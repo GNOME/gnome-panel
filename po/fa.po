@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:27+0100\n"
+"POT-Creation-Date: 2005-02-02 09:36+0000\n"
 "PO-Revision-Date: 2004-11-06 17:47+0330\n"
 "Last-Translator: Meelad Zakaria <meelad@bamdad.org>\n"
 "Language-Team: Persian <farsi@lists.sharif.edu>\n"
@@ -43,9 +43,9 @@ msgstr "_درباره"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
-#: gnome-panel/panel-menu-button.c:601
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_راهنما"
 
@@ -180,11 +180,11 @@ msgid "Custom format"
 msgstr "قالب سفارشی"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
-#: applets/fish/fish.c:144 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
-#: applets/wncklet/workspace-switcher.c:261
-#: applets/wncklet/workspace-switcher.c:569
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "در نمایش راهنما خطایی رخ داد: %s"
@@ -231,9 +231,9 @@ msgstr "استفاده از _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
-#: applets/wncklet/workspace-switcher.c:600
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
+#: applets/wncklet/workspace-switcher.c:606
 #: gnome-panel/panel-context-menu.c:110
 #, fuzzy
 msgid "translator-credits"
@@ -245,62 +245,80 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "ساعت زمان و تاریخ فعلی را نمایش می‌دهد"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24" and
+#. "12". If your locale uses 24 hour time notation, translate this to "24".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
+#.
+#. Do NOT translate this into anything else than "24" or "12". For example,
+#. if you translate this to "۲۴" or anything else that isn't "24" or
+#. "12", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:11
 msgid "24"
 msgstr "24"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:22
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:23
 msgid "Custom format of the clock"
 msgstr "قالب سفارشی ساعت"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:24
 msgid "Hour format"
 msgstr "قالب ساعت"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:25
 msgid "If true, display date in the clock, in addition to time."
 msgstr "اگر درست باشد، علاوه بر زمان، تاریخ هم در ساعت نمایش داده می‌شود."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:26
 msgid "If true, display seconds in time."
 msgstr "اگر درست باشد، ثانیه در زمان نمایش داده می‌شود"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:27
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "اگر درست باشد، زمان در منطقه‌ی زمانی هماهنگ جهانی نمایش داده می‌شود."
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:29
 msgid "If true, show week numbers in the calendar."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
 msgstr "نمایش تاریخ در ساعت"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:31
 msgid "Show date in tooltip"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:32
 msgid "Show time with seconds"
 msgstr "نمایش زمان با ثانیه"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:33
 #, fuzzy
 msgid "Show week numbers in calendar"
 msgstr "نمایش _نام فضاهای کاری در تعویض‌کننده"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:34
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -308,7 +326,7 @@ msgstr ""
 "در گنوم ۲٫۶ از استفاده از این کلید انتقاد و به جای آن استفاده از 'format "
 "key' تشویق شد. چارچوب کلی برای سازگاری با نسخه‌های قدیمی‌تر حفظ شده است."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -318,7 +336,7 @@ msgstr ""
 "استفاده‌ی برنامک ساعت را مشخص می‌کند. شما می‌توانید برای به دست آوردن یک قالب "
 "به‌خصوص، از مشخص‌کننده‌های تبدیل قابل درک برای strftime() استفاده کنید."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:36
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -338,23 +356,23 @@ msgstr ""
 "مثلاْ 1970-01-01. اگر روی «سفارشی» تنظیم شود، ساعت زمان را مطابق با قالب‌بندی "
 "مشخص شده در کلید costum_format نمایش خواهد داد."
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "این کلید برنامه‌ای را که برای پیکربندی زمان اجرا می‌شود مشخص می‌کند."
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:38
 msgid "Time configuration tool"
 msgstr "ابزار پیکرندی زمان"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:39
 msgid "Use Internet time"
 msgstr "استفاده از زمان اینترنت"
 
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:40
 msgid "Use UNIX time"
 msgstr "استفاده از زمان یونیکس"
 
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:41
 msgid "Use UTC"
 msgstr "استفاده از UTC"
 
@@ -604,7 +622,7 @@ msgid "Area where notification icons appear"
 msgstr "ناحیه‌ای که شمایل‌های اعلان در آن ظاهر می‌شوند"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:128
+#: applets/notification_area/main.c:129
 msgid "Notification Area"
 msgstr "ناحیه‌ی اعلان"
 
@@ -621,7 +639,7 @@ msgstr "جهت:"
 msgid "The orientation of the tray."
 msgstr ""
 
-#: applets/notification_area/main.c:341
+#: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
 msgstr "ناحیه‌ی اعلان تابلو"
 
@@ -646,7 +664,7 @@ msgid "Switch between workspaces"
 msgstr "تعویض بین فضاهای کاری"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "فهرست پنجره‌ها"
 
@@ -655,44 +673,44 @@ msgid "Window Navigation Applet Factory"
 msgstr "کارخانه‌ی برنامک‌های هدایت پنجره‌ها"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
-#: applets/wncklet/window-menu.c:873
+#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
 msgid "Window Selector"
 msgstr "انتخاب‌گر پنجره"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:611
+#: applets/wncklet/workspace-switcher.c:617
 msgid "Workspace Switcher"
 msgstr "تعویض‌کننده‌ی فضای کاری"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "برای برگشتن پنجره‌های مخفی اینجا کلیک کنید."
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "برای مخفی کردن همه‌ی پنجره‌ها و نمایش رومیزی اینجا کلیک کنید."
-
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "بار کردن %s شکست خورد: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
-msgid "File not found"
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#, fuzzy
+msgid "Icon not found"
 msgstr "پرونده پیدا نشد"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "برای برگشتن پنجره‌های مخفی اینجا کلیک کنید."
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "برای مخفی کردن همه‌ی پنجره‌ها و نمایش رومیزی اینجا کلیک کنید."
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "دکمه‌ی نمایش رومیزی"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:582
 #, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "این دکمه به شما اجازه می‌دهد همه‌ی پنجره‌ها را مخفی کنید و رومیزی را نشان دهید"
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -700,7 +718,7 @@ msgstr ""
 "مدیر پنجره‌ی شما از دکمه‌ی نمایش رومیزی پشتیبانی نمی‌کند، یا شما مدیر پنجره‌ی در "
 "حال اجرا ندارید."
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "فهرست پنجره‌ها فهرستی از تمام پنجره‌ها نشان می‌دهد و به شما اجازه می‌دهد آنها را "
@@ -833,42 +851,30 @@ msgstr "این کلید حداقل عرضی را که فهرست پنجره‌ه
 msgid "When to group windows"
 msgstr "زمان گروه شدن پنجره‌ها"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:113
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "انتخاب‌گر پنجره فهرستی از همه‌ی پنجره‌ها نشان می‌دهد و به شما اجازه می‌دهد آنها "
 "را مرور کنید."
 
-#: applets/wncklet/window-menu.c:310
-msgid "Unknown Window"
-msgstr "پنجره‌ی ناشناخته"
-
-#: applets/wncklet/window-menu.c:691
-msgid "No Windows Open"
-msgstr "هیچ پنجره‌ای باز نیست"
-
-#: applets/wncklet/window-menu.c:872
-msgid "Tool to switch between windows"
-msgstr "ابزاری برای تعویض بین پنجره‌ها"
-
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "ردیف"
 
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 msgid "columns"
 msgstr "ستون"
 
-#: applets/wncklet/workspace-switcher.c:449
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "خطا در بار کردن مقدار num_rows برای تعویض‌کننده‌ی فضای کاری: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:460
+#: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -876,13 +882,13 @@ msgstr ""
 "خطا در بار کردن مقدار display_worlkspace_names برای تعویض‌کننده‌ی فضای کاری: %"
 "s\n"
 
-#: applets/wncklet/workspace-switcher.c:475
+#: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "خطا در بار کردن مقدار display_all_workspaces برای تعویض‌کننده‌ی فضای کاری: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:614
+#: applets/wncklet/workspace-switcher.c:620
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -968,12 +974,12 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "پوسته‌ی تابلوی گنوم"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 #, fuzzy
 msgid "_Lock To Panel"
 msgstr "_حذف از تابلو"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_انتقال"
 
@@ -985,34 +991,26 @@ msgstr "_حذف از تابلو"
 msgid "???"
 msgstr "؟؟؟"
 
-#: gnome-panel/applet.c:1194
+#: gnome-panel/applet.c:1214
 msgid "Can't find an empty spot"
 msgstr "نقطه‌ی خالی پیدا نمی‌شود"
 
-#: gnome-panel/button-widget.c:226
+#: gnome-panel/button-widget.c:196
 #, c-format
 msgid "Failed to load image %s"
 msgstr "بار کردن تصویر %s شکست خورد"
 
-#: gnome-panel/button-widget.c:394
-msgid "none"
-msgstr "هیچ کدام"
-
-#: gnome-panel/button-widget.c:399
-msgid "file not found"
-msgstr "پرونده پیدا نشد"
-
-#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Drawer"
 msgstr "کشو"
 
-#: gnome-panel/drawer.c:599
+#: gnome-panel/drawer.c:596
 #, fuzzy
 msgid "_Add to Drawer..."
 msgstr "_افزودن به تابلو..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_مشخصه‌ها"
@@ -1021,62 +1019,62 @@ msgstr "_مشخصه‌ها"
 msgid "Create new file in the given directory"
 msgstr "ایجاد یک پرونده‌ی جدید در شاخه‌ی داده شده"
 
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "ذخیره‌ی راه‌انداز روی دیسک ممکن نیست"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "راه‌اندازی شمایل ممکن نیست"
 
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "این شمایل راه‌اندازی url برای نشان دادن ندارد."
 
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "نشان دادن %s ممکن نیست"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "URI برای پرونده‌ی رومیزی راه‌انداز تابلو وجود ندارد\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "باز کردن پرونده‌ی رومیزی %s برای راه‌انداز تابلوی %s%s مقدور نیست\n"
 
-#: gnome-panel/launcher.c:722 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "مشخصه‌های راه‌انداز"
 
-#: gnome-panel/launcher.c:834
+#: gnome-panel/launcher.c:840
 msgid "_Launch"
 msgstr ""
 
-#: gnome-panel/launcher.c:911
+#: gnome-panel/launcher.c:918
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "کلید %s تنظیم نشده است، بار کردن راه‌انداز ممکن نیست\n"
 
-#: gnome-panel/launcher.c:966 gnome-panel/launcher.c:984
-#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
-#: gnome-panel/menu-ditem.c:535
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "ایجاد راه‌انداز ممکن نیست"
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "باید یک نام مشخص کنید."
 
-#: gnome-panel/launcher.c:985 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "باید یک URL معتبر یا یک فرمان مشخص کنید."
 
-#: gnome-panel/launcher.c:1028 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "ایجاد راه‌انداز"
 
@@ -1089,11 +1087,11 @@ msgid "Menu"
 msgstr "منو"
 
 #. class
-#: gnome-panel/menu-ditem.c:510
+#: gnome-panel/menu-ditem.c:517
 msgid "Cannot save menu item to disk"
 msgstr "ذخیره‌ی شیء منو در دیسک ممکن نیست"
 
-#: gnome-panel/menu-ditem.c:536
+#: gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1101,31 +1099,31 @@ msgstr ""
 "نمی‌توانید در این مکان یک راه‌انداز جدید ایجاد کنید چون این مکان قابل نوشتن "
 "نیست."
 
-#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
 msgid "Cannot launch entry"
 msgstr "راه‌اندازی ورودی ممکن نیست"
 
-#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
 msgid "Cannot load entry"
 msgstr "بار کردن ورودی ممکن نیست"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:839
 msgid "Add this launcher to panel"
 msgstr "افزودن این راه‌انداز به تابلو"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:859
 msgid "Entire menu"
 msgstr "سراسر منو"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:869
 msgid "Add this as drawer to panel"
 msgstr "افزودن این به عنوان یک کشو به تابلو"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:881
 msgid "Add this as menu to panel"
 msgstr "افزودن به شکل منو به تابلو"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
 msgid "Applications"
 msgstr "برنامه‌ها"
 
@@ -1146,171 +1144,180 @@ msgid "Restart _Screensaver Daemon"
 msgstr "راه‌اندازی مجدد شبح محافظ صفحه‌ی نمایش"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "اجرای '%s' ممکن نیست"
 
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:282
+msgid "Cannot connect to server"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "قفل کردن صفحه"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "از کامپیوترتان در برابر استفاده‌ی غیر مجاز حفاظت کنید"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "خروج از سیستم"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr ""
 "خروج از این نشست برای ورود به عنوان یک کاربر دیگر یا برای خاموش کردن کامپیوتر"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "اجرای برنامه..."
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "اجرای یک برنامه با وارد کردن یک فرمان"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "جست و جو به دنبال پرونده..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "پرونده‌ها، پوشه‌ها و نوشتارها را در کامپیوترتان پیدا کنید"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "عکس گرفتن از صفحه‌ی نمایش"
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "گرفتن یک عکس از رومیزی شما"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "مجبور کردن یک برنامه‌ی بدرفتار به ترک"
 
-#: gnome-panel/panel-addto.c:103
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:373
+msgid "Connect to Server..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:374
+msgid "Connect to a remote server"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
 msgstr "راه‌انداز برنامه‌ی سفارشی"
 
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:103
 msgid "Create a new launcher"
 msgstr "ایجاد یک راه‌انداز جدید"
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:113
 msgid "Application Launcher..."
 msgstr "راه‌انداز برنامه..."
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "راه‌اندازی برنامه‌ای که از قبل در منوی گنوم وجود دارد"
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:128
 msgid "Main Menu"
 msgstr "منوی اصلی"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:129
 msgid "The main GNOME menu"
 msgstr "منوی اصلی گنوم"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:139
 msgid "Menu Bar"
 msgstr "نوار منو"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
 msgstr "یک نوار منوی سفارشی"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
 msgstr "یک کشوی واشو برای نگه‌داشتن اشیاء دیگر"
 
-#: gnome-panel/panel-addto.c:241
+#: gnome-panel/panel-addto.c:239
 msgid "(empty)"
 msgstr "(خالی)"
 
-#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "پرس و جو استثنای %s را برگرداند\n"
 
-#: gnome-panel/panel-addto.c:914
+#: gnome-panel/panel-addto.c:913
 #, fuzzy, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "شیئی را برای افزودن به_ %s انتخاب کنید:"
 
-#: gnome-panel/panel-addto.c:918
+#: gnome-panel/panel-addto.c:917
 #, fuzzy
 msgid "Add to Drawer"
 msgstr "_افزودن به تابلو..."
 
-#: gnome-panel/panel-addto.c:920
+#: gnome-panel/panel-addto.c:919
 #, fuzzy
 msgid "Select an _item to add to the drawer:"
 msgstr "_شیئ را برای افزودن به تابلو انتخاب کنید:"
 
-#: gnome-panel/panel-addto.c:922
+#: gnome-panel/panel-addto.c:921
 #, fuzzy
 msgid "Add to Panel"
 msgstr "_افزودن به تابلو..."
 
-#: gnome-panel/panel-addto.c:924
+#: gnome-panel/panel-addto.c:923
 msgid "Select an _item to add to the panel:"
 msgstr "_شیئ را برای افزودن به تابلو انتخاب کنید:"
 
-#: gnome-panel/panel-applet-frame.c:815
+#: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "استثنا از  منوی واشوی '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:934
+#: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:936
+#: gnome-panel/panel-applet-frame.c:935
 #, fuzzy
 msgid "Panel object has quit unexpectedly"
 msgstr "نوع شیء تابلو"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:948
 #, fuzzy
 msgid "_Don't Reload"
 msgstr "حذف _نشود"
 
-#: gnome-panel/panel-applet-frame.c:950
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:976
-msgid "D_on't Delete"
-msgstr "حذف _نشود"
-
-#: gnome-panel/panel-applet-frame.c:1024
+#: gnome-panel/panel-applet-frame.c:995
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "تابلو در حین بار کردن \"%s\" با مشکلی برخورد کرد."
 
-#: gnome-panel/panel-applet-frame.c:1041
+#: gnome-panel/panel-applet-frame.c:1012
 #, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
 msgstr ""
@@ -1318,21 +1325,21 @@ msgstr ""
 "\n"
 "آیا می‌خواهید برنامک را از پیکربندی‌تان حذف کنید؟"
 
-#: gnome-panel/panel-applet-frame.c:1138
+#: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "خطا در مراقبت از کلید gconf '%s': %s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "خطا در بار کردن شاخه‌ی gconf '%s': %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "خطا در گرفتن مقدار '%s': %s"
@@ -1377,14 +1384,14 @@ msgstr "تابلوی _جدید"
 msgid "A_bout Panels"
 msgstr "_درباره‌ی تابلوها"
 
-#: gnome-panel/panel-force-quit.c:74
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "روی یک پنجره کلیک کنید تا آن را وادار به ترک کنید. برای انصراف <ESC> را فشار "
 "دهید."
 
-#: gnome-panel/panel-force-quit.c:186
+#: gnome-panel/panel-force-quit.c:187
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1611,40 +1618,53 @@ msgstr "عکس گرفتن از صفحه"
 msgid "Take window screenshot"
 msgstr "عکس گرفتن از پنجره"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "نمایش مکان '%s' ممکن نیست"
 
-#: gnome-panel/panel-menu-bar.c:455
+#: gnome-panel/panel-menu-bar.c:470
 msgid "Bookmarks"
 msgstr ""
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
 #, fuzzy, c-format
 msgid "Open '%s'"
 msgstr "باز کردن URL: %s"
 
-#: gnome-panel/panel-menu-bar.c:528
+#: gnome-panel/panel-menu-bar.c:545
 msgid "Network Places"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:530
+#: gnome-panel/panel-menu-bar.c:547
 msgid "Removable Media"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
-msgid "Desktop"
-msgstr "رومیزی"
-
-#: gnome-panel/panel-menu-bar.c:582
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:606
 #, fuzzy
-msgid "Desktop directory"
+msgid "Desktop Folder|Desktop"
 msgstr "شاخه‌ی وب"
 
-#: gnome-panel/panel-menu-bar.c:759
+#: gnome-panel/panel-menu-bar.c:607
+msgid "Open the desktop as a folder"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:786
 msgid "Places"
+msgstr ""
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:795
+msgid "Desktop Environment|Desktop"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
@@ -1859,7 +1879,7 @@ msgstr "چپ"
 msgid "Right"
 msgstr "راست"
 
-#: gnome-panel/panel-properties-dialog.c:406
+#: gnome-panel/panel-properties-dialog.c:412
 msgid "Images"
 msgstr ""
 
@@ -1987,7 +2007,7 @@ msgstr "فهرست نوشتارهای اخیر پاک شود؟"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
@@ -2004,30 +2024,30 @@ msgstr "پاک کردن نوشتارهای اخیر"
 msgid "Clear all items from the recent documents list"
 msgstr "فهرست نوشتارهای اخیر پاک شود؟"
 
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:273
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "راه‌اندازی فرمان '%s' ممکن نیست"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "تبدیل '%s' از UTF-8 ممکن نیست"
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1056
 msgid "Choose a file to append to the command..."
 msgstr "پرونده‌ای را برای ضمیمه کردن به فرمان انتخاب کنید..."
 
-#: gnome-panel/panel-run-dialog.c:1365
+#: gnome-panel/panel-run-dialog.c:1333
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "این فرمان را اجرا خواهد کرد: '%s' "
 
-#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "برنامه‌ای را برای دیدن شرح آن انتخاب کنید"
 
-#: gnome-panel/panel-run-dialog.c:1406
+#: gnome-panel/panel-run-dialog.c:1374
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2084,7 +2104,7 @@ msgstr "نمایش فهرست _برنامه‌های شناخته شده"
 msgid "The icon of the command to be run."
 msgstr "شمایل فرمانی که قرار است اجرا شود."
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
 msgid "_Run"
 msgstr "ا_جرا"
 
@@ -2103,81 +2123,85 @@ msgid ""
 "The panel will now exit."
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:103
+#: gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:104
+#: gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
 msgstr "پا_ک کردن"
 
-#: gnome-panel/panel-toplevel.c:1110
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "حذف _نشود"
+
+#: gnome-panel/panel-toplevel.c:1121
 msgid "Hide Panel"
 msgstr "مخفی کردن تابلو"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Top Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Top Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Top Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Top Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Bottom Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Bottom Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Bottom Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Left Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Left Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Left Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Left Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Right Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Right Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Right Edge Panel"
 msgstr ""
 
@@ -2510,12 +2534,12 @@ msgstr "جزئیات: %s"
 msgid "Open URL: %s"
 msgstr "باز کردن URL: %s"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1254
 #, fuzzy
 msgid "Delete this drawer?"
 msgstr "حذف تابلو"
 
-#: gnome-panel/panel.c:1238
+#: gnome-panel/panel.c:1255
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -2524,17 +2548,17 @@ msgstr ""
 "وقتی یک تابلو پاک می‌شود، تابلو و محتویاتش\n"
 "از دست می‌روند. این تابلو حذف شود؟"
 
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1257
 #, fuzzy
 msgid "Delete Drawer"
 msgstr "حذف تابلو"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1259
 #, fuzzy
 msgid "Delete this panel?"
 msgstr "_حذف این تابلو"
 
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1260
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2543,7 +2567,7 @@ msgstr ""
 "وقتی یک تابلو پاک می‌شود، تابلو و محتویاتش\n"
 "از دست می‌روند. این تابلو حذف شود؟"
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1262
 msgid "Delete Panel"
 msgstr "حذف تابلو"
 
@@ -2559,46 +2583,46 @@ msgstr "آزمایش برنامک بونوبو"
 msgid "Test Bonobo Applet Factory"
 msgstr "آزمایش کارخانه‌ی برنامک بونوبو"
 
-#: libpanel-applet/panel-applet.c:984
+#: libpanel-applet/panel-applet.c:995
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:998
+#: libpanel-applet/panel-applet.c:1009
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1018
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "گرفتن نقشه‌نقطه‌ای %s شکست خورد"
 
-#: libpanel-applet/panel-applet.c:1014
+#: libpanel-applet/panel-applet.c:1025
 msgid "Unknown background type received"
 msgstr "نوع ناشناخته‌ای از پس‌زمینه دریافت شد"
 
-#: libpanel-applet/panel-applet.c:1199
+#: libpanel-applet/panel-applet.c:1210
 msgid "The Applet's containing Panel's orientation"
 msgstr "جهت تابلوی موجود در برنامک"
 
-#: libpanel-applet/panel-applet.c:1207
+#: libpanel-applet/panel-applet.c:1218
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "اندازه‌ی تابلوی موجود در برنامک به نقطه"
 
-#: libpanel-applet/panel-applet.c:1215
+#: libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "رنگ پس‌زمینه یا نقشه‌نقطه‌ای تابلوی موجود در برنامک"
 
-#: libpanel-applet/panel-applet.c:1223
+#: libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
 msgstr "پرچم‌های برنامک"
 
-#: libpanel-applet/panel-applet.c:1231
+#: libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "محدوده‌ای که نشان می‌دهد چه اندازه‌هایی برای برنامک قابل قبول است"
 
-#: libpanel-applet/panel-applet.c:1239
+#: libpanel-applet/panel-applet.c:1250
 msgid "The Applet's containing Panel is locked down"
 msgstr "تابلوی موجود در برنامک قفل شده است"
 
@@ -2662,6 +2686,24 @@ msgstr "برنامک:"
 #, fuzzy
 msgid "_Prefs Dir:"
 msgstr "شاخه‌ی ترجیحات:"
+
+#~ msgid "Unknown Window"
+#~ msgstr "پنجره‌ی ناشناخته"
+
+#~ msgid "No Windows Open"
+#~ msgstr "هیچ پنجره‌ای باز نیست"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "ابزاری برای تعویض بین پنجره‌ها"
+
+#~ msgid "none"
+#~ msgstr "هیچ کدام"
+
+#~ msgid "file not found"
+#~ msgstr "پرونده پیدا نشد"
+
+#~ msgid "Desktop"
+#~ msgstr "رومیزی"
 
 #, fuzzy
 #~ msgid "Workspace Selector"

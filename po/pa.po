@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:27+0100\n"
+"POT-Creation-Date: 2005-02-02 09:36+0000\n"
 "PO-Revision-Date: 2004-08-29 15:15+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -50,9 +50,9 @@ msgstr "_ਇਸ ਬਾਰੇ..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
-#: gnome-panel/panel-menu-button.c:601
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_ਸਹਾਇਤਾ"
 
@@ -188,11 +188,11 @@ msgid "Custom format"
 msgstr "ਪ੍ਰਤੀਰੂਪ ਦੀ ਸੋਧ ਕਰੋ"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
-#: applets/fish/fish.c:144 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
-#: applets/wncklet/workspace-switcher.c:261
-#: applets/wncklet/workspace-switcher.c:569
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "ਸਹਾਇਤਾ ਵੇਖਾਉ ਵੇਲੇ ਗਲਤੀ ਹੈ: %s"
@@ -239,9 +239,9 @@ msgstr "ਯੂਟੀਸੀ (_UTC) ਵਰਤੋ"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
-#: applets/wncklet/workspace-switcher.c:600
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
+#: applets/wncklet/workspace-switcher.c:606
 #: gnome-panel/panel-context-menu.c:110
 #, fuzzy
 msgid "translator-credits"
@@ -253,62 +253,80 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "ਘੜੀ ਹੁਣ ਦਾ ਸਮਾਂ ਤੇ ਮਿਤੀ ਵੇਖਾ ਰਹੀ ਹੈ"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24" and
+#. "12". If your locale uses 24 hour time notation, translate this to "24".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
+#.
+#. Do NOT translate this into anything else than "24" or "12". For example,
+#. if you translate this to "۲۴" or anything else that isn't "24" or
+#. "12", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:11
 msgid "24"
 msgstr "24"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:22
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:23
 msgid "Custom format of the clock"
 msgstr "ਘੜੀ ਲਈ ਪ੍ਰਤੀਰੂਪ ਦੀ ਸੋਧ ਕਰੋ"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:24
 msgid "Hour format"
 msgstr "ਘੰਟਾ ਪ੍ਰਤੀਰੂਪ"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:25
 msgid "If true, display date in the clock, in addition to time."
 msgstr "ਜੇ ਸੱਚ ਹੈ ਤਾਂ, ਘੜੀ ਵਿਚ ਸਮੇ ਨਾਲ ਤਰੀਕ ਵੀ ਵੇਖਾਈ ਜਾਵੇਗੀ।"
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:26
 msgid "If true, display seconds in time."
 msgstr "ਜੇ ਸੱਚ ਹੈ ਤਾਂ ਸਮੇ ਵਿਚ ਸਕਿੰਟ ਵੀ ਵੇਖਾਏ ਜਾਣਗੇ।"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:27
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "ਜੇ ਸੱਚ ਹੈ ਤਾਂ ਸਮਾਂ ਯੂਨੀਵਰਸਲ ਕਾਰਡੀਨੇਟਡ ਟਾਇਮ ਅਨੁਸਾਰ ਹੋਵੇਗਾ।"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "ਜੇ ਸੱਚ ਹੈ ਤਾਂ ਤਰੀਕ ਉਪੱਰੀ ਸੰਕੇਤ ਵਿਚ ਹੋਵੇਗਾ, ਜਦੋ ਸੂਚਕ ਘੜੀ ਦੇ ਉਪੱਰ ਹੋਵੇਗਾ।"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:29
 msgid "If true, show week numbers in the calendar."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
 msgstr "ਘੜੀ ਵਿਚ ਤਰੀਕ ਵੇਖਾਓ"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:31
 msgid "Show date in tooltip"
 msgstr "ਮਿਤੀ ਉਪਰੀ ਸੰਕੇਤ ਵਿਚ ਵੇਖਾਓ"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:32
 msgid "Show time with seconds"
 msgstr "ਸਮਾਂ ਸਕਿੰਟਾ ਵਿਚ ਵੇਖਾਓ"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:33
 #, fuzzy
 msgid "Show week numbers in calendar"
 msgstr "ਵਰਕਸਪੇਸ ਦਾ ਨਾਂ ਸਵਿੱਚਰ ਵਿਚ ਵੇਖਾਉ"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:34
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -316,7 +334,7 @@ msgstr ""
 "ਇਸ ਕੀ ਦਾ ਗਨੋਮ ੨.੬ ਵਿਚ 'ਫਾਰਮਿਟ' ਕੀ ਦੇ ਤੌਰ ਤੇ ਵਰਤੋ ਬੰਦ ਹੈ। ਸਿਰਫ ਪੁਰਾਣੇ ਵਰਜਨਾਂ ਦੇ ਕਰਕੇ ਰੱਖੀ "
 "ਗਈ ਹੈ।"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -325,7 +343,7 @@ msgstr ""
 "ਇਹ ਕੀ ਘੜੀ ਦੇ ਐਪਲੈਟ ਦੁਆਰਾ ਵਰਤੇ ਜਾਦੇ ਫਾਰਮਿਟ ਨੂੰ ਨਿਰਧਾਰਿਤ ਕਰਦੀ ਹੈ, ਜਦੋ ਕਿ ਫਾਰਮਿਟ ਕੀ ਨੂੰ "
 "\"ਸੋਧ\" ਤੇ ਨਿਰਧਾਰਿਤ ਕੀਤਾ ਜਾਦਾ ਹੈ। "
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:36
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -343,23 +361,23 @@ msgstr ""
 "ਸ਼ੁਰੂ ਹੋਣ ਤੋ 1970-01-01) ਸਮਾਂ ਸਕਿੰਟ ਵਿਚ ਸਮਾਂ ਵੇਖਾਵੇਗਾ। ਜੇਕਰ \"ਪਸੰਦੀਦਾ\" ਚੁਣਿਆ ਤਾਂ ਪਸੰਦੀਦਾ "
 "ਫਾੲਮਿਟ-ਕੀ ਨਾਲ ਫਾਰਮਿਟ ਨਿਰਧਾਰਿਤ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "ਇਹ ਕੀ ਸਮਾਂ ਨਿਰਧਾਰਨ ਕਰਨ ਲਈ ਚੱਲਣ ਵਾਲੇ ਕਾਰਜ ਨੂੰ ਨਿਰਧਾਰਿਤ ਕਰਦੀ ਹੈ।"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:38
 msgid "Time configuration tool"
 msgstr "ਸਮਾਂ ਨਿਰਧਾਰਨ ਸੰਦ"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:39
 msgid "Use Internet time"
 msgstr "ਇੰਟਰਨੈੱਟ ਸਮਾਂ ਵਰਤੋ"
 
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:40
 msgid "Use UNIX time"
 msgstr "ਯੂਨੈਕਸ ਸਮਾਂ ਵਰਤੋ"
 
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:41
 msgid "Use UTC"
 msgstr "UTC ਵਰਤੋਂ"
 
@@ -606,7 +624,7 @@ msgid "Area where notification icons appear"
 msgstr "ਥਾਂ ਜਿਥੇ ਟਿੱਪਣੀ ਆਈਕਾਨ ਹਾਜ਼ਰ ਹੋਵੇ"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:128
+#: applets/notification_area/main.c:129
 msgid "Notification Area"
 msgstr "ਟਿੱਪਣੀ ਲਈ ਥਾਂ"
 
@@ -623,7 +641,7 @@ msgstr "ਸਥਿਤੀਃ"
 msgid "The orientation of the tray."
 msgstr ""
 
-#: applets/notification_area/main.c:341
+#: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
 msgstr "ਪੈਨਲ ਲਈ ਟਿੱਪਣੀ ਖੇਤਰ"
 
@@ -648,7 +666,7 @@ msgid "Switch between workspaces"
 msgstr "ਵਰਕਸਪੇਸ ਵਿਚ ਜਾਉ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "ਝਰੋਖਾ ਸੂਚੀ"
 
@@ -657,43 +675,43 @@ msgid "Window Navigation Applet Factory"
 msgstr "ਝਰੋਖੇ ਵਿਚ ਜਾਣ ਵਾਲੀ ਐਪਲੈਟ ਕਾਰਖਾਨਾ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
-#: applets/wncklet/window-menu.c:873
+#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
 msgid "Window Selector"
 msgstr "ਝਰੋਖਾ ਚੋਣਕਾਰ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:611
+#: applets/wncklet/workspace-switcher.c:617
 msgid "Workspace Switcher"
 msgstr "ਵਰਕਸਪੇਸ ਸਵਿੱਚਰ"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "ਲੁਕਵੇ ਝਰੋਖੇ ਖੋਲਣ ਲਈ ਇਥੇ ਕਲਿੱਕ ਕਰੋ"
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "ਸਾਰੇ ਝਰੋਖੇ ਲੁਕੋਣ ਲਈ ਅਤੇ ਵਿਹੜਾ ਵੇਖਣ ਲਈ ਇਥੇ ਕਲਿੱਕ ਕਰੋ"
-
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s ਨੂੰ ਲੋਡ ਕਰਨ ਵਿਚ ਅਸਫਲ: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
-msgid "File not found"
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#, fuzzy
+msgid "Icon not found"
 msgstr "ਫਾਇਲ ਨਹੀ ਲੱਭੀ"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "ਲੁਕਵੇ ਝਰੋਖੇ ਖੋਲਣ ਲਈ ਇਥੇ ਕਲਿੱਕ ਕਰੋ"
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "ਸਾਰੇ ਝਰੋਖੇ ਲੁਕੋਣ ਲਈ ਅਤੇ ਵਿਹੜਾ ਵੇਖਣ ਲਈ ਇਥੇ ਕਲਿੱਕ ਕਰੋ"
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "ਵਿਹੜਾ ਦਾ ਬਟਨ ਵੇਖਾਉ"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:582
 #, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "ਤੁਸੀ ਇਸ ਬਟਨ ਨਾਲ ਸਾਰੇ ਝਰੋਖਿਆਂ ਨੂੰ ਓਹਲੇ ਕਰਕੇ ਵਿਹੜਾ ਵੇਖਾਉਦਾ ਹੈ "
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -701,7 +719,7 @@ msgstr ""
 "ਤੁਹਾਡਾ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਵਿਹੜਾ ਬਟਨ ਵੇਖਾਉਣ ਲਈ ਸਹਾਈ ਨਹੀ ਹੈ ਜਾਂ ਤੁਸੀ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਨਹੀ ਚਲਾ ਨਹੀ "
 "ਰਹੇ ਹੋ।"
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "ਝਰੋਖਾ ਸੂਚੀ ਸਾਰੇ ਝਰੋਖਿਆਂ ਦੀ ਸੂਚੀ ਵੇਖਾਉਦੀ ਹੈ ਅਤੇ ਤੁਸੀ ਉਹਨਾਂ ਨੂੰ ਵੇਖ ਸਕਦੇ ਹੋ।"
 
@@ -831,40 +849,28 @@ msgstr "ਇਹ ਕੀ ਨਿਰਧਾਰਿਤ ਕਰਦੀ ਹੈ, ਝਰੋਖ
 msgid "When to group windows"
 msgstr "ਜਦੋ ਝਰੋਖਿਆ ਦਾ ਸਮੂਹ ਬਣਾਉਣਾ ਹੈ "
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:113
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "ਝਰੋਖਾ ਚੋਣਕਾਰ ਸਾਰੇ ਝਰੋਖੇ ਵੇਖਾਵੇਗਾ ਅਤੇ ਤੁਸੀ ਖੋਲ ਸਕਦੇ ਹੋ।"
 
-#: applets/wncklet/window-menu.c:310
-msgid "Unknown Window"
-msgstr "ਅਣਪਛਾਤਾ ਝਰੋਖਾ"
-
-#: applets/wncklet/window-menu.c:691
-msgid "No Windows Open"
-msgstr "ਕੋਈ ਝਰੋਖਾ ਖੁੱਲਾ ਨਹੀ ਹੈ"
-
-#: applets/wncklet/window-menu.c:872
-msgid "Tool to switch between windows"
-msgstr "ਝਰੋਖਿਆਂ ਵਿਚ ਜਾਣ ਲਈ ਸੰਦ"
-
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "ਕਤਾਰਾਂ"
 
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 msgid "columns"
 msgstr "ਕਾਲਮ"
 
-#: applets/wncklet/workspace-switcher.c:449
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "ਕਤਾਰ ਦੀ ਸੰਖਿਆ(num_rows) ਲੋਡ ਕਰਨ ਵਿਚ ਗਲਤੀ ਜੋ ਕਿ ਵਰਕਸਪੇਸ ਸਵਿੱਚਰ %s ਲਈ ਹੈ\n"
 
-#: applets/wncklet/workspace-switcher.c:460
+#: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -872,14 +878,14 @@ msgstr ""
 "ਵਰਕਸਪੇਸ ਦਾ ਨਾਂ ਵੇਖਾਉਣ(display_workspace_names)ਦਾ ਮੁੱਲ ਇੱਕਠਾ ਕਰਨ ਵਿਚ ਗਲਤੀ ਜੋ ਕਿ "
 "ਵਰਕਸਪੇਸ ਸਵਿੱਚਰ: %s ਲਈ ਹੈ\n"
 
-#: applets/wncklet/workspace-switcher.c:475
+#: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "ਸਾਰੇ ਵਰਕਸਪੇਸ ਵੇਖਾਉ (display_all_workspaces) ਦਾ ਮੁੱਲ ਇੱਕਠਾ ਕਰਨ ਵਿਚ ਗਲਤੀ ਜੋ ਕਿ ਵਰਕਸਪੇਸ "
 "ਸਵਿੱਚਰ: %s ਲਈ ਹੈ\n"
 
-#: applets/wncklet/workspace-switcher.c:614
+#: applets/wncklet/workspace-switcher.c:620
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -965,12 +971,12 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "ਗਨੋਮ ਪੈਨਲ ਸ਼ੈਲ"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 #, fuzzy
 msgid "_Lock To Panel"
 msgstr "ਪੈਨਲ ਵਿਚੋ _ਹਟਾਓ"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_ਏਧਰ-ਓਧਰ"
 
@@ -982,34 +988,26 @@ msgstr "ਪੈਨਲ ਵਿਚੋ _ਹਟਾਓ"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1194
+#: gnome-panel/applet.c:1214
 msgid "Can't find an empty spot"
 msgstr "ਖਾਲੀ ਥਾਂ ਨਹੀ ਲੱਭਾ ਹੈ"
 
-#: gnome-panel/button-widget.c:226
+#: gnome-panel/button-widget.c:196
 #, c-format
 msgid "Failed to load image %s"
 msgstr "ਚਿੱਤਰ %s ਨੂੰ ਲੋਡ ਕਰਨ ਵਿਚ ਅਸਫਲ ਰਿਹਾ ਹੈ"
 
-#: gnome-panel/button-widget.c:394
-msgid "none"
-msgstr "ਕੁਝ ਨਹੀ ਹੈ"
-
-#: gnome-panel/button-widget.c:399
-msgid "file not found"
-msgstr "ਫਾਇਲ ਨਹੀ ਲੱਭੀ ਹੈ"
-
-#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Drawer"
 msgstr "ਦਰਾਜ਼"
 
-#: gnome-panel/drawer.c:599
+#: gnome-panel/drawer.c:596
 #, fuzzy
 msgid "_Add to Drawer..."
 msgstr "ਪੈਨਲ ਵਿਚ _ਸ਼ਾਮਿਲ..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_ਵਿਸ਼ੇਸਤਾਵਾਂ"
@@ -1018,62 +1016,62 @@ msgstr "_ਵਿਸ਼ੇਸਤਾਵਾਂ"
 msgid "Create new file in the given directory"
 msgstr "ਦਿੱਤੀ ਡਾਇਕਰੈਕਟਰੀ ਵਿਚ ਨਵੀ ਫਾਇਲ ਬਣਾਉ"
 
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਨੂੰ ਡਿਸਕ ਨੂੰ ਸੰਭਾਲਿਆ ਨਾ ਜਾ ਸਕਿਆ ਹੈ "
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "ਆਈਕਾਨ ਜਾਰੀ ਨਹੀ ਹੋ ਸਕਦਾ ਹੈ"
 
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "ਇਹ ਸ਼ੁਰੂ ਆਈਕਾਨ ਨਿਰਧਾਰਿਤ ਯੂਆਰਐਲ ਨੂੰ ਵੇਖਾ ਨਹੀ ਸਕਦਾ ਹੈ।"
 
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s ਵੇਖਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "ਪੱਟੀ ਸ਼ੁਰੂਆਤੀ ਵਿਹੜੇ ਦੀ ਫਾਇਲ ਲਈ ਕੋਈ ਯੂਆਰਐਲ ਨਹੀ ਦਿੱਤਾ ਗਿਆ ਹੈ\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "ਵਿਹੜੇ ਦੀ ਫਾਇਲ %s ਪੈਨਲ ਸ਼ੁਰੂਆਤੀ%s %s ਵਿਚੋ ਖੋਲਣ ਵਿਚ ਅਸਫਲ ਹੈ\n"
 
-#: gnome-panel/launcher.c:722 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਵਿਸ਼ੇਸਤਾ"
 
-#: gnome-panel/launcher.c:834
+#: gnome-panel/launcher.c:840
 msgid "_Launch"
 msgstr ""
 
-#: gnome-panel/launcher.c:911
+#: gnome-panel/launcher.c:918
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "ਕੀ %s ਨਿਰਧਾਰਿਤ ਨਹੀ ਕੀਤੀ ਗਈ ਹੈ, ਸੋ ਸ਼ੁਰੂਆਤੀ ਚੱਲ ਨਹੀ ਸਕਦਾ ਹੈ\n"
 
-#: gnome-panel/launcher.c:966 gnome-panel/launcher.c:984
-#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
-#: gnome-panel/menu-ditem.c:535
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਬਣ ਨਾ ਸਕਿਆ ਹੈ"
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "ਕਿਰਪਾ ਕਰਕੇ ਨਾਂ ਦਿਉ।"
 
-#: gnome-panel/launcher.c:985 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "ਕਿਰਪਾ ਕਰਕੇ ਜਾਇਜ਼ ਯੂਆਰ ਐਲ(URL) ਜਾ ਕਮਾਂਡ ਦਿਉ।"
 
-#: gnome-panel/launcher.c:1028 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਬਣਾਉ"
 
@@ -1086,41 +1084,41 @@ msgid "Menu"
 msgstr "ਮੇਨੂ"
 
 #. class
-#: gnome-panel/menu-ditem.c:510
+#: gnome-panel/menu-ditem.c:517
 msgid "Cannot save menu item to disk"
 msgstr "ਸੂਚੀ ਡਿਸਕ ਤੇ ਸੰਭਾਲੀ ਨਾ ਜਾ ਸਕੀ ਹੈ"
 
-#: gnome-panel/menu-ditem.c:536
+#: gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr "ਇਸ ਸਥਿਤੀ ਤੇ ਨਵਾਂ ਸ਼ੁਰੂਆਤੀ ਨਹੀ ਬਣਾ ਸਕਦੇ ਹੋ ਕਿਉਕਿ ਸਥਿਤੀ ਲਿਖਣਯੋਗ ਨਹੀ ਹੈ। "
 
-#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
 msgid "Cannot launch entry"
 msgstr "ਇੰਦਰਾਜ਼ ਚੱਲ ਨਹੀ ਸਕਦਾ ਹੈ"
 
-#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
 msgid "Cannot load entry"
 msgstr "ਇੰਦਰਾਜ਼ ਜਾਰੀ ਨਹੀ ਹੋ ਸਕਦਾ ਹੈ"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:839
 msgid "Add this launcher to panel"
 msgstr "ਪੈਨਲ ਵਿਚ ਸ਼ੁਰੂਆਤੀ ਜੋੜੋ"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:859
 msgid "Entire menu"
 msgstr "ਸਾਰੀ ਸੂਚੀ"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:869
 msgid "Add this as drawer to panel"
 msgstr "ਇਸ ਨੂੰ ਪੈਨਲ ਵਿੱਚ ਦਰਾਜ਼ ਦੇ ਤੌਰ ਤੇ ਜੋੜੋ"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:881
 msgid "Add this as menu to panel"
 msgstr "ਇਸ ਨੂੰ ਪੈਨਲ ਵਿਚ ਸੂਚੀ ਵਾਂਗ ਜੋੜੋ"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
 msgid "Applications"
 msgstr "ਕਾਰਜ"
 
@@ -1141,171 +1139,180 @@ msgid "Restart _Screensaver Daemon"
 msgstr "_ਵਿਹਲਾ ਪਰਦੇ ਮੁੜ ਸ਼ੁਰੂ ਕਰੋ"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "%s ਨੂੰ ਚਲਾਇਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ"
 
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:282
+msgid "Cannot connect to server"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "ਪਰਦੇ ਨੂੰ ਜਿੰਦਰਾ"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "ਅਣ-ਅਧਿਕਾਰਿਕ ਵਰਤੋ ਤੋ ਆਪਣੇ ਕੰਪਿਊਟਰ ਨੂੰ ਬਚਾਉ"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "ਬਾਹਰੀ ਦਰ"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr ""
 "ਇਸ ਅਜਲਾਸ ਲਈ ਬਾਹਰੀ ਦਰ ਤਾਂਕਿ ਤੁਸੀ ਵੱਖਰ ਉਪਭੋਗੀ ਦੇ ਤੌਰ ਤੇ ਦਾਖਲ ਹੋ ਸਕੋ ਜਾਂ ਮਸ਼ੀਨ ਬੰਦ ਕਰ ਸਕੋ।"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "ਕਾਰਜ ਚਲਾਉ ... "
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "ਕਮਾਂਡ ਦੇ ਕੇ ਕਾਰਜ ਚਲਾਉ"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "ਫਾਇਲ਼ਾਂ ਦੀ ਖੋਜ..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "ਆਪਣੇ ਕੰਪਿਊਟਰ ਤੇ ਫਾਇਲਾਂ, ਫੋਲਡਰ ਅਤੇ ਦਸਤਾਵੇਜ਼ਾਂ ਦੀ ਖੋਜ ਕਰੋ"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "ਪਰਦੇ ਦੀ ਤਸਵੀਰ ਲਵੋ..."
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "ਆਪਣੇ ਵਿਹੜੇ ਦੀ ਤਸਵੀਰ ਖਿੱਚੋ "
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr "ਧੱਕੇ ਨਾਲ ਬੰਦ ਕਰੋ"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "ਵਿਗੜੇ ਕਾਰਜ ਨੂੰ ਥੱਕੇ ਨਾਲ ਬੰਦ ਕਰ ਦਿਉ "
 
-#: gnome-panel/panel-addto.c:103
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:373
+msgid "Connect to Server..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:374
+msgid "Connect to a remote server"
+msgstr ""
+
+#: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
 msgstr "ਕਾਰਜ ਸ਼ੁਰੂਆਤੀ ਪਸੰਦ"
 
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:103
 msgid "Create a new launcher"
 msgstr "ਨਵਾਂ ਸ਼ੁਰੂਆਤੀ ਬਣਾਉ"
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:113
 msgid "Application Launcher..."
 msgstr "ਕਾਰਜ ਸ਼ੁਰੂਆਤੀ..."
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "ਇੱਕ ਕਾਰਜ ਚਲਾਓ, ਜੋ ਕਿ ਪਹਿਲਾਂ ਹੀ ਗਨੋਮ ਮੇਨੂ ਵਿੱਚ ਹੈ"
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:128
 msgid "Main Menu"
 msgstr "ਮੁੱਖ ਸੂਚੀ"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:129
 msgid "The main GNOME menu"
 msgstr "ਮੁੱਖ ਗਨੋਮ ਪੈਨਲ"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:139
 msgid "Menu Bar"
 msgstr "ਮੇਨੂ ਪੱਟੀ"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
 msgstr "ਪਸੰਦੀਦਾ ਮੇਨੂ ਪੱਟੀ"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
 msgstr "ਇੱਕ ਉੱਭਰਨ ਵਾਲਾ ਦਰਾਜ਼ ਜੋ ਕਿ ਹੋਰ ਇਕਾਈਆਂ ਰੱਖਦਾ ਹੈ"
 
-#: gnome-panel/panel-addto.c:241
+#: gnome-panel/panel-addto.c:239
 msgid "(empty)"
 msgstr "(ਖਾਲੀ)"
 
-#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "ਕੀਊਰੀ ਨੇ ਅਪਵਾਦ %s ਭੇਜਿਆ ਹੈ।\n"
 
-#: gnome-panel/panel-addto.c:914
+#: gnome-panel/panel-addto.c:913
 #, fuzzy, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "%s ਵਿੱਚ ਸ਼ਾਮਿਲ ਕਰਨ ਲਈ _ਇਕਾਈ ਚੁਣੋ:"
 
-#: gnome-panel/panel-addto.c:918
+#: gnome-panel/panel-addto.c:917
 #, fuzzy
 msgid "Add to Drawer"
 msgstr "ਪੈਨਲ ਵਿਚ _ਸ਼ਾਮਿਲ..."
 
-#: gnome-panel/panel-addto.c:920
+#: gnome-panel/panel-addto.c:919
 #, fuzzy
 msgid "Select an _item to add to the drawer:"
 msgstr "ਪੈਨਲ ਵਿੱਚ ਸ਼ਾਮਿਲ ਕਰਨ ਲਈ _ਇਕਾਈ ਚੁਣੋ:"
 
-#: gnome-panel/panel-addto.c:922
+#: gnome-panel/panel-addto.c:921
 #, fuzzy
 msgid "Add to Panel"
 msgstr "ਪੈਨਲ ਵਿਚ _ਸ਼ਾਮਿਲ..."
 
-#: gnome-panel/panel-addto.c:924
+#: gnome-panel/panel-addto.c:923
 msgid "Select an _item to add to the panel:"
 msgstr "ਪੈਨਲ ਵਿੱਚ ਸ਼ਾਮਿਲ ਕਰਨ ਲਈ _ਇਕਾਈ ਚੁਣੋ:"
 
-#: gnome-panel/panel-applet-frame.c:815
+#: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "ਖੁੱਲਣ ਵਾਲੀ ਸੂਚੀ '%s' ਲਈ ਅਪਵਾਦ \n"
 
-#: gnome-panel/panel-applet-frame.c:934
+#: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:936
+#: gnome-panel/panel-applet-frame.c:935
 #, fuzzy
 msgid "Panel object has quit unexpectedly"
 msgstr "ਪੈਨਲ ਇਕਾਈ ਦੀ ਕਿਸਮ"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:948
 #, fuzzy
 msgid "_Don't Reload"
 msgstr "ਹਟਾਓ _ਨਾ"
 
-#: gnome-panel/panel-applet-frame.c:950
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:976
-msgid "D_on't Delete"
-msgstr "ਹਟਾਓ _ਨਾ"
-
-#: gnome-panel/panel-applet-frame.c:1024
+#: gnome-panel/panel-applet-frame.c:995
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "ਪੱਟੀ ਨੂੰ \"%s\" ਲੋਡ ਕਰਨ ਵਿੱਚ ਮੁਸ਼ਕਿਲ ਆਈ ਹੈ।"
 
-#: gnome-panel/panel-applet-frame.c:1041
+#: gnome-panel/panel-applet-frame.c:1012
 #, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
 msgstr ""
@@ -1313,21 +1320,21 @@ msgstr ""
 "\n"
 "ਕੀ ਤੁਸੀ ਆਪਣੀ ਸੰਰਚਨਾ ਵਿਚੋ ਇਸ ਐਪਲੈਟ ਨੂੰ ਹਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
-#: gnome-panel/panel-applet-frame.c:1138
+#: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "ਨਿੰਯਤ੍ਰਣ ਤੋ AppletShell ਇੰਟਰਫੇਸ਼ ਪ੍ਰਾਪਤ ਕਰਨ ਵਿਚ ਅਸਫਲ ਹੈ\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "ਜੀ-ਕਾਨਫ ਕੀ '%s' ਵੇਖਾਉਣ ਵਿਚ ਗਲਤੀ ਹੈ:%s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "ਜੀ-ਕਾਨਫ ਡਾਇਕਰੈਕਟਰੀ %s ਨੂੰ ਲੋਡ ਕਰਨ ਵਿਚ ਗਲਤੀ ਹੈ %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "%s ਲਈ ਮੁੱਲ ਲੈਣ ਲਈ ਗਲਤੀ: %s"
@@ -1372,12 +1379,12 @@ msgstr "_ਨਵਾਂ ਪੈਨਲ"
 msgid "A_bout Panels"
 msgstr "ਪੈਨਲ਼ਾਂ ਬਾ_ਰੇ"
 
-#: gnome-panel/panel-force-quit.c:74
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "ਝਰੋਖੇ ਤੇ ਕਲਿੱਕ ਕਰੋ ਜਿਸ ਨੂੰ ਤੁਸੀ ਧੱਕੇ ਨਾਲ ਬੰਦ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ। ਰੱਦ ਕਰਨ ਲਈ <ESC> ਨੂੰ ਦਬਾਉ।"
 
-#: gnome-panel/panel-force-quit.c:186
+#: gnome-panel/panel-force-quit.c:187
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1609,40 +1616,53 @@ msgstr "ਪਰਦੇ ਦੀ ਤਸਵੀਰ ਲਵੋ"
 msgid "Take window screenshot"
 msgstr "ਝਰੋਖੇ ਦੀ ਤਸਵੀਰ ਲਵੋ"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "ਥਾਂ '%s'·ਵੇਖ ਨਹੀ ਸਕਦੇ ਹੋ"
 
-#: gnome-panel/panel-menu-bar.c:455
+#: gnome-panel/panel-menu-bar.c:470
 msgid "Bookmarks"
 msgstr ""
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
 #, fuzzy, c-format
 msgid "Open '%s'"
 msgstr "ਯੂਆਰ-ਐਲ(URL) ਖੋਲੋ:%s"
 
-#: gnome-panel/panel-menu-bar.c:528
+#: gnome-panel/panel-menu-bar.c:545
 msgid "Network Places"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:530
+#: gnome-panel/panel-menu-bar.c:547
 msgid "Removable Media"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
-msgid "Desktop"
-msgstr "ਵਿਹੜਾ"
-
-#: gnome-panel/panel-menu-bar.c:582
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:606
 #, fuzzy
-msgid "Desktop directory"
+msgid "Desktop Folder|Desktop"
 msgstr "ਵੈਬ ਡਾਇਰੈਕਟਰੀ"
 
-#: gnome-panel/panel-menu-bar.c:759
+#: gnome-panel/panel-menu-bar.c:607
+msgid "Open the desktop as a folder"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:786
 msgid "Places"
+msgstr ""
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:795
+msgid "Desktop Environment|Desktop"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
@@ -1864,7 +1884,7 @@ msgstr "ਖੱਬਾ"
 msgid "Right"
 msgstr "ਸੱਜਾ"
 
-#: gnome-panel/panel-properties-dialog.c:406
+#: gnome-panel/panel-properties-dialog.c:412
 msgid "Images"
 msgstr ""
 
@@ -1989,10 +2009,11 @@ msgid "Clear the Recent Documents list?"
 msgstr "ਤਾਜ਼ੇ ਦਸਤਾਵੇਜ਼ ਸੂਚੀ ਸਾਫ ਕਰਨੀ ਹੈ?"
 
 #: gnome-panel/panel-recent.c:157
+#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "ਜੇਕਰ ਤੁਸੀਂ ਤਾਜ਼ਾ ਦਸਤਾਵੇਜ਼ ਸਾਫ ਕੀਤੇ ਤਾਂ ਇਹ ਸਾਫ ਹੋ ਜਾਣਗੇ:\n"
@@ -2013,30 +2034,30 @@ msgstr "ਤਾਜ਼ੇ ਦਸਤਾਵੇਜ਼ ਸਾਫ ਕਰੋ"
 msgid "Clear all items from the recent documents list"
 msgstr "ਤਾਜ਼ੇ ਦਸਤਾਵੇਜ਼ ਸੂਚੀ ਸਾਫ ਕਰਨੀ ਹੈ?"
 
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:273
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "ਕਮਾਂਡ '%s' ਜਾਰੀ ਨਹੀ ਕੀਤੀ ਜਾ ਸਕੀ ਹੈ"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "ਯੂਟੀਐਫ -੮ ਤੋ '%s' ਵਿਚ ਤਬਦੀਲ ਨਹੀ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1056
 msgid "Choose a file to append to the command..."
 msgstr "ਕਮਾਂਡ ਵਿਚ ਜੋੜਨ ਲਈ ਇਕ ਫਾਇਲ ਚੁਣੋ..."
 
-#: gnome-panel/panel-run-dialog.c:1365
+#: gnome-panel/panel-run-dialog.c:1333
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "ਕਮਾਂਡ ਹੀ ਚਲਾਉਗੇਃ '%s' "
 
-#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "ਇਸ ਦਾ ਵੇਰਵਾ ਵੇਖਣ ਲਈ ਇਕ ਕਾਰਜ ਚੁਣੋ"
 
-#: gnome-panel/panel-run-dialog.c:1406
+#: gnome-panel/panel-run-dialog.c:1374
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2089,7 +2110,7 @@ msgstr "ਪਛਾਣੇ _ਕਾਰਜਾਂ ਦੀ ਸੂਚੀ ਵੇਖਾਉ 
 msgid "The icon of the command to be run."
 msgstr "ਚਲਾਉਣ ਲਈ ਕਮਾਂਡ ਦਾ ਆਈਕਾਨ।"
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
 msgid "_Run"
 msgstr "_ਚਲਾਓ"
 
@@ -2113,81 +2134,85 @@ msgstr ""
 "ਗਲਤੀ ਦਾ ਕੋਡ ਹੈ: %d\n"
 "ਹੁਣ ਪੱਟੀ ਬੰਦ ਹੋ ਰਹੀ ਹੈ।"
 
-#: gnome-panel/panel-stock-icons.c:103
+#: gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
 msgstr "_ਧੱਕੇ ਨਾਲ ਬੰਦ ਕਰੋ"
 
-#: gnome-panel/panel-stock-icons.c:104
+#: gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
 msgstr "_ਸਾਫ"
 
-#: gnome-panel/panel-toplevel.c:1110
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "ਹਟਾਓ _ਨਾ"
+
+#: gnome-panel/panel-toplevel.c:1121
 msgid "Hide Panel"
 msgstr "ਪੈਨਲ ਉਹਲੇ ਕਰੋ"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Top Expanded Edge Panel"
 msgstr "ਉਪੱਰ ਫੈਲਿਆ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Top Centered Panel"
 msgstr "ਉਪੱਰ ਵਿਚਕਾਰ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Top Floating Panel"
 msgstr "ਉਪੱਰ ਹਿੱਲਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Top Edge Panel"
 msgstr "ਉਪੱਰ ਪਾਸੇ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Bottom Expanded Edge Panel"
 msgstr "ਥੱਲੇ ਪਾਸੇ ਫੈਲਿਆ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Bottom Centered Panel"
 msgstr "ਥੱਲੇ ਕੇਦਰੀ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Bottom Floating Panel"
 msgstr "ਥੱਲੇ ਹਿੱਲਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Bottom Edge Panel"
 msgstr "ਥੱਲੇ ਪਾਸੇ ਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Left Expanded Edge Panel"
 msgstr "ਖੱਬੇ ਪਾਸੇ ਫੈਲਿਆ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Left Centered Panel"
 msgstr "ਖੱਬਾ ਕੇਦਰੀ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Left Floating Panel"
 msgstr "ਖੱਬਾ ਹਿੱਲਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Left Edge Panel"
 msgstr "ਖੱਬੇ ਪਾਸੇ ਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Right Expanded Edge Panel"
 msgstr "ਸੱਜੇ ਪਾਸੇ ਫੈਲਿਆ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Right Centered Panel"
 msgstr "ਸੱਜਾ ਕੇਦਰੀ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Right Floating Panel"
 msgstr "ਸੱਜਾ ਹਿੱਲਦਾ ਪੈਨਲ"
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Right Edge Panel"
 msgstr "ਸੱਜੇ ਪਾਸੇ ਦਾ ਪੈਨਲ"
 
@@ -2524,12 +2549,12 @@ msgstr "ਵੇਰਵਾ: %s"
 msgid "Open URL: %s"
 msgstr "ਯੂਆਰ-ਐਲ(URL) ਖੋਲੋ:%s"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1254
 #, fuzzy
 msgid "Delete this drawer?"
 msgstr "ਪੈਨਲ ਹਟਾ ਦਿਉ"
 
-#: gnome-panel/panel.c:1238
+#: gnome-panel/panel.c:1255
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -2538,17 +2563,17 @@ msgstr ""
 "ਜਦੋ ਪੈਨਲ ਹਟਾਇਆ ਜਾਵੇਗਾ ਤਾਂ ਪੈਨਲ ਦਾ\n"
 "ਨਿਰਧਾਰਨ ਖਤਮ ਹੋ ਜਾਵੇਗਾ, ਕੀ ਪੈਨਲ ਹਟਾਇਆ ਜਾਵੇ?"
 
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1257
 #, fuzzy
 msgid "Delete Drawer"
 msgstr "ਪੈਨਲ ਹਟਾ ਦਿਉ"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1259
 #, fuzzy
 msgid "Delete this panel?"
 msgstr "ਇਹ ਪੈਨਲ _ਹਟਾਓ"
 
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1260
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2557,7 +2582,7 @@ msgstr ""
 "ਜਦੋ ਪੈਨਲ ਹਟਾਇਆ ਜਾਵੇਗਾ ਤਾਂ ਪੈਨਲ ਦਾ\n"
 "ਨਿਰਧਾਰਨ ਖਤਮ ਹੋ ਜਾਵੇਗਾ, ਕੀ ਪੈਨਲ ਹਟਾਇਆ ਜਾਵੇ?"
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1262
 msgid "Delete Panel"
 msgstr "ਪੈਨਲ ਹਟਾ ਦਿਉ"
 
@@ -2573,46 +2598,46 @@ msgstr "ਬੋਨਬੋ ਐਪਲੈਟ ਦੀ ਜਾਂਚ"
 msgid "Test Bonobo Applet Factory"
 msgstr "ਬੋਨਬੋ ਐਪਲੈਟ ਦੀ ਜਾਂਚ ਫੈਕਟਰੀ"
 
-#: libpanel-applet/panel-applet.c:984
+#: libpanel-applet/panel-applet.c:995
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "ਅਧੂਰੀ '%s' ਪਿੱਠਭੂਮੀ ਦੀ ਕਿਸਮ ਮਿਲੀ ਹੈ"
 
-#: libpanel-applet/panel-applet.c:998
+#: libpanel-applet/panel-applet.c:1009
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "ਅਧੂਰੀ '%s' ਪਿੱਠਭੂਮੀ ਦੀ ਕਿਸਮ ਮਿਲੀ ਹੈ : %s"
 
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1018
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "ਪੈਕਸਮੈਪ %s ਖੋਲਣ ਵਿਚ ਅਸਫਲ ਹੈ"
 
-#: libpanel-applet/panel-applet.c:1014
+#: libpanel-applet/panel-applet.c:1025
 msgid "Unknown background type received"
 msgstr "ਅਣਪਛਾਤੀ ਪਿੱਠਭੂਮੀ ਮਿਲੀ ਹੈ "
 
-#: libpanel-applet/panel-applet.c:1199
+#: libpanel-applet/panel-applet.c:1210
 msgid "The Applet's containing Panel's orientation"
 msgstr "ਐਪਲੈਟ ਪੱਟੀ ਦੀ ਸਥਿਤੀ ਰੱਖਦਾ ਹੈ"
 
-#: libpanel-applet/panel-applet.c:1207
+#: libpanel-applet/panel-applet.c:1218
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "ਐਪਲੈਟ ਪੱਟੀ ਦਾ ਆਕਾਰ ਪਿਕਸਲ ਵਿਚ ਰੱਖਦਾ ਹੈ "
 
-#: libpanel-applet/panel-applet.c:1215
+#: libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "ਐਪਲੈਟ ਪੱਟੀ ਦੀ ਪਿੱਠਭੂਮੀ ਦਾ ਰੰਗ ਜਾਂ ਪਿਕਸਮੈਪ ਰੱਖਦਾ ਹੈ।"
 
-#: libpanel-applet/panel-applet.c:1223
+#: libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
 msgstr "ਐਪਲੈਟ ਦਾ ਨਿਸ਼ਾਨ"
 
-#: libpanel-applet/panel-applet.c:1231
+#: libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "ਐਪਲਿਟ ਦੇ ਲਈ ਮੰਨਣਯੋਗ ਅਕਾਰ ਲਈ ਸੰਕੇਤ ਲਈ ਫੈਲਾਉ"
 
-#: libpanel-applet/panel-applet.c:1239
+#: libpanel-applet/panel-applet.c:1250
 msgid "The Applet's containing Panel is locked down"
 msgstr "ਐਪਲੈਟ ਨੂੰ ਰੱਖਣ ਵਾਲੀ ਪੱਟੀ ਨੂੰ ਸਥਿਰ ਕਰ ਦਿਉ।"
 
@@ -2676,6 +2701,24 @@ msgstr "ਐਪਲੈਟਃ"
 #, fuzzy
 msgid "_Prefs Dir:"
 msgstr "ਚੋਣਵੀ ਡਾਇਃ"
+
+#~ msgid "Unknown Window"
+#~ msgstr "ਅਣਪਛਾਤਾ ਝਰੋਖਾ"
+
+#~ msgid "No Windows Open"
+#~ msgstr "ਕੋਈ ਝਰੋਖਾ ਖੁੱਲਾ ਨਹੀ ਹੈ"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "ਝਰੋਖਿਆਂ ਵਿਚ ਜਾਣ ਲਈ ਸੰਦ"
+
+#~ msgid "none"
+#~ msgstr "ਕੁਝ ਨਹੀ ਹੈ"
+
+#~ msgid "file not found"
+#~ msgstr "ਫਾਇਲ ਨਹੀ ਲੱਭੀ ਹੈ"
+
+#~ msgid "Desktop"
+#~ msgstr "ਵਿਹੜਾ"
 
 #, fuzzy
 #~ msgid "Workspace Selector"

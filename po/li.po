@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.4.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:27+0100\n"
+"POT-Creation-Date: 2005-02-02 09:36+0000\n"
 "PO-Revision-Date: 2003-02-11 13:12--100\n"
 "Last-Translator: Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -46,9 +46,9 @@ msgstr "_Euver..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
-#: gnome-panel/panel-menu-button.c:601
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -192,11 +192,11 @@ msgid "Custom format"
 msgstr "Oer-formaat"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
-#: applets/fish/fish.c:144 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
-#: applets/wncklet/workspace-switcher.c:261
-#: applets/wncklet/workspace-switcher.c:569
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "'t geuf eine faeler bie 't tuine van de hulp: %s"
@@ -249,9 +249,9 @@ msgstr "_UTC gebroeke"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
-#: applets/wncklet/workspace-switcher.c:600
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
+#: applets/wncklet/workspace-switcher.c:606
 #: gnome-panel/panel-context-menu.c:110
 #, fuzzy
 msgid "translator-credits"
@@ -261,82 +261,100 @@ msgstr "Mathieu van Woerkom <mathieu.vanwoerkom@student.kun.nl>"
 msgid "The Clock displays the current time and date"
 msgstr "De Klok tuint de hujigen tied en datem"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24" and
+#. "12". If your locale uses 24 hour time notation, translate this to "24".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
+#.
+#. Do NOT translate this into anything else than "24" or "12". For example,
+#. if you translate this to "۲۴" or anything else that isn't "24" or
+#. "12", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:11
 msgid "24"
 msgstr "24"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:22
 #, fuzzy
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:23
 msgid "Custom format of the clock"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:24
 msgid "Hour format"
 msgstr "Oer-formaat"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:25
 #, fuzzy
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Naeve de tied, ouch de datem tuine in de klok"
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:26
 #, fuzzy
 msgid "If true, display seconds in time."
 msgstr "Geuf de tied in sekónde nauw"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:27
 #, fuzzy
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Tied es Universal Coordinated Time-zone tuine"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:28
 #, fuzzy
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Datem tuine in eine sjwevende tip wen de moespiel baove de klok gehauwe weurt"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:29
 msgid "If true, show week numbers in the calendar."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:30
 #, fuzzy
 msgid "Show date in clock"
 msgstr "Datem tuine in de klok"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:31
 msgid "Show date in tooltip"
 msgstr "Datem tuine in eine sjwevende tip"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:32
 msgid "Show time with seconds"
 msgstr "Tied tuine inkluzief sekónde"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:33
 #, fuzzy
 msgid "Show week numbers in calendar"
 msgstr "Wirkblaad_name in de wisselaer tuine"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:34
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:36
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -348,24 +366,24 @@ msgid ""
 "the custom_format key."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:38
 msgid "Time configuration tool"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:39
 #, fuzzy
 msgid "Use Internet time"
 msgstr "Internet-tied gebroeke"
 
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:40
 msgid "Use UNIX time"
 msgstr "UNIX-tied gebroeke"
 
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:41
 msgid "Use UTC"
 msgstr "UTC gebroeke"
 
@@ -628,7 +646,7 @@ msgid "Area where notification icons appear"
 msgstr "Plek woe mitdeilingspiktogramme versjiene"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:128
+#: applets/notification_area/main.c:129
 msgid "Notification Area"
 msgstr "Mitdeilingegebeed"
 
@@ -645,7 +663,7 @@ msgstr "Orjentasie"
 msgid "The orientation of the tray."
 msgstr "Hujige sjtaot van dit peniel"
 
-#: applets/notification_area/main.c:341
+#: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
 msgstr "Peniel-mitdeilingegebeed"
 
@@ -673,7 +691,7 @@ msgid "Switch between workspaces"
 msgstr "Wissel tösje wirkblajer"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "Vinsterlies"
 
@@ -683,52 +701,55 @@ msgid "Window Navigation Applet Factory"
 msgstr "GenUtil Applet Febrik"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
-#: applets/wncklet/window-menu.c:873
+#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
 #, fuzzy
 msgid "Window Selector"
 msgstr "Vinsterlies"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:611
+#: applets/wncklet/workspace-switcher.c:617
 msgid "Workspace Switcher"
 msgstr "Wirkblaadwisselaer"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "Klik hie veur de gemaskeerde vinsters te hersjtèlle."
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "Klik hie veur alle vinsters te maskere en 't beroblaad te tuine."
-
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "'t laje van %s is mislónge: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
-msgid "File not found"
-msgstr "Besjtandj neet gevónje"
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#, fuzzy
+msgid "Icon not found"
+msgstr ""
+"<b>Kèn xscreensaver neet oetveure</b>\n"
+"\n"
+"Detajs: xscreensaver-opdrach neet gevónje"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "Klik hie veur de gemaskeerde vinsters te hersjtèlle."
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Klik hie veur alle vinsters te maskere en 't beroblaad te tuine."
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "Knóp 'Vinsters maskere'"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:582
 #, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Dees knóp sjtèlt uch in sjtaot alle vinsters te maskere en 't beroblaad te "
 "zeen"
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
@@ -876,47 +897,33 @@ msgstr "Minimale aafmaetinge die de vinsterlies vreug"
 msgid "When to group windows"
 msgstr "Wen vinsters gegróppeerd waere"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:113
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "De vinsterlies tuint ein lies woemit geer door alle vinster haer kèn blajere."
 
-#: applets/wncklet/window-menu.c:310
-msgid "Unknown Window"
-msgstr ""
-
-#: applets/wncklet/window-menu.c:691
-#, fuzzy
-msgid "No Windows Open"
-msgstr "Gein vinsters aope"
-
-#: applets/wncklet/window-menu.c:872
-#, fuzzy
-msgid "Tool to switch between windows"
-msgstr "Wissel tösje aope vinsters"
-
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #: applets/wncklet/workspace-switcher.glade.h:11
 #, fuzzy
 msgid "rows"
 msgstr "Blajere"
 
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #, fuzzy
 msgid "columns"
 msgstr "Kelómme"
 
-#: applets/wncklet/workspace-switcher.c:449
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Faeler bie 't laje van de 'num_rows'-waerd veur de wirkblaadwisselaer: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:460
+#: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -924,14 +931,14 @@ msgstr ""
 "Faeler bie 't laje van de 'display_workspace_names'-waerd veur de "
 "wirkblaadwisselaer: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:475
+#: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Faeler bie 't laje van de 'display_all_workspaces'-waerde veur de "
 "wirkblaadwisselaer: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:614
+#: applets/wncklet/workspace-switcher.c:620
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1029,12 +1036,12 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME-Penielshell"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 #, fuzzy
 msgid "_Lock To Panel"
 msgstr "Dit peniel tuine"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "Ver_zètte"
 
@@ -1046,34 +1053,26 @@ msgstr "Ew_egdoon van peniel"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1194
+#: gnome-panel/applet.c:1214
 msgid "Can't find an empty spot"
 msgstr "Kèn gei laeg plekke vènje"
 
-#: gnome-panel/button-widget.c:226
+#: gnome-panel/button-widget.c:196
 #, fuzzy, c-format
 msgid "Failed to load image %s"
 msgstr "'t laje van %s is mislónge: %s\n"
 
-#: gnome-panel/button-widget.c:394
-msgid "none"
-msgstr "gein"
-
-#: gnome-panel/button-widget.c:399
-msgid "file not found"
-msgstr "besjtandj neet gevónje"
-
-#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Drawer"
 msgstr "Opberglaaj"
 
-#: gnome-panel/drawer.c:599
+#: gnome-panel/drawer.c:596
 #, fuzzy
 msgid "_Add to Drawer..."
 msgstr "_Bie peniel doon"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_Eigesjappe"
@@ -1082,7 +1081,7 @@ msgstr "_Eigesjappe"
 msgid "Create new file in the given directory"
 msgstr "Maak ein nuuj besjtandj in de gegaeve map"
 
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 #, fuzzy
 msgid "Cannot save launcher to disk"
 msgstr ""
@@ -1090,70 +1089,70 @@ msgstr ""
 "\n"
 "Detajs: %s"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 #, fuzzy
 msgid "Cannot launch icon"
 msgstr ""
 "Kèn piktogram neet sjtarte\n"
 "%s"
 
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 #, fuzzy
 msgid "This launch icon does not specify a url to show."
 msgstr ""
 "Veur dit Sjtart-piktogram geuf 't gein spesifikasie veur de url die getuind "
 "moot waere"
 
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, fuzzy, c-format
 msgid "Cannot show %s"
 msgstr ""
 "Kèn %s neet tuine\n"
 "%s"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Gei URI aangegaeve veur beroblaad-besjtandj van peniel-sjtarter\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Neet in sjtaot óm beroblaad-besjtandj %s veur penielsjtarter %s%s te äöpene\n"
 
-#: gnome-panel/launcher.c:722 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Sjtarter-eigesjappe"
 
-#: gnome-panel/launcher.c:834
+#: gnome-panel/launcher.c:840
 #, fuzzy
 msgid "_Launch"
 msgstr "Sjtarter..."
 
-#: gnome-panel/launcher.c:911
+#: gnome-panel/launcher.c:918
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Sjleutel %s is neet ingesjtèld, kèn sjtarter neet laje\n"
 
-#: gnome-panel/launcher.c:966 gnome-panel/launcher.c:984
-#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
-#: gnome-panel/menu-ditem.c:535
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
 #, fuzzy
 msgid "Cannot create launcher"
 msgstr "Sjtarter aanmake"
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
 #, fuzzy
 msgid "You have to specify a name."
 msgstr "Geer moot eine naam opgaeve veur de sjtarter."
 
-#: gnome-panel/launcher.c:985 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Geer moot ein geljige URL of opdrach opgaeve."
 
-#: gnome-panel/launcher.c:1028 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Sjtarter aanmake"
 
@@ -1170,7 +1169,7 @@ msgid "Menu"
 msgstr "Menu"
 
 #. class
-#: gnome-panel/menu-ditem.c:510
+#: gnome-panel/menu-ditem.c:517
 #, fuzzy
 msgid "Cannot save menu item to disk"
 msgstr ""
@@ -1178,7 +1177,7 @@ msgstr ""
 "\n"
 "Detajs: %s"
 
-#: gnome-panel/menu-ditem.c:536
+#: gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1186,33 +1185,33 @@ msgstr ""
 "Geer kènt op dees plaats geine nuje sjtarter aanmake wiel dees plaats neet "
 "besjriefbaar is."
 
-#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
 #, fuzzy
 msgid "Cannot launch entry"
 msgstr "Sjtarter aanmake"
 
-#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
 #, fuzzy
 msgid "Cannot load entry"
 msgstr "Opdrach-inveurveldj"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:839
 msgid "Add this launcher to panel"
 msgstr "Deze sjtarter toeveugen aan 't peniel"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:859
 msgid "Entire menu"
 msgstr "Ganse menu"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:869
 msgid "Add this as drawer to panel"
 msgstr "Es opberglaaj bie peniel doon"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:881
 msgid "Add this as menu to panel"
 msgstr "Es menu bie peniel doon"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
 msgid "Applications"
 msgstr "Toepassinge"
 
@@ -1233,24 +1232,28 @@ msgid "Restart _Screensaver Daemon"
 msgstr "Sjirmbeveiliging-daemon obbenuuts _sjtarte"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
 #, fuzzy, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kèn gnome-panel-screenshot neet oetveure"
 
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:282
+msgid "Cannot connect to server"
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
 msgstr "Bildsjirm vas doon"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "Eur computer taege óngeoutoriseerd gebroek besjirme"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "Aafmelje"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:326
 #, fuzzy
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
@@ -1259,151 +1262,157 @@ msgstr ""
 "Dees sessie aafsjloete zoedet geer uch kènt aanmelje es angere gebroeker, of "
 "eure computer oezètte"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:335
 #, fuzzy
 msgid "Run Application..."
 msgstr "Toepassing"
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:336
 #, fuzzy
 msgid "Run an Application by entering a command"
 msgstr ""
 "Pregramme drieje, went geer wit waat veur ein opdrach geer moot intiepe"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "Zeuke nao besjtenj..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "Besjtenj, mappe en dókkementer vènje op eur computer"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:354
 #, fuzzy
 msgid "Take Screenshot..."
 msgstr "Sjirmaafdrök..."
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "Sjirmaafdrök van eur beroblaad make"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:103
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:373
+msgid "Connect to Server..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:374
+#, fuzzy
+msgid "Connect to a remote server"
+msgstr "Gebroekersnaam op de e-mailserver"
+
+#: gnome-panel/panel-addto.c:102
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "Toepassing"
 
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:103
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "Sjtarter aanmake"
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:113
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "Toepassing"
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:128
 #, fuzzy
 msgid "Main Menu"
 msgstr "Huidmenu"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:129
 #, fuzzy
 msgid "The main GNOME menu"
 msgstr "'t GNOME-peniel"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:139
 #, fuzzy
 msgid "Menu Bar"
 msgstr "Menu"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:241
+#: gnome-panel/panel-addto.c:239
 msgid "(empty)"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query resulteerde in oetzunjering %s\n"
 
-#: gnome-panel/panel-addto.c:914
+#: gnome-panel/panel-addto.c:913
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:918
+#: gnome-panel/panel-addto.c:917
 #, fuzzy
 msgid "Add to Drawer"
 msgstr "_Bie peniel doon"
 
-#: gnome-panel/panel-addto.c:920
+#: gnome-panel/panel-addto.c:919
 msgid "Select an _item to add to the drawer:"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:922
+#: gnome-panel/panel-addto.c:921
 #, fuzzy
 msgid "Add to Panel"
 msgstr "_Bie peniel doon"
 
-#: gnome-panel/panel-addto.c:924
+#: gnome-panel/panel-addto.c:923
 msgid "Select an _item to add to the panel:"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:815
+#: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Oetzunjering van popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:934
+#: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:936
+#: gnome-panel/panel-applet-frame.c:935
 #, fuzzy
 msgid "Panel object has quit unexpectedly"
 msgstr "penieleigesjappe"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:948
 #, fuzzy
 msgid "_Don't Reload"
 msgstr "N_eet ewegdoon"
 
-#: gnome-panel/panel-applet-frame.c:950
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:976
-msgid "D_on't Delete"
-msgstr "N_eet ewegdoon"
-
-#: gnome-panel/panel-applet-frame.c:1024
+#: gnome-panel/panel-applet-frame.c:995
 #, fuzzy, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
@@ -1412,7 +1421,7 @@ msgstr ""
 "\n"
 "Wilt geer 't applet oet eur configurasie ewegdoon?"
 
-#: gnome-panel/panel-applet-frame.c:1041
+#: gnome-panel/panel-applet-frame.c:1012
 #, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
 msgstr ""
@@ -1421,21 +1430,21 @@ msgstr ""
 "\n"
 "Wilt geer 't applet oet eur configurasie ewegdoon?"
 
-#: gnome-panel/panel-applet-frame.c:1138
+#: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "'t is mislök ein 'AppletShell'-interface te verkriege van 'control'\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, fuzzy, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "'t geuf eine faeler bie 't laje van glade-besjtandj %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr ""
@@ -1484,12 +1493,12 @@ msgstr "_Nuuj peniel"
 msgid "A_bout Panels"
 msgstr "_peniel-info"
 
-#: gnome-panel/panel-force-quit.c:74
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:186
+#: gnome-panel/panel-force-quit.c:187
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1710,7 +1719,7 @@ msgid "Take window screenshot"
 msgstr "Sjirmaafdrök make"
 
 # help is hier vertaald met help ipv hulp omdat hulp-document dubbelzinnig is
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
 #, fuzzy, c-format
 msgid "Cannot display location '%s'"
 msgstr ""
@@ -1718,35 +1727,48 @@ msgstr ""
 "\n"
 "Detajs: %s"
 
-#: gnome-panel/panel-menu-bar.c:455
+#: gnome-panel/panel-menu-bar.c:470
 msgid "Bookmarks"
 msgstr ""
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
 #, fuzzy, c-format
 msgid "Open '%s'"
 msgstr "Äöpen URL: %s"
 
-#: gnome-panel/panel-menu-bar.c:528
+#: gnome-panel/panel-menu-bar.c:545
 msgid "Network Places"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:530
+#: gnome-panel/panel-menu-bar.c:547
 msgid "Removable Media"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
-msgid "Desktop"
-msgstr "Beroblaad"
-
-#: gnome-panel/panel-menu-bar.c:582
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:606
 #, fuzzy
-msgid "Desktop directory"
+msgid "Desktop Folder|Desktop"
 msgstr "Webmap."
 
-#: gnome-panel/panel-menu-bar.c:759
+#: gnome-panel/panel-menu-bar.c:607
+msgid "Open the desktop as a folder"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:786
 msgid "Places"
+msgstr ""
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:795
+msgid "Desktop Environment|Desktop"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
@@ -1943,7 +1965,7 @@ msgstr "Links"
 msgid "Right"
 msgstr "Rechs"
 
-#: gnome-panel/panel-properties-dialog.c:406
+#: gnome-panel/panel-properties-dialog.c:412
 #, fuzzy
 msgid "Images"
 msgstr "Aafbiljing"
@@ -2084,7 +2106,7 @@ msgstr ""
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 
@@ -2100,32 +2122,32 @@ msgstr ""
 msgid "Clear all items from the recent documents list"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:273
 #, fuzzy, c-format
 msgid "Cannot launch command '%s'"
 msgstr ""
 "Kèn piktogram neet sjtarte\n"
 "%s"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1056
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1365
+#: gnome-panel/panel-run-dialog.c:1333
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Opdrach '%s' zal waere oetgeveurd"
 
-#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1406
+#: gnome-panel/panel-run-dialog.c:1374
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2183,7 +2205,7 @@ msgstr "Lies van bekènde toepassinge"
 msgid "The icon of the command to be run."
 msgstr "Neet in sjtaot de oet te veure opdrach te vènje"
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
 msgid "_Run"
 msgstr "Oetveu_re"
 
@@ -2208,98 +2230,102 @@ msgstr ""
 "De faeler kood is: %d\n"
 "'t peniel weurt noe aafgesjlaote."
 
-#: gnome-panel/panel-stock-icons.c:103
+#: gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:104
+#: gnome-panel/panel-stock-icons.c:91
 #, fuzzy
 msgid "C_lear"
 msgstr "_Kleur:"
 
-#: gnome-panel/panel-toplevel.c:1110
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "N_eet ewegdoon"
+
+#: gnome-panel/panel-toplevel.c:1121
 #, fuzzy
 msgid "Hide Panel"
 msgstr "_Randjpeniel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1487
 #, fuzzy
 msgid "Top Expanded Edge Panel"
 msgstr "Oetsjieveling-gruutde"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1488
 #, fuzzy
 msgid "Top Centered Panel"
 msgstr "Hookpeniel"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1489
 #, fuzzy
 msgid "Top Floating Panel"
 msgstr "_Sjwevend peniel"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1490
 #, fuzzy
 msgid "Top Edge Panel"
 msgstr "Randjpeniel"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1494
 #, fuzzy
 msgid "Bottom Expanded Edge Panel"
 msgstr "Oetsjieveling-gruutde"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1495
 #, fuzzy
 msgid "Bottom Centered Panel"
 msgstr "Hookpeniel"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1496
 #, fuzzy
 msgid "Bottom Floating Panel"
 msgstr "_Sjwevend peniel"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1497
 #, fuzzy
 msgid "Bottom Edge Panel"
 msgstr "Randjpeniel"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1501
 #, fuzzy
 msgid "Left Expanded Edge Panel"
 msgstr "Oetsjieveling-gruutde"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1502
 #, fuzzy
 msgid "Left Centered Panel"
 msgstr "Hookpeniel"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1503
 #, fuzzy
 msgid "Left Floating Panel"
 msgstr "_Sjwevend peniel"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1504
 #, fuzzy
 msgid "Left Edge Panel"
 msgstr "Randjpeniel"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1508
 #, fuzzy
 msgid "Right Expanded Edge Panel"
 msgstr "Oetsjieveling-gruutde"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1509
 #, fuzzy
 msgid "Right Centered Panel"
 msgstr "Oetgeliend peniel"
 
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1510
 #, fuzzy
 msgid "Right Floating Panel"
 msgstr "_Sjwevend peniel"
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1511
 #, fuzzy
 msgid "Right Edge Panel"
 msgstr "Randjpeniel"
@@ -2601,12 +2627,12 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "Äöpen URL: %s"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1254
 #, fuzzy
 msgid "Delete this drawer?"
 msgstr "Peniel ewegdoon"
 
-#: gnome-panel/panel.c:1238
+#: gnome-panel/panel.c:1255
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -2615,17 +2641,17 @@ msgstr ""
 "Wen ein peniel eweggedoon weurt, gaon alle\n"
 "insjtèllinge hievan te ramp. Peniel dennoch ewegdoon?"
 
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1257
 #, fuzzy
 msgid "Delete Drawer"
 msgstr "Peniel ewegdoon"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1259
 #, fuzzy
 msgid "Delete this panel?"
 msgstr "Dit peniel _ewegdoon"
 
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1260
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2634,7 +2660,7 @@ msgstr ""
 "Wen ein peniel eweggedoon weurt, gaon alle\n"
 "insjtèllinge hievan te ramp. Peniel dennoch ewegdoon?"
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1262
 msgid "Delete Panel"
 msgstr "Peniel ewegdoon"
 
@@ -2650,46 +2676,46 @@ msgstr "Test Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Febrik"
 
-#: libpanel-applet/panel-applet.c:984
+#: libpanel-applet/panel-applet.c:995
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Neet-compleet achtergrond type '%s' ontvangen"
 
-#: libpanel-applet/panel-applet.c:998
+#: libpanel-applet/panel-applet.c:1009
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Niet-kómpleet achtergróndj tiep '%s' óntvange:%s"
 
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1018
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "'t ophaole van aafbiljing %s is mislök"
 
-#: libpanel-applet/panel-applet.c:1014
+#: libpanel-applet/panel-applet.c:1025
 msgid "Unknown background type received"
 msgstr "Ónbekènd achtergróndjtiep óntvange"
 
-#: libpanel-applet/panel-applet.c:1199
+#: libpanel-applet/panel-applet.c:1210
 msgid "The Applet's containing Panel's orientation"
 msgstr "peniel-orjentasie van 't applet"
 
-#: libpanel-applet/panel-applet.c:1207
+#: libpanel-applet/panel-applet.c:1218
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "penielgruutde in pixels van 't applet"
 
-#: libpanel-applet/panel-applet.c:1215
+#: libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Achtergróndjkleur of -aafbiljing van 't applet-bevattende peniel"
 
-#: libpanel-applet/panel-applet.c:1223
+#: libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
 msgstr "Appletvlagge"
 
-#: libpanel-applet/panel-applet.c:1231
+#: libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Bereike die aangaeve welke aafmaetinge veur 't applet akseptabel zeen"
 
-#: libpanel-applet/panel-applet.c:1239
+#: libpanel-applet/panel-applet.c:1250
 #, fuzzy
 msgid "The Applet's containing Panel is locked down"
 msgstr "peniel-orjentasie van 't applet"
@@ -2755,6 +2781,26 @@ msgstr "Applet: "
 #, fuzzy
 msgid "_Prefs Dir:"
 msgstr "Veurkeuremap:"
+
+#~ msgid "File not found"
+#~ msgstr "Besjtandj neet gevónje"
+
+#, fuzzy
+#~ msgid "No Windows Open"
+#~ msgstr "Gein vinsters aope"
+
+#, fuzzy
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Wissel tösje aope vinsters"
+
+#~ msgid "none"
+#~ msgstr "gein"
+
+#~ msgid "file not found"
+#~ msgstr "besjtandj neet gevónje"
+
+#~ msgid "Desktop"
+#~ msgstr "Beroblaad"
 
 #, fuzzy
 #~ msgid "Workspace Selector"
@@ -3258,13 +3304,6 @@ msgstr "Veurkeuremap:"
 #, fuzzy
 #~ msgid "Background set"
 #~ msgstr "Achtergróndj"
-
-#, fuzzy
-#~ msgid "%s - command not found"
-#~ msgstr ""
-#~ "<b>Kèn xscreensaver neet oetveure</b>\n"
-#~ "\n"
-#~ "Detajs: xscreensaver-opdrach neet gevónje"
 
 #, fuzzy
 #~ msgid "Cannot execute %s"
@@ -3781,9 +3820,6 @@ msgstr "Veurkeuremap:"
 #~ msgstr ""
 #~ "Dit is de animasie die gesjouwd weurt tiedes normaal gebroek van de e-"
 #~ "mailtiejing"
-
-#~ msgid "Username on the remote server"
-#~ msgstr "Gebroekersnaam op de e-mailserver"
 
 #~ msgid "We run this command when the user clicks on Inbox Monitor"
 #~ msgstr ""

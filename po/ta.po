@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:27+0100\n"
+"POT-Creation-Date: 2005-02-02 09:36+0000\n"
 "PO-Revision-Date: 2004-10-08 19:54+0530\n"
 "Last-Translator: Jayaradha N <jaya@pune.redhat.com>\n"
 "Language-Team: Tamil <zhakanini@yahoogroups.com>\n"
@@ -60,9 +60,9 @@ msgstr "அறிமுகம்"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
-#: gnome-panel/panel-menu-button.c:601
+#: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "உதவி"
 
@@ -218,11 +218,11 @@ msgstr "தனிப்பயன் வடிவம்"
 
 # gnome-terminal/gnome-terminal.c:2097
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
-#: applets/fish/fish.c:144 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
-#: applets/wncklet/workspace-switcher.c:261
-#: applets/wncklet/workspace-switcher.c:569
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
+#: applets/wncklet/workspace-switcher.c:267
+#: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "உதவி காண்பிக்கும்போது ஓர் பிழை: %s"
@@ -279,9 +279,9 @@ msgstr "_UTC பயன்டுத்தவும்"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
-#: applets/wncklet/workspace-switcher.c:600
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
+#: applets/wncklet/workspace-switcher.c:606
 #: gnome-panel/panel-context-menu.c:110
 #, fuzzy
 msgid "translator-credits"
@@ -291,70 +291,88 @@ msgstr "மொழிபெயர்த்தவர்கள்"
 msgid "The Clock displays the current time and date"
 msgstr "கடிகாரம் தற்போதைய நேரத்தையும் தேதியையும் காட்டும்"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24" and
+#. "12". If your locale uses 24 hour time notation, translate this to "24".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12".
+#.
+#. Do NOT translate this into anything else than "24" or "12". For example,
+#. if you translate this to "۲۴" or anything else that isn't "24" or
+#. "12", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:11
 msgid "24"
 msgstr "24"
 
 # applets/gen_util/clock.c:788
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
+#. Translators:
+#. This controls whether the GNOME panel clock should display time in 24 hour mode
+#. or 12 hour mode by default. The only valid values for this are "24-hour" and
+#. "12-hour". If your locale uses 24 hour time notation, translate this to "24-hour".
+#. If your locale uses 12 hour time notation with am/pm, translate this to "12-hour".
+#.
+#. Do NOT translate this into anything else than "24-hour" or "12-hour". For example,
+#. if you translate this to "24 sata" or anything else that isn't "24-hour" or
+#. "12-hour", things will not work.
+#.
+#: applets/clock/clock.schemas.in.h:22
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:23
 msgid "Custom format of the clock"
 msgstr "கடிகாரத்தின் தனிப்பயன் வடிவமைப்பு"
 
 # applets/gen_util/clock.c:521
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:24
 msgid "Hour format"
 msgstr "மணி வடிவமைப்பு"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:25
 msgid "If true, display date in the clock, in addition to time."
 msgstr "மெய்யென்றால், கடிகாரத்தில் தேதியையும் காட்டுக"
 
 # gnome-hint/gnome-hint.c:648
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:26
 msgid "If true, display seconds in time."
 msgstr "உண்மை என்றால், நேரத்தில் நொடிகள் காட்டுக."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:27
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "உண்மையெனில் ,நேரத்தை உலகளாவிய நேரத்தில் காட்டு"
 
 # panel/gnome-panel-properties.c:635
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:28
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "உண்மையெனில், சுட்டியை கடிகாத்திற்கு அருகில் கொண்டு செல்லும்போது தேதி குறிப்பை காட்டு"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:29
 msgid "If true, show week numbers in the calendar."
 msgstr ""
 
 # applets/gen_util/clock.c:823
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
 msgstr "தேதியை கடிகாரத்தில் காட்டுக"
 
 # applets/gen_util/clock.c:837
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:31
 msgid "Show date in tooltip"
 msgstr "தேதியை கருவி-உதவியில் காண்பி"
 
 # applets/gen_util/mailcheck.c:1230
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:32
 msgid "Show time with seconds"
 msgstr "நொடிகளுடன் நேரம் காட்டுக"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:33
 #, fuzzy
 msgid "Show week numbers in calendar"
 msgstr "மாற்றியில் வேலையிடங்களின் பெயர்களைக் காட்டுக"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:34
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -362,7 +380,7 @@ msgstr ""
 "'வடிவமைப்பு' விசைக்கு ஆதரவாக க்னோம் 2.6 இந்த விசையின் பயன்பாடு மறுக்கப்பட்டது . பழைய "
 "பதிப்புகளுக்கு ஆதரவு தருவதற்காக இந்த வசதி தொடரப்படுகிறது."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:35
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -372,7 +390,7 @@ msgstr ""
 "பயன்படுத்து,strftime() ஆல் புரிந்துகொள்ளக்கூடிய மற்று குறிப்புகளை தந்து குறிப்பிட்ட "
 "அமைப்பை பெற்றுக்கொள்ளவும்."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:36
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -390,26 +408,26 @@ msgstr ""
 "என அமைத்தால் கடிகாரம் நெடிகளில் சேரத்தை காட்டும் அதாவது 1970-01-01. \"தனிப்பயன்\" என "
 "அமைத்தால் நீங்கள் குறிப்பிட்ட அமைப்பில் நேரம் காட்டப்படும்."
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "இந்த விசை நிரல் நேரத்தை அமைக்க இயக்க வேண்டும் என குறிப்பிடுகிறது"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:38
 msgid "Time configuration tool"
 msgstr "நேரம் அமைத்தல் கருவி"
 
 # applets/gen_util/clock.c:869
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:39
 msgid "Use Internet time"
 msgstr "இணைய நேரத்தை பயன்படுத்து"
 
 # applets/gen_util/clock.c:865
-#: applets/clock/clock.schemas.in.h:22
+#: applets/clock/clock.schemas.in.h:40
 msgid "Use UNIX time"
 msgstr "UNIX நேரம் பயன்படுத்துக"
 
 # applets/gen_util/clock.c:851
-#: applets/clock/clock.schemas.in.h:23
+#: applets/clock/clock.schemas.in.h:41
 msgid "Use UTC"
 msgstr "UTC பயன்டுத்தவும்"
 
@@ -686,7 +704,7 @@ msgid "Area where notification icons appear"
 msgstr "அறிவிப்பு குறும்படங்கள் காண்பிக்கப்படும் இடம்"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:128
+#: applets/notification_area/main.c:129
 msgid "Notification Area"
 msgstr "அறிவிப்பு இடம்"
 
@@ -704,7 +722,7 @@ msgstr "திசை அமைவு:"
 msgid "The orientation of the tray."
 msgstr ""
 
-#: applets/notification_area/main.c:341
+#: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
 msgstr "பலகை அறிவிப்பு இடம்"
 
@@ -731,7 +749,7 @@ msgstr "வேலையிடங்களுக்குல் மாறுக"
 
 # help-browser/window.c:227
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "சாளரம் பட்டியல்"
 
@@ -741,45 +759,45 @@ msgstr "சாளர உலாவல் ஆப்லட் தொழிற்ச
 
 # gnome-terminal/gnome-terminal.c:1499
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
-#: applets/wncklet/window-menu.c:873
+#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
 msgid "Window Selector"
 msgstr "சாளரம் தெரிவு"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:611
+#: applets/wncklet/workspace-switcher.c:617
 msgid "Workspace Switcher"
 msgstr "வேலையிட மாற்றி"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "மாறைந்திருக்கும் சாளரங்களை மீட்க இங்கு அமுத்துக"
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "அனைத்து சாளரங்களை மறைத்து கணிமேசையை காட்ட இங்கு அமுத்துக"
-
 # panel/gnome-run.c:345
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s ஏற்ற முடியவில்லை: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
-msgid "File not found"
+#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#, fuzzy
+msgid "Icon not found"
 msgstr "கோப்பு காணவில்லை"
 
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "மாறைந்திருக்கும் சாளரங்களை மீட்க இங்கு அமுத்துக"
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "அனைத்து சாளரங்களை மறைத்து கணிமேசையை காட்ட இங்கு அமுத்துக"
+
 # panel/panel_config.c:674
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "கணிமேசை பொத்தான் காட்டுக"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:582
 #, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "இந்த பொத்தான் எல்லா சாளரங்களையும் மறைத்து மேசைகளை காட்டும்"
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -787,7 +805,7 @@ msgstr ""
 "உங்கள் சாளர மேலாளர் மேல்மேசையை காட்டு ஆதரவை பயன்படுத்தவில்லை, அல்லது நீங்கள் சாளர "
 "மேலாளரை இயக்க வில்லை"
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "சாளர பட்டியல் எல்லா சாளரங்களையும் உலாவ உங்களை அனுமதிக்கும்"
 
@@ -929,60 +947,46 @@ msgstr "இந்த விசை சாளர பட்டியல் பய�
 msgid "When to group windows"
 msgstr "எப்பொழுது சாளரங்களை தொகுப்பது"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:113
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "சாளர தேர்வாளர் தேர்வு செய்யப்பட்ட சாளரங்களை காட்டுவதோடு அவைகளில் உலாவ உங்களை "
 "அனுமதிக்கும்."
 
-# gsm/gsm-client-row.c:45
-#: applets/wncklet/window-menu.c:310
-msgid "Unknown Window"
-msgstr "தெரியாத சாளரம்"
-
-# help-browser/window.c:151
-#: applets/wncklet/window-menu.c:691
-msgid "No Windows Open"
-msgstr "திறங்திருக்கும் சாளரங்கள் இல்லை"
-
-#: applets/wncklet/window-menu.c:872
-msgid "Tool to switch between windows"
-msgstr "சாளரங்கள் இடையே மாறுவதற்கான கருவி"
-
 # applets/fish/fish.c:535 applets/gen_util/mailcheck.c:1020
 # gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:602
 # panel/menu-properties.c:640 panel/panel-util.c:204
 # panel/panel_config.c:1642 panel/swallow.c:265
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "வரிசைகள்"
 
 # help-browser/history.c:260
 #: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:922
+#: applets/wncklet/workspace-switcher.c:928
 msgid "columns"
 msgstr "நெடுவரிசைகள்"
 
-#: applets/wncklet/workspace-switcher.c:449
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "பணியிட மாற்றிக்கான num_rows மதிப்பை ஏற்றுவதில் பிழை: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:460
+#: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "பணியிட மாற்றிக்கான display_workspace_names மதிப்பை ஏற்றுவதில் பிழை: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:475
+#: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "பணியிட மாற்றிக்கான display_all_workspaces மதிப்பை ஏற்றுவதில் பிழை: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:614
+#: applets/wncklet/workspace-switcher.c:620
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1075,13 +1079,13 @@ msgid "GNOME Panel Shell"
 msgstr "கனோம் பலகை மேல்வடிவு"
 
 # panel/applet.c:479
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 #, fuzzy
 msgid "_Lock To Panel"
 msgstr "பலகையில் _இருந்து கழட்டுக"
 
 # panel/applet.c:486
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_நகர்த்து"
 
@@ -1097,40 +1101,31 @@ msgid "???"
 msgstr "???"
 
 # panel/applet.c:772
-#: gnome-panel/applet.c:1194
+#: gnome-panel/applet.c:1214
 msgid "Can't find an empty spot"
 msgstr "காலியான ஓரிடம் இல்லை"
 
 # panel/gnome-run.c:345
-#: gnome-panel/button-widget.c:226
+#: gnome-panel/button-widget.c:196
 #, c-format
 msgid "Failed to load image %s"
 msgstr "%s ஓவியம் எற்ற முடியவில்லை"
 
-# gnome-terminal/gnome-terminal.glade.h:23 panel/menu.c:4724
-#: gnome-panel/button-widget.c:394
-msgid "none"
-msgstr "வெற்று"
-
-#: gnome-panel/button-widget.c:399
-msgid "file not found"
-msgstr "கோப்பு காணவில்லை"
-
 # panel/drawer.c:187 panel/drawer.c:321 panel/gnome-panel-properties.c:583
 # panel/menu.c:4886
-#: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Drawer"
 msgstr "இழுப்பறை"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: gnome-panel/drawer.c:599
+#: gnome-panel/drawer.c:596
 #, fuzzy
 msgid "_Add to Drawer..."
 msgstr "பலகத்தில் சேக்கவும்..."
 
 # panel/menu.c:5103
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
+#: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "பண்புகள்"
@@ -1141,68 +1136,68 @@ msgid "Create new file in the given directory"
 msgstr "கொடுக்கப்பட்ட அடைவில் புதிய கோப்பு உருவாக்குக"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "தொடங்கரை சேமிக்க முடியவில்லை"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "குறும்படத்தை செயல்படுத்த முடியாது"
 
 # panel/launcher.c:69
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "துவக்க சின்ன காடம் காண்பிக்கவேண்டிய url குறிப்பிடவில்லை"
 
 # panel/launcher.c:77
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s காண்பிக்க முடியாது"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "பலக துவக்கிக்கான மேல்மேசை கோப்பின் URI தரப்படவில்லை\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "%s%s பலகதுவக்கிக்கான %s மேல்மேசை கோப்பை திறக்க முடியவில்லை\n"
 
 # panel/launcher.c:561
-#: gnome-panel/launcher.c:722 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:728 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "தொடங்கர் பண்புகள்"
 
-#: gnome-panel/launcher.c:834
+#: gnome-panel/launcher.c:840
 msgid "_Launch"
 msgstr ""
 
-#: gnome-panel/launcher.c:911
+#: gnome-panel/launcher.c:918
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "%s விசை அமைக்கப்படவில்லை, தொடங்கர் ஏற்ற முடியாது\n"
 
 # panel/launcher.c:709
-#: gnome-panel/launcher.c:966 gnome-panel/launcher.c:984
-#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
-#: gnome-panel/menu-ditem.c:535
+#: gnome-panel/launcher.c:973 gnome-panel/launcher.c:991
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "தொடங்கர் உருவாக்க முடியவில்லை"
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:974 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "ஒரு பெயர் கொடுக்க வேண்டும்."
 
-#: gnome-panel/launcher.c:985 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:992 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "சரியான URL அல்லது கட்டளை கொடுக்க வேண்டும்."
 
 # panel/launcher.c:709
-#: gnome-panel/launcher.c:1028 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1035 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "தொடங்கர் உருவாக்குக"
 
@@ -1221,11 +1216,11 @@ msgstr "பட்டி"
 
 # panel/launcher.c:103 panel/launcher.c:148
 #. class
-#: gnome-panel/menu-ditem.c:510
+#: gnome-panel/menu-ditem.c:517
 msgid "Cannot save menu item to disk"
 msgstr "பட்டி உருப்படியை சேமிக்க முடியவில்லை"
 
-#: gnome-panel/menu-ditem.c:536
+#: gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1233,37 +1228,37 @@ msgstr ""
 "இந்த இடத்தில் புதிய துவக்கியை உருவாக்க முடியாது காரணம் இந்த இடத்தில் எழுதும் உரிமை இல்லை"
 
 # panel/menu.c:5040
-#: gnome-panel/menu.c:124 gnome-panel/panel-menu-bar.c:136
+#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
 msgid "Cannot launch entry"
 msgstr "உள்ளீடு தொடங்க முடியாது"
 
 # panel/swallow.c:263
-#: gnome-panel/menu.c:136 gnome-panel/panel-menu-bar.c:148
+#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
 msgid "Cannot load entry"
 msgstr "உள்ளீடு ஏற்ற முடியாது"
 
 # panel/menu.c:1627
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:839
 msgid "Add this launcher to panel"
 msgstr "இந்த ஆரம்பியை பலகையிள் போடு"
 
 # panel/menu.c:1750
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:859
 msgid "Entire menu"
 msgstr "பட்டி முழுவதும்"
 
 # panel/menu.c:1760
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:869
 msgid "Add this as drawer to panel"
 msgstr "இதை ஓர் இழுப்பறையாக பலகையில் போடு"
 
 # panel/menu.c:1769
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:881
 msgid "Add this as menu to panel"
 msgstr "இதை ஓர் பட்டியாக பலகையில் போடு"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
 msgid "Applications"
 msgstr "நிரல்கள்"
 
@@ -1289,28 +1284,32 @@ msgstr "திரைக்காப்பு மறைநிரலை மீண�
 
 # panel/menu.c:5178
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' செயல்படுத்த முடியாது"
 
+#: gnome-panel/panel-action-button.c:282
+msgid "Cannot connect to server"
+msgstr ""
+
 # panel/foobar-widget.c:385
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:313
 #, fuzzy
 msgid "Lock Screen"
 msgstr "திரையை _பூட்டுக"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:314
 msgid "Protect your computer from unauthorized use"
 msgstr "அனுமதி இல்லாதவர்கள் இடம் இருந்து கனிப்பொறியை காப்பு"
 
 # panel/foobar-widget.c:395
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:325
 msgid "Log Out"
 msgstr "வெளியேறு"
 
 # panel/menu.c:5345
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:326
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1319,135 +1318,144 @@ msgstr ""
 "நிறுத்தம் செய்யவும்"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:335
 msgid "Run Application..."
 msgstr "செயல்பாடு இயக்குக..."
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
 msgstr "கட்டளையை உள்ளிட்டு செயல்பாடை இயக்குக"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
 msgstr "கோப்புகளுக்காக தேடுக..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
 msgstr "கணிப்பொறியில் கோப்புகள், அடைவுகள், மற்றும் ஆவணங்கள் கண்டுபிடிக்கவும்"
 
 # panel/gnome-panel-properties.c:1248
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
 msgstr "திரையின் படம் பிடிக்கவும்..."
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
 msgstr "உங்கள் கணிமேசையின் படத்தை சேமிக்கவும்"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
 msgstr "கட்டாயப்படுத்தி மூடுவும்"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
 msgstr "தவருதலாக செயல்படும் செயல்பாடை கட்டாயப்படுத்தி நிறுத்துக"
 
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:373
+msgid "Connect to Server..."
+msgstr ""
+
+#: gnome-panel/panel-action-button.c:374
+msgid "Connect to a remote server"
+msgstr ""
+
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
 msgstr "தனி பயன்பாடு துவக்கி"
 
 # panel/launcher.c:709
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:103
 msgid "Create a new launcher"
 msgstr "புதிய துவக்கியை உருவாக்கு"
 
 # panel/launcher.c:484 panel/menu.c:1700
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:113
 msgid "Application Launcher..."
 msgstr "பயன்பாடு துவக்கி இயக்குக..."
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "க்னோம் மெனுவில் ஏற்கெனவே உள்ள நிரலை துவக்கவும்"
 
 # panel/menu.c:3964 panel/menu.c:3969 panel/menu.c:5654 panel/menu.c:5681
 # panel/menu.c:5817
-#: gnome-panel/panel-addto.c:129
+#: gnome-panel/panel-addto.c:128
 msgid "Main Menu"
 msgstr "தலைப்புப் பட்டி"
 
 # panel/menu.c:244
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:129
 msgid "The main GNOME menu"
 msgstr "முக்கிய க்னோம் மெனு"
 
 # panel/menu-properties.c:599
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:139
 msgid "Menu Bar"
 msgstr "மெனுபட்டி"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
 msgstr "தனி மெனு பட்டி"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
 msgstr "மற்ற உருப்படிகளை சேமிக்கும் தோன்றல் பெட்டி"
 
-#: gnome-panel/panel-addto.c:241
+#: gnome-panel/panel-addto.c:239
 msgid "(empty)"
 msgstr "(காலி)"
 
-#: gnome-panel/panel-addto.c:380 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "வினவல் திரும்பிய விதிவிலக்கு %s\n"
 
-#: gnome-panel/panel-addto.c:914
+#: gnome-panel/panel-addto.c:913
 #, fuzzy, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "%s இல் சேர்ப்பதற்கான உருப்படிகளை தேர்வு செய்யவும்:"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: gnome-panel/panel-addto.c:918
+#: gnome-panel/panel-addto.c:917
 #, fuzzy
 msgid "Add to Drawer"
 msgstr "பலகத்தில் சேக்கவும்..."
 
-#: gnome-panel/panel-addto.c:920
+#: gnome-panel/panel-addto.c:919
 #, fuzzy
 msgid "Select an _item to add to the drawer:"
 msgstr "சேர்ப்பதற்கான உருப்படிகளை தேர்வு செய்யவும்:"
 
 # panel/menu.c:4962 panel/menu.c:4967 panel/menu.c:5053
-#: gnome-panel/panel-addto.c:922
+#: gnome-panel/panel-addto.c:921
 #, fuzzy
 msgid "Add to Panel"
 msgstr "பலகத்தில் சேக்கவும்..."
 
-#: gnome-panel/panel-addto.c:924
+#: gnome-panel/panel-addto.c:923
 msgid "Select an _item to add to the panel:"
 msgstr "சேர்ப்பதற்கான உருப்படிகளை தேர்வு செய்யவும்:"
 
-#: gnome-panel/panel-applet-frame.c:815
+#: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "மேல்விரி பட்டில் இருந்து விதிவிலக்ம '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:934
+#: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr ""
 
 # panel/gnome-panel-properties.c:1697
-#: gnome-panel/panel-applet-frame.c:936
+#: gnome-panel/panel-applet-frame.c:935
 #, fuzzy
 msgid "Panel object has quit unexpectedly"
 msgstr "பலகை பொருள் வகை"
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
@@ -1455,29 +1463,23 @@ msgstr ""
 
 # gmenu/main.c:106 gsm/session-properties-capplet.c:257
 # gsm/session-properties-capplet.c:311
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:948
 #, fuzzy
 msgid "_Don't Reload"
 msgstr "அழிக்க வேண்டாம்"
 
-#: gnome-panel/panel-applet-frame.c:950
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
 msgstr ""
 
-# gmenu/main.c:106 gsm/session-properties-capplet.c:257
-# gsm/session-properties-capplet.c:311
-#: gnome-panel/panel-applet-frame.c:976
-msgid "D_on't Delete"
-msgstr "அழிக்க வேண்டாம்"
-
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: gnome-panel/panel-applet-frame.c:1024
+#: gnome-panel/panel-applet-frame.c:995
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "பலகையில் \"%s\" ஏற்றும்போது ஒரு பிழை நடைபெற்றது."
 
 # panel/menu.c:307 panel/menu.c:1042 panel/menu.c:1066 panel/menu.c:2260
-#: gnome-panel/panel-applet-frame.c:1041
+#: gnome-panel/panel-applet-frame.c:1012
 #, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
 msgstr ""
@@ -1485,22 +1487,22 @@ msgstr ""
 "\n"
 "உங்கள் அமை வடிவத்திலிருந்து இந்த குறும்பயனத்தை கழட்ட விருப்பமா?"
 
-#: gnome-panel/panel-applet-frame.c:1138
+#: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "AppletShell இடைமுகத்தை கட்டுப்படுத்தியிலிருந்து பெற முடியவில்லை\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "gconf விசை '%s' பார்க்கும்போது பிழை: %s"
 
 # gmenu/utils.c:32
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "'%s' gconf அடைவு ஏற்றும்போது பிழை: %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "'%s' மதிப்பு பெறும்போது பிழை: %s"
@@ -1552,13 +1554,13 @@ msgstr "_புதிய பலகை"
 msgid "A_bout Panels"
 msgstr "பலகம் பற்றி"
 
-#: gnome-panel/panel-force-quit.c:74
+#: gnome-panel/panel-force-quit.c:75
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "பயன்பாட்டை வௌதயேறு வலியுறுத்தத சாளரத்தின் மேல் சொடுக்கு. விடுபட <ESC> அலுத்தவும்"
 
-#: gnome-panel/panel-force-quit.c:186
+#: gnome-panel/panel-force-quit.c:187
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -1805,42 +1807,54 @@ msgid "Take window screenshot"
 msgstr "சாளரத்தின் புகைப்படம் எடுக்கவும்"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "'%s' இடத்தை காண்பிக்க முடியாது"
 
-#: gnome-panel/panel-menu-bar.c:455
+#: gnome-panel/panel-menu-bar.c:470
 msgid "Bookmarks"
 msgstr ""
 
 # panel/panel.c:956
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
 #, fuzzy, c-format
 msgid "Open '%s'"
 msgstr "வலை முகவரியை திற: %s"
 
-#: gnome-panel/panel-menu-bar.c:528
+#: gnome-panel/panel-menu-bar.c:545
 msgid "Network Places"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:530
+#: gnome-panel/panel-menu-bar.c:547
 msgid "Removable Media"
 msgstr ""
 
-# gsm/splash.c:68 panel/menu.c:5225 panel/menu.c:5230 panel/menu.c:5598
-#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
-msgid "Desktop"
-msgstr "மேல்மேசை"
-
-#: gnome-panel/panel-menu-bar.c:582
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:606
 #, fuzzy
-msgid "Desktop directory"
+msgid "Desktop Folder|Desktop"
 msgstr "வலை அடைவு"
 
-#: gnome-panel/panel-menu-bar.c:759
+#: gnome-panel/panel-menu-bar.c:607
+msgid "Open the desktop as a folder"
+msgstr ""
+
+#: gnome-panel/panel-menu-bar.c:786
 msgid "Places"
+msgstr ""
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:795
+msgid "Desktop Environment|Desktop"
 msgstr ""
 
 # gsm/logout.c:240
@@ -2071,7 +2085,7 @@ msgstr "இடது"
 msgid "Right"
 msgstr "வலது"
 
-#: gnome-panel/panel-properties-dialog.c:406
+#: gnome-panel/panel-properties-dialog.c:412
 msgid "Images"
 msgstr ""
 
@@ -2234,10 +2248,11 @@ msgid "Clear the Recent Documents list?"
 msgstr "சமீபத்தில் ஆவணங்கள் பட்டியலை நீக்கவேண்டுமா?"
 
 #: gnome-panel/panel-recent.c:157
+#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "சமீபத்திய ஆவணங்களை நீக்கினால் கீழ்கண்டவைகளை நீக்கவும்\n"
@@ -2259,31 +2274,31 @@ msgid "Clear all items from the recent documents list"
 msgstr "சமீபத்தில் ஆவணங்கள் பட்டியலை நீக்கவேண்டுமா?"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:273
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "'%s' கட்டளை தொடங்க முடியவில்லை"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:351
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "UTF-8 இலிருந்து '%s' மாற்ற முடியவில்லை"
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1056
 msgid "Choose a file to append to the command..."
 msgstr "கட்டளையுடன் சேர்ப்பதற்கு கேப்பு ஒன்று தெரிவுசெய்க..."
 
 # panel/gnome-run.c:881
-#: gnome-panel/panel-run-dialog.c:1365
+#: gnome-panel/panel-run-dialog.c:1333
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "இயக்கும் கட்டளை: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "செயல்பாட்டின் விவரங்களை பார்க்க அதனை தெரிவு செய்யவும்"
 
-#: gnome-panel/panel-run-dialog.c:1406
+#: gnome-panel/panel-run-dialog.c:1374
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2343,7 +2358,7 @@ msgid "The icon of the command to be run."
 msgstr "இயக்க வேண்டிய கட்டளையின் குறும்படம்."
 
 # panel/gnome-run.c:1193
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:89
 msgid "_Run"
 msgstr "_செயல்படுத்துக"
 
@@ -2369,110 +2384,116 @@ msgstr ""
 "பிழை எண்: %d\n"
 "பலகம் வெளியேறுகிறது."
 
-#: gnome-panel/panel-stock-icons.c:103
+#: gnome-panel/panel-stock-icons.c:90
 msgid "_Force quit"
 msgstr "_கட்டாயப்படுத்தி மூடுவும்"
 
 # panel/menu.c:4746 panel/panel_config.c:1576
-#: gnome-panel/panel-stock-icons.c:104
+#: gnome-panel/panel-stock-icons.c:91
 msgid "C_lear"
 msgstr "தூய்மையாக்கு"
 
+# gmenu/main.c:106 gsm/session-properties-capplet.c:257
+# gsm/session-properties-capplet.c:311
+#: gnome-panel/panel-stock-icons.c:92
+msgid "D_on't Delete"
+msgstr "அழிக்க வேண்டாம்"
+
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1110
+#: gnome-panel/panel-toplevel.c:1121
 msgid "Hide Panel"
 msgstr "பலகையை மறைக்கவும்"
 
 # panel/menu.c:244
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Top Expanded Edge Panel"
 msgstr "மேல் நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Top Centered Panel"
 msgstr "மேல் நடுப் பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Top Floating Panel"
 msgstr "மேல் நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Top Edge Panel"
 msgstr "மேல் ஓரப் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Bottom Expanded Edge Panel"
 msgstr "கீழ் நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Bottom Centered Panel"
 msgstr "கீழ் நடுப் பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Bottom Floating Panel"
 msgstr "கீழ் நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Bottom Edge Panel"
 msgstr "கீழ் ஓரப் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1501
 msgid "Left Expanded Edge Panel"
 msgstr "இடது நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3562 panel/menu.c:3567 panel/menu.c:5076
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Left Centered Panel"
 msgstr "இடது நடு பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Left Floating Panel"
 msgstr "இடது நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Left Edge Panel"
 msgstr "இடது ஓரப் பலகை"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1508
 msgid "Right Expanded Edge Panel"
 msgstr "வலது நீடித்த ஓரப் பலகை"
 
 # panel/menu.c:3611 panel/menu.c:4709 panel/panel_config.c:1769
 # panel/panel_config.c:1898
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Right Centered Panel"
 msgstr "வலது நடு பலகை"
 
 # panel/menu.c:3627 panel/menu.c:4711 panel/panel_config.c:1781
 # panel/panel_config.c:1920
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Right Floating Panel"
 msgstr "வலது நடமாடும் பலகை"
 
 # panel/menu.c:3603 panel/menu.c:4708 panel/panel_config.c:1762
 # panel/panel_config.c:1887
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Right Edge Panel"
 msgstr "வலது ஓரப் பலகை"
 
@@ -2833,13 +2854,13 @@ msgid "Open URL: %s"
 msgstr "வலை முகவரியை திற: %s"
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1254
 #, fuzzy
 msgid "Delete this drawer?"
 msgstr "இந்த பலகையை அழிக்கவும்"
 
 # panel/menu.c:3925
-#: gnome-panel/panel.c:1238
+#: gnome-panel/panel.c:1255
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -2849,19 +2870,19 @@ msgstr ""
 "அமைவுகளும் இழந்து போகும். இந்த பலகையை அழிக்கவா?"
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/panel.c:1240
+#: gnome-panel/panel.c:1257
 #, fuzzy
 msgid "Delete Drawer"
 msgstr "இந்த பலகையை அழிக்கவும்"
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1259
 #, fuzzy
 msgid "Delete this panel?"
 msgstr "_இந்த பலகையை அழிக்கவும்"
 
 # panel/menu.c:3925
-#: gnome-panel/panel.c:1243
+#: gnome-panel/panel.c:1260
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2871,7 +2892,7 @@ msgstr ""
 "அமைவுகளும் இழந்து போகும். இந்த பலகையை அழிக்கவா?"
 
 # panel/menu.c:5025 panel/menu.c:5086
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1262
 msgid "Delete Panel"
 msgstr "இந்த பலகையை அழிக்கவும்"
 
@@ -2888,47 +2909,47 @@ msgstr "போனபோ குறும்பயன் சோதிக்கவ�
 msgid "Test Bonobo Applet Factory"
 msgstr "சோதனை பொனபோ குறும்பயன் செயலகம்"
 
-#: libpanel-applet/panel-applet.c:984
+#: libpanel-applet/panel-applet.c:995
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "முழுமையற்ற '%s' பின்னணி வகை கிடைத்தது"
 
-#: libpanel-applet/panel-applet.c:998
+#: libpanel-applet/panel-applet.c:1009
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "முழுமையற்ற '%s' பின்னணி வகை கிடைத்தது: %s"
 
 # panel/gnome-run.c:293
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1018
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "%s பிக்ஸ்படத்தை பெற முடியவில்லை"
 
-#: libpanel-applet/panel-applet.c:1014
+#: libpanel-applet/panel-applet.c:1025
 msgid "Unknown background type received"
 msgstr "தெரியாத பின்னணி வகை கிடைத்தது"
 
-#: libpanel-applet/panel-applet.c:1199
+#: libpanel-applet/panel-applet.c:1210
 msgid "The Applet's containing Panel's orientation"
 msgstr "சிறு நிரல்கள் பலகம் திசைஅமைப்புகளை கொண்டு உள்ளது"
 
-#: libpanel-applet/panel-applet.c:1207
+#: libpanel-applet/panel-applet.c:1218
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "சிறு நிரல்கள் பலகம் அளவுகளை படப்புள்ளிகளாக கொண்டுள்ளது"
 
-#: libpanel-applet/panel-applet.c:1215
+#: libpanel-applet/panel-applet.c:1226
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "சிறு நிரல்கள் பலகம் பின்னணி நிறம் அல்லது புள்ளிவரைபடம் கொண்டு உள்ளது"
 
-#: libpanel-applet/panel-applet.c:1223
+#: libpanel-applet/panel-applet.c:1234
 msgid "The Applet's flags"
 msgstr "குறும்படத்தின் கொடிகள்"
 
-#: libpanel-applet/panel-applet.c:1231
+#: libpanel-applet/panel-applet.c:1242
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "ஆப்லட் ஏற்றுக்கொள்ளும் அளவின் வரம்பு"
 
-#: libpanel-applet/panel-applet.c:1239
+#: libpanel-applet/panel-applet.c:1250
 msgid "The Applet's containing Panel is locked down"
 msgstr "சிறு நிரல்கள் கொண்டு உள்ளது பலகம் முடபட்டிருக்கிறது "
 
@@ -3000,6 +3021,28 @@ msgstr "குறும்பயன்:"
 #, fuzzy
 msgid "_Prefs Dir:"
 msgstr "விருப்பம் அடைவு:"
+
+# gsm/gsm-client-row.c:45
+#~ msgid "Unknown Window"
+#~ msgstr "தெரியாத சாளரம்"
+
+# help-browser/window.c:151
+#~ msgid "No Windows Open"
+#~ msgstr "திறங்திருக்கும் சாளரங்கள் இல்லை"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "சாளரங்கள் இடையே மாறுவதற்கான கருவி"
+
+# gnome-terminal/gnome-terminal.glade.h:23 panel/menu.c:4724
+#~ msgid "none"
+#~ msgstr "வெற்று"
+
+#~ msgid "file not found"
+#~ msgstr "கோப்பு காணவில்லை"
+
+# gsm/splash.c:68 panel/menu.c:5225 panel/menu.c:5230 panel/menu.c:5598
+#~ msgid "Desktop"
+#~ msgstr "மேல்மேசை"
 
 #, fuzzy
 #~ msgid "Workspace Selector"
