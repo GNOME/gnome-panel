@@ -32,16 +32,17 @@ struct _StatusSpot {
 };
 
 StatusSpot *new_status_spot(void);
-void status_spot_remove(StatusSpot *ss);
+void status_spot_remove(StatusSpot *ss, gboolean destroy_socket);
 /*kill all status spots*/
 void status_spot_remove_all(void);
 
 /*returns TRUE if it could create an applet, FALSE if one already exists*/
 int load_status_applet(PanelWidget *panel, int pos);
 void status_applet_update(StatusApplet *s);
+void status_applet_put_offscreen(StatusApplet *s);
 
-/*if we set this to TRUE, then the thing will ignore add_status requests*/
-extern int status_inhibit_add;
+/*inhibit adding and updating for the purpose of quitting*/
+extern int status_inhibit;
 
 END_GNOME_DECLS
 

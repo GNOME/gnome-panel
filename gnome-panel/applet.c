@@ -57,8 +57,12 @@ panel_clean_applet(AppletInfo *info)
 {
 	g_return_if_fail(info != NULL);
 
-	if(info->widget)
+	if(info->widget) {
+		if(info->type == APPLET_STATUS) {
+			status_applet_put_offscreen(info->data);
+		}
 		gtk_widget_destroy(info->widget);
+	}
 }
 
 static void

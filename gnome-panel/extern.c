@@ -1054,7 +1054,7 @@ s_statusspot_remove(POA_GNOME_StatusSpot *servant,
 		    CORBA_Environment *ev)
 {
 	StatusSpot *ss = (StatusSpot *)servant;
-	status_spot_remove(ss);
+	status_spot_remove(ss, TRUE);
 }
 
 

@@ -13,19 +13,36 @@
 #include "panel-include.h"
 #include "gnome-panel.h"
 
-static StatusApplet *the_status = NULL; /*"there can only be one" status applet*/
+static StatusApplet *the_status = NULL; /*"there can only be one" status
+					  applet*/
 static GtkWidget *offscreen = NULL; /*offscreen window for putting status
 				      spots if there is no status applet*/
 static GtkWidget *fixed = NULL; /*the fixed container in which the docklets reside*/
 static GSList *spots = NULL;
 static int nspots = 0;
 
+int status_inhibit = FALSE; /*inhibit adding and updating for the purpose
+			      of quitting*/
+
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
-int status_inhibit_add = FALSE;
+
+extern PortableServer_POA thepoa;
 
 #define DOCKLET_SPOT 22
+
+/*this will show debug output and put the offscreen window on 10 10 to
+  view it*/
+/*#define DEBUG_STATUS 1*/
+
+#ifdef DEBUG_STATUS
+#define DPUTS(x) puts(x)
+#define DPRINTD(d) printf("%s: %d\n",#d,d)
+#else
+#define DPUTS(x)
+#define DPRINTD(d)
+#endif
 
 void
 status_applet_update(StatusApplet *s)
@@ -35,6 +52,11 @@ status_applet_update(StatusApplet *s)
 	int sz;
 	int rows;
 	int i,j;
+	
+	if(status_inhibit) return;
+	
+	DPUTS("STATUS_APPLET_UPDATE");
+	DPRINTD(nspots);
 
 	if(s->orient == PANEL_HORIZONTAL)
 		GTK_HANDLE_BOX(s->handle)->handle_position = GTK_POS_LEFT;
@@ -69,6 +91,9 @@ status_applet_update(StatusApplet *s)
 	}
 	
 	gtk_widget_set_usize(fixed,w,h);
+
+	DPRINTD(w);
+	DPRINTD(h);
 	
 	i = j = 0;
 	for(li = spots; li; li = li->next) {
@@ -80,13 +105,17 @@ status_applet_update(StatusApplet *s)
 			j+=DOCKLET_SPOT;
 		}
 	}
-	gtk_widget_queue_resize(s->handle->parent);
+	if(s->handle && s->handle->parent)
+		gtk_widget_queue_resize(s->handle->parent);
 }
 
 static void
 status_socket_destroyed(GtkWidget *w, StatusSpot *ss)
 {
-	status_spot_remove(ss);
+	/*so that we don't get called recursively, we set the ->socket to
+	  null inside status_spot_remove*/
+	if(ss->socket)
+		status_spot_remove(ss, FALSE);
 }
 
 StatusSpot *
@@ -94,8 +123,10 @@ new_status_spot(void)
 {
 	StatusSpot *ss;
 	
-	if(status_inhibit_add)
+	if(status_inhibit)
 		return NULL;
+	
+	DPUTS("NEW_STATUS_SPOT");
 
 	ss = g_new0(StatusSpot,1);
 	ss->wid = 0;
@@ -107,15 +138,19 @@ new_status_spot(void)
 	gtk_widget_set_usize(ss->socket,DOCKLET_SPOT,DOCKLET_SPOT);
 	if(!the_status && !offscreen) {
 		offscreen = gtk_window_new(GTK_WINDOW_POPUP);
+#ifdef DEBUG_STATUS
+		gtk_widget_set_uposition(offscreen,10,10);
+#else
 		gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
 					 gdk_screen_height()+10);
+#endif
 
 		/*it should be null at this point*/
 		g_assert(!fixed);
 		
 		fixed = gtk_fixed_new();
 		gtk_widget_show(fixed);
-		
+
 		gtk_container_add(GTK_CONTAINER(offscreen),fixed);
 
 		gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
@@ -136,15 +171,32 @@ new_status_spot(void)
 }
 
 void
-status_spot_remove(StatusSpot *ss)
+status_spot_remove(StatusSpot *ss, gboolean destroy_socket)
 {
 	CORBA_Environment ev;
+	PortableServer_ObjectId *id;
+	GtkWidget *w;
+
 	spots = g_slist_remove(spots,ss);
 	nspots--;
-	gtk_widget_destroy(ss->socket);
+	
+	/*set socket to NULL, as to indicate that we have taken
+	  care of destruction here*/
+	if(destroy_socket) {
+		w = ss->socket;
+		ss->socket = NULL;
+		gtk_widget_destroy(w);
+	}
+
+	DPUTS("STATUS_SPOT_REMOVE");
+	DPRINTD(nspots);
+	DPRINTD(g_slist_length(spots));
 
 	CORBA_exception_init(&ev);
 	CORBA_Object_release(ss->sspot, &ev);
+	id = PortableServer_POA_servant_to_id(thepoa, ss, &ev);
+	PortableServer_POA_deactivate_object(thepoa, id, &ev);
+	CORBA_free (id);
 	POA_GNOME_StatusSpot__fini((PortableServer_Servant) ss, &ev);
 	CORBA_exception_free(&ev);
 
@@ -156,8 +208,33 @@ status_spot_remove(StatusSpot *ss)
 void
 status_spot_remove_all(void)
 {
+	DPUTS("STATUS_SPOT_REMOVE_ALL");
+
 	while(spots)
-		status_spot_remove(spots->data);
+		status_spot_remove(spots->data, TRUE);
+	
+	DPUTS("DONE REMOVE_ALL");
+}
+
+void
+status_applet_put_offscreen(StatusApplet *s)
+{
+	DPUTS("PUT_OFFSCREEN");
+	if(!offscreen) {
+		DPUTS("CREATE OFFSCREEN");
+		offscreen = gtk_window_new(GTK_WINDOW_POPUP);
+#ifdef DEBUG_STATUS
+		gtk_widget_set_uposition(offscreen,10,10);
+#else
+		gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
+					 gdk_screen_height()+10);
+#endif
+		gtk_widget_show_now(offscreen);
+	}
+	g_assert(GTK_WIDGET_REALIZED(offscreen));
+	DPUTS("REPARENT");
+	gtk_widget_reparent(fixed,offscreen);
+	DPUTS("REPARENT DONE");
 }
 
 static int
@@ -182,15 +259,16 @@ ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 static void
 applet_destroy(GtkWidget *w, StatusApplet *s)
 {
-	if(!offscreen) {
-		offscreen = gtk_window_new(GTK_WINDOW_POPUP);
-		gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
-					 gdk_screen_height()+10);
-		gtk_widget_show_now(offscreen);
-	}
-	gtk_widget_reparent(fixed,offscreen);
 	g_free(s);
 	the_status = NULL;
+}
+
+static void
+reparent_fixed(GtkWidget *frame)
+{
+	DPUTS("REPARENT");
+	gtk_widget_reparent(fixed,frame);
+	DPUTS("REPARENT DONE");
 }
 
 int
@@ -200,6 +278,8 @@ load_status_applet(PanelWidget *panel, int pos)
 	GtkWidget *frame;
 	if(the_status)
 		return FALSE;
+
+	DPUTS("LOAD_STATUS_APPLET");
 	
 	the_status = g_new0(StatusApplet,1);
 	frame = gtk_frame_new(NULL);
@@ -212,12 +292,17 @@ load_status_applet(PanelWidget *panel, int pos)
 			   GTK_SIGNAL_FUNC(ignore_1st_click), NULL);
 	gtk_container_add(GTK_CONTAINER(the_status->handle),
 			  frame);
-	
+
 	if(!fixed) {
+		DPUTS("NO FIXED");
 		fixed = gtk_fixed_new();
+		gtk_widget_show(fixed);
+
 		gtk_container_add(GTK_CONTAINER(frame),fixed);
 	} else {
-		gtk_widget_reparent(fixed,frame);
+		gtk_signal_connect_after(GTK_OBJECT(frame),"realize",
+					 GTK_SIGNAL_FUNC(reparent_fixed),
+					 NULL);
 	}
 	
 	status_applet_update(the_status);

@@ -216,8 +216,13 @@ try_getting_plug(StatusDocklet *docklet)
 
 	CORBA_exception_init(&ev);
 	spot = GNOME_Panel_add_status(panel_client, &wid, &ev);
-	
 	/*something must have gone wrong*/
+	if(ev._major != CORBA_NO_EXCEPTION) {
+		CORBA_exception_free(&ev);
+		return FALSE;
+	}
+
+	/*we are probably inhibited from adding because of panel quitting*/
 	if(wid == 0) {
 		if(spot != CORBA_OBJECT_NIL)
 			CORBA_Object_release(spot, &ev);

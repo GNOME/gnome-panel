@@ -1,3 +1,10 @@
+Fri Oct 01 19:14:58 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c,status.[ch],session.c,extern.c: fix all the remaining issues
+	  with the status applet, there is a slight ugliness in that we have
+	  to now unparent the fixed BEFORE calling the destroy everywhere
+	  we do. However it doesn't work from the destroy handler.
+
 1999-10-01  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c (create_panel_root_menu): use the logout button

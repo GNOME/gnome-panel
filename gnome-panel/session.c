@@ -700,7 +700,7 @@ panel_session_die (GnomeClient *client,
 	/*don't catch these any more*/
 	signal(SIGCHLD, SIG_DFL);
 	
-	status_inhibit_add = TRUE;
+	status_inhibit = TRUE;
 	status_spot_remove_all();
 	
 	for(li=applets; li!=NULL; li=g_slist_next(li)) {

@@ -2113,6 +2113,24 @@ create_kde_menu(GtkWidget *menu, int fake_submenus,
 	return menu;
 }
 
+static void
+status_unparent(GtkWidget *widget)
+{
+	GList *li;
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	for(li=panel->applet_list;li;li=li->next) {
+		AppletData *ad = li->data;
+		AppletInfo *info = gtk_object_get_data(GTK_OBJECT(ad->applet),
+						       "applet_info");
+		if(info->type == APPLET_STATUS) {
+			status_applet_put_offscreen(info->data);
+		} else if(info->type == APPLET_DRAWER) {
+			Drawer *dr = info->data;
+			status_unparent(dr->drawer);
+		}
+	}
+}
+
 GtkWidget *
 create_panel_root_menu(GtkWidget *panel)
 {
@@ -2232,6 +2250,9 @@ create_panel_root_menu(GtkWidget *panel)
 						   GNOME_STOCK_PIXMAP_REMOVE),
 			_("Remove this panel"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+	gtk_signal_connect_object (GTK_OBJECT (menuitem), "activate",
+				   GTK_SIGNAL_FUNC(status_unparent),
+				   GTK_OBJECT(panel));
 	gtk_signal_connect_object (GTK_OBJECT (menuitem), "activate",
 				   GTK_SIGNAL_FUNC(gtk_widget_destroy),
 				   GTK_OBJECT(panel));
