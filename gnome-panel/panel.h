@@ -75,7 +75,6 @@ struct _AppletInfo {
 	char *path; /*used for path on external applets */
 	char *params; /*used for parameters to applets */
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
-	int destroy_callback;
 };
 
 

@@ -14,6 +14,7 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 #include "panel-widget.h"
+#include "main.h"
 #include "panel.h"
 #include "panel_config_global.h"
 #include "swallow.h"
@@ -125,14 +126,14 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 		return;
 	}
 	
-	load_applet(SWALLOW_ID,
-		    gtk_entry_get_text(GTK_ENTRY(exec_e)),
-		    gtk_entry_get_text(GTK_ENTRY(title_e)),
-		    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(width_s)),
-		    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(height_s)),
-		    NULL,NULL,
-		    PANEL_UNKNOWN_APPLET_POSITION,
-		    current_panel,NULL);
+	load_swallow_applet(gtk_entry_get_text(GTK_ENTRY(exec_e)),
+			    gtk_entry_get_text(GTK_ENTRY(title_e)),
+			    gtk_spin_button_get_value_as_int(
+						GTK_SPIN_BUTTON(width_s)),
+			    gtk_spin_button_get_value_as_int(
+						GTK_SPIN_BUTTON(height_s)),
+			    PANEL_UNKNOWN_APPLET_POSITION,
+			    current_panel);
 	gtk_widget_destroy(d);
 }
 

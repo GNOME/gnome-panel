@@ -527,9 +527,6 @@ panel_clean_applet(int applet_id)
 
 		info->widget = NULL;
 
-		gtk_signal_disconnect(GTK_OBJECT(w),info->destroy_callback);
-		info->destroy_callback = -1;
-
 		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
 
@@ -733,8 +730,8 @@ add_to_submenus(int applet_id,
 					NULL,
 					menu->text);
 		if(menu->submenu)
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem),
-						   menu->submenu);
+			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
+						  menu->submenu);
 
 		if(submenu)
 			gtk_menu_append (GTK_MENU (submenu), menu->menuitem);
@@ -746,8 +743,8 @@ add_to_submenus(int applet_id,
 		/* if the item is a submenu and doesn't have it's menu created yet*/
 		} else if(!menu->submenu) {
 			menu->submenu = gtk_menu_new();
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem),
-						   menu->submenu);
+			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
+						  menu->submenu);
 		}
 		return;
 	}
@@ -1397,11 +1394,10 @@ register_toy(GtkWidget *applet,
 			   GTK_SIGNAL_FUNC(applet_button_press),
 			   GINT_TO_POINTER(applet_count-1));
 
-	info.destroy_callback = gtk_signal_connect(GTK_OBJECT(eventbox),
-			   			   "destroy",
-			   			   GTK_SIGNAL_FUNC(
-			   			   	applet_destroy),
-			   			   GINT_TO_POINTER(applet_count-1));
+	gtk_signal_connect(GTK_OBJECT(eventbox),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(applet_destroy),
+			   GINT_TO_POINTER(applet_count-1));
 
 	gtk_widget_show_all(eventbox);
 
