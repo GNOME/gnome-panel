@@ -1,3 +1,9 @@
+1999-06-03  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel.c (panel_applet_removed): check to see if drawer->drawer is NULL,
+	to avoid crash when removing a drawer by 'remove panel' on the panel 
+	and not 'remove applet' on the applet
+
 1999-06-02  Nat Friedman  <nat@gnome-support.com>
 
 	* applet-widget.c (pg_return_val_if_fail): Do not use glib
