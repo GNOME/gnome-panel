@@ -1,3 +1,17 @@
+2002-10-18  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #91686. Based on a patch from Glynn.
+
+	* foobar-widget.c:
+	(foobar_widget_class_init): hook up size_request.
+	(foobar_widget_screen_size_changed): don't set width
+	request here.
+	(foobar_widget_size_allocate): don't set the size hints
+	here.
+	(foobar_widget_size_request): size size hints here and resize
+	the window if neccessary
+	(foobar_widget_new): don't set width request here.
+
 Tue Oct 15 19:59:07 2002  HideToshi Tajima  <hidetoshi.tajima@sun.com>
 
 	* gnome-run.c: Reverting fix #91766 - use g_locale_from_utf8()
