@@ -1,0 +1,250 @@
+   <!-- ###############   printer applet   ############### -->
+  <sect1 id="printer">
+   <title>Aplique Impresión</title> 
+
+   <para> 
+
+      El aplique <application>Impresión</application>, mostrado en  <xref linkend="printer-fig">, 
+      le permite imprimir ficheros soltándolos dentro del aplique desde el 
+      <interface>escritorio</interface> o <interface>gestor de ficheros </interface>.
+      Para añadir este aplique a un <interface>Panel</interface>, 
+      pulse el botón derecho sobre <interface>Panel</interface> y seleccione
+      <menuchoice>
+	<guimenu>Panel</guimenu>
+	<guisubmenu>Añadir a panel</guisubmenu>
+	<guisubmenu>Aplique</guisubmenu>
+	<guisubmenu>Utilidades</guisubmenu>
+	<guimenuitem>Aplique Impresión</guimenuitem>
+      </menuchoice>.
+      
+  </para>
+  
+ 
+   <figure id="printer-fig">
+   <title>Aplique Impresión</title>
+   <screenshot>
+    <screeninfo>Aplique de Impresión</screeninfo>
+    <graphic format="png" fileref="printer-fig" srccredit="Michael Hall">
+    </graphic>
+   </screenshot>
+   </figure>
+
+   <sect2 id="printer-usage">
+    <title>Utilización</title>
+
+    <para>
+    Para imprimir un fichero desde su <interface>escritorio</interface> o <interface>gestor de
+    ficheros</interface>, arrastre el archivo en el aplique<application>impresión</application>.
+    
+    </para>
+   </sect2>
+
+   <sect2 id="printer-right-click">
+    <title>Elementos del Menú emergente del Botón Derecho</title>
+    <para>
+      Al pulsar el botón derecho sobre el aplique aparece un menú conteniendo los 
+      siguientes elementos:
+      <itemizedlist> 	
+	<listitem>
+	  <para>
+	    <guimenuitem>Propiedades...</guimenuitem> &mdash; Este elemento del 
+	    menú abre el diálogo <interface>Propiedades</interface> (véase
+	    <xref linkend="printer-properties">) el cual le permite 
+	    personalizar la apariencia y comportamiento de este aplique.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <guimenuitem>Ayuda</guimenuitem> &mdash;
+	    muestra este documento.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <guimenuitem>Sobre&hellip;</guimenuitem> &mdash;
+	    muestra información básica sobre el <application>Aplique 
+	    Impresión</application>, incluyendo la versión del aplique 
+            y el nombre del autor.
+	  </para>
+	</listitem>
+
+      </itemizedlist>	
+    </para>             
+   </sect2>
+
+   <sect2 id="printer-properties">
+    <title>Propiedades</title>
+    <para>
+     Vd. puede configurar el aplique <application>impresión</application> pulsando
+     el botón derecho sobre el aplique y seleccionando el elemento de menú 
+     <guimenuitem>Propiedades...</guimenuitem>. Se abrirá el diálogo 
+     <interface>Propiedades</interface>, mostrado en  <xref
+     linkend="printer-properties-fig">.
+    </para>
+
+    <figure id="printer-properties-fig">
+     <title>Diálogo de Propiedades</title>
+     <screenshot>
+      <screeninfo>Diálogo de Propiedades</screeninfo> 
+      <graphic format="png" fileref="printer-properties" srccredit="Michael Hall">
+      </graphic>
+     </screenshot>
+    </figure>
+    
+    <para> 
+
+    Para cambiar la etiqueta mostrada en la parte inferior del aplique
+    <application>impresión</application> , ("Imprimir" en <xref
+    linkend="printer-fig">) escriba un nuevo nombre en el campo <guilabel>Nombre
+    Impresora</guilabel>.  Este elemento es útil si Vd. dispone de más de una
+    impresora para su uso y desea añadir un aplique <application>printer</application>
+    al <interface>Panel</interface> por cada impresora. El <guilabel>Nombre de 
+    Impresora</guilabel> no determina que impresora imprimirá su fichero,
+    una forma sencilla de distinguir entre impresoras puede ser 
+    tener más de un aplique  <application>impresión </application>
+    instalado en su <interface>Panel</interface>.
+
+    </para>
+    
+    <para>    
+    Para cambiar la orden que el aplique <application>impresión</application> utiliza
+    para imprimir sus ficheros, Vd. debe teclear una nueva orden en el campo <guilabel>    
+    Comando de impresión </guilabel>. El aplique <application>impresión
+   </application> utiliza, por defecto, la orden <command>lpr</command>, que es común a 
+    muchos sistemas. Su sistema puede utilizar una orden diferente. Si Vd. no está seguro, 
+    compruebe la documentación de su sistema. 
+    </para>
+      <note>
+	<title>Nota para usuarios avanzados</title>
+	<para>
+          Si Vd. posee más de una impresora, puede designar a que impresora enviará 
+          los archivos cambiando los elementos de  <guilabel>Orden de impresión</guilabel>.
+          Por ejemplo, si su sistema utiliza la orden <command>lpr</command> para 
+          imprimir ficheros y Vd. necesita imprimir su fichero en la impresora           
+	  "ljet5", debería cambiar los elementos de <guilabel>Comando de impresión</guilabel>
+          a <command>lpr -Pljet5</command>.
+	</para>
+      </note>
+
+    <para>
+      Después de que Vd. haya realizado todos los cambios que desee, pulse el botón
+      <guibutton>Aceptar</guibutton> para aplicar los cambios y cerrar el diálogo 
+      <interface>Propiedades</interface>. Para cancelar los cambios y volver a los 
+      valores anteriores, pulse el botón <guibutton>Cerrar</guibutton>. 
+    </para>
+   </sect2>
+  
+   <sect2 id="printer-bugs">
+    <title> Errores y Limitaciones Conocidas</title>
+    <para>
+     No existen errores conocidos en el aplique< <application>impresión</application>.
+    </para>
+   </sect2>
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="authors">
+    <title>Authors</title>
+    <para>
+      <application>Aplique Impresión</application> escrito por  
+      Miguel de Icaza (<email>miguel@kernel.org</email>)
+      y Federico Mena (<email>quartic@gimp.org</email>).  
+      Por favor envíe todos los comentarios,sugerencias e informes de 
+      errores al <ulink url="http://bugs.gnome.org/" type="http">base de datos
+      seguimiento de GNOME </ulink>.(Las instrucciones para 
+      los informes de errores se pueden encontrar en  <ulink
+      url="http://bugs.gnome.org/Reporting.html" type="http">
+      on-line</ulink>. También puede utilizar la <application>Herramienta 
+      de Informe de Errores</application> (<command>bug-buddy</command>), 
+      disponible en el submenú <guisubmenu>Utilidades</guisubmenu> del 
+     <guimenu>Menú Principal</guimenu>, para enviar informes de errores.
+    </para>
+
+    <para>
+      Este manual ha sido escrito por Michael Hall
+      (<email>mphall@cstone.net</email>). Por favor envíe todos los comentarios
+      y sugerencias concernientes a este manual al  <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/">Proyecto de Documentación
+      de GNOME</ulink> mediante un correo a <email>docs@gnome.org</email>. Vd.
+      también puede enviar comentarios online utilizando la  <ulink type="http" 
+      url="http://developer.gnome.org/projects/gdp/doctable/">Tabla del Estado de
+      la Documentación de GNOME</ulink>.
+    
+   </para>
+  <para> 
+    La traducción al español fue realizada por José Antonio Salgueiro 
+    (<email>joseantsa@retemail.es</email>). Por favor envíe todos los comentarios
+    y sugerencias referidas a esta traducción a traductores@es.gnome.org
+   </para>
+
+
+   <!-- For translations: uncomment this:
+
+   <para>  
+    Latin translation was done by ME
+    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
+    suggestions regarding this translation to SOMEWHERE.
+   </para>
+
+   -->
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>Licencia</title>
+   <para>
+    Este programa es software libre; Vd. puede redistribuirlo y/o
+    modificarlo bajo los términos de la  <ulink type="help"
+    url="gnome-help:gpl"><citetitle>Licencia Pública General
+    GNU</citetitle></ulink> tal como fue publicada por la Fundación
+    para el Software Libre; o bien en su versión 2 de la licencia, o
+    (según su opción) cualquier otra versión posterior.
+   </para>
+   <para>
+    Este programa se distribuye con el ánimo de ser útil, pero 
+    SIN GARANTÍA ALGUNA; incluso sin la garantía MERCANTIL implícita
+    o sin garantizar CONVENIENCIA PARA UN PROPÓSITO PARTICULAR. 
+    Véase la  <ulink type="help" url="gnome-help:gpl">
+    <citetitle>Licencia Pública General</citetitle></ulink> 
+    para más detalles.
+   </para>
+   <para>
+    Se incluye una copia de la <ulink type="help"
+    url="gnome-help:gpl"><citetitle>Licencia Pública General
+    GNU</citetitle></ulink> como un apéndice a la 
+    <citetitle>Guía de Usuario de Gnome</citetitle>. Vd. también
+    puede obtener  una copia de la <citetitle>Licencia de 
+    Documentación libre de GNU</citetitle> en la Fundación para el
+    Software Libre, visitando su <ulink type="http"
+    url="http://www.fsf.org">página web</ulink> o escribiendo a:
+   <address>
+    Free Software Foundation, Inc.
+    <street>59 Temple Place</street> - Suite 330
+    <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+    <country>USA</country>
+    </address>
+    </para>
+  </sect2>
+
+  </sect1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
