@@ -1999,8 +1999,12 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->path = g_strdup(".");
 	} else {
 		g_free(menu->path);
-		s = gtk_entry_get_text(GTK_ENTRY(pathentry));
-		if(!s || !*s)
+		s = gnome_file_entry_get_full_path(GNOME_FILE_ENTRY(pathentry),
+						   TRUE);
+		if(!s) {
+			g_warning(_("Can't open directory, using main menu!"));
+			menu->path = g_strdup(".");
+		} else if(!*s)
 			menu->path = g_strdup(".");
 		else
 			menu->path = g_strdup(s);
@@ -2181,8 +2185,10 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 
 	w = gnome_file_entry_new("menu_path",_("Browse"));
+	gnome_file_entry_set_directory(GNOME_FILE_ENTRY(w), TRUE);
+
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
-	gtk_object_set_data(GTK_OBJECT(dialog),"path",t);
+	gtk_object_set_data(GTK_OBJECT(dialog),"path",w);
 	if (menu->path)
 		gtk_entry_set_text(GTK_ENTRY(t), menu->path);
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
