@@ -533,10 +533,38 @@ basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
 }
 
 static void
+set_tip (GtkWidget *widget, gboolean showing) 
+{
+	if (showing) {
+		gtk_tooltips_set_tip (panel_tooltips, widget,
+		      _("Hide this panel"), NULL);
+	} else {
+		gtk_tooltips_set_tip (panel_tooltips, widget,
+		      _("Show this panel"), NULL);
+	}
+}
+
+static void
 basep_widget_state_change (BasePWidget *basep, BasePState state)
 {
 	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
+	/*
+	 * If the state is changed to SHOWN or HIDDEN_LEFT or HIDDEN_RIGHT
+	 * we update the tooltips on the buttons
+	 */
+	if (state == BASEP_SHOWN) {
+		set_tip (basep->hidebutton_w, TRUE);
+		set_tip (basep->hidebutton_n, TRUE);
+		set_tip (basep->hidebutton_s, TRUE);
+		set_tip (basep->hidebutton_e, TRUE);
+	} else if (state == BASEP_HIDDEN_LEFT) {
+		set_tip (basep->hidebutton_e, FALSE);
+		set_tip (basep->hidebutton_s, FALSE);
+	} else if (state == BASEP_HIDDEN_RIGHT) {
+		set_tip (basep->hidebutton_n, FALSE);
+		set_tip (basep->hidebutton_w, FALSE);
+	}
 }
 
 static void
@@ -1067,7 +1095,7 @@ make_hidebutton(BasePWidget *basep,
 	char *pixmap_name;
 
 	w = gtk_button_new();
-	GTK_WIDGET_UNSET_FLAGS(w, GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+	GTK_WIDGET_UNSET_FLAGS(w, GTK_CAN_DEFAULT);
 	if(horizontal)
 		gtk_widget_set_size_request (w, -1, PANEL_MINIMUM_WIDTH);
 	else
@@ -1088,8 +1116,7 @@ make_hidebutton(BasePWidget *basep,
 	g_object_set_data (G_OBJECT (w), "gnome_disable_sound_events",
 			   GINT_TO_POINTER (TRUE));
 
-	gtk_tooltips_set_tip (panel_tooltips, w,
-			      _("Hide this panel"), NULL);
+	set_tip (w, TRUE);
 
 	return w;
 }
@@ -1761,6 +1788,22 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		basep_widget_do_hiding (basep, hide_orient,
 					size, 
 					global_config.animation_speed);
+	}
+
+	/*
+	 * If the button being hidden has focus move it to the button which
+	 * remains shown.
+	 */
+	if (state == BASEP_HIDDEN_RIGHT) {
+		if (gtk_widget_is_focus (basep->hidebutton_e))
+			gtk_widget_grab_focus (basep->hidebutton_w);
+		else if (gtk_widget_is_focus (basep->hidebutton_s))
+			gtk_widget_grab_focus (basep->hidebutton_n);
+	} else if (state == BASEP_HIDDEN_LEFT) {
+		if (gtk_widget_is_focus (basep->hidebutton_w))
+			gtk_widget_grab_focus (basep->hidebutton_e);
+		else if (gtk_widget_is_focus (basep->hidebutton_n))
+			gtk_widget_grab_focus (basep->hidebutton_s);
 	}
 
 	basep->state = state;
