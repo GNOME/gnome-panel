@@ -434,11 +434,14 @@ window_menu_add_window (WindowMenu *window_menu,
 	if (!name)
 		name = _("Unknown Window");
 
-	if (!wnck_window_is_minimized (window))
-		label = (char *) name;
-	else {
+	if (wnck_window_is_shaded (window)) {
+		label = g_strdup_printf ("=%s=", name);
+		freeme = label;
+	} else if (wnck_window_is_minimized (window)) {
 		label = g_strdup_printf ("[%s]", name);
 		freeme = label;
+	} else {
+		label = (char *) name;
 	}
 
 	item = window_menu_item_new (window_menu,
