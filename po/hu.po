@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-4.hu\n"
-"POT-Creation-Date: 2003-10-07 14:45+0200\n"
-"PO-Revision-Date: 2003-10-07 14:43+0200\n"
+"POT-Creation-Date: 2003-10-08 13:26+0200\n"
+"PO-Revision-Date: 2003-10-08 13:23+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +102,7 @@ msgstr ""
 # gnome-terminal/gnome-terminal.c:2027
 #: applets/clock/clock.c:1353 applets/clock/clock.c:1625
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:404 applets/wncklet/window-list.c:116
+#: applets/wncklet/showdesktop.c:406 applets/wncklet/window-list.c:116
 #: applets/wncklet/window-list.c:766 applets/wncklet/window-menu.c:82
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
@@ -148,7 +148,7 @@ msgstr "_UTC használata"
 
 #. Translator credits
 #: applets/clock/clock.c:1660 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:797
+#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:797
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
@@ -589,7 +589,7 @@ msgid "Window List"
 msgstr "Ablaklista"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:128
+#: applets/wncklet/window-menu.c:128 applets/wncklet/window-menu.c:624
 msgid "Window Menu"
 msgstr "Ablak menü"
 
@@ -613,24 +613,24 @@ msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztalt."
 
-#: applets/wncklet/showdesktop.c:294
+#: applets/wncklet/showdesktop.c:295
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s betöltése sikertelen: %s\n"
 
-#: applets/wncklet/showdesktop.c:295
+#: applets/wncklet/showdesktop.c:296
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: applets/wncklet/showdesktop.c:444
+#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:446
 msgid "Show Desktop Button"
 msgstr "Munkaasztal megjelenítése gomb"
 
-#: applets/wncklet/showdesktop.c:446
+#: applets/wncklet/showdesktop.c:448
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztalt"
 
-#: applets/wncklet/showdesktop.c:486
+#: applets/wncklet/showdesktop.c:488
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -787,6 +787,11 @@ msgstr "Ismeretlen ablak"
 #: applets/wncklet/window-menu.c:538
 msgid "No Windows Open"
 msgstr "Nincs nyitott ablak"
+
+#: applets/wncklet/window-menu.c:625
+#, fuzzy
+msgid "Tool to switch between windows"
+msgstr "Átváltás a nyitott ablakok között"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:804
@@ -1353,8 +1358,8 @@ msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
-"Ez a program felelős más programok indításáért, beleértve magán belül a kis "
-"appleteket is, a világbékéért, valamint a véletlenszerű X összeomlásokért."
+"Ez a program felelős más programok indításáért és a kis appleteket "
+"futtatásáért saját magán belül."
 
 #: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:165
 #: gnome-panel/panel-action-button.c:183
