@@ -710,9 +710,13 @@ void
 applet_register (const char * ior, int id)
 {
 	AppletInfo *info = get_applet_by_id(id);
+	PanelWidget *panel;
 
 	if(!info)
 		return;
+
+ 	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
 
 	/*no longer pending*/
 	info->type = APPLET_EXTERN;
@@ -720,6 +724,8 @@ applet_register (const char * ior, int id)
 	/*set the ior*/
 	g_free(info->id);
 	info->id = g_strdup(ior);
+
+	orientation_change(info,panel);
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
