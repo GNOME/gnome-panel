@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.mk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-06 08:55+0100\n"
+"POT-Creation-Date: 2004-07-19 20:39+0100\n"
 "PO-Revision-Date: 2003-08-30 20:06+0200\n"
 "Last-Translator: Arangel Angov <ufo@linux.net.mk>\n"
 "Language-Team: Macedonian <lug@lists.linux.net.mk>\n"
@@ -73,7 +73,7 @@ msgid "Accessories"
 msgstr "Алатки"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2465
+#: applets/clock/clock.c:2543
 msgid "Clock"
 msgstr "Часовник"
 
@@ -89,20 +89,20 @@ msgstr "Фабрика за создавање на часовници апле�
 msgid "Get the current time and date"
 msgstr "Земи ги тековните датум и време"
 
-#: applets/clock/clock.c:282
+#: applets/clock/clock.c:277
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:611
+#: applets/clock/clock.c:277 applets/clock/clock.c:608
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1576
+#: applets/clock/clock.c:279 applets/clock/clock.c:1654
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:613
-#: applets/clock/clock.c:1578
+#: applets/clock/clock.c:279 applets/clock/clock.c:610
+#: applets/clock/clock.c:1656
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -111,7 +111,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:295
+#: applets/clock/clock.c:290
 #, fuzzy
 msgid "%a %b %e"
 msgstr "%a %b %d"
@@ -120,7 +120,7 @@ msgstr "%a %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:302
+#: applets/clock/clock.c:297
 #, fuzzy, c-format
 msgid ""
 "%1$s\n"
@@ -133,62 +133,62 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:309
+#: applets/clock/clock.c:304
 #, fuzzy, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:393
+#: applets/clock/clock.c:388
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:618
+#: applets/clock/clock.c:615
 #, fuzzy
 msgid "%b %d"
 msgstr "%a %b %d"
 
-#: applets/clock/clock.c:861
+#: applets/clock/clock.c:911
 msgid "Tasks"
 msgstr ""
 
-#: applets/clock/clock.c:995
+#: applets/clock/clock.c:1055
 msgid "All Day"
 msgstr ""
 
-#: applets/clock/clock.c:1035
+#: applets/clock/clock.c:1096
 #, fuzzy
 msgid "Appointments"
 msgstr "Аплети"
 
-#: applets/clock/clock.c:1256
+#: applets/clock/clock.c:1327
 msgid "Calendar"
 msgstr "Календар"
 
-#: applets/clock/clock.c:1487
+#: applets/clock/clock.c:1565
 msgid "Computer Clock"
 msgstr "Компјутерски часовник"
 
-#: applets/clock/clock.c:1571
+#: applets/clock/clock.c:1649
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1573
+#: applets/clock/clock.c:1651
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1615
+#: applets/clock/clock.c:1693
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1659
+#: applets/clock/clock.c:1737
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Неуспешно лансирање на алатката за конфигурирање на времето : %s"
 
-#: applets/clock/clock.c:1698
+#: applets/clock/clock.c:1776
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -196,12 +196,12 @@ msgstr ""
 "Не успеав да ја лоцирам програмата за конфигурирање на датум и време. "
 "Најверојатно нема инсталирано?"
 
-#: applets/clock/clock.c:2100
+#: applets/clock/clock.c:2178
 #, fuzzy
 msgid "Custom format"
 msgstr "Сопствена икона"
 
-#: applets/clock/clock.c:2221 applets/clock/clock.c:2411
+#: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -211,49 +211,49 @@ msgstr "Сопствена икона"
 msgid "There was an error displaying help: %s"
 msgstr "Грешка при прикажувањето на помошта %s"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2335
 msgid "Clock Preferences"
 msgstr "Параметри за часовникот"
 
-#: applets/clock/clock.c:2293
+#: applets/clock/clock.c:2371
 msgid "Clock _type:"
 msgstr "Тип на _часовникот:"
 
-#: applets/clock/clock.c:2303
+#: applets/clock/clock.c:2381
 msgid "12 hour"
 msgstr "12 часа"
 
-#: applets/clock/clock.c:2304
+#: applets/clock/clock.c:2382
 msgid "24 hour"
 msgstr "24 часа"
 
-#: applets/clock/clock.c:2305
+#: applets/clock/clock.c:2383
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2384
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: applets/clock/clock.c:2314
+#: applets/clock/clock.c:2392
 #, fuzzy
 msgid "Custom _format:"
 msgstr "Формат на часот"
 
-#: applets/clock/clock.c:2333
+#: applets/clock/clock.c:2411
 msgid "Show _seconds"
 msgstr "Покажи _секунди"
 
-#: applets/clock/clock.c:2342
+#: applets/clock/clock.c:2420
 msgid "Show _date"
 msgstr "Покажи _датум"
 
-#: applets/clock/clock.c:2351
+#: applets/clock/clock.c:2429
 msgid "Use _UTC"
 msgstr "Користи _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2446 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2524 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:206
@@ -262,7 +262,7 @@ msgstr ""
 "Иван Стојмиров (stojmir@linux.net.mk) \n"
 "Георги Станојевски (georgi@mail.net.mk)"
 
-#: applets/clock/clock.c:2467
+#: applets/clock/clock.c:2545
 msgid "The Clock displays the current time and date"
 msgstr "Часовникот ги покажува моменталниот датум и време"
 

@@ -7,13 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-04 04:46+0200\n"
+"POT-Creation-Date: 2004-07-19 20:39+0100\n"
 "PO-Revision-Date: 2004-07-04 13:23+0300\n"
 "Last-Translator: Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
 "MIME-Version: (null)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -62,7 +62,7 @@ msgid "Accessories"
 msgstr "Помощни"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2465
+#: applets/clock/clock.c:2543
 msgid "Clock"
 msgstr "Часовник"
 
@@ -78,20 +78,20 @@ msgstr "Фабрика за създаването на аплети за час
 msgid "Get the current time and date"
 msgstr "Взимане на текущия час и дата"
 
-#: applets/clock/clock.c:282
+#: applets/clock/clock.c:277
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:611
+#: applets/clock/clock.c:277 applets/clock/clock.c:608
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1576
+#: applets/clock/clock.c:279 applets/clock/clock.c:1654
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:613
-#: applets/clock/clock.c:1578
+#: applets/clock/clock.c:279 applets/clock/clock.c:610
+#: applets/clock/clock.c:1656
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -100,7 +100,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:295
+#: applets/clock/clock.c:290
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -108,7 +108,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:302
+#: applets/clock/clock.c:297
 #, c-format
 msgid ""
 "%1$s\n"
@@ -121,60 +121,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:309
+#: applets/clock/clock.c:304
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:393
+#: applets/clock/clock.c:388
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:618
+#: applets/clock/clock.c:615
 msgid "%b %d"
 msgstr "%b %d"
 
-#: applets/clock/clock.c:861
+#: applets/clock/clock.c:911
 msgid "Tasks"
 msgstr "Задачи"
 
-#: applets/clock/clock.c:995
+#: applets/clock/clock.c:1055
 msgid "All Day"
 msgstr "Целият ден"
 
-#: applets/clock/clock.c:1035
+#: applets/clock/clock.c:1096
 msgid "Appointments"
 msgstr "Уговорени срещи"
 
-#: applets/clock/clock.c:1256
+#: applets/clock/clock.c:1327
 msgid "Calendar"
 msgstr "Календар"
 
-#: applets/clock/clock.c:1487
+#: applets/clock/clock.c:1565
 msgid "Computer Clock"
 msgstr "Компютърен часовник"
 
-#: applets/clock/clock.c:1571
+#: applets/clock/clock.c:1649
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1573
+#: applets/clock/clock.c:1651
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1615
+#: applets/clock/clock.c:1693
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1659
+#: applets/clock/clock.c:1737
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Инструмента за настройка: %s не можа да бъде стартиран"
 
-#: applets/clock/clock.c:1698
+#: applets/clock/clock.c:1776
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -182,12 +182,12 @@ msgstr ""
 "Програмата за конфигуриране на датата и часа не беше намерена. Може би не е "
 "инсталирана?"
 
-#: applets/clock/clock.c:2100
+#: applets/clock/clock.c:2178
 msgid "Custom format"
 msgstr "Личен формат"
 
 # ##
-#: applets/clock/clock.c:2221 applets/clock/clock.c:2411
+#: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -197,59 +197,60 @@ msgstr "Личен формат"
 msgid "There was an error displaying help: %s"
 msgstr "Имаше грешка при показването на помощта: %s"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2335
 msgid "Clock Preferences"
 msgstr "Настройки на часовника"
 
-#: applets/clock/clock.c:2293
+#: applets/clock/clock.c:2371
 msgid "Clock _type:"
 msgstr "_Вид часовник:"
 
-#: applets/clock/clock.c:2303
+#: applets/clock/clock.c:2381
 msgid "12 hour"
 msgstr "12-часов"
 
-#: applets/clock/clock.c:2304
+#: applets/clock/clock.c:2382
 msgid "24 hour"
 msgstr "24-часов"
 
-#: applets/clock/clock.c:2305
+#: applets/clock/clock.c:2383
 msgid "UNIX time"
 msgstr "UNIX време"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2384
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: applets/clock/clock.c:2314
+#: applets/clock/clock.c:2392
 msgid "Custom _format:"
 msgstr "Личен формат:"
 
-#: applets/clock/clock.c:2333
+#: applets/clock/clock.c:2411
 msgid "Show _seconds"
 msgstr "Показване на _секундите"
 
-#: applets/clock/clock.c:2342
+#: applets/clock/clock.c:2420
 msgid "Show _date"
 msgstr "Показване на _датата"
 
-#: applets/clock/clock.c:2351
+#: applets/clock/clock.c:2429
 msgid "Use _UTC"
 msgstr "Използване на _Гринуич"
 
 #. Translator credits
-#: applets/clock/clock.c:2446 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2524 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:206
 msgid "translator_credits"
-msgstr "Петър Славов <pslavov@i-space.org>\n"
+msgstr ""
+"Петър Славов <pslavov@i-space.org>\n"
 "Владимир Петков <vpetkov@i-space.org>\n"
 "Ростислав Райков <zbrox@i-space.org>\n"
 "Павел Чолаков\n"
 "Александър Шопов"
 
-#: applets/clock/clock.c:2467
+#: applets/clock/clock.c:2545
 msgid "The Clock displays the current time and date"
 msgstr "Часовникът показва текущото време и дата"
 
@@ -337,7 +338,9 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "От тук се задава програмата, която да се стартира за да се конфигурира темата."
+msgstr ""
+"От тук се задава програмата, която да се стартира за да се конфигурира "
+"темата."
 
 #: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
@@ -584,8 +587,8 @@ msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
 msgstr ""
-"Този клавиш определя номера на кадрите, които ще се изобразят при "
-"анимацията на рибата."
+"Този клавиш определя номера на кадрите, които ще се изобразят при анимацията "
+"на рибата."
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -991,7 +994,7 @@ msgstr "Отк_лючване"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1090
+#: gnome-panel/applet.c:1089
 msgid "Can't find an empty spot"
 msgstr "Не мога да намеря празно място"
 
@@ -1455,7 +1458,9 @@ msgstr "Заключване на екрана"
 
 #: gnome-panel/menu.c:2507
 msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Заключване на екрана, така че може временно да оставите компютъра си без надзор"
+msgstr ""
+"Заключване на екрана, така че може временно да оставите компютъра си без "
+"надзор"
 
 #: gnome-panel/menu.c:2523 gnome-panel/panel-addto.c:102
 #: gnome-panel/panel-menu-bar.c:200
@@ -1547,7 +1552,9 @@ msgstr "Заключване"
 
 #: gnome-panel/panel-addto.c:114
 msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "Заключване на екрана, така че може временно да оставите компютъра си без наблюдение"
+msgstr ""
+"Заключване на екрана, така че може временно да оставите компютъра си без "
+"наблюдение"
 
 #: gnome-panel/panel-addto.c:125
 msgid "Force a misbehaving application to quit"
@@ -1624,12 +1631,12 @@ msgstr "Избор на обект за добавяне към %s:"
 msgid "Select an _item to add to the panel:"
 msgstr "Избор на _обект за добавяне към панела:"
 
-#: gnome-panel/panel-applet-frame.c:745
+#: gnome-panel/panel-applet-frame.c:746
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Изключение от изскачащото меню \"%s\"\n"
 
-#: gnome-panel/panel-applet-frame.c:866
+#: gnome-panel/panel-applet-frame.c:867
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1640,7 +1647,7 @@ msgstr ""
 "\n"
 "Искате ли да го презаредите?"
 
-#: gnome-panel/panel-applet-frame.c:872
+#: gnome-panel/panel-applet-frame.c:873
 msgid ""
 "\n"
 "\n"
@@ -1653,21 +1660,21 @@ msgstr ""
 "като натиснете с дясното копче на мишката върху панела и след това изберете "
 "подменюто \"Добавяне към Панела\")"
 
-#: gnome-panel/panel-applet-frame.c:912
+#: gnome-panel/panel-applet-frame.c:913
 msgid "D_on't Delete"
 msgstr "_Не изтрива"
 
-#: gnome-panel/panel-applet-frame.c:948
+#: gnome-panel/panel-applet-frame.c:949
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Панелът имаше трудности при зареждането на \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Подробности: %s"
 
-#: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
+#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
 msgid ""
 "\n"
 "\n"
@@ -1677,7 +1684,7 @@ msgstr ""
 "\n"
 "Искате ли да изтриете аплета от вашите настройки?"
 
-#: gnome-panel/panel-applet-frame.c:1084
+#: gnome-panel/panel-applet-frame.c:1085
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Не успях да получа интерфейса AppletShell от контрола\n"
 
@@ -1745,7 +1752,9 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Включване на списък с програми в диалоговия прозорец \"Стартиране на Програма\""
+msgstr ""
+"Включване на списък с програми в диалоговия прозорец \"Стартиране на Програма"
+"\""
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -1767,9 +1776,9 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Ако е истина, списъка с \"Наличните Програми\" в диалога·\"Стартиране "
-"на Програма\" е позволен. Дали списъка се разширява или не когато "
-"диалога се показва зависи от show_program_list."
+"Ако е истина, списъка с \"Наличните Програми\" в диалога·\"Стартиране на "
+"Програма\" е позволен. Дали списъка се разширява или не когато диалога се "
+"показва зависи от show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:8
 msgid "Panel ID list"
@@ -1858,16 +1867,16 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Ако е истина, де отваря прозорец и пита за потвърждение ако потребител "
-"иска да премахне панел."
+"Ако е истина, де отваря прозорец и пита за потвърждение ако потребител иска "
+"да премахне панел."
 
 #: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
 msgstr ""
-"Ако е истина, чекмеджето автоматично ще се затвори когато потребител "
-"избере стартер от него."
+"Ако е истина, чекмеджето автоматично ще се затвори когато потребител избере "
+"стартер от него."
 
 #: gnome-panel/panel-global.schemas.in.h:19
 msgid ""
@@ -1979,8 +1988,8 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"Ако е истина, потребителя на може да мърда аплета без първо да отключи обекта "
-"използвайки \"Отключване\" от менюто."
+"Ако е истина, потребителя на може да мърда аплета без първо да отключи "
+"обекта използвайки \"Отключване\" от менюто."
 
 #: gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2034,8 +2043,8 @@ msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
-"Идентификатора на панела прикрепен към шкафа. Тази настройка е валидна "
-"само ако настройката object_type·е·\"drawer-object\"."
+"Идентификатора на панела прикрепен към шкафа. Тази настройка е валидна само "
+"ако настройката object_type·е·\"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -2112,19 +2121,19 @@ msgstr "Желаната стандартна икона за обект-бут�
 msgid "Use custom path for menu contents"
 msgstr "Използване на обичайния път за съдържанието на менюто"
 
-#: gnome-panel/panel-profile.c:765 gnome-panel/panel-profile.c:796
-#: gnome-panel/panel-profile.c:832 gnome-panel/panel-profile.c:1603
+#: gnome-panel/panel-profile.c:768 gnome-panel/panel-profile.c:799
+#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1606
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Грешка при четенето на низовата стойност от GConf '%s':·%s"
 
-#: gnome-panel/panel-profile.c:811 gnome-panel/panel-profile.c:1498
-#: gnome-panel/panel-profile.c:1572 gnome-panel/panel-profile.c:1635
+#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1504
+#: gnome-panel/panel-profile.c:1575 gnome-panel/panel-profile.c:1638
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Грешка при четенето на целочислената стойност от GConf·'%s': %s"
 
-#: gnome-panel/panel-profile.c:1508
+#: gnome-panel/panel-profile.c:1514
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2133,7 +2142,7 @@ msgstr ""
 "Панелът '%s' е зададен за изобразяване на екрана %d, който не е достъпен в "
 "момента. НЕ зареждам този панел."
 
-#: gnome-panel/panel-profile.c:1587
+#: gnome-panel/panel-profile.c:1590
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Грешка при четенето на булевата стойност от GConf '%s': %s"
@@ -2315,16 +2324,16 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"Натискане на бутона за разгледане файловете за този, към чието име да се приложи "
-"командата."
+"Натискане на бутона за разгледане файловете за този, към чието име да се "
+"приложи командата."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Натискане на бутона са да се стартира избраната програма или командата в полето за "
-"въвеждане на команда."
+"Натискане на бутона са да се стартира избраната програма или командата в "
+"полето за въвеждане на команда."
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command entry"
@@ -2536,8 +2545,8 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"Ако е истина, фоновото изображение ще се върти когато панела е "
-"ориентиран вертикално."
+"Ако е истина, фоновото изображение ще се върти когато панела е ориентиран "
+"вертикално."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
@@ -2572,8 +2581,8 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"Ако е истина, панела ще се постави по цялата ширина на екрана (височина ако е "
-"вертикален панел). В този режим панела можа да се постави само на ръба на "
+"Ако е истина, панела ще се постави по цялата ширина на екрана (височина ако "
+"е вертикален панел). В този режим панела можа да се постави само на ръба на "
 "екрана. Ако не е истина панела ще е само толкова голям колкото са големи "
 "аплетите. стартерите и бутоните на панела."
 
@@ -2644,9 +2653,9 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
-"Задаване на файл, който ще се използва за фоново изображение. Ако изображението "
-"съдържа алфа - канал то ще се постави върху фоновото изображение на "
-"работното място."
+"Задаване на файл, който ще се използва за фоново изображение. Ако "
+"изображението съдържа алфа - канал то ще се постави върху фоновото "
+"изображение на работното място."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
@@ -2664,16 +2673,17 @@ msgid ""
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
 msgstr ""
-"Задава колко милисекунди ще се забави скриването на панела след като курсорът излезе "
-"от района на панела. Тази·настройка важи само ако настройката auto_hide е истина."
+"Задава колко милисекунди ще се забави скриването на панела след като "
+"курсорът излезе от района на панела. Тази·настройка важи само ако "
+"настройката auto_hide е истина."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
-"Задава брой пиксели, които се виждат когато панела е скрит автиматично в ръба "
-"на екрана. Тази настройка важи само ако auto_hide е истина."
+"Задава брой пиксели, които се виждат когато панела е скрит автиматично в "
+"ръба на екрана. Тази настройка важи само ако auto_hide е истина."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
@@ -2682,7 +2692,8 @@ msgid ""
 "onto the desktop background image."
 msgstr ""
 "Задава колко ще е прозрачен фоновия цвят. Ако цвета не е напълно непрозрачен "
-"(стойност по малка от 65535), цветът ще е насложен върху фоновото изображение."
+"(стойност по малка от 65535), цветът ще е насложен върху фоновото "
+"изображение."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2879,8 +2890,7 @@ msgstr "Указване име на профила, който да се зар
 #: libpanel-applet/panel-test-applets.c:34
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
-"Указване местоположението на gconf, в което да се запазят настройките"
+msgstr "Указване местоположението на gconf, в което да се запазят настройките"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
