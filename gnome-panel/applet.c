@@ -729,7 +729,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
 	if (applet->right_stick) {
-		if (panel_widget->packed)
+		if (!panel_widget->packed)
 			applet->position = panel_widget->size - applet->position;
 		else
 			applet->position = -1;
