@@ -430,6 +430,15 @@ close_on_escape (GtkWidget   *widget,
 	return FALSE;
 }
 
+static gboolean
+delete_event (GtkWidget   *widget,
+	      GdkEvent    *event,
+	      ClockData   *cd)
+{
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle), FALSE);
+	return TRUE;
+}
+
 static GtkWidget *
 create_calendar (ClockData *cd,
 		 GdkScreen *screen)
@@ -439,16 +448,14 @@ create_calendar (ClockData *cd,
 
 	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
 
-	/* set dialog type so it will skip the tasklist,
-	 * kinda broken. This window should really be override
-	 * redirect I suppose. But I hate override redirect
-	 * windows that don't have a pointer/keyboard grab.
-	 */
-	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DIALOG);
+	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
 	gtk_window_set_decorated (window, FALSE);
 	gtk_window_set_resizable (window, FALSE);
 	gtk_window_stick (window);
 	gtk_window_set_title (window, _("Calendar"));
+
+	g_signal_connect (window, "delete_event",
+			  G_CALLBACK (delete_event), cd);
 			
 	g_signal_connect (window, "key_press_event",
 			  G_CALLBACK (close_on_escape), cd);

@@ -1,3 +1,10 @@
+Wed Jul 02 14:17:59 2003  George Lebl <jirka@5z.com>
+
+	* clock.c: the calendar window is of type UTILITY (which it is, and
+	  thus should skip the windowlist).  Also if you would manage to
+	  close the window by some chance anyway, the toggle button is
+	  toggled correctly.  Fixes #116382
+
 ==================== 2.3.3.3 ====================
 
 ==================== 2.3.3.2 ====================
