@@ -13,7 +13,7 @@ INCLUDES = -I. -I$(srcdir) \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
-bin_PROGRAMS = panel
+bin_PROGRAMS = panel gnome-panel-properties-capplet
 
 libpanel_appletincludedir = $(includedir)
 libpanel_statusincludedir = $(includedir)
@@ -71,7 +71,6 @@ base_panel_SOURCES=\
 	session.h		\
 	panel_config.c  	\
 	panel_config.h		\
-	panel_config_global.c  	\
 	panel_config_global.h  	\
 	menu.c  		\
 	menu.h  		\
@@ -119,13 +118,26 @@ base_panel_SOURCES=\
 	tearoffitem.h
 
 panel_SOURCES = 		\
-	$(base_panel_SOURCES)	\
-	$(CORBA_SRCLIST)
+	$(base_panel_SOURCES)
 
-$(base_panel_SOURCES): $(CORBA_SRCLIST)
+# it should work without this as we link libpanel_applet anyway for shlib
+# applets and it already links to CORBA_SRCLIST, so this should give us a
+# dubious gain in linking speed and memory usage
+#	$(CORBA_SRCLIST)
+
+#$(base_panel_SOURCES): $(CORBA_SRCLIST)
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 panel_LDFLAGS=-export-dynamic
+
+gnome_panel_properties_capplet_SOURCES = \
+	gnome-panel-properties.c	\
+	panel-util.c			\
+	$(CORBA_SRCLIST)
+
+gnome_panel_properties_capplet_LDADD = -lcapplet \
+		     $(GNOME_LIBDIR) $(ORB_LIBS) \
+		     $(GNOMEUI_LIBS) $(INTLLIBS) -lgnorba
 
 data_DATA = panelrc
 
@@ -148,14 +160,15 @@ MOSTLYCLEANFILES = panelrc
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
 EXTRA_DIST = \
-	panelrc.in		\
-	panel.in		\
-	appletsConf.sh.in	\
-	dockletsConf.sh.in	\
-	panel.gnorba		\
-	panel.soundlist		\
-	APPLET_WRITING		\
-	panel.hints
+	panelrc.in			\
+	panel.in			\
+	appletsConf.sh.in		\
+	dockletsConf.sh.in		\
+	panel.gnorba			\
+	panel.soundlist			\
+	APPLET_WRITING			\
+	panel.hints			\
+	gnome-panel-properties.desktop
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
@@ -192,5 +205,11 @@ soundlist_DATA = panel.soundlist
 
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
+
+sysdir = $(datadir)/control-center/
+sys_DATA = gnome-panel-properties.desktop
+
+install-data-local:
+	$(INSTALL_DATA) $(srcdir)/gnome-panel-properties.desktop $(DESTDIR)$(datadir)/gnome/apps/Settings/gnome-panel-properties.desktop
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)

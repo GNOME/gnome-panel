@@ -48,9 +48,11 @@ create_text_entry(GtkWidget *table,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
-					       GTK_OBJECT(w));
+	if(w) {
+		gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+						       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
+						       GTK_OBJECT(w));
+	}
 	return entry;
 }
 
@@ -87,9 +89,11 @@ create_pixmap_entry(GtkWidget *table,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
-					       GTK_OBJECT(w));
+	if(w) {
+		gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+						       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
+						       GTK_OBJECT(w));
+	}
 	return entry;
 }
 
@@ -125,9 +129,11 @@ create_icon_entry(GtkWidget *table,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
-					       GTK_OBJECT(w));
+	if(w) {
+		gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+						       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
+						       GTK_OBJECT(w));
+	}
 	return entry;
 }
 
@@ -162,9 +168,11 @@ create_file_entry(GtkWidget *table,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
-					       GTK_OBJECT(w));
+	if(w) {
+		gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+						       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
+						       GTK_OBJECT(w));
+	}
 	return entry;
 }
 

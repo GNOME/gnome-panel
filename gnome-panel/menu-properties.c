@@ -28,7 +28,6 @@ extern GlobalConfig global_config;
 extern int config_sync_timeout;
 extern int panels_to_sync;
 extern int applets_to_sync;
-extern int globals_to_sync;
 extern int need_complete_save;
 
 char *

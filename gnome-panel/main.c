@@ -20,7 +20,6 @@
 extern int config_sync_timeout;
 extern int applets_to_sync;
 extern int panels_to_sync;
-extern int globals_to_sync;
 extern int need_complete_save;
 
 extern GSList *panels;
@@ -248,6 +247,9 @@ main(int argc, char **argv)
 	panel_tooltips = gtk_tooltips_new();
 
 	gnome_win_hints_init ();
+
+	/* read, convert and remove old config */
+	convert_old_config();
 
 	/*set the globals*/
 	load_up_globals();

@@ -43,7 +43,6 @@ extern GlobalConfig global_config;
 extern int config_sync_timeout;
 extern int panels_to_sync;
 extern int applets_to_sync;
-extern int globals_to_sync;
 extern int need_complete_save;
 
 /*???? this might be ugly, but I guess we can safely assume that we can only
@@ -1406,15 +1405,14 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	GSList *list;
 	GtkWidget *menu;
 	GString *title;
-
+	
 	if(!mfl)
 		return;
-	
+
 	menu = gtk_menu_new();
 	
 	title = g_string_new("");
 
-	gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
 		MenuFinfo *mf = list->data;
 
@@ -2940,6 +2938,13 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
 	show_tearoff_menu(menu, _("Add to panel"));
+}
+
+/* just run the gnome-panel-properties */
+static void
+panel_config_global(void)
+{
+	system("(gnome-panel-properties-capplet &)");
 }
 
 void

@@ -32,6 +32,4 @@ struct _GlobalConfig {
 	int tile_when_over;
 };
 
-void panel_config_global(void);
-
-#endif /* PANEL_CONFIG_H */
+#endif /* PANEL_CONFIG_GLOBAL_H */

@@ -29,7 +29,6 @@ extern int applet_count;
 extern int config_sync_timeout;
 extern int applets_to_sync;
 extern int panels_to_sync;
-extern int globals_to_sync;
 extern int need_complete_save;
 
 extern GtkTooltips *panel_tooltips;
@@ -81,6 +80,10 @@ static GNOME_StatusSpot
 s_panel_add_status(POA_GNOME_Panel *servant,
 		   CORBA_unsigned_long* wid,
 		   CORBA_Environment *ev);
+
+static void
+s_panel_notice_config_changes(POA_GNOME_Panel *servant,
+			      CORBA_Environment *ev);
 
 
 /*** PanelSpot stuff ***/
@@ -194,7 +197,8 @@ static POA_GNOME_Panel__epv panel_epv = {
   (gpointer)&s_panel_add_applet_full,
   (gpointer)&s_panel_quit,
   (gpointer)&s_panel_get_in_drag,
-  (gpointer)&s_panel_add_status
+  (gpointer)&s_panel_add_status,
+  (gpointer)&s_panel_notice_config_changes
 };
 static POA_GNOME_Panel__vepv panel_vepv = { &panel_base_epv, &panel_epv };
 static POA_GNOME_Panel panel_servant = { NULL, &panel_vepv };
@@ -622,6 +626,13 @@ s_panel_add_status(POA_GNOME_Panel *servant,
 
 	*wid = ss->wid;
 	return CORBA_Object_duplicate(acc, ev);
+}
+
+static void
+s_panel_notice_config_changes(POA_GNOME_Panel *servant,
+			      CORBA_Environment *ev)
+{
+	load_up_globals();
 }
 
 

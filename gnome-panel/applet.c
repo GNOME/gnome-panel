@@ -32,7 +32,6 @@ int applet_count = 0;
 extern int config_sync_timeout;
 extern int applets_to_sync;
 extern int panels_to_sync;
-extern int globals_to_sync;
 extern int need_complete_save;
 
 extern GlobalConfig global_config;

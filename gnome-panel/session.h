@@ -46,6 +46,9 @@ void init_user_panels(void);
 
 void apply_global_config(void);
 
+/* just temporary so that we can bridge the gap between old and new config */
+void convert_old_config(void);
+
 END_GNOME_DECLS
 
 #endif

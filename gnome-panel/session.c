@@ -20,7 +20,6 @@
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
 int panels_to_sync = FALSE;
-int globals_to_sync = FALSE;
 int need_complete_save = FALSE;
 
 extern GSList *panels;
@@ -496,12 +495,10 @@ static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
 		int sync_applets,
-		int sync_panels,
-		int sync_globals)
+		int sync_panels)
 {
 	int num;
 	char *s;
-	int i;
 #if 0
 	gchar *new_args[] = { "rm", "-r", NULL };
 
@@ -544,67 +541,6 @@ do_session_save(GnomeClient *client,
 #ifdef PANEL_DEBUG
 	printf(" 4\n"); fflush(stdout);
 #endif
-	if(complete_sync || sync_globals) {
-		GString *buf;
-		/*global options*/
-		gnome_config_set_int("auto_hide_step_size",
-				     global_config.auto_hide_step_size);
-		gnome_config_set_int("explicit_hide_step_size",
-				     global_config.explicit_hide_step_size);
-		gnome_config_set_int("drawer_step_size",
-				     global_config.drawer_step_size);
-		gnome_config_set_int("minimized_size",
-				     global_config.minimized_size);
-		gnome_config_set_int("minimize_delay",
-				     global_config.minimize_delay);
-		gnome_config_set_int("movement_type",
-				     (int)global_config.movement_type);
-		gnome_config_set_bool("tooltips_enabled",
-				      global_config.tooltips_enabled);
-		gnome_config_set_bool("show_small_icons",
-				      global_config.show_small_icons);
-		gnome_config_set_bool("show_dot_buttons",
-				      global_config.show_dot_buttons);
-		gnome_config_set_bool("hungry_menus",
-				      global_config.hungry_menus);
-		gnome_config_set_bool("off_panel_popups",
-				      global_config.off_panel_popups);
-		gnome_config_set_bool("disable_animations",
-				      global_config.disable_animations);
-		gnome_config_set_int("applet_padding",
-				     global_config.applet_padding);
-		gnome_config_set_bool("autoraise",
-				      global_config.autoraise);
-		gnome_config_set_bool("keep_bottom",
-				      global_config.keep_bottom);
-		gnome_config_set_bool("drawer_auto_close",
-				      global_config.drawer_auto_close);
-		gnome_config_set_bool("simple_movement",
-				      global_config.simple_movement);
-		gnome_config_set_bool("hide_panel_frame",
-				      global_config.hide_panel_frame);
-		gnome_config_set_bool("tile_when_over",
-				      global_config.tile_when_over);
-		buf = g_string_new(NULL);
-		for(i=0;i<LAST_TILE;i++) {
-			g_string_sprintf(buf,"tiles_enabled_%d",i);
-			gnome_config_set_bool(buf->str,
-					      global_config.tiles_enabled[i]);
-			g_string_sprintf(buf,"tile_up_%d",i);
-			gnome_config_set_string(buf->str,
-						global_config.tile_up[i]);
-			g_string_sprintf(buf,"tile_down_%d",i);
-			gnome_config_set_string(buf->str,
-						global_config.tile_down[i]);
-			g_string_sprintf(buf,"tile_border_%d",i);
-			gnome_config_set_int(buf->str,
-					     global_config.tile_border[i]);
-			g_string_sprintf(buf,"tile_depth_%d",i);
-			gnome_config_set_int(buf->str,
-					     global_config.tile_depth[i]);
-		}
-		g_string_free(buf,TRUE);
-	}
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
@@ -625,26 +561,22 @@ panel_config_sync(void)
 {
 	if(need_complete_save ||
 	   applets_to_sync ||
-	   panels_to_sync ||
-	   globals_to_sync) {
+	   panels_to_sync) {
 		if (!(gnome_client_get_flags(client) & 
 		      GNOME_CLIENT_IS_CONNECTED)) {
 			int ncs = need_complete_save;
 			int ats = applets_to_sync;
 			int pts = panels_to_sync;
-			int gts = globals_to_sync;
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			globals_to_sync = FALSE;
-			do_session_save(client,ncs,ats,pts,gts);
+			do_session_save(client,ncs,ats,pts);
 		} else {
 			/*prevent possible races by doing this before requesting
 			  save*/
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			globals_to_sync = FALSE;
 			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
 						   GNOME_INTERACT_NONE, FALSE, FALSE);
 		}
@@ -671,7 +603,7 @@ panel_session_save (GnomeClient *client,
 		ss_timeout = 1500;
 		ss_interactive = TRUE;
 	}
-	do_session_save(client,TRUE,FALSE,FALSE,FALSE);
+	do_session_save(client,TRUE,FALSE,FALSE);
 	if(is_shutdown) {
 		GSList *li;
 		for(li=panel_list;li;li=g_slist_next(li)) {
@@ -1135,9 +1067,7 @@ load_up_globals(void)
 	buf = g_string_new(NULL);
 
 	/*set up global options*/
-	
-	g_string_sprintf(buf,"%spanel/Config/",PANEL_CONFIG_PATH);
-	gnome_config_push_prefix(buf->str);
+	gnome_config_push_prefix("/panel/Config/");
 
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("tooltips_enabled=TRUE");
@@ -1208,9 +1138,200 @@ load_up_globals(void)
 		g_string_sprintf(buf,"tile_depth_%d=2",i);
 		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
 	}
-	g_string_free(buf,TRUE);
-		
 	gnome_config_pop_prefix();
 
+	g_string_free(buf,TRUE);
+
 	apply_global_config();
+}
+
+/* used for conversion to new config */
+static void
+convert_write_config(void)
+{
+	int i;
+	int is_def;
+	GString *buf;
+	gnome_config_push_prefix("/panel/Config/");
+	
+	/* is there any new config written here */
+	gnome_config_get_int_with_default("auto_hide_step_size", &is_def);
+	if(!is_def) {
+		/* we don't want to overwrite a good config */
+		gnome_config_pop_prefix();
+		return;
+	}
+
+	gnome_config_set_int("auto_hide_step_size",
+			     global_config.auto_hide_step_size);
+	gnome_config_set_int("explicit_hide_step_size",
+			     global_config.explicit_hide_step_size);
+	gnome_config_set_int("drawer_step_size",
+			     global_config.drawer_step_size);
+	gnome_config_set_int("minimized_size",
+			     global_config.minimized_size);
+	gnome_config_set_int("minimize_delay",
+			     global_config.minimize_delay);
+	gnome_config_set_int("movement_type",
+			     (int)global_config.movement_type);
+	gnome_config_set_bool("tooltips_enabled",
+			      global_config.tooltips_enabled);
+	gnome_config_set_bool("show_small_icons",
+			      global_config.show_small_icons);
+	gnome_config_set_bool("show_dot_buttons",
+			      global_config.show_dot_buttons);
+	gnome_config_set_bool("hungry_menus",
+			      global_config.hungry_menus);
+	gnome_config_set_bool("off_panel_popups",
+			      global_config.off_panel_popups);
+	gnome_config_set_bool("disable_animations",
+			      global_config.disable_animations);
+	gnome_config_set_int("applet_padding",
+			     global_config.applet_padding);
+	gnome_config_set_bool("autoraise",
+			      global_config.autoraise);
+	gnome_config_set_bool("keep_bottom",
+			      global_config.keep_bottom);
+	gnome_config_set_bool("drawer_auto_close",
+			      global_config.drawer_auto_close);
+	gnome_config_set_bool("simple_movement",
+			      global_config.simple_movement);
+	gnome_config_set_bool("hide_panel_frame",
+			      global_config.hide_panel_frame);
+	gnome_config_set_bool("tile_when_over",
+			      global_config.tile_when_over);
+	buf = g_string_new(NULL);
+	for(i=0;i<LAST_TILE;i++) {
+		g_string_sprintf(buf,"tiles_enabled_%d",i);
+		gnome_config_set_bool(buf->str,
+				      global_config.tiles_enabled[i]);
+		g_string_sprintf(buf,"tile_up_%d",i);
+		gnome_config_set_string(buf->str,
+					global_config.tile_up[i]);
+		g_string_sprintf(buf,"tile_down_%d",i);
+		gnome_config_set_string(buf->str,
+					global_config.tile_down[i]);
+		g_string_sprintf(buf,"tile_border_%d",i);
+		gnome_config_set_int(buf->str,
+				     global_config.tile_border[i]);
+		g_string_sprintf(buf,"tile_depth_%d",i);
+		gnome_config_set_int(buf->str,
+				     global_config.tile_depth[i]);
+	}
+	g_string_free(buf,TRUE);
+	gnome_config_pop_prefix();
+	gnome_config_sync();
+}
+
+static gboolean
+convert_read_old_config(void)
+{
+	char *tile_def[]={"normal","purple","green","blue"};
+	GString *buf;
+	int i,is_def;
+	int applet_count; /*store this so that we can clean*/
+
+	buf = g_string_new(NULL);
+	g_string_sprintf(buf,"%spanel/Config/",PANEL_CONFIG_PATH);
+	gnome_config_push_prefix(buf->str);
+
+	gnome_config_get_bool_with_default("tooltips_enabled=TRUE",&is_def);
+	if(is_def) {
+		gnome_config_pop_prefix();
+		g_string_free(buf,TRUE);
+		return FALSE;
+	}
+	
+	global_config.tooltips_enabled =
+		gnome_config_get_bool("tooltips_enabled=TRUE");
+
+	global_config.show_small_icons =
+		gnome_config_get_bool("show_small_icons=TRUE");
+
+	global_config.show_dot_buttons =
+		gnome_config_get_bool("show_dot_buttons=FALSE");
+
+	global_config.hungry_menus =
+		gnome_config_get_bool("hungry_menus=TRUE");
+
+	global_config.off_panel_popups =
+		gnome_config_get_bool("off_panel_popups=TRUE");
+
+	global_config.disable_animations =
+		gnome_config_get_bool("disable_animations=FALSE");
+
+	g_string_sprintf(buf,"auto_hide_step_size=%d",
+			 DEFAULT_AUTO_HIDE_STEP_SIZE);
+	global_config.auto_hide_step_size=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"explicit_hide_step_size=%d",
+			 DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+	global_config.explicit_hide_step_size=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"drawer_step_size=%d",
+			 DEFAULT_DRAWER_STEP_SIZE);
+	global_config.drawer_step_size=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
+	global_config.minimize_delay=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
+	global_config.minimized_size=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
+	global_config.movement_type=gnome_config_get_int(buf->str);
+
+	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+
+	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
+
+	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
+
+	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
+	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
+	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
+	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
+	for(i=0;i<LAST_TILE;i++) {
+		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
+		global_config.tiles_enabled[i] =
+			gnome_config_get_bool(buf->str);
+
+		g_free(global_config.tile_up[i]);
+		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
+				 i, tile_def[i]);
+		global_config.tile_up[i] = gnome_config_get_string(buf->str);
+
+		g_free(global_config.tile_down[i]);
+		g_string_sprintf(buf,"tile_down_%d=tiles/tile-%s-down.png",
+				 i,tile_def[i]);
+		global_config.tile_down[i] = gnome_config_get_string(buf->str);
+
+		g_string_sprintf(buf,"tile_border_%d=2",i);
+		global_config.tile_border[i] = gnome_config_get_int(buf->str);
+		g_string_sprintf(buf,"tile_depth_%d=2",i);
+		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
+	}
+
+	/* preserve applet count */
+	applet_count = gnome_config_get_int("applet_count=0");
+
+	gnome_config_pop_prefix();
+
+	g_string_sprintf(buf,"%spanel/Config",PANEL_CONFIG_PATH);
+
+	gnome_config_clean_section(buf->str);
+
+	g_string_sprintf(buf,"%spanel/Config/applet_count",PANEL_CONFIG_PATH);
+	gnome_config_set_int(buf->str,applet_count);
+
+	gnome_config_sync();
+	g_string_free(buf,TRUE);
+	return TRUE;
+}
+
+void
+convert_old_config(void)
+{
+	if(convert_read_old_config())
+		convert_write_config();
 }
