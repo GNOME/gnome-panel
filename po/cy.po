@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "POT-Creation-Date: 2003-05-29 04:30+0200\n"
-"PO-Revision-Date: 2003-05-29 16:00+0100\n"
+"PO-Revision-Date: 2003-05-30 23:52+0100\n"
 "Last-Translator: Dafydd Harries <daf@parnassus.ath.cx>\n"
 "Language-Team: Welsh <gnome-cy@pengwyn.linux.org.uk>\n"
 "MIME-Version: 1.0\n"
@@ -103,7 +103,7 @@ msgstr ""
 #: applets/wncklet/workspace-switcher.c:454
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "Roedd gwall yn dangos cymorth: %s"
+msgstr "Roedd gwall wrth ddangos cymorth: %s"
 
 #: applets/clock/clock.c:1278
 msgid "Clock Preferences"
@@ -275,7 +275,7 @@ msgstr "_Ynghylch..."
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
-msgstr "_Cymorth..."
+msgstr "_Cymorth"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:6
 #: applets/fish/GNOME_FishApplet.xml.h:3
@@ -558,7 +558,7 @@ msgstr "Ffatri Rhaglennigion Llywio Ffenstri"
 #: applets/wncklet/workspace-switcher.c:499
 #: applets/wncklet/workspace-switcher.c:814
 msgid "Workspace Switcher"
-msgstr "Newidydd Mannau Gwaith"
+msgstr "Cyfnewidydd Gweithfannau"
 
 #: applets/wncklet/showdesktop.c:219
 msgid "Click here to restore hidden windows."
@@ -575,7 +575,7 @@ msgstr "Methu llwytho %s: %s\n"
 
 #: applets/wncklet/showdesktop.c:295
 msgid "File not found"
-msgstr "Heb ganfod y ffeil"
+msgstr "Ni chanfodwyd y ffeil"
 
 #: applets/wncklet/showdesktop.c:444
 msgid "Show Desktop Button"
@@ -675,7 +675,7 @@ msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Penderfynu pryd i grwpio ffenestri o'r un cymhwysiad yn y Rhestr Ffenestri. "
+"Penderfynu pryd i grwpio ffenestri o'r un rhaglen yn y Rhestr Ffenestri. "
 "Mae \"never\", \"auto\" ac \"always\" yn werthoedd dilys."
 
 #: applets/wncklet/window-list.schemas.in.h:2
@@ -731,7 +731,7 @@ msgid ""
 msgstr ""
 "Er mwyn bod yn ddefnyddiol, mae'r Rhestr Ffenestri angen terfyn lled lleiaf. "
 "Mae'r gosodiad hwn yn ddefnyddiol ar gyfer paneli ymyl a phaneli symudol, "
-"sy'n gofyn am led bychan diofyn."
+"sy'n gofyn am led bychan rhagosodiedig."
 
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -1284,7 +1284,7 @@ msgstr "Methu agor ffeil bwrdd gwaith %s ar gyfer lansiwr panel%s%s\n"
 #: gnome-panel/launcher.c:525
 #, c-format
 msgid "Help on %s _Application"
-msgstr "Cymorth ynghylch y _Cymhwysiant %s"
+msgstr "Cymorth ynghylch y _Rhaglen%s"
 
 #: gnome-panel/launcher.c:645 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
@@ -1487,7 +1487,7 @@ msgstr "Cymorth ynghylch %s"
 
 #: gnome-panel/menu.c:1518
 msgid "Application"
-msgstr "Cymhwysiant"
+msgstr "Rhaglen"
 
 #: gnome-panel/menu.c:1564
 msgid "Entire menu"
@@ -1518,7 +1518,7 @@ msgstr "dychwelodd yr ymholiad eithriad %s\n"
 #: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3306
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
-msgstr "Cymwysiadau"
+msgstr "Rhaglenni"
 
 #: gnome-panel/menu.c:2830 gnome-panel/menu.c:2836 gnome-panel/menu.c:3231
 msgid "KDE Menu"
@@ -2280,14 +2280,14 @@ msgstr "_Teilio"
 
 #: gnome-panel/panel-recent.c:57
 msgid "Couldn't find a suitable application"
-msgstr "Methu canfod cymhwysiant addas"
+msgstr "Methu canfod rhaglen addas"
 
 #: gnome-panel/panel-recent.c:83
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
-"Nid yw'r cymhwysiant diofyn ar gyfer y math yma o ffeil yn gallu ymdrin "
-"affeiliau pell"
+"Nid yw'r rhaglen rhagosodedig ar gyfer y math yma o ffeil yn gallu "
+"ymdrin a ffeiliau pell"
 
 #: gnome-panel/panel-recent.c:147
 #, c-format
@@ -3109,12 +3109,6 @@ msgstr "Bach iawn iawn"
 #~ msgid "Choose a file"
 #~ msgstr "Dewiswch ffeil"
 
-#~ msgid "Known Applications"
-#~ msgstr "Cymwysiannau Hysbys"
-
-#~ msgid "No application selected"
-#~ msgstr "Dim cymhwysiant wedi ei ddewis"
-
 #~ msgid "Command to _execute when fish is clicked:"
 #~ msgstr "Gorchymyn i'w _weithredu pan caiff y pysgodyn ei glicio:"
 
@@ -3570,9 +3564,6 @@ msgstr "Bach iawn iawn"
 
 #~ msgid "_Size:"
 #~ msgstr "_Maint:"
-
-#~ msgid "Default"
-#~ msgstr "Diofyn"
 
 #~ msgid "Color"
 #~ msgstr "Lliw"
