@@ -24,7 +24,11 @@ fish_applet_LDADD = ../../panel/libpanel_applet.la \
 
 fish_applet_LINK = $(CXXLINK)
 
-EXTRA_DIST = fish_applet.desktop
+EXTRA_DIST = \
+	fish_applet.desktop	\
+	fish1.xpm		\
+	fish2.xpm		\
+	fish3.xpm
 
 sysdir = $(datadir)/applets/Amusements
 sys_DATA = fish_applet.desktop
