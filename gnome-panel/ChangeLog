@@ -1,3 +1,13 @@
+Tue Jul 08 10:35:41 2003  George Lebl <jirka@5z.com>
+
+	* menu.c: when hierarchy changed, remove old mnemonic before adding
+	  it to the new window avoids warning on exit and likely bad
+	  behaviour when reparenting things.
+
+	* panel-applet-frame.c: avoid crash/warning by only checking the
+	  locked flag while the widget and info structure still exists,
+	  for the reload-if-applet-crashes code.
+
 Tue Jul 08 09:50:24 2003  George Lebl <jirka@5z.com>
 
 	* panel-gconf.c: when cleaning a directory don't clean keys we can't

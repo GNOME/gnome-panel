@@ -1809,6 +1809,9 @@ setup_mnemonic (GtkWidget *menuitem,
 
   keyval = GPOINTER_TO_UINT (keyval_as_pointer);
 
+  if (old_toplevel != NULL)
+    gtk_window_remove_mnemonic (GTK_WINDOW (old_toplevel), keyval, GTK_WIDGET (menuitem));
+
   toplevel = gtk_widget_get_toplevel (menuitem);
   if (GTK_WIDGET_TOPLEVEL (toplevel))
     gtk_window_add_mnemonic (GTK_WINDOW (toplevel), keyval, GTK_WIDGET (menuitem));

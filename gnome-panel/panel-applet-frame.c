@@ -699,6 +699,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		char        *iid;
 		char        *id = NULL;
 		int          position = -1;
+		gboolean     locked = FALSE;
 
 		panel = frame->priv->panel;
 		iid   = g_strdup (frame->priv->iid);
@@ -706,11 +707,11 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 		if (info) {
 			id = g_strdup (info->id);
 			position  = panel_applet_get_position (info);
+			locked = panel_widget_get_applet_locked (panel, info->widget);
 			panel_applet_clean (info);
 		}
 
-		panel_applet_frame_load (iid, panel,
-					 panel_widget_get_applet_locked (panel, info->widget),
+		panel_applet_frame_load (iid, panel, locked,
 					 position, TRUE, id);
 
 		g_free (iid);
