@@ -67,9 +67,9 @@ launch (Launcher *launcher, int argc, char *argv[])
 		goad_id = get_applet_goad_id_from_dentry(item);
 
 		if(goad_id) {
-			load_extern_applet(goad_id,NULL,
+			load_extern_applet(goad_id, NULL,
 					   panels->data,
-					   0,FALSE);
+					   0, FALSE, FALSE);
 		} else {
 			g_warning(_("Can't get goad_id from desktop entry!"));
 		}
@@ -437,31 +437,34 @@ launcher_properties(Launcher *launcher)
 
 void
 load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
-			   PanelWidget *panel, int pos)
+			   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Launcher *launcher;
 
 	launcher = create_launcher(params,dentry);
 
-	if(launcher) {
-		register_toy(launcher->button,launcher, panel, pos,
-			     APPLET_LAUNCHER);
+	if(!launcher)
+		return;
 
-		gtk_tooltips_set_tip (panel_tooltips,
-				      launcher->button,
-				      launcher->dentry->comment,NULL);
+	if(!register_toy(launcher->button, launcher, panel, pos, exactpos,
+			 APPLET_LAUNCHER))
+		return;
 
-		applet_add_callback(applets_last->data,"properties",
-				    GNOME_STOCK_MENU_PROP,
-				    _("Properties..."));
-	}
+	gtk_tooltips_set_tip (panel_tooltips,
+			      launcher->button,
+			      launcher->dentry->comment,NULL);
+
+	applet_add_callback(applets_last->data,"properties",
+			    GNOME_STOCK_MENU_PROP,
+			    _("Properties..."));
 }
 
 static void
-really_add_launcher(GtkWidget *d,int button, gpointer data)
+really_add_launcher(GtkWidget *d, int button, gpointer data)
 {
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
+	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"exactpos"));
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
 	GnomeDesktopEntry *dentry;
 	
@@ -472,14 +475,14 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 			g_free(dentry->name);
 			dentry->name=g_strdup("???");
 		}
-		load_launcher_applet_full (NULL, dentry, panel, pos);
+		load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 		panel_config_sync();
 	}
 	gtk_widget_destroy(d);
 }
 
 void
-ask_about_launcher(char *file, PanelWidget *panel, int pos)
+ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *d;
 	GtkWidget *notebook;
@@ -512,6 +515,8 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 	
 	
 	gtk_object_set_data(GTK_OBJECT(d),"pos", GINT_TO_POINTER(pos));
+	gtk_object_set_data(GTK_OBJECT(d),"exactpos",
+			    GINT_TO_POINTER(exactpos));
 	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
 
 	gtk_signal_connect(GTK_OBJECT(d),"clicked",
@@ -528,7 +533,8 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 void
 load_launcher_applet_from_info(char *name, char *comment,
 			       char **exec, int execn, char *icon,
-			       PanelWidget *panel, int pos)
+			       PanelWidget *panel, int pos,
+			       gboolean exactpos)
 {
 	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
 	dentry->name = g_strdup(name);
@@ -542,14 +548,15 @@ load_launcher_applet_from_info(char *name, char *comment,
 	
 	dentry->type = g_strdup("Application");
 
-	load_launcher_applet_full (NULL,dentry,panel, pos);
+	load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 	panel_config_sync();
 }
 
 void
 load_launcher_applet_from_info_url(char *name, char *comment,
 				   char *url, char *icon,
-				   PanelWidget *panel, int pos)
+				   PanelWidget *panel, int pos,
+				   gboolean exactpos)
 {
 	char *exec[] = { NULL, NULL };
 	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
@@ -564,12 +571,13 @@ load_launcher_applet_from_info_url(char *name, char *comment,
 		dentry->icon = g_strdup(icon);
 	dentry->type = g_strdup("URL");
 
-	load_launcher_applet_full (NULL,dentry,panel, pos);
+	load_launcher_applet_full(NULL, dentry, panel, pos, exactpos);
 	panel_config_sync();
 }
 
 void
-load_launcher_applet(char *params, PanelWidget *panel, int pos)
+load_launcher_applet(char *params, PanelWidget *panel, int pos,
+		     gboolean exactpos)
 {
-	load_launcher_applet_full (params,NULL,panel, pos);
+	load_launcher_applet_full(params, NULL, panel, pos, exactpos);
 }

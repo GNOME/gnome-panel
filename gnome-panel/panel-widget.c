@@ -26,7 +26,7 @@ GSList *panels=NULL; /*other panels we might want to move the applet to*/
 
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
-int panel_applet_in_drag = FALSE;
+gboolean panel_applet_in_drag = FALSE;
 
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
@@ -57,7 +57,7 @@ int pw_drawer_step = 20;
 int pw_auto_step = 10;
 int pw_minimized_size = 6;
 int pw_minimize_delay = 300;
-int pw_disable_animations = FALSE;
+gboolean pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 int pw_applet_padding = 3;
 
@@ -2425,7 +2425,7 @@ panel_widget_add_forbidden(PanelWidget *panel)
 }
 
 int
-panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_lower_events, int insert_at_pos)
+panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, gboolean bind_lower_events, gboolean insert_at_pos)
 {
 	AppletData *ad = NULL;
 
@@ -2444,15 +2444,22 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 		pos = pw_applet_padding;
 	
 	if(!insert_at_pos) {
-		if(pw_movement_type != PANEL_FREE_MOVE ||
-		   panel->packed) {
+		if(panel->packed) {
 			if(get_applet_list_pos(panel,pos)) 
 				/*this is a slight hack so that this applet
 				  is inserted AFTER an applet with this pos
 				  number*/
 				pos++;
-		} else
-			pos = panel_widget_find_empty_pos(panel,pos);
+		} else {
+			int newpos = panel_widget_find_empty_pos(panel,pos);
+			if(newpos>=0)
+				pos = newpos;
+			else if(get_applet_list_pos(panel,pos)) 
+				/*this is a slight hack so that this applet
+				  is inserted AFTER an applet with this pos
+				  number*/
+				pos++;
+		}
 	}
 
 	if(pos==-1) return -1;
@@ -2717,7 +2724,7 @@ panel_widget_change_global(int explicit_step,
 			   int minimized_size,
 			   int minimize_delay,
 			   PanelMovementType move_type,
-			   int disable_animations,
+			   gboolean disable_animations,
 			   int applet_padding)
 {
 	if(explicit_step>0)

@@ -24,11 +24,11 @@ typedef struct {
 } Swallow;
 
 void load_swallow_applet(char *path, char *params, int width, int height,
-			 PanelWidget *panela, int pos);
+			 PanelWidget *panela, int pos, gboolean exactpos);
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 
 /*I couldn't resist the naming of this function*/
-void ask_about_swallowing(PanelWidget *panel, int pos);
+void ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos);
 
 END_GNOME_DECLS
 

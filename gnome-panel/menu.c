@@ -354,7 +354,7 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
-	load_launcher_applet(item_loc, current_panel,0);
+	load_launcher_applet(item_loc, current_panel, 0, FALSE);
 }
 
 
@@ -386,8 +386,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		subdir_name = name;
 	pixmap_name = item_info?item_info->icon:NULL;
 
-	load_drawer_applet(-1,pixmap_name,subdir_name,
-			   panel,pos);
+	load_drawer_applet(-1, pixmap_name, subdir_name, panel, pos, FALSE);
 	
 	g_return_if_fail(applets_last!=NULL);
 	info = applets_last->data;
@@ -425,7 +424,8 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 				load_launcher_applet_full (filename,
 							   dentry,
 							   newpanel,
-							   INT_MAX/2);
+							   INT_MAX/2,
+							   FALSE);
 		}
 	}
 	g_free(filename);
@@ -464,9 +464,9 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 		flags |= MAIN_MENU_DEBIAN_SUB;
 
 	if(mf)
-		load_menu_applet(mf->menudir,flags, current_panel, 0);
+		load_menu_applet(mf->menudir, flags, current_panel, 0, FALSE);
 	else
-		load_menu_applet(NULL,flags, current_panel, 0);
+		load_menu_applet(NULL, flags, current_panel, 0, FALSE);
 }
 
 static PanelWidget *
@@ -1167,24 +1167,26 @@ setup_applet_drag (GtkWidget *menuitem, char *goad_id)
 static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_drawer_applet(-1,NULL,NULL, get_panel_from_menu_data(widget->parent), 0);
+	load_drawer_applet(-1, NULL, NULL,
+			   get_panel_from_menu_data(widget->parent), 0, FALSE);
 }
 
 static void
 add_logout_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_logout_applet(get_panel_from_menu_data(widget->parent), 0);
+	load_logout_applet(get_panel_from_menu_data(widget->parent), 0, FALSE);
 }
 
 static void
 add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_lock_applet(get_panel_from_menu_data(widget->parent), 0);
+	load_lock_applet(get_panel_from_menu_data(widget->parent), 0, FALSE);
 }
 static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
-	if(!load_status_applet(get_panel_from_menu_data(widget->parent), 0)) {
+	if(!load_status_applet(get_panel_from_menu_data(widget->parent),
+			       0, FALSE)) {
 		GtkWidget *mbox;
 		mbox = gnome_message_box_new(_("You already have a status "
 					       "dock on the panel. You can "
@@ -1217,9 +1219,9 @@ add_applet (GtkWidget *w, char *item_loc)
 		gnome_error_dialog(_("Can't get goad_id from desktop entry!"));
 		return;
 	}
-	load_extern_applet(goad_id,NULL,
+	load_extern_applet(goad_id, NULL,
 			   get_panel_from_menu_data(w->parent),
-			   0,FALSE);
+			   0, FALSE, FALSE);
 
 	g_free(goad_id);
 }
@@ -2371,13 +2373,13 @@ current_panel_config(GtkWidget *w, gpointer data)
 static void
 ask_about_launcher_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_launcher(NULL,get_panel_from_menu_data(w->parent),0);
+	ask_about_launcher(NULL, get_panel_from_menu_data(w->parent), 0, FALSE);
 }
 
 static void
 ask_about_swallowing_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_swallowing(get_panel_from_menu_data(w->parent),0);
+	ask_about_swallowing(get_panel_from_menu_data(w->parent), 0, FALSE);
 }
 
 static void
@@ -3701,26 +3703,27 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 
 void
 load_menu_applet(char *params, int main_menu_flags,
-		 PanelWidget *panel, int pos)
+		 PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Menu *menu;
 
-	menu = create_menu_applet(params, ORIENT_UP,main_menu_flags);
+	menu = create_menu_applet(params, ORIENT_UP, main_menu_flags);
 
 	if(menu) {
 		char *tmp;
-		register_toy(menu->button,menu,
-			     panel,pos,APPLET_MENU);
+		if(!register_toy(menu->button, menu,
+				 panel, pos, exactpos, APPLET_MENU))
+			return;
 
 		menu->info = applets_last->data;
 
-		applet_add_callback(menu->info,"properties",
+		applet_add_callback(menu->info, "properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
-		if(params && strcmp(params,".")==0 &&
+		if(params && strcmp(params, ".")==0 &&
 		   (tmp = gnome_is_program_in_path("gmenu")))  {
 			g_free(tmp);
-			applet_add_callback(menu->info,"edit_menus",
+			applet_add_callback(menu->info, "edit_menus",
 					    NULL,
 					    _("Edit menus..."));
 		}

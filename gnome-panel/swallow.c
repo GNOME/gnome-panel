@@ -119,6 +119,8 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d),"height_s");
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
+	gboolean exactpos =
+		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"exactpos"));
 
 	if(button!=0) {
 		gtk_widget_destroy(d);
@@ -131,7 +133,7 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 						GTK_SPIN_BUTTON(width_s)),
 			    gtk_spin_button_get_value_as_int(
 						GTK_SPIN_BUTTON(height_s)),
-			    panel, pos);
+			    panel, pos, exactpos);
 	gtk_widget_destroy(d);
 }
 
@@ -146,7 +148,7 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 
 /*I couldn't resist the naming of this function*/
 void
-ask_about_swallowing(PanelWidget *panel, int pos)
+ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *d;
 	
@@ -169,6 +171,7 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 
 	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
 	gtk_object_set_data(GTK_OBJECT(d),"pos",GINT_TO_POINTER(pos));
+	gtk_object_set_data(GTK_OBJECT(d),"exactpos",GINT_TO_POINTER(exactpos));
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
@@ -336,7 +339,7 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 
 void
 load_swallow_applet(char *path, char *params, int width, int height,
-		    PanelWidget *panel, int pos)
+		    PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Swallow *swallow;
 
@@ -345,7 +348,9 @@ load_swallow_applet(char *path, char *params, int width, int height,
 	if(!swallow)
 		return;
 
-	register_toy(swallow->ebox,swallow, panel, pos, APPLET_SWALLOW);
+	if(!register_toy(swallow->ebox, swallow, panel, pos,
+			 exactpos, APPLET_SWALLOW))
+		return;
 
 	if(path && *path) {
 		char *p = strrchr(path,'.');

@@ -1,5 +1,5 @@
 /* Gnome panel: status applet
- * (C) 1999 the Free Software Foundation
+ * (C) 1999-2000 the Free Software Foundation
  *
  * Authors:  George Lebl
  */
@@ -315,8 +315,8 @@ reparent_fixed(GtkWidget *frame)
 	DPUTS("REPARENT DONE");
 }
 
-int
-load_status_applet(PanelWidget *panel, int pos)
+gboolean
+load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *ebox;
 	GtkWidget *frame;
@@ -357,7 +357,9 @@ load_status_applet(PanelWidget *panel, int pos)
 			   GTK_SIGNAL_FUNC(applet_destroy), the_status);
 	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
-	register_toy(ebox,the_status, panel, pos, APPLET_STATUS);
+	if(!register_toy(ebox, the_status,
+			 panel, pos, exactpos, APPLET_STATUS))
+		return TRUE;
 	the_status->info = applets_last->data;
 
 	return TRUE;

@@ -53,11 +53,12 @@ struct _AppletInfo {
 	gpointer data; /*the per applet structure, if it exists*/
 };
 
-int register_toy(GtkWidget *applet,
-		 gpointer data,
-		 PanelWidget *panel,
-		 int pos,
-		 AppletType type);
+gboolean register_toy(GtkWidget *applet,
+		      gpointer data,
+		      PanelWidget *panel,
+		      int pos,
+		      gboolean exactpos,
+		      AppletType type);
 
 void panel_clean_applet(AppletInfo *info);
 

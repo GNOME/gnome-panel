@@ -365,7 +365,7 @@ drawer_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 
 void
 load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
-		   PanelWidget *panel, int pos)
+		   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Drawer *drawer;
 	PanelOrientType orient = get_applet_orient(panel);
@@ -381,8 +381,8 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		g_return_if_fail(li != NULL);
 		dr_pd = li->data;
 
-		drawer=create_drawer_applet(dr_pd->panel, tooltip,
-					    pixmap, orient);
+		drawer = create_drawer_applet(dr_pd->panel, tooltip,
+					      pixmap, orient);
 
 		drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
 					    orient);
@@ -391,7 +391,17 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 	if(!drawer)
 		return;
 
-	register_toy(drawer->button,drawer, panel, pos, APPLET_DRAWER);
+	{
+		GtkWidget *dw = drawer->drawer;
+
+		if(!register_toy(drawer->button,drawer,
+				 panel, pos, exactpos, APPLET_DRAWER)) {
+			/* by this time drawer has been freed as register_toy
+			   has destroyed drawer->button */
+			gtk_widget_destroy(dw);
+			return;
+		}
+	}
 
 	gtk_signal_connect_after(GTK_OBJECT(drawer->drawer),
 				 "size_allocate",

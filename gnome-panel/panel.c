@@ -770,6 +770,167 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
+static gchar *
+extract_filename (const gchar* uri)
+{
+	/* file uri with a hostname */
+	if (strncmp(uri, "file://", strlen("file://"))==0) {
+		char *hostname = g_strdup(&uri[strlen("file://")]);
+		char *p = strchr(hostname,'/');
+		char *path;
+		char localhostname[1024];
+		/* if we can't find the '/' this uri is bad */
+		if(!p) {
+			g_free(hostname);
+			return NULL;
+		}
+		/* if no hostname */
+		if(p==hostname)
+			return hostname;
+
+		path = g_strdup(p);
+		*p = '\0';
+
+		/* if really local */
+		if(g_strcasecmp(hostname,"localhost")==0) {
+			g_free(hostname);
+			return path;
+		}
+
+		/* ok get the hostname */
+		if(gethostname(localhostname,
+			       sizeof(localhostname)) < 0) {
+			strcpy(localhostname,"");
+		}
+
+		/* if really local */
+		if(localhostname[0] &&
+		   g_strcasecmp(hostname,localhostname)==0) {
+			g_free(hostname);
+			return path;
+		}
+		
+		g_free(hostname);
+		g_free(path);
+		return NULL;
+
+	/* if the file doesn't have the //, we take it containing 
+	   a local path */
+	} else if (strncmp(uri, "file:", strlen("file:"))==0) {
+		const char *path = &uri[strlen("file:")];
+		/* if empty bad */
+		if(!*path) return NULL;
+		return g_strdup(path);
+	}
+	return NULL;
+}
+
+static void
+drop_url(PanelWidget *panel, int pos, char *url)
+{
+	char *p = g_strdup_printf("Open URL: %s",url);
+	load_launcher_applet_from_info_url(url, p, url, "netscape.png",
+					   panel, pos, TRUE);
+	g_free(p);
+}
+
+static void
+drop_menu(PanelWidget *panel, int pos, char *dir)
+{
+	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+	/*guess redhat menus*/
+	if(g_file_exists("/etc/X11/wmconfig"))
+		flags |= MAIN_MENU_REDHAT_SUB;
+	/* Guess KDE menus */
+	if(g_file_exists(KDE_MENUDIR))
+		flags |= MAIN_MENU_KDE_SUB;
+	load_menu_applet(dir, flags, panel, pos, TRUE);
+}
+
+static void
+drop_urilist(PanelWidget *panel, int pos, char *urilist)
+{
+	GList *li, *files;
+	struct stat s;
+
+	files = gnome_uri_list_extract_uris(urilist);
+
+	for(li = files; li; li = g_list_next(li)) {
+		const char *mimetype;
+		char *filename;
+
+		if(strncmp(li->data,"http:",strlen("http:"))==0 ||
+		   strncmp(li->data,"https:",strlen("https:"))==0 ||
+		   strncmp(li->data,"ftp:",strlen("ftp:"))==0 ||
+		   strncmp(li->data,"gopher:",strlen("gopher:"))==0) {
+			drop_url(panel,pos,li->data);
+			continue;
+		}
+
+		filename = extract_filename(li->data);
+		if(!filename)
+			continue;
+
+		if(stat(filename, &s) != 0) {
+			g_free(filename);
+			continue;
+		}
+
+		mimetype = gnome_mime_type(filename);
+
+		if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
+			panel_widget_set_back_pixmap (panel, filename);
+		else if(mimetype
+			&& !strcmp(mimetype, "application/x-gnome-app-info"))
+			load_launcher_applet(filename, panel, pos, TRUE);
+		else if(S_ISDIR(s.st_mode)) {
+			drop_menu(panel, pos, filename);
+		} else if(S_IEXEC & s.st_mode) /*executable?*/
+			ask_about_launcher(filename,panel,pos,TRUE);
+		g_free(filename);
+	}
+
+	gnome_uri_list_free_strings (files);
+}
+
+static void
+drop_internal_applet(PanelWidget *panel, int pos, char *applet_type)
+{
+	if(!applet_type)
+		return;
+	if(strcmp(applet_type,"MENU:MAIN")==0) {
+		drop_menu(panel, pos, NULL);
+	} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
+		load_drawer_applet(-1, NULL, NULL, panel, pos, TRUE);
+	} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
+		load_logout_applet(panel, pos, TRUE);
+	} else if(strcmp(applet_type,"LOCK:NEW")==0) {
+		load_lock_applet(panel, pos, TRUE);
+	} else if(strcmp(applet_type,"SWALLOW:ASK")==0) {
+		ask_about_swallowing(panel, pos, TRUE);
+	} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
+		ask_about_launcher(NULL, panel, pos, TRUE);
+	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
+		load_status_applet(panel, pos, TRUE);
+	}
+}
+
+static void
+drop_color(PanelWidget *panel, int pos, guint16 *dropped)
+{
+	GdkColor c;
+
+	if(!dropped) return;
+
+	c.red = dropped[0];
+	c.green = dropped[1];
+	c.blue = dropped[2];
+	c.pixel = 0;
+
+	panel_widget_set_back_color(panel, &c);
+}
+
 static void
 panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 				GdkDragContext   *context,
@@ -798,132 +959,27 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 		pos = panel->size;
 
 	switch (info) {
-	case TARGET_URL: {
-		GList *ltmp, *files;
-		struct stat s;
-
-		files =
-		  gnome_uri_list_extract_filenames(selection_data->data);
-
-		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
-		  const char *mimetype;
-
-		  mimetype = gnome_mime_type(ltmp->data);
-
-		  if(mimetype &&
-		     (!strcmp(mimetype,"x-url/http") ||
-		      !strcmp(mimetype,"x-url/ftp"))) {
-			  char *p;
-
-			  p = g_strdup_printf("Open URL: %s",
-					      (char *)ltmp->data);
-			  load_launcher_applet_from_info_url(ltmp->data,
-							     p,ltmp->data,
-							     "netscape.png",
-							     panel,pos);
-			  g_free(p);
-		  }
-
-		  if(stat(ltmp->data, &s) != 0) {
-			  continue;
-		  }
-
-		  if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
-		    panel_widget_set_back_pixmap (panel, ltmp->data);
-		  else if(mimetype
-			  && !strcmp(mimetype, "application/x-gnome-app-info"))
-		    load_launcher_applet(ltmp->data, panel, pos);
-		  else if(S_ISDIR(s.st_mode)) {
-			  int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
-
-			  /*guess redhat menus*/
-			  if(g_file_exists("/etc/X11/wmconfig"))
-				  flags |= MAIN_MENU_REDHAT_SUB;
-			  /* Guess KDE menus */
-			  if(g_file_exists(KDE_MENUDIR))
-				  flags |= MAIN_MENU_KDE_SUB;
-			  load_menu_applet(ltmp->data, flags, panel, pos);
-		  } else if(S_IEXEC & s.st_mode) /*executable?*/
-		    ask_about_launcher(ltmp->data,panel,pos);
-		}
-		
-		gnome_uri_list_free_strings (files);
+	case TARGET_URL:
+		drop_urilist(panel, pos, selection_data->data);
 		break;
-	}
-	case TARGET_NETSCAPE_URL: {
-		char *p;
-		
-		p = g_strdup_printf("Open URL: %s",selection_data->data);
-		load_launcher_applet_from_info_url(selection_data->data,p,
-						   selection_data->data,
-						   "netscape.png",panel,pos);
-		g_free(p);
+	case TARGET_NETSCAPE_URL:
+		drop_url(panel, pos, selection_data->data);
 		break;
-	}
-	case TARGET_COLOR: {
-		guint16 *dropped;
-		GdkColor c;
-
-		dropped = (guint16 *)selection_data->data;
-
-		c.red = dropped[0];
-		c.green = dropped[1];
-		c.blue = dropped[2];
-		c.pixel = 0;
-
-		panel_widget_set_back_color(panel, &c);
+	case TARGET_COLOR:
+		drop_color(panel, pos, (guint16 *)selection_data->data);
 		break;
-	}
-	case TARGET_DIRECTORY: {
-		int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
-
-		/*guess redhat menus*/
-		if(g_file_exists("/etc/X11/wmconfig"))
-			flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
-		/* Guess KDE menus */
-		if(g_file_exists(KDE_MENUDIR))
-				  flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
-		load_menu_applet ((char *)selection_data->data,flags,
-				  panel, pos);
+	case TARGET_DIRECTORY:
+		drop_menu(panel, pos, selection_data->data);
 		break;
-	}
-	case TARGET_APPLET: {
-		char *goad_id = (char *)selection_data->data;
-		if(!goad_id)
+	case TARGET_APPLET:
+		if(!selection_data->data)
 			return;
-		load_extern_applet(goad_id,NULL,panel,pos,FALSE);
+		load_extern_applet((char *)selection_data->data, NULL,
+				   panel, pos, TRUE, FALSE);
 		break;
-	}
-	case TARGET_APPLET_INTERNAL: {
-		char *applet_type = (char *)selection_data->data;
-		if(!applet_type)
-			return;
-		if(strcmp(applet_type,"MENU:MAIN")==0) {
-			int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
-
-			/*guess redhat menus*/
-			if(g_file_exists("/etc/X11/wmconfig"))
-				flags |= MAIN_MENU_REDHAT_SUB;
-			/* Guess KDE menus */
-			if(g_file_exists(KDE_MENUDIR))
-				flags |= MAIN_MENU_KDE_SUB;
-
-			load_menu_applet(NULL,flags, panel, pos);
-		} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
-			load_drawer_applet(-1,NULL,NULL, panel, pos);
-		} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
-			load_logout_applet(panel, pos);
-		} else if(strcmp(applet_type,"LOCK:NEW")==0) {
-			load_lock_applet(panel, pos);
-		} else if(strcmp(applet_type,"SWALLOW:ASK")==0) {
-			ask_about_swallowing(panel,pos);
-		} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
-			ask_about_launcher(NULL,panel,pos);
-		} else if(strcmp(applet_type,"STATUS:TRY")==0) {
-			load_status_applet(panel,pos);
-		}
+	case TARGET_APPLET_INTERNAL:
+		drop_internal_applet(panel, pos, selection_data->data);
 		break;
-	}
 	}
 }
 

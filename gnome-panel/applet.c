@@ -515,14 +515,17 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 	g_list_free(info->user_menu);
 }
 
-int
+gboolean
 register_toy(GtkWidget *applet,
 	     gpointer data,
 	     PanelWidget *panel,
 	     int pos,
+	     gboolean exactpos,
 	     AppletType type)
 {
 	AppletInfo *info;
+	int newpos;
+	gboolean insert_at_pos;
 	
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(panel != NULL, FALSE);
@@ -574,11 +577,23 @@ register_toy(GtkWidget *applet,
 	applets_to_sync = TRUE;
 
 	/*add at the beginning if pos == -1*/
-	if(panel_widget_add_full(panel, applet, pos>=0?pos:0, TRUE,
-				 pos>=0?FALSE:TRUE)==-1) {
+	if(pos>=0) {
+		newpos = pos;
+		insert_at_pos = FALSE;
+	} else {
+		newpos = 0;
+		insert_at_pos = TRUE;
+	}
+	/* if exact pos is on then insert at that precise location */
+	if(exactpos)
+		insert_at_pos = TRUE;
+
+	if(panel_widget_add_full(panel, applet, newpos, TRUE,
+				 insert_at_pos)==-1) {
 		GSList *list;
 		for(list = panels; list != NULL; list = g_slist_next(list))
-			if(panel_widget_add_full(panel, applet, 0,TRUE,FALSE)!=-1)
+			if(panel_widget_add_full(panel, applet, 0,
+						 TRUE, TRUE)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/

@@ -43,7 +43,7 @@ struct _Menu {
 };
 
 void load_menu_applet(char *params, int main_menu_flags,
-		      PanelWidget *panel, int pos);
+		      PanelWidget *panel, int pos, gboolean exactpos);
 void add_menu_widget (Menu *menu, GSList *menudirl, int main_menu,
 		      int fake_subs);
 

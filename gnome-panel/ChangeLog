@@ -1,3 +1,19 @@
+Fri Jan 21 22:38:07 2000  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: always look for an empty spot first unless
+	  insert_at_pos is given.  But then if that fails insert at
+	  pos.
+
+	* applet.[ch],menu.[ch],extern.[ch],drawer.[ch],logout.[ch],
+	  swallow.[ch],status.[ch],session.c,panel.c: take an extra
+	  argument to register_toy (exactpos) which specifies if to
+	  look for an open spot or to insert exactly.  All the
+	  load_*_applet have to take this parameter
+
+	* panel.c: cleanup the drop stuff.  use extract_uris and copy
+	  the extract_file func from HEAD gnome-libs and use that to get
+	  local filenames.
+
 Wed Jan 19 21:30:34 2000  George Lebl <jirka@5z.com>
 
 	* extern.c,applet.c: cosmetic code changes, and add _() around

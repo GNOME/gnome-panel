@@ -70,7 +70,7 @@ struct _PanelWidget
 	gboolean		rotate_pixmap_bg; /*rotate pixmap on vertical
 						    panels */
 
-	int			packed;
+	gboolean		packed;
 
 	AppletData		*currently_dragged_applet;
 
@@ -122,7 +122,7 @@ struct _PanelWidgetClass
 };
 
 guint		panel_widget_get_type		(void);
-GtkWidget *	panel_widget_new		(int packed,
+GtkWidget *	panel_widget_new		(gboolean packed,
 						 PanelOrientation orient,
 						 int sz,
 						 PanelBackType back_type,
@@ -136,8 +136,8 @@ GtkWidget *	panel_widget_new		(int packed,
 int		panel_widget_add_full		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos,
-						 int bind_lower_events,
-						 int insert_at_pos);
+						 gboolean bind_lower_events,
+						 gboolean insert_at_pos);
 #define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE))
 
 /*needs to be called for drawers after add*/
@@ -195,7 +195,7 @@ void		panel_widget_change_global	(int explicit_step,
 						 int minimized_size,
 						 int minimize_delay,
 						 PanelMovementType move_type,
-						 int disable_animations,
+						 gboolean disable_animations,
 						 int applet_padding);
 
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
@@ -237,7 +237,7 @@ void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 
 /*extern GSList *panels;*/
 
-extern int panel_applet_in_drag;
+extern gboolean panel_applet_in_drag;
 
 
 END_GNOME_DECLS

@@ -53,14 +53,15 @@ create_logout_widget(void)
 }
 
 void
-load_logout_applet(PanelWidget *panel, int pos)
+load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *logout;
 
 	logout = create_logout_widget();
+	if(!logout)
+		return;
 
-	if(logout)
-		register_toy(logout, NULL, panel, pos, APPLET_LOGOUT);
+	register_toy(logout, NULL, panel, pos, exactpos, APPLET_LOGOUT);
 }
 
 static GtkWidget *
@@ -86,13 +87,14 @@ create_lock_widget(void)
 }
 
 void
-load_lock_applet(PanelWidget *panel, int pos)
+load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *lock;
 
 	lock = create_lock_widget();
 
-	if(lock)
-		register_toy(lock, NULL, panel, pos, APPLET_LOCK);
+	if(!lock)
+		return;
+	register_toy(lock, NULL, panel, pos, exactpos, APPLET_LOCK);
 }
 

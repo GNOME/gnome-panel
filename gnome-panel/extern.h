@@ -19,7 +19,8 @@ struct _Extern {
 	char *goad_id;
 	char *cfg;
 	GtkWidget *ebox;
-	int started;
+	gboolean started;
+	gboolean exactpos;
 	gboolean send_position;
 	gboolean send_draw;
 	PanelOrientation orient; /* current orient, if it doesn't change,
@@ -32,7 +33,8 @@ struct _Extern {
 };
 void extern_clean(Extern *ext);
 
-void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, int queue);
+void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
+			int pos, gboolean exactpos, gboolean queue);
 void load_queued_externs(void);
 
 void panel_corba_clean_up(void);

@@ -445,14 +445,14 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	g_return_val_if_fail(socket!=NULL,0);
 
-	gtk_container_add(GTK_CONTAINER(ext->ebox),socket);
+	gtk_container_add(GTK_CONTAINER(ext->ebox), socket);
 
-	gtk_widget_show_all (ext->ebox);
+	gtk_widget_show_all(ext->ebox);
 	
 	/*we save the obj in the id field of the appletinfo and the 
 	  path in the path field */
 	ext->info = NULL;
-	if(!register_toy(ext->ebox,ext,panel,pos,type)) {
+	if(!register_toy(ext->ebox, ext, panel, pos, ext->exactpos, type)) {
 		/* the ebox is destroyed in register_toy */
 		ext->ebox = NULL;
 		g_warning(_("Couldn't add applet"));
@@ -471,7 +471,8 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 }
 
 void
-load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, int queue)
+load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
+		   int pos, gboolean exactpos, gboolean queue)
 {
 	Extern *ext;
 	POA_GNOME_PanelSpot *panelspot_servant;
@@ -485,6 +486,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 	
 	ext = g_new0(Extern,1);
 	ext->started = FALSE;
+	ext->exactpos = exactpos;
 	ext->send_position = FALSE;
 	ext->send_draw = FALSE;
 	ext->orient = -1;
@@ -610,6 +612,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	  have already reserved a spot for it*/
 	ext = g_new0(Extern,1);
 	ext->started = FALSE;
+	ext->exactpos = FALSE;
 	ext->send_position = FALSE;
 	ext->send_draw = FALSE;
 	ext->orient = -1;

@@ -740,14 +740,14 @@ load_default_applets1(PanelWidget *panel)
 	char *p;
 
 	load_menu_applet(NULL, get_default_menu_flags (), 
-			 panels->data, 0);
+			 panels->data, 0, FALSE);
 
 	/* if bigger then 640+50+50 add a logout button */
 	if(gdk_screen_width()>640+50)
-		load_logout_applet(panel, 48);
+		load_logout_applet(panel, 48, FALSE);
 	/* if bigger then 640+100+50 add a lock button */
 	if(gdk_screen_width()>640+100+50)
-		load_lock_applet(panel, 48*2);
+		load_lock_applet(panel, 48*2, FALSE);
 	
 	if(gdk_screen_width()>639) {
 		/*load up some launchers, but only if screen larger then 639*/
@@ -755,33 +755,35 @@ load_default_applets1(PanelWidget *panel)
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
-				load_launcher_applet(p,panel,48*4+i*48);
+				load_launcher_applet(p, panel,
+						     48*4+i*48, FALSE);
 				g_free(p);
 			}
 		}
 	}
 
-	load_extern_applet("tasklist_applet",NULL,
-			   panel,INT_MAX/2/*flush right*/,TRUE);
+	load_extern_applet("tasklist_applet", NULL,
+			   panel, INT_MAX/2/*flush right*/, FALSE, TRUE);
 	/* if we are larger then 640, put the status dock on the main
 	   panel, otherwise on the auxiliaray below */
 	if(gdk_screen_width()>640)
-		load_status_applet(panel,INT_MAX/2 + 1000/*flush right*/);
+		load_status_applet(panel,
+				   INT_MAX/2 + 1000/*flush right*/, FALSE);
 }
 
 static void
 load_default_applets2(PanelWidget *panel)
 {
-	load_extern_applet("deskguide_applet",NULL,
-			   panel,0,TRUE);
-	load_extern_applet("gen_util_clock",NULL,
-			   panel,1000,TRUE);
+	load_extern_applet("deskguide_applet", NULL,
+			   panel, 0, FALSE, TRUE);
+	load_extern_applet("gen_util_clock", NULL,
+			   panel, 1000, FALSE, TRUE);
 	load_extern_applet("gen_util_mailcheck",NULL,
-			   panel,2000,TRUE);
+			   panel, 2000, FALSE, TRUE);
 	/* if we are smaller or equal to 640, put the status dock on the
 	   auxiliary and not the main panel */
 	if(gdk_screen_width()<=640)
-		load_status_applet(panel,3000);
+		load_status_applet(panel, 3000, FALSE);
 }
 
 void
@@ -832,35 +834,37 @@ init_user_applets(void)
 		 INT_MAX/2 should allways be large enough */
 		pos += gnome_config_get_bool("right_stick=false")?INT_MAX/2:0;
 		
-		if(strcmp(applet_name,EXTERN_ID) == 0) {
+		if(strcmp(applet_name, EXTERN_ID) == 0) {
 			char *goad_id = gnome_config_get_string("goad_id");
 			if(goad_id && *goad_id) {
 				/*this is the config path to be passed to the
 				  applet when it loads*/
 				g_string_sprintf(buf,"%sApplet_%d_Extern/",
 						 PANEL_CONFIG_PATH,num);
-				load_extern_applet(goad_id,buf->str,panel,pos,TRUE);
+				load_extern_applet(goad_id, buf->str, 
+						   panel, pos, FALSE, TRUE);
 			}
 			g_free(goad_id);
-		} else if(strcmp(applet_name,LAUNCHER_ID) == 0) { 
+		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 
 			char *params = gnome_config_get_string("parameters=");
-			load_launcher_applet(params,panel,pos);
+			load_launcher_applet(params, panel, pos, FALSE);
 			g_free(params);
-		} else if(strcmp(applet_name,LOGOUT_ID) == 0) { 
-			load_logout_applet(panel,pos);
-		} else if(strcmp(applet_name,LOCK_ID) == 0) {
-			load_lock_applet(panel,pos);
-		} else if(strcmp(applet_name,STATUS_ID) == 0) {
-			load_status_applet(panel,pos);
-		} else if(strcmp(applet_name,SWALLOW_ID) == 0) {
+		} else if(strcmp(applet_name, LOGOUT_ID) == 0) { 
+			load_logout_applet(panel, pos, FALSE);
+		} else if(strcmp(applet_name, LOCK_ID) == 0) {
+			load_lock_applet(panel, pos, FALSE);
+		} else if(strcmp(applet_name, STATUS_ID) == 0) {
+			load_status_applet(panel, pos, FALSE);
+		} else if(strcmp(applet_name, SWALLOW_ID) == 0) {
 			char *path = gnome_config_get_string("execpath=");
 			char *params = gnome_config_get_string("parameters=");
 			int width = gnome_config_get_int("width=0");
 			int height = gnome_config_get_int("height=0");
-			load_swallow_applet(path,params,width,height,panel,pos);
+			load_swallow_applet(path, params, width, height,
+					    panel, pos, FALSE);
 			g_free(path);
 			g_free(params);
-		} else if(strcmp(applet_name,MENU_ID) == 0) {
+		} else if(strcmp(applet_name, MENU_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
 			char *s;
 			int type =
@@ -922,13 +926,14 @@ init_user_applets(void)
 					MAIN_MENU_DESKTOP_SUB;
 			}
 
-			load_menu_applet(params,flags,panel,pos);
+			load_menu_applet(params, flags, panel, pos, FALSE);
 			g_free(params);
-		} else if(strcmp(applet_name,DRAWER_ID) == 0) {
+		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
 			int mypanel = gnome_config_get_int("parameters=-1");
 			char *pixmap = gnome_config_get_string("pixmap=");
 			char *tooltip = gnome_config_get_string("tooltip=");
-			load_drawer_applet(mypanel,pixmap,tooltip,panel,pos);
+			load_drawer_applet(mypanel, pixmap, tooltip,
+					   panel, pos, FALSE);
 			g_free(pixmap);
 			g_free(tooltip);
 		} else
@@ -936,7 +941,7 @@ init_user_applets(void)
 		gnome_config_pop_prefix();
 		g_free(applet_name);
 	}
-	g_string_free(buf,TRUE);
+	g_string_free(buf, TRUE);
 }
 
 void
