@@ -164,22 +164,6 @@ gnome_panel_screenshot_LDADD = 	\
 	$(PANELCONFIG_LIBS)	\
 	$(PNG_LIBS)
 
-EXTRA_DIST =					\
-	APPLET_WRITING				\
-	GNOME_Panel.server.in			\
-	panel.hints				\
-	gnome-panel-properties.desktop		\
-	gnome-panel-properties			\
-	$(glade_src)				\
-	$(glade_DATA)				\
-	gnome-panel-properties.glade.h		\
-	nothing.cP				\
-	nothing.h				\
-	gnome-panel-screenshot.glade		\
-	gnome-panel-screenshot.glade.h		\
-	$(schema_DATA)				\
-	panel-marshal.list
-
 gladedir = $(datadir)/gnome/panel
 glade_DATA = \
 	gnome-panel-properties.glade2		\
@@ -192,6 +176,19 @@ glade_src = \
 glade_msgs = \
 	gnome-panel-properties.glade.h		\
 	gnome-panel-screenshot.glade.h
+
+EXTRA_DIST =					\
+	GNOME_Panel.server.in			\
+	panel.hints				\
+	gnome-panel-properties.desktop		\
+	gnome-panel-properties			\
+	$(glade_src)				\
+	$(glade_DATA)				\
+	$(glade_msgs)				\
+	nothing.cP				\
+	nothing.h				\
+	$(schema_DATA)				\
+	panel-marshal.list
 
 gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
 	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-properties.glade > gnome-panel-properties.glade.tmp \
