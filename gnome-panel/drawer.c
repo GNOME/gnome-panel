@@ -287,11 +287,10 @@ drawer_setup(Drawer *drawer)
 {
 	gtk_widget_queue_resize(drawer->drawer);
 	if(DRAWER_WIDGET(drawer->drawer)->state != DRAWER_SHOWN) {
-		gtk_widget_size_request(drawer->drawer,
-					&drawer->drawer->requisition);
+		GtkRequisition chreq;
+		gtk_widget_size_request(drawer->drawer, &chreq);
 		gtk_widget_set_uposition(drawer->drawer,
-					 -drawer->drawer->requisition.width - 1,
-					 -drawer->drawer->requisition.height - 1);
+					 -chreq.width - 1, -chreq.height - 1);
 	}
 	gtk_widget_show(drawer->drawer);
 }

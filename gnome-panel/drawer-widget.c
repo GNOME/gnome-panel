@@ -151,6 +151,7 @@ drawer_widget_size_request(GtkWidget *widget,
 {
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
+	GtkRequisition chreq;
 	int w,h;
 	if(drawer_widget_request_cube) {
 		requisition->width = PANEL_MINIMUM_WIDTH;
@@ -159,10 +160,10 @@ drawer_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 
-	w = basep->ebox->requisition.width;
-	h = basep->ebox->requisition.height;
+	w = chreq.width;
+	h = chreq.height;
 
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
@@ -249,15 +250,15 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
+	GtkRequisition chreq;
 	int w,h;
 
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->ebox,
-				 &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 
-	w = basep->ebox->requisition.width;
-	h = basep->ebox->requisition.height;
+	w = chreq.width;
+	h = chreq.height;
 
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {

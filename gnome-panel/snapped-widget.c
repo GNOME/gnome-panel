@@ -175,6 +175,7 @@ snapped_widget_size_request(GtkWidget *widget,
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
+	GtkRequisition chreq;
 
 	if(snapped_widget_request_cube) {
 		requisition->width = PANEL_MINIMUM_WIDTH;
@@ -183,18 +184,18 @@ snapped_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 	
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			requisition->width = gdk_screen_width();
-			requisition->height = basep->ebox->requisition.height;
+			requisition->height = chreq.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			requisition->height = gdk_screen_height();
-			requisition->width = basep->ebox->requisition.width;
+			requisition->width = chreq.width;
 			break;
 	}
 }
@@ -287,23 +288,23 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
+	GtkRequisition chreq;
 
 	/*get us a size request (we ignored the one on allocation
 	  because we don't want to change our size, ever*/
-	gtk_widget_size_request (basep->ebox,
-				 &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 
 	/*ignore the allocation we get, we want to be this large*/
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			allocation->width = gdk_screen_width();
-			allocation->height = basep->ebox->requisition.height;
+			allocation->height = chreq.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			allocation->height = gdk_screen_height();
-			allocation->width = basep->ebox->requisition.width;
+			allocation->width = chreq.width;
 			break;
 	}
 

@@ -3351,6 +3351,8 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 		   int wx, int wy, int ww, int wh,
 		   GtkWidget *pwidget)
 {
+	GtkRequisition mreq;
+	gtk_widget_get_child_requisition(GTK_WIDGET(menu),&mreq);
 	if(IS_DRAWER_WIDGET(pwidget)) {
 		PanelWidget *panel =
 			PANEL_WIDGET(BASEP_WIDGET(pwidget)->panel);
@@ -3359,13 +3361,13 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 			*y += wy;
 		} else {
 			*x += wx;
-			*y = wy - GTK_WIDGET (menu)->requisition.height;
+			*y = wy - mreq.height;
 		}
 	} else if(IS_SNAPPED_WIDGET(pwidget)) {
 		switch(SNAPPED_WIDGET(pwidget)->pos) {
 		case SNAPPED_BOTTOM:
 			*x += wx;
-			*y = wy - GTK_WIDGET (menu)->requisition.height;
+			*y = wy - mreq.height;
 			break;
 		case SNAPPED_TOP:
 			*x += wx;
@@ -3376,7 +3378,7 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 			*y += wy;
 			break;
 		case SNAPPED_RIGHT:
-			*x = wx - GTK_WIDGET (menu)->requisition.width;
+			*x = wx - mreq.width;
 			*y += wy;
 			break;
 		}
@@ -3388,7 +3390,7 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 			case CORNER_SE:
 			case CORNER_SW:
 				*x += wx;
-				*y = wy - GTK_WIDGET (menu)->requisition.height;
+				*y = wy - mreq.height;
 				break;
 			case CORNER_NE:
 			case CORNER_NW:
@@ -3405,19 +3407,19 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 				break;
 			case CORNER_NE:
 			case CORNER_SE:
-				*x = wx - GTK_WIDGET (menu)->requisition.width;
+				*x = wx - mreq.width;
 				*y += wy;
 				break;
 			}
 		}
 	}
 
-	if(*x + GTK_WIDGET (menu)->requisition.width > gdk_screen_width())
-		*x=gdk_screen_width() - GTK_WIDGET (menu)->requisition.width;
+	if(*x + mreq.width > gdk_screen_width())
+		*x=gdk_screen_width() - mreq.width;
 	if(*x < 0) *x =0;
 
-	if(*y + GTK_WIDGET (menu)->requisition.height > gdk_screen_height())
-		*y=gdk_screen_height() - GTK_WIDGET (menu)->requisition.height;
+	if(*y + mreq.height > gdk_screen_height())
+		*y=gdk_screen_height() - mreq.height;
 	if(*y < 0) *y =0;
 }
 

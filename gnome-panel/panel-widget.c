@@ -670,26 +670,19 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
-		gtk_widget_size_request (ad->applet, &ad->applet->requisition);
+		GtkRequisition chreq;
+		gtk_widget_size_request(ad->applet,&chreq);
 		if(panel->orient == PANEL_HORIZONTAL) {
-			if(requisition->height <
-			   ad->applet->requisition.height) {
-				requisition->height =
-					ad->applet->requisition.height;
-			}
+			if(requisition->height < chreq.height)
+				requisition->height = chreq.height;
 			if(panel->packed)
-				requisition->width +=
-					ad->applet->requisition.width +
+				requisition->width += chreq.width +
 					pw_applet_padding;
 		} else {
-			if(requisition->width <
-			   ad->applet->requisition.width) {
-				requisition->width =
-					ad->applet->requisition.width;
-			}
+			if(requisition->width < chreq.width)
+				requisition->width = chreq.width;
 			if(panel->packed)
-				requisition->height +=
-					ad->applet->requisition.height +
+				requisition->height += chreq.height +
 					pw_applet_padding;
 		}
 	}
@@ -899,24 +892,24 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list = g_list_next(list)) {
 			AppletData *ad = list->data;
 			GtkAllocation challoc;
+			GtkRequisition chreq;
+			gtk_widget_get_child_requisition(ad->applet,&chreq);
 			
 			if(i != ad->pos) {
 				ad->pos = i;
 				send_move = g_slist_prepend(send_move,ad);
 			}
 			if(panel->orient == PANEL_HORIZONTAL) {
-				ad->cells = ad->applet->requisition.width +
-					pw_applet_padding;
+				ad->cells = chreq.width + pw_applet_padding;
 				challoc.x = ad->pos;
-				challoc.y = (allocation->height - ad->applet->requisition.height) / 2;
+				challoc.y = (allocation->height - chreq.height) / 2;
 			} else {
-				ad->cells = ad->applet->requisition.height +
-					pw_applet_padding;
-				challoc.x = (allocation->width - ad->applet->requisition.width) / 2;
+				ad->cells = chreq.height + pw_applet_padding;
+				challoc.x = (allocation->width - chreq.width) / 2;
 				challoc.y = ad->pos;
 			}
-			challoc.width = ad->applet->requisition.width;
-			challoc.height = ad->applet->requisition.height;
+			challoc.width = chreq.width;
+			challoc.height = chreq.height;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
 		}
@@ -926,13 +919,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list!=NULL;
 		    list = g_list_previous(list)) {
 			AppletData *ad = list->data;
+			GtkRequisition chreq;
+			gtk_widget_get_child_requisition(ad->applet,&chreq);
 			
 			if(panel->orient == PANEL_HORIZONTAL)
-				ad->cells = ad->applet->requisition.width +
-					pw_applet_padding;
+				ad->cells = chreq.width + pw_applet_padding;
 			else
-				ad->cells = ad->applet->requisition.height +
-					pw_applet_padding;
+				ad->cells = chreq.height + pw_applet_padding;
 			if(ad->pos+ad->cells > i) {
 				ad->pos = i - ad->cells;
 				send_move = g_slist_prepend(send_move,ad);
@@ -961,15 +954,17 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list = g_list_next(list)) {
 			AppletData *ad = list->data;
 			GtkAllocation challoc;
+			GtkRequisition chreq;
+			gtk_widget_get_child_requisition(ad->applet,&chreq);
 			if(panel->orient == PANEL_HORIZONTAL) {
 				challoc.x = ad->pos;
-				challoc.y = (allocation->height - ad->applet->requisition.height) / 2;
+				challoc.y = (allocation->height - chreq.height) / 2;
 			} else {
-				challoc.x = (allocation->width - ad->applet->requisition.width) / 2;
+				challoc.x = (allocation->width - chreq.width) / 2;
 				challoc.y = ad->pos;
 			}
-			challoc.width = ad->applet->requisition.width;
-			challoc.height = ad->applet->requisition.height;
+			challoc.width = chreq.width;
+			challoc.height = chreq.height;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}

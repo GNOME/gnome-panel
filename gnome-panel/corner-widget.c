@@ -163,6 +163,7 @@ corner_widget_size_request(GtkWidget *widget,
 {
 	CornerWidget *corner = CORNER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
+	GtkRequisition chreq;
 	if(corner_widget_request_cube) {
 		requisition->width = PANEL_MINIMUM_WIDTH;
 		requisition->height = PANEL_MINIMUM_WIDTH;
@@ -170,10 +171,10 @@ corner_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 	
-	requisition->width = basep->ebox->requisition.width;
-	requisition->height = basep->ebox->requisition.height;
+	requisition->width = chreq.width;
+	requisition->height = chreq.height;
 }
 
 static void
@@ -239,7 +240,7 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 		if(panel->orient == PANEL_HORIZONTAL &&
 		   corner->state == CORNER_HIDDEN)
 			*x = gdk_screen_width() -
-				BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
+				BASEP_WIDGET(corner)->hidebutton_w->allocation.width;
 		break;
 	case CORNER_SE:
 		*x = gdk_screen_width() - width;
@@ -247,18 +248,18 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 		if(panel->orient == PANEL_HORIZONTAL &&
 		   corner->state == CORNER_HIDDEN)
 			*x = gdk_screen_width() -
-				BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
+				BASEP_WIDGET(corner)->hidebutton_w->allocation.width;
 		else if(panel->orient == PANEL_VERTICAL &&
 			corner->state == CORNER_HIDDEN)
 			*y = gdk_screen_height() -
-				BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
+				BASEP_WIDGET(corner)->hidebutton_n->allocation.height;
 		break;
 	case CORNER_SW:
 		*y = gdk_screen_height() - height;
 		if(panel->orient == PANEL_VERTICAL &&
 		   corner->state == CORNER_HIDDEN)
 			*y = gdk_screen_height() -
-				BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
+				BASEP_WIDGET(corner)->hidebutton_n->allocation.height;
 		break;
 	case CORNER_NW:
 		break;
@@ -271,14 +272,14 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	CornerWidget *corner = CORNER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
+	GtkRequisition chreq;
 	
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->ebox,
-				 &basep->ebox->requisition);
+	gtk_widget_size_request (basep->ebox, &chreq);
 	
-	allocation->width = basep->ebox->requisition.width;
-	allocation->height = basep->ebox->requisition.height;
+	allocation->width = chreq.width;
+	allocation->height = chreq.height;
 
 	corner_widget_get_pos(corner,
 			      &allocation->x,
