@@ -329,7 +329,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		}
 	}
 
-	if(tiles_enabled[button->tile]) {
+	if(tiles_enabled[button->tile] && tile) {
 		if (tile_mask) {
 			gdk_gc_set_clip_mask (gc, tile_mask);
 			gdk_gc_set_clip_origin (gc, widget->allocation.x,
