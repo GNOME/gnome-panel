@@ -31,7 +31,8 @@
 G_BEGIN_DECLS
 
 /* themeable size - "panel-menu" */
-#define PANEL_DEFAULT_MENU_ICON_SIZE 20 
+#define PANEL_DEFAULT_MENU_ICON_SIZE 	20 
+#define PANEL_DEFAULT_BUTTON_ICON_SIZE  12
 
 /* stock icons */
 #define PANEL_STOCK_RUN                 "panel-run"
@@ -58,7 +59,10 @@ G_BEGIN_DECLS
 #define PANEL_STOCK_APPLETS             "panel-applet"
 #define PANEL_STOCK_DESKTOP             "panel-desktop"
 #define PANEL_STOCK_KDE                 "panel-kde"
-
+#define PANEL_STOCK_ARROW_RIGHT         "panel-arrow-right"
+#define PANEL_STOCK_ARROW_LEFT          "panel-arrow-left"
+#define PANEL_STOCK_ARROW_UP            "panel-arrow-up"
+#define PANEL_STOCK_ARROW_DOWN          "panel-arrow-down"
 
 /* stock items  - no point in theme the icons one these,
  * they use stock gtk icons and just modify the text

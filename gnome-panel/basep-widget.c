@@ -28,6 +28,7 @@
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
+#include "panel-stock-icons.h"
 
 #undef BASEP_WIDGET_DEBUG
 
@@ -1228,39 +1229,32 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 
 
 static GtkWidget *
-make_hidebutton(BasePWidget *basep,
-		char *pixmaparrow,
-		int horizontal)
+make_hidebutton (BasePWidget *basep,
+		 const char  *arrow_stock_id,
+		 gboolean     horizontal)
 {
-	GtkWidget *w;
+	GtkWidget *button;
 	GtkWidget *pixmap;
-	char *pixmap_name;
 
-	w = gtk_button_new();
-	GTK_WIDGET_UNSET_FLAGS(w, GTK_CAN_DEFAULT);
-	if(horizontal)
-		gtk_widget_set_size_request (w, -1, PANEL_MINIMUM_WIDTH);
+	button = gtk_button_new ();
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_DEFAULT);
+
+	if (horizontal)
+		gtk_widget_set_size_request (button, -1, PANEL_MINIMUM_WIDTH);
 	else
-		gtk_widget_set_size_request (w, PANEL_MINIMUM_WIDTH, -1);
+		gtk_widget_set_size_request (button, PANEL_MINIMUM_WIDTH, -1);
 
-	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-						 pixmaparrow, TRUE, NULL);
+	pixmap = gtk_image_new_from_stock (
+			arrow_stock_id, panel_button_icon_get_size ());
+	gtk_widget_show (pixmap);
 
-	if(pixmap_name) {
-		pixmap = gtk_image_new_from_file(pixmap_name);
-		g_free(pixmap_name);
-	} else {
-		pixmap = gtk_label_new("*");
-	}
-	gtk_widget_show(pixmap);
+	gtk_container_add (GTK_CONTAINER (button), pixmap);
+	g_object_set_data (G_OBJECT (button), "gnome_disable_sound_events",
+			   GINT_TO_POINTER  (TRUE));
 
-	gtk_container_add (GTK_CONTAINER (w), pixmap);
-	g_object_set_data (G_OBJECT (w), "gnome_disable_sound_events",
-			   GINT_TO_POINTER (TRUE));
+	set_tip (button, TRUE);
 
-	set_tip (w, TRUE);
-
-	return w;
+	return button;
 }
 
 static void
@@ -1696,8 +1690,8 @@ basep_widget_construct (gchar *panel_id,
 	/*WEST*/
 	basep->hidebutton_w = make_hidebutton(basep,
 					      reverse_arrows?
-					      "panel-arrow-right.png":
-					      "panel-arrow-left.png",
+					      PANEL_STOCK_ARROW_RIGHT:
+					      PANEL_STOCK_ARROW_LEFT,
 					      TRUE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_w,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
@@ -1707,8 +1701,8 @@ basep_widget_construct (gchar *panel_id,
 	/*NORTH*/
 	basep->hidebutton_n = make_hidebutton(basep,
 					      reverse_arrows?
-					      "panel-arrow-down.png":
-					      "panel-arrow-up.png",
+					      PANEL_STOCK_ARROW_DOWN:
+					      PANEL_STOCK_ARROW_UP,  
 					      FALSE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
@@ -1718,8 +1712,8 @@ basep_widget_construct (gchar *panel_id,
 	/*EAST*/
 	basep->hidebutton_e = make_hidebutton(basep,
 					      reverse_arrows?
-					      "panel-arrow-left.png":
-					      "panel-arrow-right.png",
+					      PANEL_STOCK_ARROW_LEFT: 
+					      PANEL_STOCK_ARROW_RIGHT, 
 					      TRUE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_e,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
@@ -1729,8 +1723,8 @@ basep_widget_construct (gchar *panel_id,
 	/*SOUTH*/
 	basep->hidebutton_s = make_hidebutton (basep,
 					      reverse_arrows ?
-					      "panel-arrow-up.png" :
-					      "panel-arrow-down.png",
+					      PANEL_STOCK_ARROW_UP: 
+					      PANEL_STOCK_ARROW_DOWN, 
 					      FALSE);
 	gtk_table_attach(GTK_TABLE(basep->table), basep->hidebutton_s,
 			 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);

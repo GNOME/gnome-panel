@@ -35,6 +35,7 @@
 
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_foobar_icon_size = 0;
+static GtkIconSize panel_button_icon_size = 0;
 
 GtkIconSize
 panel_menu_icon_get_size (void)
@@ -46,6 +47,12 @@ GtkIconSize
 panel_foobar_icon_get_size (void)
 {
 	return panel_foobar_icon_size;
+}
+
+GtkIconSize
+panel_button_icon_get_size (void)
+{
+	return panel_button_icon_size;
 }
 
 typedef struct {
@@ -78,6 +85,10 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_APPLETS,             "gnome-applets" },
 	{ PANEL_STOCK_DESKTOP,             "gnome-ccdesktop" },
 	{ PANEL_STOCK_KDE,                 "go" },
+	{ PANEL_STOCK_ARROW_RIGHT,         "panel-arrow-right" },
+	{ PANEL_STOCK_ARROW_LEFT,          "panel-arrow-left" },
+	{ PANEL_STOCK_ARROW_UP,            "panel-arrow-up" },
+	{ PANEL_STOCK_ARROW_DOWN,          "panel-arrow-down" },
 };
 
 static void
@@ -166,6 +177,10 @@ panel_init_stock_icons_and_items (void)
 						       PANEL_DEFAULT_MENU_ICON_SIZE);
 
 	panel_foobar_icon_size = gtk_icon_size_register ("panel-foobar", 20, 20);
+
+	panel_button_icon_size = gtk_icon_size_register ("panel-button",
+							 PANEL_DEFAULT_BUTTON_ICON_SIZE,
+							 PANEL_DEFAULT_BUTTON_ICON_SIZE);
 
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);
