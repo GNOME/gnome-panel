@@ -10,6 +10,7 @@
 #include "panel-widget.h"
 #include "corner-widget.h"
 #include "panel-util.h"
+#include "panel_config_global.h"
 #include "gdkextra.h"
 
 extern int panel_applet_in_drag;
@@ -23,8 +24,6 @@ static void corner_widget_size_allocate	(GtkWidget         *widget,
 
 static GtkWindowClass *parent_class = NULL;
 
-extern GdkCursor *fleur_cursor;
-
 /*global settings*/
 extern int pw_explicit_step;
 extern int pw_drawer_step;
@@ -33,6 +32,8 @@ extern int pw_minimized_size;
 extern int pw_minimize_delay;
 extern int pw_disable_animations;
 extern PanelMovementType pw_movement_type;
+
+extern GlobalConfig global_config;
 
 /************************
  widget core
@@ -553,13 +554,15 @@ corner_show_hide_left(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static void
+static int
 corner_enter_notify(CornerWidget *corner,
 		     GdkEventCrossing *event,
 		     gpointer data)
 {
-  if (!gnome_win_hints_wm_exists())
-    gdk_window_raise(GTK_WIDGET(corner)->window);
+	if (!gnome_win_hints_wm_exists() &&
+	    global_config.autoraise)
+		gdk_window_raise(GTK_WIDGET(corner)->window);
+	return FALSE;
 }
 
 static void

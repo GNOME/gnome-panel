@@ -507,6 +507,8 @@ do_session_save(GnomeClient *client,
 				      global_config.disable_animations);
 		gnome_config_set_int("applet_padding",
 				     global_config.applet_padding);
+		gnome_config_set_bool("autoraise",
+				      global_config.autoraise);
 		buf = g_string_new(NULL);
 		for(i=0;i<LAST_TILE;i++) {
 			g_string_sprintf(buf,"tiles_enabled_%d",i);
@@ -1066,6 +1068,8 @@ load_up_globals(void)
 	global_config.movement_type=gnome_config_get_int(buf->str);
 
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+
+	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);

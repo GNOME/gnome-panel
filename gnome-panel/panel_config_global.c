@@ -390,6 +390,7 @@ misc_notebook_page(void)
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
+	GtkWidget *table;
 	GtkWidget *vbox;
 	
 	/* main vbox */
@@ -423,10 +424,11 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 	
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
-	gtk_container_add (GTK_CONTAINER (frame), box);
+	/* table for frame */
+	table = gtk_table_new(2,2,FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER (table),
+				       CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* Small Icons */
 	button = gtk_check_button_new_with_label (_("Show small icons"));
@@ -435,8 +437,7 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.show_small_icons));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,0,1);
 
 	/* Dot Buttons */
 	button = gtk_check_button_new_with_label (_("Show ... buttons"));
@@ -445,8 +446,7 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.show_dot_buttons));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,0,1);
 
 	/* Off Panel Popup menus */
 	button = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
@@ -455,8 +455,7 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.off_panel_popups));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,1,2);
 
 	/* Hungry Menus */
 	button = gtk_check_button_new_with_label (_("Keep menus in memory"));
@@ -465,8 +464,7 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.hungry_menus));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,1,2);
 
 	/* Movement frame */
 	frame = gtk_frame_new (_("Movement"));
@@ -501,8 +499,8 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);	
 	
-	/* Logout frame */
-	frame = gtk_frame_new (_("Log out"));
+	/* Miscellaneous frame */
+	frame = gtk_frame_new (_("Miscellaneous"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
@@ -519,6 +517,16 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.prompt_for_logout));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Autoraise */
+	button = gtk_check_button_new_with_label (_("Raise panels on mouse-over"));
+	if (temp_config.autoraise)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.autoraise));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 

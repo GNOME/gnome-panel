@@ -10,6 +10,7 @@
 #include "panel-widget.h"
 #include "drawer-widget.h"
 #include "panel-util.h"
+#include "panel_config_global.h"
 #include "gdkextra.h"
 #include "panel-include.h" 
 
@@ -26,8 +27,6 @@ static void drawer_widget_size_allocate	(GtkWidget          *widget,
 
 static GtkWindowClass *parent_class = NULL;
 
-extern GdkCursor *fleur_cursor;
-
 /*global settings*/
 extern int pw_explicit_step;
 extern int pw_drawer_step;
@@ -36,6 +35,8 @@ extern int pw_minimized_size;
 extern int pw_minimize_delay;
 extern int pw_disable_animations;
 extern PanelMovementType pw_movement_type;
+
+extern GlobalConfig global_config;
 
 typedef void (*StateSignal) (GtkObject * object,
 			     DrawerState state,
@@ -578,7 +579,8 @@ drawer_widget_close_drawer(DrawerWidget *drawer)
 static int
 drawer_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-	if (!gnome_win_hints_wm_exists())
+	if (!gnome_win_hints_wm_exists() &&
+	    global_config.autoraise)
 		gdk_window_raise(widget->window);
 	return FALSE;
 }

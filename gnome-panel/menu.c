@@ -352,10 +352,8 @@ fr_check_and_reread(FileRec *fr)
 			fr_free(fr,TRUE);
 			return NULL;
 		}
-		if(ds.st_mtime != fr->mtime) {
-			puts("!!!!!!!!!!!!!!!!!!!!!!11");
+		if(ds.st_mtime != fr->mtime)
 			reread = TRUE;
-		}
 		for(li = dr->recs; !reread && li!=NULL; li=g_slist_next(li)) {
 			FileRec *ffr = li->data;
 			DirRec *ddr;
@@ -404,7 +402,6 @@ fr_check_and_reread(FileRec *fr)
 				break;
 			case FILE_REC_FILE:
 				if(stat(ffr->name,&s)==-1) {
-					puts("!!!!!!!!!!!!!!!!!!!!!!22");
 					reread = TRUE;
 					break;
 				}
@@ -420,7 +417,6 @@ fr_check_and_reread(FileRec *fr)
 						dentry->name = NULL;
 						gnome_desktop_entry_free(dentry);
 					} else {
-						puts("!!!!!!!!!!!!!!!!!!!!!!33");
 						reread = TRUE;
 						break;
 					}
@@ -431,10 +427,8 @@ fr_check_and_reread(FileRec *fr)
 			case FILE_REC_EXTRA:
 				r = stat(ffr->name,&s);
 				if((r==-1 && ffr->mtime) ||
-				   (r!=-1 && ffr->mtime != s.st_mtime)) {
-					puts("!!!!!!!!!!!!!!!!!!!!!!44");
+				   (r!=-1 && ffr->mtime != s.st_mtime))
 					reread = TRUE;
-				}
 				break;
 			}
 		}
@@ -1390,28 +1384,18 @@ rh_submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 
 	stat("/etc/X11/wmconfig",&s);
 
-	printf("%ld %ld\n",rhsysdir_mtime,rhuserdir_mtime);
-
-	if(rhsysdir_mtime != s.st_mtime) {
-		printf("%ld\n",s.st_mtime);
-		puts("sysmenu bad");
+	if(rhsysdir_mtime != s.st_mtime)
 		do_read = TRUE;
-	}
 
 	r = stat(userrh,&s);
 	if((r == -1 && rhuserdir_mtime) ||
-	   (r != -1 && rhuserdir_mtime != s.st_mtime)) {
-		printf("%d %ld\n",r,s.st_mtime);
-		puts("USERMENU bad");
+	   (r != -1 && rhuserdir_mtime != s.st_mtime))
 		do_read = TRUE;
-	}
 
 	g_free(userrh);
 
-	if(do_read) {
-		puts("REREAD REDHAT");
+	if(do_read)
 		create_rh_menu();
-	}
 }
 
 
@@ -2544,7 +2528,6 @@ create_rh_menu(void)
 		rhsysdir_mtime = s.st_mtime;
 	else if(stat(userrh,&s)!=-1)
 		rhuserdir_mtime = s.st_mtime;
-	printf("%ld %ld\n",rhsysdir_mtime,rhuserdir_mtime);
 
 	/*read redhat wmconfig files*/
 	for(i=0;dirs[i];i++) {
@@ -2800,6 +2783,10 @@ create_panel_menu (char *menudir, int main_menu,
 		GSList *list = g_slist_append(NULL,menudir);
 		add_menu_widget(menu,list,main_menu,TRUE);
 		g_slist_free(list);
+	} else {
+		/*just load the menus from disk, don't make the widgets
+		  this just reads the .desktops of the top most directory*/
+		fr_read_dir(NULL,menudir,NULL,FALSE);
 	}
 
 	g_free (pixmap_name);
@@ -2821,10 +2808,6 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 		g_free (menu_base);
 		return NULL;
 	}
-
-	/*read the menu into memory, this just reads the .desktops
-	  of the top most directory, it doesn't create a widget yet*/
-	fr_read_dir(NULL,this_menu,NULL,FALSE);
 
 	if(!gnome_folder) {
 		gnome_folder =
