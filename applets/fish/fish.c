@@ -200,15 +200,14 @@ destroy_pb(GtkWidget *w, Fish *fish)
 static void 
 properties_dialog(AppletWidget *aw, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { "fish_applet",
-						 "properties" };
+        static GnomeHelpMenuEntry help_entry = { "fish_applet", "properties" };
 	Fish *fish = data;
 	GtkWidget *vbox;
 	GtkWidget *hbox;
 	GtkWidget *w;
 	GtkWidget *e;
 	GtkAdjustment *adj;
-	
+
 	if(fish->pb) {
 		gtk_widget_show(fish->pb);
 		gdk_window_raise(fish->pb->window);
