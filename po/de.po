@@ -11,15 +11,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.3.6.1\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
-"PO-Revision-Date: 2003-08-11 12:32+0200\n"
+"Project-Id-Version: gnome-panel 2.4.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-28 11:58+0100\n"
+"PO-Revision-Date: 2003-10-28 11:58+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:219
 msgid "%l:%M:%S %p"
@@ -341,7 +341,7 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"%s ist nicht von geringstem Nutzen. Es verschwendet lediglich kostebaren "
+"%s ist nicht von geringstem Nutzen. Es verschwendet lediglich kostbaren "
 "Plattenplatz sowie wertvolle Zeit zur Übersetzung in Maschinencode, und wenn "
 "es läuft, verbraucht es zudem wertvollen Platz im Panel und im "
 "Hauptspeicher. Sollte jemand beim Verwenden dieses Applets erwischt werden, "
@@ -639,18 +639,18 @@ msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 "Klicken Sie hier, um alle Fenster zu verbergen und den Desktop anzuzeigen."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "Desktop-Knopf anzeigen"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:295
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s konnte nicht geladen werden: %s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:296
 msgid "File not found"
 msgstr "Datei nicht gefunden"
+
+#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:447
+msgid "Show Desktop Button"
+msgstr "Desktop-Knopf anzeigen"
 
 #: applets/wncklet/showdesktop.c:449
 msgid "This button lets you hide all windows and show the desktop"
@@ -723,7 +723,7 @@ msgstr "Auf momentan a_ktiver Arbeitsfläche befindliche Fenster anzeigen"
 msgid "Show windows from a_ll workspaces"
 msgstr "Auf a_llen Arbeitsfläche befindliche Fenster anzeigen"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3608
 msgid "Size"
 msgstr "Größe"
 
@@ -759,7 +759,7 @@ msgid ""
 "will only display windows from the current workspace."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, zeigt die Fensterliste alle geöffneten "
-"Fenster anzeigen, einschließlich derer, die sich auf anderen Arbeitsflächen "
+"Fenster an, einschließlich denen, die sich auf anderen Arbeitsflächen "
 "befinden. Andernfalls zeigt sie lediglich die auf der momentan sichtbaren "
 "Arbeitsfläche befindlichen Fenster an."
 
@@ -797,14 +797,14 @@ msgid ""
 "large panels, where the window list could fill the entire space available."
 msgstr ""
 "Dieser Schlüssel legt die maximale Breite fest, die die Fensterliste "
-"anfordern darf. Dies ist nützlich, um in großen Panels deren Größe zu "
+"anfordern darf. Dies ist nützlich, um ihre Größe in großen Panels zu "
 "begrenzen, in denen sie andernfalls die gesamte verfügbare Breite in "
 "Anspruch nehmen würde."
 
 #: applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
 msgstr ""
-"Dieser Wert legt die minimale Größe fest, die die Fensterliste anfordern "
+"Dieser Wert legt die minimale Breite fest, die die Fensterliste anfordern "
 "darf."
 
 #: applets/wncklet/window-list.schemas.in.h:10
@@ -984,13 +984,13 @@ msgstr "Soll ein Pfeil-Anzeiger dargestellt werden?"
 
 #: gnome-panel/button-widget.c:778
 msgid "DnD Highlight"
-msgstr "DnD-Hervorheben"
+msgstr "Hervorheben durch Ziehen und Ablegen"
 
 #: gnome-panel/button-widget.c:779
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Soll das Symbol beim Ziehen und Ablegen hervorgehoben werden?"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3597
 msgid "Orientation"
 msgstr "Ausrichtung"
 
@@ -1389,9 +1389,7 @@ msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
-"Dieses Program ist verantwortlich für das Starten anderer Anwendungen, das "
-"Einbetten von kleinen Applets in sich selbst, den Weltfrieden, sowie "
-"grundlose X-Abstürze."
+"Dieses Program ist verantwortlich für das Starten anderer Anwendungen sowie das Einbetten kleiner Applets in sich selbst."
 
 #: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:158
 #: gnome-panel/panel-action-button.c:176
@@ -1891,7 +1889,7 @@ msgid ""
 "remove a panel."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird ein Dialog angezeigt, der den Benutzer "
-"dazu Auffordert, das Entfernen eines Panels zu bestätigen."
+"dazu auffordert, das Entfernen eines Panels zu bestätigen."
 
 #: gnome-panel/panel-global.schemas.in.h:12
 msgid ""
@@ -1899,7 +1897,7 @@ msgid ""
 "launcher in it."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird eine Schublade automatisch "
-"geschlossen, sobald der Benutzer einen Starter in ihr anklickt."
+"geschlossen, sobald der Benutzer darin einen Starter anklickt."
 
 #: gnome-panel/panel-global.schemas.in.h:13
 msgid ""
@@ -2470,203 +2468,203 @@ msgstr "Beenden _erzwingen"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr "Oberes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 msgid "Top Centered Panel"
 msgstr "Oberes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 msgid "Top Floating Panel"
 msgstr "Oberes Panel, freischwebend"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 msgid "Top Edge Panel"
 msgstr "Oberes Kanten-Panel"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr "Unteres Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr "Unteres Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr "Unteres Panel, freischwebend"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr "Unteres Kanten-Panel"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Left Expanded Edge Panel"
 msgstr "Linkes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Left Centered Panel"
 msgstr "Linkes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Left Floating Panel"
 msgstr "Linkes Panel, freischwebend"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Left Edge Panel"
 msgstr "Linkes Kanten-Panel"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr "Rechtes Kanten-Panel, ausgedehnt"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr "Rechtes Panel, zentriert"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr "Rechtes Panel, freischwebend"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr "Rechtes Kanten-Panel"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3577
 msgid "Name"
 msgstr "Name"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3578
 msgid "The name of this panel"
 msgstr "Der Name dieses Panels"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3587
 msgid "Expand"
 msgstr "Ausdehnen"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3588
 msgid "Expand to take up the full monitor width/height"
-msgstr "Ausdehnen und so die gesamte Breite/Höhe des Monitors belegen"
+msgstr "Ausdehnen und so die gesamte Breite/Höhe des Bildschirms belegen"
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3598
 msgid "The orientation of the panel"
 msgstr "Die Ausrichtung des Panels"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3609
 msgid "The height (or width when vertical) of the panel"
 msgstr "Die Höhe (bzw. Breite, falls vertikal) des Panels"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3621
 msgid "X position"
 msgstr "X-Position"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3622
 msgid "The X position of the panel"
 msgstr "Die X-Position dieses Panels"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3633
 msgid "X centered"
 msgstr "X-zentriert"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3634
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Die X-Koordinate wird relativ zur Mitte des Bildschirms berechnet"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3643
 msgid "Y position"
 msgstr "Y-Position"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3644
 msgid "The Y position of the panel"
 msgstr "Die Y-Position des Panels"
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3655
 msgid "Y centered"
 msgstr "Y-zentriert"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3656
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Die Y-Koordinate wird relativ zur Mitte des Bildschirms berechnet"
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3665
 msgid "Xinerama monitor"
 msgstr "Xinerama-Monitor"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3666
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Der (für Xinerama relevante) Monitor, auf dem sich das Panel befindet"
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3677
 msgid "Auto hide"
 msgstr "Auto-Verbergen"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3678
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Das Panel automatisch verbergen, sobald die Maus es verlässt"
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3687
 msgid "Hide delay"
 msgstr "Verzögerung beim Verbergen"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3688
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 "Die Anzahl der Millisekunden, die vor dem automatischen Verbergen gewartet "
 "werden sollen"
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3699
 msgid "Un-hide delay"
 msgstr "Verzögerung beim Wiederanzeigen"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3700
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 "Die Anzahl der Millisekunden, die vor dem automatischen Wiederanzeigen "
 "gewartet werden sollen"
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3711
 msgid "Auto-hide size"
 msgstr "Größe beim Auto-Verbergen"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3712
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "Die Anzahl der sichtbaren Pixel, wenn das Panel automatisch verborgen wurde"
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3723
 msgid "Animate"
 msgstr "Animieren"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3724
 msgid "Enable hiding/showing animations"
 msgstr "Animationen beim Anzeigen/Verbergen aktivieren"
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3733
 msgid "Animation Speed"
 msgstr "Animationsgeschwindigkeit"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3734
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 "Die Geschwindigkeit, in der der Anzeige-/Verbergeanimation des Panels "
 "dargestellt werden soll"
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3744
 msgid "Buttons Enabled"
 msgstr "Knöpfe aktivieren"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3745
 msgid "Enable hide/show buttons"
 msgstr "Anzeigen/Verbergen-Knöpfe anzeigen"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3754
 msgid "Arrows Enabled"
 msgstr "Pfeile aktivieren"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3755
 msgid "Enable arrows on hide/show buttons"
 msgstr "Pfeile auf den Anzeigen/Verbergen-Knöpfen anzeigen"
 
@@ -3058,42 +3056,42 @@ msgstr "Bonobo-Testapplet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test-Bonobo-Applet-Fabrik"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:834
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Unvollständiger Hintergrundtyp »%s« empfangen"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:848
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Unvollständiger Hintergrundtyp »%s« empfangen: %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:857
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Pixmap %s konnte nicht abgerufen werden"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:864
 msgid "Unknown background type received"
 msgstr "Unbekannter Hintergrundtyp empfangen"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1043
 msgid "The Applet's containing Panel's orientation"
 msgstr "Das Applet enthält die Ausrichtung des Panels"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1051
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Das Applet enthält die Größe des Panels in Pixeln"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1059
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Das Applet enthält die Hintergrundfarbe oder -Pixmap des Panels"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1067
 msgid "The Applet's flags"
 msgstr "Die Optionen des Applets"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1075
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Bereiche, die die akzeptierbaren Größen für das Applet verbergen"
 
