@@ -220,6 +220,222 @@ Wed Dec 16 14:54:09 1998  Owen Taylor  <otaylor@redhat.com>
 	ButtonWidget NO_WINDOW, with an additional event_window
 	field.
 
+Wed Dec 30 17:16:41 1998  George Lebl  <jirka@5z.com>
+
+        * session.c,menu.c,main.c: cleaned up some weird stuff, and use
+          g_string where possible to avoid problems
+
+        * panel-util.[ch]: remove get_full_path
+
+Wed Dec 30 01:16:06 1998  George Lebl  <jirka@5z.com>
+
+        * menu.c: close opened files!
+
+1998-12-29  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* button-widget.c (button_widget_draw): Only draw if the tile is
+	non NULL.
+
+Tue Dec 29 02:22:36 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: couple of minor fixes
+
+Mon Dec 28 20:57:33 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: remove problematic string breaking routine and use the
+	  gnome-config one, and fix a small memory leak
+
+Mon Dec 28 00:26:52 1998  George Lebl  <jirka@5z.com>
+
+	* applet-widget.c,panel.c: cosmetic code changes
+
+1998-12-26  Martin Baulig  <martin@home-of-linux.org>
+
+	* session.c (panel_config_sync): Set `applets_to_sync' back to
+	NULL before calling do_session_save (), to make it work when
+	called recursively.
+
+Sat Dec 26 01:16:45 1998  George Lebl  <jirka@5z.com>
+
+	* *.c: destroy signal is a void function, I always thought it
+	  returned int, so I fixed that
+
+Thu Dec 24 12:21:20 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: don't load menu on startup for menu applets
+
+	* menu.[ch],session,panel.[ch],main.c,applet.[ch]: implement menu
+	  aging, old menus are destroyed if not used for over a minute to
+	  save memory
+
+Thu Dec 24 04:05:25 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: save a couple of extra bytes by not allocating a
+	  string since we have a usable string that lasts long enough
+
+Thu Dec 24 03:48:46 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: create top level submenus as fakes, this saves even more
+	  ram if the user never uses a menu
+
+Thu Dec 24 03:37:05 1998  George Lebl  <jirka@5z.com>
+
+	* drawer.[ch],session.c,menu.c: cleaned up params argument to be
+	  an int, this is some old old cruft from about a year ago
+
+	* *.[ch]: minor cleanups, changed a bunch of GList's to GSList's
+
+	* panel.c: don't load the panel menu by default, load it when needed
+
+	* menu.[ch],session.c: got rid of the dot buttons and icons list,
+	  now we just mark all menus as dirty, ready for rereading, this
+	  saves us tuns of memory when the user doesn't use pixmaps or
+	  dot_buttons .. and we also don't load all menus at startup
+
+Wed Dec 23 22:53:40 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: completely change how redhat menus are read, now they
+	  are converted to normal gnome menus. also they are not fully
+	  checked for additions, only the directories are checked so it
+	  won't catch modified files, just added/removed files
+
+	* menu.c: converted all GList's to GSList's, plus I don't anymore
+	  store the desktop entry structures to save memory, plus I do a
+	  fake menu read on startup so that submenus aren't read until a
+	  user actually goes to them. Plus I fixed a race with gtk, my hack
+	  for replacing menus during the select signal didn't all work so
+	  that caused some menus to "hang", I solved it with a bigger hack
+	  that removes and re-selects the entry if the menu has already been
+	  shown.
+
+	* menu.c: changed logic for getting top directory icons
+
+	* launcher.[ch]: got rid of the load_launcher_applet_dentry func
+
+	* panel-util.[ch]: added a remove_directory call for recursively
+	  cleaning a directory, and made string_in_list func be a GSList
+	  function
+
+1998-12-23  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
+
+	* main.c (main): Fixed the error, that preventend the panel from
+ 	restoring a saved session, if it's used with gnome-session.  Due
+ 	to some changes of Felix, the 'gnome_cloned_client' call does
+ 	nothing anymore, so the panel always thought, it has to restore
+ 	the default session.
+
+Tue Dec 22 14:38:00 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,panel-widget.c: with timeouts finally working on my box
+	  I realized that 100ms for timeouts on moving is too much so
+	  changed it back to 30ms
+
+Tue Dec 22 02:10:51 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: ok ok the redhat menu code now officially sucks and
+	  will get changed, I fixed the weird menu bug by not doing a
+	  check and reread of the menu. I think I'm gonna go a completely
+	  different route on this redhat menu thing
+
+	* launcher.[ch]: added a way to make menu out of a desktop entry
+	  by itself for added speed
+
+Mon Dec 21 13:54:42 1998  George Lebl  <jirka@5z.com>
+
+	* snapped-widget.c,corner-widget.c,drawer-widget.c,panel-util.[ch]:
+	  now set color on the buttons as well if panel color is set, and
+	  I stole some color stuff from gtk to make the colors be set
+	  properly (instead of just multiplying rgb values)
+
+Mon Dec 21 00:08:09 1998  George Lebl  <jirka@5z.com>
+
+	* drawer-widget.c: implemented minimum size of 48 pixels so
+	  that adding to an empty drawer is easier
+
+Sun Dec 20 22:13:36 1998  George Lebl  <jirka@5z.com>
+
+	* extern.[ch],main.c: took out synchronious applet startup code as
+	  it didn't work anyhow and was taking up space
+
+	* menu.c,session.c,panel.c: changed menu properties to allow other
+	  menu types then user/system (such as now redhat) ... plus I enabled
+	  redhat menus as they seem stable and well behaved (dnd doesn't work
+	  from them though)
+
+Sun Dec 20 14:14:37 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: replace connect_iterp with connect_full
+
+Sun Dec 20 02:02:10 1998  George Lebl  <jirka@5z.com>
+
+	* drawer.c: use icon entry
+
+	* panel.c: use motion notify events for moving insted of just a
+	  timer, the logic here is the same as used for applet moving and
+	  it should avoid crowding of more motion events together using
+	  a timeout
+
+Sun Dec 20 01:37:54 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,applet.c: add a call to back_change when changing panels
+	  so that we actually change the back on applets that can (printer
+	  can)
+
+	* panel-widget.c: take out the old timeout based move as it's now
+	  (and actually been for a while) possible to again use motion_notify
+	  ... though I use a timeout to avoid too many motions at once and
+	  move at most every 100ms
+
+Sat Dec 19 21:10:02 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: when adding new panel try to find a spot that is empty,
+	  add conversion or edge<->corner panel and move add drawer to
+	  the main panel menu from the add panel submenu
+
+	* panel.c: don't put up panel menu on the left click, just on the
+	  right click
+
+	* panel_config.c,panel_config_global.c,menu.c: capitalize only the
+	  first letter in strings for consistency
+
+Sat Dec 19 03:30:07 1998  George Lebl  <jirka@5z.com>
+
+	* Makefile.am: install gnome-panel.h
+
+Sat Dec 19 02:38:09 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: cosmetic thingie fixed ...
+
+Sat Dec 19 02:12:32 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config_global.c: changed disable animations to enable
+	  animations
+
+	* session.c: made the "..." buttons off by default, happy now????
+
+Sat Dec 19 01:55:10 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: experimental Redhat menu reading code, #if 0'ed
+	  out now until proven stable and functionally complete
+
+	* panel_config.c,drawer.c: changed negative checkboxes to positive
+	  and made only AutoHide checkbox (not two radio boxes)
+
+	* applet-widget.c: fixed a bug with right click menus, now the
+	  menus come up the same way all over (if you click they will stay).
+	  this took some X hackery which is probably not 100% the
+	  RightWay(tm) but it works (it bypasses corba and emulates a
+	  button press on the socket with XSendEvent)
+
+Wed Dec 16 14:54:09 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* applet.c button-widget.c button-widget.h panel-widget.c:
+
+	widget->window cannot be INPUT_ONLY. So, do the same
+	trick as we do for CheckButtons or Scales. Make
+	ButtonWidget NO_WINDOW, with an additional event_window
+	field.
+
 1998-12-16  Jonathan Blandford  <jrb@aware-of-vacuity.labs.redhat.com>
 
 	* menu.c (panel_lock): let's do the correct xscreensaver command

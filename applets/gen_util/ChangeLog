@@ -1,3 +1,43 @@
+Tue Dec 29 14:40:25 1998  Maciej Stachowiak  <mstachow@mit.edu>
+
+	* Makefile.am: Build fvwm-pager applet unconditionally.
+
+1998-12-28  Martin Baulig  <martin@home-of-linux.org>
+
+	The "MultiLoad Applet Revolution".
+
+	All three multiload applets (cpuload, memload, swapload) now use
+	the same load graph object and the same properties code.
+
+	This will make it much easier to add a new applet here.
+	
+	* multiload/cpuload.h: Removed.
+	* multiload/memload.h: Removed.
+	* multiload/swapload.h: Removed.
+	* multiload/properties-cpu.[ch]: Removed.
+	* multiload/properties-mem.[ch]: Removed.
+	* multiload/properties-swap.[ch]: Removed.
+
+	* multiload/global.h: New file.
+
+	* multiload/property-entries.[ch]: New files. This code will be
+ 	moved into libgnomeui after GNOME 1.0 is released.
+
+	* multiload/load-graph.[ch]: New files. Contains some kind of
+	load graph widget/object that is used in all multiload applets.
+
+	* multiload/properties.[ch]: New files. Contains general properties
+	stuff that is used in all multiload applets.
+
+	* multiload/cpuload.c: Use the new load graph.
+	* multiload/memload.c: Likewise.
+	* multiload/swapload.c: Likewise.
+
+1998-12-18  Martin Baulig  <martin@home-of-linux.org>
+
+	* cpumemusage/procbar.[ch]: Removed.
+	* cpumemusage/cpumemusage.c: Use the GnomeProcBar from libgnomeui.
+
 Thu Dec 31 18:18:05 1998  George Lebl  <jirka@5z.com>
 
 	* slashapp/slashapp.c,gticker/gticker.c: remove unneeded glist
@@ -36,6 +76,51 @@ Tue Dec 29 14:40:25 1998  Maciej Stachowiak  <mstachow@mit.edu>
 	* multiload/cpuload.c: Use the new load graph.
 	* multiload/memload.c: Likewise.
 	* multiload/swapload.c: Likewise.
+
+1998-12-28  Martin Baulig  <martin@home-of-linux.org>
+
+	* cpuload: Removed this applet. It has been replaced with the
+	multiload applet.
+
+1998-12-26  Martin Baulig  <martin@home-of-linux.org>
+
+	* asclock/timezone.c: If /etc/localtime exists, read default
+	timezone from it and select it in the clist.
+
+	* asclock/dialogs.c: Removed useless 'General' properties tab.
+	* asclock/main.c: Use stock callbacks.
+
+1998-12-25  Jeff Garzik  <jgarzik@pobox.com>
+
+	* asclock/asclock.c, asclock/dialogs.c, fvwm-pager/Module.c,
+	  fvwm-pager/fvwm-pager.c, fvwm-pager/properties.c,
+	  gticker/gticker.c, icewm-pager/wmpager_applet.c, jbc/jbc.c,
+	  mini-commander/preferences.c, modemlights/modemlights.c:
+	Warnings fixes.
+	s/sprintf/g_snprintf/
+
+1998-12-24  Jeff Garzik  <jgarzik@pobox.com>
+
+	* batmon/batmon.c:
+	Changed one strcpy to strncpy
+
+	* clockmail/clockmail.c, cpuload/properties.c, batmon/batmon.c,
+	  diskusage/diskusage.c, diskusage/properties.c,
+	  drivemount/drivemount.c, fifteen/fifteen.c:
+	s/sprintf/g_snprintf/
+
+	* cpuload/properties.[c], diskusage/properties.[ch]:
+	Made load/save routines 'path' arg const-correct.
+
+	* cpuload/properties.c, diskusage/properties.c:
+	Corrected color str size bug.
+
+1998-12-18  Mark Galassi  <rosalia@cygnus.com>
+
+	* netload/properties.c (apply_cb): incorporated Daniel Burrows'
+	patch to fix a properties bug: the memcopy() was not enough to
+	copy the structure, since the structure had a gchar * member.
+	This patch adds a strdup() to copy the text field.
 
 1998-12-18  Martin Baulig  <martin@home-of-linux.org>
 
