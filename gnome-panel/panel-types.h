@@ -11,11 +11,6 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 #define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
 #define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
 
-/*typedef GNOME_Panel_SizeType PanelSizeType;
-#define SIZE_TINY GNOME_Panel_SIZE_TINY
-#define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
-#define SIZE_LARGE GNOME_Panel_SIZE_LARGE
-#define SIZE_HUGE GNOME_Panel_SIZE_HUGE*/
 enum {
 	SIZE_TINY = 24,
 	SIZE_SMALL = 36,

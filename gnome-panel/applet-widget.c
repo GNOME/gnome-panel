@@ -142,6 +142,10 @@ typedef void (*PositionSignal) (GtkObject * object,
 				int y,
 				gpointer data);
 
+typedef void (*DeprecSizeSignal) (GtkObject * object,
+				  GNOME_Panel_SizeType type,
+				  gpointer data);
+
 static int applet_count = 0;
 
 static int die_on_last = FALSE;
@@ -243,6 +247,24 @@ marshal_signal_position (GtkObject * object,
 }
 
 static void
+marshal_signal_deprec_size (GtkObject * object,
+			    GtkSignalFunc func,
+			    gpointer func_data,
+			    GtkArg * args)
+{
+	DeprecSizeSignal rfunc;
+
+	g_warning("change_size signal is deprecated, use the new "
+		  "change_pixel_size signal");
+
+	rfunc = (DeprecSizeSignal) func;
+
+	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+		  func_data);
+}
+
+
+static void
 applet_widget_class_init (AppletWidgetClass *class)
 {
 	GtkObjectClass *object_class;
@@ -277,7 +299,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 change_size),
-			       gtk_marshal_NONE__ENUM,
+			       marshal_signal_deprec_size,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
@@ -953,8 +975,6 @@ applet_widget_get_panel_size(AppletWidget *applet)
 	switch(applet->size) {
 	case 24:
 		return GNOME_Panel_SIZE_TINY;
-	case 36:
-		return GNOME_Panel_SIZE_SMALL;
 	default:
 	case 48:
 		return GNOME_Panel_SIZE_STANDARD;
@@ -1169,11 +1189,6 @@ server_applet_change_size(CustomAppletServant *servant,
 					applet_widget_signals[CHANGE_SIZE_SIGNAL],
 					GNOME_Panel_SIZE_TINY);
 			break;
-		case 36:
-			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-					applet_widget_signals[CHANGE_SIZE_SIGNAL],
-					GNOME_Panel_SIZE_SMALL);
-			break;
 		default:
 		case 48:
 			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
@@ -1363,11 +1378,6 @@ server_applet_thaw_changes(CustomAppletServant *servant,
 			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 					applet_widget_signals[CHANGE_SIZE_SIGNAL],
 					GNOME_Panel_SIZE_TINY);
-			break;
-		case 36:
-			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-					applet_widget_signals[CHANGE_SIZE_SIGNAL],
-					GNOME_Panel_SIZE_SMALL);
 			break;
 		default:
 		case 48:

@@ -29,7 +29,6 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 
 typedef GNOME_Panel_SizeType PanelSizeType;
 #define SIZE_TINY GNOME_Panel_SIZE_TINY
-#define SIZE_SMALL GNOME_Panel_SIZE_SMALL
 #define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
 #define SIZE_LARGE GNOME_Panel_SIZE_LARGE
 #define SIZE_HUGE GNOME_Panel_SIZE_HUGE
