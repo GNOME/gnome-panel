@@ -312,21 +312,21 @@ check_mail_file_status (MailCheck *mc)
 }
 
 static gboolean
-mailcheck_load_animation (MailCheck *mc, char *fname)
+mailcheck_load_animation (MailCheck *mc, const char *fname)
 {
 	int width, height;
 	int pbwidth, pbheight;
 	GdkPixbuf *pb;
 
-	if(mc->email_pixmap)
+	if (mc->email_pixmap != NULL)
 		gdk_pixmap_unref(mc->email_pixmap);
-	if(mc->email_mask)
+	if (mc->email_mask != NULL)
 		gdk_bitmap_unref(mc->email_mask);
 	mc->email_pixmap = NULL;
 	mc->email_mask = NULL;
 
 	pb = gdk_pixbuf_new_from_file (fname);
-	if(!pb)
+	if (pb == NULL)
 		return FALSE;
 
 	pbwidth = gdk_pixbuf_get_width(pb);
@@ -503,31 +503,32 @@ static void
 mailcheck_destroy (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = data;
+
 	mc->bin = NULL;
 
-	if (mc->property_window)
-		gtk_widget_destroy(mc->property_window);
-	if (mc->about)
-		gtk_widget_destroy(mc->about);
+	if (mc->property_window != NULL)
+		gtk_widget_destroy (mc->property_window);
+	if (mc->about != NULL)
+		gtk_widget_destroy (mc->about);
 
-	gtk_widget_unref(mc->da);
+	gtk_widget_unref (mc->da);
 
 	g_free (mc->pre_check_cmd);
 	g_free (mc->newmail_cmd);
 	g_free (mc->clicked_cmd);
 
-	g_free(mc->remote_server);
-	g_free(mc->remote_username);
-	g_free(mc->remote_password);
-	g_free(mc->real_password);
+	g_free (mc->remote_server);
+	g_free (mc->remote_username);
+	g_free (mc->remote_password);
+	g_free (mc->real_password);
 
-	g_free(mc->animation_file);
-	g_free(mc->mail_file);
+	g_free (mc->animation_file);
+	g_free (mc->mail_file);
 
-	if(mc->email_pixmap)
-		gdk_pixmap_unref(mc->email_pixmap);
-	if(mc->email_mask)
-		gdk_bitmap_unref(mc->email_mask);
+	if (mc->email_pixmap != NULL)
+		gdk_pixmap_unref (mc->email_pixmap);
+	if (mc->email_mask != NULL)
+		gdk_bitmap_unref (mc->email_mask);
 
 	if (mc->mail_timeout != 0)
 		gtk_timeout_remove (mc->mail_timeout);
@@ -585,7 +586,8 @@ create_mail_widgets (MailCheck *mc)
 	gtk_widget_show (mc->label);
 	gtk_widget_ref (mc->label);
 	
-	if (fname && WANT_BITMAPS (mc->report_mail_mode) &&
+	if (fname != NULL &&
+	    WANT_BITMAPS (mc->report_mail_mode) &&
 	    mailcheck_load_animation (mc, fname)) {
 		mc->containee = mc->da;
 	} else {
@@ -616,23 +618,18 @@ property_box_changed(GtkWidget *widget, gpointer data)
 }
 
 static void
-free_str (GtkWidget *widget, void *data)
-{
-	g_free (data);
-}
-
-static void
 mailcheck_new_entry (MailCheck *mc, GtkWidget *menu, GtkWidget *item, char *s)
 {
 	gtk_menu_append (GTK_MENU (menu), item);
 
-	gtk_object_set_user_data(GTK_OBJECT(item),mc);
+	gtk_object_set_user_data (GTK_OBJECT (item), mc);
 
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC(set_selection), s);
-	if (s != mc->mailcheck_text_only)
-		gtk_signal_connect (GTK_OBJECT (item), "destroy",
-				    GTK_SIGNAL_FUNC(free_str), s);
+	gtk_signal_connect_full (GTK_OBJECT (item), "activate",
+				 GTK_SIGNAL_FUNC (set_selection),
+				 NULL,
+				 g_strdup (s),
+				 (GtkDestroyNotify)g_free,
+				 FALSE, FALSE);
 }
 
 static GtkWidget *
@@ -653,12 +650,10 @@ mailcheck_get_animation_menu (MailCheck *mc)
 	gtk_widget_show (item);
 	mailcheck_new_entry (mc, menu, item, mc->mailcheck_text_only);
 
-	if (mc->animation_file){
-		basename = strrchr (mc->animation_file, '/');
-		if (basename)
-			basename++;
-	} else
-		mc->animation_file = NULL;
+	if (mc->animation_file != NULL)
+		basename = g_basename (mc->animation_file);
+	else
+		basename = NULL;
 
 	i = 1;
 	dir = opendir (dname);
@@ -682,6 +677,8 @@ mailcheck_get_animation_menu (MailCheck *mc)
 			gtk_widget_show (item);
 			
 			mailcheck_new_entry (mc,menu, item, s);
+
+			g_free (s);
 		}
 		closedir (dir);
 	}
@@ -711,18 +708,20 @@ load_new_pixmap (MailCheck *mc)
 		g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	} else {
-		char *fname = g_strconcat ("mailcheck/",
-					   mc->selected_pixmap_name, NULL);
+		char *fname = g_concat_dir_and_file ("mailcheck",
+						     mc->selected_pixmap_name);
 		char *full;
 		
 		full = gnome_pixmap_file (fname);
 		free (fname);
 		
-		if(full && mailcheck_load_animation (mc, full)) {
+		if(full != NULL &&
+		   mailcheck_load_animation (mc, full)) {
 			mc->containee = mc->da;
 			g_free(mc->animation_file);
 			mc->animation_file = full;
 		} else {
+			g_free (full);
 			mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
 			mc->containee = mc->label;
 			g_free(mc->animation_file);
@@ -1284,7 +1283,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 	if (!fname)
 		return;
 
-	mailcheck_load_animation (mc,fname);
+	mailcheck_load_animation (mc, fname);
 	g_free (fname);
 }
 
@@ -1324,11 +1323,11 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	mc->mail_file = gnome_config_get_string("mail/mail_file");
 
-	if (!mc->mail_file) {
-		mc->mail_file = getenv ("MAIL");
-		if (!mc->mail_file){
-			char *user = getenv ("USER");
-			if (!user)
+	if (mc->mail_file == NULL) {
+		mc->mail_file = g_getenv ("MAIL");
+		if (mc->mail_file == NULL) {
+			char *user = g_getenv ("USER");
+			if (user == NULL)
 				return NULL;
 
 			mc->mail_file = g_strdup_printf ("/var/spool/mail/%s",
@@ -1356,7 +1355,7 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	mc->remote_server = gnome_config_private_get_string("mail/remote_server=mail");
 	
-	query = g_strconcat("mail/remote_username=", getenv("USER"), NULL);
+	query = g_strconcat("mail/remote_username=", g_getenv("USER"), NULL);
 	mc->remote_username = gnome_config_private_get_string(query);
 	g_free(query);
 
@@ -1412,5 +1411,12 @@ make_mailcheck_applet(const gchar *goad_id)
 					      mc);	
 
 	gtk_widget_show (applet);
+
+	/*
+	 * check the mail right now, so we don't have to wait
+	 * for the first timeout
+	 */
+	mail_check_timeout (mc);
+
 	return applet;
 }
