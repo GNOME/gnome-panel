@@ -581,23 +581,13 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	pwidget = widget->parent;
 	
 	if(tiles_enabled[button->tile]) {
+		GdkPixbuf *pb = NULL;
 		if(button->pressed && button->in_button) {
-			GdkPixbuf *pb;
 			if(!global_config.saturate_when_over ||
 			   !button->in_button) {
 				pb = tiles.tiles_down[button->tile];
 			} else {
 				pb = tiles.tiles_down_hc[button->tile];
-			}
-			if(pb) {
-				double affine[6];
-				make_scale_affine(affine,
-						  gdk_pixbuf_get_width(pb),
-						  gdk_pixbuf_get_height(pb),
-						  size, NULL, NULL);
-				transform_pixbuf(rgb, 0, 0, size, size,
-						 rowstride, pb, affine,
-						 ART_FILTER_NEAREST, NULL);
 			}
 		} else if (!global_config.tile_when_over ||
 			   button->in_button) {
@@ -608,45 +598,51 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			} else {
 				pb = tiles.tiles_up_hc[button->tile];
 			}
-			if(pb) {
-				double affine[6];
-				make_scale_affine(affine,
-						  gdk_pixbuf_get_width(pb),
-						  gdk_pixbuf_get_height(pb),
-						  size, NULL, NULL);
-				transform_pixbuf(rgb, 0, 0, size, size,
-						 rowstride, pb, affine,
-						 ART_FILTER_NEAREST, NULL);
-			}
+		}
+
+		if(pb != NULL) {
+			GdkPixbuf *scaled_pb;
+			double affine[6];
+
+			scaled_pb = scale_pixbuf_to_square (pb, size,
+							    NULL, NULL);
+
+			art_affine_identity (affine);
+
+			transform_pixbuf(rgb, 0, 0, size, size,
+					 rowstride, scaled_pb, affine,
+					 ART_FILTER_NEAREST, NULL);
+
+			gdk_pixbuf_unref (scaled_pb);
 		}
 	}
 
 	if (pixmaps_enabled[button->tile]) {
-		GdkPixbuf *pb;
+		GdkPixbuf *pb = NULL;
 		if(!global_config.saturate_when_over || !button->in_button) {
 			pb = button->pixbuf;
 		} else {
 			pb = button->pixbuf_hc;
 		}
-		if(pb) {
+		if(pb != NULL) {
 			double affine[6];
-			double transl[6];
-			int w,h;
-			make_scale_affine(affine,
-					  gdk_pixbuf_get_width(pb),
-					  gdk_pixbuf_get_height(pb),
-					  size, &w, &h);
-			art_affine_translate(transl,
+			int w, h;
+			GdkPixbuf *scaled_pb;
+
+			scaled_pb = scale_pixbuf_to_square (pb, size, &w, &h);
+
+			art_affine_translate(affine,
 					     -border+off + (size-w)/2,
 					     -border+off + (size-h)/2);
-			art_affine_multiply(affine, affine, transl);
 
 			transform_pixbuf((rgb+border*rowstride+border*3),
 				         0, 0,
 				         size-2*border, size-2*border,
 				         rowstride,
-				         pb,
+				         scaled_pb,
 				         affine, ART_FILTER_NEAREST, NULL);
+
+			gdk_pixbuf_unref (scaled_pb);
 		}
 	}
 }

@@ -140,34 +140,82 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	}
 }
 
+#if 0
 void
 make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 {
 	int oh, ow;
 	oh = h;
 	ow = w;
-	if(w>h) {
+	if(w > h) {
 		h = h*((double)size/w);
 		w = size;
 	} else {
 		w = w*((double)size/h);
 		h = size;
 	}
-	w = w>0?w:1;
-	h = h>0?h:1;
+	w = w > 0 ? w : 1;
+	h = h > 0 ? h : 1;
 
 	affine[1] = affine[2] = affine[4] = affine[5] = 0;
 
-	affine[0] = w / (double)(ow);
-	affine[3] = h / (double)(oh);
+	affine[0] = w / (double)ow;
+	affine[3] = h / (double)oh;
 
-	if(outw) *outw = w;
-	if(outh) *outh = h;
+	if(outw)
+		*outw = w;
+	if(outh)
+		*outh = h;
+}
+#endif
+
+GdkPixbuf *
+scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh)
+{
+	GdkPixbuf *new_pb;
+	int width, height;
+	int new_width, new_height;
+
+	new_width = width = gdk_pixbuf_get_width (pb);
+	new_height = height = gdk_pixbuf_get_height (pb);
+
+	if(new_width > new_height) {
+		new_height = new_height * (size / (double)new_width);
+		new_width = size;
+	} else {
+		new_width = new_width * (size / (double)new_height);
+		new_height = size;
+	}
+
+	new_width = new_width > 0 ? new_width : 1;
+	new_height = new_height > 0 ? new_height : 1;
+
+	if(outw)
+		*outw = new_width;
+	if(outh)
+		*outh = new_height;
+
+	if (new_width == width && new_height == height)
+		return gdk_pixbuf_ref (pb);
+
+	new_pb = gdk_pixbuf_new(gdk_pixbuf_get_colorspace(pb),
+				gdk_pixbuf_get_has_alpha(pb),
+				gdk_pixbuf_get_bits_per_sample(pb),
+				new_width,
+				new_height);
+
+	gdk_pixbuf_scale (pb, new_pb, 0, 0, new_width, new_height, 0.0, 0.0,
+			  new_width / (double)width,
+			  new_height / (double)height,
+			  GDK_INTERP_HYPER);
+
+	return new_pb;
 }
 
-void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
-                      GdkPixbuf *pixbuf, double affine[6],
-                      int level, ArtAlphaGamma *ag)
+void
+transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+		 GdkPixbuf *pixbuf, double affine[6],
+		 int level, ArtAlphaGamma *ag)
 {
 	gint w, h, rs;
 

@@ -1,3 +1,10 @@
+Sun Sep 03 04:03:31 2000  George Lebl <jirka@5z.com>
+
+	* button-widget.c, rgb-stuff.[ch]:  Do scaling of buttons by using
+	  gdk-pixbuf scaling functions and the hyperbolic scaling code since
+	  libart doesn't support it yet.  This makes non-standard (48) sized
+	  panels look way cooler.
+
 Sat Sep 02 19:19:08 2000  George Lebl <jirka@5z.com>
 
 	* distribution.[ch], menu*.c:  Make distribution menus api cache the
