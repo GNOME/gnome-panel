@@ -96,7 +96,7 @@ create_pixmap_entry(GtkWidget *table,
 GtkWidget *
 create_icon_entry(GtkWidget *table,
 		  char *history_id,
-		  int row,
+		  int cols, int cole,
 		  char *label,
 		  char *text,
 		  GtkWidget *w)
@@ -108,9 +108,9 @@ create_icon_entry(GtkWidget *table,
 	wlabel = gtk_label_new(label);
 	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
 	gtk_table_attach(GTK_TABLE(table), wlabel,
-			 0, 1, row, row + 1,
+			 cols, cole, 2, 3,
+			 GTK_SHRINK,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
-			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
@@ -120,7 +120,7 @@ create_icon_entry(GtkWidget *table,
 
 	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry));
 	gtk_table_attach(GTK_TABLE(table), entry,
-			 1, 2, row, row + 1,
+			 cols, cole, 1, 2,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);

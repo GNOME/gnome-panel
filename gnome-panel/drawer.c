@@ -107,14 +107,14 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	GtkWidget *w;
 	GtkWidget *button;
 	
-	table = gtk_table_new(2, 2, FALSE);
+	table = gtk_table_new(3, 2, FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 
 	w = create_text_entry(table, "drawer_name", 0, _("Tooltip/Name"),
 			      drawer->tooltip, dialog);
 	gtk_object_set_data(GTK_OBJECT(dialog),"tooltip",w);
 	
-	w = create_icon_entry(table, "icon", 1, _("Icon"), drawer->pixmap,
+	w = create_icon_entry(table, "icon", 0, 2, _("Icon"), drawer->pixmap,
 			      dialog);
 	gtk_object_set_data(GTK_OBJECT(dialog),"pixmap",w);
 

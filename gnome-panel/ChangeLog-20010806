@@ -1,3 +1,24 @@
+1999-09-25  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel_config_global.c (make_int_scale_box): return a box, not
+	a frame
+	(set_anim_button_value): only 2 things to set inactive
+	(animation_notebook_page): 
+	(show_page): 
+	(icon_notebook_page): 
+	(buttons_notebook_page): 
+	(applets_notebook_page): 
+	(misc_notebook_page): implement the global config box from:
+	http://www.jcinteractive.com/gnome-ui/images/uihs-gnomecc/panel.gif
+
+	(doesn't go in the control center yet though)
+
+	* panel-util.[ch] (create_icon_entry): put the label under
+	the image button
+
+	* drawer.c (add_drawer_properties_page): A little fudging
+	to work with the vertical icon selector thing
+
 Fri Sep 24 15:14:55 1999  George Lebl  <jirka@5z.com>
 
 	* session.c: make hungry_menus TRUE by default (keep menus in memory)

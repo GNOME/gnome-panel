@@ -27,7 +27,8 @@ GtkWidget * create_pixmap_entry(GtkWidget *table,
 				int pw, int ph /*preview size*/);
 GtkWidget * create_icon_entry(GtkWidget *table,
 			      char *history_id,
-			      int row,
+			      int cols,
+			      int cole,
 			      char *label,
 			      char *text,
 			      GtkWidget *w);

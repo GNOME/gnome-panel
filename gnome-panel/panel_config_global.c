@@ -15,7 +15,7 @@ extern int applets_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-static GtkWidget *aniframe[4];
+static GtkWidget *aniframe[2];
 
 static GtkWidget *tilefile[LAST_TILE];
 static GtkWidget *tileborder[LAST_TILE];
@@ -130,23 +130,23 @@ int_scale_update (GtkAdjustment *adjustment, gpointer data)
 }
 
 static GtkWidget *
-make_int_scale_frame(char *title, int *data,
-		     double min, double max, double step)
+make_int_scale_box (char *title, int *data,
+		    double min, double max, double step)
 {
-	GtkWidget *frame;
+	GtkWidget *label;
 	GtkWidget *box;
 	GtkWidget *scale;
 	GtkObject *scale_data;
 
-	/* scale frame */
-	frame = gtk_frame_new (title);
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-
 	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_widget_show (box);
+
+	/* scale label */
+	label = gtk_label_new(title);
+	gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (box), label, FALSE, TRUE, 0);
+	gtk_widget_show (label);
 
 	/* Animation step_size scale */
 	scale_data = gtk_adjustment_new((double) (*data),
@@ -163,17 +163,16 @@ make_int_scale_frame(char *title, int *data,
 			   data);
 	gtk_widget_show (scale);
 
-	return frame;
+	return box;
 }
 
 static int
 set_anim_button_value(GtkWidget *w, gpointer data)
 {
-	int i;
 	int disable = !(GTK_TOGGLE_BUTTON(w)->active);
 
-	for(i=0;i<4;i++)
-		gtk_widget_set_sensitive(aniframe[i],!disable);
+	gtk_widget_set_sensitive(aniframe[0],!disable);
+	gtk_widget_set_sensitive(aniframe[1],!disable);
 	temp_config.disable_animations = disable;
 
 	if(config_window)
@@ -185,10 +184,12 @@ static GtkWidget *
 animation_notebook_page(void)
 {
 	GtkWidget *frame;
+	GtkWidget *box;
 	GtkWidget *vbox;
 	GtkWidget *button;
 	GtkWidget *w;
-	
+	GtkWidget *frame_vbox;
+
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
@@ -205,7 +206,7 @@ animation_notebook_page(void)
 	if (temp_config.simple_movement)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
 	/*note it's not a frame, but it's disabled anyhow*/
-	aniframe[3] = w;
+	aniframe[0] = w;
 	if (temp_config.disable_animations)
 		gtk_widget_set_sensitive(w,FALSE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
@@ -213,46 +214,59 @@ animation_notebook_page(void)
 			    &(temp_config.simple_movement));
 
 	/* AutoHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Auto-hide animation speed"),
-				      &(temp_config.auto_hide_step_size),
-				      1.0, 100.0, 1.0);
+	frame = gtk_frame_new (_("Animation speed"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 	if (temp_config.disable_animations)
-		gtk_widget_set_sensitive(frame,FALSE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
-
-	aniframe[0] = frame;
-
-	/* ExplicitHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Explicit-hide animation speed"),
-				      &(temp_config.explicit_hide_step_size),
-				      1.0, 100.0, 1.0);
-	if (temp_config.disable_animations)
-		gtk_widget_set_sensitive(frame,FALSE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
-
+		gtk_widget_set_sensitive (frame, FALSE);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+	gtk_widget_show (frame);
 	aniframe[1] = frame;
 
-	/* DrawerHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Drawer animation speed"),
-				      &(temp_config.drawer_step_size),
-				      1.0, 100.0, 1.0);
-	if (temp_config.disable_animations)
-		gtk_widget_set_sensitive(frame,FALSE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
+	frame_vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (frame_vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), frame_vbox);
+	gtk_widget_show (frame_vbox);
 
-	aniframe[2] = frame;
+	box = make_int_scale_box(_("Auto hide"),
+				 &(temp_config.auto_hide_step_size),
+				 1.0, 100.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
+	gtk_widget_show (box);
+
+	/* ExplicitHide Animation step_size scale frame */
+	box = make_int_scale_box(_("Explicit hide"),
+				   &(temp_config.explicit_hide_step_size),
+				   1.0, 100.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
+
+	/* DrawerHide Animation step_size scale frame */
+	box = make_int_scale_box(_("Drawer sliding"),
+				   &(temp_config.drawer_step_size),
+				   1.0, 100.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
+
+	
+	frame = gtk_frame_new (_("Auto hide"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+	gtk_widget_show (frame);
+
+	frame_vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (frame_vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), frame_vbox);
+	gtk_widget_show (frame_vbox);
 
 	/* Minimize Delay scale frame */
-	frame = make_int_scale_frame(_("Auto-hide minimize delay (ms)"),
-				      &(temp_config.minimize_delay),
-				      30.0, 10000.0, 10.0);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+	box = make_int_scale_box (_("Delay (ms)"),
+				  &(temp_config.minimize_delay),
+				  30.0, 10000.0, 10.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE, 0);
 
 	/* Minimized size scale frame */
-	frame = make_int_scale_frame(_("Auto-hide minimized size (pixels)"),
-				      &(temp_config.minimized_size),
-				      1.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+	box = make_int_scale_box (_("Size (pixels)"),
+				  &(temp_config.minimized_size),
+				  1.0, 10.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE, 0);
 
 	/*we have to do this after everything we need aniframe varaibles set*/
 	if (!temp_config.disable_animations)
@@ -291,42 +305,21 @@ set_icon_button_value(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-#if 0
-static GtkWidget *
-genicon_notebook_page(void)
+enum {
+	LAUNCHER_PAGE,
+	DRAWER_PAGE,
+	MENU_PAGE,
+	SPECIAL_PAGE,
+	N_PAGES
+};
+
+static gint
+show_page (GtkWidget *w, gpointer data)
 {
-	  GtkWidget *frame;
-	  GtkWidget *w;
-	  GtkWidget *box;
-	  GtkWidget *vbox;
-	  
-	  /* main vbox */
-	  vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	  gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	  
-	  /* General frame */
-	  frame = gtk_frame_new (_("General"));
-	  gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	  
-	  /* vbox for frame */
-	  box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	  gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	  gtk_container_add (GTK_CONTAINER (frame), box);
-	  
-	  /* Enable tiles frame */
-	  w = gtk_check_button_new_with_label (_("Tiles enabled"));
-	  if (temp_config.tiles_enabled[0])
-		  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
-	  gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			      GTK_SIGNAL_FUNC (set_icon_button_value), 
-			      &(temp_config.tiles_enabled[0]));
-	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
-
-	  return (vbox);
+	GtkWidget *notebook = gtk_object_get_user_data (GTK_OBJECT (w));
+	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), GPOINTER_TO_INT (data));
+	return FALSE;
 }
-#endif
-
 
 static GtkWidget *
 icon_notebook_page(int i, GtkWidget *config_box)
@@ -336,10 +329,22 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	GtkWidget *table;
 	GtkWidget *vbox;
 	GtkWidget *toggle;
+
+        char *icon_titles[]={
+                N_("Launcher icon"),
+                N_("Drawer icon"),
+                N_("Menu icon"),
+                N_("Logout icon")};
+
+	/* Image frame */
+	frame = gtk_frame_new (_(icon_titles[i]));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_widget_set_sensitive(frame,temp_config.tiles_enabled[i]);
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), vbox);
 
 	/* toggle button */
  	toggle = gtk_check_button_new_with_label (_("Tiles enabled"));
@@ -350,122 +355,133 @@ icon_notebook_page(int i, GtkWidget *config_box)
 			    GINT_TO_POINTER(i));
 	gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
 	
-	/* Image frame */
-	tilefile[i] = frame = gtk_frame_new (_("Image files"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	gtk_widget_set_sensitive(frame,temp_config.tiles_enabled[i]);
 	
 	/* table for frame */
-	table = gtk_table_new(3,3,FALSE);
+	tilefile[i] = table = gtk_table_new(2,3,FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), table);
+	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 	
 	/* image file entry widgets */
-	entry_up[i] = create_icon_entry(table,"tile_file",1,
-					_("Tile filename (up)"),
+	entry_up[i] = create_icon_entry(table,"tile_file",0, 1,
+					_("Normal Tile"),
 					global_config.tile_up[i],
 					config_box);
-	entry_down[i] = create_icon_entry(table,"tile_file",2,
-					  _("Tile filename (down)"),
+	entry_down[i] = create_icon_entry(table,"tile_file",1, 2,
+					  _("Clicked Tile"),
 					  global_config.tile_down[i],
 					  config_box);
 
+	w = gtk_hseparator_new ();
+	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	gtk_widget_show (w);
 
-	
 	/* Minimized size scale frame */
-	tileborder[i] = w = make_int_scale_frame(_("Border width (tile only)"),
-						 &(temp_config.tile_border[i]),
-						 0.0, 10.0, 1.0);
+	tileborder[i] = w = make_int_scale_box (_("Border width (tile only)"),
+						&(temp_config.tile_border[i]),
+						0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	gtk_widget_set_sensitive(w,temp_config.tiles_enabled[i]); 
 
 	/* Minimized size scale frame */
-	w = make_int_scale_frame(_("Depth (displacement when pressed)"),
-				 &(temp_config.tile_depth[i]),
-				 0.0, 10.0, 1.0);
+	w = make_int_scale_box (_("Depth (displacement when pressed)"),
+				&(temp_config.tile_depth[i]),
+				0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	return (vbox);
+	return frame;
 }
 
 static GtkWidget *
-misc_notebook_page(void)
+buttons_notebook_page (GtkWidget *config_box)
+{
+	  GtkWidget *m, *w;
+	  GtkWidget *box;
+	  GtkWidget *vbox;
+	  GtkWidget *label;
+	  GtkWidget *notebook;
+	  GtkWidget *page;
+	  int i;
+
+	  const char *labels[] = { N_("Launcher"),
+				  N_("Drawer"),
+				  N_("Menu"),
+				  N_("Special") };
+
+	  /* main vbox */
+	  vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	  gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+
+	  box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+	  gtk_widget_show (box);
+
+	  label = gtk_label_new (_("Button Type: "));
+	  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
+	  gtk_widget_show (label);
+
+	  m = gtk_menu_new ();
+	  notebook = gtk_notebook_new ();
+	  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+	  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+
+	  for (i = 0; i < N_PAGES; i++) {	  
+		  w = gtk_menu_item_new_with_label (_(labels[i]));
+		  gtk_signal_connect (GTK_OBJECT (w), "activate",
+				      GTK_SIGNAL_FUNC (show_page),
+				      GINT_TO_POINTER (i));
+		  gtk_widget_show (w);
+		  gtk_menu_append (GTK_MENU (m), w);
+
+		  page = icon_notebook_page (i, config_box);
+		  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
+
+		  gtk_object_set_user_data (GTK_OBJECT (w), notebook);
+	  }
+
+	  w = gtk_option_menu_new ();
+	  gtk_option_menu_set_menu (GTK_OPTION_MENU (w), m);
+	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
+	  gtk_widget_show (w);
+
+	  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
+	  gtk_widget_show (notebook);
+	  
+	  /* show/hide frame */
+	  w = gtk_check_button_new_with_label (_("Make buttons flush with panel edge"));
+	  if (temp_config.hide_panel_frame)
+		  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
+	  gtk_signal_connect (GTK_OBJECT (w), "toggled",
+			      GTK_SIGNAL_FUNC (set_toggle_button_value),
+			      &(temp_config.hide_panel_frame));
+	  gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	  
+	  
+	  /* only show tiles when mouse is over the button */
+	  w = gtk_check_button_new_with_label (_("Show button tiles only when cursor is over the button"));
+	  if (temp_config.tile_when_over)
+		  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
+	  gtk_signal_connect (GTK_OBJECT (w), "toggled",
+			      GTK_SIGNAL_FUNC (set_toggle_button_value),
+			      &(temp_config.tile_when_over));
+	  gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	  
+	  return (vbox);
+}
+
+
+
+
+static GtkWidget *
+applets_notebook_page (void)
 {
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
-	GtkWidget *table;
 	GtkWidget *vbox;
-	
+
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	
-	/* Tooltips frame */
-	frame = gtk_frame_new (_("Tooltips"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	
-	/* Tooltips enable */
-	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
-	if (temp_config.tooltips_enabled)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.tooltips_enabled));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-	/* Menu frame */
-	frame = gtk_frame_new (_("Menus"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	
-	/* table for frame */
-	table = gtk_table_new(2,2,FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), table);
-	
-	/* Small Icons */
-	button = gtk_check_button_new_with_label (_("Show small icons"));
-	if (temp_config.show_small_icons)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.show_small_icons));
-	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,0,1);
-
-	/* Dot Buttons */
-	button = gtk_check_button_new_with_label (_("Show ... buttons"));
-	if (temp_config.show_dot_buttons)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.show_dot_buttons));
-	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,0,1);
-
-	/* Off Panel Popup menus */
-	button = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
-	if (temp_config.off_panel_popups)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.off_panel_popups));
-	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,1,2);
-
-	/* Hungry Menus */
-	button = gtk_check_button_new_with_label (_("Keep menus in memory"));
-	if (temp_config.hungry_menus)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.hungry_menus));
-	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,1,2);
 
 	/* Movement frame */
 	frame = gtk_frame_new (_("Default movement mode"));
@@ -506,7 +522,75 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_movement), 
 			    (gpointer)PANEL_PUSH_MOVE);
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);	
+
+	box = make_int_scale_box(_("Applet padding"),
+				 &(temp_config.applet_padding),
+				 0.0, 10.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+	
+
+	return vbox;
+}
+
+static GtkWidget *
+misc_notebook_page(void)
+{
+	GtkWidget *frame;
+	GtkWidget *button;
+	GtkWidget *box;
+	GtkWidget *table;
+	GtkWidget *vbox;
+	
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	
+	/* Menu frame */
+	frame = gtk_frame_new (_("Menus"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+	
+	/* table for frame */
+	table = gtk_table_new(2,2,FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+	
+	/* Small Icons */
+	button = gtk_check_button_new_with_label (_("Show small icons"));
+	if (temp_config.show_small_icons)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.show_small_icons));
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,0,1);
+
+	/* Dot Buttons */
+	button = gtk_check_button_new_with_label (_("Show [...] buttons"));
+	if (temp_config.show_dot_buttons)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.show_dot_buttons));
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,0,1);
+
+	/* Off Panel Popup menus */
+	button = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
+	if (temp_config.off_panel_popups)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.off_panel_popups));
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 0,1,1,2);
+
+	/* Hungry Menus */
+	button = gtk_check_button_new_with_label (_("Keep menus in memory"));
+	if (temp_config.hungry_menus)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.hungry_menus));
+	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,1,2);
 	
 	/* Miscellaneous frame */
 	frame = gtk_frame_new (_("Miscellaneous"));
@@ -514,10 +598,37 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
 	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	box = gtk_vbox_new (FALSE, 0);
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	/* Tooltips enable */
+	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
+	if (temp_config.tooltips_enabled)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.tooltips_enabled));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);	
 	
+	/* only show tiles when mouse is over the button */
+	button = gtk_check_button_new_with_label (_("Show hints on panel startup"));
+	if (temp_config.show_startup_hints)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (set_toggle_button_value),
+			    &(temp_config.show_startup_hints));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+
+	/* Drawer/launcher auto close */
+	button = gtk_check_button_new_with_label (_("Close drawer if a launcher inside it is pressed"));
+	if (temp_config.drawer_auto_close)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.drawer_auto_close));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+
 	/* Autoraise */
 	button = gtk_check_button_new_with_label (_("Raise panels on mouse-over (non GNOME compliant window managers only)"));
 	if (temp_config.autoraise)
@@ -535,50 +646,6 @@ misc_notebook_page(void)
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.keep_bottom));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-	/* Drawer/launcher auto close */
-	button = gtk_check_button_new_with_label (_("Close drawer if a launcher inside it is pressed"));
-	if (temp_config.drawer_auto_close)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.drawer_auto_close));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-	/* show/hide frame */
-	button = gtk_check_button_new_with_label (_("Make buttons flush with panel edge"));
-	if (temp_config.hide_panel_frame)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (set_toggle_button_value),
-			    &(temp_config.hide_panel_frame));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-
-	/* only show tiles when mouse is over the button */
-	button = gtk_check_button_new_with_label (_("Show button tiles only when cursor is over the button"));
-	if (temp_config.tile_when_over)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (set_toggle_button_value),
-			    &(temp_config.tile_when_over));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-	/* only show tiles when mouse is over the button */
-	button = gtk_check_button_new_with_label (_("Show hints on panel startup"));
-	if (temp_config.show_startup_hints)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (set_toggle_button_value),
-			    &(temp_config.show_startup_hints));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
-
-	/* Minimize Delay scale frame */
-	frame = make_int_scale_frame(_("Applet padding"),
-				      &(temp_config.applet_padding),
-				      0.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
 	return (vbox);
 }
@@ -602,12 +669,6 @@ panel_config_global(void)
 	GtkWidget *page;
 	GtkWidget *box;
 	GtkWidget *prop_nbook;
-	char *icon_titles[]={
-		N_("Launcher icon"),
-		N_("Drawer icon"),
-		N_("Menu icon"),
-		N_("Miscellaneous icon")};
-	int i;
 	
 	/* return if the window is already up. */
 	if (config_window) {
@@ -640,13 +701,13 @@ panel_config_global(void)
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Animation")));
 
-#if 0
-	  /* General icon notebook page */
-	  page = genicon_notebook_page ();
-	  gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-				    page, gtk_label_new (_("General icon settings")));
+	/* General icon notebook page */
+	page = buttons_notebook_page (box);
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				    page, gtk_label_new (_("Buttons")));
 
-#endif
+
+#if 0
 	/* Specific icon notebook pages */
 	for(i = 0; i<LAST_TILE; i++) {
 		page = icon_notebook_page (i,box);
@@ -654,6 +715,11 @@ panel_config_global(void)
 					  page, gtk_label_new (_(icon_titles[i])));
 		
 	}
+#endif
+	/* applet settings */
+	page = applets_notebook_page ();
+	gtk_notebook_append_page (GTK_NOTEBOOK (prop_nbook),
+				  page, gtk_label_new (_("Applets")));
 		
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();
