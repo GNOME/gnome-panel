@@ -702,7 +702,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 				GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
 	gtk_window_set_title (GTK_WINDOW (fish->pb),
-			      _("GNOME Fish Properties"));
+			      _("GNOME Fish Preferences"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
 					 GNOME_ICONDIR "/gnome-fish.png");
 
@@ -1248,9 +1248,9 @@ applet_change_size (PanelApplet *applet,
 }
 
 static const BonoboUIVerb fish_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("FishProperties", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("FishHelp",       display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("FishAbout",      display_about_dialog),
+	BONOBO_UI_UNSAFE_VERB ("FishPreferences", display_properties_dialog),
+	BONOBO_UI_UNSAFE_VERB ("FishHelp",        display_help_dialog),
+	BONOBO_UI_UNSAFE_VERB ("FishAbout",       display_about_dialog),
 
         BONOBO_UI_VERB_END
 };
