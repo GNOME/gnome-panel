@@ -700,6 +700,7 @@ init_user_panels(void)
 	GtkWidget *panel;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
+	char *back_pixmap;
 
 	g_snprintf(buf,256,"%sConfig/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
@@ -712,43 +713,35 @@ init_user_panels(void)
 				   DEFAULT_MINIMIZE_DELAY);
 
 	for(num=1;num<=count;num++) {
-		/*these are only for free floating non-drawer like panels */
-		g_snprintf(buf,256,"%sPanel_%d/size=%d",old_panel_cfg_path,
-			   num, 50);
-		size=gnome_config_get_int(buf);
-		g_snprintf(buf,256,"%sPanel_%d/position_x=0",
-			   old_panel_cfg_path,num);
-		x=gnome_config_get_int(buf);
-		g_snprintf(buf,256,"%sPanel_%d/position_y=0",
-			   old_panel_cfg_path,num);
-		y=gnome_config_get_int(buf);
+		g_snprintf(buf,256,"%sPanel_%d/", old_panel_cfg_path, num);
 
-		g_snprintf(buf,256,"%sPanel_%d/snapped=%d",
-			   old_panel_cfg_path,num,
-			   PANEL_BOTTOM);
+		gnome_config_push_prefix (buf);
+		
+		/*these are only for free floating non-drawer like panels */
+		size = gnome_config_get_int("size=50");
+		x    = gnome_config_get_int("position_x=0");
+		y    = gnome_config_get_int("position_y=0");
+
+		g_snprintf(buf,256,"snapped=%d", PANEL_BOTTOM);
 		config.snapped=gnome_config_get_int(buf);
 
-		g_snprintf(buf,256,"%sPanel_%d/orient=%d",
-			   old_panel_cfg_path,num,
-			   PANEL_HORIZONTAL);
+		g_snprintf(buf,256,"orient=%d", PANEL_HORIZONTAL);
 		config.orient=gnome_config_get_int(buf);
 
-		g_snprintf(buf,256,"%sPanel_%d/mode=%d",
-			   old_panel_cfg_path,num,
-			   PANEL_EXPLICIT_HIDE);
+		g_snprintf(buf,256,"mode=%d", PANEL_EXPLICIT_HIDE);
 		config.mode=gnome_config_get_int(buf);
 
-		g_snprintf(buf,256,"%sPanel_%d/state=%d",
-			   old_panel_cfg_path,num,
-			   PANEL_SHOWN);
+		g_snprintf(buf,256,"state=%d", PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
-		g_snprintf(buf,256,"%sPanel_%d/drawer_drop_zone_pos=%d",
-			   old_panel_cfg_path,num,
-			   DRAWER_LEFT);
+		g_snprintf(buf,256,"drawer_drop_zone_pos=%d", DRAWER_LEFT);
 		drop_pos=gnome_config_get_int(buf);
 
-
+		back_pixmap = gnome_config_get_string ("backpixmap=");
+		if (back_pixmap && *back_pixmap == 0)
+			back_pixmap = 0;
+		
+		gnome_config_pop_prefix ();
 		panel = panel_widget_new(size,
 					 config.orient,
 					 config.snapped,
@@ -756,7 +749,9 @@ init_user_panels(void)
 					 state,
 					 x,
 					 y,
-					 drop_pos);
+					 drop_pos,
+					 back_pixmap
+					 );
 
 		panel_setup(PANEL_WIDGET(panel));
 

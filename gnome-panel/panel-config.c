@@ -39,6 +39,8 @@ set_snapped (GtkWidget *widget, gpointer data)
 	PanelSnapped snapped = (PanelSnapped) data;
 	
 	panel_config_struct.snapped = snapped;
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
 }
 
 static void 
@@ -47,6 +49,8 @@ set_mode (GtkWidget *widget, gpointer data)
 	PanelMode mode = (PanelMode) data;
 	
 	panel_config_struct.mode = mode;
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
 }
 
 static void 
@@ -56,10 +60,12 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 		*(int *)data=TRUE;
 	else
 		*(int *)data=FALSE;
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
 }
 
 static void
-config_apply (GtkWidget *widget, gpointer data)
+config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	PanelWidget *panel = data;
 	if(panel_config_struct.mode == PANEL_AUTO_HIDE) {
@@ -79,17 +85,15 @@ config_apply (GtkWidget *widget, gpointer data)
 	}
 }
 
-/* FIXME: I think these should probly go in a notebook.. I have to
- * give some thought as to the best way to present all these config
- * options.  Also, delay, and movement step size should be configurable. */
-
 GtkWidget *
-position_notebook_page(void)
+position_notebook_page(GtkWidget *propertybox)
 {
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
 	GtkWidget *vbox;
+
+	panel_config_struct.config_box = 0;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
@@ -193,7 +197,9 @@ position_notebook_page(void)
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (button);
-	
+
+	panel_config_struct.config_box = propertybox;
+
 	return (vbox);
 }
 
@@ -218,59 +224,25 @@ panel_config(PanelWidget *panel)
 	
 	
 	/* main window */
-	config_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_signal_connect(GTK_OBJECT(config_window), "delete_event",
-			   GTK_SIGNAL_FUNC (config_delete), NULL);
+	config_window = gnome_property_box_new ();
 	gtk_signal_connect(GTK_OBJECT(config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_window_set_title (GTK_WINDOW(config_window),
 			      _("Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
-	/* main vbox */
-	box1 = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_add(GTK_CONTAINER (config_window), box1);
-	gtk_widget_show(box1);
-	
-	/* notebook */
-	notebook = gtk_notebook_new();
-	gtk_box_pack_start(GTK_BOX (box1), notebook, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show(notebook);
-	
 	/* label for Position notebook page */
 	label = gtk_label_new (_("Orientation"));
 	gtk_widget_show (label);
 	
 	/* Position notebook page */
-	page = position_notebook_page ();
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
-	
-	/* hbox for close and apply buttons */
-	box2 = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_box_pack_start(GTK_BOX (box1), box2, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (box2);
-	
-	/* close button */
-	button = gtk_button_new_with_label(_("Close"));
-	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				   GTK_SIGNAL_FUNC (gtk_widget_destroy), 
-				   (gpointer)config_window);
-	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
+	page = position_notebook_page (GNOME_PROPERTY_BOX (config_window));
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+					page, gtk_label_new (_("Orientation")));
 
-	/* apply button */
-	button = gtk_button_new_with_label(_("Apply"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (config_apply), 
-			    panel);
-	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, 
-			   CONFIG_PADDING_SIZE);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-
+	gtk_signal_connect (GTK_OBJECT (config_window), "apply",
+			    GTK_SIGNAL_FUNC (config_apply), panel);
 	
-	gtk_widget_set_usize (config_window, 300, -1);
 	/* show main window */
 	gtk_widget_show (config_window);
 }

@@ -1361,7 +1361,8 @@ panel_widget_new (gint size,
 		  PanelState state,
 		  gint pos_x,
 		  gint pos_y,
-		  DrawerDropZonePos drop_zone_pos)
+		  DrawerDropZonePos drop_zone_pos,
+		  char *back_pixmap)
 {
 	PanelWidget *panel;
 	gint i;
@@ -1390,13 +1391,36 @@ panel_widget_new (gint size,
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
 	gtk_widget_show(panel->table);
 
+	gtk_widget_push_visual (gdk_imlib_get_visual ());
+	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
 	panel->fixed = gtk_fixed_new();
+	gtk_widget_pop_colormap ();
+	gtk_widget_pop_visual ();
 	gtk_table_attach(GTK_TABLE(panel->table),panel->fixed,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
 	gtk_widget_show(panel->fixed);
+	gtk_widget_realize (panel->fixed);
 
+	if (g_file_exists (back_pixmap)){
+		GdkImlibImage *im;
+		GdkPixmap *p;
+		
+		im = gdk_imlib_load_image (back_pixmap);
+		if (im){
+			gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+			p = gdk_imlib_move_image (im);
+			gdk_window_set_back_pixmap (panel->fixed->window, p, 0);
+			gdk_imlib_free_pixmap (p);
+			gdk_imlib_destroy_image (im);
+		} else {
+			back_pixmap = 0;
+		}
+	} 
+	panel->back_pixmap = back_pixmap;
+	
+	
 	/*we add all the hide buttons to the table here*/
 	/*EAST*/
 	panel->hidebutton_e=gtk_button_new();

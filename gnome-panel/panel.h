@@ -28,12 +28,12 @@ BEGIN_GNOME_DECLS
 #define PANEL_UNKNOWN_STEP_SIZE -1
 
 
-typedef struct _PanelConfig PanelConfig;
-struct _PanelConfig {
+typedef struct {
 	PanelOrientation orient;
-	PanelSnapped snapped;
-	PanelMode mode;
-};
+	PanelSnapped     snapped;
+	PanelMode        mode;
+	GtkWidget        *config_box;
+} PanelConfig;
 
 typedef enum {
 	APPLET_EXTERN,

@@ -1,9 +1,9 @@
 /* Gnome panel: panel functionality
  * (C) 1997 the Free Software Foundation
  *
- * Authors: Federico Mena
- *          Miguel de Icaza
- *          George Lebl
+ * Authors:  George Lebl
+ *           Federico Mena
+ *           Miguel de Icaza
  */
 
 #include <config.h>
@@ -169,40 +169,26 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	g_snprintf(path,256, "%sPanel_%d/", panel_cfg_path, (*num)++);
 
-	fullpath = g_copy_strings(path,"orient",NULL);
-	gnome_config_set_int(fullpath,panel->orient);
-	g_free(fullpath);
+	gnome_config_push_prefix (path);
+	
+	gnome_config_set_int("orient",panel->orient);
+	gnome_config_set_int("snapped", panel->snapped);
+	gnome_config_set_int("mode", panel->mode);
+	gnome_config_set_int("state", panel->state);
+	gnome_config_set_int("size", panel->size);
 
-	fullpath = g_copy_strings(path,"snapped",NULL);
-	gnome_config_set_int(fullpath,panel->snapped);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"mode",NULL);
-	gnome_config_set_int(fullpath,panel->mode);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"state",NULL);
-	gnome_config_set_int(fullpath,panel->state);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"size",NULL);
-	gnome_config_set_int(fullpath,panel->size);
-	g_free(fullpath);
+	if (panel->back_pixmap)
+		gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
 
 	/*FIXME: this should be allocation.[xy] but those don't work!!!
 	  probably a gtk bug*/
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
-	fullpath = g_copy_strings(path,"position_x",NULL);
-	gnome_config_set_int(fullpath,x);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"position_y",NULL);
-	gnome_config_set_int(fullpath,y);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"drawer_drop_zone_pos",NULL);
-	gnome_config_set_int(fullpath,panel->drawer_drop_zone_pos);
-	g_free(fullpath);
+	
+	gnome_config_set_int("position_x",x);
+	gnome_config_set_int("position_y",y);
+	gnome_config_set_int("drawer_drop_zone_pos",panel->drawer_drop_zone_pos);
+	
+	gnome_config_pop_prefix ();
 }
 
 static void
@@ -243,27 +229,24 @@ panel_session_save (GnomeClient *client,
 	for(num=1,i=0;i<applet_count;i++)
 		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
 					  &num);
-	g_snprintf(buf,256,"%sConfig/applet_count",panel_cfg_path);
-	gnome_config_set_int(buf,num-1);
+
+	g_snprintf(buf, 256, "%sConfig", panel_cfg_path);
+	gnome_config_push_prefix (buf);
+
+	gnome_config_set_int ("/applet_count", num-1);
 	num = 1;
-	g_list_foreach(panels,save_panel_configuration,&num);
-	g_snprintf(buf,256,"%sConfig/panel_count",panel_cfg_path);
-	gnome_config_set_int(buf,num-1);
+	g_list_foreach(panels, save_panel_configuration,&num);
+	gnome_config_set_int("panel_count",num-1);
 
 	/*global options*/
-	g_snprintf(buf,256,"%sConfig/auto_hide_step_size",panel_cfg_path);
-	gnome_config_set_int(buf, global_config.auto_hide_step_size);
-	g_snprintf(buf,256,"%sConfig/explicit_hide_step_size",panel_cfg_path);
-	gnome_config_set_int(buf, global_config.explicit_hide_step_size);
-	g_snprintf(buf,256,"%sConfig/minimized_size",panel_cfg_path);
-	gnome_config_set_int(buf, global_config.minimized_size);
-	g_snprintf(buf,256,"%sConfig/minimize_delay",panel_cfg_path);
-	gnome_config_set_int(buf, global_config.minimize_delay);
-	g_snprintf(buf,256,"%sConfig/tooltips_enabled",panel_cfg_path);
-	gnome_config_set_bool(buf, global_config.tooltips_enabled);
-	g_snprintf(buf,256,"%sConfig/show_small_icons",panel_cfg_path);
-	gnome_config_set_bool(buf, global_config.show_small_icons);
+	gnome_config_set_int("auto_hide_step_size", global_config.auto_hide_step_size);
+	gnome_config_set_int("explicit_hide_step_size", global_config.explicit_hide_step_size);
+	gnome_config_set_int("minimized_size", global_config.minimized_size);
+	gnome_config_set_int("minimize_delay", global_config.minimize_delay);
+	gnome_config_set_bool("tooltips_enabled", global_config.tooltips_enabled);
+	gnome_config_set_bool("show_small_icons", global_config.show_small_icons);
 
+	gnome_config_pop_prefix ();
 	gnome_config_sync();
 
 	if(is_shutdown) {

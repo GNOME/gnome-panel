@@ -1,3 +1,20 @@
+1998-04-22  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* Added support for a background pixmap.
+
+	* main.c (init_user_panels): Simplified the use of gnome_config by
+	using the gnome_config_push_prefix.
+
+	* panel.c (save_panel_configuration): Simplified the use of
+	gnome_config by using gnome_config_push_prefix.
+	(panel_session_save): Likewise.
+
+	* panel_config_global.c (panel_config_global): Made it use
+	GnomePropertyBox as well.
+
+	* panel_config.c (panel_config): Made it use GnomePropertyBox
+	instead of hand-done property configurator.
+
 Wed Apr 22 02:25:39 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.[ch]: added change_drop_zone_pos function

@@ -22,17 +22,11 @@ extern GList *panels;
 
 static GtkWidget *config_window;
 
-static gint 
-config_delete (GtkWidget *widget, gpointer data)
-{
-	/* allow window destroy */
-	return TRUE;
-}
-
-static void 
+static int
 config_destroy(GtkWidget *widget, gpointer data)
 {
-    config_window = NULL;
+	config_window = NULL;
+	return FALSE;
 }
 
 static void 
@@ -42,11 +36,12 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 		*(int *)data=TRUE;
 	else
 		*(int *)data=FALSE;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 
 static void
-config_apply (GtkWidget *widget, gpointer data)
+config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	global_config.minimize_delay = temp_config.minimize_delay;
 	global_config.minimized_size = temp_config.minimized_size;
@@ -65,6 +60,7 @@ gint_scale_update (GtkAdjustment *adjustment, gpointer data)
 	gint *val = data;
 	double scale_val = adjustment->value;
 	*val = (gint) scale_val;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 GtkWidget *
@@ -239,67 +235,28 @@ panel_config_global(void)
 	temp_config.show_small_icons = global_config.show_small_icons;
 
 	/* main window */
-	config_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	gtk_signal_connect(GTK_OBJECT(config_window), "delete_event",
-			   GTK_SIGNAL_FUNC (config_delete), NULL);
+	config_window = gnome_property_box_new ();
 	gtk_signal_connect(GTK_OBJECT(config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
+	gtk_signal_connect (GTK_OBJECT (config_window), "delete_event",
+			    GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_window_set_title (GTK_WINDOW(config_window),
 			      _("Global Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
-	/* main vbox */
-	box1 = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_add(GTK_CONTAINER (config_window), box1);
-	gtk_widget_show(box1);
-	
-	/* notebook */
-	notebook = gtk_notebook_new();
-	gtk_box_pack_start(GTK_BOX (box1), notebook, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show(notebook);
-	
-	/* label for Animation notebook page */
-	label = gtk_label_new (_("Animation settings"));
-	gtk_widget_show (label);
-	
 	/* Animation notebook page */
 	page = animation_notebook_page ();
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+					page, gtk_label_new (_("Animation settings")));
 
-	/* label for Miscellaneous notebook page */
-	label = gtk_label_new (_("Miscellaneous"));
-	gtk_widget_show (label);
-	
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();
-	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+					page, gtk_label_new (_("Miscellaneous")));
 
-	/* hbox for close and apply buttons */
-	box2 = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_box_pack_start(GTK_BOX (box1), box2, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (box2);
-	
-	/* close button */
-	button = gtk_button_new_with_label(_("Close"));
-	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-				   GTK_SIGNAL_FUNC (gtk_widget_destroy), 
-				   (gpointer)config_window);
-	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
+	gtk_signal_connect (GTK_OBJECT (config_window), "apply",
+			    GTK_SIGNAL_FUNC (config_apply), NULL);
 
-	/* apply button */
-	button = gtk_button_new_with_label(_("Apply"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (config_apply), 
-			    NULL);
-	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, 
-			   CONFIG_PADDING_SIZE);
-	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-	gtk_widget_grab_default (button);
-	gtk_widget_show (button);
-
-	
-	gtk_widget_set_usize (config_window, 300, -1);
 	/* show main window */
 	gtk_widget_show (config_window);
 }

@@ -112,6 +112,7 @@ struct _PanelWidget
 						 to block the autohide, until
 						 it is 0 .. it's set by the
 						 app not the widget*/
+	char                    *back_pixmap;
 };
 
 struct _PanelWidgetClass
@@ -138,8 +139,9 @@ GtkWidget*	panel_widget_new		(gint size,
 						 PanelState state,
 						 gint pos_x,
 						 gint pos_y,
-						 DrawerDropZonePos
-						 	drop_zone_pos);
+						 DrawerDropZonePos drop_zone_pos,
+						 char *back_pixmap);
+
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
