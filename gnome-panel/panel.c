@@ -777,7 +777,7 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 
 
 static void
-show_applet_menu(gint applet_id)
+show_applet_menu(gint applet_id, GdkEventButton *event)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel;
@@ -803,7 +803,7 @@ show_applet_menu(gint applet_id)
 	panel->autohide_inhibit = TRUE;
 	panel_widget_queue_pop_down(panel);
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       ITOP(applet_id), 0/*3*/, time(NULL));
+		       ITOP(applet_id), 0/*3*/, event->time);
 }
 
 
@@ -823,7 +823,7 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 					    PANEL_APPLET_PARENT_KEY);
 
 		if(!panel->currently_dragged_applet)
-			show_applet_menu(PTOI(data));
+			show_applet_menu(PTOI(data), event);
 		return TRUE;
 	}
 	return FALSE;
