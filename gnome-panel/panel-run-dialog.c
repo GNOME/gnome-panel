@@ -949,10 +949,11 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 		if (dialog->list_expander->parent)
 			gtk_container_remove (GTK_CONTAINER (dialog->list_expander->parent),
 					      dialog->list_expander);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
+                gtk_widget_grab_focus (dialog->gtk_entry);
 		
-	}
-	
-	if (show_list) {
+	} else if (show_list) {
 		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
 		gtk_widget_grab_focus (dialog->program_list);

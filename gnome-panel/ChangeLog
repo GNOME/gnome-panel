@@ -1,3 +1,12 @@
+2004-01-23  Arvind Samptur <arvind.samptur@wipro.com>
+
+	Patch from Leena Gunda <leena.gunda@wipro.com>
+
+	* panel-run-dialog.c: (panel_run_dialog_update_content):
+	Make the run dialog resizable only if both 
+	enable_program_list and show_program_list are TRUE.
+	Fixes bug #131211
+
 2004-01-21  Mark McLoughlin  <mark@skynet.ie>
 
 	* button-widget.c: (button_widget_expose): don't ref
