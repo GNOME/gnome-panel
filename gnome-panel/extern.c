@@ -194,6 +194,7 @@ void
 extern_clean(Extern *ext)
 {
 	CORBA_Environment ev;
+	PortableServer_ObjectId *id;
 	CORBA_exception_init(&ev);
 
 	g_free(ext->goad_id);
@@ -201,6 +202,9 @@ extern_clean(Extern *ext)
 
 	CORBA_Object_release(ext->pspot, &ev);
 	CORBA_Object_release(ext->applet, &ev);
+	id = PortableServer_POA_servant_to_id(thepoa, ext, &ev);
+	PortableServer_POA_deactivate_object(thepoa, id, &ev);
+	CORBA_free (id);
 	POA_GNOME_PanelSpot__fini((PortableServer_Servant) ext, &ev);
 
 	g_free(ext);
