@@ -396,210 +396,222 @@
 
 
 
-<!-- ########### Main Menu ############## -->
+   <!-- ########### Main Menu ############## -->
 
    <sect1 id="mainmenu">
     <title>The Main Menu</title>
     <para>
-      <indexterm id="idx-a3">  <primary>Main Menu</primary>
+     <indexterm id="idx-a3">  <primary>Main Menu</primary>
      </indexterm>
-      The footprint icon seen towards the left end of the example
-      panel is the <guibutton>Main Menu</guibutton> (yes, you guessed
-      right, it is the footprint of the gnome). This menu provides you
-      access to almost all you can do with GNOME &mdash; all the
-      applications, configuration tools, command line prompt,
-      <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
-      Screen</guimenuitem> commands, and much more.  To access any of
-      its items, click on the <guibutton>Main Menu
-      Button</guibutton>. You should release the mouse after pressing
-      the <guibutton>Main Menu</guibutton> button so that you can take
-      advantage of other mouse-activated features in the Main Menu
-      such as right mouse clicks and drag and drop from the menu.
-      </para>
-     <figure>
-      <title>The Main Menu Button</title>
+     The footprint icon seen towards the left end of the example
+     <interface>Panel</interface> (see <xref
+     linkend="examplepanelfig">) and in <xref
+     linkend="main-menu-button-fig"> is the  
+     <guibutton>Main Menu</guibutton> (yes, you guessed 
+     right, it is the footprint of the gnome). This menu provides 
+     access to almost everything you can do with GNOME &mdash; all the
+     applications, configuration tools, command line prompt,
+     <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
+     Screen</guimenuitem> commands, and much more.  To access any of
+     these items, click on the <guibutton>Main Menu</guibutton>
+     button. You should release the mouse after pressing
+     the <guibutton>Main Menu</guibutton> button so that you can take
+     advantage of other mouse-activated features in the <guimenu>Main
+     Menu</guimenu> such as right-click pop-up menus and drag and
+     drop from the menu to the desktop or <interface>Panel</interface>.
+    </para>
+    <figure id="main-menu-button-fig">
+     <title>The Main Menu Button</title>
      <screenshot>
-      <screeninfo>The Main Menu Button.</screeninfo>
+      <screeninfo>The Main Menu Button</screeninfo>
        <graphic fileref="./figures/mm-button" format="png"
        srccredit="dcm">
        </graphic>
      </screenshot>
     </figure>
-      <para> You can also access the <guimenu>Main menu</guimenu> by
-      clicking on the Panel with the right mouse button. If you wish,
-      you can also have several main menu buttons on different
-      panels. 
+    <para> 
+     You can also access the <guimenu>Main Menu</guimenu> by clicking
+     on a <interface>Panel</interface> with the right mouse button. If
+     you wish,  you can also have several <guibutton>Main
+     Menus</guibutton> buttons on different
+     <interface>Panels</interface>.
+    </para>
+
+
+    <sect2 id="submenus">
+     <title> Components of the Main Menu</title>
+
+     <para>
+      The main component of the <guimenu>Main Menu</guimenu> is the
+      <guimenu>Programs</guimenu> menu, which contains a list of
+      preconfigured menu items. Here you will find all the GNOME
+      applications, from the <application>Gnumeric</application>
+      spreadsheet to the <application>Kanji terminal</application>, as
+      well as quite a few non-GNOME ones, such as the
+      <application>Netscape</application> browser and the
+      <application>emacs</application> text editor.  In addition, the
+      <guisubmenu>Programs</guisubmenu> menu also contains the following
+      commands:
      </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guimenuitem>File Manager</guimenuitem> &mdash;  launches the
+        GNOME file manager
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <guimenuitem>Run program&hellip;</guimenuitem> &mdash;
+        gives you the command line prompt where you can enter
+        any command
+       </para>
+      </listitem>
+      <listitem>
+       <para>
+        <guimenuitem>Help</guimenuitem> &mdash; launches the
+        <application>GNOME Help Browser</application>. The
+        <application>GNOME Help Browser</application> gives you 
+        access to most of the documentation installed on your
+        system &mdash; not only GNOME documentation (Users guide,
+        application manuals, &hellip;), but also other types of
+        documentation (man pages, info pages)
+       </para>
+      </listitem>
+     </itemizedlist>
 
+     <para>   
+      In addition to the <guisubmenu>Programs</guisubmenu>
+      menu,  the <guimenu>Main Menu</guimenu> also contains a number
+      of other submenus and useful commands. Depending on your
+      configuration, you may not see all of these. Also, some of them
+      may be shown as submenus, and others included as part of the
+      <guimenu>Main Menu</guimenu>, separated by horizontal lines from
+      other parts. These additional submenus and commands are:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guisubmenu>Favorites</guisubmenu>. This menu, which is
+        originally empty, is the place where you can put your favorite
+        applications for quick access. You can edit this menu using
+        the <application>Menu Editor</application>, which can be
+        accessed from the <guimenu>Main Menu</guimenu> by choosing
+        <menuchoice><guisubmenu>Settings</guisubmenu>
+        <guimenuitem>Menu Editor</guimenuitem> </menuchoice>. You can
+        also add any item from any other menu (in particular, from the
+        <guimenu>Programs</guimenu> menu) to the
+        <guisubmenu>Favorites</guisubmenu> menu by clicking on the item
+        with the right mouse button and selecting <guimenuitem>Add
+        this to Favorites menu</guimenuitem>.
+       </para>
+      </listitem>
 
-   <sect2 id="submenus">
-      <title> Components of the main menu</title>
+      <listitem>
+       <para>
+        <guisubmenu>Applets</guisubmenu>. This menu contains all
+        the applets installed on your system. Selecting an applet will
+        add it to your <interface>Panel</interface>.
+       </para>
+      </listitem>
 
-      <para>
-	The main component of the Main Menu is the
-	<guimenu>Programs</guimenu> menu, which contains a list of
-	preconfigured menu items. Here you will find all the GNOME
-	applications, from <application>Gnumeric</application>
-	spreadsheet to <application>Kanji terminal</application>, as
-	well as quite a few non-Gnome ones, such as
-	<application>Netscape</application> browser and
-	<application>emacs</application> text editor.
-        In addition, <guimenu>Programs</guimenu> menu also contains
-	the following  commands:</para>
-	<itemizedlist>
-	  <listitem><para>
-	    <guimenuitem>File manager</guimenuitem> &mdash;  launches the
-	    GNOME file manager, 
-	    </para>
-	</listitem>
-	<listitem><para>
-	    <guimenuitem>Run program</guimenuitem> &mdash;
-	    gives you the command line prompt where you can enter
-	    any command,
-	  </para>
-	</listitem>
-	<listitem><para>
-	    <guimenuitem>Help</guimenuitem> &mdash;
-	launches the GNOME help browser. GNOME help browser gives you
-	an easy access to all the documentation installed on your
-	system &mdash; not only GNOME documentation (Users guide,
-	application manuals, &hellip;), but also all other types of
-	documentation (man pages, info pages).
-	  </para>
-	</listitem>
-      </itemizedlist>
+      <listitem>
+       <para>
+        <guisubmenu>KDE menus</guisubmenu>. This  shows the
+        menus of the K Desktop Environment (KDE) if you have it
+        installed on your system.
+       </para>
+      </listitem>
 
+      <listitem>
+       <para>
+        <guisubmenu>AnotherLevel menus</guisubmenu> and
+        <guisubmenu>Debian menus</guisubmenu>. These menus show the
+        default application menus for Red Hat Linux (Another Level)
+        and Debian GNU/Linux. They only make sense for the users of
+        the corresponding distributions.
+       </para>
+      </listitem>
 
-      <para> In addition to the <guimenu>Programs</guimenu>,  the main
-	menu can also contains a number of other submenus and useful
-	commands, listed below. Depending on your configuration, you
-	may not see all of them. Also, some of them may be shown as
-	submenus, and others included as part of the main menu,
-	separated by horizontal lines from other parts.
-      </para>
-	<itemizedlist>
-	  <listitem>
-	    <para>
-	      <guisubmenu>Favorites.</guisubmenu> This menu, which is
-	      originally empty, is the place where you can put your
-	      favorite applications for quicker access. You can edit
-	      this menu using the <application>Menu
-	      Editor</application>, which can be accessed from the
-	      <guimenu>Main Menu</guimenu> by choosing
-	      <menuchoice><guisubmenu>Settings</guisubmenu>
-	      <guimenuitem>Menu Editor</guimenuitem>
-	      </menuchoice>. You can also add any item from any other
-	      menu (in particular, from the
-	      <guimenu>Programs</guimenu> menu) to
-	      <guisubmenu>Favorites</guisubmenu> by clicking on the
-	      item with the right mouse button and selecting
-	      <guimenuitem>Add this to favorites menu</guimenuitem>.
-	    </para>
-	  </listitem>
+      <listitem>
+       <para>
+        <guimenuitem>Panel</guimenuitem>. This menu can be used to
+        change <interface>Panel</interface> properties (both for <link
+        linkend="panelproperties">this
+        <interface>Panel</interface></link> and <link
+        linkend="globalpanelprefs">global</link>, i.e. for all
+        <interface>Panels</interface>), <link linkend="add">add an
+        object</link> to the <interface>Panel</interface>, <link
+        linkend="panelremoving">remove the 
+        whole <interface>Panel</interface></link> or <link
+        linkend="paneladd">create a new
+        <interface>Panel</interface></link>.
+       </para>
+      </listitem>
 
-	  <listitem>
-	    <para>
-	      <guisubmenu>Applets.</guisubmenu> This menu contains all
-	      the applets installed on your system.
-	    </para>
-	  </listitem>
+      <listitem>
+       <para>
+        <guimenuitem>Desktop</guimenuitem>&mdash; This includes
+        <guimenuitem>Log out</guimenuitem>, which ends your GNOME
+        session (see <xref linkend="loggingout">) and <guimenuitem>Lock
+        screen</guimenuitem>.
+       </para>
+      </listitem>
 
-	  <listitem>
-	    <para>
-	      <guimenuitem>KDE menus.</guimenuitem> This  shows the
-	      menus of the K Desktop Environment (KDE) if you have it
-	      installed on your system
-	    </para>
-	  </listitem>
-
-
-	  <listitem>
-	    <para>
-	      <guimenuitem> Another Level menus, Debian menus.
-	      </guimenuitem> These menus show the default application
-	      menus for Red Hat Linux (Another Level) and Debian
-	      GNU/Linux. They only make sense for the users of
-	      corresponding distributions.
-	    </para>
-	  </listitem>
-
-	  <listitem>
-	    <para>
-	      <guimenuitem>Panel Menu.</guimenuitem> This menu can be
-	    used to change panel properties (both for <link
-	    linkend="panelproperties">this panel</link> and <link
-	    linkend="globalpanelprefs">global</link>, i.e. for all
-	    panels), <link linkend="add">add an object</link> to the
-	    panel, remove the whole panel or <link
-	    linkend="paneladd">create a new panel</link>.
-	    </para>
-	  </listitem>
-
-	  <listitem>
-	    <para>
-	      <guimenuitem> Desktop menu</guimenuitem>&mdash; includes
-	      <guimenuitem>Logout</guimenuitem>, which ends your GNOME
-	      session (first asking for confirmation &mdash; see <xref
-	      linkend="loggingout">) and <guimenuitem>Lock
-	      Screen</guimenuitem>.
-	    </para>
-	  </listitem>
-	  <listitem id="runcommand">
-	  <para>
-	    <guimenuitem> Run &hellip;</guimenuitem> &mdash; this
-	    command gives you the command line prompt. It is not a
-	    full-blown shell, so it is not a replacement for
-	    <application>gnome-terminal</application>, but it is very
-	    convenient when you need to enter just one command
-	    quickly. You can also launch this command line prompt by
-	    using a keyboard shortcut (you will need to specify the
-	    key you want to use in the <link
-	    linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
-	    tab of <interface><link linkend="globalpanelprefs">Global
-	    Panel Preferences</link>  dialog</interface>).
-	  </para>
-	  <para>The command line prompt has history buffer (you can
-	  recall any of previously entered command by pressing the down
-	  arrow located to the right of the text field and selecting
-	  this command) and
-	  <guibutton>Browse</guibutton> button, which allows you to
-	  choose a file &mdash; the filename will be added at the end of
-	  your command. For example, you can enter
-	    <userinput>emacs</userinput> (an extremely powerful text
-	  editor) on the command line and then use
-	  <guibutton>Browse</guibutton> button to 
-	  select the file to be edited. 
-	    </para>
-	</listitem>
-	</itemizedlist>
+      <listitem id="runcommand">
+       <para>
+        <guimenuitem>Run &hellip;</guimenuitem> &mdash; This command
+        gives you the command line prompt. It is not a full-blown
+        shell, so it is not a replacement for
+        <application>GNOME terminal</application>, but it is very
+        convenient when you need to enter just one command
+        quickly. You can also launch this command line prompt by using
+        a keyboard shortcut (you will need to specify the key you want
+        to use in the <link
+        linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
+        tab of <interface><link linkend="globalpanelprefs">Global
+        Panel Preferences</link> dialog</interface>).
+       </para>
+       <para>
+        The command line prompt has history buffer (you can recall a
+        previously entered command by pressing the down arrow
+        located to the right of the text field and selecting the
+        command) and <guibutton>Browse</guibutton> button, which
+        allows you to choose a file &mdash; the filename will be added
+        at the end of your command. For example, you can enter
+        <userinput>emacs</userinput> (an extremely powerful text
+        editor) on the command line and then use the
+        <guibutton>Browse</guibutton> button to select the file to be
+        edited.
+       </para>
+      </listitem>
+     </itemizedlist>
     </sect2>
 
     <sect2 id="mainmenuconfig">
-      <title>Configuring the main menu</title> 
+      <title>Configuring the Main Menu</title>
       <para>
       To change configuration of the main menu which you access from
-      the foot icon, right-click on this icon 
-      and select <guimenuitem>Properties</guimenuitem>  from the
+      the foot icon, right-click on this icon  and select
+      <guimenuitem>Properties</guimenuitem>  from the
       <guimenu>pop-up</guimenu> menu. This will show <interface>Menu
-      Properties dialog</interface>. In this dialog, for each of
-      the submenus  of the
-      Main menu listed above (<guisubmenu>Programs</guisubmenu>,
+      Properties dialog</interface>. In this dialog, for each of the
+      submenus  of the Main menu listed above
+      (<guisubmenu>Programs</guisubmenu>,
       <guisubmenu>Favorites</guisubmenu>, &hellip;) you can choose
       whether you want it  to be shown as part of the main menu, as a
       submenu, or not shown at all.
       </para>
-      <warning> 
-	<title>WARNING</title>    
+      <warning>  <title>WARNING</title>
 	<para>
 	  The main menu which you get by right-clicking on the panel
 	  is configured independently from the main menu you get by
-	  clicking on the foot icon. Configuration of  the main menu which
-	  you get by right-clicking on the panel (which is the same as
-	  the one you get by using keyboard shortcut) is done using
-	  <guilabel>Menu</guilabel> tab in 
-          <link linkend="globalpanelprefs"><interface>
-                 Global Panel Preferences
-           </interface></link> dialog. 
+	  clicking on the foot icon. Configuration of  the main menu
+	  which you get by right-clicking on the panel (which is the
+	  same as the one you get by using keyboard shortcut) is done
+	  using <guilabel>Menu</guilabel> tab in  <link
+	  linkend="globalpanelprefs"><interface> Global Panel
+	  Preferences </interface></link> dialog.
 	</para>
       </warning>
 
@@ -622,31 +634,29 @@
 	right-click on the main menu button and select
 	<guimenuitem>Edit Menus</guimenuitem>. Alternatively, you can
 	start <application>GNOME Menu Editor</application> by
-	selecting 
-	<menuchoice> <guisubmenu>Programs</guisubmenu>
-	  <guisubmenu>Settings</guisubmenu>
-	  <guimenuitem>Menu Editor</guimenuitem>
-	</menuchoice> from the <guimenu>Main Menu</guimenu> itself. 
+	selecting  <menuchoice> <guisubmenu>Programs</guisubmenu>
+	<guisubmenu>Settings</guisubmenu> <guimenuitem>Menu
+	Editor</guimenuitem> </menuchoice> from the <guimenu>Main
+	Menu</guimenu> itself.
       </para>
     </sect2>
 
   <sect2 id="kbdnav">
    <title>Keyboard navigation in the main menu</title>
      
-      <para> 
-        If you prefer, you can use keyboard instead of the mouse
-	to navigate the main menu. To activate the main menu, press
-	<keycap>Menu</keycap> key on your keyboard (if you are using
-	a standard PC keyboard, this key usually is located to the left
-	of the space bar and labelled with a picture of a menu); you
-	can change the default key in the <link
-	linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
-	tab of <interface><link linkend="globalpanelprefs">Global
-	Panel Preferences</link> dialog</interface>. After this, you
-	can use <keycap>Up</keycap> and <keycap>Down</keycap> arrows
-	to move inside the menu, <keycap>Right</keycap> arrow to go to
-	a submenu, and <keycap>Enter</keycap> to select an item. To
-	hide the menu again, just press <keycap>Esc</keycap>.
+      <para>  If you prefer, you can use keyboard instead of the mouse
+        to navigate the main menu. To activate the main menu, press
+        <keycap>Menu</keycap> key on your keyboard (if you are using a
+        standard PC keyboard, this key usually is located to the left
+        of the space bar and labelled with a picture of a menu); you
+        can change the default key in the <link
+        linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
+        tab of <interface><link linkend="globalpanelprefs">Global
+        Panel Preferences</link> dialog</interface>. After this, you
+        can use <keycap>Up</keycap> and <keycap>Down</keycap> arrows
+        to move inside the menu, <keycap>Right</keycap> arrow to go to
+        a submenu, and <keycap>Enter</keycap> to select an item. To
+        hide the menu again, just press <keycap>Esc</keycap>.
    </para>
   </sect2>
  </sect1>
@@ -665,12 +675,12 @@
       them - no default submenus, Run program, etc. as the
       <guimenu>Main Menu</guimenu> has.  For example, you can add any
       submenu of your <guimenu>Favorites</guimenu> menu or the
-      <guimenu>Programs</guimenu> menu as a separate menu to the panel;
-      to do so, bring up this submenu from the Main Menu, right click
-      on the submenu title, and select <guimenuitem>Add this as menu to
-      panel</guimenuitem>. <!-- FIXME - this is not right
-      To create a new Menu, use the
-      <application>Menu editor</application>. -->
+      <guimenu>Programs</guimenu> menu as a separate menu to the
+      panel; to do so, bring up this submenu from the Main Menu, right
+      click on the submenu title, and select <guimenuitem>Add this as
+      menu to panel</guimenuitem>. <!-- FIXME - this is not right To
+      create a new Menu, use the <application>Menu
+      editor</application>. -->
   </para>
   <figure>
    <title>An Example Menu</title>
@@ -705,30 +715,24 @@
     </sect2>
 
    <sect2 id="menusconf">
-    <title> Configuring the menus</title>
-     <para> 
-      To learn how you can add new menus to the Panel, see <xref
-      linkend="add">.  
+    <title> Configuring the menus</title> <para>  To learn how you can
+     add new menus to the Panel, see <xref linkend="add">.
      </para>
-     <para> You can easily change the Menu title and the icon used by the
-      Menu. To do so, click on the Menu button, right-click on the
+     <para> You can easily change the Menu title and the icon used by
+      the Menu. To do so, click on the Menu button, right-click on the
       menu title (at the very top of the list, above all other items),
       and select <guimenuitem>Properties</guimenuitem> from the
       <guimenu>pop-up</guimenu> menu. This will bring up the Menu
-      Properties Dialog, quite
-      similar to the <link linkend="launchers">Launcher
-      Properties Dialog</link>.  
-     </para> 
-     <para> To add a new item to the
-      Menu, click on the Menu button, right-click on the Menu title,
-      and select <guimenuitem>Add new item to this
-      menu</guimenuitem>. This will bring  up <interface>Create new
-      launcher</interface> 
-      dialog, in which you can enter item name, command, and other
-      information (see <xref linkend="launchers"> for more
-      information).    To remove an item from the Menu,
-      right-click on it and choose <guimenuitem>Remove this
-      item</guimenuitem>.  
+      Properties Dialog, quite similar to the <link
+      linkend="launchers">Launcher Properties Dialog</link>.   </para>
+      <para> To add a new item to the Menu, click on the Menu button,
+      right-click on the Menu title, and select <guimenuitem>Add new
+      item to this menu</guimenuitem>. This will bring  up
+      <interface>Create new launcher</interface>  dialog, in which you
+      can enter item name, command, and other information (see <xref
+      linkend="launchers"> for more information).    To remove an item
+      from the Menu, right-click on it and choose <guimenuitem>Remove
+      this item</guimenuitem>.
       </para>
       <para>
 	Finally, a frequently asked question is "How I can change the
@@ -736,10 +740,9 @@
 	is determined by the current GTK Theme, which can be changed
 	using <application>GNOME Control Center</application>, by
 	selecting <menuchoice> <guimenu>Main Menu</guimenu>
-	  <guisubmenu>Settings</guisubmenu> 
-          <guisubmenu>Desktop</guisubmenu> 
-	  <guimenuitem>Theme Selector</guimenuitem>
-	</menuchoice>.
+	<guisubmenu>Settings</guisubmenu>
+	<guisubmenu>Desktop</guisubmenu>  <guimenuitem>Theme
+	Selector</guimenuitem> </menuchoice>.
 	</para>
   </sect2>
  </sect1>
@@ -754,10 +757,9 @@
    can use any icon and has a customized tooltip to display a message
    when the cursor is passed over the Launcher.
   </para>
-  <para> 
-      You can change a launcher properties, such as the icon it uses
-      and its name, by right-clicking on a launcher and selecting
-      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This  
+  <para>  You can change a launcher properties, such as the icon it
+      uses and its name, by right-clicking on a launcher and selecting
+      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This
       brings up the <interface>Launcher properties dialog</interface>
       shown in <xref linkend="launcherpropsfig">. The same dialog is
       used when you create a new launcher (see <xref
@@ -765,7 +767,7 @@
       between menu items and launchers: these are just different
       presentations of the same thing. You can place any menu item on
       the panel, and it will show as a launcher. Therefore, all the
-      information below applies equally to launchers and menu items.  
+      information below applies equally to launchers and menu items.
       </para>
   <figure id="launcherpropsfig">
    <title>Create Launcher/Launcher Properties Dialog</title>
@@ -786,7 +788,7 @@
 	  <guilabel>Name</guilabel> &mdash; this is the application
 	  name, for example, <userinput>GNOME
 	  terminal</userinput>. This name will be used if you later
-	  put this launcher in a menu.  
+	  put this launcher in a menu.
 	</para>
       </listitem>
       <listitem>
@@ -794,40 +796,38 @@
 	  <guilabel>Comment</guilabel> &mdash; this is a brief
 	  explanation of what this application does, for example,
 	  <userinput>Terminal emulation program</userinput>. This will
-	  be used for tooltips. 
+	  be used for tooltips.
 	</para>
       </listitem>
       <listitem>
 	<para>
 	  <guilabel>Command</guilabel> &mdash; the actual command that
 	  runs the application, for example,
-	  <userinput>gnome-terminal</userinput>. 
+	  <userinput>gnome-terminal</userinput>.
 	</para>
       </listitem>
       <listitem>
 	<para>
 	  <guilabel>Type</guilabel> &mdash; should be
 	  <guilabel>Application</guilabel>; do not change it unless
-	  you want to create something other than application
-	  launcher. 
+	  you want to create something other than application launcher.
 	</para>
       </listitem>
     </itemizedlist>
     <para>
       The <guilabel>Basic</guilabel> tab also shows the icon to be
       used for the launcher; if no icon is specified, a default icon
-      will be used. To change the icon, just click on it to launch
-      the icon browser. </para>
-    <para>Finally, if the application can only run inside a terminal
-      &mdash; that is, if it doesn't create any windows on its own
-      &mdash; you should also check <guibutton>Run in
-      terminal</guibutton> button. If unsure, leave it unchecked. 
+      will be used. To change the icon, just click on it to launch the
+      icon browser. </para> <para>Finally, if the application can only
+      run inside a terminal &mdash; that is, if it doesn't create any
+      windows on its own &mdash; you should also check <guibutton>Run
+      in terminal</guibutton> button. If unsure, leave it unchecked.
     </para>
     
     <para>
       <guilabel>Advanced</guilabel> tab is shown below. It is intended
       for advanced users; most of the time, you do not need to change
-      any of the settings here. 
+      any of the settings here.
     </para>
   <figure id="launcheradvpropsfig">
    <title>Launcher Advanced Properties Dialog</title>
@@ -838,7 +838,7 @@
      </graphic>
    </screenshot>
   </figure>
-    <para> In this tab, you can set: 
+    <para> In this tab, you can set:
     </para>
     <itemizedlist>
       <listitem>
@@ -856,7 +856,8 @@
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Documentation</guilabel> &mdash; currently not used. 
+	  <guilabel>Documentation</guilabel> &mdash; currently not
+	  used.
 	</para>
       </listitem>
        <listitem>
@@ -865,33 +866,32 @@
 	  you can set translation of the <guilabel>Name</guilabel> and
 	  <guilabel>Comment</guilabel> to other languages. For
 	  example, for <application>GNOME Terminal</application>, the
-	  translations to Spanish (es) are name:  <userinput>Terminal UNIX
-	  de GNOME</userinput> and comment: <userinput>Emulador de
-	  terminal GNOME</userinput>. This means that if a user sets
-	  his language to Spanish during login (it can be done by
+	  translations to Spanish (es) are name:  <userinput>Terminal
+	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
+	  de terminal GNOME</userinput>. This means that if a user
+	  sets his language to Spanish during login (it can be done by
 	  selecting appropriate language from
 	  <guimenu>Languages</guimenu> menu of GNOME login manager
-	  (GDM)), he will see <guimenuitem>Terminal UNIX
-	  de GNOME</guimenuitem> in the menu and <userinput>Emulador de
-	  terminal GNOME</userinput> in the tooltips. Of course, the actual
-	  command that runs the terminal is unchanged. 
+	  (GDM)), he will see <guimenuitem>Terminal UNIX de
+	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
+	  terminal GNOME</userinput> in the tooltips. Of course, the
+	  actual command that runs the terminal is unchanged.
 	</para>
 	<para>
 	  To add a new translation, enter the language 2-letter code
 	  and translations of <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel>  fields in the empty
-	  fields under the list of current translations, and  press
-	  <guibutton>Add/Set</guibutton> button. 
-	  To change one of existing translations, select it in the
-	  list, edit the fields you want, and press
-	  <guibutton>Add/Set</guibutton> button. To remove one of
-	  existing translations, select it and press
-	  <guibutton>Remove</guibutton> button. 
+	  <guilabel>Comment</guilabel>  fields in the empty fields
+	  under the list of current translations, and  press
+	  <guibutton>Add/Set</guibutton> button.  To change one of
+	  existing translations, select it in the list, edit the
+	  fields you want, and press <guibutton>Add/Set</guibutton>
+	  button. To remove one of existing translations, select it
+	  and press <guibutton>Remove</guibutton> button.
 	</para>
-	<para> 
-	  You can find the list of all languages supported by
+	<para>  You can find the list of all languages supported by
 	  GNOME along with their 2-letter codes  in  <ulink
-	  type="http" url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
+	  type="http"
+	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
 	  Frequently Asked Questions</ulink>.
 	</para>
       </listitem>
@@ -903,7 +903,7 @@
       <guibutton>Apply</guibutton> or
       <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
       closes this dialog; pressing <guibutton>Apply</guibutton> will
-      allow you to continue editing. 
+      allow you to continue editing.
     </para>
  </sect1>
 
@@ -928,8 +928,8 @@
   </figure>
   <para>
    Some example Applets are shown above.  At the very left is  the
-   <application>Sound Monitor Applet</application>, which displays
-   the current volume of sound being played and allows us to control
+   <application>Sound Monitor Applet</application>, which displays the
+   current volume of sound being played and allows us to control
    various sound features.  Second is the <application>Mixer
    Applet</application>, which allows us to turn on/off sound and
    control its volume by clicking on applet.  This is followed by the
@@ -990,8 +990,7 @@
    <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
    displayed whenever the mouse is moved over the Drawer to remind you
    what is inside.  One may also select whether the <guibutton>hide
-   button</guibutton> and arrow are displayed at the end of the
-   drawer.
+   button</guibutton> and arrow are displayed at the end of the drawer.
   </para>
   <figure>
    <title>Drawer Properties Dialog</title>
@@ -1082,7 +1081,7 @@
     title of the window you would like to swallow.  In many cases, the
     application can be automatically shrank to fit in the Panel, as
     specified in the <interface>Create Swallowed Application
-    Dialog.</interface>. 
+    Dialog.</interface>.
    </para>
    <figure id="swallappfig">
      <title>Create Swallowed Application Dialog</title>
@@ -1098,7 +1097,7 @@
     window title, typically displayed on the top left edge of the
     window. (Note that the window title is case sensitive.) The width
     and height determine the size of the swallowed application in the
-    panel in pixels. 
+    panel in pixels.
       </para>
       <para>
       If you leave the <guilabel>Command</guilabel> field empty, this
@@ -1106,13 +1105,13 @@
       which will sit there waiting for a window with the given title
       to appear on your desktop. As soon such a window appears (for
       example, when you choose appropriate item in the menu), it will
-      be swallowed.  
+      be swallowed.
 	</para>
       <para> You can also enter any command in the
       <guilabel>Command</guilabel> field; this command will be
       executed before adding the swallowing window to the panel (and
-      each time the panel is restarted afterwards). This is normally used
-      to start an application which you want the Panel to swallow.
+      each time the panel is restarted afterwards). This is normally
+      used to start an application which you want the Panel to swallow.
    </para>
          
   </sect2>
@@ -1123,8 +1122,8 @@
     small windows which applications place in the Status Dock to
     provide status information.  Status Docklets can also be used to
     control the application. Essentially, Docklets are small (both in
-    size and in complexity) applets.   GNOME currently does not have many
-    applications which place Status Docklets in the Status Dock.
+    size and in complexity) applets.   GNOME currently does not have
+    many applications which place Status Docklets in the Status Dock.
     However, GNOME's Status Dock is compatible with that on the K
     Desktop Environment (KDE), so KDE applications, such as
     <application>kscd</application>, may place Status Docklets in
@@ -1141,8 +1140,8 @@
      </screenshot>
     </figure>
    <para>
-    The above example shows the Status Dock with a Status Docklet from the
-    <application>kscd</application> CD player program.  This
+    The above example shows the Status Dock with a Status Docklet from
+    the <application>kscd</application> CD player program.  This
     particular Docklet is used to open and close the main
     <application>kscd</application> window without ending the program.
    </para>
@@ -1163,7 +1162,7 @@
      </indexterm>
      <indexterm id="idx-a15">
       <primary>Panel</primary> <secondary>adding applets
-      to</secondary><see>"Applets"</see> </indexterm> --> 
+      to</secondary><see>"Applets"</see> </indexterm> -->
 
 	To move any object on the panel to a different location, just
       drag it with the middle mouse button to the desired place, or
@@ -1183,17 +1182,15 @@
     </sect2>
 
     <sect2 id="remove">
-      <title> Removing objects from the panel</title> 
-      <para>  To
-	remove an object from the panel, right-click on it and
-	choose <guimenuitem>Remove from panel</guimenuitem> form the
-	pop-up menu.
+      <title> Removing objects from the panel</title>  <para>  To
+      remove an object from the panel, right-click on it and choose
+      <guimenuitem>Remove from panel</guimenuitem> form the pop-up
+      menu.
       </para>
     </sect2>
 
 
-    <sect2 id="add">  
-      <title>Adding objects to the panel</title>
+    <sect2 id="add">   <title>Adding objects to the panel</title>
       
       <para>
 	<indexterm id="idx-a13">
@@ -1243,8 +1240,8 @@
 		the command line to launch the application. This
 		dialog is virtually identical to <interface>Launcher
 		Properties</interface> dialog, so we refer the reader
-		to <xref linkend="launchers"> for detailed description. 
-		detail.
+		to <xref linkend="launchers"> for detailed
+		description.  detail.
 	      </para>
 	      <figure>
 		<title>The Create Launcher Dialog</title>
@@ -1374,38 +1371,6 @@
   <sect1 id="panelmove">
    <title>Creating, Moving, and Removing Panels</title>
 
-      <sect2 id="panelmoving">
-	<title> Moving panels </title> <para>
-	<indexterm id="idx-a7">
-	  <primary>Panel</primary> <secondary>moving</secondary>
-	</indexterm>
-	  Any Panel you have on your desktop can be moved by using the
-	  middle mouse button, or by simultaneously pressing the left
-	  and right mouse buttons, to drag the panel to the desired
-	  edge of your screen. If you do not have a middle mouse
-	  button and did not configure your mouse to emulate a middle
-	  button you may also move a Panel by changing its location in
-	  the <interface>Panel properties</interface> dialog.  You can
-	  read more about this in <xref linkend="panelproperties"> of
-	  this documentation.
-	</para>
-      </sect2>
-    <sect2 id="panelremoving">
-      <title> Removing panels </title> 
-      <para>
-	To remove an existing panel, right-click on it and choose 
-	<guimenuitem>Remove this panel</guimenuitem> command from
-	the  <guisubmenu>Panel</guisubmenu> menu. You
-	will be prompted for a confirmation. 
-      </para>
-      <note> 
-	<title>NOTE</title>
-	<para>
-	  At all times, you must have at least one panel; GNOME will
-	  not allow you to remove your only panel.
-	</para>
-      </note>
-    </sect2>
       <sect2 id="paneladd">  <title>Creating new panels</title>
 	  <para>
 	<indexterm id="idx-a8">
@@ -1413,8 +1378,8 @@
 	</indexterm>
 	To add a new Panel to your desktop, select the
 	<guimenuitem>Create panel</guimenuitem> command from
-	<guisubmenu>Panel</guisubmenu> menu. You have a
-	choice of four possible panel types:
+	<guisubmenu>Panel</guisubmenu> menu. You have a choice of four
+	possible panel types:
       </para>
       <itemizedlist mark="bullet">
 	<listitem>
@@ -1486,6 +1451,41 @@
 	  </para>
 	</tip>
       </sect2>
+
+
+      <sect2 id="panelmoving">
+	<title> Moving panels </title> <para>
+	<indexterm id="idx-a7">
+	  <primary>Panel</primary> <secondary>moving</secondary>
+	</indexterm>
+	  Any Panel you have on your desktop can be moved by using the
+	  middle mouse button, or by simultaneously pressing the left
+	  and right mouse buttons, to drag the panel to the desired
+	  edge of your screen. If you do not have a middle mouse
+	  button and did not configure your mouse to emulate a middle
+	  button you may also move a Panel by changing its location in
+	  the <interface>Panel properties</interface> dialog.  You can
+	  read more about this in <xref linkend="panelproperties"> of
+	  this documentation.
+	</para>
+      </sect2>
+    <sect2 id="panelremoving">
+      <title> Removing panels </title> 
+      <para>
+	To remove an existing panel, right-click on it and choose 
+	<guimenuitem>Remove this panel</guimenuitem> command from
+	the  <guisubmenu>Panel</guisubmenu> menu. You
+	will be prompted for a confirmation. 
+      </para>
+      <note> 
+	<title>NOTE</title>
+	<para>
+	  At all times, you must have at least one panel; GNOME will
+	  not allow you to remove your only panel.
+	</para>
+      </note>
+    </sect2>
+
     </sect1>
 
 
