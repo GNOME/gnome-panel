@@ -805,13 +805,6 @@ panel_session_save (GnomeClient *client,
 	}
 	do_session_save(client,TRUE,FALSE,FALSE);
 	if (is_shutdown) {
-		GSList *li;
-		for(li=panel_list;li;li=g_slist_next(li)) {
-			PanelData *pd = li->data;
-			gtk_widget_hide(pd->panel);
-			if (pd->menu)
-				gtk_widget_hide(pd->menu);
-		}
 		while(!ss_done_save)
 			gtk_main_iteration_do(TRUE);
 	}
