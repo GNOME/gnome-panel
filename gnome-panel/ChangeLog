@@ -1,3 +1,22 @@
+Sun May 03 02:16:53 1998  George Lebl  <jirka@5z.com>
+
+	* launcher.[ch]: decorbaized
+
+	* panel.[ch],main.c: integrated the launcher applet into the
+	  main application. this makes things a hellovalot more stable
+	  actually, also added a way for the panel to read old
+	  config files so that all of you who have alreay some kind of
+	  setup won't have to change it
+
+	* panel.sh: removed for good
+
+	* Makefile.am: don't build launcher_applet and don't
+	  install panel.sh, plus ad dthe launcher sources to
+	  panel app
+
+	* gnome-panel.idl, mico-glue.(cc|h): removed the launcher
+	  interface
+
 Sat May 02 23:56:34 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.[ch]: dearrayizification is now officially

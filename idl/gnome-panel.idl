@@ -43,10 +43,5 @@ module GNOME {
 				    in string cfgpath,
 				    in string globcfgpath);
 	};
-
-	interface Launcher {
-		void start_new_launcher (in string cookie, in string path);
-		void restart_all_launchers (in string cookie);
-	};
 };
 

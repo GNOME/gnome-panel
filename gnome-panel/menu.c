@@ -119,9 +119,7 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 
-	panel_corba_call_launcher(ii->location);
-
-	return TRUE;
+	return add_to_panel (LAUNCHER_ID, ii->location);
 }
 
 static gint

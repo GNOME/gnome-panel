@@ -20,12 +20,9 @@
 #include "mico-glue.h"
 #include "mico-parse.h"
 #include "panel-util.h"
+#include "launcher.h"
 
 #include "cookie.h"
-
-#ifdef USE_INTERNAL_LAUNCHER
-int launcher_pid=0;
-#endif
 
 /*GList *panels = NULL;*/
 GArray *applets;
@@ -147,6 +144,18 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		   params[0] == '\0')
 		   	return;
 
+		/*VERY UGLY compatibility hack for the old launcher applet*/
+		if(strcmp(params,"#panel.application.launcher")==0) {
+			gchar *p;
+			p = g_copy_strings(cfgpath,"path=",NULL);
+			fullparams = gnome_config_get_string(p);
+			g_free(p);
+			load_applet(LAUNCHER_ID,fullparams,pos,panel,cfgpath);
+			g_free(fullparams);
+			return;
+		}
+
+
 		/*make it an absolute path, same as the applets will
 		  interpret it and the applets will sign themselves as
 		  this, so it has to be exactly the same*/
@@ -194,6 +203,19 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,NULL,APPLET_MENU);
+	} else if(strcmp(id_str,LAUNCHER_ID) == 0) {
+		Launcher *launcher;
+
+		launcher = create_launcher(params);
+
+		register_toy(launcher->button,NULL,launcher,LAUNCHER_ID,
+			     params,pos,panel,NULL,APPLET_LAUNCHER);
+
+		gtk_tooltips_set_tip (panel_tooltips,launcher->button->parent,
+				      launcher->dentry->comment,NULL);
+
+		applet_add_callback(applet_count-1,"properties",
+				    _("Properties..."));
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
@@ -773,14 +795,6 @@ init_user_panels(void)
 	}
 }
 
-gint
-call_launcher_timeout(gpointer data)
-{
-	puts("Waiting for launcher ...");
-
-	return !(panel_corba_restart_launchers());
-}
-
 /*I guess this should be called after we load up, but the problem is
   we never know when all the applets are going to finish loading and
   we don't want to clean the file before they load up, so now we
@@ -903,18 +917,6 @@ main(int argc, char **argv)
 	cookie = create_cookie ();
 	gnome_config_private_set_string ("/panel/Secret/cookie", cookie);
 	
-#ifdef USE_INTERNAL_LAUNCHER
-	launcher_pid=fork();
-
-	if(launcher_pid==-1)
-		g_error("Can't fork!");
-	if(launcher_pid==0) {
-		execlp("launcher_applet","launcher_applet",NULL);
-		g_error("Can't execlp!");
-		_exit(1);
-	}
-#endif
-
 	applets = g_array_new(FALSE);
 	applet_count=0;
 
@@ -949,8 +951,6 @@ main(int argc, char **argv)
 	panel_tooltips = gtk_tooltips_new();
 
 	apply_global_config();
-
-	gtk_timeout_add(300,call_launcher_timeout,NULL);
 
 	/*everything is erady ... load up the applets*/
 	load_queued_applets();

@@ -21,9 +21,7 @@ INCLUDES = -I. -I$(srcdir) 			\
 
 ## FIXME: logout should really be an internal applets since it is just
 ## too trivial 
-bin_PROGRAMS = panel logout_applet launcher_applet
-
-bin_SCRIPTS = panel.sh
+bin_PROGRAMS = panel logout_applet #launcher_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -78,17 +76,19 @@ panel_SOURCES = 		\
 	panel-widget.c  	\
 	panel-widget.h		\
 	panel-util.c		\
+	launcher.c		\
+	launcher.h		\
 	$(CORBA_SOURCES)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
-launcher_applet_SOURCES = \
-	launcher-lib.cc   \
-	launcher-lib.h    \
-	launcher.c
+#launcher_applet_SOURCES = \
+#	launcher-lib.cc   \
+#	launcher-lib.h    \
+#	launcher.c
 
-launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
-			$(GNOMEUI_LIBS) $(INTLLIBS)
+#launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
+#			$(GNOMEUI_LIBS) $(INTLLIBS)
 
 logout_applet_SOURCES = \
 	logout.c

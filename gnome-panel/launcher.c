@@ -5,6 +5,7 @@
  * Authors: Miguel de Icaza
  *          Federico Mena
  * CORBAized by George Lebl
+ * de-CORBAized by George Lebl
  */
 
 #include <config.h>
@@ -14,23 +15,14 @@
 #include <dirent.h>
 #include <string.h>
 #include "gnome.h"
-#include "applet-lib.h"
-#include "launcher-lib.h"
+#include "panel.h"
 
-
-#define CONFIG_TAG "Launcher"
-#define APPLET_DATA "launcher_data"
-
-static int launcher_count = 0;
-static GList *launchers = NULL;
+extern GtkTooltips *panel_tooltips;
 
 static char *default_app_pixmap;
 
-static char *myinvoc;
-
 typedef struct {
 	int                applet_id;
-	GtkWidget         *plug;
 	GtkWidget         *button;
 	gint               signal_click_tag;
 	GnomeDesktopEntry *dentry;
@@ -52,24 +44,6 @@ typedef struct {
 	GnomeDesktopEntry *dentry;
 } Properties;
 
-static Launcher *
-find_launcher(int applet_id)
-{
-	GList *list;
-
-	if(applet_id < 0)
-		return NULL;
-
-	for(list=launchers;list!=NULL;list=g_list_next(list)) {
-		Launcher *l = list->data;
-		if(l->applet_id == applet_id)
-			return l;
-	}
-
-	return NULL;
-}
-
-
 static void
 launch (GtkWidget *widget, void *data)
 {
@@ -78,8 +52,8 @@ launch (GtkWidget *widget, void *data)
 	gnome_desktop_entry_launch (item);
 }
 
-static Launcher *
-create_launcher (GtkWidget *window, char *parameters)
+Launcher *
+create_launcher (char *parameters)
 {
 	GtkWidget *pixmap;
 	GnomeDesktopEntry *dentry;
@@ -143,7 +117,6 @@ create_launcher (GtkWidget *window, char *parameters)
 	launcher->dentry = dentry;
 
 	launcher->applet_id = -1;
-	launcher->plug = NULL;
 
 	return launcher;
 }
@@ -240,8 +213,8 @@ properties_apply_callback(GtkWidget *widget, gpointer data)
 	gnome_desktop_entry_free(prop->dentry);
 	prop->dentry = dentry;
 
-	gnome_panel_applet_add_tooltip(prop->launcher->applet_id,
-				       dentry->comment);
+	gtk_tooltips_set_tip (panel_tooltips,prop->launcher->button->parent,
+			      dentry->comment,NULL);
 	
 	pixmap=GTK_BUTTON(prop->launcher->button)->child;
 
@@ -352,15 +325,15 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	return dialog;
 }
 
-static void
-properties(gint applet_id, gpointer data)
+void
+launcher_properties(Launcher *launcher)
 {
 	GnomeDesktopEntry *dentry;
 	char              *path;
 	GtkWidget         *dialog;
-	Launcher          *launcher;
 
-	launcher = find_launcher(applet_id);
+	/*FIXME:
+	launcher = find_launcher(applet_id);*/
 
 	path = launcher->dentry->location;
 
@@ -374,179 +347,4 @@ properties(gint applet_id, gpointer data)
 
 	dialog = create_properties_dialog(dentry,launcher);
 	gtk_widget_show(dialog);
-}
-
-/*these are commands sent over corba:*/
-void
-change_orient(int applet_id, int orient)
-{
-	/*PanelOrientType o = (PanelOrientType)orient;*/
-}
-
-int
-session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
-{
-	char *query;
-	Launcher *launcher;
-
-	launcher = find_launcher(applet_id);
-
-	g_return_if_fail(launcher != NULL);
-
-	query = g_copy_strings(cfgpath,"path",NULL);
-	gnome_config_set_string(query,launcher->dentry->location);
-	g_free(query);
-
-	query = g_copy_strings(globcfgpath,CONFIG_TAG,"/count",NULL);
-	gnome_config_set_int(query,launcher_count);
-	g_free(query);
-
-	gnome_config_sync();
-	gnome_config_drop_all();
-	
-	return TRUE;
-}
-
-static gint
-destroy_plug(GtkWidget *widget, gpointer data)
-{
-	Launcher *launcher = data;
-
-	g_return_val_if_fail(launcher != NULL, FALSE);
-
-	launcher_count--;
-	launchers = g_list_remove(launchers,launcher);
-
-	gnome_desktop_entry_free(launcher->dentry);
-	g_free(launcher);
-
-	return FALSE;
-}
-
-void
-start_new_launcher(const char *path)
-{
-	GtkWidget         *plug;
-	Launcher          *launcher;
-
-	char              *result;
-	char              *cfgpath;
-	char              *globcfgpath;
-	int                applet_id = -1;
-	guint32            winid;
-
-	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
-					       &cfgpath, &globcfgpath,
-					       &winid);
-	if (result)
-		g_error ("Could not talk to the Panel: %s\n", result);
-
-	plug = gtk_plug_new(winid);
-
-	launcher = NULL;
-	/*no path given, try getting it from config*/
-	if(!path) {
-		char *params;
-		char *query = g_copy_strings(cfgpath,"path=",NULL);
-		params = gnome_config_get_string(query);
-		if(params && params[0]!='\0')
-			launcher = create_launcher (plug, params);
-		g_free(params);
-		g_free(query);
-	} else {
-		launcher = create_launcher (plug, (char *)path);
-	}
-
-	g_free(globcfgpath);
-	g_free(cfgpath);
-
-	/*we can't start a launcher if we don't know what to start*/
-	if (!launcher) {
-		gnome_panel_applet_abort_id(applet_id);
-		return;
-	}
-
-	launcher->plug = plug;
-	launcher->applet_id = applet_id;
-	gtk_container_add (GTK_CONTAINER (plug), launcher->button);
-	gtk_widget_show (plug);
-	gtk_signal_connect(GTK_OBJECT(plug),"destroy",
-			   GTK_SIGNAL_FUNC(destroy_plug),
-			   launcher);
-
-	result = gnome_panel_applet_register(plug,applet_id);
-	if (result)
-		g_error ("Could not talk to the Panel: %s\n", result);
-
-	launchers = g_list_append(launchers,launcher);
-	launcher_count++;
-
-	gnome_panel_applet_register_callback(applet_id,
-					     "properties",
-					     _("Properties ..."),
-					     properties,
-					     NULL);
-
-	gnome_panel_applet_add_tooltip(applet_id, launcher->dentry->comment);
-}
-
-/*destructive call, should be done only on restart*/
-void
-restart_all_launchers(void)
-{
-	char *globcfg;
-	char *query;
-	int i,count;
-
-	if (!gnome_panel_applet_reinit_corba ())
-		g_error ("Could not comunicate with the panel\n");
-
-	launcher_count=0;
-	while(launchers) {
-		Launcher *launcher=launchers->data;
-		/*FIXME: somehow unref or something this, so we don't leak,
-		  unref gives me a bunch of warnings here*/
-		if(launcher->plug)
-			gtk_widget_destroy(launcher->plug);
-		launchers = g_list_remove(launchers,launcher);
-	}
-
-	gnome_panel_applet_request_glob_cfg(&globcfg);
-
-	query = g_copy_strings(globcfg,CONFIG_TAG,"/count=0",NULL);
-	count = gnome_config_get_int(query);
-	g_free(query);
-	g_free(globcfg);
-
-	for(i=0;i<count;i++)
-		start_new_launcher(NULL);
-}
-
-int
-main(int argc, char **argv)
-{
-	/*char *mypath;*/
-
-	panel_corba_register_arguments ();
-	gnome_init("launcher_applet", NULL, argc, argv, 0, NULL);
-
-	/*we pass '#' plus a comment (our path) to the panel to start,
-	  that will tell the panel to doing nothing (next session),
-	  but it will reserve a spot for us on the correct place, and
-	  this is the string that we identify as when we ask for the
-	  spot*/
-	/*
-	mypath = get_full_path(argv[0]);
-	if(!mypath)
-		return 1;*/
-	/* we pass an id starting with # to the panel to identify us,
-	   but not by path, this is so mc can take the place of the
-	   launcher_applet or any other filemanager */
-	myinvoc = "#panel.application.launcher";
-	/*myinvoc = g_copy_strings("#",mypath,NULL);
-	g_free(mypath);*/
-
-	launcher_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
-
-	return 0;
 }

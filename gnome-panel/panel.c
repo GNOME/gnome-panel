@@ -42,10 +42,6 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-#ifdef USE_INTERNAL_LAUNCHER
-extern int launcher_pid;
-#endif
-
 void
 apply_global_config(void)
 {
@@ -299,10 +295,6 @@ panel_session_save (GnomeClient *client,
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
 
-#ifdef USE_INTERNAL_LAUNCHER
-		puts("killing launcher");
-		kill(launcher_pid,SIGTERM);
-#endif
 		gtk_exit (0);
 	}
 
@@ -420,10 +412,9 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		send_applet_do_callback(info->id_str,
 					info->applet_id,
 					menu->name);
-	} else if(info->type != APPLET_EXTERN_PENDING &&
-	   info->type==APPLET_EXTERN_RESERVED &&
-	   info->type != APPLET_EMPTY) {
-		/*handle internal applet callbacks here*/
+	} else if(info->type == APPLET_LAUNCHER) {
+		if(strcmp(menu->name,"properties")==0)
+			launcher_properties(info->data);
 	}
 }
 
