@@ -422,7 +422,32 @@ copy_date (AppletWidget *applet, gpointer data)
 	else
 		tm = localtime(&current_time);
 
-	if (strftime(string, sizeof (string), _("%A, %B %d"), tm) <= 0)
+	if (strftime(string, sizeof (string), _("%A, %B %d %Y"), tm) <= 0)
+		strcpy (string, "???");
+	
+	g_free (cd->copied_string);
+	cd->copied_string = g_strdup (string);
+
+	gtk_selection_owner_set (GTK_WIDGET (applet),
+				 GDK_SELECTION_PRIMARY,
+				 GDK_CURRENT_TIME);
+}
+
+/* current timestamp */
+static void
+copy_timestamp (AppletWidget *applet, gpointer data)
+{
+	ClockData *cd = data;
+	time_t current_time = time (NULL);
+	struct tm *tm;
+	char string[256];
+
+	tm = localtime(&current_time);
+
+	if (strftime(string, sizeof (string),
+		     /* RFC822 conformant date, likely not different for other
+		      * locales I don't think */
+		     _("%a, %d  %b  %Y %H:%M:%S %z"), tm) <= 0)
 		strcpy (string, "???");
 	
 	g_free (cd->copied_string);
@@ -572,6 +597,13 @@ make_clock_applet(const gchar * goad_id)
 					       GNOME_STOCK_MENU_COPY,
 					       _("Copy date to selection"),
 					       copy_date,
+					       cd);
+
+	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
+					       "copy_timestamp",
+					       GNOME_STOCK_MENU_COPY,
+					       _("Copy timestamp to selection"),
+					       copy_timestamp,
 					       cd);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
