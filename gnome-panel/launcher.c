@@ -502,7 +502,7 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 	Launcher *launcher = data;
 
 	if (button == HELP_BUTTON) {
-		panel_show_help ("launcher.html");
+		panel_show_help ("launchers.html");
 	} else if (button == REVERT_BUTTON) { /* revert */
 		gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (launcher->dedit),
 					      launcher->revert_dentry);
