@@ -1,5 +1,11 @@
 2001-10-11  Alex Larsson  <alexl@redhat.com>
 
+	* gnome-run.c (simple_contents_shown):
+	Remove gtk_clist_columns_autosize() call. It crashed,
+	and we only have one column anyway.
+	
+2001-10-11  Alex Larsson  <alexl@redhat.com>
+
         * foobar-widget.c (foobar_widget_update_winhints):
 	Use the gtk hint calls.
 

@@ -833,8 +833,6 @@ simple_contents_shown (GtkWidget *vbox,
                 gdk_pixmap_unref (spacer_pixmap);
                 gdk_bitmap_unref (spacer_mask);
                 g_slist_free (files);
-
-                gtk_clist_columns_autosize (GTK_CLIST (clist));
         }
 }
 
