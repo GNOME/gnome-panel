@@ -692,12 +692,14 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 	y = new_y - panel_multiscreen_y (screen, new_monitor);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		y_centered = FALSE;
 		if (new_y == 0 || new_y == (screen_height - height))
 			x_centered = abs (x - ((monitor_width - width) / 2))
 								<= SNAP_TOLERANCE;
 		else
 			x_centered = FALSE;
 	} else {
+		x_centered = FALSE;
 		if (new_x == 0 || new_x == (screen_width - width))
 			y_centered = abs (y - ((monitor_height - height) / 2))
 								<= SNAP_TOLERANCE;
