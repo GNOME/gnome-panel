@@ -1,3 +1,15 @@
+2004-11-19  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-properties-dialog.c: (get_name):
+	(panel_properties_dialog_name_changed):
+	(panel_properties_dialog_setup_name_entry):
+	(panel_properties_dialog_update_name): remove these functions
+	(panel_properties_dialog_toplevel_notify):
+	(panel_properties_dialog_new): updated because we don't have the name
+	entry any more
+	* panel-properties-dialog.glade: remove the panel name entry
+	Fix bug #107611 (original patch by Christian Neumair)
+
 2004-11-16  William Jon McCann  <mccann@jhu.edu>
 
 	* panel-recent.c (recent_documents_clear_cb): 

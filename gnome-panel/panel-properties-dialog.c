@@ -44,8 +44,6 @@ typedef struct {
 
 	GtkWidget     *general_table;
 	GtkWidget     *general_vbox;
-	GtkWidget     *name_entry;
-	GtkWidget     *name_label;
 	GtkWidget     *orientation_combo;
 	GtkWidget     *orientation_label;
 	GtkWidget     *size_widgets;
@@ -106,69 +104,6 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 	dialog->icon_theme_dir = NULL;
 
 	g_free (dialog);
-}
-
-static char *
-get_name (PanelToplevel *toplevel,
-	  gboolean       is_attached)
-{
-	char *name;
-
-	if (!is_attached) {
-		name = panel_profile_get_toplevel_name (toplevel);
-		if (!name)
-			name = g_strdup (panel_toplevel_get_description (toplevel));
-	} else
-		name = panel_profile_get_attached_tooltip (toplevel);
-
-	return name;
-}
-
-static void
-panel_properties_dialog_name_changed (PanelPropertiesDialog *dialog,
-				      GtkEntry              *entry)
-{
-	const char *name;
-
-	name = gtk_entry_get_text (entry);
-
-	if (!panel_toplevel_get_is_attached (dialog->toplevel))
-		panel_profile_set_toplevel_name (dialog->toplevel, name);
-	else
-		panel_profile_set_attached_tooltip (dialog->toplevel, name);
-}
-
-static void
-panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
-					  GladeXML              *gui)
-{
-	char     *name;
-	gboolean  is_attached;
-	gboolean  is_writable;
-
-	dialog->name_entry = glade_xml_get_widget (gui, "name_entry");
-	g_return_if_fail (dialog->name_entry != NULL);
-
-	dialog->name_label = glade_xml_get_widget (gui, "name_label");
-	g_return_if_fail (dialog->name_label != NULL);
-
-	is_attached = panel_toplevel_get_is_attached (dialog->toplevel);
-
-	name = get_name (dialog->toplevel, is_attached);
-	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name ? name : "");
-	g_free (name);
-
-	g_signal_connect_swapped (dialog->name_entry, "changed",
-				  G_CALLBACK (panel_properties_dialog_name_changed), dialog);
-
-	is_writable = !is_attached ? panel_profile_is_writable_toplevel_name    (dialog->toplevel) :
-	                             panel_profile_is_writable_attached_tooltip (dialog->toplevel);
-
-	if (!is_writable) {
-		gtk_widget_set_sensitive (dialog->name_entry, FALSE);
-		gtk_widget_set_sensitive (dialog->name_label, FALSE);
-		gtk_widget_show (dialog->writability_warn_general);
-	}
 }
 
 enum {
@@ -666,19 +601,6 @@ panel_properties_dialog_destroy (PanelPropertiesDialog *dialog)
 }
 
 static void
-panel_properties_dialog_update_name (PanelPropertiesDialog *dialog,
-				     GConfValue            *value)
-{
-	const char *text = NULL;
-
-	if (value && value->type == GCONF_VALUE_STRING)
-		text = gconf_value_get_string (value);
-
-	if (text)
-		gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), text);
-}
-
-static void
 panel_properties_dialog_update_orientation (PanelPropertiesDialog *dialog,
 					    GConfValue            *value)
 {
@@ -741,9 +663,7 @@ panel_properties_dialog_toplevel_notify (GConfClient           *client,
 		}                                                                                  \
 	}
 
-	if (!strcmp (key, "name"))
-		panel_properties_dialog_update_name (dialog, value);
-	else if (!strcmp (key, "orientation"))
+	if (!strcmp (key, "orientation"))
 		panel_properties_dialog_update_orientation (dialog, value);
 	else if (!strcmp (key, "size"))
 		panel_properties_dialog_update_size (dialog, value);
@@ -969,7 +889,6 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	dialog->general_vbox  = glade_xml_get_widget (gui, "general_vbox");
 	dialog->general_table = glade_xml_get_widget (gui, "general_table");
 
-	panel_properties_dialog_setup_name_entry         (dialog, gui);
 	panel_properties_dialog_setup_orientation_combo  (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
 	panel_properties_dialog_setup_icon_entry         (dialog, gui);
