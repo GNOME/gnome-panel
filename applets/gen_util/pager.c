@@ -689,6 +689,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 		xml = glade_xml_new (PAGER_GLADEDIR "/pager.glade", NULL, NULL);
 		pager->properties_dialog = glade_xml_get_widget (xml, "pager_properties_dialog");
 
+		g_object_add_weak_pointer (G_OBJECT (pager->properties_dialog), 
+					   &pager->properties_dialog);
+
 		setup_dialog (xml, pager);
 		
 		g_object_unref (G_OBJECT (xml));

@@ -612,6 +612,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 		xml = glade_xml_new (TASKLIST_GLADEDIR "/tasklist.glade", NULL, NULL);
 		tasklist->properties_dialog = glade_xml_get_widget (xml, "tasklist_properties_dialog");
 
+		g_object_add_weak_pointer (G_OBJECT (tasklist->properties_dialog),
+					   &tasklist->properties_dialog);
+
 		setup_dialog (xml, tasklist);
 		
 		g_object_unref (G_OBJECT (xml));

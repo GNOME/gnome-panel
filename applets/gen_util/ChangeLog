@@ -1,3 +1,9 @@
+2002-03-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* pager.c: (display_properties_dialog):
+	* tasklist.c: (display_properties_dialog): weak ref so
+	we don't core if the window gets destroyed (74145)
+
 2002-03-25  Pasupathi Duraisamy <pasupathi.duraisamy@wipro.com>
 
         * clock.c: Fix to provide default action for enter key in
