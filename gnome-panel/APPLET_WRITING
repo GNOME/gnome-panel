@@ -456,16 +456,16 @@ thick as the thickest applet)
 The way this works is very similiar to the way orientation works so
 here is an example:
 
-How to tell which way the panel on which your applet sits is oriented,
-fairly simply. You bind the "change_orient" signal to the applet, so to
-modify our original hello applet, we'd do:
+How to what size the panel on which your applet sits is, fairly simply.
+You bind the "change_size" signal to the applet, so to modify our
+original hello applet, we'd do:
 
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
 
 #ifdef HAVE_PANEL_SIZE
-/*this is when the panel orientation changes*/
+/*this is when the panel size changes*/
 static void
 applet_change_size(GtkWidget *w, PanelSizeType o, gpointer data)
 {
