@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.2\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2003-01-24 10:53+0200\n"
 "Last-Translator: Alexander Shopov <al_shopov@yahoo.com>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
@@ -62,7 +62,7 @@ msgid "Accessories"
 msgstr "Помощни"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "Часовник"
 
@@ -80,20 +80,20 @@ msgstr "фабрика за създаването на някои основн�
 msgid "Get the current time and date"
 msgstr "Вземи текущото време и дата"
 
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -102,7 +102,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 #, fuzzy
 msgid "%a %b %e"
 msgstr "%a %b %d"
@@ -111,7 +111,7 @@ msgstr "%a %b %d"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, fuzzy, c-format
 msgid ""
 "%1$s\n"
@@ -124,51 +124,51 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, fuzzy, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "Задачи"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr ""
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 #, fuzzy
 msgid "Appointments"
 msgstr "Добави среща..."
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 #, fuzzy
 msgid "Calendar"
 msgstr "Стандартен"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "Компютърен часовник"
 
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, fuzzy, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr ""
@@ -176,14 +176,19 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 
+#: applets/clock/clock.c:2047
+#, fuzzy
+msgid "Custom format"
+msgstr "Други цветове"
+
 # ##
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -193,59 +198,54 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Имаше грешка при показването на помощта: %s"
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "Настройки на часовника"
 
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 #, fuzzy
 msgid "Clock _type:"
 msgstr "Вид часовник"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 #, fuzzy
 msgid "12 hour"
 msgstr "_12-часов"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 #, fuzzy
 msgid "24 hour"
 msgstr "_24-часов"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 #, fuzzy
 msgid "UNIX time"
 msgstr "Uni_x време"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 #, fuzzy
 msgid "Internet time"
 msgstr "_Интернет време"
 
-#: applets/clock/clock.c:2273
-#, fuzzy
-msgid "Custom format"
-msgstr "Други цветове"
-
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 #, fuzzy
 msgid "Custom _format:"
 msgstr "Формат на часа"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr "Показвай _секундите"
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr "Показвай _датата"
 
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr "Използвай _Гринуич"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -254,7 +254,7 @@ msgstr ""
 "Павел Чолаков\n"
 "Александър Шопов"
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr "Часовникът показва текущото време и дата"
 
@@ -1764,12 +1764,12 @@ msgstr "Грешка при зареждане на glade файл %s"
 msgid "Error getting value for '%s': %s"
 msgstr "Грешка при зареждане на glade файл %s"
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2321,14 +2321,14 @@ msgstr "Неизвестна грешка при опита за отварян�
 msgid "Recent Documents"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, fuzzy, c-format
 msgid "Cannot launch command '%s'"
 msgstr ""
 "Не мога да стартирам иконата\n"
 "%s"
 
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, fuzzy, c-format
 msgid "Cannot display location '%s'"
 msgstr ""
@@ -2336,21 +2336,21 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ще изпълня \"'%s\""
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 

@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2004-03-08 21:24+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -65,7 +65,7 @@ msgid "Accessories"
 msgstr "Oiriúintí"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "Clog"
 
@@ -81,20 +81,20 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr "Faigh an am agus dáta anois"
 
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -103,7 +103,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -111,7 +111,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,54 +124,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "Tascanna"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr ""
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 msgid "Appointments"
 msgstr ""
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr "Féilire"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "Cloig an Ríomhaire"
 
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Níorbh fhéidir uirlis cumraíocht ama a lainseáil: %s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 #, fuzzy
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
@@ -180,7 +180,11 @@ msgstr ""
 "Níl aon fháil ar clár /for configuring the date and time/. B'fhéidir nach "
 "bhfuil ceann insealbhaithe?"
 
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2047
+msgid "Custom format"
+msgstr "Formóid féindheanamh"
+
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -190,59 +194,55 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Ní fhéadadh cabhair a thaispeáint: %s"
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "Airíonna an Chloig"
 
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr "_Saghas an Cloig:"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr "12 uair"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr "24 uair"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr "Am Unix"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr "Am Idirlín"
 
-#: applets/clock/clock.c:2273
-msgid "Custom format"
-msgstr "Formóid féindheanamh"
-
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 msgid "Custom _format:"
 msgstr "Formóid _féindheanamh:"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr "Taispeáin na _soicind"
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr "Taispeáin an _dáta"
 
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr "Baint úsáid as _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr "Seán Ó Ceallaigh, Paul Duffy, David O'Callaghan"
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr "Taispeáin an clog an t-am agus an dáta anois"
 
@@ -1566,12 +1566,12 @@ msgstr ""
 msgid "Error getting value for '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2084,31 +2084,31 @@ msgstr ""
 msgid "Recent Documents"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Ní féidir an t-ordú '%s' a lainseáil"
 
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Ní féidir áit '%s' a thaispeáint"
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, c-format
 msgid "Will run command: '%s'"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 
@@ -2651,154 +2651,143 @@ msgstr "XX Mór"
 msgid "XX Small"
 msgstr "XX Beag"
 
-msgid "Log Out %s"
-msgstr "Éirigh as %s"
+#~ msgid "Log Out %s"
+#~ msgstr "Éirigh as %s"
 
 #, fuzzy
-msgid "Quit from %s's desktop"
-msgstr "Ealu as an deasc GNOME"
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Ealu as an deasc GNOME"
 
-msgid "Day"
-msgstr "Lá"
+#~ msgid "Day"
+#~ msgstr "Lá"
 
-msgid "Month"
-msgstr "Mí"
+#~ msgid "Month"
+#~ msgstr "Mí"
 
-msgid "Year"
-msgstr "Blian"
+#~ msgid "Year"
+#~ msgstr "Blian"
 
-msgid "Orientation"
-msgstr "Treoshuíomh"
+#~ msgid "Orientation"
+#~ msgstr "Treoshuíomh"
 
-msgid "Icon Name"
-msgstr "Ainm Dealbh"
+#~ msgid "Icon Name"
+#~ msgstr "Ainm Dealbh"
 
-msgid "Action Type"
-msgstr "Saghas Gníomh"
+#~ msgid "Action Type"
+#~ msgstr "Saghas Gníomh"
 
-msgid "Menu Path"
-msgstr "Slí Roghchláir"
+#~ msgid "Menu Path"
+#~ msgstr "Slí Roghchláir"
 
-msgid "Custom Icon"
-msgstr "Saindealbh"
+#~ msgid "Custom Icon"
+#~ msgstr "Saindealbh"
 
-msgid "Tooltip"
-msgstr "Leasfhocal"
+#~ msgid "Tooltip"
+#~ msgstr "Leasfhocal"
 
-msgid "Use Menu Path"
-msgstr "Úsáid Slí chlâr"
+#~ msgid "Use Menu Path"
+#~ msgstr "Úsáid Slí chlâr"
 
-msgid "Name"
-msgstr "Ainm"
+#~ msgid "Name"
+#~ msgstr "Ainm"
 
-msgid "X position"
-msgstr "Áit X"
+#~ msgid "X position"
+#~ msgstr "Áit X"
 
-msgid "X centered"
-msgstr "Curtha i lár X"
+#~ msgid "X centered"
+#~ msgstr "Curtha i lár X"
 
-msgid "Y position"
-msgstr "Áit Y"
+#~ msgid "Y position"
+#~ msgstr "Áit Y"
 
-msgid "Y centered"
-msgstr "Curtha i lár Y"
+#~ msgid "Y centered"
+#~ msgstr "Curtha i lár Y"
 
-msgid "Xinerama monitor"
-msgstr "Monatóir Xinerama"
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monatóir Xinerama"
 
-msgid "Auto hide"
-msgstr ""
+#~ msgid "Animate"
+#~ msgstr "Beoigh"
 
-msgid "Hide delay"
-msgstr ""
+#~ msgid "Animation Speed"
+#~ msgstr "Luas Beochana"
 
-msgid "Auto-hide size"
-msgstr ""
+#~ msgid "Background color name"
+#~ msgstr "Ainm an dath cúlra"
 
-msgid "Animate"
-msgstr "Beoigh"
+#~ msgid "Foreground color name"
+#~ msgstr "Ainm an dath dulra"
 
-msgid "Animation Speed"
-msgstr "Luas Beochana"
+#~ msgid "Foreground color"
+#~ msgstr "Dath dulra"
 
-msgid "Background color name"
-msgstr "Ainm an dath cúlra"
+#~ msgid "Font"
+#~ msgstr "Clófhoireann"
 
-msgid "Background color as a string"
-msgstr ""
+#~ msgid "Font size"
+#~ msgstr "Méid Chlófhoireann"
 
-msgid "Foreground color name"
-msgstr "Ainm an dath dulra"
+#~ msgid "Cannot execute %s"
+#~ msgstr "Ní féidir %s a chur i gcrích"
 
-msgid "Foreground color"
-msgstr "Dath dulra"
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
 
-msgid "Font"
-msgstr "Clófhoireann"
+#~ msgid "Window Menu"
+#~ msgstr "Roghchlár Fuinneoige"
 
-msgid "Font size"
-msgstr "Méid Chlófhoireann"
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr ""
+#~ "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
 
-msgid "Cannot execute %s"
-msgstr "Ní féidir %s a chur i gcrích"
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "%s an t-Iasc GNOME"
 
-msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
+#~ msgid "Help on %s _Application"
+#~ msgstr "Cabhair le haighaidh Cl_áir %s"
 
-msgid "Window Menu"
-msgstr "Roghchlár Fuinneoige"
+#~ msgid "Help on %s"
+#~ msgstr "Cabhair le haighaidh %s"
 
-msgid "If true, display internet time, which is same all over the world."
-msgstr "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
+#~ msgid "Application"
+#~ msgstr "Feidhmchlár"
 
-msgid "%s the GNOME Fish"
-msgstr "%s an t-Iasc GNOME"
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>_Dealbh:</b>"
 
-msgid "Help on %s _Application"
-msgstr "Cabhair le haighaidh Cl_áir %s"
+#~ msgid "<b>_Name:</b>"
+#~ msgstr "<b>Ai_nm:</b>"
 
-msgid "Help on %s"
-msgstr "Cabhair le haighaidh %s"
+#~ msgid "<b>_Orientation:</b>"
+#~ msgstr "<b>Tre_oshuíomh:</b>"
 
-msgid "Application"
-msgstr "Feidhmchlár"
+#~ msgid "<b>_Size:</b>"
+#~ msgstr "<b>_Méid:</b>"
 
-msgid "<b>_Icon:</b>"
-msgstr "<b>_Dealbh:</b>"
+#~ msgid "Application description"
+#~ msgstr "Cur síos feidhmchláir"
 
-msgid "<b>_Name:</b>"
-msgstr "<b>Ai_nm:</b>"
+#~ msgid "List of known applications"
+#~ msgstr "Liosta feidhmchláranna"
 
-msgid "<b>_Orientation:</b>"
-msgstr "<b>Tre_oshuíomh:</b>"
+#~ msgid "KDE Menu"
+#~ msgstr "Cláranna KDE"
 
-msgid "<b>_Size:</b>"
-msgstr "<b>_Méid:</b>"
+#~ msgid "_Drawer"
+#~ msgstr "_Taisceadá¡n"
 
-msgid "Application description"
-msgstr "Cur síos feidhmchláir"
+#~ msgid "_Run Application..."
+#~ msgstr "_Rith Feidhmclár..."
 
-msgid "List of known applications"
-msgstr "Liosta feidhmchláranna"
+#~ msgid "_Search for Files..."
+#~ msgstr "_Curdaigh le haighaidh Comhad..."
 
-msgid "KDE Menu"
-msgstr "Cláranna KDE"
+#~ msgid "_Log Out"
+#~ msgstr "Éirigh as"
 
-msgid "_Drawer"
-msgstr "_Taisceadá¡n"
-
-msgid "_Run Application..."
-msgstr "_Rith Feidhmclár..."
-
-msgid "_Search for Files..."
-msgstr "_Curdaigh le haighaidh Comhad..."
-
-msgid "_Log Out"
-msgstr "Éirigh as"
-
-msgid "Text"
-msgstr "Teacs"
+#~ msgid "Text"
+#~ msgstr "Teacs"
 
 #, fuzzy
-msgid "Font style"
-msgstr "Méid Chlófhoireann"
+#~ msgid "Font style"
+#~ msgstr "Méid Chlófhoireann"

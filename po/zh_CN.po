@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2003-08-04 18:11+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -84,7 +84,7 @@ msgstr "附件"
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "时钟"
 
@@ -101,23 +101,23 @@ msgid "Get the current time and date"
 msgstr "获取当前时间和日期"
 
 # applets/gen_util/clock.c:157
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:157
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%H:%M"
 
 # applets/mini-commander/src/message.c:105
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 # applets/mini-commander/src/message.c:105
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -127,7 +127,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr "%-m月%-d日%A"
 
@@ -135,7 +135,7 @@ msgstr "%-m月%-d日%A"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -148,65 +148,70 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 # applets/gen_util/clock.c:131
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%-m月%-d日%A"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "任务"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr "全天"
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 msgid "Appointments"
 msgstr "约会"
 
 # panel/panel_config.c:705
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr "日历"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "计算机时钟"
 
 # applets/gen_util/clock.c:157
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:157
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
 # applets/clockmail/clockmail.c:133
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%Y年%-m月%-d日%A"
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "启动时间配置工具失败：%s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "找不到用于配置日期和时间的程序。可能没有安装？"
 
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+# gnome-terminal/gnome-terminal.c:932
+#: applets/clock/clock.c:2047
+msgid "Custom format"
+msgstr "自定义格式"
+
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -216,58 +221,53 @@ msgstr "找不到用于配置日期和时间的程序。可能没有安装？"
 msgid "There was an error displaying help: %s"
 msgstr "显示帮助时发生错误：%s"
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "时钟首选项"
 
 # applets/another_clock/another_clock.c:323
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr "时钟类型(_T)："
 
 # applets/gen_util/clock.c:421
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr "12 小时"
 
 # applets/gen_util/clock.c:430
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr "24 小时"
 
 # applets/gen_util/clock.c:479
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr "UNIX 时间"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr "互联网时间"
 
-# gnome-terminal/gnome-terminal.c:932
-#: applets/clock/clock.c:2273
-msgid "Custom format"
-msgstr "自定义格式"
-
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 msgid "Custom _format:"
 msgstr "自定义格式(_F)："
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr "显示秒(_S)"
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr "显示日期(_D)"
 
 # applets/clockmail/clockmail.c:140
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr "使用 _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -278,7 +278,7 @@ msgstr ""
 "Zipeco <zipeco@btamail.net.cn>\n"
 "Wang Li <charles@linux.net.cn>"
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
@@ -1764,12 +1764,12 @@ msgstr "装入 gconf 目录“%s”时出错：%s"
 msgid "Error getting value for '%s': %s"
 msgstr "获取“%s”的值时出错：%s"
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "单击窗口可以强制退出应用程序。要取消请按 <ESC>。"
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2351,31 +2351,31 @@ msgstr "尝试打开 %s 时发生未知的错误"
 msgid "Recent Documents"
 msgstr "最近的文档"
 
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "无法启动命令“%s”"
 
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "无法显示位置“%s”"
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "无法从 UTF-8 转换“%s”"
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr "选择追加到命令的文件..."
 
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "选择应用程序可查看其描述。"
 

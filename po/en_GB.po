@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.1.2\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2001-01-15 15:27-0100\n"
 "Last-Translator: Robert Brady <robert@susu.org.uk>\n"
 "Language-Team: \n"
@@ -60,7 +60,7 @@ msgid "Accessories"
 msgstr ""
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr ""
 
@@ -76,20 +76,20 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr ""
 
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr ""
 
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr ""
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr ""
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -117,60 +117,64 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr ""
 
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr ""
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr ""
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr ""
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 msgid "Appointments"
 msgstr ""
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr ""
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr ""
 
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr ""
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr ""
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr ""
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr ""
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2047
+msgid "Custom format"
+msgstr ""
+
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -180,59 +184,55 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr ""
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr ""
 
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr ""
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr ""
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr ""
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr ""
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr ""
 
-#: applets/clock/clock.c:2273
-msgid "Custom format"
-msgstr ""
-
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 msgid "Custom _format:"
 msgstr ""
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr ""
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr ""
 
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr ""
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr ""
 
@@ -1538,12 +1538,12 @@ msgstr ""
 msgid "Error getting value for '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2057,31 +2057,31 @@ msgstr ""
 msgid "Recent Documents"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, c-format
 msgid "Will run command: '%s'"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 

@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2004-02-28 19:29+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
@@ -86,7 +86,7 @@ msgstr "Apuohjelmat"
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "Kello"
 
@@ -106,23 +106,23 @@ msgid "Get the current time and date"
 msgstr "Hae nykyinen aika ja päiväys"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -132,7 +132,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr "%a %e. %Bta"
 
@@ -140,7 +140,7 @@ msgstr "%a %e. %Bta"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -153,60 +153,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 # applets/gen_util/clock.c:273
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%A %e. %Bta"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "Tehtävät"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr "Koko päivä"
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 msgid "Appointments"
 msgstr "Tapaamiset"
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr "Kalenteri"
 
 # applets/gen_util/clock.c:378
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "Tietokoneen kello"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:503
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%A %e. %Bta %Y"
 
 # gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ajan asetustyökalun käynnistys epäonnistui: %s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -214,11 +214,15 @@ msgstr ""
 "Päiväyksen ja ajan muuttamiseen käytettävää ohjelmaa ei löytynyt. Ehkäpä "
 "sitä ei ole asennettu?"
 
+#: applets/clock/clock.c:2047
+msgid "Custom format"
+msgstr "Muu muoto"
+
 # applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
 # applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -229,56 +233,52 @@ msgid "There was an error displaying help: %s"
 msgstr "Ohjeen näyttämisessä tapahtui virhe: %s"
 
 # applets/gen_util/clock.c:916
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "Kellon asetukset"
 
 # applets/gen_util/clock.c:943
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr "Kellon t_yyppi:"
 
 # applets/gen_util/clock.c:953
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr "12 tuntia"
 
 # applets/gen_util/clock.c:959
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr "24-tuntinen"
 
 # applets/gen_util/clock.c:964
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr "Unix-aika"
 
 # applets/gen_util/clock.c:968
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr "Internet-aika"
 
-#: applets/clock/clock.c:2273
-msgid "Custom format"
-msgstr "Muu muoto"
-
 # applets/gen_util/clock.schemas.in.h:6
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 msgid "Custom _format:"
 msgstr "Muu _muoto:"
 
 # applets/gen_util/clock.c:1005
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr "Näytä _sekunnit"
 
 # applets/gen_util/clock.c:1015
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr "_Näytä päiväys"
 
 # applets/gen_util/clock.c:1025
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr "Näytä _UTC-aikaa"
 
@@ -286,7 +286,7 @@ msgstr "Näytä _UTC-aikaa"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -299,7 +299,7 @@ msgstr ""
 "http://gnome-fi.org/"
 
 # applets/gen_util/clock.c:1158
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 
@@ -1953,13 +1953,13 @@ msgstr "GConf-hakemiston \"%s\" lataus epäonnistui: %s"
 msgid "Error getting value for '%s': %s"
 msgstr "Avaimen \"%s\" arvon lataus ei onnistunut: %s"
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Pakota sovellus sulkeutumaan napsauttamalla ikkunaa. Peru painamalla Escape."
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2583,34 +2583,34 @@ msgid "Recent Documents"
 msgstr "Viimeisimmät asiakirjat"
 
 # gnome-panel/launcher.c:152
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Komentoa \"%s\" ei voi käynnistää"
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Sijaintia \"%s\" ei voi näyttää"
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Tekstiä \"%s\" ei voi muuntaa UTF-8:sta"
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr "Valitse komennon perään liitettävä tiedosto..."
 
 # gnome-panel/gnome-run.c:1268
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Suorittaa komennon \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Katsele sovelluksen kuvausta valitsemalla se."
 

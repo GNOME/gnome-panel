@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Tamil Gnome Translation v. 1.7\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
+"POT-Creation-Date: 2004-03-09 18:46+0000\n"
 "PO-Revision-Date: 2004-02-23 20:25-0600\n"
 "Last-Translator: Dinesh Nadarajah <dinesh_list@sbcglobal.net>\n"
 "Language-Team: Tamil <tamilinux@yahoogroups.com>\n"
@@ -74,7 +74,7 @@ msgstr ""
 
 # applets/gen_util/clock.c:927
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "கடிகாரம்"
 
@@ -91,24 +91,24 @@ msgid "Get the current time and date"
 msgstr ""
 
 # panel/foobar-widget.c:590
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
 # panel/foobar-widget.c:589
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
 # panel/foobar-widget.c:588
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:198 applets/gen_util/clock.c:400
 # panel/foobar-widget.c:587 panel/foobar-widget.c:1038
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -118,7 +118,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -126,7 +126,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -139,72 +139,78 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 # panel/foobar-widget.c:487
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
 # applets/desk-guide/deskguide_applet.c:101
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "செயல்கள்"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr "முழு நால்"
 
 # panel/foobar-widget.c:597
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 #, fuzzy
 msgid "Appointments"
 msgstr "Add appointement..."
 
 # panel/menu.c:4746 panel/panel_config.c:1576
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr "நால்காட்டி"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "கணிப்பொறி கடிகாரம்"
 
 # panel/menu.c:3516 panel/session.c:1549
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:191 applets/gen_util/clock.c:395
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:425
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
 # panel/gnome-run.c:236 panel/gnome-run.c:242
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, fuzzy, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr ""
 "இந்த நிரலை ஏற்ற முடியவில்லை!\n"
 "%s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 
+# gnome-terminal/gnome-terminal.c:1079
+#: applets/clock/clock.c:2047
+#, fuzzy
+msgid "Custom format"
+msgstr "தனிப்பயன் வண்ணங்கள்"
+
 # gnome-terminal/gnome-terminal.c:2097
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -218,74 +224,68 @@ msgstr ""
 "%s"
 
 # panel/logout.c:194
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "கடிகாரம் விருப்பங்கள்"
 
 # applets/gen_util/clock.c:974
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr "கடிகாரம் _வகை:"
 
 # applets/gen_util/clock.c:779
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr "12 மணி"
 
 # applets/gen_util/clock.c:788
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr "24 மணி"
 
 # applets/gen_util/clock.c:865
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr "யூநிக்ஸ் நேரம்"
 
 # applets/gen_util/clock.c:869
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr "இணையக நேரம்"
 
-# gnome-terminal/gnome-terminal.c:1079
-#: applets/clock/clock.c:2273
-#, fuzzy
-msgid "Custom format"
-msgstr "தனிப்பயன் வண்ணங்கள்"
-
 # applets/gen_util/clock.c:521
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 #, fuzzy
 msgid "Custom _format:"
 msgstr "கடிகாரம்/மணி-நேர அமைப்பு=12"
 
 # applets/gen_util/mailcheck.c:1230
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 #, fuzzy
 msgid "Show _seconds"
 msgstr "நொடிகள்"
 
 # applets/gen_util/clock.c:596
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 #, fuzzy
 msgid "Show _date"
 msgstr "திகதியை நகல்செய்"
 
 # applets/gen_util/clock.c:851
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 #, fuzzy
 msgid "Use _UTC"
 msgstr "க்றீநிச் (GMT) நேரம் உபயோகி"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr ""
 
@@ -1952,12 +1952,12 @@ msgstr "பயனர் அடைவைப் படைக்கின்றத�
 msgid "Error getting value for '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:73
+#: gnome-panel/panel-force-quit.c:74
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
-#: gnome-panel/panel-force-quit.c:185
+#: gnome-panel/panel-force-quit.c:186
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
@@ -2566,7 +2566,7 @@ msgid "Recent Documents"
 msgstr ""
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-run-dialog.c:285
+#: gnome-panel/panel-run-dialog.c:288
 #, fuzzy, c-format
 msgid "Cannot launch command '%s'"
 msgstr ""
@@ -2574,29 +2574,29 @@ msgstr ""
 "%s"
 
 # panel/launcher.c:103 panel/launcher.c:148
-#: gnome-panel/panel-run-dialog.c:311
+#: gnome-panel/panel-run-dialog.c:314
 #, fuzzy, c-format
 msgid "Cannot display location '%s'"
 msgstr ""
 "குறும்படத்தை இயக்க முடியாது\n"
 "%s"
 
-#: gnome-panel/panel-run-dialog.c:363
+#: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1041
+#: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
 msgstr ""
 
 # panel/gnome-run.c:881
-#: gnome-panel/panel-run-dialog.c:1229
+#: gnome-panel/panel-run-dialog.c:1232
 #, fuzzy, c-format
 msgid "Will run command: '%s'"
 msgstr "'%s' இயக்கும்"
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 
