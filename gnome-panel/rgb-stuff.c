@@ -112,6 +112,8 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 		g_error ("art_pixbuf_from_drawable_core (): Unknown depth.");
 	}
 
+	gdk_image_destroy(image);
+
 	art_pixbuf = art_pixbuf_new_rgb (buff, width, height, rowstride);
 
 	return gdk_pixbuf_new_from_art_pixbuf(art_pixbuf);
