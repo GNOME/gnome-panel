@@ -1002,16 +1002,6 @@ static const BonoboUIVerb fish_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static const char fish_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Fish Properties Item\" verb=\"FishProperties\" _label=\"Properties ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-properties\"/>\n"
-	"   <menuitem name=\"Fish Help Item\" verb=\"FishHelp\" _label=\"Help\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-help\"/>\n"
-	"   <menuitem name=\"Fish About Item\" verb=\"FishAbout\" _label=\"About ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
-	"</popup>\n";
-
 static gboolean
 fish_applet_fill (PanelApplet *applet)
 {
@@ -1068,8 +1058,10 @@ fish_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (applet_change_pixel_size),
 			  fish);
 
-	panel_applet_setup_menu (PANEL_APPLET (fish->applet),
-				 fish_menu_xml,
+	panel_applet_setup_menu_from_file (PANEL_APPLET (fish->applet),
+				 NULL,
+				 "GNOME_FishApplet.xml",
+				 NULL,
 				 fish_menu_verbs,
 				 fish);
 	

@@ -28,7 +28,8 @@ EXTRA_DIST =					\
 	$(FISH_BITMAPS)				\
 	GNOME_FishApplet_Factory.server.in	\
 	gnome-fish.png				\
-	fish.schemas
+	fish.schemas				\
+	$(ui_DATA)
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)
@@ -38,6 +39,9 @@ pixmap_DATA = gnome-fish.png
 
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = fish.schemas
+
+uidir		= $(datadir)/gnome-2.0/ui
+ui_DATA		= GNOME_FishApplet.xml
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_FishApplet_Factory.server.in
