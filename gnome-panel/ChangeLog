@@ -1,3 +1,15 @@
+2005-01-29  Vincent Untz  <vincent@vuntz.net>
+
+	* Makefile.am: build panel-default-setup.entries with
+	${datadir}/applications/ instead of applications:///
+	* panel-default-setup.entries: killed
+	* panel-default-setup.entries.in: new
+	* panel-object.schemas.in: replace the default menu_path with
+	applications:/ (it's just because the old default was
+	applications:///). applications:/ has a meaning now (it's just the
+	root of applications.menu)
+	Fix bug #160524
+
 2005-01-28  Vincent Untz  <vincent@vuntz.net>
 
 	* launcher.c: (launcher_load_from_gconf): try to migrate the launcher

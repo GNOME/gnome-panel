@@ -205,7 +205,7 @@ EXTRA_DIST =					\
 	panel-marshal.list			\
 	update-from-egg.sh			\
 	gnome-panelrc				\
-	panel-default-setup.entries
+	panel-default-setup.entries.in
 
 @INTLTOOL_DESKTOP_RULE@
 
@@ -261,6 +261,9 @@ rc_DATA = gnome-panelrc
 
 entriesdir = $(GCONF_SCHEMA_FILE_DIR)
 entries_DATA = panel-default-setup.entries
+
+panel-default-setup.entries: panel-default-setup.entries.in
+	sed "s,@DATADIR@,${datadir},g" $< > $@
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
