@@ -1,5 +1,5 @@
 /*
- * GNOME eime/date display module.
+ * GNOME time/date display module.
  * (C) 1997 The Free Software Foundation
  *
  * Authors: Miguel de Icaza
@@ -18,6 +18,10 @@
 #include <dirent.h>
 #include <string.h>
 #include <time.h>
+
+#define G_DISABLE_DEPRECATED
+#define GTK_DISABLE_DEPRECATED
+#define GNOME_DISABLE_DEPRECATED
 
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
@@ -79,7 +83,6 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
-static void phelp_cb	     (GtkWidget *w, gint tab, gpointer data);
 
 static int
 clock_timeout_callback (gpointer data)
@@ -348,9 +351,9 @@ create_clock_widget (ClockData *cd)
 	cd->orient = panel_applet_get_orient (PANEL_APPLET (cd->applet));
 	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
 
-	gtk_signal_connect (GTK_OBJECT(clock), "destroy",
-			    (GtkSignalFunc) destroy_clock,
-			    cd);
+	g_signal_connect (G_OBJECT(clock), "destroy",
+			  G_CALLBACK (destroy_clock),
+			  cd);
 	
 	/* Refresh the clock so that it paints its first state */
 	refresh_clock_timeout(cd);
@@ -782,7 +785,7 @@ set_hour_format_cb (GtkWidget *w,
 		    gpointer data)
 {
 	if (GTK_TOGGLE_BUTTON (w)->active) {
-		ClockData *clock = gtk_object_get_user_data (GTK_OBJECT (w));
+		ClockData *clock = g_object_get_data (G_OBJECT (w), "user_data");
 		panel_applet_gconf_set_int (PANEL_APPLET (clock->applet),
 					    KEY_HOUR_FORMAT,
 					    GPOINTER_TO_INT (data),
@@ -921,16 +924,16 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_table_attach (GTK_TABLE (table), twelvehour, 0, 1, 0, 1,
 			  GTK_FILL, GTK_FILL | GTK_EXPAND,
 			  0, 0);
-	gtk_object_set_user_data (GTK_OBJECT (twelvehour), (gpointer) cd);
+	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
 	gtk_widget_show (twelvehour);
 
-	twentyfourhour = gtk_radio_button_new_with_label (gtk_radio_button_group (GTK_RADIO_BUTTON (twelvehour)),
+	twentyfourhour = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)),
 							  _("24 hour"));
 
 	gtk_table_attach (GTK_TABLE (table), twentyfourhour, 0, 1, 1, 2,
 			  GTK_FILL, GTK_FILL | GTK_EXPAND,
 			  0, 0);
-	gtk_object_set_user_data (GTK_OBJECT (twentyfourhour), (gpointer) cd);
+	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
 	gtk_widget_show (twentyfourhour);
 
 	switch (cd->hourformat) {
@@ -945,14 +948,12 @@ display_properties_dialog (BonoboUIComponent *uic,
 		break;
 	}
 
-	gtk_signal_connect (GTK_OBJECT (twelvehour),
-			    "toggled",
-			    (GtkSignalFunc) set_hour_format_cb,
-			    (gpointer) 12);
-	gtk_signal_connect (GTK_OBJECT (twentyfourhour),
-			    "toggled",
-			    (GtkSignalFunc) set_hour_format_cb,
-			    (gpointer) 24);
+	g_signal_connect (G_OBJECT (twelvehour), "toggled",
+			  G_CALLBACK (set_hour_format_cb),
+			  GINT_TO_POINTER (12));
+	g_signal_connect (G_OBJECT (twentyfourhour), "toggled",
+			  G_CALLBACK (set_hour_format_cb),
+			  GINT_TO_POINTER (24));
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start_defaults (GTK_BOX (hbox), vbox);
@@ -965,10 +966,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->showdate)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showdate),
 					TRUE);
-	gtk_signal_connect (GTK_OBJECT (showdate),
-			    "toggled",
-			    (GtkSignalFunc) set_show_date_cb,
-			    cd);	   
+	g_signal_connect (G_OBJECT (showdate), "toggled",
+			  G_CALLBACK (set_show_date_cb),
+			  cd);	   
 
 	showtooltip = gtk_check_button_new_with_label (_("Show date in tooltip"));
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), showtooltip);
@@ -977,10 +977,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->showtooltip)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showtooltip),
 					TRUE);
-	gtk_signal_connect (GTK_OBJECT (showtooltip),
-			    "toggled",
-			    (GtkSignalFunc) set_show_tooltip_cb,
-			    cd);	
+	g_signal_connect (G_OBJECT (showtooltip), "toggled",
+			  G_CALLBACK (set_show_tooltip_cb),
+			  cd);	
 
 	use_gmt_time = gtk_check_button_new_with_label (_("Use GMT"));
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), use_gmt_time);
@@ -989,10 +988,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->gmt_time)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_gmt_time),
 					TRUE);
-	gtk_signal_connect (GTK_OBJECT (use_gmt_time),
-			    "toggled",
-			    (GtkSignalFunc) set_gmt_time_cb,
-			    cd);	
+	g_signal_connect (G_OBJECT (use_gmt_time), "toggled",
+			  G_CALLBACK (set_gmt_time_cb),
+			  cd);	
 
 	unixtime = gtk_check_button_new_with_label (_("Unix time"));
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), unixtime);
@@ -1002,45 +1000,45 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), internettime);
 	gtk_widget_show (internettime);
    
-        gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    hour_frame);
-	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    showdate);
-	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    use_gmt_time);
-	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    internettime);
+        g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  hour_frame);
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  showdate);
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  use_gmt_time);
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  internettime);
 			   
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unixtime),
 				      cd->unixtime);
 
 /* internet time */
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    hour_frame);
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    showdate);
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    use_gmt_time);   
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
-			    unixtime);   
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  hour_frame);
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  showdate);
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  use_gmt_time);   
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_datasensitive_cb),
+			  unixtime);   
    
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (internettime),
 				      cd->internettime);
    
-	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_unixtime_cb,
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_unixtime_cb),
 			    cd);
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			    (GtkSignalFunc) set_internettime_cb,
-			    cd);
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_internettime_cb),
+			  cd);
 
 	gtk_widget_show (hour_frame);
 	gtk_widget_show (hbox);
