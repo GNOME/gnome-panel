@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 09:24+0100\n"
+"POT-Creation-Date: 2004-11-29 15:26+0100\n"
 "PO-Revision-Date: 2004-08-13 16:37+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -44,9 +44,9 @@ msgstr "정보(_A)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2334
-#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
-#: gnome-panel/panel-menu-button.c:613
+#: gnome-panel/drawer.c:605 gnome-panel/menu.c:1647
+#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "도움말(_H)"
 
@@ -58,7 +58,7 @@ msgid "_Preferences"
 msgstr "기본 설정(_P)"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2543
+#: applets/clock/clock.c:2595
 msgid "Clock"
 msgstr "시계"
 
@@ -74,20 +74,20 @@ msgstr "시계 애플릿을 만드는 데 쓰이는 팩토리."
 msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
 
-#: applets/clock/clock.c:266
+#: applets/clock/clock.c:268
 msgid "%l:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: applets/clock/clock.c:266 applets/clock/clock.c:582
+#: applets/clock/clock.c:268 applets/clock/clock.c:584
 msgid "%l:%M %p"
 msgstr "%p %I:%M"
 
-#: applets/clock/clock.c:268 applets/clock/clock.c:1677
+#: applets/clock/clock.c:270 applets/clock/clock.c:1684
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:268 applets/clock/clock.c:584
-#: applets/clock/clock.c:1679
+#: applets/clock/clock.c:270 applets/clock/clock.c:586
+#: applets/clock/clock.c:1686
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -96,7 +96,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:279
+#: applets/clock/clock.c:281
 msgid "%a %b %e"
 msgstr "%b %e일 (%a)"
 
@@ -104,7 +104,7 @@ msgstr "%b %e일 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:286
+#: applets/clock/clock.c:288
 #, c-format
 msgid ""
 "%1$s\n"
@@ -117,60 +117,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:293
+#: applets/clock/clock.c:295
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:377
+#: applets/clock/clock.c:379
 msgid "%A %B %d"
 msgstr "%b %e일 %A"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:589
+#: applets/clock/clock.c:591
 msgid "%b %d"
 msgstr "%b %e일"
 
-#: applets/clock/clock.c:884
+#: applets/clock/clock.c:890
 msgid "Tasks"
 msgstr "작업"
 
-#: applets/clock/clock.c:1028
+#: applets/clock/clock.c:1034
 msgid "All Day"
 msgstr "하루 종일"
 
-#: applets/clock/clock.c:1067
+#: applets/clock/clock.c:1073
 msgid "Appointments"
 msgstr "약속"
 
-#: applets/clock/clock.c:1299
+#: applets/clock/clock.c:1305
 msgid "Calendar"
 msgstr "달력"
 
-#: applets/clock/clock.c:1579
+#: applets/clock/clock.c:1586
 msgid "Computer Clock"
 msgstr "컴퓨터 시계"
 
-#: applets/clock/clock.c:1672
+#: applets/clock/clock.c:1679
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: applets/clock/clock.c:1674
+#: applets/clock/clock.c:1681
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: applets/clock/clock.c:1716
+#: applets/clock/clock.c:1723
 msgid "%A, %B %d %Y"
 msgstr "%Y년 %b %e일 %A"
 
-#: applets/clock/clock.c:1760
+#: applets/clock/clock.c:1767
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "시간 설정 도구를 실행하는 데 실패: %s"
 
-#: applets/clock/clock.c:1799
+#: applets/clock/clock.c:1806
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -178,11 +178,11 @@ msgstr ""
 "날짜 및 시간을 설정하는 프로그램을 찾는데 실패했습니다. 설치가 안 된 것 같습"
 "니다?"
 
-#: applets/clock/clock.c:2202
+#: applets/clock/clock.c:2254
 msgid "Custom format"
 msgstr "사용자 지정 형식"
 
-#: applets/clock/clock.c:2323 applets/clock/clock.c:2500
+#: applets/clock/clock.c:2375 applets/clock/clock.c:2552
 #: applets/fish/fish.c:137 applets/notification_area/main.c:83
 #: applets/wncklet/showdesktop.c:436 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
@@ -192,51 +192,51 @@ msgstr "사용자 지정 형식"
 msgid "There was an error displaying help: %s"
 msgstr "도움말을 보여주는 데 오류가 발생했습니다: %s"
 
-#: applets/clock/clock.c:2358
+#: applets/clock/clock.c:2410
 msgid "Clock Preferences"
 msgstr "시계 기본 설정"
 
-#: applets/clock/clock.c:2382
+#: applets/clock/clock.c:2434
 msgid "Clock _type:"
 msgstr "시계 종류(_T):"
 
-#: applets/clock/clock.c:2392
+#: applets/clock/clock.c:2444
 msgid "12 hour"
 msgstr "12시간"
 
-#: applets/clock/clock.c:2393
+#: applets/clock/clock.c:2445
 msgid "24 hour"
 msgstr "24시간"
 
-#: applets/clock/clock.c:2394
+#: applets/clock/clock.c:2446
 msgid "UNIX time"
 msgstr "유닉스 시각"
 
-#: applets/clock/clock.c:2395
+#: applets/clock/clock.c:2447
 msgid "Internet time"
 msgstr "인터넷 시각"
 
-#: applets/clock/clock.c:2403
+#: applets/clock/clock.c:2455
 msgid "Custom _format:"
 msgstr "사용자 지정 형식(_F):"
 
-#: applets/clock/clock.c:2422
+#: applets/clock/clock.c:2474
 msgid "Show _seconds"
 msgstr "초 보이기(_S)"
 
-#: applets/clock/clock.c:2431
+#: applets/clock/clock.c:2483
 msgid "Show _date"
 msgstr "날짜 보이기(_D)"
 
-#: applets/clock/clock.c:2440
+#: applets/clock/clock.c:2492
 msgid "Use _UTC"
 msgstr "UTC 사용(_U)"
 
 #. Translator credits
-#: applets/clock/clock.c:2532 applets/fish/fish.c:480
+#: applets/clock/clock.c:2584 applets/fish/fish.c:480
 #: applets/notification_area/main.c:117 applets/wncklet/showdesktop.c:466
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
-#: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:189
+#: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
 #, fuzzy
 msgid "translator-credits"
 msgstr ""
@@ -244,7 +244,7 @@ msgstr ""
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@mizi.com>"
 
-#: applets/clock/clock.c:2546
+#: applets/clock/clock.c:2598
 msgid "The Clock displays the current time and date"
 msgstr "시계는 현재 시간과 날짜를 보여 줍니다"
 
@@ -284,18 +284,27 @@ msgstr ""
 "참이면, 마우스 포인터를 애플릿 위에 놓았을 때 설명에서 날짜를 보여줍니다."
 
 #: applets/clock/clock.schemas.in.h:11
+msgid "If true, show week numbers in the calendar."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in clock"
 msgstr "시계에 날짜 보이기"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show date in tooltip"
 msgstr "설명에 날짜 보이기"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:14
 msgid "Show time with seconds"
 msgstr "시간에 초 보이기"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:15
+#, fuzzy
+msgid "Show week numbers in calendar"
+msgstr "작업 공간 바꾸기 프로그램에서 공간의 이름 보이기(_N)"
+
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -303,7 +312,7 @@ msgstr ""
 "그놈 2.6에서는 이 키를 사용하지 않기를 권합니다. 대신에 'format' 키를 사용합"
 "니다. 이 스키마는 과거 버전과의 호환성을 위해 유지됩니다."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -312,7 +321,7 @@ msgstr ""
 "이 키는 format 키를 \"custom\"이라고 할 때 시계 애플릿이 사용할 시각 형식입니"
 "다. strftime()에서 사용하는 형식으로 특정 형식을 지정할 수 있습니다."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -331,23 +340,23 @@ msgstr ""
 "부터 몇 초가 지났는지를 표시합니다. \"custom\"이면 custom_format 키값에 따라 "
 "시각을 표시합니다."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "이 키는 시간을 설정할 때 실행할 프로그램을 지정합니다."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Time configuration tool"
 msgstr "시간 설정 도구"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use Internet time"
 msgstr "인터넷 시각 사용"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:22
 msgid "Use UNIX time"
 msgstr "유닉스 시각 사용"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:23
 msgid "Use UTC"
 msgstr "UTC 사용"
 
@@ -640,6 +649,7 @@ msgid "Switch between workspaces"
 msgstr "작업 공간 사이로 전환"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "창 목록"
 
@@ -691,11 +701,6 @@ msgid ""
 msgstr ""
 "창 관리자가 바탕화면 보여주기 단추를 지원하지 않거나, 창 관리자를 실행하고 있"
 "지 않습니다."
-
-#: applets/wncklet/window-list.c:820
-#, fuzzy
-msgid "Workspace List"
-msgstr "작업 공간 이름"
 
 #: applets/wncklet/window-list.c:823
 msgid "The Window List shows a list of all windows and lets you browse them."
@@ -767,7 +772,7 @@ msgid "_Never group windows"
 msgstr "창을 모으지 않음(_N)"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "pixels"
 msgstr "픽셀"
 
@@ -971,30 +976,30 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "그놈 패널 쉘"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:102
-#: gnome-panel/applet.c:461 gnome-panel/panel-applet-frame.c:113
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:101
+#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "고정(_L)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:469
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:468
 msgid "_Move"
 msgstr "옮기기(_M)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:453
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:452
 msgid "_Remove From Panel"
 msgstr "패널에서 지우기(_R)"
 
-#: gnome-panel/applet.c:102 gnome-panel/applet.c:461
+#: gnome-panel/applet.c:101 gnome-panel/applet.c:460
 #: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "고정 해제(_L)"
 
-#: gnome-panel/applet.c:374
+#: gnome-panel/applet.c:373
 msgid "???"
 msgstr "???"
 
 # 패널에 애플릿을 놓을 공간이 없음을 말한다.
-#: gnome-panel/applet.c:1088
+#: gnome-panel/applet.c:1127
 msgid "Can't find an empty spot"
 msgstr "비어 있는 위치가 없음"
 
@@ -1012,12 +1017,12 @@ msgid "file not found"
 msgstr "파일을 찾을 수 없습니다"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:151
+#: gnome-panel/panel-addto.c:150
 msgid "Drawer"
 msgstr "서랍"
 
-#: gnome-panel/drawer.c:614 gnome-panel/launcher.c:823 gnome-panel/menu.c:1367
-#: gnome-panel/menu.c:2284 gnome-panel/panel-action-button.c:132
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:820 gnome-panel/menu.c:1597
+#: gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "등록 정보(_P)"
 
@@ -1025,71 +1030,67 @@ msgstr "등록 정보(_P)"
 msgid "Create new file in the given directory"
 msgstr "주어진 폴더에 새 파일 만들기"
 
-#: gnome-panel/launcher.c:138
+#: gnome-panel/launcher.c:135
 msgid "Cannot save launcher to disk"
 msgstr "실행 아이콘을 디스크에 저장할 수 없습니다"
 
-#: gnome-panel/launcher.c:168 gnome-panel/launcher.c:216
-#: gnome-panel/launcher.c:261
+#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:213
+#: gnome-panel/launcher.c:258
 msgid "Cannot launch icon"
 msgstr "아이콘을 실행할 수 없습니다"
 
-#: gnome-panel/launcher.c:169
+#: gnome-panel/launcher.c:166
 msgid "This launch icon does not specify a url to show."
 msgstr "이 실행 아이콘은 보여줄 URL이 지정되어 있지 않습니다."
 
-#: gnome-panel/launcher.c:180
+#: gnome-panel/launcher.c:177
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s(을)를 보여줄 수 없습니다"
 
-#: gnome-panel/launcher.c:455
+#: gnome-panel/launcher.c:452
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "패널 실행 아이콘의 데스크탑 파일에 대한 URI가 들어 있지 않습니다\n"
 
-#: gnome-panel/launcher.c:469
+#: gnome-panel/launcher.c:466
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "패널 실행 아이콘 %2$s%3$s에 대한 데스크탑 파일 %1$s을(를) 열 수 없습니다\n"
 
-#: gnome-panel/launcher.c:711 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:708 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "실행 아이콘 등록 정보"
 
-#: gnome-panel/launcher.c:898
+#: gnome-panel/launcher.c:891
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "%s 키가 설정되어 있지 않습니다.  실행 아이콘을 읽어들일 수 없습니다\n"
 
-#: gnome-panel/launcher.c:952 gnome-panel/launcher.c:969
+#: gnome-panel/launcher.c:945 gnome-panel/launcher.c:962
 #: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
 #: gnome-panel/menu-ditem.c:535
 msgid "Cannot create launcher"
 msgstr "실행 아이콘을 만들 수 없습니다"
 
-#: gnome-panel/launcher.c:953 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:946 gnome-panel/menu-ditem.c:463
 msgid "You have to specify a name."
 msgstr "이름을 지정해야 합니다."
 
-#: gnome-panel/launcher.c:970 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:963 gnome-panel/menu-ditem.c:480
 msgid "You have to specify a valid URL or command."
 msgstr "올바른 URL이나 명령어를 지정해야 합니다."
 
-#: gnome-panel/launcher.c:1013 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1006 gnome-panel/menu-ditem.c:543
 msgid "Create Launcher"
 msgstr "실행 아이콘 만들기"
-
-#: gnome-panel/main.c:49
-msgid "Specify a profile name to load"
-msgstr "읽을 프로파일 이름 지정"
 
 #: gnome-panel/menu-ditem.c:126
 msgid "Cannot save changes to launcher"
 msgstr "바뀐점을 실행 아이콘에 저장할 수 없습니다"
 
-#: gnome-panel/menu-ditem.c:308 gnome-panel/menu.c:1189
+#: gnome-panel/menu-ditem.c:308
 msgid "Menu"
 msgstr "메뉴"
 
@@ -1105,15 +1106,15 @@ msgid ""
 msgstr ""
 "이 위치에 새 실행 아이콘을 만들 수 없습니다.  이 위치에는 쓸 수 없습니다."
 
-#: gnome-panel/menu.c:179
+#: gnome-panel/menu.c:154
 msgid "And many, many others..."
 msgstr "그리고 아주 아주 많은 사람들..."
 
-#: gnome-panel/menu.c:204
+#: gnome-panel/menu.c:179
 msgid "The GNOME Panel"
 msgstr "그놈 패널"
 
-#: gnome-panel/menu.c:207
+#: gnome-panel/menu.c:182
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1121,108 +1122,76 @@ msgstr ""
 "이 프로그램은 다른 프로그램을 실행하고, 내부에 작은 애플릿들을 포함하는 일을 "
 "합니다."
 
-#: gnome-panel/menu.c:237 gnome-panel/panel-action-button.c:201
-#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:680
+#: gnome-panel/menu.c:212 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:539
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s'을(를) 실행할 수 없습니다"
 
-#: gnome-panel/menu.c:238
+#: gnome-panel/menu.c:213
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: gnome-panel/menu.c:239
+#: gnome-panel/menu.c:214
 msgid "About GNOME"
 msgstr "그놈 정보"
 
-#: gnome-panel/menu.c:263
+#: gnome-panel/menu.c:240
 msgid "Cannot launch entry"
 msgstr "항목을 실행할 수 없습니다"
 
-#: gnome-panel/menu.c:275
+#: gnome-panel/menu.c:252
 msgid "Cannot load entry"
 msgstr "항목을 읽어들일 수 없습니다"
 
-#: gnome-panel/menu.c:982
-#, c-format
-msgid "Cannot remove menu item %s"
-msgstr "메뉴 항목 %s을(를) 지울 수 없습니다"
-
-#: gnome-panel/menu.c:993
-#, c-format
-msgid "Could not get file name from path: %s"
-msgstr "이 경로에서 파일이름을 가져올 수 없습니다: %s"
-
-#: gnome-panel/menu.c:1000
-#, c-format
-msgid "Could not get directory name from path: %s"
-msgstr "이 경로에서 디렉토리이름을 가져올 수 없습니다: %s"
-
-#: gnome-panel/menu.c:1184 gnome-panel/panel-addto.c:129
-msgid "Main Menu"
-msgstr "주 메뉴"
-
-#: gnome-panel/menu.c:1331
+#: gnome-panel/menu.c:914
 msgid "Add this launcher to panel"
 msgstr "실행 아이콘을 패널에 더하기"
 
-#: gnome-panel/menu.c:1340
-msgid "Remove this item"
-msgstr "이 항목 지우기"
-
-#: gnome-panel/menu.c:1388
+#: gnome-panel/menu.c:931
 msgid "Entire menu"
 msgstr "전체 메뉴에서"
 
-#: gnome-panel/menu.c:1396
+#: gnome-panel/menu.c:941
 msgid "Add this as drawer to panel"
 msgstr "서랍으로 패널에 더하기"
 
-#: gnome-panel/menu.c:1405
+#: gnome-panel/menu.c:953
 msgid "Add this as menu to panel"
 msgstr "메뉴로 패널에 더하기"
 
-#: gnome-panel/menu.c:1415
-msgid "Add new item to this menu"
-msgstr "새 항목을 이 메뉴에 더하기"
-
-#: gnome-panel/menu.c:1442
-msgid "Properties"
-msgstr "등록 정보"
-
-#: gnome-panel/menu.c:2155 gnome-panel/menu.c:2159 gnome-panel/menu.c:2473
-#: gnome-panel/panel-menu-bar.c:202
-msgid "Applications"
-msgstr "프로그램"
-
-#: gnome-panel/menu.c:2178
+#: gnome-panel/menu.c:1502
 msgid "You cannot remove your last panel."
 msgstr "마지막 패널은 지울 수 없습니다."
 
-#: gnome-panel/menu.c:2238
+#: gnome-panel/menu.c:1551
 msgid "_Delete This Panel..."
 msgstr "이 패널 지우기(_D)..."
 
-#: gnome-panel/menu.c:2241 gnome-panel/menu.c:2269
+#: gnome-panel/menu.c:1554 gnome-panel/menu.c:1582
 msgid "_Delete This Panel"
 msgstr "이 패널 지우기(_D)"
 
-#: gnome-panel/menu.c:2254
+#: gnome-panel/menu.c:1567
 msgid "_Add to Panel..."
 msgstr "패널에 더하기(_A)..."
 
-#: gnome-panel/menu.c:2298
+#: gnome-panel/menu.c:1611
 msgid "_New Panel"
 msgstr "새 패널(_N)"
 
-#: gnome-panel/menu.c:2345
+#: gnome-panel/menu.c:1658
 msgid "A_bout Panels"
 msgstr "패널 정보(_B)"
 
-#: gnome-panel/menu.c:2359
+#: gnome-panel/menu.c:1672
 msgid "About _GNOME"
 msgstr "그놈 정보(_G)"
+
+#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:191
+msgid "Applications"
+msgstr "프로그램"
 
 #: gnome-panel/panel-action-button.c:108
 msgid "_Activate Screensaver"
@@ -1291,103 +1260,114 @@ msgstr "강제로 끝내기"
 msgid "Force a misbehaving application to quit"
 msgstr "잘못 동작하는 응용 프로그램을 강제로 끝냅니다"
 
-#: gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
 msgstr "사용자 지정 프로그램 실행 아이콘"
 
-#: gnome-panel/panel-addto.c:104
+#: gnome-panel/panel-addto.c:103
 msgid "Create a new launcher"
 msgstr "새 실행 아이콘 만들기"
 
-#: gnome-panel/panel-addto.c:114
+#: gnome-panel/panel-addto.c:113
 msgid "Application Launcher..."
 msgstr "프로그램 실행 아이콘..."
 
-#: gnome-panel/panel-addto.c:115
+#: gnome-panel/panel-addto.c:114
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "그놈 메뉴에 들어있는 프로그램을 실행합니다"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:128
+msgid "Main Menu"
+msgstr "주 메뉴"
+
+#: gnome-panel/panel-addto.c:129
 msgid "The main GNOME menu"
 msgstr "그놈 주메뉴"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:139
 msgid "Menu Bar"
 msgstr "메뉴 모음"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:140
 msgid "A custom menu bar"
 msgstr "사용자 지정 메뉴 모음"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:151
 msgid "A pop out drawer to store other items in"
 msgstr "그 안에 여러가지 항목을 집어 넣는 여닫을 수 있는 서랍"
 
-#: gnome-panel/panel-addto.c:240
+#: gnome-panel/panel-addto.c:239
 msgid "(empty)"
 msgstr "(비었음)"
 
-#: gnome-panel/panel-addto.c:379 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:378 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "질의가 예외 %s을(를) 돌려줌\n"
 
-#: gnome-panel/panel-addto.c:829
+#: gnome-panel/panel-addto.c:847
 #, c-format
 msgid "Add to %s"
 msgstr "%s에 더하기"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:849
 msgid "Add to the panel"
 msgstr "패널에 더하기"
 
-#: gnome-panel/panel-addto.c:837
+#: gnome-panel/panel-addto.c:855
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "%s에 더할 항목을 선택하십시오(_I):"
 
-#: gnome-panel/panel-addto.c:840
+#: gnome-panel/panel-addto.c:858
 msgid "Select an _item to add to the panel:"
 msgstr "패널에 더할 항목을 선택하십시오(_I):"
 
-#: gnome-panel/panel-applet-frame.c:757
+#: gnome-panel/panel-applet-frame.c:752
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s'에서 예외 상황\n"
 
-#: gnome-panel/panel-applet-frame.c:876
+#: gnome-panel/panel-applet-frame.c:871
 #, c-format
-msgid "\"%s\" Has Quit Unexpectedly"
+msgid "\"%s\" has quit unexpectedly"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:877
-msgid "Panel Object Has Quit Unexpectedly"
+#: gnome-panel/panel-applet-frame.c:873
+#, fuzzy
+msgid "Panel object has quit unexpectedly"
+msgstr "패널 오브젝트 종류"
+
+#: gnome-panel/panel-applet-frame.c:880
+msgid ""
+"If you reload a panel object, it will automatically be added back to the "
+"panel."
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:888
+#: gnome-panel/panel-applet-frame.c:886
 #, fuzzy
 msgid "_Don't Reload"
 msgstr "지우지 말것(_O)"
 
-#: gnome-panel/panel-applet-frame.c:889
+#: gnome-panel/panel-applet-frame.c:887
 msgid "_Reload"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:915
+#: gnome-panel/panel-applet-frame.c:913
 msgid "D_on't Delete"
 msgstr "지우지 말것(_O)"
 
-#: gnome-panel/panel-applet-frame.c:951
+#: gnome-panel/panel-applet-frame.c:949
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "패널에서 '%s'(을)를 읽어들이는 데 문제가 발생했습니다."
 
-#: gnome-panel/panel-applet-frame.c:956 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:251
 #, c-format
 msgid "Details: %s"
 msgstr "자세한 정보: %s"
 
-#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-applet-frame.c:979
+#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
 msgid ""
 "\n"
 "\n"
@@ -1397,7 +1377,7 @@ msgstr ""
 "\n"
 "설정에서 이 애플릿을 지울까요?"
 
-#: gnome-panel/panel-applet-frame.c:1087
+#: gnome-panel/panel-applet-frame.c:1085
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "컨트롤에서 AppletShell 인터페이스를 가져올 수 없습니다\n"
 
@@ -1433,41 +1413,50 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
+"A boolean flag to indicate whether the user's previous configuration in /"
+"apps/panel/profiles/default has been copied to the new location in /apps/"
+"panel."
+msgstr ""
+
+#: gnome-panel/panel-general.schemas.in.h:2
+#, fuzzy
+msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+"settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 "패널 ID 목록. 각 ID는 각각의 최상위 패널을 가리킵니다. 이 패널들의 설정은 /"
 "apps/panel/general/$(profile)/toplevels/$(id)에 들어 있습니다."
 
-#: gnome-panel/panel-general.schemas.in.h:2
+#: gnome-panel/panel-general.schemas.in.h:3
+#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in /apps/panel/general/"
-"$(profiles)/applets/$(id)."
+"The settings for each of these applets are stored in /apps/panel/applets/"
+"$(id)."
 msgstr ""
 "패널 애플릿 ID 목록. 각 ID는 각각의 패널 애플릿을 가리킵니다. 이 애플릿의 설"
 "정은 /apps/panel/general/$(profile)/applets/$(id)에 들어 있습니다."
 
-#: gnome-panel/panel-general.schemas.in.h:3
+#: gnome-panel/panel-general.schemas.in.h:4
+#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
+"these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "패널 오브젝트 ID 목록. 각 ID는 각각의 패널 오브젝트를 가리킵니다. 실행 아이"
 "콘, 액션 단추, 혹은 메뉴 단추/메뉴 모음이 이에 해당됩니다.  이 오브젝트의 설"
 "정은 /apps/panel/general/$(profile)/objects/$(id)에 들어 있습니다."
 
-#: gnome-panel/panel-general.schemas.in.h:4
+#: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
 msgstr "\"프로그램 실행\" 대화 상자에서 프로그램 목록 사용"
 
-#: gnome-panel/panel-general.schemas.in.h:5
+#: gnome-panel/panel-general.schemas.in.h:6
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "\"프로그램 실행\" 대화 상자에서 프로그램 목록 늘리기"
 
-#: gnome-panel/panel-general.schemas.in.h:6
+#: gnome-panel/panel-general.schemas.in.h:7
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1477,7 +1466,7 @@ msgstr ""
 "램\" 목록이 열립니다.  이 설정은 enable_program_list 키가 참일 경우에만 의미"
 "가 있습니다."
 
-#: gnome-panel/panel-general.schemas.in.h:7
+#: gnome-panel/panel-general.schemas.in.h:8
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1487,15 +1476,20 @@ msgstr ""
 "습니다.  대화 상자가 나타날 때 목록을 확장할지 아닐지는 show_program_list 키"
 "로 조정할 수 있습니다."
 
-#: gnome-panel/panel-general.schemas.in.h:8
+#: gnome-panel/panel-general.schemas.in.h:9
+#, fuzzy
+msgid "Old profiles configuration migrated"
+msgstr "시간 설정 도구"
+
+#: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
 msgstr "패널 ID 목록"
 
-#: gnome-panel/panel-general.schemas.in.h:9
+#: gnome-panel/panel-general.schemas.in.h:11
 msgid "Panel applet ID list"
 msgstr "패널 애플릿 ID 목록"
 
-#: gnome-panel/panel-general.schemas.in.h:10
+#: gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel object ID list"
 msgstr "패널 오브젝트 ID 목록"
 
@@ -1643,7 +1637,7 @@ msgstr "스크린샷 잡기"
 msgid "Take window screenshot"
 msgstr "창의 스크린샷 잡기"
 
-#: gnome-panel/panel-menu-bar.c:184
+#: gnome-panel/panel-menu-bar.c:173
 msgid "Actions"
 msgstr "명령"
 
@@ -1822,19 +1816,19 @@ msgstr "오브젝트의 단추에 사용자 지정 아이콘 사용"
 msgid "Use custom path for menu contents"
 msgstr "메뉴 내용에 사용자 지정 경로 사용"
 
-#: gnome-panel/panel-profile.c:753 gnome-panel/panel-profile.c:780
-#: gnome-panel/panel-profile.c:816 gnome-panel/panel-profile.c:1622
+#: gnome-panel/panel-profile.c:743 gnome-panel/panel-profile.c:770
+#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1608
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf 문자열 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
 
-#: gnome-panel/panel-profile.c:795 gnome-panel/panel-profile.c:1520
-#: gnome-panel/panel-profile.c:1591 gnome-panel/panel-profile.c:1654
+#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1506
+#: gnome-panel/panel-profile.c:1577 gnome-panel/panel-profile.c:1640
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf 정수 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
 
-#: gnome-panel/panel-profile.c:1530
+#: gnome-panel/panel-profile.c:1516
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1843,7 +1837,7 @@ msgstr ""
 "'%s' 패널은 스크린 %d에 보여주도록 설정되어 있으나, 이 스크린은 현재 사용할 "
 "수 없습니다. 이 패널은 읽어들이지 않습니다."
 
-#: gnome-panel/panel-profile.c:1606
+#: gnome-panel/panel-profile.c:1592
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf 불리언 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
@@ -1925,54 +1919,45 @@ msgid "_Icon:"
 msgstr "아이콘(_I):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:22
-msgid "_Name:"
-msgstr "이름(_N):"
-
-#: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "_None (use system theme)"
 msgstr "없음 (시스템 테마 사용)(_N)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:23
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Orientation:"
 msgstr "방향(_O):"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:24
 msgid "_Scale"
 msgstr "크기 맞춤 반복(_S)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:25
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "_Size:"
 msgstr "크기(_S):"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:26
 msgid "_Tile"
 msgstr "타일(_T)"
 
-#: gnome-panel/panel-recent.c:63
+#: gnome-panel/panel-recent.c:54
 msgid "Couldn't find a suitable application"
 msgstr "알맞은 프로그램을 찾을 수 없습니다"
 
-#: gnome-panel/panel-recent.c:89
-msgid ""
-"The default application for this type of file cannot handle remote files"
-msgstr "기본 프로그램이 이런 형식의 원격 파일을 처리할 수 없습니다"
-
-#: gnome-panel/panel-recent.c:152 gnome-panel/panel-recent.c:159
+#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:100
 msgid "Cannot open recently used document"
 msgstr "최근 사용한 문서를 열 수 없습니다"
 
-#: gnome-panel/panel-recent.c:160
+#: gnome-panel/panel-recent.c:101
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "%s(을)를 여는 중 오류가 생겼습니다"
 
-#: gnome-panel/panel-recent.c:214
+#: gnome-panel/panel-recent.c:154
 msgid "Clear the Recent Documents list?"
 msgstr "최근 문서 목록을 지우시겠습니까?"
 
-#: gnome-panel/panel-recent.c:215
+#: gnome-panel/panel-recent.c:156
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -1985,20 +1970,20 @@ msgstr ""
 "• 모든 프로그램의 최근 문서 목록에 들어 있는 모든 항목."
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-recent.c:258
+#: gnome-panel/panel-recent.c:199
 #, fuzzy, c-format
 msgid "Open '%s'"
 msgstr "URL 열기: %s"
 
-#: gnome-panel/panel-recent.c:279
+#: gnome-panel/panel-recent.c:220
 msgid "Recent Documents"
 msgstr "최근 문서"
 
-#: gnome-panel/panel-recent.c:308
+#: gnome-panel/panel-recent.c:249
 msgid "Clear Recent Documents"
 msgstr "최근 문서 지우기"
 
-#: gnome-panel/panel-recent.c:312
+#: gnome-panel/panel-recent.c:253
 #, fuzzy
 msgid "Clear all items from the recent documents list"
 msgstr "최근 문서 목록을 지우시겠습니까?"
@@ -2018,16 +2003,16 @@ msgstr "'%s' 위치를 보일 수 없습니다"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "'%s'을(를) UTF-8에서 변환할 수 없습니다"
 
-#: gnome-panel/panel-run-dialog.c:1050
+#: gnome-panel/panel-run-dialog.c:1088
 msgid "Choose a file to append to the command..."
 msgstr "명령어에 덧붙일 파일을 선택하세요..."
 
-#: gnome-panel/panel-run-dialog.c:1328
+#: gnome-panel/panel-run-dialog.c:1366
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "다음 명령을 실행합니다: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1334 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1372 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "설명을 볼 프로그램을 선택하세요."
 
@@ -2506,16 +2491,16 @@ msgstr "패널을 표시할 Xinerama 모니터"
 msgid "Y co-ordinate of panel"
 msgstr "패널의 세로 좌표"
 
-#: gnome-panel/panel-util.c:71
+#: gnome-panel/panel-util.c:62
 msgid "Cannot display help document"
 msgstr "도움말 문서를 보일 수 없습니다"
 
-#: gnome-panel/panel.c:443
+#: gnome-panel/panel.c:451
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL 열기: %s"
 
-#: gnome-panel/panel.c:1226
+#: gnome-panel/panel.c:1205
 #, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
@@ -2524,12 +2509,12 @@ msgstr ""
 "패널이 지우면, 패널과 그안의 애플릿 설정들이\n"
 "지워집니다. 이 패널을 지울까요?"
 
-#: gnome-panel/panel.c:1228
+#: gnome-panel/panel.c:1207
 #, fuzzy
 msgid "Delete Drawer"
 msgstr "패널 지우기"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1209
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2538,7 +2523,7 @@ msgstr ""
 "패널이 지우면, 패널과 그안의 애플릿 설정들이\n"
 "지워집니다. 이 패널을 지울까요?"
 
-#: gnome-panel/panel.c:1232
+#: gnome-panel/panel.c:1211
 msgid "Delete Panel"
 msgstr "패널 지우기"
 
@@ -2673,6 +2658,38 @@ msgstr "애플릿:"
 #, fuzzy
 msgid "_Prefs Dir:"
 msgstr "설정 폴더:"
+
+#, fuzzy
+#~ msgid "Workspace List"
+#~ msgstr "작업 공간 이름"
+
+#~ msgid "Specify a profile name to load"
+#~ msgstr "읽을 프로파일 이름 지정"
+
+#~ msgid "Cannot remove menu item %s"
+#~ msgstr "메뉴 항목 %s을(를) 지울 수 없습니다"
+
+#~ msgid "Could not get file name from path: %s"
+#~ msgstr "이 경로에서 파일이름을 가져올 수 없습니다: %s"
+
+#~ msgid "Could not get directory name from path: %s"
+#~ msgstr "이 경로에서 디렉토리이름을 가져올 수 없습니다: %s"
+
+#~ msgid "Remove this item"
+#~ msgstr "이 항목 지우기"
+
+#~ msgid "Add new item to this menu"
+#~ msgstr "새 항목을 이 메뉴에 더하기"
+
+#~ msgid "Properties"
+#~ msgstr "등록 정보"
+
+#~ msgid "_Name:"
+#~ msgstr "이름(_N):"
+
+#~ msgid ""
+#~ "The default application for this type of file cannot handle remote files"
+#~ msgstr "기본 프로그램이 이런 형식의 원격 파일을 처리할 수 없습니다"
 
 #~ msgid "Unable to get the name of the command to execute"
 #~ msgstr "실행할 명령어 이름을 얻어올 수 없습니다"
