@@ -25,9 +25,9 @@
 /*list of all panel widgets created*/
 GList *panel_list = NULL;
 
-/*the timeout handeler for panel dragging id,
-  yes I am too lazy to get the events to work*/
-static int panel_dragged = 0;
+static int panel_dragged = FALSE;
+static int panel_dragged_timeout = -1;
+static int panel_been_moved = FALSE;
 
 /*the number of base panels out there, never let it go below 1*/
 int base_panels = 0;
@@ -655,23 +655,28 @@ corner_panel_move(CornerWidget *corner, double x, double y)
 		corner_widget_change_pos_orient(corner, newloc, neworient);
 }
 
-static int
-snapped_panel_move_timeout(gpointer data)
+static void
+move_panel_to_cursor(GtkWidget *w)
 {
 	int x,y;
-
 	gdk_window_get_pointer(NULL,&x,&y,NULL);
-	snapped_panel_move(data,x,y);
-	return TRUE;
+
+	if(IS_SNAPPED_WIDGET(w))
+		snapped_panel_move(SNAPPED_WIDGET(w),x,y);
+	else
+		corner_panel_move(CORNER_WIDGET(w),x,y);
 }
-static int
-corner_panel_move_timeout(gpointer data)
-{
-	int x,y;
 
-	gdk_window_get_pointer(NULL,&x,&y,NULL);
-	corner_panel_move(data,x,y);
-	return TRUE;
+static int
+panel_move_timeout(gpointer data)
+{
+	if(panel_dragged && panel_been_moved)
+		move_panel_to_cursor(data);
+	
+	panel_been_moved = FALSE;
+	panel_dragged_timeout = -1;
+
+	return FALSE;
 }
 
 static int
@@ -781,18 +786,9 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 						  cursor,
 						  bevent->time);
 				gdk_cursor_destroy (cursor);
-				if(IS_SNAPPED_WIDGET(widget)) {
+				if(IS_SNAPPED_WIDGET(widget))
 					SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
-					panel_dragged =
-						gtk_timeout_add(30,
-								snapped_panel_move_timeout,
-								widget);
-				} else { /*CORNER_WIDGET*/
-					panel_dragged =
-						gtk_timeout_add(30,
-								corner_panel_move_timeout,
-								widget);
-				}
+				panel_dragged = TRUE;
 				return TRUE;
 			}
 			break;
@@ -813,11 +809,22 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					   bevent->x_root, bevent->y_root);
 			gdk_pointer_ungrab(bevent->time);
 			gtk_grab_remove(widget);
-			gtk_timeout_remove(panel_dragged);
-			panel_dragged = 0;
+			panel_dragged = FALSE;
+			panel_dragged_timeout = -1;
+			panel_been_moved = FALSE;
 			return TRUE;
 		}
 
+		break;
+	case GDK_MOTION_NOTIFY:
+		if (panel_dragged) {
+			if(panel_dragged_timeout==-1) {
+				panel_been_moved = FALSE;
+				move_panel_to_cursor(widget);
+				panel_dragged_timeout = gtk_timeout_add (100,panel_move_timeout,widget);
+			} else
+				panel_been_moved = TRUE;
+		}
 		break;
 
 	default:
@@ -835,6 +842,7 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 	        case GDK_BUTTON_RELEASE:
+	        case GDK_MOTION_NOTIFY:
 			bevent = (GdkEventButton *) event;
 			/*if the widget is a button we want to keep the
 			  button 1 events*/

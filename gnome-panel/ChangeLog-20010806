@@ -1,3 +1,12 @@
+Sun Dec 20 02:02:10 1998  George Lebl  <jirka@5z.com>
+
+	* drawer.c: use icon entry
+
+	* panel.c: use motion notify events for moving insted of just a
+	  timer, the logic here is the same as used for applet moving and
+	  it should avoid crowding of more motion events together using
+	  a timeout
+
 Sun Dec 20 01:37:54 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c,applet.c: add a call to back_change when changing panels
