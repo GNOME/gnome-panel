@@ -5,15 +5,15 @@
 #   Updated and QA by Zipeco <zipeco@btamail.net.cn>, 2002
 #   Updated and QA by WangLi <charlesw1234@163.com>, 2002
 #   Updated by He Qiangqiang <carton@linux.net.cn>, 2002
-#   Funda Wang <fundawang@linux.net.cn>, 2003,2004
+#   Funda Wang <fundawang@linux.net.cn>, 2003-2005
 # Xiong Jiang <jxiong@offtopic.org>, 2003
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 12:24+0100\n"
-"PO-Revision-Date: 2005-01-22 21:35+0800\n"
+"POT-Creation-Date: 2005-01-26 04:28+0100\n"
+"PO-Revision-Date: 2005-01-26 13:47+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "关于(_A)"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -189,7 +189,7 @@ msgstr "自定义格式"
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -239,7 +239,7 @@ msgstr "使用 _UTC"
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
 #: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -655,8 +655,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "窗口导航小程序车间"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
-#: applets/wncklet/window-menu.c:903
+#: applets/wncklet/window-menu.c:106 applets/wncklet/window-menu.c:312
 msgid "Window Selector"
 msgstr "窗口选择器"
 
@@ -825,22 +824,10 @@ msgstr "窗口列表请求使用的最小宽度。"
 msgid "When to group windows"
 msgstr "何时对窗口编组"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:111
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "窗口选择器显示了所有窗口的列表，以便于您浏览它们。"
-
-#: applets/wncklet/window-menu.c:340
-msgid "Unknown Window"
-msgstr "未知窗口"
-
-#: applets/wncklet/window-menu.c:721
-msgid "No Windows Open"
-msgstr "没有打开的窗口"
-
-#: applets/wncklet/window-menu.c:902
-msgid "Tool to switch between windows"
-msgstr "在窗口间切换的工具"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:922
@@ -949,11 +936,11 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME 面板命令外壳"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 msgid "_Lock To Panel"
 msgstr "锁定到面板(_L)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "移动(_M)"
 
@@ -965,7 +952,7 @@ msgstr "从面板上删除(_R)"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1208
+#: gnome-panel/applet.c:1212
 msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
@@ -1086,23 +1073,23 @@ msgstr "无法调用项"
 msgid "Cannot load entry"
 msgstr "无法装入项"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "将该启动器加入面板"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:835
 msgid "Entire menu"
 msgstr "整个菜单"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:845
 msgid "Add this as drawer to panel"
 msgstr "将它作为抽屉加进面板"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:857
 msgid "Add this as menu to panel"
 msgstr "将它作为菜单加进面板"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
+#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "应用程序"
 
@@ -1607,17 +1594,30 @@ msgstr "网络位置"
 msgid "Removable Media"
 msgstr "可移动介质"
 
-#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
-msgid "Desktop"
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:597
+msgid "Desktop Folder|Desktop"
 msgstr "桌面"
 
-#: gnome-panel/panel-menu-bar.c:592
-msgid "Desktop directory"
-msgstr "桌面目录"
+#: gnome-panel/panel-menu-bar.c:598
+msgid "Open the desktop as a folder"
+msgstr "将桌面以文件夹形式打开"
 
-#: gnome-panel/panel-menu-bar.c:771
+#: gnome-panel/panel-menu-bar.c:777
 msgid "Places"
 msgstr "位置"
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:786
+msgid "Desktop Environment|Desktop"
+msgstr "桌面"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1952,12 +1952,12 @@ msgstr "清除最近的文档列表吗？"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "如果您清除最近的文档列表，您将清除下列内容：\n"
 "\n"
-"* 动作 -> 最近文档菜单项中的全部项目。\n"
+"* 位置 -> 最近文档菜单项中的全部项目。\n"
 "* 全部应用程序的最近文档列表中的全部项目。"
 
 #: gnome-panel/panel-recent.c:222
