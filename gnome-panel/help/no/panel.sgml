@@ -5,35 +5,40 @@
  <article id="index">
 
   <artheader> 
-    <title>GNOME Panelet</title>
+    <title>GNOME Panel brukerhåndbok</title>
     <copyright>
       <year>2000</year>
-      <holder>Red Hat, Inc., Dan Mueth, og Alexander Kirillov</holder>
+      <holder>Red Hat, Inc.</holder>
+      <holder>Dan Mueth</holder>
+      <holder>Alexander Kirillov</holder>
     </copyright>
 
-    <legalnotice id="legalnotice">
-      <para>
-       Permission is granted to copy, distribute and/or modify this
-       document under the terms of the GNU Free Documentation License,
-       Version 1.1 or any later version published by the Free Software
-       Foundation; with no Invariant Sections, with no  Front-Cover
-       Texts, and with no Back-Cover Texts.  A copy of the license is
-       available from the Free Software Foundation and can be viewed <ulink
-       url="http://www.gnu.org/copyleft/fdl.html"
-       type="http">online</ulink>.
-      </para>
+  <legalnotice id="legalnotice">
+   <para>
+   Permission is granted to copy, distribute and/or modify this
+   document under the terms of the <ulink type="help"
+   url="gnome-help:fdl"><citetitle>GNU Free Documentation
+   License</citetitle></ulink>, Version 1.1 or any later version
+   published by the Free Software Foundation with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of
+   the license can be found <ulink type="help"
+   url="gnome-help:fdl">here</ulink>.
+   </para>
 
-      <para> UNIX is a trademark of X/Open Group.</para> <para> Linux
-      is a trademark of Linus Torvalds.</para> <para> X Window System
-      is a trademark of X Consortium, Inc.</para> <para> Windows is a
-      trademark of Microsoft Corp.</para>
-    </legalnotice>
+   <para>Many of the names used by companies to distinguish their
+   products and services are claimed as trademarks. Where those names
+   appear in any GNOME documentation, and those trademarks are made
+   aware to the members of the GNOME Documentation Project, the names
+   have been printed in caps or initial caps.
+   </para>
+
+  </legalnotice>
 
     <releaseinfo>
      Dette er versjon 1.0 av GNOME Panel håndboken.
     </releaseinfo>
   </artheader>
-  <sect1 id="unnamed1">
+  <sect1 id="introduction">
    <title>Innledning</title>
    <para>
     <indexterm id="idx-a2">
@@ -41,10 +46,10 @@
     </indexterm>
     GNOME <interface>Panelet</interface> er hjørnesteinen i GNOME
     brukergrensesnitet og fungerer som plassholder for <link
-    linkend="mainmenu">Hovedmenyen</link>, bruker <link
-    linkend="menus">menyene</link>, applikasjon <link
-    linkend="launchers">oppstarterene</link>, <link
-    linkend="applets">appletene</link>  (applikasjoner som kjører helt og
+    linkend="mainmenu">Hovedmeny</link>, bruker <link
+    linkend="menus">brukermenyer</link>, applikasjons-<link
+    linkend="launchers">oppstartere</link>, <link
+    linkend="applets">appleter</link>  (applikasjoner som kjører helt og
     holdent i panelet), <link linkend="drawers">skuffer</link>, og
     flere <link linkend="specialobjects">spesialobjeter</link>.
     <interface>Panelet</interface> er laget med tanke på å være
@@ -54,17 +59,18 @@
     objekter</link> etter ditt eget behov og preferanser. Du
     kan til og med ha <link linkend="paneladd">flere paneler</link>,
     hvert med sitt eget utseende, egenskaper, og innhold.  Denne
-    fleksibiliteten lar deg opprette et komfortabelt og effektivt 
+    fleksibiliteten lar deg opprette et komfortabelt, effektivt og
     personlig skrivebordsmiljø på en enkel måte.
    </para>
-   <para> Denne håndboken beskriver versjon 1.1.5 av GNOME
+   <para> Denne håndboken beskriver versjon 1.4 av GNOME
     <interface>Panelet</interface>.
    </para>
   </sect1>
 
 
-<!-- ########### Panel Basics  ############## -->  <sect1
- id="panelbasics">   <title>Panel Basics</title>
+<!-- ########### Panel Basics  ############## -->  
+  <sect1 id="panelbasics">
+  <title>Grunnleggende bruk av panelet</title>
    <para>
     GNOME <interface>Panelet</interface> er meget lett å bruke, og
     det vil være lett å komme i gang med for en som har brukt et grafisk
@@ -78,7 +84,7 @@
     <para>
      Et <interface>panel</interface> kan inneholde flere typer av objekter.
      Eksempel-<interface>panelet</interface>  i  <xref
-     linkend="examplepanelfig"> viser hver type av panelobjekter.
+     linkend="examplepanelfig"> viser de forskjellige typene panelobjekter.
     </para>
     <figure id="examplepanelfig">
      <title>Et eksempel-panel</title>
@@ -96,11 +102,11 @@
        <formalpara>
         <title>Menyer</title>
         <para>
-         Menyer er lister av oppføriger, som alle enten starter en
+         Menyer er lister av oppføringer, som alle enten starter en
          applikasjon, kjører en kommando, eller er en undermeny.  I
          eksempel-<interface>panelet</interface> i <xref
          linkend="examplepanelfig"> , er ikonet helt til venstre etter
-         pilen en fotavtrykk (GNOME logoen). Dette er
+         pilen et fotavtrykk (GNOME logoen). Dette er
          <guimenu>Hovedmenyen</guimenu>, et av de viktigeste objektene
          i <interface>panelet</interface>.  Denne menyen 
          gir tilgang til nesten alle applikasjoner, kommandoer og
@@ -135,17 +141,17 @@
         <interface>panelet</interface>. Fjerde til og med åttende ikon
         i eksempel-<interface>panelet</interface> er appleter. Den
         første appleten som er vist er <application>GNOME
-        Værmelding</application> appleten, som henter nåværende værmeldinger
-        ned fra Web med jevne mellomrom, og viser informasjonen.
-        Applet nummer to <application>Diskmontering
+        værmelding</application> appleten, som henter aktuelle værmeldinger
+        ned fra nettet med jevne mellomrom, og viser disse.
+        Applet nummer to, <application>Diskmontering
         </application> appleten, som viser om en disk (i dette tilfellet 
-	diskettstasjonen) er montert, og lar deg også montere og 
+	diskettstasjonen) er montert, lar deg også montere og 
         avmontere stasjonen med et enkelt musklikk.
-        Den tredje appleten som er vist er <application>Hurtigstart
-        </application> appleten, som virker som en kontainer for
-        oppstartere, men sparer mer plass enn å plassere oppstarterene
+        Den tredje appleten som vises er <application>Hurtigstart
+        </application> appleten, som virker som en beholder for
+        oppstartere, men bruker mindre plass enn å plassere oppstarterene
         direkte på <interface>panelet</interface>. I eksempelet som
-        er vist har <application>Hurtigstart</application> appleten
+        vises har <application>Hurtigstart</application> appleten
         seks oppstartere for applikasjoner. Neste oppføring er
         <application>GNOME skrivebordsguide</application>, som lar deg
         kontrollere flere virtuelle skrivebord, som hver kan ha flere
@@ -164,7 +170,7 @@
       </listitem>
       <listitem>
        <formalpara>
-        <title>Skuffer</title>  <para>   Skuffer er i egentlig
+        <title>Skuffer</title>  <para>   Skuffer er egentlig
         utvidelser av <interface>panelet</interface> som kan åpnes
         eller lukkes. Disse kan inneholde alt som 
         <interface>panelet</interface> kan inneholde. Det brune ikonet for 
@@ -284,7 +290,7 @@
      musen til en del av skjermen hvor
      <interface>panelet</interface> er plassert. Dette kan være nyttig
      hvis du ikke kan bruke høy oppløsning på ditt system. For å lære
-     hvordan et <interface>panel</interface> auto-skjules, se <xref
+     hvordan et <interface>panel</interface> skjules automatisk, se <xref
      linkend="panelproperties">.
     </para>
    </sect2>
@@ -316,17 +322,19 @@
     </para>
     <para>
      Den vanlige måten å logge ut er ved å bruke
-     <guilabel>Logg ut</guilabel> alternativet, hvilket avslutter din GNOME
-     sesjon uten å kjøre ned maskinen.  Avhengig av ditt systems
+     <guilabel>Logg ut</guilabel> oppføringen, som avslutter din GNOME
+     sesjon uten å kjøre ned maskinen.  Avhengig av din system-
      konfigurasjon, kan du også velge <guilabel>Stopp</guilabel>
      valget, som kjører ned datamaskinen, og <guilabel>Start om</guilabel> 
      valget, som vil starte maskinen på.
     </para>
-    <note>    <title>Merknad for avanserte brukere</title>   <para>
-     <guilabel>Stopp</guilabel> og <guilabel>Start om</guilabel> valgene
-     vil bare vises hvis du har rettigheter til å kjøre kommandoen
-     <command>/usr/bin/shutdown</command>.
-     </para>
+    <note>
+	<title>Merknad for avanserte brukere</title>
+	<para>
+          <guilabel>Stopp</guilabel> og <guilabel>Start om</guilabel> valgene
+          vil bare vises hvis du har rettigheter til å kjøre kommandoen
+          <command>/usr/bin/shutdown</command>.
+	</para>
     </note>
     <para>
      Hvis du ikke ønsker å logge ut, trykker du 
@@ -335,7 +343,7 @@
      knappen for å logge ut.
     </para>
     <note>
-     <title>Logge ut og vindushåndterere</title>
+     <title>Utlogging og vindushåndterere</title>
      <para>
       Hvis du kjører en vindushåndterer som følger GNOME spesifikasjonen,
       vil logg ut funksjonen avslutte vindushåndtereren i tillgg til GNOME.
@@ -392,7 +400,7 @@
    <!-- ########### Main Menu ############## -->
 
   <sect1 id="mainmenu">
-   <title>The Main Menu</title>
+   <title>Hovedmenyen</title>
    <para>
      <indexterm id="idx-a3">  <primary>Hovedmeny</primary>
      </indexterm>
@@ -409,8 +417,8 @@
     meny</guibutton> knappen. Du må slippe musknappen etter å ha
     trykket på <guibutton>Hovedmeny</guibutton> knappen for å gjøre
     bruk av andre mus-aktiverte funksjoner i
-    <guimenu>Hovedmenyen</guimenu>, slik som høyreklikk pop-up menyer og
-    dra-og-slipp fra menyen til skrivebordet eller
+    <guimenu>Hovedmenyen</guimenu>, slik som høyreklikk pop-up menyer
+    og dra-og-slipp fra menyen til skrivebordet eller
     <interface>panelet</interface>.
    </para>
     <figure id="main-menu-button-fig">
@@ -422,7 +430,7 @@
        </graphic>
      </screenshot>
     </figure>
-    <para>   Du kan ha flere <guibutton>Hovedmeny</guibutton> knapper på
+    <para>Du kan ha flere <guibutton>Hovedmeny</guibutton> knapper på
     forskjellige <interface>paneler</interface>; som alle kan konfigureres
     hver for seg.
     </para>
@@ -437,26 +445,24 @@
      meny</guimenu>, høyreklikker du på et tomt området på
      <interface>panelet</interface>. Du kan også aksessere  
      <guimenu>Global meny</guimenu> ved å trykke på
-      <keycap>Meny</keycap> tasten på ditt tastatur (hvis du bruker et
-      standard PC tastatur, denne tasten er vanligvis plassert til venstre
-      for mellomrom tasten og er merket med et bilde av en meny); du kan
+     <keycombo action=simul>
+      <keycap>Alt</keycap> <keycap>F1</keycap> </keycombo>. (Du kan
       endre standardtasten for å aktivere <guimenu>Global 
       meny</guimenu> i <link
       linkend="misctab"><guilabel>Forskjellig</guilabel></link> fanen
       i <interface><link linkend="globalpanelprefs">Globale
       brukervalg</link> dialogen</interface>.
-      </para>
+    </para>
+    <para>
+     Merk at <guimenu>Global meny</guimenu> konfigureres 
+     uavhengig av <guimenu>Hovedmenyen</guimenu>, ved å bruke
+     <guilabel>Meny</guilabel> fanen i <link
+     linkend="globalpanelprefs"><interface>Globale
+     brukervalg</interface></link>-dialogen.
+    </para>
+   </sect2>
 
-      <para>
-	Merk at <guimenu>Global meny</guimenu> konfigureres 
-	uavhengig av <guimenu>Hovedmenyen</guimenu>, ved å bruke
-	<guilabel>Meny</guilabel> fanen i <link
- linkend="globalpanelprefs"><interface>Globale
-	brukervalg</interface></link>-dialogen.
-      </para>
-    </sect2>
-
-    <sect2 id="submenus">
+   <sect2 id="submenus">
      <title>Hovedmenyens komponenter</title>
      <para>
       Den viktigste komponenten i<guimenu>hovedmenyen</guimenu> er
@@ -478,13 +484,6 @@
         grafiske filbehandler.
        </para>
       </listitem>
-   <!-- this was made obsolete by "run..." (see below)
-     <listitem>
-       <para>
-        <guimenuitem>Kjør program&hellip;</guimenuitem> &mdash; gir
-        deg en kommandolinje fra hvor du kan kjøre enhver kommando.
-       </para>
-      </listitem> -->
       <listitem>
        <para>
         <guimenuitem>Hjelp system</guimenuitem> &mdash; starter
@@ -545,7 +544,7 @@
         <guisubmenu>AnotherLevel menyer</guisubmenu> og
         <guisubmenu>Debian menyer</guisubmenu>. Disse undermenyene viser
         standard applikasjonsmenyer for Red Hat Linux og Debian
-        GNU/Linux, respektivt. Disse vil bare komme til syne for bruker
+        GNU/Linux, respektivt. Disse vil bare komme til syne for brukere
         av disse distribusjonene.
        </para>
       </listitem>
@@ -579,27 +578,9 @@
 
       <listitem id="runcommand">
        <para>
-        <guimenuitem>Kjør &hellip;</guimenuitem> &mdash; Denne kommandoen
-        gir deg en kommandolinje. Den er ikke det samme som et fullt
-        skall, så den er ikke en ertatning for <application>GNOME
-        terminal</application>, men den er meget hendig når du bare
-        trenger å skrive inn en enkelt kommando raskt. Du kan også starte
-        denne kommandolinjen ved å bruke en tastatursnarvei.  (du
-        må spesifisere tastaturkombinasjonen du ønsker å bruke i <link
-        linkend="misctab"><guilabel>Forkjellig</guilabel></link>
-        fanen i <interface><link linkend="globalpanelprefs">Globale
-        brukervalg</link> dialogen</interface>).
-       </para>
-       <para>
-        Kommandolinjen har en buffer for historikk (du kan hente tilbake
-        tidligere brukte kommandoer ved å trykke pil ned som finnes til
-        høyre på tastaturet og velge kommandoen) og
-        <guibutton>Bla gjennom</guibutton> knappen, som lar deg velge
-        en fil &mdash; filnavnet vil bli lagt til ved slutten av kommandoen
-        For eksempel, du kan skrive inn an e<userinput>emacs</userinput> 
-        (en ekstremt kraftig teksteditor) på kommandolinjen og så bruke
-        <guibutton>Bla gjennom</guibutton> knappen for å velge filen som
-        skal redigeres.
+        <guimenuitem>Kjør &hellip;</guimenuitem> &mdash; Denne menyoppføringen
+        åpner <interface>Kjør program</interface> dialogen for
+        å kjøre skallkommandoer (se <xref linkend="runbutton">).
        </para>
       </listitem>
      </itemizedlist>
@@ -707,7 +688,7 @@
 
    <sect2 id="addingmenus">
     <title>Å legge til en meny på panelet</title>  <para> For å lære hvordan
-    du skal legg til en meny på <interface>Panelet</interface>, se <xref
+    du skal legge til en meny på <interface>Panelet</interface>, se <xref
     linkend="add">.
     </para>
    </sect2>
@@ -729,37 +710,38 @@
   </sect2>
 
    <sect2 id="menusconf">
-    <title> Configuring a Menu</title>
+    <title>Konfigurasjon av en meny</title>
     <para>
-     You can easily change a menu name and icon (for user menus
-     only, not for submenus taken from the <guimenu>Main
-     Menu</guimenu>). To do so, click on the menu, right-click
-     on the menu title (at the very top of the list, above all other
-     items), and select <guimenuitem>Properties&hellip;</guimenuitem>
-     from the pop-up menu. This will bring up the 
-     <interface>Desktop Entry Properties</interface> dialog, quite similar to
-     the <link linkend="launchers"><interface>Launcher
-     Properties</interface> dialog</link>. 
+     Du kan enkelt endre navn og ikoner i en meny (kun for bruker-
+     menyer, ikke for undermenyer tatt fra <guimenu>Hoved
+     menyen</guimenu>). Dette gjør du på følgende måte: Klikk på
+     menyen, høyreklikk på menytittelen (helt på toppen av listen, over alle andre
+     oppføringer), og velg <guimenuitem>Egenskaper&hellip;</guimenuitem>
+     fra pop-up menyen. Dette vil hente opp dialogen
+     <interface>Egenskaper for skrivebordsoppføring</interface>, som er ganske lik
+     dialogen <link linkend="launchers"><interface>Egenskaper
+     for oppstarter</interface> dialog</link>. 
     </para>
     <para>  
-     To add a new item to the menu, click on the menu button,
-     right-click on the Menu name, and select <guimenuitem>Add new
-     item to this menu</guimenuitem>. This will bring  up
-     <interface>Create Menu Item</interface> dialog, in which you
-     can enter the menu item name, comment, command, and type (see <xref
-     linkend="launchers"> for more information).  To remove an item
-     from the menu, right-click on the item and choose <guimenuitem>Remove
-     this item</guimenuitem>.
+     For å legge til en ny oppføring på menyen klikker du på menyknappen,
+     høyreklikk på menynavnet, og velg <guimenuitem>Legg til ny
+     oppføring på denne menyen</guimenuitem>. Dette vil hente opp dialogen
+     <interface>Opprett menyoppføring</interface>, hvor du kan
+     skrive inn menyoppføringens navn, kommentar, kommando og type (se <xref
+     linkend="launchers"> for mer informasjon).  For å fjerne en oppføring
+     fra menyen, høyreklikker du på oppføringen og velger <guimenuitem>Fjern
+     denne oppføringen</guimenuitem>.
     </para>
     <para>
-     Finally, a frequently asked question is "How I can change the
-     font and the background used by the menus?" The answer is that it
-     is determined by the current GTK Theme, which can be changed
-     using the <application>GNOME Control Center</application> by
-     selecting <menuchoice> <guimenu>Main Menu</guimenu>
-     <guisubmenu>Settings</guisubmenu>
-     <guisubmenu>User Interface</guisubmenu>
-     <guimenuitem>Themes</guimenuitem> 
+     Til slutt; et ofte spurt spørsmål er "Hvordan kan jeg endre
+     skrifttype og bakgrunn for menyene?" Svaret er at dette
+     bestemmes av aktivt GTK tema, som kan endres ved bruk av 
+     <application>GNOME kontrollsenter</application>. Velg
+     <menuchoice> <guimenu>Hovedmeny</guimenu>
+     <guisubmenu>Programmer</guisubmenu>
+     <guisubmenu>Innstillinger</guisubmenu>
+     <guisubmenu>Skrivebord</guisubmenu>
+     <guimenuitem>Temavelger</guimenuitem> 
      </menuchoice>.
     </para>
    </sect2>
@@ -770,146 +752,148 @@
  <sect1 id="launchers">
   <title>Launchers</title>
   <para>
-   Launchers are essentially buttons which reside in your panel and
-   start an application or execute a command when clicked.  A launcher
-   can use any icon and has a customized tooltip to display a message
-   when the cursor is passed over the Launcher.
+   Oppstartere er knapper som befinner seg på
+   <interface>Panelet</interface> og starter en applikasjon eller
+   kjører en kommando når den blir klikket. En oppstarter kan bruke
+   ethvert ikon og har et tilpasset verktøytips for å vise en
+   melding når markøren beveges over oppstarteren.
   </para>
-  <para>  You can change a launcher properties, such as the icon it
-      uses and its name, by right-clicking on a launcher and selecting
-      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This
-      brings up the <interface>Launcher properties dialog</interface>
-      shown in <xref linkend="launcherpropsfig">. The same dialog is
-      used when you create a new launcher (see <xref
-      linkend="add">). Also, internally GNOME makes no distinction
-      between menu items and launchers: these are just different
-      presentations of the same thing. You can place any menu item on
-      the panel, and it will show as a launcher. Therefore, all the
-      information below applies equally to launchers and menu items.
-      </para>
+  <para>  
+   Du kan endre en oppstarters egenskaper, slik som ikonet den
+   bruker og navnet, ved å høyreklikke på en oppstarter og velge
+   <guimenuitem>Egenskaper</guimenuitem> fra pop-up menyen. Dette
+   henter opp dialogen <interface>Oppstarteregenskaper</interface>
+   som vist i <xref linkend="launcherpropsfig">. Den samme dialogen
+   brukes når du oppretter en ny oppstarter (see <xref
+   linkend="add">). GNOME gjør ingen forskjell på oppstartere og andre
+   oppføringer internt. Disse er bare forskjellige presentasjoner av
+   samme ting. Du kan plassere enhver menyoppføring på panelet og få
+   den opp som en oppstarter. Derfor er all informasjon under like
+   relevant for både oppstartere og menyoppføringer.
+  </para>
   <figure id="launcherpropsfig">
-   <title>Create Launcher/Launcher Properties Dialog</title>
+   <title>Lag oppstarter/Dialog for egenskaper for oppstarter</title>
    <screenshot>
-    <screeninfo>Create Launcher/Launcher Properties Dialog</screeninfo>
+    <screeninfo>Lag oppstarter/Dialog for egenskaper for oppstarter</screeninfo>
      <graphic fileref="./figures/launcher_properties_basic" format="png"
      srccredit="muet">
      </graphic>
    </screenshot>
   </figure>
-    <para> This dialog has two tabs: <guilabel>Basic</guilabel> and
-    <guilabel>Advanced</guilabel>. In the <guilabel>Basic</guilabel>
-    tab, you can set:
+    <para>Denne dialogen har to faner:<guilabel>Grunnleggende</guilabel> og
+    <guilabel>Avansert</guilabel>. I fanen<guilabel>Grunnleggende</guilabel>
+    kan du sette:
     </para>
     <itemizedlist>
       <listitem>
 	<para>
-	  <guilabel>Name</guilabel> &mdash; this is the application
-	  name, for example, <userinput>GNOME
-	  terminal</userinput>. This name will be used if you later
-	  put this launcher in a menu.
+	  <guilabel>Navn</guilabel> &mdash; dette er applikasjonens
+	  navn, for eksempel, <userinput>GNOME
+	  terminal</userinput>. Dette navnet vil brukes hvis du senere
+	  plasserer denne oppstarteren i en meny.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Comment</guilabel> &mdash; this is a brief
-	  explanation of what this application does, for example,
-	  <userinput>Terminal emulation program</userinput>. This will
-	  be used for tooltips.
+	  <guilabel>Kommentar</guilabel> &mdash; dette er en kort
+	  forklaring av hva denne applikasjonen gjør, for eksempel,
+	  <userinput>Terminalemuleringsprogram</userinput>. Dette vil
+	  brukes for verktøytips.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Command</guilabel> &mdash; the actual command that
-	  runs the application, for example,
+	  <guilabel>Kommando</guilabel> &mdash; den faktiske kommandoen
+	  som kjører applikasjonen, for eksempel,
 	  <userinput>gnome-terminal</userinput>.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Type</guilabel> &mdash; should be
-	  <guilabel>Application</guilabel>; do not change it unless
-	  you want to create something other than application launcher.
+	  <guilabel>Type</guilabel> &mdash; bør være
+	  <guilabel>Applikasjon</guilabel>; ikke endre den med mindre
+	  du ønsker å opprette noe annet enn en applikasjonsoppstarter.
 	</para>
       </listitem>
     </itemizedlist>
     <para>
-      The <guilabel>Basic</guilabel> tab also shows the icon to be
-      used for the launcher; if no icon is specified, a default icon
-      will be used. To change the icon, just click on it to launch the
-      icon browser.  </para>
+      Fanen <guilabel>Grunnleggende</guilabel> viser også ikonet som skal
+      brukes for oppstarteren; hvis ingen ikon oppgis, vil et standard-
+      ikon brukes. For å endre ikonet, klikk på det for å starte ikon-
+      viseren. </para>
     <para>
-      Finally, if the application can only run inside a terminal
-      &mdash; that is, if it doesn't create any windows on its own
-      &mdash; you should also check <guibutton>Run in
-      terminal</guibutton> button. If unsure, leave it unchecked.
+      Til slutt, hvis applikasjonen kun kan kjøre i et terminalvindu
+      &mdash; det vil si, hvis den ikke lager noen vinduer på egenhånd
+      &mdash; bør du også krysse av for <guibutton>Kjør i
+      terminal</guibutton> knappen. Hvis du er usikker la den være.
     </para>
     
     <para>
-      <guilabel>Advanced</guilabel> tab is shown below. It is intended
-      for advanced users; most of the time, you do not need to change
-      any of the settings here.
+      <guilabel>Avansert</guilabel> fanen vises under. Den er ment for
+      avanserte brukere; du trenger oftest ikke endre noen av innstillingene
+      her.
     </para>
   <figure id="launcheradvpropsfig">
-   <title>Launcher Advanced Properties Dialog</title>
+   <title>Dialogen avanserte egenskaper for oppstarter</title>
    <screenshot>
-    <screeninfo>Launcher Advanced Properties Dialog</screeninfo>
+    <screeninfo>Dialogen avanserte egenskaper for oppstarter</screeninfo>
      <graphic fileref="./figures/launcher_properties_advanced" format="png"
      srccredit="muet">
      </graphic>
    </screenshot>
   </figure>
-    <para> In this tab, you can set:
+    <para> I denne fanen kan du sette:
     </para>
     <itemizedlist>
       <listitem>
 	<para>
-	  <guilabel>Try this before using</guilabel> &mdash; you can
-	  enter here a command, and GNOME will check if this command
-	  can be executed. If not, the launcher (or menu item) will
-	  not be shown even if you added it to the panel or menu. It
-	  is mostly used by people preparing GNOME distributions: for
-	  example, default GNOME <guimenu>Main Menu</guimenu> contains
-	  an item for <application>TkRat</application> e-mail program,
-	  but you will not see it unless you have
-	  <application>TkRat</application> installed on your system.
+	  <guilabel>Prøv ut før bruk</guilabel> &mdash; du kan
+	  oppgi en kommando her, og la GNOME sjekke om denne kommandoen
+	  kan kjøres. Hvis ikke vil oppstarteren (eller menyoppføringen)
+	  ikke vises selv om du la den til på panelet eller menyen. Det
+	  brukes oftest av de som forbereder GNOME-distribusjoner: for
+	  eksempel, standard GNOME <guimenu>Hovedmenyen</guimenu> inneholder
+	  en oppføring for <application>TkRat</application> e-post programmet,
+	  men du vil ikke se den med mindre du har installert
+	  <application>TkRat</application> på ditt system.
 	</para>
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Documentation</guilabel> &mdash; currently not
-	  used.
+	  <guilabel>Documentasjon</guilabel> &mdash; brukes ikke
+	  nå.
 	</para>
       </listitem>
        <listitem>
 	<para>
-	  <guilabel>Name/comment translations</guilabel> &mdash; here
-	  you can set translation of the <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel> to other languages. For
-	  example, for <application>GNOME Terminal</application>, the
-	  translations to Spanish (es) are name:  <userinput>Terminal
-	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
-	  de terminal GNOME</userinput>. This means that if a user
-	  sets his language to Spanish during login (it can be done by
-	  selecting appropriate language from
-	  <guimenu>Languages</guimenu> menu of GNOME login manager
-	  (GDM)), he will see <guimenuitem>Terminal UNIX de
-	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
-	  terminal GNOME</userinput> in the tooltips. Of course, the
-	  actual command that runs the terminal is unchanged.
+	  <guilabel>Navn/kommentar oversettelser</guilabel> &mdash; her
+	  kan du sette oversettelse av <guilabel>Navn</guilabel> og
+	  <guilabel>Kommentar</guilabel> til andre språk. For
+	  eksempel, for <application>GNOME Terminal</application>, er
+	  oversettelsen til spansk (es):  <userinput>Terminal
+	  UNIX de GNOME</userinput> og kommentarten: <userinput>Emulador
+	  de terminal GNOME</userinput>. Dette betyr at hvis en bruker
+	  setter sitt språk til spansk ved pålogging (det kan gjøres ved
+	  å velge passende språk fra
+	  <guimenu>Språk</guimenu>-menyen i GNOME skjermhåndterer
+	  (GDM)), vil vedkommende se <guimenuitem>Terminal UNIX de
+	  GNOME</guimenuitem> i menyen og <userinput>Emulador de
+	  terminal GNOME</userinput> i verktøytipset. Den faktiske
+	  kommandoen som kjøres er selvsagt uendret.
 	</para>
 	<para>
-	  To add a new translation, enter the language 2-letter code
-	  and translations of <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel>  fields in the empty fields
-	  under the list of current translations, and  press
-	  <guibutton>Add/Set</guibutton> button.  To change one of
-	  existing translations, select it in the list, edit the
-	  fields you want, and press <guibutton>Add/Set</guibutton>
-	  button. To remove one of existing translations, select it
-	  and press <guibutton>Remove</guibutton> button.
+	  For å legge til en ny oversettelse legger du inn språkets 2-bokstav
+	  kode og oversettelse av <guilabel>Navn</guilabel> og
+	  <guilabel>Kommentar</guilabel> feltene i de tomme feltene
+	  under listen av aktive oversettelser og trykker
+	  <guibutton>Legg til/sett</guibutton> knappen. For å endre en av
+	  de eksisterende oversettelsene må du velge den i listen og redigere
+	  feltene du ønsker og trykke <guibutton>Legg til/sett</guibutton>
+	  knappen. For å fjerne en av de eksisterende oversettelsene; velg
+	  den og trykk <guibutton>Fjern</guibutton> knappen.
 	</para>
-	<para>  You can find the list of all languages supported by
-	  GNOME along with their 2-letter codes  in  <ulink
+	<para>Du kan finne listen over alle språkene som støttes av
+	  GNOME sammen med deres 2-bokstav koder i  <ulink
    type="http"
 	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
 	  Frequently Asked Questions</ulink>.
@@ -918,7 +902,7 @@
     </itemizedlist>
 
     <para>
-      All the changes you made in <interface>Launcher
+XXX  All the changes you made in <interface>Launcher
       Properties</interface> dialog will take effect when you press
       <guibutton>Apply</guibutton> or
       <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
