@@ -1,4 +1,5 @@
-SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout cdplayer
+SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
+	@PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
 	-I$(top_srcdir)			\
