@@ -108,12 +108,12 @@ static int fools_hour_start = 0;
 static int fools_hour_end   = 0;
 
 static void
-show_help (FishApplet *fish)
+show_help (FishApplet *fish, const char *link_id)
 {
 	GError *error = NULL;
 
 	egg_help_display_desktop_on_screen (
-		NULL, "fish-applet-2", "fish-applet-2", NULL,
+		NULL, "fish-applet-2", "fish-applet-2", link_id,
 		gtk_widget_get_screen (GTK_WIDGET (fish)),
 		&error);
 
@@ -260,7 +260,7 @@ handle_response (GtkWidget  *widget,
 		 FishApplet *fish)
 {
 	if (id == GTK_RESPONSE_HELP) {
-		show_help (fish);
+		show_help (fish, "fish-settings");
 		return;
 	}
 
@@ -367,7 +367,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		     FishApplet        *fish,
 		     const char        *verbname)
 {
-	show_help (fish);
+	show_help (fish, NULL);
 }
 
 static void
