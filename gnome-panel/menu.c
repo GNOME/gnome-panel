@@ -2106,7 +2106,9 @@ add_redhat_entry(GSList *list, char *file)
 		p = buf;
 		g_free(read_word(&p)); /*XXX:ignore??*/
 		w = read_word(&p);
-		if(strcmp(w,"name")==0) {
+		printf("word=%s\n", w);
+		if (!w) ;
+		else if(strcmp(w,"name")==0) {
 			g_free(rh->name);
 			rh->name = read_word(&p);
 		} else if(strcmp(w,"description")==0) {
