@@ -998,7 +998,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	tmp = gnome_is_program_in_path ("nautilus");
 	if (tmp != NULL) {
 		/* nautilus */
-		char *exec = g_string_printf ("nautilus %s",
+		char *exec = g_strdup_printf ("nautilus %s",
 					      panel_quote_string (dir));
 		g_free (tmp);
 
@@ -1014,7 +1014,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 		tmp = gnome_is_program_in_path ("gmc-client");
 		if (tmp != NULL) {
 			/* gmc */
-			char *exec = g_string_printf ("gmc-client "
+			char *exec = g_strdup_printf ("gmc-client "
 						      "--create-window=%s",
 						      panel_quote_string (dir));
 

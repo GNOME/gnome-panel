@@ -640,7 +640,7 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 		}
 	} else if (info->type == APPLET_LAUNCHER) {
 		Launcher *launcher = info->data;
-		gchar *location;
+		const char *location;
 
 		/* we CAN'T unlink the file here as we may just
 		 * be killing stuff before exit, basically we
@@ -650,7 +650,8 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 		location = gnome_desktop_item_get_location (launcher->ditem);
 		if (location != NULL)
 			launchers_to_kill = 
-				g_list_prepend (launchers_to_kill, location);
+				g_list_prepend (launchers_to_kill,
+						g_strdup (location));
 	}
 
 

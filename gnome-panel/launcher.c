@@ -18,6 +18,8 @@
 #include <string.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
+#include <libgnomeui/gnome-dialog.h>
+#include <libgnomeui/gnome-uidefs.h>
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "gnome-desktop-item.h"
@@ -74,7 +76,7 @@ launch_url (Launcher *launcher)
 		panel_error_dialog ("cant_show_url_dialog",
 				    _("Cannot show %s\n%s"),
 				    url, error->message);
-		g_error_clear (&error);
+		g_clear_error (&error);
 	}
 }
 
@@ -91,7 +93,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 	item = launcher->ditem;
 	type = gnome_desktop_item_get_entry_type (item);
 
-	if (type == GNOME_DESKTOP_ITEM_TYPE_URL) {
+	if (type == GNOME_DESKTOP_ITEM_TYPE_LINK) {
 		launch_url (launcher);
 	} else {
 		GError *error = NULL;
@@ -100,7 +102,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 			panel_error_dialog ("cannot_launch_icon",
 					    _("Cannot launch icon\n%s"),
 					    error->message);
-			g_error_clear (&error);
+			g_clear_error (&error);
 		}
 	}
 	
@@ -117,8 +119,6 @@ launch (Launcher *launcher, int argc, char *argv[])
 						    grandparentw);
 		}
 	}
-
-	g_free (command);
 }
 
 static void
@@ -142,12 +142,12 @@ drag_data_received_cb (GtkWidget        *widget,
 
 	list = gnome_vfs_uri_list_parse ((char *)selection_data->data);
 
-	gnome_desktop_item_drop_uri_list (item, list &error);
+	gnome_desktop_item_drop_uri_list (launcher->ditem, list, &error);
 	if (error != NULL) {
 		panel_error_dialog ("cannot_launch_icon",
 				    _("Cannot launch icon\n%s"),
 				    error->message);
-		g_error_clear (&error);
+		g_clear_error (&error);
 	}
 
 	gnome_vfs_uri_list_free (list);
@@ -274,7 +274,8 @@ drag_data_get_cb (GtkWidget          *widget,
 		  guint               time,
 		  Launcher           *launcher)
 {
-	gchar *uri_list, *location;
+	char *uri_list;
+	const char *location;
 	
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
@@ -296,8 +297,6 @@ drag_data_get_cb (GtkWidget          *widget,
 					selection_data->target, 8,
 					location, strlen (location));
 	}
-
-	g_free (location);
 }
 
 
@@ -485,7 +484,7 @@ setup_button (Launcher *launcher)
 					 _("Application"));
 
 		applet_add_callback (launcher->info, "help_on_app",
-				     GNOME_STOCK_PIXMAP_HELP,
+				     GTK_STOCK_HELP,
 				     title);
 		g_free (title);
 	}
@@ -500,7 +499,7 @@ properties_apply (Launcher *launcher)
 	/* save (steal) location */
 	location = g_strdup (gnome_desktop_item_get_location (launcher->ditem));
 
-	gnome_desktop_item_undef (launcher->ditem);
+	gnome_desktop_item_unref (launcher->ditem);
 
 	launcher->ditem =
 		gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (launcher->dedit));
@@ -673,7 +672,7 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 static void
 really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 {
-	GnomeDitemEdit *dedit = GNOME_DITEM_EDIT(data);
+	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"pos"));
 	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"exactpos"));
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(dialog),"panel");
@@ -741,7 +740,7 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 
 	ditem = gnome_desktop_item_new ();
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, file);
-	gnome_desktop_item_set_type (ditem, GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
+	gnome_desktop_item_set_entry_type (ditem, GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
 
 	gnome_ditem_edit_set_ditem (dee, ditem);
 
@@ -808,7 +807,7 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 				PanelWidget *panel, int pos,
 				gboolean exactpos)
 {
-	GnomeDesktopItem *ditem = g_new0 (GnomeDesktopItem, 1);
+	GnomeDesktopItem *ditem;
 	Launcher *launcher;
 
 	ditem = gnome_desktop_item_new ();
@@ -816,8 +815,8 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_COMMENT, comment);
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, exec);
 	ditem_set_icon (ditem, icon);
-	gnome_desktop_item_set_type (ditem,
-				     GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
+	gnome_desktop_item_set_entry_type (ditem,
+					   GNOME_DESKTOP_ITEM_TYPE_APPLICATION);
 
 	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos);
 	if (launcher != NULL)
@@ -834,7 +833,7 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 				    PanelWidget *panel, int pos,
 				    gboolean exactpos)
 {
-	GnomeDesktopItem *ditem = g_new0 (GnomeDesktopItem, 1);
+	GnomeDesktopItem *ditem;
 	Launcher *launcher;
 
 	ditem = gnome_desktop_item_new ();
@@ -843,8 +842,8 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 				       comment);
 	ditem_set_icon (ditem, icon);
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_URL, url);
-	gnome_desktop_item_set_type (ditem,
-				     GNOME_DESKTOP_ITEM_TYPE_LINK);
+	gnome_desktop_item_set_entry_type (ditem,
+					   GNOME_DESKTOP_ITEM_TYPE_LINK);
 
 	launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos);
 	if (launcher != NULL)

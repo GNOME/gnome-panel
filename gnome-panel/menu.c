@@ -273,27 +273,30 @@ static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
 	if (gnome_execute_async (g_get_home_dir (), 1, &program_path)<0)
-		panel_error_dialog (_("Can't execute 'About GNOME'"));
+		panel_error_dialog ("cannot_exec_about_gnome",
+				    _("Can't execute 'About GNOME'"));
 }
 
 static void
 activate_app_def (GtkWidget *widget, const char *item_loc)
 {
-#ifdef FIXME
-	GnomeDesktopItem *item = gnome_desktop_item_load (item_loc);
+	GnomeDesktopItem *item = gnome_desktop_item_new_from_file
+		(item_loc,
+		 0 /* flags */,
+		 NULL /* error */);
 	if (item != NULL) {
 		char *curdir = g_get_current_dir ();
 		chdir (g_get_home_dir ());
 
-		gnome_desktop_entry_launch (item);
-		gnome_desktop_entry_free (item);
+		gnome_desktop_item_launch (item, 0, NULL, NULL);
+		gnome_desktop_item_unref (item);
 
 		chdir (curdir);
 		g_free (curdir);
 	} else {
-		panel_error_dialog (_("Can't load entry"));
+		panel_error_dialog ("cannot_load_entry",
+				    _("Can't load entry"));
 	}
-#endif
 }
 
 /* Copy a single file */
@@ -1207,7 +1210,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
 	/*guess KDE menus*/
-	if(panel_file_exists(kde_menudir))
+	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	panel = get_panel_from_menu_data (widget, TRUE);
@@ -3041,7 +3044,7 @@ create_menuitem (GtkWidget *menu,
 
 	pixmap = NULL;
 	if (gnome_preferences_get_menus_have_icons ()) {
-		if (fr->icon && panel_file_exists (fr->icon)) {
+		if (fr->icon && g_file_test (fr->icon, G_FILE_TEST_EXISTS)) {
 			pixmap = fake_pixmap_at_size (fr->icon, size);
 			if (pixmap)
 				gtk_widget_show (pixmap);
@@ -3248,7 +3251,7 @@ create_menu_at_fr (GtkWidget *menu,
 			if (pixmap_name) {
 				pixmap = fake_pixmap_at_size (pixmap_name, size);
 			}
-			if (!pixmap && gnome_folder && panel_file_exists (gnome_folder)) {
+			if (!pixmap && gnome_folder && g_file_test (gnome_folder, G_FILE_TEST_EXISTS)) {
 				pixmap = fake_pixmap_at_size (gnome_folder, size);
 			}
 		}
@@ -3738,7 +3741,8 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 		   use g_warning */
 		static gboolean done_dialog = FALSE;
 		if(!done_dialog) {
-			panel_error_dialog(_("No system menus found!"));
+			panel_error_dialog("no_system_menus",
+					   _("No system menus found!"));
 			done_dialog = TRUE;
 		} else
 			g_warning(_("No system menus found!"));
@@ -3755,7 +3759,7 @@ create_user_menu (const char *title, const char *dir, GtkWidget *menu,
 		  gboolean favourites_add)
 {
 	char *menudir = gnome_util_home_file (dir);
-	if (!panel_file_exists (menudir))
+	if (!g_file_test (menudir, G_FILE_TEST_IS_DIR))
 		mkdir (menudir, 0755);
 	if (!g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
 		g_warning(_("Can't create the user menu directory"));
@@ -3949,7 +3953,8 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	panelw = panel->panel_parent;
 
 	if (!IS_DRAWER_WIDGET (panelw) && base_panels == 1) {
-		panel_error_dialog (_("You cannot remove your last panel."));
+		panel_error_dialog ("cannot_remove_last_panel",
+				    _("You cannot remove your last panel."));
 		return;
 	}
 
@@ -5018,7 +5023,8 @@ panel_config_global(void)
 {
 	char *argv[2] = {"gnome-panel-properties-capplet", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
-		panel_error_dialog(_("Cannot execute panel global properties"));
+		panel_error_dialog("cannot_exec_global_props",
+				   _("Cannot execute panel global properties"));
 }
 
 static void
@@ -5074,7 +5080,8 @@ panel_launch_gmenu (GtkWidget *widget, gpointer data)
 {
 	char *argv[2] = {"gmenu", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
-		   panel_error_dialog (_("Cannot launch gmenu!"));
+		   panel_error_dialog ("cannot_launch_gmenu",
+				       _("Cannot launch gmenu!"));
 }
 
 void
@@ -5211,7 +5218,8 @@ panel_lock (GtkWidget *widget, gpointer data)
 {
 	char *argv[3] = {"xscreensaver-command", "-lock", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
-		panel_error_dialog (_("Cannot execute xscreensaver"));
+		panel_error_dialog ("cannot_exec_xscreensaver",
+				    _("Cannot execute xscreensaver"));
 }
 
 static void
@@ -5438,7 +5446,7 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 				TRUE, launcher_add, favourites_add);
 	pixmap_path = g_concat_dir_and_file (kde_icondir, "exec.xpm");
 
-	if (panel_file_exists(pixmap_path)) {
+	if (g_file_test (pixmap_path, G_FILE_TEST_EXISTS)) {
 		pixmap = fake_pixmap_at_size (pixmap_path, size);
 		if (pixmap)
 			gtk_widget_show (pixmap);
@@ -5826,7 +5834,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	if (menu->custom_icon &&
 	    menu->custom_icon_file != NULL &&
-	    panel_file_exists (menu->custom_icon_file))
+	    g_file_test (menu->custom_icon_file, G_FILE_TEST_EXISTS))
 		pixmap_name = g_strdup (menu->custom_icon_file);
 	else
 		pixmap_name = get_pixmap (menudir, main_menu);

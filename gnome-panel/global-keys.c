@@ -284,7 +284,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 
 		proggie = gnome_is_program_in_path ("gnome-panel-screenshot");
 		if (proggie == NULL) {
-			panel_error_dialog (_("Can't find the screenshot "
+			panel_error_dialog ("cannot_find_ss_program",
+					    _("Can't find the screenshot "
 					      "program"));
 			return GDK_FILTER_REMOVE;
 		}
@@ -292,7 +293,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		argv[1] = NULL;
 
 		if (gnome_execute_async (g_get_home_dir (), 1, argv)<0)
-			panel_error_dialog (_("Can't execute the screenshot "
+			panel_error_dialog ("cannot_exec_ss_program",
+					    _("Can't execute the screenshot "
 					      "program"));
 
 		g_free (proggie);
@@ -310,7 +312,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 
 		proggie = gnome_is_program_in_path ("gnome-panel-screenshot");
 		if (proggie == NULL) {
-			panel_error_dialog (_("Can't find the screenshot "
+			panel_error_dialog ("cannot_find_ss_program",
+					    _("Can't find the screenshot "
 					      "program"));
 			return GDK_FILTER_REMOVE;
 		}
@@ -319,7 +322,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		argv[2] = NULL;
 
 		if (gnome_execute_async (g_get_home_dir (), 2, argv)<0)
-			panel_error_dialog (_("Can't execute the screenshot "
+			panel_error_dialog ("cannot_exec_ss_program",
+					    _("Can't execute the screenshot "
 					      "program"));
 
 		g_free (proggie);

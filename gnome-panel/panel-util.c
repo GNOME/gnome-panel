@@ -75,9 +75,9 @@ panel_gnome_help_path (const char *docpath)
 static char *
 panel_kde_help_path (const char *docpath)
 {
-	GList *li;
+	const GList *li;
 
-	if ( ! g_file_text (KDE_DOCDIR, G_FILE_TEST_EXISTS))
+	if ( ! g_file_test (KDE_DOCDIR, G_FILE_TEST_EXISTS))
 		return NULL;
 
 	for (li = gnome_i18n_get_language_list ("LC_MESSAGES");
@@ -862,7 +862,7 @@ panel_error_dialog (const char *class,
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
 				    GTK_BUTTONS_OK, s);
-	gtk_window_set_wmclass (GTK_WINDOW (dlg),
+	gtk_window_set_wmclass (GTK_WINDOW (w),
 				class, "Panel");
 	g_free (s);
 

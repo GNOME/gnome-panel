@@ -19,7 +19,7 @@ G_BEGIN_DECLS
 typedef struct {
 	AppletInfo        *info;
 	GtkWidget         *button;
-	GtkObject	  *dedit;
+	GtkWidget	  *dedit;
 	GnomeDesktopItem *ditem;
 	GnomeDesktopItem *revert_ditem;
 

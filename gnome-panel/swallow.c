@@ -63,7 +63,7 @@ swallow_launch (Swallow *swallow)
 		   (strcmp (p, ".desktop") == 0 ||
 		    strcmp (p, ".kdelnk") == 0) &&
 		   g_file_test (swallow->path, G_FILE_TEST_EXISTS) &&
-		   (item = gnome_desktop_item_new_from_file (swallow->path)) != NULL) {
+		   (item = gnome_desktop_item_new_from_file (swallow->path, 0, NULL)) != NULL) {
 			char *curdir = g_get_current_dir ();
 			chdir (g_get_home_dir ());
 

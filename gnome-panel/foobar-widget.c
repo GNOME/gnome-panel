@@ -217,7 +217,8 @@ gmc_client (GtkWidget *w, gpointer data)
 	char *v[3] = { "gmc-client" };
 	v[1] = data;
 	if(gnome_execute_async (g_get_home_dir (), 2, v) < 0)
-		panel_error_dialog(_("Cannot execute the gmc-client program,\n"
+		panel_error_dialog("cannot_execute_gmc_client",
+				   _("Cannot execute the gmc-client program,\n"
 				     "perhaps gmc is not installed"));
 }
 
@@ -227,7 +228,8 @@ gnomecal_client (GtkWidget *w, gpointer data)
 	char *v[4] = { "gnomecal", "--view" };
 	v[2] = data;
 	if(gnome_execute_async (g_get_home_dir (), 3, v) < 0)
-		panel_error_dialog(_("Cannot execute the gnome calendar,\n"
+		panel_error_dialog("cannot_execute_gnome_calendar",
+				   _("Cannot execute the gnome calendar,\n"
 				     "perhaps it's not installed.\n"
 				     "It is in the gnome-pim package."));
 }
@@ -563,8 +565,9 @@ set_time_cb (GtkWidget *menu_item, char *path)
 	char *v[2] = { path };
 	
 	if (gnome_execute_async (g_get_home_dir (), 1, v) < 0)
-		panel_error_dialog (_("Could not call time-admin\n"
-						  "Perhaps time-admin is not installed"));
+		panel_error_dialog ("could_not_call_time_admin",
+				    _("Could not call time-admin\n"
+				      "Perhaps time-admin is not installed"));
 }
 
 static GtkWidget *

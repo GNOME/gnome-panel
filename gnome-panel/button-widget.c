@@ -714,8 +714,10 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 		font = gdk_fontset_load(_("-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"));
 		if(!font)
 			font = gdk_font_load("fixed");
+#ifdef FIXME
 		if(!font)
 			font = widget->style->font;
+#endif
 		
 
 		gdk_gc_set_clip_rectangle (gc, &rect);
@@ -738,8 +740,10 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 				text);
 		gdk_gc_set_foreground(gc,&widget->style->black);
 		gdk_gc_set_clip_rectangle (gc, NULL);
+#ifdef FIXME
 		if(font!=widget->style->font)
 			gdk_font_unref(font);
+#endif
 		g_free(text);
 	}
 

@@ -505,7 +505,7 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_LAUNCHER:
 		{
 			Launcher *launcher = info->data;
-			gchar *location;
+			const char *location;
 
 			gnome_config_set_string ("id", LAUNCHER_ID);
 
@@ -515,7 +515,6 @@ save_applet_configuration(AppletInfo *info)
 			launcher_save (launcher);
 			location = gnome_desktop_item_get_location (launcher->ditem);
 			gnome_config_set_string ("base_location", location);
-			g_free (location);
 			break;
 		}
 	case APPLET_LOGOUT:

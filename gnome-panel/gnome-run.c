@@ -235,13 +235,13 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                                 panel_error_dialog ("failed_to_load_desktop",
 						    _("Failed to load this program!\n%s"),
 						    error->message);
-				g_error_clear (&error);
-			} else if ( ! gnome_desktop_item_launch (name, 0, NULL,
+				g_clear_error (&error);
+			} else if ( ! gnome_desktop_item_launch (ditem, 0, NULL,
 								 &error)) {
                                 panel_error_dialog ("failed_to_load_desktop",
 						    _("Failed to load this program!\n%s"),
 						    error->message);
-				g_error_clear (&error);
+				g_clear_error (&error);
 			}
 
 			if (ditem != NULL) {
@@ -972,6 +972,7 @@ select_row_handler (GtkCList *clist,
 			}
                         
                         if (pixbuf != NULL) {
+#ifdef FIXME
                                 GdkPixmap *pixmap;
                                 GdkBitmap *mask;
 
@@ -985,6 +986,7 @@ select_row_handler (GtkCList *clist,
                                 GNOME_PIXMAP (gpixmap)->mask = mask;
                                 gtk_widget_queue_resize (gpixmap);
                                 gdk_pixbuf_unref (pixbuf);
+#endif
                         } else {
                                 unset_pixmap (gpixmap);
                         }
@@ -1026,10 +1028,12 @@ create_simple_contents (void)
         gtk_clist_column_titles_passive (GTK_CLIST (clist));
         
         gtk_widget_ensure_style (clist);
+#ifdef FIXME
         gtk_clist_set_row_height (GTK_CLIST (clist),
                                   MAX (clist->style->font->ascent +
                                        clist->style->font->descent,
                                        CLIST_ICON_SIZE));
+#endif
 
         gtk_signal_connect (GTK_OBJECT (clist),
                             "select_row",
