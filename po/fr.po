@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.2\n"
-"POT-Creation-Date: 2002-07-21 11:28+0200\n"
-"PO-Revision-Date: 2002-07-21 10:52+0200\n"
+"POT-Creation-Date: 2002-07-24 23:51+0200\n"
+"PO-Revision-Date: 2002-07-24 23:39+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,9 @@ msgstr "À _propos..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "_Aide"
 
@@ -931,9 +933,7 @@ msgstr "Ne peut créer l'applet !\n"
 msgid "Properties..."
 msgstr "Propriétés..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Aide"
 
@@ -1085,12 +1085,12 @@ msgstr "Shell du tableau de bord GNOME"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Déplacer"
+msgid "_Move"
+msgstr "_Déplacer"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Enlever du tableau de bord"
+msgid "_Remove From Panel"
+msgstr "_Enlever du tableau de bord"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1206,44 +1206,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "Taille et position"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "Bulles d'aide/Nom"
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "Icône"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "Apparence de l'applet"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "Poignée du tiroir"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "Activer le bouton de masquage"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "Activer la flèche du bouton de masquage"
 
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Tiroir"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Propriétés"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Propriétés"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1277,8 +1277,7 @@ msgstr "Capture d'écran..."
 msgid "Take a screenshot of your desktop"
 msgstr "Effectue une capture d'écran de votre bureau"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Verrouiller l'écran"
 
@@ -1712,7 +1711,7 @@ msgid "Create Launcher"
 msgstr "Créer un lanceur"
 
 #. class
-#: gnome-panel/launcher.c:998
+#: gnome-panel/launcher.c:1000
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1723,7 +1722,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1084 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1759,16 +1758,20 @@ msgstr "Verrouiller l'écran"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Activer l'économiseur d'écran"
+msgid "_Activate Screensaver"
+msgstr "_Activer l'économiseur d'écran"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "_Verrouiller l'écran"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Tuer le démon de l'économiseur d'écran"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Tuer le démon de l'économiseur d'écran"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Relancer le démon de l'économiseur d'écran"
+msgid "Restart _Screensaver Daemon"
+msgstr "_Relancer le démon de l'économiseur d'écran"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1962,6 +1965,10 @@ msgstr "Ajouter ceci comme menu au tableau de bord"
 msgid "Add new item to this menu"
 msgstr "Ajouter un nouvel élement à ce menu"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Propriétés"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2096,10 +2103,6 @@ msgstr "_Supprimer ce tableau de bord"
 msgid "_Add to Panel"
 msgstr "_Ajouter au tableau de bord"
 
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Propriétés"
-
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "_Nouveau tableau de bord"
@@ -2170,7 +2173,7 @@ msgstr "Impossible d'enregistrer le widget de contrôle\n"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Exception du popup_menu « %s »\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2188,11 +2191,11 @@ msgstr ""
 "plus tard en cliquant sur le tableau de bord avec le bouton droit et en "
 "utilisant le menu « Ajouter au tableau de bord »)"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Impossible d'obtenir une interface AppletShell à partir du contrôle\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
