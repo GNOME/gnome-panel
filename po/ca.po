@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.1\n"
-"POT-Creation-Date: 2002-07-12 00:55+0200\n"
-"PO-Revision-Date: 2002-07-12 00:57+0200\n"
+"POT-Creation-Date: 2002-07-12 14:31+0200\n"
+"PO-Revision-Date: 2002-07-12 14:35+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <gnome@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Mostra un peix nadant o un altra criatura animada"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1192
+#: applets/fish/fish.c:1237
 msgid "Fish"
 msgstr "Peix"
 
@@ -74,7 +74,7 @@ msgstr "%s, el Peix del GNOME, un oràcul contemporani"
 msgid "GNOME Fish, the fortune teller"
 msgstr "El Peix del GNOME, el contacontes"
 
-#: applets/fish/fish.c:486 applets/fish/fish.c:1159
+#: applets/fish/fish.c:486 applets/fish/fish.c:1204
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s el Peix"
@@ -129,7 +129,26 @@ msgstr "Pausa _per trama (s):"
 msgid "_Rotate on vertical panels"
 msgstr "_Rota en els quadres verticals"
 
-#: applets/fish/fish.c:981
+#: applets/fish/fish.c:864
+msgid "Unable to get the name of the command to execute"
+msgstr "No s'ha pogut obtindre el nom de l'ordre a executar"
+
+#: applets/fish/fish.c:880
+msgid "Unable to locate the command to execute"
+msgstr "No s'ha pogut trobar l'ordre a executar"
+
+#: applets/fish/fish.c:1005
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details : %s"
+msgstr ""
+"No s'ha pogut executar «%s»\n"
+"\n"
+"Detalls: %s"
+
+#: applets/fish/fish.c:1025
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -141,7 +160,7 @@ msgstr ""
 "\n"
 "Aneu al diàleg de les propietats del peix."
 
-#: applets/fish/fish.c:995
+#: applets/fish/fish.c:1040
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -149,11 +168,11 @@ msgstr ""
 "Cal canviar l'aigua!\n"
 "(Mireu la data d'avui)"
 
-#: applets/fish/fish.c:1174
+#: applets/fish/fish.c:1219
 msgid "(with minor help from George)"
 msgstr "(amb una petita ajuda de George)"
 
-#: applets/fish/fish.c:1195
+#: applets/fish/fish.c:1240
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -906,7 +925,8 @@ msgid "Properties..."
 msgstr "Propietats..."
 
 #: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/logout.c:134 gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1069,7 +1089,17 @@ msgstr "Elimina del quadre"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1125
+#: gnome-panel/applet.c:796
+#, c-format
+msgid "No object_type set for panel object with ID %s\n"
+msgstr "No hi ha un object_type per al objecte quadre amb ID %s\n"
+
+#: gnome-panel/applet.c:818
+#, c-format
+msgid "No panel_id set for panel object with ID %s\n"
+msgstr "No hi ha un panel_id establit per al objecte quadre amb ID %s\n"
+
+#: gnome-panel/applet.c:1133
 msgid "Can't find an empty spot"
 msgstr "No puc trobar cap forat lliure"
 
@@ -1204,7 +1234,7 @@ msgstr "Habilita la fletxa del botó d'amagar"
 msgid "Drawer"
 msgstr "Calaix"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:711
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
 msgid "Properties"
 msgstr "Propietats"
@@ -1640,22 +1670,36 @@ msgstr ""
 "No es pot llançar l'icona\n"
 "%s"
 
-#: gnome-panel/launcher.c:449
+#: gnome-panel/launcher.c:326
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "No s'ha proveït una URI per al fitxer desktop del llançador del quadre\n"
+
+#: gnome-panel/launcher.c:346
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "No s'ha pogut obrir el fitxer desktop %s per al llançador del quadre%s%s\n"
+
+#: gnome-panel/launcher.c:457
 #, c-format
 msgid "Help on %s Application"
 msgstr "Ajuda sobre l'aplicació %s"
 
-#: gnome-panel/launcher.c:568 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Propietats del llançador"
 
-#: gnome-panel/launcher.c:759 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:682
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr "La clau %s no està fixada, no es pot carregar el llançador\n"
+
+#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Crea un llançador"
 
 #. class
-#: gnome-panel/launcher.c:977
+#: gnome-panel/launcher.c:991
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1666,7 +1710,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1063 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -2098,6 +2142,11 @@ msgstr "Menú:"
 #: gnome-panel/menu.c:3825
 msgid "Can't create menu, using main menu!"
 msgstr "No es pot crear el menú, empreant el menú principal!"
+
+#: gnome-panel/menu.c:4332
+#, c-format
+msgid "No path set at %s for panel menu object\n"
+msgstr "No hi ha un camí fixat en %s per al objecte de menú de quadre\n"
 
 #: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
