@@ -25,6 +25,10 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
@@ -84,6 +88,10 @@ main(int argc, char **argv)
 {
 	GtkWidget *applet;
 	GtkWidget *label;
+
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
@@ -184,6 +192,10 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
@@ -272,6 +284,10 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
@@ -358,6 +374,10 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init("hello_applet", NULL, argc, argv, 0, NULL, argv[0],
@@ -394,11 +414,157 @@ user_data of the applet widget. See the clock applet for an example of
 this.
 
 If you want to put more applet types into one executable, you will need
-to use a command line argument. There is only one parameter allowed,
-otherwise things will not work. It's also not fully tested as I write
-this. Anyway the way to do this is to parse the argument yourself. 
-Then start_new_applet function also gets the parameter as an argument.
+to use a command line argument. This might change in the future since I
+think the current way is kind of hackish, but I need to figure out a
+clean interface for this, and I haven't thought of one that would work
+well yet.
 
-I do not recommend doing this as of yet, I plan to implement command
-line argument parsing in applet-widget, so you will not need to do it
-yourself. I do plan doing this soon, so do hold your breath.
+Anyway it's fairly simple to do. Here's a simple hello applet (again),
+but it handeles a "Good Bye" applet as well.
+
+#include <string.h>
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+/* These are the arguments that our application supports.  */
+static struct argp_option arguments[] =
+{
+  { "hello", -1, NULL, 0, N_("Start in hello mode"), 1 },
+  { "goodbye", -1, NULL, 0, N_("Start in goodbye mode"), 1 },
+  { NULL, 0, NULL, 0, NULL, 0 }
+};
+
+/* Forward declaration of the function that gets called when one of
+   our arguments is recognized.  */
+/* we ignore the arguments */
+static error_t
+parse_an_arg (int key, char *arg, struct argp_state *state)
+{
+	return 0;
+}
+
+/* This structure defines our parser.  It can be used to specify some
+   options for how our parsing function should be called.  */
+static struct argp parser =
+{
+	arguments,			/* Options.  */
+	parse_an_arg,			/* The parser function.  */
+	NULL,				/* Some docs.  */
+	NULL,				/* Some more docs.  */
+	NULL,				/* Child arguments -- gnome_init fills
+				           this in for us.  */
+	NULL,				/* Help filter.  */
+	NULL				/* Translation domain; for the app it
+				           can always be NULL.  */
+};
+
+/* start a new instance of the hello applet */
+static void
+make_hello_applet(gchar *param)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* create a new applet_widget */
+	applet = applet_widget_new_with_param(param);
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+}
+
+/* start a new instance of the goodbye applet */
+static void
+make_goodbye_applet(gchar *param)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* create a new applet_widget */
+	applet = applet_widget_new_with_param(param);
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("GoodBye!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+}
+
+
+/* start a new applet depending on the param string */
+static void
+make_new_applet(const gchar *param)
+{
+	if(strstr(param,"--hello"))
+		make_hello_applet(param);
+	else /* --goodbye */
+		make_goodbye_applet(param);
+}
+
+/*when we get a command to start a new widget*/
+static void
+applet_start_new_applet(const gchar *param, gpointer data)
+{
+	make_new_applet(param);
+}
+
+int
+main(int argc, char **argv)
+{
+	gchar *param;
+
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
+	/*we make a param string, instead of first parsing the params with
+	  argp, we will allways use a string, since the panel will only
+	  give us a string */
+	param = make_param_string(argc,argv);
+
+	applet_widget_init("hello_goodbye_applet", &parser, argc, argv, 0,
+			   NULL, argv[0],TRUE,TRUE,applet_start_new_applet,
+			   NULL);
+
+	/* start a new applet using param */
+	make_new_applet(param);
+	g_free(param);
+
+	/* special corba main loop */
+	applet_widget_gtk_main();
+
+	return 0;
+}
+
+Not as simple as the last one, but still simple enough. We have to set
+up the the argp argument stuff, even though we ignore it. The
+make_hello_applet and make_goodbye_applet could really be merged
+together. But the way I envision such a setup is that those functions
+are in separate files along with all the functionality of that particular
+applet.
+
+After that you only create two .desktop entries, one with:
+"hello_goodbye_applet --hello"
+and one with:
+"hello_goodbye_applet --goodbye"
+
+It's all quite simple isn't it?
+
+George <jirka@5z.com>
