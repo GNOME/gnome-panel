@@ -48,7 +48,8 @@ struct _AppletWidgetClass
 	/*when the panel wants to save a session it will call this signal 
 	  if you trap it make sure you do gnome_config_sync() and
 	  gnome_config_drop_all() after your done otherwise the changes
-	  might not be written to file*/
+	  might not be written to file, also make sure you return
+	  FALSE from this signal or your position wil not get saved!*/
 	gint (* session_save) (AppletWidget *applet,
 			       gchar *cfgpath,
 			       gchar *globcfgpath);
