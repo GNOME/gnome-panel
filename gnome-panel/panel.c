@@ -1653,3 +1653,30 @@ send_state_change(void)
 	}
 }
 
+PanelData *
+panel_data_by_id (int id)
+{
+	GSList *list;
+	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
+		PanelData *pd = list->data;
+		int pd_id = -1;
+
+		if (IS_BASEP_WIDGET (pd->panel))
+		       pd_id = PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id;
+		else if (IS_FOOBAR_WIDGET (pd->panel))
+		       pd_id = PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id;
+
+		if (id == pd_id)
+			return pd;
+	}
+	return NULL;
+}
+
+void
+panel_set_id (GtkWidget *widget, int id)
+{
+	if (IS_BASEP_WIDGET (widget))
+		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = id;
+	else if (IS_FOOBAR_WIDGET (widget))
+		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = id;
+}

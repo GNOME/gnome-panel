@@ -352,6 +352,7 @@ save_applet_configuration(AppletInfo *info)
 {
 	GString       *buf;
 	int            panel_num;
+	int            panel_id;
 	PanelWidget   *panel;
 	AppletData    *ad;
 	
@@ -389,6 +390,7 @@ save_applet_configuration(AppletInfo *info)
 		g_string_free(buf,TRUE);
 		return TRUE;
 	}
+	panel_id = panel->unique_id;
 
 	switch(info->type) {
 	case APPLET_EXTERN:
@@ -441,8 +443,8 @@ save_applet_configuration(AppletInfo *info)
 					  BASEP_WIDGET(drawer->drawer)->panel);
 			if(i>=0)
 				gnome_config_set_int("parameters",i);
-			else
-				g_warning("Drawer not associated with applet!");
+			gnome_config_set_int ("unique_drawer_panel_id", 
+					      PANEL_WIDGET (BASEP_WIDGET(drawer->drawer)->panel)->unique_id);
 			gnome_config_set_string("pixmap",
 						drawer->pixmap);
 			gnome_config_set_string("tooltip",
@@ -511,6 +513,7 @@ save_applet_configuration(AppletInfo *info)
 	}
 	gnome_config_set_int("position", ad->pos);
 	gnome_config_set_int("panel", panel_num);
+	gnome_config_set_int("unique_panel_id", panel_id);
 	gnome_config_set_bool("right_stick",
 			      panel_widget_is_applet_stuck(panel,
 							   info->widget));
@@ -564,6 +567,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_bool ("avoid_on_maximize",
 				       basep->avoid_on_maximize);
 	}
+
+	gnome_config_set_int("unique_id", panel->unique_id);
 
 	gnome_config_set_int("sz", panel->sz);
 
@@ -688,7 +693,7 @@ do_session_save(GnomeClient *client,
 #endif
 	if(complete_sync || sync_panels) {
 		num = 1;
-		g_slist_foreach(panel_list, save_panel_configuration,&num);
+		g_slist_foreach(panel_list, save_panel_configuration, &num);
 		gnome_config_set_int("panel_count",num-1);
 	}
 #ifdef PANEL_DEBUG
@@ -1042,7 +1047,7 @@ init_user_applets(void)
 	buf = g_string_new(NULL);
 	for(num=1;num<=count;num++) {
 		char *applet_name;
-		int   pos=0,panel_num;
+		int   pos = 0, panel_num, panel_id;
 		PanelWidget *panel;
 
 		g_string_sprintf(buf, "%sApplet_Config/Applet_%d/",
@@ -1063,16 +1068,30 @@ init_user_applets(void)
 
 		g_string_sprintf(buf,"position=%d", 0);
 		pos = gnome_config_get_int(buf->str);
-		panel_num = gnome_config_get_int("panel=0");
-		{
-			GSList *list = g_slist_nth(panels,panel_num);
-			if(!list) {
+		panel_id = gnome_config_get_int("unique_panel_id=-1");
+		if (panel_id < 0) {
+			GSList *list;
+
+			panel_num = gnome_config_get_int ("panel=0");
+
+			list = g_slist_nth (panels, panel_num);
+			if (list == NULL) {
 				g_warning("Can't find panel, "
 					  "putting applet on the first one");
 				panel = panels->data;
 			} else
 				panel = list->data;
+		} else {
+			panel = panel_widget_get_by_id (panel_id);
+			if (panel == NULL) {
+				g_warning("Can't find panel, "
+					  "putting applet on the first one");
+				panel = panels->data;
+			}
 		}
+
+		/* if this isn't true, then we are smoking some serious crack */
+		g_assert (panel != NULL);
 		
 		/*if we are to right stick this, make the number large, 
 		 G_MAXINT/2 should allways be large enough */
@@ -1223,10 +1242,16 @@ init_user_applets(void)
 			g_free (params);
 		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
 			int mypanel = gnome_config_get_int("parameters=-1");
+			int mypanel_id = gnome_config_get_int("unique_drawer_panel_id=-1");
 			char *pixmap = gnome_config_get_string("pixmap=");
 			char *tooltip = gnome_config_get_string("tooltip=");
-			load_drawer_applet(mypanel, pixmap, tooltip,
-					   panel, pos, TRUE);
+			if (mypanel_id < 0 && mypanel >= 0) {
+				PanelWidget *pw = g_slist_nth_data (panels, mypanel);
+				if (pw != NULL)
+					mypanel_id = pw->unique_id;
+			}
+			load_drawer_applet (mypanel_id, pixmap, tooltip,
+					    panel, pos, TRUE);
 			g_free(pixmap);
 			g_free(tooltip);
 		} else
@@ -1360,10 +1385,13 @@ init_user_panels(void)
 		gboolean rotate_pixmap_bg;
 		int hidebuttons_enabled;
 		int hidebutton_pixmaps_enabled;
+		int unique_id;
 		
 		g_string_sprintf(buf,"%spanel/Panel_%d/",
 				 PANEL_CONFIG_PATH, num);
 		gnome_config_push_prefix (buf->str);
+
+		unique_id = gnome_config_get_int ("unique_id=-1");
 		
 		back_pixmap = gnome_config_get_string ("backpixmap=");
 		if (string_empty (back_pixmap)) {
@@ -1565,6 +1593,8 @@ init_user_panels(void)
 		g_free(back_pixmap);
 
 		if (panel) {
+			if (unique_id > 0)
+				panel_set_id (panel, unique_id);
 			panel_setup(panel);
 			gtk_widget_show(panel);
 		}

@@ -1,3 +1,17 @@
+Wed Feb 14 01:51:32 2001  George Lebl <jirka@5z.com>
+
+	* panel-widget.[ch], session.c, panel.[ch], drawer.c, menu.c:  Use
+	  unique id's on panels to avoid the confusion bugs that sometimes
+	  arise with drawers.  The panel numbers are not guaranteed to stay
+	  the same and this played havoc with drawers.
+
+	* scroll-menu.c: cast to GTK_OBJECT properly
+
+Tue Feb 13 05:27:26 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: when removing a menu item from a torn off menu, hide it for
+	  this to look like the change has been made.
+
 Tue Feb 13 04:43:48 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: in remove_menuitem, apply fix suggested in #12564 by

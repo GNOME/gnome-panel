@@ -64,6 +64,8 @@ struct _AppletData
 struct _PanelWidget
 {
 	GtkFixed		fixed;
+
+	guint32			unique_id;
 	
 	GList			*applet_list;
 	GList			*no_window_applet_list;
@@ -152,6 +154,10 @@ int		panel_widget_add_full		(PanelWidget *panel,
 						 gboolean bind_lower_events,
 						 gboolean insert_at_pos);
 #define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE))
+
+PanelWidget *	panel_widget_get_by_id		(gint32 id);
+void		panel_widget_set_id		(PanelWidget *panel,
+						 gint32 id);
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);

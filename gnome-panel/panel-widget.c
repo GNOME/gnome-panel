@@ -1751,11 +1751,58 @@ panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
+PanelWidget *
+panel_widget_get_by_id (gint32 id)
+{
+	GSList *li;
+
+	for (li = panels; li != NULL; li = li->next) {
+		PanelWidget *panel = li->data;
+
+		if (panel->unique_id == id)
+			return panel;
+	}
+
+	return NULL;
+}
+
+void
+panel_widget_set_id (PanelWidget *panel, gint32 id)
+{
+	panel->unique_id = id;
+}
+
+static gint32
+generate_unique_id (void)
+{
+	gint32 id;
+	GTimeVal tv;
+	static int incr = -1;
+
+	if (incr == -1)
+		incr = (rand () >> 3) & 0xFF;
+
+	id = (rand () >> 3) && 0xFFF;
+	id += (incr << 12);
+
+	g_get_current_time (&tv);
+	id += (tv.tv_usec & 0x7FF) << 20;
+
+	incr ++;
+
+	if (panel_widget_get_by_id (id) != NULL)
+		id = generate_unique_id ();
+
+	return id;
+}
+
 static void
 panel_widget_init (PanelWidget *panel)
 {
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
+
+	panel->unique_id = generate_unique_id ();
 
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(panel),

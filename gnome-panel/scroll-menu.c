@@ -300,12 +300,12 @@ scroll_menu_init (ScrollMenu *self)
 {
 	self->up_scroll = make_scroller (self, SCROLL_UP);
 	gtk_widget_ref (self->up_scroll);
-	gtk_object_sink (self->up_scroll);
+	gtk_object_sink (GTK_OBJECT (self->up_scroll));
 	gtk_widget_set_parent (self->up_scroll, GTK_WIDGET(self));
 
 	self->down_scroll = make_scroller (self, SCROLL_DOWN);
 	gtk_widget_ref (self->down_scroll);
-	gtk_object_sink (self->up_scroll);
+	gtk_object_sink (GTK_OBJECT (self->up_scroll));
 	gtk_widget_set_parent (self->down_scroll, GTK_WIDGET(self));
 
 	self->scroll = FALSE;

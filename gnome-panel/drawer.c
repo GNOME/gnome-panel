@@ -405,20 +405,20 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 }
 
 gboolean
-load_drawer_applet (int mypanel, const char *pixmap, const char *tooltip,
+load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		    PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Drawer *drawer;
 	PanelOrientType orient = get_applet_orient (panel);
 
-	if (mypanel < 0) {
+	if (mypanel_id < 0) {
 		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
 		if (drawer != NULL)
 			panel_setup (drawer->drawer);
 	} else {
 		PanelData *dr_pd;
 
-		dr_pd = g_slist_nth_data (panel_list, mypanel);
+		dr_pd = panel_data_by_id (mypanel_id);
 
 		if (dr_pd == NULL) {
 			g_warning ("Can't find the panel for drawer, making a new panel");

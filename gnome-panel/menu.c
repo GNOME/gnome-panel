@@ -854,31 +854,34 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 }
 
 static void
-remove_menuitem (GtkWidget *widget, const char *item_loc)
+remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 {
 	const char *file;
 	char *dir, buf[256], *order_in_name, *order_out_name;
 	FILE *order_in_file, *order_out_file;
 
-	g_return_if_fail (item_loc != NULL);
+	g_return_if_fail (sim->item_loc != NULL);
+	g_return_if_fail (sim->menuitem != NULL);
 
-	if (unlink (item_loc) < 0) {
+	gtk_widget_hide (sim->menuitem);
+
+	if (unlink (sim->item_loc) < 0) {
 		panel_error_dialog(_("Could not remove the menu item %s: %s\n"), 
-				    item_loc, g_strerror(errno));
+				    sim->item_loc, g_strerror(errno));
 		return;
 	}
 
-	file = g_basename (item_loc);
+	file = g_basename (sim->item_loc);
 	if (file == NULL) {
 		g_warning (_("Could not get file name from path: %s"),
-			  item_loc);
+			  sim->item_loc);
 		return;
 	}
 
-	dir = g_dirname (item_loc);
+	dir = g_dirname (sim->item_loc);
 	if (dir == NULL) {
 		g_warning (_("Could not get directory name from path: %s"),
-			  item_loc);
+			  sim->item_loc);
 		return;
 	}
 	
@@ -1563,7 +1566,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect (GTK_OBJECT(menuitem), "activate",
 					    GTK_SIGNAL_FUNC (remove_menuitem),
-					    (gpointer)sim->item_loc);
+					    sim);
 			tmp = g_dirname(sim->item_loc);
 			if (access (tmp, W_OK) != 0)
 				gtk_widget_set_sensitive(menuitem,FALSE);
@@ -5513,6 +5516,7 @@ save_tornoff (void)
 		int x = 0, y = 0;
 		GtkWidget *tw;
 		int menu_panel = 0;
+		int menu_panel_id = 0;
 		PanelWidget *menu_panel_widget = NULL;
 		GSList *l;
 		char *s;
@@ -5546,8 +5550,11 @@ save_tornoff (void)
 		menu_panel = g_slist_index(panels, menu_panel_widget);
 		if(menu_panel < 0)
 			menu_panel = 0;
+		if (menu_panel_widget != NULL)
+			menu_panel_id = menu_panel_widget->unique_id;
 
 		gnome_config_set_int("menu_panel", menu_panel);
+		gnome_config_set_int("menu_unique_panel_id", menu_panel_id);
 
 		gnome_config_set_int("workspace",
 				     gnome_win_hints_get_workspace(tw));
@@ -5637,10 +5644,15 @@ load_tearoff_menu(void)
 	hints = gnome_config_get_int ("hints=0");
 	state = gnome_config_get_int ("state=0");
 
-	i = gnome_config_get_int("menu_panel=0");
-	if (i < 0)
-		i = 0;
-	menu_panel_widget = g_slist_nth_data(panels, i);
+	i = gnome_config_get_int("menu_panel_id=-1");
+	if (i < 0) {
+		i = gnome_config_get_int("menu_panel=0");
+		if (i < 0)
+			i = 0;
+		menu_panel_widget = g_slist_nth_data(panels, i);
+	} else {
+		menu_panel_widget = panel_widget_get_by_id (i);
+	}
 	if (menu_panel_widget == NULL)
 		menu_panel_widget = panels->data;
 	if ( ! IS_PANEL_WIDGET(menu_panel_widget))

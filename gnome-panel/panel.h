@@ -36,6 +36,9 @@ void panel_thaw_changes(PanelWidget *panel);
 
 GtkWidget * make_popup_panel_menu (PanelWidget *panel);
 
+PanelData * panel_data_by_id (int id);
+void panel_set_id (GtkWidget *widget, int id);
+
 
 #define get_panel_parent(appletw) \
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
