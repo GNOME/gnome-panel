@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 09:29+0100\n"
-"PO-Revision-Date: 2004-08-26 12:56+0200\n"
-"Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
+"POT-Creation-Date: 2004-09-09 12:19+0200\n"
+"PO-Revision-Date: 2004-09-09 16:17+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -787,11 +787,11 @@ msgstr ""
 
 #: applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
-msgstr "Leg_nagyobb ablaklistaméret"
+msgstr "Legnagyobb ablaklistaméret"
 
 #: applets/wncklet/window-list.schemas.in.h:5
 msgid "Minimum window list size"
-msgstr "Leg_kisebb ablaklistaméret"
+msgstr "Legkisebb ablaklistaméret"
 
 #: applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
@@ -967,7 +967,7 @@ msgstr "Át_helyezés"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:454
 msgid "_Remove From Panel"
-msgstr "_Törlés a panelről"
+msgstr "_Eltávolítás a panelról"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
 #: gnome-panel/panel-applet-frame.c:113
@@ -1279,7 +1279,7 @@ msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
-"Ez a program felelős más programok indításáért és a kisalkalmazások "
+"Ez a program felelős más alkalmazások indításáért és a kisalkalmazások "
 "futtatásáért saját magán belül."
 
 #: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
@@ -1330,7 +1330,7 @@ msgstr "Indítóikon hozzáadása a panelhez"
 
 #: gnome-panel/menu.c:1349
 msgid "Remove this item"
-msgstr "Menüelem törlése"
+msgstr "Ezen menüelem eltávolítása"
 
 #: gnome-panel/menu.c:1398
 msgid "Entire menu"
@@ -1359,7 +1359,7 @@ msgstr "Alkalmazások"
 
 #: gnome-panel/menu.c:2213
 msgid "You cannot remove your last panel."
-msgstr "Az utolsó panelt nem lehet törölni."
+msgstr "Az utolsó panelt nem lehet eltávolítani."
 
 #: gnome-panel/menu.c:2273
 msgid "_Delete This Panel..."
@@ -1570,7 +1570,7 @@ msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr "Nem lehet megkapni az AppletShell interfészt a vezérlőtől\n"
+msgstr "Nem lehet megkapni az AppletShell felületet a vezérlőtől\n"
 
 #: gnome-panel/panel-bindings.c:167
 #, c-format
@@ -1639,8 +1639,7 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr ""
-"Programlista kiterjesztése az \"Alkalmazás futtatása\" párbeszédablakban"
+msgstr "Programlista kibontása az \"Alkalmazás futtatása\" párbeszédablakban"
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
@@ -1658,8 +1657,8 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Ha be van állítva, az \"Ismert alkalmazások\" lista az \"Alkalmazások "
-"futtatása\" párbeszédablakban elérhető. Hogy a lista kinyíljon-e vagy sem a "
+"Ha be van állítva, az \"Ismert alkalmazások\" lista az \"Alkalmazás futtatása"
+"\" párbeszédablakban elérhető. Hogy a lista kinyíljon-e vagy sem a "
 "párbeszédablak megnyitásakor, a show_program_list kulccsal ellenőrizhető."
 
 #: gnome-panel/panel-general.schemas.in.h:8
@@ -1714,7 +1713,7 @@ msgstr "Erőltetett kilépés tiltása"
 
 #: gnome-panel/panel-global.schemas.in.h:8
 msgid "Disable Lock Screen"
-msgstr "Képernyőzár tiltása"
+msgstr "Képernyő zárolásának tiltása"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
@@ -1722,7 +1721,8 @@ msgstr "Kijelentkezés tiltása"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr "\"Futtatás\" párbeszédablak megjelenítésének gyorsbillentyűje"
+msgstr ""
+"\"Alkalmazás futtatása\" párbeszédablak megjelenítésének gyorsbillentyűje"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
@@ -1754,8 +1754,8 @@ msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
 msgstr ""
-"Ha be van állítva, megjelenik egy megerősítési ablak ha a felhasználó "
-"törölni akarja a panelt."
+"Ha be van állítva, megjelenik egy megerősítési ablak ha a felhasználó el "
+"akarja távolítani a panelt."
 
 #: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
@@ -1811,7 +1811,7 @@ msgid ""
 msgstr ""
 "Ha be van állítva, a panel nem engedi a panel konfigurációjának "
 "megváltoztatását. Egyes kisalkalmazásokat azonban szükséges lehet külön "
-"lezárni. A panelt újra kell indítani ezen beállítás érvényesítéséhez."
+"zárolni. A panelt újra kell indítani ezen beállítás érvényesítéséhez."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1927,8 +1927,9 @@ msgid ""
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
 "Az ezen gomb által képviselt művelet típusa. Lehetséges értékek: \"lock"
-"\" (képernyőzár), \"logout\" (kilépés), \"run\" (futtatás), \"search"
-"\" (fájlok keresése) és \"screenshot\" (képernyőkép)."
+"\" (képernyő zárolása), \"logout\" (kilépés), \"run\" (futtatás), \"search"
+"\" (fájlok keresése) és \"screenshot\" (képernyőkép). Ez a kulcs csak akkor "
+"lényeges, ha az object_type kulcs értéke \"action-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid ""
@@ -2402,7 +2403,7 @@ msgstr "Háttérszín"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
-msgstr "Háttérszín átlátszósága"
+msgstr "Háttérszín átlátszatlansága"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
 msgid "Background image"
