@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.91\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-19 16:35+0100\n"
-"PO-Revision-Date: 2004-03-09 13:16+0100\n"
+"POT-Creation-Date: 2004-05-26 23:37+0200\n"
+"PO-Revision-Date: 2004-05-26 23:38+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3079
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -61,7 +61,7 @@ msgid "Accessories"
 msgstr "Tilbehør"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2429
 msgid "Clock"
 msgstr "Klokke"
 
@@ -81,16 +81,16 @@ msgstr "Hent tid og dato"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:600
+#: applets/clock/clock.c:282 applets/clock/clock.c:610
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1524
+#: applets/clock/clock.c:284 applets/clock/clock.c:1544
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:602
-#: applets/clock/clock.c:1526
+#: applets/clock/clock.c:284 applets/clock/clock.c:612
+#: applets/clock/clock.c:1546
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -130,44 +130,50 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:819
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:617
+msgid "%b %d"
+msgstr "%b %d"
+
+#: applets/clock/clock.c:835
 msgid "Tasks"
 msgstr "Oppgaver"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:965
 msgid "All Day"
 msgstr "Hele dagen"
 
-#: applets/clock/clock.c:985
+#: applets/clock/clock.c:1005
 msgid "Appointments"
 msgstr "Avtaler"
 
-#: applets/clock/clock.c:1206
+#: applets/clock/clock.c:1226
 msgid "Calendar"
 msgstr "Kalender"
 
-#: applets/clock/clock.c:1437
+#: applets/clock/clock.c:1457
 msgid "Computer Clock"
 msgstr "Datamaskinklokke"
 
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:1539
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1521
+#: applets/clock/clock.c:1541
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:1561
+#: applets/clock/clock.c:1581
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1623
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Feil under kjøring av konfigurasjonsverktøy for klokke: %s"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1662
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -175,11 +181,11 @@ msgstr ""
 "Kunne ikke finne et program for konfigurasjon av dato og klokkeslett. "
 "Kanskje ingen er installert?"
 
-#: applets/clock/clock.c:2044
+#: applets/clock/clock.c:2064
 msgid "Custom format"
 msgstr "Tilpasset format"
 
-#: applets/clock/clock.c:2165 applets/clock/clock.c:2355
+#: applets/clock/clock.c:2185 applets/clock/clock.c:2375
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -189,55 +195,55 @@ msgstr "Tilpasset format"
 msgid "There was an error displaying help: %s"
 msgstr "Det oppsto en feil ved visning av hjelp: %s"
 
-#: applets/clock/clock.c:2201
+#: applets/clock/clock.c:2221
 msgid "Clock Preferences"
 msgstr "Brukervalg for klokke"
 
-#: applets/clock/clock.c:2237
+#: applets/clock/clock.c:2257
 msgid "Clock _type:"
 msgstr "Type klokke:"
 
-#: applets/clock/clock.c:2247
+#: applets/clock/clock.c:2267
 msgid "12 hour"
 msgstr "12 timer"
 
-#: applets/clock/clock.c:2248
+#: applets/clock/clock.c:2268
 msgid "24 hour"
 msgstr "24 timer"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2269
 msgid "UNIX time"
 msgstr "UNIX-tid"
 
-#: applets/clock/clock.c:2250
+#: applets/clock/clock.c:2270
 msgid "Internet time"
 msgstr "Internett-tid"
 
-#: applets/clock/clock.c:2258
+#: applets/clock/clock.c:2278
 msgid "Custom _format:"
 msgstr "Tilpasset _format:"
 
-#: applets/clock/clock.c:2277
+#: applets/clock/clock.c:2297
 msgid "Show _seconds"
 msgstr "Vis _sekunder"
 
-#: applets/clock/clock.c:2286
+#: applets/clock/clock.c:2306
 msgid "Show _date"
 msgstr "Vis _dato"
 
-#: applets/clock/clock.c:2295
+#: applets/clock/clock.c:2315
 msgid "Use _UTC"
 msgstr "Bruk _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2390 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2410 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
 
-#: applets/clock/clock.c:2411
+#: applets/clock/clock.c:2431
 msgid "The Clock displays the current time and date"
 msgstr "Klokken viser nåværende klokkeslett og dato"
 
@@ -420,7 +426,7 @@ msgstr "Kan ikke finne kommandoen som skal kjøres"
 msgid "%s the Fish Says:"
 msgstr "Fisken %s sier:"
 
-#: applets/fish/fish.c:752
+#: applets/fish/fish.c:755
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -431,7 +437,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -443,7 +449,7 @@ msgstr ""
 "\n"
 "Vennligst se dialogen \"Egenskaper\" for fisken."
 
-#: applets/fish/fish.c:1377
+#: applets/fish/fish.c:1380
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -451,7 +457,7 @@ msgstr ""
 "Vannet må skiftes!\n"
 "(Se på dagens dato)"
 
-#: applets/fish/fish.c:1437
+#: applets/fish/fish.c:1440
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Fisken %s, en historieforteller"
@@ -638,7 +644,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Factory for applet for vindunavigering"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
+#: applets/wncklet/window-menu.c:728
 msgid "Window Selector"
 msgstr "Vinduvelger"
 
@@ -827,7 +834,7 @@ msgstr "Ukjent vindu"
 msgid "No Windows Open"
 msgstr "Ingen åpne vinduer"
 
-#: applets/wncklet/window-menu.c:709
+#: applets/wncklet/window-menu.c:727
 msgid "Tool to switch between windows"
 msgstr "Verktøy for å bytte mellom vinduer"
 
@@ -1012,11 +1019,11 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-meny"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3188
 msgid "Drawer"
 msgstr "Skuff"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1168,15 +1175,7 @@ msgstr "Skjermdump-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Ikke nok plass til å skrive filen %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1142
-msgid "Grab a window instead of the entire screen"
-msgstr "Hent et vindu i stedet for hele skjermen"
-
-#: gnome-panel/gnome-panel-screenshot.c:1143
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "Ta skjermdump etter spesifisert pause [i sekunder]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1193
+#: gnome-panel/gnome-panel-screenshot.c:1179
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1184,9 +1183,22 @@ msgstr ""
 "Glade-fil for skjermdump-programmet mangler.\n"
 "Vennligst sjekk installasjonen av gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1209
+#: gnome-panel/gnome-panel-screenshot.c:1195
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan ikke ta skjermdump av skrivebordet nå."
+
+#: gnome-panel/gnome-panel-screenshot.c:1255
+#, c-format
+msgid "Save screenshot to _web page (save in %s)"
+msgstr "Lagre skjermdump til _nettside (lagre i %s)"
+
+#: gnome-panel/gnome-panel-screenshot.c:1311
+msgid "Grab a window instead of the entire screen"
+msgstr "Hent et vindu i stedet for hele skjermen"
+
+#: gnome-panel/gnome-panel-screenshot.c:1312
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Ta skjermdump etter spesifisert pause [i sekunder]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1250,31 +1262,31 @@ msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan ikke åpne .desktop-fil %s for oppstarter %s%s\n"
 
-#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:712 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Egenskaper for oppstarter"
 
-#: gnome-panel/launcher.c:864
+#: gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nøkkel %s er ikke satt. Kan ikke laste oppstarter\n"
 
-#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
+#: gnome-panel/launcher.c:953 gnome-panel/launcher.c:970
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Kan ikke opprette oppstarter"
 
-#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:954 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Du må spesifisere et navn."
 
-#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:971 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Du må spesifisere en gyldig URL eller kommando."
 
-#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:1014 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Opprett oppstarter"
 
@@ -1375,7 +1387,7 @@ msgstr ""
 "små programmer i seg selv."
 
 #: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kan ikke kjøre «%s»"
@@ -1605,7 +1617,7 @@ msgstr "I_kke slett"
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det oppsto et problem i panelet ved lasting av «%s»."
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Detaljer: %s"
@@ -2243,12 +2255,12 @@ msgstr "Kan ikke konvertere «%s» fra UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Velg en fil som skal legges til kommandoen..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1322
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kjører kommando «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1328 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Velg en applikasjon for å vise dens beskrivelse."
 
@@ -2737,7 +2749,7 @@ msgstr "Xinerama-skjerm hvor panelet vises"
 msgid "Y co-ordinate of panel"
 msgstr "Panelets y-koordinat"
 
-#: gnome-panel/panel-util.c:69
+#: gnome-panel/panel-util.c:70
 msgid "Cannot display help document"
 msgstr "Kan ikke vise hjelpdokument"
 
@@ -2872,6 +2884,3 @@ msgstr "Ekstra stor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Ekstra liten"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Feil under lesing av listeverdi «%s» fra GConf: %s"
