@@ -837,7 +837,7 @@ mailcheck_get_animation_menu (MailCheck *mc)
 
 	dname = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP,
-			"mailcheck", TRUE, NULL);
+			"mailcheck", FALSE, NULL);
 
 	mc->selected_pixmap_name = mc->mailcheck_text_only;
 	omenu = gtk_option_menu_new ();
