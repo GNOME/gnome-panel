@@ -1,3 +1,13 @@
+2003-05-25  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Ray Strode in bug #113663 to fix weirdness when
+	deleting panels and creating new ones.
+
+	* panel-profile.c:
+	(panel_profile_queue_toplevel_location_change): fix typo.
+	(panel_profile_delete_dir): stop monitoring the dir for
+	changes.
+
 2003-05-23  Mark McLoughlin  <mark@skynet.ie>
 
 	Patch from Ray Strode in bug #112122 to fix a crash with the

@@ -806,7 +806,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 			panel_profile_get_toplevel_key (toplevel, "y_centered"),
 			change->y_centered);
 
-	if (change->orientation)
+	if (change->orientation_changed)
 		gconf_change_set_set_string (
 			queued_changes,
 			panel_profile_get_toplevel_key (toplevel, "orientation"),
@@ -1581,6 +1581,10 @@ panel_profile_delete_dir (GConfClient       *client,
 
 	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s",
 				   current_profile, type_str, id);
+
+	if (type == PANEL_GCONF_TOPLEVELS)
+	    gconf_client_remove_dir (client, key, NULL);
+
 	panel_gconf_clean_dir (client, key);
 }
 
