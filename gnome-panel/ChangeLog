@@ -1,5 +1,16 @@
 2002-12-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Add a "Transparent" pseudo backround type so
+	people don't have to fiddle with the opacity
+	value in the colour picker.
+
+	* panel-config.c:
+	(background_type_changed): if set to transparent,
+	just pretend its a color with 0 alpha value.
+	(background_page): add "Transparent" option.
+
+2002-12-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-background.c: (panel_background_set):
 	don't unset loaded flag when color hasn't changed.
 

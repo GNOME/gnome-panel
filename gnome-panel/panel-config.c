@@ -1324,6 +1324,17 @@ background_type_changed (GtkOptionMenu  *option_menu,
 
 	back_type = gtk_option_menu_get_history (option_menu);
 
+	if (back_type == 3) { /* Transparent */
+		back_type = PANEL_BACK_COLOR;
+		ppc->back_color.alpha = 0x0000;
+
+		gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (ppc->backsel),
+					    ppc->back_color.gdk.red,
+					    ppc->back_color.gdk.green,
+					    ppc->back_color.gdk.blue,
+					    ppc->back_color.alpha);
+	}
+
 	if (ppc->back_type == back_type)
 		return;
 
@@ -1344,6 +1355,11 @@ background_type_changed (GtkOptionMenu  *option_menu,
 		gtk_widget_set_sensitive (ppc->pix_frame, TRUE);
 		gtk_widget_set_sensitive (ppc->backsel, FALSE);
 		gtk_widget_set_sensitive (ppc->col_label, FALSE);
+		break;
+	case 3: /* Transparent */
+		gtk_widget_set_sensitive (ppc->pix_frame, FALSE);
+		gtk_widget_set_sensitive (ppc->backsel, TRUE);
+		gtk_widget_set_sensitive (ppc->col_label, TRUE);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1382,6 +1398,8 @@ background_page (PerPanelConfig *ppc)
 			       gtk_menu_item_new_with_label (_("Color")));
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), 
 			       gtk_menu_item_new_with_label (_("Image")));
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), 
+			       gtk_menu_item_new_with_label (_("Transparent")));
 
 	ppc->back_om = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
