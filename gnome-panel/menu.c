@@ -82,7 +82,7 @@ about_cb (GtkWidget *widget, gpointer data)
 
 	about = gnome_about_new ( "The GNOME Panel", VERSION,
 			"(C) 1998 the Free Software Foundation",
-			(char **)authors,
+			(const gchar **)authors,
 			"This program is responsible for launching "
 			"other applications, embedding small applets "
 			"within itself, world peace, and random X crashes.",

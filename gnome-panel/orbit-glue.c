@@ -180,7 +180,7 @@ server_applet_request_id(POA_GNOME_Panel *servant,
   int applet_id;
   CORBA_unsigned_long winid;
 
-  CHECK_COOKIE_V (0);
+  CHECK_COOKIE_V ((*globcfgpath = NULL, *cfgpath = NULL, 0));
   applet_id = applet_request_id (path,param,dorestart,
 				 &cfg, &globcfg, &winid);
   *wid = winid;
@@ -404,7 +404,7 @@ server_quit(POA_GNOME_Panel *servant,
 /* And on the client side... Inefficiency abounds at present.
    We need to move CORBA into the core of the panel */
 
-CORBA_ORB orb;
+CORBA_ORB orb = NULL;
 CORBA_Environment ev;
 
 int
@@ -491,44 +491,8 @@ static void orb_remove_connection(GIOPConnection *cnx)
 void
 panel_corba_gtk_main (char *service_name)
 {
-  PortableServer_ObjectId objid = {0, sizeof("Panel"), "Panel" };
-  GNOME_Panel acc;
-  char hostname [4096];
-  char *name, *ior;
-  int n = 1;
-
-  CORBA_exception_init(&ev);
-
-  IIOPAddConnectionHandler = orb_add_connection;
-  IIOPRemoveConnectionHandler = orb_remove_connection;
-
-  /* It's not like ORBit reads the cmdline anyways, right now */
-  orb = CORBA_ORB_init(&n, &name /* dummy */, "mico-local-orb", &ev);
-
-  POA_GNOME_Panel__init(&servant, &ev);
-
-  PortableServer_POA_activate_object_with_id((PortableServer_POA)orb->root_poa, &objid, &servant, &ev);
-
-  acc = PortableServer_POA_servant_to_reference((PortableServer_POA)orb->root_poa, &servant, &ev);
-
-  ior = CORBA_ORB_object_to_string(orb, acc, &ev);
-  
-  gethostname (hostname, sizeof (hostname));
-  if (hostname [0] == 0)
-    strcpy (hostname, "unknown-host");
-
-  
-  name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
-			 "/DISPLAY-", getenv ("DISPLAY"), NULL);
-
-  gnome_config_set_string (name, ior);
-  gnome_config_sync ();
-  g_free (name);
-  CORBA_free(ior);
-
-  CORBA_Object_release(acc, &ev);
-
-  ORBit_custom_run_setup(orb, &ev);
+  if(!orb)
+    panel_corba_gtk_init();
 
   gtk_main();
 }
@@ -563,4 +527,48 @@ panel_corba_clean_up(void)
 void
 panel_corba_register_arguments(void)
 {
+}
+
+void
+panel_corba_gtk_init(void)
+{
+  PortableServer_ObjectId objid = {0, sizeof("Panel"), "Panel" };
+  GNOME_Panel acc;
+  char hostname [4096];
+  char *name, *ior;
+  int n = 1;
+
+  g_message("Initializing CORBA for panel\n");
+
+  CORBA_exception_init(&ev);
+
+  IIOPAddConnectionHandler = orb_add_connection;
+  IIOPRemoveConnectionHandler = orb_remove_connection;
+
+  /* It's not like ORBit reads the cmdline anyways, right now */
+  orb = CORBA_ORB_init(&n, &name /* dummy */, "mico-local-orb", &ev);
+
+  POA_GNOME_Panel__init(&servant, &ev);
+
+  PortableServer_POA_activate_object_with_id((PortableServer_POA)orb->root_poa, &objid, &servant, &ev);
+
+  acc = PortableServer_POA_servant_to_reference((PortableServer_POA)orb->root_poa, &servant, &ev);
+
+  ior = CORBA_ORB_object_to_string(orb, acc, &ev);
+  
+  gethostname (hostname, sizeof (hostname));
+  if (hostname [0] == 0)
+    strcpy (hostname, "unknown-host");
+  
+  name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
+			 "/DISPLAY-", getenv ("DISPLAY"), NULL);
+
+  gnome_config_set_string (name, ior);
+  gnome_config_sync ();
+  g_free (name);
+  CORBA_free(ior);
+
+  CORBA_Object_release(acc, &ev);
+
+  ORBit_custom_run_setup(orb, &ev);
 }

@@ -174,6 +174,7 @@ int gnome_panel_applet_reinit_corba(void)
 
   panel_client = CORBA_ORB_string_to_object(orb, iior, &ev);
 
+  g_return_val_if_fail(panel_client, 0);
 	
   return 1;
 }
@@ -183,6 +184,8 @@ gnome_panel_applet_init_corba (void)
 {
   int n = 1;
   char *foo = NULL;
+
+  g_message("Initializing CORBA for applet\n");
 
   CORBA_exception_init(&ev);
 

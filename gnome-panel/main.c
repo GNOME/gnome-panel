@@ -78,10 +78,7 @@ GList * children = NULL;
 int just_exit = 0;
 
 /* The security cookie */
-char *cookie;
-
-
-
+char *cookie = NULL;
 
 /*execution queue stuff, execute only one applet in a row, thereby getting
   rid of some problems with applet*/
@@ -1881,6 +1878,13 @@ main(int argc, char **argv)
 
 	gnome_init("panel", &parser, argc, argv, 0, NULL);
 
+	/* Setup the cookie */
+	cookie = create_cookie ();
+	gnome_config_private_set_string ("/panel/Secret/cookie", cookie);
+	gnome_config_sync();
+	
+	panel_corba_gtk_init();
+
 	if (just_exit)
 		return 0;
 
@@ -1910,10 +1914,6 @@ main(int argc, char **argv)
 	gnome_client_set_clone_command (client, 1, argv);
 	gnome_client_set_restart_command (client, 1, argv);
 
-	/* Setup the cookie */
-	cookie = create_cookie ();
-	gnome_config_private_set_string ("/panel/Secret/cookie", cookie);
-	
 	applets = g_array_new(FALSE);
 	applet_count=0;
 

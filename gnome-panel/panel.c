@@ -69,7 +69,11 @@ send_tooltips_state(int enabled)
 	for(list = children;list!=NULL;list = g_list_next(list)) {
 		AppletChild *child = list->data;
 		AppletInfo *info = get_applet_info(child->applet_id);
-		send_applet_tooltips_state(info->id_str,enabled);
+		if(!strcmp(info->id_str, EXTERN_ID))
+		  g_warning("Whoa! we were told to load applet %s at %s\n",
+			    info->path, info->id_str);
+		else
+		  send_applet_tooltips_state(info->id_str,enabled);
 	}
 }
 

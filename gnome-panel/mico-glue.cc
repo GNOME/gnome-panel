@@ -303,3 +303,8 @@ send_applet_tooltips_state (const char *ior, int enabled)
 		g_warning(_("Error on sending 'tooltips state' to applet!"));
 	}
 }
+
+void
+panel_corba_gtk_init (void)
+{
+}
