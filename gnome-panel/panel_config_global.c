@@ -177,11 +177,11 @@ misc_notebook_page(void)
 	
 	/* Tooltips enable */
 	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.tooltips_enabled));
 	if (temp_config.tooltips_enabled)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.tooltips_enabled));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -198,11 +198,11 @@ misc_notebook_page(void)
 	
 	/* Small Icons */
 	button = gtk_check_button_new_with_label (_("Show small icons"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.show_small_icons));
 	if (temp_config.show_small_icons)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.show_small_icons));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -219,11 +219,11 @@ misc_notebook_page(void)
 
 	/* Switched */
 	button = gtk_radio_button_new_with_label (NULL, _("Switched movement"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_movement), 
-			    (gpointer)PANEL_SWITCH_MOVE);
 	if (temp_config.movement_type == PANEL_SWITCH_MOVE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_movement), 
+			    (gpointer)PANEL_SWITCH_MOVE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);	
 
@@ -231,11 +231,11 @@ misc_notebook_page(void)
 	button = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 		_("Free movement (doesn't disturb other applets)"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_movement), 
-			    (gpointer)PANEL_FREE_MOVE);
 	if (temp_config.movement_type == PANEL_FREE_MOVE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_movement), 
+			    (gpointer)PANEL_FREE_MOVE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);	
 	
@@ -264,6 +264,7 @@ panel_config_global(void)
 		global_config.explicit_hide_step_size;
 	temp_config.tooltips_enabled = global_config.tooltips_enabled;
 	temp_config.show_small_icons = global_config.show_small_icons;
+	temp_config.movement_type = global_config.movement_type;
 
 	/* main window */
 	config_window = gnome_property_box_new ();

@@ -101,6 +101,7 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 	if (pixmap) {
 		gtk_container_add (GTK_CONTAINER (align), pixmap);
 		gtk_widget_set_usize (align, 22, 16);
+		gtk_widget_show (pixmap);
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
@@ -452,13 +453,19 @@ create_panel_submenu (GtkWidget *app_menu)
 	add_menu_separator(menu);
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Global properties..."));
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+					  GNOME_STOCK_PIXMAP_PREFERENCES),
+			_("Global properties..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
         gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) panel_configure, 0);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("About..."));
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_ABOUT),
+			_("About..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) about_cb, 0);
@@ -500,7 +507,10 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_lock, 0);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Log out"));
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_QUIT),
+			_("Log out"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_logout, 0);
 
