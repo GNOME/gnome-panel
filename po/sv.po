@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-06-12 17:49+0100\n"
-"PO-Revision-Date: 2003-06-11 01:33+0200\n"
+"POT-Creation-Date: 2003-06-20 22:59+0200\n"
+"PO-Revision-Date: 2003-06-20 23:00+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -283,7 +283,7 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
+#: gnome-panel/drawer.c:646 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -397,12 +397,13 @@ msgstr "GNOME-fisken, siaren"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:1
-#: gnome-panel/panel-properties-dialog.glade.h:3
+#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/panel-properties-dialog.glade.h:2
 #: gnome-panel/panel-run-dialog.glade.h:1
 msgid "*"
 msgstr "*"
@@ -677,7 +678,7 @@ msgid "_Never group windows"
 msgstr "Gruppera al_drig fönster"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:31
+#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -868,29 +869,29 @@ msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr "Huruvida namnen på arbetsytorna ska visas i arbetsytebytaren."
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:485
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:482
 #: gnome-panel/panel-applet-frame.c:88
 msgid "Un_lock"
 msgstr "_Lås upp"
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:485
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:482
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
 msgid "_Lock"
 msgstr "_Lås"
 
-#: gnome-panel/applet.c:412
+#: gnome-panel/applet.c:409
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:478 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:475 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:489 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:1037
+#: gnome-panel/applet.c:1034
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
@@ -1015,7 +1016,7 @@ msgstr "Visa pil på döljknappen"
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:749 gnome-panel/menu.c:1596
 #: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1191,33 +1192,33 @@ msgstr ""
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan inte ta en skärmdump av det aktuella skrivbordet."
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
 msgstr "<b>Alternativ</b>"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:3
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "<b>Preview</b>"
 msgstr "<b>Förhandsgranskning</b>"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:4
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save Screenshot"
 msgstr "Spara skärmdump"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _desktop"
 msgstr "Spara skärmdumpen till skriv_bordet"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Spara skärmdumpen till _fil:"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Spara skärmdumpen till _webbsida (spara i ~/public__html)"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:7
+#: gnome-panel/gnome-panel-screenshot.glade.h:9
 msgid "_Print screenshot..."
 msgstr "Skriv _ut skärmdumpen..."
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:8
-msgid "_Save screenshot to file:"
-msgstr "_Spara skärmdumpen till fil:"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1261,7 +1262,7 @@ msgstr ""
 msgid "Cannot launch icon"
 msgstr "Kan inte starta ikon"
 
-#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1096
 #: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
 #: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
 #: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
@@ -1298,16 +1299,16 @@ msgstr "Hjälp med _programmet %s"
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:811
+#: gnome-panel/launcher.c:812
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
+#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/launcher.c:1095 gnome-panel/menu.c:1267
 #: gnome-panel/panel-util.c:75
 msgid "Cannot display help document"
 msgstr "Kan inte visa hjälpdokument"
@@ -1581,8 +1582,8 @@ msgid "Search for Files..."
 msgstr "Sök filer..."
 
 #: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
-msgid "Screenshot..."
-msgstr "Skärmdump..."
+msgid "Take Screenshot..."
+msgstr "Ta skärmdump..."
 
 #: gnome-panel/menu.c:3435
 msgid "Desktop"
@@ -2131,119 +2132,115 @@ msgstr "Fel vid läsning av booleska GConf-värdet \"%s\": %s"
 msgid "Error reading GConf list value '%s': %s"
 msgstr "Fel vid läsning av GConf-listvärdet \"%s\": %s"
 
-#: gnome-panel/panel-properties-dialog.glade.h:2
-msgid "      "
-msgstr "      "
-
-#: gnome-panel/panel-properties-dialog.glade.h:4
+#: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<b>_Name:</b>"
 msgstr "<b>_Namn:</b>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:5
+#: gnome-panel/panel-properties-dialog.glade.h:4
 msgid "<b>_Orientation:</b>"
 msgstr "<b>_Orientering:</b>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:6
+#: gnome-panel/panel-properties-dialog.glade.h:5
 msgid "<b>_Size:</b>"
 msgstr "<b>_Storlek:</b>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:7
+#: gnome-panel/panel-properties-dialog.glade.h:6
 msgid "<small>Opaque</small>"
 msgstr "<small>Opak</small>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:8
+#: gnome-panel/panel-properties-dialog.glade.h:7
 msgid "<small>Transparent</small>"
 msgstr "<small>Genomskinlig</small>"
 
-#: gnome-panel/panel-properties-dialog.glade.h:9
+#: gnome-panel/panel-properties-dialog.glade.h:8
 msgid "Arro_ws on hide buttons"
 msgstr "P_ilar på döljknappar"
 
-#: gnome-panel/panel-properties-dialog.glade.h:10
+#: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Background"
 msgstr "Bakgrund"
 
-#: gnome-panel/panel-properties-dialog.glade.h:11
+#: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Background _image:"
 msgstr "Bakgrunds_bild:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:12
+#: gnome-panel/panel-properties-dialog.glade.h:11
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Nederkant"
 
-#: gnome-panel/panel-properties-dialog.glade.h:13
+#: gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Co_lor:"
 msgstr "F_ärg:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:14
+#: gnome-panel/panel-properties-dialog.glade.h:13
 msgid "E_xpand"
 msgstr "F_äll ut"
 
-#: gnome-panel/panel-properties-dialog.glade.h:15
+#: gnome-panel/panel-properties-dialog.glade.h:14
 msgid "General"
 msgstr "Allmänt"
 
-#: gnome-panel/panel-properties-dialog.glade.h:16
+#: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "Image Background Details"
 msgstr "Bildbakgrundsdetaljer"
 
-#: gnome-panel/panel-properties-dialog.glade.h:17
+#: gnome-panel/panel-properties-dialog.glade.h:16
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Vänster"
 
-#: gnome-panel/panel-properties-dialog.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Panel Properties"
 msgstr "Panelegenskaper"
 
-#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Pick a color"
 msgstr "Välj en färg"
 
-#: gnome-panel/panel-properties-dialog.glade.h:20
+#: gnome-panel/panel-properties-dialog.glade.h:19
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Höger"
 
-#: gnome-panel/panel-properties-dialog.glade.h:21
+#: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "Rotate image when panel is _vertical"
 msgstr "Rotera bild när panelen är _vertikal"
 
-#: gnome-panel/panel-properties-dialog.glade.h:22
+#: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "S_tyle:"
 msgstr "S_til:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:23
+#: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "Show hide _buttons"
 msgstr "Visa dölj_knappar"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "Solid c_olor"
 msgstr "Enf_ärgad"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:24
 msgid "St_retch"
 msgstr "St_räck ut"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:25
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Överkant"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:26
 msgid "_Autohide"
 msgstr "_Dölj automatiskt"
 
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
 msgstr "_Ingen (använd systemtemat)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:29
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_Scale"
 msgstr "_Skala"
 
-#: gnome-panel/panel-properties-dialog.glade.h:30
+#: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Tile"
 msgstr "_Upprepa"
 
@@ -2932,11 +2929,11 @@ msgstr "Hjälpdokument hittades inte"
 msgid "No document to show"
 msgstr "Inget dokument att visa"
 
-#: gnome-panel/panel-util.c:933
+#: gnome-panel/panel-util.c:934
 msgid "Cannot execute xscreensaver"
 msgstr "Kan inte köra xscreensaver"
 
-#: gnome-panel/panel-util.c:934
+#: gnome-panel/panel-util.c:935
 msgid "Details: xscreensaver-command not found"
 msgstr "Detaljer: xscreensaver-kommandot hittades inte"
 
@@ -3056,6 +3053,12 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Screenshot..."
+#~ msgstr "Skärmdump..."
+
+#~ msgid "      "
+#~ msgstr "      "
 
 #~ msgid "Could not remove the menu item %s"
 #~ msgstr "Kunde inte ta bort menyvalet %s"
@@ -4209,9 +4212,6 @@ msgstr "Jätteliten"
 
 #~ msgid "Tasklist size"
 #~ msgstr "Storlek på fönsterlista"
-
-#~ msgid "Take a Screen Shot..."
-#~ msgstr "Ta en skärmdump..."
 
 #~ msgid "Lock Display"
 #~ msgstr "Lås skärmen"
