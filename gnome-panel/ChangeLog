@@ -1,3 +1,10 @@
+Thu May 18 21:25:09 2000  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: fix bug with not strduping the back pixmap, null
+	  data after freeing for sanity
+
+	* menu.c: null data after freeing, and use _unref on menus
+
 Thu May 18 21:03:31 2000  George Lebl <jirka@5z.com>
 
 	* basep-widget.c: the destroy handler is now an override rather then

@@ -1664,6 +1664,7 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	panel->backpix = NULL;
 
 	g_free (panel->back_pixmap);
+	panel->back_pixmap = NULL;
 
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
@@ -1796,7 +1797,7 @@ panel_widget_new (gboolean packed,
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	panel->strech_pixmap_bg = strech_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
-	panel->back_pixmap = back_pixmap ? back_pixmap : g_strdup ("");
+	panel->back_pixmap = g_strdup (back_pixmap ? back_pixmap : "");
 	panel->no_padding_on_ends = no_padding_on_ends;
 	
 	if(back_color)
