@@ -1,21 +1,23 @@
-# SOME DESCRIPTIVE TITLE.
+# translation of gnome-panel.HEAD.po to Macedonian
+# translation of gnome-panel.HEAD.mk.po to
 # Copyright (C) 2002 Free Software Foundation, Inc.
+# Дамјан Георгиевски, 2002
 # Ivan Stojmirov <stojmir@linux.net.mk>, 2002.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PasACKAGE VERSION\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
-"PO-Revision-Date: 2002-10-28 00:39+0100\n"
-"Last-Translator: Georgi Stanojevski <glisha01@mail.com.mk>\n"
-"Language-Team: macedonian <gnomk@lists.sourceforge.net>\n"
+"Project-Id-Version: gnome-panel.HEAD\n"
+"POT-Creation-Date: 2002-12-13 05:55+0100\n"
+"PO-Revision-Date: 2002-12-15 22:32+0100\n"
+"Last-Translator: Ivan Stojmirov <stojmir@linux.net.mk>\n"
+"Language-Team: Macedonian <mk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.6\n"
+"X-Generator: KBabel 1.0beta2\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
 #: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
@@ -25,7 +27,7 @@ msgid "There was an error displaying help: %s"
 msgstr "Грешка при прикажувањето на помошта %s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -35,7 +37,7 @@ msgstr ""
 "Предупредување: Командата изгледа дека е нешто корисно.\n"
 "Бидејќи ова е безкорисен аплет, најверојатно не би сакале да го правите "
 "ова.\n"
-"Ве советуваме против користење на wanda за било што што би го направило\n"
+"Ве советуваме против користење на %s за било што што би го направило\n"
 "овој аплет \"практичен\" или корисен."
 
 #: applets/fish/fish.c:378 applets/fish/fish.c:536
@@ -44,14 +46,14 @@ msgid "%s the Fish"
 msgstr "%s Рибата"
 
 #: applets/fish/fish.c:379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. If "
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"Овој аплет е бескорисен. Само завзема простор на дискот и троши време за "
+"%s и онака не е корисен. Само завзема простор на дискот и троши време за "
 "компајлирање, и доколку е вчитан завзема скапоцено место на панелот и троши "
 "меморија. Доколку најдете некој што го користи овој аплет, веднаш испратете "
 "го на психијатриско испитување."
@@ -60,8 +62,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(со мала помош од George)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:416
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Риба"
 
@@ -84,18 +86,18 @@ msgid "Unable to locate the command to execute"
 msgstr "Неможам да ја најдам командата која треба да се изврши"
 
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "GNOME рибата %s"
+msgstr "GNOME рибата %s вели:"
 
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Не успеа да се изврши командата: %s\n"
+"Не успеа да се изврши %s\n"
 "\n"
 "Детали: %s"
 
@@ -141,9 +143,8 @@ msgid "Frame_s in animation:"
 msgstr "Фрејмови во анимација:"
 
 #: applets/fish/fish.glade.h:5
-#, fuzzy
-msgid "GNOME Fish Preferences"
-msgstr "Параметри за GNOME рибата"
+msgid "GNOME FIsh Preferences"
+msgstr "Параметри за GNOME Рибата"
 
 #: applets/fish/fish.glade.h:6
 msgid "Pause _per frame (s):"
@@ -165,8 +166,7 @@ msgstr "_Ротирај на вертикални панели"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
-"Риба без име е поприлично досадна риба. Расположи си ја рибата давајќи и име."
+msgstr "Риба без име е поприлично досадна риба. Расположи си ја рибата давајќи и име."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -225,8 +225,8 @@ msgstr "_За..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
+#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Помош"
 
@@ -238,108 +238,85 @@ msgstr "_Помош"
 msgid "_Preferences..."
 msgstr "Па_раметри..."
 
-#: applets/gen_util/clock.c:178
-#, fuzzy
+#: applets/gen_util/clock.c:171
 msgid "%l:%M:%S %p"
-msgstr "%I:%M:%S %p"
+msgstr "%l:%M:%S %p"
 
-#: applets/gen_util/clock.c:178
-#, fuzzy
+#: applets/gen_util/clock.c:173
 msgid "%l:%M %p"
-msgstr "%I:%M %p"
+msgstr "%l:%M %p"
 
-#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:499
+#: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:501
+#: applets/gen_util/clock.c:178 applets/gen_util/clock.c:489
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/gen_util/clock.c:186
+#: applets/gen_util/clock.c:187 applets/gen_util/clock.c:189
 msgid "%a %b %d"
 msgstr "%a %b %d"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/gen_util/clock.c:193
-#, c-format
-msgid ""
-"%s\n"
-"%s"
-msgstr ""
-
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/gen_util/clock.c:200
-#, c-format
-msgid "%s, %s"
-msgstr ""
-
 #. Show date in tooltip
-#: applets/gen_util/clock.c:303
+#: applets/gen_util/clock.c:291
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/gen_util/clock.c:409
+#: applets/gen_util/clock.c:397
 msgid "Computer Clock"
 msgstr "Компјутерски часовник"
 
-#: applets/gen_util/clock.c:494
+#: applets/gen_util/clock.c:482
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:496
+#: applets/gen_util/clock.c:484
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:535
+#: applets/gen_util/clock.c:523
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:945
 msgid "Clock Preferences"
 msgstr "Параметри за часовникот"
 
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:974
 msgid "Clock type"
 msgstr "Тип на часовникот"
 
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:984
 msgid "_12 hour"
 msgstr "_12 часа"
 
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:990
 msgid "_24 hour"
 msgstr "_24 часа"
 
-#: applets/gen_util/clock.c:1007
-#, fuzzy
+#: applets/gen_util/clock.c:995
 msgid "UNI_X time"
-msgstr "_UNIX време"
+msgstr "UNI_X време"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:999
 msgid "_Internet time"
 msgstr "_Интернет време"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1036
 msgid "Show _seconds"
 msgstr "Покажи _секунди"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1046
 msgid "Show _date"
 msgstr "Покажи _датум"
 
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1056
 msgid "Use _UTC"
 msgstr "Користи _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -348,31 +325,30 @@ msgstr ""
 "Иван Стојмиров (stojmir@linux.net.mk) \n"
 "Георги Станојевски (georgi@mail.net.mk)"
 
+#: applets/gen_util/clock.c:1192
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Часовник"
 
-#: applets/gen_util/clock.c:1205
+#: applets/gen_util/clock.c:1193
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1194
 msgid "The Clock displays the current time and date"
 msgstr "Часовникот ги покажува моменталниот датум и време"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Прикажи интернет време, кое е исто низ целиот свет"
 
 #: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
 msgid "Display date in the Clock, in addition to time"
-msgstr "Прикажи ја датата во аплетот, покрај часот."
+msgstr "Прикажи гп датумот во Часовникот, веднаш до времето"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
@@ -395,14 +371,12 @@ msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Го мести форматот на часот може да биде 12 или 24"
 
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in Clock"
-msgstr "Покажи датум во аплетот"
+msgstr "Покажи датум во Часовникот"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "Прикажи дата во додатокот кога глувчето е над аплетот"
+msgstr "Прикажи датум во објаснувањето кога глувчето е над Часовникот"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
@@ -442,7 +416,7 @@ msgstr "Ќе ве извести кога ќе добиете нова пошт�
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 msgid "Button to hide application windows and show the desktop"
-msgstr ""
+msgstr "Копче кое ги сокрива апликативните прозорци и ја покажува работната површина"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "GenUtil Applet Factory"
@@ -463,9 +437,8 @@ msgstr "Интернет"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 #: applets/gen_util/showdesktop.c:452
-#, fuzzy
 msgid "Show Desktop Button"
-msgstr "Покажувај ги копчињата за криење"
+msgstr "Покажувај Копче за Криење"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Switch between open windows"
@@ -500,9 +473,9 @@ msgid "_Check for mail"
 msgstr "Пров_ери пошта"
 
 #: applets/gen_util/mailcheck.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s: %s"
-msgstr "Имаше грешка извршувајќи %s:%s"
+msgstr "Имаше грешка при извршувањето на %s: %s"
 
 #: applets/gen_util/mailcheck.c:274
 msgid ""
@@ -696,8 +669,7 @@ msgstr "(c) 1998-2000 the Free Software Foundation"
 
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-msgstr ""
-"Inbox Monitor ве информира кога ќе пристигне нова пошта во вашиот mailbox"
+msgstr "Inbox Monitor ве информира кога ќе пристигне нова пошта во вашиот mailbox"
 
 #: applets/gen_util/mailcheck.c:1911
 msgid "Text only"
@@ -716,9 +688,8 @@ msgid "Command to execute when checking mail"
 msgstr "Команда која ќе се стартува кога се проверува поштата:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "Команда која ќе се стартува кога ќе кликнете:"
+msgstr "Команда која ќе се стартува кога ќе кликнете на Inbox Мониторот"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -796,16 +767,14 @@ msgstr "Вака проверуваме пошта, проверуваме по�
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
-"Вака ја прегледувувме поштата, прегледуваме поштата, прегледуваме поштата..."
+msgstr "Вака ја прегледувувме поштата, прегледуваме поштата, прегледуваме поштата..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
-#, fuzzy
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
 msgstr ""
-"Оваа анимација ќе биде прикажана при нормална работа на аплетот за проверка "
+"Оваа анимацијата која ќе биде прикажана при нормална работа на аплетот за проверка "
 "на пошта"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
@@ -813,14 +782,12 @@ msgid "Username on the remote server"
 msgstr "Корисничко име на оддалечениот сервер"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "Ја извршуваме оваа команда кога корисникот ќе кликне на аплетот"
+msgstr "Ја извршуваме оваа команда кога корисникот ќе кликне на Inbox Мониторот"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "Дали да го ресетираме статусот на поштата кога аплетот е кликнат"
+msgstr "Дали да го ресетираме статусот на поштата кога ќе кликнеш на Inbox Мониторот"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
@@ -844,26 +811,23 @@ msgid "Columns"
 msgstr "Колони"
 
 #: applets/gen_util/pager.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
-"Грешка при вчитувањето на вредноста num_rows за аплетот за скокање помеѓу "
-"работните простори: %s\n"
+"Грешка при вчитувањето на вредноста num_rows за Скокачот Помеѓу "
+"Работните Простори: %s\n"
 
 #: applets/gen_util/pager.c:387
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+#, c-format
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
-"Грешка при вчитувањето на вредноста display_workspace_names за аплетот за "
-"скокање помеѓу работните простори: %s \n"
+"Грешка при вчитувањето на вредноста display_workspace_names за "
+"Скокачот Помеѓу Работни Простори: %s \n"
 
 #: applets/gen_util/pager.c:402
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Грешка при вчитувањето на вредноста display_all workspaces за аплетот за "
-"скокање помеѓу работните простори: %s \n"
+msgstr "Грешка при вчитувањето на вредноста display_all workspaces Скокачот Помеѓу Работни Простори: %s \n"
 
 #: applets/gen_util/pager.c:546
 msgid "(c) 2001 Red Hat, Inc."
@@ -906,49 +870,42 @@ msgid "Workspaces"
 msgstr "Работни простори"
 
 #: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
 msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"Ако ова е селектирано, скокачот ќе ги прикаже сите простори за работи. "
-"Воспротивно ќе го прикажува само моменталниот простор."
+"Ако ова е селектирано, Скокачот ќе ги прикаже сите простори за работа. "
+"Во спротивно ќе го прикажува само моменталниот простор."
 
 #: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the workspaces in the Workspace Switcher will display the "
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"Ако ова е селектирано, скокачот ќе ги пишува имињата на просторите, "
+"Ако ова е селектирано, Скокачот Помеѓу Работни Простори ќе ги пишува имињата на просторите, "
 "воспротивно ќе ја прикажува содржината на просторот."
 
 #: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
 msgid "Number of rows in the Workspace Switcher."
-msgstr "Број на работни простори:"
+msgstr "Број на редови во Скокачот Помеѓу Работни Простори."
 
 #: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"Кога се покажуваат сите простори ова одлучува колку редови простори (за "
-"хоризонтално) и колку колони (за вертикално) скокачот ќе прикаже."
+"Кога се покажуваат сите простори ова одлучува колку редови (за "
+"хоризонтално) и колку колони (за вертикално) ќе прикаже Скокачот Помеѓу Работни Простори."
 
 #: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
 msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "Дали да ги прикаже сите простори за работа во скокачот."
+msgstr "Дали да ги прикаже сите простори за работа во Скокачот Помеѓу Работни Простори."
 
 #: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "Дали да ги прикажува имињата на просторите во скокачот."
+msgid "Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "Дали да ги прикажува имињата на просторите во Скокачот Помеѓу Работни Простори."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -1004,41 +961,35 @@ msgstr "За..."
 
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
-msgstr ""
+msgstr "Кликни овде за да ги вратиш скриените прозорци."
 
 #: applets/gen_util/showdesktop.c:220
 msgid "Click here to hide all windows and show the desktop."
-msgstr ""
+msgstr "Кликни овде за да ги сокриеш сите прозорци и да стигнеш до работната површина."
 
 #: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load %s: %s\n"
-msgstr ""
-"Не успеа да се изврши командата: %s\n"
-"\n"
-"Детали: %s"
+msgstr "Не успеа да се вчита %s: %s\n"
 
 #: applets/gen_util/showdesktop.c:291
-#, fuzzy
 msgid "File not found"
-msgstr "Документот не е најден"
+msgstr "Датотеката не е најдена"
 
 #: applets/gen_util/showdesktop.c:453
-#, fuzzy
 msgid "(C) 2002 Red Hat, Inc."
-msgstr "(c) 2001 Red Hat, Inc."
+msgstr "(C) 2001 Red Hat, Inc."
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
+msgstr "Ова копче ти овозможува да ги сокриеш сите прозорци и ти ја покажува работната површина"
 
 #: applets/gen_util/tasklist.c:809
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
+msgid "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "Листата на прозори покажува листа на сите видливи прозори и ви овозможува да "
 "ги прелистувате истите."
@@ -1100,24 +1051,22 @@ msgid "_Never group windows"
 msgstr "_Никогаш не групирај прозори"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Одлучува дали да ги групира прозорците од иста апликација во листата на "
-"прозорци. Може да стои never (никогаш), auto (автоматски), и секогаш "
+"Одлучува дали да ги групира прозорците од иста апликација во Листата на "
+"Прозорци. Може да стои never (никогаш), auto (автоматски), и секогаш "
 "(always)."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
-"Ако ова е точно листа на прозорци ќе ги прикажува сите прозорци на сите "
+"Ако ова е точно Листата на Прозорци ќе ги прикажува сите прозорци на сите "
 "екрани за работа, во спротивно ќе ги прикажува прозорците само на "
-"моменталниот екран."
+"тековниот екран."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
@@ -1128,14 +1077,12 @@ msgstr ""
 "моменталниот екран. Во спротивно префрли се на некогвиот екран за работа."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
 msgid "Maximum size that Window List requests"
-msgstr "Максимум големина на листа на прозорци"
+msgstr "Максимум големина на Листата на Прозорци"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
 msgid "Minimum size that Window List requests"
-msgstr "Минимум големина на листата на прозорци"
+msgstr "Минимум големина на Листата на Прозорци"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
@@ -1146,26 +1093,23 @@ msgid "Show windows from all workspaces"
 msgstr "Покажи прозори од сите работни простори"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
 msgid ""
 "This value is the maximum width that Window List requests. The maximum width "
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"Вредноста на максималната ширина што аплетот ќе ја има. Ова е корисно да се "
-"ограничи големината која се користи во големи панели каде овој аплет може да "
-"го пополни целиот простор на панелот како кај рабните панели."
+"Ова е вредноста на максималната ширина што ќе ја има Листата на Прозори. Ова е корисно "
+"за да се ограничи големината која ќе се користи во големи панели каде овој аплет може да "
+"го пополни целиот простор на панелот."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
 msgid ""
 "To be usable, Window List requires a minimum width. Window List requests "
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"Листата прозорци мора да има минимална ширина за да биде воопшто "
-"функционално. Оваа вредност е минималната ширина на листата на прозорци. Ова "
-"е корисно за рабни и лизгачки панели, кои инаку би барале многу мали "
+"За да биде корисна, Листата на Прозорци мора да има минимална ширина. "
+"Ова е корисно за рабни и лизгачки панели, кои инаку би барале многу мали "
 "преддефинирани ширини."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
@@ -1174,24 +1118,23 @@ msgstr "Кога да групира прозори"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr ""
+msgstr "Место каде што се појавуваат икони за известување"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 msgid "Notification Area"
-msgstr ""
+msgstr "Место за Известување"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr ""
+msgstr "Factory за Местото за Известување "
 
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
-msgstr ""
+msgstr "Место на панелот за известување"
 
 #: applets/notification_area/main.c:126
-#, fuzzy
 msgid "Copyright 2002 Red Hat Inc."
-msgstr "(c) 2001 Red Hat, Inc."
+msgstr "Copyright 2002 Red Hat Inc."
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1200,11 +1143,11 @@ msgstr "(c) 2001 Red Hat, Inc."
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/applet.c:493 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "О_тстрани од панелот"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "П_омести"
 
@@ -1218,48 +1161,47 @@ msgstr "Нема object_type наместено за објектот со ид�
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Нема наместено panel_id за објектот со идетификација %s\n"
 
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1138
 msgid "Can't find an empty spot"
 msgstr "Неможе да најде празно место"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:160
 msgid "Mode"
 msgstr "Помести"
 
-#: gnome-panel/basep-widget.c:162
-#, fuzzy
+#: gnome-panel/basep-widget.c:161
 msgid "Mode of this panel"
-msgstr "Скриј го овој панел"
+msgstr "Режим за овој панел"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:168
 msgid "State"
 msgstr "Состојба"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:169
 msgid "Current state of this panel"
 msgstr "Сегашна состојба на овој панел"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:177
 msgid "Hidebuttons enabled"
 msgstr "Копчиња за криење овозможени"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr "Дали копчињата кои го кријат и покажуваат панелот се активирани?"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebutton pixmaps enabled"
 msgstr "Сликички на стрелки за криењ"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:186
 msgid "Hidebuttons have pixmaps"
 msgstr "Стрелките имаат сликички"
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "Скриј го овој панел"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Покажи го овој панел"
 
@@ -1280,58 +1222,53 @@ msgstr "ништо"
 
 #: gnome-panel/button-widget.c:542
 msgid "file not found"
-msgstr "Документот не е најден"
+msgstr "датотеката не е најдена"
 
 #: gnome-panel/button-widget.c:879
-#, fuzzy
 msgid "Size"
-msgstr "Големина:"
+msgstr "Големина"
 
 #: gnome-panel/button-widget.c:880
 msgid "The desired ButtonWidget size"
-msgstr ""
+msgstr "Саканата големина за ButtonWidget"
 
 #: gnome-panel/button-widget.c:888
 msgid "Has Arrow"
-msgstr ""
+msgstr "Има Стрелка"
 
 #: gnome-panel/button-widget.c:889
 msgid "Whether or not to draw an arrow indicator"
-msgstr ""
+msgstr "Дали да црта покажувачка стрелка или не"
 
 #: gnome-panel/button-widget.c:897
-#, fuzzy
 msgid "Orientation"
-msgstr "Ориентација:"
+msgstr "Ориентација"
 
 #: gnome-panel/button-widget.c:898
-#, fuzzy
 msgid "The ButtonWidget orientation"
-msgstr "Аплетот ја содржи ориентацијата на панелот"
+msgstr "ButtonWidget ориентација"
 
 #: gnome-panel/button-widget.c:907
-#, fuzzy
 msgid "Icon Name"
-msgstr "Икона"
+msgstr "Име на Икона"
 
 #: gnome-panel/button-widget.c:908
 msgid "The desired icon for the ButtonWidget"
-msgstr ""
+msgstr "Саканата икона за ButtonWidget"
 
 #: gnome-panel/button-widget.c:916
 msgid "Stock Icon ID"
-msgstr ""
+msgstr "ID на Иконата"
 
 #: gnome-panel/button-widget.c:917
-#, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
-msgstr "Користи икона по сопствен избор за панел копчето"
+msgstr "Саканата икона за ButtonWidget"
 
-#: gnome-panel/disclosure-widget.c:259
+#: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
 msgstr "Големина"
 
-#: gnome-panel/disclosure-widget.c:260
+#: gnome-panel/disclosure-widget.c:252
 msgid "Size of the expander arrow"
 msgstr "Големина на стрелката"
 
@@ -1389,20 +1326,20 @@ msgstr "Овозможи ги копчињата за криење"
 msgid "Enable hidebutton arrow"
 msgstr "Овозможи стрелки на копчињата за криење"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
 msgid "Drawer"
 msgstr "Фиока"
 
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "Параме_три"
 
 #: gnome-panel/egg-recent-vfs-utils.c:90
 msgid " (invalid Unicode)"
-msgstr ""
+msgstr " (невалиден Unicode)"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Стартувај програма.."
 
@@ -1410,23 +1347,23 @@ msgstr "Стартувај програма.."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Стартувај апликации, доколку ја знаеш точната команда за весување"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr "Барај датотеки..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr "Најди датотеки, фолдери и документи на твојот компјутер"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
 msgid "Screenshot..."
 msgstr "Слика од цел екран"
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
 msgid "Take a screenshot of your desktop"
 msgstr "Сликај го твојот десктоп"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Заклучи Екран"
 
@@ -1434,8 +1371,8 @@ msgstr "Заклучи Екран"
 msgid "Protect your computer from unauthorized use"
 msgstr "Заштити го твојот компјутер од неовластено користење"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Одјави се"
 
@@ -1452,7 +1389,7 @@ msgstr "Дејствија"
 msgid "No windows open"
 msgstr "Нема отворени прозори"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
 msgid "Menu Panel"
 msgstr "Панел со мени"
 
@@ -1460,8 +1397,8 @@ msgstr "Панел со мени"
 msgid "GNOME Menu Panel"
 msgstr "Панел со GNOME мени"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
+#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Апликации"
 
@@ -1495,8 +1432,7 @@ msgid "The argument is a url to add, not a .desktop file"
 msgstr "Аргументот е url за додавање, а не .desktop датотека"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
-msgid ""
-"You must supply a single argument with the .desktop file or url to use\n"
+msgid "You must supply a single argument with the .desktop file or url to use\n"
 msgstr ""
 "Мора да внесете еден аргумент со .desktop датотеката или url-то што ќе се "
 "користи\n"
@@ -1505,7 +1441,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Не е најден панел\n"
 
-#: gnome-panel/gnome-panel-preferences.c:259
+#: gnome-panel/gnome-panel-preferences.c:192
 #: gnome-panel/gnome-panel-screenshot.c:862
 #, c-format
 msgid ""
@@ -1515,14 +1451,13 @@ msgstr ""
 "Грешка при прикажувањето на помошта:\n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:307
+#: gnome-panel/gnome-panel-preferences.c:240
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
-msgstr ""
-"Систем администраторот оневозможил модификација на конфигурацијата на панелот"
+msgstr "Систем администраторот оневозможил модификација на конфигурацијата на панелот"
 
-#: gnome-panel/gnome-panel-preferences.c:337
+#: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "Грешка при вчитувањето на glide датотеката %s"
@@ -1544,9 +1479,8 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "_Затвори фиока доколку стартувачот внатре се притисне"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "_Вклучи анимација за панелот"
+msgstr "_Анимација за Фиоката и Панелот"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
@@ -1673,19 +1607,16 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Не успеа сликањето на моменталниот десктоп."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Опции"
+msgstr "<b>Опции</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "Преглед"
+msgstr "<b>Преглед</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "Слика на екран"
+msgstr "Зачувај Слика на екран"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
@@ -1693,8 +1624,7 @@ msgstr "Зачувај ја сликата од екранот на _дескт�
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
-"Зачувај ја сликата од екранот на _веб страна (зачувај во ~/public__html)"
+msgstr "Зачувај ја сликата од екранот на _веб страна (зачувај во ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
@@ -1709,10 +1639,12 @@ msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
 msgstr ""
+"Корисничкиот директориум во кој треба да се зачуваат слики од екранот за да се "
+"појават на веб."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory."
-msgstr ""
+msgstr "Веб директориум."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1843,13 +1775,12 @@ msgstr "Нема адреса дадена за десктоп датотека�
 #: gnome-panel/launcher.c:411
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
-"Неможам да ја отворам десктоп датотеката %s на Пуштачот на програми %s%s\n"
+msgstr "Неможам да ја отворам десктоп датотеката %s на Пуштачот на програми %s%s\n"
 
 #: gnome-panel/launcher.c:525
-#, fuzzy, c-format
+#, c-format
 msgid "Help on %s _Application"
-msgstr "Помош за %s Апликацијата"
+msgstr "Помош за %s _Апликацијата"
 
 #: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
@@ -1859,8 +1790,7 @@ msgstr "Подесувања на Пуштачот на програми"
 #: gnome-panel/launcher.c:758
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
-"Ставката %s не е наместена, неможам да го вчитам Пуштачот на програми\n"
+msgstr "Ставката %s не е наместена, неможам да го вчитам Пуштачот на програми\n"
 
 #: gnome-panel/launcher.c:854 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
@@ -1877,7 +1807,7 @@ msgstr ""
 "\n"
 " %s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1894,13 +1824,11 @@ msgid "Specify a profile name to load"
 msgstr "Специфирај име на профилот што треба да се вчита"
 
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
-msgstr "Многу многу други ..."
+msgstr "Многу, многу други ..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-#, fuzzy
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "и конечно, Витезите Што Викаат ... НИ!"
 
@@ -1958,7 +1886,7 @@ msgstr ""
 "\n"
 "Детали: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1969,7 +1897,7 @@ msgstr ""
 "\n"
 "Детали: %s"
 
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1022
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1980,17 +1908,17 @@ msgstr ""
 "\n"
 "Детали: %s\n"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1032
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Неможам да видам име на датотека од патеката: %s"
 
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1039
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Неможам да добијам името на директориум од патеката: %s"
 
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1109
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -2000,158 +1928,156 @@ msgstr ""
 "\n"
 "Детали: Нема ни команда ни адреса во ставкава"
 
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1419
 msgid "Add this launcher to panel"
 msgstr "Додади го овој пуштач на програми на панелот"
 
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1427
 msgid "Remove this item"
 msgstr "Тргни го ова"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1443
 msgid "Put into run dialog"
 msgstr "Стави го во дијалог прозорецот за стартување"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1461
 #, c-format
 msgid "Help on %s"
 msgstr "Помош за %s"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1462
 msgid "Application"
 msgstr "Апликација"
 
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1506
 msgid "Entire menu"
 msgstr "Цело мени"
 
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1515
 msgid "Add this as drawer to panel"
 msgstr "Додади го ова како додаток (фиока) на панелот"
 
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1523
 msgid "Add this as menu to panel"
 msgstr "Додади го ова како мени на панелот"
 
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1531
 msgid "Add new item to this menu"
 msgstr "Додани нова ставка во ова мени"
 
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1556
 msgid "Properties"
 msgstr "Параметри"
 
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "барањето врати изклучок %s\n"
 
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
 msgid "Aligned Panel"
 msgstr "Збиен Панел"
 
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2708
 msgid "GNOME Aligned Panel"
 msgstr "GNOME Збиен Панел"
 
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Раб Панел"
 
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2730
 msgid "GNOME Edge Panel"
 msgstr "GNOME Раб Панел"
 
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Лизгачки Панел"
 
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2756
 msgid "GNOME Sliding Panel"
 msgstr "GNOME Лизгачки Панел"
 
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Лебдечки Панел"
 
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2780
 msgid "GNOME Floating Panel"
 msgstr "GNOME Лебдечки Панел"
 
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2800
 msgid "You can only have one menu panel at a time."
 msgstr "Можеш да имаш само еден мени панел."
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2844
 msgid "C_orner Panel"
 msgstr "Ќош панел"
 
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:2846
 msgid "Create corner panel"
 msgstr "Создади ќош панел"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:2853
 msgid "_Edge Panel"
 msgstr "Рабе_н Панел"
 
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:2855
 msgid "Create edge panel"
 msgstr "Креирај рабен панел"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:2862
 msgid "_Floating Panel"
 msgstr "Лебдечки анел"
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:2864
 msgid "Create floating panel"
 msgstr "Креирај лебдечки панел"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2871
 msgid "_Sliding Panel"
 msgstr "Лизгачки Панел"
 
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:2873
 msgid "Create sliding panel"
 msgstr "Креирај панел"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:2882
 msgid "_Menu Panel"
 msgstr "Панел со мени"
 
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:2884
 msgid "Create menu panel"
 msgstr "Креирај панел со менија"
 
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
 msgid "KDE Menu"
 msgstr "KDE менија"
 
-#: gnome-panel/menu.c:3037
-#, fuzzy
+#: gnome-panel/menu.c:3036
 msgid "Lock"
-msgstr "Часовник"
+msgstr "Заклучи"
 
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Слика на екран"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3052
 msgid "Search"
-msgstr ""
+msgstr "Пребарувај"
 
-#: gnome-panel/menu.c:3061
-#, fuzzy
+#: gnome-panel/menu.c:3060
 msgid "Run"
-msgstr "_Стартувај"
+msgstr "Стартувај"
 
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
 msgstr "Неможе да го отстраниш последниот панел."
 
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3145
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2159,58 +2085,56 @@ msgstr ""
 "Кога се отстранува панел, панелот и неговите \n"
 "аплети и подесувања се губат. Да го избришам овој панел?"
 
-#: gnome-panel/menu.c:3154
-#, fuzzy
+#: gnome-panel/menu.c:3153
 msgid "Delete Panel"
-msgstr "И_збриши го овој панел"
+msgstr "Избриши Панел"
 
-#: gnome-panel/menu.c:3393
+#: gnome-panel/menu.c:3392
 msgid "Launcher..."
 msgstr "Пуштач на програми..."
 
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3399
 msgid "Launcher from menu"
 msgstr "Пуштач на програми од мени"
 
-#: gnome-panel/menu.c:3408
-#, fuzzy
+#: gnome-panel/menu.c:3407
 msgid "Button"
-msgstr "Копче за одјавување"
+msgstr "Копче"
 
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
+#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
 msgid "Main Menu"
 msgstr "Главно мени"
 
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3469
 msgid "_Delete This Panel..."
 msgstr "И_збриши го овој панел..."
 
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
 msgid "_Delete This Panel"
 msgstr "И_збриши го овој панел"
 
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3491
 msgid "_Add to Panel"
 msgstr "_Додади на панел"
 
-#: gnome-panel/menu.c:3532
+#: gnome-panel/menu.c:3531
 msgid "_New Panel"
 msgstr "Нов Панел"
 
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3565
 msgid "_About Panels"
 msgstr "За панело_т..."
 
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3578
 msgid "About _GNOME"
 msgstr "За _GNOME..."
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3606
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Заклучи го екранот за да можеш привремено да го напуштиш компјутерот"
 
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3617
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2218,31 +2142,31 @@ msgstr ""
 "Одјави се од оваа сесија за да се најавиш како друг корисник или за да го "
 "исклучиш компјутерот"
 
-#: gnome-panel/menu.c:3774
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Аплети"
 
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Изврши команда"
 
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Десктоп"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Мени"
 
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Мени:"
 
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "Неможе да се креира мени, се користи главното мени!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Не е наместена патека на %s за објекти на панелот.\n"
@@ -2319,30 +2243,27 @@ msgid "Log out of GNOME"
 msgstr "Одјави се од GNOME"
 
 #: gnome-panel/panel-action-button.c:208
-#, fuzzy
 msgid "Search for Files"
-msgstr "Барај датотеки..."
+msgstr "Барај Датотеки"
 
 #: gnome-panel/panel-action-button.c:364
-#, fuzzy
 msgid "Action Type"
-msgstr "Дејствија"
+msgstr "Тип на Дејствие"
 
 #: gnome-panel/panel-action-button.c:365
 msgid "The type of action this button implements"
-msgstr ""
+msgstr "Тип на дејствие што ова копче го имплементира"
 
 #: gnome-panel/panel-applet-frame.c:185
-#, fuzzy
 msgid "Cannot register control widget\n"
-msgstr "Неможе да се регистрира контролниот widget\n"
+msgstr "Неможе да се регистрира контролен widget\n"
 
-#: gnome-panel/panel-applet-frame.c:602
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Исклучок од popup_menu %s\n"
 
-#: gnome-panel/panel-applet-frame.c:711
+#: gnome-panel/panel-applet-frame.c:716
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2359,11 +2280,11 @@ msgstr ""
 "(ако не одбереш да го пуштиш повторно, можеш секогаш да го направиш тоа со "
 "десеното копчето на панелот и подменито \"Додади на панелот\")"
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:751
 msgid "D_on't Delete"
-msgstr ""
+msgstr "Не Бриши"
 
-#: gnome-panel/panel-applet-frame.c:780
+#: gnome-panel/panel-applet-frame.c:785
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2371,8 +2292,12 @@ msgid ""
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
+"При вчитување \"%s\" панелот појави грешка\n"
+"Детали: %s\n"
+"\n"
+"Дали сакаш да го избришеш аплетот од твојата конфигурација?"
 
-#: gnome-panel/panel-applet-frame.c:878
+#: gnome-panel/panel-applet-frame.c:882
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Неможам да го добијам интерфејсот од ApletShell контролата\n"
 
@@ -2381,7 +2306,7 @@ msgstr "Неможам да го добијам интерфејсот од Aple
 msgid "Open URL: %s"
 msgstr "Отвори URL: %s"
 
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2245
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2403,18 +2328,16 @@ msgid "Arro_ws on hide buttons"
 msgstr "Пок_ажувај стрелки на копчињата за криење"
 
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "Разно"
+msgstr "Разно:"
 
 #: gnome-panel/panel-config.c:642
 msgid "Current screen:"
 msgstr "Тековен екран:"
 
 #: gnome-panel/panel-config.c:658
-#, fuzzy
 msgid "Current monitor:"
-msgstr "Тековен екран:"
+msgstr "Тековен монитор:"
 
 #: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
@@ -2429,33 +2352,28 @@ msgid "Orientation:"
 msgstr "Ориентација:"
 
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "Хоризонатално од работ:"
+msgstr "Хори_зонатално"
 
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "Вертикално од работа:"
+msgstr "_Вертикално"
 
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "Пози_ција на панелот"
+msgstr "Позиција:"
 
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "Хоризонатално од работ:"
+msgstr "Х_оризонатално:"
 
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "Вертикално од работа:"
+msgstr "Вер_тикално:"
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "_Растојание од работ:"
 
 #: gnome-panel/panel-config.c:1189
 msgid "_Size:"
@@ -2493,7 +2411,7 @@ msgstr "Ептен големо"
 
 #: gnome-panel/panel-config.c:1420
 msgid "_Type:"
-msgstr ""
+msgstr "_Тип:"
 
 #: gnome-panel/panel-config.c:1429
 msgid "Default"
@@ -2509,36 +2427,32 @@ msgstr "Слика"
 
 #: gnome-panel/panel-config.c:1435
 msgid "Transparent"
-msgstr ""
+msgstr "Прозирно"
 
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "Боја"
+msgstr "_Боја:"
 
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "Слика"
+msgstr "Слика:"
 
 #: gnome-panel/panel-config.c:1512
 msgid "T_ile"
-msgstr ""
+msgstr "Ра_спореди"
 
 #: gnome-panel/panel-config.c:1517
 msgid "_Scale"
-msgstr ""
+msgstr "_Скалирај"
 
 #: gnome-panel/panel-config.c:1521
-#, fuzzy
 msgid "St_retch"
-msgstr "Развле_чи слика"
+msgstr "_Развлечи слика"
 
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "Ротирај ја сликата за вертикални панели"
+msgstr "Ротирај ја сликата кога панелот е вертикален"
 
 #: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
@@ -2608,21 +2522,20 @@ msgstr "Прикажи ја листата на програми во дијал
 
 #: gnome-panel/panel-recent.c:55
 msgid "Couldn't find a suitable application"
-msgstr ""
+msgstr "Неможеше да се најде апликација која ќе одговара"
 
 #: gnome-panel/panel-recent.c:78
-msgid ""
-"The default application for this type of file cannot handle remote files"
-msgstr ""
+msgid "The default application for this type of file cannot handle remote files"
+msgstr "Преддефинираната апликација за овој тип на датотека не може да работи со надворешни датотеки"
 
 #: gnome-panel/panel-recent.c:135
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
-msgstr ""
+msgstr "Се јави непозната грешка при отварањето на %s"
 
 #: gnome-panel/panel-recent.c:153
 msgid "Open Recent"
-msgstr ""
+msgstr "Отвори Скорешни"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2644,12 +2557,12 @@ msgstr ""
 "Кодот на грешката е: %d\n"
 "Панелот сега ќе излезе."
 
-#: gnome-panel/panel-stock-icons.c:113
+#: gnome-panel/panel-stock-icons.c:102
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
-msgstr ""
+msgstr "Неможеше да се вчита '%s' иконата за панелот\n"
 
-#: gnome-panel/panel-stock-icons.c:142
+#: gnome-panel/panel-stock-icons.c:131
 msgid "_Run"
 msgstr "_Стартувај"
 
@@ -3006,3 +2919,4 @@ msgstr "Горе"
 
 #~ msgid "Cannot execute xscreensaver"
 #~ msgstr "Неможе да се стартува xscreensaver"
+
