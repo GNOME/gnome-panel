@@ -459,7 +459,8 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			}
 			
 			info = gnome_vfs_file_info_new ();
-			if (gnome_vfs_get_file_info (path, info, 0) != GNOME_VFS_OK) {
+			if (gnome_vfs_get_file_info (path,info,
+						     GNOME_VFS_FILE_INFO_FOLLOW_LINKS) != GNOME_VFS_OK) {
 				panel_error_dialog(
 					gtk_window_get_screen (GTK_WINDOW (run_dialog)),
 					"run_error",
@@ -470,7 +471,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 				goto return_and_close;
 			}
 			
-			if (info->type == GNOME_VFS_FILE_TYPE_REGULAR) {
+			if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+				command = g_strconcat ("nautilus ", path, NULL);
+			} else {
 				char *mime_info;
 				GnomeVFSMimeApplication *app;				
 				
@@ -496,9 +499,6 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 					g_free (path);
 					goto return_and_close;
 				}
-
-			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
-				command = g_strconcat ("nautilus ", path, NULL);
 			}
 			
 			if (!egg_screen_execute_command_line_async (
