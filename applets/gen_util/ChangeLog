@@ -1,3 +1,9 @@
+Thu Sep 02 1999 Elliot Lee <sopwith@redhat.com>
+	* mini_commander/src/command_line.c: Use gtk_widget_set_style()
+	instead of push_style;new;pop_style, since apparently the
+	style_stack gets used at realize time instead of creation time.
+	This is a BUGFIX #415.
+
 Sat Aug 21 10:10:41 1999  George Lebl  <jirka@5z.com>
 
 	* gen_util/printer.c: fixup the style setting, since get_rc_style can
