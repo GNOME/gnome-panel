@@ -3,6 +3,7 @@
 #include <glib.h>
 
 #include <gconf/gconf-client.h>
+#include <libgnomeui/gnome-client.h>
 
 #include "panel-gconf.h"
 
@@ -17,6 +18,16 @@ GConfClient * panel_gconf_get_client (void) {
                 client = gconf_client_get_default ();
 
         return client;
+}
+
+gchar * panel_gconf_get_session_key (void) {
+	static gchar *session_key;
+	if (session_key == NULL)  {
+		const gchar *panel_client_id;
+		panel_client_id = gnome_client_get_id (gnome_master_client ());	
+		session_key =  g_strdup_printf ("/apps/panel/sessions/%s/", panel_client_id);
+	}
+	return session_key;
 }
 
 gint panel_gconf_global_config_get_int (const gchar *key) {
