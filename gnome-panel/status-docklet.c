@@ -29,7 +29,7 @@ typedef void (*BuildSignal) (GtkObject * object,
 static GtkObjectClass *parent_class;
 
 guint
-status_docklet_get_type ()
+status_docklet_get_type (void)
 {
 	static guint status_docklet_type = 0;
 

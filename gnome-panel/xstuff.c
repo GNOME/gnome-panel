@@ -82,7 +82,7 @@ get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 static void
 try_adding_status(guint32 winid)
 {
-	gulong *data;
+	guint32 *data;
 	int size;
 
 	if(status_applet_get_ss(winid))
@@ -92,24 +92,21 @@ try_adding_status(guint32 winid)
 					winid,
 					KWM_DOCKWINDOW,
 					KWM_DOCKWINDOW,
-					&size,32);
+					&size, 32);
 
-	if(data) {
-		if(*data) {
-			StatusSpot *ss;
-			ss = new_status_spot();
-			if(ss)
-				gtk_socket_steal(GTK_SOCKET(ss->socket),
-						 winid);
-		}
-		g_free(data);
+	if(data && *data) {
+		StatusSpot *ss;
+		ss = new_status_spot();
+		if(ss)
+			gtk_socket_steal(GTK_SOCKET(ss->socket), winid);
 	}
+	g_free(data);
 }
 
 static void
 try_checking_swallows(guint32 winid)
 {
-	char *tit;
+	char *tit = NULL;
 	if(XFetchName(GDK_DISPLAY(), winid, &tit) &&
 	   tit) {
 		GList *li;
@@ -214,7 +211,9 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 							       GDK_ROOT_WINDOW(),
 							       _WIN_CLIENT_LIST,
 							       XA_CARDINAL,
-							       &client_list_size,32);
+							       &client_list_size, 32);
+			/* size returned is the number of bytes */
+			client_list_size /= 4;
 			go_through_client_list();
 		} else if(xevent->xproperty.atom == _WIN_SUPPORTING_WM_CHECK) {
 			redo_interface();
@@ -322,7 +321,9 @@ xstuff_init(void)
 					       GDK_ROOT_WINDOW(),
 					       _WIN_CLIENT_LIST,
 					       XA_CARDINAL,
-					       &client_list_size,32);
+					       &client_list_size, 32);
+	/* size returned is the number of bytes */
+	client_list_size /= 4;
 
 	go_through_client_list();
 }
@@ -521,10 +522,11 @@ xstuff_is_compliant_wm(void)
 							 _WIN_SUPPORTING_WM_CHECK,
 							 XA_CARDINAL,
 							 &size, 32);
-		if (wm_check_data && wm_check_data[0] == check_window)
+		if (wm_check_data &&
+		    wm_check_data[0] == check_window)
 			compliant_wm_win = check_window;
-		g_free (wm_check_data);
 		g_free (prop_data);
+		g_free (wm_check_data);
 	}
 	compliant_wm = (compliant_wm_win!=None);
 
@@ -534,8 +536,6 @@ xstuff_is_compliant_wm(void)
 
 		win = gdk_window_foreign_new(compliant_wm_win);
 
-		/* set up a filter on the root window to get map requests */
-		/* we will select the events later when we actually need them */
 		gdk_window_add_filter(win, wm_event_filter, NULL);
 
 		gdk_error_trap_push ();

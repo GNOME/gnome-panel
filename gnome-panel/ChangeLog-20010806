@@ -1,3 +1,10 @@
+Sun Apr 02 01:24:24 2000  George Lebl <jirka@5z.com>
+
+	* xstuff.c: fix a very bad segfault from reading the client list, I'm
+	  now wondering why this was working at all.
+
+	* status-docklet.c: use (void) rather then () in function declaration
+
 2000-04-02  Jonathan Blandford  <jrb@redhat.com>
 
 	* gnome-panel-properties.c (revert): prevent control-center from
