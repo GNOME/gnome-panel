@@ -9,6 +9,7 @@ INCLUDES = -I. -I$(srcdir) 			\
 	$(WNCKLET_CFLAGS) 			\
 	-DPAGER_GLADEDIR=\""$(gladedir)"\"	\
 	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"	\
+	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 
 
 gladedir   = $(datadir)/gen_util

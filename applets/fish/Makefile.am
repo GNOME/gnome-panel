@@ -3,6 +3,7 @@ INCLUDES =						\
 	-I$(srcdir)/../../libpanel-applet		\
 	-I$(top_builddir)/libpanel-applet		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
+	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""	\
 	$(GNOME_INCLUDEDIR)				\
 	$(WARN_CFLAGS)					\
 	$(PANEL_CFLAGS)

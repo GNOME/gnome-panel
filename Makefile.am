@@ -9,8 +9,8 @@ SUBDIRS =			\
 	man
 
 EXTRA_DIST = \
-	gnome-core.spec.in	\
-	gnome-core.spec		\
+	gnome-panel.spec.in	\
+	gnome-panel.spec	\
 	COPYING-DOCS		\
 	HACKING			\
 	sgmldocs.make		\
