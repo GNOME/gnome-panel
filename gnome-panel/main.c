@@ -473,7 +473,8 @@ main(int argc, char **argv)
 	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	bonobo_ui_init ("panel", VERSION, &argc, argv);
+	gnome_program_init ("panel", VERSION, &libgnomeui_module_info,
+			    argc, argv, NULL);
 
 	do_the_roswell_check ();
 

@@ -20,6 +20,8 @@
 #include <bonobo/bonobo-exception.h>
 #include <libgnome/gnome-config.h>
 
+#include <bonobo-activation/bonobo-activation.h>
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -1927,7 +1929,7 @@ panel_corba_clean_up(void)
 gint
 panel_corba_gtk_init(CORBA_ORB panel_orb)
 {
-#ifdef FIXME
+  Bonobo_RegistrationResult result;
   GNOME_Panel acc;
   CORBA_Object old_server;
   gint status;
@@ -1952,26 +1954,22 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
 
   acc = PortableServer_POA_servant_to_reference(thepoa, &panel_servant, &ev);
 
-  old_server = goad_server_activate_with_repo_id (NULL, "IDL:GNOME/Panel:1.0", 
-						  GOAD_ACTIVATE_EXISTING_ONLY,
-						  NULL);
+  old_server = bonobo_activation_activate_from_id("OAFIID:GNOME_Panel",
+						  Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
+						  NULL,
+						  &ev);
+  BONOBO_RET_VAL_EX (&ev, -1);
 
-  if(! CORBA_Object_is_nil(old_server, &ev)) {
+  if (!CORBA_Object_is_nil(old_server, &ev)) {
     CORBA_Object_release(old_server, &ev);
     return -4;
   }
 
-  status = goad_server_register(CORBA_OBJECT_NIL, acc, "gnome_panel", "server", &ev);
+  result = bonobo_activation_active_server_register("OAFIID:GNOME_Panel", acc);
+  if (result != Bonobo_ACTIVATION_REG_SUCCESS)
+    return -1;
 
-  /*
-  CORBA_Object_release(acc, &ev);
-  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
-  */
-
-  return status;
-#else
-  return -1;
-#endif
+  return 0;
 }
 
 static void

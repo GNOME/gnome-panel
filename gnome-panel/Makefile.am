@@ -26,17 +26,12 @@ INCLUDES = \
 	$(PANEL_CFLAGS) -Werror
 
 bin_PROGRAMS = \
-	panel				\
-	gnome-panel-properties-capplet	\
-	gnome-panel-add-launcher	\
-	gnome-panel-screenshot
+	panel-2
 
-noinst_PROGRAMS = panel-temp bad-applet
-
-libpanel_appletincludedir = $(includedir)
-libpanel_statusincludedir = $(includedir)
-
-lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
+# libpanel_appletincludedir = $(includedir)
+# libpanel_statusincludedir = $(includedir)
+# 
+# lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
 
 CORBA_SRCLIST = \
 	gnome-panel-stubs.c	\
@@ -66,40 +61,33 @@ panel-marshal.c: panel-marshal.h panel-marshal.list
 
 extern.c: gnome-panel.h
 
-libpanel_applet_la_SOURCES = \
-	applet-widget.c \
-	$(CORBA_SRCLIST)
-
-libpanel_appletinclude_HEADERS = \
-	applet-widget.h		\
-	gnome-panel.h
-
-libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
-libpanel_applet_la_LIBADD = $(PANEL_LIBS) -lm
-
-libpanel_status_la_SOURCES = \
-	status-docklet.c \
-	$(CORBA_SRCLIST)
-
-libpanel_statusinclude_HEADERS = \
-	status-docklet.h
-
-libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-libpanel_status_la_LIBADD = $(PANEL_LIBS) -lm
-
-bad_applet_SOURCES = bad-applet.c
-
-bad_applet_LDADD = \
-	libpanel_applet.la	\
-	$(PANEL_LIBS)		\
-	$(INTLLIBS)
+# libpanel_applet_la_SOURCES = \
+# 	applet-widget.c \
+# 	$(CORBA_SRCLIST)
+# 
+# libpanel_appletinclude_HEADERS = \
+# 	applet-widget.h		\
+# 	gnome-panel.h
+# 
+# libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
+# libpanel_applet_la_LIBADD = $(PANEL_LIBS) -lm
+# 
+# libpanel_status_la_SOURCES = \
+# 	status-docklet.c \
+# 	$(CORBA_SRCLIST)
+# 
+# libpanel_statusinclude_HEADERS = \
+# 	status-docklet.h
+# 
+# libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+# libpanel_status_la_LIBADD = $(PANEL_LIBS) -lm
 
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	panel-marshal.c		\
 	panel-marshal.h
 
-panel_SOURCES=\
+panel_2_SOURCES=\
 	$(CORBA_SRCLIST)	\
 	panel-include.h		\
 	panel-types.h		\
@@ -180,46 +168,17 @@ panel_SOURCES=\
 	extern.h  		\
 	$(NULL)
 
-panel_LDADD=\
+panel_2_LDADD=\
 	$(PANEL_LIBS)		\
 	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
 
-panel_LDFLAGS=-export-dynamic
-
-gnome_panel_properties_capplet_SOURCES = \
-	gnome-panel-properties.c	\
-	panel-util.c			\
-	icon-entry-hack.c		\
-	conditional.c			\
-	$(CORBA_SRCLIST)
-
-gnome_panel_properties_capplet_LDADD = \
-	$(PANEL_LIBS)		\
-	$(INTLLIBS)
-
-gnome_panel_add_launcher_SOURCES = \
-	gnome-panel-add-launcher.c	\
-	$(CORBA_SRCLIST)
-
-gnome_panel_screenshot_SOURCES = \
-	gnome-panel-screenshot.c
-
-gnome_panel_add_launcher_LDADD = \
-	$(PANEL_LIBS)		\
-	$(INTLLIBS)
-
-gnome_panel_screenshot_LDADD = \
-	$(PANEL_LIBS)		\
-	$(INTLLIBS)
+panel_2_LDFLAGS=-export-dynamic
 
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
 EXTRA_DIST = \
-	appletsConf.sh.in		\
-	dockletsConf.sh.in		\
-	panel.gnorba			\
-	panel.soundlist			\
 	APPLET_WRITING			\
+	panel.server.in			\
 	panel.hints			\
 	gnome-panel-properties.desktop	\
 	nothing.cP			\
@@ -227,12 +186,16 @@ EXTRA_DIST = \
 	gnome-panel-screenshot.glade	\
 	gnome-panel-screenshot.glade.h
 
+SERVER_FILES = 						\
+	panel.server
 
-panelgnorbadir  = $(sysconfdir)/CORBA/servers
-panelgnorba_DATA = panel.gnorba
+serverdir = $(datadir)/bonobo-activation
+server_DATA = $(SERVER_FILES)
 
-soundlistdir = $(sysconfdir)/sound/events
-soundlist_DATA = panel.soundlist
+panel.server : $(srcdir)/panel.server.in $(top_builddir)/config.status
+	sed -e "s|\@bindir\@|$(bindir)|" \
+	$(srcdir)/panel.server.in > panel.server 
+
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =gnome-panel-screenshot.glade
