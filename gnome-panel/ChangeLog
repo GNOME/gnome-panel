@@ -1,5 +1,11 @@
 1999-10-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* drawer-widget.c (drawer_pos_get_applet_orient): know about
+	floating widgets
+	(drawer_widget_change_params): fix up state on orient change
+	(so applets will slide from the right side.  well, unless
+	it should be sliding from the left)
+
 	* panel-widget.c (panel_widget_size_request): make panel-widgets
 	at least 12 pixels wide/high
 

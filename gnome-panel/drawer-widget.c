@@ -8,6 +8,7 @@
 
 #include "drawer-widget.h"
 #include "border-widget.h"
+#include "floating-widget.h"
 #include "panel_config_global.h"
 
 extern GlobalConfig global_config;
@@ -165,10 +166,19 @@ drawer_pos_get_applet_orient (BasePWidget *basep)
 				? ORIENT_LEFT : ORIENT_UP;
 			break;
 		}
+	} else if (IS_FLOATING_WIDGET (tpd->panel)) {
+		if (porient == PANEL_VERTICAL)
+			orient = (FLOATING_POS (BASEP_WIDGET (tpd->panel)->pos)->y <
+				  gdk_screen_height () / 2)
+				? ORIENT_DOWN : ORIENT_UP;
+		else
+			orient = (FLOATING_POS (BASEP_WIDGET (tpd->panel)->pos)->x <
+				  gdk_screen_width () / 2)
+				? ORIENT_RIGHT : ORIENT_LEFT;
 	} else if (IS_DRAWER_WIDGET (tpd->panel)) {
 		orient = (porient == PANEL_VERTICAL)
 			? ORIENT_RIGHT : ORIENT_UP;
-	} else {
+	} else { 
 		g_warning (_("Don't know about base panel type: %d\n"), tpd->type);
 	}
 	
@@ -376,6 +386,18 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 
 	if (PANEL_WIDGET (BASEP_WIDGET (drawer)->panel)->orient != porient)
 		BASEP_WIDGET (drawer)->request_cube = TRUE;
+
+	if (state != BASEP_WIDGET (drawer)->state ||
+	    pos->orient != orient) {
+		if (state == BASEP_HIDDEN_LEFT &&
+		    (orient == ORIENT_LEFT ||
+		     orient == ORIENT_UP))
+			state = BASEP_HIDDEN_RIGHT;
+		else if (state == BASEP_HIDDEN_RIGHT &&
+			 (orient == ORIENT_RIGHT ||
+			  orient == ORIENT_DOWN))
+			 state = BASEP_HIDDEN_LEFT;
+	}
 
 	if (pos->orient != orient) {
 		pos->orient = orient;
