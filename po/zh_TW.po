@@ -12,9 +12,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.3.2.1\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
-"PO-Revision-Date: 2003-05-30 06:08+0800\n"
+"Project-Id-Version: gnome-panel 2.3.3\n"
+"POT-Creation-Date: 2003-06-09 23:17+0800\n"
+"PO-Revision-Date: 2003-06-09 23:51+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -157,7 +157,7 @@ msgstr ""
 "\n"
 "Abel Cheung <maddog@linux.org.hk>, 2001-2003\n"
 "Chih-Wei Huang <cwhuang@linux.org.tw>, 2000\n"
-"Jing-Jong SHYUE <shyue@sonoma.com.tw>, 2000\n"
+"Jing-Jong Shyue <shyue@sonoma.com.tw>, 2000\n"
 "Yuan-Chung Cheng <platin@linux.org.tw>, 1999"
 
 #: applets/clock/clock.c:1550
@@ -212,11 +212,11 @@ msgstr "在時鐘內顯示日期"
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "當滑鼠鼠標在時鐘內的時候，以工具提示的形式顯示日期"
+msgstr "將滑鼠鼠標移至時鐘後，以工具提示的形式顯示日期"
 
 #: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
-msgstr "以工作提示的形式顯示日期"
+msgstr "以工具提示的形式顯示日期"
 
 #: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
@@ -649,7 +649,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "顯示所有工作區中的視窗(_L)"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3358
 msgid "Size"
 msgstr "大小"
 
@@ -909,7 +909,7 @@ msgstr "顯示箭頭"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "是否繪畫箭頭"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3347
 msgid "Orientation"
 msgstr "方向"
 
@@ -2137,7 +2137,6 @@ msgid "Background _image:"
 msgstr "背景圖片(_I)："
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "底部"
@@ -2159,7 +2158,6 @@ msgid "Image Background Details"
 msgstr "圖片背景詳細設定"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "左方"
@@ -2173,7 +2171,6 @@ msgid "Pick a color"
 msgstr "選取顏色"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "右方"
@@ -2199,7 +2196,6 @@ msgid "St_retch"
 msgstr "不依比例伸展(_R)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "頂部"
@@ -2372,158 +2368,196 @@ msgstr "無法載入面板的內置圖示‘%s’\n"
 msgid "_Force quit"
 msgstr "強制離開(_F)"
 
-#: gnome-panel/panel-toplevel.c:1359
-msgid "Floating"
-msgstr "浮動"
+#: gnome-panel/panel-toplevel.c:1340
+msgid "Top Expanded Edge Panel"
+msgstr "頂部擴大邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1341
+msgid "Top Centered Panel"
+msgstr "頂部置中面板"
+
+#: gnome-panel/panel-toplevel.c:1342
+msgid "Top Floating Panel"
+msgstr "頂部浮動面板"
+
+#: gnome-panel/panel-toplevel.c:1343
+msgid "Top Edge Panel"
+msgstr "頂部邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1347
+msgid "Bottom Expanded Edge Panel"
+msgstr "底部擴大邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1348
+msgid "Bottom Centered Panel"
+msgstr "底部置中面板"
+
+#: gnome-panel/panel-toplevel.c:1349
+msgid "Bottom Floating Panel"
+msgstr "底部浮動面板"
+
+#: gnome-panel/panel-toplevel.c:1350
+msgid "Bottom Edge Panel"
+msgstr "底部邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1354
+msgid "Left Expanded Edge Panel"
+msgstr "左邊擴大邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1355
+msgid "Left Centered Panel"
+msgstr "左邊置中面板"
+
+#: gnome-panel/panel-toplevel.c:1356
+msgid "Left Floating Panel"
+msgstr "左邊浮動面板"
+
+#: gnome-panel/panel-toplevel.c:1357
+msgid "Left Edge Panel"
+msgstr "左邊邊界面板"
+
+#: gnome-panel/panel-toplevel.c:1361
+msgid "Right Expanded Edge Panel"
+msgstr "右邊擴大邊界面板"
 
 #: gnome-panel/panel-toplevel.c:1362
-msgid "Centered"
-msgstr "置中"
+msgid "Right Centered Panel"
+msgstr "右邊置中面板"
+
+#: gnome-panel/panel-toplevel.c:1363
+msgid "Right Floating Panel"
+msgstr "右邊浮動面板"
 
 #: gnome-panel/panel-toplevel.c:1364
-msgid "Expanded Edge"
-msgstr "擴大邊界"
+msgid "Right Edge Panel"
+msgstr "右邊邊界面板"
 
-#: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr "邊界"
-
-# Don't translate it yet if not all other %s are translated -- Abel
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
-#: gnome-panel/panel-toplevel.c:1372
-#, c-format
-msgid "%s %s Panel"
-msgstr "%s%s面板"
-
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:3327
 msgid "Name"
 msgstr "名稱"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3328
 msgid "The name of this panel"
 msgstr "本面板的名稱"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3337
 msgid "Expand"
 msgstr "擴展"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3338
 msgid "Expand to take up the full monitor width/height"
 msgstr "擴展至佔用整個螢幕的寬度或高度"
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3348
 msgid "The orientation of the panel"
 msgstr "面板的方向"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3359
 msgid "The height (or width when vertical) of the panel"
 msgstr "面板的高度 (或垂直面板的寬度)"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3371
 msgid "X position"
 msgstr "水平位置"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3372
 msgid "The X position of the panel"
 msgstr "面板的水平位置"
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3383
 msgid "X centered"
 msgstr "水平置中"
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3384
 msgid "The x co-ordinate is relative to center screen"
 msgstr "X 座標是從畫面中央開始計算"
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3393
 msgid "Y position"
 msgstr "垂直位置"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3394
 msgid "The Y position of the panel"
 msgstr "面板的垂直位置"
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3405
 msgid "Y centered"
 msgstr "垂直置中"
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3406
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Y 座標是從畫面中央開始計算"
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3415
 msgid "Xinerama monitor"
 msgstr "Xinerama 螢幕"
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3416
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "面板所在的螢幕 (以 Xinerama 方式表示)"
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Auto hide"
 msgstr "自動隱藏"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "當鼠標移離面板時自動隱藏面板"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3437
 msgid "Hide delay"
 msgstr "隱藏面板的延遲時間"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3438
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "自動隱藏前延遲的時間(毫秒)"
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3449
 msgid "Un-hide delay"
 msgstr "取消隱藏面板的延遲時間"
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3450
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "自動取消隱藏前延遲的時間(毫秒)"
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3461
 msgid "Auto-hide size"
 msgstr "自動隱藏後的大小"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3462
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "面板自動隱藏後會在畫面中保留指定數目的像素"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3473
 msgid "Animate"
 msgstr "平滑移動"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3474
 msgid "Enable hiding/showing animations"
 msgstr "隱藏/顯示面板時會平滑移動"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3483
 msgid "Animation Speed"
 msgstr "平滑移動速度"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "隱藏/顯示面板時平滑移動的速度"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3494
 msgid "Buttons Enabled"
 msgstr "啟用按鈕"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Enable hide/show buttons"
 msgstr "啟用隱藏/顯示的按鈕"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Arrows Enabled"
 msgstr "啟用箭頭"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Enable arrows on hide/show buttons"
 msgstr "在隱藏/顯示的按鈕中顯示箭頭"
 
@@ -3006,32 +3040,14 @@ msgstr "極微型"
 #~ msgid "Choose a file"
 #~ msgstr "選擇檔案"
 
-#~ msgid "Known Applications"
-#~ msgstr "已知的應用程式"
-
-#~ msgid "No application selected"
-#~ msgstr "未選取應用程式"
-
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "按下小魚時執行以下的指令(_E)："
-
 #~ msgid "Pause _per frame (s):"
 #~ msgstr "每格的暫停時間[秒](_P)："
 
 #~ msgid "_Animation filename:"
 #~ msgstr "動畫檔案名稱(_A)："
 
-#~ msgid "Rows"
-#~ msgstr "行"
-
 #~ msgid "_Append File..."
 #~ msgstr "附加檔案名稱(_A)..."
-
-#~ msgid "Run Program"
-#~ msgstr "執行程式"
-
-#~ msgid "Run Program..."
-#~ msgstr "執行程式..."
 
 #~ msgid "Transparent"
 #~ msgstr "透明"
@@ -3042,14 +3058,8 @@ msgstr "極微型"
 #~ msgid "There was an error executing %s: %s"
 #~ msgstr "執行 %s 時出現錯誤：%s"
 
-#~ msgid "Password Entry box"
-#~ msgstr "密碼輸入欄位"
-
 #~ msgid "Status not updated"
 #~ msgstr "狀態並未更新"
-
-#~ msgid "Username Entry box"
-#~ msgstr "用戶名稱輸入欄位"
 
 #~ msgid "_Password:"
 #~ msgstr "密碼(_P)："
@@ -3078,35 +3088,17 @@ msgstr "極微型"
 #~ msgid "Text only"
 #~ msgstr "只顯示文字"
 
-#~ msgid "Do we run the exec-command"
-#~ msgstr "是否執行 exec-command"
-
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "如果設定本選項，則應執行 exec-command"
-
 #~ msgid "Path to the animation file"
 #~ msgstr "動畫檔的路徑"
 
 #~ msgid "The user's password"
 #~ msgstr "用戶的密碼"
 
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr "代碼為 %s 的面板物件並未設定 object_type\n"
-
 #~ msgid "Mode"
 #~ msgstr "模式"
 
 #~ msgid "State"
 #~ msgstr "狀態"
-
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr "是否啟用隱藏按鈕 (即用來隱藏或顯示面板的按鈕)？"
-
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "隱藏按鈕可使用 pixmap"
-
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "在隱藏按鈕中顯示 pixmap"
 
 #~ msgid "Hide this panel"
 #~ msgstr "隱藏本面板"
@@ -3120,81 +3112,17 @@ msgstr "極微型"
 #~ msgid "GNOME Menu Panel"
 #~ msgstr "GNOME 選單面板"
 
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "找不到畫面快照程式"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "無法執行畫面快照程式"
-
 #~ msgid "Panel to add the launcher to"
 #~ msgstr "準備加入啟動圖示的面板"
 
 #~ msgid "NUMBER"
 #~ msgstr "數值"
 
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "引數必須是一個 URL 而並非 .desktop 檔案"
-
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr "必須提供一個 .desktop 檔案或 URL 作為引數\n"
-
 #~ msgid "No panel found\n"
 #~ msgstr "找不到面板\n"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "對齊面板"
-
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "GNOME 對齊面板"
-
-#~ msgid "Edge Panel"
-#~ msgstr "邊界面板"
-
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "GNOME 邊界面板"
-
-#~ msgid "Sliding Panel"
-#~ msgstr "滑動面板"
-
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "GNOME 滑動面板"
-
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "GNOME 浮動面板"
-
 #~ msgid "You can only have one menu panel at a time."
 #~ msgstr "一次只能有一個選單面板出現。"
-
-#~ msgid "C_orner Panel"
-#~ msgstr "邊角面板(_O)"
-
-#~ msgid "Create corner panel"
-#~ msgstr "建立邊角面板"
-
-#~ msgid "_Edge Panel"
-#~ msgstr "邊界面板(_E)"
-
-#~ msgid "Create edge panel"
-#~ msgstr "建立邊界面板"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "浮動面板(_F)"
-
-#~ msgid "Create floating panel"
-#~ msgstr "建立浮動面板"
-
-#~ msgid "_Sliding Panel"
-#~ msgstr "滑動面板(_S)"
-
-#~ msgid "Create sliding panel"
-#~ msgstr "建立滑動面板"
-
-#~ msgid "_Menu Panel"
-#~ msgstr "選單面板(_M)"
-
-#~ msgid "Create menu panel"
-#~ msgstr "建立選單面板"
 
 #~ msgid "Button"
 #~ msgstr "按鈕"
@@ -3202,19 +3130,8 @@ msgstr "極微型"
 #~ msgid "Menu:"
 #~ msgstr "選單："
 
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "無法建立選單，使用主選單！"
-
 #~ msgid "No path set at %s for panel menu object\n"
 #~ msgstr "面板選單物件中的 %s 設定鍵並未設定任何路徑\n"
-
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "無法登記視窗控制元件\n"
-
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr "組態中並沒有任何面板。現在會替使用者建立選單面板"
 
 #~ msgid "Miscellaneous:"
 #~ msgstr "其它："
@@ -3249,41 +3166,11 @@ msgstr "極微型"
 #~ msgid "Default"
 #~ msgstr "預設"
 
-#~ msgid "Edge panel"
-#~ msgstr "邊界面板"
-
-#~ msgid "Corner panel"
-#~ msgstr "邊角面板"
-
-#~ msgid "Sliding panel"
-#~ msgstr "滑動面板"
-
-#~ msgid "Floating panel"
-#~ msgstr "浮動面板"
-
-#~ msgid "Corner Panel"
-#~ msgstr "邊角面板"
-
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr "開啟「執行」對話方塊時，預設會顯示程式清單"
-
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr "在「執行」對話方塊中顯示程式清單"
-
 #~ msgid "Disabled"
 #~ msgstr "關閉"
 
 #~ msgid "Applets"
 #~ msgstr "面板程式"
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "無法建立面板程式！\n"
-
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "在面板程式上按下滑鼠按鈕時執行的指令"
-
-#~ msgid "In a submenu"
-#~ msgstr "於副選單內"
 
 #~ msgid "On the main menu"
 #~ msgstr "在主選單上"
@@ -3294,14 +3181,8 @@ msgstr "極微型"
 #~ msgid "Menu type"
 #~ msgstr "選單種類"
 
-#~ msgid "Global main menu"
-#~ msgstr "整體的主選單"
-
 #~ msgid "Main menu"
 #~ msgstr "主選單"
-
-#~ msgid "Normal menu"
-#~ msgstr "一般選單"
 
 #~ msgid "Programs: "
 #~ msgstr "程式："
@@ -3317,9 +3198,6 @@ msgstr "極微型"
 
 #~ msgid "Hiding"
 #~ msgstr "隱藏"
-
-#~ msgid "Enable Auto-hide"
-#~ msgstr "啟用自動隱藏"
 
 #~ msgid "Offset from screen edge:"
 #~ msgstr "和畫面邊緣的距離："
@@ -3342,35 +3220,8 @@ msgstr "極微型"
 #~ msgid "_Browse..."
 #~ msgstr "瀏覽(_B)..."
 
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr "已經有一個嵌入式程式顯示工具放置於面板中。此工具只能有一個。"
-
-#~ msgid "Executable name for selected application"
-#~ msgstr "所選取的應用程式的可執行檔名稱"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "隱藏此按鈕之下的進階選項。"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "桌面項目屬性"
-
-#~ msgid "Create menu item"
-#~ msgstr "建立選單項目"
-
-#~ msgid "Grab key..."
-#~ msgstr "擷取按鍵..."
-
-#~ msgid "Run Program dialog:"
-#~ msgstr "執行程式對話方塊："
-
 #~ msgid "Shortcut keys"
 #~ msgstr "捷徑鍵"
-
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "啟用捷徑鍵(_E)"
-
-#~ msgid "menu wasn't created"
-#~ msgstr "沒有建立選單"
 
 #~ msgid "Reload"
 #~ msgstr "重新載入"
@@ -3387,35 +3238,14 @@ msgstr "極微型"
 #~ msgid "Programs"
 #~ msgstr "程式"
 
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "將面板程式以啟動圖示方式加入面板"
-
 #~ msgid "Programs menu"
 #~ msgstr "程式選單"
-
-#~ msgid "Network"
-#~ msgstr "網路"
-
-#~ msgid "Mail check properties"
-#~ msgstr "郵件檢查程式屬性"
 
 #~ msgid "Advanced..."
 #~ msgstr "進階設定..."
 
 #~ msgid "Remove"
 #~ msgstr "移除"
-
-#~ msgid "Do not start up shells as login shells"
-#~ msgstr "不使用登入模式的命令殼"
-
-#~ msgid "Start up shells as login shells"
-#~ msgstr "使用登入模式的命令殼"
-
-#~ msgid "GEOMETRY"
-#~ msgstr "位置大小"
-
-#~ msgid "Execute this program instead of a shell"
-#~ msgstr "執行這個程式而不是命令殼"
 
 #~ msgid "COMMAND"
 #~ msgstr "指令"
@@ -3453,47 +3283,14 @@ msgstr "極微型"
 #~ msgid "Command"
 #~ msgstr "指令"
 
-#~ msgid "Browse Currently Running Programs..."
-#~ msgstr "瀏覽執行中的程式..."
-
-#~ msgid "Add from menu"
-#~ msgstr "由選單加入"
-
-#~ msgid " (empty)"
-#~ msgstr " (空白)"
-
-#~ msgid "Remove applet"
-#~ msgstr "移除面板程式"
-
-#~ msgid "Thumb Nails"
-#~ msgstr "縮圖"
-
-#~ msgid "Fill window thumbnails with screen contents"
-#~ msgstr "使用畫面內容填滿視窗縮圖"
-
-#~ msgid "Tooltips"
-#~ msgstr "工具提示"
-
-#~ msgid "Tasks"
-#~ msgstr "工作"
-
 #~ msgid "Geometry"
 #~ msgstr "位置及大小"
 
 #~ msgid "Rows of Desktops"
 #~ msgstr "桌面的行數"
 
-#~ msgid "Tasklist: Unable to create applet widget"
-#~ msgstr "工作清單：無法建立面板程式 widget"
-
 #~ msgid "Save"
 #~ msgstr "儲存"
-
-#~ msgid "_New Submenu..."
-#~ msgstr "新增副選單(_N)..."
-
-#~ msgid "Create a new submenu"
-#~ msgstr "建立新的副選單"
 
 #~ msgid "New _Item..."
 #~ msgstr "新增項目(_I)..."
@@ -3504,9 +3301,6 @@ msgstr "極微型"
 #~ msgid "_Delete..."
 #~ msgstr "刪除(_D)..."
 
-#~ msgid "_Sort Submenu"
-#~ msgstr "排列副選單(_S)"
-
 #~ msgid "_Sort"
 #~ msgstr "排列(_S)"
 
@@ -3516,53 +3310,8 @@ msgstr "極微型"
 #~ msgid "New Item"
 #~ msgstr "新增項目"
 
-#~ msgid "Create a new item"
-#~ msgstr "建立新的項目"
-
-#~ msgid "Delete selected menu item"
-#~ msgstr "刪除所選取的項目"
-
-#~ msgid "Move up"
-#~ msgstr "上移"
-
-#~ msgid "Move down"
-#~ msgstr "下移"
-
-#~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "無法讀入 GNOME 安裝目錄\n"
-
-#~ msgid "Unable to create file: %s\n"
-#~ msgstr "無法建立檔案：%s\n"
-
-#~ msgid "unable to remove .order file: %s\n"
-#~ msgstr "無法移除 .order 檔案：%s\n"
-
-#~ msgid "The menu item must have a name"
-#~ msgstr "選單項目必須有名稱"
-
-#~ msgid "The menu entry must have a filename"
-#~ msgstr "選單項目必須有檔案名稱"
-
-#~ msgid "No socket was created"
-#~ msgstr "沒有建立 socket"
-
-#~ msgid "In the menu"
-#~ msgstr "於選單內"
-
 #~ msgid "Show menu titles"
 #~ msgstr "顯示選單標題"
-
-#~ msgid "Confirm the removal of panels with a dialog"
-#~ msgstr "當移除面板時使用確認對話方塊"
-
-#~ msgid "Take window screenshot key"
-#~ msgstr "用於擷取視窗畫面的按鍵"
-
-#~ msgid "Fish Applet"
-#~ msgstr "小魚面板程式"
-
-#~ msgid "All properties..."
-#~ msgstr "所有屬性..."
 
 #~ msgid "_Show menubar"
 #~ msgstr "顯示選單列(_S)"
@@ -3573,29 +3322,5 @@ msgstr "極微型"
 #~ msgid "The error was: %s"
 #~ msgstr "錯誤為：%s"
 
-#~ msgid "Launcher icon"
-#~ msgstr "啟動圖示"
-
 #~ msgid "Menu icon"
 #~ msgstr "選單圖示"
-
-#~ msgid "Special icon"
-#~ msgstr "特殊圖示"
-
-#~ msgid "Switched movement (or use Ctrl)"
-#~ msgstr "切換移動 (會和其它面板程式交換位置) (或使用 Crtl 鍵)"
-
-#~ msgid "Free movement (doesn't disturb other applets) (or use Alt)"
-#~ msgstr "自由移動 (不影響其它的面板程式) (或使用 Alt 鍵)"
-
-#~ msgid "Push movement (or use Shift)"
-#~ msgstr "推動移動 (會連其它面板程式一起移動) (或使用 Shift 鍵)"
-
-#~ msgid "Collapse"
-#~ msgstr "縮小"
-
-#~ msgid "Utilities"
-#~ msgstr "公用程式"
-
-#~ msgid "Halt"
-#~ msgstr "停機"
