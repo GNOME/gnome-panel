@@ -146,11 +146,9 @@ static int mail_check_timeout (gpointer data);
 static void after_mail_check (MailCheck *mc);
 
 static void applet_load_prefs(MailCheck *mc);
-static void applet_save_prefs(MailCheck *mc);
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
-static void close_callback (GtkWidget *widget, void *data);
 
 static char *
 mail_animation_filename (MailCheck *mc)
@@ -650,103 +648,6 @@ create_mail_widgets (MailCheck *mc)
 }
 
 static void
-set_selection (GtkWidget *widget, gpointer data)
-{
-	MailCheck *mc = g_object_get_data(G_OBJECT(widget), "MailCheck");
-	mc->selected_pixmap_name = data;
-	mc->anim_changed = TRUE;
-
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
-}
-
-static void
-property_box_changed(GtkWidget *widget, gpointer data)
-{
-	MailCheck *mc = data;
-	
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
-}
-
-static void
-mailcheck_new_entry (MailCheck *mc, GtkWidget *menu, GtkWidget *item, char *s)
-{
-	gtk_menu_append (GTK_MENU (menu), item);
-
-	g_object_set_data (G_OBJECT (item), "MailCheck", mc);
-
-	gtk_signal_connect_full (GTK_OBJECT (item), "activate",
-				 GTK_SIGNAL_FUNC (set_selection),
-				 NULL,
-				 g_strdup (s),
-				 (GtkDestroyNotify)g_free,
-				 FALSE, FALSE);
-}
-
-static GtkWidget *
-mailcheck_get_animation_menu (MailCheck *mc)
-{
-	GtkWidget *omenu, *menu, *item;
-	struct    dirent *e;
-	char      *dname = gnome_unconditional_pixmap_file ("mailcheck");
-	DIR       *dir;
-	const char      *basename = NULL;
-	int       i = 0, select_item = 0;
-
-	mc->selected_pixmap_name = mc->mailcheck_text_only;
-	omenu = gtk_option_menu_new ();
-	menu = gtk_menu_new ();
-
-	item = gtk_menu_item_new_with_label (mc->mailcheck_text_only);
-	gtk_widget_show (item);
-	mailcheck_new_entry (mc, menu, item, mc->mailcheck_text_only);
-
-	if (mc->animation_file != NULL)
-		basename = g_basename (mc->animation_file);
-	else
-		basename = NULL;
-
-	i = 1;
-	dir = opendir (dname);
-	if (dir){
-		while ((e = readdir (dir)) != NULL){
-			char *s;
-			
-			if (! (strstr (e->d_name, ".xpm") ||
-			       strstr (e->d_name, ".png") ||
-			       strstr (e->d_name, ".gif") ||
-			       strstr (e->d_name, ".jpg")))
-				continue;
-
-			s = g_strdup (e->d_name);
-			if (!mc->selected_pixmap_name)
-				mc->selected_pixmap_name = s;
-			if (basename && strcmp (basename, e->d_name) == 0)
-				select_item = i;
-			item = gtk_menu_item_new_with_label (s);
-			i++;
-			gtk_widget_show (item);
-			
-			mailcheck_new_entry (mc,menu, item, s);
-
-			g_free (s);
-		}
-		closedir (dir);
-	}
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (omenu), menu);
-	gtk_option_menu_set_history (GTK_OPTION_MENU (omenu), select_item);
-	gtk_widget_show (omenu);
-	g_free (dname);
-	return omenu;
-}
-
-static void
-close_callback (GtkWidget *widget, gpointer data)
-{
-	MailCheck *mc = data;
-	mc->property_window = NULL;
-}
-
-static void
 load_new_pixmap (MailCheck *mc)
 {
 	gtk_widget_hide (mc->containee);
@@ -785,145 +686,98 @@ load_new_pixmap (MailCheck *mc)
 }
 
 static void
-apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
+animation_selected (GtkMenuItem *item, gpointer data)
 {
-	const char *text;
-	MailCheck *mc = (MailCheck *)data;
+	MailCheck *mc = g_object_get_data(G_OBJECT(item), "MailCheck");
+	mc->selected_pixmap_name = data;
 	
-	if(page!=-1) return;
+	load_new_pixmap (mc);
+	panel_applet_gconf_set_string(mc->applet, "animation-file", 
+				      mc->animation_file, NULL);
+}
+
+static void
+mailcheck_new_entry (MailCheck *mc, GtkWidget *menu, GtkWidget *item, char *s)
+{
+	gtk_menu_append (GTK_MENU (menu), item);
+
+	g_object_set_data (G_OBJECT (item), "MailCheck", mc);
 	
-	mc->update_freq = 1000 * (guint)(gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->sec_spin)) + 
-					 60 * gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->min_spin)));
-	/* do this here since we can no longer make the seconds
-	 * minimum 1
-	 */
-	if (mc->update_freq == 0) {
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->sec_spin), 0.0);
-		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->min_spin), 1.0);
-		mc->update_freq = 60*1000;
+	gtk_signal_connect_full (GTK_OBJECT (item), "activate",
+				 GTK_SIGNAL_FUNC (animation_selected),
+				 NULL,
+				 g_strdup (s),
+				 (GtkDestroyNotify)g_free,
+				 FALSE, FALSE);
+
+}
+
+static GtkWidget *
+mailcheck_get_animation_menu (MailCheck *mc)
+{
+	GtkWidget *omenu, *menu, *item;
+	struct    dirent *e;
+	char      *dname = gnome_unconditional_pixmap_file ("mailcheck");
+	DIR       *dir;
+	const char      *basename = NULL;
+	int       i = 0, select_item = 0;
+
+	mc->selected_pixmap_name = mc->mailcheck_text_only;
+	omenu = gtk_option_menu_new ();
+	menu = gtk_menu_new ();
+
+	item = gtk_menu_item_new_with_label (mc->mailcheck_text_only);
+	gtk_widget_show (item);
+	mailcheck_new_entry (mc, menu, item, mc->mailcheck_text_only);
+
+	if (mc->animation_file != NULL)
+		basename = g_basename (mc->animation_file);
+	else
+		basename = NULL;
+
+	i = 1;
+	dir = opendir (dname);
+	if (dir){
+		while ((e = readdir (dir)) != NULL){
+			char *s;
+			
+			if (! (strstr (e->d_name, ".xpm") ||
+			       strstr (e->d_name, ".png") ||
+			       strstr (e->d_name, ".gif") ||
+			       strstr (e->d_name, ".jpg")))
+				continue;
+
+			s = g_strdup (e->d_name);
+			/* FIXME the string s will be freed in a second so 
+			** this should be a strdup */
+			if (!mc->selected_pixmap_name)
+				mc->selected_pixmap_name = s;
+			if (basename && strcmp (basename, e->d_name) == 0)
+				select_item = i;
+			item = gtk_menu_item_new_with_label (s);
+			
+			i++;
+			gtk_widget_show (item);
+			
+			mailcheck_new_entry (mc,menu, item, s);
+
+			g_free (s);
+		}
+		closedir (dir);
 	}
-
-	if(mc->mail_timeout != 0)
-		gtk_timeout_remove (mc->mail_timeout);
-	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
-	
-	if (mc->clicked_cmd) {
-		g_free(mc->pre_check_cmd);
-		mc->pre_check_cmd = NULL;
-	}
-
-	text = gtk_entry_get_text (GTK_ENTRY(mc->pre_check_cmd_entry));
-	
-	if (strlen (text) > 0)
-		mc->pre_check_cmd = g_strdup (text);
-	mc->pre_check_enabled = GTK_TOGGLE_BUTTON(mc->pre_check_cmd_check)->active;
-	
-	if (mc->clicked_cmd) {
-		g_free(mc->clicked_cmd);
-		mc->clicked_cmd = NULL;
-        }
-
-        text = gtk_entry_get_text (GTK_ENTRY(mc->clicked_cmd_entry));
-
-        if (strlen(text) > 0)
-                mc->clicked_cmd = g_strdup(text);
-	mc->clicked_enabled = GTK_TOGGLE_BUTTON(mc->clicked_cmd_check)->active;
-
-	if (mc->newmail_cmd) {
-		g_free(mc->newmail_cmd);
-		mc->newmail_cmd = NULL;
-	}
-
-	text = gtk_entry_get_text (GTK_ENTRY(mc->newmail_cmd_entry));
-
-	if (strlen(text) > 0)
-		mc->newmail_cmd = g_strdup(text);
-	mc->newmail_enabled = GTK_TOGGLE_BUTTON(mc->newmail_cmd_check)->active;
-
-	if (mc->anim_changed)
-		load_new_pixmap (mc);
-	
-	mc->anim_changed = FALSE;
-        
-	if (mc->mail_file) {
-		g_free(mc->mail_file);
-		mc->mail_file = NULL;
-	}
-
-	text = gtk_entry_get_text (GTK_ENTRY (mc->mailfile_entry));
-
-	if (strlen(text) > 0)
-		mc->mail_file = g_strdup(text);
-
-	if (mc->remote_server) {
-		g_free(mc->remote_server);
-		mc->remote_server = NULL;
-	}
-
-        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_server_entry));
-	
-	if (strlen(text) > 0)
-		mc->remote_server = g_strdup(text);
-
-	if (mc->remote_username) {
-		g_free(mc->remote_username);
-		mc->remote_username = NULL;
-	}
-
-        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_username_entry));
-
-	if (strlen(text) > 0)
-		mc->remote_username = g_strdup(text);
-
-	if (mc->remote_password) {
-		g_free(mc->remote_password);
-		mc->remote_password = NULL;
-	}
-
-        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_password_entry));
-
-	if (strlen(text) > 0)
-		mc->remote_password = g_strdup(text);
-
-        if (mc->remote_folder) {
-                g_free(mc->remote_folder);
-                mc->remote_folder = NULL;
-        }
- 
-        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_folder_entry));
- 
-        if (strlen(text) > 0)
-                mc->remote_folder = g_strdup(text);
-
-	if (mc->pre_remote_command) {
-		g_free(mc->pre_remote_command);
-		mc->pre_remote_command = NULL;
-	}
-
-        text = gtk_entry_get_text (GTK_ENTRY(mc->pre_remote_command_entry));
-	
-	if (strlen(text) > 0)
-		mc->pre_remote_command = g_strdup(text);
-        
-	mc->mailbox_type = mc->mailbox_type_temp;
-
-	mc->play_sound = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mc->play_sound_check));
-
-	if ((mc->mailbox_type != MAILBOX_POP3) &&
-	    (mc->mailbox_type != MAILBOX_IMAP) &&
-	    (mc->remote_handle != NULL)) {
-		helper_whack_handle (mc->remote_handle);
-		mc->remote_handle = NULL;
-	}
-	applet_save_prefs(mc);
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (omenu), menu);
+	gtk_option_menu_set_history (GTK_OPTION_MENU (omenu), select_item);
+	gtk_widget_show (omenu);
+	g_free (dname);
+	return omenu;
 }
 
 static void
 make_remote_widgets_sensitive(MailCheck *mc)
 {
-	gboolean b = mc->mailbox_type_temp != MAILBOX_LOCAL &&
-	             mc->mailbox_type_temp != MAILBOX_LOCALDIR;
-        gboolean f = mc->mailbox_type_temp == MAILBOX_IMAP;
+	gboolean b = mc->mailbox_type != MAILBOX_LOCAL &&
+	             mc->mailbox_type != MAILBOX_LOCALDIR;
+        gboolean f = mc->mailbox_type == MAILBOX_IMAP;
 	
 	gtk_widget_set_sensitive (mc->mailfile_fentry, !b);
 	gtk_widget_set_sensitive (mc->mailfile_label, !b);
@@ -940,14 +794,244 @@ make_remote_widgets_sensitive(MailCheck *mc)
 	gtk_widget_set_sensitive (mc->pre_remote_command_label, b);
 }
 
+static void
+mail_file_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->mail_file);
+		g_free (mc->mail_file);
+		
+	mc->mail_file = text;
+	panel_applet_gconf_set_string(mc->applet, "mail-file", mc->mail_file, NULL);
+}
+
+static void
+remote_server_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->remote_server);
+		g_free (mc->remote_server);
+		
+	mc->remote_server = text;
+	panel_applet_gconf_set_string(mc->applet, "remote-server", 
+				      mc->remote_server, NULL);
+}
+
+static void
+remote_username_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->remote_username);
+		g_free (mc->remote_username);
+		
+	mc->remote_username = text;
+	panel_applet_gconf_set_string(mc->applet, "remote-username", 
+				      mc->remote_username, NULL);
+}
+
+static void
+remote_password_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->remote_password);
+		g_free (mc->remote_password);
+		
+	mc->remote_password = text;
+	panel_applet_gconf_set_string(mc->applet, "remote-password", 
+				      mc->remote_password, NULL);
+}
+
+static void
+remote_folder_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->remote_folder);
+		g_free (mc->remote_folder);
+		
+	mc->remote_folder = text;
+	panel_applet_gconf_set_string(mc->applet, "remote-folder", 
+				      mc->remote_folder, NULL);
+}
+
+static void
+pre_remote_command_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->pre_remote_command);
+		g_free (mc->pre_remote_command);
+		
+	mc->pre_remote_command = text;
+	panel_applet_gconf_set_string(mc->applet, "pre-remote-command", 
+				      mc->pre_remote_command, NULL);
+}	
+
 static void 
 set_mailbox_selection (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = g_object_get_data(G_OBJECT(widget), "MailCheck");
-	mc->mailbox_type_temp = GPOINTER_TO_INT(data);
-        
+	mc->mailbox_type = GPOINTER_TO_INT(data);
+        panel_applet_gconf_set_int(mc->applet, "mailbox-type", 
+        			  (gint)mc->mailbox_type, NULL);
         make_remote_widgets_sensitive(mc);
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
+        
+        if ((mc->mailbox_type != MAILBOX_POP3) &&
+	    (mc->mailbox_type != MAILBOX_IMAP) &&
+	    (mc->remote_handle != NULL)) {
+		helper_whack_handle (mc->remote_handle);
+		mc->remote_handle = NULL;
+	}
+}
+
+static void
+pre_check_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->pre_check_enabled = gtk_toggle_button_get_active (button);
+	panel_applet_gconf_set_bool(mc->applet, "exec-enabled", 
+				    mc->pre_check_enabled, NULL);
+				    
+}
+
+static void
+pre_check_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->pre_check_cmd)
+		g_free (mc->pre_check_cmd);	
+	mc->pre_check_cmd = g_strdup (text);
+	panel_applet_gconf_set_string(mc->applet, "exec-command", 
+				      mc->pre_check_cmd, NULL);
+	g_free (text);
+	
+}
+
+static void
+newmail_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->newmail_enabled = gtk_toggle_button_get_active (button);
+	panel_applet_gconf_set_bool(mc->applet, "newmail-enabled", 
+				    mc->newmail_enabled, NULL);
+				    
+}
+
+static void
+newmail_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->newmail_cmd)
+		g_free (mc->newmail_cmd);	
+	mc->newmail_cmd = g_strdup (text);
+	panel_applet_gconf_set_string(mc->applet, "newmail-command", 
+				      mc->newmail_cmd, NULL);
+	g_free (text);
+	
+}
+
+static void
+clicked_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->clicked_enabled = gtk_toggle_button_get_active (button);
+	panel_applet_gconf_set_bool(mc->applet, "clicked-enabled", 
+				    mc->clicked_enabled, NULL);
+				    
+}
+
+static void
+clicked_changed (GtkEntry *entry, gpointer data)
+{
+	MailCheck *mc = data;
+	gchar *text;
+	
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	if (!text)
+		return;
+		
+	if (mc->clicked_cmd)
+		g_free (mc->clicked_cmd);	
+	mc->clicked_cmd = g_strdup (text);
+	panel_applet_gconf_set_string(mc->applet, "clicked-command", mc->clicked_cmd, NULL);
+	g_free (text);
+	
+}
+
+static void
+update_spin_changed (GtkSpinButton *spin, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->update_freq = 1000 * (guint)(gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->sec_spin)) + 60 * gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->min_spin)));
+	
+	if (mc->update_freq == 0) {
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->sec_spin), 0.0);
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->min_spin), 1.0);
+		mc->update_freq = 60*1000;
+	}
+	if(mc->mail_timeout != 0)
+		gtk_timeout_remove (mc->mail_timeout);
+	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
+	panel_applet_gconf_set_int(mc->applet, "update-frequency", mc->update_freq, NULL);
+}
+
+static void
+sound_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->play_sound = gtk_toggle_button_get_active (button);
+	panel_applet_gconf_set_bool(mc->applet, "play-sound", mc->play_sound, NULL);
 }
 
 static GtkWidget *
@@ -1020,14 +1104,14 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
-	mc->mailfile_fentry = l = gnome_file_entry_new ("spool file", _("Browse"));
+	mc->mailfile_fentry = l = gnome_file_entry_new ("spool_file", _("Browse"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);
 
 	mc->mailfile_entry = l = gnome_file_entry_gtk_entry(GNOME_FILE_ENTRY (l));
 	gtk_entry_set_text(GTK_ENTRY(l), mc->mail_file);
 	g_signal_connect(G_OBJECT(l), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(mail_file_changed), mc);
 
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1044,7 +1128,7 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);      
 	
 	g_signal_connect(G_OBJECT(l), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(remote_server_changed), mc);
 	
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1062,7 +1146,7 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
   
 	g_signal_connect(G_OBJECT(l), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(remote_username_changed), mc);
 
 	mc->remote_password_label = l = gtk_label_new(_("Password:"));
 	gtk_widget_show(l);
@@ -1076,7 +1160,7 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
 	
 	g_signal_connect(G_OBJECT(l), "changed",
-                     G_CALLBACK(property_box_changed), mc);
+                     G_CALLBACK(remote_password_changed), mc);
 
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -1094,13 +1178,13 @@ mailbox_properties_page(MailCheck *mc)
         gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
   
         g_signal_connect(G_OBJECT(l), "changed",
-                           G_CALLBACK(property_box_changed), mc);
+                           G_CALLBACK(remote_folder_changed), mc);
  
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_widget_show (hbox);  
 
-	mc->pre_remote_command_label = l = gtk_label_new(_("Command to run before we check for mail:"));
+	mc->pre_remote_command_label = l = gtk_label_new(_("Command to run before checking for mail:"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
   
@@ -1111,7 +1195,7 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);      
 	
 	g_signal_connect(G_OBJECT(l), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(pre_remote_command_changed), mc);
   
 	make_remote_widgets_sensitive(mc);
 	
@@ -1144,7 +1228,7 @@ mailcheck_properties_page (MailCheck *mc)
 	l = gtk_check_button_new_with_label(_("Before each update:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->pre_check_enabled);
 	g_signal_connect(G_OBJECT(l), "toggled",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(pre_check_toggled), mc);
 	gtk_widget_show(l);
 	mc->pre_check_cmd_check = l;
 	
@@ -1157,7 +1241,7 @@ mailcheck_properties_page (MailCheck *mc)
 		gtk_entry_set_text(GTK_ENTRY(mc->pre_check_cmd_entry), 
 				   mc->pre_check_cmd);
 	g_signal_connect(G_OBJECT(mc->pre_check_cmd_entry), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(pre_check_changed), mc);
 	gtk_widget_show(mc->pre_check_cmd_entry);
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->pre_check_cmd_entry,
 				   1, 2, 0, 1);
@@ -1165,7 +1249,7 @@ mailcheck_properties_page (MailCheck *mc)
 	l = gtk_check_button_new_with_label (_("When new mail arrives:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->newmail_enabled);
 	g_signal_connect(G_OBJECT(l), "toggled",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(newmail_toggled), mc);
 	gtk_widget_show(l);
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
 	mc->newmail_cmd_check = l;
@@ -1176,7 +1260,7 @@ mailcheck_properties_page (MailCheck *mc)
 				   mc->newmail_cmd);
 	}
 	g_signal_connect(G_OBJECT (mc->newmail_cmd_entry), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(newmail_changed), mc);
 	gtk_widget_show(mc->newmail_cmd_entry);
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->newmail_cmd_entry,
 				    1, 2, 1, 2);
@@ -1184,7 +1268,7 @@ mailcheck_properties_page (MailCheck *mc)
         l = gtk_check_button_new_with_label (_("When clicked:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->clicked_enabled);
 	g_signal_connect(G_OBJECT(l), "toggled",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(clicked_toggled), mc);
         gtk_widget_show(l);
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
 	mc->clicked_cmd_check = l;
@@ -1195,7 +1279,7 @@ mailcheck_properties_page (MailCheck *mc)
 				   mc->clicked_cmd);
         }
         g_signal_connect(G_OBJECT(mc->clicked_cmd_entry), "changed",
-                           G_CALLBACK(property_box_changed), mc);
+                           G_CALLBACK(clicked_changed), mc);
         gtk_widget_show(mc->clicked_cmd_entry);
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->clicked_cmd_entry,
 				   1, 2, 2, 3);
@@ -1210,10 +1294,12 @@ mailcheck_properties_page (MailCheck *mc)
 
 	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)/60), 0, 1440, 1, 5, 5);
 	mc->min_spin = gtk_spin_button_new( GTK_ADJUSTMENT (freq_a), 1, 0);
-	g_signal_connect(G_OBJECT(freq_a), "value_changed",
+	/*g_signal_connect(G_OBJECT(freq_a), "value_changed",
 			   G_CALLBACK(property_box_changed), mc);
 	g_signal_connect(G_OBJECT(mc->min_spin), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(property_box_changed), mc);*/
+	g_signal_connect (G_OBJECT (mc->min_spin), "value_changed",
+			  G_CALLBACK (update_spin_changed), mc);			  
 	gtk_box_pack_start (GTK_BOX (hbox), mc->min_spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->min_spin);
 	
@@ -1223,10 +1309,12 @@ mailcheck_properties_page (MailCheck *mc)
 	
 	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 0, 59, 1, 5, 5);
 	mc->sec_spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
-	g_signal_connect(G_OBJECT(freq_a), "value_changed",
+	/*g_signal_connect(G_OBJECT(freq_a), "value_changed",
 			   G_CALLBACK(property_box_changed), mc);
 	g_signal_connect(G_OBJECT(mc->sec_spin), "changed",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(property_box_changed), mc);*/
+	g_signal_connect (G_OBJECT (mc->sec_spin), "value_changed",
+			  G_CALLBACK (update_spin_changed), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->sec_spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->sec_spin);
 	
@@ -1237,7 +1325,7 @@ mailcheck_properties_page (MailCheck *mc)
 	mc->play_sound_check = gtk_check_button_new_with_label(_("Play a sound when new mail arrives"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(mc->play_sound_check), mc->play_sound);
 	g_signal_connect(G_OBJECT(mc->play_sound_check), "toggled",
-			   G_CALLBACK(property_box_changed), mc);
+			   G_CALLBACK(sound_toggled), mc);
 	gtk_widget_show(mc->play_sound_check);
 	gtk_box_pack_start(GTK_BOX (vbox), mc->play_sound_check, FALSE, FALSE, 0);
 
@@ -1269,39 +1357,54 @@ phelp_cb (GtkWidget *w, gint tab, gpointer data)
 }	
 
 static void
+response_cb (GtkDialog *dialog, gint id, gpointer data)
+{
+	MailCheck *mc = data;
+
+	gtk_widget_destroy (GTK_WIDGET (dialog));
+	mc->property_window = NULL;
+	
+}
+
+
+static void
 mailcheck_properties (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 {
 	GtkWidget *p;
+	GtkWidget *notebook;
 
 	MailCheck *mc = data;
 
 	if (mc->property_window != NULL) {
-		gdk_window_raise(mc->property_window->window);
+		gtk_window_present (GTK_WINDOW (mc->property_window));
 		return; /* Only one instance of the properties dialog! */
 	}
 	
-	mc->property_window = gnome_property_box_new ();
-	gtk_window_set_wmclass (GTK_WINDOW (mc->property_window),
-				"mailcheck", "Mailcheck");
-	gtk_window_set_title (GTK_WINDOW (mc->property_window),
-			      _("Mail check properties"));
+	mc->property_window = gtk_dialog_new_with_buttons (_("Inbox Monitor Properties"), 
+							   NULL,
+						           GTK_DIALOG_DESTROY_WITH_PARENT,
+						           GTK_STOCK_CLOSE, 
+						           GTK_RESPONSE_CLOSE,
+						           NULL);
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->property_window),
 					 GNOME_ICONDIR"/gnome-mailcheck.png");
-
+	
+	
+	notebook = gtk_notebook_new ();
+	gtk_widget_show (notebook);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (mc->property_window)->vbox), notebook,
+			    TRUE, TRUE, 0);
 	p = mailcheck_properties_page (mc);
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
-					p, gtk_label_new (_("Mail check")));
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), p,
+				  gtk_label_new_with_mnemonic (_("_Mail check")));
+				  
 	p = mailbox_properties_page (mc);
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
-					p, gtk_label_new (_("Mailbox")));
-
-	g_signal_connect (G_OBJECT (mc->property_window), "apply",
-			    G_CALLBACK(apply_properties_callback), mc);
-	g_signal_connect (G_OBJECT (mc->property_window), "destroy",
-			    G_CALLBACK(close_callback), mc);
-	g_signal_connect (G_OBJECT (mc->property_window), "help",
-			    G_CALLBACK(phelp_cb), mc);
-
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), p,
+				  gtk_label_new_with_mnemonic (_("Mail_box")));
+	
+	g_signal_connect (G_OBJECT (mc->property_window), "response",
+			  G_CALLBACK (response_cb), mc);
+	gtk_widget_show (GTK_DIALOG (mc->property_window)->vbox);
 	gtk_widget_show (mc->property_window);
 }
 
@@ -1343,27 +1446,6 @@ applet_load_prefs(MailCheck *mc)
 	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote-folder", NULL);
 	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox-type", NULL);
 	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play-sound", NULL);
-}
-
-static void
-applet_save_prefs(MailCheck *mc)
-{
-	panel_applet_gconf_set_string(mc->applet, "animation-file", mc->animation_file, NULL);
-	panel_applet_gconf_set_int(mc->applet, "update-frequency", mc->update_freq, NULL);
-	panel_applet_gconf_set_string(mc->applet, "exec-command", mc->pre_check_cmd, NULL);
-	panel_applet_gconf_set_bool(mc->applet, "exec-enabled", mc->pre_check_enabled, NULL);
-	panel_applet_gconf_set_string(mc->applet, "newmail-command", mc->newmail_cmd, NULL);
-	panel_applet_gconf_set_bool(mc->applet, "newmail-enabled", mc->newmail_enabled, NULL);
-	panel_applet_gconf_set_string(mc->applet, "clicked-command", mc->clicked_cmd, NULL);
-	panel_applet_gconf_set_bool(mc->applet, "clicked-enabled", mc->clicked_enabled, NULL);
-	panel_applet_gconf_set_string(mc->applet, "mail-file", mc->mail_file, NULL);
-	panel_applet_gconf_set_string(mc->applet, "remote-server", mc->remote_server, NULL);
-	panel_applet_gconf_set_string(mc->applet, "remote-username", mc->remote_username, NULL);
-	panel_applet_gconf_set_string(mc->applet, "remote-password", mc->remote_password, NULL);
-	panel_applet_gconf_set_string(mc->applet, "remote-folder", mc->remote_folder, NULL);
-	panel_applet_gconf_set_string(mc->applet, "pre-remote-command", mc->pre_remote_command, NULL);
-	panel_applet_gconf_set_int(mc->applet, "mailbox-type", (gint)mc->mailbox_type, NULL);
-	panel_applet_gconf_set_bool(mc->applet, "play-sound", mc->play_sound, NULL);
 }
 
 static void
