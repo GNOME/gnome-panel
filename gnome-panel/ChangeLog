@@ -1,3 +1,30 @@
+2000-01-30  Jacob Berkman  <jacob@helixcode.com>
+
+	* panel_config_global.h:
+	* session.c:
+	* menu.c: remove global menus stuff
+	
+	* gnome-panel-properties.c: removed the global menus checkbox
+
+	* tearoffitem.c (tearoff_item_new): use tearoffs only if
+	enabled (in gnomecc)
+
+	* menu.c (create_special_menu): get rid of warning
+	(make_panel_submenu): change string per suggestion by
+	Rodd Clarkson <rodd_clarkson@bigfoot.com>
+	(add_tearoff): use tearoffs only if they are enabled (in gnomecc)
+	(submenu_to_display): ditto
+	(create_menu_at_fr): ditto
+	(create_add_panel_submenu): again
+	(make_panel_submenu): and again
+	(create_panel_submenu): and again
+	(create_desktop_menu): again
+	(create_root_menu): and again
+
+2000-01-29  Jacob Berkman  <jacob@helixcode.com>
+
+	* menu.c (create_root_menu): make run use the same sizes
+
 Sun Jan 30 00:57:18 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: don't load icons if they are turned off, and if we won't

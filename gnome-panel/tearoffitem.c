@@ -35,6 +35,7 @@ tearoff_item_get_type(void)
 GtkWidget*
 tearoff_item_new(void)
 {
+	g_return_val_if_fail (gnome_preferences_get_menus_have_tearoff (), NULL);
 	return GTK_WIDGET(gtk_type_new(tearoff_item_get_type()));
 }
 

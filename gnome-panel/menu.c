@@ -991,15 +991,15 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 
-	if(global_config.show_small_icons ||
-	   global_config.show_dot_buttons) {
+	if (gnome_preferences_get_menus_have_icons () ||
+	    global_config.show_dot_buttons) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if(global_config.show_small_icons) {
+	if (gnome_preferences_get_menus_have_icons ()) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -1014,8 +1014,8 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 	}
 
-	if(global_config.show_small_icons ||
-	   global_config.show_dot_buttons)
+	if (gnome_preferences_get_menus_have_icons () ||
+	    global_config.show_dot_buttons)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
@@ -1066,15 +1066,15 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 	
-	if(global_config.show_small_icons ||
-	   global_config.show_dot_buttons) {
+	if (gnome_preferences_get_menus_have_icons () ||
+	    global_config.show_dot_buttons) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if(global_config.show_small_icons) {
+	if (gnome_preferences_get_menus_have_icons ()) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -1092,8 +1092,8 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else if(pixmap)
 		gtk_widget_destroy(pixmap);
 
-	if(global_config.show_small_icons ||
-	   global_config.show_dot_buttons)
+	if (gnome_preferences_get_menus_have_icons () ||
+	    global_config.show_dot_buttons)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(item_loc) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
@@ -1612,6 +1612,12 @@ static void
 add_tearoff(GtkMenu *menu)
 {
 	GtkWidget *w;
+
+	if (!gnome_preferences_get_menus_have_tearoff ()){
+		g_warning ("Adding tearoff when tearoffs are disabled");
+		return;
+	}
+
 	w = tearoff_item_new();
 	gtk_widget_show(w);
 	gtk_menu_prepend(menu,w);
@@ -1661,7 +1667,8 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 		while(GTK_MENU_SHELL(menuw)->children)
 			gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
 #ifdef TEAROFF_MENUS
-		add_tearoff(GTK_MENU(menuw));
+		if (gnome_preferences_get_menus_have_tearoff ())
+			add_tearoff(GTK_MENU(menuw));
 #endif
 
 		gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
@@ -1779,7 +1786,7 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	pixmap = NULL;
-	if (global_config.show_small_icons) {
+	if (gnome_preferences_get_menus_have_tearoff ()) {
 		if (fr->icon && g_file_exists (fr->icon)) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
 								    size, size);
@@ -1870,11 +1877,13 @@ create_menu_at_fr (GtkWidget *menu,
 		gtk_signal_connect(GTK_OBJECT(menu), "show",
 				   setup_menu_panel, NULL);
 #ifdef TEAROFF_MENUS
-		add_tearoff(GTK_MENU(menu));
+		if (gnome_preferences_get_menus_have_tearoff ()) {
+			add_tearoff(GTK_MENU(menu));
+			first_item++;
+		}
 #endif
 		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
 				   GTK_SIGNAL_FUNC(menu_destroy),NULL);
-		first_item++;
 	} else {
 		first_item = g_list_length(GTK_MENU_SHELL(menu)->children);
 		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
@@ -1918,7 +1927,7 @@ create_menu_at_fr (GtkWidget *menu,
 
 
 	pixmap = NULL;
-	if (global_config.show_small_icons) {
+	if (gnome_preferences_get_menus_have_tearoff ()) {
 		if (pixmap_name) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
 								    size, size);
@@ -2203,7 +2212,7 @@ create_add_panel_submenu (int tearoff)
 	gtk_signal_connect(GTK_OBJECT(menu), "show",
 			   setup_menu_panel, NULL);
 	
-	if(tearoff) {
+	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		menuitem = tearoff_item_new();
 		gtk_widget_show(menuitem);
 		gtk_menu_prepend(GTK_MENU(menu),menuitem);
@@ -2250,7 +2259,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 {
 	char *file;
 
-	if (!global_config.show_small_icons) {
+	if (!gnome_preferences_get_menus_have_tearoff ()) {
 		setup_menuitem (menuitem, NULL, title);
 		return;
 	}
@@ -3207,13 +3216,15 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   submenu);
 	
-	menuitem = tearoff_item_new();
-	gtk_widget_show(menuitem);
-	gtk_menu_prepend(GTK_MENU(submenu),menuitem);
+	if (gnome_preferences_get_menus_have_tearoff ()) {
+		menuitem = tearoff_item_new();
+		gtk_widget_show(menuitem);
+		gtk_menu_prepend(GTK_MENU(submenu),menuitem);
 	
-	gtk_signal_connect(GTK_OBJECT(menuitem),"activate",
-			   GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
-			   NULL);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"activate",
+				   GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
+				   NULL);
+	}
 
 	make_add_submenu (submenu, fake_submenus);
 
@@ -3255,7 +3266,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	setup_menuitem (submenuitem,
 			gnome_stock_pixmap_widget(submenu,
 						  GNOME_STOCK_MENU_PROP),
-			_("Panel..."));
+			_("All properties..."));
 
 	gtk_menu_append (GTK_MENU (submenu), submenuitem);
 	gtk_signal_connect (GTK_OBJECT (submenuitem), "activate",
@@ -3356,7 +3367,7 @@ create_panel_submenu(GtkWidget *menu, int fake_submenus, int tearoff)
 				   setup_menu_panel, NULL);
 	}
 
-	if(tearoff) {
+	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		menuitem = tearoff_item_new();
 		gtk_widget_show(menuitem);
 		gtk_menu_prepend (GTK_MENU (menu), menuitem);
@@ -3418,7 +3429,7 @@ create_desktop_menu (GtkWidget *menu, int fake_submenus, int tearoff)
 				   setup_menu_panel, NULL);
 	}
 
-	if(tearoff) {
+	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		menuitem = tearoff_item_new();
 		gtk_widget_show(menuitem);
 		gtk_menu_prepend (GTK_MENU (menu), menuitem);
@@ -3477,7 +3488,7 @@ create_root_menu(int fake_submenus, int flags, int tearoff)
 	root_menu = gtk_menu_new ();
 	gtk_signal_connect(GTK_OBJECT(root_menu), "show",
 			   setup_menu_panel, NULL);
-	if (tearoff) {
+	if (tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		GtkWidget *menuitem = tearoff_item_new ();
 		gtk_widget_show (menuitem);
 		gtk_menu_prepend (GTK_MENU (root_menu), menuitem);
@@ -3613,7 +3624,7 @@ create_root_menu(int fake_submenus, int flags, int tearoff)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-tigert.png", 
-				   _("Run..."), MEDIUM_ICON_SIZE);
+				   _("Run..."), size);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (run_cb), NULL);
 	gtk_menu_append (GTK_MENU (root_menu), menuitem);
@@ -3927,7 +3938,7 @@ save_tornoff(void)
 static GtkWidget *
 create_special_menu(char *special, PanelWidget *menu_panel_widget)
 {
-	GtkWidget *menu;
+	GtkWidget *menu = NULL;
 
 	if(strcmp(special,"ADD_PANEL")==0) {
 		menu = create_add_panel_submenu(FALSE);

@@ -84,7 +84,6 @@ apply_global_config(void)
 	int i;
 	static int dot_buttons_old = 0; /*doesn't matter first time this is
 					  done there are no menu applets*/
-	static int small_icons_old = 0; /*same here*/
 	static int keep_bottom_old = -1;
 	static int autohide_size_old = -1;
 	static int menu_flags_old = -1;
@@ -107,7 +106,6 @@ apply_global_config(void)
 	  for rereading, hopefullly the user doesn't do this too often
 	  so that he doesn't have to reread his menus all the time:)*/
 	if(dot_buttons_old != global_config.show_dot_buttons ||
-	   small_icons_old != global_config.show_small_icons ||
 	   old_use_large_icons != global_config.use_large_icons) {
 		GSList *li;
 		for(li=applets;li!=NULL;li=g_slist_next(li)) {
@@ -136,7 +134,6 @@ apply_global_config(void)
 		}
 	}
 	dot_buttons_old = global_config.show_dot_buttons;
-	small_icons_old = global_config.show_small_icons;
 	old_use_large_icons = global_config.use_large_icons;
 	send_tooltips_state(global_config.tooltips_enabled);
 
@@ -1195,9 +1192,6 @@ load_up_globals(void)
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("tooltips_enabled=TRUE");
 
-	global_config.show_small_icons =
-		gnome_config_get_bool("show_small_icons=TRUE");
-
 	global_config.show_dot_buttons =
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
@@ -1315,8 +1309,6 @@ write_global_config(void)
 			     (int)global_config.movement_type);
 	gnome_config_set_bool("tooltips_enabled",
 			      global_config.tooltips_enabled);
-	gnome_config_set_bool("show_small_icons",
-			      global_config.show_small_icons);
 	gnome_config_set_bool("show_dot_buttons",
 			      global_config.show_dot_buttons);
 	gnome_config_set_bool("hungry_menus",
@@ -1405,8 +1397,6 @@ convert_write_config(void)
 			     (int)global_config.movement_type);
 	gnome_config_set_bool("tooltips_enabled",
 			      global_config.tooltips_enabled);
-	gnome_config_set_bool("show_small_icons",
-			      global_config.show_small_icons);
 	gnome_config_set_bool("show_dot_buttons",
 			      global_config.show_dot_buttons);
 	gnome_config_set_bool("hungry_menus",
@@ -1476,9 +1466,6 @@ convert_read_old_config(void)
 	
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("tooltips_enabled=TRUE");
-
-	global_config.show_small_icons =
-		gnome_config_get_bool("show_small_icons=TRUE");
 
 	global_config.show_dot_buttons =
 		gnome_config_get_bool("show_dot_buttons=FALSE");
