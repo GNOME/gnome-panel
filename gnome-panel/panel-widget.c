@@ -433,14 +433,20 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 	gint i;
 	gint freepos;
 
+	printf("push left at: %d\n",pos);
+
 	if(!panel->applets[pos].applet) {
 		puts("push left already empty");
 		return TRUE;
 	}
 	for(i=1;pos-i>=0 && panel->applets[pos-i].applet;i++)
 		;
-	if(pos-i < 0)
+	if(pos-i < 0) {
+		puts("can't push");
 		return FALSE;
+	}
+
+	printf("push left %d cells\n",i);
 
 	freepos=i;
 
@@ -453,10 +459,20 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 	panel->applets[pos].applet=NULL;
 	panel->applets[pos].cells=1;
 
-	for(i=pos-freepos;i<pos;i+=panel->applets[i].cells)
-		panel_widget_applet_put(panel,i);
+	/*for(i=pos-freepos;i<pos;i+=panel->applets[i].cells)
+		panel_widget_applet_put(panel,i);*/
 	return TRUE;
 }
+
+static void
+panel_widget_put_all(PanelWidget *panel)
+{
+	gint i;
+	for(i=0;i<panel->size;i+=panel->applets[i].cells)
+		if(panel->applets[i].applet)
+			panel_widget_applet_put(panel,i);
+}
+
 
 
 static gint
@@ -487,9 +503,13 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 		panel_widget_set_size(panel,panel->size);
 		return TRUE;
 	}
-	
 
-	for(i=0;pos+i<panel->size && panel->applets[pos+i].applet;i++)
+	printf("push right at: %d\n",pos);
+
+	if(!panel->applets[pos].applet)
+		return TRUE;
+
+	for(i=1;pos+i<panel->size && panel->applets[pos+i].applet;i++)
 		;
 	if(pos+i >= panel->size)
 		return FALSE;
@@ -505,8 +525,8 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 	panel->applets[pos].applet=NULL;
 	panel->applets[pos].cells=1;
 
-	for(i=1;i<freepos;i+=panel->applets[pos+i].cells)
-		panel_widget_applet_put(panel,pos+i);
+	/*for(i=1;i<freepos;i+=panel->applets[pos+i].cells)
+		panel_widget_applet_put(panel,pos+i);*/
 	return TRUE;
 }
 
@@ -530,18 +550,27 @@ panel_widget_seize_space(PanelWidget *panel,
 		panel_widget_pack_applets(panel);
 
 
-	for(i=1;(pos+i<(panel->snapped==PANEL_DRAWER?PANEL_MAX:panel->size)) &&
-		(allocated < width) &&
-		(panel->applets[pos+i].applet == applet ||
-		 panel->applets[pos+i].applet == NULL);i++)
-		allocated++;
-	if(pos+i>panel->size) {
-		panel->size = pos+i;
-		panel_widget_set_size(panel,panel->size);
+	if(panel->snapped==PANEL_DRAWER) {
+		for(i=1;pos+i<PANEL_MAX &&
+			allocated < width &&
+			(panel->applets[pos+i].applet == applet ||
+			 panel->applets[pos+i].applet == NULL);i++)
+			allocated++;
+		if(pos+i>panel->size) {
+			panel->size = pos+i;
+			panel_widget_set_size(panel,panel->size);
+		}
+	} else {
+		for(i=1;pos+i<panel->size &&
+			allocated < width &&
+			(panel->applets[pos+i].applet == applet ||
+			 panel->applets[pos+i].applet == NULL);i++)
+			allocated++;
 	}
 	for(i=1;(pos-i >= 0) &&
 		(allocated < width) &&
-		(panel->applets[pos-i].applet == NULL);i++)
+		(panel->applets[pos-i].applet == applet ||
+		 panel->applets[pos-i].applet == NULL);i++)
 		allocated++;
 	pos = pos-i+1;
 
@@ -564,6 +593,9 @@ panel_widget_seize_space(PanelWidget *panel,
 		panel->applets[pos+i].applet = applet;
 		panel->applets[pos+i].cells = allocated;
 	}
+
+	panel_widget_put_all(panel);
+	
 	return pos;
 }
 
@@ -578,12 +610,12 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	gdk_window_get_geometry(applet->window,&x,&y,&width,&height,NULL);
 	pos = panel_widget_get_pos(panel,applet);
 
+	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
+
 	/*don't adjust applets out of range, wait for
 	  then to be pushed into range*/
 	if(panel->snapped != PANEL_DRAWER && pos>=panel->size)
 		return;
-
-	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
 
 	if(panel->orient==PANEL_HORIZONTAL) {
 		if(height > panel->thick) {
@@ -2010,6 +2042,7 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 				;
 			i++;
 			panel_widget_push_right(panel,i);
+			panel_widget_put_all(panel);
 		}
 		return i;
 	} else {
@@ -2025,6 +2058,7 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 		if(i>=panel->size) {
 			puts("over on the right");
 			if(panel_widget_push_left(panel,panel->size-1)) {
+				panel_widget_put_all(panel);
 				puts("pushed ok");
 				return panel->size-1;
 			}
@@ -2032,11 +2066,19 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 			return -1;
 		}
 
-		if(panel_widget_push_right(panel,i))
-			return i;
+		puts("makeemptypos before pushes");
 
-		if(i>0 && panel_widget_push_left(panel,i-1))
+		if(panel_widget_push_right(panel,i)) {
+			panel_widget_put_all(panel);
+			return i;
+		}
+
+		if(i>0 && panel_widget_push_left(panel,i-1)) {
+			panel_widget_put_all(panel);
 			return i-1;
+		}
+
+		puts("FULL!");
 
 		/*panel is full!*/
 		return -1;
