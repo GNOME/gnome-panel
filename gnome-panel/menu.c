@@ -172,7 +172,13 @@ add_applet (GtkWidget *w, gpointer data)
 	gint dorestart;
 
 	path = ii->exec[0];
-	param = gnome_string_joinv (" ", ii->exec + 1);
+
+	g_return_val_if_fail(path!=NULL,FALSE);
+	
+	if((ii->exec[1])!=NULL)
+		param = gnome_string_joinv (" ", ii->exec + 1);
+	else
+		param = NULL;
 
 	/*slightly ugly but should work fine, if the applet executable ends
 	  with multi_applet, we start this as a dorestart==FALSE type applet,
@@ -184,7 +190,7 @@ add_applet (GtkWidget *w, gpointer data)
 
 	r = add_to_panel(EXTERN_ID,path,param,dorestart);
 
-	g_free(param);
+	if(param) g_free(param);
 	return r;
 }
 
