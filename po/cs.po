@@ -1,36 +1,37 @@
 # Czech translation of gnome-panel.
 # Copyright (C) 1999 Free Software Foundation, Inc.
+# Copyright (C) 2004 Miloslav Trmac <mitr@volny.cz>
 # GIS <gis@academy.cas.cz>, 1999.
 # David Šauer <davids@penguin.cz>, 1999.
 # George Lebl <jirka@5z.com>, 2000-2001.
 # Stanislav Brabec <utx@penguin.cz>, 2000-2001.
-# Miloslav Trmac <mitr@volny.cz>, 2002, 2003.
+# Miloslav Trmac <mitr@volny.cz>, 2002, 2003, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-18 15:01+0100\n"
-"PO-Revision-Date: 2003-12-18 17:11+0100\n"
+"POT-Creation-Date: 2004-01-07 04:13+0100\n"
+"PO-Revision-Date: 2004-01-07 19:45+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:228
+#: applets/clock/clock.c:232
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:228
+#: applets/clock/clock.c:232
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:230 applets/clock/clock.c:792
+#: applets/clock/clock.c:234 applets/clock/clock.c:830
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:230 applets/clock/clock.c:794
+#: applets/clock/clock.c:234 applets/clock/clock.c:832
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -39,7 +40,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:241
+#: applets/clock/clock.c:245
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -47,7 +48,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:248
+#: applets/clock/clock.c:252
 #, c-format
 msgid ""
 "%1$s\n"
@@ -60,50 +61,48 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:255
+#: applets/clock/clock.c:259
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:358
+#: applets/clock/clock.c:374
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:487
+#: applets/clock/clock.c:508
 msgid "Calendar"
 msgstr "Kalendář"
 
-#: applets/clock/clock.c:701
+#: applets/clock/clock.c:736
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: applets/clock/clock.c:787
+#: applets/clock/clock.c:825
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S"
 
-#: applets/clock/clock.c:789
+#: applets/clock/clock.c:827
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
-#: applets/clock/clock.c:828
+#: applets/clock/clock.c:868
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: applets/clock/clock.c:868
+#: applets/clock/clock.c:910
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Nelze spustit nástroj pro nastavení času: %s"
+msgstr "Nemohu spustit nástroj pro nastavení času: %s"
 
-#: applets/clock/clock.c:909
+#: applets/clock/clock.c:951
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
-msgstr ""
-"Nelze nalézt program pro nastavení data a času. Možná není žádný "
-"nainstalován?"
+msgstr "Nemohu nalézt program pro nastavení data a času. Možná není žádný nainstalován?"
 
-#: applets/clock/clock.c:1335 applets/clock/clock.c:1600
+#: applets/clock/clock.c:1418 applets/clock/clock.c:1775
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -113,44 +112,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
 
-#: applets/clock/clock.c:1380
+#: applets/clock/clock.c:1467
 msgid "Clock Preferences"
 msgstr "Nastavení hodin"
 
-#: applets/clock/clock.c:1416
+#: applets/clock/clock.c:1503
 msgid "Clock _type:"
 msgstr "_Typ hodin:"
 
-#: applets/clock/clock.c:1427
+#: applets/clock/clock.c:1514
 msgid "12 hour"
 msgstr "Dvanáctihodinové"
 
-#: applets/clock/clock.c:1435
+#: applets/clock/clock.c:1522
 msgid "24 hour"
 msgstr "Dvacetičtyřhodinové"
 
-#: applets/clock/clock.c:1443
+#: applets/clock/clock.c:1530
 msgid "UNIX time"
 msgstr "UNIXový čas"
 
-#: applets/clock/clock.c:1451
+#: applets/clock/clock.c:1538
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: applets/clock/clock.c:1465
+#: applets/clock/clock.c:1546
+msgid "Custom format"
+msgstr "Vlastní formát"
+
+#: applets/clock/clock.c:1562
+msgid "Custom _format:"
+msgstr "Vlastní _formát:"
+
+#: applets/clock/clock.c:1579
 msgid "Show _seconds"
 msgstr "Zobrazovat _sekundy"
 
-#: applets/clock/clock.c:1474
+#: applets/clock/clock.c:1588
 msgid "Show _date"
 msgstr "Zobrazovat _datum"
 
-#: applets/clock/clock.c:1483
+#: applets/clock/clock.c:1597
 msgid "Use _UTC"
 msgstr "Použít _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1635 applets/notification_area/main.c:116
+#: applets/clock/clock.c:1810 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:502
 #: gnome-panel/menu.c:283
@@ -161,12 +168,12 @@ msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: applets/clock/clock.c:1654
+#: applets/clock/clock.c:1829
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Hodiny"
 
-#: applets/clock/clock.c:1656
+#: applets/clock/clock.c:1831
 msgid "The Clock displays the current time and date"
 msgstr "Hodiny zobrazují aktuální datum a čas"
 
@@ -179,38 +186,42 @@ msgid "24-hour"
 msgstr "24-hour"
 
 #: applets/clock/clock.schemas.in.h:3
+msgid "Custom format of the clock"
+msgstr "Vlastní formát hodin"
+
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Formát hodin"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Je-li true, zobrazovat v hodinách kromě času i datum."
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Je-li true, zobrazovat v času sekundy."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Je-li true, zobrazovat čas v zóně Universal Coordinated Time."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Je-li true, zobrazit datum v tipu, když je myš nad hodinami."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Zobrazovat v hodinách datum"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Zobrazovat datum v tipu"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Zobrazovat v čase sekundy"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -218,39 +229,42 @@ msgstr ""
 "Použití tohoto klíče je v GNOME 2.6 nahrazeno klíčem 'format'. Schéma bylo "
 "ponecháno pro kompatibilitu se staršími verzemi."
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:13
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr "Tento klíč určuje formát používaný apletem hodin, když je klíč format nastaven na \"custom\". Pro získání konkrétního formátu můžete použít specifikátory převodu, kterým rozumí strftime()."
+
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\" and \"unix\". If set to \"internet"
-"\", the clock will display internet time. The internet time system divides "
-"the day into 1000 \".beats\". There are no time zones in this system, so "
-"time is the same all over the world. If set to \"unix\", the clock will "
-"display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr ""
-"Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou "
-"\"12-hour\", \"24-hour\", \"internet\" a \"unix\". Je-li klíč nastaven na "
-"\"internet\", budou hodiny zobrazovat internetový čas. Systém internetového "
-"času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné časové zóny, "
-"takže čas je všude na světě stejný. Je-li klíč nastaven na \"unix\", budou "
-"hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970."
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display internet time. The internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr "Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou \"12-hour\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Je-li klíč nastaven na \"internet\", budou hodiny zobrazovat internetový čas. Systém internetového času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné časové zóny, takže čas je všude na světě stejný. Je-li klíč nastaven na \"unix\", budou hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970. Je-li klíč nastaven na \"custom\", budou hodiny zobrazovat čas podle formátu určeného v klíči custom_format."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Tento klíč určuje program, který spustit pro nastavení času."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
 msgstr "Nástroj pro nastavení času"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use UNIX time"
 msgstr "Použít Unixový čas"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UTC"
 msgstr "Použít UTC"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use internet time"
 msgstr "Používat Internetový čas"
 
@@ -300,7 +314,7 @@ msgstr "_O programu..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:312
+#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
 #: gnome-panel/panel-menu-button.c:608
 msgid "_Help"
 msgstr "_Nápověda"
@@ -359,11 +373,11 @@ msgstr "Ryba %s, soudobá věštkyně"
 
 #: applets/fish/fish.c:573
 msgid "Unable to get the name of the command to execute"
-msgstr "Nelze získat jméno programu, který se má spustit"
+msgstr "Nemohu získat jméno programu, který se má spustit"
 
 #: applets/fish/fish.c:590
 msgid "Unable to locate the command to execute"
-msgstr "Nelze nalézt program, který se má spustit"
+msgstr "Nemohu nalézt program, který se má spustit"
 
 #: applets/fish/fish.c:618
 #, no-c-format
@@ -377,7 +391,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"Nelze spustit '%s'\n"
+"Nemohu spustit '%s'\n"
 "\n"
 "Podrobnosti: %s"
 
@@ -568,7 +582,7 @@ msgstr "Oznamovací oblast na panelu"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:111 gnome-panel/menu.c:121 gnome-panel/menu.c:131
 #: gnome-panel/menu.c:141 gnome-panel/menu.c:151 gnome-panel/menu.c:161
-#: gnome-panel/panel-menu-bar.c:181
+#: gnome-panel/panel-menu-bar.c:192
 msgid "Actions"
 msgstr "Akce"
 
@@ -623,7 +637,7 @@ msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
 #: applets/wncklet/showdesktop.c:306
 #, c-format
 msgid "Failed to load %s: %s\n"
-msgstr "Nelze načíst %s: %s\n"
+msgstr "Nemohu načíst %s: %s\n"
 
 #: applets/wncklet/showdesktop.c:307
 msgid "File not found"
@@ -936,12 +950,12 @@ msgstr "_Přesunout"
 
 #: gnome-panel/applet.c:1115
 msgid "Can't find an empty spot"
-msgstr "Nelze najít volné místo"
+msgstr "Nemohu najít volné místo"
 
 #: gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
-msgstr "Nelze načíst obrázek %s"
+msgstr "Nemohu načíst obrázek %s"
 
 #: gnome-panel/button-widget.c:400
 msgid "none"
@@ -1093,7 +1107,7 @@ msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"Nelze inicializovat strukturu png.\n"
+"Nemohu inicializovat strukturu png.\n"
 "Máte asi ve svém systému špatnou verzi libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:129
@@ -1101,7 +1115,7 @@ msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"Nelze vytvořit png info.\n"
+"Nemohu vytvořit png info.\n"
 "Máte asi ve svém systému špatnou verzi libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:136
@@ -1109,7 +1123,7 @@ msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"Nelze nastavit png info.\n"
+"Nemohu nastavit png info.\n"
 "Máte asi ve svém systému špatnou verzi libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:154
@@ -1133,7 +1147,7 @@ msgid ""
 "\"%s\"\n"
 "Please check your permissions of the parent directory"
 msgstr ""
-"Nelze vytvořit soubor:\n"
+"Nemohu vytvořit soubor:\n"
 "\"%s\"\n"
 "Prosím zkontrolujte práva na rodičovském adresáři."
 
@@ -1189,7 +1203,7 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.c:1167
 msgid "Unable to take a screenshot of the current desktop."
-msgstr "Nelze zachytit aktuální plochu."
+msgstr "Nemohu zachytit aktuální plochu."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1256,7 +1270,7 @@ msgstr "Pro soubor desktop spouštěče na panelu nebylo poskytnuto URI\n"
 #: gnome-panel/launcher.c:422
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "Nelze otevřít soubor desktop %s pro spouštěč na panelu %s%s\n"
+msgstr "Nemohu otevřít soubor desktop %s pro spouštěč na panelu %s%s\n"
 
 #: gnome-panel/launcher.c:629 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
@@ -1266,7 +1280,7 @@ msgstr "Vlastnosti spouštěče"
 #: gnome-panel/launcher.c:813
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
+msgstr "Klíč %s není nastaven, nemohu načíst spouštěč\n"
 
 #: gnome-panel/launcher.c:897 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
@@ -1276,8 +1290,7 @@ msgstr "Vytvořit spouštěč"
 msgid "Specify a profile name to load"
 msgstr "Zadejte jméno profilu k načtení"
 
-#: gnome-panel/menu.c:110 gnome-panel/menu.c:3234
-#: gnome-panel/panel-menu-bar.c:175
+#: gnome-panel/menu.c:110
 msgid "Log Out"
 msgstr "Odhlásit se"
 
@@ -1309,8 +1322,8 @@ msgstr "Vynutit ukončení špatně se chovající aplikace"
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: gnome-panel/menu.c:143 gnome-panel/menu.c:3402
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/menu.c:143 gnome-panel/menu.c:3416
+#: gnome-panel/panel-menu-bar.c:157
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
 
@@ -1318,8 +1331,8 @@ msgstr "Zachytit obrázek vaší pracovní plochy"
 msgid "Search"
 msgstr "Hledat"
 
-#: gnome-panel/menu.c:153 gnome-panel/menu.c:3383
-#: gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:153 gnome-panel/menu.c:3397
+#: gnome-panel/panel-menu-bar.c:142
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
@@ -1378,12 +1391,12 @@ msgstr "Nemohu odstranit položku menu %s"
 #: gnome-panel/menu.c:1084
 #, c-format
 msgid "Could not get file name from path: %s"
-msgstr "Z cesty nelze získat jméno souboru: %s"
+msgstr "Nemohu získat jméno souboru z cesty: %s"
 
 #: gnome-panel/menu.c:1091
 #, c-format
 msgid "Could not get directory name from path: %s"
-msgstr "Z cesty nelze získat jméno adresáře: %s"
+msgstr "Nemohu získat jméno adresáře z cesty: %s"
 
 #: gnome-panel/menu.c:1160
 msgid "Cannot add to run box"
@@ -1439,8 +1452,8 @@ msgstr "Vlastnosti"
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3343
-#: gnome-panel/panel-menu-bar.c:197
+#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3357
+#: gnome-panel/panel-menu-bar.c:208
 msgid "Applications"
 msgstr "Aplikace"
 
@@ -1484,39 +1497,44 @@ msgstr "Spouštěč z menu"
 msgid "Menu Bar"
 msgstr "Lišta menu"
 
-#: gnome-panel/menu.c:3222 gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:169
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
-#: gnome-panel/menu.c:3228
+#: gnome-panel/menu.c:3231
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zamknout obrazovku, abyste mohli dočasně opustit svůj počítač"
 
-#: gnome-panel/menu.c:3240
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr ""
-"Odhlásit se z tohoto sezení, aby bylo možno přihlásit se jako jiný uživatel "
-"nebo vypnout počítač"
+# Ugly ...
+#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
+#, c-format
+msgid "Log Out %s"
+msgstr "Odhlásit uživatele %s"
 
-#: gnome-panel/menu.c:3364 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3252
+#, c-format
+msgid ""
+"Log out %s of this session to log in as a different user or to to shut down "
+"your computer"
+msgstr "Odhlásit uživatele %s z tohoto sezení, aby bylo možno přihlásit se jako jiný uživatel nebo vypnout počítač"
+
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
 msgid "Run Application..."
 msgstr "Spustit aplikaci..."
 
-#: gnome-panel/menu.c:3371 gnome-panel/panel-menu-bar.c:125
+#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:128
 msgid "Run an Application by entering a command"
 msgstr "Spustit aplikaci zadáním příkazu"
 
-#: gnome-panel/menu.c:3380 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:140
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/menu.c:3399 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:155
 msgid "Take Screenshot..."
 msgstr "Zachytit obrazovku..."
 
-#: gnome-panel/menu.c:3417
+#: gnome-panel/menu.c:3431
 msgid "Desktop"
 msgstr "Plocha"
 
@@ -1895,13 +1913,15 @@ msgstr "Zachytit obrazovku"
 msgid "Take window screenshot"
 msgstr "Zachytit snímek okna"
 
-#: gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-menu-bar.c:171
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
-#: gnome-panel/panel-menu-bar.c:177
-msgid "Quit from the GNOME desktop"
-msgstr "Odhlásit ze z rozhraní pracovní plochy GNOME"
+# Ugly...
+#: gnome-panel/panel-menu-bar.c:179
+#, c-format
+msgid "Quit from %s's desktop"
+msgstr "Odhlásit ze z prostředí pracovní plochy uživatele %s"
 
 #: gnome-panel/panel-menu-button.c:416
 msgid "Menu Path"
@@ -2276,8 +2296,7 @@ msgstr "Nelze nalézt vhodnou aplikaci"
 #: gnome-panel/panel-recent.c:82
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr ""
-"Výchozí aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
+msgstr "Implicitní aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
 
 #: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
 msgid "Cannot open recently used document"
@@ -2974,7 +2993,7 @@ msgstr "Přijat nedokončený typ pozadí '%s': %s"
 #: libpanel-applet/panel-applet.c:895
 #, c-format
 msgid "Failed to get pixmap %s"
-msgstr "Nelze získat obrázek %s"
+msgstr "Nemohu získat obrázek %s"
 
 #: libpanel-applet/panel-applet.c:902
 msgid "Unknown background type received"
@@ -3079,13 +3098,6 @@ msgstr "Mrňavý"
 
 #~ msgid "_Print screenshot..."
 #~ msgstr "_Tisknout obrazovku..."
-
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "V panelu došlo k problému načítání \"%s\"\n"
-#~ "Podrobnosti: %s%s"
 
 #~ msgid "If true, display internet time, which is same all over the world."
 #~ msgstr ""
