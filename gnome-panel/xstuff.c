@@ -150,9 +150,10 @@ redo_interface_timeout(gpointer data)
 		GSList *li;
 		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 			PanelData *pd = li->data;
-			if(!IS_BASEP_WIDGET(pd->panel))
-				continue;
-			basep_widget_redo_window(BASEP_WIDGET(pd->panel));
+			if(IS_BASEP_WIDGET(pd->panel))
+				basep_widget_redo_window(BASEP_WIDGET(pd->panel));
+			else if(IS_FOOBAR_WIDGET(pd->panel))
+				foobar_widget_redo_window(FOOBAR_WIDGET(pd->panel));
 		}
 	}
 

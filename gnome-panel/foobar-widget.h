@@ -25,6 +25,7 @@ struct _FoobarWidget
 {
 	GtkWindow window;
 
+	GtkWidget *ebox;
 	GtkWidget *hbox;
 	GtkWidget *panel;
 
@@ -39,8 +40,7 @@ struct _FoobarWidgetClass
 GtkType		foobar_widget_get_type		(void);
 GtkWidget *	foobar_widget_new		(void);
 
-void		foobar_widget_update_winhints	(GtkWidget *foo,
-						 gpointer ignored);
+void		foobar_widget_update_winhints	(FoobarWidget *foo);
 void		foobar_widget_redo_window	(FoobarWidget *foo);
 
 gboolean	foobar_widget_exists		(void);

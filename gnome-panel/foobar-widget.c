@@ -37,7 +37,7 @@ static void foobar_widget_init (FoobarWidget *foo);
 static GtkWidget *das_global_foobar = NULL;
 
 GtkType
-foobar_widget_get_type ()
+foobar_widget_get_type (void)
 {
 	static GtkType foobar_widget_type = 0;
 
@@ -391,21 +391,23 @@ append_clock_menu (GtkWidget *menu_bar)
 }
 
 void
-foobar_widget_update_winhints (GtkWidget *foo, gpointer ignored)
+foobar_widget_update_winhints (FoobarWidget *foo)
 {
-	if (!FOOBAR_WIDGET (foo)->compliant_wm)
+	GtkWidget *w = GTK_WIDGET (foo);
+
+	if (!foo->compliant_wm)
 		return;
 
-	gdk_window_set_hints (foo->window, 0, 0, 
+	gdk_window_set_hints (w->window, 0, 0, 
 			      0, 0, 0, 0, GDK_HINT_POS);
 
-	gnome_win_hints_set_expanded_size (foo, 0, 0, 0, 0);
-	gdk_window_set_decorations (foo->window, 0);
-	gnome_win_hints_set_state (foo, WIN_STATE_STICKY |
+	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
+	gdk_window_set_decorations (w->window, 0);
+	gnome_win_hints_set_state (w, WIN_STATE_STICKY |
 				   WIN_STATE_FIXED_POSITION);
 	
-	gnome_win_hints_set_hints (foo, GNOME_PANEL_HINTS | WIN_HINTS_DO_NOT_COVER);	
-	gnome_win_hints_set_layer (foo, WIN_LAYER_DOCK);
+	gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS | WIN_HINTS_DO_NOT_COVER);	
+	gnome_win_hints_set_layer (w, WIN_LAYER_DOCK);
 }
 
 
@@ -421,6 +423,10 @@ foobar_widget_init (FoobarWidget *foo)
 	gint flags;
 
 	foo->compliant_wm = xstuff_is_compliant_wm ();
+	if(foo->compliant_wm)
+		GTK_WINDOW(foo)->type = GTK_WINDOW_TOPLEVEL;
+	else
+		GTK_WINDOW(foo)->type = GTK_WINDOW_POPUP;
 
 	window->allow_shrink = TRUE;
 	window->allow_grow   = TRUE;
@@ -435,7 +441,9 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_widget_set_usize (GTK_WIDGET (foo),
 			      gdk_screen_width (), -2);
 
+	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
+	gtk_container_add(GTK_CONTAINER(foo->ebox), foo->hbox);
 
 #if 0	
 	path = gnome_pixmap_file ("panel/corner1.png");
@@ -495,8 +503,8 @@ foobar_widget_init (FoobarWidget *foo)
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
-	gtk_container_add (GTK_CONTAINER (foo), foo->hbox);
-	gtk_widget_show_all (foo->hbox);
+	gtk_container_add (GTK_CONTAINER (foo), foo->ebox);
+	gtk_widget_show_all (foo->ebox);
 }
 
 #warning This is probably hackish
@@ -538,14 +546,111 @@ foobar_widget_new (void)
 }
 
 gboolean
-foobar_widget_exists ()
+foobar_widget_exists (void)
 {
 	return (das_global_foobar != NULL);
 }
 
 gint
-foobar_widget_get_height ()
+foobar_widget_get_height (void)
 {
 	return (das_global_foobar && GTK_WIDGET_REALIZED (das_global_foobar)) 
 		? das_global_foobar->allocation.height : 0; 
+}
+
+static void
+reparent_button_widgets(GtkWidget *w, gpointer data)
+{
+	GdkWindow *newwin = data;
+	if(IS_BUTTON_WIDGET(w)) {
+		ButtonWidget *button = BUTTON_WIDGET(w);
+		/* we can just reparent them all to 0,0 as the next thing
+		 * that will happen is a queue_resize and on size allocate
+		 * they will be put into their proper place */
+		gdk_window_reparent(button->event_window, newwin, 0, 0);
+	}
+}
+
+void
+foobar_widget_redo_window(FoobarWidget *foo)
+{
+	GtkWindow *window;
+	GtkWidget *widget;
+	GdkWindowAttr attributes;
+	gint attributes_mask;
+	GdkWindow *oldwin;
+	GdkWindow *newwin;
+	gboolean comp;
+
+	comp = xstuff_is_compliant_wm();
+	if(comp == foo->compliant_wm)
+		return;
+
+	window = GTK_WINDOW(foo);
+	widget = GTK_WIDGET(foo);
+
+	foo->compliant_wm = comp;
+	if(foo->compliant_wm) {
+		window->type = GTK_WINDOW_TOPLEVEL;
+		attributes.window_type = GDK_WINDOW_TOPLEVEL;
+	} else {
+		window->type = GTK_WINDOW_POPUP;
+		attributes.window_type = GDK_WINDOW_TEMP;
+	}
+
+	if(!widget->window)
+		return;
+
+	/* this is mostly copied from gtkwindow.c realize method */
+	attributes.title = window->title;
+	attributes.wmclass_name = window->wmclass_name;
+	attributes.wmclass_class = window->wmclass_class;
+	attributes.width = widget->allocation.width;
+	attributes.height = widget->allocation.height;
+	attributes.wclass = GDK_INPUT_OUTPUT;
+	attributes.visual = gtk_widget_get_visual (widget);
+	attributes.colormap = gtk_widget_get_colormap (widget);
+	attributes.event_mask = gtk_widget_get_events (widget);
+	attributes.event_mask |= (GDK_EXPOSURE_MASK |
+				  GDK_KEY_PRESS_MASK |
+				  GDK_ENTER_NOTIFY_MASK |
+				  GDK_LEAVE_NOTIFY_MASK |
+				  GDK_FOCUS_CHANGE_MASK |
+				  GDK_STRUCTURE_MASK);
+
+	attributes_mask = GDK_WA_VISUAL | GDK_WA_COLORMAP;
+	attributes_mask |= (window->title ? GDK_WA_TITLE : 0);
+	attributes_mask |= (window->wmclass_name ? GDK_WA_WMCLASS : 0);
+   
+	oldwin = widget->window;
+
+	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
+	gdk_window_set_user_data(newwin, window);
+
+	/* reparent our main panel window */
+	gdk_window_reparent(foo->ebox->window, newwin, 0, 0);
+	/* reparent all the base event windows as they are also children of
+	 * the foobar */
+	gtk_container_foreach(GTK_CONTAINER(foo->panel),
+			      reparent_button_widgets,
+			      newwin);
+
+
+	widget->window = newwin;
+
+	gdk_window_set_user_data(oldwin, NULL);
+	gdk_window_destroy(oldwin);
+
+	widget->style = gtk_style_attach(widget->style, widget->window);
+	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
+
+	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+
+	gtk_widget_queue_resize(widget);
+
+	foobar_widget_update_winhints (foo);
+
+	gtk_drag_dest_set (widget, 0, NULL, 0, 0);
+
+	gtk_widget_map(widget);
 }

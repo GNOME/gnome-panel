@@ -92,7 +92,7 @@ panel_realize(GtkWidget *widget, gpointer data)
 	if (IS_BASEP_WIDGET (widget))
 		basep_widget_enable_buttons(BASEP_WIDGET(widget));
 	else if (IS_FOOBAR_WIDGET (widget))
-		foobar_widget_update_winhints (widget, NULL);
+		foobar_widget_update_winhints (FOOBAR_WIDGET(widget));
 
 	/*FIXME: this seems to fix the panel size problems on startup
 	  (from a report) but I don't think it's right*/
