@@ -241,8 +241,6 @@ panel_gconf_dir_exists (const gchar *key) {
 		g_error_free (error);
 	}
 
-	g_print ("dir_exists: %s %s\n", key, retval ? "(true)" : "(false)");
-
 	return retval;
 }
 
