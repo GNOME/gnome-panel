@@ -10,7 +10,6 @@
 #include <applet-widget.h>
 
 typedef struct _fish_properties fish_properties;
-
 struct _fish_properties {
 	char *name;
 	char *image;
@@ -52,6 +51,7 @@ load_properties(char *privcfgpath)
 	properties.image = gnome_config_get_string(buf);
 	g_snprintf(buf,256,"fish/frames=%d",defaults.frames);
 	properties.frames = gnome_config_get_int(buf);
+	if(properties.frames <= 0) properties.frames = 1;
 	g_snprintf(buf,256,"fish/speed=%f",defaults.speed);
 	properties.speed = gnome_config_get_float(buf);
 	gnome_config_pop_prefix();
@@ -155,7 +155,7 @@ apply_cb(GnomePropertyBox * pb, int page, gpointer data)
 		g_free(properties.name);
 		properties.name = g_strdup(s);
 	}
-	s = gtk_entry_get_text(GTK_ENTRY(image));
+	s = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(image));
 	if (s) {
 		g_free(properties.image);
 		properties.image = g_strdup(s);
@@ -164,19 +164,6 @@ apply_cb(GnomePropertyBox * pb, int page, gpointer data)
 	properties.speed = speed->value;
 
 	apply_properties();
-}
-
-static gint
-close_cb(GnomePropertyBox * pb, gpointer data)
-{
-	GtkWidget *name = gtk_object_get_data(GTK_OBJECT(pb),
-					      "name");
-	GtkWidget *image = gtk_object_get_data(GTK_OBJECT(pb),
-					       "image");
-	gtk_signal_disconnect_by_data(GTK_OBJECT(name),pb);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(image),pb);
-
-  return FALSE;
 }
 
 static void 
@@ -206,24 +193,24 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	gtk_box_pack_start(GTK_BOX(hbox), e, TRUE, TRUE, 0);
 	gtk_object_set_data(GTK_OBJECT(pb),"name",e);
 
-	gtk_signal_connect_object(GTK_OBJECT(e), "changed",
-				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(pb));
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
+					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
+					      GTK_OBJECT(pb));
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
 	w = gtk_label_new(_("The Animation Filename:"));
 	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	w = gnome_file_entry_new("fish_animation",_("Browse"));
+	w = gnome_pixmap_entry_new("fish_animation",_("Browse"),TRUE);
 	gtk_box_pack_start(GTK_BOX(hbox),w,TRUE,TRUE,0);
-	e = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
+	e = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (w));
 	gtk_entry_set_text(GTK_ENTRY(e), properties.image);
-	gtk_object_set_data(GTK_OBJECT(pb),"image",e);
+	gtk_object_set_data(GTK_OBJECT(pb),"image",w);
 
-	gtk_signal_connect_object(GTK_OBJECT(e), "changed",
-				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(pb));
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
+					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
+					      GTK_OBJECT(pb));
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -231,7 +218,7 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	w = gtk_label_new(_("Frames In Animation:"));
 	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (properties.frames,
-						    0.0, 255.0, 1.0, 5.0, 0.0);
+						    1.0, 255.0, 1.0, 5.0, 0.0);
 	w = gtk_spin_button_new(adj,0,0);
 	gtk_widget_set_usize(w,70,0);
 	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
@@ -262,9 +249,6 @@ properties_dialog(AppletWidget *aw, gpointer data)
 
 	gtk_signal_connect(GTK_OBJECT(pb), "apply",
 			   GTK_SIGNAL_FUNC(apply_cb),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(pb), "close",
-			   GTK_SIGNAL_FUNC(close_cb),
 			   NULL);
 
 	gtk_widget_show_all(pb);
