@@ -190,9 +190,10 @@ applet_callback_callback (GtkWidget      *widget,
 
 	switch (menu->info->type) {
 	case PANEL_OBJECT_LAUNCHER:
-		if (!strcmp (menu->name, "properties"))
-			launcher_properties (
-				menu->info->data, screen);
+		if (!strcmp (menu->name, "launch"))
+			launcher_launch (menu->info->data, widget);
+		else if (!strcmp (menu->name, "properties"))
+			launcher_properties (menu->info->data, screen);
 		break;
 	case PANEL_OBJECT_DRAWER: 
 		if (strcmp (menu->name, "add") == 0) {

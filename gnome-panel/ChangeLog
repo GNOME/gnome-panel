@@ -1,5 +1,16 @@
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
+	Add a "Launch" menu item to the launcher context menu
+
+	* applet.c: (applet_callback_callback): handle the "Launch" menu item
+	for launchers
+	* launcher.[ch]: (launch_cb): renamed to...
+	(launcher_launch): new function, arguments are now swapped
+	(create_launcher): updated
+	(load_launcher_applet): add "Launch" menu item to the context menu
+
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
 	The drawer context menu is now the same if you click on the drawer
 	toplevel or on the drawer button widget. This should be more
 	consistent.

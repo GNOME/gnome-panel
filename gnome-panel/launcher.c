@@ -184,9 +184,9 @@ launch_url (Launcher *launcher)
 	}
 }
 
-static void
-launch_cb (GtkWidget *widget,
-	   Launcher  *launcher)
+void
+launcher_launch (Launcher  *launcher,
+		 GtkWidget *widget)
 {
 	GnomeDesktopItem *item;
 
@@ -508,8 +508,8 @@ create_launcher (const char *location)
 			   G_CALLBACK (drag_drop_cb), launcher);
 	g_signal_connect (launcher->button, "drag_leave",
 			   G_CALLBACK (drag_leave_cb), launcher);
-	g_signal_connect (launcher->button, "clicked",
-			  G_CALLBACK (launch_cb), launcher);
+	g_signal_connect_swapped (launcher->button, "clicked",
+				  G_CALLBACK (launcher_launch), launcher);
 
 	launcher->destroy_handler =
 			g_signal_connect (launcher->button, "destroy",
@@ -815,6 +815,12 @@ load_launcher_applet (const char       *location,
 						PANEL_OBJECT_LAUNCHER, id);
 	if (!launcher->info)
 		return NULL;
+
+	panel_applet_add_callback (launcher->info,
+				   "launch",
+				   GTK_STOCK_EXECUTE,
+				   _("_Launch"),
+				   NULL);
 
 	panel_applet_add_callback (launcher->info,
 				   "properties",
