@@ -1,3 +1,13 @@
+2000-09-29  Jacob "Ulysses" Berkman  <jacob@helixcode.com>
+
+	* panel_config.c (update_config_edge):
+	(update_config_anchor):
+	(border_set_edge):
+	(border_set_align): if we aren't changing the align or edge,
+	return early so we don't have stack crashes
+	(panel_config): append the button list with a NULL so we don't get
+	a seg fault
+
 Fri Sep 29 00:17:17 2000  George Lebl <jirka@5z.com>
 
 	* panel_config.c: fix crash during properties by nulling the

@@ -78,6 +78,9 @@ update_config_edge (BasePWidget *panel)
 
 	g_return_if_fail (IS_BORDER_WIDGET (panel));
 
+	if (ppc->edge == BORDER_POS (panel->pos)->edge)
+		return;
+
 	ppc->edge = BORDER_POS (panel->pos)->edge;
 	update_position_toggles (ppc);
 }
@@ -296,6 +299,9 @@ update_config_align (BasePWidget *w)
 	if(!ppc)
 		return;
 
+	if (ppc->align == ALIGNED_POS (w->pos)->align)
+		return;
+
 	ppc->align = ALIGNED_POS (w->pos)->align;
 	update_position_toggles (ppc);
 }
@@ -487,6 +493,9 @@ border_set_edge (GtkWidget *widget, gpointer data)
 	int edge = GPOINTER_TO_INT (data);
 	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
 
+	if (ppc->edge == edge)
+		return;
+
 	ppc->edge = edge;
 	
 	panel_config_register_changes (ppc);
@@ -497,6 +506,9 @@ border_set_align (GtkWidget *widget, gpointer data)
 {
 	int align = GPOINTER_TO_INT (data);
 	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	if (ppc->align == align)
+		return;
 
 	ppc->align = align;
 	
@@ -1410,7 +1422,8 @@ panel_config(GtkWidget *panel)
 	/* main window */
 	ppc->config_window = gnome_dialog_new (_("Panel properties"),
 					       GNOME_STOCK_BUTTON_CLOSE,
-					       GNOME_STOCK_BUTTON_HELP);
+					       GNOME_STOCK_BUTTON_HELP,
+					       NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (ppc->config_window),
 				FALSE /* click_closes */);
 	gtk_window_set_wmclass(GTK_WINDOW(ppc->config_window),
