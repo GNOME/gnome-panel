@@ -57,6 +57,8 @@ void convert_old_config(void);
 char * get_correct_prefix (char const **sep);
 void push_correct_global_prefix (void);
 
+void session_add_dead_launcher (const gchar *location);
+
 G_END_DECLS
 
 #endif

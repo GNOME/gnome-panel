@@ -657,26 +657,6 @@ applet_button_press (GtkWidget      *widget,
 		return TRUE;
 }
 
-static GList *launchers_to_kill = NULL;
-
-void
-remove_unused_launchers (void)
-{
-	GList *li;
-
-	for (li = launchers_to_kill; li != NULL; li = li->next) {
-		char *file = li->data;
-		li->data = NULL;
-
-		unlink (file);
-
-		g_free (file);
-	}
-
-	g_list_free (launchers_to_kill);
-	launchers_to_kill = NULL;
-}
-
 static void
 applet_destroy (GtkWidget *w, AppletInfo *info)
 {
@@ -696,19 +676,12 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 			gtk_widget_destroy(dw);
 		}
 	} else if (info->type == APPLET_LAUNCHER) {
-		Launcher *launcher = info->data;
-		const char *location;
-
-		/* we CAN'T unlink the file here as we may just
-		 * be killing stuff before exit, basically we
-		 * just want to schedule removals until session
-		 * saving */
+		Launcher    *launcher = info->data;
+		const gchar *location;
 
 		location = gnome_desktop_item_get_location (launcher->ditem);
-		if (location != NULL)
-			launchers_to_kill = 
-				g_list_prepend (launchers_to_kill,
-						g_strdup (location));
+
+		session_add_dead_launcher (location);
 	}
 
 

@@ -650,8 +650,42 @@ save_next_applet(void)
 	gnome_config_drop_all();
 }
 
+/*
+ * We queue the location of .desktop files belonging
+ * to dead launchers here, to be removed when saving
+ * the session.
+ */
+static GList *session_dead_launcher_locations = NULL;
 
+void
+session_add_dead_launcher (const gchar *location)
+{
+	g_return_if_fail (location);
 
+	session_dead_launcher_locations =
+			g_list_prepend (session_dead_launcher_locations, 
+					g_strdup (location));
+}
+
+static void
+session_unlink_dead_launchers (void)
+{
+	GList *l;
+
+	for (l = session_dead_launcher_locations; l; l = l->next) {
+		gchar *file = l->data;
+
+		unlink (file);
+
+		g_free (file);
+
+		l->data = NULL;
+	}
+
+	g_list_free (session_dead_launcher_locations);
+
+	session_dead_launcher_locations = NULL;
+}
 
 static void
 do_session_save(GnomeClient *client,
@@ -719,8 +753,7 @@ do_session_save(GnomeClient *client,
 		ss_cur_applet = -1;
 		ss_done_save = FALSE;
 
-		/* kill removed launcher files */
-		remove_unused_launchers ();
+		session_unlink_dead_launchers ();
 
 		/* start saving applets */
 		save_next_applet ();

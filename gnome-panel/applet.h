@@ -93,8 +93,6 @@ void        panel_applet_callback_set_sensitive (AppletInfo *info,
 						 const char *callback_name,
 						 gint        sensitive);
 
-void remove_unused_launchers (void);
-
 G_END_DECLS
 
 #endif
