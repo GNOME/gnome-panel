@@ -32,9 +32,14 @@ extern GlobalConfig global_config;
 
 
 static void
-launch (GtkWidget *widget, void *data)
+launch (Launcher *launcher, int argc, char *argv[])
 {
-	GnomeDesktopEntry *item = data;
+	GnomeDesktopEntry *item;
+
+	g_return_if_fail(launcher != NULL);
+	g_return_if_fail(launcher->dentry != NULL);
+
+	item = launcher->dentry;
 
 	if(!item->exec) {
 		GtkWidget *dlg;
@@ -53,11 +58,11 @@ launch (GtkWidget *widget, void *data)
 	    && strstr(item->exec[0], "://"))
 		gnome_url_show(item->exec[0]);
 	else
-		gnome_desktop_entry_launch (item);
+		gnome_desktop_entry_launch_with_args (item,argc,argv);
 	
 	if(global_config.drawer_auto_close) {
 		GtkWidget *parent =
-			gtk_object_get_data(GTK_OBJECT(widget->parent),PANEL_PARENT);
+			gtk_object_get_data(GTK_OBJECT(launcher->button->parent),PANEL_PARENT);
 		g_return_if_fail(parent!=NULL);
 		if(IS_DRAWER_WIDGET(parent)) {
 			BasePWidget *basep = BASEP_WIDGET(parent);
@@ -68,6 +73,43 @@ launch (GtkWidget *widget, void *data)
 						    BASEP_WIDGET (grandparentw));
 		}
 	}
+}
+
+static void
+launch_cb (GtkWidget *widget, gpointer data)
+{
+	launch(data,0,NULL);
+}
+
+static void
+drag_data_received_cb (GtkWidget        *widget,
+		       GdkDragContext   *context,
+		       gint              x,
+		       gint              y,
+		       GtkSelectionData *selection_data,
+		       guint             info,
+		       guint             time,
+		       Launcher         *launcher)
+{
+
+	GList *li, *files;
+	int argc;
+	char **argv;
+	int i;
+
+	g_return_if_fail(launcher!=NULL);
+
+	files = gnome_uri_list_extract_filenames(selection_data->data);
+	argc = g_list_length(files);
+	argv = g_new(char *,argc+1);
+	argv[argc] = NULL;
+
+	for(i=0,li = files; li; i++,li = g_list_next(li))
+		argv[i]=li->data;
+	
+	launch(launcher,argc,argv);
+	gnome_uri_list_free_strings (files);
+	g_free(argv);
 }
 
 static void
@@ -108,7 +150,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 {
 	char *icon;
 	Launcher *launcher;
-        static GtkTargetEntry drag_targets[] = {
+        static GtkTargetEntry dnd_targets[] = {
 		{ "text/uri-list", 0, 0 }
 	};
 
@@ -177,17 +219,26 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	GTK_WIDGET_UNSET_FLAGS(launcher->button,GTK_NO_WINDOW);
 	gtk_drag_source_set(launcher->button,
 			    GDK_BUTTON1_MASK,
-			    drag_targets, 1,
+			    dnd_targets, 1,
 			    GDK_ACTION_COPY);
 	GTK_WIDGET_SET_FLAGS(launcher->button,GTK_NO_WINDOW);
+	
+	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
+			   GTK_DEST_DEFAULT_MOTION |
+			   GTK_DEST_DEFAULT_HIGHLIGHT |
+			   GTK_DEST_DEFAULT_DROP,
+			   dnd_targets, 1,
+			   GDK_ACTION_COPY);
 
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_get",
 			   drag_data_get_cb, launcher);
+	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_received",
+			   drag_data_received_cb, launcher);
 
 	gtk_signal_connect (GTK_OBJECT(launcher->button),
 			    "clicked",
-			    (GtkSignalFunc) launch,
-			    dentry);
+			    (GtkSignalFunc) launch_cb,
+			    launcher);
 	
 	gtk_signal_connect (GTK_OBJECT(launcher->button), "destroy",
 			    GTK_SIGNAL_FUNC(destroy_launcher),
