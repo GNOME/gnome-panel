@@ -32,14 +32,14 @@ dnl If you add a version number here, you *must* add an AC_SUBST line for
 dnl it too, or it will never make it into the spec file!
 
 LIBGNOME_DESKTOP_REQUIRED=2.0.3
-GDK_PIXBUF_REQUIRED=2.0.3
-GTK_REQUIRED=2.0.3
+GDK_PIXBUF_REQUIRED=2.1.0
+GTK_REQUIRED=2.1.0
 LIBGLADE_REQUIRED=2.0.0
 LIBGNOME_REQUIRED=2.0.0
 LIBGNOMEUI_REQUIRED=2.0.0
 ORBIT_REQUIRED=2.4.0
 GNOME_VFS_MODULE_REQUIRED=1.9.16
-LIBWNCK_REQUIRED=0.13
+LIBWNCK_REQUIRED=2.1.0
 
 AC_SUBST(GTK_REQUIRED)
 AC_SUBST(GDK_PIXBUF_REQUIRED)
@@ -67,23 +67,6 @@ AC_SUBST(LIBPANEL_APPLET_LIBS)
 PKG_CHECK_MODULES(WNCKLET, ORBit-2.0 >= $ORBIT_REQUIRED gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libwnck-1.0 >= $LIBWNCK_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED)
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
-
-AC_MSG_CHECKING([for gtk+ multihead support])
-if $PKG_CONFIG --atleast-version 2.1.0 gtk+-2.0; then
-   AC_DEFINE(HAVE_GTK_MULTIHEAD,,[gtk+ with multihead support found])
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
-dnl
-dnl Check for wnck_pager_set_screen and wnck_tasklist_set_screen
-dnl
-__save_LIBS=$LIBS
-LIBS="$LIBS $WNCKLET_LIBS"
-AC_CHECK_FUNCS(wnck_pager_set_screen)
-AC_CHECK_FUNCS(wnck_tasklist_set_screen)
-LIBS=$___save_LIBS
 
 dnl shape extenstion for gnome-panel-screenshot
 savecppflags=$CPPFLAGS

@@ -126,13 +126,11 @@ static void
 applet_realized (PanelApplet *applet,
 		 PagerData   *pager)
 {
-#ifdef HAVE_WNCK_PAGER_SET_SCREEN 
 	WnckScreen *screen;
 
 	screen = applet_get_screen (GTK_WIDGET (applet));
 
 	wnck_pager_set_screen (WNCK_PAGER (pager->pager), screen);
-#endif
 }
 
 static void
