@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.2\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
+"POT-Creation-Date: 2003-01-07 18:31+1300\n"
 "PO-Revision-Date: 2001-09-13 13:18+0200\n"
 "Last-Translator: Pavel Cholakov <pavel@linux.zonebg.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -14,8 +14,8 @@ msgstr ""
 
 # ##
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
-#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
@@ -127,7 +127,7 @@ msgstr ""
 msgid "*"
 msgstr ""
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Избери"
@@ -234,8 +234,8 @@ msgstr "Информация..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
+#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 #, fuzzy
 msgid "_Help"
 msgstr "Помощ"
@@ -356,7 +356,7 @@ msgid "Use _UTC"
 msgstr "Използвай GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -367,11 +367,6 @@ msgstr ""
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Часовник"
-
-#: applets/gen_util/clock.c:1205
-#, fuzzy
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
 
 #: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
@@ -477,7 +472,7 @@ msgid "Get the current time and date"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr ""
 
@@ -526,7 +521,7 @@ msgid "_Check for mail"
 msgstr "Проверявай пощата"
 
 # ##
-#: applets/gen_util/mailcheck.c:196
+#: applets/gen_util/mailcheck.c:200
 #, fuzzy, c-format
 msgid "There was an error executing %s: %s"
 msgstr ""
@@ -534,21 +529,21 @@ msgstr ""
 "\n"
 "%s"
 
-#: applets/gen_util/mailcheck.c:274
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:282
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:382
 #, fuzzy
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
@@ -558,206 +553,202 @@ msgstr ""
 "Remote-client-error! Remote-polling забранено. Може би сте използвали грешен "
 "сървър/потребител/парола?"
 
-#: applets/gen_util/mailcheck.c:537
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Имате нова поща."
 
-#: applets/gen_util/mailcheck.c:539
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Имате поща."
 
-#: applets/gen_util/mailcheck.c:543
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d съобщения"
 
-#: applets/gen_util/mailcheck.c:545
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d съобщения"
 
-#: applets/gen_util/mailcheck.c:549
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Нямате поща."
 
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 #, fuzzy
 msgid "Status not updated"
 msgstr "Показвай съобщението на деня (motd)"
 
-#: applets/gen_util/mailcheck.c:1242
+#: applets/gen_util/mailcheck.c:1263
 #, fuzzy
 msgid "Mailbox _resides on:"
 msgstr "Пощенската кутия се намира в:"
 
-#: applets/gen_util/mailcheck.c:1250
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Локална пощенска опашка"
 
-#: applets/gen_util/mailcheck.c:1258
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Локална пощенска директория"
 
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "Отдалечен POP3 сървър"
 
-#: applets/gen_util/mailcheck.c:1274
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "Отдалечен IMAP сървър"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1315
 #, fuzzy
 msgid "Mail _spool file:"
 msgstr "Име на файла с пощенската опашка:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1334
 #, fuzzy
 msgid "Mail s_erver:"
 msgstr "Пощенски сървър:"
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1333
+#: applets/gen_util/mailcheck.c:1354
 #, fuzzy
 msgid "_Username:"
 msgstr "Потребител:"
 
-#: applets/gen_util/mailcheck.c:1341
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1371
 #, fuzzy
 msgid "_Password:"
 msgstr "Парола:"
 
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1392
 #, fuzzy
 msgid "_Folder:"
 msgstr " Папка"
 
-#: applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1391
+#: applets/gen_util/mailcheck.c:1412
 #, fuzzy
 msgid "C_ommand to run before checking for mail:"
 msgstr "Команда за изпълнение преди проверка на поща:"
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1420
 #, fuzzy
 msgid "Command Entry box"
 msgstr "Команда (не задължително)"
 
-#: applets/gen_util/mailcheck.c:1424
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Изпълни"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1456
 #, fuzzy
 msgid "Before each _update:"
 msgstr "Преди всяко актуализиране:"
 
-#: applets/gen_util/mailcheck.c:1450
+#: applets/gen_util/mailcheck.c:1471
 #, fuzzy
 msgid "Command to execute before each update"
 msgstr "Команда за изпълнение при кликване на рибата:"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1481
 #, fuzzy
 msgid "When new mail _arrives:"
 msgstr "Когато пристигне нова поща:"
 
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 #, fuzzy
 msgid "Command to execute when new mail arrives"
 msgstr "Команда за изпълнение при кликване на рибата:"
 
-#: applets/gen_util/mailcheck.c:1483
+#: applets/gen_util/mailcheck.c:1504
 #, fuzzy
 msgid "When clicke_d:"
 msgstr "Когато се натисне аплета:"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1517
 #, fuzzy
 msgid "Command to execute when clicked"
 msgstr "Команда за изпълнение при кликване на рибата:"
 
-#: applets/gen_util/mailcheck.c:1506
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1517
+#: applets/gen_util/mailcheck.c:1538
 #, fuzzy
 msgid "Check for mail _every"
 msgstr "Проверявай пощата всеки"
 
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 #, fuzzy
 msgid "minutes"
 msgstr "минути и"
 
-#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "секунди"
 
-#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1576
 #, fuzzy
 msgid "Play a _sound when new mail arrives"
 msgstr "Изсвирвай звук при пристигането на нова поща"
 
-#: applets/gen_util/mailcheck.c:1566
+#: applets/gen_util/mailcheck.c:1587
 #, fuzzy
 msgid "Select a_nimation"
 msgstr "Разреши анимациите"
 
-#: applets/gen_util/mailcheck.c:1643
+#: applets/gen_util/mailcheck.c:1664
 #, fuzzy
 msgid "Inbox Monitor Preferences"
 msgstr "Свойства на елемент"
 
-#: applets/gen_util/mailcheck.c:1663
+#: applets/gen_util/mailcheck.c:1684
 #, fuzzy
 msgid "_Mail check"
 msgstr "Проверка на поща"
 
-#: applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/mailcheck.c:1688
 #, fuzzy
 msgid "Mail_box"
 msgstr "Пощенска кутия"
 
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "(c) 1998-2000 Фондация за Свободен Софтуер"
-
-#: applets/gen_util/mailcheck.c:1747
+#: applets/gen_util/mailcheck.c:1768
 #, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Mail check ви уведомява, когато получите нова поща"
 
-#: applets/gen_util/mailcheck.c:1911
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Само текст"
 
-#: applets/gen_util/mailcheck.c:1937
+#: applets/gen_util/mailcheck.c:1959
 #, fuzzy
 msgid "Mail check"
 msgstr "Проверка на поща"
 
-#: applets/gen_util/mailcheck.c:1938
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Mail check ви уведомява, когато получите нова поща"
 
@@ -912,11 +903,6 @@ msgstr ""
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 
-#: applets/gen_util/pager.c:546
-#, fuzzy
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
 #: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -985,60 +971,6 @@ msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr ""
 
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Не мога да изпълня команда към принтера"
-
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Настройки на принтера"
-
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Име на принтера:"
-
-#: applets/gen_util/printer.c:319
-#, fuzzy
-msgid "Print command:"
-msgstr "Команда за печатане:"
-
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Принтер"
-
-#: applets/gen_util/printer.c:353
-#, fuzzy
-msgid "Printer Applet"
-msgstr "Настройки на принтера"
-
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "(c) 1998 Фондация за Свободен Софтуер"
-
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Аплетът Принтер Ви позволява лесно да печатате файлове като ги пускате в него"
-
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Не мога да създам аплет!\n"
-
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Настройки..."
-
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Помощ"
-
-#: applets/gen_util/printer.c:479
-#, fuzzy
-msgid "About..."
-msgstr "Информация..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr ""
@@ -1059,17 +991,8 @@ msgstr ""
 msgid "File not found"
 msgstr ""
 
-#: applets/gen_util/showdesktop.c:453
-#, fuzzy
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/tasklist.c:809
-msgid "(c) 2001 Red Hat, Inc"
 msgstr ""
 
 #: applets/gen_util/tasklist.c:810
@@ -1210,84 +1133,79 @@ msgstr ""
 msgid "Panel Notification Area"
 msgstr ""
 
-#: applets/notification_area/main.c:126
-#, fuzzy
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 #, fuzzy
 msgid "_Remove From Panel"
 msgstr "Премахни от панела"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 #, fuzzy
 msgid "_Move"
 msgstr "Премести"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:789
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1256
 msgid "Can't find an empty spot"
 msgstr "Не мога да намеря празно място"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 #, fuzzy
 msgid "Mode"
 msgstr "Премести"
 
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 #, fuzzy
 msgid "Mode of this panel"
 msgstr "Скрий този панел"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Състояние"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 #, fuzzy
 msgid "Current state of this panel"
 msgstr "Запиши снетия екран в работното пространство"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 #, fuzzy
 msgid "Hidebuttons enabled"
 msgstr "Бутони за скриване"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 #, fuzzy
 msgid "Hidebutton pixmaps enabled"
 msgstr "Бутони за скриване"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Скрий този панел"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 #, fuzzy
 msgid "Show this panel"
 msgstr "Премахни този панел"
@@ -1312,46 +1230,46 @@ msgstr "Без фон"
 msgid "file not found"
 msgstr ""
 
-#: gnome-panel/button-widget.c:879
+#: gnome-panel/button-widget.c:868
 #, fuzzy
 msgid "Size"
 msgstr "Размери"
 
-#: gnome-panel/button-widget.c:880
+#: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
 msgstr ""
 
-#: gnome-panel/button-widget.c:888
+#: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
 msgstr ""
 
-#: gnome-panel/button-widget.c:889
+#: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
 msgstr ""
 
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:886
 #, fuzzy
 msgid "Orientation"
 msgstr "Ориентация"
 
-#: gnome-panel/button-widget.c:898
+#: gnome-panel/button-widget.c:887
 msgid "The ButtonWidget orientation"
 msgstr ""
 
-#: gnome-panel/button-widget.c:907
+#: gnome-panel/button-widget.c:896
 #, fuzzy
 msgid "Icon Name"
 msgstr "Име на сесия"
 
-#: gnome-panel/button-widget.c:908
+#: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
 msgstr ""
 
-#: gnome-panel/button-widget.c:916
+#: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
 msgstr ""
 
-#: gnome-panel/button-widget.c:917
+#: gnome-panel/button-widget.c:906
 #, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Използва потребителска икона за бутон на панел"
@@ -1422,21 +1340,17 @@ msgstr "Показвай бутона за скриване"
 msgid "Enable hidebutton arrow"
 msgstr "Показвай стрелките на бутона за скриване"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
 msgid "Drawer"
 msgstr "Шкаф"
 
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
 #, fuzzy
 msgid "_Properties"
 msgstr "Настройки"
 
-#: gnome-panel/egg-recent-vfs-utils.c:90
-msgid " (invalid Unicode)"
-msgstr ""
-
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 #, fuzzy
 msgid "Run Program..."
 msgstr "Стартирай програма"
@@ -1445,25 +1359,25 @@ msgstr "Стартирай програма"
 msgid "Run applications, if you know the correct command to type in"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
 #, fuzzy
 msgid "Screenshot..."
 msgstr "Снимка на екран"
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Запиши снетия екран в работното пространство"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Заключи екрана"
 
@@ -1471,8 +1385,8 @@ msgstr "Заключи екрана"
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Изход"
 
@@ -1490,7 +1404,7 @@ msgstr "Действие"
 msgid "No windows open"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Панел-меню"
@@ -1500,8 +1414,8 @@ msgstr "Панел-меню"
 msgid "GNOME Menu Panel"
 msgstr "GNOME Панел"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 #, fuzzy
 msgid "Applications"
 msgstr "Приложение"
@@ -1920,7 +1834,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1968,11 +1882,6 @@ msgstr ""
 msgid "The GNOME Panel"
 msgstr "GNOME Панел"
 
-#: gnome-panel/menu.c:290
-#, fuzzy
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
-
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "Край на световния глад"
@@ -1993,7 +1902,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2001,7 +1910,7 @@ msgid ""
 "Details: %s"
 msgstr "Не мога да заредя елемента"
 
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1066
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -2009,17 +1918,17 @@ msgid ""
 "Details: %s\n"
 msgstr "Не мога да премахна елементът %s: %s\n"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1076
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Не мога да взема името на файла от: %s"
 
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Не мога да взема името на директорията от пътя: %s"
 
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1153
 #, fuzzy
 msgid ""
 "<b>Can't add to run box</b>\n"
@@ -2027,177 +1936,178 @@ msgid ""
 "Details: No 'Exec' or 'URL' field in entry"
 msgstr "Няма 'Изпълни' поле в елемента"
 
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
 msgstr "Добави този стартер към панела"
 
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1471
 msgid "Remove this item"
 msgstr "Премахни този елемент"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
 msgstr "Сложи в диалога \"Стартирай...\""
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1505
 #, c-format
 msgid "Help on %s"
 msgstr "Помощ за %s"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1506
 msgid "Application"
 msgstr "Приложение"
 
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1552
 msgid "Entire menu"
 msgstr "Цялото меню"
 
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1561
 msgid "Add this as drawer to panel"
 msgstr "Добави това като шкаф към панела"
 
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1569
 msgid "Add this as menu to panel"
 msgstr "Добави това като меню към панела"
 
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1577
 msgid "Add new item to this menu"
 msgstr "Добави нов елемент към това меню"
 
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1603
 msgid "Properties"
 msgstr "Настройки"
 
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Подравнен панел"
 
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2872
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Подравнен панел"
 
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
 #: gnome-panel/panel-config.c:1727
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Ръбов панел"
 
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2894
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "GNOME Панел"
 
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
 #: gnome-panel/panel-config.c:1749
 #, fuzzy
 msgid "Sliding Panel"
 msgstr "Плъзгащ се панел"
 
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2920
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Плъзгащ се панел"
 
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
 #: gnome-panel/panel-config.c:1760
 #, fuzzy
 msgid "Floating Panel"
 msgstr "Плаващ панел"
 
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2944
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Плаващ панел"
 
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2964
 msgid "You can only have one menu panel at a time."
 msgstr "Не може да имате повече от един панел-меню."
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:3009
 #, fuzzy
 msgid "C_orner Panel"
 msgstr "Създай панел"
 
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:3011
 #, fuzzy
 msgid "Create corner panel"
 msgstr "Създай панел"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:3019
 #, fuzzy
 msgid "_Edge Panel"
 msgstr "Ръбов панел"
 
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:3021
 #, fuzzy
 msgid "Create edge panel"
 msgstr "Създай панел"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:3029
 #, fuzzy
 msgid "_Floating Panel"
 msgstr "Плаващ панел"
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:3031
 #, fuzzy
 msgid "Create floating panel"
 msgstr "Плаващ панел"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:3039
 #, fuzzy
 msgid "_Sliding Panel"
 msgstr "Плъзгащ се панел"
 
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:3041
 #, fuzzy
 msgid "Create sliding panel"
 msgstr "Създай панел"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:3051
 #, fuzzy
 msgid "_Menu Panel"
 msgstr "Панел-меню"
 
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:3053
 #, fuzzy
 msgid "Create menu panel"
 msgstr "Създай панел"
 
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
 #, fuzzy
 msgid "KDE Menu"
 msgstr "KDE менюта"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3205
 #, fuzzy
 msgid "Lock"
 msgstr "Часовник"
 
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Снимка на екран"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3223
 msgid "Search"
 msgstr ""
 
-#: gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:3232
 #, fuzzy
 msgid "Run"
 msgstr "Старт"
 
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
 msgstr "Не може да премахнете последния си панел"
 
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3317
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2207,65 +2117,65 @@ msgstr ""
 "настройки и тези на аплетите му се губят.\n"
 "Да премахна ли този панел?"
 
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3325
 #, fuzzy
 msgid "Delete Panel"
 msgstr "Премахни този панел"
 
-#: gnome-panel/menu.c:3393
-msgid "Launcher..."
-msgstr "Стартер..."
-
-#: gnome-panel/menu.c:3400
-msgid "Launcher from menu"
-msgstr "Стартер от меню"
-
-#: gnome-panel/menu.c:3408
-#, fuzzy
-msgid "Button"
-msgstr "Бутон за стартиране"
-
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
-msgid "Main Menu"
-msgstr "Главно меню"
-
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3391
 #, fuzzy
 msgid "_Delete This Panel..."
 msgstr "Премахни този панел..."
 
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
 #, fuzzy
 msgid "_Delete This Panel"
 msgstr "Премахни този панел"
 
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3416
 #, fuzzy
 msgid "_Add to Panel"
 msgstr "Добави към панела"
 
-#: gnome-panel/menu.c:3532
+#: gnome-panel/menu.c:3461
 #, fuzzy
 msgid "_New Panel"
 msgstr "Панел"
 
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3503
 #, fuzzy
 msgid "_About Panels"
 msgstr "Информация за панела..."
 
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3516
 #, fuzzy
 msgid "About _GNOME"
 msgstr "Относно GNOME"
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3556
+msgid "Launcher..."
+msgstr "Стартер..."
+
+#: gnome-panel/menu.c:3564
+msgid "Launcher from menu"
+msgstr "Стартер от меню"
+
+#: gnome-panel/menu.c:3573
+#, fuzzy
+msgid "Button"
+msgstr "Бутон за стартиране"
+
+#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
+#: gnome-panel/menu.c:4137
+msgid "Main Menu"
+msgstr "Главно меню"
+
+#: gnome-panel/menu.c:3620
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Заключва екрана, така че може временно да остави компютъра без надзор."
 
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3632
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2273,33 +2183,29 @@ msgstr ""
 "Излиза от тази сесия за да влезе като различен потребител или да спре "
 "машината"
 
-#: gnome-panel/menu.c:3774
-msgid "Applets"
-msgstr "Аплети"
-
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3797
 #, fuzzy
 msgid "Run a command"
 msgstr "Команда за печатане:"
 
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3843
 msgid "Desktop"
 msgstr "Работно пространство"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "Меню"
 
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3863
 #, fuzzy
 msgid "Menu:"
 msgstr "Меню"
 
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3935
 msgid "Can't create menu, using main menu!"
 msgstr "Не мога да създам меню. Ще използвам главното меню!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4372
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2433,7 +2339,7 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "Отваря URL: %s"
 
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2672,22 +2578,22 @@ msgstr ""
 msgid "Show the program listing in the Run box"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:55
+#: gnome-panel/panel-recent.c:56
 #, fuzzy
 msgid "Couldn't find a suitable application"
 msgstr "Не мога да добавя аплет!"
 
-#: gnome-panel/panel-recent.c:78
+#: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:135
+#: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
 msgstr ""
 
@@ -2733,11 +2639,11 @@ msgstr ""
 msgid "No document to show"
 msgstr ""
 
-#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
+#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
 msgid "Disabled"
 msgstr "Забранен"
 
-#: gnome-panel/panel-util.c:1476
+#: gnome-panel/panel-util.c:1485
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2828,6 +2734,75 @@ msgstr "Размери"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr ""
+
+#, fuzzy
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
+
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "(c) 1998-2000 Фондация за Свободен Софтуер"
+
+#, fuzzy
+#~ msgid "(c) 2001 Red Hat, Inc."
+#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
+
+#~ msgid "Can't execute printer command"
+#~ msgstr "Не мога да изпълня команда към принтера"
+
+#~ msgid "Printer properties"
+#~ msgstr "Настройки на принтера"
+
+#~ msgid "Printer name:"
+#~ msgstr "Име на принтера:"
+
+#, fuzzy
+#~ msgid "Print command:"
+#~ msgstr "Команда за печатане:"
+
+#~ msgid "Printer"
+#~ msgstr "Принтер"
+
+#, fuzzy
+#~ msgid "Printer Applet"
+#~ msgstr "Настройки на принтера"
+
+#~ msgid "(c) 1998 the Free Software Foundation"
+#~ msgstr "(c) 1998 Фондация за Свободен Софтуер"
+
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr ""
+#~ "Аплетът Принтер Ви позволява лесно да печатате файлове като ги пускате в "
+#~ "него"
+
+#~ msgid "Can't create applet!\n"
+#~ msgstr "Не мога да създам аплет!\n"
+
+#~ msgid "Properties..."
+#~ msgstr "Настройки..."
+
+#~ msgid "Help"
+#~ msgstr "Помощ"
+
+#, fuzzy
+#~ msgid "About..."
+#~ msgstr "Информация..."
+
+#, fuzzy
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
+
+#, fuzzy
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
+
+#, fuzzy
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
+
+#~ msgid "Applets"
+#~ msgstr "Аплети"
 
 #, fuzzy
 #~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"

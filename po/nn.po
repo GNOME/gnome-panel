@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.4.0.5\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
+"POT-Creation-Date: 2003-01-07 18:31+1300\n"
 "PO-Revision-Date: 2002-01-27 02:54+0100\n"
 "Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
 "Language-Team: nynorsk <nn@li.org>\n"
@@ -17,8 +17,8 @@ msgstr ""
 
 # gnome-terminal/gnome-terminal.c:2060
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
-#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
@@ -146,7 +146,7 @@ msgstr "*"
 # gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:596
 # panel/menu-properties.c:634 panel/panel-util.c:193
 # panel/panel_config.c:1631 panel/swallow.c:261
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Bla gjennom"
@@ -273,8 +273,8 @@ msgstr "Om ..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
+#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 #, fuzzy
 msgid "_Help"
 msgstr "Hjelp"
@@ -415,7 +415,7 @@ msgid "Use _UTC"
 msgstr "Bruk GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -427,12 +427,6 @@ msgstr "Roy-Magne Mo <rmo@sunnmore.net>"
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Klokke"
-
-# panel/menu.c:236
-#: applets/gen_util/clock.c:1205
-#, fuzzy
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1997-2002 the Free Software Foundation"
 
 #: applets/gen_util/clock.c:1206
 #, fuzzy
@@ -550,7 +544,7 @@ msgid "Get the current time and date"
 msgstr "Hent aktiv tid og dato"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Innboksovervakar"
 
@@ -601,7 +595,7 @@ msgid "_Check for mail"
 msgstr "Sjå etter post"
 
 # gnome-terminal/gnome-terminal.c:2060
-#: applets/gen_util/mailcheck.c:196
+#: applets/gen_util/mailcheck.c:200
 #, fuzzy, c-format
 msgid "There was an error executing %s: %s"
 msgstr ""
@@ -609,22 +603,22 @@ msgstr ""
 "\n"
 "%s"
 
-#: applets/gen_util/mailcheck.c:274
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:282
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:229
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:382
 #, fuzzy
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
@@ -635,238 +629,233 @@ msgstr ""
 "nytta feil tenar/brukarnamn/passord?"
 
 # applets/gen_util/mailcheck.c:471
-#: applets/gen_util/mailcheck.c:537
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Du har ny post."
 
 # applets/gen_util/mailcheck.c:473
-#: applets/gen_util/mailcheck.c:539
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Du har post."
 
 # applets/gen_util/mailcheck.c:477
-#: applets/gen_util/mailcheck.c:543
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d meldingar"
 
 # applets/gen_util/mailcheck.c:479
-#: applets/gen_util/mailcheck.c:545
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d meldingar"
 
 # applets/gen_util/mailcheck.c:483
-#: applets/gen_util/mailcheck.c:549
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Ikkje noko post."
 
 # gnome-hint/gnome-hint.c:39
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 #, fuzzy
 msgid "Status not updated"
 msgstr "Start i motd modus"
 
 # applets/gen_util/mailcheck.c:965
-#: applets/gen_util/mailcheck.c:1242
+#: applets/gen_util/mailcheck.c:1263
 #, fuzzy
 msgid "Mailbox _resides on:"
 msgstr "Postboksen finnast på:"
 
 # applets/gen_util/mailcheck.c:972
-#: applets/gen_util/mailcheck.c:1250
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Lokalt postlager"
 
 # applets/gen_util/mailcheck.c:980
-#: applets/gen_util/mailcheck.c:1258
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Lokal postkatalog"
 
 # applets/gen_util/mailcheck.c:988
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "Ekstern POP3-tenar"
 
 # applets/gen_util/mailcheck.c:996
-#: applets/gen_util/mailcheck.c:1274
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "Ekstern IMAP-tenar"
 
 # applets/gen_util/mailcheck.c:1016
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1315
 #, fuzzy
 msgid "Mail _spool file:"
 msgstr "Postlagerfil:"
 
 # applets/gen_util/mailcheck.c:1033
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1334
 #, fuzzy
 msgid "Mail s_erver:"
 msgstr "E-posttenar:"
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:1050
-#: applets/gen_util/mailcheck.c:1333
+#: applets/gen_util/mailcheck.c:1354
 #, fuzzy
 msgid "_Username:"
 msgstr "Brukarnamn:"
 
-#: applets/gen_util/mailcheck.c:1341
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:206 applets/gen_util/mailcheck.c:1064
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "_Passord:"
 
 # applets/gen_util/mailcheck.c:1082
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1392
 #, fuzzy
 msgid "_Folder:"
 msgstr "Mappe:"
 
-#: applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:1100
-#: applets/gen_util/mailcheck.c:1391
+#: applets/gen_util/mailcheck.c:1412
 #, fuzzy
 msgid "C_ommand to run before checking for mail:"
 msgstr "Kommando som skal køyrast før ein ser etter meldingar:"
 
 # panel/swallow.c:259
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1420
 #, fuzzy
 msgid "Command Entry box"
 msgstr "Kommando (valfri)"
 
 # applets/gen_util/mailcheck.c:1130
-#: applets/gen_util/mailcheck.c:1424
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Utfør"
 
 # applets/gen_util/mailcheck.c:1141
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1456
 #, fuzzy
 msgid "Before each _update:"
 msgstr "Før kvar oppdatering:"
 
 # applets/fish/fish.c:548
-#: applets/gen_util/mailcheck.c:1450
+#: applets/gen_util/mailcheck.c:1471
 #, fuzzy
 msgid "Command to execute before each update"
 msgstr "Kommando som skal utførast ved klikk på fisken:"
 
 # applets/gen_util/mailcheck.c:1162
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1481
 #, fuzzy
 msgid "When new mail _arrives:"
 msgstr "Når ny post vert motteke:"
 
 # applets/fish/fish.c:548
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 #, fuzzy
 msgid "Command to execute when new mail arrives"
 msgstr "Kommando som skal utførast ved klikk på fisken:"
 
 # applets/gen_util/mailcheck.c:1181
-#: applets/gen_util/mailcheck.c:1483
+#: applets/gen_util/mailcheck.c:1504
 #, fuzzy
 msgid "When clicke_d:"
 msgstr "Ved museklikk:"
 
 # applets/fish/fish.c:548
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1517
 #, fuzzy
 msgid "Command to execute when clicked"
 msgstr "Kommando som skal utførast ved klikk på fisken:"
 
-#: applets/gen_util/mailcheck.c:1506
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:1204
-#: applets/gen_util/mailcheck.c:1517
+#: applets/gen_util/mailcheck.c:1538
 #, fuzzy
 msgid "Check for mail _every"
 msgstr "Sjå etter post kvart"
 
 # applets/gen_util/mailcheck.c:1217
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "minutt"
 
-#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:1230
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr ""
 
 # applets/gen_util/mailcheck.c:1234
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1576
 #, fuzzy
 msgid "Play a _sound when new mail arrives"
 msgstr "Spill ein lyd når det kjem ny post"
 
 # applets/gen_util/mailcheck.c:1245
-#: applets/gen_util/mailcheck.c:1566
+#: applets/gen_util/mailcheck.c:1587
 #, fuzzy
 msgid "Select a_nimation"
 msgstr "Vel animasjon"
 
-#: applets/gen_util/mailcheck.c:1643
+#: applets/gen_util/mailcheck.c:1664
 #, fuzzy
 msgid "Inbox Monitor Preferences"
 msgstr "Eigenskapar for innboksovervakar"
 
 # applets/gen_util/mailcheck.c:1288
-#: applets/gen_util/mailcheck.c:1663
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "_Postkontroll"
 
 # applets/gen_util/mailcheck.c:1291
-#: applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "Post_kasse"
 
-# applets/gen_util/mailcheck.c:1377
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "© 1998-2000 the Free Software Foundation"
-
 # applets/gen_util/mailcheck.c:1379
-#: applets/gen_util/mailcheck.c:1747
+#: applets/gen_util/mailcheck.c:1768
 #, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Postkontrolleraren seier frå når du har ny e-post i postkassa"
 
 # applets/gen_util/mailcheck.c:1494
-#: applets/gen_util/mailcheck.c:1911
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Berre tekst"
 
 # applets/gen_util/mailcheck.c:1288
-#: applets/gen_util/mailcheck.c:1937
+#: applets/gen_util/mailcheck.c:1959
 #, fuzzy
 msgid "Mail check"
 msgstr "_Postkontroll"
 
 # applets/gen_util/mailcheck.c:1379
-#: applets/gen_util/mailcheck.c:1938
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Postkontrolleraren seier frå når du har ny e-post i postkassa"
 
@@ -1035,11 +1024,6 @@ msgstr ""
 "Feil ved lasting av display_all_workspaces-verdien for "
 "arbeidsflateskiftaren: %s\n"
 
-# help-browser/gnome-help-browser.c:371
-#: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 #: applets/gen_util/pager.c:547
 #, fuzzy
 msgid ""
@@ -1117,83 +1101,6 @@ msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr ""
 
-# applets/gen_util/printer.c:120
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Kan ikkje køyre utskriftskommando"
-
-# applets/gen_util/printer.c:308
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Eigenskapar for skrivarar"
-
-# applets/gen_util/printer.c:317
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Skrivarnamn:"
-
-# applets/gen_util/printer.c:321
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "Utskriftskommando:"
-
-# applets/gen_util/printer.c:327
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Skrivar"
-
-# applets/gen_util/printer.c:355
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "Utskriftsapplet"
-
-# applets/gen_util/printer.c:356
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 the Free Software Foundation"
-
-# applets/gen_util/printer.c:358
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Skrivarapplet let deg nytta dreg-og-slipp for å skriva ut filene via "
-"utskriftskommandoen"
-
-# applets/gen_util/clock.c:504 applets/gen_util/mailcheck.c:1430
-# applets/gen_util/printer.c:425
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Kan ikkje opprette tilleggsmodul!\n"
-
-# applets/desk-guide/deskguide_applet.c:238 applets/fish/fish.c:944
-# applets/gen_util/clock.c:582 applets/gen_util/mailcheck.c:1516
-# applets/gen_util/printer.c:468 applets/tasklist/tasklist_applet.c:1693
-# panel/drawer.c:489 panel/launcher.c:679 panel/menu.c:1742 panel/menu.c:1829
-# panel/menu.c:5912
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Eigenskapar ..."
-
-# applets/desk-guide/deskguide_applet.c:244 applets/fish/fish.c:951
-# applets/gen_util/clock.c:603 applets/gen_util/mailcheck.c:1528
-# applets/gen_util/printer.c:475 applets/tasklist/tasklist_applet.c:1701
-# gnome-terminal/gnome-terminal.c:1601 gsm/session-properties.c:182
-# help-browser/window.c:255 panel/drawer.c:492 panel/gnome-run.c:1270
-# panel/launcher.c:682 panel/logout.c:116 panel/logout.c:198
-# panel/menu.c:5922 panel/status.c:368 panel/swallow.c:426
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Hjelp"
-
-# applets/desk-guide/deskguide_applet.c:251 applets/fish/fish.c:958
-# applets/gen_util/clock.c:610 applets/gen_util/mailcheck.c:1534
-# applets/gen_util/printer.c:481 applets/tasklist/tasklist_applet.c:1709
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "Om ..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr ""
@@ -1216,19 +1123,9 @@ msgstr ""
 msgid "File not found"
 msgstr "Hjelpedokument ikkje funne"
 
-# help-browser/gnome-help-browser.c:371
-#: applets/gen_util/showdesktop.c:453
-#, fuzzy
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
-
-#: applets/gen_util/tasklist.c:809
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "© 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:810
 #, fuzzy
@@ -1376,97 +1273,91 @@ msgstr ""
 msgid "Panel Notification Area"
 msgstr ""
 
-# help-browser/gnome-help-browser.c:371
-#: applets/notification_area/main.c:126
-#, fuzzy
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 # applets/tasklist/tasklist_applet.c:135 panel/applet.c:434
 # panel/foobar-widget.c:747
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
 # panel/applet.c:474
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 #, fuzzy
 msgid "_Remove From Panel"
 msgstr "Fjern frå panelet"
 
 # panel/applet.c:481
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 #, fuzzy
 msgid "_Move"
 msgstr "Flytt"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:789
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr ""
 
 # panel/applet.c:766
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1256
 msgid "Can't find an empty spot"
 msgstr "Kunne ikkje finne ein tom plass"
 
 # panel/applet.c:481
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 #, fuzzy
 msgid "Mode"
 msgstr "Flytt"
 
 # panel/basep-widget.c:885
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 #, fuzzy
 msgid "Mode of this panel"
 msgstr "Gøym dette panelet"
 
 # gsm/gsm-client-list.c:121
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Tilstand"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 #, fuzzy
 msgid "Current state of this panel"
 msgstr "Lagra noverande tilstand for skrivebordet"
 
 # panel/menu.c:4777
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 #, fuzzy
 msgid "Hidebuttons enabled"
 msgstr "hidebuttons_enabled"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 #, fuzzy
 msgid "Hidebutton pixmaps enabled"
 msgstr "hidebutton_pixmaps_enabled"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 #, fuzzy
 msgid "Hidebuttons have pixmaps"
 msgstr "hidebutton_pixmaps_enabled"
 
 # panel/basep-widget.c:885
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Gøym dette panelet"
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "Vis dette panelet"
 
@@ -1492,50 +1383,50 @@ msgid "file not found"
 msgstr "Hjelpedokument ikkje funne"
 
 # applets/tasklist/tasklist_properties.c:276 panel/menu.c:4780
-#: gnome-panel/button-widget.c:879
+#: gnome-panel/button-widget.c:868
 #, fuzzy
 msgid "Size"
 msgstr "Storleik:"
 
-#: gnome-panel/button-widget.c:880
+#: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
 msgstr ""
 
-#: gnome-panel/button-widget.c:888
+#: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
 msgstr ""
 
-#: gnome-panel/button-widget.c:889
+#: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
 msgstr ""
 
 # panel/menu.c:4783
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:886
 #, fuzzy
 msgid "Orientation"
 msgstr "Retning"
 
-#: gnome-panel/button-widget.c:898
+#: gnome-panel/button-widget.c:887
 #, fuzzy
 msgid "The ButtonWidget orientation"
 msgstr "Appleten som inneheld retninga på panelet"
 
 # gsm/session-properties-capplet.c:226
-#: gnome-panel/button-widget.c:907
+#: gnome-panel/button-widget.c:896
 #, fuzzy
 msgid "Icon Name"
 msgstr "Øktnamn"
 
-#: gnome-panel/button-widget.c:908
+#: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
 msgstr ""
 
-#: gnome-panel/button-widget.c:916
+#: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
 msgstr ""
 
 # panel/menu-properties.c:624
-#: gnome-panel/button-widget.c:917
+#: gnome-panel/button-widget.c:906
 #, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Bruk eigendefinert ikon for panelknappen"
@@ -1621,23 +1512,19 @@ msgstr "Slå på pil for skjuling av knappar"
 
 # panel/drawer.c:185 panel/drawer.c:319 panel/gnome-panel-properties.c:583
 # panel/menu.c:4883
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
 msgid "Drawer"
 msgstr "Skuff"
 
 # panel/menu.c:5102
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
 #, fuzzy
 msgid "_Properties"
 msgstr "Eigenskapar"
 
-#: gnome-panel/egg-recent-vfs-utils.c:90
-msgid " (invalid Unicode)"
-msgstr ""
-
 # panel/gnome-run.c:1135
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 #, fuzzy
 msgid "Run Program..."
 msgstr "Køyr program"
@@ -1646,28 +1533,28 @@ msgstr "Køyr program"
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Køyr program, om du kjenner den korrekte kommandoen"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
 # panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
 #, fuzzy
 msgid "Screenshot..."
 msgstr "Skjermdump"
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Lagre skjermdump til _skrivebord"
 
 # panel/foobar-widget.c:362
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Lås skjerm"
 
@@ -1676,8 +1563,8 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Vern om datamaskina di mot uatorisert bruk"
 
 # panel/foobar-widget.c:372
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Logg ut"
 
@@ -1696,7 +1583,7 @@ msgid "No windows open"
 msgstr "Ingen vindauge opne"
 
 # panel/menu.c:3602
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Menypanel"
@@ -1707,8 +1594,8 @@ msgstr "Menypanel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME Panel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Program"
 
@@ -2192,7 +2079,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2249,11 +2136,6 @@ msgstr ""
 msgid "The GNOME Panel"
 msgstr "GNOME-Panel"
 
-# panel/menu.c:236
-#: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 the Free Software Foundation"
-
 # panel/menu.c:251
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
@@ -2279,7 +2161,7 @@ msgstr ""
 "Detaljar: %s"
 
 # panel/menu.c:291 panel/menu.c:1034 panel/menu.c:1051 panel/menu.c:2272
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2291,7 +2173,7 @@ msgstr ""
 "Detaljar %s"
 
 # panel/menu.c:941
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1066
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -2303,19 +2185,19 @@ msgstr ""
 "Detaljar: %s\n"
 
 # panel/menu.c:948
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1076
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Kunne ikkje hente filnamn frå sti: %s"
 
 # panel/menu.c:955
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kunne ikkje finna filnamn fra sti: %s"
 
 # panel/menu.c:1030
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1153
 #, fuzzy
 msgid ""
 "<b>Can't add to run box</b>\n"
@@ -2324,92 +2206,93 @@ msgid ""
 msgstr "Ikkje noko «Exec» eller «URL» felt i oppføringa"
 
 # panel/menu.c:1642
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
 msgstr "Legg til denne oppstartaren på panelet"
 
 # panel/menu.c:1668
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1471
 msgid "Remove this item"
 msgstr "Fjern denne oppføringa"
 
 # panel/menu.c:1686
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
 msgstr "Sett inn i køyr-dialogen"
 
 # panel/launcher.c:496 panel/launcher.c:690 panel/menu.c:1712
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1505
 #, c-format
 msgid "Help on %s"
 msgstr "Hjelp om %s"
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1506
 msgid "Application"
 msgstr "Applikasjon"
 
 # panel/menu.c:1765
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1552
 msgid "Entire menu"
 msgstr "Heile menyen"
 
 # panel/menu.c:1775
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1561
 msgid "Add this as drawer to panel"
 msgstr "Legg til som skuff på panelet"
 
 # panel/menu.c:1784
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1569
 msgid "Add this as menu to panel"
 msgstr "Legg til som meny på panelet"
 
 # panel/menu.c:1804
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1577
 msgid "Add new item to this menu"
 msgstr "Legg til ny oppføring i denne menyen"
 
 # panel/menu.c:5102
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1603
 msgid "Properties"
 msgstr "Eigenskapar"
 
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "spørjinga returnerte unntak %s\n"
 
 # panel/menu.c:3618 panel/menu.c:4714 panel/panel_config.c:1757
 # panel/panel_config.c:1880
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Justert panel"
 
 # panel/menu.c:3618 panel/menu.c:4714 panel/panel_config.c:1757
 # panel/panel_config.c:1880
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2872
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Justert panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
 #: gnome-panel/panel-config.c:1727
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Kantpanel"
 
 # panel/menu.c:235
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2894
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "GNOME Panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
 #: gnome-panel/panel-config.c:1749
 #, fuzzy
 msgid "Sliding Panel"
@@ -2417,14 +2300,14 @@ msgstr "Glidande panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2920
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
 #: gnome-panel/panel-config.c:1760
 #, fuzzy
 msgid "Floating Panel"
@@ -2432,114 +2315,114 @@ msgstr "Flytande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2944
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3531
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2964
 msgid "You can only have one menu panel at a time."
 msgstr "Du kan kun ha eitt menypanel om gongen."
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:3009
 #, fuzzy
 msgid "C_orner Panel"
 msgstr "Hjørnepanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:3011
 #, fuzzy
 msgid "Create corner panel"
 msgstr "Hjørnepanel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:3019
 #, fuzzy
 msgid "_Edge Panel"
 msgstr "Kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:3021
 #, fuzzy
 msgid "Create edge panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:3029
 #, fuzzy
 msgid "_Floating Panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:3031
 #, fuzzy
 msgid "Create floating panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:3039
 #, fuzzy
 msgid "_Sliding Panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:3041
 #, fuzzy
 msgid "Create sliding panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3602
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:3051
 #, fuzzy
 msgid "_Menu Panel"
 msgstr "Menypanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:3053
 #, fuzzy
 msgid "Create menu panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3815 panel/menu.c:3824 panel/menu.c:5412
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
 #, fuzzy
 msgid "KDE Menu"
 msgstr "KDE-menyar"
 
 # applets/gen_util/clock.c:927
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3205
 #, fuzzy
 msgid "Lock"
 msgstr "Klokke"
 
 # panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Skjermdump"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3223
 msgid "Search"
 msgstr ""
 
 # panel/gnome-run.c:1156
-#: gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:3232
 #, fuzzy
 msgid "Run"
 msgstr "Køy_r"
 
 # panel/menu.c:3920
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
 msgstr "Du kan ikkje fjerne det siste panelet:"
 
 # panel/menu.c:3930
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3317
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2549,95 +2432,90 @@ msgstr ""
 "instillingar tapte. Fjern dette panelet?"
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3325
 #, fuzzy
 msgid "Delete Panel"
 msgstr "Fjern dette panelet"
 
+# panel/menu.c:5020
+#: gnome-panel/menu.c:3391
+#, fuzzy
+msgid "_Delete This Panel..."
+msgstr "Fjern dette panelet ..."
+
+# panel/menu.c:5022 panel/menu.c:5085
+#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
+#, fuzzy
+msgid "_Delete This Panel"
+msgstr "Fjern dette panelet"
+
+# panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
+#: gnome-panel/menu.c:3416
+#, fuzzy
+msgid "_Add to Panel"
+msgstr "Legg til på panelet"
+
+# gsm/splash.c:65
+#: gnome-panel/menu.c:3461
+#, fuzzy
+msgid "_New Panel"
+msgstr "Panelet"
+
+# panel/menu.c:5266
+#: gnome-panel/menu.c:3503
+#, fuzzy
+msgid "_About Panels"
+msgstr "Om panelet ..."
+
+# gnome-about/gnome-about.c:465 panel/foobar-widget.c:242
+#: gnome-panel/menu.c:3516
+#, fuzzy
+msgid "About _GNOME"
+msgstr "Om GNOME"
+
 # panel/menu.c:4863
-#: gnome-panel/menu.c:3393
+#: gnome-panel/menu.c:3556
 msgid "Launcher..."
 msgstr "Oppstartar ..."
 
 # panel/menu.c:4872
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3564
 msgid "Launcher from menu"
 msgstr "Oppstartar fra meny"
 
 # panel/menu.c:4916
-#: gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:3573
 #, fuzzy
 msgid "Button"
 msgstr "Køyr-knapp"
 
 # panel/menu.c:3969 panel/menu.c:3974 panel/menu.c:5655 panel/menu.c:5682
 # panel/menu.c:5816
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
+#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
+#: gnome-panel/menu.c:4137
 msgid "Main Menu"
 msgstr "Hovudmeny"
 
-# panel/menu.c:5020
-#: gnome-panel/menu.c:3470
-#, fuzzy
-msgid "_Delete This Panel..."
-msgstr "Fjern dette panelet ..."
-
-# panel/menu.c:5022 panel/menu.c:5085
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
-#, fuzzy
-msgid "_Delete This Panel"
-msgstr "Fjern dette panelet"
-
-# panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: gnome-panel/menu.c:3492
-#, fuzzy
-msgid "_Add to Panel"
-msgstr "Legg til på panelet"
-
-# gsm/splash.c:65
-#: gnome-panel/menu.c:3532
-#, fuzzy
-msgid "_New Panel"
-msgstr "Panelet"
-
-# panel/menu.c:5266
-#: gnome-panel/menu.c:3566
-#, fuzzy
-msgid "_About Panels"
-msgstr "Om panelet ..."
-
-# gnome-about/gnome-about.c:465 panel/foobar-widget.c:242
-#: gnome-panel/menu.c:3579
-#, fuzzy
-msgid "About _GNOME"
-msgstr "Om GNOME"
-
 # panel/menu.c:5331
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3620
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lås skjermen så du kan forlata maskina midlertidig"
 
 # panel/menu.c:5346
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3632
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "Logg ut for å logge inn som ny brukar eller avslutte"
 
-# panel/menu.c:3317 panel/menu.c:5551
-#: gnome-panel/menu.c:3774
-msgid "Applets"
-msgstr "Appletar"
-
 # applets/gen_util/printer.c:321
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Køyr ein kommando"
 
 # gsm/splash.c:68 panel/menu.c:5224 panel/menu.c:5229 panel/menu.c:5599
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3843
 msgid "Desktop"
 msgstr "Skrivebord"
 
@@ -2645,7 +2523,7 @@ msgstr "Skrivebord"
 # panel/menu-properties.c:612 panel/menu.c:1541 panel/menu.c:3128
 # panel/menu.c:3203 panel/menu.c:3208 panel/menu.c:4821 panel/menu.c:5668
 # panel/menu.c:5800 panel/menu.c:5820
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "Meny"
 
@@ -2653,16 +2531,16 @@ msgstr "Meny"
 # panel/menu-properties.c:612 panel/menu.c:1541 panel/menu.c:3128
 # panel/menu.c:3203 panel/menu.c:3208 panel/menu.c:4821 panel/menu.c:5668
 # panel/menu.c:5800 panel/menu.c:5820
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3863
 msgid "Menu:"
 msgstr "Meny:"
 
 # panel/menu.c:5676
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3935
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikkje opprette meny, nyttar hovudmenyen!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4372
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2819,7 +2697,7 @@ msgstr "Ikkje i stand til å få tak i AppletShell-grensesnitt frå kontrollen\n
 msgid "Open URL: %s"
 msgstr "Opne URL: %s"
 
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -3103,21 +2981,21 @@ msgstr ""
 msgid "Show the program listing in the Run box"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:55
+#: gnome-panel/panel-recent.c:56
 msgid "Couldn't find a suitable application"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:78
+#: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:135
+#: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr ""
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
 msgstr ""
 
@@ -3168,11 +3046,11 @@ msgstr "Ikkje noko dokument å vise"
 # panel/gnome-panel-properties.c:1201 panel/gnome-panel-properties.c:1229
 # panel/gnome-panel-properties.c:1256 panel/gnome-panel-properties.c:1283
 # panel/panel-util.c:639 panel/panel-util.c:696
-#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
+#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
 msgid "Disabled"
 msgstr "Av"
 
-#: gnome-panel/panel-util.c:1476
+#: gnome-panel/panel-util.c:1485
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -3265,6 +3143,105 @@ msgstr "Storleik:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr ""
+
+# panel/menu.c:236
+#, fuzzy
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "© 1997-2002 the Free Software Foundation"
+
+# applets/gen_util/mailcheck.c:1377
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "© 1998-2000 the Free Software Foundation"
+
+# help-browser/gnome-help-browser.c:371
+#~ msgid "(c) 2001 Red Hat, Inc."
+#~ msgstr "© 2001 Red Hat, Inc."
+
+# applets/gen_util/printer.c:120
+#~ msgid "Can't execute printer command"
+#~ msgstr "Kan ikkje køyre utskriftskommando"
+
+# applets/gen_util/printer.c:308
+#~ msgid "Printer properties"
+#~ msgstr "Eigenskapar for skrivarar"
+
+# applets/gen_util/printer.c:317
+#~ msgid "Printer name:"
+#~ msgstr "Skrivarnamn:"
+
+# applets/gen_util/printer.c:321
+#~ msgid "Print command:"
+#~ msgstr "Utskriftskommando:"
+
+# applets/gen_util/printer.c:327
+#~ msgid "Printer"
+#~ msgstr "Skrivar"
+
+# applets/gen_util/printer.c:355
+#~ msgid "Printer Applet"
+#~ msgstr "Utskriftsapplet"
+
+# applets/gen_util/printer.c:356
+#~ msgid "(c) 1998 the Free Software Foundation"
+#~ msgstr "© 1998 the Free Software Foundation"
+
+# applets/gen_util/printer.c:358
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr ""
+#~ "Skrivarapplet let deg nytta dreg-og-slipp for å skriva ut filene via "
+#~ "utskriftskommandoen"
+
+# applets/gen_util/clock.c:504 applets/gen_util/mailcheck.c:1430
+# applets/gen_util/printer.c:425
+#~ msgid "Can't create applet!\n"
+#~ msgstr "Kan ikkje opprette tilleggsmodul!\n"
+
+# applets/desk-guide/deskguide_applet.c:238 applets/fish/fish.c:944
+# applets/gen_util/clock.c:582 applets/gen_util/mailcheck.c:1516
+# applets/gen_util/printer.c:468 applets/tasklist/tasklist_applet.c:1693
+# panel/drawer.c:489 panel/launcher.c:679 panel/menu.c:1742 panel/menu.c:1829
+# panel/menu.c:5912
+#~ msgid "Properties..."
+#~ msgstr "Eigenskapar ..."
+
+# applets/desk-guide/deskguide_applet.c:244 applets/fish/fish.c:951
+# applets/gen_util/clock.c:603 applets/gen_util/mailcheck.c:1528
+# applets/gen_util/printer.c:475 applets/tasklist/tasklist_applet.c:1701
+# gnome-terminal/gnome-terminal.c:1601 gsm/session-properties.c:182
+# help-browser/window.c:255 panel/drawer.c:492 panel/gnome-run.c:1270
+# panel/launcher.c:682 panel/logout.c:116 panel/logout.c:198
+# panel/menu.c:5922 panel/status.c:368 panel/swallow.c:426
+#~ msgid "Help"
+#~ msgstr "Hjelp"
+
+# applets/desk-guide/deskguide_applet.c:251 applets/fish/fish.c:958
+# applets/gen_util/clock.c:610 applets/gen_util/mailcheck.c:1534
+# applets/gen_util/printer.c:481 applets/tasklist/tasklist_applet.c:1709
+#~ msgid "About..."
+#~ msgstr "Om ..."
+
+# help-browser/gnome-help-browser.c:371
+#, fuzzy
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "© 2001 Red Hat, Inc."
+
+#~ msgid "(c) 2001 Red Hat, Inc"
+#~ msgstr "© 2001 Red Hat, Inc"
+
+# help-browser/gnome-help-browser.c:371
+#, fuzzy
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "© 2001 Red Hat, Inc."
+
+# panel/menu.c:236
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "© 1997-2002 the Free Software Foundation"
+
+# panel/menu.c:3317 panel/menu.c:5551
+#~ msgid "Applets"
+#~ msgstr "Appletar"
 
 # applets/fish/fish.c:400
 #, fuzzy

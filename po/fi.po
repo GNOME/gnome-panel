@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-01-04 06:02+0100\n"
+"POT-Creation-Date: 2003-01-07 18:31+1300\n"
 "PO-Revision-Date: 2002-12-28 16:58+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
@@ -23,8 +23,8 @@ msgstr ""
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
-#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
@@ -149,7 +149,7 @@ msgstr "*"
 
 # applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
 # gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Selaa"
@@ -273,8 +273,8 @@ msgstr "_Tietoja..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3466
-#: gnome-panel/menu.c:4166 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
+#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Ohje"
 
@@ -413,10 +413,10 @@ msgstr "Näytä _UTC-aikaa"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:250
+#: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Suomennos: http://gnome-fi.sourceforge.net/"
 
@@ -543,7 +543,7 @@ msgstr "Hae nykyinen aika ja päiväys"
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 # applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Postilaatikon tarkkailija"
 
@@ -604,13 +604,13 @@ msgstr "_Tarkista posti"
 # applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
-#: applets/gen_util/mailcheck.c:196
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Komennon %s suorittaminen epäonnistui: %s"
 
 # applets/gen_util/mailcheck.c:224
-#: applets/gen_util/mailcheck.c:274
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -619,16 +619,16 @@ msgstr ""
 "joten se on annettava aina kun sovelma käynnistyy."
 
 # applets/gen_util/mailcheck.c:232
-#: applets/gen_util/mailcheck.c:282
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "Anna postipalvelimesi _salasana:"
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "Salasanan tekstilaatikko"
 
 # applets/gen_util/mailcheck.c:278
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -639,217 +639,217 @@ msgstr ""
 "Ehkäpä käytit väärää palvelinta, tunnusta tai salasanaa?"
 
 # applets/gen_util/mailcheck.c:483
-#: applets/gen_util/mailcheck.c:537
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Sinulle on uutta postia."
 
 # applets/gen_util/mailcheck.c:485
-#: applets/gen_util/mailcheck.c:539
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Sinulle on postia."
 
 # applets/gen_util/mailcheck.c:489
-#: applets/gen_util/mailcheck.c:543
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d viestiä"
 
 # applets/gen_util/mailcheck.c:491
-#: applets/gen_util/mailcheck.c:545
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d viestiä"
 
 # applets/gen_util/mailcheck.c:495
-#: applets/gen_util/mailcheck.c:549
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Ei postia."
 
 # applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
 # applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "Tila ei päivittynyt"
 
 # applets/gen_util/mailcheck.c:1189
-#: applets/gen_util/mailcheck.c:1242
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "Posti_laatikon sijainti:"
 
 # applets/gen_util/mailcheck.c:1197
-#: applets/gen_util/mailcheck.c:1250
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Paikallinen postijono"
 
 # applets/gen_util/mailcheck.c:1205
-#: applets/gen_util/mailcheck.c:1258
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Paikallinen maildir"
 
 # applets/gen_util/mailcheck.c:1213
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "POP3-etäpalvelin"
 
 # applets/gen_util/mailcheck.c:1221
-#: applets/gen_util/mailcheck.c:1274
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "IMAP-etäpalvelin"
 
 # applets/gen_util/mailcheck.c:1241
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "Posti_jonotiedosto:"
 
 # applets/gen_util/mailcheck.c:1260
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "_Postipalvelin:"
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "Postipalvelimen tekstilaatikko"
 
 # applets/gen_util/mailcheck.c:1278
-#: applets/gen_util/mailcheck.c:1333
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "_Tunnus:"
 
-#: applets/gen_util/mailcheck.c:1341
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "Käyttäjätunnuksen tekstilaatikko"
 
 # applets/gen_util/mailcheck.c:1294
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "_Salasana:"
 
 # applets/gen_util/mailcheck.c:1313
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "_Hakemisto:"
 
-#: applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "Hakemiston tekstilaatikko"
 
 # applets/gen_util/mailcheck.c:1332
-#: applets/gen_util/mailcheck.c:1391
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "Ennen postin tarkistamista käynnistyvä _komento:"
 
 # gnome-panel/gnome-run.c:849
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "Komennon tekstilaatikko"
 
 # applets/gen_util/mailcheck.c:1363
-#: applets/gen_util/mailcheck.c:1424
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Suorita"
 
 # applets/gen_util/mailcheck.c:1374
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "_Ennen joka päivitystä:"
 
 # applets/gen_util/mailcheck.schemas.in.h:1
-#: applets/gen_util/mailcheck.c:1450
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "Ennen joka päivitystä käynnistyvä komento"
 
 # applets/gen_util/mailcheck.c:1399
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "_Uuden postin saapuessa:"
 
 # applets/gen_util/mailcheck.schemas.in.h:2
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Uuden postin saapuessa käynnistyvä komento"
 
 # applets/gen_util/mailcheck.c:1422
-#: applets/gen_util/mailcheck.c:1483
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "_Napsautettaessa:"
 
 # applets/fish/fish.c:748
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "Napsautettaessa käynnistyvä komento"
 
 # applets/gen_util/mailcheck.c:1445
-#: applets/gen_util/mailcheck.c:1506
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "_Aseta lukemattomien viestien määrä nollaksi"
 
 # applets/gen_util/mailcheck.c:1456
-#: applets/gen_util/mailcheck.c:1517
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "_Tarkista posti joka"
 
 # applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr ". minuutti"
 
-#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "Valitse postintarkistusten aikaväli"
 
 # applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr ". sekunti"
 
 # applets/gen_util/mailcheck.schemas.in.h:7
-#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr "Postin tarkistusten väli sekunteina"
 
 # applets/gen_util/mailcheck.c:1494
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "Soita _ääni, kun postia saapuu"
 
 # applets/gen_util/mailcheck.c:1505
-#: applets/gen_util/mailcheck.c:1566
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "Val_itse animaatio"
 
 # applets/gen_util/mailcheck.c:1580
-#: applets/gen_util/mailcheck.c:1643
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "Postilaatikon tarkkailijan asetukset"
 
 # applets/gen_util/mailcheck.c:1599
-#: applets/gen_util/mailcheck.c:1663
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "_Postintarkistus"
 
 # applets/gen_util/mailcheck.c:1603
-#: applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "Posti_laatikko"
 
 # applets/gen_util/mailcheck.c:1682
-#: applets/gen_util/mailcheck.c:1747
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Postintarkistus ilmoittaa, kun uutta postia saapuu laatikkoon"
 
 # applets/gen_util/mailcheck.c:1841
-#: applets/gen_util/mailcheck.c:1911
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Vain teksti"
 
 # applets/gen_util/mailcheck.c:1868
-#: applets/gen_util/mailcheck.c:1937
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "Postintarkistus"
 
 # applets/gen_util/mailcheck.c:1869
-#: applets/gen_util/mailcheck.c:1938
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Postintarkistus ilmoittaa, kun uutta postia saapuu"
 
@@ -1315,32 +1315,32 @@ msgstr "Paneelin ilmoitusalue"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 msgid "_Remove From Panel"
 msgstr "_Poista paneelista"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 msgid "_Move"
 msgstr "_Siirrä"
 
-#: gnome-panel/applet.c:791
+#: gnome-panel/applet.c:789
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Paneelioliolla (ID %s) ei ole object_type:ä\n"
 
-#: gnome-panel/applet.c:811 gnome-panel/applet.c:919
+#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Paneelioliolla (ID %s) ei ole panel_id:tä\n"
 
 # gnome-panel/applet.c:1123
-#: gnome-panel/applet.c:1258
+#: gnome-panel/applet.c:1256
 msgid "Can't find an empty spot"
 msgstr "Tyhjää paikkaa ei löydy"
 
@@ -1540,22 +1540,18 @@ msgid "Enable hidebutton arrow"
 msgstr "Näytä piilotusnuolipainike"
 
 # gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3239
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3558
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
 msgid "Drawer"
 msgstr "Vetolaatikko"
 
 # gnome-panel/menu.c:3351
-#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1527
-#: gnome-panel/menu.c:3422 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Ominaisuudet"
 
-#: gnome-panel/egg-recent-vfs-utils.c:90
-msgid " (invalid Unicode)"
-msgstr " (virheellistä Unicodea)"
-
 # gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3667
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3747
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Suorita komento..."
 
@@ -1565,28 +1561,28 @@ msgid "Run applications, if you know the correct command to type in"
 msgstr "Suorita ohjelmia, jos tiedät oikean komennon"
 
 # gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3680
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3761
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Etsi tiedostoja..."
 
 # gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3683
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3764
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Etsi tiedostoja, hakemistoja ja asiakirjoja tietokoneestasi"
 
 # gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3694
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3778
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Kuvakaappaus..."
 
 # gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3697
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3781
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Tallenna kuva työpöydästä"
 
 # gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
 # gnome-panel/menu.c:3447
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3578
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Lukitse näyttö"
 
@@ -1596,8 +1592,8 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Estä tietokoneesi luvatonta käyttöä"
 
 # gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3460
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3178
-#: gnome-panel/menu.c:3589
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
@@ -1618,7 +1614,7 @@ msgid "No windows open"
 msgstr "Ei ikkunoita avoinna"
 
 # gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2944
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Valikkopaneeli"
 
@@ -1629,8 +1625,8 @@ msgstr "Gnomen valikkopaneeli"
 
 # gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
 # gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3077
-#: gnome-panel/menu.c:3082 gnome-panel/menu.c:3724
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Sovellukset"
 
@@ -2112,7 +2108,7 @@ msgstr ""
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1184
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2130,18 +2126,18 @@ msgid "Specify a profile name to load"
 msgstr "Anna ladattavan profiilin nimi"
 
 # gnome-panel/menu.c:230
-#: gnome-panel/menu.c:238
+#: gnome-panel/menu.c:240
 msgid "Many, many others..."
 msgstr "Monet muut ..."
 
 # gnome-panel/menu.c:232
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:242
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "ja lisäksi ritarit, jotka sanovat... NI!"
 
 # gnome-panel/menu.c:265
-#: gnome-panel/menu.c:275
+#: gnome-panel/menu.c:277
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -2151,7 +2147,7 @@ msgstr ""
 "kaatumisista."
 
 # gnome-panel/menu.c:271
-#: gnome-panel/menu.c:281
+#: gnome-panel/menu.c:283
 msgid ""
 "\n"
 "\n"
@@ -2164,17 +2160,17 @@ msgstr ""
 "paneelin asetusten muokkaamisen."
 
 # gnome-panel/menu.c:277
-#: gnome-panel/menu.c:287
+#: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
 msgstr "Gnomen paneeli"
 
 # gnome-panel/menu.c:297
-#: gnome-panel/menu.c:309
+#: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "Lopeta nälänhädät"
 
 # gnome-panel/menu.c:312
-#: gnome-panel/menu.c:327
+#: gnome-panel/menu.c:329
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -2186,7 +2182,7 @@ msgstr ""
 "Lisätiedot: %s ei luultavasti ole olemassa"
 
 # gnome-panel/menu.c:334
-#: gnome-panel/menu.c:351
+#: gnome-panel/menu.c:353
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -2198,7 +2194,7 @@ msgstr ""
 "Tiedot: %s"
 
 # gnome-panel/menu.c:343 gnome-panel/menu.c:1037 gnome-panel/menu.c:1069
-#: gnome-panel/menu.c:361 gnome-panel/menu.c:1158 gnome-panel/menu.c:1195
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2210,7 +2206,7 @@ msgstr ""
 "Tiedot: %s"
 
 # gnome-panel/menu.c:942
-#: gnome-panel/menu.c:1062
+#: gnome-panel/menu.c:1066
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -2223,20 +2219,20 @@ msgstr ""
 
 # , c-format
 # gnome-panel/menu.c:952
-#: gnome-panel/menu.c:1072
+#: gnome-panel/menu.c:1076
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Tiedostonimen erottaminen ei onnistu polusta: %s"
 
 # , c-format
 # gnome-panel/menu.c:959
-#: gnome-panel/menu.c:1079
+#: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Hakemistonimen erottaminen ei onnistu polusta: %s"
 
 # gnome-panel/menu.c:1029
-#: gnome-panel/menu.c:1149
+#: gnome-panel/menu.c:1153
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -2247,197 +2243,197 @@ msgstr ""
 "Lisätiedot: Kohdalla ei ole \"Exec\" tai \"URL\"-kenttää"
 
 # gnome-panel/menu.c:1342
-#: gnome-panel/menu.c:1459
+#: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
 msgstr "Lisää tämä käynnistin paneeliin"
 
 # gnome-panel/menu.c:1356
-#: gnome-panel/menu.c:1467
+#: gnome-panel/menu.c:1471
 msgid "Remove this item"
 msgstr "Poista tämä kohta"
 
 # gnome-panel/menu.c:1373
-#: gnome-panel/menu.c:1483
+#: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
 msgstr "Lisää suorita-ikkunaan"
 
 # gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:1501
+#: gnome-panel/menu.c:1505
 #, c-format
 msgid "Help on %s"
 msgstr "Ohje aiheesta %s"
 
 # gnome-panel/menu.c:1392
-#: gnome-panel/menu.c:1502
+#: gnome-panel/menu.c:1506
 msgid "Application"
 msgstr "Sovellus"
 
 # gnome-panel/menu.c:1442
-#: gnome-panel/menu.c:1546
+#: gnome-panel/menu.c:1552
 msgid "Entire menu"
 msgstr "Koko valikko"
 
 # gnome-panel/menu.c:1451
-#: gnome-panel/menu.c:1555
+#: gnome-panel/menu.c:1561
 msgid "Add this as drawer to panel"
 msgstr "Lisää tämä vetolaatikkona paneeliin"
 
 # gnome-panel/menu.c:1459
-#: gnome-panel/menu.c:1563
+#: gnome-panel/menu.c:1569
 msgid "Add this as menu to panel"
 msgstr "Lisää tämä valikkona paneeliin"
 
 # gnome-panel/menu.c:1472
-#: gnome-panel/menu.c:1571
+#: gnome-panel/menu.c:1577
 msgid "Add new item to this menu"
 msgstr "Lisää uusi kohta tähän valikkoon"
 
 # gnome-panel/drawer.c:625 gnome-panel/launcher.c:716
 # gnome-panel/logout.c:217 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-#: gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:1603
 msgid "Properties"
 msgstr "Ominaisuudet"
 
 # gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
-#: gnome-panel/menu.c:2519 gnome-panel/menu.c:2574
+#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
 #: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "kysely palautti poikkeuksen %s\n"
 
 # gnome-panel/menu.c:2603 gnome-panel/menu.c:2607
-#: gnome-panel/menu.c:2854 gnome-panel/menu.c:2859
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
 msgid "Aligned Panel"
 msgstr "Keskitetty paneeli"
 
 # gnome-panel/menu.c:2608
-#: gnome-panel/menu.c:2860
+#: gnome-panel/menu.c:2872
 msgid "GNOME Aligned Panel"
 msgstr "Gnomen keskitetty paneeli"
 
 # gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
 # gnome-panel/panel-config.c:1669
-#: gnome-panel/menu.c:2877 gnome-panel/menu.c:2881
+#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Reunapaneeli"
 
 # gnome-panel/menu.c:2628
-#: gnome-panel/menu.c:2882
+#: gnome-panel/menu.c:2894
 msgid "GNOME Edge Panel"
 msgstr "Gnomen reunapaneeli"
 
 # gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
 # gnome-panel/panel-config.c:1691
-#: gnome-panel/menu.c:2903 gnome-panel/menu.c:2907
+#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Liukupaneeli"
 
 # gnome-panel/menu.c:2649
-#: gnome-panel/menu.c:2908
+#: gnome-panel/menu.c:2920
 msgid "GNOME Sliding Panel"
 msgstr "Gnomen liukupaneeli"
 
 # gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
 # gnome-panel/panel-config.c:1702
-#: gnome-panel/menu.c:2926 gnome-panel/menu.c:2931
+#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Irrallinen paneeli"
 
 # gnome-panel/menu.c:2670
-#: gnome-panel/menu.c:2932
+#: gnome-panel/menu.c:2944
 msgid "GNOME Floating Panel"
 msgstr "Gnomen irrallinen paneeli"
 
 # gnome-panel/menu.c:2689
-#: gnome-panel/menu.c:2952
+#: gnome-panel/menu.c:2964
 msgid "You can only have one menu panel at a time."
 msgstr "Vain yksi valikkopaneeli voi olla olemassa."
 
 # gnome-panel/menu.c:2759
-#: gnome-panel/menu.c:2996
+#: gnome-panel/menu.c:3009
 msgid "C_orner Panel"
 msgstr "_Nurkkapaneeli"
 
 # gnome-panel/menu.c:2761
-#: gnome-panel/menu.c:2998
+#: gnome-panel/menu.c:3011
 msgid "Create corner panel"
 msgstr "Luo nurkkapaneeli"
 
 # gnome-panel/menu.c:2749
-#: gnome-panel/menu.c:3005
+#: gnome-panel/menu.c:3019
 msgid "_Edge Panel"
 msgstr "_Reunapaneeli"
 
 # gnome-panel/menu.c:2751
-#: gnome-panel/menu.c:3007
+#: gnome-panel/menu.c:3021
 msgid "Create edge panel"
 msgstr "Luo reunapaneeli"
 
 # gnome-panel/menu.c:2779
-#: gnome-panel/menu.c:3014
+#: gnome-panel/menu.c:3029
 msgid "_Floating Panel"
 msgstr "_Irrallinen paneeli"
 
 # gnome-panel/menu.c:2781
-#: gnome-panel/menu.c:3016
+#: gnome-panel/menu.c:3031
 msgid "Create floating panel"
 msgstr "Luo irrallinen paneeli"
 
 # gnome-panel/menu.c:2769
-#: gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:3039
 msgid "_Sliding Panel"
 msgstr "_Liukupaneeli"
 
 # gnome-panel/menu.c:2771
-#: gnome-panel/menu.c:3025
+#: gnome-panel/menu.c:3041
 msgid "Create sliding panel"
 msgstr "Luo liukupaneeli"
 
 # gnome-panel/menu.c:2728
-#: gnome-panel/menu.c:3034
+#: gnome-panel/menu.c:3051
 msgid "_Menu Panel"
 msgstr "_Valikkopaneeli"
 
 # gnome-panel/menu.c:2730
-#: gnome-panel/menu.c:3036
+#: gnome-panel/menu.c:3053
 msgid "Create menu panel"
 msgstr "Luo valikkopaneeli"
 
 # gnome-panel/menu.c:2879 gnome-panel/menu.c:2886 gnome-panel/menu.c:3520
-#: gnome-panel/menu.c:3125 gnome-panel/menu.c:3131 gnome-panel/menu.c:3650
+#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
 msgid "KDE Menu"
 msgstr "KDE:n valikko"
 
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
-#: gnome-panel/menu.c:3186
+#: gnome-panel/menu.c:3205
 msgid "Lock"
 msgstr "Lukitse"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/menu.c:3194 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Kuvakaappaus"
 
-#: gnome-panel/menu.c:3202
+#: gnome-panel/menu.c:3223
 msgid "Search"
 msgstr "Etsi"
 
 # gnome-panel/gnome-run.c:1489
-#: gnome-panel/menu.c:3210
+#: gnome-panel/menu.c:3232
 msgid "Run"
 msgstr "Suorita"
 
 # gnome-panel/menu.c:2951
-#: gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
 msgstr "Viimeistä paneelia ei voi poistaa."
 
 # gnome-panel/menu.c:2964
-#: gnome-panel/menu.c:3295
+#: gnome-panel/menu.c:3317
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2447,68 +2443,68 @@ msgstr ""
 "Haluatko poistaa tämän paneelin?"
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: gnome-panel/menu.c:3303
+#: gnome-panel/menu.c:3325
 msgid "Delete Panel"
 msgstr "Poista paneeli"
 
 # gnome-panel/menu.c:3303
-#: gnome-panel/menu.c:3369
+#: gnome-panel/menu.c:3391
 msgid "_Delete This Panel..."
 msgstr "_Poista tämä paneeli..."
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: gnome-panel/menu.c:3372 gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
 msgid "_Delete This Panel"
 msgstr "_Poista tämä paneeli"
 
 # gnome-panel/menu.c:3324
-#: gnome-panel/menu.c:3393
+#: gnome-panel/menu.c:3416
 msgid "_Add to Panel"
 msgstr "_Lisää paneeliin"
 
 # gnome-panel/menu.c:3364
-#: gnome-panel/menu.c:3435
+#: gnome-panel/menu.c:3461
 msgid "_New Panel"
 msgstr "_Uusi paneeli"
 
 # gnome-panel/menu.c:3409
-#: gnome-panel/menu.c:3475
+#: gnome-panel/menu.c:3503
 msgid "_About Panels"
 msgstr "_Tietoja paneeleista..."
 
 # gnome-panel/menu.c:3422
-#: gnome-panel/menu.c:3487
+#: gnome-panel/menu.c:3516
 msgid "About _GNOME"
 msgstr "Tietoja _Gnomesta..."
 
 # gnome-panel/menu.c:3211
-#: gnome-panel/menu.c:3526
+#: gnome-panel/menu.c:3556
 msgid "Launcher..."
 msgstr "Käynnistin..."
 
 # gnome-panel/menu.c:3219
-#: gnome-panel/menu.c:3533
+#: gnome-panel/menu.c:3564
 msgid "Launcher from menu"
 msgstr "Käynnistin valikosta"
 
 # gnome-panel/menu.c:3249
-#: gnome-panel/menu.c:3541
+#: gnome-panel/menu.c:3573
 msgid "Button"
 msgstr "Painike"
 
 # gnome-panel/distribution.c:26
-#: gnome-panel/menu.c:3550 gnome-panel/menu.c:3864 gnome-panel/menu.c:3892
-#: gnome-panel/menu.c:4088
+#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
+#: gnome-panel/menu.c:4137
 msgid "Main Menu"
 msgstr "Päävalikko"
 
 # gnome-panel/menu.c:3453
-#: gnome-panel/menu.c:3584
+#: gnome-panel/menu.c:3620
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lukitse näyttö, jotta voit poistua tietokoneesi äärestä hetkeksi"
 
 # gnome-panel/menu.c:3466
-#: gnome-panel/menu.c:3595
+#: gnome-panel/menu.c:3632
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2517,32 +2513,32 @@ msgstr ""
 "käyttäjänä tai sammuttaa tietokoneen"
 
 # gnome-panel/menu.c:3673
-#: gnome-panel/menu.c:3754
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Suorita komento"
 
 # gnome-panel/menu.c:3710
-#: gnome-panel/menu.c:3794
+#: gnome-panel/menu.c:3843
 msgid "Desktop"
 msgstr "Työpöytä"
 
 # gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3738
 # gnome-panel/menu.c:3967
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3812
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "Valikko"
 
 # gnome-panel/menu.c:3740
-#: gnome-panel/menu.c:3814
+#: gnome-panel/menu.c:3863
 msgid "Menu:"
 msgstr "Valikko:"
 
 # gnome-panel/menu.c:3812
-#: gnome-panel/menu.c:3886
+#: gnome-panel/menu.c:3935
 msgid "Can't create menu, using main menu!"
 msgstr "Valikkoa ei voi luoda: käytetään päävalikkoa!"
 
-#: gnome-panel/menu.c:4403
+#: gnome-panel/menu.c:4372
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Paneelin valikko-oliota varten ei ole asetettu polkua kohdassa %s\n"
@@ -2956,21 +2952,21 @@ msgstr "Näytä ohjelmaluettelo oletuksena, kun suorita-laatikko avataan"
 msgid "Show the program listing in the Run box"
 msgstr "Näytä ohjelmaluettelo suorita-laatikossa"
 
-#: gnome-panel/panel-recent.c:55
+#: gnome-panel/panel-recent.c:56
 msgid "Couldn't find a suitable application"
 msgstr "Sopivaa sovellusta ei löydy"
 
-#: gnome-panel/panel-recent.c:78
+#: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "Tämä tiedostotyypin oletussovellus ei voi käsitellä etätiedostoja"
 
-#: gnome-panel/panel-recent.c:135
+#: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Tuntematon virhe tapahtui kohteen %s avautuessa"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
 msgstr "Avaa viimeisin"
 
@@ -3021,12 +3017,12 @@ msgid "No document to show"
 msgstr "Ei asiakirjaa näytettävänä"
 
 # gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
-#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
+#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
 msgid "Disabled"
 msgstr "Ei käytössä"
 
 # gnome-panel/menu.c:3389
-#: gnome-panel/panel-util.c:1476
+#: gnome-panel/panel-util.c:1485
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -3133,3 +3129,6 @@ msgstr "Koko:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Ylhäällä"
+
+#~ msgid " (invalid Unicode)"
+#~ msgstr " (virheellistä Unicodea)"

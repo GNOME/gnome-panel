@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.0.4\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
+"POT-Creation-Date: 2003-01-07 18:31+1300\n"
 "PO-Revision-Date: 2002-12-14 10:05GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: KBabel 0.9.6\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
-#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
@@ -130,7 +130,7 @@ msgstr "GNOME ryba, věštkyně"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Probírat"
@@ -228,8 +228,8 @@ msgstr "_O programu..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
+#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Nápověda"
 
@@ -339,7 +339,7 @@ msgid "Use _UTC"
 msgstr "Použít _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -354,10 +354,6 @@ msgstr ""
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Hodiny"
-
-#: applets/gen_util/clock.c:1205
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "©1998-2002 Free Software Foundation"
 
 #: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
@@ -452,7 +448,7 @@ msgid "Get the current time and date"
 msgstr "Získat aktuální datum a čas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Sledování pošty"
 
@@ -497,12 +493,12 @@ msgstr "generátor pro vytvoření některých obecných appletů"
 msgid "_Check for mail"
 msgstr "_Zkontrolovat poštu"
 
-#: applets/gen_util/mailcheck.c:196
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Chyba při spouštění %s: %s"
 
-#: applets/gen_util/mailcheck.c:274
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -510,15 +506,15 @@ msgstr ""
 "V nastavení Sledování pošty jste nezadali heslo,\n"
 "takže je budete muset zadat při každém jeho spuštění."
 
-#: applets/gen_util/mailcheck.c:282
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "Zadejte prosím _heslo vašeho poštovního serveru:"
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "Okno pro zadání hesla"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -528,182 +524,178 @@ msgstr ""
 "kontrola pošty deaktivována.\n"
 "Možná jste použili chybné jméno/heslo/jméno serveru?"
 
-#: applets/gen_util/mailcheck.c:537
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Přišla nová pošta."
 
-#: applets/gen_util/mailcheck.c:539
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Přišla pošta."
 
-#: applets/gen_util/mailcheck.c:543
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d zpráv"
 
-#: applets/gen_util/mailcheck.c:545
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d zpráv"
 
-#: applets/gen_util/mailcheck.c:549
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Žádná pošta."
 
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "Stav nebyl aktualizován"
 
-#: applets/gen_util/mailcheck.c:1242
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "_Umístění poštovní schránky:"
 
-#: applets/gen_util/mailcheck.c:1250
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Lokální umístění pošty"
 
-#: applets/gen_util/mailcheck.c:1258
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Lokální maildir"
 
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "Vzdálený server POP3"
 
-#: applets/gen_util/mailcheck.c:1274
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "Vzdálený server IMAP"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "_Soubor s příchozí poštou:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "Poštovní s_erver:"
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "Okno pro zadání poštovního serveru"
 
-#: applets/gen_util/mailcheck.c:1333
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "_Jméno uživatele:"
 
-#: applets/gen_util/mailcheck.c:1341
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "Okno pro zadání jména uživatele"
 
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "_Heslo:"
 
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "S_ložka:"
 
-#: applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "Okno pro zadání složky"
 
-#: applets/gen_util/mailcheck.c:1391
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "S_pustit před kontrolou pošty příkaz:"
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "Okno pro zadání příkazu"
 
-#: applets/gen_util/mailcheck.c:1424
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Spustit"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "Před každo_u aktualizací:"
 
-#: applets/gen_util/mailcheck.c:1450
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "Příkaz, který spustit před kontrolou pošty"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "Při přijetí _nové zprávy:"
 
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Příkaz, který spustit, když přijde nová pošta"
 
-#: applets/gen_util/mailcheck.c:1483
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "Při _kliknutí:"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "Příkaz, který _spustit při kliknutí"
 
-#: applets/gen_util/mailcheck.c:1506
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "Nastavit počet nepřečtených _zpráv na nula"
 
-#: applets/gen_util/mailcheck.c:1517
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "Kontrola pošty _každých"
 
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "minut"
 
-#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "Zadejte časový interval v minutách pro kontrolu pošty"
 
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr "Zadejte časový interval v sekundách pro kontrolu pošty"
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "Při přijetí _zprávy přehrát zvuk"
 
-#: applets/gen_util/mailcheck.c:1566
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "Vybrat a_nimaci"
 
-#: applets/gen_util/mailcheck.c:1643
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "Vlastnosti Sledování pošty"
 
-#: applets/gen_util/mailcheck.c:1663
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "_Kontrola pošty"
 
-#: applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "_Schránka"
 
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "©1998-2000 Free Software Foundation"
-
-#: applets/gen_util/mailcheck.c:1747
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Sledování pošty vás upozorní, když vám přijde nová zpráva"
 
-#: applets/gen_util/mailcheck.c:1911
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Pouze text"
 
-#: applets/gen_util/mailcheck.c:1937
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "Kontrola pošty"
 
-#: applets/gen_util/mailcheck.c:1938
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Applet pro kontrolu pošty vás upozorní, když vám přijde nová zpráva"
 
@@ -854,10 +846,6 @@ msgstr ""
 "Chyba při nahrávání hodnoty display_all_workspaces pro Přepínač pracovních "
 "ploch: %s\n"
 
-#: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "©2001 Red Hat, Inc."
-
 #: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -938,58 +926,6 @@ msgstr ""
 "Jestli se mají v Přepínači pracovních ploch zobrazovat názvy pracovních "
 "ploch."
 
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Nelze spustit příkaz tiskárny"
-
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Vlastnosti tiskáren"
-
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Jméno tiskárny:"
-
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "Příkaz pro tisk:"
-
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Tiskárna"
-
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "Tiskový applet"
-
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "©1998 Free Software Foundation"
-
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Tiskový applet vám umožňuje pouštět soubory k vytištění pomocí tiskového "
-"příkazu"
-
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Nelze vytvořit applet!\n"
-
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Vlastnosti..."
-
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Nápověda"
-
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "O programu..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr "Skrytá okna obnovíte kliknutím zde."
@@ -1007,18 +943,10 @@ msgstr "Nelze nahrát %s: %s\n"
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: applets/gen_util/showdesktop.c:453
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "©2002 Red Hat, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Toto tlačítko vám umožňuje skrýt všechna okna a zobrazit pracovní plochu"
-
-#: applets/gen_util/tasklist.c:809
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "©2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:810
 msgid ""
@@ -1164,78 +1092,74 @@ msgstr "Generátor Oznamovací oblasti"
 msgid "Panel Notification Area"
 msgstr "Oznamovací oblast na panelu"
 
-#: applets/notification_area/main.c:126
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "Copyright ©2002 Red Hat Inc."
-
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 msgid "_Remove From Panel"
 msgstr "Od_stranit z panelu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:789
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Pro objekt panelu s ID %s není nastaven žádný object_type\n"
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Pro objekt panelu s ID %s není nastaven žádný panel_id\n"
 
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1256
 msgid "Can't find an empty spot"
 msgstr "Nelze najít volné místo"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 msgid "Mode"
 msgstr "Mód"
 
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 msgid "Mode of this panel"
 msgstr "Mód tohoto panelu"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Stav"
 
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 msgid "Current state of this panel"
 msgstr "Aktuální stav tohoto panelu"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
 msgstr "Ukrývací tlačítka povolena"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
 "Jsou ukrývací tlačítka (tlačítka, která skrývají nebo zobrazují panel) "
 "povolena?"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
 msgstr "Pixmapy na ukrývacích tlačítkách povoleny"
 
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr "Ukrývací tlačítka mají obrázky"
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Skrýt tento panel"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "Ukázat tento panel"
 
@@ -1258,43 +1182,43 @@ msgstr "žádný"
 msgid "file not found"
 msgstr "soubor nenalezen"
 
-#: gnome-panel/button-widget.c:879
+#: gnome-panel/button-widget.c:868
 msgid "Size"
 msgstr "Velikost"
 
-#: gnome-panel/button-widget.c:880
+#: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
 msgstr "Požadovaná velikost prvku ButtonWidget"
 
-#: gnome-panel/button-widget.c:888
+#: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
 msgstr "Má šipku"
 
-#: gnome-panel/button-widget.c:889
+#: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Zda-li se má kreslit indikátor šipky"
 
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:886
 msgid "Orientation"
 msgstr "Orientace"
 
-#: gnome-panel/button-widget.c:898
+#: gnome-panel/button-widget.c:887
 msgid "The ButtonWidget orientation"
 msgstr "Orientace prvku ButtonWidget"
 
-#: gnome-panel/button-widget.c:907
+#: gnome-panel/button-widget.c:896
 msgid "Icon Name"
 msgstr "Název ikony"
 
-#: gnome-panel/button-widget.c:908
+#: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
 msgstr "Ikona požadovaná pro prvek ButtonWidget"
 
-#: gnome-panel/button-widget.c:916
+#: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
 msgstr "Standardní ID ikony"
 
-#: gnome-panel/button-widget.c:917
+#: gnome-panel/button-widget.c:906
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Požadované standardní ID ikony pro prvek ButtonWidget"
 
@@ -1360,20 +1284,16 @@ msgstr "Povolit ukrývací tlačítko"
 msgid "Enable hidebutton arrow"
 msgstr "Povolit šipku na ukrývacím tlačítku"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
-#: gnome-panel/egg-recent-vfs-utils.c:90
-msgid " (invalid Unicode)"
-msgstr " (neplatný Unicode)"
-
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Spustit program..."
 
@@ -1381,23 +1301,23 @@ msgstr "Spustit program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Spustit aplikaci, pokud víte správný příkaz"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Snímek obrazovky..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
@@ -1405,8 +1325,8 @@ msgstr "Zamknout obrazovku"
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Odhlásit se"
 
@@ -1423,7 +1343,7 @@ msgstr "Akce"
 msgid "No windows open"
 msgstr "Žádná otevřená okna"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Menu panel"
 
@@ -1431,8 +1351,8 @@ msgstr "Menu panel"
 msgid "GNOME Menu Panel"
 msgstr "Menu panel GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Aplikace"
 
@@ -1842,7 +1762,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1891,10 +1811,6 @@ msgstr ""
 msgid "The GNOME Panel"
 msgstr "Panel GNOME"
 
-#: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "©1997-2002 Free Software Foundation"
-
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
 msgstr "Ukončit hlad ve světě"
@@ -1921,7 +1837,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1932,7 +1848,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1066
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1943,17 +1859,17 @@ msgstr ""
 "\n"
 "Detaily: %s\n"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1076
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Z cesty nelze získat jméno souboru: %s"
 
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Z cesty nelze získat jméno adresáře: %s"
 
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1153
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1963,156 +1879,157 @@ msgstr ""
 "\n"
 "Detaily: V položce není pole 'Exec' ani 'URL'"
 
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
 msgstr "Přidat tento spouštěč na panel"
 
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1471
 msgid "Remove this item"
 msgstr "Odstranit tuto položku"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
 msgstr "Dát do dialogu spouštění"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1505
 #, c-format
 msgid "Help on %s"
 msgstr "Pomoc s %s"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1506
 msgid "Application"
 msgstr "Aplikace"
 
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1552
 msgid "Entire menu"
 msgstr "Celé menu"
 
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1561
 msgid "Add this as drawer to panel"
 msgstr "Přidat jako zásuvku na panel"
 
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1569
 msgid "Add this as menu to panel"
 msgstr "Přidat jako menu na panel"
 
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1577
 msgid "Add new item to this menu"
 msgstr "Přidat do tohoto menu novou položku"
 
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1603
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
 msgid "Aligned Panel"
 msgstr "Zarovnaný panel"
 
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2872
 msgid "GNOME Aligned Panel"
 msgstr "Zarovnaný panel GNOME"
 
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Hranový panel"
 
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2894
 msgid "GNOME Edge Panel"
 msgstr "Hranový panel GNOME"
 
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Posuvný panel"
 
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2920
 msgid "GNOME Sliding Panel"
 msgstr "Posuvný panel GNOME"
 
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Plovoucí panel"
 
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2944
 msgid "GNOME Floating Panel"
 msgstr "Plovoucí panel GNOME"
 
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2964
 msgid "You can only have one menu panel at a time."
 msgstr "Najednou můžete mít jen jeden menu panel."
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:3009
 msgid "C_orner Panel"
 msgstr "_Rohový panel"
 
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:3011
 msgid "Create corner panel"
 msgstr "Vytvořit rohový panel"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:3019
 msgid "_Edge Panel"
 msgstr "_Hranový panel"
 
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:3021
 msgid "Create edge panel"
 msgstr "Vytvořit hranový panel"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:3029
 msgid "_Floating Panel"
 msgstr "_Plovoucí panel"
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:3031
 msgid "Create floating panel"
 msgstr "Vytvořit plovoucí panel"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:3039
 msgid "_Sliding Panel"
 msgstr "_Posuvný panel"
 
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:3041
 msgid "Create sliding panel"
 msgstr "Vytvořit posuvný panel"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:3051
 msgid "_Menu Panel"
 msgstr "_Menu panel"
 
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:3053
 msgid "Create menu panel"
 msgstr "Vytvořit menu panel"
 
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
 msgid "KDE Menu"
 msgstr "Menu KDE"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3205
 msgid "Lock"
 msgstr "Zamknout"
 
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3223
 msgid "Search"
 msgstr "Hledat"
 
-#: gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:3232
 msgid "Run"
 msgstr "Spustit"
 
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
 msgstr "Nemůžete odstranit svůj poslední panel."
 
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3317
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2120,56 +2037,56 @@ msgstr ""
 "Když je panel odstraněn, je nastavení tohoto\n"
 "panelu ztraceno. Odstranit tento panel?"
 
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3325
 msgid "Delete Panel"
 msgstr "Odstranit panel"
 
-#: gnome-panel/menu.c:3393
-msgid "Launcher..."
-msgstr "Spouštěč..."
-
-#: gnome-panel/menu.c:3400
-msgid "Launcher from menu"
-msgstr "Spouštěč z menu"
-
-#: gnome-panel/menu.c:3408
-msgid "Button"
-msgstr "Tlačítko"
-
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
-msgid "Main Menu"
-msgstr "Hlavní menu"
-
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3391
 msgid "_Delete This Panel..."
 msgstr "_Odstranit tento panel..."
 
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
 msgid "_Delete This Panel"
 msgstr "_Odstranit tento panel"
 
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3416
 msgid "_Add to Panel"
 msgstr "_Přidat na panel"
 
-#: gnome-panel/menu.c:3532
+#: gnome-panel/menu.c:3461
 msgid "_New Panel"
 msgstr "_Nový Panel"
 
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3503
 msgid "_About Panels"
 msgstr "_O panelech"
 
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3516
 msgid "About _GNOME"
 msgstr "O _GNOME"
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3556
+msgid "Launcher..."
+msgstr "Spouštěč..."
+
+#: gnome-panel/menu.c:3564
+msgid "Launcher from menu"
+msgstr "Spouštěč z menu"
+
+#: gnome-panel/menu.c:3573
+msgid "Button"
+msgstr "Tlačítko"
+
+#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
+#: gnome-panel/menu.c:4137
+msgid "Main Menu"
+msgstr "Hlavní menu"
+
+#: gnome-panel/menu.c:3620
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zamknout obrazovku, abyste mohli dočasně opustit svůj počítač"
 
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3632
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2177,31 +2094,27 @@ msgstr ""
 "Odhlásit se z tohoto sezení, aby bylo možno přihlásit se jako jiný uživatel "
 "nebo vypnout počítač"
 
-#: gnome-panel/menu.c:3774
-msgid "Applets"
-msgstr "Applety"
-
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Spustit příkaz"
 
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3843
 msgid "Desktop"
 msgstr "Plocha"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3863
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3935
 msgid "Can't create menu, using main menu!"
 msgstr "Nelze vytvořit menu, bude použito hlavní menu!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4372
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Pro objekt menu panelu není nastavena cesta v %s\n"
@@ -2341,7 +2254,7 @@ msgstr "Z ovládacího prvku nelze získat rozhraní AppletShell\n"
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2556,22 +2469,22 @@ msgstr "Implicitně zobrazovat seznam programů při otevření okna Spustit"
 msgid "Show the program listing in the Run box"
 msgstr "Zobrazovat seznam programů v okně Spustit"
 
-#: gnome-panel/panel-recent.c:55
+#: gnome-panel/panel-recent.c:56
 msgid "Couldn't find a suitable application"
 msgstr "Nelze nalézt vhodnou aplikaci"
 
-#: gnome-panel/panel-recent.c:78
+#: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 "Výchozí aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
 
-#: gnome-panel/panel-recent.c:135
+#: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Při pokusu o otevření %s nastala neznámá chyba"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
 msgstr "Otevřít nedávné"
 
@@ -2615,11 +2528,11 @@ msgstr "Dokument nápovědy nenalezen"
 msgid "No document to show"
 msgstr "Dokument, který se má zobrazit, chybí"
 
-#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
+#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
 msgid "Disabled"
 msgstr "Zakázáno"
 
-#: gnome-panel/panel-util.c:1476
+#: gnome-panel/panel-util.c:1485
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2707,6 +2620,73 @@ msgstr "Velikost:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Nahoře"
+
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "©1998-2002 Free Software Foundation"
+
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "©1998-2000 Free Software Foundation"
+
+#~ msgid "(c) 2001 Red Hat, Inc."
+#~ msgstr "©2001 Red Hat, Inc."
+
+#~ msgid "Can't execute printer command"
+#~ msgstr "Nelze spustit příkaz tiskárny"
+
+#~ msgid "Printer properties"
+#~ msgstr "Vlastnosti tiskáren"
+
+#~ msgid "Printer name:"
+#~ msgstr "Jméno tiskárny:"
+
+#~ msgid "Print command:"
+#~ msgstr "Příkaz pro tisk:"
+
+#~ msgid "Printer"
+#~ msgstr "Tiskárna"
+
+#~ msgid "Printer Applet"
+#~ msgstr "Tiskový applet"
+
+#~ msgid "(c) 1998 the Free Software Foundation"
+#~ msgstr "©1998 Free Software Foundation"
+
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr ""
+#~ "Tiskový applet vám umožňuje pouštět soubory k vytištění pomocí tiskového "
+#~ "příkazu"
+
+#~ msgid "Can't create applet!\n"
+#~ msgstr "Nelze vytvořit applet!\n"
+
+#~ msgid "Properties..."
+#~ msgstr "Vlastnosti..."
+
+#~ msgid "Help"
+#~ msgstr "Nápověda"
+
+#~ msgid "About..."
+#~ msgstr "O programu..."
+
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "©2002 Red Hat, Inc."
+
+#~ msgid "(c) 2001 Red Hat, Inc"
+#~ msgstr "©2001 Red Hat, Inc"
+
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "Copyright ©2002 Red Hat Inc."
+
+#~ msgid " (invalid Unicode)"
+#~ msgstr " (neplatný Unicode)"
+
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "©1997-2002 Free Software Foundation"
+
+#~ msgid "Applets"
+#~ msgstr "Applety"
 
 #~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 #~ msgstr "<big><big>GNOME ryba %s říká:</big></big>"

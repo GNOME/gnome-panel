@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.5\n"
-"POT-Creation-Date: 2002-12-30 20:22+0800\n"
+"POT-Creation-Date: 2003-01-07 18:31+1300\n"
 "PO-Revision-Date: 2003-01-01 17:28+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -22,8 +22,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
-#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
@@ -56,15 +56,15 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"%s 一點用處都沒有；它佔硬碟空間、編譯的時間，啟動時還得佔去面板和記憶體"
-"空間。使用這個面板程式的人可能要被送去檢查一下精神狀況呢。"
+"%s 一點用處都沒有；它佔硬碟空間、編譯的時間，啟動時還得佔去面板和記憶體空間。"
+"使用這個面板程式的人可能要被送去檢查一下精神狀況呢。"
 
 #: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(還有 George 的幫忙)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "小魚"
 
@@ -129,7 +129,7 @@ msgstr "GNOME 小魚，預言家"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "瀏覽"
@@ -225,8 +225,8 @@ msgstr "關於(_A)..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3585
-#: gnome-panel/menu.c:4261 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
+#: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "求助(_H)"
 
@@ -338,7 +338,7 @@ msgid "Use _UTC"
 msgstr "使用 _UTC 時間"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -352,8 +352,8 @@ msgstr ""
 "Jing-Jong SHYUE <shyue@sonoma.com.tw>, 2000\n"
 "Yuan-Chung Cheng <platin@linux.org.tw>, 1999"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "時鐘"
 
@@ -450,7 +450,7 @@ msgid "Get the current time and date"
 msgstr "獲取目前的時間及日期"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "郵箱檢查"
 
@@ -495,12 +495,12 @@ msgstr "用來產生一般面板程式的工廠"
 msgid "_Check for mail"
 msgstr "檢查郵件(_C)"
 
-#: applets/gen_util/mailcheck.c:196
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "執行 %s 時出現錯誤：%s"
 
-#: applets/gen_util/mailcheck.c:274
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -508,15 +508,15 @@ msgstr ""
 "您沒有在「郵箱檢查」中的偏好設定輸入密碼，\n"
 "因此每次啟動時都要自行輸入密碼。"
 
-#: applets/gen_util/mailcheck.c:282
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "請輸入電郵伺服器的密碼(_P)："
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "密碼輸入欄位"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -525,178 +525,178 @@ msgstr ""
 "「郵箱檢查」無法檢查郵件，因此要停止自動更新。\n"
 "是郵件伺服器、用戶名稱或密碼有問題嗎？"
 
-#: applets/gen_util/mailcheck.c:537
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "您有新郵件。"
 
-#: applets/gen_util/mailcheck.c:539
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "您有郵件。"
 
-#: applets/gen_util/mailcheck.c:543
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d 個訊息"
 
-#: applets/gen_util/mailcheck.c:545
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d 個訊息"
 
-#: applets/gen_util/mailcheck.c:549
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "沒有郵件。"
 
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "狀態並未更新"
 
-#: applets/gen_util/mailcheck.c:1242
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "郵箱的位置(_R)："
 
-#: applets/gen_util/mailcheck.c:1250
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "本地的郵件檔案"
 
-#: applets/gen_util/mailcheck.c:1258
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "本地的 maildir 目錄"
 
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "遠端 POP3 伺服器"
 
-#: applets/gen_util/mailcheck.c:1274
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "遠端 IMAP 伺服器"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "儲存新郵件的檔案(_S)："
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "郵件伺服器(_E)："
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "郵件伺服器輸入欄位"
 
-#: applets/gen_util/mailcheck.c:1333
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "用戶名稱(_U)："
 
-#: applets/gen_util/mailcheck.c:1341
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "用戶名稱輸入欄位"
 
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "密碼(_P)："
 
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "資料夾(_F)："
 
-#: applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "資料夾輸入欄位"
 
-#: applets/gen_util/mailcheck.c:1391
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "檢查郵件前執行的指令(_O)："
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "指令輸入欄位"
 
-#: applets/gen_util/mailcheck.c:1424
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "執行"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "每次更新之前(_U)："
 
-#: applets/gen_util/mailcheck.c:1450
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "每次更新前執行的指令"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "當有新郵件的時候(_A)："
 
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "收到新郵件時執行的指令"
 
-#: applets/gen_util/mailcheck.c:1483
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "當按下的時候(_D)："
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "當按下的時候執行的指令"
 
-#: applets/gen_util/mailcheck.c:1506
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "將所有郵件設為已讀(_Z)"
 
-#: applets/gen_util/mailcheck.c:1517
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "檢查郵件的周期(_E)："
 
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "分"
 
-#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "選擇檢查郵件相隔的分鐘數目"
 
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "秒"
 
-#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr "選擇檢查郵件相隔的秒數"
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "有新郵件的時候播放音效(_S)"
 
-#: applets/gen_util/mailcheck.c:1566
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "請選取動畫(_N)"
 
-#: applets/gen_util/mailcheck.c:1643
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "「郵箱檢查」偏好設定"
 
-#: applets/gen_util/mailcheck.c:1663
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "郵件檢查(_M)"
 
-#: applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "郵箱(_B)"
 
-#: applets/gen_util/mailcheck.c:1747
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "「郵箱檢查」會在收到新電郵的時候發出通知"
 
-#: applets/gen_util/mailcheck.c:1911
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "僅顯示文字"
 
-#: applets/gen_util/mailcheck.c:1937
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "「郵件檢查」"
 
-#: applets/gen_util/mailcheck.c:1938
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "「郵件檢查」會在收到新電郵的時候通知您"
 
@@ -900,8 +900,8 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"當顯示所有工作區時，此選項會決定「工作區切換程式」使用多少行（水平排列）或多少"
-"列（垂直排列）來顯示工作區。"
+"當顯示所有工作區時，此選項會決定「工作區切換程式」使用多少行（水平排列）或多"
+"少列（垂直排列）來顯示工作區。"
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the Workspace Switcher."
@@ -999,8 +999,8 @@ msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"決定是否在「視窗清單」中合併同類應用程式的視窗。有效的值為“never”、"
-"“auto”及 “always”。"
+"決定是否在「視窗清單」中合併同類應用程式的視窗。有效的值為“never”、“auto”及 "
+"“always”。"
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1041,8 +1041,8 @@ msgid ""
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
 "本數值是「視窗清單」要求的寬度上限。本數值適用於在大型面板（例如邊界面板）中"
-"限制面板程式的尺寸，因為如果沒有設定本數值，面板程式可能會填滿所有可用的空間"
-"。"
+"限制面板程式的尺寸，因為如果沒有設定本數值，面板程式可能會填滿所有可用的空"
+"間。"
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
@@ -1077,29 +1077,29 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 msgid "_Remove From Panel"
 msgstr "從面板中移除(_R)"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: gnome-panel/applet.c:791
+#: gnome-panel/applet.c:789
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "ID 為 %s 的面板物件並未設定 object_type\n"
 
-#: gnome-panel/applet.c:811 gnome-panel/applet.c:919
+#: gnome-panel/applet.c:809 gnome-panel/applet.c:917
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "ID 為 %s 的面板物件並未設定 panel_id\n"
 
-#: gnome-panel/applet.c:1258
+#: gnome-panel/applet.c:1256
 msgid "Can't find an empty spot"
 msgstr "沒有空位"
 
@@ -1162,43 +1162,43 @@ msgstr "無"
 msgid "file not found"
 msgstr "找不到檔案"
 
-#: gnome-panel/button-widget.c:879
+#: gnome-panel/button-widget.c:868
 msgid "Size"
 msgstr "大小"
 
-#: gnome-panel/button-widget.c:880
+#: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
 msgstr "要求的按鈕元件尺寸"
 
-#: gnome-panel/button-widget.c:888
+#: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
 msgstr "顯示箭頭"
 
-#: gnome-panel/button-widget.c:889
+#: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
 msgstr "是否繪畫箭頭"
 
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:886
 msgid "Orientation"
 msgstr "方向"
 
-#: gnome-panel/button-widget.c:898
+#: gnome-panel/button-widget.c:887
 msgid "The ButtonWidget orientation"
 msgstr "按鈕元件的方向"
 
-#: gnome-panel/button-widget.c:907
+#: gnome-panel/button-widget.c:896
 msgid "Icon Name"
 msgstr "圖示名稱"
 
-#: gnome-panel/button-widget.c:908
+#: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
 msgstr "要求的按鈕元件圖示"
 
-#: gnome-panel/button-widget.c:916
+#: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
 msgstr ""
 
-#: gnome-panel/button-widget.c:917
+#: gnome-panel/button-widget.c:906
 msgid "The desired stock icon for the ButtonWidget"
 msgstr ""
 
@@ -1264,20 +1264,16 @@ msgstr "啟用隱藏按鈕"
 msgid "Enable hidebutton arrow"
 msgstr "啟用隱藏按鈕箭頭"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3466
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3592
 msgid "Drawer"
 msgstr "抽屜"
 
-#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1529
-#: gnome-panel/menu.c:3560 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
+#: gnome-panel/menu.c:3447 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "屬性(_P)"
 
-#: gnome-panel/egg-recent-vfs-utils.c:90
-msgid " (invalid Unicode)"
-msgstr " (無效的 Unicode)"
-
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3832
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "執行程式..."
 
@@ -1285,23 +1281,23 @@ msgstr "執行程式..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "執行程式 (假設能夠正確輸入指令)"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3846
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "搜尋檔案..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3849
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "在電腦中搜尋檔案、資料夾及文件"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3863
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "畫面快照..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3866
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "擷取桌面圖像"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "鎖定畫面"
 
@@ -1309,8 +1305,8 @@ msgstr "鎖定畫面"
 msgid "Protect your computer from unauthorized use"
 msgstr "保護電腦，避免別人在未經授權的情況下使用"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3070
-#: gnome-panel/menu.c:3653
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "登出"
 
@@ -1327,7 +1323,7 @@ msgstr "行動"
 msgid "No windows open"
 msgstr "沒有開啟的視窗"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2834
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "選單面板"
 
@@ -1335,8 +1331,8 @@ msgstr "選單面板"
 msgid "GNOME Menu Panel"
 msgstr "GNOME 選單面板"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2967
-#: gnome-panel/menu.c:2972 gnome-panel/menu.c:3799
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "應用程式"
 
@@ -1741,7 +1737,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1186
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1816,7 +1812,7 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1160 gnome-panel/menu.c:1197
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1827,7 +1823,7 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu.c:1064
+#: gnome-panel/menu.c:1066
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1838,17 +1834,17 @@ msgstr ""
 "\n"
 "原因：%s\n"
 
-#: gnome-panel/menu.c:1074
+#: gnome-panel/menu.c:1076
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "無法從路徑決定檔案名稱：%s"
 
-#: gnome-panel/menu.c:1081
+#: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "無法從路徑決定目錄名稱：%s"
 
-#: gnome-panel/menu.c:1151
+#: gnome-panel/menu.c:1153
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1858,156 +1854,157 @@ msgstr ""
 "\n"
 "原因：項目中沒有「Exec」或「URL」欄位"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
 msgstr "將此啟動圖示加入面板"
 
-#: gnome-panel/menu.c:1469
+#: gnome-panel/menu.c:1471
 msgid "Remove this item"
 msgstr "移除本項目"
 
-#: gnome-panel/menu.c:1485
+#: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
 msgstr "放到執行對話窗"
 
-#: gnome-panel/menu.c:1503
+#: gnome-panel/menu.c:1505
 #, c-format
 msgid "Help on %s"
 msgstr "%s 的說明"
 
-#: gnome-panel/menu.c:1504
+#: gnome-panel/menu.c:1506
 msgid "Application"
 msgstr "應用程式"
 
-#: gnome-panel/menu.c:1548
+#: gnome-panel/menu.c:1552
 msgid "Entire menu"
 msgstr "整個選單"
 
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1561
 msgid "Add this as drawer to panel"
 msgstr "以抽屜方式加入面板"
 
-#: gnome-panel/menu.c:1565
+#: gnome-panel/menu.c:1569
 msgid "Add this as menu to panel"
 msgstr "以選單方式加入面板"
 
-#: gnome-panel/menu.c:1573
+#: gnome-panel/menu.c:1577
 msgid "Add new item to this menu"
 msgstr "在本選單中新增項目"
 
-#: gnome-panel/menu.c:1598
+#: gnome-panel/menu.c:1603
 msgid "Properties"
 msgstr "屬性"
 
-#: gnome-panel/menu.c:2488 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2531 gnome-panel/menu.c:2586
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "詢問時回傳了例外情況 %s\n"
 
-#: gnome-panel/menu.c:2744 gnome-panel/menu.c:2749
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2871
 msgid "Aligned Panel"
 msgstr "對齊面板"
 
-#: gnome-panel/menu.c:2750
+#: gnome-panel/menu.c:2872
 msgid "GNOME Aligned Panel"
 msgstr "GNOME 對齊面板"
 
-#: gnome-panel/menu.c:2767 gnome-panel/menu.c:2771
+#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2893
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "邊界面板"
 
-#: gnome-panel/menu.c:2772
+#: gnome-panel/menu.c:2894
 msgid "GNOME Edge Panel"
 msgstr "GNOME 邊界面板"
 
-#: gnome-panel/menu.c:2793 gnome-panel/menu.c:2797
+#: gnome-panel/menu.c:2915 gnome-panel/menu.c:2919
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "滑動面板"
 
-#: gnome-panel/menu.c:2798
+#: gnome-panel/menu.c:2920
 msgid "GNOME Sliding Panel"
 msgstr "GNOME 滑動面板"
 
-#: gnome-panel/menu.c:2816 gnome-panel/menu.c:2821
+#: gnome-panel/menu.c:2938 gnome-panel/menu.c:2943
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "浮動面板"
 
-#: gnome-panel/menu.c:2822
+#: gnome-panel/menu.c:2944
 msgid "GNOME Floating Panel"
 msgstr "GNOME 浮動面板"
 
-#: gnome-panel/menu.c:2842
+#: gnome-panel/menu.c:2964
 msgid "You can only have one menu panel at a time."
 msgstr "一次只能有一個選單面板出現。"
 
-#: gnome-panel/menu.c:2886
+#: gnome-panel/menu.c:3009
 msgid "C_orner Panel"
 msgstr "邊角面板(_O)"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:3011
 msgid "Create corner panel"
 msgstr "建立邊角面板"
 
-#: gnome-panel/menu.c:2895
+#: gnome-panel/menu.c:3019
 msgid "_Edge Panel"
 msgstr "邊界面板(_E)"
 
-#: gnome-panel/menu.c:2897
+#: gnome-panel/menu.c:3021
 msgid "Create edge panel"
 msgstr "建立邊界面板"
 
-#: gnome-panel/menu.c:2904
+#: gnome-panel/menu.c:3029
 msgid "_Floating Panel"
 msgstr "浮動面板(_F)"
 
-#: gnome-panel/menu.c:2906
+#: gnome-panel/menu.c:3031
 msgid "Create floating panel"
 msgstr "建立浮動面板"
 
-#: gnome-panel/menu.c:2913
+#: gnome-panel/menu.c:3039
 msgid "_Sliding Panel"
 msgstr "滑動面板(_S)"
 
-#: gnome-panel/menu.c:2915
+#: gnome-panel/menu.c:3041
 msgid "Create sliding panel"
 msgstr "建立滑動面板"
 
-#: gnome-panel/menu.c:2924
+#: gnome-panel/menu.c:3051
 msgid "_Menu Panel"
 msgstr "選單面板(_M)"
 
-#: gnome-panel/menu.c:2926
+#: gnome-panel/menu.c:3053
 msgid "Create menu panel"
 msgstr "建立選單面板"
 
-#: gnome-panel/menu.c:3015 gnome-panel/menu.c:3021 gnome-panel/menu.c:3714
+#: gnome-panel/menu.c:3142 gnome-panel/menu.c:3148 gnome-panel/menu.c:3689
 msgid "KDE Menu"
 msgstr "KDE 選單"
 
-#: gnome-panel/menu.c:3078
+#: gnome-panel/menu.c:3205
 msgid "Lock"
 msgstr "鎖定畫面"
 
-#: gnome-panel/menu.c:3086 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "畫面快照"
 
-#: gnome-panel/menu.c:3094
+#: gnome-panel/menu.c:3223
 msgid "Search"
 msgstr "搜尋"
 
-#: gnome-panel/menu.c:3102
+#: gnome-panel/menu.c:3232
 msgid "Run"
 msgstr "執行"
 
-#: gnome-panel/menu.c:3174
+#: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
 msgstr "不可以移除最後一個面板。"
 
-#: gnome-panel/menu.c:3187
+#: gnome-panel/menu.c:3317
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2015,86 +2012,82 @@ msgstr ""
 "當刪除面板後，面板及其設定都會\n"
 "消失。是否要刪除這個面板？"
 
-#: gnome-panel/menu.c:3195
+#: gnome-panel/menu.c:3325
 msgid "Delete Panel"
 msgstr "刪除面板"
 
-#: gnome-panel/menu.c:3434
-msgid "Launcher..."
-msgstr "啟動圖示..."
-
-#: gnome-panel/menu.c:3441
-msgid "Launcher from menu"
-msgstr "選單中的啟動圖示"
-
-#: gnome-panel/menu.c:3449
-msgid "Button"
-msgstr "按鈕"
-
-#: gnome-panel/menu.c:3458 gnome-panel/menu.c:3959 gnome-panel/menu.c:3987
-#: gnome-panel/menu.c:4183
-msgid "Main Menu"
-msgstr "主選單"
-
-#: gnome-panel/menu.c:3511
+#: gnome-panel/menu.c:3391
 msgid "_Delete This Panel..."
 msgstr "刪除本面板(_D)..."
 
-#: gnome-panel/menu.c:3514 gnome-panel/menu.c:3546
+#: gnome-panel/menu.c:3394 gnome-panel/menu.c:3432
 msgid "_Delete This Panel"
 msgstr "刪除本面板(_D)"
 
-#: gnome-panel/menu.c:3533
+#: gnome-panel/menu.c:3416
 msgid "_Add to Panel"
 msgstr "加入至面板(_A)"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3461
 msgid "_New Panel"
 msgstr "新增面板(_N)"
 
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3503
 msgid "_About Panels"
 msgstr "關於面板(_A)"
 
-#: gnome-panel/menu.c:3620
+#: gnome-panel/menu.c:3516
 msgid "About _GNOME"
 msgstr "關於 _GNOME"
 
-#: gnome-panel/menu.c:3648
+#: gnome-panel/menu.c:3556
+msgid "Launcher..."
+msgstr "啟動圖示..."
+
+#: gnome-panel/menu.c:3564
+msgid "Launcher from menu"
+msgstr "選單中的啟動圖示"
+
+#: gnome-panel/menu.c:3573
+msgid "Button"
+msgstr "按鈕"
+
+#: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
+#: gnome-panel/menu.c:4137
+msgid "Main Menu"
+msgstr "主選單"
+
+#: gnome-panel/menu.c:3620
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "鎖定畫面，讓使用者可暫時離開電腦"
 
-#: gnome-panel/menu.c:3659
+#: gnome-panel/menu.c:3632
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "離開本工作階段，並以其它身份登入或關掉電腦"
 
-#: gnome-panel/menu.c:3815
-msgid "Applets"
-msgstr "面板程式"
-
-#: gnome-panel/menu.c:3839
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "執行指令"
 
-#: gnome-panel/menu.c:3879
+#: gnome-panel/menu.c:3843
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/menu.c:3907 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "選單"
 
-#: gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3863
 msgid "Menu:"
 msgstr "選單："
 
-#: gnome-panel/menu.c:3981
+#: gnome-panel/menu.c:3935
 msgid "Can't create menu, using main menu!"
 msgstr "無法建立選單，使用主選單！"
 
-#: gnome-panel/menu.c:4498
+#: gnome-panel/menu.c:4372
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "面板選單物件中的 %s 設定鍵並未設定任何路徑\n"
@@ -2443,21 +2436,21 @@ msgstr "開啟「執行」對話窗時預設會顯示程式清單"
 msgid "Show the program listing in the Run box"
 msgstr "在「執行」對話窗中顯示程式清單"
 
-#: gnome-panel/panel-recent.c:55
+#: gnome-panel/panel-recent.c:56
 msgid "Couldn't find a suitable application"
 msgstr "找不到適合的應用程式"
 
-#: gnome-panel/panel-recent.c:78
+#: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "此類檔案的預設應用程式無法處理遠端檔案"
 
-#: gnome-panel/panel-recent.c:135
+#: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "當嘗試開啟 %s 時出現不明的錯誤"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
 msgstr "最近使用的檔案"
 
@@ -2501,11 +2494,11 @@ msgstr "找不到說明文件"
 msgid "No document to show"
 msgstr "沒有可顯示的文件"
 
-#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
+#: gnome-panel/panel-util.c:639 gnome-panel/panel-util.c:655
 msgid "Disabled"
 msgstr "關閉"
 
-#: gnome-panel/panel-util.c:1476
+#: gnome-panel/panel-util.c:1485
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2593,6 +2586,12 @@ msgstr "大小："
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "頂"
+
+#~ msgid " (invalid Unicode)"
+#~ msgstr " (無效的 Unicode)"
+
+#~ msgid "Applets"
+#~ msgstr "面板程式"
 
 #~ msgid "Can't create applet!\n"
 #~ msgstr "無法建立面板程式！\n"
