@@ -3934,7 +3934,7 @@ create_root_menu (GtkWidget *root_menu,
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		setup_internal_applet_drag(menuitem, "RUN:NEW");
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      _("Execute a command line"), NULL);
+				      _("Run a command"), NULL);
 	}
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
