@@ -35,6 +35,8 @@
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
 
+#define LAUNCHER_DEBUG 1
+
 static void properties_apply (Launcher *launcher);
 
 extern GtkTooltips *panel_tooltips;
@@ -317,7 +319,9 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 								GNOME_FILE_DOMAIN_PIXMAP, 
 								"gnome-unknown.png", TRUE, 
 								NULL);
-
+#ifdef LAUNCHER_DEBUG
+	printf ("Creating Launcher %s\n", parameters);
+#endif
 	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;

@@ -615,9 +615,8 @@ main(int argc, char **argv)
 	init_fr_chunks ();
 	
 	init_menus ();
-	
-	init_user_panels ();
-	init_user_applets ();
+
+	load_session ();	
 
 	kill_free_drawers ();
 

@@ -45,8 +45,7 @@ void load_up_globals (void);
 /* only to be used on beginning, we don't really want to write globals much */
 void write_global_config (void);
 
-void init_user_applets(void);
-void init_user_panels(void);
+void load_session (void);
 
 void apply_global_config(void);
 

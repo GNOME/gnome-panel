@@ -50,7 +50,7 @@
 #include "multiscreen-stuff.h"
 #include "conditional.h"
 
-#undef SESSION_DEBUG
+#undef SESSION_DEBUG 
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
@@ -998,7 +998,7 @@ push_correct_global_prefix (void)
 	gnome_config_push_prefix ("=" GLOBAL_CONFDIR "/panel=/Config/");
 }
 
-void
+static void
 init_user_applets(void)
 {
 	GString *buf;
@@ -1106,11 +1106,16 @@ init_user_applets(void)
 				file = conditional_get_string ("parameters",
 							       NULL, NULL);
 				hoard = TRUE;
-			} else {
-				char *tmp = launcher_file_name (file);
+			} 
+			if (*file != '/') {
+				char *tmp;
+#ifdef SESSION_DEBUG
+	printf ("init_user_applets for non-starting slashes [%s]\n", file);
+#endif
+				tmp = launcher_file_name (file);
 				g_free (file);
 				file = tmp;
-			}
+			} 
 
 			launcher = load_launcher_applet(file, panel, pos, TRUE);
 			g_free(file);
@@ -1262,7 +1267,7 @@ init_user_applets(void)
 	g_free (prefix);
 }
 
-void
+static void
 init_user_panels(void)
 {
 	GString *buf;
@@ -1806,4 +1811,9 @@ write_global_config (void)
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	
+}
+
+void load_session (void) {
+  init_user_panels ();
+  init_user_applets ();
 }
