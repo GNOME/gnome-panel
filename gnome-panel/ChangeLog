@@ -1,5 +1,15 @@
 2004-12-05  Vincent Untz  <vincent@vuntz.net>
 
+	Backport patch by James Henstridge <james@jamesh.id.au> from HEAD
+
+	* panel-background.c (panel_background_prepare): call
+	gdk_display_sync() after drawing the panel background.  Since
+	applets will be looking up the background pixmap using a different
+	display connection, we need to make sure all drawing has occurred
+	first.  Fixes bug #157303.
+
+2004-12-05  Vincent Untz  <vincent@vuntz.net>
+
 	Backport patch from HEAD
 
 	* panel-properties-dialog.c: (panel_properties_dialog_response): show

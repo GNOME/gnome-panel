@@ -125,6 +125,12 @@ panel_background_prepare (PanelBackground *background)
 		break;
 	}
 
+	/* Panel applets may use the panel's background pixmap to
+	 * decide how to draw themselves.  Therefore, we need to
+	 * make sure that all drawing has been completed before
+	 * the applet looks at the pixmap. */
+	gdk_display_sync (gdk_drawable_get_display (background->window));
+
 	gdk_window_get_user_data (GDK_WINDOW (background->window),
 				  (gpointer) &widget);
 
