@@ -25,12 +25,17 @@ gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
 
 gen_util_applet_LINK = $(CXXLINK)
 
-BITMAPS = print.xpm
+PRINTER_BITMAPS = print.xpm
+MAILCHECK_BITMAPS = email.xpm email-e.xpm
 
 EXTRA_DIST = clock_applet.desktop	\
 	     mailcheck_applet.desktop	\
 	     printer.desktop		\
-	     $BITMAPS	
+	     $PRINTER_BITMAPS		\
+	     $MAILCHECK_BITMAPS
+
+mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
+mailcheckbitmaps_DATA = $MAILCHECK_BITMAPS
 
 clocksysdir = $(datadir)/applets/Utility
 clocksys_DATA = clock_applet.desktop
