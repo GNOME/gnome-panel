@@ -35,7 +35,6 @@ static char *orients [] = {
 static char *
 construct_moniker (void)
 {
-	char       *retval = NULL;
 	const char *iid;
 	const char *prefs_key;
 	char       *size;
@@ -56,12 +55,8 @@ construct_moniker (void)
 	g_assert (idx > -1 && idx < G_N_ELEMENTS (orients));
 	orient = orients [idx];
 
-	retval = g_strdup_printf ("%s!prefs_key=%s;size=%s;orient=%s",
-				  iid, prefs_key, size, orient);
-
-	fprintf (stderr, "%s\n", retval);
-
-	return retval;
+	return g_strdup_printf ("%s!prefs_key=%s;size=%s;orient=%s",
+				iid, prefs_key, size, orient);
 }
 
 G_GNUC_UNUSED void

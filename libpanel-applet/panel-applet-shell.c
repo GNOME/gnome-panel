@@ -44,8 +44,6 @@ impl_PanelAppletShell_popup_menu (PortableServer_Servant  servant,
 
 	applet_shell = PANEL_APPLET_SHELL (bonobo_object (servant));
 
-	fprintf (stderr, "popping up menu\n");
-
 	_panel_applet_popup_menu (applet_shell->priv->applet, button, time);
 }
 
