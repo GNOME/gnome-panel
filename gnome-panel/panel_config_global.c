@@ -543,6 +543,7 @@ misc_notebook_page(void)
 void 
 panel_config_global(void)
 {
+        static GnomeHelpMenuEntry help_entry = { NULL, "properties-global" };
 	GtkWidget *page;
 	GtkWidget *box;
 	GtkWidget *prop_nbook;
@@ -601,6 +602,12 @@ panel_config_global(void)
 
 	gtk_signal_connect (GTK_OBJECT (box), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), NULL);
+
+	help_entry.name = gnome_app_id;
+	gtk_signal_connect (GTK_OBJECT (box), "help",
+			    GTK_SIGNAL_FUNC (gnome_help_pbox_display),
+			    &help_entry);
+
 	gtk_signal_connect (GTK_OBJECT (box), "event",
 			    GTK_SIGNAL_FUNC (config_event),
 			    prop_nbook);

@@ -800,6 +800,7 @@ background_page (PerPanelConfig *ppc)
 void 
 panel_config(GtkWidget *panel)
 {
+        static GnomeHelpMenuEntry help_entry = { NULL, "properties" };
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
@@ -883,6 +884,12 @@ panel_config(GtkWidget *panel)
 	
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), ppc);
+
+	help_entry.name = gnome_app_id;
+	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "help",
+			    GTK_SIGNAL_FUNC (gnome_help_pbox_display),
+			    &help_entry);
+
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
 			    GTK_SIGNAL_FUNC (config_event),
 			    prop_nbook);
