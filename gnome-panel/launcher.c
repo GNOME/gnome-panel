@@ -47,7 +47,8 @@ launch (Launcher *launcher, int argc, char *argv[])
 		dlg = gnome_message_box_new(_("This launch icon does not "
 					      "specify a program to run"),
 					    GNOME_MESSAGE_BOX_ERROR,
-					    _("Close"), NULL);
+					    GNOME_STOCK_BUTTON_CLOSE,
+					    NULL);
 		gtk_window_set_wmclass(GTK_WINDOW(dlg),
 				       "no_exec_dialog","Panel");
 		gtk_widget_show_all(dlg);

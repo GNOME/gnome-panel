@@ -369,6 +369,9 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_LOCK:
 		gnome_config_set_string("id", LOCK_ID);
 		break;
+	case APPLET_STATUS:
+		gnome_config_set_string("id", STATUS_ID);
+		break;
 	default:
 		g_assert_not_reached();
 	}
@@ -841,6 +844,8 @@ init_user_applets(void)
 			load_logout_applet(panel,pos);
 		} else if(strcmp(applet_name,LOCK_ID) == 0) {
 			load_lock_applet(panel,pos);
+		} else if(strcmp(applet_name,STATUS_ID) == 0) {
+			load_status_applet(panel,pos);
 		} else if(strcmp(applet_name,SWALLOW_ID) == 0) {
 			char *path = gnome_config_get_string("execpath=");
 			char *params = gnome_config_get_string("parameters=");

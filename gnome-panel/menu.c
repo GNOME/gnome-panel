@@ -1110,6 +1110,22 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_lock_applet(current_panel, 0);
 }
+static void
+try_add_status_to_panel (GtkWidget *widget, gpointer data)
+{
+	if(!load_status_applet(current_panel, 0)) {
+		GtkWidget *mbox;
+		mbox = gnome_message_box_new(_("You already have a status "
+					       "dock on the panel. You can "
+					       "only have one"),
+					     GNOME_MESSAGE_BOX_INFO,
+					     GNOME_STOCK_BUTTON_CLOSE,
+					     NULL);
+		gtk_window_set_wmclass(GTK_WINDOW(mbox),
+				       "no_more_status_dialog","Panel");
+		gtk_widget_show_all(mbox);
+	}
+}
 
 static void
 add_applet (GtkWidget *w, char *item_loc)
@@ -2780,6 +2796,13 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_swallowing_cb),NULL);
 	setup_internal_applet_drag(menuitem, "SWALLOW:ASK");
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem(menuitem, 0, _("Status dock"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   GTK_SIGNAL_FUNC(try_add_status_to_panel),NULL);
+	setup_internal_applet_drag(menuitem, "STATUS:TRY");
 }
 
 void

@@ -163,6 +163,10 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 			set_swallow_applet_orient(swallow,SWALLOW_VERTICAL);
 		else
 			set_swallow_applet_orient(swallow,SWALLOW_HORIZONTAL);
+	} else if(info->type == APPLET_STATUS) {
+		StatusApplet *status = info->data;
+		status->orient = panel->orient;
+		status_applet_update(status);
 	}
 }
 
@@ -245,6 +249,10 @@ size_change(AppletInfo *info, PanelWidget *panel)
 				panel_clean_applet(ext->info);
 			CORBA_exception_free(&ev);
 		}
+	} else if(info->type == APPLET_STATUS) {
+		StatusApplet *status = info->data;
+		status->orient = panel->orient;
+		status_applet_update(status);
 	}
 }
 
@@ -824,6 +832,8 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 			ask_about_swallowing(panel,pos);
 		} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
 			ask_about_launcher(NULL,panel,pos);
+		} else if(strcmp(applet_type,"STATUS:TRY")==0) {
+			load_status_applet(panel,pos);
 		}
 		break;
 	}

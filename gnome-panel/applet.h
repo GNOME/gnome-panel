@@ -14,6 +14,7 @@ BEGIN_GNOME_DECLS
 #define EXTERN_ID "Extern"
 #define LAUNCHER_ID "Launcher"
 #define LOCK_ID "Lock"
+#define STATUS_ID "Status"
 
 typedef enum {
 	APPLET_EXTERN,
@@ -26,6 +27,7 @@ typedef enum {
 	APPLET_LAUNCHER,
 	APPLET_EMPTY,
 	APPLET_LOCK,
+	APPLET_STATUS
 } AppletType;
 
 typedef struct _AppletUserMenu AppletUserMenu;
