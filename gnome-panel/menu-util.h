@@ -22,6 +22,12 @@ void       panel_menu_position    (GtkMenu  *menu,
 				   gboolean *push_in,
 				   gpointer  data);
 
+void       menu_item_menu_position   (GtkMenu  *menu,
+				      gint     *x,
+				      gint     *y,
+				      gboolean *push_in,
+				      gpointer  data);
+
 char *     get_real_menu_path      (const char *arguments,
                                     gboolean main_menu);
 char *     get_pixmap              (const char *menudir,

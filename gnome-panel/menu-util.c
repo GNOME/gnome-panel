@@ -136,6 +136,18 @@ panel_menu_position (GtkMenu  *menu,
 }
 
 void
+menu_item_menu_position (GtkMenu  *menu,
+		        gint     *x,
+		        gint     *y,
+		        gboolean *push_in,
+		        gpointer  data)
+{
+	GtkWidget *w = data;
+
+	standard_position_within (menu, x, y, push_in, w);
+}
+
+void
 applet_menu_position (GtkMenu  *menu,
 		      gint     *x,
 		      gint     *y,

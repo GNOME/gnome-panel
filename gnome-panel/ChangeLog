@@ -1,9 +1,24 @@
+2002-05-07  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* menu-util.[ch]:
+	Add function menu_item_menu_position which ensures that menu item's
+	menu is displayed close to the menu item; it might be displayed
+	because of a key stroke instead of mouse click
+
+	* menu.c:
+	Add panel_menu_key_press_handler as signal handler for 
+	"key_press_event"
+	In panel_menu_key_press_handler() display active menu item's
+	menu if Shift+F10 was pressed.
+	setup_full_menuitem: Store menu item's ShowItemMenu as data of the
+	menu item so it can be found in panel_menu_key_press_handler().
+
 Fri May 03 17:35:40 2002  George Lebl <jirka@5z.com>
 
 	* gnome-run.c, panel-per-panel-config.schemas: Apply the following
 	  patch and fix bugs etc... in it
 
-	2002-05-02  Frank Worsley  <fworsley@shaw.ca>
+2002-05-02  Frank Worsley  <fworsley@shaw.ca>
 
 	* gnome-run.c: revamp the run dialog. Show 'Advanced' entry field
 	by default and rename advanced button to 'Known Applications' to

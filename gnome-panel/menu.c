@@ -138,6 +138,8 @@ static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
 static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
 				       const char *title);
+static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
+					      GdkEventKey *event);
 
 
 static inline gboolean
@@ -658,6 +660,10 @@ panel_menu_new (void)
 	g_signal_connect_after (menu, "show",
 				G_CALLBACK (panel_make_sure_menu_within_screen),
 				NULL);
+
+	g_signal_connect (menu, "key_press_event",
+			  G_CALLBACK (panel_menu_key_press_handler),
+			  NULL);
 
 	return menu;
 }
@@ -1392,12 +1398,12 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
 		}
 	}
-	
+
 	gtk_menu_popup (GTK_MENU (sim->menu),
 			NULL,
 			NULL,
-			NULL,
-			NULL,
+			menu_item_menu_position,
+			item,
 			bevent->button,
 			bevent->time);
 }
@@ -1559,6 +1565,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 					    it's not ours!*/
 		sim->mf = mf;
 		sim->menuitem = menuitem;
+                g_object_set_data (G_OBJECT (menuitem), "sim", sim);
 		g_signal_connect (G_OBJECT (menuitem), "event",
 				  G_CALLBACK (show_item_menu_mi_cb),
 				  sim);
@@ -4226,4 +4233,33 @@ menu_load_from_gconf (PanelWidget *panel_widget,
 
 	g_free (path);
 	g_free (custom_icon_file);
+}
+
+static gboolean
+panel_menu_key_press_handler (GtkWidget   *widget,
+			      GdkEventKey *event)
+{
+	gboolean retval = FALSE;
+
+	if (event->keyval == GDK_F10 && event->state == GDK_SHIFT_MASK) {
+		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
+
+		if (menu_shell->active_menu_item &&
+		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
+			ShowItemMenu* sim;
+			GtkWidget *menu_item = menu_shell->active_menu_item;
+ 
+			sim = 	g_object_get_data (G_OBJECT (menu_item), "sim");
+			if (sim) {
+				GdkEventButton bevent;
+
+				bevent.button = 3;
+				bevent.time = GDK_CURRENT_TIME;
+				show_item_menu (menu_item, &bevent, sim);
+				retval = TRUE;
+			}
+		}
+		
+	}
+	return retval;
 }
