@@ -254,7 +254,7 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	ComputerClock *cc;
 
 	frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_NONE);
 	gtk_widget_show(frame);
 
 	cc = g_new0 (ComputerClock, 1);
@@ -405,7 +405,7 @@ copy_time (AppletWidget *applet, gpointer data)
 	cd->copied_string = g_strdup (string);
 
 	gtk_selection_owner_set (GTK_WIDGET (applet),
-				 GDK_SELECTION_PRIMARY,
+				 gdk_atom_intern ("CLIPBOARD", FALSE),
 				 GDK_CURRENT_TIME);
 }
 
@@ -429,7 +429,7 @@ copy_date (AppletWidget *applet, gpointer data)
 	cd->copied_string = g_strdup (string);
 
 	gtk_selection_owner_set (GTK_WIDGET (applet),
-				 GDK_SELECTION_PRIMARY,
+                                 gdk_atom_intern ("CLIPBOARD", FALSE),
 				 GDK_CURRENT_TIME);
 }
 
@@ -454,7 +454,7 @@ copy_timestamp (AppletWidget *applet, gpointer data)
 	cd->copied_string = g_strdup (string);
 
 	gtk_selection_owner_set (GTK_WIDGET (applet),
-				 GDK_SELECTION_PRIMARY,
+                                 gdk_atom_intern ("CLIPBOARD", FALSE),
 				 GDK_CURRENT_TIME);
 }
 
@@ -522,10 +522,8 @@ make_clock_applet(const gchar * goad_id)
 		/* sanity */
 		if (strncmp (transl, "clock/hourformat=",
 			     strlen ("clock/hourformat=") != 0)) {
-			g_warning("Whoever translated the clock applet should "
-				  "be shot, as he translated "
-				  "\"clock/hourformat\" despite being asked "
-				  "not to.");
+			g_warning("Clock applet string clock/hourformat=12 "
+				  "was not translated correctly in this locale.");
 			transl = "clock/hourformat=12";
 		}
 		cd->hourformat = gnome_config_get_int(transl);
@@ -588,22 +586,15 @@ make_clock_applet(const gchar * goad_id)
 	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
 					       "copy_time",
 					       GNOME_STOCK_MENU_COPY,
-					       _("Copy time to selection"),
+					       _("Copy time"),
 					       copy_time,
 					       cd);
 
 	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
 					       "copy_date",
 					       GNOME_STOCK_MENU_COPY,
-					       _("Copy date to selection"),
+					       _("Copy date"),
 					       copy_date,
-					       cd);
-
-	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
-					       "copy_timestamp",
-					       GNOME_STOCK_MENU_COPY,
-					       _("Copy timestamp to selection"),
-					       copy_timestamp,
 					       cd);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
@@ -620,7 +611,8 @@ make_clock_applet(const gchar * goad_id)
 					      clock_about,
 					      NULL);
 
-	gtk_selection_add_targets (GTK_WIDGET (applet), GDK_SELECTION_PRIMARY,
+	gtk_selection_add_targets (GTK_WIDGET (applet),
+                                   gdk_atom_intern ("CLIPBOARD", FALSE),
 				   targets, n_targets);
 
         gtk_signal_connect (GTK_OBJECT (applet), "selection_get",

@@ -1,3 +1,18 @@
+2001-05-30  Havoc Pennington  <hp@redhat.com>
+
+	* gen_util/clock.c (make_clock_applet): remove "to selection" from
+	"Copy time to selection" and "Copy date to selection". Make them
+	copy to clipboard. Delete "Copy timestamp to selection" item.
+
+	When porting to GTK 2, we should maybe make the label selectable, 
+	and then have a simple Copy menu item. Then you can copy whatever
+	part you want, and also paste with middle mouse.
+
+	(make_clock_applet): reword the "someone should be shot" warning,
+	it occasionally appears and disturbs users
+
+	(create_computer_clock_widget): change shadow type to NONE
+	
 2001-05-27  Stanislav Brabec  <utx@penguin.cz>
 
 	* applet-dirs/Network.directory: Changed incorrrect English
