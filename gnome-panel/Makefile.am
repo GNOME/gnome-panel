@@ -14,7 +14,8 @@ CXXFLAGS =
 panel_LINK = $(CXXLINK)
 endif
 
-INCLUDES = -I. -I$(srcdir) 			\
+INCLUDES = -I. -I$(srcdir) \
+	-I$(top_srcdir)/intl -I$(top_builddir)/intl \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
