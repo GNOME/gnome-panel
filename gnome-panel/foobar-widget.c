@@ -1029,11 +1029,12 @@ foobar_widget_init (FoobarWidget *foo)
 
 	foo->screen = 0;
 
-	foo->task_item = NULL;
-	foo->task_menu = NULL;
+	foo->tasks      = NULL;
+	foo->task_item  = NULL;
+	foo->task_menu  = NULL;
 	foo->task_image = NULL;
-	foo->task_bin = NULL;
-	foo->icon_task = NULL;
+	foo->task_bin   = NULL;
+	foo->icon_task  = NULL;
 
 	foo->clock_format = g_strdup (_("%H:%M"));
 	foo->clock_timeout = 0;

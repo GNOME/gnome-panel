@@ -27,9 +27,7 @@ static int nspots = 0;
 gboolean status_inhibit = FALSE; /*inhibit adding and updating for the purpose
 				   of quitting*/
 
-extern GSList *applets;
 extern GSList *applets_last;
-extern int applet_count;
 
 extern PortableServer_POA thepoa;
 

@@ -23,7 +23,6 @@
 extern GlobalConfig global_config;
 
 extern GSList *applets;
-extern GSList *applets_last;
 
 void
 panel_show_help (const char *doc_name, const char *linkid)

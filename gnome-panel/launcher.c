@@ -33,7 +33,6 @@ extern GtkTooltips *panel_tooltips;
 
 extern GSList *applets;
 extern GSList *applets_last;
-extern int applet_count;
 
 static char *default_app_pixmap = NULL;
 
@@ -41,8 +40,6 @@ extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
 extern char *merge_merge_dir;
-
-extern GSList *panels;
 
 enum {
 	HELP_BUTTON = 0,

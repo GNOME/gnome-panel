@@ -12,7 +12,6 @@
 #include <libgnome/gnome-util.h>
 
 extern GlobalConfig global_config;
-extern GSList *panel_list;
 extern GSList *panels;
 
 #define N_BITS 32 /*all modifier masks fit into it */

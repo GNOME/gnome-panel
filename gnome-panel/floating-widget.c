@@ -15,7 +15,6 @@
 #include "panel-util.h"
 #include "multiscreen-stuff.h"
 
-extern GlobalConfig global_config;
 extern int pw_minimized_size;
 
 static void floating_pos_class_init (FloatingPosClass *klass);

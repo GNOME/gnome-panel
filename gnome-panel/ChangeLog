@@ -1,3 +1,18 @@
+2001-10-08  Mark McLoughlin <mark@skynet.ie>
+
+	* menu.c (create_applets_menu): warn if we can't find applets
+	menu directory.
+	(create_root_menu): only setup an applets menuitem if we have
+	managed to create an applets menu.
+
+	* foobar-widget.c (foobar_widget_init): init foo->tasks.
+
+ 	* logout.c, main.c, menu-properties.c, menu-util.c, menu.c,
+	  panel-util.c, panel.c, session.c, sliding-widget.c,
+	  status.c, aligned-widget.c, applet.c, basep-widget.c,
+	  drawer.c, extern.c, global-keys.c, gnome-run.c, swallow.c,
+	  launcher.c: remove unused extern defs.
+
 Thu Sep 27 01:03:48 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: port more things to ditem

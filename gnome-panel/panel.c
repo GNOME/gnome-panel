@@ -42,22 +42,15 @@ static gboolean panel_been_moved = FALSE;
 int base_panels = 0;
 
 extern GSList *applets;
-extern GSList *applets_last;
 
-extern int config_sync_timeout;
 extern int applets_to_sync;
 extern int panels_to_sync;
-extern int need_complete_save;
 
 extern gboolean commie_mode;
-extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
 
 extern char *kde_menudir;
-extern char *kde_icondir;
-extern char *kde_mini_icondir;
-
 
 /*the types of stuff we accept*/
 

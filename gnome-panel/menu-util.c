@@ -14,8 +14,6 @@
 /*#define PANEL_DEBUG 1*/
 
 extern char *kde_menudir;
-extern char *kde_icondir;
-extern char *kde_mini_icondir;
 
 extern GlobalConfig global_config;
 

@@ -31,20 +31,14 @@ extern GSList *panels;
 
 extern GSList *applets;
 extern GSList *applets_last;
-extern int applet_count;
 
-extern int config_sync_timeout;
 extern int applets_to_sync;
-extern int panels_to_sync;
 extern int need_complete_save;
 
 extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
-
-extern char *panel_cfg_path;
-extern char *old_panel_cfg_path;
 
 extern int ss_cur_applet;
 extern gboolean ss_done_save;

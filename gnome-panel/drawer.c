@@ -21,19 +21,13 @@
 
 #include <libgnomeui/gnome-uidefs.h>
 
-extern GSList *applets;
 extern GSList *applets_last;
-extern int applet_count;
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
-extern int applets_to_sync;
 extern int panels_to_sync;
-extern int need_complete_save;
 
 extern GtkTooltips *panel_tooltips;
-
-extern GSList *panel_list;
 
 static void
 properties_apply_callback(gpointer data)

@@ -29,14 +29,11 @@ GSList *applets_last = NULL;
 int applet_count = 0;
 
 /*config sync stuff*/
-extern int config_sync_timeout;
 extern int applets_to_sync;
-extern int panels_to_sync;
 extern int need_complete_save;
 
 extern gboolean commie_mode;
 extern GlobalConfig global_config;
-extern PanelWidget *current_panel;
 
 static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)

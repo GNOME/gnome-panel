@@ -41,7 +41,6 @@
 
 extern GSList *applets_last;
 extern GtkTooltips *panel_tooltips;
-extern GlobalConfig global_config;
 extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;

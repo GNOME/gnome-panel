@@ -48,7 +48,6 @@ static char *gnome_folder = NULL;
 
 extern GSList *applets;
 extern GSList *applets_last;
-extern int applet_count;
 
 /*list of all toplevel panel widgets (basep) created*/
 extern GSList *panel_list;
@@ -59,16 +58,13 @@ extern gboolean commie_mode;
 extern gboolean no_run_box;
 extern GlobalConfig global_config;
 
-extern int config_sync_timeout;
 extern int panels_to_sync;
-extern int applets_to_sync;
 extern int need_complete_save;
 
 extern int base_panels;
 
 extern char *kde_menudir;
 extern char *kde_icondir;
-extern char *kde_mini_icondir;
 
 extern GtkTooltips *panel_tooltips;
 
@@ -3301,6 +3297,7 @@ create_applets_menu (GtkWidget *menu, gboolean fake_submenus, gboolean title)
 	if (menudir == NULL ||
 	    ! g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
 		g_free (menudir);
+		g_warning (_("Cannot find applets menu directory"));
 		return NULL;
 	}
 	
@@ -5541,18 +5538,19 @@ create_root_menu (GtkWidget *root_menu,
 				   NULL);
 	}
 	/* in commie mode the applets menu doesn't make sense */
-	if ( ! commie_mode &&
-	    flags & MAIN_MENU_APPLETS_SUB) {
+	if (!commie_mode && (flags & MAIN_MENU_APPLETS_SUB)) {
 		menu = create_applets_menu(NULL, fake_submenus, FALSE);
-		menuitem = gtk_menu_item_new ();
-		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
-					  _("Applets"), size);
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+		if (menu) {
+			menuitem = gtk_menu_item_new ();
+			gtk_widget_lock_accelerators (menuitem);
+			setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
+			                           _("Applets"), size);
+			gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+			gtk_signal_connect (GTK_OBJECT (menu),"show",
+					    GTK_SIGNAL_FUNC (submenu_to_display),
+					    NULL);
+		}
 	}
 	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
 		add_distribution_submenu (root_menu, fake_submenus,

@@ -24,14 +24,6 @@
 
 /*#define PANEL_DEBUG 1*/
 
-extern GlobalConfig global_config;
-
-extern int config_sync_timeout;
-extern int panels_to_sync;
-extern int applets_to_sync;
-extern int need_complete_save;
-
-
 struct _MenuDialogInfo {
 	GtkWidget *main_menu;
 	GtkWidget *global_main;

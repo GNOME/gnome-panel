@@ -6,7 +6,6 @@
 
 #include "panel-include.h"
 
-extern GSList *applets;
 extern GSList *applets_last;
 
 extern GtkTooltips *panel_tooltips;

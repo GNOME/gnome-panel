@@ -29,7 +29,6 @@
 
 GList *check_swallows = NULL;
 
-extern GlobalConfig global_config;
 extern GSList *applets_last;
 
 static void socket_destroyed (GtkWidget *w, gpointer data);

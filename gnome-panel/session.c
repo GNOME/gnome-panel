@@ -35,7 +35,6 @@ int need_complete_save = FALSE;
 
 extern GSList *panels;
 extern GSList *applets;
-extern GSList *applets_last;
 extern int applet_count;
 
 extern GtkTooltips *panel_tooltips;
@@ -54,8 +53,6 @@ char *old_panel_cfg_path = NULL;
 extern GSList *panel_list;
 
 extern char *kde_menudir;
-extern char *kde_icondir;
-extern char *kde_mini_icondir;
 
 int ss_cur_applet = 0;
 gboolean ss_done_save = FALSE;

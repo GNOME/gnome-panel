@@ -11,9 +11,6 @@
 #include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 
-extern GlobalConfig global_config;
-extern int pw_minimized_size;
-
 static void aligned_pos_class_init (AlignedPosClass *klass);
 static void aligned_pos_init (AlignedPos *pos);
 

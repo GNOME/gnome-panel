@@ -13,9 +13,6 @@
 #include "panel-util.h"
 #include "multiscreen-stuff.h"
 
-extern GlobalConfig global_config;
-extern int pw_minimized_size;
-
 static void sliding_pos_class_init (SlidingPosClass *klass);
 static void sliding_pos_init (SlidingPos *pos);
 

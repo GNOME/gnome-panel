@@ -28,19 +28,15 @@
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
 
-extern int applets_to_sync;
 extern int panels_to_sync;
-extern int need_complete_save;
 
 /*global settings*/
 extern int pw_explicit_step;
-extern int pw_drawer_step;
 extern int pw_auto_step;
 extern int pw_minimized_size;
 extern int pw_minimize_delay;
 extern int pw_maximize_delay;
 extern gboolean pw_disable_animations;
-extern PanelMovementType pw_movement_type;
 
 extern GtkTooltips *panel_tooltips;
 
