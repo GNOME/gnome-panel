@@ -525,11 +525,14 @@ panel_config_sync(void)
 	   applets_to_sync ||
 	   panels_to_sync ||
 	   globals_to_sync) {
-		do_session_save(client,need_complete_save,
-				applets_to_sync,panels_to_sync,globals_to_sync);
-		need_complete_save = FALSE;
-		g_slist_free(applets_to_sync);
+		GSList *_applets_to_sync = applets_to_sync;
+
 		applets_to_sync = NULL;
+		do_session_save(client,need_complete_save,
+				_applets_to_sync,panels_to_sync,globals_to_sync);
+		need_complete_save = FALSE;
+
+		g_slist_free(_applets_to_sync);
 		panels_to_sync = FALSE;
 		globals_to_sync = FALSE;
 	}

@@ -1,3 +1,9 @@
+1998-12-26  Martin Baulig  <martin@home-of-linux.org>
+
+	* session.c (panel_config_sync): Set `applets_to_sync' back to
+	NULL before calling do_session_save (), to make it work when
+	called recursively.
+
 Sat Dec 26 01:16:45 1998  George Lebl  <jirka@5z.com>
 
 	* *.c: destroy signal is a void function, I always thought it
