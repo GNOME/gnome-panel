@@ -1,3 +1,32 @@
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
+	More or less finish of the compatibility code.
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_migrate_menu_panel_settings): mimic
+	a menu panel by adding the menu bar and window menu applets
+	to the configuration here rather than creating them after
+	all other applets have been loaded.
+	(panel_compatibility_migrate_panel_id): split out from
+	migrate_panel_id_list().
+	(panel_compatibility_migrate_drawer_settings),
+	(panel_compatibility_migrate_menu_button_settings),
+	(panel_compatibility_migrate_objects):impl
+	(panel_compatibility_migrate_panel_id_list): upd.
+	(panel_compatibility_warn),
+	(panel_compatibility_load_menu_panel),
+	(panel_compatibility_load_applets): kill.
+
+	* panel-object.schemas.in: s/attached_panel_id/attached_toplevel_id/.
+
+	* panel-profile.[ch]:
+	(panel_profile_prepare_object_with_id): split out from prepare_object()
+	so we can create applets for a toplevel that doesn't yet exist.
+	(panel_profile_prepare_object): upd.
+
+	* applet.c: (panel_applet_load_idle_handler): don't load menu
+	panel applets from here.
+
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-compatibility.c:

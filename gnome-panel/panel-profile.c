@@ -36,11 +36,6 @@
 #include "panel.h"
 #include "panel-widget.h"
 
-/* TODO:
- *   Detect unwritable keys
- *   Handle setting up the defaults on new screens
- */
-
 typedef struct {
 	GdkScreen       *screen;
 	int              monitor;
@@ -1408,9 +1403,9 @@ panel_profile_destroy_toplevel (const char *id)
 }
 
 char *
-panel_profile_prepare_object (PanelObjectType  object_type,
-			      PanelToplevel   *toplevel,
-			      int              position)
+panel_profile_prepare_object_with_id (PanelObjectType  object_type,
+				      const char      *toplevel_id,
+				      int              position)
 {
 	PanelGConfKeyType  key_type;
 	GConfClient       *client;
@@ -1437,7 +1432,7 @@ panel_profile_prepare_object (PanelObjectType  object_type,
 				 NULL);
 
 	key = panel_gconf_full_key (key_type, current_profile, id, "toplevel_id");
-	gconf_client_set_string (client, key, panel_profile_get_toplevel_id (toplevel), NULL);
+	gconf_client_set_string (client, key, toplevel_id, NULL);
 
 	key = panel_gconf_full_key (key_type, current_profile, id, "position");
 	gconf_client_set_int (client, key, position, NULL);
@@ -1445,6 +1440,16 @@ panel_profile_prepare_object (PanelObjectType  object_type,
 	g_free (dir);
 
 	return id;
+}
+
+char *
+panel_profile_prepare_object (PanelObjectType  object_type,
+			      PanelToplevel   *toplevel,
+			      int              position)
+{
+	return panel_profile_prepare_object_with_id (object_type,
+						     panel_profile_get_toplevel_id (toplevel),
+						     position);
 }
 
 void

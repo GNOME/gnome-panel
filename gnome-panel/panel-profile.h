@@ -50,16 +50,19 @@ void        panel_profile_set_show_program_list   (gboolean show_program_list);
 gboolean    panel_profile_get_enable_program_list (void);
 
 
-void        panel_profile_add_to_list      (PanelGConfKeyType  type,
-					    char              *id);
-void        panel_profile_remove_from_list (PanelGConfKeyType  type,
-					    const char        *id);
-void        panel_profile_create_toplevel  (void);
-void        panel_profile_delete_toplevel  (PanelToplevel     *toplevel);
-char       *panel_profile_prepare_object   (PanelObjectType    object_type,
-					    PanelToplevel     *toplevel,
-					    int                position);
-void        panel_profile_delete_object    (AppletInfo        *applet_info);
+void        panel_profile_add_to_list            (PanelGConfKeyType  type,
+						  char              *id);
+void        panel_profile_remove_from_list       (PanelGConfKeyType  type,
+						  const char        *id);
+void        panel_profile_create_toplevel        (void);
+void        panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
+char       *panel_profile_prepare_object         (PanelObjectType    object_type,
+						  PanelToplevel     *toplevel,
+						  int                position);
+char       *panel_profile_prepare_object_with_id (PanelObjectType  object_type,
+						  const char      *toplevel_id,
+						  int              position);
+void        panel_profile_delete_object          (AppletInfo        *applet_info);
 
 
 gboolean panel_profile_is_toplevel_list_writeable (void);

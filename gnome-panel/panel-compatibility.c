@@ -414,6 +414,11 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 						 const char  *panel_dir)
 {
 	const char *key;
+	const char *profile;
+	const char *toplevel_id;
+	char       *id;
+
+	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
 	gconf_client_set_bool (client, key, FALSE, NULL);
@@ -423,9 +428,20 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 				 panel_profile_map_orientation (PANEL_ORIENTATION_TOP),
 				 NULL);
 
-	/* FIXME: Need to add the two applets to GConf here */
+	toplevel_id = panel_gconf_basename (toplevel_dir);
 
-	g_warning ("FIXME: implement migrating menu panel settings");
+	/* menu bar on far right corner */
+        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_MENU_BAR, toplevel_id, 0);
+
+        panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	/* window menu on far left corner */
+        id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, G_MAXINT);
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+        gconf_client_set_string (client, key, "OAFIID:GNOME_WindowMenuApplet", NULL);
+
+        panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
 
 static void
@@ -558,10 +574,147 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	return toplevel_id;
 }
 
+static gboolean
+panel_compatibility_migrate_panel_id (GConfClient       *client,
+				      PanelGConfKeyType  key_type,
+				      const char        *object_id,
+				      GHashTable        *panel_id_hash)
+{
+	const char *profile;
+	const char *key;
+	char       *panel_id;
+	char       *toplevel_id;
+	gboolean    retval = FALSE;
+
+	profile = panel_profile_get_name ();
+
+	/* panel_id -> toplevel_id */
+	key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
+	toplevel_id = gconf_client_get_string (client, key, NULL);
+
+	key = panel_gconf_full_key (key_type, profile, object_id, "panel_id");
+	panel_id = gconf_client_get_string (client, key, NULL);
+
+	if (!toplevel_id && panel_id &&
+	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
+		key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
+		gconf_client_set_string (client, key, toplevel_id, NULL);
+
+		toplevel_id = NULL;
+		retval = TRUE;
+	}
+
+	g_free (toplevel_id);
+	g_free (panel_id);
+
+	return retval;
+}
+
 static void
-panel_compatibility_migrate_panel_ids (GConfClient       *client,
-				       PanelGConfKeyType  key_type,
-				       GHashTable        *panel_id_hash)
+panel_compatibility_migrate_drawer_settings (GConfClient       *client,
+					     PanelGConfKeyType  key_type,
+					     const char        *object_id,
+					     GHashTable        *panel_id_hash)
+{
+	const char *profile;
+	const char *key;
+	char       *toplevel_id;
+	char       *panel_id;
+	char       *custom_icon;
+	char       *pixmap;
+
+	profile = panel_profile_get_name ();
+
+	/* unique-drawer-panel-id -> attached_toplevel_id */
+	key = panel_gconf_full_key (key_type, profile, object_id, "attached_toplevel_id");
+	toplevel_id = gconf_client_get_string (client, key, NULL);
+
+	key = panel_gconf_full_key (key_type, profile, object_id, "unique-drawer-panel-id");
+	panel_id = gconf_client_get_string (client, key, NULL);
+
+	if (!toplevel_id && panel_id &&
+	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
+		key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
+		gconf_client_set_string (client, key, toplevel_id, NULL);
+
+		toplevel_id = NULL;
+	}
+
+	/* pixmap -> custom_icon */	
+	key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+	custom_icon = gconf_client_get_string (client, key, NULL);
+
+	key = panel_gconf_full_key (key_type, profile, object_id, "pixmap");
+	pixmap = gconf_client_get_string (client, key, NULL);
+
+	if (!custom_icon && pixmap) {
+		key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+		gconf_client_set_string (client, key, pixmap, NULL);
+
+		key = panel_gconf_full_key (key_type, profile, object_id, "use_custom_icon");
+		gconf_client_set_bool (client, key, TRUE, NULL);
+	}
+
+	g_free (toplevel_id);
+	g_free (panel_id);
+	g_free (custom_icon);
+	g_free (pixmap);
+}
+
+static void
+panel_compatibility_migrate_menu_button_settings (GConfClient       *client,
+						  PanelGConfKeyType  key_type,
+						  const char        *object_id)
+{
+	const char *profile;
+	const char *key;
+	gboolean    use_custom_icon;
+	gboolean    use_menu_path;
+	char       *custom_icon;
+	char       *menu_path;
+
+	profile = panel_profile_get_name ();
+
+	/* custom-icon -> use_custom_icon */
+	key = panel_gconf_full_key (key_type, profile, object_id, "custom-icon");
+	use_custom_icon = gconf_client_get_bool (client, key, NULL);
+
+	key = panel_gconf_full_key (key_type, profile, object_id, "use_custom_icon");
+	gconf_client_set_bool (client, key, use_custom_icon, NULL);
+
+	/* custom-icon-file -> custom_icon */
+	key = panel_gconf_full_key (key_type, profile, object_id, "custom-icon-file");
+	custom_icon = gconf_client_get_string (client, key, NULL);
+
+	if (custom_icon) {
+		key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+		gconf_client_set_string (client, key, custom_icon, NULL);
+	}
+
+	/* main_menu -> use_menu_path */
+	key = panel_gconf_full_key (key_type, profile, object_id, "main-menu");
+	use_menu_path = gconf_client_get_bool (client, key, NULL);
+
+	key = panel_gconf_full_key (key_type, profile, object_id, "use_menu_path");
+	gconf_client_set_bool (client, key, use_menu_path, NULL);
+
+	/* path -> menu_path */
+	key = panel_gconf_full_key (key_type, profile, object_id, "path");
+	menu_path = gconf_client_get_string (client, key, NULL);
+
+	if (menu_path) {
+		key = panel_gconf_full_key (key_type, profile, object_id, "menu_path");
+		gconf_client_set_string (client, key, custom_icon, NULL);
+	}
+
+	g_free (custom_icon);
+	g_free (menu_path);
+}
+
+static void
+panel_compatibility_migrate_objects (GConfClient       *client,
+				     PanelGConfKeyType  key_type,
+				     GHashTable        *panel_id_hash)
 {
 	const char *key;
 	const char *profile;
@@ -573,27 +726,33 @@ panel_compatibility_migrate_panel_ids (GConfClient       *client,
 	objects = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
 	for (l = objects; l; l = l->next) {
-		char *id = l->data;
-		char *panel_id;
-		char *toplevel_id;
+		const char      *id = l->data;
+		PanelObjectType  object_type;
+		char            *object_type_str;
 
-		key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
-		toplevel_id = gconf_client_get_string (client, key, NULL);
-
-		key = panel_gconf_full_key (key_type, profile, id, "panel_id");
-		panel_id = gconf_client_get_string (client, key, NULL);
-
-		if (!toplevel_id && panel_id) {
-			toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id);
-
-			key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
-			gconf_client_set_string (client, key, toplevel_id, NULL);
-
-			toplevel_id = NULL;
+		if (!panel_compatibility_migrate_panel_id (client, key_type, id, panel_id_hash)) {
+			g_free (l->data);
+			continue;
 		}
 
-		g_free (toplevel_id);
-		g_free (panel_id);
+		key = panel_gconf_full_key (key_type, profile, id, "object_type");
+		object_type_str = gconf_client_get_string (client, key, NULL);
+
+		if (panel_profile_map_object_type_string (object_type_str, &object_type)) {
+			switch (object_type) {
+			case PANEL_OBJECT_DRAWER:
+				panel_compatibility_migrate_drawer_settings (
+						client, key_type, id, panel_id_hash);
+				break;
+			case PANEL_OBJECT_MENU:
+				panel_compatibility_migrate_menu_button_settings (
+						client, key_type, id);
+				break;
+			default:
+				break;
+			}
+		}
+
 		g_free (l->data);
 	}
 	g_slist_free (objects);
@@ -651,90 +810,8 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 	g_slist_free (panel_id_list);
 	g_slist_free (toplevel_id_list);
 
-	panel_compatibility_migrate_panel_ids (client, PANEL_GCONF_OBJECTS, panel_id_hash);
-	panel_compatibility_migrate_panel_ids (client, PANEL_GCONF_APPLETS, panel_id_hash);
+	panel_compatibility_migrate_objects (client, PANEL_GCONF_OBJECTS, panel_id_hash);
+	panel_compatibility_migrate_objects (client, PANEL_GCONF_APPLETS, panel_id_hash);
 
 	g_hash_table_destroy (panel_id_hash);
-}
-
-
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-static void
-panel_compatibility_warn (const char *message)
-{
-	GtkWidget *dialog;
-
-	dialog = gtk_message_dialog_new (
-			NULL,
-			GTK_DIALOG_DESTROY_WITH_PARENT,
-			GTK_MESSAGE_ERROR,
-			GTK_BUTTONS_CLOSE,
-			message);
-
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (gtk_widget_destroy),
-			  NULL);
-
-	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-	gtk_widget_show (dialog);
-}
-
-GtkWidget *
-panel_compatibility_load_menu_panel (const char *panel_id,
-				     int         screen,
-				     int         monitor)
-{
-	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
-	GtkWidget  *retval;
-
-	panel_compatibility_warn (_("This is your lucky day. I've just broken compatibility with GNOME 2.0 and 2.2 by converting your menu panel into an edge panel with two applets. If you log back into GNOME 2.0/2.2 you will find that instead of having a menu panel you will have an edge panel on the top of your screen without an Applications/Actions menu or a Window Menu. This will will be fixed before GNOME 2.4 gets anywhere near release."));
-
-	/* A menu panel was like a x-small edge panel at the
-	 * top of the screen.
-	 */
-	retval = edge_widget_new (panel_id,
-				  screen,
-				  monitor,
-				  BORDER_TOP,
-				  BASEP_EXPLICIT_HIDE,
-				  BASEP_SHOWN,
-				  PANEL_SIZE_X_SMALL,
-				  FALSE,
-				  FALSE,
-				  PANEL_BACK_NONE,
-				  NULL,
-				  FALSE,
-				  FALSE,
-				  FALSE,
-				  &color);
-
-	g_object_set_data (G_OBJECT (BASEP_WIDGET (retval)->panel),
-			   "load-compatibility-applets", GINT_TO_POINTER (1));
-
-	return retval;
-}
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
-
-void
-panel_compatibility_load_applets (void)
-{
-	GSList *l;
-
-	for (l = panels; l; l = l->next) {
-		PanelWidget *panel = l->data;
-
-		if (!g_object_get_data (G_OBJECT (panel), "load-compatibility-applets"))
-			continue;
-
-		g_object_set_data (G_OBJECT (panel), "load-compatibility-applets", NULL);
-
-		/* A menu panel contained a menu bar on the far left
-	         * and a window menu on the far right.
-		 */
-		/* FIXME_FOR_NEW_CONFIG : panel_menu_bar_load (panel, 0, TRUE, NULL); */
-
-		panel_applet_frame_create (panel->toplevel,
-					   panel->size - 10,
-					   "OAFIID:GNOME_WindowMenuApplet");
-	}
 }

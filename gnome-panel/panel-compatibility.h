@@ -31,7 +31,6 @@
 G_BEGIN_DECLS
 
 void panel_compatibility_migrate_panel_id_list (GConfClient *client);
-void panel_compatibility_load_applets          (void);
 
 G_END_DECLS
 

@@ -615,10 +615,8 @@ panel_applet_load_idle_handler (gpointer dummy)
 {
 	PanelAppletToLoad *applet;
 
-	if (!panel_applets_to_load) {
-		panel_compatibility_load_applets ();
+	if (!panel_applets_to_load)
 		return FALSE;
-	}
 
 	applet = (PanelAppletToLoad *) panel_applets_to_load->data;
 	panel_applets_to_load->data = NULL;
