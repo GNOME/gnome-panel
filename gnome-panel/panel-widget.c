@@ -96,33 +96,6 @@ static gboolean panel_widget_push_applet_left  (PanelWidget *panel,
 						int          push);
 
 /************************
- debugging
- ************************/
-
-#ifdef PANEL_WIDGET_DEBUG
-static void
-debug_dump_panel_list(PanelWidget *panel)
-{
-	GList *list;
-	puts("\nDUMP START\n");
-	for(list = panel->applet_list;list!=NULL;list=g_list_next(list)) {
-		AppletData *ad = list->data;
-		printf("pos: %d cells: %d\n",ad->pos,ad->cells);
-	}
-	puts("\nDUMP END\n");
-}
-
-static void
-debug_panel_widget_dump_applet_data (AppletData *data) 
-{
-	printf ("===== Applet Dumped =====\n");
-	printf ("\tPosition : %d\n", data->pos);
-	printf ("\tCells : %d\n", data->cells);
-	printf ("\tDrag Off: %d\n", data->drag_off);
-}
-#endif
-
-/************************
  convenience functions
  ************************/
 static int
@@ -2212,73 +2185,92 @@ schedule_try_move(PanelWidget *panel, gboolean repeater)
 }
 
 static gboolean
-panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
+panel_widget_applet_button_press_event (GtkWidget      *widget,
+					GdkEventButton *event)
 {
 	PanelWidget *panel;
-	GdkEventButton *bevent;
+	guint32      event_time;
+	
+	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
 
-	g_return_val_if_fail(GTK_IS_WIDGET(widget),FALSE);
-	g_return_val_if_fail(PANEL_IS_WIDGET(widget->parent),FALSE);
-	g_return_val_if_fail(event!=NULL,FALSE);
+	panel = PANEL_WIDGET (widget->parent);
 
-	panel = PANEL_WIDGET(widget->parent);
-
-	switch (event->type) {
-		case GDK_BUTTON_PRESS:
-			bevent = (GdkEventButton *) event;
-#ifdef PANEL_WIDGET_DEBUG
-			printf("the appwidget %lX\n",(long)widget);
-#endif
-
-			/* don't propagate this event */
-			if (panel->currently_dragged_applet) {
-				g_signal_stop_emission 
-					(G_OBJECT (widget), 
-					 g_signal_lookup ("event", G_OBJECT_TYPE (widget)),
-					 0);
-				return TRUE;
-			}
-
-			if ( ! panel_profile_get_locked_down () &&
-			    bevent->button == 2) {
-				guint32 time_ = bevent->time;
-				/* time on sent events seems to be bogus */
-				if (bevent->send_event)
-					time_ = GDK_CURRENT_TIME;
-				/* Start drag */
-				panel_widget_applet_drag_start (
-					panel, widget, PW_DRAG_OFF_CURSOR, time_);
-				return TRUE;
-			}
-
-			break;
-
-		case GDK_BUTTON_RELEASE:
-			if (panel->currently_dragged_applet) {
-				g_signal_stop_emission
-					(G_OBJECT (widget),
-					g_signal_lookup ("event", G_OBJECT_TYPE (widget)),
+	/* don't propagate this event */
+	if (panel->currently_dragged_applet) {
+		g_signal_stop_emission (G_OBJECT (widget), 
+					g_signal_lookup ("button-press-event",
+							 G_OBJECT_TYPE (widget)),
 					0);
-				panel_widget_applet_drag_end(panel);
-				return TRUE;
-			}
+		return TRUE;
+	}
 
-			break;
-		case GDK_MOTION_NOTIFY:
-			schedule_try_move(panel, FALSE);
-			break;
-		case GDK_KEY_PRESS:
-			if (panel_applet_in_drag) {
-				return gtk_bindings_activate (GTK_OBJECT (panel),
-					((GdkEventKey *)event)->keyval, 
-					((GdkEventKey *)event)->state);	
-			}
-			break;
-		default:
-			break;
+	if (panel_profile_get_locked_down () || event->button != 2)
+		return FALSE;
+
+	/* time on sent events seems to be bogus */
+	event_time = event->time;
+	if (event->send_event)
+		event_time = GDK_CURRENT_TIME;
+
+	panel_widget_applet_drag_start (panel, widget, PW_DRAG_OFF_CURSOR, event_time);
+
+	return TRUE;
+}
+
+static gboolean
+panel_widget_applet_button_release_event (GtkWidget      *widget,
+					  GdkEventButton *event)
+{
+	PanelWidget *panel;
+	
+	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
+
+	panel = PANEL_WIDGET (widget->parent);
+	
+	/* don't propagate this event */
+	if (panel->currently_dragged_applet) {
+		g_signal_stop_emission (G_OBJECT (widget),
+					g_signal_lookup ("button-release-event",
+							 G_OBJECT_TYPE (widget)),
+					0);
+		panel_widget_applet_drag_end (panel);
+		return TRUE;
 	}
 
 	return FALSE;
+}
+
+static gboolean
+panel_widget_applet_motion_notify_event (GtkWidget      *widget,
+					 GdkEventMotion *event)
+{
+	PanelWidget *panel;
+	
+	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
+
+	panel = PANEL_WIDGET (widget->parent);
+	
+	schedule_try_move (panel, FALSE);
+
+	return FALSE;
+}
+
+static gboolean
+panel_widget_applet_key_press_event (GtkWidget   *widget,
+				     GdkEventKey *event)
+{
+	PanelWidget *panel;
+	
+	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
+
+	panel = PANEL_WIDGET (widget->parent);
+
+	if (!panel_applet_in_drag)
+		return FALSE;
+	
+	return gtk_bindings_activate (GTK_OBJECT (panel),
+				      ((GdkEventKey *)event)->keyval, 
+				      ((GdkEventKey *)event)->state);	
 }
 
 static int
@@ -2358,7 +2350,6 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 	g_free (ad);
 }
 
-
 static void
 bind_top_applet_events (GtkWidget *widget)
 {
@@ -2368,9 +2359,19 @@ bind_top_applet_events (GtkWidget *widget)
 			  G_CALLBACK (panel_widget_applet_destroy),
 			  NULL);
 
-	g_signal_connect (G_OBJECT(widget),
-			  "event",
-			  G_CALLBACK (panel_widget_applet_event),
+	/* connect-after so that we stop the propogation of the event */
+	g_signal_connect_after (widget, "button-press-event",
+				G_CALLBACK (panel_widget_applet_button_press_event),
+				NULL);
+
+	g_signal_connect (widget, "button-release-event",
+			  G_CALLBACK (panel_widget_applet_button_release_event),
+			  NULL);
+	g_signal_connect (widget, "motion-notify-event",
+			  G_CALLBACK (panel_widget_applet_motion_notify_event),
+			  NULL);
+	g_signal_connect (widget, "key-press-event",
+			  G_CALLBACK (panel_widget_applet_key_press_event),
 			  NULL);
 
 	/* XXX: This is more or less a hack.  We need to be able to

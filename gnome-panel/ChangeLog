@@ -1,3 +1,18 @@
+2003-12-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix occassional problem where button 2 clicking on an applet
+	caused both the applet and the panel to be moved.
+	See bug #123819.
+
+	* panel-widget.c:
+	(panel_widget_applet_button_press_event),
+	(panel_widget_applet_button_release_event),
+	(panel_widget_applet_motion_notify_event),
+	(panel_widget_applet_key_press_event): split these out from
+	panel_widget_applet_event().
+	(bind_top_applet_events): make the button_press handler the
+	last in the chain so we stop the propogation of the event.
+
 2003-12-15  Glynn Foster  <glynn.foster@sun.com>
 
 	* panel-stock-icons.c: Use gnome-other.png for the panel context
