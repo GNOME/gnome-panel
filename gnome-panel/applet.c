@@ -123,19 +123,27 @@ panel_applet_clean_gconf (AppletType  type,
 	panel_g_slist_deep_free (id_list);
 }
 
-/*destroy widgets and call the above cleanup function*/
+/* permanently remove an applet - all non-permanent
+ * cleanups should go in panel_applet_destroy()
+ */
 void
 panel_applet_clean (AppletInfo *info,
 		    gboolean    clean_gconf)
 {
 	g_return_if_fail (info != NULL);
 
-	if (info->remove_idle != 0) {
-		g_source_remove (info->remove_idle);
-		info->remove_idle = 0;
+	if (info->type == APPLET_LAUNCHER) {
+		Launcher    *launcher = info->data;
+		const gchar *location;
+
+		location = gnome_desktop_item_get_location (launcher->ditem);
+
+		/* Launcher may not yet have been hoarded */
+		if (location)
+			session_add_dead_launcher (location);
 	}
 
-	applets = g_slist_remove (applets, info);
+	panel_applet_clean_gconf (info->type, info->gconf_key, clean_gconf);
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
@@ -143,18 +151,6 @@ panel_applet_clean (AppletInfo *info,
 		info->widget = NULL;
 		gtk_widget_destroy (widget);
 	}
-
-	info->data = NULL;
-
-	panel_applet_clean_gconf (info->type, info->gconf_key, clean_gconf);
-
-	g_free (info->gconf_key);
-	info->gconf_key = NULL;
-
-	queued_position_saves =
-		g_slist_remove (queued_position_saves, info);
-
-	g_free (info);
 }
 
 static gboolean
@@ -163,10 +159,6 @@ applet_idle_remove (gpointer data)
 	AppletInfo *info = data;
 
 	info->remove_idle = 0;
-
-	if (info->type == APPLET_BONOBO)
-		panel_applet_frame_set_clean_remove (
-				PANEL_APPLET_FRAME (info->data), TRUE);
 
 	panel_applet_clean (info, TRUE);
 
@@ -652,15 +644,24 @@ applet_button_press (GtkWidget      *widget,
 }
 
 static void
-applet_destroy (GtkWidget *w, AppletInfo *info)
+panel_applet_destroy (GtkWidget  *widget,
+		      AppletInfo *info)
 {
-	GtkWidget *old_widget;
-	GList *li;
+	GList *l;
 
 	g_return_if_fail (info != NULL);
 
-	old_widget = info->widget;
 	info->widget = NULL;
+
+	applets = g_slist_remove (applets, info);
+
+	queued_position_saves =
+		g_slist_remove (queued_position_saves, info);
+
+	if (info->remove_idle) {
+		g_source_remove (info->remove_idle);
+		info->remove_idle = 0;
+	}
 
 	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -671,51 +672,33 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 			gtk_widget_destroy (drawer->drawer);
 			drawer->drawer = NULL;
 		}
-	} else if (info->type == APPLET_LAUNCHER) {
-		Launcher    *launcher = info->data;
-		const gchar *location;
-
-		location = gnome_desktop_item_get_location (launcher->ditem);
-
-		/* Launcher may not yet have been hoarded */
-		if (location)
-			session_add_dead_launcher (location);
 	}
 
-
-	if (info->menu != NULL) {
-		gtk_widget_unref(info->menu);
-		info->menu = NULL;
-		info->menu_age = 0;
-	}
+	if (info->menu)
+		gtk_widget_unref (info->menu);
+	info->menu = NULL;
 
 	if (info->data_destroy)
 		info->data_destroy (info->data);
-	info->data_destroy = NULL;
 	info->data = NULL;
 
-	/*free the user menu*/
-	for(li = info->user_menu; li != NULL; li = g_list_next(li)) {
-		AppletUserMenu *umenu = li->data;
+	for (l = info->user_menu; l != NULL; l = l->next) {
+		AppletUserMenu *umenu = l->data;
 
-		li->data = NULL;
+		g_free (umenu->name);
+		g_free (umenu->stock_item);
+		g_free (umenu->text);
 
-		g_free(umenu->name);
-		umenu->name = NULL;
-		g_free(umenu->stock_item);
-		umenu->stock_item = NULL;
-		g_free(umenu->text);
-		umenu->text = NULL;
-
-		g_free(umenu);
+		g_free (umenu);
 	}
+
 	g_list_free (info->user_menu);
 	info->user_menu = NULL;
 
-	/* If this was not called from the panel_applet_clean
-	 * itself.  That is if the widget entry was still set */
-	if (old_widget != NULL)
-		panel_applet_clean (info, TRUE);
+	g_free (info->gconf_key);
+	info->gconf_key = NULL;
+
+	g_free (info);
 }
 
 static G_CONST_RETURN char *
@@ -1139,11 +1122,10 @@ panel_applet_register (GtkWidget      *applet,
 	g_object_set_data (G_OBJECT (applet),
 			   PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 
-	if (type == APPLET_BONOBO) {
+	if (type == APPLET_BONOBO)
 		panel_applet_frame_get_expand_flags (PANEL_APPLET_FRAME (applet),
 						     &expand_major,
 						     &expand_minor);
-	}
 	
 	applets = g_slist_append (applets, info);
 
@@ -1166,46 +1148,38 @@ panel_applet_register (GtkWidget      *applet,
 
 	if (panel_widget_add (panel, applet, newpos,
 			      insert_at_pos, expand_major, expand_minor) == -1) {
-		GSList *list;
-		for(list = panels; list != NULL; list = g_slist_next(list))
+		GSList *l;
+
+		for (l = panels; l; l = l->next)
 			if (panel_widget_add (panel, applet, 0, TRUE,
 					      expand_major, expand_minor) != -1)
 				break;
-		if(!list) {
-			/*can't put it anywhere, clean up*/
-			info->widget = NULL;
-			gtk_widget_destroy (applet);
+
+		if (!l) {
 			panel_applet_clean (info, TRUE);
-			g_warning(_("Can't find an empty spot"));
+			g_warning (_("Can't find an empty spot"));
 			return NULL;
 		}
-		panel = PANEL_WIDGET(list->data);
+
+		panel = PANEL_WIDGET (l->data);
 	}
 
-	if(BUTTON_IS_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet)) {
-		g_signal_connect(G_OBJECT(applet),
-				   "button_press_event",
-				   G_CALLBACK(applet_button_press),
-				   info);
-		g_signal_connect(G_OBJECT (applet),
-				   "popup_menu",
-                          	   G_CALLBACK(applet_popup_menu),
-				   info);
+	if (BUTTON_IS_WIDGET (applet) ||
+	    !GTK_WIDGET_NO_WINDOW (applet)) {
+		g_signal_connect (applet, "button_press_event",
+				  G_CALLBACK (applet_button_press),
+				  info);
+
+		g_signal_connect (applet, "popup_menu",
+				  G_CALLBACK (applet_popup_menu),
+				  info);
 	}
 
-	g_signal_connect (G_OBJECT (applet), "destroy",
-			  G_CALLBACK (applet_destroy),
+	g_signal_connect (applet, "destroy",
+			  G_CALLBACK (panel_applet_destroy),
 			  info);
 
-	gtk_widget_show_all(applet);
-
-	/*g_signal_connect (G_OBJECT (applet), 
-			    "drag_request_event",
-			    G_CALLBACK(panel_dnd_drag_request),
-			    info);
-
-	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,
-				 applet_drag_types, 1);*/
+	gtk_widget_show_all (applet);
 
 	orientation_change (info, panel);
 	size_change (info, panel);

@@ -2963,13 +2963,49 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 }
 
 static void
-remove_panel_accept (GtkWidget *w, int response, GtkWidget *panelw)
+remove_panel_accept (GtkWidget *w,
+		     int        response,
+		     GtkWidget *panel)
 {
 	if (response == GTK_RESPONSE_OK) {
+
+		/* Destroy the drawers button before destroying the drawer */
+		if (DRAWER_IS_WIDGET (panel)) {
+			PanelWidget *panel_widget = NULL;
+
+			if (BASEP_IS_WIDGET (panel))
+				panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
+
+			else if (FOOBAR_IS_WIDGET (panel))
+				panel_widget = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel);
+
+			if (panel_widget && panel_widget->master_widget) {
+				AppletInfo *info;
+
+				info = g_object_get_data (
+						G_OBJECT (panel_widget->master_widget),
+						"applet_info");
+				((Drawer *) info->data)->drawer = NULL;
+				panel_applet_clean (info, TRUE);
+
+				g_assert (panel_widget->master_widget == NULL);
+			}
+		}
+
 		panel_push_window_busy (w);
-		gtk_widget_destroy (panelw);
+
+		if (BASEP_IS_WIDGET (panel))
+			panel_remove_from_gconf (
+				PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
+
+		else if (FOOBAR_IS_WIDGET (panel))
+			panel_remove_from_gconf (
+				PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel));
+
+		gtk_widget_destroy (panel);
 		panel_pop_window_busy (w);
 	}
+
 	gtk_widget_destroy (w);
 }
 

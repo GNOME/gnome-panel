@@ -529,10 +529,7 @@ panel_remove_applets (PanelWidget *panel)
 		info = g_object_get_data (
 				G_OBJECT (applet_data->applet), "applet_info");
 
-		if (info && info->type == APPLET_BONOBO)
-			panel_applet_frame_set_clean_remove (
-					PANEL_APPLET_FRAME (info->data), TRUE);
-		else if (info && info->type == APPLET_LAUNCHER)
+		if (info && info->type == APPLET_LAUNCHER)
 			launcher_properties_destroy (info->data);
 			
 	}
@@ -551,28 +548,14 @@ panel_destroy (GtkWidget *widget, gpointer data)
 
 	panel_remove_applets (panel);
 		
-	kill_config_dialog(widget);
+	kill_config_dialog (widget);
 
-	if (DRAWER_IS_WIDGET (widget)) {
-		if (panel->master_widget) {
-			AppletInfo *info;
-
-			info = g_object_get_data (
-					G_OBJECT (panel->master_widget), "applet_info");
-			((Drawer *) info->data)->drawer = NULL;
-			panel_applet_clean (info, TRUE);
-
-			g_assert (panel->master_widget == NULL);
-		}
-	} else if ((BASEP_IS_WIDGET(widget)
-		    && !DRAWER_IS_WIDGET(widget))
-		   || FOOBAR_IS_WIDGET (widget)) {
-		/*this is a base panel and we just lost it*/
+	if ((BASEP_IS_WIDGET (widget) && !DRAWER_IS_WIDGET (widget)) ||
+	    FOOBAR_IS_WIDGET (widget))
 		base_panels--;
-	}
 
-	if (pd->menu != NULL)
-		g_object_unref (G_OBJECT (pd->menu));
+	if (pd->menu)
+		g_object_unref (pd->menu);
 	pd->menu = NULL;
 
 	pd->panel = NULL;
