@@ -174,7 +174,9 @@ panel_applet_frame_load (const gchar *iid,
 	
 	gtk_widget_show_all (frame);
 
-	info = panel_applet_register (frame, NULL, NULL, panel, pos,
+	/* Pass frame as 2nd argument, since it is used in
+	 * panel_remove_applets()  */
+	info = panel_applet_register (frame, frame, NULL, panel, pos,
 				      FALSE, APPLET_BONOBO, real_key);
 
 	if (!info)

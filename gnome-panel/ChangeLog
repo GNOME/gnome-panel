@@ -1,3 +1,9 @@
+2002-03-06  Arvind S N <arvind.samptur@wipro.com>
+
+	* panel-applet-frame.c (panel_applet_frame_load):
+	Pass "frame" as a data argument instead of NULL to fix crash when
+	removing a panel (#73224).
+
 2002-03-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.[ch]: (panel_applet_position_save_timeout),
