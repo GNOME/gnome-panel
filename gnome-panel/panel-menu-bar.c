@@ -415,9 +415,6 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 	int          i;
 	GSList      *add_files, *l;
 	GnomeVFSURI *uri;
-	char        *basename;
-	char        *display_uri;
-	char        *tooltip;
 
 	filename = g_build_filename (g_get_home_dir (),
 				     BOOKMARKS_FILENAME, NULL);
@@ -477,10 +474,14 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 	}
 
 	for (l = add_files; l; l = l->next) {
-		const char *full_uri;
+		char *full_uri;
+		char *display_uri;
+		char *tooltip;
+		char *basename;
 
 		uri = l->data;
-		full_uri = gnome_vfs_uri_get_path (uri);
+		full_uri = gnome_vfs_uri_to_string (uri,
+						    GNOME_VFS_URI_HIDE_NONE);
 
 		display_uri = gnome_vfs_format_uri_for_display (full_uri);
 		/* Translators: %s is a URI */
@@ -495,6 +496,7 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 
 		g_free (basename);
 		g_free (tooltip);
+		g_free (full_uri);
 		gnome_vfs_uri_unref (uri);
 	}
 

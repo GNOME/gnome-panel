@@ -1,5 +1,14 @@
 2005-02-04  Vincent Untz  <vincent@vuntz.net>
 
+	Patch by Dennis Cranston <dennis_cranston@yahoo.com>
+	Fix bug #166239
+
+	* panel-menu-bar.c: (panel_menu_bar_append_gtk_bookmarks): use
+	gnome_vfs_uri_to_string() instead of gnome_vfs_uri_get_path() to get
+	non local paths to work
+
+2005-02-04  Vincent Untz  <vincent@vuntz.net>
+
 	Patch by Muktha <muktha.narayan@wipro.com>
 
 	* panel-run-dialog.glade: add an accessible name for the list of known
