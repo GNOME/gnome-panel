@@ -158,7 +158,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	if (page != -1)
 		return;
 	
-			/* remove the old launcher callback */
+	/* remove the old launcher callback */
 	gtk_signal_disconnect_by_func(GTK_OBJECT(launcher->button),
 			(GtkSignalFunc) launch, launcher->dentry);
 

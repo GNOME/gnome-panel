@@ -125,6 +125,9 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	PerPanelConfig *ppc = data;
 	
+	if(page != -1)
+		return;
+	
 	if(IS_SNAPPED_WIDGET(ppc->panel))
 		snapped_widget_change_params(SNAPPED_WIDGET(ppc->panel),
 					     ppc->snapped_pos,

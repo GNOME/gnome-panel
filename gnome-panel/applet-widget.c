@@ -951,8 +951,7 @@ server_applet_back_change(CustomAppletServant *servant,
 {
   GdkColor color, *cptr = NULL;
   char *pptr = NULL;
-  AppletWidget *applet;
-
+  
   switch(backing->_d) {
   case GNOME_Panel_BACK_COLOR:
     color.red = backing->_u.c.red;
@@ -966,8 +965,7 @@ server_applet_back_change(CustomAppletServant *servant,
   default:
   }
 
-  applet = servant->appwidget;
-  gtk_signal_emit(GTK_OBJECT(applet),
+  gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 		  applet_widget_signals[BACK_CHANGE_SIGNAL],
 		  (GNOME_Panel_BackType)backing->_d,
 		  pptr,

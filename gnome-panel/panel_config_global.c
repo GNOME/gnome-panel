@@ -54,6 +54,9 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	int i;
 	
+	if(page!=-1)
+		return;
+	
 	for(i=0;i<LAST_TILE;i++) {
 		g_free(global_config.tile_up[i]);
 		g_free(global_config.tile_down[i]);
