@@ -1774,16 +1774,134 @@ any_child_torn_off(GtkMenuShell *menu)
 }
 #endif
 
-/*
+/* Stolen from GTK+
+ * Reparent the menu, taking care of the refcounting
+ */
+static void 
+gtk_menu_reparent (GtkMenu      *menu, 
+		   GtkWidget    *new_parent, 
+		   gboolean      unrealize)
+{
+  GtkObject *object = GTK_OBJECT (menu);
+  GtkWidget *widget = GTK_WIDGET (menu);
+  gboolean was_floating = GTK_OBJECT_FLOATING (object);
+
+  gtk_object_ref (object);
+  gtk_object_sink (object);
+
+  if (unrealize)
+    {
+      gtk_object_ref (object);
+      gtk_container_remove (GTK_CONTAINER (widget->parent), widget);
+      gtk_container_add (GTK_CONTAINER (new_parent), widget);
+      gtk_object_unref (object);
+    }
+  else
+    gtk_widget_reparent (GTK_WIDGET (menu), new_parent);
+  gtk_widget_set_usize (new_parent, -1, -1);
+  
+  if (was_floating)
+    GTK_OBJECT_SET_FLAGS (object, GTK_FLOATING);
+  else
+    gtk_object_unref (object);
+}
+
+/*stolen from GTK+ */
+static gint
+gtk_menu_window_event (GtkWidget *window,
+		       GdkEvent  *event,
+		       GtkWidget *menu)
+{
+  gboolean handled = FALSE;
+
+  gtk_widget_ref (window);
+  gtk_widget_ref (menu);
+
+  switch (event->type)
+    {
+    case GDK_KEY_PRESS:
+    case GDK_KEY_RELEASE:
+      gtk_widget_event (menu, event);
+      handled = TRUE;
+      break;
+    default:
+      break;
+    }
+
+  gtk_widget_unref (window);
+  gtk_widget_unref (menu);
+
+  return handled;
+}
+
+
 static void
+tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
+{
+	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+	GSList *list;
+	GtkWidget *menu,*window;
+	GString *title;
+
+	if(!mfl)
+		return;
+	
+	menu = gtk_menu_new();
+	
+	title = g_string_new("");
+
+	gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
+	for(list = mfl; list != NULL; list = g_slist_next(list)) {
+		MenuFinfo *mf = list->data;
+
+		menu = create_menu_at_fr(menu,
+					 mf->fr,
+					 mf->applets,
+					 mf->dir_name,
+					 mf->pixmap_name,
+					 TRUE,
+					 FALSE);
+		
+		if(list!=mfl)
+			g_string_append_c(title,' ');
+		g_string_append(title,mf->dir_name);
+	}
+	
+	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_set_app_paintable(window, TRUE);
+	gtk_signal_connect(GTK_OBJECT(window),  
+			   "event",
+			   GTK_SIGNAL_FUNC(gtk_menu_window_event), 
+			   GTK_OBJECT(menu));
+	gtk_widget_realize(window);
+	      
+	gdk_window_set_title(window->window, title->str);
+	
+	g_string_free(title,TRUE);
+
+	gdk_window_set_decorations(window->window, 
+				   GDK_DECOR_ALL |
+				   GDK_DECOR_RESIZEH |
+				   GDK_DECOR_MINIMIZE |
+				   GDK_DECOR_MAXIMIZE);
+	gtk_window_set_policy(GTK_WINDOW(window),
+			      FALSE, FALSE, TRUE);
+	gtk_menu_reparent(GTK_MENU(menu), window, FALSE);
+
+	gtk_menu_position(GTK_MENU(menu));
+	  
+	gtk_widget_show(GTK_WIDGET(menu));
+	gtk_widget_show(window);
+}
+
+/*static void
 remove_tearoff(GtkMenuShell *menu)
 {
 	if(!menu->children ||
 	   !IS_TEAROFF_ITEM(menu->children->data))
 		return;
 	gtk_widget_destroy(menu->children->data);
-}
-*/
+}*/
 
 static void
 add_tearoff(GtkMenu *menu)
@@ -1792,6 +1910,10 @@ add_tearoff(GtkMenu *menu)
 	w = tearoff_item_new();
 	gtk_widget_show(w);
 	gtk_menu_prepend(menu,w);
+	
+	gtk_signal_connect(GTK_OBJECT(w),"activate",
+			   GTK_SIGNAL_FUNC(tearoff_new_menu),
+			   menu);
 }
 
 
@@ -1867,6 +1989,7 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 	}
 #endif
 }
+
 
 static void
 rh_submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
