@@ -1315,11 +1315,16 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	}
 }
 
+static int
+reposition_menu(gpointer data)
+{
+	gtk_menu_reposition(GTK_MENU(data));
+	return FALSE;
+}
 
 static void
-submenu_to_display(GtkMenuItem *menuitem, gpointer data)
+submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 {
-	GtkWidget *menuw = menuitem->submenu;
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 	GSList *list;
 	int need_reread = FALSE;
@@ -1348,13 +1353,11 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 		}
 	}
 
-	/*THIS IS A HACK, but a cool one at that*/
+	/*this no longer constitutes a bad hack, now it's purely cool :)*/
 	if(need_reread) {
-		int was_visible = GTK_WIDGET_VISIBLE(menuw);
-		/*prevent the mfl from being destroyed now*/
+		while(GTK_MENU_SHELL(menuw)->children)
+			gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
 		gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
-		gtk_widget_destroy(menuw);
-		menuw = NULL;
 		for(list = mfl; list != NULL;
 		    list = g_slist_next(list)) {
 			MenuFinfo *mf = list->data;
@@ -1370,23 +1373,14 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 		}
 		g_slist_free(mfl);
 
-		/*it's not yet displayed we're ok here*/
-		if(!was_visible) {
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
-						   menuw);
-		/*now we have to select again as this is already messed up*/
-		} else {
-			gtk_signal_emit_stop_by_name(GTK_OBJECT(menuitem),
-						     "select");
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
-						   menuw);
-			gtk_item_select(GTK_ITEM(menuitem));
-		}
+		/*we run this as an idle so that it runs after the
+		  show signal finished*/
+		gtk_idle_add(reposition_menu,menuw);
 	}
 }
 
 static void
-rh_submenu_to_display(GtkMenuItem *menuitem, gpointer data)
+rh_submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 {
 	struct stat s;
 	int r;
@@ -1408,7 +1402,7 @@ rh_submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 
 	g_free(userrh);
 
-	if(do_read)
+	if(do_read) 
 		create_rh_menu();
 }
 
@@ -1500,9 +1494,9 @@ create_menuitem(GtkWidget *menu,
 	menuitem = gtk_menu_item_new ();
 	if (sub) {
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_signal_connect(GTK_OBJECT(sub),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   menuitem);
 	}
 
 	pixmap = NULL;
@@ -1922,18 +1916,18 @@ create_panel_root_menu(GtkWidget *panel)
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = create_system_menu(NULL,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+	gtk_signal_connect(GTK_OBJECT(menu),"show",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   NULL);
+			   menuitem);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("User menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+	gtk_signal_connect(GTK_OBJECT(menu),"show",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   NULL);
+			   menuitem);
 
 	if(g_file_exists("/etc/X11/wmconfig")) {
 		menuitem = gtk_menu_item_new ();
@@ -1942,12 +1936,18 @@ create_panel_root_menu(GtkWidget *panel)
 		menu = create_user_menu(_("Red Hat menus"),"apps-redhat",
 					NULL,TRUE,TRUE,TRUE);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
+				   menuitem);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   menuitem);
+		/*gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
 				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   NULL);*/
 	}
 
 	menuitem = gtk_menu_item_new();
@@ -2095,15 +2095,16 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *menuitem;
 	GtkWidget *a,*b;
+	GtkWidget *m;
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   create_applets_menu(fake_submenus));
-	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+	m = create_applets_menu(fake_submenus);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
+	gtk_signal_connect(GTK_OBJECT(m),"show",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   NULL);
+			   menuitem);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add new panel"));
@@ -2636,9 +2637,9 @@ create_root_menu(int fake_submenus, int flags)
 		setup_menuitem (menuitem, 0, _("System menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   menuitem);
 	}
 	if(flags&MAIN_MENU_USER && flags&MAIN_MENU_USER_SUB) {
 		if(need_separ)
@@ -2650,9 +2651,9 @@ create_root_menu(int fake_submenus, int flags)
 		setup_menuitem (menuitem, 0, _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   menuitem);
 	}
 	if(flags&MAIN_MENU_REDHAT && flags&MAIN_MENU_REDHAT_SUB) {
 		GtkWidget *pixmap = NULL;
@@ -2672,12 +2673,12 @@ create_root_menu(int fake_submenus, int flags)
 		setup_menuitem (menuitem, pixmap, _("Red Hat menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
-				   NULL);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   menuitem);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
+				   menuitem);
 	}
 	add_special_entries (root_menu, fake_submenus);
 	

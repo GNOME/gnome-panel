@@ -1,3 +1,13 @@
+Sat Jan 16 20:54:55 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: cleaned up the submenu_to_display thing, now doesn't
+	  destroy the menu and create a new one, but uses the same
+	  menu shell but destroyes just the contents, also now it's
+	  not done on select of the item, but on show of menu, this means
+	  if you only pass above the item it won't try to create the menu
+	  even if you don't actually show it. (not to mention the hackishness
+	  factor decreased in this part:)
+
 Sat Jan 16 01:23:50 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: make a better guess for the name of the app based on
