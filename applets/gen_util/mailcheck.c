@@ -128,6 +128,8 @@ struct _MailCheck {
         MailboxType mailbox_type_temp;
 
 	gboolean play_sound;
+
+	int type; /*mailcheck = 0; mailbox = 1 */
 	
 	int size;
 };
@@ -830,6 +832,8 @@ mailbox_properties_page(MailCheck *mc)
 {
 	GtkWidget *vbox, *hbox, *l, *l2, *item;
 
+	mc->type = 1;
+
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 	gtk_widget_show (vbox);
@@ -961,7 +965,9 @@ mailcheck_properties_page (MailCheck *mc)
 {
 	GtkWidget *vbox, *hbox, *l, *table, *frame;
 	GtkObject *freq_a;
-	
+
+	mc->type = 0;
+
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 	gtk_widget_show (vbox);
@@ -1076,11 +1082,11 @@ mailcheck_properties_page (MailCheck *mc)
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(mc->play_sound_check);
 	gtk_box_pack_start(GTK_BOX (vbox), mc->play_sound_check, FALSE, FALSE, 0);
-	
+
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
-	
+
 	l = gtk_label_new (_("Select animation"));
 	gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
 	gtk_widget_show (l);
@@ -1093,8 +1099,12 @@ mailcheck_properties_page (MailCheck *mc)
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "gen_util_applet",
-					  "index.html#MAILCHECK-PREFS" };
+	GnomeHelpMenuEntry help_entry = { "mailcheck", NULL };
+
+	char *das_names[] =  { "index.html#MAILCHECK_PREFS",
+			       "index.html#MAILCHECK-SETTINGS-MAILBOX-FIG" };
+
+	help_entry.path = das_names[((MailCheck *)data)->type];
 	gnome_help_display(NULL, &help_entry);
 }	
 
@@ -1126,7 +1136,7 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "destroy",
 			    GTK_SIGNAL_FUNC(close_callback), mc);
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "help",
-			    GTK_SIGNAL_FUNC(phelp_cb), NULL);
+			    GTK_SIGNAL_FUNC(phelp_cb), mc);
 
 	gtk_widget_show (mc->property_window);
 }
@@ -1224,7 +1234,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 static void
 help_callback (AppletWidget *widget, gpointer data)
 {
-	GnomeHelpMenuEntry help_ref = { "gen_util_applet", "index.html#APPLETS-CORE-MAILCHECK"};
+	GnomeHelpMenuEntry help_ref = { "mailcheck", "index.html"};
 	gnome_help_display (NULL, &help_ref);
 }
 

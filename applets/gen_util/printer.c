@@ -277,7 +277,7 @@ build_label_and_entry (Printer *pr, GtkTable *table, int row, char *label,
 static void
 help_cb (GtkWidget *w, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "gen_util_applet" };
+	GnomeHelpMenuEntry help_entry = { "printer_applet" };/*emb*/
 	help_entry.path = data;
 	gnome_help_display(NULL, &help_entry);
 }
@@ -326,7 +326,7 @@ printer_properties (AppletWidget *applet, gpointer data)
 			    GTK_SIGNAL_FUNC(close_properties), pr);
 	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "help",
 			    GTK_SIGNAL_FUNC(phelp_cb),
-			    "printer.html#PRINTER-PROPERTIES");
+			    "index.html#PRINTER-PROPERTIES");/*emb*/
 			    
 	gtk_widget_show_all (pr->printer_prop);
 }
@@ -464,7 +464,7 @@ make_printer_applet(const gchar *goad_id)
 					      "help",
 					      GNOME_STOCK_PIXMAP_HELP,
 					      _("Help"),
-					      help_cb, "printer.html");
+					      help_cb, "index.html");/*emb*/
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(pr->applet),
 					      "about",

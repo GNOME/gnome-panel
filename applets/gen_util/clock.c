@@ -54,7 +54,7 @@ typedef struct {
 
 static void clock_properties (AppletWidget *applet, gpointer data);
 static void clock_about      (AppletWidget *applet, gpointer data);
-
+static void help_cb	     (AppletWidget *applet, gpointer data);
 
 static void
 free_data(GtkWidget * widget, gpointer data)
@@ -387,6 +387,12 @@ make_clock_applet(const gchar * goad_id)
 					      _("About..."),
 					      clock_about,
 					      NULL);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "help",
+					      GNOME_STOCK_PIXMAP_HELP,
+					      _("Help"),
+					      help_cb,
+					      "index.html" );
 	return applet;
 }
 
@@ -650,10 +656,19 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(cd->props), "destroy",
 			   GTK_SIGNAL_FUNC(close_properties), data);
 	gtk_signal_connect(GTK_OBJECT(cd->props), "help",
-			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
-			   &help_entry);
+			   GTK_SIGNAL_FUNC(help_cb),
+			   "index.html#CLOCK-PREFS");
 
 	gtk_widget_show(cd->props);
+}
+
+static void
+help_cb (AppletWidget *applet, gpointer data)
+{
+	GnomeHelpMenuEntry help_entry = { "clock_applet", NULL };
+
+	help_entry.path = data;
+	gnome_help_display (NULL, &help_entry);
 }
 
 static void
