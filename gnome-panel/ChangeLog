@@ -1,3 +1,11 @@
+2005-02-24  Vincent Untz  <vincent@vuntz.net>
+
+	Patch by Vijaykumar Patwari <vijaykumar.patwari@wipro.com>
+
+	* gnome-panel/panel-menu-button.c (panel_menu_button_recreate_menu):
+	Use gtk_widget_destroy instead of gtk_menu_detach.
+	Fixes bug #150638.
+
 2005-02-20  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-background.c: (panel_background_make_string): use effective

@@ -404,7 +404,7 @@ static void
 panel_menu_button_recreate_menu (PanelMenuButton *button)
 {
 	if (button->priv->menu)
-		gtk_menu_detach (GTK_MENU (button->priv->menu));
+		gtk_widget_destroy (button->priv->menu);
 	button->priv->menu = NULL;
 }
 
