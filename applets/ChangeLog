@@ -1,3 +1,10 @@
+1998-12-18  Mark Galassi  <rosalia@cygnus.com>
+
+	* netload/properties.c (apply_cb): incorporated Daniel Burrows'
+	patch to fix a properties bug: the memcopy() was not enough to
+	copy the structure, since the structure had a gchar * member.
+	This patch adds a strdup() to copy the text field.
+
 1998-12-18  Martin Baulig  <martin@home-of-linux.org>
 
 	* cpumemusage/procbar.[ch]: Removed.
