@@ -379,16 +379,12 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	if(dw == 0 || dh == 0) {
 		if(basep->fake) {
-			if (gnome_win_hints_wm_exists()) {
-				gdk_window_reparent(wid->window,NULL,
-						    -ow-1,-oh-1);
-				gdk_window_destroy(basep->fake);
-				basep->fake = NULL;
-			} else {
-				gdk_window_hide(basep->fake);
-			}
+			gdk_window_move(basep->fake,-dw-1,-dh-1);
+		} else {
+			gdk_window_move(wid->window,
+					-wid->allocation.width-1,
+					-wid->allocation.height-1);
 		}
-		gtk_widget_hide(wid);
 	} else {
 		if(!basep->fake) {
 			basep_widget_add_fake(basep, hide_orient,
@@ -419,7 +415,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
 
 	wid = GTK_WIDGET(basep);
-
+	
 	ox = x = wid->allocation.x;
 	oy = y = wid->allocation.y;
 	dw = wid->allocation.width;

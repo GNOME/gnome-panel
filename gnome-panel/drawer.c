@@ -289,19 +289,28 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 }
 
 static void
-drawer_realize_cb(GtkWidget *button, Drawer *drawer)
+drawer_setup(Drawer *drawer)
 {
 	gtk_widget_queue_resize(drawer->drawer);
-	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
+	if(DRAWER_WIDGET(drawer->drawer)->state != DRAWER_SHOWN) {
+		gtk_widget_size_request(drawer->drawer,
+					&drawer->drawer->requisition);
+		if(BASEP_WIDGET(drawer->drawer)->fake) {
+			gtk_widget_show(drawer->drawer);
+			gdk_window_show(BASEP_WIDGET(drawer->drawer)->fake);
+			gdk_window_move(BASEP_WIDGET(drawer->drawer)->fake,
+					-drawer->drawer->requisition.width - 1,
+					-drawer->drawer->requisition.height - 1);
+		} else {
+			gtk_widget_set_uposition(drawer->drawer,
+						 -drawer->drawer->requisition.width - 1,
+						 -drawer->drawer->requisition.height - 1);
+			gtk_widget_show(drawer->drawer);
+		}
+	} else {
 		gtk_widget_show(drawer->drawer);
 		if(BASEP_WIDGET(drawer->drawer)->fake)
 			gdk_window_show(BASEP_WIDGET(drawer->drawer)->fake);
-	} else {
-		if(!GTK_WIDGET_REALIZED(drawer->drawer))
-			gtk_widget_realize(drawer->drawer);
-		if(BASEP_WIDGET(drawer->drawer)->fake)
-			gdk_window_hide(BASEP_WIDGET(drawer->drawer)->fake);
-		gtk_widget_hide(drawer->drawer);
 	}
 }
 
@@ -376,27 +385,7 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);
-	if(GTK_WIDGET_REALIZED(drawer->button)) {
-		gtk_widget_queue_resize(drawer->drawer);
-		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
-			gtk_widget_show(drawer->drawer);
-		else {
-			/*hmm ... weird but it works*/
-			gtk_widget_set_uposition(drawer->drawer,
-						 -100,-100);
-			gtk_widget_show(drawer->drawer);
-			/*gtk_widget_realize(drawer->drawer);*/
-			gtk_widget_hide(drawer->drawer);
-		}
-	} else
-		gtk_signal_connect_after(GTK_OBJECT(drawer->button),
-					 "realize",
-					 GTK_SIGNAL_FUNC(drawer_realize_cb),
-					 drawer);
-	gtk_signal_connect_after(GTK_OBJECT(drawer->drawer),
-				 "realize",
-				 GTK_SIGNAL_FUNC(drawer_realize_cb),
-				 drawer);
+	drawer_setup(drawer);
 
 	g_return_if_fail(applets_last!=NULL);
 

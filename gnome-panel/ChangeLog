@@ -1,3 +1,10 @@
+Fri Feb 05 17:18:43 1999  George Lebl  <jirka@5z.com>
+
+	* drawer.c,drawer-widget.[ch],panel.c: keep drawers mapped but
+	  offscreen, never hide them, just move em off screen, this fixes
+	  initial drawer showing and also fixes some problems with swallows
+	  in drawers ... etc ...
+
 Fri Feb 05 16:00:56 1999  George Lebl  <jirka@5z.com>
 
 	* basep-widget.c: destroy the fake when the main window is

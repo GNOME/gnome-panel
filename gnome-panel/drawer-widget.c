@@ -275,16 +275,21 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		BasePWidget *basep = BASEP_WIDGET(widget);
+		int x = allocation->x;
+		int y = allocation->y;
+		if(drawer->state != DRAWER_SHOWN ||
+		   drawer->temp_hidden) {
+			x = -allocation->width -1;
+			y = -allocation->height -1;
+		}
 		if(!basep->fake)
 			gdk_window_move_resize (widget->window,
-						allocation->x, 
-						allocation->y,
+						x,y,
 						allocation->width, 
 						allocation->height);
 		else {
 			gdk_window_move_resize (basep->fake,
-						allocation->x, 
-						allocation->y,
+						x,y,
 						allocation->width, 
 						allocation->height);
 			gdk_window_show(widget->window);
@@ -468,29 +473,11 @@ drawer_handle_click(GtkWidget *widget, gpointer data)
 		SNAPPED_WIDGET(panelw)->drawers_open--;
 }
 
-/*static void
-do_show(BasePWidget *basep)
-{
-	if(basep->fake)
-		gdk_window_show(basep->fake);
-}
-static void
-do_hide(BasePWidget *basep)
-{
-	if(basep->fake)
-		gdk_window_hide(basep->fake);
-}*/
-
-
 static void
 drawer_widget_init (DrawerWidget *drawer)
 {
 	drawer->state = DRAWER_SHOWN;
-	
-	/*gtk_signal_connect(GTK_OBJECT(drawer),"hide",
-			   GTK_SIGNAL_FUNC(do_hide),NULL);
-	gtk_signal_connect_after(GTK_OBJECT(drawer),"show",
-				 GTK_SIGNAL_FUNC(do_show),NULL);*/
+	drawer->temp_hidden = TRUE;
 }
 
 GtkWidget*
@@ -631,6 +618,7 @@ drawer_widget_change_orient(DrawerWidget *drawer,
 void
 drawer_widget_restore_state(DrawerWidget *drawer)
 {
+	drawer->temp_hidden = FALSE;
 	gtk_widget_queue_resize(GTK_WIDGET(drawer));
 	gtk_widget_show_now(GTK_WIDGET(drawer));
 	if(BASEP_WIDGET(drawer)->fake)

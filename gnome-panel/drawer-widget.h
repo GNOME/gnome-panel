@@ -31,6 +31,7 @@ struct _DrawerWidget
 	BasePWidget		basep;
 
 	DrawerState		state;
+	int			temp_hidden;
 	PanelOrientType		orient;
 };
 

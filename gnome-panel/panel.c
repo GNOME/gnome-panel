@@ -359,9 +359,9 @@ state_restore_foreach(GtkWidget *w, gpointer data)
 					      state_restore_foreach,
 					      NULL);
 		} else { /*it's hidden*/
-			if(basep->fake)
-				gdk_window_hide(basep->fake);
-			gtk_widget_hide(drawer->drawer);
+			dw->temp_hidden = FALSE;
+			gtk_widget_size_allocate(drawer->drawer,
+						 &drawer->drawer->allocation);
 			gtk_container_foreach(GTK_CONTAINER(basep->panel),
 					      state_hide_foreach,
 					      NULL);
@@ -377,9 +377,10 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		if(basep->fake)
-			gdk_window_hide(basep->fake);
-		gtk_widget_hide(drawer->drawer);
+		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		dw->temp_hidden = TRUE;
+		gtk_widget_size_allocate(drawer->drawer,
+					 &drawer->drawer->allocation);
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      state_hide_foreach,
 				      NULL);
