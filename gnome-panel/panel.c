@@ -903,62 +903,6 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
-static gchar *
-extract_filename (const gchar* uri)
-{
-	/* file uri with a hostname */
-	if (strncmp (uri, "file://", strlen ("file://")) == 0) {
-		char *hostname = g_strdup (&uri[strlen("file://")]);
-		char *p = strchr (hostname, '/');
-		char *path;
-		char localhostname[1024];
-		/* if we can't find the '/' this uri is bad */
-		if(p == NULL) {
-			g_free (hostname);
-			return NULL;
-		}
-		/* if no hostname */
-		if(p == hostname)
-			return hostname;
-
-		path = g_strdup (p);
-		*p = '\0';
-
-		/* if really local */
-		if (g_ascii_strcasecmp (hostname, "localhost") == 0 ||
-		    g_ascii_strcasecmp (hostname, "localhost.localdomain") == 0) {
-			g_free (hostname);
-			return path;
-		}
-
-		/* ok get the hostname */
-		if (gethostname (localhostname,
-				 sizeof (localhostname)) < 0) {
-			strcpy (localhostname, "");
-		}
-
-		/* if really local */
-		if (localhostname[0] &&
-		    g_ascii_strcasecmp (hostname, localhostname) == 0) {
-			g_free (hostname);
-			return path;
-		}
-		
-		g_free (hostname);
-		g_free (path);
-		return NULL;
-
-	/* if the file doesn't have the //, we take it containing 
-	   a local path */
-	} else if (strncmp(uri, "file:", strlen("file:"))==0) {
-		const char *path = &uri[strlen("file:")];
-		/* if empty bad */
-		if(!*path) return NULL;
-		return g_strdup(path);
-	}
-	return NULL;
-}
-
 static void
 drop_url(PanelWidget *panel, int pos, const char *url)
 {
@@ -1124,7 +1068,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 		    strncmp(mimetype, "image", sizeof("image")-1) == 0 &&
 		    /* FIXME: We should probably use a gnome-vfs function here instead. */
 		    /* FIXME: probably port the whole panel background stuff to gnome-vfs */
-		    (filename = extract_filename (uri)) != NULL) {
+		    (filename = g_filename_from_uri (uri, NULL, NULL)) != NULL) {
 			panel_widget_set_back_pixmap (panel, filename);
 			g_free (filename);
 		} else if (basename != NULL &&
@@ -1153,7 +1097,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			     (GNOME_VFS_PERM_USER_EXEC |
 			      GNOME_VFS_PERM_GROUP_EXEC |
 			      GNOME_VFS_PERM_OTHER_EXEC) &&
-			   (filename = extract_filename (uri)) != NULL) {
+			   (filename = g_filename_from_uri (uri, NULL, NULL)) != NULL) {
 			/* executable and local, so add a launcher with
 			 * it */
 			ask_about_launcher (filename, panel, pos, TRUE);
@@ -1199,7 +1143,7 @@ drop_bgimage (PanelWidget *panel, const char *bgimage)
 {
 	char *filename;
 
-	filename = extract_filename (bgimage);
+	filename = g_filename_from_uri (bgimage, NULL, NULL);
 	if (filename != NULL) {
 		panel_widget_set_back_pixmap (panel, filename);
 
