@@ -4,6 +4,4 @@ SUBDIRS =		\
 
 EXTRA_SUBDIRS =		\
 	applet-dirs	\
-	desk-guide	\
-	tasklist	\
-	desk-guide
+	tasklist	
