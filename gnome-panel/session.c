@@ -820,6 +820,37 @@ load_default_applets2(PanelWidget *panel)
 				   panel, 4000, TRUE, TRUE);
 }
 
+/* try evil hacks to rewrite panel config from old applets (gnomepager for
+ * now.  This is very evil.  But that's the only way to do it, it seems */
+static gboolean
+try_evil_config_hacks(const char *goad_id, PanelWidget *panel, int pos)
+{
+	gboolean ret = FALSE;
+
+	if(strcmp(goad_id, "gnomepager_applet") == 0) {
+		static gboolean first_time = TRUE;
+		static gboolean in_path = FALSE;
+
+		if(first_time) {
+			char *tmp;
+			tmp = gnome_is_program_in_path("gnomepager_applet");
+			in_path = tmp != NULL;
+			first_time = FALSE;
+			g_free(tmp);
+		}
+
+		if(!in_path) {
+			load_extern_applet("deskguide_applet", NULL,
+					   panel, pos, TRUE, TRUE);
+
+			load_extern_applet("tasklist_applet", NULL,
+					   panel, pos+1, TRUE, TRUE);
+			ret = TRUE;
+		}
+	}
+	return ret;
+}
+
 void
 init_user_applets(void)
 {
@@ -869,11 +900,15 @@ init_user_applets(void)
 		
 		if(strcmp(applet_name, EXTERN_ID) == 0) {
 			char *goad_id = gnome_config_get_string("goad_id");
-			if(goad_id && *goad_id) {
+			if(goad_id && *goad_id &&
+			   /* if we try an evil hack such as loading tasklist
+			    * and deskguide instead of the desguide don't
+			    * try to load this applet in the first place */
+			   !try_evil_config_hacks(goad_id, panel, pos)) {
 				/*this is the config path to be passed to the
 				  applet when it loads*/
-				g_string_sprintf(buf,"%sApplet_%d_Extern/",
-						 PANEL_CONFIG_PATH,num);
+				g_string_sprintf(buf, "%sApplet_%d_Extern/",
+						 PANEL_CONFIG_PATH, num);
 				load_extern_applet(goad_id, buf->str, 
 						   panel, pos, TRUE, TRUE);
 			}
