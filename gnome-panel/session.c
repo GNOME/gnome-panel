@@ -413,19 +413,31 @@ do_session_save(GnomeClient *client,
 	char *s;
 	char *session_id;
 	int i;
+#ifdef PER_SESSION_CONFIGURATION
 	gchar *new_args[] = { "rm", "-r", NULL };
+#endif /* PER_SESSION_CONFIGURATION */
 
 	if (panel_cfg_path)
 		g_free(panel_cfg_path);
 
+	/* Since we are implementing only a single session, that
+	 * either can be saved by the user on exit, or not saved,
+	 * it is most natural if we make the saved state global,
+	 * not per-session
+	 */
+#ifdef PER_SESSION_CONFIGURATION
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED &&
 	    GNOME_CLIENT (client)->restart_style != GNOME_RESTART_NEVER)
 		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
+#endif /* PER_SESSION_CONFIGURATION */
 		panel_cfg_path = g_strdup ("/panel.d/default/");
 
+#ifdef PER_SESSION_CONFIGURATION
 	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
 	gnome_client_set_discard_command (client, 3, new_args);
+#endif /* PER_SESSION_CONFIGURATION */
+
 #ifdef PANEL_DEBUG	
 	printf("Saving to [%s]\n",panel_cfg_path);
 
@@ -528,8 +540,15 @@ panel_config_sync(void)
 	   applets_to_sync ||
 	   panels_to_sync ||
 	   globals_to_sync) {
+/* For now, since we aren't saving state per-session, just
+ * write the stuff out without going through the SM. This
+ * saves triggering a problem where the SM times out on us
+ * if our menu is up
+ */
+#ifdef PER_SESSION_CONFIGURATION 
 		if (!(gnome_client_get_flags(client) & 
 		      GNOME_CLIENT_IS_CONNECTED)) {
+#endif /* PER_SESSION_CONFIGURATION */
 			do_session_save(client,need_complete_save,
 					applets_to_sync,panels_to_sync,
 					globals_to_sync);
@@ -537,6 +556,7 @@ panel_config_sync(void)
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			globals_to_sync = FALSE;
+#ifdef PER_SESSION_CONFIGURATION
 		} else {
 			/*prevent possible races by doing this before requesting
 			  save*/
@@ -547,6 +567,7 @@ panel_config_sync(void)
 			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
 						   GNOME_INTERACT_NONE, FALSE, FALSE);
 		}
+#endif /* PER_SESSION_CONFIGURATION */
 	}
 }
 

@@ -859,12 +859,23 @@ applet_widget_init(const char *app_id,
 	/*this is not called for shlib applets so we set it to true here*/
 	die_on_last = TRUE;
 
-	gnome_client_disable_master_connection ();
 	CORBA_exception_init(&ev);
 	orb = gnome_CORBA_init_with_popt_table(app_id, app_version, 
 					       &argc, argv,
 					       options, flags, return_ctx,
 					       GNORBA_INIT_SERVER_FUNC, &ev);
+	
+	/* We need to connect to the session manager so that the session
+	 * manager waits for us to exit before exiting.
+	 *
+	 * We don't connect to the "die" signal - we expect to be told
+	 * to die by our parent. Perhaps this is bad...
+	 */
+#if 0
+	gtk_signal_connect (GTK_OBJECT (gnome_master_client ()), "die",
+			    GTK_SIGNAL_FUNC (gtk_main_quit), NULL);
+#endif	
+	gnome_client_set_restart_style (gnome_master_client(), GNOME_RESTART_NEVER);
 
 	CORBA_exception_free(&ev);
 

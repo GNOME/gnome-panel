@@ -139,9 +139,16 @@ main(int argc, char **argv)
 	}
 	gnome_client_set_priority(client,40);
 
+	/* Since we are implementing only a single session, that
+	 * either can be saved by the user on exit, or not saved,
+	 * it is most natural if we make the saved state global,
+	 * not per-session
+	 */
+#ifdef PER_SESSION_CONFIGURATION
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
+#endif /* PER_SESSION_CONFIGURATION */
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
 
 	gnome_client_set_global_config_prefix (client, "/panel.d/Session/");
