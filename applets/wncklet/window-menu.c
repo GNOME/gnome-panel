@@ -48,6 +48,7 @@ typedef struct {
 	GtkWidget    *frame;
 	GtkWidget    *image;
 	GtkWidget    *menu;
+	GtkWidget    *no_windows_item;
 
 	GdkPixbuf    *icon_pixbuf;
 	WnckWindow   *icon_window;
@@ -167,6 +168,10 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->icon_pixbuf)
 		g_object_unref (window_menu->icon_pixbuf);
 	window_menu->icon_pixbuf = NULL;
+
+	if (window_menu->no_windows_item)
+		g_object_unref (window_menu->no_windows_item);
+	window_menu->no_windows_item = NULL;
 
 	g_free (window_menu);
 }
@@ -382,6 +387,9 @@ window_menu_window_opened (WnckScreen *screen,
 			   WindowMenu *window_menu)
 {
 	if (window_menu->menu && GTK_WIDGET_VISIBLE (window_menu->menu)) {
+		if (window_menu->no_windows_item
+		    && GTK_WIDGET_VISIBLE (window_menu->no_windows_item))
+			gtk_widget_hide (window_menu->no_windows_item);
 		window_menu_add_window (window_menu, window);
 		gtk_menu_reposition (GTK_MENU (window_menu->menu));
 	}
@@ -509,6 +517,10 @@ window_menu_popup_menu (WindowMenu *window_menu,
 		gtk_container_remove (GTK_CONTAINER (window_menu->menu), l->data);
 	g_list_free (list);
 
+	if (window_menu->no_windows_item)
+		g_object_unref (window_menu->no_windows_item);
+	window_menu->no_windows_item = NULL;
+
 	g_signal_connect (window_menu->menu, "destroy",
 			  G_CALLBACK (window_menu_destroy_menu), window_menu);
 
@@ -533,13 +545,12 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	}
 
 	if (!l) {
-		GtkWidget *item;
-		
-		item = gtk_menu_item_new_with_label (_("No Windows Open"));
+		window_menu->no_windows_item = gtk_menu_item_new_with_label (_("No Windows Open"));
 
-		gtk_widget_set_sensitive (item, FALSE);
-		gtk_widget_show (item);	
-		gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu), item);
+		gtk_widget_set_sensitive (window_menu->no_windows_item, FALSE);
+		gtk_widget_show (window_menu->no_windows_item);	
+		gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu),
+				       window_menu->no_windows_item);
 	}
 
 	gtk_widget_show (window_menu->menu);

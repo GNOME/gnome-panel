@@ -1,3 +1,11 @@
+2003-10-13  Vincent Untz  <vincent@vuntz.net>
+
+	* window-menu.c: (window_menu_destroy), (window_menu_window_opened),
+	(window_menu_popup_menu): remove the "No Windows Open" item from the
+	menu when a new window is added while the menu is open and there
+	previously was no window open.
+	Fix bug #107048.
+
 2003-10-09  Padraig O'Briain <padraig.obriain@sun.com>
 
         * window_menu.c (window_menu_applet_fill): Set accessible name and
