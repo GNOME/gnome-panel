@@ -246,26 +246,34 @@ static void
 applet_change_background (PanelApplet               *applet,
 			  PanelAppletBackgroundType  type,
 			  GdkColor                  *color,
-			  const gchar               *pixmap,
+			  GdkPixmap                 *pixmap,
 			  SystemTray                *tray)
 {
-  if (type == PANEL_NO_BACKGROUND)
-    {
-      GtkRcStyle *rc_style = gtk_rc_style_new ();
-      
-      gtk_widget_modify_style (GTK_WIDGET (tray->applet), rc_style);
+  GtkRcStyle *rc_style;
+  GtkStyle   *style;
 
-      g_object_unref (G_OBJECT (rc_style));
-    }
-  else if (type == PANEL_COLOR_BACKGROUND)
+  /* reset style */
+  gtk_widget_set_style (GTK_WIDGET (tray->applet), NULL);
+  rc_style = gtk_rc_style_new ();
+  gtk_widget_modify_style (GTK_WIDGET (tray->applet), rc_style);
+  g_object_unref (rc_style);
+
+  switch (type)
     {
+    case PANEL_NO_BACKGROUND:
+      break;
+    case PANEL_COLOR_BACKGROUND:
       gtk_widget_modify_bg (GTK_WIDGET (tray->applet),
-                            GTK_STATE_NORMAL,
-                            color);
-    }
-  else
-    { /* pixmap */
-      /* FIXME: Handle this when the panel support works again */
+                            GTK_STATE_NORMAL, color);
+      break;
+    case PANEL_PIXMAP_BACKGROUND:
+      style = gtk_style_copy (GTK_WIDGET (tray->applet)->style);
+      if (style->bg_pixmap[GTK_STATE_NORMAL])
+        g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+
+      style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+      gtk_widget_set_style (GTK_WIDGET (tray->applet), style);
+      break;
     }
 }
 
