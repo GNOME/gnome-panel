@@ -1,4 +1,79 @@
 =============
+Version 2.2.1
+=============
+
+Panel
+
+	* Make global keybindings work on multi-screen setups (Erwann, Mark)
+	* Destroy "Create Launcher" dialogs when the panel is destrored (Arvind)
+	* Allow the GNOME foot icon on the Main Menu to be themed (Raj)
+	* Support themeing of the action button icons (Raj)
+	* Query deletion of a drawer when it is deleted by removing the button (Arvind)
+	* Delete child drawer panels when deleting panels (Arvind)
+	* Fix various leaks (Kjartan)
+	* Fix typo with the launchers "zoom animation" (Paul Gammans)
+	* Do not query the deletion of a panel if there are no objects on it (Heeten, Arvind)
+	* Make the "Delete Panel?" dialog modal (Arvind)
+	* Avoid rare panel hang when moving applets (Sunil Mohan Adapa)
+	* Actually load the panel background color preference (Greg Hudson)
+	* Fix crash related to drawers (Arvind)
+	* Fix various issues with egg-recent-files (James)
+	* Don't save screenshot to UTF8 filenames in G_BROKEN_FILENAMES locales (Toshi)
+	* Fix crash when the panel background image can't be loaded (Mark, Heeten)
+	* Unescape the tooltip on launchers (Bala)
+	* Destroy the "Overwrite file?" warning dialog in gnome-panel-screenshot (Bala)
+	* Add support for icon theming icons with absolute paths (Mark, Havoc, Raj)
+	* Don't crash when clicking on a drawer panel with no parent panel (Mark)
+	* Don't load the GNOME 1.4 applet's .desktop files on startup (Mark)
+
+Applets
+
+	* Destroy Window List and Workspace Switcher properties dialog when
+	  the applets are destroyed (Arvind)
+	* Launch the mail received handler on the correct screen (Satyajit Kanungo)
+	* Ignore any leading and trailing whitespace in a workspace name (Arvind)
+	* Change the max number of workspaces to 36 in sync with metacity (Mark)
+	* Fix issue with the mailcheck animation on mutliscreen setups (Satyajit Kanungo)
+	* Fix notification area crasher (Havoc)
+
+Miscellanous
+
+	* Fix "po/Makefile.in.in not found" build breakage (Clifton Lockhart)
+	* Add a --with-html-dir configure option (Julio Merino)
+	* Window List docs updates (Irene Ryan)
+	* Japanese translations of docs (Takeshi AIHANA)
+	* Support --disable-schemas-install and --with-gconf-schema-file-dir (Mark, Julio Merino)
+	* Fix libpanel-applet crash on 64 bit platforms (Matt Wilson)
+
+Translations
+
+	* Alessio Frusciante, Christian Neumair, Christian Rose, Christophe Merlet,
+	  Dmitry G. Mastrukov, Gediminas Paulauskas, Gil "Dolfin" Osher, Joël Brich,
+	  Kenneth Christiansen, Kjartan Maraas, Luca Ferretti, Metin Amiroff,
+	  Miloslav Trmac, Ole Laursen, Roozbeh Pournader, Vaidotas Zemlys,
+	  Vincent van Adrighem and Zbigniew Chyla.  
+
+===============
+Version 2.2.0.1
+===============
+
+	* Fix notification area crasher (Havoc)
+	* Make applets show correct verion in about dialog (Alex Duggan)
+
+Help Documentation
+
+	* Notification area docs (John Fleck)
+	* Updated Clock, Window List and Fish docs (Breda McColgan, Irene Ryan)
+
+Translations
+
+	* Alessio Frusciante, Alexander Shopov, Christian Neumair, Christian Rose,
+	  Christophe Fergeau, Daniel Yacob, Duarte Loreto, Elian Myftiu,
+	  Kang Jeong-Hee, Maxim Dzumanenko, Ole Laursen, ostas Papadimas,
+	  Pablo Gonzalo del Campo, Stanislav Visnovsky, Sukhochir, Takeshi AIHANA
+	  and Xiong Jiang.
+
+=============
 Version 2.2.0
 =============
 
