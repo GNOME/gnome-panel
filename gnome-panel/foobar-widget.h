@@ -10,6 +10,7 @@
 
 #include <gnome.h>
 #include "panel-types.h"
+#include "gwmh.h"
 
 BEGIN_GNOME_DECLS
 
@@ -45,6 +46,10 @@ struct _FoobarWidget
 	GtkWidget *task_menu;
 	GtkWidget *task_pixmap;
 	GtkWidget *task_bin;
+	GwmhTask *icon_task; /* the task whoose icon is shown,
+			      * hopefully should be always OK,
+			      * but we only use the pointer value
+			      * and never dereference this */
 
 	gboolean compliant_wm;
 	char *clock_format;

@@ -757,13 +757,24 @@ create_task_menu (GtkWidget *w, gpointer data)
 {
 	FoobarWidget *foo = FOOBAR_WIDGET (data);
 	GList *tasks = gwmh_task_list_get ();
+	GList *list;
+	GtkWidget *separator;
 
 	/*g_message ("creating...");*/
 	foo->tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-	add_menu_separator (foo->task_menu);
+	separator = add_menu_separator (foo->task_menu);
 
 	g_list_foreach (tasks, (GFunc)add_task, foo);
+
+	list = g_list_last (GTK_MENU_SHELL (foo->task_menu)->children);
+
+	if (list != NULL &&
+	    separator == list->data) {
+		/* if the separator is the last item wipe it.
+		 * We leave it as the first though */
+		gtk_widget_destroy (separator);
+	}
 
 	/* Owen: don't read the next line */
 	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
@@ -828,12 +839,16 @@ set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 	if (!GTK_WIDGET_REALIZED (foo))
 		return;
 
+	foo->icon_task = NULL;
+
 	if (foo->task_pixmap != NULL)
 		gtk_widget_destroy (foo->task_pixmap);
 	foo->task_pixmap = NULL;
 
-	if (task != NULL)
+	if (task != NULL) {
 		foo->task_pixmap = get_task_icon (task, GTK_WIDGET (foo));
+		foo->icon_task = task;
+	}
 
 	if (foo->task_pixmap == NULL) {
 		foo->task_pixmap = get_default_pixmap ();
@@ -846,7 +861,8 @@ set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 }
 
 static gboolean
-task_notify (gpointer data, GwmhTask *task,
+task_notify (gpointer data,
+	     GwmhTask *task,
 	     GwmhTaskNotifyType ntype,
 	     GwmhTaskInfoMask imask)
 {
@@ -855,19 +871,32 @@ task_notify (gpointer data, GwmhTask *task,
 
 	switch (ntype) {
 	case GWMH_NOTIFY_INFO_CHANGED:
-		if (imask & GWMH_TASK_INFO_FOCUSED &&
-		    GWMH_TASK_FOCUSED (task)) {
-			set_das_pixmap (foo, task);
-		}
 		if (imask & GWMH_TASK_INFO_WM_HINTS &&
-		    GWMH_TASK_FOCUSED (task))
+		    GWMH_TASK_FOCUSED (task)) {
+			/* icon might have changed */
 			set_das_pixmap (foo, task);
+		} else if (imask & GWMH_TASK_INFO_FOCUSED) {
+			if (GWMH_TASK_FOCUSED (task) &&
+			    foo->icon_task != task) {
+				/* Focused and not set in the top thingie,
+				 * so setup */
+				set_das_pixmap (foo, task);
+			} else if ( ! GWMH_TASK_FOCUSED (task) &&
+				   task == foo->icon_task) {
+				/* Just un-focused and currently the
+				 * icon_task, so set the pixmap to
+				 * the default (nothing) */
+				set_das_pixmap (foo, NULL);
+			}
+		}
 		break;
 	case GWMH_NOTIFY_NEW:
 		if (foo->tasks != NULL)
 			add_task (task, foo);
 		break;
 	case GWMH_NOTIFY_DESTROY:
+		if (task == foo->icon_task)
+			set_das_pixmap (foo, NULL);
 		/* FIXME: Whoa; leak? */
 		if (foo->tasks != NULL) {
 			item = g_hash_table_lookup (foo->tasks, task);
@@ -941,6 +970,12 @@ foobar_widget_init (FoobarWidget *foo)
 	gint flags;
 
 	foo->screen = 0;
+
+	foo->task_item = NULL;
+	foo->task_menu = NULL;
+	foo->task_pixmap = NULL;
+	foo->task_bin = NULL;
+	foo->icon_task = NULL;
 
 	foo->clock_format = g_strdup (_("%H:%M"));
 	foo->clock_timeout = 0;
