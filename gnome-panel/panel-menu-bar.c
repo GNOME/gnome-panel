@@ -369,11 +369,25 @@ panel_menu_bar_popup_menu (PanelMenuBar *menubar,
 			   guint32       activate_time)
 {
 	GtkMenu *menu;
+	GtkMenuShell *menu_shell;
 	
 	g_return_if_fail (PANEL_IS_MENU_BAR (menubar));
 
 	menu = GTK_MENU (menubar->priv->applications_menu);
 
-	gtk_menu_shell_select_item (GTK_MENU_SHELL (menubar),
+	/* 
+	 * We need to call _gtk_menu_shell_activate() here as is done in 
+	 * window_key_press_handler in gtkmenubar.c which pops up menu
+	 * when F10 is pressed.
+         *
+	 * As that function is private its code is replicated here.
+	 */
+	menu_shell = GTK_MENU_SHELL (menubar);
+	if (!menu_shell->active) {
+		gtk_grab_add (GTK_WIDGET (menu_shell));
+		menu_shell->have_grab = TRUE;
+		menu_shell->active = TRUE;
+	}
+	gtk_menu_shell_select_item (menu_shell,
 				    gtk_menu_get_attach_widget (menu));
 }
