@@ -130,6 +130,7 @@ monitor_drawers(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+
 void
 load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 {
