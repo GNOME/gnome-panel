@@ -1510,11 +1510,11 @@ session_read_global_config (void)
 
 		} else if (!strcmp (key, "use-large-icons"))
 			global_config.use_large_icons =
-				gconf_value_get_bool ("use-large-icons");
+				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "avoid-panel-overlap"))
 			global_config.avoid_collisions =
-				gconf_value_get_bool ("avoid-panel-overlap");
+				gconf_value_get_bool (value);
 
 		else
 			g_warning ("%s not handled", key);
