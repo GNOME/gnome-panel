@@ -22,7 +22,7 @@
 #include "panel-widget.h"
 #include "tearoffitem.h"
 
-/*#define TEAROFF_MENUS 1*/
+#define TEAROFF_MENUS 1
 /*#define PANEL_DEBUG 1*/
 
 #define SMALL_ICON_SIZE 20
@@ -1260,23 +1260,6 @@ gtk_menu_position (GtkMenu *menu)
 			    x, y);
 }
 
-#ifdef TEAROFF_MENUS_BLAH2
-static int
-any_child_torn_off(GtkMenuShell *menu)
-{
-	GList *li;
-	if (GTK_MENU(menu)->torn_off)
-		return TRUE;
-	for(li=menu->children;li;li=li->next) {
-		GtkMenuItem *item = li->data;
-		if(item->submenu &&
-		   any_child_torn_off(GTK_MENU_SHELL(item->submenu)))
-			return TRUE;
-	}
-	return FALSE;
-}
-#endif
-
 /* Stolen from GTK+
  * Reparent the menu, taking care of the refcounting
  */
@@ -1343,7 +1326,7 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 {
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 	GSList *list;
-	GtkWidget *menu,*window;
+	GtkWidget *menu;
 	GString *title;
 
 	if(!mfl)
@@ -1370,41 +1353,36 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 		g_string_append(title,mf->dir_name);
 	}
 	
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_widget_set_app_paintable(window, TRUE);
-	gtk_signal_connect(GTK_OBJECT(window),  
+	GTK_MENU(menu)->tearoff_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	gtk_widget_set_app_paintable(GTK_MENU(menu)->tearoff_window, TRUE);
+	gtk_signal_connect(GTK_OBJECT(GTK_MENU(menu)->tearoff_window),  
 			   "event",
 			   GTK_SIGNAL_FUNC(gtk_menu_window_event), 
 			   GTK_OBJECT(menu));
-	gtk_widget_realize(window);
+	gtk_widget_realize(GTK_MENU(menu)->tearoff_window);
 	      
-	gdk_window_set_title(window->window, title->str);
+	gdk_window_set_title(GTK_MENU(menu)->tearoff_window->window,
+			     title->str);
 	
 	g_string_free(title,TRUE);
 
-	gdk_window_set_decorations(window->window, 
+	gdk_window_set_decorations(GTK_MENU(menu)->tearoff_window->window, 
 				   GDK_DECOR_ALL |
 				   GDK_DECOR_RESIZEH |
 				   GDK_DECOR_MINIMIZE |
 				   GDK_DECOR_MAXIMIZE);
-	gtk_window_set_policy(GTK_WINDOW(window),
+	gtk_window_set_policy(GTK_WINDOW(GTK_MENU(menu)->tearoff_window),
 			      FALSE, FALSE, TRUE);
-	gtk_menu_reparent(GTK_MENU(menu), window, FALSE);
+	gtk_menu_reparent(GTK_MENU(menu), GTK_MENU(menu)->tearoff_window,
+			  FALSE);
+	
+	GTK_MENU(menu)->torn_off = TRUE;
 
 	gtk_menu_position(GTK_MENU(menu));
 	  
 	gtk_widget_show(GTK_WIDGET(menu));
-	gtk_widget_show(window);
+	gtk_widget_show(GTK_MENU(menu)->tearoff_window);
 }
-
-/*static void
-remove_tearoff(GtkMenuShell *menu)
-{
-	if(!menu->children ||
-	   !IS_TEAROFF_ITEM(menu->children->data))
-		return;
-	gtk_widget_destroy(menu->children->data);
-}*/
 
 static void
 add_tearoff(GtkMenu *menu)
@@ -1429,12 +1407,10 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 	/*if(!mfl)
 	  g_warning("Weird menu doesn't have mf entry");*/
-	
-#ifdef TEAROFF_MENUS_BLAH2
-	if (any_child_torn_off(GTK_MENU_SHELL(menuw)))
-		return;
-#endif
 
+	if (GTK_MENU(menuw)->torn_off)
+		return;
+	
 	/*check if we need to reread this*/
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
 		MenuFinfo *mf = list->data;
@@ -1482,15 +1458,6 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 		gtk_menu_position(GTK_MENU(menuw));
 	}
-#ifdef TEAROFF_MENUS_BLAH2
-	if(GTK_MENU_SHELL(menuw)->children &&
-	   !GTK_IS_TEAROFF_MENU_ITEM(GTK_MENU_SHELL(menuw)->children->data)) {
-		GtkWidget *w = gtk_tearoff_menu_item_new ();
-		gtk_widget_show(w);
-		gtk_menu_prepend(GTK_MENU(menuw),w);
-		gtk_menu_position(GTK_MENU(menuw));
-	}
-#endif
 }
 
 static GtkWidget *
