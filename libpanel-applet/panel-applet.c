@@ -1332,10 +1332,10 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, change_orient),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__INT,
+                              panel_applet_marshal_VOID__UINT,
                               G_TYPE_NONE,
 			      1,
-			      G_TYPE_INT);
+			      G_TYPE_UINT);
 
 	panel_applet_signals [CHANGE_SIZE] =
                 g_signal_new ("change_size",
@@ -1356,11 +1356,11 @@ panel_applet_class_init (PanelAppletClass *klass)
                               G_STRUCT_OFFSET (PanelAppletClass, change_background),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__ENUM_POINTER_OBJECT,
+                              panel_applet_marshal_VOID__ENUM_BOXED_OBJECT,
                               G_TYPE_NONE,
 			      3,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
-			      G_TYPE_POINTER,
+			      GDK_TYPE_COLOR,
 			      GDK_TYPE_PIXMAP);
 
 	panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =

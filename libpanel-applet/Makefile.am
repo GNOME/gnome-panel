@@ -31,8 +31,9 @@ libpanel_applet_2_la_LIBADD  = $(LIBPANEL_APPLET_LIBS)
 libpanel_appletincludedir = $(includedir)/panel-2.0
 
 libpanel_appletinclude_HEADERS =	\
-	panel-applet-gconf.h		\
 	panel-applet.h			\
+	panel-applet-gconf.h		\
+	panel-applet-enums.h		\
 	GNOME_Panel.h
 
 CORBA_SRCLIST =			\
