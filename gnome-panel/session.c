@@ -92,6 +92,7 @@ apply_global_config (void)
 	static int menu_flags_old = -1;
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
+	static int old_menu_check = -1;
 	static int old_fast_button_scaling = -1;
 	static int old_avoid_collisions = -1;
 	GSList *li;
@@ -112,7 +113,8 @@ apply_global_config (void)
 		gtk_tooltips_disable(panel_tooltips);
 	/* not incredibly efficent way to do this, we just make
 	 * sure that all directories are reread */
-	if(old_merge_menus != global_config.merge_menus) {
+	if (old_merge_menus != global_config.merge_menus ||
+	    old_menu_check != global_config.menu_check) {
 		fr_force_reread();
 	}
 	/*if we changed dot_buttons/small_icons mark all menus as dirty
@@ -120,7 +122,8 @@ apply_global_config (void)
 	  so that he doesn't have to reread his menus all the time:)*/
 	if(dot_buttons_old != global_config.show_dot_buttons ||
 	   old_use_large_icons != global_config.use_large_icons ||
-	   old_merge_menus != global_config.merge_menus) {
+	   old_merge_menus != global_config.merge_menus ||
+	   old_menu_check != global_config.menu_check) {
 		GSList *li;
 		for(li = applets; li != NULL; li = g_slist_next(li)) {
 			AppletInfo *info = li->data;
@@ -151,6 +154,7 @@ apply_global_config (void)
 	dot_buttons_old = global_config.show_dot_buttons;
 	old_use_large_icons = global_config.use_large_icons;
 	old_merge_menus = global_config.merge_menus;
+	old_menu_check = global_config.menu_check;
 	send_tooltips_state(global_config.tooltips_enabled);
 
 	/* if we changed global menu flags, cmark all main menus that use
@@ -1531,6 +1535,9 @@ load_up_globals (void)
 	global_config.merge_menus =
 		gnome_config_get_bool("merge_menus=TRUE");
 
+	global_config.menu_check =
+		gnome_config_get_bool("menu_check=TRUE");
+
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");
 		
@@ -1673,6 +1680,8 @@ write_global_config (void)
 			      global_config.use_large_icons);
 	gnome_config_set_bool("merge_menus",
 			      global_config.merge_menus);
+	gnome_config_set_bool("menu_check",
+			      global_config.menu_check);
 	gnome_config_set_bool("off_panel_popups",
 			      global_config.off_panel_popups);
 	gnome_config_set_bool("disable_animations",

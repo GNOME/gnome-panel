@@ -46,6 +46,7 @@ struct _GlobalConfig {
 	gboolean merge_menus;
 	gboolean fast_button_scaling;
 	gboolean avoid_collisions;
+	gboolean menu_check;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

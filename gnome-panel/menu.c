@@ -4463,6 +4463,18 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
 
+	if ( ! global_config.menu_check) {
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem (menuitem,
+				NULL,
+				_("Reread all menus"));
+		gtk_menu_append (GTK_MENU (menu), menuitem);
+		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				    GTK_SIGNAL_FUNC (fr_force_reread), 
+				    NULL);
+	}
+
 	add_menu_separator (menu);
 
 	menuitem = gtk_menu_item_new ();

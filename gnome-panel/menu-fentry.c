@@ -470,14 +470,14 @@ fr_replace(FileRec *fr)
 
 
 FileRec *
-fr_check_and_reread(FileRec *fr)
+fr_check_and_reread (FileRec *fr)
 {
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ret = fr;
-	time_t curtime = time(NULL);
+	time_t curtime;
 
-	g_return_val_if_fail(fr != NULL, fr);
-	g_return_val_if_fail(fr->type == FILE_REC_DIR, fr);
+	g_return_val_if_fail (fr != NULL, fr);
+	g_return_val_if_fail (fr->type == FILE_REC_DIR, fr);
 
 	if(dr->recs == NULL) {
 		fr_fill_dir(fr,1);
@@ -486,6 +486,9 @@ fr_check_and_reread(FileRec *fr)
 		gboolean any_change = FALSE;
 		struct stat ds;
 		GSList *li;
+
+		if ( ! global_config.menu_check)
+			return ret;
 
 		if (dr->force_reread)
 			reread = TRUE;
@@ -501,6 +504,8 @@ fr_check_and_reread(FileRec *fr)
 				g_free (p);
 			}
 		}
+
+		curtime = time (NULL);
 
 		if ( ! reread &&
 		    fr->last_stat < curtime-1) {
