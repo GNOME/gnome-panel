@@ -1071,7 +1071,7 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 				cursor = gdk_cursor_new (GDK_FLEUR);
 				gtk_grab_add(widget);
 				gdk_pointer_grab (widget->window,
-						  TRUE,
+						  FALSE,
 						  PANEL_EVENT_MASK,
 						  NULL,
 						  cursor,

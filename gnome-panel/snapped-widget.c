@@ -782,12 +782,21 @@ snapped_widget_change_params(SnappedWidget *snapped,
 		oldorient = PANEL_HORIZONTAL;
 	else
 		oldorient = PANEL_VERTICAL;
-	
+
 	if(oldorient != orient) {
 		int w,h,t;
+		GList *list;
+		PanelWidget *panel = PANEL_WIDGET(snapped->panel);
 		gdk_window_get_size(GTK_WIDGET(snapped)->window,&w,&h);
 		t = h>w?w:h;
 		resize_window(GTK_WIDGET(snapped),t,t);
+		
+		for(list = panel->applet_list;
+		    list != NULL;
+		    list = g_list_next(list)) {
+			AppletData *ad = list->data;
+			gtk_fixed_move(GTK_FIXED(panel->fixed),ad->applet,0,0);
+		}
 	}
 
 	panel_widget_change_params(PANEL_WIDGET(snapped->panel),
@@ -817,6 +826,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	if(snapped->mode == SNAPPED_AUTO_HIDE)
 		snapped_widget_queue_pop_down(snapped);
 }
+
 
 void
 snapped_widget_change_pos(SnappedWidget *snapped,
