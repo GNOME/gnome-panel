@@ -27,7 +27,7 @@
 #include "panel-applet-gconf.h"
 #include "panel-applet-private.h"
 
-static gchar *
+gchar *
 panel_applet_gconf_get_full_key (PanelApplet *applet,
 				 const gchar *key)
 {

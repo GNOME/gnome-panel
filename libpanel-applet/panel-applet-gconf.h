@@ -33,6 +33,9 @@
 
 G_BEGIN_DECLS
 
+gchar *      panel_applet_gconf_get_full_key    (PanelApplet  *applet,
+						 const gchar  *key);
+
 void         panel_applet_gconf_set_bool        (PanelApplet  *applet,
 						 const gchar  *key,
 						 gboolean      the_bool,
