@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core HEAD\n"
-"POT-Creation-Date: 2003-07-11 23:05+0800\n"
+"POT-Creation-Date: 2003-07-15 16:45+0100\n"
 "PO-Revision-Date: 2003-07-11 22:59+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: ms <sebol@ikhlas.com>\n"
@@ -146,7 +146,7 @@ msgstr "Guna _UTC"
 #: applets/clock/clock.c:1583 applets/notification_area/main.c:112
 #: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:786
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:493
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:290
 msgid "translator_credits"
 msgstr "Hasbullah Bin Pit <sebol@ikhlas.com>, Merlimau. 2002,2003"
 
@@ -280,8 +280,8 @@ msgstr "_Perihal..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3125
-#: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3090
+#: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
 msgstr "_Bantuan"
@@ -412,7 +412,7 @@ msgstr "<b>Animasi</b>"
 msgid "<b>General</b>"
 msgstr "<b>Umum</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:285
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:280
 msgid "Browse"
 msgstr "Lungsur"
 
@@ -703,7 +703,7 @@ msgid "_Never group windows"
 msgstr "_Jangan kumpul tetingkap"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:30
+#: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
 msgstr "piksel"
 
@@ -909,7 +909,7 @@ msgstr "_Buang Daripada Panel"
 msgid "_Move"
 msgstr "_Pindah"
 
-#: gnome-panel/applet.c:1065
+#: gnome-panel/applet.c:1072
 msgid "Can't find an empty spot"
 msgstr "Tidak dapat mencari slot kosong"
 
@@ -1030,8 +1030,8 @@ msgstr "Hidupkan panah butang sembunyi"
 msgid "Drawer"
 msgstr "Laci"
 
-#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:749 gnome-panel/menu.c:1556
-#: gnome-panel/menu.c:3075 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1508
+#: gnome-panel/menu.c:3038 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Ciri-ciri"
 
@@ -1249,82 +1249,58 @@ msgstr "Direktori web"
 msgid "GNOME Panel Shell"
 msgstr "Shell Utama GNOME"
 
-#: gnome-panel/launcher.c:104
-#, c-format
-msgid ""
-"Cannot save launcher to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-"Tak dapat menyimpan pelancar ke cakera, ralat berikut berlaki:\n"
-"\n"
-"%s"
+#: gnome-panel/launcher.c:103
+#, fuzzy
+msgid "Cannot save launcher to disk"
+msgstr "Tak dapat menyimpan item menu ke cakera"
 
-#: gnome-panel/launcher.c:132
-msgid "This launch icon does not specify a url to show"
+#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:172
+#: gnome-panel/launcher.c:217
+msgid "Cannot launch icon"
+msgstr "Tak dapat melancarkan ikon"
+
+#: gnome-panel/launcher.c:131
+#, fuzzy
+msgid "This launch icon does not specify a url to show."
 msgstr "Ikon pelancar ini tidak menyatakan url untuk dipapar"
 
-#: gnome-panel/launcher.c:141
-#, c-format
-msgid ""
-"Cannot show %s\n"
-"%s"
+#: gnome-panel/launcher.c:139
+#, fuzzy, c-format
+msgid "Cannot show %s"
 msgstr ""
 "Tak dapat memaparkan %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:172
-msgid "Cannot launch icon"
-msgstr "Tak dapat melancarkan ikon"
-
-#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1116
-#: gnome-panel/menu.c:334 gnome-panel/menu.c:364 gnome-panel/menu.c:381
-#: gnome-panel/menu.c:1085 gnome-panel/menu.c:1194 gnome-panel/menu.c:1226
-#: gnome-panel/menu.c:1244 gnome-panel/menu-ditem.c:118
-#: gnome-panel/menu-ditem.c:504 gnome-panel/panel-run-dialog.c:278
-#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:74
-msgid "Details"
-msgstr "Perincian"
-
-#: gnome-panel/launcher.c:224
-#, c-format
-msgid ""
-"Cannot launch icon\n"
-"%s"
-msgstr ""
-"Tak dapat melancarkan ikon\n"
-"%s"
-
-#: gnome-panel/launcher.c:415
+#: gnome-panel/launcher.c:408
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Tiada URI dibekalkan untuk fail desktop pelancar panel\n"
 
-#: gnome-panel/launcher.c:429
+#: gnome-panel/launcher.c:422
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Tak dapat membuka fail desktop %s bagi pelancar%s%s panel\n"
 
-#: gnome-panel/launcher.c:531
+#: gnome-panel/launcher.c:524
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Bantuan pada _Aplikasi %s"
 
-#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:182
-#: gnome-panel/menu-ditem.c:263
+#: gnome-panel/launcher.c:644 gnome-panel/menu-ditem.c:174
+#: gnome-panel/menu-ditem.c:255
 msgid "Launcher Properties"
 msgstr "Ciri-ciri Pelancar"
 
-#: gnome-panel/launcher.c:823
+#: gnome-panel/launcher.c:816
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Kekunci %s tidak ditetapkan, tak dpaat memuatkan pelancar\n"
 
-#: gnome-panel/launcher.c:892 gnome-panel/menu-ditem.c:541
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:528
 msgid "Create Launcher"
 msgstr "Cipta Pelancar"
 
-#: gnome-panel/launcher.c:1115 gnome-panel/menu.c:1225
-#: gnome-panel/panel-util.c:73
+#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1189
+#: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "Tak dapat memaparkan dokumen bantuan"
 
@@ -1332,7 +1308,7 @@ msgstr "Tak dapat memaparkan dokumen bantuan"
 msgid "Specify a profile name to load"
 msgstr "Nyatakan nama profil untuk dimuatkan"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3264
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
 msgid "Log Out"
 msgstr "Log Keluar"
 
@@ -1352,15 +1328,15 @@ msgstr "Kunci"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Kunci skrin supaya anda boleh meninggalkan komputer sekejap"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:236
 msgid "Force Quit"
 msgstr "Keluar Paksa"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:231
 msgid "Screenshot"
 msgstr "Cekupanskrin"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3434
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Ambil cekupan skrin desktop anda"
@@ -1369,7 +1345,7 @@ msgstr "Ambil cekupan skrin desktop anda"
 msgid "Search"
 msgstr "Carian"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3446
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3415
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cari fail, folder dan dokumen pada komputer anda"
@@ -1382,15 +1358,15 @@ msgstr "Laksana"
 msgid "Run a command"
 msgstr "Laksanakan arahan"
 
-#: gnome-panel/menu.c:279
+#: gnome-panel/menu.c:280
 msgid "And many, many others..."
 msgstr "Dan banyak lagi yang lain..."
 
-#: gnome-panel/menu.c:302
+#: gnome-panel/menu.c:303
 msgid "The GNOME Panel"
 msgstr "Panel GNOME"
 
-#: gnome-panel/menu.c:305
+#: gnome-panel/menu.c:306
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1398,157 +1374,170 @@ msgstr ""
 "Program ini bertanggungjawap untuk melancarkan aplikasi lain, aplet kecil "
 "embeded didalam dirinya."
 
-#: gnome-panel/menu.c:333
-msgid "Can't execute 'About GNOME'"
-msgstr "Gagal melaksanakan 'Perihal GNOME'"
+#: gnome-panel/menu.c:334 gnome-panel/panel-action-button.c:157
+#: gnome-panel/panel-action-button.c:175
+#, fuzzy, c-format
+msgid "Cannot execute '%s'"
+msgstr "Tidak boleh melaksanakan xscreensaver"
 
-#: gnome-panel/menu.c:335
-msgid "probably does not exist"
-msgstr "mungkin tidak wujud"
+#: gnome-panel/menu.c:335 gnome-panel/panel-util.c:958
+#, fuzzy, c-format
+msgid "%s - command not found"
+msgstr "Perincian: xscreensaver-command tidak dijumpai"
 
-#: gnome-panel/menu.c:363
-msgid "Can't launch entry"
+#: gnome-panel/menu.c:336
+#, fuzzy
+msgid "About GNOME"
+msgstr "Perihal _GNOME"
+
+#: gnome-panel/menu.c:358
+#, fuzzy
+msgid "Cannot launch entry"
 msgstr "Tak dapat melancarkan kemasukan"
 
-#: gnome-panel/menu.c:380 gnome-panel/menu.c:1193 gnome-panel/menu.c:1243
-msgid "Can't load entry"
+#: gnome-panel/menu.c:369 gnome-panel/menu.c:1163 gnome-panel/menu.c:1201
+#, fuzzy
+msgid "Cannot load entry"
 msgstr "Tak dapat memuatkan kemasukan"
 
-#: gnome-panel/menu.c:1083
-msgid "Could not remove the menu item"
-msgstr "Tak dapat membuang item menu"
+#: gnome-panel/menu.c:1068
+#, fuzzy, c-format
+msgid "Cannot remove menu item %s"
+msgstr "Tak dapat menyimpan item menu ke cakera"
 
-#: gnome-panel/menu.c:1100
+#: gnome-panel/menu.c:1078
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Tak boleh mendapatkan nama fail daripada path: %s"
 
-#: gnome-panel/menu.c:1107
+#: gnome-panel/menu.c:1085
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Tak boleh mendapatkan nama direktori daripada path: %s"
 
-#: gnome-panel/menu.c:1176
-msgid "Can't add to run box"
+#: gnome-panel/menu.c:1154
+#, fuzzy
+msgid "Cannot add to run box"
 msgstr "Tak boleh tambah ke kekotak laksana"
 
-#: gnome-panel/menu.c:1177
-msgid "Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1155
+#, fuzzy
+msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Perincian: Tiada medan 'Exec' atau 'URL' pada kemasukan"
 
-#: gnome-panel/menu.c:1485
+#: gnome-panel/menu.c:1437
 msgid "Add this launcher to panel"
 msgstr "Tambah pelancar ini pada panel"
 
-#: gnome-panel/menu.c:1494
+#: gnome-panel/menu.c:1446
 msgid "Remove this item"
 msgstr "Buang item ini"
 
-#: gnome-panel/menu.c:1510
+#: gnome-panel/menu.c:1462
 msgid "Put into run dialog"
 msgstr "Letakkannya di dialog perlaksanaan"
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1480
 #, c-format
 msgid "Help on %s"
 msgstr "Bantuan pada %s"
 
-#: gnome-panel/menu.c:1529
+#: gnome-panel/menu.c:1481
 msgid "Application"
 msgstr "Aplikasi"
 
-#: gnome-panel/menu.c:1577
+#: gnome-panel/menu.c:1529
 msgid "Entire menu"
 msgstr "Seluruh menu"
 
-#: gnome-panel/menu.c:1586
+#: gnome-panel/menu.c:1538
 msgid "Add this as drawer to panel"
 msgstr "Tambah laci ini pada panel"
 
-#: gnome-panel/menu.c:1595
+#: gnome-panel/menu.c:1547
 msgid "Add this as menu to panel"
 msgstr "Tambah menu ini pada panel"
 
-#: gnome-panel/menu.c:1604
+#: gnome-panel/menu.c:1556
 msgid "Add new item to this menu"
 msgstr "Tambah item baru pada menu ini"
 
-#: gnome-panel/menu.c:1630
+#: gnome-panel/menu.c:1582
 msgid "Properties"
 msgstr "Ciri-ciri"
 
-#: gnome-panel/menu.c:2602 gnome-panel/menu.c:2657
+#: gnome-panel/menu.c:2562 gnome-panel/menu.c:2617
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "kueri mengembalikan pengecualian %s\n"
 
-#: gnome-panel/menu.c:2852 gnome-panel/menu.c:2857 gnome-panel/menu.c:3402
+#: gnome-panel/menu.c:2813 gnome-panel/menu.c:2818 gnome-panel/menu.c:3371
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Aplikasi"
 
-#: gnome-panel/menu.c:2900 gnome-panel/menu.c:2906 gnome-panel/menu.c:3327
+#: gnome-panel/menu.c:2861 gnome-panel/menu.c:2867 gnome-panel/menu.c:3296
 msgid "KDE Menu"
 msgstr "Menu KDE"
 
-#: gnome-panel/menu.c:2958
+#: gnome-panel/menu.c:2918
 msgid "You cannot remove your last panel."
 msgstr "Anda tak boleh buang panel terakhir"
 
-#: gnome-panel/menu.c:3019
+#: gnome-panel/menu.c:2980
 msgid "_Delete This Panel..."
 msgstr "Pa_dam Panel Ini..."
 
-#: gnome-panel/menu.c:3022 gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:2983 gnome-panel/menu.c:3023
 msgid "_Delete This Panel"
 msgstr "Pa_dam Panel Ini"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:2998
 msgid "_Add to Panel"
 msgstr "_Tambah ke Panel"
 
-#: gnome-panel/menu.c:3088
+#: gnome-panel/menu.c:3052
 msgid "_New Panel"
 msgstr "Panel _Baru"
 
-#: gnome-panel/menu.c:3135
+#: gnome-panel/menu.c:3101
 msgid "_About Panels"
 msgstr "_Perihal Panel"
 
-#: gnome-panel/menu.c:3148
+#: gnome-panel/menu.c:3115
 msgid "About _GNOME"
 msgstr "Perihal _GNOME"
 
-#: gnome-panel/menu.c:3191
+#: gnome-panel/menu.c:3159
 msgid "_Launcher..."
 msgstr "_Pelancar..."
 
-#: gnome-panel/menu.c:3200
+#: gnome-panel/menu.c:3168
 msgid "Launcher _from menu"
 msgstr "Pelancar _daripada menu"
 
-#: gnome-panel/menu.c:3210
+#: gnome-panel/menu.c:3178
 msgid "Main _Menu"
 msgstr "_Menu Utama"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3188
 msgid "Menu _Bar"
 msgstr "_Bar Menu"
 
-#: gnome-panel/menu.c:3229
+#: gnome-panel/menu.c:3197
 msgid "_Drawer"
 msgstr "_Laci"
 
-#: gnome-panel/menu.c:3252
+#: gnome-panel/menu.c:3220
 msgid "Lock Screen"
 msgstr "Kunci Skrin"
 
-#: gnome-panel/menu.c:3258
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Kunci skrin supaya anda boleh meninggalkan komputer sekejap"
 
-#: gnome-panel/menu.c:3270
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1556,23 +1545,23 @@ msgstr ""
 "Logkeluar sesi ini untuk logmasuk sebagai pengguna lain atau untuk tutup "
 "komputer"
 
-#: gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:3396
 msgid "Run Application..."
 msgstr "Laksana Aplikasi..."
 
-#: gnome-panel/menu.c:3434 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3403 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Laksanakan aplikasi dengan memasukkan arahan"
 
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3412
 msgid "Search for Files..."
 msgstr "Cari Fail..."
 
-#: gnome-panel/menu.c:3462
+#: gnome-panel/menu.c:3431
 msgid "Take Screenshot..."
 msgstr "Cekup Skrin..."
 
-#: gnome-panel/menu.c:3480
+#: gnome-panel/menu.c:3449
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -1580,23 +1569,31 @@ msgstr "Desktop"
 msgid "Cannot save changes to launcher"
 msgstr "Tak dapat menyimpan perubahan pada pelancar"
 
-#: gnome-panel/menu-ditem.c:300
+#: gnome-panel/menu-ditem.c:292
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu-ditem.c:457
-msgid "You have to specify a name for the launcher."
+#: gnome-panel/menu-ditem.c:448 gnome-panel/menu-ditem.c:465
+#: gnome-panel/menu-ditem.c:520
+#, fuzzy
+msgid "Cannot create launcher"
+msgstr "Cipta Pelancar"
+
+#: gnome-panel/menu-ditem.c:449
+#, fuzzy
+msgid "You have to specify a name."
 msgstr "Anda mesti nyatakan nama bagi pelancar."
 
-#: gnome-panel/menu-ditem.c:473
+#: gnome-panel/menu-ditem.c:466
 msgid "You have to specify a valid URL or command."
 msgstr "Anda mesti nyatakan URL atau arahan yang sah."
 
-#: gnome-panel/menu-ditem.c:503
+#. class
+#: gnome-panel/menu-ditem.c:496
 msgid "Cannot save menu item to disk"
 msgstr "Tak dapat menyimpan item menu ke cakera"
 
-#: gnome-panel/menu-ditem.c:534
+#: gnome-panel/menu-ditem.c:521
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1620,53 +1617,45 @@ msgstr "_Bunuh Daemon Screensaver"
 msgid "Restart _Screensaver Daemon"
 msgstr "Ulanghidupkan Daemon _Screensaver"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "Cannot execute gnome-search-tool"
-msgstr "Tidak boleh melaksanakan gnome-search-tool"
-
-#: gnome-panel/panel-action-button.c:173
-msgid "Cannot execute gnome-panel-screenshot"
-msgstr "Tidak boleh melaksanakan gnome-panel-screenshot"
-
-#: gnome-panel/panel-action-button.c:205
+#: gnome-panel/panel-action-button.c:209
 msgid "Lock screen"
 msgstr "Kunci skrin"
 
-#: gnome-panel/panel-action-button.c:212
+#: gnome-panel/panel-action-button.c:216
 msgid "Log out of GNOME"
 msgstr "Log keluar GNOME"
 
-#: gnome-panel/panel-action-button.c:217
+#: gnome-panel/panel-action-button.c:221
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Run Application"
 msgstr "Laksana Aplikasi"
 
-#: gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:226
 msgid "Search for Files"
 msgstr "Cari fail"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:383
 msgid "Action Type"
 msgstr "Jenis Aksi"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:384
 msgid "The type of action this button implements"
 msgstr "Jenis aksi implmentasi butang ini"
 
-#: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
+#: gnome-panel/panel-action-button.c:393 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
 msgstr "Heret dan Jatuh dihidupkan"
 
-#: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:464
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Samada heret dan jatuh dihidupkan pada wiget ini"
 
-#: gnome-panel/panel-applet-frame.c:667
+#: gnome-panel/panel-applet-frame.c:677
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Pengecualian dari popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:784
+#: gnome-panel/panel-applet-frame.c:794
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -1684,11 +1673,11 @@ msgstr ""
 "(Jika anda pilih untuk tidak ulangmuatnya kali ini, anda boleh menambahnya "
 "dengan klik-kanan pada panel dan klik pada submenu \"Tambah ke panel\")"
 
-#: gnome-panel/panel-applet-frame.c:819
+#: gnome-panel/panel-applet-frame.c:829
 msgid "D_on't Delete"
 msgstr "_Jangan Padam"
 
-#: gnome-panel/panel-applet-frame.c:852
+#: gnome-panel/panel-applet-frame.c:862
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1701,7 +1690,7 @@ msgstr ""
 "\n"
 "Adakah anda ingin memadam aplet drpd konfigurasi anda?"
 
-#: gnome-panel/panel-applet-frame.c:862
+#: gnome-panel/panel-applet-frame.c:872
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1712,7 +1701,7 @@ msgstr ""
 "\n"
 "Adakah anda ingin memadam aplet drpd konfigurasi anda?"
 
-#: gnome-panel/panel-applet-frame.c:964
+#: gnome-panel/panel-applet-frame.c:974
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Tak boleh mendapatkan antaramuka AppletShell daripada kawalan\n"
 
@@ -2251,27 +2240,31 @@ msgid "Solid c_olor"
 msgstr "_Warna tegar"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
+msgid "Some of these properties are locked down"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
 msgstr "_Regang"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Atas"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Autohide"
 msgstr "_Auto-sembunyi"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_None (use system theme)"
 msgstr "_Tiada (guna tema sistem default)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "_Skala"
 
-#: gnome-panel/panel-properties-dialog.glade.h:29
+#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Tile"
 msgstr "_Tile"
 
@@ -2284,33 +2277,42 @@ msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "Aplikasi default bagi jenis fail ini tidak dapat mengendali fail jauh"
 
-#: gnome-panel/panel-recent.c:147
+#: gnome-panel/panel-recent.c:143 gnome-panel/panel-recent.c:149
+#, fuzzy
+msgid "Cannot open recently used document"
+msgstr "Tak dapat memaparkan dokumen bantuan"
+
+#: gnome-panel/panel-recent.c:150
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Ralat tidak diketahui berlaku bila cuba membuka %s"
 
-#: gnome-panel/panel-recent.c:165
+#: gnome-panel/panel-recent.c:168
 msgid "_Open Recent"
 msgstr "_Buka Kebelakangan"
 
-#: gnome-panel/panel-run-dialog.c:277
-msgid "Error launching command"
-msgstr "Ralat melancarkan arahan"
+#: gnome-panel/panel-run-dialog.c:297
+#, fuzzy, c-format
+msgid "Cannot launch command '%s'"
+msgstr ""
+"Tak dapat melancarkan ikon\n"
+"%s"
 
-#: gnome-panel/panel-run-dialog.c:311
-msgid "Error displaying location"
+#: gnome-panel/panel-run-dialog.c:328
+#, fuzzy, c-format
+msgid "Cannot display location '%s'"
 msgstr "Ralat memaparkan lokasi"
 
-#: gnome-panel/panel-run-dialog.c:1048
+#: gnome-panel/panel-run-dialog.c:1063
 msgid "Choose a file to append to the command..."
 msgstr "Pilih fail untuk ditambah pada arahan..."
 
-#: gnome-panel/panel-run-dialog.c:1227
+#: gnome-panel/panel-run-dialog.c:1242
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Akan melaksanakan arahan: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1233 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1248 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "Pilih aplikasi untuk melihat keterangannya."
 
@@ -2700,8 +2702,8 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
-"it leaves the panel area. Moving the pointer to that corner will cause the "
-"panel to re-appear."
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
@@ -2886,22 +2888,24 @@ msgstr "Koordinat Y bagi panel"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:105 gnome-panel/panel-util.c:141
-#: gnome-panel/panel-util.c:166
+#: gnome-panel/panel-util.c:100 gnome-panel/panel-util.c:136
+#: gnome-panel/panel-util.c:161
 msgid "Help document not found"
 msgstr "Dokumen bantuan tidak dijumpai"
 
-#: gnome-panel/panel-util.c:180
+#: gnome-panel/panel-util.c:175
 msgid "No document to show"
 msgstr "Tiada dokumen untuk dipaparkan"
 
-#: gnome-panel/panel-util.c:947
-msgid "Cannot execute xscreensaver"
-msgstr "Tidak boleh melaksanakan xscreensaver"
+#: gnome-panel/panel-util.c:483
+#, fuzzy, c-format
+msgid "Details: %s"
+msgstr "Perincian"
 
-#: gnome-panel/panel-util.c:948
-msgid "Details: xscreensaver-command not found"
-msgstr "Perincian: xscreensaver-command tidak dijumpai"
+#: gnome-panel/panel-util.c:957
+#, fuzzy, c-format
+msgid "Cannot execute %s"
+msgstr "Tidak boleh melaksanakan xscreensaver"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3011,3 +3015,30 @@ msgstr "XX Besar"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Kecil"
+
+#~ msgid ""
+#~ "Cannot save launcher to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Tak dapat menyimpan pelancar ke cakera, ralat berikut berlaki:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Can't execute 'About GNOME'"
+#~ msgstr "Gagal melaksanakan 'Perihal GNOME'"
+
+#~ msgid "probably does not exist"
+#~ msgstr "mungkin tidak wujud"
+
+#~ msgid "Could not remove the menu item"
+#~ msgstr "Tak dapat membuang item menu"
+
+#~ msgid "Cannot execute gnome-search-tool"
+#~ msgstr "Tidak boleh melaksanakan gnome-search-tool"
+
+#~ msgid "Cannot execute gnome-panel-screenshot"
+#~ msgstr "Tidak boleh melaksanakan gnome-panel-screenshot"
+
+#~ msgid "Error launching command"
+#~ msgstr "Ralat melancarkan arahan"

@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.3.3\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-06 12:00+0200\n"
+"POT-Creation-Date: 2003-07-15 16:45+0100\n"
 "PO-Revision-Date: 2003-07-06 12:02+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -147,7 +147,7 @@ msgstr "Utilitza _UTC"
 #: applets/clock/clock.c:1583 applets/notification_area/main.c:112
 #: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:786
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:493
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:290
 msgid "translator_credits"
 msgstr ""
 "Ivan Vilata i Balaguer <ivan@selidor.net>\n"
@@ -168,71 +168,82 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-msgid "Display Internet time, which is same all over the world"
-msgstr "Mostra l'hora d'Internet, que és la mateixa en tot el mon"
-
-#: applets/clock/clock.schemas.in.h:3
-msgid "Display date in the Clock, in addition to time"
-msgstr "Mostra la data en el rellotge, a més de l'hora"
-
-#: applets/clock/clock.schemas.in.h:4
-msgid "Display seconds in time"
-msgstr "Mostra els segons en l'hora"
-
-#: applets/clock/clock.schemas.in.h:5
-msgid "Display time in Universal Coordinated Time zone"
-msgstr "Mostra l'hora de la zona horària coordinada universalment"
-
-#: applets/clock/clock.schemas.in.h:6
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Mostra l'hora en segons des de l'Epoch, 01/01/1970"
-
-#: applets/clock/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Format de l'hora"
 
+#: applets/clock/clock.schemas.in.h:3
+#, fuzzy
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Mostra la data en el rellotge, a més de l'hora"
+
+#: applets/clock/clock.schemas.in.h:4
+#, fuzzy
+msgid "If true, display internet time, which is same all over the world."
+msgstr "Mostra l'hora d'Internet, que és la mateixa en tot el mon"
+
+#: applets/clock/clock.schemas.in.h:5
+#, fuzzy
+msgid "If true, display seconds in time."
+msgstr "Mostra els segons en l'hora"
+
+#: applets/clock/clock.schemas.in.h:6
+#, fuzzy
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "Mostra l'hora de la zona horària coordinada universalment"
+
+#: applets/clock/clock.schemas.in.h:7
+#, fuzzy
+msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+msgstr "Mostra l'hora en segons des de l'Epoch, 01/01/1970"
+
 #: applets/clock/clock.schemas.in.h:8
-msgid "Program to run in order to configure the time."
-msgstr "Programa a executar per a configurar l'hora."
-
-#: applets/clock/clock.schemas.in.h:9
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Fixa el format de l'hora, pot ser 12 o 24"
-
-#: applets/clock/clock.schemas.in.h:10
-msgid "Show date in Clock"
-msgstr "Mostra la data en el rellotge"
-
-#: applets/clock/clock.schemas.in.h:11
-msgid "Show date in a tooltip when a mouse is over the Clock"
+#, fuzzy
+msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Mostra la data en missatge emergent quan el punter pasa per damunt de "
 "l'applet"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:9
+#, fuzzy
+msgid "Show date in clock"
+msgstr "Mostra la data en el rellotge"
+
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Mostra la data en el suggeriment"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Mostra l'hora amb segons"
+
+#: applets/clock/clock.schemas.in.h:12
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are 12 and 24."
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:13
+#, fuzzy
+msgid "This key specifies the program to run in order to configure the time."
+msgstr "Programa a executar per a configurar l'hora."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
 msgstr "Eina de configuració de l'hora"
 
-#: applets/clock/clock.schemas.in.h:15
-msgid "Use Internet time"
-msgstr "Utilitza l'hora d'Internet"
-
 # La u de «Unix» és semiconsonant, no? iv
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:15
 msgid "Use UNIX time"
 msgstr "Utilitza l'hora de Unix"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:16
 msgid "Use UTC"
 msgstr "Utilitza UTC"
+
+#: applets/clock/clock.schemas.in.h:17
+#, fuzzy
+msgid "Use internet time"
+msgstr "Utilitza l'hora d'Internet"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -279,8 +290,8 @@ msgstr "_Quant a..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3090
+#: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
 msgstr "A_juda"
@@ -411,7 +422,7 @@ msgstr "<b>Animació</b>"
 msgid "<b>General</b>"
 msgstr "<b>General</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:285
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:280
 msgid "Browse"
 msgstr "Navega"
 
@@ -460,28 +471,62 @@ msgstr ""
 "anomenant-lo."
 
 #: applets/fish/fish.schemas.in.h:2
-msgid "Command to execute when the fish is clicked"
-msgstr "Ordre a executar en fer click al peix"
+#, fuzzy
+msgid "Command to execute on click"
+msgstr "Ordre a executar"
 
 #: applets/fish/fish.schemas.in.h:3
+#, fuzzy
+msgid "Frames in fish's animation"
+msgstr "Número de trames en l'animació del peix"
+
+#: applets/fish/fish.schemas.in.h:4
+#, fuzzy
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Si és vertader, la imatge de fons es rotarà si el quadre s'orienta "
+"verticalment."
+
+#: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
 msgstr "Pausa per trama"
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
 msgstr "Rota en els quadres verticals"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
 msgstr "El pixmap de l'animació del peix"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
 msgstr "El nom del peix"
 
-#: applets/fish/fish.schemas.in.h:7
-msgid "The number of frames in the fish's animation"
+#: applets/fish/fish.schemas.in.h:9
+#, fuzzy
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Ordre a executar en fer click al peix"
+
+#: applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:11
+#, fuzzy
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
 msgstr "Número de trames en l'animació del peix"
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr ""
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -657,7 +702,7 @@ msgstr "M_ostra les finestres de l'espai de treball actual"
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostra les finestres de t_ots els espais de treball"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3472
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3524
 msgid "Size"
 msgstr "Mida"
 
@@ -674,45 +719,51 @@ msgid "_Never group windows"
 msgstr "_Mai agrupar les finestres"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:30
+#: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
 msgstr "píxels"
 
 #: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
 msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Decideix quan agrupar finestres de la mateixa aplicació en la llista de "
 "tarees. Els valors vàlids són «mai», «auto» i «sempre»."
 
 #: applets/wncklet/window-list.schemas.in.h:2
+#, fuzzy
 msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
 msgstr ""
 "Si açò s'habilita, la llista de tarees mostrarà finestres de tots els espais "
 "de treball; d'altra forma, només mostrarà les finestres de l'espai de "
 "treball actual."
 
 #: applets/wncklet/window-list.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
 msgstr ""
 "Si açò s'habilita, quan es desminimitze una finestra, la torna a l'espai de "
 "treball actual. D'altra forma, canvia a l'espai de treball de la finestra."
 
 #: applets/wncklet/window-list.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "Mida màxima que demanarà l'applet de llistat de tarees"
+#, fuzzy
+msgid "Maximum window list size"
+msgstr "Mida mà_xima:"
 
 #: applets/wncklet/window-list.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "Mida mínima que demanarà l'applet de llistat de tarees"
+#, fuzzy
+msgid "Minimum window list size"
+msgstr "Mida mín_ima:"
 
 #: applets/wncklet/window-list.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
+#, fuzzy
+msgid "Move windows to current workspace when unminimized"
 msgstr "Moure les finestres a l'espai de treball actual en restaurar"
 
 #: applets/wncklet/window-list.schemas.in.h:7
@@ -720,10 +771,11 @@ msgid "Show windows from all workspaces"
 msgstr "Mostra les finestres de tots els espais de treball"
 
 #: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
 msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
 msgstr ""
 "Aquest valor és l'amplària màxima que la llista de tarees demanarà. La "
 "configuració d'amplària màxima és útil per a limitar la mida utilitzada en "
@@ -731,15 +783,9 @@ msgstr ""
 "tarees podria ocupar tot l'espai disponible."
 
 #: applets/wncklet/window-list.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"La llista de tarees necessita una amplària mínima per a que siga útil. "
-"Aquest valor és l'amplària mínima que la llista de tarees demanarà. "
-"L'amplària mínima és útil amb quadres lliscants i a un costat, que "
-"normalment demanen una amplària petita per defecte."
+#, fuzzy
+msgid "This key specifies the minimum width that the window list requests."
+msgstr "Mida mínima que demanarà l'applet de llistat de tarees"
 
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -831,48 +877,49 @@ msgid "Workspace na_mes:"
 msgstr "No_ms dels espais de treball:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
+#, fuzzy
+msgid "Display all workspaces"
+msgstr "Mostra tots els esp_ais de treball a:"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#, fuzzy
+msgid "Display workspace names"
+msgstr "No_ms dels espais de treball:"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+#, fuzzy
 msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
 msgstr ""
 "Si açò s'habilita, el canviador d'espais de treball mostrarà tots els espais "
 "de treball; d'altra forma només mostrará l'espai de treball actual."
 
-#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
 msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
 msgstr ""
 "Si açò s'habilita, els espais de treball en el canviador d'espais de treball "
 "mostraràn els noms dels espais de treball; d'altra manera mostraràn els "
 "continguts del espai de treball."
 
-#: applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Nombre de files en el canviador d'espais de treball"
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Rows in workspace switcher"
+msgstr "Canviador d'espais de treball"
 
-#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
 msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
+"This key specifies how many how many rows (for horizontal layout) or columns "
+"(for vertical layout) the workspace switcher shows the workspaces in. This "
+"key is only relevant if the display_all_workspaces key is true."
 msgstr ""
 "Quan es mostren tots els espais de treball, açò determina en quantes files "
 "(per al emplaçament horitzontal) o columnes (per al emplaçament vertical) "
 "mostrarà els espais de treball el canviador d'espais de treball."
-
-#: applets/wncklet/workspace-switcher.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr ""
-"Mostra o no tots els espais de treball en el canviador d'espais de treball."
-
-#: applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"Mostra o no els noms dels espais de treball en el canviador d'espais de "
-"treball."
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:104
@@ -896,7 +943,7 @@ msgstr "_Elimina del quadre"
 msgid "_Move"
 msgstr "_Mou"
 
-#: gnome-panel/applet.c:1065
+#: gnome-panel/applet.c:1072
 msgid "Can't find an empty spot"
 msgstr "No puc trobar cap forat lliure"
 
@@ -927,7 +974,7 @@ msgstr "Té fletxa"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Si s'ha de dibuixar o no una fletxa indicativa"
 
-#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3461
+#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3513
 msgid "Orientation"
 msgstr "Orientació"
 
@@ -1017,12 +1064,12 @@ msgstr "Habilita el botó d'amagar"
 msgid "Enable hidebutton arrow"
 msgstr "Habilita la fletxa del botó d'amagar"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3191
+#: gnome-panel/drawer.c:177
 msgid "Drawer"
 msgstr "Calaix"
 
-#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:749 gnome-panel/menu.c:1556
-#: gnome-panel/menu.c:3037 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1508
+#: gnome-panel/menu.c:3038 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Propietats"
 
@@ -1233,91 +1280,68 @@ msgstr ""
 "en la web."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
-msgid "Web directory."
+#, fuzzy
+msgid "Web directory"
 msgstr "Directori de web."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "Shell del quadre del GNOME"
 
-#: gnome-panel/launcher.c:104
-#, c-format
-msgid ""
-"Cannot save launcher to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-"No es pot desar el llançador al disc, ha hagut el següent error:\n"
-"\n"
-"%s"
+#: gnome-panel/launcher.c:103
+#, fuzzy
+msgid "Cannot save launcher to disk"
+msgstr "No es pot desar l'element del menú a disc"
 
-#: gnome-panel/launcher.c:132
-msgid "This launch icon does not specify a url to show"
+#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:172
+#: gnome-panel/launcher.c:217
+msgid "Cannot launch icon"
+msgstr "No es pot llançar l'icona"
+
+#: gnome-panel/launcher.c:131
+#, fuzzy
+msgid "This launch icon does not specify a url to show."
 msgstr "Aquesta icona de llançament no especifica una url a mostrar"
 
-#: gnome-panel/launcher.c:141
-#, c-format
-msgid ""
-"Cannot show %s\n"
-"%s"
+#: gnome-panel/launcher.c:139
+#, fuzzy, c-format
+msgid "Cannot show %s"
 msgstr ""
 "No es pot mostrar %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:172
-msgid "Cannot launch icon"
-msgstr "No es pot llançar l'icona"
-
-#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1116
-#: gnome-panel/menu.c:334 gnome-panel/menu.c:364 gnome-panel/menu.c:381
-#: gnome-panel/menu.c:1085 gnome-panel/menu.c:1194 gnome-panel/menu.c:1226
-#: gnome-panel/menu.c:1244 gnome-panel/menu-ditem.c:118
-#: gnome-panel/menu-ditem.c:504 gnome-panel/panel-run-dialog.c:278
-#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:74
-msgid "Details"
-msgstr "Detalls"
-
-#: gnome-panel/launcher.c:224
-#, c-format
-msgid ""
-"Cannot launch icon\n"
-"%s"
-msgstr ""
-"No es pot llançar l'icona\n"
-"%s"
-
-#: gnome-panel/launcher.c:415
+#: gnome-panel/launcher.c:408
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No s'ha proveït una URI per al fitxer desktop del llançador del quadre\n"
 
-#: gnome-panel/launcher.c:429
+#: gnome-panel/launcher.c:422
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No s'ha pogut obrir el fitxer desktop %s per al llançador del quadre%s%s\n"
 
-#: gnome-panel/launcher.c:531
+#: gnome-panel/launcher.c:524
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Ajuda sobre l'_aplicació %s"
 
-#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:182
-#: gnome-panel/menu-ditem.c:263
+#: gnome-panel/launcher.c:644 gnome-panel/menu-ditem.c:174
+#: gnome-panel/menu-ditem.c:255
 msgid "Launcher Properties"
 msgstr "Propietats del llançador"
 
-#: gnome-panel/launcher.c:823
+#: gnome-panel/launcher.c:816
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "La clau %s no està fixada, no es pot carregar el llançador\n"
 
-#: gnome-panel/launcher.c:892 gnome-panel/menu-ditem.c:541
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:528
 msgid "Create Launcher"
 msgstr "Crea un llançador"
 
-#: gnome-panel/launcher.c:1115 gnome-panel/menu.c:1225
-#: gnome-panel/panel-util.c:73
+#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1189
+#: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "No es pot mostrar el document d'ajuda"
 
@@ -1325,8 +1349,7 @@ msgstr "No es pot mostrar el document d'ajuda"
 msgid "Specify a profile name to load"
 msgstr "Especifica el nom del perfil a carregar"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3226
-#: gnome-panel/panel-menu-bar.c:161
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
 msgid "Log Out"
 msgstr "Surt"
 
@@ -1347,15 +1370,15 @@ msgid "Lock the screen so you can temporarily leave your computer"
 msgstr ""
 "Bloca la pantalla per a que pugueu anar-vos de l'ordinador temporalment"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:236
 msgid "Force Quit"
 msgstr "Força la sortida"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:231
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3434
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
@@ -1364,7 +1387,7 @@ msgstr "Fa una captura del vostre escriptori"
 msgid "Search"
 msgstr "Cerca"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3415
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
@@ -1377,168 +1400,192 @@ msgstr "Executa"
 msgid "Run a command"
 msgstr "Executa una ordre"
 
-#: gnome-panel/menu.c:279
+#: gnome-panel/menu.c:280
 msgid "And many, many others..."
 msgstr "I molts, molts altres..."
 
-#: gnome-panel/menu.c:302
+#: gnome-panel/menu.c:303
 msgid "The GNOME Panel"
 msgstr "El quadre de GNOME"
 
-#: gnome-panel/menu.c:305
+#: gnome-panel/menu.c:306
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
-msgstr "Aquest programa s'encarrega de llançar altres aplicacions i d'incorporar applets petits a ell mateix."
+msgstr ""
+"Aquest programa s'encarrega de llançar altres aplicacions i d'incorporar "
+"applets petits a ell mateix."
 
-#: gnome-panel/menu.c:333
-msgid "Can't execute 'About GNOME'"
-msgstr "No puc executar «Quant a GNOME»"
+#: gnome-panel/menu.c:334 gnome-panel/panel-action-button.c:157
+#: gnome-panel/panel-action-button.c:175
+#, fuzzy, c-format
+msgid "Cannot execute '%s'"
+msgstr "No puc executar xscreensaver"
 
-#: gnome-panel/menu.c:335
-msgid "probably does not exist"
-msgstr "probablement no existeix"
+#: gnome-panel/menu.c:335 gnome-panel/panel-util.c:958
+#, fuzzy, c-format
+msgid "%s - command not found"
+msgstr "Detalls: no s'ha trobat el xscreensaver-command"
 
-#: gnome-panel/menu.c:363
-msgid "Can't launch entry"
+#: gnome-panel/menu.c:336
+#, fuzzy
+msgid "About GNOME"
+msgstr "Quant al _GNOME"
+
+#: gnome-panel/menu.c:358
+#, fuzzy
+msgid "Cannot launch entry"
 msgstr "No es pot llançar l'entrada"
 
-#: gnome-panel/menu.c:380 gnome-panel/menu.c:1193 gnome-panel/menu.c:1243
-msgid "Can't load entry"
+#: gnome-panel/menu.c:369 gnome-panel/menu.c:1163 gnome-panel/menu.c:1201
+#, fuzzy
+msgid "Cannot load entry"
 msgstr "No es pot carregar l'entrada"
 
-#: gnome-panel/menu.c:1083
-msgid "Could not remove the menu item"
-msgstr "No s'ha pogut eliminar l'element del menú"
+#: gnome-panel/menu.c:1068
+#, fuzzy, c-format
+msgid "Cannot remove menu item %s"
+msgstr "No es pot desar l'element del menú a disc"
 
-#: gnome-panel/menu.c:1100
+#: gnome-panel/menu.c:1078
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "No s'ha pogut aconseguir el nom del fitxer del camí: %s"
 
-#: gnome-panel/menu.c:1107
+#: gnome-panel/menu.c:1085
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "No s'ha pogut aconseguir el nom del directori del camí: %s"
 
-#: gnome-panel/menu.c:1176
-msgid "Can't add to run box"
+#: gnome-panel/menu.c:1154
+#, fuzzy
+msgid "Cannot add to run box"
 msgstr "No es pot afegir a la caixa d'execució"
 
-#: gnome-panel/menu.c:1177
-msgid "Details: No 'Exec' or 'URL' field in entry"
+#: gnome-panel/menu.c:1155
+#, fuzzy
+msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Detalls: No hi ha un camp «Exec» o «URL» a l'entrada"
 
-#: gnome-panel/menu.c:1485
+#: gnome-panel/menu.c:1437
 msgid "Add this launcher to panel"
 msgstr "Afegeix aquest llançador al quadre"
 
-#: gnome-panel/menu.c:1494
+#: gnome-panel/menu.c:1446
 msgid "Remove this item"
 msgstr "Suprimeix aquest element"
 
-#: gnome-panel/menu.c:1510
+#: gnome-panel/menu.c:1462
 msgid "Put into run dialog"
 msgstr "Posa en el diàleg d'executar"
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1480
 #, c-format
 msgid "Help on %s"
 msgstr "Ajuda sobre %s"
 
-#: gnome-panel/menu.c:1529
+#: gnome-panel/menu.c:1481
 msgid "Application"
 msgstr "Aplicació"
 
-#: gnome-panel/menu.c:1577
+#: gnome-panel/menu.c:1529
 msgid "Entire menu"
 msgstr "Menú sencer"
 
-#: gnome-panel/menu.c:1586
+#: gnome-panel/menu.c:1538
 msgid "Add this as drawer to panel"
 msgstr "Afegeix això com a calaix al quadre"
 
-#: gnome-panel/menu.c:1595
+#: gnome-panel/menu.c:1547
 msgid "Add this as menu to panel"
 msgstr "Afegeix això com a menú al quadre"
 
-#: gnome-panel/menu.c:1604
+#: gnome-panel/menu.c:1556
 msgid "Add new item to this menu"
 msgstr "Afegeix un nou ítem a aquest menú"
 
-#: gnome-panel/menu.c:1630
+#: gnome-panel/menu.c:1582
 msgid "Properties"
 msgstr "Propietats"
 
-#: gnome-panel/menu.c:2564 gnome-panel/menu.c:2619
+#: gnome-panel/menu.c:2562 gnome-panel/menu.c:2617
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la petició ha tornat l'excepció %s\n"
 
-#: gnome-panel/menu.c:2814 gnome-panel/menu.c:2819 gnome-panel/menu.c:3364
+#: gnome-panel/menu.c:2813 gnome-panel/menu.c:2818 gnome-panel/menu.c:3371
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Aplicacions"
 
-#: gnome-panel/menu.c:2862 gnome-panel/menu.c:2868 gnome-panel/menu.c:3289
+#: gnome-panel/menu.c:2861 gnome-panel/menu.c:2867 gnome-panel/menu.c:3296
 msgid "KDE Menu"
 msgstr "Menú de KDE"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2918
 msgid "You cannot remove your last panel."
 msgstr "No podeu suprimir el vostre últim quadre."
 
-#: gnome-panel/menu.c:2981
+#: gnome-panel/menu.c:2980
 msgid "_Delete This Panel..."
 msgstr "_Elimina aquest quadre..."
 
-#: gnome-panel/menu.c:2984 gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:2983 gnome-panel/menu.c:3023
 msgid "_Delete This Panel"
 msgstr "_Elimina aquest quadre"
 
-#: gnome-panel/menu.c:2999
+#: gnome-panel/menu.c:2998
 msgid "_Add to Panel"
 msgstr "_Afegeix al quadre"
 
-#: gnome-panel/menu.c:3050
+#: gnome-panel/menu.c:3052
 msgid "_New Panel"
 msgstr "_Nou quadre"
 
-#: gnome-panel/menu.c:3097
+#: gnome-panel/menu.c:3101
 msgid "_About Panels"
 msgstr "Quant als quadres"
 
-#: gnome-panel/menu.c:3110
+#: gnome-panel/menu.c:3115
 msgid "About _GNOME"
 msgstr "Quant al _GNOME"
 
-#: gnome-panel/menu.c:3153
-msgid "Launcher..."
+#: gnome-panel/menu.c:3159
+#, fuzzy
+msgid "_Launcher..."
 msgstr "Llançador..."
 
-#: gnome-panel/menu.c:3162
-msgid "Launcher from menu"
+#: gnome-panel/menu.c:3168
+#, fuzzy
+msgid "Launcher _from menu"
 msgstr "Llançador des del menú"
 
-#: gnome-panel/menu.c:3172
-msgid "Main Menu"
+#: gnome-panel/menu.c:3178
+#, fuzzy
+msgid "Main _Menu"
 msgstr "Menú principal"
 
-#: gnome-panel/menu.c:3182
-msgid "Menu Bar"
+#: gnome-panel/menu.c:3188
+#, fuzzy
+msgid "Menu _Bar"
 msgstr "Barra de menú"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3197
+#, fuzzy
+msgid "_Drawer"
+msgstr "Calaix"
+
+#: gnome-panel/menu.c:3220
 msgid "Lock Screen"
 msgstr "Bloca la pantalla"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Bloca la pantalla per a que pugueu anar-vos de l'ordinador temporalment"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1546,23 +1593,23 @@ msgstr ""
 "Surt d'aquesta sessió per a entrar com un usuari diferent o per a tancar "
 "l'ordinador"
 
-#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3396
 msgid "Run Application..."
 msgstr "Executa una aplicació..."
 
-#: gnome-panel/menu.c:3396 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3403 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Executa una aplicació, introduïnt una ordre"
 
-#: gnome-panel/menu.c:3405 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3412
 msgid "Search for Files..."
 msgstr "Cerca fitxers..."
 
-#: gnome-panel/menu.c:3424 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3431
 msgid "Take Screenshot..."
 msgstr "Pren una captura de pantalla..."
 
-#: gnome-panel/menu.c:3442
+#: gnome-panel/menu.c:3449
 msgid "Desktop"
 msgstr "Escriptori"
 
@@ -1570,23 +1617,31 @@ msgstr "Escriptori"
 msgid "Cannot save changes to launcher"
 msgstr "No es pot desar els canvis del llançador"
 
-#: gnome-panel/menu-ditem.c:300
+#: gnome-panel/menu-ditem.c:292
 msgid "Menu"
 msgstr "Menú"
 
-#: gnome-panel/menu-ditem.c:457
-msgid "You have to specify a name for the launcher."
+#: gnome-panel/menu-ditem.c:448 gnome-panel/menu-ditem.c:465
+#: gnome-panel/menu-ditem.c:520
+#, fuzzy
+msgid "Cannot create launcher"
+msgstr "Crea un llançador"
+
+#: gnome-panel/menu-ditem.c:449
+#, fuzzy
+msgid "You have to specify a name."
 msgstr "Heu d'especificar un nom per al llançador"
 
-#: gnome-panel/menu-ditem.c:473
+#: gnome-panel/menu-ditem.c:466
 msgid "You have to specify a valid URL or command."
 msgstr "Heu d'especificar una URL o ordre vàlida."
 
-#: gnome-panel/menu-ditem.c:503
+#. class
+#: gnome-panel/menu-ditem.c:496
 msgid "Cannot save menu item to disk"
 msgstr "No es pot desar l'element del menú a disc"
 
-#: gnome-panel/menu-ditem.c:534
+#: gnome-panel/menu-ditem.c:521
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1598,7 +1653,7 @@ msgstr ""
 msgid "_Activate Screensaver"
 msgstr "_Activa el protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:86 gnome-panel/panel-menu-bar.c:152
 msgid "_Lock Screen"
 msgstr "B_loca la pantalla"
 
@@ -1610,53 +1665,45 @@ msgstr "Ma_ta el dimoni del protector de pantalla"
 msgid "Restart _Screensaver Daemon"
 msgstr "Reinicia el dimoni del _protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "Cannot execute gnome-search-tool"
-msgstr "No es pot executar gnome-search-tool"
-
-#: gnome-panel/panel-action-button.c:173
-msgid "Cannot execute gnome-panel-screenshot"
-msgstr "No es pot executar gnome-panel-screenshot"
-
-#: gnome-panel/panel-action-button.c:205
+#: gnome-panel/panel-action-button.c:209
 msgid "Lock screen"
 msgstr "Bloca la pantalla"
 
-#: gnome-panel/panel-action-button.c:212
+#: gnome-panel/panel-action-button.c:216
 msgid "Log out of GNOME"
 msgstr "Surt de GNOME"
 
-#: gnome-panel/panel-action-button.c:217
+#: gnome-panel/panel-action-button.c:221
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Run Application"
 msgstr "Executa una aplicació"
 
-#: gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:226
 msgid "Search for Files"
 msgstr "Cerca fitxers"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:383
 msgid "Action Type"
 msgstr "Tipus de l'acció"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:384
 msgid "The type of action this button implements"
 msgstr "El tipus d'acció que implementa aquest botó"
 
-#: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
+#: gnome-panel/panel-action-button.c:393 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
 msgstr "Arrossega i deixa anar habilitat"
 
-#: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:464
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Si està o no habilitat l'arrossega i desa al giny"
 
-#: gnome-panel/panel-applet-frame.c:667
+#: gnome-panel/panel-applet-frame.c:677
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepció de popup_menu «%s»\n"
 
-#: gnome-panel/panel-applet-frame.c:783
+#: gnome-panel/panel-applet-frame.c:794
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -1673,11 +1720,11 @@ msgstr ""
 "(Si trieu no recarregarla ara, sempre podeu afegir-la fent clic amb el botó "
 "secundari en el quadre i seleccionant el submenú «Afegeix al quadre»)"
 
-#: gnome-panel/panel-applet-frame.c:818
+#: gnome-panel/panel-applet-frame.c:829
 msgid "D_on't Delete"
 msgstr "N_o suprimeixes"
 
-#: gnome-panel/panel-applet-frame.c:852
+#: gnome-panel/panel-applet-frame.c:862
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1690,7 +1737,19 @@ msgstr ""
 "\n"
 "Voleu eliminar l'applet de la vostra configuració?"
 
-#: gnome-panel/panel-applet-frame.c:956
+#: gnome-panel/panel-applet-frame.c:872
+#, fuzzy, c-format
+msgid ""
+"The panel encountered a problem while loading \"%s\"\n"
+"\n"
+"Do you want to delete the applet from your configuration?"
+msgstr ""
+"El quadre ha trobat un problema al carregar «%s»\n"
+"Detalls: %s\n"
+"\n"
+"Voleu eliminar l'applet de la vostra configuració?"
+
+#: gnome-panel/panel-applet-frame.c:974
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No s'ha pogut obtindre la interfície AppletShell des del control\n"
 
@@ -1750,102 +1809,199 @@ msgid "Which edges to draw"
 msgstr "Quins cantons s'han de mostrar"
 
 #: gnome-panel/panel-general.schemas.in.h:1
-msgid "A list of panel IDs"
-msgstr "Una llista de ID de quadres"
-
-#: gnome-panel/panel-general.schemas.in.h:2
+#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels is stored in /apps/panel/general/"
+"settings for each of these panels are stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
 msgstr ""
 "Una llista de ID de quadres. Cada ID identifica un quadre individual del "
 "nivell superior. La configuració per a cada un d'aquests quadres es guarda "
 "en /apps/panel/general/$(profile)/toplevelts/$(id)."
 
-#: gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs"
-msgstr "Una llista d'ID d'applets del quadre"
-
-#: gnome-panel/panel-general.schemas.in.h:4
+#: gnome-panel/panel-general.schemas.in.h:2
+#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets is stored in /apps/panel/general/"
+"The settings for each of these applets are stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
 "Una llista d'ID d'applets del quadre. Cada ID identifica un applet del "
 "quadre individual. La configuració per a cada una d'aquestes applets es "
 "guarda en /apps/panel/general/$(profiles)/applets/$(id)."
 
-#: gnome-panel/panel-general.schemas.in.h:5
-msgid "A list of panel object IDs"
-msgstr "Una llista d'ID d'objectes del quadre"
-
-#: gnome-panel/panel-general.schemas.in.h:6
+#: gnome-panel/panel-general.schemas.in.h:3
+#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 "Una llista d'ID d'objectes del quadre. Cada ID identifica un objecte del "
 "quadre individual. La configuració per a cada un d'aquests objectes es "
 "guarda en /apps/panel/general/$(profiles)/objects/$(id)."
 
-#: gnome-panel/panel-general.schemas.in.h:7
-msgid "Enable the program list in the \"Run Application\" dialog."
+#: gnome-panel/panel-general.schemas.in.h:4
+#, fuzzy
+msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Habilita el llistat de programes al diàleg «Executa una aplicació»."
 
-#: gnome-panel/panel-general.schemas.in.h:8
-msgid "Expand the program list in the \"Run Application\" dialog"
+#: gnome-panel/panel-general.schemas.in.h:5
+#, fuzzy
+msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Expansiona el llistat de programes al diàleg «Executa una aplicació»."
 
-#: gnome-panel/panel-general.schemas.in.h:9
+#: gnome-panel/panel-general.schemas.in.h:6
+#, fuzzy
 msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" dialog is "
-"made available. Whether or not the listing is expanded when the dialog is "
-"shown is controlled by the show_program_list setting."
-msgstr ""
-"Si és vertader, la llista «Aplicacions conegudes» al diàleg «Executa un "
-"programa» estarà disponible. Si el llistat està o no expandit quan es mostra "
-"el diàleg està controlat per la configuració show_program_list."
-
-#: gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" is "
-"expanded when the dialog is opened. This setting is only relevant if "
-"enable_program_list is true."
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
 msgstr ""
 "Si és vertader, la llista «Aplicacions conegudes» al diàleg «Executa un "
 "programa» estarà disponible. Aquesta configuració només té importància si "
 "enable_program_list és vertader."
 
+#: gnome-panel/panel-general.schemas.in.h:7
+#, fuzzy
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Si és vertader, la llista «Aplicacions conegudes» al diàleg «Executa un "
+"programa» estarà disponible. Si el llistat està o no expandit quan es mostra "
+"el diàleg està controlat per la configuració show_program_list."
+
+#: gnome-panel/panel-general.schemas.in.h:8
+#, fuzzy
+msgid "Panel ID list"
+msgstr "Quadre: "
+
+#: gnome-panel/panel-general.schemas.in.h:9
+#, fuzzy
+msgid "Panel applet ID list"
+msgstr "Una llista d'ID d'applets del quadre"
+
+#: gnome-panel/panel-general.schemas.in.h:10
+#, fuzzy
+msgid "Panel object ID list"
+msgstr "Propietats del quadre"
+
 #: gnome-panel/panel-global.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr "Mostra el diàleg «Executa»"
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+#, fuzzy
+msgid "Animation speed"
+msgstr "Velocitat de l'_animació:"
 
 #: gnome-panel/panel-global.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr "FIXME - està açò resolt amb les coses noves dels menús?"
+#, fuzzy
+msgid "Autoclose drawer"
+msgstr "Afegeix un calaix"
 
 #: gnome-panel/panel-global.schemas.in.h:3
+#, fuzzy
+msgid "Confirm panel removal"
+msgstr "Quadre de cantó"
+
+#: gnome-panel/panel-global.schemas.in.h:4
+#, fuzzy
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr "Mostra el diàleg «Executa»"
+
+#: gnome-panel/panel-global.schemas.in.h:5
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+#, fuzzy
+msgid "Enable animations"
+msgstr "Habilita les animacions."
+
+#: gnome-panel/panel-global.schemas.in.h:6
+#, fuzzy
+msgid "Enable keybindings"
+msgstr "_Habilita les tecles vinculades"
+
+#: gnome-panel/panel-global.schemas.in.h:7
+#, fuzzy
+msgid "Enable tooltips"
+msgstr "Habilita el texte en negreta"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+#, fuzzy
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr "FIXME - està açò resolt amb les coses noves dels menús?"
+
+#: gnome-panel/panel-global.schemas.in.h:9
 msgid "FIXME - need to define limits"
 msgstr "FIXME - necessitem definir els límits"
 
-#: gnome-panel/panel-global.schemas.in.h:4
-msgid "Popup the panel menu"
+#: gnome-panel/panel-global.schemas.in.h:10
+#, fuzzy
+msgid "Highlight launchers on mouseover"
+msgstr "Il·lumina els botons si ha el ratolí al damunt"
+
+#: gnome-panel/panel-global.schemas.in.h:11
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:14
+msgid "If true, panel-specific keybindings are enabled."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "If true, tooltips are shown for objects in panels."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:16
+#, fuzzy
+msgid "Popup panel menu keybinding"
 msgstr "Mostrar el menú del panel"
 
-#: gnome-panel/panel-global.schemas.in.h:5
-msgid "Take a screen shot"
+#: gnome-panel/panel-global.schemas.in.h:17
+#, fuzzy
+msgid "Take screenshot"
 msgstr "Fa una captura de pantalla"
 
-#: gnome-panel/panel-global.schemas.in.h:6
-msgid "Take a screen shot of a window"
-msgstr "Fa una captura de una finestra"
+#: gnome-panel/panel-global.schemas.in.h:18
+#, fuzzy
+msgid "Take window screenshot"
+msgstr "Fa una captura de pantalla"
+
+#: gnome-panel/panel-menu-bar.c:110
+#, fuzzy
+msgid "_Run Application..."
+msgstr "Executa una aplicació..."
+
+#: gnome-panel/panel-menu-bar.c:123
+#, fuzzy
+msgid "_Search for Files..."
+msgstr "Cerca fitxers..."
+
+#: gnome-panel/panel-menu-bar.c:138
+#, fuzzy
+msgid "_Take Screenshot..."
+msgstr "Pren una captura de pantalla..."
 
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
+
+#: gnome-panel/panel-menu-bar.c:161
+#, fuzzy
+msgid "_Log Out"
+msgstr "Surt"
 
 #: gnome-panel/panel-menu-bar.c:163
 msgid "Quit from the GNOME desktop"
@@ -1884,36 +2040,53 @@ msgid "Use the icon specified by the custom-icon property"
 msgstr "Utilitza l'icona especificada per la propietat custom-icon"
 
 #: gnome-panel/panel-object.schemas.in.h:1
-msgid ""
-"If true the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
-msgstr ""
-"Si és veritat, la posició de l'objecte s'interpreta relativa al costat dret "
-"(o inferior, si és vertical) del quadre."
+#, fuzzy
+msgid "Action button type"
+msgstr "Tipus de l'acció"
 
 #: gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr ""
+
+#: gnome-panel/panel-object.schemas.in.h:3
+#, fuzzy
+msgid "Icon used for object's button"
+msgstr "La icona utilitzada per al botó de l'objecte"
+
+#: gnome-panel/panel-object.schemas.in.h:4
+#, fuzzy
 msgid ""
-"If true, the custom_icon setting is used as a custom icon for the button. If "
-"false, the custom_icon setting is ignored. This setting is only relevant if "
-"the object_type is \"menu-object\" or \"drawer-object\"."
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 "Si és vertader, la configuració custom_icon s'utilitza com una icona "
 "personalitzada per al botó. Si és fals, la configuració custom_icon "
 "s'ignora. Aquesta configuració només té efecte si object_type és «menu-"
 "object» o «drawer-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:3
+#: gnome-panel/panel-object.schemas.in.h:5
+#, fuzzy
 msgid ""
-"If true, the menu_path setting is used as the path from which the menu "
-"contents should be constructed. If false, the menu_path setting is ignored. "
-"This setting is only relevant if the object_type is \"menu-object\"."
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 "Si és vertader, la configuració menu_path s'utilitza com el camí des del "
 "qual es construeixen els continguts del menú. Si és fals, la configuració "
 "menu_path s'ignora. Aquesta configuració només té efecte si object_type és "
 "«menu-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:4
+#: gnome-panel/panel-object.schemas.in.h:6
+#, fuzzy
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Si és veritat, la posició de l'objecte s'interpreta relativa al costat dret "
+"(o inferior, si és vertical) del quadre."
+
+#: gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
@@ -1921,102 +2094,108 @@ msgstr ""
 "Si és vertader, l'usuari no pot moure l'applet sense primer desblocar "
 "l'objecte utilitzant l'element del menú «Desbloca»."
 
-#: gnome-panel/panel-object.schemas.in.h:5
-msgid "Interpret the position relative to the bottom/right edge"
+#: gnome-panel/panel-object.schemas.in.h:8
+#, fuzzy
+msgid "Interpret position relative to bottom/right edge"
 msgstr "Interpreta la posició relativa al costat inferior/dret"
 
-#: gnome-panel/panel-object.schemas.in.h:6
+#: gnome-panel/panel-object.schemas.in.h:9
+#, fuzzy
+msgid "Launcher location"
+msgstr "Icona del llançador"
+
+#: gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
 msgstr "Bloca l'objecte al quadre"
 
-#: gnome-panel/panel-object.schemas.in.h:7
-msgid "The Bonobo IID of the applet"
-msgstr "L'IID de Bonobo de l'applet"
+#: gnome-panel/panel-object.schemas.in.h:11
+#, fuzzy
+msgid "Menu content path"
+msgstr "Camí del menú"
 
-#: gnome-panel/panel-object.schemas.in.h:8
+#: gnome-panel/panel-object.schemas.in.h:12
+#, fuzzy
+msgid "Object's position on the panel"
+msgstr "La posició de l'objecte al quadre"
+
+#: gnome-panel/panel-object.schemas.in.h:13
+#, fuzzy
+msgid "Panel attached to drawer"
+msgstr "El quadre connectat a aquest calaix"
+
+#: gnome-panel/panel-object.schemas.in.h:14
+#, fuzzy
+msgid "Panel object type"
+msgstr "Propietats del quadre"
+
+#: gnome-panel/panel-object.schemas.in.h:15
+#, fuzzy
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This setting is only relevant if the object_type is \"bonobo-applet\"."
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
 "La ID d'implementació Bonobo de l'applet - per exemple «OAFIID:"
 "GNOME_ClockApplet». Aquesta configuració només té efecte si l'object_type és "
 "«bonobo-applet»."
 
-#: gnome-panel/panel-object.schemas.in.h:9
+#: gnome-panel/panel-object.schemas.in.h:16
+#, fuzzy
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
-"relevant if the object_type is \"action-applet\"."
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
 msgstr ""
 "El tipus d'acció que representa aquest botó. Els valors possibles són "
 "«lock», «logout», «run», «search» i «screenshot». Aquesta configuració només "
 "té efecte si l'object_type és «action-applet»."
 
-#: gnome-panel/panel-object.schemas.in.h:10
-msgid "The icon used for the object's button"
-msgstr "La icona utilitzada per al botó de l'objecte"
-
-#: gnome-panel/panel-object.schemas.in.h:11
+#: gnome-panel/panel-object.schemas.in.h:17
+#, fuzzy
 msgid ""
-"The identifier of the panel attached to this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
 msgstr ""
 "L'identificador del quadre associat a aquest calaix. Aquesta configuració "
 "només té efecte si l'object_type és «drawer-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:12
-msgid "The identifier of the panel toplevel which contains this object."
+#: gnome-panel/panel-object.schemas.in.h:18
+#, fuzzy
+msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
 "L'identificador del nivell superior del quadre que conté aquest objecte."
 
-#: gnome-panel/panel-object.schemas.in.h:13
+#: gnome-panel/panel-object.schemas.in.h:19
+#, fuzzy
 msgid ""
-"The location of the .desktop file describing the launcher. This setting is "
-"only relevant if the object_type is \"launcher-object\"."
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 "La ubicació del fitxer .desktop que descriu el llançador. Aquesta "
 "configuració només té efecte si l'object_type és «launcher-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:14
+#: gnome-panel/panel-object.schemas.in.h:20
+#, fuzzy
 msgid ""
 "The location of the image file used as the icon for the object's button. "
-"This setting is only relevant if the object_type is \"drawer-object\" or "
-"\"menu-object\" and use_custom_icon is true."
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
 "La ubicació del fitxer d'imatge utilitzat com la icona per al botó de "
 "l'objecte. Aquesta configuració només té efecte si l'object_type és «drawer-"
 "object» o «menu-object» i use_custom_icon és vertader."
 
-#: gnome-panel/panel-object.schemas.in.h:15
-msgid "The location of the launcher"
-msgstr "La posició del llançador"
-
-#: gnome-panel/panel-object.schemas.in.h:16
-msgid "The object's position on the panel"
-msgstr "La posició de l'objecte al quadre"
-
-#: gnome-panel/panel-object.schemas.in.h:17
-msgid "The panel attached to this drawer"
-msgstr "El quadre connectat a aquest calaix"
-
-#: gnome-panel/panel-object.schemas.in.h:18
-msgid "The panel toplevel which contains this object"
-msgstr "El nivell superior del quadre que conté aquest objecte"
-
-#: gnome-panel/panel-object.schemas.in.h:19
-msgid "The path for the menu contents"
-msgstr "El camí per als continguts del menú"
-
-#: gnome-panel/panel-object.schemas.in.h:20
+#: gnome-panel/panel-object.schemas.in.h:21
+#, fuzzy
 msgid ""
-"The path from which the menu contents is contructed. The setting is only "
-"relevant if use_menu_path is true and the object_type is \"menu-object\"."
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
 msgstr ""
 "El camí des del qual es construeixen els continguts del menú. La "
 "configuració només té efecte si use_menu_path és vertader i l'object_type és "
 "«menu-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:21
+#: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -2024,53 +2203,55 @@ msgstr ""
 "La posició d'aquest objecte del quadre. La posició s'especifica pel nombre "
 "de píxels des del cantó esquerre (o superior, si és vertical) del quadre."
 
-#: gnome-panel/panel-object.schemas.in.h:22
+#: gnome-panel/panel-object.schemas.in.h:23
+#, fuzzy
 msgid ""
-"The text to display in a tooltip for this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
+"The text to display in a tooltip for this drawer. This key is only relevant "
+"if the object_type key is \"drawer-object\"."
 msgstr ""
 "El text a mostrar en un rètol indicador per a quest calaix. Aquesta "
 "configuració només té efecte si object_type és «menu-object»."
 
-#: gnome-panel/panel-object.schemas.in.h:23
-msgid "The tooltip displayed for this drawer"
-msgstr "El retol indicador mostrat per a aquest calaix"
-
 #: gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of action button"
-msgstr "El tipus de botó d'acció"
-
-#: gnome-panel/panel-object.schemas.in.h:25
-msgid "The type of panel object"
-msgstr "El tipus de l'objecte de quadre"
-
-#: gnome-panel/panel-object.schemas.in.h:26
+#, fuzzy
 msgid ""
-"The type of this panel object. There are several possible values - \"drawer-"
-"object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
-"applet\" and \"menu-bar\"."
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
 msgstr ""
 "El tipus d'aquest objecte de quadre. Hi ha varies possibilitats - «drawer-"
 "object», «menu-object», «launcher-object», «bonobo-applet», «action-applet» "
 "i «menu-bar»."
 
+#: gnome-panel/panel-object.schemas.in.h:25
+#, fuzzy
+msgid "Tooltip displayed for drawer"
+msgstr "El retol indicador mostrat per a aquest calaix"
+
+#: gnome-panel/panel-object.schemas.in.h:26
+#, fuzzy
+msgid "Toplevel panel containing object"
+msgstr "El nivell superior del quadre que conté aquest objecte"
+
 #: gnome-panel/panel-object.schemas.in.h:27
-msgid "Use a custom icon for the object's button"
+#, fuzzy
+msgid "Use custom icon for object's button"
 msgstr "Utilitza una icona personalitzada per al botó de l'objecte"
 
 #: gnome-panel/panel-object.schemas.in.h:28
-msgid "Use a custom path for the menu contents"
+#, fuzzy
+msgid "Use custom path for menu contents"
 msgstr "Utilitza un camí personalitzat per als continguts del menú"
 
 #: gnome-panel/panel-profile.c:649 gnome-panel/panel-profile.c:677
-#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1390
+#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1396
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 "S'ha produït un error en llegir el valor GConf de tipus cadena «%s»: %s"
 
 #: gnome-panel/panel-profile.c:692 gnome-panel/panel-profile.c:1291
-#: gnome-panel/panel-profile.c:1359 gnome-panel/panel-profile.c:1422
+#: gnome-panel/panel-profile.c:1365 gnome-panel/panel-profile.c:1428
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "S'ha produït un error en llegir el valor GConf de tipus enter «%s»: %s"
@@ -2084,13 +2265,13 @@ msgstr ""
 "El quadre «%s» està establert per a mostrar-se a la pantalla %d que no està "
 "actualment disponible. No es carrega aquest quadre."
 
-#: gnome-panel/panel-profile.c:1374
+#: gnome-panel/panel-profile.c:1380
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
 "S'ha produït un error en llegir el valor GConf de tipus booleà «%s»: %s"
 
-#: gnome-panel/panel-profile.c:1889
+#: gnome-panel/panel-profile.c:1905
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr ""
@@ -2184,27 +2365,31 @@ msgid "Solid c_olor"
 msgstr "C_olor sòlid"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
+msgid "Some of these properties are locked down"
+msgstr ""
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
 msgstr "Est_reta"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Superior"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Autohide"
 msgstr "Ocultació _automàtica"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_None (use system theme)"
 msgstr "_Cap (utilitza el tema del sistema)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "E_scala"
 
-#: gnome-panel/panel-properties-dialog.glade.h:29
+#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Tile"
 msgstr "Mosa_ic"
 
@@ -2219,33 +2404,43 @@ msgstr ""
 "La aplicació predeterminada per a aquest tipus de fitxer no pot gestionar "
 "fitxers remots"
 
-#: gnome-panel/panel-recent.c:147
+#: gnome-panel/panel-recent.c:143 gnome-panel/panel-recent.c:149
+#, fuzzy
+msgid "Cannot open recently used document"
+msgstr "No es pot mostrar el document d'ajuda"
+
+#: gnome-panel/panel-recent.c:150
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "S'ha produït un error desconegut en intentar obrir %s"
 
-#: gnome-panel/panel-recent.c:165
-msgid "Open Recent"
+#: gnome-panel/panel-recent.c:168
+#, fuzzy
+msgid "_Open Recent"
 msgstr "Obre recents"
 
-#: gnome-panel/panel-run-dialog.c:277
-msgid "Error launching command"
-msgstr "S'ha produït un error en llançar l'ordre"
+#: gnome-panel/panel-run-dialog.c:297
+#, fuzzy, c-format
+msgid "Cannot launch command '%s'"
+msgstr ""
+"No es pot llançar l'icona\n"
+"%s"
 
-#: gnome-panel/panel-run-dialog.c:311
-msgid "Error displaying location"
+#: gnome-panel/panel-run-dialog.c:328
+#, fuzzy, c-format
+msgid "Cannot display location '%s'"
 msgstr "S'ha produït un error en mostrar la ubicació"
 
-#: gnome-panel/panel-run-dialog.c:1048
+#: gnome-panel/panel-run-dialog.c:1063
 msgid "Choose a file to append to the command..."
 msgstr "Seleccioneu un fitxer a afegir a l'ordre..."
 
-#: gnome-panel/panel-run-dialog.c:1227
+#: gnome-panel/panel-run-dialog.c:1242
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "S'executarà l'ordre: «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1233 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1248 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "Seleccioneu una aplicació per a veure la seua descripció."
 
@@ -2356,268 +2551,260 @@ msgstr "No s'ha pogut carregar la icona integrada del quadre «%s»\n"
 msgid "_Force quit"
 msgstr "_Força la sortida"
 
-#: gnome-panel/panel-toplevel.c:1365
+#: gnome-panel/panel-toplevel.c:1417
 msgid "Top Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat superior"
 
-#: gnome-panel/panel-toplevel.c:1366
+#: gnome-panel/panel-toplevel.c:1418
 msgid "Top Centered Panel"
 msgstr "Quadre centrat superior"
 
-#: gnome-panel/panel-toplevel.c:1367
+#: gnome-panel/panel-toplevel.c:1419
 msgid "Top Floating Panel"
 msgstr "Quadre flotant superior"
 
-#: gnome-panel/panel-toplevel.c:1368
+#: gnome-panel/panel-toplevel.c:1420
 msgid "Top Edge Panel"
 msgstr "Quadre a un costat superior"
 
-#: gnome-panel/panel-toplevel.c:1372
+#: gnome-panel/panel-toplevel.c:1424
 msgid "Bottom Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat inferior"
 
-#: gnome-panel/panel-toplevel.c:1373
+#: gnome-panel/panel-toplevel.c:1425
 msgid "Bottom Centered Panel"
 msgstr "Quadre centrat inferior"
 
-#: gnome-panel/panel-toplevel.c:1374
+#: gnome-panel/panel-toplevel.c:1426
 msgid "Bottom Floating Panel"
 msgstr "Quadre flotant inferior"
 
-#: gnome-panel/panel-toplevel.c:1375
+#: gnome-panel/panel-toplevel.c:1427
 msgid "Bottom Edge Panel"
 msgstr "Quadre a un costat inferior"
 
-#: gnome-panel/panel-toplevel.c:1379
+#: gnome-panel/panel-toplevel.c:1431
 msgid "Left Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1380
+#: gnome-panel/panel-toplevel.c:1432
 msgid "Left Centered Panel"
 msgstr "Quadre centrat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1381
+#: gnome-panel/panel-toplevel.c:1433
 msgid "Left Floating Panel"
 msgstr "Quadre flotant a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1382
+#: gnome-panel/panel-toplevel.c:1434
 msgid "Left Edge Panel"
 msgstr "Quadre a un costat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1386
+#: gnome-panel/panel-toplevel.c:1438
 msgid "Right Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1387
+#: gnome-panel/panel-toplevel.c:1439
 msgid "Right Centered Panel"
 msgstr "Quadre centrat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1388
+#: gnome-panel/panel-toplevel.c:1440
 msgid "Right Floating Panel"
 msgstr "Quadre flotant a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1389
+#: gnome-panel/panel-toplevel.c:1441
 msgid "Right Edge Panel"
 msgstr "Quadre a un costat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3493
 msgid "Name"
 msgstr "Nom"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3494
 msgid "The name of this panel"
 msgstr "El nom d'aquest quadre"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3503
 msgid "Expand"
 msgstr "Expansiona"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Expand to take up the full monitor width/height"
 msgstr "Expansiona per a ocupar tota l'amplada/alçada del monitor"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3514
 msgid "The orientation of the panel"
 msgstr "La orientació del quadre"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3525
 msgid "The height (or width when vertical) of the panel"
 msgstr "L'alçada (o amplada quan és vertical) del quadre"
 
-#: gnome-panel/panel-toplevel.c:3485
+#: gnome-panel/panel-toplevel.c:3537
 msgid "X position"
 msgstr "Posició X"
 
-#: gnome-panel/panel-toplevel.c:3486
+#: gnome-panel/panel-toplevel.c:3538
 msgid "The X position of the panel"
 msgstr "La posició X del quadre"
 
-#: gnome-panel/panel-toplevel.c:3497
+#: gnome-panel/panel-toplevel.c:3549
 msgid "X centered"
 msgstr "Centrat a X"
 
-#: gnome-panel/panel-toplevel.c:3498
+#: gnome-panel/panel-toplevel.c:3550
 msgid "The x co-ordinate is relative to center screen"
 msgstr "La coordenada x és relativa al centre de la pantalla"
 
-#: gnome-panel/panel-toplevel.c:3507
+#: gnome-panel/panel-toplevel.c:3559
 msgid "Y position"
 msgstr "Posició Y:"
 
-#: gnome-panel/panel-toplevel.c:3508
+#: gnome-panel/panel-toplevel.c:3560
 msgid "The Y position of the panel"
 msgstr "La posició Y del quadre"
 
-#: gnome-panel/panel-toplevel.c:3519
+#: gnome-panel/panel-toplevel.c:3571
 msgid "Y centered"
 msgstr "Centrat a Y"
 
-#: gnome-panel/panel-toplevel.c:3520
+#: gnome-panel/panel-toplevel.c:3572
 msgid "The y co-ordinate is relative to center screen"
 msgstr "La coordenada y és relativa al centre de la pantalla"
 
-#: gnome-panel/panel-toplevel.c:3529
+#: gnome-panel/panel-toplevel.c:3581
 msgid "Xinerama monitor"
 msgstr "Monitor Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3530
+#: gnome-panel/panel-toplevel.c:3582
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "El monitor (en termes de Xinerama) en el què està el quadre"
 
-#: gnome-panel/panel-toplevel.c:3541
+#: gnome-panel/panel-toplevel.c:3593
 msgid "Auto hide"
 msgstr "Ocultació automàtica"
 
-#: gnome-panel/panel-toplevel.c:3542
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Oculta el quadre automàticament quan el ratolí abandona el quadre"
 
-#: gnome-panel/panel-toplevel.c:3551
+#: gnome-panel/panel-toplevel.c:3603
 msgid "Hide delay"
 msgstr "Retard de la ocultació"
 
-#: gnome-panel/panel-toplevel.c:3552
+#: gnome-panel/panel-toplevel.c:3604
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "El nombre de milisegons a retardar abans d'ocultar automàticament"
 
-#: gnome-panel/panel-toplevel.c:3563
+#: gnome-panel/panel-toplevel.c:3615
 msgid "Un-hide delay"
 msgstr "Retard de tornar a mostrar"
 
-#: gnome-panel/panel-toplevel.c:3564
+#: gnome-panel/panel-toplevel.c:3616
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "El nombre de milisegons a retardar abans de tornar a mostrar"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3627
 msgid "Auto-hide size"
 msgstr "Mida de l'ocultació automàtica"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3628
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "El número de píxels visibles quan el quadre s'ha ocultat automàticament"
 
-#: gnome-panel/panel-toplevel.c:3587
+#: gnome-panel/panel-toplevel.c:3639
 msgid "Animate"
 msgstr "Anima"
 
-#: gnome-panel/panel-toplevel.c:3588
+#: gnome-panel/panel-toplevel.c:3640
 msgid "Enable hiding/showing animations"
 msgstr "Habilita l'ocultació/mostra d'animacions"
 
-#: gnome-panel/panel-toplevel.c:3597
+#: gnome-panel/panel-toplevel.c:3649
 msgid "Animation Speed"
 msgstr "Velocitat de l'animació"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3650
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "La velocitat a la que s'anima l'ocultament/mostra del quadre"
 
-#: gnome-panel/panel-toplevel.c:3608
+#: gnome-panel/panel-toplevel.c:3660
 msgid "Buttons Enabled"
 msgstr "Botons habilitats"
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3661
 msgid "Enable hide/show buttons"
 msgstr "Habilita el botó d'ocultar/mostrar"
 
-#: gnome-panel/panel-toplevel.c:3618
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Arrows Enabled"
 msgstr "Fletxes habilitades"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3671
 msgid "Enable arrows on hide/show buttons"
 msgstr "Habilita les fletxes al botó d'ocultació/mostra"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "A name with which to identify this panel."
-msgstr "Un nom amb el qual identificar aquest quadre."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
-msgid "Automatically hide the panel into the corner."
+#, fuzzy
+msgid "Automatically hide panel into corner"
 msgstr "Oculta automàticament el quadre a un costat."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Center the panel on the x-axis."
-msgstr "Centra el quadre al eix X."
+#, fuzzy
+msgid "Background color"
+msgstr "Color del fons"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
-msgid "Center the panel on the y-axis."
-msgstr "Centra el quadre al eix Y."
+#, fuzzy
+msgid "Background color opacity"
+msgstr "La opacitat del color de fons."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-msgid "Delay before automatically hiding the panel."
-msgstr "Retard abans de ocultar automàticament el quadre."
+#, fuzzy
+msgid "Background image"
+msgstr "_Imatge de fons:"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
-msgid "Delay before automatically un-hiding the panel."
-msgstr "Retard abans de tornar a mostrar el quadre."
+#, fuzzy
+msgid "Background type"
+msgstr "Fons"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
-msgid "Enable animations."
-msgstr "Habilita les animacions."
+#, fuzzy
+msgid "Center panel on x-axis"
+msgstr "Centra el quadre al eix X."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:8
-msgid "Enable arrows on the hide buttons."
-msgstr "Habilita fletxes als botons d'ocultació."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:9
-msgid "Enable hide buttons."
-msgstr "Habilita el botó d'amagar."
+#, fuzzy
+msgid "Center panel on y-axis"
+msgstr "Centra el quadre al eix Y."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
-msgid "Expand to occupy entire screen width."
-msgstr "Expansiona per a que ocupe l'amplada sencera de la pantalla."
+#, fuzzy
+msgid "Enable arrows on hide buttons"
+msgstr "Habilita fletxes als botons d'ocultació."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
-msgid "Fit the image to the panel."
-msgstr "Ajusta la imatge al quadre."
+#, fuzzy
+msgid "Enable hide buttons"
+msgstr "Habilita el botó d'amagar."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
-msgid ""
-"If true the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
-msgstr ""
-"Si és vertader, la imatge s'ajustarà a les dimensions del quadre. El ràtio "
-"de l'aspecte de la imatge no es mantindrà."
+#, fuzzy
+msgid "Expand to occupy entire screen width"
+msgstr "Expansiona per a que ocupe l'amplada sencera de la pantalla."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
-msgid ""
-"If true the x setting is ignored and the panel is placed at the center of "
-"the x-axis of the screen. If the panel is resized it will remain in that "
-"position - i.e. the panel will grow on both sides. If false the x setting "
-"determines the location of the panel."
-msgstr ""
-"Si és vertader, s'ignora la configuració x i el quadre es posiciona al "
-"centre de l'eix x de la pantalla. Si el quadre es redimensiona es mantindrà "
-"en eixa posició, és a dir, el quadre creixerà pels dos costats. Si és fals, "
-"la configuració x determina la ubicació del quadre."
+#, fuzzy
+msgid "Fit image to panel"
+msgstr "Ajusta la imatge al quadre."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
+#, fuzzy
 msgid ""
-"If true, arrows will be placed on the hide buttons. This preference only has "
-"meaning if enable_buttons is true."
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
 msgstr ""
 "Si és vertader, es mostraran fletxes als botons d'ocultació. Aquesta "
 "preferència només té efecte si enable_buttons és vertader."
@@ -2632,9 +2819,10 @@ msgstr ""
 "botó mostrat."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
+#, fuzzy
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantaneously."
+"happening instantly."
 msgstr ""
 "Si és vertader, s'animarà l'ocultament i la tornada a mostrar d'aquest "
 "quadre, en comptes de que ocòrrega instantàniament."
@@ -2656,6 +2844,26 @@ msgstr ""
 "imatge) a l'alçada del quadre (si és horitzontal)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
+#, fuzzy
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Si és vertader, la imatge s'ajustarà a les dimensions del quadre. El ràtio "
+"de l'aspecte de la imatge no es mantindrà."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
+#, fuzzy
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Si és vertader, quan el punter abandona l'àrea del quadre s'oculta "
+"automàticament a un costat de la pantalla. Moure el punter a aquell costat "
+"farà que el quadre reaparega."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -2668,17 +2876,33 @@ msgstr ""
 "suficientment gran per a acomodar els applets, llançadors i botons del "
 "quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:20
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+#, fuzzy
 msgid ""
-"If true, when the pointer leaves the panel area, it is automatically hidden "
-"into a corner of the screen. Moving the pointer to that corner will cause "
-"the panel to re-appear."
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
 msgstr ""
-"Si és vertader, quan el punter abandona l'àrea del quadre s'oculta "
-"automàticament a un costat de la pantalla. Moure el punter a aquell costat "
-"farà que el quadre reaparega."
+"Si és vertader, s'ignora la configuració x i el quadre es posiciona al "
+"centre de l'eix x de la pantalla. Si el quadre es redimensiona es mantindrà "
+"en eixa posició, és a dir, el quadre creixerà pels dos costats. Si és fals, "
+"la configuració x determina la ubicació del quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:21
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+#, fuzzy
+msgid ""
+"If true, the y key is ignored and the panel is placed at the center of the y-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the y key specifies the "
+"location of the panel."
+msgstr ""
+"Si és vertader, s'ignora la configuració x i el quadre es posiciona al "
+"centre de l'eix x de la pantalla. Si el quadre es redimensiona es mantindrà "
+"en eixa posició, és a dir, el quadre creixerà pels dos costats. Si és fals, "
+"la configuració x determina la ubicació del quadre."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -2687,19 +2911,41 @@ msgstr ""
 "individual. Aquesta clau identifica el monitor actual al qual s'està "
 "mostrant el quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "Number of visible pixels with a hidden panel."
-msgstr "Nombre de píxels visibles a un quadre ocult."
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+#, fuzzy
+msgid "Name to identify panel"
+msgstr "Un nom amb el qual identificar aquest quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "Rotate the image on vertical panels."
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+#, fuzzy
+msgid "Panel autohide delay"
+msgstr "Retard de tornar a mostrar"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+#, fuzzy
+msgid "Panel autounhide delay"
+msgstr "Retard de tornar a mostrar"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+#, fuzzy
+msgid "Panel orientation"
+msgstr "Orientació"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+#, fuzzy
+msgid "Panel size"
+msgstr "Mida del panel:"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+#, fuzzy
+msgid "Rotate image on vertical panels"
 msgstr "Rota la imatge als quadres verticals"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:24
+#: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Especifica el color del fons del quadre en format #RGB."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:25
+#: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2708,37 +2954,39 @@ msgstr ""
 "Especifica el fitxer a utilitzar per a la imatge de fons. Si la imatge conté "
 "un canal alfa es compondà damunt de la imatge de fons de l'escriptori."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:26
+#: gnome-panel/panel-toplevel.schemas.in.h:33
+#, fuzzy
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This preference is "
-"only relevant if auto_hide is true."
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
 "Especifica el nombre de milisegons de retard entre que el punter entra dins "
 "de l'àrea del quadre i el quadre es torna a mostrar. Aquesta configuració "
 "només té efecte si auto_hide és vertader."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:27
+#: gnome-panel/panel-toplevel.schemas.in.h:34
+#, fuzzy
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This preference is only "
-"relevant if auto_hide is true."
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
 "Especifica el nombre de milisegons de retard entre que el punter surt de "
 "l'àrea del quadre i el quadre s'oculta. Aquesta configuració només té efecte "
 "si auto_hide és vertader."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:28
+#: gnome-panel/panel-toplevel.schemas.in.h:35
+#, fuzzy
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This preference only has relevance when auto_hide is "
-"true."
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
 "Especifica el nombre de píxels visibles quan el quadre s'oculta "
 "automàticament a un costat. Aquesta configuració només té efecte si "
 "auto_hide és vertader."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:29
+#: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
@@ -2748,43 +2996,12 @@ msgstr ""
 "completament opac (un valor menor que 65535), el color es compondrà damunt "
 "de la imatge de fons de l'escriptori."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:30
-msgid "Stretch the image to the panel."
+#: gnome-panel/panel-toplevel.schemas.in.h:37
+#, fuzzy
+msgid "Stretch image to panel"
 msgstr "Estira la imatge al quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:31
-msgid "The X co-ordinate of the panel."
-msgstr "La coordenada X del quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "The X screen the panel is on."
-msgstr "La pantalla d'X en la que està el quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "The Xinerama monitor the panel is on."
-msgstr "El monitor Xinerama en el que està el quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "The Y co-ordinate of the panel."
-msgstr "La coordenada X del quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "The background color opacity."
-msgstr "La opacitat del color de fons."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "The background color."
-msgstr "El color de fons."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:37
-msgid "The background image."
-msgstr "La imatge de fons."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The background type."
-msgstr "El tipus de fons."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -2796,40 +3013,39 @@ msgstr ""
 "lletra i altres factors. La mida màxima està fixada a un quart de l'alçada "
 "(o amplada) de la pantalla:"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:40
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+#, fuzzy
 msgid ""
-"The location of the panel along the x-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 "La ubicació del quadre a l'eix x. Aquest valor només té efecte al mode no "
 "expansionat. Al mode expansionat el valor s'ignora i el quadre es posiciona "
 "a un costat de la pantalla indicat per la orientació."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:41
+#: gnome-panel/panel-toplevel.schemas.in.h:40
+#, fuzzy
 msgid ""
-"The location of the panel along the y-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
 "La ubicació del quadre a l'eix y. Aquest valor només té efecte al mode no "
 "expansionat. Al mode expansionat el valor s'ignora i el quadre es posiciona "
 "a un costat de la pantalla indicat per la orientació."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The orientation of the panel."
-msgstr "L'orientació del quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:43
+#: gnome-panel/panel-toplevel.schemas.in.h:41
+#, fuzzy
 msgid ""
-"The orientation of the panel. There are four possible values; \"top\", "
-"\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
-"screen edge the panel is on. In un-expanded mode the difference between \"top"
-"\" and \"bottom\" is less important - both indicate that this is a "
-"horizontal panel - but still give a useful hint as to how some panel objects "
-"should behave. For example, on a \"top\" panel a menu button will pop up its "
-"menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
-"up above the panel."
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
 msgstr ""
 "La orientació del quadre. Hi ha quatre valors possibles; «top», «bottom», "
 "«left», «right». En mode expansionat, el valor especifica a quin costat de "
@@ -2840,25 +3056,18 @@ msgstr ""
 "(«top») un botó de menú mostrarà el seu menú per sota el quadre, i un quadre "
 "inferior («bottom») mostrarà el menú per damunt del quadre."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The size of the panel."
-msgstr "La mida del quadre."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "The speed of animations."
-msgstr "La velocitat de les animacions."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:46
+#: gnome-panel/panel-toplevel.schemas.in.h:42
+#, fuzzy
 msgid ""
-"The speed which animations should occur. There are three possible values; "
-"\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
-"enable_animations is true."
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
 msgstr ""
 "La velocitat a la que han de tindre lloc les animacions. Hi ha tres valors "
 "possibles; «slow», «medium» i «fast». Aquesta preferència només té efecte si "
 "enable_animations és vertader."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:47
+#: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "This is a human readable name which you can use to indentify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2868,16 +3077,26 @@ msgstr ""
 "un quadre. La seua tasca principal és servir com títol de la finestra del "
 "quadre, cosa útil quan es navega entre quadres."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"Which type of background should be used for this panel. There are three "
-"possible values; \"gtk\", the default GTK+ widget background will be used, "
-"\"color\", the color preference will be used as the background color or "
-"\"image\", the image specified in the image preference will be used as the "
-"background."
-msgstr "Quin tipus de fons s'ha d'utilitzar per a aquest quadre. Hi ha 3 valors possibles; «gtk», s'utilitzarà el giny de fons predeterminat de GTK+, «color», s'utilitzarà la configuració de color com el color de fons, o «image», s'utilitzarà la imatge especificada en la configuració d'imatge com a fons."
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+#, fuzzy
+msgid "Visible pixels when hidden"
+msgstr "Nombre de píxels visibles a un quadre ocult."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:49
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+#, fuzzy
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Quin tipus de fons s'ha d'utilitzar per a aquest quadre. Hi ha 3 valors "
+"possibles; «gtk», s'utilitzarà el giny de fons predeterminat de GTK+, "
+"«color», s'utilitzarà la configuració de color com el color de fons, o "
+"«image», s'utilitzarà la imatge especificada en la configuració d'imatge com "
+"a fons."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -2886,24 +3105,46 @@ msgstr ""
 "pantalla individual. Aquesta clau identifica la pantalla en la que el quadre "
 "actual s'està mostrant."
 
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+#, fuzzy
+msgid "X co-ordinate of panel"
+msgstr "La coordenada X del quadre."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+#, fuzzy
+msgid "X screen panel is on"
+msgstr "La pantalla d'X en la que està el quadre."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+#, fuzzy
+msgid "Xinerama monitor panel is on"
+msgstr "El monitor Xinerama en el que està el quadre."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:50
+#, fuzzy
+msgid "Y co-ordinate of panel"
+msgstr "La coordenada X del quadre."
+
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:105 gnome-panel/panel-util.c:141
-#: gnome-panel/panel-util.c:166
+#: gnome-panel/panel-util.c:100 gnome-panel/panel-util.c:136
+#: gnome-panel/panel-util.c:161
 msgid "Help document not found"
 msgstr "No s'ha trobat el document d'ajuda"
 
-#: gnome-panel/panel-util.c:180
+#: gnome-panel/panel-util.c:175
 msgid "No document to show"
 msgstr "No hi ha cap document per a mostrar"
 
-#: gnome-panel/panel-util.c:947
-msgid "Cannot execute xscreensaver"
-msgstr "No puc executar xscreensaver"
+#: gnome-panel/panel-util.c:483
+#, fuzzy, c-format
+msgid "Details: %s"
+msgstr "Detalls"
 
-#: gnome-panel/panel-util.c:948
-msgid "Details: xscreensaver-command not found"
-msgstr "Detalls: no s'ha trobat el xscreensaver-command"
+#: gnome-panel/panel-util.c:957
+#, fuzzy, c-format
+msgid "Cannot execute %s"
+msgstr "No puc executar xscreensaver"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2917,42 +3158,42 @@ msgstr "Prova l'applet de Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Prova la factoría d'applets de Bonobo"
 
-#: libpanel-applet/panel-applet.c:828
+#: libpanel-applet/panel-applet.c:830
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:844
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet: %s"
 
-#: libpanel-applet/panel-applet.c:851
+#: libpanel-applet/panel-applet.c:853
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "No s'ha trobat el pixmap %s"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:860
 msgid "Unknown background type received"
 msgstr "S'ha rebut un tipus de fons desconegut"
 
-#: libpanel-applet/panel-applet.c:1037
+#: libpanel-applet/panel-applet.c:1039
 msgid "The Applet's containing Panel's orientation"
 msgstr "L'applet que conté l'orientació del Quadre"
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1047
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "L'applet que conté la mida del Quadre en píxels"
 
-#: libpanel-applet/panel-applet.c:1053
+#: libpanel-applet/panel-applet.c:1055
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "L'applet que conté el color o pixmap de fons o del Quadre"
 
-#: libpanel-applet/panel-applet.c:1061
+#: libpanel-applet/panel-applet.c:1063
 msgid "The Applet's flags"
 msgstr "Les opcions de l'applet"
 
-#: libpanel-applet/panel-applet.c:1069
+#: libpanel-applet/panel-applet.c:1071
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Rangs que donen una idea de les mides que són acceptables per a l'applet"
@@ -3019,6 +3260,111 @@ msgstr "Extra gran"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra petit"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Fixa el format de l'hora, pot ser 12 o 24"
+
+#~ msgid "Maximum size that Window List requests"
+#~ msgstr "Mida màxima que demanarà l'applet de llistat de tarees"
+
+#~ msgid ""
+#~ "To be usable, Window List requires a minimum width. Window List requests "
+#~ "this minimum width. The minimum width setting is useful for sliding and "
+#~ "edge panels, which usually request a small default width."
+#~ msgstr ""
+#~ "La llista de tarees necessita una amplària mínima per a que siga útil. "
+#~ "Aquest valor és l'amplària mínima que la llista de tarees demanarà. "
+#~ "L'amplària mínima és útil amb quadres lliscants i a un costat, que "
+#~ "normalment demanen una amplària petita per defecte."
+
+#~ msgid "Number of rows in the Workspace Switcher."
+#~ msgstr "Nombre de files en el canviador d'espais de treball"
+
+#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
+#~ msgstr ""
+#~ "Mostra o no tots els espais de treball en el canviador d'espais de "
+#~ "treball."
+
+#~ msgid ""
+#~ "Whether to display the names of the workspaces in the Workspace Switcher."
+#~ msgstr ""
+#~ "Mostra o no els noms dels espais de treball en el canviador d'espais de "
+#~ "treball."
+
+#~ msgid ""
+#~ "Cannot save launcher to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "No es pot desar el llançador al disc, ha hagut el següent error:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Can't execute 'About GNOME'"
+#~ msgstr "No puc executar «Quant a GNOME»"
+
+#~ msgid "probably does not exist"
+#~ msgstr "probablement no existeix"
+
+#~ msgid "Could not remove the menu item"
+#~ msgstr "No s'ha pogut eliminar l'element del menú"
+
+#~ msgid "Cannot execute gnome-search-tool"
+#~ msgstr "No es pot executar gnome-search-tool"
+
+#~ msgid "Cannot execute gnome-panel-screenshot"
+#~ msgstr "No es pot executar gnome-panel-screenshot"
+
+#~ msgid "A list of panel IDs"
+#~ msgstr "Una llista de ID de quadres"
+
+#~ msgid "A list of panel object IDs"
+#~ msgstr "Una llista d'ID d'objectes del quadre"
+
+#~ msgid "Take a screen shot of a window"
+#~ msgstr "Fa una captura de una finestra"
+
+#~ msgid "The Bonobo IID of the applet"
+#~ msgstr "L'IID de Bonobo de l'applet"
+
+#~ msgid "The location of the launcher"
+#~ msgstr "La posició del llançador"
+
+#~ msgid "The path for the menu contents"
+#~ msgstr "El camí per als continguts del menú"
+
+#~ msgid "The type of action button"
+#~ msgstr "El tipus de botó d'acció"
+
+#~ msgid "The type of panel object"
+#~ msgstr "El tipus de l'objecte de quadre"
+
+#~ msgid "Error launching command"
+#~ msgstr "S'ha produït un error en llançar l'ordre"
+
+#~ msgid "Delay before automatically hiding the panel."
+#~ msgstr "Retard abans de ocultar automàticament el quadre."
+
+#~ msgid "Delay before automatically un-hiding the panel."
+#~ msgstr "Retard abans de tornar a mostrar el quadre."
+
+#~ msgid "The background color."
+#~ msgstr "El color de fons."
+
+#~ msgid "The background image."
+#~ msgstr "La imatge de fons."
+
+#~ msgid "The background type."
+#~ msgstr "El tipus de fons."
+
+#~ msgid "The orientation of the panel."
+#~ msgstr "L'orientació del quadre."
+
+#~ msgid "The size of the panel."
+#~ msgstr "La mida del quadre."
+
+#~ msgid "The speed of animations."
+#~ msgstr "La velocitat de les animacions."
 
 #~ msgid "and finally, The Knights Who Say... NI!"
 #~ msgstr "i finalment, els cavallers que diuen ... NI!"
@@ -3576,9 +3922,6 @@ msgstr "Extra petit"
 #~ msgid "Edge panel"
 #~ msgstr "Quadre a un costat"
 
-#~ msgid "Corner panel"
-#~ msgstr "Quadre de cantó"
-
 #~ msgid "Sliding panel"
 #~ msgstr "Quadre lliscant"
 
@@ -3728,9 +4071,6 @@ msgstr "Extra petit"
 #~ msgid "Wanda"
 #~ msgstr "Wanda"
 
-#~ msgid "Command to execute"
-#~ msgstr "Ordre a executar"
-
 #~ msgid "Modify the global panel preferences"
 #~ msgstr "Modifica les preferències globals del quadre"
 
@@ -3745,9 +4085,6 @@ msgstr "Extra petit"
 
 #~ msgid "Offset from screen edge:"
 #~ msgstr "Offset del límit de la pantalla:"
-
-#~ msgid "Panel size:"
-#~ msgstr "Mida del panel:"
 
 #~ msgid "Color to use:"
 #~ msgstr "Color a emprar:"
@@ -4052,9 +4389,6 @@ msgstr "Extra petit"
 #~ msgid "Run dialog key:"
 #~ msgstr "Tecla del diàleg d'executar:"
 
-#~ msgid "_Enable key bindings"
-#~ msgstr "_Habilita les tecles vinculades"
-
 #~ msgid "Add this applet as a launcher to panel"
 #~ msgstr "Afegeix aquest applet com a llançador al quadre"
 
@@ -4270,9 +4604,6 @@ msgstr "Extra petit"
 
 #~ msgid "Colors"
 #~ msgstr "Colors"
-
-#~ msgid "Enable bold text"
-#~ msgstr "Habilita el texte en negreta"
 
 #~ msgid "Font:"
 #~ msgstr "Font:"
@@ -5433,14 +5764,8 @@ msgstr "Extra petit"
 #~ msgid "KDE: "
 #~ msgstr "KDE: "
 
-#~ msgid "Panel: "
-#~ msgstr "Quadre: "
-
 #~ msgid "Desktop: "
 #~ msgstr "Escriptori: "
-
-#~ msgid "Prelight buttons on mouseover"
-#~ msgstr "Il·lumina els botons si ha el ratolí al damunt"
 
 #~ msgid "In the menu"
 #~ msgstr "Al menú"
@@ -5551,9 +5876,6 @@ msgstr "Extra petit"
 #~ msgid "Drawer sliding"
 #~ msgstr "Lliscament del calaix"
 
-#~ msgid "Launcher icon"
-#~ msgstr "Icona del llançador"
-
 #~ msgid "Menu icon"
 #~ msgstr "Icona del menú"
 
@@ -5596,9 +5918,6 @@ msgstr "Extra petit"
 
 #~ msgid "Push movement (or use Shift)"
 #~ msgstr "Moviment de premuda (o utilitza Shift)"
-
-#~ msgid "Panel Objects"
-#~ msgstr "Propietats del quadre"
 
 #~ msgid "App"
 #~ msgstr "Aplicació"
@@ -5745,9 +6064,6 @@ msgstr "Extra petit"
 
 #~ msgid "Add new launcher"
 #~ msgstr "Afegeix un nou llançador"
-
-#~ msgid "Add drawer"
-#~ msgstr "Afegeix un calaix"
 
 #~ msgid "Add applet"
 #~ msgstr "Afegeix un applet"
@@ -6353,9 +6669,6 @@ msgstr "Extra petit"
 
 #~ msgid "Applet Height"
 #~ msgstr "Alçada de l'applet"
-
-#~ msgid "Backgroundcolor"
-#~ msgstr "Color del fons"
 
 #~ msgid "Textcolor"
 #~ msgstr "Color del text"
