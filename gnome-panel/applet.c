@@ -47,7 +47,7 @@ move_applet_callback(GtkWidget *widget, AppletInfo *info)
 	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_start(panel,info->widget);
+	panel_widget_applet_drag_start(panel, info->widget);
 }
 
 /*destroy widgets and call the above cleanup function*/
@@ -390,7 +390,7 @@ create_applet_menu(AppletInfo *info)
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 
 	panel_menu = gtk_menu_new();
-	make_panel_submenu(panel_menu,TRUE);
+	make_panel_submenu(panel_menu, TRUE);
 	menuitem = gtk_menu_item_new ();
 
 	pixmap = gnome_pixmap_file ("gnome-panel.png");
@@ -406,7 +406,7 @@ create_applet_menu(AppletInfo *info)
 		g_free (pixmap);
 	}
 	gtk_menu_append (GTK_MENU (info->menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), panel_menu);
 
 	if(user_menu) {
 		menuitem = gtk_menu_item_new();
@@ -426,9 +426,23 @@ create_applet_menu(AppletInfo *info)
 	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
 			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
 			   info);
+}
 
-	gtk_object_set_data (GTK_OBJECT(info->menu), "menu_panel", 
-			     info->widget->parent);
+static void
+set_data(GtkWidget *menu, gpointer panel)
+{
+	GList *children, *li;
+
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", panel);
+
+	children = gtk_container_children(GTK_CONTAINER(menu));
+
+	for(li = children; li; li = li->next) {
+		GtkMenuItem *item = li->data;
+		if(item->submenu)
+			set_data(item->submenu, panel);
+	}
+	g_list_free(children);
 }
 
 void
@@ -448,6 +462,9 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 		basep_widget_queue_autohide(BASEP_WIDGET(panel));
 	}
 	info->menu_age = 0;
+
+	set_data(info->menu, info->widget->parent);
+
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL,
 		       global_config.off_panel_popups?applet_menu_position:NULL,
 		       info, event->button, event->time);
