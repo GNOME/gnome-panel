@@ -70,11 +70,6 @@ struct _TearoffMenu {
 /* list of TearoffMenu s */
 static GSList *tearoffs = NULL;
 
-/* the list of fake menus that will be read in from time to time in a timer
-   to make it all appear "faster" */
-static GSList *fake_menus = NULL;
-static guint fake_menus_reading_timeout = 0;
-
 /*to be called on startup to load in some of the directories,
   this makes the startup a little bit slower, and take up slightly
   more ram, but it also speeds up later operation*/
@@ -170,6 +165,266 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	g_free(p);
 	system(s);
 	g_free(s);
+}
+
+struct scale_color {
+	unsigned char r, g, b;
+};
+
+static struct scale_color scale_base = { 0xd6, 0xd6, 0xd6 };
+static struct scale_color scale_trans = { 0xff, 0x00, 0xff };
+
+static char *
+scale_down(GtkWidget *window, GtkStateType state, unsigned char *datao,
+	   gint wo, gint ho, gint w, gint h)
+{
+	unsigned char *data, *p, *p2, *p3;
+	long x, y, w2, h2, xo, yo, wo3, x2, y2, i, x3, y3;
+	long yw, xw, ww, hw, r, g, b, r2, g2, b2;
+	int trans;
+
+	if (window) {
+		GtkStyle *style = gtk_widget_get_style(window);
+		scale_base.r = style->bg[state].red >> 8;
+		scale_base.g = style->bg[state].green >> 8;
+		scale_base.b = style->bg[state].blue >> 8;
+	}
+	data = g_malloc(w * h * 3);
+	p = data;
+
+	ww = (wo << 8) / w;
+	hw = (ho << 8) / h;
+	h2 = h << 8;
+	w2 = w << 8;
+	wo3 = wo * 3;
+	for (y = 0; y < h2; y += 0x100) {
+		yo = (y * ho) / h;
+		y2 = yo & 0xff;
+		yo >>= 8;
+		for (x = 0; x < w2; x += 0x100) {
+			xo = (x * wo) / w;
+			x2 = xo & 0xff;
+			xo >>= 8;
+			i = xo + (yo * wo);
+			p2 = datao + (i * 3);
+
+			r2 = g2 = b2 = 0;
+			yw = hw;
+			y3 = y2;
+			trans = 1;
+			while (yw) {
+				xw = ww;
+				x3 = x2;
+				p3 = p2;
+				r = g = b = 0;
+				while (xw) {
+					if ((0x100 - x3) < xw)
+						i = 0x100 - x3;
+					else
+						i = xw;
+					if ((p3[0] == scale_trans.r) &&
+					    (p3[1] == scale_trans.g) &&
+					    (p3[2] == scale_trans.b)) {
+						r += scale_base.r * i;
+						g += scale_base.g * i;
+						b += scale_base.b * i;
+					} else {
+						trans = 0;
+						r += p3[0] * i;
+						g += p3[1] * i;
+						b += p3[2] * i;
+					}
+					p3 += 3;
+					xw -= i;
+					x3 = 0;
+				}
+				if ((0x100 - y3) < yw) {
+					r2 += r * (0x100 - y3);
+					g2 += g * (0x100 - y3);
+					b2 += b * (0x100 - y3);
+					yw -= 0x100 - y3;
+				} else {
+					r2 += r * yw;
+					g2 += g * yw;
+					b2 += b * yw;
+					yw = 0;
+				}
+				y3 = 0;
+				p2 += wo3;
+			}
+			if (trans) {
+				*(p++) = scale_trans.r;
+				*(p++) = scale_trans.g;
+				*(p++) = scale_trans.b;
+			} else {
+				r2 /= ww * hw;
+				g2 /= ww * hw;
+				b2 /= ww * hw;
+				*(p++) = r2 & 0xff;
+				*(p++) = g2 & 0xff;
+				*(p++) = b2 & 0xff;
+			}
+		}
+	}
+
+	return data;
+}
+
+
+typedef struct _FakeIcon FakeIcon;
+struct _FakeIcon {
+	GtkWidget *fake;
+	char *file;
+	int size;
+};
+
+static guint load_icons_id = 0;
+static GSList *icons_to_load = NULL;
+
+static GtkWidget * fake_pixmap_from_fake(FakeIcon *fake);
+
+static void
+pixmap_unmap(GtkWidget *w, FakeIcon *fake)
+{
+	GtkWidget *parent = fake->fake->parent;
+
+	if(global_config.hungry_menus)
+		return;
+
+	/* don't kill the fake now, we'll kill it with the fake pixmap */
+	gtk_signal_disconnect_by_data(GTK_OBJECT(fake->fake), fake);
+	gtk_widget_destroy(fake->fake);
+
+	fake_pixmap_from_fake(fake);
+	gtk_container_add(GTK_CONTAINER(parent), fake->fake);
+}
+
+static void
+fake_destroyed(GtkWidget *w, FakeIcon *fake)
+{
+	g_free(fake->file);
+	g_free(fake);
+}
+
+static gboolean
+load_icons_handler(gpointer data)
+{
+	if(icons_to_load) {
+		GdkImlibColor shape_color = { 0xff, 0, 0xff, 0 };
+		GtkWidget *parent;
+		GtkWidget *pixmap = NULL;
+		GtkWidget *toplevel;
+		GdkImlibImage *im;
+		char *d;
+		FakeIcon *fake = icons_to_load->data;
+		icons_to_load = g_slist_remove(icons_to_load, fake);
+
+		parent = fake->fake->parent;
+
+		/* don't kill the fake now, we'll kill it with the pixmap */
+		gtk_signal_disconnect_by_data(GTK_OBJECT(fake->fake), fake);
+		gtk_widget_destroy(fake->fake);
+ 
+		im = gdk_imlib_load_image(fake->file);
+		if(!im) {
+			g_free(fake->file);
+			g_free(fake);
+			return TRUE;
+		}
+
+		d = scale_down(parent, fake->fake->state,
+			       (char *)im->rgb_data,
+			       im->rgb_width, im->rgb_height,
+			       fake->size, fake->size);
+		gdk_imlib_destroy_image(im);
+		pixmap = gnome_pixmap_new_from_rgb_d_shaped(d, NULL,
+							    fake->size,
+							    fake->size,
+							    &shape_color);
+		g_free(d);
+
+		fake->fake = pixmap;
+		toplevel = gtk_widget_get_toplevel(parent);
+		gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "unmap",
+					       GTK_SIGNAL_FUNC(pixmap_unmap),
+					       fake,
+					       GTK_OBJECT(pixmap));
+		gtk_signal_connect(GTK_OBJECT(pixmap), "destroy",
+				   GTK_SIGNAL_FUNC(fake_destroyed), fake);
+
+		gtk_widget_show(pixmap);
+		gtk_container_add(GTK_CONTAINER(parent), pixmap);
+
+		/* if still more we'll come back */
+		if(icons_to_load)
+			return TRUE;
+	}
+	load_icons_id = 0;
+	return FALSE;
+}
+
+static void
+fake_unmapped(GtkWidget *w, FakeIcon *fake)
+{
+	icons_to_load = g_slist_remove(icons_to_load, fake);
+}
+
+static void
+fake_mapped(GtkWidget *w, FakeIcon *fake)
+{
+	if(!g_slist_find(icons_to_load, fake))
+		icons_to_load = g_slist_append(icons_to_load, fake);
+	if(!load_icons_id)
+		load_icons_id = g_idle_add(load_icons_handler, NULL);
+}
+
+
+static void
+fake_mapped_fake(GtkWidget *w, FakeIcon *fake)
+{
+	GtkWidget *toplevel;
+	if(!g_slist_find(icons_to_load, fake))
+		icons_to_load = g_slist_append(icons_to_load, fake);
+	if(!load_icons_id)
+		load_icons_id = g_idle_add(load_icons_handler, NULL);
+
+	gtk_signal_disconnect_by_func(GTK_OBJECT(w),
+				      GTK_SIGNAL_FUNC(fake_mapped_fake),
+				      fake);
+
+	toplevel = gtk_widget_get_toplevel(w);
+	gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "map",
+				       GTK_SIGNAL_FUNC(fake_mapped),
+				       fake,
+				       GTK_OBJECT(fake->fake));
+	gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "unmap",
+				       GTK_SIGNAL_FUNC(fake_unmapped),
+				       fake,
+				       GTK_OBJECT(fake->fake));
+}
+
+static GtkWidget *
+fake_pixmap_from_fake(FakeIcon *fake)
+{
+	fake->fake = gtk_label_new("X");
+	gtk_widget_show(fake->fake);
+	gtk_signal_connect(GTK_OBJECT(fake->fake), "map",
+			   GTK_SIGNAL_FUNC(fake_mapped_fake),
+			   fake);
+	gtk_signal_connect(GTK_OBJECT(fake->fake), "destroy",
+			   GTK_SIGNAL_FUNC(fake_destroyed),
+			   fake);
+
+	return fake->fake;
+}
+
+static GtkWidget *
+fake_pixmap_at_size(char *file, int size)
+{
+	FakeIcon *fake = g_new0(FakeIcon,1);
+	fake->file = g_strdup(file);
+	fake->size = size;
+	return fake_pixmap_from_fake(fake);
 }
 
 /* returns a g_strdup'd string with filesystem reserved chars replaced */
@@ -1334,7 +1589,6 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	}
 	g_slist_free(mfl);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
-	fake_menus = g_slist_remove(fake_menus, menu);
 }
 
 static GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
@@ -1716,10 +1970,6 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 
 		if(position)
 			gtk_menu_position(GTK_MENU(menuw));
-
-		/* we should also remove this from the fake menu list since
-		   it no longer needs to be read in */
-		fake_menus = g_slist_remove(fake_menus, menuw);
 	}
 }
 
@@ -1729,23 +1979,6 @@ submenu_to_display(GtkWidget *menuw, gpointer data)
 {
 	try_menu_reread(menuw, TRUE);
 }
-
-static gboolean
-fake_menus_read(gpointer data)
-{
-	if(fake_menus) {
-		GSList *last = g_slist_last(fake_menus);
-
-		try_menu_reread(last->data, FALSE);
-	}
-
-	if(!fake_menus || !global_config.hungry_menus) {
-		fake_menus_reading_timeout = 0;
-		return FALSE;
-	}
-	return TRUE;
-}
-
 
 static GtkWidget *
 create_fake_menu_at (char *menudir,
@@ -1774,12 +2007,6 @@ create_fake_menu_at (char *menudir,
 	
 	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
 			   GTK_SIGNAL_FUNC(menu_destroy), NULL);
-	fake_menus = g_slist_prepend(fake_menus, menu);
-	if(global_config.hungry_menus && !fake_menus_reading_timeout) {
-		fake_menus_reading_timeout = gtk_timeout_add(1000,
-							     fake_menus_read,
-							     NULL);
-	}
 	
 	return menu;
 }
@@ -1850,8 +2077,7 @@ create_menuitem(GtkWidget *menu,
 	pixmap = NULL;
 	if (gnome_preferences_get_menus_have_icons ()) {
 		if (fr->icon && g_file_exists (fr->icon)) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
-								    size, size);
+			pixmap = fake_pixmap_at_size (fr->icon, size);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -1992,12 +2218,10 @@ create_menu_at_fr (GtkWidget *menu,
 	pixmap = NULL;
 	if (gnome_preferences_get_menus_have_icons ()) {
 		if (pixmap_name) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
-								    size, size);
+			pixmap = fake_pixmap_at_size (pixmap_name, size);
 		}
 		if (!pixmap && gnome_folder && g_file_exists (gnome_folder)) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, gnome_folder,
-								    size, size);
+			pixmap = fake_pixmap_at_size (gnome_folder, size);
 		}
 	}
 
@@ -2349,9 +2573,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 		setup_menuitem (menuitem, NULL, title);
 	} else
 		setup_menuitem_with_size (menuitem,
-					  gnome_stock_pixmap_widget_at_size(
-						  NULL, file, 
-						  icon_size, icon_size),
+					  fake_pixmap_at_size(file, icon_size),
 					  title, icon_size);
 	g_free (file);
 }
@@ -3874,9 +4096,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		pixmap_path = g_concat_dir_and_file (kde_icondir, "exec.xpm");
 
 		if (g_file_exists(pixmap_path)) {
-			pixmap = gnome_stock_pixmap_widget_at_size (
-				NULL, pixmap_path, size,
-				size);
+			pixmap = fake_pixmap_at_size (pixmap_path, size);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}

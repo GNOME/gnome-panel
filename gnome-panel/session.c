@@ -1239,7 +1239,7 @@ load_up_globals(void)
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("hungry_menus=TRUE");
+		gnome_config_get_bool("memory_hungry_menus=FALSE");
 
 	global_config.use_large_icons =
 		gnome_config_get_bool(gdk_screen_height () > 768 
@@ -1357,7 +1357,7 @@ write_global_config(void)
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
 			      global_config.show_dot_buttons);
-	gnome_config_set_bool("hungry_menus",
+	gnome_config_set_bool("memory_hungry_menus",
 			      global_config.hungry_menus);
 	gnome_config_set_bool("use_large_icons",
 			      global_config.use_large_icons);
@@ -1445,7 +1445,7 @@ convert_write_config(void)
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
 			      global_config.show_dot_buttons);
-	gnome_config_set_bool("hungry_menus",
+	gnome_config_set_bool("memory_hungry_menus",
 			      global_config.hungry_menus);
 	gnome_config_set_bool("off_panel_popups",
 			      global_config.off_panel_popups);
@@ -1513,8 +1513,12 @@ convert_read_old_config(void)
 	global_config.show_dot_buttons =
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
+	/*
 	global_config.hungry_menus =
 		gnome_config_get_bool("hungry_menus=TRUE");
+		*/
+	/* we default to FALSE now and want everything to go to false */
+	global_config.hungry_menus = FALSE;
 
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");

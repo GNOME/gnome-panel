@@ -1,3 +1,14 @@
+Sat Feb 19 03:27:09 2000  George Lebl <jirka@5z.com>
+
+	* menu.c: do loading of icons on the fly and unload them when
+	  the icon is hidden.  Also use pure gnome_pixmap for loading
+	  icons to reduce memory usage but copy the gnome_stock scale_down
+	  function
+
+	* session.c,gnome-panel-properties.c: make everything default
+	  to !hungry_menus even if the user had it set before as it's
+	  probably now faster without it
+
 Fri Feb 18 23:15:42 2000  George Lebl <jirka@5z.com>
 
 	* gnome-run.c: fix usability issues, browse now adds to the command

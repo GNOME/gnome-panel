@@ -1024,7 +1024,7 @@ loadup_vals(void)
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("hungry_menus=TRUE");
+		gnome_config_get_bool("really_hungry_menus=FALSE");
 
 	global_config.use_large_icons =
 		gnome_config_get_bool("use_large_icons=TRUE");
