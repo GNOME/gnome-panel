@@ -480,8 +480,8 @@ applet_widget_sync_config(AppletWidget *applet)
 	CORBA_exception_free(&ev);
 }
 
-static char*
-make_sane_name(char *name)
+static const char*
+make_sane_name(const char *name)
 {
 	if(!name)
 		return NULL;
@@ -493,7 +493,7 @@ make_sane_name(char *name)
 }
 
 static CallbackInfo *
-get_callback_info(GtkWidget *applet, char *name)
+get_callback_info(GtkWidget *applet, const char *name)
 {
 	GSList *list;
 	CallbackInfo *info;
@@ -513,9 +513,9 @@ get_callback_info(GtkWidget *applet, char *name)
 /*adds a callback to the callback hash*/
 static void
 gnome_panel_applet_register_callback(GtkWidget *applet,
-				     char *name,
-				     char *stock_item,
-				     char *menutext,
+				     const char *name,
+				     const char *stock_item,
+				     const char *menutext,
 				     AppletCallbackFunc func,
 				     gpointer data)
 {

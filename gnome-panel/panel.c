@@ -620,7 +620,7 @@ panel_menu_get(PanelData *pd)
 }
 
 GtkWidget *
-make_popup_panel_menu ()
+make_popup_panel_menu (void)
 {
 	BasePWidget *basep;
 	PanelData *pd;
