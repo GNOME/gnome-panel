@@ -703,105 +703,60 @@ applet_widget_get_applet_count()
 	return applet_count;
 }
 
-/*catch events relevant to the panel and notify the panel*/
+/*button press event over the applet*/
 static int
-applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+applet_bevent(GtkWidget *widget, GdkEventButton *bevent, GtkWidget *appw)
 {
-	GdkEventButton *bevent;
-	int in_drag;
 	GtkWidget *w;
 	CORBA_Environment ev;
 	int retval = FALSE;
-
+	
 	CORBA_exception_init(&ev);
 
-	switch (event->type) {
-	case GDK_BUTTON_PRESS:
-		in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
-		bevent = (GdkEventButton *) event;
-
-		if(in_drag) {
-			GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
-			retval = TRUE;
-		} else if(bevent->button == 2) {
-			if((w = gtk_grab_get_current()))
-				gtk_grab_remove(w);
-			gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-			gdk_pointer_ungrab(GDK_CURRENT_TIME);
-			gdk_flush();
-			GNOME_PanelSpot_drag_start(CD(widget)->pspot, &ev);
-			retval = TRUE;
-		} else if(bevent->button == 3) {
-			if((w = gtk_grab_get_current()))
-				gtk_grab_remove(w);
-			gdk_pointer_ungrab(GDK_CURRENT_TIME);
-			gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-			gdk_flush();
-			GNOME_PanelSpot_show_menu(CD(widget)->pspot, &ev);
-			retval = TRUE;
-		}
-		break;
-
-	case GDK_BUTTON_RELEASE:
-		in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
-		if(in_drag) {
-			GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
-			retval = TRUE;
-		}
-		break;
-
-	default:
-		break;
+	if(GNOME_Panel__get_in_drag(panel_client, &ev)) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
+					     "button_press_event");
+		GNOME_PanelSpot_drag_stop(CD(appw)->pspot, &ev);
+		retval = TRUE;
+	} else if(bevent->button == 2) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
+					     "button_press_event");
+		if((w = gtk_grab_get_current()))
+			gtk_grab_remove(w);
+		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+		gdk_pointer_ungrab(GDK_CURRENT_TIME);
+		gdk_flush();
+		GNOME_PanelSpot_drag_start(CD(appw)->pspot, &ev);
+		retval = TRUE;
+	} else if(bevent->button == 3) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
+					     "button_press_event");
+		if((w = gtk_grab_get_current()))
+			gtk_grab_remove(w);
+		gdk_pointer_ungrab(GDK_CURRENT_TIME);
+		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+		gdk_flush();
+		GNOME_PanelSpot_show_menu(CD(appw)->pspot, &ev);
+		retval = TRUE;
 	}
+
 	CORBA_exception_free(&ev);
 
 	return retval;
 }
 
-static int
-applet_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	switch (event->type) {
-		/*pass these to the parent!*/
-		case GDK_BUTTON_PRESS:
-		case GDK_BUTTON_RELEASE:
-			return gtk_widget_event(GTK_WIDGET(data), event);
-
-			break;
-
-		default:
-			break;
-	}
-
-	return FALSE;
-}
-
-
 static void
 bind_applet_events(GtkWidget *widget, gpointer data)
 {
 	if (!GTK_WIDGET_NO_WINDOW(widget)) {
-		gtk_signal_connect(GTK_OBJECT(widget), "event",
-				   (GtkSignalFunc) applet_sub_event_handler,
+		gtk_signal_connect(GTK_OBJECT(widget), "button_press_event",
+				   (GtkSignalFunc) applet_bevent,
 				   data);
 	}
 	
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, data);
-}
-
-static void
-bind_top_applet_events(GtkWidget *widget)
-{
-	gtk_signal_connect(GTK_OBJECT(widget),
-			   "event",
-			   GTK_SIGNAL_FUNC(applet_event),
-			   NULL);
-
-	if (GTK_IS_CONTAINER(widget))
-		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_applet_events,widget);
 }
 
 void
@@ -822,7 +777,7 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	GNOME_PanelSpot_register_us(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
 
-	bind_top_applet_events(GTK_WIDGET(applet));
+	bind_applet_events(GTK_WIDGET(applet),applet);
 }
 
 void
