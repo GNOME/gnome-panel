@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.5.19\n"
-"POT-Creation-Date: 2002-04-29 03:19+0100\n"
-"PO-Revision-Date: 2002-04-29 13:12+0900\n"
+"POT-Creation-Date: 2002-05-06 22:44+0900\n"
+"PO-Revision-Date: 2002-05-06 22:51+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -29,9 +29,9 @@ msgstr "정보..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:3994 gnome-panel/status.c:377
 msgid "Help"
 msgstr "도움말"
 
@@ -606,9 +606,9 @@ msgstr "프린터 애플릿은 끌어온 파일을 쉽게 인쇄 명령으로 �
 msgid "Can't create applet!\n"
 msgstr "애플릿을 만들 수 없습니다!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
+#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3992
 msgid "Properties..."
 msgstr "등록 정보..."
 
@@ -695,7 +695,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
@@ -785,66 +785,78 @@ msgstr "숨기기버튼 보임"
 msgid "Enable hidebutton arrow"
 msgstr "숨기기버튼 화살표 보임"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3133
 msgid "Drawer"
 msgstr "서랍"
 
-#: gnome-panel/foobar-widget.c:214
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:281
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "gnome-panel-screenshot을 실행할 수 없습니다"
+
+#: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:291
 msgid "Cannot execute gnome-search-tool"
 msgstr "gnome-search-tool을 실행할 수 없습니다"
 
-#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3562
 msgid "Run Program..."
 msgstr "프로그램 실행..."
 
-#: gnome-panel/foobar-widget.c:227
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "입력한 명령이 올바르다면, 응용프로그램을 실행합니다"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3574
 msgid "Search for Files..."
 msgstr "파일 찾기..."
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3577
 msgid "Find files, folders, and documents on your computer"
 msgstr "컴퓨터에 있는 파일, 폴더, 문서를 찾습니다"
 
-#: gnome-panel/foobar-widget.c:251
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3587
+msgid "Take a Screen Shot..."
+msgstr "스크린샷 잡기..."
+
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3590
+msgid "Take a screen shot of your desktop"
+msgstr "바탕화면의 스크린샷 잡기"
+
+#: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
 msgstr "화면 잠금"
 
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:257
 msgid "Protect your computer from unauthorized use"
 msgstr "인증되지 사용을 막기위해 컴퓨터를 잠급니다"
 
-#: gnome-panel/foobar-widget.c:264
+#: gnome-panel/foobar-widget.c:266
 msgid "Log Out"
 msgstr "로그아웃"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:269
 msgid "Quit from the GNOME desktop"
 msgstr "그놈 바탕화면에서 마칩니다"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:276
+#: gnome-panel/foobar-widget.c:278
 msgid "Actions"
 msgstr "명령"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:493
 msgid "No windows open"
 msgstr "열린 창 없음"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
+#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2707
 #: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
 msgid "Applications"
 msgstr "프로그램"
 
-#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
+#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2591
 #: gnome-panel/menu.c:2636
 msgid "Menu Panel"
 msgstr "메뉴 패널"
 
-#: gnome-panel/foobar-widget.c:769
+#: gnome-panel/foobar-widget.c:778
 msgid "GNOME Menu Panel"
 msgstr "그놈 메뉴 패널"
 
@@ -903,7 +915,7 @@ msgstr "패널 기본 설정"
 msgid "Modify the global panel preferences"
 msgstr "전체 패널 기본 설정을 변경합니다"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3604
 msgid "Panel"
 msgstr "패널"
 
@@ -943,7 +955,7 @@ msgstr "서랍 안에 있는 실행기를 누른 경우에 그 서랍 닫기(_C)
 msgid "_Enable panel animation"
 msgstr "패널 애니메이션 사용(_E)"
 
-#: gnome-panel/gnome-panel-screenshot.c:128
+#: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -951,7 +963,7 @@ msgstr ""
 "png 구조를 초기화 할수 없음.\n"
 "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -959,7 +971,7 @@ msgstr ""
 "png 정보를 만들 수 없음.\n"
 "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:141
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -967,7 +979,7 @@ msgstr ""
 "png 정보를 설정할 수 없음.\n"
 "시스템에 libpng의 잘못된 판이 설치되어 있을것입니다."
 
-#: gnome-panel/gnome-panel-screenshot.c:157
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -975,13 +987,13 @@ msgstr ""
 "스크린샷을 저장하는데 메모리가 부족합니다.\n"
 "몇몇 자원을 해제시킨 다음 다시 시도하십시오."
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:202
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "파일 %s가 이미 있습니다. 덮어쓸까요?"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:704
+#: gnome-panel/gnome-panel-screenshot.c:214
+#: gnome-panel/gnome-panel-screenshot.c:702
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -992,52 +1004,52 @@ msgstr ""
 "\"%s\"\n"
 "부모 디렉토리의 허가권을 확인하십시오"
 
-#: gnome-panel/gnome-panel-screenshot.c:479
+#: gnome-panel/gnome-panel-screenshot.c:477
 msgid "Print Screenshot"
 msgstr "스크린샷 인쇄"
 
-#: gnome-panel/gnome-panel-screenshot.c:527
+#: gnome-panel/gnome-panel-screenshot.c:525
 msgid "Screenshot Print Preview"
 msgstr "스크린샷 인쇄 미리보기"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:553
+#: gnome-panel/gnome-panel-screenshot.c:551
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%c스크린샷-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:558
+#: gnome-panel/gnome-panel-screenshot.c:556
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%c스크린샷.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:573
+#: gnome-panel/gnome-panel-screenshot.c:571
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%c스크린샷-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:578
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%c스크린샷-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:724
+#: gnome-panel/gnome-panel-screenshot.c:722
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "%s 파일을 쓸 공간이 부족합니다"
 
-#: gnome-panel/gnome-panel-screenshot.c:1034
+#: gnome-panel/gnome-panel-screenshot.c:1021
 msgid "Grab a window instead of the entire screen"
 msgstr "전체화면 대신 창만 잡습니다"
 
-#: gnome-panel/gnome-panel-screenshot.c:1035
+#: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "지정한 시간(초) 뒤에 스크린샷 잡기"
 
-#: gnome-panel/gnome-panel-screenshot.c:1078
+#: gnome-panel/gnome-panel-screenshot.c:1064
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1045,17 +1057,9 @@ msgstr ""
 "스크린샷 프로그램의 Glade파일이 없습니다.\n"
 "gnome-panel의 설치를 확인하십시오."
 
-#: gnome-panel/gnome-panel-screenshot.c:1100
+#: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "현재 바탕화면의 스크린샷을 찍을 수 없습니다."
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
-msgid "Screenshot Capture"
-msgstr "스크린 캡처"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
-msgid "Take a picture of the current screen contents"
-msgstr "현재 화면의 스크린샷을 찍습니다"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:1
 msgid "Options"
@@ -1085,95 +1089,85 @@ msgstr "스크린샷 인쇄(_P)..."
 msgid "_Save screenshot to file:"
 msgstr "파일로 스크린샷 저장(_S):"
 
-#: gnome-panel/gnome-run.c:224 gnome-panel/gnome-run.c:240
+#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
+#, c-format
+msgid "Failed to run this program: '%s'"
+msgstr "이 프로그램 실행 실패: '%s'"
+
+#: gnome-panel/gnome-run.c:325
+#, c-format
+msgid "Failed to execute command: '%s'"
+msgstr "명령 실행 실패: '%s'"
+
+#: gnome-panel/gnome-run.c:384
 #, c-format
 msgid ""
-"Failed to load this program!\n"
-"%s"
+"Failed to execute command: '%s'\n"
+"\n"
+"Details: %s"
 msgstr ""
-"이 프로그램 읽기 실패!\n"
-"%s"
+"명령 실행 실패: '%s'\n"
+"\n"
+"자세한 정보: %s"
 
-#: gnome-panel/gnome-run.c:333
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s"
-msgstr ""
-"명령 실행 실패:\n"
-"%s"
-
-#: gnome-panel/gnome-run.c:390
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s\n"
-"%s"
-msgstr ""
-"명령 실행 실패:\n"
-"%s\n"
-"%s"
-
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr "실행할 프로그램을 선택하십시오"
 
-#: gnome-panel/gnome-run.c:679
-msgid "Executable name for selected application"
-msgstr "선택한 프로그램의 실행파일 이름"
+#: gnome-panel/gnome-run.c:664
+msgid "Command to run"
+msgstr "실행할 명령"
 
-#: gnome-panel/gnome-run.c:692
+#: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
 msgstr "찾아보기(_B)..."
 
-#: gnome-panel/gnome-run.c:701
+#: gnome-panel/gnome-run.c:688
 msgid "Run in _terminal"
 msgstr "터미널에서 실행(_T)"
 
-#: gnome-panel/gnome-run.c:927
+#: gnome-panel/gnome-run.c:922
 #, c-format
-msgid "Will run '%s'"
-msgstr "'%s'을(를) 실행합니다"
+msgid "Will run command: '%s'"
+msgstr "다음 명령을 실행합니다: '%s'"
 
-#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
-msgid "No program selected"
-msgstr "프로그램이 선택되지 않았습니다"
+#: gnome-panel/gnome-run.c:931
+msgid "No application selected"
+msgstr "프로그램을 선택하지 않았습니다"
+
+#: gnome-panel/gnome-run.c:1051
+msgid "Known A_pplications:"
+msgstr "알려진 프로그램(_P):"
 
 #: gnome-panel/gnome-run.c:1061
-msgid "A_pplications:"
-msgstr "응용프로그램(_P):"
+msgid "List of known applications"
+msgstr "알려진 프로그램 목록"
 
-#: gnome-panel/gnome-run.c:1071
-msgid "List of Applications"
-msgstr "프로그램 목록"
-
-#: gnome-panel/gnome-run.c:1072
+#: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
 msgstr "목록에서 실행할 프로그램을 선택하십시오"
 
-#: gnome-panel/gnome-run.c:1181
-msgid "_Advanced <<"
-msgstr "고급(_A) <<"
+#: gnome-panel/gnome-run.c:1160
+msgid "_Known Applications <<"
+msgstr "알려진 프로그램(_K) <<"
 
-#: gnome-panel/gnome-run.c:1184
-msgid "Hide the advanced controls below this button."
-msgstr "이 버튼 아래에 고급 조정옵션을 숨깁니다"
+#: gnome-panel/gnome-run.c:1163
+msgid "Hide the list of known applications"
+msgstr "알려진 프로그램 목록을 숨깁니다"
 
-#: gnome-panel/gnome-run.c:1195
-msgid "_Advanced >>"
-msgstr "고급(_A) >>"
+#: gnome-panel/gnome-run.c:1177
+msgid "_Known Applications >>"
+msgstr "알려진 프로그램(_K) >>"
+
+#: gnome-panel/gnome-run.c:1180
+msgid "Display a list of known applications from the applications menu"
+msgstr "프로그램 메뉴에 있는 알려진 프로그램들의 목록을 표시합니다"
 
 #: gnome-panel/gnome-run.c:1198
-msgid ""
-"Allow typing in a command line instead of choosing an application from the "
-"list"
-msgstr "목록에서 응용프로그램을 선택하는 대신 명령을 입력하도록 합니다"
-
-#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "실행(_R)"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1255
 msgid "Run Program"
 msgstr "프로그램 실행"
 
@@ -1218,12 +1212,12 @@ msgstr "응용프로그램 %s에 대한 도움말"
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
-#: gnome-panel/menu-ditem.c:254
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
+#: gnome-panel/menu-ditem.c:256
 msgid "Launcher Properties"
 msgstr "실행기 등록 정보"
 
-#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
 msgid "Create Launcher"
 msgstr "실행기 만들기"
 
@@ -1282,45 +1276,43 @@ msgstr "화면 보호기 데몬 재시작"
 msgid "Specify a profile name to load"
 msgstr "읽을 프로파일 이름 지정"
 
-#: gnome-panel/menu-ditem.c:117
+#: gnome-panel/menu-ditem.c:119
 #, c-format
 msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
+"<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>변경 사항을 메뉴 항목에 저장할 수 없습니다</b>\n"
+"<b>변경 사항을 실행기에 저장할 수 없습니다</b>\n"
 "\n"
 "자세한 정보: %s"
 
-#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3643 gnome-panel/menu.c:3868
 msgid "Menu"
 msgstr "메뉴"
 
-#: gnome-panel/menu-ditem.c:437
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
-msgstr ""
-"실행기를 만들수 없습니다.\n"
-"\n"
-"명령이나 url이 지정되지 않았습니다."
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
+msgstr "실행기의 이름을 지정해야 합니다."
+
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
+msgstr "올바른 URL이나 명령어를 지정해야 합니다."
 
 #. class
-#: gnome-panel/menu-ditem.c:458
+#: gnome-panel/menu-ditem.c:480
 #, c-format
 msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
+"<b>Cannot save menu item to disk</b>\n"
 "\n"
-"%s"
+"Details: %s"
 msgstr ""
-"메뉴항목을 디스크에 저장할수 없습니다. 다음 오류가 발생하였습니다:\n"
+"<b>메뉴 항목을 디스크에 저장할 수 없습니다</b>\n"
 "\n"
-"%s"
+"자세한 정보: %s"
 
-#: gnome-panel/menu-ditem.c:482
+#: gnome-panel/menu-ditem.c:503
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1677,19 +1669,19 @@ msgstr "애플릿"
 msgid "Run a command"
 msgstr "명령 실행"
 
-#: gnome-panel/menu.c:3586
+#: gnome-panel/menu.c:3612
 msgid "Desktop"
 msgstr "바탕화면"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3645
 msgid "Menu:"
 msgstr "메뉴:"
 
-#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
+#: gnome-panel/menu.c:3695 gnome-panel/menu.c:3723 gnome-panel/menu.c:3908
 msgid "Main Menu"
 msgstr "주 메뉴"
 
-#: gnome-panel/menu.c:3691
+#: gnome-panel/menu.c:3717
 msgid "Can't create menu, using main menu!"
 msgstr "디렉토리를 열 수 없어서, 메인 메뉴를 사용합니다!"
 
@@ -1697,16 +1689,16 @@ msgstr "디렉토리를 열 수 없어서, 메인 메뉴를 사용합니다!"
 msgid "Cannot register control widget\n"
 msgstr "제어 위젯을 등록할 수 없음\n"
 
-#: gnome-panel/panel-applet-frame.c:597
+#: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s'에서 예외 상황\n"
 
-#: gnome-panel/panel-applet-frame.c:685
+#: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "컨트롤에서 AppletShell 인터페이스를 가져올 수 없습니다\n"
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:812
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1937,41 +1929,41 @@ msgstr "테스트 보노보 애플릿"
 msgid "Test Bonobo Applet Factory"
 msgstr "테스트 보노보 애플릿 팩토리"
 
-#: libpanel-applet/panel-applet.c:643
+#: libpanel-applet/panel-applet.c:654
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "완전하지 않은 배경 형식 '%s' 받음"
 
-#: libpanel-applet/panel-applet.c:657
+#: libpanel-applet/panel-applet.c:668
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "완전하지 않은 배경 형식 '%s' 받음: %s"
 
-#: libpanel-applet/panel-applet.c:666
+#: libpanel-applet/panel-applet.c:677
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "그림 %s 받기 실패"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:684
 msgid "Unknown background type received"
 msgstr "배경 형식 받음"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:853
 msgid "The Applet's containing Panel's orientation"
 msgstr "애플릿에 패널의 방향정보이 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:850
+#: libpanel-applet/panel-applet.c:861
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "애플릿에 패널의 크기정보가 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:869
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "애플릿에 패널의 배경색과 그림정보가 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:877
 msgid "The Applet's flags"
 msgstr "애플릿의 플래그"
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:885
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "애플릿에서 가능한 크기 범위 알려줌"
