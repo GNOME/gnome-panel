@@ -1,3 +1,12 @@
+2002-05-27  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel_applet.c: Add new function panel_applet_size_request and 
+	panel_applet_size_allocate. The child of the PanelApplet is placed,
+	not at (0,0) in the PanelApplet but is offset by 
+	focus_width + 2 * focus_pad to allow room for the focus indicator to
+	be drawn.
+	(panel_applet_expose): Draw focus indicator when PanelApplet has focus.
+	
 2002-05-23  Padraig O'Briain <padraig.obriain@sun.com>
 
 	* Makefile.am:
