@@ -104,7 +104,11 @@ snapped_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_state(w, 
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		if(snapped->mode == SNAPPED_AUTO_HIDE) {
+			gnome_win_hints_set_layer(w, WIN_LAYER_ABOVE_DOCK);
+		} else {
+			gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		}
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}    
@@ -944,7 +948,18 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	snapped->pos = pos;
 	oldstate = snapped->state;
 	snapped->state = state;
-	snapped->mode = mode;
+	if(mode != snapped->mode) {
+		snapped->mode = mode;
+		if (gnome_win_hints_wm_exists()) {
+			if(snapped->mode == SNAPPED_AUTO_HIDE) {
+				gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+							  WIN_LAYER_ABOVE_DOCK);
+			} else {
+				gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+							  WIN_LAYER_DOCK);
+			}
+		}
+	}
 	snapped->hidebuttons_enabled = hidebuttons_enabled;
 	snapped->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
