@@ -118,7 +118,8 @@ panel_background_prepare (PanelBackground *background)
 		break;
 	}
 
-	gdk_window_get_user_data (GDK_WINDOW (background->window), &widget);
+	gdk_window_get_user_data (GDK_WINDOW (background->window),
+				  (gpointer *) &widget);
 
 	if (GTK_IS_WIDGET (widget))
 	  gtk_widget_queue_draw (widget);
