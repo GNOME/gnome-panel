@@ -32,7 +32,7 @@ static DistributionInfo distribution_info [] = {
 	  GNOME_DATADIR "/gnome/distribution-menus/SuSE/.",
 	  NULL, NULL
 	},
-	{ DISTRIBUTION_SOLARIS, "/usr/dt/config/sys.dtwmrc",
+	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
 	 N_("Solaris"), N_("CDE Menus"), "gnome-gmenu.png", "cdemenu:/",
 	 NULL, NULL
 	},
