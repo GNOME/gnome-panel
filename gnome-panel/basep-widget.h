@@ -148,10 +148,10 @@ struct _BasePPosClass {
 
 	void (*realize)                   (GtkWidget *widget);
 
-	int (*north_clicked)              (BasePWidget *basep);
-	int (*south_clicked)              (BasePWidget *basep);
-	int (*east_clicked)               (BasePWidget *basep);
-	int (*west_clicked)               (BasePWidget *basep);
+	void (*north_clicked)             (BasePWidget *basep);
+	void (*south_clicked)             (BasePWidget *basep);
+	void (*east_clicked)              (BasePWidget *basep);
+	void (*west_clicked)              (BasePWidget *basep);
 
 	void (*pre_convert_hook)          (BasePWidget *basep);
 };

@@ -40,7 +40,7 @@ static void drawer_pos_get_menu_pos (BasePWidget *basep,
 				     int wx, int wy,
 				     int ww, int wh);
 
-static int drawer_pos_hidebutton_click (BasePWidget *basep);
+static void drawer_pos_hidebutton_click (BasePWidget *basep);
 
 static void drawer_pos_pre_convert_hook (BasePWidget *basep);
 
@@ -211,7 +211,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, BasePWidget *parentp)
 	parentp->drawers_open--;
 }
 
-static int
+static void
 drawer_pos_hidebutton_click (BasePWidget *basep)
 {
 	Drawer *drawer = gtk_object_get_data (GTK_OBJECT (basep),
@@ -220,8 +220,6 @@ drawer_pos_hidebutton_click (BasePWidget *basep)
 	BasePWidget *parent = BASEP_WIDGET(panel->panel_parent);
 
 	drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
-
-	return FALSE;
 }
 
 static void

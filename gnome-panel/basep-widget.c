@@ -1054,7 +1054,7 @@ basep_back_change(PanelWidget *panel,
 			 basep->hidebutton_s);
 }
 
-static int
+static void
 basep_widget_north_clicked (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep = data;
@@ -1064,11 +1064,11 @@ basep_widget_north_clicked (GtkWidget *widget, gpointer data)
 	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
 	gtk_widget_queue_draw (widget);
 
-	g_return_val_if_fail (klass && klass->north_clicked, TRUE);
-	return klass->north_clicked(basep);
+	if (klass && klass->north_clicked)
+		klass->north_clicked(basep);
 }
 
-static int
+static void
 basep_widget_south_clicked (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep = data;
@@ -1078,11 +1078,11 @@ basep_widget_south_clicked (GtkWidget *widget, gpointer data)
 	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
 	gtk_widget_queue_draw (widget);
 	
-	g_return_val_if_fail (klass && klass->south_clicked, TRUE);
-	return klass->south_clicked(basep);
+	if (klass && klass->south_clicked)
+		klass->south_clicked(basep);
 }
 
-static int
+static void
 basep_widget_east_clicked (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep = data;
@@ -1092,11 +1092,11 @@ basep_widget_east_clicked (GtkWidget *widget, gpointer data)
 	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
 	gtk_widget_queue_draw (widget);
 	
-	g_return_val_if_fail (klass && klass->east_clicked, TRUE);
-	return klass->east_clicked(basep);
+	if (klass && klass->east_clicked)
+		klass->east_clicked(basep);
 }
 
-static int
+static void
 basep_widget_west_clicked (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep = data;
@@ -1106,8 +1106,8 @@ basep_widget_west_clicked (GtkWidget *widget, gpointer data)
 	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
 	gtk_widget_queue_draw (widget);
 	
-	g_return_val_if_fail (klass && klass->west_clicked, TRUE);
-	return klass->west_clicked(basep);
+	if (klass && klass->west_clicked)
+		klass->west_clicked(basep);
 }
 
 GtkWidget*

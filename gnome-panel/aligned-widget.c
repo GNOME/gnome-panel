@@ -21,8 +21,8 @@ static void aligned_pos_get_pos (BasePWidget *basep,
 				 int *x, int *y,
 				 int w, int h);
 
-static int aligned_pos_show_hide_left (BasePWidget *basep);
-static int aligned_pos_show_hide_right (BasePWidget *basep);
+static void aligned_pos_show_hide_left (BasePWidget *basep);
+static void aligned_pos_show_hide_right (BasePWidget *basep);
 static BorderPosClass *parent_class;
 
 GtkType
@@ -206,7 +206,7 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	}
 }
 
-static int
+static void
 aligned_pos_show_hide_left (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -220,19 +220,13 @@ aligned_pos_show_hide_left (BasePWidget *basep)
 	case BASEP_HIDDEN_RIGHT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: north/west clicked while auto hidden"));
-		break;
-	case BASEP_HIDDEN_LEFT:
-	case BASEP_MOVING:
-		g_assert_not_reached ();
+	default:
 		break;
 	}
-	return FALSE;
 }
 
 
-static int
+static void
 aligned_pos_show_hide_right (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -246,15 +240,9 @@ aligned_pos_show_hide_right (BasePWidget *basep)
 	case BASEP_HIDDEN_LEFT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: south/east clicked while auto hidden"));
-		break;
-	case BASEP_MOVING:
-	case BASEP_HIDDEN_RIGHT:
-		g_assert_not_reached ();
+	default:
 		break;
 	}
-	return FALSE;
 }
 
 void aligned_widget_change_params (AlignedWidget *aligned,

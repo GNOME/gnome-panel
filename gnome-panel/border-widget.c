@@ -26,8 +26,8 @@ static void border_pos_get_menu_pos (BasePWidget *basep,
 				     int wx, int wy,
 				     int ww, int wh);
 
-static int border_pos_show_hide_left (BasePWidget *basep);
-static int border_pos_show_hide_right (BasePWidget *basep);
+static void border_pos_show_hide_left (BasePWidget *basep);
+static void border_pos_show_hide_right (BasePWidget *basep);
 
 static void border_pos_pre_convert_hook (BasePWidget *basep);
 
@@ -234,7 +234,7 @@ border_widget_change_params (BorderWidget *border,
 				    back_color);
 }
 
-static int
+static void
 border_pos_show_hide_left (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -244,20 +244,13 @@ border_pos_show_hide_left (BasePWidget *basep)
 	case BASEP_HIDDEN_RIGHT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: north/west clicked while auto hidden"));
-		break;
-	case BASEP_HIDDEN_LEFT:
-	case BASEP_MOVING:
-		/* FIXME: Do nothing - this code does get reached if you double click on a left hidebutton. */
-		/* g_assert_not_reached() */
+	default:
 		break;
 	}
-	return FALSE;
 }
 
 
-static int
+static void
 border_pos_show_hide_right (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -267,16 +260,9 @@ border_pos_show_hide_right (BasePWidget *basep)
 	case BASEP_HIDDEN_LEFT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: south/east clicked while auto hidden"));
-		break;
-	case BASEP_HIDDEN_RIGHT:
-	case BASEP_MOVING:
-		/* FIXME: Do nothing - this code does get reached if your double-click on a right hidebutton. */
-		/* g_assert_not_reached (); */
+	default:
 		break;
 	}
-	return FALSE;
 }
 
 static void

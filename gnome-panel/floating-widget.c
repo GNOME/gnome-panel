@@ -46,8 +46,8 @@ static void floating_pos_get_menu_pos (BasePWidget *basep,
 
 static void floating_pos_pre_convert_hook (BasePWidget *basep);
 
-static int floating_pos_show_hide_left (BasePWidget *basep);
-static int floating_pos_show_hide_right (BasePWidget *basep);
+static void floating_pos_show_hide_left (BasePWidget *basep);
+static void floating_pos_show_hide_right (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
 
@@ -315,7 +315,7 @@ floating_pos_get_hide_pos (BasePWidget *basep,
 	}
 }
 
-static int
+static void
 floating_pos_show_hide_left (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -325,18 +325,12 @@ floating_pos_show_hide_left (BasePWidget *basep)
 	case BASEP_HIDDEN_RIGHT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: north/west clicked while auto hidden"));
-		break;
-	case BASEP_HIDDEN_LEFT:
-	case BASEP_MOVING:
-		g_assert_not_reached ();
+	default:
 		break;
 	}
-	return FALSE;
 }
 
-static int
+static void
 floating_pos_show_hide_right (BasePWidget *basep)
 {
 	switch (basep->state) {
@@ -346,15 +340,9 @@ floating_pos_show_hide_right (BasePWidget *basep)
 	case BASEP_HIDDEN_LEFT:
 		basep_widget_explicit_show (basep);
 		break;
-	case BASEP_AUTO_HIDDEN:
-		g_warning (_("weird: south/east clicked while auto hidden"));
-		break;
-	case BASEP_MOVING:
-	case BASEP_HIDDEN_RIGHT:
-		g_assert_not_reached ();
+	default:
 		break;
 	}
-	return FALSE;
 }
 
 static void

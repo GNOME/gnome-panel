@@ -1,3 +1,10 @@
+Sat Feb 26 18:57:55 2000  George Lebl <jirka@5z.com>
+
+	* basep-widget.[ch],border-widget.c,aligned-widget.c,floating-widget.c:
+	  ignore hidebutton clicks in weird states completely as they can
+	  apparently happen and the clicked methods return nothing, not an
+	  int (just minor cleanup)
+
 2000-02-23  Peter Hawkins  <peterhawkins@ozemail.com.au>
 
 	* border-widget.c: Provisional fix to stop panel hitting assert on
