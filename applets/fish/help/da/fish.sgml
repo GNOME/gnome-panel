@@ -1,5 +1,3 @@
-  <!-- ============= Kræver opdatering ===================== -->
-
  <sect1 id="fish">
   <title>Gnome fisk-appleten</title>
 
@@ -41,8 +39,8 @@
    <para>
     Højre-klik på appletten vil frembringe en menu med følgende punkter: 
     <itemizedlist>   
-    
-     <listitem> 
+
+ <listitem> 
       <para>
        <guimenuitem>Egenskaber&hellip;</guimenuitem> &mdash;
        åbner <link linkend="fish-prefs">
@@ -65,11 +63,11 @@
        forfatterens navn.
       </para>
      </listitem>
-     
+
     </itemizedlist>
    </para>
-  </sect2>  
-       
+  </sect2>
+
   <!-- ============= Customization ============================= -->
   <sect2 id="fish-prefs">
     <title>Personificering</title>
@@ -85,142 +83,163 @@
     <figure id="fish-settings-fig">
      <title>Egenskabs-dialogen</title>
      <screenshot>
-      <screeninfo>Egenskabs-dialogen</screeninfo> 
+      <screeninfo>Properties dialog</screeninfo>
       <graphic format="png" fileref="fish_settings"
       srccredit="muet">
       </graphic>
      </screenshot>
     </figure>
 
-  <para>
-    <application>Gnome fisk-appleten</application> viser en lille fisk
-    på dit <interface>panel</interface> og ikke gør noget nyttigt 
-    i det hele taget udover dette. Den er en del af gnome-core pakken. 
-    Denne beskrivelsen af den refererer til fisken som vist i 
-    gnome-core-1.1.2.
-  </para>
-  <para>
-    Den findes normal i <interface>panelet</interface> som standard, 
-    men hvis du ikke ser den, kan du starte den ved at klikke på
-    <mousebutton>knap
-    3</mousebutton> på en tom del af <interface>panelet</interface> og
-    følge menuene
-   <menuchoice>
-   <guimenu>Appletter</guimenu>
-    <guisubmenu>Underholdning</guisubmenu>
-    <guimenuitem>Fisk</guimenuitem>
-   </menuchoice>
-  </para>
-  <para>
-    Fisk appleten er skrevet af George Lebl (<email>jirka@5z.com</email>). 
-    Rapportér venligst fejl i den til
-    <ulink type="http" url="http://bugs.gnome.org">Gnome fejlhåndterings-
-    systemet</ulink>. Du kan gøre dette ved at følge retningslinjene på
-    dette 
-    websted eller ved at bruge <command>bug-buddy</command> fra kommandolinjen.
-    Vælg gnome-core for pakke.
-  </para>
+    <para>
+     The properties are:
+     <itemizedlist>
 
-  <sect2 id="wanda-usage">
-   <title>Bruk</title>
+      <listitem>
+       <para>
+        Your GNOME Fish's Name &mdash;  You can change your fish's
+        name here. The default name is Wanda. 
+       </para>
+      </listitem>
 
-   <orderedlist>
-    <listitem>
-     <para>
-       Hvis du har <application>fortune</application> pakken installeret,
-       vil du ved at trykke på <mousebutton>museknap 1</mousebutton> få
-       <guilabel>dialogboks</guilabel> frem som indeholder en spådom.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-      Ved at trykke på <mousebutton>museknap 2</mousebutton> og holde den
-      nede kan du trække fisken rundt på panelet.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-       Ved at trykke <mousebutton>museknap 3</mousebutton> får du en
-       menu frem  som inkluderer en <guisubmenu>brugervalgsmenu</guisubmenu> og
-       en <guimenuitem>Om</guimenuitem>-boks. 
-     </para>
-    </listitem>
-   </orderedlist>
+      <listitem>
+       <para>
+        The Animation Filename &mdash; You can select a different set
+        of pictures here. By default,
+        the list of pictures is in <filename>$PREFIX/pixmaps/fish/</filename>,
+        which you can browse and choose from. You may also put a different
+        pathname in pointing to your own pictures.
+       </para>
+      </listitem>
 
+      <listitem>
+       <para>
+        Frames In Animation &mdash; The number of frames in the
+        animation. The default is three, but the range is from 1 to 255.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Pause per frame (s) &mdash;  The period in seconds before
+        updating the picture. The default is one second, but the range
+        is from 0.10 to 10 seconds.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Rotate on vertical panels &mdash; This checkbox is used for
+        vertical panels, and when checked, the
+        fish will appear swimming downwards on a vertical panel. If it is 
+        not checked, it will appear the same way as on a horizontal panel,
+        which forces the vertical panel to widen to accomodate it.
+       </para>
+      </listitem>
+
+
+     </itemizedlist>
+    </para>
+
+    <para> 
+      After you have made all the changes you want, click on
+      <guibutton>OK</guibutton> to apply the changes and close the
+      <interface>Properties</interface> dialog. To cancel the changes
+      and return to previous values, click the
+      <guibutton>Cancel</guibutton> button.
+    </para>
   </sect2>
 
-  <sect2 id="wanda-prefs">
-   <title>Brugervalg</title>
+
+  <!-- ============= Bugs ================================== -->
+  <!-- This section should describe known bugs and limitations of
+       the program if there are any - please be frank and list all
+       problems you know of -->
+  <sect2 id="fish-bugs">
+   <title>Known Bugs and Limitations</title>
    <para>
-     <guilabel>Brugervalgsdialogboksen</guilabel> (kaldt
-     Gnome fisk-egenskaber) er enkel, med fem valg du kan 
-     konfigurere.
-   </para>
-
-   <variablelist>
-    <varlistentry>
-     <term>Din GNOME fisks navn</term>
-     <listitem>
-      <para>
-        Du kan ændre navnet på din fisk her. Standard navn er Wanda.
-      </para>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>Filnavn for animationen</term>
-     <listitem>
-      <para>
-        Du kan vælge et andet sæt med billeder her. Som standard findes
-        listen med billeder du kan vælge fra i
-        <filename>$PREFIX/pixmaps/fish/</filename>,
-        Du kan også indsætte et andet stinavn for at pege på dine
-        egne bilder.
-      </para>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>Bilder i animationen</term>
-     <listitem>
-      <para>
-        Som det står her, antal billeder i animationen. Standardvalget er 
-        tre, men man kan vælge fra 1 til 255.
-      </para>
-     </listitem>
-    </varlistentry>
- 
-    <varlistentry>
-     <term>Pause per billede</term>
-     <listitem>
-      <para>
-        Tiden i sekunder før bildet opdateres. Standardværdien er 
-        et sekund, men du kan vælge mellem 0.10 til 10 sekunder.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>Rotér på vertikale paneler</term>
-     <listitem>
-      <para>
-        Denne afkrysningsboks bruges for vertikale paneler, og når den er
-        krydset af vil fisken se ud til at svømme nedover på et lodret panel. 
-	Hvis den ikke er krydset af vil fisken svømme på samme måde som på
-        et
-	vandret panel, noget som tvinger det lodrette panel til at ændre 
-	størrelse for at gøre plads til den.
-      </para>
-     </listitem>
-    </varlistentry>
-   </variablelist>
-  </sect2>
-
-  <sect2 id="wanda-bugs">
-   <title>Fejl og begrænsninger</title>
-   <para>
-     Ingen kendte fejl.
+    This applet has no known bugs.
    </para>
   </sect2>
- 
+
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="fish-authors">
+   <title>Authors</title>
+   <para>
+    <application>Fish</application> was written by George Lebl 
+    (<email>jirka@5z.com</email>).  Please send all comments,
+    suggestions, and bug 
+    reports to the <ulink url="http://bugs.gnome.org" type="http">GNOME
+    bug tracking database</ulink>. (Instructions for submitting bug
+    reports can be found <ulink
+    url="http://bugs.gnome.org/Reporting.html" type="http">
+    on-line</ulink>. If you are using
+    GNOME 1.1 or later, you can also use <application>Bug Report
+    Tool</application> (<command>bug-buddy</command>), available in the
+    <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
+    Menu</guimenu>, for submitting bug reports.
+   </para>
+
+   <para>
+    This manual was written by Telsa Gwynne
+    (<email>hobbit@aloss.ukuu.org.uk</email>). Please send all comments and
+    suggestions regarding this manual to the <ulink type="http"
+    url="http://www.gnome.org/gdp">GNOME Documentation Project</ulink> 
+    by sending an email to <email>docs@gnome.org</email>. You can also
+    submit comments online by using the <ulink type="http"
+    url="http://www.gnome.org/gdp/doctable/">GNOME Documentation Status
+    Table</ulink>.
+   </para>
+
+   <!-- For translations: uncomment this:
+
+   <para>
+    Latin translation was done by ME
+    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
+    suggestions regarding this translation to SOMEWHERE.
+   </para>
+
+   -->
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>License</title>
+   <para>
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the <citetitle>GNU General Public
+    License</citetitle> as published by the Free Software Foundation;
+    either version 2 of the License, or (at your option) any later
+    version.
+   </para>
+   <para>
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    <citetitle>GNU General Public License</citetitle> for more details.
+   </para>
+   <para>
+    A copy of the <citetitle>GNU General Public License</citetitle> is
+    included as an appendix to the <citetitle>GNOME Users
+    Guide</citetitle>.  You may also obtain a copy of the
+    <citetitle>GNU General Public License</citetitle> from the Free
+    Software Foundation by visiting <ulink type="http"
+    url="http://www.fsf.org">their Web site</ulink> or by writing to
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+     <country>USA</country>
+    </address>
+   </para>
+  </sect2>
+
  </sect1>
-</article>
+
+
+
+
