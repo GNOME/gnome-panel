@@ -1533,7 +1533,7 @@ fish_applet_change_background (PanelApplet               *panel_applet,
 	gtk_widget_set_style (GTK_WIDGET (applet), NULL);
 	rc_style = gtk_rc_style_new ();
 	gtk_widget_modify_style (GTK_WIDGET (applet), rc_style);
-	g_object_unref (rc_style);
+	gtk_rc_style_unref (rc_style);
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
@@ -1548,6 +1548,7 @@ fish_applet_change_background (PanelApplet               *panel_applet,
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
 		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
 		gtk_widget_set_style (GTK_WIDGET (applet), style);
+		g_object_unref (style);
 		break;
 	}
 }
