@@ -1,3 +1,12 @@
+2003-05-22  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-run-dialog.c:
+	(get_url_from_input): kill. Turns out this ended up
+	in gnome-vfs. Thanks Frank :-)
+	(panel_run_dialog_execute),
+	(pixmap_drag_data_get):
+	use gnome_vfs_make_uri_from_input_with_dirs.
+
 2003-05-21  Hidetoshi Tajima  <hidetoshi.tajima@sun.com>
 
 	* menu.c (create_root_menu): change "Run Application" to

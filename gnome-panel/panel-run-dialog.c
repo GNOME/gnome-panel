@@ -311,50 +311,6 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 	return TRUE;
 }
 
-/* Determines a fully qualified URL from a relative or absolute input path.
- * Basically calls gnome_vfs_make_uri_from_input except it specifically
- * tries to support paths relative to the user's home directory.
- */
-static char *
-get_url_from_input (const char *in)
-{
-	char *url, *path, *dir;
-
-	switch (in[0]) {
-	case '\0':
-		url = g_strdup ("");
-		break;
-	case '~':
-	case '/':
-		url = gnome_vfs_make_uri_from_input (in);
-		break;
-	default:
-		/* this might be a relative path, check if it exists relative
-		 * to current dir and home dir.
-		 */
-		dir = g_get_current_dir ();
-		path = g_build_filename (dir, in, NULL);
-		g_free (dir);
-
-		if (g_file_test (path, G_FILE_TEST_EXISTS)) {
-			url = gnome_vfs_make_uri_from_input (path);
-			g_free (path);
-		} else {
-			g_free (path);
-			path = g_build_filename (g_get_home_dir (), in, NULL);
-
-			if (g_file_test (path, G_FILE_TEST_EXISTS))
-				url = gnome_vfs_make_uri_from_input (path);
-			else
-				url = gnome_vfs_make_uri_from_input (in);
-
-			g_free (path);
-		}
-	}
-
-	return url;
-}
-
 static void
 panel_run_dialog_execute (PanelRunDialog *dialog)
 {
@@ -390,7 +346,8 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 	}
 		
 	disk = g_locale_from_utf8 (command, -1, NULL, NULL, NULL);
-	url = get_url_from_input (disk);
+	url = gnome_vfs_make_uri_from_input_with_dirs (disk,
+						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	escaped = g_markup_escape_text (url, -1);
 	scheme = gnome_vfs_get_uri_scheme (url);
 	result = FALSE;
@@ -1379,7 +1336,8 @@ pixmap_drag_data_get (GtkWidget          *run_dialog,
 	ditem = gnome_desktop_item_new ();
 
 	disk = g_locale_from_utf8 (text, -1, NULL, NULL, NULL);
-	uri = get_url_from_input (disk);
+	uri = gnome_vfs_make_uri_from_input_with_dirs (disk,
+						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	scheme = gnome_vfs_get_uri_scheme (uri);
 	
 	if (!strcasecmp (scheme, "http"))
