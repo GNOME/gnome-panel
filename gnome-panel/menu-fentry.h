@@ -23,7 +23,6 @@ struct _MenuFinfo {
 
 struct _MFile {
 	char *name;
-	char *name_collate_key;
 	gboolean verified;
 	time_t mtime;
 	gboolean is_dir;
@@ -59,7 +58,7 @@ struct _DirRec {
 	GSList *mfl;  /*records of menus using this record*/
 };
 
-GSList * get_mfiles_from_menudir(const char *menudir);
+GSList * get_mfiles_from_menudir (const char *menudir, gboolean *sorted);
 
 FileRec * fr_read_dir(DirRec *dr, const char *muri, time_t mtime, int sublevels);
 FileRec * fr_replace(FileRec *fr);

@@ -1,3 +1,11 @@
+Wed Feb 20 18:12:25 2002  George Lebl <jirka@5z.com>
+
+	* menu-fentry.[ch], menu.c: the fr_compare function takes into
+	  account directories being sorted before files.  MFiles can't be
+	  sorted so sort after we load the QItems.  Fix a memory leak.  Cache
+	  the scaled version of an icon to avoid lots of scaling and add
+	  the icon size to the cache key.
+
 Wed Feb 20 17:14:00 2002  George Lebl <jirka@5z.com>
 
 	* gnome-run.c, menu-fentry.[ch]: Add a fentry sorting function and

@@ -760,8 +760,12 @@ icon_to_load_copy (IconToLoad *icon)
 static void
 remove_pixmap_from_loaded (gpointer data, GObject *where_the_object_was)
 {
-	if (loaded_icons != NULL) 
-		g_hash_table_remove (loaded_icons, data);
+	char *key = data;
+
+	if (loaded_icons != NULL)
+		g_hash_table_remove (loaded_icons, key);
+
+	g_free (key);
 }
 
 static gboolean
@@ -770,7 +774,7 @@ load_icons_handler (gpointer data)
 	GtkImage *pixmap;
 	GdkPixbuf *pb;
 	IconToLoad *icon;
-	char *file;
+	char *file, *key;
 	gboolean loaded;
 
 load_icons_handler_again:
@@ -811,8 +815,10 @@ load_icons_handler_again:
 	loaded = FALSE;
 	pixmap = NULL;
 
+	key = g_strdup_printf ("%d:%s", icon->size, file);
+
 	if (loaded_icons != NULL &&
-	    (pb = g_hash_table_lookup (loaded_icons, file)) != NULL) {
+	    (pb = g_hash_table_lookup (loaded_icons, key)) != NULL) {
 		if (pb != NULL)
 			g_object_ref (G_OBJECT (pb));
 	}
@@ -822,21 +828,11 @@ load_icons_handler_again:
 		
 		/* add icon to the hash table so we don't load it again */
 		loaded = TRUE;
-		if (loaded_icons == NULL)
-		  loaded_icons = g_hash_table_new_full
-		    (g_str_hash, g_str_equal,
-		     (GDestroyNotify) g_free,
-		     (GDestroyNotify) g_object_unref);
-		g_hash_table_replace (loaded_icons,
-				      g_strdup (file),
-				      g_object_ref (G_OBJECT (pb)));
-		g_object_weak_ref (G_OBJECT (pb),
-				   (GWeakNotify) &remove_pixmap_from_loaded,
-				   g_strdup (file));
 	}
 
 	if (pb == NULL) {
 		g_free (file);
+		g_free (key);
 		icon_to_load_free (icon);
 		/* this may have been a long operation so jump back to
 		 * the main loop for a while */
@@ -855,8 +851,21 @@ load_icons_handler_again:
 	gtk_image_set_from_pixbuf (GTK_IMAGE (icon->pixmap), pb);
 	g_object_unref (G_OBJECT (pb));
 
-	if (!loaded) {
+	if (loaded) {
+		if (loaded_icons == NULL)
+			loaded_icons = g_hash_table_new_full
+				(g_str_hash, g_str_equal,
+				 (GDestroyNotify) g_free,
+				 (GDestroyNotify) g_object_unref);
+		g_hash_table_replace (loaded_icons,
+				      g_strdup (key),
+				      g_object_ref (G_OBJECT (pb)));
+		g_object_weak_ref (G_OBJECT (pb),
+				   (GWeakNotify) remove_pixmap_from_loaded,
+				   g_strdup (key));
+	} else {
 		g_free (file);
+		g_free (key);
 		icon_to_load_free (icon);
 
 		/* we didn't load from disk, so just do this again,
@@ -865,6 +874,7 @@ load_icons_handler_again:
 	}
 
 	g_free (file);
+	g_free (key);
 	icon_to_load_free (icon);
 
 	/* if still more we'll come back */
@@ -1183,7 +1193,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 
 	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 
-	list = get_mfiles_from_menudir (dirname);
+	list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
 	for(li = list; li!= NULL; li = li->next) {
 		MFile *mfile = li->data;
 		GnomeDesktopItem *dentry;
@@ -2416,35 +2426,6 @@ create_menuitem (GtkWidget *menu,
 	return TRUE;
 }
 
-/*
- * Sort the FileRecs in locale defined alphabetical order,
- * with directories first and files last.
- */
-static gint
-compare_filerecs (FileRec *fr1, FileRec *fr2)
-{
-	g_assert (fr1 != NULL && fr2 != NULL);
-
-	if (((fr1->type != FILE_REC_FILE) && (fr1->type != FILE_REC_DIR)) ||
-	    ((fr2->type != FILE_REC_FILE) && (fr2->type != FILE_REC_DIR)))
-		return 0;
-
-	else if ((fr1->type == FILE_REC_FILE) && (fr2->type == FILE_REC_DIR))
-		return 1;
-
-	else if ((fr2->type == FILE_REC_FILE) && (fr1->type == FILE_REC_DIR))
-		return -1;
-	else {
-		if (!fr1->fullname)
-			return 1;
-
-		if (!fr2->fullname)
-			return -1;
-
-		return g_utf8_collate (fr1->fullname, fr2->fullname);
-	}
-}
-
 GtkWidget *
 create_menu_at (GtkWidget *menu,
 		const char *menudir,
@@ -2518,8 +2499,6 @@ create_menu_at_fr (GtkWidget *menu,
 		/* Last added points to the last fr list item that was successfuly
 		 * added as a menu item */
 		GSList *last_added = NULL;
-
-		dr->recs = g_slist_sort (dr->recs, (GCompareFunc) compare_filerecs);
 
 		for(li = dr->recs; li != NULL; li = li->next) {
 			FileRec *tfr = li->data;

@@ -176,8 +176,6 @@ free_mfile (MFile *mfile)
 	if (mfile != NULL) {
 		g_free (mfile->name);
 		mfile->name = NULL;
-		g_free (mfile->name_collate_key);
-		mfile->name_collate_key = NULL;
 
 		g_free (mfile);
 	}
@@ -194,40 +192,20 @@ free_mfile_list (GSList *list)
 	g_slist_free (list);
 }
 
-static int
-compare_entry (MFile *m1, MFile *m2)
-{
-	if (m1->is_dir != m2->is_dir) {
-		if (m1->is_dir)
-			return 1;
-		else
-			return -1;
-	}
-	if (m1->name_collate_key == NULL) {
-		m1->name_collate_key = g_utf8_collate_key (m1->name, -1);
-	}
-	if (m2->name_collate_key == NULL) {
-		m2->name_collate_key = g_utf8_collate_key (m2->name, -1);
-	}
-        return strcmp (m2->name_collate_key, m2->name_collate_key);
-}
-
 GSList *
-get_mfiles_from_menudir (const char *menuuri)
+get_mfiles_from_menudir (const char *menuuri, gboolean *sorted)
 {
 	GSList *list = NULL;
-	gboolean sorted = FALSE;;
+
+	if (sorted != NULL)
+		*sorted = FALSE;
 
 	list = get_presorted_from (menuuri);
-	if (list != NULL)
-		sorted = TRUE;
+	if (list != NULL && sorted != NULL)
+		*sorted = TRUE;
 	list = read_directory (list, menuuri);
 
-	if ( ! sorted) {
-		return g_slist_sort (list, (GCompareFunc)compare_entry);
-	} else {
-		return g_slist_reverse (list);
-	}
+	return g_slist_reverse (list);
 }
 
 static void
@@ -302,12 +280,13 @@ fr_fill_dir (FileRec *fr, int sublevels)
 	GSList *flist;
 	DirRec *dr = (DirRec *)fr;
 	time_t curtime = time (NULL);
+	gboolean sorted = FALSE;
 	
 	g_return_if_fail (dr->recs == NULL);
 	g_return_if_fail (fr != NULL);
 	g_return_if_fail (fr->name != NULL);
 
-	flist = get_mfiles_from_menudir (fr->name);
+	flist = get_mfiles_from_menudir (fr->name, &sorted);
 	while (flist != NULL) {
 		MFile *mfile = flist->data;
 		char *name;
@@ -394,7 +373,10 @@ fr_fill_dir (FileRec *fr, int sublevels)
 		g_free (name);
 		free_mfile (mfile);
 	}
-	dr->recs = g_slist_reverse (dr->recs);
+	if (sorted)
+		dr->recs = g_slist_reverse (dr->recs);
+	else
+		dr->recs = g_slist_sort (dr->recs, (GCompareFunc)fr_compare);
 }
 
 FileRec *
@@ -795,6 +777,12 @@ fr_force_reread (void)
 int
 fr_compare (FileRec *fra, FileRec *frb)
 {
+	if (fra->type == FILE_REC_DIR && frb->type != FILE_REC_DIR) {
+		return -1;
+	} else if (fra->type != FILE_REC_DIR && frb->type == FILE_REC_DIR) {
+		return 1;
+	}
+
 	if (fra->name_collate_key == NULL) {
 		fra->name_collate_key = g_utf8_collate_key (fra->fullname, -1);
 	}
