@@ -263,6 +263,8 @@ panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"panel-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=panel_marshal >> $@
 
+$(panel_enum_headers): $(CORBA_SRCLIST)
+
 panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
 	glib-mkenums    --fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \

@@ -1,3 +1,8 @@
+2004-02-06  Tomasz K³oczko <kloczek@pld.org.pl>
+
+	* gnome-panel/Makefile.am: Force generate $(CORBA_SRCLIST)
+	  before $(panel_enum_headers) for paralel buil (make -j<N>).
+ 
 2004-02-06  Chee Bin HOH <cbhoh@gnome.org>
      
 	* applets/fish/fish.c:
