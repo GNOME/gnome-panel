@@ -9,6 +9,7 @@
 #include <time.h>
 
 #include <panel-applet.h>
+#include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
 #include <libgnomeui/libgnomeui.h>
@@ -17,32 +18,19 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/libart.h>
 
+#define FISH_PREFS_NAME		"name"
+#define FISH_PREFS_IMAGE	"image"
+#define FISH_PREFS_COMMAND	"command"
+#define FISH_PREFS_FRAMES	"frames"
+#define FISH_PREFS_SPEED	"speed"
+#define FISH_PREFS_ROTATE	"rotate"
+
 /* macro to always pass a non-null string */
 #define sure_string(__x) ((__x)!=NULL?(__x):"")
 
 int fools_day=1, fools_month=3;
 
 typedef struct {
-	char     *name;
-	char     *image;
-	int       frames;
-	float     speed;
-	gboolean  rotate;
-	char     *command;
-} FishProp;
-
-static FishProp defaults = {
-	"Wanda", /*name*/
-	NULL, /*image*/
-	3, /*frames*/
-	1.0, /*speed*/
-	TRUE, /*rotate*/
-	NULL /* command */
-};
-
-typedef struct {
-	FishProp           prop;
-
 	GtkWidget         *applet;
 	GtkWidget         *frame;
 	GtkWidget         *darea;
@@ -65,27 +53,21 @@ typedef struct {
 	PanelAppletOrient  orient;
 } Fish;
 
-#define IS_ROT(f) (										\
-	(f)->prop.rotate && 									\
-	((f)->orient == PANEL_APPLET_ORIENT_LEFT || (f)->orient == PANEL_APPLET_ORIENT_RIGHT)	\
-)
+GtkWidget *bah_window = NULL;
 
-/*static gboolean
-IS_ROT (Fish *fish)
+static gboolean
+fish_applet_rotate (Fish *fish)
 {
 	gboolean retval = FALSE;
 
-	if (fish->prop.rotate &&
-	    (fish->orient == PANEL_APPLET_ORIENT_LEFT ||
-	     fish->orient == PANEL_APPLET_ORIENT_RIGHT))
-		retval = TRUE;
-
-	g_message ("orient = %d %d", fish->orient, retval);
+	if (fish->orient == PANEL_APPLET_ORIENT_LEFT ||
+	    fish->orient == PANEL_APPLET_ORIENT_RIGHT)
+		retval = panel_applet_gconf_get_bool (PANEL_APPLET (fish->applet),
+						      FISH_PREFS_ROTATE,
+						      NULL);
 
 	return retval;
-}*/
-
-GtkWidget *bah_window = NULL;
+}
 
 static gchar *
 get_location(void)
@@ -161,25 +143,38 @@ load_image_file (Fish *fish)
 	guchar    *rgb;
 	GdkGC     *gc;
 	gint       size, w, h, width, height;
+	gchar     *image = NULL;
+	gchar     *tmp;
+	gint       frames;
 
 	if (fish->pix)
 		gdk_pixmap_unref (fish->pix);
 
-	g_assert (fish->prop.image);
 	g_assert (bah_window && bah_window->window);
 
-	pixbuf = gdk_pixbuf_new_from_file (fish->prop.image, &error);
+	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+
+	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_IMAGE, NULL);
+	if (g_path_is_absolute (tmp))
+		image = tmp;
+	else {
+		image = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
+						   tmp, FALSE, NULL);
+		g_free (tmp);
+	}
+
+	pixbuf = gdk_pixbuf_new_from_file (image, &error);
 	if (error) {
-		g_warning (G_STRLOC ": cannot open %s: %s",
-			   fish->prop.image, error->message);
+		g_warning (G_STRLOC ": cannot open %s: %s", image, error->message);
 
 		g_error_free (error);
+		g_free (image);
 		
-		if (IS_ROT (fish)) {
+		if (fish_applet_rotate (fish)) {
 			fish->w = fish->size;
-			fish->h = fish->prop.frames * fish->size;
+			fish->h = frames * fish->size;
 		} else {
-			fish->w = fish->prop.frames * fish->size;
+			fish->w = frames * fish->size;
 			fish->h = fish->size;
 		}
 
@@ -205,7 +200,7 @@ load_image_file (Fish *fish)
 	affine [0] = w / (double) width;
 	affine [3] = h / (double) height;
 
-	if (IS_ROT (fish)) {
+	if (fish_applet_rotate (fish)) {
 		double tmpaffine [6];
 		int    t;
 
@@ -269,87 +264,37 @@ load_image_file (Fish *fish)
 			    rgb, w * 3);
 		
 	g_free (rgb);
+	g_free (image);
 }
 
 static void
-setup_size(Fish *fish)
+setup_size (Fish *fish)
 {
-	if(IS_ROT(fish)) {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
-				      fish->h/fish->prop.frames);
-		gtk_widget_set_usize(fish->darea, fish->w,
-				     fish->h/fish->prop.frames);
+	gint frames;
+
+	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+
+	if (fish_applet_rotate (fish)) {
+		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
+				       fish->w,
+				       fish->h / frames);
+
+		gtk_widget_set_usize (fish->darea,
+				      fish->w,
+				      fish->h / frames);
 	} else {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), 
-				      fish->w/fish->prop.frames, fish->h);
-		gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames,
-				     fish->h);
-	}
-	gtk_widget_queue_resize(fish->darea);
-	gtk_widget_queue_resize(fish->darea->parent);
-	gtk_widget_queue_resize(fish->darea->parent->parent);
-}
+		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea), 
+				       fish->w / frames,
+				       fish->h);
 
-static void
-load_properties(Fish *fish)
-{
-#ifdef FIXME
-        char buf[4096];
-#endif
-
-        set_wanda_day ();
-
-        if (!defaults.image)
-		defaults.image = gnome_program_locate_file (NULL,
-							    GNOME_FILE_DOMAIN_PIXMAP,
-							    "fish/fishanim.png",
-							    FALSE,
-							    NULL);
-
-	if (!defaults.command) {
-		defaults.command = gnome_is_program_in_path ("fortune");
-
-		if (!defaults.command) {
-			defaults.command = "";
-
-			if (g_file_test ("/usr/games/fortune", G_FILE_TEST_EXISTS))
-				defaults.command = "/usr/games/fortune";
-		}
+		gtk_widget_set_usize (fish->darea,
+				      fish->w / frames,
+				      fish->h);
 	}
 
-#ifdef FIXME
-
-	gnome_config_push_prefix(APPLET_WIDGET(fish->applet)->privcfgpath);
-
-	g_free(fish->prop.name);
-	g_snprintf(buf,sizeof(buf),"fish/name=%s",defaults.name);
-	fish->prop.name = gnome_config_get_string(buf);
-
-	g_free(fish->prop.image);
-	g_snprintf(buf,sizeof(buf),"fish/image=%s",defaults.image);
-	fish->prop.image = gnome_config_get_string(buf);
-
-	g_snprintf(buf,sizeof(buf),"fish/frames=%d",defaults.frames);
-	fish->prop.frames = gnome_config_get_int(buf);
-	if(fish->prop.frames <= 0) fish->prop.frames = 1;
-
-	g_snprintf(buf,sizeof(buf),"fish/speed=%f",defaults.speed);
-	fish->prop.speed = gnome_config_get_float(buf);
-	if(fish->prop.speed<0.1) fish->prop.speed = 0.1;
-	if(fish->prop.speed>10.0) fish->prop.speed = 10.0;
-
-	g_snprintf (buf, sizeof(buf), "fish/rotate=%s",
-		    defaults.rotate ? "true" : "false");
-	fish->prop.rotate = gnome_config_get_bool (buf);
-
-	g_free (fish->prop.command);
-	g_snprintf (buf, sizeof (buf), "fish/command=%s", defaults.command);
-	fish->prop.command = gnome_config_get_string (buf);
-
-	gnome_config_pop_prefix ();
-#else
-	fish->prop = defaults;
-#endif
+	gtk_widget_queue_resize (fish->darea);
+	gtk_widget_queue_resize (fish->darea->parent);
+	gtk_widget_queue_resize (fish->darea->parent->parent);
 }
 
 static char *
@@ -364,35 +309,41 @@ splice_name(const char * format, const char * name)
 }
 
 static void
-fish_draw(GtkWidget *darea, Fish *fish)
+fish_draw (GtkWidget *darea,
+	   Fish      *fish)
 {
-	if(!GTK_WIDGET_REALIZED(fish->darea))
+	gint frames;
+
+	if (!GTK_WIDGET_REALIZED (fish->darea))
 		return;
-	
-	if(IS_ROT(fish))
-		gdk_draw_pixmap(fish->darea->window,
-				fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
-				fish->pix,
-				0,
-				(fish->h*fish->curpix) / fish->prop.frames,
-				0, 0, -1, -1);
+
+	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+
+	if (fish_applet_rotate (fish))
+		gdk_draw_pixmap (fish->darea->window,
+				 fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
+				 fish->pix,
+				 0,
+				 (fish->h*fish->curpix) / frames,
+				 0, 0, -1, -1);
 	else
-		gdk_draw_pixmap(fish->darea->window,
-				fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
-				fish->pix,
-				(fish->w * fish->curpix) / fish->prop.frames,
-				0, 0, 0, -1, -1);
+		gdk_draw_pixmap (fish->darea->window,
+				 fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
+				 fish->pix,
+				 (fish->w * fish->curpix) / frames,
+				 0, 0, 0, -1, -1);
 }
 
 static int
 fish_timeout(gpointer data)
 {
-	Fish *fish = data;
-	time_t ourtime;
+	Fish      *fish = data;
+	time_t     ourtime;
 	struct tm *tm;
 
-	time(&ourtime);
-	tm = localtime(&ourtime);
+
+	time (&ourtime);
+	tm = localtime (&ourtime);
 
 	if(fish->april_fools) {
 		if(tm->tm_mon != fools_month || tm->tm_mday != fools_day) {
@@ -412,10 +363,16 @@ fish_timeout(gpointer data)
 
 	/* on april fools, the fish id dead! */
 	/* on "Santos Inocentes" (spanish fool's day) the fish is dead */
-	if(!fish->april_fools) {
+	if (!fish->april_fools) {
+		gint frames;
+
+		frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+
 		fish->curpix++;
-		if(fish->curpix>=fish->prop.frames) fish->curpix=0;
-		fish_draw(fish->darea,fish);
+		if (fish->curpix >= frames)
+			fish->curpix = 0;
+
+		fish_draw (fish->darea, fish);
 	}
 
 	return TRUE;
@@ -424,37 +381,49 @@ fish_timeout(gpointer data)
 static void
 apply_properties(Fish *fish) 
 {
-	char * tmp;
 	/* xgettext:no-c-format */
-	const char * title_format = _("%s the Fish");
-	const char * label_format = _("%s the GNOME Fish Says:");
+	const char *title_format = _("%s the Fish");
+	const char *label_format = _("%s the GNOME Fish Says:");
+	gdouble     speed;
 
-	if (fish->fortune_dialog != NULL) { 
-		tmp = splice_name(title_format, fish->prop.name);
-		gtk_window_set_title(GTK_WINDOW(fish->fortune_dialog), tmp);
-		g_free(tmp);
+	if (fish->fortune_dialog) { 
+		gchar *name;     
+		gchar *tmp;
 
-		tmp = splice_name(label_format, fish->prop.name);
-		gtk_label_set_text(GTK_LABEL(fish->fortune_label), tmp);
-		g_free(tmp);
+		name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet),
+						      FISH_PREFS_NAME,
+						      NULL);
+
+		tmp = splice_name (title_format, name);
+		gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), tmp);
+		g_free (tmp);
+
+		tmp = splice_name (label_format, name);
+		gtk_label_set_text (GTK_LABEL (fish->fortune_label), tmp);
+		g_free (tmp);
+
+		g_free (name);
 	}
 	
-	load_image_file(fish);
+	load_image_file (fish);
 
-	setup_size(fish);
+	setup_size (fish);
 
-	if (fish->timeout_id != 0)
+	if (fish->timeout_id)
 		gtk_timeout_remove (fish->timeout_id);
-        fish->timeout_id = gtk_timeout_add (fish->prop.speed * 1000,
-					    fish_timeout, fish);
+
+	speed = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
+
+        fish->timeout_id = gtk_timeout_add (speed * 1000, fish_timeout, fish);
 	fish->curpix = 0;
-	fish_timeout(fish);
+
+	fish_timeout (fish);
 }
 
 static void
-apply_cb (GnomePropertyBox *pb,
-	  int               page,
-	  Fish             *fish)
+fish_properties_apply_callback (GnomePropertyBox *pb,
+				int               page,
+				Fish             *fish)
 {
 	GtkWidget     *name;
 	GtkWidget     *image;
@@ -463,7 +432,7 @@ apply_cb (GnomePropertyBox *pb,
 	GtkWidget     *rotate;
 	GtkWidget     *command;
 	const gchar   *text;
-	gchar         *s;
+	gchar         *image_file;
 
 	name    = gtk_object_get_data (GTK_OBJECT (pb), "name");
 	image   = gtk_object_get_data (GTK_OBJECT (pb), "image");
@@ -473,28 +442,28 @@ apply_cb (GnomePropertyBox *pb,
 	command = gtk_object_get_data (GTK_OBJECT (pb), "command");
 
 	if (page != -1) 
-		return; /* Only honor global apply */
+		return;
 
 	text = gtk_entry_get_text (GTK_ENTRY (name));
-	if (text) {
-		g_free (fish->prop.name);
-		fish->prop.name = g_strdup (text);
-	}
+	if (text)
+		panel_applet_gconf_set_string (PANEL_APPLET (fish->applet),
+					       FISH_PREFS_NAME,
+					       text,
+					       NULL);
 
-	s = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(image));
-	if (s != NULL) {
-		g_free(fish->prop.image);
-		fish->prop.image = g_strdup(s);
-	}
-	fish->prop.frames = frames->value;
-	fish->prop.speed = speed->value;
-	fish->prop.rotate =
-		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(rotate));
+	image_file = gnome_pixmap_entry_get_filename (GNOME_PIXMAP_ENTRY (image));
+	if (image_file)
+		panel_applet_gconf_set_string (PANEL_APPLET (fish->applet),
+					       FISH_PREFS_IMAGE,
+					       image_file,
+					       NULL);
 
 	text = gtk_entry_get_text (GTK_ENTRY (command));
 	if (text) {
-		g_free (fish->prop.command);
-		fish->prop.command = g_strdup (text);
+		panel_applet_gconf_set_string (PANEL_APPLET (fish->applet),
+					       FISH_PREFS_COMMAND,
+					       text,
+					       NULL);
 
 		/* We need more useful commands to warn on here */
 		if (!strncmp (text, "ps ", 3)  ||
@@ -513,6 +482,21 @@ apply_cb (GnomePropertyBox *pb,
 				   "which would make the applet "
 				   "\"practical\" or useful."));
 	}
+
+	panel_applet_gconf_set_int (PANEL_APPLET (fish->applet),
+				    FISH_PREFS_FRAMES,
+                                    frames->value,
+				    NULL);
+
+	panel_applet_gconf_set_float (PANEL_APPLET (fish->applet),
+				      FISH_PREFS_SPEED,
+				      speed->value,
+				      NULL);
+
+	panel_applet_gconf_set_bool (PANEL_APPLET (fish->applet),
+				     FISH_PREFS_ROTATE,
+				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (rotate)),
+				     NULL);
 
 	apply_properties (fish);
 }
@@ -538,6 +522,13 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget     *w;
 	GtkWidget     *e;
 	GtkAdjustment *adj;
+	PanelApplet   *applet;
+	gchar         *name;
+	gchar         *image;
+	gchar         *command;
+	gint           frames;
+	gdouble        speed;
+	gboolean       rotate;
 
 	if (fish->pb) {
 		gtk_widget_show (fish->pb);
@@ -545,116 +536,168 @@ display_properties_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	fish->pb = gnome_property_box_new();
+	applet = PANEL_APPLET (fish->applet);
+
+	name    = panel_applet_gconf_get_string (applet, FISH_PREFS_NAME, NULL);
+	image   = panel_applet_gconf_get_string (applet, FISH_PREFS_IMAGE, NULL);
+	command = panel_applet_gconf_get_string (applet, FISH_PREFS_COMMAND, NULL);
+	frames  = panel_applet_gconf_get_int    (applet, FISH_PREFS_FRAMES, NULL);
+	speed   = panel_applet_gconf_get_float  (applet, FISH_PREFS_SPEED, NULL);
+	rotate  = panel_applet_gconf_get_bool   (applet, FISH_PREFS_ROTATE, NULL);
+
+	fish->pb = gnome_property_box_new ();
 	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
-	gtk_window_set_title(GTK_WINDOW(fish->pb), _("GNOME Fish Properties"));
+	gtk_window_set_title (GTK_WINDOW (fish->pb),
+			      _("GNOME Fish Properties"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
-					 GNOME_ICONDIR"/gnome-fish.png");
+					 GNOME_ICONDIR "/gnome-fish.png");
 
-	vbox = gtk_vbox_new(FALSE, GNOME_PAD);
-	gtk_container_set_border_width(GTK_CONTAINER(vbox), GNOME_PAD);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
 
-	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("Your GNOME Fish's Name:"));
-	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	e = gtk_entry_new();
-	gtk_entry_set_text(GTK_ENTRY(e), sure_string (fish->prop.name));
-	gtk_box_pack_start(GTK_BOX(hbox), e, TRUE, TRUE, 0);
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"name",e);
+	w = gtk_label_new (_("Your GNOME Fish's Name:"));
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	e = gtk_entry_new ();
+	gtk_entry_set_text (GTK_ENTRY(e), name);
+	gtk_box_pack_start (GTK_BOX (hbox), e, TRUE, TRUE, 0);
+	gtk_object_set_data (GTK_OBJECT (fish->pb),"name",e);
 
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
-					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					      GTK_OBJECT(fish->pb));
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
+					       "changed",
+					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
+					       GTK_OBJECT (fish->pb));
 
-	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("The Animation Filename:"));
-	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	w = gnome_pixmap_entry_new("fish_animation",_("Browse"),TRUE);
-	gtk_box_pack_start(GTK_BOX(hbox),w,TRUE,TRUE,0);
+	w = gtk_label_new (_("The Animation Filename:"));
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	w = gnome_pixmap_entry_new ("fish_animation", _("Browse"), TRUE);
+	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
 	e = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (w));
-	gtk_entry_set_text(GTK_ENTRY(e), sure_string (fish->prop.image));
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"image",w);
+	gtk_entry_set_text (GTK_ENTRY (e), image);
+	gtk_object_set_data (GTK_OBJECT (fish->pb), "image", w);
 
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
-					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					      GTK_OBJECT(fish->pb));
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
+					       "changed",
+					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
+					       GTK_OBJECT (fish->pb));
 
-	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("Command to execute when fish is clicked:"));
-	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	e = gtk_entry_new();
-	gtk_entry_set_text(GTK_ENTRY(e), sure_string (fish->prop.command));
-	gtk_box_pack_start(GTK_BOX(hbox), e, TRUE, TRUE, 0);
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"command",e);
+	w = gtk_label_new (_("Command to execute when fish is clicked:"));
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	e = gtk_entry_new ();
+	gtk_entry_set_text (GTK_ENTRY (e), command);
+	gtk_box_pack_start (GTK_BOX (hbox), e, TRUE, TRUE, 0);
+	gtk_object_set_data (GTK_OBJECT (fish->pb), "command", e);
 
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
-					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					      GTK_OBJECT(fish->pb));
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
+					       "changed",
+					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
+					       GTK_OBJECT (fish->pb));
 
-	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("Frames In Animation:"));
-	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	adj = (GtkAdjustment *) gtk_adjustment_new (fish->prop.frames,
-						    1.0, 255.0, 1.0, 5.0, 0.0);
-	w = gtk_spin_button_new(adj,0,0);
-	gtk_widget_set_usize(w,70,0);
-	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"frames",adj);
+	w = gtk_label_new (_("Frames In Animation:"));
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (frames, 1.0, 255.0, 1.0, 5.0, 0.0);
+	w = gtk_spin_button_new (adj, 0, 0);
+	gtk_widget_set_usize (w, 70, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	gtk_object_set_data (GTK_OBJECT (fish->pb), "frames", adj);
 
-	gtk_signal_connect_object(GTK_OBJECT(adj), "value_changed",
-				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(fish->pb));
+	gtk_signal_connect_object (GTK_OBJECT (adj),
+				   "value_changed",
+				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
+				   GTK_OBJECT (fish->pb));
 
-	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
-	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new(_("Pause per frame (s):"));
-	gtk_box_pack_start(GTK_BOX(hbox), w, FALSE, FALSE, 0);
-	adj = (GtkAdjustment *) gtk_adjustment_new (fish->prop.speed,
-						    0.1, 10.0, 0.1, 1.0, 0.0);
-	w = gtk_spin_button_new(adj,0,2);
-	gtk_widget_set_usize(w,70,0);
-	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"speed",adj);
+	w = gtk_label_new (_("Pause per frame (s):"));
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (speed, 0.1, 10.0, 0.1, 1.0, 0.0);
+	w = gtk_spin_button_new (adj, 0, 2);
+	gtk_widget_set_usize (w, 70, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	gtk_object_set_data (GTK_OBJECT (fish->pb), "speed", adj);
 
-	gtk_signal_connect_object(GTK_OBJECT(adj), "value_changed",
-				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(fish->pb));
+	gtk_signal_connect_object (GTK_OBJECT (adj),
+				   "value_changed",
+				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
+				   GTK_OBJECT (fish->pb));
 
-	w = gtk_check_button_new_with_label(_("Rotate on vertical panels"));
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),fish->prop.rotate);
-	gtk_signal_connect_object(GTK_OBJECT(w), "toggled",
-				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(fish->pb));
-	gtk_object_set_data(GTK_OBJECT(fish->pb),"rotate",w);
-	gtk_box_pack_start(GTK_BOX(vbox), w, FALSE, FALSE, 0);
+	w = gtk_check_button_new_with_label (_("Rotate on vertical panels"));
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), rotate);
+	gtk_signal_connect_object (GTK_OBJECT (w),
+				   "toggled",
+				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
+				   GTK_OBJECT (fish->pb));
 
-	gnome_property_box_append_page(GNOME_PROPERTY_BOX(fish->pb), vbox,
-				       gtk_label_new(_("Fish")));
+	gtk_object_set_data (GTK_OBJECT (fish->pb), "rotate", w);
+	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	gtk_signal_connect(GTK_OBJECT(fish->pb), "apply",
-			   GTK_SIGNAL_FUNC(apply_cb),fish);
-	gtk_signal_connect(GTK_OBJECT(fish->pb), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),&fish->pb);
-	gtk_signal_connect(GTK_OBJECT(fish->pb), "help",
-			   GTK_SIGNAL_FUNC(phelp_cb), NULL);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (fish->pb),
+					vbox,
+					gtk_label_new (_("Fish")));
 
-	gtk_widget_show_all(fish->pb);
+	gtk_signal_connect (GTK_OBJECT(fish->pb),
+			    "apply",
+			    GTK_SIGNAL_FUNC (fish_properties_apply_callback),
+			    fish);
+
+	gtk_signal_connect (GTK_OBJECT(fish->pb),
+			    "destroy",
+			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			    &fish->pb);
+
+	gtk_signal_connect (GTK_OBJECT (fish->pb),
+			    "help",
+			    GTK_SIGNAL_FUNC (phelp_cb),
+			    NULL);
+
+	gtk_widget_show_all (fish->pb);
+
+	g_free (name);
+	g_free (image);
+	g_free (command);
 }
 
+#ifdef FIXME /* used in update_fortune_dialog */
+static gchar *
+fish_locate_fortune_command (Fish *fish)
+{
+	gchar *command;
+	gchar *tmp;
+
+	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_COMMAND, NULL);
+	if (!tmp)
+		return NULL;
+
+	if (g_path_is_absolute (tmp))
+		return tmp;
+
+	command = g_find_program_in_path (tmp);
+	g_free (tmp);
+
+	if (!command)
+		if (g_file_test ("/usr/games/fortune", G_FILE_TEST_EXISTS))
+			command = g_strdup ("/usr/games/fortune");
+
+	return command;
+}
+#endif
+
 static void 
-update_fortune_dialog(Fish *fish)
+update_fortune_dialog (Fish *fish)
 {
 #ifdef FIXME /* need to replace GnomeLess */
-
 	char *fortune_command;
 
 	if ( fish->fortune_dialog == NULL ) {
@@ -700,14 +743,10 @@ update_fortune_dialog(Fish *fish)
 
 	gtk_widget_show (fish->fortune_dialog);
 
-	fortune_command = g_file_exists("/usr/games/fortune")?
-		g_strdup("/usr/games/fortune"):
-		gnome_is_program_in_path("fortune");
-
-	if (fish->prop.command != NULL &&
-	    fish->prop.command[0] != '\0') {
+	fortune_command = fish_locate_fortune_command (fish);
+	if (fortune_command) {
                 gnome_less_show_command (GNOME_LESS(fish->fortune_less),
-					 fish->prop.command);
+					 fortune_command);
 	} else {
                 gnome_less_show_string (GNOME_LESS(fish->fortune_less),
 					_("You do not have fortune installed "
@@ -715,6 +754,7 @@ update_fortune_dialog(Fish *fish)
 					  "to run.\n\nPlease refer to fish "
 					  "properties dialog."));
 	}
+	g_free (fortune_command);
 #endif
 }
 
@@ -743,19 +783,23 @@ fish_expose (GtkWidget      *darea,
 	     GdkEventExpose *event,
 	     Fish           *fish)
 {
-	if (IS_ROT (fish))
+	gint frames;
+
+	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+
+	if (fish_applet_rotate (fish))
 		gdk_draw_pixmap (fish->darea->window,
 				 fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
 				 fish->pix,
 				 event->area.x,
-				 ((fish->h * fish->curpix) / fish->prop.frames) + event->area.y,
+				 ((fish->h * fish->curpix) / frames) + event->area.y,
 				 event->area.x, event->area.y,
 				 event->area.width, event->area.height);
 	else
 		gdk_draw_pixmap (fish->darea->window,
 				fish->darea->style->fg_gc [GTK_WIDGET_STATE (fish->darea)],
 				fish->pix,
-				((fish->w *fish->curpix) / fish->prop.frames) + event->area.x,
+				((fish->w *fish->curpix) / frames) + event->area.x,
 				event->area.y,
 				event->area.x, event->area.y,
 				event->area.width, event->area.height);
@@ -766,17 +810,26 @@ fish_expose (GtkWidget      *darea,
 static void
 create_fish_widget(Fish *fish)
 {
+	gint    frames;
+	gdouble speed;
+
+	frames = panel_applet_gconf_get_int   (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
+	speed  = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
+
 	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
 	fish->darea = gtk_drawing_area_new();
-	if(IS_ROT(fish)) {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
-				      fish->h/fish->prop.frames);
-	} else {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-				      fish->w/fish->prop.frames, fish->h);
-	}
+
+	if (fish_applet_rotate (fish))
+		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
+				       fish->w,
+				       fish->h / frames);
+	else
+		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
+				       fish->w / frames,
+				       fish->h);
+
 	gtk_widget_set_events(fish->darea, gtk_widget_get_events(fish->darea) |
 			      GDK_BUTTON_PRESS_MASK);
 	gtk_signal_connect(GTK_OBJECT(fish->darea), "button_press_event",
@@ -789,11 +842,8 @@ create_fish_widget(Fish *fish)
 
         fish->curpix = 0;
 
-        fish->timeout_id = gtk_timeout_add(fish->prop.speed*1000,
-					   fish_timeout,fish);
+        fish->timeout_id = gtk_timeout_add (speed * 1000, fish_timeout, fish);
 
-        fish->frame = gtk_frame_new(NULL);
-        gtk_frame_set_shadow_type(GTK_FRAME(fish->frame),GTK_SHADOW_IN);
         gtk_container_add(GTK_CONTAINER(fish->frame),fish->darea);
 
 	gtk_widget_pop_colormap ();
@@ -826,24 +876,28 @@ display_about_dialog (BonoboUIComponent *uic,
 	GdkPixbuf   *pixbuf;
 	GError      *error;
 	gchar       *file;
+	gchar       *name;
 
-	if(fish->aboutbox) {
-		gtk_widget_show(fish->aboutbox);
-		gdk_window_raise(fish->aboutbox->window);
+	if (fish->aboutbox) {
+		gtk_widget_show (fish->aboutbox);
+		gdk_window_raise (fish->aboutbox->window);
 		return;
 	}
 
-	authors[0] = splice_name(author_format, fish->prop.name);
+	name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_NAME, NULL);
+
+	authors[0] = splice_name (author_format, name);
 	authors[1] = _("(with minor help from George)");
 	authors[2] = NULL;
 
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-fish.png", TRUE, NULL);
-	if (!file) {
-		g_warning (G_STRLOC ": gnome-fish.png cannot be found");
-		return;
-	}
+	g_free (name);
+
+	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-fish.png", FALSE, NULL);
 
 	pixbuf = gdk_pixbuf_new_from_file (file, &error);
+
+	g_free (file);
+
 	if (error) {
 		g_warning (G_STRLOC ": cannot open %s: %s", file, error->message);
 
@@ -880,39 +934,9 @@ display_about_dialog (BonoboUIComponent *uic,
 	g_free (authors[0]);
 }
 
-#ifdef FIXME
-static int
-applet_save_session (GtkWidget *w,
-		     const char *privcfgpath,
-		     const char *globcfgpath,
-		     Fish *fish)
-{
-	gnome_config_push_prefix (privcfgpath);
-	gnome_config_set_string ("fish/name",fish->prop.name);
-	gnome_config_set_string ("fish/image",fish->prop.image);
-	gnome_config_set_int ("fish/frames",fish->prop.frames);
-	gnome_config_set_float ("fish/speed",fish->prop.speed);
-	gnome_config_set_bool ("fish/rotate",fish->prop.rotate);
-	gnome_config_set_string ("fish/command",fish->prop.command);
-	gnome_config_pop_prefix();
-
-	gnome_config_sync();
-	gnome_config_drop_all();
-
-	return FALSE;
-}
-#endif
-
 static void
 applet_destroy (GtkWidget *applet, Fish *fish)
 {
-	g_free (fish->prop.name);
-	fish->prop.name = NULL;
-	g_free (fish->prop.image);
-	fish->prop.image = NULL;
-	g_free (fish->prop.command);
-	fish->prop.command = NULL;
-
 	if (fish->pix != NULL)
 		gdk_pixmap_unref(fish->pix);
 	fish->pix = NULL;
@@ -993,6 +1017,8 @@ fish_applet_fill (PanelApplet *applet)
 	fish->size   = GNOME_Vertigo_PANEL_MEDIUM;
 	fish->orient = PANEL_APPLET_ORIENT_UP;
 
+	panel_applet_add_preferences (applet, "/schemas/apps/fish-applet/prefs", NULL);
+
 	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
@@ -1006,24 +1032,20 @@ fish_applet_fill (PanelApplet *applet)
 				  gdk_screen_height () + 1);
 	gtk_widget_show_now (bah_window);
 
-	load_properties (fish);
+	fish->frame = gtk_frame_new (NULL);
+	gtk_frame_set_shadow_type (GTK_FRAME (fish->frame), GTK_SHADOW_IN);
 
 	load_image_file (fish);
 
 	create_fish_widget (fish);
+
+	set_wanda_day ();
 
 	gtk_container_add (GTK_CONTAINER (fish->applet), fish->frame);
 
 	gtk_widget_show_all (GTK_WIDGET (fish->frame));
 
 	gtk_widget_show (GTK_WIDGET (fish->applet));
-
-#ifdef FIXME
-	g_signal_connect (G_OBJECT (fish->applet),
-			  "save_session",
-			  G_CALLBACK (applet_save_session),
-			  fish);
-#endif
 
 	g_signal_connect (G_OBJECT (fish->applet),
 			 "destroy",
@@ -1062,7 +1084,7 @@ fishy_factory (PanelApplet *applet,
 }
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
-			     "That stupid fish",
+			     "That-stupid-fish",
 			     "0",
 			     fishy_factory,
 			     NULL)

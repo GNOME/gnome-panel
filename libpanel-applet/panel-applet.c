@@ -30,6 +30,8 @@
 #include <bonobo/bonobo-shlib-factory.h>
 #include <libgnome/gnome-program.h>
 #include <libgnomeui/gnome-ui-init.h>
+#include <gconf/gconf.h>
+#include <gconf/gconf-client.h>
 
 #include "panel-applet.h"
 #include "panel-applet-private.h"
@@ -78,9 +80,99 @@ enum {
 	PROPERTY_BACKGROUND_IDX
 };
 
+static void
+panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
+				       const gchar  *prefs_key,
+				       const gchar  *schema_dir,
+				       GError      **error)
+{
+	GSList *list;
+
+	list = gconf_engine_all_entries (engine, schema_dir, error);
+
+	g_return_if_fail (list && !*error);
+
+	for (; list; list = list->next) {
+		GConfEntry *entry = list->data;
+		gchar      *key;
+		gchar      *tmp;
+
+		tmp = g_path_get_basename (gconf_entry_get_key (entry));
+
+		key = g_strdup_printf ("%s/%s", prefs_key, tmp);
+
+		g_free (tmp);
+
+		gconf_engine_associate_schema (engine, key, gconf_entry_get_key (entry), error);
+
+		g_free (key);
+
+		g_return_if_fail (list && !*error);
+	}
+
+	list = gconf_engine_all_dirs (engine, schema_dir, error);
+
+	for (; list; list = list->next) {
+		gchar *subdir = list->data;
+		gchar *prefs_subdir;
+		gchar *schema_subdir;
+
+		prefs_subdir  = g_strdup_printf ("%s/%s", prefs_key, subdir);
+		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, subdir);
+
+		panel_applet_associate_schemas_in_dir (engine, prefs_subdir, schema_subdir, error);
+
+		g_free (prefs_subdir);
+		g_free (schema_subdir);
+		g_free (subdir);
+
+		g_return_if_fail (list && !*error);
+	}
+}
+
+void
+panel_applet_add_preferences (PanelApplet  *applet,
+			      const gchar  *schema_dir,
+			      GError      **opt_error)
+{
+	GConfEngine  *engine;
+	GConfClient  *client;
+	GError      **error = NULL;
+	GError       *our_error = NULL;
+
+	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+
+	if (opt_error)
+		error = opt_error;
+	else
+		error = &our_error;
+
+	engine = gconf_engine_get_default ();
+
+	panel_applet_associate_schemas_in_dir (engine,
+					       applet->priv->prefs_key,
+					       schema_dir,
+					       error);
+
+	if (!opt_error && our_error) {
+		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",
+			   schema_dir, our_error->message);
+		g_error_free (our_error);
+	}
+
+	client = gconf_client_get_default ();
+
+	gconf_client_add_dir (client,
+			      applet->priv->prefs_key,
+			      GCONF_CLIENT_PRELOAD_NONE,
+			      NULL);
+}
+
 gchar *
 panel_applet_get_preferences_key (PanelApplet *applet)
 {
+	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), NULL);
+
 	if (!applet->priv->prefs_key)
 		return NULL;
 
@@ -92,6 +184,8 @@ panel_applet_get_expand_flags (PanelApplet *applet,
 			       gboolean    *expand_major,
 			       gboolean    *expand_minor)
 {
+	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+
 	*expand_major = applet->priv->expand_major;
 	*expand_minor = applet->priv->expand_minor;
 }
@@ -101,6 +195,8 @@ panel_applet_set_expand_flags (PanelApplet *applet,
 			       gboolean     expand_major,
 			       gboolean     expand_minor)
 {
+	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+
 	applet->priv->expand_major = expand_major;
 	applet->priv->expand_minor = expand_minor;
 }
@@ -117,6 +213,8 @@ panel_applet_set_expand_flags (PanelApplet *applet,
 guint
 panel_applet_get_size (PanelApplet *applet)
 {
+	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), 0);
+
 	return applet->priv->size;
 }
 
@@ -132,6 +230,8 @@ panel_applet_get_size (PanelApplet *applet)
 PanelAppletOrient
 panel_applet_get_orient (PanelApplet *applet)
 {
+	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), 0);
+
 	return applet->priv->orient;
 }
 

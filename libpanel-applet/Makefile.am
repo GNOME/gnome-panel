@@ -19,6 +19,8 @@ lib_LTLIBRARIES = libpanel-applet-2.la
 libpanel_applet_2_la_SOURCES =		\
 	panel-applet.h			\
 	panel-applet.c			\
+	panel-applet-gconf.c		\
+	panel-applet-gconf.h		\
 	panel-applet-shell.c		\
 	panel-applet-shell.h		\
 	panel-applet-private.h		\
@@ -34,6 +36,7 @@ libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS)
 libpanel_appletincludedir = $(includedir)/panel-2.0
 
 libpanel_appletinclude_HEADERS =	\
+	panel-applet-gconf.h		\
 	panel-applet.h			\
 	GNOME_Panel.h
 

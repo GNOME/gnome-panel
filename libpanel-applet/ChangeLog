@@ -1,3 +1,31 @@
+2001-12-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement applet preferences handling in gconf. Applets should
+	install schemas without any applytos. The schemas will be associated
+	with the actual keys when we know where the applet should store its
+	preferences.
+
+	* panel-applet-gconf.[ch]: (panel_applet_gconf_get_full_key),
+	(panel_applet_gconf_set_bool), (panel_applet_gconf_set_int),
+	(panel_applet_gconf_set_string), (panel_applet_gconf_set_float),
+	(panel_applet_gconf_set_value), (panel_applet_gconf_get_bool),
+	(panel_applet_gconf_get_int), (panel_applet_gconf_get_string),
+	(panel_applet_gconf_get_float), (panel_applet_gconf_get_value):
+	impl convenience functions.
+
+	* panel-applet.[ch]: (panel_applet_associate_schemas_in_dir),
+	(panel_applet_add_preferences): impl associating a directory full
+	of schemas with the appropiate keys in the applets preferences
+	directory.
+	(panel_applet_get_preferences_key), (panel_applet_get_expand_flags),
+	(panel_applet_set_expand_flags), (panel_applet_get_size),
+	(panel_applet_get_orient): improve error checking.
+	(panel_applet_control_bound): cache the prefs dir.
+
+	* Makefile.am: add panel-applet-gconf.[ch].
+
+	* TODO: knock this off the todo list :-)
+
 2001-12-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* TODO: new file.

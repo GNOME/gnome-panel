@@ -34,9 +34,14 @@ fishbitmaps_DATA = $(FISH_BITMAPS)
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-fish.png
 
+schemadir   = $(sysconfdir)/gconf/schemas
+schema_DATA = fish.schemas
+
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_FishApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)

@@ -85,24 +85,28 @@ struct _PanelAppletClass {
 				   const gchar               *pixmap);
 };
 
-GType              panel_applet_get_type  (void) G_GNUC_CONST;
+GType              panel_applet_get_type             (void) G_GNUC_CONST;
+ 
+GtkWidget         *panel_applet_new                  (void);
 
-GtkWidget         *panel_applet_new       (void);
+void               panel_applet_construct            (PanelApplet *applet);
 
-void               panel_applet_construct (PanelApplet *applet);
+PanelAppletOrient  panel_applet_get_orient           (PanelApplet *applet);
 
-PanelAppletOrient panel_applet_get_orient (PanelApplet *applet);
-
-guint              panel_applet_get_size  (PanelApplet *applet);
+guint              panel_applet_get_size             (PanelApplet *applet);
 
 gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
-void      	   panel_applet_get_expand_flags (PanelApplet *applet,
-						  gboolean    *expand_major,
-						  gboolean    *expand_minor);
-void      	   panel_applet_set_expand_flags (PanelApplet *applet,
-						  gboolean     expand_major,
-						  gboolean     expand_minor);
+void               panel_applet_add_preferences      (PanelApplet  *applet,
+						      const gchar  *schema_dir,
+						      GError      **opt_error);
+
+void      	   panel_applet_get_expand_flags     (PanelApplet *applet,
+						      gboolean    *expand_major,
+						      gboolean    *expand_minor);
+void      	   panel_applet_set_expand_flags     (PanelApplet *applet,
+						      gboolean     expand_major,
+						      gboolean     expand_minor);
 
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
@@ -154,7 +158,7 @@ __panel_applet_shlib_factory (PortableServer_POA  poa,				\
 					   (callback), (data), ev);		\
 }										\
 static BonoboActivationPluginObject plugin_list[] = {				\
-	{ (iid), __panel_applet_shlib_factory },			\
+	{ (iid), __panel_applet_shlib_factory },				\
 	{ NULL }								\
 };										\
 const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };

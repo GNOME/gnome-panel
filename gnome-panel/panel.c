@@ -597,11 +597,8 @@ panel_applet_about_to_die (GtkWidget *panel,
 	g_return_if_fail (info);
 
 	/*
-	 * FIXME
+	 * FIXME: we need to implement an applet died dialog box
 	 */
-	if (info->type == APPLET_BONOBO)
-		g_warning (G_STRLOC " FIXME: we need to implement an "
-				    "applet died dialog box\n");
 }
 
 static GtkWidget *
