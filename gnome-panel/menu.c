@@ -2820,14 +2820,14 @@ applet_menu_append (GtkWidget   *menu,
 }
 
 static void
-add_bonobo_applet (GtkWidget *widget,
-		   const char     *iid)
+add_bonobo_applet (GtkWidget  *widget,
+		   const char *iid)
 {
 	PanelWidget *panel;
 
 	panel = get_panel_from_menu_data (widget, TRUE);
 
-	panel_applet_frame_load (iid, panel, -1);
+	panel_applet_frame_load (iid, panel, -1, NULL);
 
 	/*g_free (iid);*/
 }

@@ -24,6 +24,7 @@
 #include "panel-marshal.h"
 #include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
+#include "session.h"
 
 typedef enum {
 	PANEL_SWITCH_MOVE = 0,

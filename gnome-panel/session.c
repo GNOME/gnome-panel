@@ -338,13 +338,13 @@ panel_session_save_panel (PanelData *pd)
 	printf ("Adding a new panel to id-list: %s\n", panel->unique_id);
 #endif
 		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel->unique_id));	
-	}
 
-	gconf_client_set_list (panel_gconf_get_client (),
-			       panel_id_key,
-			       GCONF_VALUE_STRING,
-			       panel_id_list,
-			       NULL);
+		gconf_client_set_list (panel_gconf_get_client (),
+				       panel_id_key,
+				       GCONF_VALUE_STRING,
+				       panel_id_list,
+				       NULL);
+	}
 
 	g_free (panel_id_key);
 	g_slist_foreach (panel_id_list, (GFunc)g_free, NULL);
@@ -662,7 +662,7 @@ panel_quit (void)
 				   GNOME_INTERACT_ANY, 0, 1);
 }
 
-#ifdef FIXME /* see session_load */
+#ifdef FIXME /* replaced by panel_applet_frame_load_applets - keeping old code temporarily for reference */
 static void
 session_init_applets (void)
 {
@@ -1530,9 +1530,7 @@ session_write_global_config (void)
 }
 
 void session_load (void) {
-  session_init_panels ();
+	session_init_panels ();
 
-#ifdef FIXME /* load the applets */
-  session_init_applets ();
-#endif
+	panel_applet_frame_load_applets ();
 }

@@ -55,17 +55,22 @@ struct _PanelAppletFrameClass {
 
 GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_applet_frame_new       (const gchar *iid);
+GtkWidget *panel_applet_frame_new       (const char *iid,
+					 const char *gconf_key);
 
 GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
-					 const gchar      *iid);
+					 const gchar      *iid,
+					 const char       *gconf_key);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
 					
 void       panel_applet_frame_load      (const gchar *iid,
 					 PanelWidget *panel,
-					 gint         pos);
+					 gint         pos,
+					 const char  *gconf_key);
+
+void       panel_applet_frame_load_applets  (void);
 
 void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 					     PanelOrient       orient);
