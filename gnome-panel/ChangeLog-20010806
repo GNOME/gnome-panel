@@ -1,3 +1,16 @@
+1999-09-22  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* menu.c (create_root_menu): only put the favorites in
+	once (fixes gnome bug #2360)
+	(create_applets_menu): use STOCK_MENU_EXEC for this pixmap
+	(create_menu_at_fr): let gnome_stock_pixmap try to find the
+	pixmap, so we don't have to pass full paths.
+	(create_system_menu): don't predo the pixmap path
+	(create_user_menu): take a pixmap parameter, so we can
+	get the favorites with gnome-squeak and not another level
+	(create_panel_root_menu): pass extra pixmap param
+	(create_root_menu): ditto
+
 1999-09-21  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* drawer-widget.c (drawer_widget_new): correctly initialize

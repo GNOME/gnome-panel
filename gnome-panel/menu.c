@@ -1701,20 +1701,19 @@ create_menu_at_fr (GtkWidget *menu,
 
 
 	pixmap = NULL;
-	if (pixmap_name && g_file_exists (pixmap_name)) {
+	if (pixmap_name) {
 		pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
 							    SMALL_ICON_SIZE,
 							    SMALL_ICON_SIZE);
-		if (pixmap)
-			gtk_widget_show (pixmap);
-	} else if (gnome_folder && g_file_exists (gnome_folder)) {
+	}
+	if (!pixmap && gnome_folder && g_file_exists (gnome_folder)) {
 		pixmap = gnome_stock_pixmap_widget_at_size (NULL, gnome_folder,
 							    SMALL_ICON_SIZE,
 							    SMALL_ICON_SIZE);
-		if (pixmap)
-			gtk_widget_show (pixmap);
 	}
 
+	if (pixmap)
+		gtk_widget_show (pixmap);
 	menuitem = gtk_menu_item_new();
 	setup_title_menuitem(menuitem,pixmap,menu_name,mf);
 	gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
@@ -1780,9 +1779,10 @@ create_applets_menu(GtkWidget *menu, int fake_submenus)
 		g_free (menudir);
 		return NULL;
 	}
-
+	
 	applet_menu = create_menu_at(menu,menudir,TRUE,
-				     _("Applets"),NULL,
+				     _("Applets"),
+				     GNOME_STOCK_MENU_EXEC,
 				     fake_submenus,FALSE);
 	g_free (menudir);
 	return applet_menu;
@@ -2018,23 +2018,19 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 	char *menudir;
-	char *pixmap;
 
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
 	if (g_file_exists (menudir)) {
-		pixmap = gnome_pixmap_file ("gnome-logo-icon-transparent.png");
 		if(!fake || menu) {
 			menu = create_menu_at (menu, menudir, FALSE, _("Programs"),
-					       pixmap,
+					       "gnome-logo-icon-transparent.png",
 					       fake_submenus, FALSE);
 		} else {
 			menu = create_fake_menu_at (menudir, FALSE,
 						    _("Programs"),
-						    pixmap);
+						    "gnome-logo-icon-transparent.png");
 		}
-		
-		g_free (pixmap);
 	} else {
 		g_warning("No system menus found!");
 	}
@@ -2043,25 +2039,23 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 }
 
 static GtkWidget *
-create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
-		 int force, int fake)
+create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
+		 int fake_submenus, int force, int fake)
 {
 	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
-	
 	if (!g_file_exists (menudir))
 		mkdir (menu_base, 0755);
 	g_free (menu_base);
+	
 	if(!fake || menu) {
 		menu = create_menu_at (menu,menudir, FALSE,
-				       title,
-				       "gnome-squeak.png",
+				       title, pixmap,
 				       fake_submenus,
 				       force);
 	} else {
 		menu = create_fake_menu_at (menudir, FALSE,
-					    title,
-					    "gnome-squeak.png");
+					    title, pixmap);
 	}
 	g_free (menudir); 
 	return menu;
@@ -2125,7 +2119,8 @@ create_panel_root_menu(GtkWidget *panel)
 				   menuitem);
 	}
 
-	menu = create_user_menu(_("Favorites"),"apps",NULL,TRUE,TRUE,TRUE);
+	menu = create_user_menu(_("Favorites"),"apps",NULL,
+				"gnome-squeak.png", TRUE, TRUE, TRUE);
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, 
@@ -2153,8 +2148,8 @@ create_panel_root_menu(GtkWidget *panel)
 	}
 
 	if(g_file_exists(REDHAT_MENUDIR)) {
-		menu = create_user_menu(_("AnotherLevel menus"),"apps-redhat",
-					NULL,TRUE,TRUE,TRUE);
+		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
+					NULL, NULL, TRUE,TRUE,TRUE);
 		if(menu) {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0, _("AnotherLevel menus"));
@@ -2953,24 +2948,18 @@ create_root_menu(int fake_submenus, int flags)
 	}
 	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
 		root_menu = create_user_menu(_("Favorites"), "apps",
-					     root_menu, fake_submenus, FALSE,
-					     FALSE);
+					     root_menu, "gnome-squeak.png",
+					     fake_submenus, FALSE, FALSE);
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_APPLETS && !(flags&MAIN_MENU_APPLETS_SUB)) {
 		root_menu = create_applets_menu(root_menu,fake_submenus);
 		need_separ = TRUE;
 	}
-	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
-		root_menu = create_user_menu(_("Favorites"), "apps",
-					     root_menu, fake_submenus, FALSE,
-					     FALSE);
-		need_separ = TRUE;
-	}
 	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
 		rh_submenu_to_display(NULL,NULL);
 		root_menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
-					     root_menu, fake_submenus, FALSE,
+					     root_menu, NULL, fake_submenus, FALSE,
 					     FALSE);
 		need_separ = TRUE;
 	}
@@ -3010,6 +2999,7 @@ create_root_menu(int fake_submenus, int flags)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
 		menu = create_user_menu(_("Favorites"), "apps", NULL,
+					"gnome-squeak.png",
 					fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, 					
@@ -3043,7 +3033,7 @@ create_root_menu(int fake_submenus, int flags)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
 		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat", 
-					NULL, fake_submenus, TRUE, TRUE);
+					NULL, NULL, fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, pixmap, _("AnotherLevel menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
