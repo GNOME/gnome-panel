@@ -821,7 +821,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(panel_dragged_timeout==-1) {
 				panel_been_moved = FALSE;
 				move_panel_to_cursor(widget);
-				panel_dragged_timeout = gtk_timeout_add (100,panel_move_timeout,widget);
+				panel_dragged_timeout = gtk_timeout_add (30,panel_move_timeout,widget);
 			} else
 				panel_been_moved = TRUE;
 		}

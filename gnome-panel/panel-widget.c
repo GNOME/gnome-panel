@@ -1841,7 +1841,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				if(moving_timeout==-1) {
 					been_moved = FALSE;
 					panel_widget_applet_move_to_cursor(panel);
-					moving_timeout = gtk_timeout_add (100,move_timeout_handler,panel);
+					moving_timeout = gtk_timeout_add (30,move_timeout_handler,panel);
 				} else
 					been_moved = TRUE;
 			}
