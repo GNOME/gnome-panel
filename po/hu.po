@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core HEAD\n"
-"POT-Creation-Date: 2002-05-19 19:49-0100\n"
+"POT-Creation-Date: 2002-05-21 01:37+1200\n"
 "PO-Revision-Date: 2001-05-04 11:14+0200\n"
 "Last-Translator: Szabolcs Ban <shooby@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -445,7 +445,6 @@ msgid "seconds"
 msgstr "másodpercenként"
 
 #: applets/gen_util/mailcheck.c:1494
-#, 
 msgid "Play a _sound when new mail arrives"
 msgstr "_Hang lejátszása levél érkezésekor"
 
@@ -454,7 +453,6 @@ msgid "Select a_nimation"
 msgstr "_Animációk kiválasztása"
 
 #: applets/gen_util/mailcheck.c:1555
-
 msgid "Inbox Monitor Preferences"
 msgstr "Postaládafigyelő beállításai"
 
@@ -537,8 +535,8 @@ msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"A Munkaterület-lapozó applet megmutatja a munkaterületek kis verzióit, "
-"ez megkönnyíti ablakaid kezelését."
+"A Munkaterület-lapozó applet megmutatja a munkaterületek kis verzióit, ez "
+"megkönnyíti ablakaid kezelését."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -629,8 +627,8 @@ msgstr "(c) 2001 Red Hat, Inc"
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
-"Az ablaklista applet egy listát mutat az ablakaidról és segítségével ki tudod "
-" választani őket."
+"Az ablaklista applet egy listát mutat az ablakaidról és segítségével ki "
+"tudod  választani őket."
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
@@ -673,7 +671,6 @@ msgid "Window List Preferences"
 msgstr "Ablaklista beállításai"
 
 #: applets/gen_util/tasklist.glade.h:11
-
 msgid "Window List content"
 msgstr "Ablaklista tartalma"
 
@@ -695,15 +692,15 @@ msgstr "GNOME panel shell"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:556
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:559
 msgid "Move"
 msgstr "Mozgatás"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:545
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:548
 msgid "Remove From Panel"
 msgstr "Törlés a panelről"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:1003
+#: gnome-panel/applet.c:210 gnome-panel/menu.c:1003
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -718,11 +715,11 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
+#: gnome-panel/applet.c:484 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1152
+#: gnome-panel/applet.c:1155
 msgid "Can't find an empty spot"
 msgstr "Nem találtam üres helyet"
 
@@ -868,17 +865,17 @@ msgstr "Műveletek"
 msgid "No windows open"
 msgstr "Nincs nyitott ablak"
 
-#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2720
+#: gnome-panel/foobar-widget.c:748 gnome-panel/menu.c:2720
 #: gnome-panel/menu.c:2726 gnome-panel/menu.c:3542
 msgid "Applications"
 msgstr "Alkalmazások"
 
-#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2605
+#: gnome-panel/foobar-widget.c:781 gnome-panel/menu.c:2605
 #: gnome-panel/menu.c:2649
 msgid "Menu Panel"
 msgstr "Menüpanel"
 
-#: gnome-panel/foobar-widget.c:778
+#: gnome-panel/foobar-widget.c:781
 msgid "GNOME Menu Panel"
 msgstr "GNOME Menüpanel"
 
@@ -1723,20 +1720,31 @@ msgstr "Főmenü"
 msgid "Can't create menu, using main menu!"
 msgstr "Nem lehet létrehozni a menüt, a főmenüt használom!"
 
-#: gnome-panel/panel-applet-frame.c:178
+#: gnome-panel/panel-applet-frame.c:179
 msgid "Cannot register control widget\n"
 msgstr "Nem tudom regisztrálni a vezérlő widget-et\n"
 
-#: gnome-panel/panel-applet-frame.c:605
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:693
+#: gnome-panel/panel-applet-frame.c:699
+#, c-format
+msgid ""
+"The %s applet appears to have died unexpectedly\n"
+"\n"
+"Reload this applet?\n"
+"\n"
+"(If you choose not to reload it at this time you can always add it by right "
+"clicking on the panel and clicking on the \"Add to panel\" submenu)"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nem kapom meg az AppletShell interfészt a vezérlőtől\n"
 
-#: gnome-panel/panel-applet-frame.c:818
+#: gnome-panel/panel-applet-frame.c:921
 #, fuzzy, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-05-19 11:20+0400\n"
+"POT-Creation-Date: 2002-05-21 01:37+1200\n"
 "PO-Revision-Date: 2002-05-19 11:19+0400\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -696,15 +696,15 @@ msgstr "Оболочка панели GNOME"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:556
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:559
 msgid "Move"
 msgstr "Переместить"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:545
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:548
 msgid "Remove From Panel"
 msgstr "Убрать с панели"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:1003
+#: gnome-panel/applet.c:210 gnome-panel/menu.c:1003
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -719,11 +719,11 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
+#: gnome-panel/applet.c:484 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1152
+#: gnome-panel/applet.c:1155
 msgid "Can't find an empty spot"
 msgstr "Невозможно найти свободное место"
 
@@ -869,17 +869,17 @@ msgstr "Действия"
 msgid "No windows open"
 msgstr "Нет открытых окон"
 
-#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2720
+#: gnome-panel/foobar-widget.c:748 gnome-panel/menu.c:2720
 #: gnome-panel/menu.c:2726 gnome-panel/menu.c:3542
 msgid "Applications"
 msgstr "Приложения"
 
-#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2605
+#: gnome-panel/foobar-widget.c:781 gnome-panel/menu.c:2605
 #: gnome-panel/menu.c:2649
 msgid "Menu Panel"
 msgstr "Панель меню"
 
-#: gnome-panel/foobar-widget.c:778
+#: gnome-panel/foobar-widget.c:781
 msgid "GNOME Menu Panel"
 msgstr "Панель меню GNOME"
 
@@ -1735,20 +1735,31 @@ msgstr "Главное меню"
 msgid "Can't create menu, using main menu!"
 msgstr "Невозможно создать меню, используется главное меню!"
 
-#: gnome-panel/panel-applet-frame.c:178
+#: gnome-panel/panel-applet-frame.c:179
 msgid "Cannot register control widget\n"
 msgstr "Невозможно зарегистрировать управляющий виджет\n"
 
-#: gnome-panel/panel-applet-frame.c:605
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Исключение из всплывающего меню \"%s\"\n"
 
-#: gnome-panel/panel-applet-frame.c:693
+#: gnome-panel/panel-applet-frame.c:699
+#, c-format
+msgid ""
+"The %s applet appears to have died unexpectedly\n"
+"\n"
+"Reload this applet?\n"
+"\n"
+"(If you choose not to reload it at this time you can always add it by right "
+"clicking on the panel and clicking on the \"Add to panel\" submenu)"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Невозможно получить интерфейс AppletShell из управляющего элемента\n"
 
-#: gnome-panel/panel-applet-frame.c:818
+#: gnome-panel/panel-applet-frame.c:921
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"

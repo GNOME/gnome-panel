@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.4.0\n"
-"POT-Creation-Date: 2002-05-13 23:33+0100\n"
+"POT-Creation-Date: 2002-05-21 01:37+1200\n"
 "PO-Revision-Date: 2001-11-05 19:09+0300\n"
 "Last-Translator: Görkem Çetin <gorkem@gelecek.com.tr>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -15,13 +15,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
 #: applets/gen_util/GNOME_PagerApplet.xml.h:1
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-#: applets/gen_util/printer.c:479
 #, fuzzy
-msgid "About..."
+msgid "_About..."
 msgstr "Hakkýnda..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -29,10 +28,8 @@ msgstr "Hakkýnda..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
-#: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4006 gnome-panel/status.c:377
-msgid "Help"
+#, fuzzy
+msgid "_Help"
 msgstr "Yardým"
 
 #: applets/fish/GNOME_FishApplet.xml.h:3
@@ -41,7 +38,7 @@ msgstr "Yardým"
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
 #, fuzzy
-msgid "Preferences..."
+msgid "_Preferences..."
 msgstr "Tercihler"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
@@ -53,6 +50,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr ""
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1182
 msgid "Fish"
 msgstr "Balýk"
 
@@ -164,10 +162,6 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(George'un naçizane yardýmlarýyla)"
 
-#: applets/fish/fish.c:1182
-msgid "The GNOME Fish Applet"
-msgstr "GNOME Balýk Takýsý"
-
 #: applets/fish/fish.c:1185
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
@@ -179,12 +173,13 @@ msgstr ""
 "deðerli panel alanýnýzý azaltýr . Eðer birisi bu takýnýn çok faydalý "
 "olduðunu söylüyorsa, onu hemen bir ruh doktoruna gönderin."
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy date"
-msgstr ""
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#, fuzzy
+msgid "Copy _date"
+msgstr "Tarihi takýda göster"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-msgid "Copy time"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
@@ -197,6 +192,7 @@ msgid "Alert you when new mail arrives"
 msgstr "Yeni ePosta varsa bir ses çýkar"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1083
 msgid "Clock"
 msgstr "Saat"
 
@@ -209,7 +205,7 @@ msgid "Get the current time and date"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
 msgid "Inbox Monitor"
 msgstr ""
 
@@ -231,12 +227,12 @@ msgid "Utility"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:626
+#: applets/gen_util/tasklist.c:625
 msgid "Window List"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:435 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr ""
 
@@ -246,7 +242,7 @@ msgstr ""
 
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
 #, fuzzy
-msgid "Check for mail"
+msgid "_Check for mail"
 msgstr "Postayý"
 
 #: applets/gen_util/clock.c:148 applets/gen_util/clock.c:445
@@ -329,14 +325,10 @@ msgstr "GMT kullan"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:423 applets/gen_util/tasklist.c:614
+#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:613
 #: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr ""
-
-#: applets/gen_util/clock.c:1083
-msgid "Clock Applet"
-msgstr "Saat Takýsý"
 
 #: applets/gen_util/clock.c:1084
 #, fuzzy
@@ -344,7 +336,7 @@ msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "Telif hakký (C) 1997-2002 the Free Software Foundation"
 
 #: applets/gen_util/clock.c:1085
-msgid "The Clock Applet displays current time and date"
+msgid "The Clock displays the current time and date"
 msgstr ""
 
 #: applets/gen_util/mailcheck.c:224
@@ -513,17 +505,13 @@ msgstr "Posta denetimi"
 msgid "Mail_box"
 msgstr "Posta kutusu"
 
-#: applets/gen_util/mailcheck.c:1653
-msgid "Mail check Applet"
-msgstr "Posta Denetimi Takýsý"
-
 #: applets/gen_util/mailcheck.c:1654
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2001 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1655 applets/gen_util/mailcheck.c:1820
+#: applets/gen_util/mailcheck.c:1655
 #, fuzzy
-msgid "Mail check notifies you when new mail arrives in your mailbox"
+msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Posta kutunuza yeni ePosta geldiyse, Posta Denetimi uyarýr"
 
 #: applets/gen_util/mailcheck.c:1792
@@ -535,6 +523,11 @@ msgstr "Salt metin"
 msgid "Mail check"
 msgstr "Posta denetimi"
 
+#: applets/gen_util/mailcheck.c:1820
+#, fuzzy
+msgid "Mail check notifies you when new mail arrives in your mailbox"
+msgstr "Posta kutunuza yeni ePosta geldiyse, Posta Denetimi uyarýr"
+
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 #, fuzzy
 msgid "Mailcheck"
@@ -545,13 +538,13 @@ msgstr "Posta denetimi"
 msgid "New Mail"
 msgstr "ePostanýz yok."
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
 #: applets/gen_util/pager.glade.h:2
 #, fuzzy
 msgid "Rows"
 msgstr "Göz At"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:648
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
 #, fuzzy
 msgid "Columns"
 msgstr "Renkler"
@@ -575,15 +568,15 @@ msgid ""
 "s\n"
 msgstr ""
 
-#: applets/gen_util/pager.c:436
+#: applets/gen_util/pager.c:435
 #, fuzzy
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "Telif Hakký (C) 1998 Red Hat Software, Inc."
 
-#: applets/gen_util/pager.c:437
+#: applets/gen_util/pager.c:436
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage the windows."
+"lets you manage your windows."
 msgstr ""
 
 #: applets/gen_util/pager.glade.h:1
@@ -660,16 +653,27 @@ msgid "Can't create applet!\n"
 msgstr "Yutulmuþ taký oluþtur"
 
 #: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
-#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
-#: gnome-panel/menu.c:3277 gnome-panel/menu.c:4004
+#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1333 gnome-panel/menu.c:1404
+#: gnome-panel/menu.c:3283 gnome-panel/menu.c:4007
 msgid "Properties..."
 msgstr "Özellikler..."
 
-#: applets/gen_util/tasklist.c:627
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
+#: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4009 gnome-panel/status.c:377
+msgid "Help"
+msgstr "Yardým"
+
+#: applets/gen_util/printer.c:479
+#, fuzzy
+msgid "About..."
+msgstr "Hakkýnda..."
+
+#: applets/gen_util/tasklist.c:626
 msgid "(c) 2001 Red Hat, Inc"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:628
+#: applets/gen_util/tasklist.c:627
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -739,16 +743,17 @@ msgstr "Gnome Ana Sayfasý"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:556
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:559
 msgid "Move"
 msgstr "Taþý"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:545
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:548
 #, fuzzy
 msgid "Remove From Panel"
 msgstr "Panelden sil"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:996 gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:210 gnome-panel/menu.c:1003
+#: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -759,11 +764,11 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
+#: gnome-panel/applet.c:484 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1152
+#: gnome-panel/applet.c:1155
 msgid "Can't find an empty spot"
 msgstr "Boþ bir nokta bulunamadý"
 
@@ -854,7 +859,7 @@ msgstr "Gizle düðmesini etkinleþtir"
 msgid "Enable hidebutton arrow"
 msgstr "Gizle düðmesi okunu etkinleþtir"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3140
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3146
 msgid "Drawer"
 msgstr "Sürgü"
 
@@ -868,7 +873,7 @@ msgstr "xscreensaver çalýþtýrýlamýyor"
 msgid "Cannot execute gnome-search-tool"
 msgstr "xscreensaver çalýþtýrýlamýyor"
 
-#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3569
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3576
 #, fuzzy
 msgid "Run Program..."
 msgstr "Uygulama Çalýþtýr"
@@ -877,19 +882,19 @@ msgstr "Uygulama Çalýþtýr"
 msgid "Run applications, if you know the correct command to type in"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3893
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3589
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3896
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3592
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3906
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3603
 msgid "Take a Screen Shot..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3909
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3606
 #, fuzzy
 msgid "Take a screen shot of your desktop"
 msgstr "Ekran görüntüsünü _masaüstüne kaydet"
@@ -921,18 +926,18 @@ msgstr "Eylem"
 msgid "No windows open"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2714
-#: gnome-panel/menu.c:2720 gnome-panel/menu.c:3535
+#: gnome-panel/foobar-widget.c:748 gnome-panel/menu.c:2720
+#: gnome-panel/menu.c:2726 gnome-panel/menu.c:3542
 msgid "Applications"
 msgstr "Uygulamalar"
 
-#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2598
-#: gnome-panel/menu.c:2643
+#: gnome-panel/foobar-widget.c:781 gnome-panel/menu.c:2605
+#: gnome-panel/menu.c:2649
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Menü paneli"
 
-#: gnome-panel/foobar-widget.c:778
+#: gnome-panel/foobar-widget.c:781
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "GNOME Paneli"
@@ -996,7 +1001,7 @@ msgstr "Tercihler"
 msgid "Modify the global panel preferences"
 msgstr "Panel özellikleri"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3585
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3619
 msgid "Panel"
 msgstr "Panel"
 
@@ -1176,22 +1181,18 @@ msgstr "E_kran görüntüsünü yazdýr..."
 msgid "_Save screenshot to file:"
 msgstr "_Ekran görüntüsünü dosyaya kaydet"
 
-#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
-#, fuzzy, c-format
-msgid "Failed to run this program: '%s'"
-msgstr "Programý yüklerken hata oluþtu!\n"
-
-#: gnome-panel/gnome-run.c:325
-#, fuzzy, c-format
-msgid "Failed to execute command: '%s'"
-msgstr ""
-"Komut çalýþtýrýlýrken hata oluþtu:\n"
-"%s"
-
-#: gnome-panel/gnome-run.c:384
+#: gnome-panel/gnome-run.c:237 gnome-panel/gnome-run.c:254
 #, fuzzy, c-format
 msgid ""
-"Failed to execute command: '%s'\n"
+"<b>Failed to run this program</b>\n"
+"\n"
+"Details: %s"
+msgstr "Programý yüklerken hata oluþtu!\n"
+
+#: gnome-panel/gnome-run.c:344 gnome-panel/gnome-run.c:418
+#, fuzzy, c-format
+msgid ""
+"<b>Failed to execute command:</b> '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
@@ -1199,74 +1200,73 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:425
-msgid "Choose a program to run"
+#: gnome-panel/gnome-run.c:441
+#, c-format
+msgid ""
+"<b>Failed to open file:</b> '%s'\n"
+"\n"
+"Details: no application available to open file"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:664
+#: gnome-panel/gnome-run.c:455
+#, fuzzy, c-format
+msgid ""
+"<b>Failed to open file:</b> '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Komut çalýþtýrýlýrken hata oluþtu:\n"
+"%s\n"
+"%s"
+
+#: gnome-panel/gnome-run.c:531
+msgid "Choose a file"
+msgstr ""
+
+#: gnome-panel/gnome-run.c:726 gnome-panel/gnome-run.c:727
+#, fuzzy
+msgid "Known Applications"
+msgstr "Uygulamalar"
+
+#: gnome-panel/gnome-run.c:855
 #, fuzzy
 msgid "Command to run"
 msgstr "Komut (isteðe baðlý)"
 
-#: gnome-panel/gnome-run.c:677
-#, fuzzy
-msgid "_Browse..."
-msgstr "Gözat..."
-
-#: gnome-panel/gnome-run.c:688
+#: gnome-panel/gnome-run.c:889
 #, fuzzy
 msgid "Run in _terminal"
 msgstr "Terminalde çalýþtýr"
 
-#: gnome-panel/gnome-run.c:922
+#: gnome-panel/gnome-run.c:894
+msgid "_Append File..."
+msgstr ""
+
+#: gnome-panel/gnome-run.c:1264
 #, fuzzy, c-format
 msgid "Will run command: '%s'"
 msgstr "'%s' çalýþtýrýlacak"
 
-#: gnome-panel/gnome-run.c:931
+#: gnome-panel/gnome-run.c:1273
 #, fuzzy
 msgid "No application selected"
 msgstr "Program seçilmedi"
 
-#: gnome-panel/gnome-run.c:1051
-#, fuzzy
-msgid "Known A_pplications:"
-msgstr "Uygulamalar"
-
-#: gnome-panel/gnome-run.c:1061
+#: gnome-panel/gnome-run.c:1390
 #, fuzzy
 msgid "List of known applications"
 msgstr "Uygulamalar"
 
-#: gnome-panel/gnome-run.c:1062
+#: gnome-panel/gnome-run.c:1391
 msgid "Choose an application to run from the list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1160
-#, fuzzy
-msgid "_Known Applications <<"
-msgstr "Uygulamalar"
-
-#: gnome-panel/gnome-run.c:1163
-#, fuzzy
-msgid "Hide the list of known applications"
-msgstr "Uygulamalar"
-
-#: gnome-panel/gnome-run.c:1177
-#, fuzzy
-msgid "_Known Applications >>"
-msgstr "Uygulamalar"
-
-#: gnome-panel/gnome-run.c:1180
-msgid "Display a list of known applications from the applications menu"
-msgstr ""
-
-#: gnome-panel/gnome-run.c:1198
+#: gnome-panel/gnome-run.c:1485
 #, fuzzy
 msgid "_Run"
 msgstr "Çalýþtýr..."
 
-#: gnome-panel/gnome-run.c:1255
+#: gnome-panel/gnome-run.c:1542
 msgid "Run Program"
 msgstr "Uygulama Çalýþtýr"
 
@@ -1325,7 +1325,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3391
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3398
 msgid "Log out"
 msgstr "Çýk"
 
@@ -1333,7 +1333,7 @@ msgstr "Çýk"
 msgid "Log out of GNOME"
 msgstr "GNOME'dan çýk"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3378
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3385
 msgid "Lock screen"
 msgstr "Ekraný kilitle"
 
@@ -1382,7 +1382,7 @@ msgid ""
 msgstr "gmenu çalýþtýrýlamadý!"
 
 #: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3624 gnome-panel/menu.c:3849
+#: gnome-panel/menu.c:3658 gnome-panel/menu.c:3883
 msgid "Menu"
 msgstr "Menü"
 
@@ -1519,10 +1519,14 @@ msgid "End world hunger"
 msgstr "Dünyadaki açlýðý bitirelim"
 
 #: gnome-panel/menu.c:308
-msgid "Can't execute 'About GNOME'"
-msgstr "'GNOME Hakkýnda' çalýþtýrýlamadý"
+#, c-format
+msgid ""
+"<b>Can't execute 'About GNOME'</b>\n"
+"\n"
+"Details: %s probably does not exist"
+msgstr ""
 
-#: gnome-panel/menu.c:326
+#: gnome-panel/menu.c:328
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1530,7 +1534,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:334 gnome-panel/menu.c:977 gnome-panel/menu.c:1005
+#: gnome-panel/menu.c:336 gnome-panel/menu.c:984 gnome-panel/menu.c:1012
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1538,7 +1542,7 @@ msgid ""
 "Details: %s"
 msgstr "Girdi yüklenemiyor"
 
-#: gnome-panel/menu.c:889
+#: gnome-panel/menu.c:894
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1546,126 +1550,129 @@ msgid ""
 "Details: %s\n"
 msgstr "%s menü öðesi silinemedi: %s\n"
 
-#: gnome-panel/menu.c:898
+#: gnome-panel/menu.c:904
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Dosya adý bu dosya yolundan alýnamadý: %s"
 
-#: gnome-panel/menu.c:905
+#: gnome-panel/menu.c:911
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Dizin ismi bu dosya yolundan alýnamadý: %s"
 
-#: gnome-panel/menu.c:971
+#: gnome-panel/menu.c:977
 #, fuzzy
-msgid "No 'Exec' or 'URL' field in entry"
+msgid ""
+"<b>Can't add to run box</b>\n"
+"\n"
+"Details: No 'Exec' or 'URL' field in entry"
 msgstr "Girdide 'Exec' alaný yok"
 
-#: gnome-panel/menu.c:1258
+#: gnome-panel/menu.c:1265
 msgid "Add this launcher to panel"
 msgstr "Bu baþlatýcýyý panele ekle"
 
-#: gnome-panel/menu.c:1266
+#: gnome-panel/menu.c:1273
 msgid "Remove this item"
 msgstr "Bu öðeyi sil"
 
-#: gnome-panel/menu.c:1282
+#: gnome-panel/menu.c:1289
 msgid "Put into run dialog"
 msgstr "Çalýþtýrma diyaloðuna koy"
 
-#: gnome-panel/menu.c:1300
+#: gnome-panel/menu.c:1307
 #, c-format
 msgid "Help on %s"
 msgstr "%s için yardým"
 
-#: gnome-panel/menu.c:1301
+#: gnome-panel/menu.c:1308
 msgid "Application"
 msgstr "Uygulama"
 
-#: gnome-panel/menu.c:1347
+#: gnome-panel/menu.c:1354
 msgid "Entire menu"
 msgstr "Tüm Menü"
 
-#: gnome-panel/menu.c:1356
+#: gnome-panel/menu.c:1363
 msgid "Add this as drawer to panel"
 msgstr "Bunu sürgü olarak panele ekle"
 
-#: gnome-panel/menu.c:1364
+#: gnome-panel/menu.c:1371
 msgid "Add this as menu to panel"
 msgstr "Bunu menü olarak panele ekle"
 
-#: gnome-panel/menu.c:1372
+#: gnome-panel/menu.c:1379
 msgid "Add new item to this menu"
 msgstr "Bu menüye yeni öðe ekle"
 
-#: gnome-panel/menu.c:1707
+#: gnome-panel/menu.c:1714
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Panelde zaten bir durum rýhtýmý var. Sadece bir tane olabilir."
 
-#: gnome-panel/menu.c:2302 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2309 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2520 gnome-panel/menu.c:2524
+#: gnome-panel/menu.c:2527 gnome-panel/menu.c:2531
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Gnome Paneli"
 
-#: gnome-panel/menu.c:2525
+#: gnome-panel/menu.c:2532
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Gnome Paneli"
 
-#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2544 gnome-panel/menu.c:2662
+#: gnome-panel/menu.c:2548 gnome-panel/menu.c:2551 gnome-panel/menu.c:2668
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Kenar paneli"
 
-#: gnome-panel/menu.c:2545
+#: gnome-panel/menu.c:2552
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "GNOME Paneli"
 
-#: gnome-panel/menu.c:2561 gnome-panel/menu.c:2565 gnome-panel/menu.c:2678
+#: gnome-panel/menu.c:2568 gnome-panel/menu.c:2572 gnome-panel/menu.c:2684
 #, fuzzy
 msgid "Sliding Panel"
 msgstr "Kayan panel"
 
-#: gnome-panel/menu.c:2566
+#: gnome-panel/menu.c:2573
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Kayan panel"
 
-#: gnome-panel/menu.c:2582 gnome-panel/menu.c:2586 gnome-panel/menu.c:2686
+#: gnome-panel/menu.c:2589 gnome-panel/menu.c:2593 gnome-panel/menu.c:2692
 #, fuzzy
 msgid "Floating Panel"
 msgstr "Yüzen panel"
 
-#: gnome-panel/menu.c:2587
+#: gnome-panel/menu.c:2594
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Yüzen panel"
 
-#: gnome-panel/menu.c:2603
+#: gnome-panel/menu.c:2610
 msgid "You can only have one menu panel at a time."
 msgstr "Bir defada sadece bir menü paneline sahip olabilirsiniz."
 
-#: gnome-panel/menu.c:2670
+#: gnome-panel/menu.c:2676
 #, fuzzy
 msgid "Corner Panel"
 msgstr "Köþe paneli"
 
 #. force_image
-#: gnome-panel/menu.c:2783 gnome-panel/menu.c:2790 gnome-panel/menu.c:3451
+#: gnome-panel/menu.c:2789 gnome-panel/menu.c:2796 gnome-panel/menu.c:3458
 msgid "KDE menus"
 msgstr "KDE menüleri"
 
-#: gnome-panel/menu.c:2860
+#: gnome-panel/menu.c:2866
 msgid "You cannot remove your last panel."
 msgstr "Son panel silinemez."
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2878
 #, fuzzy
 msgid ""
 "When a panel is removed, the panel and its\n"
@@ -1674,123 +1681,137 @@ msgstr ""
 "Bir panel silinince, panel ve takýlarýnýn\n"
 "tüm ayarlarý silinecektir. Bu panel silinsin mi?"
 
-#: gnome-panel/menu.c:3112
+#: gnome-panel/menu.c:3118
 msgid "Launcher..."
 msgstr "Baþlatýcý..."
 
-#: gnome-panel/menu.c:3120
+#: gnome-panel/menu.c:3126
 msgid "Launcher from menu"
 msgstr "Menüden baþlatýcý"
 
-#: gnome-panel/menu.c:3130
+#: gnome-panel/menu.c:3136
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "GNOME Paneli"
 
-#: gnome-panel/menu.c:3150
+#: gnome-panel/menu.c:3156
 msgid "Log out button"
 msgstr "Çýkýþ düðmesi"
 
-#: gnome-panel/menu.c:3160
+#: gnome-panel/menu.c:3166
 msgid "Lock button"
 msgstr "Kilitleme düðmesi"
 
-#: gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:3174
 msgid "Status dock"
 msgstr "Durum rýhtýmý"
 
-#: gnome-panel/menu.c:3182
+#: gnome-panel/menu.c:3188
 #, fuzzy
 msgid "Cannot execute panel global preferences"
 msgstr "Panel genel özellikleri çalýþtýrýlamýyor"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3226
 #, fuzzy
 msgid "Delete this panel..."
 msgstr "Bu paneli sil...."
 
-#: gnome-panel/menu.c:3222 gnome-panel/menu.c:3261
+#: gnome-panel/menu.c:3228 gnome-panel/menu.c:3267
 #, fuzzy
 msgid "Delete this panel"
 msgstr "Bu paneli siler"
 
-#: gnome-panel/menu.c:3240
+#: gnome-panel/menu.c:3246
 msgid "Add to panel"
 msgstr "Panele ekle"
 
-#: gnome-panel/menu.c:3252
+#: gnome-panel/menu.c:3258
 msgid "Create panel"
 msgstr "Panel oluþtur"
 
-#: gnome-panel/menu.c:3289
+#: gnome-panel/menu.c:3295
 msgid "Global Preferences..."
 msgstr "Genel Tercihler..."
 
-#: gnome-panel/menu.c:3302
+#: gnome-panel/menu.c:3308
 msgid "Panel Manual..."
 msgstr "Panel Kýlavuzu..."
 
-#: gnome-panel/menu.c:3314
-msgid "Cannot execute xscreensaver"
-msgstr "xscreensaver çalýþtýrýlamýyor"
+#: gnome-panel/menu.c:3320
+msgid ""
+"<b>Cannot execute xscreensaver</b>\n"
+"\n"
+"Details: xscreensaver-command not found"
+msgstr ""
 
-#: gnome-panel/menu.c:3333
+#: gnome-panel/menu.c:3340
 msgid "About the panel..."
 msgstr "Panel hakkýnda..."
 
-#: gnome-panel/menu.c:3347
+#: gnome-panel/menu.c:3354
 msgid "About GNOME..."
 msgstr "GNOME hakkýnda..."
 
-#: gnome-panel/menu.c:3384
+#: gnome-panel/menu.c:3391
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Bilgisayar baþýndan geçici bir süre ayrýlmak için ekraný kilitleyin"
 
-#: gnome-panel/menu.c:3397
+#: gnome-panel/menu.c:3404
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3552
+#: gnome-panel/menu.c:3559
 msgid "Applets"
 msgstr "Takýlar"
 
-#: gnome-panel/menu.c:3575
+#: gnome-panel/menu.c:3582
 msgid "Run a command"
 msgstr "Komut çalýþtýr"
 
-#: gnome-panel/menu.c:3593
+#: gnome-panel/menu.c:3627
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: gnome-panel/menu.c:3626
+#: gnome-panel/menu.c:3660
 #, fuzzy
 msgid "Menu:"
 msgstr "Menü"
 
-#: gnome-panel/menu.c:3676 gnome-panel/menu.c:3704 gnome-panel/menu.c:3920
+#: gnome-panel/menu.c:3710 gnome-panel/menu.c:3738 gnome-panel/menu.c:3923
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: gnome-panel/menu.c:3698
+#: gnome-panel/menu.c:3732
 msgid "Can't create menu, using main menu!"
 msgstr "Menü oluþturulamýyor, ana menü kullanýlýyor!"
 
-#: gnome-panel/panel-applet-frame.c:178
+#: gnome-panel/panel-applet-frame.c:179
 msgid "Cannot register control widget\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:605
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:693
+#: gnome-panel/panel-applet-frame.c:699
+#, c-format
+msgid ""
+"The %s applet appears to have died unexpectedly\n"
+"\n"
+"Reload this applet?\n"
+"\n"
+"(If you choose not to reload it at this time you can always add it by right "
+"clicking on the panel and clicking on the \"Add to panel\" submenu)"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:818
+#: gnome-panel/panel-applet-frame.c:921
 #, fuzzy, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2059,6 +2080,43 @@ msgstr ""
 #: libpanel-applet/panel-applet.c:892
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
+
+#~ msgid "The GNOME Fish Applet"
+#~ msgstr "GNOME Balýk Takýsý"
+
+#~ msgid "Clock Applet"
+#~ msgstr "Saat Takýsý"
+
+#~ msgid "Mail check Applet"
+#~ msgstr "Posta Denetimi Takýsý"
+
+#, fuzzy
+#~ msgid "Failed to execute command: '%s'"
+#~ msgstr ""
+#~ "Komut çalýþtýrýlýrken hata oluþtu:\n"
+#~ "%s"
+
+#, fuzzy
+#~ msgid "_Browse..."
+#~ msgstr "Gözat..."
+
+#, fuzzy
+#~ msgid "_Known Applications <<"
+#~ msgstr "Uygulamalar"
+
+#, fuzzy
+#~ msgid "Hide the list of known applications"
+#~ msgstr "Uygulamalar"
+
+#, fuzzy
+#~ msgid "_Known Applications >>"
+#~ msgstr "Uygulamalar"
+
+#~ msgid "Can't execute 'About GNOME'"
+#~ msgstr "'GNOME Hakkýnda' çalýþtýrýlamadý"
+
+#~ msgid "Cannot execute xscreensaver"
+#~ msgstr "xscreensaver çalýþtýrýlamýyor"
 
 #~ msgid "Password:"
 #~ msgstr "Parola:"
