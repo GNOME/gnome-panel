@@ -329,9 +329,8 @@ gboolean
 load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget  *ebox;
-	AppletInfo *info;
 
-	if (the_status)
+	if (the_status != NULL)
 		return FALSE;
 
 	DPUTS("LOAD_STATUS_APPLET");
@@ -371,7 +370,7 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 
 	the_status->info = panel_applet_register (ebox, the_status, free_status, panel,
 						  pos, exactpos, APPLET_STATUS);
-	if (!info)
+	if (the_status->info == NULL)
 		return TRUE;
 
 	panel_applet_add_callback (the_status->info, "help", GTK_STOCK_HELP, _("Help"));
