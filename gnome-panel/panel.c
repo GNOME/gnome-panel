@@ -201,54 +201,53 @@ static void
 set_show_hide_buttons_visibility(void)
 {
 	if(the_panel->mode!=PANEL_STAYS_PUT) {
-		gtk_widget_hide(the_panel->hidebutton_h);
-		gtk_widget_hide(the_panel->showbutton_h);
-		gtk_widget_hide(the_panel->hidebutton_v);
-		gtk_widget_hide(the_panel->showbutton_v);
+		gtk_widget_hide(the_panel->hidebutton_l_h);
+		gtk_widget_hide(the_panel->hidebutton_r_h);
+		gtk_widget_hide(the_panel->hidebutton_l_v);
+		gtk_widget_hide(the_panel->hidebutton_r_v);
 		return;
 	}
 	if(the_panel->state==PANEL_SHOWN) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
 			case PANEL_POS_BOTTOM:
-				gtk_widget_show(the_panel->hidebutton_h);
-				gtk_widget_hide(the_panel->showbutton_h);
-				gtk_widget_hide(the_panel->hidebutton_v);
-				gtk_widget_hide(the_panel->showbutton_v);
+				gtk_widget_show(the_panel->hidebutton_l_h);
+				gtk_widget_show(the_panel->hidebutton_r_h);
+				gtk_widget_hide(the_panel->hidebutton_l_v);
+				gtk_widget_hide(the_panel->hidebutton_r_v);
 				break;
 			case PANEL_POS_LEFT:
 			case PANEL_POS_RIGHT:
-				gtk_widget_hide(the_panel->hidebutton_h);
-				gtk_widget_hide(the_panel->showbutton_h);
-				gtk_widget_show(the_panel->hidebutton_v);
-				gtk_widget_hide(the_panel->showbutton_v);
+				gtk_widget_hide(the_panel->hidebutton_l_h);
+				gtk_widget_hide(the_panel->hidebutton_r_h);
+				gtk_widget_show(the_panel->hidebutton_l_v);
+				gtk_widget_show(the_panel->hidebutton_r_v);
 				break;
 		}
 	} else {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
 			case PANEL_POS_BOTTOM:
-				gtk_widget_hide(the_panel->hidebutton_h);
-				gtk_widget_show(the_panel->showbutton_h);
-				gtk_widget_hide(the_panel->hidebutton_v);
-				gtk_widget_hide(the_panel->showbutton_v);
+				gtk_widget_show(the_panel->hidebutton_l_h);
+				gtk_widget_show(the_panel->hidebutton_r_h);
+				gtk_widget_hide(the_panel->hidebutton_l_v);
+				gtk_widget_hide(the_panel->hidebutton_r_v);
 				break;
 			case PANEL_POS_LEFT:
 			case PANEL_POS_RIGHT:
-				gtk_widget_hide(the_panel->hidebutton_h);
-				gtk_widget_hide(the_panel->showbutton_h);
-				gtk_widget_hide(the_panel->hidebutton_v);
-				gtk_widget_show(the_panel->showbutton_v);
+				gtk_widget_hide(the_panel->hidebutton_l_h);
+				gtk_widget_hide(the_panel->hidebutton_r_h);
+				gtk_widget_show(the_panel->hidebutton_l_v);
+				gtk_widget_show(the_panel->hidebutton_r_v);
 				break;
 		}
 	}
 }
 
 static void
-pop_show(void)
+pop_show(int fromright)
 {
 	int width, height;
-	int swidth, sheight;
 
 	if ((the_panel->state == PANEL_MOVING) ||
 	    (the_panel->state == PANEL_SHOWN))
@@ -258,19 +257,29 @@ pop_show(void)
 
 	width   = the_panel->window->allocation.width;
 	height  = the_panel->window->allocation.height;
-	swidth  = gdk_screen_width();
-	sheight = gdk_screen_height();
 
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
-			move_horiz(-width +
-				the_panel->showbutton_h->allocation.width, 0);
+			if(fromright)
+				move_horiz(-width +
+					   the_panel->hidebutton_r_h->
+					   allocation.width, 0);
+			else
+				move_horiz(width -
+					   the_panel->hidebutton_l_h->
+					   allocation.width, 0);
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
-			move_vert(-height +
-				the_panel->showbutton_v->allocation.height, 0);
+			if(fromright)
+				move_vert(-height +
+					  the_panel->hidebutton_r_v->
+					  allocation.height, 0);
+			else
+				move_vert(height -
+					  the_panel->hidebutton_l_v->
+					  allocation.height, 0);
 			break;
 	}
 
@@ -280,10 +289,9 @@ pop_show(void)
 }
 
 static void
-pop_hide(void)
+pop_hide(int fromright)
 {
 	int width, height;
-	int swidth, sheight;
 
 	if ((the_panel->state == PANEL_MOVING) ||
 	    (the_panel->state == PANEL_HIDDEN))
@@ -293,19 +301,29 @@ pop_hide(void)
 
 	width   = the_panel->window->allocation.width;
 	height  = the_panel->window->allocation.height;
-	swidth  = gdk_screen_width();
-	sheight = gdk_screen_height();
 
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
-			move_horiz(0, -width +
-				the_panel->hidebutton_h->allocation.width);
+			if(fromright)
+				move_horiz(0, -width +
+					   the_panel->hidebutton_r_h->
+					   allocation.width);
+			else
+				move_horiz(0, width -
+					   the_panel->hidebutton_l_h->
+					   allocation.width);
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
-			move_vert(0, -height +
-				the_panel->hidebutton_v->allocation.height);
+			if(fromright)
+				move_vert(0, -height +
+					  the_panel->hidebutton_r_v->
+					  allocation.height);
+			else
+				move_vert(0, height -
+					  the_panel->hidebutton_l_v->
+					  allocation.height);
 			break;
 	}
 
@@ -315,14 +333,25 @@ pop_hide(void)
 }
 
 static void
-panel_show_hide(GtkWidget *widget, gpointer data)
+panel_show_hide_right(GtkWidget *widget, gpointer data)
 {
 	if(the_panel->state == PANEL_MOVING) 
 		return;
 	else if(the_panel->state == PANEL_HIDDEN)
-		pop_show();
+		pop_show(FALSE);
 	else
-		pop_hide();
+		pop_hide(TRUE);
+}
+
+static void
+panel_show_hide_left(GtkWidget *widget, gpointer data)
+{
+	if(the_panel->state == PANEL_MOVING) 
+		return;
+	else if(the_panel->state == PANEL_HIDDEN)
+		pop_show(TRUE);
+	else
+		pop_hide(FALSE);
 }
 
 static gint
@@ -944,6 +973,8 @@ set_panel_position(void)
 					     gdk_screen_width(),
 					     DEFAULT_HEIGHT);
 			gtk_widget_set_uposition(the_panel->window, 0, 0);
+			the_panel->window->allocation.x=0;
+			the_panel->window->allocation.y=0;
 			break;
 		case PANEL_POS_BOTTOM:
 			gtk_widget_set_usize(the_panel->window,
@@ -952,11 +983,16 @@ set_panel_position(void)
 			gtk_widget_set_uposition(the_panel->window, 0,
 						 gdk_screen_height() -
 						 DEFAULT_HEIGHT);
+			the_panel->window->allocation.x=0;
+			the_panel->window->allocation.y=gdk_screen_height() -
+						 	DEFAULT_HEIGHT;
 			break;
 		case PANEL_POS_LEFT:
 			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
 					     gdk_screen_height());
 			gtk_widget_set_uposition(the_panel->window, 0, 0);
+			the_panel->window->allocation.x=0;
+			the_panel->window->allocation.y=0;
 			break;
 		case PANEL_POS_RIGHT:
 			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
@@ -964,6 +1000,9 @@ set_panel_position(void)
 			gtk_widget_set_uposition(the_panel->window,
 						 gdk_screen_width() -
 						 DEFAULT_HEIGHT, 0);
+			the_panel->window->allocation.x=gdk_screen_width() -
+						 	DEFAULT_HEIGHT;
+			the_panel->window->allocation.y=0;
 			break;
 	}
 }
@@ -980,25 +1019,32 @@ panel_init(void)
 	the_panel->window = gtk_window_new(GTK_WINDOW_POPUP);
 
 
+	/*FIXME: read this from config file*/
 	/*the_panel->pos   = PANEL_POS_RIGHT;*/
 	the_panel->pos   = PANEL_POS_BOTTOM;
 	the_panel->state = PANEL_SHOWN;
 	the_panel->mode  = PANEL_GETS_HIDDEN;
 	/* the_panel->mode  = PANEL_STAYS_PUT; */
+	the_panel->step_size            = DEFAULT_STEP_SIZE;
+	the_panel->delay                = DEFAULT_DELAY;
+	the_panel->minimize_delay       = DEFAULT_MINIMIZE_DELAY;
+	the_panel->minimized_size       = DEFAULT_MINIMIZED_SIZE;
+	the_panel->applet_being_dragged = NULL;
+
 
 	the_panel->table = gtk_table_new(3,3,FALSE);
 
 
 	/*hide buttons (one for vertical one for horizontal)*/
-	the_panel->hidebutton_h=gtk_button_new_with_label("<");
-	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_h), "clicked",
-			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
-	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_h,
+	the_panel->hidebutton_l_h=gtk_button_new_with_label("<");
+	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_l_h), "clicked",
+			   GTK_SIGNAL_FUNC(panel_show_hide_right),NULL);
+	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_l_h,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
-	the_panel->hidebutton_v=gtk_button_new_with_label("^");
-	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_v), "clicked",
-			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
-	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_v,
+	the_panel->hidebutton_l_v=gtk_button_new_with_label("^");
+	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_l_v), "clicked",
+			   GTK_SIGNAL_FUNC(panel_show_hide_right),NULL);
+	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_l_v,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	
 	/*fixed*/
@@ -1010,15 +1056,15 @@ panel_init(void)
 	gtk_widget_show(the_panel->fixed);
 
 	/*show buttons (one for vertical one for horizontal)*/
-	the_panel->showbutton_h=gtk_button_new_with_label(">");
-	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton_h), "clicked",
-			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
-	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->showbutton_h,
+	the_panel->hidebutton_r_h=gtk_button_new_with_label(">");
+	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_r_h), "clicked",
+			   GTK_SIGNAL_FUNC(panel_show_hide_left),NULL);
+	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_r_h,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
-	the_panel->showbutton_v=gtk_button_new_with_label("\\/");
-	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton_v), "clicked",
-			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
-	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->showbutton_v,
+	the_panel->hidebutton_r_v=gtk_button_new_with_label("\\/");
+	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton_r_v), "clicked",
+			   GTK_SIGNAL_FUNC(panel_show_hide_left),NULL);
+	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_r_v,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 	
 	set_show_hide_buttons_visibility();
@@ -1029,12 +1075,6 @@ panel_init(void)
 
 	/*set the position and size of the panel*/
 	set_panel_position();
-
-	the_panel->step_size            = DEFAULT_STEP_SIZE;
-	the_panel->delay                = DEFAULT_DELAY;
-	the_panel->minimize_delay       = DEFAULT_MINIMIZE_DELAY;
-	the_panel->minimized_size       = DEFAULT_MINIMIZED_SIZE;
-	the_panel->applet_being_dragged = NULL;
 
 	the_panel->enter_notify_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "enter_notify_event",
 							(GtkSignalFunc) panel_enter_notify,
@@ -1369,6 +1409,10 @@ panel_change_orient(void)
 void
 panel_reconfigure(Panel *newconfig)
 {
+	if(the_panel->mode==PANEL_GETS_HIDDEN) {
+		the_panel->step_size=0;
+		pop_up();
+	}
 	if(newconfig->pos != the_panel->pos) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:

@@ -28,13 +28,11 @@ typedef enum {
 typedef struct {
 	GtkWidget  *window;
 	GtkWidget  *table;
-	GtkWidget  *hidebutton_h;
-	GtkWidget  *showbutton_h;
-	GtkWidget  *hidebutton_v;
-	GtkWidget  *showbutton_v;
+	GtkWidget  *hidebutton_l_h;
+	GtkWidget  *hidebutton_r_h;
+	GtkWidget  *hidebutton_l_v;
+	GtkWidget  *hidebutton_r_v;
 	GtkWidget  *fixed;
-	GtkWidget  *showbutton;
-	GtkWidget  *box;
 	PanelPos    pos;
 	PanelState  state;
 	PanelMode   mode;
