@@ -21,11 +21,11 @@
 #include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_rgb_rgba_affine.h>
 
+#include <unistd.h>
+
 /* macro to always pass a non-null string */
 #define sure_string(__x) ((__x)!=NULL?(__x):"")
 
-/* The place where we will guess where we are */
-#define TIMEZONESPEC "/etc/timezone"
 int fools_day=1, fools_month=3;
 
 typedef struct _FishProp FishProp;
@@ -71,12 +71,77 @@ struct _Fish {
 
 GtkWidget *bah_window = NULL;
 
+static gchar *
+get_location(void)
+{
+	static gchar location[256];
+	FILE *zone;
+	
+	/* Now we try old method. Works for glibc < 2.2 */
+	zone = fopen("/etc/timezone", "r");
+	if (zone != NULL) {
+		fscanf(zone, "%255s", location);
+		fclose(zone);
+		return location;
+	} else { /* We try new method for glibc 2.2 */
+		gchar buf[256];
+		int i, len, count;
+		
+		len = readlink("/etc/localtime", buf, sizeof(buf));
+		if (len <= 0)
+			return NULL;
+
+		for (i = len, count = 0; (i > 0) && (count != 2); i--)
+			if (buf[i] == '/')
+				count++;
+
+		if (count != 2)
+			return NULL;
+
+		memcpy(location, &buf[i + 2], len - i - 2);
+		return location;
+	}
+	
+	return NULL;
+}
+
+static void 
+set_wanda_day(void)
+{
+	const gchar *spanish_timezones[] = {
+		"Europe/Madrid",
+		"Africa/Ceuta",
+		"Atlantic/Canary",
+		"America/Mexico_City",
+		"Mexico/BajaSur",
+		"Mexico/BajaNorte",
+		"Mexico/General",
+		NULL
+	};
+	gchar *location = get_location();
+	int i;
+	gboolean found = FALSE;
+	
+	if (location == NULL) /* We couldn't guess our location */
+		return;
+	
+	for (i = 0; !found && spanish_timezones[i]; i++)
+		if (!g_strcasecmp(spanish_timezones[i], location)) {
+			/* Hah!, We are in Spain ot Mexico */
+			/* Spanish fool's day: 28th December */
+			fools_day = 28;
+			fools_month = 11;
+			found = TRUE;
+		}
+	
+}
+
 static void
 load_image_file(Fish *fish)
 {
 	GdkPixbuf *pix;
 	int w, h;
-
+	
 	if(fish->pix)
 		gdk_pixmap_unref(fish->pix);
 
@@ -206,39 +271,11 @@ setup_size(Fish *fish)
 static void
 load_properties(Fish *fish)
 {
-	char buf[4096];
-	/* I think theese is a good place to guess where we are */
-	FILE *zone;
-	
-	zone = fopen(TIMEZONESPEC, "r");
-	if (zone != NULL) { /* If file doesn't exists we will stick to
-			       "Standard" fools day */
-		int i;
-		gboolean found = FALSE;
-		char *spanish_timezones[] = {
-			"Europe/Madrid",
-			"Africa/Ceuta",
-			"Atlantic/Canary",
-			"America/Mexico_City",
-			"Mexico/BajaSur",
-			"Mexico/BajaNorte",
-			"Mexico/General",
-			NULL
-		};
-		fscanf(zone, "%255s", buf);
-		fclose(zone);
-		for(i=0; !found && spanish_timezones[i]; i++) {
-			if (!strcmp(spanish_timezones[i], buf)) {
-				/* Hah!, We are in Spain or Mexico */
-				/* Spanish fool's day: 28th December*/
-				fools_day = 28;
-				fools_month = 11;
-				found = TRUE;
-			}
-		}
-	}
+        char buf[4096];
 
-	if (defaults.image == NULL)
+        set_wanda_day(); /* Just to know where we are */
+
+        if (defaults.image == NULL)
 		defaults.image = gnome_unconditional_pixmap_file ("fish/fishanim.png");
 	if (defaults.command == NULL) {
 		defaults.command = gnome_is_program_in_path("fortune");
