@@ -11,7 +11,6 @@ struct _GlobalConfig {
 	int minimize_delay;
 	int maximize_delay;
 	gboolean tooltips_enabled;
-	/*gboolean show_small_icons;*/
 	gboolean show_dot_buttons;
 	gboolean show_menu_titles;
 	gboolean hungry_menus;
@@ -22,12 +21,6 @@ struct _GlobalConfig {
 	gboolean keep_bottom;
 	gboolean normal_layer;
 	gboolean drawer_auto_close;
-	gboolean tiles_enabled[LAST_POBJECT];
-	char *tile_up[LAST_POBJECT];
-	char *tile_down[LAST_POBJECT];
-	int tile_border[LAST_POBJECT];
-	int tile_depth[LAST_POBJECT];
-	gboolean tile_when_over;
 	gboolean saturate_when_over;
 	gboolean confirm_panel_remove;
 	gboolean keys_enabled;
