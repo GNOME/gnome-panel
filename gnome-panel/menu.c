@@ -1786,7 +1786,7 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	pixmap = NULL;
-	if (gnome_preferences_get_menus_have_tearoff ()) {
+	if (gnome_preferences_get_menus_have_icons ()) {
 		if (fr->icon && g_file_exists (fr->icon)) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
 								    size, size);
@@ -1927,7 +1927,7 @@ create_menu_at_fr (GtkWidget *menu,
 
 
 	pixmap = NULL;
-	if (gnome_preferences_get_menus_have_tearoff ()) {
+	if (gnome_preferences_get_menus_have_icons ()) {
 		if (pixmap_name) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
 								    size, size);
@@ -2259,7 +2259,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 {
 	char *file;
 
-	if (!gnome_preferences_get_menus_have_tearoff ()) {
+	if (!gnome_preferences_get_menus_have_icons ()) {
 		setup_menuitem (menuitem, NULL, title);
 		return;
 	}
