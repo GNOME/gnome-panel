@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-03 04:46+0200\n"
-"PO-Revision-Date: 2003-07-03 10:13+0200\n"
+"POT-Creation-Date: 2003-07-08 12:48+0200\n"
+"PO-Revision-Date: 2003-07-08 21:07+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +278,7 @@ msgstr "_O programu..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3087
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3122
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -905,43 +905,43 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/button-widget.c:475
+#: gnome-panel/button-widget.c:483
 msgid "none"
 msgstr "žádný"
 
-#: gnome-panel/button-widget.c:480
+#: gnome-panel/button-widget.c:488
 msgid "file not found"
 msgstr "soubor nenalezen"
 
-#: gnome-panel/button-widget.c:853
+#: gnome-panel/button-widget.c:864
 msgid "Has Arrow"
 msgstr "Má šipku"
 
-#: gnome-panel/button-widget.c:854
+#: gnome-panel/button-widget.c:865
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Jestli se má kreslit indikátor šipky"
 
-#: gnome-panel/button-widget.c:862 gnome-panel/panel-toplevel.c:3461
+#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3461
 msgid "Orientation"
 msgstr "Orientace"
 
-#: gnome-panel/button-widget.c:863
+#: gnome-panel/button-widget.c:874
 msgid "The ButtonWidget orientation"
 msgstr "Orientace prvku ButtonWidget"
 
-#: gnome-panel/button-widget.c:872
+#: gnome-panel/button-widget.c:883
 msgid "Icon Name"
 msgstr "Název ikony"
 
-#: gnome-panel/button-widget.c:873
+#: gnome-panel/button-widget.c:884
 msgid "The desired icon for the ButtonWidget"
 msgstr "Ikona požadovaná pro prvek ButtonWidget"
 
-#: gnome-panel/button-widget.c:881
+#: gnome-panel/button-widget.c:892
 msgid "Stock Icon ID"
 msgstr "Standardní ID ikony"
 
-#: gnome-panel/button-widget.c:882
+#: gnome-panel/button-widget.c:893
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Požadované standardní ID ikony pro prvek ButtonWidget"
 
@@ -1007,12 +1007,12 @@ msgstr "Povolit ukrývací tlačítko"
 msgid "Enable hidebutton arrow"
 msgstr "Povolit šipku na ukrývacím tlačítku"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3191
+#: gnome-panel/drawer.c:177
 msgid "Drawer"
 msgstr "Zásuvka"
 
 #: gnome-panel/drawer.c:658 gnome-panel/launcher.c:749 gnome-panel/menu.c:1556
-#: gnome-panel/menu.c:3037 gnome-panel/panel-action-button.c:91
+#: gnome-panel/menu.c:3072 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1223,8 +1223,8 @@ msgstr ""
 "na Webu."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
-msgid "Web directory."
-msgstr "Webový adresář."
+msgid "Web directory"
+msgstr "Adresář WWW"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1262,7 +1262,7 @@ msgstr "Nemohu spustit ikonu"
 #: gnome-panel/menu.c:334 gnome-panel/menu.c:364 gnome-panel/menu.c:381
 #: gnome-panel/menu.c:1085 gnome-panel/menu.c:1194 gnome-panel/menu.c:1226
 #: gnome-panel/menu.c:1244 gnome-panel/menu-ditem.c:118
-#: gnome-panel/menu-ditem.c:496 gnome-panel/panel-run-dialog.c:278
+#: gnome-panel/menu-ditem.c:504 gnome-panel/panel-run-dialog.c:278
 #: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:74
 msgid "Details"
 msgstr "Detaily"
@@ -1291,7 +1291,7 @@ msgid "Help on %s _Application"
 msgstr "Nápověda k _aplikaci %s"
 
 #: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:182
-#: gnome-panel/menu-ditem.c:259
+#: gnome-panel/menu-ditem.c:263
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
@@ -1300,7 +1300,7 @@ msgstr "Vlastnosti spouštěče"
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:892 gnome-panel/menu-ditem.c:533
+#: gnome-panel/launcher.c:892 gnome-panel/menu-ditem.c:541
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1313,8 +1313,7 @@ msgstr "Nemohu zobrazit dokument nápovědy"
 msgid "Specify a profile name to load"
 msgstr "Zadejte jméno profilu k načtení"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3226
-#: gnome-panel/panel-menu-bar.c:161
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3261
 msgid "Log Out"
 msgstr "Odhlásit se"
 
@@ -1342,7 +1341,7 @@ msgstr "Vynutit ukončení"
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3462
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
@@ -1351,7 +1350,7 @@ msgstr "Zachytit obrázek vaší pracovní plochy"
 msgid "Search"
 msgstr "Hledat"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3443
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
@@ -1459,74 +1458,78 @@ msgstr "Přidat do tohoto menu novou položku"
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: gnome-panel/menu.c:2564 gnome-panel/menu.c:2619
+#: gnome-panel/menu.c:2599 gnome-panel/menu.c:2654
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: gnome-panel/menu.c:2814 gnome-panel/menu.c:2819 gnome-panel/menu.c:3364
+#: gnome-panel/menu.c:2849 gnome-panel/menu.c:2854 gnome-panel/menu.c:3399
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Aplikace"
 
-#: gnome-panel/menu.c:2862 gnome-panel/menu.c:2868 gnome-panel/menu.c:3289
+#: gnome-panel/menu.c:2897 gnome-panel/menu.c:2903 gnome-panel/menu.c:3324
 msgid "KDE Menu"
 msgstr "Menu KDE"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2955
 msgid "You cannot remove your last panel."
 msgstr "Nemůžete odstranit svůj poslední panel."
 
-#: gnome-panel/menu.c:2981
+#: gnome-panel/menu.c:3016
 msgid "_Delete This Panel..."
 msgstr "_Odstranit tento panel..."
 
-#: gnome-panel/menu.c:2984 gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:3019 gnome-panel/menu.c:3058
 msgid "_Delete This Panel"
 msgstr "_Odstranit tento panel"
 
-#: gnome-panel/menu.c:2999
+#: gnome-panel/menu.c:3034
 msgid "_Add to Panel"
 msgstr "_Přidat na panel"
 
-#: gnome-panel/menu.c:3050
+#: gnome-panel/menu.c:3085
 msgid "_New Panel"
 msgstr "_Nový Panel"
 
-#: gnome-panel/menu.c:3097
+#: gnome-panel/menu.c:3132
 msgid "_About Panels"
 msgstr "_O panelech"
 
-#: gnome-panel/menu.c:3110
+#: gnome-panel/menu.c:3145
 msgid "About _GNOME"
 msgstr "O _GNOME"
 
-#: gnome-panel/menu.c:3153
-msgid "Launcher..."
-msgstr "Spouštěč..."
+#: gnome-panel/menu.c:3188
+msgid "_Launcher..."
+msgstr "_Spouštěč..."
 
-#: gnome-panel/menu.c:3162
-msgid "Launcher from menu"
-msgstr "Spouštěč z menu"
+#: gnome-panel/menu.c:3197
+msgid "Launcher _from menu"
+msgstr "_Spouštěč z menu"
 
-#: gnome-panel/menu.c:3172
-msgid "Main Menu"
-msgstr "Hlavní menu"
+#: gnome-panel/menu.c:3207
+msgid "Main _Menu"
+msgstr "Hlavní _menu"
 
-#: gnome-panel/menu.c:3182
-msgid "Menu Bar"
-msgstr "Lišta menu"
+#: gnome-panel/menu.c:3217
+msgid "Menu _Bar"
+msgstr "_Lišta menu"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3226
+msgid "_Drawer"
+msgstr "_Zásuvka"
+
+#: gnome-panel/menu.c:3249
 msgid "Lock Screen"
 msgstr "Zamknout obrazovku"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3255
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zamknout obrazovku, abyste mohli dočasně opustit svůj počítač"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3267
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1535,23 +1538,23 @@ msgstr ""
 "nebo vypnout počítač"
 
 # FIXME: change "run program" everywhere
-#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3424
 msgid "Run Application..."
 msgstr "Spustit aplikaci..."
 
-#: gnome-panel/menu.c:3396 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3431 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Spustit aplikaci zadáním příkazu"
 
-#: gnome-panel/menu.c:3405 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3440
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/menu.c:3424 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3459
 msgid "Take Screenshot..."
 msgstr "Zachytit obrazovku..."
 
-#: gnome-panel/menu.c:3442
+#: gnome-panel/menu.c:3477
 msgid "Desktop"
 msgstr "Plocha"
 
@@ -1559,23 +1562,23 @@ msgstr "Plocha"
 msgid "Cannot save changes to launcher"
 msgstr "Nemohu uložit změny spouštěče"
 
-#: gnome-panel/menu-ditem.c:292
+#: gnome-panel/menu-ditem.c:300
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu-ditem.c:449
+#: gnome-panel/menu-ditem.c:457
 msgid "You have to specify a name for the launcher."
 msgstr "Musíte zadat jméno spouštěče."
 
-#: gnome-panel/menu-ditem.c:465
+#: gnome-panel/menu-ditem.c:473
 msgid "You have to specify a valid URL or command."
 msgstr "Musíte zadat platné URL nebo příkaz."
 
-#: gnome-panel/menu-ditem.c:495
+#: gnome-panel/menu-ditem.c:503
 msgid "Cannot save menu item to disk"
 msgstr "Nemohu uložit položku menu na disk"
 
-#: gnome-panel/menu-ditem.c:526
+#: gnome-panel/menu-ditem.c:534
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1587,7 +1590,7 @@ msgstr ""
 msgid "_Activate Screensaver"
 msgstr "_Aktivovat šetřič obrazovky"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:86 gnome-panel/panel-menu-bar.c:152
 msgid "_Lock Screen"
 msgstr "_Zamknout obrazovku"
 
@@ -1739,102 +1742,162 @@ msgid "Which edges to draw"
 msgstr "Které hrany kreslit"
 
 #: gnome-panel/panel-general.schemas.in.h:1
-msgid "A list of panel IDs"
-msgstr "Seznam ID panelů"
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"setttings for each of these panels are stored in /apps/panel/general/"
+"$(profile)/toplevels/$(id)."
+msgstr "Seznam ID panelů. Každé ID identifikuje jeden panel nejvyšší úrovně. Nastavení každého takového panelu je uloženo v /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels is stored in /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
-msgstr ""
-"Seznam ID panelů. Každé ID identifikuje jeden panel nejvyšší úrovně. "
-"Nastavení každého takového panelu je uloženo v /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/general/"
+"$(profiles)/applets/$(id)."
+msgstr "Seznam ID apletů panelu. Každé ID identifikuje jeden aplet panelu. Nastavení každého takového apletu je uloženo v /apps/panel/general/$(profiles)/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs"
-msgstr "Seznam ID apletů panelu"
-
-#: gnome-panel/panel-general.schemas.in.h:4
-msgid ""
-"A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets is stored in /apps/panel/general/"
-"$(profiles)/applets/$(id)."
-msgstr ""
-"Seznam ID apletů panelu. Každé ID identifikuje jeden aplet panelu. Nastavení "
-"každého takového apletu je uloženo v /apps/panel/general/$(profiles)/applets/"
-"$(id)."
-
-#: gnome-panel/panel-general.schemas.in.h:5
-msgid "A list of panel object IDs"
-msgstr "Seznam ID objektů panelu"
-
-#: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 "Seznam ID objektů panelu. Každé ID identifikuje jeden objekt panelu (např. "
 "spouštěč, tlačítko akce nebo tlačítko/pruh menu). Nastavení každého takového "
 "objektu je uloženo v /apps/panel/general/$(profiles)/objects/$(id)."
 
-#: gnome-panel/panel-general.schemas.in.h:7
-msgid "Enable the program list in the \"Run Application\" dialog."
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid "Enable program list in \"Run Application\" dialog"
 msgstr "Povolit seznam programů v dialogu \"Spustit aplikaci\"."
 
-#: gnome-panel/panel-general.schemas.in.h:8
-msgid "Expand the program list in the \"Run Application\" dialog"
+#: gnome-panel/panel-general.schemas.in.h:5
+msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Rozbalit seznam programů v dialogu \"Spustit aplikaci\""
 
-#: gnome-panel/panel-general.schemas.in.h:9
+#: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" dialog is "
-"made available. Whether or not the listing is expanded when the dialog is "
-"shown is controlled by the show_program_list setting."
-msgstr ""
-"Je-li toto true, je v dialogu \"Spustit program\" dostupný seznam \"Známé "
-"aplikace\". Jestli seznam je nebo není rozbalen při zobrazení dialogu je "
-"řízeno nastavením show_program_list."
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr "Je-li true, je seznam \"Známé aplikace\" v při otevření dialogu \"Spustit aplikaci\" rozbalen. Toto nastavení má vliv, jen pokud je klíč enable_program_list true."
+
+#: gnome-panel/panel-general.schemas.in.h:7
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr "Je-li toto true, je v dialogu \"Spustit aplikaci\" dostupný seznam \"Známé aplikace\". Jestli seznam je nebo není rozbalen při zobrazení dialogu je řízeno nastavením klíče show_program_list."
+
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid "Panel ID list"
+msgstr "Seznam ID panelů"
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid "Panel applet ID list"
+msgstr "Seznam ID apletů panelu"
 
 #: gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" is "
-"expanded when the dialog is opened. This setting is only relevant if "
-"enable_program_list is true."
-msgstr ""
-"Je-li toto true, je seznam \"Známé aplikace\" v při otevření dialogu "
-"\"Spustit program\" rozbalen. Toto nastavení má vliv jen pokud "
-"enable_program_list je true."
+msgid "Panel object ID list"
+msgstr "Seznam ID objektů panelu"
 
 #: gnome-panel/panel-global.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr "Zobrazovat dialog \"Spustit\""
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Rychlost animace"
 
 #: gnome-panel/panel-global.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr "FIXME - je toto s novým menu vyřešeno?"
+msgid "Autoclose drawer"
+msgstr "Automaticky zavřít zásuvku"
 
 #: gnome-panel/panel-global.schemas.in.h:3
+msgid "Confirm panel removal"
+msgstr "Potvrzovat odstranění panelu"
+
+#: gnome-panel/panel-global.schemas.in.h:4
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr "Klávesová zkratka zobrazení dialogu \"Spustit aplikaci\""
+
+#: gnome-panel/panel-global.schemas.in.h:5
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Povolit animace"
+
+#: gnome-panel/panel-global.schemas.in.h:6
+msgid "Enable keybindings"
+msgstr "Povolit klávesové zkratky"
+
+#: gnome-panel/panel-global.schemas.in.h:7
+msgid "Enable tooltips"
+msgstr "Povolit tipy"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr "FIXME - je toto s novým menu vyřešeno"
+
+#: gnome-panel/panel-global.schemas.in.h:9
 msgid "FIXME - need to define limits"
 msgstr "FIXME - potřeba definovat limity"
 
-#: gnome-panel/panel-global.schemas.in.h:4
-msgid "Popup the panel menu"
-msgstr "Zobrazit menu Panelu"
+#: gnome-panel/panel-global.schemas.in.h:10
+msgid "Highlight launchers on mouseover"
+msgstr "Zvýrazňovat spouštěče při přítomnosti myši"
 
-#: gnome-panel/panel-global.schemas.in.h:5
-msgid "Take a screen shot"
+#: gnome-panel/panel-global.schemas.in.h:11
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr "Je-li true, je zobrazen dialog žádající o potvrzení, když chce uživatel odstranit panel."
+
+#: gnome-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr "Je-li true, bude zásuvka automaticky zavřena, když uživatel klikne na spouštěč v ní."
+
+#: gnome-panel/panel-global.schemas.in.h:13
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr "Je-li true, je spouštěč zvýrazněn, když na něj uživatel přesune kurzor."
+
+#: gnome-panel/panel-global.schemas.in.h:14
+msgid "If true, panel-specific keybindings are enabled."
+msgstr "Je-li true, jsou povoleny klávesové zkratky specifické pro panel."
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "Je-li true, jsou zobrazovány tipy pro objekty v panelech."
+
+#: gnome-panel/panel-global.schemas.in.h:16
+msgid "Popup panel menu keybinding"
+msgstr "Klávesová zkratka zobrazení menu panelu"
+
+#: gnome-panel/panel-global.schemas.in.h:17
+msgid "Take screenshot"
 msgstr "Zachytit obrazovku"
 
-#: gnome-panel/panel-global.schemas.in.h:6
-msgid "Take a screen shot of a window"
+#: gnome-panel/panel-global.schemas.in.h:18
+msgid "Take window screenshot"
 msgstr "Zachytit snímek okna"
+
+# FIXME: change "run program" everywhere
+#: gnome-panel/panel-menu-bar.c:110
+msgid "_Run Application..."
+msgstr "_Spustit aplikaci..."
+
+#: gnome-panel/panel-menu-bar.c:123
+msgid "_Search for Files..."
+msgstr "_Hledat soubory..."
+
+#: gnome-panel/panel-menu-bar.c:138
+msgid "_Take Screenshot..."
+msgstr "_Zachytit obrazovku..."
 
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
+
+#: gnome-panel/panel-menu-bar.c:161
+msgid "_Log Out"
+msgstr "_Odhlásit se"
 
 #: gnome-panel/panel-menu-bar.c:163
 msgid "Quit from the GNOME desktop"
@@ -1873,34 +1936,40 @@ msgid "Use the icon specified by the custom-icon property"
 msgstr "Používat ikonu určenou ve vlastnosti custom-icon"
 
 #: gnome-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "Typ tlačítka akce"
+
+#: gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr "Bonobo IID apletu"
+
+#: gnome-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "Ikona používaná pro tlačítko objektu"
+
+#: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
-"If true the position of the object is interpreted relative to the right (or "
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr "Je-li true, používá se klíč custom_icon jako vlastní ikona pro tlačítko. Je-li false, je klíč custom_icon ignorován. Tento klíč má význam, jen pokud klíč object_type je \"menu-object\" nebo \"drawer-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr "Je-li true, používá se klír menu_path jako cesta, ze které má být vytvořen obsah menu. Je-li false, je klíč menu_path ignorován. Tento klíč má význam, jen pokud klíč object_type je \"menu-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
 "Je-li true, je umístění objektu interpretováno relativně k pravému okraji "
 "panelu (nebo dolnímu, je-li vertikální)."
 
-#: gnome-panel/panel-object.schemas.in.h:2
-msgid ""
-"If true, the custom_icon setting is used as a custom icon for the button. If "
-"false, the custom_icon setting is ignored. This setting is only relevant if "
-"the object_type is \"menu-object\" or \"drawer-object\"."
-msgstr ""
-"Je-li true, používá se nastavení custom_icon jako vlastní ikona pro "
-"tlačítko. Je-li false, je nastavení custom_icon ignorováno. Toto nastavení "
-"má význam, jen pokud object_type je \"menu-object\" nebo \"drawer-object\"."
-
-#: gnome-panel/panel-object.schemas.in.h:3
-msgid ""
-"If true, the menu_path setting is used as the path from which the menu "
-"contents should be constructed. If false, the menu_path setting is ignored. "
-"This setting is only relevant if the object_type is \"menu-object\"."
-msgstr ""
-"Je-li true, používá se nastavení menu_path jako cesta, ze které má být "
-"vytvořen obsah menu. Je-li false, je nastavení menu_path ignorováno. Toto "
-"nastavení má význam, jen pokud object_type je \"menu-object\"."
-
-#: gnome-panel/panel-object.schemas.in.h:4
+#: gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
@@ -1908,99 +1977,78 @@ msgstr ""
 "Je-li true, nemůže uživatel s apletem hýbat, pokud jej nejdřív neodemkne "
 "pomocí položky menu \"Odemknout\"."
 
-#: gnome-panel/panel-object.schemas.in.h:5
-msgid "Interpret the position relative to the bottom/right edge"
+#: gnome-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
 msgstr "Interpretovat pozici relativně k spodnímu/pravému okraji"
 
-#: gnome-panel/panel-object.schemas.in.h:6
-msgid "Lock the object to the panel"
-msgstr "Zamknout objekt na panelu"
-
-#: gnome-panel/panel-object.schemas.in.h:7
-msgid "The Bonobo IID of the applet"
-msgstr "Bonobo Id apletu"
-
-#: gnome-panel/panel-object.schemas.in.h:8
-msgid ""
-"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This setting is only relevant if the object_type is \"bonobo-applet\"."
-msgstr ""
-"Bobono ID implementace apletu - např. \"OAFIID:GNOME_ClockApplet\". Toto "
-"nastavení má vliv, jen pokud object-type je \"bonobo-applet\"."
-
 #: gnome-panel/panel-object.schemas.in.h:9
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
-"relevant if the object_type is \"action-applet\"."
-msgstr ""
-"Typ akce, kterou toto tlačítko reprezentuje. Možné hodnoty jsou \"lock\", "
-"\"logout\", \"run\", \"search\" a \"screenshot\". Toto nastavení má vliv, "
-"jen pokud object_type je \"action-applet\"."
-
-#: gnome-panel/panel-object.schemas.in.h:10
-msgid "The icon used for the object's button"
-msgstr "Ikona používaná pro tlačítko objektu"
-
-#: gnome-panel/panel-object.schemas.in.h:11
-msgid ""
-"The identifier of the panel attached to this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
-msgstr ""
-"Identifikátor panelu připojeného k této zásuvce. Toto nastavení má vliv, jen "
-"pokud object_type je \"drawer-object\"."
-
-#: gnome-panel/panel-object.schemas.in.h:12
-msgid "The identifier of the panel toplevel which contains this object."
-msgstr "Identifikátor panelu nejvyšší úrovně, který obsahuje tento objekt."
-
-#: gnome-panel/panel-object.schemas.in.h:13
-msgid ""
-"The location of the .desktop file describing the launcher. This setting is "
-"only relevant if the object_type is \"launcher-object\"."
-msgstr ""
-"Umístění souboru .desktop popisujícího spouštěč. Toto nastavení má vliv, jen "
-"pokud object_type je \"launcher-object\"."
-
-#: gnome-panel/panel-object.schemas.in.h:14
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This setting is only relevant if the object_type is \"drawer-object\" or "
-"\"menu-object\" and use_custom_icon is true."
-msgstr ""
-"Umístění souboru s obrázkem používaného jako ikona tlačítka objektu. Toto "
-"nastavení má vliv jen pokud object_type je \"drawer-object\" nebo \"menu-"
-"object\" a use_custom_icon je true."
-
-#: gnome-panel/panel-object.schemas.in.h:15
-msgid "The location of the launcher"
+msgid "Launcher location"
 msgstr "Umístění spouštěče"
 
-#: gnome-panel/panel-object.schemas.in.h:16
-msgid "The object's position on the panel"
+#: gnome-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the pane"
+msgstr "Zamknout objekt na panelu"
+
+#: gnome-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "Cesta k obsahu menu"
+
+#: gnome-panel/panel-object.schemas.in.h:12
+msgid "Object's position on panel"
 msgstr "Pozice objektu na panelu"
 
+#: gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "Panel připojený k zásuvce"
+
+#: gnome-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "Typ objektu panelu"
+
+#: gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr "ID implementace Bobono apletu - např. \"OAFIID:GNOME_ClockApplet\". Tento klíč má vliv, jen pokud klíč object-type je \"bonobo-applet\"."
+
+#: gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr "Typ akce, kterou toto tlačítko reprezentuje. Možné hodnoty jsou \"lock\", \"logout\", \"run\", \"search\" a \"screenshot\". Tento klíč má vliv, jen pokud klíč object_type je \"action-applet\"."
+
 #: gnome-panel/panel-object.schemas.in.h:17
-msgid "The panel attached to this drawer"
-msgstr "Panel připojený k této zásuvce"
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr "Identifikátor panelu připojeného k této zásuvce. Tento klíč má vliv, jen pokud klíč object_type je \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
-msgid "The panel toplevel which contains this object"
-msgstr "Panel nejvyšší úrovně, který obsahuje tento objekt"
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Identifikátor panelu nejvyšší úrovně, který obsahuje tento objekt."
 
 #: gnome-panel/panel-object.schemas.in.h:19
-msgid "The path for the menu contents"
-msgstr "Cesta k obsahu menu"
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr "Umístění souboru .desktop popisujícího spouštěč. Tento klíč má vliv, jen pokud klíč object_type je \"launcher-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
-"The path from which the menu contents is contructed. The setting is only "
-"relevant if use_menu_path is true and the object_type is \"menu-object\"."
-msgstr ""
-"Cesta, odkud je vytvářen obsah menu. TOto nastavení má vliv, jen pokud "
-"use_menu_path je true a object_type je \"menu-object\"."
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr "Umístění souboru s obrázkem používaného jako ikona tlačítka objektu. Tento klíč má vliv, jen pokud klíč object_type je \"drawer-object\" nebo \"menu-object\" a klíč use_custom_icon je true."
 
 #: gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr "Cesta, odkud je vytvářen obsah menu. Tento klíč má vliv, jen pokud klíč use_menu_path je true a klíč object_type je \"menu-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
@@ -2008,52 +2056,43 @@ msgstr ""
 "Pozice tohoto objektu panelu. Pozice je určena počtem pixelů od levého "
 "okraje panelu (nebo horního, je-li vertikální)."
 
-#: gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The text to display in a tooltip for this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
-msgstr ""
-"Text, který zobrazovat v tipu pro tuto zásuvku. Toto nastavení má vliv, jen "
-"pokud object_type je \"drawer-object\"."
-
 #: gnome-panel/panel-object.schemas.in.h:23
-msgid "The tooltip displayed for this drawer"
-msgstr "Tip zobrazovaný pro tuto zásuvku"
+msgid ""
+"The text to display in a tooltip for this drawer. This key is only relevant "
+"if the object_type key is \"drawer-object\"."
+msgstr "Text, který zobrazovat v tipu pro tuto zásuvku. Tento klíč má vliv, jen pokud klíč object_type je \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of action button"
-msgstr "Typ tlačítka akce"
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr "Typ tohoto objektu panelu. Možné hodnoty jsou \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" a \"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-msgid "The type of panel object"
-msgstr "Typ objektu panelu"
+msgid "Tooltip displayed for drawer"
+msgstr "Tip zobrazovaný pro zásuvku"
 
 #: gnome-panel/panel-object.schemas.in.h:26
-msgid ""
-"The type of this panel object. There are several possible values - \"drawer-"
-"object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
-"applet\" and \"menu-bar\"."
-msgstr ""
-"Typ tohoto objektu panelu. Existuje několik možných hodnot - \"drawer-object"
-"\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
-"\" a \"menu-bar\"."
+msgid "Toplevel panel containing object"
+msgstr "Panel nejvyšší úrovně, který obsahuje objekt"
 
 #: gnome-panel/panel-object.schemas.in.h:27
-msgid "Use a custom icon for the object's button"
+msgid "Use custom icon for object's button"
 msgstr "Používat vlastní ikonu pro tlačítko objektu"
 
 #: gnome-panel/panel-object.schemas.in.h:28
-msgid "Use a custom path for the menu contents"
+msgid "Use custom path for menu contents"
 msgstr "Používat vlastní cestu pro obsah menu"
 
 #: gnome-panel/panel-profile.c:649 gnome-panel/panel-profile.c:677
-#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1390
+#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1396
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Chyba při čtení řetězcové hodnoty GConf '%s': %s"
 
 #: gnome-panel/panel-profile.c:692 gnome-panel/panel-profile.c:1291
-#: gnome-panel/panel-profile.c:1359 gnome-panel/panel-profile.c:1422
+#: gnome-panel/panel-profile.c:1365 gnome-panel/panel-profile.c:1428
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Chyba při čtení celočíselné hodnoty GConf '%s': %s"
@@ -2067,12 +2106,12 @@ msgstr ""
 "Panel '%s' je nastaven pro zobrazování na obrazovce %d, která momentálně "
 "není k dispozici. Nenačítám tento panel."
 
-#: gnome-panel/panel-profile.c:1374
+#: gnome-panel/panel-profile.c:1380
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Chyba při čtení pravdivostní hodnoty GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:1889
+#: gnome-panel/panel-profile.c:1905
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "Chyba při čtení pravdivostní hodnoty GConf '%s': %s"
@@ -2205,8 +2244,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Při pokusu o otevření %s nastala neznámá chyba"
 
 #: gnome-panel/panel-recent.c:165
-msgid "Open Recent"
-msgstr "Otevřít nedávné"
+msgid "_Open Recent"
+msgstr "Otevřít _nedávné"
 
 #: gnome-panel/panel-run-dialog.c:277
 msgid "Error launching command"
@@ -2526,76 +2565,55 @@ msgstr "Šipky povoleny"
 msgid "Enable arrows on hide/show buttons"
 msgstr "Povolit šipky na tlačítkách skrýt/zobrazit"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "A name with which to identify this panel."
-msgstr "Název, kterým identifikovat tento panel."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
-msgid "Automatically hide the panel into the corner."
-msgstr "Automaticky skrývat panel do rohu."
+msgid "Automatically hide panel into corner"
+msgstr "Automaticky skrývat panel do rohu"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Center the panel on the x-axis."
-msgstr "Vycentrovat panel v ose x."
+msgid "Background color"
+msgstr "Barva pozadí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
-msgid "Center the panel on the y-axis."
-msgstr "Vycentrovat panel v ose y."
+msgid "Background color opacity"
+msgstr "Krytí barvy pozadí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-msgid "Delay before automatically hiding the panel."
-msgstr "Zpoždění před automatickým skrytím panelu."
+msgid "Background image"
+msgstr "Obrázek na pozadí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
-msgid "Delay before automatically un-hiding the panel."
-msgstr "Zpoždění před automatickým odkrytím panelu."
+msgid "Background type"
+msgstr "Typ pozadí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
-msgid "Enable animations."
-msgstr "Povolit animace."
+msgid "Center panel on x-axis"
+msgstr "Vycentrovat panel v ose x"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:8
-msgid "Enable arrows on the hide buttons."
-msgstr "Povolit šipky na ukrývacích tlačítkách."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:9
-msgid "Enable hide buttons."
-msgstr "Povolit ukrývací tlačítka."
+msgid "Center panel on y-axis"
+msgstr "Vycentrovat panel v ose y"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
-msgid "Expand to occupy entire screen width."
-msgstr "Rozpínat se zabrání celé šířky obrazovky."
+msgid "Enable arrows on hide buttons"
+msgstr "Povolit šipky na ukrývacích tlačítkách"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
-msgid "Fit the image to the panel."
-msgstr "Přizpůsobit obrázek velikosti panelu."
+msgid "Enable hide buttons"
+msgstr "Povolit ukrývací tlačítka"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
-msgid ""
-"If true the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
-msgstr ""
-"Je-li true, bude velikost obrázku změněna na rozměry panelu. Poměr stran "
-"obrázku nebude zachován."
+msgid "Expand to occupy entire screen width"
+msgstr "Rozpínat pro zabrání celé šířky obrazovky"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
-msgid ""
-"If true the x setting is ignored and the panel is placed at the center of "
-"the x-axis of the screen. If the panel is resized it will remain in that "
-"position - i.e. the panel will grow on both sides. If false the x setting "
-"determines the location of the panel."
-msgstr ""
-"Je-li true, je nastavení x ignorováno a panel je umístěn do středu osy x "
-"obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. "
-"zvětší se na obou stranách. Je-li false, určuje umístění panelu nastavení x."
+msgid "Fit image to panel"
+msgstr "Přizpůsobit obrázek velikosti panelu"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
-"If true, arrows will be placed on the hide buttons. This preference only has "
-"meaning if enable_buttons is true."
-msgstr ""
-"Je-li true, budou na skrývacích tlačítkách umístěny šipky. TOto nastavení má "
-"význam, jen pokud enable_buttons je true."
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr "Je-li true, budou na skrývacích tlačítkách umístěny šipky. Tento klíč má význam, jen pokud klíč enable_buttons je true."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
@@ -2608,10 +2626,8 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantaneously."
-msgstr ""
-"Je-li true, bude skrývání a odkrývání panelu animovaní místo toho, aby se "
-"stalo okamžitě."
+"happening instantly."
+msgstr "Je-li true, bude skrývání a odkrývání panelu animované místo toho, aby se stalo okamžitě."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2631,6 +2647,14 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Je-li true, bude velikost obrázku změněna na rozměry panelu. Poměr stran "
+"obrázku nebude zachován."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
@@ -2641,16 +2665,31 @@ msgstr ""
 "obrazovky. Je-li false, bude panel jen tak velký, aby se do něj vešly jeho "
 "aplety, spouštěče a tlačítka."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:20
-msgid ""
-"If true, when the pointer leaves the panel area, it is automatically hidden "
-"into a corner of the screen. Moving the pointer to that corner will cause "
-"the panel to re-appear."
-msgstr ""
-"je-li true a kurzor opustí oblast panelu, je panel automaticky skryt do rohu "
-"obrazovky. Přesun kurzoru do tohoto rozhu způsobí, že panel se znovu objeví."
-
+# FIXME: the pointer is hidden... when "it" leaves the panel area
 #: gnome-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the pointer is automatically hidden into a corner of the screen "
+"when it leaves the panel area. Moving the pointer to that corner will cause "
+"the panel to re-appear."
+msgstr "je-li true, je panel automaticky skryt do rohu obrazovky, když kurzor opustí oblast panelu. Přesun kurzoru do tohoto rozhu způsobí, že se panel znovu objeví."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key determines the "
+"location of the panel."
+msgstr "Je-li true, je klíč x ignorován a panel je umístěn do středu osy x obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. zvětší se na obou stranách. Je-li false, určuje umístění panelu klíč x."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
+msgstr "Je-li true, je klíč x ignorován a panel je umístěn do středu osy x obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. zvětší se na obou stranách. Je-li false, určuje umístění panelu klíč x."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -2658,19 +2697,36 @@ msgstr ""
 "V nastavení Xinerama můžete mít panely na každém monitoru. Tento klíč "
 "identifikuje aktuální monitor, na kterém je panel zobrazován."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "Number of visible pixels with a hidden panel."
-msgstr "Počet viditelných pixelů skrytého panelu."
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Název, kterým identifikovat panel"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "Rotate the image on vertical panels."
-msgstr "Rotovat obrázek na vertikálních panelech."
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Zpoždění automatického skrytí panelu"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:24
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Zpoždění automatického odkrytí panelu"
+
+# FIXME: ..n
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientatio"
+msgstr "Orientace panelu"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Velikost panelu"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Rotovat obrázek na vertikálních panelech"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Určuje barvu pozadí panelu ve formátu #RGB."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:25
+#: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2679,36 +2735,27 @@ msgstr ""
 "Určuje soubor, který používat pro obrázek na pozadí. Pokud obrázek obsahuje "
 "kanál alfa, bude složen s obrázkem na pozadí pracovní plochy."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:26
+#: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This preference is "
-"only relevant if auto_hide is true."
-msgstr ""
-"Určuje počet milisekund zpoždění poté, co kurzor vstoupí do oblasti panelu, "
-"než je panel automaticky obnoven. Toto nastavení má vliv, jen pokud "
-"auto_hide je true."
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr "Určuje počet milisekund zpoždění poté, co kurzor vstoupí do oblasti panelu, než je panel automaticky obnoven. Tento klíč má vliv, jen pokud klíč auto_hide je true."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:27
+#: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This preference is only "
-"relevant if auto_hide is true."
-msgstr ""
-"Určuje počet milisekund zpoždění poté, co kurzor opustí oblast panelu, než "
-"je panel automaticky skryt. Toto nastavení má vliv, jen pokud auto_hide je "
-"true."
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr "Určuje počet milisekund zpoždění poté, co kurzor opustí oblast panelu, než je panel automaticky skryt. Tento klíč má vliv, jen pokud klíč auto_hide je true."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:28
+#: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This preference only has relevance when auto_hide is "
-"true."
-msgstr ""
-"Určuje počet viditelných pixelů, když je panel automaticky skryt do rohu. "
-"Toto nastavení má vliv, jen pokud auto_hide je true."
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr "Určuje počet viditelných pixelů, když je panel automaticky skryt do rohu. Tento klíč má vliv, jen pokud klíč auto_hide je true."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:29
+#: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
@@ -2717,43 +2764,11 @@ msgstr ""
 "Určuje krytí formátu barvy na pozadí. Pokud barva úplně nekryje (hodnota "
 "menší než 65535), bude barva složena s obrázkem na pozadí pracovní plochy."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:30
-msgid "Stretch the image to the panel."
-msgstr "Roztáhnout obrázek na panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:31
-msgid "The X co-ordinate of the panel."
-msgstr "X-ová souřadnice panelu."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "The X screen the panel is on."
-msgstr "Obrazovka X, na které je panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "The Xinerama monitor the panel is on."
-msgstr "Monitor Xinerama, na kterém je panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "The Y co-ordinate of the panel."
-msgstr "Y-ová souřadnice panelu."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "The background color opacity."
-msgstr "Krytí barvy pozadí."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "The background color."
-msgstr "Barva pozadí."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:37
-msgid "The background image."
-msgstr "Obrázek na pozadí."
+msgid "Stretch image to panel"
+msgstr "Roztáhnout obrázek na panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The background type."
-msgstr "Typ pozadí."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -2764,68 +2779,40 @@ msgstr ""
 "velikost podle velikosti písma a jiných hodnot. Maximální velikost je "
 "omezena na jednu čtvrtinu výšky (nebo šířky) obrazovky."
 
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr "Umístění panelu podél osy x. Tento klíč má význam jen mimo režim rozpínání. V režimu rozpínání je tento klíč ignorován a panel je umístěn na okraj obrazovky daný klíčem orientation."
+
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
-"The location of the panel along the x-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
-msgstr ""
-"Umístění panelu podél osy x. Tato hodnota má význam jen mimo režim "
-"rozpínání. Ve režimu rozpínání je hodnota ignorována a panel je umístěn na "
-"okraj obrazovky daný orientací."
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr "Umístění panelu podél osy y. Tento klíč má význam jen mimo režim rozpínání. V režimu rozpínání je tento klíč ignorován a panel je umístěn na okraj obrazovky daný klíčem orientation."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
-"The location of the panel along the y-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
-msgstr ""
-"Umístění panelu podél osy y. Tato hodnota má význam jen mimo režim "
-"rozpínání. Ve režimu rozpínání je hodnota ignorována a panel je umístěn na "
-"okraj obrazovky daný orientací."
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr "Orientace panelu. Možné hodnoty jsou \"top\", \"bottom\", \"left\", \"right\". V režimu rozpínání klíč určuje, na kterém okraji obrazovky je panel. Mimo režim rozpínání je rozdíl mezi \"top\" a \"bottom\" méně důležitý - obojí indikuje, že je to horizontální panel - ale stále dává užitečnou nápovědu, jak se mají chovat některé objekty panelu. Například na panelu \"top\" bude tlačítko menu otevírat menu pod panelem, ale na panelu \"bottom\" bude menu otevřeno nad panelem."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The orientation of the panel."
-msgstr "Orientace panelu."
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr "Rychlost, kterou mají probíhat animace. Možné hodnoty jsou \"slow\", \"medium\" a \"fast\". Tento klíč má vliv, jen pokud klíč enable_animations je true."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"The orientation of the panel. There are four possible values; \"top\", "
-"\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
-"screen edge the panel is on. In un-expanded mode the difference between \"top"
-"\" and \"bottom\" is less important - both indicate that this is a "
-"horizontal panel - but still give a useful hint as to how some panel objects "
-"should behave. For example, on a \"top\" panel a menu button will pop up its "
-"menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
-"up above the panel."
-msgstr ""
-"Orientace panelu. Existují čtyři možné hodnoty; \"top\", \"bottom\", \"left"
-"\", \"right\". V režimu rozpínání hodnota určuje, na kterém okraji obrazovky "
-"je panel. Mimo režim rozpínání je rozdíl mezi \"top\" a \"bottom\" méně "
-"důležitý - obojí indikuje, že je to horizontální panel - ale stále dává "
-"užitečnou nápovědu, jak se mají chovat některé objekty panelu. Například na "
-"panelu \"top\" bude tlačítko menu otevírat menu pod panelem, ale na panelu "
-"\"bottom\" bude menu otevřeno nad panelem."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The size of the panel."
-msgstr "Velikost panelu."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "The speed of animations."
-msgstr "Rychlost animací."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:46
-msgid ""
-"The speed which animations should occur. There are three possible values; "
-"\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
-"enable_animations is true."
-msgstr ""
-"Rychlost, kterou mají probíhat animace. Existují tři možné hodnoty; \"slow"
-"\", \"medium\" a \"fast\". Toto nastavení má vliv jen pokud "
-"enable_animations je true."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
 "This is a human readable name which you can use to indentify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2835,26 +2822,41 @@ msgstr ""
 "panelu. Jeho hlavní účel je sloužit jako nadpis okna panelu, což je užitečné "
 "při přepínnání mezi panely."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"Which type of background should be used for this panel. There are three "
-"possible values; \"gtk\", the default GTK+ widget background will be used, "
-"\"color\", the color preference will be used as the background color or "
-"\"image\", the image specified in the image preference will be used as the "
-"background."
-msgstr ""
-"Jaký typ pozadí má být použit pro tento panel. Existují tři možné hodnoty; "
-"\"gtk\", bude použito implicitní pozadí widgetů GTK+, \"color\", jako barva "
-"pozadí bude použito nastavení color, nebo \"image\", jako pozadí bude použit "
-"obrázek určen v nastavení image."
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+msgid "Visible pixels when hidden"
+msgstr "Počet viditelných pixelů skrytého panelu"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:49
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr "Jaký typ pozadí má být použit pro tento panel. Možné hodnoty jsou \"gtk\" - bude použito implicitní pozadí widgetů GTK+, \"color\" - jako barva pozadí bude použit klíč color, nebo \"image\" - jako pozadí bude použit obrázek určený v klíči image."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
 "V systému s více obrazovkami můžete mít panely na na každé obrovce. Tento "
 "klíč identifikuje aktuální obrazovku, na které je panel zobrazován."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+msgid "X co-ordinate of panel"
+msgstr "X-ová souřadnice panelu"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+msgid "X screen panel is on"
+msgstr "Obrazovka X, na které je panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+msgid "Xinerama monitor panel is on"
+msgstr "Monitor Xinerama, na kterém je panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "Y co-ordinate of panel"
+msgstr "Y-ová souřadnice panelu"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
