@@ -1342,10 +1342,10 @@ mailcheck_properties_page (MailCheck *mc)
 	return vbox;
 }
 
+#ifdef FIXME
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-#ifdef FIXME
 	GnomeHelpMenuEntry help_entry = { "mailcheck_applet", NULL };
 
 	char *das_names[] =  { "index.html#MAILCHECK-PREFS",
@@ -1353,8 +1353,8 @@ phelp_cb (GtkWidget *w, gint tab, gpointer data)
 
 	help_entry.path = das_names[((MailCheck *)data)->type];
 	gnome_help_display(NULL, &help_entry);
-#endif
 }	
+#endif
 
 static void
 response_cb (GtkDialog *dialog, gint id, gpointer data)

@@ -555,6 +555,14 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
 	g_slist_free (list);
 }
 
+static gboolean
+delete_event (GtkWidget *widget, gpointer data)
+{
+	gtk_widget_hide (widget);
+	return TRUE;
+}
+
+
 #define WID(s) glade_xml_get_widget (xml, s)
 
 static void
@@ -604,6 +612,9 @@ setup_dialog (GladeXML  *xml,
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
 
+	g_signal_connect (pager->properties_dialog, "delete_event",
+			  G_CALLBACK (delete_event),
+			  pager);
 	
 	g_signal_connect_swapped (WID ("done_button"), "clicked",
 				  (GCallback) gtk_widget_hide, pager->properties_dialog);
