@@ -3853,16 +3853,8 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 void
 panel_lock (GtkWidget *widget, gpointer data)
 {
-	char *argv[3] = {"xscreensaver-command", NULL, NULL};
-	gboolean lock;
-	lock = gnome_config_get_bool ("Screensaver/Default/password=false");
-	/* we want to default to something safe.
-	 * Have we started xscreensaver in a locked state or not?*/
-	if (lock)
-		argv[1] = "-activate";
-	else
-		argv[1] = "-lock";
-	if(gnome_execute_async(NULL,2,argv)<0)
+	char *argv[3] = {"xscreensaver-command", "-lock", NULL};
+	if(gnome_execute_async(NULL, 2, argv) < 0)
 		panel_error_dialog(_("Cannot execute xscreensaver"));
 }
 
