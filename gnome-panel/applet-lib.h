@@ -1,9 +1,23 @@
 #ifndef APPLET_LIB_H
 #define APPLET_LIB_H
 
-#include "panel-util.h"
-
 BEGIN_GNOME_DECLS
+
+#ifndef PANEL_UTIL_H
+/*from panel-util.h*/
+char *get_full_path(char *argv0);
+#endif
+
+#ifndef PANEL_H
+/*from panel.h*/
+typedef enum {
+	ORIENT_UP,
+	ORIENT_DOWN,
+	ORIENT_LEFT,
+	ORIENT_RIGHT
+} PanelOrientType;
+#endif
+
 
 /*all the cfgpaths in this interface are load paths (might be an old
   session different from current) ... except the save_session which gets

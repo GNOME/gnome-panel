@@ -3,8 +3,6 @@
 
 #include "gnome.h"
 #include "applet-lib.h"
-#include "panel.h"
-#include "mico-parse.h"
 
 GtkWidget *plug;
 int applet_id = (-1);

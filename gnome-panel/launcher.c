@@ -14,8 +14,6 @@
 #include <dirent.h>
 #include <string.h>
 #include "gnome.h"
-#include "panel.h"
-#include "mico-parse.h"
 #include "applet-lib.h"
 #include "launcher-lib.h"
 
