@@ -1,77 +1,16 @@
-2001-12-14  Alex Larsson  <alexl@redhat.com>
+2001-12-17  Mark McLoughlin  <mark@skynet.ie>
 
-	* gen_util/tasklist.c (applet_change_background):
-	Handle background changes. This doesn't change the color of the
-	buttons right now, since we would need the whole style for that.
-	But it does handle the part of the tasklist that is empty when
-	all the buttons fit on the tasklist.
-
-2001-12-14  Alex Larsson  <alexl@redhat.com>
-
-	* gen_util/clock.c:
-	Handle background color changes.
-
-2001-12-14  Mark McLoughlin  <mark@skynet.ie>
-
-	* gen_util/clock.c: update for panel-applet
-          GNOME_Vertigo namespace changes.
-
-2001-12-08  Richard Hult  <rhult@codefactory.se>
-
-	* gen_util/clock.c (computer_clock_update_func): Convert time/date
-	string to utf-8 before setting the label text.
-
-2001-12-04  Alex Larsson  <alexl@redhat.com>
-
-	* gen_util/GNOME_GenUtilApplet_Factory.server.in.in:
-	* gen_util/tasklist.[ch]:
-	* applets/gen_util/Makefile.am:
-	New tasklist implementation using libwnck.
-
-	* applets/gen_util/pager.c:
-	Fixed copyright
-
-2001-11-30  Mark McLoughlin  <mark@skynet.ie>
-
-	* gen_util/clock.c: (make_clock_applet): update for
-	applet api changes.
-
-	* gen_util/pager.c: (make_pager_applet): ditto.
-
-2001-11-27  Mark McLoughlin  <mark@skynet.ie>
-
-	* gen_util/Makefile.am: build against ../../libpanel-applet.
+        * ChangeLog: trim some gen_util entries.
 
 2001-11-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: add desk-guide to SUBDIRS.
-
-	* gen_util/Makefile.am: add
-	  GNOME_GenUtilApplet_Factory.server.in.in to EXTRA_DIST.
-
-2001-11-23  Mark McLoughlin  <mark@skynet.ie>
-
-	* gen_util/GNOME_GenUtilApplet_Factory.server.in.in: add
-	"panel:icon" and "panel:category" attributes.
 
 2001-11-23  Alexander Larsson  <alla@lysator.liu.se>
 
         * Makefile.am:
 	Build gen_util
 
-	* gen_util/Makefile.am:
-	* gen_util/clock.[ch]: 
-	* gen_util/main.c:
-	Convert to new applet API and gnome 2.
-
-	* gen_util/GNOME_GenUtilApplet_Factory.server.in.in:
-	New oaf file for the applets.
-
-2001-10-17  Kjartan Maraas  <kmaraas@gnome.org>
-
-	* gen_util/clock_applet.desktop: Use gnome-clock.png as icon.
-	Patch from Red Hat.
-	
 2001-08-14  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* */*.sgml: Fix up the sgml a bit.
