@@ -448,7 +448,6 @@ create_mail_widgets (MailCheck *mc)
 	}
 	free (fname);
 	gtk_container_add (GTK_CONTAINER (mc->bin), mc->containee);
-	mail_check_timeout (mc);
 	return mc->bin;
 }
 
