@@ -569,7 +569,7 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 	str = gconf_client_get_string (client, key, NULL);
 
 	if (!panel_profile_map_orientation_string (str, &orientation))
-	    return panel_toplevel_get_orientation (toplevel);
+	    orientation = panel_toplevel_get_orientation (toplevel);
 
 	g_free (str);
 
