@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "POT-Creation-Date: 2003-12-09 14:50+0000\n"
-"PO-Revision-Date: 2003-11-06 12:18+0100\n"
+"PO-Revision-Date: 2003-12-12 12:58+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <franciscojavier.fernandez."
 "serrador@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -52,7 +52,6 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:243
-#, fuzzy
 msgid "%a %b %e"
 msgstr "%a %d de %b"
 
@@ -186,7 +185,6 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
 msgstr "24 horas"
 
@@ -231,7 +229,7 @@ msgstr "Mostrar hora con segundos"
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr ""
+msgstr "El uso de esta clave ha sido declarado obsoleto en GNOME 2.6 en favor de la clave «format». El esquema se conserva por compatibilidad con versiones antiguas."
 
 #: applets/clock/clock.schemas.in.h:12
 msgid ""
@@ -241,7 +239,7 @@ msgid ""
 "the day into 1000 \".beats\". There is no time zones in this system, so time "
 "is the same all over the world. If set to \"unix\", the clock will display "
 "time in seconds since Epoch, i.e. 1970-01-01."
-msgstr ""
+msgstr "Esta clave especifica el formato de hora usado por la miniaplicación del reloj. Los valores posibles son \"12-horas\", \"24-horas\", \"internet\" y \"unix\". Si se establece a  \"internet\", el reloj mostrará la hora de Internet. El sistema de hora de Internet divide el día en «.beats». No hay zonas horarias en este sistema, así que la hora es la misma en en todo el mundo. Si se establece a  «unix», el reloj mostrará la hora en segundos desde Epoch: 01-01-1970."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid "This key specifies the program to run in order to configure the time."
@@ -365,9 +363,9 @@ msgid "Fish"
 msgstr "Pez"
 
 #: applets/fish/fish.c:528
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "%s el pez de GNOME, un oráculo contemporáneo"
+msgstr "%s el Pez, un oráculo contemporáneo"
 
 #: applets/fish/fish.c:575
 msgid "Unable to get the name of the command to execute"
@@ -378,9 +376,9 @@ msgid "Unable to locate the command to execute"
 msgstr "No se puede ubicar el comando para ejecutar"
 
 #: applets/fish/fish.c:620
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "%s, el pez de GNOME, dice:"
+msgstr "%s, el Pez, dice:"
 
 #: applets/fish/fish.c:746
 #, c-format
@@ -414,9 +412,9 @@ msgstr ""
 "(Mire la fecha de hoy)"
 
 #: applets/fish/fish.c:1431
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "El pez de GNOME, el que dice la fortuna"
+msgstr "%s El Pez, el que dice la fortuna"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -621,9 +619,8 @@ msgstr "Fábrica de miniaplicaciones de navegación de ventana"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:706
-#, fuzzy
 msgid "Window Selector"
-msgstr "Lista de ventanas"
+msgstr "Selector de ventanas"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -802,12 +799,9 @@ msgid "When to group windows"
 msgstr "Cuándo agrupar las ventanas"
 
 #: applets/wncklet/window-menu.c:136
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"El menú de ventanas muestra una lista de todas las ventanas y le permite "
-"examinarlas."
+msgstr "El selector de ventanas muestra una lista de todas las ventanas y le permite examinarlas."
 
 #: applets/wncklet/window-menu.c:416
 msgid "Unknown Window"
@@ -1168,32 +1162,31 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cPantallazo-%s.png"
+msgstr "Pantallazo-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cPantallazo.png"
+msgstr "Pantallazo.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cPantallazo-%s-%d.png"
+msgstr "Pantallazo-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cPantallazo-%d.png"
+msgstr "Pantallazo-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1636,15 +1629,15 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepción de popup_menu «%s»\n"
 
 #: gnome-panel/panel-applet-frame.c:861
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
-"La miniaplicación %s parece haber muerto inesperadamente\n"
+"La miniaplicación «%s» parece haber muerto inesperadamente\n"
 "\n"
-"¿Quiere recargar la miniaplicación? %s"
+"¿Quiere recargar esta miniaplicación?"
 
 #: gnome-panel/panel-applet-frame.c:867
 msgid ""
@@ -1664,9 +1657,9 @@ msgid "D_on't Delete"
 msgstr "_No borrar"
 
 #: gnome-panel/panel-applet-frame.c:944
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr "El panel ha encontrado un problema mientras cargaba «%s» %s"
+msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
 #: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:262
 #, c-format
@@ -1962,14 +1955,12 @@ msgid "The custom icon for the menu"
 msgstr "El icono personalizado para el menú"
 
 #: gnome-panel/panel-menu-button.c:434
-#, fuzzy
 msgid "Tooltip"
-msgstr "Consejo/Nombre"
+msgstr "Sugerencia"
 
 #: gnome-panel/panel-menu-button.c:435
-#, fuzzy
 msgid "Tooltip displayed for the menu"
-msgstr "Sugerencia mostrada para el cajón"
+msgstr "Sugerencia mostrada para el menú"
 
 #: gnome-panel/panel-menu-button.c:443
 msgid "Use Menu Path"
@@ -2136,14 +2127,10 @@ msgstr ""
 "borde del panel."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr ""
-"El texto a desplegar en una sugerencia de la herramienta (tooltip) para este "
-"cajón. Esta clave sólo es relevante si el valor de «object_type» es «drawer-"
-"object»."
+msgstr "El texto a mostrar en una sugerencia para este cajón o este menú. Esta clave sólo es relevante si el valor de «object_type» es «drawer-object» o «menu-object»."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2156,9 +2143,8 @@ msgstr ""
 "bar»."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Sugerencia mostrada para el cajón"
+msgstr "Sugerencia mostrada para el cajón o menú"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2296,9 +2282,8 @@ msgid "_Autohide"
 msgstr "Ocultar _automáticamente"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "Icono"
+msgstr "_Icono:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
 msgid "_Name:"
@@ -2346,7 +2331,7 @@ msgstr "Ocurrió un error desconocido al intentar abrir %s"
 
 #: gnome-panel/panel-recent.c:175
 msgid "Recent Documents"
-msgstr ""
+msgstr "Documentos recientes"
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -3008,14 +2993,12 @@ msgid "X co-ordinate of panel"
 msgstr "Coordenada X del panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "El panel de la pantalla X está activado"
+msgstr "La pantalla X donde el se muestra el panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:51
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "El panel del monitor de Xinerama está activado"
+msgstr "El monitor Xinerama donde se muestra el panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:52
 msgid "Y co-ordinate of panel"
