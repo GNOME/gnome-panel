@@ -1,3 +1,4 @@
 SUBDIRS =		\
 	gen_util	\
-	fish
+	fish		\
+	notification_area

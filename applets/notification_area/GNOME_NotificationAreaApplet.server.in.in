@@ -1,0 +1,33 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_NotificationAreaApplet_Factory"
+	    type="shlib"
+	    location="@APPLET_LIBDIR@/libnotification-area-applet.so">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area Factory"/>
+	<oaf_attribute name="description" type="string" _value="Notification Area Factory"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_NotificationAreaApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_NotificationAreaApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area"/>
+	<oaf_attribute name="description" type="string" _value="Area where notification icons appear"/>
+	<oaf_attribute name="panel:category" type="string" _value="Utility"/>
+        <!-- FIXME panel won't display the applet unless you have an icon, so use a broken one -->
+        <oaf_attribute name="panel:icon" type="string" value="battstat.png"/>
+
+</oaf_server>
+
+</oaf_info>
