@@ -100,6 +100,7 @@ BUILT_SOURCES = \
 	panel-marshal.h
 
 panel_temp_SOURCES=\
+	$(CORBA_SRCLIST)	\
 	panel-include.h		\
 	panel-types.h		\
 	panel-marshal-main.c	\
@@ -177,6 +178,8 @@ panel_temp_SOURCES=\
 	menu-properties.h	\
 	launcher.c		\
 	launcher.h		\
+	extern.c  		\
+	extern.h  		\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -185,8 +188,6 @@ panel_temp_LDADD=\
 
 panel_SOURCES=\
 	things-will-not-compile-below-this-line		\
-	extern.c  		\
-	extern.h  		\
 	gnome-run.c		\
 	gnome-run.h		\
 	icon-entry-hack.c	\
