@@ -1,3 +1,27 @@
+2002-10-17  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Padraig to ensure there is enough room around
+	each applet to draw a focus indication if one is needed.
+	Focus indication is only needed when there is a toplevel
+	tooltip on the PanelApplet *or* the applet has no
+	focusable children. Fixes #84215.
+
+	Please read:
+
+http://mail.gnome.org/archives/desktop-devel-list/2002-October/msg00227.html
+
+	before deciding that this behaviour is wrong.
+
+	* panel-applet.c:
+	(panel_applet_can_focus): only focus if the applet has
+	a toplevel tooltip or no focusable children.
+	(panel_applet_size_request): request room to draw the
+	focus indication. Deliberately ignore focus padding.
+	(panel_applet_size_allocate): adjust the child's position
+	to give room to draw focus.
+	(panel_applet_expose): draw focus here.
+	(panel_applet_class_init): hook up.
+
 2002-10-01  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c:

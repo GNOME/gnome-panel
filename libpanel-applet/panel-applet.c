@@ -507,6 +507,22 @@ panel_applet_position_menu (GtkMenu   *menu,
 }
 
 static gboolean
+panel_applet_can_focus (GtkWidget *widget)
+{
+	/*
+	 * A PanelApplet widget can focus if it has a tooltip or it does 
+	 * not have any focusable children.
+	 */
+	if (gtk_tooltips_data_get (widget))
+		return TRUE;
+
+	if (!PANEL_IS_APPLET (widget))
+		return FALSE;
+
+	return !panel_applet_has_focusable_child (PANEL_APPLET (widget));
+}
+
+static gboolean
 panel_applet_button_press (GtkWidget      *widget,
 			   GdkEventButton *event)
 {
@@ -552,56 +568,59 @@ panel_applet_popup_menu (PanelApplet *applet)
 	return _panel_applet_popup_menu (applet, 3, GDK_CURRENT_TIME);
 }
 
-#ifdef FIXME
 static void
 panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
-	PanelApplet *applet = PANEL_APPLET (widget);
-	GtkBin *bin = GTK_BIN (widget);
-	gint focus_width, focus_pad;
+	int focus_width = 0;
 
-	requisition->width = GTK_CONTAINER (widget)->border_width * 2;
-	requisition->height = GTK_CONTAINER (widget)->border_width * 2;
+	GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
 
+	if (!panel_applet_can_focus (widget))
+		return;
+
+	/*
+	 * We are deliberately ignoring focus-padding here to
+	 * save valuable panel real estate.
+	 */
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
 			      NULL);
 
-	if (bin->child && GTK_WIDGET_VISIBLE (bin->child)) {
-		GtkRequisition child_requisition;
-
-		gtk_widget_size_request (bin->child, &child_requisition);
-
-		requisition->width += child_requisition.width;
-		requisition->height += child_requisition.height;
-	}
-	requisition->width += 2 * (2 * focus_pad + focus_width);
-	requisition->height += 2 * (2 * focus_pad + focus_width);
+	requisition->width  += 2 * focus_width;
+	requisition->height += 2 * focus_width;
 }
 
 static void
-panel_applet_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+panel_applet_size_allocate (GtkWidget     *widget,
+			    GtkAllocation *allocation)
 {
-	PanelApplet *applet = PANEL_APPLET (widget);
-	gint focus_width, focus_pad;
-	gint x, y, width, height;
-	gint border_width;
-	GtkBin *bin;
-	GtkAllocation child_allocation;
+	GtkAllocation  child_allocation;
+	GtkBin        *bin;
+	int            border_width;
+	int            focus_width = 0;
 
+	if (!panel_applet_can_focus (widget)) {
+		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+		return;
+	}
+
+	/*
+	 * We are deliberately ignoring focus-padding here to
+	 * save valuable panel real estate.
+	 */
 	gtk_widget_style_get (widget,
 			      "focus-line-width", &focus_width,
-			      "focus-padding", &focus_pad,
 			      NULL);
+
 	border_width = GTK_CONTAINER (widget)->border_width;
 
 	widget->allocation = *allocation;
 	bin = GTK_BIN (widget);
 
- 	child_allocation.x = focus_width + 2 * focus_pad;
- 	child_allocation.y = focus_width + 2 * focus_pad;
-	child_allocation.width = MAX (allocation->width - border_width * 2, 0);
+ 	child_allocation.x = focus_width;
+ 	child_allocation.y = focus_width;
+
+	child_allocation.width  = MAX (allocation->width  - border_width * 2, 0);
 	child_allocation.height = MAX (allocation->height - border_width * 2, 0);
 
 	if (GTK_WIDGET_REALIZED (widget))
@@ -610,43 +629,51 @@ panel_applet_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 					allocation->y + GTK_CONTAINER (widget)->border_width,
 					child_allocation.width,
 					child_allocation.height);
-	child_allocation.width = MAX (child_allocation.width - 2 * (focus_width + 2 * focus_pad), 0);
-	child_allocation.height = MAX (child_allocation.height - 2 * (focus_width + 2 * focus_pad), 0);
+
+	child_allocation.width  = MAX (child_allocation.width  - 2 * focus_width, 0);
+	child_allocation.height = MAX (child_allocation.height - 2 * focus_width, 0);
 
 	if (bin->child)
 		gtk_widget_size_allocate (bin->child, &child_allocation);
 }
-#endif /* FIXME */
 
 static gboolean
 panel_applet_expose (GtkWidget      *widget,
 		     GdkEventExpose *event) 
 {
+	int border_width;
+	int focus_width = 0;
+	int x, y, width, height;
+
 	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
 	GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-        if (GTK_WIDGET_HAS_FOCUS (widget)) {
-		gint focus_width, focus_pad;
-		gint x, y, width, height;
-		gint border_width;
+        if (!GTK_WIDGET_HAS_FOCUS (widget))
+		return FALSE;
 
-		gtk_widget_style_get (widget,
-				      "focus-line-width", &focus_width,
-				      "focus-padding", &focus_pad,
-				      NULL);
-		border_width = GTK_CONTAINER (widget)->border_width;
+	/*
+	 * We are deliberately ignoring focus-padding here to
+	 * save valuable panel real estate.
+	 */
+	gtk_widget_style_get (widget,
+			      "focus-line-width", &focus_width,
+			      NULL);
 
-		x = widget->allocation.x + focus_pad;
-		y = widget->allocation.y + focus_pad;
-		width = widget->allocation.width - 2 * border_width - 0.5 * focus_pad;
-		height = widget->allocation.height - 2 * border_width - 0.5 * focus_pad;
-		gtk_paint_focus (widget->style, widget->window,
-                                 GTK_WIDGET_STATE (widget),
-                                 &event->area, widget, "panel_applet",
-                                 x, y, width, height);
-	}
+	border_width = GTK_CONTAINER (widget)->border_width;
+
+	x = widget->allocation.x;
+	y = widget->allocation.y;
+
+	width  = widget->allocation.width  - 2 * border_width;
+	height = widget->allocation.height - 2 * border_width;
+
+	gtk_paint_focus (widget->style, widget->window,
+			 GTK_WIDGET_STATE (widget),
+			 &event->area, widget, "panel_applet",
+			 x, y, width, height);
+
 	return FALSE;
 }                
 
@@ -1235,10 +1262,8 @@ panel_applet_class_init (PanelAppletClass *klass,
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
-#ifdef FIXME
 	widget_class->size_request = panel_applet_size_request;
 	widget_class->size_allocate = panel_applet_size_allocate;
-#endif /* FIXME */
 	widget_class->expose_event = panel_applet_expose;
 	widget_class->focus = panel_applet_focus;
 
