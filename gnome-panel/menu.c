@@ -3748,7 +3748,7 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 static void
 panel_config_global(void)
 {
-	char *argv[2] = {"gnome-panel-properties-capplet", NULL};
+	char *argv[2] = {"gnome-panel-properties", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
 		panel_error_dialog("cannot_exec_global_props",
 				   _("Cannot execute panel global properties"));
