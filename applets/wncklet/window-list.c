@@ -9,6 +9,10 @@
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
