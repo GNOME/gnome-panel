@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
+"POT-Creation-Date: 2004-08-16 20:12+0100\n"
 "PO-Revision-Date: 2004-03-20 22:24+0200\n"
 "Last-Translator: Mişu Moldovan <dumol@go.ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
@@ -48,7 +48,7 @@ msgstr "_Despre..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "_Ajutor"
@@ -252,53 +252,55 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Ceasul arată timpul şi data curentă"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Format personalizat pentru ceas"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Format oră"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "La activare arată data în ceas pe lângă timp."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "La activare arată secundele în timpul afişat."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "La activare arată timpul în zona de timp UTC."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "La activare arată data ca un indiciu când indicatorul de mouse este deasupra "
 "ceasului."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Arată data în ceas"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Arată data ca indiciu"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Arată secundele în ceas"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -306,7 +308,7 @@ msgstr ""
 "Utilizarea acestei chei în GNOME 2.6 este descurajată în favoarea cheii "
 "„format”. A fost păstrată însă din motive de compatibilitate."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -316,7 +318,7 @@ msgstr ""
 "valoarea „custom”. Puteţi utiliza variabile ale funcţiei strftime() pentru a "
 "defini un format personalizat."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 #, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
@@ -337,25 +339,25 @@ msgstr ""
 "valoarea „custom”, ceasul va arăta timpul în formatul specificat de cheia "
 "„custom_format”."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Această cheie specifică programul de pornit pentru configurarea timpului."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Unealtă de configurare a timpului"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 #, fuzzy
 msgid "Use Internet time"
 msgstr "Utilizează timpul Internet"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Utilizează timpul Unix"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Utilizează UTC"
 
@@ -635,8 +637,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fabrica progrămelelor de navigare ferestre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "Selector ferestre"
 
@@ -824,11 +826,11 @@ msgstr ""
 msgid "Unknown Window"
 msgstr "Fereastră necunoscută"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "Nici o fereastră deschisă"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "Unealtă pentru schimbarea ferestrei active"
 
@@ -952,7 +954,7 @@ msgid "GNOME Panel Shell"
 msgstr "Shell Panou GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "_Blochează"
 
@@ -965,7 +967,7 @@ msgid "_Remove From Panel"
 msgstr "_Elimină din panou"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "De_blochează"
 
@@ -1015,78 +1017,18 @@ msgid "CDE Menu"
 msgstr "Meniu CDE"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "Sertar"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Proprietăţi"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "Creează un nou fişier în directorul dat"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"S-a produs o eroare la afişarea ajutorului: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"Administratorul sistemului a dezactivat\n"
-"modificarea setărilor panoului"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "Eroare la încărcarea fişierului %s"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "Panouri"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "Schimbaţi setările tuturor panourilor"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "_Viteză animaţie:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "Închide _sertarul la apăsarea unui buton"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "A_nimaţii sertare şi panouri"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "Rapidă"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "Medie"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "Preferinţe panou"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Lentă"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1170,6 +1112,15 @@ msgstr "Captura-ecran-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Spaţiu insuficient pentru a scrie fişierul %s"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"S-a produs o eroare la afişarea ajutorului: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1328,8 +1279,8 @@ msgstr ""
 "Acest program este responsabil pentru lansarea altor aplicaţii şi înglobarea "
 "unor progrămele utile."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nu pot porni „%s”"
@@ -1366,7 +1317,7 @@ msgstr "Nu am putut obţine numele fişierului din cale: %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Nu am putut obţine numele directorului din cale: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Meniu principal"
 
@@ -1398,8 +1349,8 @@ msgstr "Adaugă un element nou în acest meniu"
 msgid "Properties"
 msgstr "Proprietăţi"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "Aplicaţii"
 
@@ -1433,20 +1384,39 @@ msgstr "D_espre panouri"
 msgid "About _GNOME"
 msgstr "Despre _GNOME"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
-msgstr "Blocare ecran"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "Desktop"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Blocaţi ecranul pentru a vă putea părăsi temporar calculatorul"
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "_Activează protecţia ecranului"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "_Blochează ecranul"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "_Opreşte daemonul xscreensaver"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "Reporneşte daemonul _xscreensaver"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
+msgstr "Blochează ecranul"
+
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "Protejaţi-vă calculatorul de utilizatori neautorizaţi"
+
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "Ieşire"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1454,171 +1424,108 @@ msgstr ""
 "Ieşiţi din această sesiune pentru a vă autentifica ca un utilizator diferit "
 "sau pentru a vă opri calculatorul"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "Pornire aplicaţii..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "Porniţi o aplicaţie introducând o comandă"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "Căutare fişiere..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "Căutaţi fişiere, directoare şi documente pe disc"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "Captură de ecran..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "Capturaţi desktopul într-o imagine"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "Desktop"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "_Activează protecţia ecranului"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "_Blochează ecranul"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "_Opreşte daemonul xscreensaver"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "Reporneşte daemonul _xscreensaver"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "Blochează ecranul"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "Ieşire din GNOME"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "Pornire aplicaţii"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "Căutare fişiere"
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "Captură de ecran"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "Închide forţat"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "Blochează"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "Blochează ecranul astfel încât să puteţi părăsi temporar calculatorul"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "Forţează închiderea unei aplicaţii ce nu mai răspunde"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "Caută"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "Porneşte"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "Execută o comandă"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "Pornire aplicaţii"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "Creează un lansator"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "Pornire aplicaţii..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 #, fuzzy
 msgid "The main GNOME menu"
 msgstr "Panoul GNOME"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Bară de meniu"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "cererea a returnat excepţia %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, fuzzy, c-format
 msgid "Add to %s"
 msgstr "A_daugă la panou"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 #, fuzzy
 msgid "Add to the panel"
 msgstr "A_daugă la panou"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:757
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepţie de la meniul popup „%s”\n"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:879
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1629,7 +1536,7 @@ msgstr ""
 "\n"
 "Doriţi să-l reporniţi?"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:885
 msgid ""
 "\n"
 "\n"
@@ -1641,21 +1548,21 @@ msgstr ""
 "(Dacă alegeţi să nu îl reîncărcaţi acum puteţi să-l adăugaţi oricând cu "
 "click dreapta pe panou utilizând submeniul „Adaugă la panou”)"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:925
 msgid "D_on't Delete"
 msgstr "_Nu şterge"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:961
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panoul a întâlnit o problemă la încărcarea „%s”"
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Detalii: %s"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
 msgid ""
 "\n"
 "\n"
@@ -1665,7 +1572,7 @@ msgstr ""
 "\n"
 "Doriţi să eliminaţi progrămelul din configuraţia proprie?"
 
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nu pot obţine interfaţa AppletShell de la control\n"
 
@@ -1922,11 +1829,7 @@ msgstr "Capturează ecranul"
 msgid "Take window screenshot"
 msgstr "Capturează fereastra"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "Protejaţi-vă calculatorul de utilizatori neautorizaţi"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "Acţiuni"
 
@@ -2354,6 +2257,10 @@ msgstr "Iconiţă comandă"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "Introduceţi o comandă aici pentru a o executa."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "Pornire aplicaţii"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2926,6 +2833,10 @@ msgstr "Progrămel:"
 msgid "Large"
 msgstr "Mare"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "Medie"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "Orientare:"
@@ -2957,6 +2868,71 @@ msgstr "Enorm"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Minuscul"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Administratorul sistemului a dezactivat\n"
+#~ "modificarea setărilor panoului"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Eroare la încărcarea fişierului %s"
+
+#~ msgid "Panel"
+#~ msgstr "Panouri"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Schimbaţi setările tuturor panourilor"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "_Viteză animaţie:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Închide _sertarul la apăsarea unui buton"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "A_nimaţii sertare şi panouri"
+
+#~ msgid "Fast"
+#~ msgstr "Rapidă"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Preferinţe panou"
+
+#~ msgid "Slow"
+#~ msgstr "Lentă"
+
+#~ msgid "Lock Screen"
+#~ msgstr "Blocare ecran"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "Blocaţi ecranul pentru a vă putea părăsi temporar calculatorul"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Ieşire din GNOME"
+
+#~ msgid "Search for Files"
+#~ msgstr "Căutare fişiere"
+
+#~ msgid "Screenshot"
+#~ msgstr "Captură de ecran"
+
+#~ msgid "Lock"
+#~ msgstr "Blochează"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Blochează ecranul astfel încât să puteţi părăsi temporar calculatorul"
+
+#~ msgid "Search"
+#~ msgstr "Caută"
+
+#~ msgid "Run"
+#~ msgstr "Porneşte"
+
+#~ msgid "Run a command"
+#~ msgstr "Execută o comandă"
 
 #~ msgid "Accessories"
 #~ msgstr "Accesorii"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
+"POT-Creation-Date: 2004-08-16 20:12+0100\n"
 "PO-Revision-Date: 2002-06-09 21:35+0200\n"
 "Last-Translator: Andraz Tori <andraz.tori1@guest.arnes.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "_O programu..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "_Pomoč"
@@ -253,66 +253,68 @@ msgstr "Andraž Tori <andraz.tori1@guest.arnes.si>"
 msgid "The Clock displays the current time and date"
 msgstr "Ura prikaže trenutni datum in čas"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 #, fuzzy
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Oblika zapisa časa"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Če je resnično, v vstavku poleg časa kaži tudi datum."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "Če je resnično, v času kaži tudi sekunde."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Če je resnično, kaži čas v Univerzalno koordinirani časovni coni (UTC)."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Če je resnično, kaži datum v namigu, ko je nad uro miška"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Kaži datum v uri"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Kaži datum v namigu"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Kaži čas s sekundami"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -324,24 +326,24 @@ msgid ""
 "the custom_format key."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Ta ključ navaja program, ki naj se požene za nastavitev časa."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Orodje za nastavitev časa"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 #, fuzzy
 msgid "Use Internet time"
 msgstr "Uporabi internetni čas"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Uporabi UNIX čas"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Uporabi UTC"
 
@@ -620,8 +622,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Tovarna vstavkov navigacije med okni"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 #, fuzzy
 msgid "Window Selector"
 msgstr "Seznam oken"
@@ -811,11 +813,11 @@ msgstr ""
 msgid "Unknown Window"
 msgstr "Neznano okno"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "Ni odprtih oken"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Preklopi med odprtimi okni"
@@ -940,7 +942,7 @@ msgid "GNOME Panel Shell"
 msgstr "Lupina pulta GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "_Zakleni"
 
@@ -953,7 +955,7 @@ msgid "_Remove From Panel"
 msgstr "_Odstrani s pulta"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "_Odkleni"
 
@@ -1003,78 +1005,18 @@ msgid "CDE Menu"
 msgstr "Menu CDE"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "predal"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Lastnosti"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "Ustvari novo datoteko v danem imeniku"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"Ob prikazovanju pomoči se je zgodila napaka: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"Sistemski administrator je prepovedal\n"
-"spreminjanje nastavitev pulta"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "Napaka ob nalaganju datoteke glade %s"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "Pult"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "Izberi nastavitve za vse svoje pulte"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "Hitrost _animacij:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "Ko je kliknjen zaganjalnik, zapri predal"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "_Animacije predalov in pultov"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "Hitro"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "Srednji"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "Nastavitve pulta"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Počasi"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1159,6 +1101,15 @@ msgstr "%s%cZajem_zaslona-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Ni dovolj prostora za zapis datoteke %s"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"Ob prikazovanju pomoči se je zgodila napaka: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1316,8 +1267,8 @@ msgstr ""
 "Ta program je zadolžen za zagon drugih programov, vključevanje manjših "
 "vstavkov vase, svetovni mir in naključna sesutja X-ov."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Ne morem zagnati '%s'"
@@ -1354,7 +1305,7 @@ msgstr "Nisem mogel dobiti imena datoteke iz poti: %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Nisem mogel dobiti imena imenika iz poti: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Glavni menu"
 
@@ -1386,8 +1337,8 @@ msgstr "Dodaj nov predmet temu menuju"
 msgid "Properties"
 msgstr "Lastnosti"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "Programi"
 
@@ -1421,20 +1372,39 @@ msgstr "_O pultih..."
 msgid "About _GNOME"
 msgstr "O _GNOME..."
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "Namizje"
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "_Aktiviraj ohranjvalnik zaslona"
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "_Zakleni zaslon"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "_Ubij daemon ohranjevalnika zaslona"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "Znova poženi daemon _ohranjevalnika zaslona"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
 msgstr "Zakleni zaslon"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Zakleni zaslon tako, da lahko začasno zapustite računalnik"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "Zavaruje vaš računalnik pred neavtorizirano uporabo"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "Odjava"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1442,171 +1412,108 @@ msgstr ""
 "Odjavi se iz te seje, da bi se prijavil kot drug upoabnik ali ugasnil "
 "računalnik"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "Poženi program..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "Poženi program z vpisom ukaza"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "Išči datoteke..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "Poišči datoteke, mape in dokumente na vašem računalniku"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "Zajemi sliko zaslona..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "Zajemi sliko zaslona vašega namizja"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "Namizje"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "_Aktiviraj ohranjvalnik zaslona"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "_Zakleni zaslon"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "_Ubij daemon ohranjevalnika zaslona"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "Znova poženi daemon _ohranjevalnika zaslona"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "Zakleni zaslon"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "Odjavi se iz GNOME-a"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "Poženi program"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "Išči datoteke..."
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "Zajem zaslona"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "Nasilen izhod"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "Zaklep"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "Zakleni zaslon tako, da lahko začasno zapustite računalnik"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "Iskanje"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "Zagon"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "Poženi ukaz"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "Poženi program"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "Ustvari zaganjalnik"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "Poženi program..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 #, fuzzy
 msgid "The main GNOME menu"
 msgstr "v glavnem menuju"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Menujska vrstica"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "poizvedba je vrnila izjemo %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, fuzzy, c-format
 msgid "Add to %s"
 msgstr "_Dodaj pultu"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 #, fuzzy
 msgid "Add to the panel"
 msgstr "_Dodaj pultu"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:757
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Izjema iz vzkličnega menuja '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:879
 #, fuzzy, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1616,7 +1523,7 @@ msgstr ""
 "Zdi se, da je pogoltnjen progra nepričakovano umru.\n"
 "Naj ga poskusim znova naložiti?"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:885
 #, fuzzy
 msgid ""
 "\n"
@@ -1631,11 +1538,11 @@ msgstr ""
 "(Če izberete, da ga zdaj ne boste znova naložili, ga lahko vedno dodate s "
 "klikom na desni gumb nad pultom ali klikom na podmenu \"Dodaj pultu\")"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:925
 msgid "D_on't Delete"
 msgstr "_Ne zbriši"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:961
 #, fuzzy, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
@@ -1643,12 +1550,12 @@ msgstr ""
 "\n"
 "Želite zbrisati vstavek iz vaših nastavitev?"
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Podrobnosti: %s"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
 #, fuzzy
 msgid ""
 "\n"
@@ -1659,7 +1566,7 @@ msgstr ""
 "\n"
 "Želite zbrisati vstavek iz vaših nastavitev?"
 
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Od nadzornika ne morem dobiti vmesnika AppletShell\n"
 
@@ -1899,11 +1806,7 @@ msgstr "Zajemi sliko zaslona"
 msgid "Take window screenshot"
 msgstr "Zajemi sliko okna"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "Zavaruje vaš računalnik pred neavtorizirano uporabo"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "Dejanja"
 
@@ -2328,6 +2231,10 @@ msgstr "Ikona ukaza"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "Tu vpišite niz ukaza, ki se bo pognal."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "Poženi program"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2892,6 +2799,10 @@ msgstr "Vstavek: "
 msgid "Large"
 msgstr "Veliko"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "Srednji"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "Usmeritev:"
@@ -2923,6 +2834,70 @@ msgstr "Zelo zelo velik"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Zelo zelo majhen"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Sistemski administrator je prepovedal\n"
+#~ "spreminjanje nastavitev pulta"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Napaka ob nalaganju datoteke glade %s"
+
+#~ msgid "Panel"
+#~ msgstr "Pult"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Izberi nastavitve za vse svoje pulte"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "Hitrost _animacij:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Ko je kliknjen zaganjalnik, zapri predal"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_Animacije predalov in pultov"
+
+#~ msgid "Fast"
+#~ msgstr "Hitro"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Nastavitve pulta"
+
+#~ msgid "Slow"
+#~ msgstr "Počasi"
+
+#~ msgid "Lock Screen"
+#~ msgstr "Zakleni zaslon"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "Zakleni zaslon tako, da lahko začasno zapustite računalnik"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Odjavi se iz GNOME-a"
+
+#~ msgid "Search for Files"
+#~ msgstr "Išči datoteke..."
+
+#~ msgid "Screenshot"
+#~ msgstr "Zajem zaslona"
+
+#~ msgid "Lock"
+#~ msgstr "Zaklep"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "Zakleni zaslon tako, da lahko začasno zapustite računalnik"
+
+#~ msgid "Search"
+#~ msgstr "Iskanje"
+
+#~ msgid "Run"
+#~ msgstr "Zagon"
+
+#~ msgid "Run a command"
+#~ msgstr "Poženi ukaz"
 
 #~ msgid "Accessories"
 #~ msgstr "Pripomočki"

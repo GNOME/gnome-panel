@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
+"POT-Creation-Date: 2004-08-16 20:12+0100\n"
 "PO-Revision-Date: 2004-03-18 20:50+0100\n"
 "Last-Translator: Isam Bayazidi <bayazidi@arabeyes.org>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -48,7 +48,7 @@ msgstr "_حول..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "م_ساعدة"
@@ -251,53 +251,55 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "تعرض الساعة الوقت و اليوم الحاليين"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "تهيئة خاصة للساعة"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "تهيئة الساعات"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "إذا ضبط لـ true، سيعرض في الساعة اليوم بالإضافة إلى الوقت."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "إذا ضبط لـ true، ستعرض البواني في الوقت."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "إذا ضبط لـ true، فسيعرض الوقت بتهيئة UTC."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "إذا ضبط لـtrue، سيعرض اليوم على شكل تلميحة أداة عند وضع مؤشر الفأرة فوق "
 "الساعة."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "عرض اليوم في الساعة"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "عرض اليوم في تلميحة الأدات"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "عرض الوقت بالثواني"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -305,7 +307,7 @@ msgstr ""
 "الغي استخدام هذا المفتاح في جنوم 2.6 دعما لمفاتح 'التهيئة'. ابقي على المخطط "
 "فقط للتطابق مع إصدارات قديمة."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -315,7 +317,7 @@ msgstr ""
 "\"خاص\".يمكنك إستعمال محدّدات تحويل مفهومة من قبل strftime() للحصول على تهيئة "
 "محدّدة."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 #, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
@@ -335,24 +337,24 @@ msgstr ""
 "1970-01-01 مثلا. إذا ضبط لـ\"خاص\" فستعرض الساعة الوقت باعتبار التهيئة "
 "المحدّدة في مفتاح custom_format."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "يحدّد هذا المفتاح البرنامج الذي سيشغّل لإعداد الوقت."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "أدات إعداد الوقت"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 #, fuzzy
 msgid "Use Internet time"
 msgstr "استخدام وقت الإنترنت"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "استخدام وقت يونكس"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "استخدام UTC"
 
@@ -625,8 +627,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "مصنع بريمج تصفح النوافذ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "منتقي النوافذ"
 
@@ -807,11 +809,11 @@ msgstr "يعرض منتقي النوافذ قائمة لكل النوافذ و �
 msgid "Unknown Window"
 msgstr "نافذة مجهولة"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "لا نوافذ مفتوحة"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "أدات للتحول بين النوافذ"
 
@@ -931,7 +933,7 @@ msgid "GNOME Panel Shell"
 msgstr "هيكل شريط جنوم"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "_قفل"
 
@@ -944,7 +946,7 @@ msgid "_Remove From Panel"
 msgstr "_حذف من الشريط"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "_فتح القفل"
 
@@ -994,78 +996,18 @@ msgid "CDE Menu"
 msgstr "قوائم سي دي إي"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "الدرج"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "ال_خصائص"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "إنشاء ملف جديد في المجلد المعطى"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"حدث خطأ عند عرض المساعدة: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"قام مدير النظام بمنع\n"
-"تعديل إعدادات الشريط"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "خطأ عند تحميل ملف كلايد %s"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "الشريط"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "اضبط تفضيلاتك لجميع شرائطك"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "_سرعة الحركة:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "غلق ال_درج عند نقر المطلق"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "_حركة الدرج و الشريط"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "سريع"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "متوسط"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "تفضيلات الشريط"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "بطيء"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1149,6 +1091,15 @@ msgstr "صورة الشاشة-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "مساحة غير كافية لكتابة الملف %s"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"حدث خطأ عند عرض المساعدة: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1302,8 +1253,8 @@ msgid ""
 msgstr ""
 "هذا البرنامج مسؤول عن تشغيل تطبيقات اخرى و تضمين بريمجات صغيرة ضمن نفسه."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "لا يمكن تنفيذ '%s'"
@@ -1340,7 +1291,7 @@ msgstr "لم يمكن الحصول على أسم الملف من المسار: %
 msgid "Could not get directory name from path: %s"
 msgstr "لم يمكن الحصول على أسم الدليل من المسار: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "القائمة الرئيسية"
 
@@ -1372,8 +1323,8 @@ msgstr "إضافة عنصر جديد لهذه القائمة"
 msgid "Properties"
 msgstr "خصائص"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "تطبيقات"
 
@@ -1407,190 +1358,146 @@ msgstr "_حول الشرائط"
 msgid "About _GNOME"
 msgstr "حول _جنوم"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "سطح المكتب"
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "ت_نشيط حافظ الشاشة"
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "_قفل الشاشة"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "_قتل جني حافظ الشاشة"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "إعادة تشغيل جنّي _حافظ الشاشة"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
 msgstr "قفل الشاشة"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "اقفل الشاشة حتى يمكنك مغادرة حاسوبك مؤقتا"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "احمي حاسوبك من الاستخدامات الغير مرخّص بها"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "تسجيل الخروج"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "تسجيل الخروج من هذه الجلسة لتسجيل الدخول كمستخدم آخر أو لإطفاء الحاسوب"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "تشغيل تطبيق..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "تشغيل تطبيق بكتابة أمر"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "بحث عن ملفات..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "ابحث عن ملفات و مجلدات و وثائق في حاسوبك"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "اخذ صورة شاشة..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "خذ صورة الشاشة لسطح مكتبك"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "سطح المكتب"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "ت_نشيط حافظ الشاشة"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "_قفل الشاشة"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "_قتل جني حافظ الشاشة"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "إعادة تشغيل جنّي _حافظ الشاشة"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "قفل الشاشة"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "تسجيل الخروج من جنوم"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "تشغيل تطبيق"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "بحث عن ملفات"
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "صورة شاشة"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "إجبار الإنهاء"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "قفل"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "اقفل الشاشة حتى تتمكن من مغادرة حاسوبك مؤقتا"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "إجبار تطبيق لا يعمل عاديا على الإنتهاء"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "بحث"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "تنفيذ"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "تنفيذ أمر"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "تشغيل تطبيق"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "إنشاء مطلق"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "تشغيل تطبيق..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 #, fuzzy
 msgid "The main GNOME menu"
 msgstr "في القائمة الرئيسية"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "عمود القوائم"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "أرجع الاستعلام الاستثناء %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, fuzzy, c-format
 msgid "Add to %s"
 msgstr "إ_ضافة للشريط"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 #, fuzzy
 msgid "Add to the panel"
 msgstr "إ_ضافة للشريط"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:757
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "استثناء من popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:879
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1601,7 +1508,7 @@ msgstr ""
 "\n"
 "هل تريد إعادة تحميله؟"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:885
 msgid ""
 "\n"
 "\n"
@@ -1613,21 +1520,21 @@ msgstr ""
 "(إذ اخترت عدم إعادة تحميله الآن يمكنك إضافته مستقبلا بالنقر اﻷيمن على الشريط "
 "ثم النقر على القائمة الفرعية \"إضافة للشريط\")"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:925
 msgid "D_on't Delete"
 msgstr "_لا حذف"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:961
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "واجه الشريط مشكلة أثناء تحميل \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "التفاصيل: %s"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
 msgid ""
 "\n"
 "\n"
@@ -1637,7 +1544,7 @@ msgstr ""
 "\n"
 "هل تريد حذف البريمج من إعداداتك؟"
 
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "لا يمكن الحصول على واجهة AppletShell من القطعة\n"
 
@@ -1882,11 +1789,7 @@ msgstr "اخذ صورة شاشة"
 msgid "Take window screenshot"
 msgstr "اخذ صورة شاشة للنافذة"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "احمي حاسوبك من الاستخدامات الغير مرخّص بها"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "أعمال"
 
@@ -2301,6 +2204,10 @@ msgstr "أيقونة الأمر"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "ادخل سلسلة أمر هنا لتنفيذه."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "تشغيل تطبيق"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2855,6 +2762,10 @@ msgstr "البريمج:"
 msgid "Large"
 msgstr "كبير"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "متوسط"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "الاتجاه :"
@@ -2886,6 +2797,70 @@ msgstr "كبير جدا جدا"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "صغير جدا جدا"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "قام مدير النظام بمنع\n"
+#~ "تعديل إعدادات الشريط"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "خطأ عند تحميل ملف كلايد %s"
+
+#~ msgid "Panel"
+#~ msgstr "الشريط"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "اضبط تفضيلاتك لجميع شرائطك"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "_سرعة الحركة:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "غلق ال_درج عند نقر المطلق"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_حركة الدرج و الشريط"
+
+#~ msgid "Fast"
+#~ msgstr "سريع"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "تفضيلات الشريط"
+
+#~ msgid "Slow"
+#~ msgstr "بطيء"
+
+#~ msgid "Lock Screen"
+#~ msgstr "قفل الشاشة"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr "اقفل الشاشة حتى يمكنك مغادرة حاسوبك مؤقتا"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "تسجيل الخروج من جنوم"
+
+#~ msgid "Search for Files"
+#~ msgstr "بحث عن ملفات"
+
+#~ msgid "Screenshot"
+#~ msgstr "صورة شاشة"
+
+#~ msgid "Lock"
+#~ msgstr "قفل"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr "اقفل الشاشة حتى تتمكن من مغادرة حاسوبك مؤقتا"
+
+#~ msgid "Search"
+#~ msgstr "بحث"
+
+#~ msgid "Run"
+#~ msgstr "تنفيذ"
+
+#~ msgid "Run a command"
+#~ msgstr "تنفيذ أمر"
 
 #~ msgid "Accessories"
 #~ msgstr "إكسسوارات"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.7.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
+"POT-Creation-Date: 2004-08-16 20:12+0100\n"
 "PO-Revision-Date: 2004-07-03 14:43+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -51,7 +51,7 @@ msgstr "_Info"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "_Hilfe"
@@ -256,58 +256,60 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Benutzerdefiniertes Uhrenformat"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Stundenformat"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird in der Uhr zusätzlich zur Zeit das "
 "Datum angezeigt."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird die Zeit sekundengenau angezeigt."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird die Zeit in koordinierter Weltzeit "
 "(UTC) angezeigt."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird das Datum in einer Minihilfe "
 "angezeigt, wenn sich die Maus über der Uhr befindet?"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Datum in Uhr anzeigen"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Datum in Minihilfe anzeigen"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Zeit sekundengenau anzeigen"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -316,7 +318,7 @@ msgstr ""
 "Schlüssels für nichtig erklärt. Das Schema wird zwecks "
 "Rückwärtskompatibilität beibehalten."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -326,7 +328,7 @@ msgstr ""
 "Format-Schlüssel »custom« (benutzerdefiniert) ist. Sie können von »strftime"
 "()« akzeptierte Platzhalter verwenden, um ein bestimmtes Format zu erzielen."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -344,25 +346,25 @@ msgstr ""
 "»custom« (benutzerdefiniert, dem vom Schlüssel »custom_format« angegebenen "
 "Format entsprechend)."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Dieser Schlüssel gibt das zum Konfigurieren der Zeit auszuführende Programm "
 "an."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Werkzeug zur Zeitkonfiguration"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Internet-Zeit verwenden"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "UNIX-Zeit verwenden"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "UTC verwenden"
 
@@ -652,8 +654,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fabrik für Fensternavigationsapplet"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "Fensterwähler"
 
@@ -854,11 +856,11 @@ msgstr ""
 msgid "Unknown Window"
 msgstr "Unbekanntes Fenster"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "Keine Fenster geöffnet"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "Werkzeug zum Wechseln zwischen Fenstern"
 
@@ -983,7 +985,7 @@ msgid "GNOME Panel Shell"
 msgstr "Befehlszeile des GNOME-Panels"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "_Sperren"
 
@@ -996,7 +998,7 @@ msgid "_Remove From Panel"
 msgstr "Aus dem Panel _entfernen"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "_Freigeben"
 
@@ -1046,78 +1048,18 @@ msgid "CDE Menu"
 msgstr "CDE-Menü"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "Schublade"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "Eine neue Datei im angegebenen Verzeichnis anlegen"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"Der Systemadministrator hat Änderungen\n"
-"an den Panel-Einstellungen untersagt"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "Fehler beim Laden der Glade-Datei %s"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "Panel"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "Die globalen Einstellungen für all Ihre Panels festlegen"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "Animations_geschwindigkeit:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "Schublade _schließen, wenn ein Starter darin gedrückt wird"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "Schubladen- und Panel-_Animation"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "Schnell"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "Mittel"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "Panel-Einstellungen"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Langsam"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1201,6 +1143,15 @@ msgstr "Bildschirmfoto-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nicht genügend Plattenplatz verfügbar, um Datei %s zu schreiben"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1362,8 +1313,8 @@ msgstr ""
 "Dieses Program ist verantwortlich für das Starten anderer Anwendungen sowie "
 "das Einbetten kleiner Applets in sich selbst."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "»%s« konnte nicht ausgeführt werden"
@@ -1400,7 +1351,7 @@ msgstr "Dateiname konnte dem Pfad nicht entnommen werden: %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Verzeichnisname konnte dem Pfad nicht entnommen werden: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Hauptmenü"
 
@@ -1432,8 +1383,8 @@ msgstr "Neuen Eintrag zum Menü hinzufügen"
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "Anwendungen"
 
@@ -1466,22 +1417,39 @@ msgstr "_Info zu den Panels"
 msgid "About _GNOME"
 msgstr "Info zu _GNOME"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "Desktop"
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "Bildschirmschoner _aktivieren"
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "Bildschirm _sperren"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "Bildschirmschoner-Dämon ab_würgen"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "Bildschirmschoner-Dämon _neu starten"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr ""
-"Den Bildschirm sperren, sodass Sie den Computer vorübergehend verlassen "
-"können"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "Den Computer vor unbefugtem Zugriff schützen"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "Abmelden"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1489,170 +1457,105 @@ msgstr ""
 "Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden "
 "oder den Computer herunterzufahren"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "Anwendung ausführen..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "Eine Anwendung durch Eingabe eines Befehls ausführen"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "Nach Dateien suchen..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "Auf dem Computer nach Dateien, Ordnern und Dokumenten suchen"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "Bildschirmfoto aufnehmen..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "Desktop"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "Bildschirmschoner _aktivieren"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "Bildschirm _sperren"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "Bildschirmschoner-Dämon ab_würgen"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "Bildschirmschoner-Dämon _neu starten"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "Bildschirm sperren"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "Von GNOME abmelden"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "Anwendung ausführen"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "Nach Dateien suchen"
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "Bildschirmfoto"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "Beenden erzwingen"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "Sperren"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr ""
-"Den Bildschirm sperren, sodass Sie den Computer vorübergehend verlassen "
-"können"
-
 # CHECK - misbehaving übersetzen, ohne erzieherisch zu wirken
 # 	  ("schlecht benehmen")
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "Das Beenden einer fehlerhaften Anwendung erzwingen"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "Suchen"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "Ausführen"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "Einen Befehl ausführen"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 msgid "Custom Application Launcher"
 msgstr "Benutzerdefinierter Anwendungsstarter"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 msgid "Create a new launcher"
 msgstr "Einen neuen Starter anlegen"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 msgid "Application Launcher..."
 msgstr "Anwendungsstarter..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Ein Programm ausführen, das sich bereits im GNOME-Menü befindet"
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 msgid "The main GNOME menu"
 msgstr "Das GNOME-Hauptmenü"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Menüleiste"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr "Eine benutzerdefinierte Menüleiste"
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr "Eine Popup-Schublade, in der andere Objekte abgelegt werden können"
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr "(leer)"
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Anfrage lieferte Ausnahmefehler %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, c-format
 msgid "Add to %s"
 msgstr "Zu %s hinzufügen"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 msgid "Add to the panel"
 msgstr "Zum Panel hinzufügen"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Wählen Sie ein _Objekt, das zu %s hinzugefügt werden soll:"
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:757
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Ausnahmefehler des popup_menu-Menüs »%s«\n"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:879
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1663,7 +1566,7 @@ msgstr ""
 "\n"
 "Wollen Sie dieses Applet neu laden?"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:885
 msgid ""
 "\n"
 "\n"
@@ -1676,21 +1579,21 @@ msgstr ""
 "können Sie es jederzeit durch einen Rechtsklick auf ein Panel und das "
 "Anklicken des »Zum Panel hinzufügen«-Untermenüs hinzufügen.)"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:925
 msgid "D_on't Delete"
 msgstr "_Nicht löschen"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:961
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Das Panel ist beim Laden von »%s« auf ein Problem gestoßen."
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Details: %s"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
 msgid ""
 "\n"
 "\n"
@@ -1700,7 +1603,7 @@ msgstr ""
 "\n"
 "Wollen Sie das Applet aus Ihrer Konfiguration löschen?"
 
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 "Die AppletShell-Applet-Befehlszeilenschnittstelle konnte nicht vom "
@@ -1968,11 +1871,7 @@ msgstr "Bildschirmfoto aufnehmen"
 msgid "Take window screenshot"
 msgstr "Bildschirmfoto eines Fensters aufnehmen"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "Den Computer vor unbefugtem Zugriff schützen"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -2408,6 +2307,10 @@ msgstr "Befehlssymbol"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "Geben Sie hier einen Befehl ein, um ihn auszuführen."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "Anwendung ausführen"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -3001,6 +2904,10 @@ msgstr "Applet:"
 msgid "Large"
 msgstr "Groß"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "Mittel"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "Ausrichtung:"
@@ -3032,6 +2939,74 @@ msgstr "Extrem groß"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extrem klein"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "Der Systemadministrator hat Änderungen\n"
+#~ "an den Panel-Einstellungen untersagt"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Fehler beim Laden der Glade-Datei %s"
+
+#~ msgid "Panel"
+#~ msgstr "Panel"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Die globalen Einstellungen für all Ihre Panels festlegen"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "Animations_geschwindigkeit:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Schublade _schließen, wenn ein Starter darin gedrückt wird"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "Schubladen- und Panel-_Animation"
+
+#~ msgid "Fast"
+#~ msgstr "Schnell"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Panel-Einstellungen"
+
+#~ msgid "Slow"
+#~ msgstr "Langsam"
+
+#~ msgid "Lock Screen"
+#~ msgstr "Bildschirm sperren"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Den Bildschirm sperren, sodass Sie den Computer vorübergehend verlassen "
+#~ "können"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Von GNOME abmelden"
+
+#~ msgid "Search for Files"
+#~ msgstr "Nach Dateien suchen"
+
+#~ msgid "Screenshot"
+#~ msgstr "Bildschirmfoto"
+
+#~ msgid "Lock"
+#~ msgstr "Sperren"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Den Bildschirm sperren, sodass Sie den Computer vorübergehend verlassen "
+#~ "können"
+
+#~ msgid "Search"
+#~ msgstr "Suchen"
+
+#~ msgid "Run"
+#~ msgstr "Ausführen"
+
+#~ msgid "Run a command"
+#~ msgstr "Einen Befehl ausführen"
 
 #~ msgid "Accessories"
 #~ msgstr "Zubehör"

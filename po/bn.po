@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.bn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
+"POT-Creation-Date: 2004-08-16 20:12+0100\n"
 "PO-Revision-Date: 2003-08-13 01:49-0400\n"
 "Last-Translator: Runa Bhattacharjee <runa@bengalinux.org>\n"
 "Language-Team: Bengali/Bangla <gnome-translation@bengalinux.org>\n"
@@ -47,7 +47,7 @@ msgstr "সম্বন্ধে (_প)..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "সহায়িকা (_স)"
@@ -250,51 +250,53 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "ঘড়ি-তে এই মূহুর্তের সময় ও তারিখ প্রদর্শিত হয়"
 
-#: applets/clock/clock.schemas.in.h:1
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
 msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
 msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "ঘড়ির নিজস্ব ফরমা"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "ঘন্টা-র ফরমা"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "সত্য (true) হলে সময়ের সাথে ঘড়িতে তারিখও প্রদর্শন করো।"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "সত্য (true) হলে সময় দেখানোর সময় সেকেন্ডও প্রদর্শন করো।"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "সত্য (true) হলে ইউনিভারসাল কোওরডিনেটেড টাইম জোন-এ সময় প্রদর্শন করো।"
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "সত্য (true) হলে ঘড়ির ওপরে মাউস আনা হলে একটি টুলটিপে তারিখ প্রদর্শন করো।"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "ঘড়িতে তারিখ প্রদর্শন করো"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "টুলটিপ-এ তারিখ প্রদর্শন করো"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "সেকেন্ড সহ সময় প্রদর্শন করো"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -302,7 +304,7 @@ msgstr ""
 "GNOME 2.6 এ এই কী (key) টি সরিয়ে ফেলে 'format' কী (key) টি ব্যবহৃত হয়। পুরাতন "
 "ভারসানগুলোর সাথে সামঞ্জস্য রাখার জন্য এই ধরণটি বজায় রাখা হয়েছে।"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -312,7 +314,7 @@ msgstr ""
 "ফরমাটি ব্যবহার করবে। strftime() এর বোধগম্য পরিবর্তন নির্দেশক ব্যবহার করে একটি "
 "নির্দিষ্ট ফরমা তপিরি করা সম্ভব হবে।"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 #, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
@@ -332,25 +334,25 @@ msgstr ""
 "১৯৭০-০১-০১ থেকে সেকন্ডে সময় প্রদর্শিত হবে। যদি মান \"নিজস্ব\" হয়, তাহলে "
 "নিজস্ব_ফরমা কী (key) তেনির্ধারিত ফরমাটির ব্যবহার করে ঘড়িতে সময় প্রদর্শিত হবে।"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "এই কী (key) সময় কনফিগার করার জন্য যে প্রোগ্রাম চালানো হবে সেটা নির্ধারণ করে।"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "সময় কনফিগার করার টুল"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 #, fuzzy
 msgid "Use Internet time"
 msgstr "ইন্টারনেটের সময় ব্যবহার করো"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "ইউনিকস্‌-এর সময় ব্যবহার করো"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "ইউ-টি-সি ব্যবহার করো"
 
@@ -625,8 +627,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "উইন্ডো ন্যাভিগেশন অ্যাপ্লেট ফ্যাক্টরি"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "উইন্ডো নির্বাচক"
 
@@ -815,11 +817,11 @@ msgstr ""
 msgid "Unknown Window"
 msgstr "অজানা উইন্ডো"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "কোন উইন্ডো খোলা নেই"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "খোলা উইন্ডোগুলির মধ্যে অদলবদল করার প্রোগ্রাম"
 
@@ -942,7 +944,7 @@ msgid "GNOME Panel Shell"
 msgstr "গুহ্‍নোম প্যানেল শেল"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
 msgid "_Lock"
 msgstr "লক করে দিন (_আ)"
 
@@ -955,7 +957,7 @@ msgid "_Remove From Panel"
 msgstr "প্যানেল থেকে সরিয়ে ফেল (_প)"
 
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:462
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:113
 msgid "Un_lock"
 msgstr "খুলে দিন (_খ)"
 
@@ -1005,78 +1007,18 @@ msgid "CDE Menu"
 msgstr "সি-ডি-ই মেনু"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "ড্রয়ার"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "বৈশিষ্ট্যাবলী (_ব)"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "বাছাই করা ডিরেক্টরিতে নতুন ফাইল তৈরি করো"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"সহায়িকা প্রদর্শনে সমস্যা দেখা দিয়েছে: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"সিস্টেম অ্যাড্‌মিনিস্ট্রেটর প্যানেলের কন্‌ফিগারেশন\n"
-"পরিবর্তন করার অনুমতি প্রদান করেননি"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "glade ফাইল %s লোড করতে সমস্যা হয়েছে"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "প্যানেল"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "আপনার প্যানেলগুলির সম্বন্ধে পছন্দসমূহ নির্বাচন করুন"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "অ্যানিমেশনের গতি (_গ):"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "লঞ্চারে ক্লিক্‌ করা হলে ড্রয়ার বন্ধ করো (_ব)"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "ড্রয়ার এবং প্যানেলের অ্যানিমেশন (_অ)"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "দ্রুত গতিতে"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "মধ্যম গতিতে"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "প্যানেল সম্বন্ধীয় পছন্দসমূহ"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "ধীর গতিতে"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1160,6 +1102,15 @@ msgstr "পর্দাছবি-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "%s ফাইলটি লেখার যথেষ্ট যায়গা নেই"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"সহায়িকা প্রদর্শনে সমস্যা দেখা দিয়েছে: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1318,8 +1269,8 @@ msgstr ""
 "এই প্রোগ্রামটি অন্য অ্যাপ্লিকেশন চালাতে ও নিজের সাথে ক্ষুদ্র অ্যাপ্লেট সন্নিবিষ্ট করতে "
 "সক্ষম।"
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' চালানো সম্ভব নয়"
@@ -1356,7 +1307,7 @@ msgstr "ফাইলের নাম, পাথ থেকে উদ্ধার 
 msgid "Could not get directory name from path: %s"
 msgstr "ডিরেক্টরির নাম, পাথ থেকে উদ্ধার করা যায়নি: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "মূল মেনু"
 
@@ -1388,8 +1339,8 @@ msgstr "এই মেনু-তে নতুন বস্তু যোগ কর
 msgid "Properties"
 msgstr "বৈশিষ্ট্যাবলী"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "অ্যাপ্‌লিকেশন সমূহ"
 
@@ -1423,22 +1374,39 @@ msgstr "প্যানেল পরিচিতি (_প)"
 msgid "About _GNOME"
 msgstr "গুহ্‍নোম সম্বন্ধে (_গ)"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "ডেস্কটপ"
+
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "স্ক্রিনসেভার সক্রিয় করো (_স)"
+
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "পর্দা লক করো (_ল)"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "স্ক্রিনসেভার ডেমনটি ধংশ করো (_ধ)"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "স্ক্রিনসেভার ডেমনটিকে পুনরায় চালু করো (_চ)"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
 msgstr "পর্দা লক করো"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr ""
-"পর্দা লক করে নিন যাতে আপনি কিছুক্ষণের জন্য আপনার কম্পিউটার ছেড়ে অন্য কোথাও যেতে "
-"পারেন"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "আপনার কম্পিউটারকে অননুমত ব্যবহার থেকে রক্ষা করুন"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "প্রস্থান (লগ অউট)"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1446,173 +1414,108 @@ msgstr ""
 "অন্য ব্যবহারকারী হয়ে লগ-ইন করতে  অথবা আপনার কম্পিউটার বন্ধ করে দিতে হলে, এই সেশন "
 "থেকে প্রস্থান (লগ-আউট) করুন"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "অ্যাপ্লিকেশন চালাও..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "একটি কমান্ড লিখে অ্যাপ্লিকেশন চালান"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "ফাইলের খঁোজ করো ..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "আপনার কম্পিউটারে ফাইল, ফোল্ডার এবং ডকুমেন্ট খঁুজুন"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "পর্দার ছবি তোলো..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "ডেস্কটপের একটি ছবি নিন"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "ডেস্কটপ"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "স্ক্রিনসেভার সক্রিয় করো (_স)"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "পর্দা লক করো (_ল)"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "স্ক্রিনসেভার ডেমনটি ধংশ করো (_ধ)"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "স্ক্রিনসেভার ডেমনটিকে পুনরায় চালু করো (_চ)"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "পর্দা লক করো"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "গুহ্‍নোম থেকে লগ-অউট করো"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "অ্যাপ্লিকেশন চালাও"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "ফাইলের খঁোজ করো"
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "স্ক্রিনশট"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "জোর করে প্রোগ্রাম বন্ধ করো"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "লক করা"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr ""
-"পর্দা লক করে নিন যাতে আপনি কিছুক্ষণের জন্য আপনার কম্‌পিউটার ছেড়ে অন্য কোথাও যেতে "
-"পারেন"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "কোন উশৃঙ্খল অ্যাপ্লিকেশনকে জোর করে বন্ধ করো"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "অনুসন্ধান"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "চালাও"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "একটি কমান্ড চালাও"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 #, fuzzy
 msgid "Custom Application Launcher"
 msgstr "অ্যাপ্লিকেশন চালাও"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 #, fuzzy
 msgid "Create a new launcher"
 msgstr "লঞ্চার তৈরি করো"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 #, fuzzy
 msgid "Application Launcher..."
 msgstr "অ্যাপ্লিকেশন চালাও..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 #, fuzzy
 msgid "The main GNOME menu"
 msgstr "গুহ্‍নোম প্যানেল"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "মেনুবার"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "কোয়েরির ফলাফল হিসাবে এক্সেপশন হলো %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, fuzzy, c-format
 msgid "Add to %s"
 msgstr "প্যানেলে যোগ করো (_য)"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 #, fuzzy
 msgid "Add to the panel"
 msgstr "প্যানেলে যোগ করো (_য)"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr ""
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:746
+#: gnome-panel/panel-applet-frame.c:757
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "'%s' পপ্‌-আপ মেনুতে exception হয়েছে (_ম) \n"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:879
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1623,7 +1526,7 @@ msgstr ""
 "\n"
 "এই অ্যাপ্লেটটিকে কি আপনি পুনরায় লোড করতে ইচ্ছুক?"
 
-#: gnome-panel/panel-applet-frame.c:873
+#: gnome-panel/panel-applet-frame.c:885
 msgid ""
 "\n"
 "\n"
@@ -1635,21 +1538,21 @@ msgstr ""
 "(এখন রিলোড না করতে চাইলে আপনি আপনার সুবিধামতো প্যানেলে রাইট ক্লিক্‌ করে "
 "\"প্যানেলে  যোগ করো\" সাবমেনুতে ক্লিক্‌ করে যোগ করতে পারবেন)"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:925
 msgid "D_on't Delete"
 msgstr "মুছে ফেলবেন না (_ন)"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:961
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" লোড করার সময় প্যানেলে সমস্যা হয়েছে।"
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:260
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "বিস্তারিত: %s"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
 msgid ""
 "\n"
 "\n"
@@ -1659,7 +1562,7 @@ msgstr ""
 "\n"
 "আপনি কি কন্‌ফিগরেশন থেকে অ্যাপ্‌লেটটি মুছে ফেলতে চান?"
 
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1097
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "কন্ট্রোল থেকে অ্যাপ্‌লেটশেল ইন্টারফেস পাওয়া গেল না\n"
 
@@ -1915,11 +1818,7 @@ msgstr "পর্দার ছবি নেও"
 msgid "Take window screenshot"
 msgstr "উইন্ডোর ছবি নেও"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "আপনার কম্পিউটারকে অননুমত ব্যবহার থেকে রক্ষা করুন"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "কার্যবলী"
 
@@ -2342,6 +2241,10 @@ msgstr "কমান্ডটির আইকন"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "কোন কমান্ড চালাতে চাইলে এখানে সেই কমান্ড-টিকে লিখুন।"
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "অ্যাপ্লিকেশন চালাও"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2903,6 +2806,10 @@ msgstr "অ্যাপ্লেট:"
 msgid "Large"
 msgstr "বড়"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "মধ্যম গতিতে"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "দিশা:"
@@ -2934,6 +2841,74 @@ msgstr "অত্যাধিক বড়"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "অত্যাধিক ছোট"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "সিস্টেম অ্যাড্‌মিনিস্ট্রেটর প্যানেলের কন্‌ফিগারেশন\n"
+#~ "পরিবর্তন করার অনুমতি প্রদান করেননি"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "glade ফাইল %s লোড করতে সমস্যা হয়েছে"
+
+#~ msgid "Panel"
+#~ msgstr "প্যানেল"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "আপনার প্যানেলগুলির সম্বন্ধে পছন্দসমূহ নির্বাচন করুন"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "অ্যানিমেশনের গতি (_গ):"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "লঞ্চারে ক্লিক্‌ করা হলে ড্রয়ার বন্ধ করো (_ব)"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "ড্রয়ার এবং প্যানেলের অ্যানিমেশন (_অ)"
+
+#~ msgid "Fast"
+#~ msgstr "দ্রুত গতিতে"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "প্যানেল সম্বন্ধীয় পছন্দসমূহ"
+
+#~ msgid "Slow"
+#~ msgstr "ধীর গতিতে"
+
+#~ msgid "Lock Screen"
+#~ msgstr "পর্দা লক করো"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr ""
+#~ "পর্দা লক করে নিন যাতে আপনি কিছুক্ষণের জন্য আপনার কম্পিউটার ছেড়ে অন্য কোথাও যেতে "
+#~ "পারেন"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "গুহ্‍নোম থেকে লগ-অউট করো"
+
+#~ msgid "Search for Files"
+#~ msgstr "ফাইলের খঁোজ করো"
+
+#~ msgid "Screenshot"
+#~ msgstr "স্ক্রিনশট"
+
+#~ msgid "Lock"
+#~ msgstr "লক করা"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr ""
+#~ "পর্দা লক করে নিন যাতে আপনি কিছুক্ষণের জন্য আপনার কম্‌পিউটার ছেড়ে অন্য কোথাও যেতে "
+#~ "পারেন"
+
+#~ msgid "Search"
+#~ msgstr "অনুসন্ধান"
+
+#~ msgid "Run"
+#~ msgstr "চালাও"
+
+#~ msgid "Run a command"
+#~ msgstr "একটি কমান্ড চালাও"
 
 #~ msgid "Accessories"
 #~ msgstr "আনুষঙ্গিক"
