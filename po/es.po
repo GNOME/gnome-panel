@@ -14,14 +14,14 @@
 # Germán Poo Caamaño <gpoo@ubiobio.cl>, 2002 (Revisor).
 # Juan Manuel García Molina <juanma_gm@wanadoo.es>, 2003.
 # Yelitza Louze <ylouze@redhat.com>, 2003.
-# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-26 20:33+0100\n"
-"PO-Revision-Date: 2004-12-26 20:34+0100\n"
+"POT-Creation-Date: 2005-01-07 02:34+0100\n"
+"PO-Revision-Date: 2005-01-07 02:36+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -59,8 +59,8 @@ msgstr "A_cerca de"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:770
+#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:350
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "A_yuda"
@@ -198,11 +198,11 @@ msgid "Custom format"
 msgstr "Formato personalizado"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
-#: applets/fish/fish.c:137 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
-#: applets/wncklet/workspace-switcher.c:202
-#: applets/wncklet/workspace-switcher.c:508
+#: applets/fish/fish.c:144 applets/notification_area/main.c:81
+#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/workspace-switcher.c:261
+#: applets/wncklet/workspace-switcher.c:569
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ha ocurrido un error al mostrar la ayuda: %s"
@@ -248,10 +248,10 @@ msgid "Use _UTC"
 msgstr "Usar _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
-#: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
-#: applets/wncklet/workspace-switcher.c:539
+#: applets/clock/clock.c:2584 applets/fish/fish.c:481
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:467
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:128
 msgid "translator-credits"
 msgstr ""
@@ -385,7 +385,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Muestra un pez nadando u otra criatura animada"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: applets/fish/fish.c:500
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Pez"
 
@@ -397,7 +397,7 @@ msgstr "De dónde proviene ese estúpido pez"
 msgid "Wanda Factory"
 msgstr "Fábrica de Wanda"
 
-#: applets/fish/fish.c:207
+#: applets/fish/fish.c:214
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -411,12 +411,12 @@ msgstr ""
 "Le rogamos encarecidamente que no use %s para algo\n"
 "que pueda hacer la miniaplicación «práctica» o útil."
 
-#: applets/fish/fish.c:466 applets/fish/fish.c:528 applets/fish/fish.c:643
+#: applets/fish/fish.c:467 applets/fish/fish.c:529 applets/fish/fish.c:644
 #, no-c-format
 msgid "%s the Fish"
 msgstr "El pez %s"
 
-#: applets/fish/fish.c:467
+#: applets/fish/fish.c:468
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -430,25 +430,25 @@ msgstr ""
 "miniaplicación debería ser enviado inmediatamente a que le hagan un examen "
 "psiquiátrico."
 
-#: applets/fish/fish.c:493
+#: applets/fish/fish.c:494
 msgid "(with minor help from George)"
 msgstr "(con un poco de ayuda de George)"
 
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:530
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s el Pez, un oráculo contemporáneo"
 
-#: applets/fish/fish.c:599
+#: applets/fish/fish.c:600
 msgid "Unable to locate the command to execute"
 msgstr "No se puede ubicar el comando para ejecutar"
 
-#: applets/fish/fish.c:648
+#: applets/fish/fish.c:649
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s, el Pez, dice:"
 
-#: applets/fish/fish.c:717
+#: applets/fish/fish.c:718
 #, c-format
 msgid ""
 "Unable to read output from command\n"
@@ -459,16 +459,16 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: applets/fish/fish.c:782
+#: applets/fish/fish.c:783
 msgid "_Speak again"
 msgstr "_Hable otra vez"
 
-#: applets/fish/fish.c:863
+#: applets/fish/fish.c:864
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
 msgstr "El comando configurado no está funcionando y se ha reemplazado por: %s"
 
-#: applets/fish/fish.c:886
+#: applets/fish/fish.c:887
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -479,7 +479,7 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: applets/fish/fish.c:902
+#: applets/fish/fish.c:903
 #, c-format
 msgid ""
 "Unable to read from '%s'\n"
@@ -490,7 +490,7 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: applets/fish/fish.c:1539
+#: applets/fish/fish.c:1565
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -498,7 +498,7 @@ msgstr ""
 "¡El agua necesita un cambio!\n"
 "(Mire la fecha de hoy)"
 
-#: applets/fish/fish.c:1599
+#: applets/fish/fish.c:1659
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s El Pez, el que dice la fortuna"
@@ -639,6 +639,7 @@ msgid "Area where notification icons appear"
 msgstr "Área donde aparecen los iconos de notificación"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+#: applets/notification_area/main.c:128
 msgid "Notification Area"
 msgstr "Área de notificación"
 
@@ -654,7 +655,7 @@ msgstr "Orientación"
 msgid "The orientation of the tray."
 msgstr "La orientación del panel de notificación."
 
-#: applets/notification_area/main.c:128 applets/notification_area/main.c:341
+#: applets/notification_area/main.c:341
 msgid "Panel Notification Area"
 msgstr "Área del panel de notificación"
 
@@ -679,7 +680,7 @@ msgid "Switch between workspaces"
 msgstr "Intercambiar entre las áreas de trabajo"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:820
+#: applets/wncklet/window-list.c:819
 msgid "Window List"
 msgstr "Lista de ventanas"
 
@@ -688,13 +689,13 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fábrica de miniaplicaciones de navegación de ventana"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:886 applets/wncklet/window-menu.c:888
+#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
+#: applets/wncklet/window-menu.c:873
 msgid "Window Selector"
 msgstr "Selector de ventanas"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:550
-#: applets/wncklet/workspace-switcher.c:957
+#: applets/wncklet/workspace-switcher.c:611
 msgid "Workspace Switcher"
 msgstr "Intercambiador de áreas de trabajo"
 
@@ -715,15 +716,15 @@ msgstr "Fallo al cargar %s: %s\n"
 msgid "File not found"
 msgstr "Archivo no encontrado"
 
-#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:479
+#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:478
 msgid "Show Desktop Button"
 msgstr "Botón para mostrar el escritorio"
 
-#: applets/wncklet/showdesktop.c:482
+#: applets/wncklet/showdesktop.c:481
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Este botón le permite ocultar todas las ventanas y mostrar el escritorio."
 
-#: applets/wncklet/showdesktop.c:523
+#: applets/wncklet/showdesktop.c:522
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -731,7 +732,7 @@ msgstr ""
 "Su gestor de ventanas no soporta el botón para mostrar el escritorio, o ud. "
 "no está ejecutando un gestor de ventanas."
 
-#: applets/wncklet/window-list.c:823
+#: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "La lista de ventanas muestra una lista de todas las ventanas y le permite "
@@ -802,7 +803,7 @@ msgid "_Never group windows"
 msgstr "_Nunca agrupar las ventanas"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "pixels"
 msgstr "píxeles"
 
@@ -866,61 +867,57 @@ msgstr "Esta clave especifica el ancho mínimo que utilizará la lista de ventan
 msgid "When to group windows"
 msgstr "Cuándo agrupar las ventanas"
 
-#: applets/wncklet/window-menu.c:129
-msgid "Workspace Selector"
-msgstr "Selector de áreas de trabajo"
-
-#: applets/wncklet/window-menu.c:134
+#: applets/wncklet/window-menu.c:135
 msgid "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "El selector de ventanas muestra una lista de todas las ventanas y le permite "
 "examinarlas."
 
-#: applets/wncklet/window-menu.c:309
+#: applets/wncklet/window-menu.c:310
 msgid "Unknown Window"
 msgstr "Ventana desconocida"
 
-#: applets/wncklet/window-menu.c:724
+#: applets/wncklet/window-menu.c:691
 msgid "No Windows Open"
 msgstr "No hay ventanas abiertas"
 
-#: applets/wncklet/window-menu.c:887
+#: applets/wncklet/window-menu.c:872
 msgid "Tool to switch between windows"
 msgstr "Herramienta para cambiar entre ventanas"
 
-#: applets/wncklet/workspace-switcher.c:146
-#: applets/wncklet/workspace-switcher.c:861
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:922
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "filas"
 
-#: applets/wncklet/workspace-switcher.c:146
-#: applets/wncklet/workspace-switcher.c:861
+#: applets/wncklet/workspace-switcher.c:144
+#: applets/wncklet/workspace-switcher.c:922
 msgid "columns"
 msgstr "columnas"
 
-#: applets/wncklet/workspace-switcher.c:390
+#: applets/wncklet/workspace-switcher.c:449
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor de num_rows para el paginador de espacios de "
 "trabajo: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:401
+#: applets/wncklet/workspace-switcher.c:460
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor display_workspace_names para el paginador de áreas "
 "de trabajo: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:416
+#: applets/wncklet/workspace-switcher.c:475
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Error al cargar el valor display_all_workspaces para el paginador de áreas "
 "de trabajo: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:553
+#: applets/wncklet/workspace-switcher.c:614
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1008,29 +1005,23 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "Shell del panel de GNOME"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:99
-#: gnome-panel/applet.c:480 gnome-panel/panel-applet-frame.c:130
-msgid "_Lock"
-msgstr "B_loquear"
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+msgid "_Lock To Panel"
+msgstr "_Bloquear al panel"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:488
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
 msgid "_Move"
 msgstr "_Mover"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:472
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:511
 msgid "_Remove From Panel"
 msgstr "_Quitar del panel"
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:480
-#: gnome-panel/panel-applet-frame.c:130
-msgid "Un_lock"
-msgstr "De_sbloquear"
-
-#: gnome-panel/applet.c:389
+#: gnome-panel/applet.c:428
 msgid "???"
 msgstr "¿?"
 
-#: gnome-panel/applet.c:1145
+#: gnome-panel/applet.c:1194
 msgid "Can't find an empty spot"
 msgstr "No se pudo encontrar un espacio vacío"
 
@@ -1057,7 +1048,7 @@ msgid "_Add to drawer..."
 msgstr "Añadir al _cajón..."
 
 #: gnome-panel/drawer.c:605 gnome-panel/launcher.c:837
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:283
+#: gnome-panel/panel-action-button.c:135 gnome-panel/panel-context-menu.c:283
 msgid "_Properties"
 msgstr "_Propiedades"
 
@@ -1173,46 +1164,46 @@ msgstr "Añadir este cajón al panel"
 msgid "Add this as menu to panel"
 msgstr "Añadir este menú al panel"
 
-#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:182
+#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:201
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: gnome-panel/panel-action-button.c:108
+#: gnome-panel/panel-action-button.c:111
 msgid "_Activate Screensaver"
 msgstr "_Activar el protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:114
+#: gnome-panel/panel-action-button.c:117
 msgid "_Lock Screen"
 msgstr "B_loquear la pantalla"
 
-#: gnome-panel/panel-action-button.c:120
+#: gnome-panel/panel-action-button.c:123
 msgid "_Kill Screensaver Daemon"
 msgstr "_Matar el demonio del protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:126
+#: gnome-panel/panel-action-button.c:129
 msgid "Restart _Screensaver Daemon"
 msgstr "Reiniciar el _demonio del protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:58
+#: gnome-panel/panel-action-button.c:230 gnome-panel/panel-action-button.c:243
+#: gnome-panel/panel-action-button.c:267 gnome-panel/panel-context-menu.c:58
 #: gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "No se puede ejecutar «%s»"
 
-#: gnome-panel/panel-action-button.c:289
-msgid "Lock screen"
+#: gnome-panel/panel-action-button.c:310
+msgid "Lock Screen"
 msgstr "Bloquear la pantalla"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
 msgstr "Proteja su computadora del uso no autorizado"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:323
 msgid "Log Out"
 msgstr "Terminar la sesión"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:324
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1220,35 +1211,51 @@ msgstr ""
 "Salir de esta sesión para iniciar sesión como un usuario diferente o apagar "
 "su computadora"
 
-#: gnome-panel/panel-action-button.c:313
-msgid "Run Application..."
-msgstr "Ejecutar un programa…"
+#: gnome-panel/panel-action-button.c:334
+msgid "Shut Down"
+msgstr "Apagar"
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:335
+msgid "Log out of GNOME and shut down the computer"
+msgstr "Cerrar la sesión de Gnome y apagar el equipo"
+
+#: gnome-panel/panel-action-button.c:345
+msgid "Restart"
+msgstr "Reiniciar"
+
+#: gnome-panel/panel-action-button.c:346
+msgid "Log out of GNOME and reboot the computer"
+msgstr "Cerrar la sesión de Gnome y reiniciar el equipo"
+
+#: gnome-panel/panel-action-button.c:356
+msgid "Run Application..."
+msgstr "Ejecutar una aplicación..."
+
+#: gnome-panel/panel-action-button.c:357
 msgid "Run an Application by entering a command"
 msgstr "Ejecute una aplicación introduciendo un comando"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:367
 msgid "Search for Files..."
-msgstr "Buscar archivos…"
+msgstr "Buscar archivos..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:368
 msgid "Find files, folders, and documents on your computer"
 msgstr "Busca archivos, carpetas y documentos en su computadora"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:377
 msgid "Take Screenshot..."
 msgstr "Capturar la pantalla…"
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:378
 msgid "Take a screenshot of your desktop"
 msgstr "Captura la pantalla de su escritorio"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:387
 msgid "Force Quit"
 msgstr "Forzar el cierre"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:388
 msgid "Force a misbehaving application to quit"
 msgstr "Forzar la salida de la aplicación de comportamiento errático"
 
@@ -1315,48 +1322,48 @@ msgstr "Seleccione un _elemento para añadirlo a %s:"
 msgid "Select an _item to add to the panel:"
 msgstr "Seleccione un _elemento para añadirlo al panel:"
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:815
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepción de popup_menu «%s»\n"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:934
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "«%s» ha terminado de forma inesperada"
 
-#: gnome-panel/panel-applet-frame.c:906
+#: gnome-panel/panel-applet-frame.c:936
 msgid "Panel object has quit unexpectedly"
 msgstr "El objeto del panel ha terminado de forma inesperada"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:943
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Si recarga un objeto del panel, se añadirá automáticamente otra vez al panel."
 
-#: gnome-panel/panel-applet-frame.c:919
+#: gnome-panel/panel-applet-frame.c:949
 msgid "_Don't Reload"
 msgstr "_No recargar"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:950
 msgid "_Reload"
 msgstr "_Recargar"
 
-#: gnome-panel/panel-applet-frame.c:946
+#: gnome-panel/panel-applet-frame.c:976
 msgid "D_on't Delete"
 msgstr "_No borrar"
 
-#: gnome-panel/panel-applet-frame.c:994
+#: gnome-panel/panel-applet-frame.c:1024
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "El panel ha encontrado un problema mientras cargaba «%s»."
 
-#: gnome-panel/panel-applet-frame.c:1011
+#: gnome-panel/panel-applet-frame.c:1041
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "¿Desea borrar la miniaplicación de su configuración?"
 
-#: gnome-panel/panel-applet-frame.c:1108
+#: gnome-panel/panel-applet-frame.c:1138
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No se puede obtener la interfaz AppletShell del control\n"
 
@@ -1684,7 +1691,7 @@ msgstr "Capturar la pantalla"
 msgid "Take window screenshot"
 msgstr "Captura una imagen de una ventana"
 
-#: gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/panel-menu-bar.c:210
 msgid "Actions"
 msgstr "Acciones"
 
@@ -1896,6 +1903,30 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Error al leer el valor booleano GConf «%s»: %s"
 
+#: gnome-panel/panel-properties-dialog.c:120
+#: libpanel-applet/panel-test-applets.c:52
+msgid "Top"
+msgstr "Superior"
+
+#: gnome-panel/panel-properties-dialog.c:121
+#: libpanel-applet/panel-test-applets.c:53
+msgid "Bottom"
+msgstr "Inferior"
+
+#: gnome-panel/panel-properties-dialog.c:122
+#: libpanel-applet/panel-test-applets.c:54
+msgid "Left"
+msgstr "Izquierda"
+
+#: gnome-panel/panel-properties-dialog.c:123
+#: libpanel-applet/panel-test-applets.c:55
+msgid "Right"
+msgstr "Derecha"
+
+#: gnome-panel/panel-properties-dialog.c:406
+msgid "Images"
+msgstr "Imágenes"
+
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>Opaco</small>"
@@ -1949,48 +1980,52 @@ msgid "S_tyle:"
 msgstr "Es_tilo:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
+msgid "Select background"
+msgstr "Seleccione el fondo"
+
+#: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
 msgstr "Mostrar _botones de ocultación"
 
-#: gnome-panel/panel-properties-dialog.glade.h:17
+#: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Solid c_olor"
 msgstr "C_olor sólido"
 
-#: gnome-panel/panel-properties-dialog.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Some of these properties are locked down"
 msgstr "Algunas de estas propiedades están bloqueadas"
 
-#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "St_retch"
 msgstr "Ajus_tado"
 
-#: gnome-panel/panel-properties-dialog.glade.h:20
+#: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "_Autohide"
 msgstr "Ocultar _automáticamente"
 
-#: gnome-panel/panel-properties-dialog.glade.h:21
+#: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_Icon:"
 msgstr "_Icono:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:22
+#: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "_None (use system theme)"
 msgstr "_Ninguno (utilizar el tema del sistema)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:23
+#: gnome-panel/panel-properties-dialog.glade.h:24
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Orientation:"
 msgstr "_Orientación:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "_Scale"
 msgstr "E_scalado"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "_Size:"
 msgstr "_Tamaño:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Tile"
 msgstr "Mosa_ico"
 
@@ -2701,22 +2736,6 @@ msgstr ""
 "Especifique la orientación inicial de la miniaplicación (superior, inferior, "
 "izquierda o derecha)"
 
-#: libpanel-applet/panel-test-applets.c:52
-msgid "Top"
-msgstr "Superior"
-
-#: libpanel-applet/panel-test-applets.c:53
-msgid "Bottom"
-msgstr "Inferior"
-
-#: libpanel-applet/panel-test-applets.c:54
-msgid "Left"
-msgstr "Izquierda"
-
-#: libpanel-applet/panel-test-applets.c:55
-msgid "Right"
-msgstr "Derecha"
-
 #: libpanel-applet/panel-test-applets.c:60
 msgid "XX Small"
 msgstr "Diminuto"
@@ -2756,4 +2775,16 @@ msgstr "_Miniaplicación:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Dir _prefs:"
+
+#~ msgid "Workspace Selector"
+#~ msgstr "Selector de áreas de trabajo"
+
+#~ msgid "_Lock"
+#~ msgstr "B_loquear"
+
+#~ msgid "Un_lock"
+#~ msgstr "De_sbloquear"
+
+#~ msgid "Lock screen"
+#~ msgstr "Bloquear la pantalla"
 
