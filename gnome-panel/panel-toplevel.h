@@ -122,6 +122,8 @@ gboolean             panel_toplevel_get_is_attached     (PanelToplevel       *to
 PanelToplevel       *panel_toplevel_get_attach_toplevel (PanelToplevel       *toplevel);
 GtkWidget           *panel_toplevel_get_attach_widget   (PanelToplevel       *toplevel);
 
+gboolean             panel_toplevel_get_is_floating	(PanelToplevel       *toplevel);
+
 gboolean             panel_toplevel_get_is_hidden       (PanelToplevel       *toplevel);
 PanelState           panel_toplevel_get_state           (PanelToplevel       *toplevel);
 

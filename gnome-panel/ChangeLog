@@ -1,3 +1,13 @@
+Wed Aug 13 17:26:20 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.[ch]: Add an accessor to the floating flag,
+	  panel_toplevel_get_is_floating
+
+	* panel-profile.c: when creating a new panel, try to find an
+	  empty orientation/monitor (free from other non-floating
+	  panels).  If no such place is found, will just use the
+	  default values.  Fixes #107620
+
 2003-08-13  Christian Neumair  <chris@gnome-de.org>
 
 	* panel-toplevel.c: Localize panel description by adding a few gettext

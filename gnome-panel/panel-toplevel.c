@@ -4100,6 +4100,14 @@ panel_toplevel_get_expand (PanelToplevel *toplevel)
 	return toplevel->priv->expand;
 }
 
+gboolean
+panel_toplevel_get_is_floating (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), TRUE);
+
+	return toplevel->priv->floating;
+}
+
 void
 panel_toplevel_set_orientation (PanelToplevel    *toplevel,
 				PanelOrientation  orientation)
