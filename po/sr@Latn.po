@@ -1,5 +1,5 @@
 # Serbian translation of gnome-panel
-# Courtesy of Prevod.org team (http://prevod.org/) -- 2003, 2004.
+# Courtesy of Prevod.org team (http://prevod.org/) -- 2003, 2004, 2005.
 #
 # This file is distributed under the same license as the gnome-panel package.
 #
@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 09:36+0000\n"
-"PO-Revision-Date: 2004-10-15 23:38+0200\n"
+"POT-Creation-Date: 2005-03-02 14:53+0100\n"
+"PO-Revision-Date: 2005-03-02 15:05+0100\n"
 "Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr "_O programu"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-context-menu.c:325 gnome-panel/panel-menu-bar.c:302
 #: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Pomoć"
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "Po_stavke"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2594
+#: applets/clock/clock.c:2590
 msgid "Clock"
 msgstr "Časovnik"
 
@@ -77,20 +77,20 @@ msgstr "Proizvodnja programčeta za časovnik."
 msgid "Get the current time and date"
 msgstr "Saznaj trenutno vreme i datum"
 
-#: applets/clock/clock.c:268
+#: applets/clock/clock.c:265
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:268 applets/clock/clock.c:584
+#: applets/clock/clock.c:265 applets/clock/clock.c:581
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:270 applets/clock/clock.c:1684
+#: applets/clock/clock.c:267 applets/clock/clock.c:1682
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:270 applets/clock/clock.c:586
-#: applets/clock/clock.c:1686
+#: applets/clock/clock.c:267 applets/clock/clock.c:583
+#: applets/clock/clock.c:1684
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -99,7 +99,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:281
+#: applets/clock/clock.c:278
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -107,7 +107,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:288
+#: applets/clock/clock.c:285
 #, c-format
 msgid ""
 "%1$s\n"
@@ -120,60 +120,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:295
+#: applets/clock/clock.c:292
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:379
+#: applets/clock/clock.c:376
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:591
+#: applets/clock/clock.c:588
 msgid "%b %d"
 msgstr "%d. %b"
 
-#: applets/clock/clock.c:890
+#: applets/clock/clock.c:887
 msgid "Tasks"
 msgstr "Zaduženja"
 
-#: applets/clock/clock.c:1034
+#: applets/clock/clock.c:1031
 msgid "All Day"
 msgstr "Ceo dan"
 
-#: applets/clock/clock.c:1073
+#: applets/clock/clock.c:1070
 msgid "Appointments"
 msgstr "Zakazani sastanci"
 
-#: applets/clock/clock.c:1305
+#: applets/clock/clock.c:1302
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1583
 msgid "Computer Clock"
 msgstr "Računarski časovnik"
 
-#: applets/clock/clock.c:1679
+#: applets/clock/clock.c:1677
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1679
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1723
+#: applets/clock/clock.c:1721
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y."
 
-#: applets/clock/clock.c:1767
+#: applets/clock/clock.c:1765
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ne mogu da pokrenem alat za podešavanje: %s"
 
-#: applets/clock/clock.c:1806
+#: applets/clock/clock.c:1804
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -181,76 +181,73 @@ msgstr ""
 "Ne mogu da pronađem program za podešavanje datuma i vremena. Možda nijedan "
 "nije instaliran?"
 
-#: applets/clock/clock.c:2253
+#: applets/clock/clock.c:2251
 msgid "Custom format"
 msgstr "Oblik po izboru"
 
-#: applets/clock/clock.c:2374 applets/clock/clock.c:2551
+#: applets/clock/clock.c:2372 applets/clock/clock.c:2549
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
-#: applets/wncklet/workspace-switcher.c:267
-#: applets/wncklet/workspace-switcher.c:575
+#: applets/wncklet/window-list.c:114 applets/wncklet/wncklet.c:123
+#: applets/wncklet/workspace-switcher.c:241
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Došlo je do greške pri prikazivanju pomoći: %s"
 
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2407
 msgid "Clock Preferences"
 msgstr "Postavke časovnika"
 
-#: applets/clock/clock.c:2433
+#: applets/clock/clock.c:2431
 msgid "Clock _type:"
 msgstr "_Vrsta časovnika:"
 
-#: applets/clock/clock.c:2443
+#: applets/clock/clock.c:2441
 msgid "12 hour"
 msgstr "12-točasovni"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2442
 msgid "24 hour"
 msgstr "24-očasovni"
 
-#: applets/clock/clock.c:2445
+#: applets/clock/clock.c:2443
 msgid "UNIX time"
 msgstr "UNIX vreme"
 
-#: applets/clock/clock.c:2446
+#: applets/clock/clock.c:2444
 msgid "Internet time"
 msgstr "Internet vreme"
 
-#: applets/clock/clock.c:2454
+#: applets/clock/clock.c:2452
 msgid "Custom _format:"
 msgstr "Oblik po _izboru:"
 
-#: applets/clock/clock.c:2473
+#: applets/clock/clock.c:2471
 msgid "Show _seconds"
 msgstr "Prikaži _sekunde"
 
-#: applets/clock/clock.c:2482
+#: applets/clock/clock.c:2480
 msgid "Show _date"
 msgstr "Prikaži _datum"
 
-#: applets/clock/clock.c:2491
+#: applets/clock/clock.c:2489
 msgid "Use _UTC"
 msgstr "Koristi _UT"
 
+#: applets/clock/clock.c:2593
+msgid "The Clock displays the current time and date"
+msgstr "Časovnik prikazuje trenutno vreme i datum"
+
 #. Translator credits
-#: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
-#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
-#: applets/wncklet/workspace-switcher.c:606
-#: gnome-panel/panel-context-menu.c:110
-#, fuzzy
+#: applets/clock/clock.c:2596 applets/fish/fish.c:505
+#: applets/notification_area/main.c:133 applets/wncklet/showdesktop.c:510
+#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:75
+#: applets/wncklet/workspace-switcher.c:555
+#: gnome-panel/panel-context-menu.c:130
 msgid "translator-credits"
 msgstr ""
 "Danilo Šegan <dsegan@gmx.net>\n"
 "\n"
 "Prevod.org — prevod na srpski jezik"
-
-#: applets/clock/clock.c:2597
-msgid "The Clock displays the current time and date"
-msgstr "Časovnik prikazuje trenutno vreme i datum"
 
 #. Translators:
 #. This controls whether the GNOME panel clock should display time in 24 hour mode
@@ -307,7 +304,7 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:29
 msgid "If true, show week numbers in the calendar."
-msgstr ""
+msgstr "Ukoliko je postavljeno, prikazuje brojeve nedelja u kalendaru."
 
 #: applets/clock/clock.schemas.in.h:30
 msgid "Show date in clock"
@@ -322,17 +319,16 @@ msgid "Show time with seconds"
 msgstr "Prikaži vreme sa sekundama"
 
 #: applets/clock/clock.schemas.in.h:33
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Prikaži _imena radnih površina u prebacivaču"
+msgstr "Prikaži brojeve nedelja u kalendaru"
 
 #: applets/clock/clock.schemas.in.h:34
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"Upotreba ovog ključa je prevaziđena u Gnomu 2.6 u korist ključa „format“. "
-"Šema je zadržana zarad saglasnosti sa starijim izdanjima."
+"Upotreba ovog ključa je prevaziđena u Gnomu 2.6 u korist ključa „format“. Šema "
+"je zadržana zarad saglasnosti sa starijim izdanjima."
 
 #: applets/clock/clock.schemas.in.h:35
 msgid ""
@@ -340,9 +336,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
-"Ovaj ključ navodi oblik časovnika koji se koristi u programčetu kada je "
-"oblik postavljen na „custom“. Možete koristiti oznake koje razume strftime() "
-"radi dobijanja željenog oblika."
+"Ovaj ključ navodi oblik časovnika koji se koristi u programčetu kada je oblik "
+"postavljen na „custom“. Možete koristiti oznake koje razume strftime() radi "
+"dobijanja željenog oblika."
 
 # bug: ".beats" or "beats"?
 #: applets/clock/clock.schemas.in.h:36
@@ -356,14 +352,14 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"Ovaj ključ navodi oblik časa koji koristi programče sa časovnikom. "
-"Dozvoljene vrednosti su „12-hour“, „24-hour“, „internet“, „unix“ i „custom“. "
-"Ukoliko je postavljeno na „internet“, sat će prikazivati Internet vreme. "
-"Sistem Internet vremena deli dan na 1.000 „otkucaja“. U ovom sistemu nema "
-"vremenskih zona, pa je vreme isto u celom svetu. Ukoliko je postavljeno na "
-"„unix“, sat će prikazivati proteklo vreme u sekundama od Epohe, tj. 1. "
-"januara 1970. Ako je postavljeno na „custom“, sat će prikazivati vreme u "
-"skladu sa oblikom navedenim u ključu custom_format."
+"Ovaj ključ navodi oblik časa koji koristi programče sa časovnikom. Dozvoljene "
+"vrednosti su „12-hour“, „24-hour“, „internet“, „unix“ i „custom“. Ukoliko je "
+"postavljeno na „internet“, sat će prikazivati Internet vreme. Sistem Internet "
+"vremena deli dan na 1.000 „otkucaja“. U ovom sistemu nema vremenskih zona, "
+"pa je vreme isto u celom svetu. Ukoliko je postavljeno na „unix“, sat će "
+"prikazivati proteklo vreme u sekundama od Epohe, tj. 1. januara 1970. Ako je "
+"postavljeno na „custom“, sat će prikazivati vreme u skladu sa oblikom "
+"navedenim u ključu custom_format."
 
 #: applets/clock/clock.schemas.in.h:37
 msgid "This key specifies the program to run in order to configure the time."
@@ -390,7 +386,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Prikaži ribu kako pliva ili neko drugo animirano stvorenje"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-#: applets/fish/fish.c:501
+#: applets/fish/fish.c:499
 msgid "Fish"
 msgstr "Riba"
 
@@ -415,7 +411,7 @@ msgstr ""
 "Mi ne preporučujemo da „%s“ koristite za bilo šta što bi ovo programče "
 "učinilo „praktičnim“ ili korisnim."
 
-#: applets/fish/fish.c:467 applets/fish/fish.c:529 applets/fish/fish.c:644
+#: applets/fish/fish.c:467 applets/fish/fish.c:527 applets/fish/fish.c:642
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Riba zvana %s"
@@ -433,45 +429,45 @@ msgstr ""
 "panelu i u memoriji. Ukoliko se pronađe neko ko ga koristi, odmah mora otići "
 "na psihijatrijski pregled."
 
-#: applets/fish/fish.c:494
+#: applets/fish/fish.c:492
 msgid "(with minor help from George)"
 msgstr "(uz malu pomoć DŽordža)"
 
-#: applets/fish/fish.c:530
+#: applets/fish/fish.c:528
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Riba zvana %s, savremeno svetilište"
 
-#: applets/fish/fish.c:600
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "Ne mogu da pronađem naredbu koju treba izvršiti"
 
-#: applets/fish/fish.c:649
+#: applets/fish/fish.c:647
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Riba zvana %s kaže:"
 
-#: applets/fish/fish.c:718
-#, fuzzy, c-format
+#: applets/fish/fish.c:716
+#, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Ne mogu da izvršim „%s“\n"
+"Ne mogu da pročitam izlaz naredbe\n"
 "\n"
 "Detalji: %s"
 
-#: applets/fish/fish.c:783
+#: applets/fish/fish.c:781
 msgid "_Speak again"
-msgstr ""
+msgstr "_Pričaj ponovo"
 
-#: applets/fish/fish.c:864
+#: applets/fish/fish.c:862
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "Podešena naredba ne radi i zamenjena je sa: %s"
 
-#: applets/fish/fish.c:887
+#: applets/fish/fish.c:885
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -482,18 +478,18 @@ msgstr ""
 "\n"
 "Detalji: %s"
 
-#: applets/fish/fish.c:903
-#, fuzzy, c-format
+#: applets/fish/fish.c:901
+#, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Ne mogu da izvršim „%s“\n"
+"Ne mogu da čitam iz „%s“\n"
 "\n"
 "Detalji: %s"
 
-#: applets/fish/fish.c:1565
+#: applets/fish/fish.c:1564
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -501,7 +497,7 @@ msgstr ""
 "Potrebno je promeniti vodu!\n"
 "(Vidi bre koji je datum)"
 
-#: applets/fish/fish.c:1659
+#: applets/fish/fish.c:1658
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Riba zvana %s, kraljica među proročicama"
@@ -513,8 +509,6 @@ msgid "    "
 msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
-#: gnome-panel/panel-run-dialog.glade.h:1
-#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -587,8 +581,8 @@ msgstr "Broj kadrova u animaciji ribe"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
-"Ukoliko je postavljeno, animacija ribe će biti rotirana kada je panel "
-"usmeren uspravno."
+"Ukoliko je postavljeno, animacija ribe će biti rotirana kada je panel usmeren "
+"uspravno."
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -635,7 +629,7 @@ msgid "Area where notification icons appear"
 msgstr "Površina gde se pojavljuju ikone za obaveštenja"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:129
+#: applets/notification_area/main.c:128
 msgid "Notification Area"
 msgstr "Obaveštajna zona"
 
@@ -676,7 +670,7 @@ msgid "Switch between workspaces"
 msgstr "Sledeća radna površina"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:805
+#: applets/wncklet/window-list.c:775
 msgid "Window List"
 msgstr "Spisak prozora"
 
@@ -685,43 +679,41 @@ msgid "Window Navigation Applet Factory"
 msgstr "Proizvodnja programčeta za izbor prozora"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Izbor prozora"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:617
+#: applets/wncklet/workspace-switcher.c:558
 msgid "Workspace Switcher"
 msgstr "Izmena radnih površina"
 
-#: applets/wncklet/showdesktop.c:205
+#: applets/wncklet/showdesktop.c:171
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Neuspelo učitavanje „%s“: %s\n"
 
-#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
-#, fuzzy
+#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:569
 msgid "Icon not found"
-msgstr "%s — naredba nije nađena"
+msgstr "Ikona nije nađena"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Kliknite ovde da prikažete prikrivene prozore."
 
-#: applets/wncklet/showdesktop.c:267
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknite ovde da prikrijete sve prozore i vidite radnu površinu."
 
-#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
+#: applets/wncklet/showdesktop.c:429 applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
 msgstr "Dugme za prikazivanje radne površine"
 
-#: applets/wncklet/showdesktop.c:582
-#, fuzzy
+#: applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Ovo dugme omogućava da prikrijete sve prozore i vidite radnu površinu."
 
-#: applets/wncklet/showdesktop.c:623
+#: applets/wncklet/showdesktop.c:545
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -729,7 +721,7 @@ msgstr ""
 "Vaš upravnik prozorima ne podržava prikazivanje radne površine, ili ne "
 "koristite upravnika prozora."
 
-#: applets/wncklet/window-list.c:808
+#: applets/wncklet/window-list.c:777
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Spisak prozora prikazuje spisak svih prozora i omogućava da ih pregledate."
@@ -850,10 +842,9 @@ msgid ""
 "maximum width setting is useful to limit the size of the window list in "
 "large panels, where the window list could fill the entire space available."
 msgstr ""
-"Ova vrednost predstavlja najveću širinu koju zahteva spisak prozora. "
-"Postavka najveće širine je korisna za ograničavanje veličine spiska prozora "
-"u velikim panelima kao što su ivični, gde spisak može zauzeti svo "
-"raspoloživo mesto."
+"Ova vrednost predstavlja najveću širinu koju zahteva spisak prozora. Postavka "
+"najveće širine je korisna za ograničavanje veličine spiska prozora u velikim "
+"panelima kao što su ivični, gde spisak može zauzeti svo raspoloživo mesto."
 
 #: applets/wncklet/window-list.schemas.in.h:9
 msgid "This key specifies the minimum width that the window list requests."
@@ -863,7 +854,7 @@ msgstr "Ovaj ključ navodi najmanju veličinu koju zahteva spisak prozora."
 msgid "When to group windows"
 msgstr "Kada grupisati prozore"
 
-#: applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-menu.c:82
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
@@ -871,26 +862,26 @@ msgstr ""
 
 # bug: plural-forms
 # izabrao sam ovo zato što ćemo najčešće imati 2, 3 ili 4 reda, a ređe 1 red, a još ređe 5, 6, ... redova
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:859
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "reda"
 
 # bug: plural-forms
 # isto objašnjenje kao za „rows“
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:859
 msgid "columns"
 msgstr "kolone"
 
-#: applets/wncklet/workspace-switcher.c:455
+#: applets/wncklet/workspace-switcher.c:429
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Greška pri učitavanju vrednosti „num_rows“ za izmenu radne površine: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:466
+#: applets/wncklet/workspace-switcher.c:440
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -898,14 +889,14 @@ msgstr ""
 "Greška pri učitavanju vrednosti „display_workspace_names“ za izmenu radne "
 "površine: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:481
+#: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Greška pri učitavanju vrednosti „display_all_workspaces“ za izmenu radne "
 "površine: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:620
+#: applets/wncklet/workspace-switcher.c:560
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -992,9 +983,8 @@ msgid "GNOME Panel Shell"
 msgstr "Gnomova ljuska panela"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
-#, fuzzy
 msgid "_Lock To Panel"
-msgstr "Priveži sâm panel"
+msgstr "Priveži _za panel"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
@@ -1018,17 +1008,16 @@ msgid "Failed to load image %s"
 msgstr "Neuspelo učitavanje slike %s"
 
 #: gnome-panel/drawer.c:353 gnome-panel/panel-addto.c:150
-#: gnome-panel/panel-toplevel.c:1516
+#: gnome-panel/panel-toplevel.c:1531
 msgid "Drawer"
 msgstr "Fioka"
 
 #: gnome-panel/drawer.c:596
-#, fuzzy
 msgid "_Add to Drawer..."
-msgstr "_Dodaj na panel..."
+msgstr "_Dodaj u fioku..."
 
 #: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:263
 msgid "_Properties"
 msgstr "Oso_bine"
 
@@ -1070,9 +1059,8 @@ msgid "Launcher Properties"
 msgstr "Postavke pokretača"
 
 #: gnome-panel/launcher.c:840
-#, fuzzy
 msgid "_Launch"
-msgstr "Pokretač..."
+msgstr "Po_kreni"
 
 #: gnome-panel/launcher.c:918
 #, c-format
@@ -1118,33 +1106,21 @@ msgstr ""
 "Ne možete napraviti novi pokretač na ovom mestu pošto je ovde snimanje "
 "zabranjeno."
 
-#: gnome-panel/menu.c:125 gnome-panel/panel-menu-bar.c:136
-msgid "Cannot launch entry"
-msgstr "Ne mogu da pokrenem stavku"
-
-#: gnome-panel/menu.c:137 gnome-panel/panel-menu-bar.c:148
-msgid "Cannot load entry"
-msgstr "Ne mogu da učitam stavku"
-
-#: gnome-panel/menu.c:839
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "Dodaj ovaj pokretač na panel"
 
-#: gnome-panel/menu.c:859
+#: gnome-panel/menu.c:838
 msgid "Entire menu"
 msgstr "Ceo meni"
 
-#: gnome-panel/menu.c:869
+#: gnome-panel/menu.c:848
 msgid "Add this as drawer to panel"
 msgstr "Dodaj ovo kao fioku na panel"
 
-#: gnome-panel/menu.c:881
+#: gnome-panel/menu.c:860
 msgid "Add this as menu to panel"
 msgstr "Dodaj ovo na panel kao meni"
-
-#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
-msgid "Applications"
-msgstr "Programi"
 
 # Zar nije dobar prevod, a?
 #: gnome-panel/panel-action-button.c:108
@@ -1164,14 +1140,14 @@ msgid "Restart _Screensaver Daemon"
 msgstr "Iznova pokreni uslugu _čuvanja ekrana"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:633
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Ne mogu da izvršim „%s“"
 
 #: gnome-panel/panel-action-button.c:282
 msgid "Cannot connect to server"
-msgstr ""
+msgstr "Ne mogu da se povežem sa serverom"
 
 #: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
@@ -1228,11 +1204,11 @@ msgstr "Primoraj nedolični program na zatvaranje"
 #. FIXME icon
 #: gnome-panel/panel-action-button.c:373
 msgid "Connect to Server..."
-msgstr ""
+msgstr "Poveži se sa serverom..."
 
 #: gnome-panel/panel-action-button.c:374
 msgid "Connect to a remote server"
-msgstr ""
+msgstr "Poveži se sa udaljenim serverom"
 
 #: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
@@ -1274,32 +1250,29 @@ msgstr "Iskačuća fioka za smeštanje drugih stavki"
 msgid "(empty)"
 msgstr "(prazno)"
 
-#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:400 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "ispitaj vraćenu grešku „%s“\n"
 
-#: gnome-panel/panel-addto.c:913
-#, fuzzy, c-format
+#: gnome-panel/panel-addto.c:952
+#, c-format
 msgid "Select an _item to add to \"%s\":"
-msgstr "Izaberite _stavku koju dodajete u %s:"
+msgstr "Izaberite _stavku koju dodajete na „%s“:"
 
-#: gnome-panel/panel-addto.c:917
-#, fuzzy
+#: gnome-panel/panel-addto.c:956
 msgid "Add to Drawer"
-msgstr "_Dodaj na panel..."
+msgstr "Dodaj u fioku"
 
-#: gnome-panel/panel-addto.c:919
-#, fuzzy
+#: gnome-panel/panel-addto.c:958
 msgid "Select an _item to add to the drawer:"
-msgstr "Izaberite _stavku koju dodajete na panel:"
+msgstr "Izaberite _stavku koju dodajete u fioku:"
 
-#: gnome-panel/panel-addto.c:921
-#, fuzzy
+#: gnome-panel/panel-addto.c:960
 msgid "Add to Panel"
-msgstr "_Dodaj na panel..."
+msgstr "Dodaj na panel"
 
-#: gnome-panel/panel-addto.c:923
+#: gnome-panel/panel-addto.c:962
 msgid "Select an _item to add to the panel:"
 msgstr "Izaberite _stavku koju dodajete na panel:"
 
@@ -1311,27 +1284,25 @@ msgstr "Greška u popup_menu: „%s“\n"
 #: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr ""
+msgstr "„%s“ je neočekivano okončan"
 
 #: gnome-panel/panel-applet-frame.c:935
-#, fuzzy
 msgid "Panel object has quit unexpectedly"
-msgstr "Vrsta objekta na panelu"
+msgstr "Objekat panela je neočekivano okončan"
 
 #: gnome-panel/panel-applet-frame.c:942
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr ""
+msgstr "Ukoliko ponovo učitate objekat panela, sam će biti dodat nazad na panel."
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy
 msgid "_Don't Reload"
-msgstr "_Ne uklanjaj"
+msgstr "_Ne učitavaj"
 
 #: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
-msgstr ""
+msgstr "_Učitaj"
 
 #: gnome-panel/panel-applet-frame.c:995
 #, c-format
@@ -1339,12 +1310,8 @@ msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Ovaj panel je naišao na nepriliku pri učitavanju „%s“."
 
 #: gnome-panel/panel-applet-frame.c:1012
-#, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
-msgstr ""
-"\n"
-"\n"
-"Da li želite da uklonite ovo programče iz vaših postavki?"
+msgstr "Da li želite da uklonite ovo programče iz vaših podešavanja?"
 
 #: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -1369,11 +1336,11 @@ msgstr "Greška pri učitavanju vrednosti za „%s“: %s"
 msgid "And many, many others..."
 msgstr "I mnogo, mnogo drugih..."
 
-#: gnome-panel/panel-context-menu.c:125
+#: gnome-panel/panel-context-menu.c:123
 msgid "The GNOME Panel"
 msgstr "Gnom panel"
 
-#: gnome-panel/panel-context-menu.c:128
+#: gnome-panel/panel-context-menu.c:126
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1381,27 +1348,27 @@ msgstr ""
 "Ovaj program je zadužen za pokretanje drugih programa i umetanje malih "
 "programčeta u njih same."
 
-#: gnome-panel/panel-context-menu.c:168
+#: gnome-panel/panel-context-menu.c:166
 msgid "You cannot remove your last panel."
 msgstr "Ne možete ukloniti jedini preostali panel."
 
-#: gnome-panel/panel-context-menu.c:217
+#: gnome-panel/panel-context-menu.c:215
 msgid "_Delete This Panel..."
 msgstr "_Ukloni ovaj panel..."
 
-#: gnome-panel/panel-context-menu.c:220 gnome-panel/panel-context-menu.c:250
+#: gnome-panel/panel-context-menu.c:218 gnome-panel/panel-context-menu.c:248
 msgid "_Delete This Panel"
 msgstr "_Ukloni ovaj panel"
 
-#: gnome-panel/panel-context-menu.c:234
+#: gnome-panel/panel-context-menu.c:232
 msgid "_Add to Panel..."
 msgstr "_Dodaj na panel..."
 
-#: gnome-panel/panel-context-menu.c:280
+#: gnome-panel/panel-context-menu.c:278
 msgid "_New Panel"
 msgstr "_Novi panel"
 
-#: gnome-panel/panel-context-menu.c:338
+#: gnome-panel/panel-context-menu.c:336
 msgid "A_bout Panels"
 msgstr "_O panelima"
 
@@ -1425,39 +1392,27 @@ msgid ""
 "A boolean flag to indicate whether the user's previous configuration in /"
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
-msgstr ""
+msgstr "Istinitosna vrednost koja označava da li su prethodna podešavanja korisnika iz /apps/panel/profiles/default prebačena na novo mesto u /apps/panel."
 
 #: gnome-panel/panel-general.schemas.in.h:2
-#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"Spisak IB-a panela. Svaki IB određuje jedan panel prvog nivoa. Podešavanja "
-"za svaki od ovih panela se nalaze u /apps/panel/general/$(profile)/toplevels/"
-"$(id)."
+msgstr "Spisak IB-a panela. Svaki IB određuje jedan panel prvog nivoa. Podešavanja za svaki od ovih panela se nalaze u /apps/panel/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
-msgstr ""
-"Spisak IB-a programčeta na panelu. Svaki IB određuje jedno programče na "
-"panelu. Podešavanja za svako programče se nalaze u /apps/panel/general/"
-"$(profile)/applets/$(id)."
+msgstr "Spisak IB-a programčeta na panelu. Svaki IB određuje jedno programče na panelu. Podešavanja za svako programče se nalaze u /apps/panel/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"Spisak IB-a objekata na panelu. Svaki IB određuje jedan objekat na panelu "
-"(npr. pokretač, dugme ili meni). Podešavanja za svaki objekat se nalaze u /"
-"apps/panel/general/$(profile)/objects/$(id)."
+msgstr "Spisak IB-a objekata na panelu. Svaki IB određuje jedan objekat na panelu (npr. pokretač, dugme ili meni). Podešavanja za svaki objekat se nalaze u /apps/panel/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1483,14 +1438,13 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"Ukoliko je postavljeno, prikazuje se spisak poznatih programa u prozorčetu "
-"za pokretanje programa. Da li je spisak razgranat pri prikazivanju "
-"prozorčeta se podešava pomoću show_program_list."
+"Ukoliko je postavljeno, prikazuje se spisak poznatih programa u prozorčetu za "
+"pokretanje programa. Da li je spisak razgranat pri prikazivanju prozorčeta se "
+"podešava pomoću show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Alat za podešavanje vremena"
+msgstr "Stara podešavanja profila su preneta"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
@@ -1512,8 +1466,8 @@ msgid ""
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
 "Spisak IID-a programčića koje će panel zanemarivati. Na ovaj način možete da "
-"sprečite učitavanje ili prikazivanje u meniju nekih programčića. Na primer, "
-"da isključite programče mali-narednik, dodajte „OAFIID:"
+"sprečite učitavanje ili prikazivanje u meniju nekih programčića. Na primer, da "
+"isključite programče mali-narednik, dodajte „OAFIID:"
 "GNOME_MiniCommanderApplet“ u ovaj spisak. Panel je neophodno ponovo "
 "pokrenuti da bi ovo uzelo maha."
 
@@ -1599,14 +1553,13 @@ msgstr ""
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
-"Ukoliko je postavljeno, pokretač se osvetljava kada korisnik pređe mišem "
-"preko njega."
+"Ukoliko je postavljeno, pokretač se osvetljava kada korisnik pređe mišem preko "
+"njega."
 
 #: gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, panel-specific keybindings are enabled."
 msgstr ""
-"Ukoliko je postavljeno, uključene su prečice sa tastature za pojedinačni "
-"panel."
+"Ukoliko je postavljeno, uključene su prečice sa tastature za pojedinačni panel."
 
 #: gnome-panel/panel-global.schemas.in.h:21
 msgid ""
@@ -1621,8 +1574,8 @@ msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Ukoliko je postavljeno, panel neće dozvoliti korisniku da zaključa svoj "
-"ekran, uklanjanjem stavki menija za zaključavanje ekrana."
+"Ukoliko je postavljeno, panel neće dozvoliti korisniku da zaključa svoj ekran, "
+"uklanjanjem stavki menija za zaključavanje ekrana."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
@@ -1659,54 +1612,63 @@ msgstr "Snimak ekrana"
 msgid "Take window screenshot"
 msgstr "Snimak prozora"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
+#: gnome-panel/panel-menu-bar.c:132
+msgid "Applications"
+msgstr "Programi"
+
+#: gnome-panel/panel-menu-items.c:103 gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Ne mogu da prikaže putanju „%s“"
 
-#: gnome-panel/panel-menu-bar.c:470
+#: gnome-panel/panel-menu-items.c:322
 msgid "Bookmarks"
-msgstr ""
+msgstr "Obeleživači"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
-#, fuzzy, c-format
+#: gnome-panel/panel-menu-items.c:343 gnome-panel/panel-recent.c:197
+#, c-format
 msgid "Open '%s'"
-msgstr "Otvori adresu: %s"
+msgstr "Otvori „%s“"
 
-#: gnome-panel/panel-menu-bar.c:545
+#: gnome-panel/panel-menu-items.c:417
 msgid "Network Places"
-msgstr ""
+msgstr "Mrežna mesta"
 
-#: gnome-panel/panel-menu-bar.c:547
+#: gnome-panel/panel-menu-items.c:419
 msgid "Removable Media"
-msgstr ""
+msgstr "Izmenjivi diskovi"
 
-#. Translators: Desktop is
-#. * used here as in "Desktop
-#. * Folder" (this is not the
-#. * Desktop environment). Do
-#. * not keep "Desktop Folder|"
+#. Translators: Desktop is used here as in
+#. * "Desktop Folder" (this is not the Desktop
+#. * environment). Do not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-bar.c:606
-#, fuzzy
+#: gnome-panel/panel-menu-items.c:477
 msgid "Desktop Folder|Desktop"
-msgstr "Veb direktorijum"
+msgstr "Radna površ"
 
-#: gnome-panel/panel-menu-bar.c:607
+#: gnome-panel/panel-menu-items.c:478
 msgid "Open the desktop as a folder"
-msgstr ""
+msgstr "Otvori radnu površ kao direktorijum"
 
-#: gnome-panel/panel-menu-bar.c:786
+#: gnome-panel/panel-menu-items.c:805
 msgid "Places"
-msgstr ""
+msgstr "Prečice"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-bar.c:795
+#: gnome-panel/panel-menu-items.c:843
 msgid "Desktop Environment|Desktop"
-msgstr ""
+msgstr "Okruženje"
+
+#: gnome-panel/panel-menu-items.c:984
+msgid "Cannot launch entry"
+msgstr "Ne mogu da pokrenem stavku"
+
+#: gnome-panel/panel-menu-items.c:996
+msgid "Cannot load entry"
+msgstr "Ne mogu da učitam stavku"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1728,8 +1690,8 @@ msgid ""
 msgstr ""
 "Ukoliko je postavljeno, koristi se custom_icon kao izabrana ikona za dugme. "
 "Ukoliko nije postavljeno, zanemaruje se podešavanje custom_icon. Ovo "
-"podešavanje je značajno jedino ako je vrsta objekta „menu-object“ ili "
-"„drawer-object“."
+"podešavanje je značajno jedino ako je vrsta objekta „menu-object“ ili „drawer-"
+"object“."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1737,10 +1699,9 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"Ukoliko je postavljeno, podešavanje menu_path se koristi kao putanja iz koje "
-"se izvlači sadržaj menija. Ukoliko nije postavljeno, zanemaruje se "
-"podešavanje menu_path. Ovo je značajno jedino ukoliko je vrsta objekta „menu-"
-"object“."
+"Ukoliko je postavljeno, podešavanje menu_path se koristi kao putanja iz koje se "
+"izvlači sadržaj menija. Ukoliko nije postavljeno, zanemaruje se podešavanje "
+"menu_path. Ovo je značajno jedino ukoliko je vrsta objekta „menu-object“."
 
 #: gnome-panel/panel-object.schemas.in.h:6
 msgid ""
@@ -1840,8 +1801,8 @@ msgid ""
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
-"Putanja iz koje se izvlači sadržaj menija. Ovo podešavanje je značajno "
-"jedino ako je postavljeno use_menu_path, a vrsta objekta je „menu-object“."
+"Putanja iz koje se izvlači sadržaj menija. Ovo podešavanje je značajno jedino "
+"ako je postavljeno use_menu_path, a vrsta objekta je „menu-object“."
 
 #: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
@@ -1934,7 +1895,7 @@ msgstr "Desno"
 
 #: gnome-panel/panel-properties-dialog.c:412
 msgid "Images"
-msgstr ""
+msgstr "Slike"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
@@ -1989,9 +1950,8 @@ msgid "S_tyle:"
 msgstr "Vrs_ta:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
-#, fuzzy
 msgid "Select background"
-msgstr "Pozadina"
+msgstr "Izaberite pozadinu"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
@@ -2052,12 +2012,11 @@ msgstr "Ne mogu da otvorim nedavno korišćeni dokument"
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Došlo je do nepoznate greške pri pokušaju otvaranja „%s“"
 
-#: gnome-panel/panel-recent.c:155
+#: gnome-panel/panel-recent.c:152
 msgid "Clear the Recent Documents list?"
 msgstr "Očisti spisak skorašnjih dokumenata?"
 
-#: gnome-panel/panel-recent.c:157
-#, fuzzy
+#: gnome-panel/panel-recent.c:154
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2066,51 +2025,50 @@ msgid ""
 msgstr ""
 "Ukoliko očistite spisak skorašnjih dokumenata, čistite sledeće:\n"
 "\n"
-"• Sve stavke iz stavke menija Akcije → Skorašnji dokumenti.\n"
+"• Sve stavke iz stavke menija Prečice → Skorašnji dokumenti.\n"
 "• Sve stavke iz spiska skorašnjih dokumenata u svim programima."
 
-#: gnome-panel/panel-recent.c:222
+#: gnome-panel/panel-recent.c:219
 msgid "Recent Documents"
 msgstr "Skorašnji dokumenti"
 
-#: gnome-panel/panel-recent.c:251
+#: gnome-panel/panel-recent.c:249
 msgid "Clear Recent Documents"
 msgstr "Očisti skorašnje dokumente"
 
-#: gnome-panel/panel-recent.c:255
-#, fuzzy
+#: gnome-panel/panel-recent.c:253
 msgid "Clear all items from the recent documents list"
-msgstr "Očisti spisak skorašnjih dokumenata?"
+msgstr "Očisti sve stavke iz spiska skorašnjih dokumenata?"
 
-#: gnome-panel/panel-run-dialog.c:273
+#: gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Ne mogu da pokrenem naredbu „%s“"
 
-#: gnome-panel/panel-run-dialog.c:351
+#: gnome-panel/panel-run-dialog.c:362
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Ne mogu da pretvorim „%s“ iz UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1056
+#: gnome-panel/panel-run-dialog.c:1067
 msgid "Choose a file to append to the command..."
 msgstr "Izaberite datoteku koju želite da pridodate naredbi..."
 
-#: gnome-panel/panel-run-dialog.c:1333
+#: gnome-panel/panel-run-dialog.c:1414
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Izvršiću naredbu: „%s“"
 
-#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1421 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Izaberite program da vidite njegov opis."
 
-#: gnome-panel/panel-run-dialog.c:1374
+#: gnome-panel/panel-run-dialog.c:1456
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr ""
+msgstr "Spisak adresa pušten na prozorče za pokretanje je bio neispravnog oblika (%d) ili dužine (%d)\n"
 
-#: gnome-panel/panel-run-dialog.glade.h:2
+#: gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
@@ -2118,25 +2076,29 @@ msgstr ""
 "Kliknite ovo dugme da pronađete datoteku čije ime želite da pridodate "
 "naredbi."
 
-#: gnome-panel/panel-run-dialog.glade.h:3
+#: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Kliknite ovo dugme da pokrenete izabrani program ili naredbu iz polja za "
-"unos naredbe."
+"Kliknite ovo dugme da pokrenete izabrani program ili naredbu iz polja za unos "
+"naredbe."
 
-#: gnome-panel/panel-run-dialog.glade.h:4
+#: gnome-panel/panel-run-dialog.glade.h:3
 msgid "Command entry"
 msgstr "Unos naredbe"
 
-#: gnome-panel/panel-run-dialog.glade.h:5
+#: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
 msgstr "Ikona naredbe"
 
-#: gnome-panel/panel-run-dialog.glade.h:6
+#: gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
 msgstr "Ovde unesite naredbu da biste je izvršili."
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "List of known applications"
+msgstr "Spisak poznatih programa"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
@@ -2205,67 +2167,67 @@ msgstr "Sakrij panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1502
 msgid "Top Expanded Edge Panel"
 msgstr "Rašireni ivični panel u vrhu"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Top Centered Panel"
 msgstr "Centrirani panel u vrhu"
 
-#: gnome-panel/panel-toplevel.c:1489
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Top Floating Panel"
 msgstr "Plutajući panel u vrhu"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1505
 msgid "Top Edge Panel"
 msgstr "Ivični panel u vrhu"
 
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1509
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rašireni ivični panel pri dnu"
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1510
 msgid "Bottom Centered Panel"
 msgstr "Centrirani panel pri dnu"
 
-#: gnome-panel/panel-toplevel.c:1496
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Bottom Floating Panel"
 msgstr "Plutajući panel pri dnu"
 
-#: gnome-panel/panel-toplevel.c:1497
+#: gnome-panel/panel-toplevel.c:1512
 msgid "Bottom Edge Panel"
 msgstr "Ivični panel pri dnu"
 
-#: gnome-panel/panel-toplevel.c:1501
+#: gnome-panel/panel-toplevel.c:1516
 msgid "Left Expanded Edge Panel"
 msgstr "Rašireni ivični panel levo"
 
-#: gnome-panel/panel-toplevel.c:1502
+#: gnome-panel/panel-toplevel.c:1517
 msgid "Left Centered Panel"
 msgstr "Centrirani panel levo"
 
-#: gnome-panel/panel-toplevel.c:1503
+#: gnome-panel/panel-toplevel.c:1518
 msgid "Left Floating Panel"
 msgstr "Plutajući panel levo"
 
-#: gnome-panel/panel-toplevel.c:1504
+#: gnome-panel/panel-toplevel.c:1519
 msgid "Left Edge Panel"
 msgstr "Ivični panel levo"
 
-#: gnome-panel/panel-toplevel.c:1508
+#: gnome-panel/panel-toplevel.c:1523
 msgid "Right Expanded Edge Panel"
 msgstr "Rašireni ivični panel desno"
 
-#: gnome-panel/panel-toplevel.c:1509
+#: gnome-panel/panel-toplevel.c:1524
 msgid "Right Centered Panel"
 msgstr "Centrirani panel desno"
 
-#: gnome-panel/panel-toplevel.c:1510
+#: gnome-panel/panel-toplevel.c:1525
 msgid "Right Floating Panel"
 msgstr "Plutajući panel desno"
 
-#: gnome-panel/panel-toplevel.c:1511
+#: gnome-panel/panel-toplevel.c:1526
 msgid "Right Edge Panel"
 msgstr "Ivični panel desno"
 
@@ -2326,9 +2288,8 @@ msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Ukoliko je postavljeno, sa svake strane panela će se prikazati dugmići "
-"kojima se panel može pomeriti na ivicu ekrana, tako da samo dugme ostane "
-"prikazano."
+"Ukoliko je postavljeno, sa svake strane panela će se prikazati dugmići kojima "
+"se panel može pomeriti na ivicu ekrana, tako da samo dugme ostane prikazano."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
@@ -2381,8 +2342,8 @@ msgid ""
 msgstr ""
 "Ukoliko je postavljeno, panel će zauzeti celu širinu ekrana (visinu ako se "
 "radi o uspravnom panelu). Na ovaj način se panel može postaviti jedino uz "
-"ivicu ekrana. Ukoliko nije postavljeno, panel će biti taman toliki da na "
-"njega može da stane svako programče, pokretač i dugme."
+"ivicu ekrana. Ukoliko nije postavljeno, panel će biti taman toliki da na njega "
+"može da stane svako programče, pokretač i dugme."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2405,8 +2366,8 @@ msgid ""
 msgstr ""
 "Ukoliko je postavljeno, zanemaruje se uspravna pozicija i panel se centrira "
 "uspravno. Ukoliko se izmeni veličina panela, ostaće na istoj poziciji — "
-"porašće sa svake strane. Ukoliko nije postavljeno, uspravna pozicija "
-"određuje mesto panela."
+"porašće sa svake strane. Ukoliko nije postavljeno, uspravna pozicija određuje "
+"mesto panela."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2487,9 +2448,8 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
-"Određuje providnost pozadinske boje. Ukoliko je boja providna (vrednost "
-"manja od 65535), boje će se ukomponovati sa pozadinskom slikom radne "
-"površine."
+"Određuje providnost pozadinske boje. Ukoliko je boja providna (vrednost manja "
+"od 65535), boje će se ukomponovati sa pozadinskom slikom radne površine."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2514,8 +2474,7 @@ msgid ""
 msgstr ""
 "Pozicija panela na vodoravnoj osi. Ova vrednost je značajna jedino pri "
 "neraširenom prikazivanju. Pri raširenom prikazivanju se ova vrednost "
-"zanemaruje i panel se postavlja uz ivicu ekrana kako je naznačeno u "
-"usmerenju."
+"zanemaruje i panel se postavlja uz ivicu ekrana kako je naznačeno u usmerenju."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2525,8 +2484,7 @@ msgid ""
 msgstr ""
 "Pozicija panela na uspravnoj osi. Ova vrednost je značajna jedino pri "
 "neraširenom prikazivanju. Pri raširenom prikazivanju se ova vrednost "
-"zanemaruje i panel se postavlja uz ivicu ekrana kako je naznačeno u "
-"usmerenju."
+"zanemaruje i panel se postavlja uz ivicu ekrana kako je naznačeno u usmerenju."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2539,13 +2497,13 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"Usmerenje panela. Postoje četiri dozvoljene vrednosti: „top“, „bottom“, "
-"„left“ i „right“. Pri raširenom prikazivanju, ova vrednost označava uz koju "
-"ivicu se postavlja panel. Pri neraširenom prikazivanju, razlika između „top“ "
-"i „bottom“ je manje značajna — oba označavaju da se radi o vodoravnom panelu "
-"— ali ipak daje i nagoveštaj kako neki objekti na panelu treba da se "
-"ponašaju. Na primer, na „top“ panelu će se meniji prikazivati ispod panela, "
-"dok će se na „bottom“ panelu meniji prikazivati iznad panela."
+"Usmerenje panela. Postoje četiri dozvoljene vrednosti: „top“, „bottom“, „left“ "
+"i „right“. Pri raširenom prikazivanju, ova vrednost označava uz koju ivicu se "
+"postavlja panel. Pri neraširenom prikazivanju, razlika između „top“ i „bottom“ "
+"je manje značajna — oba označavaju da se radi o vodoravnom panelu — ali ipak "
+"daje i nagoveštaj kako neki objekti na panelu treba da se ponašaju. Na "
+"primer, na „top“ panelu će se meniji prikazivati ispod panela, dok će se na "
+"„bottom“ panelu meniji prikazivati iznad panela."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2578,8 +2536,8 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"Koje je vrste pozadina ovog panela. Postoje tri dozvoljene vrednosti: „gtk“ "
-"— koristi se uobičajena pozadina za Gtk+ elemente; „color“ — koristi se "
+"Koje je vrste pozadina ovog panela. Postoje tri dozvoljene vrednosti: „gtk“ — "
+"koristi se uobičajena pozadina za Gtk+ elemente; „color“ — koristi se "
 "postavljena boja za pozadinu; ili „image“ — izabrana slika se koristi za "
 "pozadinu."
 
@@ -2588,8 +2546,8 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"U sistemu sa više ekrana, možete imati panele na svakom od ekrana. Ovaj "
-"ključ određuje tekući ekran na kom se prikazuje panel."
+"U sistemu sa više ekrana, možete imati panele na svakom od ekrana. Ovaj ključ "
+"određuje tekući ekran na kom se prikazuje panel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
@@ -2607,11 +2565,11 @@ msgstr "Ksinerama ekran na kojem je prikazan panel"
 msgid "Y co-ordinate of panel"
 msgstr "Uspravna koordinata panela"
 
-#: gnome-panel/panel-util.c:63
+#: gnome-panel/panel-util.c:65
 msgid "Cannot display help document"
 msgstr "Ne može da prikaže pomoć"
 
-#: gnome-panel/panel-util.c:253
+#: gnome-panel/panel-util.c:255
 #, c-format
 msgid "Details: %s"
 msgstr "Detalji: %s"
@@ -2622,37 +2580,32 @@ msgid "Open URL: %s"
 msgstr "Otvori adresu: %s"
 
 #: gnome-panel/panel.c:1254
-#, fuzzy
 msgid "Delete this drawer?"
-msgstr "Ukloni panel"
+msgstr "Ukloni ovu fioku?"
 
 #: gnome-panel/panel.c:1255
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"Kada se panel ukloni, panel i njegove postavke se \n"
-"nepovratno gube. Sigurno želite da uklonite panel?"
+"Kada se ukloni fioka, fioka i njegove \n"
+"postavke se gube."
 
 #: gnome-panel/panel.c:1257
-#, fuzzy
 msgid "Delete Drawer"
-msgstr "Ukloni panel"
+msgstr "Ukloni fioku"
 
 #: gnome-panel/panel.c:1259
-#, fuzzy
 msgid "Delete this panel?"
-msgstr "_Ukloni ovaj panel"
+msgstr "Ukloni ovaj panel?"
 
 #: gnome-panel/panel.c:1260
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Kada se panel ukloni, panel i njegove postavke se \n"
-"nepovratno gube. Sigurno želite da uklonite panel?"
+"nepovratno gube."
 
 #: gnome-panel/panel.c:1262
 msgid "Delete Panel"
@@ -2760,21 +2713,19 @@ msgstr "Ogromni"
 msgid "XX Large"
 msgstr "Gigantski"
 
+#. This is an utility to easily test various applets
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Test applet utility"
-msgstr "Spisak IB-a programčeta na panelu"
+msgstr "Alat za isprobavanje programčeta"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
 msgid "_Applet:"
-msgstr "Programče:"
+msgstr "_Programče:"
 
 # bug: prefs -> preferences; dir -> directory
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "_Prefs Dir:"
-msgstr "Postavke:"
+msgstr "_Postavke:"
 
 #~ msgid "File not found"
 #~ msgstr "Datoteka nije nađena"
@@ -2796,10 +2747,6 @@ msgstr "Postavke:"
 
 #~ msgid "Desktop"
 #~ msgstr "Radna površina"
-
-#, fuzzy
-#~ msgid "Workspace Selector"
-#~ msgstr "Izmena radnih površina"
 
 #~ msgid "_Lock"
 #~ msgstr "Priv_eži"
@@ -2827,10 +2774,6 @@ msgstr "Postavke:"
 
 #~ msgid "Actions"
 #~ msgstr "Akcije"
-
-#, fuzzy
-#~ msgid "Workspace List"
-#~ msgstr "Imena radnih površina"
 
 #~ msgid "Specify a profile name to load"
 #~ msgstr "Navedite ime profila koji učitavate"
@@ -3523,9 +3466,9 @@ msgstr "Postavke:"
 #~ "Ukoliko je postavljeno, panel će biti zaključan na tekućoj poziciji, "
 #~ "osobine neće biti moguće izmeniti. Korisnik neće moći ni da dodaje, "
 #~ "uklanja, pa čak ni da pomera programčiće. Takođe, na ovom panelu će biti "
-#~ "zaključane i sve osobine objekata. Osobine spoljnjih programčeta možda "
-#~ "mogu da se zasebno zaključaju. Panel je neophodno iznova pokenuti da bi "
-#~ "ovo uzelo maha."
+#~ "zaključane i sve osobine objekata. Osobine spoljnjih programčeta možda mogu "
+#~ "da se zasebno zaključaju. Panel je neophodno iznova pokenuti da bi ovo "
+#~ "uzelo maha."
 
 #~ msgid "Cannot execute %s"
 #~ msgstr "Ne može da izvrši %s"
@@ -3541,8 +3484,8 @@ msgstr "Postavke:"
 
 #~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
 #~ msgstr ""
-#~ "Ukoliko je postavljeno, prikaži vreme kao broj sekundi proteklih od "
-#~ "Epohe, tj. 1. januara 1970."
+#~ "Ukoliko je postavljeno, prikaži vreme kao broj sekundi proteklih od Epohe, "
+#~ "tj. 1. januara 1970."
 
 #~ msgid ""
 #~ "This key specifies the hour format used by the clock applet. Possible "
@@ -3618,9 +3561,6 @@ msgstr "Postavke:"
 #~ msgid "Application description"
 #~ msgstr "Opis programa"
 
-#~ msgid "List of known applications"
-#~ msgstr "Spisak poznatih programa"
-
 #~ msgid "Select an application from the list to run it"
 #~ msgstr "Izaberite program iz spiska da biste ga izvršili"
 
@@ -3629,8 +3569,7 @@ msgstr "Postavke:"
 
 #~ msgid "If true, display internet time, which is same all over the world."
 #~ msgstr ""
-#~ "Ukoliko je postavljeno, prikaži Internet vreme, koje je isto svuda u "
-#~ "svetu."
+#~ "Ukoliko je postavljeno, prikaži Internet vreme, koje je isto svuda u svetu."
 
 #~ msgid ""
 #~ "Failed to load image %s\n"
