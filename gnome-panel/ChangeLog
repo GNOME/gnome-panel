@@ -1,3 +1,9 @@
+Thu Aug 29 10:35:23 2002  George Lebl <jirka@5z.com>
+
+	* gnome-panel-screenshot.c: Check for NULL return from the
+	  gdk_window_foreign_new function and exit nicely if that is the
+	  case.  Probably very rare, fixes #91744
+
 Thu Aug 29 10:25:24 2002  George Lebl <jirka@5z.com>
 
 	* gnome-panel-screenshot.c: Apply patch from Owen Taylor for bug
