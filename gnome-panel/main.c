@@ -29,7 +29,7 @@ GlobalConfig global_config = {
 		DEFAULT_MINIMIZED_SIZE,
 		DEFAULT_MINIMIZE_DELAY,
 		TRUE, /*tooltips*/
-		TRUE  /*show small icons*/
+		TRUE /*show small icons*/
 	};
 
 
@@ -181,6 +181,7 @@ init_user_panels(void)
 	GtkWidget *panel;
 	GtkWidget *panel_menu;
 	PanelState state;
+	DrawerDropZonePos drop_pos;
 
 	count=gnome_config_get_int("/panel/Config/panel_count=0");
 	if(count<=0) count++; /*this will load up a single panel with
@@ -210,6 +211,10 @@ init_user_panels(void)
 			PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
+		sprintf(buf,"/panel/Panel_%d/drawer_drop_zone_pos=%d",num,
+			DRAWER_LEFT);
+		drop_pos=gnome_config_get_int(buf);
+
 
 		panel = panel_widget_new(size,
 					 config.orient,
@@ -223,8 +228,7 @@ init_user_panels(void)
 					  anyway, they are globals*/
 					 x,
 					 y,
-					 DRAWER_LEFT);
-					 /*FIXME: this is just a decoy*/
+					 drop_pos);
 
 
 		/*FIXME: this should be made cleaner I guess*/

@@ -190,6 +190,10 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int(fullpath,y);
 	g_free(fullpath);
 
+	fullpath = g_copy_strings(path,"drawer_drop_zone_pos",NULL);
+	gnome_config_set_int(fullpath,panel->drawer_drop_zone_pos);
+	g_free(fullpath);
+
 	g_free(path);
 }
 

@@ -557,8 +557,10 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 				   GdkEvent *event,
 				   gpointer data)
 {
-	/*FIXME: has to get it's parent! since it can change*/
-	panel_widget_adjust_applet((PanelWidget *)data,widget);
+	PanelWidget *panel;
+
+	panel = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_PARENT_KEY);
+	panel_widget_adjust_applet(panel,widget);
 
 	return TRUE;
 }
@@ -1300,11 +1302,14 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(pos>=0,-1);
 
 	if(panel->snapped == PANEL_DRAWER) {
-		if(pos >= panel->size) {
-			/*FIXME: check for right drop_zone*/
+		if(pos >= panel->size &&
+		   panel->drawer_drop_zone_pos == DRAWER_LEFT) {
 			i = panel->size++;
+			panel_widget_set_size(panel,panel->size);
 		} else {
-			if(panel->drawer_drop_zone_pos==DRAWER_LEFT)
+			if(pos >= panel->size)
+				pos = panel->size-1;
+			if(panel->drawer_drop_zone_pos == DRAWER_LEFT)
 				while(pos<PANEL_MAX &&
 				      panel->applets[pos].applet ==
 				      panel->drawer_drop_zone)
@@ -1315,7 +1320,6 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 			i++;
 			panel_widget_push_right(panel,i);
 		}
-		panel_widget_set_size(panel,panel->size);
 	} else {
 		if(pos>=panel->size)
 			pos = panel->size - 1;
@@ -1339,6 +1343,8 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	gtk_fixed_put(GTK_FIXED(panel->fixed),applet,0,0);
 	panel->applets[i].applet = applet;
 	panel->applets[i].cells = 1;
+
+	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY,panel);
 
 	bind_top_applet_events(panel,applet);
 
@@ -1494,13 +1500,6 @@ panel_widget_change_params(PanelWidget *panel,
 
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
-
-	/*pop itself up if hidden!*/
-	/*if(panel->mode == PANEL_AUTO_HIDE) {
-		panel->step_size=0;
-		panel_widget_pop_up(panel);
-	}*/
-
 
 	/*the set_size will make it shown, this may change!  it would
 	  require more work to keep the state to be persistent accross
