@@ -130,12 +130,9 @@ update_config_size(GtkWidget *panel)
 		break;
 	}
 	
-	/* this actually won't activate the size item that it needs to
-	   so we need to do a slight hack by doing what that should do
-	   ourselves */
 	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->size_menu), i);
-	ppc->sz = p->sz;
-	REGISTER_CHANGES (ppc);
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(ppc->size_menu_items[i]),
+				       TRUE);
 }
 
 void
@@ -154,6 +151,7 @@ update_config_back(PanelWidget *pw)
 	if(!ppc)
 		return;
 	switch(pw->back_type) {
+	default:
 	case PANEL_BACK_NONE:
 		item = ppc->non;
 		history = 0;
@@ -176,11 +174,10 @@ update_config_back(PanelWidget *pw)
 		break;
 	}
 
-	if (item) {
-		gtk_menu_item_activate(GTK_MENU_ITEM(item));
-		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om),
-					    history);
-	}
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item),
+				       TRUE);
+	gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om),
+				    history);
 }
 
 void
@@ -786,6 +783,9 @@ size_set_size (GtkWidget *widget, gpointer data)
 	int sz = GPOINTER_TO_INT(data);
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
+	if(!GTK_CHECK_MENU_ITEM(widget)->active)
+		return;
+
 	ppc->sz = sz;
 	
 	REGISTER_CHANGES (ppc);
@@ -799,6 +799,7 @@ make_size_widget (PerPanelConfig *ppc)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *w;
+	GSList *group;
 	gchar *s;
 	int i;
 
@@ -815,43 +816,61 @@ make_size_widget (PerPanelConfig *ppc)
 	
 	menu = gtk_menu_new ();
 
-	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
+	ppc->size_menu_items[0] = menuitem =
+		gtk_radio_menu_item_new_with_label (NULL,
+						    _("Tiny (24 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "toggled",
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_TINY));
 	
-	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
+
+	ppc->size_menu_items[1] = menuitem =
+		gtk_radio_menu_item_new_with_label (group,
+						    _("Small (36 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "toggled",
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_SMALL));
+	
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
 
-	menuitem = gtk_menu_item_new_with_label (_("Standard (48 pixels)"));
+	ppc->size_menu_items[2] = menuitem =
+		gtk_radio_menu_item_new_with_label (group,
+						    _("Standard (48 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "toggled",
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_STANDARD));
 
-	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
+
+	ppc->size_menu_items[3] = menuitem =
+		gtk_radio_menu_item_new_with_label (group,
+						    _("Large (64 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "toggled",
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_LARGE));
 
-	menuitem = gtk_menu_item_new_with_label (_("Huge (80 pixels)"));
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(menuitem));
+
+	ppc->size_menu_items[4] = menuitem =
+		gtk_radio_menu_item_new_with_label (group,
+						    _("Huge (80 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "toggled",
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_HUGE));
 
@@ -889,11 +908,13 @@ make_size_widget (PerPanelConfig *ppc)
 	}
 
 	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->size_menu), i);
+	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(ppc->size_menu_items[i]),
+				       TRUE);
 
 	return vbox;
 }
 
-static int
+static void
 value_changed (GtkWidget *w, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -902,8 +923,6 @@ value_changed (GtkWidget *w, gpointer data)
 	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 
 	REGISTER_CHANGES (ppc);
-
-	return FALSE;
 }
 
 static void
@@ -945,12 +964,15 @@ color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
 	REGISTER_CHANGES (ppc);
 }
 			   
-static int
+static void
 set_back (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *pixf,*colf;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	PanelBackType back_type = GPOINTER_TO_INT(data);
+
+	if(!GTK_CHECK_MENU_ITEM(widget)->active)
+		return;
 
 	pixf = gtk_object_get_data(GTK_OBJECT(widget),"pix");
 	colf = gtk_object_get_data(GTK_OBJECT(widget),"col");
@@ -969,8 +991,6 @@ set_back (GtkWidget *widget, gpointer data)
 	ppc->back_type = back_type;
 
 	REGISTER_CHANGES (ppc);
-
-	return FALSE;
 }
 
 
@@ -980,6 +1000,7 @@ background_page (PerPanelConfig *ppc)
 	GtkWidget *box, *f, *t;
 	GtkWidget *vbox, *noscale, *fit, *strech;
 	GtkWidget *w, *m;
+	GSList *group;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
@@ -992,15 +1013,17 @@ background_page (PerPanelConfig *ppc)
 
 	/*background type option menu*/
 	m = gtk_menu_new ();
-	ppc->non = gtk_menu_item_new_with_label (_("None"));
+	ppc->non = gtk_radio_menu_item_new_with_label (NULL, _("Standard"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
 	gtk_widget_show (ppc->non);
 	gtk_menu_append (GTK_MENU (m), ppc->non);
-	ppc->col = gtk_menu_item_new_with_label (_("Color"));
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(ppc->non));
+	ppc->col = gtk_radio_menu_item_new_with_label (group, _("Color"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->col),ppc);
 	gtk_widget_show (ppc->col);
 	gtk_menu_append (GTK_MENU (m), ppc->col);
-	ppc->pix = gtk_menu_item_new_with_label (_("Pixmap"));
+	group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(ppc->col));
+	ppc->pix = gtk_radio_menu_item_new_with_label (group, _("Pixmap"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
 	gtk_widget_show (ppc->pix);
 	gtk_menu_append (GTK_MENU (m), ppc->pix);
@@ -1097,25 +1120,28 @@ background_page (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (set_rotate_pixmap_bg), ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
 
-	gtk_signal_connect (GTK_OBJECT (ppc->non), "activate", 
+	gtk_signal_connect (GTK_OBJECT (ppc->non), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_NONE));
-	gtk_signal_connect (GTK_OBJECT (ppc->pix), "activate", 
+	gtk_signal_connect (GTK_OBJECT (ppc->pix), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_PIXMAP));
-	gtk_signal_connect (GTK_OBJECT (ppc->col), "activate", 
+	gtk_signal_connect (GTK_OBJECT (ppc->col), "toggled", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_COLOR));
 	
 	if(ppc->back_type == PANEL_BACK_NONE) {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 0);
-		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->non));
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(ppc->non),
+					       TRUE);
 	} else if(ppc->back_type == PANEL_BACK_COLOR) {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 1);
-		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->col));
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(ppc->col),
+					       TRUE);
 	} else {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 2);
-		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->pix));
+		gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(ppc->pix),
+					       TRUE);
 	}
 
 	return vbox;

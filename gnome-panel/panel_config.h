@@ -7,6 +7,8 @@
 #include "sliding-widget.h"
 #include "drawer-widget.h"
 
+#define NUMBER_OF_SIZES 5
+
 /* used to temporarily store config values until the 'Apply'
    button is pressed. */
 typedef struct _PerPanelConfig PerPanelConfig;
@@ -44,6 +46,8 @@ struct _PerPanelConfig {
 
 	/*size*/
 	GtkWidget               *size_menu;
+	GtkWidget               *size_menu_items[NUMBER_OF_SIZES];
+
 
 	/*color buttons*/
 	GtkWidget		*non;

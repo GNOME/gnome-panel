@@ -181,6 +181,8 @@ wm_event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 		   compliant_wm_win == xevent->xdestroywindow.window)
 			redo_interface();
 	}
+
+	return GDK_FILTER_CONTINUE;
 }
 
 static GdkFilterReturn
