@@ -1,20 +1,20 @@
 # gnome-panel's Portuguese translation
-# Copyright (C) 2001, 2004 gnome-panel
+# Copyright © 2001, 2004 gnome-panel
 # Distributed under the same licence as the gnome-panel package
-# Nuno Ferreira <nmrf@rnl.ist.utl.pt>, 1999
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2001, 2004
+# Nuno Ferreira <nmrf@rnl.ist.utl.pt>, 1999.
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2001, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
-"POT-Creation-Date: 2004-02-16 21:07+0000\n"
-"PO-Revision-Date: 2004-01-05 00:30+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2004-02-17 22:55+0000\n"
+"PO-Revision-Date: 2004-02-17 23:00+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -134,15 +134,15 @@ msgstr "%A, %e de %B de %Y"
 
 #: applets/clock/clock.c:839
 msgid "Tasks"
-msgstr ""
+msgstr "Tarefas"
 
 #: applets/clock/clock.c:976
 msgid "All Day"
-msgstr ""
+msgstr "Todo o Dia"
 
 #: applets/clock/clock.c:1008
 msgid "Appointments"
-msgstr ""
+msgstr "Compromissos"
 
 #: applets/clock/clock.c:1243
 msgid "Calendar"
@@ -212,14 +212,12 @@ msgid "Internet time"
 msgstr "Hora Internet"
 
 #: applets/clock/clock.c:2285
-#, fuzzy
 msgid "Custom format"
-msgstr "Ícone Personalizado"
+msgstr "Formato personalizado"
 
 #: applets/clock/clock.c:2301
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Formato de hora"
+msgstr "_Formato personalizado:"
 
 #: applets/clock/clock.c:2318
 msgid "Show _seconds"
@@ -255,7 +253,7 @@ msgstr "24-horas"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Formato personalizado do relógio"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -305,9 +303,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Esta chave especifica o formato utilizado pela applet de relógio quando a "
+"chave de formaro está definida como \"costum\". Pode utilizar especificadores "
+"de conversão aceitáveis pelo strftime() para obter um formato específico."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -319,12 +319,13 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Esta chave especifica o formato de hora utilizado pela applet de relógio. "
-"Valores possíveis são \"12-hour\", \"24-hour\", \"internet\" e \"unix\". Se "
-"definido como \"internet\", o relógio irá apresentar a hora internet. O "
-"sistema de tempo da internet divide o dia em 1000 \"ciclos\". Não existem "
-"zonas horárias neste sistema, pelo que a hora é a mesma em todo o mundo. Se "
-"definido como \"unix\", o relógio irá apresentar o tempo em segundos desde a "
-"Epoch, isto é 1970/01/01."
+"Valores possíveis são \"12-hour\", \"24-hour\", \"internet\" e \"unix\" e \""
+"costum\". Se definido como \"internet\", o relógio irá apresentar a hora "
+"internet. O sistema de tempo da internet divide o dia em 1000 \"ciclos\". Não "
+"existem zonas horárias neste sistema, pelo que a hora é a mesma em todo o "
+"mundo. Se definido como \"unix\", o relógio irá apresentar o tempo em segundos "
+"desde a Epoch, isto é 1970/01/01. Se definido como \"costum\", o relógio "
+"apresentará as horas de acordo com o formato especificado na chave costum_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -1525,17 +1526,17 @@ msgstr ""
 "Tranque o ecrã para que possa abandonar temporariamente o seu computador"
 
 #: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "Terminar Sessão"
+msgstr "Terminar a Sessão %s"
 
 #: gnome-panel/menu.c:3246
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"Termine esta sessão para iniciar outra com um utilizador diferente ou para "
+"Terminar a sessão de %s para iniciar outra com um utilizador diferente ou para "
 "desligar o seu computador"
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
@@ -1783,18 +1784,16 @@ msgid "Confirm panel removal"
 msgstr "Confirmar a remoção de painel"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Forçar Saida"
+msgstr "Desavtivar a Saida Forçada"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Trancar Ecrã"
+msgstr "Desactivar o Trancar de Ecrã"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Desactivar o Terminar Sessão"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1858,18 +1857,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um utilizador force uma aplicação "
+"a terminar removendo o acesso ao botão de forçar saida."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um utilizador tranque o seu ecrã "
+"removendo o acesso de menu às entradas de trancar ecrã."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um utilizador termine uma sessão "
+"removendo o acesso de menu às entradas de terminar sessão."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1903,9 +1908,9 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Proteja o seu computador de utilizações não autorizadas"
 
 #: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Sair do ambiente de trabalho GNOME"
+msgstr "Sair da área de trabalho de %s"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2369,9 +2374,8 @@ msgid "_Force quit"
 msgstr "_Forçar saída"
 
 #: gnome-panel/panel-toplevel.c:1106
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Atraso ao esconder"
+msgstr "Esconder Painel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2918,9 +2922,8 @@ msgstr "Extra-extra Grande"
 msgid "XX Small"
 msgstr "Extra-extra Pequeno"
 
-#, fuzzy
 #~ msgid "Year"
-#~ msgstr "Procurar"
+#~ msgstr "Ano"
 
 #~ msgid "Has Arrow"
 #~ msgstr "Tem Seta"
@@ -3099,37 +3102,29 @@ msgstr "Extra-extra Pequeno"
 #~ msgid "Enable arrows on hide/show buttons"
 #~ msgstr "Activar setas nos botões de esconder/apresentar"
 
-#, fuzzy
 #~ msgid "Background color name"
-#~ msgstr "Cor do fundo"
+#~ msgstr "Nome da cor do fundo"
 
-#, fuzzy
 #~ msgid "Background color as a string"
-#~ msgstr "Opacidade da cor do fundo"
+#~ msgstr "Cor do fundo como uma expressão"
 
-#, fuzzy
 #~ msgid "Background color as a GdkColor"
-#~ msgstr "Cor do fundo"
+#~ msgstr "Cor do fundo como uma GdkColor"
 
-#, fuzzy
 #~ msgid "Foreground color name"
-#~ msgstr "Cor do fundo"
+#~ msgstr "Nome da cor de primeiro plano"
 
-#, fuzzy
 #~ msgid "Foreground color"
-#~ msgstr "Cor do fundo"
+#~ msgstr "Cor de primeiro plano"
 
-#, fuzzy
 #~ msgid "Font stretch"
-#~ msgstr "Estica_r"
+#~ msgstr "Esticar de fonte"
 
-#, fuzzy
 #~ msgid "Font size"
-#~ msgstr "Tamanho do painel"
+#~ msgstr "Tamanho da fonte"
 
-#, fuzzy
 #~ msgid "Background set"
-#~ msgstr "Fundo"
+#~ msgstr "Fundo definido"
 
 #~ msgid ""
 #~ "If true, the panel will be locked in place, properties won't be "
