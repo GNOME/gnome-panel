@@ -1099,7 +1099,7 @@ background_page (PerPanelConfig *ppc)
 
 	strech = gtk_radio_button_new_with_label (
 		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
-		_("Strech image (change proportions)"));
+		_("Stretch image (change proportions)"));
 	gtk_box_pack_start (GTK_BOX (box), strech, FALSE, FALSE,0);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (noscale),
