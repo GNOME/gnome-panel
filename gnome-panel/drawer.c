@@ -511,31 +511,40 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	return drawer;
 }
 
-static Drawer *
-create_empty_drawer_applet (PanelToplevel    *parent_toplevel,
-			    const char       *tooltip,
-			    const char       *pixmap,
-			    PanelOrientation  orientation)
+static PanelToplevel *
+create_drawer_toplevel (const char *drawer_id)
 {
 	PanelToplevel *toplevel;
-	GdkScreen     *screen;
-	int            monitor;
-	int            screen_width, screen_height;
+	GConfClient   *client;
+	const char    *profile;
+	const char    *key;
+	char          *profile_dir;
+	char          *toplevel_id;
 
-	screen  = gtk_window_get_screen (GTK_WINDOW (parent_toplevel));
-	monitor = panel_toplevel_get_monitor (parent_toplevel);
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
 
-	screen_width  = gdk_screen_get_width  (screen);
-	screen_height = gdk_screen_get_height (screen);
+	profile_dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, profile);
 
-	/* FIXME_FOR_NEW_TOPLEVEL: this is bogus */
-	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
-				 "x", screen_width  + 10,
-				 "y", screen_height + 10,
-				 NULL);
+	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 
-	return create_drawer_applet (toplevel, parent_toplevel,
-				     tooltip, pixmap, orientation);
+	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
+
+	/* takes ownership of toplevel_id */
+	toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
+
+	g_free (profile_dir);
+
+	if (!toplevel)
+		return NULL;
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_panel_id");
+	gconf_client_set_string (client, key, toplevel_id, NULL);
+
+	panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
+	panel_profile_set_toplevel_enable_arrows (toplevel, TRUE);
+
+	return toplevel;
 }
 
 void
@@ -569,26 +578,20 @@ load_drawer_applet (char          *toplevel_id,
 		    gboolean       exactpos,
 		    const char    *id)
 {
-	PanelToplevel    *toplevel = NULL;
 	PanelOrientation  orientation;
-	Drawer           *drawer;
+	PanelToplevel    *toplevel = NULL;
+	Drawer           *drawer = NULL;
 
 	orientation = panel_toplevel_get_orientation (parent_toplevel);
 
-	if (toplevel_id) {
+	if (toplevel_id)
 		toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
-		if (!toplevel)
-			g_warning ("Can't find the panel for drawer, making a new panel");
-	}
 
-	if (toplevel)
-		drawer = create_drawer_applet (toplevel, parent_toplevel,
-					       tooltip, pixmap, orientation);
-	else {
-		drawer = create_empty_drawer_applet (parent_toplevel, tooltip, pixmap, orientation);
-		if (drawer)
-			panel_setup (drawer->toplevel);
-	}
+	if (!toplevel)
+		toplevel = create_drawer_toplevel (id);
+
+	if (toplevel) 
+		drawer = create_drawer_applet (toplevel, parent_toplevel, tooltip, pixmap, orientation);
 
 	if (!drawer)
 		return;

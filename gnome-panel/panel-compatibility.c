@@ -52,8 +52,10 @@ panel_compatibility_map_orient_string (const char  *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (orient != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_orient_map, str, &mapped))
 		return FALSE;
@@ -75,8 +77,10 @@ panel_compatibility_map_orientation_string (const char     *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (orientation != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_orientation_map, str, &mapped))
 		return FALSE;
@@ -106,8 +110,10 @@ panel_compatibility_map_edge_string (const char *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (edge != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_edge_map, str, &mapped))
 		return FALSE;
@@ -141,8 +147,10 @@ panel_compatibility_map_panel_type_string (const char *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (type != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_type_map, str, &mapped))
 		return FALSE;
@@ -168,8 +176,10 @@ panel_compatibility_map_panel_size_string (const char *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (size != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_size_map, str, &mapped))
 		return FALSE;
@@ -179,12 +189,114 @@ panel_compatibility_map_panel_size_string (const char *str,
 	return TRUE;
 }
 
+static GConfEnumStringPair panel_background_type_map [] = {
+	{ PANEL_BACK_NONE,   "no-background" },
+	{ PANEL_BACK_COLOR,  "color-background" },
+	{ PANEL_BACK_IMAGE,  "pixmap-background" },
+};
+
+static gboolean
+panel_compatibility_map_background_type_string (const char          *str,
+						PanelBackgroundType *type)
+{
+	int mapped;
+
+	g_return_val_if_fail (type != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
+
+	if (!gconf_string_to_enum (panel_background_type_map, str, &mapped))
+		return FALSE;
+
+	*type = mapped;
+
+	return TRUE;
+}
+
 static void
 panel_compatibility_migrate_background_settings (GConfClient *client,
 						 const char  *toplevel_dir,
 						 const char  *panel_dir)
 {
-	g_warning ("FIXME: implement migrating the panel background settings");
+	PanelBackgroundType  type;
+	const char          *key;
+	char                *background_dir;
+	char                *type_str;
+	char                *color_str;
+	char                *image_str;
+	gboolean             fit;
+	gboolean             stretch;
+	gboolean             rotate;
+	int                  opacity;
+
+	background_dir = gconf_concat_dir_and_key (toplevel_dir, "background");
+
+	/* panel_background_type -> background/type */
+	key = panel_gconf_sprintf ("%s/panel_background_type", panel_dir);
+	type_str = gconf_client_get_string (client, key, NULL);
+
+	if (panel_compatibility_map_background_type_string (type_str, &type)) {
+		key = panel_gconf_sprintf ("%s/type", background_dir);
+		gconf_client_set_string (client,
+					 key,
+					 panel_profile_map_background_type (type),
+					 NULL);
+	}
+
+	g_free (type_str);
+
+	/* panel_background_color -> background/color */
+	key = panel_gconf_sprintf ("%s/panel_background_color", panel_dir);
+	color_str = gconf_client_get_string (client, key, NULL);
+
+	if (color_str) {
+		key = panel_gconf_sprintf ("%s/color", background_dir);
+		gconf_client_set_string (client, key, color_str, NULL);
+	}
+
+	g_free (color_str);
+
+	/* panel_background_color_alpha -> background/opacity */
+	key = panel_gconf_sprintf ("%s/panel_background_color_alpha", panel_dir);
+	opacity = gconf_client_get_int (client, key, NULL);
+
+	key = panel_gconf_sprintf ("%s/opacity", background_dir);
+	gconf_client_set_int (client, key, opacity, NULL);
+
+	/* panel_background_pixmap -> background/image */
+	key = panel_gconf_sprintf ("%s/panel_background_pixmap", panel_dir);
+	image_str = gconf_client_get_string (client, key, NULL);
+
+	if (image_str) {
+		key = panel_gconf_sprintf ("%s/image", background_dir);
+		gconf_client_set_string (client, key, image_str, NULL);
+	}
+
+	g_free (image_str);
+
+	/* panel_background_pixmap_fit -> background/fit */
+	key = panel_gconf_sprintf ("%s/panel_background_pixmap_fit", panel_dir);
+	fit = gconf_client_get_bool (client, key, NULL);
+
+	key = panel_gconf_sprintf ("%s/fit", background_dir);
+	gconf_client_set_bool (client, key, fit, NULL);
+
+	/* panel_background_pixmap_stretch -> background/stretch */
+	key = panel_gconf_sprintf ("%s/panel_background_pixmap_stretch", panel_dir);
+	stretch = gconf_client_get_bool (client, key, NULL);
+
+	key = panel_gconf_sprintf ("%s/stretch", background_dir);
+	gconf_client_set_bool (client, key, stretch, NULL);
+
+	/* panel_background_pixmap_rotate -> background/rotate */
+	key = panel_gconf_sprintf ("%s/panel_background_pixmap_rotate", panel_dir);
+	rotate = gconf_client_get_bool (client, key, NULL);
+
+	key = panel_gconf_sprintf ("%s/rotate", background_dir);
+	gconf_client_set_bool (client, key, rotate, NULL);
+
+	g_free (background_dir);
 }
 
 static void

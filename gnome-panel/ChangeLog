@@ -1,3 +1,33 @@
+2003-03-05  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement migrating background settings and fix drawers.
+
+	* new-toplevel-todo: upd.
+
+	* drawer.c:
+	(create_drawer_toplevel): create the drawer toplevel using
+	GConf.
+	(load_drawer_applet): refactor a little.
+
+	* panel-compatibility.c:
+	(panel_compatibility_map_orient_string),
+	(panel_compatibility_map_orientation_string),
+	(panel_compatibility_map_edge_string),
+	(panel_compatibility_map_panel_type_string),
+	(panel_compatibility_map_panel_size_string): fix assertions.
+	(panel_compatibility_map_background_type_string),
+	(panel_compatibility_migrate_background_settings): implement.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_background_type): impl.
+	(panel_profile_get_toplevel_by_id): return if the id is an
+	empty string.
+	(panel_profile_set_background_type): upd.
+	(panel_profile_add_to_list): don't create a new if if we're
+	passed a valid id.
+	(panel_profile_load_toplevel): don't attempt to load if the
+	id is an empty string.
+
 2003-03-04  Mark McLoughlin  <mark@skynet.ie>
 
 	Don't include drawer toplevels in the toplevel_id_list

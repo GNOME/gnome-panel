@@ -169,6 +169,12 @@ panel_profile_map_background_type_string (const char          *str,
 	return TRUE;
 }
 
+const char *
+panel_profile_map_background_type (PanelBackgroundType  background_type)
+{
+	return gconf_enum_to_string (panel_background_type_map, background_type);
+}
+
 gboolean
 panel_profile_map_object_type_string (const char       *str,
 				      PanelObjectType  *object_type)
@@ -212,7 +218,7 @@ panel_profile_get_toplevel_by_id (const char *toplevel_id)
 {
 	GSList *toplevels, *l;
 
-	if (!toplevel_id)
+	if (!toplevel_id || !toplevel_id [0])
 		return NULL;
 
 	toplevels = panel_toplevel_list_toplevels ();
@@ -344,7 +350,7 @@ panel_profile_set_background_type (PanelToplevel       *toplevel,
 	key = panel_profile_get_toplevel_key (toplevel, "background/type");
 	gconf_client_set_string (client,
 				 key,
-				 gconf_enum_to_string (panel_background_type_map, background_type),
+				 panel_profile_map_background_type (background_type),
 			         NULL);
 }
 
@@ -1124,7 +1130,8 @@ panel_profile_add_to_list (PanelGConfKeyType  type,
 	key = panel_gconf_general_key (current_profile, id_list);
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
-	id =  panel_profile_find_new_id (type);
+	if (!id)
+		id =  panel_profile_find_new_id (type);
 
 	list = g_slist_append (list, id);
 
@@ -1269,6 +1276,9 @@ panel_profile_load_toplevel (GConfClient       *client,
 	const char    *key;
 	char          *toplevel_dir;
 	guint          notify_id;
+
+	if (!toplevel_id || !toplevel_id [0])
+		return;
 
 	toplevel_dir = g_strdup_printf ("%s/toplevels/%s", profile_dir, toplevel_id);
 
