@@ -131,11 +131,11 @@ before_remove (Swallow *swallow)
 
 		gtk_signal_connect_after (GTK_OBJECT (swallow->socket),
 					  "realize",
-					  GTK_SIGNAL_FUNC (socket_realized),
+					  G_CALLBACK (socket_realized),
 					  NULL);
-		gtk_signal_connect (GTK_OBJECT (swallow->socket), "destroy",
-				    GTK_SIGNAL_FUNC (socket_destroyed),
-				    swallow);
+		g_signal_connect (G_OBJECT (swallow->socket), "destroy",
+				  G_CALLBACK (socket_destroyed),
+				  swallow);
 
 		gtk_container_add (GTK_CONTAINER (swallow->frame),
 				   swallow->socket);
@@ -277,8 +277,8 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	w = gnome_entry_new("swallow_title");
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
 	title_e = gnome_entry_gtk_entry(GNOME_ENTRY(w));
-	gtk_signal_connect(GTK_OBJECT(title_e),"activate",
-			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
+	g_signal_connect (G_OBJECT(title_e),"activate",
+			  G_CALLBACK(act_really_add_swallow),d);
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
@@ -287,8 +287,8 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	w = gnome_file_entry_new("execute",_("Browse"));
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
 	exec_e = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
-	gtk_signal_connect(GTK_OBJECT(exec_e),"activate",
-			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
+	g_signal_connect (G_OBJECT(exec_e),"activate",
+			  G_CALLBACK(act_really_add_swallow),d);
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
@@ -315,8 +315,8 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	height_s = gtk_spin_button_new(adj,0,0);
 	gtk_box_pack_start(GTK_BOX(box),height_s,FALSE,FALSE,0);
 	
-	gtk_signal_connect (GTK_OBJECT (d), "response",
-			    GTK_SIGNAL_FUNC (really_add_swallow), NULL);
+	g_signal_connect (G_OBJECT (d), "response",
+			  G_CALLBACK (really_add_swallow), NULL);
 	gtk_object_set_data(GTK_OBJECT(d),"title_e",title_e);
 	gtk_object_set_data(GTK_OBJECT(d),"exec_e",exec_e);
 	gtk_object_set_data(GTK_OBJECT(d),"width_s",width_s);
@@ -363,14 +363,14 @@ create_swallow_applet(const char *title, const char *path, int width, int height
 	if (width != 0 || height != 0)
 		gtk_widget_set_usize(swallow->socket, width, height);
 	gtk_signal_connect_after (GTK_OBJECT (swallow->socket), "realize",
-				  GTK_SIGNAL_FUNC (socket_realized), NULL);
-	gtk_signal_connect (GTK_OBJECT (swallow->socket), "destroy",
-			    GTK_SIGNAL_FUNC (socket_destroyed), swallow);
+				  G_CALLBACK (socket_realized), NULL);
+	g_signal_connect (G_OBJECT (swallow->socket), "destroy",
+			  G_CALLBACK (socket_destroyed), swallow);
 	
 	
 	swallow->handle_box = gtk_handle_box_new ();
-	gtk_signal_connect (GTK_OBJECT (swallow->handle_box), "event",
-			    GTK_SIGNAL_FUNC (ignore_1st_click), NULL);
+	g_signal_connect (G_OBJECT (swallow->handle_box), "event",
+			  G_CALLBACK (ignore_1st_click), NULL);
 	
 	gtk_container_add (GTK_CONTAINER(swallow->ebox),
 			   swallow->handle_box);

@@ -670,8 +670,8 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 		return pd->menu;
 	
 	pd->menu = create_panel_root_menu (panel, TRUE);
-	gtk_signal_connect (GTK_OBJECT (pd->menu), "deactivate",
-			    GTK_SIGNAL_FUNC (menu_deactivate), pd);
+	g_signal_connect (G_OBJECT (pd->menu), "deactivate",
+			  G_CALLBACK (menu_deactivate), pd);
 	return pd->menu;
 }
 
@@ -1513,68 +1513,68 @@ drag_data_recieved_cb (GtkWidget	*widget,
 static void
 panel_widget_setup(PanelWidget *panel)
 {
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_added",
-			   GTK_SIGNAL_FUNC(panel_applet_added),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_removed",
-			   GTK_SIGNAL_FUNC(panel_applet_removed),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_move",
-			   GTK_SIGNAL_FUNC(panel_applet_move),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_draw",
-			   GTK_SIGNAL_FUNC(panel_applet_draw),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "applet_about_to_die",
-			   GTK_SIGNAL_FUNC(panel_applet_about_to_die),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "back_change",
-			   GTK_SIGNAL_FUNC(panel_back_change),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "size_change",
-			   GTK_SIGNAL_FUNC(panel_size_change),
-			   NULL);
-	gtk_signal_connect (GTK_OBJECT (panel),
-			    "orient_change",
-			    GTK_SIGNAL_FUNC (panel_orient_change),
-			    NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "applet_added",
+			  G_CALLBACK(panel_applet_added),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "applet_removed",
+			  G_CALLBACK(panel_applet_removed),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "applet_move",
+			  G_CALLBACK(panel_applet_move),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "applet_draw",
+			  G_CALLBACK(panel_applet_draw),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "applet_about_to_die",
+			  G_CALLBACK(panel_applet_about_to_die),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "back_change",
+			  G_CALLBACK(panel_back_change),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel),
+			  "size_change",
+			  G_CALLBACK(panel_size_change),
+			  NULL);
+	g_signal_connect (G_OBJECT (panel),
+			  "orient_change",
+			  G_CALLBACK (panel_orient_change),
+			  NULL);
 }
 
 void
 basep_pos_connect_signals (BasePWidget *basep)
 {
 	if (BORDER_IS_WIDGET (basep)) {
-		gtk_signal_connect (GTK_OBJECT (basep->pos),
-				    "edge_change",
-				    GTK_SIGNAL_FUNC (border_edge_change),
-				    basep);
+		g_signal_connect (G_OBJECT (basep->pos),
+				  "edge_change",
+				  G_CALLBACK (border_edge_change),
+				  basep);
 	}
 
 	if (ALIGNED_IS_WIDGET (basep))
-		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
-					   "align_change",
-					   GTK_SIGNAL_FUNC (update_config_align),
-					   GTK_OBJECT (basep));
+		gtk_signal_connect_object (G_OBJECT (basep->pos),
+					 "align_change",
+					 G_CALLBACK (update_config_align),
+					 G_OBJECT (basep));
 	else if (FLOATING_IS_WIDGET (basep))
-		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
-					   "floating_coords_change",
-					   GTK_SIGNAL_FUNC (update_config_floating_pos),
-					   GTK_OBJECT(basep));
+		gtk_signal_connect_object (G_OBJECT (basep->pos),
+					 "floating_coords_change",
+					 G_CALLBACK (update_config_floating_pos),
+					 G_OBJECT(basep));
 	else if (SLIDING_IS_WIDGET (basep)) {
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "anchor_change",
-					   GTK_SIGNAL_FUNC (update_config_anchor),
+					   G_CALLBACK (update_config_anchor),
 					   GTK_OBJECT(basep));
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "offset_change",
-					   GTK_SIGNAL_FUNC (update_config_offset),
+					   G_CALLBACK (update_config_offset),
 					   GTK_OBJECT (basep));
 	}
 }
@@ -1664,68 +1664,63 @@ panel_setup(GtkWidget *panelw)
 	panel_widget_setup(panel);
 
 	if (basep) {
-		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect (GTK_OBJECT (basep),
-				    "state_change",
-				    GTK_SIGNAL_FUNC (basep_state_change),
-				    NULL);
+		g_signal_connect (G_OBJECT(basep->hidebutton_e), "event",
+				  G_CALLBACK (panel_sub_event_handler),
+				  panelw);
+		g_signal_connect (G_OBJECT(basep->hidebutton_w), "event",
+				  G_CALLBACK (panel_sub_event_handler),
+				  panelw);
+		g_signal_connect (G_OBJECT(basep->hidebutton_n), "event",
+				  G_CALLBACK (panel_sub_event_handler),
+				  panelw);
+		g_signal_connect (G_OBJECT(basep->hidebutton_s), "event",
+				  G_CALLBACK (panel_sub_event_handler),
+				  panelw);
+		g_signal_connect (G_OBJECT (basep), "state_change",
+				  G_CALLBACK (basep_state_change),
+				  NULL);
 		basep_pos_connect_signals (basep);
 		basep_widget_disable_buttons(basep);
 
-		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
-					 GTK_SIGNAL_FUNC(panelw_size_alloc),
-					 NULL);
+		gtk_signal_connect_after (G_OBJECT(panelw), "size_allocate",
+					G_CALLBACK(panelw_size_alloc),
+					NULL);
 	}
 
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "drag_data_received",
-			   GTK_SIGNAL_FUNC(drag_data_recieved_cb),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "drag_motion",
-			   GTK_SIGNAL_FUNC(drag_motion_cb),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "drag_leave",
-			   GTK_SIGNAL_FUNC(drag_leave_cb),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "drag_drop",
-			   GTK_SIGNAL_FUNC(drag_drop_cb),
-			   NULL);
+	g_signal_connect (G_OBJECT(panelw), "drag_data_received",
+			  G_CALLBACK(drag_data_recieved_cb),
+			  NULL);
+	g_signal_connect (G_OBJECT(panelw), "drag_motion",
+			  G_CALLBACK(drag_motion_cb),
+			  NULL);
+	g_signal_connect (G_OBJECT(panelw), "drag_leave",
+			  G_CALLBACK(drag_leave_cb),
+			  NULL);
+	g_signal_connect (G_OBJECT(panelw), "drag_drop",
+			  G_CALLBACK(drag_drop_cb),
+			  NULL);
 
 	gtk_drag_dest_set (GTK_WIDGET (panelw),
 			   0, NULL, 0, 0);
 
-	gtk_signal_connect (GTK_OBJECT (panelw), "event",
-			   GTK_SIGNAL_FUNC (panel_event), pd);
-	gtk_signal_connect (GTK_OBJECT (panel), "event",
-			   GTK_SIGNAL_FUNC (panel_widget_event), panelw);
+	g_signal_connect (G_OBJECT (panelw), "event",
+			  G_CALLBACK (panel_event), pd);
+	g_signal_connect (G_OBJECT (panel), "event",
+			  G_CALLBACK (panel_widget_event), panelw);
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |
 			      PANEL_EVENT_MASK);
  
-	gtk_signal_connect (GTK_OBJECT (panelw), "destroy",
-			    GTK_SIGNAL_FUNC (panel_destroy), NULL);
+	g_signal_connect (G_OBJECT (panelw), "destroy",
+			  G_CALLBACK (panel_destroy), NULL);
 
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panelw)))
 		panel_realize(GTK_WIDGET(panelw),NULL);
 	else
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "realize",
-					 GTK_SIGNAL_FUNC(panel_realize),
+					 G_CALLBACK(panel_realize),
 					 NULL);
 }
 

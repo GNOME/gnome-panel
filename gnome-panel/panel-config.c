@@ -684,9 +684,9 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->mode == BASEP_AUTO_HIDE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (basep_set_auto_hide), 
-			    NULL);
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			  G_CALLBACK (basep_set_auto_hide), 
+			  NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons enable */
@@ -695,25 +695,25 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->hidebuttons);
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			  G_CALLBACK (set_toggle),
+			  &ppc->hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Arrow enable */
 	button = gtk_check_button_new_with_label (_("Show arrows on hide button"));
 	ppc->hidebutton_pixmaps_button = button;
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
-			    button);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (set_sensitive_toggle),
+			  button);
 	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->hidebutton_pixmaps);
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			  G_CALLBACK (set_toggle),
+			  &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);	
 
 	return frame;
@@ -754,9 +754,9 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->avoid_on_maximize)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (basep_set_avoid), 
-			    NULL);
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			  G_CALLBACK (basep_set_avoid), 
+			  NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	if (multiscreen_screens () > 1) {
@@ -774,8 +774,8 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 		gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
 		gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
-		gtk_signal_connect (GTK_OBJECT (button), "changed",
-				    GTK_SIGNAL_FUNC (screen_set), NULL);
+		g_signal_connect (G_OBJECT (button), "changed",
+				  G_CALLBACK (screen_set), NULL);
 		gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	}
 
@@ -847,12 +847,12 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align,
 				  GTK_FILL,
 				  GTK_EXPAND | GTK_FILL, 0, 0);
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_edge),
-				    GINT_TO_POINTER (BORDER_LEFT));
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_align),
-				    GINT_TO_POINTER (align));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_edge),
+				  GINT_TO_POINTER (BORDER_LEFT));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_align),
+				  GINT_TO_POINTER (align));
 	}
 	
 
@@ -868,12 +868,12 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align, 0, 1,
 				  GTK_EXPAND | GTK_FILL,
 				  0, 0, 0);
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_edge),
-				    GINT_TO_POINTER (BORDER_TOP));
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_align),
-				    GINT_TO_POINTER (align));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_edge),
+				  GINT_TO_POINTER (BORDER_TOP));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_align),
+				  GINT_TO_POINTER (align));
 	}
 
 
@@ -890,12 +890,12 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align,
 				  GTK_FILL,
 				  GTK_FILL | GTK_EXPAND, 0, 0);
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_edge),
-				    GINT_TO_POINTER (BORDER_RIGHT));
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_align),
-				    GINT_TO_POINTER (align));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_edge),
+				  GINT_TO_POINTER (BORDER_RIGHT));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_align),
+				  GINT_TO_POINTER (align));
 	}
 
 
@@ -912,12 +912,12 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + aligns, 2 + aligns,
 				  GTK_EXPAND | GTK_FILL,
 				  0, 0, 0);
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_edge),
-				    GINT_TO_POINTER (BORDER_BOTTOM));
-		gtk_signal_connect (GTK_OBJECT (w), "toggled",
-				    GTK_SIGNAL_FUNC (border_set_align),
-				    GINT_TO_POINTER (align));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_edge),
+				  GINT_TO_POINTER (BORDER_BOTTOM));
+		g_signal_connect (G_OBJECT (w), "toggled",
+				  G_CALLBACK (border_set_align),
+				  GINT_TO_POINTER (align));
 	}
 
 	update_position_toggles (ppc);
@@ -1076,9 +1076,9 @@ floating_notebook_page (PerPanelConfig *ppc)
 	if(ppc->orient == PANEL_HORIZONTAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (floating_set_orient),
-			    GINT_TO_POINTER (PANEL_HORIZONTAL));
+	g_signal_connect (G_OBJECT (button), "toggled",
+			  G_CALLBACK (floating_set_orient),
+			  GINT_TO_POINTER (PANEL_HORIZONTAL));
 	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	ppc->v_orient = button = 
@@ -1088,9 +1088,9 @@ floating_notebook_page (PerPanelConfig *ppc)
 	if(ppc->orient == PANEL_VERTICAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (floating_set_orient),
-			    GINT_TO_POINTER (PANEL_VERTICAL));
+	g_signal_connect (G_OBJECT (button), "toggled",
+			  G_CALLBACK (floating_set_orient),
+			  GINT_TO_POINTER (PANEL_VERTICAL));
 	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new (FALSE, 0);
@@ -1105,9 +1105,9 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->x);
-	gtk_signal_connect (GTK_OBJECT (button), "changed",
-			    GTK_SIGNAL_FUNC (floating_set_xy),
-			    &ppc->x);
+	g_signal_connect (G_OBJECT (button), "changed",
+			  G_CALLBACK (floating_set_xy),
+			  &ppc->x);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	label = gtk_label_new (_("Y"));
@@ -1119,9 +1119,9 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
-	gtk_signal_connect (GTK_OBJECT (button), "changed",
-			    GTK_SIGNAL_FUNC (floating_set_xy),
-			    &ppc->y);
+	g_signal_connect (G_OBJECT (button), "changed",
+			  G_CALLBACK (floating_set_xy),
+			  &ppc->y);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	w = make_level_widget (ppc);
@@ -1201,8 +1201,8 @@ sliding_notebook_page (PerPanelConfig *ppc)
 		gtk_spin_button_new (adj, 1, 0);
 	gtk_widget_set_usize (button, 100, 0);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
-	gtk_signal_connect (GTK_OBJECT (button), "changed",
-			    GTK_SIGNAL_FUNC (sliding_set_offset), ppc);
+	g_signal_connect (G_OBJECT (button), "changed",
+			  G_CALLBACK (sliding_set_offset), ppc);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	w = make_level_widget (ppc);
@@ -1267,65 +1267,65 @@ make_size_widget (PerPanelConfig *ppc)
 
 	
 	menu = gtk_menu_new ();
-	gtk_signal_connect (GTK_OBJECT (menu), "deactivate", 
-			    GTK_SIGNAL_FUNC (activate_proper_item), 
-			    NULL);
+	g_signal_connect (G_OBJECT (menu), "deactivate", 
+			  G_CALLBACK (activate_proper_item), 
+			  NULL);
 
 	menuitem = gtk_menu_item_new_with_label (_("XX Small Tiny (12 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_XX_SMALL));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_XX_SMALL));
 
 	menuitem = gtk_menu_item_new_with_label (_("X Small (24 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_X_SMALL));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_X_SMALL));
 	
 	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_SMALL));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_SMALL));
 	
 	menuitem = gtk_menu_item_new_with_label (_("Medium (48 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_MEDIUM));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_MEDIUM));
 
 	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_LARGE));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_LARGE));
 
 	menuitem = gtk_menu_item_new_with_label (_("X Large (80 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_X_LARGE));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_X_LARGE));
 
 	menuitem = gtk_menu_item_new_with_label (_("XX Large (128 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (PANEL_SIZE_XX_LARGE));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (size_set_size),
+			  GINT_TO_POINTER (PANEL_SIZE_XX_LARGE));
 
 	ppc->size_menu = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->size_menu), menu);
@@ -1402,41 +1402,41 @@ make_level_widget (PerPanelConfig *ppc)
 			    FALSE, FALSE, 0);
 
 	menu = gtk_menu_new ();
-	gtk_signal_connect (GTK_OBJECT (menu), "deactivate", 
-			    GTK_SIGNAL_FUNC (activate_proper_item), 
-			    NULL);
+	g_signal_connect (G_OBJECT (menu), "deactivate", 
+			  G_CALLBACK (activate_proper_item), 
+			  NULL);
 
 	menuitem = gtk_menu_item_new_with_label (_("Default (from global preferences)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (level_set_level),
-			    GINT_TO_POINTER (BASEP_LEVEL_DEFAULT));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (level_set_level),
+			  GINT_TO_POINTER (BASEP_LEVEL_DEFAULT));
 
 	menuitem = gtk_menu_item_new_with_label (_("Above other windows"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (level_set_level),
-			    GINT_TO_POINTER (BASEP_LEVEL_ABOVE));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (level_set_level),
+			  GINT_TO_POINTER (BASEP_LEVEL_ABOVE));
 
 	menuitem = gtk_menu_item_new_with_label (_("Normal"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (level_set_level),
-			    GINT_TO_POINTER (BASEP_LEVEL_NORMAL));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (level_set_level),
+			  GINT_TO_POINTER (BASEP_LEVEL_NORMAL));
 
 	menuitem = gtk_menu_item_new_with_label (_("Below other windows"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (level_set_level),
-			    GINT_TO_POINTER (BASEP_LEVEL_BELOW));
+	g_signal_connect (G_OBJECT (menuitem), "activate",
+			  G_CALLBACK (level_set_level),
+			  GINT_TO_POINTER (BASEP_LEVEL_BELOW));
 
 	ppc->level_menu = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->level_menu), menu);
@@ -1588,9 +1588,9 @@ background_page (PerPanelConfig *ppc)
 
 	/*background type option menu*/
 	m = gtk_menu_new ();
-	gtk_signal_connect (GTK_OBJECT (m), "deactivate", 
-			    GTK_SIGNAL_FUNC (activate_proper_item), 
-			    NULL);
+	g_signal_connect (G_OBJECT (m), "deactivate", 
+			  G_CALLBACK (activate_proper_item), 
+			  NULL);
 	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
 	gtk_widget_show (ppc->non);
@@ -1630,11 +1630,11 @@ background_page (PerPanelConfig *ppc)
 	 * the config dialog */
 	gtk_signal_connect_after (GTK_OBJECT (ppc->backsel),
 				  "clicked",
-				  GTK_SIGNAL_FUNC (color_picker_clicked_signal),
+				  G_CALLBACK (color_picker_clicked_signal),
 				  NULL);
 
-	gtk_signal_connect(GTK_OBJECT(ppc->backsel),"color_set",
-			   GTK_SIGNAL_FUNC(color_set_cb), ppc);
+	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
+			  G_CALLBACK(color_set_cb), ppc);
         gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
 				   ppc->back_color.red,
 				   ppc->back_color.green,
@@ -1662,7 +1662,7 @@ background_page (PerPanelConfig *ppc)
 						     0,50);
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (ppc->pix_entry));
 	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
-					GTK_SIGNAL_FUNC (value_changed), ppc,
+					G_CALLBACK (value_changed), ppc,
 					GTK_OBJECT (ppc->pix_entry));
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
 	
@@ -1691,27 +1691,27 @@ background_page (PerPanelConfig *ppc)
 				      ppc->strech_pixmap_bg);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fit),
 				      ppc->fit_pixmap_bg);
-	gtk_signal_connect (GTK_OBJECT (fit), "toggled",
-			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg), ppc);
-	gtk_signal_connect (GTK_OBJECT (strech), "toggled",
-			    GTK_SIGNAL_FUNC (set_strech_pixmap_bg), ppc);
+	g_signal_connect (G_OBJECT (fit), "toggled",
+			  G_CALLBACK (set_fit_pixmap_bg), ppc);
+	g_signal_connect (G_OBJECT (strech), "toggled",
+			  G_CALLBACK (set_strech_pixmap_bg), ppc);
 
 	w = gtk_check_button_new_with_label (_("Rotate image for vertical panels"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w),
 				      ppc->rotate_pixmap_bg);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled",
-			    GTK_SIGNAL_FUNC (set_rotate_pixmap_bg), ppc);
+	g_signal_connect (G_OBJECT (w), "toggled",
+			  G_CALLBACK (set_rotate_pixmap_bg), ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
 
-	gtk_signal_connect (GTK_OBJECT (ppc->non), "activate", 
-			    GTK_SIGNAL_FUNC (set_back), 
-			    GINT_TO_POINTER(PANEL_BACK_NONE));
-	gtk_signal_connect (GTK_OBJECT (ppc->pix), "activate", 
-			    GTK_SIGNAL_FUNC (set_back), 
-			    GINT_TO_POINTER(PANEL_BACK_PIXMAP));
-	gtk_signal_connect (GTK_OBJECT (ppc->col), "activate", 
-			    GTK_SIGNAL_FUNC (set_back), 
-			    GINT_TO_POINTER(PANEL_BACK_COLOR));
+	g_signal_connect (G_OBJECT (ppc->non), "activate", 
+			  G_CALLBACK (set_back), 
+			  GINT_TO_POINTER(PANEL_BACK_NONE));
+	g_signal_connect (G_OBJECT (ppc->pix), "activate", 
+			  G_CALLBACK (set_back), 
+			  GINT_TO_POINTER(PANEL_BACK_PIXMAP));
+	g_signal_connect (G_OBJECT (ppc->col), "activate", 
+			  G_CALLBACK (set_back), 
+			  GINT_TO_POINTER(PANEL_BACK_COLOR));
 	
 	if(ppc->back_type == PANEL_BACK_NONE) {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 0);
@@ -1885,8 +1885,8 @@ panel_config (GtkWidget *panel)
 	gtk_window_set_policy (GTK_WINDOW (ppc->config_window),
 			       FALSE, FALSE, TRUE);
 
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "destroy",
-			    GTK_SIGNAL_FUNC (config_destroy), ppc);
+	g_signal_connect (G_OBJECT (ppc->config_window), "destroy",
+			  G_CALLBACK (config_destroy), ppc);
 	
 	prop_nbook = gtk_notebook_new ();
 
@@ -1958,13 +1958,13 @@ panel_config (GtkWidget *panel)
 			     help_path);
 	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_linkid",
 			     help_linkid);
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "response",
-			    GTK_SIGNAL_FUNC (window_response),
-			    prop_nbook);
+	g_signal_connect (G_OBJECT (ppc->config_window), "response",
+			  G_CALLBACK (window_response),
+			  prop_nbook);
 	
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
-			    GTK_SIGNAL_FUNC (config_event),
-			    prop_nbook);
+	g_signal_connect (G_OBJECT (ppc->config_window), "event",
+			  G_CALLBACK (config_event),
+			  prop_nbook);
 	
 	ppc->register_changes = TRUE;
 

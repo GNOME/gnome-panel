@@ -167,22 +167,22 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			    G_CALLBACK (set_toggle),
 			    &ppc->hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE, 0);
 
 	button = gtk_check_button_new_with_label (_("Enable hidebutton arrow"));
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			    G_CALLBACK (set_sensitive_toggle),
 			    button);
 	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
+	g_signal_connect (G_OBJECT (button), "toggled", 
+			    G_CALLBACK (set_toggle),
 			    &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE, 0);
 	gtk_container_add(GTK_CONTAINER(f),box_in);
@@ -192,8 +192,8 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  box, gtk_label_new (_("Drawer")));
 	
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) properties_close_callback,
+	g_signal_connect (G_OBJECT(dialog), "destroy",
+			  G_CALLBACK (properties_close_callback),
 			   drawer);
 
 	ppc->update_function = properties_apply_callback;
@@ -350,22 +350,22 @@ create_drawer_applet(GtkWidget * drawer_panel,
 			     GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
 
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "drag_data_get",
-			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+	g_signal_connect (G_OBJECT (drawer->button), "drag_data_get",
+			    G_CALLBACK (drag_data_get_cb),
 			    NULL);
 
 	gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;
 
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "clicked",
-			    GTK_SIGNAL_FUNC (drawer_click), drawer);
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "destroy",
-			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "enter_notify_event",
-			    GTK_SIGNAL_FUNC (enter_notify_drawer), drawer);
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "leave_notify_event",
-			    GTK_SIGNAL_FUNC (leave_notify_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "clicked",
+			    G_CALLBACK (drawer_click), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "destroy",
+			    G_CALLBACK (destroy_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "enter_notify_event",
+			    G_CALLBACK (enter_notify_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "leave_notify_event",
+			    G_CALLBACK (leave_notify_drawer), drawer);
 
 	gtk_object_set_user_data (GTK_OBJECT (drawer->button), drawer);
 	gtk_object_set_data (GTK_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
@@ -489,7 +489,7 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 
 	gtk_signal_connect_after(GTK_OBJECT(drawer->button),
 				 "size_allocate",
-				 GTK_SIGNAL_FUNC(button_size_alloc),
+				 G_CALLBACK(button_size_alloc),
 				 drawer);
 
 	/* this doesn't make sense anymore */

@@ -215,9 +215,9 @@ make_int_scale_box (char *title, GtkAdjustment **adj,
 	gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
 	gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
 	gtk_box_pack_start (GTK_BOX (box), scale, TRUE, TRUE, 0);
-	gtk_signal_connect(GTK_OBJECT (*adj), 
+	g_signal_connect(G_OBJECT (*adj), 
 			   "value_changed",
-			   GTK_SIGNAL_FUNC (changed_cb),NULL);
+			   G_CALLBACK (changed_cb),NULL);
 	gtk_widget_show (scale);
 
 	return box;
@@ -278,8 +278,8 @@ animation_notebook_page(void)
 
 	/* Animation enable */
 	enable_animations_cb = gtk_check_button_new_with_label (_("Enable animations"));
-	gtk_signal_connect (GTK_OBJECT (enable_animations_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (set_anim_button_value),NULL); 
+	g_signal_connect (G_OBJECT (enable_animations_cb), "toggled", 
+			    G_CALLBACK (set_anim_button_value),NULL); 
 	gtk_box_pack_start (GTK_BOX (vbox), enable_animations_cb, FALSE, FALSE, 0);
 
 	/* Auto and Explicit Hide Animation step_size scale frame */
@@ -363,8 +363,8 @@ buttons_notebook_page (void)
 	  /* prelight on mouseovers hack (used to be saturation, hence
 	   * the config option name) */
 	  saturate_when_over_cb = gtk_check_button_new_with_label (_("Prelight buttons on mouseover"));
-	  gtk_signal_connect (GTK_OBJECT (saturate_when_over_cb), "toggled",
-			      GTK_SIGNAL_FUNC (changed_cb), NULL);
+	  g_signal_connect (G_OBJECT (saturate_when_over_cb), "toggled",
+			      G_CALLBACK (changed_cb), NULL);
 	  gtk_box_pack_start (GTK_BOX (vbox), saturate_when_over_cb, FALSE, FALSE, 0);
 
 	  return (vbox);
@@ -440,21 +440,21 @@ add_menu_options (GtkTable *table, MenuOptions *opt, int row)
 
 	w = opt->none_rb = gtk_radio_button_new_with_label (NULL, _("Off"));
 	gtk_table_attach_defaults (table, w, 3, 4, row, row+1);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	rb = GTK_RADIO_BUTTON (w);
 
 	w = opt->submenu_rb = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (rb), _("In a submenu"));
 	gtk_table_attach_defaults (table, w, 2, 3, row, row+1);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 
 	w = opt->inline_rb = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (rb), _("In the menu"));
 	gtk_table_attach_defaults (table, w, 1, 2, row, row+1);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 }
 
 static GtkWidget *
@@ -481,48 +481,48 @@ menu_notebook_page(void)
 
 	/* large icons */
 	use_large_icons_cb = gtk_check_button_new_with_label (_("Use large icons"));
-	gtk_signal_connect (GTK_OBJECT (use_large_icons_cb), "toggled",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (use_large_icons_cb), "toggled",
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_table_attach_defaults (GTK_TABLE (table), use_large_icons_cb,
 				   0, 1, 0, 1);
 	
 	/* Dot Buttons */
 	show_dot_buttons_cb = gtk_check_button_new_with_label (_("Show [...] buttons"));
-	gtk_signal_connect (GTK_OBJECT (show_dot_buttons_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (show_dot_buttons_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table),show_dot_buttons_cb, 1,2,0,1);
 
 	/* Off Panel Popup menus */
 	off_panel_popups_cb = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
-	gtk_signal_connect (GTK_OBJECT (off_panel_popups_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (off_panel_popups_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table),off_panel_popups_cb, 0,1,1,2);
 
 	/* Hungry Menus */
 	hungry_menus_cb = gtk_check_button_new_with_label (_("Keep menus in memory"));
-	gtk_signal_connect (GTK_OBJECT (hungry_menus_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (hungry_menus_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_table_attach_defaults (GTK_TABLE (table), hungry_menus_cb,
 				   1, 2, 1, 2);
 
 	/* Merge system menus */
 	merge_menus_cb = gtk_check_button_new_with_label (_("Merge in system menus"));
-	gtk_signal_connect (GTK_OBJECT (merge_menus_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (merge_menus_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table), merge_menus_cb,
 				  0, 1, 2, 3);
 
 	/* Menu check */
 	menu_check_cb = gtk_check_button_new_with_label (_("Automatically re-check menus\nfor newly installed software"));
-	gtk_signal_connect (GTK_OBJECT (menu_check_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (menu_check_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table), menu_check_cb,
 				  1, 2, 2, 3);
 	
 	/* Menu titles */
 	show_menu_titles_cb = gtk_check_button_new_with_label (_("Show menu titles"));
-	gtk_signal_connect (GTK_OBJECT (show_menu_titles_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (show_menu_titles_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_table_attach_defaults (GTK_TABLE (table), show_menu_titles_cb,
 				   0, 1, 3, 4);
 
@@ -732,32 +732,32 @@ misc_notebook_page(void)
 
 	/* Tooltips enable */
 	tooltips_enabled_cb = gtk_check_button_new_with_label (_("Tooltips enabled"));
-	gtk_signal_connect (GTK_OBJECT (tooltips_enabled_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (tooltips_enabled_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), tooltips_enabled_cb, FALSE, FALSE, 0);	
 	
 	/* Drawer/launcher auto close */
 	drawer_auto_close_cb = gtk_check_button_new_with_label (_("Close drawer if a launcher inside it is pressed"));
-	gtk_signal_connect (GTK_OBJECT (drawer_auto_close_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	g_signal_connect (G_OBJECT (drawer_auto_close_cb), "toggled", 
+			    G_CALLBACK (changed_cb),  NULL);
 	gtk_box_pack_start (GTK_BOX (box), drawer_auto_close_cb, FALSE, FALSE, 0);
 
 	/* Autoraise */
 	autoraise_cb = gtk_check_button_new_with_label (_("Raise panels on mouse-over"));
-	gtk_signal_connect (GTK_OBJECT (autoraise_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (autoraise_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), autoraise_cb, FALSE, FALSE, 0);
 
 	/* Confirm panel removal */
 	confirm_panel_remove_cb = gtk_check_button_new_with_label (_("Confirm the removal of panels with a dialog"));
-	gtk_signal_connect (GTK_OBJECT (confirm_panel_remove_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (confirm_panel_remove_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), confirm_panel_remove_cb, FALSE, FALSE, 0);
 
 	/* Collision avoidance */
 	avoid_collisions_cb = gtk_check_button_new_with_label (_("Try to avoid overlapping panels"));
-	gtk_signal_connect (GTK_OBJECT (avoid_collisions_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (avoid_collisions_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), avoid_collisions_cb, FALSE, FALSE, 0);
 
 	/* Layer frame */
@@ -772,22 +772,22 @@ misc_notebook_page(void)
 
 	/* Keep on bottom */
 	keep_bottom_cb = gtk_radio_button_new_with_label (NULL, _("Keep panels below other windows"));
-	gtk_signal_connect (GTK_OBJECT (keep_bottom_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (keep_bottom_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
 
 	/* Normal */
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
 	normal_layer_cb = gtk_radio_button_new_with_label (group, _("Keep panels on the same level as other windows"));
-	gtk_signal_connect (GTK_OBJECT (normal_layer_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (normal_layer_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), normal_layer_cb, FALSE, FALSE, 0);
 
 	/* Above */
 	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
 	above_cb = gtk_radio_button_new_with_label (group, _("Keep panels above other windows"));
-	gtk_signal_connect (GTK_OBJECT (above_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (above_cb), "toggled", 
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), above_cb, FALSE, FALSE, 0);
 
 	/* Key Bindings frame */
@@ -805,8 +805,8 @@ misc_notebook_page(void)
 
 	/* enabled */
 	keys_enabled_cb = gtk_check_button_new_with_label (_("Enable panel keybindings"));
-	gtk_signal_connect (GTK_OBJECT (keys_enabled_cb), "toggled",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	g_signal_connect (G_OBJECT (keys_enabled_cb), "toggled",
+			    G_CALLBACK (changed_cb), NULL);
 	gtk_table_attach_defaults (GTK_TABLE (table), keys_enabled_cb, 
 				   0, 3, 0, 1);
 	
@@ -827,17 +827,17 @@ misc_notebook_page(void)
 	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
 	g_list_free(list);
 	menu_key_entry = GTK_COMBO(w)->entry;
-	gtk_signal_connect (GTK_OBJECT (menu_key_entry),
+	g_signal_connect (G_OBJECT (menu_key_entry),
 			    "changed",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+			    G_CALLBACK (changed_cb), NULL);
 	/*gtk_widget_set_sensitive (menu_key_entry, FALSE);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 1, 2);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 1, 2,
 			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_signal_connect (GTK_OBJECT (w), "clicked",
-			    GTK_SIGNAL_FUNC (grab_button_pressed),
+	g_signal_connect (G_OBJECT (w), "clicked",
+			    G_CALLBACK (grab_button_pressed),
 			    menu_key_entry);
 
 	/* run key...*/
@@ -855,17 +855,17 @@ misc_notebook_page(void)
 	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
 	g_list_free(list);
 	run_key_entry = GTK_COMBO(w)->entry;
-	gtk_signal_connect (GTK_OBJECT (run_key_entry),
+	g_signal_connect (G_OBJECT (run_key_entry),
 			    "changed",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+			    G_CALLBACK (changed_cb), NULL);
 	/*gtk_widget_set_sensitive (run_key_entry, FALSE);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 2, 3);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 2, 3,
 			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_signal_connect (GTK_OBJECT (w), "clicked",
-			    GTK_SIGNAL_FUNC (grab_button_pressed),
+	g_signal_connect (G_OBJECT (w), "clicked",
+			    G_CALLBACK (grab_button_pressed),
 			    run_key_entry);
 	
 	/* screenshot key...*/
@@ -882,17 +882,17 @@ misc_notebook_page(void)
 	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
 	g_list_free(list);
 	screenshot_key_entry = GTK_COMBO(w)->entry;
-	gtk_signal_connect (GTK_OBJECT (screenshot_key_entry),
+	g_signal_connect (G_OBJECT (screenshot_key_entry),
 			    "changed",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+			    G_CALLBACK (changed_cb), NULL);
 	/*gtk_widget_set_sensitive (screenshot_key_entry, FALSE);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 3, 4);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 3, 4,
 			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_signal_connect (GTK_OBJECT (w), "clicked",
-			    GTK_SIGNAL_FUNC (grab_button_pressed),
+	g_signal_connect (G_OBJECT (w), "clicked",
+			    G_CALLBACK (grab_button_pressed),
 			    screenshot_key_entry);
 
 	/* window screenshot key...*/
@@ -909,17 +909,17 @@ misc_notebook_page(void)
 	gtk_combo_set_popdown_strings (GTK_COMBO (w), list);
 	g_list_free (list);
 	window_screenshot_key_entry = GTK_COMBO(w)->entry;
-	gtk_signal_connect (GTK_OBJECT (window_screenshot_key_entry),
+	g_signal_connect (G_OBJECT (window_screenshot_key_entry),
 			    "changed",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+			    G_CALLBACK (changed_cb), NULL);
 	/*gtk_widget_set_sensitive (window_screenshot_key_entry, FALSE);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 4, 5);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 4, 5,
 			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_signal_connect (GTK_OBJECT (w), "clicked",
-			    GTK_SIGNAL_FUNC (grab_button_pressed),
+	g_signal_connect (G_OBJECT (w), "clicked",
+			    G_CALLBACK (grab_button_pressed),
 			    window_screenshot_key_entry);
 
  	return (vbox);
@@ -1219,8 +1219,8 @@ setup_the_ui(GtkWidget *capplet)
 				  page, gtk_label_new (_("Miscellaneous")));
 
 
-	gtk_signal_connect (GTK_OBJECT (nbook), "event",
-			    GTK_SIGNAL_FUNC (config_event),
+	g_signal_connect (G_OBJECT (nbook), "event",
+			    G_CALLBACK (config_event),
 			    nbook);
 
 	/* show notebook */
@@ -1234,16 +1234,16 @@ setup_the_ui(GtkWidget *capplet)
 
 	/* Finished */
 	gtk_widget_show_all(capplet);
-	gtk_signal_connect(GTK_OBJECT(capplet), "try",
-			   GTK_SIGNAL_FUNC(try), NULL);
-	gtk_signal_connect(GTK_OBJECT(capplet), "revert",
-			   GTK_SIGNAL_FUNC(revert), NULL);
-	gtk_signal_connect(GTK_OBJECT(capplet), "ok",
-			   GTK_SIGNAL_FUNC(try), NULL);
-	gtk_signal_connect(GTK_OBJECT(capplet), "cancel",
-			   GTK_SIGNAL_FUNC(revert), NULL);
-	gtk_signal_connect(GTK_OBJECT(capplet), "help",
-			   GTK_SIGNAL_FUNC(help), NULL);
+	g_signal_connect(G_OBJECT(capplet), "try",
+			   G_CALLBACK(try), NULL);
+	g_signal_connect(G_OBJECT(capplet), "revert",
+			   G_CALLBACK(revert), NULL);
+	g_signal_connect(G_OBJECT(capplet), "ok",
+			   G_CALLBACK(try), NULL);
+	g_signal_connect(G_OBJECT(capplet), "cancel",
+			   G_CALLBACK(revert), NULL);
+	g_signal_connect(G_OBJECT(capplet), "help",
+			   G_CALLBACK(help), NULL);
 }
 
 int

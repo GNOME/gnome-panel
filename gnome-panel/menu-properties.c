@@ -397,9 +397,9 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 
 	if(!on && !sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_prop), 
+			  menu);
 	
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("In a submenu"));
@@ -409,9 +409,9 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 
 	if (sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_prop), 
+			  menu);
 	
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("On the main menu"));
@@ -419,9 +419,9 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 	gtk_table_attach_defaults(table, w, 1, 2, row, row+1);
 	if (on)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_prop), 
+			  menu);
 }
 
 static void
@@ -489,9 +489,9 @@ create_properties_dialog (Menu *menu)
 	if (menu->main_menu &&
 	    menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_global_main), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_global_main), 
+			  menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gtk_radio_button_new_with_label (
@@ -502,9 +502,9 @@ create_properties_dialog (Menu *menu)
 	if (menu->main_menu &&
 	    ! menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_main_menu), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_main_menu), 
+			  menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w2 = gtk_radio_button_new_with_label (
@@ -512,9 +512,9 @@ create_properties_dialog (Menu *menu)
 		  _("Normal menu"));
 	if ( ! menu->main_menu)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_normal_menu), 
-			    menu);
+	g_signal_connect (G_OBJECT (w2), "toggled", 
+			  G_CALLBACK (toggle_normal_menu), 
+			  menu);
 	gtk_box_pack_start(GTK_BOX(box), w2, TRUE, TRUE, 0);
 
 	f = gtk_frame_new(_("Main menu"));
@@ -602,9 +602,9 @@ create_properties_dialog (Menu *menu)
 		g_free(s);
 	}
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
-	gtk_signal_connect (GTK_OBJECT (t), "changed",
-			    GTK_SIGNAL_FUNC (textbox_changed),
-			    menu);
+	g_signal_connect (G_OBJECT (t), "changed",
+			  G_CALLBACK (textbox_changed),
+			  menu);
 	
 	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Menu")));
@@ -624,9 +624,9 @@ create_properties_dialog (Menu *menu)
 	if(menu->custom_icon &&
 	   menu->custom_icon_file != NULL)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_custom_icon), 
-			    menu);
+	g_signal_connect (G_OBJECT (w), "toggled", 
+			  G_CALLBACK (toggle_custom_icon), 
+			  menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gnome_icon_entry_new("icon", _("Browse"));
@@ -639,22 +639,22 @@ create_properties_dialog (Menu *menu)
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
-	gtk_signal_connect (GTK_OBJECT (w), "changed",
-			    GTK_SIGNAL_FUNC (textbox_changed),
-			    menu);
+	g_signal_connect (G_OBJECT (w), "changed",
+			  G_CALLBACK (textbox_changed),
+			  menu);
 
 	gtk_widget_grab_focus (global_main);
 
 	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Icon")));
 	
-	gtk_signal_connect (GTK_OBJECT(dialog), "destroy",
-			    GTK_SIGNAL_FUNC (properties_close_callback),
-			    menu);
+	g_signal_connect (G_OBJECT(dialog), "destroy",
+			  G_CALLBACK (properties_close_callback),
+			  menu);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "response",
-			    GTK_SIGNAL_FUNC (dialog_response),
-			    menu);
+	g_signal_connect (G_OBJECT (dialog), "response",
+			  G_CALLBACK (dialog_response),
+			  menu);
 
 	return dialog;
 }

@@ -404,15 +404,15 @@ browse(GtkWidget *w, GtkWidget *entry)
 				      GTK_WINDOW (run_dialog));
 	gtk_object_set_user_data(GTK_OBJECT(fsel), entry);
 
-	gtk_signal_connect (GTK_OBJECT (fsel->ok_button), "clicked",
-			    GTK_SIGNAL_FUNC (browse_ok), fsel);
+	g_signal_connect (G_OBJECT (fsel->ok_button), "clicked",
+			    G_CALLBACK (browse_ok), fsel);
 	gtk_signal_connect_object
 		(GTK_OBJECT (fsel->cancel_button), "clicked",
-		 GTK_SIGNAL_FUNC (gtk_widget_destroy), 
+		 G_CALLBACK (gtk_widget_destroy), 
 		 GTK_OBJECT(fsel));
 	gtk_signal_connect_object_while_alive
 		(GTK_OBJECT (entry), "destroy",
-		 GTK_SIGNAL_FUNC (gtk_widget_destroy),
+		 G_CALLBACK (gtk_widget_destroy),
 		 GTK_OBJECT (fsel));
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
@@ -565,8 +565,8 @@ create_toggle_advanced_button (const char *label)
 
         gtk_container_add (GTK_CONTAINER (align), button);
 
-        gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                            GTK_SIGNAL_FUNC (toggle_contents),
+        g_signal_connect (G_OBJECT (button), "clicked",
+                            G_CALLBACK (toggle_contents),
                             run_dialog);
 
         gtk_object_set_data (GTK_OBJECT (run_dialog),
@@ -618,28 +618,28 @@ create_advanced_contents (void)
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 
-        gtk_signal_connect (GTK_OBJECT (entry), "event",
-                            GTK_SIGNAL_FUNC (entry_event),
+        g_signal_connect (G_OBJECT (entry), "event",
+                            G_CALLBACK (entry_event),
                             NULL);
-        gtk_signal_connect (GTK_OBJECT (entry), "destroy",
-                            GTK_SIGNAL_FUNC (kill_completion),
+        g_signal_connect (G_OBJECT (entry), "destroy",
+                            G_CALLBACK (kill_completion),
                             NULL);
  
         gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         gtk_object_set_data (GTK_OBJECT (run_dialog), "entry", entry);
 
-	gtk_signal_connect (GTK_OBJECT (entry), "activate",
-			    GTK_SIGNAL_FUNC (activate_run),
+	g_signal_connect (G_OBJECT (entry), "activate",
+			    G_CALLBACK (activate_run),
 			    run_dialog);
-        gtk_signal_connect (GTK_OBJECT (entry),
+        g_signal_connect (G_OBJECT (entry),
                             "changed",
-                            GTK_SIGNAL_FUNC (entry_changed),
+                            G_CALLBACK (entry_changed),
                             run_dialog);
         
         w = gtk_button_new_with_label(_("Browse..."));
-        gtk_signal_connect(GTK_OBJECT(w), "clicked",
-                           GTK_SIGNAL_FUNC (browse), entry);
+        g_signal_connect(G_OBJECT(w), "clicked",
+                           G_CALLBACK (browse), entry);
         gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE,
                             GNOME_PAD_SMALL);
 
@@ -658,9 +658,9 @@ create_advanced_contents (void)
                                   vbox,
                                   (GtkDestroyNotify) gtk_object_unref);
         
-        gtk_signal_connect (GTK_OBJECT (vbox),
+        g_signal_connect (G_OBJECT (vbox),
                             "show",
-                            GTK_SIGNAL_FUNC (advanced_contents_shown),
+                            G_CALLBACK (advanced_contents_shown),
                             run_dialog);
 
         return vbox;
@@ -1026,9 +1026,9 @@ create_simple_contents (void)
                                        CLIST_ICON_SIZE));
 #endif
 
-        gtk_signal_connect (GTK_OBJECT (clist),
+        g_signal_connect (G_OBJECT (clist),
                             "select_row",
-                            GTK_SIGNAL_FUNC (select_row_handler),
+                            G_CALLBACK (select_row_handler),
                             run_dialog);
         
         w = gtk_scrolled_window_new (NULL, NULL);
@@ -1079,9 +1079,9 @@ create_simple_contents (void)
                                   vbox,
                                   (GtkDestroyNotify) gtk_object_unref);
 
-        gtk_signal_connect (GTK_OBJECT (vbox),
+        g_signal_connect (G_OBJECT (vbox),
                             "show",
-                            GTK_SIGNAL_FUNC (simple_contents_shown),
+                            G_CALLBACK (simple_contents_shown),
                             run_dialog);
 
         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
@@ -1186,8 +1186,8 @@ show_run_dialog (void)
 	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
 					 GNOME_ICONDIR"/gnome-run.png");
 #endif
-	gtk_signal_connect(GTK_OBJECT(run_dialog), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+	g_signal_connect(G_OBJECT(run_dialog), "destroy",
+			   G_CALLBACK(gtk_widget_destroyed),
 			   &run_dialog);
 	gtk_window_position(GTK_WINDOW(run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
@@ -1195,8 +1195,8 @@ show_run_dialog (void)
 	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), 
 					 RUN_BUTTON);
 
-        gtk_signal_connect (GTK_OBJECT (run_dialog), "response", 
-                            GTK_SIGNAL_FUNC (run_dialog_response), NULL);
+        g_signal_connect (G_OBJECT (run_dialog), "response", 
+                            G_CALLBACK (run_dialog_response), NULL);
 
         create_simple_contents ();
         create_advanced_contents ();
@@ -1274,15 +1274,15 @@ create_run_widget(void)
 			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
-	gtk_signal_connect (GTK_OBJECT (button), "drag_data_get",
-			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+	g_signal_connect (G_OBJECT (button), "drag_data_get",
+			    G_CALLBACK (drag_data_get_cb),
 			    NULL);
 
 	g_free(pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Run..."), NULL);
 
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   GTK_SIGNAL_FUNC(show_run_dialog), NULL);
+	g_signal_connect(G_OBJECT(button), "clicked",
+			   G_CALLBACK(show_run_dialog), NULL);
 
 	return button;
 }

@@ -258,9 +258,9 @@ session_save_timeout (gpointer data)
 					 "save request.\n"
 					 "Remove the applet "
 					 "or continue waiting?"));
-	gtk_signal_connect(GTK_OBJECT(ss_timeout_dlg),"destroy",
-			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-			   &ss_timeout_dlg);
+	g_signal_connect (G_OBJECT(ss_timeout_dlg),"destroy",
+			  G_CALLBACK (gtk_widget_destroyed),
+			  &ss_timeout_dlg);
 	gtk_dialog_add_button (GTK_DIALOG (ss_timeout_dlg),
 			       _("Remove applet"),
 			       1); /* FIXME: GNOME_STOCK_PIXMAP_TRASH */

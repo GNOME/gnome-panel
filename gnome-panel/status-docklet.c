@@ -59,57 +59,28 @@ enum {
 static guint status_docklet_signals[LAST_SIGNAL] = {0};
 
 static void
-marshal_signal_build (GClosure     *closure,
-		      GValue       *return_value,
-		      guint         n_param_values,
-		      const GValue *param_values,
-		      gpointer      invocation_hint,
-		      gpointer      marshal_data)
-{
-  register BuildSignal callback;
-  register GCClosure *cc = (GCClosure*) closure;
-  register gpointer data1, data2;
-
-  g_return_if_fail (n_param_values == 3);
-
-  if (G_CCLOSURE_SWAP_DATA (closure))
-    {
-      data1 = closure->data;
-      data2 = g_value_peek_pointer (param_values + 0);
-    }
-  else
-    {
-      data1 = g_value_peek_pointer (param_values + 0);
-      data2 = closure->data;
-    }
-  callback = (BuildSignal) (marshal_data ? marshal_data : cc->callback);
-
-  callback (data1,
-            g_value_get_pointer (param_values + 1),
-            data2);
-
-}
-
-static void
 status_docklet_class_init (StatusDockletClass *class)
 {
-	GtkObjectClass *object_class;
+	GObjectClass *object_class;
+	GtkObjectClass *gtk_object_class;
 
-	object_class = (GtkObjectClass*) class;
+	object_class =  G_OBJECT_CLASS (class);
+	gtk_object_class = GTK_OBJECT_CLASS (class);
 
 	status_docklet_signals[BUILD_PLUG_SIGNAL] =
-		gtk_signal_new("build_plug",
-			       GTK_RUN_FIRST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(StatusDockletClass,
-			       			 build_plug),
-			       marshal_signal_build,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("build_plug",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (StatusDockletClass, build_plug),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER)		
 
 	class->build_plug = status_docklet_build_plug;
-	object_class->destroy = status_docklet_destroy;
+	gtk_object_class->destroy = status_docklet_destroy;
 }
 
 static void

@@ -93,15 +93,15 @@ create_logout_widget (void)
 			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
-	gtk_signal_connect (GTK_OBJECT (button), "drag_data_get",
-			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+	g_signal_connect (G_OBJECT (button), "drag_data_get",
+			    G_CALLBACK (drag_data_get_cb),
 			    "LOGOUT");
 
 	g_free (pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Log out of GNOME"), NULL);
 
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (logout), NULL);
+	g_signal_connect (G_OBJECT (button), "clicked",
+			    G_CALLBACK (logout), NULL);
 
 	return button;
 }
@@ -157,15 +157,15 @@ create_lock_widget(void)
 			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
-	gtk_signal_connect (GTK_OBJECT (button), "drag_data_get",
-			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+	g_signal_connect (G_OBJECT (button), "drag_data_get",
+			    G_CALLBACK (drag_data_get_cb),
 			    "LOCK");
 
 	g_free (pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Lock screen"), NULL);
 
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (panel_lock), NULL);
+	g_signal_connect (G_OBJECT (button), "clicked",
+			    G_CALLBACK (panel_lock), NULL);
 
 	return button;
 }

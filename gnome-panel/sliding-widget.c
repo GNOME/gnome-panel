@@ -10,6 +10,7 @@
 #include "sliding-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "panel-marshal.h"
 #include "panel-util.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
@@ -64,28 +65,31 @@ static void
 sliding_pos_class_init (SlidingPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
+	GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
 	sliding_pos_signals[ANCHOR_CHANGE_SIGNAL] =
-		gtk_signal_new("anchor_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(SlidingPosClass,
-						 anchor_change),
-			       gtk_marshal_VOID__ENUM, /* FIXME:2 use NONE__ENUM ? */
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_SLIDING_ANCHOR);
+                g_signal_new ("anchor_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (SlidingPosClass, anchor_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              PANEL_TYPE_SLIDING_ANCHOR);
 
 	sliding_pos_signals[OFFSET_CHANGE_SIGNAL] =
-		gtk_signal_new("offset_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(SlidingPosClass,
-						 offset_change),
-			       gtk_marshal_NONE__INT,
-			       GTK_TYPE_NONE,
-			       2, GTK_TYPE_INT,
-			       GTK_TYPE_INT);
+                g_signal_new ("offset_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (SlidingPosClass, offset_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              2,
+                              G_TYPE_INT, G_TYPE_INT); 
 
 	pos_class->set_pos = sliding_pos_set_pos;
 	pos_class->get_pos = sliding_pos_get_pos;
@@ -345,17 +349,17 @@ sliding_widget_change_params (SlidingWidget *sliding,
 
 	if (anchor != pos->anchor) {
 		pos->anchor = anchor;
-		gtk_signal_emit (GTK_OBJECT (pos),
-				 sliding_pos_signals[ANCHOR_CHANGE_SIGNAL],
-				 anchor);
+		g_signal_emit (G_OBJECT (pos),
+			       sliding_pos_signals[ANCHOR_CHANGE_SIGNAL],
+			       0, anchor);
 		
 	}
 
 	if (offset != pos->offset) {
 		pos->offset = offset;
-		gtk_signal_emit (GTK_OBJECT (pos),
-				 sliding_pos_signals[OFFSET_CHANGE_SIGNAL],
-				 offset);
+		g_signal_emit (G_OBJECT (pos),
+			       sliding_pos_signals[OFFSET_CHANGE_SIGNAL],
+			       0, offset);
 	}
 
 	border_widget_change_params (BORDER_WIDGET (sliding),

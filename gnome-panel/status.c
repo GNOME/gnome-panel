@@ -182,9 +182,9 @@ new_status_spot(void)
 		status_applet_update(the_status);
 
 	gtk_widget_show_now(ss->socket);
-	gtk_signal_connect(GTK_OBJECT(ss->socket),"destroy",
-			   GTK_SIGNAL_FUNC(status_socket_destroyed),
-			   ss);
+	g_signal_connect (G_OBJECT(ss->socket),"destroy",
+			  G_CALLBACK(status_socket_destroyed),
+			  ss);
 	
 	ss->wid = GDK_WINDOW_XWINDOW(ss->socket->window);
 	return ss;
@@ -343,8 +343,8 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 				       GTK_SHADOW_IN);
 	gtk_container_set_border_width(GTK_CONTAINER(the_status->handle),
 				       1);
-	gtk_signal_connect(GTK_OBJECT(the_status->handle), "event",
-			   GTK_SIGNAL_FUNC(ignore_1st_click), NULL);
+	g_signal_connect (G_OBJECT(the_status->handle), "event",
+			  G_CALLBACK(ignore_1st_click), NULL);
 
 	if(!fixed) {
 		DPUTS("NO FIXED");
@@ -355,9 +355,9 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 
 		gtk_container_add(GTK_CONTAINER(the_status->handle), fixed);
 	} else {
-		gtk_signal_connect_after(GTK_OBJECT(the_status->handle), "realize",
-					 GTK_SIGNAL_FUNC(reparent_fixed),
-					 NULL);
+		gtk_signal_connect_after (GTK_OBJECT(the_status->handle), "realize",
+				          G_CALLBACK(reparent_fixed),
+					  NULL);
 	}
 	
 	status_applet_update(the_status);

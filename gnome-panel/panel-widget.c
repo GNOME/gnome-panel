@@ -140,87 +140,102 @@ panel_widget_class_init (PanelWidgetClass *class)
 	
 
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
-		gtk_signal_new("orient_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 orient_change),
-			       gtk_marshal_VOID__ENUM, /* FIXME:2 should this be gtk_marshal_NONE__ENUM ? */
-			       GTK_TYPE_NONE,
-			       1,
-			       PANEL_TYPE_PANEL_ORIENTATION);
+                g_signal_new ("orient_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, orient_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              PANEL_TYPE_PANEL_ORIENTATION); 
+
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
-		gtk_signal_new("size_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 size_change),
-			       gtk_marshal_NONE__INT,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_INT);
+                g_signal_new ("size_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, size_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__INT,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_INT); 
+
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
-		gtk_signal_new("applet_move",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_move),
-			       gtk_marshal_NONE__POINTER,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("applet_move",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, applet_move),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER); 
+
 	panel_widget_signals[APPLET_ADDED_SIGNAL] =
-		gtk_signal_new("applet_added",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_added),
-			       gtk_marshal_NONE__POINTER,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("applet_added",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, applet_added),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER); 
+
 	panel_widget_signals[APPLET_REMOVED_SIGNAL] =
-		gtk_signal_new("applet_removed",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_removed),
-			       gtk_marshal_NONE__POINTER,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("applet_removed",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, applet_removed),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER); 
+
 	panel_widget_signals[BACK_CHANGE_SIGNAL] =
-		gtk_signal_new("back_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 back_change),
-			       panel_marshal_VOID__ENUM_POINTER_POINTER,
-			       GTK_TYPE_NONE,
-			       3,
-			       PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
-			       GTK_TYPE_POINTER,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("back_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, back_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__ENUM_POINTER_POINTER,
+                              G_TYPE_NONE,
+                              3,
+			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
+			      G_TYPE_POINTER,
+			      G_TYPE_POINTER);
+
 	panel_widget_signals[APPLET_DRAW_SIGNAL] =
-		gtk_signal_new("applet_draw",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_draw),
-			       gtk_marshal_NONE__POINTER,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("applet_draw",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, applet_draw),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER);
+
 	panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL] =
-		gtk_signal_new("applet_about_to_die",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_about_to_die),
-			       gtk_marshal_NONE__POINTER,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
+                g_signal_new ("applet_about_to_die",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, applet_about_to_die),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__POINTER,
+                              G_TYPE_NONE,
+                              1,
+                              G_TYPE_POINTER); 
 
 	class->orient_change = NULL;
 	class->size_change = NULL;
@@ -253,9 +268,9 @@ applet_move(PanelWidget *panel, GtkWidget *applet)
 			button->cache = NULL;
 		}
 	}
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_DRAW_SIGNAL],
-			applet);
+	g_signal_emit (G_OBJECT(panel),
+		       panel_widget_signals[APPLET_DRAW_SIGNAL],
+		       0, applet);
 }
 
 static void
@@ -371,9 +386,9 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 
 	if (ad != NULL &&
 	    ad->no_die == 0) {
-		gtk_signal_emit (GTK_OBJECT (container),
-				 panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
-				 widget);
+		g_signal_emit (G_OBJECT (container),
+			       panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
+			       0, widget);
 	}
 
 
@@ -395,9 +410,9 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 			g_list_remove (panel->no_window_applet_list, ad);
 	}
 
-	gtk_signal_emit (GTK_OBJECT (container),
-			 panel_widget_signals[APPLET_REMOVED_SIGNAL],
-			 widget);
+	g_signal_emit (G_OBJECT (container),
+		       panel_widget_signals[APPLET_REMOVED_SIGNAL],
+		       0, widget);
 	gtk_widget_unref(widget);
 }
 
@@ -500,9 +515,9 @@ allocate_dirty_child(gpointer data)
 	challoc.height = chreq.height;
 	gtk_widget_size_allocate(ad->applet,&challoc);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			ad->applet);
+	g_signal_emit (G_OBJECT(panel),
+		       panel_widget_signals[APPLET_MOVE_SIGNAL],
+		       0, ad->applet);
 
 	return FALSE;
 }
@@ -785,9 +800,9 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 	} while(ad->pos+ad->cells == i);
 
 	for(list = prev;list!=NULL;list=g_list_next(list))
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_MOVE_SIGNAL],
-				((AppletData *)list->data)->applet);
+		g_signal_emit (G_OBJECT(panel),
+			       panel_widget_signals[APPLET_MOVE_SIGNAL],
+			       0, ((AppletData *)list->data)->applet);
 }
 
 static void
@@ -892,9 +907,9 @@ send_draw_to_all_applets(PanelWidget *panel)
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_DRAW_SIGNAL],
-				ad->applet);
+		g_signal_emit (G_OBJECT(panel),
+			       panel_widget_signals[APPLET_DRAW_SIGNAL],
+			       0, ad->applet);
 	}
 }
 
@@ -1310,9 +1325,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	for(li=send_move;li!=NULL;li=g_slist_next(li)) {
 		AppletData *ad = li->data;
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_MOVE_SIGNAL],
-				ad->applet);
+		g_signal_emit (G_OBJECT(panel),
+			       panel_widget_signals[APPLET_MOVE_SIGNAL],
+			       0, ad->applet);
 	}
 	g_slist_free(send_move);
 	
@@ -1366,9 +1381,9 @@ panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 		panel->back_type = PANEL_BACK_PIXMAP;
 		panel_widget_draw_all(panel,NULL);
 
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[BACK_CHANGE_SIGNAL],
-				panel->back_type,
+		g_signal_emit (G_OBJECT(panel),
+			       panel_widget_signals[BACK_CHANGE_SIGNAL],
+			       0, panel->back_type,
 				panel->back_pixmap,
 				&panel->back_color);
 	} else
@@ -1405,11 +1420,12 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 	panel_try_to_set_back_color(panel, color);
 	panel_widget_draw_all(panel,NULL);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[BACK_CHANGE_SIGNAL],
-			panel->back_type,
-			panel->back_pixmap,
-			&panel->back_color);
+	g_signal_emit(GTK_OBJECT(panel),
+		      panel_widget_signals[BACK_CHANGE_SIGNAL],
+		      0,
+		      panel->back_type,
+		      panel->back_pixmap,
+		      &panel->back_color);
 }
 
 static GdkPixmap *
@@ -1736,18 +1752,15 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->backpixmap = NULL;
 	panel->inhibit_draw = FALSE;
 
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(panel_widget_destroy),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "style_set",
-			   GTK_SIGNAL_FUNC(panel_widget_style_set),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "event",
-			   GTK_SIGNAL_FUNC(panel_widget_event),
-			   NULL);
+	g_signal_connect (G_OBJECT(panel), "destroy",
+			  G_CALLBACK (panel_widget_destroy),
+			  NULL);
+	g_signal_connect (G_OBJECT(panel), "style_set",
+			  G_CALLBACK (panel_widget_style_set),
+			  NULL);
+	g_signal_connect (GTK_OBJECT(panel), "event",
+			  G_CALLBACK (panel_widget_event),
+			  NULL);
 
 	panels = g_slist_append(panels,panel);
 }
@@ -2374,9 +2387,9 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	 */
 	
 	if (!GTK_WIDGET_NO_WINDOW(widget))
-		gtk_signal_connect(GTK_OBJECT(widget), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   data);
+		g_signal_connect (G_OBJECT(widget), "event",
+				  G_CALLBACK (panel_sub_event_handler),
+				  data);
 	
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
@@ -2397,9 +2410,9 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 	if(applet->parent) {
 		PanelWidget *panel = PANEL_WIDGET (applet->parent);
 
-		gtk_signal_emit (GTK_OBJECT (panel),
-				 panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
-				 applet);
+		g_signal_emit (G_OBJECT (panel),
+			       panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
+			       0, applet);
 
 		if (panel->currently_dragged_applet == ad)
 			panel_widget_applet_drag_end (panel);
@@ -2420,14 +2433,14 @@ bind_top_applet_events(GtkWidget *widget, gboolean bind_lower)
 	g_return_if_fail(widget!=NULL);
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
-	gtk_signal_connect(GTK_OBJECT(widget), "destroy",
-			   GTK_SIGNAL_FUNC(panel_widget_applet_destroy),
-			   NULL);
+	g_signal_connect (G_OBJECT(widget), "destroy",
+			  G_CALLBACK (panel_widget_applet_destroy),
+			  NULL);
 
-	gtk_signal_connect(GTK_OBJECT(widget),
-			   "event",
-			   GTK_SIGNAL_FUNC(panel_widget_applet_event),
-			   NULL);
+	g_signal_connect (G_OBJECT(widget),
+			  "event",
+			  G_CALLBACK (panel_widget_applet_event),
+			  NULL);
 
 	/* XXX: This is more or less a hack.  We need to be able to
 	 * capture events over applets so that we can drag them with
@@ -2574,9 +2587,9 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
 
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_ADDED_SIGNAL],
-			applet);
+	g_signal_emit (G_OBJECT(panel),
+		       panel_widget_signals[APPLET_ADDED_SIGNAL],
+		       0, applet);
 	
 	/*NOTE: forbidden list is not updated on addition, use the
 	function above for the panel*/
@@ -2666,9 +2679,9 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 		panel->no_window_applet_list =
 			g_list_remove(panel->no_window_applet_list,ad);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			ad->applet);
+	g_signal_emit (G_OBJECT(panel),
+		       panel_widget_signals[APPLET_MOVE_SIGNAL],
+		       0, ad->applet);
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
 
 	return pos;
@@ -2727,14 +2740,14 @@ panel_widget_change_params(PanelWidget *panel,
 	send_draw_to_all_applets(panel);
 
 	if(oldorient != panel->orient) {
-	   	gtk_signal_emit(GTK_OBJECT(panel),
-	   			panel_widget_signals[ORIENT_CHANGE_SIGNAL],
-	   			panel->orient);
+	   	g_signal_emit (G_OBJECT(panel),
+	   		       panel_widget_signals[ORIENT_CHANGE_SIGNAL],
+	   		       0, panel->orient);
 	}
 	if(oldsz != panel->sz) {
-	   	gtk_signal_emit(GTK_OBJECT(panel),
-	   			panel_widget_signals[SIZE_CHANGE_SIGNAL],
-	   			panel->sz);
+	   	g_signal_emit (G_OBJECT(panel),
+	   		       panel_widget_signals[SIZE_CHANGE_SIGNAL],
+	   		       0, panel->sz);
 	}
 	if(back_color) {
 		/*this will allways trigger, but so what*/
@@ -2774,11 +2787,12 @@ panel_widget_change_params(PanelWidget *panel,
 
 	/* let the applets know we changed the background */
 	if (change_back) {
-		gtk_signal_emit (GTK_OBJECT (panel),
-				 panel_widget_signals[BACK_CHANGE_SIGNAL],
-				 panel->back_type,
-				 panel->back_pixmap,
-				 &panel->back_color);
+		g_signal_emit (G_OBJECT (panel),
+			       panel_widget_signals[BACK_CHANGE_SIGNAL],
+			       0, 	
+			       panel->back_type,
+			       panel->back_pixmap,
+			       &panel->back_color);
 	}
 
 	/* inhibit draws until we resize */

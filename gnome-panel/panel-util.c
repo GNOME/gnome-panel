@@ -179,9 +179,9 @@ create_text_entry(GtkWidget *table,
 
 	if(func) {
 		gtk_object_set_data (GTK_OBJECT (t), "update_function", func);
-		gtk_signal_connect (GTK_OBJECT (t), "changed",
-				    GTK_SIGNAL_FUNC (updated), 
-				    data);
+		g_signal_connect (G_OBJECT (t), "changed",
+				  G_CALLBACK (updated), 
+				  data);
 	}
 	return entry;
 }
@@ -222,9 +222,9 @@ create_icon_entry(GtkWidget *table,
 
 	if(func) {
 		gtk_object_set_data (GTK_OBJECT (entry), "update_function", func);
-		gtk_signal_connect (GTK_OBJECT (entry), "changed",
-				    GTK_SIGNAL_FUNC (updated), 
-				    data);
+		g_signal_connect (G_OBJECT (entry), "changed",
+				  G_CALLBACK (updated), 
+				  data);
 	}
 
 	return entry;
@@ -802,9 +802,9 @@ panel_set_dialog_layer (GtkWidget *dialog)
 #if FIXME
 	if (g_slist_find (layered_dialogs, dialog) == NULL) {
 		layered_dialogs = g_slist_prepend (layered_dialogs, dialog);
-		gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-				    GTK_SIGNAL_FUNC (remove_from_layered),
-				    NULL);
+		g_signal_connect (G_OBJECT (dialog), "destroy",
+				  G_CALLBACK (remove_from_layered),
+				  NULL);
 	}
 
 	if (GTK_WIDGET_REALIZED (dialog) &&
@@ -813,9 +813,9 @@ panel_set_dialog_layer (GtkWidget *dialog)
 		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
 					   WIN_LAYER_ABOVE_DOCK);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "realize",
-			    GTK_SIGNAL_FUNC (panel_dialog_realized),
-			    NULL);
+	g_signal_connect (G_OBJECT (dialog), "realize",
+			  G_CALLBACK (panel_dialog_realized),
+			  NULL);
 #endif
 }
 
@@ -870,7 +870,7 @@ panel_error_dialog (const char *class,
 	panel_set_dialog_layer (w);
 
 	gtk_signal_connect_object (GTK_OBJECT (w), "response",
-				   GTK_SIGNAL_FUNC (gtk_widget_destroy),
+				   G_CALLBACK (gtk_widget_destroy),
 				   GTK_OBJECT (w));
 
 	return w;
@@ -904,7 +904,7 @@ panel_info_dialog (const char *class,
 	panel_set_dialog_layer (w);
 
 	gtk_signal_connect_object (GTK_OBJECT (w), "response",
-				   GTK_SIGNAL_FUNC (gtk_widget_destroy),
+				   G_CALLBACK (gtk_widget_destroy),
 				   GTK_OBJECT (w));
 
 	return w;

@@ -551,10 +551,10 @@ main(int argc, char **argv)
 
 	gnome_client_set_global_config_prefix (client, PANEL_CONFIG_PATH);
 	
-	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
-	gtk_signal_connect (GTK_OBJECT (client), "die",
-			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
+	g_signal_connect (G_OBJECT (client), "save_yourself",
+			  G_CALLBACK (panel_session_save), NULL);
+	g_signal_connect (G_OBJECT (client), "die",
+			  G_CALLBACK (panel_session_die), NULL);
 
 	panel_tooltips = gtk_tooltips_new ();
 

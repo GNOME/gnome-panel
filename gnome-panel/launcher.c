@@ -401,29 +401,29 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
 
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_get",
-			   GTK_SIGNAL_FUNC(drag_data_get_cb),
+	g_signal_connect (G_OBJECT(launcher->button), "drag_data_get",
+			   G_CALLBACK(drag_data_get_cb),
 			   launcher);
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_received",
-			   GTK_SIGNAL_FUNC(drag_data_received_cb),
+	g_signal_connect (G_OBJECT(launcher->button), "drag_data_received",
+			   G_CALLBACK(drag_data_received_cb),
 			   launcher);
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_motion",
-			   GTK_SIGNAL_FUNC(drag_motion_cb),
+	g_signal_connect (G_OBJECT(launcher->button), "drag_motion",
+			   G_CALLBACK(drag_motion_cb),
 			   launcher);
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_drop",
-			   GTK_SIGNAL_FUNC(drag_drop_cb),
+	g_signal_connect (G_OBJECT(launcher->button), "drag_drop",
+			   G_CALLBACK(drag_drop_cb),
 			   launcher);
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_leave",
-			   GTK_SIGNAL_FUNC(drag_leave_cb),
+	g_signal_connect (G_OBJECT(launcher->button), "drag_leave",
+			   G_CALLBACK(drag_leave_cb),
 			   launcher);
 
 
-	gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
+	g_signal_connect (G_OBJECT(launcher->button), "clicked",
 			    (GtkSignalFunc) launch_cb,
 			    launcher);
 	
-	gtk_signal_connect (GTK_OBJECT(launcher->button), "destroy",
-			    GTK_SIGNAL_FUNC(destroy_launcher),
+	g_signal_connect (G_OBJECT(launcher->button), "destroy",
+			    G_CALLBACK(destroy_launcher),
 			    launcher);
 
 	gtk_object_set_user_data(GTK_OBJECT(launcher->button), launcher);
@@ -605,17 +605,17 @@ create_properties_dialog (Launcher *launcher)
 #undef SETUP_EDITABLE
 #endif
 	
-	gtk_signal_connect (GTK_OBJECT (launcher->dedit), "changed",
-			    GTK_SIGNAL_FUNC (launcher_changed),
+	g_signal_connect (G_OBJECT (launcher->dedit), "changed",
+			    G_CALLBACK (launcher_changed),
 			    launcher);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
-			    GTK_SIGNAL_FUNC (properties_close_callback),
+	g_signal_connect (G_OBJECT (dialog), "destroy",
+			    G_CALLBACK (properties_close_callback),
 			    launcher);
 
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "response",
-			    GTK_SIGNAL_FUNC (window_response),
+	g_signal_connect (G_OBJECT (dialog), "response",
+			    G_CALLBACK (window_response),
 			    launcher);
 
 	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (launcher->dedit));
@@ -761,8 +761,8 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 			     GINT_TO_POINTER (exactpos));
 	gtk_object_set_data (GTK_OBJECT (dialog), "panel", panel);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "response",
-			    GTK_SIGNAL_FUNC (really_add_launcher),
+	g_signal_connect (G_OBJECT (dialog), "response",
+			    G_CALLBACK (really_add_launcher),
 			    dee);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), OK_BUTTON);

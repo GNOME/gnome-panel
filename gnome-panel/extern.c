@@ -833,7 +833,7 @@ extern_before_remove (Extern ext)
 
 	gtk_signal_connect_full
 		(GTK_OBJECT (dlg), "response",
-		 GTK_SIGNAL_FUNC (reload_applet_callback),
+		 G_CALLBACK (reload_applet_callback),
 		 NULL,
 		 d,
 		 destroy_reload_callback_data,
@@ -1065,7 +1065,7 @@ socket_unset_loading (GtkWidget *socket)
 
 		gtk_signal_connect_after (GTK_OBJECT (socket),
 					  "size_allocate",
-					  GTK_SIGNAL_FUNC (socket_size_allocate),
+					  G_CALLBACK (socket_size_allocate),
 					  NULL);
 	}
 }
@@ -1091,7 +1091,7 @@ reserve_applet_spot (Extern       ext,
 
 	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),
 				  "size_allocate",
-				  GTK_SIGNAL_FUNC (ebox_size_allocate),
+				  G_CALLBACK (ebox_size_allocate),
 				  ext);
 
 	gtk_widget_show (ext->ebox);
@@ -1116,9 +1116,9 @@ reserve_applet_spot (Extern       ext,
 		return 0;
 	}
 
-	gtk_signal_connect (GTK_OBJECT (socket),
+	g_signal_connect (G_OBJECT (socket),
 			    "destroy",
-			    GTK_SIGNAL_FUNC (extern_socket_destroy),
+			    G_CALLBACK (extern_socket_destroy),
 			    extern_ref (ext));
 	
 	if (!GTK_WIDGET_REALIZED (socket))

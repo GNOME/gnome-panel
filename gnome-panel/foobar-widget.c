@@ -43,12 +43,12 @@ extern GSList *panel_list;
 
 extern GtkTooltips *panel_tooltips;
 
-static void foobar_widget_class_init	(FoobarWidgetClass	*klass);
-static void foobar_widget_instance_init (FoobarWidget		*foo);
-static void foobar_widget_realize	(GtkWidget		*w);
-static void foobar_widget_destroy	(GtkObject		*o);
-static void foobar_widget_size_allocate	(GtkWidget		*w,
-					 GtkAllocation		*alloc);
+static void foobar_widget_class_init	(FoobarWidgetClass *klass);
+static void foobar_widget_instance_init (FoobarWidget *foo);
+static void foobar_widget_realize	(GtkWidget *w);
+static void foobar_widget_destroy	(GtkObject *o);
+static void foobar_widget_size_allocate	(GtkWidget *w,
+					 GtkAllocation *alloc);
 static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
@@ -59,8 +59,6 @@ static void setup_task_menu (FoobarWidget *foo);
 static GList *foobars = NULL;
 
 static GtkWindowClass *foobar_widget_parent_class = NULL;
-
-
 
 GType
 foobar_widget_get_type (void)
@@ -204,9 +202,9 @@ url_menu_item (const char *label, const char *url, const char *pixmap)
 	GtkWidget *item;
 	item = pixmap_menu_item_new (label, pixmap);
 	if (!label) gtk_widget_set_sensitive (item, FALSE);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (url_show), 
-			    (gpointer *)url);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (url_show), 
+			  url);
 	return item;
 }
 
@@ -303,8 +301,8 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	item = pixmap_menu_item_new (_("About GNOME"), GNOME_STOCK_ABOUT);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (about_cb), NULL);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (about_cb), NULL);
 
 	add_tearoff (GTK_MENU_SHELL (menu));
 
@@ -324,8 +322,8 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 
 	item = gtk_menu_item_new_with_label (label);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (gmc_client), flag);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (gmc_client), flag);
 
 	return item;
 }
@@ -429,15 +427,15 @@ append_desktop_menu (GtkWidget *menu_bar)
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					       "gnome-lockscreen.png");
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		gtk_signal_connect (GTK_OBJECT (item), "activate",
-				    GTK_SIGNAL_FUNC (panel_lock), 0);
+		g_signal_connect (G_OBJECT (item), "activate",
+				  G_CALLBACK (panel_lock), 0);
 		setup_internal_applet_drag(item, "LOCK:NEW");
 	}
 
 	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC(panel_quit), 0);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
 
 	add_tearoff (GTK_MENU_SHELL (menu));
@@ -447,7 +445,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 
 	gtk_signal_connect_full (GTK_OBJECT (menu), "show",
-				 GTK_SIGNAL_FUNC (desktop_selected),
+				 G_CALLBACK (desktop_selected),
 				 NULL,
 				 gmc_menu_items,
 				 (GtkDestroyNotify) g_list_free,
@@ -499,9 +497,9 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 
-	gtk_signal_connect (GTK_OBJECT (menu), "show",
-			    GTK_SIGNAL_FUNC (submenu_to_display),
-			    NULL);
+	g_signal_connect (G_OBJECT (menu), "show",
+			  G_CALLBACK (submenu_to_display),
+			  NULL);
 
 	return menu;
 }
@@ -512,8 +510,8 @@ append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 {
 	GtkWidget *item = gtk_menu_item_new_with_label (label);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (gnomecal_client), (gpointer)flag);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (gnomecal_client), flag);
 }
 #endif
 
@@ -607,9 +605,9 @@ append_format_item (GtkWidget *menu, const char *format)
 
 	item = gtk_menu_item_new_with_label (hour);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (set_fooclock_format),
-			    (gpointer)format);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (set_fooclock_format),
+			  format);
 }
 #endif
 
@@ -660,8 +658,8 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	time_admin_path = g_find_program_in_path  ("time-admin");
 	if (time_admin_path) {
 		item = gtk_menu_item_new_with_label (_("Set Time"));
-		gtk_signal_connect (GTK_OBJECT (item), "activate",
-						GTK_SIGNAL_FUNC (set_time_cb), time_admin_path);
+		g_signal_connect (G_OBJECT (item), "activate",
+				  G_CALLBACK (set_time_cb), time_admin_path);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		add_menu_separator (menu);
 	}
@@ -860,9 +858,9 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 	gtk_container_add (GTK_CONTAINER (item), label);
 	g_hash_table_insert (foo->tasks, task, item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate", 
-			    GTK_SIGNAL_FUNC (focus_task),
-			    task);
+	g_signal_connect (G_OBJECT (item), "activate", 
+			  G_CALLBACK (focus_task),
+			  task);
 	gtk_widget_show_all (item);
 	
 	if (!desk)
@@ -1061,10 +1059,10 @@ setup_task_menu (FoobarWidget *foo)
 	GList *tasks;
 	g_assert (foo->task_item != NULL);
 
-	gtk_signal_connect (GTK_OBJECT (foo->task_item), "select",
-			    GTK_SIGNAL_FUNC (create_task_menu), foo);
-	gtk_signal_connect (GTK_OBJECT (foo->task_item), "deselect",
-			    GTK_SIGNAL_FUNC (destroy_task_menu), foo);
+	g_signal_connect (G_OBJECT (foo->task_item), "select",
+			  G_CALLBACK (create_task_menu), foo);
+	g_signal_connect (G_OBJECT (foo->task_item), "deselect",
+			  G_CALLBACK (destroy_task_menu), foo);
 
 	set_the_task_submenu (foo, foo->task_item);
 
@@ -1122,8 +1120,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	window->auto_shrink  = TRUE;
 #endif
 
-	gtk_signal_connect (GTK_OBJECT (foo), "delete_event",
-			    GTK_SIGNAL_FUNC (gtk_true), NULL);
+	g_signal_connect (G_OBJECT (foo), "delete_event",
+			  G_CALLBACK (gtk_true), NULL);
 
 	gtk_widget_set_uposition (GTK_WIDGET (foo),
 				  multiscreen_x (foo->screen),
@@ -1157,9 +1155,9 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	menu = create_root_menu (NULL, TRUE, flags, TRUE, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menu), "show",
-			    GTK_SIGNAL_FUNC (programs_menu_to_display),
-			    NULL);
+	g_signal_connect (G_OBJECT (menu), "show",
+			  G_CALLBACK (programs_menu_to_display),
+			  NULL);
 	foo->programs = menu;
 
 	foo->favorites =
