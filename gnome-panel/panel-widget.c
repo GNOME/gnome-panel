@@ -944,6 +944,9 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 		}
 		pb = panel->backpix;
 	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
+		if(!panel->backpixmap)
+			panel_resize_pixmap(panel);
+
 		pb = panel->backpix;
 
 		if(panel->fit_pixmap_bg ||
@@ -1120,38 +1123,6 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	return FALSE;
 }
 
-static int
-fit_pix_timeout(gpointer data)
-{
-	PanelWidget *panel = data;
-	if(panel->pixmap_resize_pending &&
-	   (panel->fit_pixmap_bg || panel->strech_pixmap_bg) &&
-	   panel->back_type == PANEL_BACK_PIXMAP) {
-		panel_resize_pixmap(panel);
-		panel->pixmap_resize_pending = FALSE;
-		return TRUE;
-	}
-	panel->pixmap_resize_timeout = 0;
-	panel->pixmap_resize_pending = FALSE;
-	return FALSE;
-}
-
-static int
-fit_pix_timeout_top(gpointer data)
-{
-	PanelWidget *panel = data;
-	panel->pixmap_resize_timeout_top = 0;
-	if(panel->pixmap_resize_timeout ||
-	   !(panel->fit_pixmap_bg || panel->strech_pixmap_bg) ||
-	   panel->back_type != PANEL_BACK_PIXMAP)
-		return FALSE;
-	panel_resize_pixmap(panel);
-	panel->pixmap_resize_pending = FALSE;
-	panel->pixmap_resize_timeout =
-		gtk_timeout_add(2000,fit_pix_timeout,panel);
-	return FALSE;
-}
-
 static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -1291,13 +1262,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	   (panel->fit_pixmap_bg || panel->strech_pixmap_bg) &&
 	   (old_alloc.width != allocation->width ||
 	    old_alloc.height != allocation->height)) {
-		if(panel->pixmap_resize_timeout)
-			panel->pixmap_resize_pending = TRUE;
-		else {
-			if(panel->pixmap_resize_timeout_top)
-				gtk_timeout_remove(panel->pixmap_resize_timeout_top);
-			panel->pixmap_resize_timeout_top = 
-				gtk_timeout_add(500,fit_pix_timeout_top,panel);
+		if(panel->backpixmap) {
+			gdk_pixmap_unref(panel->backpixmap);
+			panel->backpixmap = NULL;
 		}
 	}
 
@@ -1421,7 +1388,7 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 	GdkPixmap *p;
 	gdouble affine[6];
 	guchar *rgb;
-
+	
 	affine[1] = affine[2] = affine[4] = affine[5] = 0;
 
 	affine[0] = scale_w / (double)(pb->art_pixbuf->width);
@@ -1503,7 +1470,7 @@ panel_resize_pixmap(PanelWidget *panel)
 		default:
 			g_assert_not_reached ();
 		}
-	} else { /*strech_pixmap_bg*/
+	} else if(panel->strech_pixmap_bg) {
 		if(panel->orient == PANEL_VERTICAL &&
 		   panel->rotate_pixmap_bg) {
 			panel->scale_w = ph;
@@ -1530,7 +1497,6 @@ panel_resize_pixmap(PanelWidget *panel)
 static int
 panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 {
-	int pw,ph;
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
 
@@ -1556,53 +1522,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 
 	panel->scale_w = panel->backpix->art_pixbuf->width;
 	panel->scale_h = panel->backpix->art_pixbuf->height;
-
-	pw = GTK_WIDGET(panel)->allocation.width;
-	ph = GTK_WIDGET(panel)->allocation.height;
-	
-	if (panel->fit_pixmap_bg) {
-		int w, h;
-		
-		w = panel->scale_w;
-		h = panel->scale_h;
-
-		switch (panel->orient) {
-		case PANEL_HORIZONTAL:
-			panel->scale_w = w * ph / h;
-			panel->scale_h = ph;
-			break;
-
-		case PANEL_VERTICAL:
-			if(panel->rotate_pixmap_bg) {
-				panel->scale_w = w * pw / h;
-				panel->scale_h = pw;
-			} else {
-				panel->scale_w = pw;
-				panel->scale_h = h * pw / w;
-			}
-			break;
-
-		default:
-			g_assert_not_reached ();
-		}
-	} else if (panel->strech_pixmap_bg) {
-		if(panel->orient == PANEL_VERTICAL &&
-		   panel->rotate_pixmap_bg) {
-			panel->scale_w = ph;
-			panel->scale_h = pw;
-		} else {
-			panel->scale_w = pw;
-			panel->scale_h = ph;
-		}
-	}
-
-	panel->backpixmap = get_pixmap_from_pixbuf(
-					GTK_WIDGET(panel),
-					panel->backpix,
-					panel->scale_w,
-					panel->scale_h,
-					panel->orient == PANEL_VERTICAL &&
-					  panel->rotate_pixmap_bg);
 
 	return TRUE;
 }
@@ -1642,11 +1561,6 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
-
-	if(panel->pixmap_resize_timeout)
-		gtk_timeout_remove(panel->pixmap_resize_timeout);
-	if(panel->pixmap_resize_timeout_top)
-		gtk_timeout_remove(panel->pixmap_resize_timeout_top);
 }
 
 static void
@@ -1721,9 +1635,6 @@ panel_widget_init (PanelWidget *panel)
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
 	panel->strech_pixmap_bg = FALSE;
-	panel->pixmap_resize_timeout = 0;
-	panel->pixmap_resize_timeout_top = 0;
-	panel->pixmap_resize_pending = FALSE;
 	panel->back_pixmap = NULL;
 	panel->back_color.red = 0;
 	panel->back_color.green = 0;

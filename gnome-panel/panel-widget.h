@@ -69,9 +69,6 @@ struct _PanelWidget
 						    of the panel */
 	gboolean		rotate_pixmap_bg; /*rotate pixmap on vertical
 						    panels */
-	int			pixmap_resize_timeout;
-	int			pixmap_resize_timeout_top;
-	int			pixmap_resize_pending;
 
 	int			packed;
 

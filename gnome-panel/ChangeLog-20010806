@@ -1,3 +1,12 @@
+Mon Oct 25 23:57:42 1999  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: don't do that weird queing of resizes as
+	  we now resize on drawing anyway so it had no point, and also
+	  draw the pixmap just before we really need it
+
+	* session.c,menu.c: make the rotate background default to FALSE as
+	  it's currently slow
+
 Mon Oct 25 22:32:35 1999  George Lebl  <jirka@5z.com>
 
 	* {aligned,basep,border,drawer,edge,floating,panel,sliding}-widget.[ch]:

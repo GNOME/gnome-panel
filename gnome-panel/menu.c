@@ -1929,7 +1929,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
-					   TRUE, FALSE, TRUE,
+					   TRUE, FALSE, FALSE,
 					   &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);
@@ -1944,7 +1944,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					TRUE,
 					PANEL_BACK_NONE,
 					NULL,
-					TRUE, FALSE, TRUE,
+					TRUE, FALSE, FALSE,
 					&bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
@@ -1958,7 +1958,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					    SIZE_STANDARD,
 					    TRUE, TRUE,
 					    PANEL_BACK_NONE,
-					    NULL, TRUE, FALSE, TRUE,
+					    NULL, TRUE, FALSE, FALSE,
 					    &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
@@ -1973,7 +1973,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					     SIZE_STANDARD,
 					     TRUE, TRUE,
 					     PANEL_BACK_NONE,
-					     NULL, TRUE, FALSE, TRUE,
+					     NULL, TRUE, FALSE, FALSE,
 					     &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);
