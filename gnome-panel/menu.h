@@ -21,6 +21,12 @@ void		setup_menuitem		(GtkWidget        *menuitem,
 					 GtkWidget        *pixmap,
 					 const char       *title,
 					 gboolean          invisible_mnemonic);
+void            setup_stock_menu_item   (GtkWidget        *item,
+					 GtkIconSize       icon_size,
+					 const char       *stock_id,
+					 const char       *title,
+					 gboolean          invisible_mnemonic);
+
 
 GtkWidget      *create_menu_at          (GtkWidget     *menu,
 					 const char    *menudir,

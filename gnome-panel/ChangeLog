@@ -1,5 +1,27 @@
 2003-07-24  Mark McLoughlin  <mark@skynet.ie>
 
+	Remove visible mnemonics from the Actions menu and Add to Panel
+	menus. Based on patch from Glynn.
+
+	* menu-util.[ch]: (stock_menu_item_new): huh ? Why on earth
+	is there a function that looks like setup_stock_menu_item,
+	but isn't. Dammit, we don't need code duplication.
+	
+	* menu.[ch]:
+	(applet_menu_append), (applet_menu_append_category),
+	(make_add_submenu): remove visible mnemonics.
+	(setup_stock_menu_item): make public
+
+	* panel-menu-bar.c:
+	(panel_menu_bar_append_action_item): use setup_stock_menu_item().
+	(panel_menu_bar_append_actions_menu): remove visible mnemonics.
+	
+	* panel-recent.c:
+	(panel_recent_append_documents_menu): use setup_stock_menu_item()
+	and remove the visible mnemonic.
+
+2003-07-24  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix problem where the context menu for the menu bar pops
 	up in the wrong place. Based on a patch from Glynn in
 	bug #111313.

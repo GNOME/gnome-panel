@@ -195,11 +195,6 @@ static void add_distribution_submenu (GtkWidget *root_menu,
 static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
 					     gboolean fake_submenus);
 
-static void setup_stock_menu_item     (GtkWidget   *item,
-				       GtkIconSize  icon_size,
-				       const char  *stock_id,
-				       const char  *title,
-				       gboolean     invisible_mnemonic);
 static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
 static void         make_add_submenu   (GtkWidget             *menu,
@@ -2411,7 +2406,6 @@ applet_menu_append (GtkWidget  *menu,
 		    gboolean objects_writable)
 {
 	GtkWidget *menuitem;
-	char      *name_with_mnemonic;
 
 	menuitem = gtk_image_menu_item_new ();
 
@@ -2419,9 +2413,7 @@ applet_menu_append (GtkWidget  *menu,
 		panel_load_menu_image_deferred (
 			menuitem, GTK_ICON_SIZE_MENU, applet->stock_icon, applet->icon, NULL, FALSE);
 	
-	name_with_mnemonic = g_strconcat ("_", applet->name, NULL);
-	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, name_with_mnemonic, FALSE);
-	g_free (name_with_mnemonic);
+	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, applet->name, TRUE);
 
 	gtk_widget_show_all (menuitem);
 
@@ -2458,7 +2450,6 @@ applet_menu_append_category (GtkWidget *menu,
 			     const char *stock_icon)
 {
 	GtkWidget *menuitem;
-	char      *category_with_mnemonic;
 
 	menuitem = gtk_image_menu_item_new ();
 
@@ -2466,9 +2457,7 @@ applet_menu_append_category (GtkWidget *menu,
 		panel_load_menu_image_deferred (
 			menuitem, GTK_ICON_SIZE_MENU, stock_icon, NULL, NULL, FALSE);
 
-	category_with_mnemonic = g_strconcat ("_", category, NULL);
-	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, category_with_mnemonic, FALSE);
-	g_free (category_with_mnemonic);
+	setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, category, TRUE);
 
 	gtk_widget_show_all (menuitem);
 
@@ -2785,7 +2774,7 @@ create_new_panel (GtkWidget *menuitem)
 	panel_profile_create_toplevel ();
 }
 
-static void
+void
 setup_stock_menu_item (GtkWidget   *item,
 		       GtkIconSize  icon_size,
 		       const char  *stock_id,
@@ -3123,7 +3112,7 @@ make_add_submenu (GtkWidget             *menu,
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("_Launcher..."), FALSE);
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher..."), TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(ask_about_launcher_cb),NULL);
@@ -3132,7 +3121,7 @@ make_add_submenu (GtkWidget             *menu,
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher _from menu"), FALSE);
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher from menu"), TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	m = create_add_launcher_menu (NULL, TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
@@ -3142,7 +3131,7 @@ make_add_submenu (GtkWidget             *menu,
 
   	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_MAIN_MENU, _("Main _Menu"), FALSE);
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_MAIN_MENU, _("Main Menu"), TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
@@ -3152,7 +3141,7 @@ make_add_submenu (GtkWidget             *menu,
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Menu _Bar"), FALSE);
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Menu Bar"), TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (add_menu_bar_to_panel), NULL);
@@ -3161,7 +3150,7 @@ make_add_submenu (GtkWidget             *menu,
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_DRAWER, _("_Drawer"), FALSE);
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_DRAWER, _("Drawer"), TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_drawer_to_panel,

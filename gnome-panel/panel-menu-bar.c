@@ -82,7 +82,12 @@ panel_menu_bar_append_action_item (PanelMenuBar *menubar,
 {
 	GtkWidget *item;
 
-	item = stock_menu_item_new (title, stock_id, FALSE);
+	item = gtk_image_menu_item_new ();
+	setup_stock_menu_item (item,
+			       panel_menu_icon_get_size (),
+			       stock_id,
+			       title,
+			       TRUE);
 
 	gtk_tooltips_set_tip (panel_tooltips, item, tooltip, NULL);
 
@@ -107,7 +112,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("_Run Application..."),
+			_("Run Application..."),
 			PANEL_STOCK_RUN,
 			_("Run an Application by entering a command"),
 			"ACTION:run:NEW",
@@ -120,7 +125,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("_Search for Files..."),
+			_("Search for Files..."),
 			PANEL_STOCK_SEARCHTOOL,
 			_("Find files, folders, and documents on your computer"),
 			"ACTION:search:NEW",
@@ -135,7 +140,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("_Take Screenshot..."),
+			_("Take Screenshot..."),
 			PANEL_STOCK_SCREENSHOT,
 			_("Take a screenshot of your desktop"),
 			"ACTION:screenshot:NEW",
@@ -149,7 +154,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("_Lock Screen"), 
+			_("Lock Screen"), 
 			PANEL_STOCK_LOCKSCREEN, 
 			_("Protect your computer from unauthorized use"),
 			"ACTION:lock:NEW",
@@ -158,7 +163,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("_Log Out"),
+			_("Log Out"),
 			PANEL_STOCK_LOGOUT,
 			_("Quit from the GNOME desktop"),
 			"ACTION:logout:NEW",

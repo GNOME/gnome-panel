@@ -26,10 +26,6 @@ void       menu_item_menu_position   (GtkMenu  *menu,
 
 GtkWidget *add_menu_separator     (GtkWidget *menu);
 
-GtkWidget *stock_menu_item_new (const char *text,
-				const char *stock_id,
-				gboolean    force_image);
-
 int        get_default_menu_flags (void);
 gboolean   got_distro_menus (void);
 

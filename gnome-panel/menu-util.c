@@ -205,25 +205,3 @@ got_distro_menus (void)
 	else
 		return FALSE;
 }
-
-GtkWidget *
-stock_menu_item_new (const char *text,
-		     const char *stock_id,
-		     gboolean    force_image)
-{
-        GtkWidget *item;
-        GtkWidget *label;
-
-        item = gtk_image_menu_item_new ();
-
-        panel_load_menu_image_deferred (
-		item, panel_menu_icon_get_size (), stock_id, NULL, NULL, force_image);
-
-        if (text) {
-                label = gtk_label_new_with_mnemonic (text);
-                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-                gtk_container_add (GTK_CONTAINER (item), label);
-        }
-
-        return item;
-}
