@@ -262,8 +262,8 @@ drawer_pos_get_pos(BasePWidget *basep,
 
 	/* we are shown but we are hidden, life is full of ironies */
 	if (pos->temp_hidden) {
-		*x = -width - 1;
-		*y = -height - 1;
+		*x = -ABS (width) - 1;
+		*y = -ABS (height) - 1;
 		return;
 	}
 
