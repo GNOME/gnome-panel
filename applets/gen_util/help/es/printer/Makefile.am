@@ -2,7 +2,7 @@ figs = \
 	figures/printer-fig.png			\
 	figures/printer-properties.png
 docname = printer_applet
-lang = es 
+lang = es
 omffile = printer_applet-es.omf
 sgml_ents = printer.sgml \
 	authors.sgml \
