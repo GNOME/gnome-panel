@@ -388,6 +388,72 @@ add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 	add_to_panel((char *)data, NULL);
 }
 
+static gint
+act_really_add_swallow(GtkWidget *w, gpointer data)
+{
+	GtkWidget *entry = data;
+	GtkWidget *d = gtk_object_get_user_data(GTK_OBJECT(entry));
+
+	gtk_widget_hide(d);
+	add_to_panel(SWALLOW_ID, gtk_entry_get_text(GTK_ENTRY(entry)));
+
+	return TRUE;
+}
+
+static gint
+really_add_swallow(GtkWidget *d,gint button, gpointer data)
+{
+	GtkWidget *entry = data;
+
+	gtk_widget_hide(d);
+	if(button == 0)
+		add_to_panel(SWALLOW_ID, gtk_entry_get_text(GTK_ENTRY(entry)));
+	return TRUE;
+}
+
+static void
+add_swallow_to_panel(GtkWidget *widget, gpointer data)
+{
+	static GtkWidget *d=NULL;
+
+	if(!d) {
+		GtkWidget *w;
+		GtkWidget *box;
+		d = gnome_dialog_new(_("Create swallow applet"),
+				     GNOME_STOCK_BUTTON_OK,
+				     GNOME_STOCK_BUTTON_CANCEL,
+				     NULL);
+		box = gtk_hbox_new(FALSE,5);
+		gtk_widget_show(box);
+		gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
+				   TRUE,TRUE,5);
+
+		w = gtk_label_new(_("Title of application to swallow"));
+		gtk_widget_show(w);
+		gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,5);
+		w = gtk_entry_new();
+		gtk_widget_show(w);
+		gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,5);
+
+		gtk_object_set_user_data(GTK_OBJECT(w),d);
+
+		gtk_signal_connect(GTK_OBJECT(d),"clicked",
+				   GTK_SIGNAL_FUNC(really_add_swallow),
+				   w);
+		gtk_signal_connect(GTK_OBJECT(w),"activate",
+				   GTK_SIGNAL_FUNC(act_really_add_swallow),
+				   w);
+
+		gnome_dialog_close_hides(GNOME_DIALOG(d),TRUE);
+
+		gnome_dialog_set_default(GNOME_DIALOG(d),0);
+
+		gtk_widget_grab_focus(w);
+	}
+	gtk_widget_show(d);
+}
+
+
 static GtkWidget *
 create_applets_menu(void)
 {
@@ -455,8 +521,7 @@ create_panel_submenu (GtkWidget *app_menu)
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_applet_to_panel_data,
-			   SWALLOW_ID);
+			   (GtkSignalFunc) add_swallow_to_panel,NULL);
 #endif
 
 	add_menu_separator(menu);
