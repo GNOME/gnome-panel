@@ -661,8 +661,6 @@ handle_tasks_changed (ClockData *cd)
         g_slist_free (events);
 
         update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_filter));
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle))
-                position_calendar_popup (cd, cd->calendar_popup, cd->toggle);
 }
 
 static void
@@ -1078,8 +1076,6 @@ handle_appointments_changed (ClockData *cd)
         g_slist_free (events);
 
         update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_model));
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle))
-                position_calendar_popup (cd, cd->calendar_popup, cd->toggle);
 }
 
 static GtkWidget *
@@ -1373,12 +1369,13 @@ position_calendar_popup (ClockData *cd,
 	GtkRequisition  req;
 	GdkScreen      *screen;
 	GdkRectangle    monitor;
+	GdkGravity      gravity = GDK_GRAVITY_NORTH_WEST;
 	int             button_w, button_h;
 	int             x, y;
 	int             w, h;
 	int             i, n;
 	gboolean        found_monitor = FALSE;
-		
+
 	/* Get root origin of the toggle button, and position above that. */
 	gdk_window_get_origin (button->window, &x, &y);
 
@@ -1402,7 +1399,6 @@ position_calendar_popup (ClockData *cd,
 		}
 	}
 
-
 	if ( ! found_monitor) {
 		/* eek, we should be on one of those xinerama
 		   monitors */
@@ -1422,25 +1418,44 @@ position_calendar_popup (ClockData *cd,
 		x += button_w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
+
+		if ((y + h) > (monitor.height / 2))
+			gravity = GDK_GRAVITY_SOUTH_WEST;
+		else
+			gravity = GDK_GRAVITY_NORTH_WEST;
+
 		break;
 	case PANEL_APPLET_ORIENT_LEFT:
 		x -= w;
 		if ((y + h) > monitor.y + monitor.height)
 			y -= (y + h) - (monitor.y + monitor.height);
+
+		if ((y + h) > (monitor.height / 2))
+			gravity = GDK_GRAVITY_SOUTH_EAST;
+		else
+			gravity = GDK_GRAVITY_NORTH_EAST;
+
 		break;
 	case PANEL_APPLET_ORIENT_DOWN:
 		y += button_h;
 		if ((x + w) > monitor.x + monitor.width)
 			x -= (x + w) - (monitor.x + monitor.width);
+
+		gravity = GDK_GRAVITY_NORTH_WEST;
+
 		break;
 	case PANEL_APPLET_ORIENT_UP:
 		y -= h;
 		if ((x + w) > monitor.x + monitor.width)
 			x -= (x + w) - (monitor.x + monitor.width);
+
+		gravity = GDK_GRAVITY_SOUTH_WEST;
+
 		break;
 	}
 		
 	gtk_window_move (GTK_WINDOW (window), x, y);
+	gtk_window_set_gravity (GTK_WINDOW (window), gravity);
 }
 
 static void

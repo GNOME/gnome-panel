@@ -1,3 +1,13 @@
+2004-10-20  William Jon McCann  <mccann@jhu.edu>
+
+	Fix for bug #139955.
+	
+	* clock.c (handle_tasks_changed, handle_appointments_changed):
+	Don't re-position the popup here allow the window gravity to do
+	the right thing.
+	(position_calendar_popup): Set the window gravity after the
+	initial positioning.
+
 ==================== 2.8.0.1 ====================
 
 2004-09-27  Mark McLoughlin  <mark@skynet.ie>
