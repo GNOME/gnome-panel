@@ -3,19 +3,20 @@
 # Seán Ó Ceallaigh <s_oceallaigh@yahoo.com>, 2000.
 # Paul Duffy <dubhthach@frink.nuigalway.ie>, 2003.
 # David O'Callaghan <david.ocallaghan@cs.tcd.ie>, 2003.
+# Alastair McKinstry <mckinstry@computer.org>, 2004.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel gnome-2-4\n"
+"Project-Id-Version: gnome-panel HEAD\n"
+"Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-15 12:14+0000\n"
 "PO-Revision-Date: 2003-10-26 13:24+0000\n"
-"Last-Translator:  David O'Callaghan <david.ocallaghan@cs.tcd.ie>\n"
-"Language-Team: Irish\n"
+"Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
+"Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -82,7 +83,7 @@ msgstr "Faigh an am agus dáta anois"
 
 #: applets/clock/calendar-client.c:177
 msgid "Day"
-msgstr ""
+msgstr "Lá"
 
 #: applets/clock/calendar-client.c:178
 msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
@@ -90,16 +91,15 @@ msgstr ""
 
 #: applets/clock/calendar-client.c:185
 msgid "Month"
-msgstr ""
+msgstr "Mí"
 
 #: applets/clock/calendar-client.c:186
 msgid "The currently monitored month between 0 and 11"
 msgstr ""
 
 #: applets/clock/calendar-client.c:193
-#, fuzzy
 msgid "Year"
-msgstr "Cuardaigh"
+msgstr "Blian"
 
 #: applets/clock/calendar-client.c:194
 msgid "The currently monitored year"
@@ -128,31 +128,30 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:276
-#, fuzzy
 msgid "%a %b %e"
-msgstr "%a %b %d"
+msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:283
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:407
@@ -240,14 +239,12 @@ msgid "Internet time"
 msgstr "Am Idirlín"
 
 #: applets/clock/clock.c:2223
-#, fuzzy
 msgid "Custom format"
-msgstr "Saindealbh"
+msgstr ""
 
 #: applets/clock/clock.c:2239
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Formáid uaire"
+msgstr ""
 
 #: applets/clock/clock.c:2256
 msgid "Show _seconds"
@@ -278,9 +275,8 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24 uair"
+msgstr "24-uair"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
@@ -313,9 +309,8 @@ msgid "Show date in clock"
 msgstr "Taispeáin dáta sa chlog"
 
 #: applets/clock/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in tooltip"
-msgstr "Taispeáin dáta sa /tooltip/"
+msgstr "Taispeáin dáta sa leathfhocal"
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
@@ -399,9 +394,8 @@ msgid "Whether to crop the text and display \"...\" when space is limited"
 msgstr ""
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:218
-#, fuzzy
 msgid "Background color name"
-msgstr "Dath cúlra"
+msgstr "Ainm an dath cúlra"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:219
 #, fuzzy
@@ -419,18 +413,16 @@ msgid "Background color as a GdkColor"
 msgstr "Dath cúlra"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:234
-#, fuzzy
 msgid "Foreground color name"
-msgstr "Dath cúlra"
+msgstr "Ainm an dath dulra"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:235
 msgid "Foreground color as a string"
 msgstr ""
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:242
-#, fuzzy
 msgid "Foreground color"
-msgstr "Dath cúlra"
+msgstr "Dath dulra"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:243
 msgid "Foreground color as a GdkColor"
@@ -447,7 +439,7 @@ msgstr ""
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:259
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:267
 msgid "Font"
-msgstr ""
+msgstr "Clófhoireann"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:260
 msgid "Font description as a string"
@@ -489,7 +481,7 @@ msgstr ""
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:322
 #, fuzzy
 msgid "Font size"
-msgstr "Méid painéil"
+msgstr "Méid Chlófhoireann"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:331
 msgid "Font points"
@@ -533,9 +525,8 @@ msgid "Style of underline for this text"
 msgstr ""
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:381
-#, fuzzy
 msgid "Background set"
-msgstr "Cúlra"
+msgstr ""
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:382
 msgid "Whether this tag affects the background color"
@@ -686,9 +677,9 @@ msgid "(with minor help from George)"
 msgstr "(le beagán cúnamh de George)"
 
 #: applets/fish/fish.c:526
-#, fuzzy, c-format
+#,  c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "An t-Iasc GNOME  %s, aitheascal comhaimseartha"
+msgstr "An t-Iasc %s, aitheascal comhaimseartha"
 
 #: applets/fish/fish.c:573
 msgid "Unable to get the name of the command to execute"
@@ -700,9 +691,9 @@ msgstr "Níl an ordú a chur i gcrích ar fáil"
 
 # no-c-format
 #: applets/fish/fish.c:618
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "Dúirt %s, an t-Iasc GNOME:"
+msgstr "Dúirt an t-Iasc %s:"
 
 #: applets/fish/fish.c:744
 #, c-format
@@ -730,9 +721,9 @@ msgid ""
 msgstr ""
 
 #: applets/fish/fish.c:1429
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "An t-Iasc Feasa"
+msgstr ""
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -911,9 +902,8 @@ msgstr ""
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
-#, fuzzy
 msgid "Window Selector"
-msgstr "Liosta na Fuinneoga"
+msgstr ""
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -954,7 +944,6 @@ msgid ""
 msgstr ""
 
 #: applets/wncklet/window-list.c:821
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Taispeáineann Liosta na Fuinneoga liosta do gach fuinneog le feiceáil agus "
@@ -1084,7 +1073,6 @@ msgid "When to group windows"
 msgstr "Cathain na fuinneoga a chur i ngrúpaí"
 
 #: applets/wncklet/window-menu.c:135
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
@@ -1100,7 +1088,6 @@ msgid "No Windows Open"
 msgstr "Níl aon fhuinneog oscailte"
 
 #: applets/wncklet/window-menu.c:706
-#, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Aistrigh idir fuinneoga oscailte"
 
@@ -1171,9 +1158,8 @@ msgid "Workspace Names"
 msgstr "Ainmneacha Spáiseanna Obair"
 
 #: applets/wncklet/workspace-switcher.glade.h:9
-#, fuzzy
 msgid "Workspace Switcher Preferences"
-msgstr "Ábaltachtaí Printéir"
+msgstr ""
 
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "Workspace na_mes:"
@@ -1211,9 +1197,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
 msgid "GNOME Panel Shell"
-msgstr "EagathÃ³ir Chláir GNOME"
+msgstr "Blasocacha Chláir GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
 #: gnome-panel/applet.c:497 gnome-panel/panel-applet-frame.c:111
@@ -1444,7 +1429,7 @@ msgstr "Pictiúr-an-Scáileán.png"
 #: gnome-panel/gnome-panel-screenshot.c:445
 #, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr ""
+msgstr "Scáthán-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
@@ -1663,9 +1648,9 @@ msgid "Cannot execute '%s'"
 msgstr "Ní féidir '%s' a chur i gcrích"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1695,9 +1680,8 @@ msgid "Could not get directory name from path: %s"
 msgstr ""
 
 #: gnome-panel/menu.c:1160
-#, fuzzy
 msgid "Cannot add to run box"
-msgstr "Ordú (roghnach)"
+msgstr ""
 
 #: gnome-panel/menu.c:1161
 msgid "No 'Exec' or 'URL' field in entry"
@@ -1799,9 +1783,8 @@ msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 
 #: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
-#, fuzzy, c-format
 msgid "Log Out %s"
-msgstr "Éirigh as"
+msgstr "Éirigh as %s"
 
 #: gnome-panel/menu.c:3252
 #, c-format
@@ -1856,14 +1839,12 @@ msgstr "Éirigh as an GNOME"
 
 #: gnome-panel/panel-action-button.c:245
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Run Application"
-msgstr "Beochan"
+msgstr ""
 
 #: gnome-panel/panel-action-button.c:250
-#, fuzzy
 msgid "Search for Files"
-msgstr "Comhad Speisialta"
+msgstr ""
 
 #: gnome-panel/panel-action-button.c:405
 msgid "Action Type"
@@ -2051,19 +2032,16 @@ msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:8
 #: gnome-panel/panel-toplevel.schemas.in.h:9
-#, fuzzy
 msgid "Enable animations"
 msgstr "Úsáid beochain"
 
 #: gnome-panel/panel-global.schemas.in.h:9
-#, fuzzy
 msgid "Enable keybindings"
-msgstr "Úsáid beochain"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:10
-#, fuzzy
 msgid "Enable tooltips"
-msgstr "Úsáid beochain"
+msgstr "Úsáid leathfhocail"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 msgid "FIXME - is this resolved with the new menu stuff"
@@ -2110,9 +2088,8 @@ msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:20
-#, fuzzy
 msgid "Popup panel menu keybinding"
-msgstr "Faoi..."
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:21
 #, fuzzy
@@ -2158,18 +2135,16 @@ msgid "Tooltip displayed for the menu"
 msgstr ""
 
 #: gnome-panel/panel-menu-button.c:443
-#, fuzzy
 msgid "Use Menu Path"
-msgstr "Slí Chlar"
+msgstr "Úsáid Slí chlâr"
 
 #: gnome-panel/panel-menu-button.c:444
 msgid "Use the path specified by the menu-path property"
 msgstr ""
 
 #: gnome-panel/panel-menu-button.c:452
-#, fuzzy
 msgid "Use Custom Icon"
-msgstr "Dathanna feíndeánamh"
+msgstr ""
 
 #: gnome-panel/panel-menu-button.c:453
 msgid "Use the icon specified by the custom-icon property"
@@ -2222,27 +2197,24 @@ msgid "Launcher location"
 msgstr "Áit lainseoir"
 
 #: gnome-panel/panel-object.schemas.in.h:10
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:11
 msgid "Menu content path"
 msgstr "Slí méid chláir"
 
 #: gnome-panel/panel-object.schemas.in.h:12
-#, fuzzy
 msgid "Object's position on the panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:14
-#, fuzzy
 msgid "Panel object type"
-msgstr "Ábaltachtaí Paineál"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:15
 msgid ""
@@ -2360,9 +2332,8 @@ msgid "<small>Transparent</small>"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:5
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "Taispeáin ... cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:6
 msgid "Background"
@@ -2412,9 +2383,8 @@ msgid "Right"
 msgstr "Deis"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "S_tyle:"
@@ -2447,32 +2417,28 @@ msgid "_Autohide"
 msgstr "Cuir ar súil Auto-hide"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "SeisiÃºn"
+msgstr "_Dealbh:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Ainm"
+msgstr "_Ainm:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
 msgstr "_Tada (baint úsáid as téama an córas)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Treoshuíomh:"
+msgstr "_Treoshuíomh:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Size:"
-msgstr "Méid:"
+msgstr "_Méid:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "_Tile"
@@ -2553,9 +2519,8 @@ msgid "Enter a command string here to run it."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:8
-#, fuzzy
 msgid "Run in _terminal"
-msgstr "Teirminéal _Nua"
+msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "Run with _file..."
@@ -2566,14 +2531,12 @@ msgid "Select this box to run the command in a terminal window."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:12
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "Beochan"
+msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "Cuir le Painial"
+msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:144
 #, fuzzy
@@ -2611,19 +2574,16 @@ msgid "Top Expanded Edge Panel"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:1455
-#, fuzzy
 msgid "Top Centered Panel"
-msgstr "Idirlíon"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:1456
-#, fuzzy
 msgid "Top Floating Panel"
-msgstr "An Painéal GNOME"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:1457
-#, fuzzy
 msgid "Top Edge Panel"
-msgstr "An Painéal GNOME"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:1461
 msgid "Bottom Expanded Edge Panel"
@@ -2680,9 +2640,8 @@ msgid "Name"
 msgstr "Ainm"
 
 #: gnome-panel/panel-toplevel.c:3581
-#, fuzzy
 msgid "The name of this panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3590
 msgid "Expand"
@@ -2693,14 +2652,12 @@ msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3601
-#, fuzzy
 msgid "The orientation of the panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3612
-#, fuzzy
 msgid "The height (or width when vertical) of the panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3624
 msgid "X position"
@@ -2795,24 +2752,20 @@ msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3747
-#, fuzzy
 msgid "Buttons Enabled"
-msgstr "Folaigh cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3748
-#, fuzzy
 msgid "Enable hide/show buttons"
-msgstr "Taispeáin ... cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3757
-#, fuzzy
 msgid "Arrows Enabled"
-msgstr "Usáid Leathfhocail"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3758
-#, fuzzy
 msgid "Enable arrows on hide/show buttons"
-msgstr "Taispeáin ... cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2839,14 +2792,12 @@ msgid "Center panel on y-axis"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
-#, fuzzy
 msgid "Enable arrows on hide buttons"
-msgstr "Taispeáin ... cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
-#, fuzzy
 msgid "Enable hide buttons"
-msgstr "Taispeáin ... cnaipí"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
@@ -2940,19 +2891,16 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
-#, fuzzy
 msgid "Lock down the panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:27
-#, fuzzy
 msgid "Name to identify panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
-#, fuzzy
 msgid "Panel autohide delay"
-msgstr "Folaitheach"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid "Panel autounhide delay"
@@ -2967,9 +2915,8 @@ msgid "Panel size"
 msgstr "Méid painéil"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:32
-#, fuzzy
 msgid "Rotate image on vertical panels"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid "Specifies the background color for the panel in #RGB format."
@@ -3010,9 +2957,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:39
-#, fuzzy
 msgid "Stretch image to panel"
-msgstr "Scríos an paineál seo"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -3120,9 +3066,8 @@ msgid "A simple applet for testing the GNOME-2.0 panel"
 msgstr ""
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-#, fuzzy
 msgid "Test Bonobo Applet"
-msgstr "Feidhmchláirín"
+msgstr ""
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
@@ -3229,97 +3174,83 @@ msgstr "XX Mór"
 msgid "XX Small"
 msgstr "XX Beag"
 
-#~ msgid "Cannot execute %s"
-#~ msgstr "Ní féidir %s a chur i gcrích"
+msgid "Cannot execute %s"
+msgstr "Ní féidir %s a chur i gcrích"
 
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
+msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
 
-#~ msgid "Window Menu"
-#~ msgstr "Roghchlár Fuinneoige"
+msgid "Window Menu"
+msgstr "Roghchlár Fuinneoige"
 
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr ""
-#~ "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
+msgid "If true, display internet time, which is same all over the world."
+msgstr "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
 
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s an t-Iasc GNOME"
+msgid "%s the GNOME Fish"
+msgstr "%s an t-Iasc GNOME"
 
-#, fuzzy
-#~ msgid "Help on %s _Application"
-#~ msgstr "Cabhair le haighaidh Cl_áir %s"
+msgid "Help on %s _Application"
+msgstr "Cabhair le haighaidh Cl_áir %s"
 
-#~ msgid "Help on %s"
-#~ msgstr "Cabhair le haighaidh %s"
+msgid "Help on %s"
+msgstr "Cabhair le haighaidh %s"
 
-#~ msgid "Application"
-#~ msgstr "Feidhmchlár"
+msgid "Application"
+msgstr "Feidhmchlár"
 
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>_Dealbh:</b>"
+msgid "<b>_Icon:</b>"
+msgstr "<b>_Dealbh:</b>"
 
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>Ai_nm:</b>"
+msgid "<b>_Name:</b>"
+msgstr "<b>Ai_nm:</b>"
 
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>Tre_oshuíomh:</b>"
+msgid "<b>_Orientation:</b>"
+msgstr "<b>Tre_oshuíomh:</b>"
 
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Méid:</b>"
+msgid "<b>_Size:</b>"
+msgstr "<b>_Méid:</b>"
 
-#~ msgid "Application description"
-#~ msgstr "Cur síos feidhmchláir"
+msgid "Application description"
+msgstr "Cur síos feidhmchláir"
 
-#~ msgid "List of known applications"
-#~ msgstr "Liosta feidhmchláranna"
+msgid "List of known applications"
+msgstr "Liosta feidhmchláranna"
 
-#, fuzzy
-#~ msgid "Drawer handle"
-#~ msgstr "TaisceadÃ¡n"
+msgid "Drawer handle"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Enable hidebutton"
-#~ msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgid "Enable hidebutton"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgid "Enable hidebutton arrow"
+msgstr ""
 
-#, fuzzy
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr "OrdÃº (roghnach)"
+msgid ""
+"Cannot save launcher to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
 
-#, fuzzy
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "ag cruthaigh fillteÃ¡n 'sÃ¡idtheoir: %s\n"
+msgid "Can't execute 'About GNOME'"
+msgstr ""
 
-#, fuzzy
-#~ msgid "KDE Menu"
-#~ msgstr "ClÃ¡ranna KDE"
+msgid "KDE Menu"
+msgstr "Cláranna KDE"
 
-#, fuzzy
-#~ msgid "_Drawer"
-#~ msgstr "TaisceadÃ¡n"
+msgid "_Drawer"
+msgstr "_Taisceadá¡n"
 
-#, fuzzy
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "ag cruthaigh fillteÃ¡n 'sÃ¡idtheoir: %s\n"
+msgid "Cannot execute gnome-search-tool"
+msgstr ""
 
-#, fuzzy
-#~ msgid "_Run Application..."
-#~ msgstr "Rith ClÃ¡r..."
+msgid "_Run Application..."
+msgstr "_Rith Feidhmclár..."
 
-#, fuzzy
-#~ msgid "_Search for Files..."
-#~ msgstr "Curdaigh le haighaidh Comhad..."
+msgid "_Search for Files..."
+msgstr "_Curdaigh le haighaidh Comhad..."
 
-#, fuzzy
-#~ msgid "_Log Out"
-#~ msgstr "Ã‰irigh as"
+msgid "_Log Out"
+msgstr "Éirigh as"
 
-#, fuzzy
-#~ msgid "Error launching command"
-#~ msgstr "OrdÃº (roghnach)"
+msgid "Error launching command"
+msgstr ""
