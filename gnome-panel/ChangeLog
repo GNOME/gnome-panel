@@ -1,3 +1,11 @@
+2004-12-16  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-menu-bar.c: (panel_menu_bar_connect_menu_signals): fix memory
+	corruption (the callback data for gtk_widget_destroyed should never be
+	a pointer to a GtkWidget * that is a function parameter!)
+	(panel_menu_bar_recreate_actions_menu): updated
+	(panel_menu_bar_instance_init): updated
+
 2004-12-15  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-addto.c: (panel_addto_append_internal_applets): data is static

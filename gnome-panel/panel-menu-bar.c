@@ -63,22 +63,22 @@ panel_menu_bar_show_menu (PanelMenuBar *menubar,
 }
 
 static void
-panel_menu_bar_connect_menu_signals (PanelMenuBar *menubar,
-				     GtkWidget    *menu)
+panel_menu_bar_connect_menu_signals (PanelMenuBar  *menubar,
+				     GtkWidget    **menu)
 {
 	/* intercept all right button clicks makes sure they don't
 	   go to the object itself */
-	g_signal_connect (menu, "button_press_event",
+	g_signal_connect (*menu, "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	g_signal_connect (menu, "destroy", G_CALLBACK (gtk_widget_destroyed),
-			  &menu);
+	g_signal_connect (*menu, "destroy", G_CALLBACK (gtk_widget_destroyed),
+			  menu);
 
-	g_signal_connect_swapped (menu, "show",
+	g_signal_connect_swapped (*menu, "show",
 				  G_CALLBACK (panel_menu_bar_show_menu),
 				  menubar);
 
-	g_signal_connect_swapped (menu, "hide",
+	g_signal_connect_swapped (*menu, "hide",
 				  G_CALLBACK (gtk_menu_shell_deselect), 
 				  menubar);
 }
@@ -90,7 +90,7 @@ panel_menu_bar_recreate_actions_menu (PanelMenuBar *menubar)
 		gtk_widget_destroy (menubar->priv->actions_menu);
 		menubar->priv->actions_menu = panel_menu_bar_create_actions_menu (menubar);
 		panel_menu_bar_connect_menu_signals (menubar,
-						     menubar->priv->actions_menu);
+						     &menubar->priv->actions_menu);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->actions_item),
 					   menubar->priv->actions_menu);
 	}
@@ -173,11 +173,11 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 
 	menubar->priv->applications_menu = create_applications_menu ("applications.menu", NULL);
 	panel_menu_bar_connect_menu_signals (menubar,
-					     menubar->priv->applications_menu);
+					     &menubar->priv->applications_menu);
 
 	menubar->priv->actions_menu = panel_menu_bar_create_actions_menu (menubar);
 	panel_menu_bar_connect_menu_signals (menubar,
-					     menubar->priv->actions_menu);
+					     &menubar->priv->actions_menu);
 
 	item = gtk_image_menu_item_new_with_label (_("Applications"));
 	image = gtk_image_new_from_stock (PANEL_STOCK_GNOME_LOGO,
