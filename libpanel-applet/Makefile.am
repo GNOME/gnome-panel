@@ -51,7 +51,9 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-bin_PROGRAMS = test-bonobo-applet panel-test-applets
+noinst_PROGRAMS = test-bonobo-applet
+
+bin_PROGRAMS = panel-test-applets
 
 panel_test_applets_LDADD =		\
 	$(LIBPANEL_APPLET_LIBS)		\
@@ -127,7 +129,7 @@ CLEANFILES = $(BUILT_SOURCES)
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel_TestApplet.server.in
-server_DATA     = $(server_in_files:.server.in=.server)
+noinst_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
