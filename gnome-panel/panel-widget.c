@@ -1705,6 +1705,10 @@ panel_widget_nice_move(PanelWidget *panel, AppletData *ad, int pos)
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
 }
 
+static int moving_timeout = -1;
+static int been_moved = FALSE;
+
+
 /*find the cursor position and move the applet to that position*/
 int
 panel_widget_applet_move_to_cursor(PanelWidget *panel)
@@ -1750,15 +1754,9 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 					_panel_widget_applet_drag_end(panel);
 					_panel_widget_applet_drag_start(
 						new_panel, applet);
-					panel_widget_applet_move_use_idle(
-						new_panel);
 			    	   	return FALSE;
 			    	}
 			}
-			/*FIXME: without this it's sometimes hard to get
-			  applets onto drawers, but it's an annoying
-			  behaviour*/
-			/*return TRUE;*/
 		}
 
 		if(pw_movement_type == PANEL_SWITCH_MOVE ||
@@ -1787,17 +1785,13 @@ move_timeout_handler(gpointer data)
 {
 	g_return_val_if_fail(data!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(data),FALSE);
-
-	return panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
-}
-
-void
-panel_widget_applet_move_use_idle(PanelWidget *panel)
-{
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
-
-	gtk_timeout_add (30,move_timeout_handler,panel);
+	
+	if(been_moved)
+		panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
+	been_moved = FALSE;
+	moving_timeout = -1;
+	
+	return FALSE;
 }
 
 
@@ -1817,7 +1811,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	panel = PANEL_WIDGET(widget->parent);
 
 	g_return_val_if_fail(panel!=NULL,TRUE);
-
+	
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
@@ -1830,7 +1824,6 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(bevent->button == 2) {
 				/* Start drag */
 				panel_widget_applet_drag_start(panel, widget);
-				panel_widget_applet_move_use_idle(panel);
 				return TRUE;
 			}
 
@@ -1843,7 +1836,16 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			}
 
 			break;
-
+		case GDK_MOTION_NOTIFY:
+			if (panel->currently_dragged_applet) {
+				if(moving_timeout==-1) {
+					been_moved = FALSE;
+					panel_widget_applet_move_to_cursor(panel);
+					moving_timeout = gtk_timeout_add (100,move_timeout_handler,panel);
+				} else
+					been_moved = TRUE;
+			}
+			break;
 		default:
 			break;
 	}
@@ -1863,6 +1865,7 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
+		case GDK_MOTION_NOTIFY:
 			bevent = (GdkEventButton *)event;
 			if(bevent->button != 1 || panel_applet_in_drag)
 				return gtk_widget_event(data, event);
@@ -2104,7 +2107,13 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->pos = pos;
 
 	/*reparent applet*/
-	gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
+	if (IS_BUTTON_WIDGET (applet)) {
+		gtk_widget_ref (applet);
+		gtk_container_remove (GTK_CONTAINER (applet->parent), applet);
+		gtk_container_add (GTK_CONTAINER (new_panel), applet);
+		gtk_widget_unref (applet);
+	} else 
+		gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
 
 	return pos;
 }

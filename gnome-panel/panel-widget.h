@@ -34,7 +34,7 @@ typedef struct _AppletRecord		AppletRecord;
 typedef struct _AppletData		AppletData;
 typedef struct _DNDRecord		DNDRecord;
 typedef enum {
-	PANEL_HORIZONTAL,
+	PANEL_HORIZONTAL=0,
 	PANEL_VERTICAL
 } PanelOrientation;
 typedef enum {
@@ -146,7 +146,6 @@ void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       GtkWidget *applet);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
-void		panel_widget_applet_move_use_idle(PanelWidget *panel);
 
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,

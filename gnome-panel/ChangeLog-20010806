@@ -1,3 +1,73 @@
+Sun Dec 20 02:02:10 1998  George Lebl  <jirka@5z.com>
+
+	* drawer.c: use icon entry
+
+	* panel.c: use motion notify events for moving insted of just a
+	  timer, the logic here is the same as used for applet moving and
+	  it should avoid crowding of more motion events together using
+	  a timeout
+
+Sun Dec 20 01:37:54 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,applet.c: add a call to back_change when changing panels
+	  so that we actually change the back on applets that can (printer
+	  can)
+
+	* panel-widget.c: take out the old timeout based move as it's now
+	  (and actually been for a while) possible to again use motion_notify
+	  ... though I use a timeout to avoid too many motions at once and
+	  move at most every 100ms
+
+Sat Dec 19 21:10:02 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: when adding new panel try to find a spot that is empty,
+	  add conversion or edge<->corner panel and move add drawer to
+	  the main panel menu from the add panel submenu
+
+	* panel.c: don't put up panel menu on the left click, just on the
+	  right click
+
+	* panel_config.c,panel_config_global.c,menu.c: capitalize only the
+	  first letter in strings for consistency
+
+Sat Dec 19 03:30:07 1998  George Lebl  <jirka@5z.com>
+
+	* Makefile.am: install gnome-panel.h
+
+Sat Dec 19 02:38:09 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: cosmetic thingie fixed ...
+
+Sat Dec 19 02:12:32 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config_global.c: changed disable animations to enable
+	  animations
+
+	* session.c: made the "..." buttons off by default, happy now????
+
+Sat Dec 19 01:55:10 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: experimental Redhat menu reading code, #if 0'ed
+	  out now until proven stable and functionally complete
+
+	* panel_config.c,drawer.c: changed negative checkboxes to positive
+	  and made only AutoHide checkbox (not two radio boxes)
+
+	* applet-widget.c: fixed a bug with right click menus, now the
+	  menus come up the same way all over (if you click they will stay).
+	  this took some X hackery which is probably not 100% the
+	  RightWay(tm) but it works (it bypasses corba and emulates a
+	  button press on the socket with XSendEvent)
+
+Wed Dec 16 14:54:09 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* applet.c button-widget.c button-widget.h panel-widget.c:
+
+	widget->window cannot be INPUT_ONLY. So, do the same
+	trick as we do for CheckButtons or Scales. Make
+	ButtonWidget NO_WINDOW, with an additional event_window
+	field.
+
 1998-12-16  Jonathan Blandford  <jrb@aware-of-vacuity.labs.redhat.com>
 
 	* menu.c (panel_lock): let's do the correct xscreensaver command

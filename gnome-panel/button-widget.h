@@ -23,6 +23,8 @@ struct _ButtonWidget
 	GdkPixmap		*pixmap; /*this is the one we start from*/
 	GdkBitmap		*mask;
 	
+	GdkWindow               *event_window;
+	
 	guint			pressed:1; /*true if the button is pressed*/
 	guint			in_button:1;
 

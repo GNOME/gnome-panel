@@ -19,10 +19,10 @@ typedef struct _SnappedWidget		SnappedWidget;
 typedef struct _SnappedWidgetClass	SnappedWidgetClass;
 
 typedef enum {
-	SNAPPED_TOP,
+	SNAPPED_TOP=0,
+	SNAPPED_RIGHT,
 	SNAPPED_BOTTOM,
-	SNAPPED_LEFT,
-	SNAPPED_RIGHT
+	SNAPPED_LEFT
 } SnappedPos;
 typedef enum {
 	SNAPPED_EXPLICIT_HIDE,

@@ -19,7 +19,7 @@ typedef struct _CornerWidget		CornerWidget;
 typedef struct _CornerWidgetClass	CornerWidgetClass;
 
 typedef enum {
-	CORNER_NE,
+	CORNER_NE=0,
 	CORNER_SE,
 	CORNER_SW,
 	CORNER_NW

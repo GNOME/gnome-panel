@@ -945,7 +945,7 @@ load_up_globals(void)
 		gnome_config_get_bool("show_small_icons=TRUE");
 
 	global_config.show_dot_buttons =
-		gnome_config_get_bool("show_dot_buttons=TRUE");
+		gnome_config_get_bool("show_dot_buttons=FALSE");
 		
 	global_config.prompt_for_logout =
 		gnome_config_get_bool("prompt_for_logout=TRUE");
