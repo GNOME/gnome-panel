@@ -793,11 +793,11 @@ load_icons_handler_again:
 	}
 
 	file = gnome_desktop_item_find_icon (icon->image,
-					     20 /* desired size */,
+					     icon->size /* desired size */,
 					     0 /* flags */);
 	if (file == NULL)
 		file = gnome_desktop_item_find_icon (icon->fallback_image,
-						     20 /* desired size */,
+						     icon->size /* desired size */,
 						     0 /* flags */);
 
 	if (file == NULL) {
@@ -821,8 +821,24 @@ load_icons_handler_again:
 
 	if (pb == NULL) {
 		pb = gdk_pixbuf_new_from_file (file, NULL);
+		
+		/* add icon to the hash table so we don't load it again */
 		loaded = TRUE;
+		if (loaded_icons == NULL)
+		  loaded_icons = g_hash_table_new_full
+		    (g_str_hash, g_str_equal,
+		     (GDestroyNotify) g_free,
+		     (GDestroyNotify) g_object_unref);
+		g_hash_table_replace (loaded_icons,
+				      g_strdup (file),
+				      g_object_ref (G_OBJECT (pb)));
+		g_signal_connect_data (G_OBJECT (pb), "destroy",
+				       G_CALLBACK (remove_pixmap_from_loaded),
+				       g_strdup (file),
+				       (GClosureNotify) g_free,
+				       0 /* connect_flags */);
 	}
+
 	if (pb == NULL) {
 		g_free (file);
 		icon_to_load_free (icon);
@@ -843,21 +859,7 @@ load_icons_handler_again:
 	gtk_image_set_from_pixbuf (GTK_IMAGE (icon->pixmap), pb);
 	g_object_unref (G_OBJECT (pb));
 
-	if (loaded) {
-		if (loaded_icons == NULL)
-			loaded_icons = g_hash_table_new_full
-				(g_str_hash, g_str_equal,
-				 (GDestroyNotify) g_free,
-				 (GDestroyNotify) g_object_unref);
-		g_hash_table_replace (loaded_icons,
-				      g_strdup (file),
-				      g_object_ref (G_OBJECT (icon->pixmap)));
-		g_signal_connect_data (G_OBJECT (icon->pixmap), "destroy",
-				       G_CALLBACK (remove_pixmap_from_loaded),
-				       g_strdup (file),
-				       (GClosureNotify) g_free,
-				       0 /* connect_flags */);
-	} else {
+	if (!loaded) {
 		g_free (file);
 		icon_to_load_free (icon);
 
@@ -3118,7 +3120,7 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 	char *uri;
 
 	pixmap_name = gnome_desktop_item_find_icon ("go.png",
-						    20 /* desired_size */,
+						    ICON_SIZE /* desired_size */,
 						    0 /* flags */);
 	if (pixmap_name == NULL) {
 		pixmap_name = g_build_filename (kde_icondir, "exec.xpm", NULL);

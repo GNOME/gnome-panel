@@ -1,5 +1,18 @@
 2002-02-16  Seth Nickell  <snickell@stanford.edu>
 
+	* menu.c: (load_icons_handler), (create_kde_menu):
+
+	Only cache the pixbufs as directly loaded from the icon
+	files. That way if a smaller icon is loaded first
+	we don't end up scaling it up later when its needed
+	for a larger version.
+
+	Really we should just include size as well as filename
+	in the hashtable, but the number of calls is small
+	enough that this isn't problematic.
+
+2002-02-16  Seth Nickell  <snickell@stanford.edu>
+
 	* menu.c: (compare_filerecs), (create_menu_at_fr),
 	(applet_menu_get_category_icon):
 
