@@ -21,6 +21,7 @@
 static GdkPixbuf * get_missing (GtkIconTheme *icon_theme,
 				int           preffered_size);
 static void button_widget_icon_theme_changed (ButtonWidget *button);
+static void button_widget_reload_pixbuf (ButtonWidget *button);
 
 enum {
 	PROP_0,
@@ -138,6 +139,7 @@ button_widget_realize(GtkWidget *widget)
 				 button,
 				 G_CONNECT_SWAPPED);
 
+	button_widget_reload_pixbuf (BUTTON_WIDGET (widget));
 }
 
 static void

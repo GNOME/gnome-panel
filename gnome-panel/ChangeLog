@@ -1,3 +1,9 @@
+2005-03-29  Vincent Untz  <vincent@vuntz.net>
+
+	* button-widget.c: (button_widget_realize): load the pixbuf here since
+	it's most probably not loaded yet.
+	Fix bug #171256.
+
 2005-03-28  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-bar.c: (panel_menu_bar_class_init): remove unused
