@@ -62,7 +62,6 @@ GSList *applets_last = NULL;
 
 /* animation page */
 static GtkWidget *enable_animations_cb;
-static GtkWidget *simple_movement_cb;
 static GtkWidget *anim_frame;
 static GtkAdjustment *hiding_step_size;
 static GtkAdjustment *minimize_delay;
@@ -254,7 +253,6 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 {
 	int enable = GTK_TOGGLE_BUTTON(w)->active;
 
-	gtk_widget_set_sensitive(simple_movement_cb,enable);
 	gtk_widget_set_sensitive(anim_frame,enable);
 
 	if(!changing)
@@ -265,16 +263,12 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 static void
 sync_animation_page_with_config(GlobalConfig *conf)
 {
-	gtk_widget_set_sensitive(simple_movement_cb,
-				 !conf->disable_animations);
 	gtk_widget_set_sensitive(anim_frame,
 				 !conf->disable_animations);
 
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(enable_animations_cb),
 				    /*notice the not*/
 				    !conf->disable_animations);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(simple_movement_cb),
-				    conf->simple_movement);
 	gtk_adjustment_set_value(hiding_step_size,
 				 conf->hiding_step_size);
 	gtk_adjustment_set_value(minimize_delay,
@@ -290,8 +284,6 @@ sync_config_with_animation_page(GlobalConfig *conf)
 	/*notice the not*/
 	conf->disable_animations =
 		! GTK_TOGGLE_BUTTON(enable_animations_cb)->active;
-	conf->simple_movement =
-		GTK_TOGGLE_BUTTON(simple_movement_cb)->active;
 	conf->hiding_step_size = hiding_step_size->value;
 	conf->minimize_delay = minimize_delay->value;
 	conf->maximize_delay = maximize_delay->value;
@@ -314,11 +306,6 @@ animation_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (enable_animations_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (set_anim_button_value),NULL); 
 	gtk_box_pack_start (GTK_BOX (vbox), enable_animations_cb, FALSE, FALSE, 0);
-
-	simple_movement_cb = gtk_check_button_new_with_label (_("Constant speed animations"));
-	gtk_box_pack_start (GTK_BOX (vbox), simple_movement_cb, FALSE, FALSE, 0);
-	gtk_signal_connect (GTK_OBJECT (simple_movement_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 
 	/* Auto and Explicit Hide Animation step_size scale frame */
 	anim_frame = gtk_frame_new (_("Panel Animation Settings"));
@@ -1388,8 +1375,6 @@ loadup_vals (void)
 
 	global_config.drawer_auto_close =
 		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.simple_movement =
-		conditional_get_bool ("simple_movement", FALSE, NULL);
 	global_config.hide_panel_frame =
 		conditional_get_bool ("hide_panel_frame", FALSE, NULL);
 	global_config.tile_when_over =
@@ -1515,8 +1500,6 @@ write_config (GlobalConfig *conf)
 			      conf->normal_layer);
 	gnome_config_set_bool("drawer_auto_close",
 			      conf->drawer_auto_close);
-	gnome_config_set_bool("simple_movement",
-			      conf->simple_movement);
 	gnome_config_set_bool("hide_panel_frame",
 			      conf->hide_panel_frame);
 	gnome_config_set_bool("tile_when_over",

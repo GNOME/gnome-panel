@@ -22,7 +22,6 @@ struct _GlobalConfig {
 	gboolean keep_bottom;
 	gboolean normal_layer;
 	gboolean drawer_auto_close;
-	gboolean simple_movement;
 	gboolean tiles_enabled[LAST_TILE];
 	char *tile_up[LAST_TILE];
 	char *tile_down[LAST_TILE];

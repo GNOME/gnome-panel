@@ -1765,8 +1765,6 @@ load_up_globals (void)
 
 	global_config.drawer_auto_close =
 		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.simple_movement =
-		conditional_get_bool ("simple_movement", FALSE, NULL);
 	global_config.hide_panel_frame =
 		conditional_get_bool ("hide_panel_frame", FALSE, NULL);
 	global_config.tile_when_over =
@@ -1870,8 +1868,6 @@ write_global_config (void)
 			       global_config.normal_layer);
 	gnome_config_set_bool ("drawer_auto_close",
 			       global_config.drawer_auto_close);
-	gnome_config_set_bool ("simple_movement",
-			       global_config.simple_movement);
 	gnome_config_set_bool ("hide_panel_frame",
 			       global_config.hide_panel_frame);
 	gnome_config_set_bool ("tile_when_over",
@@ -1956,8 +1952,6 @@ convert_write_config(void)
 			      global_config.keep_bottom);
 	gnome_config_set_bool("drawer_auto_close",
 			      global_config.drawer_auto_close);
-	gnome_config_set_bool("simple_movement",
-			      global_config.simple_movement);
 	gnome_config_set_bool("hide_panel_frame",
 			      global_config.hide_panel_frame);
 	gnome_config_set_bool("tile_when_over",
@@ -2046,7 +2040,6 @@ convert_read_old_config(void)
 	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
 
 	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
-	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	for(i=0;i<LAST_TILE;i++) {

@@ -589,35 +589,28 @@ basep_widget_set_ebox_orient(BasePWidget *basep,
 static int
 move_step(int src, int dest, long start_time, long end_time, long cur_time)
 {
-	double percentage;
+	double n, d, percentage;
 	
 	if(src == dest)
 		return dest;
 
-	if(global_config.simple_movement) {
-		percentage = ((double)(cur_time-start_time))/(end_time-start_time);
-		if(percentage>1.0)
-			percentage = 1.0;
-		return  src + ((dest - src)*percentage);
-	} else {
-		double n = cur_time-start_time;
-		double d = end_time-start_time;
+	n = cur_time-start_time;
+	d = end_time-start_time;
 
-		if(n<d) {
-			/*blah blah blah just a simple function to make the
-			  movement more "sin" like ... we run it twice to
-			  pronounce make it more pronounced*/
-			percentage = sin(M_PI*(n/d)-M_PI/2)/2+0.5;
-			percentage = sin(M_PI*percentage-M_PI/2)/2+0.5;
-			if(percentage<0.0)
-				percentage = 0.0;
-			else if(percentage>1.0)
-				percentage = 1.0;
-		} else
+	if(n<d) {
+		/*blah blah blah just a simple function to make the
+		  movement more "sin" like ... we run it twice to
+		  pronounce make it more pronounced*/
+		percentage = sin(M_PI*(n/d)-M_PI/2)/2+0.5;
+		percentage = sin(M_PI*percentage-M_PI/2)/2+0.5;
+		if(percentage<0.0)
+			percentage = 0.0;
+		else if(percentage>1.0)
 			percentage = 1.0;
+	} else
+		percentage = 1.0;
 
-		return  src + ((dest - src)*percentage);
-	}
+	return  src + ((dest - src)*percentage);
 }
 
 void
