@@ -6,22 +6,20 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(includedir) $(GNOME_INCLUDEDIR)		\
 	@PIXBUF_CFLAGS@
 
-bin_PROGRAMS = fish_applet
-
 #if DO_EXE
 #bin_PROGRAMS = fish_applet
 #else
-#lib_LTLIBRARIES=libfish_applet.la
+lib_LTLIBRARIES=libfish_applet.la
 #endif
 
-#libfish_applet_la_SOURCES = fish.c
+libfish_applet_la_SOURCES = fish.c
 
-fish_applet_SOURCES = fish.c
+#fish_applet_SOURCES = fish.c
 
-fish_applet_LDADD = ../../panel/libpanel_applet.la \
-		 	$(GNOME_LIBDIR) \
-		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) \
-			@PIXBUF_LIBS@
+#fish_applet_LDADD = ../../panel/libpanel_applet.la \
+#		 	$(GNOME_LIBDIR) \
+#		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) \
+#			@PIXBUF_LIBS@
 
 #libfish_applet_la_LIBADD = ../../panel/libpanel_applet.la \
 #		 	$(GNOME_LIBDIR) \

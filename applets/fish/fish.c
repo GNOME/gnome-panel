@@ -714,7 +714,7 @@ wanda_deactivator(PortableServer_POA poa,
   applet_widget_corba_deactivate(poa, goad_id, impl_ptr, ev);
 }
 
-#if 0 && defined(SHLIB_APPLETS)
+#if 1 || defined(SHLIB_APPLETS)
 static const char *repo_id[]={"IDL:GNOME/Applet:1.0", NULL};
 static GnomePluginObject applets_list[] = {
   {repo_id, "fish_applet", NULL, "Wanda the Magnificient",
