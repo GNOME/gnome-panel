@@ -326,7 +326,7 @@ timeout_cb (gpointer data)
 	GtkWidget *label = GTK_WIDGET (data);
 	struct tm *das_tm;
 	time_t das_time;
-	char hour[20];
+	char hour[256];
 
 	if (!IS_FOOBAR_WIDGET (das_global_foobar))
 		return FALSE;
@@ -335,15 +335,26 @@ timeout_cb (gpointer data)
 	das_tm = localtime (&das_time);
 
 	if (das_tm->tm_mday != day) {
-		if (strftime (hour, 20, _("%A %B %d"), das_tm) == 20)
-			hour[19] = '\0';
+		if(strftime(hour, sizeof(hour), _("%A %B %d"), das_tm) == 0) {
+			/* according to docs, if the string does not fit, the
+			 * contents of tmp2 are undefined, thus just use
+			 * ??? */
+			strcpy(hour, "???");
+		}
+		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
+
 		gtk_tooltips_set_tip (panel_tooltips, clock_ebox, hour, NULL);
 
 		day = das_tm->tm_mday;
 	}
 
-	if (strftime (hour, 20, FOOBAR_WIDGET (das_global_foobar)->clock_format, das_tm) == 20)
-		hour[19] = '\0';
+	if(strftime(hour, sizeof(hour), FOOBAR_WIDGET (das_global_foobar)->clock_format, das_tm) == 0) {
+		/* according to docs, if the string does not fit, the
+		 * contents of tmp2 are undefined, thus just use
+		 * ??? */
+		strcpy(hour, "???");
+	}
+	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
 	gtk_label_set_text (GTK_LABEL (label), hour);
 
