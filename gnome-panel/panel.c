@@ -20,6 +20,10 @@
 #include "gnome-run.h"
 #include "gnome-panel.h"
 
+/* nautilus uses this UTTER HACK to reset backgrounds, ugly ugly ugly,
+ * broken, ugly ugly, but whatever */
+#define RESET_IMAGE_NAME "/nautilus/backgrounds/reset.png"
+
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -880,7 +884,7 @@ drop_url(PanelWidget *panel, int pos, char *url)
 }
 
 static void
-drop_menu(PanelWidget *panel, int pos, char *dir)
+drop_menu (PanelWidget *panel, int pos, char *dir)
 {
 	int flags = MAIN_MENU_SYSTEM | MAIN_MENU_USER;
 	DistributionType distribution = get_distribution_type ();
@@ -895,15 +899,15 @@ drop_menu(PanelWidget *panel, int pos, char *dir)
 }
 
 static void
-drop_urilist(PanelWidget *panel, int pos, char *urilist,
-	     gboolean background_drops)
+drop_urilist (PanelWidget *panel, int pos, char *urilist,
+	      gboolean background_drops)
 {
 	GList *li, *files;
 	struct stat s;
 
 	files = gnome_uri_list_extract_uris(urilist);
 
-	for(li = files; li; li = g_list_next(li)) {
+	for(li = files; li; li = li->next) {
 		const char *mimetype;
 		char *filename;
 
@@ -955,10 +959,25 @@ drop_bgimage(PanelWidget *panel, char *bgimage)
 	char *filename;
 
 	filename = extract_filename(bgimage);
-	if(filename != NULL) {
-		panel_widget_set_back_pixmap (panel, filename);
+	if (filename != NULL) {
+		/* an incredible hack, no, worse, INCREDIBLE FUCKING HACK,
+		 * whatever, we need to work with nautilus on this one */
+		if (strstr (filename, RESET_IMAGE_NAME) != NULL) {
+			panel_widget_change_params (panel,
+						    panel->orient,
+						    panel->sz,
+						    PANEL_BACK_NONE,
+						    panel->back_pixmap,
+						    panel->fit_pixmap_bg,
+						    panel->strech_pixmap_bg,
+						    panel->rotate_pixmap_bg,
+						    panel->no_padding_on_ends,
+						    &panel->back_color);
+		} else {
+			panel_widget_set_back_pixmap (panel, filename);
+		}
 
-		g_free(filename);
+		g_free (filename);
 	}
 }
 

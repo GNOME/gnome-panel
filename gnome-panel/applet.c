@@ -76,6 +76,9 @@ kill_applet_in_idle(gpointer data)
 	if (info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
 		ext->clean_remove = TRUE;
+	} else if (info->type == APPLET_SWALLOW) {
+		Swallow *swallow = info->data;
+		swallow->clean_remove = TRUE;
 	}
 	panel_clean_applet (info);
 	return FALSE;

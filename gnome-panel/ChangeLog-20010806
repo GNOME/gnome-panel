@@ -1,3 +1,14 @@
+Thu Nov 16 21:45:38 2000  George Lebl <jirka@5z.com>
+
+	* applet.c, session.c, swallow.[ch]:  Remove bits of cruft.  Add the
+	  applet like reload hack for swallowed thingies.  Also fix a
+	  destruction crash by refcounting the swallow structure.
+
+	* panel.c: Accept the nautilus background reset ugly ugly ugly hack
+
+	* session.c: cleanup, remove some cruft, and set the clock format
+	  default to use the space padded hour format as that's more correct.
+
 2000-11-15  Jacob "Ulysses" Berkman  <jacob@helixcode.com>
 
 	* Makefile.am: remove some cruft, yo

@@ -27,103 +27,154 @@
 GList *check_swallows = NULL;
 
 extern GlobalConfig global_config;
-
 extern GSList *applets_last;
 
-#if 0
-static int
-get_window_id(Window win, char *title, guint32 *wid)
+static void socket_destroyed (GtkWidget *w, gpointer data);
+static void socket_realized (GtkWidget *w, gpointer data);
+
+static void
+socket_realized (GtkWidget *w, gpointer data)
 {
-	Window root_return;
-	Window parent_return;
-	Window *children;
-	unsigned int nchildren;
-	unsigned int i;
-	char *tit;
-	int ret = FALSE;
-	int (*oldErrorHandler)(Display*, XErrorEvent*);
+	Swallow *swallow = gtk_object_get_user_data (GTK_OBJECT (w));
 
-	gdk_error_trap_push ();
-		
-	XQueryTree(GDK_DISPLAY(),
-		   win,
-		   &root_return,
-		   &parent_return,
-		   &children,
-		   &nchildren);
-
-	for(i=0;i<nchildren;i++) {
-		if (!XFetchName(GDK_DISPLAY(),
-				children[i],
-				&tit)) {
-			continue;
-		}
-		if(tit) {
-			if(strcmp(tit,title)==0) {
-				XFree(tit);
-				*wid = children[i];
-				ret = TRUE;
-				break ;
-			}
-			XFree(tit);
-		}
-	}
-	gdk_flush();
-	gdk_error_trap_pop ();
-	for(i=0;!ret && i<nchildren;i++)
-		ret=get_window_id(children[i],title,wid);
-	if(children)
-		XFree(children);
-	return ret;
-}
-#endif
-
-static int
-socket_realized(GtkWidget *w, gpointer data)
-{
-	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));
-
-	g_return_val_if_fail(swallow->title!=NULL,FALSE);
+	g_return_if_fail (swallow->title != NULL);
 	
 	gdk_error_trap_push ();
 
 	if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
 			  &swallow->wid, TRUE)) {
-		check_swallows = g_list_prepend(check_swallows,swallow);
-		xstuff_reset_need_substructure();
+		check_swallows = g_list_prepend (check_swallows, swallow);
+		xstuff_reset_need_substructure ();
 	} else
-		gtk_socket_steal(GTK_SOCKET(swallow->socket), swallow->wid);
+		gtk_socket_steal (GTK_SOCKET(swallow->socket), swallow->wid);
 
 	gdk_flush();
 	gdk_error_trap_pop ();
-
-	return FALSE;
 }
 
 static void
-socket_destroyed(GtkWidget *w, gpointer data)
+swallow_launch (Swallow *swallow)
+{
+	if ( ! string_empty (swallow->path)) {
+		char *p = strrchr (swallow->path, '.');
+		GnomeDesktopEntry *item;
+
+		/*only if such a file exists and ends in a .desktop, should
+		  we try to launch it as such*/
+		if(p != NULL &&
+		   (strcmp (p, ".desktop") == 0 ||
+		    strcmp (p, ".kdelnk") == 0) &&
+		   g_file_exists (swallow->path) &&
+		   (item = gnome_desktop_entry_load (swallow->path)) != NULL) {
+			gnome_desktop_entry_launch (item);
+			gnome_desktop_entry_free (item);
+		} else {
+			gnome_execute_shell (NULL, swallow->path);
+		}
+	}
+}
+
+static gboolean
+before_remove (Swallow *swallow)
+{
+	GtkWidget *dlg;
+
+	if (swallow->clean_remove)
+		return TRUE;
+
+	dlg = gnome_message_box_new (_("A swallowed application appears to "
+				       "have died unexpectadly.\n"
+				       "Attempt to reload it?"),
+				     GNOME_MESSAGE_BOX_QUESTION,
+				     _("Reload"),
+				     GNOME_STOCK_BUTTON_CANCEL,
+				     NULL);
+	gnome_dialog_set_close (GNOME_DIALOG (dlg),
+				TRUE /* click_closes */);
+	gtk_window_set_wmclass (GTK_WINDOW (dlg),
+				"swallow_crashed", "Panel");
+
+	if (gnome_dialog_run (GNOME_DIALOG (dlg)) == 0) {
+
+		/* make the socket again */
+		swallow->socket = gtk_socket_new ();
+		gtk_object_set_user_data (GTK_OBJECT (swallow->socket),
+					  swallow);
+
+		if (swallow->width != 0 || swallow->height != 0)
+			gtk_widget_set_usize(swallow->socket,
+					     swallow->width, swallow->height);
+
+		gtk_signal_connect_after (GTK_OBJECT (swallow->socket),
+					  "realize",
+					  GTK_SIGNAL_FUNC (socket_realized),
+					  NULL);
+		gtk_signal_connect (GTK_OBJECT (swallow->socket), "destroy",
+				    GTK_SIGNAL_FUNC (socket_destroyed),
+				    swallow);
+
+		gtk_container_add (GTK_CONTAINER (swallow->frame),
+				   swallow->socket);
+		gtk_widget_show (swallow->socket);
+
+		/* launch the command if some exists */
+		swallow_launch (swallow);
+
+		if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
+				  &swallow->wid, TRUE)) {
+			check_swallows = g_list_prepend (check_swallows, swallow);
+			xstuff_reset_need_substructure ();
+		} else {
+			gtk_socket_steal (GTK_SOCKET(swallow->socket), swallow->wid);
+		}
+		
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
+static void
+unref_swallow (Swallow *swallow)
+{
+	swallow->ref_count --;
+
+	if (swallow->ref_count == 0) {
+		g_free (swallow->title);
+		swallow->title = NULL;
+		g_free (swallow->path);
+		swallow->path = NULL;
+
+		g_free (swallow);
+	}
+}
+
+static Swallow *
+ref_swallow (Swallow *swallow)
+{
+	swallow->ref_count ++;
+
+	return swallow;
+}
+
+static void
+socket_destroyed (GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = data;
+
+	swallow->wid = -1;
 	
-	gtk_widget_destroy(swallow->ebox);
+	if ( ! before_remove (swallow))
+		return;
+
+	gtk_widget_destroy (swallow->ebox);
 	swallow->ebox = NULL;
 
-	check_swallows = g_list_remove(check_swallows,swallow);
+	check_swallows = g_list_remove (check_swallows, swallow);
+
+	/* here is where the swallow really dies */
+	unref_swallow (swallow);
 }
-
-static void
-free_swallow (gpointer data)
-{
-	Swallow *swallow = data;
-	
-	g_free(swallow->title);
-	swallow->title = NULL;
-	g_free(swallow->path);
-	swallow->path = NULL;
-
-	g_free(swallow);
-}
-
 
 static void
 really_add_swallow(GtkWidget *d,int button, gpointer data)
@@ -164,7 +215,7 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 	GtkWidget *d = data;
 	
 	/*just call the above handler for the dialog*/
-	really_add_swallow(d,0,NULL);
+	really_add_swallow (d, 0, NULL);
 }
 
 /*I couldn't resist the naming of this function*/
@@ -277,56 +328,50 @@ static Swallow *
 create_swallow_applet(char *title, char *path, int width, int height, SwallowOrient orient)
 {
 	Swallow *swallow;
-	GtkWidget *w;
 	
-	swallow = g_new(Swallow,1);
+	swallow = g_new (Swallow, 1);
+	swallow->ref_count = 1;
 
-	swallow->ebox = gtk_event_box_new();
-	gtk_widget_show(swallow->ebox);
+	swallow->clean_remove = TRUE;
 
-	swallow->socket=gtk_socket_new();
-	if(width != 0 || height != 0)
+	swallow->ebox = gtk_event_box_new ();
+	gtk_widget_show (swallow->ebox);
+
+	swallow->socket = gtk_socket_new ();
+	if (width != 0 || height != 0)
 		gtk_widget_set_usize(swallow->socket, width, height);
-	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
-			         GTK_SIGNAL_FUNC(socket_realized), NULL);
-	gtk_signal_connect(GTK_OBJECT(swallow->socket),"destroy",
-			   GTK_SIGNAL_FUNC(socket_destroyed), swallow);
+	gtk_signal_connect_after (GTK_OBJECT (swallow->socket), "realize",
+				  GTK_SIGNAL_FUNC (socket_realized), NULL);
+	gtk_signal_connect (GTK_OBJECT (swallow->socket), "destroy",
+			    GTK_SIGNAL_FUNC (socket_destroyed), swallow);
 	
 	
-	swallow->handle_box = gtk_handle_box_new();
-	gtk_signal_connect(GTK_OBJECT(swallow->handle_box),"event",
-			   GTK_SIGNAL_FUNC(ignore_1st_click),NULL);
+	swallow->handle_box = gtk_handle_box_new ();
+	gtk_signal_connect (GTK_OBJECT (swallow->handle_box), "event",
+			    GTK_SIGNAL_FUNC (ignore_1st_click), NULL);
 	
-	gtk_container_add ( GTK_CONTAINER(swallow->ebox),
-			    swallow->handle_box );
+	gtk_container_add (GTK_CONTAINER(swallow->ebox),
+			   swallow->handle_box);
 	
-	w = gtk_frame_new(NULL);
+	swallow->frame = gtk_frame_new (NULL);
 	
-	gtk_frame_set_shadow_type( GTK_FRAME(w), GTK_SHADOW_IN);
-	gtk_container_add ( GTK_CONTAINER(swallow->handle_box), w );
+	gtk_frame_set_shadow_type (GTK_FRAME(swallow->frame), GTK_SHADOW_IN);
+	gtk_container_add (GTK_CONTAINER(swallow->handle_box), swallow->frame);
 	
-	gtk_widget_show ( swallow->handle_box );
-	/*
-	  FIXME: I want to add the title of the swallowed window.
-	  E.g. a Pager is "sticky", but having a pager in a handlebox
-	  is not -> clicking will change the desktop, but leave the
-	  pager behind :-( Below is one of the non working versions...
-	*/
-	/*gdk_window_set_title(GTK_HANDLE_BOX(swallow->handle_box)->float_window,
-	  g_strdup(title));*/
-	gtk_container_add ( GTK_CONTAINER(w),
-			    swallow->socket );
+	gtk_widget_show (swallow->handle_box);
+	gtk_container_add (GTK_CONTAINER (swallow->frame),
+			   swallow->socket);
 
-	gtk_widget_show(swallow->socket);
-	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
+	gtk_widget_show (swallow->socket);
+	gtk_object_set_user_data (GTK_OBJECT (swallow->socket), swallow);
 
-	swallow->title = g_strdup(title);
-	swallow->path = path?g_strdup(path):NULL;
+	swallow->title = g_strdup (title);
+	swallow->path = path ? g_strdup (path) : NULL;
 	swallow->width = width;
 	swallow->height = height;
 	swallow->wid = -1;
 
-	set_swallow_applet_orient(swallow, orient);
+	set_swallow_applet_orient (swallow, orient);
 
 	return swallow;
 }
@@ -335,64 +380,52 @@ void
 set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 {
 	if (GTK_HANDLE_BOX(swallow->handle_box)->child_detached) {
-		if(orient==SWALLOW_VERTICAL) {
+		if (orient == SWALLOW_VERTICAL) {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-			gtk_widget_set_usize( swallow->handle_box, swallow->width,
+			gtk_widget_set_usize (swallow->handle_box, swallow->width,
 					      DRAG_HANDLE_SIZE);
 		} else {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-			gtk_widget_set_usize( swallow->handle_box, DRAG_HANDLE_SIZE,
-					      swallow->height );
+			gtk_widget_set_usize (swallow->handle_box, DRAG_HANDLE_SIZE,
+					      swallow->height);
 		}
 	} else {
-		if(orient==SWALLOW_VERTICAL) {
+		if (orient == SWALLOW_VERTICAL) {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-			gtk_widget_set_usize( swallow->handle_box, swallow->width,
+			gtk_widget_set_usize (swallow->handle_box, swallow->width,
 					      swallow->height + DRAG_HANDLE_SIZE);
 		} else {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-			gtk_widget_set_usize( swallow->handle_box,
+			gtk_widget_set_usize (swallow->handle_box,
 					      swallow->width + DRAG_HANDLE_SIZE,
-					      swallow->height );
+					      swallow->height);
 		}
 	}
-	gtk_object_set_user_data(GTK_OBJECT(swallow->handle_box),
-				 GINT_TO_POINTER(orient));
 }
 
 void
-load_swallow_applet(char *path, char *params, int width, int height,
-		    PanelWidget *panel, int pos, gboolean exactpos)
+load_swallow_applet (char *path, char *params, int width, int height,
+		     PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Swallow *swallow;
 
-	swallow = create_swallow_applet(params, path, width, height,
-					SWALLOW_HORIZONTAL);
-	if(!swallow)
+	swallow = create_swallow_applet (params, path, width, height,
+					 SWALLOW_HORIZONTAL);
+	if (swallow == NULL)
 		return;
 
-	if(!register_toy(swallow->ebox,
-			 swallow, free_swallow,
-			 panel, pos,
-			 exactpos, APPLET_SWALLOW))
+	if ( ! register_toy (swallow->ebox,
+			     ref_swallow (swallow),
+			     (GDestroyNotify) unref_swallow,
+			     panel, pos,
+			     exactpos, APPLET_SWALLOW))
 		return;
-	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
-			    _("Help"));
-	if(path && *path) {
-		char *p = strrchr(path,'.');
-		GnomeDesktopEntry *item;
-		/*only if such a file exists and ends in a .desktop, should
-		  we try to launch it as such*/
-		if(p &&
-		   (strcmp(p,".desktop")==0 ||
-		    strcmp(p,".kdelnk")==0) &&
-		   g_file_exists(path) &&
-		   (item = gnome_desktop_entry_load(path))) {
-			gnome_desktop_entry_launch(item);
-			gnome_desktop_entry_free(item);
-		} else {
-			gnome_execute_shell(NULL, path);
-		}
-	}
+
+	swallow->clean_remove = FALSE;
+
+	applet_add_callback (applets_last->data, "help",
+			     GNOME_STOCK_PIXMAP_HELP,
+			     _("Help"));
+
+	swallow_launch (swallow);
 }

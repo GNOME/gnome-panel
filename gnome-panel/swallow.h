@@ -11,16 +11,18 @@ typedef enum {
 } SwallowOrient;
 
 typedef struct {
+	int ref_count;
+
 	GtkWidget *ebox;
-/* 	GtkWidget *handle_n; */
-/* 	GtkWidget *handle_w; */
 	GtkWidget *socket;
         GtkWidget *handle_box;
+	GtkWidget *frame;
         char *title;
 	char *path;
 	int width;
 	int height;
 	guint32 wid;
+	gboolean clean_remove;
 } Swallow;
 
 void load_swallow_applet(char *path, char *params, int width, int height,

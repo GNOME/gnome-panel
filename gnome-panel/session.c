@@ -55,22 +55,23 @@ static int ss_timeout = 500;
 
 /*send the tooltips state to all external applets*/
 static void
-send_tooltips_state(int enabled)
+send_tooltips_state(gboolean enabled)
 {
 	GSList *li;
 
-	for(li = applets; li!=NULL; li = g_slist_next(li)) {
+	for(li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
-		if(info->type == APPLET_EXTERN) {
+		if (info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
-			g_assert(ext);
+			g_assert(ext != NULL);
 			/*if it's not set yet, don't send it, it will be sent
 			  when the ior is discovered anyhow, so this would be
 			  redundant anyway*/
-			if(ext->applet) {
+			if (ext->applet != NULL) {
 				CORBA_Environment ev;
 				CORBA_exception_init(&ev);
-				GNOME_Applet_set_tooltips_state(ext->applet, enabled, &ev);
+				GNOME_Applet_set_tooltips_state(ext->applet,
+								enabled, &ev);
 				if(ev._major)
 					panel_clean_applet(ext->info);
 				CORBA_exception_free(&ev);
@@ -232,7 +233,7 @@ apply_global_config (void)
 }
 
 static void
-timeout_dlg_realized(GtkWidget *dialog)
+timeout_dlg_realized (GtkWidget *dialog)
 {
 	/* always make top layer */
 	gnome_win_hints_set_layer (GTK_WIDGET(dialog),
@@ -240,16 +241,16 @@ timeout_dlg_realized(GtkWidget *dialog)
 }
 
 static gboolean
-session_save_timeout(gpointer data)
+session_save_timeout (gpointer data)
 {
-	int cookie = GPOINTER_TO_INT(data);
-	if(cookie != ss_cookie)
+	int cookie = GPOINTER_TO_INT (data);
+	if (cookie != ss_cookie)
 		return FALSE;
 
 #ifdef PANEL_DEBUG	
 	printf("SAVE TIMEOUT (%u)\n",ss_cookie);
 #endif
-	if (!ss_interactive)
+	if ( ! ss_interactive)
 		return FALSE;
 
 	ss_timeout_dlg =
@@ -813,15 +814,13 @@ panel_session_die (GnomeClient *client,
 {
 	GSList *li;
 
-	gtk_timeout_remove(config_sync_timeout);
+	gtk_timeout_remove (config_sync_timeout);
+	config_sync_timeout = 0;
   
-	/*don't catch these any more*/
-	signal(SIGCHLD, SIG_DFL);
-	
 	status_inhibit = TRUE;
-	status_spot_remove_all();
-	
-	for(li=applets; li!=NULL; li=g_slist_next(li)) {
+	status_spot_remove_all ();
+
+	for (li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
@@ -829,6 +828,7 @@ panel_session_die (GnomeClient *client,
 			gtk_widget_destroy (info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
+			swallow->clean_remove = TRUE;
 			if(GTK_SOCKET(swallow->socket)->plug_window)
 				XKillClient(GDK_DISPLAY(),
 					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
@@ -1470,7 +1470,7 @@ init_user_panels(void)
 			panel = foobar_widget_new ();
 
 			/* Don't translate the first part of this string */
-			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+			s = gnome_config_get_string (_("/panel/Config/clock_format=%l:%M:%S %p"));
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);
