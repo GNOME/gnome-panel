@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-19 12:21+0200\n"
-"PO-Revision-Date: 2002-07-19 15:51+0200\n"
+"POT-Creation-Date: 2002-07-23 20:55+0200\n"
+"PO-Revision-Date: 2002-07-23 20:57+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,9 @@ msgstr "_Informacje o..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
 #: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1 gnome-panel/menu.c:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1 gnome-panel/drawer.c:1
+#: gnome-panel/launcher.c:1 gnome-panel/logout.c:1
+#: gnome-panel/logout.c:1 gnome-panel/menu.c:1 gnome-panel/menu.c:1
 msgid "_Help"
 msgstr "Pomo_c"
 
@@ -923,9 +925,7 @@ msgstr "Nie można utworzyć apletu!\n"
 msgid "Properties..."
 msgstr "Właściwości..."
 
-#: applets/gen_util/printer.c:1 gnome-panel/drawer.c:1
-#: gnome-panel/launcher.c:1 gnome-panel/logout.c:1
-#: gnome-panel/logout.c:1 gnome-panel/menu.c:1
+#: applets/gen_util/printer.c:1
 msgid "Help"
 msgstr "Pomoc"
 
@@ -1075,12 +1075,12 @@ msgstr "Powłoka panelu GNOME"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:1
-msgid "Move"
-msgstr "Przesuń"
+msgid "_Move"
+msgstr "_Przesuń"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:1
-msgid "Remove From Panel"
-msgstr "Usuń z panelu"
+msgid "_Remove From Panel"
+msgstr "_Usuń z panelu"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1234,8 +1234,8 @@ msgstr "Szuflada"
 
 #: gnome-panel/drawer.c:1 gnome-panel/launcher.c:1
 #: gnome-panel/logout.c:1 gnome-panel/menu.c:1 gnome-panel/menu.c:1
-msgid "Properties"
-msgstr "Właściwości"
+msgid "_Properties"
+msgstr "_Właściwości"
 
 #: gnome-panel/foobar-widget.c:1 gnome-panel/menu.c:1
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1269,8 +1269,7 @@ msgstr "Zrzut ekranu..."
 msgid "Take a screenshot of your desktop"
 msgstr "Pobiera zrzut aktualnego stanu ekranu"
 
-#: gnome-panel/foobar-widget.c:1 gnome-panel/logout.c:1
-#: gnome-panel/menu.c:1
+#: gnome-panel/foobar-widget.c:1 gnome-panel/menu.c:1
 msgid "Lock Screen"
 msgstr "Zabezpiecz ekran"
 
@@ -1747,16 +1746,20 @@ msgstr "Zabezpiecz ekran"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:1
-msgid "Activate Screensaver"
-msgstr "Uaktywnij wygaszacz ekranu"
+msgid "_Activate Screensaver"
+msgstr "_Uaktywnij wygaszacz ekranu"
 
 #: gnome-panel/logout.c:1
-msgid "Kill Screensaver Daemon"
-msgstr "Usuń demona wygaszacza ekranu"
+msgid "_Lock Screen"
+msgstr "_Zabezpiecz ekran"
 
 #: gnome-panel/logout.c:1
-msgid "Restart Screensaver Daemon"
-msgstr "Uruchom ponownie demona wygaszacza ekranu"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Usuń demona wygaszacza ekranu"
+
+#: gnome-panel/logout.c:1
+msgid "Restart _Screensaver Daemon"
+msgstr "U_ruchom ponownie demona wygaszacza ekranu"
 
 #: gnome-panel/main.c:1
 msgid "Specify a profile name to load"
@@ -1948,6 +1951,10 @@ msgstr "Dodaj to menu do panelu"
 msgid "Add new item to this menu"
 msgstr "Dodaj nowy element do menu"
 
+#: gnome-panel/menu.c:1
+msgid "Properties"
+msgstr "Właściwości"
+
 #: gnome-panel/menu.c:1 libpanel-applet/panel-test-applets.c:1
 #, c-format
 msgid "query returned exception %s\n"
@@ -2081,10 +2088,6 @@ msgstr "_Usuń ten panel"
 #: gnome-panel/menu.c:1
 msgid "_Add to Panel"
 msgstr "_Dodaj do panelu"
-
-#: gnome-panel/menu.c:1
-msgid "_Properties"
-msgstr "_Właściwości"
 
 #: gnome-panel/menu.c:1
 msgid "_New Panel"
