@@ -1,3 +1,14 @@
+Wed Jul 02 11:43:26 2003  George Lebl <jirka@5z.com>
+
+	* panel-applet-frame.c: when creating new applets be more careful
+	  about errors and null returns if they can possibly happen, and
+	  fix a leak when this happens
+
+	* panel-widget.c: the time on events with send_event (hand generated
+	  events) seems to be bogus for the drag start and so just
+	  use GDK_CURRENT_TIME in this case.  This fixes dragging applets
+	  like fish and window-list for me.
+
 2003-07-02  Mark McLoughlin  <mark@skynet.ie>
 	
 	* panel-stock-icons.[ch]: add a new stock id "panel-main-menu"

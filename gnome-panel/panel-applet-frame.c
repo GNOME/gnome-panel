@@ -1080,7 +1080,9 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	g_free (moniker);
 
-	if (BONOBO_EX (&ev)) {
+	/* according to the source of bonobo control == NULL && no
+	   exception can happen, so handle it */
+	if (BONOBO_EX (&ev) || control == CORBA_OBJECT_NIL) {
 		panel_applet_frame_loading_failed (
 			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
 		CORBA_exception_free (&ev);
@@ -1122,8 +1124,10 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	
 	frame->priv->ui_component =
 		bonobo_control_frame_get_popup_component (control_frame, NULL);
-	if (!frame->priv->ui_component)
+	if (!frame->priv->ui_component) {
+		gtk_object_sink (GTK_OBJECT (widget));
 		return NULL;
+	}
 
 	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
 			       "GNOME_Panel_Popup.xml", "panel", NULL);
@@ -1132,10 +1136,16 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 		frame->priv->ui_component, popup_verbs, frame);
 
 	control = bonobo_control_frame_get_control (control_frame);
-	if (!control)
+	if (!control) {
+		gtk_object_sink (GTK_OBJECT (widget));
 		return NULL;
+	}
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
+	if (frame->priv->applet_shell == CORBA_OBJECT_NIL) {
+		gtk_object_sink (GTK_OBJECT (widget));
+		return NULL;
+	}
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 

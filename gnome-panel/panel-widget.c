@@ -1836,7 +1836,8 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 		gdk_flush ();
 
 		if (status != GDK_GRAB_SUCCESS) {
-			g_warning (G_STRLOC ": failed to grab pointer");
+			g_warning (G_STRLOC ": failed to grab pointer (errorcode: %d)",
+				   status);
 			panel_widget_applet_drag_end (panel);
 		}
 	}
@@ -2214,9 +2215,13 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
 
 			if ( ! commie_mode &&
 			    bevent->button == 2) {
+				guint32 time_ = bevent->time;
+				/* time on sent events seems to be bogus */
+				if (bevent->send_event)
+					time_ = GDK_CURRENT_TIME;
 				/* Start drag */
 				panel_widget_applet_drag_start (
-					panel, widget, PW_DRAG_OFF_CURSOR, bevent->time);
+					panel, widget, PW_DRAG_OFF_CURSOR, time_);
 				return TRUE;
 			}
 
