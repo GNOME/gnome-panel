@@ -2859,7 +2859,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 					 GTK_BUTTONS_OK_CANCEL,
 					 _("When a panel is removed, the panel "
 					   "and its\napplet settings are lost. "
-					   "Remove this panel?"));
+					   "Delete this panel?"));
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
 
@@ -3205,9 +3205,9 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 	 * and then the confirm_panel_remove changed, but oh well */
 	if (panel->applet_list != NULL &&
 	    global_config.confirm_panel_remove)
-		gtk_label_set_text(GTK_LABEL(label), _("Remove this panel..."));
+		gtk_label_set_text(GTK_LABEL(label), _("Delete this panel..."));
 	else
-		gtk_label_set_text(GTK_LABEL(label), _("Remove this panel"));
+		gtk_label_set_text(GTK_LABEL(label), _("Delete this panel"));
 }
 
 static void
@@ -3246,7 +3246,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 
 		setup_menuitem (menuitem, 
 				gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU),
-				_("Remove this panel"));
+				_("Delete this panel"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK (remove_panel_query),
