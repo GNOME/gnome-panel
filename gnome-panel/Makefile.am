@@ -33,7 +33,7 @@ $(CORBA_SRCLIST): gnome-panel.idl
 
 APPLET_LIB = orbit-applet-lib.c
 
-PANEL_ORB_SRCLIST= orbit-glue.c mico-glue.h
+PANEL_ORB_SRCLIST= orbit-glue.c
 
 else
 
@@ -47,7 +47,8 @@ gnome-panel.cc gnome-panel.h: gnome-panel.idl
 
 APPLET_LIB=applet-lib.cc mico-parse.cc mico-parse.h
 
-PANEL_ORB_SRCLIST= mico-glue.cc mico-glue.h mico-parse.cc mico-parse.h
+PANEL_ORB_SRCLIST= mico-glue.cc mico-parse.cc mico-parse.h
+
 endif
 
 libpanel_applet_la_SOURCES = \
@@ -56,6 +57,10 @@ libpanel_applet_la_SOURCES = \
 	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SRCLIST)
+
+EXTRA_libpanel_applet_la_SOURCES = \
+	orbit-applet-lib.c \
+	applet-lib.cc mico-parse.cc mico-parse.h
 
 libpanel_appletinclude_HEADERS = \
 	applet-lib.h \
@@ -110,8 +115,13 @@ panel_SOURCES = 		\
 	gdkextra.h		\
 	cookie.h		\
 	cookie.c		\
+	mico-glue.h		\
 	$(PANEL_ORB_SRCLIST)	\
 	$(CORBA_SRCLIST)
+
+EXTRA_panel_SOURCES = \
+	orbit-glue.c \
+	mico-glue.cc mico-parse.cc mico-parse.h
 
 panel_LDADD = $(GNOME_LIBDIR) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
