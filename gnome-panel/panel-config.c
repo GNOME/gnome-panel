@@ -49,7 +49,7 @@ struct _PerPanelConfig {
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
-	GnomeColorSelector	*backsel;
+	GtkWidget		*backsel;
 };
 
 static GList *ppconfigs=NULL;
@@ -136,11 +136,11 @@ update_config_back(PanelWidget *pw)
 					    TRUE);
 		break;
 	case PANEL_BACK_COLOR:
-		gnome_color_selector_set_color_int(ppc->backsel,
-			pw->back_color.red,
-			pw->back_color.green,
-			pw->back_color.blue,
-			65355);
+		gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
+					   pw->back_color.red,
+					   pw->back_color.green,
+					   pw->back_color.blue,
+					   65535);
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->col),
 					    TRUE);
 		break;
@@ -601,16 +601,13 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 }
 
 static void
-color_changed_cb(GnomeColorSelector *sel, gpointer data)
+color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
 {
- 	int r,g,b;
 	PerPanelConfig *ppc = data;
-
-        gnome_color_selector_get_color_int(sel,&r,&g,&b, 65355);
 
 	ppc->back_color.red = r;
 	ppc->back_color.green = g;
-	ppc->back_color.blue =b;
+	ppc->back_color.blue = b;
 	
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
@@ -752,15 +749,16 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
-	ppc->backsel = gnome_color_selector_new(color_changed_cb, ppc);
-        gnome_color_selector_set_color_int(ppc->backsel,
-		ppc->back_color.red,
-		ppc->back_color.green,
-		ppc->back_color.blue,
-		65355);
+	ppc->backsel = gnome_color_picker_new();
+	gtk_signal_connect(GTK_OBJECT(ppc->backsel),"color_set",
+			   GTK_SIGNAL_FUNC(color_set_cb), ppc);
+        gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
+				   ppc->back_color.red,
+				   ppc->back_color.green,
+				   ppc->back_color.blue,
+				   65535);
 
-	gtk_box_pack_start (GTK_BOX (box),
-			    gnome_color_selector_get_button (ppc->backsel),
+	gtk_box_pack_start (GTK_BOX (box), ppc->backsel,
 			    FALSE, FALSE, CONFIG_PADDING_SIZE);
 
 	gtk_signal_connect (GTK_OBJECT (ppc->non), "toggled", 

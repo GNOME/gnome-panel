@@ -217,13 +217,21 @@ applet_widget_class_init (AppletWidgetClass *class)
 static void
 wapplet_widget_init (AppletWidget *applet_widget)
 {
+	g_return_if_fail(applet_widget != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet_widget));
+
 	applet_widget->applet_id = -1;
 }
 
 static int
 applet_widget_destroy(GtkWidget *w, gpointer data)
 {
-	AppletWidget *applet = APPLET_WIDGET(w);
+	AppletWidget *applet;
+
+	g_return_val_if_fail(w != NULL,FALSE);
+	g_return_val_if_fail(IS_APPLET_WIDGET(w),FALSE);
+
+	applet = APPLET_WIDGET(w);
 	if(!applet->privcfgpath)
 		return FALSE;
 	g_free(applet->privcfgpath);
@@ -248,12 +256,18 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 void
 applet_widget_remove_from_panel(AppletWidget *applet)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_remove_from_panel(applet->applet_id);
 }
 
 void
 applet_widget_sync_config(AppletWidget *applet)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_sync_config(applet->applet_id);
 }
 
@@ -264,6 +278,9 @@ applet_widget_register_callback(AppletWidget *applet,
 				AppletCallbackFunc func,
 				gpointer data)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_register_callback (applet->applet_id,name,
 					      "",menutext,func,data);
 }
@@ -275,6 +292,9 @@ applet_widget_register_stock_callback(AppletWidget *applet,
 				      AppletCallbackFunc func,
 				      gpointer data)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_register_callback (applet->applet_id,name,
 					      stock_type,menutext,func,data);
 }
@@ -283,6 +303,9 @@ void
 applet_widget_unregister_callback(AppletWidget *applet,
 				  char *name)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_unregister_callback (applet->applet_id,name);
 }
 
@@ -291,6 +314,9 @@ applet_widget_register_callback_dir(AppletWidget *applet,
 				    char *name,
 				    char *menutext)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
 						  "",menutext);
 }
@@ -300,6 +326,9 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 					  char *stock_type,
 					  char *menutext)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
 						  stock_type,menutext);
 }
@@ -307,6 +336,9 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 void
 applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	gnome_panel_applet_unregister_callback_dir (applet->applet_id,name);
 }
 
@@ -364,6 +396,11 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 {
 	char *result;
 
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(GTK_IS_WIDGET(widget));
+
 	gtk_container_add(GTK_CONTAINER(applet),widget);
 
 	result = gnome_panel_applet_register(GTK_WIDGET(applet),
@@ -377,12 +414,20 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
 				 GtkWidget *widget,
 				 char *text)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(widget != NULL);
+	g_return_if_fail(GTK_IS_WIDGET(widget));
+
 	gtk_tooltips_set_tip (applet_tooltips,widget,text,NULL);
 }
 
 void
 applet_widget_set_tooltip(AppletWidget *applet, char *text)
 {
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
 	if(text)
 		gnome_panel_applet_add_tooltip (applet->applet_id, text);
 	else
@@ -393,6 +438,9 @@ applet_widget_set_tooltip(AppletWidget *applet, char *text)
 PanelOrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
+	g_return_val_if_fail(applet != NULL,ORIENT_UP);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet),ORIENT_UP);
+
 	return (PanelOrientType)gnome_panel_applet_get_panel_orient (applet->applet_id);
 }
 
