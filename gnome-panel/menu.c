@@ -21,7 +21,6 @@
 #include <limits.h>
 #include <errno.h>
 #include <math.h>
-#include <libgnome/gnome-program.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-config.h>
 
@@ -3335,7 +3334,7 @@ create_applets_menu (GtkWidget *menu, gboolean fake_submenus, gboolean title)
 	char *menudir = gnome_datadir_file ("applets");
 
 	if (menudir == NULL ||
-	    ! g_file_test (menudir, G_FILE_TEST_ISDIR)) {
+	    ! g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
 		g_free (menudir);
 		return NULL;
 	}
@@ -3712,7 +3711,7 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 	char *menudir = gnome_datadir_file ("gnome/apps");
 
 	if (menudir &&
-	    g_file_test (menudir, G_FILE_TEST_ISDIR)) {
+	    g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
 		if(!fake || menu) {
 			menu = create_menu_at (menu, menudir,
 					       FALSE /* applets */,
@@ -5771,9 +5770,9 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gtk_grab_remove(menu->button);
 
 	menu->age = 0;
-	gtk_menu_popup(GTK_MENU(menu->menu), 0, 0, 
-		       applet_menu_position,
-		       menu->info, bevent->button, bevent->time);
+	gtk_menu_shell_popup(GTK_MENU_SHELL(menu->menu), 0, 0, 
+			     applet_menu_position,
+			     menu->info, bevent->button, bevent->time);
 	gdk_event_free((GdkEvent *)bevent);
 }
 

@@ -10,7 +10,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-program.h>
+#include <libgnome/gnome-util.h>
 #include <libgnomeui.h>
 #include "panel-widget.h"
 #include "basep-widget.h"

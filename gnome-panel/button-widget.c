@@ -2,7 +2,7 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-program.h>
+#include <libgnome/gnome-util.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
