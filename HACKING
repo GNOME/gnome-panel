@@ -1,12 +1,19 @@
-Hacking the GNOME 2.0 core
---------------------------
+Hacking on gnome-panel:
+-----------------------
 
-	At the present, not much here works very well and help is
-needed.
+	* Please send patch to desktop-devel-list@gnome.org or to the
+people listed in the MAINTAINERS file.
 
-	If you want to hack on this module - welcome. Before you start
-committing patches though, try to sync up with George, Jacob, myself,
-Glynn and Alex so we know who's working on what.
+	* Don't commit any but the most trivial patches to without
+approval.
 
-			Cheers,
-				Mark McLoughlin (Mon Nov 26, 2001)
+	* Exceptions to this are
+		+ Translators may commit basic i18n related patches to
+		  the build setup.
+		+ Members of the GNOME packaging product may commit
+		  fixes to the .spec files.
+		+ Build sheriff are welcome - in accordance with the
+		  relevant build sheriff constraints. 
+
+	* We are now in API, Feature and Strings freeze. Make sure you
+understand what this means.
