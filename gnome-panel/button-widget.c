@@ -27,14 +27,14 @@ static void button_widget_unmap         (GtkWidget         *widget);
 static void button_widget_real_draw     (GtkWidget         *widget,
 					 GdkRectangle      *area);
 
-static int  button_widget_button_press	(GtkWidget         *widget,
-					 GdkEventButton    *event);
-static int  button_widget_button_release(GtkWidget         *widget,
-					 GdkEventButton    *event);
-static int  button_widget_enter_notify	(GtkWidget         *widget,
-					 GdkEventCrossing  *event);
-static int  button_widget_leave_notify	(GtkWidget         *widget,
-					 GdkEventCrossing  *event);
+static gboolean  button_widget_button_press	(GtkWidget         *widget,
+						 GdkEventButton    *event);
+static gboolean  button_widget_button_release(GtkWidget         *widget,
+					      GdkEventButton    *event);
+static gboolean  button_widget_enter_notify	(GtkWidget         *widget,
+						 GdkEventCrossing  *event);
+static gboolean  button_widget_leave_notify	(GtkWidget         *widget,
+						 GdkEventCrossing  *event);
 static void button_widget_pressed	(ButtonWidget *button);
 static void button_widget_unpressed	(ButtonWidget *button);
 
@@ -363,9 +363,8 @@ loadup_file(char *file)
 {
 	GdkPixbuf *pb = NULL;
 	
-	if(!file) {
+	if(!file)
 		return NULL;
-	}
 
 	if(*file!='/') {
 		char *f;
@@ -742,7 +741,7 @@ pressed_timeout_func(gpointer data)
 	return FALSE;
 }
 
-static int
+static gboolean
 button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
 	ButtonWidget *button;
@@ -765,7 +764,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	return TRUE;
 }
 
-static int
+static gboolean
 button_widget_button_release (GtkWidget *widget, GdkEventButton *event)
 {
 	g_return_val_if_fail (widget != NULL, FALSE);
@@ -781,7 +780,7 @@ button_widget_button_release (GtkWidget *widget, GdkEventButton *event)
 	return TRUE;
 }
 
-static int
+static gboolean
 button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkWidget *event_widget;
@@ -809,7 +808,7 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	return FALSE;
 }
 
-static int
+static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkWidget *event_widget;
@@ -851,6 +850,9 @@ button_widget_clicked(ButtonWidget *button)
 static void
 button_widget_pressed(ButtonWidget *button)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	button->pressed = TRUE;
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
@@ -862,6 +864,9 @@ button_widget_pressed(ButtonWidget *button)
 static void
 button_widget_unpressed(ButtonWidget *button)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	button->pressed = FALSE;
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
@@ -876,6 +881,9 @@ button_widget_unpressed(ButtonWidget *button)
 void
 button_widget_down(ButtonWidget *button)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	if(!button->pressed)
 		gtk_signal_emit(GTK_OBJECT(button),
 				button_widget_signals[PRESSED_SIGNAL]);
@@ -883,6 +891,9 @@ button_widget_down(ButtonWidget *button)
 void
 button_widget_up(ButtonWidget *button)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	if(button->pressed)
 		gtk_signal_emit(GTK_OBJECT(button),
 				button_widget_signals[UNPRESSED_SIGNAL]);
@@ -933,9 +944,12 @@ button_widget_new(char *filename,
 	return GTK_WIDGET(button);
 }
 
-int
+gboolean
 button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 {
+	g_return_val_if_fail(button != NULL, FALSE);
+	g_return_val_if_fail(IS_BUTTON_WIDGET(button), FALSE);
+
 	if(size<0)
 		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
 	
@@ -960,6 +974,9 @@ button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 void
 button_widget_set_text(ButtonWidget *button, char *text)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	g_free(button->text);
 	button->text = text?g_strdup(text):NULL;
 
@@ -977,6 +994,9 @@ button_widget_set_params(ButtonWidget *button,
 			 guint arrow,
 			 PanelOrientType orient)
 {
+	g_return_if_fail(button != NULL);
+	g_return_if_fail(IS_BUTTON_WIDGET(button));
+
 	button->tile = tile;
 	button->arrow = arrow;
 	button->orient = orient;

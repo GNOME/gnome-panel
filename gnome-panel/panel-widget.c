@@ -1100,6 +1100,8 @@ panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(GTK_IS_WIDGET(button));
+	g_return_if_fail(panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	
 #ifdef PANEL_DEBUG
 	puts("PANEL_WIDGET_DRAW_ICON");

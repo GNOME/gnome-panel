@@ -77,7 +77,7 @@ void		button_widget_draw		(ButtonWidget *button,
 void		button_widget_draw_xlib		(ButtonWidget *button,
 						 GdkPixmap *pixmap);
 
-int		button_widget_set_pixmap	(ButtonWidget *button,
+gboolean	button_widget_set_pixmap	(ButtonWidget *button,
 						 char *pixmap,
 						 int size);
 
