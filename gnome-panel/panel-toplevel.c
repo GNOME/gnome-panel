@@ -2804,8 +2804,12 @@ static gboolean
 panel_toplevel_motion_notify_event (GtkWidget      *widget,
 				    GdkEventMotion *event)
 {
-	return panel_toplevel_handle_grab_op_motion_event (
+	if (gdk_event_get_screen ((GdkEvent *)event) == 
+	    gtk_window_get_screen (GTK_WINDOW (widget)))
+		return panel_toplevel_handle_grab_op_motion_event (
 				PANEL_TOPLEVEL (widget), event);
+	else
+		return FALSE;
 }
 
 static gboolean
