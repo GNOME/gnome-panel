@@ -30,7 +30,7 @@ static DistributionInfo distribution_info [] = {
 	},
 	{ DISTRIBUTION_SUSE, "/etc/SuSE-release",
 	  N_("SuSE Linux"), N_("SuSE Menu"),
-	  PANEL_STOCK_CDE, "gnome/distribution-menus/SuSE/.",
+	  PANEL_STOCK_CDE, "/etc/opt/gnome/SuSE/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
