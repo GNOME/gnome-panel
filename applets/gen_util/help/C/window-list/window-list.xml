@@ -1,0 +1,296 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "March 2002">
+  <!ENTITY applet "Window List">
+  <!-- Information about the entities.
+       The legal.xml file contains legal information, there is no need to edit the file. 
+       Use the appletversion entity to specify the version of the applet.
+       Use the manrevision entity to specify the revision number of this manual.
+       Use the date entity to specify the release date of this manual.
+       Use the applet entity to specify the name of the applet. -->
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="en">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>&applet; Applet Manual V&manrevision;</title> 
+	 <copyright> 
+		<year>2002</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME Documentation Project </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address> 
+		  </affiliation> 
+		</author> 
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Tasklist Applet Manual</revnumber> 
+		  <date>2001</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> This manual describes version &appletversion; of &applet;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Feedback</title> 
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this
+		  manual, follow the directions in the 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Window List</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction"> 
+	 <title>Introduction</title> 
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowlist-applet-fig"> 
+		<title>&applet; Applet</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/window_list_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Screenshot of the Window List applet.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    	<!-- ==== End of Figure ======================================= -->
+	 <para>The <application>&applet;</application> applet enables you to manage the windows
+	 that are open on the GNOME desktop. <application>&applet;</application> uses a button
+	 to represent each window or group of windows that is open. The state of the buttons in the 
+	 applet varies depending on the state of the window that the button represents. The following 
+	 table explains the possible states of the <application>&applet;</application> buttons:</para>
+	<informaltable>
+	<tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	<row>
+	<entry colname="col1"><para>State</para></entry>
+	<entry colname="col2"><para>Indicates...</para></entry>
+	<entry colname="col3"><para>Example in <xref linkend="windowlist-applet-fig"/></para></entry>
+	</row>
+	</thead>
+	<tbody>
+	<row>
+	<entry colname="col1"><para>Button is pressed in.</para></entry>
+	<entry colname="col2"><para>The window has focus.</para></entry>
+	<entry colname="col3"><para><application>Terminal</application></para></entry>
+	</row>
+	<row>
+	<entry colname="col1"><para>Square brackets around window title, button contents faded.</para></entry>
+	<entry colname="col2"><para>The window is minimized.</para></entry>
+	<entry colname="col3"><para><application>Netscape</application></para></entry>
+	</row> 
+	<row>
+	<entry colname="col1"><para>Button is not pressed in, no square brackets around title.</para></entry>
+	<entry colname="col2"><para>The window is displayed on the desktop and is not minimized.</para></entry>
+	<entry colname="col3"><para><application>GNOME Calculator</application></para></entry>
+	</row>
+	<row>
+	<entry colname="col1"><para>Dotted triangular shape in upper right corner of button.</para></entry>
+	<entry colname="col2"><para>The button represents a group of buttons. </para></entry>
+	<entry colname="col3"><para>Untitled application</para></entry>
+	</row>
+	</tbody>
+	</tgroup>
+	</informaltable>
+	 <para>To add <application>&applet;</application> to a panel, right-click on the panel to open the 
+		<guimenu>Panel</guimenu> menu, then choose 
+		<menuchoice> 
+		  <guimenu>Add to panel</guimenu> 
+		  <guisubmenu>Utility</guisubmenu> 
+		  <guimenuitem>Window List</guimenuitem> 
+		</menuchoice>. 
+	The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
+	<sect2 id="window-groups">
+	<title>Grouping Buttons</title>
+	<para>If the space on a panel is limited, <application>&applet;</application> can group the 
+	buttons that represent windows of the same class under one <application>&applet;</application> 
+	button. To open a list of the buttons in a button group, click on the 
+	<application>&applet;</application> button that represents the button group. The 
+	<guibutton>untitled application</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
+	is an example of a button that represents a group of buttons.
+	The following figure shows an example of the <application>&applet;</application> applet with a button group open.</para> 
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowgroup-open-fig"> 
+		<title>&applet; Applet with a Button Group Open</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/window_list_group.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Screenshot of the Window List applet with a button group open.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+ 
+	</sect2>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage"> 
+	 <title>Usage</title> 
+	 <para>You can use <application>&applet;</application> to perform the following tasks:</para>
+	<itemizedlist>
+	<listitem>
+	<para>To give focus to a window</para>
+	<para>If you click on the <application>&applet;</application> button that represents a window that is displayed on the desktop but 
+	does not have focus, the applet gives focus to the window. </para>
+	</listitem>
+	<listitem>
+	<para>To minimize a window</para>
+	<para>If you click on the <application>&applet;</application> button that represents the window that has focus, the applet 
+	minimizes the window. </para>
+	</listitem>
+	<listitem>
+	<para>To restore a minimized window</para>
+	<para>If you click on the <application>&applet;</application> button that represents a minimized window, 
+	the applet restores the window.</para>
+	</listitem>
+	</itemizedlist>
+  </sect1>
+<!-- ============= Customization ============================= -->
+  <sect1 id="windowlist-prefs"> 
+	 <title>Settings</title> 
+	 <para>To configure the <application>&applet;</application> applet, right-click 
+	 on the applet, then choose <guimenuitem>Properties</guimenuitem> 
+	 from the applet popup menu. The <guilabel>Window List Properties</guilabel> dialog is displayed.</para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Window List content</guilabel> </term>
+	 <listitem>
+	 <para>To specify which windows to display in the <application>&applet;</application> applet, select one of the following options: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Show windows from current workspace</guilabel></para>
+	 	<para>Select this option to only show the windows that are open in the current workspace.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Show windows from all workspaces</guilabel></para>
+	 	<para>Select this option to show the windows that are open in all workspaces.</para>
+	 	</listitem>
+	 	</itemizedlist>
+	 <para>Default: <guilabel>Show windows from current workspace</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>When restoring minimized windows</guilabel> </term>
+	 <listitem>
+	 <para>To define how the applet behaves when you restore windows, select one of the following options: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Restore to current workspace</guilabel></para>
+	 	<para>Select this option to restore a window from the applet to the current workspace, even if the 
+	 	window did not previously reside in the current workspace.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Restore to native workspace</guilabel></para>
+	 	<para>Select this option to switch to the native workspace in which a window resides when you restore the window
+	 	from the applet. </para>
+	 	</listitem>
+	 	</itemizedlist>
+
+	 <para>Default: <guilabel>Restore to current workspace</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Window grouping</guilabel> </term>
+	 <listitem>
+	 <para>To specify when <application>&applet;</application> groups windows of the same class, select one of the following options: </para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Never group windows</guilabel></para>
+	 	<para>Select this option to never group windows of the same class under one <application>&applet;</application> button.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Group windows when space is limited</guilabel></para>
+	 	<para>Select this option to group windows of the same class under one <application>&applet;</application> button when
+	 	the space on the panel is restricted.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Always group windows</guilabel></para>
+	 	<para>Select this option to always group windows of the same class under one <application>&applet;</application> button.</para>
+		</listitem>
+		</itemizedlist>
+	 <para>Default: <guilabel>Group windows when space is limited</guilabel>.</para>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article> 

@@ -1,3 +1,3 @@
-SUBDIRS = pager tasklist clock mailcheck
+SUBDIRS = workspace-switcher window-list clock mailcheck
 
 
