@@ -28,7 +28,7 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
-bin_PROGRAMS = gnome-panel-2
+bin_PROGRAMS = gnome-panel-2 gnome-panel-properties
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -168,11 +168,18 @@ gnome_panel_2_LDADD =		\
 
 gnome_panel_2_LDFLAGS = -export-dynamic
 
+gnome_panel_properties_SOURCES = gnome-panel-properties.c
+
+gnome_panel_properties_LDADD = $(PANELCONFIG_LIBS)           
+
 EXTRA_DIST =					\
 	APPLET_WRITING				\
 	GNOME_Panel.server.in			\
 	panel.hints				\
 	gnome-panel-properties.desktop		\
+	gnome-panel-properties			\
+	gnome-panel-properties.glade2		\
+	gnome-panel-properties.glade.h		\
 	nothing.cP				\
 	title-item.gob				\
 	gnome-panel-screenshot.glade		\
@@ -181,7 +188,14 @@ EXTRA_DIST =					\
 	panel-marshal.list
 
 gladedir = $(datadir)/gnome/panel
-glade_DATA =gnome-panel-screenshot.glade
+glade_DATA =gnome-panel-properties.glade2
+glade_src = gnome-panel-properties.glade
+glade_msgs = gnome-panel-properties.glade.h
+
+gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
+	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-properties.glade > gnome-panel-properties.glade.tmp \
+	&& mv gnome-panel-properties.glade.tmp gnome-panel-properties.glade2
+
 
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
