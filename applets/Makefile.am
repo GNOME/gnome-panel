@@ -8,6 +8,10 @@ else
 libgtop_SUBDIRS =
 endif
 
+if HAVE_LIBGHTTP
+bussign = bussign
+endif
+
 if APPLET_CDPLAYER
 cdplayer = cdplayer
 endif
@@ -26,7 +30,8 @@ winlist = winlist
 endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
-	 $(cdplayer) $(mixer) $(modemlights) $(winlist)
+	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
+         $(bussign)
 
 #sometimes_built_SUBDIRS = cdplayer mixer modemlights winlist
 #DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
