@@ -63,6 +63,9 @@ typedef struct {
 	GtkWidget     *opacity_label;
 	GtkWidget     *opacity_legend;
 
+	GtkWidget     *writability_warn_general;
+	GtkWidget     *writability_warn_background;
+
 	guint          toplevel_notify;
 	guint          background_notify;
 } PanelPropertiesDialog;
@@ -117,9 +120,9 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 	char *name;
 
 	dialog->name_entry = glade_xml_get_widget (gui, "name_entry");
-	g_assert (dialog->name_entry != NULL);
+	g_return_if_fail (dialog->name_entry != NULL);
 	dialog->name_label = glade_xml_get_widget (gui, "name_label");
-	g_assert (dialog->name_label != NULL);
+	g_return_if_fail (dialog->name_label != NULL);
 
 	name = get_name (dialog->toplevel);
 	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
@@ -131,6 +134,7 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 	if ( ! panel_profile_is_writable_toplevel_name (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->name_entry, FALSE);
 		gtk_widget_set_sensitive (dialog->name_label, FALSE);
+		gtk_widget_show (dialog->writability_warn_general);
 	}
 }
 
@@ -199,9 +203,9 @@ panel_properties_dialog_setup_orientation_menu (PanelPropertiesDialog *dialog,
 	PanelOrientation orientation;
 
 	dialog->orientation_menu = glade_xml_get_widget (gui, "orientation_menu");
-	g_assert (dialog->orientation_menu != NULL);
+	g_return_if_fail (dialog->orientation_menu != NULL);
 	dialog->orientation_label = glade_xml_get_widget (gui, "orientation_label");
-	g_assert (dialog->orientation_label != NULL);
+	g_return_if_fail (dialog->orientation_label != NULL);
 
 	orientation = panel_profile_get_toplevel_orientation (dialog->toplevel);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->orientation_menu),
@@ -214,6 +218,7 @@ panel_properties_dialog_setup_orientation_menu (PanelPropertiesDialog *dialog,
 	if ( ! panel_profile_is_writable_toplevel_orientation (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->orientation_menu, FALSE);
 		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
+		gtk_widget_show (dialog->writability_warn_general);
 	}
 }
 
@@ -230,11 +235,11 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					 GladeXML              *gui)
 {
 	dialog->size_spin = glade_xml_get_widget (gui, "size_spin");
-	g_assert (dialog->size_spin != NULL);
+	g_return_if_fail (dialog->size_spin != NULL);
 	dialog->size_label = glade_xml_get_widget (gui, "size_label");
-	g_assert (dialog->size_label != NULL);
+	g_return_if_fail (dialog->size_label != NULL);
 	dialog->size_label_pixels = glade_xml_get_widget (gui, "size_label_pixels");
-	g_assert (dialog->size_label_pixels != NULL);
+	g_return_if_fail (dialog->size_label_pixels != NULL);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_profile_get_toplevel_size (dialog->toplevel));
@@ -247,9 +252,12 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 		gtk_widget_set_sensitive (dialog->size_spin, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label_pixels, FALSE);
+		gtk_widget_show (dialog->writability_warn_general);
 	}
 }
 
+/* Note: this is only for toggle buttons on the general page, if needed for togglebuttons
+   elsewhere you must make this respect the writability warning thing for the right page */
 #define SETUP_TOGGLE_BUTTON(wid, n, p)                                                            \
 	static void                                                                               \
 	panel_properties_dialog_##n (PanelPropertiesDialog *dialog,                               \
@@ -267,8 +275,10 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					      panel_profile_get_toplevel_##p (dialog->toplevel)); \
 		g_signal_connect_swapped (dialog->n, "toggled",                                   \
 					  G_CALLBACK (panel_properties_dialog_##n), dialog);      \
-		if ( ! panel_profile_is_writable_toplevel_##p (dialog->toplevel))                 \
+		if ( ! panel_profile_is_writable_toplevel_##p (dialog->toplevel)) {               \
 			gtk_widget_set_sensitive (dialog->n, FALSE);                              \
+			gtk_widget_show (dialog->writability_warn_general);			  \
+		}										  \
 	}
 
 SETUP_TOGGLE_BUTTON ("expand_toggle",      expand_toggle,      expand)
@@ -298,9 +308,9 @@ panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
 	PanelColor color;
 
 	dialog->color_picker = glade_xml_get_widget (gui, "color_picker");
-	g_assert (dialog->color_picker != NULL);
+	g_return_if_fail (dialog->color_picker != NULL);
 	dialog->color_label = glade_xml_get_widget (gui, "color_label");
-	g_assert (dialog->color_label != NULL);
+	g_return_if_fail (dialog->color_label != NULL);
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
@@ -317,6 +327,7 @@ panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
 	if ( ! panel_profile_is_writable_background_color (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->color_picker, FALSE);
 		gtk_widget_set_sensitive (dialog->color_label, FALSE);
+		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
 
@@ -355,6 +366,7 @@ panel_properties_dialog_setup_image_entry (PanelPropertiesDialog *dialog,
 
 	if ( ! panel_profile_is_writable_background_image (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->image_entry, FALSE);
+		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
 
@@ -379,11 +391,11 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 	gdouble percentage;
 
 	dialog->opacity_scale = glade_xml_get_widget (gui, "opacity_scale");
-	g_assert (dialog->opacity_scale != NULL);
+	g_return_if_fail (dialog->opacity_scale != NULL);
 	dialog->opacity_label = glade_xml_get_widget (gui, "opacity_label");
-	g_assert (dialog->opacity_label != NULL);
+	g_return_if_fail (dialog->opacity_label != NULL);
 	dialog->opacity_legend = glade_xml_get_widget (gui, "opacity_legend");
-	g_assert (dialog->opacity_legend != NULL);
+	g_return_if_fail (dialog->opacity_legend != NULL);
 
 	opacity = panel_profile_get_background_opacity (dialog->toplevel);
 
@@ -399,6 +411,7 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 		gtk_widget_set_sensitive (dialog->opacity_scale, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_label, FALSE);
 		gtk_widget_set_sensitive (dialog->opacity_legend, FALSE);
+		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
 
@@ -482,6 +495,7 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 		gtk_widget_set_sensitive (dialog->default_radio, FALSE);
 		gtk_widget_set_sensitive (dialog->color_radio, FALSE);
 		gtk_widget_set_sensitive (dialog->image_radio, FALSE);
+		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
 
@@ -722,6 +736,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
+
+	dialog->writability_warn_general = glade_xml_get_widget (gui, "writability_warn_general");
+	dialog->writability_warn_background = glade_xml_get_widget (gui, "writability_warn_background");
 
 	panel_properties_dialog_setup_name_entry         (dialog, gui);
 	panel_properties_dialog_setup_orientation_menu   (dialog, gui);

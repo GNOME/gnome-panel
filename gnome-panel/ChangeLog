@@ -1,3 +1,14 @@
+Mon Jul 14 10:22:39 2003  George Lebl <jirka@5z.com>
+
+	* panel-properties-dialog.(c|glade): Add warning label if some of the
+	  properties are locked down so that the user isn't just baffled that
+	  they are insensitive, also change the g_asserts that I added into
+	  g_return_if_fails which are less anal
+
+	* applet.c: if say the background property is not locked down, the
+	  panel_right_stick and position properties of an applet can still
+	  change, so check for writability of those before writing them
+
 2003-07-14  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.c: (panel_applet_frame_change_size):

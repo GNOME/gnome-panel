@@ -934,10 +934,16 @@ panel_applet_save_position (AppletInfo *applet_info,
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 	g_free (old_toplevel_id);
 
+	/* Note: changing some properties of the panel that may not be locked down
+	   (e.g. background) can change the state of the "panel_right_stick" and
+	   "position" properties of an applet that may in fact be locked down.
+	   So check if these are writable before attempting to write them */
+
 	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
 	key = panel_gconf_full_key (
 			key_type, profile, id, "panel_right_stick");
-	if (gconf_client_get_bool (client, key, NULL) ? 1 : 0 != right_stick)
+	if (gconf_client_key_is_writable (client, key, NULL) &&
+	    (gconf_client_get_bool (client, key, NULL) ? 1 : 0) != right_stick)
 		gconf_client_set_bool (client, key, right_stick, NULL);
 
 	position = panel_applet_get_position (applet_info);
@@ -945,7 +951,8 @@ panel_applet_save_position (AppletInfo *applet_info,
 		position = panel_widget->size - position;
 
 	key = panel_gconf_full_key (key_type, profile, id, "position");
-	if (gconf_client_get_int (client, key, NULL) != position)
+	if (gconf_client_key_is_writable (client, key, NULL) &&
+	    gconf_client_get_int (client, key, NULL) != position)
 		gconf_client_set_int (client, key, position, NULL);
 	
 	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
