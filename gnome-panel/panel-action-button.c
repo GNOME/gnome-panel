@@ -402,7 +402,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass,
 			gobject_class,
 			PROP_DND_ENABLED,
 			g_param_spec_boolean ("dnd-enabled",
-					      _("Drag N' Drop enabled"),
+					      _("Drag and drop enabled"),
 					      _("Whether or not drag and drop is enabled on the widget"),
 					      TRUE,
 					      G_PARAM_READWRITE));

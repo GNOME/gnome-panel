@@ -464,7 +464,7 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass,
 			gobject_class,
 			PROP_DND_ENABLED,
                         g_param_spec_boolean ("dnd-enabled",
-					      _("Drag N' Drop enabled"),
+					      _("Drag and drop enabled"),
 					      _("Whether or not drag and drop is enabled on the widget"),
 					      FALSE,
 					      G_PARAM_READWRITE));
