@@ -183,7 +183,10 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-	g_return_if_fail (applet->priv->prefs_key != NULL);
+	g_return_if_fail (schema_dir != NULL);
+
+	if (!applet->priv->prefs_key)
+		return;
 
 	if (opt_error)
 		error = opt_error;

@@ -24,6 +24,20 @@ static GtkWidget *orient_options = NULL;
 static GtkWidget *size_options = NULL;
 static GPtrArray *applet_iids = NULL;
 
+static char *cli_iid = NULL;
+static char *cli_prefs_dir = NULL;
+static char *cli_size = NULL;
+static char *cli_orient = NULL;
+
+static const struct poptOption options [] = {
+	{ "iid", '\0', POPT_ARG_STRING, &cli_iid, 0, N_("Specify an applet IID to load"), NULL},
+	{ "prefs-dir", '\0', POPT_ARG_STRING, &cli_prefs_dir, 0, N_("Specify a gconf location in which the applet preferences should be stored"), NULL},
+	{ "size", '\0', POPT_ARG_STRING, &cli_size, 0, N_("Specify the initial size of the applet (xx-small, medium, large etc.)"), NULL},
+	POPT_AUTOHELP
+	{ "orient", '\0', POPT_ARG_STRING, &cli_orient, 0, N_("Specify the initial orientation of the applet (top, bottom, left or right)"), NULL},
+	{NULL, '\0', 0, NULL, 0}
+};
+
 static char *sizes [] = {
 	"xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"
 };
@@ -59,27 +73,67 @@ construct_moniker (void)
 				iid, prefs_key, size, orient);
 }
 
-G_GNUC_UNUSED void
-on_ok_button_clicked (GtkButton *button,
-		      gpointer   dummy)
+static void
+load_applet_into_window (const char *moniker)
 {
 	GtkWidget *applet_window;
 	GtkWidget *applet;
-	char      *moniker;
 
 	applet_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 	g_signal_connect (G_OBJECT (applet_window), "destroy",
 			  G_CALLBACK (gtk_main_quit), NULL);
 
-	moniker = construct_moniker ();
 	applet = bonobo_widget_new_control (moniker, NULL);
-	g_free (moniker);
 
 	gtk_widget_show (applet);
 
 	gtk_container_add (GTK_CONTAINER (applet_window), applet);
 
 	gtk_widget_show (applet_window);
+}
+
+static void
+load_applet_from_command_line (void)
+{
+	GString *str;
+
+	g_assert (cli_iid != NULL);
+
+	str = g_string_new (cli_iid);
+
+	if (cli_prefs_dir || cli_size || cli_orient) {
+		g_string_append_c (str, '!');
+
+		if (cli_prefs_dir)
+			g_string_append_printf (str, "prefs_key=%s", cli_prefs_dir);
+
+		g_string_append_c (str, ';');
+
+		if (cli_size)
+			g_string_append_printf (str, "size=%s", cli_size);
+
+		g_string_append_c (str, ';');
+
+		if (cli_orient)
+			g_string_append_printf (str, "orient=%s", cli_orient);
+	}
+	
+	g_print ("Loading %s\n", str->str);
+
+	load_applet_into_window (str->str);
+
+	g_string_free (str, TRUE);
+}
+
+G_GNUC_UNUSED void
+on_ok_button_clicked (GtkButton *button,
+		      gpointer   dummy)
+{
+	char *moniker;
+
+	moniker = construct_moniker ();
+	load_applet_into_window (moniker);
+	g_free (moniker);
 }
 
 static void
@@ -139,7 +193,15 @@ main (int argc, char **argv)
 	char      *gladefile;
 
 	gnome_program_init (argv [0], "0.0.0.0", LIBGNOMEUI_MODULE,
-			    argc, argv, GNOME_PARAM_NONE);
+			    argc, argv,
+			    GNOME_PARAM_POPT_TABLE, options,
+			    GNOME_PARAM_NONE);
+
+	if (cli_iid) {
+		load_applet_from_command_line ();
+		gtk_main ();
+		return 0;
+	}
 
 	gladefile = PANEL_APPLET_GLADEDIR "/panel-test-applets.glade";
 	gui = glade_xml_new (gladefile, "toplevel", NULL);

@@ -1,3 +1,14 @@
+2003-01-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c: (panel_applet_add_preferences): allow
+	prefs_key to be NULL.
+
+	* panel-test-applets.c:
+	(load_applet_into_window), (load_applet_from_command_line),
+	(on_ok_button_clicked), (main): impl allowing the choosing
+	of applet, size, orientation and prefs_key from the command
+	line. Fixes #96416.
+
 2002-12-06  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* panel-applet.c: (panel_applet_finalize):
