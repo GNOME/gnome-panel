@@ -191,6 +191,9 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 			gdk_window_get_origin (ppanel->window, &px, &py);
 			gdk_window_get_size (ppanel->window, &pw, &ph);
 
+			/*FIXME: THE +/- 2 is a HACK!, the border of a frame
+			  could be different ... we'd better figure out the
+			  GoodSolution(tm) for this*/
 			switch(drawer->orient) {
 			case ORIENT_UP:
 				*x = bx+(bw-width)/2;
