@@ -319,9 +319,17 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 }
 
 static void
-button_widget_theme_changed (ButtonWidget *button)
+button_widget_icon_theme_changed (ButtonWidget *button)
 {
-	button_widget_reload_pixbuf (button);
+	if (!button->stock_id)
+		button_widget_reload_pixbuf (button);
+}
+
+static void
+button_widget_gtk_theme_changed (ButtonWidget *button)
+{
+	if (button->stock_id)
+		button_widget_reload_pixbuf (button);
 }
 
 static void
@@ -818,7 +826,10 @@ button_widget_instance_init (ButtonWidget *button)
 
 	panel_signal_connect_object_while_alive (
 			panel_icon_theme, "changed",
-			G_CALLBACK (button_widget_theme_changed), button);
+			G_CALLBACK (button_widget_icon_theme_changed), button);
+
+	g_signal_connect (button, "style-set", 
+			  G_CALLBACK (button_widget_gtk_theme_changed), button);
 }
 
 static void
