@@ -238,10 +238,11 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 	Pixmap	*prop_data = NULL;
 	GdkAtom	 prop_type;
 
-	gdk_property_get (
+	if (!gdk_property_get (
 		monitor->gdkwindow, monitor->gdkatom,
 		gdk_x11_xatom_to_atom (XA_PIXMAP), 0, 10, 
-		FALSE, &prop_type, NULL, NULL, (gpointer) &prop_data);
+		FALSE, &prop_type, NULL, NULL, (gpointer) &prop_data))
+		return;
 
 	if ((prop_type == GDK_TARGET_PIXMAP) && prop_data && prop_data [0]) {
 		g_assert (monitor->gdkpixmap == NULL);
