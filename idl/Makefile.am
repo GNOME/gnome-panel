@@ -1,7 +1,7 @@
 idldir = $(datadir)/idl
 
 idl_DATA = 			\
-	gnome-panel.idl 	\
+	GNOME_Panel.idl 	\
 	GNOME_Desktop.idl	\
 	help-browser.idl	\
 	Terminal.idl
