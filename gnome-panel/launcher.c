@@ -125,11 +125,11 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 
 	location = gnome_desktop_item_get_location (ditem);
 	if (!location) {
-		char *path;
+		char *uri;
 
-		path = panel_make_unique_path (NULL, ".desktop");
-		gnome_desktop_item_set_location (ditem, path);
-		g_free (path);
+		uri = panel_make_unique_uri (NULL, ".desktop");
+		gnome_desktop_item_set_location (ditem, uri);
+		g_free (uri);
 	}
 
 	gnome_desktop_item_save (ditem, NULL, TRUE, &error);
@@ -1143,7 +1143,7 @@ panel_launcher_create_copy (PanelToplevel *toplevel,
 	char        *new_location;
 	const char  *filename;
 
-	new_location = panel_make_unique_path (NULL, ".desktop");
+	new_location = panel_make_unique_uri (NULL, ".desktop");
 	
 	source_uri = gnome_vfs_uri_new (location);
 	dest_uri   = gnome_vfs_uri_new (new_location);
