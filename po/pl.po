@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-21 20:23+0200\n"
+"POT-Creation-Date: 2004-06-23 19:27+0200\n"
 "PO-Revision-Date: 2003-09-10 21:43+0100\n"
 "Last-Translator: Gnome PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -47,7 +47,7 @@ msgstr "_Informacje o"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3020
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:2452
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -243,7 +243,7 @@ msgstr "Czas _UTC"
 #: applets/clock/clock.c:2446 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
-#: gnome-panel/menu.c:283
+#: gnome-panel/menu.c:206
 msgid "translator_credits"
 msgstr "GNOME PL Team <translators@gnome.pl>"
 
@@ -616,8 +616,6 @@ msgid "Panel Notification Area"
 msgstr "Obszar powiadamiania Panelu GNOME"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
-#: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
 #: gnome-panel/panel-menu-bar.c:208
 msgid "Actions"
 msgstr "Operacje"
@@ -1029,12 +1027,13 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3129
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
+#: gnome-panel/panel-addto.c:212
 msgid "Drawer"
 msgstr "Szuflada"
 
-#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1458
-#: gnome-panel/menu.c:2970 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1381
+#: gnome-panel/menu.c:2402 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Właściwości"
 
@@ -1312,7 +1311,7 @@ msgstr "Określa nazwę wczytywanego profilu"
 msgid "Cannot save changes to launcher"
 msgstr "Nie można zapisać zmian aktywatora"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1280
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1203
 msgid "Menu"
 msgstr "Menu"
 
@@ -1329,70 +1328,15 @@ msgstr ""
 "Nie można utworzyć w tym miejscu nowego aktywatora, ponieważ nie jest ono "
 "zapisywalne."
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3171
-#: gnome-panel/panel-menu-bar.c:200
-msgid "Log Out"
-msgstr "Koniec pracy"
-
-#: gnome-panel/menu.c:114 gnome-panel/menu.c:3178
-msgid ""
-"Log out of this session to log in as a different user or to shut down the "
-"computer"
-msgstr ""
-"Kończy bieżącą sesję, pozwalając na zalogowanie się innemu użytkownikowi lub "
-"na wyłączenie komputera"
-
-#: gnome-panel/menu.c:121
-msgid "Lock"
-msgstr "Zablokuj"
-
-#: gnome-panel/menu.c:124
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr "Zabezpiecza ekran, pozwalając na chwilowe odejście od komputera."
-
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
-msgid "Force Quit"
-msgstr "Wymuś zamknięcie"
-
-#: gnome-panel/menu.c:134
-msgid "Force a misbehaving application to quit"
-msgstr "Wymusza zakończenie źle działającej aplikacji"
-
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
-msgid "Screenshot"
-msgstr "Zapisz zrzut ekranu"
-
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3346
-#: gnome-panel/panel-menu-bar.c:170
-msgid "Take a screenshot of your desktop"
-msgstr "Pobiera zrzut aktualnego stanu ekranu"
-
-#: gnome-panel/menu.c:151
-msgid "Search"
-msgstr "Znajdź"
-
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3327
-#: gnome-panel/panel-menu-bar.c:154
-msgid "Find files, folders, and documents on your computer"
-msgstr "Wyszukuje na komputerze pliki, foldery i dokumenty"
-
-#: gnome-panel/menu.c:161
-msgid "Run"
-msgstr "Uruchom"
-
-#: gnome-panel/menu.c:164
-msgid "Run a command"
-msgstr "Wykonuje polecenie"
-
-#: gnome-panel/menu.c:273
+#: gnome-panel/menu.c:196
 msgid "And many, many others..."
 msgstr "I wielu, wielu innych..."
 
-#: gnome-panel/menu.c:296
+#: gnome-panel/menu.c:219
 msgid "The GNOME Panel"
 msgstr "Panel GNOME"
 
-#: gnome-panel/menu.c:299
+#: gnome-panel/menu.c:222
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1400,152 +1344,157 @@ msgstr ""
 "Program ten jest odpowiedzialny za uruchamianie innych aplikacji, "
 "zagnieżdżanie w sobie małych apletów."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/menu.c:251 gnome-panel/panel-action-button.c:200
 #: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nie można uruchomić \"%s\""
 
-#: gnome-panel/menu.c:329
+#: gnome-panel/menu.c:252
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: gnome-panel/menu.c:330
+#: gnome-panel/menu.c:253
 msgid "About GNOME"
 msgstr "Informacje o GNOME"
 
-#: gnome-panel/menu.c:354
+#: gnome-panel/menu.c:277
 msgid "Cannot launch entry"
 msgstr "Nie można uruchomić pozycji"
 
-#: gnome-panel/menu.c:366
+#: gnome-panel/menu.c:289
 msgid "Cannot load entry"
 msgstr "Nie można wczytać pozycji"
 
-#: gnome-panel/menu.c:1073
+#: gnome-panel/menu.c:996
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "Nie można usunąć elementu menu %s"
 
-#: gnome-panel/menu.c:1084
+#: gnome-panel/menu.c:1007
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Nie można pobrać nazwy pliku ze ścieżki: %s"
 
-#: gnome-panel/menu.c:1091
+#: gnome-panel/menu.c:1014
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Nie można pobrać nazwy katalogu ze ścieżki: %s"
 
-#: gnome-panel/menu.c:1275 gnome-panel/menu.c:3110
+#: gnome-panel/menu.c:1198 gnome-panel/panel-addto.c:190
 msgid "Main Menu"
 msgstr "Menu główne"
 
-#: gnome-panel/menu.c:1422
+#: gnome-panel/menu.c:1345
 msgid "Add this launcher to panel"
 msgstr "Dodaj aktywator do panelu"
 
-#: gnome-panel/menu.c:1431
+#: gnome-panel/menu.c:1354
 msgid "Remove this item"
 msgstr "Usuń ten element"
 
-#: gnome-panel/menu.c:1480
+#: gnome-panel/menu.c:1403
 msgid "Entire menu"
 msgstr "Całe menu"
 
-#: gnome-panel/menu.c:1488
+#: gnome-panel/menu.c:1411
 msgid "Add this as drawer to panel"
 msgstr "Dodaj tę szufladę do panelu"
 
-#: gnome-panel/menu.c:1499
+#: gnome-panel/menu.c:1422
 msgid "Add this as menu to panel"
 msgstr "Dodaj to menu do panelu"
 
-#: gnome-panel/menu.c:1511
+#: gnome-panel/menu.c:1434
 msgid "Add new item to this menu"
 msgstr "Dodaj nowy element do menu"
 
-#: gnome-panel/menu.c:1538
+#: gnome-panel/menu.c:1461
 msgid "Properties"
 msgstr "Właściwości"
 
-#: gnome-panel/menu.c:2510 gnome-panel/menu.c:2565
-#: libpanel-applet/panel-test-applets.c:156
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "zapytanie zwróciło wyjątek %s\n"
-
-#: gnome-panel/menu.c:2782 gnome-panel/menu.c:2787 gnome-panel/menu.c:3288
+#: gnome-panel/menu.c:2220 gnome-panel/menu.c:2225 gnome-panel/menu.c:2640
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Aplikacje"
 
-#: gnome-panel/menu.c:2857
+#: gnome-panel/menu.c:2295
 msgid "You cannot remove your last panel."
 msgstr "Nie można usunąć ostatniego panelu."
 
-#: gnome-panel/menu.c:2917
+#: gnome-panel/menu.c:2355
 msgid "_Delete This Panel..."
 msgstr "_Usuń ten panel..."
 
-#: gnome-panel/menu.c:2920 gnome-panel/menu.c:2955
+#: gnome-panel/menu.c:2358 gnome-panel/menu.c:2387
 msgid "_Delete This Panel"
 msgstr "_Usuń ten panel"
 
-#: gnome-panel/menu.c:2934
-msgid "_Add to Panel"
-msgstr "_Dodaj do panelu"
+#: gnome-panel/menu.c:2371
+msgid "_Add to Panel..."
+msgstr "_Dodaj do panelu..."
 
-#: gnome-panel/menu.c:2984
+#: gnome-panel/menu.c:2416
 msgid "_New Panel"
 msgstr "_Nowy panel"
 
-#: gnome-panel/menu.c:3031
+#: gnome-panel/menu.c:2463
 msgid "_About Panels"
 msgstr "_Informacje o panelach"
 
-#: gnome-panel/menu.c:3045
+#: gnome-panel/menu.c:2477
 msgid "About _GNOME"
 msgstr "Informacje o _GNOME"
 
-#: gnome-panel/menu.c:3090
-msgid "Launcher..."
-msgstr "Aktywator..."
-
-#: gnome-panel/menu.c:3100
-msgid "Launcher from menu"
-msgstr "Aktywator z elementu menu"
-
-#: gnome-panel/menu.c:3120
-msgid "Menu Bar"
-msgstr "Pasek menu"
-
-#: gnome-panel/menu.c:3149 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:2501 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Zabezpiecz ekran"
 
-#: gnome-panel/menu.c:3155
+#: gnome-panel/menu.c:2507
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zabezpiecza ekran, pozwalając na chwilowe odejście od komputera."
 
-#: gnome-panel/menu.c:3309 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:2523 gnome-panel/panel-addto.c:102
+#: gnome-panel/panel-menu-bar.c:200
+msgid "Log Out"
+msgstr "Koniec pracy"
+
+#: gnome-panel/menu.c:2530 gnome-panel/panel-addto.c:103
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
+msgstr ""
+"Kończy bieżącą sesję, pozwalając na zalogowanie się innemu użytkownikowi lub "
+"na wyłączenie komputera"
+
+#: gnome-panel/menu.c:2661 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Uruchom program..."
 
-#: gnome-panel/menu.c:3316 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:2668 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Uruchamia aplikację po wpisaniu pełnego wiersza polecenia"
 
-#: gnome-panel/menu.c:3324 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:2676 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Znajdź pliki..."
 
-#: gnome-panel/menu.c:3343 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:2679 gnome-panel/panel-addto.c:147
+#: gnome-panel/panel-menu-bar.c:154
+msgid "Find files, folders, and documents on your computer"
+msgstr "Wyszukuje na komputerze pliki, foldery i dokumenty"
+
+#: gnome-panel/menu.c:2695 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Zrzut ekranu..."
 
-#: gnome-panel/menu.c:3361
+#: gnome-panel/menu.c:2698 gnome-panel/panel-addto.c:136
+#: gnome-panel/panel-menu-bar.c:170
+msgid "Take a screenshot of your desktop"
+msgstr "Pobiera zrzut aktualnego stanu ekranu"
+
+#: gnome-panel/menu.c:2713
 msgid "Desktop"
 msgstr "Biurko"
 
@@ -1581,6 +1530,97 @@ msgstr "Uruchom program"
 #: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Znajdź pliki..."
+
+#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
+msgid "Screenshot"
+msgstr "Zapisz zrzut ekranu"
+
+#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+msgid "Force Quit"
+msgstr "Wymuś zamknięcie"
+
+#: gnome-panel/panel-addto.c:113
+msgid "Lock"
+msgstr "Zablokuj"
+
+#: gnome-panel/panel-addto.c:114
+msgid "Lock the screen so you can temporarily leave your computer"
+msgstr "Zabezpiecza ekran, pozwalając na chwilowe odejście od komputera."
+
+#: gnome-panel/panel-addto.c:125
+msgid "Force a misbehaving application to quit"
+msgstr "Wymusza zakończenie źle działającej aplikacji"
+
+#: gnome-panel/panel-addto.c:146
+msgid "Search"
+msgstr "Znajdź"
+
+#: gnome-panel/panel-addto.c:157
+msgid "Run"
+msgstr "Uruchom"
+
+#: gnome-panel/panel-addto.c:158
+msgid "Run a command"
+msgstr "Wykonuje polecenie"
+
+#: gnome-panel/panel-addto.c:168
+msgid "Custom Application Launcher"
+msgstr "Własny aktywator aplikacji"
+
+#: gnome-panel/panel-addto.c:169
+msgid "Create a new launcher"
+msgstr "Utwórz nowy aktywator"
+
+#: gnome-panel/panel-addto.c:179
+msgid "Application Launcher..."
+msgstr "Aktywator aplikacji..."
+
+#: gnome-panel/panel-addto.c:180
+msgid "Launch a program that is already in the GNOME menu"
+msgstr "Uruchamia program który znajduje się w menu GNOME"
+
+#: gnome-panel/panel-addto.c:191
+msgid "The main GNOME menu"
+msgstr "Główne menu GNOME"
+
+#: gnome-panel/panel-addto.c:201
+msgid "Menu Bar"
+msgstr "Pasek menu"
+
+#: gnome-panel/panel-addto.c:202
+msgid "A custom menu bar"
+msgstr "Własny pasek menu"
+
+#: gnome-panel/panel-addto.c:213
+msgid "A pop out drawer to store other items in"
+msgstr "Wysuwana szuflada przechowująca elementy"
+
+#: gnome-panel/panel-addto.c:301
+msgid "(empty)"
+msgstr "(puste)"
+
+#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "zapytanie zwróciło wyjątek %s\n"
+
+#: gnome-panel/panel-addto.c:831
+#, c-format
+msgid "Add to %s"
+msgstr "Dodaj do %s"
+
+#: gnome-panel/panel-addto.c:833
+msgid "Add to the panel"
+msgstr "Dodaj do panelu"
+
+#: gnome-panel/panel-addto.c:839
+#, c-format
+msgid "Select an _item to add to %s:"
+msgstr "Wyb_ierz element do dodania do %s:"
+
+#: gnome-panel/panel-addto.c:842
+msgid "Select an _item to add to the panel:"
+msgstr "Wyb_ierz element do dodania do panelu:"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -2893,6 +2933,12 @@ msgstr "Bardzo bardzo duży"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Bardzo bardzo mały"
+
+#~ msgid "Launcher..."
+#~ msgstr "Aktywator..."
+
+#~ msgid "Launcher from menu"
+#~ msgstr "Aktywator z elementu menu"
 
 #~ msgid "Cannot add to run box"
 #~ msgstr "Nie można dodać do okna uruchamiania"
