@@ -1235,18 +1235,21 @@ panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
 
 static void
 panel_profile_save_id_list (PanelGConfKeyType  type,
-			    GSList            *list)
+			    GSList            *list,
+			    gboolean           resave)
 {
 	GConfClient *client;
 	const char  *key;
 	const char  *id_list;
+
+	g_assert (!(resave && list != NULL));
 
 	client = panel_gconf_get_client ();
 
 	id_list = panel_gconf_key_type_to_id_list (type);
 
 	key = panel_gconf_general_key (id_list);
-	if (!list)
+	if (resave)
 		list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
 	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
@@ -1259,13 +1262,13 @@ static inline void
 panel_profile_save_other_id_lists (PanelGConfKeyType type)
 {
 	if (type != PANEL_GCONF_TOPLEVELS)
-		panel_profile_save_id_list (PANEL_GCONF_TOPLEVELS, NULL);
+		panel_profile_save_id_list (PANEL_GCONF_TOPLEVELS, NULL, TRUE);
 
 	if (type != PANEL_GCONF_OBJECTS)
-		panel_profile_save_id_list (PANEL_GCONF_OBJECTS, NULL);
+		panel_profile_save_id_list (PANEL_GCONF_OBJECTS, NULL, TRUE);
 
 	if (type != PANEL_GCONF_APPLETS)
-		panel_profile_save_id_list (PANEL_GCONF_APPLETS, NULL);
+		panel_profile_save_id_list (PANEL_GCONF_APPLETS, NULL, TRUE);
 }
 
 void
@@ -1289,7 +1292,7 @@ panel_profile_add_to_list (PanelGConfKeyType  type,
 
 	list = g_slist_append (list, new_id);
 
-	panel_profile_save_id_list (type, list);
+	panel_profile_save_id_list (type, list, FALSE);
 	panel_profile_save_other_id_lists (type);
 }
 
@@ -1317,7 +1320,7 @@ panel_profile_remove_from_list (PanelGConfKeyType  type,
 		list = g_slist_delete_link (list, l);
 	}
 
-	panel_profile_save_id_list (type, list);
+	panel_profile_save_id_list (type, list, FALSE);
 	panel_profile_save_other_id_lists (type);
 }
 

@@ -1,5 +1,17 @@
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
+	Fix removal of the last applet/object that could not get removed,
+	which could cause a crash if the user tried to remove it again.
+
+	* panel-profile.c: (panel_profile_save_id_list): add a resave
+	parameter so we know if we want to save again the same id_list or if
+	we want to save the new one passed as paramater
+	(panel_profile_save_other_id_lists): updated
+	(panel_profile_add_to_list): updated
+	(panel_profile_remove_from_list): updated
+
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
 	Add a "Launch" menu item to the launcher context menu
 
 	* applet.c: (applet_callback_callback): handle the "Launch" menu item
