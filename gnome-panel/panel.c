@@ -2895,6 +2895,8 @@ panel_delete_query (PanelWidget *panel_widget)
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_window_get_screen (GTK_WINDOW (panel)));
 
+	gtk_window_set_position (GTK_WINDOW (dialog),GTK_WIN_POS_CENTER);
+
 	panel_widget->delete_dialog = dialog;
 
 	g_signal_connect (dialog, "response",
