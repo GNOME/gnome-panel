@@ -9,8 +9,7 @@
 #include "mico-parse.h"
 #include <fcntl.h>
 
-#define CHECK_COOKIE() if (strcmp (cookie, ccookie)) return;
-#define CHECK_COOKIE_V(x) if (strcmp (cookie, ccookie)) return x;
+#include "cookie.h"
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -52,7 +51,8 @@ class Applet_impl : virtual public GNOME::Applet_skel {
 	GtkWidget *the_widget;
 public:
 	Applet_impl (GtkWidget *widget) { the_widget = widget; };
-	void change_orient (const char *ccookie, CORBA::Short applet_id, CORBA::Short orient) {
+	void change_orient (const char *ccookie, CORBA::Short applet_id,
+			    CORBA::Short orient) {
 		::change_orient(applet_id,orient);
 	}
 	CORBA::Short session_save (const char *ccookie,
@@ -97,8 +97,6 @@ gnome_panel_applet_init_corba (void)
 	if (hostname [0] == 0)
 		strcpy (hostname, "unknown-host");
 
-	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
-
 	/*do a 20 second timeout until we get the iior*/
 	for(i=0;i<20;i++) {
 		name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
@@ -113,6 +111,8 @@ gnome_panel_applet_init_corba (void)
 	}
 	if(!iior)
 		return 0;
+
+	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
 
 	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
@@ -151,6 +151,8 @@ gnome_panel_applet_reinit_corba (void)
 	}
 	if(!iior)
 		return 0;
+
+	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
 	
@@ -311,6 +313,7 @@ gnome_panel_applet_request_id (char *path,
 							             globcfg,
 								     wid);
 		} catch (...) {
+			puts("T");
 			sleep(1);
 			gnome_panel_applet_reinit_corba ();
 			continue;

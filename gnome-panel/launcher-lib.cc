@@ -9,6 +9,8 @@
 #include "panel-widget.h"
 #include "mico-parse.h"
 
+#include "cookie.h"
+
 extern CORBA::ORB_ptr orb_ptr;
 extern CORBA::BOA_ptr boa_ptr;
 
@@ -20,15 +22,19 @@ void start_new_launcher(const char *path);
 void restart_all_launchers(void);
 END_GNOME_DECLS
 
-#define CHECK_COOKIE() if (strcmp (cookie, ccookie)) return;
-
 class Launcher_impl : virtual public GNOME::Launcher_skel {
 public:
 	void start_new_launcher (const char *ccookie, const char *path) {
+		/*avoid races*/
+		cookie = gnome_config_private_get_string (
+			"/panel/Secret/cookie=");
 		CHECK_COOKIE ();
 		::start_new_launcher(path);
 	}
 	void restart_all_launchers (const char *ccookie) {
+		/*avoid races*/
+		cookie = gnome_config_private_get_string (
+			"/panel/Secret/cookie=");
 		CHECK_COOKIE ();
 		::restart_all_launchers ();
 	}
@@ -41,7 +47,6 @@ launcher_corba_gtk_main (char *str)
 	char hostname [4096];
 	char *name;
 
-	cookie = gnome_config_private_get_string ("/panel/Secret/cookie=");
 	gethostname (hostname, sizeof (hostname));
 	if (hostname [0] == 0)
 		strcpy (hostname, "unknown-host");

@@ -1,3 +1,14 @@
+Fri Apr 24 00:06:58 1998  George Lebl  <jirka@5z.com>
+
+	* cookie.h: added, includes the CHECK_COOKIE macros
+	  and create_cookie definition. the CHECK_COOKIES
+	  now spitout a warning with file and line so we can
+	  see if tehre are any bugs remaining (races)
+
+	* main.c, applet-lib.cc, launcher-lib.cc, mico-glue.cc:
+	  use cookie.h, read cookie on corba_reinit, allways
+	  reread cookie on launcher calls to prevent races
+
 Thu Apr 23 23:28:54 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: interpanel moving bugs fixed and

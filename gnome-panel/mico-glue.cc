@@ -7,14 +7,13 @@
 #include "panel.h"
 #include "mico-parse.h"
 
+#include "cookie.h"
+
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
  * "instances" of the panel, as there is only one panel running on the
  * screen.
  * */
-
-#define CHECK_COOKIE() if (strcmp (cookie, ccookie)) return;
-#define CHECK_COOKIE_V(x) if (strcmp (cookie, ccookie)) return x;
 
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
@@ -44,7 +43,8 @@ public:
 			globcfgpath = CORBA::string_dup("");
 		return applet_id;
 	}
-	void applet_register (const char *ccookie, const char *ior, CORBA::Short applet_id) {
+	void applet_register (const char *ccookie, const char *ior,
+			      CORBA::Short applet_id) {
 		CHECK_COOKIE ();
 		::applet_register(ior, applet_id);
 	}
