@@ -1,5 +1,17 @@
 2003-01-27  Mark McLoughlin  <mark@skynet.ie>
 
+	Add popup calendar and time configuration to clock applet.
+	Slightly re-worked version of Havoc's patch. #85723.
+
+	* GNOME_ClockApplet.xml: add "Adjust Date & Time" item.
+
+	* clock.c: add support for time configuration tool and
+	calendar popup.
+
+	* clock.schemas.in: add configuration tool preference.
+
+2003-01-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* GNOME_ClockApplet_Factory.server.in.in,
 	  Makefile.am: copy from gen_util and tweak.
 

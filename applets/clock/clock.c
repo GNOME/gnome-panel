@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 /*
  * GNOME time/date display module.
  * (C) 1997 The Free Software Foundation
@@ -30,13 +31,15 @@
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 6
-static const char* KEY_HOUR_FORMAT	= "hour_format";
-static const char* KEY_SHOW_SECONDS 	= "show_seconds";
-static const char* KEY_SHOW_DATE 	= "show_date";
-static const char* KEY_GMT_TIME		= "gmt_time";
-static const char* KEY_UNIX_TIME	= "unix_time";
-static const char* KEY_INTERNET_TIME	= "internet_time";
+#define N_GCONF_PREFS 7
+
+static const char* KEY_HOUR_FORMAT   = "hour_format";
+static const char* KEY_SHOW_SECONDS  = "show_seconds";
+static const char* KEY_SHOW_DATE     = "show_date";
+static const char* KEY_GMT_TIME      = "gmt_time";
+static const char* KEY_UNIX_TIME     = "unix_time";
+static const char* KEY_INTERNET_TIME = "internet_time";
+static const char* KEY_CONFIG_TOOL   = "config_tool";
 
 typedef struct _ClockData ClockData;
 
@@ -44,6 +47,7 @@ struct _ClockData {
 	/* widgets */
 	GtkWidget *applet;
 	GtkWidget *clockw;
+        GtkWidget *toggle;
 	GtkWidget *props;
   
 	/* preferences */
@@ -53,7 +57,9 @@ struct _ClockData {
 	gboolean unixtime;
 	gboolean internettime;
 	gboolean gmt_time;
-	
+
+        char *config_tool;
+        
 	/* runtime data */
 	char *timeformat;
 	guint timeout;
@@ -378,19 +384,191 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 	}
 
         g_free (cd->timeformat);
-        
+	g_free (cd->config_tool);
 	g_free (cd);
 }
+
+static gboolean
+close_on_escape (GtkWidget   *widget,
+		 GdkEventKey *event,
+		 ClockData   *cd)
+{
+	if (event->keyval == GDK_Escape) {             
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->toggle), FALSE);
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+static GtkWidget *
+create_calendar (ClockData *cd,
+		 GdkScreen *screen)
+{
+	GtkWindow *window;
+	GtkWidget *calendar;
+
+	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
+
+	/* set dialog type so it will skip the tasklist,
+	 * kinda broken. This window should really be override
+	 * redirect I suppose. But I hate override redirect
+	 * windows that don't have a pointer/keyboard grab.
+	 */
+	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DIALOG);
+	gtk_window_set_decorated (window, FALSE);
+	gtk_window_set_resizable (window, FALSE);
+	gtk_window_stick (window);
+	gtk_window_set_title (window, _("Calendar"));
+			
+	g_signal_connect (window, "key_press_event",
+			  G_CALLBACK (close_on_escape), cd);
+			
+	calendar = gtk_calendar_new ();
+
+	gtk_container_add (GTK_CONTAINER (window), calendar);
+
+	gtk_widget_show (calendar);
+
+	return GTK_WIDGET (window);
+}
+
+static void
+present_calendar_popup (ClockData *cd,
+			GtkWidget *window,
+			GtkWidget *button)
+{
+	GtkRequisition  req;
+	GdkScreen      *screen;
+	int             button_w, button_h;
+	int             screen_w, screen_h;
+	int             x, y;
+	int             w, h;
+		
+	/* Get root origin of the toggle button, and position above that. */
+	gdk_window_get_origin (button->window, &x, &y);
+
+	gtk_window_get_size (GTK_WINDOW (window), &w, &h);
+	gtk_widget_size_request (window, &req);
+	w = req.width;
+	h = req.height;
+
+	button_w = button->allocation.width;
+	button_h = button->allocation.height;
+
+	screen = gtk_window_get_screen (GTK_WINDOW (window));
+
+	/* FIXME use xinerama extents for xinerama containing
+	 * the applet.
+	 */
+	screen_w = gdk_screen_get_width (screen);
+	screen_h = gdk_screen_get_height (screen);
+		
+	/* Based on panel orientation, position the popup.
+	 * Ignore window gravity since the window is undecorated.
+	 * The orientations are all named backward from what
+	 * I expected.
+	 */
+	switch (cd->orient) {
+	case PANEL_APPLET_ORIENT_RIGHT:
+		x += button_w;
+		if ((y + h) > screen_h)
+			y -= (y + h) - screen_h;
+			break;
+	case PANEL_APPLET_ORIENT_LEFT:
+		x -= w;
+		if ((y + h) > screen_h)
+			y -= (y + h) - screen_h;
+		break;
+	case PANEL_APPLET_ORIENT_DOWN:
+		y += button_h;
+		if ((x + w) > screen_w)
+			x -= (x + w) - screen_w;
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+		y -= h;
+		if ((x + w) > screen_w)
+			x -= (x + w) - screen_w;
+		break;
+	}
+		
+	gtk_window_move (GTK_WINDOW (window), x, y);
+	gtk_window_present (GTK_WINDOW (window));
+}
+
+static void
+update_popup (ClockData *cd)
+{
+	GtkWidget *window;
+	GtkWidget *button;
+
+	button = cd->toggle;
+	
+	window = g_object_get_data (G_OBJECT (button), "calendar");
+	
+	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
+		if (!window) {
+			window = create_calendar (cd, gtk_widget_get_screen (cd->applet));
+
+			g_object_set_data_full (
+				G_OBJECT (button), "calendar",
+				window, (GDestroyNotify) gtk_widget_destroy);
+		}
+	} else {
+		if (window) {
+			/* Destroys the calendar */
+			g_object_set_data (G_OBJECT (button), "calendar", NULL);
+			window = NULL;
+		}
+	}
+
+	if (window && GTK_WIDGET_REALIZED (button))
+		present_calendar_popup (cd, window, button);
+}
+
+static void
+toggle_calendar (GtkWidget *button,
+                 ClockData *cd)
+{
+	update_popup (cd);
+}
+
+static gboolean
+do_not_eat_button_press (GtkWidget      *widget,
+                         GdkEventButton *event)
+{
+	if (event->button != 1)
+		g_signal_stop_emission_by_name (widget, "button_press_event");
+
+	return FALSE;
+}
+
 
 static void
 create_clock_widget (ClockData *cd)
 {
 	GtkWidget *clock;
+	GtkWidget *toggle;
 
 	clock = gtk_label_new ("hmm?");
 	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
 	gtk_label_set_line_wrap (GTK_LABEL (clock), TRUE);
 	gtk_widget_show (clock);
+
+	toggle = gtk_toggle_button_new ();
+	gtk_button_set_relief (GTK_BUTTON (toggle), GTK_RELIEF_NONE);
+        
+	gtk_container_add (GTK_CONTAINER (toggle), clock);
+
+	g_signal_connect (toggle, "button_press_event",
+			  G_CALLBACK (do_not_eat_button_press), NULL);
+
+	g_signal_connect (toggle, "toggled",
+			  G_CALLBACK (toggle_calendar), cd);
+        
+	gtk_widget_show (toggle);        
+        
+	cd->toggle = toggle;
 
 	cd->clockw = clock;
 
@@ -422,6 +600,7 @@ applet_change_orient (PanelApplet       *applet,
 	time (&current_time);
 	cd->orient = orient;
 	update_clock (cd, current_time);
+        update_popup (cd);
 }
 
 static void
@@ -541,6 +720,85 @@ copy_date (BonoboUIComponent *uic,
 	g_free (utf8);
 }
 
+static gboolean
+try_config_tool (GdkScreen  *screen,
+		 const char *tool)
+{
+	GtkWidget *dialog;
+	GError    *err;
+	char      *argv[2];
+	char      *app;
+
+	g_return_val_if_fail (tool != NULL, FALSE);
+
+	app = g_find_program_in_path (tool);
+
+	if (!app)
+		return FALSE;
+		
+	argv [0] = app;
+	argv [1] = NULL;		
+
+	/* FIXME: use egg_spawn_async_on_screen */
+	err = NULL;
+	if (g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
+		g_free (app);
+		return TRUE;
+	}
+			
+	dialog = gtk_message_dialog_new (NULL,
+					 GTK_DIALOG_DESTROY_WITH_PARENT,
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_CLOSE,
+					 _("Failed to launch time configuration tool: %s"),
+					 err->message);
+		
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy), NULL);
+			
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+			
+	gtk_widget_show_all (dialog);			
+
+	g_free (app);
+		
+	return TRUE;
+}
+
+static void
+config_date (BonoboUIComponent *uic,
+             ClockData         *cd,
+             const char        *verbname)
+{
+	GtkWidget *dialog;
+	GdkScreen *screen;
+
+	screen = gtk_widget_get_screen (cd->applet);
+
+	/* FIXME add GST, etc. */
+	if (cd->config_tool && try_config_tool (screen, cd->config_tool))
+		return;
+
+	else if (try_config_tool (screen, "redhat-config-date"))
+		return;
+		
+	dialog = gtk_message_dialog_new (NULL,
+					 GTK_DIALOG_DESTROY_WITH_PARENT,
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_CLOSE,
+					 _("Failed to locate a program for configuring "
+					   "the date and time. Perhaps none is installed?"));
+		
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy), NULL);
+		
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+
+	gtk_widget_show_all (dialog);
+}
+
 /* current timestamp */
 static const BonoboUIVerb clock_menu_verbs [] = {
 	BONOBO_UI_UNSAFE_VERB ("ClockPreferences", display_properties_dialog),
@@ -548,6 +806,7 @@ static const BonoboUIVerb clock_menu_verbs [] = {
 	BONOBO_UI_UNSAFE_VERB ("ClockAbout",       display_about_dialog),
 	BONOBO_UI_UNSAFE_VERB ("ClockCopyTime",    copy_time),
 	BONOBO_UI_UNSAFE_VERB ("ClockCopyDate",    copy_date),
+        BONOBO_UI_UNSAFE_VERB ("ClockConfig",      config_date),
 	BONOBO_UI_VERB_END
 };
 
@@ -660,6 +919,23 @@ gmt_time_changed (GConfClient  *client,
 }
 
 static void
+config_tool_changed (GConfClient  *client,
+                     guint         cnxn_id,
+                     GConfEntry   *entry,
+                     ClockData    *clock)
+{
+	const char *value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+		return;
+
+	value = gconf_value_get_string (entry->value);
+
+        g_free (clock->config_tool);
+	clock->config_tool = g_strdup (value);
+}
+
+static void
 setup_gconf (ClockData *clock)
 {
 	GConfClient *client;
@@ -720,6 +996,15 @@ setup_gconf (ClockData *clock)
 				(GConfClientNotifyFunc)internet_time_changed,
 				clock, NULL, NULL);
 	g_free (key);
+
+        key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_CONFIG_TOOL);
+	clock->listeners [6] =
+		gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) config_tool_changed,
+				clock, NULL, NULL);
+	g_free (key);
 }
 
 static gboolean
@@ -763,13 +1048,14 @@ fill_clock_applet (PanelApplet *applet)
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
 	cd->unixtime = panel_applet_gconf_get_bool (applet, KEY_UNIX_TIME, NULL);
 	cd->internettime = panel_applet_gconf_get_bool (applet, KEY_INTERNET_TIME, NULL);
+	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
 
 	cd->timeformat = NULL;
 
 	create_clock_widget (cd);
 
 	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 0);
-	gtk_container_add (GTK_CONTAINER (cd->applet), cd->clockw);
+	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
 	gtk_widget_show (cd->applet);
 
@@ -1176,7 +1462,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	static const char *documenters[] =
 	{
-		"Dan Mueth (d-mueth@uchicago.edu)",
+		"Dan Mueth <d-mueth@uchicago.edu>",
 		NULL
 	};
 	/* Translator credits */
