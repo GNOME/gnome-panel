@@ -1,3 +1,20 @@
+2004-02-04  Mark McLoughlin  <mark@skynet.ie>
+
+	Don't use a mnemonic for the log out menu item lest we create
+	a mnemonic with users that have underscode in their username.
+	Fix for #133350 by Jordy Potman.
+
+	* menu.c: (setup_full_menuitem): don't use new_with_mnemonic
+	if use_invisible_mnemonic is TRUE.
+	
+2004-02-04  Mark McLoughlin  <mark@skynet.ie>
+	
+	* menu.c: 
+	(append_lock_screen),
+	(append_log_out): split out these
+	(create_desktop_menu): from here ... to make things readable.
+	(create_root_menu): upd.
+
 2004-01-27  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-util.[ch]: (panel_signal_connect_object_while_alive):
