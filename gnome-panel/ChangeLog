@@ -1,3 +1,8 @@
+Sat Aug 21 18:51:42 1999  George Lebl  <jirka@5z.com>
+
+	* panel.c: don't send the orientation, size and back changes from an
+          idle on addition to avoid races when the applet dies too quick
+
 Sat Aug 21 17:01:54 1999  George Lebl  <jirka@5z.com>
 
 	* session.c: completely new default setup, now the default launchers
