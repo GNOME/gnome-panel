@@ -43,7 +43,6 @@ get_window_id(Window win, char *title)
 			   children[i],
 			   &tit);
 		if(tit) {
-			puts(tit);
 			if(strcmp(tit,title)==0) {
 				XFree(tit);
 				wid = children[i];
@@ -59,18 +58,41 @@ get_window_id(Window win, char *title)
 	return wid;
 }
 
+/*we should really do this differently but for now this is good enough*/
+static gint
+socket_getwindow_timeout(Swallow *swallow)
+{
+	swallow->wid = get_window_id(GDK_ROOT_WINDOW(),swallow->title);
+	if(swallow->wid==-1)
+		return TRUE;
+	gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
+	return FALSE;
+}
+
 static gint
 socket_realized(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));
-	char *title = data;
-	guint wid;
 
-	wid = get_window_id(GDK_ROOT_WINDOW(),title);
-	if(wid==-1)
-		puts("DANG!"); /*FIXME: wait for the window to appear*/
+	if(swallow->title==NULL) {
+		char buf[256];
+		/*FIXME: ask for one with a dialog box!*/
+		printf("Enter the name of the window to get: ");
+		fflush(stdout);
+		fgets(buf,255,stdin);
+		if(buf[strlen(buf)-1]=='\n')
+			buf[strlen(buf)-1]='\0';
+		swallow->title=g_strdup(buf);
+	}
+	if(swallow->title==NULL)
+		return FALSE;
+
+	swallow->wid = get_window_id(GDK_ROOT_WINDOW(),swallow->title);
+	if(swallow->wid==-1)
+		gtk_timeout_add(500,(GtkFunction)socket_getwindow_timeout,
+				swallow);
 	else
-		gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
+		gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 
 	return FALSE;
 }
@@ -142,8 +164,13 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
-			         GTK_SIGNAL_FUNC(socket_realized),
-			         g_strdup(arguments));
+			         GTK_SIGNAL_FUNC(socket_realized), NULL);
+
+	if(arguments)
+		swallow->title=g_strdup(arguments);
+	else
+		swallow->title=NULL;
+	swallow->wid = -1;
 
 	set_swallow_applet_orient(swallow, orient);
 
