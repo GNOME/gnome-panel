@@ -193,9 +193,6 @@ add_tab_bindings (GtkBindingSet    *binding_set,
   	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
 				      "tab_move", 1,
 				      G_TYPE_BOOLEAN, next);
-  	gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
-				      "tab_move", 1,
-				      G_TYPE_BOOLEAN, next);
 }
 
 static void
@@ -259,7 +256,6 @@ remove_tab_bindings (GtkBindingSet    *binding_set,
 {
 	gtk_binding_entry_clear (binding_set, GDK_Tab, modifiers);
   	gtk_binding_entry_clear (binding_set, GDK_KP_Tab, modifiers);
-  	gtk_binding_entry_clear (binding_set, GDK_ISO_Left_Tab, modifiers);
 }
 
 static void

@@ -249,9 +249,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_KP_Tab, GDK_CONTROL_MASK,
 				      "move_focus_out", 0);
-	gtk_binding_entry_add_signal (binding_set,
-				      GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
-				      "move_focus_out", 0);
 }
 
 static void
