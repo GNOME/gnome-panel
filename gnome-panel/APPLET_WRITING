@@ -12,6 +12,9 @@ etc ... etc ... etc ...
 Changes:
 ========
 
+10/24/99) Took out the old panel size stuff and replaced it with the new
+	 pixel_size stuff
+
 5/30/99) Took out the old mico example, added .gnorba,.desktop examples
 	 and explanation, and fixed the multiple applet support
 	 documentation. Also fixed all the applet_widget_init and
@@ -457,24 +460,19 @@ The way this works is very similiar to the way orientation works so
 here is an example:
 
 How to what size the panel on which your applet sits is, fairly simply.
-You bind the "change_size" signal to the applet, so to modify our
+You bind the "change_pixel_size" signal to the applet, so to modify our
 original hello applet, we'd do:
 
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
 
-#ifdef HAVE_PANEL_SIZE
+#ifdef HAVE_PANEL_PIXEL_SIZE
 /*this is when the panel size changes*/
 static void
-applet_change_size(GtkWidget *w, PanelSizeType o, gpointer data)
+applet_change_pixel_size(GtkWidget *w, int size, gpointer data)
 {
-	switch(o) {
-		case SIZE_TINY: puts("SIZE_TINY"); break;
-		case SIZE_STANDARD: puts("SIZE_STANDARD"); break;
-		case SIZE_LARGE: puts("SIZE_LARGE"); break;
-		case SIZE_HUGE: puts("SIZE_HUGE"); break;
-	}
+	printf("Got size of %d pixels\n",size);
 }
 #endif
 
@@ -503,12 +501,12 @@ main(int argc, char **argv)
 	label = gtk_label_new(_("Hello There!"));
 	gtk_widget_show(label);
 
-#ifdef HAVE_PANEL_SIZE
+#ifdef HAVE_PANEL_PIXEL_SIZE
 	/*we have to bind change_size before we do applet_widget_add 
 	  since we need to get an initial change_size signal to set our
 	  initial size, and we get that during the _add call*/
-	gtk_signal_connect(GTK_OBJECT(applet),"change_size",
-			   GTK_SIGNAL_FUNC(applet_change_size),
+	gtk_signal_connect(GTK_OBJECT(applet),"change_pixel_size",
+			   GTK_SIGNAL_FUNC(applet_change_pixel_size),
 			   NULL);
 #endif
 
@@ -523,9 +521,21 @@ main(int argc, char **argv)
 	return 0;
 }
 
-Notice the "#ifdef HAVE_PANEL_SIZE" line, this will make sure your applet
+Notice the "#ifdef HAVE_PANEL_PIXEL_SIZE" line, this will make sure your applet
 compiles correctly even on a panel from gnome-core 1.0 which doesn't have
-support for multiple sizes.
+support for multiple sizes.  Note that in gnome-core 1.1 release there was
+another implementation of panel sizes which is now deprecated, so you should
+use the method above.
+
+If you want to say compare to the standard sizes (You shouldn't assume that
+they are the only ones that exist!), you can use the PIXEL_SIZE_TINY,
+PIXEL_SIZE_STANDARD, PIXEL_SIZE_LARGE and PIXEL_SIZE_HUGE constants as in
+
+if(size < PIXEL_SIZE_STANDARD) {
+	... do something for very small applet ...
+} else {
+	... do something else for standard size applet ...
+}
 
 Rebinding events (Rebuilding the widget structure on the applet):
 =================================================================

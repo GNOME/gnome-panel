@@ -153,7 +153,7 @@ GtkWidget *
 edge_widget_new (BorderEdge edge,
 		 BasePMode mode,
 		 BasePState state,
-		 PanelSizeType sz,
+		 int sz,
 		 int hidebuttons_enabled,
 		 int hidebutton_pixmaps_enabled,
 		 PanelBackType back_type,

@@ -62,7 +62,7 @@ struct _PanelWidget
 
 	int			size;
 	PanelOrientation	orient;
-	PanelSizeType		sz;
+	int			sz;
 	int			fit_pixmap_bg;
 	int			pixmap_resize_timeout;
 	int			pixmap_resize_timeout_top;
@@ -103,7 +103,7 @@ struct _PanelWidgetClass
 	void (* orient_change) (PanelWidget *panel,
 				PanelOrientation orient);
 	void (* size_change) (PanelWidget *panel,
-			      PanelSizeType sz);
+			      int sz);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
@@ -119,7 +119,7 @@ struct _PanelWidgetClass
 guint		panel_widget_get_type		(void);
 GtkWidget *	panel_widget_new		(int packed,
 						 PanelOrientation orient,
-						 PanelSizeType sz,
+						 int sz,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -169,7 +169,7 @@ int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
-						 PanelSizeType sz,
+						 int sz,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,
@@ -214,8 +214,6 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /*needed for other panel types*/
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
-
-int		panel_widget_get_pixel_size	(PanelWidget *panel);
 
 /*extern GSList *panels;*/
 

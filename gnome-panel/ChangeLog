@@ -1,3 +1,13 @@
+Sun Oct 24 16:55:37 1999  George Lebl  <jirka@5z.com>
+
+	* {panel,aligned,sliding,edge,floating,border,button,applet}-widget.[ch],
+	  panel-types.h, panel.c, panel_config.[ch], session.c, status.h:
+	  changed sizes to be pixel based, and added pixel_size stuff to
+	  applets, while preserving compatiblity with the current scheme
+
+	* session.c: don't complain when we can't remove config file for
+	  extern applet as it might in fact not be there
+
 Sun Oct 24 14:38:44 1999  George Lebl  <jirka@5z.com>
 
 	* session.c: remove the hack that quit when it wasn't connected

@@ -32,7 +32,7 @@ struct _PerPanelConfig {
 	SlidingAnchor           anchor;
 	
 	/*panel types*/
-	PanelSizeType		sz;
+	int			sz;
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;

@@ -307,9 +307,7 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_sync();*/
 			/* but gnome-config.[ch] is broken ! */
 			s = gnome_config_get_real_path(buf->str);
-			if(unlink(s) != 0) {
-				g_warning("Can't remove file");
-			}
+			unlink(s);
 			g_free(s);
 
 			gnome_config_sync();
@@ -931,7 +929,7 @@ init_user_panels(void)
 	for(num=1;num<=count;num++) {
 		PanelType type;
 		PanelBackType back_type;
-		PanelSizeType sz;
+		int sz;
 		BasePState state;
 		BasePMode mode;
 		BorderEdge edge;

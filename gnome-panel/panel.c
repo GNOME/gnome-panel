@@ -329,7 +329,7 @@ size_change_foreach(GtkWidget *w, gpointer data)
 
 static void
 panel_size_change(GtkWidget *widget,
-		  PanelSizeType sz,
+		  int sz,
 		  gpointer data)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,

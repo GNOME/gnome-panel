@@ -352,7 +352,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	GtkWidget *widget = GTK_WIDGET(button);
 	GtkWidget *pwidget;
 	PanelWidget *panel = PANEL_WIDGET(widget->parent);
-	int size = panel_widget_get_pixel_size(panel);
+	int size = panel->sz;
 	/*offset for pressed buttons*/
 	int off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
 	/*border to not draw when drawing a tile*/
@@ -494,8 +494,7 @@ static void
 button_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 {
 	PanelWidget *panel = PANEL_WIDGET(widget->parent);
-	requisition->width = requisition->height = 
-		panel_widget_get_pixel_size(panel);
+	requisition->width = requisition->height = panel->sz;
 }
 static void
 button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
@@ -729,7 +728,7 @@ int
 button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 {
 	if(size<0)
-		size = panel_widget_get_pixel_size(PANEL_WIDGET(GTK_WIDGET(button)->parent));
+		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
 	
 	button->pixbuf = loadup_file(pixmap);
 	g_free(button->filename);

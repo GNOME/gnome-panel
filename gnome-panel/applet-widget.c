@@ -55,7 +55,7 @@ server_applet_change_orient(CustomAppletServant *servant,
 
 static void
 server_applet_change_size(CustomAppletServant *servant,
-			  GNOME_Panel_SizeType size,
+			  CORBA_short size,
 			  CORBA_Environment *ev);
 
 static void
@@ -171,6 +171,7 @@ applet_widget_get_type ()
 
 enum {
 	CHANGE_ORIENT_SIGNAL,
+	CHANGE_PIXEL_SIZE_SIGNAL,
 	CHANGE_SIZE_SIGNAL,
 	SAVE_SESSION_SIGNAL,
 	BACK_CHANGE_SIGNAL,
@@ -254,6 +255,16 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
+	applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL] =
+		gtk_signal_new("change_pixel_size",
+			       GTK_RUN_FIRST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 change_pixel_size),
+			       gtk_marshal_NONE__INT,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_INT);
 	applet_widget_signals[CHANGE_SIZE_SIGNAL] =
 		gtk_signal_new("change_size",
 			       GTK_RUN_FIRST,
@@ -904,8 +915,30 @@ applet_widget_get_panel_orient(AppletWidget *applet)
 GNOME_Panel_SizeType
 applet_widget_get_panel_size(AppletWidget *applet)
 {
-	g_return_val_if_fail(applet != NULL,SIZE_STANDARD);
-	g_return_val_if_fail(IS_APPLET_WIDGET(applet), SIZE_STANDARD);
+	g_return_val_if_fail(applet != NULL,GNOME_Panel_SIZE_STANDARD);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet), GNOME_Panel_SIZE_STANDARD);
+	
+	g_warning("applet_widget_get_panel_size is deprecated, use the new pixel_size methods");
+
+	switch(applet->size) {
+	case 24:
+		return GNOME_Panel_SIZE_TINY;
+	default:
+	case 48:
+		return GNOME_Panel_SIZE_STANDARD;
+	case 64:
+		return GNOME_Panel_SIZE_LARGE;
+	case 80:
+		return GNOME_Panel_SIZE_HUGE;
+	}
+}
+
+/* Get the size the applet should use */
+int
+applet_widget_get_panel_pixel_size(AppletWidget *applet)
+{
+	g_return_val_if_fail(applet != NULL,PIXEL_SIZE_STANDARD);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet), PIXEL_SIZE_STANDARD);
 
 	return applet->size;
 }
@@ -1012,17 +1045,40 @@ server_applet_change_orient(CustomAppletServant *servant,
 
 static void
 server_applet_change_size(CustomAppletServant *servant,
-			  GNOME_Panel_SizeType size,
+			  CORBA_short size,
 			  CORBA_Environment *ev)
 {
 	servant->appwidget->size = size;
 	if(servant->appwidget->frozen_level>0) {
 		servant->appwidget->frozen_got_size = TRUE;
-		servant->appwidget->frozen_size = (GNOME_Panel_SizeType)size;
+		servant->appwidget->frozen_size = size;
 	} else {
+		switch(size) {
+		case 24:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_TINY);
+			break;
+		default:
+		case 48:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_STANDARD);
+			break;
+		case 64:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_LARGE);
+			break;
+		case 80:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_HUGE);
+			break;
+		}
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_SIZE_SIGNAL],
-				(GNOME_Panel_SizeType)size);
+				applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL],
+				size);
 	}
 }
 
@@ -1179,8 +1235,31 @@ server_applet_thaw_changes(CustomAppletServant *servant,
 	}
 	if(servant->appwidget->frozen_got_size) {
 		servant->appwidget->frozen_got_size = FALSE;
+		switch(servant->appwidget->frozen_size) {
+		case 24:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_TINY);
+			break;
+		default:
+		case 48:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_STANDARD);
+			break;
+		case 64:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_LARGE);
+			break;
+		case 80:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_HUGE);
+			break;
+		}
 		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_SIZE_SIGNAL],
+				applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL],
 				servant->appwidget->frozen_size);
 	}
 	if(servant->appwidget->frozen_got_back) {

@@ -103,6 +103,7 @@ update_config_size(GtkWidget *panel)
 	case SIZE_TINY:
 		toggle = ppc->s_tiny;
 		break;
+	default:
 	case SIZE_STANDARD:
 		toggle = ppc->s_std;
 		break;
@@ -856,7 +857,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 static void
 size_set_size (GtkWidget *widget, gpointer data)
 {
-	PanelSizeType sz = (PanelSizeType) data;
+	int sz = GPOINTER_TO_INT(data);
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	if(!(GTK_TOGGLE_BUTTON(widget)->active))
@@ -903,7 +904,7 @@ size_notebook_page(PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(ppc->s_tiny),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->s_tiny), "toggled", 
 			    GTK_SIGNAL_FUNC (size_set_size), 
-			    (gpointer)SIZE_TINY);
+			    GINT_TO_POINTER(SIZE_TINY));
 	gtk_box_pack_start (GTK_BOX (box), ppc->s_tiny, FALSE, FALSE,0);
 	
 	/* Standard Size */
@@ -913,7 +914,7 @@ size_notebook_page(PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(ppc->s_std),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->s_std), "toggled", 
 			    GTK_SIGNAL_FUNC (size_set_size), 
-			    (gpointer)SIZE_STANDARD);
+			    GINT_TO_POINTER(SIZE_STANDARD));
 	gtk_box_pack_start (GTK_BOX (box), ppc->s_std, FALSE, FALSE,0);
 
 	/* Large Size */
@@ -923,7 +924,7 @@ size_notebook_page(PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(ppc->s_large),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->s_large), "toggled", 
 			    GTK_SIGNAL_FUNC (size_set_size), 
-			    (gpointer)SIZE_LARGE);
+			    GINT_TO_POINTER(SIZE_LARGE));
 	gtk_box_pack_start (GTK_BOX (box), ppc->s_large, FALSE, FALSE,0);
 	
 	/* Huge Size */
@@ -933,7 +934,7 @@ size_notebook_page(PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(ppc->s_huge),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->s_huge), "toggled", 
 			    GTK_SIGNAL_FUNC (size_set_size), 
-			    (gpointer)SIZE_HUGE);
+			    GINT_TO_POINTER(SIZE_HUGE));
 	gtk_box_pack_start (GTK_BOX (box), ppc->s_huge, FALSE, FALSE,0);
 	
 	switch(ppc->sz) {
@@ -941,6 +942,7 @@ size_notebook_page(PerPanelConfig *ppc)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_tiny),
 					     TRUE);
 		break;
+	default:
 	case SIZE_STANDARD:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_std),
 					     TRUE);

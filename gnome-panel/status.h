@@ -17,7 +17,7 @@ struct _StatusApplet {
 	GtkWidget *frame;
 	GtkWidget *handle; /*a gtk handlebox but one that doesn't undock*/
 	PanelOrientation orient;
-	PanelSizeType size;
+	int size;
 	AppletInfo *info;
 };
 

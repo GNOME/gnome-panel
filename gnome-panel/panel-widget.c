@@ -179,10 +179,10 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 size_change),
-			       gtk_marshal_NONE__ENUM,
+			       gtk_marshal_NONE__INT,
 			       GTK_TYPE_NONE,
 			       1,
-			       GTK_TYPE_ENUM);
+			       GTK_TYPE_INT);
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
 		gtk_signal_new("applet_move",
 			       GTK_RUN_LAST,
@@ -796,10 +796,10 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		requisition->width = pw_applet_padding;
-		requisition->height = panel_widget_get_pixel_size(panel);
+		requisition->height = panel->sz;
 	} else {
 		requisition->height = pw_applet_padding;
-		requisition->width = panel_widget_get_pixel_size(panel);
+		requisition->width = panel->sz;
 	}
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
@@ -976,7 +976,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	gdk_draw_rectangle(pixmap,gc, TRUE, 0,0,-1,-1);
 
 	/* get pixel size of an icon */
-	size = panel_widget_get_pixel_size(panel);
+	size = panel->sz;
 
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
@@ -1680,7 +1680,7 @@ panel_widget_init (PanelWidget *panel)
 GtkWidget *
 panel_widget_new (int packed,
 		  PanelOrientation orient,
-		  PanelSizeType sz,
+		  int sz,
 		  PanelBackType back_type,
 		  char *back_pixmap,
 		  int fit_pixmap_bg,
@@ -1712,6 +1712,10 @@ panel_widget_new (int packed,
 
 	panel->orient = orient;
 	panel->sz = sz;
+
+#ifdef PANEL_DEBUG
+	printf("GOT SIZE OF %d\n",sz);
+#endif
 
 	panel->packed = packed;
 	if(packed)
@@ -2555,14 +2559,14 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 void
 panel_widget_change_params(PanelWidget *panel,
 			   PanelOrientation orient,
-			   PanelSizeType sz,
+			   int sz,
 			   PanelBackType back_type,
 			   char *pixmap,
 			   int fit_pixmap_bg,
 			   GdkColor *back_color)
 {
 	PanelOrientation oldorient;
-	PanelSizeType oldsz;
+	int oldsz;
 	int change_back = FALSE;
 
 	g_return_if_fail(panel!=NULL);
@@ -2574,6 +2578,10 @@ panel_widget_change_params(PanelWidget *panel,
 
 	oldsz = panel->sz;
 	panel->sz = sz;
+	
+#ifdef PANEL_DEBUG
+	printf("GOT SIZE OF %d\n",sz);
+#endif
 
 	kill_cache_on_all_buttons(panel, TRUE);
 
@@ -2676,20 +2684,5 @@ panel_widget_change_global(int explicit_step,
 		pw_applet_padding = applet_padding;
 		for(li=panels;li!=NULL;li=g_slist_next(li))
 			gtk_widget_queue_resize(li->data);
-	}
-}
-
-int
-panel_widget_get_pixel_size(PanelWidget *panel)
-{
-	g_return_val_if_fail(panel!=NULL,48);
-	g_return_val_if_fail(IS_PANEL_WIDGET(panel),48);
-
-	switch(panel->sz) {
-	case SIZE_TINY: return 24;
-	case SIZE_STANDARD: return 48;
-	case SIZE_LARGE: return 64;
-	case SIZE_HUGE: return 80;
-	default: return 48;
 	}
 }

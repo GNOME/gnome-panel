@@ -16,6 +16,7 @@
 #define HAVE_SAVE_SESSION_SIGNAL 1
 #define HAVE_APPLET_BIND_EVENTS 1
 #define HAVE_PANEL_SIZE 1
+#define HAVE_PANEL_PIXEL_SIZE 1
 
 BEGIN_GNOME_DECLS
 
@@ -30,6 +31,13 @@ typedef GNOME_Panel_SizeType PanelSizeType;
 #define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
 #define SIZE_LARGE GNOME_Panel_SIZE_LARGE
 #define SIZE_HUGE GNOME_Panel_SIZE_HUGE
+
+enum {
+	PIXEL_SIZE_TINY = 24,
+	PIXEL_SIZE_STANDARD = 48,
+	PIXEL_SIZE_LARGE = 64,
+	PIXEL_SIZE_HUGE = 80
+};
 
 typedef GNOME_Panel_BackType PanelBackType;
 #define PANEL_BACK_NONE GNOME_Panel_BACK_NONE
@@ -56,7 +64,7 @@ struct _AppletWidget
 	char			*globcfgpath;
 	
 	PanelOrientType		orient;			
-	PanelSizeType		size;			
+	int			size;			
 	
 	/* below this is private data */
 
@@ -69,7 +77,7 @@ struct _AppletWidget
 	PanelOrientType		frozen_orient;			
 
 	gboolean		frozen_got_size;
-	PanelSizeType		frozen_size;			
+	int			frozen_size;			
 	
 	gboolean		frozen_got_back;
 	PanelBackType		frozen_back_type;			
@@ -91,7 +99,7 @@ struct _AppletWidgetClass
 	   that you can update your orientation properly */
 	void (* change_orient) (AppletWidget *applet,
 				GNOME_Panel_OrientType orient);
-	/* when the panel size changes, semantics are the same as above */
+	/* DEPRECATED: when the panel size changes, semantics are the same as above */
 	void (* change_size) (AppletWidget *applet,
 			      GNOME_Panel_SizeType size);
 	/* the panel background changes, the pixmap handeling is likely
@@ -119,6 +127,10 @@ struct _AppletWidgetClass
 	  with the applet_widget_send_position*/
 	void (* change_position) (AppletWidget *applet,
 				  int x, int y);
+
+	/* when the panel size changes, semantics are the same as above */
+	void (* change_pixel_size) (AppletWidget *applet,
+				    int size);
 };
 
 typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **params, int nparams);
@@ -216,7 +228,10 @@ void		applet_widget_sync_config	(AppletWidget *applet);
 /* Get the orientation the applet should use */
 GNOME_Panel_OrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 
-/* Get the size the applet should use */
+/* Get the pixel size the applet should use */
+int		applet_widget_get_panel_pixel_size	(AppletWidget *applet);
+
+/* DEPRECATED: Get the size the applet should use */
 GNOME_Panel_SizeType	applet_widget_get_panel_size	(AppletWidget *applet);
 
 /* Get the free space for the applet if it's on an edge panel or 0
