@@ -69,9 +69,10 @@ void		add_menu_widget		(Menu *menu,
 void		set_menu_applet_orient	(Menu *menu,
 					 PanelOrient orient);
 
-void		setup_menuitem		(GtkWidget  *menuitem,
-					 GtkWidget  *pixmap,
-					 const char *title);
+void		setup_menuitem		(GtkWidget   *menuitem,
+					 GtkIconSize  icon_size,
+					 GtkWidget   *pixmap,
+					 const char  *title);
 
 GtkWidget      *create_panel_context_menu (PanelWidget *panel);
 GtkWidget      *create_panel_root_menu    (PanelWidget *panel);
@@ -112,11 +113,12 @@ enum {
 };
 
 GtkWidget *	panel_menu_new		(void);
-void		panel_load_menu_image_deferred (GtkWidget  *image_menu_item,
-						const char *stock_id,
-						const char *image_filename,
-						const char *fallback_image_filename,
-						gboolean    force_image);
+void		panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
+						GtkIconSize  icon_size,
+						const char  *stock_id,
+						const char  *image_filename,
+						const char  *fallback_image_filename,
+						gboolean     force_image);
 /* Note, bind the following on 'show' or some such */
 void		panel_make_sure_menu_within_screen (GtkMenu *menu);
 

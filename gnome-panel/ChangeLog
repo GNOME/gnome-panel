@@ -1,3 +1,32 @@
+2003-01-06  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix #95995 by making only the applications/actions menu use
+	"panel-menu" icon size and the rest use the "gtk-menu" size.
+	I swear, this icon size crap will be death of me yet ...
+
+	* menu.[ch]: (icon_to_load_copy): add a GtkIconSize member to
+	IconToLoad and IconToAdd.
+	(menu_item_style_set): pass the icon size as the signal data
+	and use it instead of "panel-menu".
+	(setup_full_menuitem), (panel_load_menu_image_deferred),
+	(setup_stock_menu_item): add a GtkIconSize param to these.
+	(do_icons_to_add), (load_icons_handler),
+	(image_menuitem_size_request), (setup_menuitem),
+	(create_menuitem): pass the icon size up the chain.
+	(show_item_menu), (applet_menu_append),
+	(create_add_panel_submenu), (create_button_menu),
+	(make_panel_submenu), (create_panel_context_menu),
+	(make_add_submenu): use "gtk-menu" for all these.
+	(create_desktop_menu), (add_distribution_submenu),
+	(add_kde_submenu), (create_root_menu):
+	use "panel-menu" here.
+
+	* applet.c: (setup_an_item), (panel_applet_create_menu):
+	Use "gtk-menu" icon size for these menus.
+
+	* menu-util.c: (stock_menu_item_new): use "panel-menu" icon
+	size for this one.
+
 2003-01-05  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: use @ENUMSHORT@ mkenums substitution pattern

@@ -234,7 +234,8 @@ stock_menu_item_new (const char *text,
 
         item = gtk_image_menu_item_new ();
 
-        panel_load_menu_image_deferred (item, stock_id, NULL, NULL, force_image);
+        panel_load_menu_image_deferred (
+		item, panel_menu_icon_get_size (), stock_id, NULL, NULL, force_image);
 
         if (text) {
                 label = gtk_label_new (text);

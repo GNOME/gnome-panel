@@ -340,24 +340,22 @@ panel_applet_remove_callback (AppletInfo *info,
 }
 
 static void
-setup_an_item(AppletUserMenu *menu,
-	      GtkWidget *submenu,
-	      int is_submenu)
+setup_an_item (AppletUserMenu *menu,
+	       GtkWidget      *submenu,
+	       int             is_submenu)
 {
+	GtkWidget *image = NULL;
+
 	menu->menuitem = gtk_image_menu_item_new ();
 
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menu->menuitem);
-	if(menu->stock_item && *(menu->stock_item))
-		setup_menuitem (menu->menuitem,
-				gtk_image_new_from_stock (menu->stock_item,
-							  GTK_ICON_SIZE_MENU),
-				menu->text);
-	else
-		setup_menuitem (menu->menuitem,
-				NULL,
-				menu->text);
+
+	if (menu->stock_item && menu->stock_item [0])
+		image = gtk_image_new_from_stock (menu->stock_item, GTK_ICON_SIZE_MENU);
+
+	setup_menuitem (menu->menuitem, GTK_ICON_SIZE_MENU, image, menu->text);
 
 	if(submenu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
@@ -489,7 +487,7 @@ panel_applet_create_menu (AppletInfo *info)
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
 
-		setup_menuitem (menuitem, image , _("_Remove From Panel"));
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image , _("_Remove From Panel"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
@@ -501,7 +499,7 @@ panel_applet_create_menu (AppletInfo *info)
 		/* FIXME: should have a "Move" pixmap.
 		 */
 		image = gtk_image_new ();
-		setup_menuitem (menuitem, image, _("_Move"));
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, _("_Move"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
