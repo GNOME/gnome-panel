@@ -1130,7 +1130,7 @@ load_up_globals(void)
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("hungry_menus=FALSE");
+		gnome_config_get_bool("hungry_menus=TRUE");
 
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");
