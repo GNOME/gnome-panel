@@ -849,7 +849,7 @@ init_user_applets(void)
 				if(g_file_exists(KDE_MENUDIR))
 					flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 				/*guess debian menus*/
-				if (g_file_exists("/etc/menu-methods/gnome"))
+				if (g_file_exists(DEBIAN_MENUDIR))
 					flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 			}
 			load_menu_applet(params,flags,panel,pos);
