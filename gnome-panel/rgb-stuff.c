@@ -25,12 +25,12 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 	GdkImage *image;
 	GdkColormap *colormap;
 	art_u8 *buff;
-	art_u8 *pixels;
 	gulong pixel;
 	gint rowstride;
 	art_u8 r, g, b;
 	gint xx, yy;
 	int width, height;
+	GdkPixbuf *pb;
 
 	g_return_val_if_fail (window != NULL, NULL);
 	
@@ -42,7 +42,6 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 	rowstride = width * 3;
 
 	buff = g_malloc (rowstride * height);
-	pixels = buff;
 
 	switch (image->depth)
 	{
@@ -60,10 +59,10 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 			for (xx = 0; xx < width; xx++)
 			{
 				pixel = gdk_image_get_pixel (image, xx, yy);
-				pixels[0] = colormap->colors[pixel].red;
-				pixels[1] = colormap->colors[pixel].green;
-				pixels[2] = colormap->colors[pixel].blue;
-				pixels += 3;
+				buff[0] = colormap->colors[pixel].red;
+				buff[1] = colormap->colors[pixel].green;
+				buff[2] = colormap->colors[pixel].blue;
+				buff += 3;
            
 			}
 		}
@@ -79,10 +78,10 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 				r =  (pixel >> 8) & 0xf8;
 				g =  (pixel >> 3) & 0xfc;
 				b =  (pixel << 3) & 0xf8;
-				pixels[0] = r;
-				pixels[1] = g;
-				pixels[2] = b;
-				pixels += 3;
+				buff[0] = r;
+				buff[1] = g;
+				buff[2] = b;
+				buff += 3;
 			}
 		}
 		break;
@@ -97,10 +96,10 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 				r =  (pixel >> 16) & 0xff;
 				g =  (pixel >> 8)  & 0xff;
 				b = pixel & 0xff;
-				pixels[0] = r;
-				pixels[1] = g;
-				pixels[2] = b;
-				pixels += 3;
+				buff[0] = r;
+				buff[1] = g;
+				buff[2] = b;
+				buff += 3;
 			}
 		}
 		break;
@@ -111,8 +110,10 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 
 	gdk_image_destroy(image);
 
-	return gdk_pixbuf_new_from_data(buff, GDK_COLORSPACE_RGB, FALSE, 24,
-					width, height, rowstride, NULL, NULL);
+	pb = gdk_pixbuf_new_from_data(buff, GDK_COLORSPACE_RGB, FALSE, 8,
+				      width, height, rowstride, NULL, NULL);
+	if (!pb) g_free(buff);
+	return pb;
 }
 
 void
