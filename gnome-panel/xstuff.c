@@ -21,7 +21,6 @@
 #include "basep-widget.h"
 #include "foobar-widget.h"
 #include "global-keys.h"
-#include "status.h"
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -63,90 +62,6 @@ xstuff_atom_intern (Display *display, const char *name)
 	return atom;
 }
 
-static void
-steal_statusspot(StatusSpot *ss, Window winid)
-{
-	GdkDragProtocol protocol;
-
-	gtk_socket_add_id (GTK_SOCKET (ss->socket), winid);
-	if (gdk_drag_get_protocol (winid, &protocol))
-		gtk_drag_dest_set_proxy (GTK_WIDGET (ss->socket),
-					 GTK_SOCKET(ss->socket)->plug_window,
-					 protocol, TRUE);
-}
-
-static void
-try_adding_status(guint32 winid)
-{
-	guint32 *data;
-	int size;
-
-	if (status_applet_get_ss (winid))
-		return;
-
-	data = get_typed_property_data (GDK_DISPLAY (),
-					winid,
-					ATOM ("KWM_DOCKWINDOW"),
-					ATOM ("KWM_DOCKWINDOW"),
-					&size, 32);
-
-	if(data && *data) {
-		StatusSpot *ss;
-		ss = new_status_spot ();
-		if (ss != NULL)
-			steal_statusspot (ss, winid);
-	}
-	g_free(data);
-}
-
-typedef struct {
-	char *name;
-	gulong xid;
-} XWin;
-
-void
-xstuff_go_through_client_list (void)
-{
-	WnckScreen *screen = wnck_screen_get_default ();
-	GList *windows, *li, *our_windows = NULL;
-
-	/* Avoid possible race by copying out information first */
-	windows = wnck_screen_get_windows (screen);
-	while (windows != NULL) {
-		WnckWindow *window = windows->data;
-		XWin *xw = g_new0 (XWin, 1);
-		xw->name = g_strdup (wnck_window_get_name (window));
-		xw->xid = wnck_window_get_xid (window);
-
-		our_windows = g_list_prepend (our_windows, xw);
-
-		windows = windows->next;
-	}
-
-	gdk_error_trap_push ();
-
-	/* just for status dock stuff for now */
-	for (li = our_windows; li != NULL; li = li->next) {
-		XWin *xw = li->data;
-		/* skip own windows */
-		if (xw->name != NULL &&
-		    strcmp (xw->name, "panel") == 0)
-			continue;
-
-		try_adding_status (xw->xid);
-
-		li->data = NULL;
-		g_free (xw->name);
-		xw->name = NULL;
-		g_free (xw);
-	}
-
-	gdk_flush();
-	gdk_error_trap_pop ();
-
-	g_list_free (our_windows);
-}
-
 void
 xstuff_init (void)
 {
@@ -159,9 +74,6 @@ xstuff_init (void)
 
 	xstuff_setup_global_desktop_area (0, 0, 0, 0);
 
-	xstuff_go_through_client_list ();
-
-	/* there is a flush in xstuff_go_through_client_list */
 	gdk_error_trap_pop ();
 }
 
@@ -180,45 +92,6 @@ xstuff_set_simple_hint (GdkWindow *w, const char *name, long val)
 
 	gdk_flush ();
 	gdk_error_trap_pop ();
-}
-
-static GdkFilterReturn
-status_event_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
-{
-	XEvent *xevent;
-
-	xevent = (XEvent *)gdk_xevent;
-
-	if(xevent->type == ClientMessage) {
-		if(xevent->xclient.message_type ==
-		   ATOMEV (xevent, "KWM_MODULE_DOCKWIN_ADD") &&
-		   !status_applet_get_ss(xevent->xclient.data.l[0])) {
-			Window w = xevent->xclient.data.l[0];
-			StatusSpot *ss;
-			ss = new_status_spot ();
-			if (ss != NULL)
-				steal_statusspot (ss, w);
-		} else if(xevent->xclient.message_type ==
-			  ATOMEV (xevent, "KWM_MODULE_DOCKWIN_REMOVE")) {
-			StatusSpot *ss;
-			ss = status_applet_get_ss (xevent->xclient.data.l[0]);
-			if (ss != NULL)
-				status_spot_remove (ss, TRUE);
-		}
-	}
-
-	return GDK_FILTER_CONTINUE;
-}
-
-void
-xstuff_setup_kde_dock_thingie (GdkWindow *w)
-{
-	xstuff_set_simple_hint (w, "KWM_MODULE", 2);
-	gdk_window_add_filter (w, status_event_filter, NULL);
-	send_client_message_3L (GDK_ROOT_WINDOW (), GDK_WINDOW_XWINDOW (w),
-				ATOMGDK (w, "KWM_MODULE"),
-				SubstructureNotifyMask,
-				GDK_WINDOW_XWINDOW (w), 0, 0);
 }
 
 /* Stolen from deskguide */
@@ -316,32 +189,6 @@ get_typed_property_data (Display *xdisplay,
     XFree (prop_data);
   
   return data;
-}
-
-/* sorta stolen from deskguide */
-gboolean
-send_client_message_3L (Window recipient,
-			Window event_window,
-			Atom   message_type,
-			long   event_mask,
-			long   long1,
-			long   long2,
-			long   long3)
-{
-  XEvent xevent = { 0 };
-
-  xevent.type = ClientMessage;
-  xevent.xclient.window = event_window;
-  xevent.xclient.message_type = message_type;
-  xevent.xclient.format = 32;
-  xevent.xclient.data.l[0] = long1;
-
-  gdk_error_trap_push ();
-
-  XSendEvent (GDK_DISPLAY (), recipient, False, event_mask, &xevent);
-  gdk_flush ();
-
-  return !gdk_error_trap_pop ();
 }
 
 gboolean

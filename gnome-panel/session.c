@@ -40,7 +40,6 @@
 #include "panel-config-global.h"
 #include "session.h"
 #include "sliding-widget.h"
-#include "status.h"
 #include "gnome-run.h"
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
@@ -256,9 +255,6 @@ panel_session_die (GnomeClient *client,
 	g_source_remove (config_sync_timeout);
 	config_sync_timeout = 0;
   
-	status_inhibit = TRUE;
-	status_spot_remove_all ();
-
 	for (l = applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 

@@ -25,7 +25,6 @@
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "session.h"
-#include "status.h"
 #include "panel-applet-frame.h"
 
 #define SMALL_ICON_SIZE 20
@@ -49,7 +48,6 @@ static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_LAUNCHER, "launcher-object" }, 
 	{ APPLET_EMPTY,    "empty-object" },
 	{ APPLET_LOCK,     "lock-object" },
-	{ APPLET_STATUS,   "status-object" },
 	{ APPLET_BONOBO,   "bonobo-applet" },
 };
 
@@ -142,9 +140,6 @@ panel_applet_clean (AppletInfo *info,
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
-
-		if (info->type == APPLET_STATUS)
-			status_applet_put_offscreen (info->data);
 
 		info->widget = NULL;
 		gtk_widget_destroy (widget);
@@ -273,10 +268,6 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("specialobjects", "LOGOUTBUTTON");
-		break;
-	case APPLET_STATUS:
-		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects", "STATUSDOC");
 		break;
 	case APPLET_BONOBO:
 		/*
@@ -896,9 +887,6 @@ panel_applet_load_from_unique_id (AppletType   type,
 	case APPLET_LOCK:
 		load_lock_applet (panel_widget, position, TRUE, unique_id);
 		break;
-	case APPLET_STATUS:
-		load_status_applet (panel_widget, position, TRUE, unique_id);
-		break;
 	default:
 		break;
 	}
@@ -1060,7 +1048,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		break;
 	case APPLET_LOGOUT: /* no object specific stuff to save */
 	case APPLET_LOCK:
-	case APPLET_STATUS:
 	default:
 		break;
 	}

@@ -1,3 +1,16 @@
+2002-05-22  Mark McLoughlin  <mark@skynet.ie>
+
+	Kill broken status dock. Will be replaced by a
+	system tray (see freedesktop.org) impl beyond 2.0
+
+	* applet.c, main.c, menu.c, panel.[ch], panel.h,
+	  session.c, xstuff.[ch]: kill all status dock
+	related code.
+
+	* Makefile.am: removed status.[ch] from the build.
+
+	* status-docklet.[ch], status.[ch]: removed these files.
+
 Mon May 20 17:12:06 2002  George Lebl <jirka@5z.com>
 
 	* applet.c, basep-widget.c, gnome-panel-preferences.c,

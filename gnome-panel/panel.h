@@ -32,9 +32,6 @@ GtkWidget * make_popup_panel_menu (PanelWidget *panel);
 
 PanelData * panel_data_by_id (const char *id);
 
-void status_unparent (GtkWidget *widget);
-
-
 
 #define get_panel_parent(appletw) \
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)

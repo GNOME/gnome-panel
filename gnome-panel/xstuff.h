@@ -14,8 +14,6 @@ void xstuff_set_simple_hint		(GdkWindow *w,
 					 long val);
 void xstuff_delete_property		(GdkWindow *window,
 					 const char *name);
-void xstuff_setup_kde_dock_thingie	(GdkWindow *w);
-
 gboolean xstuff_is_compliant_wm		(void);
 
 gpointer get_typed_property_data	(Display *xdisplay,
@@ -24,16 +22,6 @@ gpointer get_typed_property_data	(Display *xdisplay,
 					 Atom     requested_type,
 					 gint    *size_p,
 					 guint    expected_format);
-
-gboolean send_client_message_3L		(Window  recipient,
-					 Window  event_window,
-					 Atom    message_type,
-					 long    event_mask,
-					 long    long1,
-					 long    long2,
-					 long    long3);
-
-void xstuff_go_through_client_list	(void);
 
 void xstuff_set_no_group_and_no_input	(GdkWindow *win);
 

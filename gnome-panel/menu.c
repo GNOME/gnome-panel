@@ -58,7 +58,6 @@
 #include "panel-config-global.h"
 #include "session.h"
 #include "sliding-widget.h"
-#include "status.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
@@ -1699,25 +1698,6 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 }
 
 static void
-try_add_status_to_panel (GtkWidget *widget, gpointer data)
-{
-	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
-	PanelData *pd;
-	int insertion_pos = -1;
-
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-	
-	if (!load_status_applet (panel, insertion_pos, FALSE, NULL)) {
-		panel_info_dialog ("no_more_status_dialog",
-				   _("You already have a status "
-				     "dock on the panel. You can "
-				     "only have one"));
-	}
-}
-
-static void
 add_launcher (GtkWidget *widget, const char *item_loc)
 {
 	Launcher *launcher;
@@ -2839,18 +2819,11 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 }
 
 static void
-remove_panel (GtkWidget *widget)
-{
-	status_unparent (widget);
-	gtk_widget_destroy (widget);
-}
-
-static void
 remove_panel_accept (GtkWidget *w, int response, GtkWidget *panelw)
 {
 	if (response == GTK_RESPONSE_OK) {
 		panel_push_window_busy (w);
-		remove_panel (panelw);
+		gtk_widget_destroy (panelw);
 		panel_pop_window_busy (w);
 	}
 	gtk_widget_destroy (w);
@@ -2873,7 +2846,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	}
 
 	if(!global_config.confirm_panel_remove) {
-		remove_panel (panelw);
+		gtk_widget_destroy (panelw);
 		return;
 	}
 	dialog = gtk_message_dialog_new (NULL /* parent */,
@@ -3174,13 +3147,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			   G_CALLBACK(add_lock_to_panel),
 			   NULL);
 	setup_internal_applet_drag(menuitem, "LOCK:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem(menuitem, NULL, _("Status dock"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(try_add_status_to_panel),NULL);
-	setup_internal_applet_drag(menuitem, "STATUS:TRY");
 }
 
 /* just run the gnome-panel-preferences */

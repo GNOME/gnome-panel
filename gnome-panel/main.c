@@ -28,7 +28,6 @@
 #include "panel-config-global.h"
 #include "panel-shell.h"
 #include "session.h"
-#include "status.h"
 #include "xstuff.h"
 
 extern int config_sync_timeout;
@@ -153,7 +152,6 @@ kill_free_drawers (void)
 		PanelData *pd = li->data;
 		if (DRAWER_IS_WIDGET (pd->panel) &&
 		    PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->master_widget == NULL) {
-			status_unparent (pd->panel);
 			to_destroy = g_slist_prepend (to_destroy, pd->panel);
 		}
 	}
@@ -210,8 +208,6 @@ main(int argc, char **argv)
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/interface");
 	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
-
-	status_applet_create_offscreen ();
 
 	session_load ();	
 

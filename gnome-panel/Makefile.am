@@ -98,7 +98,6 @@ panel_sources =			\
 	panel-gconf.c		\
 	global-keys.c		\
 	panel-config.c  	\
-	status.c  		\
 	distribution.c		\
 	gnome-run.c  		\
 	menu.c  		\
@@ -140,7 +139,6 @@ panel_headers =			\
 	panel-config.h		\
 	panel-config-global.h  	\
 	panel-gconf.h		\
-	status.h  		\
 	distribution.h		\
 	gnome-run.h  		\
 	menu.h  		\

@@ -44,7 +44,6 @@
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "session.h"
-#include "status.h"
 #include "panel-applet-frame.h"
 #include "global-keys.h"
 
@@ -211,15 +210,6 @@ orientation_change (AppletInfo  *info,
 				       (gpointer)basep->panel);
 		}
 		break;
-	case APPLET_STATUS: {
-		StatusApplet *status = info->data;
-
-		if (status->orient != panel->orient) {
-			status->orient = panel->orient;
-			status_applet_update (status);
-		}
-		}
-		break;
 	default:
 		break;
 	}
@@ -271,24 +261,9 @@ void
 size_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	PanelSize size = panel->sz;
-	
-	switch (info->type) {
-	case APPLET_BONOBO:
+	if (info->type == APPLET_BONOBO)
 		panel_applet_frame_change_size (
-			PANEL_APPLET_FRAME (info->widget), size);
-		break;
-	case APPLET_STATUS: {
-		StatusApplet *status = info->data;
-
-		status->size = size;
-
-		status_applet_update (status);
-		}
-		break;
-	default:
-		break;
-	}
+			PANEL_APPLET_FRAME (info->widget), panel->sz);
 }
 
 static void
@@ -1278,9 +1253,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
 		ask_about_launcher(NULL, panel, pos, TRUE);
 
-	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
-		load_status_applet(panel, pos, TRUE, NULL);
-	} 
+	}
 
 	if (remove_applet &&
 	    action == GDK_ACTION_MOVE) {
@@ -1827,28 +1800,6 @@ panel_data_by_id (const char *id)
 		}
 	}
 	return NULL;
-}
-
-void
-status_unparent (GtkWidget *widget)
-{
-	GList *li;
-	PanelWidget *panel = NULL;
-	if (BASEP_IS_WIDGET (widget))
-		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
-	else if (FOOBAR_IS_WIDGET (widget))
-		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
-	for(li=panel->applet_list;li;li=li->next) {
-		AppletData *ad = li->data;
-		AppletInfo *info = g_object_get_data (G_OBJECT (ad->applet),
-						      "applet_info");
-		if(info->type == APPLET_STATUS) {
-			status_applet_put_offscreen(info->data);
-		} else if(info->type == APPLET_DRAWER) {
-			Drawer *dr = info->data;
-			status_unparent(dr->drawer);
-		}
-	}
 }
 
 void
