@@ -375,6 +375,48 @@ key_press_drawer (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	}
 }
 
+/*
+ * This function implements Esc moving focus from the drawer to the drawer
+ * icon and closing the drawer and Shift+Esc moving focus from the drawer
+ * to the drawer icon without closing the drawer when focus is in the drawer.
+ */
+static gboolean
+key_press_drawer_widget (GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+	Drawer *drawer;
+	DrawerWidget *drawerw;
+	PanelWidget *parent;
+	gboolean ret_val = FALSE;
+
+	switch (event->keyval) {
+	case GDK_Escape: {
+		drawer = data;
+		parent = PANEL_WIDGET (drawer->button->parent);
+		drawerw = DRAWER_WIDGET (drawer->drawer);
+
+		if (event->state == GDK_SHIFT_MASK) {
+			gtk_window_present (GTK_WINDOW (parent->panel_parent));
+			ret_val = TRUE;
+		} else if (event->state == 0) {
+			gtk_window_present (GTK_WINDOW (parent->panel_parent));
+			switch (BASEP_WIDGET (drawerw)->state) {
+			case BASEP_SHOWN:
+			case BASEP_AUTO_HIDDEN:
+				drawer_widget_close_drawer (drawerw, parent->panel_parent);
+				break;
+			default:
+				break;
+			}
+			ret_val = TRUE;
+			break;
+		} 
+	}
+	default:
+		break;
+	}
+	return ret_val;
+}
+
 static void  
 drag_data_get_cb (GtkWidget          *widget,
 		  GdkDragContext     *context,
@@ -476,6 +518,8 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 			    G_CALLBACK (focus_out_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "key_press_event",
 			    G_CALLBACK (key_press_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->drawer), "key_press_event",
+			    G_CALLBACK (key_press_drawer_widget), drawer);
 
 	g_object_set_data (G_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
 	gtk_widget_queue_resize (GTK_WIDGET (drawer_panel));
