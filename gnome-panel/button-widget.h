@@ -29,6 +29,7 @@ struct _ButtonWidget {
 	PanelOrientation  orientation;
 
 	guint             pressed_timeout;
+	int               size;
 
 	guint             ignore_leave  : 1;
 	guint             arrow         : 1;

@@ -1,5 +1,30 @@
 2003-07-01  Mark McLoughlin  <mark@skynet.ie>
 
+	* button-widget.[ch]:
+	(button_widget_load_pixbuf_and_scale),
+	(button_widget_reload_pixbuf), (button_widget_expose),
+	(button_widget_size_request), (button_widget_size_allocate),
+	(button_widget_instance_init): allow rectangular buttons and
+	make the button fully occupy the panel height.
+	
+	* panel-frame.c: (panel_frame_size_request): only request
+	room to draw bevels for the edges on which we are actually
+	going to draw the bevels.
+	
+	* panel-toplevel.c:
+	(panel_toplevel_update_size): only request room to draw bevels
+	for the edges on which we are actually going to draw the bevels.
+	(panel_toplevel_size_request): don't chain up to GtkWindow's
+	size_request, just ask the child for its requisition.
+	
+	* drawer.c: (load_drawer_applet):
+	* launcher.c: (load_launcher_applet):
+	* panel-menu-button.c: (panel_menu_button_load):
+	* panel-action-button.c: (panel_action_button_load): set the
+	expand_minor flag.
+
+2003-07-01  Mark McLoughlin  <mark@skynet.ie>
+
 	* button-widget.[ch]: remove the size property and args to
 	the constructors. We weren't using it anywhere.
 

@@ -602,6 +602,7 @@ load_drawer_applet (char          *toplevel_id,
 	PanelOrientation  orientation;
 	PanelToplevel    *toplevel = NULL;
 	Drawer           *drawer = NULL;
+	PanelWidget      *panel_widget;
 
 	orientation = panel_toplevel_get_orientation (parent_toplevel);
 
@@ -617,9 +618,11 @@ load_drawer_applet (char          *toplevel_id,
 	if (!drawer)
 		return;
 
+	panel_widget = panel_toplevel_get_panel_widget (parent_toplevel);
+
 	drawer->info = panel_applet_register (drawer->button, drawer,
 					      (GDestroyNotify) free_drawer,
-					      panel_toplevel_get_panel_widget (parent_toplevel),
+					      panel_widget,
 					      locked, pos, exactpos,
 					      PANEL_OBJECT_DRAWER, id);
 
@@ -632,6 +635,7 @@ load_drawer_applet (char          *toplevel_id,
 				G_CALLBACK (drawer_button_size_allocated), drawer);
 
 	panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
+	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
 
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button, drawer->tooltip, NULL);
 	gtk_window_present (GTK_WINDOW (drawer->toplevel));

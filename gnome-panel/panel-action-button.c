@@ -529,6 +529,8 @@ panel_action_button_load (PanelActionButtonType  type,
 	panel_applet_add_callback (
 		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
 
+	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
+
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);
 

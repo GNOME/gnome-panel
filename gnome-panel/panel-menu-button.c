@@ -578,6 +578,8 @@ panel_menu_button_load (const char  *menu_path,
 	panel_applet_add_callback (
 		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
 
+	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
+
 	panel_menu_button_connect_to_gconf (button);
 }
 

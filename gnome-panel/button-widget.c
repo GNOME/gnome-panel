@@ -241,13 +241,9 @@ button_widget_unset_pixbufs (ButtonWidget *button)
 }
 
 static void
-button_widget_load_pixbuf_and_scale (ButtonWidget *button,
-				     int           dest_width,
-				     int           dest_height)
+button_widget_load_pixbuf_and_scale (ButtonWidget *button)
 {
 	double scale;
-	double scale_x;
-	double scale_y;
 	int    width;
 	int    height;
 
@@ -282,13 +278,16 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button,
 			return;
 	}
 
+	if (button->size <= 1)
+		return;
+
 	width  = gdk_pixbuf_get_width  (button->pixbuf);
 	height = gdk_pixbuf_get_height (button->pixbuf);
 
-	scale_x = (double) dest_width  / width;
-	scale_y = (double) dest_height / height;
-
-	scale = MIN (scale_x, scale_y);
+	if (button->orientation & PANEL_HORIZONTAL_MASK)
+		scale = (double) button->size / height;
+	else
+		scale = (double) button->size / width;
 
 	width  *= scale;
 	height *= scale;
@@ -308,21 +307,15 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button,
 		g_object_unref (button->scaled_hc);
 	
 	button->scaled_hc = make_hc_pixbuf (button->scaled);
+
+	gtk_widget_queue_resize (GTK_WIDGET (button));
 }
 
 static void
 button_widget_reload_pixbuf (ButtonWidget *button)
 {
 	button_widget_unset_pixbufs (button);
-	if (GTK_WIDGET (button)->allocation.width  <= 1 ||
-	    GTK_WIDGET (button)->allocation.height <= 1)
-		return;
-
-	button_widget_load_pixbuf_and_scale (
-		button,
-		GTK_WIDGET (button)->allocation.width,
-		GTK_WIDGET (button)->allocation.height);
-	gtk_widget_queue_draw (GTK_WIDGET (button));
+	button_widget_load_pixbuf_and_scale (button);
 }
 
 static void
@@ -611,6 +604,9 @@ button_widget_expose (GtkWidget         *widget,
 		pb = button_widget->scaled_hc;
 	else
 		pb = button_widget->scaled;
+
+	if (!pb)
+		return FALSE;
 	
 	w = gdk_pixbuf_get_width (pb);
 	h = gdk_pixbuf_get_height (pb);
@@ -677,27 +673,34 @@ static void
 button_widget_size_request (GtkWidget      *widget,
 			    GtkRequisition *requisition)
 {
-	PanelWidget *panel = PANEL_WIDGET (widget->parent);
+	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	requisition->width = requisition->height = panel->sz;
+	if (button_widget->scaled) {
+		requisition->width  = gdk_pixbuf_get_width  (button_widget->scaled);
+		requisition->height = gdk_pixbuf_get_height (button_widget->scaled);
+	}
 }
 
 static void
 button_widget_size_allocate (GtkWidget     *widget,
 			     GtkAllocation *allocation)
 {
-	ButtonWidget *button_widget;
-	GtkButton    *button;
+	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
+	GtkButton    *button = GTK_BUTTON (widget);
+	int           size;
 
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
+	if (button_widget->orientation & PANEL_HORIZONTAL_MASK)
+		size = allocation->height;
+	else
+		size = allocation->width;
 
-	button_widget = BUTTON_WIDGET (widget);
-	button        = GTK_BUTTON (widget);
+	if (button_widget->size != size) {
+		button_widget->size = size;
+
+		button_widget_load_pixbuf_and_scale (button_widget);
+	}
 
 	widget->allocation = *allocation;
-
-	button_widget_load_pixbuf_and_scale (
-		button_widget, allocation->width, allocation->height);
 
 	if (GTK_WIDGET_REALIZED (widget)) {
 		PanelWidget *panel;
@@ -809,6 +812,7 @@ button_widget_instance_init (ButtonWidget *button)
 	button->dnd_highlight = FALSE;
 
 	button->pressed_timeout = 0;
+	button->size            = 0;
 
 	panel_signal_connect_object_while_alive (
 			panel_icon_theme, "changed",

@@ -2056,7 +2056,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 						   toplevel->priv->orientation);
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		height = MAX (MAX (requisition->height, toplevel->priv->size), minimum_height);
+		height = MAX (MAX (height, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
@@ -2065,7 +2065,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 		else
 			width  = MAX (MINIMUM_WIDTH, width);
 	} else {
-		width = MAX (MAX (requisition->width, toplevel->priv->size), minimum_height);
+		width = MAX (MAX (width, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
@@ -2075,8 +2075,14 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 			height = MAX (MINIMUM_WIDTH, height);
 	}
 
-	width  += 2 * widget->style->xthickness;
-	height += 2 * widget->style->ythickness;
+	if (toplevel->priv->edges & PANEL_EDGE_TOP)
+		height += widget->style->ythickness;
+	if (toplevel->priv->edges & PANEL_EDGE_BOTTOM)
+		height += widget->style->ythickness;
+	if (toplevel->priv->edges & PANEL_EDGE_LEFT)
+		width += widget->style->ythickness;
+	if (toplevel->priv->edges & PANEL_EDGE_RIGHT)
+		width += widget->style->ythickness;
 
 	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_width);
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
@@ -2527,14 +2533,16 @@ panel_toplevel_size_request (GtkWidget      *widget,
 			     GtkRequisition *requisition)
 {
 	PanelToplevel *toplevel;
+	GtkBin        *bin;
 	GdkRectangle   old_geometry;
 	int            position_changed = FALSE;
 	int            size_changed = FALSE;
 
 	toplevel = PANEL_TOPLEVEL (widget);
+	bin = GTK_BIN (widget);
 
-	if (GTK_WIDGET_CLASS (parent_class)->size_request)
-		GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+		gtk_widget_size_request (bin->child, requisition);
 
 	old_geometry = toplevel->priv->geometry;
 

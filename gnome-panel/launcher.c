@@ -748,6 +748,8 @@ load_launcher_applet (const char       *location,
 					   GTK_STOCK_PROPERTIES,
 					   _("_Properties"));
 
+	panel_widget_set_applet_expandable (panel, GTK_WIDGET (launcher->button), FALSE, TRUE);
+
 	/* setup button according to ditem */
 	setup_button (launcher);
 
