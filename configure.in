@@ -96,7 +96,7 @@ if test x$with_xinerama != xno ; then
 		AC_CHECK_LIB(Xinerama, XineramaQueryScreens, [
 		     	AC_DEFINE(HAVE_LIBXINERAMA)
 		     	XINERAMA_LIBS="-lXinerama"
-		     	XINERAMA_SUPPORT=yes],, $GTK_LIBS)
+		     	XINERAMA_SUPPORT=yes],, $PANEL_LIBS)
 	])
 fi
 AC_SUBST(XINERAMA_LIBS)
