@@ -470,22 +470,47 @@ button_widget_init (ButtonWidget *button)
 	button->in_button = FALSE;
 	button->ignore_leave = FALSE;
 	
+	button->pressed_timeout = 0;
+	
 	gtk_signal_connect(GTK_OBJECT(button),"destroy",
 			   GTK_SIGNAL_FUNC(button_widget_destroy),
 			   NULL);
 }
 
 static int
+pressed_timeout_func(gpointer data)
+{
+	ButtonWidget *button;
+
+	g_return_val_if_fail (data != NULL, FALSE);
+	g_return_val_if_fail (IS_BUTTON_WIDGET (data), FALSE);
+
+	button = BUTTON_WIDGET (data);
+	
+	button->pressed_timeout=0;
+	
+	return FALSE;
+}
+
+static int
 button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
+	ButtonWidget *button;
+
 	g_return_val_if_fail (widget != NULL, FALSE);
 	g_return_val_if_fail (IS_BUTTON_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
+	button = BUTTON_WIDGET (widget);
+
+	if (button->pressed_timeout)
+		return;
+
 	if (event->button == 1) {
-		ButtonWidget *button = BUTTON_WIDGET (widget);
 		gtk_grab_add(widget);
 		button_widget_down (button);
+		button->pressed_timeout =
+			gtk_timeout_add(600,pressed_timeout_func,button);
 	}
 	return TRUE;
 }
@@ -581,14 +606,16 @@ button_widget_unpressed(ButtonWidget *button)
 void
 button_widget_down(ButtonWidget *button)
 {
-	gtk_signal_emit(GTK_OBJECT(button),
-			button_widget_signals[PRESSED_SIGNAL]);
+	if(!button->pressed)
+		gtk_signal_emit(GTK_OBJECT(button),
+				button_widget_signals[PRESSED_SIGNAL]);
 }
 void
 button_widget_up(ButtonWidget *button)
 {
-	gtk_signal_emit(GTK_OBJECT(button),
-			button_widget_signals[UNPRESSED_SIGNAL]);
+	if(button->pressed)
+		gtk_signal_emit(GTK_OBJECT(button),
+				button_widget_signals[UNPRESSED_SIGNAL]);
 }
 
 

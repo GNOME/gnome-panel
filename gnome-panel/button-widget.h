@@ -37,8 +37,10 @@ struct _ButtonWidget
 	
 	guint			tile:2; /*the tile number, only used if tiles are on*/
 	guint			arrow:1; /*0 no arrow, 1 simple arrow, more to do*/
-
+	
 	PanelOrientType		orient;
+
+	guint			pressed_timeout;
 };
 
 struct _ButtonWidgetClass
