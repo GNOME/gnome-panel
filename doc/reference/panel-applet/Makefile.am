@@ -3,13 +3,16 @@
 # The name of the module, e.g. 'glib'.
 DOC_MODULE=panel-applet
 
+# Where the html is to be installed
+HTML_DIR=$(datadir)/gtk-doc/html
+
 # The top-level SGML file. Change it if you want.
 DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
 
 # The directory containing the source code. Relative to $(srcdir).
 # gtk-doc will search all .c & .h files beneath here for inline comments
 # documenting functions and macros.
-DOC_SOURCE_DIR=../../
+DOC_SOURCE_DIR=../../../panel
 
 # Extra options to supply to gtkdoc-scan.
 SCAN_OPTIONS=
@@ -97,11 +100,12 @@ extra_files =
 # contains GtkObjects/GObjects and you want to document signals and properties.
 GTKDOC_CFLAGS =				\
 	$(PANEL_CFLAGS)			\
-	-I$(srcdir)/../../
+	-I$(srcdir)/../../../panel      \
+	-I$(top_builddir)/panel
 
 GTKDOC_LIBS =				\
 	$(PANEL_LIBS)			\
-	../../libpanel-applet-2.la
+	../../../panel/libpanel-applet-2.la
 
 GTKDOC_CC=$(LIBTOOL) --mode=compile $(CC)
 GTKDOC_LD=$(LIBTOOL) --mode=link $(CC)

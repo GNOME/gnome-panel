@@ -2313,7 +2313,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if (panel->currently_dragged_applet) {
 				g_signal_stop_emission 
 					(G_OBJECT (widget), 
-					 g_signal_lookup (G_OBJECT (widget), "event"),
+					 g_signal_lookup ("event", G_OBJECT_TYPE (widget)),
 					 0);
 				return TRUE;
 			}
@@ -2330,8 +2330,10 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 		case GDK_BUTTON_RELEASE:
 			if (panel->currently_dragged_applet) {
-				g_signal_stop_emission 
-					(GTK_OBJECT (widget), "event");
+				g_signal_stop_emission
+					(G_OBJECT (widget),
+					g_signal_lookup ("event", G_OBJECT_TYPE (widget)),
+					0);
 				panel_widget_applet_drag_end(panel);
 				return TRUE;
 			}

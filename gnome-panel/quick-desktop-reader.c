@@ -56,6 +56,8 @@
 
 #include "quick-desktop-reader.h"
 
+#undef QUICK_DESKTOP_READER_DEBUG
+
 /* This shares a lot of code with gnome-desktop-item, hmmm .... */
 
 QuickDesktopItem *
@@ -409,7 +411,11 @@ quick_desktop_item_load_uri (const char *uri,
 
 	if (retval != NULL &&
 	    retval->name == NULL) {
+
+#ifdef QUICK_DESKTOP_READER_DEBUG
 		g_print ("no name: %s\n", uri);
+#endif /* QUICK_DESKTOP_READER_DEBUG */
+
 		quick_desktop_item_destroy (retval);
 		retval = NULL;
 	}

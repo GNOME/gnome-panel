@@ -333,8 +333,10 @@ fr_fill_dir (FileRec *fr, int sublevels)
 			continue;
 		}
 
+#ifdef MENU_FENTRY_DEBUG
 		g_print ("fr->name = \"%s\" , mfile->name = \"%s\"\n",
 			 fr->name, mfile->name);
+#endif
 
 		name = g_build_path ("/", fr->name, mfile->name, NULL);
 
@@ -350,7 +352,9 @@ fr_fill_dir (FileRec *fr, int sublevels)
 			if ( ! is_ext2 (mfile->name, ".desktop", ".kdelnk")) {
 				g_free (name);
 				free_mfile (mfile);
+#ifdef MENU_FENTRY_DEBUG
 				g_print ("BAD EXTENSION\n");
+#endif
 				continue;
 			}
 
@@ -397,9 +401,12 @@ fr_fill_dir (FileRec *fr, int sublevels)
 				quick_desktop_item_destroy (qitem);
 
 				dr->recs = g_slist_prepend (dr->recs, ffr);
-			} else {
+			} 
+#ifdef MENU_FENTRY_DEBUG
+			else {
 				g_print ("NO QITEM\n");
 			}
+#endif
 		}
 		g_free (name);
 		free_mfile (mfile);
@@ -417,8 +424,10 @@ fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 	
 	g_return_val_if_fail (muri != NULL, NULL);
 
+#ifdef MENU_FENTRY_DEBUG
 	g_print ("fr_read_dir (..., \"%s\", %ld, %d)\n",
 		 muri, (long)mtime, sublevels);
+#endif
 
 	info = gnome_vfs_file_info_new ();
 

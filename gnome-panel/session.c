@@ -50,7 +50,7 @@
 #include "multiscreen-stuff.h"
 #include "conditional.h"
 
-#undef SESSION_DEBUG 1
+#undef SESSION_DEBUG
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;

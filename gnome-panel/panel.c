@@ -1558,24 +1558,24 @@ basep_pos_connect_signals (BasePWidget *basep)
 	}
 
 	if (ALIGNED_IS_WIDGET (basep))
-		g_signal_connect_object (G_OBJECT (basep->pos),
-					 "align_change",
-					 G_CALLBACK (update_config_align),
-					 G_OBJECT (basep));
+		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
+					   "align_change",
+					   GTK_SIGNAL_FUNC (update_config_align),
+					   GTK_OBJECT (basep));
 	else if (FLOATING_IS_WIDGET (basep))
-		g_signal_connect_object (G_OBJECT (basep->pos),
-					 "floating_coords_change",
-					 G_CALLBACK (update_config_floating_pos),
-					 G_OBJECT(basep));
+		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
+					   "floating_coords_change",
+					   GTK_SIGNAL_FUNC (update_config_floating_pos),
+					   GTK_OBJECT(basep));
 	else if (SLIDING_IS_WIDGET (basep)) {
-		g_signal_connect_object (G_OBJECT (basep->pos),
-					 "anchor_change",
-					 G_CALLBACK (update_config_anchor),
-					 G_OBJECT(basep));
-		g_signal_connect_object (G_OBJECT (basep->pos),
-					 "offset_change",
-					 G_CALLBACK (update_config_offset),
-					 G_OBJECT (basep));
+		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
+					   "anchor_change",
+					   GTK_SIGNAL_FUNC (update_config_anchor),
+					   GTK_OBJECT(basep));
+		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
+					   "offset_change",
+					   GTK_SIGNAL_FUNC (update_config_offset),
+					   GTK_OBJECT (basep));
 	}
 }
 

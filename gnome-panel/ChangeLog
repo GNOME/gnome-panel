@@ -1,5 +1,27 @@
 2001-11-26  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu-fentry.c: (fr_fill_dir), (fr_read_dir): #ifdef out
+	  debugging messages.
+
+	* quick-desktop-reader.c: (quick_desktop_item_load_uri): ditto.
+
+	* menu.c: (fake_mapped_fake), (show_item_menu),
+	(create_menu_at_fr): revert g_signal_connect_object changes
+	back to gtk_signal_connect_object. Giving out warnings and not
+	sure how to fix it.
+	Use g_signal_handlers_disconnect_matched instead of
+	g_signal_disconnect_by_func which doesn't exist.
+
+	* panel-widget.c: (panel_widget_applet_event):
+	reverse order of params in g_signal_lookup calls.
+
+	* panel.c: (basep_pos_connect_signals): revert
+	 g_signal_connect_object changes back to 
+	 gtk_signal_connect_object. Giving out warnings and not sure
+	 how to fix it.
+
+2001-11-26  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am: cleanup libpanel-applet-2 building. Add
 	  GNOME_Panel_TestApplet.server.in to EXTRA_DIST.
 	
