@@ -332,10 +332,6 @@ display_preferences_dialog (BonoboUIComponent *uic,
 	gtk_dialog_set_default_response (
 		GTK_DIALOG (fish->preferences_dialog), GTK_RESPONSE_OK);
 
-	gnome_window_icon_set_from_file (
-		GTK_WINDOW (fish->preferences_dialog),
-		GNOME_ICONDIR "/gnome-fish.png");
-
 	fish->name_entry = glade_xml_get_widget (xml, "name_entry");
 	gtk_entry_set_text (GTK_ENTRY (fish->name_entry), fish->name);
 
@@ -469,10 +465,10 @@ display_about_dialog (BonoboUIComponent *uic,
 		"Sun GNOME Documentation Team <gdocteam@sun.com>",
           	NULL
 	};
+	/* Translator credits */
+	const char *translator_credits = _("translator-credits");
+
 	char        *authors [3];
-	GdkPixbuf   *pixbuf;
-	GError      *error = NULL;
-	char        *file;
 	char        *descr;
 
 	if (fish->about_dialog) {
@@ -486,40 +482,27 @@ display_about_dialog (BonoboUIComponent *uic,
 	authors [1] = _("(with minor help from George)");
 	authors [2] = NULL;
 
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					  "gnome-fish.png", FALSE, NULL);
-	pixbuf = gdk_pixbuf_new_from_file (file, &error);
-	g_free (file);
-
-	if (error) {
-		g_warning (G_STRLOC ": cannot open %s: %s", file, error->message);
-		g_error_free (error);
-	}
-
 	descr = g_strdup_printf (about_format, fish->name);
 		
-	fish->about_dialog =
-		gnome_about_new (_("Fish"),
-				 "3.4.7.4ac19",
-				 "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
-				 descr,
-				 (const char **) authors,
-				 documenters,
-				 NULL,
-				 pixbuf);
+	fish->about_dialog = gtk_about_dialog_new ();
+	g_object_set (fish->about_dialog,
+		      "name", _("Fish"),
+		      "version", "3.4.7.4ac19",
+		      "copyright", "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
+		      "comments", descr,
+		      "authors", (const char **) authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "gnome-fish",
+		      NULL);
 
 	g_free (descr);
 	g_free (authors [0]);
-
-	if (pixbuf)
-		g_object_unref (pixbuf);
 
 	gtk_window_set_wmclass (
 		GTK_WINDOW (fish->about_dialog), "fish", "Fish");
 	gtk_window_set_screen (GTK_WINDOW (fish->about_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
-	gnome_window_icon_set_from_file (GTK_WINDOW (fish->about_dialog),
-					 GNOME_ICONDIR "/gnome-fish.png");
 
 	g_signal_connect (fish->about_dialog, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
@@ -706,8 +689,6 @@ display_fortune_dialog (FishApplet *fish)
 				  G_CALLBACK (handle_fortune_response), fish);
 
 		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
-		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
-						 GNOME_ICONDIR"/gnome-fish.png");
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (fish));
 
@@ -1613,6 +1594,7 @@ fish_applet_fill (FishApplet *fish)
 					      NULL);
 	}
 
+	gtk_window_set_default_icon_name ("gnome-fish");
 	setup_fish_widget (fish);
 
 	return TRUE;
