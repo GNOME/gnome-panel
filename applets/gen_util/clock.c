@@ -23,6 +23,8 @@
 
 #include "clock.h"
 
+#define INTERNETSECOND (864/4)
+
 typedef struct _ClockData ClockData;
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
 struct _ClockData {
@@ -33,6 +35,7 @@ struct _ClockData {
 	int hourformat;
         gboolean showdate;
 	gboolean unixtime;
+	gboolean internettime;
 	gboolean gmt_time;
 	gboolean showtooltip;
 	ClockUpdateFunc update_func;
@@ -43,6 +46,7 @@ struct _ClockData {
 	int prop_hourformat;
         int prop_showdate;
 	int prop_unixtime;
+	int prop_internettime;
 	int prop_gmt_time;
 	int prop_showtooltip;
 };
@@ -82,6 +86,14 @@ clock_timeout_callback(gpointer data)
 						      cd);
 			return FALSE;
 		}
+	} else if(cd->internettime) {
+		if (cd->timeouttime != INTERNETSECOND) {
+			cd->timeouttime = INTERNETSECOND;
+			cd->timeout = gtk_timeout_add(cd->timeouttime,
+						      clock_timeout_callback,
+						      cd);
+			return FALSE;
+		}	   
 	} else {
 		if (cd->timeouttime != 36000) {
 			cd->timeouttime = 36000;
@@ -106,6 +118,7 @@ applet_save_session(GtkWidget * w,
 	gnome_config_set_int("clock/hourformat", cd->hourformat);
 	gnome_config_set_int("clock/showdate", cd->showdate);
 	gnome_config_set_int("clock/unixtime", cd->unixtime);
+	gnome_config_set_int("clock/internettime", cd->internettime);
 	gnome_config_set_int("clock/showtooltip", cd->showtooltip);
 	gnome_config_set_int("clock/gmt_time", cd->gmt_time);
 	gnome_config_pop_prefix();
@@ -141,6 +154,15 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			g_snprintf(hour,20,"%lu",(unsigned long)current_time);
 		} 
 		g_string_append(gs,hour);
+	} else if (cd->internettime) {
+		float itime;
+		time_t bmt;
+
+		bmt=current_time+3600;
+		tm = gmtime(&bmt);
+		itime=(tm->tm_hour*60+tm->tm_min+tm->tm_sec/60.0)*1000.0/1440.0;
+		g_snprintf(hour,20,"@%3.2f",itime);
+		g_string_append(gs,hour);
 	} else if (cd->hourformat == 12) {
 		/* This format string is used, to display the actual time in
 		   12 hour format.  */
@@ -161,7 +183,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 		g_string_append(gs,hour);
 	}
 
-	if (cd->showdate && !cd->unixtime) {
+	if (cd->showdate && !cd->unixtime && !cd->internettime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
 		    cd->size >= PIXEL_SIZE_STANDARD) {
 			/* This format string is used, to display the actual day,
@@ -183,7 +205,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	}
 	
 	/* Set the applets tooltip */
-	if (cd->showtooltip && !cd->unixtime) {
+	if (cd->showtooltip && !cd->unixtime && !cd->internettime) {
 		if (strftime(tooltip, 30, _("%A, %B %d"), tm) == 30)
 			date[29] = '\0';
 		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), tooltip);
@@ -286,6 +308,8 @@ create_clock_widget(ClockData *cd, GtkWidget * applet)
     
 	if(cd->unixtime)
 		cd->timeouttime = 1000;
+        else if(cd->internettime)
+                cd->timeouttime = INTERNETSECOND;
 	else
 		cd->timeouttime = 36000-(tm->tm_sec*600);
 	cd->timeout = gtk_timeout_add(cd->timeouttime,
@@ -375,6 +399,7 @@ make_clock_applet(const gchar * goad_id)
 		cd->showdate = gnome_config_get_int("clock/showdate=1");
 
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
+	cd->internettime = gnome_config_get_int("clock/internettime=0");
 	/* if on a small screen show tooltip with date by default */
 	if(gdk_screen_width()<=800)
 		cd->showtooltip = gnome_config_get_int("clock/showtooltip=1");
@@ -438,6 +463,7 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	cd->hourformat = cd->prop_hourformat;
 	cd->showdate = cd->prop_showdate;
 	cd->unixtime = cd->prop_unixtime;
+   	cd->internettime = cd->prop_internettime;
 	cd->gmt_time = cd->prop_gmt_time;
 	cd->showtooltip = cd->prop_showtooltip;
 
@@ -455,12 +481,14 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 
 	if(cd->unixtime)
 		cd->timeouttime = 1000;
+        else if(cd->internettime)
+                cd->timeouttime = INTERNETSECOND;
 	else
 		cd->timeouttime = 36000-(tm->tm_sec*600);
 	cd->timeout = gtk_timeout_add(cd->timeouttime,
 				      clock_timeout_callback,
 				      cd);		      
-	if(!cd->showtooltip || cd->unixtime)
+	if(!cd->showtooltip || cd->unixtime || cd->internettime)
   		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), "");
 				      
 /* gtk_widget_queue_resize (cd->clockw);*/
@@ -498,6 +526,15 @@ static void
 set_datasensitive_cb(GtkWidget * w, GtkWidget *wid)
 {
 	gtk_widget_set_sensitive(wid,!(GTK_TOGGLE_BUTTON(w)->active));
+}
+
+static void
+set_internettime_cb(GtkWidget * w, gpointer data)
+{
+	ClockData *cd = data;
+
+	cd->prop_internettime = GTK_TOGGLE_BUTTON(w)->active;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 }
 
 static void
@@ -539,6 +576,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *showdate;
 	GtkWidget *showtooltip;
 	GtkWidget *unixtime;
+	GtkWidget *internettime;
 	GtkWidget *use_gmt_time;
 	ClockData *cd = data;
 
@@ -657,7 +695,11 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), unixtime);
 	gtk_widget_show(unixtime);
 
-	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
+        internettime = gtk_check_button_new_with_label(_("Internet time"));
+	gtk_box_pack_start_defaults(GTK_BOX(vbox), internettime);
+	gtk_widget_show(internettime);
+   
+        gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
 			   (GtkSignalFunc) set_datasensitive_cb,
 			   hour_frame);
 	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
@@ -669,13 +711,42 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
 			   (GtkSignalFunc) set_datasensitive_cb,
 			   use_gmt_time);
+	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   internettime);
 			   
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(unixtime),
 				     cd->unixtime);
 	cd->prop_unixtime = cd->unixtime;
-	
+
+
+/* internet time */
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   hour_frame);
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   showdate);
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   showtooltip);
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   use_gmt_time);   
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   unixtime);   
+   
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(internettime),
+				     cd->internettime);
+	cd->prop_internettime = cd->internettime;
+/* */
+   
 	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
 			   (GtkSignalFunc) set_unixtime_cb,
+			   data);
+	gtk_signal_connect(GTK_OBJECT(internettime), "toggled",
+			   (GtkSignalFunc) set_internettime_cb,
 			   data);
 
 	gtk_widget_show(hour_frame);
