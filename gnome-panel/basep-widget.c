@@ -595,13 +595,10 @@ set_tip (GtkWidget *widget, gboolean showing)
 }
 
 static void
-basep_widget_state_change (BasePWidget *basep, BasePState old_state)
+setup_hidebuttons (BasePWidget *basep)
 {
-	if (BORDER_IS_WIDGET (basep))
-		basep_border_queue_recalc (basep->screen);
-
 	/*
-	 * If the state is changed to SHOWN or HIDDEN_LEFT or HIDDEN_RIGHT
+	 * If the state is SHOWN or HIDDEN_LEFT or HIDDEN_RIGHT
 	 * we update the tooltips on the buttons, and sensitivity.  Offscreen
 	 * stuff is insensitive.
 	 */
@@ -616,6 +613,24 @@ basep_widget_state_change (BasePWidget *basep, BasePState old_state)
 		set_tip (basep->hidebutton_n, TRUE);
 		set_tip (basep->hidebutton_s, TRUE);
 		set_tip (basep->hidebutton_e, TRUE);
+
+		/* move focus nicely in case orientation changed on us */
+		if (PANEL_WIDGET (basep->panel)->orient ==
+		    GTK_ORIENTATION_VERTICAL) {
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_e)
+				gtk_window_set_focus (GTK_WINDOW (basep),
+						      basep->hidebutton_s);
+			else if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_w)
+				gtk_window_set_focus (GTK_WINDOW (basep),
+						      basep->hidebutton_n);
+		} else {
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_n)
+				gtk_window_set_focus (GTK_WINDOW (basep),
+						      basep->hidebutton_w);
+			else if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_s)
+				gtk_window_set_focus (GTK_WINDOW (basep),
+						      basep->hidebutton_e);
+		}
 	} else if (basep->state == BASEP_HIDDEN_LEFT) {
 		GtkWidget *hb;
 		gboolean set_focus = FALSE;
@@ -623,13 +638,15 @@ basep_widget_state_change (BasePWidget *basep, BasePState old_state)
 		if (PANEL_WIDGET (basep->panel)->orient ==
 		    GTK_ORIENTATION_VERTICAL) {
 			hb = basep->hidebutton_s;
-			if (GTK_WINDOW (basep)->focus_widget ==
-			    basep->hidebutton_n)
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_n ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_e ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_w)
 				set_focus = TRUE;
 		} else {
 			hb = basep->hidebutton_e;
-			if (GTK_WINDOW (basep)->focus_widget ==
-			    basep->hidebutton_w)
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_w ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_n ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_s)
 				set_focus = TRUE;
 		}
 
@@ -652,13 +669,15 @@ basep_widget_state_change (BasePWidget *basep, BasePState old_state)
 		if (PANEL_WIDGET (basep->panel)->orient ==
 		    GTK_ORIENTATION_VERTICAL) {
 			hb = basep->hidebutton_n;
-			if (GTK_WINDOW (basep)->focus_widget ==
-			    basep->hidebutton_s)
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_s ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_e ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_w)
 				set_focus = TRUE;
 		} else {
 			hb = basep->hidebutton_w;
-			if (GTK_WINDOW (basep)->focus_widget ==
-			    basep->hidebutton_e)
+			if (GTK_WINDOW (basep)->focus_widget == basep->hidebutton_e ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_n ||
+			    GTK_WINDOW (basep)->focus_widget == basep->hidebutton_s)
 				set_focus = TRUE;
 		}
 
@@ -674,6 +693,16 @@ basep_widget_state_change (BasePWidget *basep, BasePState old_state)
 		if (set_focus)
 			gtk_window_set_focus (GTK_WINDOW (basep), hb);
 	}
+}
+
+
+static void
+basep_widget_state_change (BasePWidget *basep, BasePState old_state)
+{
+	if (BORDER_IS_WIDGET (basep))
+		basep_border_queue_recalc (basep->screen);
+
+	setup_hidebuttons (basep);
 }
 
 static void
@@ -1483,6 +1512,14 @@ basep_back_change (PanelWidget *panel,
 }
 
 static void
+basep_orient_change (PanelWidget *panel,
+		     GtkOrientation orient,
+		     BasePWidget *basep)
+{
+	setup_hidebuttons (basep);
+}
+
+static void
 basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
 {
 	BasePWidget *basep;
@@ -1598,9 +1635,13 @@ basep_widget_construct (gchar *panel_id,
 					rotate_pixmap_bg,
 					back_color);
 
+	g_signal_connect_after (G_OBJECT (basep->panel), "orient_change",
+				G_CALLBACK (basep_orient_change),
+				basep);
+
 	g_signal_connect_after (G_OBJECT (basep->panel), "back_change",
 				G_CALLBACK (basep_back_change),
-				 basep);
+				basep);
 
 	PANEL_WIDGET(basep->panel)->panel_parent = GTK_WIDGET(basep);
 	PANEL_WIDGET(basep->panel)->drop_widget = GTK_WIDGET(basep);
@@ -1691,6 +1732,9 @@ basep_widget_construct (gchar *panel_id,
 	if (state == BASEP_AUTO_HIDDEN &&
 	    mode != BASEP_AUTO_HIDE)
 		basep->state = BASEP_SHOWN;
+
+	/* setup the hide buttons stuff according to state */
+	setup_hidebuttons (basep);
 	       
 	if (klass->get_pos)
 		klass->get_pos (basep, &x, &y, 
