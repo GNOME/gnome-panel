@@ -185,6 +185,7 @@ panel_edit_dentry (const char *loc,
 			GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	
 	dedit = gnome_ditem_edit_new ();
@@ -263,6 +264,7 @@ panel_edit_direntry (const char *dir,
 				NULL);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
@@ -532,6 +534,7 @@ panel_new_launcher (const char *item_loc,
 				NULL);
 
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "create_menu_item", "Panel");
@@ -539,8 +542,7 @@ panel_new_launcher (const char *item_loc,
 	
 	dee = gnome_ditem_edit_new ();
 	gtk_container_set_border_width (GTK_CONTAINER (dee), 5);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), dee,
-			    TRUE, TRUE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), dee, TRUE, TRUE, 0);
 
 	gnome_ditem_edit_set_entry_type (GNOME_DITEM_EDIT (dee), 
 					 "Application");

@@ -644,6 +644,7 @@ create_properties_dialog (Launcher  *launcher,
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher Properties"));
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	help = gtk_dialog_add_button (
@@ -892,6 +893,7 @@ ask_about_launcher (const char  *file,
 
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog)->vbox), 2);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
@@ -900,8 +902,7 @@ ask_about_launcher (const char  *file,
 	dee = GNOME_DITEM_EDIT (gnome_ditem_edit_new ());
 	gtk_container_set_border_width (GTK_CONTAINER (dee), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-			    GTK_WIDGET (dee),
-			    TRUE, TRUE, GNOME_PAD_SMALL);
+			    GTK_WIDGET (dee), TRUE, TRUE, 0);
 
 	panel->create_launcher_dialog_list = 
 					g_slist_append (panel->create_launcher_dialog_list,
