@@ -25,15 +25,19 @@
  *      Jacob Berkman <jacob@helixcode.com>
  */
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
 #include <string.h>
 #include <panel-applet.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnomeui/gnome-help.h>
 
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/selector.h>
 
+#include "wncklet.h"
 #include "window-menu.h"
 
 typedef struct {
@@ -49,34 +53,8 @@ window_menu_help (BonoboUIComponent *uic,
                   WindowMenu        *window_menu,
                   const char        *verb) 
 {
-	GError *error = NULL;
-
-	gnome_help_display_desktop_on_screen (
-		NULL, "user-guide", "user-guide.xml", "gosmetacity-27",
-		gtk_widget_get_screen (window_menu->applet),
-		&error);
-
-	if (error) {
-		GtkWidget *dialog;
-
-		dialog = gtk_message_dialog_new (
-				NULL,
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_OK,
-				_("There was an error displaying help: %s"),
-				error->message);
-
-		g_signal_connect (dialog, "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (window_menu->applet));
-		gtk_widget_show (dialog);
-		g_error_free (error);
-	}
+	wncklet_display_help (window_menu->applet, "user-guide",
+			      "user-guide.xml", "gosmetacity-27");
 }
 
 static void
@@ -96,37 +74,18 @@ window_menu_about (BonoboUIComponent *uic,
         };
 	const char *translator_credits = _("translator-credits");
 
-	if (window_menu->about_dialog) {
-		gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
-				       gtk_widget_get_screen (window_menu->applet));
-		gtk_window_present (GTK_WINDOW (window_menu->about_dialog));
-		return;
-	}
-
-	window_menu->about_dialog = gtk_about_dialog_new ();
-	g_object_set (window_menu->about_dialog,
-		      "name",  _("Window Selector"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
-				   "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
-				   "Copyright \xc2\xa9 2000 Helix Code, Inc.",
-		      "comments", _("The Window Selector shows a list of all windows and lets you browse them."),
-		      "authors", authors,
-		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "panel-window-menu",
-		      NULL);
-
-	gtk_window_set_wmclass (GTK_WINDOW (window_menu->about_dialog), "window-menu", "WindowMenu");
-	gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
-			       gtk_widget_get_screen (window_menu->applet));
-
-	gtk_window_set_icon_name (GTK_WINDOW (window_menu->about_dialog),
-				  "panel-window-menu"); 
-
-	g_signal_connect (window_menu->about_dialog, "destroy",
-			  (GCallback) gtk_widget_destroyed, &window_menu->about_dialog);
-	gtk_widget_show (window_menu->about_dialog);
+	wncklet_display_about (window_menu->applet, &window_menu->about_dialog,
+			       _("Window Selector"),
+			       "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
+			       "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
+			       "Copyright \xc2\xa9 2000 Helix Code, Inc.",
+			       _("The Window Selector shows a list of all windows and lets you browse them."),
+			       authors,
+			       documenters,
+			       translator_credits,
+			       "panel-window-menu",
+			       "window-menu",
+			       "WindowMenu");
 }
 
 static const BonoboUIVerb window_menu_verbs [] =
@@ -155,49 +114,8 @@ window_menu_change_background (PanelApplet               *applet,
                                GdkPixmap                 *pixmap,
                                WindowMenu                *window_menu)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (window_menu->selector), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (window_menu->selector), rc_style);
-	g_object_unref (rc_style);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (GTK_WIDGET (window_menu->selector),
-				      GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (GTK_WIDGET (window_menu->selector)->style);
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (window_menu->selector), style);
-		break;
-	}
-}
-
-
-static void
-set_tooltip (GtkWidget  *widget,
-             const char *tip)
-{
-	GtkTooltips *tooltips;
-
-	tooltips = g_object_get_data (G_OBJECT (widget), "window-menu-tooltips");
-	if (!tooltips) {
-		tooltips = gtk_tooltips_new ();
-		g_object_ref (tooltips);
-		gtk_object_sink (GTK_OBJECT (tooltips));
-		g_object_set_data_full (G_OBJECT (widget), "window-menu-tooltips", tooltips,
-					(GDestroyNotify) g_object_unref);
-	}
-
-	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
+	wncklet_change_background (GTK_WIDGET (window_menu->selector), type,
+				   color, pixmap);
 }
 
 static gboolean
@@ -330,19 +248,6 @@ filter_button_press (GtkWidget *widget,
 	return FALSE;
 }
 
-static WnckScreen *
-applet_get_screen (GtkWidget *applet)
-{
-	int screen_num;
-
-	if (!gtk_widget_has_screen (applet))
-		return wnck_screen_get_default ();
-
-	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
-
-	return wnck_screen_get (screen_num);
-}
-
 gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
@@ -353,7 +258,7 @@ window_menu_applet_fill (PanelApplet *applet)
 
 	window_menu->applet = GTK_WIDGET (applet);
 	force_no_focus_padding (window_menu->applet);
-	set_tooltip (window_menu->applet, _("Window Selector"));
+	wncklet_set_tooltip (window_menu->applet, _("Window Selector"));
  
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 	window_menu->size = panel_applet_get_size (applet);
@@ -365,7 +270,7 @@ window_menu_applet_fill (PanelApplet *applet)
 	panel_applet_setup_menu_from_file (applet, NULL, "GNOME_WindowMenuApplet.xml",
 					   NULL, window_menu_verbs, window_menu);
 
-	screen = applet_get_screen (window_menu->applet);
+	screen = wncklet_get_screen (window_menu->applet);
 	window_menu->selector = wnck_selector_new (screen);
 	gtk_container_add (GTK_CONTAINER (window_menu->applet), 
 			   window_menu->selector);

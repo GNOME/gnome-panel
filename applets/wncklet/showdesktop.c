@@ -21,21 +21,24 @@
  * 02111-1307, USA.
  */
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
-#include "showdesktop.h"
-#include <gtk/gtkaboutdialog.h>
+#endif
+
 #include <gtk/gtkicontheme.h>
 #include <gtk/gtktogglebutton.h>
-#include <gtk/gtktooltips.h>
 #include <gtk/gtkimage.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkdnd.h>
-#include <libgnomeui/gnome-help.h>
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/screen.h>
-#include "wncklet.h"
 #include <gdk/gdkx.h>
+
+#include <libwnck/screen.h>
+
+#include "wncklet.h"
+#include "showdesktop.h"
 
 #include <string.h>
 
@@ -79,24 +82,6 @@ static void button_toggled_callback       (GtkWidget       *button,
 static void show_desktop_changed_callback (WnckScreen      *screen,
                                            ShowDesktopData *sdd);
 
-static void
-set_tooltip (GtkWidget  *widget,
-             const char *tip)
-{
-        GtkTooltips *tooltips;
-
-        tooltips = g_object_get_data (G_OBJECT (widget), "tooltips");
-        if (!tooltips) {
-                tooltips = gtk_tooltips_new ();
-                g_object_ref (tooltips);
-                gtk_object_sink (GTK_OBJECT (tooltips));
-                g_object_set_data_full (G_OBJECT (widget), "tooltips", tooltips,
-                                        (GDestroyNotify) g_object_unref);
-        }
-
-        gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
-}
-
 /* this is when the panel orientation changes */
 
 static void
@@ -134,30 +119,8 @@ applet_change_background (PanelApplet               *applet,
                           GdkPixmap                 *pixmap,
                           ShowDesktopData           *sdd)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (sdd->applet), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (sdd->applet), rc_style);
-	g_object_unref (rc_style);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (GTK_WIDGET (sdd->applet),
-				      GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (GTK_WIDGET (sdd->applet)->style);
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (sdd->applet), style);
-		break;
-	}
+	wncklet_change_background (GTK_WIDGET (sdd->applet), type,
+				   color, pixmap);
 }
 
 /* this is when the panel size changes */
@@ -263,11 +226,11 @@ static void
 update_button_display (ShowDesktopData *sdd)
 {
         if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (sdd->button))) {
-                set_tooltip (sdd->button,
-                             _("Click here to restore hidden windows."));
+                wncklet_set_tooltip (sdd->button,
+				     _("Click here to restore hidden windows."));
         } else {
-                set_tooltip (sdd->button,
-                             _("Click here to hide all windows and show the desktop."));
+                wncklet_set_tooltip (sdd->button,
+				     _("Click here to hide all windows and show the desktop."));
         }
 }
 
@@ -525,32 +488,8 @@ display_help_dialog (BonoboUIComponent *uic,
                      ShowDesktopData         *sdd,
                      const gchar       *verbname)
 {
-        GError *error = NULL;
-
-        gnome_help_display_desktop_on_screen (
-                NULL, "user-guide", "user-guide.xml", "gospanel-564",
-                gtk_widget_get_screen (sdd->applet),
-		&error);
-
-        if (error) {
-                GtkWidget *dialog;
-                dialog = gtk_message_dialog_new (NULL,
-                                                 GTK_DIALOG_MODAL,
-                                                 GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_OK,
-                                                 _("There was an error displaying help: %s"),
-                                                 error->message);
-
-                g_signal_connect (G_OBJECT (dialog), "response",
-                                  G_CALLBACK (gtk_widget_destroy),
-                                  NULL);
-
-                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-                gtk_window_set_screen (GTK_WINDOW (dialog),
-                                       gtk_widget_get_screen (sdd->applet));
-                gtk_widget_show (dialog);
-                g_error_free (error);
-        }
+	wncklet_display_help (sdd->applet, "user-guide",
+			      "user-guide.xml", "gospanel-564");
 }
 
 static void
@@ -570,36 +509,16 @@ display_about_dialog (BonoboUIComponent *uic,
         /* Translator credits */
         const char *translator_credits = _("translator-credits");
 
-        if (sdd->about_dialog) {
-                gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
-                                       gtk_widget_get_screen (sdd->applet));
-                gtk_window_present (GTK_WINDOW (sdd->about_dialog));
-                return;
-        }
-
-        sdd->about_dialog = gtk_about_dialog_new ();
-        g_object_set (sdd->about_dialog,
-                      "name",  _("Show Desktop Button"),
-                      "version", VERSION,
-                      "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
-                      "comments", _("This button lets you hide all windows and show the desktop."),
-                      "authors", authors,
-                      "documenters", documenters,
-                      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-                      "logo_icon_name", "gnome-fs-desktop",
-                      NULL);
-
-        gtk_window_set_wmclass (GTK_WINDOW (sdd->about_dialog), "show-desktop", "show-desktop");
-        gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
-                               gtk_widget_get_screen (sdd->applet));
-
-	gtk_window_set_icon_name (GTK_WINDOW (sdd->about_dialog),
-				  "gnome-fs-desktop"); 
-
-        g_signal_connect (G_OBJECT(sdd->about_dialog), "destroy",
-                          (GCallback)gtk_widget_destroyed, &sdd->about_dialog);
-
-        gtk_widget_show (sdd->about_dialog);
+	wncklet_display_about (sdd->applet, &sdd->about_dialog,
+			       _("Show Desktop Button"),
+			       "Copyright \xc2\xa9 2002 Red Hat, Inc.",
+			       _("This button lets you hide all windows and show the desktop."),
+			       authors,
+			       documenters,
+			       translator_credits,
+			       "gnome-fs-desktop",
+			       "show-desktop",
+			       "show-desktop");
 }
 
 static void

@@ -24,15 +24,48 @@
 #ifndef __WNCKLET_H__
 #define __WNCKLET_H__
 
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
+#include <libwnck/screen.h>
+
 #include <glib.h>
+#include <gtk/gtkwidget.h>
+#include <panel-applet.h>
 
 G_BEGIN_DECLS
 
-void wncklet_connect_while_alive (gpointer    object,
-			          const char *signal,
-			          GCallback   func,
-			          gpointer    func_data,
-			          gpointer    alive_object);
+void        wncklet_set_tooltip         (GtkWidget  *widget,
+					 const char *tip);
+
+void        wncklet_display_about       (GtkWidget   *applet,
+					 GtkWidget  **dialog,
+					 const char  *name,
+					 const char  *copyright,
+					 const char  *comments,
+					 const char **authors,
+					 const char **documenters,
+					 const char  *translator_credits,
+					 const char  *icon_name,
+					 const char  *wmclass_name,
+					 const char  *wmclass_class);
+
+void        wncklet_display_help        (GtkWidget  *widget,
+					 const char *doc_id,
+					 const char *filename,
+					 const char *link_id);
+
+void        wncklet_change_background   (GtkWidget                 *widget,
+					 PanelAppletBackgroundType  type,
+					 GdkColor                  *color,
+					 GdkPixmap                 *pixmap);
+
+WnckScreen *wncklet_get_screen          (GtkWidget *applet);
+	
+void        wncklet_connect_while_alive (gpointer    object,
+					 const char *signal,
+					 GCallback   func,
+					 gpointer    func_data,
+					 gpointer    alive_object);
+
 G_END_DECLS
 
 #endif

@@ -19,14 +19,14 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
-#include <gtk/gtk.h>
-#include <libbonobo.h>
+#include <gtk/gtkdialog.h>
 #include <libgnomeui/gnome-help.h>
 #include <libgnome/gnome-desktop-item.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
+#include "wncklet.h"
 #include "window-list.h"
 
 typedef struct {
@@ -128,26 +128,13 @@ response_cb (GtkWidget    *widget,
 		gtk_widget_hide (widget);
 }
 
-static WnckScreen *
-applet_get_screen (GtkWidget *applet)
-{
-	int screen_num;
-
-	if (!gtk_widget_has_screen (applet))
-		return wnck_screen_get_default ();
-
-	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
-
-	return wnck_screen_get (screen_num);
-}
-
 static void
 applet_realized (PanelApplet  *applet,
 		 TasklistData *tasklist)
 {
 	WnckScreen *screen;
 
-	screen = applet_get_screen (GTK_WIDGET (applet));
+	screen = wncklet_get_screen (GTK_WIDGET (applet));
 
 	wnck_tasklist_set_screen (WNCK_TASKLIST (tasklist->tasklist), screen);
 
@@ -205,30 +192,8 @@ applet_change_background (PanelApplet               *applet,
 			  GdkPixmap                 *pixmap,
 			  TasklistData              *tasklist)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (tasklist->applet), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (tasklist->applet), rc_style);
-	g_object_unref (rc_style);
-
-	switch (type) {
-	case PANEL_NO_BACKGROUND:
-		break;
-	case PANEL_COLOR_BACKGROUND:
-		gtk_widget_modify_bg (GTK_WIDGET (tasklist->applet),
-				      GTK_STATE_NORMAL, color);
-		break;
-	case PANEL_PIXMAP_BACKGROUND:
-		style = gtk_style_copy (GTK_WIDGET (tasklist->applet)->style);
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (tasklist->applet), style);
-		break;
-	}
+	wncklet_change_background (GTK_WIDGET (tasklist->applet), type,
+				   color, pixmap);
 }
 
 static void
@@ -658,7 +623,7 @@ window_list_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	tasklist->screen = applet_get_screen (tasklist->applet);
+	tasklist->screen = wncklet_get_screen (tasklist->applet);
 
 	/* because the tasklist doesn't respond to signals at the moment */
 	wnck_screen_force_update (tasklist->screen);
@@ -750,31 +715,8 @@ display_help_dialog (BonoboUIComponent *uic,
 		     TasklistData      *tasklist,
 		     const gchar       *verbname)
 {
-	GError *error = NULL;
-
-	gnome_help_display_desktop_on_screen (
-			NULL, "window-list", "window-list", NULL,
-			gtk_widget_get_screen (tasklist->applet),
-			&error);
-	if (error) {
-		GtkWidget *dialog;
-		dialog = gtk_message_dialog_new (NULL,
-						 GTK_DIALOG_MODAL,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						  _("There was an error displaying help: %s"),
-						 error->message);
-
-		g_signal_connect (dialog, "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (tasklist->applet));
-		gtk_widget_show (dialog);
-		g_error_free (error);
-	}
+	wncklet_display_help (tasklist->applet, "window-list",
+			      "window-list", NULL);
 }
 
 static void
@@ -793,36 +735,16 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	const char *translator_credits = _("translator-credits");
 
-	if (tasklist->about) {
-		gtk_window_set_screen (GTK_WINDOW (tasklist->about),
-				       gtk_widget_get_screen (tasklist->applet));
-		gtk_window_present (GTK_WINDOW (tasklist->about));
-		return;
-	}
-
-	tasklist->about = gtk_about_dialog_new ();
-	g_object_set (tasklist->about,
-		      "name",  _("Window List"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-		      "comments", _("The Window List shows a list of all windows and lets you browse them."),
-		      "authors", authors,
-		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "panel-window-list",
-		      NULL);
-
-	gtk_window_set_wmclass (GTK_WINDOW (tasklist->about), "tasklist", "Tasklist");
-	gtk_window_set_screen (GTK_WINDOW (tasklist->about),
-			       gtk_widget_get_screen (tasklist->applet));
-
-	gtk_window_set_icon_name (GTK_WINDOW (tasklist->about),
-				  "panel-window-list"); 
-	
-	g_signal_connect (G_OBJECT(tasklist->about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &tasklist->about);
-	
-	gtk_widget_show (tasklist->about);
+	wncklet_display_about (tasklist->applet, &tasklist->about,
+			       _("Window List"),
+			       "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
+			       _("The Window List shows a list of all windows and lets you browse them."),
+			       authors,
+			       documenters,
+			       translator_credits,
+			       "panel-window-list",
+			       "tasklist",
+			       "Tasklist");
 }
 
 static void

@@ -21,8 +21,7 @@
 
 #include <stdlib.h>
 
-#include <gtk/gtk.h>
-#include <libbonobo.h>
+#include <gtk/gtkdialog.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
@@ -92,26 +91,13 @@ pager_update (PagerData *pager)
 				 pager->display_all);
 }
 
-static WnckScreen *
-applet_get_screen (GtkWidget *applet)
-{
-	int screen_num;
-
-	if (!gtk_widget_has_screen (applet))
-		return wnck_screen_get_default ();
-
-	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
-
-	return wnck_screen_get (screen_num);
-}
-
 static void
 applet_realized (PanelApplet *applet,
 		 PagerData   *pager)
 {
 	WnckScreen *screen;
 
-	screen = applet_get_screen (GTK_WIDGET (applet));
+	screen = wncklet_get_screen (GTK_WIDGET (applet));
 
 	wnck_pager_set_screen (WNCK_PAGER (pager->pager), screen);
 }
@@ -151,15 +137,6 @@ applet_change_background (PanelApplet               *applet,
 			  GdkPixmap                 *pixmap,
 			  PagerData                 *pager)
 {
-	GtkRcStyle *rc_style;
-	GtkStyle   *style;
-
-	/* reset style */
-	gtk_widget_set_style (GTK_WIDGET (pager->applet), NULL);
-	rc_style = gtk_rc_style_new ();
-	gtk_widget_modify_style (GTK_WIDGET (pager->applet), rc_style);
-	g_object_unref (rc_style);
-
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
 		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
@@ -168,19 +145,15 @@ applet_change_background (PanelApplet               *applet,
 	case PANEL_COLOR_BACKGROUND:
 		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
 					    GTK_SHADOW_NONE);
-		gtk_widget_modify_bg (GTK_WIDGET (pager->applet),
-				      GTK_STATE_NORMAL, color);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
 		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
 					    GTK_SHADOW_NONE);
-		style = gtk_style_copy (GTK_WIDGET (pager->applet)->style);
-		if (style->bg_pixmap[GTK_STATE_NORMAL])
-			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
-		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
-		gtk_widget_set_style (GTK_WIDGET (pager->applet), style);
 		break;
 	}
+
+	wncklet_change_background (GTK_WIDGET (pager->applet), type,
+				   color, pixmap);
 }
 
 static gboolean
@@ -197,7 +170,7 @@ applet_scroll (PanelApplet    *applet,
 	if (event->type != GDK_SCROLL)
 		return FALSE;
 
-	screen         = applet_get_screen (GTK_WIDGET (applet));
+	screen         = wncklet_get_screen (GTK_WIDGET (applet));
 	index          = wnck_workspace_get_number (wnck_screen_get_active_workspace (screen));
 	n_workspaces   = wnck_screen_get_workspace_count (screen);
 	n_columns      = n_workspaces / pager->n_rows;
@@ -496,7 +469,7 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 		break;
 	}
 
-	pager->screen = applet_get_screen (pager->applet);
+	pager->screen = wncklet_get_screen (pager->applet);
 
 	/* because the pager doesn't respond to signals at the moment */
 	wnck_screen_force_update (pager->screen);
@@ -559,33 +532,8 @@ display_help_dialog (BonoboUIComponent *uic,
 		     PagerData         *pager,
 		     const gchar       *verbname)
 {
-	GError *error = NULL;
-
-	gnome_help_display_desktop_on_screen (
-		NULL, "workspace-switcher", "workspace-switcher", NULL,
-		gtk_widget_get_screen (pager->applet),
-		&error);
-
-	if (error) {
-		GtkWidget *dialog;
-		dialog = gtk_message_dialog_new (NULL,
-						 GTK_DIALOG_MODAL,
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						  _("There was an error displaying help: %s"),
-						 error->message);
-
-		g_signal_connect (dialog, "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  NULL);
-
-		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (pager->applet));
-		gtk_widget_show (dialog);
-		g_error_free (error);
-
-	}
+	wncklet_display_help (pager->applet, "workspace-switcher",
+			      "workspace-switcher", NULL);
 }
 
 static void
@@ -605,34 +553,16 @@ display_about_dialog (BonoboUIComponent *uic,
 	};
 	const char *translator_credits = _("translator-credits");
 
-	if (pager->about) {
-		gtk_window_set_screen (GTK_WINDOW (pager->about),
-				       gtk_widget_get_screen (pager->applet));
-		gtk_window_present (GTK_WINDOW (pager->about));
-		return;
-	}
-
-	pager->about = gtk_about_dialog_new ();
-	g_object_set (pager->about,
-		      "name",  _("Workspace Switcher"),
-		      "version", VERSION,
-		      "copyright", "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-		      "comments", _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
-		      "authors", authors,
-		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "gnome-workspace",
-		      NULL);
-
-	gtk_window_set_wmclass (GTK_WINDOW (pager->about), "pager", "Pager");
-	gtk_window_set_screen (GTK_WINDOW (pager->about),
-			       gtk_widget_get_screen (pager->applet));
-
-	gtk_window_set_icon_name (GTK_WINDOW (pager->about), "gnome-workspace"); 
-	g_signal_connect (G_OBJECT(pager->about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &pager->about);
-	
-	gtk_widget_show (pager->about);
+	wncklet_display_about (pager->applet, &pager->about,
+			       _("Workspace Switcher"),
+			       "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
+			       _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
+			       authors,
+			       documenters,
+			       translator_credits,
+			       "gnome-workspace",
+			       "pager",
+			       "Pager");
 }
 
 

@@ -1,5 +1,40 @@
 2005-02-02  Vincent Untz  <vincent@vuntz.net>
 
+	Share some code in wncklet.c since it's used by many applets.
+
+	* showdesktop.c: (set_tooltip): kill
+	(applet_change_background): just call wncklet_change_background()
+	(update_button_display): updated with wncklet_set_tooltip()
+	(display_help_dialog): just call wncklet_display_help()
+	(display_about_dialog): just call wncklet_display_about()
+	* window-list.c: (applet_get_screen): kill
+	(applet_realized): updated with wncklet_get_screen()
+	(applet_change_background): just call wncklet_change_background()
+	(window_list_applet_fill): updated with wncklet_get_screen()
+	(display_help_dialog): just call wncklet_display_help()
+	(display_about_dialog): just call wncklet_display_about()
+	* window-menu.c: (window_menu_help): just call wncklet_display_help()
+	(window_menu_about): just call wncklet_display_about()
+	(window_menu_change_background): just call wncklet_change_background()
+	(set_tooltip): kill
+	(applet_get_screen): kill
+	(window_menu_applet_fill): updated with wncklet_set_tooltip() &
+	wncklet_get_screen()
+	* wncklet.[ch]: (wncklet_set_tooltip): new
+	(wncklet_display_about): new
+	(wncklet_display_help): new
+	(wncklet_change_background): new
+	(wncklet_get_screen): new
+	* workspace-switcher.c: (applet_get_screen): kill
+	(applet_realized): updated with wncklet_get_screen()
+	(applet_change_background): call wncklet_change_background()
+	(applet_scroll): updated with wncklet_get_screen()
+	(workspace_switcher_applet_fill): updated with wncklet_get_screen()
+	(display_help_dialog): just call wncklet_display_help()
+	(display_about_dialog): just call wncklet_display_about()
+
+2005-02-02  Vincent Untz  <vincent@vuntz.net>
+
 	* showdesktop.c: (update_icon): don't update the icon if we don't have
 	the icon theme yet
 

@@ -21,15 +21,162 @@
  *      Mark McLoughlin <mark@skynet.ie>
  */
 
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
 #include <string.h>
 #include <panel-applet.h>
+#include <libgnomeui/gnome-help.h>
+#include <gtk/gtkaboutdialog.h>
+#include <gtk/gtkmessagedialog.h>
+#include <gtk/gtktooltips.h>
+#include <libwnck/screen.h>
 
 #include "wncklet.h"
 #include "window-menu.h"
 #include "workspace-switcher.h"
 #include "window-list.h"
 #include "showdesktop.h"
+
+void
+wncklet_set_tooltip (GtkWidget  *widget,
+		     const char *tip)
+{
+        GtkTooltips *tooltips;
+
+        tooltips = g_object_get_data (G_OBJECT (widget), "tooltips");
+        if (!tooltips) {
+                tooltips = gtk_tooltips_new ();
+                g_object_ref (tooltips);
+                gtk_object_sink (GTK_OBJECT (tooltips));
+                g_object_set_data_full (G_OBJECT (widget), "tooltips", tooltips,
+                                        (GDestroyNotify) g_object_unref);
+        }
+
+        gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
+}
+
+void
+wncklet_display_about (GtkWidget   *applet,
+		       GtkWidget  **dialog,
+		       const char  *name,
+		       const char  *copyright,
+		       const char  *comments,
+		       const char **authors,
+		       const char **documenters,
+		       const char  *translator_credits,
+		       const char  *icon_name,
+		       const char  *wmclass_name,
+		       const char  *wmclass_class)
+{
+	if (*dialog) {
+		gtk_window_set_screen (GTK_WINDOW (*dialog),
+				       gtk_widget_get_screen (applet));
+		gtk_window_present (GTK_WINDOW (*dialog));
+		return;
+	}
+
+	*dialog = gtk_about_dialog_new ();
+	g_object_set (*dialog,
+		      "name",  name,
+		      "version", VERSION,
+		      "copyright", copyright,
+		      "comments", comments,
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", icon_name,
+		      NULL);
+
+	gtk_window_set_wmclass (GTK_WINDOW (*dialog),
+				wmclass_name, wmclass_class);
+	gtk_window_set_screen (GTK_WINDOW (*dialog),
+			       gtk_widget_get_screen (applet));
+
+	gtk_window_set_icon_name (GTK_WINDOW (*dialog), icon_name); 
+	g_signal_connect (*dialog, "destroy",
+			  (GCallback) gtk_widget_destroyed, dialog);
+	
+	gtk_widget_show (*dialog);
+}
+
+void
+wncklet_display_help (GtkWidget  *widget,
+		      const char *doc_id,
+		      const char *filename,
+		      const char *link_id)
+{
+	GError *error = NULL;
+
+	gnome_help_display_desktop_on_screen (NULL, doc_id, filename, link_id,
+					      gtk_widget_get_screen (widget),
+					      &error);
+
+	if (error) {
+		GtkWidget *dialog;
+
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_DESTROY_WITH_PARENT,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_OK,
+						 _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (dialog, "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (widget));
+		gtk_widget_show (dialog);
+		g_error_free (error);
+	}
+}
+void
+wncklet_change_background (GtkWidget                 *widget,
+			   PanelAppletBackgroundType  type,
+			   GdkColor                  *color,
+			   GdkPixmap                 *pixmap)
+{
+	GtkRcStyle *rc_style;
+	GtkStyle   *style;
+
+	/* reset style */
+	gtk_widget_set_style (widget, NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (widget, rc_style);
+	g_object_unref (rc_style);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gtk_widget_modify_bg (widget, GTK_STATE_NORMAL, color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		style = gtk_style_copy (widget->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (widget, style);
+		break;
+	}
+}
+
+WnckScreen *
+wncklet_get_screen (GtkWidget *applet)
+{
+	int screen_num;
+
+	if (!gtk_widget_has_screen (applet))
+		return wnck_screen_get_default ();
+
+	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
+
+	return wnck_screen_get (screen_num);
+}
 
 void
 wncklet_connect_while_alive (gpointer    object,
