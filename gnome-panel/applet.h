@@ -4,23 +4,14 @@
 #include <glib.h>
 #include <gdk/gdktypes.h>
 #include "panel-widget.h"
+#include "panel-gconf.h"
 
 G_BEGIN_DECLS
-
-#define EMPTY_ID    "Empty"
-#define MENU_ID     "Menu"
-#define DRAWER_ID   "Drawer"
-#define LOGOUT_ID   "Logout"
-#define LAUNCHER_ID "Launcher"
-#define LOCK_ID     "Lock"
-#define STATUS_ID   "Status"
-#define BONOBO_ID   "Bonobo"
 
 typedef enum {
 	APPLET_DRAWER,
 	APPLET_MENU,
 	APPLET_LAUNCHER,
-	APPLET_EMPTY,
 	APPLET_STATUS,
 	APPLET_BONOBO,
 	APPLET_ACTION,
@@ -97,6 +88,10 @@ void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
 void        panel_applet_save_position           (AppletInfo *applet_info,
 						  const char *gconf_key,
 						  gboolean    immediate);
+
+void panel_applet_load_defaults_for_screen (PanelGConfKeyType  type,
+					    const char        *profile,
+					    int                screen);
 
 int         panel_applet_get_position    (AppletInfo *applet);
 

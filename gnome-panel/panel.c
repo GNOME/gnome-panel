@@ -1772,23 +1772,191 @@ panel_data_by_id (const char *id)
 	return NULL;
 }
 
+void
+panel_register_window_icon (void)
+{
+	char *panel_icon;
+
+	panel_icon = panel_pixmap_discovery ("gnome-panel.png", FALSE);
+
+	if (panel_icon) {
+		gnome_window_icon_set_default_from_file (panel_icon);
+		g_free (panel_icon);
+	}
+}
+
+GdkScreen *
+panel_screen_from_toplevel (GtkWidget *panel)
+{
+	GdkScreen  *retval = NULL;
+	GdkDisplay *display;
+
+	display = gdk_display_get_default ();
+
+	if (BASEP_IS_WIDGET (panel))
+	        retval = gdk_display_get_screen (
+	                        display, BASEP_WIDGET (panel)->screen);
+
+	else if (FOOBAR_IS_WIDGET (panel))
+	        retval = gdk_display_get_screen (
+	                        display, FOOBAR_WIDGET (panel)->screen);
+
+	return retval;
+}
+
+int
+panel_monitor_from_toplevel (GtkWidget *panel)
+{
+	int retval = -1;
+
+	if (BASEP_IS_WIDGET (panel))
+	        retval = BASEP_WIDGET (panel)->monitor;
+
+	else if (FOOBAR_IS_WIDGET (panel))
+	        retval = FOOBAR_WIDGET (panel)->monitor;
+
+	return retval;
+}
+
+int
+panel_screen_from_panel_widget (PanelWidget *panel)
+{
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
+	g_return_val_if_fail (panel->panel_parent != NULL, 0);
+	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
+			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
+
+	if (BASEP_IS_WIDGET (panel->panel_parent))
+		return BASEP_WIDGET (panel->panel_parent)->screen;
+	else
+		return FOOBAR_WIDGET (panel->panel_parent)->screen;
+}
+
+int
+panel_monitor_from_panel_widget (PanelWidget *panel)
+{
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
+	g_return_val_if_fail (panel->panel_parent != NULL, 0);
+	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
+			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
+
+	if (BASEP_IS_WIDGET (panel->panel_parent))
+		return BASEP_WIDGET (panel->panel_parent)->monitor;
+	else
+		return FOOBAR_WIDGET (panel->panel_parent)->monitor;
+}
+
+gboolean
+panel_is_applet_right_stick (GtkWidget *applet)
+{
+        PanelWidget *panel;
+
+        g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
+        g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
+
+        panel = PANEL_WIDGET (applet->parent);
+
+        /* These types of panels are *always* packed */
+        if (ALIGNED_IS_WIDGET (panel->panel_parent) ||
+            BORDER_IS_WIDGET (panel->panel_parent)  ||
+            SLIDING_IS_WIDGET (panel->panel_parent) ||
+            FLOATING_IS_WIDGET (panel->panel_parent))
+                return FALSE;
+
+        return panel_widget_is_applet_stuck (panel, applet);
+}
+
+static char *
+panel_get_string (const char *profile,
+		  const char *panel_id,
+		  const char *key,
+		  const char *default_val)
+{
+	const char *full_key;
+	char       *retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_string (full_key, default_val);
+
+	return retval;
+}
+
+static int
+panel_get_int (const char *profile,
+	       const char *panel_id,
+	       const char *key,
+	       gint        default_val)
+{
+	const char *full_key;
+	int         retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_int (full_key, default_val);
+
+	return retval;
+}
+
+static gboolean
+panel_get_bool (const char *profile,
+		const char *panel_id,
+		const char *key,
+		gboolean    default_val)
+{
+	const char *full_key;
+	gboolean    retval;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	retval = panel_gconf_get_bool (full_key, default_val);
+
+	return retval;
+}
+
 static void
-panel_ensure_panel_per_screen (int screen)
+panel_set_string (const char *profile,
+		  const char *panel_id,
+		  const char *key,
+		  const char *value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_string (full_key, value);	
+}
+
+static void
+panel_set_int (const char *profile,
+	       const char *panel_id,
+	       const char *key,
+	       int         value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_int (full_key, value);	
+}
+
+static void
+panel_set_bool (const char *profile,
+		const char *panel_id,
+		const char *key,
+		gboolean    value)
+{
+	const char *full_key;
+
+	full_key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS, profile, panel_id, key);
+	panel_gconf_set_bool (full_key, value);	
+}
+
+static void
+panel_load_fallback_default_panel (int screen)
 {
 	GtkWidget *panel;
-	GSList    *l;
-
-	for (l = panel_list; l; l = l->next) {
-		PanelData *pdata = l->data;
-
-		if (BASEP_IS_WIDGET (pdata->panel) &&
-		    BASEP_WIDGET (pdata->panel)->screen == screen)
-			return;
-
-		else if (FOOBAR_IS_WIDGET (pdata->panel) &&
-			 FOOBAR_WIDGET (pdata->panel)->screen == screen)
-			return;
-	}
 
 	panel = foobar_widget_new (NULL, screen, 0);
 	panel_save_to_gconf (panel_setup (panel));
@@ -1900,93 +2068,6 @@ panel_apply_global_config (void)
 	panel_global_keys_setup ();
 }
 
-
-static char *
-panel_get_string (const char *profile,
-		  const char *panel_id,
-		  const char *key,
-		  const char *default_val)
-{
-	const char *full_key;
-	char       *retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_string (full_key, default_val);
-
-	return retval;
-}
-
-static int
-panel_get_int (const char *profile,
-	       const char *panel_id,
-	       const char *key,
-	       gint        default_val)
-{
-	const char *full_key;
-	int         retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_int (full_key, default_val);
-
-	return retval;
-}
-
-static gboolean
-panel_get_bool (const char *profile,
-		const char *panel_id,
-		const char *key,
-		gboolean    default_val)
-{
-	const char *full_key;
-	gboolean    retval;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	retval = panel_gconf_get_bool (full_key, default_val);
-
-	return retval;
-}
-
-static void
-panel_set_string (const char *profile,
-		  const char *panel_id,
-		  const char *key,
-		  const char *value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_string (full_key, value);	
-}
-
-static void
-panel_set_int (const char *profile,
-	       const char *panel_id,
-	       const char *key,
-	       int         value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_int (full_key, value);	
-}
-
-static void
-panel_set_bool (const char *profile,
-		const char *panel_id,
-		const char *key,
-		gboolean    value)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS, profile, panel_id, key);
-	panel_gconf_set_bool (full_key, value);	
-}
 
 static GtkWidget *
 panel_load_edge_panel_from_gconf (const char          *profile,
@@ -2372,6 +2453,121 @@ panel_load_panel_from_gconf (const char *profile,
 	}
 }
 
+static gboolean
+panel_load_default_panel_for_screen (const char *profile,
+				     const char *panel_id,
+				     int         screen)
+{
+	GConfClient *client;
+	GError      *error = NULL;
+	GSList      *panels, *l;
+	const char  *key;
+	char        *new_panel_id;
+
+	new_panel_id = panel_gconf_load_default_config_for_screen (
+				PANEL_GCONF_PANELS, profile, panel_id, screen, &error);
+	if (error) {
+		g_warning ("Could not load default config for panel '%s' on screen %d: '%s'\n",
+			   panel_id, screen, error->message);
+		g_error_free (error);
+		return FALSE;
+	}
+
+	panel_set_int (profile, new_panel_id, "screen", screen);
+
+	panel_load_panel_from_gconf (profile, new_panel_id);
+
+	client = panel_gconf_get_client ();
+
+	key = panel_gconf_general_key (profile, "panel_id_list");
+	panels = gconf_client_get_list (
+				client, key, GCONF_VALUE_STRING, NULL);
+
+	for (l = panels; l; l = l->next)
+		if (!strcmp (new_panel_id, l->data))
+			break;
+	
+	if (!l) {
+		panels = g_slist_append (panels, new_panel_id);	
+		new_panel_id = NULL;
+
+		gconf_client_set_list (
+			client, key, GCONF_VALUE_STRING, panels, NULL);
+	}
+
+	panel_g_slist_deep_free (panels);
+	g_free (new_panel_id);
+
+	return TRUE;
+}
+
+static gboolean
+panel_load_default_panels_for_screen (const char *profile,
+				      int         screen)
+{
+	GConfClient *client;
+	GSList      *panels, *l;
+	GError      *error = NULL;
+	int          loaded_panels;
+
+	client = panel_gconf_get_client ();
+
+	/* FIXME: "medium" shouldn't be hardcoded.
+	 */
+	panels = gconf_client_all_dirs (
+			client,
+			"/schemas/apps/panel/default_profiles/medium/panels",
+			&error);
+	if (error) {
+		g_warning ("Cannot list default panels: '%s'\n", error->message);
+		g_error_free (error);
+		return FALSE;
+	}
+
+	loaded_panels = 0;
+
+	for (l = panels; l; l = l->next) {
+		char *panel_id;
+
+		panel_id = g_path_get_basename (l->data);
+
+		if (panel_load_default_panel_for_screen (profile, panel_id, screen))
+			loaded_panels++;
+
+		g_free (panel_id);
+		g_free (l->data);
+	}
+
+	g_slist_free (panels);
+
+	panel_applet_load_defaults_for_screen (PANEL_GCONF_APPLETS, profile, screen);
+	panel_applet_load_defaults_for_screen (PANEL_GCONF_OBJECTS, profile, screen);
+
+	return loaded_panels > 0;
+}
+
+static void
+panel_ensure_panel_per_screen (const char *profile,
+			       int         screen)
+{
+	GSList *l;
+
+	for (l = panel_list; l; l = l->next) {
+		PanelData *pdata = l->data;
+
+		if (BASEP_IS_WIDGET (pdata->panel) &&
+		    BASEP_WIDGET (pdata->panel)->screen == screen)
+			return;
+
+		else if (FOOBAR_IS_WIDGET (pdata->panel) &&
+			 FOOBAR_WIDGET (pdata->panel)->screen == screen)
+			return;
+	}
+
+	if (!panel_load_default_panels_for_screen (profile, screen))
+		panel_load_fallback_default_panel (screen);
+}
+
 void
 panel_load_panels_from_gconf (void)
 {
@@ -2391,23 +2587,18 @@ panel_load_panels_from_gconf (void)
 	for (l = panel_ids; l; l = l->next)
 		panel_load_panel_from_gconf (profile, l->data);
 
-	/* Failsafe! */
-	if (panel_ids == NULL) {
-		GtkWidget *panel;
-
+	if (!panel_ids) {
 		panel_error_dialog (
 			gdk_screen_get_default (),
 			"no_panels_found",
 			_("No panels were found in your configuration.  "
 			  "I will create a menu panel for you"));
 
-		panel = foobar_widget_new (NULL, 0, 0);
-		panel_save_to_gconf (panel_setup (panel));
-		gtk_widget_show (panel);
+		panel_load_fallback_default_panel (0);
 	}
 
 	for (i = 0; i < multiscreen_screens (); i++)
-		panel_ensure_panel_per_screen (i);
+		panel_ensure_panel_per_screen (profile, i);
 
 	panel_g_slist_deep_free (panel_ids);
 }
@@ -2604,98 +2795,4 @@ panel_remove_from_gconf (PanelWidget *panel)
 
 	if (new_panels)
 		panel_g_slist_deep_free (new_panels);
-}
-
-void
-panel_register_window_icon (void)
-{
-	char *panel_icon;
-
-	panel_icon = panel_pixmap_discovery ("gnome-panel.png", FALSE);
-
-	if (panel_icon) {
-		gnome_window_icon_set_default_from_file (panel_icon);
-		g_free (panel_icon);
-	}
-}
-
-GdkScreen *
-panel_screen_from_toplevel (GtkWidget *panel)
-{
-	GdkScreen  *retval = NULL;
-	GdkDisplay *display;
-
-	display = gdk_display_get_default ();
-
-	if (BASEP_IS_WIDGET (panel))
-	        retval = gdk_display_get_screen (
-	                        display, BASEP_WIDGET (panel)->screen);
-
-	else if (FOOBAR_IS_WIDGET (panel))
-	        retval = gdk_display_get_screen (
-	                        display, FOOBAR_WIDGET (panel)->screen);
-
-	return retval;
-}
-
-int
-panel_monitor_from_toplevel (GtkWidget *panel)
-{
-	int retval = -1;
-
-	if (BASEP_IS_WIDGET (panel))
-	        retval = BASEP_WIDGET (panel)->monitor;
-
-	else if (FOOBAR_IS_WIDGET (panel))
-	        retval = FOOBAR_WIDGET (panel)->monitor;
-
-	return retval;
-}
-
-int
-panel_screen_from_panel_widget (PanelWidget *panel)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
-			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
-
-	if (BASEP_IS_WIDGET (panel->panel_parent))
-		return BASEP_WIDGET (panel->panel_parent)->screen;
-	else
-		return FOOBAR_WIDGET (panel->panel_parent)->screen;
-}
-
-int
-panel_monitor_from_panel_widget (PanelWidget *panel)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
-			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
-
-	if (BASEP_IS_WIDGET (panel->panel_parent))
-		return BASEP_WIDGET (panel->panel_parent)->monitor;
-	else
-		return FOOBAR_WIDGET (panel->panel_parent)->monitor;
-}
-
-gboolean
-panel_is_applet_right_stick (GtkWidget *applet)
-{
-        PanelWidget *panel;
-
-        g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
-        g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
-
-        panel = PANEL_WIDGET (applet->parent);
-
-        /* These types of panels are *always* packed */
-        if (ALIGNED_IS_WIDGET (panel->panel_parent) ||
-            BORDER_IS_WIDGET (panel->panel_parent)  ||
-            SLIDING_IS_WIDGET (panel->panel_parent) ||
-            FLOATING_IS_WIDGET (panel->panel_parent))
-                return FALSE;
-
-        return panel_widget_is_applet_stuck (panel, applet);
 }

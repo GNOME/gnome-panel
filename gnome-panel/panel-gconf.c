@@ -33,7 +33,7 @@ panel_gconf_get_profile (void)
  * Return Value: a pointer to the static string buffer.
  */
 G_CONST_RETURN char *
-panel_gconf_sprintf (const gchar *format,
+panel_gconf_sprintf (const char *format,
 		     ...)
 {
 	static char *buffer = NULL;
@@ -71,7 +71,7 @@ panel_gconf_sprintf (const gchar *format,
 }
 
 G_CONST_RETURN char * 
-panel_gconf_global_key (const gchar *key)
+panel_gconf_global_key (const char *key)
 {
 	return panel_gconf_sprintf ("/apps/panel/global/%s", key);
 }
@@ -208,22 +208,22 @@ panel_gconf_get_string (const char *key,
 }
 
 void 
-panel_gconf_set_int (const gchar *key,
-		     gint         value)
+panel_gconf_set_int (const char *key,
+		     int         value)
 {
 	gconf_client_set_int (panel_gconf_get_client (), key, value, NULL);
 }
 
 void 
-panel_gconf_set_bool (const gchar *key,
-		      gboolean     value)
+panel_gconf_set_bool (const char *key,
+		      gboolean    value)
 {
 	gconf_client_set_bool (panel_gconf_get_client (), key, value, NULL);
 }
 
 void 
-panel_gconf_set_string (const gchar *key,
-			const gchar *value)
+panel_gconf_set_string (const char *key,
+			const char *value)
 {
 	gconf_client_set_string (panel_gconf_get_client (), key, value, NULL);
 }
@@ -245,7 +245,7 @@ panel_notify_object_dead (guint notify_id)
 }
 
 guint
-panel_gconf_notify_add_while_alive (const gchar           *key, 
+panel_gconf_notify_add_while_alive (const char            *key, 
 				    GConfClientNotifyFunc  notify_func, 
 				    GObject               *alive_object)
 {
@@ -306,15 +306,15 @@ panel_gconf_clean_dir (GConfClient *client,
 }
 
 static void
-panel_gconf_associate_schemas_in_dir (GConfClient  *client,
-				      const gchar  *profile_dir,
-				      const gchar  *schema_dir,
+panel_gconf_associate_schemas_in_dir (GConfClient *client,
+				      const char  *profile_dir,
+				      const char  *schema_dir,
 				      GError      **error)
 {
 	GSList *list, *l;
 
 #ifdef PANEL_GCONF_DEBUG
-	fprintf (stderr, "associating schemas in %s to %s\n", schema_dir, profile_dir);
+	g_print ("associating schemas in %s to %s\n", schema_dir, profile_dir);
 #endif
 
 	list = gconf_client_all_entries (client, schema_dir, error);
@@ -395,7 +395,7 @@ panel_gconf_setup_profile (const char *profile)
 	}
 
 #ifdef PANEL_GCONF_DEBUG
-	fprintf (stderr, "%s does not exist\n", profile_dir);
+	g_print ("%s does not exist\n", profile_dir);
 #endif
 
 	/*
@@ -417,4 +417,52 @@ panel_gconf_setup_profile (const char *profile)
 	/*
 	 * FIXME: setup notifies
 	 */
+}
+
+char *
+panel_gconf_load_default_config_for_screen (PanelGConfKeyType   type,
+					    const char         *profile,
+					    const char         *id,
+					    int                 screen,
+					    GError            **error)
+{
+	const char *subdir = NULL;
+	const char *schemas_dir;
+	char       *new_dir;
+	char       *new_id;
+
+	switch (type) {
+	case PANEL_GCONF_PANELS:
+		subdir = "panels";
+		break;
+	case PANEL_GCONF_OBJECTS:
+		subdir = "objects";
+		break;
+	case PANEL_GCONF_APPLETS:
+		subdir = "applets";
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	schemas_dir = panel_gconf_sprintf (
+				"/schemas/apps/panel/default_profiles/medium/%s/%s",
+				subdir, id);
+
+	new_id = g_strdup_printf ("%s_screen%d", id, screen);
+
+	new_dir = g_strdup_printf ("/apps/panel/profiles/%s/%s/%s", profile, subdir, new_id);
+
+	panel_gconf_associate_schemas_in_dir (
+		panel_gconf_get_client (), new_dir, schemas_dir, error);
+
+	g_free (new_dir);
+
+	if (error && *error) {
+		g_free (new_id);
+		new_id = NULL;
+	}
+
+	return new_id;
 }

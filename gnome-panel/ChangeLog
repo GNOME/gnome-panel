@@ -1,5 +1,45 @@
 2002-12-20  Mark McLoughlin  <mark@skynet.ie>
 
+	/me shovels more crap onto the dung heap that is the panel.
+
+	More precisely, fix #93177 by loading the default panel
+	configuration on all screens, instead of just loading
+	a foobar on the non-default screens.
+
+	* applet.h: kill APPLET_EMPTY and all the string
+	ids which haven't been used since 1.4.
+
+	* applet.c:
+	(panel_applet_get_full_gconf_key): kill. dead. good bye.
+	(panel_applet_load_from_unique_id),
+	(panel_applet_load_list): use PanelGConfKeyType to
+	distinguish between "applets" and "objects" instead of
+	using the APPLET_EMPTY hack.
+	(panel_applet_load_default_applet_for_screen),
+	(panel_applet_load_defaults_for_screen): impl loading the
+	configuration for the default set of applets onto a
+	particular screen.
+	(panel_applet_save_position), (panel_applet_save_to_gconf):
+	use panel_gconf_full_key instead of panel_applet_get_full_gconf_key;
+
+	* panel-gconf.[ch]:
+	(panel_gconf_load_default_config_for_screen): impl method
+	for applying the schemas for a default panel or applet
+	to a new panel or applet on a given screen.
+
+	* panel.c:
+	(panel_load_fallback_default_panel): the worst case scenario.
+	Just load a foobar.
+	(panel_load_default_panel_for_screen),
+	(panel_load_default_panels_for_screen): impl loading the
+	configuration for the default set of panels onto a
+        particular screen.
+	(panel_ensure_panel_per_screen): load the default panels
+	if no other panels are on that screen.
+	(panel_load_panels_from_gconf): upd.
+
+2002-12-20  Mark McLoughlin  <mark@skynet.ie>
+
 	Fixes #93541, panel hogging the CPU when hide_delay
 	and show_delay are zero.
 
