@@ -135,6 +135,10 @@ save_applet_configuration(AppletInfo *info, gint *num)
 			g_free(fullpath);
 
 			fullpath = g_copy_strings(path,"parameters",NULL);
+			gnome_config_set_string(fullpath, info->path);
+			g_free(fullpath);
+
+			fullpath = g_copy_strings(path,"parameters2",NULL);
 			gnome_config_set_string(fullpath, info->params);
 			g_free(fullpath);
 		} else
@@ -446,6 +450,8 @@ panel_clean_applet(gint applet_id)
 
 	if(info->id_str) g_free(info->id_str);
 	info->id_str=NULL;
+	if(info->path) g_free(info->path);
+	info->path=NULL;
 	if(info->params) g_free(info->params);
 	info->params=NULL;
 	if(info->cfg) g_free(info->cfg);
@@ -772,7 +778,7 @@ applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
 }
 
 int
-applet_request_id (const char *path, char **cfgpath,
+applet_request_id (const char *path, const char *param, char **cfgpath,
 		   char **globcfgpath, guint32 * winid)
 {
 	AppletInfo *info;
@@ -780,7 +786,8 @@ applet_request_id (const char *path, char **cfgpath,
 
 	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
 		if(info && info->type == APPLET_EXTERN_PENDING &&
-		   strcmp(info->params,path)==0) {
+		   strcmp(info->path,path)==0 &&
+		   strcmp(info->params,param)==0) {
 			/*we started this and already reserved a spot
 			  for it, including the socket widget*/
 			*cfgpath = info->cfg;
@@ -792,7 +799,7 @@ applet_request_id (const char *path, char **cfgpath,
 		}
 	}
 
-	*winid = reserve_applet_spot (EXTERN_ID, path, 0, 0, NULL,
+	*winid = reserve_applet_spot (EXTERN_ID, path, param, 0, 0, NULL,
 				      APPLET_EXTERN_RESERVED);
 	if(*winid == 0) {
 		*globcfgpath = NULL;
@@ -835,8 +842,8 @@ applet_register (const char * ior, int applet_id)
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
 guint32
-reserve_applet_spot (const char *id_str, const char *path, int panel,
-		     int pos, char *cfgpath, AppletType type)
+reserve_applet_spot (const char *id_str, const char *path, const char *param,
+		     int panel, int pos, char *cfgpath, AppletType type)
 {
 	GtkWidget *socket;
 
@@ -847,9 +854,9 @@ reserve_applet_spot (const char *id_str, const char *path, int panel,
 	gtk_widget_show (socket);
 	
 	/*we save the ior in the id field of the appletinfo and the 
-	  path in the params field*/
+	  path in the path field*/
 	if(!register_toy(socket,NULL,NULL,g_strdup(id_str),g_strdup(path),
-		         pos,panel,cfgpath, type)) {
+			 g_strdup(param), pos,panel,cfgpath, type)) {
 		g_warning("Couldn't add applet");
 		return 0;
 	}
@@ -869,7 +876,7 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 	PanelWidget *panel = data;
 	gint panel_num = find_panel(panel);
 
-	load_applet(MENU_ID,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(MENU_ID,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
 		    panel_num!=-1?panel_num:0,NULL);
 
 	return TRUE;
@@ -980,6 +987,7 @@ register_toy(GtkWidget *applet,
 	     GtkWidget * assoc,
 	     gpointer data,
 	     char *id_str,
+	     char *path,
 	     char *params,
 	     int pos,
 	     int panel,
@@ -1017,6 +1025,10 @@ register_toy(GtkWidget *applet,
 	info.menu = NULL;
 	info.data = data;
 	info.id_str = g_strdup(id_str);
+	if(path)
+		info.path = g_strdup(path);
+	else
+		info.path = NULL;
 	if(params)
 		info.params = g_strdup(params);
 	else
@@ -1048,6 +1060,8 @@ register_toy(GtkWidget *applet,
 			gtk_widget_unref(eventbox);
 			if(info.cfg)
 				g_free(info.cfg);
+			if(info.path)
+				g_free(info.path);
 			if(info.params)
 				g_free(info.params);
 			g_free(info.id_str);

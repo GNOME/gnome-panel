@@ -77,8 +77,8 @@ struct _AppletInfo {
 	gpointer data;
 	gchar *id_str; /*used for IOR or string Id*/
 	gchar *cfg; /*used for passing around the per applet config path*/
-	gchar *params; /*used for parameters to internal applets and for path
-			 for external applets*/
+	gchar *path; /*used for path on external applets */
+	gchar *params; /*used for parameters to applets */
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
 	gint destroy_callback;
 };
@@ -99,6 +99,7 @@ gint register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,
 		  gpointer data,
 		  char *id_str,
+		  char *path,
 		  char *params,
 		  int pos,
 		  int panel,
@@ -112,11 +113,12 @@ void apply_global_config(void);
 void panel_clean_applet(gint applet_id);
 
 /*stuff for corba*/
-int applet_request_id (const char *path, char **cfgpath,
+int applet_request_id (const char *path, const char *param, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
 void applet_register (const char * ior, int applet_id);
 void applet_request_glob_cfg (char **globcfgpath);
 guint32 reserve_applet_spot (const char *id_str, const char *path,
+			     const char *param,
 			     int panel, int pos, char *cfgpath,
 			     AppletType type);
 void applet_abort_id(gint applet_id);
@@ -134,7 +136,8 @@ void applet_remove_from_panel(gint applet_id);
 extern char *cookie;
 
 /*this is in main.c*/
-void load_applet(char *id, char *params, int pos, int panel, char *cfgpath);
+void load_applet(char *id, char *path, char *params, int pos, int panel,
+		 char *cfgpath);
 void orientation_change(gint applet_id, PanelWidget *panel);
 
 #define get_applet_info(applet_id) \

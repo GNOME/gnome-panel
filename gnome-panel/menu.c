@@ -140,9 +140,9 @@ free_string (GtkWidget *widget, void *data)
 }
 
 static gint
-add_to_panel (char *applet, char *arg)
+add_to_panel (char *applet, char *path, char *arg)
 {
-	load_applet(applet,arg,PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	load_applet(applet,path,arg,PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 	return TRUE;
 }
 
@@ -151,20 +151,53 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 
-	return add_to_panel (LAUNCHER_ID, ii->location);
+	return add_to_panel (LAUNCHER_ID, NULL, ii->location);
 }
 
 static gint
 add_dir_to_panel (GtkWidget *widget, void *data)
 {
-	return add_to_panel (MENU_ID, data);
+	return add_to_panel (MENU_ID, NULL, data);
+}
+
+
+/* a fairly dumb parser, spaces have to be escaped with \ not in
+   quotes!!!*/
+static void
+get_path_param(gchar *in, gchar **path, gchar **param)
+{
+	gchar *p;
+
+	*path = g_strdup(in);
+	p = *path;
+
+	do
+		p=strchr(p,' ');
+	while(p && p>*path && *(p-1)=='\\');
+	
+	if(!p || p>*path) {
+		*param = g_strdup("");
+	} else {
+		*p = '\0';
+		*param = g_strdup(p+1);
+	}
 }
 
 static gint
 add_applet (GtkWidget *w, gpointer data)
 {
 	GnomeDesktopEntry *ii = data;
-	return add_to_panel(EXTERN_ID,ii->exec);
+	char *path;
+	char *param;
+	gint r;
+
+	/*parse out the path and arguments with this really REALLY dumb*/
+	get_path_param(ii->exec,&path,&param);
+
+	r = add_to_panel(EXTERN_ID,path,param);
+	g_free(path);
+	g_free(param);
+	return r;
 }
 
 static GtkWidget *
@@ -385,7 +418,7 @@ panel_configure (GtkWidget *widget, void *data)
 static void
 add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 {
-	add_to_panel((char *)data, NULL);
+	add_to_panel((char *)data, NULL, NULL);
 }
 
 static gint
@@ -395,7 +428,7 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 	GtkWidget *d = gtk_object_get_user_data(GTK_OBJECT(entry));
 
 	gtk_widget_hide(d);
-	add_to_panel(SWALLOW_ID, gtk_entry_get_text(GTK_ENTRY(entry)));
+	add_to_panel(SWALLOW_ID, NULL, gtk_entry_get_text(GTK_ENTRY(entry)));
 
 	return TRUE;
 }
@@ -407,7 +440,8 @@ really_add_swallow(GtkWidget *d,gint button, gpointer data)
 
 	gtk_widget_hide(d);
 	if(button == 0)
-		add_to_panel(SWALLOW_ID, gtk_entry_get_text(GTK_ENTRY(entry)));
+		add_to_panel(SWALLOW_ID, NULL,
+			     gtk_entry_get_text(GTK_ENTRY(entry)));
 	return TRUE;
 }
 

@@ -19,15 +19,9 @@
 
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
-	CORBA::Short applet_query_about (const char *ccookie,
-				         const char *path,
-				         char *&ior) {
-		CHECK_COOKIE_V (0);
-		/*FIXME query for applet*/
-		return 0;
-	}
 	CORBA::Short applet_request_id (const char *ccookie,
 					const char *path,
+					const char *param,
 					char *&cfgpath,
 					char *&globcfgpath,
 					CORBA::ULong &wid) {
@@ -37,7 +31,7 @@ public:
 		guint32 winid;
 
 		CHECK_COOKIE_V (0);
-		applet_id = ::applet_request_id (path,&cfg,&globcfg,&winid);
+		applet_id = ::applet_request_id (path,param,&cfg,&globcfg,&winid);
 		wid = winid;
 
 		if(cfg) {

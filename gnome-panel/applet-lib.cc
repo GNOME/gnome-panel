@@ -94,7 +94,7 @@ public:
 		}
 	}
 	void start_new_applet (const char *ccookie,
-			       const char *params)
+			       const char *param)
 	{
 		CHECK_COOKIE ();
 		/*FIXME: start new applet*/
@@ -300,6 +300,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
   itself as*/
 char *
 gnome_panel_applet_request_id (char *path,
+			       char *param,
 			       int *applet_id,
 			       char **cfgpath,
 			       char **globcfgpath,
@@ -319,7 +320,9 @@ gnome_panel_applet_request_id (char *path,
 		try {
 			/*reserve a spot and get an id for this applet*/
 			*applet_id = panel_client->applet_request_id(cookie,
-								     path,cfg,
+								     path,
+								     param,
+								     cfg,
 							             globcfg,
 								     wid);
 		} catch (...) {

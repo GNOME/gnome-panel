@@ -60,6 +60,7 @@ struct _AppletWidgetClass
 
 guint		applet_widget_get_type		(void);
 GtkWidget*	applet_widget_new		(gchar *argv0);
+GtkWidget*	applet_widget_new_with_param	(gchar *argv0, gchar *param);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,

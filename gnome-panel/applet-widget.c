@@ -161,6 +161,12 @@ applet_widget_register_callback(AppletWidget *applet,
 GtkWidget *
 applet_widget_new(gchar *argv0)
 {
+	return applet_widget_new_with_param(argv0,"");
+}
+
+GtkWidget *
+applet_widget_new_with_param(gchar *argv0, gchar *param)
+{
 	AppletWidget *applet;
 	char *result;
 	char *cfgpath;
@@ -173,10 +179,13 @@ applet_widget_new(gchar *argv0)
 	if(!myinvoc)
 		return 0;
 
+	if(!param)
+		param="";
+
 	if (!gnome_panel_applet_init_corba())
 		g_error("Could not communicate with the panel\n");
 
-	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
+	result = gnome_panel_applet_request_id(myinvoc, param, &applet_id,
 					       &cfgpath, &globcfgpath,
 					       &winid);
 	if (result)

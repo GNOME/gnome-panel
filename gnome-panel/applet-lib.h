@@ -15,7 +15,7 @@ char *get_full_path(char *argv0);
   the current session stuff (not in this file, but implemented in any
   applet)*/
 
-char *gnome_panel_applet_request_id (char *path, int *applet_id,
+char *gnome_panel_applet_request_id (char *path, char *param, int *applet_id,
 				     char **cfgpath, char **globcfgpath,
 				     guint32 *winid);
 char *gnome_panel_applet_register (GtkWidget *widget, int applet_id);

@@ -1,3 +1,15 @@
+Tue May 12 01:29:19 1998  George Lebl  <jirka@5z.com>
+
+	* gnome-panel.idl,mico-glue.cc,applet-lib.cc:
+	  removed the query call as multiple applets
+	  will be handeled on the panel side
+
+	* gnome-panel.idl,mico-glue.cc,applet-lib.cc,main.c,
+	  panel.[ch],menu.c: added support for parameters
+	  to applets, seems pretty hackish mainly because
+	  it tries not to break existing config file format,
+	  which it doesn't as far as I can see
+
 Mon May 11 00:44:25 1998  George Lebl  <jirka@5z.com>
 
 	* main.c: start applets witha shell and get the pid
