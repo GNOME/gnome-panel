@@ -382,7 +382,7 @@ append_clock_menu (GtkWidget *menu_bar)
 		append_gnomecal_item (menu, _(cals[i]), cals[i+1]);
 
 	item = gtk_menu_item_new ();
-	label = gtk_label_new (_(""));
+	label = gtk_label_new ("");
 	timeout = gtk_timeout_add (1000, timeout_cb, label);
 	gtk_signal_connect (GTK_OBJECT (label), "destroy",
 			    GTK_SIGNAL_FUNC (timeout_remove),
