@@ -22,26 +22,6 @@
  *	Mark McLoughlin <mark@skynet.ie>
  */
 
-/* TODO:
- *
- *  o Initial position when a new panel is created.
- *  o Collision avoidance.
- *             
- * Random problems:
- *  o When flipping between buttons and handles we should center the
- *    position temporarily like with rotate so we don't get movement.
- *  o When toggling buttons on a centered panel it loses the centered
- *    property
- *  o Instead of the position_centered flag, should we allow the
- *    co-ordinates to be relative to the left, center or right ? Similar
- *    to the way aligned panels used to work.
- *
- * Drawers:
- *  o When attached we should only have a single hide button with the
- *    arrow pointing in the opposite direction.
- *  o Really need a re-sizing variation of the animation
- */
-
 #include <config.h>
 
 #include "panel-toplevel.h"

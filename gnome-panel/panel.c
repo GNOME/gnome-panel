@@ -145,11 +145,6 @@ panel_size_change (GtkWidget *widget, gpointer data)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,
 			      widget);
-
-#ifdef FIXME_FOR_NEW_CONFIG
-	/*update the configuration box if it is displayed*/
-	update_config_size (PANEL_WIDGET (widget)->toplevel);
-#endif /* FIXME_FOR_NEW_CONFIG */
 }
 
 #ifdef FIXME_FOR_NEW_CONFIG
