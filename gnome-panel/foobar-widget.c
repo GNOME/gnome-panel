@@ -515,11 +515,20 @@ append_actions_menu (GtkWidget *menu_bar)
 	item = gtk_menu_item_new_with_label (_("Actions"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
+
+	panel_strech_events_to_toplevel (item,
+					 TRUE /* top */,
+					 FALSE /* right */,
+					 FALSE /* bottom */,
+					 FALSE /* left */);
 }
 
 static GtkWidget *
 append_folder_menu (GtkWidget *menu_bar, const char *label,
-		    const char *pixmap, const char *path)
+		    const char *pixmap, const char *path,
+		    gboolean strech_left,
+		    gboolean strech_top,
+		    gboolean strech_right)
 {
 	GtkWidget *item, *menu;
 
@@ -551,6 +560,14 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (submenu_to_display),
 			  NULL);
+
+	if (strech_left || strech_top || strech_right)
+		panel_strech_events_to_toplevel (item,
+						 strech_top,
+						 strech_right,
+						 FALSE,
+						 strech_left);
+		
 
 	return menu;
 }
@@ -1220,7 +1237,10 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	foo->programs =
 		append_folder_menu (menu_bar, _("Applications"),
 				    "gnome-logo-icon-transparent.png",
-				    "programs:/");
+				    "programs:/",
+				    TRUE /* strech_left */,
+				    TRUE /* strech_top */,
+				    FALSE /* strech_right */);
 
 #if 0
 	foo->favorites =

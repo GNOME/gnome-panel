@@ -1178,3 +1178,203 @@ panel_pixmap_discovery (const char *name, gboolean fallback)
 						    NULL /* ret_locations */);
 	return pixmap;
 }
+
+typedef struct {
+	gboolean top;
+	gboolean right;
+	gboolean bottom;
+	gboolean left;
+} StrechSides;
+
+static void
+strech_widget_realize (GtkWidget *widget)
+{
+	GdkWindowAttr attributes = {0};
+	int attributes_mask;
+	GtkWidget *toplevel;
+	int x,y,w,h;
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
+						 "StrechEventWindow");
+	StrechSides *sides = g_object_get_data (G_OBJECT (widget),
+						"StrechSides");
+	if (sides == NULL)
+		return;
+
+	if (eventwin != NULL)
+		gdk_window_destroy (eventwin);
+
+	toplevel = gtk_widget_get_toplevel (widget);
+
+	if (toplevel == NULL ||
+	    ! GTK_WIDGET_REALIZED (toplevel))
+		return;
+	
+	gtk_widget_translate_coordinates (widget /* src_widget */,
+					  toplevel /* dest_widget */,
+					  0, 0 /* src */,
+					  &x, &y /* dest */);
+
+	w = widget->allocation.width;
+	h = widget->allocation.height;
+
+	if (sides->top) {
+		h += y;
+		y = 0;
+	}
+	if (sides->left) {
+		w += x;
+		x = 0;
+	}
+	if (sides->bottom)
+		h = toplevel->allocation.height - y;
+	if (sides->right)
+		w = toplevel->allocation.width - x;
+
+	attributes.window_type = GDK_WINDOW_CHILD;
+	attributes.x = x;
+	attributes.y = y;
+	attributes.width = w;
+	attributes.height = h;
+	attributes.wclass = GDK_INPUT_ONLY;
+	attributes.event_mask = (GDK_BUTTON_PRESS_MASK |
+				 GDK_BUTTON_RELEASE_MASK |
+				 GDK_POINTER_MOTION_MASK |
+				 GDK_POINTER_MOTION_HINT_MASK |
+				 GDK_KEY_PRESS_MASK |
+				 GDK_ENTER_NOTIFY_MASK |
+				 GDK_LEAVE_NOTIFY_MASK);
+	attributes_mask = GDK_WA_X | GDK_WA_Y;
+
+	eventwin = gdk_window_new (toplevel->window,
+				   &attributes,
+				   attributes_mask);
+	gdk_window_set_user_data (eventwin, widget);
+
+	g_object_set_data (G_OBJECT (widget),
+			   "StrechEventWindow",
+			   eventwin);
+}
+
+static void
+strech_widget_unrealize (GtkWidget *widget)
+{
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
+						 "StrechEventWindow");
+	if (eventwin == NULL)
+		return;
+
+	gdk_window_destroy (eventwin);
+	g_object_set_data (G_OBJECT (widget),
+			   "StrechEventWindow",
+			   NULL);
+}
+
+/* Evil but otherwise it doesn't seem
+ * to work.  There needs to be a cleaner
+ * solution */
+static gboolean
+raise_in_idle (gpointer data)
+{
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (data),
+						 "StrechEventWindow");
+
+	g_object_unref (G_OBJECT (data));
+
+	if (eventwin == NULL)
+		return FALSE;
+
+	gdk_window_raise (eventwin);
+	return FALSE;
+}
+
+
+static void
+strech_widget_map (GtkWidget *widget)
+{
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
+						 "StrechEventWindow");
+	if (eventwin == NULL)
+		return;
+
+	if (GTK_WIDGET_MAPPED (widget)) {
+		gdk_window_show (eventwin);
+		gdk_window_raise (eventwin);
+		g_idle_add (raise_in_idle,
+			    g_object_ref (G_OBJECT (widget)));
+	}
+}
+
+static void
+strech_widget_unmap (GtkWidget *widget)
+{
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
+						 "StrechEventWindow");
+	if (eventwin == NULL)
+		return;
+
+	gdk_window_hide (eventwin);
+}
+
+
+static void
+strech_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+{
+	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
+						 "StrechEventWindow");
+	if (eventwin == NULL)
+		return;
+
+	/* somewhat evil */
+	strech_widget_unrealize (widget);
+	strech_widget_realize (widget);
+	strech_widget_map (widget);
+}
+
+static void
+strech_widget_hierarchy_changed (GtkWidget *widget,
+				 GtkWidget *previous_toplevel)
+{
+	strech_widget_unrealize (widget);
+	strech_widget_realize (widget);
+	strech_widget_map (widget);
+}
+
+void
+panel_strech_events_to_toplevel (GtkWidget *widget,
+				 gboolean top,
+				 gboolean right,
+				 gboolean bottom,
+				 gboolean left)
+{
+	StrechSides *sides;
+
+	g_signal_connect_after (GTK_WIDGET (widget), "realize",
+				G_CALLBACK (strech_widget_realize),
+				NULL);
+	g_signal_connect (GTK_WIDGET (widget), "unrealize",
+			  G_CALLBACK (strech_widget_unrealize),
+			  NULL);
+	g_signal_connect_after (GTK_WIDGET (widget), "size_allocate",
+				G_CALLBACK (strech_widget_size_allocate),
+				NULL);
+	g_signal_connect_after (GTK_WIDGET (widget), "map",
+				G_CALLBACK (strech_widget_map),
+				NULL);
+	g_signal_connect_after (GTK_WIDGET (widget), "unmap",
+				G_CALLBACK (strech_widget_unmap),
+				NULL);
+	g_signal_connect_after (GTK_WIDGET (widget), "hierarchy_changed",
+				G_CALLBACK (strech_widget_hierarchy_changed),
+				NULL);
+
+	sides = g_new0 (StrechSides, 1);
+	sides->top = top;
+	sides->right = right;
+	sides->bottom = bottom;
+	sides->left = left;
+
+	g_object_set_data_full (G_OBJECT (widget),
+				"StrechSides",
+				sides,
+				(GDestroyNotify) g_free);
+}
