@@ -522,6 +522,20 @@ launcher_changed (GtkObject *dedit, gpointer data)
 }
 
 static void
+set_revert_insensitive (GtkWidget *button,	
+			gpointer   dummy)
+{
+     gtk_widget_set_sensitive (button, FALSE);
+}
+
+static void
+set_revert_sensitive (GtkWidget *button,
+		      gpointer   dummy)
+{
+     gtk_widget_set_sensitive (button, FALSE);
+}
+
+static void
 window_response (GtkWidget *w, int response, gpointer data)
 {
 	Launcher *launcher = data;
@@ -560,18 +574,21 @@ static GtkWidget *
 create_properties_dialog (Launcher *launcher)
 {
 	GtkWidget *dialog;
+        GtkWidget *button;
 
-	/* watch the enum at the top of the file */
-	dialog = gtk_dialog_new_with_buttons (_("Launcher properties"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_HELP,
-					      GTK_RESPONSE_HELP,
-					      GTK_STOCK_REVERT_TO_SAVED,
-					      REVERT_BUTTON,
-					      GTK_STOCK_CLOSE,
-					      GTK_RESPONSE_CLOSE,
-					      NULL);
+	dialog = gtk_dialog_new ();
+
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher properties"));
+
+	button = gtk_dialog_add_button (
+			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
+
+	button = gtk_dialog_add_button(
+			GTK_DIALOG (dialog), GTK_STOCK_REVERT_TO_SAVED, REVERT_BUTTON);
+        gtk_widget_set_sensitive (button, FALSE);
+
+	button = gtk_dialog_add_button(
+			GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
 	launcher->dedit = gnome_ditem_edit_new ();
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
@@ -587,19 +604,27 @@ create_properties_dialog (Launcher *launcher)
 	gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
 				    launcher->ditem);
 
-	g_signal_connect (G_OBJECT (launcher->dedit), "changed",
-			    G_CALLBACK (launcher_changed),
-			    launcher);
+	g_signal_connect (launcher->dedit, "changed",
+			  G_CALLBACK (launcher_changed),
+			  launcher);
 
-	g_signal_connect (G_OBJECT (dialog), "destroy",
-			    G_CALLBACK (properties_close_callback),
-			    launcher);
+        g_signal_connect_swapped (launcher->dedit, "changed",
+				  G_CALLBACK (set_revert_sensitive),
+				  button);
+
+	g_signal_connect (dialog, "destroy",
+			  G_CALLBACK (properties_close_callback),
+			  launcher);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
-	g_signal_connect (G_OBJECT (dialog), "response",
-			    G_CALLBACK (window_response),
-			    launcher);
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (window_response),
+			  launcher);
+
+	g_signal_connect (button, "clicked",
+			  G_CALLBACK (set_revert_insensitive),
+			  NULL);
 
 	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (launcher->dedit));
 

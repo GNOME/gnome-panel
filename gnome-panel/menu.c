@@ -3662,8 +3662,6 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 	PanelWidget *panel = get_panel_from_menu_data(menu, TRUE);
 	GtkWidget *label;
 
-	g_print ("woo, setting up remove this panel: %p\n", panel);
-	
 	g_assert(panel->panel_parent);
 
 	if( ! DRAWER_IS_WIDGET(panel->panel_parent) &&
