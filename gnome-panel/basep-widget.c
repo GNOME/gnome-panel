@@ -454,6 +454,8 @@ make_hidebutton(BasePWidget *basep,
 
 	gtk_container_add(GTK_CONTAINER(w),pixmap);
 	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
+	gtk_object_set_data(GTK_OBJECT(w), "gnome_disable_sound_events",
+			    GINT_TO_POINTER(1));
 	return w;
 }
 
@@ -507,6 +509,7 @@ basep_widget_init (BasePWidget *basep)
 
 	basep->hidebuttons_enabled = TRUE;
 	basep->hidebutton_pixmaps_enabled = TRUE;
+
 }
 
 
