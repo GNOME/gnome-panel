@@ -45,13 +45,6 @@ lib_LTLIBRARIES =		\
 
 test_bonobo_applet_SOURCES =	\
 	test-bonobo-applet.c	\
-	panel-applet.c		\
-	panel-applet.h		\
-	panel-applet-shell.c	\
-	panel-applet-shell.h	\
-	panel-marshal-main.c	\
-	panel-typebuiltins.c	\
-	panel-typebuiltins.h	\
 	$(CORBA_SRCLIST)	\
 	$(NULL)
 
@@ -62,6 +55,7 @@ test_bonobo_applet_LDADD =	\
 
 libpanel_applet_2_la_SOURCES =	\
 	panel-applet.h          \
+	panel-applet.c          \
 	panel-applet-shell.c    \
 	panel-applet-shell.h    \
 	panel-marshal-main.c    \

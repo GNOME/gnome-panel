@@ -1,3 +1,33 @@
+2001-11-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Port to new applets api.
+
+	* fish.c:
+	(load_image_file): use GError with gdk_pixbuf.
+	(load_properties): #ifdef FIXME out all the gnome_config 
+	stuff for now.
+	(phelp_cb): #ifdef FIXME out for now - need to use new 
+	help api.
+	(display_properties_dialog): rename from propeties_dialog.
+	(update_fortune_dialog):  #ifdef FIXME out for now - what
+	replaces gnome_less ?
+	(display_help_dialog): rename from help_cb.
+	(display_about_dialog): rename from about_cb. Use GError with
+	gdk_pixbuf. Port to gnome_program_locate_file.
+	(applet_save_session): session saving not yet implmented.
+	(wanda_{de}activator): kill.
+	(fish_applet_new): impl.
+	(fishy_factory): impl.
+
+	* Makefile.am: build applet as an exe. don't install the
+	.desktop file or the .gnorba file. Install the .server file.
+
+	* GNOME_FishApplet_Factory.server.in: new file.
+
+	* fish_applet.gnorba: kill.
+
+	* fish_applet.desktop: retain only for translations.
+
 2001-03-01  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* help/no/*: Updated Norwegian translation of telsa's nice doc.

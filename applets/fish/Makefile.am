@@ -1,39 +1,36 @@
-INCLUDES = -I. -I$(srcdir) 				\
-	-I$(top_srcdir)/intl -I$(top_builddir)/intl	\
+INCLUDES =						\
+	-I$(srcdir)					\
+	-I$(top_srcdir)/intl				\
+	-I$(top_builddir)/intl				\
 	-I$(srcdir)/../../panel				\
 	-I$(top_builddir)/panel				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-I$(includedir) $(GNOME_INCLUDEDIR)		\
-	@PIXBUF_CFLAGS@
+	$(GNOME_INCLUDEDIR)				\
+	$(WARN_CFLAGS)					\
+	$(PANEL_CFLAGS)
 
-SUBDIRS = help
+SUBDIRS =
 
-#if DO_EXE
-#bin_PROGRAMS = fish_applet
-#else
-lib_LTLIBRARIES=libfish_applet.la
-#endif
+EXTRA_SUBDIRS = help
 
-libfish_applet_la_SOURCES = fish.c
+bin_PROGRAMS = fish-applet-2
 
-#fish_applet_SOURCES = fish.c
+fish_applet_2_SOURCES = fish.c
 
-#fish_applet_LDADD = ../../panel/libpanel_applet.la \
-#		 	$(GNOME_LIBDIR) \
-#		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) \
-#			@PIXBUF_LIBS@
+fish_applet_2_LDADD =				\
+	../../panel/libpanel-applet-2.la	\
+	$(PANEL_LIBS)
 
-#libfish_applet_la_LIBADD = .e./../panel/libpanel_applet.la \
-#		 	$(GNOME_LIBDIR) \
-#		     	$(GNOMEGNORBA_LIBS) $(INTLLIBS) 
+FISH_BITMAPS =		\
+	fishanim.png	\
+	oldwanda.png	\
+	footguy.png	\
+	monkey.png
 
-FISH_BITMAPS = fishanim.png oldwanda.png footguy.png monkey.png
-
-EXTRA_DIST = \
-	fish_applet.desktop \
-	$(FISH_BITMAPS)	\
-	gnome-fish.png \
-	fish_applet.gnorba
+EXTRA_DIST =					\
+	$(FISH_BITMAPS)				\
+	GNOME_FishApplet_Factory.server.in	\
+	gnome-fish.png
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)
@@ -41,8 +38,9 @@ fishbitmaps_DATA = $(FISH_BITMAPS)
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-fish.png
 
-sysdir = $(datadir)/applets/Amusements
-sys_DATA = fish_applet.desktop
+serverdir       = $(libdir)/bonobo/servers
+server_in_files = GNOME_FishApplet_Factory.server.in
+server_DATA     = $(server_in_files:.server.in=.server)
 
-gnorbadir  = $(sysconfdir)/CORBA/servers
-gnorba_DATA = fish_applet.gnorba
+@INTLTOOL_SERVER_RULE@
+

@@ -1,3 +1,18 @@
+2001-11-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add panel-applet.c to libpanel-applet 
+	sources - hmmm.
+
+	* menu.c:
+	(add_test_bonobo_applet): take an iid to be generic.
+	(make_add_submenu): add an menuitem for the fish. Jeez, I need
+	to get this applets menu work soon.
+
+	* panel-applet.h: fix party pooper.
+
+	* test-bonobo-applet.c: remove debugging rubish. Use
+	G_CALLBACK instead of (GCallback) cast.
+
 2001-11-21  Glynn Foster  <glynn.foster@sun.com>
 
 	* aligned-widget.c, basep-widget.c, menu-fentry.c,

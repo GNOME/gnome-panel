@@ -1,6 +1,8 @@
-SUBDIRS = \
-       applet-dirs     \
-       desk-guide      \
-       fish            \
-       gen_util        \
-       tasklist
+SUBDIRS =		\
+       fish
+
+EXTRA_SUBDIRS =		\
+	applet-dirs	\
+	desk-guide	\
+	gen_util	\
+	tasklist

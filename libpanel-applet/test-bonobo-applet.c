@@ -126,12 +126,10 @@ test_applet_handle_background_change (PanelApplet               *applet,
 }
 
 static BonoboObject *
-test_applet_new (const gchar *iid)
+test_applet_new ()
 {
 	PanelApplet *applet;
 	GtkWidget   *label;
-
-	g_message ("test_applet_new: %s\n", iid);
 
 	label = gtk_label_new (NULL);
 
@@ -145,17 +143,17 @@ test_applet_new (const gchar *iid)
 
 	g_signal_connect (G_OBJECT (applet),
 			  "change_orient",
-			  (GCallback) test_applet_handle_orient_change,
+			  G_CALLBACK (test_applet_handle_orient_change),
 			  label);
 
 	g_signal_connect (G_OBJECT (applet),
 			  "change_size",
-			  (GCallback) test_applet_handle_size_change,
+			  G_CALLBACK (test_applet_handle_size_change),
 			  label);
 
 	g_signal_connect (G_OBJECT (applet),
 			  "change_background",
-			  (GCallback) test_applet_handle_background_change,
+			  G_CALLBACK (test_applet_handle_background_change),
 			  label);
 			  
 	return BONOBO_OBJECT (panel_applet_get_control (applet));
@@ -168,12 +166,8 @@ test_applet_factory (BonoboGenericFactory *this,
 {
 	BonoboObject *applet = NULL;
     
-	g_message ("test_applet_factory: %s\n", iid);
-
 	if (!strcmp (iid, "OAFIID:GNOME_Panel_TestBonoboApplet"))
-		applet = test_applet_new (iid); 
-    
-	g_message ("test_applet_factory: returning %p\n", applet);
+		applet = test_applet_new (); 
     
 	return applet;
 }
