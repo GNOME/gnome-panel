@@ -927,23 +927,13 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	if (BONOBO_EX (&ev)) {
 		char *err = bonobo_exception_get_text (&ev);
+
 		panel_error_dialog
 			("problem_loading_applet",
 			 _("<b>There was a problem loading applet '%s'</b>\n\n"
 			   "Details: %s"),
 			  iid, err);
 
-		/* FIXME: 2.2.x addition: #89173
-		 * 
-		 * Instead of automatically removing the applet from the
-		 * configuration the above dialog should read:
-		 *
-		 * There was a problem loading applet 'blah'.
-		 * 
-		 * Remove this applet from you configuration ?
-		 *
-		 *                              [Don't Remove] [[Remove]]
-		 */
 		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
 
 		CORBA_exception_free (&ev);
