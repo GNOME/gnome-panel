@@ -1650,9 +1650,9 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free (file);
 	
-	mc->about = gnome_about_new (_("Mail check Applet"), "1.1",
+	mc->about = gnome_about_new (_("Inbox Monitor"), "1.1",
 				     _("(c) 1998-2000 the Free Software Foundation"),
-				     _("Mail check notifies you when new mail arrives in your mailbox"),
+				     _("Inbox Monitor notifies you when new mail arrives in your mailbox"),
 				     authors,
 				     documenters,
    				     strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
@@ -1660,10 +1660,10 @@ mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 				     
 	gtk_window_set_wmclass (GTK_WINDOW (mc->about), "mailcheck", "Mailcheck");
 	
-#ifdef FIXME
+
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->about),
 					 GNOME_ICONDIR"/gnome-mailcheck.png");
-#endif
+
 	g_signal_connect( G_OBJECT(mc->about), "destroy",
 			    G_CALLBACK(gtk_widget_destroyed), &mc->about );
 	gtk_widget_show(mc->about);

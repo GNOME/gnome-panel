@@ -1080,9 +1080,9 @@ display_about_dialog (BonoboUIComponent *uic,
 	} else
 		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
 
-	about = gnome_about_new (_("Clock Applet"), VERSION,
+	about = gnome_about_new (_("Clock"), VERSION,
 				 _("(C) 1998-2002 the Free Software Foundation"),
-				 _("The Clock Applet displays current time and date"),
+				 _("The Clock displays the current time and date"),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

@@ -434,7 +434,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	about = gnome_about_new (_("Workspace Switcher"), "1.0",
 				 _("(c) 2001 Red Hat, Inc."),
-				 _("The Workspace Switcher shows you a small version of your workspaces that lets you manage the windows."),
+				 _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,

@@ -1179,7 +1179,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	}
 		
 	fish->aboutbox =
-		gnome_about_new (_("The GNOME Fish Applet"),
+		gnome_about_new (_("Fish"),
 				 "3.4.7.4ac19",
 				 "(C) 1998 the Free Software Foundation",
 				 _("This applet has no use what-so-ever. "
