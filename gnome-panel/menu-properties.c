@@ -345,10 +345,7 @@ dialog_response (GtkWidget *dialog, int response, gpointer data)
 	if (response == GTK_RESPONSE_CLOSE) {
 		gtk_widget_destroy (dialog);
 	} else if (response == GTK_RESPONSE_HELP) {
-		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
-			panel_show_help ("mainmenu", "MAINMENUCONFIG");
-		else
-			panel_show_help ("menus", NULL);
+			panel_show_help ("wgospanel.xml", "gospanel-37");
 	}
 }
 
