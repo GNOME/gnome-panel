@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-07-13 11:20+0200\n"
-"PO-Revision-Date: 2003-07-13 11:20+0200\n"
+"POT-Creation-Date: 2003-07-15 12:04+0200\n"
+"PO-Revision-Date: 2003-07-15 12:06+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -718,7 +718,7 @@ msgid "_Never group windows"
 msgstr "Gruppera al_drig fönster"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:30
+#: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -921,7 +921,7 @@ msgstr "_Ta bort från panelen"
 msgid "_Move"
 msgstr "_Flytta"
 
-#: gnome-panel/applet.c:1065
+#: gnome-panel/applet.c:1072
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
@@ -1668,12 +1668,12 @@ msgstr "Huruvida dra och släpp är aktiverat på widgeten eller inte"
 # Sun vill ha "popup_meny"
 # Jag vill ha "popup_menu" (det är ett namn, inte "popup menu")
 #
-#: gnome-panel/panel-applet-frame.c:667
+#: gnome-panel/panel-applet-frame.c:677
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Undantag från popup_menu \"%s\"\n"
 
-#: gnome-panel/panel-applet-frame.c:784
+#: gnome-panel/panel-applet-frame.c:794
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -1690,11 +1690,11 @@ msgstr ""
 "(Om du väljer att inte starta om det nu kan du alltid lägga till det genom "
 "att högerklicka på panelen och klicka på undermenyn \"Lägg till i panelen\")"
 
-#: gnome-panel/panel-applet-frame.c:819
+#: gnome-panel/panel-applet-frame.c:829
 msgid "D_on't Delete"
 msgstr "Ta i_nte bort"
 
-#: gnome-panel/panel-applet-frame.c:852
+#: gnome-panel/panel-applet-frame.c:862
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1707,7 +1707,7 @@ msgstr ""
 "\n"
 "Vill du ta bort panelprogrammet från din konfiguration?"
 
-#: gnome-panel/panel-applet-frame.c:862
+#: gnome-panel/panel-applet-frame.c:872
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1718,7 +1718,7 @@ msgstr ""
 "\n"
 "Vill du ta bort panelprogrammet från din konfiguration?"
 
-#: gnome-panel/panel-applet-frame.c:964
+#: gnome-panel/panel-applet-frame.c:974
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan inte få AppletShell-gränssnitt från kontroll\n"
 
@@ -2295,27 +2295,31 @@ msgid "Solid c_olor"
 msgstr "Enf_ärgad"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
+msgid "Some of these properties are locked down"
+msgstr "En del av dessa egenskaper är låsta"
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
 msgstr "St_räck ut"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Överkant"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Autohide"
 msgstr "_Dölj automatiskt"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_None (use system theme)"
 msgstr "_Ingen (använd systemtemat)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "_Skala"
 
-#: gnome-panel/panel-properties-dialog.glade.h:29
+#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Tile"
 msgstr "_Upprepa"
 
@@ -2341,26 +2345,26 @@ msgstr "Ett okänt fel inträffade vid försök att öppna %s"
 msgid "_Open Recent"
 msgstr "_Öppna senaste"
 
-#: gnome-panel/panel-run-dialog.c:276
+#: gnome-panel/panel-run-dialog.c:297
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Kan inte starta kommandot \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:307
+#: gnome-panel/panel-run-dialog.c:328
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Kan inte visa platsen \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1042
+#: gnome-panel/panel-run-dialog.c:1063
 msgid "Choose a file to append to the command..."
 msgstr "Välj en fil att lägga till efter kommandot..."
 
-#: gnome-panel/panel-run-dialog.c:1221
+#: gnome-panel/panel-run-dialog.c:1242
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1227 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1248 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
@@ -2759,12 +2763,12 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving it to that corner again will cause "
-"the panel to re-appear."
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
 msgstr ""
 "Om detta är sant kommer panelen att automatiskt döljas i ett hörn på skärmen "
-"när pekaren lämnar panelytan. Att flytta den till det hörnet kommer att göra "
-"att panelen åter visas."
+"när pekaren lämnar panelytan. Att flytta pekaren till det hörnet kommer att "
+"göra att panelen åter visas."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -3141,13 +3145,16 @@ msgstr "Jättestor"
 msgid "XX Small"
 msgstr "Jätteliten"
 
+#~ msgid "Some of these properties are locked down."
+#~ msgstr "En del av dessa egenskaper är låsta."
+
 #~ msgid ""
 #~ "If true, the panel is automatically hidden into a corner of the screen "
-#~ "when the pointer leaves the panel area. Moving the pointer to that corner "
-#~ "again will cause the panel to re-appear."
+#~ "when the pointer leaves the panel area. Moving it to that corner again "
+#~ "will cause the panel to re-appear."
 #~ msgstr ""
 #~ "Om detta är sant kommer panelen att automatiskt döljas i ett hörn på "
-#~ "skärmen när pekaren lämnar panelytan. Att flytta pekaren till det hörnet "
+#~ "skärmen när pekaren lämnar panelytan. Att flytta den till det hörnet "
 #~ "kommer att göra att panelen åter visas."
 
 #~ msgid ""
