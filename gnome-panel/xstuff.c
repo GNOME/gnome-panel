@@ -680,7 +680,7 @@ xstuff_set_wmspec_strut (GdkWindow *window,
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
 			 ATOMGDK (window, "_NET_WM_STRUT"),
-                         XA_ATOM, 32, PropModeReplace,
+                         XA_CARDINAL, 32, PropModeReplace,
                          (guchar *)vals, 4);
 }
 
