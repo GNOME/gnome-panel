@@ -48,7 +48,7 @@ libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
 
-panel_SOURCES = 		\
+base_panel_SOURCES=\
 	panel-include.h		\
 	main.c			\
 	main.h			\
@@ -87,8 +87,13 @@ panel_SOURCES = 		\
 	panel-util.c		\
 	panel-util.h		\
 	gdkextra.c		\
-	gdkextra.h		\
+	gdkextra.h
+
+panel_SOURCES = 		\
+	$(base_panel_SOURCES)	\
 	$(CORBA_SRCLIST)
+
+$(base_panel_SOURCES): $(CORBA_SRCLIST)
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 panel_LDFLAGS=-export-dynamic

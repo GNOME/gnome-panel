@@ -1,7 +1,7 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
-	 gnome-pager mini-commander fvwm-pager
+	 gnome-pager mini-commander
 
 if HAVE_LIBESD
 esdmanager = esd-manager
@@ -44,4 +44,4 @@ SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 
 DIST_SUBDIRS = $(always_built_SUBDIRS) esd-manager cpumemusage \
 	diskusage multiload netload bussign gticker slashapp cdplayer \
-	 mixer modemlights winlist
+	 mixer modemlights winlist fvwm-pager
