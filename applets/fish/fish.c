@@ -16,6 +16,8 @@
 #include <libart_lgpl/art_rgb_pixbuf_affine.h>
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_rgb.h>
+#include <libart_lgpl/art_rgb_affine.h>
+#include <libart_lgpl/art_rgb_rgba_affine.h>
 
 typedef struct _FishProp FishProp;
 struct _FishProp {
@@ -76,22 +78,26 @@ load_image_file(Fish *fish)
 		guchar *rgb;
 		GdkGC *gc;
 		int size;
+		gint width, height;
 		
 		size = fish->size - 4;
-		if(ABS(pix->art_pixbuf->height - size)<6) {
-			size = pix->art_pixbuf->height;
+
+		width = gdk_pixbuf_get_width (pix);
+		height = gdk_pixbuf_get_height (pix);
+
+		if(ABS(height - size)<6) {
+			size = height;
 		}
 
 		h = size;
-		w = pix->art_pixbuf->width *
-			((double)h/pix->art_pixbuf->height);
+		w = width * ((double) h / height);
 		
 		affine[1] = affine[2] = affine[4] = affine[5] = 0;
 
-		affine[0] = w / (double)(pix->art_pixbuf->width);
-		affine[3] = h / (double)(pix->art_pixbuf->height);
+		affine[0] = w / (double) width;
+		affine[3] = h / (double) height;
 
-		if(IS_ROT(fish)) {
+		if (IS_ROT(fish)) {
 			int t;
 			double tmpaffine[6];
 			t = w; w = h; h = t;
@@ -113,11 +119,24 @@ load_image_file(Fish *fish)
 		}
 		
 		rgb = g_new0(guchar,w*h*3);
-		
-		art_rgb_pixbuf_affine(rgb,
-				      0,0,w,h,w*3,
-				      pix->art_pixbuf,affine,
-				      ART_FILTER_NEAREST,NULL);
+
+		if (gdk_pixbuf_get_has_alpha (pix)) {
+			art_rgb_rgba_affine (rgb,
+					     0, 0, w, h, w * 3,
+					     gdk_pixbuf_get_pixels (pix),
+					     width, height, gdk_pixbuf_get_rowstride (pix),
+					     affine,
+					     ART_FILTER_NEAREST,
+					     NULL);
+		} else {
+			art_rgb_affine (rgb,
+					0, 0, w, h, w * 3,
+					gdk_pixbuf_get_pixels (pix),
+					width, height, gdk_pixbuf_get_rowstride (pix),
+					affine,
+					ART_FILTER_NEAREST,
+					NULL);
+		}
 		
 		gdk_pixbuf_unref(pix);
 
@@ -127,14 +146,13 @@ load_image_file(Fish *fish)
  					   fish->w,fish->h,-1);
 		gc = gdk_gc_new(fish->pix);
 
-		if(fish->april_fools) {
+		if (fish->april_fools) {
 			/* rgb has is packed, thus rowstride is w*3 so
 			 * we can do the following.  It makes the whole
 			 * image have an ugly industrial waste like tint
 			 * to make it obvious that the fish is dead */
 			art_rgb_run_alpha(rgb, 255, 128, 0, 70, w*h);
 		}
-
 
 		gdk_draw_rgb_image(fish->pix,gc,
 				   0,0, w, h,
