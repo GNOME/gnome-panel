@@ -44,6 +44,8 @@ panel_ditem_launch (const GnomeDesktopItem       *item,
 
 	workspace = xstuff_get_current_workspace (screen);
 
+	gnome_desktop_item_set_launch_time (item, gtk_get_current_event_time ());
+
 	return gnome_desktop_item_launch_on_screen (
 			item, file_list, flags, screen, workspace, error);
 }
