@@ -55,7 +55,7 @@ get_uri (const char *arg)
 	char *uri;
 
 	if (is_an_uri (arg))
-		return g_strdup (arg);
+		return gnome_vfs_make_uri_canonical (arg);
 
 	if (g_path_is_absolute (arg)) {
 		uri = gnome_vfs_get_uri_from_local_path (arg);

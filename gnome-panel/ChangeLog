@@ -1,3 +1,11 @@
+2002-05-31  Dave Camp  <dave@ximian.com>
+
+	* gnome-desktop-item-edit.c (get_uri): If the argument is already a uri,
+	canonicalize it.  
+
+	* panel-util.c (panel_uri_exists): Return FALSE without a warning
+	for invalid uris.  These two changes fix #83705.
+
 2002-05-31  Mark McLoughlin  <mark@skynet.ie>
 
 	* basep-widget.c (basep_widget_focus_in_event): add

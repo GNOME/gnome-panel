@@ -1413,8 +1413,9 @@ panel_uri_exists (const char *uri)
 
 	suri = gnome_vfs_uri_new (uri);
 
-	/* eek */
-	g_return_val_if_fail (suri != NULL, FALSE);
+	if (!suri) {
+		return FALSE;
+	}
 
 	ret = gnome_vfs_uri_exists (suri);
 
