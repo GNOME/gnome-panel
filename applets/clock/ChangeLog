@@ -1,3 +1,14 @@
+1999-03-17  Nat Friedman  <nat@nat.org>
+
+	* battery/properties.c (battery_properties_window): Set the
+ 	close_hides property on the window.
+
+	* battery/battery.c (make_new_battery_applet): Set bat->setup
+ 	before calling battery_set_size.  This fixes the bug Jes Sorensen
+ 	<Jes.Sorensen@cern.ch> reported about the applet size not being
+ 	set correctly when the applet first starts up.
+	(battery_set_size): Don't unref the pixmaps if they're NULL.
+
 1999-03-13  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* gen_util/mailcheck.c: Applied patch by Jacob Berkman's
