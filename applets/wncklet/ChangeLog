@@ -1,3 +1,17 @@
+2002-05-28  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
+
+	* clock.c: help callback modified .
+	* pager.c: help callback added for the help button in preference
+	  dialog box. help Callback modified and Error handling put.	
+
+	* mailcheck.c : help button added to the preference dialog box 
+	  and help callback is linked to the button.
+	* tasklist.c: help callback added for the help button in the preference 
+	  dialog box.
+	* tasklist.glde, pager.glade - response id added for help buttons.
+	* Makefile.am : DADADIR, LIBDIR,SYSCONFDIR,and PREFIX passed to the program.
+	  to be used in program_init() 
+
 2002-05-24  Akira TAGOH  <tagoh@gnome.gr.jp>
 
 	* clock.c (update_timeformat): need to convert UTF-8 to the locale
