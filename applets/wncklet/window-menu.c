@@ -615,10 +615,14 @@ window_menu_applet_fill (PanelApplet *applet)
 {
 	WindowMenu *window_menu;
 	GtkWidget  *alignment;
+	AtkObject  *atk_obj;
 
 	window_menu = g_new0 (WindowMenu, 1);
 
 	window_menu->applet = GTK_WIDGET (applet);
+	atk_obj = gtk_widget_get_accessible (window_menu->applet);
+	atk_object_set_name (atk_obj, _("Window Menu"));
+	atk_object_set_description (atk_obj, _("Tool to switch between windows"));
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 

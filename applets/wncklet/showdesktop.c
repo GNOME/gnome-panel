@@ -275,6 +275,7 @@ show_desktop_applet_fill (PanelApplet *applet)
         ShowDesktopData *sdd;
         char *file;
         GError *error;
+	AtkObject *atk_obj;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -321,7 +322,8 @@ show_desktop_applet_fill (PanelApplet *applet)
         update_icon (sdd);
 
         sdd->button = gtk_toggle_button_new ();
-
+	atk_obj = gtk_widget_get_accessible (sdd->button);
+	atk_object_set_name (atk_obj, _("Show Desktop Button"));
         g_signal_connect (G_OBJECT (sdd->button), "button_press_event",
                           G_CALLBACK (do_not_eat_button_press), NULL);
 
