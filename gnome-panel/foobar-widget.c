@@ -19,7 +19,6 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-program.h>
-#include <libgnome/gnome-preferences.h>
 
 #include "menu.h"
 #include "menu-util.h"
@@ -109,7 +108,9 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 
 	item = gtk_image_menu_item_new ();
 
-	if (try_file && gnome_preferences_get_menus_have_icons ()) {
+	if (try_file && gconf_client_get_bool (panel_main_gconf_client (),
+					       "/desktop/gnome/interface/menus-have-tearoff",
+					       NULL)) {
 		GtkWidget *image;
 		GdkPixbuf *pixbuf;
 
@@ -151,7 +152,9 @@ add_tearoff (GtkMenuShell *menu)
 {
 	GtkWidget *item;
 
-	if (!gnome_preferences_get_menus_have_tearoff ())
+	if (!gconf_client_get_bool (panel_main_gconf_client (),
+				    "/desktop/gnome/interface/menus-have-tearoff",
+				    NULL))
 		return;
 	
 	item = gtk_tearoff_menu_item_new ();

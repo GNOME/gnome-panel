@@ -1,3 +1,24 @@
+2001-10-18  Mark McLoughlin <mark@skynet.ie>
+
+	* main.h, main.c (panel_main_gconf_client): impl.
+
+	* foobar-widget.c (pixmap_menu_item_new): port from 
+	gnome_preferences_* to gconf.
+	(add_tearoff): ditto.
+
+	* tearoffitem.c (tearoff_item_new): ditto.
+
+	* menu.c (menu_add_tearoff): impl to use gconf.
+	(add_tearoff): kill.
+	(submenu_to_display): use menu_add_tearoff.
+	(start_favourites_menu): ditto.
+	(create_menu_at_fr): ditto.
+	(create_add_panel_submenu): ditto.
+	(make_panel_submenu): ditto.
+	(create_panel_submenu): ditto.
+	(create_desktop_menu): ditto.
+	(create_root_menu): ditto.
+
 2001-10-18  Glynn Foster  <glynn.foster@sun.com>
 
 	* basep-widget.c, gnome-panel-properties.c, 
