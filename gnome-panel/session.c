@@ -1674,17 +1674,17 @@ load_up_globals (void)
 	global_config.disable_animations =
 		conditional_get_bool ("disable_animations", FALSE, NULL);
 		
-	global_config.hiding_step_size =
-		conditional_get_int ("hiding_step_size", 
-				     DEFAULT_HIDING_STEP_SIZE, NULL);
+	global_config.hide_speed =
+		conditional_get_int ("hide_speed", 
+				     DEFAULT_HIDE_SPEED, NULL);
 	
-	global_config.minimize_delay =
-		conditional_get_int ("minimize_delay",
-				     DEFAULT_MINIMIZE_DELAY, NULL);
+	global_config.hide_delay =
+		conditional_get_int ("hide_delay",
+				     DEFAULT_HIDE_DELAY, NULL);
 
-	global_config.maximize_delay =
-		conditional_get_int ("maximize_delay",
-				     DEFAULT_MAXIMIZE_DELAY, NULL);
+	global_config.show_delay =
+		conditional_get_int ("show_delay",
+				     DEFAULT_SHOW_DELAY, NULL);
 		
 	global_config.minimized_size =
 		conditional_get_int("minimized_size",
@@ -1765,14 +1765,14 @@ write_global_config (void)
 {
 	gnome_config_push_prefix ("/panel/Config/");
 
-	gnome_config_set_int ("hiding_step_size",
-			      global_config.hiding_step_size);
+	gnome_config_set_int ("hide_speed",
+			      global_config.hide_speed);
 	gnome_config_set_int ("minimized_size",
 			      global_config.minimized_size);
-	gnome_config_set_int ("minimize_delay",
-			      global_config.minimize_delay);
-	gnome_config_set_int ("maximize_delay",
-			      global_config.maximize_delay);
+	gnome_config_set_int ("hide_delay",
+			      global_config.hide_delay);
+	gnome_config_set_int ("show_delay",
+			      global_config.show_delay);
 	gnome_config_set_bool ("tooltips_enabled",
 			       global_config.tooltips_enabled);
 	gnome_config_set_bool ("show_dot_buttons",
@@ -1836,12 +1836,12 @@ convert_write_config(void)
 		return;
 	}
 
-	gnome_config_set_int("hiding_step_size",
-			     global_config.hiding_step_size);
+	gnome_config_set_int("hide_speed",
+			     global_config.hide_speed);
 	gnome_config_set_int("minimized_size",
 			     global_config.minimized_size);
-	gnome_config_set_int("minimize_delay",
-			     global_config.minimize_delay);
+	gnome_config_set_int("hide_delay",
+			     global_config.hide_delay);
 	gnome_config_set_bool("tooltips_enabled",
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
@@ -1899,12 +1899,12 @@ convert_read_old_config(void)
 	global_config.disable_animations =
 		gnome_config_get_bool("disable_animations=FALSE");
 
-	g_string_sprintf(buf,"hiding_step_size=%d",
-			 DEFAULT_HIDING_STEP_SIZE);
-	global_config.hiding_step_size=gnome_config_get_int(buf->str);
+	g_string_sprintf(buf,"hide_speed=%d",
+			 DEFAULT_HIDE_SPEED);
+	global_config.hide_speed=gnome_config_get_int(buf->str);
 
-	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay=gnome_config_get_int(buf->str);
+	g_string_sprintf(buf,"hide_delay=%d", DEFAULT_HIDE_DELAY);
+	global_config.hide_delay=gnome_config_get_int(buf->str);
 
 	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf->str);

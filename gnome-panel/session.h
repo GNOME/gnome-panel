@@ -7,11 +7,11 @@
 
 G_BEGIN_DECLS
 
-#define DEFAULT_HIDING_STEP_SIZE 50
+#define DEFAULT_HIDE_SPEED 50
 
 /* amount of time in ms. to wait before lowering panel */
-#define DEFAULT_MINIMIZE_DELAY 300
-#define DEFAULT_MAXIMIZE_DELAY 0
+#define DEFAULT_HIDE_DELAY 300
+#define DEFAULT_SHOW_DELAY 0
 
 /* number of pixels it'll stick up from the bottom when using
    PANEL_AUTO_HIDE */

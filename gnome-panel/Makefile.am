@@ -297,6 +297,8 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc
 
+schemadir = $(sysconfdir)/gconf/schemas
+schema_DATA = panelglobalconfig.schema
 CLEANFILES    = $(BUILT_SOURCES)
 
 dist-hook:

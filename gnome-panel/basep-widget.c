@@ -528,13 +528,13 @@ basep_pos_get_hide_size (BasePWidget *basep,
 	case ORIENT_UP:
 	case ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
-			? panel_gconf_get_int ("panel_minimized_size")
+			? panel_gconf_global_config_get_int ("panel_minimized_size")
 			: get_requisition_height (basep->hidebutton_n);
 		break;
 	case ORIENT_RIGHT:
 	case ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
-			? panel_gconf_get_int ("panel_minimized_size")
+			? panel_gconf_global_config_get_int ("panel_minimized_size")
 			: get_requisition_width (basep->hidebutton_e);
 		break;
 	}
@@ -554,12 +554,12 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 		break;
 	case ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? panel_gconf_get_int ("panel_minimized_size")
+			   ? panel_gconf_global_config_get_int ("panel_minimized_size")
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? panel_gconf_get_int ("panel_minimized_size")
+			   ? panel_gconf_global_config_get_int ("panel_minimized_size")
 			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
@@ -773,7 +773,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		break;
 	}
 
-	if(!panel_gconf_get_bool ("disable_animations") && step != 0) {
+	if(!panel_gconf_global_config_get_bool ("disable_animations") && step != 0) {
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
@@ -877,7 +877,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		break;
 	}
 	
-	if(!panel_gconf_get_bool ("disable_animations") && step != 0) {
+	if(!panel_gconf_global_config_get_bool ("disable_animations") && step != 0) {
 		int i;
 		GTimeVal tval;
 		long start_secs;
@@ -1714,7 +1714,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
 					size, 
-					panel_gconf_get_int ("panel_hide_speed"));
+					panel_gconf_global_config_get_int ("panel_hide_speed"));
 	}
 
 	basep->state = state;
@@ -1754,7 +1754,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
 					 size, 
-					 panel_gconf_get_int ("panel_hide_speed"));
+					 panel_gconf_global_config_get_int ("panel_hide_speed"));
 	}
 	
 	basep->state = BASEP_SHOWN;
@@ -1804,7 +1804,7 @@ basep_widget_autoshow (gpointer data)
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
-					 panel_gconf_get_int ("panel_hide_speed"));
+					 panel_gconf_global_config_get_int ("panel_hide_speed"));
 	}
 
 	basep->state = BASEP_SHOWN;
@@ -1850,12 +1850,12 @@ basep_widget_queue_autoshow (BasePWidget *basep)
                 return;
 	}
 
-	if (panel_gconf_get_int ("panel_hide_delay") == 0) {
+	if (panel_gconf_global_config_get_int ("panel_hide_delay") == 0) {
 		basep_widget_autoshow (basep);
 	} else {
 		/* set up our delay for popup. */
 		basep->enter_notify_timer_tag =
-			gtk_timeout_add (panel_gconf_get_int ("panel_show_delay"),
+			gtk_timeout_add (panel_gconf_global_config_get_int ("panel_show_delay"),
 					 basep_widget_autoshow, basep);
 	}
 }
@@ -1924,7 +1924,7 @@ basep_widget_autohide (gpointer data)
 		basep_widget_do_hiding (basep,
 					hide_orient,
 					size,
-					panel_gconf_get_int ("panel_hide_speed"));
+					panel_gconf_global_config_get_int ("panel_hide_speed"));
 	}
 
 
@@ -1969,7 +1969,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
                 
        /* set up our delay for popup. */
         basep->leave_notify_timer_tag =
-                gtk_timeout_add (panel_gconf_get_int ("panel_hide_delay"),
+                gtk_timeout_add (panel_gconf_global_config_get_int ("panel_hide_delay"),
                                  basep_widget_autohide, basep);
 }
 

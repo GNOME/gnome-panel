@@ -6,10 +6,10 @@
 
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
-	int hiding_step_size;
+	int hide_speed;
 	int minimized_size;
-	int minimize_delay;
-	int maximize_delay;
+	int hide_delay;
+	int show_delay;
 	gboolean tooltips_enabled;
 	gboolean show_dot_buttons;
 	gboolean show_menu_titles;

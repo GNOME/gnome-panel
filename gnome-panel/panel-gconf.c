@@ -6,6 +6,13 @@
 
 #include "panel-gconf.h"
 
+static gchar * panel_gconf_global_config_get_full_key (const gchar *key) {
+	gchar *full_key;
+
+	full_key = g_strdup_printf ("/apps/panel/%s", key);
+	return full_key;
+}
+
 GConfClient * panel_gconf_get_client (void) {
 	static GConfClient *client = NULL;
 
@@ -15,10 +22,14 @@ GConfClient * panel_gconf_get_client (void) {
         return client;
 }
 
-gint panel_gconf_get_int (const gchar *key) {
-	return 0;
+gint panel_gconf_global_config_get_int (const gchar *key) {
+	return gconf_client_get_int (panel_gconf_get_client (),
+				     panel_gconf_global_config_get_full_key (key),
+				     NULL);
 }
 
-gboolean panel_gconf_get_bool (const gchar *key) {
-	return TRUE;
+gboolean panel_gconf_global_config_get_bool (const gchar *key) {
+	return gconf_client_get_bool (panel_gconf_get_client (),
+				      panel_gconf_global_config_get_full_key (key),
+				      NULL);
 }
