@@ -855,8 +855,17 @@ panel_compatibility_detect_needs_migration (const char *profile)
 
 	source = g_strdup_printf ("xml:readwrite:%s/.gconf", g_get_home_dir ());
 
-	if (!(engine = gconf_engine_get_for_address (source, NULL)))
+	if (!(engine = gconf_engine_get_for_address (source, &error))) {
+#if 0
+		g_warning ("Cannot get GConf source '%s': %s\n",
+			   source, error->message);
+#endif
+		g_error_free (error);
+		g_free (source);
 		return FALSE;
+	}
+
+	g_free (source);
 
 	key = panel_gconf_general_key (profile, "panel_id_list");
 	if (!(value = gconf_engine_get_without_default (engine, key, NULL)))
