@@ -28,8 +28,10 @@ struct _FoobarWidget
 	GtkWidget *ebox;
 	GtkWidget *hbox;
 	GtkWidget *panel;
+	GtkWidget *clock_ebox;
 
 	gboolean compliant_wm;
+	char *clock_format;
 };
 
 struct _FoobarWidgetClass

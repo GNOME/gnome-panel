@@ -598,7 +598,7 @@ create_fish_widget(Fish *fish)
 static void
 help_cb (AppletWidget *widget, gpointer data)
 {
-	GnomeHelpMenuEntry help_ref = { "fish", "index.html"};
+	GnomeHelpMenuEntry help_ref = { "fish_applet", "index.html"};
 	gnome_help_display (NULL, &help_ref);
 }
 
@@ -754,11 +754,13 @@ wanda_activator(PortableServer_POA poa,
 	gtk_signal_connect(GTK_OBJECT(fish->applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_destroy),fish);
 
+
+	
 	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
-					      "about",
-					      GNOME_STOCK_MENU_ABOUT,
-					      _("About..."),
-					      about_cb,
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      properties_dialog,
 					      fish);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
@@ -769,10 +771,10 @@ wanda_activator(PortableServer_POA poa,
 					      NULL);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
-					      "properties",
-					      GNOME_STOCK_MENU_PROP,
-					      _("Properties..."),
-					      properties_dialog,
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      about_cb,
 					      fish);
 
 	return applet_widget_corba_activate(fish->applet, poa, goad_id, params,

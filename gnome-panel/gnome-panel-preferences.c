@@ -1085,7 +1085,7 @@ loadup_vals(void)
 	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
 
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =
 			gnome_config_get_bool(buf->str);
 
@@ -1183,7 +1183,7 @@ write_config(GlobalConfig *conf)
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
 		gnome_config_set_bool(buf->str,
 				      conf->tiles_enabled[i]);
 		g_string_sprintf(buf,"tile_up_%d",i);

@@ -275,14 +275,24 @@ build_label_and_entry (Printer *pr, GtkTable *table, int row, char *label,
 }
 
 static void
+help_cb (GtkWidget *w, gpointer data)
+{
+	GnomeHelpMenuEntry help_entry = { "gen_util_applet" };
+	help_entry.path = data;
+	gnome_help_display(NULL, &help_entry);
+}
+
+static void
+phelp_cb (GtkWidget *w, gint tab, gpointer data)
+{
+	help_cb (w, data);
+}
+
+static void
 printer_properties (AppletWidget *applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { NULL,
-						 "properties-printer" };
 	GtkWidget *table;
 	Printer *pr = data;
-
-	help_entry.name = gnome_app_id;
 
 	if (pr->printer_prop) {
 		gtk_widget_show_now(pr->printer_prop);
@@ -315,8 +325,8 @@ printer_properties (AppletWidget *applet, gpointer data)
 	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "destroy",
 			    GTK_SIGNAL_FUNC(close_properties), pr);
 	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "help",
-			    GTK_SIGNAL_FUNC(gnome_help_pbox_display),
-			    &help_entry);
+			    GTK_SIGNAL_FUNC(phelp_cb),
+			    "printer.html#PRINTER-PROPERTIES");
 			    
 	gtk_widget_show_all (pr->printer_prop);
 }
@@ -444,18 +454,25 @@ make_printer_applet(const gchar *goad_id)
 	gtk_widget_show (pr->applet);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(pr->applet),
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      printer_properties,
+					      pr);
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(pr->applet),
+					      "help",
+					      GNOME_STOCK_PIXMAP_HELP,
+					      _("Help"),
+					      help_cb, "printer.html");
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(pr->applet),
 					      "about",
 					      GNOME_STOCK_MENU_ABOUT,
 					      _("About..."),
 					      printer_about,
 					      pr);
 
-	applet_widget_register_stock_callback(APPLET_WIDGET(pr->applet),
-					      "properties",
-					      GNOME_STOCK_MENU_PROP,
-					      _("Properties..."),
-					      printer_properties,
-					      pr);
 
 	return pr->applet;
 }

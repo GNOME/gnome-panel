@@ -36,6 +36,8 @@ static void foobar_widget_class_init (FoobarWidgetClass *klass);
 static void foobar_widget_init (FoobarWidget *foo);
 
 static GtkWidget *das_global_foobar = NULL;
+static GtkWidget *clock_ebox = NULL;
+static GtkTooltips *tooltips = NULL;
 
 GtkType
 foobar_widget_get_type (void)
@@ -65,6 +67,8 @@ static void
 foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	foobar_widget_parent_class = gtk_type_class (FOOBAR_WIDGET_TYPE);
+	tooltips = gtk_tooltips_new ();
+	gtk_tooltips_enable (tooltips);
 }
 
 static GtkWidget *
@@ -113,14 +117,6 @@ url_menu_item (const char *label, const char *url, const char *pixmap)
 			    (gpointer *)url);
 	return item;
 }
-
-#if 0
-static void
-run_cb (GtkWidget *w, gpointer data)
-{
-	show_run_dialog ();
-}
-#endif
 
 static void
 about_cb (GtkWidget *w, gpointer data)
@@ -188,28 +184,12 @@ append_gnome_menu (GtkWidget *menu_bar)
 						url[i][2]));
 		
 	add_menu_separator (menu);
-#if 0		
-	item = pixmap_menu_item_new (_("Run..."), GNOME_STOCK_MENU_EXEC);
-	gtk_menu_append (GTK_MENU (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (run_cb), NULL);
 
-	add_menu_separator (menu);
-#endif
 	item = pixmap_menu_item_new (_("About GNOME"), GNOME_STOCK_MENU_ABOUT);
 	gtk_menu_append (GTK_MENU (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (about_cb), NULL);
 
-#if 0
-	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
-	gtk_menu_append (GTK_MENU (menu), item);
-	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (panel_quit), 0);
-	setup_internal_applet_drag (item, "LOGOUT:NEW");
-#endif
-
-	/*item = gtk_menu_item_new_with_label ("G N O M E");*/
 	item = pixmap_menu_item_new ("", "gnome-spider.png");
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -258,12 +238,8 @@ append_desktop_menu (GtkWidget *menu_bar)
 	append_gmc_item (menu, _("Rescan Desktop Directory"), "--rescan-desktop");
 	append_gmc_item (menu, _("Rescan Desktop Devices"), "--rescan-desktop-devices");
 
-
-
 	add_menu_separator (menu);
 	
-
-
 	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		item = pixmap_menu_item_new (_("Lock Screen"), 
@@ -335,15 +311,27 @@ append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 static int
 timeout_cb (gpointer data)
 {
+	static int day = 0;
 	GtkWidget *label = GTK_WIDGET (data);
 	struct tm *das_tm;
 	time_t das_time;
 	char hour[20];
 
+	if (!IS_FOOBAR_WIDGET (das_global_foobar))
+		return FALSE;
+
 	time (&das_time);
 	das_tm = localtime (&das_time);
 
-	if (strftime (hour, 20, _("%I:%M:%S %p"), das_tm) == 20)
+	if (das_tm->tm_mday != day) {
+		if (strftime (hour, 20, _("%A %B %d"), das_tm) == 20)
+			hour[19] = '\0';
+		gtk_tooltips_set_tip (tooltips, clock_ebox, hour, NULL);
+
+		day = das_tm->tm_mday;
+	}
+
+	if (strftime (hour, 20, FOOBAR_WIDGET (das_global_foobar)->clock_format, das_tm) == 20)
 		hour[19] = '\0';
 
 	gtk_label_set_text (GTK_LABEL (label), hour);
@@ -357,16 +345,53 @@ timeout_remove (GtkWidget *w, gpointer data)
 	gtk_timeout_remove (GPOINTER_TO_INT (data));
 }
 
+static void
+set_fooclock_format (GtkWidget *w, char *format)
+{
+	if (!IS_FOOBAR_WIDGET (das_global_foobar))
+		return;
+
+	g_free (FOOBAR_WIDGET (das_global_foobar)->clock_format);
+	FOOBAR_WIDGET (das_global_foobar)->clock_format = g_strdup (_(format));
+}
+
+static void
+append_format_item (GtkWidget *menu, char *format)
+{
+	char hour[20];
+	GtkWidget *item;
+	struct tm *das_tm;
+	time_t das_time = 0;
+
+	das_tm = localtime (&das_time);
+	if (strftime (hour, 20, _(format), das_tm) == 20)
+		hour[19] = '\0';
+
+	item = gtk_menu_item_new_with_label (hour);
+	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_signal_connect (GTK_OBJECT (item), "activate",
+			    GTK_SIGNAL_FUNC (set_fooclock_format),
+			    format);
+}
+
 static GtkWidget *
 append_clock_menu (GtkWidget *menu_bar)
 {
-	GtkWidget *item, *menu, *label;
+	GtkWidget *item, *menu, *label, *menu2;
 	gint timeout;
 	int i;
 	const char *cals[] = { 
 		N_("Today"),      "dayview",
 		N_("This Week"),  "weekview",
 		N_("This Month"), "monthview",
+		NULL
+	};
+
+	const char *formats[] = {
+		N_("%H:%M"),
+		N_("%H:%M:%S"),
+		N_("%I:%M %p"),
+		N_("%I:%M:%S %p"),
 		NULL
 	};
 
@@ -382,12 +407,23 @@ append_clock_menu (GtkWidget *menu_bar)
 	for (i=0; cals[i]; i+=2)
 		append_gnomecal_item (menu, _(cals[i]), cals[i+1]);
 
+	add_menu_separator (menu);
+
+	menu2 = gtk_menu_new ();
+	for (i=0; formats[i]; i++)
+		append_format_item (menu2, formats[i]);
+
+	item = gtk_menu_item_new_with_label (_("Format"));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
+	gtk_menu_append (GTK_MENU (menu), item);
+	
 	item = gtk_menu_item_new ();
 	label = gtk_label_new ("");
 	timeout = gtk_timeout_add (1000, timeout_cb, label);
 	gtk_signal_connect (GTK_OBJECT (label), "destroy",
 			    GTK_SIGNAL_FUNC (timeout_remove),
 			    GINT_TO_POINTER (timeout));
+	clock_ebox = item;
 	gtk_container_add (GTK_CONTAINER (item), label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 

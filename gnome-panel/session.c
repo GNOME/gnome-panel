@@ -539,6 +539,9 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int ("orient", DRAWER_POS (basep->pos)->orient);
 		/*gnome_config_set_int ("temp_hidden", DRAWER_POS (basep->pos)->temp_state);*/
 		break;
+	case FOOBAR_PANEL:
+		gnome_config_set_string ("/panel/Config/clock_format", FOOBAR_WIDGET (pd->panel)->clock_format);
+		break;
 	default:
 		break;
 	}
@@ -1055,6 +1058,8 @@ init_user_panels(void)
 
 #if 0 /* don't show the foobar by default yet */
 		panel = foobar_widget_new ();
+		FOOBAR_WIDGET (panel)->format = 
+			gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
 		panel_setup (panel);
 		gtk_widget_show (panel);
 #endif
@@ -1241,6 +1246,8 @@ init_user_panels(void)
 		}
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new ();
+			FOOBAR_WIDGET (panel)->clock_format = 
+				gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
 			break;
 		default:
 			panel = NULL;
@@ -1346,7 +1353,7 @@ load_up_globals(void)
 	global_config.menu_flags = gnome_config_get_int (buf->str);
 
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =
 			gnome_config_get_bool(buf->str);
 
@@ -1432,7 +1439,7 @@ write_global_config(void)
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
 		gnome_config_set_bool(buf->str,
 				      global_config.tiles_enabled[i]);
 		g_string_sprintf(buf,"tile_up_%d",i);
@@ -1509,7 +1516,7 @@ convert_write_config(void)
 			      global_config.tile_when_over);
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
 		gnome_config_set_bool(buf->str,
 				      global_config.tiles_enabled[i]);
 		g_string_sprintf(buf,"tile_up_%d",i);
@@ -1600,7 +1607,7 @@ convert_read_old_config(void)
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
+		g_string_sprintf(buf,"new_tiles_enabled_%d=TRUE",i);
 		global_config.tiles_enabled[i] =
 			gnome_config_get_bool(buf->str);
 

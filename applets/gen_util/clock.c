@@ -373,12 +373,6 @@ make_clock_applet(const gchar * goad_id)
 			   GTK_SIGNAL_FUNC(applet_save_session),
 			   cd);
 
-	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
-					      "about",
-					      GNOME_STOCK_MENU_ABOUT,
-					      _("About..."),
-					      clock_about,
-					      NULL);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "properties",
@@ -386,6 +380,13 @@ make_clock_applet(const gchar * goad_id)
 					      _("Properties..."),
 					      clock_properties,
 					      cd);
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      clock_about,
+					      NULL);
 	return applet;
 }
 

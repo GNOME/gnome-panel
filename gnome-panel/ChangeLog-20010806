@@ -1,3 +1,25 @@
+2000-04-04  Jacob Berkman  <jacob@helixcode.com>
+
+	* gnome-panel-properties.desktop: remove #
+
+	* foobar-widget.c (timeout_cb): when the day changes update
+	the tooltip
+
+	* foobar-widget.c (append_clock_menu): make a format submenu
+	(timeout_cb): use clock format instead of hard coded one
+
+	* session.c (load_up_globals): 
+	(write_global_config): 
+	(convert_write_config): 
+	(convert_read_old_config): 
+	* gnome-panel-properties.c (loadup_vals): 
+	(write_config): rename the tiles key
+
+	* session.c (init_user_panels): load clock format
+	* session.c (save_panel_configuration): save clock format
+
+	* foobar-widget.c: remove some #if 0'd code
+
 Mon Apr 03 21:01:27 2000  George Lebl <jirka@5z.com>
 
 	* gnome-run.c, launcher.c: add help buttons and link them

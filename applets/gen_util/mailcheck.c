@@ -1093,8 +1093,8 @@ mailcheck_properties_page (MailCheck *mc)
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "mailcheck_applet",
-					  "index.html#mailcheck-prefs" };
+	GnomeHelpMenuEntry help_entry = { "gen_util_applet",
+					  "index.html#MAILCHECK-PREFS" };
 	gnome_help_display(NULL, &help_entry);
 }	
 
@@ -1224,7 +1224,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 static void
 help_callback (AppletWidget *widget, gpointer data)
 {
-	GnomeHelpMenuEntry help_ref = { "mailcheck_applet", "index.html"};
+	GnomeHelpMenuEntry help_ref = { "gen_util_applet", "index.html#APPLETS-CORE-MAILCHECK"};
 	gnome_help_display (NULL, &help_ref);
 }
 
