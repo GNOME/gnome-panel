@@ -109,7 +109,7 @@ applet_files_init(void)
 	struct stat    filestat;
 	int            len;
 	
-	applet_files_ht = g_hash_table_new(g_string_hash, g_string_equal);
+	applet_files_ht = g_hash_table_new(g_str_hash, g_str_equal);
 
 	dirname = gnome_unconditional_libdir_file("."); /* Get libdir name */
 
