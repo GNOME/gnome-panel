@@ -1,5 +1,5 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef NOTHING_H
+#define NOTHING_H
 
 #include <gtk/gtk.h>
 

@@ -7,26 +7,40 @@
 
 #include "panel-gconf.h"
 
-static gchar * 
+gchar * 
 panel_gconf_global_config_get_full_key (const gchar *key) {
 	return g_strdup_printf ("/apps/panel/global/%s", key);
 }
 
-static gchar *
-panel_gconf_general_profile_get_full_key (const gchar * profile, const gchar *key) {
+gchar *
+panel_gconf_general_profile_get_full_key (const gchar *profile, const gchar *key) {
 	return g_strdup_printf ("/apps/panel/profiles/%s/general/%s", profile, key);
 }
 
-static gchar *
-panel_gconf_panel_profile_get_full_key (const gchar *profile, gint panel_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/panels/%d/%s", profile, panel_id, key);
+gchar *
+panel_gconf_panel_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/panels/%s/%s", profile, panel_id, key);
 }
 
-static gchar *
-panel_gconf_applets_profile_get_full_key (const gchar *profile, gint applet_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/applets/%d/%s", profile, applet_id, key);
+gchar *
+panel_gconf_applets_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/%s", profile, applet_id, key);
 }
 
+gchar *
+panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/default-profiles/%s/general/%s", profile, key);
+}
+
+gchar *
+panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/default-profiles/%s/panels/%s/%s", profile, panel_id, key);
+}
+
+gchar *
+panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/default-profiles/%s/applets/%s/%s", profile, applet_id, key);
+}
 
 GConfClient * 
 panel_gconf_get_client (void) {
@@ -68,96 +82,61 @@ panel_gconf_all_global_entries (void)
 }
 
 gint 
-panel_gconf_global_config_get_int (const gchar *key) {
+panel_gconf_get_int (const gchar *key) {
 	gint value;
-	gchar *full_key;
-
-	full_key = panel_gconf_global_config_get_full_key (key);
-	value =  gconf_client_get_int (panel_gconf_get_client (),
-				       full_key,
-				       NULL);
-	g_free (full_key);
+	
+	value =  gconf_client_get_int (panel_gconf_get_client (), key, NULL);
 	return value;
 }
 
 gboolean
-panel_gconf_global_config_get_bool (const gchar *key) {
+panel_gconf_get_bool (const gchar *key) {
 	gboolean value;
-	gchar *full_key;
 	
-	full_key = panel_gconf_global_config_get_full_key (key);
-	value = gconf_client_get_bool (panel_gconf_get_client (),
-				       full_key,
-				       NULL);
-	g_free (full_key);
+	value = gconf_client_get_bool (panel_gconf_get_client (), key, NULL);
 	return value;
 }
 
 gchar * 
-panel_gconf_global_config_get_string (const gchar *key) {
+panel_gconf_get_string (const gchar *key) {
 	gchar *value;
-	gchar *full_key;
 
-	full_key = panel_gconf_global_config_get_full_key (key);
-	value = gconf_client_get_string (panel_gconf_get_client (),
-					 full_key,
-					 NULL);
-	g_free (full_key);
+	value = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 	return value;
 }
 
 void 
-panel_gconf_global_config_set_int (const gchar *key, gint value) {
-	gchar *full_key;
+panel_gconf_set_int (const gchar *key, gint value) {
 
-	full_key = panel_gconf_global_config_get_full_key (key);
-	gconf_client_set_int (panel_gconf_get_client (),
-			      full_key,
-			      value,
-			      NULL);
+	gconf_client_set_int (panel_gconf_get_client (), key, value, NULL);
 			      
-
-	g_free (full_key);
 	return;
 }
 
 void 
-panel_gconf_global_config_set_bool (const gchar *key, gboolean value) {
-	gchar *full_key;
+panel_gconf_set_bool (const gchar *key, gboolean value) {
 
-	full_key = panel_gconf_global_config_get_full_key (key);
-	gconf_client_set_bool (panel_gconf_get_client (),
-			       full_key,
-			       value,
-			       NULL);
+	gconf_client_set_bool (panel_gconf_get_client (), key, value, NULL);
 
-	g_free (full_key);
 	return;
 }
 
 void 
-panel_gconf_global_config_set_string (const gchar *key, const gchar *value) {
-	gchar *full_key;
+panel_gconf_set_string (const gchar *key, const gchar *value) {
 
-	full_key = panel_gconf_global_config_get_full_key (key);
-	gconf_client_set_string (panel_gconf_get_client (),
-				 full_key,
-				 value,
-				 NULL);
+	gconf_client_set_string (panel_gconf_get_client (), key, value, NULL);
 
-	g_free (full_key);
 	return;
 }
 
 guint 
 panel_gconf_notify_add (const gchar *key, GConfClientNotifyFunc notify_func, gpointer user_data) {
 	guint notify_id;
-	notify_id = gconf_client_notify_add (panel_gconf_get_client (),
-					     key,
-					     notify_func,
-					     user_data,
-					     NULL,
-					     NULL);
+	notify_id = gconf_client_notify_add (panel_gconf_get_client (), 
+					     key, 
+					     notify_func, 
+					     user_data, 
+					     NULL, NULL);
 	return notify_id;
 }
 
@@ -201,4 +180,26 @@ panel_gconf_add_dir (const gchar *key) {
 			      GCONF_CLIENT_PRELOAD_NONE,
 			      NULL);
 	return;
+}
+
+gboolean
+panel_gconf_dir_exists (const gchar *key) {
+	return gconf_client_dir_exists (panel_gconf_get_client (),
+				 	key,
+				 	NULL);
+}
+
+gchar *
+panel_gconf_panel_profile_get_conditional_key (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        return panel_gconf_panel_default_profile_get_full_key ("small",
+                                                                               panel_id,
+                                                                               key);
+		}
+                else {
+                        return panel_gconf_panel_profile_get_full_key (profile,
+                                                                       panel_id,
+                                                                       key);
+		}
 }

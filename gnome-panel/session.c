@@ -62,6 +62,8 @@ extern GSList *panels;
 extern GSList *applets;
 extern int applet_count;
 
+extern gchar *panel_profile_name;
+
 extern GtkTooltips *panel_tooltips;
 
 extern GnomeClient *client;
@@ -70,9 +72,6 @@ gboolean commie_mode = FALSE;
 gboolean no_run_box = FALSE;
 
 GlobalConfig global_config;
-
-char *panel_cfg_path = NULL;
-char *old_panel_cfg_path = NULL;
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -378,6 +377,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	PanelData     *pd = data;
 	BasePWidget   *basep = NULL; 
 	PanelWidget   *panel = NULL;
+	gchar *panel_profile_key;
 
 	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
@@ -433,8 +433,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	gnome_config_set_int("back_type", panel->back_type);
 	
-	g_string_free(buf,TRUE);
-
 	/* now do different types */
 	if (BORDER_IS_WIDGET(pd->panel))
 		gnome_config_set_int("edge", BORDER_POS(basep->pos)->edge);
@@ -457,12 +455,17 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		/*gnome_config_set_int ("temp_hidden", DRAWER_POS (basep->pos)->temp_state);*/
 		break;
 	case FOOBAR_PANEL:
-		panel_gconf_global_config_set_string ("clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
+	g_string_sprintf(buf, "%spanel/Panel_%d", PANEL_CONFIG_PATH, *num);
+		panel_profile_key = panel_gconf_global_config_get_full_key ("clock-format");
+		panel_gconf_set_string (panel_profile_key, FOOBAR_WIDGET (pd->panel)->clock_format);
+		g_free (panel_profile_key);
 		gnome_config_set_int ("screen", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
 	}
+	
+	g_string_free(buf,TRUE);
 
 	gnome_config_pop_prefix ();
 }
@@ -542,11 +545,6 @@ do_session_save(GnomeClient *client,
 	 * could have changed anything anyway */
 	if (commie_mode)
 		return;
-
-	if (panel_cfg_path)
-		g_free (panel_cfg_path);
-
-		panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
 
 #ifdef SESSION_DEBUG	
 	printf("Saving to [%s]\n",PANEL_CONFIG_PATH);
@@ -969,29 +967,35 @@ session_init_user_applets (void)
 }
 
 static void
-session_init_user_panels(void)
+session_init_panels(void)
 {
-	GString *buf;
-	int count, num;	
-	char *s;
+	gchar *panel_profile_key;
+	gchar *panel_default_profile;
+	gboolean use_default = FALSE;
+
 	GtkWidget *panel = NULL;
-	char *prefix;
-	const char *sep;
+	GSList *panel_ids;
+	GSList *temp;
+	char *s;
+	
+	panel_profile_key = panel_gconf_general_profile_get_full_key (panel_profile_name, "panel-id-list");
 
-	prefix = get_correct_prefix (&sep);
+	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
+		/* FIXME: We need to resort to another fallback default panel config 
+		          and do some sort of check for screen sizes */
+		use_default = TRUE;
+		panel_default_profile = "small";
+		g_free (panel_profile_key);
+		panel_profile_key = panel_gconf_general_default_profile_get_full_key (panel_default_profile, "panel-id-list");
+	}
 
-	buf = g_string_new (NULL);
-
-	g_string_sprintf (buf, "%spanel%s/Config/panel_count",
-			  prefix, sep);
-
-	count = conditional_get_int (buf->str, 0, NULL);
-
-	/*load a default snapped panel on the bottom of the screen,
-	  it is required to have at least one panel for this all
-	  to work, so this is the way we find out if there was no
-	  config from last time*/
-	if (count <= 0)  {
+	panel_ids = gconf_client_get_list (panel_gconf_get_client (),
+					   panel_profile_key,
+					   GCONF_VALUE_STRING,
+					   NULL);
+	g_free (panel_profile_key);
+					  
+	if (panel_ids == NULL)  {
 		/* Eeeeeeeek! no default config, no user config, this is
 		 * bad bad bad, load a single panel */
 		panel = edge_widget_new (0 /* screen */,
@@ -1010,21 +1014,18 @@ session_init_user_panels(void)
 		panel_setup(panel);
 		gtk_widget_show(panel);
 
-		/* load up the foot menu */
+		/* FIXME : load up the foot menu 
 		load_menu_applet ("applications:/",
-				  TRUE /* main_menu */,
+				  TRUE, 
 				  get_default_menu_flags (),
 				  TRUE, FALSE, NULL,
 				  PANEL_WIDGET(BASEP_WIDGET(panel)->panel),
 				  0, TRUE);
-
-		g_free (prefix);
-		g_string_free (buf, TRUE);
-
+		*/
 		return;
 	}
 
-	for (num = 1; num <= count; num++) {
+	for (temp = panel_ids; temp; temp = temp->next) {
 		PanelType type;
 		PanelBackType back_type;
 		int sz;
@@ -1038,65 +1039,135 @@ session_init_user_panels(void)
 		gboolean rotate_pixmap_bg;
 		int hidebuttons_enabled;
 		int hidebutton_pixmaps_enabled;
-		int unique_id;
 		int screen;
 
-		g_string_sprintf (buf, "%spanel%s/Panel_%d/",
-				  prefix, sep, num);
-		gnome_config_push_prefix (buf->str);
-
-		if ( ! conditional_true ("Conditional")) {
-			gnome_config_pop_prefix ();
-			continue;
-		}
-
-		unique_id = conditional_get_int ("unique_id", -1, NULL);
-		
-		back_pixmap = conditional_get_string ("backpixmap", NULL, NULL);
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name, 
+										   (const gchar *) temp->data,
+										   "panel-background-pixmap",
+										   use_default);
+		back_pixmap = panel_gconf_get_string (panel_profile_key);
 		if (string_empty (back_pixmap)) {
 			g_free (back_pixmap);
 			back_pixmap = NULL;
 		}
+		g_free (panel_profile_key);
 
-		color = conditional_get_string ("backcolor", "#ffffff", NULL);
+
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-background-color",
+										   use_default);
+		color = panel_gconf_get_string (panel_profile_key);
 		if ( ! string_empty (color))
 			gdk_color_parse (color, &back_color);
+		g_free (panel_profile_key);
 
-		back_type=conditional_get_int ("back_type",
-					       PANEL_BACK_NONE, NULL);
-		fit_pixmap_bg = conditional_get_bool ("fit_pixmap_bg",
-						      TRUE, NULL);
-		strech_pixmap_bg = conditional_get_bool ("strech_pixmap_bg",
-							 FALSE, NULL);
-		rotate_pixmap_bg = conditional_get_bool ("rotate_pixmap_bg",
-							 FALSE, NULL);
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-background-type",
+										   use_default);
+		back_type = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
 
-		sz=conditional_get_int ("sz", PANEL_SIZE_MEDIUM, NULL);
-		if(sz < 0)
-			sz = 0;
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-background-pixmap-fit",
+										   use_default);
+		fit_pixmap_bg = panel_gconf_get_bool (panel_profile_key);
+		g_free (panel_profile_key);
 
-		/*now for type specific config*/
 
-		type = conditional_get_int ("type", EDGE_PANEL, NULL);
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-background-pixmap-stretch",
+										   use_default);
 
-		hidebuttons_enabled =
-			conditional_get_bool ("hidebuttons_enabled", TRUE, NULL);
-		hidebutton_pixmaps_enabled =
-			conditional_get_bool ("hidebutton_pixmaps_enabled", TRUE, NULL);
+		strech_pixmap_bg = panel_gconf_get_bool (panel_profile_key);
+		g_free (panel_profile_key);
 
-		state = conditional_get_int ("state", 0, NULL);
-		mode = conditional_get_int ("mode", 0, NULL);
-		screen = conditional_get_int ("screen", 0, NULL);
-		if (screen < 0)
-			screen = 0;
+
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-background-pixmap-rotate",
+										   use_default);
+		rotate_pixmap_bg = panel_gconf_get_bool (panel_profile_key);
+		g_free (panel_profile_key);
+
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-size",
+										   use_default);
+		
+		sz = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
+
+
+		/* Now for type specific config */
+
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-type",
+										   use_default);
+		type = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
+
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "hide-buttons-enabled",
+										   use_default);
+		
+		hidebuttons_enabled = panel_gconf_get_bool (panel_profile_key);
+		g_free (panel_profile_key);
+
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "hide-button-pixmaps-enabled",
+										   use_default);
+
+		hidebutton_pixmaps_enabled = panel_gconf_get_bool (panel_profile_key);
+		g_free (panel_profile_key);
+
+		
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-hide-state",
+										   use_default);
+		state = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
+
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "panel-hide-mode",
+										   use_default);
+		mode = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
+
+
+		panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+										   (const gchar *) temp->data,
+										   "screen-id",
+										   use_default);
+		screen = panel_gconf_get_int (panel_profile_key);
+		g_free (panel_profile_key);
+
 #if 0 /* i guess we can't easily do this for now */
 		pos = basep_widget_load_pos_settings();
 #endif
 		switch (type) {
 			
 		case EDGE_PANEL:
-			edge = conditional_get_int ("edge", BORDER_BOTTOM,
-						    NULL);
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "screen-edge",
+											   use_default);
+			
+			edge = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
 
 			panel = edge_widget_new (screen,
 						 edge, 
@@ -1112,8 +1183,13 @@ session_init_user_panels(void)
 			break;
 		case ALIGNED_PANEL: {
 			AlignedAlignment align;
-			edge = conditional_get_int ("edge", BORDER_BOTTOM,
-						    NULL);
+			
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "screen-edge",
+											   use_default);
+			edge = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
 			
 			align = conditional_get_int ("align", ALIGNED_LEFT,
 						     NULL);
@@ -1137,14 +1213,36 @@ session_init_user_panels(void)
 		case SLIDING_PANEL: {
 			gint16 offset;
 			SlidingAnchor anchor;
-			edge = conditional_get_int ("edge", BORDER_BOTTOM,
-						    NULL);
 			
-			anchor = conditional_get_int ("anchor",
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "screen-edge",
+											   use_default);
+			edge = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+			
+
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-anchor",
+											   use_default);
+			anchor = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+			
+			
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-offset",
+											   use_default);
+			offset = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+	
+			/* FIXME : clean up after schema has been written, kept so we can remember default
+			anchor = conditional_get_int ("anchor",	
 						      SLIDING_ANCHOR_LEFT,
 						      NULL);
-
 			offset = conditional_get_int ("offset", 0, NULL);
+			*/
 
 			panel = sliding_widget_new (screen,
 						    anchor,
@@ -1165,10 +1263,18 @@ session_init_user_panels(void)
 		}
 		case DRAWER_PANEL: {
 			PanelOrient orient;
-			/*BasePState temp_state;*/
+			
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-orient",
+											   use_default);
+			orient = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
 
+			/* FIXME : clean up after schema has been written, kept so we can remember default
 			orient = conditional_get_int ("orient", PANEL_ORIENT_UP,
 						      NULL);
+			*/
 
 			/* FIXME: there are some issues with auto hiding drawers */
 
@@ -1184,23 +1290,43 @@ session_init_user_panels(void)
 						   strech_pixmap_bg,
 						   rotate_pixmap_bg,
 						   &back_color);
-#if 0
-			g_string_sprintf (buf, "temp_state=%d", BASEP_SHOWN);
-			temp_state = conditional_get_int (buf->str);
-			DRAWER_POS (BASEP_WIDGET (panel)->pos)->temp_state = temp_state;
-#endif
 			break;
 		}
 		case FLOATING_PANEL: {
 			GtkOrientation orient;
 			int x, y;
 			
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-orient",
+											   use_default);
+			orient = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+
+
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-x-position",
+											   use_default);
+			x = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+
+
+			panel_profile_key = panel_gconf_panel_profile_get_conditional_key (panel_profile_name,
+											   (const gchar *) temp->data,
+											   "panel-y-position",
+											   use_default);
+			y = panel_gconf_get_int (panel_profile_key);
+			g_free (panel_profile_key);
+			
+			/* FIXME : clean up after schema has been written, kept so we can remember default
 			orient = conditional_get_int ("orient",
 						      GTK_ORIENTATION_HORIZONTAL,
 						      NULL);
-
 			x = conditional_get_int ("x", 0, NULL);
 			y = conditional_get_int ("y", 0, NULL);
+			*/
+
 
 			panel = floating_widget_new (screen,
 						     x,
@@ -1222,9 +1348,9 @@ session_init_user_panels(void)
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new (screen);
 
-			push_correct_global_prefix ();
-			s = panel_gconf_global_config_get_string ("clock-format");
-			gnome_config_pop_prefix ();
+			panel_profile_key = panel_gconf_global_config_get_full_key ("clock-format");
+			s = panel_gconf_get_string (panel_profile_key);
+			g_free (panel_profile_key);
 
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
@@ -1237,21 +1363,14 @@ session_init_user_panels(void)
 			break;
 		}
 
-		gnome_config_pop_prefix ();
-		
 		g_free (color);
 		g_free (back_pixmap);
 
 		if (panel != NULL) {
-			if (unique_id > 0)
-				panel_set_id (panel, unique_id);
 			panel_setup (panel);
 			gtk_widget_show (panel);
 		}
 	}
-	g_string_free (buf, TRUE);
-
-	g_free (prefix);
 }
 
 static gboolean
@@ -1469,34 +1588,80 @@ void
 session_write_global_config (void)
 {
 	GConfChangeSet *global_config_cs;
+	gchar *full_key;
 
 	global_config_cs = gconf_change_set_new ();
 
-	/* FIXME - I promise I will use a GConfChangeSet for this stuff */
-	
 	/* FIXME STUFF THAT IS BORKED 
 	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
 	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
 	*/
 
-	gconf_change_set_set_int (global_config_cs, "panel-animation-speed", global_config.animation_speed);
-	gconf_change_set_set_int (global_config_cs, "panel-minimized-speed", global_config.minimized_size);
-	gconf_change_set_set_int (global_config_cs, "panel-hide-delay", global_config.hide_delay);
-	gconf_change_set_set_int (global_config_cs, "panel-show-delay", global_config.show_delay);
-	gconf_change_set_set_int (global_config_cs, "panel-window-layer", global_config.layer);
+	/* FIXME: Make this more generic - this currently sucks */
 
-	gconf_change_set_set_bool (global_config_cs, "tooltips-enabled", global_config.tooltips_enabled);
-	gconf_change_set_set_bool (global_config_cs, "enable-animations", global_config.enable_animations);
-	gconf_change_set_set_bool (global_config_cs, "autoraise-panel", global_config.autoraise);
-	gconf_change_set_set_bool (global_config_cs, "drawer-autoclose", global_config.drawer_auto_close);
-	gconf_change_set_set_bool (global_config_cs, "highlight-launchers-on-mouseover", global_config.highlight_when_over);
-	gconf_change_set_set_bool (global_config_cs, "confirm-panel-remove", global_config.confirm_panel_remove);
-	gconf_change_set_set_bool (global_config_cs, "keep-menus-in-memory", global_config.keep_menus_in_memory);
+	full_key = panel_gconf_global_config_get_full_key ("panel-animation-speed");
+	gconf_change_set_set_int (global_config_cs, full_key , global_config.animation_speed);
+	g_free (full_key);
 
-	gconf_change_set_set_string (global_config_cs, "menu-key", global_config.menu_key);
-	gconf_change_set_set_string (global_config_cs, "run-key", global_config.run_key);
-	gconf_change_set_set_string (global_config_cs, "screenshot-key", global_config.screenshot_key);
-	gconf_change_set_set_string (global_config_cs, "window-screenshot-key", global_config.window_screenshot_key);
+	full_key = panel_gconf_global_config_get_full_key ("panel-minimized-speed");
+	gconf_change_set_set_int (global_config_cs, full_key, global_config.minimized_size);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-hide-delay");
+	gconf_change_set_set_int (global_config_cs, full_key, global_config.hide_delay);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-show-delay");
+	gconf_change_set_set_int (global_config_cs, full_key, global_config.show_delay);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("panel-window-layer");
+	gconf_change_set_set_int (global_config_cs, full_key, global_config.layer);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("tooltips-enabled");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.tooltips_enabled);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("enable-animations");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.enable_animations);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("autoraise-panel");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.autoraise);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("drawer-autoclose");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.drawer_auto_close);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("highlight-launchers-on-mouseover");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.highlight_when_over);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("confirm-panel-remove");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.confirm_panel_remove);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("keep-menus-in-memory");
+	gconf_change_set_set_bool (global_config_cs, full_key, global_config.keep_menus_in_memory);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("menu-key");
+	gconf_change_set_set_string (global_config_cs, full_key, global_config.menu_key);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("run-key");
+	gconf_change_set_set_string (global_config_cs, full_key, global_config.run_key);
+	g_free (full_key);
+
+	full_key = panel_gconf_global_config_get_full_key ("screenshot-key");
+	gconf_change_set_set_string (global_config_cs, full_key, global_config.screenshot_key);
+	g_free (full_key);
+	
+	full_key = panel_gconf_global_config_get_full_key ("window-screenshot-key");
+	gconf_change_set_set_string (global_config_cs, full_key, global_config.window_screenshot_key);
+	g_free (full_key);
 
 	gconf_client_commit_change_set (panel_gconf_get_client (), global_config_cs, FALSE, NULL);
 
@@ -1505,6 +1670,6 @@ session_write_global_config (void)
 }
 
 void session_load (void) {
-  session_init_user_panels ();
-  session_init_user_applets ();
+  session_init_panels ();
+/*  session_init_user_applets (); */
 }

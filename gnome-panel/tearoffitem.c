@@ -3,7 +3,6 @@
 #include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
 
-#include "main.h"
 #include "menu.h"
 #include "tearoffitem.h"
 

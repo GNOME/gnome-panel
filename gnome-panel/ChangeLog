@@ -1,3 +1,19 @@
+2001-12-17  Glynn Foster  <glynn.foster@sun.com>
+
+	* Makefile.am, floating-widget.c, foobar-widget.c,
+	* gnome-run.c, main.c, main.h, menu.c, nothing.cP,
+	* nothing.h, panel-gconf.c, panel-gconf.h,
+	* panel-per-panel-config.schemas, session.c, session.h,
+	* tearoffitem.c:
+	
+	This patch will upset quite a lot of people. The move towards
+	gconf and profiles Part I "Oh What a Tangled Web we Weave". Please
+	don't look at the code, it's horrible. Basically we now have a 
+	default schema for small, medium and large screens. The panel will 
+	in future take a --profile option to load a profile. For now, applet
+	inits don't work, panel inits are taken from the 'small' profile. Don't 
+	file bugs about panel not saving, we know.
+		
 2001-12-17  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.h: fix PANEL_MENU_HAVE_ICONS_KEY.
@@ -52,7 +68,7 @@ Fri Dec 14 16:41:23 2001  George Lebl <jirka@5z.com>
 	  panel-types.h: move to our reserved GNOME_Vertigo
           namespace.
 
-2001-12-14  Satan
+2001-12-14  Seth Nickell <snickell@stanford.edu>
 
 	* menu.c: (panel_menu_have_icons):
 

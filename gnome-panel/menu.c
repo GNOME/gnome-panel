@@ -46,7 +46,7 @@
 #include "gnome-run.h"
 #include "launcher.h"
 #include "logout.h"
-#include "main.h"
+#include "nothing.h"
 #include "menu-fentry.h"
 #include "menu-properties.h"
 #include "menu-util.h"
@@ -3044,12 +3044,15 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
-		char *s;
+		gchar *panel_profile_key;
+		gchar *s;
 		if (!foobar_widget_exists (screen)) {
 			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
-			s = panel_gconf_global_config_get_string ("clock-format");
+			panel_profile_key = panel_gconf_global_config_get_full_key ("clock-format");
+			s = panel_gconf_get_string (panel_profile_key);
+			g_free (panel_profile_key);	
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);

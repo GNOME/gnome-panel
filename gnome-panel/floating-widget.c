@@ -310,18 +310,24 @@ floating_pos_get_hide_size (BasePWidget *basep,
 			    PanelOrient hide_orient,
 			    int *w, int *h)
 {
+	gchar *panel_global_key;
+
 	if (basep->state == BASEP_AUTO_HIDDEN &&
 	    ! basep->hidebuttons_enabled) {
+		panel_global_key = panel_gconf_global_config_get_full_key ("panel_minimized-size");
+
 		switch (hide_orient) {
 		case PANEL_ORIENT_UP:
 		case PANEL_ORIENT_DOWN:
-			*h = panel_gconf_global_config_get_int ("panel-minimized-size");
+			*h = panel_gconf_get_int (panel_global_key);
 			break;
 		case PANEL_ORIENT_LEFT:
 		case PANEL_ORIENT_RIGHT:
-			*w = panel_gconf_global_config_get_int ("panel-minimized-size");
+			*w = panel_gconf_get_int (panel_global_key);
 			break;
 		}
+
+		g_free (panel_global_key);
 	} else {
 		switch (hide_orient) {
 		case PANEL_ORIENT_UP:
@@ -350,6 +356,10 @@ floating_pos_get_hide_pos (BasePWidget *basep,
 			   int *x, int *y,
 			   int w, int h)
 {
+	gchar *panel_global_key;
+
+	panel_global_key = panel_gconf_global_config_get_full_key ("panel_minimized-size");
+
 	switch (hide_orient) {
 	case PANEL_ORIENT_UP:
 	case PANEL_ORIENT_LEFT:
@@ -357,16 +367,18 @@ floating_pos_get_hide_pos (BasePWidget *basep,
 	case PANEL_ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
-			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
+			   ? panel_gconf_get_int (panel_global_key)
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case PANEL_ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
-			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
+			   ? panel_gconf_get_int (panel_global_key)
 			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
+	
+	g_free (panel_global_key);
 }
 
 static void

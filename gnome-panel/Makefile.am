@@ -92,7 +92,6 @@ panel_sources =			\
 
 panel_headers =			\
 	panel-types.h		\
-	main.h			\
 	panel-widget.h		\
 	basep-widget.h		\
 	button-widget.h		\
@@ -161,6 +160,7 @@ EXTRA_DIST =					\
 	$(glade_DATA)				\
 	gnome-panel-properties.glade.h		\
 	nothing.cP				\
+	nothing.h				\
 	gnome-panel-screenshot.glade		\
 	gnome-panel-screenshot.glade.h		\
 	$(schema_DATA)				\

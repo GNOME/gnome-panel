@@ -51,9 +51,6 @@ void session_write_global_config (void);
 
 void apply_global_config(void);
 
-/* just temporary so that we can bridge the gap between old and new config */
-void convert_old_config(void);
-
 /* prefix thingie */
 char * get_correct_prefix (char const **sep);
 void push_correct_global_prefix (void);

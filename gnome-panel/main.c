@@ -18,8 +18,6 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "main.h"
-
 #include "conditional.h"
 #include "drawer-widget.h"
 #include "menu-fentry.h"
@@ -43,7 +41,6 @@ extern GSList *applets;
 
 extern gboolean commie_mode;
 extern GlobalConfig global_config;
-extern char *old_panel_cfg_path;
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -56,7 +53,7 @@ char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
 
-gchar *profile_name = NULL;
+gchar *panel_profile_name = NULL;
 
 static gboolean
 menu_age_timeout(gpointer data)
@@ -98,238 +95,6 @@ menu_age_timeout(gpointer data)
 	}
 
 	return TRUE;
-}
-
-/* Some important code copied from PonG */
-typedef struct _AppletContainer AppletContainer;
-struct _AppletContainer {
-	GdkWindow *win;
-	gboolean hide_mode;
-	int state;
-	int x, y, xs, ys;
-	int handler;
-	GdkPixmap *phsh[4];
-	GdkBitmap *phsh_mask[4];
-};
-AppletContainer phsh = {0};
-
-static void
-phsh_kill (void)
-{
-	int i;
-	for (i = 0; i < 4; i++) {
-		gdk_pixmap_unref (phsh.phsh[i]);
-		gdk_bitmap_unref (phsh.phsh_mask[i]);
-	}
-	gdk_window_destroy (phsh.win);
-	gtk_timeout_remove (phsh.handler);
-	memset (&phsh, 0, sizeof (AppletContainer));
-}
-
-static gboolean
-phsh_move (gpointer data)
-{
-	int orient, state;
-	gboolean change = TRUE;
-
-	phsh.x += phsh.xs;
-	phsh.y += phsh.ys;
-	if (phsh.x <= -60 ||
-	    phsh.x >= gdk_screen_width ()) {
-		phsh_kill ();
-		return FALSE;
-	}
-	if (phsh.y <= 0 ||
-	    phsh.y >= gdk_screen_height () - 40 ||
-	    rand() % (phsh.hide_mode?10:50) == 0)
-		phsh.ys = -phsh.ys;
-
-	phsh.state ++;
-	if (phsh.state % (phsh.hide_mode?2:4) == 0)
-		change = TRUE;
-	if (phsh.state >= (phsh.hide_mode?4:8))
-		phsh.state = 0;
-
-	state = phsh.state >= (phsh.hide_mode?2:4) ? 1 : 0;
-	orient = phsh.xs >= 0 ? 0 : 2;
-
-	if (change) {
-		gdk_window_set_back_pixmap (phsh.win, phsh.phsh[orient + state], FALSE);
-		gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[orient + state], 0, 0);
-		gdk_window_clear (phsh.win);
-	}
-
-	gdk_window_move (phsh.win, phsh.x, phsh.y);
-	gdk_window_raise (phsh.win);
-
-	return TRUE;
-}
-
-static void
-phsh_reverse (GdkPixbuf *gp)
-{
-	guchar *pixels = gdk_pixbuf_get_pixels (gp);
-	int x, y;
-	int rs = gdk_pixbuf_get_rowstride (gp);
-#define DOSWAP(x,y) tmp = x; x = y; y = tmp;
-	for (y = 0; y < 40; y++, pixels += rs) {
-		guchar *p = pixels;
-		guchar *p2 = pixels + 60*4 - 4;
-		for (x = 0; x < 30; x++, p+=4, p2-=4) {
-			guchar tmp;
-			DOSWAP (p[0], p2[0]);
-			DOSWAP (p[1], p2[1]);
-			DOSWAP (p[2], p2[2]);
-			DOSWAP (p[3], p2[3]);
-		}
-	}
-#undef DOSWAP
-}
-
-/* This dered's the phsh */
-static void
-phsh_dered(GdkPixbuf *gp)
-{
-	guchar *pixels = gdk_pixbuf_get_pixels (gp);
-	int x, y;
-	int rs = gdk_pixbuf_get_rowstride (gp);
-	for (y = 0; y < 40; y++, pixels += rs) {
-		guchar *p = pixels;
-		for (x = 0; x < 60; x++, p+=4) {
-			if (p[0] < 55 && p[1] > 100)
-			       p[3] = 0;	
-		}
-	}
-}
-
-static GdkFilterReturn
-phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
-{
-	XEvent *xevent = (XEvent *)gdk_xevent;
-
-	if (xevent->type == ButtonPress &&
-	    ! phsh.hide_mode) {
-		gtk_timeout_remove (phsh.handler);
-		phsh.handler = gtk_timeout_add (90, phsh_move, NULL);
-		phsh.xs *= 2.0;
-		phsh.ys *= 2.5;
-		phsh.hide_mode = TRUE;
-		if (phsh.x < (gdk_screen_width () / 2))
-			phsh.xs *= -1;
-	}
-	return GDK_FILTER_CONTINUE;
-}
-
-/* this checks the screen */
-static void
-check_screen (void)
-{
-	GdkWindowAttr attributes;
-	char *phsh_file;
-	char *name;
-	GdkPixbuf *gp, *tmp;
-
-	if (phsh.win != NULL)
-		return;
-
-	name = g_strdup_printf ("%cish/%cishanim.png",
-				'f', 'f');
-
-	phsh_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					       name, TRUE, NULL);
-
-	g_free (name);
-
-	if (!phsh_file)
-		return;
-
-	tmp = gdk_pixbuf_new_from_file (phsh_file, NULL);
-	if (tmp == NULL)
-		return;
-
-	g_free (phsh_file);
-
-	if (gdk_pixbuf_get_width (tmp) != 180 ||
-	    gdk_pixbuf_get_height (tmp) != 40) {
-		gdk_pixbuf_unref (tmp);
-		return;
-	}
-
-	phsh.state = 0;
-	phsh.hide_mode = FALSE;
-
-	gp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
-	gdk_pixbuf_copy_area (tmp, 60, 0, 60, 40, gp, 0, 0);
-
-	phsh_dered (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[2], &phsh.phsh_mask[2], 128);
-	phsh_reverse (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[0], &phsh.phsh_mask[0], 128);
-
-	gdk_pixbuf_copy_area (tmp, 120, 0, 60, 40, gp, 0, 0);
-
-	phsh_dered (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[3], &phsh.phsh_mask[3], 128);
-	phsh_reverse (gp);
-	gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[1], &phsh.phsh_mask[1], 128);
-	gdk_pixbuf_unref (gp);
-
-	gdk_pixbuf_unref (tmp);
-	
-	phsh.x = -60;
-	phsh.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
-	phsh.xs = 8;
-	phsh.ys = (rand() % 2) + 1;
-
-	attributes.window_type = GDK_WINDOW_TEMP;
-	attributes.x = phsh.x;
-	attributes.y = phsh.y;
-	attributes.width = 60;
-	attributes.height = 40;
-	attributes.wclass = GDK_INPUT_OUTPUT;
-	attributes.visual = gdk_rgb_get_visual();
-	attributes.colormap = gdk_rgb_get_cmap();
-	attributes.event_mask = GDK_BUTTON_PRESS_MASK;
-
-	phsh.win = gdk_window_new (NULL, &attributes,
-				   GDK_WA_X | GDK_WA_Y |
-				   GDK_WA_VISUAL | GDK_WA_COLORMAP);
-	gdk_window_set_back_pixmap (phsh.win, phsh.phsh[0], FALSE);
-	gdk_window_shape_combine_mask (phsh.win, phsh.phsh_mask[0], 0, 0);
-
-	/* setup the keys filter */
-	gdk_window_add_filter (phsh.win,
-			       phsh_filter,
-			       NULL);
-
-	gdk_window_show (phsh.win);
-	phsh.handler = gtk_timeout_add (150, phsh_move, NULL);
-}
-
-static guint screen_check_id = 0;
-
-static gboolean
-check_screen_timeout (gpointer data)
-{
-	screen_check_id = 0;
-
-	check_screen ();
-
-	screen_check_id = gtk_timeout_add (rand()%120*1000,
-					   check_screen_timeout, NULL);
-	return FALSE;
-}
-
-void
-start_screen_check (void)
-{
-	if (screen_check_id > 0)
-		gtk_timeout_remove (screen_check_id);
-
-	screen_check_id = 0;
-	check_screen ();
-
-	screen_check_id = gtk_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
 }
 
 static int
@@ -439,7 +204,7 @@ session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *e
 }
 
 static const struct poptOption options[] = {
-  {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
+  {"profile", '\0', POPT_ARG_STRING, &panel_profile_name, 0, N_("Specify a profile name to load"), NULL},
   {NULL, '\0', 0, NULL, 0}
 };
 
@@ -447,8 +212,6 @@ static const struct poptOption options[] = {
 int
 main(int argc, char **argv)
 {
-	gchar *real_global_path;
-	
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
@@ -465,8 +228,8 @@ main(int argc, char **argv)
 	if (g_getenv ("I_LOVE_PANEL_CRACK") == NULL)
 		tell_user_Im_on_crack ();
 
-	if (profile_name == NULL)
-		profile_name = g_strdup ("default");
+	if (panel_profile_name == NULL)
+		panel_profile_name = g_strdup ("default");
 
 	/*
 	 * Let applets spew.
@@ -482,18 +245,11 @@ main(int argc, char **argv)
 
 	client = gnome_master_client ();
 
-	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
+	/* FIXME - get the session stuff working properly */
 
+	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
 	gnome_client_set_priority (client, 40);
 
-
-	if (gnome_client_get_flags (client) & GNOME_CLIENT_RESTORED)
-		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
-	else
-		old_panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
-
-	gnome_client_set_global_config_prefix (client, PANEL_CONFIG_PATH);
-	
 	g_signal_connect (G_OBJECT (client), "save_yourself",
 			  G_CALLBACK (panel_session_save), NULL);
 	g_signal_connect (G_OBJECT (client), "die",
@@ -514,10 +270,6 @@ main(int argc, char **argv)
 
 	/* Do the notification stuff */
 	panel_gconf_notify_add ("/apps/panel/global", session_notify_global_changes, NULL);
-
-	/* this is so the capplet gets the right defaults */
-	if ( ! commie_mode)
-		session_write_global_config ();
 
 	init_menus ();
 
@@ -546,6 +298,6 @@ main(int argc, char **argv)
 
 	gtk_main ();
 
-	g_free (profile_name);
+	g_free (panel_profile_name);
 	return 0;
 }

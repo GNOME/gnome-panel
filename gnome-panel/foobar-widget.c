@@ -23,7 +23,6 @@
 
 #include "foobar-widget.h"
 
-#include "main.h"
 #include "menu.h"
 #include "menu-util.h"
 #include "session.h"
