@@ -51,7 +51,7 @@ GtkWidget *	create_root_menu	(GtkWidget   *root_menu,
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
 
-GtkWidget *	panel_menu_new		(void);
+GtkWidget *	panel_create_menu              (void);
 void		panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 						GtkIconSize  icon_size,
 						const char  *stock_id,

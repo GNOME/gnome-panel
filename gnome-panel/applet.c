@@ -346,7 +346,7 @@ setup_an_item (AppletUserMenu *menu,
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if (!menu->submenu) {
-		menu->submenu = panel_menu_new ();
+		menu->submenu = panel_create_menu ();
 	}
 
 	if(menu->submenu) {
@@ -408,7 +408,7 @@ add_to_submenus (AppletInfo *info,
 	}
 	
 	if (s_menu->submenu == NULL) {
-		s_menu->submenu = panel_menu_new ();
+		s_menu->submenu = panel_create_menu ();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
 		if (s_menu->menuitem != NULL) {
@@ -433,7 +433,7 @@ panel_applet_create_menu (AppletInfo  *info,
 	GtkWidget *menuitem;
 	GList     *l;
 
-	menu = g_object_ref (panel_menu_new ());
+	menu = g_object_ref (panel_create_menu ());
 	gtk_object_sink (GTK_OBJECT (menu));
 
 	/* connect the deactivate signal, so that we can "re-allow" 

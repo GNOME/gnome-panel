@@ -729,33 +729,33 @@ icon_theme_changed (GnomeIconTheme *icon_theme,
 }
 
 GtkWidget *
-panel_menu_new (void)
+panel_create_menu (void)
 {
-	GtkWidget       *menu;
-	static gboolean  registred_icon_theme_changer = FALSE;
+	GtkWidget       *retval;
+	static gboolean  registered_icon_theme_changer = FALSE;
 
-	if (!registred_icon_theme_changer) {
-		registred_icon_theme_changer = TRUE;
+	if (!registered_icon_theme_changer) {
+		registered_icon_theme_changer = TRUE;
 
 		g_signal_connect (panel_icon_theme, "changed",
 				  G_CALLBACK (icon_theme_changed), NULL);
 	}
 	
-	menu = gtk_menu_new ();
-
+	retval = gtk_menu_new ();
+	
 	panel_gconf_notify_add_while_alive ("/desktop/gnome/interface/menus_have_icons",
 					    (GConfClientNotifyFunc) menus_have_icons_changed,
-					    G_OBJECT (menu));
+					    G_OBJECT (retval));
 
-	g_signal_connect_after (menu, "show",
+	g_signal_connect_after (retval, "show",
 				G_CALLBACK (panel_make_sure_menu_within_screen),
 				NULL);
 
-	g_signal_connect (menu, "key_press_event",
+	g_signal_connect (retval, "key_press_event",
 			  G_CALLBACK (panel_menu_key_press_handler),
 			  NULL);
 
-	return menu;
+	return retval;
 }
 
 static GtkWidget *
@@ -763,7 +763,7 @@ menu_new (void)
 {
 	GtkWidget *retval;
 
-	retval = panel_menu_new ();
+	retval = panel_create_menu ();
 
 	g_signal_connect (
 		retval, "show", G_CALLBACK (setup_menu_panel), NULL);

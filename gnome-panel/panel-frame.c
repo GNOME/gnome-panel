@@ -1,5 +1,5 @@
 /*
- * panel-toplevel.c: A frame which only draws certain edges.
+ * panel-frame.c: A frame which only draws certain edges.
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *

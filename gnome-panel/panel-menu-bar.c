@@ -98,7 +98,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 {
 	GtkWidget *item;
 
-	menubar->priv->actions_menu = panel_menu_new ();
+	menubar->priv->actions_menu = panel_create_menu ();
 
 	g_signal_connect (menubar->priv->actions_menu, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
