@@ -1,3 +1,10 @@
+2005-01-31  Vincent Untz  <vincent@vuntz.net>
+
+	* quick-desktop-reader.c: (is_key): do not return "" as value for the
+	key if there is no value.
+	(is_i18n_key): ditto
+	Fix bug #165799. Thanks to Debian people for the fix.
+
 2005-01-14  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-recent.c: (panel_recent_append_documents_menu): connect to the

@@ -100,6 +100,8 @@ is_key (const char *key, gsize keylen, const char *buf)
 	p++;
 	if (*p == ' ')
 		p++;
+	if (*p == '\0')
+		return NULL;
 	return p;
 }
 /* nice wrapper for this to still allow some compiler optimization
@@ -144,6 +146,8 @@ is_i18n_key (const char *key, gsize keylen, const char *buf, char **lang)
 	p++;
 	if (*p == ' ')
 		p++;
+	if (*p == '\0')
+		return NULL;
 	return p;
 }
 /* nice wrapper for this to still allow some compiler optimization
