@@ -474,7 +474,7 @@
 	      <guimenu>Programs</guimenu> menu) to
 	      <guisubmenu>Favorites</guisubmenu> by clicking on the
 	      item with the right mouse button and selecting
-	      <guimenuitem>Add this to personal menu</guimenuitem>.
+	      <guimenuitem>Add this to favorites menu</guimenuitem>.
 	    </para>
 	  </listitem>
 
@@ -559,7 +559,7 @@
       <title>Configuring the main menu</title> 
       <para>
       To change configuration of the main menu which you access from
-      the foot icon, righ-click on this icon 
+      the foot icon, right-click on this icon 
       and select <guimenuitem>Properties</guimenuitem>  from the
       <guimenu>pop-up</guimenu> menu. This will show <interface>Menu
       Properties dialog</interface>. In this dialog, for each of
@@ -597,7 +597,7 @@
       <para>
 	You can also edit the contents of the
 	<guisubmenu>Favorites</guisubmenu> menu (or, if you are the
-	system administartor, also of the
+	system administrator, also of the
 	<guisubmenu>Programs</guisubmenu> menu) using the
 	<application>GNOME Menu Editor</application>. To start it,
 	right-click on the main menu button and select
@@ -662,8 +662,9 @@
    </screenshot>
   </figure>
   <para>
-   The example above shows a menu titled "My Favorites" which includes
-   three application launchers and one sub-menu titled "games".
+   The example above shows a menu titled <guimenu>My
+   Favorites</guimenu> which includes three application launchers and
+   one submenu titled <guisubmenu>Games</guisubmenu>.
   </para>
    <sect2 id="menusconf">
     <title> Configuring the menus</title>
@@ -674,7 +675,7 @@
      <para> You can easily change the Menu title and the icon used by the
       Menu. To do so, click on the Menu button, right-click on the
       menu title (at the very top of the list, above all other items),
-      and select <guimenuitem>properties</guimenuitem> from the
+      and select <guimenuitem>Properties</guimenuitem> from the
       <guimenu>pop-up</guimenu> menu. This will bring up the Menu
       Properties Dialog, quite
       similar to the <link linkend="launchers">Launcher
@@ -688,7 +689,7 @@
       dialog, in which you can enter item name, command, and other
       information (see <xref linkend="launchers"> for more
       information).    To remove an item from the Menu,
-      righ-click on it and choose <guimenuitem>Remove this
+      right-click on it and choose <guimenuitem>Remove this
       item</guimenuitem>.  
       </para>
       <para>
@@ -717,15 +718,15 @@
   </para>
   <para> 
       You can change a launcher properties, such as the icon it uses
-      and its name, by right-clicking on a laucher and selecting
+      and its name, by right-clicking on a launcher and selecting
       <guimenuitem>Properties</guimenuitem> from the pop-up menu. This  
       brings up the <interface>Launcher properties dialog</interface>
       shown in <xref linkend="launcherpropsfig">. The same dialog is
       used when you create a new launcher (see <xref
       linkend="add">). Also, internally GNOME makes no distinction
-      between menu items and lunchers: these are just different
+      between menu items and launchers: these are just different
       presentations of the same thing. You can place any menu item on
-      the panel, and it will show as a luncher. Threfore, all the
+      the panel, and it will show as a launcher. Therefore, all the
       information below applies equally to launchers and menu items.  
       </para>
   <figure id="launcherpropsfig">
@@ -838,17 +839,22 @@
 	  command that runs the terminal is unchanged. 
 	</para>
 	<para>
+	  To add a new translation, enter the language 2-letter code
+	  and translations of <guilabel>Name</guilabel> and
+	  <guilabel>Comment</guilabel>  fields in the empty
+	  fields under the list of current translations, and  press
+	  <guibutton>Add/Set</guibutton> button. 
 	  To change one of existing translations, select it in the
 	  list, edit the fields you want, and press
 	  <guibutton>Add/Set</guibutton> button. To remove one of
-	  exiting translations, select it and press
+	  existing translations, select it and press
 	  <guibutton>Remove</guibutton> button. 
 	</para>
 	<para> 
 	  You can find the list of all languages supported by
 	  GNOME along with their 2-letter codes  in  <ulink
 	  type="http" url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
-	  Frequenlty Asked Questions</ulink>.
+	  Frequently Asked Questions</ulink>.
 	</para>
       </listitem>
     </itemizedlist>
@@ -939,13 +945,15 @@
   <para>
    You can configure a Drawer's properties by right clicking on the
    Drawer's icon and selecting
-   <guimenuitem>Properties</guimenuitem>. This brings up the Drawer
-   Properties Dialog. Here you can select the icon used for the drawer
-   by clicking on the icon. A tooltip may be entered by typing in the
+   <guimenuitem>Properties</guimenuitem>. This brings up the
+   <interface>Drawer Properties Dialog</interface>. Here you can
+   select the icon used for the drawer by clicking on the icon. A
+   tooltip may be entered by typing in the
    <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
    displayed whenever the mouse is moved over the Drawer to remind you
    what is inside.  One may also select whether the <guibutton>hide
-   button</guibutton> and arrow are displayed at the end of the drawer.
+   button</guibutton> and arrow are displayed at the end of the
+   drawer.
   </para>
   <figure>
    <title>Drawer Properties Dialog</title>
@@ -958,9 +966,9 @@
   </figure>
   <para>
    You may also control the background of the Drawer. Just right click
-   on the Drawer and select the "Background" tab to bring up the
-   standard Panel Background Dialog (see <xref
-   linkend="panelbacktab">).  </para>
+   on the Drawer and select the <guilabel>Background</guilabel> tab to
+   bring up the standard <interface>Panel Background
+   Dialog</interface> (see <xref linkend="panelbacktab">).  </para>
  </sect1>
 
 
@@ -1019,16 +1027,17 @@
    <para>
     The <guibutton>Logout</guibutton> button is used to exit the GNOME
     desktop environment.  It initiates the logout sequence, bringing
-    up the Logout Dialog, as described in <xref linkend="loggingout">.
+    up the <interface>Logout Dialog</interface>, as described in <xref
+    linkend="loggingout">.
    </para>
   </sect2>
   <sect2 id="swallowedapps">
    <title>Swallowed Applications</title>
    <para>
     The GNOME Panel allows you to run applications which are not
-    Applets inside the Panel as if they were Applets.  Applications
+    applets inside the Panel as if they were applets.  Applications
     which you pull into the Panel, even though they are not GNOME
-    Applets are called "swallowed applications".  Applications do not
+    applets, are called "swallowed applications".  Applications do not
     have to be GNOME-compliant to be swallowed.  In general, the only
     constraints for swallowing an application are that the application
     must be small enough to fit in your panel and you must know the
@@ -1047,12 +1056,12 @@
      </screenshot>
     </figure>
    <para>
-    The "Title of application to swallow" is the window title,
-    typically displayed on the top left edge of the window. (Note that
-    the window title is case sensitive.) The width
+    The <guilabel>Title of application to swallow</guilabel> is the
+    window title, typically displayed on the top left edge of the
+    window. (Note that the window title is case sensitive.) The width
     and height determine the size of the swallowed application in the
-    panel in pixels.
-      </para> 
+    panel in pixels. 
+      </para>
       <para>
       If you leave the <guilabel>Command</guilabel> field empty, this
       dialog will create an empty window of given size on the panel
@@ -1075,12 +1084,14 @@
     The Status Dock is a Panel object which can hold Status Docklets -
     small windows which applications place in the Status Dock to
     provide status information.  Status Docklets can also be used to
-    control the application.  GNOME currently does not have many
+    control the application. Essentially, Docklets are small (both in
+    size and in complexity) applets.   GNOME currently does not have many
     applications which place Status Docklets in the Status Dock.
-    However, GNOME's Status Dock is compatible with that on KDE, so
-    KDE applications (eg: kscd) may place Status Docklets in GNOME's
-    Status Dock.  Future versions of GNOME applications will make use
-    of this recently added Panel object.
+    However, GNOME's Status Dock is compatible with that on the K
+    Desktop Environment (KDE), so KDE applications, such as
+    <application>kscd</application>, may place Status Docklets in
+    GNOME's Status Dock.  Future versions of GNOME applications will
+    make use of this recently added Panel object.
    </para>
    <figure id="statusdockfig">
      <title>Example Status Dock With Docklet</title>
@@ -1103,11 +1114,11 @@
 
 <!-- ########### Adding, Moving, and Removing Panel Objects
 ############## -->
-    <sect1 id="appletadd">
-      <title>Adding, Moving, and Removing Panel Objects</title>
-      <sect2 id="moving">
-	<title>Moving objects</title>
-	<para>
+  <sect1 id="appletadd">
+    <title>Adding, Moving, and Removing Panel Objects</title>
+    <sect2 id="moving">
+      <title>Moving objects</title>
+      <para>
 <!--
      <indexterm id="idx-a14">
       <primary>Panel</primary> <secondary>launchers</secondary>
@@ -1116,35 +1127,35 @@
       <primary>Panel</primary> <secondary>adding applets
       to</secondary><see>"Applets"</see> </indexterm> --> 
 
-	To move any
-      object on the panel to a different location, just drag it with
-      the middle mouse button to the desired place, or right-click on
-      it and choose <guimenuitem>Move applet</guimenuitem>. If in the
-      course of this movement it hits other objects, the behaviour
-      depends on the global preferences you set (see <xref
-      linkend="appletstab">): the object you are moving can
-      switch places with other objects, "push" all objects it meets,
-      or "jump" over all other objects without disturbing them. You
-      can also overrun the default behaviour by holding
-      <keycap>Shift</keycap> button (for "push" mode), 
+	To move any object on the panel to a different location, just
+      drag it with the middle mouse button to the desired place, or
+      right-click on it and choose <guimenuitem>Move
+      applet</guimenuitem>. If in the course of this movement it hits
+      other objects, the behavior depends on the global preferences
+      you set (see <xref linkend="appletstab">): the object you are
+      moving can switch places with other objects, "push" all objects
+      it meets, or "jump" over all other objects without disturbing
+      them. You can also overrun the default behavior by holding
+      <keycap>Shift</keycap> button (for "push" mode),
       <keycap>Ctrl</keycap> (for "switched" mode), or
       <keycap>Alt</keycap> (for "free" mode, i.e. jumping other other
-      objects without disturbing them) button while
-      dragging.
+      objects without disturbing them) button while dragging.
 	</para>
-      </sect2>
-	<sect2 id="remove">
-	  <title> Removing objects from the panel</title> <para>  To
-	  remove an object from the panel, right-click on it and
-	  choose <guimenuitem>Remove from panel</guimenuitem> form the
-	  pop-up menu.
-	    </para>
-	</sect2>
+    </sect2>
+
+    <sect2 id="remove">
+      <title> Removing objects from the panel</title> 
+      <para>  To
+	remove an object from the panel, right-click on it and
+	choose <guimenuitem>Remove from panel</guimenuitem> form the
+	pop-up menu.
+      </para>
+    </sect2>
 
 
     <sect2 id="add">  
-       <title>Adding objects to the panel</title>
-
+      <title>Adding objects to the panel</title>
+      
       <para>
 	<indexterm id="idx-a13">
 	  <primary>Panel</primary> <secondary>adding applications
@@ -1190,11 +1201,10 @@
 		presented the <interface>Create Launcher
 		dialog</interface>, shown below.  In this dialog you
 		should enter a name for your launcher, a comment, and
-		the command line to launch the application.  You may
-		also press the icon button and choose an icon to
-		represent the application from the icon picker. If no
-		icon is chosen a default icon will be used.  This
-		dialog has a built-in help which explains its usage in
+		the command line to launch the application. This
+		dialog is virtually identical to <interface>Launcher
+		Properties</interface> dialog, so we refer the reader
+		to <xref linkend="launchers"> for detailed description. 
 		detail.
 	      </para>
 	      <figure>
@@ -1265,9 +1275,9 @@
 	    </para>
 	    <para>
 	      After you have added a menu to the panel using any of
-	      the methods describee above, you can modify its
+	      the methods described above, you can modify its
 	      properties (for example, add new items to this menu or
-	      change the icon used by the menu), as decribed in <xref
+	      change the icon used by the menu), as described in <xref
 	      linkend="menus">.
 	    </para>
 
@@ -1308,7 +1318,7 @@
 		produce a <interface>Create Swallowed
 		Application</interface> dialog, which is shown in
 		<xref linkend="swallappfig">. For details, see <xref
-		linkend="swallowedapps">. FIXME
+		linkend="swallowedapps">.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1500,20 +1510,23 @@
       <para>
        <guilabel>Auto hide animation speed</guilabel> &mdash; If you have
        the panel hiding automatically this will control how fast it
-       occurs.
+       occurs. The slowest setting is 1, the fastest, 100. 
       </para>
      </listitem>
      <listitem>
       <para>
        <guilabel>Explicit hide animation speed</guilabel> &mdash;  This
-       controls the hide speed when you press the Panel's Hide Button.
+       controls the hide speed when you press the Panel's
+       <guibutton>Hide Button</guibutton>. The slowest setting is 1,
+       the fastest, 100. 
       </para>
      </listitem>
      <listitem>
       <para>
        <guilabel>Drawer sliding animation speed</guilabel> &mdash; this
        will control how fast the drawer menu will raise when you press
-       a Drawer button on the Panel. 
+       a Drawer button on the Panel. The slowest setting is 1, the
+       fastest, 100. 
       </para>
      </listitem>
      <listitem>
@@ -1531,7 +1544,8 @@
       <para>
        <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash; If you
        have the Panel hiding automatically this determines the number
-       of pixels that will show while the Panel is minimized.
+       of pixels that will show while the Panel is minimized. To
+       maximize the panel the pointer must enter the panel area. 
       </para>
      </listitem>
     </itemizedlist>
@@ -1592,14 +1606,17 @@
       <itemizedlist>
 	<listitem> 
 	  <para> <guilabel>Make buttons flush with panel
-	  edge</guilabel> &mdash; FIXME
+	  edge</guilabel> &mdash; allows you to align the button
+            with the edge of the panel.  If this option is not set then the
+            border width setting is obeyed.  By default this option is
+            off. 
 	  </para>
 	</listitem>
 	<listitem>
 	  <para><guilabel>Show button tiles only when cursor is over
 	  the button</guilabel> &mdash; if this option is enabled, the
 	  tiles will only appear when mouse cursor is over the
-	  butotn. 
+	  button. 
 	  </para>
 	</listitem>
 	<listitem>
@@ -1629,10 +1646,11 @@
 	    </para>
 	    <itemizedlist>
 	      <listitem><para>
-		  <emphasis>Switched</emphasis> &mdash; when the object you are
-	    moving hits another object, they switch places
+		<emphasis>Switched</emphasis> &mdash; when the object
+		you are moving hits another object, they switch places
 		  </para>
 	      </listitem>
+
 	      <listitem><para> 
 		  <emphasis>Free</emphasis> &mdash; when the object
 		  you are moving hits another object, it "jumps" over
@@ -1647,7 +1665,7 @@
 		<para>
 		  <emphasis>Push</emphasis> &mdash; the object you are
 		  moving pushes all other objects in front of it, like a
-		  snowplow.
+		  snow plow.
 		</para>
 	      </listitem>
 	    </itemizedlist>
@@ -1662,7 +1680,7 @@
 	  <para>
 	    <guilabel>Applet padding</guilabel> &mdash;  This changes
 	    the amount of space (padding) between objects on the
-	    panel. 
+	    panel. It is measured in pixels. 
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -1670,6 +1688,11 @@
 
    <sect2 id="menutab">
     <title>Menu  Tab</title>
+      <para> 
+	In this tab, you can set the options determining the
+	appearance of Panel menus. 
+      </para>
+      
      <itemizedlist>
       <listitem>
       <para>
@@ -1687,8 +1710,8 @@
      <listitem>
       <para>
        <guilabel>Show popup menus outside of panels</guilabel> &mdash; When
-       this button is on, it allows popup menus to appear away from the
-       Panel. When toggled off, the popups will appear over the
+       this button is on, it allows pop-up menus to appear away from the
+       Panel. When toggled off, the pop-ups will appear over the
        Panel. This can be useful on smaller screens or cluttered
        desktops.
       </para>
@@ -1702,7 +1725,15 @@
 	</para>
 	</listitem>
 	<listitem> 
-	  <para> <guilabel>Panel Menu</guilabel> &mdash; FIXME
+	  <para> <guilabel>Panel Menu</guilabel> &mdash; This allows
+	  you to configure the main menu which you get by
+	  right-clicking on the panel, or by using the keyboard
+	  shortcut. For each of the possible submenus
+	  (<guisubmenu>Programs</guisubmenu>,
+	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
+	  whether it should be included as a part of the Main Menu, as
+	  a submenu, or not included at all. A description of  these
+	  submenus is given in <xref linkend="submenus">.  
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -1710,13 +1741,17 @@
 
 
    <sect2 id="misctab">
-    <title>Miscellaneous Tab</title>
+    <title>Miscellaneous Tab</title>   
+      <para>The Miscellaneous group contains options for various customizable
+            behavior that didn't fit anywhere else.
+      </para>
+
      <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tooltips enabled</guilabel> &mdash; This enables tooltips
-       for items on the panel.  Tooltips are pop-up help dialogs that
-       appear when you mouse is over an element on the panel.
+       <guilabel>Tooltips enabled</guilabel> &mdash; This option
+            defines whether GNOME should show a tooltip when the
+            pointer pauses on a panel item.  
       </para>
 	</listitem>
      <listitem>
@@ -1732,7 +1767,7 @@
 
      <listitem>
       <para>
-       <guilabel>Raise panels on mouse-over</guilabel> - If you are
+       <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you are
        using a window manager that is not GNOME compliant it will not
        understand its relationship with the Panel. This can cause your
        Panel to be covered by applications. If you enable this feature
@@ -1762,9 +1797,9 @@
     </itemizedlist>
       <para>
       This tab also allows you to configure some global key
-      bindings. At the moment, you can define keybindings for Main
+      bindings. At the moment, you can define key bindings for Main
       Menu and for Run Command dialog. For example, if you are using
-      satndard PC keyboard, you can bind the <keycap>Menu</keycap> key
+      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
       (this key is usually  located to the left of the space bar and
       labelled with a picture of a menu) to the Main Menu, so that
       pressing this key will bring up the Main Menu. To change the key
@@ -1865,7 +1900,11 @@
 	    </para>
 	    <para>
              Changing panel size automatically resizes all the icons
-             on this panel, which can lead to some quality loss.
+             on this panel, which can lead to some quality loss. Also,
+             the panel will ask all the applets to resize
+             themselves. Most of the applets will comply; however, if
+             some applets do not obey this request, then the panel
+             will resize itself so that it can fit all the applets.   
 	  </para>
 	</listitem>
 
@@ -1889,9 +1928,11 @@
    </sect2>
 
    <sect2 id="panelbacktab">
-    <title>Background Tab</title> <!--      <indexterm id="idx-a65">
- <primary>Panel</primary> <secondary>Background</secondary>
- </indexterm> -->
+    <title>Background Tab</title> 
+      <indexterm id="idx-a65">
+	<primary>Panel</primary> 
+	<secondary>Background</secondary>
+      </indexterm> 
   
       <figure>
 	<title>Panel Background Properties Dialog</title>
@@ -1994,8 +2035,11 @@
     <title>Current bugs and limitations</title>
     <para>
       Most of the things here are not really bugs; rather, they
-      describe situations when the Panel's behaviour is not what you
-      would expect.  </para>  <para>  First of all: you can't place an
+      describe situations when the Panel's behavior is not what you
+      would expect.  
+    </para>  
+
+    <para>  First of all: you can't place an
       ordinary file or directory on the panel. If you try to drag and
       drop a file from the File Manager window to the panel, it won't
       work, and similarly for panels. The only type of file that can
@@ -2003,7 +2047,8 @@
       which describe launchers; any directory dropped on the panel
       will be interpreted as a menu &mdash; that is, all the files
       other than <filename>.desktop</filename> files will be ignored.
-      </para>
+    </para>
+
     <para> Editing menus other than the Main menu is rather
       confusing. <application>Menu Editor</application> at the moment
       can not be used for this, and
@@ -2015,16 +2060,32 @@
     </para>
 
     <para> The Main menu which you get by pressing the
-      <keycap>Menu</keycap> key on the keyboard does not reflect the
-      preference changes you did to the <guimenu>main menu</guimenu>
-      on the panel. The reason is that you can have several
-      <guimenu>Main Menu</guimenu> buttons on different panels.
+      <keycap>Menu</keycap> key on the keyboard or, by right-clicking
+      on the panel itself, and the main menu you get by clicking on
+      the foot icon are configured separately. The reason is that you
+      can have several <guimenu>Main Menu</guimenu> buttons on
+      different panels.
     </para>
 
     <para>
      The <guibutton>Screen Lock</guibutton> button does not lock the
      screen if "No Screensaver" is set in the Control Center.
     </para>
+
+    <para> 
+      The only way of changing Panel type (Edge, Aligned, etc.) is by
+      choosing <menuchoice>
+       <guisubmenu>Properties</guisubmenu>
+       <guisubmenu>Type</guisubmenu> 
+      </menuchoice> from the <guimenu>Panel</guimenu> menu: you can
+      not change Panel type in <interface>Panel Properties</interface>
+      dialog. Conversely, <menuchoice>
+       <guisubmenu>Properties</guisubmenu>
+       <guisubmenu>Background type</guisubmenu> 
+      </menuchoice>   allows you to change the background type
+      (Pixmap/Color/Standard), but not to choose the actual color or
+      image to use.
+    </para> 
 
   </sect1>
 
