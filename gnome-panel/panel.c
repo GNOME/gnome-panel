@@ -73,22 +73,6 @@ static GtkTargetEntry panel_drop_types[] = {
 static gint n_panel_drop_types = 
    sizeof(panel_drop_types) / sizeof(panel_drop_types[0]);
 
-#if 0
-static PanelData *
-get_lowest_level_master_pd(PanelWidget *panel)
-{
-	PanelData *pd;
-
-	while(panel->master_widget)
-		panel = PANEL_WIDGET(panel->master_widget->parent);
-	g_return_val_if_fail(panel->panel_parent!=NULL,NULL);
-	
-	pd = gtk_object_get_user_data(panel->panel_parent);
-	g_return_val_if_fail(pd!=NULL,NULL);
-	
-	return pd;
-}
-#endif
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
@@ -253,8 +237,8 @@ panel_orient_change(GtkWidget *widget,
 			      orient_change_foreach,
 			      widget);
 
-	if (IS_FLOATING_WIDGET (widget))
-		update_config_floating_orient (BASEP_WIDGET (widget));
+	if (IS_FLOATING_WIDGET (PANEL_WIDGET (widget)->panel_parent))
+		update_config_floating_orient (FLOATING_WIDGET (PANEL_WIDGET (widget)->panel_parent));
 
 	panels_to_sync = TRUE;
 }
@@ -964,7 +948,7 @@ basep_pos_connect_signals (BasePWidget *basep)
 		gtk_signal_connect (GTK_OBJECT (basep->pos),
 				    "floating_coords_change",
 				    GTK_SIGNAL_FUNC (floating_pos_change),
-				    basep);				    
+				    basep);
 	else if (IS_SLIDING_WIDGET (basep)) {
 		gtk_signal_connect (GTK_OBJECT (basep->pos),
 				    "anchor_change",

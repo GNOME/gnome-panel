@@ -428,6 +428,29 @@ floating_widget_change_orient (FloatingWidget *floating,
 	}
 }
 
+void
+floating_widget_change_coords (FloatingWidget *floating,
+			       gint16 x, gint16 y)
+{
+	FloatingPos *pos = FLOATING_POS (floating->pos);
+	if (pos->x != x || pos->y != y) {
+		BasePWidget *basep = BASEP_WIDGET (floating);
+		PanelWidget *panel = PANEL_WIDGET (basep->panel);
+		floating_widget_change_params (floating, 
+					       x, y,
+					       panel->orient,
+					       basep->mode,
+					       basep->state,
+					       panel->sz,
+					       basep->hidebuttons_enabled,
+					       basep->hidebutton_pixmaps_enabled,
+					       panel->back_type,
+					       panel->back_pixmap,
+					       panel->fit_pixmap_bg,
+					       &panel->back_color);
+	}
+}
+
 GtkWidget *
 floating_widget_new (gint16 x, gint16 y,
 		     PanelOrientation orient,

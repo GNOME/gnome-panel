@@ -2412,6 +2412,12 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
+		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+			edge = (y > gdk_screen_height () / 2)
+				? BORDER_BOTTOM : BORDER_TOP;
+		else
+			edge = (x > gdk_screen_width () / 2)
+				? BORDER_RIGHT : BORDER_LEFT;
 
 		border_widget_change_edge (BORDER_WIDGET (basep), edge);
 		break;
@@ -2426,6 +2432,13 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
+		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+			edge = (y > gdk_screen_height () / 2)
+				? BORDER_BOTTOM : BORDER_TOP;
+		else
+			edge = (x > gdk_screen_width () / 2)
+				? BORDER_RIGHT : BORDER_LEFT;
+
 		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
 			mid = x + w / 2;
 			max = gdk_screen_width ();
@@ -2455,6 +2468,12 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
+		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+			edge = (y > gdk_screen_height () / 2)
+				? BORDER_BOTTOM : BORDER_TOP;
+		else
+			edge = (x > gdk_screen_width () / 2)
+				? BORDER_RIGHT : BORDER_LEFT;
 		
 		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
 			val = x;
@@ -2475,6 +2494,13 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		sliding_widget_change_anchor_offset_edge (
 			SLIDING_WIDGET (basep), anchor, offset, edge);
 		
+		break;
+	}
+	case FLOATING_PANEL:
+	{
+		convert_setup (basep, FLOATING_POS_TYPE);
+		floating_widget_change_coords (FLOATING_WIDGET (basep),
+					       x, y);
 		break;
 	}
 	default:
@@ -2673,7 +2699,9 @@ update_type_menu (GtkWidget *menu, gpointer data)
 		s = MENU_TYPE_ALIGNED;
 	else if (IS_SLIDING_WIDGET (basep))
 		s = MENU_TYPE_SLIDING;
-	else 
+	else if (IS_FLOATING_WIDGET (basep))
+		s = MENU_TYPE_FLOATING;
+	else
 		return;
 	
 	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);				 
@@ -2852,6 +2880,7 @@ make_properties_submenu (GtkWidget *menu)
 	StringEnumPair types[] = { { N_(MENU_TYPE_EDGE), EDGE_PANEL },
 				   { N_(MENU_TYPE_ALIGNED), ALIGNED_PANEL },
 				   { N_(MENU_TYPE_SLIDING), SLIDING_PANEL },
+				   { N_(MENU_TYPE_FLOATING), FLOATING_PANEL },
 				   { NULL, -1 } };
 	
 	StringEnumPair modes[] = { { N_(MENU_MODE_EXPLICIT_HIDE), BASEP_EXPLICIT_HIDE },

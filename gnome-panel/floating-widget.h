@@ -70,6 +70,9 @@ void floating_widget_change_params (FloatingWidget *floating,
 				    int fit_pixmap_bg,
 				    GdkColor *back_color);
 
+void floating_widget_change_coords (FloatingWidget *floating,
+				    gint16 x, gint16 y);
+
 void floating_widget_change_orient (FloatingWidget *floating,
 				    PanelOrientType orient);
 
