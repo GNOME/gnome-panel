@@ -1,5 +1,15 @@
 2005-01-29  Vincent Untz  <vincent@vuntz.net>
 
+	Use GtkIconTheme instead of GnomeIconTheme
+
+	* window-list.c: (applet_realized): update the icon theme for the
+	screen
+	(destroy_tasklist): don't unref the icon theme
+	(icon_loader_func): updated & simplified
+	(window_list_applet_fill): do not create an icon theme here
+
+2005-01-29  Vincent Untz  <vincent@vuntz.net>
+
 	Change icon on theme change.
 	Based on patch from Paolo Borelli <pborelli@katamail.com>
 	Fix bug #140776

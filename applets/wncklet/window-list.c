@@ -43,7 +43,7 @@ typedef struct {
 	int size;
 	gint maximum_size;
 
-        GnomeIconTheme *icon_theme;
+        GtkIconTheme *icon_theme;
   
 	/* Properties: */
 	GtkWidget *properties_dialog;
@@ -150,6 +150,8 @@ applet_realized (PanelApplet  *applet,
 	screen = applet_get_screen (GTK_WIDGET (applet));
 
 	wnck_tasklist_set_screen (WNCK_TASKLIST (tasklist->tasklist), screen);
+
+	tasklist->icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (tasklist->applet));
 }
 
 static void
@@ -247,9 +249,6 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
 	GConfClient *client = gconf_client_get_default ();
 
-        g_object_unref (tasklist->icon_theme);
-        tasklist->icon_theme = NULL;
-        
 	gconf_client_notify_remove (client, tasklist->listeners[0]);
 	gconf_client_notify_remove (client, tasklist->listeners[1]);
 	gconf_client_notify_remove (client, tasklist->listeners[2]);
@@ -591,22 +590,11 @@ icon_loader_func (const char  *icon,
                   void        *data)
 {
         TasklistData *tasklist;
-        char *file;
-        GdkPixbuf *pixbuf;
         
         tasklist = data;
-        
-        file = gnome_desktop_item_find_icon (tasklist->icon_theme,
-                                             icon, size, 0);
 
-        if (file == NULL)
-                return NULL;
-
-        pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-
-        g_free (file);
-
-        return pixbuf;
+	return gtk_icon_theme_load_icon (tasklist->icon_theme,
+					 icon, size, 0, NULL);
 }
 
 gboolean
@@ -631,8 +619,6 @@ window_list_applet_fill (PanelApplet *applet)
 
 	setup_gconf (tasklist);
 
-        tasklist->icon_theme = gnome_icon_theme_new ();
-        
 	error = NULL;
 	tasklist->include_all_workspaces = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
 	if (error) {
