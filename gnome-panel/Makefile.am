@@ -258,7 +258,11 @@ server_DATA     = $(server_in_files:.server.in=.server)
 @INTLTOOL_SERVER_RULE@
 
 install-data-local:
-	GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
+	if test -z "$(DESTDIR)" ; then \
+		for p in $(schema_DATA) ; do \
+			GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$$p ; \
+		done \
+	fi
 
 CLEANFILES = $(BUILT_SOURCES)
 
