@@ -1,7 +1,7 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
-	 gnome-pager
+	 gnome-pager mini-commander
 
 if HAVE_LIBESD
 esdmanager = esd-manager
