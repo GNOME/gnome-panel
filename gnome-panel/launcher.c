@@ -318,16 +318,11 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	if (!default_app_pixmap)
 		default_app_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
 							     FALSE /* fallback */);
-#ifdef LAUNCHER_DEBUG
-	printf ("Creating Launcher %s\n", parameters);
-#endif
 	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;
 		}
-#ifdef LAUNCHER_DEBUG
-	printf ("Creating gnome_desktop_item_new_from_uri\n");
-#endif
+
 		ditem = gnome_desktop_item_new_from_uri (parameters,
 							 0 /* flags */,
 							 NULL /* error */);
@@ -532,7 +527,7 @@ static void
 set_revert_sensitive (GtkWidget *button,
 		      gpointer   dummy)
 {
-     gtk_widget_set_sensitive (button, FALSE);
+     gtk_widget_set_sensitive (button, TRUE);
 }
 
 static void
@@ -574,20 +569,22 @@ static GtkWidget *
 create_properties_dialog (Launcher *launcher)
 {
 	GtkWidget *dialog;
-        GtkWidget *button;
+        GtkWidget *help;
+        GtkWidget *close;
+        GtkWidget *revert;
 
 	dialog = gtk_dialog_new ();
 
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher properties"));
 
-	button = gtk_dialog_add_button (
+	help = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
 
-	button = gtk_dialog_add_button(
+	revert = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_REVERT_TO_SAVED, REVERT_BUTTON);
-        gtk_widget_set_sensitive (button, FALSE);
+        gtk_widget_set_sensitive (revert, FALSE);
 
-	button = gtk_dialog_add_button(
+	close = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
 	launcher->dedit = gnome_ditem_edit_new ();
@@ -610,7 +607,7 @@ create_properties_dialog (Launcher *launcher)
 
         g_signal_connect_swapped (launcher->dedit, "changed",
 				  G_CALLBACK (set_revert_sensitive),
-				  button);
+				  revert);
 
 	g_signal_connect (dialog, "destroy",
 			  G_CALLBACK (properties_close_callback),
@@ -622,7 +619,7 @@ create_properties_dialog (Launcher *launcher)
 			  G_CALLBACK (window_response),
 			  launcher);
 
-	g_signal_connect (button, "clicked",
+	g_signal_connect (revert, "clicked",
 			  G_CALLBACK (set_revert_insensitive),
 			  NULL);
 
