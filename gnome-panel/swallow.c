@@ -275,6 +275,18 @@ ask_about_swallowing(void)
 	gtk_widget_show_all(d);
 }
 
+static int
+ignore_1st_click(GtkWidget *w, GdkEvent *e)
+{
+	GdkEventButton *be = (GdkEventButton *)e;
+	if(e->type == GDK_BUTTON_PRESS &&
+	   be->button == 1) {
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(w),"event");
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 static Swallow *
 create_swallow_applet(char *title, char *path, int width, int height, SwallowOrient orient)
@@ -299,17 +311,8 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	
 	
 	swallow->handle_box = gtk_handle_box_new();
-	
-	/*
-	  WHAT??? why the f*** can't I put swallow as an argument to
-	  the signal funcs??? Using *-set-data for now. I need a brain.
-	*/
-	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_attached",
-			    GTK_SIGNAL_FUNC(swallow_attached), NULL);
-	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_detached",
-			    GTK_SIGNAL_FUNC(swallow_detached), NULL);
-	gtk_object_set_data (GTK_OBJECT (swallow->handle_box), "swallow_obj",
-			     swallow);
+	gtk_signal_connect(GTK_OBJECT(swallow->handle_box),"event",
+			   GTK_SIGNAL_FUNC(ignore_1st_click),NULL);
 	
 	gtk_container_add ( GTK_CONTAINER(swallow->ebox),
 			    swallow->handle_box );
