@@ -2539,6 +2539,17 @@ panel_profile_get_locked_down (void)
 	return value;
 }
 
+GSList *
+panel_profile_get_disabled_applets (void)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+	key = panel_gconf_global_key ("disabled_applets");
+	return gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+}
+
 /* True if all the move keys are writable.  This is kind of
    a blanket statement.  For example we may only lock one of them
    down and that would prevent the user from moving the panel at

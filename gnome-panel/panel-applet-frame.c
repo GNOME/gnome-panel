@@ -1156,8 +1156,18 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	ORBitConnectionStatus  cnx_status;
 	GtkWidget             *widget;
 	char                  *moniker;
+	GSList                *disabled_applets;
 
 	frame->priv->panel = panel;
+
+	disabled_applets = panel_profile_get_disabled_applets ();
+
+	if (g_slist_find_custom (disabled_applets, iid, (GCompareFunc)strcmp) != NULL) {
+		panel_g_slist_deep_free (disabled_applets);
+		return NULL;
+	}
+
+	panel_g_slist_deep_free (disabled_applets);
 
 	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
 

@@ -189,6 +189,7 @@ gboolean    panel_profile_can_be_moved_freely         (PanelToplevel *toplevel);
 gboolean    panel_profile_get_inhibit_command_line    (void);
 gboolean    panel_profile_get_inhibit_force_quit      (void);
 gboolean    panel_profile_get_locked_down             (void);
+GSList     *panel_profile_get_disabled_applets        (void);
 
 G_END_DECLS
 

@@ -211,6 +211,23 @@ Panel Global Config Schema File -  work in progress
         </locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/panel/global/disabled_applets</key>
+        <applyto>/apps/panel/global/disabled_applets</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short>Applet IIDs to disable from loading</short>
+          <long>A list of applet IIDs that the panel will ignore.  This way you
+		can disable certain applets from loading or showing up in the menu.
+		For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet'
+		to this list.  The panel must be restarted for this to take effect.
+          </long>
+        </locale>
+      </schema>
+
   </schemalist>
   
 </gconfschemafile>

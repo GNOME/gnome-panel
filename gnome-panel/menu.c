@@ -2718,6 +2718,7 @@ create_applets_menu (GtkWidget             *menu,
 	GSList            *langs_gslist;
 	GSList            *applets = NULL;
 	GSList		  *item = NULL;
+	GSList            *disabled_applets;
 	gboolean           applets_writable;
 	gboolean           objects_writable;
 
@@ -2741,6 +2742,8 @@ create_applets_menu (GtkWidget             *menu,
 		langs_glist = langs_glist->next;
 	}
 
+	disabled_applets = panel_profile_get_disabled_applets ();
+
 	for (i = 0; i < applet_list->_length; i++) {
 		Bonobo_ServerInfo *info;
 		AppletMenuInfo    *applet;
@@ -2751,6 +2754,9 @@ create_applets_menu (GtkWidget             *menu,
 		const char        *untranslated_category;
 
 		info = &applet_list->_buffer [i];
+
+		if (g_slist_find_custom (disabled_applets, info->iid, (GCompareFunc)strcmp) != NULL)
+			continue;
 
 		name        = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
 		category    = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
@@ -2769,7 +2775,7 @@ create_applets_menu (GtkWidget             *menu,
 		applet->untranslated_category = untranslated_category;
 		applet->description = description;
 		applet->icon = icon;
-		applet->drag_data = info->iid;;
+		applet->drag_data = info->iid;
 
 		applets = g_slist_append (applets, applet);
 	}
@@ -2818,6 +2824,8 @@ create_applets_menu (GtkWidget             *menu,
 	
 	g_slist_free (langs_gslist);
 	g_slist_free (applets);
+
+	panel_g_slist_deep_free	(disabled_applets);
 	
 	return menu;
 }

@@ -1,3 +1,12 @@
+Wed Sep 17 17:09:22 2003  George Lebl <jirka@5z.com>
+
+	* panel-global.schemas.in: add /apps/panel/global/disabled_applets
+	  lists that lists disabled applet iids (lockdown removed stuff)
+
+	* menu.c, panel-applet-frame.c, panel-profile.[ch]:  Implement the
+	  disabled applets list.  Don't show in list and don't allow 
+	  activating.
+
 2003-09-17  Vincent Untz  <vincent@vuntz.net>
 
 	* main.c: don't show the help flags twice in 'gnome-panel --help'.
