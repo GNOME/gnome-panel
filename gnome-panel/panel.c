@@ -8,6 +8,9 @@
 #include <config.h>
 #include <string.h>
 #include "gnome.h"
+
+#include "panel-widget.h"
+
 #include "applet_files.h"
 #include "gdkextra.h"
 #include "panel_cmds.h"
@@ -1359,10 +1362,36 @@ get_applet_types(void)
 void
 panel_init(void)
 {
+#if 0
+	GtkWidget *window;
+	GtkWidget *panel;
+	GtkWidget *button;
+#endif
+	
 	GtkWidget *pixmap;
 	char *pixmap_name;
 	char buf[256];
 	int i;
+
+#if 0
+	window = gtk_window_new(GTK_WINDOW_POPUP);
+	panel = panel_widget_new(20,PANEL_HORIZONTAL);
+	gtk_container_add(GTK_CONTAINER(window),panel);
+	gtk_widget_show(panel);
+
+	gtk_widget_set_uposition(window, 50, 50);
+	gtk_widget_set_usize(window, 20*50,50);
+
+	button = gtk_button_new_with_label("TEST");
+	panel_widget_add(PANEL_WIDGET(panel),button,1);
+	gtk_widget_show(button);
+
+	button = gtk_button_new_with_label("TEST2");
+	panel_widget_add(PANEL_WIDGET(panel),button,8);
+	gtk_widget_show(button);
+
+	gtk_widget_show(window);
+#endif
 
 	the_panel = g_new(PanelMain, 1);
 	the_panel->panel = g_new(Panel, 1);

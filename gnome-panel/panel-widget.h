@@ -40,7 +40,7 @@ struct _PanelWidget
 
 	AppletRecord		**applets;
 	gint	 		applet_count;
-	GtkTable		*table;
+	GtkWidget		*table;
 
 	gint			size;
 	PanelOrientation	orientation;
