@@ -213,6 +213,8 @@ main(int argc, char **argv)
 	panel_gconf_add_dir ("/desktop/gnome/menus");
 	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
+	status_applet_create_offscreen ();
+
 	session_load ();	
 
 	kill_free_drawers ();
@@ -229,8 +231,6 @@ main(int argc, char **argv)
 
 	/* add some timeouts */
 	g_timeout_add (10*1000, menu_age_timeout, NULL);
-
-	status_applet_create_offscreen ();
 
 	gtk_main ();
 

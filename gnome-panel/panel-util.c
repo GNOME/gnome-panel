@@ -1265,6 +1265,93 @@ panel_g_slist_deep_free	(GSList *list)
 	g_slist_free (list);
 }
 
+static gboolean
+internal_panel_is_uri_writable (const char *uri, gboolean recurse)
+{
+	GnomeVFSFileInfo *info = gnome_vfs_file_info_new ();
+
+	if (gnome_vfs_get_file_info
+	    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
+		char *dir;
+		gboolean ret;
+
+		gnome_vfs_file_info_unref (info);
+
+		if ( ! recurse)
+			return FALSE;
+
+		dir = g_path_get_dirname (uri);
+		ret = internal_panel_is_uri_writable (dir, FALSE);
+		g_free (dir);
+
+		return ret;
+	}
+
+	if ( ! (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS)) {
+		gnome_vfs_file_info_unref (info);
+		/* assume writable, if no permissions */
+		return TRUE;
+	} 
+
+	if (info->permissions & GNOME_VFS_PERM_OTHER_WRITE) {
+		gnome_vfs_file_info_unref (info);
+		return TRUE;
+	}
+
+	if (info->gid == getgid () &&
+	    info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
+		gnome_vfs_file_info_unref (info);
+		return TRUE;
+	}
+
+	if (info->uid == getuid () &&
+	    info->permissions & GNOME_VFS_PERM_USER_WRITE) {
+		gnome_vfs_file_info_unref (info);
+		return TRUE;
+	}
+
+	if (info->gid == getgid () &&
+	    info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
+		gnome_vfs_file_info_unref (info);
+		return TRUE;
+	}
+
+	if (info->permissions & GNOME_VFS_PERM_GROUP_WRITE) {
+		gid_t *groups;
+		int i, n;
+
+		/* get size */
+		n = getgroups (0, NULL);
+
+		if (n == 0) {
+			/* no more groups */
+			gnome_vfs_file_info_unref (info);
+			return FALSE;
+		}
+
+		groups = g_new0 (gid_t, n);
+
+		n = getgroups (n, groups);
+		for (i = 0; i < n; i++) {
+			if (info->gid == groups[i]) {
+				/* ok */
+				gnome_vfs_file_info_unref (info);
+				return TRUE;
+			}
+		}
+	}
+
+	/* no more perimission stuff to try */
+	gnome_vfs_file_info_unref (info);
+	return FALSE;
+}
+
+gboolean
+panel_is_uri_writable (const char *uri)
+{
+	internal_panel_is_uri_writable (uri, TRUE /* recurse */);
+}
+
 #if 0
 /* hmmm, we need to use this I think to add a battery applet
  *  -George */

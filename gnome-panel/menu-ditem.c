@@ -124,33 +124,23 @@ ditem_properties_close (GtkWidget *widget, gpointer data)
 static gboolean
 is_item_writable (const char *loc, const char *dir)
 {
-	errno = 0;
-	if (loc != NULL &&
-	    /*A HACK: but it works, don't have it edittable if it's redhat
-	      menus as they are auto generated!*/
-	    /* FIXME: crap, need to port to gnome-vfs */
-	    strstr (loc,"/" GNOME_DOT_GNOME "/apps-redhat/") == NULL &&
-	    /*if it's a kdelnk file, don't let it be editted*/
-	    ! is_ext (loc, ".kdelnk") &&
-	    access (loc, W_OK) == 0) {
-#ifdef MENU_DEBUG
-		puts (loc);
-#endif
-		/*file exists and is writable, we're in bussines*/
-		return TRUE;
-	} else if ((loc == NULL ||
-		    errno == ENOENT) &&
-		   dir != NULL) {
-		/*the dentry isn't there, check if we can write the
-		  directory*/
-		/* FIXME: crap, need to port to gnome-vfs */
-		if (access (dir, W_OK) == 0 &&
-		   /*A HACK: but it works, don't have it edittable if it's redhat
-		     menus as they are auto generated!*/
-		   strstr (dir, GNOME_DOT_GNOME "apps-redhat/") == NULL)
+	if (loc != NULL) {
+		/* if old style kde link file, don't allow
+		 * editting */
+		if (is_ext (loc, ".kdelnk"))
+			return FALSE;
+		if (panel_is_uri_writable (loc))
 			return TRUE;
+		else
+			return FALSE;
 	}
-	return FALSE;
+
+	if (dir != NULL) {
+		if (panel_is_uri_writable (loc))
+			return TRUE;
+		else
+			return FALSE;
+	}
 }
 
 static void

@@ -122,6 +122,8 @@ void		panel_signal_connect_object_while_alive (GObject      *object,
 
 gboolean	panel_ensure_dir	(const char *dirname);
 
+gboolean	panel_is_uri_writable	(const char *uri);
+
 /* GnomeVFS reading utils */
 
 typedef struct _ReadBuf ReadBuf;
@@ -135,7 +137,6 @@ ReadBuf *	readbuf_open		(const char *uri);
 /* unused for now */
 gboolean	readbuf_rewind		(ReadBuf *rb);
 void		readbuf_close		(ReadBuf *rb);
-
 
 /* FIXME : make battery stuff public as appropriate */
 
