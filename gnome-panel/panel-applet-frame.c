@@ -61,19 +61,19 @@ panel_applet_frame_load_from_unique_id (GConfClient *gconf_client,
 	int          position;
 	gboolean     right_stick;
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/bonobo-iid", profile, unique_id);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "bonobo-iid");
 	applet_iid = gconf_client_get_string (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/position", profile, unique_id);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "position");
 	position = gconf_client_get_int (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/panel-id", profile, unique_id);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "panel-id");
 	panel_id = gconf_client_get_string (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/right-stick", profile, unique_id);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "right-stick");
 	right_stick = gconf_client_get_bool (gconf_client, temp_key, NULL);
 	g_free (temp_key);
 
@@ -144,7 +144,7 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame)
 	g_slist_foreach (applet_id_list, (GFunc) g_free, NULL);
 	g_slist_free (applet_id_list);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/bonobo-iid", profile, frame->priv->unique_key);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "bonobo-iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 	g_free (temp_key);
 
@@ -298,15 +298,15 @@ panel_applet_frame_save_position (PanelAppletFrame *frame)
 
 	info = frame->priv->applet_info;
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/position", profile, frame->priv->unique_key);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "position");
 	gconf_client_set_int (client, temp_key, panel_applet_get_position (info), NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/panel-id", profile, frame->priv->unique_key);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "panel-id");
 	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (info), NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/right-stick", profile, frame->priv->unique_key);
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "right-stick");
 	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (info), NULL);
 	g_free (temp_key);
 }

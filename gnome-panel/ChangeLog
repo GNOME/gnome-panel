@@ -1,5 +1,13 @@
 2002-01-04  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c:
+	(panel_applet_frame_load_from_unique_id),
+	(panel_applet_frame_save_to_gconf),
+	(panel_applet_frame_save_position): use
+	panel_gconf_applets_profile_get_full_key
+
+2002-01-04  Mark McLoughlin  <mark@skynet.ie>
+
 	Saving and loading of applets to gconf should work now.
 
 	* panel-applet-frame.[ch]:
