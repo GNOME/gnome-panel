@@ -819,11 +819,13 @@ basep_widget_destroy (GtkObject *o)
 	 * there was */
 	if (basep->leave_notify_timer_tag != 0)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
-	gtk_object_unref (GTK_OBJECT (basep->pos));
-	basep->pos = NULL;
+	basep->leave_notify_timer_tag = 0;
 
 	if (IS_BORDER_WIDGET (basep))
 		basep_border_queue_recalc ();
+
+	gtk_object_unref (GTK_OBJECT (basep->pos));
+	basep->pos = NULL;
 
 	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy (o);
