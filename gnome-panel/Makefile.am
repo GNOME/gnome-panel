@@ -138,9 +138,9 @@ confexec_DATA = appletsConf.sh
 # Create the appletsConf.sh file from the .sh.in file
 #
 appletsConf.sh: appletsConf.sh.in Makefile
-	sed -e 's,\@GNOME_LIBDIR\@,$(GNOME_LIBDIR),g' \
-	    -e 's,\@GNOMEUI_LIBS\@,$(GNOMEUI_LIBS),g' \
-	    -e 's,\@GNOME_INCLUDEDIR\@,$(GNOME_INCLUDEDIR),g' \
-	    -e 's,\@ORB_LIBS\@,$(ORB_LIBS),g' \
+	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
+	    -e 's?\@GNOMEUI_LIBS\@?$(GNOMEUI_LIBS)?g' \
+	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
+	    -e 's?\@ORB_LIBS\@?$(ORB_LIBS)?g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
