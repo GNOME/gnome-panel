@@ -1694,12 +1694,13 @@ show_run_dialog (GdkScreen *screen)
 		add_items_idle_id =
 			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
 			 		 w, NULL);
+
+		gtk_widget_grab_focus (w);
+	} else {
+		w = g_object_get_data (G_OBJECT (run_dialog), "entry");
+		gtk_widget_grab_focus (w);
 	}
-
-	/* always focus the entry initially */
-	w = g_object_get_data (G_OBJECT (run_dialog), "entry");
-	gtk_widget_grab_focus (w);
-
+	
 	gtk_widget_show_all (run_dialog);
 }
 
