@@ -1,5 +1,12 @@
 2001-10-08  Mark McLoughlin <mark@skynet.ie>
 
+	* extern.c: privatised the Extern struct. Implemented
+	various set/get methods.
+
+	* applet.c, panel.c, session.c: updated for above change.
+
+2001-10-08  Mark McLoughlin <mark@skynet.ie>
+
 	* applet.c (show_applet_menu): get popup menu working.
 	  panel.c (panel_event): ditto.
 	  menu.c (menu_button_pressed): ditto.

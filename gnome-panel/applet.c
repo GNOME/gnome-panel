@@ -10,6 +10,7 @@
 #include <string.h>
 #include <signal.h>
 #include <libgnome/gnome-i18n.h>
+#include <libbonobo.h>
 #include <gdk/gdkx.h>
 
 #include "panel-include.h"
@@ -73,15 +74,18 @@ static gboolean
 kill_applet_in_idle(gpointer data)
 {
 	AppletInfo *info = data;
-	if (info->type == APPLET_EXTERN) {
-		Extern *ext = info->data;
-		extern_save_last_position (ext, TRUE /* sync */);
-		ext->clean_remove = TRUE;
-	} else if (info->type == APPLET_SWALLOW) {
+
+	if (info->type == APPLET_EXTERN)
+		extern_save_last_position ((Extern)info->data, TRUE);
+
+	else if (info->type == APPLET_SWALLOW) {
 		Swallow *swallow = info->data;
+
 		swallow->clean_remove = TRUE;
 	}
+
 	panel_clean_applet (info);
+
 	return FALSE;
 }
 
@@ -101,16 +105,20 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	switch(menu->info->type) {
 	case APPLET_EXTERN:
 		{
-			CORBA_Environment ev;
-			Extern *ext = menu->info->data;
-			g_assert(ext);
-			g_assert(ext->applet);
+			CORBA_Environment env;
+			GNOME_Applet      applet;
 
-			CORBA_exception_init(&ev);
-			GNOME_Applet_do_callback(ext->applet, menu->name, &ev);
-			if(ev._major)
-				panel_clean_applet(ext->info);
-			CORBA_exception_free(&ev);
+			g_assert (menu->info->data);
+
+			applet = extern_get_applet ((Extern)menu->info->data);
+
+			CORBA_exception_init (&env);
+
+			GNOME_Applet_do_callback (applet, menu->name, &env);
+			if (BONOBO_EX (&env))
+				panel_clean_applet (menu->info);
+
+			CORBA_exception_free (&env);
 			break;
 		}
 	case APPLET_LAUNCHER:

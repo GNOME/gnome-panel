@@ -17,6 +17,7 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-init.h>
 #include <libgnome/gnome-config.h>
+#include <libbonobo.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"
@@ -69,20 +70,26 @@ send_tooltips_state(gboolean enabled)
 
 	for(li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
+
 		if (info->type == APPLET_EXTERN) {
-			Extern *ext = info->data;
-			g_assert(ext != NULL);
-			/*if it's not set yet, don't send it, it will be sent
-			  when the ior is discovered anyhow, so this would be
-			  redundant anyway*/
-			if (ext->applet != NULL) {
-				CORBA_Environment ev;
-				CORBA_exception_init(&ev);
-				GNOME_Applet_set_tooltips_state(ext->applet,
-								enabled, &ev);
-				if(ev._major)
-					panel_clean_applet(ext->info);
-				CORBA_exception_free(&ev);
+			GNOME_Applet applet;
+			Extern       ext;
+
+			g_assert (info->data);
+
+			ext    = info->data;
+			applet = extern_get_applet (ext);
+
+			if (applet != CORBA_OBJECT_NIL) {
+				CORBA_Environment env;
+
+				CORBA_exception_init (&env);
+
+				GNOME_Applet_set_tooltips_state (applet, enabled, &env);
+				if(BONOBO_EX (&env))
+					panel_clean_applet (info);
+
+				CORBA_exception_free (&env);
 			}
 		}
 	}
@@ -414,8 +421,14 @@ save_applet_configuration(AppletInfo *info)
 	switch(info->type) {
 	case APPLET_EXTERN:
 		{
-			Extern *ext = info->data;
+			Extern       ext = info->data;
+			GNOME_Applet applet;
 			char *s;
+
+			g_assert (info->data);
+
+			ext    = info->data;
+			applet = extern_get_applet (ext);
 
 			/*just in case the applet times out*/
 			gnome_config_set_string("id", EMPTY_ID);
@@ -442,13 +455,15 @@ save_applet_configuration(AppletInfo *info)
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 PANEL_CONFIG_PATH, info->applet_id+1);
 			/*have the applet do it's own session saving*/
-			send_applet_session_save(info, ext->applet,
-						 buf->str,
-						 PANEL_CONFIG_PATH
-						 "Applet_All_Extern/");
+			send_applet_session_save (info,
+						  applet,
+						  buf->str,
+						  PANEL_CONFIG_PATH
+						  "Applet_All_Extern/");
+
 			/* update the configuration string */
-			g_free (ext->cfg);
-			ext->cfg = g_strdup (buf->str);
+			extern_set_config_string (ext, buf->str);
+
 			return FALSE; /*here we'll wait for done_session_save*/
 		}
 	case APPLET_DRAWER: 
@@ -861,16 +876,17 @@ panel_session_die (GnomeClient *client,
 
 	for (li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
-		if(info->type == APPLET_EXTERN) {
-			Extern *ext = info->data;
-			/* save but don't sync, we do that after
-			 * for everything */
-			extern_save_last_position (ext, FALSE /* sync */);
-			ext->clean_remove = TRUE;
+
+		if (info->type == APPLET_EXTERN) {
+			extern_save_last_position ((Extern)info->data, FALSE);
+
 			gtk_widget_destroy (info->widget);
-		} else if(info->type == APPLET_SWALLOW) {
+		}
+		else if (info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
+
 			swallow->clean_remove = TRUE;
+
 			if(GTK_SOCKET(swallow->socket)->plug_window)
 				XKillClient(GDK_DISPLAY(),
 					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
