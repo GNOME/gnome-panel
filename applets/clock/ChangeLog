@@ -1,3 +1,10 @@
+1999-06-08  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* gen_util/mailcheck.c (create_mail_widgets): don't check mail
+	when applet is first created.  This is done to avoid blocking
+	the panel on session login when using something like fetchmail
+	to check for messages.
+
 Sun May 30 17:21:17 1999  George Lebl  <jirka@5z.com>
 
 	* gen_util/mailcheck.c: support full sizing of the panel

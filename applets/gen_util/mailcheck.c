@@ -388,7 +388,6 @@ create_mail_widgets (MailCheck *mc)
 			    mc);
 
 	gtk_widget_show (mc->bin);
-	check_mail_file_status (mc);
 	
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
 
