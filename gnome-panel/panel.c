@@ -1361,32 +1361,32 @@ panel_change_orient(void)
 		      swap_applet_coords,NULL);
 }
 
-static void
-panel_reconfigure(Panel newconfig)
+void
+panel_reconfigure(Panel *newconfig)
 {
-	if(newconfig.pos!=the_panel->pos) {
+	if(newconfig->pos!=the_panel->pos) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
-				the_panel->pos=newconfig.pos;
-				if(newconfig.pos!=PANEL_POS_BOTTOM)
+				the_panel->pos=newconfig->pos;
+				if(newconfig->pos!=PANEL_POS_BOTTOM)
 					panel_change_orient();
 				set_panel_position();
 				break;
 			case PANEL_POS_BOTTOM:
-				the_panel->pos=newconfig.pos;
-				if(newconfig.pos!=PANEL_POS_TOP)
+				the_panel->pos=newconfig->pos;
+				if(newconfig->pos!=PANEL_POS_TOP)
 					panel_change_orient();
 				set_panel_position();
 				break;
 			case PANEL_POS_LEFT:
-				the_panel->pos=newconfig.pos;
-				if(newconfig.pos!=PANEL_POS_RIGHT)
+				the_panel->pos=newconfig->pos;
+				if(newconfig->pos!=PANEL_POS_RIGHT)
 					panel_change_orient();
 				set_panel_position();
 				break;
 			case PANEL_POS_RIGHT:
-				the_panel->pos=newconfig.pos;
-				if(newconfig.pos!=PANEL_POS_LEFT)
+				the_panel->pos=newconfig->pos;
+				if(newconfig->pos!=PANEL_POS_LEFT)
 					panel_change_orient();
 				set_panel_position();
 				break;
@@ -1396,12 +1396,12 @@ panel_reconfigure(Panel newconfig)
 	  it would require more work to keep the state to be persistent
 	  accross sessions or even reconfigurations*/
 	the_panel->state=PANEL_SHOWN;
-	the_panel->mode=newconfig.mode;
+	the_panel->mode=newconfig->mode;
 	set_show_hide_buttons_visibility();
-	the_panel->step_size=newconfig.step_size;
-	the_panel->delay=newconfig.delay;
-	the_panel->minimize_delay=newconfig.minimize_delay;
-	the_panel->minimized_size=newconfig.minimized_size;
+	the_panel->step_size=newconfig->step_size;
+	the_panel->delay=newconfig->delay;
+	the_panel->minimize_delay=newconfig->minimize_delay;
+	the_panel->minimized_size=newconfig->minimized_size;
 }
 
 static void
