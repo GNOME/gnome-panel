@@ -458,7 +458,7 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 	case ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
 			   ? pw_minimized_size
-			   : get_requisition_width (basep->hidebutton_s));
+			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
 }
