@@ -2649,11 +2649,12 @@ create_rh_menu(int dofork)
 	GSList *rhlist = NULL;
 	GtkWidget *w;
 	int i;
-	char *dirs[3] = {"/etc/X11/wmconfig",userrh,NULL};
+	char *dirs[3] = {"/etc/X11/wmconfig",NULL,NULL};
 	struct stat s;
 	g_return_if_fail(userrh!=NULL);
 	g_return_if_fail(rhdir!=NULL);
 	
+        dirs[1] = userrh;
 	rhsysdir_mtime = rhuserdir_mtime = 0;
 	if(stat("/etc/X11/wmconfig",&s)!=-1)
 		rhsysdir_mtime = s.st_mtime;

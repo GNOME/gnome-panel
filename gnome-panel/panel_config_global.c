@@ -562,10 +562,10 @@ panel_config_global(void)
 	GtkWidget *box;
 	GtkWidget *prop_nbook;
 	char *icon_titles[]={
-		_("Launcher icon"),
-		_("Drawer icon"),
-		_("Menu icon"),
-		_("Logout icon")};
+		N_("Launcher icon"),
+		N_("Drawer icon"),
+		N_("Menu icon"),
+		N_("Logout icon")};
 	int i;
 	
 	/* return if the window is already up. */

@@ -102,7 +102,8 @@ snapped_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_hints(w, 
 					  WIN_HINTS_SKIP_FOCUS |
 					  WIN_HINTS_SKIP_WINLIST |
-					  WIN_HINTS_SKIP_TASKBAR);
+					  WIN_HINTS_SKIP_TASKBAR |
+					  WIN_HINTS_DO_NOT_COVER);
 		gnome_win_hints_set_state(w, 
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);

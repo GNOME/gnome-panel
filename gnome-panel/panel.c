@@ -911,11 +911,12 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			  int pos = panel_widget_get_cursorloc(panel);
 			  char *exec[3] = {
 			  	"gnome-moz-remote",
-				ltmp->data,
+				NULL,
 				NULL
 			  };
 			  char *p;
 
+		          exec[1] = ltmp->data;
 			  p = g_strdup_printf("Open URL: %s",
 					      (char *)ltmp->data);
 			  load_launcher_applet_from_info(ltmp->data,
@@ -952,11 +953,12 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		int pos = panel_widget_get_cursorloc(panel);
 		char *exec[3] = {
 			"gnome-moz-remote",
-			selection_data->data,
+			NULL,
 			NULL
 		};
 		char *p;
 		
+         	exec[1] = selection_data->data;
 		p = g_strdup_printf("Open URL: %s",selection_data->data);
 		load_launcher_applet_from_info(selection_data->data,p,exec,2,
 					       "netscape.png",panel,pos);

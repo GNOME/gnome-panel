@@ -369,12 +369,13 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		char *text = g_strdup(button->text);
 		int twidth,theight;
 		GdkFont *font;
-		GdkRectangle rect = {
-			widget->allocation.x,
-			widget->allocation.y,
-			widget->allocation.width,
-			widget->allocation.height
-		};
+		GdkRectangle rect;
+	         
+	        rect.x = widget->allocation.x;
+	        rect.y = widget->allocation.y;
+	        rect.width = widget->allocation.width;
+	        rect.height = widget->allocation.height;
+
 		if(!text) text = g_strdup("XXX");
 		
 		font = gdk_font_load("-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*");
