@@ -880,7 +880,7 @@ drop_url(PanelWidget *panel, int pos, const char *url)
 static void
 drop_menu (PanelWidget *panel, int pos, const char *dir)
 {
-	int flags = MAIN_MENU_SYSTEM | MAIN_MENU_USER;
+	int flags = MAIN_MENU_SYSTEM;
 	DistributionType distribution = get_distribution_type ();
 
 	/*guess distribution menus*/

@@ -948,7 +948,6 @@ make_background(PanelWidget *panel, guchar *rgb_buf,
 		}
 	} else {
 		int i, j;
-		int size;
 		int r,g,b;
 		guchar *p;
 		if(panel->back_type != PANEL_BACK_COLOR) {

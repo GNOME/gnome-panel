@@ -37,7 +37,6 @@ struct _FoobarWidget
 	guint clock_timeout;
 
 	GtkWidget *programs;
-	GtkWidget *favorites;
 	GtkWidget *settings;
 
 	GHashTable *tasks;

@@ -201,8 +201,6 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	char **envv = NULL;
 	int envc;
         gboolean use_advanced;
-        gboolean add_to_favourites;
-        GtkWidget *favorites;
         
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
@@ -217,9 +215,6 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
         clist = gtk_object_get_data (GTK_OBJECT (run_dialog), "dentry_list");
         terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT(w),
 							   "terminal"));
-        favorites = gtk_object_get_data (GTK_OBJECT (run_dialog), "favorites");
-
-        add_to_favourites = GTK_TOGGLE_BUTTON (favorites)->active;
         
         if (gtk_object_get_data (GTK_OBJECT (run_dialog), "use_list")) {
                 char *name;
@@ -259,8 +254,6 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			}
 
 			if (ditem != NULL) {
-                                if (add_to_favourites)
-                                        panel_add_favourite (name);
 				gnome_desktop_item_unref (ditem);
 			}
                 }
@@ -917,11 +910,6 @@ unset_selected (GtkWidget *dialog)
         gtk_clist_set_selection_mode (GTK_CLIST (clist),
                                       GTK_SELECTION_SINGLE);
         gtk_clist_unselect_all (GTK_CLIST (clist));
-
-        /* Can't add non-listed items to favorites for now. */
-        gtk_widget_set_sensitive (gtk_object_get_data (GTK_OBJECT (dialog),
-                                                       "favorites"),
-                                  FALSE);
 }
 
 static void
@@ -987,11 +975,6 @@ select_row_handler (GtkCList *clist,
         }
 
         sync_list_to_entry (dialog);
-
-        /* Allow adding to favorites */
-        gtk_widget_set_sensitive (gtk_object_get_data (GTK_OBJECT (dialog),
-                                                       "favorites"),
-                                  TRUE);
 }
 
 static GtkWidget*
@@ -1003,7 +986,6 @@ create_simple_contents (void)
         GtkWidget *pixmap;
         GtkWidget *clist;
         GtkWidget *hbox;
-        GtkWidget *favorites;
         char *titles[2];
         
         vbox = gtk_vbox_new (FALSE, 1);
@@ -1062,10 +1044,6 @@ create_simple_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 #endif
 
-        favorites = gtk_check_button_new_with_label (_("Add this program to Favorites"));
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "favorites", favorites);
-        gtk_box_pack_start (GTK_BOX (vbox), favorites, FALSE, FALSE, 0);
-        
         unset_selected (run_dialog);
         
         w = create_toggle_advanced_button ("");
@@ -1221,67 +1199,4 @@ show_run_dialog_with_text (const char *text)
 	entry = gtk_object_get_data(GTK_OBJECT(run_dialog), "entry");
 
 	gtk_entry_set_text(GTK_ENTRY(entry), text);
-}
-
-static void  
-drag_data_get_cb (GtkWidget          *widget,
-		  GdkDragContext     *context,
-		  GtkSelectionData   *selection_data,
-		  guint               info,
-		  guint               time,
-		  gpointer            data)
-{
-	char *foo;
-
-	foo = g_strdup_printf ("RUN:%d", find_applet (widget));
-
-	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)foo,
-				strlen (foo));
-
-	g_free (foo);
-}
-
-
-static GtkWidget *
-create_run_widget(void)
-{
-        static GtkTargetEntry dnd_targets[] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
-	};
-	GtkWidget *button;
-	char *pixmap_name;
-
-	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-						 "gnome-run.png", TRUE, NULL);
-
-	button = button_widget_new(pixmap_name,-1,
-				   MISC_POBJECT,
-				   FALSE,
-				   PANEL_ORIENT_UP,
-				   _("Run..."));
-
-	/*A hack since this function only pretends to work on window
-	  widgets (which we actually kind of are) this will select
-	  some (already selected) events on the panel instead of
-	  the button window (where they are also selected) but
-	  we don't mind*/
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
-	gtk_drag_source_set (button,
-			     GDK_BUTTON1_MASK,
-			     dnd_targets, 1,
-			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
-
-	g_signal_connect (G_OBJECT (button), "drag_data_get",
-			    G_CALLBACK (drag_data_get_cb),
-			    NULL);
-
-	g_free(pixmap_name);
-	gtk_tooltips_set_tip (panel_tooltips, button, _("Run..."), NULL);
-
-	g_signal_connect(G_OBJECT(button), "clicked",
-			   G_CALLBACK(show_run_dialog), NULL);
-
-	return button;
 }

@@ -7,17 +7,14 @@
 G_BEGIN_DECLS
 
 enum {
-	MAIN_MENU_USER = 1<<0,
-	MAIN_MENU_USER_SUB = 1<<1,
+	/* FIXME: should we move this array or keep the bitvalues
+	 * the same??? */
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
 	MAIN_MENU_DISTRIBUTION = 1<<4,
 	MAIN_MENU_DISTRIBUTION_SUB = 1<<5,
 	MAIN_MENU_KDE = 1<<6,
 	MAIN_MENU_KDE_SUB = 1<<7,
-	/* keep this for compatibility. */
-	MAIN_MENU_OBSOLETE_DEBIAN = 1<<8,
-	MAIN_MENU_OBSOLETE_DEBIAN_SUB = 1<<9,
 	MAIN_MENU_APPLETS = 1<<10,
 	MAIN_MENU_APPLETS_SUB = 1<<11,
 	MAIN_MENU_PANEL = 1<<12,
@@ -92,7 +89,6 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,
 					 gboolean applets,
 					 gboolean launcher_add,
-					 gboolean favourites_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean fake_submenus,
@@ -101,12 +97,9 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 GtkWidget *	create_fake_menu_at	(const char *menudir,
 					 gboolean applets,
 					 gboolean launcher_add,
-					 gboolean favourites_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean title);
-GtkWidget *	start_favourites_menu	(GtkWidget *menu,
-					 gboolean fake_submenus);
 
 void		submenu_to_display	(GtkWidget *menuw, gpointer data);
 gboolean	menu_need_reread	(GtkWidget *menuw);
@@ -122,8 +115,6 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
-
-void		panel_add_favourite	(const char *source_dentry);
 
 /* perhaps into basep-widget.h? */
 enum {

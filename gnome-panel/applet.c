@@ -363,7 +363,7 @@ setup_an_item(AppletUserMenu *menu,
 	      GtkWidget *submenu,
 	      int is_submenu)
 {
-	menu->menuitem = gtk_menu_item_new ();
+	menu->menuitem = gtk_image_menu_item_new ();
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menu->menuitem);
@@ -477,7 +477,7 @@ applet_setup_panel_menu (gboolean is_basep)
 	GtkWidget *panel_menu;
 	gchar     *pixmap_path;
 
-	menuitem = gtk_menu_item_new ();
+	menuitem = gtk_image_menu_item_new ();
 
 	pixmap_path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 						 "gnome-panel.png", TRUE, NULL);
@@ -514,7 +514,7 @@ panel_applet_create_menu (AppletInfo *info,
 	if (!commie_mode) {
 		GtkWidget *image;
 
-		menuitem = gtk_menu_item_new ();
+		menuitem = gtk_image_menu_item_new ();
 
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
@@ -528,7 +528,7 @@ panel_applet_create_menu (AppletInfo *info,
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 
-		menuitem = gtk_menu_item_new();
+		menuitem = gtk_image_menu_item_new();
 
 		/*
 		 * FIXME: should have a "Move" pixmap.
@@ -548,7 +548,7 @@ panel_applet_create_menu (AppletInfo *info,
 	gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 
 	if (info->user_menu) {
-		menuitem = gtk_menu_item_new ();
+		menuitem = gtk_image_menu_item_new ();
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 

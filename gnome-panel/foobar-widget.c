@@ -323,7 +323,7 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 {
 	GtkWidget *item;
 
-	item = gtk_menu_item_new_with_label (label);
+	item = gtk_image_menu_item_new_with_label (label);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (gmc_client), flag);
@@ -403,7 +403,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	for (i=0; arrange[i]; i+=2)
 		append_gmc_item (menu, _(arrange[i]), arrange[i+1]);
 
-	item = gtk_menu_item_new_with_label (_("Arrange Icons"));
+	item = gtk_image_menu_item_new_with_label (_("Arrange Icons"));
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
@@ -529,15 +529,9 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	menu = create_fake_menu_at (path,
 				    FALSE /* applets */,
 				    FALSE /* launcher_add */,
-				    FALSE /* favourites_add */,
 				    label /* dir_name */,
 				    NULL /* pixmap_name */,
 				    FALSE /* title */);
-#ifdef FIXME /*EVIL!!*/
-	if (path != NULL && strcmp (path, "apps") == 0)
-		/* This will add the add submenu thingie */
-		start_favourites_menu (menu, TRUE /* fake_submenus */);
-#endif
 
 	if (menu == NULL) {
 		g_warning (_("menu wasn't created"));
@@ -570,7 +564,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 static void
 append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 {
-	GtkWidget *item = gtk_menu_item_new_with_label (label);
+	GtkWidget *item = gtk_image_menu_item_new_with_label (label);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (gnomecal_client), flag);
@@ -665,7 +659,7 @@ append_format_item (GtkWidget *menu, const char *format)
 	}
 	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-	item = gtk_menu_item_new_with_label (hour);
+	item = gtk_image_menu_item_new_with_label (hour);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (set_fooclock_format),
@@ -711,7 +705,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	menu = gtk_menu_new ();
 	
 #if 0 /* put back when evolution can do this */
-	item = gtk_menu_item_new_with_label (_("Add appointement..."));
+	item = gtk_image_menu_item_new_with_label (_("Add appointement..."));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	add_menu_separator (menu);
@@ -719,7 +713,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	time_admin_path = g_find_program_in_path  ("time-admin");
 	if (time_admin_path) {
-		item = gtk_menu_item_new_with_label (_("Set Time"));
+		item = gtk_image_menu_item_new_with_label (_("Set Time"));
 		g_signal_connect (G_OBJECT (item), "activate",
 				  G_CALLBACK (set_time_cb), time_admin_path);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
@@ -737,7 +731,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	add_tearoff (GTK_MENU_SHELL (menu2));
 
-	item = gtk_menu_item_new_with_label (_("Format"));
+	item = gtk_image_menu_item_new_with_label (_("Format"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
@@ -1216,9 +1210,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 				    FALSE /* strech_right */);
 
 #if 0
-	foo->favorites =
-		append_folder_menu(menu_bar, _("Favorites"), NULL,
-				   "favorites:/");
 	foo->settings =
 		append_folder_menu(menu_bar, _("Settings"),  NULL,
 			           "programs:/Settings/");
@@ -1390,9 +1381,6 @@ foobar_widget_force_menu_remake (void)
 					     "need_reread", GINT_TO_POINTER(1));
 		if (foo->settings != NULL)
 			gtk_object_set_data (GTK_OBJECT(foo->settings),
-					     "need_reread", GINT_TO_POINTER(1));
-		if (foo->favorites != NULL)
-			gtk_object_set_data (GTK_OBJECT(foo->favorites),
 					     "need_reread", GINT_TO_POINTER(1));
 	}
 }

@@ -97,14 +97,6 @@ apply_global_config (void)
 	static int old_avoid_collisions = -1;
 	GSList *li;
 
-#ifdef FIXME
-	panel_widget_change_global (global_config.hiding_step_size,
-				    global_config.minimized_size,
-				    global_config.minimize_delay,
-				    global_config.maximize_delay,
-				    global_config.movement_type,
-				    global_config.disable_animations);
-#endif
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
@@ -210,16 +202,6 @@ apply_global_config (void)
 }
 
 #ifdef FIXME /* Keep this code until a new one is done for applets */
-static void
-timeout_dlg_realized (GtkWidget *dialog)
-{
-#if FIXME
-	/* always make top layer */
-	gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-				   WIN_LAYER_ABOVE_DOCK);
-#endif
-}
-
 static gboolean
 session_save_timeout (gpointer data)
 {
@@ -253,10 +235,6 @@ session_save_timeout (gpointer data)
 			       _("Continue waiting"),
 			       2); /* FIXME: GNOME_STOCK_PIXMAP_TIMER */
 
-	g_signal_connect_after (G_OBJECT(ss_timeout_dlg), "realize",
-				G_CALLBACK (timeout_dlg_realized),
-			 	NULL);
-	
 	if (1 == gtk_dialog_run (GTK_DIALOG (ss_timeout_dlg))) {
 		ss_cookie++;
 		g_warning(_("Timed out on sending session save to an applet"));

@@ -41,8 +41,6 @@ struct _MenuDialogInfo {
 	GtkWidget *global_main;
 	GtkWidget *system;
 	GtkWidget *system_sub;
-	GtkWidget *user;
-	GtkWidget *user_sub;
 	GtkWidget *applets;
 	GtkWidget *applets_sub;
 	GtkWidget *distribution;
@@ -109,29 +107,6 @@ get_pixmap (const char *menudir, gboolean main_menu)
 	return pixmap_name;
 }
 
-static gboolean
-got_gmenu (void)
-{
-	static gboolean checked = FALSE;
-	static gboolean got_it = FALSE;
-	char *tmp;
-
-	if (checked)
-		return got_it;
-
-	tmp = g_find_program_in_path  ("gmenu");
-	if (tmp != NULL)
-		got_it = TRUE;
-	else
-		got_it = FALSE;
-
-	g_free (tmp);
-
-	checked = TRUE;
-
-	return got_it;
-}
-
 static void
 properties_apply_callback (Menu *menu)
 {
@@ -178,9 +153,7 @@ properties_apply_callback (Menu *menu)
 	    GTK_TOGGLE_BUTTON (menu->dialog_info->global_main)->active) {
 		menu->main_menu = TRUE;
 
-		if (got_gmenu ()) {
-			need_edit_menus = TRUE;
-		}
+		need_edit_menus = TRUE;
 	} else {
 		s = gnome_file_entry_get_full_path (GNOME_FILE_ENTRY (menu->dialog_info->pathentry),
 						    TRUE);
@@ -222,11 +195,6 @@ properties_apply_callback (Menu *menu)
 		menu->main_menu_flags |= MAIN_MENU_SYSTEM_SUB;
 	else if (GTK_TOGGLE_BUTTON(menu->dialog_info->system)->active)
 		menu->main_menu_flags |= MAIN_MENU_SYSTEM;
-
-	if(GTK_TOGGLE_BUTTON(menu->dialog_info->user_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_USER_SUB;
-	else if (GTK_TOGGLE_BUTTON (menu->dialog_info->user)->active)
-		menu->main_menu_flags |= MAIN_MENU_USER;
 
 	if(GTK_TOGGLE_BUTTON(menu->dialog_info->applets_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_APPLETS_SUB;
@@ -532,13 +500,6 @@ create_properties_dialog (Menu *menu)
 			      &menu->dialog_info->system_sub,
 			      menu->main_menu_flags & MAIN_MENU_SYSTEM,
 			      menu->main_menu_flags & MAIN_MENU_SYSTEM_SUB);
-	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),1,
-			      _("Favorites: "),
-			      &menu->dialog_info->user,
-			      &menu->dialog_info->user_sub,
-			      menu->main_menu_flags & MAIN_MENU_USER,
-			      menu->main_menu_flags & MAIN_MENU_USER_SUB);
 	add_menu_type_options(menu,
 			      GTK_OBJECT(dialog), GTK_TABLE(table),2,
 			      _("Applets: "),

@@ -1,3 +1,15 @@
+Sat Dec 08 23:16:39 2001  George Lebl <jirka@5z.com>
+
+	* menu.[ch], menu-fentry.h, menu-util.c, menu-properties.c,
+	  session.c, main.c, gnome-run.c:  Remove favourites menu.  It is
+	  useless with the current push towards editable menus.  Also instead
+	  of running gedit, run nautilus on programs:/ as a menu editor.
+
+	* panel-widget.c: fix warning.
+
+	* applet.c, foobar-widget.c: use gtk image menu items instead of
+	  normal items where appropriate.
+
 Sat Dec 08 11:28:37 2001  George Lebl <jirka@5z.com>
 
 	* gnome-run.c, launcher.c, menu.c, swallow.c:  Use the new desktop

@@ -138,7 +138,6 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 				      FileRec *fr,
 				      gboolean applets,
 				      gboolean launcher_add,
-				      gboolean favourites_add,
 				      const char *dir_name,
 				      const char *pixmap_name,
 				      gboolean fake_submenus,
@@ -154,17 +153,13 @@ static GtkWidget * create_desktop_menu (GtkWidget *m,
 
 static void add_kde_submenu (GtkWidget *root_menu,
 			     gboolean fake_submenus,
-			     gboolean launcher_add,
-			     gboolean favourites_add);
+			     gboolean launcher_add);
 static void add_distribution_submenu (GtkWidget *root_menu,
 				      gboolean fake_submenus,
-				      gboolean launcher_add,
-				      gboolean favourites_add);
+				      gboolean launcher_add);
 
 static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
 					     gboolean fake_submenus);
-static GtkWidget * create_add_favourites_menu (GtkWidget *menu,
-					       gboolean fake_submenus);
 
 static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
@@ -264,8 +259,6 @@ init_menus (void)
 		g_free (uri);
 	}
 	g_free (menu);
-
-	fr_read_dir (NULL, "favorites:/", 0, 2);
 
 	if (distribution_info != NULL &&
 	    distribution_info->menu_init_func != NULL)
@@ -400,138 +393,6 @@ activate_app_def (GtkWidget *widget, const char *item_loc)
 		panel_error_dialog ("cannot_load_entry",
 				    _("Can't load entry"));
 	}
-}
-
-#ifdef FIXME
-/* Copy a single file */
-static void
-copy_file_to_dir (const char *item, const char *to, mode_t mode)
-{
-	/* FIXME: port this to vfolders ... or are we getting rid of personal
-	 * folder anyway which is the only place it's used */
-	int fdin;
-	int fdout;
-	int chars;
-	char buf[1024];
-	char *toname;
-	char *base;
-
-	fdin = open (item, O_RDONLY);
-	if (fdin < 0)
-		return;
-
-	base = g_path_get_basename (item);
-	toname = g_build_filename (to, base, NULL);
-	g_free (base);
-
-	fdout = open (toname, O_WRONLY | O_CREAT, mode);
-	g_free (toname);
-	if (fdout < 0) {
-		close (fdin);
-		return;
-	}
-
-	while ((chars = read(fdin, buf, sizeof(buf))) > 0) {
-		write (fdout, buf, chars);
-	}
-
-
-	close (fdin);
-	close (fdout);
-}
-#endif
-
-#ifdef FIXME
-static void
-copy_fr_dir (DirRec *dr, const char *to)
-{
-	/* FIXME: port this to vfolders ... or are we getting rid of personal
-	 * folder anyway which is the only place it's used */
-	GSList *li;
-	char *file_name;
-	FILE *order_file = NULL;
-
-	g_return_if_fail (dr != NULL);
-	g_return_if_fail (to != NULL);
-
-	file_name = g_build_filename (dr->frec.name, ".directory", NULL);
-	copy_file_to_dir (file_name, to, 0600);
-	g_free (file_name);
-
-	file_name = g_build_filename (to, ".order", NULL);
-	order_file = fopen (file_name, "a");
-	g_free (file_name);
-
-	for (li = dr->recs; li != NULL; li = li->next) {
-		FileRec *fr = li->data;
-		char *base;
-		
-		if (fr->type == FILE_REC_FILE) {
-			copy_file_to_dir (fr->name, to, 0600);
-		} else if (fr->type == FILE_REC_DIR) {
-			char *base = g_path_get_basename (fr->name);
-			char *newdir = g_build_filename (to, base, NULL);
-			g_free (base);
-			if (g_file_test (newdir, G_FILE_TEST_IS_DIR) ||
-			    mkdir (newdir, 0700) == 0)
-				copy_fr_dir ((DirRec *)fr, newdir);
-			g_free (newdir);
-		} else if (fr->type == FILE_REC_EXTRA) {
-			base = g_path_get_basename (fr->name);
-			if (base != NULL &&
-			    strcmp (base, ".order") != 0)
-				copy_file_to_dir (fr->name, to, 0600);
-			g_free (base);
-		} else {
-			continue;
-		}
-
-		base = g_path_get_basename (fr->name);
-
-		if (order_file != NULL &&
-		    base != NULL)
-			fprintf (order_file, "%s\n", base);
-		g_free (base);
-	}
-
-	if (order_file != NULL)
-		fclose (order_file);
-}
-#endif
-
-static void
-add_app_to_personal (GtkWidget *widget, const char *item_loc)
-{
-#ifdef FIXME
-	/* FIXME: port this to vfolders ... or are we getting rid of personal
-	 * folder anyway which is the only place it's used */
-	char *to;
-
-	to = gnome_util_home_file ("apps");
-
-	if (g_file_test (item_loc, G_FILE_TEST_IS_DIR)) {
-		FileRec *fr = fr_get_dir (item_loc);
-		if (fr != NULL) {
-			char *base = g_path_get_basename (fr->name);
-			char *newdir = g_build_filename (to, base, NULL);
-			g_free (base);
-			if (g_file_test (newdir, G_FILE_TEST_IS_DIR) ||
-			    mkdir (newdir, 0700) == 0)
-				copy_fr_dir ((DirRec *)fr, newdir);
-			g_free(newdir);
-		}
-	} else {
-		copy_file_to_dir (item_loc, to, 0600);
-	}
-
-	g_free (to);
-#endif
-}
-
-void
-panel_add_favourite (const char *source_dentry)
-{
-	add_app_to_personal (NULL, source_dentry);
 }
 
 static PanelWidget *
@@ -1139,9 +1000,8 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 	gboolean main_menu;
 	PanelWidget *panel;
 	DistributionType distribution = get_distribution_type ();
-	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
-		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
-		MAIN_MENU_DESKTOP_SUB;
+	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_APPLETS_SUB |
+		MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP_SUB;
 	
 	/*guess distribution menus*/
 	if (distribution != DISTRIBUTION_UNKNOWN)
@@ -1588,19 +1448,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					    G_CALLBACK(add_app_to_panel),
 					    (gpointer)sim->item_loc);
 
-			if ( ! sim->applet) {
-				menuitem = gtk_image_menu_item_new ();
-				setup_menuitem (menuitem, NULL,
-						_("Add this to Favorites menu"));
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-				g_signal_connect (G_OBJECT(menuitem), "activate",
-						   G_CALLBACK(add_app_to_personal),
-						   (gpointer)sim->item_loc);
-				/*ummmm slightly ugly but should work 99% of time*/
-				if (strstr(sim->item_loc, "/" GNOME_DOT_GNOME "apps/") != NULL)
-					gtk_widget_set_sensitive(menuitem,FALSE);
-			}
-
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, NULL,
 					_("Remove this item"));
@@ -1717,16 +1564,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					   G_CALLBACK(add_menu_to_panel),
 					   sim->mf->menudir);
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, NULL,
-					_("Add this to Favorites menu"));
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-					   G_CALLBACK(add_app_to_personal),
-					   sim->mf->menudir);
-			/*ummmm slightly ugly but should work 99% of time*/
-			if(strstr(sim->mf->menudir, "/" GNOME_DOT_GNOME "apps") != NULL)
-				gtk_widget_set_sensitive(menuitem, FALSE);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, NULL,
@@ -2122,12 +1959,6 @@ add_launcher (GtkWidget *w, const char *item_loc)
 }
 
 static void
-add_favourites (GtkWidget *w, const char *item_loc)
-{
-	panel_add_favourite (item_loc);
-}
-
-static void
 destroy_mf(MenuFinfo *mf)
 {
 	if (mf->fr != NULL) {
@@ -2466,7 +2297,6 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 					  mf->fr,
 					  mf->applets,
 					  mf->launcher_add,
-					  mf->favourites_add,
 					  mf->dir_name,
 					  mf->pixmap_name,
 					  TRUE /*fake_submenus*/,
@@ -2576,8 +2406,6 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 {
 	GSList *mfl, *list;
 	gboolean add_launcher_hack;
-	gboolean add_favourites_hack;
-	gboolean favourites_hack;
 
 	if (GTK_MENU(menuw)->torn_off)
 		return;
@@ -2590,12 +2418,6 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 	add_launcher_hack = 
 		GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (menuw),
 						      "_add_launcher_menu_hack_"));
-	add_favourites_hack = 
-		GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (menuw),
-						      "_add_favourites_menu_hack_"));
-	favourites_hack = 
-		GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (menuw),
-						      "_favourites_menu_hack_"));
 
 	/* Note this MUST be destroy and not unref, unref would fuck
 	 * up here, we don't hold a reference to them, so we must
@@ -2605,15 +2427,9 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 
 	if (add_launcher_hack) {
 		create_add_launcher_menu (menuw, TRUE /* fake_submenus */);
-	} else if (add_favourites_hack) {
-		create_add_favourites_menu (menuw, TRUE /* fake_submenus */);
 	} else {
 
 		menu_add_tearoff (GTK_MENU (menuw), G_CALLBACK (tearoff_new_menu), menuw);
-
-		if (favourites_hack) {
-			start_favourites_menu (menuw, TRUE /* fake_submenus */);
-		}
 
 		mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 
@@ -2627,7 +2443,6 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 						   mf->fr,
 						   mf->applets,
 						   mf->launcher_add,
-						   mf->favourites_add,
 						   mf->dir_name,
 						   mf->pixmap_name,
 						   TRUE /*fake_submenus*/,
@@ -2642,46 +2457,9 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 }
 
 GtkWidget *
-start_favourites_menu (GtkWidget *menu,
-		       gboolean fake_submenus)
-{
-	GtkWidget *menuitem;
-	GtkWidget *m;
-
-	if (menu == NULL) {
-		menu = menu_new ();
-
-		menu_add_tearoff (GTK_MENU (menu), G_CALLBACK (tearoff_new_menu), menu);
-	}
-
-	/* Add the favourites stuff here */
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem,
-				   "launcher-program.png",
-				   /* Add to favourites */
-				   _("Add from menu"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	m = create_add_favourites_menu (NULL,
-					TRUE /*fake_submenus*/);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
-	g_signal_connect (G_OBJECT (m), "show",
-			  G_CALLBACK (submenu_to_display), NULL);
-
-	/* Eeeek, a hack, if this is set then the reloading
-	 * function will use start_favourites_menu */
-	gtk_object_set_data (GTK_OBJECT (menu),
-			     "_favourites_menu_hack_",
-			     GINT_TO_POINTER (1));
-
-	return menu;
-}
-
-
-GtkWidget *
 create_fake_menu_at (const char *menudir,
 		     gboolean applets,
 		     gboolean launcher_add,
-		     gboolean favourites_add,
 		     const char *dir_name,
 		     const char *pixmap_name,
 		     gboolean title)
@@ -2696,7 +2474,6 @@ create_fake_menu_at (const char *menudir,
 	mf->menudir = g_strdup (menudir);
 	mf->applets = applets;
 	mf->launcher_add = launcher_add;
-	mf->favourites_add = favourites_add;
 	mf->dir_name = g_strdup (dir_name);
 	mf->pixmap_name = g_strdup (pixmap_name);
 	mf->fake_menu = TRUE;
@@ -2717,7 +2494,6 @@ create_menuitem (GtkWidget *menu,
 		 FileRec *fr,
 		 gboolean applets,
 		 gboolean launcher_add,
-		 gboolean favourites_add,
 		 gboolean fake_submenus,
 		 gboolean *add_separator,
 		 int *first_item,
@@ -2763,7 +2539,6 @@ create_menuitem (GtkWidget *menu,
 			sub = create_fake_menu_at (fr->name,
 						   applets,
 						   launcher_add,
-						   favourites_add,
 						   itemname,
 						   fr->icon,
 						   TRUE);
@@ -2771,7 +2546,6 @@ create_menuitem (GtkWidget *menu,
 			sub = create_menu_at_fr (NULL, fr,
 						 applets,
 						 launcher_add,
-						 favourites_add,
 						 itemname,
 						 fr->icon,
 						 fake_submenus,
@@ -2825,10 +2599,6 @@ create_menuitem (GtkWidget *menu,
 			g_signal_connect (G_OBJECT (menuitem), "activate",
 					    G_CALLBACK (add_launcher),
 					    fr->name);
-		else if (favourites_add)
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					    G_CALLBACK (add_favourites),
-					    fr->name);
 		else if (applets)
 			g_signal_connect (G_OBJECT (menuitem), "activate",
 					    G_CALLBACK (add_applet),
@@ -2849,7 +2619,6 @@ create_menu_at (GtkWidget *menu,
 		const char *menudir,
 		gboolean applets,
 		gboolean launcher_add,
-		gboolean favourites_add,
 		const char *dir_name,
 		const char *pixmap_name,
 		gboolean fake_submenus,
@@ -2860,7 +2629,6 @@ create_menu_at (GtkWidget *menu,
 				  fr_get_dir (menudir),
 				  applets,
 				  launcher_add,
-				  favourites_add,
 				  dir_name,
 				  pixmap_name,
 				  fake_submenus,
@@ -2873,7 +2641,6 @@ create_menu_at_fr (GtkWidget *menu,
 		   FileRec *fr,
 		   gboolean applets,
 		   gboolean launcher_add,
-		   gboolean favourites_add,
 		   const char *dir_name,
 		   const char *pixmap_name,
 		   gboolean fake_submenus,
@@ -2942,7 +2709,6 @@ create_menu_at_fr (GtkWidget *menu,
 			else if (create_menuitem (menu, tfr,
 						  applets,
 						  launcher_add,
-						  favourites_add,
 						  fake_submenus,
 						  &add_separator,
 						  &first_item,
@@ -2953,7 +2719,6 @@ create_menu_at_fr (GtkWidget *menu,
 
 	mf->applets        = applets;
 	mf->launcher_add   = launcher_add;
-	mf->favourites_add = favourites_add;
 	mf->dir_name       = g_strdup (dir_name);
 	mf->pixmap_name    = g_strdup (pixmap_name);
 	mf->fake_menu      = FALSE;
@@ -3498,15 +3263,13 @@ static GtkWidget *
 create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 		    gboolean fake,
 		    gboolean title,
-		    gboolean launcher_add,
-		    gboolean favourites_add)
+		    gboolean launcher_add)
 {
 	if ( ! fake ||
 	     menu != NULL) {
 		menu = create_menu_at (menu, "programs:/",
 				       FALSE /* applets */,
 				       launcher_add,
-				       favourites_add,
 				       _("Programs"),
 				       "gnome-logo-icon-transparent.png",
 				       fake_submenus, FALSE, title);
@@ -3514,7 +3277,6 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 		menu = create_fake_menu_at ("programs:/",
 					    FALSE /* applets */,
 					    launcher_add,
-					    favourites_add,
 					    _("Programs"),
 					    "gnome-logo-icon-transparent.png",
 					    title);
@@ -3524,37 +3286,11 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 }
 
 static GtkWidget *
-create_user_menu (const char *title, const char *dir, GtkWidget *menu,
-		  const char *pixmap, gboolean fake_submenus,
-		  gboolean force, gboolean fake, gboolean gottitle,
-		  gboolean launcher_add,
-		  gboolean favourites_add)
-{
-	if(!fake || menu) {
-		menu = create_menu_at (menu, dir,
-				       FALSE /* applets */,
-				       launcher_add,
-				       favourites_add,
-				       title, pixmap,
-				       fake_submenus,
-				       force, gottitle);
-	} else {
-		menu = create_fake_menu_at (dir,
-					    FALSE /* applets */,
-					    launcher_add,
-					    favourites_add,
-					    title, pixmap, gottitle);
-	}
-	return menu;
-}
-
-static GtkWidget *
 create_distribution_menu (GtkWidget *menu,
 			  gboolean fake_submenus,
 			  gboolean fake,
 			  gboolean title,
-			  gboolean launcher_add,
-			  gboolean favourites_add)
+			  gboolean launcher_add)
 {
 	const DistributionInfo *info = get_distribution_info ();
 	gchar *pixmap_file, *menu_path;
@@ -3577,14 +3313,12 @@ create_distribution_menu (GtkWidget *menu,
 		menu = create_menu_at (menu, menu_path,
 				       FALSE /* applets */,
 				       launcher_add,
-				       favourites_add,
 				       info->menu_name, pixmap_file,
 				       fake_submenus, FALSE, title);
 	} else {
 		menu = create_fake_menu_at (menu_path,
 					    FALSE /* applets */,
 					    launcher_add,
-					    favourites_add,
 					    info->menu_name, pixmap_file,
 					    title);
 	}
@@ -3598,8 +3332,7 @@ create_distribution_menu (GtkWidget *menu,
 static GtkWidget *
 create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 		 gboolean force, gboolean fake, gboolean title,
-		 gboolean launcher_add,
-		 gboolean favourites_add)
+		 gboolean launcher_add)
 {
 	char *pixmap_name;
 	char *uri;
@@ -3614,7 +3347,6 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 				       uri,
 				       FALSE /* applets */,
 				       launcher_add,
-				       favourites_add,
 				       _("KDE menus"), 
 				       pixmap_name,
 				       fake_submenus,
@@ -3623,7 +3355,6 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 		menu = create_fake_menu_at (uri,
 					    FALSE /* applets */,
 					    launcher_add,
-					    favourites_add,
 					    _("KDE menus"),
 					    pixmap_name, title);
 	}
@@ -3647,52 +3378,19 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 			     "_add_launcher_menu_hack_",
 			     GINT_TO_POINTER (1));
 
-	create_system_menu (menu, fake_submenus, FALSE, TRUE, TRUE, FALSE);
-	create_user_menu (_("Favorites"), "favorites:",
-			  menu, "gnome-favorites.png",
-			  fake_submenus, FALSE, FALSE, TRUE, TRUE, FALSE);
+	create_system_menu (menu,
+			    fake_submenus,
+			    FALSE /* fake */,
+			    TRUE /* title */,
+			    TRUE /* launcher_add */);
 
 	add_menu_separator (menu);
 
 	add_distribution_submenu (menu, fake_submenus,
-				  TRUE /*launcher_add */,
-				  FALSE /*favourites_add */);
+				  TRUE /*launcher_add */);
 	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR)) {
 		add_kde_submenu (menu, fake_submenus,
-				 TRUE /*launcher_add */,
-				 FALSE /*favourites_add */);
-	}
-
-	return menu;
-}
-
-static GtkWidget *
-create_add_favourites_menu (GtkWidget *menu, gboolean fake_submenus)
-{
-	if (menu == NULL)
-		menu = menu_new ();
-
-	/* Eeeek, a hack, if this is set then the reloading
-	 * function will use create_add_favourites_menu, rather then
-	 * the nomral way of reloading, as that would dump the
-	 * submenus */
-	gtk_object_set_data (GTK_OBJECT (menu),
-			     "_add_favourites_menu_hack_",
-			     GINT_TO_POINTER (1));
-
-	create_system_menu (menu, fake_submenus, FALSE, TRUE,
-			    FALSE /*launcher_add */,
-			    TRUE /*favourites_add */);
-
-	add_menu_separator (menu);
-
-	add_distribution_submenu (menu, fake_submenus,
-				  TRUE /*launcher_add */,
-				  TRUE /* favourites_add */);
-	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR)) {
-		add_kde_submenu (menu, fake_submenus,
-				 FALSE /*launcher_add */,
-				 TRUE /*favourites_add */);
+				 TRUE /*launcher_add */);
 	}
 
 	return menu;
@@ -4039,15 +3737,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			   "programs:/");
 	setup_internal_applet_drag(submenuitem, "MENU:programs:/");
 
-	submenuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (submenuitem, "gnome-favorites.png",
-				   _("Favorites menu"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
-	g_signal_connect (G_OBJECT(submenuitem), "activate",
-			   G_CALLBACK(add_menu_to_panel),
-			   "favorites:");
-	setup_internal_applet_drag(submenuitem, "MENU:favorites:/");
-
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "launcher-program.png",
@@ -4203,12 +3892,12 @@ show_panel_help (GtkWidget *w, gpointer data)
 }
 
 static void
-panel_launch_gmenu (GtkWidget *widget, gpointer data)
+panel_launch_nautilus (GtkWidget *widget, gpointer data)
 {
-	char *argv[2] = {"gmenu", NULL};
+	char *argv[3] = {"nautilus", data, NULL};
 	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
-		   panel_error_dialog ("cannot_launch_gmenu",
-				       _("Cannot launch gmenu!"));
+		   panel_error_dialog ("cannot_launch_nautilus",
+				       _("Cannot launch nautilus!"));
 }
 
 void
@@ -4285,8 +3974,8 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 					   _("Edit menus..."));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (G_OBJECT (menuitem), "activate",
-				    G_CALLBACK(panel_launch_gmenu), 
-				    NULL);
+				  G_CALLBACK (panel_launch_nautilus), 
+				  "programs:/");
 
 		if ( ! global_config.menu_check) {
 			menuitem = gtk_image_menu_item_new ();
@@ -4477,8 +4166,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 
 static void
 add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
-			  gboolean launcher_add,
-			  gboolean favourites_add)
+			  gboolean launcher_add)
 {
 	GtkWidget *menu;
 	GtkWidget *menuitem;
@@ -4487,9 +4175,11 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	if (distribution_info == NULL)
 		return;
 
-	menu = create_distribution_menu(NULL, fake_submenus,
-					TRUE, TRUE, launcher_add,
-					favourites_add);
+	menu = create_distribution_menu (NULL /* menu */,
+					 fake_submenus,
+					 TRUE /* fake */,
+					 TRUE /* title */,
+					 launcher_add);
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   distribution_info->menu_icon,
@@ -4508,15 +4198,14 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 
 static void
 add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
-		 gboolean launcher_add,
-		 gboolean favourites_add)
+		 gboolean launcher_add)
 {
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	char *pixmap_path;
 
 	menu = create_kde_menu (NULL, fake_submenus, TRUE, TRUE,
-				TRUE, launcher_add, favourites_add);
+				TRUE, launcher_add);
 	pixmap_path = g_build_filename (kde_icondir, "exec.xpm", NULL);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -4545,12 +4234,10 @@ create_root_menu (GtkWidget *root_menu,
 	GtkWidget *menuitem;
 
 	gboolean has_inline = (flags & (MAIN_MENU_SYSTEM |
-					MAIN_MENU_USER |
 					MAIN_MENU_APPLETS |
 					MAIN_MENU_KDE));
 
 	gboolean has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
-				      MAIN_MENU_USER_SUB |
 				      MAIN_MENU_APPLETS_SUB |
 				      MAIN_MENU_KDE_SUB));
 
@@ -4577,16 +4264,9 @@ create_root_menu (GtkWidget *root_menu,
 
 	if (flags & MAIN_MENU_SYSTEM)
 		create_system_menu(root_menu, fake_submenus,
-				   FALSE, title,
-				   FALSE /* launcher_add */,
-				   FALSE /* favourites_add */);
-	if (flags & MAIN_MENU_USER)
-		/* FIXME: add the add to favourites somehow here */
-		create_user_menu(_("Favorites"), "favorites:",
-				 root_menu, "gnome-favorites.png",
-				 fake_submenus, FALSE, FALSE, title,
-				 FALSE /* launcher_add */,
-				 FALSE /* favourites_add */);
+				   FALSE /* fake */,
+				   title,
+				   FALSE /* launcher_add */);
 	/* in commie mode the applets menu doesn't make sense */
 	if ( ! commie_mode &&
 	    flags & MAIN_MENU_APPLETS)
@@ -4599,14 +4279,12 @@ create_root_menu (GtkWidget *root_menu,
 
 		create_distribution_menu(root_menu, fake_submenus, FALSE,
 					 title,
-					 FALSE /* launcher_add */,
-					 FALSE /* favourites_add */);
+					 FALSE /* launcher_add */);
 	}
 	if (flags & MAIN_MENU_KDE)
 		create_kde_menu(root_menu, fake_submenus, FALSE, FALSE,
 				title,
-				FALSE /* launcher_add */,
-				FALSE /* favourites_add */);
+				FALSE /* launcher_add */);
 
 	/*others here*/
 
@@ -4617,8 +4295,7 @@ create_root_menu (GtkWidget *root_menu,
 	if (flags & MAIN_MENU_SYSTEM_SUB) {
 		menu = create_system_menu(NULL, fake_submenus, TRUE,
 					  TRUE,
-					  FALSE /* launcher_add */,
-					  FALSE /* favourites_add */);
+					  FALSE /* launcher_add */);
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
 					   "gnome-logo-icon-transparent.png",
@@ -4633,22 +4310,6 @@ create_root_menu (GtkWidget *root_menu,
 		}
 	}
 
-	if (flags & MAIN_MENU_USER_SUB) {
-		menu = start_favourites_menu (NULL, fake_submenus);
-		create_user_menu(_("Favorites"), "favorites:", menu,
-				 "gnome-favorites.png",
-				 fake_submenus, TRUE, TRUE, TRUE,
-				 FALSE /* launcher_add */,
-				 FALSE /* favourites_add */);
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem_try_pixmap (menuitem, "gnome-favorites.png",
-					   _("Favorites"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		g_signal_connect (G_OBJECT(menu),"show",
-				   G_CALLBACK(submenu_to_display),
-				   NULL);
-	}
 	/* in commie mode the applets menu doesn't make sense */
 	if (!commie_mode && (flags & MAIN_MENU_APPLETS_SUB)) {
 		menu = create_applets_menu(NULL, fake_submenus, FALSE);
@@ -4665,13 +4326,11 @@ create_root_menu (GtkWidget *root_menu,
 	}
 	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
 		add_distribution_submenu (root_menu, fake_submenus,
-					  FALSE /*launcher_add */,
-					  FALSE /*favourites_add */);
+					  FALSE /*launcher_add */);
 	}
 	if (flags & MAIN_MENU_KDE_SUB) {
 		add_kde_submenu (root_menu, fake_submenus,
-				 FALSE /*launcher_add */,
-				 FALSE /*favourites_add */);
+				 FALSE /*launcher_add */);
 	}
 
 	if ( ! no_run_box) {
@@ -4766,7 +4425,6 @@ add_menu_widget (Menu *menu,
 			menu->menu = create_menu_at (menu->menu, li->data,
 						     FALSE /* applets */,
 						     FALSE /* launcher_add */,
-						     FALSE /* favourites_add */,
 						     NULL, NULL,
 						     fake_subs, FALSE, TRUE);
 
@@ -5033,8 +4691,7 @@ load_menu_applet (const char *params,
 						   GTK_STOCK_PROPERTIES,
 						   _("Properties..."));
 
-			if (menu->main_menu &&
-			    panel_is_program_in_path ("gmenu"))  {
+			if (menu->main_menu) {
 				panel_applet_add_callback (info,
 							   "edit_menus",
 							    NULL,
@@ -5178,8 +4835,6 @@ save_tornoff (void)
 			gnome_config_set_bool(name, mf->applets);
 			g_snprintf(name, sizeof (name), "launcher_add_%d", j);
 			gnome_config_set_bool(name, mf->launcher_add);
-			g_snprintf(name, sizeof (name), "favourites_add_%d", j);
-			gnome_config_set_bool(name, mf->favourites_add);
 		}
 
 		gnome_config_pop_prefix();
@@ -5286,7 +4941,6 @@ load_tearoff_menu(void)
 			char *name;
 			gboolean applets;
 			gboolean launcher_add;
-			gboolean favourites_add;
 			char *dir_name;
 			char *pixmap_name;
 
@@ -5298,9 +4952,6 @@ load_tearoff_menu(void)
 			g_snprintf (propname, sizeof (propname),
 				    "launcher_add_%d", i);
 			launcher_add = conditional_get_bool(propname, FALSE, NULL);
-			g_snprintf (propname, sizeof (propname),
-				    "favourites_add_%d", i);
-			favourites_add = conditional_get_bool(propname, FALSE, NULL);
 			g_snprintf (propname, sizeof (propname),
 				    "dir_name_%d", i);
 			dir_name = conditional_get_string(propname, NULL, NULL);
@@ -5315,7 +4966,6 @@ load_tearoff_menu(void)
 			menu = create_menu_at (menu, name,
 					       applets,
 					       launcher_add,
-					       favourites_add,
 					       dir_name,
 					       pixmap_name, TRUE, FALSE, TRUE);
 
