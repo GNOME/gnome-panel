@@ -1,3 +1,18 @@
+2002-01-19  Seth Nickell  <snickell@stanford.edu>
+
+	* gnome-panel-properties.glade:
+
+	Reword "on mouseover" to "when the mouse moves over them". Yeah,
+	its longer, but its also a lot more natural (and still not the
+	longest string in that dialog ;-)
+	
+	* menu.c: (create_panel_context_menu):
+	* menu.h:
+	* panel.c: (panel_menu_get):
+
+	Make the panel right click menu only be a context menu for
+	panels rather than a "full" Main menu.
+
 2002-01-17  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* basep_widget.c: Fill in panel background with prelight color/pixmap 

@@ -2976,6 +2976,17 @@ create_panel_root_menu (PanelWidget *panel)
 	return menu;
 }
 
+GtkWidget *
+create_panel_context_menu (PanelWidget *panel)
+{
+	GtkWidget *menu;
+
+	menu = create_panel_submenu (NULL, TRUE, BASEP_IS_WIDGET (panel->panel_parent));
+	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
+
+	return menu;
+}
+
 static void
 current_panel_config(GtkWidget *w, gpointer data)
 {

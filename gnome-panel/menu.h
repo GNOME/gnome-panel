@@ -74,6 +74,7 @@ void		make_panel_submenu	(GtkWidget *menu,
 					 gboolean is_basep);
 
 GtkWidget *	create_panel_root_menu	(PanelWidget *panel);
+GtkWidget *     create_panel_context_menu (PanelWidget *panel);
 
 void		menu_properties		(Menu *menu);
 
