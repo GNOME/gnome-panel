@@ -70,6 +70,11 @@ struct _TearoffMenu {
 /* list of TearoffMenu s */
 static GSList *tearoffs = NULL;
 
+/* the list of fake menus that will be read in from time to time in a timer
+   to make it all appear "faster" */
+static GSList *fake_menus = NULL;
+static guint fake_menus_reading_timeout = 0;
+
 /*to be called on startup to load in some of the directories,
   this makes the startup a little bit slower, and take up slightly
   more ram, but it also speeds up later operation*/
@@ -1321,6 +1326,7 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	}
 	g_slist_free(mfl);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
+	fake_menus = g_slist_remove(fake_menus, menu);
 }
 
 static GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
@@ -1644,13 +1650,12 @@ add_tearoff(GtkMenu *menu)
 			   menu);
 }
 
-
 static void
-submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
+try_menu_reread(GtkWidget *menuw, gboolean position)
 {
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 	GSList *list;
-	int need_reread = FALSE;
+	gboolean need_reread = FALSE;
 
 	/*if(!mfl)
 	  g_warning("Weird menu doesn't have mf entry");*/
@@ -1704,9 +1709,38 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 		}
 		g_slist_free(mfl);
 
-		gtk_menu_position(GTK_MENU(menuw));
+		if(position)
+			gtk_menu_position(GTK_MENU(menuw));
+
+		/* we should also remove this from the fake menu list since
+		   it no longer needs to be read in */
+		fake_menus = g_slist_remove(fake_menus, menuw);
 	}
 }
+
+
+static void
+submenu_to_display(GtkWidget *menuw, gpointer data)
+{
+	try_menu_reread(menuw, TRUE);
+}
+
+static gboolean
+fake_menus_read(gpointer data)
+{
+	if(fake_menus) {
+		GSList *last = g_slist_last(fake_menus);
+
+		try_menu_reread(last->data, FALSE);
+	}
+
+	if(!fake_menus || !global_config.hungry_menus) {
+		fake_menus_reading_timeout = 0;
+		return FALSE;
+	}
+	return TRUE;
+}
+
 
 static GtkWidget *
 create_fake_menu_at (char *menudir,
@@ -1721,7 +1755,7 @@ create_fake_menu_at (char *menudir,
 	menu = gtk_menu_new ();
 	gtk_signal_connect(GTK_OBJECT(menu), "show",
 			   setup_menu_panel, NULL);
-	
+
 	mf = g_new0(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
 	mf->applets = applets;
@@ -1730,11 +1764,17 @@ create_fake_menu_at (char *menudir,
 	mf->fake_menu = TRUE;
 	mf->fr = NULL;
 	
-	list = g_slist_prepend(NULL,mf);
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",list);
+	list = g_slist_prepend(NULL, mf);
+	gtk_object_set_data(GTK_OBJECT(menu), "mf", list);
 	
-	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
-			   GTK_SIGNAL_FUNC(menu_destroy),NULL);
+	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+			   GTK_SIGNAL_FUNC(menu_destroy), NULL);
+	fake_menus = g_slist_prepend(fake_menus, menu);
+	if(global_config.hungry_menus && !fake_menus_reading_timeout) {
+		fake_menus_reading_timeout = gtk_timeout_add(1000,
+							     fake_menus_read,
+							     NULL);
+	}
 	
 	return menu;
 }
@@ -1798,8 +1838,7 @@ create_menuitem(GtkWidget *menu,
 	if (sub) {
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
 		gtk_signal_connect(GTK_OBJECT(sub),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+				   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
 	}
 
 	pixmap = NULL;
@@ -3127,8 +3166,7 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	m = create_applets_menu(NULL,fake_submenus);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
 	gtk_signal_connect(GTK_OBJECT(m),"show",
-			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   menuitem);
+			   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3626,7 +3664,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 						   menu);
 			gtk_signal_connect(GTK_OBJECT(menu),"show",
 					   GTK_SIGNAL_FUNC(submenu_to_display),
-					   menuitem);
+					   NULL);
 		}
 	}
 
@@ -3641,7 +3679,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+				   NULL);
 	}
 	if (flags & MAIN_MENU_APPLETS_SUB) {
 		menu = create_applets_menu(NULL,fake_submenus);
@@ -3656,7 +3694,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+				   NULL);
 	}
 	if (flags & MAIN_MENU_REDHAT_SUB) {
 		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
@@ -3671,8 +3709,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
 				   menuitem);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+				   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
 	}
 	if (flags & MAIN_MENU_DEBIAN_SUB) {
 		menu = create_debian_menu(NULL,fake_submenus, TRUE);
@@ -3686,7 +3723,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 						   menu);
 			gtk_signal_connect(GTK_OBJECT(menu),"show",
 					   GTK_SIGNAL_FUNC(submenu_to_display),
-					   menuitem);
+					   NULL);
 		}
 	}
 	if (flags & MAIN_MENU_KDE_SUB) {
@@ -3709,8 +3746,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
+				   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
 	}
 
 	menuitem = gtk_menu_item_new ();
@@ -3876,8 +3912,8 @@ create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 	/*if we are allowed to be pigs and load all the menus to increase
 	  speed, load them*/
 	if(global_config.hungry_menus) {
-		GSList *list = g_slist_append(NULL,menudir);
-		add_menu_widget(menu,panel,list,main_menu,TRUE);
+		GSList *list = g_slist_append(NULL, menudir);
+		add_menu_widget(menu, panel, list, main_menu, TRUE);
 		g_slist_free(list);
 	}
 

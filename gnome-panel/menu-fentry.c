@@ -246,7 +246,7 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 	if(fr->last_stat < curtime-1) {
 		if(!dstat) {
 			if (stat (mdir, &s) == -1) {
-				fr_free(fr,TRUE);
+				fr_free(fr, TRUE);
 				return NULL;
 			}
 
@@ -287,12 +287,12 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 	}
 	g_free(fname);
 	
-	dir_list = g_slist_prepend(dir_list,fr);
+	dir_list = g_slist_prepend(dir_list, fr);
 	
 	/*if this is a fake structure, so we don't actually look into
 	  the directory*/
 	if(sublevels>0)
-		fr_fill_dir(fr,sublevels);
+		fr_fill_dir(fr, sublevels);
 
 	return fr;
 }
