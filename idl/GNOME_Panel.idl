@@ -8,12 +8,29 @@
  */
 module GNOME {
 
+	/*
+	 * The panel's orientation.
+	 */
 	enum PanelOrient {
 		ORIENT_UP,
 		ORIENT_DOWN,
 		ORIENT_LEFT,
 		ORIENT_RIGHT
 	};
+
+	/*
+	 * The panel's width or height, depending
+	 * on its orientation.
+	 */
+	typedef unsigned short PanelSize;
+
+	const PanelSize PANEL_XX_SMALL = 12;
+	const PanelSize PANEL_X_SMALL  = 24;
+	const PanelSize PANEL_SMALL    = 36;
+	const PanelSize PANEL_MEDIUM   = 48;
+	const PanelSize PANEL_LARGE    = 64;
+	const PanelSize PANEL_X_LARGE  = 80;
+	const PanelSize PANEL_XX_LARGE = 128;
 
 	interface PanelShell : Bonobo::Unknown {
 
@@ -37,6 +54,19 @@ module GNOME {
 		 * Panel it is contained in has changed.
 		 */
 		void changeOrientation (in PanelOrient orient);
+
+		/*
+		 * GNOME::PanelAppletShell::changeSize
+		 * @size: new Applet size.
+		 *
+		 * Instruct the Applet that the size of the
+		 * Panel it is contained in has changed.
+		 *
+		 * Note that the 'size' refers to the Panel's
+		 * width or height depending on its orientation.
+		 */
+		void changeSize (in PanelSize size);
+
 	};
 
 };
