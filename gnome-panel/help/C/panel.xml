@@ -423,12 +423,43 @@
        </graphic>
      </screenshot>
     </figure>
-    <para>   You can also access the <guimenu>Main Menu</guimenu> by
-     clicking on the <interface>Panel</interface> with the right mouse
-     button. If you wish,  you can also have several <guibutton>Main
+    <para>   You can  have several <guibutton>Main
      Menu</guibutton> buttons on different
-     <interface>Panels</interface>.
+     <interface>Panels</interface>; all of them can be configured
+     independently.
     </para>
+
+   <sect2 id="globalmenu">
+    <title>Global menu</title>
+    <para>
+     In addition to the <guimenu>Main Menu</guimenu> which you get by
+     clicking of the foot icon, GNOME also provides a <guimenu>Global
+     Menu</guimenu>, which contains the same commands but is not
+     linked to any button. To access the  <guimenu>Global
+     Menu</guimenu>, right-click on any empty place on the
+     <interface>Panel</interface>. You can also  access  
+      the <guimenu>Global  Menu</guimenu> by  pressing  the
+      <keycap>Menu</keycap> key on your keyboard (if you are using a
+      standard PC keyboard, this key usually is located to the left of
+      the space bar and labelled with a picture of a menu); you can
+      change the default key for activating the <guimenu>Global 
+      Menu</guimenu> in the <link
+      linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
+      of the <interface><link linkend="globalpanelprefs">Global Panel
+      Preferences</link> dialog</interface>.
+      </para>
+
+      <para>
+	Note that the <guimenu>Global Menu</guimenu> is configured
+	independently from the <guimenu>Main Menu</guimenu>, by using
+	the <guilabel>Menu</guilabel> tab in the <link
+	linkend="globalpanelprefs"><interface>Global Panel
+	Preferences</interface></link> dialog.
+      </para>
+    </sect2>
+
+
+
 
 
     <sect2 id="submenus">
@@ -596,20 +627,7 @@
       whether you want it  to be shown as part of the <guimenu>Main
       Menu</guimenu>, as a submenu, or not at all.
      </para>
-     <warning>    <title>WARNING</title>
-      <para>
-       The <guimenu>Main Menu</guimenu> which you get by
-       right-clicking on the <interface>Panel</interface>  is
-       configured independently from the <guimenu>Main Menu</guimenu>
-       you get by  clicking on the foot icon. Configuration of  the
-       <guimenu>Main Menu</guimenu> which you get by right-clicking on
-       the <interface>Panel</interface> (which is the  same as the one
-       you get by using keyboard shortcut) is done using the
-       <guilabel>Menu</guilabel> tab in the <link
-       linkend="globalpanelprefs"><interface>Global Panel
-       Preferences</interface></link> dialog.
-      </para>
-     </warning>
+
 
      <figure>
       <title>Menu Properties Dialog</title>
@@ -638,6 +656,7 @@
      </para>
     </sect2>
 
+<!-- Do we need it now that we have information about Global menu?
     <sect2 id="kbdnav">
      <title>Keyboard Navigation in the Main Menu</title>
      
@@ -658,7 +677,7 @@
       submenu, and <keycap>Enter</keycap> to select an item. To exit
       the menu, just press the <keycap>Esc</keycap> key.
      </para>
-    </sect2>
+    </sect2> -->
    </sect1>
 
 
@@ -1450,19 +1469,23 @@
 	    </listitem>
 	    <listitem>
 	      <para>
-		<guilabel>Menu Panel</guilabel> &mdash; The Menu Panel
-		is a special panel which is always placed at the top
-		of your screen and contains several pull-down menus.
-		These are Programs, Favorites, Settings, Desktop, a
-		clock/calendar, and a special launcher which provides
-		quick access to GNOME-related Internet resources (look
-		for the bullet hole icon).  This panel can
-		also hold the other objects which other panels can
-		hold, but it does not have the configuration
-		properties which other panels have. Note that the
-		<guilabel>Menu Panel</guilabel> is more restrictive
-		than other panels, and some normal panel operations,
-		such as moving the panel, cannot be performed on it.
+		<guilabel>Menu Panel</guilabel> &mdash; The
+		<interface>Menu Panel</interface> is a special panel
+		which is always placed at the top of your screen and
+		contains several pull-down menus.  These are
+		<guimenu>Programs</guimenu>,
+		<guimenu>Favorites</guimenu>,
+		<guimenu>Settings</guimenu>,
+		<guimenu>Desktop</guimenu>, a clock/calendar, and a
+		special launcher which provides quick access to
+		GNOME-related Internet resources (look for the bullet
+		hole icon).  This panel can also hold the other
+		objects which other panels can hold, but it does not
+		have the configuration properties which other panels
+		have. Note that the <interface>Menu Panel</interface> is
+		more restrictive than other panels, and some normal
+		panel operations, such as moving the panel, cannot be
+		performed on it.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
@@ -1533,10 +1556,11 @@
     </para>
     <para>
      This will bring the <interface>Global Panel
-     Preferences</interface>  dialog up  (this dialog is one of the
-     components of the GNOME Control Center).  With this dialog you
-     can set properties that will affect all Panels you use now and
-     any panels you add in the future.
+     Preferences</interface> dialog up (this dialog is one of the
+     components of the <application>GNOME Control
+     Center</application>).  With this dialog you can set properties
+     that will affect all Panels you use now and any panels you add in
+     the future.
      <figure>
       <title>The Global Panel Configuration Dialog</title>
      <screenshot>
@@ -1551,7 +1575,7 @@
      The Global Panel Configuration Dialog contains five tabs which
      help you configure the global properties of the GNOME Panel:
      <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
-     <guilabel>Applets</guilabel>, <guilabel>Menu</guilabel>, and
+     <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
      <guilabel>Miscellaneous</guilabel>. Each of these tabs is
      explained below.
     </para>
@@ -1614,7 +1638,7 @@
        If you have the Panel hiding automatically this determines the
        number of pixels that will show while the Panel is
        minimized. To maximize the panel the pointer must enter the
-       panel area.
+       Panel area.
       </para>
      </listitem>
     </itemizedlist>
@@ -1697,12 +1721,10 @@
       </itemizedlist>
    </sect2>
     <sect2 id="appletstab">
-      <title>Applets Tab</title>
+      <title>Panel objects Tab</title>
       <para>
 	This tab shows some options related to placement and moving
-	objects on the panel (contrary to the title, this options
-	apply not only to applets but to all objects &mdash; applets,
-	application launchers, menus, etc.).
+	objects on the panel.  
       </para>
       <itemizedlist>
 	<listitem>
@@ -1744,7 +1766,7 @@
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel>Applet padding</guilabel> &mdash;  This changes
+	    <guilabel>Padding</guilabel> &mdash;  This changes
 	    the amount of space (padding) between objects on the
 	    panel. It is measured in pixels.
 	  </para>
@@ -1753,14 +1775,16 @@
     </sect2>
 
    <sect2 id="menutab">
-    <title>Menu  Tab</title> <para>  In this tab, you can set the
-      options determining the appearance of Panel menus.
+    <title>Menu Tab</title> 
+
+      <para> In this tab, you can set the options determining the
+	appearance of <interface>Panel</interface> menus.
       </para>
       
      <itemizedlist>
       <listitem>
       <para>
-       <guilabel>Use Large Icons</guilabel> &mdash; This will use
+       <guilabel>Use large icons</guilabel> &mdash; This will use
        large icons (rather than the default size) in menus. Only
        practical for those with high resolution screens (1280x1024 and
        higher)
@@ -1768,9 +1792,13 @@
      </listitem>
       <listitem>
       <para>
-       <guilabel>Show ... buttons</guilabel> &mdash; This will enable
-       three small dots to appear on Main Menu items that launch
-       dialogs.
+       <guilabel>Show ... buttons</guilabel> &mdash; This will add
+       small buttons labelled by three dots (...) to all the items of
+       the <guimenu>Main Menu</guimenu>. Clicking on such a button
+       with the left mouse button will bring the
+       <guimenu>pop-up</guimenu> menu for this item, i.e. the same
+       menu which you get by clicking on the menu item wiht the right
+       mouse button.   
       </para>
      </listitem>
      <listitem>
@@ -1790,13 +1818,15 @@
        result in you missing new items added to your menu.
 	</para>
 	</listitem>
-	<listitem> <para> <guilabel>Panel Menu</guilabel> &mdash; This
-	  allows you to configure the  <guimenu>Main Menu</guimenu>
+	<listitem> <para> 
+          <guilabel>Global menu</guilabel> &mdash; This
+	  allows you to configure the  <link linkend="globalmenu">
+          <guimenu>Global Menu</guimenu></link>
 	  which you get by right-clicking on the panel, or by using
 	  the keyboard shortcut. For each of the possible submenus
 	  (<guisubmenu>Programs</guisubmenu>,
 	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
-	  whether it should be included as a part of the <guimenu>Main
+	  whether it should be included as a part of the <guimenu>Global
 	  Menu</guimenu>, as a submenu, or not included at all. A
 	  description of these submenus is given in <xref
 	  linkend="submenus">.
@@ -1807,7 +1837,8 @@
 
 
    <sect2 id="misctab">
-    <title>Miscellaneous Tab</title>    <para>The Miscellaneous group
+    <title>Miscellaneous Tab</title>    
+      <para>The Miscellaneous group
       contains options for various customizable behavior that didn't
       fit anywhere else.
       </para>
@@ -1836,8 +1867,9 @@
        <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
        are using a window manager that is not GNOME compliant it will
        not understand its relationship with the Panel. This can cause
-       your Panel to be covered by applications. If you enable this
-       feature you can have the Panel automatically raise when your
+       your <interface>Panel</interface> to be covered by
+       applications. If you enable this feature you can have the
+       <interface>Panel</interface> automatically raise when your
        mouse is over it.
       </para>
      </listitem>
@@ -1863,19 +1895,21 @@
     </itemizedlist>
       <para>
       This tab also allows you to configure some global key
-      bindings. At the moment, you can define key bindings for Main
-      Menu and for Run Command dialog. For example, if you are using a
+      bindings. At the moment, you can define key bindings for <link
+      linkend="globalmenu"><guimenu>Global Menu</guimenu></link> and
+      for Run Command dialog.  For example, if you are using a
       standard PC keyboard, you can bind the <keycap>Menu</keycap> key
       (this key is usually located to the left of the space bar and
-      labelled with a picture of a menu) to the Main Menu, so that
-      pressing this key will bring up the Main Menu; similarly, the
-      common key binding for the Run command dialog is the so-called
+      labelled with a picture of a menu) to the <guimenu>Global
+      Menu</guimenu>, so that pressing this key will bring up the
+      <guimenu>Global Menu</guimenu>; similarly, the common key
+      binding for the Run command dialog is the so-called
       <keycap>Windows</keycap> key (called so because on most PC
       keyboards this key is indeed labelled with a flying window).  To
-      change the key bound to Main Menu or to the Run Dialog, you can
-      either select a key from the drop-down list, or click on the
-      <guibutton>Grab</guibutton> button and then press the desired
-      key. </para>
+      change the key bound to <guimenu>Global Menu</guimenu> or to the
+      Run Dialog, you can either select a key from the drop-down list,
+      or click on the <guibutton>Grab</guibutton> button and then
+      press the desired key. </para>
       <note>
 	<title>NOTE</title>
 	<para>
@@ -1947,11 +1981,12 @@
       <guisubmenu>Properties</guisubmenu> menu.
     </para>
     <para>
-     The Panel properties dialog contains two tabs to help you set the
-     active Panel properties: <guilabel>Edge Panel</guilabel> (or
-     <guilabel>Aligned</guilabel>, &hellip - depending on your panel
-     type) and <guilabel>Background</guilabel>. Both of these tabs are
-     explained below.
+     The <interface>Panel properties</interface> dialog contains two
+     tabs to help you set the active Panel properties: <guilabel>Edge
+     Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip -
+     depending on your panel type) and
+     <guilabel>Background</guilabel>. Both of these tabs are explained
+     below.
     </para>
 
    <sect2 id="edgetab">
@@ -1969,15 +2004,19 @@
 	<listitem>
 	  <para>
 	    <guilabel>Panel Position</guilabel> &mdash; This changes
-	    the position of the Panel on the screen. For edge panel,
-	    you must specify an edge  (Top, Right, Left or
-	    Bottom). For Aligned panel, you have to specify an edge
-	    and one of the edge's ends or the center. For Sliding
-	    Panel, you must specify the edge and offset from one of
-	    the corners (in pixels). Finally, for Floating panel you
-	    must specify orientation (horizontal or vertical) and
-	    position of panel's left top corner (relative to the left
-	    top corner of the screen and measured in pixels).
+	    the position of the Panel on the screen. For
+	    <interface>Edge Panel</interface>, you must specify an
+	    edge (<guilabel>Top</guilabel>,
+	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
+	    <guilabel>Bottom</guilabel>). For <interface>Aligned
+	    Panel</interface>, you have to specify an edge and one of
+	    the edge's ends or the center. For <interface>Sliding
+	    Panel</interface>, you must specify the edge and offset
+	    from one of the corners (in pixels). Finally, for
+	    <interface>Floating Panel</interface> you must specify
+	    orientation (horizontal or vertical) and position of
+	    panel's left top corner (relative to the left top corner
+	    of the screen and measured in pixels).
 	  </para>
 	  <para>
 	    The Panel will change position once you have pressed
@@ -2065,9 +2104,9 @@
 
      <listitem>
       <para>
-       <guilabel>Color to use:</guilabel> &mdash If you choose to have
-       your Panel one color, this button will launch a dialog which
-       allows you to specify which color to use.
+       <guilabel>Color to use</guilabel> &mdash If you choose to have
+       your <interface>Panel</interface> one color, this button will
+       launch a dialog which allows you to specify which color to use.
       </para>
      </listitem>
 
@@ -2075,12 +2114,12 @@
      <listitem>
       <para>
        <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
-       for the background of your Panel, this section of the dialog
-       allows you to choose which image to use.  If you press the
-       <guibutton>Browse</guibutton> button, you can search for the
-       file you want to use. The current filename is shown to the left
-       of this button. The window above it  shows you the preview of
-       this background.
+       for the background of your <interface>Panel</interface>, this
+       section of the dialog allows you to choose which image to use.
+       If you press the <guibutton>Browse</guibutton> button, you can
+       search for the file you want to use. The current filename is
+       shown to the left of this button. The window above it shows you
+       the preview of this background.
       </para>
      </listitem>
 </itemizedlist>
@@ -2144,15 +2183,17 @@
       Panel. If you try to drag and drop a file from the File Manager
       window to the panel, it won't work. The only type of file that
       can be placed on the Panel are <filename>.desktop</filename>
-      files, which describe launchers; any directory dropped on the
+      files, which describe launchers (and
+      <filename>.kdelnk</filename> files, which describe lunchers in
+      the format used by K Desktop Environment); any directory dropped on the
       panel will be interpreted as a menu &mdash; that is, all the
       files other than <filename>.desktop</filename> files will be
       ignored.
     </para>
 
-    <para> Editing menus other than the Main menu is rather
-      confusing. <application>Menu Editor</application> at the moment
-      can not be used for this, and
+    <para> Editing menus other than the <guimenu>Main Menu</guimenu>
+      is rather confusing. <application>Menu Editor</application> at
+      the moment can not be used for this, and
       <guimenuitem>Properties</guimenuitem> item of the right-click
       menu is not too helpful either - for example, it doesn't allow
       one to change menu's icon (see <xref linkend="menusconf"> for
@@ -2160,10 +2201,11 @@
       release.
     </para>
 
-    <para> The Main menu which you get by pressing the
-      <keycap>Menu</keycap> key on the keyboard or, by right-clicking
-      on the panel itself, and the main menu you get by clicking on
-      the foot icon are configured separately. The reason is that you
+    <para> The <guimenu>Global Menu</guimenu> (which you get by
+      pressing the <keycap>Menu</keycap> key on the keyboard or by
+      right-clicking on the panel itself), and the <guimenu>Main
+      Menu</guimenu> (which you get by clicking on the foot icon)
+      are configured separately. The reason is that you
       can have several <guimenu>Main Menu</guimenu> buttons on
       different panels.
     </para>
