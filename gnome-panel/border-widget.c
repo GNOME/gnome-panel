@@ -249,7 +249,8 @@ border_pos_show_hide_left (BasePWidget *basep)
 		break;
 	case BASEP_HIDDEN_LEFT:
 	case BASEP_MOVING:
-		g_assert_not_reached ();
+		/* FIXME: Do nothing - this code does get reached if you double click on a left hidebutton. */
+		/* g_assert_not_reached() */
 		break;
 	}
 	return FALSE;
@@ -269,9 +270,10 @@ border_pos_show_hide_right (BasePWidget *basep)
 	case BASEP_AUTO_HIDDEN:
 		g_warning (_("weird: south/east clicked while auto hidden"));
 		break;
-	case BASEP_MOVING:
 	case BASEP_HIDDEN_RIGHT:
-		g_assert_not_reached ();
+	case BASEP_MOVING:
+		/* FIXME: Do nothing - this code does get reached if your double-click on a right hidebutton. */
+		/* g_assert_not_reached (); */
 		break;
 	}
 	return FALSE;
