@@ -2086,11 +2086,7 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
 
-	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-		return x;
-	} else {
-		return y;
-	}
+	return panel->orient == GTK_ORIENTATION_HORIZONTAL ? x : y;
 }
 
 /*calculates the value to move the applet by*/
@@ -2298,30 +2294,21 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			if(panel != new_panel &&
 			   panel_widget_is_cursor(new_panel,10) &&
 			   (!g_slist_find(forb,new_panel))) {
-				pos = panel_widget_get_moveby (new_panel, 0,
-							       ad->drag_off);
-				if (pos < 0)
-					pos = 0;
+				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
+
+				if (pos < 0) pos = 0;
+
 				panel_widget_applet_drag_end (panel);
-				/*disable reentrancy into this
-				  function*/
-				if (panel_widget_reparent (panel,
-							   new_panel,
-							   applet,
-							   pos) == -1) {
-					panel_widget_applet_drag_start
-						(panel, applet, ad->drag_off);
-					/*can't find a free pos
-					  so cancel the reparent*/
+
+				/*disable reentrancy into this function*/
+				if (!panel_widget_reparent (panel, new_panel, applet, pos)) {
+					panel_widget_applet_drag_start (panel, applet, ad->drag_off);
 					continue;
 				}
-				panel_widget_applet_drag_start (new_panel,
-								applet,
-								ad->drag_off);
-				/* schedule a move, the thing might have
-				 * gone outside the cursor, thus we need to
-				 * schedule a move */
-				schedule_try_move(new_panel, TRUE);
+
+				panel_widget_applet_drag_start (new_panel, applet, ad->drag_off);
+				schedule_try_move (new_panel, TRUE);
+
 				return;
 			}
 		}
@@ -2743,6 +2730,14 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 	g_return_val_if_fail(ad!=NULL,-1);
+
+	/* Don't try and reparent to an explicitly hidden panel,
+	 * very confusing for the user ...
+	 */
+	if (BASEP_IS_WIDGET (new_panel->panel_parent) &&
+	    (BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_LEFT ||
+	     BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_RIGHT))
+		return FALSE;
 	
 	/*we'll resize both panels anyway*/
 	ad->dirty = FALSE;
@@ -2774,7 +2769,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	ad->no_die--;
 
-	return pos;
+	return TRUE;
 }
 
 void

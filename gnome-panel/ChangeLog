@@ -1,3 +1,16 @@
+2002-07-30  Mark McLoughlin  <mark@skynet.ie>
+
+	Don't allow moving objects to explicitly hidden panels. It
+	makes little sense and is less confusing. Fixes #89317.
+
+	* panel-widget.c:
+	(panel_widget_applet_move_to_cursor): don't check for
+	-1 return value from reparent - it returns a bool.
+	(panel_widget_reparent): return FALSE and canel the
+	reparent if trying to move to an explicitly hidden
+	panel. Also, return TRUE (not the position) if reparent
+	succeeds.
+
 2002-07-29  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.glade: set "directory_entry"
