@@ -789,7 +789,7 @@ applet_widget_new(const char *goad_id)
 	return GTK_WIDGET(applet);
 }
 
-GtkWidget *
+void
 applet_widget_construct(AppletWidget* applet, const char *goad_id)
 {
 	CustomAppletServant *corbadat;
