@@ -28,6 +28,7 @@
 #include "panel-util.h"
 #include "session.h"
 #include "xstuff.h"
+#include "panel-stock-icons.h"
 
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
@@ -595,13 +596,15 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 		drawer->tooltip = g_strdup (tooltip);
 
 	if (string_empty (pixmap)) {
-		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-							    "panel-drawer.png", TRUE, NULL);
+		drawer->pixmap = NULL;
+		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER, -1,
+							       TRUE, orient);
 	} else {
 		drawer->pixmap = g_strdup (pixmap);
+		drawer->button = button_widget_new (drawer->pixmap, -1,
+						    TRUE, orient);
 	}
-	drawer->button = button_widget_new (drawer->pixmap, -1,
-					    TRUE, orient);
+	
 	if (!drawer->button) {
 		free_drawer (drawer);
 		return NULL;
