@@ -1073,7 +1073,6 @@ panel_applet_frame_event_listener (BonoboListener    *listener,
 				   CORBA_Environment *ev,
 				   PanelAppletFrame  *frame)
 {
-  g_print ("%s\n", event);
 	if (!strcmp (event, "Bonobo/Property:change:" PROPERTY_FLAGS))
 		panel_applet_frame_set_flags_from_any (frame, any);
 
