@@ -24,7 +24,7 @@
 #define DRAWER_PROPERTIES "drawer_properties"
 
 extern GArray *applets;
-extern gint applet_count;
+extern int applet_count;
 extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
@@ -37,7 +37,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget     *pixmap;
 	GtkWidget     *pixentry = gtk_object_get_data(GTK_OBJECT(widget),"pixmap");
 	GtkWidget     *tipentry = gtk_object_get_data(GTK_OBJECT(widget),"tooltip");
-	gchar         *s;
+	char         *s;
 
 	if (page != -1)
 		return;
@@ -81,7 +81,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			      pixmap->requisition.height);*/
 }
 
-static gint
+static int
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
@@ -154,10 +154,10 @@ drawer_properties(Drawer *drawer)
 void
 reposition_drawer(Drawer *drawer)
 {
-	gint x=0,y=0;
-	gint bx, by, bw, bh;
-	gint dw, dh;
-	gint px, py, pw, ph;
+	int x=0,y=0;
+	int bx, by, bw, bh;
+	int dw, dh;
+	int px, py, pw, ph;
 	PanelWidget *panel; /*parent panel*/
 
 	/*get's the panel data from the event box that is the applet's
@@ -193,7 +193,7 @@ reposition_drawer(Drawer *drawer)
 	panel_widget_set_drawer_pos(PANEL_WIDGET(drawer->drawer),x,y);
 }
 
-static gint
+static int
 drawer_click(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
@@ -207,7 +207,7 @@ drawer_click(GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
-static gint
+static int
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
@@ -215,7 +215,7 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static gint
+static int
 enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
 	Drawer *drawer = data;
