@@ -288,6 +288,14 @@ panel_applet_frame_get_background_string (PanelAppletFrame *frame,
 	case PANEL_BACK_PIXMAP: {
 		GdkNativeWindow pixmap_xid;
 
+		/* If we don't actually have a pixmap background,
+		 * then don't force the applet to copy from our
+		 * window.
+		 */
+		if (!panel->backpixmap)
+			return panel_applet_frame_get_background_string (
+					frame, panel, PANEL_BACK_NONE);
+
 		pixmap_xid = gdk_x11_drawable_get_xid (
 				GDK_DRAWABLE (GTK_WIDGET (panel)->window));
 
