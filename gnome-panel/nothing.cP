@@ -209,8 +209,8 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 
 		goat_darea = gtk_drawing_area_new();
 
-		gtk_signal_connect_after(GTK_OBJECT(goat_darea),"realize",
-					 GTK_SIGNAL_FUNC(goat_realize),NULL);
+		g_signal_connect_after (G_OBJECT(goat_darea),"realize",
+					G_CALLBACK (goat_realize),NULL);
 		
 		gtk_widget_show(goat_darea);
 		goat_timeout = gtk_timeout_add(60,goat_timeout_func,NULL);

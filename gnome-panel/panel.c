@@ -1558,24 +1558,24 @@ basep_pos_connect_signals (BasePWidget *basep)
 	}
 
 	if (ALIGNED_IS_WIDGET (basep))
-		gtk_signal_connect_object (G_OBJECT (basep->pos),
+		g_signal_connect_object (G_OBJECT (basep->pos),
 					 "align_change",
 					 G_CALLBACK (update_config_align),
 					 G_OBJECT (basep));
 	else if (FLOATING_IS_WIDGET (basep))
-		gtk_signal_connect_object (G_OBJECT (basep->pos),
+		g_signal_connect_object (G_OBJECT (basep->pos),
 					 "floating_coords_change",
 					 G_CALLBACK (update_config_floating_pos),
 					 G_OBJECT(basep));
 	else if (SLIDING_IS_WIDGET (basep)) {
-		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
-					   "anchor_change",
-					   G_CALLBACK (update_config_anchor),
-					   GTK_OBJECT(basep));
-		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
-					   "offset_change",
-					   G_CALLBACK (update_config_offset),
-					   GTK_OBJECT (basep));
+		g_signal_connect_object (G_OBJECT (basep->pos),
+					 "anchor_change",
+					 G_CALLBACK (update_config_anchor),
+					 G_OBJECT(basep));
+		g_signal_connect_object (G_OBJECT (basep->pos),
+					 "offset_change",
+					 G_CALLBACK (update_config_offset),
+					 G_OBJECT (basep));
 	}
 }
 
@@ -1682,7 +1682,7 @@ panel_setup(GtkWidget *panelw)
 		basep_pos_connect_signals (basep);
 		basep_widget_disable_buttons(basep);
 
-		gtk_signal_connect_after (G_OBJECT(panelw), "size_allocate",
+		g_signal_connect_after (G_OBJECT(panelw), "size_allocate",
 					G_CALLBACK(panelw_size_alloc),
 					NULL);
 	}
@@ -1719,9 +1719,9 @@ panel_setup(GtkWidget *panelw)
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panelw)))
 		panel_realize(GTK_WIDGET(panelw),NULL);
 	else
-		gtk_signal_connect_after(GTK_OBJECT(panelw), "realize",
-					 G_CALLBACK(panel_realize),
-					 NULL);
+		g_signal_connect_after(G_OBJECT(panelw), "realize",
+				       G_CALLBACK(panel_realize),
+				       NULL);
 }
 
 /*send state change to all the panels*/

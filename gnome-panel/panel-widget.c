@@ -1810,10 +1810,10 @@ panel_widget_new (gboolean packed,
 	else
 		panel->size = G_MAXINT;
 	
-	gtk_signal_connect_after(GTK_OBJECT(panel),
-				 "realize",
-				 GTK_SIGNAL_FUNC(panel_widget_realize),
-				 panel);
+	g_signal_connect_after (G_OBJECT(panel),
+				"realize",
+				G_CALLBACK (panel_widget_realize),
+				panel);
 	
 	return GTK_WIDGET(panel);
 }
@@ -2311,8 +2311,10 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 			/* don't propagate this event */
 			if (panel->currently_dragged_applet) {
-				gtk_signal_emit_stop_by_name
-					(GTK_OBJECT (widget), "event");
+				g_signal_stop_emission 
+					(G_OBJECT (widget), 
+					 g_signal_lookup (G_OBJECT (widget), "event"),
+					 0);
 				return TRUE;
 			}
 
@@ -2328,7 +2330,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 		case GDK_BUTTON_RELEASE:
 			if (panel->currently_dragged_applet) {
-				gtk_signal_emit_stop_by_name
+				g_signal_stop_emission 
 					(GTK_OBJECT (widget), "event");
 				panel_widget_applet_drag_end(panel);
 				return TRUE;

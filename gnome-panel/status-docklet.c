@@ -243,14 +243,14 @@ try_getting_plug(StatusDocklet *docklet)
 	CORBA_exception_free(&ev);
 
 	gtk_object_set_data(GTK_OBJECT(docklet->plug), "status_docklet", docklet);
-	gtk_signal_connect(GTK_OBJECT(docklet->plug), "destroy",
-			   GTK_SIGNAL_FUNC(plug_destroyed),
+	g_signal_connect(G_OBJECT(docklet->plug), "destroy",
+			 G_CALLBACK (plug_destroyed),
 			   NULL);
 	gtk_widget_show(docklet->plug);
 
-	gtk_signal_emit(GTK_OBJECT(docklet),
+	g_signal_emit(G_OBJECT(docklet),
 			status_docklet_signals[BUILD_PLUG_SIGNAL],
-			docklet->plug);
+		  	0, docklet->plug);
 	
 	return TRUE;
 }

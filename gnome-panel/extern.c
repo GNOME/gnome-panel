@@ -1063,10 +1063,10 @@ socket_unset_loading (GtkWidget *socket)
 	if (socket->parent) {
 		gtk_widget_set_usize (socket->parent, -1, -1);
 
-		gtk_signal_connect_after (GTK_OBJECT (socket),
-					  "size_allocate",
-					  G_CALLBACK (socket_size_allocate),
-					  NULL);
+		g_signal_connect_after (G_OBJECT (socket),
+					"size_allocate",
+					G_CALLBACK (socket_size_allocate),
+					NULL);
 	}
 }
 
@@ -1089,10 +1089,10 @@ reserve_applet_spot (Extern       ext,
 
 	gtk_widget_set_usize (ext->ebox, size, size);
 
-	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),
-				  "size_allocate",
-				  G_CALLBACK (ebox_size_allocate),
-				  ext);
+	g_signal_connect_after (G_OBJECT (ext->ebox),
+				"size_allocate",
+				G_CALLBACK (ebox_size_allocate),
+				ext);
 
 	gtk_widget_show (ext->ebox);
 

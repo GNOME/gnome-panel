@@ -800,9 +800,9 @@ fake_mapped_fake(GtkWidget *w, FakeIcon *fake)
 	if(!load_icons_id)
 		load_icons_id = g_idle_add(load_icons_handler, NULL);
 
-	gtk_signal_disconnect_by_func(GTK_OBJECT(w),
-				      G_CALLBACK(fake_mapped_fake),
-				      fake);
+	g_signal_disconnect_by_func (G_OBJECT(w),
+				     G_CALLBACK (fake_mapped_fake),
+				     fake);
 
 	toplevel = gtk_widget_get_toplevel(w);
 	gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "map",
@@ -1731,10 +1731,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			if (access (tmp, W_OK) != 0)
 				gtk_widget_set_sensitive(menuitem,FALSE);
 			g_free (tmp);
-			gtk_signal_connect_object (GTK_OBJECT (menuitem),
-						   "activate",
-						   G_CALLBACK (gtk_menu_shell_deactivate),
-						   GTK_OBJECT (item->parent));
+			g_signal_connect_object (G_OBJECT (menuitem),
+						 "activate",
+						 G_CALLBACK (gtk_menu_shell_deactivate),
+						 G_OBJECT (item->parent));
 
 			if ( ! sim->applet) {
 				menuitem = gtk_menu_item_new ();
@@ -1742,15 +1742,14 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						_("Put into run dialog"));
 				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
 						 menuitem);
-				gtk_signal_connect
-					(GTK_OBJECT(menuitem), "activate",
-					 G_CALLBACK(add_to_run_dialog),
-					 (gpointer)sim->item_loc);
-				gtk_signal_connect_object
-					(GTK_OBJECT(menuitem),
+				g_signal_connect (G_OBJECT(menuitem), "activate",
+					          G_CALLBACK(add_to_run_dialog),
+					          (gpointer)sim->item_loc);
+				g_signal_connect_swapped
+					(G_OBJECT(menuitem),
 					 "activate",
 					 G_CALLBACK(gtk_menu_shell_deactivate),
-					 GTK_OBJECT(item->parent));
+					 G_OBJECT(item->parent));
 			}
 
 			if (ii != NULL) {
@@ -1774,23 +1773,21 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				g_free (title);
 				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
 						 menuitem);
-				gtk_signal_connect
-					(GTK_OBJECT(menuitem), "activate",
-					 G_CALLBACK(show_help_on),
-					 (gpointer)sim->item_loc);
-				gtk_signal_connect_object
-					(GTK_OBJECT(menuitem),
-					 "activate",
-					 G_CALLBACK(gtk_menu_shell_deactivate),
-					 GTK_OBJECT(item->parent));
+				g_signal_connect (G_OBJECT(menuitem), "activate",
+					          G_CALLBACK(show_help_on),
+					          (gpointer)sim->item_loc);
+				g_signal_connect_swapped (G_OBJECT(menuitem),
+					 		  "activate",
+					 		   G_CALLBACK(gtk_menu_shell_deactivate),
+					 		   G_OBJECT(item->parent));
 			}
 
 			menuitem = gtk_menu_item_new ();
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object(GTK_OBJECT(menuitem),
-						  "activate",
-						  G_CALLBACK(gtk_menu_shell_deactivate),
-						  GTK_OBJECT(item->parent));
+			g_signal_connect_object (G_OBJECT(menuitem),
+						 "activate",
+						 G_CALLBACK(gtk_menu_shell_deactivate),
+						 G_OBJECT(item->parent));
 			g_signal_connect (G_OBJECT(menuitem),
 					   "activate",
 					   G_CALLBACK(edit_dentry),
@@ -1854,10 +1851,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					_("Add new item to this menu"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object (GTK_OBJECT(menuitem),
-						  "activate",
-						  G_CALLBACK(gtk_menu_shell_deactivate),
-						  GTK_OBJECT(item->parent));
+			g_signal_connect_object (G_OBJECT(menuitem),
+						 "activate",
+						 G_CALLBACK(gtk_menu_shell_deactivate),
+						 G_OBJECT(item->parent));
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					    G_CALLBACK(add_new_app_to_menu),
 					    sim->mf->menudir);
@@ -1867,10 +1864,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 			menuitem = gtk_menu_item_new ();
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object(GTK_OBJECT(menuitem),
-						  "activate",
-						  G_CALLBACK(gtk_menu_shell_deactivate),
-						  GTK_OBJECT(item->parent));
+			g_signal_connect_object (G_OBJECT(menuitem),
+						 "activate",
+						 G_CALLBACK(gtk_menu_shell_deactivate),
+						 G_OBJECT(item->parent));
 			g_signal_connect (G_OBJECT (menuitem),
 					    "activate",
 					    G_CALLBACK (edit_direntry),
@@ -5301,8 +5298,8 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 			    G_CALLBACK (drag_data_get_cb),
 			    NULL);
 
-	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
-				  G_CALLBACK (menu_button_pressed), menu);
+	g_signal_connect_after (G_OBJECT (menu->button), "pressed",
+				G_CALLBACK (menu_button_pressed), menu);
 	g_signal_connect (G_OBJECT (menu->button), "destroy",
 			    G_CALLBACK (destroy_menu), menu);
 	gtk_widget_show(menu->button);

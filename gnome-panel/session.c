@@ -268,9 +268,9 @@ session_save_timeout (gpointer data)
 			       _("Continue waiting"),
 			       2); /* FIXME: GNOME_STOCK_PIXMAP_TIMER */
 
-	gtk_signal_connect_after(GTK_OBJECT(ss_timeout_dlg), "realize",
-				 GTK_SIGNAL_FUNC(timeout_dlg_realized),
-				 NULL);
+	g_signal_connect_after (G_OBJECT(ss_timeout_dlg), "realize",
+				G_CALLBACK (timeout_dlg_realized),
+			 	NULL);
 	
 	if (1 == gtk_dialog_run (GTK_DIALOG (ss_timeout_dlg))) {
 		ss_cookie++;

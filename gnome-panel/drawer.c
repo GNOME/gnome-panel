@@ -487,10 +487,10 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		}
 	}
 
-	gtk_signal_connect_after(GTK_OBJECT(drawer->button),
-				 "size_allocate",
-				 G_CALLBACK(button_size_alloc),
-				 drawer);
+	g_signal_connect_after (G_OBJECT(drawer->button),
+				"size_allocate",
+				G_CALLBACK (button_size_alloc),
+				drawer);
 
 	/* this doesn't make sense anymore */
 	if((BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) &&

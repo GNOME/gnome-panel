@@ -869,9 +869,9 @@ panel_error_dialog (const char *class,
 	gtk_widget_show_all (w);
 	panel_set_dialog_layer (w);
 
-	gtk_signal_connect_object (GTK_OBJECT (w), "response",
+	g_signal_connect_swapped (G_OBJECT (w), "response",
 				   G_CALLBACK (gtk_widget_destroy),
-				   GTK_OBJECT (w));
+				   G_OBJECT (w));
 
 	return w;
 }
@@ -903,9 +903,9 @@ panel_info_dialog (const char *class,
 	gtk_widget_show_all (w);
 	panel_set_dialog_layer (w);
 
-	gtk_signal_connect_object (GTK_OBJECT (w), "response",
-				   G_CALLBACK (gtk_widget_destroy),
-				   GTK_OBJECT (w));
+	g_signal_connect_swapped (G_OBJECT (w), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  G_OBJECT (w));
 
 	return w;
 }

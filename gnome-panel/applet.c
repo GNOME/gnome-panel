@@ -355,9 +355,9 @@ setup_an_item(AppletUserMenu *menu,
 	      int is_submenu)
 {
 	menu->menuitem = gtk_menu_item_new ();
-	gtk_signal_connect (GTK_OBJECT (menu->menuitem), "destroy",
-			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			    &menu->menuitem);
+	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
+			  G_CALLBACK (gtk_widget_destroyed),
+			  &menu->menuitem);
 	if(menu->stock_item && *(menu->stock_item))
 		setup_menuitem (menu->menuitem,
 				gtk_image_new_from_stock (menu->stock_item,
@@ -373,12 +373,12 @@ setup_an_item(AppletUserMenu *menu,
 
 	/*if an item not a submenu*/
 	if(!is_submenu) {
-		gtk_signal_connect(GTK_OBJECT(menu->menuitem), "activate",
-				   (GtkSignalFunc) applet_callback_callback,
+		g_signal_connect(G_OBJECT(menu->menuitem), "activate",
+				 G_CALLBACK (applet_callback_callback),
 				   menu);
-		gtk_signal_connect(GTK_OBJECT (submenu), "destroy",
-				   GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-				   &menu->submenu);
+		g_signal_connect(G_OBJECT (submenu), "destroy",
+				 G_CALLBACK (gtk_widget_destroyed),
+				 &menu->submenu);
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
@@ -388,8 +388,8 @@ setup_an_item(AppletUserMenu *menu,
 	if(menu->submenu) {
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
 					  menu->submenu);
-		gtk_signal_connect (GTK_OBJECT (menu->submenu), "destroy",
-				    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		g_signal_connect (G_OBJECT (menu->submenu), "destroy",
+				    G_CALLBACK (gtk_widget_destroyed),
 				    &menu->submenu);
 	}
 	
@@ -512,9 +512,9 @@ panel_applet_create_menu (AppletInfo *info,
 
 		setup_menuitem (menuitem, image , _("Remove from panel"));
 
-		gtk_signal_connect (GTK_OBJECT (menuitem),
+		g_signal_connect (G_OBJECT (menuitem),
 				    "activate",
-				    (GtkSignalFunc) remove_applet_callback,
+				    G_CALLBACK (remove_applet_callback),
 				    info);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
@@ -526,9 +526,9 @@ panel_applet_create_menu (AppletInfo *info,
 		 */
 		setup_menuitem (menuitem, NULL, _("Move"));
 
-		gtk_signal_connect (GTK_OBJECT (menuitem),
+		g_signal_connect (G_OBJECT (menuitem),
 				    "activate",
-				    (GtkSignalFunc) move_applet_callback,
+				    G_CALLBACK (move_applet_callback),
 				    info);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
@@ -559,9 +559,9 @@ panel_applet_create_menu (AppletInfo *info,
 	 * connect the deactivate signal, so that we can "re-allow" 
 	 * autohide when the menu is deactivated.
 	 */
-	gtk_signal_connect (GTK_OBJECT (info->menu),
+	g_signal_connect (G_OBJECT (info->menu),
 			    "deactivate",
-			     GTK_SIGNAL_FUNC (applet_menu_deactivate),
+			     G_CALLBACK (applet_menu_deactivate),
 			     info);
 }
 
@@ -801,20 +801,20 @@ panel_applet_register (GtkWidget      *applet,
 	}
 
 	if(BUTTON_IS_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet))
-		gtk_signal_connect(GTK_OBJECT(applet),
+		g_signal_connect(G_OBJECT(applet),
 				   "button_press_event",
-				   GTK_SIGNAL_FUNC(applet_button_press),
+				   G_CALLBACK(applet_button_press),
 				   info);
 
-	gtk_signal_connect(GTK_OBJECT(applet), "destroy",
-			   GTK_SIGNAL_FUNC(applet_destroy),
+	g_signal_connect(G_OBJECT(applet), "destroy",
+			   G_CALLBACK(applet_destroy),
 			   info);
 
 	gtk_widget_show_all(applet);
 
-	/*gtk_signal_connect (GTK_OBJECT (applet), 
+	/*g_signal_connect (G_OBJECT (applet), 
 			    "drag_request_event",
-			    GTK_SIGNAL_FUNC(panel_dnd_drag_request),
+			    G_CALLBACK(panel_dnd_drag_request),
 			    info);
 
 	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,

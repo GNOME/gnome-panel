@@ -406,10 +406,9 @@ browse(GtkWidget *w, GtkWidget *entry)
 
 	g_signal_connect (G_OBJECT (fsel->ok_button), "clicked",
 			    G_CALLBACK (browse_ok), fsel);
-	gtk_signal_connect_object
-		(GTK_OBJECT (fsel->cancel_button), "clicked",
-		 G_CALLBACK (gtk_widget_destroy), 
-		 GTK_OBJECT(fsel));
+	g_signal_connect_swapped (G_OBJECT (fsel->cancel_button), "clicked",
+		 		  G_CALLBACK (gtk_widget_destroy), 
+		 		  G_OBJECT(fsel));
 	gtk_signal_connect_object_while_alive
 		(GTK_OBJECT (entry), "destroy",
 		 G_CALLBACK (gtk_widget_destroy),

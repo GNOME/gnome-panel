@@ -1628,10 +1628,10 @@ background_page (PerPanelConfig *ppc)
 	ppc->backsel = gnome_color_picker_new();
 	/* This will make sure the selection dialog is set as a transient for
 	 * the config dialog */
-	gtk_signal_connect_after (GTK_OBJECT (ppc->backsel),
-				  "clicked",
-				  G_CALLBACK (color_picker_clicked_signal),
-				  NULL);
+	g_signal_connect_after (G_OBJECT (ppc->backsel),
+				"clicked",
+				G_CALLBACK (color_picker_clicked_signal),
+				NULL);
 
 	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
 			  G_CALLBACK(color_set_cb), ppc);

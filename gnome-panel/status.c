@@ -355,9 +355,9 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 
 		gtk_container_add(GTK_CONTAINER(the_status->handle), fixed);
 	} else {
-		gtk_signal_connect_after (GTK_OBJECT(the_status->handle), "realize",
-				          G_CALLBACK(reparent_fixed),
-					  NULL);
+		g_signal_connect_after (G_OBJECT(the_status->handle), "realize",
+				        G_CALLBACK(reparent_fixed),
+					NULL);
 	}
 	
 	status_applet_update(the_status);

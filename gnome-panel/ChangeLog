@@ -1,5 +1,17 @@
 2001-11-26  Glynn Foster  <glynn.foster@sun.com>
 
+	* applet.c: * drawer.c: * extern.c: * gnome-panel-screenshot.c: 
+	* gnome-run.c: * menu.c: * nothing.cP: * panel-util.c: 
+	* panel-widget.c: * panel.c: * panel_config.c: * session.c: 
+	* status-docklet.c: * status.c: * swallow.c: 
+
+	I see a glorious dream for the panel. Using no deprecated stuff
+	for the 2.0 release. This brings us one step closer to that dream.
+	Some more gtk_signal_* porting. Now there is only the weird stuff
+	left that I don't know what to do with.
+	
+2001-11-26  Glynn Foster  <glynn.foster@sun.com>
+
 	* launcher.c, session.c: Quick hack to get launchers on the panel
 	again. Don't expect it to be working 100% of the time. We really
 	need to get this stuff using gnome-vfs all over.
