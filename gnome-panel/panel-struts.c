@@ -445,11 +445,29 @@ panel_struts_update_toplevel (PanelToplevel    *toplevel,
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return;
 
-	geometry->x = strut->geometry.x;
-	geometry->y = strut->geometry.y;
-
-	if (orientation & PANEL_HORIZONTAL_MASK)
+	switch (strut->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		geometry->x = strut->geometry.x;
+		geometry->y = strut->geometry.y;
 		geometry->width = strut->geometry.width;
-	else
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		geometry->x = strut->geometry.x;
+		geometry->y = strut->geometry.y + strut->geometry.height - geometry->height;
+		geometry->width = strut->geometry.width;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		geometry->x = strut->geometry.x;
+		geometry->y = strut->geometry.y;
 		geometry->height = strut->geometry.height;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		geometry->x = strut->geometry.x + strut->geometry.width - geometry->width;
+		geometry->y = strut->geometry.y;
+		geometry->height = strut->geometry.height;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
 }

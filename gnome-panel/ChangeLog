@@ -1,3 +1,13 @@
+Thu Aug 07 14:09:56 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.c: don't update struts until we have gotten initial
+	  position/size stuff.  Fixes autohide panels from jumping to the
+	  other side of the screen on startup.
+
+	* panel-struts.c: correctly position panels in their strut according
+	  to the orientation, fixes expanded autohide panels.  All
+	  hidden/animating panels are still broken if around other struts.
+
 ==================== 2.3.6 ====================
 
 2003-08-07  Arvind Samptur  <arvind.samptur@wipro.com>

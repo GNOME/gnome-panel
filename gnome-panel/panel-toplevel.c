@@ -1240,6 +1240,9 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 
+	if ( ! toplevel->priv->updated_geometry_initial)
+		return FALSE;
+
 	if (toplevel->priv->attached) {
 		panel_struts_unregister_strut (toplevel);
 		panel_struts_set_window_hint (toplevel);
