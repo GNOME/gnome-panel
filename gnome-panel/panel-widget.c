@@ -575,10 +575,7 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	gint oldx,oldy;
 	gint pos;
 
-	width = applet->allocation.width;
-	height = applet->allocation.height;
-	oldx = applet->allocation.x;
-	oldy = applet->allocation.y;
+	gdk_window_get_geometry(applet->window,&x,&y,&width,&height,NULL);
 	pos = panel_widget_get_pos(panel,applet);
 
 	/*don't adjust applets out of range, wait for
@@ -713,7 +710,8 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 		finalpos = 0;
 
 	while((pos+width-1)<finalpos) {
-		if(panel_widget_get_right_switch_pos(panel,pos) > finalpos)
+		if((panel_widget_get_right_switch_pos(panel,pos)+width-1) >
+		   finalpos)
 			return pos;
 		pos = panel_widget_switch_applet_right(panel,pos);
 	}
@@ -1297,18 +1295,19 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 }
 
 static gint
-panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
-			   gpointer data)
+panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
+			         gpointer data)
 {
-	PanelWidget *panel = PANEL_WIDGET(widget);
+	PanelWidget *panel = data;
 
-	if(!GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
+	if(!GTK_WIDGET_REALIZED(widget))
 		return FALSE;
 
 	panel_widget_set_position(panel);
 	panel_widget_apply_size_limit(panel);
 	return TRUE;
 }
+
 
 /*static gint
 panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -1571,9 +1570,10 @@ panel_widget_new (gint size,
 	gtk_signal_connect(GTK_OBJECT(panel), "leave_notify_event",
 			   GTK_SIGNAL_FUNC(panel_leave_notify),
 			   panel);
-	gtk_signal_connect_after(GTK_OBJECT(panel),
+	gtk_signal_connect_after(GTK_OBJECT(panel->fixed),
 				 "size_allocate",
-				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
+				 GTK_SIGNAL_FUNC(
+				 	panel_widget_fixed_size_allocate),
 				 panel);
 
 	panel_widget_set_size(panel,panel->size);
