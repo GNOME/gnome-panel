@@ -640,9 +640,10 @@ phelp (Fish *fish)
 {
 	GError *error = NULL;
 
-	egg_screen_help_display_desktop (
+	egg_help_display_desktop_on_screen (
+		NULL, "fish-applet-2", "fish-applet-2", NULL,
 		gtk_widget_get_screen (fish->applet),
-		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
+		&error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
@@ -1217,9 +1218,10 @@ display_help_dialog (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	egg_screen_help_display_desktop (
+	egg_help_display_desktop_on_screen (
+		NULL, "fish-applet-2", "fish-applet-2", NULL,
 		gtk_widget_get_screen (fish->applet),
-		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
+		&error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
