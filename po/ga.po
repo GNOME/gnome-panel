@@ -4,16 +4,18 @@
 # Paul Duffy <dubhthach@frink.nuigalway.ie>, 2003.
 # David O'Callaghan <david.ocallaghan@cs.tcd.ie>, 2003.
 # 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
-"PO-Revision-Date: 2003-08-19 20:02+0100\n"
-"Last-Translator:  Paul Duffy <dubhthach@frink.nuigalway.ie>\n"
+"Project-Id-Version: gnome-panel gnome-2-4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-10-25 13:54+0200\n"
+"PO-Revision-Date: 2003-10-26 13:24+0000\n"
+"Last-Translator:  David O'Callaghan <david.ocallaghan@cs.tcd.ie>\n"
 "Language-Team: Irish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: applets/clock/clock.c:219
 msgid "%l:%M:%S %p"
@@ -83,9 +85,9 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
 #: applets/clock/clock.c:850
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Níorbh fhéidir uirlis /time configuration/ a lainseáil: %s"
+msgstr "Níorbh fhéidir uirlis cumraíocht ama a lainseáil: %s"
 
 #: applets/clock/clock.c:891
 #, fuzzy
@@ -203,9 +205,8 @@ msgid "Show date in tooltip"
 msgstr "Taispeáin dáta sa /tooltip/"
 
 #: applets/clock/clock.schemas.in.h:11
-#, fuzzy
 msgid "Show time with seconds"
-msgstr "Taispeáin am le soicind"
+msgstr "Taispeáin am mar soicind"
 
 #: applets/clock/clock.schemas.in.h:12
 msgid ""
@@ -218,9 +219,8 @@ msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid "Time configuration tool"
-msgstr "Uirlis /time configuration/"
+msgstr "Uirlis cumraíocht ama"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use UNIX time"
@@ -346,7 +346,7 @@ msgstr "Níl an ordú a chur i gcrích ar fáil"
 #: applets/fish/fish.c:605
 #, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "Dúirt an t-Iasc GNOME %s:"
+msgstr "Dúirt %s, an t-Iasc GNOME:"
 
 #: applets/fish/fish.c:730
 #, c-format
@@ -467,7 +467,7 @@ msgstr "Cas timpeall ar painéail ingearaigh"
 
 #: applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
-msgstr "Íomhá beochain an éisc"
+msgstr "Íomhá beochana an éisc"
 
 #: applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
@@ -553,11 +553,11 @@ msgstr "Taispeáin an Deasc"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between open windows"
-msgstr "Athraigh idir fuinneoga oscailte"
+msgstr "Aistrigh idir fuinneoga oscailte"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 msgid "Switch between workspaces"
-msgstr "Athraigh idir spáiseanna obair"
+msgstr "Aistrigh idir spáiseanna obair"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 #: applets/wncklet/window-list.c:800
@@ -587,18 +587,18 @@ msgstr "Cliceáil anseo chun na fuinneoga folaithe a athchóiriú."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Cliceáil anseo chun na fuinneoga a folaigh agus an deasc a taispeáint."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "Taispeáin Cnaipe Deisce"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:295
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Níorbh fhéidir %s a lódáil: %s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:296
 msgid "File not found"
 msgstr "Níl comhad ar fáil"
+
+#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:447
+msgid "Show Desktop Button"
+msgstr "Taispeáin Cnaipe Deisce"
 
 #: applets/wncklet/showdesktop.c:449
 msgid "This button lets you hide all windows and show the desktop"
@@ -666,7 +666,7 @@ msgstr "_Taispeáin fuinneoga do spás oibre reatha"
 msgid "Show windows from a_ll workspaces"
 msgstr "Taispeáin fuinneoga do _gach spáiseanna obair"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3608
 msgid "Size"
 msgstr "Méid"
 
@@ -742,7 +742,6 @@ msgid "When to group windows"
 msgstr "Cathain na fuinneoga a chur i ngrúpaí"
 
 #: applets/wncklet/window-menu.c:347
-#, fuzzy
 msgid "Unknown Window"
 msgstr "Fuinneog Anaithnid"
 
@@ -814,16 +813,16 @@ msgstr ""
 
 #: applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Names"
-msgstr ""
+msgstr "Ainmneacha Spáiseanna Obair"
 
 #: applets/wncklet/workspace-switcher.glade.h:9
 #, fuzzy
 msgid "Workspace Switcher Preferences"
-msgstr "ÃbaltachtaÃ­ PrintÃ©ir"
+msgstr "Ábaltachtaí Printéir"
 
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "Workspace na_mes:"
-msgstr ""
+msgstr "Ain_mneacha spáiseanna obair:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -864,7 +863,7 @@ msgstr ""
 #: gnome-panel/applet.c:100 gnome-panel/applet.c:494
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:104
 msgid "_Lock"
-msgstr "G_las"
+msgstr "G_lasáil"
 
 #: gnome-panel/applet.c:406
 msgid "???"
@@ -872,7 +871,7 @@ msgstr "???"
 
 #: gnome-panel/applet.c:480 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
-msgstr "_Cuir as PainÃ©al"
+msgstr "_Cuir as Painéal"
 
 #: gnome-panel/applet.c:502 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
@@ -888,9 +887,8 @@ msgid "Failed to load image %s"
 msgstr ""
 
 #: gnome-panel/button-widget.c:400
-#, fuzzy
 msgid "none"
-msgstr "rinneadh"
+msgstr "tada"
 
 #: gnome-panel/button-widget.c:405
 msgid "file not found"
@@ -912,19 +910,17 @@ msgstr ""
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr ""
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
-#, fuzzy
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3597
 msgid "Orientation"
-msgstr "TreoshuÃ­omh"
+msgstr "Treoshuíomh"
 
 #: gnome-panel/button-widget.c:788
 msgid "The ButtonWidget orientation"
 msgstr ""
 
 #: gnome-panel/button-widget.c:797
-#, fuzzy
 msgid "Icon Name"
-msgstr "SeisiÃºn"
+msgstr "Ainm Dealbh"
 
 #: gnome-panel/button-widget.c:798
 msgid "The desired icon for the ButtonWidget"
@@ -952,7 +948,7 @@ msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian Menu"
-msgstr "ClÃ¡ranna Debian"
+msgstr "Roghchlár Debian"
 
 #: gnome-panel/distribution.c:32
 msgid "SuSE Linux"
@@ -960,22 +956,20 @@ msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
 msgid "SuSE Menu"
-msgstr "ClÃ¡ranna KDE"
+msgstr "Roghchlár SuSE"
 
 #: gnome-panel/distribution.c:37
 msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
-msgstr "ClÃ¡ranna KDE"
+msgstr "Roghchlár CDE"
 
 #: gnome-panel/drawer.c:594 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
 #: gnome-panel/menu.c:3046 gnome-panel/panel-action-button.c:92
-#, fuzzy
 msgid "_Properties"
-msgstr "ÃbaltachtaÃ­"
+msgstr "Áb_altachtaí"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
@@ -1002,41 +996,36 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
-msgstr "PainÃ©al"
+msgstr "Painéal"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
 msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
-msgstr "Beochan"
+msgstr "_Luas beochana:"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
 msgid "Close _drawer when launcher is clicked"
 msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and panel _animation"
-msgstr "ÃšsÃ¡id beochain"
+msgstr "_Beochan tarraiceán agus painéal"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
-#, fuzzy
 msgid "Fast"
-msgstr "Deireadh"
+msgstr "Tapa"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "Medium"
-msgstr "ClÃ¡r"
+msgstr "Meán"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:6
-#, fuzzy
 msgid "Panel Preferences"
-msgstr "Roghnachais..."
+msgstr "Airíonna Painéal"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
@@ -1176,27 +1165,25 @@ msgstr ""
 #: gnome-panel/GNOME_Panel.server.in.h:1
 #, fuzzy
 msgid "GNOME Panel Shell"
-msgstr "EagathÃ³ir ChlÃ¡ir GNOME"
+msgstr "EagathÃ³ir Chláir GNOME"
 
 #: gnome-panel/launcher.c:103
-#, fuzzy
 msgid "Cannot save launcher to disk"
-msgstr "Cruthaigh seoltÃ³ra feidhmchlÃ¡rÃ­n"
+msgstr "Ní féidir lainseoir a sábháil go diosca"
 
 #: gnome-panel/launcher.c:131 gnome-panel/launcher.c:174
 #: gnome-panel/launcher.c:220
-#, fuzzy
 msgid "Cannot launch icon"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ní féidir dealbh a lainseáil"
 
 #: gnome-panel/launcher.c:132
 msgid "This launch icon does not specify a url to show."
 msgstr ""
 
 #: gnome-panel/launcher.c:140
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot show %s"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ní féidir %s a thaispeáint"
 
 #: gnome-panel/launcher.c:412
 msgid "No URI provided for panel launcher desktop file\n"
@@ -1214,9 +1201,8 @@ msgstr "Cabhair le haighaidh Cl_áir %s"
 
 #: gnome-panel/launcher.c:652 gnome-panel/menu-ditem.c:175
 #: gnome-panel/menu-ditem.c:257
-#, fuzzy
 msgid "Launcher Properties"
-msgstr "ÃbaltachtaÃ­ seoltÃ³ra"
+msgstr "Ábaltachtaí lainseoir"
 
 #: gnome-panel/launcher.c:829
 #, c-format
@@ -1224,9 +1210,8 @@ msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 
 #: gnome-panel/launcher.c:913 gnome-panel/menu-ditem.c:532
-#, fuzzy
 msgid "Create Launcher"
-msgstr "Cruthaigh seoltÃ³ra feidhmchlÃ¡rÃ­n"
+msgstr "Cruthaigh Lainseoir"
 
 #: gnome-panel/launcher.c:1120 gnome-panel/menu.c:1192
 #: gnome-panel/panel-util.c:74
@@ -1240,7 +1225,7 @@ msgstr ""
 #: gnome-panel/menu.c:111 gnome-panel/menu.c:3240
 #: gnome-panel/panel-menu-bar.c:171
 msgid "Log Out"
-msgstr "Ã‰irigh as"
+msgstr "Éirigh as"
 
 #: gnome-panel/menu.c:114
 msgid ""
@@ -1250,7 +1235,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
-msgstr "Glas"
+msgstr "Glasáil"
 
 #: gnome-panel/menu.c:124
 msgid "Lock the screen so you can temporarily leave your computer"
@@ -1286,7 +1271,7 @@ msgstr "Ag Rith"
 #: gnome-panel/menu.c:164
 #, fuzzy
 msgid "Run a command"
-msgstr "OrdÃº PrintÃ©ir:"
+msgstr "Ordú Printéir:"
 
 #: gnome-panel/menu.c:272
 msgid "And many, many others..."
@@ -1294,7 +1279,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:295
 msgid "The GNOME Panel"
-msgstr "An PainÃ©al GNOME"
+msgstr "An Painéal GNOME"
 
 #: gnome-panel/menu.c:298
 msgid ""
@@ -1304,9 +1289,9 @@ msgstr ""
 
 #: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:158
 #: gnome-panel/panel-action-button.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot execute '%s'"
-msgstr "ag cruthaigh fillteÃ¡n 'sÃ¡idtheoir: %s\n"
+msgstr "Ní féidir '%s' a chur i gcrích"
 
 #: gnome-panel/menu.c:327 gnome-panel/panel-util.c:962
 #, c-format
@@ -1314,19 +1299,16 @@ msgid "%s - command not found"
 msgstr ""
 
 #: gnome-panel/menu.c:328
-#, fuzzy
 msgid "About GNOME"
-msgstr "Faoi _GNOME"
+msgstr "Faoi GNOME"
 
 #: gnome-panel/menu.c:350
-#, fuzzy
 msgid "Cannot launch entry"
-msgstr "Cruthaigh seoltÃ³ra feidhmchlÃ¡rÃ­n"
+msgstr "Ní féidir iontráil a lainseáil"
 
 #: gnome-panel/menu.c:362 gnome-panel/menu.c:1165 gnome-panel/menu.c:1205
-#, fuzzy
 msgid "Cannot load entry"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ní féidir iontráil a lódáil"
 
 #: gnome-panel/menu.c:1069
 #, c-format
@@ -1346,7 +1328,7 @@ msgstr ""
 #: gnome-panel/menu.c:1156
 #, fuzzy
 msgid "Cannot add to run box"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ordú (roghnach)"
 
 #: gnome-panel/menu.c:1157
 msgid "No 'Exec' or 'URL' field in entry"
@@ -1370,14 +1352,12 @@ msgid "Help on %s"
 msgstr "Cabhair le haighaidh %s"
 
 #: gnome-panel/menu.c:1525
-#, fuzzy
 msgid "Application"
-msgstr "Beochan"
+msgstr "Feidhmchlár"
 
 #: gnome-panel/menu.c:1573
-#, fuzzy
 msgid "Entire menu"
-msgstr "san fÃ³chlÃ¡r"
+msgstr "Roghchlár iomlán"
 
 #: gnome-panel/menu.c:1582
 msgid "Add this as drawer to panel"
@@ -1393,7 +1373,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:1626
 msgid "Properties"
-msgstr "ÃbaltachtaÃ­"
+msgstr "Ábaltachtaí"
 
 #: gnome-panel/menu.c:2600 gnome-panel/menu.c:2655
 #: libpanel-applet/panel-test-applets.c:156
@@ -1404,19 +1384,19 @@ msgstr ""
 #: gnome-panel/menu.c:2851 gnome-panel/menu.c:2856 gnome-panel/menu.c:3349
 #: gnome-panel/panel-menu-bar.c:193
 msgid "Applications"
-msgstr "FeidhclÃ¡ranna"
+msgstr "Feidhmcláranna"
 
 #: gnome-panel/menu.c:2926
 msgid "You cannot remove your last panel."
-msgstr ""
+msgstr "Ní féidir leat do phainéal deireanach a scrios."
 
 #: gnome-panel/menu.c:2988
 msgid "_Delete This Panel..."
-msgstr "_ScrÃ­os an paineÃ¡l seo..."
+msgstr "_Scríos an paineál seo..."
 
 #: gnome-panel/menu.c:2991 gnome-panel/menu.c:3031
 msgid "_Delete This Panel"
-msgstr "_ScrÃ­os an paineÃ¡l seo"
+msgstr "_Scríos an paineál seo"
 
 #: gnome-panel/menu.c:3006
 msgid "_Add to Panel"
@@ -1424,43 +1404,39 @@ msgstr "_Cuir le Painial"
 
 #: gnome-panel/menu.c:3060
 msgid "_New Panel"
-msgstr "PainÃ©al _Nua"
+msgstr "Painéal _Nua"
 
 #: gnome-panel/menu.c:3109
 msgid "_About Panels"
-msgstr "_Faoi na PainsÃ©alaÃ­"
+msgstr "_Faoi na Painséalaí"
 
 #: gnome-panel/menu.c:3123
 msgid "About _GNOME"
 msgstr "Faoi _GNOME"
 
 #: gnome-panel/menu.c:3167
-#, fuzzy
 msgid "Launcher..."
-msgstr "Dealbh SeoltÃ³ra"
+msgstr "Lainseoir..."
 
 #: gnome-panel/menu.c:3176
-#, fuzzy
 msgid "Launcher from menu"
-msgstr "Dealbh SeoltÃ³ra"
+msgstr "Lainseoir ó roghchlár"
 
 #: gnome-panel/menu.c:3186 gnome-panel/panel-menu-button.c:86
-#, fuzzy
 msgid "Main Menu"
-msgstr "PrÃ­omhchlair"
+msgstr "Príomhroghchlár"
 
 #: gnome-panel/menu.c:3196
-#, fuzzy
 msgid "Menu Bar"
-msgstr "SlÃ­ Chlar"
+msgstr "Barra Roghchláir"
 
 #: gnome-panel/menu.c:3205
 msgid "Drawer"
-msgstr "TaisceadÃ¡n"
+msgstr "Tarraiceán"
 
 #: gnome-panel/menu.c:3228 gnome-panel/panel-menu-bar.c:162
 msgid "Lock Screen"
-msgstr "GlasÃ¡l an scathÃ¡n"
+msgstr "Glasáil an scathán"
 
 #: gnome-panel/menu.c:3234
 msgid "Lock the screen so that you can temporarily leave your computer"
@@ -1474,7 +1450,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:3370 gnome-panel/panel-menu-bar.c:120
 msgid "Run Application..."
-msgstr "Rith ClÃ¡r..."
+msgstr "Rith Feidhmchlár..."
 
 #: gnome-panel/menu.c:3377 gnome-panel/panel-menu-bar.c:122
 msgid "Run an Application by entering a command"
@@ -1482,7 +1458,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:3386 gnome-panel/panel-menu-bar.c:133
 msgid "Search for Files..."
-msgstr "Curdaigh le haighaidh Comhad..."
+msgstr "Cuardaigh Comhad..."
 
 #: gnome-panel/menu.c:3405 gnome-panel/panel-menu-bar.c:148
 msgid "Take Screenshot..."
@@ -1498,13 +1474,12 @@ msgstr ""
 
 #: gnome-panel/menu-ditem.c:295
 msgid "Menu"
-msgstr "ClÃ¡r"
+msgstr "Roghchlár"
 
 #: gnome-panel/menu-ditem.c:451 gnome-panel/menu-ditem.c:468
 #: gnome-panel/menu-ditem.c:524
-#, fuzzy
 msgid "Cannot create launcher"
-msgstr "Cruthaigh seoltÃ³ra feidhmchlÃ¡rÃ­n"
+msgstr "Ní féidir lainseoir a cruthaigh"
 
 #: gnome-panel/menu-ditem.c:452
 msgid "You have to specify a name."
@@ -1531,7 +1506,7 @@ msgstr ""
 
 #: gnome-panel/panel-action-button.c:87
 msgid "_Lock Screen"
-msgstr "G_lasÃ¡l an scathÃ¡n"
+msgstr "G_lasáil an scathán"
 
 #: gnome-panel/panel-action-button.c:88
 msgid "_Kill Screensaver Daemon"
@@ -1543,11 +1518,11 @@ msgstr ""
 
 #: gnome-panel/panel-action-button.c:210
 msgid "Lock screen"
-msgstr "GlasÃ¡l an scathÃ¡n"
+msgstr "Glasáil an scathán"
 
 #: gnome-panel/panel-action-button.c:217
 msgid "Log out of GNOME"
-msgstr "Ã‰irigh as an GNOME"
+msgstr "Éirigh as an GNOME"
 
 #: gnome-panel/panel-action-button.c:222
 #: gnome-panel/panel-run-dialog.glade.h:10
@@ -1561,9 +1536,8 @@ msgid "Search for Files"
 msgstr "Comhad Speisialta"
 
 #: gnome-panel/panel-action-button.c:384
-#, fuzzy
 msgid "Action Type"
-msgstr "Beochan"
+msgstr "Saghas Gníomh"
 
 #: gnome-panel/panel-action-button.c:385
 msgid "The type of action this button implements"
@@ -1594,9 +1568,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:833
-#, fuzzy
 msgid "D_on't Delete"
-msgstr "Dealaigh"
+msgstr "Ná Scri_os"
 
 #: gnome-panel/panel-applet-frame.c:866
 #, c-format
@@ -1646,9 +1619,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel.c:1230
-#, fuzzy
 msgid "Delete Panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an Paineál seo"
 
 #: gnome-panel/panel-force-quit.c:73
 msgid ""
@@ -1717,20 +1689,17 @@ msgid "Panel ID list"
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Panel applet ID list"
-msgstr "ÃbaltachtaÃ­ PaineÃ¡l"
+msgstr "Liosta CA feidhmchláirín painéil"
 
 #: gnome-panel/panel-general.schemas.in.h:10
-#, fuzzy
 msgid "Panel object ID list"
-msgstr "ÃbaltachtaÃ­ PaineÃ¡l"
+msgstr "Liosta CA ruda painéil"
 
 #: gnome-panel/panel-global.schemas.in.h:1
 #: gnome-panel/panel-toplevel.schemas.in.h:1
-#, fuzzy
 msgid "Animation speed"
-msgstr "Beochan"
+msgstr "Luas beochana"
 
 #: gnome-panel/panel-global.schemas.in.h:2
 msgid "Autoclose drawer"
@@ -1748,17 +1717,17 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:9
 #, fuzzy
 msgid "Enable animations"
-msgstr "ÃšsÃ¡id beochain"
+msgstr "Úsáid beochain"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 #, fuzzy
 msgid "Enable keybindings"
-msgstr "ÃšsÃ¡id beochain"
+msgstr "Úsáid beochain"
 
 #: gnome-panel/panel-global.schemas.in.h:7
 #, fuzzy
 msgid "Enable tooltips"
-msgstr "ÃšsÃ¡id beochain"
+msgstr "Úsáid beochain"
 
 #: gnome-panel/panel-global.schemas.in.h:8
 msgid "FIXME - is this resolved with the new menu stuff"
@@ -1805,7 +1774,7 @@ msgstr "Faoi..."
 #: gnome-panel/panel-global.schemas.in.h:17
 #, fuzzy
 msgid "Take screenshot"
-msgstr "GlasÃ¡l an scathÃ¡n"
+msgstr "Glasál an scathán"
 
 #: gnome-panel/panel-global.schemas.in.h:18
 msgid "Take window screenshot"
@@ -1820,18 +1789,16 @@ msgid "Quit from the GNOME desktop"
 msgstr "Ealu as an deasc GNOME"
 
 #: gnome-panel/panel-menu-button.c:431
-#, fuzzy
 msgid "Menu Path"
-msgstr "SlÃ­ Chlar"
+msgstr "Slí Roghchláir"
 
 #: gnome-panel/panel-menu-button.c:432
 msgid "The path from which to construct the menu"
 msgstr ""
 
 #: gnome-panel/panel-menu-button.c:440
-#, fuzzy
 msgid "Custom Icon"
-msgstr "Dathanna feÃ­ndeÃ¡namh"
+msgstr "Saindealbh"
 
 #: gnome-panel/panel-menu-button.c:441
 msgid "The custom icon for the menu"
@@ -1840,7 +1807,7 @@ msgstr ""
 #: gnome-panel/panel-menu-button.c:449
 #, fuzzy
 msgid "Use Menu Path"
-msgstr "SlÃ­ Chlar"
+msgstr "Slí Chlar"
 
 #: gnome-panel/panel-menu-button.c:450
 msgid "Use the path specified by the menu-path property"
@@ -1849,16 +1816,15 @@ msgstr ""
 #: gnome-panel/panel-menu-button.c:458
 #, fuzzy
 msgid "Use Custom Icon"
-msgstr "Dathanna feÃ­ndeÃ¡namh"
+msgstr "Dathanna feíndeánamh"
 
 #: gnome-panel/panel-menu-button.c:459
 msgid "Use the icon specified by the custom-icon property"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
-#, fuzzy
 msgid "Action button type"
-msgstr "Beochan"
+msgstr "Saghas cnaipe gníomh"
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
@@ -1899,24 +1865,22 @@ msgid "Interpret position relative to bottom/right edge"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:9
-#, fuzzy
 msgid "Launcher location"
-msgstr "ÃbaltachtaÃ­ seoltÃ³ra"
+msgstr "Áit lainseoir"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 #, fuzzy
 msgid "Lock the object to the panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-object.schemas.in.h:11
-#, fuzzy
 msgid "Menu content path"
-msgstr "SlÃ­ Chlar"
+msgstr "Slí méid chláir"
 
 #: gnome-panel/panel-object.schemas.in.h:12
 #, fuzzy
 msgid "Object's position on the panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
@@ -1925,7 +1889,7 @@ msgstr ""
 #: gnome-panel/panel-object.schemas.in.h:14
 #, fuzzy
 msgid "Panel object type"
-msgstr "ÃbaltachtaÃ­ PaineÃ¡l"
+msgstr "Ábaltachtaí Paineál"
 
 #: gnome-panel/panel-object.schemas.in.h:15
 msgid ""
@@ -2035,23 +1999,20 @@ msgid "Error reading GConf list value '%s': %s"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
-#, fuzzy
 msgid "<b>_Icon:</b>"
-msgstr "MÃ©id"
+msgstr "<b>_Dealbh:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:4
 msgid "<b>_Name:</b>"
 msgstr "<b>Ai_nm:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:5
-#, fuzzy
 msgid "<b>_Orientation:</b>"
-msgstr "TreoshuÃ­omh"
+msgstr "<b>Tre_oshuíomh:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:6
-#, fuzzy
 msgid "<b>_Size:</b>"
-msgstr "MÃ©id"
+msgstr "<b>_Méid:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:7
 msgid "<small>Opaque</small>"
@@ -2064,16 +2025,15 @@ msgstr ""
 #: gnome-panel/panel-properties-dialog.glade.h:9
 #, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin ... cnaipí"
 
 #: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Background"
-msgstr "CÃºlra"
+msgstr "Cúlra"
 
 #: gnome-panel/panel-properties-dialog.glade.h:11
-#, fuzzy
 msgid "Background _image:"
-msgstr "Saghas CÃºlra"
+msgstr "Í_omhá cúlra:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
 #: libpanel-applet/panel-test-applets.glade.h:2
@@ -2082,7 +2042,7 @@ msgstr "Bun"
 
 #: gnome-panel/panel-properties-dialog.glade.h:13
 msgid "Co_lor:"
-msgstr "DÃ¡_th:"
+msgstr "Da_th:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:14
 msgid "E_xpand"
@@ -2090,22 +2050,20 @@ msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "General"
-msgstr "GnÃ¡th"
+msgstr "Gnáth"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
-#, fuzzy
 msgid "Image Background Details"
-msgstr "Saghas CÃºlra"
+msgstr "Sonraí Íomhá Cúlra"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
-msgstr "ClÃ©"
+msgstr "Clé"
 
 #: gnome-panel/panel-properties-dialog.glade.h:18
-#, fuzzy
 msgid "Panel Properties"
-msgstr "ÃbaltachtaÃ­ PaineÃ¡l"
+msgstr "Ábaltachtaí Painéal"
 
 #: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Pick a color"
@@ -2119,21 +2077,19 @@ msgstr "Deis"
 #: gnome-panel/panel-properties-dialog.glade.h:21
 #, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "S_tyle:"
-msgstr "StÃ­l:"
+msgstr "S_tíl:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:23
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin cnaipí folaigh"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#, fuzzy
 msgid "Solid c_olor"
-msgstr "Dath"
+msgstr "D_ath teimhneach"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "Some of these properties are locked down"
@@ -2151,11 +2107,11 @@ msgstr "Mullach"
 #: gnome-panel/panel-properties-dialog.glade.h:28
 #, fuzzy
 msgid "_Autohide"
-msgstr "Cuir ar sÃºil Auto-hide"
+msgstr "Cuir ar súil Auto-hide"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_None (use system theme)"
-msgstr "_Tada (baint triall as téama an Córas"
+msgstr "_Tada (baint úsáid as téama an córas)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Scale"
@@ -2166,9 +2122,8 @@ msgid "_Tile"
 msgstr "_Leacán"
 
 #: gnome-panel/panel-recent.c:57
-#, fuzzy
 msgid "Couldn't find a suitable application"
-msgstr "Suim le prÃ­omhchlÃ¡ir"
+msgstr "Níorbh feidhmchlár oiriúnach ar fháil"
 
 #: gnome-panel/panel-recent.c:83
 msgid ""
@@ -2189,14 +2144,14 @@ msgid "Open Recent"
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot launch command '%s'"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ní féidir an t-ordú '%s' a lainseáil"
 
 #: gnome-panel/panel-run-dialog.c:325
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot display location '%s'"
-msgstr "OrdÃº (roghnach)"
+msgstr "Ní féidir áit '%s' a thaispeáint"
 
 #: gnome-panel/panel-run-dialog.c:1064
 msgid "Choose a file to append to the command..."
@@ -2205,7 +2160,7 @@ msgstr ""
 #: gnome-panel/panel-run-dialog.c:1249
 #, fuzzy, c-format
 msgid "Will run command: '%s'"
-msgstr "OrdÃº PrintÃ©ir:"
+msgstr "Ordú Printéir:"
 
 #: gnome-panel/panel-run-dialog.c:1255 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
@@ -2218,9 +2173,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-#, fuzzy
 msgid "Application description"
-msgstr "Beochan"
+msgstr "Cur síos feidhmchláir"
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid ""
@@ -2235,28 +2189,25 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:6
-#, fuzzy
 msgid "Command entry"
-msgstr "OrdÃº (roghnach)"
+msgstr "Iontráil ordú"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Command icon"
-msgstr "OrdÃº (roghnach)"
+msgstr "Dealbh ordú"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Enter a command string here to run it."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:9
-#, fuzzy
 msgid "List of known applications"
-msgstr "Beochan"
+msgstr "Liosta feidhmchláranna"
 
 #: gnome-panel/panel-run-dialog.glade.h:11
 #, fuzzy
 msgid "Run in _terminal"
-msgstr "TeirminÃ©al _Nua"
+msgstr "Teirminéal _Nua"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Run with _file..."
@@ -2315,241 +2266,233 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1447
-#, fuzzy
-msgid "Top Centered Panel"
-msgstr "IdirlÃ­on"
-
-#: gnome-panel/panel-toplevel.c:1448
-#, fuzzy
-msgid "Top Floating Panel"
-msgstr "An PainÃ©al GNOME"
-
 #: gnome-panel/panel-toplevel.c:1449
 #, fuzzy
-msgid "Top Edge Panel"
-msgstr "An PainÃ©al GNOME"
+msgid "Top Centered Panel"
+msgstr "Idirlíon"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1450
+#, fuzzy
+msgid "Top Floating Panel"
+msgstr "An Painéal GNOME"
+
+#: gnome-panel/panel-toplevel.c:1451
+#, fuzzy
+msgid "Top Edge Panel"
+msgstr "An Painéal GNOME"
+
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1460
-msgid "Left Expanded Edge Panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:1461
-#, fuzzy
-msgid "Left Centered Panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
-
 #: gnome-panel/panel-toplevel.c:1462
-msgid "Left Floating Panel"
+msgid "Left Expanded Edge Panel"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:1463
 #, fuzzy
-msgid "Left Edge Panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgid "Left Centered Panel"
+msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1464
+msgid "Left Floating Panel"
+msgstr ""
+
+#: gnome-panel/panel-toplevel.c:1465
+#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Scríos an paineál seo"
+
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3575
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3577
 msgid "Name"
-msgstr "CluchÃ­"
+msgstr "Ainm"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3578
 #, fuzzy
 msgid "The name of this panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3587
 msgid "Expand"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3588
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3598
 #, fuzzy
 msgid "The orientation of the panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3609
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:3619
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3621
 msgid "X position"
-msgstr "Ãit PaineÃ¡l"
+msgstr "Áit X"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3622
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3633
 msgid "X centered"
-msgstr ""
+msgstr "Curtha i lár X"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3634
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3641
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3643
 msgid "Y position"
-msgstr "Ãit PaineÃ¡l"
+msgstr "Áit Y"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3644
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3655
 msgid "Y centered"
-msgstr ""
+msgstr "Curtha i lár Y"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3656
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3665
 msgid "Xinerama monitor"
-msgstr ""
+msgstr "Monatóir Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3666
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3677
 #, fuzzy
 msgid "Auto hide"
-msgstr "Cuir ar sÃºil Auto-hide"
+msgstr "Cuir ar súil Auto-hide"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3678
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3687
 #, fuzzy
 msgid "Hide delay"
 msgstr "Folaitheach"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3688
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3699
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3700
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3711
 #, fuzzy
 msgid "Auto-hide size"
-msgstr "Cuir ar sÃºil Auto-hide"
+msgstr "Cuir ar súil Auto-hide"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3712
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3721
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3723
 msgid "Animate"
-msgstr "Beochan"
+msgstr "Beoigh"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3724
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3731
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3733
 msgid "Animation Speed"
-msgstr "Beochan"
+msgstr "Luas Beochana"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3734
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3744
 #, fuzzy
 msgid "Buttons Enabled"
-msgstr "Folaigh cnaipÃ­"
+msgstr "Folaigh cnaipí"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3745
 #, fuzzy
 msgid "Enable hide/show buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin ... cnaipí"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3754
 #, fuzzy
 msgid "Arrows Enabled"
-msgstr "UsÃ¡id Leathfhocail"
+msgstr "Usáid Leathfhocail"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3755
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin ... cnaipí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
-#, fuzzy
 msgid "Background color"
-msgstr "Dath CÃºlra"
+msgstr "Dath cúlra"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
-#, fuzzy
 msgid "Background color opacity"
-msgstr "Dath CÃºlra"
+msgstr "Teimhneacht dath cúlra"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-#, fuzzy
 msgid "Background image"
-msgstr "Saghas CÃºlra"
+msgstr "Íomhá cúlra"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
 msgid "Background type"
-msgstr "Saghas CÃºlra"
+msgstr "Saghas Cúlra"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
@@ -2562,12 +2505,12 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:10
 #, fuzzy
 msgid "Enable arrows on hide buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin ... cnaipí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
 #, fuzzy
 msgid "Enable hide buttons"
-msgstr "TaispeÃ¡in ... cnaipÃ­"
+msgstr "Taispeáin ... cnaipí"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
@@ -2576,7 +2519,7 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 #, fuzzy
 msgid "Fit image to panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
@@ -2654,7 +2597,7 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:25
 #, fuzzy
 msgid "Name to identify panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 #, fuzzy
@@ -2666,19 +2609,17 @@ msgid "Panel autounhide delay"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
-#, fuzzy
 msgid "Panel orientation"
-msgstr "TreoshuÃ­omh"
+msgstr "Treoshuíomh painéil"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
-#, fuzzy
 msgid "Panel size"
-msgstr "PainÃ©al"
+msgstr "Méid painéil"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
 #, fuzzy
 msgid "Rotate image on vertical panels"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
@@ -2721,7 +2662,7 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 #, fuzzy
 msgid "Stretch image to panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Scríos an paineál seo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
 msgid ""
@@ -2790,9 +2731,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
-#, fuzzy
 msgid "X co-ordinate of panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "X comhordanáid an painéil"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "X screen panel is on"
@@ -2803,9 +2743,8 @@ msgid "Xinerama monitor panel is on"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-#, fuzzy
 msgid "Y co-ordinate of panel"
-msgstr "ScrÃ­os an paineÃ¡l seo"
+msgstr "Y comhordanáid an painéil"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2819,14 +2758,14 @@ msgid "No document to show"
 msgstr ""
 
 #: gnome-panel/panel-util.c:486
-#, fuzzy, c-format
+#, c-format
 msgid "Details: %s"
-msgstr "Eolas: %s"
+msgstr "Sonraí: %s"
 
 #: gnome-panel/panel-util.c:961
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot execute %s"
-msgstr "ag cruthaigh fillteÃ¡n 'sÃ¡idtheoir: %s\n"
+msgstr "Ní féidir %s a chur i gcrích"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2835,48 +2774,48 @@ msgstr ""
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
 #, fuzzy
 msgid "Test Bonobo Applet"
-msgstr "FeidhmchlÃ¡irÃ­n"
+msgstr "Feidhmchláirín"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:834
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:848
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:857
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:864
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1043
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1051
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1059
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1067
 msgid "The Applet's flags"
-msgstr "Breatach le haighaidh an FeidhmchlÃ¡irÃ­n"
+msgstr "Breatach le haighaidh an Feidhmchláirín"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1075
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
@@ -2900,16 +2839,15 @@ msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
-msgstr "FeidhmchlÃ¡irÃ­n:"
+msgstr "Feidhmchláirín:"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
 msgid "Large"
-msgstr "MÃ³r"
+msgstr "Mór"
 
 #: libpanel-applet/panel-test-applets.glade.h:6
-#, fuzzy
 msgid "Orientation:"
-msgstr "TreoshuÃ­omh"
+msgstr "Treoshuíomh:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
@@ -2917,7 +2855,7 @@ msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:9
 msgid "Size:"
-msgstr "MÃ©id:"
+msgstr "Méid:"
 
 #: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
