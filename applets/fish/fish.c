@@ -79,7 +79,11 @@ typedef struct {
 	GtkWidget         *fortune_dialog;
 	GtkWidget         *fortune_view;
 	GtkWidget         *fortune_label;
+	GtkWidget         *fortune_cmd_label;
 	GtkTextBuffer	  *fortune_buffer;
+
+	unsigned int       source_id;
+	GIOChannel        *io_channel;
 
 	gboolean           april_fools;
 
@@ -555,42 +559,64 @@ something_fishy_going_on (FishApplet *fish,
 	gtk_widget_show (dialog);
 }
 
-static char *
-locate_fortune_command (FishApplet *fish)
+static gboolean
+locate_fortune_command (FishApplet   *fish,
+			int          *argcp,
+			char       ***argvp)
 {
-	char *retval = NULL;
+	char *prog = NULL;
 
-	if (!fish->command) {
-		something_fishy_going_on (
-			fish, _("Unable to get the name of the command to execute"));
-		return NULL;
+	if (fish->command
+	    && g_shell_parse_argv (fish->command, argcp, argvp, NULL)) {
+		prog = g_find_program_in_path ((*argvp)[0]);
+		if (prog) {
+			g_free (prog);
+			return TRUE;
+		}
+
+		g_strfreev (*argvp);
 	}
 
-	if (g_path_is_absolute (fish->command))
-		retval = g_strdup (fish->command);
-	else
-		retval = g_find_program_in_path (fish->command);
+	prog = g_find_program_in_path ("fortune");
+	if (prog) {
+		g_free (prog);
+		if (g_shell_parse_argv ("fortune", argcp, argvp, NULL))
+			return FALSE;
+	}
 
-	if (!retval)
-		retval = g_find_program_in_path ("fortune");
+	if (g_file_test ("/usr/games/fortune", G_FILE_TEST_IS_EXECUTABLE)
+	    && g_shell_parse_argv ("/usr/games/fortune", argcp, argvp, NULL))
+		return FALSE;
 
-	if (!retval && g_file_test ("/usr/games/fortune", G_FILE_TEST_EXISTS))
-		retval = g_strdup ("/usr/games/fortune");
-
-	if (!retval)
-		something_fishy_going_on (
-			fish, _("Unable to locate the command to execute"));
-
-	return retval;
+	something_fishy_going_on (fish,
+				  _("Unable to locate the command to execute"));
+	*argvp = NULL;
+	return FALSE;
 }
 
 #define FISH_RESPONSE_SPEAK 1
+static inline void
+fish_close_channel (FishApplet *fish)
+{
+	if (fish->io_channel) {
+		g_io_channel_shutdown (fish->io_channel, TRUE, NULL);
+		g_io_channel_unref (fish->io_channel);
+	}
+	fish->io_channel = NULL;
+}
 
 static void
 handle_fortune_response (GtkWidget  *widget,
 			 int         id,
 			 FishApplet *fish)
 {
+	/* if there is still a pipe, close it: speak again will open a new pipe
+	 * and if we hide the widget, the output can't be seen */
+	if (fish->source_id)
+		g_source_remove (fish->source_id);
+	fish->source_id = 0;
+	fish_close_channel (fish);
+
 	if (id == FISH_RESPONSE_SPEAK)
 		display_fortune_dialog (fish);
 	else
@@ -634,6 +660,9 @@ insert_fortune_text (FishApplet *fish,
 	gtk_text_buffer_insert_with_tags_by_name (fish->fortune_buffer, &iter,
 						  text, -1, "monospace_tag",
 						  NULL);
+
+	while (gtk_events_pending ())
+	  gtk_main_iteration ();
 }
 
 static void
@@ -652,16 +681,83 @@ clear_fortune_text (FishApplet *fish)
 	insert_fortune_text (fish, "\n");
 }
 
+static gboolean
+fish_read_output (GIOChannel   *source,
+		  GIOCondition  condition,
+		  gpointer      data)
+{
+	char        output[4096];
+	char       *utf8_output;
+	gsize       bytes_read;
+	GError     *error = NULL;
+	GIOStatus   status;
+	FishApplet *fish;
+
+	fish = (FishApplet *) data;
+
+	if (!(condition & G_IO_IN)) {
+		fish->source_id = 0;
+		fish_close_channel (fish);
+		return FALSE;
+	}
+
+	status = g_io_channel_read_chars (source, output, 4096, &bytes_read,
+					  &error);
+
+	if (error) {
+		char *message;
+
+		message = g_strdup_printf (_("Unable to read output from command\n\nDetails: %s"),
+					   error->message);
+		something_fishy_going_on (fish, message);
+		g_free (message);
+		g_error_free (error);
+		fish->source_id = 0;
+		fish_close_channel (fish);
+		return FALSE;
+	}
+
+	if (status == G_IO_STATUS_AGAIN)
+		return TRUE;
+
+	if (bytes_read > 0) {
+		/* The output is not guarantied to be in UTF-8 format, most
+		 * likely it's just in ASCII-7 or in the user locale
+		 */
+		if (!g_utf8_validate (output, -1, NULL))
+			utf8_output = g_locale_to_utf8 (output, bytes_read,
+							NULL, NULL, NULL);
+		else
+			utf8_output = g_strndup (output, bytes_read);
+
+		if (utf8_output)
+			insert_fortune_text (fish, utf8_output);
+
+		g_free (utf8_output);
+	}
+
+	if (status == G_IO_STATUS_EOF) {
+		fish->source_id = 0;
+		fish_close_channel (fish);
+	}
+	return (status != G_IO_STATUS_EOF);
+}
+
 static void 
 display_fortune_dialog (FishApplet *fish)
 {
-	GError *error = NULL;
-	char   *fortune_command;
-	char   *output = NULL;
-	char   *utf8_output;
+	GError      *error = NULL;
+	gboolean     user_command;
+	int          output;
+	const char  *charset;
+	int          argc;
+	char       **argv;
 
-	fortune_command = locate_fortune_command (fish);
-	if (!fortune_command)
+	g_assert (!fish->io_channel);
+	g_assert (!fish->source_id);
+
+	user_command = locate_fortune_command (fish, &argc, &argv);
+	if (!argv)
 		return;
 
 	if (!fish->fortune_dialog) {
@@ -695,8 +791,6 @@ display_fortune_dialog (FishApplet *fish)
 		screen_width  = gdk_screen_get_width (screen);
 		screen_height = gdk_screen_get_height (screen);
 
-		gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog), screen);
-
 		gtk_window_set_default_size (GTK_WINDOW (fish->fortune_dialog),
 					     MIN (600, screen_width  * 0.9),
 					     MIN (350, screen_height * 0.9));
@@ -723,6 +817,11 @@ display_fortune_dialog (FishApplet *fish)
 		gtk_container_add (GTK_CONTAINER (scrolled), fish->fortune_view);
 
 		fish->fortune_label = gtk_label_new ("");
+		gtk_label_set_ellipsize (GTK_LABEL (fish->fortune_label),
+					 PANGO_ELLIPSIZE_MIDDLE);
+		fish->fortune_cmd_label = gtk_label_new ("");
+		gtk_misc_set_alignment (GTK_MISC (fish->fortune_cmd_label),
+					0, 0.5);
 
 		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    fish->fortune_label,
@@ -732,49 +831,82 @@ display_fortune_dialog (FishApplet *fish)
 				    scrolled,
 				    TRUE, TRUE, GNOME_PAD);
 
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
+				    fish->fortune_cmd_label,
+				    FALSE, FALSE, GNOME_PAD);
+
 		update_fortune_dialog (fish);
 
-		gtk_widget_show_all (fish->fortune_dialog);
+		/* We don't show_all for the dialog since fortune_cmd_label
+		 * might need to be hidden 
+		 * The dialog will be shown with gtk_window_present later */
+		gtk_widget_show (scrolled);
+		gtk_widget_show (fish->fortune_view);
+		gtk_widget_show (fish->fortune_label);
 	}
 
-	gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
-			       gtk_widget_get_screen (GTK_WIDGET (fish)));
-	gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
+	if (!user_command) {
+		char *command;
+		char * text;
+
+		command = g_strdup_printf ("<tt>%s</tt>", argv[0]);
+		text = g_strdup_printf (_("The configured command is not "
+					  "working and has been replaced by: "
+					  "%s"), command);
+		gtk_label_set_markup (GTK_LABEL (fish->fortune_cmd_label),
+				      text);
+		g_free (command);
+		g_free (text);
+		gtk_widget_show (fish->fortune_cmd_label);
+	} else {
+		gtk_widget_hide (fish->fortune_cmd_label);
+	}
 
 	clear_fortune_text (fish);
 
-	g_spawn_command_line_sync (fortune_command, &output, NULL, NULL, &error);
+	gdk_spawn_on_screen_with_pipes (gtk_widget_get_screen (GTK_WIDGET (fish)),
+					NULL, argv, NULL,
+					G_SPAWN_SEARCH_PATH|G_SPAWN_STDERR_TO_DEV_NULL,
+					NULL, NULL, NULL, NULL, &output, NULL,
+					&error);
+
 	if (error) {
 		char *message;
 
 		message = g_strdup_printf (_("Unable to execute '%s'\n\nDetails: %s"),
-					   fortune_command, error->message);
+					   argv[0], error->message);
 		something_fishy_going_on (fish, message);
 		g_free (message);
 		g_error_free (error);
+		g_strfreev (argv);
+		return;
 	}
-	
-	g_free (fortune_command);
 
-	/* The output is not guarantied to be in UTF-8 format, most
-	 * likely it's just in ASCII-7 or in the user locale
-	  */
-	if (!g_utf8_validate (output, -1, NULL))
-		utf8_output = g_locale_to_utf8 (output, -1, NULL, NULL, NULL);
-	else
-		utf8_output = g_strdup (output);
+	fish->io_channel = g_io_channel_unix_new (output);
+	/* set the correct encoding if the locale is not using UTF-8 */
+	if (!g_get_charset (&charset))
+		g_io_channel_set_encoding(fish->io_channel, charset, &error);
+	if (error) {
+		char *message;
 
-	if (utf8_output)
-		insert_fortune_text (fish, utf8_output);
-	else
-		insert_fortune_text (fish, 
-				     _("You do not have fortune installed "
-				       "or you have not specified a program "
-				       "to run.\n\nPlease refer to fish "
-				       "properties dialog."));
+		message = g_strdup_printf (_("Unable to read from '%s'\n\nDetails: %s"),
+					   argv[0], error->message);
+		something_fishy_going_on (fish, message);
+		g_free (message);
+		g_error_free (error);
+		g_strfreev (argv);
+		return;
+	}
 
-	g_free (output);
-	g_free (utf8_output);
+	g_strfreev (argv);
+
+	fish->source_id = g_io_add_watch (fish->io_channel,
+					  G_IO_IN|G_IO_ERR|G_IO_HUP|G_IO_NVAL,
+					  fish_read_output, fish);
+
+	gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
+			       gtk_widget_get_screen (GTK_WIDGET (fish)));
+	gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
 }
 
 static void
@@ -847,7 +979,7 @@ command_changed_notify (GConfClient *client,
 	
 	value = gconf_value_get_string (entry->value);
 
-	if (!value [0] || (fish->command && !strcmp (fish->command, value)))
+	if (fish->command && !strcmp (fish->command, value))
 		return;
 
 	if (fish->command)
@@ -1547,8 +1679,6 @@ fish_applet_fill (FishApplet *fish)
 		g_error_free (error);
 		error = NULL;
 	}
-	if (!fish->command)
-		fish->command = g_strdup ("fortune"); /* Fallback */
 
 	fish->n_frames = panel_applet_gconf_get_int (applet, "frames", &error);
 	if (error) {
@@ -1666,6 +1796,12 @@ fish_applet_destroy (GtkObject *object)
 		gtk_widget_destroy (fish->fortune_dialog);
 	fish->fortune_dialog = NULL;
 
+	if (fish->source_id)
+		g_source_remove (fish->source_id);
+	fish->source_id = 0;
+
+	fish_close_channel (fish);
+
 	destroy_tooltip (fish);
 
 	GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -1715,7 +1851,11 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->fortune_dialog = NULL;
 	fish->fortune_view   = NULL;
 	fish->fortune_label  = NULL;
+	fish->fortune_cmd_label = NULL;
 	fish->fortune_buffer = NULL;
+
+	fish->source_id  = 0;
+	fish->io_channel = NULL;
 
 	for (i = 0; i < N_FISH_PREFS; i++)
 		fish->listeners [i] = 0;

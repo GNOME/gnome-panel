@@ -1,3 +1,28 @@
+2004-10-28  Vincent Untz  <vincent@vuntz.net>
+
+	* fish.c: (locate_fortune_command): changed so that it builds an
+	argument vector (specified arguments are now used, fix bug #123690)
+	and returns a boolean telling if the command is the one specified by
+	the user or a fallback
+	(fish_close_channel): new, close the pipe
+	(handle_fortune_response): remove the source for reading input from
+	the command and close the pipe
+	(insert_fortune_text): process GTK+ events (useful if you configure a
+	command with huge output like 'ls -lR /')
+	(fish_read_output): new, read output from the command
+	(display_fortune_dialog): make the "Wanda says" label ellipsized so
+	the window doesn't grow forever when the name is long (fix bug
+	#143109), add a label telling the user that the output comes from a
+	fallback command if the configured command can not be found (fix bug
+	#144252), spawn the command on the right screen (fix bug #117534) and
+	prepare things so we can read from the pipe
+	(command_changed_notify): accept commands that are void (we'll use the
+	fallback)
+	(fish_applet_fill): don't configure the fallback here since it's done
+	in locate_fortune_command anyway
+	(fish_applet_destroy): remove the source and close the pipe
+	(fish_applet_instance_init): init new fields
+
 2004-10-27  Vincent Untz  <vincent@vuntz.net>
 
 	* Makefile.am: install gnome-fish in the hicolor theme dir
