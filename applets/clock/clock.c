@@ -1549,6 +1549,8 @@ copy_time (BonoboUIComponent *uic,
 	}
 
 	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
+	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_PRIMARY),
+				utf8, -1);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
 				utf8, -1);
 	g_free (utf8);
@@ -1576,6 +1578,8 @@ copy_date (BonoboUIComponent *uic,
 	g_free (loc);
 	
 	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
+	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_PRIMARY),
+				utf8, -1);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
 				utf8, -1);
 	g_free (utf8);
