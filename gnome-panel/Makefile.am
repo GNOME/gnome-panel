@@ -4,7 +4,7 @@
 AUTOMAKE_OPTIONS = 1.2f
 
 #enable drawers and swallows for testing only, not for release!
-CFLAGS += -DUSE_INTERNAL_LAUNCHER #-DDRAWER_AND_SWALLOW
+#CFLAGS += -DDRAWER_AND_SWALLOW
 
 CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
