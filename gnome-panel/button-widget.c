@@ -255,7 +255,7 @@ button_widget_destroy (GtkObject *obj)
 	ButtonWidget *button = BUTTON_WIDGET(obj);
 
 	if (button->pressed_timeout != 0)
-		gtk_timeout_remove (button->pressed_timeout);
+		g_source_remove (button->pressed_timeout);
 	button->pressed_timeout = 0;
 
 	if (button->pixbuf)
@@ -659,7 +659,7 @@ button_widget_button_pressed (GtkButton *button)
 
 	button_widget = BUTTON_WIDGET (button);
 	button_widget->pressed_timeout =
-		gtk_timeout_add (400, pressed_timeout_func, button_widget);
+		g_timeout_add (400, pressed_timeout_func, button_widget);
         gtk_widget_queue_draw (GTK_WIDGET (button));
 }
 

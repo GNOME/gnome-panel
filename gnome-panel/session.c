@@ -155,7 +155,7 @@ panel_config_sync (void)
 	int pts = panels_to_sync;
 
 	if (sync_handler != 0) {
-		gtk_timeout_remove (sync_handler);
+		g_source_remove (sync_handler);
 		sync_handler = 0;
 	}
 
@@ -187,7 +187,7 @@ panel_config_sync_schedule (void)
 {
 	if (sync_handler == 0) {
 		/* don't sync for another 30 secs */
-		sync_handler = gtk_timeout_add (30000, sync_handler_timeout, NULL);
+		sync_handler = g_timeout_add (30000, sync_handler_timeout, NULL);
 		sync_handler_needed = FALSE;
 		panel_config_sync ();
 	} else {
@@ -207,7 +207,7 @@ panel_session_do_sync (gpointer data)
 void
 panel_session_setup_config_sync (void)
 {
-	config_sync_timeout = gtk_timeout_add (10*1000, panel_session_do_sync, NULL);
+	config_sync_timeout = g_timeout_add (10*1000, panel_session_do_sync, NULL);
 }
 
 /* This is called when the session manager requests a shutdown.  It
@@ -253,7 +253,7 @@ panel_session_die (GnomeClient *client,
 {
 	GSList *l;
 
-	gtk_timeout_remove (config_sync_timeout);
+	g_source_remove (config_sync_timeout);
 	config_sync_timeout = 0;
   
 	status_inhibit = TRUE;

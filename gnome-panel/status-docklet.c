@@ -104,7 +104,7 @@ status_docklet_destroy(GtkObject *o)
 	docklet = STATUS_DOCKLET(o);
 	
 	if (docklet->timeout_handle != -1)
-		gtk_timeout_remove(docklet->timeout_handle);
+		g_source_remove(docklet->timeout_handle);
 	docklet->timeout_handle = -1;
 	
 	/*if we do have a plug, set the "status_docklet" data to NULL,
@@ -318,12 +318,12 @@ status_docklet_run(StatusDocklet *docklet)
 	g_return_if_fail(IS_STATUS_DOCKLET(docklet));
 
 	if(docklet->timeout_handle != -1)
-		gtk_timeout_remove(docklet->timeout_handle);
+		g_source_remove(docklet->timeout_handle);
 
 	if(!try_getting_plug(docklet)) {
 		docklet->tries ++;
 		if(docklet->tries < docklet->maximum_retries)
-			docklet->timeout_handle = gtk_timeout_add(STATUS_DOCKLET_RETRY_EVERY*1000,
+			docklet->timeout_handle = g_timeout_add(STATUS_DOCKLET_RETRY_EVERY*1000,
 								  try_timeout,docklet);
 		else
 			docklet->tries = 0;

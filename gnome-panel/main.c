@@ -228,7 +228,7 @@ main(int argc, char **argv)
 	panel_session_setup_config_sync ();
 
 	/* add some timeouts */
-	gtk_timeout_add (10*1000, menu_age_timeout, NULL);
+	g_timeout_add (10*1000, menu_age_timeout, NULL);
 
 	status_applet_create_offscreen ();
 

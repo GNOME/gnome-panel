@@ -525,7 +525,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	item = gtk_menu_item_new ();
 
 	foo->clock_label = gtk_label_new ("");
-	foo->clock_timeout = gtk_timeout_add (1000, timeout_cb, foo);
+	foo->clock_timeout = g_timeout_add (1000, timeout_cb, foo);
 
 	foo->clock_ebox = item;
 	gtk_container_add (GTK_CONTAINER (item), foo->clock_label);
@@ -1178,7 +1178,7 @@ foobar_widget_destroy (GtkObject *o)
 	foobars = g_list_remove (foobars, foo);
 
 	if (foo->clock_timeout != 0)
-		gtk_timeout_remove (foo->clock_timeout);
+		g_source_remove (foo->clock_timeout);
 	foo->clock_timeout = 0;
 	
 	foo->clock_label = NULL;

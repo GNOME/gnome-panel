@@ -1434,10 +1434,10 @@ ditem_properties_changed (GtkWidget *dedit, gpointer data)
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout", NULL);
 
 	if (timeout != 0)
-		gtk_timeout_remove (timeout);
+		g_source_remove (timeout);
 
 	/* Will save after 5 seconds */
-	timeout = gtk_timeout_add (5 * 1000,
+	timeout = g_timeout_add (5 * 1000,
 				   ditem_properties_apply_timeout,
 				   dedit);
 
@@ -1458,7 +1458,7 @@ ditem_properties_close (GtkWidget *widget, gpointer data)
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout", NULL);
 
 	if (timeout != 0) {
-		gtk_timeout_remove (timeout);
+		g_source_remove (timeout);
 
 		ditem_properties_apply_timeout (dedit);
 	}

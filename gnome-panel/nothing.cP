@@ -24,7 +24,7 @@ destroy_egg(GtkWidget *widget, gpointer data)
 {
 	goat_pages = 0;
 	if(goat_timeout) {
-		gtk_timeout_remove(goat_timeout);
+		g_source_remove(goat_timeout);
 		goat_timeout = 0;
 	}
 	goat_x = goat_y = -1;
@@ -212,7 +212,7 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 					G_CALLBACK (goat_realize),NULL);
 		
 		gtk_widget_show(goat_darea);
-		goat_timeout = gtk_timeout_add(60,goat_timeout_func,NULL);
+		goat_timeout = g_timeout_add(60,goat_timeout_func,NULL);
 		/*the GEGL shall not be translated*/
 		gtk_notebook_append_page (nbook, goat_darea,
 					  gtk_label_new ("GEGL"));
@@ -252,7 +252,7 @@ phsh_kill (void)
                 g_object_unref (G_OBJECT (phsh.phsh_mask[i]));
         }
         gdk_window_destroy (phsh.win);
-        gtk_timeout_remove (phsh.handler);
+        g_source_remove (phsh.handler);
         memset (&phsh, 0, sizeof (AppletContainer));
 }
 
@@ -339,8 +339,8 @@ phsh_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
         if (xevent->type == ButtonPress &&
             ! phsh.hide_mode) {
-                gtk_timeout_remove (phsh.handler);
-                phsh.handler = gtk_timeout_add (90, phsh_move, NULL);
+                g_source_remove (phsh.handler);
+                phsh.handler = g_timeout_add (90, phsh_move, NULL);
                 phsh.xs *= 2.0;
                 phsh.ys *= 2.5;
                 phsh.hide_mode = TRUE;
@@ -453,7 +453,7 @@ check_screen (void)
                                NULL);
 
         gdk_window_show (phsh.win);
-        phsh.handler = gtk_timeout_add (150, phsh_move, NULL);
+        phsh.handler = g_timeout_add (150, phsh_move, NULL);
 }
 
 static guint screen_check_id = 0;
@@ -465,7 +465,7 @@ check_screen_timeout (gpointer data)
 
         check_screen ();
 
-        screen_check_id = gtk_timeout_add (rand()%120*1000,
+        screen_check_id = g_timeout_add (rand()%120*1000,
                                            check_screen_timeout, NULL);
         return FALSE;
 }
@@ -474,12 +474,12 @@ void
 start_screen_check (void)
 {
         if (screen_check_id > 0)
-                gtk_timeout_remove (screen_check_id);
+                g_source_remove (screen_check_id);
 
         screen_check_id = 0;
         check_screen ();
 
-        screen_check_id = gtk_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
+        screen_check_id = g_timeout_add (rand()%120*1000, check_screen_timeout, NULL);
 }
 
 typedef struct {
@@ -1422,7 +1422,7 @@ move_window_destroyed (GtkWidget *win)
 	int handler = GPOINTER_TO_INT (data);
 
 	if (handler != 0)
-		gtk_timeout_remove (handler);
+		g_source_remove (handler);
 	g_object_set_data (G_OBJECT (win), "move_window_handler", NULL);
 }
 
@@ -1433,7 +1433,7 @@ doblah (GtkWidget *window)
 	int handler = GPOINTER_TO_INT (data);
 
 	if (handler == 0) {
-		handler = gtk_timeout_add (30, move_window_handler, window);
+		handler = g_timeout_add (30, move_window_handler, window);
 		data = GINT_TO_POINTER (handler);
 		g_object_set_data (G_OBJECT (window), "move_window_handler", data);
 		g_signal_connect (G_OBJECT (window), "destroy",

@@ -1826,7 +1826,7 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 	g_return_if_fail (ad != NULL);
 
 	if (moving_timeout != 0) {
-		gtk_timeout_remove (moving_timeout);
+		g_source_remove (moving_timeout);
 		moving_timeout = 0;
 		been_moved = FALSE;
 	}
@@ -1863,7 +1863,7 @@ panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 
 	remove_all_move_bindings (panel);
 	if (moving_timeout != 0) {
-		gtk_timeout_remove (moving_timeout);
+		g_source_remove (moving_timeout);
 		moving_timeout = 0;
 		been_moved = FALSE;
 	}
@@ -2284,7 +2284,7 @@ schedule_try_move(PanelWidget *panel, gboolean repeater)
 		been_moved = FALSE;
 		panel_widget_applet_move_to_cursor(panel);
 		moving_timeout =
-			gtk_timeout_add (50, move_timeout_handler, panel);
+			g_timeout_add (50, move_timeout_handler, panel);
 	} else
 		been_moved = TRUE;
 }
