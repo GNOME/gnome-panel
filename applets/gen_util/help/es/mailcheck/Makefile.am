@@ -1,5 +1,4 @@
 figs = \
-	figures/mailcheck-applet.png			\
 	figures/mailcheck-properties-mailbox.png	\
 	figures/mailcheck-properties-mailcheck.png
 docname = mailcheck_applet
