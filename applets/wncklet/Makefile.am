@@ -34,11 +34,8 @@ wnck_applet_LDADD = \
 	../../libpanel-applet/libpanel-applet-2.la \
 	$(WNCKLET_LIBS)
 
-BUILT_SOURCES = inlinepixbufs.h
-
 EXTRA_DIST = \
 	GNOME_Wncklet_Factory.server.in.in \
-	$(IMAGES) \
 	$(ui_DATA) \
 	$(schemas_in_files) \
 	$(glade_DATA)
@@ -60,14 +57,6 @@ ui_DATA  = \
 	GNOME_WorkspaceSwitcherApplet.xml \
 	GNOME_ShowDesktopApplet.xml \
 	GNOME_WindowListApplet.xml
-
-IMAGES = default_icon.png
-VARIABLES = default_icon_data $(srcdir)/default_icon.png
-
-noinst_DATA = inlinepixbufs.h
-
-inlinepixbufs.h: $(IMAGES)
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(VARIABLES) > inlinepixbufs.h
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = workspace-switcher.schemas.in window-list.schemas.in 
