@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.4.0.5\n"
-"POT-Creation-Date: 2002-08-19 05:05+0200\n"
+"POT-Creation-Date: 2002-08-27 15:42+1200\n"
 "PO-Revision-Date: 2002-08-19 09:19+0200\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -33,8 +33,8 @@ msgstr "_Info..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:3378 gnome-panel/menu.c:4081
+#: gnome-panel/launcher.c:736 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3349 gnome-panel/menu.c:4052
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -115,7 +115,7 @@ msgid "_Animation filename:"
 msgstr "Naam van het _animatiebestand:"
 
 #: applets/fish/fish.c:741 applets/gen_util/mailcheck.c:1276
-#: gnome-panel/panel-config.c:1401 gnome-panel/panel-util.c:241
+#: gnome-panel/panel-config.c:1402 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Bladeren"
 
@@ -158,7 +158,8 @@ msgstr ""
 #: applets/fish/fish.c:1024
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
-"run.\n\n"
+"run.\n"
+"\n"
 "Please refer to fish properties dialog."
 msgstr ""
 "U heeft \"fortune\" niet geïnstalleerd op uw systeem of u heeft de "
@@ -195,8 +196,8 @@ msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"Een vis zonder naam is behoorlijk saai. Geef het beestje een naam om er leven "
-"in te blazen."
+"Een vis zonder naam is behoorlijk saai. Geef het beestje een naam om er "
+"leven in te blazen."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -476,8 +477,8 @@ msgid ""
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"Het was niet mogelijk om na te gaan of u nieuwe e-mail heeft. De automatische "
-"verversing is daarom voorlopig\n"
+"Het was niet mogelijk om na te gaan of u nieuwe e-mail heeft. De "
+"automatische verversing is daarom voorlopig\n"
 "gedeactiveerd. Misschien hebt u een verkeerde server, gebruikersnaam of "
 "wachtwoord ingevuld?"
 
@@ -700,8 +701,8 @@ msgstr "Of automatisch op nieuwe e-mail moet worden gecontroleerd"
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr ""
-"Als dit is ingesteld, zal elke 'update-freq' miliseconden op nieuwe berichten "
-"worden gecontroleerd"
+"Als dit is ingesteld, zal elke 'update-freq' miliseconden op nieuwe "
+"berichten worden gecontroleerd"
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
@@ -763,8 +764,8 @@ msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
 msgstr ""
-"Dit is de animatie die wordt vertoond tijdens normaal gebruik van het Postvak "
-"in-applet"
+"Dit is de animatie die wordt vertoond tijdens normaal gebruik van het "
+"Postvak in-applet"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
@@ -802,23 +803,26 @@ msgstr "Kolommen"
 #: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
-msgstr "Fout bij laden van waarde: aantal-rijen voor de werkbladwisselaar: %s\n"
+msgstr ""
+"Fout bij laden van waarde: aantal-rijen voor de werkbladwisselaar: %s\n"
 
 #: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: "
-"%s\n"
+"Error loading display_workspace_names value for workspace switcher applet: %"
+"s\n"
 msgstr ""
-"Fout bij laden van waarde: toon-werkblad-namen voor de werkbladwisselaar: %s\n"
+"Fout bij laden van waarde: toon-werkblad-namen voor de werkbladwisselaar: %"
+"s\n"
 
 #: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %s\n"
+"Error loading display_all_workspaces value for workspace switcher applet: %"
+"s\n"
 msgstr ""
-"Fout bij laden van waarde: toon-alle-werkbladen voor de werkbladwisselaar: "
-"%s\n"
+"Fout bij laden van waarde: toon-alle-werkbladen voor de werkbladwisselaar: %"
+"s\n"
 
 #: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
@@ -826,8 +830,8 @@ msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/pager.c:505
 msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that lets "
-"you manage your windows."
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
 msgstr ""
 "De Werkbladwisselaar laat een verkleinde versie van uw werkruimte zien zodat "
 "u de vensters hierin kunt beheren."
@@ -865,8 +869,8 @@ msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
 msgstr ""
-"Als dit waar is zal de pager alle werkbladen tonen. Anders alleen het huidige "
-"werkblad."
+"Als dit waar is zal de pager alle werkbladen tonen. Anders alleen het "
+"huidige werkblad."
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
@@ -882,8 +886,9 @@ msgstr "Aantal rijen in de werkbladwisselaar"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
-"When showing all the workspaces this determines how many rows (for horizontal "
-"layout) or columns (for vertical layout) the pager shows the workspaces in."
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the pager shows the "
+"workspaces in."
 msgstr ""
 "Als alle werkbladen worden weergegeven, bepaalt dit de verdeling van de "
 "werkbladen in de werkbladwisselaar over het aantal rijen (voor een "
@@ -931,8 +936,8 @@ msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
 msgstr ""
-"Het printer applet laat je simpel bestanden afdrukken door ze naar het applet "
-"te slepen"
+"Het printer applet laat je simpel bestanden afdrukken door ze naar het "
+"applet te slepen"
 
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
@@ -1240,24 +1245,24 @@ msgstr "Verbergknop inschakelen"
 msgid "Enable hidebutton arrow"
 msgstr "Pijl op verbergknop inchakelen"
 
-#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3245
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3216
 msgid "Drawer"
 msgstr "Opberglade"
 
-#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1429 gnome-panel/menu.c:3353
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:734
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1403 gnome-panel/menu.c:3324
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
-#: gnome-panel/foobar-widget.c:141 gnome-panel/menu.c:3533
+#: gnome-panel/foobar-widget.c:141 gnome-panel/menu.c:3504
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "Kan gnome-panel-screenshot niet uitvoeren"
 
-#: gnome-panel/foobar-widget.c:152 gnome-panel/menu.c:3543
+#: gnome-panel/foobar-widget.c:152 gnome-panel/menu.c:3514
 msgid "Cannot execute gnome-search-tool"
 msgstr "Kan gnome-search-tool niet uitvoeren"
 
-#: gnome-panel/foobar-widget.c:162 gnome-panel/menu.c:3662
+#: gnome-panel/foobar-widget.c:162 gnome-panel/menu.c:3633
 msgid "Run Program..."
 msgstr "Programma uitvoeren..."
 
@@ -1265,23 +1270,23 @@ msgstr "Programma uitvoeren..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Programma's draaien, als u weet welke opdracht u moet in typen"
 
-#: gnome-panel/foobar-widget.c:175 gnome-panel/menu.c:3674
+#: gnome-panel/foobar-widget.c:175 gnome-panel/menu.c:3645
 msgid "Search for Files..."
 msgstr "Zoek naar bestanden..."
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3677
+#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3648
 msgid "Find files, folders, and documents on your computer"
 msgstr "Bestanden, mappen en documenten op uw computer vinden"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3687
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3658
 msgid "Screenshot..."
 msgstr "Schermafdruk..."
 
-#: gnome-panel/foobar-widget.c:194 gnome-panel/menu.c:3690
+#: gnome-panel/foobar-widget.c:194 gnome-panel/menu.c:3661
 msgid "Take a screenshot of your desktop"
 msgstr "Schermafdruk van uw bureaublad maken"
 
-#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3447
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3418
 msgid "Lock Screen"
 msgstr "Beeldscherm vergrendelen"
 
@@ -1289,7 +1294,7 @@ msgstr "Beeldscherm vergrendelen"
 msgid "Protect your computer from unauthorized use"
 msgstr "Uw computer tegen ongeautoriseerd gebruik beschermen"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3458
+#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3429
 msgid "Log Out"
 msgstr "Afmelden"
 
@@ -1306,7 +1311,7 @@ msgstr "Acties"
 msgid "No windows open"
 msgstr "Geen vensters open"
 
-#: gnome-panel/foobar-widget.c:686 gnome-panel/menu.c:2711
+#: gnome-panel/foobar-widget.c:686 gnome-panel/menu.c:2682
 msgid "Menu Panel"
 msgstr "Menu-paneel"
 
@@ -1314,16 +1319,16 @@ msgstr "Menu-paneel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME Menu-paneel"
 
-#: gnome-panel/foobar-widget.c:706 gnome-panel/menu.c:2847
-#: gnome-panel/menu.c:2852 gnome-panel/menu.c:3630
+#: gnome-panel/foobar-widget.c:706 gnome-panel/menu.c:2818
+#: gnome-panel/menu.c:2823 gnome-panel/menu.c:3601
 msgid "Applications"
 msgstr "Toepassingen"
 
-#: gnome-panel/global-keys.c:289 gnome-panel/global-keys.c:317
+#: gnome-panel/global-keys.c:319 gnome-panel/global-keys.c:347
 msgid "Can't find the screenshot program"
 msgstr "Kan het schermafdruk-programma niet vinden"
 
-#: gnome-panel/global-keys.c:298 gnome-panel/global-keys.c:327
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't execute the screenshot program"
 msgstr "Het schermafdruk-programma kan niet uitgevoerd worden"
 
@@ -1633,15 +1638,15 @@ msgstr "Opdracht '%s' zal worden uitgevoerd"
 msgid "No application selected"
 msgstr "Geen toepassing geselecteerd"
 
-#: gnome-panel/gnome-run.c:1457
+#: gnome-panel/gnome-run.c:1458
 msgid "List of known applications"
 msgstr "Lijst van bekende toepassingen"
 
-#: gnome-panel/gnome-run.c:1458
+#: gnome-panel/gnome-run.c:1459
 msgid "Choose an application to run from the list"
 msgstr "Kies uit de lijst een toepassing om te draaien"
 
-#: gnome-panel/gnome-run.c:1582
+#: gnome-panel/gnome-run.c:1583
 msgid "Run Program"
 msgstr "Programma uitvoeren"
 
@@ -1700,17 +1705,17 @@ msgstr "Hulp over %s Toepassing"
 msgid "Launcher Properties"
 msgstr "Starter-eigenschappen"
 
-#: gnome-panel/launcher.c:689
+#: gnome-panel/launcher.c:690
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Sleutel %s is niet ingesteld, kan starter niet laden\n"
 
-#: gnome-panel/launcher.c:780 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:784 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Starter creëren"
 
 #. class
-#: gnome-panel/launcher.c:1000
+#: gnome-panel/launcher.c:1004
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1722,7 +1727,7 @@ msgstr ""
 "%s"
 
 # help is hier vertaald met help ipv hulp omdat hulp-document dubbelzinnig is
-#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1069
+#: gnome-panel/launcher.c:1090 gnome-panel/menu.c:1063
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1788,8 +1793,8 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3730
-#: gnome-panel/menu.c:3958
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3701
+#: gnome-panel/menu.c:3929
 msgid "Menu"
 msgstr "Menu"
 
@@ -1832,8 +1837,8 @@ msgstr "en tenslotte, The Knights Who Say ... NI!"
 
 #: gnome-panel/menu.c:265
 msgid ""
-"This program is responsible for launching other applications, embedding small "
-"applets within itself, world peace, and random X crashes."
+"This program is responsible for launching other applications, embedding "
+"small applets within itself, world peace, and random X crashes."
 msgstr ""
 "Dit programma is verantwoordelijk voor het starten van andere applicaties, "
 "het bevatten van appletjes, de wereldvrede en willekeurige crashes van X."
@@ -1884,7 +1889,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu.c:343 gnome-panel/menu.c:1047 gnome-panel/menu.c:1079
+#: gnome-panel/menu.c:343 gnome-panel/menu.c:1041 gnome-panel/menu.c:1073
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1895,7 +1900,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: gnome-panel/menu.c:952
+#: gnome-panel/menu.c:947
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1906,17 +1911,17 @@ msgstr ""
 "\n"
 "Details: %s\n"
 
-#: gnome-panel/menu.c:962
+#: gnome-panel/menu.c:957
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Bestand niet gevonden in pad: %s"
 
-#: gnome-panel/menu.c:969
+#: gnome-panel/menu.c:964
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kon map naam van pad %s niet vinden."
 
-#: gnome-panel/menu.c:1039
+#: gnome-panel/menu.c:1033
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1926,140 +1931,140 @@ msgstr ""
 "\n"
 "Details: Geen 'Exec' of 'URL' veld in dit item"
 
-#: gnome-panel/menu.c:1349
+#: gnome-panel/menu.c:1335
 msgid "Add this launcher to panel"
 msgstr "Deze starter toevoegen aan het paneel"
 
-#: gnome-panel/menu.c:1363
+#: gnome-panel/menu.c:1343
 msgid "Remove this item"
 msgstr "Dit item verwijderen"
 
-#: gnome-panel/menu.c:1380
+#: gnome-panel/menu.c:1359
 msgid "Put into run dialog"
 msgstr "In uitvoeren-dialoog zetten"
 
-#: gnome-panel/menu.c:1398
+#: gnome-panel/menu.c:1377
 #, c-format
 msgid "Help on %s"
 msgstr "Hulp bij %s"
 
-#: gnome-panel/menu.c:1399
+#: gnome-panel/menu.c:1378
 msgid "Application"
 msgstr "Toepassing"
 
-#: gnome-panel/menu.c:1449
+#: gnome-panel/menu.c:1422
 msgid "Entire menu"
 msgstr "Hele menu"
 
-#: gnome-panel/menu.c:1458
+#: gnome-panel/menu.c:1431
 msgid "Add this as drawer to panel"
 msgstr "Als opberglade aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1466
+#: gnome-panel/menu.c:1439
 msgid "Add this as menu to panel"
 msgstr "Als menu aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1479
+#: gnome-panel/menu.c:1447
 msgid "Add new item to this menu"
 msgstr "Nieuw item toevoegen aan dit menu"
 
-#: gnome-panel/menu.c:1504
+#: gnome-panel/menu.c:1472
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: gnome-panel/menu.c:2384 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2351 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query resulteerde in uitzondering %s\n"
 
-#: gnome-panel/menu.c:2628 gnome-panel/menu.c:2632
+#: gnome-panel/menu.c:2595 gnome-panel/menu.c:2600
 msgid "Aligned Panel"
 msgstr "Uitgelijnd Paneel"
 
-#: gnome-panel/menu.c:2633
+#: gnome-panel/menu.c:2601
 msgid "GNOME Aligned Panel"
 msgstr "GNOME uitgelijnd paneel"
 
-#: gnome-panel/menu.c:2649 gnome-panel/menu.c:2652
-#: gnome-panel/panel-config.c:1641
+#: gnome-panel/menu.c:2617 gnome-panel/menu.c:2621
+#: gnome-panel/panel-config.c:1642
 msgid "Edge Panel"
 msgstr "Randpaneel"
 
-#: gnome-panel/menu.c:2653
+#: gnome-panel/menu.c:2622
 msgid "GNOME Edge Panel"
 msgstr "GNOME Randpaneel"
 
-#: gnome-panel/menu.c:2673 gnome-panel/menu.c:2676
-#: gnome-panel/panel-config.c:1663
+#: gnome-panel/menu.c:2642 gnome-panel/menu.c:2646
+#: gnome-panel/panel-config.c:1664
 msgid "Sliding Panel"
 msgstr "Schuivend Paneel"
 
-#: gnome-panel/menu.c:2677
+#: gnome-panel/menu.c:2647
 msgid "GNOME Sliding Panel"
 msgstr "GNOME Schuivend Paneel"
 
-#: gnome-panel/menu.c:2694 gnome-panel/menu.c:2698
-#: gnome-panel/panel-config.c:1674
+#: gnome-panel/menu.c:2664 gnome-panel/menu.c:2669
+#: gnome-panel/panel-config.c:1675
 msgid "Floating Panel"
 msgstr "Zwevend Paneel"
 
-#: gnome-panel/menu.c:2699
+#: gnome-panel/menu.c:2670
 msgid "GNOME Floating Panel"
 msgstr "GNOME Zwevend Paneel"
 
-#: gnome-panel/menu.c:2718
+#: gnome-panel/menu.c:2689
 msgid "You can only have one menu panel at a time."
 msgstr "U kunt maar één menupaneel tegelijkertijd hebben."
 
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2728
 msgid "C_orner Panel"
 msgstr "H_oekpaneel"
 
-#: gnome-panel/menu.c:2759
+#: gnome-panel/menu.c:2730
 msgid "Create corner panel"
 msgstr "Hoekpaneel creëren"
 
-#: gnome-panel/menu.c:2767
+#: gnome-panel/menu.c:2738
 msgid "_Edge Panel"
 msgstr "_Randpaneel"
 
-#: gnome-panel/menu.c:2769
+#: gnome-panel/menu.c:2740
 msgid "Create edge panel"
 msgstr "Randpaneel creëren"
 
-#: gnome-panel/menu.c:2776
+#: gnome-panel/menu.c:2747
 msgid "_Floating Panel"
 msgstr "_Zwevend Paneel"
 
-#: gnome-panel/menu.c:2778
+#: gnome-panel/menu.c:2749
 msgid "Create floating panel"
 msgstr "Zwevend paneel creëren"
 
-#: gnome-panel/menu.c:2785
+#: gnome-panel/menu.c:2756
 msgid "_Sliding Panel"
 msgstr "_Schuivend paneel"
 
-#: gnome-panel/menu.c:2787
+#: gnome-panel/menu.c:2758
 msgid "Create sliding panel"
 msgstr "Schuivend paneel creëren"
 
-#: gnome-panel/menu.c:2806
+#: gnome-panel/menu.c:2777
 msgid "_Menu Panel"
 msgstr "_Menu-paneel"
 
-#: gnome-panel/menu.c:2808
+#: gnome-panel/menu.c:2779
 msgid "Create menu panel"
 msgstr "Menu-paneel creëren"
 
-#: gnome-panel/menu.c:2895 gnome-panel/menu.c:2901 gnome-panel/menu.c:3519
+#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2872 gnome-panel/menu.c:3490
 msgid "KDE Menu"
 msgstr "KDE-menu"
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2935
 msgid "You cannot remove your last panel."
 msgstr "Het laatste paneel kan niet verwijderd worden."
 
-#: gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2948
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2067,44 +2072,44 @@ msgstr ""
 "Wanneer een paneel verwijderd wordt, gaan alle\n"
 "instellingen hiervan verloren. Paneel toch verwijderen?"
 
-#: gnome-panel/menu.c:3222
+#: gnome-panel/menu.c:3193
 msgid "Launcher..."
 msgstr "Starter..."
 
-#: gnome-panel/menu.c:3229
+#: gnome-panel/menu.c:3200
 msgid "Launcher from menu"
 msgstr "Starter vanuit menu"
 
-#: gnome-panel/menu.c:3237 gnome-panel/menu.c:3782 gnome-panel/menu.c:3810
-#: gnome-panel/menu.c:4003
+#: gnome-panel/menu.c:3208 gnome-panel/menu.c:3753 gnome-panel/menu.c:3781
+#: gnome-panel/menu.c:3974
 msgid "GNOME Menu"
 msgstr "Gnome-menu"
 
-#: gnome-panel/menu.c:3253
+#: gnome-panel/menu.c:3224
 msgid "Log Out Button"
 msgstr "Afmeldknop"
 
-#: gnome-panel/menu.c:3261
+#: gnome-panel/menu.c:3232
 msgid "Lock button"
 msgstr "Vergrendelknop"
 
-#: gnome-panel/menu.c:3305
+#: gnome-panel/menu.c:3276
 msgid "_Delete This Panel..."
 msgstr "Dit paneel _verwijderen..."
 
-#: gnome-panel/menu.c:3308 gnome-panel/menu.c:3339
+#: gnome-panel/menu.c:3279 gnome-panel/menu.c:3310
 msgid "_Delete This Panel"
 msgstr "Dit paneel _verwijderen"
 
-#: gnome-panel/menu.c:3326
+#: gnome-panel/menu.c:3297
 msgid "_Add to Panel"
 msgstr "_Toevoegen aan paneel"
 
-#: gnome-panel/menu.c:3366
+#: gnome-panel/menu.c:3337
 msgid "_New Panel"
 msgstr "_Nieuw paneel"
 
-#: gnome-panel/menu.c:3391
+#: gnome-panel/menu.c:3362
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2114,19 +2119,20 @@ msgstr ""
 "\n"
 "Details: xscreensaver-opdracht niet gevonden"
 
-#: gnome-panel/menu.c:3411
+#: gnome-panel/menu.c:3382
 msgid "_About Panels"
 msgstr "_Paneel-info"
 
-#: gnome-panel/menu.c:3424
+#: gnome-panel/menu.c:3395
 msgid "About _GNOME"
 msgstr "_GNOME-info"
 
-#: gnome-panel/menu.c:3453
-msgid "Lock the screen so that you can temporairly leave your computer"
+#: gnome-panel/menu.c:3424
+#, fuzzy
+msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Het scherm vergrendelen zodat u uw computer tijdelijk kunt verlaten"
 
-#: gnome-panel/menu.c:3464
+#: gnome-panel/menu.c:3435
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2134,27 +2140,27 @@ msgstr ""
 "Deze sessie afsluiten zodat u zich aan kunt melden als een andere gebruiker, "
 "of uw computer uitzetten"
 
-#: gnome-panel/menu.c:3646
+#: gnome-panel/menu.c:3617
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3668
+#: gnome-panel/menu.c:3639
 msgid "Run a command"
 msgstr "Opdracht uitvoeren"
 
-#: gnome-panel/menu.c:3702
+#: gnome-panel/menu.c:3673
 msgid "Desktop"
 msgstr "Bureaublad"
 
-#: gnome-panel/menu.c:3732
+#: gnome-panel/menu.c:3703
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3804
+#: gnome-panel/menu.c:3775
 msgid "Can't create menu, using main menu!"
 msgstr "Kan menu niet aanmaken, hoofdmenu wordt gebruikt!"
 
-#: gnome-panel/menu.c:4319
+#: gnome-panel/menu.c:4290
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Geen pad ingesteld bij %s voor paneel-menuobject\n"
@@ -2198,8 +2204,8 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Er heeft zich een probleem voorgedaan tijdens het laden van het applet "
-"'%s'</b>\n"
+"<b>Er heeft zich een probleem voorgedaan tijdens het laden van het applet '%"
+"s'</b>\n"
 "\n"
 "Details: %s"
 
@@ -2226,128 +2232,128 @@ msgstr "Diversen"
 msgid "Current screen:"
 msgstr "Huidige scherm:"
 
-#: gnome-panel/panel-config.c:706
+#: gnome-panel/panel-config.c:707
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Geeft de paneelpositite en de oriëntatie op het scherm"
 
-#: gnome-panel/panel-config.c:724
+#: gnome-panel/panel-config.c:725
 msgid "_Position:"
 msgstr "_Paneelpositie:"
 
-#: gnome-panel/panel-config.c:951
+#: gnome-panel/panel-config.c:952
 msgid "Orient hori_zontally"
 msgstr "Hori_zontaal georiënteerd"
 
-#: gnome-panel/panel-config.c:963
+#: gnome-panel/panel-config.c:964
 msgid "Orient _vertically"
 msgstr "_Verticaal georiënteerd"
 
-#: gnome-panel/panel-config.c:977
+#: gnome-panel/panel-config.c:978
 msgid "H_orizontal offset:"
 msgstr "H_orizontale verspringing:"
 
-#: gnome-panel/panel-config.c:997
+#: gnome-panel/panel-config.c:998
 msgid "Ver_tical offset:"
 msgstr "Ver_ticale verspringing:"
 
-#: gnome-panel/panel-config.c:1062
+#: gnome-panel/panel-config.c:1063
 msgid "Screen edge _offset:"
 msgstr "Schermrand _verspringing:"
 
-#: gnome-panel/panel-config.c:1121
+#: gnome-panel/panel-config.c:1122
 msgid "_Size:"
 msgstr "_Grootte:"
 
-#: gnome-panel/panel-config.c:1129
+#: gnome-panel/panel-config.c:1130
 msgid "XX Small (12 pixels)"
 msgstr "Miniem (12 pixels)"
 
-#: gnome-panel/panel-config.c:1137
+#: gnome-panel/panel-config.c:1138
 msgid "X Small (24 pixels)"
 msgstr "Heel klein (24 pixels)"
 
-#: gnome-panel/panel-config.c:1145
+#: gnome-panel/panel-config.c:1146
 msgid "Small (36 pixels)"
 msgstr "Klein (36 punten)"
 
-#: gnome-panel/panel-config.c:1153
+#: gnome-panel/panel-config.c:1154
 msgid "Medium (48 pixels)"
 msgstr "Medium (48 pixels)"
 
-#: gnome-panel/panel-config.c:1161
+#: gnome-panel/panel-config.c:1162
 msgid "Large (64 pixels)"
 msgstr "Groot (64 punten)"
 
-#: gnome-panel/panel-config.c:1169
+#: gnome-panel/panel-config.c:1170
 msgid "X Large (80 pixels)"
 msgstr "Heel groot (80 pixels)"
 
-#: gnome-panel/panel-config.c:1177
+#: gnome-panel/panel-config.c:1178
 msgid "XX Large (128 pixels)"
 msgstr "Gigantisch (128 pixels)"
 
-#: gnome-panel/panel-config.c:1325
+#: gnome-panel/panel-config.c:1326
 msgid "Background _type:"
 msgstr "Achtergrond_type :"
 
-#: gnome-panel/panel-config.c:1333
+#: gnome-panel/panel-config.c:1334
 msgid "Default"
 msgstr "Standaard"
 
-#: gnome-panel/panel-config.c:1337
+#: gnome-panel/panel-config.c:1338
 msgid "Color"
 msgstr "Kleur"
 
 #. image frame
-#: gnome-panel/panel-config.c:1341 gnome-panel/panel-config.c:1389
+#: gnome-panel/panel-config.c:1342 gnome-panel/panel-config.c:1390
 msgid "Image"
 msgstr "Afbeelding"
 
-#: gnome-panel/panel-config.c:1356
+#: gnome-panel/panel-config.c:1357
 msgid "Background co_lor:"
 msgstr "Achtergrondk_leur:"
 
-#: gnome-panel/panel-config.c:1415
+#: gnome-panel/panel-config.c:1416
 msgid "_Do not scale image to fit"
 msgstr "_Afbeelding niet schalen om te passen"
 
-#: gnome-panel/panel-config.c:1420
+#: gnome-panel/panel-config.c:1421
 msgid "Sc_ale image"
 msgstr "Afbeelding sch_alen"
 
-#: gnome-panel/panel-config.c:1424
+#: gnome-panel/panel-config.c:1425
 msgid "St_retch image"
 msgstr "Afbeelding uit_rekken"
 
-#: gnome-panel/panel-config.c:1438
+#: gnome-panel/panel-config.c:1439
 msgid "Rotate image for _vertical panels"
 msgstr "Afbeelding draaien bij _verticale panelen"
 
-#: gnome-panel/panel-config.c:1517
+#: gnome-panel/panel-config.c:1518
 msgid "Edge panel"
 msgstr "Randpaneel"
 
-#: gnome-panel/panel-config.c:1524
+#: gnome-panel/panel-config.c:1525
 msgid "Corner panel"
 msgstr "Hoek paneel"
 
-#: gnome-panel/panel-config.c:1530
+#: gnome-panel/panel-config.c:1531
 msgid "Sliding panel"
 msgstr "Schuivend paneel"
 
-#: gnome-panel/panel-config.c:1536
+#: gnome-panel/panel-config.c:1537
 msgid "Floating panel"
 msgstr "Zwevend paneel"
 
-#: gnome-panel/panel-config.c:1609
+#: gnome-panel/panel-config.c:1610
 msgid "Panel Properties"
 msgstr "Paneeleigenschappen"
 
-#: gnome-panel/panel-config.c:1652
+#: gnome-panel/panel-config.c:1653
 msgid "Corner Panel"
 msgstr "Hoekpaneel"
 
-#: gnome-panel/panel-config.c:1693
+#: gnome-panel/panel-config.c:1694
 msgid "Background"
 msgstr "Achtergrond"
 
@@ -2399,7 +2405,8 @@ msgstr ""
 #: gnome-panel/panel-shell.c:47
 #, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation server.\n"
+"There was a problem registering the panel with the bonobo-activation "
+"server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
@@ -2543,4 +2550,3 @@ msgstr "Gigantisch"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Miniem"
-
