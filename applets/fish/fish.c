@@ -30,12 +30,15 @@ struct _Fish {
 	GtkWidget *applet;
 	GtkWidget *frame;
 	GtkWidget *darea;
-	GdkImlibImage *pix;
+	GdkPixmap *pix;
+	int w,h;
 	int curpix;
 	int timeout_id;
 	GtkWidget * fortune_dialog;
 	GtkWidget * fortune_label;
 	GtkWidget * fortune_less; 
+	GtkWidget * aboutbox;
+	GtkWidget * pb;
 };
 
 
@@ -44,6 +47,7 @@ static void
 load_properties(Fish *fish)
 {
 	char buf[256];
+	GdkImlibImage *pix;
 	if(!defaults.image)
 		defaults.image = gnome_unconditional_pixmap_file ("fish/fishanim.png");
 
@@ -69,11 +73,15 @@ load_properties(Fish *fish)
 	gnome_config_pop_prefix();
 
 	if(fish->pix)
-		gdk_imlib_destroy_image(fish->pix);
+		gdk_pixmap_unref(fish->pix);
 	
-	fish->pix = gdk_imlib_load_image(fish->prop.image);
-	gdk_imlib_render (fish->pix, fish->pix->rgb_width,
-			  fish->pix->rgb_height);
+	pix = gdk_imlib_load_image(fish->prop.image);
+	gdk_imlib_render (pix, pix->rgb_width,
+			  pix->rgb_height);
+	fish->w = pix->rgb_width;
+	fish->h = pix->rgb_height;
+	fish->pix = gdk_imlib_move_image(pix);
+	gdk_imlib_destroy_image(pix);
 }
 
 static char *
@@ -95,8 +103,8 @@ fish_draw(GtkWidget *darea, Fish *fish)
 	
 	gdk_draw_pixmap(fish->darea->window,
 			fish->darea->style->fg_gc[GTK_WIDGET_STATE(fish->darea)],
-			fish->pix->pixmap,
-			(fish->pix->rgb_width*fish->curpix)/fish->prop.frames,
+			fish->pix,
+			(fish->w*fish->curpix)/fish->prop.frames,
 			0, 0, 0, -1, -1);
 }
 
@@ -117,6 +125,7 @@ apply_properties(Fish *fish)
 	char * tmp;
 	const char * title_format = _("%s the Fish");
 	const char * label_format = _("%s the GNOME Fish Says:");
+	GdkImlibImage *pix;
 
 	if (fish->fortune_dialog != NULL) { 
 		tmp = splice_name(title_format, fish->prop.name);
@@ -129,19 +138,20 @@ apply_properties(Fish *fish)
 	}
 	
 	if(fish->pix)
-		gdk_imlib_destroy_image(fish->pix);
+		gdk_pixmap_unref(fish->pix);
 	
-	fish->pix = gdk_imlib_load_image(fish->prop.image);
-	gdk_imlib_render (fish->pix, fish->pix->rgb_width,
-			  fish->pix->rgb_height);
+	pix = gdk_imlib_load_image(fish->prop.image);
+	gdk_imlib_render (pix, pix->rgb_width,
+			  pix->rgb_height);
+	fish->w = pix->rgb_width;
+	fish->h = pix->rgb_height;
+	fish->pix = gdk_imlib_move_image(pix);
+	gdk_imlib_destroy_image(pix);
 
 	gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-			      fish->pix->rgb_width/fish->prop.frames,
-			      fish->pix->rgb_height);
+			      fish->w/fish->prop.frames, fish->h);
 
-	gtk_widget_set_usize(fish->darea,
-			     fish->pix->rgb_width/fish->prop.frames,
-			     fish->pix->rgb_height);
+	gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames, fish->h);
 
 	if(fish->timeout_id)
 		gtk_timeout_remove(fish->timeout_id);
@@ -181,20 +191,31 @@ apply_cb(GnomePropertyBox * pb, int page, Fish *fish)
 	apply_properties(fish);
 }
 
+static void
+destroy_pb(GtkWidget *w, Fish *fish)
+{
+	fish->pb = NULL;
+}
+
 static void 
 properties_dialog(AppletWidget *aw, gpointer data)
 {
 	Fish *fish = data;
-	GtkWidget *pb;
 	GtkWidget *vbox;
 	GtkWidget *hbox;
 	GtkWidget *w;
 	GtkWidget *e;
 	GtkAdjustment *adj;
+	
+	if(fish->pb) {
+		gtk_widget_show(fish->pb);
+		gdk_window_raise(fish->pb->window);
+		return;
+	}
 
-	pb = gnome_property_box_new();
+	fish->pb = gnome_property_box_new();
 
-	gtk_window_set_title(GTK_WINDOW(pb), _("GNOME Fish Properties"));
+	gtk_window_set_title(GTK_WINDOW(fish->pb), _("GNOME Fish Properties"));
 
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), GNOME_PAD);
@@ -207,11 +228,11 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	e = gtk_entry_new();
 	gtk_entry_set_text(GTK_ENTRY(e), fish->prop.name);
 	gtk_box_pack_start(GTK_BOX(hbox), e, TRUE, TRUE, 0);
-	gtk_object_set_data(GTK_OBJECT(pb),"name",e);
+	gtk_object_set_data(GTK_OBJECT(fish->pb),"name",e);
 
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
 					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					      GTK_OBJECT(pb));
+					      GTK_OBJECT(fish->pb));
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -222,11 +243,11 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	gtk_box_pack_start(GTK_BOX(hbox),w,TRUE,TRUE,0);
 	e = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (w));
 	gtk_entry_set_text(GTK_ENTRY(e), fish->prop.image);
-	gtk_object_set_data(GTK_OBJECT(pb),"image",w);
+	gtk_object_set_data(GTK_OBJECT(fish->pb),"image",w);
 
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(e), "changed",
 					      GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					      GTK_OBJECT(pb));
+					      GTK_OBJECT(fish->pb));
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -238,11 +259,11 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	w = gtk_spin_button_new(adj,0,0);
 	gtk_widget_set_usize(w,70,0);
 	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
-	gtk_object_set_data(GTK_OBJECT(pb),"frames",adj);
+	gtk_object_set_data(GTK_OBJECT(fish->pb),"frames",adj);
 
 	gtk_signal_connect_object(GTK_OBJECT(adj), "value_changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(pb));
+				  GTK_OBJECT(fish->pb));
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
@@ -254,19 +275,21 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	w = gtk_spin_button_new(adj,0,2);
 	gtk_widget_set_usize(w,70,0);
 	gtk_box_pack_start(GTK_BOX(hbox),w,FALSE,FALSE,0);
-	gtk_object_set_data(GTK_OBJECT(pb),"speed",adj);
+	gtk_object_set_data(GTK_OBJECT(fish->pb),"speed",adj);
 
 	gtk_signal_connect_object(GTK_OBJECT(adj), "value_changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
-				  GTK_OBJECT(pb));
+				  GTK_OBJECT(fish->pb));
 
-	gnome_property_box_append_page(GNOME_PROPERTY_BOX(pb), vbox,
+	gnome_property_box_append_page(GNOME_PROPERTY_BOX(fish->pb), vbox,
 				       gtk_label_new(_("Fish")));
 
-	gtk_signal_connect(GTK_OBJECT(pb), "apply",
+	gtk_signal_connect(GTK_OBJECT(fish->pb), "apply",
 			   GTK_SIGNAL_FUNC(apply_cb),fish);
+	gtk_signal_connect(GTK_OBJECT(fish->pb), "destroy",
+			   GTK_SIGNAL_FUNC(destroy_pb),fish);
 
-	gtk_widget_show_all(pb);
+	gtk_widget_show_all(fish->pb);
 }
 
 static void 
@@ -322,8 +345,8 @@ fish_expose(GtkWidget *darea, GdkEventExpose *event, Fish *fish)
 {
 	gdk_draw_pixmap(fish->darea->window,
 			fish->darea->style->fg_gc[GTK_WIDGET_STATE(fish->darea)],
-			fish->pix->pixmap,
-			((fish->pix->rgb_width*fish->curpix)/fish->prop.frames)+
+			fish->pix,
+			((fish->w*fish->curpix)/fish->prop.frames)+
 			event->area.x, event->area.y,
 			event->area.x, event->area.y,
 			event->area.width, event->area.height);
@@ -341,8 +364,7 @@ create_fish_widget(Fish *fish)
 	
 	fish->darea = gtk_drawing_area_new();
 	gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-			      fish->pix->rgb_width/fish->prop.frames,
-			      fish->pix->rgb_height);
+			      fish->w/fish->prop.frames, fish->h);
 	gtk_widget_set_events(fish->darea, gtk_widget_get_events(fish->darea) |
 			      GDK_BUTTON_PRESS_MASK);
 	gtk_signal_connect(GTK_OBJECT(fish->darea), "button_press_event",
@@ -366,35 +388,47 @@ create_fish_widget(Fish *fish)
 	gtk_widget_pop_visual ();
 }
 
+static void
+destroy_about(GtkWidget *w, Fish *fish)
+{
+	fish->pb = NULL;
+}
+
 /*the most important dialog in the whole application*/
 static void
 about_cb (AppletWidget *widget, gpointer data)
 {
 	Fish *fish = data;
-	GtkWidget *about;
 	char *authors[3];
 	const char * author_format = _("%s the Fish");
+
+	if(fish->aboutbox) {
+		gtk_widget_show(fish->aboutbox);
+		gdk_window_raise(fish->aboutbox->window);
+		return;
+	}
 
 	authors[0] = splice_name(author_format, fish->prop.name);
 	authors[1] = _("(with minor help from George)");
 	authors[2] = NULL;
 
-	about = gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4",
-			"(C) 1998 the Free Software Foundation",
-			(const char **)authors,
-			_("This applet has no use what-so-ever. "
-			  "It only takes up disk space and "
-			  "compilation time, and if loaded it also "
-			  "takes up precious panel space and memory. "
-			  "If anyone is found using this applet, he "
-			  "should be promptly sent for a psychiatric "
-			  "evaluation."),
-			NULL);
-	gtk_widget_show (about);
+	fish->aboutbox =
+		gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4",
+				 "(C) 1998 the Free Software Foundation",
+				 (const char **)authors,
+				 _("This applet has no use what-so-ever. "
+				   "It only takes up disk space and "
+				   "compilation time, and if loaded it also "
+				   "takes up precious panel space and memory. "
+				   "If anyone is found using this applet, he "
+				   "should be promptly sent for a psychiatric "
+				   "evaluation."),
+				 NULL);
+	gtk_signal_connect(GTK_OBJECT(fish->aboutbox),"destroy",
+			   GTK_SIGNAL_FUNC(destroy_about),fish);
+	gtk_widget_show (fish->aboutbox);
 
 	g_free(authors[0]);
-
-	return;
 }
 
 static int
@@ -423,11 +457,15 @@ applet_destroy(GtkWidget *applet,Fish *fish)
 	g_free(fish->prop.image);
 
 	if(fish->pix)
-		gdk_imlib_destroy_image(fish->pix);
+		gdk_pixmap_unref(fish->pix);
 	if(fish->timeout_id)
 		gtk_timeout_remove(fish->timeout_id);
 	if(fish->fortune_dialog)
 		gtk_widget_destroy(fish->fortune_dialog);
+	if(fish->aboutbox)
+		gtk_widget_destroy(fish->aboutbox);
+	if(fish->pb)
+		gtk_widget_destroy(fish->pb);
 	g_free(fish);
 }
 	
@@ -455,6 +493,8 @@ wanda_activator(PortableServer_POA poa,
 
   gtk_signal_connect(GTK_OBJECT(fish->applet),"save_session",
 		     GTK_SIGNAL_FUNC(applet_save_session),fish);
+  gtk_signal_connect(GTK_OBJECT(fish->applet),"destroy",
+		     GTK_SIGNAL_FUNC(applet_destroy),fish);
 
   applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
 					"about",
