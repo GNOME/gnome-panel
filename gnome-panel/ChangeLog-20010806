@@ -1,3 +1,17 @@
+Mon Nov 16 22:18:45 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: setup the config structure properly for corner
+	  hidebutton options
+
+	* panel-widget.c: default width is 48 not 0 in size_request
+
+	* panel-widget.c: fixed the set_default style so that it works with
+	  themes properly
+
+	* snapped-widget.[ch],corner-widget.[ch],drawer-widget.[ch]:
+	  when setting a background color, set the frame colors as well
+	  for a nicer look
+
 Thu Nov 12 00:28:04 1998  George Lebl  <jirka@5z.com>
 
 	* corner-widget.[ch],panel_config.[ch],session.c: add the hidebutton

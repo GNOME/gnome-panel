@@ -90,24 +90,74 @@ marshal_signal_int (GtkObject * object,
 }
 
 static void
+set_frame_colors(CornerWidget *corner)
+{
+	if(PANEL_WIDGET(corner->panel)->back_type == PANEL_BACK_COLOR) {
+		GdkColor n;
+		GtkStyle *ns;
+
+		ns = gtk_style_copy(corner->panel->style);
+		gtk_style_ref(ns);
+
+		ns->bg[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(corner->panel)->back_color;
+		ns->base[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(corner->panel)->back_color;
+
+		n = PANEL_WIDGET(corner->panel)->back_color;
+		n.red/=3;
+		n.green/=3;
+		n.blue/=3;
+		ns->dark[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(corner->panel)->back_color;
+		n.red/=2;
+		n.green/=2;
+		n.blue/=2;
+		ns->mid[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(corner->panel)->back_color;
+		n.red=MIN(65535,n.red*2);
+		n.green=MIN(65535,n.green*2);
+		n.blue=MIN(65535,n.blue*2);
+		ns->light[GTK_STATE_NORMAL] = n;
+
+		gtk_widget_set_style(corner->frame, ns);
+
+		gtk_style_unref(ns);
+	} else {
+		GtkStyle *ns;
+
+		ns = gtk_rc_get_style(corner->frame);
+		if(!ns) ns = gtk_style_new();
+
+		gtk_style_ref(ns);
+		gtk_widget_set_style(corner->frame, ns);
+		gtk_style_unref(ns);
+	}
+}
+
+static void
 corner_widget_realize(GtkWidget *w)
 {
-  GTK_WIDGET_CLASS(parent_class)->realize(w);
-  
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    {
-      gnome_win_hints_set_hints(w,
-				WIN_HINTS_SKIP_FOCUS |
-				WIN_HINTS_SKIP_WINLIST |
-				WIN_HINTS_SKIP_TASKBAR);
-      gnome_win_hints_set_state(w,
-				WIN_STATE_STICKY |
-				WIN_STATE_FIXED_POSITION);
-      gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
-      gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-      gdk_window_set_decorations(w->window, 0);
-    }
+	CornerWidget *corner = CORNER_WIDGET(w);
+	GTK_WIDGET_CLASS(parent_class)->realize(w);
+
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists()) {
+		gnome_win_hints_set_hints(w,
+					  WIN_HINTS_SKIP_FOCUS |
+					  WIN_HINTS_SKIP_WINLIST |
+					  WIN_HINTS_SKIP_TASKBAR);
+		gnome_win_hints_set_state(w,
+					  WIN_STATE_STICKY |
+					  WIN_STATE_FIXED_POSITION);
+		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
+		gdk_window_set_decorations(w->window, 0);
+	}
+	
+	set_frame_colors(corner);
 }
 
 static void
@@ -617,13 +667,12 @@ make_hidebutton(CornerWidget *corner,
 static void
 corner_widget_init (CornerWidget *corner)
 {
-  /*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
-
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    GTK_WINDOW(corner)->type = GTK_WINDOW_TOPLEVEL;
-  else
-    GTK_WINDOW(corner)->type = GTK_WINDOW_POPUP;
+	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists())
+		GTK_WINDOW(corner)->type = GTK_WINDOW_TOPLEVEL;
+	else
+		GTK_WINDOW(corner)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(corner)->allow_shrink = TRUE;
 	GTK_WINDOW(corner)->allow_grow = TRUE;
 	GTK_WINDOW(corner)->auto_shrink = TRUE;
@@ -706,8 +755,15 @@ corner_widget_show_hidebutton_pixmaps(CornerWidget *corner)
 	show_hidebutton_pixmap(corner->hidebutton_s, show);
 }
 
-
-
+static void
+c_back_change(PanelWidget *panel,
+	    PanelBackType type,
+	    char *pixmap,
+	    GdkColor *color,
+	    CornerWidget *corner)
+{
+	set_frame_colors(corner);
+}
 
 GtkWidget*
 corner_widget_new (CornerPos pos,
@@ -721,7 +777,6 @@ corner_widget_new (CornerPos pos,
 		   GdkColor *back_color)
 {
 	CornerWidget *corner;
-	GtkWidget *frame;
 
 	corner = gtk_type_new(corner_widget_get_type());
 
@@ -731,18 +786,21 @@ corner_widget_new (CornerPos pos,
 					 back_pixmap,
 					 fit_pixmap_bg,
 					 back_color);
+	gtk_signal_connect_after(GTK_OBJECT(corner->panel), "back_change",
+				 GTK_SIGNAL_FUNC(c_back_change),
+				 corner);
 	gtk_object_set_data(GTK_OBJECT(corner->panel),PANEL_PARENT,
 			    corner);
 	PANEL_WIDGET(corner->panel)->drop_widget = GTK_WIDGET(corner);
 
 	gtk_widget_show(corner->panel);
 
-	frame = gtk_frame_new(NULL);
-	gtk_widget_show(frame);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(frame),corner->panel);
+	corner->frame = gtk_frame_new(NULL);
+	gtk_widget_show(corner->frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(corner->frame),GTK_SHADOW_OUT);
+	gtk_container_add(GTK_CONTAINER(corner->frame),corner->panel);
 
-	gtk_table_attach(GTK_TABLE(corner->table),frame,1,2,1,2,
+	gtk_table_attach(GTK_TABLE(corner->table),corner->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);

@@ -41,6 +41,8 @@ struct _CornerWidget
 	GtkWidget		*hidebutton_e;
 	GtkWidget		*hidebutton_w;
 	GtkWidget		*hidebutton_s;
+	
+	GtkWidget		*frame;
 
 	CornerPos		pos;
 	CornerState		state;

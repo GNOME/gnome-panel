@@ -47,6 +47,8 @@ struct _SnappedWidget
 	GtkWidget		*hidebutton_e;
 	GtkWidget		*hidebutton_w;
 	GtkWidget		*hidebutton_s;
+	
+	GtkWidget		*frame;
 
 	SnappedPos		pos;
 	SnappedMode		mode;

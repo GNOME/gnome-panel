@@ -830,6 +830,8 @@ panel_config(GtkWidget *panel)
 		PanelWidget *pw = PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
 		ppc->corner_pos = corner->pos;
 		ppc->corner_orient = pw->orient;
+		ppc->corner_hidebuttons = corner->hidebuttons_enabled;
+		ppc->corner_hidebutton_pixmaps = corner->hidebutton_pixmaps_enabled;
 		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
 		ppc->back_pixmap = g_strdup(pw->back_pixmap);
 		ppc->back_color = pw->back_color;

@@ -90,24 +90,74 @@ marshal_signal_state (GtkObject * object,
 }
 
 static void
+set_frame_colors(DrawerWidget *drawer)
+{
+	if(PANEL_WIDGET(drawer->panel)->back_type == PANEL_BACK_COLOR) {
+		GdkColor n;
+		GtkStyle *ns;
+
+		ns = gtk_style_copy(drawer->panel->style);
+		gtk_style_ref(ns);
+
+		ns->bg[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(drawer->panel)->back_color;
+		ns->base[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(drawer->panel)->back_color;
+
+		n = PANEL_WIDGET(drawer->panel)->back_color;
+		n.red/=3;
+		n.green/=3;
+		n.blue/=3;
+		ns->dark[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(drawer->panel)->back_color;
+		n.red/=2;
+		n.green/=2;
+		n.blue/=2;
+		ns->mid[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(drawer->panel)->back_color;
+		n.red=MIN(65535,n.red*2);
+		n.green=MIN(65535,n.green*2);
+		n.blue=MIN(65535,n.blue*2);
+		ns->light[GTK_STATE_NORMAL] = n;
+
+		gtk_widget_set_style(drawer->frame, ns);
+
+		gtk_style_unref(ns);
+	} else {
+		GtkStyle *ns;
+
+		ns = gtk_rc_get_style(drawer->frame);
+		if(!ns) ns = gtk_style_new();
+
+		gtk_style_ref(ns);
+		gtk_widget_set_style(drawer->frame, ns);
+		gtk_style_unref(ns);
+	}
+}
+
+
+static void
 drawer_widget_realize(GtkWidget *w)
 {
-  GTK_WIDGET_CLASS(parent_class)->realize(w);
-  
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    {
-      gnome_win_hints_set_hints(w,
-				WIN_HINTS_SKIP_FOCUS |
-				WIN_HINTS_SKIP_WINLIST |
-				WIN_HINTS_SKIP_TASKBAR);
-      gnome_win_hints_set_state(w,
-				WIN_STATE_STICKY |
-				WIN_STATE_FIXED_POSITION);
-      gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
-      gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-      gdk_window_set_decorations(w->window, 0);
-    }
+	DrawerWidget *drawer = DRAWER_WIDGET(w);
+	GTK_WIDGET_CLASS(parent_class)->realize(w);
+
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists()) {
+		gnome_win_hints_set_hints(w,
+					  WIN_HINTS_SKIP_FOCUS |
+					  WIN_HINTS_SKIP_WINLIST |
+					  WIN_HINTS_SKIP_TASKBAR);
+		gnome_win_hints_set_state(w,
+					  WIN_STATE_STICKY |
+					  WIN_STATE_FIXED_POSITION);
+		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
+		gdk_window_set_decorations(w->window, 0);
+	}
+	set_frame_colors(drawer);
 }
 
 static void
@@ -663,6 +713,16 @@ drawer_widget_init (DrawerWidget *drawer)
 	drawer->state = DRAWER_SHOWN;
 }
 
+static void
+d_back_change(PanelWidget *panel,
+	    PanelBackType type,
+	    char *pixmap,
+	    GdkColor *color,
+	    DrawerWidget *drawer)
+{
+	set_frame_colors(drawer);
+}
+
 
  
 GtkWidget*
@@ -696,18 +756,21 @@ drawer_widget_new (PanelOrientType orient,
 					 back_pixmap,
 					 fit_pixmap_bg,
 					 back_color);
+	gtk_signal_connect_after(GTK_OBJECT(drawer->panel), "back_change",
+				 GTK_SIGNAL_FUNC(d_back_change),
+				 drawer);
 	gtk_object_set_data(GTK_OBJECT(drawer->panel),PANEL_PARENT,
 			    drawer);
 	PANEL_WIDGET(drawer->panel)->drop_widget = GTK_WIDGET(drawer);
 
 	gtk_widget_show(drawer->panel);
 
-	frame = gtk_frame_new(NULL);
-	gtk_widget_show(frame);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(frame),drawer->panel);
+	drawer->frame = gtk_frame_new(NULL);
+	gtk_widget_show(drawer->frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(drawer->frame),GTK_SHADOW_OUT);
+	gtk_container_add(GTK_CONTAINER(drawer->frame),drawer->panel);
 
-	gtk_table_attach(GTK_TABLE(drawer->table),frame,1,2,1,2,
+	gtk_table_attach(GTK_TABLE(drawer->table),drawer->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);

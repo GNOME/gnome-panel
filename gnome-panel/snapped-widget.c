@@ -90,24 +90,73 @@ marshal_signal_int (GtkObject * object,
 }
 
 static void
+set_frame_colors(SnappedWidget *snapped)
+{
+	if(PANEL_WIDGET(snapped->panel)->back_type == PANEL_BACK_COLOR) {
+		GdkColor n;
+		GtkStyle *ns;
+
+		ns = gtk_style_copy(snapped->panel->style);
+		gtk_style_ref(ns);
+
+		ns->bg[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(snapped->panel)->back_color;
+		ns->base[GTK_STATE_NORMAL] =
+			PANEL_WIDGET(snapped->panel)->back_color;
+
+		n = PANEL_WIDGET(snapped->panel)->back_color;
+		n.red/=3;
+		n.green/=3;
+		n.blue/=3;
+		ns->dark[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(snapped->panel)->back_color;
+		n.red/=2;
+		n.green/=2;
+		n.blue/=2;
+		ns->mid[GTK_STATE_NORMAL] = n;
+
+		n = PANEL_WIDGET(snapped->panel)->back_color;
+		n.red=MIN(65535,n.red*2);
+		n.green=MIN(65535,n.green*2);
+		n.blue=MIN(65535,n.blue*2);
+		ns->light[GTK_STATE_NORMAL] = n;
+
+		gtk_widget_set_style(snapped->frame, ns);
+
+		gtk_style_unref(ns);
+	} else {
+		GtkStyle *ns;
+
+		ns = gtk_rc_get_style(snapped->frame);
+		if(!ns) ns = gtk_style_new();
+
+		gtk_style_ref(ns);
+		gtk_widget_set_style(snapped->frame, ns);
+		gtk_style_unref(ns);
+	}
+}
+
+static void
 snapped_widget_realize(GtkWidget *w)
 {
-  GTK_WIDGET_CLASS(parent_class)->realize(w);
-  
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    {
-      gnome_win_hints_set_hints(w, 
-				WIN_HINTS_SKIP_FOCUS |
-				WIN_HINTS_SKIP_WINLIST |
-				WIN_HINTS_SKIP_TASKBAR);
-      gnome_win_hints_set_state(w, 
-				WIN_STATE_STICKY |
-				WIN_STATE_FIXED_POSITION);
-      gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
-      gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-      gdk_window_set_decorations(w->window, 0);
-    }    
+	SnappedWidget *snapped = SNAPPED_WIDGET(w);
+	GTK_WIDGET_CLASS(parent_class)->realize(w);
+
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists()) {
+		gnome_win_hints_set_hints(w, 
+					  WIN_HINTS_SKIP_FOCUS |
+					  WIN_HINTS_SKIP_WINLIST |
+					  WIN_HINTS_SKIP_TASKBAR);
+		gnome_win_hints_set_state(w, 
+					  WIN_STATE_STICKY |
+					  WIN_STATE_FIXED_POSITION);
+		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
+		gdk_window_set_decorations(w->window, 0);
+	}    
+	set_frame_colors(snapped);
 }
 
 static void
@@ -757,12 +806,12 @@ snapped_widget_destroy(GtkWidget *w, gpointer data)
 static void
 snapped_widget_init (SnappedWidget *snapped)
 {
-  /*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    GTK_WINDOW(snapped)->type = GTK_WINDOW_TOPLEVEL;
-  else
-    GTK_WINDOW(snapped)->type = GTK_WINDOW_POPUP;
+	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists())
+		GTK_WINDOW(snapped)->type = GTK_WINDOW_TOPLEVEL;
+	else
+		GTK_WINDOW(snapped)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(snapped)->allow_shrink = TRUE;
 	GTK_WINDOW(snapped)->allow_grow = TRUE;
 	GTK_WINDOW(snapped)->auto_shrink = TRUE;
@@ -831,6 +880,16 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->drawers_open = 0;
 }
 
+static void
+s_back_change(PanelWidget *panel,
+	    PanelBackType type,
+	    char *pixmap,
+	    GdkColor *color,
+	    SnappedWidget *snapped)
+{
+	set_frame_colors(snapped);
+}
+
 GtkWidget*
 snapped_widget_new (SnappedPos pos,
 		    SnappedMode mode,
@@ -861,18 +920,21 @@ snapped_widget_new (SnappedPos pos,
 					  back_pixmap,
 					  fit_pixmap_bg,
 					  back_color);
+	gtk_signal_connect_after(GTK_OBJECT(snapped->panel), "back_change",
+				 GTK_SIGNAL_FUNC(s_back_change),
+				 snapped);
 	gtk_object_set_data(GTK_OBJECT(snapped->panel),PANEL_PARENT,
 			    snapped);
 	PANEL_WIDGET(snapped->panel)->drop_widget = GTK_WIDGET(snapped);
 
 	gtk_widget_show(snapped->panel);
 
-	frame = gtk_frame_new(NULL);
-	gtk_widget_show(frame);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(frame),snapped->panel);
+	snapped->frame = gtk_frame_new(NULL);
+	gtk_widget_show(snapped->frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(snapped->frame),GTK_SHADOW_OUT);
+	gtk_container_add(GTK_CONTAINER(snapped->frame),snapped->panel);
 
-	gtk_table_attach(GTK_TABLE(snapped->table),frame,1,2,1,2,
+	gtk_table_attach(GTK_TABLE(snapped->table),snapped->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);

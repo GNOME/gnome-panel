@@ -675,12 +675,13 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	panel = PANEL_WIDGET(widget);
 
-	requisition->height = 0;
-	requisition->width = 0;
-	if(panel->orient == PANEL_HORIZONTAL)
+	if(panel->orient == PANEL_HORIZONTAL) {
 		requisition->width = pw_applet_padding;
-	else
+		requisition->height = PANEL_MINIMUM_WIDTH;
+	} else {
 		requisition->height = pw_applet_padding;
+		requisition->width = PANEL_MINIMUM_WIDTH;
+	}
 
 	for(list = panel->applet_list; list!=NULL; list = g_list_next(list)) {
 		AppletData *ad = list->data;
@@ -1078,7 +1079,8 @@ panel_try_to_set_default_back(PanelWidget *panel)
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
-	ns = gtk_style_new();
+	ns = gtk_rc_get_style(GTK_WIDGET(panel));
+	if(!ns) ns = gtk_style_new();
 
 	gtk_style_ref(ns);
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
