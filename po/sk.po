@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
-"POT-Creation-Date: 2002-12-10 13:27+1300\n"
+"POT-Creation-Date: 2002-12-17 09:50+1300\n"
 "PO-Revision-Date: 2002-07-03 16:51+0200\n"
 "Last-Translator: Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -13,8 +13,8 @@ msgstr ""
 "<bobo@bobo.bspc.sk>\n"
 "X-Generator: KBabel 1.0beta2\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
-#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
 #: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
@@ -139,7 +139,7 @@ msgstr "_Obrázky v animácii:"
 
 #: applets/fish/fish.glade.h:5
 #, fuzzy
-msgid "GNOME FIsh Preferences"
+msgid "GNOME Fish Preferences"
 msgstr "Nastavenie GNOME ryby"
 
 #: applets/fish/fish.glade.h:6
@@ -221,8 +221,8 @@ msgstr "_O programe..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
-#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
+#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Pomocník"
 
@@ -234,86 +234,106 @@ msgstr "_Pomocník"
 msgid "_Preferences..."
 msgstr "Nas_tavenia..."
 
-#: applets/gen_util/clock.c:171
+#: applets/gen_util/clock.c:178
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:173
+#: applets/gen_util/clock.c:178
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
+#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:499
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:178 applets/gen_util/clock.c:489
+#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:501
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/gen_util/clock.c:187 applets/gen_util/clock.c:189
+#: applets/gen_util/clock.c:186
 msgid "%a %b %d"
 msgstr "%a %b %d"
 
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/gen_util/clock.c:193
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/gen_util/clock.c:200
+#, c-format
+msgid "%s, %s"
+msgstr ""
+
 #. Show date in tooltip
-#: applets/gen_util/clock.c:291
+#: applets/gen_util/clock.c:303
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/gen_util/clock.c:397
+#: applets/gen_util/clock.c:409
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: applets/gen_util/clock.c:482
+#: applets/gen_util/clock.c:494
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:484
+#: applets/gen_util/clock.c:496
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:523
+#: applets/gen_util/clock.c:535
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:945
+#: applets/gen_util/clock.c:957
 msgid "Clock Preferences"
 msgstr "Nastavenie hodín"
 
-#: applets/gen_util/clock.c:974
+#: applets/gen_util/clock.c:986
 msgid "Clock type"
 msgstr "Typ hodín"
 
-#: applets/gen_util/clock.c:984
+#: applets/gen_util/clock.c:996
 msgid "_12 hour"
 msgstr "_12-hodinový"
 
-#: applets/gen_util/clock.c:990
+#: applets/gen_util/clock.c:1002
 msgid "_24 hour"
 msgstr "_24-hodinový"
 
-#: applets/gen_util/clock.c:995
+#: applets/gen_util/clock.c:1007
 #, fuzzy
 msgid "UNI_X time"
 msgstr "_Unixový čas"
 
-#: applets/gen_util/clock.c:999
+#: applets/gen_util/clock.c:1011
 msgid "_Internet time"
 msgstr "_Internetový čas"
 
-#: applets/gen_util/clock.c:1036
+#: applets/gen_util/clock.c:1048
 msgid "Show _seconds"
 msgstr "Zobraziť _sekundy"
 
-#: applets/gen_util/clock.c:1046
+#: applets/gen_util/clock.c:1058
 msgid "Show _date"
 msgstr "Zobraziť _dátum"
 
-#: applets/gen_util/clock.c:1056
+#: applets/gen_util/clock.c:1068
 msgid "Use _UTC"
 msgstr "Používať _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -322,15 +342,15 @@ msgstr ""
 "                      Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1192
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Hodiny"
 
-#: applets/gen_util/clock.c:1193
+#: applets/gen_util/clock.c:1205
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1194
+#: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
 msgstr "Applet Hodiny zobrazuje aktuálny dátum a čas"
 
@@ -1192,47 +1212,47 @@ msgstr ""
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:1138
+#: gnome-panel/applet.c:1157
 msgid "Can't find an empty spot"
 msgstr "Nepodarilo sa nájsť prázdne miesto"
 
-#: gnome-panel/basep-widget.c:160
+#: gnome-panel/basep-widget.c:161
 msgid "Mode"
 msgstr "Mód"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:162
 msgid "Mode of this panel"
 msgstr "Mód tohto panelu"
 
-#: gnome-panel/basep-widget.c:168
+#: gnome-panel/basep-widget.c:169
 msgid "State"
 msgstr "Stav"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:170
 msgid "Current state of this panel"
 msgstr "Aktuálny stav tohto panelu"
 
-#: gnome-panel/basep-widget.c:177
+#: gnome-panel/basep-widget.c:178
 msgid "Hidebuttons enabled"
 msgstr "Povolené skrývacie tlačidlá"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:179
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr "Sú skrývacie tlačidlá (pre skrývanie panelu) zapnuté?"
 
-#: gnome-panel/basep-widget.c:185
+#: gnome-panel/basep-widget.c:186
 msgid "Hidebutton pixmaps enabled"
 msgstr "Povolené obrázky na skrývacích tlačidlách"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:187
 msgid "Hidebuttons have pixmaps"
 msgstr "Skrývacie tlačidlá majú obrázky"
 
-#: gnome-panel/basep-widget.c:590
+#: gnome-panel/basep-widget.c:591
 msgid "Hide this panel"
 msgstr "Skryť tento panel"
 
-#: gnome-panel/basep-widget.c:593
+#: gnome-panel/basep-widget.c:594
 msgid "Show this panel"
 msgstr "Zobraziť tento panel"
 
@@ -1302,11 +1322,11 @@ msgstr ""
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Použiť vlastnú ikonu pre tlačidlo panelu"
 
-#: gnome-panel/disclosure-widget.c:251
+#: gnome-panel/disclosure-widget.c:259
 msgid "Expander Size"
 msgstr "Veľkosť rozbaľovacieho symbolu"
 
-#: gnome-panel/disclosure-widget.c:252
+#: gnome-panel/disclosure-widget.c:260
 msgid "Size of the expander arrow"
 msgstr "Veľkosť rozbaľovacieho symbolu"
 
@@ -1364,12 +1384,12 @@ msgstr "Povoliť hidebutton"
 msgid "Enable hidebutton arrow"
 msgstr "Povoliť šipku hidebutton"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
 msgid "Drawer"
 msgstr "Vykresľovač"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
+#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1377,7 +1397,7 @@ msgstr "_Vlastnosti"
 msgid " (invalid Unicode)"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
 msgid "Run Program..."
 msgstr "Spustiť program..."
 
@@ -1385,23 +1405,23 @@ msgstr "Spustiť program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Spúšťa aplikácie, ak viete, aký príkaz zadať"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
 msgid "Search for Files..."
 msgstr "Hľadať súbory..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hľadá súbory, priečinky a dokumenty na vašom počítači"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
 msgid "Screenshot..."
 msgstr "Zachytiť obrazovku..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytiť obrazovku"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
 msgid "Lock Screen"
 msgstr "Zamknúť obrazovku"
 
@@ -1409,8 +1429,8 @@ msgstr "Zamknúť obrazovku"
 msgid "Protect your computer from unauthorized use"
 msgstr "Ochráni váš počítač pred neoprávneným použitím"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
-#: gnome-panel/menu.c:3611
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
+#: gnome-panel/menu.c:3612
 msgid "Log Out"
 msgstr "Odhlásiť"
 
@@ -1427,7 +1447,7 @@ msgstr "Akcie"
 msgid "No windows open"
 msgstr "Neotvorené žiadne okná"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
 msgid "Menu Panel"
 msgstr "Menu panel"
 
@@ -1435,8 +1455,8 @@ msgstr "Menu panel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME menu panel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
-#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
+#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
 msgid "Applications"
 msgstr "Aplikácie"
 
@@ -1478,7 +1498,7 @@ msgstr "Musíte zadať jeden argument so súborom .desktop alebo url\n"
 msgid "No panel found\n"
 msgstr "Panel nenájdený\n"
 
-#: gnome-panel/gnome-panel-preferences.c:192
+#: gnome-panel/gnome-panel-preferences.c:259
 #: gnome-panel/gnome-panel-screenshot.c:862
 #, c-format
 msgid ""
@@ -1488,13 +1508,13 @@ msgstr ""
 "Pri pokuse o zobrazenie Pomocníka nastala chyba:\n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:240
+#: gnome-panel/gnome-panel-preferences.c:307
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr "Administrátor systému zakázal zmenu nastavenia panelu"
 
-#: gnome-panel/gnome-panel-preferences.c:270
+#: gnome-panel/gnome-panel-preferences.c:337
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "Chyba pri načítavaní súboru glade %s"
@@ -1848,7 +1868,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1929,7 +1949,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1940,7 +1960,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/menu.c:1022
+#: gnome-panel/menu.c:1023
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1951,17 +1971,17 @@ msgstr ""
 "\n"
 "Detaily: %s\n"
 
-#: gnome-panel/menu.c:1032
+#: gnome-panel/menu.c:1033
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Nepodarilo sa získať meno súboru s cestou: %s"
 
-#: gnome-panel/menu.c:1039
+#: gnome-panel/menu.c:1040
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Nepodarilo sa získať meno priečinku z cesty: %s"
 
-#: gnome-panel/menu.c:1109
+#: gnome-panel/menu.c:1110
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1971,158 +1991,158 @@ msgstr ""
 "\n"
 "Detaily: V položke nie je pole 'Exec' ani 'URL'"
 
-#: gnome-panel/menu.c:1419
+#: gnome-panel/menu.c:1420
 msgid "Add this launcher to panel"
 msgstr "Pridať tento spúšťač do panelu"
 
-#: gnome-panel/menu.c:1427
+#: gnome-panel/menu.c:1428
 msgid "Remove this item"
 msgstr "Odstrániť túto položku"
 
-#: gnome-panel/menu.c:1443
+#: gnome-panel/menu.c:1444
 msgid "Put into run dialog"
 msgstr "Vložiť do dialógu Spustiť"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1462
 #, c-format
 msgid "Help on %s"
 msgstr "Pomocník k %s"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1463
 msgid "Application"
 msgstr "Aplikácia"
 
-#: gnome-panel/menu.c:1506
+#: gnome-panel/menu.c:1507
 msgid "Entire menu"
 msgstr "Celé menu"
 
-#: gnome-panel/menu.c:1515
+#: gnome-panel/menu.c:1516
 msgid "Add this as drawer to panel"
 msgstr "Pridať toto ako vykresľovač do panelu"
 
-#: gnome-panel/menu.c:1523
+#: gnome-panel/menu.c:1524
 msgid "Add this as menu to panel"
 msgstr "Pridať toto ako menu do panelu"
 
-#: gnome-panel/menu.c:1531
+#: gnome-panel/menu.c:1532
 msgid "Add new item to this menu"
 msgstr "Pridať novú položku do tohoto menu"
 
-#: gnome-panel/menu.c:1556
+#: gnome-panel/menu.c:1557
 msgid "Properties"
 msgstr "Vlastnosti"
 
-#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "otázka vrátila výnimku %s\n"
 
-#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
 msgid "Aligned Panel"
 msgstr "Zarovnaný panel"
 
-#: gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2709
 msgid "GNOME Aligned Panel"
 msgstr "Zarovnaný panel GNOME"
 
-#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
+#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Okrajový panel"
 
-#: gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2731
 msgid "GNOME Edge Panel"
 msgstr "Okrajový panel GNOME"
 
-#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
+#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Kĺzajúci panel"
 
-#: gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2757
 msgid "GNOME Sliding Panel"
 msgstr "Kĺzajúci panel GNOME"
 
-#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Plávajúci panel"
 
-#: gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2781
 msgid "GNOME Floating Panel"
 msgstr "Plávajúci panel GNOME"
 
-#: gnome-panel/menu.c:2800
+#: gnome-panel/menu.c:2801
 msgid "You can only have one menu panel at a time."
 msgstr "V jednom momente môžete mať iba jeden menu panel."
 
-#: gnome-panel/menu.c:2844
+#: gnome-panel/menu.c:2845
 msgid "C_orner Panel"
 msgstr "_Rohový panel"
 
-#: gnome-panel/menu.c:2846
+#: gnome-panel/menu.c:2847
 msgid "Create corner panel"
 msgstr "Vytvoriť rohový panel"
 
-#: gnome-panel/menu.c:2853
+#: gnome-panel/menu.c:2854
 msgid "_Edge Panel"
 msgstr "_Okrajový panel"
 
-#: gnome-panel/menu.c:2855
+#: gnome-panel/menu.c:2856
 msgid "Create edge panel"
 msgstr "Vytvoriť okrajový panel"
 
-#: gnome-panel/menu.c:2862
+#: gnome-panel/menu.c:2863
 msgid "_Floating Panel"
 msgstr "_Plávajúci panel"
 
-#: gnome-panel/menu.c:2864
+#: gnome-panel/menu.c:2865
 msgid "Create floating panel"
 msgstr "Vytvoriť plávajúci panel"
 
-#: gnome-panel/menu.c:2871
+#: gnome-panel/menu.c:2872
 msgid "_Sliding Panel"
 msgstr "_Kĺzajúci panel"
 
-#: gnome-panel/menu.c:2873
+#: gnome-panel/menu.c:2874
 msgid "Create sliding panel"
 msgstr "Vytvoriť kĺzajúci panel"
 
-#: gnome-panel/menu.c:2882
+#: gnome-panel/menu.c:2883
 msgid "_Menu Panel"
 msgstr "_Menu panel"
 
-#: gnome-panel/menu.c:2884
+#: gnome-panel/menu.c:2885
 msgid "Create menu panel"
 msgstr "Vytvoriť panel menu"
 
-#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
+#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
 msgid "KDE Menu"
 msgstr "KDE menu"
 
-#: gnome-panel/menu.c:3036
+#: gnome-panel/menu.c:3037
 #, fuzzy
 msgid "Lock"
 msgstr "Hodiny"
 
-#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Obrazovka"
 
-#: gnome-panel/menu.c:3052
+#: gnome-panel/menu.c:3053
 msgid "Search"
 msgstr ""
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3061
 #, fuzzy
 msgid "Run"
 msgstr "_Spustiť"
 
-#: gnome-panel/menu.c:3132
+#: gnome-panel/menu.c:3133
 msgid "You cannot remove your last panel."
 msgstr "Nemôžete odstrániť posledný panel."
 
-#: gnome-panel/menu.c:3145
+#: gnome-panel/menu.c:3146
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2130,90 +2150,90 @@ msgstr ""
 "Keď je panel odstránený, jeho a nastavenia jeho\n"
 "appletov sú stratené. Odstrániť tento panel?"
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3154
 #, fuzzy
 msgid "Delete Panel"
 msgstr "_Odstrániť tento panel"
 
-#: gnome-panel/menu.c:3392
+#: gnome-panel/menu.c:3393
 msgid "Launcher..."
 msgstr "Spúšťač..."
 
-#: gnome-panel/menu.c:3399
+#: gnome-panel/menu.c:3400
 msgid "Launcher from menu"
 msgstr "Spúšťač z menu"
 
-#: gnome-panel/menu.c:3407
+#: gnome-panel/menu.c:3408
 #, fuzzy
 msgid "Button"
 msgstr "Tlačidlo Odhlásiť"
 
-#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
-#: gnome-panel/menu.c:4141
+#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
+#: gnome-panel/menu.c:4142
 msgid "Main Menu"
 msgstr "Hlavné menu"
 
-#: gnome-panel/menu.c:3469
+#: gnome-panel/menu.c:3470
 msgid "_Delete This Panel..."
 msgstr "_Odstrániť tento panel..."
 
-#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
+#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
 msgid "_Delete This Panel"
 msgstr "_Odstrániť tento panel"
 
-#: gnome-panel/menu.c:3491
+#: gnome-panel/menu.c:3492
 msgid "_Add to Panel"
 msgstr "_Pridať do panelu"
 
-#: gnome-panel/menu.c:3531
+#: gnome-panel/menu.c:3532
 msgid "_New Panel"
 msgstr "_Nový panel"
 
-#: gnome-panel/menu.c:3565
+#: gnome-panel/menu.c:3566
 msgid "_About Panels"
 msgstr "_O paneloch"
 
-#: gnome-panel/menu.c:3578
+#: gnome-panel/menu.c:3579
 msgid "About _GNOME"
 msgstr "O _GNOME..."
 
-#: gnome-panel/menu.c:3606
+#: gnome-panel/menu.c:3607
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zamknúť obrazovku, takže môžete dočasne opustiť počítač."
 
-#: gnome-panel/menu.c:3617
+#: gnome-panel/menu.c:3618
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 "Ukončiť toto sedenie a prihlásiť sa ako iný používateľ, alebo vypnúť počítač."
 
-#: gnome-panel/menu.c:3773
+#: gnome-panel/menu.c:3774
 msgid "Applets"
 msgstr "Aplety"
 
-#: gnome-panel/menu.c:3797
+#: gnome-panel/menu.c:3798
 msgid "Run a command"
 msgstr "Vykonať príkaz"
 
-#: gnome-panel/menu.c:3837
+#: gnome-panel/menu.c:3838
 msgid "Desktop"
 msgstr "Plocha"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu.c:3867
+#: gnome-panel/menu.c:3868
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3939
+#: gnome-panel/menu.c:3940
 msgid "Can't create menu, using main menu!"
 msgstr "Nemôžem vytvoriť menu, použijem hlavné menu!"
 
-#: gnome-panel/menu.c:4464
+#: gnome-panel/menu.c:4463
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2311,12 +2331,12 @@ msgstr ""
 msgid "Cannot register control widget\n"
 msgstr "Nepodarilo sa registrovať ovládací prvok\n"
 
-#: gnome-panel/panel-applet-frame.c:606
+#: gnome-panel/panel-applet-frame.c:602
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Výnimka z popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:716
+#: gnome-panel/panel-applet-frame.c:711
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2333,11 +2353,11 @@ msgstr ""
 "(Ak sa rozhodnete, že nie, môžete ho vždy pridať kliknutím pravým tlačidlom "
 "myši na panel a výberom menu \"Pridať do panelu\")"
 
-#: gnome-panel/panel-applet-frame.c:751
+#: gnome-panel/panel-applet-frame.c:746
 msgid "D_on't Delete"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:780
 #, fuzzy, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2349,7 +2369,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: gnome-panel/panel-applet-frame.c:882
+#: gnome-panel/panel-applet-frame.c:878
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nepodarilo sa získať rozhranie AppletShell z ovládacieho prvku\n"
 
@@ -2358,7 +2378,7 @@ msgstr "Nepodarilo sa získať rozhranie AppletShell z ovládacieho prvku\n"
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
-#: gnome-panel/panel.c:2245
+#: gnome-panel/panel.c:2266
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2620,12 +2640,12 @@ msgstr ""
 "Chybový kód je: %d\n"
 "Panel teraz skončí."
 
-#: gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-stock-icons.c:113
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:131
+#: gnome-panel/panel-stock-icons.c:142
 msgid "_Run"
 msgstr "_Spustiť"
 
