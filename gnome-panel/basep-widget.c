@@ -499,24 +499,30 @@ basep_widget_size_allocate (GtkWidget *widget,
 				left = global_config.minimized_size ;
 			else
 				left = basep->shown_alloc.width;
+                        left += allocation->x;
 			break;
 		case BORDER_RIGHT:
 			if (basep->mode == BASEP_AUTO_HIDE)
 				right = global_config.minimized_size ;
 			else
 				right = basep->shown_alloc.width;
+                        right += multiscreen_width (basep->screen) -
+                          (allocation->x + allocation->width);
 			break;
 		case BORDER_TOP:
 			if (basep->mode == BASEP_AUTO_HIDE)
 				top = global_config.minimized_size ;
 			else
 				top = basep->shown_alloc.height;
+                        top += allocation->y;
 			break;
 		case BORDER_BOTTOM:
 			if (basep->mode == BASEP_AUTO_HIDE)
 				bottom = global_config.minimized_size ;
 			else
 				bottom = basep->shown_alloc.height;
+                        bottom += multiscreen_height (basep->screen) -
+                          (allocation->y + allocation->height);
 			break;
 		}
 		if (basep->strut_left != left ||

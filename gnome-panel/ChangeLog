@@ -1,3 +1,11 @@
+2002-02-10  Havoc Pennington  <hp@pobox.com>
+
+	* basep-widget.c (basep_widget_size_allocate): Consider the x/y
+	position of the panel when setting struts. This means we get the
+	right strut if some crack-smoker puts multiple panels on the same
+	side of the screen. Currently only seems to matter for stacking an
+	edge panel under the foobar.
+
 2002-02-10  Gediminas Paulauskas <menesis@delfi.lt>
 
 	* Makefile.am: use intltool for .desktop files.
