@@ -1,3 +1,11 @@
+2000-05-17  Jacob Berkman  <jacob@helixcode.com>
+
+	* gen_util/mailcheck.c (create_mail_widgets): s/free/g_free/
+	(applet_change_pixel_size): clean up stuff a little, and g_free
+	a string
+	(make_mailcheck_applet): make the "little hack" not leak memory,
+	and give the code a little love, which it needed very much
+
 2000-05-14  Karl Eichwalder  <ke@suse.de>
 
 	* gen_util/mailcheck.soundlist (description): Add de.

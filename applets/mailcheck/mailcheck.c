@@ -124,7 +124,7 @@ struct _MailCheck {
 	GtkWidget *remote_option_menu;
 	GtkWidget *play_sound_check;
         
-	char *remote_server, *remote_username, *remote_password;
+	char *remote_server, *remote_username, *remote_password, *real_password;
 	MailboxType mailbox_type; /* local = 0; maildir = 1; pop3 = 2; imap = 3 */
         MailboxType mailbox_type_temp;
 
@@ -217,7 +217,6 @@ check_mail_file_status (MailCheck *mc)
 	struct stat s;
 	off_t newsize;
 	int status, old_unreadmail;
-	static gchar *pass = NULL;
 	
 	if ((mc->mailbox_type == MAILBOX_POP3) || 
 	    (mc->mailbox_type == MAILBOX_IMAP)) {
@@ -225,27 +224,26 @@ check_mail_file_status (MailCheck *mc)
 
 		if (mc->remote_password != NULL &&
 		    mc->remote_password[0] != '\0') {
-			if(pass && pass != mc->remote_password)
-				g_free(pass);
-			pass = mc->remote_password;
+			g_free (mc->real_password);
+			mc->real_password = g_strdup (mc->remote_password);
 		}
-		else if(pass == NULL) {
+		else if(mc->real_password == NULL) {
 			gtk_timeout_remove(mc->mail_timeout);
-			pass = get_remote_password();
+			mc->real_password = get_remote_password();
 			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
 							   mail_check_timeout,
 							   mc);
 		}
 
-		if (pass && mc->remote_username && mc->remote_server) {
+		if (mc->real_password && mc->remote_username && mc->remote_server) {
 			if (mc->mailbox_type == MAILBOX_POP3)
 				v = pop3_check(mc->remote_server,
 					       mc->remote_username,
-					       pass);
+					       mc->real_password);
 			else
 				v = imap_check(mc->remote_server,
 					       mc->remote_username,
-					       pass);
+					       mc->real_password);
 		}
 		else
 			v = -1;
@@ -495,6 +493,8 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	if (mc->about)
 		gtk_widget_destroy(mc->about);
 
+	gtk_widget_unref(mc->da);
+
 	g_free (mc->pre_check_cmd);
 	g_free (mc->newmail_cmd);
 	g_free (mc->clicked_cmd);
@@ -502,6 +502,10 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	g_free(mc->remote_server);
 	g_free(mc->remote_username);
 	g_free(mc->remote_password);
+	g_free(mc->real_password);
+
+	g_free(mc->animation_file);
+	g_free(mc->mail_file);
 
 	if(mc->email_pixmap)
 		gdk_pixmap_unref(mc->email_pixmap);
@@ -564,7 +568,7 @@ create_mail_widgets (MailCheck *mc)
 		mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
 		mc->containee = mc->label;
 	}
-	free (fname);
+	g_free (fname);
 	gtk_container_add (GTK_CONTAINER (mc->bin), mc->containee);
 	return mc->ebox;
 }
@@ -660,6 +664,7 @@ mailcheck_get_animation_menu (MailCheck *mc)
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (omenu), menu);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (omenu), select_item);
 	gtk_widget_show (omenu);
+	g_free (dname);
 	return omenu;
 }
 
@@ -1231,19 +1236,22 @@ static void
 applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 {
 	MailCheck *mc = data;
-	
+	char *fname;
+
+	if(mc->report_mail_mode == REPORT_MAIL_USE_TEXT)
+		return;
+
 	mc->size = size;
+	fname = mail_animation_filename (mc);
 
-	if(mc->report_mail_mode != REPORT_MAIL_USE_TEXT) {
-		char *fname = mail_animation_filename (mc);
-		int size = mc->size;
-
-		gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
-		gtk_widget_set_usize (GTK_WIDGET(mc->da), size, size);
+	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
+	gtk_widget_set_usize (GTK_WIDGET(mc->da), size, size);
 	
-		if (fname)
-			mailcheck_load_animation (mc,fname);
-	}
+	if (!fname)
+		return;
+
+	mailcheck_load_animation (mc,fname);
+	g_free (fname);
 }
 
 static void
@@ -1284,17 +1292,14 @@ make_mailcheck_applet(const gchar *goad_id)
 	if (!mc->mail_file) {
 		mc->mail_file = getenv ("MAIL");
 		if (!mc->mail_file){
-			char *user;
-			
-			if ((user = getenv("USER")) != NULL){
-				mc->mail_file = g_malloc(strlen(user) + 20);
-				sprintf(mc->mail_file, "/var/spool/mail/%s", user);
-			} else {
+			char *user = getenv ("USER");
+			if (!user)
 				return NULL;
-			}
-		}
-		/* little hack to get a dup'ed string */
-		mc->mail_file = g_strdup(mc->mail_file);
+
+			mc->mail_file = g_strdup_printf ("/var/spool/mail/%s",
+							 user);
+		} else
+			mc->mail_file = g_strdup (mc->mail_file);
 	}
 
 	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.png");
