@@ -1,3 +1,24 @@
+2002-02-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: split deprecation related cflags and gnome_program
+	related defines into their own variable.
+
+	* applet.c:
+	(panel_applet_clean_gconf): free gconf_key here.
+	(panel_applet_clean): don't clean gconf until after the widget has
+	been destroyed.
+	(applet_destroy): don't free key here.
+
+	* distribution.[ch]: (get_distribution_info): allow distribution menus
+	to be re-locatable.
+
+	* gnome-panel-properties.c: (main): set the window icon.
+
+	* gnome-run.c: (register_run_stock_item): impl to register a new stock
+	icon and icon set for the run button.
+	(show_run_dialog): use above instead of stock execute item. Lookup
+	window icon with gnome_program_locate_file.
+
 2002-02-06  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-applet-frame.[ch]

@@ -7,7 +7,6 @@
 
 #include "panel-gconf.h"
 
-
 #undef PANEL_GCONF_DEBUG
 
 gchar * 
@@ -281,7 +280,8 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
       			g_free (s);
       			tmp = g_slist_next (tmp);
     		}
-    	g_slist_free (subdirs);
+
+	    	g_slist_free (subdirs);
   	}
  
   	entries = gconf_client_all_entries (client, dir, NULL);
@@ -293,7 +293,7 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
  			GConfEntry *entry = tmp->data;
 
 #ifdef PANEL_GCONF_DEBUG
-	printf ("Unsetting %s\n", gconf_entry_get_key (entry));
+			printf ("Unsetting %s\n", gconf_entry_get_key (entry));
 #endif 
       			gconf_client_unset (client, gconf_entry_get_key (entry), NULL);
       			gconf_entry_free (entry);
@@ -302,5 +302,6 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
     		
 		g_slist_free (entries);
   	}
+
 	gconf_client_unset (client, dir, NULL);
 }

@@ -596,7 +596,7 @@ launcher_properties (Launcher *launcher)
 }
 
 void
-launcher_save_to_gconf (Launcher  *launcher,
+launcher_save_to_gconf (Launcher   *launcher,
 			const char *gconf_key)
 {
 	const char *location;

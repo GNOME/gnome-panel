@@ -19,7 +19,7 @@ typedef struct {
 	const gchar *distribution_name;
 	const gchar *menu_name;
 	const gchar *menu_icon;
-	const gchar *menu_path;
+	gchar       *menu_path;
 	void (*menu_init_func) (void);
 	void (*menu_show_func) (GtkWidget *, GtkMenuItem *);
 } DistributionInfo;

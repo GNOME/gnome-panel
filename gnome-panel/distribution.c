@@ -29,7 +29,7 @@ static DistributionInfo distribution_info [] = {
 	},
 	{ DISTRIBUTION_SUSE, "/etc/SuSE-release",
 	  N_("SuSE Linux"), N_("SuSE menus"), "gnome-suse.png",
-	  GNOME_DATADIR "/gnome/distribution-menus/SuSE/.",
+	  "gnome/distribution-menus/SuSE/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
@@ -96,6 +96,15 @@ get_distribution_info (void)
 
 	cache = internal_get_distribution_info (type);
 	cached = TRUE;
+
+	if (cache->menu_path && !g_path_is_absolute (cache->menu_path)) {
+		char *full_path;
+
+		full_path = gnome_program_locate_file (
+				NULL, GNOME_FILE_DOMAIN_DATADIR, cache->menu_path, TRUE, NULL);
+		if (full_path)
+			cache->menu_path = full_path;
+	}
 
 	return cache;
 }

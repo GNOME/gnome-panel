@@ -1854,8 +1854,9 @@ panel_session_init_global_config (void)
 		value = gconf_entry_get_value (entry);
 
 		key = g_path_get_basename (gconf_entry_get_key (entry));
+
 #ifdef PANEL_SESSION_DEBUG
-	printf ("Checking global config for %s\n", key);
+		printf ("Checking global config for %s\n", key);
 #endif
 		/* FIXME: We need to do something more user friendly here */
 		if (!strcmp (key, "panel-animation-speed")) {

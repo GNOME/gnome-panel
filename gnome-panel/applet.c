@@ -78,7 +78,8 @@ panel_applet_clean_gconf (AppletInfo *info)
 	char        *temp_key = NULL;
 	char        *profile;
 
-	g_return_if_fail (info && info->gconf_key);
+	g_return_if_fail (info != NULL);
+	g_return_if_fail (info->gconf_key != NULL);
 
         client  = panel_gconf_get_client ();
 	profile = session_get_current_profile ();
@@ -118,6 +119,9 @@ panel_applet_clean_gconf (AppletInfo *info)
 
         g_free (temp_key);
 	panel_g_slist_deep_free (id_list);
+
+	g_free (info->gconf_key);
+	info->gconf_key = NULL;
 }
 
 /*destroy widgets and call the above cleanup function*/
@@ -131,21 +135,21 @@ panel_applet_clean (AppletInfo *info)
 		info->remove_idle = 0;
 	}
 
-	panel_applet_clean_gconf (info);
-
 	applets = g_slist_remove (applets, info);
 
-	if (info->widget != NULL) {
+	if (info->widget) {
 		GtkWidget *widget = info->widget;
-		if(info->type == APPLET_STATUS) {
+
+		if (info->type == APPLET_STATUS)
 			status_applet_put_offscreen (info->data);
-		}
-		/* destroy will remove it from the panel */
+
 		info->widget = NULL;
 		gtk_widget_destroy (widget);
 	}
 
 	info->data = NULL;
+
+	panel_applet_clean_gconf (info);
 
 	g_free (info);
 }
@@ -786,15 +790,10 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 		info->menu_age = 0;
 	}
 
-	info->type = APPLET_EMPTY;
-
 	if (info->data_destroy)
 		info->data_destroy (info->data);
 	info->data_destroy = NULL;
 	info->data = NULL;
-
-	g_free (info->gconf_key);
-	info->gconf_key = NULL;
 
 	/*free the user menu*/
 	for(li = info->user_menu; li != NULL; li = g_list_next(li)) {

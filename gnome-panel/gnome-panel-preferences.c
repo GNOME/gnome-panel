@@ -25,6 +25,11 @@
 #include <config.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+/*
+ * FIXME: remove when this starts getting installed
+ *        by libgnomeui
+ */
+#include <libgnomeui/gnome-window-icon.h>
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 
@@ -40,8 +45,6 @@
 #include <libart_lgpl/art_alphagamma.h>
 
 #include <gconf/gconf-client.h>
-
-#define GNOME_PANEL_PROPERTIES_DEBUG 1
 
 /* Just so we can link with panel-util.c for the convert keys stuff*/
 GSList *applets;
@@ -369,6 +372,7 @@ int
 main (int argc, char **argv)
 {
   	GtkWidget *main_window;
+	char      *panel_icon;
 
 	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -416,6 +420,13 @@ main (int argc, char **argv)
 
 	gtk_window_set_title(GTK_WINDOW(main_window),
 		_("Panel Global Properties"));
+
+	panel_icon = gnome_program_locate_file (
+			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);
+	if (panel_icon) {
+		gnome_window_icon_set_from_file (GTK_WINDOW (main_window), panel_icon);
+		g_free (panel_icon);
+	}
 
 	gtk_widget_show_all(main_window);
 

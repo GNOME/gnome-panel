@@ -29,6 +29,10 @@
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+/*
+ * FIXME: remove when this starts getting installed
+ *        by libgnomeui
+ */
 #include <libgnomeui/gnome-window-icon.h>
 
 #include "gnome-run.h"
@@ -59,6 +63,12 @@ enum {
 	COLUMN_NAME,
 	NUM_COLUMNS
 };
+
+typedef enum {
+	PANEL_RESPONSE_RUN,
+} PanelResponseType;
+
+#define PANEL_STOCK_RUN "panel-run"
 
 extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
@@ -189,10 +199,6 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 	(*envv)[i] = NULL;
 	g_list_free (envar);
 }
-
-enum {
-	RUN_BUTTON
-};
 
 static void 
 run_dialog_response (GtkWidget *w, int response, gpointer data)
@@ -621,7 +627,7 @@ advanced_contents_shown (GtkWidget *vbox,
 static void
 activate_run (GtkWidget *entry, GtkWidget *dialog)
 {
-	gtk_dialog_response (GTK_DIALOG (dialog), RUN_BUTTON);
+	gtk_dialog_response (GTK_DIALOG (dialog), PANEL_RESPONSE_RUN);
 }
 
 static GtkWidget*
@@ -1115,18 +1121,48 @@ update_contents (GtkWidget *dialog)
         }
 }
 
+static inline void
+register_run_stock_item (void)
+{
+	static gboolean registered = FALSE;
+
+	if (!registered) {
+		GtkIconFactory      *factory;
+		GtkIconSet          *execute_icons;
+
+		static GtkStockItem  run_item [] = {
+			{ PANEL_STOCK_RUN, N_("_Run ..."), 0, 0, GETTEXT_PACKAGE },
+		};
+
+		execute_icons = gtk_icon_factory_lookup_default (GTK_STOCK_EXECUTE);
+
+		factory = gtk_icon_factory_new ();
+
+		gtk_icon_factory_add (factory, PANEL_STOCK_RUN, execute_icons);
+
+		gtk_icon_factory_add_default (factory);
+
+		gtk_stock_add_static (run_item, 1);
+
+		registered = TRUE;
+	}
+}
+
 void
 show_run_dialog (void)
 {
-        gboolean use_advanced;          
+        gboolean  use_advanced;          
+	char     *run_icon;
 
 	if (no_run_box)
 		return;
 
-	if(run_dialog != NULL) {
+	if (run_dialog != NULL) {
 		gtk_window_present (GTK_WINDOW (run_dialog));
 		return;
 	}
+
+	register_run_stock_item ();
 
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
@@ -1137,10 +1173,8 @@ show_run_dialog (void)
 						  GTK_RESPONSE_HELP,
 						  GTK_STOCK_CLOSE,
 						  GTK_RESPONSE_CLOSE,
-						  /* FIXME: how the hell do we get a different label but
-						   * the execute stock icon */
-						  GTK_STOCK_EXECUTE,
-						  RUN_BUTTON,
+						  PANEL_STOCK_RUN,
+						  PANEL_RESPONSE_RUN,
 						  NULL);
 
         /* This is lame in advanced mode, but if you change it on mode
@@ -1156,17 +1190,21 @@ show_run_dialog (void)
         if (!use_advanced)
                 gtk_window_set_default_size (GTK_WINDOW (run_dialog),
                                              -1, 400);
-        
-	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
-					 GNOME_ICONDIR"/gnome-run.png");
+
+	run_icon = gnome_program_locate_file (
+			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-run.png", TRUE, NULL);
+	if (run_icon) {
+		gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog), run_icon);
+		g_free (run_icon);
+	}
+
 	g_signal_connect(G_OBJECT(run_dialog), "destroy",
 			   G_CALLBACK(gtk_widget_destroyed),
 			   &run_dialog);
 	gtk_window_set_position (GTK_WINDOW (run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
-	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), 
-					 RUN_BUTTON);
+	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), PANEL_RESPONSE_RUN);
 
         g_signal_connect (G_OBJECT (run_dialog), "response", 
 			  G_CALLBACK (run_dialog_response), NULL);

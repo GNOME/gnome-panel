@@ -7,34 +7,43 @@ NULL =
 
 EXTRA_SUBDIRS = help
 
-# FIXME:
-# this define is to allow menu.c to continure
-# using deprecated gtk+ internals
-ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
-
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_srcdir)/gnome-desktop				\
 	-I$(top_builddir)/panel					\
 	-DPANEL_DEBUG						\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
+	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
+	$(DISABLE_DEPRECATED_CFLAGS)				\
+	$(STANDARD_PROPERTIES_CFLAGS)				\
+	$(ALLOW_CRACKPOT_MENU_CODE)				\
+	$(PANEL_CFLAGS)						\
+	$(PANELCONFIG_CFLAGS)					\
+	$(WARN_CFLAGS)						\
+	$(NULL)
+
+# FIXME:
+# this define is to allow menu.c to continue
+# using deprecated gtk+ internals
+ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
+
+# Flags to make sure we're not using any deprecated functions
+DISABLE_DEPRECATED_CFLAGS = 					\
 	-DG_DISABLE_DEPRECATED					\
 	-DGDK_DISABLE_DEPRECATED				\
 	-DGTK_DISABLE_DEPRECATED				\
 	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
 	-DGNOME_DISABLE_DEPRECATED				\
 	-DGNOME_CORE_INTERNAL					\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
-	-DGNOME_DATADIR=\""$(datadir)"\"			\
-	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
+	$(NULL)
+
+# Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
+STANDARD_PROPERTIES_CFLAGS = 					\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
-	-DDATADIR=\""$(datadir)"\"				\
 	-DLIBDIR=\""$(libdir)"\"				\
-	$(ALLOW_CRACKPOT_MENU_CODE)				\
-	$(PANEL_CFLAGS)						\
-	$(PANELCONFIG_CFLAGS)					\
-	$(WARN_CFLAGS)						\
+	-DDATADIR=\""$(datadir)"\"				\
 	$(NULL)
 
 bin_PROGRAMS = \

@@ -2632,6 +2632,9 @@ add_bonobo_applet (GtkWidget  *widget,
 	panel_applet_frame_load (iid, panel, -1, NULL);
 }
 
+/*
+ * FIXME: we're now in the Vertigo namespace.
+ */
 static const gchar applet_requirements [] = 
 	"has_all (repo_ids, ['IDL:Bonobo/Control:1.0', 'IDL:GNOME/PanelAppletShell:1.0']) && "
 	"defined (panel:icon) && defined (panel:category)";
