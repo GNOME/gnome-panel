@@ -1167,16 +1167,25 @@ add_appointments_and_tasks (ClockData *cd,
         cd->task_list = create_task_list (cd, &tree_view);
         g_object_add_weak_pointer (G_OBJECT (cd->task_list),
                                    (gpointer *) &cd->task_list);
-        gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
         setup_list_size_constraint (cd->task_list, cd->calendar, tree_view);
         update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_model));
         
         cd->appointment_list = create_appointment_list (cd, &tree_view);
         g_object_add_weak_pointer (G_OBJECT (cd->appointment_list),
                                    (gpointer *) &cd->appointment_list);
-        gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
         setup_list_size_constraint (cd->appointment_list, cd->calendar, tree_view);
         update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_model));
+
+        switch (cd->orient) {
+        case PANEL_APPLET_ORIENT_UP:
+                gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
+                break;
+        default:
+                gtk_box_pack_start (GTK_BOX (vbox), cd->task_list, TRUE, TRUE, 0);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->appointment_list, TRUE, TRUE, 0);
+                break;
+        }
 
         if (!cd->client) {
                 cd->client = calendar_client_new ();
