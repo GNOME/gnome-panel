@@ -414,7 +414,6 @@ save_applet_configuration(AppletInfo *info)
 	switch(info->type) {
 	case APPLET_EXTERN:
 		{
-			char *s;
 			Extern *ext = info->data;
 
 			/*just in case the applet times out*/

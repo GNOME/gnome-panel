@@ -12,6 +12,7 @@
 
 #include <config.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "foobar-widget.h"
 #include <libgnome/gnome-i18n.h>

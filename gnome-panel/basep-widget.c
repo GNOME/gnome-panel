@@ -4,8 +4,9 @@
  * Authors:  George Lebl
  *           Jacob Berkman
  */
-#include <math.h>
 #include <config.h>
+#include <math.h>
+#include <string.h>
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
