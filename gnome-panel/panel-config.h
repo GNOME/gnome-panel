@@ -85,6 +85,7 @@ struct _PerPanelConfig {
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
+	GtkWidget		*trans;
 	GtkWidget		*backsel;
 	GtkWidget		*back_om; /* the back type option menu */
 

@@ -1173,6 +1173,8 @@ void
 basep_update_frame (BasePWidget *basep)
 {
 	gboolean hide_frame = global_config.hide_panel_frame ||
+		PANEL_WIDGET (basep->panel)->back_type == 
+						PANEL_BACK_TRANSLUCENT ||
 		PANEL_WIDGET (basep->panel)->back_type == PANEL_BACK_PIXMAP;
 
 	if (hide_frame && GTK_WIDGET_VISIBLE (basep->frame)) {
@@ -1330,7 +1332,9 @@ basep_widget_construct (BasePWidget *basep,
 
 	gtk_widget_show(basep->panel);
 
-	if(back_type != PANEL_BACK_PIXMAP && !global_config.hide_panel_frame) {
+	if(back_type != PANEL_BACK_PIXMAP && 
+			back_type != PANEL_BACK_TRANSLUCENT &&
+			!global_config.hide_panel_frame) {
 		gtk_widget_show(basep->frame);
 		gtk_container_add(GTK_CONTAINER(basep->frame),basep->panel);
 	} else {

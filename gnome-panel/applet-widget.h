@@ -42,6 +42,7 @@ typedef GNOME_Panel_BackType PanelBackType;
 #define PANEL_BACK_NONE GNOME_Panel_BACK_NONE
 #define PANEL_BACK_COLOR GNOME_Panel_BACK_COLOR
 #define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
+#define PANEL_BACK_TRANSLUCENT GNOME_Panel_BACK_TRANSLUCENT
 
 
 #define TYPE_APPLET_WIDGET          (applet_widget_get_type ())

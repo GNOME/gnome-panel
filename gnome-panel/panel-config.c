@@ -396,6 +396,10 @@ update_config_back (PanelWidget *pw)
 		item = ppc->pix;
 		history = 2;
 		break;
+	case PANEL_BACK_TRANSLUCENT:
+		item = ppc->trans;
+		history = 3;
+		break;
 	}
 
 	gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), history);
@@ -1511,6 +1515,9 @@ set_back (GtkWidget *widget, gpointer data)
 	} else if (back_type == PANEL_BACK_COLOR) {
 		gtk_widget_set_sensitive (pixf, FALSE);
 		gtk_widget_set_sensitive (colf, TRUE);
+	} else if (back_type == PANEL_BACK_TRANSLUCENT) {
+		gtk_widget_set_sensitive (pixf, FALSE);
+		gtk_widget_set_sensitive (colf, FALSE);
 	} else  {
 		gtk_widget_set_sensitive (pixf, TRUE);
 		gtk_widget_set_sensitive (colf, FALSE);
@@ -1548,6 +1555,7 @@ background_page (PerPanelConfig *ppc)
 	GtkWidget *box, *f, *t;
 	GtkWidget *vbox, *noscale, *fit, *strech;
 	GtkWidget *w, *m;
+	GtkWidget *spinbutton;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
@@ -1575,6 +1583,10 @@ background_page (PerPanelConfig *ppc)
 	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
 	gtk_widget_show (ppc->pix);
 	gtk_menu_append (GTK_MENU (m), ppc->pix);
+	ppc->trans = gtk_menu_item_new_with_label (_("Translucent"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->trans),ppc);
+	gtk_widget_show (ppc->trans);
+	gtk_menu_append (GTK_MENU (m), ppc->trans);
 
 	ppc->back_om = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
@@ -1584,6 +1596,7 @@ background_page (PerPanelConfig *ppc)
 	/*color frame*/
 	f = gtk_frame_new (_("Color"));
 	gtk_widget_set_sensitive (f, ppc->back_type == PANEL_BACK_COLOR);
+	gtk_object_set_data(GTK_OBJECT(ppc->trans),"col",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->pix),"col",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->col),"col",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->non),"col",f);
@@ -1618,6 +1631,7 @@ background_page (PerPanelConfig *ppc)
 	/*image frame*/
 	f = gtk_frame_new (_("Image"));
 	gtk_widget_set_sensitive (f, ppc->back_type == PANEL_BACK_PIXMAP);
+	gtk_object_set_data(GTK_OBJECT(ppc->trans),"pix",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->pix),"pix",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->col),"pix",f);
 	gtk_object_set_data(GTK_OBJECT(ppc->non),"pix",f);
@@ -1637,7 +1651,7 @@ background_page (PerPanelConfig *ppc)
 					GTK_SIGNAL_FUNC (value_changed), ppc,
 					GTK_OBJECT (ppc->pix_entry));
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
-	
+
 	gtk_entry_set_text (GTK_ENTRY (t),
 			    sure_string (ppc->back_pixmap));
 	
@@ -1681,6 +1695,9 @@ background_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (ppc->pix), "activate", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_PIXMAP));
+	gtk_signal_connect (GTK_OBJECT (ppc->trans), "activate", 
+			    GTK_SIGNAL_FUNC (set_back), 
+			    GINT_TO_POINTER(PANEL_BACK_TRANSLUCENT));
 	gtk_signal_connect (GTK_OBJECT (ppc->col), "activate", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_COLOR));
@@ -1691,9 +1708,12 @@ background_page (PerPanelConfig *ppc)
 	} else if(ppc->back_type == PANEL_BACK_COLOR) {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 1);
 		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->col));
-	} else {
+	} else if(ppc->back_type == PANEL_BACK_PIXMAP) {
 		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 2);
 		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->pix));
+	} else { /* ppc->back_type == PANEL_BACK_TRANSLUCENT */
+		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 3);
+		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->trans));
 	}
 
 	return vbox;

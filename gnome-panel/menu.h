@@ -169,6 +169,7 @@ enum {
 #define MENU_BACK_NONE "back-none"
 #define MENU_BACK_PIXMAP "back-pixmap"
 #define MENU_BACK_COLOR "back-color"
+#define MENU_BACK_TRANSLUCENT "back-translucent"
 
 #define MENU_ORIENTS "orients_menu"
 #define MENU_ORIENT_HORIZONTAL "orient-horizontal"

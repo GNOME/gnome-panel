@@ -4585,6 +4585,9 @@ update_back_menu (GtkWidget *menu, gpointer data)
 	case PANEL_BACK_PIXMAP:
 		s = MENU_BACK_PIXMAP;
 		break;
+	case PANEL_BACK_TRANSLUCENT:
+		s = MENU_BACK_TRANSLUCENT;
+		break;
 	default:
 		return;
 	}
@@ -4751,6 +4754,7 @@ make_properties_submenu (GtkWidget *menu)
 		{ N_("Standard"), MENU_BACK_NONE, PANEL_BACK_NONE },
 		{ N_("Color"), MENU_BACK_COLOR, PANEL_BACK_COLOR },
 		{ N_("Pixmap"), MENU_BACK_PIXMAP, PANEL_BACK_PIXMAP },
+		{ N_("Translucent"), MENU_BACK_TRANSLUCENT, PANEL_BACK_TRANSLUCENT },
 		{ NULL, NULL, -1 }
 	};
 

@@ -109,6 +109,10 @@ struct _PanelWidget
 						   was set, this is used
 						   for tiling onto the
 						   background */
+	int			x;
+	int			y;
+	int                     width;
+	int                     height;
 };
 
 struct _PanelWidgetClass
@@ -264,6 +268,8 @@ void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 
 extern gboolean panel_applet_in_drag;
 
+void 		panel_widget_force_repaint 	(PanelWidget *panel);
+void		panel_widget_setup_translucent_background (PanelWidget	*panel);
 END_GNOME_DECLS
 
 #endif /* PANEL_WIDGET_H */

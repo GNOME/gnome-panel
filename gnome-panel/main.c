@@ -39,6 +39,8 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
+extern GdkPixmap *desktop_pixmap;
+
 /*list of all panel widgets created*/
 extern GSList *panel_list;
 
@@ -427,6 +429,84 @@ kill_free_drawers (void)
 	}
 }
 
+/* gets a GdkPixmap for a given X atom name whose value is an X Pixmap */
+static GdkPixmap *
+get_pixmap_prop (char *prop_id)
+{
+	Atom prop, type;
+	int format;
+	unsigned long length, after;
+	unsigned char *data;
+	Pixmap p;
+
+	prop = XInternAtom(GDK_DISPLAY(), prop_id, True);
+
+	if (prop == None) {
+		return NULL;
+	}
+
+	XGetWindowProperty(GDK_DISPLAY(), GDK_ROOT_WINDOW(), prop, 0L, 1L, 
+			False, AnyPropertyType, &type, &format, &length, 
+			&after, &data);
+
+	if (type != XA_PIXMAP) {
+		return NULL;
+	}
+
+	p = *((Pixmap *)data);
+
+	/* remember not to unref this pixmap */
+	return gdk_pixmap_foreign_new(p);
+}
+
+
+/* gets a GdkPixmap that refers to the GNOME desktop pixmap and stores it
+ * in desktop_pixmap.
+ */
+static void
+get_desktop_pixmap()
+{
+	desktop_pixmap = get_pixmap_prop ("_XROOTPMAP_ID");
+}
+
+/* an event handler for when the GNOME desktop pixmap changes */
+static GdkFilterReturn
+desktop_event_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent;
+	GSList *item;
+	PanelWidget *panel;
+
+	xevent = (XEvent *) gdk_xevent;
+
+	if (xevent->type == PropertyNotify && xevent->xproperty.atom == 
+			gdk_atom_intern("ESETROOT_PMAP_ID", TRUE)) {
+
+		get_desktop_pixmap ();
+
+		for (item = panels; item; item = g_slist_next (item)) {
+			panel = PANEL_WIDGET (item->data);
+
+			if (panel->back_type == PANEL_BACK_TRANSLUCENT) {
+				panel_widget_setup_translucent_background (panel);
+				panel_widget_force_repaint (panel);
+			}
+		}
+
+
+	}
+	return GDK_FILTER_CONTINUE;
+}
+
+/* set up the event handler */
+static void
+set_up_desktop_event_handler () 
+{
+	/* we need to watch for desktop image changes */
+	gdk_window_add_filter (GDK_ROOT_PARENT(), desktop_event_filter, NULL);
+}	
+
+
 int
 main(int argc, char **argv)
 {
@@ -531,6 +611,10 @@ main(int argc, char **argv)
 	init_fr_chunks ();
 	
 	init_menus ();
+
+	/* get the GNOME desktop image stuff */
+	get_desktop_pixmap ();
+	set_up_desktop_event_handler ();
 	
 	init_user_panels ();
 	init_user_applets ();

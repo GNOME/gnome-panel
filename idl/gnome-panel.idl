@@ -37,7 +37,8 @@ module GNOME {
 		enum BackType {
 			BACK_NONE,
 			BACK_COLOR,
-			BACK_PIXMAP
+			BACK_PIXMAP,
+			BACK_TRANSLUCENT
 		};
 
 		union BackInfoType switch(BackType) {

@@ -1753,6 +1753,7 @@ server_applet_back_change(PortableServer_Servant _servant,
 		cptr = &color;
 		break;
 	case GNOME_Panel_BACK_PIXMAP:
+	case GNOME_Panel_BACK_TRANSLUCENT:
 		pptr = backing->_u.pmap;
 		break;
 	default:

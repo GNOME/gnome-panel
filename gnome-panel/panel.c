@@ -363,9 +363,9 @@ back_change (AppletInfo *info, PanelWidget *panel)
 			CORBA_Environment ev;
 			CORBA_exception_init(&ev);
 			backing._d = panel->back_type;
-			if(panel->back_type == PANEL_BACK_PIXMAP)
+			if(panel->back_type == PANEL_BACK_PIXMAP) {
 				backing._u.pmap = panel->back_pixmap;
-			else if(panel->back_type == PANEL_BACK_COLOR) {
+			} else if(panel->back_type == PANEL_BACK_COLOR) {
 				backing._u.c.red = panel->back_color.red;
 				backing._u.c.green = panel->back_color.green;
 				backing._u.c.blue = panel->back_color.blue;
