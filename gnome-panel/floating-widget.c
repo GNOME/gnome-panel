@@ -42,13 +42,6 @@ static void floating_pos_get_hide_size (BasePWidget *basep,
 					PanelOrient hide_orient,
 					int *x, int *y);
 
-static void floating_pos_get_menu_pos (BasePWidget *basep,
-				       GtkWidget *widget,
-				       GtkRequisition *mreq,
-				       int *x, int *y,
-				       int wx, int wy,
-				       int ww, int wh);
-
 static void floating_pos_pre_convert_hook (BasePWidget *basep);
 
 static void floating_pos_show_hide_left (BasePWidget *basep);
@@ -116,7 +109,6 @@ floating_pos_class_init (FloatingPosClass *klass)
 	pos_class->get_hide_size = floating_pos_get_hide_size;
 	pos_class->get_pos = floating_pos_get_pos;
 	pos_class->set_pos = floating_pos_set_pos;
-	pos_class->get_menu_pos = floating_pos_get_menu_pos;
 	pos_class->pre_convert_hook = floating_pos_pre_convert_hook;
 	pos_class->north_clicked = pos_class->west_clicked = 
 		floating_pos_show_hide_left;
@@ -189,37 +181,6 @@ floating_pos_get_hide_orient (BasePWidget *basep)
 	default:
 		g_warning ("not hidden");
 		return -1;
-	}
-}
-
-static void
-floating_pos_get_menu_pos (BasePWidget *basep,
-			   GtkWidget *widget,
-			   GtkRequisition *mreq,
-			   int *x, int *y,
-			   int wx, int wy,
-			   int ww, int wh)
-{	
-	PanelOrient menu_orient = floating_pos_get_applet_orient (basep);
-	
-	switch (menu_orient) {
-	case PANEL_ORIENT_DOWN:
-		*x += wx;
-		*y = wy + wh;
-		break;
-	case PANEL_ORIENT_LEFT:
-		*x = wx - mreq->width;
-		*y += wy;
-		break;
-	default:
-	case PANEL_ORIENT_UP:
-		*x += wx;
-		*y = wy - mreq->height;
-		break;
-	case PANEL_ORIENT_RIGHT:
-		*x = wx + ww;
-		*y += wy;
-		break;
 	}
 }
 

@@ -38,13 +38,6 @@ static void drawer_pos_get_pos(BasePWidget *basep,
 			       int *x, int *y,
 			       int width, int height);
 
-static void drawer_pos_get_menu_pos (BasePWidget *basep,
-				     GtkWidget *widget,
-				     GtkRequisition *mreq,
-				     int *x, int *y,
-				     int wx, int wy,
-				     int ww, int wh);
-
 static void drawer_pos_hidebutton_click (BasePWidget *basep);
 
 static void drawer_pos_pre_convert_hook (BasePWidget *basep);
@@ -88,7 +81,6 @@ drawer_pos_class_init (DrawerPosClass *klass)
 	pos_class->get_hide_pos = drawer_pos_get_hide_pos;
 	pos_class->get_hide_size = drawer_pos_get_hide_size;
 	pos_class->get_pos = drawer_pos_get_pos;
-	pos_class->get_menu_pos = drawer_pos_get_menu_pos;
 
 	pos_class->north_clicked = 
 		pos_class->west_clicked = 
@@ -230,26 +222,6 @@ drawer_pos_hidebutton_click (BasePWidget *basep)
 	drawer->moving_focus = TRUE;
 	gtk_window_present (GTK_WINDOW (parent));
 	gtk_widget_grab_focus (drawer->button);
-}
-
-static void
-drawer_pos_get_menu_pos (BasePWidget *basep,
-			 GtkWidget *widget,
-			 GtkRequisition *mreq,
-			 int *x, int *y,
-			 int wx, int wy,
-			 int ww, int wh)
-{	
-	PanelWidget *panel =
-		PANEL_WIDGET(basep->panel);
-
-	if(panel->orient==GTK_ORIENTATION_VERTICAL) {
-		*x = wx + ww;
-		*y += wy;
-	} else {
-		*x += wx;
-		*y = wy - mreq->height;
-	}
 }
 
 static void

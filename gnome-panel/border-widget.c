@@ -24,13 +24,6 @@ static PanelOrient border_pos_get_applet_orient (BasePWidget *basep);
 
 static PanelOrient border_pos_get_hide_orient (BasePWidget *basep);
 
-static void border_pos_get_menu_pos (BasePWidget *basep,
-				     GtkWidget *widget,
-				     GtkRequisition *mreq,
-				     int *x, int *y,
-				     int wx, int wy,
-				     int ww, int wh);
-
 static void border_pos_show_hide_left (BasePWidget *basep);
 static void border_pos_show_hide_right (BasePWidget *basep);
 
@@ -94,7 +87,6 @@ border_pos_class_init (BorderPosClass *klass)
 	pos_class->set_hidebuttons = border_pos_set_hidebuttons;
 	pos_class->get_applet_orient = border_pos_get_applet_orient;
 	pos_class->get_hide_orient = border_pos_get_hide_orient;
-	pos_class->get_menu_pos = border_pos_get_menu_pos;
 
 	pos_class->north_clicked = pos_class->west_clicked = 
 		border_pos_show_hide_left;
@@ -168,37 +160,6 @@ border_pos_get_hide_orient (BasePWidget *basep)
 	}
 	g_assert_not_reached ();
 	return PANEL_ORIENT_LEFT;
-}
-
-static void
-border_pos_get_menu_pos (BasePWidget *basep,
-			 GtkWidget *widget,
-			 GtkRequisition *mreq,
-			 int *x, int *y,
-			 int wx, int wy,
-			 int ww, int wh)
-{
-	switch (BORDER_POS(basep->pos)->edge) {
-	case BORDER_TOP:
-		*x += wx;
-		*y = wy + wh;
-		break;
-	case BORDER_RIGHT:
-		*x = wx - mreq->width;
-		*y += wy;
-		break;
-	case BORDER_BOTTOM:
-		*x += wx;
-		*y = wy - mreq->height;
-		break;
-	case BORDER_LEFT:
-		*x = wx + ww;
-		*y += wy;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
 }
 
 void

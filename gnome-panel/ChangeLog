@@ -1,3 +1,18 @@
+2002-10-01  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (applet_show_menu): use
+	panel_position_applet_menu.
+
+	* basep-widget.[ch], border-widget.c, drawer-widget.c:
+ 	  floating-widget.c:  kill all get_menu_pos() code.
+
+	* menu-util.[ch]: (panel_position_applet_menu): impl
+	popping up the menu outside of the applets.
+
+	* menu.c:
+	(panel_make_sure_menu_within_screen): upd.
+	(menu_button_menu_popup): use panel_position_applet_menu.
+
 2002-09-27  Alexander Larsson  <alexl@redhat.com>
 
 	* button-widget.c: 

@@ -661,8 +661,7 @@ panel_make_sure_menu_within_screen (GtkMenu *menu)
 
 	/* if already set to a standard pos func, just ignore */
 	if (menu->position_func == menu_on_screen ||
-	    menu->position_func == panel_menu_position ||
-	    menu->position_func == applet_menu_position)
+	    menu->position_func == panel_menu_position)
 		return;
 
 	repo = g_new0 (MenuReposition, 1);
@@ -3979,7 +3978,7 @@ menu_button_menu_popup (Menu    *menu,
 	gtk_menu_popup (GTK_MENU (menu->menu),
 			NULL,
 			NULL, 
-			applet_menu_position_outside,
+			(GtkMenuPositionFunc) panel_position_applet_menu,
 			menu->info,
 			button,
 			activate_time);

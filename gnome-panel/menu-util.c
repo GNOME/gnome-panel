@@ -146,80 +146,43 @@ menu_item_menu_position (GtkMenu  *menu,
 }
 
 void
-applet_menu_position (GtkMenu  *menu,
-		      gint     *x,
-		      gint     *y,
-		      gboolean *push_in,
-		      gpointer  data)
+panel_position_applet_menu (GtkMenu   *menu,
+			    int       *x,
+			    int       *y,
+			    gboolean  *push_in,
+			    GtkWidget *widget)
 {
-	AppletInfo *info = data;
-	PanelWidget *panel;
-	GtkWidget *w; /*the panel window widget*/
+	GtkRequisition  requisition;
+	GdkScreen      *screen;
+	int             menu_x = 0;
+	int             menu_y = 0;
 
-	g_return_if_fail(info != NULL);
-	g_return_if_fail(info->widget != NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
-	panel = PANEL_WIDGET(info->widget->parent);
-	g_return_if_fail(panel != NULL);
-	
-	w = panel->panel_parent;
+	screen = gtk_widget_get_screen (widget);
 
-	standard_position_within (menu, x, y, push_in, w);
-}
+	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
-void
-applet_menu_position_outside (GtkMenu  *menu,
-			      gint     *x,
-			      gint     *y,
-			      gboolean *push_in,
-			      gpointer  data)
-{
-	AppletInfo *info = data;
-	int wx, wy;
-	PanelWidget *panel;
-	GtkWidget *w; /*the panel window widget*/
+	gdk_window_get_origin (widget->window, &menu_x, &menu_y);
 
-	g_return_if_fail(info != NULL);
-	g_return_if_fail(info->widget != NULL);
+	menu_x += widget->allocation.x;
+	menu_y += widget->allocation.y;
 
-	panel = PANEL_WIDGET(info->widget->parent);
-	g_return_if_fail(panel != NULL);
-	
-	w = panel->panel_parent;
-
-	gdk_window_get_origin (info->widget->window, &wx, &wy);
-	if(GTK_WIDGET_NO_WINDOW(info->widget)) {
-		wx += info->widget->allocation.x;
-		wy += info->widget->allocation.y;
+	if (PANEL_WIDGET (widget->parent)->orient == GTK_ORIENTATION_HORIZONTAL) {
+		if (menu_y > gdk_screen_get_height (screen) / 2)
+			menu_y -= requisition.height;
+		else
+			menu_y += widget->allocation.height;
+	} else {
+		if (menu_x > gdk_screen_get_width (screen) / 2)
+			menu_x -= requisition.width;
+		else
+			menu_x += widget->allocation.width;
 	}
 
-#ifdef MENU_UTIL_DEBUG
-	g_print ("applet_menu_position_outside: origin x = %d, y = %d\n", wx, wy);
-#endif
-
-	if (BASEP_IS_WIDGET (w)) {
-		*x = *y = 0;
-		basep_widget_get_menu_pos(BASEP_WIDGET(w),
-					  GTK_WIDGET(menu),
-					  x,y,wx,wy,
-					  info->widget->allocation.width,
-					  info->widget->allocation.height);
-       	} else if (FOOBAR_IS_WIDGET (w)) {
-		GtkRequisition req;
-		FoobarWidget *foo = FOOBAR_WIDGET (w);
-		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-		*x = MIN (*x,
-			  multiscreen_width (foo->screen, foo->monitor) +
-			  multiscreen_x (foo->screen, foo->monitor) - req.width);
-		*y = w->allocation.height + multiscreen_y (foo->screen, foo->monitor);
-	}
-
+	*x = menu_x;
+	*y = menu_y;
 	*push_in = TRUE;
- 
-#ifdef MENU_UTIL_DEBUG
-	g_print ("applet_menu_position_outside: x = %d, y = %d, push_in = %s\n",
-		 *x, *y, *push_in ? "(true)" : "(false)");
-#endif
 }
 
 int

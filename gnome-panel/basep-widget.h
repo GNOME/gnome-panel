@@ -161,13 +161,6 @@ struct _BasePPosClass {
 					    int *x, int *y,
 					    int w, int h);
 
-	void (*get_menu_pos)              (BasePWidget *basep,
-					   GtkWidget *widget,
-					   GtkRequisition *mreq,
-					   int *x, int *y,
-					   int wx, int wy,
-					   int ww, int wh);
-
 	void (*realize)                   (GtkWidget *widget);
 
 	void (*north_clicked)             (BasePWidget *basep);
@@ -253,12 +246,6 @@ void		basep_widget_get_position	(BasePWidget *basep,
 						 PanelOrient hide_orient,
 						 int *x, int *y,
 						 int w, int h);
-
-void            basep_widget_get_menu_pos  (BasePWidget *basep,
-					    GtkWidget *menu,
-					    int *x, int *y,
-					    int wx, int wy,
-					    int ww, int wh);
 
 PanelOrient basep_widget_get_applet_orient (BasePWidget *basep);
 

@@ -2226,43 +2226,6 @@ basep_widget_queue_autohide (BasePWidget *basep)
 				       basep_widget_autohide, basep);
 }
 
-void
-basep_widget_get_menu_pos (BasePWidget *basep,
-			   GtkWidget   *menu,
-			   int *x, int *y,
-			   int wx, int wy,
-			   int ww, int wh)
-{
-	BasePPosClass  *klass = basep_widget_get_pos_class (basep);
-	GtkRequisition  mreq;
-	int             monitor_x;
-	int             monitor_y;
-	int             monitor_width;
-	int             monitor_height;
-
-	g_return_if_fail (klass && klass->get_menu_pos);
-
-	gtk_widget_get_child_requisition (menu, &mreq);
-
-	klass->get_menu_pos (
-			basep, menu, &mreq, x, y, wx, wy, ww, wh);
-
-	monitor_x      = multiscreen_x (basep->screen, basep->monitor);
-	monitor_y      = multiscreen_y (basep->screen, basep->monitor);
-	monitor_width  = multiscreen_width (basep->screen, basep->monitor);
-	monitor_height = multiscreen_height (basep->screen, basep->monitor);
-
-	if (*x + mreq.width > (monitor_x + monitor_width))
-		*x = monitor_x + monitor_width - mreq.width;
-	if (*x < monitor_x)
-		*x = monitor_x;
-
-	if (*y + mreq.height > (monitor_y + monitor_height))
-		*y = monitor_y + monitor_height - mreq.height;
-	if (*y < monitor_y)
-		*y = monitor_y;
-}
-
 PanelOrient
 basep_widget_get_applet_orient (BasePWidget *basep)
 {

@@ -565,8 +565,8 @@ applet_show_menu (AppletInfo     *info,
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,
-			applet_menu_position,
-			info,
+			(GtkMenuPositionFunc) panel_position_applet_menu,
+			info->widget,
 			event->button,
 			event->time);
 }

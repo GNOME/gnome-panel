@@ -5,16 +5,12 @@
 
 G_BEGIN_DECLS
 
-void       applet_menu_position   (GtkMenu  *menu,
-				   gint     *x,
-				   gint     *y,
-				   gboolean *push_in,
-				   gpointer  data);
-void       applet_menu_position_outside   (GtkMenu  *menu,
-					   gint     *x,
-					   gint     *y,
-					   gboolean *push_in,
-					   gpointer  data);
+void panel_position_applet_menu (GtkMenu   *menu,
+				 int       *x, 
+				 int       *y,
+				 gboolean  *push_in,
+				 GtkWidget *widget);
+
 
 void       panel_menu_position    (GtkMenu  *menu,
 				   gint     *x,
