@@ -1,3 +1,17 @@
+Tue Sep  1 15:32:54 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* Some ref-counting fixups. Ref the widgets we are
+	going to later unref, and always unref our menus
+	instead of destroying them, since the latter might
+	leak.
+
+	* Destroy all panels on exit, so that GTK_DEBUG=objects
+	can give meaningful results.
+
+	* orbit-applet-lib.c (applet_corba_gtk_main_quit): Release
+	the panel reference when quitting so that the connection
+	is shut down nicely.
+
 Tue Sep 01 10:28:05 1998  George Lebl  <jirka@5z.com>
 
 	* launcher.c: got rid of an obscolete argument

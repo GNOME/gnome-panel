@@ -1077,3 +1077,18 @@ send_state_change(void)
 					    NULL);
 	}
 }
+
+/* Destroy all panels - called upon exit */
+void
+destroy_all_panels(void)
+{
+	GList *list = panel_list;
+	while (list) {
+		PanelData *pd = list->data;
+		GList *tmp = list->next;
+		gtk_widget_destroy (pd->panel);
+		list = tmp;
+	}
+	g_list_free (panel_list);
+	panel_list = NULL;
+}

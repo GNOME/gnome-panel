@@ -35,6 +35,9 @@ void panel_setup(GtkWidget *panel);
 /*send state change to all the panels*/
 void send_state_change(void);
 
+/* Destroy all panels - called upon exit */
+void destroy_all_panels(void);
+
 #define get_panel_parent(appletw) \
 	(gtk_object_get_data( \
 	     gtk_object_get_data(GTK_OBJECT(appletw), \

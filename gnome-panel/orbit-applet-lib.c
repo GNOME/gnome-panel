@@ -663,6 +663,9 @@ applet_corba_gtk_main (char *str)
 void
 applet_corba_gtk_main_quit (void)
 {
+  if(panel_client)
+    CORBA_Object_release(panel_client, &ev);
+
   CORBA_ORB_shutdown(orb, CORBA_TRUE, &ev);
   gtk_main_quit();
 }

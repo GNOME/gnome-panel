@@ -72,9 +72,8 @@ panel_clean_applet(int applet_id)
 					    PANEL_APPLET_PARENT_KEY);
 
 		if(panel) {
-			gtk_widget_ref(w);
 			gtk_container_remove(GTK_CONTAINER(panel),w);
-			gtk_widget_destroy(w);
+			gtk_widget_unref(w);
 		}
 	}
 	if(type == APPLET_DRAWER) {
@@ -87,9 +86,10 @@ panel_clean_applet(int applet_id)
 			gtk_widget_destroy(dw);
 		}
 	}
-	if(info->menu)
+	if(info->menu) {
 		gtk_widget_unref(info->menu);
-	info->menu=NULL;
+		info->menu=NULL;
+	}
 
 	info->data=NULL;
 
@@ -439,6 +439,13 @@ register_toy(GtkWidget *applet,
 	info.menu = NULL;
 	info.data = data;
 	info.user_menu = NULL;
+
+	/* Since we will be taking care of refcounting by ourselves,
+	 * sink the object.
+	 */
+
+	gtk_widget_ref (info.widget);
+	gtk_object_sink (GTK_OBJECT (info.widget));
 
 	gtk_object_set_data(GTK_OBJECT(applet),"applet_id",
 			    GINT_TO_POINTER(applet_count));

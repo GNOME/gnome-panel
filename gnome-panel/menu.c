@@ -318,6 +318,7 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 	
 	if(!menu) {
 		menu = gtk_menu_new ();
+		
 		gtk_object_set_data(GTK_OBJECT(w),"menu",menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"deactivate",
 				   GTK_SIGNAL_FUNC(restore_grabs),
@@ -378,7 +379,7 @@ destroy_item_menu(GtkWidget *w, gpointer data)
 	menu = gtk_object_get_data(GTK_OBJECT(w),"menu");
 	
 	if(menu)
-		gtk_widget_destroy(menu);
+		gtk_widget_unref(menu);
 	return FALSE;
 }
 
