@@ -20,8 +20,6 @@
 #include "popcheck.h"
 #include "mailcheck.h"
 
-#define WIDGET_HEIGHT 48
-
 GtkWidget *applet = NULL;
 
 typedef struct _MailCheck MailCheck;
@@ -108,9 +106,23 @@ struct _MailCheck {
 	char *remote_server, *remote_username, *remote_password;
 	int mailbox_type; /* local = 0; pop3 = 1; imap = 2 */
         int mailbox_type_temp;
+	
+	PanelSizeType size;
 };
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
+
+static int
+get_pixel_size(PanelSizeType s)
+{
+	switch(s) {
+	case SIZE_TINY: return 24;
+	case SIZE_STANDARD: return 48;
+	case SIZE_LARGE: return 64;
+	case SIZE_HUGE: return 80;
+	default: return 48;
+	}
+}
 
 
 static void close_callback (GtkWidget *widget, void *data);
@@ -207,8 +219,8 @@ mailcheck_load_animation (MailCheck *mc, char *fname)
 
 	im = gdk_imlib_load_image (fname);
 
-	width = im->rgb_width;
-	height = im->rgb_height;
+	height = get_pixel_size(mc->size);
+	width = im->rgb_width*((double)height/im->rgb_height);
 
 	gdk_imlib_render (im, width, height);
 
@@ -218,7 +230,7 @@ mailcheck_load_animation (MailCheck *mc, char *fname)
 	gdk_imlib_destroy_image (im);
 	
 	/* yeah, they have to be square, in case you were wondering :-) */
-	mc->frames = width / WIDGET_HEIGHT;
+	mc->frames = width / height;
 	if (mc->frames == 3)
 		mc->report_mail_mode = REPORT_MAIL_USE_BITMAP;
 	mc->nframe = 0;
@@ -323,9 +335,10 @@ static gint
 icon_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
 	MailCheck *mc = data;
+	int h = get_pixel_size(mc->size);
 	gdk_draw_pixmap (mc->da->window, mc->da->style->black_gc,
-			 mc->email_pixmap, mc->nframe * WIDGET_HEIGHT,
-			 0, 0, 0, WIDGET_HEIGHT, WIDGET_HEIGHT);
+			 mc->email_pixmap, mc->nframe * h,
+			 0, 0, 0, h, h);
 	return TRUE;
 }
 
@@ -386,7 +399,8 @@ create_mail_widgets (MailCheck *mc)
 	gtk_widget_pop_colormap ();
 	gtk_widget_pop_visual ();
 	gtk_widget_ref (mc->da);
-	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da), 48, 48);
+	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),
+			       get_pixel_size(mc->size), get_pixel_size(mc->size));
 	gtk_signal_connect (GTK_OBJECT(mc->da), "expose_event", (GtkSignalFunc)icon_expose, mc);
 	gtk_widget_set_events(GTK_WIDGET(mc->da),GDK_EXPOSURE_MASK);
 	gtk_widget_show (mc->da);
@@ -540,13 +554,13 @@ load_new_pixmap (MailCheck *mc)
 	gtk_widget_show (mc->containee);
 }
 
-/* FIXME?: for some reason, this function seems to be getting called twice
-   when "Apply" is pressed */
 static void
-apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
+apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 {
 	char *text;
 	MailCheck *mc = (MailCheck *)data;
+	
+	if(page!=-1) return;
 	
 	mc->update_freq = 1000 * (guint)(gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->sec_spin)) + 
 					 60 * gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->min_spin)));
@@ -655,7 +669,7 @@ static void make_remote_widgets_sensitive(MailCheck *mc)
 static void set_mailbox_selection (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = gtk_object_get_user_data(GTK_OBJECT(widget));
-	mc->mailbox_type_temp = (int)data;
+	mc->mailbox_type_temp = GPOINTER_TO_INT(data);
         
         make_remote_widgets_sensitive(mc);
 	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
@@ -684,19 +698,19 @@ mailbox_properties_page(MailCheck *mc)
 	item = gtk_menu_item_new_with_label(_("Local mailspool")); 
 	gtk_widget_show(item);
 	gtk_object_set_user_data(GTK_OBJECT(item), mc);
-	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)0);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), GINT_TO_POINTER(0));
 	gtk_menu_append(GTK_MENU(l2), item);
 
 	item = gtk_menu_item_new_with_label(_("Remote POP3-server")); 
 	gtk_widget_show(item);
 	gtk_object_set_user_data(GTK_OBJECT(item), mc);
-	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)1);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), GINT_TO_POINTER(1));
         
 	gtk_menu_append(GTK_MENU(l2), item);
 	item = gtk_menu_item_new_with_label(_("Remote IMAP-server")); 
 	gtk_widget_show(item);
 	gtk_object_set_user_data(GTK_OBJECT(item), mc);
-	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)2);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), GINT_TO_POINTER(2));
 	gtk_menu_append(GTK_MENU(l2), item);
 	
 	gtk_widget_show(l2);
@@ -989,6 +1003,26 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 	gtk_widget_show(about);
 }
 
+/*this is when the panel size changes */
+static void
+applet_change_size(GtkWidget * w, PanelSizeType o, gpointer data)
+{
+	MailCheck *mc = data;
+
+	mc->size = o;
+
+	if(mc->report_mail_mode != REPORT_MAIL_USE_TEXT) {
+		char *fname = mail_animation_filename (mc);
+		int size = get_pixel_size(mc->size);
+
+		gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
+		gtk_widget_set_usize (GTK_WIDGET(mc->da), size, size);
+	
+		if (fname)
+			mailcheck_load_animation (mc,fname);
+	}
+}
+
 GtkWidget *
 make_mailcheck_applet(const gchar *goad_id)
 {
@@ -1054,6 +1088,13 @@ make_mailcheck_applet(const gchar *goad_id)
 	gnome_config_pop_prefix();
 
 	mc->mailcheck_text_only = _("Text only");
+	
+	mc->size = SIZE_STANDARD;
+
+	gtk_signal_connect(GTK_OBJECT(applet), "change_size",
+			   GTK_SIGNAL_FUNC(applet_change_size),
+			   mc);
+
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
 	applet_widget_add (APPLET_WIDGET (applet), mailcheck);
