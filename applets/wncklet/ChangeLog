@@ -1,5 +1,22 @@
 2005-01-29  Vincent Untz  <vincent@vuntz.net>
 
+	Change icon on theme change.
+	Based on patch from Paolo Borelli <pborelli@katamail.com>
+	Fix bug #140776
+
+	* showdesktop.c: (update_icon): always reload icon from icon theme
+	here (this also fixes SVG icons looking ugly)
+	(applet_destroyed): do not unref icon_theme since it's shared,
+	disconnect some handlers
+	(show_desktop_applet_realized): update the button state from here so
+	that the state when the applet is launched is correct, find the icon
+	theme for the screen and connect to the theme-changed signal
+	(theme_changed_callback): new, update icon
+	(show_desktop_applet_fill): don't create icon theme here, and don't
+	get the icon here either
+
+2005-01-29  Vincent Untz  <vincent@vuntz.net>
+
 	* .cvsignore: remove inlinepixbufs.h
 	* Makefile.am: remove stuff related to inlinepixbufs.h since we no
 	longer need it (the window selector needed it before we migrated most

@@ -24,6 +24,7 @@
 #include <config.h>
 #include "showdesktop.h"
 #include <gtk/gtkaboutdialog.h>
+#include <gtk/gtkicontheme.h>
 #include <gtk/gtktogglebutton.h>
 #include <gtk/gtktooltips.h>
 #include <gtk/gtkimage.h>
@@ -31,7 +32,6 @@
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkdnd.h>
 #include <libgnomeui/gnome-help.h>
-#include <libgnomeui/gnome-icon-theme.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
 #include "wncklet.h"
@@ -47,7 +47,6 @@ typedef struct {
         GtkWidget *applet;
         GtkWidget *button;
         GtkWidget *image;
-        GdkPixbuf *icon;
         GtkWidget *about_dialog;
 
         PanelAppletOrient orient;
@@ -58,7 +57,7 @@ typedef struct {
         guint showing_desktop : 1;
         guint button_activate;
 
-	GnomeIconTheme *icon_theme;
+	GtkIconTheme *icon_theme;
 } ShowDesktopData;
 
 static void display_help_dialog  (BonoboUIComponent *uic,
@@ -71,6 +70,9 @@ static void display_about_dialog (BonoboUIComponent *uic,
 static void update_icon           (ShowDesktopData *sdd);
 static void update_button_state   (ShowDesktopData *sdd);
 static void update_button_display (ShowDesktopData *sdd);
+
+static void theme_changed_callback        (GtkIconTheme    *icon_theme,
+					   ShowDesktopData *sdd);
 
 static void button_toggled_callback       (GtkWidget       *button,
                                            ShowDesktopData *sdd);
@@ -100,7 +102,7 @@ set_tooltip (GtkWidget  *widget,
 static void
 applet_change_orient (PanelApplet       *applet,
                       PanelAppletOrient  orient,
-                      ShowDesktopData         *sdd)
+                      ShowDesktopData   *sdd)
 {
         GtkOrientation new_orient;
 
@@ -186,46 +188,63 @@ static void
 update_icon (ShowDesktopData *sdd)
 {
         int width, height;
+        GdkPixbuf *icon;
         GdkPixbuf *scaled;
-        double aspect;
         int icon_size;
+	GError *error;
 
-        if (sdd->icon == NULL)
-                return;
+#define SPACE_FOR_BUTTON_BORDER 4
+	icon_size = sdd->size - SPACE_FOR_BUTTON_BORDER;
 
-        width = gdk_pixbuf_get_width (sdd->icon);
-        height = gdk_pixbuf_get_height (sdd->icon);
+	error = NULL;
+	icon = gtk_icon_theme_load_icon (sdd->icon_theme,
+					 "gnome-fs-desktop",
+					 icon_size, 0, &error);
 
-        aspect = (double) width / (double) height;
+	if (icon == NULL) {
+		g_printerr (_("Failed to load %s: %s\n"), "gnome-fs-desktop",
+			    error ? error->message : _("Icon not found"));
+		if (error) {
+			g_error_free (error);
+			error = NULL;
+		}
 
-#define SPACE_FOR_BUTTON_BORDER 3
-        icon_size = sdd->size - SPACE_FOR_BUTTON_BORDER;
+		gtk_image_set_from_stock (GTK_IMAGE (sdd->image),
+					  GTK_STOCK_MISSING_IMAGE,
+					  GTK_ICON_SIZE_SMALL_TOOLBAR);
+		return;
+	}
+
+        width = gdk_pixbuf_get_width (icon);
+        height = gdk_pixbuf_get_height (icon);
 
         scaled = NULL;
 
         /* Make it fit on the given panel */
         switch (sdd->orient) {
         case GTK_ORIENTATION_HORIZONTAL:
-                width = icon_size * aspect;
+                width = (icon_size * width) / height;
                 height = icon_size;
                 break;
         case GTK_ORIENTATION_VERTICAL:
-                height = icon_size / aspect;
+                height = (icon_size * height) / width;
                 width = icon_size;
                 break;
         }
 
-        scaled = gdk_pixbuf_scale_simple (sdd->icon,
+        scaled = gdk_pixbuf_scale_simple (icon,
                                           width, height,
                                           GDK_INTERP_BILINEAR);
 
-        if (scaled == NULL)
-                return;
+        if (scaled != NULL) {
+		gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image),
+					   scaled);
+		g_object_unref (scaled);
+	} else
+		gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image),
+					   icon);
 
-        gtk_image_set_from_pixbuf (GTK_IMAGE (sdd->image),
-                                   scaled);
-
-        g_object_unref (G_OBJECT (scaled));
+        g_object_unref (icon);
 }
 
 static const BonoboUIVerb show_desktop_menu_verbs [] = {
@@ -279,9 +298,6 @@ static void
 applet_destroyed (GtkWidget       *applet,
                   ShowDesktopData *sdd)
 {
-        g_object_unref (G_OBJECT (sdd->icon));
-	g_object_unref (sdd->icon_theme);
-
 	if (sdd->about_dialog) {
 		gtk_widget_destroy (sdd->about_dialog);
 		sdd->about_dialog =  NULL;
@@ -292,6 +308,19 @@ applet_destroyed (GtkWidget       *applet,
 		sdd->button_activate = 0;
 	}
 
+	if (sdd->wnck_screen != NULL) {
+		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
+						      show_desktop_changed_callback,
+						      sdd);
+		sdd->wnck_screen = NULL;
+	}
+
+	if (sdd->icon_theme != NULL) {
+		g_signal_handlers_disconnect_by_func (sdd->icon_theme,
+						      theme_changed_callback,
+						      sdd);
+		sdd->icon_theme = NULL;
+	}
 
         g_free (sdd);
 }
@@ -353,15 +382,23 @@ static void
 show_desktop_applet_realized (PanelApplet *applet, 
 			      gpointer     data)
 {
-	ShowDesktopData *sdd = data;
+	ShowDesktopData *sdd;
+	GdkScreen       *screen;
+	
+	sdd = (ShowDesktopData *) data;
 
 	if (sdd->wnck_screen != NULL)
 		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
 						      show_desktop_changed_callback,
 						      sdd);
 
-	sdd->wnck_screen =
-		wnck_screen_get (gdk_screen_get_number (gtk_widget_get_screen (sdd->applet)));
+	if (sdd->icon_theme != NULL)
+		g_signal_handlers_disconnect_by_func (sdd->icon_theme,
+						      theme_changed_callback,
+						      sdd);
+
+	screen = gtk_widget_get_screen (sdd->applet);
+	sdd->wnck_screen = wnck_screen_get (gdk_screen_get_number (screen));
 
 	if (sdd->wnck_screen != NULL)
 		wncklet_connect_while_alive (sdd->wnck_screen,
@@ -371,15 +408,30 @@ show_desktop_applet_realized (PanelApplet *applet,
 					     sdd->applet);
 	else
 		g_warning ("Could not get WnckScreen!");
+
+        show_desktop_changed_callback (sdd->wnck_screen, sdd);
+
+	sdd->icon_theme = gtk_icon_theme_get_for_screen (screen);
+	wncklet_connect_while_alive (sdd->icon_theme, "changed",
+				     G_CALLBACK (theme_changed_callback),
+				     sdd,
+				     sdd->applet);
+
+        update_icon (sdd);
+}
+
+static void
+theme_changed_callback (GtkIconTheme    *icon_theme,
+			ShowDesktopData *sdd)
+{
+	update_icon (sdd);
 }
 
 gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
         ShowDesktopData *sdd;
-        char *file;
-        GError *error;
-	AtkObject *atk_obj;
+	AtkObject       *atk_obj;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
@@ -387,32 +439,7 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         sdd->applet = GTK_WIDGET (applet);
 
-	sdd->icon_theme = gnome_icon_theme_new ();
-	gnome_icon_theme_set_allow_svg (sdd->icon_theme, TRUE);
-	file = gnome_icon_theme_lookup_icon (sdd->icon_theme,
-					     "gnome-fs-desktop", 48,
-					     NULL, NULL);
-        error = NULL;
-        if (file) {
-                sdd->icon = gdk_pixbuf_new_from_file (file, &error);
-                g_free (file);
-		file = NULL;
-        }
-
-        if (sdd->icon == NULL) {
-                g_printerr (_("Failed to load %s: %s\n"),
-                            file ? file : "gnome-fs-desktop",
-			    error ? error->message : _("File not found"));
-                if (error)
-                        g_error_free (error);
-        }
-
-        if (sdd->icon) {
-                sdd->image = gtk_image_new_from_pixbuf (sdd->icon);
-        } else {
-                sdd->image = gtk_image_new_from_stock (GTK_STOCK_MISSING_IMAGE,
-                                                       GTK_ICON_SIZE_SMALL_TOOLBAR);
-        }
+	sdd->image = gtk_image_new ();
 
         switch (panel_applet_get_orient (applet)) {
         case PANEL_APPLET_ORIENT_LEFT:
@@ -427,8 +454,6 @@ show_desktop_applet_fill (PanelApplet *applet)
         }
 
         sdd->size = panel_applet_get_size (PANEL_APPLET (sdd->applet));
-
-        update_icon (sdd);
 
 	g_signal_connect (G_OBJECT (sdd->applet), "realize",
 			  G_CALLBACK (show_desktop_applet_realized), sdd);
@@ -445,9 +470,6 @@ show_desktop_applet_fill (PanelApplet *applet)
         gtk_container_set_border_width (GTK_CONTAINER (sdd->button), 0);
         gtk_container_add (GTK_CONTAINER (sdd->button), sdd->image);
         gtk_container_add (GTK_CONTAINER (sdd->applet), sdd->button);
-
-        update_button_state (sdd);
-
 
         /* FIXME: Update this comment. */
         /* we have to bind change_orient before we do applet_widget_add
