@@ -1,3 +1,10 @@
+2002-02-08  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel.c: (panel_gconf_profile_set_string),
+	(panel_gconf_profile_set_int), (panel_gconf_profile_set_bool):
+	fix more hideous leaks and re-name like below.
+	(panel_session_save_panel): upd for above.
+
 2002-02-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu-properties.c: (properties_apply_callback): save to gconf.
