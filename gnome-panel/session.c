@@ -1204,6 +1204,7 @@ init_user_panels(void)
 			break;
 		}
 		default:
+			panel = NULL;
 			g_warning ("Unkown panel type: %d; ignoring.", type);
 			break;
 		}
