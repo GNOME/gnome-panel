@@ -95,7 +95,18 @@ PKG_CHECK_MODULES(WNCKLET, ORBit-2.0 >= $ORBIT_REQUIRED gdk-pixbuf-2.0 >= $GDK_P
 AC_SUBST(WNCKLET_CFLAGS)
 AC_SUBST(WNCKLET_LIBS)
 
-PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED)
+AC_MSG_CHECKING(for evolution-data-server)
+if $PKG_CONFIG --exists libecal-1.0; then
+   AC_MSG_RESULT(yes)
+   AC_DEFINE(HAVE_LIBECAL)
+   LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.4"
+else
+   AC_MSG_RESULT(no)
+   LIBECAL_REQUIREMENT=
+fi
+AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
+
+PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED $LIBECAL_REQUIREMENT)
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
@@ -253,10 +264,10 @@ libpanel-applet/Makefile
 po/Makefile.in
 applets/Makefile
 applets/clock/Makefile
+applets/clock/cut-n-paste/Makefile
 applets/fish/Makefile
 applets/notification_area/Makefile
 applets/wncklet/Makefile
-applets/wncklet/eel/Makefile
 doc/Makefile
 doc/reference/Makefile
 doc/reference/panel-applet/Makefile
