@@ -1,5 +1,11 @@
 2002-07-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-config.c: slightly modified version of
+	a patch from Glynn to add mnemonics and clean
+	up the panel properties dialog. #85623.
+
+2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c:
 	(free_launcher): remove launcher from hoarding list.
 	(launcher_idle_hoard), (launcher_hoard): hoard launchers
@@ -255,7 +261,7 @@ Mon Jul  1 16:44:35 2002  Jonathan Blandford  <jrb@gnome.org>
 
 	* Makefile.am: use $(prefix)/$(DATADIRNAME)/locale instead
 	of $datadir/locale for locale directory location. Reported
-	by Hidetoshit Tajima in #83623.
+	by Hidetoshi Tajima in #83623.
 
 2002-06-10  Kjartan Maraas  <kmaraas@gnome.org>
 
