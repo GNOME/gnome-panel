@@ -28,6 +28,7 @@ enum {
 
 struct _FileRec {
 	int type;
+	gboolean merged;
 	char *name;
 	char *comment;
 	char *fullname;
@@ -42,6 +43,7 @@ struct _DirRec {
 	FileRec frec;
 	time_t dentrymtime;
 	time_t dentrylast_stat;
+	time_t merge_mtime;
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/
 };
@@ -50,10 +52,12 @@ char * get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii);
 
 GSList * get_files_from_menudir(char *menudir);
 
-FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, int sublevels);
+FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge_dstat, int sublevels);
 FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(const char *mdir);
+gboolean fr_is_subdir (const char *dir, const char *superdir, int superdir_len);
+char * fr_get_mergedir (const char *dir);
 
 void init_fr_chunks (void);
 END_GNOME_DECLS

@@ -59,6 +59,10 @@ extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
 
+extern char *merge_main_dir;
+extern int merge_main_dir_len;
+extern char *merge_merge_dir;
+
 extern GtkTooltips *panel_tooltips;
 
 typedef struct _TearoffMenu TearoffMenu;
@@ -87,15 +91,15 @@ init_menus(void)
 	  and a level down*/
 	char *menu = gnome_datadir_file("gnome/apps");
 	if(menu)
-		fr_read_dir(NULL,menu,NULL,2);
+		fr_read_dir(NULL, menu, NULL, NULL, 2);
 	g_free(menu);
 	menu = gnome_datadir_file("applets");
 	if(menu)
-		fr_read_dir(NULL,menu,NULL,2);
+		fr_read_dir(NULL, menu, NULL, NULL, 2);
 	g_free(menu);
 	menu = gnome_util_home_file("apps");
 	if(menu)
-		fr_read_dir(NULL,menu,NULL,2);
+		fr_read_dir(NULL, menu, NULL, NULL, 2);
 	g_free(menu);
 
 	if(distribution_info && distribution_info->menu_init_func)
@@ -840,8 +844,19 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 
 		g_free (li->data);
 
-		if (stat (filename, &s) != 0)
-			continue;
+		if (stat (filename, &s) != 0) {
+			char *mergedir = fr_get_mergedir(dirname);
+			if(mergedir != NULL) {
+				g_free(filename);
+				filename = g_concat_dir_and_file(mergedir, li->data);
+				g_free(mergedir);
+				if (stat (filename, &s) != 0) {
+					continue;
+				}
+			} else {
+				continue;
+			}
+		}
 		if (S_ISDIR (s.st_mode)) {
 			add_drawers_from_dir(filename, NULL, G_MAXINT/2,
 					     newpanel);
@@ -2312,19 +2327,32 @@ create_menu_at_fr (GtkWidget *menu,
 	}
 	
 	if(fr) {
-		for(li = dr->recs; li!=NULL; li=g_slist_next(li)) {
-			create_menuitem(menu,li->data,
-					applets,fake_submenus,
+		GSList *last = NULL;
+		for(li = dr->recs; li != NULL; li = li->next) {
+			FileRec *tfr = li->data;
+			FileRec *pfr = last ? last->data : NULL;
+
+			/* Add a separator between merged and non-merged menuitems */
+			if (tfr->merged &&
+			    pfr != NULL &&
+			    ! pfr->merged) {
+				add_menu_separator(menu);
+			}
+
+			create_menuitem(menu, tfr,
+					applets, fake_submenus,
 					&add_separator,
 					&first_item);
+
+			last = li;
 		}
 	}
 
 	mf = g_new0(MenuFinfo,1);
 	mf->menudir = g_strdup(fr->name);
 	mf->applets = applets;
-	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
-	mf->pixmap_name = pixmap_name?g_strdup(pixmap_name):NULL;
+	mf->dir_name = g_strdup(dir_name);
+	mf->pixmap_name = g_strdup(pixmap_name);
 	mf->fake_menu = FALSE;
 	mf->title = title;
 	mf->fr = fr;
