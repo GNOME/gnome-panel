@@ -187,6 +187,10 @@ panel_SOURCES=\
 	conditional.c		\
 	conditional.h
 
+man_MANS = panel.1			\
+	gnome-panel-add-launcher.1	\
+	gnome-panel-properties-capplet.1
+	
 panel_LDADD = \
 	libpanel_applet.la	\
 	$(GNOME_LIBDIR)		\
@@ -242,14 +246,15 @@ EXTRA_DIST = \
 	appletsConf.sh.in		\
 	dockletsConf.sh.in		\
 	panel.gnorba			\
-	panel.soundlist.in			\
+	panel.soundlist.in		\
 	APPLET_WRITING			\
 	panel.hints			\
 	gnome-panel-properties.desktop.in	\
 	nothing.cP			\
 	title-item.gob			\
 	gnome-panel-screenshot.glade	\
-	gnome-panel-screenshot.glade.h
+	gnome-panel-screenshot.glade.h	\
+	$(man_MANS)
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
