@@ -21,15 +21,13 @@ struct _PerPanelConfig {
 	/*floating widget*/
 	PanelOrientation        orient;
 	int                     x, y;
-	/*border widget*/
-	BorderEdge              edge;
 
-	/*aligned widget*/
-	AlignedAlignment        align;
+	/*indexes for toggle*/
+	int edge;
+	int align;
 
-	/*sliding widget*/
 	gint16                  offset;
-	SlidingAnchor           anchor;
+
 	
 	/*panel types*/
 	int			sz;
@@ -44,36 +42,27 @@ struct _PerPanelConfig {
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
 
-	/*floating buttons*/
-	GtkWidget               *h_orient;
-	GtkWidget               *v_orient;
-	GtkWidget               *x_spin;
-	GtkWidget               *y_spin;
-	/*sliding buttons*/
-	GtkWidget               *l_anchor;
-	GtkWidget               *r_anchor;
-	GtkWidget               *offset_spin;
-	GtkObject               *offset_adj;
-	/*aligned buttons*/
-	GtkWidget               *l_align;
-	GtkWidget               *c_align;
-	GtkWidget               *r_align;
-	/*border buttons*/
-	GtkWidget		*r_edge;
-	GtkWidget		*l_edge;
-	GtkWidget		*t_edge;
-	GtkWidget		*b_edge;
-	/*size buttons*/
-	GtkWidget		*s_tiny;
-	GtkWidget               *s_small;
-	GtkWidget		*s_std;
-	GtkWidget		*s_large;
-	GtkWidget		*s_huge;
+	/*size*/
+	GtkWidget               *size_menu;
+
 	/*color buttons*/
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
 	GtkWidget		*backsel;
+
+	/*position widgets*/
+	GtkWidget               *toggle[4][3];    /* left */
+
+	/*floating buttons*/
+	GtkWidget               *h_orient;
+	GtkWidget               *v_orient;
+	GtkWidget               *x_spin;
+	GtkWidget               *y_spin;
+
+	/*sliding buttons*/
+	GtkWidget               *offset_spin;
+	GtkObject               *offset_adj;
 };
 
 void panel_config(GtkWidget *panel);
