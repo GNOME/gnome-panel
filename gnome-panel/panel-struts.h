@@ -39,6 +39,7 @@ gboolean panel_struts_register_strut           (PanelToplevel    *toplevel,
 void     panel_struts_unregister_strut         (PanelToplevel    *toplevel);
 
 void     panel_struts_set_window_hint          (PanelToplevel    *toplevel);
+void     panel_struts_unset_window_hint        (PanelToplevel    *toplevel);
 
 gboolean panel_struts_update_toplevel_geometry (PanelToplevel    *toplevel,
 						int              *x,

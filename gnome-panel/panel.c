@@ -491,18 +491,19 @@ drop_url (PanelWidget *panel,
 static gboolean
 drop_menu (PanelWidget *panel,
 	   int          position,
+	   const char  *menu_filename,
 	   const char  *menu_path)
 {
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	panel_menu_button_create (panel->toplevel,
-				  position,
-				  menu_path,
-				  menu_path != NULL,
-				  NULL);
+	return panel_menu_button_create (panel->toplevel,
+					 position,
+					 menu_filename,
+					 menu_path,
+					 menu_path != NULL,
+					 NULL);
 
-	return TRUE;
 }
 
 static gboolean
@@ -718,12 +719,27 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 			g_warning ("Only MOVE supported for menus/drawers");
 		success = move_applet (panel, pos, applet_index);
 
-	} else if (strncmp (applet_type, "MENU:", strlen("MENU:")) == 0) {
-		const char *menu = &applet_type[strlen ("MENU:")];
-		if (strcmp (menu, "MAIN") == 0)
-			success = drop_menu (panel, pos, NULL);
-		else
-			success = drop_menu (panel, pos, menu);
+	} else if (strncmp (applet_type, "MENU:", strlen ("MENU:")) == 0) {
+		const char *menu;
+		const char *menu_path;
+
+		menu = &applet_type[strlen ("MENU:")];
+		menu_path = strchr (menu, '/');
+
+		if (!menu_path) {
+			if (strncmp (menu, "MAIN", strlen ("MAIN")) == 0)
+				success = drop_menu (panel, pos, NULL, NULL);
+			else
+				success = drop_menu (panel, pos, menu, NULL);
+		} else {
+			char *menu_filename;
+
+			menu_filename = g_strndup (menu, menu_path - menu);
+			*menu_path++;
+			success = drop_menu (panel, pos,
+					     menu_filename, menu_path);
+			g_free (menu_filename);
+		}
 
 	} else if (!strcmp (applet_type, "DRAWER:NEW")) {
 		if (panel_profile_id_lists_are_writable ()) {

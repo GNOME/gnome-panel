@@ -85,6 +85,7 @@ typedef struct {
 	char                  *icon;
 	PanelActionButtonType  action_type;
 	char                  *launcher_path;
+	char                  *menu_filename;
 	char                  *menu_path;
 	char                  *iid;
 	gboolean               static_data;
@@ -104,6 +105,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
+	  NULL,
 	  "LAUNCHER:ASK",
 	  TRUE },
 
@@ -112,6 +114,7 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  N_("Launch a program that is already in the GNOME menu"),
 	  "launcher-program",
 	  PANEL_ACTION_NONE,
+	  NULL,
 	  NULL,
 	  NULL,
 	  "LAUNCHER:MENU",
@@ -128,6 +131,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
+	  NULL,
 	  "MENU:MAIN",
 	  TRUE },
 
@@ -138,6 +142,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
+	  NULL,
 	  "MENUBAR:NEW",
 	  TRUE },
 
@@ -146,6 +151,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	  N_("A pop out drawer to store other items in"),
 	  PANEL_DRAWER_ICON,
 	  PANEL_ACTION_NONE,
+	  NULL,
 	  NULL,
 	  NULL,
 	  "DRAWER:NEW",
@@ -514,7 +520,8 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 
 static void
 panel_addto_make_application_list (GSList            **parent_list,
-				   MenuTreeDirectory  *directory)
+				   MenuTreeDirectory  *directory,
+				   const char         *filename)
 {
 	GSList *subdirs;
 	GSList *entries;
@@ -531,6 +538,7 @@ panel_addto_make_application_list (GSList            **parent_list,
 		data->item_info.name        = g_strdup (menu_tree_directory_get_name (subdir));
 		data->item_info.description = g_strdup (menu_tree_directory_get_comment (subdir));
 		data->item_info.icon        = g_strdup (menu_tree_directory_get_icon (subdir));
+		data->item_info.menu_filename = g_strdup (filename);
 		data->item_info.menu_path   = menu_tree_directory_make_path (subdir, NULL);
 		data->item_info.static_data = FALSE;
 
@@ -544,7 +552,8 @@ panel_addto_make_application_list (GSList            **parent_list,
 
 		*parent_list = g_slist_prepend (*parent_list, data);
 
-		panel_addto_make_application_list (&data->children, subdir);
+		panel_addto_make_application_list (&data->children, subdir,
+						   filename);
 
 		menu_tree_directory_unref (subdir);
 	}
@@ -627,7 +636,8 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 	tree = menu_tree_lookup ("applications.menu");
 
 	if ((root = menu_tree_get_root_directory (tree))) {
-		panel_addto_make_application_list (&dialog->application_list, root);
+		panel_addto_make_application_list (&dialog->application_list,
+						   root, "applications.menu");
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 
 		menu_tree_directory_unref (root);
@@ -649,7 +659,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    -1);
 
 		panel_addto_make_application_list (&dialog->settings_list,
-						   root);
+						   root, "settings.menu");
 		panel_addto_populate_application_model (store, NULL,
 							dialog->settings_list);
 
@@ -698,6 +708,7 @@ panel_addto_add_item (PanelAddtoDialog   *dialog,
 	case PANEL_ADDTO_MENU:
 		panel_menu_button_create (dialog->panel_widget->toplevel,
 					  dialog->insertion_position,
+					  item_info->menu_filename,
 					  item_info->menu_path,
 					  item_info->menu_path != NULL,
 					  item_info->name);
@@ -822,6 +833,10 @@ panel_addto_dialog_free_item_info (PanelAddtoItemInfo *item_info)
 	if (item_info->launcher_path != NULL)
 		g_free (item_info->launcher_path);
 	item_info->launcher_path = NULL;
+
+	if (item_info->menu_filename != NULL)
+		g_free (item_info->menu_filename);
+	item_info->menu_filename = NULL;
 
 	if (item_info->menu_path != NULL)
 		g_free (item_info->menu_path);
@@ -989,7 +1004,8 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 		case PANEL_ADDTO_MENU:
 			/* build the iid for menus other than the main menu */
 			if (data->iid == NULL) {
-				iid = g_strdup_printf ("MENU:%s",
+				iid = g_strdup_printf ("MENU:%s/%s",
+						       data->menu_filename,
 						       data->menu_path);
 			} else {
 				iid = g_strdup (data->iid);

@@ -50,6 +50,25 @@ enum {
 	PROP_DND_ENABLED
 };
 
+typedef enum {
+	FIRST_MENU,
+	APPLICATIONS_MENU,
+#define DEFAULT_MENU      APPLICATIONS_MENU
+	SETTINGS_MENU,
+	LAST_MENU
+} MenuPathRoot;
+
+typedef struct {
+	MenuPathRoot  root_id;
+	char         *scheme;
+	char         *filename;
+} MenuPathRootItem;
+
+static MenuPathRootItem root_items [] = {
+	{ APPLICATIONS_MENU, "applications", "applications.menu" },
+	{ SETTINGS_MENU,     "settings",     "settings.menu"     }
+};
+
 struct _PanelMenuButtonPrivate {
 	PanelToplevel         *toplevel;
 	guint                  gconf_notify;
@@ -61,6 +80,7 @@ struct _PanelMenuButtonPrivate {
 	char                  *custom_icon;
 	char                  *tooltip;
 
+	MenuPathRoot           path_root;
 	guint                  use_menu_path : 1;
 	guint                  use_custom_icon : 1;
 	guint                  dnd_enabled : 1;
@@ -73,6 +93,70 @@ static void panel_menu_button_set_icon              (PanelMenuButton *button);
 static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
 
 static GObjectClass *parent_class;
+
+static const char *
+panel_menu_path_root_to_filename (MenuPathRoot path_root)
+{
+	const char *retval;
+	int         i;
+
+	retval = NULL;
+
+	for (i = 0; i < G_N_ELEMENTS (root_items); i++) {
+		if (root_items [i].root_id == path_root) {
+			retval = root_items [i].filename;
+			break;
+		}
+	}
+
+	return retval;
+}
+
+static const char *
+panel_menu_filename_to_scheme (const char *filename)
+{
+	const char *retval;
+	int         i;
+
+	retval = NULL;
+	
+	if (!filename)
+		return retval;
+
+	for (i = 0; i < G_N_ELEMENTS (root_items); i++) {
+		if (root_items [i].filename &&
+		    !strncmp (filename, root_items [i].filename,
+			      strlen (root_items [i].filename))) {
+			retval = root_items [i].scheme;
+			break;
+		}
+	}
+
+	return retval;
+}
+
+static MenuPathRoot
+panel_menu_scheme_to_path_root (const char *scheme)
+{
+	MenuPathRoot retval;
+	int          i;
+
+	retval = LAST_MENU;
+	
+	if (!scheme)
+		return retval;
+
+	for (i = 0; i < G_N_ELEMENTS (root_items); i++) {
+		if (root_items [i].scheme &&
+		    !strncmp (scheme, root_items [i].scheme,
+			      strlen (root_items [i].scheme))) {
+			retval = root_items [i].root_id;
+			break;
+		}
+	}
+
+	return retval;
+}
 
 static void
 panel_menu_button_instance_init (PanelMenuButton      *button,
@@ -88,6 +172,7 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 	button->priv->custom_icon = NULL;
 	button->priv->tooltip = NULL;
 
+	button->priv->path_root       = LAST_MENU;
 	button->priv->use_menu_path   = FALSE;
 	button->priv->use_custom_icon = FALSE;
 }
@@ -291,10 +376,15 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 
 	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
 
-	if (button->priv->use_menu_path && button->priv->menu_path)
-		button->priv->menu = create_applications_menu ("applications.menu",
+	if (button->priv->use_menu_path          &&
+	    button->priv->path_root > FIRST_MENU &&
+	    button->priv->path_root < LAST_MENU) {
+		const char *filename;
+
+		filename = panel_menu_path_root_to_filename (button->priv->path_root);
+		button->priv->menu = create_applications_menu (filename,
 							       button->priv->menu_path);
-	else
+	} else
 		button->priv->menu = create_main_menu (panel_widget);
 
 	gtk_menu_attach_to_widget (GTK_MENU (button->priv->menu),
@@ -675,13 +765,17 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 				 const char      *menu_uri)
 {
 	const char *menu_path;
+	char       *scheme;
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
-	/*
-	 * Bah, lets just ignore the scheme
-	 */
-	menu_path = split_menu_uri (menu_uri, NULL);
+	scheme    = NULL;
+	menu_path = split_menu_uri (menu_uri, &scheme);
+
+	if (!scheme)
+		return;
+
+	button->priv->path_root = panel_menu_scheme_to_path_root (scheme);
 
 	if (!button->priv->menu_path && (!menu_path || !menu_path [0]))
 		return;
@@ -693,8 +787,7 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 	g_free (button->priv->menu_path);
 	button->priv->menu_path = NULL;
 
-	if (menu_path && menu_path [0])
-		button->priv->menu_path = g_strdup (menu_path);
+	button->priv->menu_path = g_strdup (menu_path);
 
 	if (button->priv->menu)
 		gtk_menu_detach (GTK_MENU (button->priv->menu));
@@ -821,14 +914,16 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	g_free (tooltip);
 }
 
-void
+gboolean
 panel_menu_button_create (PanelToplevel *toplevel,
 			  int            position,
+			  const char    *filename,
 			  const char    *menu_path,
 			  gboolean       use_menu_path,
 			  const char    *tooltip)
 {
 	GConfClient *client;
+	const char  *scheme;
 	const char  *key;
 	char        *id;
 
@@ -839,10 +934,17 @@ panel_menu_button_create (PanelToplevel *toplevel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
-	if (use_menu_path && menu_path && menu_path [0]) {
-		char *menu_uri;
+	scheme = panel_menu_filename_to_scheme (filename);
 
-		menu_uri = g_strconcat ("applications:", menu_path, NULL);
+	if (filename && !scheme) {
+		g_warning ("Failed to find menu scheme for %s\n", filename);
+		return FALSE;
+	}
+
+	if (use_menu_path && menu_path && menu_path [0] && scheme) {
+		char       *menu_uri;
+
+		menu_uri = g_strconcat (scheme, ":", menu_path, NULL);
 
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
 		gconf_client_set_string (client, key, menu_uri, NULL);
@@ -857,6 +959,8 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	return TRUE;
 }
 			  
 void

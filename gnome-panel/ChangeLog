@@ -1,3 +1,37 @@
+2005-02-01  Vincent Untz  <vincent@vuntz.net>
+
+	* menu.c: (add_menu_to_panel): get the filename corresponding to the
+	MenuTree and use it to create the menu button
+	(create_item_context_menu): look for the filename corresponding to the
+	MenuTree and set it on the context menu so we can find ot in
+	add_menu_to_panel()
+	(create_applications_menu): set filename corresponding to the MenuTree
+	on the menu
+	* panel-addto.c: (panel_addto_make_application_list): add a filename
+	parameter so we can add it to the item info
+	(panel_addto_make_application_model): updated
+	(panel_menu_button_create): updated
+	(panel_addto_dialog_free_item_info): updated
+	(panel_addto_selection_changed): add the filename to the iid for
+	PANEL_ADDTO_MENU
+	* panel-menu-button.[ch]: add structures so we can make the
+	correspondance between a menu scheme and a filename for the menu
+	(panel_menu_path_root_to_filename): new
+	(panel_menu_filename_to_scheme): new
+	(panel_menu_scheme_to_path_root): new
+	(panel_menu_button_instance_init): updated
+	(panel_menu_button_create_menu): find the filename needed to create
+	the menu instead of always using applications.menu
+	(panel_menu_button_set_menu_path): don't ignore the scheme and remove
+	useless test
+	(panel_menu_button_create): add a filename parameter and use it to
+	find the scheme, return a boolean telling if we could create the menu
+	button
+	* panel.c: (drop_menu): add a filename parameter and return the value
+	returned by panel_menu_button_create()
+	(drop_internal_applet): updated to use the filename specified in the
+	iid
+
 2005-01-31  Vincent Untz  <vincent@vuntz.net>
 
 	Allow use of the whole screen when hiding a panel

@@ -56,8 +56,9 @@ struct _PanelMenuButtonClass {
 
 GType      panel_menu_button_get_type            (void) G_GNUC_CONST;
 
-void       panel_menu_button_create              (PanelToplevel    *toplevel,
+gboolean   panel_menu_button_create              (PanelToplevel    *toplevel,
 						  int               position,
+						  const char       *filename,
 						  const char       *menu_path,
 						  gboolean          use_menu_path,
 						  const char       *tooltip);

@@ -706,6 +706,16 @@ add_menu_to_panel (GtkWidget     *menuitem,
 	PanelData         *pd;
 	int                insertion_pos;
 	char              *menu_path;
+	char              *menu_filename;
+	GtkWidget         *parent;
+
+	menu_filename = g_object_get_data (G_OBJECT (menuitem->parent),
+					   "panel-menu-tree-filename");
+
+	if (!menu_filename) {
+		g_warning ("Cannot find the filename for the menu");
+		return;
+	}
 
 	directory = menu_tree_entry_get_parent (entry);
 
@@ -718,6 +728,7 @@ add_menu_to_panel (GtkWidget     *menuitem,
 
 	panel_menu_button_create (panel->toplevel,
 				  insertion_pos,
+				  menu_filename,
 				  menu_path,
 				  TRUE,
 				  menu_tree_directory_get_name (directory));
@@ -784,9 +795,11 @@ create_item_context_menu (GtkWidget   *item,
 			  PanelWidget *panel_widget)
 {
 	MenuTreeEntry *entry;
+	GtkWidget     *parent;
 	GtkWidget     *menu;
 	GtkWidget     *submenu;
 	GtkWidget     *menuitem;
+	char          *menu_filename;
 	gboolean       id_lists_writable;
 
 	id_lists_writable = panel_profile_id_lists_are_writable ();
@@ -794,6 +807,18 @@ create_item_context_menu (GtkWidget   *item,
 	entry = g_object_get_data (G_OBJECT (item), "panel-menu-tree-entry");
 	g_assert (entry != NULL);
 
+	parent = item->parent;
+
+	while (parent) {
+		menu_filename = g_object_get_data (G_OBJECT (parent),
+						   "panel-menu-tree-filename");
+		if (menu_filename)
+			break;
+
+		parent = gtk_menu_get_attach_widget (GTK_MENU (parent))->parent;
+		if (!GTK_IS_MENU (parent))
+			break;
+	}
 
 	menu = create_empty_menu ();
 	g_object_set_data_full (G_OBJECT (item),
@@ -803,8 +828,6 @@ create_item_context_menu (GtkWidget   *item,
 	gtk_object_sink (GTK_OBJECT (menu));
 
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel_widget);
-
-
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (restore_grabs), item);
 
@@ -823,7 +846,10 @@ create_item_context_menu (GtkWidget   *item,
 	submenu = create_empty_menu ();
 
 	g_object_set_data (G_OBJECT (submenu), "menu_panel", panel_widget);
-
+	g_object_set_data_full (G_OBJECT (submenu),
+				"panel-menu-tree-filename",
+				g_strdup (menu_filename),
+				(GDestroyNotify) g_free);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -1355,6 +1381,11 @@ create_applications_menu (const char *menu_file,
 	menu = create_empty_menu ();
 
 	tree = menu_tree_lookup (menu_file);
+
+	g_object_set_data_full (G_OBJECT (menu),
+				"panel-menu-tree-filename",
+				g_strdup (menu_file),
+				(GDestroyNotify) g_free);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree",
