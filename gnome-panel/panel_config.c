@@ -23,9 +23,6 @@
 
 static void config_apply (PerPanelConfig *ppc);
 
-static GtkWidget *make_size_widget (PerPanelConfig *ppc);
-static GtkWidget *make_level_widget (PerPanelConfig *ppc);
-
 static GList *ppconfigs = NULL;
 
 /* register changes */
@@ -34,7 +31,7 @@ panel_config_register_changes (PerPanelConfig *ppc)
 {
 	if (ppc->register_changes) {
 		config_apply (ppc);
-		if (ppc->update_function)
+		if (ppc->update_function != NULL)
 			ppc->update_function (ppc->update_data);
 	}
 }
@@ -43,35 +40,49 @@ static PerPanelConfig *
 get_config_struct(GtkWidget *panel)
 {
 	GList *list;
-	for(list=ppconfigs;list!=NULL;list=g_list_next(list)) {
+	for (list = ppconfigs; list != NULL; list = list->next) {
 		PerPanelConfig *ppc = list->data;
-		if(ppc->panel == panel)
+		if (ppc->panel == panel)
 			return ppc;
 	}
 	return NULL;
 }
 
 void
-kill_config_dialog(GtkWidget *panel)
+kill_config_dialog (GtkWidget *panel)
 {
-	PerPanelConfig *ppc = get_config_struct(panel);
-	if(ppc && ppc->config_window)
-		gtk_widget_destroy(ppc->config_window);
+	PerPanelConfig *ppc;
+
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (panel));
+
+	ppc = get_config_struct (panel);
+	if (ppc != NULL &&
+	    ppc->config_window != NULL)
+		gtk_widget_destroy (ppc->config_window);
 }
 
 static void
 update_position_toggles (PerPanelConfig *ppc)
 {
 	GtkWidget *toggle = ppc->toggle[ppc->edge][ppc->align];
+
 	/* this could happen during type changes */
-	if(!toggle) return;
+	if (toggle == NULL)
+		return;
+
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 }
 
 void
 update_config_edge (BasePWidget *panel)
 {
-	PerPanelConfig *ppc = get_config_struct(GTK_WIDGET (panel));
+	PerPanelConfig *ppc;
+
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (panel));
+
+	ppc = get_config_struct (GTK_WIDGET (panel));
 
 	if (ppc == NULL)
 		return;
@@ -88,7 +99,12 @@ update_config_edge (BasePWidget *panel)
 void
 update_config_floating_pos (BasePWidget *panel)
 {
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
+	PerPanelConfig *ppc;
+
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (panel));
+
+	ppc = get_config_struct (GTK_WIDGET (panel));
 
 	if (ppc == NULL)
 		return;
@@ -103,11 +119,17 @@ update_config_floating_pos (BasePWidget *panel)
 void
 update_config_floating_pos_limits (BasePWidget *panel)
 {
-	GtkWidget *widget = GTK_WIDGET(panel);
-	PerPanelConfig *ppc = get_config_struct (widget);
+	GtkWidget *widget;
+	PerPanelConfig *ppc;
 	int xlimit, ylimit;
 	int val;
 	GtkAdjustment *adj;
+
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (panel));
+
+	widget = GTK_WIDGET (panel);
+	ppc = get_config_struct (widget);
 
 	if (ppc == NULL)
 		return;
@@ -838,23 +860,30 @@ edge_notebook_page (PerPanelConfig *ppc)
 static GtkWidget *
 aligned_notebook_page (PerPanelConfig *ppc)
 {
-	GtkWidget *vbox, *box;
+	GtkWidget *vbox, *vvbox, *box;
 	GtkWidget *w, *f;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
 	f = gtk_frame_new (_("Size and Position"));
+	gtk_container_set_border_width (GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, TRUE, 0);
+
+	vvbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vvbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (f), vvbox);
 	
 	box = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
-	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vvbox), box, TRUE, TRUE, 0);
 	
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
 	w = make_position_widget (ppc, 3);
 	gtk_box_pack_start (GTK_BOX (box), w,  FALSE, FALSE, 0);
+
+	w = make_level_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -890,32 +919,37 @@ static GtkWidget *
 floating_notebook_page (PerPanelConfig *ppc)
 {
 	GtkWidget *vbox;
+	GtkWidget *vvbox;
 	GtkWidget *box;
 	GtkWidget *button;
-	GtkWidget *table;
+	GtkWidget *orientbox;
 	GtkObject *range;
 	GtkWidget *f, *w;
 	GtkWidget *hbox;
 	int xlimit, ylimit;
 
-	xlimit = gdk_screen_width() - ppc->panel->allocation.width;
-	ylimit = gdk_screen_height() - ppc->panel->allocation.height;
+	xlimit = gdk_screen_width () - ppc->panel->allocation.width;
+	ylimit = gdk_screen_height () - ppc->panel->allocation.height;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
 	f = gtk_frame_new (_("Size and Position"));
+	gtk_container_set_border_width (GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, TRUE, 0);
+
+	vvbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vvbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (f), vvbox);
 	
 	box = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
-	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vvbox), box, TRUE, TRUE, 0);
 	
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
 	/****** bleh ********/
-	table = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (box), table, FALSE, FALSE, 0);
+	orientbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (box), orientbox, FALSE, FALSE, 0);
 
 	ppc->h_orient = button = gtk_radio_button_new_with_label (
 		NULL, _("Orient panel horizontally"));
@@ -925,7 +959,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
 			    GINT_TO_POINTER (PANEL_HORIZONTAL));
-	gtk_box_pack_start (GTK_BOX (table), button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	ppc->v_orient = button = 
 		gtk_radio_button_new_with_label_from_widget (
@@ -937,10 +971,10 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			    GTK_SIGNAL_FUNC (floating_set_orient),
 			    GINT_TO_POINTER (PANEL_VERTICAL));
-	gtk_box_pack_start (GTK_BOX (table), button, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new (FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (table), hbox, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (orientbox), hbox, FALSE, FALSE, 0);
 	
 	button = gtk_label_new (_("Top left corner's position: X"));
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -970,6 +1004,9 @@ floating_notebook_page (PerPanelConfig *ppc)
 			    &ppc->y);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
+	w = make_level_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
+
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -992,7 +1029,7 @@ sliding_set_offset (GtkWidget *widget, gpointer data)
 static GtkWidget *
 sliding_notebook_page (PerPanelConfig *ppc)
 {
-	GtkWidget *vbox, *box, *hbox;
+	GtkWidget *vvbox, *vbox, *box, *hbox;
 	GtkWidget *w, *f;
 	GtkWidget *l;
 	GtkWidget *button;
@@ -1002,19 +1039,32 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
 	f = gtk_frame_new (_("Size and Position"));
+	gtk_container_set_border_width (GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, TRUE, 0);
 	
-	box = gtk_vbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	vvbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vvbox), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (f), vvbox);
+	
+	box = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
 
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
+	hbox = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vvbox), hbox, TRUE, TRUE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+
+	gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+
+	w = make_position_widget (ppc, 2);
+	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
+
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (box), hbox, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (vvbox), hbox, TRUE, TRUE, 0);
 
 	l = gtk_label_new (_("Offset from screen edge:"));
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
 		range = gdk_screen_height() - ppc->panel->allocation.height;
@@ -1023,19 +1073,14 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
 		gtk_spin_button_new (adj, 1, 0);
+	gtk_widget_set_usize (button, 100, 0);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
 	gtk_signal_connect (GTK_OBJECT (button), "changed",
 			    GTK_SIGNAL_FUNC (sliding_set_offset), ppc);
-	gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-	hbox = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), hbox);
-	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
-
-	gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
-
-	w = make_position_widget (ppc, 2);
-	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
+	w = make_level_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1062,12 +1107,12 @@ static void
 activate_proper_item (GtkMenu *menu)
 {
 	GtkWidget *active;
-	active = gtk_menu_get_active(menu);
-	if(active)
-		gtk_menu_item_activate(GTK_MENU_ITEM(active));
+	active = gtk_menu_get_active (menu);
+	if (active != NULL)
+		gtk_menu_item_activate (GTK_MENU_ITEM (active));
 }
 
-static GtkWidget *
+GtkWidget *
 make_size_widget (PerPanelConfig *ppc)
 {
 	GtkWidget *box;
@@ -1210,7 +1255,7 @@ level_set_level (GtkWidget *widget, gpointer data)
 	panel_config_register_changes (ppc);
 }
 
-static GtkWidget *
+GtkWidget *
 make_level_widget (PerPanelConfig *ppc)
 {
 	GtkWidget *box;
@@ -1329,7 +1374,7 @@ set_rotate_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 }
 
 static void
-color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
+color_set_cb (GtkWidget *w, int r, int g, int b, int a, gpointer data)
 {
 	PerPanelConfig *ppc = data;
 
@@ -1345,23 +1390,23 @@ set_back (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *pixf,*colf;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-	PanelBackType back_type = GPOINTER_TO_INT(data);
+	PanelBackType back_type = GPOINTER_TO_INT (data);
 
-	if(ppc->back_type == back_type)
+	if (ppc->back_type == back_type)
 		return;
 
-	pixf = gtk_object_get_data(GTK_OBJECT(widget),"pix");
-	colf = gtk_object_get_data(GTK_OBJECT(widget),"col");
+	pixf = gtk_object_get_data (GTK_OBJECT (widget), "pix");
+	colf = gtk_object_get_data (GTK_OBJECT (widget), "col");
 	
-	if(back_type == PANEL_BACK_NONE) {
-		gtk_widget_set_sensitive(pixf,FALSE);
-		gtk_widget_set_sensitive(colf,FALSE);
-	} else if(back_type == PANEL_BACK_COLOR) {
-		gtk_widget_set_sensitive(pixf,FALSE);
-		gtk_widget_set_sensitive(colf,TRUE);
+	if (back_type == PANEL_BACK_NONE) {
+		gtk_widget_set_sensitive (pixf, FALSE);
+		gtk_widget_set_sensitive (colf, FALSE);
+	} else if (back_type == PANEL_BACK_COLOR) {
+		gtk_widget_set_sensitive (pixf, FALSE);
+		gtk_widget_set_sensitive (colf, TRUE);
 	} else  {
-		gtk_widget_set_sensitive(pixf,TRUE);
-		gtk_widget_set_sensitive(colf,FALSE);
+		gtk_widget_set_sensitive (pixf, TRUE);
+		gtk_widget_set_sensitive (colf, FALSE);
 	}
 	
 	ppc->back_type = back_type;

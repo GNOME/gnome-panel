@@ -114,4 +114,8 @@ void update_config_floating_pos_limits (BasePWidget *panel);
 void update_config_type (BasePWidget *panel);
 void kill_config_dialog (GtkWidget *panel);
 
+GtkWidget *make_level_widget (PerPanelConfig *ppc);
+GtkWidget *make_size_widget (PerPanelConfig *ppc);
+
+
 #endif /* PANEL_CONFIG_H */

@@ -94,17 +94,38 @@ set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 }
 
 void
-add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer)
+add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer)
 {
-        GtkWidget *dialog = ppc->config_window;
+        GtkWidget *dialog;
         GtkWidget *table;
 	GtkWidget *f;
 	GtkWidget *box, *box_in;
 	GtkWidget *w;
 	GtkWidget *button;
+
+	g_return_if_fail (ppc != NULL);
+
+        dialog = ppc->config_window;
+
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+
+	box_in = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box_in), GNOME_PAD_SMALL);
+
+	w = make_size_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (box_in), w, FALSE, FALSE, 0);
+
+	w = make_level_widget (ppc);
+	gtk_box_pack_start (GTK_BOX (box_in), w, FALSE, FALSE, 0);
+
+	f = gtk_frame_new (_("Size and Position"));
+	gtk_container_add (GTK_CONTAINER (f), box_in);
+	gtk_box_pack_start (GTK_BOX (box), f, FALSE, FALSE, 0);
+
 	
-	table = gtk_table_new(3, 2, FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
+	table = gtk_table_new (3, 2, FALSE);
+	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
 
 	w = create_text_entry(table, "drawer_name", 0, _("Tooltip/Name"),
 			      drawer->tooltip,
@@ -121,8 +142,6 @@ add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer 
 	f = gtk_frame_new(_("Applet appearance"));
 	gtk_container_add(GTK_CONTAINER(f),table);
 
-	box = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER(box), GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
 
 	f = gtk_frame_new(_("Drawer handle"));
