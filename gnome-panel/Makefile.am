@@ -222,7 +222,7 @@ hints_DATA = panel.hints
 sysdir = $(datadir)/control-center/Desktop/
 sys_DATA = gnome-panel-properties.desktop
 
-install-data-local:
-	$(INSTALL_DATA) $(srcdir)/gnome-panel-properties.desktop $(DESTDIR)$(datadir)/gnome/apps/Settings/Desktop/gnome-panel-properties.desktop
+deskdir = $(datadir)/gnome/apps/Settings/Desktop/
+desk_DATA = gnome-panel-properties.desktop
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)
