@@ -19,8 +19,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-07-19 23:21+0200\n"
-"PO-Revision-Date: 2002-07-19 23:22+0200\n"
+"POT-Creation-Date: 2002-07-23 11:24+0200\n"
+"PO-Revision-Date: 2002-07-23 11:25+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,9 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "_Hjælp"
 
@@ -926,9 +928,7 @@ msgstr "Kan ikke oprette panelprogram!\n"
 msgid "Properties..."
 msgstr "Indstillinger..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Hjælp"
 
@@ -1075,12 +1075,12 @@ msgstr "Gnome-panelskal"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Flyt"
+msgid "_Move"
+msgstr "_Flyt"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Fjern fra panel"
+msgid "_Remove From Panel"
+msgstr "F_jern fra panel"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1195,44 +1195,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-menu"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "Størrelse og placering"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "Værktøjstip/navn"
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "Ikon"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "Panelprogramudseende"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "Skuffehåndtag"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "Benyt skjuleknap"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "Benyt skjuleknapspil"
 
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Skuffe"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Indstillinger"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Indstillinger"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1266,8 +1266,7 @@ msgstr "Skærmbillede..."
 msgid "Take a screenshot of your desktop"
 msgstr "Gem et billede af skrivebordet"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Lås skærm"
 
@@ -1741,16 +1740,20 @@ msgstr "Lås skærm"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Aktivér pauseskærm"
+msgid "_Activate Screensaver"
+msgstr "_Aktivér pauseskærm"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "_Lås skærm"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Dræb pauseskærmsdæmon"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Dræb pauseskærmsdæmon"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Genstart pauseskærmsdæmon"
+msgid "Restart _Screensaver Daemon"
+msgstr "_Genstart pauseskærmsdæmon"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1942,6 +1945,10 @@ msgstr "Tilføj som menu på panelet"
 msgid "Add new item to this menu"
 msgstr "Tilføj nyt punkt i denne menu"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Indstillinger"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2076,10 +2083,6 @@ msgstr "_Fjern dette panel"
 msgid "_Add to Panel"
 msgstr "_Tilføj til panel"
 
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Indstillinger"
-
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "_Nyt panel"
@@ -2148,7 +2151,7 @@ msgstr "Kan ikke registrere kontrollerende kontrol\n"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Undtagelse fra popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2165,11 +2168,11 @@ msgstr ""
 "(Hvis du vælger ikke at genindlæse det nu, kan du altid senere tilføje det "
 "ved at højreklikke på panelet og vælge \"Tilføj til panel\"-undermenuen)"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke skaffe AppletShell-grænseflade fra kontrol\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
