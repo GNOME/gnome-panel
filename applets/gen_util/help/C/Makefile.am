@@ -1,2 +1,3 @@
-SUBDIRS = pager tasklist clock
+SUBDIRS = pager tasklist clock mailcheck
+
 

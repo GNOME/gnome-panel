@@ -2,10 +2,10 @@ figs = \
 	figures/mailcheck-applet.png			\
 	figures/mailcheck-properties-mailbox.png	\
 	figures/mailcheck-properties-mailcheck.png
-docname = mailcheck_applet
+docname = mailcheck
 lang = C
-omffile = mailcheck_applet-C.omf
-sgml_ents = mailcheck.sgml
-include $(top_srcdir)/sgmldocs.make
+omffile = mailcheck-C.omf
+entities = legal.xml
+include $(top_srcdir)/xmldocs.make
 dist-hook: app-dist-hook
 
