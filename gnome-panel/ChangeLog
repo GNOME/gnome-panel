@@ -1,5 +1,12 @@
 2002-07-27  Mark McLoughlin  <mark@skynet.ie>
 
+	* basep-widget.c: (basep_widget_focus_in_event): remove
+	bogus autoshowing on focus that was supposed to fix
+	#81041. Ths solution for this needs a lot more 
+	consideration - see #83476 for issues.
+
+2002-07-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c:
 	(panel_applet_clean_gconf): don't take AppletInfo as an
 	arg so we can clean an unregistered applet. Don't free

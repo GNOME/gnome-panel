@@ -784,12 +784,9 @@ static int
 basep_widget_focus_in_event (GtkWidget     *widget,
 			     GdkEventFocus *event)
 {
+#if 0
 	BasePWidget *basep = BASEP_WIDGET (widget);
 
-	if (basep->state == BASEP_AUTO_HIDDEN)
-		basep_widget_autoshow (basep);
-
-#if 0
         /* FIXME: When we have focus and hit ctrl-alt-tab with
          *        Metacity, it does a grab and we a FocusChange
          *        event because gdk doesn't ignore NotifyGrab
