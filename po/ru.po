@@ -1,3490 +1,2881 @@
-# Copyright (C) 2000-2002, 2004 Free Software Foundation, Inc.
+# translation of gnome-panel to Russian
+# Copyright (C) 1998-2003, 2004 Free Software Foundation, Inc.
+# Max Valianskiy <maxcom@vinchi.ru>, 1998-1999.
+# Sergey Panov <sipan@mit.edu>, 1999.
 # Valek Filippov <frob@df.ru>, 2000-2002.
-# Dmitry G. Mastrukov <dmitry@taurussoft.org>, 2002-2003.
-# Mikhail Zabaluev <mhz@altlinux.ru>, 2004.
-# Leonid Kanter <leon@asplinux.ru>, 2004.
+# Dmitry G. Mastrukov <dmitry@taurussoft.org>, 2002-2004.
+# Andrew W. Nosenko <awn@bcs.zp.ua>, 2003.
+# Leonid Kanter <leon@asplinux.ru>, 2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: epiphany.gnome-2-8\n"
+"Project-Id-Version: ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-11 12:13+0200\n"
-"PO-Revision-Date: 2004-10-13 19:01+0300\n"
+"POT-Creation-Date: 2004-12-22 13:10+0100\n"
+"PO-Revision-Date: 2004-11-02 13:34+0200\n"
 "Last-Translator: Leonid Kanter <leon@asplinux.ru>\n"
 "Language-Team:  <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.3.1\n"
-
-#: data/GNOME_Epiphany_Automation.server.in.h:1
-msgid "Epiphany automation"
-msgstr "Автоматизация Epiphany"
-
-#: data/bme.desktop.in.h:1
-msgid "Browse and organize your bookmarks"
-msgstr "Программа для просмотра и организации закладок"
-
-#: data/bme.desktop.in.h:2
-msgid "Epiphany Web Bookmarks"
-msgstr "Закладки браузера Epiphany"
-
-#: data/bme.desktop.in.h:3
-msgid "Web Bookmarks"
-msgstr "Веб-закладки"
-
-#: data/epiphany-lockdown.schemas.in.h:1
-msgid ""
-"A list of protocols to be considered safe in addition to the default, when "
-"disable_unsafe_protocols is enabled."
-msgstr ""
-"Список протоколов, в добавление к исходному считающихся безопасными, когда "
-"ключ \"disable_unsafe_protocols\" установлен."
-
-#: data/epiphany-lockdown.schemas.in.h:2
-msgid "Additional safe protocols"
-msgstr "Дополнительные безопасные протоколы"
-
-#: data/epiphany-lockdown.schemas.in.h:3
-msgid "Disable Arbitrary URLs"
-msgstr "Отключить произвольные URL"
-
-#: data/epiphany-lockdown.schemas.in.h:4
-msgid "Disable Bookmark Editing"
-msgstr "Отключить редактирование закладок"
-
-#: data/epiphany-lockdown.schemas.in.h:5
-msgid "Disable History"
-msgstr "Отключить историю"
-
-#: data/epiphany-lockdown.schemas.in.h:6
-msgid "Disable JavaScript chrome control"
-msgstr "Отключить JavaScript над \"хромом\""
-
-#: data/epiphany-lockdown.schemas.in.h:7
-msgid "Disable JavaScript's control over window chrome."
-msgstr "Отключить управление внешним видом окна с помощью JavaScript."
-
-#: data/epiphany-lockdown.schemas.in.h:8
-msgid "Disable Toolbar Editing"
-msgstr "Отключить редактирование панели инструментов"
-
-#: data/epiphany-lockdown.schemas.in.h:9
-msgid ""
-"Disable all historical information by disabling the back button, not "
-"allowing the history dialog and hiding the most used bookmarks list."
-msgstr ""
-"Отключить всю информацию об истории посещений путём отключение кнопки \"Назад"
-"\", запрета диалога истории и сокрытия списка наиболее часто используемых "
-"закладок."
-
-#: data/epiphany-lockdown.schemas.in.h:10
-msgid "Disable the user's ability to edit their bookmarks."
-msgstr "Отключить пользователям возможность редактировать свои закладки."
-
-#: data/epiphany-lockdown.schemas.in.h:11
-msgid "Disable the user's ability to edit toolbars."
-msgstr "Отключить пользователям возможность редактировать свои панели инструментов."
-
-#: data/epiphany-lockdown.schemas.in.h:12
-msgid "Disable the user's ability to type in a URL to epiphany."
-msgstr "Отключить пользователям возможность вручную указывать URL."
-
-#: data/epiphany-lockdown.schemas.in.h:13
-msgid "Disable unsafe protocols"
-msgstr "Отключить небезопасные протоколы"
-
-#: data/epiphany-lockdown.schemas.in.h:14
-msgid ""
-"Disables loading of content from unsafe protocols. Safe protocols are http: "
-"and https:."
-msgstr ""
-"Отключить загрузку содержимого через небезопасные протоколы. Безопасные "
-"протоколы - \"http:\" и \"https:\"."
-
-#: data/epiphany-lockdown.schemas.in.h:15
-msgid "Hide menubar by default"
-msgstr "Скрывать меню по умолчанию"
-
-#: data/epiphany-lockdown.schemas.in.h:16
-msgid "Hide the menubar by default."
-msgstr "Скрывать меню по умолчанию."
-
-#: data/epiphany.desktop.in.h:1
-msgid "Browse the web"
-msgstr "Веб-браузер"
-
-#: data/epiphany.desktop.in.h:2 src/ephy-main.c:116
-msgid "Epiphany Web Browser"
-msgstr "Веб-браузер Epiphany"
-
-#: data/epiphany.desktop.in.h:3
-msgid "Web Browser"
-msgstr "Веб-браузер"
-
-#: data/epiphany.schemas.in.h:1
-msgid "Address of the user's home page."
-msgstr "Адрес начальной страницы."
-
-#: data/epiphany.schemas.in.h:2
-msgid "Allow popups"
-msgstr "Разрешить всплывающие окна"
-
-#: data/epiphany.schemas.in.h:3
-msgid "Allow sites to open new windows using JavaScript (if JavaScript is enabled)."
-msgstr ""
-"Позволять сайтам открывать новые окна используя сценарии JavaScript (если "
-"использование сценариев JavaScript включено)."
-
-#: data/epiphany.schemas.in.h:4
-msgid "Always show the tab bar"
-msgstr "Всегда показывать ярлыки вкладок"
-
-#: data/epiphany.schemas.in.h:5
-msgid "Automatic downloads"
-msgstr "Автоматическое скачивание"
-
-#: data/epiphany.schemas.in.h:6
-msgid "Autowrap for find in page"
-msgstr "Переходить к началу страницы при поиске"
-
-#: data/epiphany.schemas.in.h:7
-msgid "Browse with caret"
-msgstr "Просматривать с курсором"
-
-#: data/epiphany.schemas.in.h:8
-msgid "Cookie accept"
-msgstr "Принимать Cookie"
-
-#: data/epiphany.schemas.in.h:9
-msgid "Default encoding"
-msgstr "Кодировка по умолчанию"
-
-#: data/epiphany.schemas.in.h:10
-msgid ""
-"Default encoding. Accepted values are: \"armscii-8\", \"Big5\", \"Big5-HKSCS"
-"\", \"EUC-JP\", \"EUC-KR\", \"gb18030\", \"GB2312\", \"geostd8\", \"HZ-GB-"
-"2312\", \"IBM850\", \"IBM852\", \"IBM855\", \"IBM857\", \"IBM862\", \"IBM864"
-"\", \"IBM866\", \"ISO-2022-CN\", \"ISO-2022-JP\", \"ISO-2022-KR\", \"ISO-"
-"8859-1\", \"ISO-8859-2\", \"ISO-8859-3\", \"ISO-8859-4\", \"ISO-8859-5\", "
-"\"ISO-8859-6\", \"ISO-8859-7\", \"ISO-8859-8\", \"ISO-8859-8-I\", \"ISO-8859-"
-"9\", \"ISO-8859-10\", \"ISO-8859-11\", \"ISO-8859-13\", \"ISO-8859-14\", "
-"\"ISO-8859-15\", \"ISO-8859-16\", \"ISO-IR-111\", \"KOI8-R\", \"KOI8-U\", "
-"\"Shift_JIS\", \"TIS-620\", \"UTF-7\", \"UTF-8\", \"VISCII\", \"windows-874"
-"\", \"windows-1250\", \"windows-1251\", \"windows-1252\", \"windows-1253\", "
-"\"windows-1254\", \"windows-1255\", \"windows-1256\", \"windows-1257\", "
-"\"windows-1258\", \"x-euc-tw\", \"x-gbk\", \"x-johab\", \"x-mac-arabic\", "
-"\"x-mac-ce\", \"x-mac-croatian\", \"x-mac-cyrillic\", \"x-mac-devanagari\", "
-"\"x-mac-farsi\", \"x-mac-greek\", \"x-mac-gujarati\", \"x-mac-gurmukhi\", "
-"\"x-mac-hebrew\", \"x-mac-icelandic\", \"x-mac-roman\", \"x-mac-romanian\", "
-"\"x-mac-turkish\", \"x-mac-ukrainian\", \"x-user-defined\", \"x-viet-tcvn5712"
-"\", \"x-viet-vps\" and \"x-windows-949\"."
-msgstr ""
-"Кодировка по умолчанию. Допустимые значения: \"armscii-8\", \"Big5\", \"Big5-"
-"HKSCS\", \"EUC-JP\", \"EUC-KR\", \"gb18030\", \"GB2312\", \"geostd8\", \"HZ-"
-"GB-2312\", \"IBM850\", \"IBM852\", \"IBM855\", \"IBM857\", \"IBM862\", "
-"\"IBM864\", \"IBM866\", \"ISO-2022-CN\", \"ISO-2022-JP\", \"ISO-2022-KR\", "
-"\"ISO-8859-1\", \"ISO-8859-2\", \"ISO-8859-3\", \"ISO-8859-4\", \"ISO-8859-5"
-"\", \"ISO-8859-6\", \"ISO-8859-7\", \"ISO-8859-8\", \"ISO-8859-8-I\", \"ISO-"
-"8859-9\", \"ISO-8859-10\", \"ISO-8859-11\", \"ISO-8859-13\", \"ISO-8859-14"
-"\", \"ISO-8859-15\", \"ISO-8859-16\", \"ISO-IR-111\", \"KOI8-R\", \"KOI8-U"
-"\", \"Shift_JIS\", \"TIS-620\", \"UTF-7\", \"UTF-8\", \"VISCII\", \"windows-"
-"874\", \"windows-1250\", \"windows-1251\", \"windows-1252\", \"windows-1253"
-"\", \"windows-1254\", \"windows-1255\", \"windows-1256\", \"windows-1257\", "
-"\"windows-1258\", \"x-euc-tw\", \"x-gbk\", \"x-johab\", \"x-mac-arabic\", "
-"\"x-mac-ce\", \"x-mac-croatian\", \"x-mac-cyrillic\", \"x-mac-devanagari\", "
-"\"x-mac-farsi\", \"x-mac-greek\", \"x-mac-gujarati\", \"x-mac-gurmukhi\", "
-"\"x-mac-hebrew\", \"x-mac-icelandic\", \"x-mac-roman\", \"x-mac-romanian\", "
-"\"x-mac-turkish\", \"x-mac-ukrainian\", \"x-user-defined\", \"x-viet-tcvn5712"
-"\", \"x-viet-vps\" и \"x-windows-949\"."
-
-#: data/epiphany.schemas.in.h:11
-msgid "Default font type"
-msgstr "Шрифт по умолчанию"
-
-#: data/epiphany.schemas.in.h:12
-msgid "Default font type. Possible values are \"serif\" and \"sans-serif\"."
-msgstr ""
-"Тип шрифта по умолчанию. Возможные значения \"serif\" (с засечками) и \"sans-"
-"serif\" (без засечек)."
-
-#: data/epiphany.schemas.in.h:13
-msgid "Enable Java"
-msgstr "Включить Java"
-
-#: data/epiphany.schemas.in.h:14
-msgid "Enable Java."
-msgstr "Включить использование языка Java."
-
-#: data/epiphany.schemas.in.h:15
-msgid "Enable JavaScript"
-msgstr "Включить JavaScript"
-
-#: data/epiphany.schemas.in.h:16
-msgid "Enable JavaScript."
-msgstr "Включить использование сценариев JavaScript."
-
-#: data/epiphany.schemas.in.h:17
-msgid "Filename to print to"
-msgstr "Имя файла для печати"
-
-#: data/epiphany.schemas.in.h:18
-msgid "Filename to print to."
-msgstr "Имя файла для печати."
-
-#: data/epiphany.schemas.in.h:19
-msgid ""
-"For find in page, whether to start again at the beginning after reaching the "
-"end of the page."
-msgstr "Начинать ли поиск снова с начала страницы, когда конец страницы достигнут."
-
-#: data/epiphany.schemas.in.h:20
-msgid "History pages time range"
-msgstr "Временной диапазон страниц истории"
-
-#: data/epiphany.schemas.in.h:21
-msgid "Home page"
-msgstr "Начальная страница"
-
-#: data/epiphany.schemas.in.h:22
-msgid "ISO-8859-1"
-msgstr "ISO-8859-1"
-
-#: data/epiphany.schemas.in.h:23
-msgid "Languages"
-msgstr "Языки"
-
-#: data/epiphany.schemas.in.h:24
-msgid "Match case for find in page"
-msgstr "Учитывать регистр при поиске на странице"
-
-#: data/epiphany.schemas.in.h:25
-msgid "Match case for find in page."
-msgstr "Учитывать регистр при поиске на странице."
-
-#: data/epiphany.schemas.in.h:26
-msgid "Middle click to open the web page pointed to by the currently selected text"
-msgstr ""
-"Использовать среднюю кнопку мыши для открытия веб-страницы, на которую "
-"указывает выделенный текст."
-
-#: data/epiphany.schemas.in.h:27
-msgid ""
-"Middle clicking on the main view pane will open the web page pointed to by "
-"the currently selected text."
-msgstr ""
-"Использовать щелчок средней кнопкой мыши в основной панели для открытия веб-"
-"страницы, на которую указывает выделенный текст."
-
-#: data/epiphany.schemas.in.h:28
-msgid "Paper type"
-msgstr "Формат страницы"
-
-#: data/epiphany.schemas.in.h:29
-msgid ""
-"Paper type. Supported values are \"A4\", \"Letter\", \"Legal\" and "
-"\"Executive\"."
-msgstr ""
-"Формат страницы. Поддерживаемые значения: \"A4\", \"Letter\", \"Legal\" и "
-"\"Executive\"."
-
-#: data/epiphany.schemas.in.h:30
-msgid "Preferred languages, two letter codes."
-msgstr "Предпочтительные языки, двухбуквенные коды."
-
-#: data/epiphany.schemas.in.h:31
-msgid "Printer name"
-msgstr "Имя принтера"
-
-#: data/epiphany.schemas.in.h:32
-msgid "Printer name."
-msgstr "Имя принтера."
-
-#: data/epiphany.schemas.in.h:33
-msgid "Printing bottom margin"
-msgstr "Нижний отступ печати"
-
-#: data/epiphany.schemas.in.h:34
-msgid "Printing bottom margin (in mm)."
-msgstr "Нижний отступ печати (в мм)"
-
-#: data/epiphany.schemas.in.h:35
-msgid "Printing left margin"
-msgstr "Левый отступ печати"
-
-#: data/epiphany.schemas.in.h:36
-msgid "Printing left margin (in mm)."
-msgstr "Левый отступ печати (в мм)."
-
-#: data/epiphany.schemas.in.h:37
-msgid "Printing right margin"
-msgstr "Правый отступ печати"
-
-#: data/epiphany.schemas.in.h:38
-msgid "Printing right margin (in mm)."
-msgstr "Правый отступ печати (в мм)."
-
-#: data/epiphany.schemas.in.h:39
-msgid "Printing top margin"
-msgstr "Верхний отступ печати"
-
-#: data/epiphany.schemas.in.h:40
-msgid "Printing top margin (in mm)."
-msgstr "Верхнй отступ печати (в мм)."
-
-#: data/epiphany.schemas.in.h:41
-msgid "Show bookmarks bar by default"
-msgstr "Показывать панель закладок по умолчанию"
-
-#: data/epiphany.schemas.in.h:42
-msgid "Show bookmarks bar by default."
-msgstr "Показывать панель закладок по умолчанию."
-
-#: data/epiphany.schemas.in.h:43
-msgid "Show statusbar by default"
-msgstr "Показывать строку состояния по умолчанию"
-
-#: data/epiphany.schemas.in.h:44
-msgid "Show statusbar by default."
-msgstr "Показывать строку состояния по умолчанию."
-
-#: data/epiphany.schemas.in.h:45
-msgid ""
-"Show the history pages visited \"ever\", \"last_two_days\", \"last_three_days"
-"\", \"today\"."
-msgstr ""
-"Показывать страницы, посещённые когда-то (\"ever\"), за последние два дня "
-"(\"last_two_days\", за последние три дня (\"last_three_days\"), сегодня "
-"(\"today\")."
-
-#: data/epiphany.schemas.in.h:46
-msgid "Show the tab bar also when there is only one tab open."
-msgstr "Показывать панель вкладок, даже если открыта только одна вкладка."
-
-#: data/epiphany.schemas.in.h:47
-msgid "Show toolbars by default"
-msgstr "Показывать панели инструментов по умолчанию"
-
-#: data/epiphany.schemas.in.h:48
-msgid "Show toolbars by default."
-msgstr "Показывать панели инструментов по умолчанию."
-
-#: data/epiphany.schemas.in.h:49
-msgid "Size of disk cache"
-msgstr "Размер дискового кэша"
-
-#: data/epiphany.schemas.in.h:50
-msgid "Size of disk cache, in MB."
-msgstr "Размер дискового кэша, в МБ."
-
-#: data/epiphany.schemas.in.h:51
-msgid "The bookmark informations shown in the editor view"
-msgstr "Информация из закладок, показываемая в редакторе"
-
-#: data/epiphany.schemas.in.h:52
-msgid ""
-"The bookmark informations shown in the editor view. Valid values in the list "
-"are \"address\" and \"title\"."
-msgstr ""
-"Информация из закладок, показываемая в редакторе. Допустимые значения в "
-"списке \"address\" (адрес) и \"title\" (заголовок)."
-
-#: data/epiphany.schemas.in.h:53
-msgid "The currently selected fonts language"
-msgstr "Выбранный на настоящий момент язык шрифтов"
-
-#: data/epiphany.schemas.in.h:54
-msgid ""
-"The currently selected fonts language. Valid values are \"ar\" (arabic), \"x-"
-"baltic\" (baltic languages), \"x-central-euro\" (central european "
-"languages), \"x-cyrillic\" (languages written with cyrillic alphabet), \"el"
-"\" (greek), \"he\" (hebrew), \"ja\" (japanese), \"ko\" (korean), \"zh-CN"
-"\" (simplified chinese), \"th\" (thai), \"zh-TW\" (traditional chinese), \"tr"
-"\" (turkish), \"x-unicode\" (other languages), \"x-western\" (languages "
-"written in latin script), \"x-tamil\" (tamil) and \"x-devanagari"
-"\" (devanagari)."
-msgstr ""
-"Выбранный на настоящий момент язык шрифтов. Допустимые значения \"ar"
-"\" (арабский), \"x-baltic\" (балтийские языки), \"x-central-euro"
-"\" (центрально-европейские языки) , \"x-cyrillic\" (языки, использующие "
-"кириллицу), \"el\" (греческий), \"he\" (еврейский), \"ja\" (японский), \"ko"
-"\" (корейский), \"zh-CN\" (китайский упрощённый), \"th\" (тайский), \"zh-TW"
-"\" (китайский традиционный), \"tr\" (турецкий), \"x-unicode\" (прочие "
-"языки), \"x-western\" (языки, использующие латиницу), \"x-tamil"
-"\" (тамильский) and \"x-devanagari\" (деванагари)."
-
-#: data/epiphany.schemas.in.h:55
-msgid "The downloads folder"
-msgstr "Папка для скачивания"
-
-#: data/epiphany.schemas.in.h:56
-msgid "The encoding autodetector. Empty string means autodetect is off"
-msgstr "Автоопределение кодировки. Пустая строка означает \"выключено\""
-
-#: data/epiphany.schemas.in.h:57
-msgid ""
-"The encoding autodetector. Valid entries are \"\" (autodetectors off), "
-"\"cjk_parallel_state_machine\" (autodetect east asian encodings), "
-"\"ja_parallel_state_machine\" (autodetect japanese encodings), "
-"\"ko_parallel_state_machine\" (autodetect korean encodings), \"ruprob"
-"\" (autodetect russian encodings), \"ukprob\" (autodetect ukrainian "
-"encodings), \"zh_parallel_state_machine\" (autodetect chinese encodings), "
-"\"zhcn_parallel_state_machine\" (autodetect simplified chinese encodings), "
-"\"zhtw_parallel_state_machine\" (autodetect traditional chinese encodings) "
-"and \"universal_charset_detector\" (autodetect most encodings)."
-msgstr ""
-"Автоопределение кодировки. Допустимые значения \"\" (выключено), "
-"\"cjk_parallel_state_machine\" (восточно-азиатские кодировки), "
-"\"ja_parallel_state_machine\" (японские кодировки), "
-"\"ko_parallel_state_machine\" (корейские кодировки), \"ruprob\" (русские "
-"кодировки), \"ukprob\" (украинские кодировки), \"zh_parallel_state_machine"
-"\" (китайские кодировки), \"zhcn_parallel_state_machine\" (китайские "
-"упрощённые кодировки), \"zhtw_parallel_state_machine\" (китайские "
-"традиционные кодировки) and \"universal_charset_detector\" (большинство "
-"кодировок)."
-
-#: data/epiphany.schemas.in.h:58
-msgid "The page informations shown in the history view"
-msgstr "Информация о странице, показываемая в окне истории"
-
-#: data/epiphany.schemas.in.h:59
-msgid ""
-"The page informations shown in the history view. Valid values in the list "
-"are \"address\", \"title\"."
-msgstr ""
-"Информация о странице, показываемая в окне истории. Допустимые значения в "
-"списке \"address\" (адрес), \"title\" (заголовок)."
-
-#: data/epiphany.schemas.in.h:60
-msgid "The path of the folder where downloads are saved."
-msgstr "Путь к папке, где сохраняются скачанные материалы."
-
-#: data/epiphany.schemas.in.h:61
-msgid "Use caret browsing mode."
-msgstr "Использовать режим просмотра с курсором."
-
-#: data/epiphany.schemas.in.h:62
-msgid "Use own colors"
-msgstr "Использовать собственные цвета"
-
-#: data/epiphany.schemas.in.h:63
-msgid "Use own fonts"
-msgstr "Использовать собственные шрифты"
-
-#: data/epiphany.schemas.in.h:64
-msgid "Use your own colors instead of the colors the page requests."
-msgstr "Использовать собственные цвета вместо цветов документа"
-
-#: data/epiphany.schemas.in.h:65
-msgid "Use your own fonts instead of the fonts the page requests."
-msgstr "Использовать собственные шрифты вместо шрифтов документа"
-
-#: data/epiphany.schemas.in.h:66
-msgid ""
-"When files cannot be opened by the browser they are automatically downloaded "
-"to the download folder and opened with the appropriate application."
-msgstr "Если файлы не могут быть открыты браузером, они будут скачаны в папку и открыты соответствующим приложением."
-
-#: data/epiphany.schemas.in.h:67
-msgid ""
-"Where to accept cookies from. Possible values are \"anywhere\", \"current "
-"site\" and \"nowhere\"."
-msgstr "Откуда принимать файлы cookie. Возможные варианты: \"anywhere\" (отовсюду), \"current site\" (текущий сайт) и \"nowhere\" (ниоткуда)."
-
-#: data/epiphany.schemas.in.h:68
-msgid "Whether to print the date in the footer"
-msgstr "Печатать ли дату в нижнем колонтитуле"
-
-#: data/epiphany.schemas.in.h:69
-msgid "Whether to print the date in the footer."
-msgstr "Печатать ли дату в нижнем колонтитуле."
-
-#: data/epiphany.schemas.in.h:70
-msgid "Whether to print the page address in the header"
-msgstr "Печатать ли адрес страницы в верхнем колонтитуле"
-
-#: data/epiphany.schemas.in.h:71
-msgid "Whether to print the page address in the header."
-msgstr "Печатать ли адрес страницы в верхнем колонтитуле."
-
-#: data/epiphany.schemas.in.h:72
-msgid "Whether to print the page numbers (x of total) in the footer"
-msgstr "Печатать ли номера страниц (х из всего) в нижнем колонтитуле"
-
-#: data/epiphany.schemas.in.h:73
-msgid "Whether to print the page numbers (x of total) in the footer."
-msgstr "Печатать ли номера страниц (х из всего) в нижнем колонтитуле."
-
-#: data/epiphany.schemas.in.h:74
-msgid "Whether to print the page title in the header"
-msgstr "Печатать ли заголовок страницы в верхнем колонтитуле"
-
-#: data/epiphany.schemas.in.h:75
-msgid "Whether to print the page title in the header."
-msgstr "Печатать ли заголовок страницы в верхнем колонтитуле."
-
-#: data/epiphany.schemas.in.h:76
-msgid "x-western"
-msgstr "x-western"
-
-#: data/glade/certificate-dialogs.glade.h:1 data/glade/prefs-dialog.glade.h:1
-#: data/glade/print.glade.h:1
-msgid "    "
-msgstr "    "
-
-#: data/glade/certificate-dialogs.glade.h:2
-msgid "<b>Fingerprints</b>"
-msgstr "<b>Отпечатки</b>"
-
-#: data/glade/certificate-dialogs.glade.h:3
-msgid "<b>Issued By</b>"
-msgstr "<b>Выпущен кем</b>"
-
-#: data/glade/certificate-dialogs.glade.h:4
-msgid "<b>Issued To</b>"
-msgstr "<b>Выпущен для</b>"
-
-#: data/glade/certificate-dialogs.glade.h:5
-msgid "<b>Validity</b>"
-msgstr "<b>Действительность</b>"
-
-#: data/glade/certificate-dialogs.glade.h:6
-msgid "Certificate _Fields"
-msgstr "_Поля сертификата"
-
-#: data/glade/certificate-dialogs.glade.h:7
-msgid "Certificate _Hierarchy"
-msgstr "_Иерархия сертификата"
-
-#: data/glade/certificate-dialogs.glade.h:8
-msgid "Common Name:"
-msgstr "Общее имя:"
-
-#: data/glade/certificate-dialogs.glade.h:9
-msgid "DYNAMIC"
-msgstr "ДИНАМИЧЕСКИЙ"
-
-#: data/glade/certificate-dialogs.glade.h:10
-msgid "Details"
-msgstr "Подробности"
-
-#: data/glade/certificate-dialogs.glade.h:11
-msgid "Expires On:"
-msgstr "Истекает:"
-
-#: data/glade/certificate-dialogs.glade.h:12
-msgid "Field _Value"
-msgstr "З_начение поля"
-
-#: data/glade/certificate-dialogs.glade.h:13
-#: data/glade/prefs-dialog.glade.h:25
-msgid "General"
-msgstr "Общие"
-
-#: data/glade/certificate-dialogs.glade.h:14
-msgid "Issued On:"
-msgstr "Выпущен:"
-
-#: data/glade/certificate-dialogs.glade.h:15
-msgid "MD5 Fingerprint:"
-msgstr "Отпечаток в формате MD5:"
-
-#: data/glade/certificate-dialogs.glade.h:16
-#: embed/mozilla/GtkNSSDialogs.cpp:988
-msgid "Organization:"
-msgstr "Организация:"
-
-#: data/glade/certificate-dialogs.glade.h:17
-msgid "Organizational Unit:"
-msgstr "Подразделение организации:"
-
-#: data/glade/certificate-dialogs.glade.h:18
-msgid "SHA1 Fingerprint:"
-msgstr "Отпечаток в формате SHA1:"
-
-#: data/glade/certificate-dialogs.glade.h:19
-msgid "Serial Number:"
-msgstr "Серийный номер:"
-
-#: data/glade/epiphany.glade.h:1
-msgid "      "
-msgstr "      "
-
-#: data/glade/epiphany.glade.h:2 data/glade/prefs-dialog.glade.h:2
-#: data/glade/print.glade.h:2
-msgid "*"
-msgstr "*"
-
-#: data/glade/epiphany.glade.h:3
-msgid "<b>_Automatic</b>"
-msgstr "<b>_Автоматически</b>"
-
-#: data/glade/epiphany.glade.h:4
-msgid "<b>_Use a different encoding:</b>"
-msgstr "<b>_Использовать другую кодировку:</b>"
-
-#: data/glade/epiphany.glade.h:5
-msgid "C_ase sensitive"
-msgstr "_Чувствительно к регистру"
-
-#: data/glade/epiphany.glade.h:6
-msgid "Cookies"
-msgstr "Cookies"
-
-#: data/glade/epiphany.glade.h:7
-msgid "Download Manager"
-msgstr "Менеджер скачивания"
-
-#: data/glade/epiphany.glade.h:8 src/ephy-window.c:1122
-msgid "Find"
-msgstr "Поиск"
-
-#: data/glade/epiphany.glade.h:9
-msgid "Passwords"
-msgstr "Пароли"
-
-#: data/glade/epiphany.glade.h:10
-msgid "Personal Data Manager"
-msgstr "Менеджер персональных данных"
-
-#: data/glade/epiphany.glade.h:11
-msgid "Text Encoding"
-msgstr "Кодировка текста"
-
-#: data/glade/epiphany.glade.h:12 src/ephy-encoding-menu.c:368
-msgid "Use the encoding specified by the document"
-msgstr "Использовать кодировку, определённую в документе"
-
-#: data/glade/epiphany.glade.h:13
-msgid "_Find:"
-msgstr "На_йти:"
-
-#: data/glade/epiphany.glade.h:14
-msgid "_Next"
-msgstr "С_ледующее"
-
-#: data/glade/epiphany.glade.h:15 embed/downloader-view.c:292
-msgid "_Pause"
-msgstr "При_остановить"
-
-#: data/glade/epiphany.glade.h:16
-msgid "_Previous"
-msgstr "_Предыдущее"
-
-#: data/glade/epiphany.glade.h:17
-msgid "_Wrap around"
-msgstr "Пере_ходить к началу"
-
-#: data/glade/prefs-dialog.glade.h:3 data/glade/print.glade.h:3
-msgid "<b>Colors</b>"
-msgstr "<b>Цвета</b>"
-
-#: data/glade/prefs-dialog.glade.h:4
-msgid "<b>Cookies</b>"
-msgstr "<b>Cookies</b>"
-
-#: data/glade/prefs-dialog.glade.h:5
-msgid "<b>Downloads</b>"
-msgstr "<b>Скачивание</b>"
-
-#: data/glade/prefs-dialog.glade.h:6
-msgid "<b>Encodings</b>"
-msgstr "<b>Кодировки</b>"
-
-#: data/glade/prefs-dialog.glade.h:7
-msgid "<b>Fonts</b>"
-msgstr "<b>Шрифты</b>"
-
-#: data/glade/prefs-dialog.glade.h:8
-msgid "<b>Home page</b>"
-msgstr "<b>Начальная страница</b>"
-
-#: data/glade/prefs-dialog.glade.h:9
-msgid "<b>Languages</b>"
-msgstr "<b>Языки</b>"
-
-#: data/glade/prefs-dialog.glade.h:10
-msgid "<b>Temporary Files</b>"
-msgstr "<b>Временные файлы</b>"
-
-#: data/glade/prefs-dialog.glade.h:11
-msgid "<b>Web Content</b>"
-msgstr "<b>Содержимое страницы</b>"
-
-#: data/glade/prefs-dialog.glade.h:12
-msgid "A_utomatically download and open files"
-msgstr "А_втоматически скачивать и открывать файлы"
-
-#: data/glade/prefs-dialog.glade.h:13
-msgid "Add Language"
-msgstr "Добавить язык"
-
-#: data/glade/prefs-dialog.glade.h:14
-msgid "Al_ways use the desktop theme colors"
-msgstr "Все_гда использовать цвета темы рабочего стола"
-
-#: data/glade/prefs-dialog.glade.h:15
-msgid "Allow popup _windows"
-msgstr "Разрешить _всплывающие окна"
-
-#: data/glade/prefs-dialog.glade.h:16
-msgid "Always use _these fonts"
-msgstr "Всегда использовать _эти шрифты"
-
-#: data/glade/prefs-dialog.glade.h:17
-msgid "Au_todetect:"
-msgstr "А_втообнаружение:"
-
-#: data/glade/prefs-dialog.glade.h:18
-msgid "Choose a l_anguage:"
-msgstr "Выберите _язык"
-
-#: data/glade/prefs-dialog.glade.h:19
-msgid "Cl_ear"
-msgstr "О_чистить"
-
-#: data/glade/prefs-dialog.glade.h:20
-msgid "De_fault:"
-msgstr "По _умолчанию:"
-
-#: data/glade/prefs-dialog.glade.h:21
-msgid "Enable Java_Script"
-msgstr "Включить Java_Script"
-
-#: data/glade/prefs-dialog.glade.h:22
-msgid "Enable _Java"
-msgstr "Включить _Java"
-
-#: data/glade/prefs-dialog.glade.h:23
-msgid "Fonts and Colors"
-msgstr "Шрифты и цвета"
-
-#: data/glade/prefs-dialog.glade.h:24
-msgid "For l_anguage:"
-msgstr "Для _языка:"
-
-#: data/glade/prefs-dialog.glade.h:26
-msgid "Language"
-msgstr "Язык"
-
-#: data/glade/prefs-dialog.glade.h:27
-msgid "MB"
-msgstr "МБ"
-
-#: data/glade/prefs-dialog.glade.h:28
-msgid "Only _from sites you visit"
-msgstr "Только с посе_щённых сайтов"
-
-#: data/glade/prefs-dialog.glade.h:29
-msgid "Preferences"
-msgstr "Параметры"
-
-#: data/glade/prefs-dialog.glade.h:30
-msgid "Privacy"
-msgstr "Секретность"
-
-#: data/glade/prefs-dialog.glade.h:31
-msgid "Set to Current _Page"
-msgstr "Установить на _текущую страницу"
-
-#: data/glade/prefs-dialog.glade.h:32
-msgid "Set to _Blank Page"
-msgstr "Установить на п_устую страницу"
-
-#: data/glade/prefs-dialog.glade.h:33
-msgid "_Add..."
-msgstr "Доб_авить..."
-
-#: data/glade/prefs-dialog.glade.h:34
-#: src/bookmarks/ephy-bookmark-properties.c:373
-msgid "_Address:"
-msgstr "_Адрес:"
-
-#: data/glade/prefs-dialog.glade.h:35
-msgid "_Always accept"
-msgstr "Принимать вс_егда"
-
-#: data/glade/prefs-dialog.glade.h:36
-msgid "_Disk space:"
-msgstr "_Дисковое пространство:"
-
-#: data/glade/prefs-dialog.glade.h:37
-msgid "_Down"
-msgstr "В_низ"
-
-#: data/glade/prefs-dialog.glade.h:38
-msgid "_Download folder:"
-msgstr "_Каталог скачивания:"
-
-#: data/glade/prefs-dialog.glade.h:39
-msgid "_Fixed width:"
-msgstr "_Фиксированная ширина:"
-
-#: data/glade/prefs-dialog.glade.h:40
-msgid "_Minimum size:"
-msgstr "Мин_имальный размер:"
-
-#: data/glade/prefs-dialog.glade.h:41
-msgid "_Never accept"
-msgstr "Не принимать _никогда"
-
-#: data/glade/prefs-dialog.glade.h:42
-msgid "_Remove"
-msgstr "У_брать"
-
-#: data/glade/prefs-dialog.glade.h:43 src/ephy-window.c:209
-msgid "_Up"
-msgstr "В_верх"
-
-#: data/glade/prefs-dialog.glade.h:44
-msgid "_Variable width:"
-msgstr "_Переменная ширина:"
-
-#: data/glade/print.glade.h:4
-msgid "<b>Footers</b>"
-msgstr "<b>Нижние колонтитулы</b>"
-
-#: data/glade/print.glade.h:5
-msgid "<b>Headers</b>"
-msgstr "<b>Верхние колонтитулы</b>"
-
-#: data/glade/print.glade.h:6
-msgid "<b>Margins (in mm)</b>"
-msgstr "<b>Поля (в мм)</b>"
-
-#: data/glade/print.glade.h:7
-msgid "<b>Orientation</b>"
-msgstr "<b>Ориентация</b>"
-
-#: data/glade/print.glade.h:8
-msgid "<b>Page Range</b>"
-msgstr "<b>Диапазон страниц</b>"
-
-#: data/glade/print.glade.h:9
-msgid "<b>Print To</b>"
-msgstr "<b>Принтер</b>"
-
-#: data/glade/print.glade.h:10
-msgid "<b>Size</b>"
-msgstr "<b>Размер</b>"
-
-#: data/glade/print.glade.h:11
-msgid "A_4"
-msgstr "A_4"
-
-#: data/glade/print.glade.h:12
-msgid "Appearance"
-msgstr "Внешний вид"
-
-#: data/glade/print.glade.h:13
-msgid "C_olor"
-msgstr "_Цвет"
-
-#: data/glade/print.glade.h:14
-msgid "E_xecutive"
-msgstr "E_xecutive"
-
-#: data/glade/print.glade.h:15
-msgid "L_egal"
-msgstr "L_egal"
-
-#: data/glade/print.glade.h:16
-msgid "Lan_dscape"
-msgstr "_Пейзаж"
-
-#: data/glade/print.glade.h:17
-msgid "P_age title"
-msgstr "Заголовок ст_раницы"
-
-#: data/glade/print.glade.h:18
-msgid "P_ortrait"
-msgstr "П_ортрет"
-
-#: data/glade/print.glade.h:19
-msgid "P_rinter:"
-msgstr "_Принтер:"
-
-#: data/glade/print.glade.h:20
-msgid "Pa_ges"
-msgstr "Стра_ницы"
-
-#: data/glade/print.glade.h:21
-msgid "Page _numbers"
-msgstr "Но_мера страниц"
-
-#: data/glade/print.glade.h:22
-msgid "Paper"
-msgstr "Бумага"
-
-#: data/glade/print.glade.h:23 src/ephy-window.c:1118
-msgid "Print"
-msgstr "Печать"
-
-#: data/glade/print.glade.h:24
-msgid "Print Setup"
-msgstr "Настройка печати"
-
-#: data/glade/print.glade.h:25
-msgid "_All pages"
-msgstr "_Все страницы"
-
-#: data/glade/print.glade.h:26
-msgid "_Bottom:"
-msgstr "С_низу:"
-
-#: data/glade/print.glade.h:27
-msgid "_Browse..."
-msgstr "П_росмотреть..."
-
-#: data/glade/print.glade.h:28
-msgid "_Date"
-msgstr "_Дата"
-
-#: data/glade/print.glade.h:29
-msgid "_File:"
-msgstr "_Файл:"
-
-#: data/glade/print.glade.h:30
-msgid "_Grayscale"
-msgstr "По_лутона"
-
-#: data/glade/print.glade.h:31
-msgid "_Left:"
-msgstr "С_лева:"
-
-#: data/glade/print.glade.h:32
-msgid "_Letter"
-msgstr "_Letter"
-
-#: data/glade/print.glade.h:33
-msgid "_Page address"
-msgstr "Адрес _страницы"
-
-#: data/glade/print.glade.h:34
-msgid "_Right:"
-msgstr "С_права:"
-
-#: data/glade/print.glade.h:35
-msgid "_Selection"
-msgstr "Вы_деление"
-
-#: data/glade/print.glade.h:36
-msgid "_Top:"
-msgstr "С_верху:"
-
-#: data/glade/print.glade.h:37
-msgid "_to:"
-msgstr "по:"
-
-#: data/glade/print.glade.h:38
-msgid "fr_om:"
-msgstr "с:"
-
-#: embed/downloader-view.c:237
-#, c-format
-msgid "%u:%02u.%02u"
-msgstr "%u:%02u.%02u"
-
-#: embed/downloader-view.c:241
-#, c-format
-msgid "%02u.%02u"
-msgstr "%02u.%02u"
-
-#: embed/downloader-view.c:292
-msgid "_Resume"
-msgstr "Про_должить"
-
-#. Translator hint: this is a label on progress bars inside a tree view.
-#.
-#: embed/downloader-view.c:355 lib/widgets/ephy-cell-renderer-progress.c:246
-#: lib/widgets/ephy-cell-renderer-progress.c:306 src/ephy-window.c:1303
-msgid "Unknown"
-msgstr "Неизвестно"
-
-#: embed/downloader-view.c:406
-#, c-format
-msgid "About %d second left"
-msgid_plural "About %d seconds left"
-msgstr[0] "Осталось около %d секунды"
-msgstr[1] "Осталось около %d секунд"
-msgstr[2] "Осталось около %d секунд"
-
-#: embed/downloader-view.c:414
-#, c-format
-msgid "About %d minute left"
-msgid_plural "About %d minutes left"
-msgstr[0] "Осталось около %d минуты"
-msgstr[1] "Осталось около %d минут"
-msgstr[2] "Осталось около %d минут"
-
-#: embed/downloader-view.c:421
-#, c-format
-msgid "%d download"
-msgid_plural "%d downloads"
-msgstr[0] "%d файл"
-msgstr[1] "%d файла"
-msgstr[2] "%d файлов"
-
-#: embed/downloader-view.c:561 src/bookmarks/ephy-bookmarks-editor.c:675
-msgid "File"
-msgstr "Файл"
-
-#: embed/downloader-view.c:583
-msgid "%"
-msgstr "%"
-
-#: embed/downloader-view.c:594
-msgid "Remaining"
-msgstr "Осталось"
-
-#: embed/ephy-encodings.c:63
-msgid "Arabic (_IBM-864)"
-msgstr "Арабская (_IBM-864)"
-
-#: embed/ephy-encodings.c:64
-msgid "Arabic (ISO-_8859-6)"
-msgstr "Арабская (ISO-_8859-6)"
-
-#: embed/ephy-encodings.c:65
-msgid "Arabic (_MacArabic)"
-msgstr "Арабская (_MacArabic)"
-
-#: embed/ephy-encodings.c:66
-msgid "Arabic (_Windows-1256)"
-msgstr "Арабская (_Windows-1256)"
-
-#: embed/ephy-encodings.c:67
-msgid "Baltic (_ISO-8859-13)"
-msgstr "Балтийская (_ISO-8859-13)"
-
-#: embed/ephy-encodings.c:68
-msgid "Baltic (I_SO-8859-4)"
-msgstr "Балтийская (I_SO-8859-4)"
-
-#: embed/ephy-encodings.c:69
-msgid "Baltic (_Windows-1257)"
-msgstr "Балтийская (_Windows-1257)"
-
-#: embed/ephy-encodings.c:70
-msgid "_Armenian (ARMSCII-8)"
-msgstr "_Армянская (ARMSCII-8)"
-
-#: embed/ephy-encodings.c:71
-msgid "_Georgian (GEOSTD8)"
-msgstr "_Грузинская (GEOSTD8)"
-
-#: embed/ephy-encodings.c:72
-msgid "Central European (_IBM-852)"
-msgstr "Центрально-европейская (_IBM-852)"
-
-#: embed/ephy-encodings.c:73
-msgid "Central European (I_SO-8859-2)"
-msgstr "Центрально-европейская (I_SO-8859-2)"
-
-#: embed/ephy-encodings.c:74
-msgid "Central European (_MacCE)"
-msgstr "Центрально-европейская (_MacCE)"
-
-#: embed/ephy-encodings.c:75
-msgid "Central European (_Windows-1250)"
-msgstr "Центрально-европейская (_Windows-1250)"
-
-#: embed/ephy-encodings.c:76
-msgid "Chinese Simplified (_GB18030)"
-msgstr "Упрощенная китайская (_GB18030)"
-
-#: embed/ephy-encodings.c:77
-msgid "Chinese Simplified (G_B2312)"
-msgstr "Упрощенная китайская (G_B2312)"
-
-#: embed/ephy-encodings.c:78
-msgid "Chinese Simplified (GB_K)"
-msgstr "Упрощенная китайская (GB_K)"
-
-#: embed/ephy-encodings.c:79
-msgid "Chinese Simplified (_HZ)"
-msgstr "Упрощенная китайская (_HZ)"
-
-#: embed/ephy-encodings.c:80
-msgid "Chinese Simplified (_ISO-2022-CN)"
-msgstr "Упрощенная китайская (_ISO-2022-CN)"
-
-#: embed/ephy-encodings.c:81
-msgid "Chinese Traditional (Big_5)"
-msgstr "Традиционная китайская (Big_5)"
-
-#: embed/ephy-encodings.c:82
-msgid "Chinese Traditional (Big5-HK_SCS)"
-msgstr "Традиционная китайская (Big5-HK_SCS)"
-
-#: embed/ephy-encodings.c:83
-msgid "Chinese Traditional (_EUC-TW)"
-msgstr "Традиционная китайская (_EUC-TW)"
-
-#: embed/ephy-encodings.c:84
-msgid "Cyrillic (_IBM-855)"
-msgstr "Кириллица (_IBM-855)"
-
-#: embed/ephy-encodings.c:85
-msgid "Cyrillic (I_SO-8859-5)"
-msgstr "Кириллица (I_SO-8859-5)"
-
-#: embed/ephy-encodings.c:86
-msgid "Cyrillic (IS_O-IR-111)"
-msgstr "Кириллица (IS_O-IR-111)"
-
-#: embed/ephy-encodings.c:87
-msgid "Cyrillic (_KOI8-R)"
-msgstr "Кириллица (_KOI8-R)"
-
-#: embed/ephy-encodings.c:88
-msgid "Cyrillic (_MacCyrillic)"
-msgstr "Кириллица (_MacCirillic)"
-
-#: embed/ephy-encodings.c:89
-msgid "Cyrillic (_Windows-1251)"
-msgstr "Кириллица (_Windows-1251)"
-
-#: embed/ephy-encodings.c:90
-msgid "Cyrillic/_Russian (IBM-866)"
-msgstr "Кириллица/_Русская (CP-866)"
-
-#: embed/ephy-encodings.c:91
-msgid "Greek (_ISO-8859-7)"
-msgstr "Греческая (_ISO-8859-7)"
-
-#: embed/ephy-encodings.c:92
-msgid "Greek (_MacGreek)"
-msgstr "Греческая (_MacGreek)"
-
-#: embed/ephy-encodings.c:93
-msgid "Greek (_Windows-1253)"
-msgstr "Греческая (_Windows-1253)"
-
-#: embed/ephy-encodings.c:94
-msgid "Gujarati (_MacGujarati)"
-msgstr "Гуджарати (_MacGujarati)"
-
-#: embed/ephy-encodings.c:95
-msgid "Gurmukhi (Mac_Gurmukhi)"
-msgstr "Гурмухи (Mac_Gurmukhi)"
-
-#: embed/ephy-encodings.c:96
-msgid "Hindi (Mac_Devanagari)"
-msgstr "Хинди (Mac_Devanagari)"
-
-#: embed/ephy-encodings.c:97
-msgid "Hebrew (_IBM-862)"
-msgstr "Иврит (_IBM-862)"
-
-#: embed/ephy-encodings.c:98
-msgid "Hebrew (IS_O-8859-8-I)"
-msgstr "Иврит (IS_O-8859-8-I)"
-
-#: embed/ephy-encodings.c:99
-msgid "Hebrew (_MacHebrew)"
-msgstr "Иврит (_MacHebrew)"
-
-#: embed/ephy-encodings.c:100
-msgid "Hebrew (_Windows-1255)"
-msgstr "Иврит (_Windows-1255)"
-
-#: embed/ephy-encodings.c:101
-msgid "_Visual Hebrew (ISO-8859-8)"
-msgstr "_Визуальный иврит (ISO-8859-8)"
-
-#: embed/ephy-encodings.c:102
-msgid "Japanese (_EUC-JP)"
-msgstr "Японская (_EUC-JP)"
-
-#: embed/ephy-encodings.c:103
-msgid "Japanese (_ISO-2022-JP)"
-msgstr "Японская (_ISO-2022-JP)"
-
-#: embed/ephy-encodings.c:104
-msgid "Japanese (_Shift-JIS)"
-msgstr "Японская (_Shift_JIS)"
-
-#: embed/ephy-encodings.c:105
-msgid "Korean (_EUC-KR)"
-msgstr "Корейская (_EUC-KR)"
-
-#: embed/ephy-encodings.c:106
-msgid "Korean (_ISO-2022-KR)"
-msgstr "Корейская (_ISO-2022-KR)"
-
-#: embed/ephy-encodings.c:107
-msgid "Korean (_JOHAB)"
-msgstr "Корейская (_JOHAB)"
-
-#: embed/ephy-encodings.c:108
-msgid "Korean (_UHC)"
-msgstr "Корейская (_UHC)"
-
-#: embed/ephy-encodings.c:109
-msgid "_Celtic (ISO-8859-14)"
-msgstr "_Кельтская (ISO-8859-14)"
-
-#: embed/ephy-encodings.c:110
-msgid "_Icelandic (MacIcelandic)"
-msgstr "_Исландская (MacIcelandic)"
-
-#: embed/ephy-encodings.c:111
-msgid "_Nordic (ISO-8859-10)"
-msgstr "_Северная (ISO-8859-10)"
-
-#: embed/ephy-encodings.c:112
-msgid "_Persian (MacFarsi)"
-msgstr "_Фарси (MacFarsi)"
-
-#: embed/ephy-encodings.c:113
-msgid "Croatian (Mac_Croatian)"
-msgstr "Хорватская (Mac_Croatian)"
-
-#: embed/ephy-encodings.c:114
-msgid "_Romanian (MacRomanian)"
-msgstr "_Румынская (MacRomanian)"
-
-#: embed/ephy-encodings.c:115
-msgid "R_omanian (ISO-8859-16)"
-msgstr "Р_умынская (ISO-8859-16)"
-
-#: embed/ephy-encodings.c:116
-msgid "South _European (ISO-8859-3)"
-msgstr "Южно-_европейская (ISO-8859-3)"
-
-#: embed/ephy-encodings.c:117
-msgid "Thai (TIS-_620)"
-msgstr "Тайская (TIS-_620)"
-
-#: embed/ephy-encodings.c:118
-msgid "Thai (IS_O-8859-11)"
-msgstr "Тайская (IS_O-8859-11)"
-
-#: embed/ephy-encodings.c:119
-msgid "_Thai (Windows-874)"
-msgstr "_Тайская (Windows-874)"
-
-#: embed/ephy-encodings.c:120
-msgid "Turkish (_IBM-857)"
-msgstr "Турецкая (_IBM-857)"
-
-#: embed/ephy-encodings.c:121
-msgid "Turkish (I_SO-8859-9)"
-msgstr "Турецкая (I_SO-8859-9)"
-
-#: embed/ephy-encodings.c:122
-msgid "Turkish (_MacTurkish)"
-msgstr "Турецкая (_MacTurkish)"
-
-#: embed/ephy-encodings.c:123
-msgid "Turkish (_Windows-1254)"
-msgstr "Турецкая (_Windows-1254)"
-
-#: embed/ephy-encodings.c:124
-msgid "Unicode (UTF-_8)"
-msgstr "Юникод (Unicode) (UTF-_8)"
-
-#: embed/ephy-encodings.c:125
-msgid "Cyrillic/Ukrainian (_KOI8-U)"
-msgstr "Кириллица/Украинская (_KOI8-U)"
-
-#: embed/ephy-encodings.c:126
-msgid "Cyrillic/Ukrainian (Mac_Ukrainian)"
-msgstr "Кириллица/Украинская (Mac_Ukrainian)"
-
-#: embed/ephy-encodings.c:127
-msgid "Vietnamese (_TCVN)"
-msgstr "Вьетнамская (_TCVN)"
-
-#: embed/ephy-encodings.c:128
-msgid "Vietnamese (_VISCII)"
-msgstr "Вьетнамская (_VISCII)"
-
-#: embed/ephy-encodings.c:129
-msgid "Vietnamese (V_PS)"
-msgstr "Вьетнамская (V_PS)"
-
-#: embed/ephy-encodings.c:130
-msgid "Vietnamese (_Windows-1258)"
-msgstr "Вьетнамская (_Windows-1258)"
-
-#: embed/ephy-encodings.c:131
-msgid "Western (_IBM-850)"
-msgstr "Западная (_IBM-850)"
-
-#: embed/ephy-encodings.c:132
-msgid "Western (_ISO-8859-1)"
-msgstr "Западная (_ISO-8859-1)"
-
-#: embed/ephy-encodings.c:133
-msgid "Western (IS_O-8859-15)"
-msgstr "Западная (IS_O-8859-15)"
-
-#: embed/ephy-encodings.c:134
-msgid "Western (_MacRoman)"
-msgstr "Западная (_MacRoman)"
-
-#: embed/ephy-encodings.c:135
-msgid "Western (_Windows-1252)"
-msgstr "Западная (_Windows-1252)"
-
-#. the following encodings are so rarely used that we don't want to pollute the "related"
-#. * part of the encodings menu with them, so we set the language group to 0 here
-#.
-#: embed/ephy-encodings.c:140
-msgid "English (_US-ASCII)"
-msgstr "Английская (_US-ASCII)"
-
-#: embed/ephy-encodings.c:141
-msgid "Unicode (UTF-_16 BE)"
-msgstr "Юникод (UTF-_16 BE)"
-
-#: embed/ephy-encodings.c:142
-msgid "Unicode (UTF-1_6 LE)"
-msgstr "Юникод (UTF-1_6 LE)"
-
-#: embed/ephy-encodings.c:143
-msgid "Unicode (UTF-_32 BE)"
-msgstr "Юникод (UTF-_32 BE)"
-
-#: embed/ephy-encodings.c:144
-msgid "Unicode (UTF-3_2 LE)"
-msgstr "Юникод (UTF-3_2 LE)"
-
-#: embed/ephy-encodings.c:146
-msgid "Off"
-msgstr "Выкл."
-
-#: embed/ephy-encodings.c:147 src/prefs-dialog.c:119
-msgid "Chinese"
-msgstr "Китайский"
-
-#: embed/ephy-encodings.c:148
-msgid "Chinese Simplified"
-msgstr "Упрощенный китайский"
-
-#: embed/ephy-encodings.c:149
-msgid "Chinese Traditional"
-msgstr "Традиционный китайский"
-
-#: embed/ephy-encodings.c:150
-msgid "East Asian"
-msgstr "Восточноазиатский"
-
-#: embed/ephy-encodings.c:151 lib/ephy-langs.c:38 src/prefs-dialog.c:139
-msgid "Japanese"
-msgstr "Японский"
-
-#: embed/ephy-encodings.c:152 lib/ephy-langs.c:39 src/prefs-dialog.c:140
-msgid "Korean"
-msgstr "Корейский"
-
-#: embed/ephy-encodings.c:153 src/prefs-dialog.c:152
-msgid "Russian"
-msgstr "Русский"
-
-#: embed/ephy-encodings.c:154
-msgid "Universal"
-msgstr "Универсально"
-
-#: embed/ephy-encodings.c:155 src/prefs-dialog.c:161
-msgid "Ukrainian"
-msgstr "Украинский"
-
-#. translators: this is the title that an unknown encoding will
-#. * be displayed as.
-#.
-#: embed/ephy-encodings.c:318
-#, c-format
-msgid "Unknown (%s)"
-msgstr "Неизвестная (%s)"
-
-#: embed/ephy-history.c:486 src/bookmarks/ephy-bookmarks.c:697
-msgid "All"
-msgstr "Все"
-
-#: embed/ephy-history.c:660
-msgid "Others"
-msgstr "Другое"
-
-#: embed/ephy-history.c:666
-msgid "Local files"
-msgstr "Локальные файлы"
-
-#: embed/mozilla/ContentHandler.cpp:148
-#: embed/mozilla/EphyHeaderSniffer.cpp:359
-msgid "Save"
-msgstr "Сохранить"
-
-#: embed/mozilla/ContentHandler.cpp:278
-msgid "_Save As..."
-msgstr "_Сохранить как..."
-
-#: embed/mozilla/ContentHandler.cpp:295
-msgid "Download the unsafe file?"
-msgstr "Скачать небезопасный файл?"
-
-#: embed/mozilla/ContentHandler.cpp:296
-msgid ""
-"This type of file could potentially damage your documents or invade your "
-"privacy. It's not safe to open it directly. You can save it instead."
-msgstr ""
-"Данный тип файла потенциально может повредить ваши документы или нарушить "
-"вашу секретность. Небезопасно открывать его напрямую. Однако его можно "
-"сохранить."
-
-#: embed/mozilla/ContentHandler.cpp:304
-msgid "Open the file in another application?"
-msgstr "Открыть файл с помощью иного приложения?"
-
-#: embed/mozilla/ContentHandler.cpp:305
-msgid ""
-"It's not possible to view this file type directly in the browser. You can "
-"open it with another application or save it."
-msgstr ""
-"Невозможно просмотреть файл этого типа напрямую в браузере. Файл можно "
-"открыть с помощью иного приложения или сохранить."
-
-#: embed/mozilla/ContentHandler.cpp:312
-msgid "Download the file?"
-msgstr "Скачать файл?"
-
-#: embed/mozilla/ContentHandler.cpp:313
-msgid ""
-"It's not possible to view this file because there is no application "
-"installed that can open it. You can save it instead."
-msgstr ""
-"Невозможно просмотреть файл этого типа, так как отсутствуют приложения, "
-"способные его открыть. Однако его можно сохранить."
-
-#: embed/mozilla/EphyHeaderSniffer.cpp:322
-#: src/bookmarks/ephy-bookmarks-import.c:252
-#: src/bookmarks/ephy-bookmarksbar-model.c:349 src/window-commands.c:344
-msgid "Untitled"
-msgstr "Неозаглавленное"
-
-#: embed/mozilla/FilePicker.cpp:143 embed/print-dialog.c:339
-#: lib/ephy-file-chooser.c:379 src/bookmarks/ephy-bookmarks-editor.c:600
-msgid "All files"
-msgstr "Все файлы"
-
-#: embed/mozilla/FilePicker.cpp:148 lib/ephy-file-chooser.c:363
-msgid "Web pages"
-msgstr "Веб-страницы"
-
-#: embed/mozilla/FilePicker.cpp:156
-msgid "Text files"
-msgstr "Текстовые файлы"
-
-#: embed/mozilla/FilePicker.cpp:161 lib/ephy-file-chooser.c:371
-msgid "Images"
-msgstr "Изображения"
-
-#: embed/mozilla/FilePicker.cpp:169
-msgid "XML files"
-msgstr "Файлы формата XML"
-
-#: embed/mozilla/FilePicker.cpp:174
-msgid "XUL files"
-msgstr "Файлы формата XUL"
-
-#: embed/mozilla/GtkNSSClientAuthDialogs.cpp:156
-msgid "_Select Certificate"
-msgstr "_Выбрать сертификат"
-
-#: embed/mozilla/GtkNSSClientAuthDialogs.cpp:196
-#, c-format
-msgid "Choose a certificate to present as identification to %s."
-msgstr "Выбрать сертификат для идентификации на \"%s\"."
-
-#: embed/mozilla/GtkNSSClientAuthDialogs.cpp:199
-msgid "Select a certificate to identify yourself."
-msgstr "Выбрать сертификат для идентификации себя."
-
-#: embed/mozilla/GtkNSSClientAuthDialogs.cpp:237
-msgid "Certificate _Details"
-msgstr "Показать по_дробности"
-
-#. Add the buttons
-#: embed/mozilla/GtkNSSDialogs.cpp:226 embed/mozilla/GtkNSSDialogs.cpp:549
-msgid "_View Certificate"
-msgstr "П_осмотреть сертификат"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:234
-msgid "_Accept"
-msgstr "_Принять"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:301
-#, c-format
-msgid ""
-"The site %s returned security information for %s. It is possible that "
-"someone is intercepting your communication to obtain your confidential "
-"information."
-msgstr ""
-"Сайт \"%s\" вернул данные о безопасности для \"%s\". Возможно, что кто-то "
-"вклинился в ваше взаимодействие и получил конфиденциальную информацию."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:307
-#, c-format
-msgid "You should only accept the security information if you trust %s and %s."
-msgstr ""
-"Следует принимать данные о безопасности только если вы доверяете \"%s\" и \"%"
-"s\""
-
-#: embed/mozilla/GtkNSSDialogs.cpp:312
-msgid "Accept incorrect security information?"
-msgstr "Принять некорректные данные о безопасности?"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:347
-#, c-format
-msgid ""
-"Your browser was unable to trust %s. It is possible that someone is "
-"intercepting your communication to obtain your confidential information."
-msgstr ""
-"Браузер не может доверять \"%s\". Возможно, что кто-то вклинился в ваше "
-"взаимодействие и получил конфиденциальную информацию."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:353
-#, c-format
-msgid ""
-"You should only connect to the site if you are certain you are connected to %"
-"s."
-msgstr ""
-"Следует соединяться с сайтом, только если есть уверенность, что это "
-"соединение с \"%s\""
-
-#: embed/mozilla/GtkNSSDialogs.cpp:358
-msgid "Connect to untrusted site?"
-msgstr "Соединиться с сомнительным сайтом?"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:362
-msgid "_Don't show this message again for this site"
-msgstr "_Не показывать это сообщение снова для этого сайта"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:363
-msgid "Co_nnect"
-msgstr "С_оединиться"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:423
-msgid "Accept expired security information?"
-msgstr "Принять устаревшие данные о безопасности?"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:424
-#, c-format
-msgid "The security information for %s expired on %s."
-msgstr "Срок действия данных о безопасности для \"%s\" истек %s."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:430
-msgid "Accept not yet valid security information?"
-msgstr "Принять данные о безопасности, пока не действительные?"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:431
-#, c-format
-msgid "The security information for %s isn't valid until %s."
-msgstr "Данные о безопасности для \"%s\" не вступят в действие до %s."
-
-#. To translators: this a time format that is used while displaying the
-#. * expiry or start date of an SSL certificate, for the format see
-#. * strftime(3)
-#: embed/mozilla/GtkNSSDialogs.cpp:447
-msgid "%a %d %b %Y"
-msgstr "%a, %d %b %Y"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:457
-msgid "You should ensure that your computer's time is correct."
-msgstr "Следует убедиться, что компьютерные часы идут правильно."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:505
-#, c-format
-msgid "Cannot establish connection to %s."
-msgstr "Невозможно установить соединение с \"%s\""
-
-#: embed/mozilla/GtkNSSDialogs.cpp:508
-#, c-format
-msgid "The certificate revocation list (CRL) from %s needs to be updated."
-msgstr "Список отзыва сертификатов (CRL) от %s необходимо обновить."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:513
-msgid "Please ask your system administrator for assistance."
-msgstr "Обратитесь за помощью к системному администратору."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:552
-msgid "_Trust CA"
-msgstr "_Доверять этому CA"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:568
-#, c-format
-msgid "Trust %s to identify:"
-msgstr "Доверять %s для идентификации:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:572
-msgid "Trust new Certificate Authority?"
-msgstr "Доверять новой Службе сертификатов?"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:573
-msgid ""
-"Before trusting a Certificate Authority (CA) you should verify the "
-"certificate is authentic."
-msgstr "Перед тем как доверять этой Службе сертификатов (CA), вы должны убедиться в аутентичности этого сертификата."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:583
-msgid "_Web sites"
-msgstr "_Веб-сайты"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:588
-msgid "_Software developers"
-msgstr "_Разработчики ПО"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:654
-msgid "Certificate already exists."
-msgstr "Такой сертификат уже существует."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:655
-msgid "The certificate has already been imported."
-msgstr "Этот сертификат уже был импортирован ранее."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:774
-msgid "_Backup Certificate"
-msgstr "_Сохранить сертификат"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:781
-msgid "Select password."
-msgstr "Выберите пароль."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:782
-msgid "Select a password to protect this certificate."
-msgstr "Выберите пароль для защиты этого сертификата."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:794 embed/mozilla/GtkNSSDialogs.cpp:897
-msgid "_Password:"
-msgstr "_Пароль:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:808
-msgid "Con_firm password:"
-msgstr "Под_твердить пароль:"
-
-#. TODO: We need a better password quality meter
-#: embed/mozilla/GtkNSSDialogs.cpp:820
-msgid "Password quality:"
-msgstr "Качество пароля:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:878
-msgid "I_mport Certificate"
-msgstr "И_мпортировать сертификат"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:886
-msgid "Password required."
-msgstr "Требуется пароль."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:887
-msgid "Enter the password for this certificate."
-msgstr "Введите пароль для этого сертификата."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:966
-msgid "Certificate Revocation list successfully imported."
-msgstr "Список отозванных сертификатов успешно импортирован."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:967
-msgid "Certificate Revocation list (CRL) imported:"
-msgstr "Импортированный список отзыва (CRL):"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:993
-msgid "Unit:"
-msgstr "Отдел:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:998
-msgid "Next Update:"
-msgstr "Следующее обновление:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1025
-msgid "Not part of certificate"
-msgstr "Не входит в сертификат"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1304
-msgid "Certificate Properties"
-msgstr "Свойства сертификата"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1326
-msgid "This certificate has been verified for the following uses:"
-msgstr "Этот сертификат был проверен для следующих применений:"
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1329
-msgid "Could not verify this certificate because it has been revoked."
-msgstr "Не удается проверить этот сертификат, потому что он был отозван."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1332
-msgid "Could not verify this certificate because it has expired."
-msgstr "Не удается проверить этот сертификат, потому что срок его действия истёк."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1335
-msgid "Could not verify this certificate because it is not trusted."
-msgstr "Не удается проверить этот сертификат, потому что к нему нет доверия."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1338
-msgid "Could not verify this certificate because the issuer is not trusted."
-msgstr "Не удается проверить этот сертификат, потому что его поставщик неизвестен."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1341
-msgid "Could not verify this certificate because the issuer is unknown."
-msgstr "Не удается проверить этот сертификат, потому что его поставщик неизвестен."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1344
-msgid "Could not verify this certificate because the CA certificate is invalid."
-msgstr "Не удается проверить этот сертификат, потому что сертификат поставщика неверен."
-
-#: embed/mozilla/GtkNSSDialogs.cpp:1349
-msgid "Could not verify this certificate for unknown reasons."
-msgstr "Не удается проверить этот сертификат по неизвестной причине."
-
-#: embed/mozilla/GtkNSSKeyPairDialogs.cpp:191
-msgid "Generating Private Key."
-msgstr "Генерируется секретный ключ"
-
-#: embed/mozilla/GtkNSSKeyPairDialogs.cpp:192
-msgid ""
-"Please wait while a new private key is generated. This process could take a "
-"few minutes."
-msgstr "Подождите, пока будет сгенерирован новый секретный ключ. Этот процесс может занять несколько минут."
-
-#: embed/mozilla/MozDownload.cpp:567
-msgid "Files"
-msgstr "Файлы"
-
-#. We do this before reading the user pref file so that the user
-#. * still can overwrite this pref.
-#. * We don't use the default-prefs.js file since that cannot be
-#. * localised (see bug #144909).
-#.
-#. translators: this is the URL that searches from the location
-#. * entry get directed to. The search terms will be _appended_ to it,
-#. * in url-escaped UTF-8; that means that if you're choosing google,
-#. * the 'q=' part needs to come last.
-#.
-#: embed/mozilla/mozilla-embed-single.cpp:226
-msgid "http://www.google.com/search?ie=UTF-8&oe=UTF-8&q="
-msgstr "http://www.google.com/search?ie=UTF-8&oe=UTF-8&q="
-
-#: embed/mozilla/mozilla-embed-single.cpp:543
-msgid ""
-"Epiphany can't be used now. Mozilla initialization failed. Check your "
-"MOZILLA_FIVE_HOME environmental variable."
-msgstr "Epiphany не может быть использована. Произошёл сбой при инициализации Mozilla. Проверьте переменную окружения MOZILLA_FIVE_HOME."
-
-#. *
-#. * This is a comma separated list of language ranges, as specified
-#. * by RFC 2616, 14.4.
-#. * Always include the basic language code last.
-#. *
-#. * Examples:
-#. * "pt"    translation: "pt"
-#. * "pt_BR" translation: "pt-br,pt"
-#. * "zh_CN" translation: "zh-cn,zh"
-#. * "zh_HK" translation: "zh-hk,zh" or maybe "zh-hk,zh-tw,zh"
-#.
-#: embed/mozilla/mozilla-notifiers.cpp:718
-msgid "system-language"
-msgstr "ru-ru,ru-su,ru"
-
-#: embed/print-dialog.c:331
-msgid "Print to"
-msgstr "Напечатать в"
-
-#: embed/print-dialog.c:336
-msgid "Postscript files"
-msgstr "Файлы формата Postscript"
-
-#: lib/eel-gconf-extensions.c:81
-#, c-format
-msgid ""
-"GConf error:\n"
-"  %s"
-msgstr ""
-"Ошибка GConf:\n"
-"  %s"
-
-#: lib/egg/egg-editable-toolbar.c:536
-msgid "_Remove Toolbar"
-msgstr "У_брать панель"
-
-#: lib/egg/egg-toolbar-editor.c:554
-msgid "Separator"
-msgstr "Разделитель"
-
-#: lib/egg/egg-toolbar-editor.c:584
-msgid ""
-"Drag an item onto the toolbars above to add it, from the toolbars in the "
-"items table to remove it."
-msgstr ""
-"Перенесите элемент на панели вверху для добавления или с панелей в таблицу "
-"элементов для удаления."
-
-#: lib/ephy-file-chooser.c:352
-msgid "All supported types"
-msgstr "Все поддерживаемые типы"
-
-#. The name of the default downloads folder
-#: lib/ephy-file-helpers.c:78 src/prefs-dialog.c:1110
-msgid "Downloads"
-msgstr "Скачивание"
-
-#: lib/ephy-file-helpers.c:179
-#, c-format
-msgid "Failed to find %s"
-msgstr "Не удалось найти %s"
-
-#: lib/ephy-file-helpers.c:245
-#, c-format
-msgid "%s exists, please move it out of the way."
-msgstr "Каталог \"%s\" существует, перенесите его в другое место"
-
-#: lib/ephy-file-helpers.c:251
-#, c-format
-msgid "Failed to create directory %s."
-msgstr "Не удалось создать каталог %s."
-
-#: lib/ephy-gui.c:104
-#, c-format
-msgid "A file %s already exists."
-msgstr "Файл %s уже существует."
-
-#: lib/ephy-gui.c:108
-msgid "If you choose to overwrite this file, the contents will be lost."
-msgstr "Если вы решите перезаписать этот файл, его содержимое будет утеряно."
-
-#: lib/ephy-gui.c:111
-msgid "Overwrite File"
-msgstr "Перезаписать файл"
-
-#: lib/ephy-gui.c:116
-msgid "_Overwrite"
-msgstr "_Перезаписать"
-
-#: lib/ephy-gui.c:163
-#, c-format
-msgid "Could not display help: %s"
-msgstr "Не удалось отобразить справку: %s"
-
-#: lib/ephy-langs.c:31 src/prefs-dialog.c:110
-msgid "Arabic"
-msgstr "Арабская"
-
-#: lib/ephy-langs.c:32
-msgid "Baltic"
-msgstr "Балтийская"
-
-#: lib/ephy-langs.c:33
-msgid "Central European"
-msgstr "Центрально-европейская"
-
-#: lib/ephy-langs.c:34
-msgid "Cyrillic"
-msgstr "Кириллица"
-
-#: lib/ephy-langs.c:35
-msgid "Devanagari"
-msgstr "Деванагари"
-
-#: lib/ephy-langs.c:36 src/prefs-dialog.c:132
-msgid "Greek"
-msgstr "Греческая"
-
-#: lib/ephy-langs.c:37 src/prefs-dialog.c:133
-msgid "Hebrew"
-msgstr "Иврит"
-
-#: lib/ephy-langs.c:40 src/prefs-dialog.c:117
-msgid "Simplified Chinese"
-msgstr "Упрощённая китайская"
-
-#: lib/ephy-langs.c:41 src/prefs-dialog.c:159
-msgid "Tamil"
-msgstr "Тамильский"
-
-#: lib/ephy-langs.c:42
-msgid "Thai"
-msgstr "Тайская"
-
-#: lib/ephy-langs.c:43 src/prefs-dialog.c:118
-msgid "Traditional Chinese"
-msgstr "Традиционная китайская"
-
-#: lib/ephy-langs.c:44
-msgid "Traditional Chinese (Hong Kong)"
-msgstr "Традиционная китайская (Гонконг)"
-
-#: lib/ephy-langs.c:45 src/prefs-dialog.c:160
-msgid "Turkish"
-msgstr "Турецкая"
-
-#: lib/ephy-langs.c:46
-msgid "Unicode"
-msgstr "Юникод"
-
-#: lib/ephy-langs.c:47
-msgid "Western"
-msgstr "Западная"
-
-#: lib/ephy-stock-icons.c:55
-msgid "Secure"
-msgstr "С защитой"
-
-#: lib/ephy-stock-icons.c:56 src/ephy-window.c:1306
-msgid "Insecure"
-msgstr "Без защиты"
-
-#: lib/ephy-stock-icons.c:57
-msgid "Popup Windows"
-msgstr "Всплывающие окна"
-
-#: lib/ephy-stock-icons.c:58 src/ephy-history-window.c:1202
-msgid "History"
-msgstr "История"
-
-#: lib/ephy-stock-icons.c:59 src/bookmarks/ephy-bookmarks-editor.c:1423
-#: src/bookmarks/ephy-topic-action.c:990 src/ephy-window.c:1124
-msgid "Bookmarks"
-msgstr "Закладки"
-
-#: lib/ephy-stock-icons.c:60 src/toolbar.c:338
-msgid "Address Entry"
-msgstr "Строка адреса"
-
-#: lib/ephy-stock-icons.c:61
-msgid "_Download"
-msgstr "С_качать ссылку"
-
-#: lib/ephy-zoom.h:41
-msgid "50%"
-msgstr "50%"
-
-#: lib/ephy-zoom.h:42
-msgid "75%"
-msgstr "75%"
-
-#: lib/ephy-zoom.h:43
-msgid "100%"
-msgstr "100%"
-
-#: lib/ephy-zoom.h:44
-msgid "125%"
-msgstr "125%"
-
-#: lib/ephy-zoom.h:45
-msgid "150%"
-msgstr "150%"
-
-#: lib/ephy-zoom.h:46
-msgid "175%"
-msgstr "175%"
-
-#: lib/ephy-zoom.h:47
-msgid "200%"
-msgstr "200%"
-
-#: lib/ephy-zoom.h:48
-msgid "300%"
-msgstr "300%"
-
-#: lib/ephy-zoom.h:49
-msgid "400%"
-msgstr "400%"
-
-#. Translator hint: this is a label on progress bars inside a tree view.
-#.
-#: lib/widgets/ephy-cell-renderer-progress.c:242
-msgid "Failed"
-msgstr "Произошёл сбой"
-
-#. Translator hint: this is the default label on progress bars
-#. * inside a tree view. %d will be replaced by the percentage
-#.
-#: lib/widgets/ephy-cell-renderer-progress.c:251
-#, c-format
-msgid "%d %%"
-msgstr "%d%%"
-
-#: lib/widgets/ephy-label.c:3432
-msgid "Select All"
-msgstr "Выделить все"
-
-#: lib/widgets/ephy-label.c:3442
-msgid "Input Methods"
-msgstr "Методы ввода"
-
-#: src/bookmarks/ephy-bookmark-action.c:277
-#, c-format
-msgid "%s:"
-msgstr "%s:"
-
-#: src/bookmarks/ephy-bookmark-action.c:533
-#: src/bookmarks/ephy-bookmarks-editor.c:181
-#: src/bookmarks/ephy-bookmarks-editor.c:1043 src/ephy-history-window.c:169
-#: src/ephy-history-window.c:747
-msgid "Open in New _Tab"
-msgstr "Открыть в новой _вкладке"
-
-#: src/bookmarks/ephy-bookmark-action.c:539
-msgid "Open in New _Window"
-msgstr "Открыть в _новом окне"
-
-#: src/bookmarks/ephy-bookmark-action.c:570
-#: src/bookmarks/ephy-topic-action.c:744
-msgid "Move _Left"
-msgstr "Передвинуть в_лево"
-
-#: src/bookmarks/ephy-bookmark-action.c:577
-#: src/bookmarks/ephy-topic-action.c:751
-msgid "Move Ri_ght"
-msgstr "Передвинуть в_право"
-
-#: src/bookmarks/ephy-bookmark-properties.c:232
-#, c-format
-msgid "%s Properties"
-msgstr "Свойства %s"
-
-#: src/bookmarks/ephy-bookmark-properties.c:354
-#: src/bookmarks/ephy-new-bookmark.c:228
-msgid "_Title:"
-msgstr "_Заголовок:"
-
-#: src/bookmarks/ephy-bookmark-properties.c:396
-#: src/bookmarks/ephy-new-bookmark.c:251
-msgid "To_pics:"
-msgstr "Те_мы:"
-
-#: src/bookmarks/ephy-bookmark-properties.c:405
-msgid "_Show in bookmarks bar"
-msgstr "Показать на панели закладок"
-
-#. Toplevel
-#: src/bookmarks/ephy-bookmarks-editor.c:168 src/ephy-history-window.c:159
-#: src/ephy-window.c:91
-msgid "_File"
-msgstr "_Файл"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:169 src/ephy-history-window.c:160
-#: src/ephy-window.c:92
-msgid "_Edit"
-msgstr "_Правка"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:170 src/ephy-history-window.c:161
-#: src/ephy-window.c:93
-msgid "_View"
-msgstr "_Вид"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:171 src/ephy-history-window.c:162
-#: src/ephy-window.c:98
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time"
+msgstr "_Установить дату и время"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "Скопировать _дату"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "Скопировать _время"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About"
+msgstr "_Об апплете"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2364
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
+#: gnome-panel/panel-menu-button.c:613
 msgid "_Help"
 msgstr "_Справка"
 
-#. File Menu
-#: src/bookmarks/ephy-bookmarks-editor.c:175
-#: src/bookmarks/ephy-new-bookmark.c:298
-msgid "_New Topic"
-msgstr "_Создать тему"
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences"
+msgstr "_Параметры"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:176
-msgid "Create a new topic"
-msgstr "Создать новую тему"
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+#: applets/clock/clock.c:2553
+msgid "Clock"
+msgstr "Часы"
 
-#. File Menu
-#: src/bookmarks/ephy-bookmarks-editor.c:178
-#: src/bookmarks/ephy-bookmarks-editor.c:1042 src/ephy-history-window.c:166
-#: src/ephy-history-window.c:746
-msgid "_Open in New Window"
-msgstr "_Открыть в новом окне"
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+msgid "Clock Applet Factory"
+msgstr "Фабрика апплета часов"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:179
-msgid "Open the selected bookmark in a new window"
-msgstr "Открыть выбранную закладку в новом окне"
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Factory for creating clock applets."
+msgstr "Фабрика для создания апплетов часов."
 
-#: src/bookmarks/ephy-bookmarks-editor.c:182
-msgid "Open the selected bookmark in a new tab"
-msgstr "Открыть выбранную закладку в новой вкладке"
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr "Апплет отображает текущие время и дату"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:184
-msgid "_Rename..."
-msgstr "Пере_именовать..."
+#: applets/clock/clock.c:265
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:185
-msgid "Rename the selected bookmark or topic"
-msgstr "Переименовать выбранную закладку или тему"
+#: applets/clock/clock.c:265 applets/clock/clock.c:581
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:186 src/ephy-history-window.c:172
-msgid "_Delete"
-msgstr "У_далить"
+#: applets/clock/clock.c:267 applets/clock/clock.c:1664
+msgid "%H:%M:%S"
+msgstr "%H:%M:%S"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:187
-msgid "Delete the selected bookmark or topic"
-msgstr "Удалить выбранную закладку или тему"
+#: applets/clock/clock.c:267 applets/clock/clock.c:583
+#: applets/clock/clock.c:1666
+msgid "%H:%M"
+msgstr "%H:%M"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:189
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:278
+msgid "%a %b %e"
+msgstr "%a, %e %b"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:285
+#, c-format
+msgid ""
+"%1$s\n"
+"%2$s"
+msgstr ""
+"%1$s\n"
+"%2$s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/clock/clock.c:292
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
+#. Show date in tooltip
+#: applets/clock/clock.c:376
+msgid "%A %B %d"
+msgstr "%A, %d %B"
+
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:588
+msgid "%b %d"
+msgstr "%d %b"
+
+#: applets/clock/clock.c:888
+msgid "Tasks"
+msgstr "Задачи"
+
+#: applets/clock/clock.c:1032
+msgid "All Day"
+msgstr "Весь день"
+
+#: applets/clock/clock.c:1073
+msgid "Appointments"
+msgstr "Встречи"
+
+#: applets/clock/clock.c:1305
+msgid "Calendar"
+msgstr "Календарь"
+
+#: applets/clock/clock.c:1566
+msgid "Computer Clock"
+msgstr "Компьютерные часы"
+
+#: applets/clock/clock.c:1659
+msgid "%I:%M:%S %p"
+msgstr "%I:%M:%S %p"
+
+#: applets/clock/clock.c:1661
+msgid "%I:%M %p"
+msgstr "%I:%M %p"
+
+#: applets/clock/clock.c:1703
+msgid "%A, %B %d %Y"
+msgstr "%A, %d %B %Y"
+
+#: applets/clock/clock.c:1747
+#, c-format
+msgid "Failed to launch time configuration tool: %s"
+msgstr "Произошёл сбой при запуске программы установки часов: %s"
+
+#: applets/clock/clock.c:1786
+msgid ""
+"Failed to locate a program for configuring the date and time. Perhaps none "
+"is installed?"
+msgstr ""
+"Произошёл сбой при попытке найти программу, устанавливающую дату и время.  "
+"Возможно, ни одна подобная программа не установлена?"
+
+#: applets/clock/clock.c:2188
+msgid "Custom format"
+msgstr "Другой формат"
+
+#: applets/clock/clock.c:2309 applets/clock/clock.c:2499
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
+#: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
+#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
+#: applets/wncklet/workspace-switcher.c:170
+#: applets/wncklet/workspace-switcher.c:472
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "Произошла ошибка при отображении справки: %s"
+
+#: applets/clock/clock.c:2345
+msgid "Clock Preferences"
+msgstr "Параметры апплета часов"
+
+#: applets/clock/clock.c:2381
+msgid "Clock _type:"
+msgstr "_Тип часов:"
+
+#: applets/clock/clock.c:2391
+msgid "12 hour"
+msgstr "12-часовые"
+
+#: applets/clock/clock.c:2392
+msgid "24 hour"
+msgstr "24-часовые"
+
+#: applets/clock/clock.c:2393
+msgid "UNIX time"
+msgstr "Время UNIX"
+
+#: applets/clock/clock.c:2394
+msgid "Internet time"
+msgstr "Время Интернета"
+
+#: applets/clock/clock.c:2402
+msgid "Custom _format:"
+msgstr "Другой _формат:"
+
+#: applets/clock/clock.c:2421
+msgid "Show _seconds"
+msgstr "Показывать се_кунды"
+
+#: applets/clock/clock.c:2430
+msgid "Show _date"
+msgstr "Показывать _дату"
+
+#: applets/clock/clock.c:2439
+msgid "Use _UTC"
+msgstr "Показывать время по _Гринвичу (UTC)"
+
+#. Translator credits
+#: applets/clock/clock.c:2534 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
+#: gnome-panel/menu.c:201
+msgid "translator_credits"
+msgstr ""
+"Макс Валянский\n"
+"Сергей Панов\n"
+"Валек Филиппов\n"
+"Дмитрий Мастрюков\n"
+"Андрей Носенко <awn@bcs.zp.ua>\n"
+"Леонид Кантер <leon@asplinux.ru>"
+
+#: applets/clock/clock.c:2555
+msgid "The Clock displays the current time and date"
+msgstr "Апплет отображает текущие время и дату"
+
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
+msgid "24"
+msgstr "24"
+
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+msgid "24-hour"
+msgstr "24-hour"
+
+#: applets/clock/clock.schemas.in.h:5
+msgid "Custom format of the clock"
+msgstr "Другой формат часов"
+
+#: applets/clock/clock.schemas.in.h:6
+msgid "Hour format"
+msgstr "Формат часов"
+
+#: applets/clock/clock.schemas.in.h:7
+msgid "If true, display date in the clock, in addition to time."
+msgstr ""
+"Если этот ключ установлен, в апплете отображается не только время, но и дата."
+
+#: applets/clock/clock.schemas.in.h:8
+msgid "If true, display seconds in time."
+msgstr "Если этот ключ установлен, отображаются секунды."
+
+#: applets/clock/clock.schemas.in.h:9
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "Если этот ключ установлен, отображается время по Гринвичу (UTC)."
+
+#: applets/clock/clock.schemas.in.h:10
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr ""
+"Если этот ключ установлен, при наведении указателя на апплет часов "
+"отображается дата."
+
+#: applets/clock/clock.schemas.in.h:11
+msgid "Show date in clock"
+msgstr "Показывать дату в апплете часов"
+
+#: applets/clock/clock.schemas.in.h:12
+msgid "Show date in tooltip"
+msgstr "Показывать дату в подсказке"
+
+#: applets/clock/clock.schemas.in.h:13
+msgid "Show time with seconds"
+msgstr "Показывать секунды"
+
+#: applets/clock/clock.schemas.in.h:14
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"Использовать этот ключ в среде Гном версии 2.6  не рекомендуется. "
+"Предпочтительнее использовать ключ \"формат\". Данный ключ отсаётся только "
+"для совместимости с предыдущими версиями."
+
+#: applets/clock/clock.schemas.in.h:15
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr ""
+"Этот ключ определяет формат, используемый апплетом часов, когда ключ формата "
+"установлен в значение \"иной (custom)\". Можно использовать "
+"последовательности, понимаемые функцией strftime(), для достижения желаемого "
+"формата."
+
+#: applets/clock/clock.schemas.in.h:16
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr ""
+"Этот ключ определяет формат часов, используемый апплетом часов. Возможными "
+"значениями являются \"12-часовой (12-hour)\", \"24-часовой (24-hour)\", "
+"\"интернет (internet)\", \"(юникс) unix\" и \"иной (custom)\". Если этот "
+"ключ установлен в значение \"internet\", часы будут отображать время "
+"Интернета. В этой системе день делится на 1000 \"битов (.beats)\". Часовые "
+"пояса отсутствуют в этой системе, так что время одинаково во всём мире. Если "
+"ключ установлен в значение \"unix\", часы будут отображать время в секундах "
+"с начала \"Эпохи (Epoch)\", т.е 1.01.1970. Если ключ установлен в значение "
+"\"custom\", часы будут отображать время в соответствии с форматом, "
+"определённым ключом \"custom_format\"."
+
+#: applets/clock/clock.schemas.in.h:17
+msgid "This key specifies the program to run in order to configure the time."
+msgstr ""
+"Этот ключ определяет программу, которая запускается для установки времени."
+
+#: applets/clock/clock.schemas.in.h:18
+msgid "Time configuration tool"
+msgstr "Программа установки часов"
+
+#: applets/clock/clock.schemas.in.h:19
+msgid "Use Internet time"
+msgstr "Показывать время Интернета"
+
+#: applets/clock/clock.schemas.in.h:20
+msgid "Use UNIX time"
+msgstr "Показывать время Юникса (UNIX)"
+
+#: applets/clock/clock.schemas.in.h:21
+msgid "Use UTC"
+msgstr "Показывать время по Гринвичу (UTC)"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr "Апплет отображает плавающую рыбку или другое анимированное создание"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+#: applets/fish/fish.c:501
+msgid "Fish"
+msgstr "Рыбка"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+msgid "From Whence That Stupid Fish Came"
+msgstr "Откуда приплыла эта глупая рыбка"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "Wanda Factory"
+msgstr "Фабрика \"Рыбки\""
+
+#: applets/fish/fish.c:197
+#, c-format
+msgid ""
+"Warning:  The command appears to be something actually useful.\n"
+"Since this is a useless applet, you may not want to do this.\n"
+"We strongly advise you against using %s for anything\n"
+"which would make the applet \"practical\" or useful."
+msgstr ""
+"ВНИМАНИЕ: Похоже, команда будет делать действительно что-то полезное.\n"
+"Но поскольку это бесполезный апплет, вы возможно не хотите этого.\n"
+"Мы настоятельно рекомендуем вам избегать использования \"Рыбки по имени %s "
+"\" для чего-либо,\n"
+"что может сделать этот апплет \"практичным\" или полезным."
+
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
+#, no-c-format
+msgid "%s the Fish"
+msgstr "Рыбка по имени %s"
+
+#: applets/fish/fish.c:459
+#, c-format
+msgid ""
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
+msgstr ""
+"\"Рыбка по имени %s\" - совершенно бесполезный апплет. Он только занимает "
+"место на диске и увеличивает время компиляции. Также, будучи загруженным, он "
+"занимает место на панели и в памяти. Того, кто нашёл применение этому "
+"апплету, нужно отправить на психиатрическое обследование."
+
+#: applets/fish/fish.c:485
+msgid "(with minor help from George)"
+msgstr "(с минимальной помощью Джоржда)"
+
+#: applets/fish/fish.c:534
+#, c-format
+msgid "%s the Fish, a contemporary oracle"
+msgstr "\"Рыбка по имени %s\", современный оракул"
+
+#: applets/fish/fish.c:581
+msgid "Unable to get the name of the command to execute"
+msgstr "Не удается получить наименование команды для выполнения"
+
+#: applets/fish/fish.c:598
+msgid "Unable to locate the command to execute"
+msgstr "Не удается найти команду для выполнения"
+
+#: applets/fish/fish.c:626
+#, no-c-format
+msgid "%s the Fish Says:"
+msgstr "Рыбка по имени %s говорит:"
+
+#: applets/fish/fish.c:755
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Не удается выполнить команду \"%s\"\n"
+"\n"
+"Подробности: %s"
+
+#: applets/fish/fish.c:776
+msgid ""
+"You do not have fortune installed or you have not specified a program to "
+"run.\n"
+"\n"
+"Please refer to fish properties dialog."
+msgstr ""
+"Программа \"fortune\" не установлена, или программа для запуска не указана.\n"
+"\n"
+"Пожалуйста, обратитесь к диалогу настроек \"Рыбки\"."
+
+#: applets/fish/fish.c:1380
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Воду надо менять!\n"
+"(Посмотри, какое сегодня число)"
+
+#: applets/fish/fish.c:1440
+#, c-format
+msgid "%s the Fish, the fortune teller"
+msgstr "Рыбка по имени %s, гадалка"
+
+#: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
+#: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
+#: gnome-panel/panel-properties-dialog.glade.h:1
+msgid "    "
+msgstr "    "
+
+#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/panel-properties-dialog.glade.h:2
+#: gnome-panel/panel-run-dialog.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:3
+msgid "<b>Animation</b>"
+msgstr "<b>Анимация</b>"
+
+#: applets/fish/fish.glade.h:4
+msgid "<b>General</b>"
+msgstr "<b>Общие</b>"
+
+#: applets/fish/fish.glade.h:5
+msgid "Browse"
+msgstr "Просмотреть"
+
+#: applets/fish/fish.glade.h:6
+msgid "Co_mmand to run when clicked:"
+msgstr "_Команда, выполняемая при щелчке:"
+
+#: applets/fish/fish.glade.h:7
+msgid "Fish Preferences"
+msgstr "Настройки \"Рыбки\""
+
+#: applets/fish/fish.glade.h:8
+msgid "_File:"
+msgstr "_Файл:"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Name of fish:"
+msgstr "_Имя рыбки:"
+
+#: applets/fish/fish.glade.h:10
+msgid "_Pause per frame:"
+msgstr "З_адержка кадра:"
+
+#: applets/fish/fish.glade.h:11
+msgid "_Rotate on vertical panels"
+msgstr "Поворачивать на в_ертикальных панелях"
+
+#: applets/fish/fish.glade.h:12
+msgid "_Total frames in animation:"
+msgstr "К_оличество кадров в анимации:"
+
+#: applets/fish/fish.glade.h:13
+msgid "frames"
+msgstr "кадров"
+
+#: applets/fish/fish.glade.h:14
+msgid "seconds"
+msgstr "секунд"
+
+#: applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr "Рыбка без имени - скучная рыбка. Вызовите рыбку к жизни, дав ей имя."
+
+#: applets/fish/fish.schemas.in.h:2
+msgid "Command to execute on click"
+msgstr "Команда, выполняемая при щелчке"
+
+#: applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Число кадров при анимации рыбки"
+
+#: applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Если этот ключ установлен, на вертикальных панелях анимация будет "
+"отображаться в повёрнутом виде."
+
+#: applets/fish/fish.schemas.in.h:5
+msgid "Pause per frame"
+msgstr "Задержка кадра"
+
+#: applets/fish/fish.schemas.in.h:6
+msgid "Rotate on vertical panels"
+msgstr "Поворачивать на вертикальных панелях"
+
+#: applets/fish/fish.schemas.in.h:7
+msgid "The fish's animation pixmap"
+msgstr "Анимированное изображение рыбки"
+
+#: applets/fish/fish.schemas.in.h:8
+msgid "The fish's name"
+msgstr "Имя рыбки"
+
+#: applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Этот ключ определяет команду, выполняемую при щелчке на рыбке."
+
+#: applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr ""
+"Этот ключ определяет имя файла изображения, которое будет использоваться для "
+"отображения анимации апплета рыбки, относительно каталога изображений "
+"(pixmap)."
+
+#: applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "Число кадров, используемых при анимации рыбки."
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr ""
+"Этот ключ определяет количество секунд, в течении которых отображается "
+"каждый кадр."
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
+msgid "Area where notification icons appear"
+msgstr "Апплет, в котором появляются значки уведомления"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+msgid "Notification Area"
+msgstr "Область уведомления"
+
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
+msgid "Notification Area Factory"
+msgstr "Фабрика \"Области уведомления\""
+
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:364
+msgid "Panel Notification Area"
+msgstr "Область уведомления панели"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Factory for the window navigation related applets"
+msgstr "Фабрика для создания апплетов навигации между окнами"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+msgid "Hide application windows and show the desktop"
+msgstr "Свернуть все окна приложений и показать рабочий стол"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+msgid "Show Desktop"
+msgstr "Расчистить рабочий стол"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Апплет переключения между открытыми окнами"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Апплет переключения между рабочими местами"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/window-list.c:820
+msgid "Window List"
+msgstr "Список окон"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+msgid "Window Navigation Applet Factory"
+msgstr "Фабрика апплетов навигации между окнами"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
+msgid "Window Selector"
+msgstr "Переключатель окон"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
+msgid "Workspace Switcher"
+msgstr "Переключатель рабочих мест"
+
+#: applets/wncklet/showdesktop.c:230
+msgid "Click here to restore hidden windows."
+msgstr "Щёлкните здесь для восстановления свёрнутых окон"
+
+#: applets/wncklet/showdesktop.c:233
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Щёлкните здесь для сворачивания всех окон и расчистки рабочего стола"
+
+#: applets/wncklet/showdesktop.c:315
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Произошёл сбой при загрузке \"%s\": %s\n"
+
+#: applets/wncklet/showdesktop.c:316
+msgid "File not found"
+msgstr "Файл не найден"
+
+#: applets/wncklet/showdesktop.c:346 applets/wncklet/showdesktop.c:465
+msgid "Show Desktop Button"
+msgstr "Кнопка расчистки рабочего стола"
+
+#: applets/wncklet/showdesktop.c:467
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "Эта кнопка позволяет свернуть все окна и расчистить рабочий стол"
+
+#: applets/wncklet/showdesktop.c:507
+msgid ""
+"Your window manager does not support the show desktop button, or you are not "
+"running a window manager."
+msgstr ""
+"Либо оконный менеджер не поддерживает функциональность, необходимую для "
+"кнопки расчистки рабочего стола, либо оконный менеджер не запущен вовсе."
+
+#: applets/wncklet/window-list.c:822
+msgid "The Window List shows a list of all windows and lets you browse them."
+msgstr ""
+"Апплет показывает список всех окон и позволяет переключаться между ними."
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "<b>Restoring Minimized Windows</b>"
+msgstr "<b>Восстановление минимизированных окон</b>"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "<b>Window Grouping</b>"
+msgstr "<b>Группировка окон</b>"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "<b>Window List Content</b>"
+msgstr "<b>Содержимое</b>"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "<b>Window List Size</b>"
+msgstr "<b>Размер списка окон</b>"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Behavior"
+msgstr "Поведение"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Group windows when _space is limited"
+msgstr "группировать окна, когда _пространство ограничено"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "M_inimum size:"
+msgstr "м_инимальный:"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Ma_ximum size:"
+msgstr "м_аксимальный:"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Restore to current _workspace"
+msgstr "восстанавливать на текущее _рабочее место"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Restore to na_tive workspace"
+msgstr "восстанавливать на ис_ходное рабочее место"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Sh_ow windows from current workspace"
+msgstr "показывать окна тек_ущего рабочего места"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "Show windows from a_ll workspaces"
+msgstr "показывать окна вс_ех рабочих мест"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "Size"
+msgstr "Размер"
+
+#: applets/wncklet/window-list.glade.h:15
+msgid "Window List Preferences"
+msgstr "Настройки списка окон"
+
+#: applets/wncklet/window-list.glade.h:16
+msgid "_Always group windows"
+msgstr "всегда _группировать окна"
+
+#: applets/wncklet/window-list.glade.h:17
+msgid "_Never group windows"
+msgstr "никогда _не группировать окна"
+
+#: applets/wncklet/window-list.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:32
+msgid "pixels"
+msgstr "пикселей"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Определяет, когда группировать окна одинаковых приложений в списке окон. "
+"Допустимые значения \"никогда\", \"автоматически\" и \"всегда\"."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr ""
+"Если этот ключ установлен, список окон будет отображать окна со всех рабочих "
+"мест, а не только с текущего."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr ""
+"Если этот ключ установлен, восстановление окна будет происходить на текущее "
+"рабочее место, а не на исходное."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum window list size"
+msgstr "Максимальный размер списка окон"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum window list size"
+msgstr "Минимальный размер списка окон"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to current workspace when unminimized"
+msgstr "Перемещать окна на текущее рабочее место при восстановлении"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Показывать окна со всех рабочих мест"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
+msgstr ""
+"Этот ключ определяет максимальную ширину, запрашиваемую списком окон. "
+"Установка максимальной ширины списка полезна для ограничения размера списка "
+"окон на больших панелях, где список может занять всё доступное место."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid "This key specifies the minimum width that the window list requests."
+msgstr ""
+"Этот ключ определяет минимальную ширину, которую запрашивает список окон."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Группировать ли окна"
+
+#: applets/wncklet/window-menu.c:152
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
+msgstr ""
+"Апплет показывает список всех окон и позволяет переключаться между ними."
+
+#: applets/wncklet/window-menu.c:435
+msgid "Unknown Window"
+msgstr "Неизвестное окно"
+
+#: applets/wncklet/window-menu.c:643
+msgid "No Windows Open"
+msgstr "Ни одно окно не открыто"
+
+#: applets/wncklet/window-menu.c:750
+msgid "Tool to switch between windows"
+msgstr "Апплет переключения между окнами"
+
+#: applets/wncklet/workspace-switcher.c:147
+#: applets/wncklet/workspace-switcher.c:832
+#: applets/wncklet/workspace-switcher.glade.h:11
+msgid "rows"
+msgstr "строк(и)"
+
+#: applets/wncklet/workspace-switcher.c:147
+#: applets/wncklet/workspace-switcher.c:832
+msgid "columns"
+msgstr "столбцов(а)"
+
+#: applets/wncklet/workspace-switcher.c:358
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения num_rows для апплета переключателя "
+"рабочих мест: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:369
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения display_workspace_names для апплета "
+"переключателя рабочих мест: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:384
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Произошла ошибка при загрузке значения display_all_workspaces для апплета "
+"переключателя рабочих мест: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:521
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Переключатель рабочих мест показывает уменьшенную версию рабочих мест, "
+"позволяя управлять окнами."
+
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "<b>Switcher</b>"
+msgstr "<b>Переключатель</b>"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "<b>Workspaces</b>"
+msgstr "<b>Рабочие места</b>"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Number of _workspaces:"
+msgstr "_Число рабочих мест:"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show _all workspaces in:"
+msgstr "Показывать вс_е рабочие места в "
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Show _only the current workspace"
+msgstr "Показывать только тек_ущее рабочее место"
+
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Show workspace _names in switcher"
+msgstr "Показывать _наименования рабочих мест в переключателе"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Names"
+msgstr "Наименования рабочих мест"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspace Switcher Preferences"
+msgstr "Настройки переключателя рабочих мест"
+
+#: applets/wncklet/workspace-switcher.glade.h:10
+msgid "Workspace na_mes:"
+msgstr "Наи_менования рабочих мест:"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid "Display all workspaces"
+msgstr "Отображать все рабочие места"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid "Display workspace names"
+msgstr "Отображать имена рабочих мест"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr ""
+"Если этот ключ установлен, переключатель будет показывать все рабочие места, "
+"а не только текущее."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
+msgstr ""
+"Если этот ключ установлен, переключатель будет отображать имена рабочих "
+"мест. Если не установлен, на рабочих местах будут отображаться окна."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Rows in workspace switcher"
+msgstr "Строк в переключателе"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"This key specifies how many rows (for horizontal layout) or columns (for "
+"vertical layout) the workspace switcher shows the workspaces in. This key is "
+"only relevant if the display_all_workspaces key is true."
+msgstr ""
+"Этот ключ определяет, во сколько рядов (при горизонтальном размещении) или "
+"столбцов (при вертикальном размещении) переключатель будет показывать "
+"рабочие места. Имеет смысл только если установлен ключ "
+"display_all_workspaces."
+
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Панель - оболочка среды Гном"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
+msgid "_Lock"
+msgstr "За_блокировать"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:470
+msgid "_Move"
+msgstr "_Переместить"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:454
+msgid "_Remove From Panel"
+msgstr "_Убрать с панели"
+
+#: gnome-panel/applet.c:103 gnome-panel/applet.c:462
+#: gnome-panel/panel-applet-frame.c:113
+msgid "Un_lock"
+msgstr "Раз_блокировать"
+
+#: gnome-panel/applet.c:375
+msgid "???"
+msgstr "без имени"
+
+#: gnome-panel/applet.c:1089
+msgid "Can't find an empty spot"
+msgstr "Не удается найти свободное место"
+
+#: gnome-panel/button-widget.c:199
+#, c-format
+msgid "Failed to load image %s"
+msgstr "Произошёл сбой при загрузке изображения \"%s\""
+
+#: gnome-panel/button-widget.c:408
+msgid "none"
+msgstr "нет"
+
+#: gnome-panel/button-widget.c:413
+msgid "file not found"
+msgstr "файл не найден"
+
+#: gnome-panel/distribution.c:27
+msgid "Debian GNU/Linux"
+msgstr "Дистрибутив Debian GNU/Linux"
+
+#: gnome-panel/distribution.c:27
+msgid "Debian Menu"
+msgstr "Меню дистрибутива Debian"
+
+#: gnome-panel/distribution.c:32
+msgid "SuSE Linux"
+msgstr "Дистрибутив SuSE Linux"
+
+#: gnome-panel/distribution.c:32
+msgid "SuSE Menu"
+msgstr "Меню дистрибутива SuSE"
+
+#: gnome-panel/distribution.c:37
+msgid "Solaris"
+msgstr "ОС Solaris"
+
+#: gnome-panel/distribution.c:37
+msgid "CDE Menu"
+msgstr "Меню среды CDE"
+
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
+#: gnome-panel/panel-addto.c:147
+msgid "Drawer"
+msgstr "Ящик"
+
+#: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
+#: gnome-panel/menu.c:2314 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Свойства"
 
-#: src/bookmarks/ephy-bookmarks-editor.c:190
-msgid "View or modify the properties of the selected bookmark"
-msgstr "Просмотреть или измененить свойства выбранной закладки"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:192
-msgid "_Import Bookmarks..."
-msgstr "И_мпортировать закладки..."
-
-#: src/bookmarks/ephy-bookmarks-editor.c:193
-msgid "Import bookmarks from another browser or a bookmarks file"
-msgstr "Импортировать закладки из другого браузера или файла закладок"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:195 src/ephy-history-window.c:178
-#: src/ephy-window.c:129
-msgid "_Close"
-msgstr "_Закрыть"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:196
-msgid "Close the bookmarks window"
-msgstr "Закрыть окно закладок"
-
-#. Edit Menu
-#: src/bookmarks/ephy-bookmarks-editor.c:200 src/ephy-history-window.c:183
-#: src/ephy-window.c:140
-msgid "Cu_t"
-msgstr "_Вырезать"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:201 src/ephy-history-window.c:184
-#: src/ephy-window.c:141
-msgid "Cut the selection"
-msgstr "Вырезать выделение"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:203
-#: src/bookmarks/ephy-bookmarks-editor.c:1052 src/ephy-history-window.c:186
-#: src/ephy-history-window.c:756 src/ephy-window.c:143
-msgid "_Copy"
-msgstr "_Копировать"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:204 src/ephy-history-window.c:187
-#: src/ephy-window.c:144
-msgid "Copy the selection"
-msgstr "Копировать выделение"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:206 src/ephy-history-window.c:189
-#: src/ephy-window.c:146
-msgid "_Paste"
-msgstr "Вст_авить"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:207 src/ephy-history-window.c:190
-msgid "Paste the clipboard"
-msgstr "Вставить из буфера обмена"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:209 src/ephy-history-window.c:192
-#: src/ephy-window.c:149
-msgid "Select _All"
-msgstr "Выделить вс_е"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:210
-msgid "Select all bookmarks or text"
-msgstr "Выделить все закладки или текст"
-
-#. Help Menu
-#. Help menu
-#: src/bookmarks/ephy-bookmarks-editor.c:214 src/ephy-history-window.c:200
-#: src/ephy-window.c:240
-msgid "_Contents"
-msgstr "_Содержание"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:215
-msgid "Display bookmarks help"
-msgstr "Отобразить справку по закладкам"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:217 src/ephy-history-window.c:203
-#: src/ephy-window.c:243
-msgid "_About"
-msgstr "_О программе..."
-
-#: src/bookmarks/ephy-bookmarks-editor.c:218 src/ephy-history-window.c:204
-#: src/ephy-window.c:244
-msgid "Display credits for the web browser creators"
-msgstr "Отобразить информацию о программе"
-
-#. File Menu
-#: src/bookmarks/ephy-bookmarks-editor.c:226
-msgid "_Show in Bookmarks Bar"
-msgstr "_Показать на панели закладок"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:227
-msgid "Show the selected bookmark or topic in the bookmarks bar"
-msgstr "Показать выбранную закладку или тему на панели закладок"
-
-#. View Menu
-#: src/bookmarks/ephy-bookmarks-editor.c:241 src/ephy-history-window.c:219
-msgid "_Title"
-msgstr "_Заголовок"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:242 src/ephy-history-window.c:220
-msgid "Show only the title column"
-msgstr "Показывать только столбец заголовка"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:243 src/ephy-history-window.c:223
-msgid "T_itle and Address"
-msgstr "За_головок и адрес"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:244 src/ephy-history-window.c:224
-msgid "Show both the title and address columns"
-msgstr "Показывать столбцы заголовка и адреса"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:286
-#: src/bookmarks/ephy-topics-selector.c:317
-msgid "Type a topic"
-msgstr "Введите тему"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:581
-msgid "Import bookmarks from file"
-msgstr "Импортировать закладки из файла"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:588
-msgid "Firefox/Firebird/Mozilla bookmarks"
-msgstr "Закладки Firefox/Firebird/Mozilla"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:592
-msgid "Galeon/Konqueror bookmarks"
-msgstr "Закладки Galeon/Konqueror"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:596
-msgid "Epiphany bookmarks"
-msgstr "Закладки Epiphany"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:635
-msgid "Import Bookmarks"
-msgstr "Импортировать закладки"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:641
-msgid "I_mport"
-msgstr "И_мпорт"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:655
-msgid "Import bookmarks from:"
-msgstr "Импортировать закладки из:"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:663
-msgid "Firebird"
-msgstr "Firebird"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:665
-msgid "Firefox"
-msgstr "Firefox"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:667
-msgid "Galeon"
-msgstr "Galeon"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:669
-msgid "Konqueror"
-msgstr "Konqueror"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:671
-msgid "Mozilla"
-msgstr "Mozilla"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1037 src/ephy-history-window.c:741
-msgid "_Open in New Windows"
-msgstr "_Открыть в новом окне"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1038 src/ephy-history-window.c:742
-msgid "Open in New _Tabs"
-msgstr "Открыть в новой _вкладке"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1048 src/ephy-history-window.c:752
-msgid "_Copy Address"
-msgstr "_Копировать адрес"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1293 src/ephy-history-window.c:1048
-msgid "_Search:"
-msgstr "Поиск:"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1506
-#: src/bookmarks/ephy-topics-selector.c:197
-msgid "Topics"
-msgstr "Темы"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1571 src/ephy-history-window.c:1333
-msgid "Title"
-msgstr "Заголовок"
-
-#: src/bookmarks/ephy-bookmarks-editor.c:1577 src/ephy-history-window.c:1339
-msgid "Address"
-msgstr "Адрес"
-
-#. Translators you should change these links to respect your locale.
-#. * For instance in .nl these should be
-#. * "http://www.google.nl" and "http://www.google.nl/search?q=%s"
-#.
-#: src/bookmarks/ephy-bookmarks.c:84
-msgid "Search the web"
-msgstr "Поиск в Веб"
-
-#: src/bookmarks/ephy-bookmarks.c:84
-#, c-format
-msgid "http://www.google.com/search?q=%s&ie=UTF-8&oe=UTF-8"
-msgstr "http://www.google.com/search?q=%s&ie=UTF-8&oe=UTF-8"
-
-#: src/bookmarks/ephy-bookmarks.c:90
-msgid "Entertainment"
-msgstr "Развлечения"
-
-#: src/bookmarks/ephy-bookmarks.c:91
-msgid "News"
-msgstr "Новости"
-
-#: src/bookmarks/ephy-bookmarks.c:92
-msgid "Shopping"
-msgstr "Покупки"
-
-#: src/bookmarks/ephy-bookmarks.c:93
-msgid "Sports"
-msgstr "Спорт"
-
-#: src/bookmarks/ephy-bookmarks.c:94
-msgid "Travel"
-msgstr "Путешествия"
-
-#: src/bookmarks/ephy-bookmarks.c:95
-msgid "Work"
-msgstr "Работа"
-
-#: src/bookmarks/ephy-bookmarks.c:730
-msgid "Most Visited"
-msgstr "Наиболее часто посещаемые"
-
-#: src/bookmarks/ephy-bookmarks.c:746
-msgid "Not Categorized"
-msgstr "Без категории"
-
-#: src/bookmarks/ephy-new-bookmark.c:274
-msgid "Add Bookmark"
-msgstr "Добавить закладку"
-
-#. FIXME: We "should" use gtk_message dialog here
-#. * but it doesn't support markup of text yet
-#. * so we build our own. See bug 65501.
-#.
-#: src/bookmarks/ephy-new-bookmark.c:322
-msgid "Duplicated Bookmark"
-msgstr "Повторяющаяся закладка"
-
-#: src/bookmarks/ephy-new-bookmark.c:353
-#, c-format
-msgid "A bookmark titled %s already exists for this page."
-msgstr "Закладка, озаглавленная \"%s\", уже существует для этой страницы."
-
-#. This is the adjective, not the verb
-#: src/bookmarks/ephy-topic-action.c:273
-msgid "Empty"
-msgstr "Пустой"
-
-#: src/bookmarks/ephy-topic-action.c:444
-msgid "_Open in Tabs"
-msgstr "_Открыть во вкладках"
-
-#: src/ephy-encoding-dialog.c:315
-msgid "Encodings"
-msgstr "Кодировка"
-
-#: src/ephy-encoding-menu.c:359
-msgid "_Other..."
-msgstr "_Другая..."
-
-#: src/ephy-encoding-menu.c:360
-msgid "Other encodings"
-msgstr "Другие кодировки"
-
-#: src/ephy-encoding-menu.c:367
-msgid "_Automatic"
-msgstr "_Автоматически"
-
-#: src/ephy-go-action.c:73 src/toolbar.c:372
-msgid "Go"
-msgstr "Перейти"
-
-#: src/ephy-history-window.c:167
-msgid "Open the selected history link in a new window"
-msgstr "Открыть выбранную посещённую ссылку в новом окне"
-
-#: src/ephy-history-window.c:170
-msgid "Open the selected history link in a new tab"
-msgstr "Открыть выбранную посещённую ссылку в новой вкладке"
-
-#: src/ephy-history-window.c:173
-msgid "Delete the selected history link"
-msgstr "Удалить выбранную посещённую ссылку"
-
-#: src/ephy-history-window.c:175
-msgid "Boo_kmark Link..."
-msgstr "Доб_авить к закладкам..."
-
-#: src/ephy-history-window.c:176
-msgid "Bookmark the selected history link"
-msgstr "Добавить выбранную посещённую ссылку к закладкам"
-
-#: src/ephy-history-window.c:179
-msgid "Close the history window"
-msgstr "Закрыть окно истории"
-
-#: src/ephy-history-window.c:193
-msgid "Select all history links or text"
-msgstr "Выбрать все посещённые ссылки или текст"
-
-#: src/ephy-history-window.c:195
-msgid "C_lear History"
-msgstr "О_чистить историю"
-
-#: src/ephy-history-window.c:196
-msgid "Clear your browsing history"
-msgstr "Очистить всю историю посещений?"
-
-#: src/ephy-history-window.c:201
-msgid "Display history help"
-msgstr "Отобразить справку по истории"
-
-#: src/ephy-history-window.c:221
-msgid "_Address"
-msgstr "_Адрес"
-
-#: src/ephy-history-window.c:222
-msgid "Show only the address column"
-msgstr "Показывать только столбец адреса"
-
-#: src/ephy-history-window.c:254
-msgid "Clear History"
-msgstr "Очистить историю"
-
-#: src/ephy-history-window.c:284
-msgid "C_lear"
-msgstr "О_чистить"
-
-#: src/ephy-history-window.c:308
-msgid "Clear browsing history?"
-msgstr "Очистить историю посещений?"
-
-#: src/ephy-history-window.c:315
+#: gnome-panel/gnome-desktop-item-edit.c:26
+msgid "Create new file in the given directory"
+msgstr "Создать новый файл в заданном каталоге"
+
+#: gnome-panel/gnome-panel-screenshot.c:122
 msgid ""
-"Clearing the browsing history will cause all history links to be permanently "
-"deleted."
-msgstr "Очистка истории посещений приведёт к полному удалению всех посещённых ссылок."
-
-#: src/ephy-history-window.c:1057
-msgid "Today"
-msgstr "сегодня"
-
-#. keep this in sync with embed/ephy-history.c's HISTORY_PAGE_OBSOLETE_DAYS
-#: src/ephy-history-window.c:1058 src/ephy-history-window.c:1061
-#: src/ephy-history-window.c:1065
-#, c-format
-msgid "Last %d day"
-msgid_plural "Last %d days"
-msgstr[0] "последний %d день"
-msgstr[1] "последние %d дня"
-msgstr[2] "последние %d дней"
-
-#: src/ephy-history-window.c:1275
-msgid "Sites"
-msgstr "Сайты"
-
-#: src/ephy-main.c:56
-msgid "Open a new tab in an existing Epiphany window"
-msgstr "Открыть новую вкладку в существующем окне браузера"
-
-#: src/ephy-main.c:59
-msgid "Run Epiphany in full screen mode"
-msgstr "Запустить браузер в полноэкранном режиме"
-
-#: src/ephy-main.c:62
-msgid "Load the given session file"
-msgstr "Загрузить указанный файл сеанса"
-
-#: src/ephy-main.c:63 src/ephy-main.c:69
-msgid "FILE"
-msgstr "ФАЙЛ"
-
-#: src/ephy-main.c:65
-msgid "Add a bookmark (don't open any window)"
-msgstr "Добавить закладку (не открывать никаких окон)"
-
-#: src/ephy-main.c:66
-msgid "URL"
-msgstr "URL"
-
-#: src/ephy-main.c:68
-msgid "Import bookmarks from the given file"
-msgstr "Импорт закладок из другого браузера или файла закладок"
-
-#: src/ephy-main.c:71
-msgid "Launch the bookmarks editor"
-msgstr "Запустить редактор закладок"
-
-#: src/ephy-main.c:74
-msgid "Used internally by the bonobo interface"
-msgstr "Используется внутренне интерфейсом системы Bonobo"
-
-#: src/ephy-main.c:112
-msgid "Ephy"
-msgstr "Ephy"
-
-#: src/ephy-session.c:374
-msgid "Crash Recovery"
-msgstr "Восстановление после сбоя"
-
-#: src/ephy-session.c:376
-msgid "_Don't Recover"
-msgstr "_Не восстанавливать"
-
-#: src/ephy-session.c:377
-msgid "_Recover"
-msgstr "_Восстановить"
-
-#: src/ephy-session.c:408
-msgid "Epiphany appears to have crashed or been killed the last time it was run."
+"Unable to initialize png structure.\n"
+"You probably have a bad version of libpng on your system"
 msgstr ""
-"Возможно, браузер Epiphany рухнул или был уничтожен при последнем "
-"запуске."
+"Не удается инициализировать структуру формата png.\n"
+"Похоже, в системе установлена неподходящая версия библиотеки libpng."
 
-#: src/ephy-session.c:414
-msgid "You can recover the opened tabs and windows."
-msgstr "Вы можете восстановить те окна и вкладки, которые были открыты."
-
-#: src/ephy-shell.c:347
+#: gnome-panel/gnome-panel-screenshot.c:130
 msgid ""
-"Bonobo couldn't locate the GNOME_Epiphany_Automation.server file. You can "
-"use bonobo-activation-sysconf to configure the search path for bonobo server "
-"files."
+"Unable to create png info.\n"
+"You probably have a bad version of libpng on your system"
 msgstr ""
-"Системе Bonobo не удалось обнаружить файл GNOME_Epiphany_Automation.server. "
-"Можно использовать утилиту bonobo-activation-sysconf для настройки пути к "
-"файлам системы Bonobo."
+"Не удается создать информацию формата png.\n"
+"Похоже, в системе установлена неподходящая версия библиотеки libpng."
 
-#: src/ephy-shell.c:354
+#: gnome-panel/gnome-panel-screenshot.c:137
 msgid ""
-"Epiphany can't be used now, due to an unexpected error from Bonobo when "
-"attempting to register the automation server"
+"Unable to set png info.\n"
+"You probably have a bad version of libpng on your system"
 msgstr ""
-"Браузер не может быть использован сейчас из-за неожиданной ошибки в системе "
-"Bonobo при попытке регистрации сервера"
+"Не удается установить информацию формата png.\n"
+"Похоже, в системе установлена неподходящая версия библиотеки libpng."
 
-#: src/ephy-shell.c:377
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
-"Epiphany can't be used now, due to an unexpected error from Bonobo when "
-"attempting to locate the automation object."
+"Insufficient memory to save the screenshot.\n"
+"Please free up some resources and try again."
 msgstr ""
-"Браузер не может быть использован сейчас из-за неожиданной ошибки в системе "
-"Bonobo при попытке обнаружения объекта автоматизации."
+"Недостаточно памяти для сохранения снимка экрана.\n"
+"Освободите часть ресурсов и попробуйте ещё раз."
 
-#: src/ephy-tab.c:426 src/ephy-tab.c:1590 src/ephy-tab.c:1805
-msgid "Blank page"
-msgstr "Пустая страница"
-
-#: src/ephy-tab.c:1134
-msgid "site"
-msgstr "сайт"
-
-#: src/ephy-tab.c:1158
+#: gnome-panel/gnome-panel-screenshot.c:213
 #, c-format
-msgid "Redirecting to %s..."
-msgstr "Осуществляется перенаправление на сайт \"%s\"..."
-
-#: src/ephy-tab.c:1162
-#, c-format
-msgid "Transferring data from %s..."
-msgstr "Передаются данные с сайта \"%s\"..."
-
-#: src/ephy-tab.c:1166
-#, c-format
-msgid "Waiting for authorization from %s..."
-msgstr "Ожидается авторизация на сайте \"%s\"..."
-
-#: src/ephy-tab.c:1174
-#, c-format
-msgid "Loading %s..."
-msgstr "Загружается сайт \"%s\"..."
-
-#: src/ephy-window.c:94
-msgid "_Bookmarks"
-msgstr "_Закладки"
-
-#: src/ephy-window.c:95
-msgid "_Go"
-msgstr "Пере_ход"
-
-#: src/ephy-window.c:96
-msgid "T_ools"
-msgstr "_Инструменты"
-
-#: src/ephy-window.c:97
-msgid "_Tabs"
-msgstr "В_кладки"
-
-#. File menu
-#: src/ephy-window.c:102
-msgid "_New Window"
-msgstr "_Создать окно"
-
-#: src/ephy-window.c:103
-msgid "Open a new window"
-msgstr "Открыть новое окно"
-
-#: src/ephy-window.c:105
-msgid "New _Tab"
-msgstr "Создать _вкладку"
-
-#: src/ephy-window.c:106
-msgid "Open a new tab"
-msgstr "Открыть новую вкладку"
-
-#: src/ephy-window.c:108
-msgid "_Open..."
-msgstr "_Открыть..."
-
-#: src/ephy-window.c:109
-msgid "Open a file"
-msgstr "Открыть файл"
-
-#: src/ephy-window.c:111 src/ephy-window.c:114
-msgid "Save _As..."
-msgstr "Сохранить _как..."
-
-#: src/ephy-window.c:112 src/ephy-window.c:115
-msgid "Save the current page"
-msgstr "Сохранить текущую страницу"
-
-#: src/ephy-window.c:117
-msgid "Print Set_up..."
-msgstr "_Настроить печать..."
-
-#: src/ephy-window.c:118
-msgid "Setup the page settings for printing"
-msgstr "Настроить параметры страницы для печати"
-
-#: src/ephy-window.c:120
-msgid "Print Pre_view"
-msgstr "Пре_дварительный просмотр"
-
-#: src/ephy-window.c:121
-msgid "Print preview"
-msgstr "Просмотреть образец печати"
-
-#: src/ephy-window.c:123
-msgid "_Print..."
-msgstr "_Печать..."
-
-#: src/ephy-window.c:124
-msgid "Print the current page"
-msgstr "Напечатать текущую страницу"
-
-#: src/ephy-window.c:126
-msgid "S_end To..."
-msgstr "Пос_лать..."
-
-#: src/ephy-window.c:127
-msgid "Send a link of the current page"
-msgstr "Послать ссылку на текущую страницу"
-
-#: src/ephy-window.c:130
-msgid "Close this window"
-msgstr "Закрыть это окно"
-
-#. Edit menu
-#: src/ephy-window.c:134
-msgid "_Undo"
-msgstr "_Отменить"
-
-#: src/ephy-window.c:135
-msgid "Undo the last action"
-msgstr "Отменить последнее действие"
-
-#: src/ephy-window.c:137
-msgid "Re_do"
-msgstr "Ве_рнуть"
-
-#: src/ephy-window.c:138
-msgid "Redo the last undone action"
-msgstr "Вернуть последнее отменённое действие"
-
-#: src/ephy-window.c:147
-msgid "Paste clipboard"
-msgstr "Вставить из буфера обмена"
-
-#: src/ephy-window.c:150
-msgid "Select the entire page"
-msgstr "Выбрать всю страницу"
-
-#: src/ephy-window.c:152
-msgid "_Find..."
-msgstr "_Найти..."
-
-#: src/ephy-window.c:153
-msgid "Find a word or phrase in the page"
-msgstr "Найти слово или фразу на текущей странице"
-
-#: src/ephy-window.c:155
-msgid "Find Ne_xt"
-msgstr "Найти след_ующее"
-
-#: src/ephy-window.c:156
-msgid "Find next occurrence of the word or phrase"
-msgstr "Найти следующее вхождение слова или фразы"
-
-#: src/ephy-window.c:158
-msgid "Find Pre_vious"
-msgstr "Найти пред_ыдущее"
-
-#: src/ephy-window.c:159
-msgid "Find previous occurrence of the word or phrase"
-msgstr "Найти предыдущее вхождение слова или фразы"
-
-#: src/ephy-window.c:161
-msgid "P_ersonal Data"
-msgstr "П_ерсональные данные"
-
-#: src/ephy-window.c:162
-msgid "View and remove cookies and passwords"
-msgstr "Просмотр и удаление файлов cookies и паролей"
-
-#: src/ephy-window.c:164
-msgid "T_oolbars"
-msgstr "Панели _инструментов"
-
-#: src/ephy-window.c:165
-msgid "Customize toolbars"
-msgstr "Настроить панели инструментов"
-
-#: src/ephy-window.c:167
-msgid "P_references"
-msgstr "_Параметры"
-
-#: src/ephy-window.c:168
-msgid "Configure the web browser"
-msgstr "Изменить параметры браузера"
-
-#. View menu
-#: src/ephy-window.c:172
-msgid "_Stop"
-msgstr "Ос_тановить"
-
-#: src/ephy-window.c:173
-msgid "Stop current data transfer"
-msgstr "Остановить текущую передачу данных"
-
-#: src/ephy-window.c:175
-msgid "_Reload"
-msgstr "Переза_грузить"
-
-#: src/ephy-window.c:176
-msgid "Display the latest content of the current page"
-msgstr "Показать последнее содержимое текущей страницы"
-
-#: src/ephy-window.c:178
-msgid "Zoom _In"
-msgstr "У_величить"
-
-#: src/ephy-window.c:179
-msgid "Increase the text size"
-msgstr "Увеличить размер текста"
-
-#: src/ephy-window.c:181
-msgid "Zoom _Out"
-msgstr "У_меньшить"
-
-#: src/ephy-window.c:182
-msgid "Decrease the text size"
-msgstr "Уменьшить размер текста"
-
-#: src/ephy-window.c:184
-msgid "_Normal Size"
-msgstr "Обы_чный размер"
-
-#: src/ephy-window.c:185
-msgid "Use the normal text size"
-msgstr "Использовать обычный размер текста"
-
-#: src/ephy-window.c:187
-msgid "Text _Encoding"
-msgstr "_Кодировка текста"
-
-#: src/ephy-window.c:188
-msgid "Change the text encoding"
-msgstr "Изменить кодировку текста"
-
-#: src/ephy-window.c:190
-msgid "_Page Source"
-msgstr "_Исходный текст"
-
-#: src/ephy-window.c:191
-msgid "View the source code of the page"
-msgstr "Показать исходный текст страницы"
-
-#. Bookmarks menu
-#: src/ephy-window.c:195
-msgid "_Add Bookmark..."
-msgstr "Доб_авить закладку..."
-
-#: src/ephy-window.c:196 src/ephy-window.c:283
-msgid "Add a bookmark for the current page"
-msgstr "Добавить закладку для текущей страницы"
-
-#: src/ephy-window.c:198
-msgid "_Edit Bookmarks"
-msgstr "_Изменить закладки"
-
-#: src/ephy-window.c:199
-msgid "Open the bookmarks window"
-msgstr "Открыть окно закладок"
-
-#. Go menu
-#: src/ephy-window.c:203
-msgid "_Back"
-msgstr "На_зад"
-
-#: src/ephy-window.c:204
-msgid "Go to the previous visited page"
-msgstr "Вернуться к предыдущей странице"
-
-#: src/ephy-window.c:206
-msgid "_Forward"
-msgstr "В_перёд"
-
-#: src/ephy-window.c:207
-msgid "Go to the next visited page"
-msgstr "Перейти к следующей странице"
-
-#: src/ephy-window.c:210
-msgid "Go up one level"
-msgstr "Перейти на один уровень вверх"
-
-#: src/ephy-window.c:212
-msgid "_Home"
-msgstr "В на_чало"
-
-#: src/ephy-window.c:213
-msgid "Go to the home page"
-msgstr "Вернуться на начальную страницу"
-
-#: src/ephy-window.c:215
-msgid "_Location..."
-msgstr "_Адрес..."
-
-#: src/ephy-window.c:216
-msgid "Go to a specified location"
-msgstr "Перейти к указанному адресу"
-
-#: src/ephy-window.c:218
-msgid "H_istory"
-msgstr "_История"
-
-#: src/ephy-window.c:219
-msgid "Open the history window"
-msgstr "Открыть окно истории"
-
-#. Tabs menu
-#: src/ephy-window.c:223
-msgid "_Previous Tab"
-msgstr "На пред_ыдущую вкладку"
-
-#: src/ephy-window.c:224
-msgid "Activate previous tab"
-msgstr "Перейти на предыдущую вкладку"
-
-#: src/ephy-window.c:226
-msgid "_Next Tab"
-msgstr "На след_ующую вкладку"
-
-#: src/ephy-window.c:227
-msgid "Activate next tab"
-msgstr "Перейти на следующую вкладку"
-
-#: src/ephy-window.c:229
-msgid "Move Tab _Left"
-msgstr "Передвинуть вкладку в_лево"
-
-#: src/ephy-window.c:230
-msgid "Move current tab to left"
-msgstr "Передвинуть текущую вкладку влево"
-
-#: src/ephy-window.c:232
-msgid "Move Tab _Right"
-msgstr "Передвинуть вкладку в_право"
-
-#: src/ephy-window.c:233
-msgid "Move current tab to right"
-msgstr "Передвинуть текущую вкладку вправо"
-
-#: src/ephy-window.c:235
-msgid "_Detach Tab"
-msgstr "_Отсоединить вкладку"
-
-#: src/ephy-window.c:236
-msgid "Detach current tab"
-msgstr "Отсоединить текущую вкладку"
-
-#: src/ephy-window.c:241
-msgid "Display web browser help"
-msgstr "Отобразить справку"
-
-#. File Menu
-#: src/ephy-window.c:252
-msgid "_Work Offline"
-msgstr "_Работать автономно"
-
-#: src/ephy-window.c:253
-msgid "Toggle network status"
-msgstr "Переключить состояние подключения к сети"
-
-#. View Menu
-#: src/ephy-window.c:257
-msgid "_Toolbar"
-msgstr "Панель _инструментов"
-
-#: src/ephy-window.c:258
-msgid "Show or hide toolbar"
-msgstr "Показать или скрыть панель инструментов"
-
-#: src/ephy-window.c:260
-msgid "_Bookmarks Bar"
-msgstr "Панель _закладок"
-
-#: src/ephy-window.c:261
-msgid "Show or hide bookmarks bar"
-msgstr "Показать или скрыть панель закладок"
-
-#: src/ephy-window.c:263
-msgid "St_atusbar"
-msgstr "Строка _состояния"
-
-#: src/ephy-window.c:264
-msgid "Show or hide statusbar"
-msgstr "Показать или скрыть строку состояния"
-
-#: src/ephy-window.c:266
-msgid "_Fullscreen"
-msgstr "На весь _экран"
-
-#: src/ephy-window.c:267
-msgid "Browse at full screen"
-msgstr "Просматривать в полноэкранном режиме"
-
-#: src/ephy-window.c:269
-msgid "Popup _Windows"
-msgstr "Разрешить _всплывающие окна"
-
-#: src/ephy-window.c:270
-msgid "Show or hide unrequested popup windows from this site"
-msgstr "Показывать или скрывать непрошенные всплывающие окна с этого сайта"
-
-#: src/ephy-window.c:272
-msgid "Selection Caret"
-msgstr "Курсор выделения"
-
-#. Document
-#: src/ephy-window.c:280
-msgid "_Save Background As..."
-msgstr "Со_хранить фон как..."
-
-#: src/ephy-window.c:282
-msgid "Add Boo_kmark..."
-msgstr "Добавить _закладку..."
-
-#. Framed document
-#: src/ephy-window.c:287
-msgid "_Open Frame"
-msgstr "_Открыть кадр"
-
-#. Links
-#: src/ephy-window.c:291
-msgid "_Open Link"
-msgstr "_Открыть ссылку"
-
-#: src/ephy-window.c:293
-msgid "Open Link in _New Window"
-msgstr "Открыть ссылку в _новом окне"
-
-#: src/ephy-window.c:295
-msgid "Open Link in New _Tab"
-msgstr "Открыть ссылку в новой _вкладке"
-
-#: src/ephy-window.c:297
-msgid "_Download Link"
-msgstr "_Скачать ссылку"
-
-#: src/ephy-window.c:299
-msgid "_Save Link As..."
-msgstr "Со_хранить ссылку как..."
-
-#: src/ephy-window.c:301
-msgid "_Bookmark Link..."
-msgstr "Добавить ссылку к _закладкам..."
-
-#: src/ephy-window.c:303
-msgid "_Copy Link Address"
-msgstr "_Копировать адрес ссылки"
-
-#. Images
-#: src/ephy-window.c:307
-msgid "Open _Image"
-msgstr "_Открыть изображение"
-
-#: src/ephy-window.c:309
-msgid "_Save Image As..."
-msgstr "Со_хранить изображение как..."
-
-#: src/ephy-window.c:311
-msgid "_Use Image As Background"
-msgstr "_Использовать изображение как фон"
-
-#: src/ephy-window.c:313
-msgid "Copy I_mage Address"
-msgstr "_Копировать адрес изображения"
-
-#: src/ephy-window.c:574
-msgid "Exit Fullscreen"
-msgstr "Выйти из полноэкранного режима"
-
-#: src/ephy-window.c:657
-msgid "Close _Document"
-msgstr "_Закрыть документ"
-
-#: src/ephy-window.c:687
-msgid "There are unsubmitted changes to form elements."
-msgstr "Есть непереданные изменения в элементах формы."
-
-#: src/ephy-window.c:688
-msgid "If you close the document anyway, you will lose that information."
-msgstr "Если документ будет закрыт, информация будет потеряна."
-
-#: src/ephy-window.c:1114 src/window-commands.c:397
-msgid "Open"
-msgstr "Открыть"
-
-#: src/ephy-window.c:1116 src/window-commands.c:423
-msgid "Save As"
-msgstr "Сохранить как"
-
-#: src/ephy-window.c:1120
-msgid "Bookmark"
-msgstr "Закладка"
-
-#: src/ephy-window.c:1309
-msgid "Broken"
-msgstr "Нарушено"
-
-#: src/ephy-window.c:1312
-msgid "Medium"
-msgstr "Средний"
-
-#: src/ephy-window.c:1316
-msgid "Low"
-msgstr "Низкий"
-
-#: src/ephy-window.c:1320
-msgid "High"
-msgstr "Высокий"
-
-#: src/ephy-window.c:1330
+msgid "File %s already exists. Overwrite?"
+msgstr "Файл \"%s\" уже существует. Перезаписать его?"
+
+#: gnome-panel/gnome-panel-screenshot.c:234
+#: gnome-panel/gnome-panel-screenshot.c:587
 #, c-format
 msgid ""
-"Security level: %s\n"
+"Unable to create the file:\n"
+"\"%s\"\n"
+"Please check your permissions of the parent directory"
+msgstr ""
+"Не удается создать файл:\n"
+"\"%s\"\n"
+"Проверьте права доступа к родительскому каталогу"
+
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if a specific window is taken
+#: gnome-panel/gnome-panel-screenshot.c:421
+#, c-format
+msgid "Screenshot-%s.png"
+msgstr "снимок_экрана-%s.png"
+
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: gnome-panel/gnome-panel-screenshot.c:425
+msgid "Screenshot.png"
+msgstr "снимок_экрана.png"
+
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if a specific window is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:447
+#, c-format
+msgid "Screenshot-%s-%d.png"
+msgstr "снимок_экрана-%s-%d.png"
+
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:454
+#, c-format
+msgid "Screenshot-%d.png"
+msgstr "снимок_экрана-%d.png"
+
+#: gnome-panel/gnome-panel-screenshot.c:610
+#, c-format
+msgid "Not enough room to write file %s"
+msgstr "Недостаточно места для записи файла \"%s\""
+
+#: gnome-panel/gnome-panel-screenshot.c:711
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
 "%s"
 msgstr ""
-"Уровень безопасности: %s\n"
+"Произошла ошибка при отображении справки: \n"
 "%s"
 
-#: src/ephy-window.c:1336
+#: gnome-panel/gnome-panel-screenshot.c:1306
+msgid ""
+"Glade file for the screenshot program is missing.\n"
+"Please check your installation of gnome-panel"
+msgstr ""
+"Отсутствует файл формата glade для программы, делающей снимки экрана.\n"
+"Проверьте установку пакета gnome-panel"
+
+#: gnome-panel/gnome-panel-screenshot.c:1322
+msgid "Unable to take a screenshot of the current desktop."
+msgstr "Не удается сделать снимок экрана текущего рабочего стола."
+
+#: gnome-panel/gnome-panel-screenshot.c:1382
 #, c-format
-msgid "Security level: %s"
-msgstr "Уровень безопасности: %s"
+msgid "Save screenshot to _web page (save in %s)"
+msgstr "Сохранить снимок экрана на _веб-странице (сохранить в %s)"
 
-#: src/ephy-window.c:1360
+#: gnome-panel/gnome-panel-screenshot.c:1438
+msgid "Grab a window instead of the entire screen"
+msgstr "Сделать снимок только окна вместо всего экрана"
+
+#: gnome-panel/gnome-panel-screenshot.c:1439
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Сделать снимок экрана после определённой задержки (в секундах)"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
+msgid "<b>Options</b>"
+msgstr "<b>Параметры</b>"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
+msgid "<b>Preview</b>"
+msgstr "<b>Просмотр образца</b>"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
+msgid "Save Screenshot"
+msgstr "Сохранение снимков экрана"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "Сохранить снимок экрана на _рабочем столе"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Сохранить снимок экрана в _файле:"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
+msgid "Save screenshot to _web page (save in ~/public__html)"
+msgstr "Сохранить снимок экрана на _веб-странице (сохранить в ~/public__html)"
+
+#: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
+msgid ""
+"The user's directory in which screenshots should be saved so as to appear on "
+"the web."
+msgstr ""
+"Пользовательский каталог, в котором снимки экрана следует сохранить, чтобы "
+"они появились на веб-странице."
+
+#: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
+msgid "Web directory"
+msgstr "Веб-каталог"
+
+#: gnome-panel/launcher.c:139
+msgid "Cannot save launcher to disk"
+msgstr "Не удается сохранить кнопку запуска на диск"
+
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
+msgid "Cannot launch icon"
+msgstr "Не удается запустить значок"
+
+#: gnome-panel/launcher.c:170
+msgid "This launch icon does not specify a url to show."
+msgstr "Этот значок запуска не указывает url для отображения."
+
+#: gnome-panel/launcher.c:181
 #, c-format
-msgid "%d hidden popup window"
-msgid_plural "%d hidden popup windows"
-msgstr[0] "%d скрытое всплывающее окно"
-msgstr[1] "%d скрытых всплывающих окна"
-msgstr[2] "%d скрытых всплывающих окон"
+msgid "Cannot show %s"
+msgstr "Не удается отобразить %s"
 
-#: src/pdm-dialog.c:417
-msgid "Domain"
-msgstr "Домен"
+#: gnome-panel/launcher.c:456
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Идентификатор (URI) не установлен для файла кнопки запуска панели\n"
 
-#: src/pdm-dialog.c:429
-msgid "Name"
-msgstr "Наименование"
-
-#: src/pdm-dialog.c:661
-msgid "Host"
-msgstr "Узел"
-
-#: src/pdm-dialog.c:673
-msgid "User Name"
-msgstr "Имя пользователя"
-
-#: src/pdm-dialog.c:906
-msgid "Cookie Properties"
-msgstr "Свойства механизма Cookie"
-
-#: src/pdm-dialog.c:922
-msgid "Content:"
-msgstr "Содержание:"
-
-#: src/pdm-dialog.c:937
-msgid "Path:"
-msgstr "Путь:"
-
-#: src/pdm-dialog.c:952
-msgid "Send for:"
-msgstr "Послать для:"
-
-#: src/pdm-dialog.c:961
-msgid "Encrypted connections only"
-msgstr "Только защищенные соединения"
-
-#: src/pdm-dialog.c:961
-msgid "Any type of connection"
-msgstr "Любой тип соединения"
-
-#: src/pdm-dialog.c:967
-msgid "Expires:"
-msgstr "Истекает:"
-
-#: src/pdm-dialog.c:978
-msgid "End of current session"
-msgstr "Окончание текущего сеанса"
-
-#: src/popup-commands.c:243
-msgid "Download Link"
-msgstr "Скачать ссылку"
-
-#: src/popup-commands.c:251
-msgid "Save Link As"
-msgstr "Сохранить ссылку как"
-
-#: src/popup-commands.c:258
-msgid "Save Image As"
-msgstr "Сохранить изображение как"
-
-#: src/popup-commands.c:344
-msgid "Save Background As"
-msgstr "Сохранить фон как"
-
-#: src/ppview-toolbar.c:92
-msgid "First"
-msgstr "Первый"
-
-#: src/ppview-toolbar.c:93
-msgid "Go to the first page"
-msgstr "Перейти к первой странице"
-
-#: src/ppview-toolbar.c:96
-msgid "Last"
-msgstr "Последний"
-
-#: src/ppview-toolbar.c:97
-msgid "Go to the last page"
-msgstr "Перейти к последней странице"
-
-#: src/ppview-toolbar.c:100
-msgid "Previous"
-msgstr "Предыдущее"
-
-#: src/ppview-toolbar.c:101
-msgid "Go to the previous page"
-msgstr "Перейти к предыдущей странице"
-
-#: src/ppview-toolbar.c:104
-msgid "Next"
-msgstr "Следующее"
-
-#: src/ppview-toolbar.c:105
-msgid "Go to next page"
-msgstr "Перейти к следующей странице"
-
-#: src/ppview-toolbar.c:108
-msgid "Close"
-msgstr "Закрыть"
-
-#: src/ppview-toolbar.c:109
-msgid "Close print preview"
-msgstr "Закрыть просмотр печати"
-
-#. *
-#. * please translate like this: "<your language> (System setting)"
-#. * Examples:
-#. * "de"    translation: "Deutsch (Systemeinstellung)"
-#. * "en_AU" translation: "English, Australia (System setting)" or
-#. *                      "Australian English (System setting)"
-#.
-#: src/prefs-dialog.c:107
-msgid "System language"
-msgstr "Русский (Системные установки)"
-
-#: src/prefs-dialog.c:108
-msgid "Afrikaans"
-msgstr "Африкаанс"
-
-#: src/prefs-dialog.c:109
-msgid "Albanian"
-msgstr "Албанский"
-
-#: src/prefs-dialog.c:111
-msgid "Azerbaijani"
-msgstr "Азербайджанский"
-
-#: src/prefs-dialog.c:112
-msgid "Basque"
-msgstr "Баскский"
-
-#: src/prefs-dialog.c:113
-msgid "Breton"
-msgstr "Бретонский"
-
-#: src/prefs-dialog.c:114
-msgid "Bulgarian"
-msgstr "Болгарский"
-
-#: src/prefs-dialog.c:115
-msgid "Byelorussian"
-msgstr "Белорусский"
-
-#: src/prefs-dialog.c:116
-msgid "Catalan"
-msgstr "Каталонский"
-
-#: src/prefs-dialog.c:120
-msgid "Croatian"
-msgstr "Хорватский"
-
-#: src/prefs-dialog.c:121
-msgid "Czech"
-msgstr "Чешский"
-
-#: src/prefs-dialog.c:122
-msgid "Danish"
-msgstr "Датский"
-
-#: src/prefs-dialog.c:123
-msgid "Dutch"
-msgstr "Голландский"
-
-#: src/prefs-dialog.c:124
-msgid "English"
-msgstr "Английский"
-
-#: src/prefs-dialog.c:125
-msgid "Esperanto"
-msgstr "Эсперанто"
-
-#: src/prefs-dialog.c:126
-msgid "Estonian"
-msgstr "Эстонский"
-
-#: src/prefs-dialog.c:127
-msgid "Faeroese"
-msgstr "Фарерский"
-
-#: src/prefs-dialog.c:128
-msgid "Finnish"
-msgstr "Финский)"
-
-#: src/prefs-dialog.c:129
-msgid "French"
-msgstr "Французский"
-
-#: src/prefs-dialog.c:130
-msgid "Galician"
-msgstr "Гальский"
-
-#: src/prefs-dialog.c:131
-msgid "German"
-msgstr "Немецкий"
-
-#: src/prefs-dialog.c:134
-msgid "Hungarian"
-msgstr "Венгерский"
-
-#: src/prefs-dialog.c:135
-msgid "Icelandic"
-msgstr "Исландский"
-
-#: src/prefs-dialog.c:136
-msgid "Indonesian"
-msgstr "Индонезийский"
-
-#: src/prefs-dialog.c:137
-msgid "Irish"
-msgstr "Ирландский"
-
-#: src/prefs-dialog.c:138
-msgid "Italian"
-msgstr "Итальянский"
-
-#: src/prefs-dialog.c:141
-msgid "Latvian"
-msgstr "Латвийский"
-
-#: src/prefs-dialog.c:142
-msgid "Lithuanian"
-msgstr "Литовский"
-
-#: src/prefs-dialog.c:143
-msgid "Macedonian"
-msgstr "Македонский"
-
-#: src/prefs-dialog.c:144
-msgid "Malay"
-msgstr "Малайский"
-
-#: src/prefs-dialog.c:145
-msgid "Norwegian/Nynorsk"
-msgstr "Норвежский/Современный"
-
-#: src/prefs-dialog.c:146
-msgid "Norwegian/Bokmal"
-msgstr "Норвежский/Книжный"
-
-#: src/prefs-dialog.c:147
-msgid "Norwegian"
-msgstr "Норвежский"
-
-#: src/prefs-dialog.c:148
-msgid "Polish"
-msgstr "Польский"
-
-#: src/prefs-dialog.c:149
-msgid "Portuguese"
-msgstr "Португальский"
-
-#: src/prefs-dialog.c:150
-msgid "Portuguese of Brazil"
-msgstr "Бразильский португальский"
-
-#: src/prefs-dialog.c:151
-msgid "Romanian"
-msgstr "Румынский"
-
-#: src/prefs-dialog.c:153
-msgid "Scottish"
-msgstr "Шотландский"
-
-#: src/prefs-dialog.c:154
-msgid "Serbian"
-msgstr "Сербский"
-
-#: src/prefs-dialog.c:155
-msgid "Slovak"
-msgstr "Словацкий"
-
-#: src/prefs-dialog.c:156
-msgid "Slovenian"
-msgstr "Словенский"
-
-#: src/prefs-dialog.c:157
-msgid "Spanish"
-msgstr "Испанский"
-
-#: src/prefs-dialog.c:158
-msgid "Swedish"
-msgstr "Шведский"
-
-#: src/prefs-dialog.c:162
-msgid "Vietnamese"
-msgstr "Вьетнамская"
-
-#: src/prefs-dialog.c:163
-msgid "Walloon"
-msgstr "Валлонский"
-
-#: src/prefs-dialog.c:1060
+#: gnome-panel/launcher.c:470
 #, c-format
-msgid "Custom [%s]"
-msgstr "Другой [%s]"
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Не удается открыть файл \"%s\" для кнопки запуска панели%s%s\n"
 
-#. Note that this does NOT refer to the home page but to a
-#. * user's home folder. It should be translated by the same
-#. * term as GTK+'s "Home" string to be consistent with the
-#. * filechooser
-#: src/prefs-dialog.c:1105
-msgid "Home"
-msgstr "Домашний каталог"
+#: gnome-panel/launcher.c:712 gnome-panel/menu-ditem.c:182
+#: gnome-panel/menu-ditem.c:265
+msgid "Launcher Properties"
+msgstr "Свойства кнопки запуска"
 
-#: src/prefs-dialog.c:1114 src/prefs-dialog.c:1118
+#: gnome-panel/launcher.c:899
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr "Ключ %s не установлен, невозможно загрузить кнопку запуска\n"
+
+#: gnome-panel/launcher.c:953 gnome-panel/launcher.c:970
+#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:536
+msgid "Cannot create launcher"
+msgstr "Не удается создать кнопку запуска"
+
+#: gnome-panel/launcher.c:954 gnome-panel/menu-ditem.c:464
+msgid "You have to specify a name."
+msgstr "Необходимо указать имя."
+
+#: gnome-panel/launcher.c:971 gnome-panel/menu-ditem.c:481
+msgid "You have to specify a valid URL or command."
+msgstr "Необходимо указать допустимую ссылку (URL) или команду"
+
+#: gnome-panel/launcher.c:1014 gnome-panel/menu-ditem.c:544
+msgid "Create Launcher"
+msgstr "Создать кнопку запуска"
+
+#: gnome-panel/main.c:49
+msgid "Specify a profile name to load"
+msgstr "Задать название профиля для загрузки"
+
+#: gnome-panel/menu-ditem.c:127
+msgid "Cannot save changes to launcher"
+msgstr "Не удается сохранить изменения в кнопке запуска"
+
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1198
+msgid "Menu"
+msgstr "Меню"
+
+#. class
+#: gnome-panel/menu-ditem.c:511
+msgid "Cannot save menu item to disk"
+msgstr "Не удается сохранить пункт меню на диск"
+
+#: gnome-panel/menu-ditem.c:537
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Не удается создать новую кнопку запуска здесь, так как запись невозможна"
+
+#: gnome-panel/menu.c:191
+msgid "And many, many others..."
+msgstr "и многие, многие другие..."
+
+#: gnome-panel/menu.c:214
+msgid "The GNOME Panel"
+msgstr "Панель среды Гном версии"
+
+#: gnome-panel/menu.c:217
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+"Эта программа ответственна за запуск других приложений и встраивание "
+"маленьких апплетов в себя."
+
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
+#, c-format
+msgid "Cannot execute '%s'"
+msgstr "Не удается выполнить программу \"%s\""
+
+#: gnome-panel/menu.c:247
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: gnome-panel/menu.c:248
+msgid "About GNOME"
+msgstr "О среде Гном"
+
+#: gnome-panel/menu.c:272
+msgid "Cannot launch entry"
+msgstr "Не удается выполнить элемент"
+
+#: gnome-panel/menu.c:284
+msgid "Cannot load entry"
+msgstr "Не удается загрузить элемент"
+
+#: gnome-panel/menu.c:991
+#, c-format
+msgid "Cannot remove menu item %s"
+msgstr "Не удается убрать элемент меню %s"
+
+#: gnome-panel/menu.c:1002
+#, c-format
+msgid "Could not get file name from path: %s"
+msgstr "Не удается получить имя файла из пути: %s"
+
+#: gnome-panel/menu.c:1009
+#, c-format
+msgid "Could not get directory name from path: %s"
+msgstr "Не удается получить имя каталога из пути: %s"
+
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
+msgid "Main Menu"
+msgstr "Главное меню"
+
+#: gnome-panel/menu.c:1340
+msgid "Add this launcher to panel"
+msgstr "Добавить эту кнопку запуска на панель"
+
+#: gnome-panel/menu.c:1349
+msgid "Remove this item"
+msgstr "Убрать этот элемент"
+
+#: gnome-panel/menu.c:1397
+msgid "Entire menu"
+msgstr "Всё меню"
+
+#: gnome-panel/menu.c:1405
+msgid "Add this as drawer to panel"
+msgstr "Добавить это как ящик на панель"
+
+#: gnome-panel/menu.c:1414
+msgid "Add this as menu to panel"
+msgstr "Добавить это как меню на панель"
+
+#: gnome-panel/menu.c:1424
+msgid "Add new item to this menu"
+msgstr "Добавить новый элемент к этому меню"
+
+#: gnome-panel/menu.c:1451
+msgid "Properties"
+msgstr "Изменить свойства"
+
+#: gnome-panel/menu.c:2164 gnome-panel/menu.c:2168 gnome-panel/menu.c:2555
+#: gnome-panel/panel-menu-bar.c:202
+msgid "Applications"
+msgstr "Приложения"
+
+#: gnome-panel/menu.c:2208
+msgid "You cannot remove your last panel."
+msgstr "Не удается удалить последнюю панель."
+
+#: gnome-panel/menu.c:2268
+msgid "_Delete This Panel..."
+msgstr "_Удалить эту панель..."
+
+#: gnome-panel/menu.c:2271 gnome-panel/menu.c:2299
+msgid "_Delete This Panel"
+msgstr "_Удалить эту панель"
+
+#: gnome-panel/menu.c:2284
+msgid "_Add to Panel..."
+msgstr "_Добавить на панель..."
+
+#: gnome-panel/menu.c:2328
+msgid "_New Panel"
+msgstr "Со_здать панель"
+
+#: gnome-panel/menu.c:2375
+msgid "A_bout Panels"
+msgstr "_О панелях"
+
+#: gnome-panel/menu.c:2389
+msgid "About _GNOME"
+msgstr "О среде _Гном"
+
+#: gnome-panel/menu.c:2636
 msgid "Desktop"
 msgstr "Рабочий стол"
 
-#: src/prefs-dialog.c:1325
-msgid "Select a directory"
-msgstr "Выберите каталог"
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "_Активировать Хранитель экрана"
 
-#: src/toolbar.c:295
-msgid "Back"
-msgstr "Назад"
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "За_блокировать экран"
 
-#: src/toolbar.c:297
-msgid "Go back"
-msgstr "Назад"
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "О_становить демон Хранителя экрана"
 
-#: src/toolbar.c:309
-msgid "Forward"
-msgstr "Вперед"
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "_Перезапустить демон Хранителя экрана"
 
-#: src/toolbar.c:311
-msgid "Go forward"
-msgstr "Вперед"
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
+msgstr "Заблокировать экран"
 
-#: src/toolbar.c:322
-msgid "Up"
-msgstr "Вверх"
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "Защитить компьютер от несанкционированного использования"
 
-#: src/toolbar.c:324
-msgid "Go up"
-msgstr "Вверх"
+#: gnome-panel/panel-action-button.c:278
+msgid "Log Out"
+msgstr "Завершить сеанс"
 
-#: src/toolbar.c:340
-msgid "Enter a web address to open, or a phrase to search for on the web"
-msgstr "Введите веб-адрес для открытия или фразу для поиска в вебе"
-
-#: src/toolbar.c:352
-msgid "Zoom"
-msgstr "Масштаб"
-
-#: src/toolbar.c:354
-msgid "Adjust the text size"
-msgstr "Подогнать размер текста"
-
-#: src/toolbar.c:364
-msgid "Favicon"
-msgstr "Favicon"
-
-#: src/toolbar.c:374
-msgid "Go to the address entered in the address entry"
-msgstr "Перейти по адресу, введённому в строке адреса"
-
-#: src/window-commands.c:171
-msgid "Check this out!"
-msgstr "Проверить это!"
-
-#: src/window-commands.c:881
-msgid "Toolbar Editor"
-msgstr "Редактор панели инструментов"
-
-#: src/window-commands.c:902
-msgid "_Add a New Toolbar"
-msgstr "Доб_авить новую панель инструментов"
-
-#. Translator credits
-#: src/window-commands.c:954
-msgid "translator-credits"
+#: gnome-panel/panel-action-button.c:279
+msgid ""
+"Log out of this session to log in as a different user or to shut down the "
+"computer"
 msgstr ""
-"Валёк Филиппов <frob@df.ru>\n"
-"Дмитрий Мастрюков <dmitry@taurussoft.org>"
+"Завершить этот сеанс, чтобы войти как другой пользователь, или выключить "
+"компьютер"
 
-#: src/window-commands.c:986
-msgid "A GNOME browser based on Mozilla"
+#: gnome-panel/panel-action-button.c:288
+msgid "Run Application..."
+msgstr "Выполнить программу..."
+
+#: gnome-panel/panel-action-button.c:289
+msgid "Run an Application by entering a command"
+msgstr "Выполнить программу путём ввода командной строки"
+
+#: gnome-panel/panel-action-button.c:298
+msgid "Search for Files..."
+msgstr "Поиск файлов..."
+
+#: gnome-panel/panel-action-button.c:299
+msgid "Find files, folders, and documents on your computer"
+msgstr "Поиск файлов, каталогов и документов на компьютере"
+
+#: gnome-panel/panel-action-button.c:307
+msgid "Take Screenshot..."
+msgstr "Снимок экрана..."
+
+#: gnome-panel/panel-action-button.c:308
+msgid "Take a screenshot of your desktop"
+msgstr "Сделать снимок рабочего стола"
+
+#: gnome-panel/panel-action-button.c:316
+msgid "Force Quit"
+msgstr "Принудительное завершение"
+
+#: gnome-panel/panel-action-button.c:317
+msgid "Force a misbehaving application to quit"
+msgstr "Принудительно завершает работу сбоящего приложения"
+
+#: gnome-panel/panel-addto.c:103
+msgid "Custom Application Launcher"
+msgstr "Пользовательская кнопка запуска"
+
+#: gnome-panel/panel-addto.c:104
+msgid "Create a new launcher"
+msgstr "Создать кнопку запуска"
+
+#: gnome-panel/panel-addto.c:114
+msgid "Application Launcher..."
+msgstr "Запуск приложений..."
+
+#: gnome-panel/panel-addto.c:115
+msgid "Launch a program that is already in the GNOME menu"
+msgstr "Запускает программу, которая уже находится в меню среды Гном"
+
+#: gnome-panel/panel-addto.c:126
+msgid "The main GNOME menu"
+msgstr "Главное меню среды Гном"
+
+#: gnome-panel/panel-addto.c:136
+msgid "Menu Bar"
+msgstr "Строка меню"
+
+#: gnome-panel/panel-addto.c:137
+msgid "A custom menu bar"
+msgstr "Пользовательская строка меню"
+
+#: gnome-panel/panel-addto.c:148
+msgid "A pop out drawer to store other items in"
+msgstr "Всплывающий ящик для хранения других элементов"
+
+#: gnome-panel/panel-addto.c:236
+msgid "(empty)"
+msgstr "(пусто)"
+
+#: gnome-panel/panel-addto.c:376 libpanel-applet/panel-test-applets.c:156
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "запрос вернул исключение %s\n"
+
+#: gnome-panel/panel-addto.c:787
+#, c-format
+msgid "Add to %s"
+msgstr "Добавить к %s"
+
+#: gnome-panel/panel-addto.c:789
+msgid "Add to the panel"
+msgstr "Добавить на панель"
+
+#: gnome-panel/panel-addto.c:795
+#, c-format
+msgid "Select an _item to add to %s:"
+msgstr "Выбрать _элемент для добавления к %s:"
+
+#: gnome-panel/panel-addto.c:798
+msgid "Select an _item to add to the panel:"
+msgstr "Выбрать _элемент для добавления на панель:"
+
+#: gnome-panel/panel-applet-frame.c:757
+#, c-format
+msgid "Exception from popup_menu '%s'\n"
+msgstr "Произошло исключение во всплывающем меню \"%s\"\n"
+
+#: gnome-panel/panel-applet-frame.c:879
+#, c-format
+msgid ""
+"The \"%s\" applet appears to have died unexpectedly.\n"
+"\n"
+"Do you want to reload this applet?"
 msgstr ""
-"Программа просмотра (браузер) для среды Гном, основанная на ядре проекта "
-"\"Мозилла\""
+"Похоже, апплет \"%s\" внезапно завершился.\n"
+"\n"
+"Перезагрузить этот апплет?"
 
+#: gnome-panel/panel-applet-frame.c:885
+msgid ""
+"\n"
+"\n"
+"(If you choose not to reload it at this time you can always add it by right "
+"clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+msgstr ""
+"\n"
+"\n"
+"(Если вы решите не перезагружать его сейчас, апплет всегда можно добавить "
+"путём щелчка правой клавишей мыши на панели и выбором в появившемся меню "
+"пункта \"Добавить на панель\")"
+
+#: gnome-panel/panel-applet-frame.c:925
+msgid "D_on't Delete"
+msgstr "_Не удалять"
+
+#: gnome-panel/panel-applet-frame.c:961
+#, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "Обнаружилась проблема при загрузке апплета \"%s\"."
+
+#: gnome-panel/panel-applet-frame.c:966 gnome-panel/panel-util.c:260
+#, c-format
+msgid "Details: %s"
+msgstr "Подробности: %s"
+
+#: gnome-panel/panel-applet-frame.c:976 gnome-panel/panel-applet-frame.c:989
+msgid ""
+"\n"
+"\n"
+"Do you want to delete the applet from your configuration?"
+msgstr ""
+"\n"
+"\n"
+"Удалить апплет из текущей конфигурации?"
+
+#: gnome-panel/panel-applet-frame.c:1097
+msgid "Unable to obtain AppletShell interface from control\n"
+msgstr "Не удается получить интерфейс AppletShell из управляющего элемента\n"
+
+#: gnome-panel/panel-bindings.c:167
+#, c-format
+msgid "Error watching gconf key '%s': %s"
+msgstr "Произошла ошибка наблюдения за ключём \"%s\" системы GConf: %s"
+
+#: gnome-panel/panel-bindings.c:185
+#, c-format
+msgid "Error loading gconf directory '%s': %s"
+msgstr "Произошла ошибка загрузки каталога \"%s\" системы GConf: %s"
+
+#: gnome-panel/panel-bindings.c:199
+#, c-format
+msgid "Error getting value for '%s': %s"
+msgstr "Произошла ошибка получения значения для \"%s\": %s"
+
+#: gnome-panel/panel-force-quit.c:74
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Щелкните на окне приложения, которые хотите принудительно завершить.  Для "
+"отмены нажмите <ESC>."
+
+#: gnome-panel/panel-force-quit.c:186
+msgid ""
+"Force this application to exit?\n"
+"(Any open documents will be lost.)"
+msgstr ""
+"Завершить указанное приложение принудительно?\n"
+"(Все открытые файлы и/или документы будут потеряны.)"
+
+#: gnome-panel/panel-general.schemas.in.h:1
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"settings for each of these panels are stored in /apps/panel/general/"
+"$(profile)/toplevels/$(id)."
+msgstr ""
+"Список идентификаторов панелей.  Каждый идентификатор идентифицирует "
+"отдельную панель верхнего уровня.  Параметры каждой из этих панелей хранятся "
+"в /apps/panel/general/$(profile)/toplevels/$(id)."
+
+#: gnome-panel/panel-general.schemas.in.h:2
+msgid ""
+"A list of panel applet IDs. Each ID identifies an individual panel applet. "
+"The settings for each of these applets are stored in /apps/panel/general/"
+"$(profiles)/applets/$(id)."
+msgstr ""
+"Список идентификаторов апплетов панели.  Каждый идентификатор идентифицирует "
+"отдельный апплет на панели.  Параметры каждого из этих апплетов хранятся в /"
+"apps/panel/general/$(profiles)/applets/$(id)."
+
+#: gnome-panel/panel-general.schemas.in.h:3
+msgid ""
+"A list of panel object IDs. Each ID identifies an individual panel object (e."
+"g. a launcher, action button or menu button/bar). The settings for each of "
+"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
+msgstr ""
+"Список идентификаторов (ID) объектов панели.  Каждый идентификатор "
+"идентифицирует отдельный объект панели (например, кнопку запуска, кнопку "
+"команды или или меню).  Параметры каждого из этих объектов хранятся в /apps/"
+"panel/general/$(profiles)/objects/$(id)."
+
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Включить список программ в диалоге \"Выполнить программу\""
+
+#: gnome-panel/panel-general.schemas.in.h:5
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Разворачивать список программ в диалоге \"Выполнить программу\""
+
+#: gnome-panel/panel-general.schemas.in.h:6
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Если этот ключ установлен, список \"Известные приложения\" в диалоге "
+"\"Выполнить программу\" по умолчанию разворачивается.  Эта установка имеет "
+"смысл только в том случае, если устанвлен параметр enable_program_list."
+
+#: gnome-panel/panel-general.schemas.in.h:7
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
+msgstr ""
+"Если этот ключ установлен, то в диалоге \"Выполнить программу\" становится "
+"доступным список \"Известные приложения\".  Будет ли он развёрнут по "
+"умолчанию или нет -- контролируется настройкой show_program_list."
+
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid "Panel ID list"
+msgstr "Список идентификаторов панели"
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid "Panel applet ID list"
+msgstr "Список идентификаторов апплетов панели"
+
+#: gnome-panel/panel-general.schemas.in.h:10
+msgid "Panel object ID list"
+msgstr "Список идентификаторов объектов панели"
+
+#: gnome-panel/panel-global.schemas.in.h:1
+msgid ""
+"A list of applet IIDs that the panel will ignore. This way you can disable "
+"certain applets from loading or showing up in the menu. For example to "
+"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
+"this list. The panel must be restarted for this to take effect."
+msgstr ""
+"Список идентификаторов апплетов (IID), которые панель будет игнорировать. "
+"Таким образом можно запретить загрузку некоторых апплетов или их отображение "
+"в меню. Например, чтобы запретить апплет командной строки необходимо "
+"добавить строку \"OAFIID:GNOME_MiniCommanderApplet\" к этому списку. Для "
+"получения эффекта панель необходимо перезапустить."
+
+#: gnome-panel/panel-global.schemas.in.h:2
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Скорость анимации"
+
+#: gnome-panel/panel-global.schemas.in.h:3
+msgid "Applet IIDs to disable from loading"
+msgstr "Идентификаторы (IID) запрещённых апплетов"
+
+#: gnome-panel/panel-global.schemas.in.h:4
+msgid "Autoclose drawer"
+msgstr "Автоматически закрывать ящик"
+
+#: gnome-panel/panel-global.schemas.in.h:5
+msgid "Complete panel lockdown"
+msgstr "Полная блокировка панели"
+
+#: gnome-panel/panel-global.schemas.in.h:6
+msgid "Confirm panel removal"
+msgstr "Подтверждать удаление панели"
+
+#: gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "Отключить принудительное завершение"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+msgid "Disable Lock Screen"
+msgstr "Отключить блокирование экрана"
+
+#: gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr "Отключить завершение сеанса"
+
+#: gnome-panel/panel-global.schemas.in.h:10
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr "Отображать привязки клавиш диалога \"Выполнить программу\""
+
+#: gnome-panel/panel-global.schemas.in.h:11
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Включить анимацию"
+
+#: gnome-panel/panel-global.schemas.in.h:12
+msgid "Enable keybindings"
+msgstr "Включить привязки клавиш"
+
+#: gnome-panel/panel-global.schemas.in.h:13
+msgid "Enable tooltips"
+msgstr "Включить всплывающие подсказки"
+
+#: gnome-panel/panel-global.schemas.in.h:14
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr "FIXME - исправлено ли с новым меню?"
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "FIXME - need to define limits"
+msgstr "FIXME - необходимо определить пределы"
+
+#: gnome-panel/panel-global.schemas.in.h:16
+msgid "Highlight launchers on mouseover"
+msgstr "Подсвечивать кнопки при наведении мыши"
+
+#: gnome-panel/panel-global.schemas.in.h:17
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Если этот ключ установлен, при попытке удаления панели будет запрашиваться "
+"подтверждение."
+
+#: gnome-panel/panel-global.schemas.in.h:18
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Если этот ключ установлен, ящик будет автоматически закрываться при нажатии "
+"на одну из кнопок запуска в нём."
+
+#: gnome-panel/panel-global.schemas.in.h:19
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Если этот ключ установлен, кнопка запуска подсвечивается при наведении на "
+"неё указателя."
+
+#: gnome-panel/panel-global.schemas.in.h:20
+msgid "If true, panel-specific keybindings are enabled."
+msgstr "Если этот ключ установлен, привязки клавиш панели включены."
+
+#: gnome-panel/panel-global.schemas.in.h:21
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять принудительно завершать "
+"приложение. Соответствующая кнопка будет недоступна."
+
+#: gnome-panel/panel-global.schemas.in.h:22
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять блокировать экран. "
+"Соответствующий пункт меню будет недоступен."
+
+#: gnome-panel/panel-global.schemas.in.h:23
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять завершать сеанс. "
+"Соответствующий пункт меню будет недоступен."
+
+#: gnome-panel/panel-global.schemas.in.h:24
+msgid ""
+"If true, the panel will not allow any changes to the configuration of the "
+"panel. Individual applets may need to be locked down separately however. The "
+"panel must be restarted for this to take effect."
+msgstr ""
+"Если этот ключ установлен, панель не будет позволять производить изменения в "
+"конфигурации панели. Однако отдельные апплеты могут потребовать отдельной "
+"блокировки. Для достижения эффекта панель необходимо перезапустить."
+
+#: gnome-panel/panel-global.schemas.in.h:25
+msgid "If true, tooltips are shown for objects in panels."
+msgstr ""
+"Если этот ключ установлен, для объектов панели отображаются всплывающие "
+"подсказки."
+
+#: gnome-panel/panel-global.schemas.in.h:26
+msgid "Popup panel menu keybinding"
+msgstr "Привязка клавиш меню всплывающей панели"
+
+#: gnome-panel/panel-global.schemas.in.h:27
+msgid "Take screenshot"
+msgstr "Сделать снимок"
+
+#: gnome-panel/panel-global.schemas.in.h:28
+msgid "Take window screenshot"
+msgstr "Сделать снимок окна"
+
+#: gnome-panel/panel-menu-bar.c:184
+msgid "Actions"
+msgstr "Команды"
+
+#: gnome-panel/panel-object.schemas.in.h:1
+msgid "Action button type"
+msgstr "Тип кнопки действия"
+
+#: gnome-panel/panel-object.schemas.in.h:2
+msgid "Applet Bonobo IID"
+msgstr "Bonobo-идентификатор апплета"
+
+#: gnome-panel/panel-object.schemas.in.h:3
+msgid "Icon used for object's button"
+msgstr "Значок, используемый для кнопки объекта"
+
+#: gnome-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Если этот ключ установлен, то значение из ключа custom_icon используется как "
+"пользовательский значок для кнопки. Если не установлен, то значение ключа "
+"custom_icon будет проигнорировано. Этот параметр имеет смысл, только если "
+"ключ object_type содержит значение \"menu-object\" или \"drawer-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Если этот ключ установлен, то значение из ключа menu_path используется как "
+"путь, из которого будет сконструировано меню. Если не установлен, то "
+"значение ключа menu_path будет проигнорировано.  Этот параметр имеет смысл "
+"только если ключ object_type содержит значение \"menu-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Если этот ключ установлен, то позиция объекта интерпретируется относительно "
+"правого (или нижнего для вертикальных панелей) края панели."
+
+#: gnome-panel/panel-object.schemas.in.h:7
+msgid ""
+"If true, the user may not move the applet without first unlocking the object "
+"using the \"Unlock\" menuitem."
+msgstr ""
+"Если этот ключ установлен, то пользователь НЕ может перемещать апплет не "
+"отдав перед этим команду \"Разблокировать\"."
+
+#: gnome-panel/panel-object.schemas.in.h:8
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Интерпретировать позицию относительно нижнего/правого края"
+
+#: gnome-panel/panel-object.schemas.in.h:9
+msgid "Launcher location"
+msgstr "Расположение кнопки запуска"
+
+#: gnome-panel/panel-object.schemas.in.h:10
+msgid "Lock the object to the panel"
+msgstr "Блокировать объект на панели"
+
+#: gnome-panel/panel-object.schemas.in.h:11
+msgid "Menu content path"
+msgstr "Путь содержимого меню"
+
+#: gnome-panel/panel-object.schemas.in.h:12
+msgid "Object's position on the panel"
+msgstr "Позиция объекта на панели"
+
+#: gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "Панель, присоединённая к ящику"
+
+#: gnome-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "Тип объекта панели"
+
+#: gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"Идентификатор реализации Bonobo (the Bonobo implementation ID) апплета -- "
+"например, \"OAFIID:GNOME_ClockApplet\".  Эта параметр имеет смысл только "
+"если object_type содержит \"bonobo-applet\"."
+
+#: gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"Тип действия, реализуемого кнопкой.  Допустимые значения: \"lock\", \"logout"
+"\", \"run\", \"search\" and \"screenshot\".  Этот параметр имеет смысл "
+"только если object_type содержит \"action-applet\"."
+
+#: gnome-panel/panel-object.schemas.in.h:17
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"Идентификатор панели, присоединенной к данному ящику.  Эта параметр имеет "
+"смысл только если тип объекта (object_type) содержит \"drawer-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:18
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "Идентификатор панели верхнего уровня, которая содержит данный объект."
+
+#: gnome-panel/panel-object.schemas.in.h:19
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"Расположение файла .desktop, описывающего кнопку запуска.  Этот параметр "
+"имеет смысл, только если тип объекта (object_type) содержит \"launcher-object"
+"\"."
+
+#: gnome-panel/panel-object.schemas.in.h:20
+msgid ""
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
+msgstr ""
+"Расположение файла изображения, используемого как значок для кнопки "
+"объекта.  Этот ключ имеет смысл, если тип объекта (ключ object_type) "
+"содержит \"drawer-object\" и ключ use_custom_icon установлен."
+
+#: gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"Путь, из которого содержимое меню будет сконструировано. Этот ключ имеет "
+"смысл, только если ключ use_menu_path установлен и ключ object_type имеет "
+"значение \"menu-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:22
+msgid ""
+"The position of this panel object. The position is specified by the number "
+"of pixels from the left (or top if vertical) panel edge."
+msgstr ""
+"Позиция объекта на панели.  Позиция определяется количеством пикселей от "
+"левого (или верхнего для вертикальных панелей) края панели."
+
+#: gnome-panel/panel-object.schemas.in.h:23
+msgid ""
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgstr ""
+"Текст, используемый в качестве подсказки для данного ящика. Этот параметр "
+"имеет смысл, только если ключ object_type имеет значение  \"drawer-object\" "
+"или \"menu-object\"."
+
+#: gnome-panel/panel-object.schemas.in.h:24
+msgid ""
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
+msgstr ""
+"Тип объекта панели.  Допустимые значения: \"drawer-object\", \"menu-object"
+"\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" и \"menu-bar\"."
+
+#: gnome-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer or menu"
+msgstr "Всплывающая подсказка для ящика или меню"
+
+#: gnome-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "Панель верхнего уровня, содержащая объект"
+
+#: gnome-panel/panel-object.schemas.in.h:27
+msgid "Use custom icon for object's button"
+msgstr "Использовать другой значок для кнопки объекта"
+
+#: gnome-panel/panel-object.schemas.in.h:28
+msgid "Use custom path for menu contents"
+msgstr "Использовать иной путь к содержимому меню"
+
+#: gnome-panel/panel-profile.c:768 gnome-panel/panel-profile.c:799
+#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1641
+#, c-format
+msgid "Error reading GConf string value '%s': %s"
+msgstr "Ошибка чтения из GConf значения типа string: '%s': %s"
+
+#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1539
+#: gnome-panel/panel-profile.c:1610 gnome-panel/panel-profile.c:1673
+#, c-format
+msgid "Error reading GConf integer value '%s': %s"
+msgstr "Ошибка чтения из GConf значения типа integer: '%s': %s"
+
+#: gnome-panel/panel-profile.c:1549
+#, c-format
+msgid ""
+"Panel '%s' is set to be displayed on screen %d which is not currently "
+"available. Not loading this panel."
+msgstr ""
+"Панель '%s' настроена так, чтобы отображаться на экране (screen) %d, который "
+"в данный момент недоступен.  Панель НЕ загружена."
+
+#: gnome-panel/panel-profile.c:1625
+#, c-format
+msgid "Error reading GConf boolean value '%s': %s"
+msgstr "Ошибка чтения из GConf значения типа boolean: '%s': %s"
+
+#: gnome-panel/panel-properties-dialog.glade.h:3
+msgid "<small>Opaque</small>"
+msgstr "<small>непрозрачный</small>"
+
+#: gnome-panel/panel-properties-dialog.glade.h:4
+msgid "<small>Transparent</small>"
+msgstr "<small>прозрачный</small>"
+
+#: gnome-panel/panel-properties-dialog.glade.h:5
+msgid "Arro_ws on hide buttons"
+msgstr "Показывать с_трелки на кнопках сокрытия"
+
+#: gnome-panel/panel-properties-dialog.glade.h:6
+msgid "Background"
+msgstr "Фон"
+
+#: gnome-panel/panel-properties-dialog.glade.h:7
+msgid "Background _image:"
+msgstr "Фоновое _изображение:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:8
+#: libpanel-applet/panel-test-applets.glade.h:2
+msgid "Bottom"
+msgstr "внизу"
+
+#: gnome-panel/panel-properties-dialog.glade.h:9
+msgid "Co_lor:"
+msgstr "Ц_вет:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:10
+msgid "E_xpand"
+msgstr "Р_асширять до предела"
+
+#: gnome-panel/panel-properties-dialog.glade.h:11
+msgid "General"
+msgstr "Общие"
+
+#: gnome-panel/panel-properties-dialog.glade.h:12
+msgid "Image Background Details"
+msgstr "Подробности фонового изображения"
+
+#: gnome-panel/panel-properties-dialog.glade.h:13
+#: libpanel-applet/panel-test-applets.glade.h:4
+msgid "Left"
+msgstr "слева"
+
+#: gnome-panel/panel-properties-dialog.glade.h:14
+msgid "Panel Properties"
+msgstr "Свойства панели"
+
+#: gnome-panel/panel-properties-dialog.glade.h:15
+msgid "Pick a color"
+msgstr "Укажите цвет"
+
+#: gnome-panel/panel-properties-dialog.glade.h:16
+#: libpanel-applet/panel-test-applets.glade.h:8
+msgid "Right"
+msgstr "справа"
+
+#: gnome-panel/panel-properties-dialog.glade.h:17
+msgid "Rotate image when panel is _vertical"
+msgstr "Поворачивать изображение на _вертикальных панелях"
+
+#: gnome-panel/panel-properties-dialog.glade.h:18
+msgid "S_tyle:"
+msgstr "С_тиль:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:19
+msgid "Show hide _buttons"
+msgstr "Показывать _кнопки скрытия"
+
+#: gnome-panel/panel-properties-dialog.glade.h:20
+msgid "Solid c_olor"
+msgstr "Заливка _цветом"
+
+#: gnome-panel/panel-properties-dialog.glade.h:21
+msgid "Some of these properties are locked down"
+msgstr "Некоторые из этих свойств заблокированы"
+
+#: gnome-panel/panel-properties-dialog.glade.h:22
+msgid "St_retch"
+msgstr "Раст_ягивать"
+
+#: gnome-panel/panel-properties-dialog.glade.h:23
+#: libpanel-applet/panel-test-applets.glade.h:11
+msgid "Top"
+msgstr "вверху"
+
+#: gnome-panel/panel-properties-dialog.glade.h:24
+msgid "_Autohide"
+msgstr "Автоматически скр_ывать"
+
+#: gnome-panel/panel-properties-dialog.glade.h:25
+msgid "_Icon:"
+msgstr "З_начок:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:26
+msgid "_Name:"
+msgstr "_Имя:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:27
+msgid "_None (use system theme)"
+msgstr "_Нет (используется общесистемная тема)"
+
+#: gnome-panel/panel-properties-dialog.glade.h:28
+msgid "_Orientation:"
+msgstr "_Ориентация:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:29
+msgid "_Scale"
+msgstr "Мас_штабировать"
+
+#: gnome-panel/panel-properties-dialog.glade.h:30
+msgid "_Size:"
+msgstr "_Размер:"
+
+#: gnome-panel/panel-properties-dialog.glade.h:31
+msgid "_Tile"
+msgstr "Располагать в виде о_боев"
+
+#: gnome-panel/panel-recent.c:61
+msgid "Couldn't find a suitable application"
+msgstr "Не удается найти подходящее приложение"
+
+#: gnome-panel/panel-recent.c:87
+msgid ""
+"The default application for this type of file cannot handle remote files"
+msgstr ""
+"Исходное приложение для этого типа файла не может обрабатывать удалённые "
+"файлы"
+
+#: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
+msgid "Cannot open recently used document"
+msgstr "Не удаётся открыть недавно использовавшийся документ"
+
+#: gnome-panel/panel-recent.c:158
+#, c-format
+msgid "An unknown error occurred while trying to open %s"
+msgstr "Произошла неизвестная ошибка при попытке открыть \"%s\""
+
+#: gnome-panel/panel-recent.c:212
+msgid "Clear the Recent Documents list?"
+msgstr "Очистить список недавно использовавашихся документов?"
+
+#: gnome-panel/panel-recent.c:213
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
+msgstr ""
+"При очистке списка недавно использовавшихся документов будут очищены:\n"
+"\n"
+"• Все элементы меню Actions → Недавно использовавшиеся документы.\n"
+"• Все элементы из списка недавно использовавшихся документов во всех "
+"приложениях."
+
+#: gnome-panel/panel-recent.c:249
+msgid "Recent Documents"
+msgstr "Недавно использовавашиеся документы"
+
+#: gnome-panel/panel-recent.c:275
+msgid "Clear Recent Documents"
+msgstr "Очистить недавно использовавашиеся документы"
+
+#: gnome-panel/panel-run-dialog.c:289
+#, c-format
+msgid "Cannot launch command '%s'"
+msgstr "Не удаётся выполнить команду \"%s\""
+
+#: gnome-panel/panel-run-dialog.c:315
+#, c-format
+msgid "Cannot display location '%s'"
+msgstr "Не удаётся отобразить адрес '%s'"
+
+#: gnome-panel/panel-run-dialog.c:367
+#, c-format
+msgid "Cannot convert '%s' from UTF-8"
+msgstr "Не удается сконвертировать \"%s\" из UTF-8"
+
+#: gnome-panel/panel-run-dialog.c:1046
+msgid "Choose a file to append to the command..."
+msgstr "Выбрать файл для присоединения к команде..."
+
+#: gnome-panel/panel-run-dialog.c:1324
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "Будет выполнена команда: \"%s\""
+
+#: gnome-panel/panel-run-dialog.c:1330 gnome-panel/panel-run-dialog.glade.h:10
+msgid "Select an application to view its description."
+msgstr "Выбрать приложение для просмотра его описания."
+
+#: gnome-panel/panel-run-dialog.glade.h:2
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Щёлкнуть по этой кнопке для выбора файла, имя которого будет добавлено к "
+"командной строке."
+
+#: gnome-panel/panel-run-dialog.glade.h:3
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Щёлкнуть по этой кнопке для запуска выбранного приложения или выполнения "
+"команды, указанной в поле ввода."
+
+#: gnome-panel/panel-run-dialog.glade.h:4
+msgid "Command entry"
+msgstr "Поле ввода команды"
+
+#: gnome-panel/panel-run-dialog.glade.h:5
+msgid "Command icon"
+msgstr "Значок команды"
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "Enter a command string here to run it."
+msgstr "Ввести здесь командную строку."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "Запустить приложение"
+
+#: gnome-panel/panel-run-dialog.glade.h:8
+msgid "Run in _terminal"
+msgstr "Запустить в те_рминале"
+
+#: gnome-panel/panel-run-dialog.glade.h:9
+msgid "Run with _file..."
+msgstr "Запустить с _файлом..."
+
+#: gnome-panel/panel-run-dialog.glade.h:11
+msgid "Select this box to run the command in a terminal window."
+msgstr "Отметить для запуска команды в окне терминала."
+
+#: gnome-panel/panel-run-dialog.glade.h:12
+msgid "Show list of known _applications"
+msgstr "Показывать cписок известных прило_жений"
+
+#: gnome-panel/panel-run-dialog.glade.h:13
+msgid "The icon of the command to be run."
+msgstr "Значок команды для выполнения"
+
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:145
+msgid "_Run"
+msgstr "За_пустить"
+
+#: gnome-panel/panel-shell.c:74
+msgid ""
+"I've detected a panel already running,\n"
+"and will now exit."
+msgstr ""
+"Панель уже запущена.\n"
+"Новая панель запущена не будет."
+
+#: gnome-panel/panel-shell.c:78
+#, c-format
+msgid ""
+"There was a problem registering the panel with the bonobo-activation "
+"server.\n"
+"The error code is: %d\n"
+"The panel will now exit."
+msgstr ""
+"Возникла проблема при регистрации панели с помощью сервера bonobo-"
+"activation.\n"
+"Код ошибки: %d\n"
+"Панель будет закрыта."
+
+#: gnome-panel/panel-stock-icons.c:116
+#, c-format
+msgid "Unable to load panel stock icon '%s'\n"
+msgstr "Не удается загрузить встроенный значок панели \"%s\"\n"
+
+#: gnome-panel/panel-stock-icons.c:146
+msgid "_Force quit"
+msgstr "_Принудительно завершить"
+
+#: gnome-panel/panel-stock-icons.c:147
+msgid "C_lear"
+msgstr "О_чистить"
+
+#: gnome-panel/panel-toplevel.c:1109
+msgid "Hide Panel"
+msgstr "Скрыть панель"
+
+#. translators: these string will be shown in MetaCity's switch window
+#. * popup when you pass the focus to a panel
+#: gnome-panel/panel-toplevel.c:1470
+msgid "Top Expanded Edge Panel"
+msgstr "Верхняя расширенная краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1471
+msgid "Top Centered Panel"
+msgstr "Верхняя центрированная панель"
+
+#: gnome-panel/panel-toplevel.c:1472
+msgid "Top Floating Panel"
+msgstr "Верхняя плавающая панель"
+
+#: gnome-panel/panel-toplevel.c:1473
+msgid "Top Edge Panel"
+msgstr "Верхняя краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1477
+msgid "Bottom Expanded Edge Panel"
+msgstr "Нижняя расширенная краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1478
+msgid "Bottom Centered Panel"
+msgstr "Нижняя центрированная панель"
+
+#: gnome-panel/panel-toplevel.c:1479
+msgid "Bottom Floating Panel"
+msgstr "Нижняя плавающая панель"
+
+#: gnome-panel/panel-toplevel.c:1480
+msgid "Bottom Edge Panel"
+msgstr "Нижняя краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1484
+msgid "Left Expanded Edge Panel"
+msgstr "Левая расширенная краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1485
+msgid "Left Centered Panel"
+msgstr "Левая центрированная панель"
+
+#: gnome-panel/panel-toplevel.c:1486
+msgid "Left Floating Panel"
+msgstr "Левая плавающая панель"
+
+#: gnome-panel/panel-toplevel.c:1487
+msgid "Left Edge Panel"
+msgstr "Левая краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1491
+msgid "Right Expanded Edge Panel"
+msgstr "Правая расширенная краевая панель"
+
+#: gnome-panel/panel-toplevel.c:1492
+msgid "Right Centered Panel"
+msgstr "Правая центрированная панель"
+
+#: gnome-panel/panel-toplevel.c:1493
+msgid "Right Floating Panel"
+msgstr "Правая плавающая панель"
+
+#: gnome-panel/panel-toplevel.c:1494
+msgid "Right Edge Panel"
+msgstr "Правая краевая панель"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:2
+msgid "Automatically hide panel into corner"
+msgstr "Автоматически прятать панель в угол"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Фоновый цвет"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:4
+msgid "Background color opacity"
+msgstr "Степень непрозрачности фонового цвета"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:5
+msgid "Background image"
+msgstr "Фоновое изображение"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:6
+msgid "Background type"
+msgstr "Тип фон"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:7
+msgid "Center panel on x-axis"
+msgstr "Центрировать панель по оси X"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:8
+msgid "Center panel on y-axis"
+msgstr "Центрировать панель по оси Y"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:10
+msgid "Enable arrows on hide buttons"
+msgstr "Разрешить стрелки на кнопках сокрытия/раскрытия"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:11
+msgid "Enable hide buttons"
+msgstr "Разрешить кнопки сокрытия/раскрытия"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:12
+msgid "Expand to occupy entire screen width"
+msgstr "Расширять панель, пока она не займёт всю ширину экрана"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:13
+msgid "Fit image to panel"
+msgstr "Подгонять размер изображения под размер панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:14
+msgid ""
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
+msgstr ""
+"Если этот ключ установлен, то на кнопки скрытия/раскрытия будут нанесены "
+"стрелки.  Этот параметр имеет смысл, если установлен ключ enable_buttons."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:15
+msgid ""
+"If true, buttons will be placed on each side of the panel which may be used "
+"to move the panel to edge of the screen, leaving only a button showing."
+msgstr ""
+"Если этот ключ установлен, то на панель будут нанесены кнопки сокрытия/"
+"раскрытия.  Они используются для \"вывода\" панели за пределы экрана, так "
+"что остаётся видимой только кнопка, позволяющая \"развернуть\" панель "
+"обратно."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:16
+msgid ""
+"If true, hiding and un-hiding of this panel will be animated rather than "
+"happening instantly."
+msgstr ""
+"Если этот ключ установлен, то сокрытие и раскрытие панели будет "
+"анимированным, а не \"моментальным\"."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:17
+msgid ""
+"If true, the background image will be rotated when the panel is oriented "
+"vertically."
+msgstr ""
+"Если этот ключ установлен, то фоновое изображение будет повёрнуто, если "
+"панель ориентирована вертикально."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:18
+msgid ""
+"If true, the image will be scaled (retaining the aspect ratio of the image) "
+"to the panel height (if horizontal)."
+msgstr ""
+"Если этот ключ установлен, то фоновое изображение будет масштабироваться (с "
+"сохранением соотношения высота/ширина) до высоты панели (если панель "
+"горизонтальная)."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Если этот ключ установлен, размер изображения будет изменен до размеров "
+"панели. Соотношение ширина/высота изображения при этом не сохраняется."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"the pointer leaves the panel area. Moving the pointer to that corner again "
+"will cause the panel to re-appear."
+msgstr ""
+"Если этот ключ установлен, то при покидании указателем мыши пространства над "
+"панелью панель автоматически скрывается в угол экрана.  Перемещение "
+"указателя мыши в этот угол вызовет раскрытие этой панели."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:21
+msgid ""
+"If true, the panel will occupy the entire screen width (height if this is a "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
+"If false, the panel will only be large enough to accommodate the applets, "
+"launchers and buttons on the panel."
+msgstr ""
+"Если этот ключ установлен, то панель будет занимать всю ширину экрана (или "
+"высоту, если панель вертикальная).  Такие панели могут размещаться только по "
+"краям экрана.  Если не установлен, то паналь будет занимать столько "
+"пространства, сколько необходимо для размещения включенных в нее апплетов, "
+"кнопок и т.п."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
+msgstr ""
+"Если этот ключ установлен, то установка X-координаты игнорируется и панель "
+"помещается в центр оси-X экрана.  Если панель изменяет размер, она всё равно "
+"остаётся на том же месте (иными словами -- расширяется одновременно в обе "
+"стороны).  Если ключ не установлен, то установка X-координаты принимается во "
+"внимание и определяет положение панели."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y key is ignored and the panel is placed at the center of the y-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the y key specifies the "
+"location of the panel."
+msgstr ""
+"Если этот ключ установлен, то установка Y-координаты игнорируется и панель "
+"помещается в центр оси Y экрана.  Если панель изменяет размер, она всё равно "
+"остаётся на том же месте (иными словами -- расширяется одновременно в обе "
+"стороны).  Если ключ не установлен, то установка Y-координаты принимается во "
+"внимание и определяет положение панели."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
+msgid ""
+"In a Xinerama setup, you may have panels on each individual monitor. This "
+"key identifies the current monitor the panel is displayed on."
+msgstr ""
+"При использовании системы Xinerama, можно помещать панель на индивидуальный "
+"монитор. Этот ключ определяет текущий монитор, на котором панель помещена."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Имя для идентификации панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Задержка автоскрытия панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Задержка автораскрытия панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientation"
+msgstr "Ориентация панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Размер панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Поворачивать изображение на вертикальных панелях"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:31
+msgid "Specifies the background color for the panel in #RGB format."
+msgstr "Указывает цвет фона для панели (в формате #RGB)."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:32
+msgid ""
+"Specifies the file to be used for the background image. If the image "
+"contains an alpha channel it will be composited onto the desktop background "
+"image."
+msgstr ""
+"Указывает файл, используемый в качестве фонового изображения.  Если "
+"изображение содержит альфа-канал, то оно будет \"совмещено\" на прозрачных "
+"участках с изображением фона рабочего стола."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:33
+msgid ""
+"Specifies the number of milliseconds delay after the pointer enters the "
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Указывает задержку в миллисекундах между появлением указателя мыши в области "
+"панели и автоматическим раскрытием этой панели.  Имеет смысл, только если "
+"установлен ключ auto_hide."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:34
+msgid ""
+"Specifies the number of milliseconds delay after the pointer leaves the "
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
+msgstr ""
+"Указывает задержку в миллисекундах между покиданием указателем мыши области "
+"над панелью и автоматическим скрытием этой панели.  Имеет смысл только если "
+"установлен ключ auto_hide."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:35
+msgid ""
+"Specifies the number of pixels visible when the panel is automatically "
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgstr ""
+"Указывает количество пикселов, видимых когда панель автоматически скрывается "
+"за границу экрана.  Эта установка имеет смысл только если установлен ключ "
+"auto_hide."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:36
+msgid ""
+"Specifies the opacity of the background color format. If the color is not "
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr ""
+"Определяет степень непрозрачности фонового цвета.  Если цвет имеет какую-то "
+"прозрачность (значение этого параметра меньше, чем 65535), то цвет будет "
+"\"совмещен\" с изображением фона рабочего стола."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:37
+msgid "Stretch image to panel"
+msgstr "Растянуть изображение по панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:38
+msgid ""
+"The height (width for a vertical panel) of the panel. The panel will "
+"determine at runtime a minimum size based on the font size and other "
+"indicators. The maximum size is fixed at one quarter of the screen height "
+"(or width)."
+msgstr ""
+"Высота панели (или ширина, если панель вертикальная).  Панель определяет "
+"минимально допустимый размер \"на ходу\" исходя из размера шрифта и "
+"помещенных на неё индикаторов.  Максимальный размер ограничен четвертью "
+"высоты экрана (или ширины, для вертикальных панелей)."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Расположение панели по оси X. Это значение имеет эффект только в "
+"нерасширенном режиме. В расширенном режиме это значение игнорируется, и "
+"панель размещается у края экрана в соответствии со значением ключа "
+"ориентации."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:40
+msgid ""
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"Расположение панели по оси Y. Это значение имеет эффект только в "
+"нерасширенном режиме. В расширенном режиме это значение игнорируется, и "
+"панель размещается у края экрана в соответствии со значением ключа "
+"ориентации."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:41
+msgid ""
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
+msgstr ""
+"Ориентация панели. Возможные значения; \"top\", \"bottom\", \"left\", \"right"
+"\". В расширенном режиме значение определяет, у какой стороны экрана "
+"расположена панель. В нерасширенном режиме разница между \"top\" и \"bottom"
+"\" менее важна - оба значения определяют, что это горизонтальная панель, но "
+"всё же определяет некоторые аспекты поведения объектов на панели. Например, "
+"при значении \"top\" выпадающее меню у кнопки меню будет ориентировано вниз, "
+"тогда как при \"bottom\" - вверх."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:42
+msgid ""
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
+msgstr ""
+"Скорость, с которой должна производиться анимация.  Допустимые значения: "
+"\"slow\" (медленно), \"medium\" (средне), и \"fast\" (быстро).  Этот ключ "
+"действует только в том случае, если установлен ключ enable_animations."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:43
+msgid ""
+"This is a human readable name which you can use to identify a panel. Its "
+"main purpose is to serve as the panel's window title which is useful when "
+"navigating between panels."
+msgstr ""
+"Удобное для чтения человеком имя панели.  Основное назначение -- служить "
+"заголовком окна панели, что полезно при переключении между панелями."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+msgid "Visible pixels when hidden"
+msgstr "Количество отображаемых пикселов скрытой панели."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Какой тип фона использовать для панели.  Допустимые значения: \"gtk\" (будет "
+"использован общесистемный фон GTK+ виджетов), \"color\" (фон будет залит "
+"цветом, указанным в соотв. настройке) и \"image\" (в качестве фона будет "
+"использовано указанное в соотв. настройке изображение)."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
+msgid ""
+"With a multi-screen setup, you may have panels on each individual screen. "
+"This key identifies the current screen the panel is displayed on."
+msgstr ""
+"При настройке с несколькими экранами можно помещать панель на индивидуальный "
+"экран. Данный ключ определяет текущий экран, на который помещена панель."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+msgid "X co-ordinate of panel"
+msgstr "X-координата панели"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+msgid "X screen where the panel is displayed"
+msgstr "Экран в системе Икс (Х), где панель будет отображена"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+msgid "Xinerama monitor where the panel is displayed"
+msgstr "Монитора в расширении Xinerama, где панель будет отображена"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "Y co-ordinate of panel"
+msgstr "Y-координата панели"
+
+#: gnome-panel/panel-util.c:70
+msgid "Cannot display help document"
+msgstr "Не удается показать справку"
+
+#: gnome-panel/panel.c:458
+#, c-format
+msgid "Open URL: %s"
+msgstr "Открыть ссылку (URL): %s"
+
+#: gnome-panel/panel.c:1272
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"Когда панель удаляется, теряются настройки её апплетов\n"
+"и её собственные. Удалить эту панель?"
+
+#: gnome-panel/panel.c:1281
+msgid "Delete Panel"
+msgstr "Удалить панель"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr "Простой апплет для проверки панели среды Гном"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+msgid "Test Bonobo Applet"
+msgstr "Тестовый апплет Bonobo"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr "Фабрика тестового апплета bonobo"
+
+#: libpanel-applet/panel-applet.c:848
+#, c-format
+msgid "Incomplete '%s' background type received"
+msgstr "Получен незавершённый тип фона \"%s\""
+
+#: libpanel-applet/panel-applet.c:862
+#, c-format
+msgid "Incomplete '%s' background type received: %s"
+msgstr "Получен незавершённый тип фона \"%s\": %s"
+
+#: libpanel-applet/panel-applet.c:871
+#, c-format
+msgid "Failed to get pixmap %s"
+msgstr "Произошёл сбой при получении изображения %s"
+
+#: libpanel-applet/panel-applet.c:878
+msgid "Unknown background type received"
+msgstr "Получен неизвестный тип фона"
+
+#: libpanel-applet/panel-applet.c:1063
+msgid "The Applet's containing Panel's orientation"
+msgstr "Указание на ориентацию панели"
+
+#: libpanel-applet/panel-applet.c:1071
+msgid "The Applet's containing Panel's size in pixels"
+msgstr "Размер панели в пикселях"
+
+#: libpanel-applet/panel-applet.c:1079
+msgid "The Applet's containing Panel's background color or pixmap"
+msgstr "Содержит цвет фона панели или изображение"
+
+#: libpanel-applet/panel-applet.c:1087
+msgid "The Applet's flags"
+msgstr "Флаги апплета"
+
+#: libpanel-applet/panel-applet.c:1095
+msgid "Ranges that hint what sizes are acceptable for the applet"
+msgstr "Изменяет размеры подсказки так, чтобы они были приемлемы для апплета"
+
+#: libpanel-applet/panel-applet.c:1103
+msgid "The Applet's containing Panel is locked down"
+msgstr "Панель, содержащая апплет, заблокирована"
+
+#: libpanel-applet/panel-test-applets.c:33
+msgid "Specify an applet IID to load"
+msgstr "Указывает идентификатор (IID) апплета для загрузки"
+
+#: libpanel-applet/panel-test-applets.c:34
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
+msgstr ""
+"Указывает местоположение в системе GConf, где настройки апплета будут "
+"сохранены"
+
+#: libpanel-applet/panel-test-applets.c:35
+msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
+msgstr "Указывает начальный размер апплета (xx-small, medium, large и т.п.)"
+
+#: libpanel-applet/panel-test-applets.c:37
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr "Указывает начальную ориентацию апплета (top, bottom, left или right)"
+
+#: libpanel-applet/panel-test-applets.glade.h:1
+msgid "Applet:"
+msgstr "Апплет:"
+
+#: libpanel-applet/panel-test-applets.glade.h:3
+msgid "Large"
+msgstr "Большая"
+
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "средняя"
+
+#: libpanel-applet/panel-test-applets.glade.h:6
+msgid "Orientation:"
+msgstr "Ориентация:"
+
+#: libpanel-applet/panel-test-applets.glade.h:7
+msgid "Prefs Dir:"
+msgstr "Предпочитаемые каталоги:"
+
+#: libpanel-applet/panel-test-applets.glade.h:9
+msgid "Size:"
+msgstr "Размер:"
+
+#: libpanel-applet/panel-test-applets.glade.h:10
+msgid "Small"
+msgstr "Маленькая"
+
+#: libpanel-applet/panel-test-applets.glade.h:12
+msgid "X Large"
+msgstr "Очень большая"
+
+#: libpanel-applet/panel-test-applets.glade.h:13
+msgid "X Small"
+msgstr "Очень маленькая"
+
+#: libpanel-applet/panel-test-applets.glade.h:14
+msgid "XX Large"
+msgstr "Сверхбольшая"
+
+#: libpanel-applet/panel-test-applets.glade.h:15
+msgid "XX Small"
+msgstr "Сверхмаленькая"
