@@ -7,23 +7,23 @@
 # Huib Kleinhout <huib@stack.nl>, 2002.
 # Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002.
 # Tino MeinHen <a.t.meinen@chello.nl>, 2002.
-# Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2003
+# Reinout van Schouwen <reinout@cs.vu.nl>, 2002-2004
 # we kunnen er voor kiezen om mail te vertalen met berichten.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.3.x\n"
+"Project-Id-Version: gnome-panel \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 16:01+0100\n"
-"PO-Revision-Date: 2004-02-16 00:48+0100\n"
+"POT-Creation-Date: 2004-08-22 11:47+0200\n"
+"PO-Revision-Date: 2004-08-22 17:05+0100\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
 msgstr "Datum & tijd _wijzigen..."
 
@@ -42,9 +42,8 @@ msgstr "_Tijd kopiëren"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "_Info..."
+msgstr "_Info"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -63,9 +62,8 @@ msgstr "_Hulp"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "_Voorkeuren..."
+msgstr "_Voorkeuren"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: applets/clock/clock.c:2544
@@ -140,9 +138,8 @@ msgstr "%A %d %B "
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr "%a %e %b"
+msgstr "%d %b"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -333,7 +330,6 @@ msgstr ""
 "verkrijgen."
 
 #: applets/clock/clock.schemas.in.h:16
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -364,9 +360,8 @@ msgid "Time configuration tool"
 msgstr "Tijd-instelprogramma"
 
 #: applets/clock/clock.schemas.in.h:19
-#, fuzzy
 msgid "Use Internet time"
-msgstr "Internet-tijd gebruiken"
+msgstr "Internettijd gebruiken"
 
 #: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
@@ -1166,9 +1161,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan geen schermafdruk maken van het huidige bureaublad."
 
 #: gnome-panel/gnome-panel-screenshot.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "Schermafdruk opslaan als _webpagina (opslaan in ~/public__html)"
+msgstr "Schermafdruk opslaan als _webpagina (opslaan in %s)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
@@ -1399,16 +1394,14 @@ msgid "_Delete This Panel"
 msgstr "Dit paneel _verwijderen"
 
 #: gnome-panel/menu.c:2289
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "_Toevoegen aan paneel"
+msgstr "_Toevoegen aan paneel..."
 
 #: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "_Nieuw paneel"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
 msgstr "_Paneel-info"
 
@@ -1489,28 +1482,24 @@ msgid "Force a misbehaving application to quit"
 msgstr "Een zich misdragende toepassing dwingen tot afsluiten"
 
 #: gnome-panel/panel-addto.c:103
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Toepassing uitvoeren"
+msgstr "Aangepaste toepassingsstarter"
 
 #: gnome-panel/panel-addto.c:104
-#, fuzzy
 msgid "Create a new launcher"
-msgstr "Starter aanmaken"
+msgstr "Nieuwe starter aanmaken"
 
 #: gnome-panel/panel-addto.c:114
-#, fuzzy
 msgid "Application Launcher..."
-msgstr "Toepassing uitvoeren..."
+msgstr "Toepassingsstarter..."
 
 #: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Programma starten dat al in het GNOME-menu staat"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "Het GNOME-paneel"
+msgstr "Het GNOME-hoofdmenu"
 
 #: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
@@ -1518,15 +1507,15 @@ msgstr "Menubalk"
 
 #: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
-msgstr ""
+msgstr "Een aangepaste menubalk"
 
 #: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Een opberglade voor andere items die openspringt"
 
 #: gnome-panel/panel-addto.c:236
 msgid "(empty)"
-msgstr ""
+msgstr "(leeg)"
 
 #: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1534,23 +1523,22 @@ msgid "query returned exception %s\n"
 msgstr "query resulteerde in uitzondering %s\n"
 
 #: gnome-panel/panel-addto.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "_Toevoegen aan paneel"
+msgstr "Toevoegen aan %s"
 
 #: gnome-panel/panel-addto.c:768
-#, fuzzy
 msgid "Add to the panel"
-msgstr "_Toevoegen aan paneel"
+msgstr "Toevoegen aan het paneel"
 
 #: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "Selecteer een _item om aan %s toe te voegen:"
 
 #: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "Selecteer een _item om aan het paneel toe te voegen:"
 
 #: gnome-panel/panel-applet-frame.c:757
 #, c-format
@@ -2228,9 +2216,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Een onbekende fout is opgetreden bij een poging om %s te openen"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Recente documenten"
+msgstr "Recente documentenlijst wissen?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2239,15 +2226,18 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Als u de Recente documentenlijst wist, dan gooit u het volgende weg:\n"
+"\n"
+"• Alle items uit het Acties → Recente documenten menu-item.\n"
+"• Alle items uit de recente documentenlijst in alle toepassingen."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "Recente documenten"
 
 #: gnome-panel/panel-recent.c:275
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Recente documenten"
+msgstr "Recente documenten wissen"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2366,9 +2356,8 @@ msgid "_Force quit"
 msgstr "Afsluiten _forceren"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Kalender"
+msgstr "_Wissen"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
