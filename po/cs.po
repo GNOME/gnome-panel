@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-06-13 12:38+0200\n"
-"PO-Revision-Date: 2003-06-17 19:42+0200\n"
+"POT-Creation-Date: 2003-06-20 04:33+0200\n"
+"PO-Revision-Date: 2003-06-20 12:01+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -278,7 +278,7 @@ msgstr "_O programu..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:646 gnome-panel/launcher.c:748 gnome-panel/menu.c:3088
+#: gnome-panel/drawer.c:646 gnome-panel/menu.c:3088
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -391,11 +391,12 @@ msgstr "GNOME ryba, věštkyně"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:1
+#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:2
 #: gnome-panel/panel-properties-dialog.glade.h:3
 #: gnome-panel/panel-run-dialog.glade.h:1
 msgid "*"
@@ -868,29 +869,29 @@ msgstr ""
 "Jestli se mají v Přepínači pracovních ploch zobrazovat názvy pracovních "
 "ploch."
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:485
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:482
 #: gnome-panel/panel-applet-frame.c:88
 msgid "Un_lock"
 msgstr "Ode_mknout"
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:485
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:482
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
 msgid "_Lock"
 msgstr "Za_mknout"
 
-#: gnome-panel/applet.c:412
+#: gnome-panel/applet.c:409
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:478 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:475 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "Od_stranit z panelu"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:489 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/applet.c:1037
+#: gnome-panel/applet.c:1034
 msgid "Can't find an empty spot"
 msgstr "Nelze najít volné místo"
 
@@ -1015,7 +1016,7 @@ msgstr "Povolit šipku na ukrývacím tlačítku"
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:746 gnome-panel/menu.c:1596
+#: gnome-panel/drawer.c:643 gnome-panel/launcher.c:749 gnome-panel/menu.c:1596
 #: gnome-panel/menu.c:3042 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Vlastnosti"
@@ -1190,33 +1191,33 @@ msgstr ""
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nelze zachytit aktuální plochu."
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
 msgstr "<b>Volby</b>"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:3
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "<b>Preview</b>"
 msgstr "<b>Náhled</b>"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:4
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save Screenshot"
 msgstr "Uložit snímek obrazovky"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _desktop"
 msgstr "Zapsat obrazovku na _plochu"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "_Uložit snímek obrazovky do souboru:"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Zapsat obrazovku na _www stránku (uložit v ~/public_html)"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:7
+#: gnome-panel/gnome-panel-screenshot.glade.h:9
 msgid "_Print screenshot..."
 msgstr "_Tisknout obrazovku..."
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:8
-msgid "_Save screenshot to file:"
-msgstr "_Zapsat obrazovku do souboru:"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1262,7 +1263,7 @@ msgstr ""
 msgid "Cannot launch icon"
 msgstr "Nemohu spustit ikonu"
 
-#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
+#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1093
 #: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
 #: gnome-panel/menu.c:1127 gnome-panel/menu.c:1236 gnome-panel/menu.c:1268
 #: gnome-panel/menu.c:1286 gnome-panel/menu-ditem.c:123
@@ -1299,16 +1300,16 @@ msgstr "Nápověda k _aplikaci %s"
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: gnome-panel/launcher.c:811
+#: gnome-panel/launcher.c:812
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nelze načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
+#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
-#: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
+#: gnome-panel/launcher.c:1092 gnome-panel/menu.c:1267
 #: gnome-panel/panel-util.c:75
 msgid "Cannot display help document"
 msgstr "Nemohu zobrazit dokument nápovědy"
@@ -1573,8 +1574,8 @@ msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
 #: gnome-panel/menu.c:3417 gnome-panel/panel-menu-bar.c:138
-msgid "Screenshot..."
-msgstr "Snímek obrazovky..."
+msgid "Take Screenshot..."
+msgstr "Zachytit obrazovku..."
 
 #: gnome-panel/menu.c:3435
 msgid "Desktop"
@@ -2895,11 +2896,11 @@ msgstr "Dokument nápovědy nenalezen"
 msgid "No document to show"
 msgstr "Dokument, který se má zobrazit, chybí"
 
-#: gnome-panel/panel-util.c:933
+#: gnome-panel/panel-util.c:934
 msgid "Cannot execute xscreensaver"
 msgstr "Nemohu spustit xscreensaver"
 
-#: gnome-panel/panel-util.c:934
+#: gnome-panel/panel-util.c:935
 msgid "Details: xscreensaver-command not found"
 msgstr "Detaily: nenalezen xscreensaver-command"
 
