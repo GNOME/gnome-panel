@@ -206,29 +206,9 @@ gnome_panel_add_launcher_LDADD = \
 	$(INTLLIBS)		\
 	@PIXBUF_LIBS@
 
-data_DATA = panelrc
-
-## Why not just make this via configure?  Because @datadir@ will be
-## expanded incorrectly.
-
-# xpanel: xpanel.in Makefile
-# ## Why do a sed and then an mv?  To avoid problems if the user
-# ## interrupts.
-# 	sed -e 's,\@bindir\@,$(bindir),g' < $(srcdir)/xpanel.in \
-# 	> xpanel.tmp && chmod +x xpanel.tmp && mv -f xpanel.tmp xpanel
-
-panelrc: panelrc.in Makefile
-## Why do a sed and then an mv?  To avoid problems if the user
-## interrupts.
-	sed -e 's,\@datadir\@,$(datadir),g' < $(srcdir)/panelrc.in \
-	  > panelrc.tmp && mv -f panelrc.tmp panelrc
-
-MOSTLYCLEANFILES = panelrc
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
 EXTRA_DIST = \
-	panelrc.in			\
-	panel.in			\
 	appletsConf.sh.in		\
 	dockletsConf.sh.in		\
 	panel.gnorba			\

@@ -583,12 +583,14 @@ focus_task (GtkWidget *w, GwmhTask *task)
 }
 
 static void
-append_task (GwmhTask *task, FoobarWidget *foo)
+add_task (GwmhTask *task, FoobarWidget *foo)
 {
 	GtkWidget *item, *label;
 	char *title = NULL;
 	int slen;
 	GtkWidget *pixmap  = NULL;
+
+	static GwmhDesk *desk = NULL;
 
 	g_assert (foo->tasks);
 
@@ -616,7 +618,16 @@ append_task (GwmhTask *task, FoobarWidget *foo)
 			    GTK_SIGNAL_FUNC (focus_task),
 			    task);
 	gtk_widget_show_all (item);
-	gtk_menu_append (GTK_MENU (foo->task_menu), item);
+	
+	if (!desk)
+		desk = gwmh_desk_get_config ();
+
+	if (task->desktop == desk->current_desktop &&
+	    task->harea   == desk->current_harea   &&
+	    task->varea   == desk->current_varea)
+		gtk_menu_prepend (GTK_MENU (foo->task_menu), item);
+	else
+		gtk_menu_append (GTK_MENU (foo->task_menu), item);
 }
 
 static void
@@ -628,7 +639,9 @@ create_task_menu (GtkWidget *w, gpointer data)
 	/*g_message ("creating...");*/
 	foo->tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
 
-	g_list_foreach (tasks, (GFunc)append_task, foo);
+	add_menu_separator (foo->task_menu);
+
+	g_list_foreach (tasks, (GFunc)add_task, foo);
 
 	/* Owen: don't read the next line */
 	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
@@ -690,6 +703,9 @@ get_default_pixmap (void)
 static void
 set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 {
+	if (!GTK_WIDGET_REALIZED (foo))
+		return;
+
 	if (foo->task_pixmap != NULL)
 		gtk_widget_destroy (foo->task_pixmap);
 	foo->task_pixmap = NULL;
@@ -727,7 +743,7 @@ task_notify (gpointer data, GwmhTask *task,
 		break;
 	case GWMH_NOTIFY_NEW:
 		if (foo->tasks)
-			append_task (task, foo);
+			add_task (task, foo);
 		break;
 	case GWMH_NOTIFY_DESTROY:
 		if (foo->tasks) {

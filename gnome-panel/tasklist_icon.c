@@ -92,7 +92,7 @@ tasklist_icon_check_mini (GwmhTask *task,  GtkWidget *widget)
 	gdk_pixmap_unref (pixmap);
 	
 	if (size > 1 && atomdata[1]) {
-		mask = gdk_pixmap_new (NULL, width, height, depth);
+		mask = gdk_pixmap_new (widget->window, width, height, depth);
 		gc = gdk_gc_new (mask);
 		gdk_gc_set_background (gc, &widget->style->black);
 		gdk_gc_set_foreground (gc, &widget->style->white);
