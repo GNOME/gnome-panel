@@ -1,5 +1,10 @@
 2004-12-22  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-toplevel.c: (panel_toplevel_auto_hide_timeout_handler):
+	reset the hide timeout id. Fix autohiding not always working.
+
+2004-12-22  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-struts.c: (get_toplevel_depth): new function to know the depth
 	of a toplevel (useful for drawers)
 	(panel_struts_compare): panel with biggest depth should be at the top

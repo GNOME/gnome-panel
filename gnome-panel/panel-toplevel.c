@@ -3216,8 +3216,10 @@ panel_toplevel_auto_hide_timeout_handler (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
 
-	if (panel_toplevel_get_autohide_disabled (toplevel))
+	if (panel_toplevel_get_autohide_disabled (toplevel)) {
+		toplevel->priv->hide_timeout = 0;
 		return FALSE;
+	}
 
 	/* keep coming back until the animation has finished.
 	 * FIXME: we should really remove the timeout/idle
