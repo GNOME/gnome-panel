@@ -55,4 +55,6 @@ void xstuff_set_wmspec_strut		(GdkWindow *window,
 					 int top,
 					 int bottom);
 
+void xstuff_window_raise_on_current_wspace (GtkWidget *window);
+
 #endif

@@ -489,7 +489,7 @@ applet_setup_panel_menu (gboolean is_basep)
 		
 		pixbuf = gdk_pixbuf_new_from_file (pixmap_path, NULL);
 
-		if (pixbuf) {
+		if (pixbuf != NULL) {
 			scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
 								 SMALL_ICON_SIZE,
 								 SMALL_ICON_SIZE,
@@ -497,9 +497,10 @@ applet_setup_panel_menu (gboolean is_basep)
 			g_object_unref (pixbuf);
 		}
 
-		if (scaled_pixbuf)
+		if (scaled_pixbuf != NULL) {
 			image = gtk_image_new_from_pixbuf (scaled_pixbuf);
-		g_object_unref (scaled_pixbuf);
+			g_object_unref (scaled_pixbuf);
+		}
 		
 		setup_menuitem (menuitem, 
 				image,

@@ -25,6 +25,7 @@
 
 #include "quick-desktop-reader.h"
 #include "panel-util.h"
+#include "xstuff.h"
 
 #include "menu-properties.h"
 
@@ -625,8 +626,7 @@ menu_properties (Menu *menu)
 	g_return_if_fail (menu != NULL);
 
 	if (menu->prop_dialog != NULL) {
-		gtk_widget_show_now (menu->prop_dialog);
-		gdk_window_raise (menu->prop_dialog->window);
+		xstuff_window_raise_on_current_wspace (menu->prop_dialog);
 		return;
 	}
 

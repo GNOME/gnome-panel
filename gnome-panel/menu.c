@@ -62,6 +62,7 @@
 #include "tearoffitem.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
+#include "xstuff.h"
 
 #undef MENU_DEBUG
 
@@ -307,8 +308,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  };
 
 	if (about) {
-		gdk_window_show (about->window);
-		gdk_window_raise (about->window);
+		xstuff_window_raise_on_current_wspace (about);
 		return;
 	}
 
@@ -1259,16 +1259,15 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 
 	if (ditem != NULL) {
 		/* pass the ditem as the data to clicked */
-		gtk_signal_connect_full (GTK_OBJECT (dialog), "response",
-					 G_CALLBACK (ditem_properties_clicked),
-					 NULL,
-					 ditem,
-					 (GtkDestroyNotify) gnome_desktop_item_unref,
-					 FALSE, FALSE);
+		g_signal_connect_data (G_OBJECT (dialog), "response",
+				       G_CALLBACK (ditem_properties_clicked),
+				       ditem,
+				       (GClosureNotify) gnome_desktop_item_unref,
+				       0 /* connect_flags */);
 	} else {
 		g_signal_connect (G_OBJECT (dialog), "response",
-				    G_CALLBACK (ditem_properties_clicked),
-				    NULL);
+				  G_CALLBACK (ditem_properties_clicked),
+				  NULL);
 	}
 
 	gtk_widget_show (dialog);
@@ -1396,12 +1395,11 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 
 	if (ditem != NULL) {
 		/* pass the dentry as the data to clicked */
-		gtk_signal_connect_full (GTK_OBJECT (dialog), "response",
-					 G_CALLBACK (ditem_properties_clicked),
-					 NULL,
-					 ditem,
-					 (GtkDestroyNotify) gnome_desktop_item_unref,
-					 FALSE, FALSE);
+		g_signal_connect_data (G_OBJECT (dialog), "response",
+				       G_CALLBACK (ditem_properties_clicked),
+				       ditem,
+				       (GClosureNotify) gnome_desktop_item_unref,
+				       0 /* connect_flags */);
 	} else {
 		g_signal_connect (G_OBJECT (dialog), "response",
 				    G_CALLBACK (ditem_properties_clicked),
@@ -1792,12 +1790,13 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
 	
-	gtk_signal_connect_full (GTK_OBJECT (menuitem), "drag_data_get",
-			   G_CALLBACK (drag_data_get_string_cb), NULL,
-			   g_strdup (applet_type), (GtkDestroyNotify)g_free,
-			   FALSE, FALSE);
+	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
+			       G_CALLBACK (drag_data_get_string_cb),
+			       g_strdup (applet_type),
+			       (GClosureNotify)g_free,
+			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
-			    G_CALLBACK (drag_end_menu_cb), NULL);
+			  G_CALLBACK (drag_end_menu_cb), NULL);
 
 }
 
@@ -2208,9 +2207,10 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	/*set the panel to use as the data*/
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
 
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
-		      "destroy", G_CALLBACK(gtk_widget_unref),
-		      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive (G_OBJECT (menu_panel),
+						 "destroy",
+						 G_CALLBACK (gtk_widget_unref),
+						 G_OBJECT(menu));
 	
 	title = g_string_new(NULL);
 
@@ -3089,10 +3089,10 @@ add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 
 	/*set the panel to use as the data*/
 	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", menu_panel);
-	gtk_signal_connect_object_while_alive
-		(GTK_OBJECT (menu_panel), "destroy",
+	panel_signal_connect_object_while_alive
+		(G_OBJECT (menu_panel), "destroy",
 		 G_CALLBACK (gtk_widget_unref),
-		 GTK_OBJECT(menu));
+		 G_OBJECT(menu));
 
 	show_tearoff_menu (menu, _("Create panel"), TRUE, 0, 0, wmclass);
 
@@ -3359,9 +3359,9 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	g_signal_connect (G_OBJECT (dialog), "response",
 			    G_CALLBACK (remove_panel_accept),
 			    panelw);
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (panelw), "destroy",
-					       G_CALLBACK (gtk_widget_destroy),
-					       GTK_OBJECT (dialog));
+	panel_signal_connect_object_while_alive (G_OBJECT (panelw), "destroy",
+						 G_CALLBACK (gtk_widget_destroy),
+						 G_OBJECT (dialog));
 	gtk_widget_show_all (dialog);
 }
 
@@ -3382,9 +3382,9 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 				 TRUE /* run_item */);
 
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", menu_panel);
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
-		      "destroy", G_CALLBACK(gtk_widget_unref),
-		      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive (G_OBJECT(menu_panel),
+						 "destroy", G_CALLBACK(gtk_widget_unref),
+						 G_OBJECT(menu));
 
 	show_tearoff_menu(menu, _("Main Menu"),TRUE,0,0,wmclass);
 
@@ -3727,9 +3727,9 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	/*set the panel to use as the data*/
 	menu_panel = get_panel_from_menu_data(w, TRUE);
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
-		      "destroy", G_CALLBACK(gtk_widget_unref),
-		      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive (G_OBJECT(menu_panel),
+						 "destroy", G_CALLBACK(gtk_widget_unref),
+						 G_OBJECT(menu));
 	show_tearoff_menu(menu, _("Add to panel"),TRUE,0,0, wmclass);
 
 	tm = g_new0(TearoffMenu,1);
@@ -3933,9 +3933,9 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 		
 	/*set the panel to use as the data*/
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
-		      "destroy", G_CALLBACK(gtk_widget_unref),
-		      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive (G_OBJECT(menu_panel),
+						 "destroy", G_CALLBACK(gtk_widget_unref),
+						 G_OBJECT(menu));
 
 	show_tearoff_menu (menu, _("Panel"), TRUE, 0, 0, wmclass);
 
@@ -3962,9 +3962,9 @@ desktop_menu_tearoff_new_menu (GtkWidget *w, gpointer data)
 	/*set the panel to use as the data*/
 	menu_panel = get_panel_from_menu_data(w, TRUE);
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
-		      "destroy", G_CALLBACK(gtk_widget_unref),
-		      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive (G_OBJECT(menu_panel),
+						 "destroy", G_CALLBACK(gtk_widget_unref),
+						 G_OBJECT(menu));
 
 	show_tearoff_menu (menu, _("Desktop"), TRUE, 0, 0, wmclass);
 
@@ -4016,10 +4016,11 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 				gtk_image_new_from_stock (GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
 				_("About GNOME..."));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_signal_connect_full(GTK_OBJECT (menuitem), "activate",
-					G_CALLBACK(about_gnome_cb),NULL,
-					char_tmp, (GtkDestroyNotify)g_free,
-					FALSE,TRUE);
+		g_signal_connect_data (G_OBJECT (menuitem), "activate",
+				       G_CALLBACK (about_gnome_cb),
+				       char_tmp,
+				       (GClosureNotify)g_free,
+				       G_CONNECT_AFTER);
 	}
 	return menu;
 }
@@ -4360,10 +4361,10 @@ add_menu_widget (Menu *menu,
 			    G_CALLBACK (menu_deactivate), menu);
 
 	gtk_object_set_data(GTK_OBJECT(menu->menu), "menu_panel", panel);
-	gtk_signal_connect_object_while_alive(
-	      GTK_OBJECT(panel),
+	panel_signal_connect_object_while_alive(
+	      G_OBJECT (panel),
 	      "destroy", G_CALLBACK(gtk_widget_unref),
-	      GTK_OBJECT(menu->menu));
+	      G_OBJECT (menu->menu));
 }
 
 static void
@@ -4899,10 +4900,10 @@ load_tearoff_menu(void)
 	/*set the panel to use as the data, or we will use current_panel*/
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel",
 			    menu_panel_widget);
-	gtk_signal_connect_object_while_alive(
-	      GTK_OBJECT(menu_panel_widget),
-	      "destroy", G_CALLBACK(gtk_widget_unref),
-	      GTK_OBJECT(menu));
+	panel_signal_connect_object_while_alive(
+	      G_OBJECT (menu_panel_widget),
+	      "destroy", G_CALLBACK (gtk_widget_unref),
+	      G_OBJECT (menu));
 	
 	/* This is so that we get size of the menu right */
 	show_tearoff_menu (menu, title, FALSE, x, y, wmclass);

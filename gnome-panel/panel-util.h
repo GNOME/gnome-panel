@@ -117,6 +117,16 @@ void		panel_strech_events_to_toplevel (GtkWidget *widget,
 						 gboolean left);
 
 
+void		panel_signal_connect_while_alive (GObject     *object,
+						  const gchar *signal,
+						  GCallback    func,
+						  gpointer     func_data,
+						  GObject     *alive_object);
+void		panel_signal_connect_object_while_alive (GObject      *object,
+							 const gchar  *signal,
+							 GCallback     func,
+							 GObject      *alive_object);
+
 
 /* GnomeVFS reading utils */
 

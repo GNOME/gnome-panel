@@ -12,6 +12,10 @@
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
+/* Yes, yes I know, now bugger off ... */
+#define WNCK_I_KNOW_THIS_IS_UNSTABLE
+#include <libwnck/libwnck.h>
+
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
 #include "basep-widget.h"
@@ -669,4 +673,27 @@ xstuff_delete_property (GdkWindow *window, const char *name)
                          GDK_WINDOW_XWINDOW (window),
 			 ATOMGDK (window, name));
 }
+
+void
+xstuff_window_raise_on_current_wspace (GtkWidget *window)
+{
+	gulong xid;
+	WnckWindow *wnck_window;
+
+	gtk_widget_show_now (window);
+
+	xid = GDK_WINDOW_XWINDOW (window->window);
+
+	wnck_window = wnck_window_get (xid);
+	if (wnck_window != NULL) {
+		WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
+		WnckWorkspace *wspace = wnck_screen_get_active_workspace (screen);
+
+		if (wspace != NULL)
+			wnck_window_move_to_workspace (wnck_window, wspace);
+	}
+
+	gdk_window_raise (window->window);
+}
+
 

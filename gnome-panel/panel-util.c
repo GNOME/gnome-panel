@@ -1378,3 +1378,37 @@ panel_strech_events_to_toplevel (GtkWidget *widget,
 				sides,
 				(GDestroyNotify) g_free);
 }
+
+/* stolen from gtk */
+void
+panel_signal_connect_while_alive (GObject     *object,
+				  const gchar *signal,
+				  GCallback    func,
+				  gpointer     func_data,
+				  GObject     *alive_object)
+{
+	GClosure *closure;
+
+	g_return_if_fail (G_IS_OBJECT (object));
+
+	closure = g_cclosure_new (func, func_data, NULL);
+	g_object_watch_closure (G_OBJECT (alive_object), closure);
+	g_signal_connect_closure_by_id (object,
+					g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
+					closure,
+					FALSE);
+}
+
+void
+panel_signal_connect_object_while_alive (GObject      *object,
+					 const gchar  *signal,
+					 GCallback     func,
+					 GObject      *alive_object)
+{
+  g_return_if_fail (G_IS_OBJECT (object));
+  
+  g_signal_connect_closure_by_id (object,
+				  g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
+				  g_cclosure_new_object_swap (func, G_OBJECT (alive_object)),
+				  FALSE);
+}

@@ -1,3 +1,31 @@
+Sun Dec 09 22:35:26 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, title-item*.(c|h|gob):  Title item no longer needed,
+	  so removed
+
+	* applet.c: a bit of gdkpixbuf fixage
+
+	* foobar-widget.c: Some warning fixes, also reposition task menu
+	  on show, Fix icon unreffage issues, look for default task icon
+	  better, when no windows are present add 'No windows open'
+ 	  insensitive item to the task menu, Actually show the icon on
+	  the menu, and strech events for the task item to the right
+	  corner
+
+	* panel-util.[ch], foobar-widget.c: add _while_alive wrappers
+	  that are sort of like the gtk ones but for GObjects
+
+	* menu.c: gtk_signal_* excorcism
+
+	* xstuff.[ch], gnome-run.c, launcher.c, menu.c, menu-properties.c,
+	  panel_config.c: Add a function to show/raise/move to current
+	  workspace for windows and use it for all the dialogs where
+	  we only always have one copy of.  So that say the run dialog
+	  will appear on your workspace even if it's open on another
+	  one already
+
+	* session.c: add to the auto-update-menus conversation warning
+
 2001-12-09  Anders Carlsson  <andersca@gnu.org>
 
 	* menu.c (get_panel_from_menu_data): Use gtk_menu_get_attach_widget

@@ -68,7 +68,6 @@ panel_sources =			\
 	floating-widget.c	\
 	rgb-stuff.c		\
 	tearoffitem.c		\
-	title-item.c		\
 	panel.c			\
 	applet.c		\
 	logout.c		\
@@ -110,8 +109,6 @@ panel_headers =			\
 	floating-widget.h	\
 	rgb-stuff.h		\
 	tearoffitem.h		\
-	title-item.h		\
-	title-item-private.h	\
 	panel.h         	\
 	applet.h         	\
 	logout.h		\
@@ -162,7 +159,6 @@ EXTRA_DIST =					\
 	$(glade_DATA)				\
 	gnome-panel-properties.glade.h		\
 	nothing.cP				\
-	title-item.gob				\
 	gnome-panel-screenshot.glade		\
 	gnome-panel-screenshot.glade.h		\
 	$(schema_DATA)				\

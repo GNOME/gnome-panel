@@ -46,6 +46,7 @@
 #include "menu.h"
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
+#include "xstuff.h"
 
 #define ADVANCED_DIALOG_KEY "advanced_run_dialog"
 
@@ -410,10 +411,8 @@ browse(GtkWidget *w, GtkWidget *entry)
 		 GTK_OBJECT (fsel));
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
-	/* we must do show_now so that we can raise the window in the next
-	 * call */
-	gtk_widget_show_now (GTK_WIDGET (fsel));
-	gdk_window_raise (GTK_WIDGET (fsel)->window);
+
+	xstuff_window_raise_on_current_wspace (GTK_WIDGET (fsel));
 }
 
 static gboolean
@@ -1129,8 +1128,7 @@ show_run_dialog (void)
 		return;
 
 	if(run_dialog != NULL) {
-		gtk_widget_show_now(run_dialog);
-		gdk_window_raise(run_dialog->window);
+		xstuff_window_raise_on_current_wspace (run_dialog);
 		return;
 	}
 

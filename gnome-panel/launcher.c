@@ -31,6 +31,7 @@
 #include "panel-util.h"
 #include "panel_config_global.h"
 #include "session.h"
+#include "xstuff.h"
 
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
@@ -612,8 +613,7 @@ void
 launcher_properties (Launcher *launcher)
 {
 	if (launcher->prop_dialog != NULL) {
-		gtk_widget_show_now (launcher->prop_dialog);
-		gdk_window_raise (launcher->prop_dialog->window);
+		xstuff_window_raise_on_current_wspace (launcher->prop_dialog);
 		return;
 	}
 

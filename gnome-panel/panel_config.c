@@ -31,6 +31,7 @@
 #include "panel.h"
 #include "rgb-stuff.h"
 #include "multiscreen-stuff.h"
+#include "xstuff.h"
 
 enum {
 	HELP_BUTTON,
@@ -1612,8 +1613,7 @@ panel_config (GtkWidget *panel)
 	if (ppc != NULL) {
 		g_assert (ppc->config_window != NULL);
 
-		gtk_widget_show_now (ppc->config_window);
-		gdk_window_raise (ppc->config_window->window);
+		xstuff_window_raise_on_current_wspace (ppc->config_window);
 		return;
 	}
 	

@@ -577,6 +577,9 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 	foo->task_menu = gtk_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
 	/*g_message ("setting...");*/
+	g_signal_connect (G_OBJECT (foo->task_menu), "show",
+			  G_CALLBACK (our_gtk_menu_position),
+			  NULL);
 }
 
 static void
@@ -585,13 +588,14 @@ focus_window (GtkWidget *w, WnckWindow *window)
 	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
 	WnckWorkspace *wspace = wnck_screen_get_active_workspace (screen);
 
-	wnck_window_move_to_workspace (window, wspace);
+	if (wspace != NULL)
+		wnck_window_move_to_workspace (window, wspace);
 	if (wnck_window_is_minimized (window)) 
 		wnck_window_unminimize (window);
 	wnck_window_activate (window);
 }
 
-
+/* No need to unref, in fact do NOT unref the return */
 static GdkPixbuf *
 get_default_image (void)
 {
@@ -600,7 +604,15 @@ get_default_image (void)
 
 	if (! looked) {
 		GdkPixbuf *pb = NULL, *scaled = NULL;
-		pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png", NULL);
+		char *name = panel_pixmap_discovery ("gnome-tasklist.png", FALSE /* fallback */);
+		if (name == NULL)
+			/* evil fallback huh? */
+			name = panel_pixmap_discovery ("apple-red.png", FALSE /* fallback */);
+
+		if (name != NULL) {
+			pb = gdk_pixbuf_new_from_file (name, NULL);
+			g_free (name);
+		}
 		
 		if (pb != NULL) {
 			scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
@@ -663,7 +675,6 @@ add_window (WnckWindow *window, FoobarWidget *foo)
 		gtk_widget_show (image);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
 					       GTK_WIDGET (image));
-		gdk_pixbuf_unref (pb);
 	}
 
 	label = gtk_label_new (title);
@@ -693,7 +704,7 @@ create_task_menu (GtkWidget *w, gpointer data)
 	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
 	GList *windows = wnck_screen_get_windows (screen);
 
-	/*g_message ("creating...");*/
+	/* g_message ("creating..."); */
 	foo->windows = g_hash_table_new (g_direct_hash, g_direct_equal);
 
 	separator = add_menu_separator (foo->task_menu);
@@ -709,9 +720,24 @@ create_task_menu (GtkWidget *w, gpointer data)
 		gtk_widget_destroy (separator);
 	}
 
+	list = g_list_last (GTK_MENU_SHELL (foo->task_menu)->children);
+	if (list == NULL) {
+		GtkWidget *item;
+		item = gtk_image_menu_item_new_with_label (_("No windows open"));
+		gtk_widget_set_sensitive (item, FALSE);
+		gtk_widget_show_all (item);
+	
+		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
+	}
+
+	if (GTK_WIDGET_VISIBLE (foo->task_menu))
+		our_gtk_menu_position (GTK_MENU (foo->task_menu));
+
 	/* Owen: don't read the next line */
-	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
-	our_gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
+#if 0
+	GTK_MENU_SHELL (foo->task_menu)->active = 1;
+	our_gtk_menu_position (GTK_MENU (foo->task_menu));
+#endif
 }
 
 static void
@@ -747,9 +773,7 @@ set_das_pixmap (FoobarWidget *foo, WnckWindow *window)
 	if (pb != NULL) {
 		foo->task_image = gtk_image_new_from_pixbuf (pb);
 		gtk_widget_show (foo->task_image);
-	}
 
-	if (foo->task_image != NULL) {
 		gtk_container_add (GTK_CONTAINER (foo->task_bin),
 				   GTK_WIDGET (foo->task_image));
 	}
@@ -759,6 +783,7 @@ static void
 append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 {
 	foo->task_item = gtk_menu_item_new ();
+	gtk_widget_show (foo->task_item);
 
 	foo->task_bin = gtk_alignment_new (0.3, 0.5, 0.0, 0.0);
 	gtk_widget_set_usize (foo->task_bin, 25, 20);
@@ -769,7 +794,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 
 	panel_strech_events_to_toplevel (foo->task_item,
 					 TRUE /* top */,
-					 FALSE /* right */,
+					 TRUE /* right */,
 					 FALSE /* bottom */,
 					 FALSE /* left */);
 }
@@ -783,10 +808,10 @@ icon_changed (WnckWindow *window, FoobarWidget *foo)
 static void
 bind_window_changes (WnckWindow *window, FoobarWidget *foo)
 {
-	gtk_signal_connect_while_alive (GTK_OBJECT (window), "icon_changed",
-					GTK_SIGNAL_FUNC (icon_changed),
-					foo,
-					GTK_OBJECT (foo));
+	panel_signal_connect_while_alive (G_OBJECT (window), "icon_changed",
+					  G_CALLBACK (icon_changed),
+					  foo,
+					  G_OBJECT (foo));
 	/* XXX: do we care about names changing? */
 }
 
@@ -866,21 +891,21 @@ setup_task_menu (FoobarWidget *foo)
 
 	g_list_foreach (windows, (GFunc)bind_window_changes, foo);
 
-	gtk_signal_connect_while_alive (GTK_OBJECT (screen),
-					"active_window_changed",
-					GTK_SIGNAL_FUNC (active_window_changed),
-					foo,
-					GTK_OBJECT (foo));
-	gtk_signal_connect_while_alive (GTK_OBJECT (screen),
-					"window_opened",
-					GTK_SIGNAL_FUNC (window_opened),
-					foo,
-					GTK_OBJECT (foo));
-	gtk_signal_connect_while_alive (GTK_OBJECT (screen),
-					"window_closed",
-					GTK_SIGNAL_FUNC (window_closed),
-					foo,
-					GTK_OBJECT (foo));
+	panel_signal_connect_while_alive (G_OBJECT (screen),
+					  "active_window_changed",
+					  G_CALLBACK (active_window_changed),
+					  foo,
+					  G_OBJECT (foo));
+	panel_signal_connect_while_alive (G_OBJECT (screen),
+					  "window_opened",
+					  G_CALLBACK (window_opened),
+					  foo,
+					  G_OBJECT (foo));
+	panel_signal_connect_while_alive (G_OBJECT (screen),
+					  "window_closed",
+					  G_CALLBACK (window_closed),
+					  foo,
+					  G_OBJECT (foo));
 
 }
 
