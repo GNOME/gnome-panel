@@ -1695,7 +1695,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
 	Menu *menu = data;
 	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget), "main_menu");
-	GtkWidget *nomral_menu = gtk_object_get_data(GTK_OBJECT(widget), "nomral_menu");
 	GtkWidget *menu_both = gtk_object_get_data(GTK_OBJECT(widget), "menu_both");
 	GtkWidget *menu_system = gtk_object_get_data(GTK_OBJECT(widget), "menu_system");
 	GtkWidget *menu_user = gtk_object_get_data(GTK_OBJECT(widget), "menu_user");
@@ -1720,7 +1719,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->main_menu_type = MAIN_MENU_BOTH;
 	else if(GTK_TOGGLE_BUTTON(menu_system)->active)
 		menu->main_menu_type = MAIN_MENU_SYSTEM;
-	else if(GTK_TOGGLE_BUTTON(menu_user)->active)
+	else /*it's menu user then*/
 		menu->main_menu_type = MAIN_MENU_USER;
 	
 	gtk_widget_unref(menu->menu);	
@@ -1840,7 +1839,6 @@ create_properties_dialog(Menu *menu)
 	w2 = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
 			  _("Normal Menu"));
-	gtk_object_set_data(GTK_OBJECT(dialog),"normal_menu",w2);
 	if(menu->path && strcmp(menu->path,".")!=0)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
@@ -1883,7 +1881,6 @@ create_properties_dialog(Menu *menu)
 	w2 = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
 			  _("User on the main menu, System menu as a submenu"));
-	gtk_object_set_data(GTK_OBJECT(dialog),"menu_user",w2);
 	if(menu->main_menu_type == MAIN_MENU_USER)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 

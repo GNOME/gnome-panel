@@ -107,7 +107,7 @@ add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
 	gtk_container_border_width(GTK_CONTAINER(box), 5);
 	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
 
-	nbook = GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook);
+	nbook = GNOME_PROPERTY_BOX (dialog)->notebook;
 	gtk_notebook_append_page (GTK_NOTEBOOK(nbook),
 				  box, gtk_label_new (_("Drawer")));
 	
