@@ -17,6 +17,7 @@ typedef enum {
 	PANEL_CMD_GET_APPLET_CMD_FUNC,
 	PANEL_CMD_CREATE_APPLET,
 	PANEL_CMD_REGISTER_TOY,
+	PANEL_CMD_SET_TOOLTIP,
 	PANEL_CMD_PROPERTIES
 } PanelCommandType;
 
@@ -45,6 +46,12 @@ typedef struct {
 			int        ypos;
 			long       flags;
 		} register_toy;
+
+		/* Tooltip */
+		struct {
+			GtkWidget *applet;
+			char *tooltip;
+		} set_tooltip;
 	} params;
 } PanelCommand;
 

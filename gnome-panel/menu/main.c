@@ -618,6 +618,12 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 	cmd.params.register_toy.flags  = APPLET_HAS_PROPERTIES;
 
 	(*panel_cmd_func) (&cmd);
+
+	cmd.cmd = PANEL_CMD_SET_TOOLTIP;
+	cmd.params.set_tooltip.applet  = menu_component;
+	cmd.params.set_tooltip.tooltip = _("Menu");
+
+	(*panel_cmd_func) (&cmd);
 }
 
 

@@ -49,11 +49,14 @@ static GtkWidget *applet_menu_remove_item;
 static GtkWidget *applet_menu_prop_separator;
 static GtkWidget *applet_menu_prop_item;
 
+
 static GdkCursor *fleur_cursor;
 
 static menu_count=0; /*how many "menu" applets we have ....*/
 
 Panel *the_panel;
+
+static GtkTooltips *panel_tooltips;
 
 
 static void
@@ -772,78 +775,81 @@ show_applet_menu(GtkWidget *applet)
 typedef struct _applet_pos {
 	gint x,y,width,height;
 	gint xlimit,ylimit;
-	gint repair;
-	gint ok;
+	gint repaired;
 	GtkWidget *w;
 } applet_pos;
 
-static void
-is_applet_pos_ok(gpointer data, gpointer user_data)
+static gint
+is_applet_pos_ok(GList *list, applet_pos *newpos)
 {
-	GtkWidget *applet=(GtkWidget *)data;
-	applet_pos *newpos=(applet_pos *)user_data;
 	int x, y, width, height;
 	int diffx, diffy;
 	int nx, ny;
 
+	GtkWidget *applet;
 
-	if(!(newpos->ok) || (applet==newpos->w && newpos->w!=NULL))
-		return;
+	for(;list;list=list->next) {
+		applet = list->data;
+		if(applet==newpos->w)
+			continue;
 
-	get_applet_geometry(applet, &x, &y, &width, &height);
+		get_applet_geometry(applet, &x, &y, &width, &height);
 
-	if((	newpos->x<(x+width) &&
-		(newpos->x+newpos->width)>x) &&
-		(newpos->y<(y+height) &&
-		(newpos->y+newpos->height)>y)) {
-		/*it's overlapping some other applet so scratch that*/
-		newpos->ok=FALSE;
-		if(!(newpos->repair))
-			return;
-		diffx=(newpos->x+(newpos->width/2))-(x+(width/2));
-		diffy=(newpos->y+(newpos->height/2))-(y+(height/2));
-		nx=newpos->x+x-(newpos->x+newpos->width);
-		ny=newpos->y+y-(newpos->y+newpos->height);
-		if(diffx>0) nx+=width+newpos->width;
-		if(diffy>0) ny+=height+newpos->height;
-		if( (abs(diffy)<abs(diffx)
-			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-			newpos->x=nx;
-			newpos->repair=FALSE;
-			return;
-		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-			newpos->y=ny;
-			newpos->repair=FALSE;
-			return;
-		}
-		if(diffx>0) nx-=width+newpos->width;
-		if(diffy>0) ny-=height+newpos->height;
-		if( (abs(diffy)<abs(diffx)
-			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-			newpos->x=nx;
-			newpos->repair=FALSE;
-			return;
-		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-			newpos->y=ny;
-			newpos->repair=FALSE;
-			return;
-		}
-		nx+=width+newpos->width;
-		ny+=height+newpos->height;
-		if( (abs(diffy)<abs(diffx)
-			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-			newpos->x=nx;
-			newpos->repair=FALSE;
-			return;
-		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-			newpos->y=ny;
-			newpos->repair=FALSE;
-			return;
+		if((	newpos->x<(x+width) &&
+			(newpos->x+newpos->width)>x) &&
+			(newpos->y<(y+height) &&
+			(newpos->y+newpos->height)>y)) {
+			/*it's overlapping some other applet so scratch that*/
+			if(newpos->repaired)
+				return FALSE;
+			diffx=(newpos->x+(newpos->width/2))-(x+(width/2));
+			diffy=(newpos->y+(newpos->height/2))-(y+(height/2));
+			nx=newpos->x+x-(newpos->x+newpos->width);
+			ny=newpos->y+y-(newpos->y+newpos->height);
+			if(diffx>0) nx+=width+newpos->width;
+			if(diffy>0) ny+=height+newpos->height;
+			if( (abs(diffy)<abs(diffx)
+				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+				newpos->x=nx;
+				newpos->repaired=TRUE;
+				return FALSE;
+			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+				newpos->y=ny;
+				newpos->repaired=TRUE;
+				return FALSE;
+			}
+			if(diffx>0) nx-=width+newpos->width;
+			if(diffy>0) ny-=height+newpos->height;
+			if( (abs(diffy)<abs(diffx)
+				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+				newpos->x=nx;
+				newpos->repaired=TRUE;
+				return FALSE;
+			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+				newpos->y=ny;
+				newpos->repaired=TRUE;
+				return FALSE;
+			}
+			nx+=width+newpos->width;
+			ny+=height+newpos->height;
+			if( (abs(diffy)<abs(diffx)
+				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+				newpos->x=nx;
+				newpos->repaired=TRUE;
+				return FALSE;
+			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+				newpos->y=ny;
+				newpos->repaired=TRUE;
+				return FALSE;
+			}
+			newpos->repaired=FALSE;
+			return FALSE;
 		}
 	}
+	return TRUE;
 }
 
 static gint
@@ -851,7 +857,7 @@ panel_find_clean_spot(GtkWidget *widget, GList *applets, gint *x, gint *y,
 	gint width, gint height)
 {
 	/*set up the applet_pos structure*/
-	applet_pos newpos={*x,*y,width,height,0,0,TRUE,TRUE,widget};
+	applet_pos newpos={*x,*y,width,height,0,0,FALSE,widget};
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
@@ -865,22 +871,18 @@ panel_find_clean_spot(GtkWidget *widget, GList *applets, gint *x, gint *y,
 			break;
 	}
 
-	g_list_foreach(applets,
-		       is_applet_pos_ok,
-		       (gpointer)&newpos);
-	if(newpos.repair==FALSE) {
-		newpos.ok=TRUE;
-		g_list_foreach(applets,
-			       is_applet_pos_ok,
-			       (gpointer)&newpos);
+	if(!is_applet_pos_ok(applets,&newpos)) {
+		if(newpos.repaired) {
+			if(!is_applet_pos_ok(applets,&newpos))
+				return FALSE;
+		} else {
+			return FALSE;
+		}
 	}
 
-	if(newpos.ok) {
-		*x=newpos.x;
-		*y=newpos.y;
-		return TRUE;
-	} else
-		return FALSE;
+	*x=newpos.x;
+	*y=newpos.y;
+	return TRUE;
 }
 
 static void
@@ -1369,6 +1371,9 @@ panel_init(void)
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
 	create_applet_menu();
+
+	/*set up the tooltips*/
+	panel_tooltips=gtk_tooltips_new();
 }
 
 
@@ -1584,7 +1589,9 @@ fix_an_applet_idle_func(gpointer data)
 	xpos=applet_stack[applet_stacktop].x;
 	ypos=applet_stack[applet_stacktop].y;
 
-	if(GTK_WIDGET(applet)->allocation.width<=1)
+	if(the_panel->window->allocation.width<=1 ||
+		the_panel->fixed->allocation.width<=1 ||
+		GTK_WIDGET(applet)->allocation.width<=1)
 		return TRUE;
 
 	/*we probably want to do something like this but we need to
@@ -1624,11 +1631,19 @@ fix_an_applet(GtkWidget *applet,gint x, gint y)
 	return TRUE;
 }
 
+static void
+set_tooltip(GtkWidget *applet, char *tooltip)
+{
+	if(!applet)
+		return;
+	gtk_tooltips_set_tips(panel_tooltips,applet,tooltip);
+}
+
 
 static void
 register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 {
-	GtkWidget *eventbox;
+	GtkWidget     *eventbox;
 	
 	g_assert(applet != NULL);
 	g_assert(id != NULL);
@@ -1652,7 +1667,7 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 		case PANEL_POS_BOTTOM:
 			fix_an_applet(eventbox,xpos,ypos);
 			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
-				      xpos, ypos);
+				      0, 0);
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
@@ -1660,10 +1675,9 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 			/*this is done for saving the app position as well!!!*/
 			fix_an_applet(eventbox,ypos,xpos);
 			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
-				      ypos, xpos);
+				      0, 0);
 			break;
 	}
-
 
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
@@ -1813,6 +1827,11 @@ panel_command(PanelCommand *cmd)
 				     cmd->params.register_toy.xpos,
 				     cmd->params.register_toy.ypos,
 				     cmd->params.register_toy.flags);
+			break;
+
+		case PANEL_CMD_SET_TOOLTIP:
+			set_tooltip(cmd->params.set_tooltip.applet,
+				    cmd->params.set_tooltip.tooltip);
 			break;
 
 		case PANEL_CMD_PROPERTIES:
