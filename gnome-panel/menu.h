@@ -104,7 +104,7 @@ enum {
 #define MENU_SIZE_SMALL "Small (36 pixels)"
 #define MENU_SIZE_STANDARD "Standard (48 pixels)"
 #define MENU_SIZE_LARGE "Large (64 pixels)"
-#define MENU_SIZE_HUGE "Huge (80 pixels"
+#define MENU_SIZE_HUGE "Huge (80 pixels)"
 
 #define MENU_BACKS "background_menu"
 #define MENU_BACK_NONE "Standard"
