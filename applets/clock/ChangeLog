@@ -1,3 +1,8 @@
+Sat Aug 21 10:10:41 1999  George Lebl  <jirka@5z.com>
+
+	* gen_util/printer.c: fixup the style setting, since get_rc_style can
+          return NULL, we use gtk_widget_set_rc_style 
+
 1999-08-04  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* gen_util/printer.c (applet_set_default_back): get the GtkStyle

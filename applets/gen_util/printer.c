@@ -147,15 +147,9 @@ printer_widget (Printer *pr)
 static void
 applet_set_default_back(Printer *pr)
 {
-	GtkStyle *ns;
-	g_return_if_fail (pr->label != NULL);
+	g_return_if_fail (pr->printer != NULL);
 
-	ns = gtk_rc_get_style(pr->label);
-
-	gtk_style_ref(ns);
-	gtk_widget_set_style(pr->printer, ns);
-	gtk_style_unref(ns);
-
+	gtk_widget_set_rc_style(pr->printer);
 	gtk_widget_queue_draw(GTK_WIDGET(pr->printer));
 }
 
