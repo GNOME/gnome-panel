@@ -44,12 +44,13 @@ wnck_applet_SOURCES = \
 	workspace-switcher.h \
 	showdesktop.c \
 	showdesktop.h \
-	inlinepixbufs.h \
 	$(EGGFILES)
 
 wnck_applet_LDADD = \
 	../../libpanel-applet/libpanel-applet-2.la \
 	$(WNCKLET_LIBS)
+
+BUILT_SOURCES = inlinepixbufs.h
 
 EXTRA_DIST = \
 	GNOME_Wncklet_Factory.server.in.in \
@@ -68,7 +69,7 @@ $(server_in_files): $(server_in_files).in
 
 @INTLTOOL_SERVER_RULE@
 
-CLEANFILES = $(server_in_files) $(server_DATA) ($noinst_DATA)
+CLEANFILES = $(server_in_files) $(server_DATA) $(noinst_DATA)
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-show-desktop.png
@@ -87,8 +88,6 @@ noinst_DATA = inlinepixbufs.h
 
 inlinepixbufs.h: $(IMAGES)
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(VARIABLES) >$(srcdir)/inlinepixbufs.h
-
-$(OBJECTS): inlinepixbufs.h
 
 EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
 
