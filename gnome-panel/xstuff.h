@@ -39,6 +39,6 @@ gboolean get_window_id(guint32 window, char *title, guint32 *wid,
  * check_swallows or anything else that's gonna use it in the future */
 void xstuff_reset_need_substructure(void);
 
-void xstuff_set_no_group(GdkWindow *win);
+void xstuff_set_no_group_and_no_input (GdkWindow *win);
 
 #endif

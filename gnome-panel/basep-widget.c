@@ -109,7 +109,7 @@ basep_widget_realize(GtkWidget *w)
 	GTK_WIDGET_CLASS(basep_widget_parent_class)->realize(w);
 
 	basep_widget_update_winhints (basep);
-	xstuff_set_no_group(w->window);
+	xstuff_set_no_group_and_no_input (w->window);
 
 	set_frame_colors(PANEL_WIDGET(basep->panel),
 			 basep->frame,
@@ -906,7 +906,7 @@ basep_widget_redo_window(BasePWidget *basep)
 	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
 	gdk_window_set_user_data(newwin, window);
 
-	xstuff_set_no_group(newwin);
+	xstuff_set_no_group_and_no_input (newwin);
 
 	/* reparent our main panel window */
 	gdk_window_reparent(basep->ebox->window, newwin, 0, 0);

@@ -570,7 +570,7 @@ xstuff_is_compliant_wm(void)
 }
 
 void
-xstuff_set_no_group (GdkWindow *win)
+xstuff_set_no_group_and_no_input (GdkWindow *win)
 {
 	XWMHints *old_wmhints;
 	XWMHints wmhints = {0};
@@ -589,12 +589,14 @@ xstuff_set_no_group (GdkWindow *win)
 		XFree (old_wmhints);
 
 		wmhints.flags &= ~WindowGroupHint;
+		wmhints.flags |= InputHint;
+		wmhints.input = False;
 		wmhints.window_group = 0;
 	} else {
 		/* General paranoia */
 		wmhints.flags = InputHint | StateHint;
 		wmhints.window_group = 0;
-		wmhints.input = True;
+		wmhints.input = False;
 		wmhints.initial_state = NormalState;
 	}
 	XSetWMHints (GDK_DISPLAY (),

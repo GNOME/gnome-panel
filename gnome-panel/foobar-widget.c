@@ -573,7 +573,7 @@ foobar_widget_realize (GtkWidget *w)
 		GTK_WIDGET_CLASS (parent_class)->realize (w);
 
 	foobar_widget_update_winhints (FOOBAR_WIDGET (w));
-	xstuff_set_no_group (w->window);
+	xstuff_set_no_group_and_no_input (w->window);
 
 	setup_task_menu (FOOBAR_WIDGET (w));
 }
@@ -1113,7 +1113,7 @@ foobar_widget_redo_window(FoobarWidget *foo)
 	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
 	gdk_window_set_user_data(newwin, window);
 
-	xstuff_set_no_group(newwin);
+	xstuff_set_no_group_and_no_input (newwin);
 
 	/* reparent our main panel window */
 	gdk_window_reparent(foo->ebox->window, newwin, 0, 0);
