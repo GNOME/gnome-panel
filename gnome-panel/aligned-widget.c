@@ -44,7 +44,7 @@ aligned_pos_get_type (void)
 			NULL
 		};
 
-		aligned_pos_type = gtk_type_unique (TYPE_BORDER_POS,
+		aligned_pos_type = gtk_type_unique (BORDER_TYPE_POS,
 						    &aligned_pos_info);
 	}
 			       
@@ -63,7 +63,7 @@ aligned_pos_class_init (AlignedPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-	parent_class = gtk_type_class(TYPE_BORDER_POS);
+	parent_class = gtk_type_class(BORDER_TYPE_POS);
 	
 	aligned_pos_signals[ALIGN_CHANGE_SIGNAL] =
 		gtk_signal_new ("align_change",

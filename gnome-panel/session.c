@@ -593,7 +593,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	g_string_free(buf,TRUE);
 
 	/* now do different types */
-	if (IS_BORDER_WIDGET(pd->panel))
+	if (BORDER_IS_WIDGET(pd->panel))
 		gnome_config_set_int("edge", BORDER_POS(basep->pos)->edge);
 
 	switch (pd->type) {

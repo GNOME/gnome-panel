@@ -1496,7 +1496,7 @@ panel_widget_setup(PanelWidget *panel)
 void
 basep_pos_connect_signals (BasePWidget *basep)
 {
-	if (IS_BORDER_WIDGET (basep)) {
+	if (BORDER_IS_WIDGET (basep)) {
 		gtk_signal_connect (GTK_OBJECT (basep->pos),
 				    "edge_change",
 				    GTK_SIGNAL_FUNC (border_edge_change),

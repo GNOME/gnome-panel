@@ -7,10 +7,7 @@
 #include "panel-gconf.h"
 
 static gchar * panel_gconf_global_config_get_full_key (const gchar *key) {
-	gchar *full_key;
-
-	full_key = g_strdup_printf ("/apps/panel/%s", key);
-	return full_key;
+	return g_strdup_printf ("/apps/panel/%s", key);
 }
 
 GConfClient * panel_gconf_get_client (void) {
@@ -23,19 +20,37 @@ GConfClient * panel_gconf_get_client (void) {
 }
 
 gint panel_gconf_global_config_get_int (const gchar *key) {
-	return gconf_client_get_int (panel_gconf_get_client (),
-				     panel_gconf_global_config_get_full_key (key),
-				     NULL);
+	gint value;
+	gchar *full_key;
+
+	full_key = panel_gconf_global_config_get_full_key (key);
+	value =  gconf_client_get_int (panel_gconf_get_client (),
+				       full_key,
+				       NULL);
+	g_free (full_key);
+	return value;
 }
 
 gboolean panel_gconf_global_config_get_bool (const gchar *key) {
-	return gconf_client_get_bool (panel_gconf_get_client (),
-				      panel_gconf_global_config_get_full_key (key),
-				      NULL);
+	gboolean value;
+	gchar *full_key;
+	
+	full_key = panel_gconf_global_config_get_full_key (key);
+	value = gconf_client_get_bool (panel_gconf_get_client (),
+				       full_key,
+				       NULL);
+	g_free (full_key);
+	return value;
 }
 
 gchar * panel_gconf_global_config_get_string (const gchar *key) {
-	return gconf_client_get_string (panel_gconf_get_client (),
-					panel_gconf_global_config_get_full_key (key),
-					NULL);
+	gchar *value;
+	gchar *full_key;
+
+	full_key = panel_gconf_global_config_get_full_key (key);
+	value = gconf_client_get_string (panel_gconf_get_client (),
+					 full_key,
+					 NULL);
+	g_free (full_key);
+	return value;
 }

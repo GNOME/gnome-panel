@@ -17,7 +17,7 @@
 extern GlobalConfig global_config;
 
 static void border_pos_class_init (BorderPosClass *klass);
-static void border_pos_init (BorderPos *pos);
+static void border_pos_instance_init (BorderPos *pos);
 
 static void border_pos_set_hidebuttons (BasePWidget *basep);
 static PanelOrientType border_pos_get_applet_orient (BasePWidget *basep);
@@ -36,28 +36,31 @@ static void border_pos_show_hide_right (BasePWidget *basep);
 
 static void border_pos_pre_convert_hook (BasePWidget *basep);
 
-static BasePPosClass *parent_class;
+static BasePPosClass *border_pos_parent_class;
 
 GType
 border_pos_get_type (void)
 {
-	static GType border_pos_type = 0;
-
-	if (!border_pos_type) {
-		GtkTypeInfo border_pos_info = {
-			"BorderPos",
-			sizeof (BorderPos),
+	static GType object_type = 0;
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
 			sizeof (BorderPosClass),
-			(GtkClassInitFunc) border_pos_class_init,
-			(GtkObjectInitFunc) border_pos_init,
-			NULL, NULL
+			(GBaseInitFunc)		NULL,
+			(GBaseFinalizeFunc) 	NULL,
+			(GClassInitFunc)	border_pos_class_init,
+			NULL,			/* class_finalize */
+			NULL,			/* class_data */
+			sizeof (BorderPos),
+			0,			/* n_preallocs */
+			(GInstanceInitFunc)	border_pos_instance_init
 		};
 
-		border_pos_type = gtk_type_unique (BASEP_TYPE_POS,
-						   &border_pos_info);
+		object_type = g_type_register_static (BASEP_TYPE_POS,
+						      "BorderPos", &object_info, 0);
+		border_pos_parent_class = g_type_class_ref (BASEP_TYPE_POS);
 	}
 
-	return border_pos_type;
+	return object_type;
 }
 
 enum {
@@ -70,16 +73,15 @@ static guint border_pos_signals[LAST_SIGNAL] = { 0 };
 static void
 border_pos_class_init (BorderPosClass *klass)
 {
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
+	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(BASEP_TYPE_POS);
 
 	/* set up signals */
 	border_pos_signals[EDGE_CHANGE_SIGNAL] =
 		gtk_signal_new("edge_change",
 			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
+			       GTK_CLASS_TYPE (gtk_object_class),
 			       GTK_SIGNAL_OFFSET(BorderPosClass,
 						 edge_change),
 			       gtk_marshal_VOID__ENUM, /* FIXME:2 should we be using NONE__ENUM? */
@@ -97,10 +99,11 @@ border_pos_class_init (BorderPosClass *klass)
 	pos_class->south_clicked = pos_class->east_clicked =
 		border_pos_show_hide_right;
 	pos_class->pre_convert_hook = border_pos_pre_convert_hook;
+
 }
 
 static void
-border_pos_init (BorderPos *pos)
+border_pos_instance_init (BorderPos *pos)
 {
 	pos->edge = BORDER_TOP;
 }
@@ -324,7 +327,7 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 	
 	if (BORDER_POS (border->pos)->edge == edge)
 		return;
-	
+
 	border_widget_change_params (border,
 				     basep->screen,
 				     edge,
@@ -341,7 +344,6 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 				     panel->strech_pixmap_bg,
 				     panel->rotate_pixmap_bg,
 				     &panel->back_color);
-	
 }
 
 GtkWidget *

@@ -49,7 +49,7 @@ edge_pos_get_type (void)
 			NULL
 		};
 
-		edge_pos_type = gtk_type_unique (TYPE_BORDER_POS,
+		edge_pos_type = gtk_type_unique (BORDER_TYPE_POS,
 						 &edge_pos_info);
 	}
 			       
@@ -61,7 +61,7 @@ edge_pos_class_init (EdgePosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(TYPE_BORDER_POS);
+	parent_class = gtk_type_class(BORDER_TYPE_POS);
 
 	pos_class->set_pos = edge_pos_set_pos;
 	pos_class->get_pos = edge_pos_get_pos;

@@ -35,6 +35,8 @@ extern int panels_to_sync;
 
 extern GtkTooltips *panel_tooltips;
 
+#define DRAWER_DEBUG 1
+
 static void
 properties_apply_callback(gpointer data)
 {
@@ -206,14 +208,22 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
 	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
 	GtkWidget *panelw = parent->panel_parent;
-	
+#ifdef DRAWER_DEBUG
+	printf ("Registering drawer click \n");
+#endif	
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
 	case BASEP_AUTO_HIDDEN:
+#ifdef DRAWER_DEBUG
+	printf ("Drawer closing\n");
+#endif
 		drawer_widget_close_drawer (drawerw, panelw);
 		break;
 	case BASEP_HIDDEN_LEFT:
 	case BASEP_HIDDEN_RIGHT:
+#ifdef DRAWER_DEBUG
+	printf ("Drawer opening\n");
+#endif
 		drawer_widget_open_drawer (drawerw, panelw);
 		break;
 	case BASEP_MOVING:
@@ -239,7 +249,9 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
 	Drawer *drawer = data;
 	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
-
+#ifdef DRAWER_DEBUG
+	printf ("Enter notify drawer\n");
+#endif
 	if (!xstuff_is_compliant_wm() || global_config.autoraise)
 		gdk_window_raise(drawer->drawer->window);
 
@@ -329,8 +341,9 @@ create_drawer_applet(GtkWidget * drawer_panel,
 	  widgets (which we actually kind of are) this will select
 	  some (already selected) events on the panel instead of
 	  the button window (where they are also selected) but
-	  we don't mind*/
+	  we don't mind*/ 
 	GTK_WIDGET_UNSET_FLAGS (drawer->button, GTK_NO_WINDOW);
+ 
 	gtk_drag_source_set (drawer->button,
 			     GDK_BUTTON1_MASK,
 			     dnd_targets, 1,

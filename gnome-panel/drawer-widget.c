@@ -5,7 +5,7 @@
  *           George Lebl
  *
  */
-
+#include <stdio.h>
 #include "config.h"
 #include "drawer-widget.h"
 #include "border-widget.h"
@@ -16,6 +16,8 @@
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
+
+#define DRAWER_WIDGET_DEBUG 1
 
 static void drawer_pos_class_init (DrawerPosClass *klass);
 static void drawer_pos_init (DrawerPos *pos);

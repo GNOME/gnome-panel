@@ -1,3 +1,17 @@
+2001-11-14  Glynn Foster  <glynn.foster@sun.com>
+
+	* aligned-widget.c, aligned-widget.h, basep-widget.c,
+	* border-widget.c, border-widget.h, drawer-widget.c,
+	* drawer.c, edge-widget.c, edge-widget.h,
+	* foobar-widget.c, menu.c, panel-gconf.c, panel.c,
+	* panel_config.c, panelglobalconfig.schema, session.c,
+	* sliding-widget.c, sliding-widget.h:
+
+	Fix gconf leaks - thanks to andersca
+	Change the schema to cover over a problem with autohide
+	panels [still needs to be fixed].
+	More GObject porting and header standardization.
+
 2001-11-12  Frank Belew  <frb@ximian.com>
 
 	* Makefile.am: comment out SUBDIRS to fix dist targets

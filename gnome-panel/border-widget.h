@@ -12,18 +12,18 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_BORDER_POS        (border_pos_get_type ())
-#define BORDER_POS(o)          (GTK_CHECK_CAST ((o), TYPE_BORDER_POS, BorderPos))
-#define BORDER_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST ((k), TYPE_BORDER_POS, BorderPosClass))
-#define IS_BORDER_POS(o)       (GTK_CHECK_TYPE ((o), TYPE_BORDER_POS))
-#define IS_BORDER_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), TYPE_BORDER_POS))
+#define BORDER_TYPE_POS        		(border_pos_get_type ())
+#define BORDER_POS(object)     		(G_TYPE_CHECK_INSTANCE_CAST ((object), BORDER_TYPE_POS, BorderPos))
+#define BORDER_POS_CLASS(klass)    	(G_TYPE_CHECK_CLASS_CAST ((klass), BORDER_TYPE_POS, BorderPosClass))
+#define BORDER_IS_POS(object)       	(G_TYPE_CHECK_INSTANCE_TYPE ((object), BORDER_TYPE_POS))
+#define BORDER_IS_POS_CLASS(klass) 	(G_TYPE_CHECK_CLASS_TYPE ((klass), BORDER_TYPE_POS))
 
-#define TYPE_BORDER_WIDGET        (BASEP_TYPE_WIDGET) 
-#define BORDER_WIDGET(o)          (BASEP_WIDGET(o))
-#define BORDER_WIDGET_CLASS(k)    (BASEP_WIDGET_CLASS(o))
-#define IS_BORDER_WIDGET(o)       (BASEP_IS_WIDGET(o) && IS_BORDER_POS( BASEP_WIDGET(o)->pos ))
+#define BORDER_TYPE_WIDGET        	(BASEP_TYPE_WIDGET) 
+#define BORDER_WIDGET(object)     	(BASEP_WIDGET(object))
+#define BORDER_WIDGET_CLASS(klass)	(BASEP_WIDGET_CLASS(klass))
+#define BORDER_IS_WIDGET(object)  	(BASEP_IS_WIDGET(object) && BORDER_IS_POS( BASEP_WIDGET(object)->pos ))
 /* this is not reliable... */
-#define IS_BORDER_WIDGET_CLASS(k) (BASEP_IS_WIDGET_CLASS (k))
+#define BORDER_IS_WIDGET_CLASS(klass) 	(BASEP_IS_WIDGET_CLASS (klass))
 
 typedef BasePWidget          BorderWidget;
 typedef BasePWidgetClass     BorderWidgetClass;

@@ -44,7 +44,7 @@ sliding_pos_get_type (void)
 			NULL
 		};
 
-		sliding_pos_type = gtk_type_unique (TYPE_BORDER_POS,
+		sliding_pos_type = gtk_type_unique (BORDER_TYPE_POS,
 						    &sliding_pos_info);
 	}
 			       
@@ -64,7 +64,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-	parent_class = gtk_type_class(TYPE_BORDER_POS);
+	parent_class = gtk_type_class(BORDER_TYPE_POS);
 
 	sliding_pos_signals[ANCHOR_CHANGE_SIGNAL] =
 		gtk_signal_new("anchor_change",

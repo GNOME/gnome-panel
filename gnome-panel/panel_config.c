@@ -104,7 +104,7 @@ update_config_edge (BasePWidget *panel)
 	    ppc->ppc_origin_change)
 		return;
 
-	g_return_if_fail (IS_BORDER_WIDGET (panel));
+	g_return_if_fail (BORDER_IS_WIDGET (panel));
 
 	if (ppc->edge == BORDER_POS (panel->pos)->edge)
 		return;
@@ -1725,7 +1725,7 @@ background_page (PerPanelConfig *ppc)
 static void
 setup_pertype_defs (BasePWidget *basep, PerPanelConfig *ppc)
 {
-	if (IS_BORDER_WIDGET (basep))
+	if (BORDER_IS_WIDGET (basep))
 		ppc->edge = BORDER_POS (basep->pos)->edge;
 	
 	if (IS_ALIGNED_WIDGET(basep)) {

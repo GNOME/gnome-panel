@@ -23,12 +23,12 @@ G_BEGIN_DECLS
 #define IS_EDGE_POS(o)         (GTK_CHECK_TYPE ((o), TYPE_EDGE_POS))
 #define IS_EDGE_POS_CLASS(k)   (GTK_CHECK_CLASS_TYPE ((k), TYPE_EDGE_POS))
 
-#define TYPE_EDGE_WIDGET       (TYPE_BORDER_WIDGET)
+#define TYPE_EDGE_WIDGET       (BORDER_TYPE_WIDGET)
 #define EDGE_WIDGET(o)         (BORDER_WIDGET(o))
 #define EDGE_WIDGET_CLASS(k)   (BORDER_WIDGET_CLASS(k))
-#define IS_EDGE_WIDGET(o)      (IS_BORDER_WIDGET(o) && IS_EDGE_POS(BASEP_WIDGET(o)->pos))
+#define IS_EDGE_WIDGET(o)      (BORDER_IS_WIDGET(o) && IS_EDGE_POS(BASEP_WIDGET(o)->pos))
 /* this is not reliable */
-#define IS_EDGE_WIDGET_CLASS(k) (IS_BORDER_WIDGET_CLASS(k))
+#define IS_EDGE_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
 
 typedef BorderWidget            EdgeWidget;
 typedef BorderWidgetClass       EdgeWidgetClass;

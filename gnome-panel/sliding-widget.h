@@ -18,12 +18,12 @@ G_BEGIN_DECLS
 #define IS_SLIDING_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_SLIDING_POS))
 #define IS_SLIDING_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_SLIDING_POS))
 
-#define TYPE_SLIDING_WIDGET        (TYPE_BORDER_WIDGET)
+#define TYPE_SLIDING_WIDGET        (BORDER_TYPE_WIDGET)
 #define SLIDING_WIDGET(o)          (BORDER_WIDGET(o))
 #define SLIDING_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
-#define IS_SLIDING_WIDGET(o)       (IS_BORDER_WIDGET(o) && IS_SLIDING_POS(BASEP_WIDGET(o)->pos))
+#define IS_SLIDING_WIDGET(o)       (BORDER_IS_WIDGET(o) && IS_SLIDING_POS(BASEP_WIDGET(o)->pos))
 /* this is not reliable */
-#define IS_SLIDING_WIDGET_CLASS(k) (IS_BORDER_WIDGET_CLASS(k))
+#define IS_SLIDING_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
 
 typedef BorderWidget            SlidingWidget;
 typedef BorderWidgetClass       SlidingWidgetClass;

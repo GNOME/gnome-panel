@@ -18,12 +18,12 @@ G_BEGIN_DECLS
 #define IS_ALIGNED_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_ALIGNED_POS))
 #define IS_ALIGNED_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_ALIGNED_POS))
 
-#define TYPE_ALIGNED_WIDGET        (TYPE_BORDER_WIDGET)
+#define TYPE_ALIGNED_WIDGET        (BORDER_TYPE_WIDGET)
 #define ALIGNED_WIDGET(o)          (BORDER_WIDGET(o))
 #define ALIGNED_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
-#define IS_ALIGNED_WIDGET(o)       (IS_BORDER_WIDGET(o) && IS_ALIGNED_POS(BASEP_WIDGET(o)->pos))
+#define IS_ALIGNED_WIDGET(o)       (BORDER_IS_WIDGET(o) && IS_ALIGNED_POS(BASEP_WIDGET(o)->pos))
 /* this is not reliable */
-#define IS_ALIGNED_WIDGET_CLASS(k) (IS_BORDER_WIDGET_CLASS(k))
+#define IS_ALIGNED_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
 
 typedef BorderWidget            AlignedWidget;
 typedef BorderWidgetClass       AlignedWidgetClass;

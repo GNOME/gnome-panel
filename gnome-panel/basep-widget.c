@@ -27,7 +27,7 @@
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
 
-#undef BASEP_WIDGET_DEBUG
+#define BASEP_WIDGET_DEBUG 1
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
@@ -183,11 +183,11 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                                              G_PARAM_READWRITE));
 
 	/*basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
-		gtk_signal_new("type_change",
-			       GTK_RUN_LAST,
-			       gtk_object_class->type,
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 type_change),
+		g_signal_new("type_change",
+			     GTK_RUN_LAST,
+			     gtk_object_class->type,
+			     GTK_SIGNAL_OFFSET(BasePWidgetClass,
+			 		       type_change),
 			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
 			       1, PANEL_TYPE_PANEL_TYPE);*/
@@ -361,6 +361,7 @@ basep_widget_size_allocate (GtkWidget *widget,
 	
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
+
 #ifdef BASEP_WIDGET_DEBUG
 	if (basep->state == BASEP_MOVING)
 		g_warning ("size_allocate whilst moving");
@@ -458,14 +459,14 @@ basep_widget_size_allocate (GtkWidget *widget,
 static void
 basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
 {
-	if (IS_BORDER_WIDGET (basep))
+	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
 }
 
 static void
 basep_widget_state_change (BasePWidget *basep, BasePState state)
 {
-	if (IS_BORDER_WIDGET (basep))
+	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
 }
 
@@ -527,6 +528,10 @@ basep_pos_get_hide_size (BasePWidget *basep,
 			 PanelOrientType hide_orient,
 			 int *w, int *h)
 {
+
+#ifdef BASEP_WIDGET_DEBUG
+	printf ("basep_pos_get_hide_size %d\n", panel_gconf_global_config_get_int ("panel-minimized-size"));
+#endif
 	switch (hide_orient) {
 	case ORIENT_UP:
 	case ORIENT_DOWN:
@@ -990,10 +995,10 @@ basep_widget_destroy (GtkObject *o)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
 	basep->leave_notify_timer_tag = 0;
 
-	if (IS_BORDER_WIDGET (basep))
+	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
-
-	gtk_object_unref (GTK_OBJECT (basep->pos));
+	if (basep->pos != NULL) 
+		g_object_unref (basep->pos);
 	basep->pos = NULL;
 
 	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
@@ -1617,7 +1622,7 @@ basep_widget_convert_to (BasePWidget *basep,
 	basep->pos = new_pos;
 	new_pos->basep = basep;
 
-	gtk_object_unref (GTK_OBJECT (old_pos));
+	g_object_unref (G_OBJECT (old_pos));
 
 	klass = basep_widget_get_pos_class (basep);
 	if (klass->pre_convert_hook)
@@ -1821,11 +1826,14 @@ basep_widget_autoshow (gpointer data)
 	return FALSE;
 }
 
+/* FIXME - there's a problem if the show and hide delays are set to 0 */
+
 void
 basep_widget_queue_autoshow (BasePWidget *basep)
 {
         /* check if there's already a timeout set, and delete it if 
          * there was */
+
 	if (basep->state == BASEP_MOVING) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_print ("basep_widget_queue_autoshow: return 2");
@@ -1853,6 +1861,7 @@ basep_widget_queue_autoshow (BasePWidget *basep)
                 return;
 	}
 
+
 	if (panel_gconf_global_config_get_int ("panel-hide-delay") == 0) {
 		basep_widget_autoshow (basep);
 	} else {
@@ -1860,7 +1869,7 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 		basep->enter_notify_timer_tag =
 			gtk_timeout_add (panel_gconf_global_config_get_int ("panel-show-delay"),
 					 basep_widget_autoshow, basep);
-	}
+	} 
 }
 
 gboolean
@@ -2370,7 +2379,7 @@ basep_border_recalc (int screen)
 
 			panel = pd->panel;
 
-			if (IS_BORDER_WIDGET (panel) &&
+			if (BORDER_IS_WIDGET (panel) &&
 			    BASEP_WIDGET (panel)->screen == screen) {
 				gtk_widget_queue_resize (panel);
 			}
@@ -2414,6 +2423,9 @@ queue_recalc_handler (gpointer data)
 void
 basep_border_queue_recalc (int screen)
 {
+#ifdef BASEP_WIDGET_DEBUG
+	printf ("basep_border_queue_recalc\n");
+#endif
 	if (g_list_find (recalc_list,
 			 GINT_TO_POINTER (screen)) == NULL)
 		recalc_list = g_list_prepend (recalc_list,

@@ -4089,7 +4089,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		BorderEdge edge = BORDER_BOTTOM;
 		convert_setup (basep, TYPE_EDGE_POS);
 
-		if (IS_BORDER_POS (old_pos))
+		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
@@ -4111,7 +4111,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		convert_setup (basep, TYPE_ALIGNED_POS);
 
-		if (IS_BORDER_POS (old_pos))
+		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
@@ -4149,7 +4149,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		
 		convert_setup (basep, TYPE_SLIDING_POS);
 		
-		if (IS_BORDER_POS (old_pos))
+		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
