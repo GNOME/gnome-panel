@@ -677,22 +677,16 @@ panel_compatibility_migrate_panel_id (GConfClient       *client,
 	profile = panel_profile_get_name ();
 
 	/* panel_id -> toplevel_id */
-	key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
-	toplevel_id = gconf_client_get_string (client, key, NULL);
-
 	key = panel_gconf_full_key (key_type, profile, object_id, "panel_id");
 	panel_id = gconf_client_get_string (client, key, NULL);
 
-	if (!toplevel_id && panel_id &&
-	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
+	if (panel_id && (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
 		key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 
-		toplevel_id = NULL;
 		retval = TRUE;
 	}
 
-	g_free (toplevel_id);
 	g_free (panel_id);
 
 	return retval;
@@ -846,6 +840,51 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 	g_slist_free (objects);
 }
 
+/* Major hack, but we now set toplevel_id_list in the defaults database,
+ * so we need to figure out if its actually set in the users database.
+ */
+static gboolean
+panel_compatibility_detect_needs_migration (const char *profile)
+{
+	GConfEngine *engine;
+	GConfValue  *value;
+	GError      *error = NULL;
+	char        *source;
+	const char  *key;
+	gboolean     needs_migration = FALSE;
+
+	source = g_strdup_printf ("xml:readwrite:%s/.gconf", g_get_home_dir ());
+
+	if (!(engine = gconf_engine_get_for_address (source, NULL)))
+		return FALSE;
+
+	key = panel_gconf_general_key (profile, "panel_id_list");
+	if (!(value = gconf_engine_get_without_default (engine, key, NULL)))
+		goto no_migration;
+
+	gconf_value_free (value);
+
+	key = panel_gconf_general_key (profile, "toplevel_id_list");
+	value = gconf_engine_get_without_default (engine, key, &error);
+	if (error) {
+		g_warning ("Error reading GConf value from '%s': %s", key, error->message);
+		g_error_free (error);
+		goto no_migration;
+	}
+
+	if (value) {
+		gconf_value_free (value);
+		goto no_migration;
+	}
+
+	needs_migration = TRUE;
+
+ no_migration:
+	gconf_engine_unref (engine);
+
+	return needs_migration;
+}
+
 /* If toplevel_id_list is unset, migrate all the panels in
  * panel_id_list to toplevels
  */
@@ -853,8 +892,6 @@ void
 panel_compatibility_migrate_panel_id_list (GConfClient *client)
 {
 	GHashTable *panel_id_hash;
-	GConfValue *value;
-	GError     *error = NULL;
 	const char *profile;
 	const char *key;
 	GSList     *panel_id_list;
@@ -863,18 +900,8 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 
 	profile = panel_profile_get_name ();
 
-	key = panel_gconf_general_key (profile, "toplevel_id_list");
-	value = gconf_client_get (client, key, &error);
-	if (error) {
-		g_warning ("Error reading GConf value from '%s': %s", key, error->message);
-		g_error_free (error);
+	if (!panel_compatibility_detect_needs_migration (profile))
 		return;
-	}
-
-	if (value) {
-		gconf_value_free (value);
-		return;
-	}
 
 	panel_id_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
