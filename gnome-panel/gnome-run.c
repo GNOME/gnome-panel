@@ -1702,6 +1702,7 @@ show_run_dialog_with_text (GdkScreen  *screen,
 			   const char *text)
 {
 	GtkWidget *entry;
+	char *exec;
 
 	g_return_if_fail (text != NULL);
 
@@ -1713,5 +1714,9 @@ show_run_dialog_with_text (GdkScreen  *screen,
         
 	entry = g_object_get_data (G_OBJECT (run_dialog), "entry");
 
-	gtk_entry_set_text (GTK_ENTRY (entry), text);
+	exec = remove_parameters (text);
+
+	gtk_entry_set_text (GTK_ENTRY (entry), exec);
+
+	g_free (exec);
 }
