@@ -498,9 +498,7 @@ fish_timeout(gpointer data)
 static void
 apply_dialog_properties (Fish *fish) 
 {
-	/* xgettext:no-c-format */
-	const char *title_format = _("%s the Fish");
-	const char *label_format = _("<big><big>%s the GNOME Fish Says:</big></big>");
+	char *label_text;
 	char *name, *tmp;
 
 	if (fish->fortune_dialog == NULL)
@@ -510,14 +508,19 @@ apply_dialog_properties (Fish *fish)
 					      FISH_PREFS_NAME,
 					      NULL);
 
-	tmp = g_strdup_printf (title_format, name);
+	/* xgettext:no-c-format */
+	tmp = g_strdup_printf (_("%s the Fish"), name);
 	gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), tmp);
 	g_free (tmp);
 
-	tmp = g_strdup_printf (label_format, name);
+	/* xgettext:no-c-format */
+	label_text = g_strdup_printf (_("%s the GNOME Fish Says:"), name);
+
+	tmp = g_strdup_printf ("<big><big>%s</big></big>", label_text);
 	gtk_label_set_markup (GTK_LABEL (fish->fortune_label), tmp);
 	g_free (tmp);
 
+	g_free (label_text);
 	g_free (name);
 }
 
