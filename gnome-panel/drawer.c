@@ -660,6 +660,7 @@ load_drawer_applet (gchar       *mypanel_id,
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);
 	drawer_setup (drawer);
+	gtk_window_present (GTK_WINDOW (drawer->drawer));
 
 	if (!commie_mode)
 		panel_applet_add_callback (drawer->info,

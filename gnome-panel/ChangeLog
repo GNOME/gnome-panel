@@ -1,5 +1,16 @@
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix #90664 by giving focus to the PanelWidget
+	in a newly created drawer.
+
+	* drawer-widget.c: (drawer_widget_new): allow the
+	PanelWidget to be focused.
+
+	* drawer.c: (load_drawer_applet): set the focus on
+	the PanelWidget.
+
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
 	Fixes #90317 by explicitly destroying panels on receipt
 	of a Die from the session manager rather than just
 	exiting the mainloop. Apparently embedded out of process
