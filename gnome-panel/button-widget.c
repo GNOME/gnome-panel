@@ -1,4 +1,5 @@
 #include <config.h>
+#include <math.h>
 #include <string.h>
 #include <gtk/gtk.h>
 #include <libgnome/gnome-i18n.h>
@@ -551,7 +552,8 @@ button_widget_set_dnd_highlight(ButtonWidget *button, gboolean highlight)
 }
 
 void
-button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
+button_widget_draw(ButtonWidget *button, 
+		   GdkPixbuf    *dest)
 {
 	GtkWidget *widget, *pwidget;
 	PanelWidget *panel;
@@ -560,8 +562,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
-	g_return_if_fail(rgb != NULL);
-	g_return_if_fail(rowstride >= 0);
+	g_return_if_fail(dest != NULL);
 
 	widget = GTK_WIDGET(button);
 	panel = PANEL_WIDGET(widget->parent);
@@ -583,28 +584,32 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 		pb = button->pixbuf_hc;
 	}
 	if(pb != NULL) {
-		double affine[6];
 		int w, h;
-		GdkPixbuf *scaled_pb;
-		GdkInterpType interp;
+		int x, y;
 
-		interp = GDK_INTERP_HYPER;
+		w = gdk_pixbuf_get_width (pb);
+		h = gdk_pixbuf_get_height (pb);
 
-		scaled_pb = scale_pixbuf_to_square (pb, size, &w, &h,
-						    interp);
+		if(w > h) {
+		  h = (int) floor (h * (size / (double)w) + 0.5);
+		  w = size;
+		} else {
+		  w = (int) floor (w * (size / (double)h) + 0.5);
+		  h = size;
+		}
 
-		art_affine_translate(affine, 
-				     off + (size-w)/2, 
-				     off + (size-h)/2);
+		x = off + (size - w)/2;
+		y = off + (size - h)/2;
 
-		transform_pixbuf(rgb,
-			         0, 0,
-			         size, size,
-			         rowstride,
-			         scaled_pb,
-			         affine, ART_FILTER_NEAREST, NULL);
-
-		gdk_pixbuf_unref (scaled_pb);
+		gdk_pixbuf_composite (pb, dest,
+				      x, y, 
+				      MIN (w, gdk_pixbuf_get_width (dest) - x),
+				      MIN (h, gdk_pixbuf_get_height (dest) - y),
+				      x, y,
+				      w/(double)gdk_pixbuf_get_width (pb),
+				      h/(double)gdk_pixbuf_get_height (pb),
+				      GDK_INTERP_BILINEAR,
+				      255);
 	}
 }
 

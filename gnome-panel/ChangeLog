@@ -1,3 +1,14 @@
+2001-12-07  Alex Larsson  <alexl@redhat.com>
+
+	* button-widget.[ch]:
+	Draw buttons using gdk-pixbuf instead of libart, should
+	be faster and more correct.
+
+	* panel-widget.c (make_background): Take a rowstride arg.
+	(queue_resize_on_all_applets): New function
+	(send_draw_to_all_applets): Use pixbuf
+	(panel_widget_change_params): Queue resize on applets.
+
 2001-12-08  Glynn Foster  <glynn.foster@sun.com>
 
 	* gnome-run.c, gnome-run.h, menu.c,
@@ -95,7 +106,6 @@ Wed Dec 05 13:36:43 2001  George Lebl <jirka@5z.com>
 	* gnome-panel-properties.glade
 	Updated GUI and made enable animations work
 
->>>>>>> 1.1406
 2001-12-04  Alex Larsson  <alexl@redhat.com>
 
 	* applet.c (panel_applet_register):

@@ -75,8 +75,7 @@ GtkWidget*	button_widget_new		(const char *pixmap,
 						 const char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
-						 guchar *rgb,
-						 int rowstride);
+						 GdkPixbuf    *dest);
 /* draw the xlib part (arrow/text) */
 void		button_widget_draw_xlib		(ButtonWidget *button,
 						 GdkPixmap *pixmap);
