@@ -162,12 +162,18 @@ applet_change_background (PanelApplet               *applet,
 
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
+		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+					    GTK_SHADOW_IN);
 		break;
 	case PANEL_COLOR_BACKGROUND:
+		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+					    GTK_SHADOW_NONE);
 		gtk_widget_modify_bg (GTK_WIDGET (pager->applet),
 				      GTK_STATE_NORMAL, color);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
+		wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager),
+					    GTK_SHADOW_NONE);
 		style = gtk_style_copy (GTK_WIDGET (pager->applet)->style);
 		if (style->bg_pixmap[GTK_STATE_NORMAL])
 			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
