@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <string.h>
@@ -59,10 +60,6 @@ extern int base_panels;
 extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
-
-extern char *merge_main_dir;
-extern int merge_main_dir_len;
-extern char *merge_merge_dir;
 
 extern GtkTooltips *panel_tooltips;
 
@@ -185,21 +182,103 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 	}
 }
 
-/* XXX: not as hackish as it was before, but still quite bad */
+/* Copy a single file */
 static void
-add_app_to_personal (GtkWidget *widget, char *item_loc)
+copy_file_to_dir (const char *item, const char *to, mode_t mode)
 {
-	char *argv[6]={"cp","-r","-f"};
-	char *p;
+	int fdin;
+	int fdout;
+	int chars;
+	char buf[1024];
+	char *toname;
 
-	p = gnome_util_home_file("apps");
-	argv[3] = item_loc;
-	argv[4] = p;
-	argv[5] = NULL;
+	fdin = open (item, O_RDONLY);
+	if (fdin < 0)
+		return;
 
-	if(gnome_execute_async(NULL, 5, argv)<0)
-		panel_error_dialog(_("Can't execute copy (cp)"));
-	g_free(p);
+	toname = g_concat_dir_and_file (to, g_basename (item));
+	fdout = open (toname, O_WRONLY | O_CREAT, mode);
+	g_free (toname);
+	if (fdout < 0) {
+		close (fdin);
+		return;
+	}
+
+	while ((chars = read(fdin, buf, sizeof(buf))) > 0) {
+		write (fdout, buf, chars);
+	}
+
+
+	close (fdin);
+	close (fdout);
+}
+
+static void
+copy_fr_dir (DirRec *dr, const char *to)
+{
+	GSList *li;
+	char *file_name;
+	FILE *order_file = NULL;
+
+	g_return_if_fail (dr != NULL);
+	g_return_if_fail (to != NULL);
+
+	file_name = g_concat_dir_and_file (dr->frec.name, ".directory");
+	copy_file_to_dir (file_name, to, 0600);
+	g_free (file_name);
+
+	file_name = g_concat_dir_and_file (to, ".order");
+	order_file = fopen (file_name, "a");
+	g_free (file_name);
+
+	for (li = dr->recs; li != NULL; li = li->next) {
+		FileRec *fr = li->data;
+		
+		if (fr->type == FILE_REC_FILE) {
+			copy_file_to_dir (fr->name, to, 0600);
+		} else if (fr->type == FILE_REC_DIR) {
+			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
+			if (g_file_exists (newdir) ||
+			    mkdir (newdir, 0700) == 0)
+				copy_fr_dir ((DirRec *)fr, newdir);
+			g_free (newdir);
+		} else if (fr->type == FILE_REC_EXTRA) {
+			if (strcmp (g_basename (fr->name),
+				    ".order") != 0)
+				copy_file_to_dir (fr->name, to, 0600);
+		} else {
+			continue;
+		}
+
+		if (order_file != NULL)
+			fprintf (order_file, "%s\n", g_basename (fr->name));
+	}
+
+	if (order_file != NULL)
+		fclose (order_file);
+}
+
+static void
+add_app_to_personal (GtkWidget *widget, const char *item_loc)
+{
+	char *to;
+
+	to = gnome_util_home_file ("apps");
+
+	if (g_file_test (item_loc, G_FILE_TEST_ISDIR)) {
+		FileRec *fr = fr_get_dir (item_loc);
+		if (fr != NULL) {
+			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
+			if (g_file_exists (newdir) ||
+			    mkdir (newdir, 0700) == 0)
+				copy_fr_dir ((DirRec *)fr, newdir);
+			g_free(newdir);
+		}
+	} else {
+		copy_file_to_dir (item_loc, to, 0600);
+	}
+
+	g_free (to);
 }
 
 static PanelWidget *
@@ -1908,7 +1987,7 @@ static char *
 get_unique_tearoff_wmclass(void)
 {
 	static char buf[256];
-	g_snprintf(buf,256,"panel_tearoff_%lu",wmclass_number++);
+	g_snprintf(buf, 256, "panel_tearoff_%lu", wmclass_number++);
 	return buf;
 }
 
@@ -2159,7 +2238,7 @@ create_fake_menu_at (const char *menudir,
 	return menu;
 }
 
-static void
+static gboolean
 create_menuitem(GtkWidget *menu,
 		FileRec *fr,
 		gboolean applets,
@@ -2172,16 +2251,16 @@ create_menuitem(GtkWidget *menu,
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 	char *itemname;
 	
-	g_return_if_fail(fr != NULL);
+	g_return_val_if_fail (fr != NULL, FALSE);
 
 	if(fr->type == FILE_REC_EXTRA)
-		return;
+		return FALSE;
 
 
 	if(fr->type == FILE_REC_FILE && applets &&
 	   !fr->goad_id) {
 		g_warning(_("Can't get goad_id for applet, ignoring it"));
-		return;
+		return FALSE;
 	}
 
 	sub = NULL;
@@ -2212,7 +2291,7 @@ create_menuitem(GtkWidget *menu,
 
 		if (!sub) {
 			g_free(itemname);
-			return;
+			return FALSE;
 		}
 	}
 
@@ -2266,6 +2345,8 @@ create_menuitem(GtkWidget *menu,
 				    fr->name);
 	}
 	g_free(itemname);
+
+	return TRUE;
 }
 
 GtkWidget *
@@ -2333,10 +2414,12 @@ create_menu_at_fr (GtkWidget *menu,
 	}
 	
 	if(fr) {
-		GSList *last = NULL;
+		/* Last added points to the last fr list item that was successfuly
+		 * added as a menu item */
+		GSList *last_added = NULL;
 		for(li = dr->recs; li != NULL; li = li->next) {
 			FileRec *tfr = li->data;
-			FileRec *pfr = last ? last->data : NULL;
+			FileRec *pfr = last_added ? last_added->data : NULL;
 
 			/* Add a separator between merged and non-merged menuitems */
 			if (tfr->merged &&
@@ -2345,12 +2428,11 @@ create_menu_at_fr (GtkWidget *menu,
 				add_menu_separator(menu);
 			}
 
-			create_menuitem(menu, tfr,
-					applets, fake_submenus,
-					&add_separator,
-					&first_item);
-
-			last = li;
+			if (create_menuitem(menu, tfr,
+					    applets, fake_submenus,
+					    &add_separator,
+					    &first_item))
+				last_added = li;
 		}
 	}
 
@@ -2678,7 +2760,7 @@ add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_unref),
 		      GTK_OBJECT(menu));
 
-	show_tearoff_menu(menu, _("Create panel"),TRUE,0,0,wmclass);
+	show_tearoff_menu(menu, _("Create panel"), TRUE, 0, 0, wmclass);
 
 	tm = g_new0(TearoffMenu,1);
 	tm->menu = menu;

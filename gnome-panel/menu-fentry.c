@@ -222,18 +222,18 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	time_t curtime = time(NULL);
 	char *mergedir;
 	
-	g_return_if_fail(dr->recs==NULL);
-	g_return_if_fail(fr!=NULL);
-	g_return_if_fail(fr->name!=NULL);
+	g_return_if_fail (dr->recs == NULL);
+	g_return_if_fail (fr != NULL);
+	g_return_if_fail (fr->name != NULL);
 
 	ffr = g_chunk_new0 (FileRec, file_chunk);
 	ffr->type = FILE_REC_EXTRA;
-	ffr->name = g_concat_dir_and_file(fr->name,".order");
+	ffr->name = g_concat_dir_and_file(fr->name, ".order");
 	ffr->parent = dr;
 	if (stat (ffr->name, &s) != -1)
 		ffr->mtime = s.st_mtime;
 	ffr->last_stat = curtime;
-	dr->recs = g_slist_prepend(dr->recs,ffr);
+	dr->recs = g_slist_prepend(dr->recs, ffr);
 
 	mergedir = fr_get_mergedir (fr->name);
 
@@ -301,7 +301,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 					get_applet_goad_id_from_dentry(dentry);
 				gnome_desktop_entry_free(dentry);
 
-				dr->recs = g_slist_prepend(dr->recs,ffr);
+				dr->recs = g_slist_prepend(dr->recs, ffr);
 			} else
 				g_free(name);
 		}
