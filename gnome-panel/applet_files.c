@@ -53,10 +53,12 @@ get_dl_func(void *handle, char *name)
 {
 	void *func;
 	char *error;
-	char *funcname = name;
+	char *funcname;
 
 #       ifdef __FreeBSD__
         funcname = g_copy_strings("_", name, NULL);
+#       else
+        funcname = g_strdup(name);
 #       endif
 
 	func = dlsym(handle, funcname);
@@ -66,9 +68,7 @@ get_dl_func(void *handle, char *name)
 		g_assert(error == NULL);
 	}
 
-#       ifdef __FreeBSD__
 	g_free(funcname);
-#       endif
 
 	return func;
 }
