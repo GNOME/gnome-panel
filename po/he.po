@@ -1,21 +1,23 @@
 # translation of gnome-panel.HEAD.he.po to Hebrew
 # translation of gnome-panel.gnome-2-0.he.po to Hebrew
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2002,2003
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2002,2003.
+# Gil Osher <dolfin@rpg.org.il>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-19 16:35+0100\n"
-"PO-Revision-Date: 2003-07-26 12:06+0300\n"
-"Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
+"POT-Creation-Date: 2004-05-22 03:54+0200\n"
+"PO-Revision-Date: 2004-05-22 15:14+0300\n"
+"Last-Translator: Gil Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -46,7 +48,7 @@ msgstr "_אודות..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3079
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -64,7 +66,7 @@ msgid "Accessories"
 msgstr "עזרים"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2413
 msgid "Clock"
 msgstr "שעון"
 
@@ -84,16 +86,16 @@ msgstr "קבל את השעה והתאריך הנוכחיים"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:600
+#: applets/clock/clock.c:282 applets/clock/clock.c:604
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1524
+#: applets/clock/clock.c:284 applets/clock/clock.c:1528
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:602
-#: applets/clock/clock.c:1526
+#: applets/clock/clock.c:284 applets/clock/clock.c:606
+#: applets/clock/clock.c:1530
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -103,86 +105,84 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:295
-#, fuzzy
 msgid "%a %b %e"
-msgstr "%a %d %b"
+msgstr "%a %d ב%b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:302
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:309
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:393
 msgid "%A %B %d"
 msgstr "יום %A, ה %d ב%B"
 
-#: applets/clock/clock.c:819
+#: applets/clock/clock.c:823
 msgid "Tasks"
-msgstr ""
+msgstr "משימות"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:955
 msgid "All Day"
-msgstr ""
+msgstr "כל היום"
 
-#: applets/clock/clock.c:985
+#: applets/clock/clock.c:989
 msgid "Appointments"
-msgstr ""
+msgstr "פגישות"
 
-#: applets/clock/clock.c:1206
+#: applets/clock/clock.c:1210
 msgid "Calendar"
 msgstr "לוח שנה"
 
-#: applets/clock/clock.c:1437
+#: applets/clock/clock.c:1441
 msgid "Computer Clock"
 msgstr "שעון מחשב"
 
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:1523
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1521
+#: applets/clock/clock.c:1525
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1561
+#: applets/clock/clock.c:1565
 msgid "%A, %B %d %Y"
 msgstr "יום %A, ה %d ב%B %Y"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1607
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "נכשל בהפעלת הכלי להגדרת השעה: %s"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1646
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr "נכשל במציאת תוכנית להגדרת התאריך והשעה. אולי אין כזו תוכנית מותקנת?"
 
-#: applets/clock/clock.c:2044
-#, fuzzy
+#: applets/clock/clock.c:2048
 msgid "Custom format"
-msgstr "סמל מותאם אישית"
+msgstr "סידור מותאם אישית"
 
-#: applets/clock/clock.c:2165 applets/clock/clock.c:2355
+#: applets/clock/clock.c:2169 applets/clock/clock.c:2359
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -192,49 +192,48 @@ msgstr "סמל מותאם אישית"
 msgid "There was an error displaying help: %s"
 msgstr "ארעה שגיאה בהצגת העזרה: %s"
 
-#: applets/clock/clock.c:2201
+#: applets/clock/clock.c:2205
 msgid "Clock Preferences"
 msgstr "העדפות שעון"
 
-#: applets/clock/clock.c:2237
+#: applets/clock/clock.c:2241
 msgid "Clock _type:"
 msgstr "_סוג שעון:"
 
-#: applets/clock/clock.c:2247
+#: applets/clock/clock.c:2251
 msgid "12 hour"
 msgstr "12 שעות"
 
-#: applets/clock/clock.c:2248
+#: applets/clock/clock.c:2252
 msgid "24 hour"
 msgstr "24 שעות"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2253
 msgid "UNIX time"
 msgstr "זמן UNIX"
 
-#: applets/clock/clock.c:2250
+#: applets/clock/clock.c:2254
 msgid "Internet time"
 msgstr "זמן אינטרנט"
 
-#: applets/clock/clock.c:2258
-#, fuzzy
+#: applets/clock/clock.c:2262
 msgid "Custom _format:"
-msgstr "מבנה שעה"
+msgstr "_סידור מותאם אישית"
 
-#: applets/clock/clock.c:2277
+#: applets/clock/clock.c:2281
 msgid "Show _seconds"
 msgstr "הצג _שניות"
 
-#: applets/clock/clock.c:2286
+#: applets/clock/clock.c:2290
 msgid "Show _date"
 msgstr "הצג _תאריך"
 
-#: applets/clock/clock.c:2295
+#: applets/clock/clock.c:2299
 msgid "Use _UTC"
 msgstr "השתמש ב _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2390 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2394 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -246,7 +245,7 @@ msgstr ""
 "פרויקט linBrew\n"
 "http://linbrew.sourceforge.net"
 
-#: applets/clock/clock.c:2411
+#: applets/clock/clock.c:2415
 msgid "The Clock displays the current time and date"
 msgstr "השעון מציג את הזמן והתאריך הנוכחיים"
 
@@ -255,13 +254,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24-hour"
+msgstr "24 שעות"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "סידור מותאם אישית של השעון"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -299,14 +297,14 @@ msgstr "הצג זמן עם שניות"
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr ""
+msgstr "השימוש במפתח זה בוטל ב GNOME 2.6 לטובת מקש ה 'סידור'. הסכימה נשארה לצורכי תאימות עם גרסאות ישנות."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr ""
+msgstr "המפתח מציין את הסידור המשמש את יישומון השעון כאשר מפתח הסידור נקבע ל \"custom\". ניתן להשתמש במצייני ההמרות אשר בשימוש ב strftime() כדי לקבל את סידור מסויים."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -318,7 +316,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
+msgstr "המפתח מציין את סידור השעה המשמש את יישומון השעון. ערכים אפשריים הם \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". אם נקבע ל \"internet\", השעון יציג זמן אינטרנט. שיטת זמן האינטרנט מחלקת את היום ל 1000 \".פעימות\". אין איזורי זמן בשיטה זו, כך שהזמן זהה בכל רחבי העולם. אם נקבע ל \"unix\", השעון יציג את הזמן בשניות מאז Epoch, כלומר 01-01-1970. אם נקבע ל \"custom\", השעון יציג את הזמן בסידור שנקבע במפתח custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -396,9 +394,9 @@ msgid "(with minor help from George)"
 msgstr "(עם מעט עזרה מג'ורג')"
 
 #: applets/fish/fish.c:534
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "%s הדג של GNOME, נביא מודרני"
+msgstr "%s הדג, נביא מודרני"
 
 #: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
@@ -409,11 +407,11 @@ msgid "Unable to locate the command to execute"
 msgstr "לא ניתן לאתר את הפקודה להרצה"
 
 #: applets/fish/fish.c:626
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "%s הדג של GNOME אומר:"
+msgstr "%s הדג אומר:"
 
-#: applets/fish/fish.c:752
+#: applets/fish/fish.c:755
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -424,7 +422,7 @@ msgstr ""
 "\n"
 "פרטים: %s"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -435,7 +433,7 @@ msgstr ""
 "\n"
 "אנא פנה לחלון מאפייני הדג."
 
-#: applets/fish/fish.c:1377
+#: applets/fish/fish.c:1380
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -443,10 +441,10 @@ msgstr ""
 "צריך להחליף את המים!\n"
 "(תסתכל על התאריך של היום)"
 
-#: applets/fish/fish.c:1437
-#, fuzzy, c-format
+#: applets/fish/fish.c:1440
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "דג GNOME, מגלה העתידות"
+msgstr "%s הדג, מגלה העתידות"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -524,8 +522,7 @@ msgid "Frames in fish's animation"
 msgstr "פריימים בהנפשת הדג"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "אם אמת, הנפשת הדג תוצג מסובבת בלוחות אנכיים."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -626,10 +623,10 @@ msgid "Window Navigation Applet Factory"
 msgstr "יצרן יישומון ניווט חלונות"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
-#, fuzzy
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
+#: applets/wncklet/window-menu.c:728
 msgid "Window Selector"
-msgstr "רשימת חלונות"
+msgstr "בוחר חלונות"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:519
@@ -671,9 +668,8 @@ msgstr ""
 "חלונות."
 
 #: applets/wncklet/window-list.c:822
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr "רשימת החלונות מציגה רשימה של כל החלונות הנראים ונותנת לך לדפדף בהם."
+msgstr "רשימת החלונות מציגה רשימה של כל החלונות ונותנת לך לדפדף בהם."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -803,10 +799,8 @@ msgid "When to group windows"
 msgstr "מתי לקבץ חלונות"
 
 #: applets/wncklet/window-menu.c:138
-#, fuzzy
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
-msgstr "רשימת החלונות מציגה רשימה של כל החלונות הנראים ונותנת לך לדפדף בהם."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgstr "בוחר החלונות מציג רשימה של כל החלונות ונותן לך לדפדף בהם."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -816,10 +810,9 @@ msgstr "חלון לא-ידוע"
 msgid "No Windows Open"
 msgstr "אין חלונות פתוחים"
 
-#: applets/wncklet/window-menu.c:709
-#, fuzzy
+#: applets/wncklet/window-menu.c:727
 msgid "Tool to switch between windows"
-msgstr "החלף בין חלונות פתוחים"
+msgstr "כלי להחלפה בין חלונות"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:832
@@ -839,8 +832,7 @@ msgstr "שגיאה בטעינת הערך מספר שורות למחליף סבי
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "שגיאה בטעינת הערך הצגת שמות סביבות עבודה למחליף סביבות העבודה: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:384
@@ -921,7 +913,6 @@ msgid "Rows in workspace switcher"
 msgstr "שורות במחליף סביבות העבודה"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
-#, fuzzy
 msgid ""
 "This key specifies how many rows (for horizontal layout) or columns (for "
 "vertical layout) the workspace switcher shows the workspaces in. This key is "
@@ -962,9 +953,9 @@ msgid "Can't find an empty spot"
 msgstr "לא ניתן למצוא נקודה ריקה"
 
 #: gnome-panel/button-widget.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load image %s"
-msgstr "שגיאה בטעינת %s: %s\n"
+msgstr "נכשלה טעינת תמונה %s"
 
 #: gnome-panel/button-widget.c:403
 msgid "none"
@@ -998,11 +989,11 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "תפריט CDE"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3188
 msgid "Drawer"
 msgstr "מגירה"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_מאפיינים"
@@ -1123,47 +1114,38 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cתמונת-מסך-%s.png"
+msgstr "תמונת-מסך-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cתמונת-מסך.png"
+msgstr "תמונת-מסך.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cתמונת-מסך-%s-%d.png"
+msgstr "תמונת-מסך-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cתמונת-מסך-%d.png"
+msgstr "תמונת-מסך-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "אין מספיק מקום לכתוב את הקובץ %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1142
-msgid "Grab a window instead of the entire screen"
-msgstr "תפוס חלון במקום את כל המסך"
-
-#: gnome-panel/gnome-panel-screenshot.c:1143
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "קח תמונת מסך לאחר פרק זמן נתון [בשניות]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1193
+#: gnome-panel/gnome-panel-screenshot.c:1179
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1171,9 +1153,22 @@ msgstr ""
 "קובץ Glade לתוכנית תמונות המסך חסר.\n"
 "אנא בדוק את ההתקנה שלך של gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1209
+#: gnome-panel/gnome-panel-screenshot.c:1195
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "לא ניתן לקחת תמונת מסך של שולחן העבודה הנוכחי."
+
+#: gnome-panel/gnome-panel-screenshot.c:1255
+#, c-format
+msgid "Save screenshot to _web page (save in %s)"
+msgstr "שמור תמונות מסך לעמוד _רשת (שמור ב %s)"
+
+#: gnome-panel/gnome-panel-screenshot.c:1311
+msgid "Grab a window instead of the entire screen"
+msgstr "תפוס חלון במקום את כל המסך"
+
+#: gnome-panel/gnome-panel-screenshot.c:1312
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "קח תמונת מסך לאחר פרק זמן נתון [בשניות]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1236,31 +1231,31 @@ msgstr "לא סופקה כתובת לקובץ שולחן העבודה של מש�
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "לא ניתן לפתוח את קובץ שולחן העבודה %s למשגר הלוח %s%s\n"
 
-#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:712 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "מאפייני משגר"
 
-#: gnome-panel/launcher.c:864
+#: gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "המפתח %s לא נקבע, לא ניתן לטעון את המשגר\n"
 
-#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
+#: gnome-panel/launcher.c:953 gnome-panel/launcher.c:970
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "לא ניתן ליצור משגר"
 
-#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:954 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "אתה חייב לציין שם."
 
-#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:971 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "אתה חייב לציין כתובת או פקודה תקינים."
 
-#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:1014 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "צור משגר"
 
@@ -1312,7 +1307,7 @@ msgstr "הכרח יציאה"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "הכרח יישום פרוע לסיים"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
@@ -1355,15 +1350,15 @@ msgid ""
 msgstr "תוכנית זו אחראית על הפעלת תוכניות אחרות והטמעת יישומונים קטנים בתוכה."
 
 #: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "לא ניתן להפעיל את '%s'"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1560,18 +1555,18 @@ msgid ""
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
+"נראה כי היישומון \"%s\" מת באופן לא צפוי.\n"
+"\n"
+"האם ברצונך לטעון מחדש את היישומון?"
 
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"היישומון %s נראה שמת באופן בלתי-צפוי\n"
 "\n"
-"האם לטעון מחדש יישומון זה?\n"
 "\n"
 "(אם תבחר לא לטעון אותו מחדש עכשיו, תמיד תוכל להוסיף אותו על-ידי לחיצה ימנית "
 "על הלוח ולחיצה על תת-התפריט \"הוסף ללוח\")"
@@ -1581,26 +1576,22 @@ msgid "D_on't Delete"
 msgstr "_אל תמחק"
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"הלוח נתקל בתקלה בזמן טעינת \"%s\"\n"
-"\n"
-"האם אתה רוצה למחוק יישומון זה מהגדרותיך?"
+msgstr "הלוח נתקל בתקלה בזמן טעינת \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "פרטים: %s"
 
 #: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"הלוח נתקל בתקלה בזמן טעינת \"%s\"\n"
+"\n"
 "\n"
 "האם אתה רוצה למחוק יישומון זה מהגדרותיך?"
 
@@ -1624,8 +1615,7 @@ msgid "Error getting value for '%s': %s"
 msgstr "שגיאה בקבלת ערך בעבור '%s': %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr "לחץ על חלון כדי להכריח את היישום לסיים. לביטול לחץ <ESC>."
 
 #: gnome-panel/panel-force-quit.c:186
@@ -1709,7 +1699,7 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr ""
+msgstr "רשימה של מזהיי יישומונים שהלוח יתעלם מהם. בצורה זו אתה יכול למנוע מיישומונים מסויימים להטען או להופיע בתפריט. לדוגמה, כדי לכבות את היישומון 'שורת-פקודה קטנה' הוסף 'OAFIID:GNOME_MiniCommanderApplet' לרשימה זו. הלוח חייב להטען מחדש כדי שזה יתחיל לפעול."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1718,7 +1708,7 @@ msgstr "מהירות הנפשה"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "מזהיי יישומונים למניעה מטעינה"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -1726,25 +1716,23 @@ msgstr "סגור אוטומטית מגירה"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "נעילה מוחלטת של הלוח"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
 msgstr "אשר הסרת לוח"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "הכרח יציאה"
+msgstr "כבה הכרח יציאה"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "נעל מסך"
+msgstr "כבה נעל מסך"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "כבה התנתק"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1788,8 +1776,7 @@ msgid ""
 msgstr "אם אמת, מגירה תיסגר אוטומטית כאשר משתמש לוחץ על משגר בתוכה."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "אם אמת, אזי המשגר יואר כאשר המשתמש מזיז את הסמן מעליו."
 
 #: gnome-panel/panel-global.schemas.in.h:20
@@ -1801,25 +1788,31 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"אם אמת, הלוח לא יירשה למשתמש להכריח יישום לסיים על-ידי "
+"הסרת הגישה לכפתור הכרח יציאה."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"אם אמת, הלוח לא יירשה למשתמש לנעול את מסכו על-ידי "
+"הסרת הגישה לפריטי התפריט של נעילת המסך."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"אם אמת, הלוח לא יירשה למשתמש להתנתק על-ידי "
+"הסרת הגישה לפריטי התפריט של התנתקות."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
-msgstr ""
+msgstr "אם אמת, הלוח לא יירשה כל שינוי של הגדרות הלוח. עם זאת, יישומונים יצטרכו להנעל בנפרד. הלוח חייב להטען מחדש כדי שזה יתחיל לפעול."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1877,8 +1870,7 @@ msgstr ""
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
-msgstr ""
-"אם אמת, המיקום של האובייקט מפורש ביחס לקצה הימני (או התחתי אם אנכי) של הלוח."
+msgstr "אם אמת, המיקום של האובייקט מפורש ביחס לקצה הימני (או התחתי אם אנכי) של הלוח."
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid ""
@@ -1982,13 +1974,12 @@ msgstr ""
 "מהעליון אם אנכי) של הלוח."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"הטקסט להצגה בתגית הכלי של מגירה זו. מפתח זה רלוונטי רק אם מפתח object_type "
-"הוא \"drawer-object\"."
+"הטקסט להצגה בתגית הכלי של מגירה זו או תפריט זה. מפתח זה רלוונטי רק אם מפתח object_type "
+"הוא \"drawer-object\" או \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2000,9 +1991,8 @@ msgstr ""
 "\"launcher-object\", \"bonobo-applet\", \"action-applet\" וגם \"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "תגית הכלי המוצגת למגירה"
+msgstr "תגית הכלי המוצגת למגירה או לתפריט"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2133,32 +2123,28 @@ msgid "_Autohide"
 msgstr "_הסתר אוטומטית"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "סמל"
+msgstr "_סמל:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "שם"
+msgstr "_שם:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
 msgstr "_ללא (השתמש בערכת הנושא של המערכת)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "יישור:"
+msgstr "_יישור:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "_דירוג"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Size:"
-msgstr "גודל:"
+msgstr "_גודל:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "_Tile"
@@ -2169,8 +2155,7 @@ msgid "Couldn't find a suitable application"
 msgstr "לא ניתן למצוא יישום מתאים"
 
 #: gnome-panel/panel-recent.c:82
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr "היישום ברירת המחדל לסוג זה לא יכול להתמודד עם קבצים מרוחקים"
 
 #: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
@@ -2184,7 +2169,7 @@ msgstr "ארעה שגיאה לא ידועה בזמן ניסיון לפתיחת %
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "מסמכים אחרונים"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2199,7 +2184,7 @@ msgstr "לא ניתן להציג מיקום '%s'"
 #: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "לא ניתן להמיר את '%s' מ UTF-8"
 
 #: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
@@ -2224,8 +2209,7 @@ msgstr "לחץ על כפתור זה כדי לעיין בעבור קובץ ששמ
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr ""
-"לחץ על כפתור זה כדי להפעיל את היישום הנבחר או את הפקודה אשר בשדה ערך הפקודה."
+msgstr "לחץ על כפתור זה כדי להפעיל את היישום הנבחר או את הפקודה אשר בשדה ערך הפקודה."
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command entry"
@@ -2293,9 +2277,8 @@ msgid "_Force quit"
 msgstr "ה_כרח יציאה"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "השהיית הסתרה"
+msgstr "הסתר לוח"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2668,20 +2651,18 @@ msgid "X co-ordinate of panel"
 msgstr "קורדינטת ה X של הלוח"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "מסך ה X בו הלוח"
+msgstr "מסך ה X בו הלוח מוצג"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "צג Xinerama בו הלוח נמצא."
+msgstr "צג Xinerama בו הלוח מוצג"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
 msgstr "קורדינטת ה Y של הלוח."
 
-#: gnome-panel/panel-util.c:69
+#: gnome-panel/panel-util.c:70
 msgid "Cannot display help document"
 msgstr "לא ניתן להציג מסמך עזרה"
 
@@ -2752,17 +2733,15 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "טווח שמורה מה הגדלים שמקובלים על יישומון זה"
 
 #: libpanel-applet/panel-applet.c:1132
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "היישומון כולל יישור לוח"
+msgstr "הלוח המכיל את היישומון נעול."
 
 #: libpanel-applet/panel-test-applets.c:33
 msgid "Specify an applet IID to load"
 msgstr "ציין את IID היישומון לטעינה"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "ציין מיקום gconf שבו על העדפות היישומון להישמר"
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2770,8 +2749,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "ציין את הגודל ההתחלתי של היישומון (xx-small, medium, large וכו')"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "ציין את היישור ההתחלתי של היישומון (top, bottom, left או right)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2814,481 +2792,3 @@ msgstr "מאוד מאוד גדול"
 msgid "XX Small"
 msgstr "מאוד מאוד קטן"
 
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "שגיאה בקריאת ערך רשימה של GConf '%s': %s"
-
-#, fuzzy
-#~ msgid "Log Out %s"
-#~ msgstr "התנתק"
-
-#, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr "התנתק מתצורת הפעלה זו כדי להתחבר כמשתמש אחר או כדי לכבות את מחשבך."
-
-#, fuzzy
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "צא משולחן העבודה של GNOME"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "חיפוש"
-
-#~ msgid "Has Arrow"
-#~ msgstr "יש חץ"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "האם לצייר מצביע חץ או לא"
-
-#, fuzzy
-#~ msgid "Drag and drop Highlight"
-#~ msgstr "הדגשת גרירה וזריקה"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "האם או לא להדגיש את הסמל בזמן גרירה וזריקה"
-
-#~ msgid "Orientation"
-#~ msgstr "יישור"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "יישור ButtonWidget"
-
-#~ msgid "Icon Name"
-#~ msgstr "שם הסמל"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "הסמל הרצוי ל ButtonWidget"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "זיהוי מחסנית סמל"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "מחסנית הסמל הרצוי ל ButtonWidget"
-
-#~ msgid "Action Type"
-#~ msgstr "סוג פעולה"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "סוג הפעולה שכפתור זה מבצע"
-
-#, fuzzy
-#~ msgid "Drag and drop enabled"
-#~ msgstr "גרירה וזריקה מאופשרים"
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "האם גרירה וזריקה מאופשרים בפריט"
-
-#~ msgid "Edges"
-#~ msgstr "קצוות"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "אילו קצוות לצייר"
-
-#~ msgid "Menu Path"
-#~ msgstr "נתיב התפריט"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "הנתיב ממנו יש לבנות את התפריט"
-
-#~ msgid "Custom Icon"
-#~ msgstr "סמל מותאם אישית"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "סמל מותאם אישית לתפריט"
-
-#, fuzzy
-#~ msgid "Tooltip"
-#~ msgstr "תגית/שם"
-
-#, fuzzy
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "תגית הכלי המוצגת למגירה"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "השתמש בנתיב תפריט"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "השתמש בנתיב שצוין על-ידי המאפיין menu-path"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "השתמש בסמל מותאם אישית"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "השתמש בסמל שצוין במאפיין custom-icon"
-
-#~ msgid "Name"
-#~ msgstr "שם"
-
-#~ msgid "The name of this panel"
-#~ msgstr "שם הלוח"
-
-#~ msgid "Expand"
-#~ msgstr "הרחב"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "הרחב כדי לתפוס רוחב/גובה צג מלא"
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "יישור הלוח"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "הגובה (או הרוחב כאשר אנכי) של הלוח"
-
-#~ msgid "X position"
-#~ msgstr "מיקום X"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "מיקום X של הלוח"
-
-#~ msgid "X centered"
-#~ msgstr "X מרכזי"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "קורדינטת ה X מיוחסת למרכז המסך"
-
-#~ msgid "Y position"
-#~ msgstr "מיקום Y"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "מיקום ה Y של הלוח"
-
-#~ msgid "Y centered"
-#~ msgstr "Y מרכזי"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "קורדינטת ה Y מיוחסת למרכז המסך"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "צג Xinerama"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "הצג (במונחי Xinerama) אשר עליו הלוח"
-
-#~ msgid "Auto hide"
-#~ msgstr "הסתר אוטומטית"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "הסתר את הלוח באופן אוטומטי כאשר העכבר עוזב את הלוח"
-
-#~ msgid "Hide delay"
-#~ msgstr "השהיית הסתרה"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "מספר המילי-שניות של השהייה לפני ההסתרה האוטומטית"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "השהיית גילוי"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr "מספר המילי-שניות של השהייה לפני הגילוי האוטומטי"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "גודל הסתרה-אוטומטית"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr "מספר הפיקסלים הנראים כאשר הלוח מוסתר באופן אוטומטי"
-
-#~ msgid "Animate"
-#~ msgstr "הנפש"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "אפשר הנפשות הצגה/הסתרה"
-
-#~ msgid "Animation Speed"
-#~ msgstr "מהירות הנפשה"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr "המהירות בה יש להנפיש את הצגת/הסתרת הלוח"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "כפתורים מאופשרים"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "אפשר כפתורי הצגה/הסתרה"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "חצים מאופשרים"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "אפשר חצים על כפתורי ההצגה/הסתרה"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "צבע הרקע"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "אטימות צבע הרקע"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "צבע הרקע"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "צבע הרקע"
-
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "צבע הרקע"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "_מתח"
-
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "גודל הלוח"
-
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "רקע"
-
-#, fuzzy
-#~ msgid "Lock down the panel"
-#~ msgstr "נעל את האובייקט ללוח"
-
-#~ msgid "%s - command not found"
-#~ msgstr "%s - הפקודה לא נמצאה"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "לא ניתן להפעיל את %s"
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr "אם אמת, מציג את הזמן בשניות מאז התקופה, כלומר 01-01-1970."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "מפתח זה מציין את מבנה השעה בשימוש על-ידי יישומון השעון. ערכים אפשריים הם "
-#~ "12 ו 24."
-
-#~ msgid "Window Menu"
-#~ msgstr "תפריט חלון"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "הדפס תמונת מסך"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "תצוגה מקדימה של הדפסת תמונת מסך"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_הדפס תמונת מסך..."
-
-#, fuzzy
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "הלוח נתקל בתקלה בזמן טעינת \"%s\"\n"
-#~ "פרטים: %s\n"
-#~ "\n"
-#~ "האם אתה רוצה למחוק יישומון זה מהגדרותיך?"
-
-#~ msgid "Open Recent"
-#~ msgstr "נפתח לאחרונה"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr "אם אמת, מציג זמן אינטרנט, שהוא זהה בכל העולם."
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s הדג של GNOME"
-
-#~ msgid "Expander Size"
-#~ msgstr "גודל מרחיב"
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "גודלו של החץ המרחיב"
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "עזרה ל_יישום %s"
-
-#~ msgid "Help on %s"
-#~ msgstr "עזרה ב %s"
-
-#~ msgid "Application"
-#~ msgstr "יישום"
-
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>_סמל:</b>"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_שם:</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_יישור:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_גודל:</b>"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr "תיאור של היישום הנוכחי שנבחר או מידע על הפקודה שתופעל."
-
-#~ msgid "Application description"
-#~ msgstr "תיאור היישום"
-
-#~ msgid "List of known applications"
-#~ msgstr "רשימה של יישומים ידועים"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "בחר יישום להפעלה מהרשימה"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "כאשר זה נבחר, רשימה של יישומים ידועים מופיעה."
-
-#~ msgid "Help document not found"
-#~ msgstr "מסמך עזרה לא נמצא"
-
-#~ msgid "No document to show"
-#~ msgstr "אין מסמך להצגה"
-
-#~ msgid ""
-#~ "Failed to load image %s\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "שגיאה בטעינת תמונה %s\n"
-#~ "\n"
-#~ "פרטים: %s"
-
-#~ msgid "Size and Position"
-#~ msgstr "גודל ומיקום"
-
-#~ msgid "Applet appearance"
-#~ msgstr "מראה יישומון"
-
-#~ msgid "Drawer handle"
-#~ msgstr "מזהה ייחודי למגירה"
-
-#~ msgid "Enable hidebutton"
-#~ msgstr "אפשר כפתורי הסתרה"
-
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "אפשר חצי כפתורי הסתרה"
-
-#~ msgid "_Drawer"
-#~ msgstr "מ_גירה"
-
-#~ msgid "_Run Application..."
-#~ msgstr "_הפעל יישום..."
-
-#~ msgid "_Search for Files..."
-#~ msgstr "_חפש קבצים..."
-
-#~ msgid "_Take Screenshot..."
-#~ msgstr "_קח תמונת מסך..."
-
-#~ msgid "_Log Out"
-#~ msgstr "ה_תנתק"
-
-#~ msgid "KDE Menu"
-#~ msgstr "תפריט KDE"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "קובע את מבנה השעה, יכול להיות 12 או 24"
-
-#~ msgid "Maximum size that Window List requests"
-#~ msgstr "גודל מקסימלי שרשימת החלונות תדרוש"
-
-#~ msgid ""
-#~ "To be usable, Window List requires a minimum width. Window List requests "
-#~ "this minimum width. The minimum width setting is useful for sliding and "
-#~ "edge panels, which usually request a small default width."
-#~ msgstr ""
-#~ "רשימת החלונות צריכה רוחב מינימלי כדי להיות שמישה בכלל. ערך זה הינו הרוחב "
-#~ "המינימלי שרשימת החלונות תדרוש. זה שימושי עבור לוחות גלישה ולוחות קצה, "
-#~ "שבדרך-כלל ידרשו רוחב מינימלי קטן ביותר."
-
-#~ msgid "Number of rows in the Workspace Switcher."
-#~ msgstr "מספר שורות במחליף סביבות העבודה"
-
-#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
-#~ msgstr "האם להציג את כל סביבות העבודה במחליף סביבות העבודה."
-
-#~ msgid ""
-#~ "Whether to display the names of the workspaces in the Workspace Switcher."
-#~ msgstr "האם להציג את שמות סביבות העבודה במחליף סביבות העבודה."
-
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "לא יכול לשמור משגר לדיסק, השגיאה הבאה ארעה:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "לא ניתן להפעיל את 'אודות GNOME'"
-
-#~ msgid "probably does not exist"
-#~ msgstr "כנראה שלא קיים"
-
-#~ msgid "Could not remove the menu item"
-#~ msgstr "לא ניתן להסיר את פריט התפריט"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "לא ניתן להפעיל את gnome-search-tool"
-
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "לא ניתן להפעיל את gnome-panel-screenshot"
-
-#~ msgid "Error launching command"
-#~ msgstr "שגיאה בהפעלת פקודה"
-
-#~ msgid ""
-#~ "If true, the x key is ignored and the panel is placed at the center of "
-#~ "the x-axis of the screen. If the panel is resized it will remain at that "
-#~ "position - i.e. the panel will grow on both sides. If false, the x key "
-#~ "determines the location of the panel."
-#~ msgstr ""
-#~ "אם אמת, יתעלמו ממפתח X והלוח ימוקם במרכז ציר ה X של המסך. אם הלוח ישנה "
-#~ "גודלו הוא יישאר במיקום זה. - לדוגמה, הלוח יגדל לשני הצדדים. אם שקר, מפתח "
-#~ "ה X מזהה את המיקום של הלוח."
-
-#~ msgid "A list of panel IDs"
-#~ msgstr "רשימה של זיהויי הלוחות"
-
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "קח תמונת מסך של חלון"
-
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "IID של Bonobo ליישומון"
-
-#~ msgid "The location of the launcher"
-#~ msgstr "מיקום המשגר"
-
-#~ msgid "The path for the menu contents"
-#~ msgstr "הנתיב לתכני התפריט"
-
-#~ msgid "The type of action button"
-#~ msgstr "סוג כפתור פעולה"
-
-#~ msgid "The type of panel object"
-#~ msgstr "סוג אובייקט הלוח"
-
-#~ msgid "Delay before automatically hiding the panel."
-#~ msgstr "השהייה לפני שמסתירים אוטומטית את הלוח."
-
-#~ msgid "Delay before automatically un-hiding the panel."
-#~ msgstr "השהייה לפני שמגלים אוטומטית את הלוח."
-
-#~ msgid "The background image."
-#~ msgstr "תמונת הרקע."
-
-#~ msgid "The background type."
-#~ msgstr "סוג הרקע."
-
-#~ msgid "The orientation of the panel."
-#~ msgstr "יישור הלוח."
-
-#~ msgid "The size of the panel."
-#~ msgstr "גודל הלוח."
-
-#~ msgid "The speed of animations."
-#~ msgstr "מהירות ההנפשות."
