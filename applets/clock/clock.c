@@ -498,6 +498,20 @@ create_calendar (ClockData *cd,
 	options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
 	gtk_calendar_set_display_options (GTK_CALENDAR (calendar), options);
 
+	if (cd->gmt_time &&
+	    (cd->format != CLOCK_FORMAT_UNIX ||
+	     cd->format != CLOCK_FORMAT_INTERNET)) {
+		time_t     current_time;
+		struct tm *tm;
+
+		time (&current_time);
+		tm = gmtime (&current_time);
+		gtk_calendar_select_month (GTK_CALENDAR (calendar),
+					   tm->tm_mon,
+					   tm->tm_year + 1900);
+		gtk_calendar_select_day (GTK_CALENDAR (calendar), tm->tm_mday);
+	}
+
 	gtk_container_add (GTK_CONTAINER (window), calendar);
 
 	gtk_widget_show (calendar);
