@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-4.hu\n"
-"POT-Creation-Date: 2003-09-28 21:33+0200\n"
-"PO-Revision-Date: 2003-09-28 21:40+0200\n"
+"POT-Creation-Date: 2003-10-03 16:36+0200\n"
+"PO-Revision-Date: 2003-10-03 16:49+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -628,7 +628,7 @@ msgstr "A fájl nem található"
 
 #: applets/wncklet/showdesktop.c:444
 msgid "Show Desktop Button"
-msgstr "Munkaasztal gomb megjelenítése"
+msgstr "Munkaasztal megjelenítése gomb"
 
 #: applets/wncklet/showdesktop.c:446
 msgid "This button lets you hide all windows and show the desktop"
@@ -638,7 +638,7 @@ msgstr "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztal
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
-msgstr ""
+msgstr "Az ablakkezelőd nem támogatja a munkaasztal megjelenítése gombot, vagy nem futtatsz ablakkezelőt."
 
 #: applets/wncklet/window-list.c:802 applets/wncklet/window-menu.c:132
 msgid ""
@@ -958,11 +958,11 @@ msgstr "Rajzoljon-e nyilat"
 
 #: gnome-panel/button-widget.c:778
 msgid "DnD Highlight"
-msgstr ""
+msgstr "Húzd és ejtsd kiemelése"
 
 #: gnome-panel/button-widget.c:779
 msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
+msgstr "Legyen-e kiemelve az éppen vonszolt ikon"
 
 #: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3561
 msgid "Orientation"
@@ -1713,12 +1713,12 @@ msgstr "Nem kapom meg az AppletShell interfészt a vezérlőtől\n"
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr ""
+msgstr "Hiba a(z) '%s' GConf-kulcs figyelésekor: %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "Hiba a '%s' glade fájl beolvasása közben"
+msgstr "Hiba a(z) '%s' GConf-könyvtár betöltése közben: %s"
 
 #: gnome-panel/panel-bindings.c:199
 #, fuzzy, c-format
@@ -1745,13 +1745,15 @@ msgstr "Panel törlése"
 #: gnome-panel/panel-force-quit.c:73
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
+msgstr "Kattints az ablakra, hogy az alkalmazás bezáródjon. A művelet az <ESC> billentyűvel szakítható meg."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"Bezárod erőszakkal ezt az alkalmazást?\n"
+"(Minden megnyitott dokumentum elvész.)"
 
 #: gnome-panel/panel-frame.c:268
 msgid "Edges"
@@ -1759,7 +1761,7 @@ msgstr "Szélek"
 
 #: gnome-panel/panel-frame.c:269
 msgid "Which edges to draw"
-msgstr ""
+msgstr "Melyik széleket rajzolja meg"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2405,160 +2407,137 @@ msgstr "Nem sikerült betölteni a panelikont: \"%s\"\n"
 
 #: gnome-panel/panel-stock-icons.c:144
 msgid "_Force quit"
-msgstr ""
+msgstr "_Erőszakos bezárás"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
 #: gnome-panel/panel-toplevel.c:1421
-#, fuzzy
 msgid "Top Expanded Edge Panel"
-msgstr "Expander mérete"
+msgstr "Fenti kiterjesztett élpanel"
 
 #: gnome-panel/panel-toplevel.c:1422
-#, fuzzy
 msgid "Top Centered Panel"
-msgstr "Sarokpanel"
+msgstr "Fenti középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1423
-#, fuzzy
 msgid "Top Floating Panel"
-msgstr "Ús_zópanel"
+msgstr "Fenti úszópanel"
 
 #: gnome-panel/panel-toplevel.c:1424
-#, fuzzy
 msgid "Top Edge Panel"
-msgstr "Élpanel"
+msgstr "Fenti élpanel"
 
 #: gnome-panel/panel-toplevel.c:1428
-#, fuzzy
 msgid "Bottom Expanded Edge Panel"
-msgstr "Expander mérete"
+msgstr "Lenti kiterjesztett élpanel"
 
 #: gnome-panel/panel-toplevel.c:1429
-#, fuzzy
 msgid "Bottom Centered Panel"
-msgstr "Sarokpanel"
+msgstr "Lenti középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1430
-#, fuzzy
 msgid "Bottom Floating Panel"
-msgstr "Ús_zópanel"
+msgstr "Lenti úszópanel"
 
 #: gnome-panel/panel-toplevel.c:1431
-#, fuzzy
 msgid "Bottom Edge Panel"
-msgstr "Élpanel"
+msgstr "Lenti élpanel"
 
 #: gnome-panel/panel-toplevel.c:1435
-#, fuzzy
 msgid "Left Expanded Edge Panel"
-msgstr "Expander mérete"
+msgstr "Bal oldali kiterjesztett élpanel"
 
 #: gnome-panel/panel-toplevel.c:1436
-#, fuzzy
 msgid "Left Centered Panel"
-msgstr "Sarokpanel"
+msgstr "Bal oldali középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1437
-#, fuzzy
 msgid "Left Floating Panel"
-msgstr "Ús_zópanel"
+msgstr "Bal oldali úszópanel"
 
 #: gnome-panel/panel-toplevel.c:1438
-#, fuzzy
 msgid "Left Edge Panel"
-msgstr "Élpanel"
+msgstr "Bal oldali élpanel"
 
 #: gnome-panel/panel-toplevel.c:1442
-#, fuzzy
 msgid "Right Expanded Edge Panel"
-msgstr "Expander mérete"
+msgstr "Jobb oldali kiterjesztett élpanel"
 
 #: gnome-panel/panel-toplevel.c:1443
-#, fuzzy
 msgid "Right Centered Panel"
-msgstr "Illesztett panel"
+msgstr "Jobb oldali középre helyezett panel"
 
 #: gnome-panel/panel-toplevel.c:1444
-#, fuzzy
 msgid "Right Floating Panel"
-msgstr "Ús_zópanel"
+msgstr "Jobb oldali úszópanel"
 
 #: gnome-panel/panel-toplevel.c:1445
-#, fuzzy
 msgid "Right Edge Panel"
-msgstr "Élpanel"
+msgstr "Jobb oldali élpanel"
 
 #: gnome-panel/panel-toplevel.c:3541
-#, fuzzy
 msgid "Name"
 msgstr "Név"
 
 #: gnome-panel/panel-toplevel.c:3542
-#, fuzzy
 msgid "The name of this panel"
-msgstr "Panel módja"
+msgstr "A panel neve"
 
 #: gnome-panel/panel-toplevel.c:3551
-#, fuzzy
 msgid "Expand"
-msgstr "Expander mérete"
+msgstr "Kiterjesztés"
 
 #: gnome-panel/panel-toplevel.c:3552
 msgid "Expand to take up the full monitor width/height"
-msgstr ""
+msgstr "Kiterjesztés a képernyő teljes szélességében, illetve magasságában"
 
 #: gnome-panel/panel-toplevel.c:3562
-#, fuzzy
 msgid "The orientation of the panel"
-msgstr "A panel állapota"
+msgstr "A panel iránya"
 
 #: gnome-panel/panel-toplevel.c:3573
-#, fuzzy
 msgid "The height (or width when vertical) of the panel"
-msgstr "A panel állapota"
+msgstr "A panel magassága (függőlegesnél a szélessége)"
 
 #: gnome-panel/panel-toplevel.c:3585
-#, fuzzy
 msgid "X position"
 msgstr "X pozíció"
 
 #: gnome-panel/panel-toplevel.c:3586
 msgid "The X position of the panel"
-msgstr ""
+msgstr "A panel X pozíciója"
 
 #: gnome-panel/panel-toplevel.c:3597
 msgid "X centered"
-msgstr ""
+msgstr "X középről"
 
 #: gnome-panel/panel-toplevel.c:3598
 msgid "The x co-ordinate is relative to center screen"
-msgstr ""
+msgstr "Az X koordináta a képernyő közepétől számítva"
 
 #: gnome-panel/panel-toplevel.c:3607
-#, fuzzy
 msgid "Y position"
 msgstr "Y pozíció"
 
 #: gnome-panel/panel-toplevel.c:3608
 msgid "The Y position of the panel"
-msgstr ""
+msgstr "A panel Y pozíciója"
 
 #: gnome-panel/panel-toplevel.c:3619
 msgid "Y centered"
-msgstr ""
+msgstr "Y középről"
 
 #: gnome-panel/panel-toplevel.c:3620
 msgid "The y co-ordinate is relative to center screen"
-msgstr ""
+msgstr "Az Y koordináta a képernyő közepétől számítva"
 
 #: gnome-panel/panel-toplevel.c:3629
 msgid "Xinerama monitor"
-msgstr ""
+msgstr "Xinerama monitor"
 
 #: gnome-panel/panel-toplevel.c:3630
 msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
+msgstr "A monitor (a Xinerama szerint), amelyen a panel elhelyezkedik"
 
 #: gnome-panel/panel-toplevel.c:3641
 msgid "Auto hide"
@@ -2566,15 +2545,15 @@ msgstr "Automatikus elrejtés"
 
 #: gnome-panel/panel-toplevel.c:3642
 msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
+msgstr "A panel automatikus elrejtése, ha az egér elhagyja a panelt."
 
 #: gnome-panel/panel-toplevel.c:3651
 msgid "Hide delay"
-msgstr ""
+msgstr "Elrejtés késleltetése"
 
 #: gnome-panel/panel-toplevel.c:3652
 msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
+msgstr "Az ezredmásodpercek száma, ameddig késleltetni kell az automatikus elrejtést"
 
 #: gnome-panel/panel-toplevel.c:3663
 msgid "Un-hide delay"
@@ -2585,9 +2564,8 @@ msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3675
-#, fuzzy
 msgid "Auto-hide size"
-msgstr "_Automatikus elrejtés"
+msgstr "Automatikus elrejtés mérete"
 
 #: gnome-panel/panel-toplevel.c:3676
 msgid ""
