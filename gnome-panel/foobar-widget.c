@@ -637,10 +637,11 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 	if ( ! foo->compliant_wm)
 		return;
 
-	gdk_window_set_hints (w->window, 
-			      multiscreen_x (foo->screen),
-			      multiscreen_y (foo->screen),
-			      0, 0, 0, 0, GDK_HINT_POS);
+	xstuff_set_pos_size (w->window,
+			     multiscreen_x (foo->screen),
+			     multiscreen_y (foo->screen),
+			     w->allocation.width,
+			     w->allocation.height);
 
 	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
 	gdk_window_set_decorations (w->window, 0);
@@ -1153,8 +1154,15 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 		GTK_WIDGET_CLASS (parent_class)->size_allocate (w, alloc);
 
 	if (GTK_WIDGET_REALIZED (w)) {
+		FoobarWidget *foo = FOOBAR_WIDGET (w);
+		xstuff_set_pos_size (w->window,
+				     multiscreen_x (foo->screen),
+				     multiscreen_y (foo->screen),
+				     alloc->width,
+				     alloc->height);
+
 		g_slist_foreach (panel_list, queue_panel_resize, NULL);
-		basep_border_queue_recalc (FOOBAR_WIDGET (w)->screen);
+		basep_border_queue_recalc (foo->screen);
 	}
 }
 

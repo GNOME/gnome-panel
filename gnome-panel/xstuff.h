@@ -37,5 +37,8 @@ void xstuff_setup_desktop_area		(int screen,
 					 int top,
 					 int bottom);
 void xstuff_unsetup_desktop_area	(void);
+void xstuff_set_pos_size		(GdkWindow *window,
+					 int x, int y,
+					 int w, int h);
 
 #endif

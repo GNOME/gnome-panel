@@ -548,3 +548,28 @@ xstuff_unsetup_desktop_area (void)
 	gdk_flush ();
 	gdk_error_trap_pop ();
 }
+
+void
+xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
+{
+	Window win = GDK_WINDOW_XWINDOW (window);
+	XSizeHints size_hints;
+  
+	size_hints.flags = USPosition | PPosition | USSize | PSize | PMaxSize | PMinSize;
+	size_hints.x = x;
+	size_hints.y = y;
+	size_hints.width = w;
+	size_hints.height = h;
+	size_hints.min_width = w;
+	size_hints.min_height = h;
+	size_hints.max_width = w;
+	size_hints.max_height = h;
+  
+	gdk_error_trap_push ();
+
+	XSetWMNormalHints (GDK_DISPLAY (), win, &size_hints);
+
+	gdk_window_move_resize (window, x, y, w, h);
+
+	gdk_error_trap_pop ();
+}

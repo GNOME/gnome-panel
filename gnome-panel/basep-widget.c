@@ -280,15 +280,11 @@ basep_widget_size_allocate (GtkWidget *widget,
 	widget->allocation = *allocation;
 
 	if (GTK_WIDGET_REALIZED(widget)) {
-		gdk_window_set_hints (widget->window,
-				      allocation->x, 
-				      allocation->y,
-				      0,0,0,0, GDK_HINT_POS);
-		gdk_window_move_resize (widget->window,
-					allocation->x, 
-					allocation->y,
-					allocation->width,
-					allocation->height);
+		xstuff_set_pos_size (widget->window,
+				     allocation->x, 
+				     allocation->y,
+				     allocation->width,
+				     allocation->height);
 	}
 
 	gtk_widget_size_allocate (basep->ebox, &challoc);
@@ -714,10 +710,8 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			usleep(1000);
 		}
 
-		gdk_window_resize(wid->window,dw,dh);
-		gdk_window_set_hints (wid->window,
-				      dx,dy,0,0,0,0,
-				      GDK_HINT_POS);
+		xstuff_set_pos_size (wid->window,
+				     dx, dy, dw, dh);
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
@@ -798,12 +792,9 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			(diff/1000.0)*200*(10001-(step*step));
 		
 		basep_widget_set_ebox_orient(basep, hide_orient);
-		gdk_window_resize(wid->window,ow,oh);
-		gdk_window_set_hints (wid->window,
-				      ox,oy,0,0,0,0,
-				      GDK_HINT_POS);
 		gdk_window_show(wid->window);
-		gdk_window_move(wid->window,ox,oy);
+		xstuff_set_pos_size (wid->window,
+				     ox, oy, ow, oh);
 
 		gtk_widget_show_now(wid);
 
@@ -835,10 +826,8 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			usleep(1000);
 		}
 
-		gdk_window_resize(wid->window,dw,dh);
-		gdk_window_set_hints (wid->window,
-				      dx,dy,0,0,0,0,
-				      GDK_HINT_POS);
+		xstuff_set_pos_size (wid->window,
+				     dx, dy, dw, dh);
 
 		basep_widget_set_ebox_orient(basep, -1);
 	}
