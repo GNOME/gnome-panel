@@ -144,18 +144,6 @@ if test x$with_xinerama != xno ; then
 fi
 AC_SUBST(XINERAMA_LIBS)
 
-dnl
-dnl check if we have gtk+ 2.1.x (again - for multihead support)
-dnl only needed for egg-screen-exec
-dnl
-AC_MSG_CHECKING([for gtk+ multihead support])
-if $PKG_CONFIG --atleast-version 2.1.0 gtk+-2.0; then
-   AC_DEFINE(HAVE_GTK_MULTIHEAD,,[gtk+ with multihead support found])
-   AC_MSG_RESULT(yes)
-else
-   AC_MSG_RESULT(no)
-fi
-
 dnl Check for libpng
 
 PNG_LIBS=
