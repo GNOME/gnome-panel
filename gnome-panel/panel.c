@@ -927,8 +927,8 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist,
 		} else if (S_ISDIR(s.st_mode)) {
 			drop_menu(panel, pos, filename);
 		} else if (S_IEXEC & s.st_mode) /*executable?*/
-			ask_about_launcher(filename,panel,pos,TRUE);
-		g_free(filename);
+			ask_about_launcher (filename, panel, pos, TRUE);
+		g_free (filename);
 	}
 
 	gnome_uri_list_free_strings (files);

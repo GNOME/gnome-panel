@@ -1,3 +1,18 @@
+Thu Nov 02 21:27:28 2000  George Lebl <jirka@5z.com>
+
+	* extern.c, panel.gnorba: Implement the Panel2 interface.
+
+	* applet.c, panel-widget.c, panel.c: minor cosmetic cleanup
+
+	* Makefile.am, gnome-panel-add-launcher.c:  Add a proggie to add
+	  launchers externally.  Let's not doc this so that that many
+	  people don't use it as it could become annoying, but major apps
+	  may want to use it to optionally add their launcher to the panel.
+	  note here, it should be OPTIONAL! in the installer, otherwise I'm
+	  going to go after each and every dumbass who made it install an
+	  icon without asking the user with a chainsaw.  If it becomes a
+	  bother I'll stick in a confirmation dialog in these funcs.
+
 2000-11-02  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* gnome-panel-properties.desktop: Added "no" translation.

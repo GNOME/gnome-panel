@@ -2520,7 +2520,8 @@ panel_widget_add_forbidden(PanelWidget *panel)
 }
 
 int
-panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, gboolean bind_lower_events, gboolean insert_at_pos)
+panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
+		       gboolean bind_lower_events, gboolean insert_at_pos)
 {
 	AppletData *ad = NULL;
 
@@ -2532,26 +2533,27 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, gboolean 
 	
 	ad = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_DATA);
 
-	if(ad)
+	if (ad)
 		pos = ad->pos;
 
-	if(pos < 0)
+	if (pos < 0)
 		pos = 0;
-	if(!panel->no_padding_on_ends && pos < pw_applet_padding)
+	if ( ! panel->no_padding_on_ends &&
+	     pos < pw_applet_padding)
 		pos = pw_applet_padding;
 	
-	if(!insert_at_pos) {
-		if(panel->packed) {
-			if(get_applet_list_pos(panel,pos)) 
+	if ( ! insert_at_pos) {
+		if (panel->packed) {
+			if (get_applet_list_pos (panel, pos)) 
 				/*this is a slight hack so that this applet
 				  is inserted AFTER an applet with this pos
 				  number*/
 				pos++;
 		} else {
-			int newpos = panel_widget_find_empty_pos(panel,pos);
-			if(newpos>=0)
+			int newpos = panel_widget_find_empty_pos (panel, pos);
+			if (newpos >= 0)
 				pos = newpos;
-			else if(get_applet_list_pos(panel,pos)) 
+			else if (get_applet_list_pos (panel, pos)) 
 				/*this is a slight hack so that this applet
 				  is inserted AFTER an applet with this pos
 				  number*/

@@ -19,7 +19,11 @@ INCLUDES = -I. -I$(srcdir) \
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
-bin_PROGRAMS = panel gnome-panel-properties-capplet
+bin_PROGRAMS = \
+	panel				\
+	gnome-panel-properties-capplet	\
+	gnome-panel-add-launcher
+
 noinst_PROGRAMS = bad-applet
 
 libpanel_appletincludedir = $(includedir)
@@ -27,7 +31,11 @@ libpanel_statusincludedir = $(includedir)
 
 lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
 
-CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
+CORBA_SRCLIST = \
+	gnome-panel-stubs.c	\
+	gnome-panel-skels.c	\
+	gnome-panel-common.c	\
+	gnome-panel.h
 
 # try to make these get cleaned properly
 CLEANFILES += $(CORBA_SRCLIST) my_gnome_panel_idl
@@ -65,9 +73,11 @@ libpanel_status_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 bad_applet_SOURCES = bad-applet.c
 
-bad_applet_LDADD = libpanel_applet.la \
+bad_applet_LDADD = \
+	libpanel_applet.la	\
 	$(GNOME_LIBDIR) 	\
-	$(GNORBA_LIBS) $(INTLLIBS)
+	$(GNORBA_LIBS)		\
+	$(INTLLIBS)
 
 GWMH_SRCLIST = \
 	gwmh.c		\
@@ -168,8 +178,14 @@ panel_SOURCES=\
 	scroll-menu.h		\
 	scroll-menu.c
 
-panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
-	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@
+panel_LDADD = \
+	libpanel_applet.la	\
+	$(GNOME_LIBDIR)		\
+	$(GNORBA_LIBS)		\
+	$(ORB_LIBS)		\
+	$(GNOMEUI_LIBS)		\
+	$(INTLLIBS)		\
+	@PIXBUF_LIBS@
 
 panel_LDFLAGS=-export-dynamic
 
@@ -181,7 +197,20 @@ gnome_panel_properties_capplet_SOURCES = \
 gnome_panel_properties_capplet_LDADD = \
 	$(GNOME_LIBDIR)		\
 	$(GNOME_CAPPLET_LIBS)	\
-	$(INTLLIBS) @PIXBUF_LIBS@
+	$(INTLLIBS)		\
+	@PIXBUF_LIBS@
+
+gnome_panel_add_launcher_SOURCES = \
+	gnome-panel-add-launcher.c	\
+	$(CORBA_SRCLIST)
+
+gnome_panel_add_launcher_LDADD = \
+	$(GNOME_LIBDIR)		\
+	$(GNOMEUI_LIBS)		\
+	$(GNORBA_LIBS)		\
+	$(ORB_LIBS)		\
+	$(INTLLIBS)		\
+	@PIXBUF_LIBS@
 
 data_DATA = panelrc
 

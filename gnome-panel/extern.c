@@ -15,6 +15,7 @@
 
 #include "panel-include.h"
 #include "gnome-panel.h"
+#include "gnome-run.h"
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -89,6 +90,41 @@ static void
 s_panel_notice_config_changes(PortableServer_Servant servant,
 			      CORBA_Environment *ev);
 
+
+/** Panel2 additions **/
+void s_panel_suggest_sync (PortableServer_Servant _servant,
+			   CORBA_Environment * ev);
+void s_panel_add_launcher (PortableServer_Servant _servant,
+			   const CORBA_char * launcher_desktop,
+			   const CORBA_short panel,
+			   const CORBA_short pos,
+			   CORBA_Environment * ev);
+void s_panel_ask_about_launcher (PortableServer_Servant _servant,
+				 const CORBA_char * exec_string,
+				 const CORBA_short panel,
+				 const CORBA_short pos,
+				 CORBA_Environment * ev);
+void s_panel_add_launcher_from_info (PortableServer_Servant _servant,
+				     const CORBA_char * name,
+				     const CORBA_char * comment,
+				     const CORBA_char * exec,
+				     const CORBA_char * icon,
+				     const CORBA_short panel,
+				     const CORBA_short pos,
+				     CORBA_Environment * ev);
+void s_panel_add_launcher_from_info_url (PortableServer_Servant _servant,
+					 const CORBA_char * name,
+					 const CORBA_char * comment,
+					 const CORBA_char * url,
+					 const CORBA_char * icon,
+					 const CORBA_short panel,
+					 const CORBA_short pos,
+					 CORBA_Environment * ev);
+void s_panel_run_box (PortableServer_Servant _servant,
+		      const CORBA_char * initial_string,
+		      CORBA_Environment * ev);
+void s_panel_main_menu (PortableServer_Servant _servant,
+			CORBA_Environment * ev);
 
 /*** PanelSpot stuff ***/
 
@@ -199,31 +235,41 @@ s_statusspot_remove(POA_GNOME_StatusSpot *servant,
 		    CORBA_Environment *ev);
 
 
-
-
 static PortableServer_ServantBase__epv panel_base_epv = {
-  NULL, /* _private */
-  NULL, /* finalize */
-  NULL, /* use base default_POA function */
+	NULL, /* _private */
+	NULL, /* finalize */
+	NULL  /* use base default_POA function */
 };
 
 static POA_GNOME_Panel__epv panel_epv = {
-  NULL, /* private data */
-  s_panel_add_applet,
-  s_panel_add_applet_full,
-  s_panel_quit,
-  s_panel_get_in_drag,
-  s_panel_add_status,
-  s_panel_notice_config_changes
+	NULL, /* private data */
+	s_panel_add_applet,
+	s_panel_add_applet_full,
+	s_panel_quit,
+	s_panel_get_in_drag,
+	s_panel_add_status,
+	s_panel_notice_config_changes
 };
-static POA_GNOME_Panel__vepv panel_vepv = { &panel_base_epv, &panel_epv };
-static POA_GNOME_Panel panel_servant = { NULL, &panel_vepv };
+
+static POA_GNOME_Panel2__epv panel2_epv = {
+	NULL, /* private data */
+	s_panel_suggest_sync,
+	s_panel_add_launcher,
+	s_panel_ask_about_launcher,
+	s_panel_add_launcher_from_info,
+	s_panel_add_launcher_from_info_url,
+	s_panel_run_box,
+	s_panel_main_menu
+};
+
+static POA_GNOME_Panel2__vepv panel_vepv = { &panel_base_epv, &panel_epv, &panel2_epv };
+static POA_GNOME_Panel2 panel_servant = { NULL, &panel_vepv };
 
 
 static PortableServer_ServantBase__epv panelspot_base_epv = {
   NULL, /* _private */
   NULL, /* finalize */
-  NULL, /* use base default_POA function */
+  NULL  /* use base default_POA function */
 };
 
 static POA_GNOME_PanelSpot__epv panelspot_epv = {
@@ -257,7 +303,7 @@ static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panels
 static PortableServer_ServantBase__epv statusspot_base_epv = {
   NULL, /* _private */
   NULL, /* finalize */
-  NULL, /* use base default_POA function */
+  NULL  /* use base default_POA function */
 };
 
 static POA_GNOME_StatusSpot__epv statusspot_epv = {
@@ -656,11 +702,8 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 			      CORBA_OBJECT_NIL);
 
 	/*select the nth panel*/
-	if(panel)
-		li = g_slist_nth(panels, panel);
-	else
-		li = NULL;
-	if(li == NULL)
+	li = g_slist_nth (panels, panel);
+	if (li == NULL)
 		li = panels;
 
 	/* There's always at least one */
@@ -737,6 +780,141 @@ s_panel_notice_config_changes(PortableServer_Servant servant,
 	load_up_globals();
 }
 
+/** Panel2 additions **/
+
+void
+s_panel_suggest_sync (PortableServer_Servant _servant,
+		      CORBA_Environment * ev)
+{
+	need_complete_save = TRUE;
+	panel_config_sync();
+}
+
+void
+s_panel_add_launcher (PortableServer_Servant _servant,
+		      const CORBA_char * launcher_desktop,
+		      const CORBA_short panel,
+		      const CORBA_short pos,
+		      CORBA_Environment * ev)
+{
+	Launcher *launcher;
+	PanelWidget *panel_widget;
+
+	g_assert (panels != NULL);
+
+	panel_widget = g_slist_nth_data (panels, panel);
+	if (panel_widget == NULL)
+		panel_widget = panels->data;
+
+	launcher = load_launcher_applet (launcher_desktop,
+					 panel_widget, pos, FALSE);
+	if (launcher != NULL)
+		launcher_hoard (launcher);
+}
+
+void
+s_panel_ask_about_launcher (PortableServer_Servant _servant,
+			    const CORBA_char * exec_string,
+			    const CORBA_short panel,
+			    const CORBA_short pos,
+			    CORBA_Environment * ev)
+{
+	PanelWidget *panel_widget;
+
+	g_assert (panels != NULL);
+
+	panel_widget = g_slist_nth_data (panels, panel);
+	if (panel_widget == NULL)
+		panel_widget = panels->data;
+
+	ask_about_launcher (exec_string, panel_widget, pos, FALSE);
+}
+
+void
+s_panel_add_launcher_from_info (PortableServer_Servant _servant,
+				const CORBA_char * name,
+				const CORBA_char * comment,
+				const CORBA_char * exec,
+				const CORBA_char * icon,
+				const CORBA_short panel,
+				const CORBA_short pos,
+				CORBA_Environment * ev)
+{
+	PanelWidget *panel_widget;
+	char *exec_argv[2] = { NULL, NULL };
+
+	g_assert (panels != NULL);
+
+	panel_widget = g_slist_nth_data (panels, panel);
+	if (panel_widget == NULL)
+		panel_widget = panels->data;
+
+	/* ugly but works because of the way this actually works */
+	exec_argv[0] = (char *)exec;
+	load_launcher_applet_from_info (name, comment, exec_argv, 1,
+					icon, panel_widget, pos, FALSE);
+}
+
+void
+s_panel_add_launcher_from_info_url (PortableServer_Servant _servant,
+				    const CORBA_char * name,
+				    const CORBA_char * comment,
+				    const CORBA_char * url,
+				    const CORBA_char * icon,
+				    const CORBA_short panel,
+				    const CORBA_short pos,
+				    CORBA_Environment * ev)
+{
+	PanelWidget *panel_widget;
+
+	g_assert (panels != NULL);
+
+	panel_widget = g_slist_nth_data (panels, panel);
+	if (panel_widget == NULL)
+		panel_widget = panels->data;
+
+	load_launcher_applet_from_info_url (name, comment, url,
+					    icon, panel_widget, pos, FALSE);
+}
+
+void
+s_panel_run_box (PortableServer_Servant _servant,
+		 const CORBA_char * initial_string,
+		 CORBA_Environment * ev)
+{
+	if (initial_string != NULL &&
+	    initial_string[0] != '\0')
+		show_run_dialog_with_text (initial_string);
+	else
+		show_run_dialog ();
+}
+
+void
+s_panel_main_menu (PortableServer_Servant _servant,
+		   CORBA_Environment * ev)
+{
+	PanelWidget *panel;
+	GtkWidget *menu, *basep;
+
+	/* check if anybody else has a grab */
+	if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+			      0, NULL, NULL, GDK_CURRENT_TIME)
+	    != GrabSuccess) {
+		return;
+	} else {
+		gdk_pointer_ungrab (GDK_CURRENT_TIME);
+	}
+
+	panel = panels->data;
+	menu = make_popup_panel_menu (panel);
+	basep = panel->panel_parent;
+	if (IS_BASEP_WIDGET(basep)) {
+		BASEP_WIDGET(basep)->autohide_inhibit = TRUE;
+		basep_widget_autohide (BASEP_WIDGET (basep));
+	}
+	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+			NULL, NULL, 0, GDK_CURRENT_TIME);
+}
 
 /*** PanelSpot stuff ***/
 
@@ -1290,11 +1468,11 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
 
   orb = panel_orb;
 
-  POA_GNOME_Panel__init(&panel_servant, &ev);
-  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
+  POA_GNOME_Panel2__init (&panel_servant, &ev);
+  pg_return_val_if_fail (&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   thepoa = (PortableServer_POA)
-    CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
+    CORBA_ORB_resolve_initial_references (orb, "RootPOA", &ev);
   pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);

@@ -645,28 +645,28 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 }
 
 gboolean
-register_toy(GtkWidget *applet,
-	     gpointer data,
-	     GDestroyNotify data_destroy,
-	     PanelWidget *panel,
-	     int pos,
-	     gboolean exactpos,
-	     AppletType type)
+register_toy (GtkWidget *applet,
+	      gpointer data,
+	      GDestroyNotify data_destroy,
+	      PanelWidget *panel,
+	      int pos,
+	      gboolean exactpos,
+	      AppletType type)
 {
 	AppletInfo *info;
 	int newpos;
 	gboolean insert_at_pos;
 	
-	g_return_val_if_fail(applet != NULL, FALSE);
-	g_return_val_if_fail(panel != NULL, FALSE);
+	g_return_val_if_fail (applet != NULL, FALSE);
+	g_return_val_if_fail (panel != NULL, FALSE);
 
-	if(!GTK_WIDGET_NO_WINDOW(applet))
-		gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
-					       APPLET_EVENT_MASK) &
-				      ~( GDK_POINTER_MOTION_MASK |
-					 GDK_POINTER_MOTION_HINT_MASK));
+	if ( ! GTK_WIDGET_NO_WINDOW (applet))
+		gtk_widget_set_events (applet, (gtk_widget_get_events (applet) |
+						APPLET_EVENT_MASK) &
+				       ~( GDK_POINTER_MOTION_MASK |
+					  GDK_POINTER_MOTION_HINT_MASK));
 
-	info = g_new0(AppletInfo,1);
+	info = g_new0 (AppletInfo, 1);
 	info->applet_id = applet_count;
 	info->type = type;
 	info->widget = applet;
@@ -676,34 +676,25 @@ register_toy(GtkWidget *applet,
 	info->data_destroy = data_destroy;
 	info->user_menu = NULL;
 
-	/* Since we will be taking care of refcounting by ourselves,
-	 * sink the object.
-	 */
+	gtk_object_set_data (GTK_OBJECT (applet), "applet_info", info);
 
-	/*
-	gtk_widget_ref (info->widget);
-	gtk_object_sink (GTK_OBJECT (info->widget));
-	*/
-
-	gtk_object_set_data(GTK_OBJECT(applet),"applet_info",info);
-
-	if(type == APPLET_DRAWER) {
+	if (type == APPLET_DRAWER) {
 		Drawer *drawer = data;
 		PanelWidget *assoc_panel =
-			PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
+			PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel);
 
-		gtk_object_set_data(GTK_OBJECT(applet),
-				    PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
+		gtk_object_set_data (GTK_OBJECT (applet),
+				     PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
 		assoc_panel->master_widget = applet;
 	}
 
-	gtk_object_set_data(GTK_OBJECT(applet),
-			    PANEL_APPLET_FORBIDDEN_PANELS, NULL);
+	gtk_object_set_data (GTK_OBJECT (applet),
+			     PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 		
 	if (applets == NULL) {
-		applets_last = applets = g_slist_append(NULL, info);
+		applets_last = applets = g_slist_append (NULL, info);
 	} else {
-		applets_last = g_slist_append(applets_last, info);
+		applets_last = g_slist_append (applets_last, info);
 		applets_last = applets_last->next;
 	}
 	applet_count++;
@@ -720,15 +711,15 @@ register_toy(GtkWidget *applet,
 		insert_at_pos = TRUE;
 	}
 	/* if exact pos is on then insert at that precise location */
-	if(exactpos)
+	if (exactpos)
 		insert_at_pos = TRUE;
 
-	if(panel_widget_add_full(panel, applet, newpos, TRUE,
-				 insert_at_pos)==-1) {
+	if (panel_widget_add_full (panel, applet, newpos, TRUE,
+				   insert_at_pos)==-1) {
 		GSList *list;
 		for(list = panels; list != NULL; list = g_slist_next(list))
-			if(panel_widget_add_full(panel, applet, 0,
-						 TRUE, TRUE)!=-1)
+			if (panel_widget_add_full (panel, applet, 0,
+						   TRUE, TRUE)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/
