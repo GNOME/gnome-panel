@@ -125,7 +125,7 @@ window_menu_about (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free (file);
 
-	about = gnome_about_new (_("Window Menu"), "5.04",
+	about = gnome_about_new (_("Window Menu"), VERSION,
 				 "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 				 "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 				 "Copyright \xc2\xa9 2000 Helix Code, Inc.",
