@@ -1,10 +1,11 @@
-applet = mailcheck
 figs = \
-        mailcheck-properties-mailbox.png\
-        mailcheck-properties-mailcheck.png
+	figures/mailcheck-applet.png			\
+	figures/mailcheck-properties-mailbox.png	\
+	figures/mailcheck-properties-mailcheck.png
+docname = mailcheck_applet
 lang = C
-sgml_ents = $(applet).sgml
-omffiles = mailcheck_applet-C.omf
-include $(top_srcdir)/applet-docs.make
-dist-hook: applet-dist-hook
+omffile = mailcheck_applet-C.omf
+sgml_ents = mailcheck.sgml
+include $(top_srcdir)/sgmldocs.make
+dist-hook: app-dist-hook
 

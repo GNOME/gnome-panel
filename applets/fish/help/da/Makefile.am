@@ -1,7 +1,10 @@
-figs = fish_applet.png  fish_settings.png
-applet = fish
+figs = \
+	figures/fish_applet.png			\
+	figures/fish_settings.png
+docname = fish_applet
 lang = da
-sgml_ents = $(applet).sgml
-omffiles = fish_applet-da.omf
-include $(top_srcdir)/applet-docs.make
-dist-hook: applet-dist-hook
+omffile = fish_applet-da.omf
+sgml_ents = fish.sgml
+include $(top_srcdir)/sgmldocs.make
+dist-hook: app-dist-hook
+

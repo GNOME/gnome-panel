@@ -1,10 +1,10 @@
-applet = clock
 figs = \
-        clock_applet.png\
-        clock_settings.png
+	figures/clock_applet.png		\
+	figures/clock_settings.png
+docname = clock_applet
 lang = C
-sgml_ents = $(applet).sgml
-omffiles = clock_applet-C.omf
-include $(top_srcdir)/applet-docs.make
-dist-hook: applet-dist-hook
-                                
+omffile = clock_applet-C.omf
+sgml_ents = clock.sgml
+include $(top_srcdir)/sgmldocs.make
+dist-hook: app-dist-hook
+

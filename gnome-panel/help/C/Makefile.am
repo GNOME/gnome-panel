@@ -18,8 +18,9 @@ figs = \
 	figures/panel_props_edge.png	\
 	figures/panel_swallow.png	\
 	figures/status_dock.png
-app = panel
+docname = panel
 lang = C
-omffiles=panel-C.omf
-include $(top_srcdir)/app-docs.make
+omffile = panel-C.omf
+sgml_ents =
+include $(top_srcdir)/sgmldocs.make
 dist-hook: app-dist-hook

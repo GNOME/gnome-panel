@@ -1,9 +1,10 @@
-applet = printer
 figs = \
-        printer-fig.png\
-        printer-properties.png
+	figures/printer-fig.png			\
+	figures/printer-properties.png
+docname = printer_applet
 lang = da
-omffiles = printer_applet-da.omf
-sgml_ents = $(applet).sgml
-include $(top_srcdir)/applet-docs.make
-dist-hook: applet-dist-hook
+omffile = printer_applet-da.omf
+sgml_ents = printer.sgml
+include $(top_srcdir)/sgmldocs.make
+dist-hook: app-dist-hook
+
