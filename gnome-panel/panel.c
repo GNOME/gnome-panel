@@ -315,23 +315,50 @@ destroy_applet_module(gpointer key, gpointer value, gpointer user_data)
 }
 
 
-static void
-panel_quit(void)
+/* This is called when the session manager requests a shutdown.  It
+   can also be run directly when we don't detect a session manager.
+   We assume no interaction is done by the applets.  And we ignore the
+   other arguments for now.  Yes, this is lame.  */
+int
+panel_session_save (gpointer client_data,
+		    GnomeSaveStyle save_style,
+		    int is_shutdown,
+		    GnomeInteractStyle interact_style,
+		    int is_fast)
 {
 	int num;
-	
+
 	num = 0;
 	gnome_config_clean_section("/panel/Applets");
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed), save_applet_configuration, &num);
 	gnome_config_sync();
 
 	gdk_cursor_destroy(fleur_cursor);
-	
+
 	gtk_widget_destroy(the_panel->window);
 
 	g_hash_table_foreach(applet_files_ht, destroy_applet_module, NULL);
-	
+
 	applet_files_destroy();
+
+	/* Always successful.  */
+	return 1;
+}
+
+static void
+panel_quit(void)
+{
+  if (! gnome_session_connected_p ())
+    {
+      panel_session_save (NULL, GNOME_SAVE_BOTH, 1, GNOME_INTERACT_NONE, 0);
+      gtk_main_quit ();
+    }
+  else
+    {
+      /* We request a completely interactive, full, slow shutdown.  */
+      gnome_session_request_save (GNOME_SAVE_BOTH, 1, GNOME_INTERACT_ANY,
+				  0, 1);
+    }
 }
 
 
@@ -917,7 +944,6 @@ panel_command(PanelCommand *cmd)
 	switch (cmd->cmd) {
 		case PANEL_CMD_QUIT:
 			panel_quit();
-			gtk_main_quit();
 			return NULL;
 
 		case PANEL_CMD_GET_APPLET_TYPES:

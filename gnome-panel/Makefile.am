@@ -1,4 +1,4 @@
-SUBDIRS  = menu mailcheck clock launcher batmon netwatch
+SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout
 
 INCLUDES =	 			\
 	-I../.. 			\

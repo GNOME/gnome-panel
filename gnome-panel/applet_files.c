@@ -61,7 +61,8 @@ get_dl_func(void *handle, char *name)
 
 	func = dlsym(handle, funcname);
 	if ((error = dlerror()) != NULL) {
-		fprintf(stderr, "get_dl_func: %s\n", error);
+		fprintf(stderr, "get_dl_func: %s (func is %s)\n", error,
+			funcname);
 		g_assert(error == NULL);
 	}
 

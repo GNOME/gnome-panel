@@ -85,10 +85,25 @@ init_user_applets(void)
 }
 
 
+/* FIXME: session management not complete.  In particular, we should:
+   1. Actually save state in a useful way.
+   2. Parse argv to get our session management key.  */
+static void
+init_session_management (int argc, char *argv[])
+{
+  char *previous_id = NULL;
+  char *session_id;
+
+  session_id = gnome_session_init (panel_session_save, NULL, NULL, NULL,
+				   previous_id);
+}
+
 int
 main(int argc, char **argv)
 {
 	gnome_init(&argc, &argv);
+
+	init_session_management (argc, argv);
 
 	applet_files_init();
 	panel_init();
@@ -96,7 +111,7 @@ main(int argc, char **argv)
 	init_user_applets();
 
 	gtk_widget_show(the_panel->window);
-	
+
 	gtk_main();
 	return 0;
 }
