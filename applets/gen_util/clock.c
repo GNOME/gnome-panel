@@ -27,8 +27,6 @@
 
 #include "clock.h"
 
-#include "multihead-hacks.h"
-
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
@@ -847,9 +845,7 @@ set_gmt_time_cb (GtkWidget *w,
 }
 
 static void
-properties_response_cb (GtkWidget *widget,
-			int        id,
-			ClockData *cd)
+properties_response_cb (GtkWidget *widget, gint id, gpointer data)
 {
 	
 	if (id == GTK_RESPONSE_HELP) {
@@ -881,8 +877,6 @@ properties_response_cb (GtkWidget *widget,
 					  NULL);
 
 			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-			gtk_window_set_screen (GTK_WINDOW (dialog),
-					       gtk_widget_get_screen (cd->applet));
 			gtk_widget_show (dialog);
 			g_error_free (error);
 		}
@@ -914,9 +908,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GSList    *list;
 	char      *file;
 
-	if (cd->props) {
-		gtk_window_set_screen (GTK_WINDOW (cd->props),
-				       gtk_widget_get_screen (cd->applet));
+	if (cd->props != NULL) {
 		gtk_window_present (GTK_WINDOW (cd->props));
 		return;
 	}
@@ -930,8 +922,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_dialog_set_has_separator (GTK_DIALOG (cd->props), FALSE);
 	gtk_dialog_set_default_response (GTK_DIALOG (cd->props), GTK_RESPONSE_CLOSE);
-	gtk_window_set_screen (GTK_WINDOW (cd->props),
-			       gtk_widget_get_screen (cd->applet));
 		
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 	                                  "gnome-clock.png", TRUE, NULL);
@@ -1071,7 +1061,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_signal_connect (G_OBJECT (cd->props), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
 	g_signal_connect (G_OBJECT (cd->props), "response",
-			  G_CALLBACK (properties_response_cb), cd);
+			  G_CALLBACK (properties_response_cb), NULL);
 
 	/* sets up atk relation  */
 	list = g_slist_append (NULL, twelvehour);
@@ -1119,8 +1109,6 @@ display_help_dialog (BonoboUIComponent *uic,
 				  NULL);
 
 		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (cd->applet));
 		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
@@ -1149,9 +1137,8 @@ display_about_dialog (BonoboUIComponent *uic,
 	/* Translator credits */
 	const char *translator_credits = _("translator_credits");
 
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
-				       gtk_widget_get_screen (cd->applet));
+	if (about != NULL)
+	{
 		gtk_window_present (GTK_WINDOW (about));
 		return;
 	}
@@ -1175,8 +1162,6 @@ display_about_dialog (BonoboUIComponent *uic,
 				 pixbuf);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (about), "clock", "Clock");
-	gtk_window_set_screen (GTK_WINDOW (about),
-			       gtk_widget_get_screen (cd->applet));
 
 	if (pixbuf) {
 		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);

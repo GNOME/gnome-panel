@@ -118,10 +118,10 @@ aligned_pos_set_pos (BasePWidget *basep,
 			return;
 	}
 	
-	innerx = x - multiscreen_x (basep->screen, basep->monitor);
-	innery = y - multiscreen_y (basep->screen, basep->monitor);
-	screen_width = multiscreen_width (basep->screen, basep->monitor);
-	screen_height = multiscreen_height (basep->screen, basep->monitor);
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
 
 	/*if in the inner 1/3rd, don't change to avoid fast flickery
 	  movement*/
@@ -189,59 +189,58 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x = *y = 0;
 	switch (edge) {
 	case BORDER_BOTTOM:
-		*y = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - h;
+		*y = multiscreen_height(basep->screen) - h - foobar_widget_get_height (basep->screen);
 		/* fall thru */
 	case BORDER_TOP:
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
-		switch (ALIGNED_POS (basep->pos)->align) {
+		*y += foobar_widget_get_height (basep->screen);
+		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
 			break;
 		case ALIGNED_CENTER:
-			*x = (multiscreen_width (basep->screen, basep->monitor) - w) / 2;
+			*x = (multiscreen_width(basep->screen) - w) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*x = multiscreen_width (basep->screen, basep->monitor) - w;
+			*x = multiscreen_width(basep->screen) - w;
 			break;
 		}
 		break;
 	case BORDER_RIGHT:
-		*x = multiscreen_width (basep->screen, basep->monitor) - w;
-		basep_border_get (basep, BORDER_TOP, NULL, NULL, &a);
-		basep_border_get (basep, BORDER_BOTTOM, NULL, NULL, &b);
-		switch (ALIGNED_POS (basep->pos)->align) {
+		*x = multiscreen_width(basep->screen) - w;
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (basep->screen, BORDER_BOTTOM, NULL, NULL, &b);
+		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height (basep->screen, basep->monitor) + a;
+			*y = foobar_widget_get_height (basep->screen) + a;
 			break;
 		case ALIGNED_CENTER:
-			*y = (multiscreen_height (basep->screen, basep->monitor) - h) / 2;
+			*y = (multiscreen_height(basep->screen) - h) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*y = multiscreen_height (basep->screen, basep->monitor) - h - b;
+			*y = multiscreen_height(basep->screen) - h - b;
 			break;
 		}
 		break;
 	case BORDER_LEFT:
-		basep_border_get (basep, BORDER_TOP, &a, NULL, NULL);
-		basep_border_get (basep, BORDER_BOTTOM, &b, NULL, NULL);
-		switch (ALIGNED_POS (basep->pos)->align) {
+		basep_border_get (basep->screen, BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_BOTTOM, &b, NULL, NULL);
+		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height (basep->screen, basep->monitor) + a;
+			*y = foobar_widget_get_height (basep->screen) + a;
 			break;
 		case ALIGNED_CENTER:
-			*y = (multiscreen_height (basep->screen, basep->monitor) - h) / 2;
+			*y = (multiscreen_height(basep->screen) - h) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*y = multiscreen_height (basep->screen, basep->monitor) - h - b;
+			*y = multiscreen_height(basep->screen) - h - b;
 			break;
 		}
 		break;
 	}
 
-	*x += multiscreen_x (basep->screen, basep->monitor);
-	*y += multiscreen_y (basep->screen, basep->monitor);
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 
-	basep_border_queue_recalc (basep->screen, basep->monitor);
+	basep_border_queue_recalc (basep->screen);
 }
 
 static void
@@ -286,7 +285,6 @@ aligned_pos_show_hide_right (BasePWidget *basep)
 void
 aligned_widget_change_params (AlignedWidget *aligned,
 			      int screen,
-			      int monitor,
 			      AlignedAlignment align,
 			      BorderEdge edge,
 			      int sz,
@@ -312,7 +310,6 @@ aligned_widget_change_params (AlignedWidget *aligned,
 
 	border_widget_change_params (BORDER_WIDGET (aligned),
 				     screen,
-				     monitor,
 				     edge,
 				     sz,
 				     mode,
@@ -341,7 +338,6 @@ aligned_widget_change_align (AlignedWidget *aligned,
 
 	aligned_widget_change_params (aligned,
 				      basep->screen,
-				      basep->monitor,
 				      align,
 				      BORDER_POS (pos)->edge,
 				      panel->sz, basep->mode,
@@ -366,7 +362,6 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 
 	aligned_widget_change_params (aligned,
 				      basep->screen,
-				      basep->monitor,
 				      align,
 				      edge,
 				      panel->sz,
@@ -385,7 +380,6 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 GtkWidget *
 aligned_widget_new (gchar *panel_id,
 		    int screen,
-		    int monitor,
 		    AlignedAlignment align,
 		    BorderEdge edge,
 		    BasePMode mode,
@@ -400,11 +394,8 @@ aligned_widget_new (gchar *panel_id,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
-	AlignedWidget *aligned;
-	AlignedPos    *pos;
-
-	aligned = g_object_new (ALIGNED_TYPE_WIDGET, NULL);
-	pos = g_object_new (ALIGNED_TYPE_POS, NULL);
+	AlignedWidget *aligned = g_object_new (ALIGNED_TYPE_WIDGET, NULL);
+	AlignedPos *pos = g_object_new (ALIGNED_TYPE_POS, NULL);
 	pos->align = align;
 
 	BASEP_WIDGET (aligned)->pos = BASEP_POS (pos);
@@ -412,7 +403,6 @@ aligned_widget_new (gchar *panel_id,
 	border_widget_construct (panel_id,
 				 BORDER_WIDGET (aligned),
 				 screen,
-				 monitor,
 				 edge, 
 				 TRUE,
 				 FALSE,

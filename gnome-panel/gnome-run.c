@@ -46,9 +46,6 @@
 #include "panel-gconf.h"
 #include "quick-desktop-reader.h"
 #include "nothing.h"
-#include "egg-screen-exec.h"
-
-#include "multihead-hacks.h"
 
 #define ICON_SIZE 20
 
@@ -160,36 +157,22 @@ kill_completion (void)
 }
 
 static void
-get_environment (int         *argc,
-		 char      ***argv,
-		 int         *envc,
-		 char      ***envv,
-		 GdkScreen   *screen)
+get_environment (int *argc, char ***argv, int *envc, char ***envv)
 {
-	GList    *envar = NULL, *li;
-	gboolean  display_found = FALSE;
-	int       i, moveby;
+	GList *envar = NULL, *li;
+	int i, moveby;
 
 	*envv = NULL;
 	*envc = 0;
 
 	moveby = 0;
 	for (i = 0; i < *argc; i++) {
-		if (!strchr ((*argv) [i], '='))
+		if (strchr ((*argv)[i], '=') == NULL) {
 			break;
-
-		if (!strncmp ((*argv) [i], "DISPLAY", 7))
-			display_found = TRUE;
-
+		}
 		envar = g_list_append (envar, g_strdup ((*argv)[i]));
 		moveby ++;
 	}
-
-#ifdef HAVE_GTK_MULTIHEAD
-	if (!display_found && gdk_screen_get_default () != screen)
-		envar = g_list_append (
-				envar, egg_screen_exec_display_string (screen));
-#endif
 
 	if (moveby == *argc) {
 		panel_g_list_deep_free (envar);
@@ -199,7 +182,7 @@ get_environment (int         *argc,
 	if (envar == NULL)
 		return;
 
-	for (i = 0; i < *argc && moveby; i++) {
+	for (i = 0; i < *argc; i++) {
 		g_free ((*argv)[i]);
 		if (i + moveby < *argc) {
 			(*argv)[i] = (*argv)[i+moveby];
@@ -244,11 +227,10 @@ launch_selected (GtkTreeModel *model,
 	g_free (name);
 
 	if (!ditem) {
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-			"failed_to_load_desktop",
-			_("<b>Failed to run this program</b>\n\nDetails: %s"),
-			error->message);
+		panel_error_dialog ("failed_to_load_desktop",
+				    _("<b>Failed to run this program</b>\n\n"
+				      "Details: %s"),
+				    error->message);
 		g_clear_error (&error);
 		return;
 	}
@@ -261,14 +243,11 @@ launch_selected (GtkTreeModel *model,
 					GNOME_DESKTOP_ITEM_TERMINAL,
 					terminal->active);
 
-	if (!panel_ditem_launch (
-			gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-			ditem, NULL, 0, &error)) {
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-			"failed_to_load_desktop",
-			_("<b>Failed to run this program</b>\n\nDetails: %s"),
-			error->message);
+	if (!gnome_desktop_item_launch (ditem, NULL, 0, &error)) {
+		panel_error_dialog ("failed_to_load_desktop",
+				    _("<b>Failed to run this program</b>\n\n"
+				      "Details: %s"),
+				    error->message);
 		g_clear_error (&error);
 	}
 
@@ -337,21 +316,17 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 
                 /* evil eggies, do not translate! */
                 if (strcmp (s, "you shall bring us a shrubbery") == 0) {
-                        panel_info_dialog (
-				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				"ni_ni_ni_ni",
-				"NI! NI! NI! NI! NI! NI!");
+                        panel_info_dialog ("ni_ni_ni_ni",
+					   "NI! NI! NI! NI! NI! NI!");
                         goto return_and_close;
                 } else if (strcmp (s, "supreme executive power") == 0) {
-                        panel_info_dialog (
-				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				"evil",
-				"Listen -- strange women lying in\n"
-				"ponds distributing swords is no\n"
-				"basis for a system of government.\n"
-				"Supreme executive power derives from\n"
-				"a mandate from the masses, not from\n"
-				"some farcical aquatic ceremony!");
+                        panel_info_dialog ("evil",
+					   "Listen -- strange women lying in\n"
+					   "ponds distributing swords is no\n"
+					   "basis for a system of government.\n"
+					   "Supreme executive power derives from\n"
+					   "a mandate from the masses, not from\n"
+					   "some farcical aquatic ceremony!");
                         goto return_and_close;
                 } else if (strcmp (s, "free the fish") == 0) {
 			start_screen_check ();
@@ -371,18 +346,14 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 }
 
                 if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, &error)) {
-			panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				"run_error",
-				_("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
-				escaped, error->message);
+			panel_error_dialog ("run_error",
+					    _("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
+					    escaped, error->message);
 			g_clear_error (&error);
                         goto return_and_close;
                 }
 
-                get_environment (
-			&temp_argc, &temp_argv, &envc, &envv,
-			gtk_window_get_screen (GTK_WINDOW (run_dialog)));
+                get_environment (&temp_argc, &temp_argv, &envc, &envv);
 
 		terminal = GTK_TOGGLE_BUTTON (
 				g_object_get_data (G_OBJECT (w), "terminal"));
@@ -449,11 +420,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			
 			info = gnome_vfs_file_info_new ();
 			if (gnome_vfs_get_file_info (path, info, 0) != GNOME_VFS_OK) {
-				panel_error_dialog(
-					gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-					"run_error",
-					_("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
-					escaped, g_strerror (errno));
+				panel_error_dialog("run_error",
+						   _("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
+                	                           escaped, g_strerror (errno));
 				g_free (path);
 				gnome_vfs_file_info_unref (info);
 				goto return_and_close;
@@ -474,12 +443,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 				g_free (mime_info);				
 				
 				if (command == NULL) {
-					panel_error_dialog (
-						gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-						"run_error",
-						_("<b>Failed to open file:</b> '%s'\n\n"
-						  "Details: no application available to open file"),
-						escaped);
+					panel_error_dialog ("run_error",
+							    _("<b>Failed to open file:</b> '%s'\n\nDetails: no application available to open file"),
+							    escaped);
 
 					gnome_vfs_file_info_unref (info);
 					g_free (path);
@@ -490,13 +456,10 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 				command = g_strconcat ("nautilus ", path, NULL);
 			}
 			
-			if (!egg_screen_execute_command_line_async (
-					gtk_window_get_screen (GTK_WINDOW (run_dialog)), command, &error)) {
-				panel_error_dialog (
-					gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-					"run_error",
-					_("<b>Failed to open file:</b> '%s'\n\nDetails: %s"),
-					escaped, error->message);
+			if (!g_spawn_command_line_async (command, &error)) {
+				panel_error_dialog ("run_error",
+						    _("<b>Failed to open file:</b> '%s'\n\nDetails: %s"),
+						    escaped, error->message);
 				g_clear_error (&error);
 			}
 	
@@ -856,7 +819,7 @@ drag_data_received (GtkWidget        *widget,
 #define ELEMENTS(x) (sizeof (x) / sizeof (x[0]))
 
 static GtkWidget*
-create_simple_contents (GdkScreen *screen)
+create_simple_contents (void)
 {
         GtkWidget *vbox;
         GtkWidget *entry;
@@ -868,7 +831,6 @@ create_simple_contents (GdkScreen *screen)
         GtkWidget *w;
 	const char *key;
 	gboolean enable_program_list;
-	int width_request;
 	static GtkTargetEntry drop_types[] = { { "text/uri-list", 0, 0 } };
         
         vbox = gtk_vbox_new (FALSE, 0);
@@ -893,9 +855,9 @@ create_simple_contents (GdkScreen *screen)
         gtk_box_pack_start (GTK_BOX (vbox2), gentry,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
-        /* 1/4 the width of the first monitor should be a good value */
-	width_request = multiscreen_width (gdk_screen_get_number (screen), 0) / 4;
-	g_object_set (G_OBJECT (gentry), "width_request", width_request, NULL);
+        /* 1/4 the width of the first screen should be a good value */
+	g_object_set (G_OBJECT (gentry),"width_request",
+		      (int)(multiscreen_width (0) / 4), NULL);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 	gtk_tooltips_set_tip (panel_tooltips, entry, _("Command to run"), NULL);
@@ -1580,7 +1542,7 @@ run_dialog_destroyed (GtkWidget *widget)
 }
 
 void
-show_run_dialog (GdkScreen *screen)
+show_run_dialog (void)
 {
         gboolean  enable_program_list;
 	GtkWidget *w;
@@ -1590,8 +1552,7 @@ show_run_dialog (GdkScreen *screen)
 	if (no_run_box)
 		return;
 
-	if (run_dialog) {
-		gtk_window_set_screen (GTK_WINDOW (run_dialog), screen);
+	if (run_dialog != NULL) {
 		gtk_window_present (GTK_WINDOW (run_dialog));
 		/* always focus the entry initially */
 		w = g_object_get_data (G_OBJECT (run_dialog), "entry");
@@ -1601,15 +1562,16 @@ show_run_dialog (GdkScreen *screen)
 
 	register_run_stock_item ();
 
-	run_dialog = gtk_dialog_new_with_buttons (
-				_("Run Program"),
-				NULL, 0 /* flags */,
-				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				NULL);
+	run_dialog = gtk_dialog_new_with_buttons (_("Run Program"),
+						  NULL /* parent */,
+						  0 /* flags */,
+						  GTK_STOCK_HELP,
+						  GTK_RESPONSE_HELP,
+						  GTK_STOCK_CANCEL,
+						  GTK_RESPONSE_CANCEL,
+						  NULL);
 
 	gtk_window_set_resizable (GTK_WINDOW (run_dialog), FALSE);
-	gtk_window_set_screen (GTK_WINDOW (run_dialog), screen);
 
 	w = gtk_dialog_add_button (GTK_DIALOG (run_dialog),
 				   PANEL_STOCK_RUN, PANEL_RESPONSE_RUN);
@@ -1636,7 +1598,7 @@ show_run_dialog (GdkScreen *screen)
 			  G_CALLBACK (run_dialog_response), NULL);
 
 
-        create_simple_contents (screen);
+        create_simple_contents ();
 	
 	key = panel_gconf_general_key
 		(panel_gconf_get_profile (), "enable_program_list"),
@@ -1661,14 +1623,13 @@ show_run_dialog (GdkScreen *screen)
 }
 
 void
-show_run_dialog_with_text (GdkScreen  *screen,
-			   const char *text)
+show_run_dialog_with_text (const char *text)
 {
 	GtkWidget *entry;
 
 	g_return_if_fail (text != NULL);
 
-	show_run_dialog (screen);
+	show_run_dialog ();
 
 	if (run_dialog == NULL) {
 		return;

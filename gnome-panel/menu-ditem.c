@@ -15,8 +15,6 @@
 #include "menu-ditem.h"
 #include "panel-util.h"
 
-#include "multihead-hacks.h"
-
 enum {
 	REVERT_BUTTON
 };
@@ -116,12 +114,11 @@ ditem_properties_close (GtkWidget *dialog,
 
 	saving_error = g_object_get_data (G_OBJECT (dedit), "SavingError");
 
-	if (saving_error)
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (dialog)),
-			"cannot_save_entry",
-			_("<b>Cannot save changes to launcher</b>\n\n"
-			  "Details: %s"), saving_error);
+	if (saving_error != NULL) {
+		panel_error_dialog ("cannot_save_entry",
+				    _("<b>Cannot save changes to launcher</b>\n\n"
+				      "Details: %s"), saving_error);
+	}
 }
 
 static gboolean
@@ -165,8 +162,7 @@ set_ditem_sensitive (GtkDialog *dialog,
 
 GtkWidget *
 panel_edit_dentry (const char *loc,
-		   const char *dir,
-		   GdkScreen  *screen)
+		   const char *dir)
 {
 	GnomeDesktopItem *ditem;
 	GtkWidget        *dialog;
@@ -198,7 +194,6 @@ panel_edit_dentry (const char *loc,
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			        "desktop_entry_properties","Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	
 	g_object_set_data_full (G_OBJECT (dedit), "location",
 				g_strdup (loc),
@@ -240,9 +235,7 @@ panel_edit_dentry (const char *loc,
 }
 
 GtkWidget *
-panel_edit_direntry (const char *dir,
-		     const char *dir_name,
-		     GdkScreen  *screen)
+panel_edit_direntry (const char *dir, const char *dir_name)
 {
 	GtkWidget *dialog;
 	GtkWidget *dedit;
@@ -266,7 +259,6 @@ panel_edit_direntry (const char *dir,
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"desktop_entry_properties", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	
 	dedit = gnome_ditem_edit_new ();
 	gtk_widget_show (dedit);
@@ -441,10 +433,10 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 
 	/* check for valid name */
 	if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
-		dialog = panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (d)),
-				"cannot_create_launcher",
-				_("You have to specify a name for the launcher."));
+		dialog = panel_error_dialog_with_parent
+			(GTK_WINDOW (d),
+			 "cannot_create_launcher",
+			 _("You have to specify a name for the launcher."));
 		g_signal_connect_swapped (G_OBJECT (dialog),
 					  "destroy",
 					  G_CALLBACK (panel_pop_window_busy),
@@ -457,10 +449,10 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
 	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
-		dialog = panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (d)),
-				"cannot_create_launcher",
-				_("You have to specify a valid URL or command."));
+		dialog = panel_error_dialog_with_parent
+			(GTK_WINDOW (d),
+			 "cannot_create_launcher",
+			 _("You have to specify a valid URL or command."));
 		g_signal_connect_swapped (G_OBJECT (dialog),
 					  "destroy",
 					  G_CALLBACK (panel_pop_window_busy),
@@ -487,13 +479,11 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 NULL /* under */,
 				 TRUE /* force */,
 				 &error);
-	if (error) {
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (d)),
-			"cannot_save_menu_item" /* class */,
-			_("<b>Cannot save menu item to disk</b>\n\n"
-			  "Details: %s"),
-			error->message);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_save_menu_item" /* class */,
+				    _("<b>Cannot save menu item to disk</b>\n\n"
+				      "Details: %s"),
+				    error->message);
 		g_clear_error (&error);
 	}
 
@@ -506,15 +496,13 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 }
 
 GtkWidget *
-panel_new_launcher (const char *item_loc,
-		    GdkScreen  *screen)
+panel_new_launcher (const char *item_loc)
 {
 	GtkWidget *dialog;
 	GtkWidget *dee;
 
 	if (!is_item_writable (item_loc, NULL)) {
 		dialog = panel_error_dialog (
-				screen,
 				"cannot_create_launcher",
 				_("You can not create a new launcher at this location "
 				  "since the location is not writable."));
@@ -531,7 +519,6 @@ panel_new_launcher (const char *item_loc,
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "create_menu_item", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 	
 	dee = gnome_ditem_edit_new ();
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), dee,

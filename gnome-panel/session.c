@@ -253,8 +253,12 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit (void)
 {
-	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-				   GNOME_INTERACT_ANY, 0, 1);
+	/* Only request a Global save. We only want a Local
+	 * save if the user selects 'Save current setup'
+	 * from the dialog.
+	 */
+	gnome_client_request_save (
+		client, GNOME_SAVE_GLOBAL, 1, GNOME_INTERACT_ANY, 0, 1);
 }
 
 #ifdef FIXME

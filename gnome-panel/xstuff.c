@@ -18,8 +18,6 @@
 
 #include "xstuff.h"
 
-#include "multihead-hacks.h"
-
 #include "global-keys.h"
 
 static Atom
@@ -148,30 +146,26 @@ get_typed_property_data (Display *xdisplay,
 gboolean
 xstuff_is_compliant_wm (void)
 {
-	Display  *xdisplay;
-	Window    root_window;
-	gpointer  data;
-	int       size;
-
-	xdisplay = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
-	root_window = GDK_WINDOW_XWINDOW (
-				gdk_get_default_root_window ());
+	gpointer data;
+	int size;
 
         /* FIXME this is totally broken; should be using
          * gdk_net_wm_supports() on particular hints when we rely
          * on those particular hints
          */
-	data = get_typed_property_data (
-			xdisplay, root_window,
-			panel_atom_get (xdisplay ,"_NET_SUPPORTED"),
-			XA_ATOM, &size, 32);
-
-	if (!data)
+        
+	data = get_typed_property_data (GDK_DISPLAY (),
+					GDK_ROOT_WINDOW (),
+					panel_atom_get (GDK_DISPLAY (), "_NET_SUPPORTED"),
+					XA_ATOM,
+					&size, 32);
+	if (data != NULL) {
+		/* Actually checks for some of these */
+		g_free (data);
+		return TRUE;
+	} else {
 		return FALSE;
-
-	/* Actually checks for some of these */
-	g_free (data);
-	return TRUE;
+	}
 }
 
 void
@@ -298,25 +292,6 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 void
 xstuff_init (void)
 {
-#ifdef HAVE_GTK_MULTIHEAD
-	GdkDisplay *display;
-	int         screens, i;
-
-	display = gdk_display_get_default ();
-	screens = gdk_display_get_n_screens (display);
-
-	for (i = 0; i < screens; i++) {
-		GdkScreen *screen;
-		GdkWindow *root_window;
-
-		screen = gdk_display_get_screen (display, i);
-		root_window = gdk_screen_get_root_window (screen);
-
-		gdk_window_add_filter (
-			root_window, panel_global_keys_filter, NULL);
-	}
-#else
 	gdk_window_add_filter (gdk_get_default_root_window (),
 			       panel_global_keys_filter, NULL);
-#endif
 }

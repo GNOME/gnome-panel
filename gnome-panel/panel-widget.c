@@ -2291,11 +2291,9 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			PanelWidget *new_panel =
 				PANEL_WIDGET(list->data);
 
-			if (panel != new_panel &&
-			    panel_widget_is_cursor (new_panel,10) &&
-			    panel_screen_from_panel_widget (panel) ==
-			    panel_screen_from_panel_widget (new_panel) &&
-			    !g_slist_find (forb, new_panel)) {
+			if(panel != new_panel &&
+			   panel_widget_is_cursor(new_panel,10) &&
+			   (!g_slist_find(forb,new_panel))) {
 				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
 
 				if (pos < 0) pos = 0;

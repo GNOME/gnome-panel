@@ -6,8 +6,6 @@
 #include "panel-shell.h"
 #include "panel-util.h"
 
-#include "multihead-hacks.h"
-
 struct _PanelShellPrivate {
 	int dummy;
 };
@@ -54,10 +52,8 @@ panel_shell_register (void)
 		}
 
 		if (message) {
-			GtkWidget *dlg = panel_error_dialog (
-						gdk_screen_get_default (),
-						"panel_shell_register_error",
-						"%s", message);
+			GtkWidget *dlg = panel_error_dialog
+				("panel_shell_register_error", "%s", message);
 
 			/* FIXME: quick hack */
 			g_signal_handlers_disconnect_by_func

@@ -58,11 +58,6 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-EGGFILES =                      \
-	egg-screen-exec.h       \
-	egg-screen-exec.c       \
-	$(NULL)
-
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	panel-typebuiltins.c	\
@@ -120,7 +115,6 @@ panel_headers =			\
 	basep-widget.h		\
 	button-widget.h		\
 	multiscreen-stuff.h	\
-	multihead-hacks.h	\
 	xstuff.h		\
 	session.h		\
 	foobar-widget.h		\
@@ -155,7 +149,6 @@ panel_headers =			\
 
 gnome_panel_SOURCES =		\
 	$(CORBA_SRCLIST)	\
-	$(EGGFILES)		\
 	$(panel_sources)	\
 	$(panel_headers)	\
 	$(NULL)
@@ -184,7 +177,6 @@ gnome_desktop_item_edit_SOURCES = \
 	menu-ditem.c		  \
 	panel-util.c		  \
 	panel-access.c		  \
-	egg-screen-exec.c	  \
 	rgb-stuff.c
 
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
@@ -217,7 +209,6 @@ EXTRA_DIST =					\
 	$(schemas_in_files)			\
 	$(ui_DATA)				\
 	panel-marshal.list			\
-	update-from-egg.sh			\
 	gnome-panelrc
 
 sysdir = $(datadir)/control-center-2.0/capplets
@@ -296,8 +287,3 @@ CLEANFILES = $(BUILT_SOURCES)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
-
-EGGDIR = $(srcdir)/../../libegg/libegg/screen-exec
-
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh

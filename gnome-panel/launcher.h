@@ -63,8 +63,7 @@ Launcher *	load_launcher_applet_from_info_url(const char *name,
 						   int pos,
 						   gboolean exactpos);
 
-void		launcher_properties		(Launcher  *launcher,
-						 GdkScreen *screen);
+void		launcher_properties		(Launcher  *launcher);
 
 void            launcher_save_to_gconf          (Launcher   *launcher,
 						 const char *gconf_key);

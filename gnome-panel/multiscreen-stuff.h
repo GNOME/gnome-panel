@@ -2,7 +2,7 @@
  *   multiscreen-stuff: Multiscreen and Xinerama support for the panel.
  *
  *   Copyright (C) 2001 George Lebl <jirka@5z.com>
- *                 2002 Sun Microsystems Inc.
+ *                 2002 Sun Microsystems Inc. (Mark McLoughlin <mark@skynet.ie>)
  *
  * This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as 
@@ -18,9 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
  * USA
- *
- * Authors: George Lebl <jirka@5z.com>,
- *          Mark McLoughlin <mark@skynet.ie>
  */
 
 #ifndef MULTISCREEN_STUFF_H
@@ -31,20 +28,13 @@
 void	multiscreen_init		(void);
 
 int	multiscreen_screens		(void);
-int	multiscreen_monitors		(int        screen);
 
-int	multiscreen_x			(int        screen,
-					 int        monitor);
-int	multiscreen_y			(int        screen,
-					 int        monitor);
-int	multiscreen_width		(int        screen,
-					 int        monitor);
-int	multiscreen_height		(int        screen,
-					 int        monitor);
-int	multiscreen_locate_coords	(int        screen,
-					 int        x,
+int	multiscreen_x			(int        screen);
+int	multiscreen_y			(int        screen);
+int	multiscreen_width		(int        screen);
+int	multiscreen_height		(int        screen);
+int	multiscreen_locate_coords	(int        x,
 					 int        y);
-int	multiscreen_locate_widget	(int        screen,
-					 GtkWidget *widget);
+int	multiscreen_locate_widget	(GtkWidget *widget);
 
 #endif /* MULTISCREEN_STUFF_H */

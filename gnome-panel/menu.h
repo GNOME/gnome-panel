@@ -75,7 +75,7 @@ GtkWidget      *create_panel_root_menu    (PanelWidget *panel);
 
 void		menu_properties		(Menu *menu);
 
-void		panel_menuitem_lock_screen (GtkWidget *widget);
+void		panel_lock		(GtkWidget *widget);
 
 /*to be called on startup to load in some of the directories*/
 void		init_menus		(void);

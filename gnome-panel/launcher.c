@@ -38,8 +38,6 @@
 
 #include "quick-desktop-reader.h"
 
-#include "multihead-hacks.h"
-
 #undef LAUNCHER_DEBUG
 
 static void properties_apply (Launcher *launcher);
@@ -58,20 +56,6 @@ enum {
 	REVERT_BUTTON
 };
 
-static GdkScreen *
-launcher_get_screen (Launcher *launcher)
-{
-	GtkWidget *panel;
-
-	g_return_val_if_fail (launcher != NULL, 0);
-	g_return_val_if_fail (launcher->info != NULL, 0);
-	g_return_val_if_fail (launcher->info->widget != NULL, 0);
-
-	panel = get_panel_parent (launcher->info->widget);
-
-	return gtk_window_get_screen (GTK_WINDOW (panel));
-}
-
 static void
 launch_url (Launcher *launcher)
 {
@@ -86,21 +70,18 @@ launch_url (Launcher *launcher)
 	url = gnome_desktop_item_get_string (item,
 					     GNOME_DESKTOP_ITEM_URL);
 
-	if (!url) {
-		panel_error_dialog (
-			launcher_get_screen (launcher),
-			"no_url_dialog",
-			_("This launch icon does not specify a url to show"));
+	if (url == NULL) {
+		panel_error_dialog ("no_url_dialog",
+				    _("This launch icon does not "
+				      "specify a url to show"));
 		return;
 	}
 
 	gnome_url_show (url, &error);
-	if (error) {
-		panel_error_dialog (
-			launcher_get_screen (launcher),
-			"cant_show_url_dialog",
-			_("Cannot show %s\n%s"),
-			url, error->message);
+	if (error != NULL) {
+		panel_error_dialog ("cant_show_url_dialog",
+				    _("Cannot show %s\n%s"),
+				    url, error->message);
 		g_clear_error (&error);
 	}
 }
@@ -123,14 +104,11 @@ launch_cb (GtkWidget *widget,
 	else {
 		GError *error = NULL;
 
-		panel_ditem_launch (launcher_get_screen (launcher),
-				    item, NULL, 0, &error);
+		gnome_desktop_item_launch (item, NULL, 0, &error);
 		if (error) {
-			panel_error_dialog (
-				launcher_get_screen (launcher),
-				"cannot_launch_icon",
-				_("<b>Cannot launch icon</b>\n\n"
-				"Details: %s"), error->message);
+			panel_error_dialog ("cannot_launch_icon",
+					    _("<b>Cannot launch icon</b>\n\n"
+					      "Details: %s"), error->message);
 			g_clear_error (&error);
 		}
 	}
@@ -169,12 +147,10 @@ drag_data_received_cb (GtkWidget        *widget,
 					  (const char *)selection_data->data,
 					  0 /* flags */,
 					  &error);
-	if (error) {
-		panel_error_dialog (
-			launcher_get_screen (launcher),
-			"cannot_launch_icon",
-			_("Cannot launch icon\n%s"),
-			error->message);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_launch_icon",
+				    _("Cannot launch icon\n%s"),
+				    error->message);
 		g_clear_error (&error);
 	}
 
@@ -595,8 +571,7 @@ window_response (GtkWidget *w, int response, gpointer data)
 }
 
 static GtkWidget *
-create_properties_dialog (Launcher  *launcher,
-			  GdkScreen *screen)
+create_properties_dialog (Launcher *launcher)
 {
 	GtkWidget *dialog;
         GtkWidget *help;
@@ -606,7 +581,6 @@ create_properties_dialog (Launcher  *launcher,
 	dialog = gtk_dialog_new ();
 
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher Properties"));
-	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	help = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
@@ -660,17 +634,14 @@ create_properties_dialog (Launcher  *launcher,
 }
 
 void
-launcher_properties (Launcher  *launcher,
-		     GdkScreen *screen)
+launcher_properties (Launcher *launcher)
 {
 	if (launcher->prop_dialog != NULL) {
-		gtk_window_set_screen (
-			GTK_WINDOW (launcher->prop_dialog), screen);
 		gtk_window_present (GTK_WINDOW (launcher->prop_dialog));
 		return;
 	}
 
-	launcher->prop_dialog = create_properties_dialog (launcher, screen);
+	launcher->prop_dialog = create_properties_dialog (launcher);
 	gtk_widget_show_all (launcher->prop_dialog);
 }
 
@@ -1024,13 +995,12 @@ launcher_save (Launcher *launcher)
 				 NULL /* under */,
 				 TRUE /* force */,
 				 &error);
-	if (error) {
-		panel_error_dialog (
-			launcher_get_screen (launcher),
-			"cannot_save_launcher",
-			_("Cannot save launcher to disk, "
-			  "the following error occured:\n\n%s"),
-			error->message);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_save_launcher" /* class */,
+				    _("Cannot save launcher to disk, "
+				      "the following error occured:\n\n"
+				      "%s"),
+				    error->message);
 		g_clear_error (&error);
 	}
 }
@@ -1112,7 +1082,6 @@ launcher_show_help (Launcher *launcher)
 	panel_show_gnome_kde_help (docpath, &error);
 	if (error) {
 		panel_error_dialog (
-			launcher_get_screen (launcher),
 			"cannot_show_gnome_kde_help",
 			_("<b>Cannot display help document</b>\n\nDetails: %s"),
 			error->message);

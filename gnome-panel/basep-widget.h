@@ -50,7 +50,6 @@ struct _BasePWidget
 	GtkAllocation		shown_alloc;
 
 	int			screen;
-	int                     monitor;
 
 	GtkWidget		*ebox;
 	
@@ -114,8 +113,7 @@ struct _BasePWidgetClass
 			       BasePState old_state);
 
 	void (* screen_change) (BasePWidget *basep,
-				int          old_screen,
-				int          old_monitor);
+				int old_screen);
 
 };
 
@@ -185,7 +183,6 @@ GtkWidget*	basep_widget_construct		(gchar *panel_id,
 						 gboolean packed,
 						 gboolean reverse_arrows,
 						 int screen,
-						 int monitor,
 						 GtkOrientation orient,
 						 int sz,
 						 BasePMode mode,
@@ -202,7 +199,6 @@ GtkWidget*	basep_widget_construct		(gchar *panel_id,
 /* changing parameters */
 void		basep_widget_change_params	(BasePWidget *basep,
 						 int screen,
-						 int monitor,
 						 GtkOrientation orient,
 						 int sz,
 						 BasePMode mode,
@@ -276,8 +272,7 @@ void            basep_widget_get_size          (BasePWidget *basep,
 void            basep_widget_pre_convert_hook (BasePWidget *basep);
 
 void		basep_widget_screen_change	(BasePWidget *basep,
-						 int          screen,
-						 int          monitor);
+						 int screen);
 
 void            basep_update_frame             (BasePWidget *basep);
 
@@ -286,15 +281,17 @@ void		basep_widget_redo_window	(BasePWidget *basep);
 
 /* -1 means don't set, caller will not get queue resized as optimization */
 
-void		basep_border_recalc		(int          screen,
-						 int          monitor);
-void		basep_border_queue_recalc	(int          screen,
-						 int          monitor);
-void		basep_border_get		(BasePWidget *basep, 
-						 BorderEdge   edge,
-						 int         *left,
-						 int         *center,
-						 int         *right);
+void		basep_border_recalc		(int screen);
+void		basep_border_queue_recalc	(int screen);
+void		basep_border_get		(int screen,
+						 BorderEdge edge,
+						 int *left,
+						 int *center,
+						 int *right);
+
+/* FIXME:
+#define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
+*/
 
 G_END_DECLS
 

@@ -528,28 +528,17 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 }
 
 static Drawer *
-create_empty_drawer_applet (PanelWidget *container,
-			    const char  *tooltip,
-			    const char  *pixmap,
-			    PanelOrient  orient)
+create_empty_drawer_applet(const char *tooltip, const char *pixmap,
+			   PanelOrient orient)
 {
-	GtkWidget *drawer_widget;
-	int        screen;
-	int        monitor;
-
-	screen  = panel_screen_from_panel_widget (container);
-	monitor = panel_monitor_from_panel_widget (container);
-
-	drawer_widget = drawer_widget_new (NULL, screen,
-					   monitor, orient,
+	GtkWidget *dw = drawer_widget_new (NULL, orient,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
 					   PANEL_SIZE_MEDIUM,
 					   TRUE, TRUE,
 					   PANEL_BACK_NONE, NULL,
 					   TRUE, FALSE, TRUE, NULL);
-	return create_drawer_applet (
-			drawer_widget, tooltip, pixmap, orient);
+	return create_drawer_applet (dw, tooltip, pixmap, orient);
 }
 
 void
@@ -607,7 +596,7 @@ load_drawer_applet (gchar       *mypanel_id,
 	orient = panel_widget_get_applet_orient (panel);
 
 	if (!mypanel_id) {
-		drawer = create_empty_drawer_applet (panel, tooltip, pixmap, orient);
+		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
 		if (drawer != NULL)
 			panel_setup (drawer->drawer);
 		panels_to_sync = TRUE;
@@ -618,12 +607,12 @@ load_drawer_applet (gchar       *mypanel_id,
 
 		if (dr_pd == NULL) {
 			g_warning ("Can't find the panel for drawer, making a new panel");
-			drawer = create_empty_drawer_applet(panel, tooltip, pixmap, orient);
+			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
 			panels_to_sync = TRUE;
 		} else if ( ! DRAWER_IS_WIDGET (dr_pd->panel)) {
 			g_warning ("I found a bogus panel for a drawer, making a new one");
-			drawer = create_empty_drawer_applet(panel, tooltip, pixmap, orient);
+			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
 			panels_to_sync = TRUE;
 		} else {

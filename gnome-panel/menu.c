@@ -62,9 +62,6 @@
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
-#include "egg-screen-exec.h"
-
-#include "multihead-hacks.h"
 
 #undef MENU_DEBUG
 
@@ -147,7 +144,6 @@ static gboolean panel_menu_key_press_handler (GtkWidget   *widget,
 					      GdkEventKey *event);
 
 static PanelWidget *menu_get_panel     (GtkWidget *menu);
-static GdkScreen   *menuitem_to_screen (GtkWidget *menuitem);
 
 static inline gboolean
 panel_menu_have_icons (void)
@@ -205,7 +201,7 @@ check_for_screen (GtkWidget *w, GdkEvent *ev, gpointer data)
 
 /*the most important dialog in the whole application*/
 static void
-about_cb (GtkWidget *menuitem, gpointer data)
+about_cb (GtkWidget *widget, gpointer data)
 {
 	static GtkWidget *about;
 	GtkWidget *hbox, *l;
@@ -245,9 +241,7 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	/* Translator credits */
 	char *translator_credits = _("translator_credits");
 
-	if (about) {
-		gtk_window_set_screen (
-			GTK_WINDOW (about), menuitem_to_screen (menuitem));
+	if (about != NULL) {
 		gtk_window_present (GTK_WINDOW (about));
 		return;
 	}
@@ -288,16 +282,14 @@ about_cb (GtkWidget *menuitem, gpointer data)
 			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 			logo);
 
-	g_object_unref (logo);
+	g_object_unref (G_OBJECT (logo));
 	g_string_free (comment, TRUE);
 
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (about),
-			       menuitem_to_screen (menuitem));
-	g_signal_connect (about, "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &about);
-	g_signal_connect (about, "event",
+	g_signal_connect (G_OBJECT (about), "destroy",
+			    G_CALLBACK (gtk_widget_destroyed),
+			    &about);
+	g_signal_connect (G_OBJECT (about), "event",
 			  G_CALLBACK (check_for_screen), NULL);
 
 	hbox = gtk_hbox_new (TRUE, 0);
@@ -315,11 +307,8 @@ static void
 about_gnome_cb (GtkWidget *menuitem,
 		char      *program_path)
 {
-	GdkScreen *screen = menuitem_to_screen (menuitem);
-
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, &program_path) < 0)
-		panel_error_dialog (screen,
-				    "cannot_exec_about_gnome",
+	if (gnome_execute_async (g_get_home_dir (), 1, &program_path) < 0)
+		panel_error_dialog ("cannot_exec_about_gnome",
 				    _("<b>Can't execute 'About GNOME'</b>\n\n"
 				    "Details: %s probably does not exist"),
 				    program_path);
@@ -338,11 +327,9 @@ activate_app_def (GtkWidget  *menuitem,
 			&error);
 
 	if (item) {
-		panel_ditem_launch (menuitem_to_screen (menuitem),
-				    item, NULL, 0, &error);
+		gnome_desktop_item_launch (item, NULL, 0, &error);
 		if (error) {
 			panel_error_dialog (
-				menuitem_to_screen (menuitem),
 				"cant_launch_entry",
 				_("<b>Can't launch entry</b>\n\n"
 				  "Details: %s"), error->message);
@@ -352,7 +339,6 @@ activate_app_def (GtkWidget  *menuitem,
 	} else {
 		g_assert (error != NULL);
 		panel_error_dialog (
-			menuitem_to_screen (menuitem),
 			"cant_load_entry",
 			_("<b>Can't load entry</b>\n\n"
 			  "Details: %s"), error->message);
@@ -406,17 +392,6 @@ setup_menu_panel (GtkWidget *menu)
 
 	panel = menu_get_panel (menu);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
-}
-
-static GdkScreen *
-menuitem_to_screen (GtkWidget *menuitem)
-{
-	PanelWidget *panel_widget;
-
-	panel_widget = menu_get_panel (menuitem);
-
-	return gtk_window_get_screen (
-			GTK_WINDOW (panel_widget->panel_parent));
 }
 
 static void
@@ -585,7 +560,6 @@ menu_on_screen (GtkMenu  *menu,
 	MenuReposition *repo = data;
 	GtkRequisition  req;
 	int             screen;
-	int             monitor;
 	int             monitor_width;
 	int             monitor_height;
 	int             monitor_basex;
@@ -593,14 +567,12 @@ menu_on_screen (GtkMenu  *menu,
 
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
 
-	screen = gdk_screen_get_number (
-			gtk_widget_get_screen (GTK_WIDGET (menu)));
-	monitor = multiscreen_locate_coords (screen, *x, *y);
+	screen = multiscreen_locate_coords (*x, *y);
 
-	monitor_width  = multiscreen_width (screen, monitor);
-	monitor_height = multiscreen_height (screen, monitor);
-	monitor_basex  = multiscreen_x (screen, monitor);
-	monitor_basey  = multiscreen_y (screen, monitor);
+	monitor_width  = multiscreen_width (screen);
+	monitor_height = multiscreen_height (screen);
+	monitor_basex  = multiscreen_x (screen);
+	monitor_basey  = multiscreen_y (screen);
 
 	if (repo->orig_func != NULL) {
 		repo->orig_func (menu, x, y, push_in, repo->orig_data);
@@ -940,13 +912,9 @@ load_icons_handler_again:
  * doesn't work. Re-enable in future.
  */
 static void
-add_new_app_to_menu (GtkWidget    *widget,
-		     ShowItemMenu *sim)
+add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 {
-	g_return_if_fail (sim->mf != NULL);
-
-	panel_new_launcher (sim->mf->menudir,
-			    menuitem_to_screen (sim->menuitem));
+	panel_new_launcher (item_loc);
 }
 
 static void
@@ -970,7 +938,6 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		esc = g_markup_escape_text (sim->item_loc, -1);
 
 		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
 			"cant_remove_menu_item",
 			_("<b>Could not remove the menu item %s</b>\n\n"
 			  "Details: %s\n"), 
@@ -1045,7 +1012,7 @@ add_to_run_dialog (GtkWidget    *widget,
 	item = gnome_desktop_item_new_from_uri (sim->item_loc,
 						GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
 						&error);
-	if (item != NULL) {
+	if (item) {
 		const char *exec;
 
 		exec = gnome_desktop_item_get_string (
@@ -1054,11 +1021,10 @@ add_to_run_dialog (GtkWidget    *widget,
 			exec = gnome_desktop_item_get_string (
 				item, GNOME_DESKTOP_ITEM_URL);
 
-		if (exec != NULL)
-			show_run_dialog_with_text (menuitem_to_screen (sim->menuitem), exec);
+		if (exec)
+			show_run_dialog_with_text (exec);
 		else
 			panel_error_dialog (
-				menuitem_to_screen (sim->menuitem),
 				"no_exec_or_url_field",
 				_("<b>Can't add to run box</b>\n\n"
 				  "Details: No 'Exec' or 'URL' field in entry"));
@@ -1067,7 +1033,6 @@ add_to_run_dialog (GtkWidget    *widget,
 	} else {
 		g_assert (error != NULL);
 		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
 			"cant_load_entry",
 			_("<b>Can't load entry</b>\n\n"
 			  "Details: %s"), error->message);
@@ -1090,7 +1055,6 @@ show_help_on (GtkWidget    *widget,
 			(item, "X-GNOME-DocPath");
 		if ( ! panel_show_gnome_kde_help (docpath, &error)) {
 			panel_error_dialog (
-				menuitem_to_screen (sim->menuitem),
 				"cannot_show_gnome_kde_help",
 				_("<b>Cannot display help document</b>\n\n"
 				  "Details: %s"), error->message);
@@ -1101,7 +1065,6 @@ show_help_on (GtkWidget    *widget,
 	} else {
 		g_assert (error != NULL);
 		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
 			"cant_load_entry",
 			_("<b>Can't load entry</b>\n\n"
 			  "Details: %s"), error->message);
@@ -1324,8 +1287,7 @@ edit_dentry (GtkWidget    *widget,
 	if (sim->mf)
 		dir = sim->mf->menudir;
 
-	panel_edit_dentry (sim->item_loc, dir,
-			   menuitem_to_screen (sim->menuitem));
+	panel_edit_dentry (sim->item_loc, dir);
 }
 
 static void
@@ -1336,8 +1298,7 @@ edit_direntry (GtkWidget    *widget,
 	g_return_if_fail (sim->mf != NULL);
 
 	panel_edit_direntry (sim->mf->menudir,
-			     sim->mf->dir_name,
-			     menuitem_to_screen (sim->menuitem));
+			     sim->mf->dir_name);
 }
 #endif /* FIXME */
 
@@ -1538,10 +1499,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 #endif /* FIXME */
 		}
 	}
-
-	gtk_menu_set_screen (
-		GTK_MENU (sim->menu),
-		panel_screen_from_toplevel (panel_widget->panel_parent));
 
 	gtk_menu_popup (GTK_MENU (sim->menu),
 			NULL,
@@ -2510,9 +2467,7 @@ create_applets_menu (GtkWidget *menu)
 }
 
 static void
-find_empty_pos_array (int screen,
-		      int monitor,
-		      int posscore[3][3])
+find_empty_pos_array (int screen, int posscore[3][3])
 {
 	GSList *li;
 	int i,j;
@@ -2523,14 +2478,14 @@ find_empty_pos_array (int screen,
 	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
-	if (foobar_widget_exists (screen, monitor)) {
+	if (foobar_widget_exists (screen)) {
 		posscore[0][0] += 5;
 		posscore[1][0] += 5;
 		posscore[2][0] += 5;
 	}
 
-	sw2 = 2 * (sw = multiscreen_width (screen, monitor) / 3);
-	sh2 = 2 * (sh = multiscreen_height (screen, monitor) / 3);
+	sw2 = 2 * (sw = multiscreen_width (screen) / 3);
+	sh2 = 2 * (sh = multiscreen_height (screen) / 3);
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		pd = li->data;
@@ -2541,13 +2496,12 @@ find_empty_pos_array (int screen,
 
 		basep = BASEP_WIDGET (pd->panel);
 		
-		if (basep->screen  != screen &&
-		    basep->monitor != monitor)
+		if (basep->screen != screen)
 			continue;
 
 		basep_widget_get_pos (basep, &tx, &ty);
-		tx -= multiscreen_x (screen, monitor);
-		ty -= multiscreen_y (screen, monitor);
+		tx -= multiscreen_x (screen);
+		ty -= multiscreen_y (screen);
 		basep_widget_get_size (basep, &w, &h);
 
 		if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -2567,15 +2521,12 @@ find_empty_pos_array (int screen,
 }
 
 static void
-find_empty_pos (int     screen,
-		int     monitor,
-		gint16 *x,
-		gint16 *y)
+find_empty_pos (int screen, gint16 *x, gint16 *y)
 {
 	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
 	int i, j, lowi= 0, lowj = 2;
 
-	find_empty_pos_array (screen, monitor, posscore);
+	find_empty_pos_array (screen, posscore);
 
 	for (j = 2; j >= 0; j--) {
 		for (i = 0; i < 3; i++) {
@@ -2586,22 +2537,22 @@ find_empty_pos (int     screen,
 		}
 	}
 
-	*x = ((float)lowi * multiscreen_width (screen, monitor)) / 2.0;
-	*y = ((float)lowj * multiscreen_height (screen, monitor)) / 2.0;
+	*x = ((float)lowi * multiscreen_width (screen)) / 2.0;
+	*y = ((float)lowj * multiscreen_height (screen)) / 2.0;
 
-	*x += multiscreen_x (screen, monitor);
-	*y += multiscreen_y (screen, monitor);
+	*x += multiscreen_x (screen);
+	*y += multiscreen_y (screen);
 }
 
 static BorderEdge
-find_empty_edge (int screen, int monitor)
+find_empty_edge (int screen)
 {
 	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
 	int escore [4] = { 0, 0, 0, 0};
 	BorderEdge edge = BORDER_BOTTOM;
 	int low=4096, i;
 
-	find_empty_pos_array (screen, monitor, posscore);
+	find_empty_pos_array (screen, posscore);
 
 	escore[BORDER_TOP] = posscore[0][0] + posscore[1][0] + posscore[2][0];
 	escore[BORDER_RIGHT] = posscore[2][0] + posscore[2][1] + posscore[2][2];
@@ -2625,21 +2576,16 @@ create_new_panel (GtkWidget *w, gpointer data)
 	GtkWidget *panel = NULL;
 	gint16     x, y;
 	int        screen;
-	int        monitor;
 
 	g_return_if_fail (type != DRAWER_PANEL);
 
-	screen = gdk_screen_get_number (
-			gtk_widget_get_screen (w));
-	monitor = multiscreen_locate_widget (
-			screen, GTK_WIDGET (menu_get_panel (w)));
+	screen = multiscreen_locate_widget (GTK_WIDGET (menu_get_panel (w)));
 
 	switch (type) {
 	case ALIGNED_PANEL: 
-		find_empty_pos (screen, monitor, &x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = aligned_widget_new (NULL,
 					    screen,
-					    monitor,
 					    ALIGNED_LEFT,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -2662,8 +2608,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 	case EDGE_PANEL: 
 		panel = edge_widget_new (NULL,
 					 screen,
-					 monitor,
-					 find_empty_edge (screen, monitor),
+					 find_empty_edge (screen),
 					 BASEP_EXPLICIT_HIDE,
 					 BASEP_SHOWN,
 					 PANEL_SIZE_MEDIUM,
@@ -2681,10 +2626,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 				   _("GNOME Edge Panel"));
 		break;
 	case SLIDING_PANEL:
-		find_empty_pos (screen, monitor, &x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = sliding_widget_new (NULL,
 					    screen,
-					    monitor,
 					    SLIDING_ANCHOR_LEFT, 0,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -2703,10 +2647,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 				   _("GNOME Sliding Panel"));
 		break;
 	case FLOATING_PANEL:
-		find_empty_pos (screen, monitor, &x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = floating_widget_new (NULL,
 					     screen,
-					     monitor,
 					     x, y,
 					     GTK_ORIENTATION_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
@@ -2727,10 +2670,10 @@ create_new_panel (GtkWidget *w, gpointer data)
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
 
-		if (!foobar_widget_exists (screen, monitor)) {
+		if (!foobar_widget_exists (screen)) {
 			const char *panel_id;
 			
-			panel = foobar_widget_new (NULL, screen, monitor);
+			panel = foobar_widget_new (NULL, screen);
 			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
 			
 			panel_save_to_gconf (panel_setup (panel));
@@ -2740,7 +2683,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 		}
 
 		dialog = panel_error_dialog (
-				gdk_screen_get_default (),
 				"only_one_foobar",
 				_("You can only have one menu panel at a time."));
 		break;
@@ -2761,17 +2703,12 @@ foobar_item_showhide (GtkWidget *widget, gpointer data)
 	GtkWidget   *menuitem = data;
 	PanelWidget *panel;
 	int          screen = 0;
-	int          monitor = 0;
 
 	panel = menu_get_panel (menuitem);
-	if (panel) {
-		screen = gdk_screen_get_number (
-				gtk_widget_get_screen (GTK_WIDGET (panel)));
-		monitor = multiscreen_locate_widget (
-				screen, panel->panel_parent);
-	}
+	if (panel)
+		screen = multiscreen_locate_widget (panel->panel_parent);
 
-	if (!foobar_widget_exists (screen, monitor))
+	if (!foobar_widget_exists (screen))
 		gtk_widget_show (menuitem);
 	else
 		gtk_widget_hide (menuitem);
@@ -2794,6 +2731,7 @@ create_add_panel_submenu (void)
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(ALIGNED_PANEL));
 
+ 	
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
 				   _("_Edge Panel"));
@@ -2826,6 +2764,16 @@ create_add_panel_submenu (void)
 
 	menuitem = add_menu_separator (menu);
 
+	/* HACK, initial hide/show based on screen 0,
+	 * this works most of the time and we get it correctly in
+	 * the show/hide thingie below */
+	if (foobar_widget_exists (0))
+		gtk_widget_hide (menuitem);
+
+	g_signal_connect (G_OBJECT (menu), "show",
+			  G_CALLBACK (foobar_item_showhide),
+			  menuitem);
+
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
 				   _("_Menu Panel"));
@@ -2837,10 +2785,10 @@ create_add_panel_submenu (void)
 			  G_CALLBACK (create_new_panel),
 			  GINT_TO_POINTER (FOOBAR_PANEL));
 
-	/* HACK, initial hide/show based on screen 0, monitor 0,
+	/* HACK, initial hide/show based on screen 0,
 	 * this works most of the time and we get it correctly in
 	 * the show/hide thingie below */
-	if (foobar_widget_exists (0, 0))
+	if (foobar_widget_exists (0))
 		gtk_widget_hide (menuitem);
 
 	g_signal_connect (G_OBJECT (menu), "show",
@@ -3010,7 +2958,6 @@ remove_panel_query (GtkWidget *menuitem,
 
 	if (!DRAWER_IS_WIDGET (panel) && base_panels == 1) {
 		panel_error_dialog (
-			menuitem_to_screen (menuitem),
 			"cannot_remove_last_panel",
 			_("You cannot remove your last panel."));
 		return;
@@ -3037,8 +2984,6 @@ remove_panel_query (GtkWidget *menuitem,
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (panel)));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (remove_panel_accept),
@@ -3446,13 +3391,14 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 }
 
 void
-panel_menuitem_lock_screen (GtkWidget *menuitem)
+panel_lock (GtkWidget *menuitem)
 {
-	GdkScreen *screen;
+	char      *argv[3] = {"xscreensaver-command", "-lock", NULL};
 
-	screen = menuitem_to_screen (menuitem);
-
-	panel_lock_screen (screen);
+	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
+		panel_error_dialog ("cannot_exec_xscreensaver",
+				    _("<b>Cannot execute xscreensaver</b>\n\n"
+				    "Details: xscreensaver-command not found"));
 }
 
 static GtkWidget *
@@ -3512,7 +3458,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus)
 					   _("Lock Screen"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_menuitem_lock_screen), NULL);
+				  G_CALLBACK (panel_lock), NULL);
 		setup_internal_applet_drag(menuitem, "LOCK:NEW");
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Lock the screen so that you can "
@@ -3592,35 +3538,27 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 static void
 menu_screenshot (GtkWidget *menuitem)
 {
-	GdkScreen *screen;
 	char      *argv [2] = {"gnome-panel-screenshot", NULL};
 
-	screen = menuitem_to_screen (menuitem);
-
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-panel-screenshot",
+	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+		panel_error_dialog ("cannot_exec_gnome-panel-screenshot",
 				    N_("Cannot execute gnome-panel-screenshot"));
 }
 
 static void
 menu_search (GtkWidget *menuitem)
 {
-	GdkScreen *screen;
         char      *argv[2] = {"gnome-search-tool", NULL};
 
-	screen = menuitem_to_screen (menuitem);
-
-        if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-                panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool",
+        if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+                panel_error_dialog ("cannot_exec_gnome-search-tool",
 				    N_("Cannot execute gnome-search-tool"));
 }
 
 static void
 activate_run_dialog (GtkWidget *menuitem)
 {
-	show_run_dialog (menuitem_to_screen (menuitem));
+	show_run_dialog ();
 }
 
 GtkWidget *
@@ -3948,9 +3886,6 @@ menu_button_menu_popup (Menu    *menu,
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 
 	menu->age = 0;
-
-	gtk_menu_set_screen (GTK_MENU (menu->menu),
-			     panel_screen_from_toplevel (panel));
 
 	gtk_menu_popup (GTK_MENU (menu->menu),
 			NULL,

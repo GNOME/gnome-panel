@@ -101,10 +101,10 @@ edge_pos_set_pos (BasePWidget *basep,
 			return;
 	}
 	
-	innerx = x - multiscreen_x (basep->screen, basep->monitor);
-	innery = y - multiscreen_y (basep->screen, basep->monitor);
-	screen_width = multiscreen_width (basep->screen, basep->monitor);
-	screen_height = multiscreen_height (basep->screen, basep->monitor);
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
 
 	if ( innerx > (screen_width / 3) &&
 	     innerx < (2*screen_width / 3) &&
@@ -130,64 +130,61 @@ edge_pos_set_pos (BasePWidget *basep,
 }
 
 static void
-edge_pos_get_pos (BasePWidget *basep,
-		  int         *x,
-		  int         *y,
-		  int          w,
-		  int          h)
+edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
+		  int w, int h)
 {
 	BorderEdge edge;
 
 	*x = *y = 0;
 
-	edge = BORDER_POS (basep->pos)->edge;
+	edge = BORDER_POS(basep->pos)->edge;
 
 	switch (edge) {
 	case BORDER_RIGHT:
-		basep_border_get (basep, BORDER_TOP, NULL, NULL, y);
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
-		*x = multiscreen_width (basep->screen, basep->monitor) - w;
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, y);
+		*y += foobar_widget_get_height (basep->screen);
+		*x = multiscreen_width(basep->screen) - w;
+
 		break;
 	case BORDER_LEFT:
-		basep_border_get (basep, BORDER_TOP, y, NULL, NULL);
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
+		basep_border_get (basep->screen, BORDER_TOP, y, NULL, NULL);
+		*y += foobar_widget_get_height (basep->screen);
 		break;
 	case BORDER_TOP:
-		*y = foobar_widget_get_height (basep->screen, basep->monitor);
+		*y = foobar_widget_get_height (basep->screen);
 		break;
 	case BORDER_BOTTOM:
-		*y = multiscreen_height (basep->screen, basep->monitor) - h;
+		*y = multiscreen_height(basep->screen) - h;
 		break;
 	}
 
-	*x += multiscreen_x (basep->screen, basep->monitor);
-	*y += multiscreen_y (basep->screen, basep->monitor);
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 
-	basep_border_queue_recalc (basep->screen, basep->monitor);
+	basep_border_queue_recalc (basep->screen);
 }
 
 static void
 edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 {
-	BorderEdge edge = BORDER_POS (basep->pos)->edge;
-	int        a, b;
+	int a, b;
+
+	BorderEdge edge = BORDER_POS(basep->pos)->edge;
 
 	switch (edge) {
 	case BORDER_RIGHT:
-		basep_border_get (basep, BORDER_TOP, NULL, NULL, &a);
-		basep_border_get (basep, BORDER_BOTTOM, NULL, NULL, &b);
-		*h = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - a - b;
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (basep->screen, BORDER_BOTTOM, NULL, NULL, &b);
+		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_LEFT:
-		basep_border_get (basep, BORDER_TOP, &a, NULL, NULL);
-		basep_border_get (basep, BORDER_BOTTOM, &b, NULL, NULL);
-		*h = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - a - b;
+		basep_border_get (basep->screen, BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_BOTTOM, &b, NULL, NULL);
+		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_TOP:
 	case BORDER_BOTTOM:
-		*w = multiscreen_width (basep->screen, basep->monitor);
+		*w = multiscreen_width (basep->screen);
 		break;
 	}
 }
@@ -202,7 +199,6 @@ edge_pos_pre_convert_hook (BasePWidget *basep)
 GtkWidget *
 edge_widget_new (gchar *panel_id,
 		 int screen,
-		 int monitor,
 		 BorderEdge edge,
 		 BasePMode mode,
 		 BasePState state,
@@ -216,18 +212,14 @@ edge_widget_new (gchar *panel_id,
 		 gboolean rotate_pixmap_bg,
 		 GdkColor *back_color)
 {
-	EdgeWidget  *edgew;
-	BasePWidget *basep;
-
-	edgew = g_object_new (EDGE_TYPE_WIDGET, NULL);
-	basep = BASEP_WIDGET (edgew);
+	EdgeWidget *edgew = g_object_new (EDGE_TYPE_WIDGET, NULL);
+	BasePWidget *basep = BASEP_WIDGET (edgew);
 
 	basep->pos = g_object_new (EDGE_TYPE_POS, NULL);
 
 	border_widget_construct (panel_id,
 				 BORDER_WIDGET (basep), 
 				 screen,
-				 monitor,
 				 edge, 
 				 TRUE, FALSE,
 				 sz, mode, state,

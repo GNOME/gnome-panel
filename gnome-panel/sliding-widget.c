@@ -116,10 +116,10 @@ sliding_pos_set_pos (BasePWidget *basep,
 	/* FIXME: how does screenchanging interact with depending on
 	 * the above positions of the actual X windows stuff */
 	
-	innerx = x - multiscreen_x (basep->screen, basep->monitor);
-	innery = y - multiscreen_y (basep->screen, basep->monitor);
-	screen_width = multiscreen_width (basep->screen, basep->monitor);
-	screen_height = multiscreen_height (basep->screen, basep->monitor);
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
 
 	/*if in the inner 1/3rd, don't change to avoid fast flickery
 	  movement*/
@@ -248,36 +248,32 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (BORDER_POS (basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - h;
+		*y = multiscreen_height (basep->screen) - h - foobar_widget_get_height (basep->screen);
 		/* fall through */
 	case BORDER_TOP:
-		(*y) += foobar_widget_get_height (basep->screen, basep->monitor);
+		(*y) += foobar_widget_get_height (basep->screen);
 		*x = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
-			: multiscreen_width (basep->screen, basep->monitor)
-				- pos->offset - w;
+			: multiscreen_width (basep->screen) - pos->offset - w;
 		break;
 	case BORDER_RIGHT:
-		*x = multiscreen_width (basep->screen, basep->monitor) - w;
+		*x = multiscreen_width (basep->screen) - w;
                 /* fall through */
 	case BORDER_LEFT:
 		*y = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
-			: multiscreen_height (basep->screen, basep->monitor)
-				- pos->offset - h;
-		*y = MAX (*y, foobar_widget_get_height (basep->screen, basep->monitor));
+			: multiscreen_height (basep->screen) - pos->offset - h;
+		*y = MAX (*y, foobar_widget_get_height (basep->screen));
 		break;
 	}
 
-	*x += multiscreen_x (basep->screen, basep->monitor);
-	*y += multiscreen_y (basep->screen, basep->monitor);
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 }
 
 GtkWidget *
 sliding_widget_new (gchar *panel_id,
 		    int screen,
-		    int monitor,
 		    SlidingAnchor anchor,
 		    gint16 offset,
 		    BorderEdge edge,
@@ -304,7 +300,6 @@ sliding_widget_new (gchar *panel_id,
 	border_widget_construct (panel_id,
 				 BORDER_WIDGET (sliding),
 				 screen,
-				 monitor,
 				 edge,
 				 TRUE,
 				 FALSE,
@@ -325,7 +320,6 @@ sliding_widget_new (gchar *panel_id,
 void 
 sliding_widget_change_params (SlidingWidget *sliding,
 			      int screen,
-			      int monitor,
 			      SlidingAnchor anchor,
 			      gint16 offset,
 			      BorderEdge edge,
@@ -358,7 +352,6 @@ sliding_widget_change_params (SlidingWidget *sliding,
 
 	border_widget_change_params (BORDER_WIDGET (sliding),
 				     screen,
-				     monitor,
 				     edge,
 				     sz,
 				     mode,
@@ -385,7 +378,6 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
 
 	sliding_widget_change_params (sliding,
 				      basep->screen,
-				      basep->monitor,
 				      pos->anchor,
 				      offset,
 				      BORDER_POS (pos)->edge,
@@ -414,7 +406,6 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 
 	sliding_widget_change_params (sliding,
 				      basep->screen,
-				      basep->monitor,
 				      anchor,
 				      pos->offset,
 				      BORDER_POS (pos)->edge,
@@ -442,7 +433,6 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 
 	sliding_widget_change_params (sliding,
 				      basep->screen,
-				      basep->monitor,
 				      anchor,
 				      offset,
 				      edge,

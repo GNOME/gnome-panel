@@ -10,18 +10,6 @@
 	* fish.c: (get_location): clean up a bit to
 	fix warning.
 
-2002-07-17  Mark McLoughlin  <mark@skynet.ie>
-
-	* fish.c: (something_fishy_going_on): fix build breakage.
-
-2002-07-15  Mark McLoughlin  <mark@skynet.ie>
-
-	* fish.c:
-	(something_fishy_going_on): add fish arg and set dialog
-	screen.
-	(fish_locate_fortune_command), (update_fortune_dialog): upd
-	for above change.
-
 2002-07-12  Mark McLoughlin  <mark@skynet.ie>
 
 	* fish.c: (something_fishy_going_on): impl.
@@ -33,17 +21,6 @@
 
 	* fish.c (update_fortune_dialog): Convert the fortune string from
 	the user locale to UTF-8. This fixes bug #82254
-
-2002-06-25  Mark McLoughlin  <mark@skynet.ie>
-
-	* fish.c: (fishy_root_window),
-	(fishy_window_set_screen): impl helper methods.
-	(load_image_file): create the pixmap using the correct
-	root window.
-	(fish_properties_apply), (display_properties_dialog),
-	(update_fortune_dialog), (change_water),
-	(display_about_dialog): set the screen on which the window
-	is to realize.
 
 2002-06-21  Mark McLoughlin  <mark@skynet.ie>
   

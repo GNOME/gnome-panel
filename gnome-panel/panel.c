@@ -41,7 +41,6 @@
 #include "menu-fentry.h"
 #include "menu-util.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel-config.h"
 #include "panel-config-global.h"
@@ -49,8 +48,6 @@
 #include "session.h"
 #include "panel-applet-frame.h"
 #include "global-keys.h"
-
-#include "multihead-hacks.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -500,16 +497,9 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 static void
 move_panel_to_cursor (GtkWidget *panel)
 {
-	GdkScreen *screen;
-	GdkWindow *root_window;
 	int        x, y;
 
-	g_return_if_fail (GTK_IS_WINDOW (panel));
-
-	screen = gtk_window_get_screen (GTK_WINDOW (panel));
-	root_window = gdk_screen_get_root_window (screen);
-
-	gdk_window_get_pointer (root_window, &x, &y, NULL);
+	gdk_window_get_pointer (gdk_get_default_root_window (), &x, &y, NULL);
 
 	if (BASEP_IS_WIDGET (panel))
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
@@ -691,7 +681,6 @@ static gboolean
 panel_do_popup_menu (PanelWidget *panel,
 		     BasePWidget *basep,
 		     GtkWidget   *widget,
-		     int          screen,
 		     guint        button,
 		     guint32      activate_time)
 {
@@ -703,9 +692,6 @@ panel_do_popup_menu (PanelWidget *panel,
                         basep->autohide_inhibit = TRUE;
 			basep_widget_autohide (basep);
 		}
-
-		gtk_menu_set_screen (GTK_MENU (menu),
-				     panel_screen_from_number (screen));
 
 		gtk_menu_popup (GTK_MENU (menu),
                                 NULL,
@@ -725,17 +711,13 @@ panel_popup_menu (GtkWidget *widget, gpointer data)
 {
  	PanelWidget *panel = NULL;
 	BasePWidget *basep = NULL;
-	int          screen = 0;
 
 	panel = PANEL_WIDGET (widget);
-	if (BASEP_IS_WIDGET (data)) {
+	if (BASEP_IS_WIDGET (data))
 		basep = BASEP_WIDGET (data);
-		screen = basep->screen;
-	} else if (FOOBAR_IS_WIDGET (data))
-		screen = FOOBAR_WIDGET (data)->screen;
 
 	return panel_do_popup_menu (
-			panel, basep, widget, screen, 3, GDK_CURRENT_TIME);
+			panel, basep, widget, 3, GDK_CURRENT_TIME);
 }
 
 static gboolean
@@ -773,15 +755,12 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 	GdkEventButton *bevent;
 	GdkEventKey *kevent;
 	int x, y;
-	int screen = 0;
 
 	if (BASEP_IS_WIDGET (widget)) {
 		basep = BASEP_WIDGET (widget);
 		panel = PANEL_WIDGET (basep->panel);
-		screen = basep->screen;
 	} else if (FOOBAR_IS_WIDGET (widget)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
-		screen= FOOBAR_WIDGET (widget)->screen;
 	}
 
 	switch (event->type) {
@@ -801,7 +780,7 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 			else
 				pd->insertion_pos = x;
 
-			if (panel_do_popup_menu (panel, basep, widget, screen,
+			if (panel_do_popup_menu (panel, basep, widget,
 						 bevent->button, bevent->time))
 				return TRUE;
 			break;
@@ -1773,29 +1752,6 @@ panel_data_by_id (const char *id)
 	return NULL;
 }
 
-static void
-panel_ensure_panel_per_screen (int screen)
-{
-	GtkWidget *panel;
-	GSList    *l;
-
-	for (l = panel_list; l; l = l->next) {
-		PanelData *pdata = l->data;
-
-		if (BASEP_IS_WIDGET (pdata->panel) &&
-		    BASEP_WIDGET (pdata->panel)->screen == screen)
-			return;
-
-		else if (FOOBAR_IS_WIDGET (pdata->panel) &&
-			 FOOBAR_WIDGET (pdata->panel)->screen == screen)
-			return;
-	}
-
-	panel = foobar_widget_new (NULL, screen, 0);
-	panel_save_to_gconf (panel_setup (panel));
-	gtk_widget_show (panel);
-}
-
 void
 panel_load_global_config (void)
 {
@@ -1996,7 +1952,6 @@ panel_load_panels_from_gconf (void)
 	GSList     *l;
 	const char *profile;
 	const char *key;
-	int         i;
 
 	profile = panel_gconf_get_profile ();
 	
@@ -2018,7 +1973,6 @@ panel_load_panels_from_gconf (void)
 		gboolean       hidebuttons_enabled;
 		gboolean       hidebutton_pixmaps_enabled;
 		int            screen;
-		int            monitor;
 		int            size;
 		char          *panel_id;
 		char          *back_pixmap;
@@ -2026,21 +1980,9 @@ panel_load_panels_from_gconf (void)
 
 		panel_id = l->data;
 
-		screen  = panel_get_int (profile, panel_id, "screen", -1);
-		monitor = panel_get_int (profile, panel_id, "monitor", -1);
-		if (screen == -1 || monitor == -1) {
-			/* Backwards compat:
-			 *   In 2.0.0, we only had Xinerama support and the
-			 *   monitor number was saved as "screen_id".
-			 */
-			screen = 0;
-			monitor = panel_get_int (profile, panel_id, "screen_id", 0);
-		}
-
-		if (screen >= multiscreen_screens () ||
-		    monitor >= multiscreen_monitors (screen))
-			continue;
-
+#ifdef PANEL_SESSION_DEBUG
+		printf ("Loading panel id %s\n", panel_id);
+#endif
 		back_pixmap = panel_get_string (profile, panel_id,
 						"panel_background_pixmap", NULL);
 		if (string_empty (back_pixmap)) {
@@ -2079,6 +2021,7 @@ panel_load_panels_from_gconf (void)
 
 		state   = panel_get_int (profile, panel_id, "panel_hide_state", 0);
 		mode    = panel_get_int (profile, panel_id, "panel_hide_mode", 0);
+		screen  = panel_get_int (profile, panel_id, "screen_id", 0);
 
 		tmp_str = panel_get_string (profile, panel_id, "panel_type", "edge-panel");
 		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (gint *) &type);
@@ -2096,7 +2039,6 @@ panel_load_panels_from_gconf (void)
 			
 			panel = edge_widget_new (panel_id,
 						 screen,
-						 monitor,
 						 edge, 
 						 mode, state,
 						 size,
@@ -2127,7 +2069,6 @@ panel_load_panels_from_gconf (void)
 
 			panel = aligned_widget_new (panel_id,
 						    screen,
-						    monitor,
 						    align,
 						    edge,
 						    mode,
@@ -2163,7 +2104,6 @@ panel_load_panels_from_gconf (void)
 	
 			panel = sliding_widget_new (panel_id,
 						    screen,
-						    monitor,
 						    anchor,
 						    offset,
 						    edge,
@@ -2189,8 +2129,6 @@ panel_load_panels_from_gconf (void)
 			g_free (tmp_str);
 
 			panel = drawer_widget_new (panel_id,
-						   screen,
-						   monitor,
 						   (PanelOrient) orient,
 						   BASEP_EXPLICIT_HIDE, 
 						   state,
@@ -2219,7 +2157,6 @@ panel_load_panels_from_gconf (void)
 			
 			panel = floating_widget_new (panel_id,
 						     screen,
-						     monitor,
 						     x,
 						     y,
 						     orient,
@@ -2236,7 +2173,7 @@ panel_load_panels_from_gconf (void)
 			}
 			break;
 		case FOOBAR_PANEL:
-			panel = foobar_widget_new (panel_id, screen, monitor);
+			panel = foobar_widget_new (panel_id, screen);
 			break;
 		default:
 			g_warning ("Unkown panel type: %d; ignoring.", type);
@@ -2256,18 +2193,14 @@ panel_load_panels_from_gconf (void)
 		GtkWidget *panel;
 
 		panel_error_dialog (
-			gdk_screen_get_default (),
 			"no_panels_found",
 			_("No panels were found in your configuration.  "
 			  "I will create a menu panel for you"));
 
-		panel = foobar_widget_new (NULL, 0, 0);
+		panel = foobar_widget_new (NULL, 0);
 		panel_save_to_gconf (panel_setup (panel));
 		gtk_widget_show (panel);
 	}
-
-	for (i = 0; i < multiscreen_screens (); i++)
-		panel_ensure_panel_per_screen (i);
 
 	panel_g_slist_deep_free (panel_ids);
 }
@@ -2284,7 +2217,6 @@ panel_save_to_gconf (PanelData *pd)
 	const char  *key;
 	char	    *color;
 	int          screen = 0;
-	int          monitor = 0;
 
 	g_return_if_fail (pd != NULL);
 	
@@ -2292,12 +2224,10 @@ panel_save_to_gconf (PanelData *pd)
 		basep   = BASEP_WIDGET (pd->panel);
 		panel   = PANEL_WIDGET (basep->panel);
 		screen  = basep->screen;
-		monitor = basep->monitor;
 
 	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel   = PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel);
 		screen  = FOOBAR_WIDGET (pd->panel)->screen;
-		monitor = FOOBAR_WIDGET (pd->panel)->monitor;
 	}
 
 	profile = panel_gconf_get_profile ();
@@ -2325,8 +2255,7 @@ panel_save_to_gconf (PanelData *pd)
 	panel_set_string (profile, panel->unique_id, "panel_type", 
 			  gconf_enum_to_string (panel_type_type_enum_map, pd->type));
 
-	panel_set_int (profile, panel->unique_id, "screen", screen);
-	panel_set_int (profile, panel->unique_id, "monitor", monitor);
+	panel_set_int (profile, panel->unique_id, "screen_id", screen);
 
 	if (basep) {
 		panel_set_bool (profile, panel->unique_id,
@@ -2476,65 +2405,18 @@ panel_register_window_icon (void)
 	}
 }
 
-GdkScreen *
-panel_screen_from_toplevel (GtkWidget *panel)
-{
-	GdkScreen  *retval = NULL;
-	GdkDisplay *display;
-
-	display = gdk_display_get_default ();
-
-	if (BASEP_IS_WIDGET (panel))
-	        retval = gdk_display_get_screen (
-	                        display, BASEP_WIDGET (panel)->screen);
-
-	else if (FOOBAR_IS_WIDGET (panel))
-	        retval = gdk_display_get_screen (
-	                        display, FOOBAR_WIDGET (panel)->screen);
-
-	return retval;
-}
-
 int
 panel_monitor_from_toplevel (GtkWidget *panel)
 {
 	int retval = -1;
 
 	if (BASEP_IS_WIDGET (panel))
-	        retval = BASEP_WIDGET (panel)->monitor;
+	        retval = BASEP_WIDGET (panel)->screen;
 
 	else if (FOOBAR_IS_WIDGET (panel))
-	        retval = FOOBAR_WIDGET (panel)->monitor;
+	        retval = FOOBAR_WIDGET (panel)->screen;
 
 	return retval;
-}
-
-int
-panel_screen_from_panel_widget (PanelWidget *panel)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
-			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
-
-	if (BASEP_IS_WIDGET (panel->panel_parent))
-		return BASEP_WIDGET (panel->panel_parent)->screen;
-	else
-		return FOOBAR_WIDGET (panel->panel_parent)->screen;
-}
-
-int
-panel_monitor_from_panel_widget (PanelWidget *panel)
-{
-	g_return_val_if_fail (PANEL_IS_WIDGET (panel), 0);
-	g_return_val_if_fail (panel->panel_parent != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (panel->panel_parent) ||
-			      FOOBAR_IS_WIDGET (panel->panel_parent), 0);
-
-	if (BASEP_IS_WIDGET (panel->panel_parent))
-		return BASEP_WIDGET (panel->panel_parent)->monitor;
-	else
-		return FOOBAR_WIDGET (panel->panel_parent)->monitor;
 }
 
 gboolean
