@@ -1,4 +1,10 @@
 2005-01-14  Vincent Untz  <vincent@vuntz.net>
+	
+	* panel-recent.c: (panel_recent_append_documents_menu): connect to the
+	"changed" signal only while the model is alive.
+	Fix crash #150809.
+
+2005-01-14  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-bar.c: (panel_menu_bar_append_gtk_bookmarks): unescape
 	the uri before creating the GnomeVFSURI
