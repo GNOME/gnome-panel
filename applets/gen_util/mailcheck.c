@@ -349,8 +349,8 @@ mailcheck_get_animation_menu (MailCheck *mc)
 	struct    dirent *e;
 	char      *dname = gnome_unconditional_pixmap_file ("mailcheck");
 	DIR       *dir;
-	char      *basename;
-	int       i = 0, select_item;
+	char      *basename = NULL;
+	int       i = 0, select_item = 0;
 
 	mc->selected_pixmap_name = mc->mailcheck_text_only;
 	omenu = gtk_option_menu_new ();
@@ -393,7 +393,6 @@ mailcheck_get_animation_menu (MailCheck *mc)
 		}
 		closedir (dir);
 	}
-	printf ("Selecciuonado: %d\n", select_item);
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (omenu), menu);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (omenu), select_item);
 	gtk_widget_show (omenu);
@@ -553,7 +552,7 @@ make_mailcheck_applet(const gchar *param)
 	if (!mc->mail_file){
 		char *user;
 	
-		if (user = getenv("USER")){
+		if ((user = getenv("USER")) != NULL){
 			mc->mail_file = g_malloc(strlen(user) + 20);
 			sprintf(mc->mail_file, "/var/spool/mail/%s", user);
 		} else {
