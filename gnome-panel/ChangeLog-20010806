@@ -1,3 +1,11 @@
+Mon May 18 23:35:13 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch],main.c: implement run queue, this will start up
+	  applets in a row, reducing load on the machine, flicker,
+	  though it doesn't do much for speed as I thought it would,
+	  maybe when we use ORBit and the applets will start up faster
+	  it will be noticable as they are not fighting over X
+
 Mon May 18 21:31:53 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c: fix segfault

@@ -78,6 +78,22 @@ gint just_exit = 0;
 /* The security cookie */
 char *cookie;
 
+
+
+
+/*execution queue stuff, execute only one applet in a row, thereby getting
+  rid of some problems with applet*/
+gint current_exec = -1;
+guint cur_timeout=0;
+typedef struct _ExecQueue ExecQueue;
+struct _ExecQueue {
+	gint applet_id;
+	gchar *path;
+	gchar *param;
+};
+GList *exec_queue=NULL;
+
+
 /* These are the arguments that our application supports.  */
 static struct argp_option arguments[] =
 {
@@ -108,6 +124,96 @@ static struct argp parser =
 
 /*needed for drawers*/
 static void panel_setup(PanelWidget *panel);
+
+static void really_exec_prog(gint applet_id, gchar *path, gchar *param);
+static void exec_queue_start_next(void);
+
+static gint
+exec_queue_timeout(gpointer data)
+{
+	g_warning("TIMED OUT waiting to applet ID: %d!",current_exec);
+	cur_timeout = -1;
+	exec_queue_start_next();
+	return FALSE;
+}
+
+static void
+really_exec_prog(gint applet_id, gchar *path, gchar *param)
+{
+	/*this applet is dumb and wants us to start it :)*/
+	AppletChild *child;
+
+	child = g_new(AppletChild,1);
+
+	child->pid = fork();
+	if(child->pid < 0)
+		g_error("Can't fork!");
+	if(child->pid == 0) {
+		if(strlen(param)>0)
+			execl(path,path,param,NULL);
+		else
+			execl(path,path,NULL);
+		g_error("Can't execl!");
+	}
+
+	printf("started applet, pid: %d\n",child->pid);
+	
+	child->applet_id = applet_id;
+		
+	children = g_list_prepend(children,child);
+
+	current_exec = applet_id;
+
+	cur_timeout = gtk_timeout_add(30*100,exec_queue_timeout,NULL);
+}
+
+static void
+exec_queue_start_next(void)
+{
+	ExecQueue *eq;
+	current_exec = -1;
+	if(cur_timeout>0)
+		gtk_timeout_remove(cur_timeout);
+	cur_timeout=0;
+
+	if(!exec_queue)
+		return;
+
+	eq = exec_queue->data;
+
+	really_exec_prog(eq->applet_id, eq->path, eq->param);
+	g_free(eq->path);
+	if(eq->param) g_free(eq->param);
+	g_free(eq);
+
+	exec_queue = g_list_remove_link(exec_queue,exec_queue);
+}
+
+void
+exec_queue_done(gint applet_id)
+{
+	if(applet_id>-1 && applet_id==current_exec)
+		exec_queue_start_next();
+}
+
+
+static void
+exec_prog(gint applet_id, gchar *path, gchar *param)
+{
+	if(current_exec==-1) {
+		really_exec_prog(applet_id,path,param);
+	} else {
+		ExecQueue *eq = g_new(ExecQueue,1);
+		eq->applet_id = applet_id;
+		eq->path = g_strdup(path);
+		if(param)
+			eq->param = g_strdup(param);
+		else
+			eq->param = NULL;
+		exec_queue = g_list_append(exec_queue,eq);
+	}
+}
+
 
 static void
 queue_load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
@@ -200,29 +306,8 @@ load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 			}
 		}
 
-		if(path[0]!='#') {
-			/*this applet is dumb and wants us to start it :)*/
-			AppletChild *child;
-
-			child = g_new(AppletChild,1);
-
-			child->pid = fork();
-			if(child->pid < 0)
-				g_error("Can't fork!");
-			if(child->pid == 0) {
-				if(strlen(param)>0)
-					execl(fullpath,fullpath,param,NULL);
-				else
-					execl(fullpath,fullpath,NULL);
-				g_error("Can't execl!");
-			}
-
-			printf("started applet, pid: %d\n",child->pid);
-			
-			child->applet_id = applet_count-1;
-				
-			children = g_list_prepend(children,child);
-		}
+		if(path[0]!='#')
+			exec_prog(applet_count-1,fullpath,param);
 
 		g_free(fullpath);
 	} else if(strcmp(id_str,MENU_ID) == 0) {
@@ -920,6 +1005,8 @@ sigchld_handler(int type)
 			   	info->widget = NULL;
 
 			panel_clean_applet(child->applet_id);
+
+			exec_queue_done(child->applet_id);
 
 			g_free(child);
 			children=g_list_remove_link(children,list);

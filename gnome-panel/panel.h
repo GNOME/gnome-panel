@@ -144,6 +144,9 @@ void mulapp_load_or_add_to_queue(gchar *path,gchar *param);
 
 void mulapp_add_to_queue(gchar *path, gint applet_id);
 
+/*exec queue done function from main.c*/
+void exec_queue_done(gint applet_id);
+
 
 extern char *cookie;
 

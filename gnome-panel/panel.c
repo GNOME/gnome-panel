@@ -302,15 +302,15 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	if (panel->back_pixmap) {
 		gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
-		gnome_config_clean_key("backcolor");
-	} else {
+	gnome_config_clean_key("backcolor");
+	} else if(panel->back_color.pixel>0) {
 		char buf[32];
-		gnome_config_clean_key("backpixmap");
 		g_snprintf(buf, sizeof(buf), "#%02x%02x%02x",
 			(guint)panel->back_color.red/256,
 			(guint)panel->back_color.green/256,
 			(guint)panel->back_color.blue/256);
 		gnome_config_set_string("backcolor", buf);
+		gnome_config_clean_key("backpixmap");
 	}
 
 
@@ -947,6 +947,7 @@ applet_request_id (const char *path, const char *param,
 	}
 	*cfgpath = NULL;
 	*globcfgpath = g_strdup(old_panel_cfg_path);
+
 	return i;
 }
 
@@ -961,6 +962,9 @@ applet_register (const char * ior, int applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel;
+
+	/*start the next applet in queue*/
+	exec_queue_done(applet_id);
 
 	g_return_if_fail(info != NULL);
 
