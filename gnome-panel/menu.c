@@ -462,9 +462,13 @@ typedef struct
 	gpointer orig_data;
 } MenuReposition;
 
-/* XXX:
+/* FIXME:
  * Stolen mostly from GTK+ and modified for our purposes of multiscreen
- * things.  Kind of evil, but oh well */
+ * things.  Kind of evil, but oh well
+ *
+ * This is deprecated in gtk now, that's why we need the GTK_MENU_INTERNALS
+ * define in Makefile.am
+ */
 static void
 our_menu_item_position_menu (GtkMenu  *menu,
 			     int       screen_width,
@@ -558,7 +562,6 @@ our_menu_item_position_menu (GtkMenu  *menu,
 	*x = tx + screen_basex;
 	*y = ty + screen_basey;
 }
-
 
 static void
 menu_on_screen (GtkMenu  *menu,

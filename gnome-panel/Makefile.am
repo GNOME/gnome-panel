@@ -7,6 +7,11 @@ NULL =
 
 EXTRA_SUBDIRS = help
 
+# FIXME:
+# this define is to allow menu.c to continure
+# using deprecated gtk+ internals
+ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
+
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
@@ -15,6 +20,7 @@ INCLUDES =							\
 	-DPANEL_DEBUG						\
 	-DG_DISABLE_DEPRECATED					\
 	-DGDK_DISABLE_DEPRECATED				\
+	-DGTK_DISABLE_DEPRECATED				\
 	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
 	-DGNOME_DISABLE_DEPRECATED				\
 	-DGNOME_CORE_INTERNAL					\
@@ -25,6 +31,7 @@ INCLUDES =							\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DLIBDIR=\""$(libdir)"\"				\
+	$(ALLOW_CRACKPOT_MENU_CODE)				\
 	$(PANEL_CFLAGS)						\
 	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
