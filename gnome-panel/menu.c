@@ -434,7 +434,7 @@ create_panel_submenu (GtkWidget *app_menu)
 static void
 panel_lock (GtkWidget *widget, void *data)
 {
-	system ("xlock");
+	system ("(xlock&)");
 }
 
 static void
