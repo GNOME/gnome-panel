@@ -1276,8 +1276,22 @@ add_drawers_from_dir (const char  *dirname,
 
 			else if ((g_str_has_suffix (mfile->name, ".desktop") ||
 				  g_str_has_suffix (mfile->name, ".kdelnk")) &&
-				 vfs_text_uri_exists (uri))
-				panel_launcher_create_with_id (attached_toplevel_id, G_MAXINT/2, uri);
+				 vfs_text_uri_exists (uri)) {
+					
+					QuickDesktopItem *qitem;
+
+					qitem = quick_desktop_item_load_uri (uri,
+									     NULL,
+									     TRUE);
+
+					/* Don't add the desktop entry if TryExec fails */
+					if (qitem != NULL) {
+						panel_launcher_create_with_id (
+									   attached_toplevel_id, 
+									   G_MAXINT/2, uri);
+						quick_desktop_item_destroy (qitem);
+					}
+			}
 		}
 
 		g_free (uri);
