@@ -229,6 +229,15 @@ sal(GtkWidget *applet, GtkAllocation *alloc)
 	       applet->allocation.height);
 }*/
 
+static void
+test_size(GtkWidget *applet, GtkAllocation *alloc)
+{
+	if(applet->allocation.width > applet->requisition.width ||
+	   applet->allocation.height > applet->requisition.height) {
+		gtk_widget_queue_resize(applet->parent);
+	}
+}
+
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
 static CORBA_unsigned_long
@@ -244,6 +253,9 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 				 GDK_POINTER_MOTION_HINT_MASK));
 
 	socket = gtk_socket_new();
+
+	gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
+				 GTK_SIGNAL_FUNC(test_size),NULL);
 
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(sal),NULL);*/

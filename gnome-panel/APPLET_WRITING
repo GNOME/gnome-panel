@@ -230,7 +230,7 @@ applet_save_session(GtkWidget *w,
 {
 	gnome_config_push_prefix(privcfgpath);
 	gnome_config_set_string("section/hello",hello);
-	gnome_config_pop_prefix(privcfgpath);
+	gnome_config_pop_prefix();
 
 	gnome_config_sync();
 	/* you need to use the drop_all here since we're all writing to
