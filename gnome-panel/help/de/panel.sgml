@@ -5,7 +5,7 @@
 <article id="index">
 
   <artheader> 
-    <title>Das GNOME Panel</title>
+    <title>Das GNOME-Panel</title>
     <copyright>
       <year>2000</year>
       <holder>Red Hat, Inc., Dan Mueth, and Alexander Kirillov</holder>
@@ -1199,39 +1199,38 @@
       
     </sect2>
     <sect2 id="statusdock">
-      <title>Status Dock</title>
+      <title>Statusdock</title>
       <para>
-    The <interface>Status Dock</interface> is a
-    <interface>Panel</interface> object which can  hold Status
-    Docklets &mdash; small windows which applications place in the
-    <interface>Status Dock</interface> to  provide status information.
-    Status Docklets can also be used to control the
-    application. Essentially, Docklets are small (both in size and in
-    complexity) applets.   GNOME currently does not have many
-    applications which place Status Docklets in the <interface>Status
-    Dock</interface>.  However, GNOME's Status Dock is compatible with
-    that of the K Desktop Environment (KDE), so KDE applications, such
-    as <application>kscd</application>, may place Status Docklets in
-    GNOME's <interface>Status Dock</interface>.  Future versions of
-    GNOME applications will  make use of this recently added
-    <interface>Panel</interface> object.
-   </para>
+	Das <interface>Statusdock</interface> ist ein
+	<interface>Panel</interface>-Objekt, welches Statusdockletts &mdash;
+	kleine Fenster, die Applikationen im <interface>Statusdock</interface>
+	plazieren können um Statusinformationen darzustellen. Statusdockletts
+	können darüberhinaus verwendet werden, um die Applikation zu steuern.
+	In wesentlichen sind Docklets kleine (sowohl die Größe als auch die
+	Komplexität betreffend) Applets. Gegenwärtig gibt es nicht viele
+	GNOME-Applikationen, welche Statusdocklets benutzen. Allerdings ist
+	das GNOME-Statusdock kompatible mit dem der K Desktop-Umgebung (KDE),
+	do daß KDE-Applikationen, wie etwa <application>kscd</application>,
+	Statusdocklets im GNOME-Statusdock plazieren können. In Zukunft werden
+	mehr GNOME-Applikationen dieses erst vor kurzem erst geschaffene
+	Panel-Objekt benutzen.
+      </para>
       <figure id="statusdockfig">
-	<title>Example Status Dock With Docklet</title>
+	<title>Beispiel-Statusdock mit Docklett</title>
 	<screenshot>
-	  <screeninfo>Example Status Dock With Docklet</screeninfo>
+	  <screeninfo>Beispiel-Statusdock mit Docklett</screeninfo>
 	  <graphic fileref="./figures/status_dock" format="png"
-      srccredit="lebl">
-      </graphic>
+	    srccredit="lebl">
+	  </graphic>
 	</screenshot>
       </figure>
       <para>
-    The above example shows the <interface>Status Dock</interface>
-    with a Status Docklet from  the <application>kscd</application> CD
-    player program.  This particular Docklet is used to open and close
-    the main <application>kscd</application> window without ending the
-    program.
-   </para>
+	Das obige Beispiel zeigt das <interface>Statusdock</interface>
+	mit einem Statusdocklett des <application>kscd</application>
+	CD-Spielers. Dieses spezielle Docklett kann dazu benutzt werden,
+	das <application>kscd</application> zu öffnen und zu schließen,
+	ohne es zu beenden.
+      </para>
     </sect2>
   </sect1>
 
@@ -1239,9 +1238,9 @@
   <!-- ########### Adding, Moving, and Removing Panel Objects
   ############## -->
   <sect1 id="appletadd">
-    <title>Adding, Moving, and Removing Panel Objects</title>
+    <title>Hinzufügen, Verschieben und Entfernen von Panel-Objekten</title>
     <sect2 id="moving">
-      <title>Moving objects</title>
+      <title>Objekte verschieben</title>
       <para>
 <!--
       <indexterm id="idx-a14">
@@ -1251,203 +1250,212 @@
       <primary>Panel</primary> <secondary>adding applets
       to</secondary><see>"Applets"</see> </indexterm> -->
 
-	To move any object on the <interface>Panel</interface> to a
-	different location, just  drag it with the middle mouse button
-	to the desired place, or right-click on it and choose
-	<guimenuitem>Move applet</guimenuitem>. You can move it to a
-	dfferent location on the same <interface>Panel</interface>, or
-	to a different <interface>Panel</interface>.  If in the course
-	of this movement it hits other objects, the behavior depends
-	on the global preferences you set (see <xref
-	  linkend="appletstab">): the object you are moving can switch
-	places with other objects, "push" all objects it meets, or
-	"jump" over all other objects without disturbing them. You can
-	also override the default behavior by holding
-	<keycap>Shift</keycap> button (for "push" mode),
-	<keycap>Ctrl</keycap> (for "switched" mode), or
-	<keycap>Alt</keycap> (for "free" mode, i.e. jumping other
-	other objects without disturbing them) button while dragging.
-	</para>
+	Um ein beliebiges Objekt auf dem <interface>Panel</interface> an
+	eine andere Stelle zu schieben, fassen Sie es einfach mit der mittleren
+	Maustaste an und ziehen es an den gewünschten Platz, oder rechtsklicken
+	Sie auf es und wählen Sie <guimenuitem>Applet verschieben</guimenuitem>.
+	Sie können das Objekt zu einer anderen Stelle im selben
+	<interface>Panel</interface> schieben oder aber zu einem ganz anderen
+	<interface>Panel</interface>. Wenn Sie beim Verschieben andere Objekte
+	streifen, hängt das Verhalten von den globalen Eigenschaften (siehe
+	<xref linkend="appletstab">) ab, die Sie gesetzt haben: das Objekt, das
+	Sie verschieben, kann mit anderen Objekten die Plätze tauschen, sie
+	zur Seite schieben oder über sie hinwegspringen ohne sie zu stören.
+	Diese Verhalten kann mit der <keycap>Umschalt</keycap>-Taste (für
+	"zur Seite schieben"), der <keycap>Strl</keycap>-Taste (für "die
+	Plätze tauschen") bzw. der <keycap>Alt</keycap>-Taste (für
+	"drüberspringen") beeinflußt werden, indem Sie diese betätigen, wenn
+	Sie das Objekt anfassen.
+      </para>
     </sect2>
 
     <sect2 id="remove">
-      <title> Removing objects from the panel</title>   <para>   To
-      remove an object from the <interface>Panel</interface>,
-      right-click on it and choose  <guimenuitem>Remove from
-      panel</guimenuitem> from the pop-up menu.
+      <title>Objekte vom Panel entfernen</title>
+
+      <para>
+	Um ein Objekt vom <interface>Panel</interface> zu entfernen,
+	rechtsklicken Sie auf es und wählen Sie
+	<guimenuitem>Vom Panel entfernen</guimenuitem> im
+	Kontext-Menü.
       </para>
     </sect2>
 
 
-    <sect2 id="add">    <title>Adding objects to the panel</title>
+    <sect2 id="add">
+      <title>Objekte zum Panel hinzufügen</title>
       
       <para>
 	<indexterm id="idx-a13">
-	  <primary>Panel</primary> <secondary>adding applications
-	  to</secondary>
+	  <primary>Panel</primary>
+	  <secondary>Objekte hinzufügen</secondary>
 	</indexterm>
-	By default, the GNOME <interface>Panel</interface> contains
-	very few basic objects,  such as the <guimenu>Main
-	Menu</guimenu>. However, there is a number of things you can
-	add to it. For example, every menu item in the <guimenu>Main
-	Menu</guimenu> or its submenus can be added to the panel as an
-	application launcher. GNOME also contains a number of applets
-	that can be added to the panel, ranging from
-	<application>Printer Applet</application>, which prints a file
-	which you drag and drop onto this applet, to
-	<application>Wanda the Fish</application>. If these are not
-	enough, there is also a number of GNOME applets available on
-	the Internet.
+	Standardmäßig enthält das GNOME-<interface>Panel</interface> nur
+	ein paar wenige grundlegende Objekte, wie etwa das
+	<guimenu>Hauptmenü</guimenu>. Es gibt jedoch eine Reihe von Dingen,
+	die Sie zum Panel hinzufügen können. Zum Beispiel läßt sich jeder
+	Eintrag des <guimenu>Hauptmenüs</guimenu> oder eines seiner
+	Untermenüs als Applikations-Starter zum Panel hinzufügen. GNOME hat
+	darüberhinaus eine Reihe von Applets &mdash; angefangen beim
+	<application>Drucker-Applet</application>, das eine Datei druckt,
+	die Sie auf das Applet ziehen und dort fallenlassen, bis zu
+	<application>Wanda, dem Fisch</application>. Wenn das noch nicht
+	genug ist, gibt es noch eine ganze Reihe von GNOME-Applets im
+	Internet.
       </para>
       <variablelist>
 	<varlistentry>
 	  <term> <emphasis>Applets</emphasis></term>
 	  <listitem>
 	    <para>
-		To add an applet, right-click on the
-		<interface>Panel</interface> and select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Applet</guisubmenu></menuchoice> from the
-		<guimenu>Panel</guimenu> menu. This will show you the
-		menu of all the applets on your system, divided into
-		categories; choosing any applet from this menu will
-		add it to the <interface>Panel</interface>.
-	      </para>
+	      Um ein Applet hinzuzufügen, rechtsklicken Sie auf das
+	      <interface>Panel</interface> und wählen Sie
+	      <menuchoice><guisubmenu>Zum Panel hinzufügen</guisubmenu>
+		<guisubmenu>Applet</guisubmenu></menuchoice> vom
+	      <guimenu>Panel</guimenu>-Menü. Dies zeigt Ihnen ein Menü
+	      aller in Ihrem System intallierter Applets, unterteilt in
+	      Kategorien; wenn Sie aus diesem Menü eines der Applets
+	      wählen, wird es zum <interface>Panel</interface>
+	      hinzugefügt.
+	    </para>
 	  </listitem>
 	</varlistentry>
 
 
 	<varlistentry>
-	  <term> <emphasis>Application launchers</emphasis></term>
+	  <term> <emphasis>Applikations-Starter</emphasis></term>
 	  <listitem>
 	    <para>
-		To create a new application launcher, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guimenuitem>Launcher</guimenuitem> </menuchoice> from
-		the <guimenu>Panel</guimenu> menu.  You will be
-		presented the <interface>Create Launcher
-		dialog</interface>, shown below.  In this dialog you
-		should enter a name for your launcher, a comment, and
-		the command line to launch the application. This
-		dialog is virtually identical to <interface>Launcher
-		Eigenschaften</interface> dialog, so we refer the reader
-		to <xref linkend="launchers"> for detailed description.
+	      Um einen neuen Applikations-Starter zu erzeugen, wählen Sie
+	      <menuchoice><guisubmenu>Zum Panel hinzufügen</guisubmenu>
+		<guimenuitem>Starter</guimenuitem> </menuchoice> im
+	      <guimenu>Panel</guimenu>-Menü. Es erscheint der unten gezeigte
+	      <interface>Starter erzeugen</interface>-Dialog. In diesem Dialog
+	      sollten Sie einen Namen für Ihren Starter eingeben, einen
+	      Kommentar und den Befehl um die Applikation zu starten. Dieser
+	      Dialog ist identisch zum
+	      <interface>Starter-Eigenschaften</interface>-Dialog, so daß wir
+	      den Leser für weiter Informationen auf <xref linkend="launchers">
+	      verweisen.
 	      </para>
 	    <figure>
-	      <title>The Create launcher dialog</title>
+	      <title>Der "Starter erzeugen"-Dialog</title>
 	      <screenshot>
-		<screeninfo>Create launcher dialog</screeninfo>
+		<screeninfo>Der "Starter erzeugen"-Dialog</screeninfo>
 		<graphic fileref="./figures/create_launcher" format="png"
-			   srccredit="muet">
-		  </graphic>
+		  srccredit="muet">
+		</graphic>
 	      </screenshot>
 	    </figure>
 	    <para>
-		You can also add to the <interface>Panel</interface>
-		any existing menu item  or any launcher on your
-		desktop: just drag it to the panel and drop there. Be
-		careful to drop in the empty space on the panel and
-		not on any existing object: for example, if you drop
-		it on the printer applet, it will be printed. For menu
-		items, you can also right-click on an item in the menu
-		and select <guimenuitem>Add this launcher to the
-		panel</guimenuitem>. After this, you can change any
-		options for that launcher by clicking on it with the
-		right mouse button and selecting
-		<guimenuitem>Eigenschaften</guimenuitem> menu item.
-	      </para>
+	      Darüberhinaus können Sie jeden beliebigen Menüeintrag oder
+	      jeden sich auf dem Desktop befindlichen Starter zum
+	      <interface>Panel</interface> hinzufügen: ziehen Sie ihn einfach
+	      auf das Panel und lassen ihn dort fallen. Seien Sie dabei bitte
+	      vorsichtig und lassen das Objekt auf einem leeren Fleck auf dem
+	      Panel los und nicht auf einem dort bereits vorhandenen Objekt,
+	      wenn Sie zum Beispiel etwas auf dem Drucker-Applet fallenlassen,
+	      wird es gedruckt. Bei Menüs können Sie auch auf einen der
+	      Einträge rechtsklicken und
+	      <guimenuitem>Als Starter zum Panel hinzufügen</guimenuitem>
+	      wählen. Danach können Sie die Eigenschaften dieses Starters
+	      ändern, indem Sie mit der rechten Maustaste auf ihn klicken
+	      und <guimenuitem>Eigenschaften</guimenuitem> im Kontext-Menü
+	      wählen.
+	    </para>
 	  </listitem>
 	</varlistentry>
 
 	<varlistentry>
-	  <term> <emphasis>Menus</emphasis></term>
+	  <term> <emphasis>Menüs</emphasis></term>
 	  <listitem>
-	    <para>To add a menu, select <menuchoice><guisubmenu>Add
-		to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
-	      </menuchoice>  from the <guimenu>Panel</guimenu>
-		menu. This gives you a choice of the <guimenu>Main
-		menu</guimenu>, <guimenu>Programs</guimenu> menu, and
-		<guimenu>Favoriten</guimenu> menu.
-	      </para>
 	    <para>
-		You can also add the <guimenu>Hauptmenü</guimenu> or
-		any its submenu  as a new menu to the panel by
-		right-clicking  on the menu title (the top line of the
-		menu, separated from menu items by a thin line) and
-		selecting <guimenuitem>Add this as a menu to the
-		panel</guimenuitem>.
-	      </para>
-	    <para>  Advanced users can also create new menus
-              manually. To do so, you need to know that internally,
-              GNOME represents a menu by a directory, with menu items
-              presented by files of special type
-              (<filename>.desktop</filename> files &mdash; these files
-              also represent the application launchers), and submenus
-              presented by subdirectories. For example, the
-              <guimenu>Favoriten</guimenu> menu corresponds to the
-              directory <filename>~/.gnome/apps</filename> (where
-              <filename>~</filename> denotes your home directory), and
-              the <guimenu>Programs</guimenu> menu corresponds to the
-              directory
-              <filename>/usr/share/gnome/apps</filename>. Thus, you
-              can create a new directory, using the GNOME File
-              Manager, drag and drop there any
-              <filename>.desktop</filename> files from any other
-              directories you might have (for example, from
-              <filename>/usr/share/gnome/apps</filename>) or from the
-              desktop, and then drag and drop this directory from the
-              File Manager window to the
-              <interface>Panel</interface>. This will add this
-              directory as a menu to the <interface>Panel</interface>.
+	      Um ein Menü hinzuzufügen, wählen Sie
+	      <menuchoice><guisubmenu>Zum Panel hinzufügen</guisubmenu>
+		<guisubmenu>Menü</guisubmenu>
+	      </menuchoice> im <guimenu>Panel</guimenu>-Menü. Dies gibt
+	      Ihnen eine Auswahl zwischen <guimenu>Hauptmenü</guimenu>,
+	      <guimenu>Programme</guimenu>-Menü und
+	      <guimenu>Favoriten</guimenu>-Menü.
 	    </para>
 	    <para>
-	      After you have added a menu to the
-	      <interface>Panel</interface> using any of  the methods
-	      described above, you can modify its properties (for
-	      example, add new items to this menu or change the icon
-	      used by the menu), as described in <xref
-		linkend="menus">.
+	      Sie können auch das <guimenu>Hauptmenü</guimenu> oder eines
+	      seiner Untermenüs als neues Menü zum Panel hinzufügen, indem
+	      Sie auf dem Menütitel (die oberste Zeile im Menü, von den
+	      Menüeinträgen durch eine dünne, gestrichelte Linie getrennt)
+	      rechtsklicken und
+	      <guimenuitem>Als Menü zum Panel hinzufügen</guimenuitem>
+	      wählen.
+	    </para>
+	    <para>
+	      Fortgeschrittene Benutzer können neue Menüs auch von Hand
+	      erzeugen. Dazu müssen Sie wissen, daß GNOME Menüs intern als
+	      Verzeichnis darstellt, die eine Reihe Dateien eines bestimmten
+	      Typs (<filename>.desktop</filename>-Dateien &mdash; diese
+	      Dateien werden auch für Applikations-Starter verwendet) sowie
+	      Unterverzeichnisse für Untermenüs enthalten. So gehört zum
+	      Beispiel zum <guimenu>Favoriten</guimenu>-Menü das Verzeichnis
+	      <filename>~/.gnome/apps</filename> (wobei
+              <filename>~</filename> Ihr Heimatverzeichnis darstellt), und zum
+	      <guimenu>Programe</guimenu>-Menü das Verzeichnis
+              <filename>/usr/share/gnome/apps</filename>. Sie können also
+	      mit Hilfe des GNOME-Dateimanagers ein neues Verzeichnis erstellen,
+	      ein Paar <filename>.desktop</filename>-Dateien hineinwerfen, die
+	      Sie haben (aus einem anderen Verzeichnis, zum Beispiel aus
+              <filename>/usr/share/gnome/apps</filename> &mdash; oder aber auch
+	      vom Desktop) und dann dieses Verzeichnis vom Dateimanager auf
+	      das <interface>Panel</interface> ziehen und dort loslassen.
+	      Dies wird dieses Verzeichnis als Menü zum
+	      <interface>Panel</interface> hinzufügen.
+	    </para>
+	    <para>
+	      Nachdem Sie ein Menü mit eine der oben beschriebenen Methoden
+	      zum <interface>Panel</interface> hinzugefügt haben, können Sie
+	      seine Eigenschaften ändern (zum Beispiel, neue Einträge hinzufügen
+	      oder aber das vom Menü benutzte Icon ändern), wie es in
+	      <xref linkend="menus"> beschrieben ist.
 	    </para>
 
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term> <emphasis>Drawers</emphasis></term>
+	  <term> <emphasis>Schubladen</emphasis></term>
 	  <listitem>
 	    <para>
-                 To add a new empty drawer, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Drawer</guisubmenu> </menuchoice> from the
-		<guimenu>Panel</guimenu> menu. After this, you can
-		right-click on this drawer and select
-		<guimenuitem>Eigenschaften</guimenuitem> to change its
-		properties (for example, the icon it uses). You can
-		add new items to this drawer in the same way as you
-		add items to the panel: all the methods for adding new
-		objects to the panel described in this section will
-		also work for adding new items to the drawer.
+	      Um eine neue leere Schublade hinzuzufügen, wählen Sie
+	      <menuchoice><guisubmenu>Zum Panel hinzufügen</guisubmenu>
+		<guisubmenu>Schublade</guisubmenu> </menuchoice> im
+	      <guimenu>Panel</guimenu>-Menü. Danach können Sie auf die
+	      Schublade rechtsklicken und
+	      <guimenuitem>Eigenschaften</guimenuitem> wählen, um Ihre
+	      Eigenschaften zu ändern (zum Beispiel das von der Schublade
+	      verwendete Icon). Sie können auf dieselbe Art und Weise neue
+	      Objekte zu der Schublade hinzufügen, wie Sie dies bei einem
+	      Panel tun würden: alle in diesem Abschritt beschriebenen
+	      Methoden, um Objekte zum Panel hinzuzufügen, funktionieren
+	      auch für Schubladen.
 	    </para>
 	    <para>
-	      You can also add the <guimenu>Hauptmenü</guimenu> or any
-		its submenu as a new drawer to the panel by
-		right-clicking on the menu title and selecting
-		<guimenuitem>Add this as a drawer to the
-		panel</guimenuitem>.
-	      </para>
+	      Genauso können Sie auch das <guimenu>Hauptmenü</guimenu> oder
+	      eines seiner Untermenüs als neue Schublade zum Panel hinzufügen,
+	      indem Sie auf den Menütitel rechtsklicken und
+	      <guimenuitem>Als Schublade zum Panel hinzufügen</guimenuitem>
+	      wählen.
+	    </para>
 	  </listitem>
 	</varlistentry>
 	<varlistentry>
-	  <term> <emphasis>Swallowed application</emphasis></term>
+	  <term> <emphasis>Verschluckte Applikationen</emphasis></term>
 	  <listitem>
-	    <para>To add a new swallowed application, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Swallowed app</guisubmenu> </menuchoice>
-		from the <guimenu>Panel</guimenu> menu. This will
-		produce a <interface>Create Swallowed
-		Application</interface> dialog, which is shown in
-		<xref linkend="swallappfig">. For details, see <xref
-		linkend="swallowedapps">.
-	      </para>
+	    <para>
+	      Um eine verschluckte Applikation hinzuzufügen, wählen Sie
+	      <menuchoice><guisubmenu>Zum Panel hinzufügen</guisubmenu>
+		<guisubmenu>Verschluckte Applikation</guisubmenu> </menuchoice>
+	      im <guimenu>Panel</guimenu>-Menü. Dies bringt den
+	      <interface>Verschluckte Applikation erzeugen</interface>-Dialog
+	      zum Vorschein, der in <xref linkend="swallappfig"> gezeigt wird.
+	      Nähere Informationen finden Sie unter
+	      <xref linkend="swallowedapps">.
+	    </para>
 	  </listitem>
 	</varlistentry>
       </variablelist>
