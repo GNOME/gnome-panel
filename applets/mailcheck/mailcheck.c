@@ -1514,25 +1514,50 @@ mailcheck_properties_page (MailCheck *mc)
 	return vbox;
 }
 
-#ifdef FIXME
 static void
-phelp_cb (GtkWidget *w, gint tab, gpointer data)
+phelp_cb (GtkDialog *w, gint tab, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "mailcheck_applet", NULL };
+	GError *error = NULL;
+	static GnomeProgram *applet_program = NULL;
 
-	char *das_names[] =  { "index.html#MAILCHECK-PREFS",
-			       "index.html#MAILCHECK-SETTINGS-MAILBOX-FIG" };
+	if (!applet_program) {
+		int argc = 1;
+		char *argv[2] = { "mailcheck" };
+		applet_program = gnome_program_init ("mailcheck", VERSION,
+						      LIBGNOME_MODULE, argc, argv,
+     						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+	}
 
-	help_entry.path = das_names[((MailCheck *)data)->type];
-	gnome_help_display(NULL, &help_entry);
+	gnome_help_display_desktop (applet_program, "mailcheck",
+				    "mailcheck","mailcheck-prefs", &error);
+	if (error) {
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new (GTK_WINDOW (w),
+						 GTK_DIALOG_DESTROY_WITH_PARENT,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						  _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_widget_show (dialog);
+		g_error_free (error);
+	}
 }	
-#endif
 
 static void
 response_cb (GtkDialog *dialog, gint id, gpointer data)
 {
 	MailCheck *mc = data;
-
+	if(id == GTK_RESPONSE_HELP)
+	{
+		phelp_cb (dialog,id,data);
+		return;	
+	}
 	gtk_widget_destroy (GTK_WIDGET (dialog));
 	mc->property_window = NULL;
 	
@@ -1557,6 +1582,8 @@ mailcheck_properties (BonoboUIComponent *uic, gpointer data, const gchar *verbna
 						           GTK_DIALOG_DESTROY_WITH_PARENT,
 						           GTK_STOCK_CLOSE, 
 						           GTK_RESPONSE_CLOSE,
+						           GTK_STOCK_HELP, 
+						           GTK_RESPONSE_HELP,
 						           NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (mc->property_window), GTK_RESPONSE_CLOSE);
 	gnome_window_icon_set_from_file (GTK_WINDOW (mc->property_window),
@@ -1694,11 +1721,33 @@ static void
 help_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 {
 	GError *error = NULL;
+	static GnomeProgram *applet_program = NULL;
 
-	gnome_help_display_desktop (
-			NULL, "mailcheck", "mailcheck", NULL, &error);
+	if (!applet_program) {
+		int argc = 1;
+		char *argv[2] = { "mailcheck" };
+		applet_program = gnome_program_init ("mailcheck", VERSION,
+						      LIBGNOME_MODULE, argc, argv,
+						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+	}
+
+	gnome_help_display_desktop (applet_program, "mailcheck",
+				    "mailcheck",NULL, &error);
 	if (error) {
-		g_warning ("help error: %s\n", error->message);
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_MODAL,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						  _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
 }
