@@ -231,14 +231,6 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	menu = panel_menu_new ();
 
-	item = pixmap_menu_item_new (_("Take a Screen Shot"), "gnome-mdi.png", FALSE);
-	gtk_tooltips_set_tip (panel_tooltips, item,
-			      _("Take a screen shot of your desktop"),
-			      NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-        g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (foobar_screenshot), 0);	 
-
 	item = pixmap_menu_item_new (_("Run Program..."), "gnome-run.png",
 				     FALSE /* force_image */);
 	gtk_tooltips_set_tip (panel_tooltips, item,
@@ -264,6 +256,16 @@ append_actions_menu (GtkWidget *menu_bar)
 				  G_CALLBACK (foobar_search), 0);
 	}
 
+	item = pixmap_menu_item_new (_("Take a Screen Shot"), "gnome-mdi.png", FALSE);
+	gtk_tooltips_set_tip (panel_tooltips, item,
+			      _("Take a screen shot of your desktop"),
+			      NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+        g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (foobar_screenshot), 0);	 
+
+	item = gtk_separator_menu_item_new ();
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = pixmap_menu_item_new (_("Lock Display"), 
