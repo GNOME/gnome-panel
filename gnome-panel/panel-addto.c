@@ -30,7 +30,6 @@
 #include "menu.h"
 
 #include "launcher.h"
-#include "menu-ditem.h"
 #include "panel.h"
 #include "drawer.h"
 #include "panel-applet-frame.h"
@@ -365,10 +364,10 @@ static GSList *
 panel_addto_query_applets (GSList *list)
 {
 	Bonobo_ServerInfoList *applet_list;
-	CORBA_Environment  env;
-	const char       **langs_pointer;
-	GSList            *langs_gslist;
-	int                i;
+	CORBA_Environment   env;
+	const char * const *langs_pointer;
+	GSList             *langs_gslist;
+	int                 i;
 
 	CORBA_exception_init (&env);
 

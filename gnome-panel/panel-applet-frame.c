@@ -824,10 +824,10 @@ panel_applet_frame_get_name (char *iid)
 
 	list = bonobo_activation_query (query, NULL, NULL);
 	if (list && list->_length > 0 && list->_buffer) {
-		Bonobo_ServerInfo *info = &list->_buffer [0];
-		const char       **langs_pointer;
-		GSList            *langs_gslist;
-		int                i;
+		Bonobo_ServerInfo  *info = &list->_buffer [0];
+		const char * const *langs_pointer;
+		GSList             *langs_gslist;
+		int                 i;
 
 		langs_gslist = NULL;
 		langs_pointer = g_get_language_names ();

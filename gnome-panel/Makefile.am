@@ -89,7 +89,6 @@ panel_sources =			\
 	panel-properties-dialog.c \
 	panel-run-dialog.c	\
 	menu.c  		\
-	menu-ditem.c		\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-shell.c		\
@@ -133,7 +132,6 @@ panel_headers =			\
 	panel-gconf.h		\
 	panel-run-dialog.h	\
 	menu.h  		\
-	menu-ditem.h		\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-shell.h		\
@@ -179,8 +177,7 @@ gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
 	menu-ditem.c		  \
 	panel-util.c		  \
-	xstuff.c		  \
-	panel-a11y.c
+	xstuff.c
 
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 

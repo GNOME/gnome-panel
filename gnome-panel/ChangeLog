@@ -1,5 +1,15 @@
 2004-11-13  Vincent Untz  <vincent@vuntz.net>
 
+	* Makefile.am: gnome-panel doesn't need menu-ditem.[ch] and
+	gnome_desktop_item_edit doesn't need panel-a11y.c
+	* panel-addto.c: remove useless menu-ditem.h include
+	(panel_addto_query_applets): kill one warning
+	* panel-applet-frame.c: (panel_applet_frame_get_name): kill one
+	warning
+	* screenshot-utils.h: remove
+
+2004-11-13  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-addto.c: (panel_addto_query_applets)
 	* panel-applet-frame.c: (panel_applet_frame_get_name)
 	Stop using deprecated gnome_i18n_get_language_list().
