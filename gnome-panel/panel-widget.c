@@ -1767,7 +1767,7 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->applet_list   = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget   = widget;
-	panel->create_launcher_dialog_list = NULL;
+	panel->open_dialogs  = NULL;
 
 	panel_background_init (&panel->background);
 

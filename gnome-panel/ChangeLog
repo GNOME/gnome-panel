@@ -1,3 +1,14 @@
+2003-08-27  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-widget.[ch] : Re-name create_launcher_dialog_list
+	with open_dialogs to reflect a wider range of
+	cleanup that we are upto.
+
+	*launcher.c,panel-applet-frame.c,panel.c: Use it
+
+	Fixes the dialogs being left on the screen when 
+	the panel is destroyed and the crashes thereafter. #120812
+
 ==================== 2.3.7 ====================
 
 Fri Aug 22 14:59:01 2003  George Lebl <jirka@5z.com>

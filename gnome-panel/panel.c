@@ -259,7 +259,7 @@ panel_remove_open_create_launcher_dialogs (PanelWidget *panel)
 {
 	GSList *l;
 
-	for (l = panel->create_launcher_dialog_list; l ; l = l->next) {
+	for (l = panel->open_dialogs; l ; l = l->next) {
 		GtkWidget *dialog = l->data;
 
 		if (GTK_IS_WIDGET (dialog))
