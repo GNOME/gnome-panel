@@ -323,7 +323,7 @@ init_user_applets(void)
 	}
 }
 
-static void
+void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
 	GdkCursor *cursor;

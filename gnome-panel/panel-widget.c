@@ -1562,6 +1562,8 @@ panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEvent *event, gpointer data
 static void
 panel_widget_dnd_droped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
 {
+	GdkCursor *cursor;
+
 	if (panel_try_to_set_pixmap (panel, event->data)){
 		if (panel->back_pixmap)
 			g_free (panel->back_pixmap);
@@ -1576,7 +1578,6 @@ panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEventDropDataAvailable *eve
 	/* Test for the type that was dropped */
 	if (strcmp (event->data_type, "url:ALL") == 0)
 		panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
-	
 	return;
 }
 
