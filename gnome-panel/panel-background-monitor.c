@@ -29,6 +29,7 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 #include "panel-background-monitor.h"
 #include "panel-gdk-pixbuf-extensions.h"
@@ -238,7 +239,8 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 	GdkAtom	 prop_type;
 
 	gdk_property_get (
-		monitor->gdkwindow, monitor->gdkatom, 0, 0, 10, 
+		monitor->gdkwindow, monitor->gdkatom,
+		gdk_x11_xatom_to_atom (XA_PIXMAP), 0, 10, 
 		FALSE, &prop_type, NULL, NULL, (guchar **) &prop_data);
 
 	if ((prop_type == GDK_TARGET_PIXMAP) && prop_data && prop_data [0]) {
