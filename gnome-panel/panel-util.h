@@ -5,26 +5,17 @@
 
 BEGIN_GNOME_DECLS
 
-gboolean string_is_in_list(GSList *list,char *text);
+typedef void (*UpdateFunction) (gpointer);
+
+gboolean string_is_in_list(const GSList *list, const char *text);
+
 GtkWidget * create_text_entry(GtkWidget *table,
 			      char *history_id,
 			      int row,
 			      char *label,
 			      char *text,
-			      GtkWidget *w);
-GtkWidget * create_file_entry(GtkWidget *table,
-			      char *history_id,
-			      int row,
-			      char *label,
-			      char *text,
-			      GtkWidget *w);
-GtkWidget * create_pixmap_entry(GtkWidget *table,
-				char *history_id,
-				int row,
-				char *label,
-				char *text,
-				GtkWidget *w,
-				int pw, int ph /*preview size*/);
+			      UpdateFunction func,
+			      gpointer data);
 GtkWidget * create_icon_entry(GtkWidget *table,
 			      char *history_id,
 			      int cols,
@@ -32,7 +23,8 @@ GtkWidget * create_icon_entry(GtkWidget *table,
 			      char *label,
 			      char *subdir,
 			      char *text,
-			      GtkWidget *w);
+			      UpdateFunction func,
+			      gpointer data);
 
 void panel_pbox_help_cb (GtkWidget *, gint, gpointer);
 

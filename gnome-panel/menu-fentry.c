@@ -44,7 +44,7 @@ init_fr_chunks (void)
 
 /*reads in the order file and makes a list*/
 static GSList *
-get_presorted_from(GSList *list, char *dir)
+get_presorted_from(GSList *list, const char *dir)
 {
 	char buf[PATH_MAX+1];
 	char *fname = g_concat_dir_and_file(dir, ".order");
@@ -105,7 +105,7 @@ fr_get_mergedir (const char *dir)
 }
 
 static GSList *
-read_directory (GSList *list, char *menudir)
+read_directory (GSList *list, const char *menudir)
 {
 	DIR *dir;
 	struct dirent *dent;
@@ -126,7 +126,7 @@ read_directory (GSList *list, char *menudir)
 }
 
 GSList *
-get_files_from_menudir(char *menudir)
+get_files_from_menudir(const char *menudir)
 {
 	GSList *list = NULL;
 	char *mergedir;
@@ -139,9 +139,11 @@ get_files_from_menudir(char *menudir)
 	if(mergedir != NULL) {
 		list = get_presorted_from(list, mergedir);
 		list = read_directory(list, mergedir);
+
+		g_free (mergedir);
 	}
 
-	return g_slist_reverse(list);
+	return g_slist_reverse (list);
 }
 
 char *

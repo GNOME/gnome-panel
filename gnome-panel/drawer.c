@@ -30,22 +30,22 @@ extern GtkTooltips *panel_tooltips;
 extern GSList *panel_list;
 
 static void
-properties_apply_callback(GtkWidget *widget, int page, gpointer data)
+properties_apply_callback(gpointer data)
 {
 	Drawer       *drawer = data;
-	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(widget),
+
+	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
 						     "pixmap");
-	GtkWidget    *tipentry = gtk_object_get_data(GTK_OBJECT(widget),
+	GtkWidget    *tipentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
 						     "tooltip");
 	char         *s;
 
-	if (page != -1)
-		return;
-
 	if(drawer->pixmap)
 		g_free(drawer->pixmap);
+	drawer->pixmap = NULL;
 	if(drawer->tooltip)
 		g_free(drawer->tooltip);
+	drawer->tooltip = NULL;
 	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(pixentry));
 	if(!s || !*s) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
@@ -67,8 +67,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else
 		drawer->tooltip = g_strdup(s);
 
-	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
-			      drawer->tooltip,NULL);
+	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
+			      drawer->tooltip, NULL);
 }
 
 static void
@@ -96,7 +96,7 @@ set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 }
 
 void
-add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
+add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer)
 {
         GtkWidget *dialog = ppc->config_window;
         GtkWidget *table;
@@ -110,11 +110,15 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 
 	w = create_text_entry(table, "drawer_name", 0, _("Tooltip/Name"),
-			      drawer->tooltip, dialog);
+			      drawer->tooltip,
+			      (UpdateFunction)panel_config_register_changes,
+			      ppc);
 	gtk_object_set_data(GTK_OBJECT(dialog),"tooltip",w);
 	
 	w = create_icon_entry(table, "icon", 0, 2, _("Icon"),
-			      NULL, drawer->pixmap, dialog);
+			      NULL, drawer->pixmap,
+			      (UpdateFunction)panel_config_register_changes,
+			      ppc);
 	gtk_object_set_data(GTK_OBJECT(dialog), "pixmap", w);
 
 	f = gtk_frame_new(_("Applet appearance"));
@@ -155,17 +159,15 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_box_pack_start (GTK_BOX (box),f,FALSE,FALSE,0);
 
 	
-	nbook = GNOME_PROPERTY_BOX (dialog)->notebook;
-	gtk_notebook_append_page (GTK_NOTEBOOK(nbook),
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  box, gtk_label_new (_("Drawer")));
 	
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) properties_close_callback,
 			   drawer);
 
-	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
-			   GTK_SIGNAL_FUNC(properties_apply_callback),
-			   drawer);
+	ppc->update_function = properties_apply_callback;
+	ppc->update_data = drawer;
 
 	drawer->properties = dialog;
 }

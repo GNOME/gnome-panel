@@ -499,7 +499,7 @@ icon_notebook_page(int i)
 					_("Normal tile"),
 					"tiles",
 					file,
-					NULL);
+					NULL, NULL);
 	g_free(file);
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_up[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
@@ -512,7 +512,7 @@ icon_notebook_page(int i)
 					  _("Clicked tile"),
 					  "tiles",
 					  file,
-					  NULL);
+					  NULL, NULL);
 	g_free(file);
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_down[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",

@@ -7,6 +7,8 @@
 #include "sliding-widget.h"
 #include "drawer-widget.h"
 
+#include "panel-util.h"
+
 #define NUMBER_OF_SIZES 5
 
 /* used to temporarily store config values until the 'Apply'
@@ -14,6 +16,9 @@
 typedef struct _PerPanelConfig PerPanelConfig;
 struct _PerPanelConfig {
 	GtkWidget		*panel;
+
+	UpdateFunction		update_function;
+	gpointer		update_data;
 
 	/*basep types*/
 	int			hidebuttons;

@@ -33,8 +33,11 @@ static GList *ppconfigs = NULL;
 void
 panel_config_register_changes (PerPanelConfig *ppc)
 {
-	if (ppc->register_changes)
+	if (ppc->register_changes) {
 		config_apply (ppc);
+		if (ppc->update_function)
+			ppc->update_function (ppc->update_data);
+	}
 }
 
 static PerPanelConfig *
@@ -1464,7 +1467,7 @@ panel_config(GtkWidget *panel)
 		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
-		add_drawer_properties_page(ppc, info->data);
+		add_drawer_properties_page(ppc, GTK_NOTEBOOK (prop_nbook), info->data);
 		help_path = "drawers.html";
 		/* we can't change to/from drawers anyhow */
 		ppc->type_tab = NULL;

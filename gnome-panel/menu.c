@@ -926,8 +926,6 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		g_free (filename);
 		filename = g_concat_dir_and_file(dirname, li->data);
 
-		g_free (li->data);
-
 		if (stat (filename, &s) != 0) {
 			char *mergedir = fr_get_mergedir(dirname);
 			if(mergedir != NULL) {
@@ -941,6 +939,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 				continue;
 			}
 		}
+
 		if (S_ISDIR (s.st_mode)) {
 			add_drawers_from_dir(filename, NULL, G_MAXINT/2,
 					     newpanel);
@@ -968,8 +967,10 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 			}
 		}
 	}
-	g_free(filename);
-	g_slist_free(list);
+	g_free (filename);
+
+	g_slist_foreach (list, (GFunc)g_free, NULL);
+	g_slist_free (list);
 }
 
 /*add a drawer with the contents of a menu to the panel*/

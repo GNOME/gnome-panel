@@ -21,7 +21,7 @@ gboolean load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
 
-void add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer);
+void add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer);
 
 END_GNOME_DECLS
 

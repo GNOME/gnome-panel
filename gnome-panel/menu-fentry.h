@@ -51,7 +51,7 @@ struct _DirRec {
 
 char * get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii);
 
-GSList * get_files_from_menudir(char *menudir);
+GSList * get_files_from_menudir(const char *menudir);
 
 FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge_dstat, int sublevels);
 FileRec * fr_replace(FileRec *fr);
