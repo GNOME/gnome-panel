@@ -1,5 +1,17 @@
 2002-12-18  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixes menu items not resizing when icon size changes.
+
+	* menu.c:
+	(reload_image_menu_items), (icon_theme_changed),
+	(panel_menu_new): re-indent the icon theme change
+	handling stuff.
+	(menu_item_style_set), (do_icons_to_add): connect
+	to the "style_set" signal and reload the image
+	if the icon size changes.
+
+2002-12-18  Mark McLoughlin  <mark@skynet.ie>
+
 	Implement support for tiled background images. #100952.
 
 	* panel-background-monitor.c:

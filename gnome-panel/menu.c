@@ -680,45 +680,45 @@ panel_make_sure_menu_within_screen (GtkMenu *menu)
 }
 
 static void
-icon_theme_changed (GnomeIconTheme *icon_theme,
-		    gpointer data)
+reload_image_menu_items (void)
 {
-  GtkWidget *image;
-  gboolean is_mapped;
-  GSList *l;
+	GSList *l;
 
-  l = image_menu_items;
-
-  while (l != NULL) {
-    image = l->data;
+	for (l = image_menu_items; l; l = l->next) {
+		GtkWidget *image = l->data;
+		gboolean   is_mapped;
       
-    is_mapped = GTK_WIDGET_MAPPED(image);
+		is_mapped = GTK_WIDGET_MAPPED (image);
 
-    if (is_mapped)
-      gtk_widget_unmap (image);
+		if (is_mapped)
+			gtk_widget_unmap (image);
 
-    /* Make sure we reload the icon */
-    gtk_image_set_from_pixbuf (GTK_IMAGE (image), NULL);
+		gtk_image_set_from_pixbuf (GTK_IMAGE (image), NULL);
     
-    if (is_mapped)
-      gtk_widget_map (image);
+		if (is_mapped)
+			gtk_widget_map (image);
 
-    l = l->next;
-  }
+	}
 }
 
+static void
+icon_theme_changed (GnomeIconTheme *icon_theme,
+		    gpointer        data)
+{
+	reload_image_menu_items ();
+}
 
 GtkWidget *
 panel_menu_new (void)
 {
-	GtkWidget *menu;
-	static gboolean registred_icon_theme_changer = FALSE;
+	GtkWidget       *menu;
+	static gboolean  registred_icon_theme_changer = FALSE;
 
 	if (!registred_icon_theme_changer) {
-	  registred_icon_theme_changer = TRUE;
+		registred_icon_theme_changer = TRUE;
 
-	  g_signal_connect (panel_icon_theme, "changed",
-			    G_CALLBACK (icon_theme_changed), NULL);
+		g_signal_connect (panel_icon_theme, "changed",
+				  G_CALLBACK (icon_theme_changed), NULL);
 	}
 	
 	menu = gtk_menu_new ();
@@ -884,6 +884,36 @@ panel_make_menu_icon (const char *icon,
 }
 
 static void
+menu_item_style_set (GtkImage *image)
+{
+	GtkWidget *widget;
+	GdkPixbuf *pixbuf;
+	int        icon_height;
+	gboolean   is_mapped;
+
+	if (!gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
+		return;
+
+	pixbuf = gtk_image_get_pixbuf (image);
+	if (!pixbuf)
+		return;
+
+	if (gdk_pixbuf_get_height (pixbuf) == icon_height)
+		return;
+
+	widget = GTK_WIDGET (image);
+
+	is_mapped = GTK_WIDGET_MAPPED (widget);
+	if (is_mapped)
+		gtk_widget_unmap (widget);
+
+	gtk_image_set_from_pixbuf (image, NULL);
+    
+	if (is_mapped)
+		gtk_widget_map (widget);
+}
+
+static void
 do_icons_to_add (void)
 {
 	while (icons_to_add) {
@@ -902,6 +932,9 @@ do_icons_to_add (void)
 			gtk_image_set_from_pixbuf (
 				GTK_IMAGE (icon_to_add->image),
 				icon_to_add->pixbuf);
+
+			g_signal_connect (icon_to_add->image, "style-set",
+					  G_CALLBACK (menu_item_style_set), NULL);
 
 			g_object_unref (icon_to_add->pixbuf);
 		}
