@@ -88,6 +88,11 @@ struct _AppletWidgetClass
 	int (* save_session) (AppletWidget *applet,
 			      char *cfgpath,
 			      char *globcfgpath);
+	/*when the position changes and we selected to get this signal,
+	  it is sent so that you can move some external window along with
+	  the applet*/
+	void (* change_position) (AppletWidget *applet,
+				  int x, int y);
 };
 
 typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **params, int nparams);
@@ -186,6 +191,10 @@ GNOME_Panel_SizeType	applet_widget_get_panel_size	(AppletWidget *applet);
 /* Get the free space for the applet if it's on an edge panel or 0
    if on a packed panel or on error */
 int		applet_widget_get_free_space	(AppletWidget *applet);
+
+/* sets if the change_position signal is sent*/
+void		applet_widget_send_position	(AppletWidget *applet,
+						 int enable);
 
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new

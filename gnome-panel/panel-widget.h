@@ -12,6 +12,7 @@
 
 
 #include <gtk/gtk.h>
+#include <gnome.h>
 #include "button-widget.h"
 #include "panel-types.h"
 

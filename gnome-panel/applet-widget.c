@@ -80,6 +80,12 @@ server_applet_set_tooltips_state(CustomAppletServant *servant,
 				 CORBA_boolean enabled,
 				 CORBA_Environment *ev);
 
+static void
+server_applet_change_position(CustomAppletServant *servant,
+			      CORBA_short x,
+			      CORBA_short y,
+			      CORBA_Environment *ev);
+
 static CORBA_char *
 server_applet__get_goad_id(CustomAppletServant *servant,
 			   CORBA_Environment *ev);
@@ -92,6 +98,7 @@ static POA_GNOME_Applet__epv applet_epv = {
   (gpointer)&server_applet_session_save,
   (gpointer)&server_applet_back_change,
   (gpointer)&server_applet_set_tooltips_state,
+  (gpointer)&server_applet_change_position,
   (gpointer)&server_applet__get_goad_id
 };
 
@@ -103,6 +110,7 @@ static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);
 
+
 typedef int (*SaveSignal) (GtkObject * object,
 			   char *cfgpath,
 			   char *globcfgpath,
@@ -113,6 +121,11 @@ typedef void (*BackSignal) (GtkObject * object,
 			    char *pixmap,
 			    GdkColor *color,
 			    gpointer data);
+
+typedef void (*PositionSignal) (GtkObject * object,
+				int x,
+				int y,
+				gpointer data);
 
 static int applet_count = 0;
 
@@ -153,10 +166,11 @@ enum {
 	SAVE_SESSION_SIGNAL,
 	BACK_CHANGE_SIGNAL,
 	TOOLTIP_STATE_SIGNAL,
+	CHANGE_POSITION_SIGNAL,
 	LAST_SIGNAL
 };
 
-static int applet_widget_signals[LAST_SIGNAL] = {0,0,0,0};
+static int applet_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 marshal_signal_save (GtkObject * object,
@@ -193,6 +207,22 @@ marshal_signal_back (GtkObject * object,
 	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
 		  GTK_VALUE_POINTER (args[1]),
 		  GTK_VALUE_POINTER (args[2]),
+		  func_data);
+}
+
+static void
+marshal_signal_position (GtkObject * object,
+			 GtkSignalFunc func,
+			 gpointer func_data,
+			 GtkArg * args)
+{
+	PositionSignal rfunc;
+
+	rfunc = (PositionSignal) func;
+
+	(*rfunc) (object,
+		  GTK_VALUE_INT (args[0]),
+		  GTK_VALUE_INT (args[1]),
 		  func_data);
 }
 
@@ -258,6 +288,17 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_INT);
+	applet_widget_signals[CHANGE_POSITION_SIGNAL] =
+		gtk_signal_new("change_position",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 change_position),
+			       marshal_signal_position,
+			       GTK_TYPE_NONE,
+			       2,
+			       GTK_TYPE_INT,
+			       GTK_TYPE_INT);
 
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
@@ -267,6 +308,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 	class->save_session = NULL;
 	class->back_change = NULL;
 	class->tooltip_state = NULL;
+	class->change_position = NULL;
 }
 
 static void
@@ -1030,6 +1072,18 @@ server_applet_set_tooltips_state(CustomAppletServant *servant,
 	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 			applet_widget_signals[TOOLTIP_STATE_SIGNAL],
 			enabled);
+}
+
+static void
+server_applet_change_position(CustomAppletServant *servant,
+			      CORBA_short x,
+			      CORBA_short y,
+			      CORBA_Environment *ev)
+{
+	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+			applet_widget_signals[CHANGE_POSITION_SIGNAL],
+			(int)x,
+			(int)y);
 }
 
 static CORBA_char *

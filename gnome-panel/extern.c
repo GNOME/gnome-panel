@@ -110,6 +110,14 @@ static CORBA_short
 s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
 			   CORBA_Environment *ev);
 
+static CORBA_boolean
+s_panelspot_get_send_position(POA_GNOME_PanelSpot *servant,
+			      CORBA_Environment *ev);
+static void
+s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
+			      CORBA_boolean,
+			      CORBA_Environment *ev);
+
 static void
 s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 		     CORBA_Environment *ev);
@@ -188,6 +196,8 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_get_parent_orient,
   (gpointer)&s_panelspot_get_parent_size,
   (gpointer)&s_panelspot_get_free_space,
+  (gpointer)&s_panelspot_get_send_position,
+  (gpointer)&s_panelspot_set_send_position,
   (gpointer)&s_panelspot_register_us,
   (gpointer)&s_panelspot_unregister_us,
   (gpointer)&s_panelspot_abort_load,
@@ -251,8 +261,47 @@ sal(GtkWidget *applet, GtkAllocation *alloc)
 	       applet->allocation.height);
 }*/
 
+
 static void
-test_size(GtkWidget *applet, GtkAllocation *alloc)
+send_position_change(Extern *ext)
+{
+	/*ingore this until we get an ior*/
+	if(ext->applet) {
+		int x=0,y=0;
+		GtkWidget *wid;
+
+		CORBA_Environment ev;
+		CORBA_exception_init(&ev);
+
+		/*go the the toplevel panel widget*/
+		for(;;) {
+			if(!GTK_WIDGET_NO_WINDOW(wid)) {
+				x += wid->allocation.x;
+				y += wid->allocation.y;
+			}
+			if(wid->parent)
+				wid = wid->parent;
+			else
+				break;
+		}
+		GNOME_Applet_change_position(ext->applet,
+					     x,y,
+					     &ev);
+		if(ev._major)
+			panel_clean_applet(ext->info);
+		CORBA_exception_free(&ev);
+	}
+}
+
+static void
+ebox_size_allocate(GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
+{
+	if(ext->send_position)
+		send_position_change(ext);
+}
+
+static void
+socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
 {
 	if(applet->allocation.width > applet->requisition.width ||
 	   applet->allocation.height > applet->requisition.height) {
@@ -273,11 +322,15 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 					  APPLET_EVENT_MASK) &
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
+	gtk_signal_connect_after(GTK_OBJECT(ext->ebox),"size_allocate",
+				 GTK_SIGNAL_FUNC(ebox_size_allocate),
+				 ext);
 
 	socket = gtk_socket_new();
 
 	gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
-				 GTK_SIGNAL_FUNC(test_size),NULL);
+				 GTK_SIGNAL_FUNC(socket_size_allocate),
+				 NULL);
 
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(sal),NULL);*/
@@ -321,8 +374,9 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 		/*we will free this lateer*/
 		cfgpath = g_strdup(cfgpath);
 	
-	ext = g_new(Extern,1);
+	ext = g_new0(Extern,1);
 	ext->started = FALSE;
+	ext->send_position = FALSE;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -440,7 +494,9 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	
 	/*this is an applet that was started from outside, otherwise we would
 	  have already reserved a spot for it*/
-	ext = g_new(Extern,1);
+	ext = g_new0(Extern,1);
+	ext->started = FALSE;
+	ext->send_position = FALSE;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -613,6 +669,29 @@ s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
 	return panel_widget_get_free_space(panel,ext->info->widget);
 }
 
+static CORBA_boolean
+s_panelspot_get_send_position(POA_GNOME_PanelSpot *servant,
+			      CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+
+	g_assert(ext);
+	
+	return ext->send_position;
+}
+
+static void
+s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
+			      CORBA_boolean enable,
+			      CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+
+	g_assert(ext);
+	
+	ext->send_position = enable?TRUE:FALSE;
+}
+
 static void
 s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 			CORBA_Environment *ev)
@@ -637,6 +716,8 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 	orientation_change(ext->info,panel);
 	size_change(ext->info,panel);
 	back_change(ext->info,panel);
+	if(ext->send_position)
+		send_position_change(ext);
 
 	GNOME_Applet_set_tooltips_state(ext->applet,
 					global_config.tooltips_enabled, ev);

@@ -20,6 +20,7 @@ struct _Extern {
 	char *cfg;
 	GtkWidget *ebox;
 	int started;
+	int send_position;
 
 	AppletInfo *info;
 };
