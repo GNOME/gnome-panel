@@ -3,12 +3,13 @@
 
 BEGIN_GNOME_DECLS
 
-typedef struct {
+typedef struct _Menu Menu;
+struct _Menu {
 	GtkWidget *button;
 	GtkWidget *menu;
 	char *path;
 	PanelOrientType orient;
-} Menu;
+};
 
 void init_main_menu(void);
 

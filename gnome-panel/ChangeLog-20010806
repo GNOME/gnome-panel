@@ -1,3 +1,14 @@
+Sun Jul 12 18:52:55 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: much smarter menu rereading, will only reread the
+	  current menu, not it's submenus, same thing for statting,
+	  this should make menus much faster
+
+	* main.c: a coumple of bugs fixed, related to applet removal
+	  the iterating has to be there, but we should check if the applet
+	  was already destroyed as then we'd get a segfault, so it's
+	  properly fixed now.
+
 Sun Jul 12 21:31:39 EDT 1998 Manish Vachharajani <mvachhar@vger.rutgers.edu>
 
 	* main.c: fixed the sigchld handler I think.  Someone who knows

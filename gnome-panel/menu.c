@@ -45,9 +45,19 @@ struct _FileInfo {
 	time_t ctime;
 };
 
-/*???? this might be ugly, but I guess we can safely assume that we can only have
-  one menu open and that nothing weird will happen to the panel that opened that
-  menu whilethe user is looking over the choices*/
+typedef struct _MenuFinfo MenuFinfo;
+struct _MenuFinfo {
+	char *menudir;
+	int create_app_menu;
+	int applets;
+	char *dir_name;
+	int fake_menu;
+	GList *finfo;
+};
+
+/*???? this might be ugly, but I guess we can safely assume that we can only
+  have one menu open and that nothing weird will happen to the panel that
+  opened that menu whilethe user is looking over the choices*/
 static PanelWidget *current_panel = NULL;
 
 /*the most important dialog in the whole application*/
@@ -217,25 +227,6 @@ check_finfo_list(GList *finfo)
 	return TRUE;
 }
 
-static void
-free_finfo(FileInfo *fi)
-{
-	if(fi) {
-		if(fi->name)
-			g_free(fi->name);
-		g_free(fi);
-	}
-}
-
-static void
-free_finfo_list(GList *finfo)
-{
-	while(finfo) {
-		free_finfo(finfo->data);
-		finfo = g_list_remove_link(finfo,finfo);
-	}
-}
-
 static FileInfo *
 make_finfo(char *name)
 {
@@ -285,14 +276,159 @@ get_presorted_from(char *dir)
 	return list;
 }
 
+static int
+menu_destroy(GtkWidget *menu, gpointer data)
+{
+	MenuFinfo *mf = gtk_object_get_data(GTK_OBJECT(menu),"mf");
+	while(mf->finfo) {
+		FileInfo *fi = mf->finfo->data;
+		if(fi->name) g_free(fi->name);
+		g_free(fi);
+		mf->finfo = g_list_remove_link(mf->finfo, mf->finfo);
+	}
+	if(mf->menudir) g_free(mf->menudir);
+	if(mf->dir_name) g_free(mf->dir_name);
+	g_free(mf);
+	return FALSE;
+}
 
+static void
+make_app_menu(GtkWidget *sub, char *pixmap_name, 
+	      char *filename, char *menuitem_name)
+{
+	GtkWidget *pixmap = NULL;
+	char *text;
+	char *dirname;
+	GtkWidget *menuitem;
 
+	/* create separator */
+
+	menuitem = gtk_menu_item_new ();
+	gtk_menu_prepend (GTK_MENU (sub), menuitem);
+	gtk_widget_show (menuitem);
+
+	/* create menu item */
+
+	menuitem = gtk_menu_item_new ();
+	if (pixmap_name) {
+		pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
+							     SMALL_ICON_SIZE,
+							     SMALL_ICON_SIZE);
+		gtk_widget_show (pixmap);
+	} else if (gnome_folder) {
+		pixmap = gnome_pixmap_new_from_file_at_size (gnome_folder,
+							     SMALL_ICON_SIZE,
+							     SMALL_ICON_SIZE);
+		gtk_widget_show (pixmap);
+	}
+
+	text = g_copy_strings ("Menu: ", menuitem_name, NULL);
+	setup_menuitem (menuitem, pixmap, text);
+	g_free (text);
+
+	dirname = g_strdup (filename);
+	gtk_menu_prepend (GTK_MENU (sub), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(add_dir_to_panel),
+			    dirname);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
+			    GTK_SIGNAL_FUNC(free_string),
+			    dirname);
+}
+
+static void add_menu_widget (Menu *menu, char *menudir, int main_menu);
+static GtkWidget * create_menu_at (char *menudir, int create_app_menu,
+				   int applets, char *dir_name,
+				   int fake_submenus);
+
+/*if menu is NULL that means just reread the menu don't do anything with the
+  applet*/
+static GtkWidget *
+check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
+{
+	MenuFinfo *mf = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+
+	if(!mf)
+		g_warning("Weird menu doesn't have mf entry");
+	else {
+		/*if something has changed or if this is a
+		  fake menu, reread the menu*/
+		if(mf->fake_menu || !check_finfo_list(mf->finfo)) {
+			puts("debug: rereading menu");
+			if(menu) {
+				/*in case it's a main menu, force reread of
+				  the root_menu*/
+				if(main_menu)
+					root_menu = NULL;
+				
+				add_menu_widget(menu,mf->menudir,
+						main_menu);
+
+				gtk_widget_unref(menuw);
+			} else {
+				char *pixmap_name =
+					gtk_object_get_data(GTK_OBJECT(menuw),
+							    "pixmap");
+				menuw = create_menu_at(mf->menudir,
+						       mf->create_app_menu,
+						       mf->applets,
+						       mf->dir_name,
+						       TRUE);
+				if(mf->create_app_menu && mf->dir_name)
+					make_app_menu(menuw,
+						      pixmap_name,
+						      mf->menudir,
+						      mf->dir_name);
+			}
+		}
+	}
+	return menuw;
+}
+
+static void
+submenu_to_display(GtkMenuItem *menuitem, gpointer data)
+{
+	GtkWidget *menu = check_and_reread(menuitem->submenu,
+					   NULL,FALSE);
+	g_return_if_fail(menu!=NULL);
+	if(menu!=menuitem->submenu)
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+}
+
+static GtkWidget *
+create_fake_menu_at (char *menudir,
+		     int create_app_menu,
+		     int applets,
+		     char *dir_name,
+		     int fake_submenus)
+{	
+	MenuFinfo *mf;
+	GtkWidget *menu;
+	
+	menu = gtk_menu_new ();
+	
+	mf = g_new(MenuFinfo,1);
+	mf->menudir = g_strdup(menudir);
+	mf->create_app_menu = create_app_menu;
+	mf->applets = applets;
+	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
+	mf->fake_menu = TRUE;
+	mf->finfo = NULL;
+	
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",mf);
+	
+	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
+			   GTK_SIGNAL_FUNC(menu_destroy),NULL);
+	
+	return menu;
+}
 
 static GtkWidget *
 create_menu_at (char *menudir,
 		int create_app_menu,
 		int applets,
-		GList **finfo)
+		char *dir_name,
+		int fake_submenus)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -302,9 +438,12 @@ create_menu_at (char *menudir,
 	DIR *dir;
 	int items = 0;
 	FileInfo *fi;
+	GList *finfo = NULL;
 	GList *presorted = NULL;
 	GList *done = NULL;
 	char *thisfile;
+	
+	MenuFinfo *mf;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
@@ -316,9 +455,19 @@ create_menu_at (char *menudir,
 		g_warning("Something went wrong, directory %s can't be stated",
 			  menudir);
 	else
-		*finfo = g_list_prepend(*finfo,fi);
+		finfo = g_list_prepend(finfo,fi);
 	
 	presorted = get_presorted_from(menudir);
+
+	/*add the order file to the checked files list,
+	  but only if we can stat it (if we can't it probably doesn't
+	  exist)*/
+	filename = g_concat_dir_and_file(menudir,".order");
+	fi = make_finfo(filename);
+	if(fi)
+		finfo = g_list_prepend(finfo,fi);
+	g_free(filename);
+
 
 	menu = gtk_menu_new ();
 	
@@ -358,14 +507,6 @@ create_menu_at (char *menudir,
 		if (S_ISDIR (s.st_mode)) {
 			char *dentry_name;
 
-			sub = create_menu_at (filename, create_app_menu,
-					      applets,finfo);
-			if (!sub) {
-				g_free (filename);
-				g_free(thisfile);
-				continue;
-			}
-
 			dentry_name = g_concat_dir_and_file (filename,
 							     ".directory");
 			item_info = gnome_desktop_entry_load (dentry_name);
@@ -376,43 +517,33 @@ create_menu_at (char *menudir,
 			else
 				menuitem_name = thisfile;
 
-			/* just for now */
-			pixmap_name = NULL;
-
-			if (create_app_menu) {
-				GtkWidget *pixmap = NULL;
-				char *text;
-				char *dirname;
-
-				/* create separator */
-
-				menuitem = gtk_menu_item_new ();
-				gtk_menu_prepend (GTK_MENU (sub), menuitem);
-				gtk_widget_show (menuitem);
-
-				/* create menu item */
-
-				menuitem = gtk_menu_item_new ();
-				if (gnome_folder) {
-					pixmap = gnome_pixmap_new_from_file_at_size (gnome_folder,
-										     BIG_ICON_SIZE,
-										     BIG_ICON_SIZE);
-					gtk_widget_show (pixmap);
-				}
-
-				text = g_copy_strings ("Menu: ", menuitem_name, NULL);
-				setup_menuitem (menuitem, pixmap, text);
-				g_free (text);
-				
-				dirname = g_strdup (filename);
-				gtk_menu_prepend (GTK_MENU (sub), menuitem);
-				gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-						    (GtkSignalFunc) add_dir_to_panel,
-						    dirname);
-				gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
-						    (GtkSignalFunc) free_string,
-						    dirname);
+			if(fake_submenus)
+				sub = create_fake_menu_at (filename,
+							   create_app_menu,
+							   applets,
+							   menuitem_name,
+							   fake_submenus);
+			else
+				sub = create_menu_at (filename, create_app_menu,
+						      applets, menuitem_name,
+						      fake_submenus);
+			if (!sub) {
+				g_free(filename);
+				g_free(thisfile);
+				if(item_info)
+					gnome_desktop_entry_free(item_info);
+				continue;
 			}
+
+
+			pixmap_name = item_info?item_info->icon:NULL;
+			
+			gtk_object_set_data(GTK_OBJECT(sub),"pixmap",
+					    pixmap_name);
+			
+			if (create_app_menu)
+				make_app_menu(sub,pixmap_name,filename,
+					      menuitem_name);
 		} else {
 			if (strstr (filename, ".desktop") == 0) {
 				g_free (filename);
@@ -435,14 +566,18 @@ create_menu_at (char *menudir,
 					  "file %s can't be stated",
 					  filename);
 			else
-				*finfo = g_list_prepend(*finfo,fi);
+				finfo = g_list_prepend(finfo,fi);
 		}
 		
 		items++;
 		
 		menuitem = gtk_menu_item_new ();
-		if (sub)
+		if (sub) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
+			gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   NULL);
+		}
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
@@ -469,18 +604,30 @@ create_menu_at (char *menudir,
 					    activate_func, item_info);
 		}
 
-		g_free (filename);
+		g_free(filename);
 		g_free(thisfile);
 	}
 	closedir (dir);
-
-	if (items == 0) {
-		gtk_widget_destroy (menu);
-		menu = NULL;
-	}
 	
 	g_list_foreach(done,(GFunc)g_free,NULL);
 	g_list_free(done);
+
+	if (items == 0) {
+		gtk_widget_destroy (menu);
+		return NULL;
+	}
+	
+	mf = g_new(MenuFinfo,1);
+	mf->menudir = g_strdup(menudir);
+	mf->create_app_menu = create_app_menu;
+	mf->applets = applets;
+	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
+	mf->fake_menu = FALSE;
+	mf->finfo = finfo;
+	
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",mf);
+	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
+			   GTK_SIGNAL_FUNC(menu_destroy),NULL);
 	
 	return menu;
 }
@@ -653,7 +800,7 @@ add_swallow_to_panel(GtkWidget *widget, gpointer data)
 
 
 static GtkWidget *
-create_applets_menu(GList **finfo)
+create_applets_menu(int fake_submenus)
 {
 	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("applets");
@@ -666,7 +813,7 @@ create_applets_menu(GList **finfo)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at(menudir,0,TRUE,finfo);
+	applet_menu = create_menu_at(menudir,0,TRUE,NULL,fake_submenus);
 	g_free (menudir);
 	return applet_menu;
 }
@@ -745,7 +892,7 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	GtkWidget *menu, *menuitem;
 
 	menu = gtk_menu_new ();
-	
+
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add app to panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -788,14 +935,14 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 #endif
 
 	add_menu_separator(menu);
-	
+
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
 			gnome_stock_pixmap_widget(menu,
-					  GNOME_STOCK_PIXMAP_PREFERENCES),
+						  GNOME_STOCK_PIXMAP_PREFERENCES),
 			_("Global properties..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-        gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) panel_configure, 0);
 
 	menuitem = gtk_menu_item_new ();
@@ -826,7 +973,7 @@ static void
 add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_menu)
 {
 	GtkWidget *menuitem;
-	
+
 	/* Panel entry */
 
 	add_menu_separator (menu);
@@ -838,7 +985,7 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_men
 				   create_panel_submenu (app_menu,applet_menu));
 
 	add_menu_separator (menu);
-	
+
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Lock screen"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -861,27 +1008,23 @@ add_menu_widget (Menu *menu, char *menudir, int main_menu)
 {
 	GtkWidget *app_menu;
 	GtkWidget *applet_menu;
-	GList *finfo = NULL;
-	
+
 	if (main_menu) {
 		/*this should not happen init root menu should have
 		  been called (unless there are no panels*/
 		if(!root_menu) {
-			root_menu = create_menu_at(menudir,0,FALSE,&finfo);
-			app_menu = create_menu_at (menudir, 1,FALSE,&finfo);
-			applet_menu = create_applets_menu(&finfo);
+			root_menu = create_menu_at(menudir,FALSE,FALSE,NULL,
+						   TRUE);
+			app_menu = create_menu_at (menudir,TRUE,FALSE,NULL,
+						   TRUE);
+			applet_menu = create_applets_menu(TRUE);
 			add_special_entries (root_menu, app_menu, applet_menu);
-			gtk_object_set_data(GTK_OBJECT(root_menu),"finfo",
-					    finfo);
 		}
 		menu->menu = root_menu;
-	} else {
-		menu->menu = create_menu_at (menudir, 0, FALSE,&finfo);
-		gtk_object_set_data(GTK_OBJECT(menu->menu),"finfo",finfo);
-	}
+	} else
+		menu->menu = create_menu_at (menudir, 0, FALSE,NULL,TRUE);
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
-
 }
 
 static int
@@ -890,42 +1033,9 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	Menu *menu = data;
 	if(event->button==1) {
 		GtkWidget *wpanel = get_panel_parent(menu->button->parent);
-			
-		GList *finfo = gtk_object_get_data(GTK_OBJECT(menu->menu),
-						   "finfo");
-		
-		if(!finfo)
-			g_warning("Weird menu doesn't have finfo entry");
-		else {
-			/*if something has changed reread the menu*/
-			if(!check_finfo_list(finfo)) {
-				char *menu_base =
-					gnome_unconditional_datadir_file ("apps");
-				char *this_menu =
-					get_real_menu_path(menu->path,
-							   menu_base);
-				
-				puts("debug: rereading menu");
+		int main_menu = (strcmp (menu->path, ".") == 0);
 
-				if (this_menu) {
-					int main_menu =
-						(strcmp(menu->path,".")==0);
-					
-					/*free the menu releated data*/
-					gtk_widget_unref(menu->menu);
-					if(menu->menu == root_menu)
-						root_menu = NULL;
-					free_finfo_list(finfo);
-					
-					add_menu_widget(menu,this_menu,
-							main_menu);
-
-					g_free(menu_base);
-					g_free(this_menu);
-				} else
-					g_free (menu_base);
-			}
-		}
+		check_and_reread(menu->menu,menu,main_menu);
 
 		/*so that the panel doesn't pop down until we're done with
 		  the menu */
@@ -933,7 +1043,7 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 			SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
 			snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
 		}
-		
+
 		/*this HAS to be set everytime we popup the menu*/
 		current_panel =
 			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
@@ -946,6 +1056,42 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
+static char *
+get_pixmap(char *menudir, PanelOrientType orient, int main_menu)
+{
+	char *pixmap_name;
+	if (main_menu) {
+		switch(orient) {
+		case ORIENT_DOWN:
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
+			break;
+		case ORIENT_UP:
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
+			break;
+		case ORIENT_RIGHT:
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
+			break;
+		case ORIENT_LEFT:
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
+			break;
+		}
+	} else {
+		char *dentry_name;
+		GnomeDesktopEntry *item_info;
+
+		dentry_name = g_concat_dir_and_file (menudir,
+						     ".directory");
+		item_info = gnome_desktop_entry_load (dentry_name);
+		g_free (dentry_name);
+
+		if(item_info) {
+			pixmap_name = g_strdup(item_info->icon);
+			gnome_desktop_entry_free(item_info);
+		} else
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
+	}
+	return pixmap_name;
+}
 
 static Menu *
 create_panel_menu (char *menudir, int main_menu,
@@ -953,35 +1099,18 @@ create_panel_menu (char *menudir, int main_menu,
 {
 	GtkWidget *pixmap;
 	Menu *menu;
-	
+
 	char *pixmap_name = NULL;
 
 	menu = g_new(Menu,1);
 
-	if (main_menu)
-		switch(orient) {
-			case ORIENT_DOWN:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
-				break;
-			case ORIENT_UP:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
-				break;
-			case ORIENT_RIGHT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
-				break;
-			case ORIENT_LEFT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
-				break;
-		}
-	else
-		/*FIXME: these guys need arrows as well*/
-		pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
+	pixmap_name = get_pixmap(menudir,orient,main_menu);
 
 	menu->orient = orient;
 
 	/* main button */
 	menu->button = gtk_event_box_new ();
-	
+
 	/*make the pixmap*/
 	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
 						     BIG_ICON_SIZE,
@@ -1015,7 +1144,6 @@ init_main_menu(void)
 	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *menudir;
-	GList *finfo = NULL;
 
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
@@ -1024,13 +1152,11 @@ init_main_menu(void)
 		return;
 	}
 
-	root_menu = create_menu_at(menudir,0,FALSE,&finfo);
-	app_menu = create_menu_at (menudir, 1,FALSE,&finfo);
-	applet_menu = create_applets_menu(&finfo);
+	root_menu = create_menu_at(menudir,0,FALSE,NULL,FALSE);
+	app_menu = create_menu_at (menudir, 1,FALSE,NULL,FALSE);
+	applet_menu = create_applets_menu(FALSE);
 	add_special_entries (root_menu, app_menu, applet_menu);
 	g_free (menudir);
-	
-	gtk_object_set_data(GTK_OBJECT(root_menu),"finfo",finfo);
 }
 
 Menu *
@@ -1046,24 +1172,24 @@ create_menu_applet(char *arguments, PanelOrientType orient)
 		g_free (menu_base);
 		return NULL;
 	}
-	
+
 
 	if(!gnome_folder) {
 		gnome_folder = gnome_unconditional_pixmap_file
-					("gnome-folder.png");
+			("gnome-folder.png");
 		if (!g_file_exists (gnome_folder)) {
 			free (gnome_folder);
 			gnome_folder = NULL;
 		}
 	}
-	
+
 	main_menu = (!arguments || (strcmp (arguments, ".") == 0));
 
 	menu = create_panel_menu (this_menu, main_menu, orient);
 	menu->path=g_strdup(arguments?arguments:".");
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
-	
+
 	g_free(menu_base);
 	g_free (this_menu);
 	return menu;
@@ -1088,35 +1214,21 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name = NULL;
+	char *this_menu;
+	char *menu_base;
 
 	g_return_if_fail(menu!=NULL);
 	g_return_if_fail(menu->path!=NULL);
 
 	menu->orient = orient;
 
-	if (strcmp (menu->path, ".") == 0)
-		switch (menu->orient) {
-			case ORIENT_DOWN:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-down.png");
-				break;
-			case ORIENT_UP:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-up.png");
-				break;
-			case ORIENT_RIGHT:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-right.png");
-				break;
-			case ORIENT_LEFT:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-left.png");
-				break;
-		}
-	else
-		/*FIXME: these guys need arrows as well*/
-		pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
-		
+	menu_base = gnome_unconditional_datadir_file ("apps");
+	this_menu = get_real_menu_path(menu->path,menu_base);
+	pixmap_name = get_pixmap(this_menu,menu->orient,
+				 strcmp (menu->path, ".") == 0);
+	g_free(menu_base);
+	g_free(this_menu);
+
 	pixmap=GTK_BIN(menu->button)->child;
 	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
 	/*this is done by remove right?*/
@@ -1129,6 +1241,6 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 
 	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (pixmap);
-	
+
 	g_free(pixmap_name);
 }

@@ -641,9 +641,9 @@ static void
 load_default_applets(void)
 {
 	queue_load_applet(MENU_ID, NULL, ".", NULL, NULL,
-			  PANEL_UNKNOWN_APPLET_POSITION, 0,NULL);
+			  PANEL_UNKNOWN_APPLET_POSITION, panels->data,NULL);
 	queue_load_applet(EXTERN_ID, "gen_util_applet", "--clock", NULL, NULL,
-			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+			  PANEL_UNKNOWN_APPLET_POSITION, panels->data,NULL);
 }
 
 static void
@@ -1012,12 +1012,9 @@ count_open_drawers(gpointer data, gpointer user_data)
 	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 	int *count = user_data;
-	if(info->type == APPLET_DRAWER) {
-		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(info->assoc),
-						       PANEL_PARENT);
-		if(dw->state == DRAWER_SHOWN)
-			(*count)++;
-	}
+	if(info->type == APPLET_DRAWER &&
+	   DRAWER_WIDGET(info->assoc)->state == DRAWER_SHOWN)
+		(*count)++;
 }
 
 static void
@@ -1827,21 +1824,20 @@ sigchld_handler(int type)
 		AppletChild *child=list->data;
 		if(child->pid == pid) {
 			AppletInfo *info = get_applet_info(child->applet_id);
-			char *s;
-			int i;
-			if(!info) return;
-#if 0 /* Check me, is this ok, why were we iterating here? */
-			s = g_strdup(info->id_str);
-			for(i=0,info=(AppletInfo *)applets->data;
-			    i<applet_count;
-			    i++,info++) {
-				if(info->id_str &&
-				   strcmp(info->id_str,s)==0)
-					panel_clean_applet(info->applet_id);
+			if(info &&
+			   info->widget &&
+			   info->id_str) {
+				int i;
+				char *s = g_strdup(info->id_str);
+				for(i=0,info=(AppletInfo *)applets->data;
+				    i<applet_count;
+				    i++,info++) {
+					if(info->id_str &&
+					   strcmp(info->id_str,s)==0)
+						panel_clean_applet(info->applet_id);
+				}
+				g_free(s);
 			}
-			g_free(s);
-#endif
-			panel_clean_applet(info->applet_id);
 			exec_queue_done(child->applet_id);
 
 			g_free(child);
