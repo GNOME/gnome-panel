@@ -27,6 +27,7 @@
 #include "scroll-menu.h"
 #include "gwmh.h"
 #include "tasklist_icon.h"
+#include "scroll-menu.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -687,7 +688,7 @@ programs_menu_to_display(GtkWidget *menu)
 static void
 set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 {
-	foo->task_menu = gtk_menu_new ();
+	foo->task_menu = scroll_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
 	/*g_message ("setting...");*/
 }
