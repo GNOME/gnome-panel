@@ -97,20 +97,10 @@ static void
 response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 {
 	if(id == GTK_RESPONSE_HELP) {
-
 		GError *error = NULL;
-		static GnomeProgram *applet_program = NULL;
-
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "window-list" };
-			applet_program = gnome_program_init ("window-list", VERSION,
-							     LIBGNOME_MODULE,argc, argv,
-							     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
-		}
 
 		egg_help_display_desktop_on_screen (
-			applet_program, "window-list",
+			NULL, "window-list",
 			"window-list", "windowlist-prefs",
 			gtk_widget_get_screen (tasklist->applet),
 			&error);
@@ -741,18 +731,9 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "window-list" };
-		applet_program = gnome_program_init ("window-list", VERSION,
-						     LIBGNOME_MODULE,argc, argv,
-						     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-			applet_program, "window-list",
+			NULL, "window-list",
 			"window-list", NULL,
 			gtk_widget_get_screen (tasklist->applet),
 			&error);

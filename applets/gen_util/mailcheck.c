@@ -1623,18 +1623,9 @@ static void
 phelp_cb (GtkDialog *w, gint tab, MailCheck *mc)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "mailcheck" };
-		applet_program = gnome_program_init ("mailcheck", VERSION,
-						      LIBGNOME_MODULE, argc, argv,
-     						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-			applet_program, "mailcheck", "mailcheck", "mailcheck-prefs",
+			NULL, "mailcheck", "mailcheck", "mailcheck-prefs",
 			gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
 			&error);
 	if (error) {
@@ -1831,18 +1822,9 @@ static void
 help_callback (BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "mailcheck" };
-		applet_program = gnome_program_init ("mailcheck", VERSION,
-						      LIBGNOME_MODULE, argc, argv,
-						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-		applet_program, "mailcheck", "mailcheck",NULL,
+		NULL, "mailcheck", "mailcheck",NULL,
 		gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
 		&error);
 	if (error) {

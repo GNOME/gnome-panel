@@ -1,3 +1,13 @@
+2003-04-16  Mark McLoughlin  <mark@skynet.ie>
+
+	* clock.c: (properties_response_cb), (display_help_dialog):
+	* mailcheck.c: (phelp_cb), (help_callback):
+	* pager.c: (response_cb), (display_help_dialog):
+	* showdesktop.c: (display_help_dialog):
+	* tasklist.c: (response_cb), (display_help_dialog):
+	Remove calls to gnome_program_init. Because we're using the
+	global help files location I don't think its needed.
+
 2003-04-04  Mark McLoughlin <mark@skynet.ie>
 
 	* mailcheck.c: Fix statis variable usage so that multiple

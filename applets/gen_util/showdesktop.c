@@ -385,21 +385,9 @@ display_help_dialog (BonoboUIComponent *uic,
                      const gchar       *verbname)
 {
         GError *error = NULL;
-        static GnomeProgram *applet_program = NULL;
-
-        if (!applet_program) {
-                /* FIXME there is no way this crack is right; it's some junk
-                 * copied from clock.c
-                 */
-                int argc = 1;
-                char *argv[2] = { "show-desktop" };
-                applet_program = gnome_program_init ("show-desktop", VERSION,
-                                                     LIBGNOME_MODULE, argc, argv,
-                                                     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-        }
 
         egg_help_display_desktop_on_screen (
-                applet_program, "show-desktop", "show-desktop", NULL,
+                NULL, "show-desktop", "show-desktop", NULL,
                 gtk_widget_get_screen (sdd->applet),
 		&error);
 

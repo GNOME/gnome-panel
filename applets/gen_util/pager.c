@@ -161,21 +161,10 @@ static void
 response_cb(GtkWidget * widget,int id, PagerData *pager)
 {
 	if(id == GTK_RESPONSE_HELP) {
-		
 		GError *error = NULL;
-		static GnomeProgram *applet_program = NULL;
-
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "workspace-switcher" };
-			applet_program = gnome_program_init ("workspace-switcher", VERSION,
-							     LIBGNOME_MODULE, argc, argv,
-							     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-		}
 
 		egg_help_display_desktop_on_screen (
-			applet_program, "workspace-switcher",
-			"workspace-switcher", "workspacelist-prefs",
+			NULL, "workspace-switcher", "workspace-switcher", "workspacelist-prefs",
 			gtk_widget_get_screen (pager->applet),
 			&error);
 		if (error) {
@@ -498,19 +487,9 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "workspace-switcher" };
-		applet_program = gnome_program_init ("workspace-switcher", VERSION,
-						     LIBGNOME_MODULE, argc, argv,
-						     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-		applet_program, "workspace-switcher",
-		"workspace-switcher", NULL,
+		NULL, "workspace-switcher", "workspace-switcher", NULL,
 		gtk_widget_get_screen (pager->applet),
 		&error);
 	if (error) {

@@ -883,20 +883,10 @@ properties_response_cb (GtkWidget *widget,
 {
 	
 	if (id == GTK_RESPONSE_HELP) {
-		static GnomeProgram *applet_program = NULL;
 		GError *error = NULL;
 
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "clock" };
-			applet_program = gnome_program_init ("clock", VERSION,
-							      LIBGNOME_MODULE, argc, argv,
-							      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-		}
-
 		egg_help_display_desktop_on_screen (
-				applet_program, "clock",
-				"clock", "clock-settings",
+				NULL, "clock", "clock", "clock-settings",
 				gtk_widget_get_screen (cd->applet),
 				&error);
 
@@ -1126,18 +1116,9 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "clock" };
-		applet_program = gnome_program_init ("clock", VERSION,
-						      LIBGNOME_MODULE, argc, argv,
-						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-			applet_program, "clock", "clock",NULL,
+			NULL, "clock", "clock",NULL,
 			gtk_widget_get_screen (cd->applet),
 			&error);
 	if (error) {
