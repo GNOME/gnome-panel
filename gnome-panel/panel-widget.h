@@ -42,6 +42,7 @@ typedef enum {
 } PanelMode;
 typedef enum {
 	PANEL_SHOWN,
+	PANEL_MOVING,
 	PANEL_HIDDEN
 } PanelState;
 
@@ -49,6 +50,7 @@ struct _AppletRecord
 {
 	GtkWidget		*applet;
 	GtkWidget		*drawer;
+	gint			cells;
 };
 
 struct _WorkspaceDesc
@@ -78,6 +80,13 @@ struct _PanelWidget
 	PanelSnapped		snapped;
 	PanelMode		mode;
 	PanelState		state;
+
+	gint			step_size;
+	gint			minimized_size;
+	gint			minimize_delay;
+	gint			tooltips_enabled;
+
+	gint			leave_notify_timer_tag;
 };
 
 struct _PanelWidgetClass
@@ -90,10 +99,19 @@ GtkWidget*	panel_widget_new		(gint length,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
-						 PanelState state);
+						 PanelState state,
+						 gint step_size,
+						 gint minimized_size,
+						 gint minimize_delay,
+						 gint tooltips_enabled);
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
+						 gint pos);
+/*add a drawer (you supply the button) to the panel, preferably at
+  position pos*/
+gint		panel_widget_add_with_drawer	(PanelWidget *panel,
+						 GtkWidget *button,
 						 gint pos);
 /*remove an applet from the panel*/
 gint		panel_widget_remove		(PanelWidget *panel,
