@@ -526,6 +526,8 @@ mailcheck_properties_page (MailCheck *mc)
 	mc->spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 0.1, 1);
   gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
                      GTK_SIGNAL_FUNC(property_box_changed), mc);
+  gtk_signal_connect(GTK_OBJECT(mc->spin), "changed",
+                     GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->spin);
 
