@@ -390,13 +390,13 @@ basep_pos_get_hide_size (BasePWidget *basep,
 	case ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
 			? pw_minimized_size
-			: basep->hidebutton_n->allocation.height;
+			: get_requisition_height (basep->hidebutton_n);
 		break;
 	case ORIENT_RIGHT:
 	case ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
 			? pw_minimized_size
-			: basep->hidebutton_e->allocation.width;
+			: get_requisition_width (basep->hidebutton_e);
 		break;
 	}
 	*w = MAX (*w, 1);
@@ -415,11 +415,13 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 		break;
 	case ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN)
-			    ? pw_minimized_size : basep->hidebutton_w->allocation.width);
+			   ? pw_minimized_size
+			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? pw_minimized_size : basep->hidebutton_s->allocation.height);
+			   ? pw_minimized_size
+			   : get_requisition_width (basep->hidebutton_s));
 		break;
 	}
 }

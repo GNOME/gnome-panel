@@ -1,3 +1,13 @@
+Sat Feb 24 19:26:42 2001  George Lebl <jirka@5z.com>
+
+	* basep-widget.c, floating-widget.c, panel-util.[ch],
+	  sliding-widget.c:  use hidebutton requisition rather then
+	  allocation, as that's not really available yet sometimes.
+
+	* floating-widget.c: Fixed #7552, autohiding floating panel
+	  without hidebuttons needs to use the autohide size.  Limit hidden
+	  size to 3 pixels, as 1 would make it impossible to manipulate.
+
 Thu Feb 22 18:02:51 2001  George Lebl <jirka@5z.com>
 
 	* xstuff.[ch], foobar-widget.c: detect presence of nautilus desktop

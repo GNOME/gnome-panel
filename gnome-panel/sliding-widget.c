@@ -5,9 +5,12 @@
  *           George Lebl
  */
 
+#include "config.h"
+
 #include "sliding-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "panel-util.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -193,12 +196,12 @@ sliding_pos_set_pos (BasePWidget *basep,
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
 			newoffset = x - offset_x;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
-				newoffset -= w - basep->hidebutton_e->allocation.width;
+				newoffset -= w - get_requisition_width (basep->hidebutton_e);
 		} else {
 			newoffset = gdk_screen_width () -
 				(x - offset_x) - w;
 			if (basep->state == BASEP_HIDDEN_LEFT)
-				newoffset -= w - basep->hidebutton_w->allocation.width;
+				newoffset -= w - get_requisition_width (basep->hidebutton_w);
 		}
 		newoffset = CLAMP (newoffset, 0, gdk_screen_width () - w);
 		break;
@@ -211,12 +214,12 @@ sliding_pos_set_pos (BasePWidget *basep,
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
 			newoffset = y - offset_y;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
-				newoffset -= h - basep->hidebutton_s->allocation.height;
+				newoffset -= h - get_requisition_height (basep->hidebutton_s);
 		} else {
 			newoffset = gdk_screen_height () -
 				(y - offset_y) - h;
 			if (basep->state == BASEP_HIDDEN_LEFT)
-				newoffset -= h - basep->hidebutton_n->allocation.height;
+				newoffset -= h - get_requisition_height (basep->hidebutton_n);
 		}
 		newoffset = CLAMP (newoffset, 0, gdk_screen_height () - h);
 		break;

@@ -87,6 +87,9 @@ char *		panel_is_program_in_path (const char *program);
 
 int		find_applet		(GtkWidget *widget);
 
+int		get_requisition_width	(GtkWidget *widget);
+int		get_requisition_height	(GtkWidget *widget);
+
 END_GNOME_DECLS
 
 #endif /* PANEL_UTIL_H */

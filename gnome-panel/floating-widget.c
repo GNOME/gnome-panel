@@ -6,10 +6,13 @@
  *
  */
 
+#include "config.h"
+
 #include "floating-widget.h"
 #include "border-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "panel-util.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -234,10 +237,10 @@ floating_pos_set_pos (BasePWidget *basep,
 			break;
 		case BASEP_AUTO_HIDDEN:
 		case BASEP_HIDDEN_LEFT:
-			w = basep->hidebutton_w->allocation.width;
+			w = get_requisition_width (basep->hidebutton_w);
 			break;
 		case BASEP_HIDDEN_RIGHT:
-			w = basep->hidebutton_e->allocation.width;
+			w = get_requisition_width (basep->hidebutton_e);
 			break;
 		}
 	}
@@ -251,10 +254,10 @@ floating_pos_set_pos (BasePWidget *basep,
 			break;
 		case BASEP_AUTO_HIDDEN:
 		case BASEP_HIDDEN_LEFT:
-			h = basep->hidebutton_n->allocation.height;
+			h = get_requisition_height (basep->hidebutton_n);
 			break;
 		case BASEP_HIDDEN_RIGHT:
-			h = basep->hidebutton_s->allocation.height;
+			h = get_requisition_height (basep->hidebutton_s);
 			break;
 		}
 	}
@@ -286,22 +289,38 @@ floating_pos_get_hide_size (BasePWidget *basep,
 			    PanelOrientType hide_orient,
 			    int *w, int *h)
 {
-	switch (hide_orient) {
-	case ORIENT_UP:
-		*h = basep->hidebutton_n->allocation.height;
-		break;
-	case ORIENT_RIGHT:
-		*w = basep->hidebutton_w->allocation.width;
-		break;
-	case ORIENT_DOWN:
-		*h = basep->hidebutton_s->allocation.height;
-		break;
-	case ORIENT_LEFT:
-		*w = basep->hidebutton_e->allocation.width;
-		break;
+	if (basep->state == BASEP_AUTO_HIDDEN &&
+	    ! basep->hidebuttons_enabled) {
+		switch (hide_orient) {
+		case ORIENT_UP:
+		case ORIENT_DOWN:
+			*h = pw_minimized_size;
+			break;
+		case ORIENT_LEFT:
+		case ORIENT_RIGHT:
+			*w = pw_minimized_size;
+			break;
+		}
+	} else {
+		switch (hide_orient) {
+		case ORIENT_UP:
+			*h = get_requisition_height (basep->hidebutton_n);
+			break;
+		case ORIENT_RIGHT:
+			*w = get_requisition_width (basep->hidebutton_w);
+			break;
+		case ORIENT_DOWN:
+			*h = get_requisition_height (basep->hidebutton_s);
+			break;
+		case ORIENT_LEFT:
+			*w = get_requisition_height (basep->hidebutton_e);
+			break;
+		}
 	}
-	*w = MAX (*w, 1);
-	*h = MAX (*h, 1);
+	/* minimum of 3x3 pixels, as 1x1 is impossible to hit in case
+	 * something goes wrong */
+	*w = MAX (*w, 3);
+	*h = MAX (*h, 3);
 }
 
 static void
@@ -315,10 +334,16 @@ floating_pos_get_hide_pos (BasePWidget *basep,
 	case ORIENT_LEFT:
 		break;
 	case ORIENT_RIGHT:
-		*x += w - basep->hidebutton_w->allocation.width;
+		*x += w - ((basep->state == BASEP_AUTO_HIDDEN &&
+			    ! basep->hidebuttons_enabled)
+			   ? pw_minimized_size
+			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case ORIENT_DOWN:
-		*y += h - basep->hidebutton_s->allocation.height;
+		*y += h - ((basep->state == BASEP_AUTO_HIDDEN &&
+			    ! basep->hidebuttons_enabled)
+			   ? pw_minimized_size
+			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
 }

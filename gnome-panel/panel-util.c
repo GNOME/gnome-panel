@@ -853,3 +853,22 @@ find_applet (GtkWidget *widget)
 	return i;
 }
 
+int
+get_requisition_width (GtkWidget *widget)
+{
+	GtkRequisition req;
+
+	gtk_widget_get_child_requisition (widget, &req);
+
+	return req.width;
+}
+
+int
+get_requisition_height (GtkWidget *widget)
+{
+	GtkRequisition req;
+
+	gtk_widget_get_child_requisition (widget, &req);
+
+	return req.height;
+}
