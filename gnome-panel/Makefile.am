@@ -10,13 +10,19 @@ INCLUDES =							\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGLADEDIR=\""$(gladedir)"\"			\
-	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"			\
+	-DICONDIR=\""$(datadir)/gnome/panel/pixmaps"\"		\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
+	$(ALLOW_CRACKPOT_MENU_CODE)				\
 	$(PANEL_CFLAGS)						\
 	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
+
+# FIXME:
+# this define is to allow menu.c to continue
+# using deprecated gtk+ internals
+ALLOW_CRACKPOT_MENU_CODE=-DGTK_MENU_INTERNALS
 
 # Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
 STANDARD_PROPERTIES_CFLAGS = 					\
