@@ -126,6 +126,7 @@ void applet_add_callback(gint applet_id,
 void applet_set_tooltip(gint applet_id, const char *tooltip);
 void applet_remove_from_panel(gint applet_id);
 
+extern char *cookie;
 
 /*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel, char *cfgpath);

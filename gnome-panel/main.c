@@ -71,6 +71,9 @@ GList *load_queue=NULL;
 /* True if parsing determined that all the work is already done.  */
 int just_exit = 0;
 
+/* The security cookie */
+char *cookie;
+
 /* These are the arguments that our application supports.  */
 static struct argp_option arguments[] =
 {
@@ -885,6 +888,10 @@ main(int argc, char **argv)
 
 	if (just_exit)
 		return 0;
+
+	/* Setup the cookie */
+	cookie = create_cookie ();
+	gnome_config_private_set_string ("/panel/Secret/cookie", cookie);
 	
 #ifdef USE_INTERNAL_LAUNCHER
 	launcher_pid=fork();

@@ -1,39 +1,46 @@
+#
+# The cookie is an extremely *BAD* hack that we have implemented
+# for security reasons for *NOW*
+#
 module GNOME {
 	interface Panel {
 		/* Sends the object identifier for the Applet server that
 		   contacts the Panel */
-		short applet_request_id(in string path,
+		short applet_request_id(in string cookie,
+					in string path,
 					out string cfgpath,
 					out string globcfgpath,
 					out unsigned long wid);
-		void applet_register(in string ior, in short applet_id);
-		void applet_abort_id(in short applet_id);
-		void applet_request_glob_cfg(out string globcfgpath);
-		void applet_remove_from_panel (in short applet_id);
-		short applet_get_panel (in short applet_id);
-		short applet_get_pos (in short applet_id);
-		void applet_show_menu (in short applet_id);
-		void applet_drag_start (in short applet_id);
-		void applet_drag_stop (in short applet_id);
-		void applet_add_callback (in short applet_id,
+		void applet_register(in string cookie, in string ior, in short applet_id);
+		void applet_abort_id(in string cookie, in short applet_id);
+		void applet_request_glob_cfg(in string cookie, out string globcfgpath);
+		void applet_remove_from_panel (in string cookie, in short applet_id);
+		short applet_get_panel (in string cookie, in short applet_id);
+		short applet_get_pos (in string cookie, in short applet_id);
+		void applet_show_menu (in string cookie, in short applet_id);
+		void applet_drag_start (in string cookie, in short applet_id);
+		void applet_drag_stop (in string cookie, in short applet_id);
+		void applet_add_callback (in string cookie, 
+					  in short applet_id,
 					  in string callback_name,
 					  in string menuitem_text);
-		void applet_add_tooltip (in short applet_id, in string tooltip);
-		void applet_remove_tooltip (in short applet_id);
-		void quit();
+		void applet_add_tooltip (in string cookie, in short applet_id, in string tooltip);
+		void applet_remove_tooltip (in string cookie, in short applet_id);
+		void quit(in string cookie);
 	};
 
 	interface Applet {
-		void change_orient (in short applet_id, in short orient);
-		void do_callback (in short applet_id, in string callback_name);
-		short session_save (in short applet_id,
+		void change_orient (in string cookie, in short applet_id, in short orient);
+		void do_callback (in string cookie, in short applet_id, in string callback_name);
+		short session_save (in string cookie,
+				    in short applet_id,
 				    in string cfgpath,
 				    in string globcfgpath);
 	};
 
 	interface Launcher {
-		void start_new_launcher (in string path);
-		void restart_all_launchers ();
+		void start_new_launcher (in string cookie, in string path);
+		void restart_all_launchers (in string cookie);
 	};
 };
 

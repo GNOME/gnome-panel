@@ -13,9 +13,13 @@
  * screen.
  * */
 
+#define CHECK_COOKIE() if (strcmp (cookie, ccookie)) return;
+#define CHECK_COOKIE_V(x) if (strcmp (cookie, ccookie)) return x;
+
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
-	CORBA::Short applet_request_id (const char *path,
+	CORBA::Short applet_request_id (const char *ccookie,
+					const char *path,
 					char *&cfgpath,
 					char *&globcfgpath,
 					CORBA::ULong &wid) {
@@ -24,6 +28,7 @@ public:
 		int applet_id;
 		guint32 winid;
 
+		CHECK_COOKIE_V (0);
 		applet_id = ::applet_request_id (path,&cfg,&globcfg,&winid);
 		wid = winid;
 
@@ -39,15 +44,18 @@ public:
 			globcfgpath = CORBA::string_dup("");
 		return applet_id;
 	}
-	void applet_register (const char *ior, CORBA::Short applet_id) {
+	void applet_register (const char *ccookie, const char *ior, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_register(ior, applet_id);
 	}
-	void applet_abort_id (CORBA::Short applet_id) {
+	void applet_abort_id (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_abort_id (applet_id);
 	}
-	void applet_request_glob_cfg (char *&globcfgpath) {
+	void applet_request_glob_cfg (const char *ccookie, char *&globcfgpath) {
 		char *globcfg=NULL;
 
+		CHECK_COOKIE ();
 		::applet_request_glob_cfg (&globcfg);
 		if(globcfg) {
 			globcfgpath = CORBA::string_dup(globcfg);
@@ -55,38 +63,49 @@ public:
 		} else
 			globcfgpath = CORBA::string_dup("");
 	}
-	CORBA::Short applet_get_panel (CORBA::Short applet_id) {
+	CORBA::Short applet_get_panel (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE_V (0);
 		return ::applet_get_panel (applet_id);
 	}
-	CORBA::Short applet_get_pos (CORBA::Short applet_id) {
+	CORBA::Short applet_get_pos (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE_V (0);
 		return ::applet_get_pos (applet_id);
 	}
-	void applet_show_menu (CORBA::Short applet_id) {
+	void applet_show_menu (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_show_menu (applet_id);
 	}
-	void applet_drag_start (CORBA::Short applet_id) {
+	void applet_drag_start (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_drag_start (applet_id);
 	}
-	void applet_drag_stop (CORBA::Short applet_id) {
+	void applet_drag_stop (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_drag_stop (applet_id);
 	}
-	void applet_remove_from_panel (CORBA::Short applet_id) {
-		applet_remove_from_panel(applet_id);
+	void applet_remove_from_panel (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
+		applet_remove_from_panel(cookie, applet_id);
 	}
-        void applet_add_callback (CORBA::Short applet_id,
+        void applet_add_callback (const char *ccookie, 
+				  CORBA::Short applet_id,
 				  const char *callback_name,
 				  const char *menuitem_text) {
+		CHECK_COOKIE ();
 		::applet_add_callback(applet_id,
 				      (char *)callback_name,
 				      (char *)menuitem_text);
 	}
-	void applet_add_tooltip (CORBA::Short applet_id, const char *tooltip) {
+	void applet_add_tooltip (const char *ccookie, CORBA::Short applet_id, const char *tooltip) {
+		CHECK_COOKIE ();
 		::applet_set_tooltip(applet_id,tooltip);
 	}
-	void applet_remove_tooltip (CORBA::Short applet_id) {
+	void applet_remove_tooltip (const char *ccookie, CORBA::Short applet_id) {
+		CHECK_COOKIE ();
 		::applet_set_tooltip(applet_id,NULL);
 	}
-	void quit(void) {
+	void quit(const char *ccookie) {
+		CHECK_COOKIE ();
 		::panel_quit();
 	}
 };
@@ -161,7 +180,7 @@ panel_corba_call_launcher(const char *path)
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
 
 	try {
-		launcher_client->start_new_launcher(path);
+		launcher_client->start_new_launcher(cookie, path);
 	} catch( ... ) {
 		return FALSE;
 	}
@@ -193,7 +212,7 @@ panel_corba_restart_launchers(void)
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
 
 	try {
-		launcher_client->restart_all_launchers();
+		launcher_client->restart_all_launchers(cookie);
 	} catch( ... ) {
 		return FALSE;
 	}
@@ -210,7 +229,7 @@ send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	return applet->session_save(applet_id,cfgpath,globcfgpath);
+	return applet->session_save(cookie, applet_id,cfgpath,globcfgpath);
 }
 
 void
@@ -221,7 +240,7 @@ send_applet_change_orient (const char *ior, int applet_id, int orient)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->change_orient(applet_id,orient);
+	applet->change_orient(cookie,applet_id,orient);
 }
 
 void
@@ -232,5 +251,5 @@ send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->do_callback(applet_id, callback_name);
+	applet->do_callback(cookie,applet_id, callback_name);
 }
