@@ -412,9 +412,6 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_INT,
 			       GTK_TYPE_INT);
 
-	gtk_object_class_add_signals(object_class,applet_widget_signals,
-				     LAST_SIGNAL);
-
 	class->change_orient = NULL;
 	class->save_session = NULL;
 	class->back_change = NULL;
