@@ -1,5 +1,21 @@
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
+	Hmm, that was loading two copies of the menu bar
+	and window menu. Fixed that but I'm still having
+	trouble getting the window menu on the far right
+	of a compat foobar.
+
+	* applet.c:
+	(panel_applet_loaded): impl checking to see if an
+	applet was already loaded.
+	(panel_applet_load_from_unique_id): use it here.
+	Don't load an already loaded applet.
+
+	* panel-compatibility.c: (foobar_widget_new): kill
+	debug.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
 	Add the code to make old configurations work. I'll
 	get rid of FoobarWidget properly soon.
 

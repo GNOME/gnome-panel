@@ -59,8 +59,6 @@ foobar_widget_new (const char *panel_id,
 
 	panel_menu_bar_load (panel, 0, TRUE, NULL);
 
-	g_print ("POSITION: %d\n", multiscreen_width (screen, monitor) - 10);
-
 	panel_applet_frame_load ("OAFIID:GNOME_WindowMenuApplet",
 				 panel,
 				 multiscreen_width (screen, monitor) - 10,

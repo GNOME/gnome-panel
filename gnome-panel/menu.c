@@ -2964,16 +2964,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 		GtkWidget *dialog;
 
 		if (!foobar_widget_exists (screen, monitor)) {
-			const char *panel_id;
-			
 			panel = foobar_widget_new (NULL, screen, monitor);
-#if 0
-			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
-#else
-			panel_id = PANEL_WIDGET (BASEP_WIDGET (panel)->panel)->unique_id;
-#endif
-			
 			panel_save_to_gconf (panel_setup (panel));
+			
 			gtk_window_set_title (GTK_WINDOW (panel), _("Menu Panel"));
 			gtk_widget_show (panel);
 			break;
