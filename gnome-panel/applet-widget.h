@@ -14,6 +14,7 @@
 #include <gnome-panel.h>
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
+#define HAVE_APPLET_BIND_EVENTS 1
 
 BEGIN_GNOME_DECLS
 
@@ -104,6 +105,18 @@ void		applet_widget_set_widget_tooltip(AppletWidget *applet,
    can bind the events over them so that peoplce can move them with
    the second button, get the menu, etc ...*/
 void		applet_widget_add		(AppletWidget *applet,
+						 GtkWidget *widget);
+/* this function is the same as above, but you can select if the events
+   are actually bound, most applet writers can use the above, this is
+   just for very special cases*/
+void		applet_widget_add_full		(AppletWidget *applet,
+						 GtkWidget *widget,
+						 int bind_events);
+
+/* bind the events for button2 and button3 on a widget, this is useful
+   when you are added a new widget and want the right click menu and middle
+   button move events to work on it*/
+void		applet_bind_events		(AppletWidget *applet,
 						 GtkWidget *widget);
 
 /* remove the plug from the panel, this will destroy the applet */

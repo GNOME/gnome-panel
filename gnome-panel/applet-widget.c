@@ -770,7 +770,8 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 }
 
 void
-applet_widget_add(AppletWidget *applet, GtkWidget *widget)
+applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
+		       int bind_events)
 {
 	GString *str;
 	CORBA_Environment ev;
@@ -787,7 +788,20 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	GNOME_PanelSpot_register_us(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
 
-	bind_applet_events(GTK_WIDGET(applet),applet);
+	if(bind_events)
+		bind_applet_events(GTK_WIDGET(applet),applet);
+}
+
+void
+applet_widget_add(AppletWidget *applet, GtkWidget *widget)
+{
+	applet_widget_add_full(applet,widget,TRUE);
+}
+
+void
+applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
+{
+	bind_applet_events(GTK_WIDGET(applet),widget);
 }
 
 void
