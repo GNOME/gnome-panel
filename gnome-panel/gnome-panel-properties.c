@@ -29,7 +29,7 @@
 #include <gdk/gdkx.h>
 #include "capplet-widget.h"
 #include "global-keys.h"
-/*we just use the GlobalConfig and LAST_TILE definitions, some panel-util stuff,
+/*we just use the GlobalConfig and LAST_POBJECT definitions, some panel-util stuff,
   and the DEFAULT_* defines from session.h !!!*/
 #include "panel-types.h"
 #include "panel_config_global.h"
@@ -70,16 +70,9 @@ static GtkAdjustment *minimized_size;
 
 
 /* buttons page */
-static GtkWidget *tile_enable_cb[LAST_TILE];
-static GtkWidget *tile_file_box[LAST_TILE];
-static GtkWidget *tile_border_box[LAST_TILE];
-static GtkAdjustment *tile_border[LAST_TILE];
-static GtkAdjustment *tile_depth[LAST_TILE];
+static GtkWidget *entry_up[LAST_POBJECT];
+static GtkWidget *entry_down[LAST_POBJECT];
 
-static GtkWidget *entry_up[LAST_TILE];
-static GtkWidget *entry_down[LAST_TILE];
-
-static GtkWidget *tile_when_over_cb;
 static GtkWidget *saturate_when_over_cb;
 
 
@@ -184,10 +177,6 @@ set_config (GlobalConfig *dest, GlobalConfig *src)
 	g_return_if_fail (dest != NULL);
 	g_return_if_fail (src != NULL);
 
-	for (i = 0; i < LAST_TILE; i++) {
-		g_free (dest->tile_up[i]);
-		g_free (dest->tile_down[i]);
-	}
 	g_free (dest->menu_key);
 	g_free (dest->run_key);
 	g_free (dest->screenshot_key);
@@ -195,10 +184,6 @@ set_config (GlobalConfig *dest, GlobalConfig *src)
 
 	*dest = *src;
 
-	for (i = 0; i < LAST_TILE; i++) {
-		dest->tile_up[i] = g_strdup (dest->tile_up[i]);
-		dest->tile_down[i] = g_strdup (dest->tile_down[i]);
-	}
 	dest->menu_key = g_strdup (dest->menu_key);
 	dest->run_key = g_strdup (dest->run_key);
 	dest->screenshot_key = g_strdup (dest->screenshot_key);
@@ -344,76 +329,20 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
-static char *
-get_full_tile(const char *file)
-{
-	if (file == NULL)
-		return NULL;
-	else if (g_path_is_absolute(file))
-		return g_strdup(file);
-	else
-		return gnome_program_locate_file (NULL,
-						  GNOME_FILE_DOMAIN_PIXMAP,
-						  file, FALSE, NULL);
-}
-
 static void
 sync_buttons_page_with_config(GlobalConfig *conf)
 {
 	int i;
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tile_when_over_cb),
-				    conf->tile_when_over);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(saturate_when_over_cb),
 				    conf->saturate_when_over);
-	
-	for(i=0;i<LAST_TILE;i++) {
-		char *file;
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tile_enable_cb[i]),
-					    conf->tiles_enabled[i]);
-
-		file = get_full_tile(conf->tile_up[i]);
-		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_up[i]), file);
-		g_free(file);
-		file = get_full_tile(conf->tile_down[i]);
-		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_down[i]), file);
-		g_free(file);
-		gtk_adjustment_set_value(tile_border[i], conf->tile_border[i]);
-		gtk_adjustment_set_value(tile_depth[i], conf->tile_depth[i]);
-	}
 }
 static void
 sync_config_with_buttons_page(GlobalConfig *conf)
 {
 	int i;
-	conf->tile_when_over =
-		GTK_TOGGLE_BUTTON(tile_when_over_cb)->active;
 	conf->saturate_when_over =
 		GTK_TOGGLE_BUTTON(saturate_when_over_cb)->active;
 
-	for(i=0;i<LAST_TILE;i++) {
-		conf->tiles_enabled[i] =
-			GTK_TOGGLE_BUTTON(tile_enable_cb[i])->active;
-		g_free(conf->tile_up[i]);
-		conf->tile_up[i] =
-			hack_icon_entry_get_icon (GNOME_ICON_ENTRY(entry_up[i]));
-		g_free(conf->tile_down[i]);
-		conf->tile_down[i] =
-			hack_icon_entry_get_icon (GNOME_ICON_ENTRY(entry_down[i]));
-		conf->tile_border[i] = tile_border[i]->value;
-		conf->tile_depth[i] = tile_depth[i]->value;
-	}
-}
-
-static void
-set_icon_button(GtkWidget *w, gpointer data)
-{
-	int i = GPOINTER_TO_INT(data);
-	int active = GTK_TOGGLE_BUTTON(w)->active;
-
-	gtk_widget_set_sensitive(tile_file_box[i],active);
-	gtk_widget_set_sensitive(tile_border_box[i],active);
-
-	changed_cb();
 }
 
 enum {
@@ -432,148 +361,13 @@ show_page (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-icon_notebook_page(int i)
-{
-	GtkWidget *frame;
-	GtkWidget *w;
-	GtkWidget *table;
-	GtkWidget *vbox;
-	char *file;
-
-        char *icon_titles[]={
-                N_("Launcher icon"),
-                N_("Drawer icon"),
-                N_("Menu icon"),
-                N_("Special icon")};
-
-	/* Image frame */
-	frame = gtk_frame_new (_(icon_titles[i]));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	
-	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), vbox);
-
-	/* toggle button */
- 	tile_enable_cb[i] = gtk_check_button_new_with_label (_("Tiles enabled"));
-	gtk_signal_connect (GTK_OBJECT (tile_enable_cb[i]), "toggled", 
-			    GTK_SIGNAL_FUNC (set_icon_button), 
-			    GINT_TO_POINTER(i));
-	gtk_box_pack_start (GTK_BOX (vbox), tile_enable_cb[i], FALSE, FALSE, 0);
-	
-	
-	/* table for frame */
-	tile_file_box[i] = table = gtk_table_new(2,3,FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-	
-	/* image file entry widgets */
-	file = get_full_tile(global_config.tile_up[i]);
-	entry_up[i] = create_icon_entry(table,"tile_file",0, 1,
-					_("Normal tile"),
-					"tiles",
-					file,
-					NULL, NULL);
-	g_free(file);
-	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_up[i]));
-	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
-				       GTK_SIGNAL_FUNC(changed_cb), 
-				       NULL,
-				       GTK_OBJECT(capplet));
-
-	file = get_full_tile(global_config.tile_down[i]);
-	entry_down[i] = create_icon_entry(table,"tile_file",1, 2,
-					  _("Clicked tile"),
-					  "tiles",
-					  file,
-					  NULL, NULL);
-	g_free(file);
-	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_down[i]));
-	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
-				       GTK_SIGNAL_FUNC(changed_cb), 
-				       NULL,
-				       GTK_OBJECT(capplet));
-
-	w = gtk_hseparator_new ();
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
-	gtk_widget_show (w);
-
-	/* Minimized size scale frame */
-	tile_border_box[i] = w = make_int_scale_box (_("Border width (tile only)"),
-						&tile_border[i],
-						0.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
-
-	/* Minimized size scale frame */
-	w = make_int_scale_box (_("Depth (displacement when pressed)"),
-				&tile_depth[i],
-				0.0, 10.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
-
-	return frame;
-}
-
-static GtkWidget *
 buttons_notebook_page (void)
 {
-	  GtkWidget *m, *w;
-	  GtkWidget *box;
 	  GtkWidget *vbox;
-	  GtkWidget *label;
-	  GtkWidget *notebook;
-	  GtkWidget *page;
-	  int i;
-
-	  const char *labels[] = { N_("Launcher"),
-				  N_("Drawer"),
-				  N_("Menu"),
-				  N_("Special") };
 
 	  /* main vbox */
 	  vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	  gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-
-	  box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	  gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
-	  gtk_widget_show (box);
-
-	  label = gtk_label_new (_("Button type: "));
-	  gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-	  gtk_widget_show (label);
-
-	  m = gtk_menu_new ();
-	  notebook = gtk_notebook_new ();
-	  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
-	  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-
-	  for (i = 0; i < N_PAGES; i++) {	  
-		  w = gtk_menu_item_new_with_label (_(labels[i]));
-		  gtk_signal_connect (GTK_OBJECT (w), "activate",
-				      GTK_SIGNAL_FUNC (show_page),
-				      GINT_TO_POINTER (i));
-		  gtk_widget_show (w);
-		  gtk_menu_append (GTK_MENU (m), w);
-
-		  page = icon_notebook_page (i);
-		  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, NULL);
-
-		  gtk_object_set_user_data (GTK_OBJECT (w), notebook);
-	  }
-
-	  w = gtk_option_menu_new ();
-	  gtk_option_menu_set_menu (GTK_OPTION_MENU (w), m);
-	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
-	  gtk_widget_show (w);
-
-	  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
-	  gtk_widget_show (notebook);
-	  
-	  /* only show tiles when mouse is over the button */
-	  tile_when_over_cb = gtk_check_button_new_with_label (_("Show button tiles only when cursor is over the button"));
-	  gtk_signal_connect (GTK_OBJECT (tile_when_over_cb), "toggled",
-			      GTK_SIGNAL_FUNC (changed_cb), NULL);
-	  gtk_box_pack_start (GTK_BOX (vbox), tile_when_over_cb, FALSE, FALSE, 0);
 
 	  /* prelight on mouseovers hack (used to be saturation, hence
 	   * the config option name) */
@@ -1252,16 +1046,8 @@ loadup_vals (void)
 	 * apply_global_config and the default menu flags are hardcoded here
 	 * FIXME: make this code common!!!!!
 	 */
-	char *tile_def[] = {
-		"normal",
-		"purple",
-		"green",
-		"blue"
-	};
 	int i;
 	gboolean def;
-	GString *keybuf;
-	GString *tilebuf;
 
 	/*set up global options*/
 	_push_correct_global_prefix ();
@@ -1364,8 +1150,6 @@ loadup_vals (void)
 
 	global_config.drawer_auto_close =
 		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.tile_when_over =
-		conditional_get_bool ("tile_when_over", FALSE, NULL);
 	global_config.saturate_when_over =
 		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
@@ -1385,41 +1169,6 @@ loadup_vals (void)
 			 MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 			 MAIN_MENU_DESKTOP);
 	}
-
-	keybuf = g_string_new(NULL);
-	tilebuf = g_string_new(NULL);
-	for (i = 0; i < LAST_TILE; i++) {
-		GString *keybuf = g_string_new(NULL);
-		GString *tilebuf = g_string_new(NULL);
-
-		g_string_sprintf (keybuf, "new_tiles_enabled_%d",i);
-		global_config.tiles_enabled[i] =
-			conditional_get_bool (keybuf->str, FALSE, NULL);
-
-		g_free (global_config.tile_up[i]);
-		g_string_sprintf (keybuf, "tile_up_%d", i);
-		g_string_sprintf (tilebuf, "tiles/tile-%s-up.png", tile_def[i]);
-		global_config.tile_up[i] = conditional_get_string (keybuf->str,
-								   tilebuf->str,
-								   NULL);
-
-		g_free(global_config.tile_down[i]);
-		g_string_sprintf (keybuf, "tile_down_%d", i);
-		g_string_sprintf (tilebuf, "tiles/tile-%s-down.png",
-				  tile_def[i]);
-		global_config.tile_down[i] =
-			conditional_get_string (keybuf->str, tilebuf->str,
-						NULL);
-
-		g_string_sprintf (keybuf, "tile_border_%d", i);
-		global_config.tile_border[i] =
-			conditional_get_int (keybuf->str, 2, NULL);
-		g_string_sprintf (keybuf, "tile_depth_%d", i);
-		global_config.tile_depth[i] =
-			conditional_get_int (keybuf->str, 2, NULL);
-	}
-	g_string_free (tilebuf, TRUE);
-	g_string_free (keybuf, TRUE);
 
 	gnome_config_sync ();
 
@@ -1448,7 +1197,6 @@ static void
 write_config (GlobalConfig *conf)
 {
 	int i;
-	GString *buf;
 	gnome_config_push_prefix ("/panel/Config/");
 
 	gnome_config_set_int("hiding_step_size",
@@ -1487,8 +1235,6 @@ write_config (GlobalConfig *conf)
 			      conf->normal_layer);
 	gnome_config_set_bool("drawer_auto_close",
 			      conf->drawer_auto_close);
-	gnome_config_set_bool("tile_when_over",
-			      conf->tile_when_over);
 	gnome_config_set_bool("saturate_when_over",
 			      conf->saturate_when_over);
 	gnome_config_set_bool("confirm_panel_remove",
@@ -1502,25 +1248,6 @@ write_config (GlobalConfig *conf)
 	gnome_config_set_string("screenshot_key", conf->screenshot_key);
 	gnome_config_set_string("window_screenshot_key", conf->window_screenshot_key);
 			     
-	buf = g_string_new(NULL);
-	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
-		gnome_config_set_bool(buf->str,
-				      conf->tiles_enabled[i]);
-		g_string_sprintf(buf,"tile_up_%d",i);
-		gnome_config_set_string(buf->str,
-					conf->tile_up[i]);
-		g_string_sprintf(buf,"tile_down_%d",i);
-		gnome_config_set_string(buf->str,
-					conf->tile_down[i]);
-		g_string_sprintf(buf,"tile_border_%d",i);
-		gnome_config_set_int(buf->str,
-				     conf->tile_border[i]);
-		g_string_sprintf(buf,"tile_depth_%d",i);
-		gnome_config_set_int(buf->str,
-				     conf->tile_depth[i]);
-	}
-	g_string_free(buf,TRUE);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	

@@ -29,12 +29,13 @@ typedef GNOME_Panel_BackType PanelBackType;
 
 
 typedef enum {
-	LAUNCHER_TILE=0,
-	DRAWER_TILE,
-	MENU_TILE,
-	MISC_TILE,
-	LAST_TILE
-} PanelTileType;
+	LAUNCHER_POBJECT=0,
+	DRAWER_POBJECT,
+	MENU_POBJECT,
+	MISC_POBJECT,
+	LAST_POBJECT
+} PObjectType; 
+
 /* XXX: if you add any here you need to make the tile type larger
  * for button-widget, as it's 2 bits only for now */
 

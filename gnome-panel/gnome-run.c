@@ -1268,7 +1268,7 @@ create_run_widget(void)
 						 "gnome-run.png", TRUE, NULL);
 
 	button = button_widget_new(pixmap_name,-1,
-				   MISC_TILE,
+				   MISC_POBJECT,
 				   FALSE,
 				   ORIENT_UP,
 				   _("Run..."));

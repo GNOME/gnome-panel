@@ -210,16 +210,7 @@ apply_global_config (void)
 	}
 	keep_bottom_old = global_config.keep_bottom;
 	normal_layer_old = global_config.normal_layer;
-
-	for (i = 0; i < LAST_TILE; i++) {
-		button_widget_set_flags (i, global_config.tiles_enabled[i],
-					 1, 0);
-		button_widget_load_tile (i, global_config.tile_up[i],
-					 global_config.tile_down[i],
-					 global_config.tile_border[i],
-					 global_config.tile_depth[i]);
-	}
-
+	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
 		if (IS_BASEP_WIDGET (pd->panel)) {
@@ -1784,41 +1775,6 @@ load_up_globals (void)
 		global_config.menu_flags = get_default_menu_flags ();
 	}
 
-	keybuf = g_string_new(NULL);
-	tilebuf = g_string_new(NULL);
-	for (i = 0; i < LAST_TILE; i++) {
-		GString *keybuf = g_string_new(NULL);
-		GString *tilebuf = g_string_new(NULL);
-
-		g_string_sprintf (keybuf, "new_tiles_enabled_%d",i);
-		global_config.tiles_enabled[i] =
-			conditional_get_bool (keybuf->str, FALSE, NULL);
-
-		g_free (global_config.tile_up[i]);
-		g_string_sprintf (keybuf, "tile_up_%d", i);
-		g_string_sprintf (tilebuf, "tiles/tile-%s-up.png", tile_def[i]);
-		global_config.tile_up[i] = conditional_get_string (keybuf->str,
-								   tilebuf->str,
-								   NULL);
-
-		g_free(global_config.tile_down[i]);
-		g_string_sprintf (keybuf, "tile_down_%d", i);
-		g_string_sprintf (tilebuf, "tiles/tile-%s-down.png",
-				  tile_def[i]);
-		global_config.tile_down[i] =
-			conditional_get_string (keybuf->str, tilebuf->str,
-						NULL);
-
-		g_string_sprintf (keybuf, "tile_border_%d", i);
-		global_config.tile_border[i] =
-			conditional_get_int (keybuf->str, 2, NULL);
-		g_string_sprintf (keybuf, "tile_depth_%d", i);
-		global_config.tile_depth[i] =
-			conditional_get_int (keybuf->str, 2, NULL);
-	}
-	g_string_free (tilebuf, TRUE);
-	g_string_free (keybuf, TRUE);
-
 	gnome_config_sync ();
 
 	gnome_config_pop_prefix ();
@@ -1887,25 +1843,7 @@ write_global_config (void)
 	gnome_config_set_bool ("avoid_collisions",
 			       global_config.avoid_collisions);
 			     
-	buf = g_string_new (NULL);
-	for (i = 0; i < LAST_TILE; i++) {
-		g_string_sprintf (buf, "new_tiles_enabled_%d", i);
-		gnome_config_set_bool (buf->str,
-				       global_config.tiles_enabled[i]);
-		g_string_sprintf(buf,"tile_up_%d",i);
-		gnome_config_set_string(buf->str,
-					global_config.tile_up[i]);
-		g_string_sprintf(buf,"tile_down_%d",i);
-		gnome_config_set_string(buf->str,
-					global_config.tile_down[i]);
-		g_string_sprintf(buf,"tile_border_%d",i);
-		gnome_config_set_int(buf->str,
-				     global_config.tile_border[i]);
-		g_string_sprintf(buf,"tile_depth_%d",i);
-		gnome_config_set_int(buf->str,
-				     global_config.tile_depth[i]);
-	}
-	g_string_free(buf,TRUE);
+	
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	
@@ -1917,7 +1855,6 @@ convert_write_config(void)
 {
 	int i;
 	int is_def;
-	GString *buf;
 	gnome_config_push_prefix("/panel/Config/");
 	
 	/* is there any new config written here */
@@ -1954,25 +1891,7 @@ convert_write_config(void)
 			      global_config.drawer_auto_close);
 	gnome_config_set_bool("tile_when_over",
 			      global_config.tile_when_over);
-	buf = g_string_new(NULL);
-	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
-		gnome_config_set_bool(buf->str,
-				      global_config.tiles_enabled[i]);
-		g_string_sprintf(buf,"tile_up_%d",i);
-		gnome_config_set_string(buf->str,
-					global_config.tile_up[i]);
-		g_string_sprintf(buf,"tile_down_%d",i);
-		gnome_config_set_string(buf->str,
-					global_config.tile_down[i]);
-		g_string_sprintf(buf,"tile_border_%d",i);
-		gnome_config_set_int(buf->str,
-				     global_config.tile_border[i]);
-		g_string_sprintf(buf,"tile_depth_%d",i);
-		gnome_config_set_int(buf->str,
-				     global_config.tile_depth[i]);
-	}
-	g_string_free(buf,TRUE);
+	
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 }
@@ -2038,27 +1957,6 @@ convert_read_old_config(void)
 	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
 
 	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
-	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
-	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d=TRUE",i);
-		global_config.tiles_enabled[i] =
-			gnome_config_get_bool(buf->str);
-
-		g_free(global_config.tile_up[i]);
-		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
-				 i, tile_def[i]);
-		global_config.tile_up[i] = gnome_config_get_string(buf->str);
-
-		g_free(global_config.tile_down[i]);
-		g_string_sprintf(buf,"tile_down_%d=tiles/tile-%s-down.png",
-				 i,tile_def[i]);
-		global_config.tile_down[i] = gnome_config_get_string(buf->str);
-
-		g_string_sprintf(buf,"tile_border_%d=2",i);
-		global_config.tile_border[i] = gnome_config_get_int(buf->str);
-		g_string_sprintf(buf,"tile_depth_%d=2",i);
-		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
-	}
 
 	/* preserve applet count */
 	applet_count = gnome_config_get_int("applet_count=0");

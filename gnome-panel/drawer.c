@@ -322,7 +322,7 @@ create_drawer_applet(GtkWidget * drawer_panel,
 		drawer->pixmap = g_strdup (pixmap);
 	}
 	drawer->button = button_widget_new (drawer->pixmap, -1,
-					    DRAWER_TILE,
+					    DRAWER_POBJECT,
 					    TRUE, orient,
 					    _("Drawer"));
 
@@ -384,7 +384,7 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 	g_return_if_fail(drawer!=NULL);
 
 	button_widget_set_params(BUTTON_WIDGET(drawer->button),
-				 DRAWER_TILE,TRUE,orient);
+				 DRAWER_POBJECT,TRUE,orient);
 	
 	/*ignore orient events until we are realized, this will only
 	  be the initial one and we have already set the orientation*/

@@ -28,6 +28,8 @@ struct _ButtonWidget
 	char			*filename;
 	int			size;
 	
+	guint			pobject:2; /* Not quite sure if we need this right now */
+	
 	GdkWindow               *event_window;
 	
 	char			*text;
@@ -40,8 +42,6 @@ struct _ButtonWidget
 						  set the in_button properly
 						  later!*/
 	
-	guint			tile:2; /*the tile number, only used if tiles
-					  are on*/
 	guint			arrow:1; /*0 no arrow, 1 simple arrow, more
 					   to do*/
 	guint			dnd_highlight:1;
@@ -68,7 +68,7 @@ GType		button_widget_get_type		(void) G_GNUC_CONST;
 
 GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,
-						 int tile,
+						 int pobject,
 						 gboolean arrow,
 						 PanelOrientType orient,
 						 const char *text);
@@ -88,7 +88,7 @@ void		button_widget_set_text		(ButtonWidget *button,
 						 const char *text);
 
 void		button_widget_set_params	(ButtonWidget *button,
-						 int tile,
+						 int pobject,
 						 gboolean arrow,
 						 PanelOrientType orient);
 
@@ -98,20 +98,6 @@ void		button_widget_set_dnd_highlight	(ButtonWidget *button,
 void		button_widget_clicked		(ButtonWidget *button);
 void		button_widget_down		(ButtonWidget *button);
 void		button_widget_up		(ButtonWidget *button);
-
-/*load a tile of a given type/class, note that depth applies to a class
-  wheather or not there is a tile or not, so this is basically a class
-  initialization function*/
-void		button_widget_load_tile		(int tile,
-						 const char *tile_up,
-						 const char *tile_down,
-						 int border,
-						 int depth);
-
-void		button_widget_set_flags		(int tile,
-						 gboolean tiles_enabled,
-						 gboolean pixmaps_enabled,
-						 gboolean always_text);
 
 void		button_widget_redo_all		(void);
 #ifdef __cplusplus

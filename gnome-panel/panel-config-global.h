@@ -22,11 +22,11 @@ struct _GlobalConfig {
 	gboolean keep_bottom;
 	gboolean normal_layer;
 	gboolean drawer_auto_close;
-	gboolean tiles_enabled[LAST_TILE];
-	char *tile_up[LAST_TILE];
-	char *tile_down[LAST_TILE];
-	int tile_border[LAST_TILE];
-	int tile_depth[LAST_TILE];
+	gboolean tiles_enabled[LAST_POBJECT];
+	char *tile_up[LAST_POBJECT];
+	char *tile_down[LAST_POBJECT];
+	int tile_border[LAST_POBJECT];
+	int tile_depth[LAST_POBJECT];
 	gboolean tile_when_over;
 	gboolean saturate_when_over;
 	gboolean confirm_panel_remove;

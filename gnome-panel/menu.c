@@ -5856,7 +5856,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	menu->global_main = global_main;
 
 	/*make the pixmap*/
-	menu->button = button_widget_new (pixmap_name, -1, MENU_TILE,
+	menu->button = button_widget_new (pixmap_name, -1, MENU_POBJECT,
 					  TRUE, orient, _("Menu"));
 
 	/*A hack since this function only pretends to work on window
@@ -5945,7 +5945,7 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	g_return_if_fail(menu!=NULL);
 
 	button_widget_set_params(BUTTON_WIDGET(menu->button),
-				 MENU_TILE, TRUE, orient);
+				 MENU_POBJECT, TRUE, orient);
 }
 
 void

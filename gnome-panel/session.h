@@ -19,7 +19,7 @@ G_BEGIN_DECLS
 
 #define DEFAULT_PANEL_NUM 0
 
-#define PANEL_CONFIG_PATH "/panel2.d/default/"
+#define PANEL_CONFIG_PATH "panel2.d/default/"
 
 int panel_session_save (GnomeClient *client,
 			int phase,
