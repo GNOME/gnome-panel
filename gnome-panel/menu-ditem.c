@@ -22,7 +22,7 @@ ditem_properties_clicked (GtkWidget *w, int response, gpointer data)
 	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help (
 			gtk_window_get_screen (GTK_WINDOW (w)),
-			"user-guide.xml", "gospanel-16");
+			"user-guide.xml", "gospanel-52");
 	} else if (response == REVERT_BUTTON) {
 		if (ditem != NULL)
 			gnome_ditem_edit_set_ditem (dee, ditem);
@@ -443,7 +443,14 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	char *name, *loc, *dir;
 	GtkWidget *dialog; 
 
-	if (response != GTK_RESPONSE_OK) {
+	switch (response) {
+	case GTK_RESPONSE_OK:
+		break;
+	case GTK_RESPONSE_HELP:
+		panel_show_help (gtk_window_get_screen (GTK_WINDOW (d)),
+				 "wgospanel.xml", "gospanel-52");
+		return;
+	default:
 		gtk_widget_destroy (d);
 		return;
 	}
@@ -542,6 +549,7 @@ panel_new_launcher (const char *item_loc,
 	dialog = gtk_dialog_new_with_buttons (
 				_("Create Launcher"),
 				NULL, 0 /* flags */,
+				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,
 				NULL);

@@ -1,4 +1,14 @@
 2005-01-14  Vincent Untz  <vincent@vuntz.net>
+
+	Add a help button when creating a new .desktop file on the desktop.
+	Fix bug #163895
+	Original patch from Takao Fujiwara <Takao.Fujiwara@Sun.COM>
+
+	* menu-ditem.c: (ditem_properties_clicked): update the help we show
+	(really_add_new_menu_item): handle help
+	(panel_new_launcher): add a help button
+	
+2005-01-14  Vincent Untz  <vincent@vuntz.net>
 	
 	* panel-recent.c: (panel_recent_append_documents_menu): connect to the
 	"changed" signal only while the model is alive.
