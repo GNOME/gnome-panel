@@ -54,8 +54,8 @@ schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 
 # don't do this if we are building in eg. rpm
 install-data-local:
-        if test -z "$(DESTDIR)" ; then \
-	   for p in $(schemas_DATA) ; do \
-	      GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/fish/$$p ; \
-	   done \
+	if test -z "$(DESTDIR)" ; then \
+		for p in $(schemas_DATA) ; do \
+			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/fish/$$p ; \
+	done \
 	fi
