@@ -775,7 +775,7 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			gobject_class,
 			PROP_DND_HIGHLIGHT,
 			g_param_spec_boolean ("dnd-highlight",
-					      _("DnD Highlight"),
+					      _("Drag N' Drop Highlight"),
 					      _("Whether or not to highlight the icon during drag and drop"),
 					      FALSE,
 					      G_PARAM_READWRITE));
