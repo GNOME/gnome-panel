@@ -76,7 +76,6 @@ panel_widget_dnd_drop (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 {
 	GtkWidget *dragfrom;
 	PanelWidget *panel;
-	AppletRecord *tmp;
 	gint from,to;
 
 	dragfrom = *(GtkWidget **)event->dropdataavailable.data;
@@ -84,39 +83,22 @@ panel_widget_dnd_drop (GtkWidget *widget, GdkEvent *event, gpointer user_data)
 
 
 	from = panel_widget_get_pos(panel,dragfrom);
-	to = panel_widget_get_pos(panel,widget);
+	for(to=0;to<panel->size;to++)
+		if(panel->applets[to]->widget == widget)
+			break;
 
-	gtk_container_remove(GTK_CONTAINER(panel->table), dragfrom);
-	gtk_container_remove(GTK_CONTAINER(panel->table), widget);
+	panel->applets[from]->is_applet = FALSE;
+	panel->applets[to]->is_applet = TRUE;
 
-	tmp = panel->applets[from];
-	panel->applets[from] = panel->applets[to];
-	panel->applets[to] = tmp;
-
-	panel_widget_place_applet(panel,panel->applets[from],from);
-	panel_widget_place_applet(panel,panel->applets[to],to);
+	gtk_widget_reparent(dragfrom,widget);
 }
 
-void
-panel_widget_dnd_drag_request (GtkWidget *widget, GdkEvent *event)
+static void
+panel_widget_dnd_drag_request (GtkWidget *widget, GdkEvent *event,
+	gpointer data)
 {
-	gtk_widget_dnd_data_set (widget, event, &widget, sizeof(GtkWidget *));
-}
-
-
-void
-panel_widget_placeholder_realized (GtkWidget *widget,gpointer data)
-{
-	gtk_signal_connect(GTK_OBJECT (widget),
-			   "drag_request_event",
-			   GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
-			   data);
-	gtk_signal_connect(GTK_OBJECT (widget),
-			   "drop_data_available_event",
-			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
-			   data);
-	gtk_widget_dnd_drop_set(widget, TRUE, accepted_drop_types, 1, FALSE);
-	gtk_widget_dnd_drag_set(widget, FALSE, possible_drag_types, 1);
+	gtk_widget_dnd_data_set(GTK_WIDGET(data), event, &data,
+				sizeof(GtkWidget *));
 }
 
 void
@@ -126,14 +108,18 @@ panel_widget_applet_realized (GtkWidget *widget,gpointer data)
 			   "drag_request_event",
 			   GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
 			   data);
+	gtk_widget_dnd_drag_set(widget, TRUE, possible_drag_types, 1);
+}
+
+void
+panel_widget_placeholder_realized (GtkWidget *widget,gpointer data)
+{
 	gtk_signal_connect(GTK_OBJECT (widget),
 			   "drop_data_available_event",
 			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
 			   data);
-	gtk_widget_dnd_drag_set(widget, TRUE, possible_drag_types, 1);
-	gtk_widget_dnd_drop_set(widget, FALSE, accepted_drop_types, 1, FALSE);
+	gtk_widget_dnd_drop_set(widget, TRUE, accepted_drop_types, 1, FALSE);
 }
-
 
 GtkWidget*
 panel_widget_new (gint size, PanelOrientation orient)
@@ -203,37 +189,17 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 			return -1;
 	}
 
-	if(panel->applets[i]->widget) {
-		/*remove placeholder*/
-		gtk_container_remove(GTK_CONTAINER(panel->table),
-				     panel->applets[i]->widget);
-		gtk_widget_destroy(panel->applets[i]->widget);
-	}
-
-	panel->applets[i]->widget = applet;
+	gtk_container_add(GTK_CONTAINER(panel->applets[i]->widget),applet);
 	panel->applets[i]->is_applet = TRUE;
-	panel_widget_place_applet(panel,panel->applets[i],i);
 
-
-	if(GTK_WIDGET_REALIZED(GTK_WIDGET(applet))) {
-		gtk_signal_connect(GTK_OBJECT (applet), "drag_request_event",
-				   GTK_SIGNAL_FUNC(
-				   	panel_widget_dnd_drag_request),
-				   panel);
-		gtk_signal_connect(GTK_OBJECT (applet),
-				   "drop_data_available_event",
-				   GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
-				   panel);
-		gtk_widget_dnd_drag_set(applet, TRUE, possible_drag_types, 1);
-		gtk_widget_dnd_drop_set(applet, FALSE, accepted_drop_types, 1,
-					FALSE);
-	} else {
-		gtk_signal_connect_after(GTK_OBJECT(applet), "realize",
+	if(GTK_WIDGET_REALIZED(applet))
+		panel_widget_applet_realized(applet,panel->applets[i]->widget);
+	else
+		gtk_signal_connect_after(GTK_OBJECT(applet),
+					 "realize",
 					 (GtkSignalFunc)
 					 panel_widget_applet_realized,
-					 panel);
-	}
-	
+					 panel->applets[i]->widget);
 
 	return i;
 }
@@ -247,7 +213,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	g_return_val_if_fail(applet,-1);
 
 	for(i=0;i<panel->size;i++)
-		if(panel->applets[i]->widget == applet)
+		if(GTK_BIN(panel->applets[i]->widget)->child == applet)
 			break;
 
 	/*applet not found*/
@@ -255,21 +221,8 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 		return -1;
 
 	/*remove applet*/
-	gtk_container_remove(GTK_CONTAINER(panel->table),
-			     panel->applets[i]->widget);
-	gtk_widget_destroy(panel->applets[i]->widget);
+	gtk_container_remove(GTK_CONTAINER(panel->applets[i]->widget),applet);
 
-	/*put placeholder in place*/
-	panel->applets[i]->widget = gtk_event_box_new();
-	panel->applets[i]->is_applet = FALSE;
-	panel_widget_place_applet(panel,panel->applets[i],i);
-	gtk_widget_show(panel->applets[i]->widget);
-
-	gtk_signal_connect_after(GTK_OBJECT(panel->applets[i]->widget),
-				 "realize",
-				 (GtkSignalFunc)
-				 panel_widget_placeholder_realized,
-				 panel);
 	return i;
 }
 
@@ -282,7 +235,7 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 	g_return_val_if_fail(applet,-1);
 
 	for(i=0;i<panel->size;i++)
-		if(panel->applets[i]->widget == applet)
+		if(GTK_BIN(panel->applets[i]->widget)->child == applet)
 			break;
 
 	/*applet not found*/
