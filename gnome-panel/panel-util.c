@@ -59,6 +59,7 @@ panel_show_help (GdkScreen  *screen,
 		panel_error_dialog (
 			screen,
 			"cannot_show_help",
+			TRUE,
 			_("Cannot display help document"),
 			"%s",
 			error != NULL ? error->message : "");
@@ -537,6 +538,7 @@ panel_lock_screen (GdkScreen *screen)
 	if (!gdk_spawn_command_line_on_screen (screen, XSCREENSAVER_LOCK_COMMAND, &error)) {
 		panel_error_dialog (screen,
 				    "cannot_exec_xscreensaver",
+				    TRUE,
 				    _("Cannot execute '%s'"),
 				    "%s",
 				    XSCREENSAVER_LOCK_COMMAND,
