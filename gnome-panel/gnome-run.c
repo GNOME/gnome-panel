@@ -359,17 +359,18 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			start_geginv ();
                         goto return_and_close;
 		} else if (strcmp (s, "End world hunger") == 0) {
-			egg_screen_url_show (
+			egg_url_show_on_screen (
+				"http://www.wfp.org",
 				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				"http://www.wfp.org", NULL);
+				NULL);
                         goto return_and_close;
 		}
 
                 /* Somewhat of a hack I suppose */
                 if (panel_is_url (s)) {
 			/* FIXME: URLs are in UTF8 ... right? */
-                        egg_screen_url_show (
-				gtk_window_get_screen (GTK_WINDOW (run_dialog)), s, NULL);
+                        egg_url_show_on_screen (
+				s, gtk_window_get_screen (GTK_WINDOW (run_dialog)), NULL);
                         goto return_and_close;
                 }
 

@@ -83,7 +83,7 @@ panel_show_help (GdkScreen  *screen,
 {
 	GError *error = NULL;
 
-	if (!egg_screen_help_display_desktop (screen, NULL, "user-guide", doc_name, linkid, &error)) {
+	if (!egg_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
 		panel_error_dialog (
 			screen,
 			"cannot_show_help",
@@ -122,9 +122,9 @@ panel_show_gnome_help (GdkScreen   *screen,
 
 	retval = TRUE;
 
-	if ( ! egg_screen_help_display_desktop (screen, NULL, app, path, NULL, error)) {
-		retval = egg_screen_help_display_with_doc_id (
-				screen, NULL, app, path, NULL, error);
+	if ( ! egg_help_display_desktop_on_screen (NULL, app, path, NULL, screen, error)) {
+		retval = egg_help_display_with_doc_id_on_screen (
+				NULL, app, path, NULL, screen, error);
 	}
 
 	g_free (app);
@@ -158,7 +158,7 @@ panel_show_kde_help (GdkScreen   *screen,
 			gboolean retval;
 			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
 			g_free (fullpath);
-			retval = egg_screen_help_display_uri (screen, uri, error);
+			retval = egg_help_display_uri_on_screen (uri, screen, error);
 			g_free (uri);
 			return retval;
 		}
@@ -187,7 +187,7 @@ panel_show_gnome_kde_help (GdkScreen   *screen,
 	}
 
 	if (panel_is_url (docpath))
-		return egg_screen_help_display_uri (screen, docpath, error);
+		return egg_help_display_uri_on_screen (docpath, screen, error);
 
 	if ( ! panel_show_gnome_help (screen, docpath, error)) {
 		return panel_show_kde_help (screen, docpath, error);

@@ -100,7 +100,7 @@ launch_url (Launcher *launcher)
 		return;
 	}
 
-	egg_screen_url_show (screen, url, &error);
+	egg_url_show_on_screen (url, screen, &error);
 	if (error) {
 		panel_error_dialog (
 			screen,
