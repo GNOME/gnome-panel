@@ -2790,6 +2790,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		return;
 		
 	panels_to_sync = TRUE;
+	gtk_window_present (GTK_WINDOW (panel));
 }
 
 static void
