@@ -12,7 +12,7 @@ struct _GlobalConfig {
 	int show_delay;
 	gboolean tooltips_enabled;
 	gboolean keep_menus_in_memory;
-	gboolean disable_animations;
+	gboolean enable_animations;
 	gboolean autoraise;
 	PanelLayer layer;
 	gboolean drawer_auto_close;

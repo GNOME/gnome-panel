@@ -55,29 +55,17 @@ Panel Global Config Schema File -  work in progress
       </schema>
 
       <schema>
-        <key>/schemas/apps/panel/global/disable-animations</key>
-        <applyto>/apps/panel/global/disable-animations</applyto>
+        <key>/schemas/apps/panel/global/enable-animations</key>
+        <applyto>/apps/panel/global/enable-animations</applyto>
         <owner>panel</owner>
         <type>bool</type>
-        <default>false</default>
+        <default>true</default>
         <locale name="C">
           <short></short>
           <long></long>
         </locale>
       </schema>
 
-      <schema>
-        <key>/schemas/apps/panel/animation-speed</key>
-        <applyto>/apps/panel/animation-speed</applyto>
-        <owner>panel</owner>
-        <type>string</type>
-        <default>Slow</default>
-        <locale name="C">
-          <short></short>
-          <long></long>
-        </locale>
-      </schema>
-      
       <schema>
         <key>/schemas/apps/panel/global/panel-minimized-size</key>
         <applyto>/apps/panel/global/panel-minimized-size</applyto>
@@ -95,7 +83,7 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/panel-show-delay</applyto>
         <owner>panel</owner>
         <type>int</type>
-        <default>2</default>
+        <default>0</default>
         <locale name="C">
           <short>FIXME - need to define limits</short>
           <long></long>
@@ -107,9 +95,9 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/panel-animation-speed</applyto>
         <owner>panel</owner>
         <type>int</type>
-        <default>80</default>
+        <default>0</default>
         <locale name="C">
-          <short>FIXME - need to define limits</short>
+          <short>FIXME - need to define limits fast = 0, medium = 1, slow = 2</short>
           <long></long>
         </locale>
       </schema>
@@ -119,7 +107,7 @@ Panel Global Config Schema File -  work in progress
         <applyto>/apps/panel/global/panel-hide-delay</applyto>
         <owner>panel</owner>
         <type>int</type>
-        <default>2</default>
+        <default>30</default>
         <locale name="C">
           <short>FIXME - need to define limits</short>
           <long></long>

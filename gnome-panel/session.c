@@ -1382,9 +1382,21 @@ session_read_global_config (void)
 
 		key = g_path_get_basename (gconf_entry_get_key (entry));
 
-		if (!strcmp (key, "panel-animation-speed"))
-			global_config.animation_speed =
-				gconf_value_get_int (value);
+		if (!strcmp (key, "panel-animation-speed")) {
+			switch (gconf_value_get_int (value)) {
+				case 0:
+					global_config.animation_speed = 80;
+					break;
+				case 1:
+					global_config.animation_speed = 60;
+					break;
+				case 2:
+					global_config.animation_speed = 10;
+					break;
+				default:
+					global_config.animation_speed = 60;
+			}
+		}
 
 		else if (!strcmp (key, "panel-minimized-speed"))
 			global_config.minimized_size =
@@ -1410,8 +1422,8 @@ session_read_global_config (void)
 			global_config.keep_menus_in_memory =
 				gconf_value_get_bool (value);
 
-		else if (!strcmp (key, "disable-animations"))
-			global_config.disable_animations =
+		else if (!strcmp (key, "enable-animations"))
+			global_config.enable_animations =
 				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "autoraise-panel"))
@@ -1530,7 +1542,7 @@ session_write_global_config (void)
 
 	gconf_change_set_set_bool (global_config_cs, "tooltips-enabled", global_config.tooltips_enabled);
 	gconf_change_set_set_bool (global_config_cs, "use-large-icons", global_config.use_large_icons);
-	gconf_change_set_set_bool (global_config_cs, "disable-animations", global_config.disable_animations);
+	gconf_change_set_set_bool (global_config_cs, "enable-animations", global_config.enable_animations);
 	gconf_change_set_set_bool (global_config_cs, "autoraise-panel", global_config.autoraise);
 	gconf_change_set_set_bool (global_config_cs, "drawer-autoclose", global_config.drawer_auto_close);
 	gconf_change_set_set_bool (global_config_cs, "highlight-launchers-on-mouseover", global_config.highlight_when_over);

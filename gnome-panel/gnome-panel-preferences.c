@@ -52,7 +52,7 @@ gchar* checkboxes[] = {
 	"confirm-panel-remove",
 	"avoid-panel-overlap",
 	"keep-menus-in-memory",
-	"disable-animations",
+	"enable-animations",
 	NULL
 	};
 
@@ -201,12 +201,12 @@ checkbox_clicked (GtkWidget *widget, gpointer data)
 }
 
 static void
-disable_animations_clicked (GtkWidget *widget, gpointer data)
+enable_animations_clicked (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *vbox = GTK_WIDGET(data);
-	int disable = GTK_TOGGLE_BUTTON(widget)->active;
+	int enable = GTK_TOGGLE_BUTTON(widget)->active;
 
-	gtk_widget_set_sensitive(vbox,disable);
+	gtk_widget_set_sensitive(vbox,enable);
 }
 
 static void
@@ -255,12 +255,12 @@ load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
 		key = NULL;
 	}*/
 
-	checkbox = glade_xml_get_widget(gui,"disable-animations");
+	checkbox = glade_xml_get_widget(gui,"enable-animations");
 	anim_vbox =  glade_xml_get_widget(gui,"animation-vbox");
 	gtk_widget_set_sensitive(anim_vbox,
 		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox)));
 	g_signal_connect(G_OBJECT(checkbox),"clicked",
-                        G_CALLBACK(disable_animations_clicked),anim_vbox);
+                        G_CALLBACK(enable_animations_clicked),anim_vbox);
 }
 
 static void

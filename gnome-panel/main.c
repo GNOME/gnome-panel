@@ -430,6 +430,10 @@ tell_user_Im_on_crack (void)
 
 	gtk_widget_destroy (dialog);
 }
+static void
+session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *entry, gpointer user_data) {
+	session_read_global_config ();
+}
 
 int
 main(int argc, char **argv)
@@ -499,9 +503,14 @@ main(int argc, char **argv)
 
 	load_system_wide ();
 
+	panel_gconf_add_dir ("/apps/panel/global");
+
 	/* set the globals, it is important this is before
 	 * init_user_applets */
 	session_read_global_config ();
+
+	/* Do the notification stuff */
+	panel_gconf_notify_add ("/apps/panel/global", session_notify_global_changes, NULL);
 
 	/* this is so the capplet gets the right defaults */
 	if ( ! commie_mode)

@@ -849,7 +849,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 
-	if(!global_config.disable_animations && step != 0) {
+	if(global_config.enable_animations && step != 0) {
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
@@ -956,7 +956,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 	
-	if(!global_config.disable_animations && step != 0) {
+	if(global_config.enable_animations && step != 0) {
 		int i;
 		GTimeVal tval;
 		long start_secs;
