@@ -644,7 +644,6 @@ applet_cmd_func(AppletCommand *cmd)
 				(int) cmd->cmd);
 			break;
 	}
-
 	return NULL;
 }
 
