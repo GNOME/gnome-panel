@@ -16,7 +16,7 @@
 #include "panel-include.h"
 
 extern int config_sync_timeout;
-extern GSList *applets_to_sync;
+extern int applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;

@@ -15,7 +15,7 @@
 #include "panel-include.h"
 
 int config_sync_timeout = 0;
-GSList *applets_to_sync = NULL;
+int applets_to_sync = FALSE;
 int panels_to_sync = FALSE;
 int globals_to_sync = FALSE;
 int need_complete_save = FALSE;
@@ -404,7 +404,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
-		GSList *sync_applets,
+		int sync_applets,
 		int sync_panels,
 		int sync_globals)
 {
@@ -430,13 +430,9 @@ do_session_save(GnomeClient *client,
 
 	printf("Saving session: 1"); fflush(stdout);
 #endif
-	if(complete_sync) {
+	if(complete_sync || sync_applets) {
 		GSList *li;
 		for(li=applets;li!=NULL;li=g_slist_next(li))
-			save_applet_configuration(li->data);
-	} else {
-		GSList *li;
-		for(li = sync_applets; li!=NULL; li=g_slist_next(li))
 			save_applet_configuration(li->data);
 	}
 #ifdef PANEL_DEBUG
@@ -533,29 +529,25 @@ panel_config_sync(void)
 	   applets_to_sync ||
 	   panels_to_sync ||
 	   globals_to_sync) {
-		GSList *_applets_to_sync = applets_to_sync;
-
-		applets_to_sync = NULL;
 		if (!(gnome_client_get_flags(client) & 
 		      GNOME_CLIENT_IS_CONNECTED)) {
 			do_session_save(client,need_complete_save,
-					_applets_to_sync,panels_to_sync,
+					applets_to_sync,panels_to_sync,
 					globals_to_sync);
 			need_complete_save = FALSE;
+			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			globals_to_sync = FALSE;
-			g_slist_free(_applets_to_sync);
 		} else {
 			/*prevent possible races by doing this before requesting
 			  save*/
 			need_complete_save = FALSE;
+			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			globals_to_sync = FALSE;
-			g_slist_free(_applets_to_sync);
 			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
 						   GNOME_INTERACT_NONE, FALSE, FALSE);
 		}
-
 	}
 }
 
@@ -575,7 +567,7 @@ panel_session_save (GnomeClient *client,
 		    int is_fast,
 		    gpointer client_data)
 {
-	do_session_save(client,TRUE,NULL,FALSE,FALSE);
+	do_session_save(client,TRUE,FALSE,FALSE,FALSE);
 	/* Always successful.  */
 	return TRUE;
 }

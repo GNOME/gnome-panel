@@ -27,7 +27,7 @@ extern GSList *applets_last;
 extern int applet_count;
 
 extern int config_sync_timeout;
-extern GSList *applets_to_sync;
+extern int applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -725,8 +725,7 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);
-	if(g_slist_find(applets_to_sync, ext->info)==NULL)
-		applets_to_sync = g_slist_prepend(applets_to_sync,ext->info);
+	applets_to_sync = TRUE;
 	panel_config_sync();
 }
 

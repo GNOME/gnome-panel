@@ -33,7 +33,7 @@ static int panel_been_moved = FALSE;
 int base_panels = 0;
 
 extern int config_sync_timeout;
-extern GSList *applets_to_sync;
+extern int applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -526,8 +526,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	gtk_idle_add(panel_applet_added_idle,info);
 
 	/*we will need to save this applet's config now*/
-	if(g_slist_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_slist_prepend(applets_to_sync,info);
+	applets_to_sync = TRUE;
 }
 
 static void
@@ -570,8 +569,7 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	/*we will need to save this applet's config now*/
-	if(g_slist_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_slist_prepend(applets_to_sync,info);
+	applets_to_sync = TRUE;
 }
 
 static void
@@ -744,11 +742,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget),
-					       "applet_info");
-	
-	if(g_slist_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_slist_prepend(applets_to_sync,info);
+	applets_to_sync = TRUE;
 }
 
 static GtkWidget *

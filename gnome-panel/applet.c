@@ -28,7 +28,7 @@ int applet_count = 0;
 
 /*config sync stuff*/
 extern int config_sync_timeout;
-extern GSList *applets_to_sync;
+extern int applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -475,8 +475,7 @@ register_toy(GtkWidget *applet,
 	applet_count++;
 
 	/*we will need to save this applet's config now*/
-	if(g_slist_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_slist_prepend(applets_to_sync,info);
+	applets_to_sync = TRUE;
 
 	if(panel_widget_add_full(panel, applet, pos, TRUE)==-1) {
 		GSList *list;
