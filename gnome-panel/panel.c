@@ -476,6 +476,7 @@ drop_nautilus_uri (PanelWidget *panel,
 	char *quoted;
 	char *exec;
 	char *base;
+	char **split;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
@@ -484,6 +485,10 @@ drop_nautilus_uri (PanelWidget *panel,
 	 * be interpreted as command line arguments
 	 */
 	quoted = g_shell_quote (uri);
+        split = g_strsplit (quoted, "%");
+	g_free (quoted);
+	quoted = g_strjoinv ("%%", split);
+	g_strfreev (split);
 	exec = g_strdup_printf ("nautilus -- %s", quoted);
 	g_free (quoted);
 

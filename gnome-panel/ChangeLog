@@ -1,5 +1,13 @@
 2004-12-05  Vincent Untz  <vincent@vuntz.net>
 
+	Backport patch from HEAD
+
+	* panel.c: (drop_nautilus_uri): fix quoting issue that
+	prevented some dropped folders from working. Fix from
+	Matthias Clasen in bug #155725.
+
+2004-12-05  Vincent Untz  <vincent@vuntz.net>
+
 	Backport patch by James Henstridge <james@jamesh.id.au> from HEAD
 
 	* panel-background.c (panel_background_prepare): call
