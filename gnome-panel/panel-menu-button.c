@@ -81,7 +81,7 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 	button->priv->use_menu_path   = FALSE;
 	button->priv->use_custom_icon = FALSE;
 
-	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_GNOME_LOGO);
+	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
 
 	/* FIXME: set a tooltip */
 }
@@ -625,7 +625,7 @@ panel_menu_button_set_icon (PanelMenuButton *button)
 	if (icon_path)
 		button_widget_set_pixmap (BUTTON_WIDGET (button), icon_path);
 	else
-		button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_GNOME_LOGO);
+		button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
 }
                                                                                                              
 void
@@ -830,7 +830,7 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
 		gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
-						PANEL_STOCK_GNOME_LOGO);
+						PANEL_STOCK_MAIN_MENU);
 		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));

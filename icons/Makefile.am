@@ -18,6 +18,7 @@ icon_DATA =				\
 	gnome-run.png			\
 	gnome-screenshot.png		\
 	panel-drawer.png		\
+	gnome-main-menu.png		\
 	$(NULL)
 
 EXTRA_DIST = $(icon_DATA)

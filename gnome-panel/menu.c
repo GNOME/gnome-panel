@@ -3169,7 +3169,7 @@ make_add_submenu (GtkWidget             *menu,
 
   	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Main Menu"));
+		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_MAIN_MENU, _("Main Menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),

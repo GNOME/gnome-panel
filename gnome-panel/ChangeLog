@@ -1,3 +1,14 @@
+2003-07-02  Mark McLoughlin  <mark@skynet.ie>
+	
+	* panel-stock-icons.[ch]: add a new stock id "panel-main-menu"
+	pointing to the gnome-main-menu icon to allow the main menu
+	icon to be themed seperately from the GNOME logo.
+
+	* menu.c: (make_add_submenu):
+	* panel-menu-button.c: (panel_menu_button_instance_init),
+	(panel_menu_button_set_icon), (panel_menu_button_set_dnd_enabled):
+	Use PANEL_STOCK_MAIN_MENU.
+
 ==================== 2.3.3.3 ====================
 
 2003-07-02  Mark McLoughlin  <mark@skynet.ie>

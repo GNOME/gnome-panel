@@ -68,6 +68,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_LOGOUT,              "gnome-logout" },
 	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" },
 	{ PANEL_STOCK_GNOME_LOGO,          "gnome-logo-icon-transparent"},
+	{ PANEL_STOCK_MAIN_MENU,           "gnome-main-menu"},
 	{ PANEL_STOCK_DEBIAN,              "gnome-debian"},
 	{ PANEL_STOCK_SUSE,                "gnome-suse"},
 	{ PANEL_STOCK_CDE,                 "cdeappmenu"},
