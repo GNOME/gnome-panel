@@ -258,8 +258,12 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	GtkWidget *button;
 	GtkWidget *box;
 	GtkWidget *hbox;
+	GtkWidget *vbox;
         GtkWidget *table;
         GtkWidget *w;
+
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, 0);
 	
 	/* main hbox */
 	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
@@ -388,7 +392,9 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	return (hbox);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+
+	return (vbox);
 }
 
 static void
