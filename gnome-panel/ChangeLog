@@ -1,5 +1,10 @@
 2003-03-06  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-background.c: (free_composited_resources): another leak
+	fix from Kjartan which never got committed to HEAD.
+
+2003-03-06  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (Bonobo_ServerInfoList_equals), (recheck_applet_list):
 	re-enable the re-loading of the applet menu. It crashes for
 	some people but we need to fix that.

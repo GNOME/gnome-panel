@@ -139,9 +139,6 @@ free_composited_resources (PanelBackground *background)
 
 	background->composited = FALSE;
 
-	if (background->type != PANEL_BACK_IMAGE)
-		return;
-
 	if (background->composited_image)
 		g_object_unref (background->composited_image);
 	background->composited_image = NULL;
