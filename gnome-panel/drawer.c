@@ -14,10 +14,8 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include <libgnomeui.h>
 
 #include "panel-include.h"
-#include "icon-entry-hack.h"
 
 #include "xstuff.h"
 
@@ -38,6 +36,7 @@ extern GSList *panel_list;
 static void
 properties_apply_callback(gpointer data)
 {
+#ifdef FIXME
 	Drawer       *drawer = data;
 
 	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
@@ -73,6 +72,7 @@ properties_apply_callback(gpointer data)
 
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
 			      drawer->tooltip, NULL);
+#endif
 }
 
 static void
@@ -485,10 +485,10 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 
 	if ( ! commie_mode)
 		applet_add_callback(applets_last->data,"properties",
-				    GNOME_STOCK_MENU_PROP,
+				    GTK_STOCK_PROPERTIES,
 				    _("Properties..."));
 	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
+			    GTK_STOCK_HELP,
 			    _("Help"));
 	return TRUE;
 }
