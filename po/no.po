@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2002-04-15 13:50+0200\n"
+"POT-Creation-Date: 2002-04-15 18:34+0100\n"
 "PO-Revision-Date: 2002-04-15 13:53+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -50,12 +50,12 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Vis en svømmende fisk eller et annet animert vesen"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-msgid "From Whence That Stupid Fish Came"
-msgstr "Den dumme fiskens opphav"
+msgid "Fish"
+msgstr "Fisk"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "Wanda"
-msgstr "Wanda"
+msgid "From Whence That Stupid Fish Came"
+msgstr "Den dumme fiskens opphav"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
 msgid "Wanda Factory"
@@ -75,7 +75,7 @@ msgstr "GNOME-fisken %s, et nåtidens orakel"
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME-fisk, en historieforteller"
 
-#: applets/fish/fish.c:484 applets/fish/fish.c:1127
+#: applets/fish/fish.c:484 applets/fish/fish.c:1116
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
@@ -102,11 +102,12 @@ msgid "GNOME Fish Preferences"
 msgstr "Brukervalg for GNOME-fisk"
 
 #: applets/fish/fish.c:718
-msgid "Your GNOME Fish's _Name:"
-msgstr "_Navnet på din Gnome fisk:"
+msgid "_Name of GNOME fish:"
+msgstr ""
 
 #: applets/fish/fish.c:735
-msgid "The Animation _Filename:"
+#, fuzzy
+msgid "_Animation filename:"
 msgstr "_Filnavn for animasjonen:"
 
 #: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1226
@@ -120,7 +121,8 @@ msgid "Command to _execute when fish is clicked:"
 msgstr "Kommando som skal utfør_es ved klikk på fisken:"
 
 #: applets/fish/fish.c:770
-msgid "Frame_s In Animation:"
+#, fuzzy
+msgid "Frame_s in animation:"
 msgstr "Bilder i anima_sjonen:"
 
 #: applets/fish/fish.c:788
@@ -131,7 +133,7 @@ msgstr "_Pause for hvert bilde (s):"
 msgid "_Rotate on vertical panels"
 msgstr "_Roter på vertikale paneler"
 
-#: applets/fish/fish.c:988
+#: applets/fish/fish.c:976
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -143,7 +145,7 @@ msgstr ""
 "\n"
 "Vennligst se dialogen \"Egenskaper\" for fisken."
 
-#: applets/fish/fish.c:1008
+#: applets/fish/fish.c:997
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -151,15 +153,15 @@ msgstr ""
 "Vannet må skiftes!\n"
 "(Se på dagens dato)"
 
-#: applets/fish/fish.c:1142
+#: applets/fish/fish.c:1131
 msgid "(with minor help from George)"
 msgstr "(med litt hjelp fra George)"
 
-#: applets/fish/fish.c:1160
+#: applets/fish/fish.c:1149
 msgid "The GNOME Fish Applet"
 msgstr "Gnome-fisk applet"
 
-#: applets/fish/fish.c:1163
+#: applets/fish/fish.c:1152
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -221,7 +223,7 @@ msgid "Utility"
 msgstr "Verktøy"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:531
+#: applets/gen_util/tasklist.c:533
 msgid "Window List"
 msgstr "Vinduliste"
 
@@ -238,19 +240,19 @@ msgstr "factory for oppretting av generelle appleter"
 msgid "Check for mail"
 msgstr "Sjekk etter post"
 
-#: applets/gen_util/clock.c:148 applets/gen_util/clock.c:408
+#: applets/gen_util/clock.c:148 applets/gen_util/clock.c:445
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:150 applets/gen_util/clock.c:410
+#: applets/gen_util/clock.c:150 applets/gen_util/clock.c:447
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:153 applets/gen_util/clock.c:413
+#: applets/gen_util/clock.c:153 applets/gen_util/clock.c:450
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:155 applets/gen_util/clock.c:415
+#: applets/gen_util/clock.c:155 applets/gen_util/clock.c:452
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -259,70 +261,71 @@ msgid "%a %b %d"
 msgstr "%a %d %b"
 
 #. Show date in tooltip
-#: applets/gen_util/clock.c:230
+#: applets/gen_util/clock.c:267
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/gen_util/clock.c:324
+#: applets/gen_util/clock.c:361
 msgid "Computer Clock"
 msgstr "Datamaskinklokke"
 
-#: applets/gen_util/clock.c:448
+#: applets/gen_util/clock.c:485
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:828
+#: applets/gen_util/clock.c:866
 msgid "Clock Preferences"
 msgstr "Brukervalg for klokke"
 
-#: applets/gen_util/clock.c:855
+#: applets/gen_util/clock.c:893
 msgid "Clock type"
 msgstr "Klokketype"
 
-#: applets/gen_util/clock.c:865
+#: applets/gen_util/clock.c:903
 msgid "_12 hour"
 msgstr "_12 timer"
 
-#: applets/gen_util/clock.c:871
+#: applets/gen_util/clock.c:909
 msgid "_24 hour"
 msgstr "_24 timer"
 
-#: applets/gen_util/clock.c:876
+#: applets/gen_util/clock.c:914
 msgid "_UNIX time"
 msgstr "_UNIX tid"
 
-#: applets/gen_util/clock.c:880
+#: applets/gen_util/clock.c:918
 msgid "_Internet time"
 msgstr "_Internett-tid"
 
-#: applets/gen_util/clock.c:917
+#: applets/gen_util/clock.c:955
 msgid "Show _seconds"
 msgstr "Vis _sekunder"
 
-#: applets/gen_util/clock.c:927
+#: applets/gen_util/clock.c:965
 msgid "Show _date"
 msgstr "Vis _dato"
 
-#: applets/gen_util/clock.c:937
-msgid "Use _GMT"
+#: applets/gen_util/clock.c:975
+#, fuzzy
+msgid "Use _UTC"
 msgstr "Bruk _GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1016 applets/gen_util/mailcheck.c:1590
-#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:519
+#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:521
 #: gnome-panel/menu.c:237
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
 
-#: applets/gen_util/clock.c:1034
+#: applets/gen_util/clock.c:1083
 msgid "Clock Applet"
 msgstr "Klokkeapplet"
 
-#: applets/gen_util/clock.c:1035
+#: applets/gen_util/clock.c:1084
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "© 1998-2000 Free Software Foundation"
 
-#: applets/gen_util/clock.c:1036
+#: applets/gen_util/clock.c:1085
 msgid "The Clock Applet displays current time and date"
 msgstr "Klokke-appleten viser nåværende klokkeslett og dato"
 
@@ -613,11 +616,11 @@ msgstr "Kan ikke opprette applet!\n"
 msgid "Properties..."
 msgstr "Egenskaper ..."
 
-#: applets/gen_util/tasklist.c:532
+#: applets/gen_util/tasklist.c:534
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:533
+#: applets/gen_util/tasklist.c:535
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
@@ -749,8 +752,9 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-msgid "CDE Menus"
-msgstr "CDE-menyer"
+#, fuzzy
+msgid "CDE Applications"
+msgstr "Applikasjoner"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -1122,52 +1126,52 @@ msgstr ""
 msgid "Choose a program to run"
 msgstr "Velg et program som skal kjøres"
 
-#: gnome-panel/gnome-run.c:677
+#: gnome-panel/gnome-run.c:679
 msgid "Executable name for selected application"
 msgstr "Navn på kjørbar fil for valgt applikasjon"
 
-#: gnome-panel/gnome-run.c:690
+#: gnome-panel/gnome-run.c:692
 msgid "_Browse..."
 msgstr "_Bla gjennom..."
 
-#: gnome-panel/gnome-run.c:699
+#: gnome-panel/gnome-run.c:701
 msgid "Run in _terminal"
 msgstr "Kjør i _terminal"
 
-#: gnome-panel/gnome-run.c:925
+#: gnome-panel/gnome-run.c:927
 #, c-format
 msgid "Will run '%s'"
 msgstr "Kjører '%s'"
 
-#: gnome-panel/gnome-run.c:936 gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
 msgid "No program selected"
 msgstr "Ingen program valgt"
 
-#: gnome-panel/gnome-run.c:1059
+#: gnome-panel/gnome-run.c:1061
 msgid "A_pplications:"
 msgstr "A_pplikasjoner"
 
-#: gnome-panel/gnome-run.c:1069
+#: gnome-panel/gnome-run.c:1071
 msgid "List of Applications"
 msgstr "Liste over applikasjoner"
 
-#: gnome-panel/gnome-run.c:1070
+#: gnome-panel/gnome-run.c:1072
 msgid "Choose an application to run from the list"
 msgstr "Velg en applikasjon som skal kjøres fra listen"
 
-#: gnome-panel/gnome-run.c:1179
+#: gnome-panel/gnome-run.c:1181
 msgid "_Advanced <<"
 msgstr "_Avansert <<"
 
-#: gnome-panel/gnome-run.c:1182
+#: gnome-panel/gnome-run.c:1184
 msgid "Hide the advanced controls below this button."
 msgstr "Skjul avanserte kontroller under denne knappen."
 
-#: gnome-panel/gnome-run.c:1193
+#: gnome-panel/gnome-run.c:1195
 msgid "_Advanced >>"
 msgstr "_Avansert >>"
 
-#: gnome-panel/gnome-run.c:1196
+#: gnome-panel/gnome-run.c:1198
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
@@ -1175,11 +1179,11 @@ msgstr ""
 "Tillat å skrive inn en kommandolinje i stedet for å velge en applikasjon fra "
 "listen"
 
-#: gnome-panel/gnome-run.c:1214
+#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "Kjø_r"
 
-#: gnome-panel/gnome-run.c:1271
+#: gnome-panel/gnome-run.c:1273
 msgid "Run Program"
 msgstr "Kjør program"
 
@@ -1990,10 +1994,17 @@ msgstr "Appletens flagg"
 
 #: libpanel-applet/panel-applet.c:861
 msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr "Områder som gir hint om hvilke størrelser som er akseptable for appleten"
+msgstr ""
+"Områder som gir hint om hvilke størrelser som er akseptable for appleten"
 
-#~ msgid "Fish"
-#~ msgstr "Fisk"
+#~ msgid "Wanda"
+#~ msgstr "Wanda"
+
+#~ msgid "Your GNOME Fish's _Name:"
+#~ msgstr "_Navnet på din Gnome fisk:"
+
+#~ msgid "CDE Menus"
+#~ msgstr "CDE-menyer"
 
 #~ msgid ""
 #~ "%I:%M\n"

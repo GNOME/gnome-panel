@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.16\n"
-"POT-Creation-Date: 2002-04-14 18:31+0800\n"
+"POT-Creation-Date: 2002-04-15 18:34+0100\n"
 "PO-Revision-Date: 2002-04-11 06:59+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -53,12 +53,12 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "顯示游泳中的魚兒或其它生物"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-msgid "From Whence That Stupid Fish Came"
-msgstr "從那條蠢魚的出產地來的"
+msgid "Fish"
+msgstr "小魚"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "Wanda"
-msgstr "Wanda"
+msgid "From Whence That Stupid Fish Came"
+msgstr "從那條蠢魚的出產地來的"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
 msgid "Wanda Factory"
@@ -78,7 +78,7 @@ msgstr "GNOME 小魚 %s，當代的聖人"
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME 小魚，預言家"
 
-#: applets/fish/fish.c:484 applets/fish/fish.c:1127
+#: applets/fish/fish.c:484 applets/fish/fish.c:1116
 #, no-c-format
 msgid "%s the Fish"
 msgstr "小魚 %s"
@@ -104,11 +104,13 @@ msgid "GNOME Fish Preferences"
 msgstr "GNOME 小魚偏好設定"
 
 #: applets/fish/fish.c:718
-msgid "Your GNOME Fish's _Name:"
-msgstr "GNOME 小魚的名字(_N)："
+#, fuzzy
+msgid "_Name of GNOME fish:"
+msgstr "GNOME 小魚 Wanda"
 
 #: applets/fish/fish.c:735
-msgid "The Animation _Filename:"
+#, fuzzy
+msgid "_Animation filename:"
 msgstr "動畫檔案名稱(_F)："
 
 #: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1226
@@ -122,7 +124,8 @@ msgid "Command to _execute when fish is clicked:"
 msgstr "按下小魚時執行以下指令(_E)："
 
 #: applets/fish/fish.c:770
-msgid "Frame_s In Animation:"
+#, fuzzy
+msgid "Frame_s in animation:"
 msgstr "動畫格數(_S)："
 
 #: applets/fish/fish.c:788
@@ -133,7 +136,7 @@ msgstr "每格的暫停時間 [秒](_P)："
 msgid "_Rotate on vertical panels"
 msgstr "使用垂直面板時要旋轉面板程式(_R)"
 
-#: applets/fish/fish.c:988
+#: applets/fish/fish.c:976
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -144,7 +147,7 @@ msgstr ""
 "\n"
 "請回到小魚屬性對話窗。"
 
-#: applets/fish/fish.c:1008
+#: applets/fish/fish.c:997
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -152,15 +155,15 @@ msgstr ""
 "該換水了！\n"
 "(看一下今天的日期)"
 
-#: applets/fish/fish.c:1142
+#: applets/fish/fish.c:1131
 msgid "(with minor help from George)"
 msgstr "(還有 George 的幫忙)"
 
-#: applets/fish/fish.c:1160
+#: applets/fish/fish.c:1149
 msgid "The GNOME Fish Applet"
 msgstr "GNOME 小魚面板程式"
 
-#: applets/fish/fish.c:1163
+#: applets/fish/fish.c:1152
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -220,7 +223,7 @@ msgid "Utility"
 msgstr "公用程式"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:531
+#: applets/gen_util/tasklist.c:533
 msgid "Window List"
 msgstr "視窗清單"
 
@@ -237,19 +240,19 @@ msgstr "產生一般面板程式的工廠"
 msgid "Check for mail"
 msgstr "檢查郵件"
 
-#: applets/gen_util/clock.c:148 applets/gen_util/clock.c:408
+#: applets/gen_util/clock.c:148 applets/gen_util/clock.c:445
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: applets/gen_util/clock.c:150 applets/gen_util/clock.c:410
+#: applets/gen_util/clock.c:150 applets/gen_util/clock.c:447
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: applets/gen_util/clock.c:153 applets/gen_util/clock.c:413
+#: applets/gen_util/clock.c:153 applets/gen_util/clock.c:450
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:155 applets/gen_util/clock.c:415
+#: applets/gen_util/clock.c:155 applets/gen_util/clock.c:452
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -258,70 +261,71 @@ msgid "%a %b %d"
 msgstr "%b %d(%a)"
 
 #. Show date in tooltip
-#: applets/gen_util/clock.c:230
+#: applets/gen_util/clock.c:267
 msgid "%A %B %d"
 msgstr "%B %d(%A)"
 
-#: applets/gen_util/clock.c:324
+#: applets/gen_util/clock.c:361
 msgid "Computer Clock"
 msgstr "電腦時鐘"
 
-#: applets/gen_util/clock.c:448
+#: applets/gen_util/clock.c:485
 msgid "%A, %B %d %Y"
 msgstr "%B %d %Y(%A)"
 
-#: applets/gen_util/clock.c:828
+#: applets/gen_util/clock.c:866
 msgid "Clock Preferences"
 msgstr "時鐘偏好設定"
 
-#: applets/gen_util/clock.c:855
+#: applets/gen_util/clock.c:893
 msgid "Clock type"
 msgstr "時鐘樣式"
 
-#: applets/gen_util/clock.c:865
+#: applets/gen_util/clock.c:903
 msgid "_12 hour"
 msgstr "_12 小時制"
 
-#: applets/gen_util/clock.c:871
+#: applets/gen_util/clock.c:909
 msgid "_24 hour"
 msgstr "_24 小時制"
 
-#: applets/gen_util/clock.c:876
+#: applets/gen_util/clock.c:914
 msgid "_UNIX time"
 msgstr "_Unix 時間"
 
-#: applets/gen_util/clock.c:880
+#: applets/gen_util/clock.c:918
 msgid "_Internet time"
 msgstr "_Internet 時間"
 
-#: applets/gen_util/clock.c:917
+#: applets/gen_util/clock.c:955
 msgid "Show _seconds"
 msgstr "顯示秒數(_S)"
 
-#: applets/gen_util/clock.c:927
+#: applets/gen_util/clock.c:965
 msgid "Show _date"
 msgstr "顯示日期(_D)"
 
-#: applets/gen_util/clock.c:937
-msgid "Use _GMT"
+#: applets/gen_util/clock.c:975
+#, fuzzy
+msgid "Use _UTC"
 msgstr "使用 _GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1016 applets/gen_util/mailcheck.c:1590
-#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:519
+#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:521
 #: gnome-panel/menu.c:237
 msgid "translator_credits"
 msgstr "Abel Cheung <maddog@linux.org.hk>"
 
-#: applets/gen_util/clock.c:1034
+#: applets/gen_util/clock.c:1083
 msgid "Clock Applet"
 msgstr "時鐘面板程式"
 
-#: applets/gen_util/clock.c:1035
+#: applets/gen_util/clock.c:1084
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1997-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1036
+#: applets/gen_util/clock.c:1085
 msgid "The Clock Applet displays current time and date"
 msgstr "時鐘面板程式可顯示目前的時間及日期"
 
@@ -603,11 +607,11 @@ msgstr "無法建立面板程式！\n"
 msgid "Properties..."
 msgstr "屬性..."
 
-#: applets/gen_util/tasklist.c:532
+#: applets/gen_util/tasklist.c:534
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:533
+#: applets/gen_util/tasklist.c:535
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr "視窗清單會列出包含所有視窗的清單，方便瀏覽。"
@@ -737,8 +741,9 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-msgid "CDE Menus"
-msgstr "CDE 選單"
+#, fuzzy
+msgid "CDE Applications"
+msgstr "應用程式"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -1106,62 +1111,62 @@ msgstr ""
 msgid "Choose a program to run"
 msgstr "選擇要執行的程式"
 
-#: gnome-panel/gnome-run.c:677
+#: gnome-panel/gnome-run.c:679
 msgid "Executable name for selected application"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:690
+#: gnome-panel/gnome-run.c:692
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: gnome-panel/gnome-run.c:699
+#: gnome-panel/gnome-run.c:701
 msgid "Run in _terminal"
 msgstr "在終端機中執行(_T)"
 
-#: gnome-panel/gnome-run.c:925
+#: gnome-panel/gnome-run.c:927
 #, c-format
 msgid "Will run '%s'"
 msgstr "將要執行‘%s’"
 
-#: gnome-panel/gnome-run.c:936 gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
 msgid "No program selected"
 msgstr "未選擇程式"
 
-#: gnome-panel/gnome-run.c:1059
+#: gnome-panel/gnome-run.c:1061
 msgid "A_pplications:"
 msgstr "應用程式(_P)"
 
-#: gnome-panel/gnome-run.c:1069
+#: gnome-panel/gnome-run.c:1071
 msgid "List of Applications"
 msgstr "應用程式清單"
 
-#: gnome-panel/gnome-run.c:1070
+#: gnome-panel/gnome-run.c:1072
 msgid "Choose an application to run from the list"
 msgstr "在清單中選擇要執行的應用程式"
 
-#: gnome-panel/gnome-run.c:1179
+#: gnome-panel/gnome-run.c:1181
 msgid "_Advanced <<"
 msgstr "進階選項(_A) <<"
 
-#: gnome-panel/gnome-run.c:1182
+#: gnome-panel/gnome-run.c:1184
 msgid "Hide the advanced controls below this button."
 msgstr "隱藏此按鈕之下的進階選項。"
 
-#: gnome-panel/gnome-run.c:1193
+#: gnome-panel/gnome-run.c:1195
 msgid "_Advanced >>"
 msgstr "進階選項(_A) >>"
 
-#: gnome-panel/gnome-run.c:1196
+#: gnome-panel/gnome-run.c:1198
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
 msgstr "允許直接輸入指令列來代替由列表中選擇應用程式"
 
-#: gnome-panel/gnome-run.c:1214
+#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "執行(_R)"
 
-#: gnome-panel/gnome-run.c:1271
+#: gnome-panel/gnome-run.c:1273
 msgid "Run Program"
 msgstr "執行程式"
 
@@ -1968,6 +1973,15 @@ msgstr "面板程式的旗標"
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
+#~ msgid "Wanda"
+#~ msgstr "Wanda"
+
+#~ msgid "Your GNOME Fish's _Name:"
+#~ msgstr "GNOME 小魚的名字(_N)："
+
+#~ msgid "CDE Menus"
+#~ msgstr "CDE 選單"
+
 #~ msgid "Remove from panel"
 #~ msgstr "從面板中移除"
 
@@ -1997,9 +2011,6 @@ msgstr ""
 
 #~ msgid "_Enable shortcut keys"
 #~ msgstr "啟用捷徑鍵(_E)"
-
-#~ msgid "Fish"
-#~ msgstr "小魚"
 
 #~ msgid "Clock Properties"
 #~ msgstr "時鐘偏好設定"
@@ -2123,9 +2134,6 @@ msgstr ""
 
 #~ msgid "About GNOME"
 #~ msgstr "關於 GNOME"
-
-#~ msgid "Wanda the GNOME Fish"
-#~ msgstr "GNOME 小魚 Wanda"
 
 #~ msgid "GNOME Login"
 #~ msgstr "GNOME 登入"
