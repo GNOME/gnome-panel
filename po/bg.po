@@ -1,19 +1,22 @@
 # Bulgarian translation of gnome-panel.
 # Copyright (C) 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
-# Updated by Vladimir "Kaladan" Petkov <vpetkov@i-space.org>, 2004
-# Updated by Peter "Peshka" Slavov <pslavov@i-space.org>, 2004
+# Updated by Vladimir "Kaladan" Petkov <vpetkov@i-space.org>, 2004.
+# Updated by Peter "Peshka" Slavov <pslavov@i-space.org>, 2004.
+# Rostislav Raykov <zbrox@i-space.org>, 2004.
+# Vladimir "Kaladan" Petkov <vpetkov@i-space.org>, 2004.
+# 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 08:31+0100\n"
-"PO-Revision-Date: 2004-07-04 13:23+0300\n"
-"Last-Translator: Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org>\n"
+"POT-Creation-Date: 2004-07-29 03:39+0200\n"
+"PO-Revision-Date: 2004-07-29 11:57+0300\n"
+"Last-Translator: Rostislav Raykov <zbrox@i-space.org>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
 "MIME-Version: (null)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
@@ -186,7 +189,6 @@ msgstr ""
 msgid "Custom format"
 msgstr "Личен формат"
 
-# ##
 #: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
@@ -1049,7 +1051,6 @@ msgstr "_Настройки"
 msgid "Create new file in the given directory"
 msgstr "Създаване на нов файл в посочената директория"
 
-# ##
 #: gnome-panel/gnome-panel-preferences.c:319
 #: gnome-panel/gnome-panel-screenshot.c:708
 #, c-format
@@ -1574,7 +1575,7 @@ msgstr "Стартиране на команда"
 
 #: gnome-panel/panel-addto.c:168
 msgid "Custom Application Launcher"
-msgstr ""
+msgstr "Пускане на избрана програма"
 
 #: gnome-panel/panel-addto.c:169
 msgid "Create a new launcher"
@@ -1602,7 +1603,7 @@ msgstr "Меню, създадено от потребителя"
 
 #: gnome-panel/panel-addto.c:213
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Изскачащ шкаф, в който да се пазят други обекти"
 
 #: gnome-panel/panel-addto.c:301
 msgid "(empty)"
@@ -1799,6 +1800,10 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Списък с IID-та на аплети, които панела ще игнорира. Така ще забраните на "
+"определени аплети да се зареждат или показват в менюто. Примерно, за да "
+"забраните аплета за пускане на програми добавяте \"OAFIID: GNOME_MiniCommanderApplet\" "
+"към списъка. Панела трябва да бъде рестартиран, за да влезнат в действие промените."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1807,7 +1812,7 @@ msgstr "Скорост на анимацията"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "IID-та на аплети, които да се забранят за зареждане"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -2288,22 +2293,20 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Неизвестна грешка при опита за отваряне на %s"
 
 #: gnome-panel/panel-recent.c:210
-#, fuzzy
 msgid "Clear recent document history?"
-msgstr "Последни Документи"
+msgstr "Изчистване списъка със скорошните документи?"
 
 #: gnome-panel/panel-recent.c:211
 msgid "This will clear the contents of the Recent Documents menu."
-msgstr ""
+msgstr "Това ще изчисти съдържанието на менюто \"Скорошни документи\""
 
 #: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
 msgstr "Последни Документи"
 
 #: gnome-panel/panel-recent.c:271
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Последни Документи"
+msgstr "Изчистване на списъка със скорошните документи"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2416,9 +2419,8 @@ msgid "_Force quit"
 msgstr "_Насилствен Изход"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Календар"
+msgstr "Изчистване"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2746,6 +2748,9 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
+"Местонахождението на панела по Y-оста. Този ключ се използва само при неразгърнат режим."
+"В разгърнатия режим, този ключ се игнорира и панела се поставя на края на екрана обозначен "
+"от ключа за ориентация."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -3573,7 +3578,6 @@ msgstr "Най-малки"
 #~ msgid "_Check for mail"
 #~ msgstr "_Проверявай пощата"
 
-# ##
 #~ msgid "There was an error executing %s: %s"
 #~ msgstr "Имаше грешка при изпълнението на %s: %s"
 
@@ -4299,7 +4303,6 @@ msgstr "Най-малки"
 #~ msgid "You already have a status dock on the panel. You can only have one"
 #~ msgstr "Вече има един status dock на панела. Повече не може."
 
-# ##
 #~ msgid "Status dock"
 #~ msgstr "Док за статус"
 
@@ -4842,10 +4845,7 @@ msgstr "Най-малки"
 #~ msgid "Swap Delete/Backspace"
 #~ msgstr "Размени Delete/Backspace"
 
-# #: gnome-terminal/gnome-terminal.c:1089
-# #msgid "Browse..."
-# #msgstr "Избери..."
-#~ msgid "Terminal Class:"
+#~ msgid "Browse..."#~ msgstr "Избери..."#~ msgid "Terminal Class:"
 #~ msgstr "Терминален клас:"
 
 #~ msgid "Use --login by default"
@@ -4918,7 +4918,6 @@ msgstr "Най-малки"
 #~ msgid "Point Size:"
 #~ msgstr "Размер на панела"
 
-# ###
 #, fuzzy
 #~ msgid "Spacing:"
 #~ msgstr "Запазвам"
@@ -4984,7 +4983,6 @@ msgstr "Най-малки"
 #~ msgid "GNOME Main Site"
 #~ msgstr "Главна страница на GNOME"
 
-# ##
 #~ msgid "GNOME Developers' Site"
 #~ msgstr "Сайт на разработчиците"
 
@@ -5148,14 +5146,12 @@ msgstr "Най-малки"
 #~ msgid "Started but has not yet reported state."
 #~ msgstr "Стартиран, но без отговор за състоянието."
 
-# ###
 #~ msgid "Running"
 #~ msgstr "Стартирам"
 
 #~ msgid "A normal member of the session."
 #~ msgstr "Нормален член на сесията"
 
-# ###
 #~ msgid "Saving"
 #~ msgstr "Запазвам"
 
@@ -5282,7 +5278,6 @@ msgstr "Най-малки"
 #~ msgid "Start Session"
 #~ msgstr "Започни сесия"
 
-# ##
 #~ msgid "Cancel Login"
 #~ msgstr "Прекъсни Login"
 
@@ -5615,7 +5610,6 @@ msgstr "Най-малки"
 #~ msgid "Add this to Favorites menu"
 #~ msgstr "Добави това към менюто 'Обичайни'"
 
-# ##
 #~ msgid "Favorites menu"
 #~ msgstr "Меню с обичайни неща"
 
@@ -6354,7 +6348,6 @@ msgstr "Най-малки"
 #~ msgid "_New Window"
 #~ msgstr "_Нов прозорец"
 
-# ##
 #~ msgid "_Add Bookmark"
 #~ msgstr "_Добави отбелязка"
 
@@ -6379,7 +6372,6 @@ msgstr "Най-малки"
 #~ msgid "Show History Window"
 #~ msgstr "Показва прозореца с историята"
 
-# ##
 #~ msgid "_Bookmarks"
 #~ msgstr "_Отбелязки"
 
@@ -6506,7 +6498,6 @@ msgstr "Най-малки"
 #~ msgid "Red Hat menus"
 #~ msgstr "Red Hat меню"
 
-# ##
 #~ msgid ""
 #~ "Zvt terminal widget: \n"
 #~ "    Michael Zucchi (zucchi@zedzone.mmc.com.au)"
