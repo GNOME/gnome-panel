@@ -667,10 +667,6 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
     pg_return_val_if_fail(panel_client != NULL, NULL);
   }
 
-
-{  static volatile int stop_here = 0;
- while(stop_here);}
-
   applet_servant->pspot = GNOME_Panel_add_applet(panel_client, applet_obj,
 						 (char *)goad_id,
 						 &privcfg,&globcfg,
@@ -706,7 +702,7 @@ applet_widget_new(const char *goad_id)
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 
-	CD(applet) = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
+	applet->corbadat = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
 	g_return_val_if_fail(corbadat!=NULL,NULL);
 

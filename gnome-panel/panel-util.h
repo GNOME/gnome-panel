@@ -5,6 +5,10 @@
 
 BEGIN_GNOME_DECLS
 
+#ifndef __PANEL_WIDGET_H__
+typedef struct _PanelWidget            PanelWidget;
+#endif
+
 int string_is_in_list(GSList *list,char *text);
 GtkWidget * create_text_entry(GtkWidget *table,
 			      char *history_id,
