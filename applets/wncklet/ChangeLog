@@ -1,3 +1,15 @@
+2005-01-10  Vincent Untz  <vincent@vuntz.net>
+
+	Activate show desktop button on drag an drop
+	Patch from Maciej Katafiasz <mnews2@wp.pl>
+	Fix bug #141900
+
+	* showdesktop.c: (button_motion_timeout): new, activate the button
+	(button_drag_leave): new, remove the timeout
+	(button_drag_motion): new, add a timeout to activate the button
+	(applet_destroyed): remove the timeout if it exists
+	(show_desktop_applet_fill): connect to drag signals
+
 2005-01-04  Vincent Noel  <vnoel@cox.net>
 
 	Patch by Søren Sandmann and me. Fixes bug 160450.

@@ -29,6 +29,7 @@
 #include <gtk/gtkimage.h>
 #include <gtk/gtkstock.h>
 #include <gtk/gtkmessagedialog.h>
+#include <gtk/gtkdnd.h>
 #include <libgnomeui/gnome-help.h>
 #include <libgnomeui/gnome-icon-theme.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
@@ -37,6 +38,9 @@
 #include <gdk/gdkx.h>
 
 #include <string.h>
+
+#define TIMEOUT_ACTIVATE 1000
+
 
 typedef struct {
         /* widgets */
@@ -52,6 +56,7 @@ typedef struct {
         WnckScreen *wnck_screen;
 
         guint showing_desktop : 1;
+        guint button_activate;
 
 	GnomeIconTheme *icon_theme;
 } ShowDesktopData;
@@ -282,6 +287,12 @@ applet_destroyed (GtkWidget       *applet,
 		sdd->about_dialog =  NULL;
 	}
 
+	if (sdd->button_activate != 0) {
+		g_source_remove (sdd->button_activate);
+		sdd->button_activate = 0;
+	}
+
+
         g_free (sdd);
 }
 
@@ -294,6 +305,48 @@ do_not_eat_button_press (GtkWidget      *widget,
         }
 
         return FALSE;
+}
+
+static gboolean
+button_motion_timeout (gpointer data)
+{
+	ShowDesktopData *sdd = (ShowDesktopData*) data;
+
+	sdd->button_activate = 0;
+
+	g_signal_emit_by_name (G_OBJECT (sdd->button), "clicked", sdd);
+
+	return FALSE;
+}
+
+static void
+button_drag_leave (GtkWidget          *widget,
+		   GdkDragContext     *context,
+		   guint               time,
+		   ShowDesktopData    *sdd)
+{
+	if (sdd->button_activate != 0) {
+		g_source_remove (sdd->button_activate);
+		sdd->button_activate = 0;
+	}
+}
+
+static gboolean
+button_drag_motion (GtkWidget          *widget,
+		    GdkDragContext     *context,
+		    gint                x,
+		    gint                y,
+		    guint               time,
+		    ShowDesktopData    *sdd)
+{
+
+	if (sdd->button_activate == 0)
+		sdd->button_activate = g_timeout_add (TIMEOUT_ACTIVATE,
+						      button_motion_timeout,
+						      sdd);
+	gdk_drag_status (context, 0, time);
+	
+	return TRUE;
 }
 
 gboolean
@@ -411,7 +464,16 @@ show_desktop_applet_fill (PanelApplet *applet)
                           G_CALLBACK (applet_destroyed),
                           sdd);
 
-        gtk_widget_show_all (sdd->applet);
+	gtk_drag_dest_set (GTK_WIDGET(sdd->button), 0, NULL, 0, 0);
+
+	g_signal_connect (G_OBJECT(sdd->button), "drag_motion",
+			  G_CALLBACK (button_drag_motion),
+			  sdd);
+	g_signal_connect (G_OBJECT(sdd->button), "drag_leave",
+			  G_CALLBACK (button_drag_leave),
+			  sdd);
+
+  	gtk_widget_show_all (sdd->applet);
 
         return TRUE;
 }
