@@ -311,18 +311,18 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 				     APPLET_EVENT_MASK) &
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
-	gtk_widget_show (ebox);
 
 	socket = gtk_socket_new();
 
 	g_return_val_if_fail(socket!=NULL,0);
 
-	gtk_widget_show (socket);
 	gtk_container_add(GTK_CONTAINER(ebox),socket);
 
 	gtk_signal_connect_after(GTK_OBJECT(socket),"destroy",
 				 GTK_SIGNAL_FUNC(extern_socket_destroy),
 				 ext);
+
+	gtk_widget_show_all (ebox);
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/

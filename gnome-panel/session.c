@@ -352,7 +352,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
-		GList **sync_applets,
+		GList *sync_applets,
 		int sync_panels,
 		int sync_globals)
 {
@@ -391,11 +391,9 @@ do_session_save(GnomeClient *client,
 		for(i=0;i<applet_count;i++)
 			save_applet_configuration(i);
 	} else {
-		while(sync_applets && *sync_applets) {
-			/*printf("\nsaving: %d\n",GPOINTER_TO_INT((*sync_applets)->data));*/
-			save_applet_configuration(GPOINTER_TO_INT((*sync_applets)->data));
-			*sync_applets = my_g_list_pop_first(*sync_applets);
-		}
+		GList *li;
+		for(li = sync_applets; li!=NULL; li=g_list_next(li))
+			save_applet_configuration(GPOINTER_TO_INT(li->data));
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
@@ -466,7 +464,7 @@ panel_config_sync(void)
 	   panels_to_sync ||
 	   globals_to_sync) {
 		do_session_save(client,need_complete_save,
-				&applets_to_sync,panels_to_sync,globals_to_sync);
+				applets_to_sync,panels_to_sync,globals_to_sync);
 		need_complete_save = FALSE;
 		g_list_free(applets_to_sync);
 		applets_to_sync = NULL;
@@ -914,11 +912,13 @@ load_up_globals(void)
 	
 	for(i=0;i<LAST_TILE;i++) {
 		g_free(global_config.tile_up[i]);
-		g_snprintf(buf,256,"tile_up_%d=tile-%s-up.png",i,tile_def[i]);
+		g_snprintf(buf,256,"tiles/tile_up_%d=tile-%s-up.png",
+			   i, tile_def[i]);
 		global_config.tile_up[i] = gnome_config_get_string(buf);
 
 		g_free(global_config.tile_down[i]);
-		g_snprintf(buf,256,"tile_down_%d=tile-%s-down.png",i,tile_def[i]);
+		g_snprintf(buf,256,"tiles/tile_down_%d=tile-%s-down.png",
+			   i,tile_def[i]);
 		global_config.tile_down[i] = gnome_config_get_string(buf);
 
 		g_snprintf(buf,256,"tile_border_%d=2",i);
