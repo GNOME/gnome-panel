@@ -25,6 +25,7 @@
 
 #include <config.h>
 
+#include <string.h>
 #include <libgnome/libgnome.h>
 #include <libgnomevfs/gnome-vfs-application-registry.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
@@ -35,6 +36,7 @@
 #include "menu.h"
 #include "menu-util.h"
 #include "panel-util.h"
+#include "panel-globals.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
 
@@ -234,6 +236,34 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 	gtk_widget_show (clear_recent_dialog);
 }
 
+static void
+recent_documents_tooltip_func (GtkTooltips   *tooltips,
+			       GtkWidget     *menu_item,
+			       EggRecentItem *item,
+			       gpointer       user_data)
+{
+	char *uri;
+	char *tooltip;
+	int   offset;
+
+	uri = egg_recent_item_get_uri_for_display (item);
+	g_return_if_fail (uri != NULL);
+
+	if (g_str_has_prefix (uri, g_get_home_dir ()))
+		offset = strlen (g_get_home_dir ()) + 1;
+	else
+		offset = 0;
+
+	/* Translators: %s is a URI */
+	tooltip = g_strdup_printf (_("Open '%s'"), uri + offset);
+
+	g_free (uri);
+
+	gtk_tooltips_set_tip (tooltips, menu_item, tooltip, NULL);
+
+	g_free (tooltip);
+}
+
 void
 panel_recent_append_documents_menu (GtkWidget *top_menu)
 {
@@ -265,6 +295,9 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 
 	view = egg_recent_view_gtk_new (menu, NULL);
 
+	egg_recent_view_gtk_set_tooltip_func (view,
+					      recent_documents_tooltip_func,
+					      NULL);
 	menu_item = gtk_separator_menu_item_new ();
 	gtk_menu_append (menu, menu_item);
 
@@ -274,6 +307,10 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 			       GTK_STOCK_CLEAR,
 			       _("Clear Recent Documents"),
 			       TRUE);
+	gtk_tooltips_set_tip (panel_tooltips,
+			      menu_item,
+			      _("Clear all items from the recent documents list"),
+			      NULL);
 	gtk_menu_append (menu, menu_item);
 
 	g_signal_connect (menu_item, "activate",
