@@ -1242,7 +1242,7 @@ is_item_writable (const ShowItemMenu *sim)
 	if (sim->item_loc != NULL &&
 	    /*A HACK: but it works, don't have it edittable if it's redhat
 	      menus as they are auto generated!*/
-	    strstr (sim->item_loc,"/.gnome/apps-redhat/") == NULL &&
+	    strstr (sim->item_loc,"/" DOT_GNOME "/apps-redhat/") == NULL &&
 	    /*if it's a kdelnk file, don't let it be editted*/
 	    ! is_ext (sim->item_loc, ".kdelnk") &&
 	    access (sim->item_loc, W_OK) == 0) {
@@ -1259,7 +1259,7 @@ is_item_writable (const ShowItemMenu *sim)
 		if (access (sim->mf->menudir, W_OK) == 0 &&
 		   /*A HACK: but it works, don't have it edittable if it's redhat
 		     menus as they are auto generated!*/
-		   strstr (sim->mf->menudir, ".gnome/apps-redhat/") == NULL)
+		   strstr (sim->mf->menudir, DOT_GNOME "apps-redhat/") == NULL)
 			return TRUE;
 	}
 	return FALSE;
@@ -1533,7 +1533,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						   G_CALLBACK(add_app_to_personal),
 						   (gpointer)sim->item_loc);
 				/*ummmm slightly ugly but should work 99% of time*/
-				if (strstr(sim->item_loc,"/.gnome/apps/") != NULL)
+				if (strstr(sim->item_loc, "/" DOT_GNOME "apps/") != NULL)
 					gtk_widget_set_sensitive(menuitem,FALSE);
 			}
 
@@ -1661,7 +1661,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   G_CALLBACK(add_app_to_personal),
 					   sim->mf->menudir);
 			/*ummmm slightly ugly but should work 99% of time*/
-			if(strstr(sim->mf->menudir, "/.gnome/apps") != NULL)
+			if(strstr(sim->mf->menudir, "/" DOT_GNOME "apps") != NULL)
 				gtk_widget_set_sensitive(menuitem, FALSE);
 
 			menuitem = gtk_image_menu_item_new ();
