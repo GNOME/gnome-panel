@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 19:12-0500\n"
-"PO-Revision-Date: 2004-12-03 18:58-0400\n"
+"POT-Creation-Date: 2004-12-19 05:34-0500\n"
+"PO-Revision-Date: 2004-12-19 18:58-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,8 +45,8 @@ msgstr "_About"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:1647
-#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:331
+#: gnome-panel/drawer.c:605 gnome-panel/panel-action-button.c:727
+#: gnome-panel/panel-context-menu.c:326 gnome-panel/panel-menu-bar.c:302
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Help"
@@ -185,7 +185,7 @@ msgstr "Custom format"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
 #: applets/fish/fish.c:137 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:436 applets/wncklet/window-list.c:114
+#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:202
 #: applets/wncklet/workspace-switcher.c:508
@@ -235,9 +235,10 @@ msgstr "Use _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:466
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
-#: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
+#: applets/wncklet/workspace-switcher.c:539
+#: gnome-panel/panel-context-menu.c:127
 msgid "translator-credits"
 msgstr ""
 "Maintainer: Adam Weinberger <adamw@gnome.org>\n"
@@ -678,24 +679,24 @@ msgstr "Click here to restore hidden windows."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Click here to hide all windows and show the desktop."
 
-#: applets/wncklet/showdesktop.c:325
+#: applets/wncklet/showdesktop.c:326
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Failed to load %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:326
+#: applets/wncklet/showdesktop.c:328
 msgid "File not found"
 msgstr "File not found"
 
-#: applets/wncklet/showdesktop.c:356 applets/wncklet/showdesktop.c:477
+#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:479
 msgid "Show Desktop Button"
 msgstr "Show Desktop Button"
 
-#: applets/wncklet/showdesktop.c:480
+#: applets/wncklet/showdesktop.c:482
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "This button lets you hide all windows and show the desktop."
 
-#: applets/wncklet/showdesktop.c:521
+#: applets/wncklet/showdesktop.c:523
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -997,16 +998,16 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Can't find an empty spot"
 
-#: gnome-panel/button-widget.c:197
+#: gnome-panel/button-widget.c:226
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Failed to load image %s"
 
-#: gnome-panel/button-widget.c:406
+#: gnome-panel/button-widget.c:394
 msgid "none"
 msgstr "none"
 
-#: gnome-panel/button-widget.c:411
+#: gnome-panel/button-widget.c:399
 msgid "file not found"
 msgstr "file not found"
 
@@ -1015,8 +1016,8 @@ msgstr "file not found"
 msgid "Drawer"
 msgstr "Drawer"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822 gnome-panel/menu.c:1597
-#: gnome-panel/panel-action-button.c:132
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:282
 msgid "_Properties"
 msgstr "_Properties"
 
@@ -1100,90 +1101,31 @@ msgstr ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 
-#: gnome-panel/menu.c:154
-msgid "And many, many others..."
-msgstr "And many, many others..."
-
-#: gnome-panel/menu.c:179
-msgid "The GNOME Panel"
-msgstr "The GNOME Panel"
-
-#: gnome-panel/menu.c:182
-msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
-msgstr ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
-
-#: gnome-panel/menu.c:212 gnome-panel/panel-action-button.c:201
-#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:542
-#, c-format
-msgid "Cannot execute '%s'"
-msgstr "Cannot execute '%s'"
-
-#: gnome-panel/menu.c:213
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
-#: gnome-panel/menu.c:214
-msgid "About GNOME"
-msgstr "About GNOME"
-
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:124
 msgid "Cannot launch entry"
 msgstr "Cannot launch entry"
 
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:136
 msgid "Cannot load entry"
 msgstr "Cannot load entry"
 
-#: gnome-panel/menu.c:914
+#: gnome-panel/menu.c:800
 msgid "Add this launcher to panel"
 msgstr "Add this launcher to panel"
 
-#: gnome-panel/menu.c:931
+#: gnome-panel/menu.c:817
 msgid "Entire menu"
 msgstr "Entire menu"
 
-#: gnome-panel/menu.c:941
+#: gnome-panel/menu.c:827
 msgid "Add this as drawer to panel"
 msgstr "Add this as drawer to panel"
 
-#: gnome-panel/menu.c:953
+#: gnome-panel/menu.c:839
 msgid "Add this as menu to panel"
 msgstr "Add this as menu to panel"
 
-#: gnome-panel/menu.c:1502
-msgid "You cannot remove your last panel."
-msgstr "You cannot remove your last panel."
-
-#: gnome-panel/menu.c:1551
-msgid "_Delete This Panel..."
-msgstr "_Delete This Panel..."
-
-#: gnome-panel/menu.c:1554 gnome-panel/menu.c:1582
-msgid "_Delete This Panel"
-msgstr "_Delete This Panel"
-
-#: gnome-panel/menu.c:1567
-msgid "_Add to Panel..."
-msgstr "_Add to Panel..."
-
-#: gnome-panel/menu.c:1611
-msgid "_New Panel"
-msgstr "_New Panel"
-
-#: gnome-panel/menu.c:1658
-msgid "A_bout Panels"
-msgstr "A_bout Panels"
-
-#: gnome-panel/menu.c:1672
-msgid "About _GNOME"
-msgstr "About _GNOME"
-
-#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:223
+#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:182
 msgid "Applications"
 msgstr "Applications"
 
@@ -1203,19 +1145,26 @@ msgstr "_Kill Screensaver Daemon"
 msgid "Restart _Screensaver Daemon"
 msgstr "Restart _Screensaver Daemon"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:57
+#: gnome-panel/panel-util.c:542
+#, c-format
+msgid "Cannot execute '%s'"
+msgstr "Cannot execute '%s'"
+
+#: gnome-panel/panel-action-button.c:289
 msgid "Lock screen"
 msgstr "Lock screen"
 
-#: gnome-panel/panel-action-button.c:267
+#: gnome-panel/panel-action-button.c:290
 msgid "Protect your computer from unauthorized use"
 msgstr "Protect your computer from unauthorized use"
 
-#: gnome-panel/panel-action-button.c:278
+#: gnome-panel/panel-action-button.c:302
 msgid "Log Out"
 msgstr "Log Out"
 
-#: gnome-panel/panel-action-button.c:279
+#: gnome-panel/panel-action-button.c:303
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1223,35 +1172,35 @@ msgstr ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 
-#: gnome-panel/panel-action-button.c:288
+#: gnome-panel/panel-action-button.c:313
 msgid "Run Application..."
 msgstr "Run Application..."
 
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:314
 msgid "Run an Application by entering a command"
 msgstr "Run an Application by entering a command"
 
-#: gnome-panel/panel-action-button.c:298
+#: gnome-panel/panel-action-button.c:324
 msgid "Search for Files..."
 msgstr "Search for Files..."
 
-#: gnome-panel/panel-action-button.c:299
+#: gnome-panel/panel-action-button.c:325
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find files, folders, and documents on your computer"
 
-#: gnome-panel/panel-action-button.c:307
+#: gnome-panel/panel-action-button.c:334
 msgid "Take Screenshot..."
 msgstr "Take Screenshot..."
 
-#: gnome-panel/panel-action-button.c:308
+#: gnome-panel/panel-action-button.c:335
 msgid "Take a screenshot of your desktop"
 msgstr "Take a screenshot of your desktop"
 
-#: gnome-panel/panel-action-button.c:316
+#: gnome-panel/panel-action-button.c:344
 msgid "Force Quit"
 msgstr "Force Quit"
 
-#: gnome-panel/panel-action-button.c:317
+#: gnome-panel/panel-action-button.c:345
 msgid "Force a misbehaving application to quit"
 msgstr "Force a misbehaving application to quit"
 
@@ -1291,30 +1240,30 @@ msgstr "A custom menu bar"
 msgid "A pop out drawer to store other items in"
 msgstr "A pop-out drawer to store other items in"
 
-#: gnome-panel/panel-addto.c:239
+#: gnome-panel/panel-addto.c:240
 msgid "(empty)"
 msgstr "(empty)"
 
-#: gnome-panel/panel-addto.c:378 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:379 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "query returned exception %s\n"
 
-#: gnome-panel/panel-addto.c:847
+#: gnome-panel/panel-addto.c:885
 #, c-format
 msgid "Add to %s"
 msgstr "Add to %s"
 
-#: gnome-panel/panel-addto.c:849
+#: gnome-panel/panel-addto.c:887
 msgid "Add to the panel"
 msgstr "Add to the panel"
 
-#: gnome-panel/panel-addto.c:855
+#: gnome-panel/panel-addto.c:893
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Select an _item to add to %s:"
 
-#: gnome-panel/panel-addto.c:858
+#: gnome-panel/panel-addto.c:896
 msgid "Select an _item to add to the panel:"
 msgstr "Select an _item to add to the panel:"
 
@@ -1379,6 +1328,59 @@ msgstr "Error loading gconf directory '%s': %s"
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Error getting value for '%s': %s"
+
+#: gnome-panel/panel-context-menu.c:58
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: gnome-panel/panel-context-menu.c:59
+msgid "About GNOME"
+msgstr "About GNOME"
+
+#: gnome-panel/panel-context-menu.c:117
+msgid "And many, many others..."
+msgstr "And many, many others..."
+
+#: gnome-panel/panel-context-menu.c:142
+msgid "The GNOME Panel"
+msgstr "The GNOME Panel"
+
+#: gnome-panel/panel-context-menu.c:145
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+
+#: gnome-panel/panel-context-menu.c:185
+msgid "You cannot remove your last panel."
+msgstr "You cannot remove your last panel."
+
+#: gnome-panel/panel-context-menu.c:234
+msgid "_Delete This Panel..."
+msgstr "_Delete This Panel..."
+
+#: gnome-panel/panel-context-menu.c:237 gnome-panel/panel-context-menu.c:267
+msgid "_Delete This Panel"
+msgstr "_Delete This Panel"
+
+#: gnome-panel/panel-context-menu.c:251
+msgid "_Add to Panel..."
+msgstr "_Add to Panel..."
+
+#: gnome-panel/panel-context-menu.c:297
+msgid "_New Panel"
+msgstr "_New Panel"
+
+#: gnome-panel/panel-context-menu.c:337
+msgid "A_bout Panels"
+msgstr "A_bout Panels"
+
+#: gnome-panel/panel-context-menu.c:353
+msgid "About _GNOME"
+msgstr "About _GNOME"
 
 #: gnome-panel/panel-force-quit.c:74
 msgid ""
@@ -1626,7 +1628,7 @@ msgstr "Take screenshot"
 msgid "Take window screenshot"
 msgstr "Take window screenshot"
 
-#: gnome-panel/panel-menu-bar.c:232
+#: gnome-panel/panel-menu-bar.c:191
 msgid "Actions"
 msgstr "Actions"
 
@@ -1965,15 +1967,15 @@ msgstr ""
 msgid "Open '%s'"
 msgstr "Open '%s'"
 
-#: gnome-panel/panel-recent.c:221
+#: gnome-panel/panel-recent.c:222
 msgid "Recent Documents"
 msgstr "Recent Documents"
 
-#: gnome-panel/panel-recent.c:250
+#: gnome-panel/panel-recent.c:251
 msgid "Clear Recent Documents"
 msgstr "Clear Recent Documents"
 
-#: gnome-panel/panel-recent.c:254
+#: gnome-panel/panel-recent.c:255
 msgid "Clear all items from the recent documents list"
 msgstr "Clear all items from the recent documents list"
 
@@ -2008,7 +2010,8 @@ msgstr "Select an application to view its description."
 #: gnome-panel/panel-run-dialog.c:1406
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "URI list dropped on run dialogue had wrong format (%d) or length (%d)\n"
+msgstr ""
+"URI list dropped on run dialogue had wrong format (%d) or length (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2062,7 +2065,7 @@ msgstr "Show list of known _applications"
 msgid "The icon of the command to be run."
 msgstr "The icon of the command to be run."
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:108
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:102
 msgid "_Run"
 msgstr "_Run"
 
@@ -2087,11 +2090,11 @@ msgstr ""
 "The error code is: %d\n"
 "The panel will now exit."
 
-#: gnome-panel/panel-stock-icons.c:109
+#: gnome-panel/panel-stock-icons.c:103
 msgid "_Force quit"
 msgstr "_Force quit"
 
-#: gnome-panel/panel-stock-icons.c:110
+#: gnome-panel/panel-stock-icons.c:104
 msgid "C_lear"
 msgstr "C_lear"
 
@@ -2512,32 +2515,40 @@ msgstr "Cannot display help document"
 msgid "Details: %s"
 msgstr "Details: %s"
 
-#: gnome-panel/panel.c:452
+#: gnome-panel/panel.c:460
 #, c-format
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: gnome-panel/panel.c:1211
+#: gnome-panel/panel.c:1224
+msgid "Delete this drawer?"
+msgstr "Delete this drawer?"
+
+#: gnome-panel/panel.c:1225
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
-"settings are lost. Delete this drawer?"
+"settings are lost."
 msgstr ""
 "When a drawer is deleted, the drawer and its\n"
-"settings are lost. Delete this drawer?"
+"settings are lost."
 
-#: gnome-panel/panel.c:1213
+#: gnome-panel/panel.c:1227
 msgid "Delete Drawer"
 msgstr "Delete Drawer"
 
-#: gnome-panel/panel.c:1215
+#: gnome-panel/panel.c:1229
+msgid "Delete this panel?"
+msgstr "Delete this panel?"
+
+#: gnome-panel/panel.c:1230
 msgid ""
 "When a panel is deleted, the panel and its\n"
-"settings are lost. Delete this panel?"
+"settings are lost."
 msgstr ""
 "When a panel is deleted, the panel and its\n"
-"settings are lost. Delete this panel?"
+"settings are lost."
 
-#: gnome-panel/panel.c:1217
+#: gnome-panel/panel.c:1232
 msgid "Delete Panel"
 msgstr "Delete Panel"
 
