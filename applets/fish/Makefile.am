@@ -22,11 +22,14 @@ fish_applet_LDADD = ../../panel/libpanel_applet.la \
 
 fish_applet_LINK = $(CXXLINK)
 
+FISH_BITMAPS = fishanim.png
+
 EXTRA_DIST = \
-	fish_applet.desktop	\
-	fish1.xpm		\
-	fish2.xpm		\
-	fish3.xpm
+	fish_applet.desktop \
+	$(FISH_BITMAPS)
+
+fishbitmapsdir = $(datadir)/pixmaps/fish
+fishbitmaps_DATA = $(FISH_BITMAPS)
 
 sysdir = $(datadir)/applets/Amusements
 sys_DATA = fish_applet.desktop
