@@ -8,10 +8,9 @@
 #define __APPLET_WIDGET_H__
 
 #include <gtk/gtk.h>
-#include <bonobo-activation/bonobo-activation.h>
-#include <libbonobo.h>
 
-#include <GNOME_Panel.h>
+#include "applet-object.h"
+#include "GNOME_Panel.h"
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 #define HAVE_APPLET_BIND_EVENTS 1
@@ -59,6 +58,8 @@ struct _AppletWidget
 	GtkPlug			window;
 	
 	/*< public >*/
+	AppletObject            *object;
+
 	char			*privcfgpath;
 	char			*globcfgpath;
 	
@@ -67,7 +68,7 @@ struct _AppletWidget
 	int			size;			
 	
 	/*< private >*/
-	AppletWidgetPrivate	*_priv;
+	AppletWidgetPrivate    *priv;
 };
 
 typedef struct _AppletWidgetClass	AppletWidgetClass;
@@ -141,12 +142,8 @@ GtkWidget*	applet_widget_new            (const char *iid);
 void		applet_widget_construct      (AppletWidget *applet,
 					      const char   *iid);
 
-/*set tooltip over the applet, NULL to remove a tooltip*/
-void		applet_widget_set_tooltip	(AppletWidget *applet,
-						 const char *text);
-
 /*set tooltip on a specific widget inside the applet*/
-void		applet_widget_set_widget_tooltip(AppletWidget *applet,
+void		applet_widget_set_tooltip(AppletWidget *applet,
 						 GtkWidget *widget,
 						 const char *text);
 
@@ -272,38 +269,6 @@ void		applet_widget_gtk_main_quit	(void);
 
 /*quit the panel (this will log out the gnome session)*/
 void		applet_widget_panel_quit	(void);
-
-/*
- * Used by shlib applets.
- */
-CORBA_Object applet_widget_corba_activate   (GtkWidget           *applet,
-					     PortableServer_POA   poa,
-					     const char          *iid,
-					     const char         **params,
-					     gpointer            *impl_ptr,
-					     CORBA_Environment   *ev);
-
-void         applet_widget_corba_deactivate (PortableServer_POA   poa,
-					     const char          *iid,
-					     gpointer             impl_ptr,
-					     CORBA_Environment   *ev);
-
-
-#define APPLET_ACTIVATE(func, iid, apldat) G_STMT_START {         \
-	CORBA_Environment  env;                                   \
-	CORBA_Object       obj;                                   \
-	CORBA_exception_init (&env);                              \
-	obj = func (bonobo_poa (), iid, NULL, apldat, &env);      \
-	CORBA_Object_release (obj, &env);                         \
-	CORBA_exception_free (&env);                              \
-} G_STMT_END
-
-#define APPLET_DEACTIVATE(func, iid, apldat) G_STMT_START {       \
-	CORBA_Environment env;                                    \
-	CORBA_exception_init (&env);                              \
-	func (bonobo_poa (), iid, apldat, &env);                  \
-	CORBA_exception_free (&env);                              \
-} G_STMT_END
 
 G_END_DECLS
 

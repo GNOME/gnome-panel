@@ -242,6 +242,32 @@ module GNOME {
 	interface StatusSpot {
 		oneway void remove ();
 	};
+
+	/*
+	 * GNOME-2.0 applet interface.
+	 * Everything here is negotiable at the moment.
+	 */
+	interface Applet2 : Bonobo::Unknown {
+                readonly attribute string iid;
+
+                oneway void change_orient      (in Panel::OrientType orient);
+                oneway void change_size        (in short size);
+                oneway void change_position    (in short x, in short y);
+
+                oneway void do_callback        (in string callback_name);
+                oneway void back_change        (in Panel::BackInfoType backing);
+
+                oneway void set_tooltips_state (in boolean enabled);
+
+                oneway void draw               ();
+                oneway void save_session       (in string config_path,
+						in string global_config_path,
+						in unsigned long cookie);
+
+                oneway void freeze_changes     ();
+                oneway void thaw_changes       ();
+        };
+
 };
 
 #endif /* GNOME_PANEL_IDL */
