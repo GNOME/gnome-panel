@@ -1,0 +1,34 @@
+/**
+ * gnome-ditem.idl: GNOME Desktop Item types
+ *
+ * Copyright (C) 2001  SuSE Linux AG.
+ *
+ * Authors:
+ *   Martin Baulig <baulig@suse.de>
+ */
+
+#ifndef GNOME_DITEM_IDL
+#define GNOME_DITEM_IDL
+
+#include <Bonobo.idl>
+
+module GNOME {
+
+    struct LocalizedString {
+	string locale;
+	string text;
+    };
+
+    typedef sequence<LocalizedString> LocalizedStringList;
+
+    struct DesktopEntry {
+	LocalizedStringList Name;
+	LocalizedStringList Comment;
+	string Icon;
+	boolean Terminal;
+	stringlist Exec;
+    };
+
+};
+
+#endif
