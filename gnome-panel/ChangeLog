@@ -1,3 +1,14 @@
+Tue Feb 20 02:42:31 2001  George Lebl <jirka@5z.com>
+
+	* drawer.c: make sure panels are synced when new one is created
+
+	* panel.c, basep-widget.c: don't sync panels on every statechange
+	  sync only when explicit state is set.
+
+	* basep-widget.c: when autohide mode is on, the default layer is
+	  always DOCK not the global default.  This is because it doesn't
+	  really make sense to have autohide panels that go below windows
+
 Sun Feb 18 01:53:46 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: the main menu has a title of "Main Menu" not "Panel"

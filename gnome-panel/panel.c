@@ -480,8 +480,6 @@ basep_state_change(BasePWidget *basep,
 			       ? state_restore_foreach
 			       : state_hide_foreach,
 			       (gpointer)basep);
-
-	panels_to_sync = TRUE;
 }
 
 /*static void

@@ -25,6 +25,10 @@ extern GSList *applets_last;
 extern int applet_count;
 extern GlobalConfig global_config;
 
+extern int applets_to_sync;
+extern int panels_to_sync;
+extern int need_complete_save;
+
 extern GtkTooltips *panel_tooltips;
 
 extern GSList *panel_list;
@@ -415,6 +419,7 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
 		if (drawer != NULL)
 			panel_setup (drawer->drawer);
+		panels_to_sync = TRUE;
 	} else {
 		PanelData *dr_pd;
 
@@ -424,10 +429,12 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 			g_warning ("Can't find the panel for drawer, making a new panel");
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
+			panels_to_sync = TRUE;
 		} else if ( ! IS_DRAWER_WIDGET (dr_pd->panel)) {
 			g_warning ("I found a bogus panel for a drawer, making a new one");
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
+			panels_to_sync = TRUE;
 		} else {
 			drawer = create_drawer_applet (dr_pd->panel, tooltip,
 						       pixmap, orient);

@@ -24,6 +24,10 @@
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
 
+extern int applets_to_sync;
+extern int panels_to_sync;
+extern int need_complete_save;
+
 /*global settings*/
 extern int pw_explicit_step;
 extern int pw_drawer_step;
@@ -1069,6 +1073,17 @@ basep_widget_update_winhints (BasePWidget *basep)
 		} else {
 			layer = WIN_LAYER_DOCK;
 		}
+
+		/* drawers are always in DOCK, or NORMAL */
+		if ( IS_DRAWER_WIDGET(w) &&
+		     ! global_config.normal_layer)
+			layer = WIN_LAYER_DOCK;
+
+		/* if in autohiding mode, then we always want dock by default
+		 */
+		if (basep->mode == BASEP_AUTO_HIDE)
+			layer = WIN_LAYER_DOCK;
+
 	} else if (basep->level == BASEP_LEVEL_BELOW) {
 		layer = WIN_LAYER_BELOW;
 	} else if (basep->level == BASEP_LEVEL_NORMAL) {
@@ -1080,11 +1095,6 @@ basep_widget_update_winhints (BasePWidget *basep)
 	switch (basep->state) {
 	case BASEP_SHOWN:
 	case BASEP_MOVING:
-		/* drawers are always in DOCK, or NORMAL */
-		if( IS_DRAWER_WIDGET(w) &&
-		    basep->level == BASEP_LEVEL_DEFAULT &&
-		    ! global_config.normal_layer)
-			layer = WIN_LAYER_DOCK;
 
 		gnome_win_hints_set_layer (w, layer);
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
@@ -1392,6 +1402,7 @@ basep_widget_change_params (BasePWidget *basep,
 		gtk_signal_emit(GTK_OBJECT(basep),
 				basep_widget_signals[STATE_CHANGE_SIGNAL],
 				state);
+		panels_to_sync = TRUE;
 	}
 
 	panel_widget_change_params(PANEL_WIDGET(basep->panel),
@@ -1522,6 +1533,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 	gtk_signal_emit(GTK_OBJECT(basep),
 			basep_widget_signals[STATE_CHANGE_SIGNAL],
 			state);
+	panels_to_sync = TRUE;
 
 	/* if the app did any updating of the interface, flush that for us*/
 	gdk_flush();
@@ -1598,6 +1610,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 	gtk_signal_emit(GTK_OBJECT(basep),
 			basep_widget_signals[STATE_CHANGE_SIGNAL],
 			BASEP_SHOWN);
+	panels_to_sync = TRUE;
 }
 
 void
@@ -1940,6 +1953,7 @@ basep_widget_set_state (BasePWidget *basep, BasePState state,
 		gtk_signal_emit(GTK_OBJECT(basep),
 				basep_widget_signals[STATE_CHANGE_SIGNAL],
 				state);
+	panels_to_sync = TRUE;
 }
 
 /*****
