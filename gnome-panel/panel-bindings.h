@@ -26,14 +26,11 @@
 #define __PANEL_BINDINGS_H__
 
 #include <glib/gmacros.h>
-
-#include "panel-toplevel.h"
+#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-void panel_bindings_register_toplevel   (PanelToplevel *toplevel);
-void panel_bindings_unregister_toplevel (PanelToplevel *toplevel,
-					 gboolean       unset_bindings);
+void panel_bindings_set_entries (GtkBindingSet *binding_set);
 
 G_END_DECLS
 

@@ -348,7 +348,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 
 	gtk_widget_get_pointer (GTK_WIDGET (panel_widget), &x, &y);
 
-	if (panel_widget->orient == GTK_ORIENTATION_VERTICAL)
+	if (panel_widget->orient == GTK_ORIENTATION_HORIZONTAL)
 		panel_data->insertion_pos = x;
 	else
 		panel_data->insertion_pos = y;
@@ -390,10 +390,9 @@ panel_key_press_event (GtkWidget   *widget,
   	 * If the focus widget is a GtkSocket, i.e. the
 	 * focus is in an applet in another process, then key 
 	 * bindings do not work. We get around this by
-	 * activating the key binding we require here.
+	 * activating the key bindings here.
 	 */ 
-	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget) &&
-	    event->keyval == GDK_F10 && event->state == GDK_CONTROL_MASK)
+	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget))
 		return gtk_bindings_activate (GTK_OBJECT (widget),
 					      event->keyval,
 					      event->state);

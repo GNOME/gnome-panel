@@ -148,15 +148,6 @@ gboolean             panel_toplevel_get_enable_buttons  (PanelToplevel       *to
 void                 panel_toplevel_set_enable_arrows   (PanelToplevel       *toplevel,
 							 gboolean             enable_arrows);
 gboolean             panel_toplevel_get_enable_arrows   (PanelToplevel       *toplevel);
-
-void                 panel_toplevel_set_binding         (PanelToplevel       *toplevel,
-							 guint                keyval,
-							 GdkModifierType      modifiers,
-							 const char          *signal);
-void                 panel_toplevel_unset_binding       (PanelToplevel       *toplevel,
-							 guint                keyval,
-							 GdkModifierType      modifiers);
-
 void                 panel_toplevel_update_edges        (PanelToplevel       *toplevel);
 
 

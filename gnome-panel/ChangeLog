@@ -1,5 +1,37 @@
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
 
+	Only register the toplevel keybindings once, remove the toplevel
+	pointer resizing feature, fix applets getting added to the panel
+	in the wrong place and make toplevel bindings work when focus
+	is on an out-of-proc applet.
+
+	* panel-bindings.[ch]:
+	(get_binding_set), (panel_binding_clear_entry),
+	(panel_binding_set_entry), (panel_binding_changed),
+	(panel_bindings_set_entries): set the bindings on PanelToplevel's
+	GtkBindingSet once, rather than for each toplevel.
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_begin_grab_op): make the assert a normal condition.
+	(panel_toplevel_handle_grab_op_motion_event): upd.
+	(panel_toplevel_get_resize_op): kill.
+	(panel_toplevel_button_press_event): kill the resize code.
+	(panel_toplevel_update_cursor_for_resize): don't change the cursor
+	at the edge of the panel.
+	(panel_toplevel_motion_notify_event): kill the resize code.
+	(panel_toplevel_class_init): set the bindings here.
+	(panel_toplevel_instance_init): don't register the toplevel with
+	the bindings code.
+	(panel_toplevel_set_binding), (panel_toplevel_unset_binding): kill.
+
+	* panel.c:
+	(panel_popup_menu): retain the correct axis offset for object
+	insertion.
+	(panel_key_press_event): activate all keybindings when focus is
+	on out-of-proc applets, not just the shift-F10 binding.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix bugs with yesterdays commit - it wasn't as broken as I
 	thought it was.
 

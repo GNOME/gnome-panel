@@ -30,6 +30,7 @@
 #include <libgnome/gnome-i18n.h>
 
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "eggaccelerators.h"
 
 #define BINDINGS_PREFIX "/apps/metacity/window_keybindings"
@@ -41,8 +42,7 @@ typedef struct {
 	GdkModifierType  modifiers;
 } PanelBinding;
 
-static GSList   *toplevels = NULL;
-static gboolean  initialised = FALSE;
+static gboolean initialised = FALSE;
 
 static PanelBinding bindings [] = {
 	{ "activate_window_menu", "popup-panel-menu", 0, 0 },
@@ -87,6 +87,46 @@ panel_binding_set_from_string (PanelBinding *binding,
 	}
 }
 
+static inline GtkBindingSet *
+get_binding_set (GtkBindingSet *binding_set)
+{
+	if (!binding_set) {
+		PanelToplevelClass *toplevel_class;
+
+		toplevel_class = g_type_class_peek (PANEL_TYPE_TOPLEVEL);
+		if (!toplevel_class)
+			return NULL;
+
+		g_assert (PANEL_IS_TOPLEVEL_CLASS (toplevel_class));
+
+		binding_set = gtk_binding_set_by_class (toplevel_class);
+	}
+
+	return binding_set;
+}
+
+static void
+panel_binding_clear_entry (PanelBinding  *binding,
+			   GtkBindingSet *binding_set)
+{
+	binding_set = get_binding_set (binding_set);
+
+        gtk_binding_entry_clear (binding_set,	binding->keyval, binding->modifiers);
+}
+
+static void
+panel_binding_set_entry (PanelBinding  *binding,
+			 GtkBindingSet *binding_set)
+{
+	binding_set = get_binding_set (binding_set);
+
+        gtk_binding_entry_add_signal (binding_set,	
+				      binding->keyval,
+				      binding->modifiers,
+				      binding->signal,
+				      0);
+}
+
 static void
 panel_binding_changed (GConfClient  *client,
 		       guint         cnxn_id,
@@ -94,13 +134,9 @@ panel_binding_changed (GConfClient  *client,
 		       PanelBinding *binding)
 {
 	GConfValue *value;
-	GSList     *l;
 
 	if (binding->keyval)
-		for (l = toplevels; l; l = l->next)
-			panel_toplevel_unset_binding (l->data,
-						      binding->keyval,
-						      binding->modifiers);
+		panel_binding_clear_entry (binding, NULL);
 
 	binding->keyval    = 0;
 	binding->modifiers = 0;
@@ -115,11 +151,7 @@ panel_binding_changed (GConfClient  *client,
 	if (!binding->keyval)
 		return;
 
-	for (l = toplevels; l; l = l->next)
-		panel_toplevel_set_binding (l->data,
-					    binding->keyval,
-					    binding->modifiers,
-					    binding->signal);
+	panel_binding_set_entry (binding, NULL);
 }
 
 static void
@@ -177,7 +209,7 @@ panel_bindings_initialise (void)
 }
 
 void
-panel_bindings_register_toplevel (PanelToplevel *toplevel)
+panel_bindings_set_entries (GtkBindingSet *binding_set)
 {
 	int i;
 
@@ -190,35 +222,6 @@ panel_bindings_register_toplevel (PanelToplevel *toplevel)
 		if (!bindings [i].keyval)
 			continue;
 
-		panel_toplevel_set_binding (toplevel,
-					    bindings [i].keyval,
-					    bindings [i].modifiers,
-					    bindings [i].signal);
-	}
-
-	toplevels = g_slist_prepend (toplevels, toplevel);
-}
-
-void
-panel_bindings_unregister_toplevel (PanelToplevel *toplevel,
-				    gboolean       unset_bindings)
-{
-	int i;
-
-	if (!initialised)
-		return;
-
-	toplevels = g_slist_remove (toplevels, toplevel);
-
-	if (!unset_bindings)
-		return;
-
-	for (i = 0; i < G_N_ELEMENTS (bindings); i++) {
-		if (!bindings [i].keyval)
-			continue;
-
-		panel_toplevel_unset_binding (toplevel,
-					      bindings [i].keyval,
-					      bindings [i].modifiers);
+		panel_binding_set_entry (&bindings [i], binding_set);
 	}
 }

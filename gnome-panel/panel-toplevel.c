@@ -61,7 +61,6 @@
 #include "panel-bindings.h"
 
 #define DEFAULT_SIZE              48
-#define RESIZE_GRAB_AREA_SIZE     3
 #define DEFAULT_AUTO_HIDE_SIZE    6
 #define DEFAULT_HIDE_DELAY        500
 #define DEFAULT_UNHIDE_DELAY      500
@@ -415,7 +414,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
 
-	g_return_if_fail (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE);
+	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+		return;
 
 	if (toplevel->priv->attached && op_type == PANEL_GRAB_OP_MOVE) {
 		panel_toplevel_begin_attached_move (toplevel, grab_keyboard, time_);
@@ -952,8 +952,6 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 			panel_toplevel_move_to_pointer (
 					toplevel, event->x_root, event->y_root);
 		return TRUE;
-	case PANEL_GRAB_OP_RESIZE:
-		break;
 	case PANEL_GRAB_OP_RESIZE_UP:
 	case PANEL_GRAB_OP_RESIZE_DOWN:
 	case PANEL_GRAB_OP_RESIZE_LEFT:
@@ -961,7 +959,6 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 		panel_toplevel_resize_to_pointer (toplevel, event->x_root, event->y_root);
 		return TRUE;
 	default:
-		g_assert_not_reached ();
 		break;
 	}
 
@@ -2528,45 +2525,12 @@ panel_toplevel_expose (GtkWidget      *widget,
 	return retval;
 }
 
-static PanelGrabOpType
-panel_toplevel_get_resize_op (PanelToplevel *toplevel,
-			      int            x,
-			      int            y)
-{
-	PanelFrameEdge edges;
-	PanelFrameEdge retval;
-
-	edges = toplevel->priv->edges;
-	if (edges == PANEL_EDGE_NONE)
-		edges = panel_frame_get_edges (toplevel->priv->inner_frame);
-
-	retval = PANEL_GRAB_OP_NONE;
-
-	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		if (edges & PANEL_EDGE_TOP && y <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_GRAB_OP_RESIZE_UP;
-
-		else if (edges & PANEL_EDGE_BOTTOM &&
-			 toplevel->priv->geometry.height - y <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_GRAB_OP_RESIZE_DOWN;
-	} else {
-		if (edges & PANEL_EDGE_LEFT && x <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_GRAB_OP_RESIZE_LEFT;
-
-		else if (edges & PANEL_EDGE_RIGHT &&
-			 toplevel->priv->geometry.width - x <= RESIZE_GRAB_AREA_SIZE)
-			retval = PANEL_GRAB_OP_RESIZE_RIGHT;
-	}
-
-	return retval;
-}
-
 static gboolean
 panel_toplevel_button_press_event (GtkWidget      *widget,
 				   GdkEventButton *event)
 {
-	PanelToplevel   *toplevel;
-	PanelGrabOpType  grab_op;
+	PanelToplevel *toplevel;
+	GtkWidget     *event_widget;
 
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
 
@@ -2578,25 +2542,16 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	if (toplevel->priv->animating)
 		return FALSE;
 
-	grab_op = panel_toplevel_get_resize_op (toplevel, event->x, event->y);
-	if (grab_op != PANEL_GRAB_OP_NONE)
-		panel_toplevel_init_resize_drag_offsets (toplevel, grab_op);
+	gdk_window_get_user_data (event->window, (gpointer *)&event_widget);
+	g_assert (GTK_IS_WIDGET (event_widget));
+	gtk_widget_translate_coordinates (event_widget,
+					  widget,
+					  event->x,
+					  event->y,
+					  &toplevel->priv->drag_offset_x,
+					  &toplevel->priv->drag_offset_y);
 
-	else {
-		GtkWidget *event_widget;
-
-		grab_op = PANEL_GRAB_OP_MOVE;
-
-		gdk_window_get_user_data (event->window, (gpointer *)&event_widget);
-		gtk_widget_translate_coordinates (event_widget,
-						  widget,
-						  event->x,
-						  event->y,
-						  &toplevel->priv->drag_offset_x,
-						  &toplevel->priv->drag_offset_y);
-	}
-
-	panel_toplevel_begin_grab_op (toplevel, grab_op, FALSE, event->time);
+	panel_toplevel_begin_grab_op (toplevel, PANEL_GRAB_OP_MOVE, FALSE, event->time);
 
 	return TRUE;
 }
@@ -2639,47 +2594,12 @@ panel_toplevel_key_press_event (GtkWidget   *widget,
 	return FALSE;
 }
 
-static void
-panel_toplevel_update_cursor_for_resize (PanelToplevel  *toplevel,
-					 GdkEventMotion *event)
-{
-	PanelGrabOpType  grab_op;
-	GdkCursorType    cursor_type = -1;
-	GdkCursor       *cursor;
-	GtkWidget       *widget;
-
-	widget = GTK_WIDGET (toplevel);
-
-	grab_op = panel_toplevel_get_resize_op (toplevel, event->x, event->y);
-	if (grab_op == PANEL_GRAB_OP_NONE) {
-		gdk_window_set_cursor (widget->window, NULL);
-		return;
-	}
-
-	cursor_type = panel_toplevel_grab_op_cursor (toplevel, grab_op);
-
-	g_assert (cursor_type != -1);
-
-	cursor = gdk_cursor_new (cursor_type);
-	gdk_window_set_cursor (widget->window, cursor);
-	gdk_cursor_unref (cursor);
-}
-
 static gboolean
 panel_toplevel_motion_notify_event (GtkWidget      *widget,
 				    GdkEventMotion *event)
 {
-	PanelToplevel *toplevel;
-
-	toplevel = PANEL_TOPLEVEL (widget);
-
-	if (toplevel->priv->grab_op == PANEL_GRAB_OP_NONE) {
-		panel_toplevel_update_cursor_for_resize (toplevel, event);
-		
-		return FALSE;
-	}
-
-	return panel_toplevel_handle_grab_op_motion_event (toplevel, event);
+	return panel_toplevel_handle_grab_op_motion_event (
+				PANEL_TOPLEVEL (widget), event);
 }
 
 static gboolean
@@ -3574,6 +3494,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
                                      "popup_panel_menu", 0);
 
+	panel_bindings_set_entries (binding_set);
+
 	icon_file = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-panel.png", TRUE, NULL);
 	if (icon_file) {
@@ -3719,8 +3641,6 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
 	
-	panel_bindings_register_toplevel (toplevel);
-
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
 }
 
@@ -4306,34 +4226,4 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 		return TRUE;
 
 	return FALSE;
-}
-
-void
-panel_toplevel_unset_binding (PanelToplevel   *toplevel,
-			      guint            keyval,
-			      GdkModifierType  modifiers)
-{
-	GtkBindingSet *binding_set;
-
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (keyval != 0);
-
-        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
-	gtk_binding_entry_clear (binding_set, keyval, modifiers);
-}
-
-void
-panel_toplevel_set_binding (PanelToplevel   *toplevel,
-			    guint            keyval,
-			    GdkModifierType  modifiers,
-			    const char      *signal)
-{
-	GtkBindingSet *binding_set;
-
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (keyval != 0);
-	g_return_if_fail (signal != NULL);
-
-        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
-	gtk_binding_entry_add_signal (binding_set, keyval, modifiers, signal, 0);
 }
