@@ -55,6 +55,9 @@ static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_BONOBO,   "bonobo-applet" },
 };
 
+static GSList *queued_position_saves = NULL;
+static guint   queued_position_source = 0;
+
 static void
 move_applet_callback (GtkWidget *widget, AppletInfo *info)
 {
@@ -150,6 +153,9 @@ panel_applet_clean (AppletInfo *info)
 	info->data = NULL;
 
 	panel_applet_clean_gconf (info);
+
+	queued_position_saves =
+		g_slist_remove (queued_position_saves, info);
 
 	g_free (info);
 }
@@ -933,9 +939,6 @@ panel_applet_load_applets_from_gconf (void)
 	panel_applet_load_list (APPLET_BONOBO);
 	panel_applet_load_list (APPLET_EMPTY);
 }
-
-static GSList *queued_position_saves = NULL;
-static guint   queued_position_source = 0;
 
 static gboolean
 panel_applet_position_save_timeout (gpointer dummy)
