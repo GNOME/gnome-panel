@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/wait.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <string.h>
@@ -79,17 +80,21 @@ struct _FileRec {
 	char *goad_id;
 	DirRec *parent;
 	time_t mtime;
+	time_t last_stat;
 };
 
 
 struct _DirRec {
 	FileRec frec;
 	time_t dentrymtime;
+	time_t dentrylast_stat;
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/
 };
 
 static GSList *dir_list = NULL;
+
+static void create_rh_menu(int dofork);
 
 /*reads in the order file and makes a list*/
 static GSList *
@@ -195,15 +200,16 @@ fr_free(FileRec *fr, int free_fr)
 	}
 }
 
-static FileRec * fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake);
+static FileRec * fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels);
 
 static void
-fr_fill_dir(FileRec *fr)
+fr_fill_dir(FileRec *fr, int sublevels)
 {
 	GSList *flist;
 	struct stat s;
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ffr;
+	time_t curtime = time(NULL);
 	
 	g_return_if_fail(dr->recs==NULL);
 
@@ -213,6 +219,7 @@ fr_fill_dir(FileRec *fr)
 	ffr->parent = dr;
 	if (stat (ffr->name, &s) != -1)
 		ffr->mtime = s.st_mtime;
+	ffr->last_stat = curtime;
 	dr->recs = g_slist_prepend(dr->recs,ffr);
 
 	flist = get_files_from_menudir(fr->name);
@@ -229,7 +236,7 @@ fr_fill_dir(FileRec *fr)
 		}
 
 		if (S_ISDIR (s.st_mode)) {
-			ffr = fr_read_dir(NULL,name,&s,TRUE);
+			ffr = fr_read_dir(NULL,name,&s,sublevels-1);
 			g_free(name);
 			if(ffr)
 				dr->recs = g_slist_prepend(dr->recs,ffr);
@@ -241,13 +248,14 @@ fr_fill_dir(FileRec *fr)
 				continue;
 			}
 
-			ffr = g_new0(FileRec,1);
-			ffr->type = FILE_REC_FILE;
-			ffr->name = name;
-			ffr->mtime = s.st_mtime;
-			ffr->parent = dr;
 			dentry = gnome_desktop_entry_load(name);
 			if(dentry) {
+				ffr = g_new0(FileRec,1);
+				ffr->type = FILE_REC_FILE;
+				ffr->name = name;
+				ffr->mtime = s.st_mtime;
+				ffr->last_stat = curtime;
+				ffr->parent = dr;
 				ffr->icon = dentry->icon;
 				dentry->icon = NULL;
 				ffr->fullname = dentry->name;
@@ -255,41 +263,49 @@ fr_fill_dir(FileRec *fr)
 				ffr->goad_id =
 					get_applet_goad_id_from_dentry(dentry);
 				gnome_desktop_entry_free(dentry);
-			}
-			dr->recs = g_slist_prepend(dr->recs,ffr);
+
+				dr->recs = g_slist_prepend(dr->recs,ffr);
+			} else
+				g_free(name);
 		}
 	}
 	dr->recs = g_slist_reverse(dr->recs);
 }
 
 static FileRec *
-fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake)
+fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 {
 	char *fname;
 	struct stat s;
 	FileRec *fr;
+	time_t curtime = time(NULL);
 
 	/*this will zero all fields*/
 	if(!dr)
 		dr = g_new0(DirRec,1);
 	fr = (FileRec *)dr;
 
-	if(!dstat) {
-		if (stat (mdir, &s) == -1) {
-			fr_free(fr,TRUE);
-			return NULL;
-		}
+	if(fr->last_stat < curtime-1) {
+		if(!dstat) {
+			if (stat (mdir, &s) == -1) {
+				fr_free(fr,TRUE);
+				return NULL;
+			}
 
-		fr->mtime = s.st_mtime;
-	} else
-		fr->mtime = dstat->st_mtime;
+			fr->mtime = s.st_mtime;
+		} else
+			fr->mtime = dstat->st_mtime;
+		fr->last_stat = curtime;
+	}
 
 	fr->type = FILE_REC_DIR;
 	g_free(fr->name);
 	fr->name = g_strdup(mdir);
 
+	s.st_mtime = 0;
 	fname = g_concat_dir_and_file(mdir,".directory");
-	if (stat (fname, &s) != -1) {
+	if (dr->dentrylast_stat >= curtime-1 ||
+	    stat (fname, &s) != -1) {
 		GnomeDesktopEntry *dentry;
 		dentry = gnome_desktop_entry_load(fname);
 		if(dentry) {
@@ -300,7 +316,15 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake)
 			fr->fullname = dentry->name;
 			dentry->name = NULL;
 			gnome_desktop_entry_free(dentry);
+		} else {
+			g_free(fr->icon);
+			fr->icon = NULL;
+			g_free(fr->fullname);
+			fr->fullname = NULL;
 		}
+		/*if we statted*/
+		if(s.st_mtime)
+			dr->dentrylast_stat = curtime;
 		dr->dentrymtime = s.st_mtime;
 	}
 	g_free(fname);
@@ -309,8 +333,8 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake)
 	
 	/*if this is a fake structure, so we don't actually look into
 	  the directory*/
-	if(!fake)
-		fr_fill_dir(fr);
+	if(sublevels>0)
+		fr_fill_dir(fr,sublevels);
 
 	return fr;
 }
@@ -327,7 +351,7 @@ fr_replace(FileRec *fr)
 	fr->parent = NULL;
 	fr->name = NULL;
 	fr_free(fr,FALSE);
-	fr = fr_read_dir((DirRec *)fr,tmp,NULL,FALSE);
+	fr = fr_read_dir((DirRec *)fr,tmp,NULL,1);
 	if(fr)
 		fr->parent = par;
 	return fr;
@@ -339,21 +363,24 @@ fr_check_and_reread(FileRec *fr)
 {
 	DirRec *dr = (DirRec *)fr;
 	FileRec *ret = fr;
+	time_t curtime = time(NULL);
 	g_return_val_if_fail(fr!=NULL,fr);
 	g_return_val_if_fail(fr->type == FILE_REC_DIR,fr);
 	if(!dr->recs) {
-		fr_fill_dir(fr);
+		fr_fill_dir(fr,1);
 	} else {
 		int reread = FALSE;
 		int any_change = FALSE;
 		struct stat ds;
 		GSList *li;
-		if(stat(fr->name,&ds)==-1) {
-			fr_free(fr,TRUE);
-			return NULL;
+		if (fr->last_stat < curtime-1) {
+			if(stat(fr->name,&ds)==-1) {
+				fr_free(fr,TRUE);
+				return NULL;
+			}
+			if(ds.st_mtime != fr->mtime)
+				reread = TRUE;
 		}
-		if(ds.st_mtime != fr->mtime)
-			reread = TRUE;
 		for(li = dr->recs; !reread && li!=NULL; li=g_slist_next(li)) {
 			FileRec *ffr = li->data;
 			DirRec *ddr;
@@ -366,6 +393,8 @@ fr_check_and_reread(FileRec *fr)
 				ddr = (DirRec *)ffr;
 				p = g_concat_dir_and_file(ffr->name,
 							  ".directory");
+				if (ddr->dentrylast_stat >= curtime-1)
+					break;
 				if(stat(p,&s)==-1) {
 					if(dr->dentrymtime) {
 						g_free(ffr->icon);
@@ -375,6 +404,7 @@ fr_check_and_reread(FileRec *fr)
 						ddr->dentrymtime = 0;
 						any_change = TRUE;
 					}
+					dr->dentrylast_stat = 0;
 					g_free(p);
 					break;
 				}
@@ -396,11 +426,14 @@ fr_check_and_reread(FileRec *fr)
 						ffr->fullname = NULL;
 					}
 					ddr->dentrymtime = s.st_mtime;
+					dr->dentrylast_stat = curtime;
 					any_change = TRUE;
 				}
 				g_free(p);
 				break;
 			case FILE_REC_FILE:
+				if (ffr->last_stat >= curtime-1)
+					break;
 				if(stat(ffr->name,&s)==-1) {
 					reread = TRUE;
 					break;
@@ -421,10 +454,13 @@ fr_check_and_reread(FileRec *fr)
 						break;
 					}
 					ffr->mtime = s.st_mtime;
+					ffr->last_stat = curtime;
 					any_change = TRUE;
 				}
 				break;
 			case FILE_REC_EXTRA:
+				if (ffr->last_stat >= curtime-1)
+					break;
 				r = stat(ffr->name,&s);
 				if((r==-1 && ffr->mtime) ||
 				   (r!=-1 && ffr->mtime != s.st_mtime))
@@ -454,17 +490,34 @@ fr_get_dir(char *mdir)
 		if(strcmp(fr->name,mdir)==0)
 			return fr_check_and_reread(fr);
 	}
-	return fr_read_dir(NULL,mdir,NULL,FALSE);
+	return fr_read_dir(NULL,mdir,NULL,1);
 }
 
-
-
-
-
-
-
-
-
+/*to be called on startup to load in some of the directories,
+  this makes the startup a little bit slower, and take up slightly
+  more ram, but it also speeds up later operation*/
+void
+init_menus(void)
+{
+	/*just load the menus from disk, don't make the widgets
+	  this just reads the .desktops of the top most directory
+	  and a level down*/
+	char *menu = gnome_datadir_file("apps");
+	if(menu)
+		fr_read_dir(NULL,menu,NULL,2);
+	g_free(menu);
+	menu = gnome_datadir_file("applets");
+	if(menu)
+		fr_read_dir(NULL,menu,NULL,2);
+	g_free(menu);
+	menu = gnome_util_home_file("apps");
+	if(menu)
+		fr_read_dir(NULL,menu,NULL,2);
+	g_free(menu);
+	/*if redhat menus, use the fork version to read*/
+	if(g_file_exists("/etc/X11/wmconfig"))
+		create_rh_menu(TRUE);
+}
 
 /*the most important dialog in the whole application*/
 static void
@@ -504,8 +557,12 @@ static void
 activate_app_def (GtkWidget *widget, char *item_loc)
 {
 	GnomeDesktopEntry *item = gnome_desktop_entry_load(item_loc);
-	gnome_desktop_entry_launch (item);
-	gnome_desktop_entry_free(item);
+	if(item) {
+		gnome_desktop_entry_launch (item);
+		gnome_desktop_entry_free(item);
+	} else {
+		g_warning(_("Can't load entry"));
+	}
 }
 
 static void
@@ -513,7 +570,7 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 {
 	char *s;
 	char *p;
-	p = gnome_util_home_file("apps/");
+	p = gnome_util_home_file("apps");
 	s = g_strdup_printf("cp -r -f %s %s",item_loc,p);
 	g_free(p);
 	system(s);
@@ -683,7 +740,9 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 {
 	GtkWidget *dialog;
 	GtkObject *o;
-	GnomeDesktopEntry *dentry = gnome_desktop_entry_load(item_loc);
+	GnomeDesktopEntry *dentry;
+	
+	g_return_if_fail(item_loc!=NULL);
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
@@ -693,7 +752,11 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	/*item loc will be alive all this time*/
 	gtk_object_set_data(o,"location",item_loc);
 
-	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
+	dentry = gnome_desktop_entry_load(item_loc);
+	if(dentry) {
+		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
+		gnome_desktop_entry_free(dentry);
+	}
 
 	gtk_signal_connect_object(GTK_OBJECT(o), "changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
@@ -703,7 +766,6 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 			   GTK_SIGNAL_FUNC(dentry_apply_callback),
 			   o);
 	gtk_widget_show(dialog);
-	gnome_desktop_entry_free(dentry);
 }
 
 static void
@@ -1210,8 +1272,16 @@ add_logout_to_panel (GtkWidget *widget, void *data)
 static void
 add_applet (GtkWidget *w, char *item_loc)
 {
-	GnomeDesktopEntry *ii = gnome_desktop_entry_load(item_loc);
-	char *goad_id = get_applet_goad_id_from_dentry(ii);
+	GnomeDesktopEntry *ii;
+	char *goad_id;
+
+	ii = gnome_desktop_entry_load(item_loc);
+	if(!ii) {
+		g_warning(_("Can't load entry"));
+		return;
+	}
+
+	goad_id = get_applet_goad_id_from_dentry(ii);
 	gnome_desktop_entry_free(ii);
 	
 	if(!goad_id) {
@@ -1260,7 +1330,6 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
 				      int applets, char *dir_name,
 				      char *pixmap_name, int fake_submenus,
 				      int force);
-static void create_rh_menu(void);
 
 /*reread the applet menu, not a submenu*/
 static void
@@ -1403,7 +1472,7 @@ rh_submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 	g_free(userrh);
 
 	if(do_read) 
-		create_rh_menu();
+		create_rh_menu(FALSE);
 }
 
 
@@ -1677,6 +1746,8 @@ static char *
 get_real_menu_path(char *arguments, char *menu_base)
 {
 	char *this_menu;
+	
+	g_return_val_if_fail(menu_base!=NULL,NULL);
 
 	/*if null, let's put the main menu up*/
 	if (!arguments || !*arguments)
@@ -2533,25 +2604,48 @@ make_rh_submenu(char *dir, GSList *rhlist)
 
 
 static void
-create_rh_menu(void)
+create_rh_menu(int dofork)
 {
-	char *userrh = gnome_util_prepend_user_home(".wmconfig/");
-	char *rhdir = gnome_util_home_file("apps-redhat/");
+	char *userrh = gnome_util_prepend_user_home(".wmconfig");
+	char *rhdir = gnome_util_home_file("apps-redhat");
 	GSList *rhlist = NULL;
 	GtkWidget *w;
 	int i;
-	char *dirs[3] = {"/etc/X11/wmconfig/",userrh,NULL};
+	char *dirs[3] = {"/etc/X11/wmconfig",userrh,NULL};
 	struct stat s;
 	g_return_if_fail(userrh!=NULL);
 	g_return_if_fail(rhdir!=NULL);
 	
-	remove_directory(rhdir,FALSE);
-
 	rhsysdir_mtime = rhuserdir_mtime = 0;
-	if(stat("/etc/X11/wmconfig/",&s)!=-1)
+	if(stat("/etc/X11/wmconfig",&s)!=-1)
 		rhsysdir_mtime = s.st_mtime;
 	else if(stat(userrh,&s)!=-1)
 		rhuserdir_mtime = s.st_mtime;
+
+	/*slightly hackish, but since this thing eats up a lot of
+	  ram, and it leaves nothing in memory that we need, we
+	  just fork a process to do it unless we need the data
+	  synchroniously*/
+	if(dofork) {
+		int i = fork();
+		if(i>0) {
+			wait(NULL);
+			return;
+		/*if fork failed, no need to worry we'll just do it
+		  in this process*/
+		} else if(i<0) {
+			dofork = FALSE;
+		} else {
+			/*we're in a child, so fork once more and
+			  exit the parent to not leave any zombies
+			  around*/
+			if(fork()==0) {
+				_exit(0);
+			}
+		}
+	}
+
+	remove_directory(rhdir,FALSE);
 
 	/*read redhat wmconfig files*/
 	for(i=0;dirs[i];i++) {
@@ -2567,7 +2661,7 @@ create_rh_menu(void)
 			    (dent->d_name[1] == '.' &&
 			     dent->d_name[2] == '\0')))
 				continue;
-			p = g_strconcat(dirs[i],dent->d_name,NULL);
+			p = g_strconcat(dirs[i],"/",dent->d_name,NULL);
 			rhlist = add_redhat_entry(rhlist,p);
 			/* free the list. */
 			g_free(p);
@@ -2582,7 +2676,7 @@ create_rh_menu(void)
 			dentry.name = _("Red Hat menus");
 			dentry.type = "Directory";
 			dentry.icon = "/usr/share/icons/mini/mini-redhat.xpm";
-			dentry.location = g_strconcat(rhdir,".directory",
+			dentry.location = g_strconcat(rhdir,"/.directory",
 						      NULL);
 			gnome_desktop_entry_save(&dentry);
 			/* free up the dentry + the location */
@@ -2594,6 +2688,8 @@ create_rh_menu(void)
 		g_slist_free(rhlist);
 	}
 	g_free(rhdir);
+	if(dofork)
+		_exit(0);
 }
 
 static GtkWidget *
@@ -2807,10 +2903,6 @@ create_panel_menu (char *menudir, int main_menu,
 		GSList *list = g_slist_append(NULL,menudir);
 		add_menu_widget(menu,list,main_menu,TRUE);
 		g_slist_free(list);
-	} else {
-		/*just load the menus from disk, don't make the widgets
-		  this just reads the .desktops of the top most directory*/
-		fr_read_dir(NULL,menudir,NULL,FALSE);
 	}
 
 	g_free (pixmap_name);

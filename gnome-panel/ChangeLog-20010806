@@ -1,3 +1,21 @@
+Mon Jan 18 03:34:35 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: don't show the entry if the entry load failed, and
+	  do more sanity checking all around on entry loads
+
+	* menu.c: save the time of the last file, and only stat files once
+	  per second, this reduces the amount of stats if going though menus
+	  fast and if loading more then two of the same menuitems on startup
+
+	* menu.[ch],main.c: since now the directories can be read in fairly
+	  efficently, we do this on startup for up to two levels on the main
+	  directories.
+
+	* menu.c: redhat menus can now be read in a separate process that
+	  quits right after reading them, this saves some memory, and
+	  probably makes the startup more snappier as the menu conversion is
+	  done in parallel. (this is only done on the init)
+
 Sat Jan 16 20:54:55 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: cleaned up the submenu_to_display thing, now doesn't

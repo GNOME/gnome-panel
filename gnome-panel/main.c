@@ -184,6 +184,8 @@ main(int argc, char **argv)
 	/*set the globals*/
 	load_up_globals();
 	
+	init_menus();
+	
 	init_user_panels();
 
 	init_user_applets();

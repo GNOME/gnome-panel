@@ -49,6 +49,8 @@ void applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
 void panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
 
 
+/*to be called on startup to load in some of the directories*/
+void init_menus(void);
 
 END_GNOME_DECLS
 
