@@ -33,3 +33,8 @@ MYLIBS = \
 panel_LDADD = $(MYLIBS) 
 
 module_test_LDADD = $(MYLIBS)
+
+EXTRA_DIST = panelrc
+
+install-data-local:
+	$(INSTALL_DATA) $(srcdir)/panelrc $(datadir)/
