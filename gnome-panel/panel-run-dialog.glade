@@ -182,6 +182,10 @@
 		      <property name="visible">True</property>
 		      <property name="history_id">gnome-run</property>
 		      <property name="max_saved">10</property>
+		      <accessibility>
+			    <atkproperty name="AtkObject::accessible_name" translatable="yes">Command entry</atkproperty>
+			    <atkproperty name="AtkObject::accessible_description" translatable="yes">Enter a command string here to run it.</atkproperty>
+		      </accessibility>
 
 		      <child internal-child="entry">
 			<widget class="GtkEntry" id="gtk_entry">
@@ -194,10 +198,6 @@
 			  <property name="has_frame">True</property>
 			  <property name="invisible_char" translatable="yes">*</property>
 			  <property name="activates_default">True</property>
-			  <accessibility>
-			    <atkproperty name="AtkObject::accessible_name" translatable="yes">Command entry</atkproperty>
-			    <atkproperty name="AtkObject::accessible_description" translatable="yes">Enter a command string here to run it.</atkproperty>
-			  </accessibility>
 			</widget>
 		      </child>
 		    </widget>
