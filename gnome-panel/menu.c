@@ -2168,52 +2168,6 @@ add_redhat_entry(GSList *list, char *file)
 }
 
 
-/* This is a simple-minded string splitter.  It splits on whitespace.
-   Something better would be to define a quoting syntax so that the
-   user can use quotes and such.  FIXME.  */
-/*stolen from gnome-dentry-edit*/
-static void
-gnome_dentry_edit_split (char *text, int *argcp, char ***argvp)
-{
-  char *p;
-  int count = 0;
-
-  /* First pass: find out how large to make the return vector.  */
-  for (p = text; *p; ++p) {
-    while (*p && isspace (*p))
-      ++p;
-    if (! *p)
-      break;
-    while (*p && ! isspace (*p))
-      ++p;
-    ++count;
-  }
-
-  /* Increment count to account for NULL terminator.  Resulting ARGC
-     doesn't include NULL terminator, though.  */
-  *argcp = count;
-  ++count;
-  *argvp = (char **) g_malloc (count * sizeof (char *));
-
-  count = 0;
-  for (p = text; *p; ++p) {
-    char *q;
-
-    while (*p && isspace (*p))
-      ++p;
-    if (! *p)
-      break;
-
-    q = p;
-    while (*p && ! isspace (*p))
-      ++p;
-    (*argvp)[count++] = (char *) g_strndup (q, p - q);
-  }
-
-  (*argvp)[count] = NULL;
-}
-
-
 static void
 make_rh_submenu(char *dir, GSList *rhlist)
 {
@@ -2250,9 +2204,9 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			dentry->icon = g_strdup(ri->u.item.icon?
 						ri->u.item.icon:
 						ri->u.item.mini_icon);
-			gnome_dentry_edit_split(ri->u.item.exec,
-						&dentry->exec_length,
-						&dentry->exec);
+			gnome_config_make_vector(ri->u.item.exec,
+						 &dentry->exec_length,
+						 &dentry->exec);
 			dentry->location = g_concat_dir_and_file(dir,s);
 			if(fp) fprintf(fp,"%s\n",dentry->location);
 			g_free(s);
@@ -2326,7 +2280,7 @@ create_rh_menu(void)
 		g_slist_foreach(rhlist,(GFunc)free_rh_item,NULL);
 		g_slist_free(rhlist);
 	}
-
+	g_free(rhdir);
 }
 
 static GtkWidget *
