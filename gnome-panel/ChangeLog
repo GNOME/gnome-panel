@@ -1,3 +1,10 @@
+2003-10-13 Owen Taylor <otaylor@redhat.com>
+
+	* gnome-panel/panel-stock-icons.c (panel_init_stock_icons):
+	Look up default images for stock icons at an arbitrary large 
+	size, so that we always scale down, from the biggest image
+	we have available, instead of sometimes scaling up. (#124230)
+	
 2003-10-13  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-action-button.c (panel_action_button_set_type): Set
