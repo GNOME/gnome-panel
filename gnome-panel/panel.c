@@ -18,6 +18,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <libbonobo.h>
+#include <libgnomeui/gnome-icon-lookup.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
@@ -583,9 +584,12 @@ drop_urilist (PanelWidget *panel,
 			} else {
 				const char *icon;
 
-				icon = NULL;
-				if (info->mime_type)
-					icon = gnome_vfs_mime_get_icon (info->mime_type);
+				icon = gnome_icon_lookup (panel_icon_theme,
+							  NULL, NULL, NULL,
+							  info, info->mime_type,
+							  GNOME_ICON_LOOKUP_FLAGS_NONE,
+							  NULL);
+
 				if (!icon)
 					icon = "gnome-unknown.png";
 

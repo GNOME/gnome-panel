@@ -1,5 +1,10 @@
 2004-11-30  Vincent Untz  <vincent@vuntz.net>
 
+	* panel.c: (drop_urilist): use gnome_icon_lookup() to find the icon
+	for the dropped URI. Fix bug #159174.
+
+2004-11-30  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-util.[ch]: (panel_error_dialog): add an argument to specify
 	if the dialog should be automatically destroyed when closed
 	(panel_dialog): ditto
