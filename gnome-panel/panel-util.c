@@ -40,6 +40,8 @@
 #include "foobar-widget.h"
 #include "panel.h"
 #include "egg-screen-exec.h"
+#include "egg-screen-url.h"
+#include "egg-screen-help.h"
 
 #include "multihead-hacks.h"
 
@@ -82,13 +84,15 @@ panel_ditem_launch (GdkScreen                    *screen,
 }
 
 void
-panel_show_help (const char *doc_name, const char *linkid)
+panel_show_help (GdkScreen  *screen,
+		 const char *doc_name,
+		 const char *linkid)
 {
 	GError *error = NULL;
 
-	if (!gnome_help_display_desktop (NULL, "user-guide", doc_name, linkid, &error)) {
+	if (!egg_screen_help_display_desktop (screen, NULL, "user-guide", doc_name, linkid, &error)) {
 		panel_error_dialog (
-			gdk_screen_get_default (),
+			screen,
 			"cannot_show_help",
 			_("<b>Cannot display help document</b>\n\n"
 			  "Details: %s"),
@@ -98,7 +102,9 @@ panel_show_help (const char *doc_name, const char *linkid)
 }
 
 static gboolean
-panel_show_gnome_help (const char *docpath, GError **error)
+panel_show_gnome_help (GdkScreen   *screen,
+		       const char  *docpath,
+		       GError     **error)
 {
 	char *app, *p, *path;
 	gboolean retval;
@@ -123,16 +129,9 @@ panel_show_gnome_help (const char *docpath, GError **error)
 
 	retval = TRUE;
 
-	if ( ! gnome_help_display_desktop (NULL /* program */,
-					   app /* doc_id */,
-					   path /* file_name */,
-					   NULL /* link_id */,
-					   error)) {
-		retval = gnome_help_display_with_doc_id (NULL /* program */,
-							 app /* doc_id */,
-							 path /* file_name */,
-							 NULL /* link_id */,
-							 error);
+	if ( ! egg_screen_help_display_desktop (screen, NULL, app, path, NULL, error)) {
+		retval = egg_screen_help_display_with_doc_id (
+				screen, NULL, app, path, NULL, error);
 	}
 
 	g_free (app);
@@ -141,7 +140,9 @@ panel_show_gnome_help (const char *docpath, GError **error)
 }
 
 static gboolean
-panel_show_kde_help (const char *docpath, GError **error)
+panel_show_kde_help (GdkScreen   *screen,
+		     const char  *docpath,
+		     GError     **error)
 {
 	const GList *li;
 
@@ -164,7 +165,7 @@ panel_show_kde_help (const char *docpath, GError **error)
 			gboolean retval;
 			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
 			g_free (fullpath);
-			retval = gnome_help_display_uri (uri, error);
+			retval = egg_screen_help_display_uri (screen, uri, error);
 			g_free (uri);
 			return retval;
 		}
@@ -180,8 +181,9 @@ panel_show_kde_help (const char *docpath, GError **error)
 }
 
 gboolean
-panel_show_gnome_kde_help (const char *docpath,
-			   GError **error)
+panel_show_gnome_kde_help (GdkScreen   *screen,
+			   const char  *docpath,
+			   GError     **error)
 {
 	if (string_empty (docpath)) {
 		g_set_error (error,
@@ -192,10 +194,10 @@ panel_show_gnome_kde_help (const char *docpath,
 	}
 
 	if (panel_is_url (docpath))
-		return gnome_help_display_uri (docpath, error);
+		return egg_screen_help_display_uri (screen, docpath, error);
 
-	if ( ! panel_show_gnome_help (docpath, error)) {
-		return panel_show_kde_help (docpath, error);
+	if ( ! panel_show_gnome_help (screen, docpath, error)) {
+		return panel_show_kde_help (screen, docpath, error);
 	}
 
 	return TRUE;

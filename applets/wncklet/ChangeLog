@@ -1,3 +1,13 @@
+2002-08-08  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add egg-screen-exec files to the build.
+
+	* clock.c: (properties_response_cb), (display_help_dialog):
+	* mailcheck.c: (phelp_cb), (help_callback):
+	* pager.c: (response_cb), (display_help_dialog):
+	* tasklist.c: (response_cb), (display_help_dialog):
+	use egg_screen_display_desktop().
+
 2002-08-05  Mark McLoughlin  <mark@skynet.ie>
 
 	* GNOME_ClockApplet.xml: move Copy Date/Time to

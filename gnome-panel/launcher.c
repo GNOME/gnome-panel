@@ -39,6 +39,7 @@
 #include "quick-desktop-reader.h"
 
 #include "multihead-hacks.h"
+#include "egg-screen-url.h"
 
 #undef LAUNCHER_DEBUG
 
@@ -78,6 +79,7 @@ launch_url (Launcher *launcher)
 	GnomeDesktopItem *item;
 	const char *url;
 	GError *error = NULL;
+	GdkScreen *screen;
 
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
@@ -86,25 +88,26 @@ launch_url (Launcher *launcher)
 	url = gnome_desktop_item_get_string (item,
 					     GNOME_DESKTOP_ITEM_URL);
 
+	screen = launcher_get_screen (launcher);
+
 	if (!url) {
 		panel_error_dialog (
-			launcher_get_screen (launcher),
+			screen,
 			"no_url_dialog",
 			_("This launch icon does not specify a url to show"));
 		return;
 	}
 
-	gnome_url_show (url, &error);
+	egg_screen_url_show (screen, url, &error);
 	if (error) {
 		panel_error_dialog (
-			launcher_get_screen (launcher),
+			screen,
 			"cant_show_url_dialog",
 			_("Cannot show %s\n%s"),
 			url, error->message);
 		g_clear_error (&error);
 	}
 }
-
 
 static void
 launch_cb (GtkWidget *widget,
@@ -565,7 +568,9 @@ window_response (GtkWidget *w, int response, gpointer data)
 	Launcher *launcher = data;
 
 	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("wgospanel.xml", "gospanel-52");
+		panel_show_help (
+			gtk_window_get_screen (GTK_WINDOW (w)),
+			"wgospanel.xml", "gospanel-52");
 	} else if (response == REVERT_BUTTON) { /* revert */
 		if (launcher->ditem != NULL)
 			gnome_desktop_item_unref (launcher->ditem);
@@ -787,7 +792,9 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 
 		panel_config_sync_schedule ();
 	} else if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("wgospanel.xml", "gospanel-52");
+		panel_show_help (
+			gtk_window_get_screen (GTK_WINDOW (dialog)),
+			"wgospanel.xml", "gospanel-52");
 		/* just return as we don't want to close */
 		return;
 	}
@@ -1099,7 +1106,8 @@ find_launcher (const char *path)
 }
 
 void
-launcher_show_help (Launcher *launcher)
+launcher_show_help (Launcher  *launcher,
+		    GdkScreen *screen)
 {
 	GError     *error = NULL;
 	const char *docpath;
@@ -1109,10 +1117,10 @@ launcher_show_help (Launcher *launcher)
 
 	docpath = gnome_desktop_item_get_string (
 				launcher->ditem, "X-GNOME-DocPath");
-	panel_show_gnome_kde_help (docpath, &error);
+	panel_show_gnome_kde_help (screen, docpath, &error);
 	if (error) {
 		panel_error_dialog (
-			launcher_get_screen (launcher),
+			screen,
 			"cannot_show_gnome_kde_help",
 			_("<b>Cannot display help document</b>\n\nDetails: %s"),
 			error->message);

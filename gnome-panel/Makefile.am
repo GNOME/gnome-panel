@@ -61,6 +61,10 @@ $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 EGGFILES =                      \
 	egg-screen-exec.h       \
 	egg-screen-exec.c       \
+	egg-screen-help.h       \
+	egg-screen-help.c       \
+	egg-screen-url.h        \
+	egg-screen-url.c        \
 	$(NULL)
 
 BUILT_SOURCES = \
@@ -185,6 +189,8 @@ gnome_desktop_item_edit_SOURCES = \
 	panel-util.c		  \
 	panel-access.c		  \
 	egg-screen-exec.c	  \
+	egg-screen-help.c	  \
+	egg-screen-url.c	  \
 	rgb-stuff.c
 
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic

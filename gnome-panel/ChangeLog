@@ -1,3 +1,18 @@
+2002-08-08  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add egg-screen-exec file to the build.
+
+	* panel-util.[ch]:
+	(panel_show_help), (panel_show_gnome_help),
+	(panel_show_kde_help), (panel_show_gnome_kde_help):
+	add a GdkScreen* arg and use the egg_screen_help
+	variants in all of these.
+
+	* applet.c, launcher.c, menu-ditem.c, menu.c,
+	  panel-config.c: pass a GdkScreen* to the help
+	functions and use egg_screen_url_show instead of
+	gnome_url_show.
+
 2002-08-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: link against XSHAPE_LIBS. Fixes #90000.

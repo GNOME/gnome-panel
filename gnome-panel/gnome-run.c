@@ -47,6 +47,7 @@
 #include "quick-desktop-reader.h"
 #include "nothing.h"
 #include "egg-screen-exec.h"
+#include "egg-screen-url.h"
 
 #include "multihead-hacks.h"
 
@@ -298,7 +299,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	GError *error = NULL;
 
 	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("wgoseditmainmenu.xml", "gospanel-23");
+		panel_show_help (
+			gtk_window_get_screen (GTK_WINDOW (w)),
+			"wgoseditmainmenu.xml", "gospanel-23");
 		/* just return as we don't want to close */
 		return;
 	} else if (response != PANEL_RESPONSE_RUN) {
@@ -360,13 +363,16 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			start_geginv ();
                         goto return_and_close;
 		} else if (strcmp (s, "End world hunger") == 0) {
-			gnome_url_show ("http://www.wfp.org", NULL);
+			egg_screen_url_show (
+				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
+				"http://www.wfp.org", NULL);
                         goto return_and_close;
 		}
 
                 /* Somewhat of a hack I suppose */
                 if (panel_is_url (s)) {
-                        gnome_url_show (s, NULL);
+                        egg_screen_url_show (
+				gtk_window_get_screen (GTK_WINDOW (run_dialog)), s, NULL);
                         goto return_and_close;
                 }
 

@@ -28,7 +28,9 @@ ditem_properties_clicked (GtkWidget *w, int response, gpointer data)
 	GnomeDesktopItem *ditem = data;
 
 	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("wgospanel.xml", "gospanel-16");
+		panel_show_help (
+			gtk_window_get_screen (GTK_WINDOW (w)),
+			"wgospanel.xml", "gospanel-16");
 	} else if (response == REVERT_BUTTON) {
 		if (ditem != NULL)
 			gnome_ditem_edit_set_ditem (dee, ditem);

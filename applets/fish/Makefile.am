@@ -12,7 +12,15 @@ SUBDIRS = help
 
 libexec_PROGRAMS = fish-applet-2
 
-fish_applet_2_SOURCES = fish.c
+EGGFILES =                      \
+	egg-screen-exec.h       \
+	egg-screen-exec.c       \
+	egg-screen-help.h       \
+	egg-screen-help.c       \
+	egg-screen-url.h        \
+	egg-screen-url.c
+
+fish_applet_2_SOURCES = fish.c $(EGGFILES)
 
 fish_applet_2_LDADD =					\
 	../../libpanel-applet/libpanel-applet-2.la	\
@@ -62,3 +70,8 @@ install-data-local:
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/fish/$$p ; \
 	done \
 	fi
+
+EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
+
+regenerate-built-sources:
+	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh

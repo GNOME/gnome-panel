@@ -18,6 +18,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/libart.h>
 
+#include "egg-screen-help.h"
+
 #define FISH_PREFS_NAME		"name"
 #define FISH_PREFS_IMAGE	"image"
 #define FISH_PREFS_COMMAND	"command"
@@ -73,6 +75,16 @@ fishy_window_set_screen (GtkWindow *window,
 {
 #ifdef HAVE_GTK_MULTIHEAD
 	gtk_window_set_screen (window, gtk_widget_get_screen (widget));
+#endif
+}
+
+static inline GdkScreen *
+fishy_get_screen (Fish *fish)
+{
+#ifdef HAVE_GTK_MULTIHEAD
+	return gtk_widget_get_screen (fish->applet);
+#else
+	return NULL;
 #endif
 }
 
@@ -641,11 +653,12 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 }
 
 static void
-phelp (void)
+phelp (Fish *fish)
 {
 	GError *error = NULL;
 
-	gnome_help_display_desktop (
+	egg_screen_help_display_desktop (
+		fishy_get_screen (fish),
 		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
@@ -675,7 +688,7 @@ response_cb (GtkDialog *dialog, gint id, gpointer data)
 			fish_properties_apply (dialog, fish);
 			break;
 		case GTK_RESPONSE_HELP:
-			phelp ();
+			phelp (fish);
 			break;
 		case GTK_RESPONSE_CLOSE:
 			gtk_widget_destroy (GTK_WIDGET(dialog));
@@ -1216,7 +1229,8 @@ display_help_dialog (BonoboUIComponent *uic,
 {
 	GError *error = NULL;
 
-	gnome_help_display_desktop (
+	egg_screen_help_display_desktop (
+		fishy_get_screen (fish),
 		NULL, "fish-applet-2", "fish-applet-2", NULL, &error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);

@@ -52,7 +52,8 @@ GdkScreen      *panel_screen_from_number   (int           screen);
 
 
 
-void		panel_show_help		(const char *path,
+void		panel_show_help		(GdkScreen  *screen,
+					 const char *path,
 					 const char *linkid);
 
 GList *		panel_g_list_swap_next	(GList *list,
@@ -108,8 +109,9 @@ typedef enum {
 #define PANEL_HELP_ERROR panel_help_error_quark ()
 GQuark panel_help_error_quark (void);
 
-gboolean	panel_show_gnome_kde_help (const char *docpath,
-					   GError **error);
+gboolean	panel_show_gnome_kde_help (GdkScreen   *screen,
+					   const char  *docpath,
+					   GError     **error);
 
 gboolean	panel_is_url		(const char *url);
 

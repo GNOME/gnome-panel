@@ -28,6 +28,7 @@
 #include "clock.h"
 
 #include "multihead-hacks.h"
+#include "egg-screen-help.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
@@ -864,8 +865,10 @@ properties_response_cb (GtkWidget *widget,
 							      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 		}
 
-		gnome_help_display_desktop (applet_program, "clock",
-					    "clock", "clock-settings", &error);
+		egg_screen_help_display_desktop (
+				gtk_widget_get_screen (cd->applet),
+				applet_program, "clock",
+				"clock", "clock-settings", &error);
 
 		if (error) {
 			GtkWidget *dialog;
@@ -1103,8 +1106,9 @@ display_help_dialog (BonoboUIComponent *uic,
 						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	gnome_help_display_desktop (applet_program, "clock",
-				    "clock",NULL, &error);
+	egg_screen_help_display_desktop (
+			gtk_widget_get_screen (cd->applet),
+			applet_program, "clock", "clock",NULL, &error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,

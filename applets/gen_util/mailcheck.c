@@ -29,6 +29,7 @@
 #include "mailcheck.h"
 
 #include "multihead-hacks.h"
+#include "egg-screen-help.h"
 
 typedef enum {
 	MAILBOX_LOCAL,
@@ -1574,8 +1575,9 @@ phelp_cb (GtkDialog *w, gint tab, MailCheck *mc)
      						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	gnome_help_display_desktop (applet_program, "mailcheck",
-				    "mailcheck","mailcheck-prefs", &error);
+	egg_screen_help_display_desktop (
+			gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
+			applet_program, "mailcheck", "mailcheck","mailcheck-prefs", &error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (GTK_WINDOW (w),
@@ -1780,8 +1782,9 @@ help_callback (BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	gnome_help_display_desktop (applet_program, "mailcheck",
-				    "mailcheck",NULL, &error);
+	egg_screen_help_display_desktop (
+		gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
+		applet_program, "mailcheck", "mailcheck",NULL, &error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,

@@ -29,6 +29,7 @@
 #include "tasklist.h"
 
 #include "multihead-hacks.h"
+#include "egg-screen-help.h"
 
 typedef struct {
 	GtkWidget *applet;
@@ -105,8 +106,10 @@ response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 							     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
 		}
 
-		gnome_help_display_desktop (applet_program, "window-list",
-					    "window-list","windowlist-prefs", &error);
+		egg_screen_help_display_desktop (
+			gtk_widget_get_screen (tasklist->applet),
+			applet_program, "window-list",
+			"window-list","windowlist-prefs", &error);
 		if (error) {
 			GtkWidget *dialog;
 			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
@@ -708,8 +711,10 @@ display_help_dialog (BonoboUIComponent *uic,
 						     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
 	}
 
-	gnome_help_display_desktop (applet_program, "window-list",
-				    "window-list",NULL, &error);
+	egg_screen_help_display_desktop (
+			gtk_widget_get_screen (tasklist->applet),
+			applet_program, "window-list",
+			"window-list",NULL, &error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,

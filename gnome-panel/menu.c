@@ -1081,6 +1081,9 @@ show_help_on (GtkWidget    *widget,
 {
 	GError           *error = NULL;
 	GnomeDesktopItem *item;
+	GdkScreen        *screen;
+
+	screen = menuitem_to_screen (sim->menuitem);
 
 	item = gnome_desktop_item_new_from_uri (sim->item_loc,
 						GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
@@ -1088,9 +1091,9 @@ show_help_on (GtkWidget    *widget,
 	if (item != NULL) {
 		const char *docpath = gnome_desktop_item_get_string
 			(item, "X-GNOME-DocPath");
-		if ( ! panel_show_gnome_kde_help (docpath, &error)) {
+		if ( ! panel_show_gnome_kde_help (screen, docpath, &error)) {
 			panel_error_dialog (
-				menuitem_to_screen (sim->menuitem),
+				screen,
 				"cannot_show_gnome_kde_help",
 				_("<b>Cannot display help document</b>\n\n"
 				  "Details: %s"), error->message);
@@ -1101,7 +1104,7 @@ show_help_on (GtkWidget    *widget,
 	} else {
 		g_assert (error != NULL);
 		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
+			screen,
 			"cant_load_entry",
 			_("<b>Can't load entry</b>\n\n"
 			  "Details: %s"), error->message);
@@ -3409,7 +3412,8 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 static void
 show_panel_help (GtkWidget *w, gpointer data)
 {
-	panel_show_help ("wgospanel.xml", "gospanel-1");
+	panel_show_help (
+		gtk_widget_get_screen (w), "wgospanel.xml", "gospanel-1");
 }
 
 static void

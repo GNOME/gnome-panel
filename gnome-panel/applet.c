@@ -192,20 +192,23 @@ static void
 applet_callback_callback (GtkWidget      *widget,
 			  AppletUserMenu *menu)
 {
+	GdkScreen *screen;
+
 	g_return_if_fail (menu->info != NULL);
+
+	screen = applet_user_menu_get_screen (menu);
 
 	switch (menu->info->type) {
 	case APPLET_LAUNCHER:
 		if (!strcmp (menu->name, "properties"))
 			launcher_properties (
-				menu->info->data,
-				applet_user_menu_get_screen (menu));
+				menu->info->data, screen);
 
 		else if (!strcmp (menu->name, "help"))
-			panel_show_help ("wgospanel.xml", "gospanel-16");
+			panel_show_help (screen, "wgospanel.xml", "gospanel-16");
 
 		else if (!strcmp (menu->name, "help_on_app"))
-			launcher_show_help (menu->info->data);
+			launcher_show_help (menu->info->data, screen);
 		break;
 	case APPLET_DRAWER: 
 		if (strcmp (menu->name, "properties")==0) {
@@ -213,13 +216,12 @@ applet_callback_callback (GtkWidget      *widget,
 			g_assert(drawer);
 			panel_config(drawer->drawer);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("wgospanel.xml", "gospanel-18");
+			panel_show_help (screen, "wgospanel.xml", "gospanel-18");
 		}
 		break;
 	case APPLET_MENU:
-		if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("wgospanel.xml", "gospanel-37");
-		}
+		if (!strcmp (menu->name, "help"))
+			panel_show_help (screen, "wgospanel.xml", "gospanel-37");
 		break;
 	case APPLET_LOCK: {
                 /*
@@ -236,7 +238,7 @@ applet_callback_callback (GtkWidget      *widget,
 		char *command = NULL;
 		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("wgospanel.xml", "gospanel-21");
+			panel_show_help (screen, "wgospanel.xml", "gospanel-21");
 		else if (strcmp (menu->name, "restart") == 0) {
 			command = "xscreensaver-command -exit ; xscreensaver &";
 		} else if (strcmp (menu->name, "prefs") == 0) {
@@ -248,15 +250,14 @@ applet_callback_callback (GtkWidget      *widget,
 		}
 		if (command)
 			egg_screen_execute_shell (
-				applet_user_menu_get_screen (menu),
-				g_get_home_dir (), command);
+				screen, g_get_home_dir (), command);
 		if (freeit)
 			g_free (command);
 		break;
 	}
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("wgospanel.xml", "gospanel-20");
+			panel_show_help (screen, "wgospanel.xml", "gospanel-20");
 		break;
 	case APPLET_BONOBO:
 		/*

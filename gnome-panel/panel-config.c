@@ -1597,9 +1597,13 @@ window_response (GtkWidget *w, int response, gpointer data)
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
 		if (tab == 1)
-			panel_show_help ("wgospanel.xml", "gospanel-28");
+			panel_show_help (
+				gtk_window_get_screen (GTK_WINDOW (w)),
+				"wgospanel.xml", "gospanel-28");
 		else
-			panel_show_help (help_path, help_linkid);
+			panel_show_help (
+				gtk_window_get_screen (GTK_WINDOW (w)),
+				help_path, help_linkid);
 	} else {
 		gtk_widget_destroy (w);
 	}

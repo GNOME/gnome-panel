@@ -26,6 +26,14 @@ DISABLE_DEPRECATED_CFLAGS =			\
 gladedir   = $(datadir)/gen_util
 glade_DATA = pager.glade tasklist.glade
 
+EGGFILES =                      \
+	egg-screen-exec.h       \
+	egg-screen-exec.c       \
+	egg-screen-help.h       \
+	egg-screen-help.c       \
+	egg-screen-url.h        \
+	egg-screen-url.c
+
 libgen_util_applet_2_la_SOURCES = \
 	main.c \
 	clock.c \
@@ -40,7 +48,8 @@ libgen_util_applet_2_la_SOURCES = \
 	popcheck.h \
 	remote-helper.c \
 	remote-helper.h \
-	multihead-hacks.h
+	multihead-hacks.h \
+	$(EGGFILES)
 
 libgen_util_applet_2_la_LDFLAGS = -module -avoid-version
 libgen_util_applet_2_la_LIBADD =			\
@@ -103,3 +112,8 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(schemas_in_files)				\
 	$(glade_DATA)					\
 	$(ui_DATA)
+
+EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
+
+regenerate-built-sources:
+	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
