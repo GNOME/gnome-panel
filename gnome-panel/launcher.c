@@ -405,7 +405,6 @@ load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
 		applet_add_callback(applets_last->data,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
-		panel_config_sync();
 	}
 }
 
@@ -425,6 +424,7 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 			dentry->name=g_strdup("???");
 		}
 		load_launcher_applet_full (NULL, dentry, panel, pos);
+		panel_config_sync();
 	}
 	gtk_widget_destroy(d);
 }
@@ -485,6 +485,7 @@ load_launcher_applet_from_info(char *name, char *comment,
 		dentry->icon = g_strdup(icon);
 
 	load_launcher_applet_full (NULL,dentry,panel, pos);
+	panel_config_sync();
 }
 
 void

@@ -26,6 +26,4 @@ void cutout_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, 
 void place_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs);
 #endif
 
-GdkPixbuf * my_gdk_pixbuf_scale (const GdkPixbuf *pixbuf, gint w, gint h);
-
 #endif /* _RGB_STUFF_H_ */

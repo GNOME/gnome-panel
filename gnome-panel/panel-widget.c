@@ -12,6 +12,11 @@
 #include "button-widget.h"
 #include "panel-util.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_alphagamma.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_pixbuf.h>
+#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_affine.h>
 #include "rgb-stuff.h"
 
 GSList *panels=NULL; /*other panels we might want to move the applet to*/
@@ -986,7 +991,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 				button->cache =
 					gdk_pixmap_new(widget->window, size,size,
 						       gtk_widget_get_visual(widget)->depth);
-				rgb_buf = g_new(guchar, size*size*3);
+				rgb_buf = g_new0(guchar, size*size*3);
 				/*if the icon doesn't have an opaque tile,
 				  draw us a background*/
 				if(!button->no_alpha)
@@ -1388,40 +1393,32 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 }
 
 static GdkPixmap *
-get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb)
+get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h)
 {
 	GdkGC *gc;
 	GdkPixmap *p;
-	p = gdk_pixmap_new(w->window,
-			   pb->art_pixbuf->width,
-			   pb->art_pixbuf->height,
+	gdouble affine[6];
+	guchar *rgb;
+	p = gdk_pixmap_new(w->window, scale_w,scale_h,
 			   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
 	gc = gdk_gc_new(p);
-	if(!pb->art_pixbuf->has_alpha) {
-		gdk_draw_rgb_image(p,gc,0,0,
-				   pb->art_pixbuf->width,
-				   pb->art_pixbuf->height,
-				   GDK_RGB_DITHER_NORMAL,
-				   pb->art_pixbuf->pixels,
-				   pb->art_pixbuf->rowstride);
-	} else {
-		guchar *rgb;
-		rgb = g_new(guchar,pb->art_pixbuf->width*pb->art_pixbuf->height*3);
-		tile_rgb(rgb,
-			 pb->art_pixbuf->width,pb->art_pixbuf->height,
-			 0,0,
-			 pb->art_pixbuf->width*3,
-			 pb->art_pixbuf->pixels,
-			 pb->art_pixbuf->width,pb->art_pixbuf->height,
-			 pb->art_pixbuf->rowstride, TRUE);
-		gdk_draw_rgb_image(p,gc,0,0,
-				   pb->art_pixbuf->width,
-				   pb->art_pixbuf->height,
-				   GDK_RGB_DITHER_NORMAL,
-				   rgb,
-				   pb->art_pixbuf->width*3);
-		g_free(rgb);
-	}
+	
+	affine[1] = affine[2] = affine[4] = affine[5] = 0;
+
+	affine[0] = scale_w / (double)(pb->art_pixbuf->width);
+	affine[3] = scale_h / (double)(pb->art_pixbuf->height);
+	
+	rgb = g_new0(guchar,scale_w*scale_h*3);
+	art_rgb_pixbuf_affine(rgb,
+			      0,0,scale_w,scale_h,scale_w*3,
+			      pb->art_pixbuf,affine,
+			      ART_FILTER_NEAREST,NULL);
+	gdk_draw_rgb_image(p,gc,0,0,
+			   scale_w,scale_h,
+			   GDK_RGB_DITHER_NORMAL,
+			   rgb, scale_w*3);
+	g_free(rgb);
+
 	gdk_gc_destroy(gc);
 	return p;
 }
@@ -1431,7 +1428,6 @@ static void
 panel_resize_pixmap(PanelWidget *panel)
 {
 	int w, h;
-	GdkPixbuf *pb = NULL;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
@@ -1442,31 +1438,28 @@ panel_resize_pixmap(PanelWidget *panel)
 		gdk_pixmap_unref(panel->backpixmap);
 	panel->backpixmap = NULL;
 
-	w = panel->backpix->art_pixbuf->width;
-	h = panel->backpix->art_pixbuf->height;
+	panel->scale_w = w = panel->backpix->art_pixbuf->width;
+	panel->scale_w = h = panel->backpix->art_pixbuf->height;
 
 	switch (panel->orient) {
 	case PANEL_HORIZONTAL:
-		pb = my_gdk_pixbuf_scale(panel->backpix,
-					 w * panel->thick / h,
-					 panel->thick);
+		panel->scale_w = w * panel->thick / h;
+		panel->scale_h = panel->thick;
 		break;
 
 	case PANEL_VERTICAL:
-		pb = my_gdk_pixbuf_scale(panel->backpix,
-					 panel->thick,
-					 h * panel->thick / w);
+		panel->scale_w = panel->thick;
+		panel->scale_h = h * panel->thick / w;
 		break;
 
 	default:
 		g_assert_not_reached ();
 	}
 
-	panel->scale_w = pb->art_pixbuf->width;
-	panel->scale_h = pb->art_pixbuf->height;
-	
-	panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),pb);
-	gdk_pixbuf_unref(pb);
+	panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),
+						   panel->backpix,
+						   panel->scale_w,
+						   panel->scale_h);
 
 	panel_widget_draw_all(panel,NULL);
 }
@@ -1499,35 +1492,36 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	
 	if (panel->fit_pixmap_bg) {
 		int w, h;
-		GdkPixbuf *pb = NULL;
 
-		w = panel->backpix->art_pixbuf->width;
-		h = panel->backpix->art_pixbuf->height;
+		panel->scale_w = w = panel->backpix->art_pixbuf->width;
+		panel->scale_h = h = panel->backpix->art_pixbuf->height;
 
 		switch (panel->orient) {
 		case PANEL_HORIZONTAL:
-			pb = my_gdk_pixbuf_scale(panel->backpix,
-						 w * panel->thick / h,
-						 panel->thick);
+			panel->scale_w = w * panel->thick / h;
+			panel->scale_h = panel->thick;
 			break;
 
 		case PANEL_VERTICAL:
-			pb = my_gdk_pixbuf_scale(panel->backpix,
-						 panel->thick,
-						 h * panel->thick / w);
+			panel->scale_w = panel->thick;
+			panel->scale_h = h * panel->thick / w;
 			break;
 
 		default:
 			g_assert_not_reached ();
 		}
-		panel->scale_w = pb->art_pixbuf->width;
-		panel->scale_h = pb->art_pixbuf->height;
 	
-		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel), pb);
-		gdk_pixbuf_unref(pb);
+		panel->backpixmap =
+			get_pixmap_from_pixbuf(GTK_WIDGET(panel), 
+					       panel->backpix,
+					       panel->scale_w,
+					       panel->scale_h);
 	} else {
-		panel->backpixmap = get_pixmap_from_pixbuf(GTK_WIDGET(panel),
-							   panel->backpix);
+		panel->backpixmap =
+			get_pixmap_from_pixbuf(GTK_WIDGET(panel),
+					       panel->backpix,
+					       panel->backpix->art_pixbuf->width,
+					       panel->backpix->art_pixbuf->height);
 	}
 
 	return TRUE;
