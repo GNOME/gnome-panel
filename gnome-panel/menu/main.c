@@ -92,6 +92,7 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
+	(*small_icons)=g_list_prepend(*small_icons,align);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
