@@ -62,8 +62,7 @@
 
 QuickDesktopItem *
 quick_desktop_item_load_file (const char *file,
-			      const char *expected_type,
-			      gboolean    run_tryexec)
+                              gboolean    run_tryexec)
 {
         QuickDesktopItem *retval;
 	char *uri;
@@ -79,7 +78,7 @@ quick_desktop_item_load_file (const char *file,
 		uri = gnome_vfs_get_uri_from_local_path (full);
 		g_free (full);
 	}
-	retval = quick_desktop_item_load_uri (uri, expected_type, run_tryexec);
+	retval = quick_desktop_item_load_uri (uri, run_tryexec);
 
 	g_free (uri);
 
@@ -319,8 +318,7 @@ exec_exists (const char *exec)
 
 QuickDesktopItem *
 quick_desktop_item_load_uri (const char *uri,
-			     const char *expected_type,
-			     gboolean run_tryexec)
+                             gboolean run_tryexec)
 {
 	QuickDesktopItem *retval = NULL;
 	ReadBuf *rb;
@@ -387,16 +385,6 @@ quick_desktop_item_load_uri (const char *uri,
 				g_free (lang);
 			}
 		} else if ((val = IS_KEY ("Type", buf)) != NULL) {
-			if (expected_type != NULL &&
-			    strcmp (val, expected_type) != 0) {
-#ifdef QUICK_DESKTOP_READER_DEBUG
-				g_print ("bad type '%s' != '%s': %s\n", val,
-					 expected_type, uri);
-#endif
-				quick_desktop_item_destroy (retval);
-				retval = NULL;
-				break;
-			}
 			g_free (retval->type);
 			retval->type = g_strdup (val);
 		} else if ((val = IS_KEY ("Icon", buf)) != NULL) {

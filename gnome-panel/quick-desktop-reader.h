@@ -52,10 +52,8 @@ struct _QuickDesktopItem {
 };
 
 QuickDesktopItem * quick_desktop_item_load_file (const char  *file,
-						 const char  *expected_type,
 						 gboolean     run_tryexec);
 QuickDesktopItem * quick_desktop_item_load_uri  (const char  *uri,
-						 const char  *expected_type,
 						 gboolean     run_tryexec);
 
 void		   quick_desktop_item_destroy   (QuickDesktopItem *item);

@@ -1180,7 +1180,7 @@ add_drawers_from_dir (const char  *dirname,
 	char             *attached_toplevel_id;
 
 	dentry_name = g_build_path ("/", dirname, ".directory", NULL);
-	item_info = quick_desktop_item_load_uri (dentry_name, NULL, FALSE);
+	item_info = quick_desktop_item_load_uri (dentry_name, FALSE);
 	g_free (dentry_name);
 
 	subdir_name = name ? name : (item_info ? item_info->name : NULL);
@@ -1210,9 +1210,7 @@ add_drawers_from_dir (const char  *dirname,
 					
 					QuickDesktopItem *qitem;
 
-					qitem = quick_desktop_item_load_uri (uri,
-									     NULL,
-									     TRUE);
+					qitem = quick_desktop_item_load_uri (uri, TRUE);
 
 					/* Don't add the desktop entry if TryExec fails */
 					if (qitem != NULL) {

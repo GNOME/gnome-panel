@@ -643,7 +643,7 @@ panel_menu_button_get_icon_for_menu_path (PanelMenuButton *button)
 				    button->priv->menu_path,
 				    ".directory",
 				    NULL);
-	item = quick_desktop_item_load_uri (dentry_path, NULL, FALSE);
+	item = quick_desktop_item_load_uri (dentry_path, FALSE);
 	g_free (dentry_path);
 
 	if (!item)

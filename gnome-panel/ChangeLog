@@ -1,3 +1,12 @@
+2004-06-09  Christian Neumair  <chris@gnome-de.org>
+
+	* menu-fentry.c: (get_presorted_from), (fr_fill_dir), (fr_read_dir),
+	(fr_check_and_reread):
+	* menu.c: (add_drawers_from_dir):
+	* panel-menu-button.c: (panel_menu_button_get_icon_for_menu_path):
+	* quick-desktop-reader.[ch]: Remove expected_type parameter from
+	quick_desktop_item_load_uri. All calls pass NULL. Fixes #143965.
+
 ==================== 2.7.1 ====================
 
 2004-06-02  Christian Neumair  <chris@gnome-de.org>

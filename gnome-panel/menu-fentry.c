@@ -83,9 +83,7 @@ get_presorted_from (const char *dir_uri)
 	QuickDesktopItem *qitem;
 	
 	uri = g_build_path ("/", dir_uri, ".directory", NULL);
-	qitem = quick_desktop_item_load_uri (uri,
-					     NULL /* expected_type */,
-					     FALSE /* run_tryexec */);
+	qitem = quick_desktop_item_load_uri (uri, FALSE /* run_tryexec */);
 
 	g_free (uri);
 
@@ -325,7 +323,6 @@ fr_fill_dir (FileRec *fr, int sublevels)
 			tryexec_path = NULL;
 
 			qitem = quick_desktop_item_load_uri (name /* uri */,
-							     NULL /* expected_type */,
 							     FALSE /* run_tryexec */);
 			if (qitem != NULL &&
 			    qitem->tryexec != NULL) {
@@ -446,7 +443,6 @@ fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 		g_free (fr->comment);          fr->comment = NULL;
 
 		qitem = quick_desktop_item_load_uri (furi /* uri */,
-						     NULL /* expected_type */,
 						     TRUE /* run_tryexec */);
 		if (qitem) {
 			fr->fullname = g_strdup (qitem->name);
@@ -611,8 +607,7 @@ fr_check_and_reread (FileRec *fr)
 				if (ddr->ditemmtime != info->mtime) {
 					QuickDesktopItem *qitem;
 					qitem = quick_desktop_item_load_uri (p /* file */,
-									      NULL /* expected_type */,
-									      TRUE /* run_tryexec */);
+									     TRUE /* run_tryexec */);
 					if (qitem != NULL) {
 						g_free (ffr->icon);
 						ffr->icon = g_strdup (qitem->icon);
@@ -659,7 +654,6 @@ fr_check_and_reread (FileRec *fr)
 				if (ffr->mtime != info->mtime) {
 					QuickDesktopItem *qitem;
 					qitem = quick_desktop_item_load_uri (ffr->name /* file */,
-									     NULL /* expected_type */,
 									     TRUE /* run_tryexec */);
 					if (qitem != NULL) {
 						g_free (ffr->exec);
