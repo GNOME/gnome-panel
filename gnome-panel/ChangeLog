@@ -1,3 +1,11 @@
+2005-03-26  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_setup_image_chooser),
+	(panel_properties_dialog_update_background_image): do not select files
+	with an empty name, but unselect all filenames instead.
+	Fix panel part of bug #169979.
+
 2005-03-23  Mark McLoughlin  <mark@skynet.ie>
 
 	Based on a patch from Frederic Crozat in bug #164310
