@@ -27,7 +27,7 @@
 
 #include <string.h>
 #include <glib/gi18n.h>
-#include <libgnomevfs/gnome-vfs-application-registry.h>
+#include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include "egg-recent-model.h"
 #include "egg-recent-view.h"
