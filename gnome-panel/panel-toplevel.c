@@ -2218,9 +2218,11 @@ panel_toplevel_attach_widget_parent_set (PanelToplevel *toplevel,
 static void
 panel_toplevel_attach_toplevel_hiding (PanelToplevel *toplevel)
 {
-	panel_toplevel_hide (toplevel, FALSE, -1);
+	if (!panel_toplevel_get_is_hidden (toplevel)) {
+		panel_toplevel_hide (toplevel, FALSE, -1);
 
-	toplevel->priv->attach_hidden = TRUE;
+		toplevel->priv->attach_hidden = TRUE;
+	}
 }
 
 static void
