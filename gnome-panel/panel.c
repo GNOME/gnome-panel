@@ -1198,6 +1198,27 @@ floating_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 			      basep->panel);
 }
 
+static void
+drawer_orient_change_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	PanelWidget *panel = data;
+	
+	if(info->type == APPLET_DRAWER)
+		orientation_change(info,panel);
+}
+
+static void
+sliding_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
+{
+	if(!GTK_WIDGET_REALIZED(basep))
+		return;
+
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
+			      drawer_orient_change_foreach,
+			      basep->panel);
+}
+
 void
 panel_setup(GtkWidget *panelw)
 {
@@ -1307,9 +1328,15 @@ panel_setup(GtkWidget *panelw)
 					 GTK_SIGNAL_FUNC(panel_realize),
 					 NULL);
 
-	if(IS_FLOATING_WIDGET(panelw))
+	if(IS_FLOATING_WIDGET(panelw) ||
+	   IS_DRAWER_WIDGET(panelw))
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
 					 GTK_SIGNAL_FUNC(floating_size_alloc),
+					 NULL);
+	if(IS_SLIDING_WIDGET(panelw) ||
+	   IS_ALIGNED_WIDGET(panelw))
+		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
+					 GTK_SIGNAL_FUNC(sliding_size_alloc),
 					 NULL);
 }
 

@@ -209,7 +209,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	Drawer *drawer = data;
 	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
 
-	if (!xstuff_is_compliant_wm())
+	if (!xstuff_is_compliant_wm() || global_config.autoraise)
 		gdk_window_raise(drawer->drawer->window);
 
 	if (basep->state == BASEP_MOVING)
