@@ -10,13 +10,11 @@
 #include "gnome.h"
 
 #include "panel-widget.h"
-
 #include "gdkextra.h"
 #include "panel.h"
 #include "menu.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
-
 #include <gdk/gdkx.h>
 
 static GtkWidget *applet_menu;
@@ -283,7 +281,7 @@ panel_session_save (GnomeClient *client,
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
 		gtk_widget_unref(applet_menu);
-		gtk_widget_unref(panel_tooltips);
+		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 
 		small_icons = NULL;
 			/*prevent searches through the g_list to speed
@@ -490,28 +488,44 @@ add_main_menu(GtkWidget *widget, gpointer data)
 	create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
+void
+reparent_window_id (unsigned long id)
+{
+	GtkWidget *eb;
+	GdkWindow *win;
+	int w,h;
+	int i;
+	
+	printf ("I got this window ID to reparent: %d\n", id);
+	eb = gtk_event_box_new();
+	
+	win = gdk_window_foreign_new(id);
+	gdk_window_get_size(win,&w,&h);
+	gtk_widget_set_usize(eb,w,h);
+	gtk_widget_show (eb);
+
+	panel_widget_add(PANEL_WIDGET(panels->data), eb, 0);
+
+	/* We dont know why, but that is how it goes */
+	for (i = 0; i < 200; i++){
+		gdk_window_reparent(win,eb->window,0,0);
+		gdk_flush ();
+	}
+	gtk_widget_queue_resize (PANEL_WIDGET (panels->data));
+	gtk_main_iteration ();
+	printf ("leaving reparent\n");
+}
+
 /*FIXME: add a function that does this, so generalize register_toy for this*/
 static void
 add_reparent(GtkWidget *widget, gpointer data)
 {
 	int id;
-	GtkWidget *eb;
-	GdkWindow *win;
-	int w,h;
 
 	puts("Enter window ID to reparent:");
 	scanf("%d",&id);
 
-	eb = gtk_event_box_new();
-	gtk_widget_show(eb);
-
-	win = gdk_window_foreign_new(id);
-	gdk_window_get_size(win,&w,&h);
-	gtk_widget_set_usize(eb,w,h);
-
-	panel_widget_add(PANEL_WIDGET(panels->data), eb, 0);
-
-	gdk_window_reparent(win,eb->window,0,0);
+	reparent_window_id (id);
 }
 
 GtkWidget *

@@ -7,12 +7,13 @@
 
 #include <config.h>
 #include <string.h>
-#include "gnome.h"
+#include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
 #include "panel_config_global.h"
 #include "menu.h"
 #include "drawer.h"
+#include "mico-glue.h"
 
 GList *panels = NULL;
 GList *applets = NULL;
@@ -268,8 +269,9 @@ main(int argc, char **argv)
 {
 	GtkWidget *base_panel;
 	char buf[256];
-	
+
 	gnome_init("panel", &argc, &argv);
+
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
@@ -302,6 +304,9 @@ main(int argc, char **argv)
 
 	apply_global_config();
 
-	gtk_main();
+	printf ("starting corba looop\n");
+	/* I use the glue code to avoid making this a C++ file */
+	panel_corba_gtk_main (&argc, &argv, "IDL:GNOME/Panel:1.0");
+	
 	return 0;
 }

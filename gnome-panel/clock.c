@@ -19,6 +19,7 @@
 #include <time.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
+#include <applet-lib.h>
 
 #define CLOCK_DATA "clock_data"
 
@@ -166,21 +167,28 @@ main(int argc, char **argv)
 {
 	GtkWidget *clock;
 	GtkWidget *window;
-
+	char *result;
+	
 	gnome_init("clock_applet", &argc, &argv);
+
+	if (!gnome_panel_applet_init_corba (&argc, &argv)){
+		fprintf (stderr, "Could not comunicate with the panel\n");
+		exit (1);
+	}
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
 	clock = create_clock_widget (GTK_WIDGET(window));
 	gtk_widget_show(clock);
+	gtk_container_add (GTK_CONTAINER (window), clock);
+	
+	result = gnome_panel_prepare_and_transfer(window);
 
-	gtk_container_add(GTK_CONTAINER(window),clock);
-
-	gtk_widget_show(window);
-
-	printf ("The window id is: %d\n", GDK_WINDOW_XWINDOW (clock->window));
-
-	gtk_main();
+	if (result){
+		printf ("Could not talk to the Panel: %s\n", result);
+		exit (1);
+	}
+	gtk_main ();
 
 	return 0;
 }

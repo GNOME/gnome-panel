@@ -323,7 +323,7 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	Menu *menu = data;
 	if(event->button==1) {
 		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
-			data, event->button, time(NULL));
+			       data, event->button, event->time);
 		return TRUE;
 	}
 	return FALSE;

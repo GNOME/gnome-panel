@@ -84,6 +84,8 @@ void apply_global_config(void);
 /*these are in main.c*/
 void load_applet(char *id, char *params, int pos, int panel);
 
+void reparent_window_id (unsigned long id);
+	
 END_GNOME_DECLS
 
 #endif

@@ -1,0 +1,46 @@
+#include <iostream.h>
+#include <mico/gtkmico.h>
+#include <mico/naming.h>
+#include <gnome.h>
+#include "mico-glue.h"
+#include "gnome-panel.h"
+
+/* This implements the server-side of the gnome-panel.idl
+ * specification Currently there is no way to create new CORBA
+ * "instances" of the panel, as there is only one panel running on the
+ * screen.
+ * */
+   
+class Panel_impl : virtual public GNOME::Panel_skel {
+public:
+	void reparent_window_id (CORBA::ULong wid){
+		printf ("REPARENT!\n");
+
+		::reparent_window_id (wid);
+	}
+};
+
+void
+panel_corba_gtk_main (int *argc, char ***argv, char *service_name)
+{
+	CORBA::ORB_var orb = CORBA::ORB_init (*argc, *argv, "mico-local-orb");
+	CORBA::BOA_var boa = orb->BOA_init (*argc, *argv, "mico-local-boa");
+	GNOME::Panel_ptr acc = new Panel_impl ();
+	char hostname [4096];
+	char *name;
+
+	gethostname (hostname, sizeof (hostname));
+	if (hostname [0] == 0)
+		strcpy (hostname, "unknown-host");
+
+	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
+			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+
+	gnome_config_set_string (name, orb->object_to_string (acc));
+	gnome_config_sync ();
+	g_free (name);
+	
+	orb->dispatcher (new GtkDispatcher ());
+	boa->impl_is_ready (CORBA::ImplementationDef::_nil());
+}
+
