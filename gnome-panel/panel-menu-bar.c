@@ -105,6 +105,11 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 
 	menubar->priv->actions_menu = panel_create_menu ();
 
+	/* intercept all right button clicks makes sure they don't
+	   go to the object itself */
+	g_signal_connect (G_OBJECT (menubar->priv->actions_menu), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
 	g_signal_connect (menubar->priv->actions_menu, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menubar->priv->actions_menu);
@@ -193,6 +198,11 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 
 	menubar->priv->applications_menu =
 		create_root_menu (NULL, NULL, TRUE, MENU_FLAGS, FALSE);
+
+	/* intercept all right button clicks makes sure they don't
+	   go to the object itself */
+	g_signal_connect (G_OBJECT (menubar->priv->applications_menu), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	g_signal_connect (menubar->priv->applications_menu, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),

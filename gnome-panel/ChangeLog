@@ -1,3 +1,12 @@
+Fri Aug 01 15:37:02 2003  George Lebl <jirka@5z.com>
+
+	* panel-menu-bar.c: catch and intercept all button_press_events on
+	  the two toplevel menus to avoid them going all the way to the
+	  menubar.  Fixes #111313 where right clicking on dead space in
+	  the menus could bring up confusingly the applet menu.  Very
+	  important bugfix indeed, but I think I have a fever, so I'm
+	  allowed to fix just simple stuff.
+
 2003-08-01  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-recent.c: (recent_documents_activate_cb):
