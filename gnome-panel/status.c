@@ -299,9 +299,11 @@ ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 }
 
 static void
-applet_destroy(GtkWidget *w, StatusApplet *s)
+free_status (gpointer data)
 {
+	StatusApplet *s = data;
 	g_free(s);
+
 	the_status = NULL;
 }
 
@@ -353,11 +355,9 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	
 	ebox = gtk_event_box_new();
 	gtk_widget_show(ebox);
-	gtk_signal_connect(GTK_OBJECT(ebox), "destroy",
-			   GTK_SIGNAL_FUNC(applet_destroy), the_status);
 	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
-	if(!register_toy(ebox, the_status,
+	if(!register_toy(ebox, the_status, free_status,
 			 panel, pos, exactpos, APPLET_STATUS))
 		return TRUE;
 	the_status->info = applets_last->data;

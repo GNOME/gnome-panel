@@ -198,9 +198,10 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	Drawer *drawer = data;
 	GtkWidget *prop_dialog = drawer->properties;
 
+	drawer->properties = NULL;
+
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
-	g_free(drawer);
 }
 
 static int
@@ -377,7 +378,8 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 	{
 		GtkWidget *dw = drawer->drawer;
 
-		if(!register_toy(drawer->button,drawer,
+		if(!register_toy(drawer->button,
+				 drawer, (GDestroyNotify)g_free,
 				 panel, pos, exactpos, APPLET_DRAWER)) {
 			/* by this time drawer has been freed as register_toy
 			   has destroyed drawer->button */

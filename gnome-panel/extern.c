@@ -277,6 +277,22 @@ extern_start_new_goad_id(Extern *e)
 	CORBA_exception_free(&ev);
 }
 
+static Extern *
+extern_ref (Extern *ext)
+{
+	ext->refcount++;
+	return ext;
+}
+
+static void
+extern_unref (Extern *ext)
+{
+	ext->refcount--;
+	if (ext->refcount == 0)
+		g_free (ext);
+	return ext;
+}
+
 void
 extern_clean(Extern *ext)
 {
@@ -285,10 +301,15 @@ extern_clean(Extern *ext)
 	CORBA_exception_init(&ev);
 
 	g_free(ext->goad_id);
+	ext->goad_id = NULL;
+
 	g_free(ext->cfg);
+	ext->cfg = NULL;
 
 	CORBA_Object_release(ext->pspot, &ev);
+	ext->pspot = NULL;
 	CORBA_Object_release(ext->applet, &ev);
+	ext->applet = NULL;
 	id = PortableServer_POA_servant_to_id(thepoa, ext, &ev);
 	PortableServer_POA_deactivate_object(thepoa, id, &ev);
 	CORBA_free (id);
@@ -303,7 +324,7 @@ extern_clean(Extern *ext)
 		ext->send_draw_idle = 0;
 	}
 
-	g_free(ext);
+	extern_unref(ext);
 
 	CORBA_exception_free(&ev);
 }
@@ -314,11 +335,12 @@ extern_socket_destroy(GtkWidget *w, gpointer data)
 	GtkSocket *socket = GTK_SOCKET(w);
 	Extern *ext = data;
 
-	if (socket->same_app && socket->plug_window) {
+	if (socket->same_app &&
+	    socket->plug_window != NULL) {
 		GtkWidget *plug_widget;
 		gdk_window_get_user_data (socket->plug_window,
 					  (gpointer *)&plug_widget);
-		if(plug_widget) {
+		if(plug_widget != NULL) {
 			/* XXX: hackaround to broken gtkplug/gtksocket!!!
 			   KILL all references to ourselves on the plug
 			   and all our references to the plug and then
@@ -336,8 +358,11 @@ extern_socket_destroy(GtkWidget *w, gpointer data)
 		}
 	}
 
-	gtk_widget_destroy(ext->ebox);
-	extern_clean(ext);
+	if (ext->ebox != NULL)
+		gtk_widget_destroy(ext->ebox);
+	ext->ebox = NULL;
+
+	extern_unref (ext);
 }
 
 /*static void
@@ -432,12 +457,14 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	gtk_container_add(GTK_CONTAINER(ext->ebox), socket);
 
-	gtk_widget_show_all(ext->ebox);
+	gtk_widget_show_all (ext->ebox);
 	
 	/*we save the obj in the id field of the appletinfo and the 
 	  path in the path field */
 	ext->info = NULL;
-	if(!register_toy(ext->ebox, ext, panel, pos, ext->exactpos, type)) {
+	if(!register_toy(ext->ebox,
+			 ext, (GDestroyNotify)extern_clean,
+			 panel, pos, ext->exactpos, type)) {
 		/* the ebox is destroyed in register_toy */
 		ext->ebox = NULL;
 		g_warning(_("Couldn't add applet"));
@@ -445,9 +472,9 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	}
 	ext->info = applets_last->data;
 
-	gtk_signal_connect(GTK_OBJECT(socket),"destroy",
-			   GTK_SIGNAL_FUNC(extern_socket_destroy),
-			   ext);
+	gtk_signal_connect(GTK_OBJECT (socket), "destroy",
+			   GTK_SIGNAL_FUNC (extern_socket_destroy),
+			   extern_ref (ext));
 	
 	if(!GTK_WIDGET_REALIZED(socket))
 		gtk_widget_realize(socket);
@@ -470,6 +497,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
 		cfgpath = g_strdup(cfgpath);
 	
 	ext = g_new0(Extern,1);
+	ext->refcount = 1;
 	ext->started = FALSE;
 	ext->exactpos = exactpos;
 	ext->send_position = FALSE;
@@ -599,6 +627,7 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 	/*this is an applet that was started from outside, otherwise we would
 	  have already reserved a spot for it*/
 	ext = g_new0(Extern, 1);
+	ext->refcount = 1;
 	ext->started = FALSE;
 	ext->exactpos = FALSE;
 	ext->send_position = FALSE;

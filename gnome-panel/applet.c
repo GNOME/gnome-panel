@@ -71,7 +71,7 @@ static gboolean
 kill_applet_in_idle(gpointer data)
 {
 	AppletInfo *info = data;
-	panel_clean_applet(info);
+	panel_clean_applet (info);
 	return FALSE;
 }
 
@@ -556,6 +556,27 @@ applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
 	return TRUE;
 }
 
+static GList *launchers_to_kill = NULL;
+
+void
+remove_unused_launchers (void)
+{
+	GList *li;
+
+	for (li = launchers_to_kill; li != NULL; li = li->next) {
+		char *file = li->data;
+
+		unlink (file);
+
+		g_free (file);
+
+		li->data = NULL;
+	}
+
+	g_list_free (launchers_to_kill);
+	launchers_to_kill = NULL;
+}
+
 static void
 applet_destroy(GtkWidget *w, AppletInfo *info)
 {
@@ -565,7 +586,7 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 
 	info->widget = NULL;
 
-	if(info->type == APPLET_DRAWER) {
+	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		g_assert(drawer);
 		if(drawer->drawer) {
@@ -574,8 +595,23 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 			PANEL_WIDGET(BASEP_WIDGET(dw)->panel)->master_widget = NULL;
 			gtk_widget_destroy(dw);
 		}
+	} else if (info->type == APPLET_LAUNCHER) {
+		Launcher *launcher = info->data;
+
+		/* we CAN'T unlink the file here as we may just
+		 * be killing stuff before exit, basically we
+		 * just want to schedule removals until session
+		 * saving */
+
+		if (launcher->dentry->location != NULL) {
+			char *file = g_strdup (launcher->dentry->location);
+			launchers_to_kill = 
+				g_list_prepend (launchers_to_kill, file);
+		}
 	}
-	if(info->menu) {
+
+
+	if (info->menu != NULL) {
 		gtk_widget_unref(info->menu);
 		info->menu = NULL;
 		info->menu_age = 0;
@@ -583,25 +619,33 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 
 	info->type = APPLET_EMPTY;
 
-	info->data=NULL;
+	if (info->data_destroy)
+		info->data_destroy (info->data);
+	info->data = NULL;
 
 	/*free the user menu*/
 	for(li = info->user_menu; li != NULL; li = g_list_next(li)) {
 		AppletUserMenu *umenu = li->data;
-		if(umenu->name)
-			g_free(umenu->name);
-		if(umenu->stock_item)
-			g_free(umenu->stock_item);
-		if(umenu->text)
-			g_free(umenu->text);
+
+		g_free(umenu->name);
+		umenu->name = NULL;
+		g_free(umenu->stock_item);
+		umenu->stock_item = NULL;
+		g_free(umenu->text);
+		umenu->text = NULL;
+
 		g_free(umenu);
+
+		li->data = NULL;
 	}
 	g_list_free(info->user_menu);
+	info->user_menu = NULL;
 }
 
 gboolean
 register_toy(GtkWidget *applet,
 	     gpointer data,
+	     GDestroyNotify data_destroy,
 	     PanelWidget *panel,
 	     int pos,
 	     gboolean exactpos,
@@ -627,6 +671,7 @@ register_toy(GtkWidget *applet,
 	info->menu = NULL;
 	info->menu_age = 0;
 	info->data = data;
+	info->data_destroy = data_destroy;
 	info->user_menu = NULL;
 
 	/* Since we will be taking care of refcounting by ourselves,
@@ -649,10 +694,11 @@ register_toy(GtkWidget *applet,
 				    PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
 		assoc_panel->master_widget = applet;
 	}
+
 	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 		
-	if(!applets) {
+	if (applets == NULL) {
 		applets_last = applets = g_slist_append(NULL, info);
 	} else {
 		applets_last = g_slist_append(applets_last, info);
@@ -664,7 +710,7 @@ register_toy(GtkWidget *applet,
 	applets_to_sync = TRUE;
 
 	/*add at the beginning if pos == -1*/
-	if(pos>=0) {
+	if (pos >= 0) {
 		newpos = pos;
 		insert_at_pos = FALSE;
 	} else {

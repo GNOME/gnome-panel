@@ -53,10 +53,12 @@ struct _AppletInfo {
 	int menu_age;
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
 	gpointer data; /*the per applet structure, if it exists*/
+	GDestroyNotify data_destroy;
 };
 
 gboolean register_toy(GtkWidget *applet,
 		      gpointer data,
+		      GDestroyNotify data_destroy,
 		      PanelWidget *panel,
 		      int pos,
 		      gboolean exactpos,
@@ -76,6 +78,10 @@ void applet_callback_set_sensitive(AppletInfo *info,
 				   const char *callback_name,
 				   int sensitive);
 void show_applet_menu(AppletInfo *info, GdkEventButton *event);
+
+/* during session save, we call this to unlink the .desktop files of
+ * removed launchers */
+void remove_unused_launchers (void);
 
 END_GNOME_DECLS
 

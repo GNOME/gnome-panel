@@ -16,6 +16,8 @@ struct _Extern {
 	GNOME_PanelSpot pspot;
         GNOME_Applet applet;
 
+	int refcount; /* primitive refcounting */
+
 	char *goad_id;
 	char *cfg;
 	GtkWidget *ebox;

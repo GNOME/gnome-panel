@@ -865,7 +865,12 @@ static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
 	PanelWidget *panel = get_panel_from_menu_data (widget);
-	load_launcher_applet(item_loc, panel, 0, FALSE);
+	Launcher *launcher;
+
+	launcher = load_launcher_applet(item_loc, panel, 0, FALSE);
+
+	if (launcher != NULL)
+		launcher_hoard (launcher);
 }
 
 
@@ -948,12 +953,19 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 			/*we load the applet at the right
 			  side, that is end of the drawer*/
 			dentry = gnome_desktop_entry_load (filename);
-			if (dentry)
-				load_launcher_applet_full (filename,
-							   dentry,
-							   newpanel,
-							   G_MAXINT/2,
-							   FALSE);
+			if (dentry) {
+				Launcher *launcher;
+
+				launcher =
+					load_launcher_applet_full (filename,
+								   dentry,
+								   newpanel,
+								   G_MAXINT/2,
+								   FALSE);
+
+				if (launcher != NULL)
+					launcher_hoard (launcher);
+			}
 		}
 	}
 	g_free(filename);
@@ -1615,10 +1627,10 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 		sim->type = 1;
 		sim->applet = applet;
 		sim->menuitem = menuitem;
-		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
+		gtk_signal_connect(GTK_OBJECT(menuitem), "event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"destroy",
+		gtk_signal_connect(GTK_OBJECT(menuitem), "destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
 		if(global_config.show_dot_buttons) {
@@ -2509,15 +2521,21 @@ destroy_menu (GtkWidget *widget, gpointer data)
 	Menu *menu = data;
 	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(menu->button),
 						     MENU_PROPERTIES);
-	if(prop_dialog)
-		gtk_widget_unref(prop_dialog);
 	gtk_object_set_data(GTK_OBJECT(menu->button), MENU_PROPERTIES, NULL);
+	if (prop_dialog != NULL)
+		gtk_widget_unref (prop_dialog);
 
 	menu->button = NULL;
 
 	if(menu->menu)
 		gtk_widget_unref(menu->menu);
 	menu->menu = NULL;
+}
+
+static void
+free_menu (gpointer data)
+{
+	Menu *menu = data;
 
 	g_free(menu->path);
 	menu->path = NULL;
@@ -4678,9 +4696,11 @@ load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
 				  main_menu_flags, global_main,
 				  custom_icon, custom_icon_file);
 
-	if(menu) {
+	if(menu != NULL) {
 		char *tmp;
-		if(!register_toy(menu->button, menu,
+
+		if(!register_toy(menu->button,
+				 menu, free_menu,
 				 panel, pos, exactpos, APPLET_MENU))
 			return;
 

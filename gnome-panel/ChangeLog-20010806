@@ -1,3 +1,19 @@
+Thu Sep 28 19:50:25 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c: cleaner checking for if a child was added,
+	  to know when to call abort load, and some other minor cleanups
+
+	* applet.c, launcher.[ch], session.[ch]: store launchers in better
+	  paths, and keep the filename constant.  Also allows us to save a
+	  .desktop file without having to save the entire session.  This
+	  reduces the need for temporary file mess and reduces races.  The
+	  downside is no code for per-session panel config, but that's
+	  mostly broken anyway
+
+	* applet.[ch], launcher.c, drawer.c, logout.c, menu.c, gnome-run.c,
+	  status.c, swallow.c:  Add a destroy notify to the AppletInfo.
+	  use it to destroy the per applet structures.
+	  
 Thu Sep 28 01:01:41 2000  George Lebl <jirka@5z.com>
 
 	* panel_config.[ch], drawer.c, launcher.[ch]: Make, property

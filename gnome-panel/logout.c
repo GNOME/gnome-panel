@@ -63,7 +63,7 @@ load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	if(!logout)
 		return;
 
-	if (!register_toy(logout, NULL, panel,
+	if (!register_toy(logout, NULL, NULL, panel,
 			  pos, exactpos, APPLET_LOGOUT))
 		return;
 
@@ -102,7 +102,7 @@ load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
 
 	if(!lock)
 		return;
-	if (!register_toy(lock, NULL, panel, pos, 
+	if (!register_toy(lock, NULL, NULL, panel, pos, 
 			  exactpos, APPLET_LOCK))
 		return;
 

@@ -898,16 +898,22 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist,
 
 		mimetype = gnome_mime_type(filename);
 
-		if(background_drops &&
-		   mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
+		if (background_drops &&
+		    mimetype != NULL &&
+		    strncmp(mimetype, "image", sizeof("image")-1) == 0) {
 			panel_widget_set_back_pixmap (panel, filename);
-		else if(mimetype &&
-			(strcmp(mimetype, "application/x-gnome-app-info")==0 ||
-			 strcmp(mimetype, "application/x-kde-app-info")==0))
-			load_launcher_applet(filename, panel, pos, TRUE);
-		else if(S_ISDIR(s.st_mode)) {
+		} else if (mimetype != NULL &&
+			  (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
+			   strcmp(mimetype, "application/x-kde-app-info") == 0)) {
+			Launcher *launcher;
+
+			launcher = load_launcher_applet (filename, panel, pos, TRUE);
+
+			if (launcher != NULL)
+				launcher_hoard (launcher);
+		} else if (S_ISDIR(s.st_mode)) {
 			drop_menu(panel, pos, filename);
-		} else if(S_IEXEC & s.st_mode) /*executable?*/
+		} else if (S_IEXEC & s.st_mode) /*executable?*/
 			ask_about_launcher(filename,panel,pos,TRUE);
 		g_free(filename);
 	}

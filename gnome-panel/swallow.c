@@ -106,11 +106,21 @@ socket_destroyed(GtkWidget *w, gpointer data)
 	Swallow *swallow = data;
 	
 	gtk_widget_destroy(swallow->ebox);
+	swallow->ebox = NULL;
 
 	check_swallows = g_list_remove(check_swallows,swallow);
+}
 
+static void
+free_swallow (gpointer data)
+{
+	Swallow *swallow = data;
+	
 	g_free(swallow->title);
+	swallow->title = NULL;
 	g_free(swallow->path);
+	swallow->path = NULL;
+
 	g_free(swallow);
 }
 
@@ -361,7 +371,9 @@ load_swallow_applet(char *path, char *params, int width, int height,
 	if(!swallow)
 		return;
 
-	if(!register_toy(swallow->ebox, swallow, panel, pos,
+	if(!register_toy(swallow->ebox,
+			 swallow, free_swallow,
+			 panel, pos,
 			 exactpos, APPLET_SWALLOW))
 		return;
 	applet_add_callback(applets_last->data, "help",

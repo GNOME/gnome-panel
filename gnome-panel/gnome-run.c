@@ -302,7 +302,7 @@ load_run_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	if(!run)
 		return;
 
-	if (!register_toy(run, NULL, panel,
+	if (!register_toy(run, NULL, NULL, panel,
 			  pos, exactpos, APPLET_RUN))
 		return;
 

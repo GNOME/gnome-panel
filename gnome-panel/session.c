@@ -324,22 +324,6 @@ send_applet_session_save (AppletInfo *info,
 }
 
 
-static void
-convert_dentry_to_gnome(GnomeDesktopEntry *dentry)
-{
-	int i;
-	dentry->is_kde = FALSE;
-	for(i=0; i<dentry->exec_length; i++) {
-		if(dentry->exec[i][0] == '%' &&
-		   strlen(dentry->exec[i]) == 2) {
-			g_free(dentry->exec[i]);
-			dentry->exec[i] = g_strdup("");
-		}
-	}
-}
-
-
-
 /*returns TRUE if the save was completed, FALSE if we need to wait
   for the applet to respond*/
 static int
@@ -472,19 +456,15 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_LAUNCHER:
 		{
 			Launcher *launcher = info->data;
-			/*we set the .desktop to be in the panel config
-			  dir*/
-			g_string_sprintf(buf, "%s/%sApplet_%d.desktop",
-					 gnome_user_dir,PANEL_CONFIG_PATH,
-					 info->applet_id+1);
-			g_free(launcher->dentry->location);
-			launcher->dentry->location = g_strdup(buf->str);
-			if(launcher->dentry->is_kde)
-				convert_dentry_to_gnome(launcher->dentry);
-			gnome_desktop_entry_save(launcher->dentry);
 
-			gnome_config_set_string("id", LAUNCHER_ID);
-			gnome_config_set_string("parameters", buf->str);
+			gnome_config_set_string ("id", LAUNCHER_ID);
+
+			/* clean old launcher info */
+			gnome_config_clean_key ("parameters");
+
+			launcher_save (launcher);
+			gnome_config_set_string ("base_location",
+						 g_basename (launcher->dentry->location));
 			break;
 		}
 	case APPLET_LOGOUT:
@@ -695,7 +675,12 @@ do_session_save(GnomeClient *client,
 	if(complete_sync || sync_applets) {
 		ss_cur_applet = -1;
 		ss_done_save = FALSE;
-		save_next_applet();
+
+		/* kill removed launcher files */
+		remove_unused_launchers ();
+
+		/* start saving applets */
+		save_next_applet ();
 	}
 
 
@@ -883,9 +868,14 @@ load_default_applets1(PanelWidget *panel)
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
-				load_launcher_applet(p, panel,
-						     sz*4+i*sz, TRUE);
+				Launcher *launcher;
+				launcher = load_launcher_applet(p, panel,
+								sz*4+i*sz, TRUE);
 				g_free(p);
+
+				/* suck these into our own directories now */
+				if (launcher != NULL)
+					launcher_hoard (launcher);
 			}
 		}
 	}
@@ -1007,9 +997,27 @@ init_user_applets(void)
 			}
 			g_free(goad_id);
 		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 
-			char *params = gnome_config_get_string("parameters=");
-			load_launcher_applet(params, panel, pos, TRUE);
-			g_free(params);
+			gboolean hoard = FALSE;
+			Launcher *launcher;
+			char *file;
+
+			file = gnome_config_get_string("base_location=");
+			if (file == NULL || *file == '\0') {
+				g_free (file);
+				file = gnome_config_get_string("parameters=");
+				hoard = TRUE;
+			} else {
+				char *tmp = launcher_file_name (file);
+				g_free (file);
+				file = tmp;
+			}
+
+			launcher = load_launcher_applet(file, panel, pos, TRUE);
+			g_free(file);
+
+			/* If this was an old style launcher, hoard it now */
+			if (hoard && launcher != NULL)
+				launcher_hoard (launcher);
 		} else if(strcmp(applet_name, LOGOUT_ID) == 0) { 
 			load_logout_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, LOCK_ID) == 0) {
