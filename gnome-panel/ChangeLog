@@ -1,3 +1,10 @@
+2003-04-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel.c: (panel_key_press_event): only activate the
+	binding if its Ctrl-F10. Fixes #109791, Shift-F10 was
+	popping up the panel's context menu not the applet's
+	menu.
+
 2003-04-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-properties-dialog.glade: Commit patch from

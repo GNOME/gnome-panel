@@ -402,7 +402,8 @@ panel_key_press_event (GtkWidget   *widget,
 	 * bindings do not work. We get around this by
 	 * activating the key bindings here.
 	 */ 
-	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget))
+	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget) &&
+	    event->keyval == GDK_F10 && event->state == GDK_CONTROL_MASK)
 		return gtk_bindings_activate (GTK_OBJECT (widget),
 					      event->keyval,
 					      event->state);
