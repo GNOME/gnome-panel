@@ -11,6 +11,7 @@ struct _GlobalConfig {
 	gint minimize_delay;
 	gint tooltips_enabled;
 	gint show_small_icons;
+	gint prompt_for_logout;
 	PanelMovementType movement_type;
 };
 

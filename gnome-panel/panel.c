@@ -273,6 +273,8 @@ panel_session_save (GnomeClient *client,
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_small_icons",
 			      global_config.show_small_icons);
+	gnome_config_set_bool("prompt_for_logout",
+			      global_config.prompt_for_logout);
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
@@ -315,17 +317,71 @@ panel_session_save (GnomeClient *client,
 	return TRUE;
 }
 
+static gint
+panel_really_logout(GtkWidget *w, gint button, gpointer data)
+{
+	GtkWidget **box=data;
+
+	if(button!=0)
+		gnome_dialog_close(GNOME_DIALOG(w));
+	else {
+		if (! GNOME_CLIENT_CONNECTED (client)) {
+			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
+					    GNOME_INTERACT_NONE, 0, NULL);
+		} else {
+			/* We request a completely interactive, full,
+			   slow shutdown.  */
+			gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+						   GNOME_INTERACT_ANY, 0, 1);
+		}
+	}
+	if(box)
+		*box = NULL;
+
+	return TRUE;
+}
+
+static void
+ask_next_time(GtkWidget *w,gpointer data)
+{
+	global_config.prompt_for_logout = GTK_TOGGLE_BUTTON(w)->active == TRUE;
+}
+
 void
 panel_quit(void)
 {
-	if (! GNOME_CLIENT_CONNECTED (client)) {
-		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
-				    GNOME_INTERACT_NONE, 0, NULL);
-	} else {
-		/* We request a completely interactive, full, slow shutdown.  */
-		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-					   GNOME_INTERACT_ANY, 0, 1);
+	static GtkWidget *box = NULL;
+	GtkWidget *but = NULL;
+
+	if(!global_config.prompt_for_logout) {
+		panel_really_logout(NULL,0,NULL);
+		return;
 	}
+
+	if(box) {
+		gdk_window_raise(box->window);
+		return;
+	}
+
+	box = gnome_message_box_new (_("Really log out?"),
+			       GNOME_MESSAGE_BOX_QUESTION,
+			       GNOME_STOCK_BUTTON_YES,
+			       GNOME_STOCK_BUTTON_NO,
+			       NULL);
+	gtk_signal_connect (GTK_OBJECT (box), "clicked",
+		            GTK_SIGNAL_FUNC (panel_really_logout), &box);
+
+	but = gtk_check_button_new_with_label(_("Ask next time"));
+	gtk_widget_show(but);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(box)->vbox),but,
+		           FALSE, TRUE, GNOME_PAD_SMALL);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(but),TRUE);
+	gtk_signal_connect(GTK_OBJECT(but),"toggled",
+			   GTK_SIGNAL_FUNC(ask_next_time),NULL);
+
+	/* gnome_dialog_set_modal (GNOME_DIALOG(box)); */
+	/* gnome_dialog_close_hides(GNOME_DIALOG(box), TRUE); */
+	gtk_widget_show (box);
 }
 
 static void

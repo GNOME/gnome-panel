@@ -2536,7 +2536,7 @@ add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
 	panel = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
 				    PANEL_APPLET_PARENT_KEY);
 	if(panel)
-		remove_panel_from_forbidden(panel, r);
+		add_panel_to_forbidden(panel, r);
 }
 
 static gint

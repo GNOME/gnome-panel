@@ -434,14 +434,16 @@ create_panel_submenu (GtkWidget *app_menu)
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   MENU_ID);
 
-#ifdef DRAWER_AND_SWALLOW
+#ifdef _DRAWER_
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add drawer"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   DRAWER_ID);
+#endif
 
+#ifdef _SWALLOW_
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);

@@ -10,7 +10,7 @@ typedef void (*AppletWidgetOrientSignal) (GtkObject * object,
 					  PanelOrientType orient,
 					  gpointer data);
 
-typedef void (*AppletWidgetSaveSignal) (GtkObject * object,
+typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
 				        char *cfgpath,
 				        char *globcfgpath,
 				        gpointer data);
@@ -70,12 +70,15 @@ gtk_applet_widget_marshal_signal_save (GtkObject * object,
 				       GtkArg * args)
 {
 	AppletWidgetSaveSignal rfunc;
+	gint *retval;
 
 	rfunc = (AppletWidgetSaveSignal) func;
 
-	(*rfunc) (object, GTK_VALUE_STRING (args[0]),
-		  GTK_VALUE_STRING (args[0]),
-		  func_data);
+	retval = GTK_RETLOC_BOOL(args[2]);
+
+	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
+		  	    GTK_VALUE_STRING (args[1]),
+		  	    func_data);
 }
 
 static void

@@ -277,6 +277,8 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		panel_widget_pop_up(panelarr[1]);
 
 		reposition_drawer(drawer);
+
+		panel_widget_add_forbidden(PANEL_WIDGET(drawer->drawer));
 	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
@@ -937,27 +939,36 @@ main(int argc, char **argv)
 
 	/*set up global options*/
 	
-	g_snprintf(buf,256,"%sConfig/tooltips_enabled=TRUE",
-		   old_panel_cfg_path);
-	global_config.tooltips_enabled = gnome_config_get_bool(buf);
-	g_snprintf(buf,256,"%sConfig/show_small_icons=TRUE",
-		   old_panel_cfg_path);
-	global_config.show_small_icons = gnome_config_get_bool(buf);
-	g_snprintf(buf,256,"%sConfig/auto_hide_step_size=%d",
-		   old_panel_cfg_path, DEFAULT_AUTO_HIDE_STEP_SIZE);
+	g_snprintf(buf,256,"%sConfig/",old_panel_cfg_path);
+	gnome_config_push_prefix(buf);
+
+	global_config.tooltips_enabled =
+		gnome_config_get_bool("tooltips_enabled=TRUE");
+
+	global_config.show_small_icons =
+		gnome_config_get_bool("show_small_icons=TRUE");
+		
+	global_config.prompt_for_logout =
+		gnome_config_get_bool("prompt_for_logout=TRUE");
+		
+	g_snprintf(buf,256,"auto_hide_step_size=%d",
+		   DEFAULT_AUTO_HIDE_STEP_SIZE);
 	global_config.auto_hide_step_size=gnome_config_get_int(buf);
-	g_snprintf(buf,256,"%sConfig/explicit_hide_step_size=%d",
-		   old_panel_cfg_path, DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+		
+	g_snprintf(buf,256,"explicit_hide_step_size=%d",
+		   DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
 	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
-	g_snprintf(buf,256,"%sConfig/minimize_delay=%d",old_panel_cfg_path,
-		   DEFAULT_MINIMIZE_DELAY);
+		
+	g_snprintf(buf,256,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf);
-	g_snprintf(buf,256,"%sConfig/minimized_size=%d",old_panel_cfg_path,
-		   DEFAULT_MINIMIZED_SIZE);
+		
+	g_snprintf(buf,256,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf);
-	g_snprintf(buf,256,"%sConfig/movement_type=%d",old_panel_cfg_path,
-		   PANEL_SWITCH_MOVE);
+		
+	g_snprintf(buf,256,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf);
+		
+	gnome_config_pop_prefix();
 
 	init_main_menu();
 	init_user_panels();

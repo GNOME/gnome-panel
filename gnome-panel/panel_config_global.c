@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 
+#include <string.h>
 #include <config.h>
 #include <gnome.h>
 #include "panel.h"
@@ -43,14 +44,7 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 static void
 config_apply (GtkWidget *widget, int page, gpointer data)
 {
-	global_config.minimize_delay = temp_config.minimize_delay;
-	global_config.minimized_size = temp_config.minimized_size;
-	global_config.auto_hide_step_size = temp_config.auto_hide_step_size;
-	global_config.explicit_hide_step_size =
-		temp_config.explicit_hide_step_size;
-	global_config.tooltips_enabled = temp_config.tooltips_enabled;
-	global_config.show_small_icons = temp_config.show_small_icons;
-	global_config.movement_type = temp_config.movement_type;
+	memcpy(&global_config,&temp_config,sizeof(GlobalConfig));
 
 	apply_global_config();
 }
@@ -239,6 +233,27 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);	
 	
+	/* Logout frame */
+	frame = gtk_frame_new (_("Log Out"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+	
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	
+	/* Small Icons */
+	button = gtk_check_button_new_with_label (_("Prompt before logout"));
+	if (temp_config.prompt_for_logout)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.prompt_for_logout));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
 	return (vbox);
 }
 
@@ -257,14 +272,7 @@ panel_config_global(void)
 	if (config_window)
 		return;
 
-	temp_config.minimize_delay = global_config.minimize_delay;
-	temp_config.minimized_size = global_config.minimized_size;
-	temp_config.auto_hide_step_size = global_config.auto_hide_step_size;
-	temp_config.explicit_hide_step_size =
-		global_config.explicit_hide_step_size;
-	temp_config.tooltips_enabled = global_config.tooltips_enabled;
-	temp_config.show_small_icons = global_config.show_small_icons;
-	temp_config.movement_type = global_config.movement_type;
+	memcpy(&temp_config,&global_config,sizeof(GlobalConfig));
 
 	/* main window */
 	config_window = gnome_property_box_new ();

@@ -3,8 +3,9 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f
 
-#enable drawers and swallows for testing only, not for release!
-#CFLAGS += -DDRAWER_AND_SWALLOW
+#enable swallows for testing only, not for release!
+#CFLAGS += -D_SWALLOW_
+CFLAGS += -D_DRAWER_
 
 CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
