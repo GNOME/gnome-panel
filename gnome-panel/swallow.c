@@ -59,6 +59,22 @@ get_window_id(Window win, char *title)
 	return wid;
 }
 
+static gint
+socket_realized(GtkWidget *w, gpointer data)
+{
+	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));
+	char *title = data;
+	guint wid;
+
+	wid = get_window_id(GDK_ROOT_WINDOW(),title);
+	if(wid==-1)
+		puts("DANG!"); /*FIXME: wait for the window to appear*/
+	else
+		gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
+
+	return FALSE;
+}
+
 Swallow *
 create_swallow_applet(char *arguments, SwallowOrient orient)
 {
@@ -118,24 +134,16 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
 
+
+	gtk_container_add(GTK_CONTAINER(w),swallow->socket);
+
 	gtk_widget_show(swallow->socket);
 
-	/*FIXME: add the right window or wait for it or something here*/
-	//gtk_widget_set_usize(swallow->socket,48,48);
-	{
-		long wid;
-		char buf[256];
-		puts("window name to get:");
-		scanf("%s",buf);
-		wid = get_window_id(GDK_ROOT_WINDOW(),buf);
-		if(wid==-1)
-			puts("DANG!");
-		else
-			gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
-	}
-
-
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
+
+	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
+			         GTK_SIGNAL_FUNC(socket_realized),
+			         g_strdup(arguments));
 
 	set_swallow_applet_orient(swallow, orient);
 
