@@ -38,6 +38,8 @@
 #define DEFAULT_ROWS 1
 
 #define NEVER_SENSITIVE "never_sensitive"
+#define NUM_WORKSPACES "/apps/metacity/general/num_workspaces"
+#define WORKSPACE_NAME "/apps/metacity/workspace_names/name_1"
 
 typedef struct {
 	GtkWidget *applet;
@@ -712,7 +714,10 @@ setup_sensitivity (PagerData *pager,
 	char *fullkey;
 	GtkWidget *w;
 
-	fullkey = panel_applet_gconf_get_full_key (applet, key);
+	if (key[0] == '/')
+		fullkey = g_strdup (key);
+	else
+		fullkey = panel_applet_gconf_get_full_key (applet, key);
 
 	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
 		g_object_unref (G_OBJECT (client));
@@ -778,7 +783,18 @@ setup_dialog (GladeXML  *xml,
 			   "num_rows" /* key */);
 
 	pager->num_workspaces_spin = WID ("num_workspaces_spin");
+	setup_sensitivity (pager, xml,
+			   "num_workspaces_spin",
+			   NULL,
+			   NULL,
+			   NUM_WORKSPACES /* key */);
+
 	pager->workspaces_tree = WID ("workspaces_tree_view");
+	setup_sensitivity (pager, xml,
+			   "workspaces_tree_view",
+			   NULL,
+			   NULL,
+			   WORKSPACE_NAME /* key */);
 
 	/* Display workspace names: */
 	
