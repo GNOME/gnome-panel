@@ -31,5 +31,12 @@ gboolean send_client_message_1L (Window recipient,
 				 long   event_mask,
 				 glong  long1);
 
+gboolean get_window_id(guint32 window, char *title, guint32 *wid,
+		       gboolean depth);
+
+/* if we want to select the substructure notify or not as it can get
+ * a little expensive, so this should be called whenever we add/remove to
+ * check_swallows or anything else that's gonna use it in the future */
+void xstuff_reset_need_substructure(void);
 
 #endif

@@ -153,18 +153,21 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 	}
 }
 
-/* FIXME: this is an extremely ugly function, I mean this is so
-   bad it's not even funny */
+/* XXX: not as hackish as it was before, but still quite bad */
 static void
 add_app_to_personal (GtkWidget *widget, char *item_loc)
 {
-	char *s;
+	char *argv[6]={"cp","-r","-f"};
 	char *p;
+
 	p = gnome_util_home_file("apps");
-	s = g_strdup_printf("cp -r -f '%s' '%s'",item_loc,p);
+	argv[3] = item_loc;
+	argv[4] = p;
+	argv[5] = NULL;
+
+	if(gnome_execute_async(NULL, 5, argv)<0)
+		gnome_error_dialog(_("Can't execute copy (cp)"));
 	g_free(p);
-	system(s);
-	g_free(s);
 }
 
 static PanelWidget *

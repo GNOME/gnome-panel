@@ -18,6 +18,8 @@
 #include "panel-include.h"
 #include "panel-widget.h"
 
+#include "xstuff.h"
+
 /* from gtkhandlebox.c */
 #define DRAG_HANDLE_SIZE 10
 
@@ -25,14 +27,7 @@ GList *check_swallows = NULL;
 
 extern GlobalConfig global_config;
 
-static int
-ignore_x_error(Display* d, XErrorEvent* e)
-{
-	fprintf(stderr, "ignore_x_error called\n");
-	return 0;
-}
-
-
+#if 0
 static int
 get_window_id(Window win, char *title, guint32 *wid)
 {
@@ -45,6 +40,7 @@ get_window_id(Window win, char *title, guint32 *wid)
 	int ret = FALSE;
 	int (*oldErrorHandler)(Display*, XErrorEvent*);
 
+	gdk_error_trap_push ();
 		
 	XQueryTree(GDK_DISPLAY(),
 		   win,
@@ -53,7 +49,6 @@ get_window_id(Window win, char *title, guint32 *wid)
 		   &children,
 		   &nchildren);
 
-	oldErrorHandler = XSetErrorHandler(ignore_x_error);
 	for(i=0;i<nchildren;i++) {
 		if (!XFetchName(GDK_DISPLAY(),
 				children[i],
@@ -65,18 +60,19 @@ get_window_id(Window win, char *title, guint32 *wid)
 				XFree(tit);
 				*wid = children[i];
 				ret = TRUE;
-				break;
+				break ;
 			}
 			XFree(tit);
 		}
 	}
-	XSetErrorHandler(oldErrorHandler);
+	gdk_error_trap_pop ();
 	for(i=0;!ret && i<nchildren;i++)
 		ret=get_window_id(children[i],title,wid);
 	if(children)
 		XFree(children);
 	return ret;
 }
+#endif
 
 static int
 socket_realized(GtkWidget *w, gpointer data)
@@ -85,12 +81,12 @@ socket_realized(GtkWidget *w, gpointer data)
 
 	g_return_val_if_fail(swallow->title!=NULL,FALSE);
 
-	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid)) {
+	if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
+			  &swallow->wid, TRUE)) {
 		check_swallows = g_list_prepend(check_swallows,swallow);
-		/*XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(),
-			     SubstructureNotifyMask);*/
+		xstuff_reset_need_substructure();
 	} else
-		gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
+		gtk_socket_steal(GTK_SOCKET(swallow->socket), swallow->wid);
 
 	return FALSE;
 }
@@ -358,17 +354,18 @@ load_swallow_applet(char *path, char *params, int width, int height,
 
 	if(path && *path) {
 		char *p = strrchr(path,'.');
+		GnomeDesktopEntry *item;
 		/*only if such a file exists and ends in a .desktop, should
 		  we try to launch it as such*/
-		if(p && strcmp(p,".desktop")==0 && g_file_exists(path)) {
-			GnomeDesktopEntry *item;
-			item = gnome_desktop_entry_load(path);
+		if(p &&
+		   (strcmp(p,".desktop")==0 ||
+		    strcmp(p,".kdelnk")==0) &&
+		   g_file_exists(path) &&
+		   (item = gnome_desktop_entry_load(path))) {
 			gnome_desktop_entry_launch(item);
 			gnome_desktop_entry_free(item);
 		} else {
-			char *s = g_strconcat("(true; ",path," &)",NULL);
-			system(s);
-			g_free(s);
+			gnome_execute_shell(NULL, path);
 		}
 	}
 }

@@ -34,26 +34,32 @@ static Window compliant_wm_win = None;
 /*list of all panel widgets created*/
 extern GSList *panel_list;
 
-static int
-get_window_id(Window win, char *title, guint32 *wid)
+gboolean
+get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 {
+	Window win = window;
 	Window root_return;
 	Window parent_return;
 	Window *children = NULL;
 	unsigned int nchildren;
 	unsigned int i;
 	char *tit;
-	int ret = FALSE;
+	gboolean ret = FALSE;
+
+	gdk_error_trap_push ();
 	
 	if(XFetchName(GDK_DISPLAY(), win, &tit) && tit) {
-		if(strstr(tit,title)!=NULL) {
+		if(strstr(tit, title)!=NULL) {
 			if(wid) *wid = win;
 			ret = TRUE;
 		}
 		XFree(tit);
 	}
-	
-	if(ret) return TRUE;
+
+	if(!depth || ret) {
+		gdk_error_trap_pop ();
+		return ret;
+	}
 
 	XQueryTree(GDK_DISPLAY(),
 		   win,
@@ -65,9 +71,10 @@ get_window_id(Window win, char *title, guint32 *wid)
 	/*otherwise we got a problem*/
 	if(children) {
 		for(i=0;!ret && i<nchildren;i++)
-			ret=get_window_id(children[i],title,wid);
+			ret=get_window_id(children[i], title, wid, depth);
 		XFree(children);
 	}
+	gdk_error_trap_pop ();
 	return ret;
 }
 
@@ -114,7 +121,8 @@ try_checking_swallows(guint32 winid)
 				gtk_socket_steal(GTK_SOCKET(swallow->socket),
 						 swallow->wid);
 				check_swallows = 
-					g_list_remove(check_swallows,swallow);
+					g_list_remove(check_swallows, swallow);
+				xstuff_reset_need_substructure();
 				break;
 			}
 		}
@@ -213,16 +221,19 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	case MapNotify:
 		if (check_swallows) {
 			GList *li;
-			int remove; /* counts the number of NULLs we should remove
-				       from the check_swallows_list */
+			int remove; /* counts the number of NULLs we
+				       should remove from the
+				       check_swallows_list */
 
 			gdk_error_trap_push ();
 
 			remove = 0;
 			for(li = check_swallows; li; li = g_list_next(li)) {
 				Swallow *swallow = li->data;
-				if(get_window_id(xevent->xmap.window,swallow->title,
-						 &(swallow->wid))) {
+				if(get_window_id(xevent->xmap.window,
+						 swallow->title,
+						 &(swallow->wid),
+						 FALSE)) {
 					gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 					li->data = NULL;
 					remove++;
@@ -230,6 +241,8 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 			}
 			while(remove--)
 				check_swallows = g_list_remove(check_swallows,NULL);
+			if(!check_swallows)
+				xstuff_reset_need_substructure();
 
 			gdk_error_trap_pop ();
 		}
@@ -239,6 +252,33 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 		return GDK_FILTER_REMOVE;
 	else*/
 	return GDK_FILTER_CONTINUE;
+}
+
+void
+xstuff_reset_need_substructure(void)
+{
+	XWindowAttributes attribs = { 0 };
+
+	gdk_error_trap_push ();
+
+	/* select events, we need to trap the kde status thingies anyway */
+	XGetWindowAttributes (GDK_DISPLAY (),
+			      GDK_ROOT_WINDOW (),
+			      &attribs);
+	if (check_swallows) {
+		XSelectInput (GDK_DISPLAY (),
+			      GDK_ROOT_WINDOW (),
+			      attribs.your_event_mask |
+			      SubstructureNotifyMask);
+	} else {
+		XSelectInput (GDK_DISPLAY (),
+			      GDK_ROOT_WINDOW (),
+			      attribs.your_event_mask &
+			      ~SubstructureNotifyMask);
+	}
+	gdk_flush ();
+
+	gdk_error_trap_pop ();
 }
 
 void
@@ -268,6 +308,7 @@ xstuff_init(void)
 	XSelectInput (GDK_DISPLAY (),
 		      GDK_ROOT_WINDOW (),
 		      attribs.your_event_mask |
+		      SubstructureNotifyMask |
 		      StructureNotifyMask |
 		      PropertyChangeMask);
 	gdk_flush ();
