@@ -54,7 +54,8 @@ typedef struct {
 
 static void clock_properties (AppletWidget *applet, gpointer data);
 static void clock_about      (AppletWidget *applet, gpointer data);
-static void help_cb	     (AppletWidget *applet, gpointer data);
+static void help_cb	     (GtkWidget *w, gpointer data);
+static void phelp_cb	     (GtkWidget *w, gint tab, gpointer data);
 
 static void
 free_data(GtkWidget * widget, gpointer data)
@@ -382,17 +383,18 @@ make_clock_applet(const gchar * goad_id)
 					      cd);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
-					      "about",
-					      GNOME_STOCK_MENU_ABOUT,
-					      _("About..."),
-					      clock_about,
-					      NULL);
-	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "help",
 					      GNOME_STOCK_PIXMAP_HELP,
 					      _("Help"),
 					      help_cb,
 					      "index.html" );
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      clock_about,
+					      NULL);
 	return applet;
 }
 
@@ -498,7 +500,6 @@ set_show_tooltip_cb(GtkWidget * w, gpointer data)
 static void
 clock_properties(AppletWidget * applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { NULL, "properties-clock" };
         GtkWidget *hbox;
         GtkWidget *vbox;
         GtkWidget *hour_frame;
@@ -511,7 +512,6 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *use_gmt_time;
 	ClockData *cd = data;
 
-	help_entry.name = gnome_app_id;
 
 	if(cd->props) {
 		gdk_window_raise(cd->props->window);
@@ -656,19 +656,25 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(cd->props), "destroy",
 			   GTK_SIGNAL_FUNC(close_properties), data);
 	gtk_signal_connect(GTK_OBJECT(cd->props), "help",
-			   GTK_SIGNAL_FUNC(help_cb),
+			   GTK_SIGNAL_FUNC(phelp_cb),
 			   "index.html#CLOCK-PREFS");
 
 	gtk_widget_show(cd->props);
 }
 
 static void
-help_cb (AppletWidget *applet, gpointer data)
+help_cb (GtkWidget *w, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "clock_applet", NULL };
+	GnomeHelpMenuEntry help_entry = { "clock_applet" };
 
 	help_entry.path = data;
 	gnome_help_display (NULL, &help_entry);
+}
+
+static void
+phelp_cb (GtkWidget *w, gint tab, gpointer data)
+{
+	help_cb (w, data);
 }
 
 static void

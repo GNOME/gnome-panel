@@ -1234,7 +1234,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 static void
 help_callback (AppletWidget *widget, gpointer data)
 {
-	GnomeHelpMenuEntry help_ref = { "mailcheck", "index.html"};
+	GnomeHelpMenuEntry help_ref = { "mailcheck_applet", "index.html"};
 	gnome_help_display (NULL, &help_ref);
 }
 
