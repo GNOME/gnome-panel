@@ -335,26 +335,60 @@ window_menu_activate_window (WnckWindow *window)
 	wnck_window_activate (window);
 }
 
+#define WINDOW_MENU_MAX_WIDTH 50	/* maximum width in characters */
+
+static gint
+get_width (GtkWidget *widget, const char *text)
+{
+	PangoContext *context;
+	PangoFontMetrics *metrics;
+	gint char_width;
+	PangoLayout *layout;
+	PangoRectangle natural;
+	gint max_width;
+	gint screen_width;
+	gint width;
+
+	gtk_widget_ensure_style (widget);
+
+	context = gtk_widget_get_pango_context (widget);
+	metrics = pango_context_get_metrics (
+		context, widget->style->font_desc,
+		pango_context_get_language (context));
+	char_width = pango_font_metrics_get_approximate_char_width (metrics);
+	pango_font_metrics_unref (metrics);
+	max_width = PANGO_PIXELS (WINDOW_MENU_MAX_WIDTH * char_width);
+
+	layout = gtk_widget_create_pango_layout (widget, text);
+	pango_layout_get_pixel_extents (layout, NULL, &natural);
+	g_object_unref (G_OBJECT (layout));
+
+	screen_width = gdk_screen_get_width (gtk_widget_get_screen (widget));
+
+	width = MIN (natural.width, max_width);
+	width = MIN (width, 3 * (screen_width / 4));
+	
+	return width;
+}
+
 static GtkWidget*
 window_menu_item_new (WindowMenu  *window_menu,
 		      const gchar *label)
 {
 	GtkWidget *item;
 	GtkWidget *ellipsizing_label;
-	int screen_width;
 
 	item = gtk_image_menu_item_new ();
-
-	screen_width = gdk_screen_get_width (
-				gtk_widget_get_screen (window_menu->applet));
-	gtk_widget_set_size_request (item, screen_width / 6, -1);
-
+	
 	ellipsizing_label = eel_ellipsizing_label_new (label);
 	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
 
 	gtk_container_add (GTK_CONTAINER (item), ellipsizing_label);
+
 	gtk_widget_show (ellipsizing_label);
 
+	gtk_widget_set_size_request (
+		ellipsizing_label, get_width (window_menu->applet, label), -1);
 	return item;
 }
 
