@@ -341,7 +341,7 @@ endif
 
 CLEANFILES = \
 	$(BUILT_SOURCES) \
-	$(schemas_DATA) \
+	$(schemas_in_files:.schemas.in=.schemas) \
 	$(server_DATA) \
 	$(sys_DATA)
 
