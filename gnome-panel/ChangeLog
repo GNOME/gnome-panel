@@ -21,6 +21,16 @@
 	* panel-menu-bar.c: (panel_menu_bar_append_actions_menu): ditto
 	Fix bugs #131875, #134828. Reopen bug 130663.
 
+2004-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Bart Martens in bug #127758 to stop the panel
+	resizing slightly during autohide which caused some pretty
+	icky visual problems.
+
+	* panel-toplevel.c: (panel_toplevel_update_edges): Don't draw
+	bevels on edges of the panel which aren't visible on screen
+	instead of just edges which are flush against the screen edge.
+
 ==================== 2.5.90 ====================
 
 2004-02-23  Mark McLoughlin  <mark@skynet.ie>
