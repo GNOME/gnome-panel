@@ -831,14 +831,38 @@ properties_response_cb (GtkWidget *widget, gint id, gpointer data)
 {
 	
 	if (id == GTK_RESPONSE_HELP) {
+		static GnomeProgram *applet_program = NULL;
 		GError *error = NULL;
 
-		gnome_help_display_desktop (NULL, "clock", "clock",
-				            "CLOCK-SETTINGS", &error);
+		if (!applet_program) {
+			int argc = 1;
+			char *argv[2] = { "clock" };
+			applet_program = gnome_program_init ("clock", VERSION,
+							      LIBGNOME_MODULE, argc, argv,
+							      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+		}
+
+		gnome_help_display_desktop (applet_program, "clock",
+					    "clock", "clock-settings", &error);
+
 		if (error) {
-			g_warning ("help error: %s\n", error->message);
+			GtkWidget *dialog;
+			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
+							 GTK_DIALOG_DESTROY_WITH_PARENT,
+							 GTK_MESSAGE_ERROR,
+							 GTK_BUTTONS_CLOSE,
+							  _("There was an error displaying help: %s"),
+							 error->message);
+
+			g_signal_connect (G_OBJECT (dialog), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  NULL);
+
+			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+			gtk_widget_show (dialog);
 			g_error_free (error);
 		}
+
 	} else {
 		gtk_widget_destroy (widget);
 	}
@@ -1041,10 +1065,33 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
+	static GnomeProgram *applet_program = NULL;
 
-	gnome_help_display_desktop (NULL, "clock", "clock", NULL, &error);
+	if (!applet_program) {
+		int argc = 1;
+		char *argv[2] = { "clock" };
+		applet_program = gnome_program_init ("clock", VERSION,
+						      LIBGNOME_MODULE, argc, argv,
+						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+	}
+
+	gnome_help_display_desktop (applet_program, "clock",
+				    "clock",NULL, &error);
 	if (error) {
-		g_warning ("help error: %s\n", error->message);
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_MODAL,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						  _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_widget_show (dialog);
 		g_error_free (error);
 	}
 }
