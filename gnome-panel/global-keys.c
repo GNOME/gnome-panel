@@ -9,7 +9,6 @@
 #include "global-keys.h"
 
 #include "applet.h"
-#include "foobar-widget.h"
 #include "gnome-run.h"
 #include "panel.h"
 #include "menu.h"
@@ -292,10 +291,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		menu = create_panel_root_menu (panel_widget);
 		panel = panel_widget->panel_parent;
 
-		if (BASEP_IS_WIDGET (panel)) {
-			BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-			basep_widget_autohide (BASEP_WIDGET (panel));
-		}
+		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
+		basep_widget_autohide (BASEP_WIDGET (panel));
 
 		gtk_menu_set_screen (GTK_MENU (menu), screen);
 		gtk_menu_popup (GTK_MENU (menu), NULL, NULL,

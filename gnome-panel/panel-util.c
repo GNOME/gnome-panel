@@ -37,7 +37,6 @@
 #include "applet.h"
 #include "nothing.h"
 #include "basep-widget.h"
-#include "foobar-widget.h"
 #include "panel.h"
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"

@@ -2436,8 +2436,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	/* Don't try and reparent to an explicitly hidden panel,
 	 * very confusing for the user ...
 	 */
-	if (BASEP_IS_WIDGET (new_panel->panel_parent) &&
-	    (BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_LEFT ||
+	if ((BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_LEFT ||
 	     BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_RIGHT))
 		return FALSE;
 	
@@ -2690,9 +2689,6 @@ panel_widget_get_applet_orient (PanelWidget *panel)
 {
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), PANEL_ORIENT_UP);
 	g_return_val_if_fail (panel->panel_parent != NULL, PANEL_ORIENT_UP);
-
-	if (!BASEP_IS_WIDGET (panel->panel_parent))
-		return PANEL_ORIENT_DOWN;
 
 	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
 }

@@ -9,7 +9,6 @@
 #include "panel-marshal.h"
 #include "aligned-widget.h"
 #include "panel-config-global.h"
-#include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
 
@@ -189,11 +188,9 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x = *y = 0;
 	switch (edge) {
 	case BORDER_BOTTOM:
-		*y = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - h;
+		*y = multiscreen_height (basep->screen, basep->monitor) - h;
 		/* fall thru */
 	case BORDER_TOP:
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
 		switch (ALIGNED_POS (basep->pos)->align) {
 		case ALIGNED_LEFT:
 			break;
@@ -211,7 +208,7 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		basep_border_get (basep, BORDER_BOTTOM, NULL, NULL, &b);
 		switch (ALIGNED_POS (basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height (basep->screen, basep->monitor) + a;
+			*y = a;
 			break;
 		case ALIGNED_CENTER:
 			*y = (multiscreen_height (basep->screen, basep->monitor) - h) / 2;
@@ -226,7 +223,7 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		basep_border_get (basep, BORDER_BOTTOM, &b, NULL, NULL);
 		switch (ALIGNED_POS (basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height (basep->screen, basep->monitor) + a;
+			*y = a;
 			break;
 		case ALIGNED_CENTER:
 			*y = (multiscreen_height (basep->screen, basep->monitor) - h) / 2;

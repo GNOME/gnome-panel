@@ -1,3 +1,35 @@
+2003-01-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-menu-bar.c:
+	(panel_menu_bar_append_actions_menu): only add a
+	seperator after the screenshot item if we actually
+	have a screenshot item.
+
+2003-01-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: remove foobar-widget.[ch].
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_load_menu_panel): rename from
+	foobar_widget_new().
+
+	* panel-stock-icons.[ch]:
+	(panel_menu_bar_icon_get_size): rename from
+	panel_foobat_icon_get_size() but keep the icon size
+	name as "foobar-menu" for compatibility.
+	(panel_init_stock_icons_and_items): upd.
+
+	* panel-types.h: s/FOOBAR_PANEL/MENU_PANEL/
+
+	* aligned-widget.c, applet.c, basep-widget.c, button-widget.c,
+	  drawer-widget.c, drawer.c, edge-widget.c, floating-widget.c,
+	  global-keys.c, menu-util.c, menu.[ch], multiscreen-stuff.c,
+	  panel-menu-bar.c, panel-util.c, panel-widget.c, panel.[ch],
+	  sliding-widget.c: remove all special case handling of the
+	foobar. We only have BasePWidget based panels now.
+
+	* foobar-widget.[ch]: kill.
+
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-per-panel-config.schemas.in: make the default

@@ -29,7 +29,6 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "basep-widget.h"
-#include "foobar-widget.h"
 
 extern GSList *panel_list;
 
@@ -50,13 +49,8 @@ multiscreen_screen_size_changed (GdkScreen *screen)
 
 		g_assert (panel_data->panel != NULL);
 
-		if (BASEP_IS_WIDGET (panel_data->panel))
-			basep_widget_screen_size_changed (
+		basep_widget_screen_size_changed (
 				BASEP_WIDGET (panel_data->panel), screen);
-
-		else if (FOOBAR_IS_WIDGET (panel_data->panel))
-			foobar_widget_screen_size_changed (
-				FOOBAR_WIDGET (panel_data->panel), screen);
 	}
 }
 

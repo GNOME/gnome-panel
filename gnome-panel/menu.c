@@ -43,7 +43,6 @@
 #include "drawer-widget.h"
 #include "edge-widget.h"
 #include "floating-widget.h"
-#include "foobar-widget.h"
 #include "gnome-run.h"
 #include "launcher.h"
 #include "nothing.h"
@@ -2415,8 +2414,7 @@ menu_deactivate (GtkWidget *w, gpointer data)
 	GtkWidget *panel = get_panel_parent (menu->button);
 
 	/* allow the panel to hide again */
-	if (BASEP_IS_WIDGET (panel))
-		BASEP_WIDGET (panel)->autohide_inhibit = FALSE;
+	BASEP_WIDGET (panel)->autohide_inhibit = FALSE;
 	GTK_BUTTON (menu->button)->in_button = FALSE;
 	BUTTON_WIDGET (menu->button)->ignore_leave = FALSE;
 	gtk_button_released (GTK_BUTTON (menu->button));
@@ -2718,20 +2716,13 @@ find_empty_pos_array (int screen,
 	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
-	if (foobar_widget_exists (screen, monitor)) {
-		posscore[0][0] += 5;
-		posscore[1][0] += 5;
-		posscore[2][0] += 5;
-	}
-
 	sw2 = 2 * (sw = multiscreen_width (screen, monitor) / 3);
 	sh2 = 2 * (sh = multiscreen_height (screen, monitor) / 3);
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		pd = li->data;
 
-		if (DRAWER_IS_WIDGET(pd->panel) ||
-		    FOOBAR_IS_WIDGET (pd->panel))
+		if (DRAWER_IS_WIDGET(pd->panel))
 			continue;
 
 		basep = BASEP_WIDGET (pd->panel);
@@ -3199,13 +3190,9 @@ remove_panel_accept (GtkWidget *w,
 
 		/* Destroy the drawers button before destroying the drawer */
 		if (DRAWER_IS_WIDGET (panel)) {
-			PanelWidget *panel_widget = NULL;
+			PanelWidget *panel_widget;
 
-			if (BASEP_IS_WIDGET (panel))
-				panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-			else if (FOOBAR_IS_WIDGET (panel))
-				panel_widget = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel);
+			panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
 
 			if (panel_widget && panel_widget->master_widget) {
 				AppletInfo *info;
@@ -3222,13 +3209,7 @@ remove_panel_accept (GtkWidget *w,
 
 		panel_push_window_busy (w);
 
-		if (BASEP_IS_WIDGET (panel))
-			panel_remove_from_gconf (
-				PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
-
-		else if (FOOBAR_IS_WIDGET (panel))
-			panel_remove_from_gconf (
-				PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel));
+		panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
 
 		gtk_widget_destroy (panel);
 		panel_pop_window_busy (w);
@@ -3296,9 +3277,7 @@ create_panel_root_menu (PanelWidget *panel)
 	GtkWidget *menu;
 
 	menu = create_root_menu (
-			NULL, panel, TRUE, get_default_menu_flags (),
-			BASEP_IS_WIDGET (panel->panel_parent),
-			TRUE /* extra_items */);
+			NULL, panel, TRUE, get_default_menu_flags (), TRUE);
 
 	return menu;
 }
@@ -3354,8 +3333,7 @@ current_panel_config(GtkWidget *w, gpointer data)
 }
 
 static void
-make_panel_submenu (GtkWidget *menu,
-		    gboolean   show_properties)
+make_panel_submenu (GtkWidget *menu)
 {
 	Bonobo_ServerInfoList *applet_list;
 	GtkWidget             *menuitem, *submenu;
@@ -3389,19 +3367,17 @@ make_panel_submenu (GtkWidget *menu,
 			    G_CALLBACK(setup_remove_this_panel),
 			    menuitem);
 
-	if (show_properties) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem (menuitem,
-				GTK_ICON_SIZE_MENU,
-				gtk_image_new_from_stock (
-					GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU),
-				_("_Properties"));
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem (menuitem,
+			GTK_ICON_SIZE_MENU,
+			gtk_image_new_from_stock (
+				GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU),
+			_("_Properties"));
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		g_signal_connect (G_OBJECT (menuitem), "activate",
-				    G_CALLBACK (current_panel_config), 
-				    NULL);
-	}
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (current_panel_config), 
+			  NULL);
 
 	add_menu_separator (menu);
 
@@ -3434,7 +3410,7 @@ create_panel_context_menu (PanelWidget *panel)
 	retval = menu_new ();
 
 	if (!commie_mode)
-		make_panel_submenu (retval, BASEP_IS_WIDGET (panel->panel_parent));
+		make_panel_submenu (retval);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -3657,7 +3633,6 @@ create_root_menu (GtkWidget   *root_menu,
 		  PanelWidget *panel,
 		  gboolean     fake_submenus,
 		  int          flags,
-		  gboolean     is_basep,
 		  gboolean     extra_items)
 {
 	const DistributionInfo *distribution_info;
@@ -3864,9 +3839,7 @@ add_menu_widget (Menu *menu,
 		else
 			flags = menu->main_menu_flags;
 		menu->menu = create_root_menu (
-				NULL, panel, fake_subs, flags,
-				BASEP_IS_WIDGET (panel->panel_parent),
-				TRUE /* extra_items */);
+				NULL, panel, fake_subs, flags, TRUE);
 
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
 				      _("Main Menu"), NULL);
@@ -3893,9 +3866,7 @@ add_menu_widget (Menu *menu,
 				flags = menu->main_menu_flags;
 			g_warning(_("Can't create menu, using main menu!"));
 			menu->menu = create_root_menu (
-					NULL, panel, fake_subs, flags,
-					BASEP_IS_WIDGET (panel->panel_parent),
-					TRUE /* extra_items */);
+					NULL, panel, fake_subs, flags, TRUE);
 			gtk_tooltips_set_tip (panel_tooltips, menu->button,
 					      _("Main Menu"), NULL);
 		}
@@ -3949,10 +3920,8 @@ menu_button_menu_popup (Menu    *menu,
 
 	panel = get_panel_parent (menu->button);
 
-	if (BASEP_IS_WIDGET (panel)) {
-		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-		basep_widget_queue_autohide (BASEP_WIDGET (panel));
-	}
+	BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
+	basep_widget_queue_autohide (BASEP_WIDGET (panel));
 
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 

@@ -95,11 +95,6 @@ calculate_overlay_geometry (PanelWidget *panel,
 			*w = panel->size - applet->allocation.x;
 		}
 
-		if ( ! BASEP_IS_WIDGET(parent)) {
-			/*don't do the edge flushing on foobar*/
-			return;
-		}
-
 		/* if on the edge (only if padding is 0)
 		   then make the thing flush with the innerebox or frame
 		   of the basep */
@@ -124,11 +119,6 @@ calculate_overlay_geometry (PanelWidget *panel,
 
 		if ((*h + applet->allocation.y) > panel->size) {
 			*h = panel->size - applet->allocation.y;
-		}
-
-		if ( ! BASEP_IS_WIDGET(parent)) {
-			/*don't do the edge flushing on foobar*/
-			return;
 		}
 
 		/* if on the edge (only if padding is 0)

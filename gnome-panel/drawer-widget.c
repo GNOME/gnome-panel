@@ -182,8 +182,7 @@ drawer_pos_get_hide_orient (BasePWidget *basep)
 void
 drawer_widget_open_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
-	if (BASEP_IS_WIDGET (parentp))
-		BASEP_WIDGET (parentp)->drawers_open++;
+	BASEP_WIDGET (parentp)->drawers_open++;
 	basep_widget_explicit_show (BASEP_WIDGET (drawer));
 }
 
@@ -206,8 +205,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 		break;
 	}
 
-	if (BASEP_IS_WIDGET (parentp))
-		BASEP_WIDGET (parentp)->drawers_open--;
+	BASEP_WIDGET (parentp)->drawers_open--;
 }
 
 static void

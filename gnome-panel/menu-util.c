@@ -16,7 +16,6 @@
 #include "quick-desktop-reader.h"
 
 #include "basep-widget.h"
-#include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 #include "distribution.h"
 #include "panel-config-global.h"

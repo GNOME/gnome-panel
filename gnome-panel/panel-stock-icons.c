@@ -34,7 +34,7 @@
 #include "panel-main.h"
 
 static GtkIconSize panel_menu_icon_size = 0;
-static GtkIconSize panel_foobar_icon_size = 0;
+static GtkIconSize panel_menu_bar_icon_size = 0;
 static GtkIconSize panel_button_icon_size = 0;
 
 GtkIconSize
@@ -44,9 +44,9 @@ panel_menu_icon_get_size (void)
 }
 
 GtkIconSize
-panel_foobar_icon_get_size (void)
+panel_menu_bar_icon_get_size (void)
 {
-	return panel_foobar_icon_size;
+	return panel_menu_bar_icon_size;
 }
 
 GtkIconSize
@@ -176,7 +176,7 @@ panel_init_stock_icons_and_items (void)
 						       PANEL_DEFAULT_MENU_ICON_SIZE,
 						       PANEL_DEFAULT_MENU_ICON_SIZE);
 
-	panel_foobar_icon_size = gtk_icon_size_register ("panel-foobar", 20, 20);
+	panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar", 20, 20);
 
 	panel_button_icon_size = gtk_icon_size_register ("panel-button",
 							 PANEL_DEFAULT_BUTTON_ICON_SIZE,

@@ -8,7 +8,6 @@
 #include "config.h"
 #include "edge-widget.h"
 #include "panel-config-global.h"
-#include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
@@ -145,15 +144,12 @@ edge_pos_get_pos (BasePWidget *basep,
 	switch (edge) {
 	case BORDER_RIGHT:
 		basep_border_get (basep, BORDER_TOP, NULL, NULL, y);
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
 		*x = multiscreen_width (basep->screen, basep->monitor) - w;
 		break;
 	case BORDER_LEFT:
 		basep_border_get (basep, BORDER_TOP, y, NULL, NULL);
-		*y += foobar_widget_get_height (basep->screen, basep->monitor);
 		break;
 	case BORDER_TOP:
-		*y = foobar_widget_get_height (basep->screen, basep->monitor);
 		break;
 	case BORDER_BOTTOM:
 		*y = multiscreen_height (basep->screen, basep->monitor) - h;
@@ -176,14 +172,12 @@ edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 	case BORDER_RIGHT:
 		basep_border_get (basep, BORDER_TOP, NULL, NULL, &a);
 		basep_border_get (basep, BORDER_BOTTOM, NULL, NULL, &b);
-		*h = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - a - b;
+		*h = multiscreen_height (basep->screen, basep->monitor) - a - b;
 		break;
 	case BORDER_LEFT:
 		basep_border_get (basep, BORDER_TOP, &a, NULL, NULL);
 		basep_border_get (basep, BORDER_BOTTOM, &b, NULL, NULL);
-		*h = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - a - b;
+		*h = multiscreen_height (basep->screen, basep->monitor) - a - b;
 		break;
 	case BORDER_TOP:
 	case BORDER_BOTTOM:

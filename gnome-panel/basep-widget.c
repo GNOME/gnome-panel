@@ -19,7 +19,6 @@
 #include "basep-widget.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
-#include "foobar-widget.h"
 #include "drawer-widget.h"
 #include "border-widget.h"
 #include "edge-widget.h"
@@ -2507,8 +2506,7 @@ basep_border_recalc (int screen, int monitor)
 	sb->left   = border_max (sb, BORDER_LEFT);
 	sb->right  = border_max (sb, BORDER_RIGHT);
 	sb->bottom = border_max (sb, BORDER_BOTTOM);
-	sb->top    = border_max (sb, BORDER_TOP) +
-				foobar_widget_get_height (screen, monitor);
+	sb->top    = border_max (sb, BORDER_TOP);
 
 	if (!memcmp (&old, sb, sizeof (ScreenBorders)))
 		return;

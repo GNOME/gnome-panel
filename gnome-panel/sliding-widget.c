@@ -9,7 +9,6 @@
 
 #include "sliding-widget.h"
 #include "panel-config-global.h"
-#include "foobar-widget.h"
 #include "panel-marshal.h"
 #include "panel-util.h"
 #include "multiscreen-stuff.h"
@@ -248,11 +247,9 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (BORDER_POS (basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = multiscreen_height (basep->screen, basep->monitor) -
-		     foobar_widget_get_height (basep->screen, basep->monitor) - h;
+		*y = multiscreen_height (basep->screen, basep->monitor) - h;
 		/* fall through */
 	case BORDER_TOP:
-		(*y) += foobar_widget_get_height (basep->screen, basep->monitor);
 		*x = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
 			: multiscreen_width (basep->screen, basep->monitor)
@@ -266,7 +263,6 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 			? pos->offset
 			: multiscreen_height (basep->screen, basep->monitor)
 				- pos->offset - h;
-		*y = MAX (*y, foobar_widget_get_height (basep->screen, basep->monitor));
 		break;
 	}
 

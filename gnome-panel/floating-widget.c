@@ -12,7 +12,6 @@
 #include "border-widget.h"
 #include "panel-marshal.h"
 #include "panel-config-global.h"
-#include "foobar-widget.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "multiscreen-stuff.h"
@@ -187,15 +186,13 @@ floating_pos_get_hide_orient (BasePWidget *basep)
 static int
 xclamp (int screen, int monitor, int x, int w)
 {
-	return CLAMP (x, 0,
-		      multiscreen_width (screen, monitor) - w);
+	return CLAMP (x, 0, multiscreen_width (screen, monitor) - w);
 }
 
 static int
 yclamp (int screen, int monitor, int y, int h)
 {
-	return CLAMP (y, foobar_widget_get_height (screen, monitor), 
-		      multiscreen_height (screen, monitor) - h);
+	return CLAMP (y, 0, multiscreen_height (screen, monitor) - h);
 }
 
 static void

@@ -92,7 +92,6 @@ GtkWidget *	create_root_menu	(GtkWidget   *root_menu,
 					 PanelWidget *panel,
 					 gboolean     fake_submenus,
 					 int          flags,
-					 gboolean     is_basep,
 					 gboolean     extra_items);
 
 /* some gtk code cut-n-paste action */

@@ -27,6 +27,7 @@
 #include "egg-screen-exec.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
+#include "panel-compatibility.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -242,13 +243,12 @@ applet_callback_callback (GtkWidget      *widget,
 }
 
 static void
-applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
+applet_menu_deactivate (GtkWidget *w, AppletInfo *info)
 {
 	GtkWidget *panel = get_panel_parent(info->widget);
 	info->menu_age = 0;
 	
-	if(BASEP_IS_WIDGET(panel))
-		BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
+	BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
 AppletUserMenu *
@@ -555,10 +555,8 @@ applet_show_menu (AppletInfo     *info,
 
 	g_assert (info->menu);
 
-	if (BASEP_IS_WIDGET (panel)) {
-		BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-		basep_widget_queue_autohide (BASEP_WIDGET (panel));
-	}
+	BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
+	basep_widget_queue_autohide (BASEP_WIDGET (panel));
 
 	info->menu_age = 0;
 

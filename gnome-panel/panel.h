@@ -64,8 +64,7 @@ void panel_receive_dnd_data (PanelWidget      *panel,
 			     int               pos,
 			     GtkSelectionData *selection_data,
 			     GdkDragContext   *context,
-			     guint             time_,
-			     gboolean          is_foobar);
+			     guint             time_);
 
 gboolean panel_check_drop_forbidden (PanelWidget    *panel,
 				     GdkDragContext *context,

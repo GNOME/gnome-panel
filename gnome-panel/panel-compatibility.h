@@ -30,11 +30,11 @@
 
 G_BEGIN_DECLS
 
-GtkWidget *foobar_widget_new (const char *panel_id,
-			      int         screen,
-			      int         monitor);
+GtkWidget *panel_compatibility_load_menu_panel (const char *panel_id,
+						int         screen,
+						int         monitor);
 
-void panel_compatibility_load_applets (void);
+void       panel_compatibility_load_applets    (void);
 
 G_END_DECLS
 

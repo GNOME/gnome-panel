@@ -398,7 +398,7 @@ drag_data_received_cb (GtkWidget          *widget,
 	panel = PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel);
 
 	panel_receive_dnd_data (
-		panel, info, -1, selection_data, context, time_, FALSE);
+		panel, info, -1, selection_data, context, time_);
 }
 
 static gboolean
@@ -744,12 +744,10 @@ load_drawer_applet (gchar       *mypanel_id,
 				drawer);
 
 	/* this doesn't make sense anymore */
-	if((BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) &&
-	   (BASEP_IS_WIDGET (panel->panel_parent))) {
+	if (BASEP_WIDGET (drawer->drawer)->state == BASEP_SHOWN)
 		/*pop up, if popped down, if it's not an autohidden
 		  widget then it will just ignore this next call */
-		basep_widget_autoshow(BASEP_WIDGET(panel->panel_parent));
-	} 
+		basep_widget_autoshow (BASEP_WIDGET (panel->panel_parent));
 
 	panel_widget_add_forbidden(PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel));
 

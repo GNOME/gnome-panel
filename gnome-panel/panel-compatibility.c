@@ -33,13 +33,16 @@
 extern GSList *panels;
 
 GtkWidget *
-foobar_widget_new (const char *panel_id,
-		   int         screen,
-		   int         monitor)
+panel_compatibility_load_menu_panel (const char *panel_id,
+				     int         screen,
+				     int         monitor)
 {
 	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
 	GtkWidget  *retval;
 
+	/* A menu panel was like a x-small edge panel at the
+	 * top of the screen.
+	 */
 	retval = edge_widget_new (panel_id,
 				  screen,
 				  monitor,
@@ -75,6 +78,9 @@ panel_compatibility_load_applets (void)
 
 		g_object_set_data (G_OBJECT (panel), "load-compatibility-applets", NULL);
 
+		/* A menu panel contained a menu bar on the far left
+	         * and a window menu on the far right.
+		 */
 		panel_menu_bar_load (panel, 0, TRUE, NULL);
 
 		panel_applet_frame_load ("OAFIID:GNOME_WindowMenuApplet",

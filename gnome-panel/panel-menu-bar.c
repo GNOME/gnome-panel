@@ -68,7 +68,7 @@ panel_menu_bar_show_applications_menu (GtkWidget    *menu,
 	while (GTK_MENU_SHELL (menu)->children)
 		gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
 
-	create_root_menu (menu, NULL, TRUE, MENU_FLAGS, FALSE, FALSE);
+	create_root_menu (menu, NULL, TRUE, MENU_FLAGS, FALSE);
 }
 
 static void
@@ -127,10 +127,10 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 
 	panel_recent_append_documents_menu (menubar->priv->actions_menu);
 
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
+		item = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
 
-	if (panel_is_program_in_path ("gnome-panel-screenshot"))
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
@@ -139,6 +139,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			_("Take a screenshot"),
 			"ACTION:screenshot:NEW",
 			G_CALLBACK (panel_action_screenshot));
+	}
 
 	item = gtk_separator_menu_item_new ();
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
@@ -181,11 +182,11 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	item = gtk_image_menu_item_new_with_label (_("Applications"));
         image = gtk_image_new_from_stock (
 			PANEL_STOCK_GNOME_LOGO,
-			panel_foobar_icon_get_size ()),
+			panel_menu_bar_icon_get_size ()),
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 
 	menubar->priv->applications_menu =
-		create_root_menu (NULL, NULL, TRUE, MENU_FLAGS, FALSE, FALSE);
+		create_root_menu (NULL, NULL, TRUE, MENU_FLAGS, FALSE);
 
 	g_signal_connect (menubar->priv->applications_menu, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),

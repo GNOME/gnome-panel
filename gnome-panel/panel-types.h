@@ -29,16 +29,13 @@ typedef enum {
 	PANEL_BACK_IMAGE
 } PanelBackgroundType;
 
-/* XXX: if you add any here you need to make the tile type larger
- * for button-widget, as it's 2 bits only for now */
-
 typedef enum {
 	EDGE_PANEL,
 	DRAWER_PANEL,
 	ALIGNED_PANEL,
 	SLIDING_PANEL,
 	FLOATING_PANEL,
-	FOOBAR_PANEL
+	MENU_PANEL
 } PanelType;
 
 typedef enum {
