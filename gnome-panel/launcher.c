@@ -646,9 +646,23 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-launcher_changed (GtkObject *dedit, gpointer data)
+launcher_changed (GObject *dedit, gpointer data)
 {
-	Launcher *launcher = data;
+	Launcher         *launcher;
+	GnomeDesktopItem *new_ditem;
+	const char       *old_exec;
+	const char       *new_exec;
+
+	launcher = (Launcher *) data;
+	new_ditem = gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (dedit));
+
+	old_exec = gnome_desktop_item_get_string (launcher->ditem,
+						  GNOME_DESKTOP_ITEM_EXEC);
+	new_exec = gnome_desktop_item_get_string (new_ditem,
+						  GNOME_DESKTOP_ITEM_EXEC);
+
+	if (!old_exec || !new_exec || strcmp (old_exec, new_exec))
+		gnome_desktop_item_clear_attr (new_ditem, "StartupNotify");
 
 	properties_apply (launcher);
 }
