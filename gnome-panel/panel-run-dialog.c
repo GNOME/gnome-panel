@@ -338,7 +338,6 @@ static void
 panel_run_dialog_execute (PanelRunDialog *dialog)
 {
 	GdkScreen *screen;
-	GError    *error;
 	gboolean   result;
 	char      *command;
 	char      *escaped;
@@ -369,20 +368,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		return;
 	}
 		
-	error = NULL;
-	disk = g_locale_from_utf8 (command, -1, NULL, NULL, &error);
-
-	if (!disk || error) {
-		panel_error_dialog (screen, "cannot_convert_command_from_utf8",
-				    _("Cannot convert '%s' from UTF-8"),
-				    "%s",
-				    command,
-				    error->message);
-
-		g_error_free (error);
-		return;
-	}
-
+	disk = g_locale_from_utf8 (command, -1, NULL, NULL, NULL);
 	url = gnome_vfs_make_uri_from_input_with_dirs (disk,
 						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	escaped = g_markup_escape_text (url, -1);
