@@ -1,5 +1,3 @@
-NOTE: FIXME:!!!!!!!!!!!!! This is broken now, needs fixing!!!!
-
 This is a little document that describes the "art" of applet writing.
 
 Introduction:
@@ -13,6 +11,12 @@ etc ... etc ... etc ...
 
 Changes:
 ========
+
+5/30/99) Took out the old mico example, added .gnorba,.desktop examples
+	 and explanation, and fixed the multiple applet support
+	 documentation. Also fixed all the applet_widget_init and
+	 applet_widget_new calls for the correct arguments. Hopefully it's
+	 now correct.
 
 7/23/98) The applets should call applet_widget_sync_config, so that their
 	 changes can be noticed by the panel and synced to disk immediately
@@ -50,11 +54,10 @@ main(int argc, char **argv)
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
-	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
-				    NULL, argv[0]);
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL,0,NULL);
 
 	/* create a new applet_widget */
-	applet = applet_widget_new();
+	applet = applet_widget_new("hello_applet");
 	/* in the rare case that the communication with the panel
 	   failed, error out */
 	if (!applet)
@@ -78,9 +81,40 @@ main(int argc, char **argv)
 This creates an applet which just sits on the panel, not really doing
 anything, in real life the label would be substituted by something which
 actually does something useful. as you can see the applet doesn't really
-take care of restarting itself, it just passes the argv[0] parameter to 
-the panel, in the applet_widget_init_defaults call and that's the way
-the panel will restart it next time.
+take care of restarting itself.
+
+The .gnorba and .desktop files:
+===============================
+
+For the applet to be added to the menus, you need to install two files.
+Your x.gnorba file goes into <prefix>/etc/CORBA/servers/ and the
+x.desktop file goes into <prefix>/share/applets/<category>/.
+
+Example files are
+
+hello.desktop:
+
+	[Desktop Entry]
+	Name=Hello Applet
+	Comment=An example Hello World type Applet
+	Exec=hello_applet --activate-goad-server=hello_applet
+	Icon=
+	Terminal=0
+	Type=Application
+
+hello.gnorba:
+
+	[hello_applet]
+	type=exe
+	repo_id=IDL:GNOME/Applet:1.0
+	description=Hello Applet
+	location_info=hello_applet
+
+One thing to keep in mind is that the Exec line doesn't actually get
+executed really. The panel will parse out the goad-server name and use
+the standard gnome activation service to run the applet. For a simple
+applet all you need to do is replace the hello_applet with the name of
+your applet executable.
 
 Now to the more interesting stuff.
 
@@ -114,11 +148,10 @@ main(int argc, char **argv)
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
-	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
-				    NULL, argv[0]);
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL, 0, NULL);
 
 	/* create a new applet_widget */
-	applet = applet_widget_new();
+	applet = applet_widget_new("hello_applet");
 	/* in the rare case that the communication with the panel
 	   failed, error out */
 	if (!applet)
@@ -260,11 +293,10 @@ main(int argc, char **argv)
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
-	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
-				    NULL, argv[0]);
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL, 0, NULL);
 
 	/* create a new applet_widget */
-	applet = applet_widget_new();
+	applet = applet_widget_new("hello_applet");
 	/* in the rare case that the communication with the panel
 	   failed, error out */
 	if (!applet)
@@ -321,7 +353,7 @@ Similiarly for the save_session.
 
 NOTE:
 When you update your configuration in some properties dialog, or however
-else, you should call applet_widget_config_sync(AppletWidget *applet),
+else, you should call applet_widget_sync_config(AppletWidget *applet),
 it will tell the panel to send a session save signal to the applet with
 the correct paths etc. This is not 100% neccessary, but makes it nice so
 that configuration is not lost during crashes (when panel couldn't do it's
@@ -362,11 +394,10 @@ main(int argc, char **argv)
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
-	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
-				    NULL, argv[0]);
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL, 0, NULL);
 
 	/* create a new applet_widget */
-	applet = applet_widget_new();
+	applet = applet_widget_new("hello_applet");
 	/* in the rare case that the communication with the panel
 	   failed, error out */
 	if (!applet)
@@ -406,39 +437,46 @@ Also note that you should bind the event before you do applet_widget_add,
 as the event will be triggered during the add, so that you can set your
 initial orientation.
 
-Multiple Applet Support:
-========================
+Panel Size:
+===========
+(not in 1.0)
 
-Having one process per applet might be ok, but when you have many applets
-it can be quite a hit on the memory. so why not manage multiple applets
-from one process, even different types of applets. Ok here's how it's
-done. For a simple example let's modify our original hello applet to
-make it possible to have multiple instances of it from just one
-executable.
+One things that is very new in the panel now is the Size support. The
+panel supports the following sizes:
+
+Tiny: 24 pixels
+Standard: 48 pixels
+Large: 64 pixels
+Huge: 80 pixels
+
+It would be nice to let your applet pick it's layout so that it doesn't
+stretch the panel out of it's preffered size (the panel is always as
+thick as the thickest applet)
+
+The way this works is very similiar to the way orientation works so
+here is an example:
+
+How to tell which way the panel on which your applet sits is oriented,
+fairly simply. You bind the "change_orient" signal to the applet, so to
+modify our original hello applet, we'd do:
 
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
 
-/*when we get a command to start a new widget*/
+#ifdef HAVE_PANEL_SIZE
+/*this is when the panel orientation changes*/
 static void
-applet_start_new_applet(const gchar *param, gpointer data)
+applet_change_size(GtkWidget *w, PanelSizeType o, gpointer data)
 {
-	GtkWidget *applet;
-
-	applet = applet_widget_new_with_param(param);
-	if (!applet)
-		g_error("Can't create applet!\n");
-
-	/* create the widget we are going to put on the applet */
-	label = gtk_label_new(_("Hello There!"));
-	gtk_widget_show(label);
-
-	/* add the widget to the applet-widget, and thereby actually
-	   putting it "onto" the panel */
-	applet_widget_add (APPLET_WIDGET (applet), label);
-	gtk_widget_show (applet);
+	switch(o) {
+		case SIZE_TINY: puts("SIZE_TINY"); break;
+		case SIZE_STANDARD: puts("SIZE_STANDARD"); break;
+		case SIZE_LARGE: puts("SIZE_LARGE"); break;
+		case SIZE_HUGE: puts("SIZE_HUGE"); break;
+	}
 }
+#endif
 
 int
 main(int argc, char **argv)
@@ -452,11 +490,10 @@ main(int argc, char **argv)
 
 	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
-	applet_widget_init("hello_applet", NULL, argc, argv, 0, NULL, argv[0],
-			   TRUE,TRUE,applet_start_new_applet,NULL);
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL, 0, NULL);
 
 	/* create a new applet_widget */
-	applet = applet_widget_new();
+	applet = applet_widget_new("hello_applet");
 	/* in the rare case that the communication with the panel
 	   failed, error out */
 	if (!applet)
@@ -465,6 +502,15 @@ main(int argc, char **argv)
 	/* create the widget we are going to put on the applet */
 	label = gtk_label_new(_("Hello There!"));
 	gtk_widget_show(label);
+
+#ifdef HAVE_PANEL_SIZE
+	/*we have to bind change_size before we do applet_widget_add 
+	  since we need to get an initial change_size signal to set our
+	  initial size, and we get that during the _add call*/
+	gtk_signal_connect(GTK_OBJECT(applet),"change_size",
+			   GTK_SIGNAL_FUNC(applet_change_size),
+			   NULL);
+#endif
 
 	/* add the widget to the applet-widget, and thereby actually
 	   putting it "onto" the panel */
@@ -477,71 +523,60 @@ main(int argc, char **argv)
 	return 0;
 }
 
-You will note in the above that all that is changed is that we use the
-full syntax for the applet_widget_init function, and added a callback
-function for starting a new applet. That's all that's needed really.
-Of course the applet can't do things globally, but most likely you will
-want to store the widget data in a structure which you store in the
-user_data of the applet widget. See the clock applet for an example of
-this.
+Notice the "#ifdef HAVE_PANEL_SIZE" line, this will make sure your applet
+compiles correctly even on a panel from gnome-core 1.0 which doesn't have
+support for multiple sizes.
 
-If you want to put more applet types into one executable, you will need
-to use a command line argument. This might change in the future since I
-think the current way is kind of hackish, but I need to figure out a
-clean interface for this, and I haven't thought of one that would work
-well yet.
+Rebinding events (Rebuilding the widget structure on the applet):
+=================================================================
+(not in 1.0)
 
-Anyway it's fairly simple to do. Here's a simple hello applet (again),
-but it handeles a "Good Bye" applet as well.
+Sometimes you want to change the way the applet looks after it has already
+been added to the panel, and you want the right and middle mouse button
+clicks to still work. In this case you need to notify the panel that it
+should try to rebind the events. You do this with:
 
-#include <string.h>
+#ifdef HAVE_APPLET_BIND_EVENTS
+applet_widget_bind_events(APPLET_WIDGET(applet),GTK_WIDGET(widget));
+#endif
+
+which will bind mouseclicks (2nd and 3rd button) on the "widget".
+
+Note that this is NOT in the panel in gnome-core 1.0, so if you use this
+feature, make sure to put the "#ifdef HAVE_APPLET_BIND_EVENTS" around the
+code.
+
+Multiple Applet Support:
+========================
+
+Having one process per applet might be ok, but when you have many applets
+it can be quite a hit on the memory. so why not manage multiple applets
+from one process, even different types of applets. Ok here's how it's
+done. For a simple example let's modify our original hello applet to
+make it possible to have multiple instances of it from just one
+executable. We will create a factory corba service that can create new
+instances of the applet.
+
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
 
-/* These are the arguments that our application supports.  */
-static struct argp_option arguments[] =
-{
-  { "hello", -1, NULL, 0, N_("Start in hello mode"), 1 },
-  { "goodbye", -1, NULL, 0, N_("Start in goodbye mode"), 1 },
-  { NULL, 0, NULL, 0, NULL, 0 }
-};
 
-/* Forward declaration of the function that gets called when one of
-   our arguments is recognized.  */
-/* we ignore the arguments */
-static error_t
-parse_an_arg (int key, char *arg, struct argp_state *state)
-{
-	return 0;
-}
-
-/* This structure defines our parser.  It can be used to specify some
-   options for how our parsing function should be called.  */
-static struct argp parser =
-{
-	arguments,			/* Options.  */
-	parse_an_arg,			/* The parser function.  */
-	NULL,				/* Some docs.  */
-	NULL,				/* Some more docs.  */
-	NULL,				/* Child arguments -- gnome_init fills
-				           this in for us.  */
-	NULL,				/* Help filter.  */
-	NULL				/* Translation domain; for the app it
-				           can always be NULL.  */
-};
-
-/* start a new instance of the hello applet */
-static void
-make_hello_applet(gchar *param)
+/*when we get a command to start a new widget*/
+static GtkWidget *
+applet_start_new_applet(const gchar *goad_id, const gchar **params, gint nparams)
 {
 	GtkWidget *applet;
 	GtkWidget *label;
 
+	/*if we weren't asked to start hello_applet, just return*/
+	if(strcmp(goad_id, "hello_applet")!=0) return NULL;
+
+	/*now we do the same exact thing as we do in the main function for
+	  creating the applet*/
+
 	/* create a new applet_widget */
-	applet = applet_widget_new_with_param(param);
-	/* in the rare case that the communication with the panel
-	   failed, error out */
+	applet = applet_widget_new("hello_applet");
 	if (!applet)
 		g_error("Can't create applet!\n");
 
@@ -553,89 +588,102 @@ make_hello_applet(gchar *param)
 	   putting it "onto" the panel */
 	applet_widget_add (APPLET_WIDGET (applet), label);
 	gtk_widget_show (applet);
-}
 
-/* start a new instance of the goodbye applet */
-static void
-make_goodbye_applet(gchar *param)
-{
-	GtkWidget *applet;
-	GtkWidget *label;
-
-	/* create a new applet_widget */
-	applet = applet_widget_new_with_param(param);
-	/* in the rare case that the communication with the panel
-	   failed, error out */
-	if (!applet)
-		g_error("Can't create applet!\n");
-
-	/* create the widget we are going to put on the applet */
-	label = gtk_label_new(_("GoodBye!"));
-	gtk_widget_show(label);
-
-	/* add the widget to the applet-widget, and thereby actually
-	   putting it "onto" the panel */
-	applet_widget_add (APPLET_WIDGET (applet), label);
-	gtk_widget_show (applet);
-}
-
-
-/* start a new applet depending on the param string */
-static void
-make_new_applet(const gchar *param)
-{
-	if(strstr(param,"--hello"))
-		make_hello_applet(param);
-	else /* --goodbye */
-		make_goodbye_applet(param);
-}
-
-/*when we get a command to start a new widget*/
-static void
-applet_start_new_applet(const gchar *param, gpointer data)
-{
-	make_new_applet(param);
+	/* return the applet widget from this function */
+	return applet;
 }
 
 int
 main(int argc, char **argv)
 {
-	gchar *param;
+	GtkWidget *applet;
+	GtkWidget *label;
+	gchar *goad_id;
 
 	/* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	/*we make a param string, instead of first parsing the params with
-	  argp, we will allways use a string, since the panel will only
-	  give us a string */
-	param = make_param_string(argc,argv);
+	/* intialize, this will basically set up the applet, corba and
+	   call gnome_init */
+	applet_widget_init("hello_applet", NULL, argc, argv, NULL, 0, NULL);
 
-	applet_widget_init("hello_goodbye_applet", &parser, argc, argv, 0,
-			   NULL, argv[0],TRUE,TRUE,applet_start_new_applet,
-			   NULL);
+	/*make new factory and get us the goad_id that was used to start us*/
+	applet_factory_new("hello_applet_factory", NULL, applet_start_new_applet);
+	goad_id = (gchar *)goad_server_activation_id();
 
-	/* start a new applet using param */
-	make_new_applet(param);
-	g_free(param);
+	/*if the goad_id was hello_applet, we create a new instance of
+	  our applet, otherwise don't do anything*/
+	if(goad_id && strcmp(goad_id, "hello_applet")==0) {
+		/* create a new applet_widget */
+		applet = applet_widget_new("hello_applet");
+		if (!applet)
+			g_error("Can't create applet!\n");
+
+		/* create the widget we are going to put on the applet */
+		label = gtk_label_new(_("Hello There!"));
+		gtk_widget_show(label);
+
+		/* add the widget to the applet-widget, and thereby actually
+		   putting it "onto" the panel */
+		applet_widget_add (APPLET_WIDGET (applet), label);
+		gtk_widget_show (applet);
+
+	}
 
 	/* special corba main loop */
-	applet_widget_gtk_main();
+	applet_widget_gtk_main ();
 
 	return 0;
 }
 
-Not as simple as the last one, but still simple enough. We have to set
-up the the argp argument stuff, even though we ignore it. The
-make_hello_applet and make_goodbye_applet could really be merged
-together. But the way I envision such a setup is that those functions
-are in separate files along with all the functionality of that particular
-applet.
+What you will notice is that what we do is just make a factory service
+with applet_factory_new, to which we pass a function pointer to a function
+that just creates new applets for us.
 
-After that you only create two .desktop entries, one with:
-"hello_goodbye_applet --hello"
-and one with:
-"hello_goodbye_applet --goodbye"
+Now we need to create a .gnorba and .desktop files for an applet of this
+type. The .desktop file is the exact same as for normal applets. The
+.gnorba file however must now describe the factory as well.
+
+hello.gnorba:
+
+	[hello_applet_factory]
+	type=exe
+	repo_id=IDL:GNOME/GenericFactory:1.0
+	description=Hello Applet
+	location_info=hello_applet
+
+	[hello_applet]
+	type=factory
+	repo_id=IDL:GNOME/Applet:1.0
+	description=Hello Applet
+	location_info=hello_applet_factory
+
+That's it.
+
+Now sometimes you may want to have two applets that have very similiar
+functionality, but that appear to the user as two different applets, and
+you want to manage them from the same process. This is extremely simple.
+Just take the above example and add more types into the .gnorba file, then
+wherever we check the goad_id, just add another "else if" to check for
+another goad_id. Then in your desktops on the Exec line, you would have say
+
+In one .desktop:
+
+Exec=hello_applet --activate-goad-server=hello_version_1_applet
+
+In another .desktop
+
+Exec=hello_applet --activate-goad-server=hello_version_2_applet
+
+Shared library applets:
+=======================
+
+It is possible to make applets which will not be separate processes, but
+will be loaded directly into the panel. This makes the panel less stable
+if the applet is less stable.
+
+FIXME! Need explanation, examples.
 
 Building the applets:
 =====================
@@ -644,52 +692,7 @@ Here's a simple makefile you can use (this one is for the fish applet) if
 you want to compile applets outside of the gnome-core source tree. It was
 sent to me by John Ellis <johne@bellatlantic.net>.
 
-------------------8<-------------------
-#set PREFIX to gnome's location:
-PREFIX = /usr
-BINARY = fish_applet
-DESKTOP_FILE = fish_applet.desktop
-DESKTOP_DIR = Amusements
-# i18n does not like this, but:
-PACKAGE = gnome-core
-
-include $(PREFIX)/lib/gnomeConf.sh
-
-#Parse out those nasty quotes.
-GNOME_INCLUDEDIR_PARSED = $(subst ",,$(GNOME_INCLUDEDIR))
-GNOME_LIBS_PARSED = $(subst ",,$(GNOME_LIBS))
-GNOMEUI_LIBS_PARSED = $(subst ",,$(GNOMEUI_LIBS))
-
-GTK_INCLUDE = `gtk-config --cflags`
-GTK_LIB = `gtk-config --libs`
-CFLAGS = $(GTK_INCLUDE) $(GNOME_INCLUDEDIR_PARSED) -I.
-LDFLAGS = $(GTK_LIB) $(GNOMEUI_LIBS_PARSED) $(PREFIX)/lib/libpanel_applet.so    \
-          -lmicocoss2.0.5 -lmicoaux2.0.5 -lmico2.0.5
-CC = gcc -Wall $(CFLAGS)
-CCPLUS = c++ -Wall
-
-OBJS = fish.o
-
-$(BINARY): $(OBJS)
-        $(CCPLUS) $(OBJS) -o $(BINARY) $(LDFLAGS)
-
-fish.o : fish.c
-        echo "#define PACKAGE \"$(PACKAGE)\"" > config.h
-        $(CC) -c fish.c
-
-install:
-        install -c $(BINARY) $(PREFIX)/bin/$(BINARY)
-        install -c $(DESKTOP_FILE) $(PREFIX)/share/applets/$(DESKTOP_DIR)/$(DESK
-TOP_FILE)
-
-uninstall:
-        rm -f $(PREFIX)/bin/$(BINARY)
-        rm -f $(PREFIX)/share/applets/$(DESKTOP_DIR)/$(DESKTOP_FILE)
-
-clean:
-        rm -f *.o *~ $(BINARY) core
-
-------------------8<-------------------
+FIXME! We need a more up to date example.
 
 It's all quite simple isn't it?
 
