@@ -35,6 +35,7 @@ struct _ClockData {
 	int unixtime;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
+	PanelSizeType size;
 
 	GtkWidget *props;
 	int prop_hourformat;
@@ -47,8 +48,7 @@ static void clock_properties(AppletWidget *, gpointer);
 
 
 typedef struct {
-	GtkWidget *date;
-	GtkWidget *time;
+	GtkWidget *time; /*the time label*/
 } ComputerClock;
 
 static void
@@ -112,58 +112,79 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 {
 	ComputerClock *cc;
 	struct tm *tm;
+	GString *gs = g_string_new("");
 	char date[20], hour[20];
 
 	cc = gtk_object_get_user_data(GTK_OBJECT(cd->clockw));
 
 	tm = localtime(&current_time);
 
-	if (cd->showdate && !cd->unixtime) {
-	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-	        /* This format string is used, to display the actual day,
-		   when showing a vertical panel.  For an explanation of
-		   this format string type 'man strftime'.  */
-	        if (strftime(date, 20, _("%a\n%b %d"), tm) == 20)
-		    date[19] = '\0';
-	    } else {
-	        /* This format string is used, to display the actual day,
-		   when showing a horizontal panel.  */
-	        if (strftime(date, 20, _("%a %b %d"), tm) == 20)
-		    date[19] = '\0';
-	    }
-	    gtk_label_set_text(GTK_LABEL(cc->date), date);
-	    if (!GTK_WIDGET_VISIBLE(cc->date))
-	         gtk_widget_show (cc->date);
-	  } else {
-	      if (GTK_WIDGET_VISIBLE(cc->date))
-	          gtk_widget_hide (cc->date);
-	  }
-
 	if (cd->unixtime) {
-	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-		    g_snprintf(hour,20,"%lu\n%lu",
-			       (unsigned long)(current_time/100000L),
-			       (unsigned long)(current_time%100000L));
-	    } else {
-		    g_snprintf(hour,20,"%lu",(unsigned long)current_time);
-	    } 
+		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
+		    cd->size != SIZE_TINY) {
+			g_snprintf(hour,20,"%lu\n%lu",
+				   (unsigned long)(current_time/100000L),
+				   (unsigned long)(current_time%100000L));
+		} else {
+			g_snprintf(hour,20,"%lu",(unsigned long)current_time);
+		} 
+		g_string_append(gs,hour);
 	} else if (cd->hourformat == 0) {
-	    /* This format string is used, to display the actual time in
-	       12 hour format.  */
-	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-	        if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
-		        hour[19] = '\0';
-	    } else {
-	        if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
-	                hour[19] = '\0';
-	    } 
+		/* This format string is used, to display the actual time in
+		   12 hour format.  */
+		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
+		    cd->size != SIZE_TINY) {
+			if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
+				hour[19] = '\0';
+		} else {
+			if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
+				hour[19] = '\0';
+		} 
+		g_string_append(gs,hour);
 	} else if (cd->hourformat == 1) {
-	    /* This format string is used, to display the actual time in
-               24 hour format.  */
-	    if (strftime(hour, 20, _("%H:%M"), tm) == 20)
+		/* This format string is used, to display the actual time in
+		   24 hour format.  */
+		if (strftime(hour, 20, _("%H:%M"), tm) == 20)
 			hour[19] = '\0';
+		g_string_append(gs,hour);
 	}
-	gtk_label_set_text(GTK_LABEL(cc->time), hour);
+
+	if (cd->showdate && !cd->unixtime) {
+		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
+		    cd->size != SIZE_TINY) {
+			/* This format string is used, to display the actual day,
+			   when showing a vertical panel.  For an explanation of
+			   this format string type 'man strftime'.  */
+			if (strftime(date, 20, _("%a\n%b %d"), tm) == 20)
+				date[19] = '\0';
+		} else {
+			/* This format string is used, to display the actual day,
+			   when showing a horizontal panel.  */
+			if (strftime(date, 20, _("%a %b %d"), tm) == 20)
+				date[19] = '\0';
+		}
+		if(cd->size == SIZE_TINY)
+			g_string_append_c(gs,' ');
+		else
+			g_string_append_c(gs,'\n');
+		g_string_append(gs,date);
+	}
+
+	/*if we are vertical, just make it char per line*/
+	if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
+	    cd->size == SIZE_TINY) {
+		char *p;
+		GString *gst = g_string_new("");
+		for(p=gs->str;*p;p++) {
+			if(p!=gs->str)
+				g_string_append_c(gst,'\n');
+			g_string_append_c(gst,*p);
+		}
+		g_string_free(gs,TRUE);
+		gs = gst;
+	}
+	gtk_label_set_text(GTK_LABEL(cc->time), gs->str);
+	g_string_free(gs,TRUE);
 }
 
 static void
@@ -188,12 +209,9 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_widget_show(vbox);
 
 	cc = g_new(ComputerClock, 1);
-	cc->date = gtk_label_new("hmm");
 	cc->time = gtk_label_new("hmm?");
 
-	gtk_box_pack_start_defaults(GTK_BOX(vbox), cc->date);
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), cc->time);
-	gtk_widget_show(cc->date);
 	gtk_widget_show(cc->time);
 
 	gtk_object_set_user_data(GTK_OBJECT(frame), cc);
@@ -229,6 +247,7 @@ create_clock_widget(ClockData *cd, GtkWidget * applet)
 	cd->props = NULL;
 
 	cd->orient = ORIENT_UP;
+	cd->size = SIZE_STANDARD;
 
 	gtk_signal_connect(GTK_OBJECT(clock), "destroy",
 			   (GtkSignalFunc) destroy_clock,
@@ -261,6 +280,17 @@ applet_change_orient(GtkWidget * w, PanelOrientType o, gpointer data)
 	cd->orient = o;
 	(*cd->update_func) (cd, current_time);
 }
+/*this is when the panel size changes */
+static void
+applet_change_size(GtkWidget * w, PanelSizeType o, gpointer data)
+{
+	ClockData *cd = data;
+	time_t current_time;
+
+	time(&current_time);
+	cd->size = o;
+	(*cd->update_func) (cd, current_time);
+}
 
 GtkWidget *
 make_clock_applet(const gchar * goad_id)
@@ -283,10 +313,14 @@ make_clock_applet(const gchar * goad_id)
 	create_clock_widget(cd,applet);
 
 	/*we have to bind change_orient before we do applet_widget_add 
-	   since we need to get an initial change_orient signal to set our
-	   initial oriantation, and we get that during the _add call */
+	  since we need to get an initial change_orient signal to set our
+	  initial oriantation, and we get that during the _add call */
 	gtk_signal_connect(GTK_OBJECT(applet), "change_orient",
 			   GTK_SIGNAL_FUNC(applet_change_orient),
+			   cd);
+	/*similiar to the above in semantics*/
+	gtk_signal_connect(GTK_OBJECT(applet), "change_size",
+			   GTK_SIGNAL_FUNC(applet_change_size),
 			   cd);
 
 	gtk_widget_show(cd->clockw);
