@@ -290,7 +290,7 @@ gnome_panel_applet_request_id (char *path,
 	char *result;
 	char *cfg = NULL;
 	char *globcfg = NULL;
-	guint32 wid;
+	CORBA::ULong wid;
 	int i;
 
 	/*this is the first call to panel so we'll do a loop and timeout
