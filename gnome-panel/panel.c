@@ -67,6 +67,7 @@ static GtkTargetEntry panel_drop_types[] = {
 	{ "x-url/http",          0, TARGET_NETSCAPE_URL },
 	{ "x-url/ftp",           0, TARGET_NETSCAPE_URL },
 	{ "_NETSCAPE_URL",       0, TARGET_NETSCAPE_URL },
+	{ "text/x-moz-url",      0, TARGET_NETSCAPE_URL },
 	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
 	{ "application/x-panel-applet", 0, TARGET_APPLET },
 	{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
