@@ -1,7 +1,8 @@
 /*code snippet, not to be compiled separately*/
 static int goat_pages=0;
-static GdkPixmap *goat_pix = NULL;
-static GdkPixmap *goat_pix_rev = NULL;
+static int goat_frame=0;
+static GdkPixmap *goat_pix[2] = {NULL,NULL};
+static GdkPixmap *goat_pix_rev[2] = {NULL,NULL};
 static GtkWidget *goat_darea = NULL;
 static char *goat_filename = NULL;
 static int goat_width = 0,goat_height = 0;
@@ -23,9 +24,11 @@ destroy_egg(GtkWidget *widget, gpointer data)
 static int
 goat_timeout_func(gpointer data)
 {
+	int real_goat_frame;
+
 	if(!GTK_WIDGET_REALIZED(goat_darea) ||
 	   !GTK_WIDGET_DRAWABLE(goat_darea) ||
-	   !goat_pix)
+	   !goat_pix[0])
 		return TRUE;
 	
 	if(goat_x == -1) {
@@ -63,12 +66,18 @@ goat_timeout_func(gpointer data)
 		if(goat_filename)
 			gnome_sound_play (goat_filename);
 	}
+
+	real_goat_frame = goat_frame/2;
 	
 	gdk_draw_pixmap(goat_darea->window,
 			goat_darea->style->white_gc,
-			goat_accx>0?goat_pix_rev:goat_pix,
+			goat_accx>0?goat_pix_rev[real_goat_frame]:
+				goat_pix[real_goat_frame],
 			0,0,goat_x,goat_y,
 			goat_width,goat_height);
+
+	if(++goat_frame == 4)
+		goat_frame = 0;
 
 	return TRUE;
 }
@@ -89,7 +98,14 @@ goat_expose(GtkWidget *widget, GdkEventExpose *event)
 static void
 goat_realize(GtkWidget *widget)
 {
-	if(!goat_pix) {
+	int frame;
+	char *files[] = {
+		"gnome-gegl2.png",
+		"gnome-gegl2-2.png"
+	};
+	if(goat_pix[0])
+		return;
+	for(frame=0;frame<2;frame++) {
 		GdkPixbuf *pb;
 		guchar *rgb;
 		GdkGC *gc;
@@ -97,8 +113,8 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = gnome_unconditional_pixmap_file("gnome-gegl2.png");
-		if(!file || !g_file_exists (file) ||
+		file = gnome_pixmap_file(files[frame]);
+		if(!file || 
 		   !(pb=gdk_pixbuf_new_from_file (file))) {
 			g_warning("Goat is not available!");
 			return;
@@ -118,11 +134,11 @@ goat_realize(GtkWidget *widget)
 				      ART_FILTER_NEAREST,NULL);
 		gdk_pixbuf_unref(pb);
 
-		goat_pix = gdk_pixmap_new(widget->window,
-					  goat_width,goat_height,
-					  gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
-		gc = gdk_gc_new(goat_pix);
-		gdk_draw_rgb_image(goat_pix,gc,0,0,
+		goat_pix[frame] = gdk_pixmap_new(widget->window,
+						 goat_width,goat_height,
+						 gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
+		gc = gdk_gc_new(goat_pix[frame]);
+		gdk_draw_rgb_image(goat_pix[frame],gc,0,0,
 				   goat_width,goat_height,
 				   GDK_RGB_DITHER_NORMAL,
 				   rgb, goat_width*3);
@@ -140,11 +156,11 @@ goat_realize(GtkWidget *widget)
 			}
 #undef GUCHARSWAP
 
-		goat_pix_rev = gdk_pixmap_new(widget->window,
+		goat_pix_rev[frame] = gdk_pixmap_new(widget->window,
 					  goat_width,goat_height,
 					  gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
-		gc = gdk_gc_new(goat_pix_rev);
-		gdk_draw_rgb_image(goat_pix_rev,gc,0,0,
+		gc = gdk_gc_new(goat_pix_rev[frame]);
+		gdk_draw_rgb_image(goat_pix_rev[frame],gc,0,0,
 				   goat_width,goat_height,
 				   GDK_RGB_DITHER_NORMAL,
 				   rgb, goat_width*3);
