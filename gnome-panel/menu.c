@@ -253,47 +253,41 @@ check_for_screen (GtkWidget *w, GdkEvent *ev, gpointer data)
 	return FALSE;
 }
 
-/*the most important dialog in the whole application*/
 static void
-about_cb (GtkWidget *menuitem, gpointer data)
+show_about_dialog (GtkWidget *menuitem)
 {
-	static GtkWidget *about;
-	GtkWidget *hbox, *l;
-	GdkPixbuf *logo;
-	GString *comment;
-	char *logo_file;
-	char *authors[] = {
-	  "George Lebl (jirka@5z.com)",
-	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
-	  "Miguel de Icaza (miguel@kernel.org)",
-	  "Federico Mena (quartic@gimp.org)",
-	  "Tom Tromey (tromey@cygnus.com)",
-	  "Ian Main (imain@gtk.org)",
-	  "Elliot Lee (sopwith@redhat.com)",
-	  "Owen Taylor (otaylor@redhat.com)",
-	  "Mark McLoughlin (mark@skynet.ie)",
-	  "Alex Larsson (alexl@redhat.com)",
-	  "Martin Baulig (baulig@suse.de)",
-	  "Seth Nickell (snickell@stanford.edu)",
-	  "Darin Adler (darin@bentspoon.com)",
-	  "Glynn Foster (glynn.foster@sun.com)",
-	  "Stephen Browne (stephen.browne@sun.com)",
-	  "Anders Carlsson (andersca@gnu.org)",
-	  "Padraig O'Briain (padraig.obriain@sun.com)",
-	  "Ian McKellar <yakk@yakk.net>",
-	N_("Many, many others..."),
-	/* ... from the Monty Pythons show...  */
-	N_("and finally, The Knights Who Say... NI!"),
-	  NULL
-	  };
+	static GtkWidget *about = NULL;
+	char             *authors [] = {
+		"Alex Larsson (alexl@redhat.com)",
+		"Anders Carlsson (andersca@gnu.org)",
+		"Darin Adler (darin@bentspoon.com)",
+		"Elliot Lee (sopwith@redhat.com)",
+		"Federico Mena (quartic@gimp.org)",
+		"George Lebl (jirka@5z.com)",
+		"Glynn Foster (glynn.foster@sun.com)",
+		"Ian Main (imain@gtk.org)",
+		"Ian McKellar <yakk@yakk.net>",
+		"Jacob Berkman (jberkman@andrew.cmu.edu)",
+		"Mark McLoughlin (mark@skynet.ie)",
+		"Martin Baulig (baulig@suse.de)",
+		"Miguel de Icaza (miguel@kernel.org)",
+		"Owen Taylor (otaylor@redhat.com)",
+		"Padraig O'Briain (padraig.obriain@sun.com)",
+		"Seth Nickell (snickell@stanford.edu)",
+		"Stephen Browne (stephen.browne@sun.com)",
+		"Tom Tromey (tromey@cygnus.com)",
+		N_("And many, many others..."),
+		NULL
+	};
 	char *documenters[] = {
-		"Dave Mason (dcm@redhat.com)",
-		"Dan Mueth (d-mueth@uchicago.edu)",
 	        "Alexander Kirillov (kirillov@math.sunysb.edu)",
+		"Dan Mueth (d-mueth@uchicago.edu)",
+		"Dave Mason (dcm@redhat.com)",
 		NULL
 	  };
 	/* Translator credits */
 	char *translator_credits = _("translator_credits");
+	int   i;
 
 	if (about) {
 		gtk_window_set_screen (
@@ -302,44 +296,18 @@ about_cb (GtkWidget *menuitem, gpointer data)
 		return;
 	}
 
-	{
-		int i=0;
-		while (authors[i] != NULL) {
-		       	authors[i]=_(authors[i]);
-			i++;
-		}
-	}
+	for (i = 0; authors [i]; i++)
+		authors [i] = _(authors [i]);
 
-	logo = NULL;
-	logo_file = panel_pixmap_discovery ("gnome-gegl2.png",
-					    FALSE /* fallback */);
-	if (logo_file != NULL) {
-		logo = gdk_pixbuf_new_from_file (logo_file, NULL /* error */);
-		g_free (logo_file);
-	}
-
-	comment = g_string_new (_("This program is responsible for launching "
-				  "other applications, embedding small applets "
-				  "within itself, world peace, and random X crashes."));
-
-	if (commie_mode) {
-		g_string_append (comment,
-				 _("\n\nRunning in \"Lockdown\" mode.  This "
-				   "means your system administrator has "
-				   "prohibited any changes to the panel's "
-				   "configuration to take place."));
-	}
-	
-	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			"Copyright \xc2\xa9 1997-2002 Free Software Foundation, Inc.",
-			comment->str,
-			(const char **)authors,
-			(const char **)documenters,
-			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-			logo);
-
-	g_object_unref (logo);
-	g_string_free (comment, TRUE);
+	about = gnome_about_new (_("The GNOME Panel"),
+				 VERSION,
+				 "Copyright \xc2\xa9 1997-2003 Free Software Foundation, Inc.",
+				 _("This program is responsible for launching other "
+				   "applications and embedding small applets within itself."),
+				 (const char **) authors,
+				 (const char **) documenters,
+				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+				 NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (about),
@@ -349,14 +317,6 @@ about_cb (GtkWidget *menuitem, gpointer data)
 			  &about);
 	g_signal_connect (about, "event",
 			  G_CALLBACK (check_for_screen), NULL);
-
-	hbox = gtk_hbox_new (TRUE, 0);
-	l = gnome_href_new ("http://www.wfp.org/",
-			    _("End world hunger"));
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
-			    hbox, TRUE, FALSE, 0);
-	gtk_widget_show_all (hbox);
 
 	gtk_widget_show (about);
 }
@@ -3136,7 +3096,7 @@ create_panel_context_menu (PanelWidget *panel)
 				GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
 			_("_About Panels"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate", G_CALLBACK (about_cb), NULL);
+	g_signal_connect (menuitem, "activate", G_CALLBACK (show_about_dialog), NULL);
 	
 	gnome_about = g_find_program_in_path ("gnome-about");
 	if (gnome_about) {
