@@ -32,6 +32,7 @@ struct _ClockData {
 	int hourformat;
         int showdate;
 	int unixtime;
+	int showtooltip;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
 	PanelSizeType size;
@@ -40,6 +41,7 @@ struct _ClockData {
 	int prop_hourformat;
         int prop_showdate;
 	int prop_unixtime;
+	int prop_showtooltip;
 };
 
 
@@ -98,6 +100,7 @@ applet_save_session(GtkWidget * w,
 	gnome_config_set_int("clock/hourformat", cd->hourformat);
 	gnome_config_set_int("clock/showdate", cd->showdate);
 	gnome_config_set_int("clock/unixtime", cd->unixtime);
+	gnome_config_set_int("clock/showtooltip", cd->showtooltip);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -112,7 +115,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	ComputerClock *cc;
 	struct tm *tm;
 	GString *gs = g_string_new("");
-	char date[20], hour[20];
+	char date[20], hour[20], tooltip[30];
 
 	cc = gtk_object_get_user_data(GTK_OBJECT(cd->clockw));
 
@@ -168,7 +171,14 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			g_string_append_c(gs,'\n');
 		g_string_append(gs,date);
 	}
-
+	
+	/* Set the applets tooltip */
+	if (cd->showtooltip && !cd->unixtime) {
+		if (strftime(tooltip, 30, _("%A, %B %d"), tm) == 30)
+			date[29] = '\0';
+		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), tooltip);
+	}
+	
 	/*if we are vertical, just make it char per line*/
 	if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
 	    cd->size == SIZE_TINY) {
@@ -184,6 +194,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	}
 	gtk_label_set_text(GTK_LABEL(cc->time), gs->str);
 	g_string_free(gs,TRUE);
+	
 }
 
 static void
@@ -307,6 +318,7 @@ make_clock_applet(const gchar * goad_id)
 	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
 	cd->showdate = gnome_config_get_int("clock/showdate=1");
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
+	cd->showtooltip = gnome_config_get_int("clock/showtooltip=0");
 	gnome_config_pop_prefix();
 
 	create_clock_widget(cd,applet);
@@ -350,6 +362,7 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	cd->hourformat = cd->prop_hourformat;
 	cd->showdate = cd->prop_showdate;
 	cd->unixtime = cd->prop_unixtime;
+	cd->showtooltip = cd->prop_showtooltip;
 
 	/* Call the clock's update function so that it paints its first state */
 	time(&current_time);
@@ -365,7 +378,10 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 		cd->timeouttime = 36000-(tm->tm_sec*600);
 	cd->timeout = gtk_timeout_add(cd->timeouttime,
 				      clock_timeout_callback,
-				      cd);
+				      cd);		      
+	if(!cd->showtooltip || cd->unixtime)
+  		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), "");
+				      
 /* gtk_widget_queue_resize (cd->clockw);*/
 }
 
@@ -403,13 +419,21 @@ set_datasensitive_cb(GtkWidget * w, GtkWidget *wid)
 	gtk_widget_set_sensitive(wid,!(GTK_TOGGLE_BUTTON(w)->active));
 }
 
-
 static void
 set_unixtime_cb(GtkWidget * w, gpointer data)
 {
 	ClockData *cd = data;
 
 	cd->prop_unixtime = GTK_TOGGLE_BUTTON(w)->active;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+}
+
+static void
+set_show_tooltip_cb(GtkWidget * w, gpointer data)
+{
+	ClockData *cd = data;
+
+	cd->prop_showtooltip = GTK_TOGGLE_BUTTON(w)->active;
 	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 }
 
@@ -424,6 +448,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *twelvehour;
 	GtkWidget *twentyfourhour;
 	GtkWidget *showdate;
+	GtkWidget *showtooltip;
 	GtkWidget *unixtime;
 	ClockData *cd = data;
 
@@ -495,7 +520,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_box_pack_start_defaults(GTK_BOX(hbox), vbox);
 	gtk_widget_show(vbox);
 
-	showdate = gtk_check_button_new_with_label(_("Show date"));
+	showdate = gtk_check_button_new_with_label(_("Show date in applet"));
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), showdate);
 	gtk_widget_show(showdate);
 	
@@ -507,7 +532,21 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(showdate),
 			   "toggled",
 			   (GtkSignalFunc) set_show_date_cb,
-			   data);
+			   data);	   
+
+	showtooltip = gtk_check_button_new_with_label(_("Show date in tooltip"));
+	gtk_box_pack_start_defaults(GTK_BOX(vbox), showtooltip);
+	gtk_widget_show(showtooltip);
+	
+	if (cd->showtooltip)
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(showtooltip),
+				      TRUE);
+	cd->prop_showtooltip = cd->showtooltip;
+	
+	gtk_signal_connect(GTK_OBJECT(showtooltip),
+			   "toggled",
+			   (GtkSignalFunc) set_show_tooltip_cb,
+			   data);	
 
 	unixtime = gtk_check_button_new_with_label(_("Unix time"));
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), unixtime);
@@ -519,7 +558,10 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
 			   (GtkSignalFunc) set_datasensitive_cb,
 			   showdate);
-	
+	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   showtooltip);
+			   
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(unixtime),
 				     cd->unixtime);
 	cd->prop_unixtime = cd->unixtime;
