@@ -988,7 +988,7 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
 	g_return_val_if_fail(IS_BASEP_WIDGET (widget) ||
 			     IS_FOOBAR_WIDGET (widget), FALSE);
 
-	if(!(context->actions & GDK_ACTION_COPY))
+	if(!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
 		return FALSE;
 
 	if (IS_BASEP_WIDGET (widget))
@@ -1010,10 +1010,10 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
 	for(li = context->targets; li; li = li->next) {
 		guint temp_info;
 		if(gtk_target_list_find(panel_target_list, 
-					GPOINTER_TO_INT(li->data),
+					GPOINTER_TO_UINT(li->data),
 					&temp_info)) {
 			if(info) *info = temp_info;
-			if(ret_atom) *ret_atom = GPOINTER_TO_INT(li->data);
+			if(ret_atom) *ret_atom = GPOINTER_TO_UINT(li->data);
 			break;
 		}
 	}
@@ -1052,7 +1052,11 @@ drag_motion_cb(GtkWidget	  *widget,
 	       gint                y,
 	       guint               time)
 {
-	gdk_drag_status (context, GDK_ACTION_COPY, time);
+	/* always prefer copy */
+	if(context->actions & GDK_ACTION_COPY)
+		gdk_drag_status (context, GDK_ACTION_COPY, time);
+	else
+		gdk_drag_status (context, context->suggested_action, time);
 
 	if(!is_this_drop_ok(widget, context, NULL, NULL))
 		return FALSE;
@@ -1158,6 +1162,9 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 	case TARGET_APPLET_INTERNAL:
 		drop_internal_applet(panel, pos, (char *)selection_data->data);
 		break;
+	default:
+		gtk_drag_finish(context,FALSE,FALSE,time);
+		return;
 	}
 
 	gtk_drag_finish(context,TRUE,FALSE,time);

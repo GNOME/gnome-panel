@@ -1,3 +1,9 @@
+Sat Apr 29 19:02:58 2000  George Lebl <jirka@5z.com>
+
+	* panel.c: accept _MOVE drops also, but never pass the del flag
+	  to drag_finish and also prefer _COPY when we can.  This is because
+	  netscape _MOVEs urls for some reason
+
 Sat Apr 29 17:04:42 2000  George Lebl <jirka@5z.com>
 
 	* session.c: if the dentry is kde, then try a really simple
