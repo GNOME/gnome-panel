@@ -1189,7 +1189,8 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	cnx_status = ORBit_small_get_connection_status (control);
 	if (cnx_status != ORBIT_CONNECTION_IN_PROC) {
-		ORBitConnection *cnx = ORBit_small_get_connection_ref (control);
+		ORBitConnection *cnx = ORBit_small_get_connection (control);
+
 		if (cnx == NULL) {
 			CORBA_exception_free (&ev);
 			panel_applet_frame_loading_failed (
@@ -1198,16 +1199,15 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 			gtk_object_sink (GTK_OBJECT (widget));
 			return NULL;
 		}
+
 		g_signal_connect_object (
 			cnx,
 			"broken",
 			G_CALLBACK (panel_applet_frame_cnx_broken),
 			frame,
 			G_CONNECT_SWAPPED);
-		ORBit_small_connection_unref (cnx);
 	}
 	
-
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 
 	return widget;
@@ -1224,10 +1224,8 @@ panel_applet_frame_new (PanelWidget *panel,
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	if (!panel_applet_frame_construct (frame, panel, iid, id)) {
-		//gtk_object_sink (GTK_OBJECT (frame));
+	if (!panel_applet_frame_construct (frame, panel, iid, id))
 		return NULL;
-	}
 
 	return GTK_WIDGET (frame);
 }
