@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-12-01 17:22+0100\n"
-"PO-Revision-Date: 2002-12-01 17:25+0100\n"
+"POT-Creation-Date: 2002-12-01 23:39+0100\n"
+"PO-Revision-Date: 2002-12-01 23:41+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,17 +34,17 @@ msgstr "GNOME-fisken %s, ett samtida orakel"
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME-fisken, siaren"
 
-#: applets/fish/fish.c:502 applets/fish/fish.c:1248
+#: applets/fish/fish.c:512 applets/fish/fish.c:1251
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
 
-#: applets/fish/fish.c:503
-#, c-format
-msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "<big><big>GNOME-fisken %s säger:</big></big>"
+#: applets/fish/fish.c:517
+#, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "GNOME-fisken %s säger:"
 
-#: applets/fish/fish.c:596
+#: applets/fish/fish.c:599
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -58,48 +58,48 @@ msgstr ""
 "någonting som skulle göra panelprogrammet \"praktiskt\" eller\n"
 "användbart."
 
-#: applets/fish/fish.c:746
+#: applets/fish/fish.c:749
 msgid "GNOME Fish Preferences"
 msgstr "Inställningar för GNOME-fisken"
 
-#: applets/fish/fish.c:756
+#: applets/fish/fish.c:759
 msgid "_Name of GNOME fish:"
 msgstr "_Namnet på GNOME-fisken:"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid "_Animation filename:"
 msgstr "_Animationsfilnamnet:"
 
-#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
+#: applets/fish/fish.c:778 applets/gen_util/mailcheck.c:1298
 #: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Bläddra"
 
-#: applets/fish/fish.c:791
+#: applets/fish/fish.c:794
 msgid "Command to _execute when fish is clicked:"
 msgstr "Kommando som ska _utföras när man klickar på fisken:"
 
-#: applets/fish/fish.c:808
+#: applets/fish/fish.c:811
 msgid "Frame_s in animation:"
 msgstr "_Bildrutor i animationen:"
 
-#: applets/fish/fish.c:826
+#: applets/fish/fish.c:829
 msgid "Pause _per frame (s):"
 msgstr "Paus _per bildruta (s):"
 
-#: applets/fish/fish.c:841
+#: applets/fish/fish.c:844
 msgid "_Rotate on vertical panels"
 msgstr "_Rotera i vertikala paneler"
 
-#: applets/fish/fish.c:900
+#: applets/fish/fish.c:903
 msgid "Unable to get the name of the command to execute"
 msgstr "Kan inte få tag i namnet på kommandot att köra"
 
-#: applets/fish/fish.c:916
+#: applets/fish/fish.c:919
 msgid "Unable to locate the command to execute"
 msgstr "Kan inte lokalisera kommandot att köra"
 
-#: applets/fish/fish.c:1045
+#: applets/fish/fish.c:1048
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -110,7 +110,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: applets/fish/fish.c:1065
+#: applets/fish/fish.c:1068
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -122,7 +122,7 @@ msgstr ""
 "\n"
 "Ställ in detta i inställningsrutan för GNOME-fiskens egenskaper"
 
-#: applets/fish/fish.c:1080
+#: applets/fish/fish.c:1083
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -130,7 +130,7 @@ msgstr ""
 "Vattnet behöver bytas!\n"
 "(Titta på dagens datum)"
 
-#: applets/fish/fish.c:1249
+#: applets/fish/fish.c:1252
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -143,11 +143,11 @@ msgstr ""
 "panelen. Om någon hittas användande detta panelprogram bör han eller hon "
 "genast skickas på psykiatrisk undersökning."
 
-#: applets/fish/fish.c:1273
+#: applets/fish/fish.c:1276
 msgid "(with minor help from George)"
 msgstr "(med lite hjälp från George)"
 
-#: applets/fish/fish.c:1291
+#: applets/fish/fish.c:1294
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Fisk"
@@ -1050,7 +1050,7 @@ msgstr "Gruppera al_drig fönster"
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
-"Valid values are never, auto, and always."
+"Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Avgör när fönster från samma program ska grupperas i fönsterlistan. Giltiga "
 "värden är \"never\", \"auto\" och \"always\"."
@@ -2710,6 +2710,9 @@ msgstr "Jättestor"
 msgid "XX Small"
 msgstr "Jätteliten"
 
+#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
+#~ msgstr "<big><big>GNOME-fisken %s säger:</big></big>"
+
 #~ msgid "Copyright 2002 Red Hat, Inc."
 #~ msgstr "Copyright 2002 Red Hat, Inc."
 
@@ -4095,9 +4098,6 @@ msgstr "Jätteliten"
 
 #~ msgid "Time Format"
 #~ msgstr "Tidsformat"
-
-#~ msgid "%s the GNOME Fish Says:"
-#~ msgstr "GNOME-fisken %s säger:"
 
 #~ msgid "Clock Properties"
 #~ msgstr "Klockegenskaper"
