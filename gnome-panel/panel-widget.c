@@ -2813,21 +2813,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 		old_panel->applets[i+n].cells = 1;
 	}
 
-	gtk_widget_hide(applet);
-
-	/*reparent applet*/
-	gtk_widget_reparent(applet,new_panel->fixed);
-
-	/*it will get moved to the right position on size_allocate*/
-	if(new_panel->orient == PANEL_HORIZONTAL)
-		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
-			       pos*PANEL_CELL_SIZE,0);
-	else
-		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
-			       0,pos*PANEL_CELL_SIZE);
-
-	gtk_widget_show(applet);
-
 	new_panel->applets[pos].applet = applet;
 	new_panel->applets[pos].cells = 1;
 
@@ -2853,6 +2838,21 @@ panel_widget_reparent (PanelWidget *old_panel,
 	} else {
 		g_warning("No applet structure on repearented applet!");
 	}
+
+	gtk_widget_hide(applet);
+
+	/*reparent applet*/
+	gtk_widget_reparent(applet,new_panel->fixed);
+
+	/*it will get moved to the right position on size_allocate*/
+	if(new_panel->orient == PANEL_HORIZONTAL)
+		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
+			       pos*PANEL_CELL_SIZE,0);
+	else
+		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
+			       0,pos*PANEL_CELL_SIZE);
+
+	gtk_widget_show(applet);
 
 	if(old_panel->snapped==PANEL_DRAWER)
 		panel_widget_pack_applets(old_panel);
