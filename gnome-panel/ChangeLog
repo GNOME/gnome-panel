@@ -1,5 +1,11 @@
 2004-12-16  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-recent.c: (panel_recent_append_documents_menu): use
+	add_menu_separator (). Sometimes the separator disappeared: the widget
+	needs to be shown.
+
+2004-12-16  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-menu-bar.c: (panel_menu_bar_connect_menu_signals): fix memory
 	corruption (the callback data for gtk_widget_destroyed should never be
 	a pointer to a GtkWidget * that is a function parameter!)

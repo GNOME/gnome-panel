@@ -241,8 +241,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	egg_recent_view_gtk_set_tooltip_func (view,
 					      recent_documents_tooltip_func,
 					      NULL);
-	menu_item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
+	add_menu_separator (menu);
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_menu_item_with_icon (menu_item,
