@@ -1,3 +1,16 @@
+2000-05-04  Jacob Berkman  <jacob@helixcode.com>
+
+	* menu.c (load_icons_handler): turn it inside out
+
+	* main.c (main):
+	* gnome-panel-properties.c (main): 
+	* gnome-run.c (show_run_dialog): use the new icon hint stuff
+
+	* menu.c (create_menuitem): set the comment as a tooltip on
+	the menu items
+
+	* menu-fentry.[ch]: save the comment too
+
 Tue May 02 23:17:17 2000  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: use the main tooltips for date tooltip

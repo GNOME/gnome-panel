@@ -29,6 +29,7 @@ enum {
 struct _FileRec {
 	int type;
 	char *name;
+	char *comment;
 	char *fullname;
 	char *icon;
 	char *goad_id;

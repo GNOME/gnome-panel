@@ -120,6 +120,7 @@ fr_free(FileRec *fr, int free_fr)
 	if(!fr) return;
 	g_free(fr->name);
 	g_free(fr->fullname);
+	g_free(fr->comment);
 	g_free(fr->icon);
 	g_free(fr->goad_id);
 	if(fr->parent && free_fr)
@@ -211,6 +212,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->icon = dentry->icon;
 				dentry->icon = NULL;
 				ffr->fullname = dentry->name;
+				ffr->comment  = g_strdup (dentry->comment);
 				dentry->name = NULL;
 				ffr->goad_id =
 					get_applet_goad_id_from_dentry(dentry);
@@ -272,6 +274,8 @@ fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, int sublevels)
 			dentry->icon = NULL;
 			g_free(fr->fullname);
 			fr->fullname = dentry->name;
+			g_free(fr->comment);
+			fr->comment = g_strdup (dentry->comment);
 			dentry->name = NULL;
 			gnome_desktop_entry_free(dentry);
 		} else {
@@ -279,6 +283,8 @@ fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, int sublevels)
 			fr->icon = NULL;
 			g_free(fr->fullname);
 			fr->fullname = NULL;
+			g_free(fr->comment);
+			fr->comment = NULL;
 		}
 		/*if we statted*/
 		if(s.st_mtime)
@@ -361,6 +367,8 @@ fr_check_and_reread(FileRec *fr)
 						ffr->icon = NULL;
 						g_free(ffr->fullname);
 						ffr->fullname = NULL;
+						g_free(ffr->comment);
+						ffr->comment = NULL;
 						ddr->dentrymtime = 0;
 						any_change = TRUE;
 					}
@@ -377,6 +385,8 @@ fr_check_and_reread(FileRec *fr)
 						dentry->icon = NULL;
 						g_free(ffr->fullname);
 						ffr->fullname = dentry->name;
+						g_free(ffr->comment);
+						ffr->comment = g_strdup (dentry->comment);
 						dentry->name = NULL;
 						gnome_desktop_entry_free(dentry);
 					} else {
@@ -384,6 +394,8 @@ fr_check_and_reread(FileRec *fr)
 						ffr->icon = NULL;
 						g_free(ffr->fullname);
 						ffr->fullname = NULL;
+						g_free(ffr->comment);
+						ffr->comment = NULL;
 					}
 					ddr->dentrymtime = s.st_mtime;
 					dr->dentrylast_stat = curtime;
@@ -407,6 +419,8 @@ fr_check_and_reread(FileRec *fr)
 						dentry->icon = NULL;
 						g_free(ffr->fullname);
 						ffr->fullname = dentry->name;
+						g_free(ffr->comment);
+						ffr->comment = g_strdup (dentry->comment);
 						dentry->name = NULL;
 						gnome_desktop_entry_free(dentry);
 					} else {

@@ -59,6 +59,8 @@ extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
 
+extern GtkTooltips *panel_tooltips;
+
 typedef struct _TearoffMenu TearoffMenu;
 struct _TearoffMenu {
 	GtkWidget *menu;
@@ -391,64 +393,67 @@ fake_destroyed(GtkWidget *w, FakeIcon *fake)
 static gboolean
 load_icons_handler(gpointer data)
 {
-	if(icons_to_load) {
-		GtkWidget *parent;
-		GtkWidget *pixmap = NULL;
-		GtkWidget *toplevel;
-		GdkPixbuf *pb, *pb2;
-		GdkPixmap *gp;
-		GdkBitmap *gm;
+	GtkWidget *parent;
+	GtkWidget *pixmap = NULL;
+	GtkWidget *toplevel;
+	GdkPixbuf *pb, *pb2;
+	GdkPixmap *gp;
+	GdkBitmap *gm;
 
-		FakeIcon *fake = icons_to_load->data;
-		icons_to_load = g_slist_remove(icons_to_load, fake);
+	FakeIcon *fake;
 
-		parent = fake->fake->parent;
-
-		/* don't kill the fake now, we'll kill it with the pixmap */
-		gtk_signal_disconnect_by_data(GTK_OBJECT(fake->fake), fake);
-		gtk_widget_destroy(fake->fake);
- 
-		pb = gdk_pixbuf_new_from_file(fake->file);
-		if(!pb) {
-			g_free(fake->file);
-			g_free(fake);
-			return TRUE;
-		}
-
-		pb2 = gdk_pixbuf_new(GDK_COLORSPACE_RGB, gdk_pixbuf_get_has_alpha(pb),
-				     8, fake->size, fake->size);
-
-		scale_down(parent, parent->state, pb2, pb);
-		gdk_pixbuf_unref(pb);
-
-		gdk_pixbuf_render_pixmap_and_mask (pb2, &gp, &gm, 128);
-
-		gdk_pixbuf_unref(pb2);
-
-		pixmap = gtk_pixmap_new(gp, gm);
-		gdk_pixmap_unref(gp);
-
-		if (gm != NULL)   /* Is this right?  Some icons dont seem to have alpha. */
-			gdk_bitmap_unref(gm);
-
-		fake->fake = pixmap;
-		toplevel = gtk_widget_get_toplevel(parent);
-		gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "unmap",
-					       GTK_SIGNAL_FUNC(pixmap_unmap),
-					       fake,
-					       GTK_OBJECT(pixmap));
-		gtk_signal_connect(GTK_OBJECT(pixmap), "destroy",
-				   GTK_SIGNAL_FUNC(fake_destroyed), fake);
-
-		gtk_widget_show(pixmap);
-		gtk_container_add(GTK_CONTAINER(parent), pixmap);
-
-		/* if still more we'll come back */
-		if(icons_to_load)
-			return TRUE;
+	if (!icons_to_load) {
+		load_icons_id = 0;
+		return FALSE;
 	}
-	load_icons_id = 0;
-	return FALSE;
+
+	fake = icons_to_load->data;
+	icons_to_load = g_slist_remove(icons_to_load, fake);
+
+	parent = fake->fake->parent;
+	
+	/* don't kill the fake now, we'll kill it with the pixmap */
+	gtk_signal_disconnect_by_data(GTK_OBJECT(fake->fake), fake);
+
+	gtk_widget_destroy(fake->fake);
+
+	pb = gdk_pixbuf_new_from_file(fake->file);
+	if(!pb) {
+		g_free(fake->file);
+		g_free(fake);
+		return TRUE;
+	}
+	
+	pb2 = gdk_pixbuf_new(GDK_COLORSPACE_RGB, gdk_pixbuf_get_has_alpha(pb),
+			     8, fake->size, fake->size);
+	
+	scale_down(parent, parent->state, pb2, pb);
+	
+	gdk_pixbuf_unref (pb);
+
+	gdk_pixbuf_render_pixmap_and_mask (pb2, &gp, &gm, 128);
+	
+	gdk_pixbuf_unref(pb2);
+	pixmap = gtk_pixmap_new(gp, gm);
+	gdk_pixmap_unref(gp);
+
+	if (gm != NULL)   /* Is this right?  Some icons dont seem to have alpha. */
+		gdk_bitmap_unref(gm);
+	
+	fake->fake = pixmap;
+	toplevel = gtk_widget_get_toplevel(parent);
+	gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "unmap",
+				       GTK_SIGNAL_FUNC(pixmap_unmap),
+				       fake,
+				       GTK_OBJECT(pixmap));
+	gtk_signal_connect(GTK_OBJECT(pixmap), "destroy",
+			   GTK_SIGNAL_FUNC(fake_destroyed), fake);
+	
+	gtk_widget_show(pixmap);
+	gtk_container_add(GTK_CONTAINER(parent), pixmap);
+	
+	/* if still more we'll come back */
+	return TRUE;
 }
 
 static void
@@ -2149,6 +2154,10 @@ create_menuitem(GtkWidget *menu,
 		(*first_item)++;
 		*add_separator = FALSE;
 	}
+	
+	if(fr->comment)
+		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				      fr->comment, NULL);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
 	if(!sub) {

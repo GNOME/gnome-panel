@@ -25,6 +25,7 @@
 #include <config.h>
 #include <gnome.h>
 #include <libgnorba/gnorba.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <gdk/gdkx.h>
 #include "capplet-widget.h"
 #include "global-keys.h"
@@ -1340,7 +1341,7 @@ main (int argc, char **argv)
 	if(gnome_capplet_init("gnome-panel-properties", VERSION, argc,
 			      argv, NULL, 0, NULL) < 0)
 		return 1;
-	
+	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
 	loadup_vals();
 	
 	loaded_config = global_config;

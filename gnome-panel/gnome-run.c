@@ -22,6 +22,7 @@
 
 #include <config.h>
 #include <gnome.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <errno.h>
 
 #include "panel-include.h"
@@ -196,6 +197,8 @@ show_run_dialog ()
 	}
 
 	dialog = gnome_dialog_new(_("Run Program"), NULL);
+	gnome_window_icon_set_from_file (GTK_WINDOW (dialog),
+					 GNOME_ICONDIR"/gnome-run.png");
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			   &dialog);

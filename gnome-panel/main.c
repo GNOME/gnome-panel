@@ -13,6 +13,7 @@
 #include <sys/wait.h>
 #include <gnome.h>
 #include <libgnorba/gnorba.h>
+#include <libgnomeui/gnome-window-icon.h>
 
 #include "panel-include.h"
 
@@ -166,6 +167,7 @@ main(int argc, char **argv)
 			       &argc, argv,
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
+	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
 	setup_visuals ();
 
 	switch (panel_corba_gtk_init (orb)) {
