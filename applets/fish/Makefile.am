@@ -37,7 +37,7 @@ glade_DATA = fish.glade
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)
 
-pixmapdir = $(datadir)/pixmaps
+pixmapdir = $(datadir)/icons/hicolor/48x48/apps
 pixmap_DATA = gnome-fish.png
 
 uidir		= $(datadir)/gnome-2.0/ui
