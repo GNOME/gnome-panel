@@ -326,18 +326,18 @@ applet_servant_destroy(CustomAppletServant *servant)
   CORBA_exception_free(&ev);
 }
 
-static int
+static void
 applet_widget_destroy(GtkWidget *w, gpointer data)
 {
   AppletWidget *applet;
   CORBA_Environment ev;
 
-  g_return_val_if_fail(w != NULL,FALSE);
-  g_return_val_if_fail(IS_APPLET_WIDGET(w),FALSE);
+  g_return_if_fail(w != NULL);
+  g_return_if_fail(IS_APPLET_WIDGET(w));
 
   applet = APPLET_WIDGET(w);
   if(!applet->privcfgpath)
-    return FALSE;
+    return;
 
   g_free(applet->privcfgpath);
   g_free(applet->globcfgpath);
@@ -356,8 +356,6 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
   if(die_on_last && applet_count == 0)
     applet_widget_gtk_main_quit();
-
-  return FALSE;
 }
 
 void
@@ -786,6 +784,9 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
 	g_return_if_fail(widget != NULL);
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
+	if(!applet_tooltips)
+		applet_tooltips = gtk_tooltips_new();
+
 	gtk_tooltips_set_tip (applet_tooltips,widget,text,NULL);
 }
 
@@ -839,8 +840,6 @@ applet_widget_init(const char *app_id,
 					       GNORBA_INIT_SERVER_FUNC, &ev);
 
 	CORBA_exception_free(&ev);
-
-	applet_tooltips = gtk_tooltips_new();
 
 	return ret;
 }
@@ -966,6 +965,9 @@ server_applet_set_tooltips_state(CustomAppletServant *servant,
 				 CORBA_boolean enabled,
 				 CORBA_Environment *ev)
 {
+	if(!applet_tooltips)
+		applet_tooltips = gtk_tooltips_new();
+
 	if(enabled)
 		gtk_tooltips_enable(applet_tooltips);
 	else

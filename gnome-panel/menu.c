@@ -343,12 +343,11 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	gnome_desktop_entry_free(dentry);
 }
 
-static int
+static void
 destroy_dedit(GtkObject *dedit,gpointer data)
 {
 	char *s = gtk_object_get_data(dedit,"location");
 	g_free(s);
-	return FALSE;
 }
 
 static void
@@ -934,7 +933,7 @@ destroy_mf(MenuFinfo *mf)
 }
 
 
-static int
+static void
 menu_destroy(GtkWidget *menu, gpointer data)
 {
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menu),"mf");
@@ -945,7 +944,6 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	}
 	g_slist_free(mfl);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
-	return FALSE;
 }
 
 static void add_menu_widget (Menu *menu, GSList *menudirl,
@@ -2675,13 +2673,12 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	}
 }
 
-static int
+static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
 	gtk_object_set_data(GTK_OBJECT(menu->button),
 			    MENU_PROPERTIES,NULL);
-	return FALSE;
 }
 
 static void

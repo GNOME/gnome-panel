@@ -369,12 +369,12 @@ applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
 	return TRUE;
 }
 
-static int
+static void
 applet_destroy(GtkWidget *w, AppletInfo *info)
 {
 	AppletType type;
 	
-	g_return_val_if_fail(info != NULL,FALSE);
+	g_return_if_fail(info != NULL);
 
 	info->widget = NULL;
 
@@ -410,8 +410,6 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		g_free(umenu);
 		info->user_menu = my_g_list_pop_first(info->user_menu);
 	}
-
-	return FALSE;
 }
 
 int
@@ -495,8 +493,7 @@ register_toy(GtkWidget *applet,
 				   GTK_SIGNAL_FUNC(applet_button_press),
 				   info);
 
-	gtk_signal_connect(GTK_OBJECT(applet),
-			   "destroy",
+	gtk_signal_connect(GTK_OBJECT(applet), "destroy",
 			   GTK_SIGNAL_FUNC(applet_destroy),
 			   info);
 

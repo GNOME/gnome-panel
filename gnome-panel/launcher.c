@@ -38,7 +38,7 @@ launch (GtkWidget *widget, void *data)
 	gnome_desktop_entry_launch (item);
 }
 
-static int
+static void
 destroy_launcher(GtkWidget *widget, gpointer data)
 {
 	Launcher *launcher = data;
@@ -48,7 +48,6 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 		gtk_widget_destroy(prop_dialog);
 	gnome_desktop_entry_free(launcher->dentry);
 	g_free(launcher);
-	return FALSE;
 }
 
 
@@ -185,14 +184,13 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	}
 }
 
-static int
+static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Launcher *launcher = data;
 	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,NULL);
 	launcher->dedit = NULL;
-	return FALSE;
 }
 
 static GtkWidget *

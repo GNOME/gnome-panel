@@ -232,7 +232,7 @@ button_widget_unmap (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
-static int
+static void
 button_widget_destroy(GtkWidget *w, gpointer data)
 {
 	ButtonWidget *button = BUTTON_WIDGET(w);
@@ -245,8 +245,6 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 	button->mask = NULL;
 
 	buttons = g_list_remove(buttons,button);
-
-	return FALSE;
 }
 
 static void

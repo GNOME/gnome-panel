@@ -610,13 +610,12 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 	return TRUE;
 }
 
-static int
+static void
 panel_really_logout_destroy(GtkWidget *w, gpointer data)
 {
 	GtkWidget **box=data;
 	if(box)
 		*box = NULL;
-	return FALSE;
 }
 
 

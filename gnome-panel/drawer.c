@@ -75,13 +75,12 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			      drawer->tooltip,NULL);
 }
 
-static int
+static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
 	gtk_object_set_data(GTK_OBJECT(drawer->button),
 			    DRAWER_PROPERTIES,NULL);
-	return FALSE;
 }
 
 static void
@@ -201,7 +200,7 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	}
 }
 
-static int
+static void
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
@@ -210,7 +209,6 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
 	g_free(drawer);
-	return FALSE;
 }
 
 static int

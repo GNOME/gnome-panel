@@ -680,7 +680,7 @@ panel_move_timeout(gpointer data)
 	return FALSE;
 }
 
-static int
+static void
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
@@ -707,8 +707,6 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
-	
-	return FALSE;
 }
 
 static void

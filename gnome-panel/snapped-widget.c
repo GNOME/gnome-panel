@@ -759,12 +759,6 @@ snapped_widget_show_hidebutton_pixmaps(SnappedWidget *snapped)
 	show_hidebutton_pixmap(snapped->hidebutton_s, show);
 }
 
-static int
-snapped_widget_destroy(GtkWidget *w, gpointer data)
-{
-	return FALSE;
-}
-
 static void
 snapped_widget_init (SnappedWidget *snapped)
 {
@@ -826,10 +820,6 @@ snapped_widget_init (SnappedWidget *snapped)
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(snapped), "leave_notify_event",
 			   GTK_SIGNAL_FUNC(snapped_leave_notify),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(snapped),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(snapped_widget_destroy),
 			   NULL);
 	snapped->pos = SNAPPED_BOTTOM;
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;

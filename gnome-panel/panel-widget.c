@@ -1268,13 +1268,13 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 	panel_widget_draw_all(panel);
 }
 
-static int
+static void
 panel_widget_destroy(GtkWidget *w, gpointer data)
 {
 	GdkImlibImage *im;
 
-	g_return_val_if_fail(w!=NULL,FALSE);
-	g_return_val_if_fail(IS_PANEL_WIDGET(w),FALSE);
+	g_return_if_fail(w!=NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(w));
 
 	im = gtk_object_get_data(GTK_OBJECT(w),"gdk_image");
 	if(im) gdk_imlib_destroy_image (im);
@@ -1282,8 +1282,6 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
-	
-	return FALSE;
 }
 
 static int panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data);
@@ -1890,13 +1888,14 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, data);
 }
-static int
+
+static void
 panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 {
 	AppletData *ad;
 
-	g_return_val_if_fail(applet!=NULL,FALSE);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet),FALSE);
+	g_return_if_fail(applet!=NULL);
+	g_return_if_fail(GTK_IS_WIDGET(applet));
 
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 
@@ -1913,7 +1912,6 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 	}
 
 	g_free(ad);
-	return FALSE;
 }
 
 

@@ -215,13 +215,12 @@ extern_clean(Extern *ext)
 
 
 
-static int
+static void
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
 	Extern *ext = data;
 	gtk_widget_destroy(ext->ebox);
 	extern_clean(ext);
-	return FALSE;
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING

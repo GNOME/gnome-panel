@@ -31,11 +31,10 @@ static GtkWidget *entry_down[LAST_TILE];
 
 static GtkWidget *config_window;
 
-static int
+static void
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	config_window = NULL;
-	return FALSE;
 }
 
 static void 
@@ -540,8 +539,6 @@ panel_config_global(void)
 	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 	gtk_signal_connect(GTK_OBJECT(box), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
-	gtk_signal_connect (GTK_OBJECT (box), "delete_event",
-			    GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_window_set_title (GTK_WINDOW(box),
 			      _("Global panel configuration"));
 	gtk_container_set_border_width (GTK_CONTAINER(box), CONFIG_PADDING_SIZE);
