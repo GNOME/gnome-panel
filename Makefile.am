@@ -4,6 +4,7 @@ SUBDIRS =			\
 	gnome-panel		\
 	libpanel-applet		\
 	applets			\
+	help			\
 	doc			\
 	man
 

@@ -1,5 +1,3 @@
-SUBDIRS = help
-
 INCLUDES = 						\
 	-I$(srcdir)/../../libpanel-applet 		\
 	-I$(top_builddir)/libpanel-applet 		\

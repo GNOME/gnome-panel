@@ -8,8 +8,6 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(FISH_CFLAGS)
 
-SUBDIRS = help
-
 libexec_PROGRAMS = fish-applet-2
 
 EGGFILES =                      \
