@@ -298,7 +298,7 @@ FIXME: We need to change some of the ints into user visible strings
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
-        <default>[00000001,00000002,00000003,00000004]</default>
+        <default>[00000001,00000002,00000003,00000004,show_desktop_button]</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -428,7 +428,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_type</key>
         <owner>panel</owner>
         <type>string</type>
-        <default>no-background</default>
+        <default>color-background</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -483,7 +483,18 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_color</key>
         <owner>panel</owner>
         <type>string</type>
-        <default>#000000</default>
+        <default>#ffffff</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/panels/00000001/panel_background_color_alpha</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -609,6 +620,62 @@ FIXME: We need to change some of the ints into user visible strings
       <!-- Applets -->
 
       <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>bonobo-applet</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/bonobo_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:GNOME_ShowDesktopApplet</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/show_desktop_button/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+
+      <schema>
         <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/object_type</key>
         <owner>panel</owner>
         <type>string</type>
@@ -634,7 +701,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/applets/00000001/position</key>
         <owner>panel</owner>
         <type>int</type>
-        <default>0</default>
+        <default>1</default>
         <locale name="C">
           <short></short>
           <long></long>
