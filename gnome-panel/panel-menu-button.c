@@ -83,7 +83,7 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 
 	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
 
-	/* FIXME: set a tooltip */
+	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button), _("Main Menu"), NULL);
 }
 
 static void
