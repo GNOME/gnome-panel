@@ -77,6 +77,11 @@ static const char* KEY_GMT_TIME      = "gmt_time";
 static const char* KEY_CONFIG_TOOL   = "config_tool";
 static const char* KEY_CUSTOM_FORMAT = "custom_format";
 
+static const char *clock_config_tools [] = {
+	"redhat-config-date",
+	"time-admin",
+};
+
 typedef enum {
 	CLOCK_FORMAT_12,
 	CLOCK_FORMAT_24,
@@ -1616,19 +1621,17 @@ config_date (BonoboUIComponent *uic,
 {
 	GtkWidget *dialog;
 	GdkScreen *screen;
+	int i;
 
 	screen = gtk_widget_get_screen (cd->applet);
 
-	/* FIXME add other time config tools. */
-	if (cd->config_tool && cd->config_tool[0]
-	    && try_config_tool (screen, cd->config_tool))
+	if (cd->config_tool && cd->config_tool[0] &&
+            try_config_tool (screen, cd->config_tool))
 		return;
-
-	else if (try_config_tool (screen, "redhat-config-date"))
-		return;
-		
-	else if (try_config_tool (screen, "time-admin"))
-		return;
+	
+	for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
+		if (try_config_tool (screen, clock_config_tools [i]))
+			return;
 		
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1869,10 +1872,12 @@ clock_migrate_to_26 (ClockData *clock)
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
-	ClockData *cd;
-	GError    *error;
-	char      *format_str;
-	int        format_int;
+	ClockData         *cd;
+	BonoboUIComponent *popup_component;
+	GError            *error;
+	char              *format_str;
+	int                format_int;
+	char              *config_tool;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
@@ -1958,11 +1963,9 @@ fill_clock_applet (PanelApplet *applet)
 					   clock_menu_verbs,
 					   cd);
 
+	popup_component = panel_applet_get_popup_component (PANEL_APPLET (cd->applet));
+
 	if (panel_applet_get_locked_down (PANEL_APPLET (cd->applet))) {
-		BonoboUIComponent *popup_component;
-
-		popup_component = panel_applet_get_popup_component (PANEL_APPLET (cd->applet));
-
 		bonobo_ui_component_set_prop (popup_component,
 					      "/commands/ClockPreferences",
 					      "hidden", "1",
@@ -1972,6 +1975,26 @@ fill_clock_applet (PanelApplet *applet)
 					      "hidden", "1",
 					      NULL);
 	}
+
+        config_tool = NULL;
+	if (cd->config_tool && cd->config_tool [0])
+		config_tool = g_find_program_in_path (cd->config_tool);
+
+        if (!config_tool) {
+                int i;
+
+                for (i = 0; i < G_N_ELEMENTS (clock_config_tools); i++)
+                        if ((config_tool = g_find_program_in_path (clock_config_tools [i])))
+                                break;
+        }
+
+	if (!config_tool)
+		bonobo_ui_component_set_prop (popup_component,
+					      "/commands/ClockConfig",
+					      "hidden", "1",
+					      NULL);
+        
+        g_free (config_tool);
 	
 	return TRUE;
 }
