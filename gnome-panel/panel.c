@@ -316,29 +316,30 @@ panel_session_save (GnomeClient *client,
 	return TRUE;
 }
 
-/*static  int
-do_exit(gpointer data)
-{
-	gtk_exit(0);
-	return FALSE;
-}*/
-
 int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
+	AppletInfo *info;
+	int i;
+
 	gtk_timeout_remove(config_sync_timeout);
   
 	/*don't catch these any more*/
 	signal(SIGCHLD, SIG_DFL);
 	
+	for(i=0,info=(AppletInfo *)applets->data;
+	    i<applet_count;
+	    i++,info++) {
+		if(info->type == APPLET_EXTERN)
+			gtk_container_remove(GTK_CONTAINER(info->widget),
+					     info->applet_widget);
+	}
+			
+	
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
-	/*FIXME: MICO BUG!!!!! the mico main will go on forever!!!!
-	  this is a problem, so we'll do gtk_exit in an idle handler*/
-	/*gtk_main_quit ();*/
-	/*gtk_idle_add(do_exit,NULL);*/
 	panel_corba_gtk_main_quit();
 	return TRUE;
 }
