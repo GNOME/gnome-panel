@@ -18,7 +18,11 @@ endif
 endif
 
 if HAVE_LIBGTOP
+if FALSE
 libgtop_SUBDIRS = cpumemusage diskusage multiload netload
+else
+libgtop_SUBDIRS = cpumemusage diskusage multiload
+endif
 else
 libgtop_SUBDIRS =
 endif
