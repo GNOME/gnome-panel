@@ -1062,6 +1062,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 						     "pixbuf", COLUMN_ICON,
 						     NULL);
 	renderer = gtk_cell_renderer_text_new ();
+	g_object_set (renderer, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
 	gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (dialog->tree_view),
 						     -1, NULL,
 						     renderer,
