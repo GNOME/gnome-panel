@@ -682,10 +682,36 @@ make_hidebutton(SnappedWidget *snapped,
 	gtk_widget_show(pixmap);
 
 	gtk_container_add(GTK_CONTAINER(w),pixmap);
+	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
 	gtk_signal_connect(GTK_OBJECT(w), "clicked",
 			   GTK_SIGNAL_FUNC(hidefunc),
 			   snapped);
 	return w;
+}
+
+static void
+show_hidebutton_pixmap(GtkWidget *hidebutton, int show)
+{
+	GtkWidget *pixmap;
+
+	pixmap = gtk_object_get_user_data(GTK_OBJECT(hidebutton));
+
+	if (!pixmap) return;
+
+	if (show)
+		gtk_widget_show(pixmap);
+	else
+		gtk_widget_hide(pixmap);
+}
+
+static void
+snapped_widget_show_hidebutton_pixmaps(SnappedWidget *snapped)
+{
+	int show = snapped->hidebutton_pixmaps_enabled;
+	show_hidebutton_pixmap(snapped->hidebutton_n, show);
+	show_hidebutton_pixmap(snapped->hidebutton_e, show);
+	show_hidebutton_pixmap(snapped->hidebutton_w, show);
+	show_hidebutton_pixmap(snapped->hidebutton_s, show);
 }
 
 static int
@@ -760,6 +786,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;
 	snapped->state = SNAPPED_SHOWN;
 	snapped->hidebuttons_enabled = TRUE;
+	snapped->hidebutton_pixmaps_enabled = TRUE;
 
 	snapped->leave_notify_timer_tag = 0;
 	snapped->autohide_inhibit = FALSE;
@@ -771,6 +798,7 @@ snapped_widget_new (SnappedPos pos,
 		    SnappedMode mode,
 		    SnappedState state,
 		    int hidebuttons_enabled,
+		    int hidebutton_pixmaps_enabled,
 		    PanelBackType back_type,
 		    char *back_pixmap,
 		    int fit_pixmap_bg,
@@ -814,6 +842,7 @@ snapped_widget_new (SnappedPos pos,
 	snapped->pos = pos;
 	snapped->mode = mode;
 	snapped->hidebuttons_enabled = hidebuttons_enabled;
+	snapped->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 	if(state != SNAPPED_MOVING)
 		snapped->state = state;
 
@@ -825,6 +854,7 @@ snapped_widget_new (SnappedPos pos,
 		snapped->state = SNAPPED_SHOWN;
 
 	snapped_widget_set_hidebuttons(snapped);
+/* */	snapped_widget_show_hidebutton_pixmaps(snapped);
 	snapped_widget_set_initial_pos(snapped);
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE)
@@ -839,6 +869,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 			     SnappedMode mode,
 			     SnappedState state,
 			     int hidebuttons_enabled,
+			     int hidebutton_pixmaps_enabled,
 			     PanelBackType back_type,
 			     char *pixmap_name,
 			     int fit_pixmap_bg,
@@ -858,6 +889,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	snapped->state = state;
 	snapped->mode = mode;
 	snapped->hidebuttons_enabled = hidebuttons_enabled;
+	snapped->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
 	if(snapped->pos == SNAPPED_TOP ||
 	   snapped->pos == SNAPPED_BOTTOM)
@@ -883,6 +915,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 				   back_color);
 
 	snapped_widget_set_hidebuttons(snapped);
+/* */	snapped_widget_show_hidebutton_pixmaps(snapped);
 	gtk_widget_queue_resize(GTK_WIDGET(snapped));
 
 	if(snapped->mode == SNAPPED_EXPLICIT_HIDE &&
@@ -913,6 +946,7 @@ snapped_widget_change_pos(SnappedWidget *snapped,
 				     snapped->mode,
 				     snapped->state,
 				     snapped->hidebuttons_enabled,
+				     snapped->hidebutton_pixmaps_enabled,
 				     panel->back_type,
 				     panel->back_pixmap,
 				     panel->fit_pixmap_bg,

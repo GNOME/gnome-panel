@@ -302,6 +302,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("state", snapped->state);
 		gnome_config_set_bool("hidebuttons_enabled",
 				      snapped->hidebuttons_enabled);
+		gnome_config_set_bool("hidebutton_pixmaps_enabled",
+				      snapped->hidebutton_pixmaps_enabled);
 		break;
 		}
 	case CORNER_PANEL:
@@ -721,6 +723,7 @@ init_user_panels(void)
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
 					   TRUE,
+					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
 					   TRUE,
@@ -771,6 +774,7 @@ init_user_panels(void)
 				SnappedMode mode;
 				SnappedState state;
 				int hidebuttons_enabled;
+				int hidebutton_pixmaps_enabled;
 
 				g_snprintf(buf,256,"pos=%d", SNAPPED_BOTTOM);
 				pos=gnome_config_get_int(buf);
@@ -783,11 +787,14 @@ init_user_panels(void)
 
 				hidebuttons_enabled =
 					gnome_config_get_bool("hidebuttons_enabled=TRUE");
+				hidebutton_pixmaps_enabled =
+					gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
 
 				panel = snapped_widget_new(pos,
 							   mode,
 							   state,
 							   hidebuttons_enabled,
+							   hidebutton_pixmaps_enabled,
 							   back_type,
 							   back_pixmap,
 							   fit_pixmap_bg,

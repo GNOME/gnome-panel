@@ -26,6 +26,7 @@ struct _PerPanelConfig {
 	SnappedPos		snapped_pos;
 	SnappedMode		snapped_mode;
 	int			snapped_hidebuttons;
+	int			snapped_hidebutton_pixmaps;
 	
 	/*corner types*/
 	CornerPos		corner_pos;
@@ -182,6 +183,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					     ppc->snapped_mode,
 					     SNAPPED_WIDGET(ppc->panel)->state,
 					     ppc->snapped_hidebuttons,
+					     ppc->snapped_hidebutton_pixmaps,
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
@@ -270,6 +272,16 @@ snapped_set_hidebuttons (GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	ppc->snapped_hidebuttons = !(GTK_TOGGLE_BUTTON(widget)->active);
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+snapped_set_hidebutton_pixmaps (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	ppc->snapped_hidebutton_pixmaps = !(GTK_TOGGLE_BUTTON(widget)->active);
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
@@ -418,6 +430,16 @@ snapped_notebook_page(PerPanelConfig *ppc)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_hidebuttons), NULL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Auto-hide */
+	button = gtk_check_button_new_with_label (_("Disable hidebutton arrows"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->snapped_hidebutton_pixmaps)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (snapped_set_hidebutton_pixmaps), NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -807,6 +829,7 @@ panel_config(GtkWidget *panel)
 		ppc->snapped_pos = snapped->pos;
 		ppc->snapped_mode = snapped->mode;
 		ppc->snapped_hidebuttons = snapped->hidebuttons_enabled;
+		ppc->snapped_hidebutton_pixmaps = snapped->hidebutton_pixmaps_enabled;
 		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
 		ppc->back_pixmap = g_strdup(pw->back_pixmap);
 		ppc->back_color = pw->back_color;

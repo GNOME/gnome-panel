@@ -1263,6 +1263,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
 					   TRUE,
+					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
 					   TRUE,
