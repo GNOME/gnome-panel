@@ -35,8 +35,6 @@
 
 GList *check_swallows = NULL;
 
-extern GSList *applets_last;
-
 static void socket_destroyed (GtkWidget *w, gpointer data);
 static void socket_realized (GtkWidget *w, gpointer data);
 
@@ -422,7 +420,7 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 	if (swallow == NULL)
 		return;
 
-	info = panel_register_applet (swallow->ebox, ref_swallow (swallow),
+	info = panel_applet_register (swallow->ebox, ref_swallow (swallow),
 				      (GDestroyNotify) unref_swallow,
 				      panel, pos, exactpos, APPLET_SWALLOW);
 	if (!info)
@@ -430,9 +428,7 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 
 	swallow->clean_remove = FALSE;
 
-	applet_add_callback (applets_last->data, "help",
-			     GTK_STOCK_HELP,
-			     _("Help"));
+	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 
 	swallow_launch (swallow);
 }

@@ -64,7 +64,7 @@ struct _AppletInfo {
 	GDestroyNotify data_destroy;
 };
 
-AppletInfo *panel_register_applet (GtkWidget      *applet,
+AppletInfo *panel_applet_register (GtkWidget      *applet,
 				   gpointer        data,
 				   GDestroyNotify  data_destroy,
 				   PanelWidget    *panel,

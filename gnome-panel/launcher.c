@@ -40,7 +40,6 @@ static void properties_apply (Launcher *launcher);
 extern GtkTooltips *panel_tooltips;
 
 extern GSList *applets;
-extern GSList *applets_last;
 
 static char *default_app_pixmap = NULL;
 
@@ -644,16 +643,16 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 			   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Launcher   *launcher;
-	AppletInfo *info;
 
 	launcher = create_launcher (params, ditem);
 
 	if (launcher == NULL)
 		return NULL;
 
-	info = panel_register_applet (launcher->button, launcher ,free_launcher,
-				      panel, pos, exactpos, APPLET_LAUNCHER);
-	if (!info) {
+	launcher->info = panel_applet_register (launcher->button, launcher,
+						free_launcher, panel, pos, 
+						exactpos, APPLET_LAUNCHER);
+	if (!launcher->info) {
 		/* 
 		 * Don't free launcher here, the button has 
 		 * been destroyed above and the launcher 
@@ -662,15 +661,13 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 		return NULL;
 	}
 
-	launcher->info = applets_last->data;
-
-	if ( ! commie_mode)
-		applet_add_callback (applets_last->data,"properties",
+	if (!commie_mode)
+		applet_add_callback (launcher->info,
+				     "properties",
 				     GTK_STOCK_PROPERTIES,
 				     _("Properties..."));
-	applet_add_callback (applets_last->data, "help",
-			     GTK_STOCK_HELP,
-			     _("Help"));
+
+	applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
 
 	/* setup button according to ditem */
 	setup_button (launcher);

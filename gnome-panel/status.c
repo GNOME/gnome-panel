@@ -32,10 +32,6 @@ static int nspots = 0;
 gboolean status_inhibit = FALSE; /*inhibit adding and updating for the purpose
 				   of quitting*/
 
-extern GSList *applets_last;
-
-extern PortableServer_POA thepoa;
-
 #define DOCKLET_SPOT 22
 
 #define MINIMUM_WIDTH 10
@@ -373,14 +369,12 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_widget_show(ebox);
 	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
-	info = panel_register_applet (ebox, the_status, free_status, panel,
-				      pos, exactpos, APPLET_STATUS);
+	the_status->info = panel_applet_register (ebox, the_status, free_status, panel,
+						  pos, exactpos, APPLET_STATUS);
 	if (!info)
 		return TRUE;
 
-	the_status->info = applets_last->data;
-	applet_add_callback(applets_last->data, "help",
-			    GTK_STOCK_HELP,
-			    _("Help"));
+	applet_add_callback (the_status->info, "help", GTK_STOCK_HELP, _("Help"));
+
 	return TRUE;
 }

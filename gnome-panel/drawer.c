@@ -28,7 +28,6 @@
 #include "session.h"
 #include "xstuff.h"
 
-extern GSList *applets_last;
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
@@ -418,12 +417,13 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 	gtk_object_set_data(GTK_OBJECT(widget),"allocated",GINT_TO_POINTER(1));
 }
 
-gboolean
+Drawer *
 load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		    PanelWidget *panel, int pos, gboolean exactpos)
 {
-	Drawer *drawer;
-	PanelOrientType orient = get_applet_orient (panel);
+	Drawer          *drawer;
+	PanelOrientType  orient = get_applet_orient (panel);
+	AppletInfo      *info;
 
 	if (mypanel_id < 0) {
 		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
@@ -454,14 +454,13 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		}
 	}
 
-	if(!drawer)
-		return FALSE;
+	if (!drawer)
+		return NULL;
 
 	{
 		GtkWidget  *dw = drawer->drawer;
-		AppletInfo *info;
 
-		info = panel_register_applet (drawer->button,
+		info = panel_applet_register (drawer->button,
 					      drawer,
 					      (GDestroyNotify) g_free,
 					      panel,
@@ -471,7 +470,7 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 
 		if (!info) {
 			gtk_widget_destroy (dw);
-			return FALSE;
+			return NULL;
 		}
 	}
 
@@ -494,15 +493,14 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 			      drawer->tooltip,NULL);
 	drawer_setup (drawer);
 
-	g_assert (applets_last != NULL);
+	if (!commie_mode)
+		applet_add_callback (info,
+				     "properties",
+				     GTK_STOCK_PROPERTIES,
+				     _("Properties..."));
 
-	if ( ! commie_mode)
-		applet_add_callback(applets_last->data,"properties",
-				    GTK_STOCK_PROPERTIES,
-				    _("Properties..."));
-	applet_add_callback(applets_last->data, "help",
-			    GTK_STOCK_HELP,
-			    _("Help"));
-	return TRUE;
+	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+
+	return drawer;
 }
 

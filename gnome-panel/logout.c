@@ -17,8 +17,6 @@
 #include "extern.h"
 #include "session.h"
 
-extern GSList *applets_last;
-
 extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
@@ -120,14 +118,12 @@ load_logout_applet (PanelWidget *panel,
 	if (!logout)
 		return;
 
-	info = panel_register_applet (logout, NULL, NULL, panel,
+	info = panel_applet_register (logout, NULL, NULL, panel,
 				      pos, exactpos, APPLET_LOGOUT);
 	if (!info)
 		return;
 
-	applet_add_callback(applets_last->data, "help",
-			    GTK_STOCK_HELP,
-			    _("Help"));
+	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }
 
 static GtkWidget *
@@ -187,7 +183,7 @@ load_lock_applet (PanelWidget *panel,
 	if (!lock)
 		return;
 
-	info = panel_register_applet (lock, NULL, NULL, panel, pos,
+	info = panel_applet_register (lock, NULL, NULL, panel, pos,
 				      exactpos, APPLET_LOCK);
 	if (!info)
 		return;
@@ -204,20 +200,13 @@ load_lock_applet (PanelWidget *panel,
 	  <jwz> and "xscreensaver-demo"
 	*/
 
-	applet_add_callback(applets_last->data, "activate",
-			    NULL, _("Blank Screen Now"));
-	applet_add_callback(applets_last->data, "lock",
-			    NULL, _("Lock Screen Now"));
-	applet_add_callback(applets_last->data, "exit",
-			    NULL, _("Kill Daemon"));
-	applet_add_callback(applets_last->data, "restart",
-			    NULL, _("Restart Daemon"));
-	if ( ! commie_mode)
-		applet_add_callback(applets_last->data, "prefs",
-				    NULL, _("Preferences"));
-	applet_add_callback(applets_last->data, "help",
-			    GTK_STOCK_HELP,
-			    _("Help"));
+	applet_add_callback (info, "activate", NULL, _("Blank Screen Now"));
+	applet_add_callback (info, "lock", NULL, _("Lock Screen Now"));
+	applet_add_callback (info, "exit", NULL, _("Kill Daemon"));
+	applet_add_callback (info, "restart", NULL, _("Restart Daemon"));
+
+	if (!commie_mode)
+		applet_add_callback (info, "prefs", NULL, _("Preferences"));
+
+	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }
-
-

@@ -34,7 +34,7 @@ panel_bonobo_applet_load (const gchar *iid,
 
 	widget = panel_bonobo_applet_widget (iid);
 
-	info = panel_register_applet (widget, 
+	info = panel_applet_register (widget, 
 				      NULL,     /* FIXME: data */
 				      NULL,     /* FIXME: data_destroy */
 				      panel,

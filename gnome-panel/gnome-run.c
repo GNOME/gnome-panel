@@ -48,7 +48,6 @@
 
 #define ADVANCED_DIALOG_KEY "advanced_run_dialog"
 
-extern GSList *applets_last;
 extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
 
@@ -1314,13 +1313,10 @@ load_run_applet (PanelWidget *panel,
 	if (!run)
 		return;
 
-	info = panel_register_applet (run, NULL, NULL, panel,
+	info = panel_applet_register (run, NULL, NULL, panel,
 				      pos, exactpos, APPLET_RUN);
 	if (!info)
 		return;
 
-	applet_add_callback (applets_last->data,
-			     "help",
-			     GTK_STOCK_HELP,
-			     _("Help"));
+	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }

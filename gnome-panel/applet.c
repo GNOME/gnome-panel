@@ -31,7 +31,6 @@
 extern GSList *panels;
 
 GSList *applets = NULL;
-GSList *applets_last = NULL;
 int applet_count = 0;
 
 /*config sync stuff*/
@@ -743,7 +742,7 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 }
 
 AppletInfo *
-panel_register_applet (GtkWidget      *applet,
+panel_applet_register (GtkWidget      *applet,
 		       gpointer        data,
 		       GDestroyNotify  data_destroy,
 		       PanelWidget    *panel,
@@ -788,12 +787,8 @@ panel_register_applet (GtkWidget      *applet,
 	gtk_object_set_data (GTK_OBJECT (applet),
 			     PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 		
-	if (applets == NULL) {
-		applets_last = applets = g_slist_append (NULL, info);
-	} else {
-		applets_last = g_slist_append (applets_last, info);
-		applets_last = applets_last->next;
-	}
+	applets = g_slist_append (applets, info);
+
 	applet_count++;
 
 	/*we will need to save this applet's config now*/

@@ -70,7 +70,6 @@ typedef enum {
 static char *gnome_folder = NULL;
 
 extern GSList *applets;
-extern GSList *applets_last;
 
 /*list of all toplevel panel widgets (basep) created*/
 extern GSList *panel_list;
@@ -1112,7 +1111,6 @@ static void
 add_drawers_from_dir (const char *dirname, const char *name,
 		      int pos, PanelWidget *panel)
 {
-	AppletInfo *info;
 	Drawer *drawer;
 	PanelWidget *newpanel;
 	GnomeDesktopItem *item_info;
@@ -1141,21 +1139,12 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		subdir_name = name;
 	pixmap_name = item_info?gnome_desktop_item_get_icon (item_info):NULL;
 
-	if( ! load_drawer_applet (-1, pixmap_name, subdir_name,
-				  panel, pos, FALSE) ||
-	    applets_last == NULL) {
+	drawer = load_drawer_applet (-1, pixmap_name, subdir_name, panel, pos, FALSE);
+	if (!drawer) {
 		g_warning("Can't load a drawer");
 		return;
 	}
-	info = applets_last->data;
-	g_assert(info!=NULL);
-	if(info->type != APPLET_DRAWER) {
-		g_warning("Something weird happened and we didn't get a drawer");
-		return;
-	}
-	
-	drawer = info->data;
-	g_assert(drawer);
+
 	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 
 	mergedir = fr_get_mergedir(dirname);
@@ -5954,27 +5943,28 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 		AppletInfo *info;
 		gchar      *tmp;
 
-		info = panel_register_applet (menu->button, menu, free_menu, panel, 
+		info = panel_applet_register (menu->button, menu, free_menu, panel, 
 					      pos, exactpos, APPLET_MENU);
 		if (!info)
 			return;
 
-		menu->info = applets_last->data;
+		menu->info = info;
 
-		if ( ! commie_mode) {
-			applet_add_callback(menu->info, "properties",
-					    GTK_STOCK_PROPERTIES,
-					    _("Properties..."));
+		if (!commie_mode) {
+			applet_add_callback (info, 
+					     "properties",
+					     GTK_STOCK_PROPERTIES,
+					     _("Properties..."));
+
 			if(params && strcmp(params, ".")==0 &&
 			   (tmp = gnome_is_program_in_path("gmenu")))  {
 				g_free(tmp);
-				applet_add_callback(menu->info, "edit_menus",
-						    NULL, _("Edit menus..."));
+				applet_add_callback (info, "edit_menus",
+						     NULL, _("Edit menus..."));
 			}
 		}
-		applet_add_callback(applets_last->data, "help",
-				    GTK_STOCK_HELP,
-				    _("Help"));
+
+		applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 	}
 }
 

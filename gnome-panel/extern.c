@@ -88,7 +88,6 @@ struct Extern_struct {
 extern GSList *panels;
 
 extern GSList *applets;
-extern GSList *applets_last;
 
 extern int applets_to_sync;
 extern int need_complete_save;
@@ -1073,14 +1072,13 @@ reserve_applet_spot (Extern       ext,
 		     AppletType   type)
 {
 	GtkWidget  *socket;
-	AppletInfo *info;
 	gint        events;
 	gint        size;
 
 	ext->ebox = gtk_event_box_new ();
 
 	/*
-	 * FIXME: duplicated in panel_register_applet ?
+	 * FIXME: duplicated in panel_applet_register ?
 	 */
 	events  = gtk_widget_get_events (ext->ebox) | APPLET_EVENT_MASK;
 	events &= ~(GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
@@ -1104,18 +1102,12 @@ reserve_applet_spot (Extern       ext,
 
 	gtk_widget_show (socket);
 
-	/*
-	 * we save the obj in the id field of the 
-	 * appletinfo and the path in the path field.
-	 */
-	ext->info = NULL;
-
-	info = panel_register_applet (ext->ebox, ext,
-				      (GDestroyNotify)extern_clean,
-				      panel, pos, ext->exactpos, type);
-	if (!info) {
+	ext->info = panel_applet_register (ext->ebox, ext,
+					   (GDestroyNotify)extern_clean,
+					   panel, pos, ext->exactpos, type);
+	if (!ext->info) {
 		/*
-		 * the ebox is destroyed in panel_register_applet.
+		 * the ebox is destroyed in panel_applet_register.
 		 */
 		ext->ebox = NULL;
 
@@ -1123,8 +1115,6 @@ reserve_applet_spot (Extern       ext,
 
 		return 0;
 	}
-
-	ext->info = applets_last->data;
 
 	gtk_signal_connect (GTK_OBJECT (socket),
 			    "destroy",

@@ -421,7 +421,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	
 	/*
 	 * on a real add the info will be NULL as the 
-	 * only adding is done in panel_register_applet 
+	 * only adding is done in panel_applet_register 
 	 * and that doesn't add the info to the array until 
 	 * after the add, so we can be sure this was 
 	 * generated on a reparent.
@@ -1403,7 +1403,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	pos = panel_widget_get_cursorloc(panel);
 	
 	/* 
-	 * -1 passed to panel_register_applet will turn on 
+	 * -1 passed to panel_applet_register will turn on 
 	 * the insert_at_pos flag for panel_widget_add_full,
 	 * which will not place it after the first applet.
 	 */
