@@ -673,11 +673,15 @@ applet_widget_new(const char *goad_id)
 	int applet_id=-1;
 	CustomAppletServant *corbadat;
 	CORBA_unsigned_long wid;
-
+	
+	g_return_val_if_fail(goad_id!=NULL,NULL);
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 
 	CD(applet) = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
+
+	g_return_val_if_fail(corbadat!=NULL,NULL);
+
 	corbadat->appwidget = applet;
 
 	gtk_plug_construct(GTK_PLUG(applet), corbadat->winid);
