@@ -16,7 +16,7 @@ test:
 #FIXME: without libapplet in a separate dir, cdplayer won't compile
 #SUBDIRS  = @PROGRAMS_PANEL_CDPLAYER@ batmon mailcheck netwatch
 
-INCLUDES =	 			\
+INCLUDES = -I. -I$(srcdir) 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
