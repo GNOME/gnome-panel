@@ -116,6 +116,11 @@ PanelAppletFlags   panel_applet_get_flags            (PanelApplet      *applet);
 void      	   panel_applet_set_flags            (PanelApplet      *applet,
 						      PanelAppletFlags  flags);
 
+void      	   panel_applet_set_size_hints       (PanelApplet      *applet,
+						      const int        *size_hints,
+						      int               n_elements,
+						      int               base_size);
+
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
 

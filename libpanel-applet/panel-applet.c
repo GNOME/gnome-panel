@@ -65,6 +65,9 @@ struct _PanelAppletPrivate {
 	gchar                      *background;
 
 	GdkPixmap                  *bg_pixmap;
+
+        int                        *size_hints;
+        int                         size_hints_len;
 };
 
 static GObjectClass *parent_class;
@@ -83,12 +86,14 @@ static guint panel_applet_signals [LAST_SIGNAL];
 #define PROPERTY_SIZE       "panel-applet-size"
 #define PROPERTY_BACKGROUND "panel-applet-background"
 #define PROPERTY_FLAGS      "panel-applet-flags"
+#define PROPERTY_SIZE_HINTS "panel-applet-size-hints"
 
 enum {
 	PROPERTY_ORIENT_IDX,
 	PROPERTY_SIZE_IDX,
 	PROPERTY_BACKGROUND_IDX,
 	PROPERTY_FLAGS_IDX,
+	PROPERTY_SIZE_HINTS_IDX,
 };
 
 static void
@@ -217,6 +222,21 @@ panel_applet_set_flags (PanelApplet      *applet,
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	applet->priv->flags = flags;
+}
+
+void
+panel_applet_set_size_hints (PanelApplet      *applet,
+			     const int        *size_hints,
+			     int               n_elements,
+			     int               base_size)
+{
+	int i;
+	applet->priv->size_hints = g_realloc (applet->priv->size_hints, n_elements * sizeof (int));
+	memcpy (applet->priv->size_hints, size_hints, n_elements * sizeof (int));
+	applet->priv->size_hints_len = n_elements;
+
+	for (i = 0; i < n_elements; i++)
+		applet->priv->size_hints[i] += base_size;
 }
 
 /**
@@ -679,6 +699,8 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 		       gpointer           user_data)
 {
 	PanelApplet *applet = PANEL_APPLET (user_data);
+	CORBA_sequence_CORBA_long *seq;
+	int i;
 
 	switch (arg_id) {
 	case PROPERTY_ORIENT_IDX:
@@ -692,6 +714,16 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 		break;
 	case PROPERTY_FLAGS_IDX:
 		BONOBO_ARG_SET_SHORT (arg, applet->priv->flags);
+		break;
+	case PROPERTY_SIZE_HINTS_IDX:
+		seq = arg->_value;
+
+		seq->_buffer = CORBA_sequence_CORBA_long_allocbuf (applet->priv->size_hints_len);
+		seq->_maximum = applet->priv->size_hints_len;
+		seq->_length = applet->priv->size_hints_len;
+		
+		for (i = 0; i < applet->priv->size_hints_len; i++)
+			seq->_buffer [i] = applet->priv->size_hints[i];
 		break;
 	default:
 		g_assert_not_reached ();
@@ -819,6 +851,14 @@ panel_applet_property_bag (PanelApplet *applet)
 				 BONOBO_ARG_SHORT,
 				 NULL,
 				 _("The Applet's flags"),
+				 Bonobo_PROPERTY_READABLE);
+
+	bonobo_property_bag_add (sack,
+				 PROPERTY_SIZE_HINTS,
+				 PROPERTY_SIZE_HINTS_IDX,
+				 TC_CORBA_sequence_CORBA_long,
+				 NULL,
+				 _("Ranges that hint what sizes are acceptable for the applet"),
 				 Bonobo_PROPERTY_READABLE);
 
 	return sack;

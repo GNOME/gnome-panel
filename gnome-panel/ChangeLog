@@ -1,3 +1,14 @@
+2002-04-13  Alexander Larsson  <alla@lysator.liu.se>
+
+	* panel-widget.c:
+	Implement size hints for expanding applets.
+
+	* panel-applet-frame.h: 
+	Add panel_applet_frame_get_size_hints()
+	
+	* panel-applet-frame.c (panel_applet_frame_get_size_hints):
+	Get the size hints from the property bag.
+
 Fri Apr 12 15:19:34 2002  George Lebl <jirka@5z.com>
 
 	* panel-config.c: remove some cruft for some gtk bug workarounds

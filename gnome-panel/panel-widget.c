@@ -27,6 +27,7 @@
 #include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
 #include "drawer-widget.h"
+#include "panel-applet-frame.h"
 
 #define MOVE_INCREMENT 2
 
@@ -652,6 +653,27 @@ panel_widget_is_applet_stuck(PanelWidget *panel, GtkWidget *applet)
 }
 
 static int
+get_size_from_hints (AppletData *ad, int cells)
+{
+	int i;
+	
+	for (i = 0; i < ad->size_hints_len; i += 2) {
+		if (cells > ad->size_hints[i]) {
+			/* Clip to top */
+			cells = ad->size_hints[i];
+			break;
+		}
+		if (cells <= ad->size_hints[i] &&
+		    cells >= ad->size_hints[i+1]) {
+			/* Keep cell size */
+			break;
+		}
+	}
+	
+	return cells;
+}
+
+static int
 allocate_dirty_child(gpointer data)
 {
 	AppletData *ad = data;
@@ -695,13 +717,22 @@ allocate_dirty_child(gpointer data)
 
 	if (!panel->packed && ad->expand_major) {
 		GList *l = g_list_find (panel->applet_list, ad);
+		int cells;
+		
 		if (l) {
 			if (l->next) {
 				nad = l->next->data;
-				ad->cells = nad->pos - ad->pos - 1;
+				cells = nad->pos - ad->pos - 1;
 			} else {
-				ad->cells = panel->size - ad->pos - 1;
+				cells = panel->size - ad->pos - 1;
 			}
+
+			if (ad->size_hints) 
+				cells = get_size_from_hints (ad, cells);
+			
+			cells = MAX (cells, ad->min_cells);
+			
+			ad->cells = cells;
 			
 			if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 				challoc.width = ad->cells;
@@ -1051,6 +1082,14 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		AppletData *ad = list->data;
 		GtkRequisition chreq;
 		gtk_widget_size_request(ad->applet,&chreq);
+
+		if (ad->expand_major && PANEL_IS_APPLET_FRAME (ad->applet)) {
+			if (ad->size_hints != NULL)
+				g_free (ad->size_hints);
+			ad->size_hints = panel_applet_frame_get_size_hints (PANEL_APPLET_FRAME (ad->applet),
+									    &ad->size_hints_len);
+		}
+		
 		if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			if(requisition->height < chreq.height)
 				requisition->height = chreq.height;
@@ -1279,6 +1318,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		    list = g_list_previous(list)) {
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
+			int cells;
+			
 			gtk_widget_get_child_requisition(ad->applet,&chreq);
 
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -1289,7 +1330,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			ad->min_cells = ad->cells;
 			
 			if (ad->expand_major) {
-				ad->cells = (i - ad->pos) - 1;
+				cells = (i - ad->pos) - 1;
+
+				if (ad->size_hints) 
+					cells = get_size_from_hints (ad, cells);
+				cells = MAX (cells, ad->min_cells);
+
+				ad->cells = cells;
 			}
 
 			if(ad->pos+ad->min_cells > i) {
@@ -2433,6 +2480,8 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 		panel->applet_list = g_list_remove (panel->applet_list,ad);
 	}
 
+	g_free (ad->size_hints);
+
 	g_free (ad);
 }
 
@@ -2575,6 +2624,7 @@ panel_widget_add (PanelWidget *panel,
 		ad->no_die = 0;
 		ad->expand_major = expand_major;
 		ad->expand_minor = expand_minor;
+		ad->size_hints = NULL;
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_DATA, ad);
 		

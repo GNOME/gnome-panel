@@ -355,6 +355,23 @@ setup_gconf (TasklistData *tasklist)
 	g_free (key);
 }
 
+static void
+frame_size_request  (GtkWidget      *widget,
+		     GtkRequisition *requisition,
+		     TasklistData   *tasklist)
+{
+	int len;
+	const int *size_hints;
+	GtkRequisition child_req;
+	
+	gtk_widget_get_child_requisition (tasklist->frame,
+					  &child_req);
+	
+	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist),
+						       &len);
+	
+	panel_applet_set_size_hints (PANEL_APPLET (tasklist->applet), size_hints, len, child_req.width - 1);
+}
 
 gboolean
 fill_tasklist_applet(PanelApplet *applet)
@@ -424,6 +441,10 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	g_signal_connect (G_OBJECT (tasklist->tasklist), "destroy",
 			  G_CALLBACK (destroy_tasklist),
+			  tasklist);
+
+	g_signal_connect (G_OBJECT (tasklist->frame), "size_request",
+			  G_CALLBACK (frame_size_request),
 			  tasklist);
 
 	tasklist_update (tasklist);

@@ -101,6 +101,10 @@ void       panel_applet_frame_set_clean_remove	(PanelAppletFrame *frame,
 						 gboolean          clean_remove);
 gboolean   panel_applet_frame_get_clean_remove	(PanelAppletFrame *frame);
 
+
+int *      panel_applet_frame_get_size_hints    (PanelAppletFrame *frame,
+						 int              *n_elements);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */

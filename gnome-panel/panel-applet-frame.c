@@ -193,6 +193,38 @@ panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
 	*expand_minor = retval & (1 << 1);
 }
 
+
+int *
+panel_applet_frame_get_size_hints (PanelAppletFrame *frame,
+				   int              *n_elements)
+{
+	CORBA_any *value;
+	CORBA_sequence_CORBA_long *seq;
+	int *size_hints;
+	int i;
+
+	*n_elements = 0;
+	value = bonobo_pbclient_get_value (frame->priv->property_bag,
+					   "panel-applet-size-hints",
+					   TC_CORBA_sequence_CORBA_long,
+					   NULL);
+	
+	if (value == NULL)
+		return NULL;
+
+	seq = value->_value;
+
+	*n_elements = seq->_length;
+	size_hints = g_new (int, seq->_length);
+	for (i = 0; i < seq->_length; i++) {
+		size_hints[i] = seq->_buffer[i];
+	}
+	
+	CORBA_free (value);
+	
+	return size_hints;
+}
+
 void
 panel_applet_frame_change_orient (PanelAppletFrame *frame,
 				  PanelOrient       orient)
