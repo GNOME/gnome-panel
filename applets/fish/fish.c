@@ -24,13 +24,18 @@
 
 #include <config.h>
 #include <string.h>
+#include <time.h>
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
-#include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-file-entry.h>
+#include <libgnomeui/gnome-help.h>
+#include <libgnomeui/gnome-pixmap-entry.h>
+#include <libgnomeui/gnome-uidefs.h>
 #include <libart_lgpl/libart.h>
 #include <glade/glade-xml.h>
 
