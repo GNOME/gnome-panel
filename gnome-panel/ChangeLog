@@ -1,5 +1,9 @@
 2005-02-25  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-background.c: (panel_background_free): unref the monitor
+
+2005-02-25  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-menu-button.c: (panel_menu_button_set_menu_path): fix leak
 	* panel-recent.c: (panel_recent_append_documents_menuà: fix huge leak
 	caused by EggRecentViewGtk's ref on the menu...

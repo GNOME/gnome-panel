@@ -885,6 +885,10 @@ panel_background_free (PanelBackground *background)
 		g_object_unref (background->loaded_image);
 	background->loaded_image = NULL;
 
+	if (background->monitor)
+		g_object_unref (background->monitor);
+	background->monitor = NULL;
+
 	if (background->window)
 		g_object_unref (background->window);
 	background->window = NULL;
