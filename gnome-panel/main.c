@@ -107,7 +107,7 @@ static const struct poptOption options[] = {
 };
 
 int
-main(int argc, char **argv)
+main (int argc, char **argv)
 {
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -124,6 +124,7 @@ main(int argc, char **argv)
 		return -1;
 
 	panel_icon_theme = gnome_icon_theme_new ();
+	gnome_icon_theme_set_allow_svg (panel_icon_theme, TRUE);
 	
 	find_kde_directory();
 
