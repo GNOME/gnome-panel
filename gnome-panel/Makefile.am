@@ -201,11 +201,8 @@ gnome-panel-screenshot.glade2: gnome-panel-screenshot.glade $(LIBGLADE_CONVERT)
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
 
-sysdir = $(datadir)/control-center/Desktop/
+sysdir = $(datadir)/gnome/capplets
 sys_DATA = gnome-panel-properties.desktop
-
-deskdir = $(datadir)/applications
-desk_DATA = gnome-panel-properties.desktop
 
 panel_enum_headers =				\
 	$(top_srcdir)/panel/panel-types.h	\
