@@ -44,6 +44,8 @@ static GSList *applets_to_start = NULL;
 int ss_cur_applet = 0;
 int ss_done_save = FALSE;
 gushort ss_cookie = 0;
+GtkWidget *ss_timeout_dlg = NULL;
+static int ss_interactive = FALSE;
 static int ss_timeout = 500;
 
 /*send the tooltips state to all external applets*/
@@ -170,18 +172,51 @@ apply_global_config(void)
 	}
 }
 
+static void
+ss_cancel_wait(GtkWidget *dlg, gpointer data)
+{
+	int cookie = GPOINTER_TO_INT(data);
+	ss_timeout_dlg = NULL;
+	if(cookie == ss_cookie) {
+		/*increment cookie so that the done_session_save will fail*/
+		ss_cookie++;
+		g_warning(_("Timed out on sending session save to an applet"));
+		save_next_applet();
+	}
+}
+
 static int
 session_save_timeout(gpointer data)
 {
 	int cookie = GPOINTER_TO_INT(data);
 	if(cookie == ss_cookie) {
-		printf("TIMEOUT (%d)\n",cookie);
+		if(ss_interactive) {
+			ss_timeout_dlg =
+				gnome_message_box_new(_("An applet is not "
+							"responding to a "
+							"save request,\n"
+							"should I stop "
+							"waiting and cancel "
+							"the applet?"),
+						      GNOME_MESSAGE_BOX_WARNING,
+						      GNOME_STOCK_BUTTON_CANCEL,
+						      NULL);
+			gtk_signal_connect(GTK_OBJECT(ss_timeout_dlg),"destroy",
+					   GTK_SIGNAL_FUNC(ss_cancel_wait),
+					   GINT_TO_POINTER(cookie));
+			gnome_dialog_close_hides(GNOME_DIALOG(ss_timeout_dlg),
+						 FALSE);
+			gnome_dialog_set_close(GNOME_DIALOG(ss_timeout_dlg),
+					       TRUE);
+			gtk_widget_show(ss_timeout_dlg);
+			return FALSE;
+		}
+
 		/*increment cookie so that the done_session_save will fail*/
 		ss_cookie++;
 		g_warning(_("Timed out on sending session save to an applet"));
 		save_next_applet();
-	} else
-		printf("EXPIRED (%d)\n",cookie);
+	}
 	return FALSE;
 }
 
@@ -232,6 +267,7 @@ save_applet_configuration(AppletInfo *info)
 
 	buf = g_string_new(NULL);
 	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
+	gnome_config_clean_section(buf->str);
 	gnome_config_push_prefix(buf->str);
 
 	/*obviously no need for saving*/
@@ -267,6 +303,8 @@ save_applet_configuration(AppletInfo *info)
 			  own config, this is a separate file, so that we */
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 panel_cfg_path, info->applet_id+1);
+			gnome_config_clean_file(buf->str);
+			gnome_config_sync();
 			/*have the applet do it's own session saving*/
 			send_applet_session_save(info,ext->applet,
 						 buf->str, globalcfg);
@@ -614,8 +652,10 @@ panel_session_save (GnomeClient *client,
 		    int is_fast,
 		    gpointer client_data)
 {
-	if(is_shutdown)
-		ss_timeout = 3000;
+	if(is_shutdown) {
+		ss_timeout = 1500;
+		ss_interactive = TRUE;
+	}
 	do_session_save(client,TRUE,FALSE,FALSE,FALSE);
 	if(is_shutdown) {
 		GSList *li;

@@ -1,3 +1,9 @@
+Mon May 31 20:29:30 1999  George Lebl  <jirka@5z.com>
+
+	* session.c,extern.c: on exit, we timeout after 1.5 sec, and then
+	  put up a dialog indefinately but allow the user to cancel wating
+	  for an applet to save
+
 Mon May 31 18:43:09 1999  George Lebl  <jirka@5z.com>
 
 	* session.[ch],extern.c,applet-widget.c: revamp the applet saving

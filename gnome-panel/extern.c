@@ -41,6 +41,7 @@ extern char *old_panel_cfg_path;
 
 extern int ss_cur_applet;
 extern int ss_done_save;
+extern GtkWidget* ss_timeout_dlg;
 extern gushort ss_cookie;
 
 /********************* CORBA Stuff *******************/
@@ -788,10 +789,13 @@ s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 	if(cookie != ss_cookie)
 		return;
 
-	printf("DONE (%lu)\n",ss_cookie);
-	
 	/*increment cookie to kill the timeout warning*/
 	ss_cookie++;
+	
+	if(ss_timeout_dlg) {
+		gtk_widget_destroy(ss_timeout_dlg);
+		ss_timeout_dlg = NULL;
+	}
 
 	if(g_slist_length(applets)<=ss_cur_applet) {
 		ss_done_save = TRUE;
