@@ -330,12 +330,11 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(snapped->state != SNAPPED_SHOWN) {
 		PanelOrientType hide_orient;
-		gint16 w, h;
 
 		snapped_widget_get_hidepos(snapped, &hide_orient,
-					   &w, &h);
-		allocation->width = w;
-		allocation->height = h;
+					   &allocation->width, 
+					   &allocation->height);
+
 		basep_widget_get_position(basep, hide_orient,
 					  &challoc.x, &challoc.y,
 					  allocation->width,

@@ -331,14 +331,17 @@ create_applet_menu(AppletInfo *info)
 	info->menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new();
-	setup_menuitem(menuitem,NULL,_("Remove from panel"));
+	setup_menuitem(menuitem,
+		       gnome_stock_pixmap_widget (info->menu,
+						  GNOME_STOCK_PIXMAP_REMOVE),
+		       _("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   info);
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	
 	menuitem = gtk_menu_item_new();
-	setup_menuitem(menuitem,NULL,_("Move applet"));
+	setup_menuitem(menuitem, NULL, _("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
 			   info);

@@ -1,3 +1,21 @@
+1999-09-20  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* corner-widget.c (corner_widget_size_allocate): fix
+	hiding sizings
+
+	* snapped-widget.c (snapped_widget_size_allocate): fix
+	hiding sizings
+
+	* applet.c (create_applet_menu): add remove pixmap
+
+	* menu.c (create_kde_menu): use the KDE gear icon
+	(create_system_menu): use gnome logo icon, a probably
+	never occuring memleak
+	(create_panel_root_menu): use remove menu for 'remove panel'
+	(add_special_entries): pixmaps, check for xscreensaver being
+	in the path (from HEAD)
+	(create_root_menu): fix kde icon locating
+
 1999-09-16  Ettore Perazzoli  <ettore@comm2000.it>
 
 	* launcher.c (create_properties_dialog): Call
