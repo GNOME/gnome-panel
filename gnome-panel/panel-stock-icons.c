@@ -65,7 +65,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_SEARCHTOOL,          "gnome-searchtool" },
 	{ PANEL_STOCK_SCREENSHOT,          "gnome-screenshot" },
 	{ PANEL_STOCK_LOCKSCREEN,          "gnome-lockscreen" },
-	{ PANEL_STOCK_LOGOUT,              "gnome-term-night" },
+	{ PANEL_STOCK_LOGOUT,              "gnome-logout" },
 	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" },
 	{ PANEL_STOCK_GNOME_LOGO,          "gnome-logo-icon-transparent"},
 	{ PANEL_STOCK_DEBIAN,              "gnome-debian"},
