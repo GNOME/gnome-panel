@@ -230,7 +230,7 @@ panel_toplevel_is_last_unattached (PanelToplevel *toplevel)
 	GSList *l;
 
 	if (panel_toplevel_get_is_attached (toplevel))
-		return TRUE;
+		return FALSE;
 
 	for (l = toplevel_list; l; l = l->next) {
 		PanelToplevel *t = l->data;
