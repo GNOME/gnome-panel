@@ -143,17 +143,26 @@ applet_change_background (PanelApplet               *applet,
          */
 }
 
-
 /* this is when the panel size changes */
 static void
-applet_change_pixel_size (PanelApplet *applet,
-                          gint         size,
-                          ShowDesktopData   *sdd)
+applet_size_allocated (PanelApplet       *applet,
+                       gint               size,
+                       ShowDesktopData   *sdd)
 {
-        if (sdd->size == size)
-                return;
+	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
+		&& (sdd->size == allocation->height))
+	    || ((sdd->orient == GTK_ORIENTATION_VERTICAL)
+	    	&& (sdd->size == allocation->width)))
+	     return;
 
-        sdd->size = size;
+	switch (sdd->orient) {
+	case GTK_ORIENTATION_HORIZONTAL:
+		sdd->size = allocation->height;
+		break;
+	case GTK_ORIENTATION_VERTICAL:
+		sdd->size = allocation->width;
+		break;
+	}
 
         update_icon (sdd);
 }
@@ -369,8 +378,8 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         /* similiar to the above in semantics*/
         g_signal_connect (G_OBJECT (sdd->applet),
-                          "change_size",
-                          G_CALLBACK (applet_change_pixel_size),
+                          "size_allocate",
+                          G_CALLBACK (applet_size_allocated),
                           sdd);
 
         /* FIXME: initial background, this needs some panel-applet voodoo */

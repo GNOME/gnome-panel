@@ -1,3 +1,13 @@
+2004-08-04  Vincent Untz  <vincent@vuntz.net>
+
+	Patch from Vincent Noel <vnoel@cox.net>. Should fix bug #129124.
+
+	* showdesktop.c: (show_desktop_applet_fill): connect to the
+	size_allocate signal, not the change_size one
+	(applet_change_pixel_size): killed
+	(applet_size_allocated): new function to correctly handle the size
+	change
+
 ==================== 2.7.4.1 ====================
 
 ==================== 2.7.4 ====================
