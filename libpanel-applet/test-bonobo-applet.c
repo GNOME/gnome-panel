@@ -119,7 +119,7 @@ test_applet_handle_background_change (PanelApplet               *applet,
 		gdk_window_set_back_pixmap (GTK_WIDGET (label)->window, NULL, FALSE);
 		break;
 	case PANEL_PIXMAP_BACKGROUND:
-		g_message ("Setting background to '%s'", pixmap);
+		g_message ("Setting background to '%p'", pixmap);
 		gdk_window_set_back_pixmap (GTK_WIDGET (label)->window, pixmap, FALSE);
 		break;
 	default:

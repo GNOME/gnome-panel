@@ -34,6 +34,8 @@ panel_applet_gconf_get_full_key (PanelApplet *applet,
 	const gchar *prefs_key;
 	gchar       *full_key;
 
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
+
 	if (!key)
 		return NULL;
 
@@ -54,6 +56,8 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
 	gchar        *full_key;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
+
+	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	if (opt_error)
 		error = opt_error;
@@ -85,6 +89,8 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+
 	if (opt_error)
 		error = opt_error;
 	else
@@ -114,6 +120,8 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
 	gchar        *full_key;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
+
+	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	if (opt_error)
 		error = opt_error;
@@ -145,6 +153,8 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+
 	if (opt_error)
 		error = opt_error;
 	else
@@ -175,6 +185,8 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+
 	if (opt_error)
 		error = opt_error;
 	else
@@ -204,6 +216,8 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
 	gboolean      retval;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
 
 	if (opt_error)
 		error = opt_error;
@@ -237,6 +251,8 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), -1);
+
 	if (opt_error)
 		error = opt_error;
 	else
@@ -268,6 +284,8 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
 	gchar        *retval;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (opt_error)
 		error = opt_error;
@@ -301,6 +319,8 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0.0);
+
 	if (opt_error)
 		error = opt_error;
 	else
@@ -332,6 +352,8 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
 	GConfValue   *retval;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (opt_error)
 		error = opt_error;

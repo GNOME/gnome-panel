@@ -93,7 +93,8 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 
 	list = gconf_engine_all_entries (engine, schema_dir, error);
 
-	g_return_if_fail (list && !*error);
+	g_return_if_fail (list != NULL);
+	g_return_if_fail (*error == NULL);
 
 	for (l = list; l; l = l->next) {
 		GConfEntry *entry = l->data;
@@ -155,7 +156,7 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	GError      **error = NULL;
 	GError       *our_error = NULL;
 
-	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	if (opt_error)
 		error = opt_error;
@@ -186,7 +187,7 @@ panel_applet_add_preferences (PanelApplet  *applet,
 gchar *
 panel_applet_get_preferences_key (PanelApplet *applet)
 {
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), NULL);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!applet->priv->prefs_key)
 		return NULL;
@@ -199,7 +200,7 @@ panel_applet_get_expand_flags (PanelApplet *applet,
 			       gboolean    *expand_major,
 			       gboolean    *expand_minor)
 {
-	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	*expand_major = applet->priv->expand_major;
 	*expand_minor = applet->priv->expand_minor;
@@ -210,7 +211,7 @@ panel_applet_set_expand_flags (PanelApplet *applet,
 			       gboolean     expand_major,
 			       gboolean     expand_minor)
 {
-	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+	g_return_if_fail (PANEL_IS_APPLET (applet));
 
 	applet->priv->expand_major = expand_major;
 	applet->priv->expand_minor = expand_minor;
@@ -228,7 +229,7 @@ panel_applet_set_expand_flags (PanelApplet *applet,
 guint
 panel_applet_get_size (PanelApplet *applet)
 {
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), 0);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0);
 
 	return applet->priv->size;
 }
@@ -245,7 +246,7 @@ panel_applet_get_size (PanelApplet *applet)
 PanelAppletOrient
 panel_applet_get_orient (PanelApplet *applet)
 {
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), 0);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0);
 
 	return applet->priv->orient;
 }
@@ -269,7 +270,8 @@ panel_applet_setup_menu (PanelApplet        *applet,
 {
 	BonoboUIComponent *popup_component;
 
-	g_return_if_fail (applet && xml && verb_list);
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+	g_return_if_fail (xml != NULL && verb_list != NULL);
 
 	popup_component = panel_applet_get_popup_component (applet);
 
@@ -304,7 +306,8 @@ panel_applet_setup_menu_from_file (PanelApplet        *applet,
 	BonoboUIComponent *popup_component;
 	gchar             *app_name = NULL;
 
-	g_return_if_fail (applet && file && verb_list);
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+	g_return_if_fail (file != NULL && verb_list != NULL);
 
 	if (!opt_datadir)
 		opt_datadir = GNOME_DATADIR;
@@ -333,7 +336,7 @@ panel_applet_setup_menu_from_file (PanelApplet        *applet,
 BonoboControl *
 panel_applet_get_control (PanelApplet *applet)
 {
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), NULL);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	return applet->priv->control;
 }
@@ -350,7 +353,7 @@ panel_applet_get_control (PanelApplet *applet)
 BonoboUIComponent *
 panel_applet_get_popup_component (PanelApplet *applet)
 {
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), NULL);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	return bonobo_control_get_popup_ui_component (applet->priv->control);
 }
@@ -688,8 +691,8 @@ panel_applet_control_bound (BonoboControl *control,
 {
 	gboolean ret;
 
-	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
-	g_return_if_fail (applet->priv->iid && applet->priv->closure);
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+	g_return_if_fail (applet->priv->iid != NULL && applet->priv->closure != NULL);
 
 	if (applet->priv->bound)
 		return;
@@ -721,7 +724,7 @@ panel_applet_item_handler_get_object (BonoboItemHandler *handler,
 	GSList      *options;
 	GSList      *l;
 
-	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), CORBA_OBJECT_NIL);
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), CORBA_OBJECT_NIL);
 
 	options = bonobo_item_option_parse (item_name);
 
@@ -917,8 +920,8 @@ panel_applet_factory_main_closure (const gchar                 *iid,
 {
 	int                 retval;
 
-	g_return_val_if_fail (iid, 1);
-	g_return_val_if_fail (closure, 1);
+	g_return_val_if_fail (iid != NULL, 1);
+	g_return_val_if_fail (closure != NULL, 1);
 
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
 
@@ -947,8 +950,8 @@ panel_applet_factory_main (const gchar                 *iid,
 {
 	GClosure *closure;
 
-	g_return_val_if_fail (iid, 1);
-	g_return_val_if_fail (callback, 1);
+	g_return_val_if_fail (iid != NULL, 1);
+	g_return_val_if_fail (callback != NULL, 1);
 
 
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
@@ -965,8 +968,8 @@ panel_applet_shlib_factory_closure (const char                 *iid,
 {
 	BonoboShlibFactory *factory;
 
-	g_return_val_if_fail (iid, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (closure, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (closure != NULL, CORBA_OBJECT_NIL);
 
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
        
@@ -987,8 +990,8 @@ panel_applet_shlib_factory (const char                 *iid,
 			    gpointer                    user_data,
 			    CORBA_Environment          *ev)
 {
-	g_return_val_if_fail (iid, CORBA_OBJECT_NIL);
-	g_return_val_if_fail (callback, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (iid != NULL, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (callback != NULL, CORBA_OBJECT_NIL);
 
 	return panel_applet_shlib_factory_closure
 		(iid, poa, impl_ptr,
