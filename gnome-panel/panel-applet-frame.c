@@ -590,8 +590,6 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 		popup_container = Bonobo_Control_getPopupContainer (control, &env);
 
-		bonobo_ui_component_set_container (ui_component, popup_container, &env);
-
                 bonobo_ui_component_set_container (ui_component, popup_container, &env);
 		
                 CORBA_exception_free (&env);
