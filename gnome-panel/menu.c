@@ -6299,11 +6299,6 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 		screen = FOOBAR_WIDGET (cur_panel->panel_parent)->screen;
 	}
 
-	scroll_menu_set_screen_size (SCROLL_MENU (menu),
-				     multiscreen_y (screen),
-				     multiscreen_y (screen) +
-				     	multiscreen_height (screen));
-
 	x = menutop->allocation.x;
 	y = menutop->allocation.y;
 
@@ -6334,6 +6329,7 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 GtkWidget *
 hack_scroll_menu_new (void)
 {
+#ifdef FIXME
 	GtkWidget *menu = scroll_menu_new ();
 
 	gtk_signal_connect_after (GTK_OBJECT (menu), "size_allocate",
@@ -6341,4 +6337,7 @@ hack_scroll_menu_new (void)
 				  NULL);
 
 	return menu;
+#else
+	return NULL;
+#endif
 }

@@ -172,8 +172,6 @@ panel_temp_SOURCES=\
 	menu-fentry.h  		\
 	swallow.c  		\
 	swallow.h  		\
-	scroll-menu.h		\
-	scroll-menu.c		\
 	menu-properties.c	\
 	menu-properties.h	\
 	launcher.c		\
