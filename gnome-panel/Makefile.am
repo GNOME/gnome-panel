@@ -28,6 +28,8 @@ INCLUDES = \
 bin_PROGRAMS = \
 	panel-2
 
+gwmh_dir = $(top_srcdir)/applets/desk-guide
+
 # libpanel_appletincludedir = $(includedir)
 # libpanel_statusincludedir = $(includedir)
 # 
@@ -82,13 +84,27 @@ extern.c: gnome-panel.h
 # libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 # libpanel_status_la_LIBADD = $(PANEL_LIBS) -lm
 
+GWMH_SRCLIST = \
+	gwmh.c		\
+	gwmh.h		\
+	gstc.c		\
+	gstc.h
+
+$(GWMH_SRCLIST):
+	for file in $(GWMH_SRCLIST); do \
+		echo $$file ; \
+		ln -sf $(gwmh_dir)/$$file . ; \
+	done
+
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
+	$(GWMH_SRCLIST)		\
 	panel-marshal.c		\
 	panel-marshal.h
 
 panel_2_SOURCES=\
 	$(CORBA_SRCLIST)	\
+	gwmh.h			\
 	panel-include.h		\
 	panel-types.h		\
 	panel-marshal-main.c	\
