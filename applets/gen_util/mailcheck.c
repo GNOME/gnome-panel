@@ -188,21 +188,18 @@ get_password_callback (gchar *string, gpointer data)
 	gchar **pass = (gchar **)data;
 
 	*pass = string;
-
-	gtk_main_quit();
 }
 
 static gchar *
 get_remote_password (void)
 {
-	gchar *pass;
+	gchar *pass = NULL;
 	GtkWidget *dialog;
 
 	dialog = gnome_request_dialog(TRUE, _("Password:"), "",
 				      256, get_password_callback, &pass, NULL);
 	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gtk_widget_show(dialog);
-	gtk_main();
+	gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
 
 	return pass;
 }
@@ -299,9 +296,9 @@ check_mail_file_status (MailCheck *mc)
 	else { /* MAILBOX_LOCALDIR */
 		int newmail, oldmail;
 		char tmp[1024];
-		snprintf(tmp, 1024, "%s/new", mc->mail_file);
+		g_snprintf(tmp, sizeof (tmp), "%s/new", mc->mail_file);
 		newmail = calc_dir_contents(tmp);
-		snprintf(tmp, 1024, "%s/cur", mc->mail_file);
+		g_snprintf(tmp, sizeof (tmp), "%s/cur", mc->mail_file);
 		oldmail = calc_dir_contents(tmp);
 		mc->newmail = newmail > oldsize;
 		mc->unreadmail = newmail;

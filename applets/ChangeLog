@@ -1,3 +1,10 @@
+Sat Feb 24 22:26:14 2001  George Lebl <jirka@5z.com>
+
+	* gen_util/mailcheck.c:  prevent the possibility of an uninitialized
+	  pointer being sent from the password dialog and use
+	  gnome_dialog_run_and_close to run the dialog.  Also some more
+	  minor cleanup.
+
 Mon Feb 12 20:44:49 2001  George Lebl <jirka@5z.com>
 
 	* gen_util/help/C/printer/Makfile.am: fix typo referring to
