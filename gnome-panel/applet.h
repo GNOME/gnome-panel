@@ -63,9 +63,9 @@ GSList     *panel_applet_list_applets (void);
 
 void        panel_applet_clean        (AppletInfo    *info);
 
-void panel_applet_queue_applet_to_load (char            *id,
+void panel_applet_queue_applet_to_load (const char      *id,
 					PanelObjectType  type,
-					char            *toplevel_id,
+					const char      *toplevel_id,
 					int              position,
 					gboolean         right_stick,
 					gboolean         locked);

@@ -516,8 +516,8 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 
 	/* menu bar on far right corner */
         id = panel_profile_prepare_object_with_id (PANEL_OBJECT_MENU_BAR, toplevel_id, 0, FALSE);
-
         panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+	g_free (id);
 
 	/* window menu on far left corner */
         id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, 0, TRUE);
@@ -526,6 +526,7 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
         gconf_client_set_string (client, key, "OAFIID:GNOME_WindowMenuApplet", NULL);
 
         panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
+	g_free (id);
 }
 
 static void

@@ -637,8 +637,9 @@ panel_action_button_create (PanelToplevel         *toplevel,
 				 gconf_enum_to_string (panel_action_type_map, type),
 				 NULL);
 
-	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	g_free (id);
 }
 
 /* This is only for backwards compatibility with 2.0.x

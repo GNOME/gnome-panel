@@ -790,9 +790,9 @@ panel_applet_load_idle_handler (gpointer dummy)
 }
 
 void
-panel_applet_queue_applet_to_load (char            *id,
+panel_applet_queue_applet_to_load (const char      *id,
 				   PanelObjectType  type,
-				   char            *toplevel_id,
+				   const char      *toplevel_id,
 				   int              position,
 				   gboolean         right_stick,
 				   gboolean         locked)
@@ -801,15 +801,14 @@ panel_applet_queue_applet_to_load (char            *id,
 
 	if (!toplevel_id) {
 		g_warning ("No toplevel on which to load object '%s'\n", id);
-		g_free (id);
 		return;
 	}
 
 	applet = g_new0 (PanelAppletToLoad, 1);
 
-	applet->id          = id;
+	applet->id          = g_strdup (id);
 	applet->type        = type;
-	applet->toplevel_id = toplevel_id;
+	applet->toplevel_id = g_strdup (toplevel_id);
 	applet->position    = position;
 	applet->right_stick = right_stick != FALSE;
 	applet->locked      = locked != FALSE;

@@ -349,8 +349,9 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
 	gconf_client_set_string (client, key, iid, NULL);
 
-	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
+
+	g_free (id);
 }
 
 void

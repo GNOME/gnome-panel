@@ -52,7 +52,7 @@ gboolean    panel_profile_get_enable_program_list (void);
 
 
 void           panel_profile_add_to_list            (PanelGConfKeyType  type,
-						     char              *id);
+						     const char        *id);
 void           panel_profile_remove_from_list       (PanelGConfKeyType  type,
 						     const char        *id);
 gboolean       panel_profile_list_is_writable       (PanelGConfKeyType  type);
@@ -60,7 +60,7 @@ void           panel_profile_create_toplevel        (GdkScreen         *screen);
 PanelToplevel *panel_profile_load_toplevel          (GConfClient       *client,
 						     const char        *profile_dir,
 						     PanelGConfKeyType  type,
-						     char              *toplevel_id);
+						     const char        *toplevel_id);
 void           panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
 char          *panel_profile_prepare_object         (PanelObjectType    object_type,
 						     PanelToplevel     *toplevel,

@@ -1119,8 +1119,9 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
 	gconf_client_set_string (client, key, location, NULL);
 
-	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	g_free (id);
 }
 
 void

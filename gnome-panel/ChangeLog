@@ -1,3 +1,29 @@
+2004-07-06  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes "Invalid read of size 1" thrown up by valgrind.
+	Report from Kjartan Maraas in bug #144460.
+
+	* panel-profile.[ch]:
+	(panel_profile_set_toplevel_id),
+	(panel_profile_add_to_list),
+	(panel_profile_load_toplevel),
+	(panel_profile_load_and_show_toplevel),
+	(panel_profile_load_object): make memory ownership easier
+	to understand by making all these functions take a
+	const string id.
+	(panel_profile_create_toplevel),
+	(panel_profile_load_added_ids),
+	(panel_profile_delete_removed_ids),
+	(panel_profile_load_list): free the ids in all the right
+	places.
+	
+	* applet.[ch]: (panel_applet_queue_applet_to_load): similarily,
+	make this take const sting ids and make a copy of them.
+
+	* drawer.c, launcher.c, panel-action-button.c,
+	  panel-applet-frame.c, panel-compatibility.c, panel-menu-bar.c:
+	free the ids in all the right places.
+
 2004-06-23  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* panel-addto.c: (panel_addto_dialog_new): Use HIG border spacing.

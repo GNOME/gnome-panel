@@ -407,10 +407,10 @@ create_drawer_toplevel (const char *drawer_id)
 
 	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 	
-	/* takes ownership of toplevel_id */
 	toplevel = panel_profile_load_toplevel (client, profile_dir,
 						PANEL_GCONF_TOPLEVELS, toplevel_id);
 
+	g_free (toplevel_id);
 	g_free (profile_dir);
 
 	if (!toplevel)
@@ -685,8 +685,9 @@ panel_drawer_create (PanelToplevel *toplevel,
 
 	panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, NULL);
 
-	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	g_free (id);
 }
 
 char *
@@ -703,8 +704,9 @@ panel_drawer_create_with_id (const char    *toplevel_id,
 
 	panel_drawer_prepare (id, custom_icon, use_custom_icon, tooltip, &attached_toplevel_id);
 
-	/* frees id */
-	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, g_strdup (id));
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
+
+	g_free (id);
 
 	return attached_toplevel_id;
 }
@@ -756,6 +758,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    TRUE,
 			    id);
 
+	g_free (toplevel_id);
 	g_free (profile_dir);
 	g_free (custom_icon);
 	g_free (tooltip);
