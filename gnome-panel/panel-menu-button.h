@@ -31,6 +31,8 @@
 
 G_BEGIN_DECLS
 
+#define PANEL_MAIN_MENU_ICON "gnome-main-menu"
+
 #define PANEL_TYPE_MENU_BUTTON         (panel_menu_button_get_type ())
 #define PANEL_MENU_BUTTON(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButton))
 #define PANEL_MENU_BUTTON_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonClass))

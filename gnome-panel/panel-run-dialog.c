@@ -151,22 +151,6 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 }
 
 static void
-set_window_icon_from_stock (GtkWindow *window,
-			    const char *stock_id)
-{
-	GdkPixbuf *icon;
-
-	icon = gtk_widget_render_icon (GTK_WIDGET (window),
-				       stock_id,
-				       GTK_ICON_SIZE_DIALOG,
-				       NULL);
-
-	gtk_window_set_icon (window, icon);
-
-	g_object_unref (icon);
-}
-
-static void
 panel_run_dialog_set_icon (PanelRunDialog *dialog,
 			   const char     *icon_path)
 {
@@ -202,15 +186,15 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 	} else {
 		g_free (icon);
 		
-		gtk_image_set_from_stock (GTK_IMAGE (dialog->pixmap), 
-					  PANEL_STOCK_RUN,
-					  GTK_ICON_SIZE_DIALOG);
+		gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
+					      PANEL_RUN_ICON,
+					      GTK_ICON_SIZE_DIALOG);
 		
-		set_window_icon_from_stock (GTK_WINDOW (dialog->run_dialog),
-					    PANEL_STOCK_RUN);
+		gtk_window_set_icon_name (GTK_WINDOW (dialog->run_dialog),
+					  PANEL_RUN_ICON);
 		
-		gtk_drag_source_set_icon_stock (dialog->run_dialog,
-						PANEL_STOCK_RUN);
+		/* FIXME: waiting for bug #116577
+		gtk_drag_source_set_icon_name (dialog->run_dialog, PANEL_RUN_ICON); */
 	}
 }
 
@@ -1541,10 +1525,6 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 	g_signal_connect (dialog->run_dialog, "drag_data_get",
 			  G_CALLBACK (pixmap_drag_data_get),
 			  dialog);
-
-	gtk_image_set_from_stock (GTK_IMAGE (dialog->pixmap), 
-				  PANEL_STOCK_RUN,
-				  GTK_ICON_SIZE_DIALOG);
 }
 
 static PanelRunDialog *
@@ -1573,6 +1553,8 @@ panel_run_dialog_new (GdkScreen *screen,
 	panel_run_dialog_setup_program_list  (dialog, gui);
 	panel_run_dialog_setup_list_expander (dialog, gui);
 
+	panel_run_dialog_set_icon            (dialog, NULL);
+
 	panel_run_dialog_update_content (dialog, panel_profile_get_show_program_list ());
 
 	gtk_widget_set_sensitive (dialog->run_button, FALSE);
@@ -1581,8 +1563,6 @@ panel_run_dialog_new (GdkScreen *screen,
 					 GTK_RESPONSE_OK);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->run_dialog), screen);
-
-	set_window_icon_from_stock (GTK_WINDOW (dialog->run_dialog), PANEL_STOCK_RUN);
 
 	gtk_widget_grab_focus (dialog->gtk_entry);
 	gtk_widget_realize (dialog->run_dialog);

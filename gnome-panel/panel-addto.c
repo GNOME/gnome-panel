@@ -33,7 +33,6 @@
 #include "panel.h"
 #include "drawer.h"
 #include "panel-applet-frame.h"
-#include "panel-stock-icons.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-toplevel.h"
@@ -84,7 +83,6 @@ typedef struct {
 	char                  *name;
 	char                  *description;
 	char                  *icon;
-	const char            *stock_icon;
 	PanelActionButtonType  action_type;
 	char                  *launcher_path;
 	char                  *menu_path;
@@ -103,7 +101,6 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  N_("Custom Application Launcher"),
 	  N_("Create a new launcher"),
 	  "launcher-program",
-	  NULL,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -114,7 +111,6 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	  N_("Application Launcher..."),
 	  N_("Launch a program that is already in the GNOME menu"),
 	  "launcher-program",
-	  NULL,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -128,8 +124,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_MENU,
 	  N_("Main Menu"),
 	  N_("The main GNOME menu"),
-	  NULL,
-	  PANEL_STOCK_MAIN_MENU,
+	  PANEL_MAIN_MENU_ICON,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -139,8 +134,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_MENUBAR,
 	  N_("Menu Bar"),
 	  N_("A custom menu bar"),
-	  NULL,
-	  PANEL_STOCK_GNOME_LOGO,
+	  PANEL_GNOME_LOGO_ICON,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -150,8 +144,7 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_DRAWER,
 	  N_("Drawer"),
 	  N_("A pop out drawer to store other items in"),
-	  "drawer",
-	  NULL,
+	  PANEL_DRAWER_ICON,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -221,7 +214,6 @@ panel_addto_prepend_internal_applets (GSList *list)
 		info->name        = (char *) panel_action_get_text (i);
 		info->description = (char *) panel_action_get_tooltip (i);
 		info->icon        = (char *) panel_action_get_icon_name (i);
-		info->stock_icon  = (char *) panel_action_get_stock_icon (i);
 		info->iid         = (char *) panel_action_get_drag_id (i);
 		info->static_data = TRUE;
 
@@ -264,6 +256,9 @@ panel_addto_make_pixbuf (const char *filename,
 
 	pb = panel_load_icon (gtk_icon_theme_get_default (), filename,
 			      desired_height, NULL);
+	if (!pb)
+		return NULL;
+
 	width = gdk_pixbuf_get_width (pb);
 	height = gdk_pixbuf_get_height (pb);
 
@@ -444,14 +439,11 @@ panel_addto_append_item (PanelAddtoDialog *dialog,
 				    COLUMN_SEARCH, NULL,
 				    -1);
 	} else {
+		pixbuf = NULL;
+
 		if (applet->icon != NULL) {
 			pixbuf = panel_addto_make_pixbuf (applet->icon,
 							  GTK_ICON_SIZE_DIALOG);
-		} else {
-			pixbuf = gtk_widget_render_icon (GTK_WIDGET (dialog->panel_widget),
-							 applet->stock_icon,
-							 GTK_ICON_SIZE_DIALOG,
-							 NULL);
 		}
 
 		gtk_list_store_append (model, &iter);

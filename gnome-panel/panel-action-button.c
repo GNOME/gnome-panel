@@ -36,7 +36,6 @@
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-profile.h"
-#include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
 #include "panel-force-quit.h"
 #include "panel-util.h"
@@ -288,7 +287,6 @@ panel_action_connect_server (GtkWidget *widget)
 
 typedef struct {
 	PanelActionButtonType   type;
-	char                   *stock_icon;
 	char                   *icon_name;
 	char                   *text;
 	char                   *tooltip;
@@ -306,12 +304,11 @@ typedef struct {
 static PanelAction actions [] = {
 	{
 		PANEL_ACTION_NONE,
-		NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL, NULL,
 		NULL, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_LOCK,
-		NULL,
 		"gnome-lockscreen",
 		N_("Lock Screen"),
 		N_("Protect your computer from unauthorized use"),
@@ -324,7 +321,6 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_LOGOUT,
-		NULL,
 		"gnome-logout",
 		N_("Log Out"),
 		N_("Log out of this session to log in as a different user or to shut down the computer"),
@@ -335,8 +331,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_RUN,
-		PANEL_STOCK_RUN,
-		NULL,
+		PANEL_RUN_ICON,
 		N_("Run Application..."),
 		N_("Run an Application by entering a command"),
 		"gospanel-555",
@@ -346,7 +341,6 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SEARCH,
-		NULL,
 		"gnome-searchtool",
 		N_("Search for Files..."),
 		N_("Find files, folders, and documents on your computer"),
@@ -356,7 +350,6 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SCREENSHOT,
-		NULL,
 		"applets-screenshooter",
 		N_("Take Screenshot..."),
 		N_("Take a screenshot of your desktop"),
@@ -366,8 +359,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT,
-		PANEL_STOCK_FORCE_QUIT,
-		NULL,
+		PANEL_FORCE_QUIT_ICON,
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
 		"gospanel-563",
@@ -377,7 +369,6 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_CONNECT_SERVER,
-		NULL,
 		"gnome-globe", //FIXME icon
 		N_("Connect to Server..."),
 		N_("Connect to a remote server"), //FIXME
@@ -406,14 +397,6 @@ panel_action_get_invoke (PanelActionButtonType type)
 	g_assert (actions[type].invoke != NULL);
 
 	return G_CALLBACK (actions[type].invoke);
-}
-
-G_CONST_RETURN char*
-panel_action_get_stock_icon (PanelActionButtonType type)
-{
-	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
-
-	return actions[type].stock_icon;
 }
 
 G_CONST_RETURN char*
@@ -667,8 +650,6 @@ panel_action_button_set_type (PanelActionButton     *button,
 
 	if (actions [type].icon_name != NULL)
 		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [type].icon_name);
-	else
-		button_widget_set_stock_id (BUTTON_WIDGET (button), actions [type].stock_icon);
 
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
 			      _(actions [type].tooltip), NULL);
@@ -721,8 +702,6 @@ panel_action_button_style_set (PanelActionButton *button)
 {
 	if (actions [button->priv->type].icon_name != NULL)
 		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [button->priv->type].icon_name);
-	else
-		button_widget_set_stock_id (BUTTON_WIDGET (button), actions [button->priv->type].stock_icon);
 }
 
 static void
@@ -938,11 +917,8 @@ panel_action_button_set_dnd_enabled (PanelActionButton *button,
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		if (actions [button->priv->type].stock_icon != NULL)
-			gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
-							actions [button->priv->type].stock_icon);
 		/* FIXME: waiting for bug #116577
-		else
+		if (actions [button->priv->type].icon_name != NULL)
 		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
 						actions [button->priv->type].icon_name);
 						*/

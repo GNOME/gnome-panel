@@ -1,5 +1,56 @@
 2005-01-29  Vincent Untz  <vincent@vuntz.net>
 
+	Try to get rid of most of our stock icons.
+
+	* button-widget.[ch]: (button_widget_load_and_scale_stock_icon):
+	(button_widget_gtk_theme_changed):
+	(button_widget_new_from_stock):
+	(button_widget_set_stock_id):
+	(button_widget_get_stock_id): killed these functions
+	(button_widget_reload_pixbuf): remove code that blocked the "missing"
+	icon from being used, remove stock icon code
+	(button_widget_finalize): remove stock icon code
+	(button_widget_get_property): ditto
+	(button_widget_set_property): ditto
+	(button_widget_instance_init): ditto
+	(button_widget_class_init): ditto
+	* drawer.[ch]: (create_drawer_applet): stop using stock icons
+	(panel_drawer_set_dnd_enabled): add a comment for drag icon by name
+	* menu.c: (setup_internal_applet_drag): stop using stock icons
+	(menu_create_action_item): ditto
+	* panel-action-button.[ch]: remove stock icons
+	(panel_action_get_stock_icon): kill
+	(panel_action_button_set_type): remove stock icon code
+	(panel_action_button_style_set): ditto
+	(panel_action_button_set_dnd_enabled): ditto
+	* panel-addto.c: stop using stock icons
+	(panel_addto_prepend_internal_applets): remove stock icon code
+	(panel_addto_make_pixbuf): safety check that the pixbuf is not NULL
+	(panel_addto_append_item): remove stock icon code
+	* panel-applet-frame.c: (register_stock_item): move this code to
+	panel-stock-icons.c
+	(panel_applet_frame_loading_failed): updated
+	* panel-force-quit.[ch]: (display_popup_window): stop using stock icon
+	* panel-menu-bar.[ch]: (panel_menu_bar_instance_init): ditto
+	* panel-menu-button.[ch]: (panel_menu_button_instance_init): remove
+	stock icon code
+	(panel_menu_button_get_icon): return the icon for the menu button, and
+	not the icon of the menu path
+	(panel_menu_button_set_icon): updated
+	(panel_menu_button_set_dnd_enabled): stop using stock icons
+	* panel-run-dialog.[ch]: (set_window_icon_from_stock): kill
+	(panel_run_dialog_set_icon): stop using stock icons
+	(panel_run_dialog_setup_pixmap): don't set the image here...
+	(panel_run_dialog_new): ... but here, and we don't need to set the
+	window icon
+	* panel-stock-icons.[ch]: (panel_button_icon_get_size): kill
+	remove PANEL_STOCK_RUN, PANEL_STOCK_GNOME_LOGO, PANEL_STOCK_MAIN_MENU,
+	PANEL_STOCK_DRAWER, add PANEL_STOCK_DONT_DELETE
+	(panel_init_stock_icons_and_items): do not register
+	panel_button_icon_size since it's useless
+
+2005-01-29  Vincent Untz  <vincent@vuntz.net>
+
 	Move away from GnomeIconTheme. Still some work to do to use
 	the icon theme of the right screen...
 

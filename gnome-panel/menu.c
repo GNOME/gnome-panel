@@ -1147,11 +1147,8 @@ setup_internal_applet_drag (GtkWidget             *menuitem,
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
 
-	if (panel_action_get_stock_icon (type)  != NULL)
-		gtk_drag_source_set_icon_stock (menuitem,
-						panel_action_get_stock_icon (type));
 	/* FIXME: waiting for bug #116577
-	else
+	if (panel_action_get_icon_name (type)  != NULL)
 		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
 					panel_action_get_icon_name (type);
 					*/
@@ -1464,7 +1461,7 @@ menu_create_action_item (PanelActionButtonType action_type)
         setup_menu_item_with_icon (item,
 				   panel_menu_icon_get_size (),
 				   panel_action_get_icon_name (action_type),
-				   panel_action_get_stock_icon (action_type),
+				   NULL,
 				   panel_action_get_text (action_type),
 				   TRUE);
 

@@ -31,7 +31,6 @@
 
 #include "applet.h"
 #include "panel-widget.h"
-#include "panel-stock-icons.h"
 #include "panel-util.h"
 #include "panel-profile.h"
 #include "panel-globals.h"
@@ -91,8 +90,6 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 
 	button->priv->use_menu_path   = FALSE;
 	button->priv->use_custom_icon = FALSE;
-
-	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
 }
 
 static void
@@ -615,18 +612,24 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 	MenuTreeDirectory *directory;
         char              *retval;
 
-	if (!button->priv->use_menu_path || !button->priv->menu_path)
-		return NULL;
+	retval = NULL;
 
-	if (!panel_menu_button_create_menu (button))
-		return NULL;
+	if (button->priv->use_custom_icon &&
+	    button->priv->custom_icon)
+		retval = g_strdup (button->priv->custom_icon);
 
-	directory = g_object_get_data (G_OBJECT (button->priv->menu),
-				       "panel-menu-tree-directory");
-	if (!directory)
-		return NULL;
+	if (!retval                     &&
+	    button->priv->use_menu_path &&
+	    button->priv->menu_path     &&
+	    panel_menu_button_create_menu (button)) {
+		directory = g_object_get_data (G_OBJECT (button->priv->menu),
+					       "panel-menu-tree-directory");
+		if (directory)
+			retval = g_strdup (menu_tree_directory_get_icon (directory));
+	}
 
-	retval = g_strdup (menu_tree_directory_get_icon (directory));
+	if (!retval)
+		retval = g_strdup (PANEL_MAIN_MENU_ICON);
 
 	return retval;
 }
@@ -634,14 +637,9 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 static void
 panel_menu_button_set_icon (PanelMenuButton *button)
 {
-	char *icon_path = NULL;
+	char *icon_path;
 
-	if (button->priv->use_custom_icon)
-		icon_path = g_strdup (button->priv->custom_icon);
-
-	if (!icon_path)
-		icon_path = panel_menu_button_get_icon (button);
-
+	icon_path = panel_menu_button_get_icon (button);
 	button_widget_set_icon_name (BUTTON_WIDGET (button), icon_path);
 
 	g_free (icon_path);
@@ -898,8 +896,11 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
-						PANEL_STOCK_MAIN_MENU);
+		/* FIXME: waiting for bug #116577
+		icon = panel_menu_button_get_icon (button);
+		gtk_drag_source_set_icon_name (GTK_WIDGET (button), icon);
+		g_free (icon);
+		*/
 		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));

@@ -28,8 +28,7 @@ enum {
 	PROP_HAS_ARROW,
 	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
-	PROP_ICON_NAME,
-	PROP_STOCK_ID
+	PROP_ICON_NAME
 };
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
@@ -176,48 +175,12 @@ button_widget_unset_pixbufs (ButtonWidget *button)
 	button->pixbuf_hc = NULL;
 }
 
-static GdkPixbuf *
-button_widget_load_and_scale_stock_icon (ButtonWidget *button)
-{
-	GdkPixbuf *new;
-	GdkPixbuf *retval;
-	double     scale;
-	int        width;
-	int        height;
-
-	new = gtk_widget_render_icon (GTK_WIDGET (button),
-				      button->stock_id,
-				      (GtkIconSize) -1,
-				      NULL);
-
-	width  = gdk_pixbuf_get_width  (new);
-	height = gdk_pixbuf_get_height (new);
-
-	if (button->orientation & PANEL_HORIZONTAL_MASK)
-		scale = (double) button->size / height;
-	else
-		scale = (double) button->size / width;
-
-	width  *= scale;
-	height *= scale;
-
-	retval = gdk_pixbuf_scale_simple (new, width, height,
-					  GDK_INTERP_BILINEAR);
-
-	g_object_unref (new);
-
-	return retval;
-}
-
 static void
 button_widget_reload_pixbuf (ButtonWidget *button)
 {
 	button_widget_unset_pixbufs (button);
 
 	if (button->size <= 1)
-		return;
-
-	if (!button->filename && !button->stock_id)
 		return;
 
 	if (button->filename != NULL) {
@@ -237,9 +200,6 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 			g_free (error);
 		}
 	}
-
-	if (button->pixbuf == NULL && button->stock_id != NULL)
-		button->pixbuf = button_widget_load_and_scale_stock_icon (button);
 
 	if (button->pixbuf == NULL)
 		button->pixbuf = get_missing (button->icon_theme,
@@ -261,13 +221,6 @@ button_widget_icon_theme_changed (ButtonWidget *button)
 }
 
 static void
-button_widget_gtk_theme_changed (ButtonWidget *button)
-{
-	if (button->stock_id != NULL)
-		button_widget_reload_pixbuf (button);
-}
-
-static void
 button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
@@ -277,9 +230,6 @@ button_widget_finalize (GObject *object)
 	g_free (button->filename);
 	button->filename = NULL;
 
-	g_free (button->stock_id);
-	button->stock_id = NULL;
-	
 	parent_class->finalize (object);
 }
 
@@ -310,9 +260,6 @@ button_widget_get_property (GObject    *object,
 		break;
 	case PROP_ICON_NAME:
 		g_value_set_string (value, button->filename);
-		break;
-	case PROP_STOCK_ID:
-		g_value_set_string (value, button->stock_id);
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -347,9 +294,6 @@ button_widget_set_property (GObject      *object,
 		break;
 	case PROP_ICON_NAME:
 		button_widget_set_icon_name (button, g_value_get_string (value));
-		break;
-	case PROP_STOCK_ID:
-		button_widget_set_stock_id (button, g_value_get_string (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -650,9 +594,6 @@ button_widget_instance_init (ButtonWidget *button)
 	button->dnd_highlight = FALSE;
 
 	button->size = 0;
-
-	g_signal_connect (button, "style-set", 
-			  G_CALLBACK (button_widget_gtk_theme_changed), button);
 }
 
 static void
@@ -724,15 +665,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					     "The desired icon for the ButtonWidget",
 					     NULL,
 					     G_PARAM_READWRITE));
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_STOCK_ID,
-			g_param_spec_string ("stock-id",
-					     "Stock Icon ID",
-					     "The desired stock icon for the ButtonWidget",
-					     NULL,
-					     G_PARAM_READWRITE));
 }
 
 GType
@@ -772,23 +704,6 @@ button_widget_new (const char       *filename,
 			"has-arrow", arrow,
 			"orientation", orientation,
 			"icon-name", filename,
-			NULL);
-	
-	return retval;
-}
-
-GtkWidget *
-button_widget_new_from_stock (const char       *stock_id,
-			      gboolean          arrow,
-			      PanelOrientation  orientation)
-{
-	GtkWidget *retval;
-
-	retval = g_object_new (
-			BUTTON_TYPE_WIDGET,
-			"has-arrow", arrow,
-			"orientation", orientation,
-			"stock-id", stock_id,
 			NULL);
 	
 	return retval;
@@ -844,32 +759,6 @@ button_widget_get_icon_name (ButtonWidget *button)
 	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
 
 	return button->filename;
-}
-
-void
-button_widget_set_stock_id (ButtonWidget *button,
-			    const char   *stock_id)
-{
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-	
-	if (button->stock_id && stock_id && !strcmp (button->stock_id, stock_id))
-		return;
-
-	if (button->stock_id)
-		g_free (button->stock_id);
-	button->stock_id = g_strdup (stock_id);
-
-	button_widget_reload_pixbuf (button);
-
-	g_object_notify (G_OBJECT (button), "stock-id");
-}
-
-const char *
-button_widget_get_stock_id (ButtonWidget *button)
-{
-	g_return_val_if_fail (BUTTON_IS_WIDGET (button), NULL);
-	
-	return button->stock_id;
 }
 
 void

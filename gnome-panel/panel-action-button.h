@@ -89,7 +89,6 @@ gboolean   panel_action_button_load_from_drag   (PanelToplevel          *topleve
 
 gboolean             panel_action_get_is_disabled (PanelActionButtonType type);
 GCallback            panel_action_get_invoke      (PanelActionButtonType type);
-G_CONST_RETURN char *panel_action_get_stock_icon  (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_icon_name   (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_text        (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_tooltip     (PanelActionButtonType type);

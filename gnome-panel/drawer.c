@@ -28,7 +28,6 @@
 #include "panel-util.h"
 #include "xstuff.h"
 #include "panel-globals.h"
-#include "panel-stock-icons.h"
 #include "panel-lockdown.h"
 
 static void
@@ -339,13 +338,11 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	drawer->toplevel = toplevel;
 
 	if (!use_custom_icon || !custom_icon || !custom_icon [0]) {
-		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER,
-							       TRUE, orientation);
+		drawer->button = button_widget_new (PANEL_DRAWER_ICON, TRUE,
+						    orientation);
 	} else {
-		drawer->button = button_widget_new (custom_icon, TRUE, orientation);
-		/* make sure there is a backup stock id */
-		button_widget_set_stock_id (BUTTON_WIDGET (drawer->button),
-					    PANEL_STOCK_DRAWER);
+		drawer->button = button_widget_new (custom_icon, TRUE,
+						    orientation);
 	}
 
 	if (!drawer->button) {
@@ -762,7 +759,9 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 				     GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_MOVE);
-		gtk_drag_source_set_icon_stock (drawer->button, PANEL_STOCK_DRAWER);
+		/* FIXME: waiting for bug #116577
+		gtk_drag_source_set_icon_name (drawer->button, PANEL_DRAWER_ICON); */
+
 		GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
 
 	} else

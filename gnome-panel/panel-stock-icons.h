@@ -32,14 +32,9 @@ G_BEGIN_DECLS
 
 /* themeable size - "panel-menu" */
 #define PANEL_DEFAULT_MENU_ICON_SIZE 	24
-#define PANEL_DEFAULT_BUTTON_ICON_SIZE  12
 
 /* stock icons */
-#define PANEL_STOCK_RUN                 "panel-run"
 #define PANEL_STOCK_FORCE_QUIT          "panel-force-quit"
-#define PANEL_STOCK_GNOME_LOGO          "panel-gnome-logo"
-#define PANEL_STOCK_MAIN_MENU           "panel-main-menu"
-#define PANEL_STOCK_DRAWER              "panel-drawer"
 
 /* stock items  - no point in theme the icons one these,
  * they use stock gtk icons and just modify the text
@@ -47,11 +42,11 @@ G_BEGIN_DECLS
  */
 #define PANEL_STOCK_EXECUTE             "panel-execute"
 #define PANEL_STOCK_CLEAR               "panel-clear"
+#define PANEL_STOCK_DONT_DELETE         "panel-dont-delete"
 
 void        panel_init_stock_icons_and_items (void);
 GtkIconSize panel_menu_icon_get_size         (void);
 GtkIconSize panel_menu_bar_icon_get_size     (void);
-GtkIconSize panel_button_icon_get_size       (void);
 
 G_END_DECLS
 

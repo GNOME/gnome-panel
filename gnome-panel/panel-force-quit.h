@@ -29,6 +29,8 @@
 
 G_BEGIN_DECLS
 
+#define PANEL_FORCE_QUIT_ICON "panel-force-quit"
+
 void panel_force_quit (GdkScreen *screen);
 
 G_END_DECLS

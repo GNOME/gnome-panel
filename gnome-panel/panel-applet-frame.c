@@ -39,14 +39,13 @@
 #include "panel-marshal.h"
 #include "panel-background.h"
 #include "panel-lockdown.h"
+#include "panel-stock-icons.h"
 
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
 #undef PANEL_APPLET_FRAME_DEBUG
 
 #define HANDLE_SIZE 10
-
-#define PANEL_STOCK_DONT_DELETE "panel-dont-delete"
 
 #define PROPERTY_ORIENT     "panel-applet-orient"
 #define PROPERTY_SIZE       "panel-applet-size"
@@ -963,33 +962,6 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 	g_free (dialog_txt);
 }
 
-static inline void
-register_stock_item (void)
-{
-        static gboolean registered = FALSE;
-
-        if (!registered) {
-                GtkIconFactory      *factory;
-                GtkIconSet          *cancel_icons;
-
-                static GtkStockItem  dont_delete_item [] = {
-                        { PANEL_STOCK_DONT_DELETE, N_("D_on't Delete"), 0, 0, GETTEXT_PACKAGE },
-                };
-
-                cancel_icons = gtk_icon_factory_lookup_default (GTK_STOCK_CANCEL);
-
-                factory = gtk_icon_factory_new ();
-
-                gtk_icon_factory_add (factory, PANEL_STOCK_DONT_DELETE, cancel_icons);
-
-                gtk_icon_factory_add_default (factory);
-
-                gtk_stock_add_static (dont_delete_item, 1);
-
-                registered = TRUE;
-        }
-}
-
 enum {
 	LOADING_FAILED_RESPONSE_DONT_DELETE,
 	LOADING_FAILED_RESPONSE_DELETE
@@ -1019,7 +991,6 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gboolean   locked_down;
 
 	locked_down = panel_lockdown_get_locked_down ();
-	register_stock_item ();
 
 	problem_txt = g_strdup_printf (_("The panel encountered a problem "
 					 "while loading \"%s\"."),

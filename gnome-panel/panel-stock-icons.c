@@ -30,11 +30,8 @@
 #include <gtk/gtkiconfactory.h>
 #include <glib/gi18n.h>
 
-#include "panel-globals.h"
-
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_menu_bar_icon_size = 0;
-static GtkIconSize panel_button_icon_size = 0;
 
 GtkIconSize
 panel_menu_icon_get_size (void)
@@ -48,23 +45,13 @@ panel_menu_bar_icon_get_size (void)
 	return panel_menu_bar_icon_size;
 }
 
-GtkIconSize
-panel_button_icon_get_size (void)
-{
-	return panel_button_icon_size;
-}
-
 typedef struct {
 	char *stock_id;
 	char *icon;
 } PanelStockIcon;
 
 static PanelStockIcon stock_icons [] = {
-	{ PANEL_STOCK_RUN,                 "gnome-run" },
-	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" },
-	{ PANEL_STOCK_GNOME_LOGO,          "gnome-logo-icon-transparent"},
-	{ PANEL_STOCK_MAIN_MENU,           "gnome-main-menu"},
-	{ PANEL_STOCK_DRAWER,              "drawer" }
+	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" }
 };
 
 static void
@@ -99,9 +86,10 @@ typedef struct {
 } PanelStockItem;
 
 static PanelStockItem stock_items [] = {
-	{ PANEL_STOCK_EXECUTE,    GTK_STOCK_EXECUTE,       N_("_Run") },
-	{ PANEL_STOCK_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
-	{ PANEL_STOCK_CLEAR,      GTK_STOCK_CLEAR,         N_("C_lear") }
+	{ PANEL_STOCK_EXECUTE,     GTK_STOCK_EXECUTE,       N_("_Run") },
+	{ PANEL_STOCK_FORCE_QUIT,  PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
+	{ PANEL_STOCK_CLEAR,       GTK_STOCK_CLEAR,         N_("C_lear") },
+	{ PANEL_STOCK_DONT_DELETE, GTK_STOCK_CANCEL,        N_("D_on't Delete") }
 };
 
 static void
@@ -139,10 +127,6 @@ panel_init_stock_icons_and_items (void)
 						       PANEL_DEFAULT_MENU_ICON_SIZE);
 
 	panel_menu_bar_icon_size = gtk_icon_size_register ("panel-foobar", 20, 20);
-
-	panel_button_icon_size = gtk_icon_size_register ("panel-button",
-							 PANEL_DEFAULT_BUTTON_ICON_SIZE,
-							 PANEL_DEFAULT_BUTTON_ICON_SIZE);
 
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);

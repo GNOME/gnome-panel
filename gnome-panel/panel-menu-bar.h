@@ -1,5 +1,5 @@
 /*
- * panel-menu-bar.h: panel Applications/Actions menu bar
+ * panel-menu-bar.h: panel Applications/Places/Desktop menu bar
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
@@ -29,6 +29,8 @@
 #include "panel-widget.h"
 
 G_BEGIN_DECLS
+
+#define PANEL_GNOME_LOGO_ICON "gnome-logo-icon-transparent"
 
 #define PANEL_TYPE_MENU_BAR         (panel_menu_bar_get_type ())
 #define PANEL_MENU_BAR(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_MENU_BAR, PanelMenuBar))

@@ -22,10 +22,7 @@ struct _ButtonWidget {
 	GdkPixbuf        *pixbuf;
 	GdkPixbuf        *pixbuf_hc;
 
-	/* if filename doesn't lead to a findable icon,
-	   try stock_id */
 	char             *filename;
-	char             *stock_id;
 
 	PanelOrientation  orientation;
 
@@ -45,18 +42,12 @@ GType            button_widget_get_type          (void) G_GNUC_CONST;
 GtkWidget *      button_widget_new               (const char       *pixmap,
 						  gboolean          arrow,
 						  PanelOrientation  orientation);
-GtkWidget *      button_widget_new_from_stock    (const char       *stock_id,
-						  gboolean          arrow,
-						  PanelOrientation  orientation);
 void             button_widget_set_activatable   (ButtonWidget     *button,
 						  gboolean          activatable);
 gboolean         button_widget_get_activatable   (ButtonWidget     *button);
 void             button_widget_set_icon_name     (ButtonWidget     *button,
 						  const char       *icon_name);
 const char *     button_widget_get_icon_name     (ButtonWidget     *button);
-void             button_widget_set_stock_id      (ButtonWidget     *button,
-						  const char       *stock_id);
-const char *     button_widget_get_stock_id      (ButtonWidget     *button);
 void             button_widget_set_orientation   (ButtonWidget     *button,
 						  PanelOrientation  orientation);
 PanelOrientation button_widget_get_orientation   (ButtonWidget     *button);
