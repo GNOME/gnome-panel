@@ -14,7 +14,13 @@ if APPLET_MODEMLIGHTS
 modemlights = modemlights
 endif
 
-SUBDIRS = $(always_built_SUBDIRS) $(cdplayer) $(mixer) $(modemlights)
+if FALSE
+# not yet ready for primetime?
+winlist = winlist
+endif
+
+SUBDIRS = $(always_built_SUBDIRS) \
+	 $(cdplayer) $(mixer) $(modemlights) $(winlist)
 
 sometimes_built_SUBDIRS = cdplayer mixer modemlights winlist
-DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
+#DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
