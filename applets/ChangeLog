@@ -1,3 +1,10 @@
+Fri Oct 09 02:42:07 1998  George Lebl  <jirka@5z.com>
+
+	* battery/session.[ch]: session save MUST return FALSE, otherwise
+	  applet is NOT restarted next time (using FALSE is to make it
+	  "ideologically compatible" with gtk) ... the function can't be
+	  void, since garbage is likely not gonna be 0
+
 1998-10-08  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
 
 	* gen_util/mailcheck.c: enable user to configure the mail checking
