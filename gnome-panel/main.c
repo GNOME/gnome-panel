@@ -847,14 +847,18 @@ int
 main(int argc, char **argv)
 {
 	char buf[256];
-
+	struct sigaction sa;
+	
 	panel_cfg_path = g_strdup("/panel/");
 	old_panel_cfg_path = g_strdup("/panel/");
 
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
-	signal(SIGCHLD,  sigchld_handler);
+	sigemptyset (&sa.sa_mask);
+	sa.sa_handler = sigchld_handler;
+	sa.sa_flags   = 0;
+	sigaction (SIGCHLD, &sa, NULL);
 
 	client = gnome_client_new_default ();
 
