@@ -571,10 +571,12 @@ register_toy(GtkWidget *applet,
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;
 
-	if(panel_widget_add_full(panel, applet, pos, TRUE)==-1) {
+	/*add at the beginning if pos == -1*/
+	if(panel_widget_add_full(panel, applet, pos>=0?pos:0, TRUE,
+				 pos>=0?FALSE:TRUE)==-1) {
 		GSList *list;
 		for(list = panels; list != NULL; list = g_slist_next(list))
-			if(panel_widget_add_full(panel, applet, pos, TRUE)!=-1)
+			if(panel_widget_add_full(panel, applet, 0,TRUE,FALSE)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/

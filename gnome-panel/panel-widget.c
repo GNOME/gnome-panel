@@ -2184,7 +2184,7 @@ panel_widget_add_forbidden(PanelWidget *panel)
 }
 
 int
-panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_lower_events)
+panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_lower_events, int insert_at_pos)
 {
 	AppletData *ad = NULL;
 
@@ -2201,15 +2201,18 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 
 	if(pos<pw_applet_padding)
 		pos = pw_applet_padding;
-
-	if(pw_movement_type != PANEL_FREE_MOVE ||
-	   panel->packed) {
-		if(get_applet_list_pos(panel,pos)) 
-			/*this is a slight hack so that this applet is
-			  inserted AFTER an applet with this pos number*/
-			pos++;
-	} else
-		pos = panel_widget_find_empty_pos(panel,pos);
+	
+	if(!insert_at_pos) {
+		if(pw_movement_type != PANEL_FREE_MOVE ||
+		   panel->packed) {
+			if(get_applet_list_pos(panel,pos)) 
+				/*this is a slight hack so that this applet
+				  is inserted AFTER an applet with this pos
+				  number*/
+				pos++;
+		} else
+			pos = panel_widget_find_empty_pos(panel,pos);
+	}
 
 	if(pos==-1) return -1;
 

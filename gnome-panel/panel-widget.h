@@ -119,12 +119,14 @@ GtkWidget *	panel_widget_new		(int packed,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
 						 GdkColor *back_color);
-/*add an applet to the panel, preferably at position pos*/
+/*add an applet to the panel, preferably at position pos, if insert_at_pos
+  is on, we REALLY want to insert at the pos given by pos*/
 int		panel_widget_add_full		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos,
-						 int bind_lower_events);
-#define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE))
+						 int bind_lower_events,
+						 int insert_at_pos);
+#define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE))
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);

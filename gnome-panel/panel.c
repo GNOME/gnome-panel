@@ -682,8 +682,11 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 
 	pos = panel_widget_get_cursorloc(panel);
 	
+	/* -1 passed to register_toy will turn on the insert_at_pos
+	   flag for panel_widget_add_full, which will not place it
+	   after the first applet */
 	if(pos < 0)
-		pos = 0;
+		pos = -1;
 	else if(pos > panel->size)
 		pos = panel->size;
 
