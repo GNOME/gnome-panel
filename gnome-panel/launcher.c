@@ -438,9 +438,11 @@ create_properties_dialog(Launcher *launcher)
 	gtk_object_ref(launcher->dedit);
 	gtk_object_sink(launcher->dedit);
 	
-	types = g_list_append(types, _("Application"));
-	types = g_list_append(types, _("URL"));
-	types = g_list_append(types, _("PanelApplet"));
+	/* Do not translate these, these are written to the file, they are
+	 * not just for the user */
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
 	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(launcher->dedit)->type_combo), types);
 	g_list_free(types);
 
@@ -585,16 +587,18 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_object_ref(GTK_OBJECT(dee));
 	gtk_object_sink(GTK_OBJECT(dee));
 
-	types = g_list_append(types, _("Application"));
-	types = g_list_append(types, _("URL"));
-	types = g_list_append(types, _("PanelApplet"));
+	/* Do NOT translate these */
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
 	gtk_combo_set_popdown_strings(GTK_COMBO(dee->type_combo), types);
 	g_list_free(types);
 	
 	if(file)
 		gtk_entry_set_text(GTK_ENTRY(dee->exec_entry), file);
+	/* Do not translate */
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
-			   _("Application"));
+			   "Application");
 	
 	
 	gtk_object_set_data(GTK_OBJECT(d),"pos", GINT_TO_POINTER(pos));

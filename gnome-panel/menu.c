@@ -756,12 +756,14 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
 	gtk_object_ref(GTK_OBJECT(dee));
 	gtk_object_sink(GTK_OBJECT(dee));
+	/* Do NOT translate */
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
 	types = g_list_append(types, "PanelApplet");
 	gtk_combo_set_popdown_strings(GTK_COMBO(dee->type_combo), types);
 	g_list_free(types);
 	
+	/* Do NOT translate */
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
 			   "Application");
 
@@ -1083,6 +1085,7 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
 	gtk_object_ref(o);
 	gtk_object_sink(o);
+	/* Do NOT translate */
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
 	types = g_list_append(types, "PanelApplet");
