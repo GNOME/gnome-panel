@@ -195,6 +195,8 @@ static void
 recent_documents_clear_cb (GtkMenuItem    *menuitem,
                            EggRecentModel *model)
 {
+	gpointer tmp;
+
 	if (clear_recent_dialog != NULL) {
 		gtk_window_set_screen (GTK_WINDOW (clear_recent_dialog),
 				       gtk_widget_get_screen (GTK_WIDGET (menuitem)));
@@ -224,8 +226,8 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 	g_signal_connect (clear_recent_dialog, "response",
 			  G_CALLBACK (clear_dialog_response), model);
 
-	g_object_add_weak_pointer (G_OBJECT (clear_recent_dialog),
-				   (gpointer *) &clear_recent_dialog);
+	tmp = &clear_recent_dialog;
+	g_object_add_weak_pointer (G_OBJECT (clear_recent_dialog), tmp);
 
 	gtk_window_set_screen (GTK_WINDOW (clear_recent_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (menuitem)));
