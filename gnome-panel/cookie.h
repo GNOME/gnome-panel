@@ -1,7 +1,9 @@
 #ifndef COOKIE_H
 #define COOKIE_H
 
+#ifdef HAVE_CRYPT_H
 #include <crypt.h>
+#endif
 
 BEGIN_GNOME_DECLS
 
