@@ -1002,8 +1002,8 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 				button_widget_draw(button, rgb_buf, size*3);
 				gdk_draw_rgb_image(button->cache,gc,
 						   0,0, size, size,
-						   GDK_RGB_DITHER_NONE,rgb_buf,
-						   size*3);
+						   GDK_RGB_DITHER_NORMAL,
+						   rgb_buf, size*3);
 				g_free(rgb_buf);
 				button_widget_draw_xlib(button, button->cache);
 			}
