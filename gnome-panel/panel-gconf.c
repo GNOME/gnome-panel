@@ -18,21 +18,73 @@ panel_gconf_get_profile (void)
 	return panel_gconf_profile;
 }
 
-char * 
-panel_gconf_global_key (const gchar *key)
+/*
+ * panel_gconf_sprintf:
+ * @format: the format string. See sprintf() documentation.
+ * @...: the arguments to be inserted.
+ *
+ * This is a version of sprintf using a static buffer which is
+ * intended for use in generating the full gconf key for all panel
+ * config keys.
+ * Note, you should not free the return value from this function and
+ * you should realize that the return value will get overwritten or
+ * freed by a subsequent call to this function.
+ *
+ * Return Value: a pointer to the static string buffer.
+ */
+G_CONST_RETURN char *
+panel_gconf_sprintf (const gchar *format,
+		     ...)
 {
-	return g_strconcat ("/apps/panel/global/", key, NULL);
+	static char *buffer = NULL;
+	static int   buflen = 128;
+	va_list      args;
+	int          len;
+
+	if (!buffer)
+		buffer = g_new (char, buflen);
+
+	va_start (args, format);
+	len = g_vsnprintf (buffer, buflen, format, args);
+
+	if (len >= buflen) {
+		int i;
+
+		/* Round up length to the nearest power of 2 */
+		for (i = 0; len != 1; i++, len >>= 1);
+
+		buflen = len << (i + 1);
+		g_assert (buflen > 0);
+
+		g_free (buffer);
+		buffer = g_new (char, buflen);
+
+		va_start (args, format);
+		len = g_vsnprintf (buffer, buflen, format, args);
+
+		g_assert (len < buflen);
+	}
+
+	va_end (args);
+
+	return buffer;
 }
 
-char *
+G_CONST_RETURN char * 
+panel_gconf_global_key (const gchar *key)
+{
+	return panel_gconf_sprintf ("/apps/panel/global/%s", key);
+}
+
+G_CONST_RETURN char *
 panel_gconf_general_key (const char *profile,
 			 const char *key)
 {
-	return g_strdup_printf ("/apps/panel/profiles/%s/general/%s",
-				profile, key);
+	return panel_gconf_sprintf (
+			"/apps/panel/profiles/%s/general/%s", profile, key);
 }
 
-char *
+G_CONST_RETURN char *
 panel_gconf_full_key (PanelGConfKeyType  type,
 		      const char        *profile,
 		      const char        *id,
@@ -55,8 +107,9 @@ panel_gconf_full_key (PanelGConfKeyType  type,
 		break;
 	}
 
-	return g_strdup_printf ("/apps/panel/profiles/%s/%s/%s/%s",
-				profile, subdir, id, key);
+	return panel_gconf_sprintf (
+			"/apps/panel/profiles/%s/%s/%s/%s",
+			profile, subdir, id, key);
 }
 
 GConfClient * 

@@ -210,12 +210,24 @@ panel_session_setup_config_sync (void)
 	config_sync_timeout = g_timeout_add (10*1000, panel_session_do_sync, NULL);
 }
 
-/* This is called when the session manager requests a shutdown.  It
-   can also be run directly when we don't detect a session manager.
-   We assume no interaction is done by the applets.  And we ignore the
-   other arguments for now.  Yes, this is lame.  */
-/* update: some SM stuff implemented but we still ignore most of the
-   arguments now*/
+void
+panel_session_set_restart_command (GnomeClient *client,
+				   char        *exec)
+{
+	char *argv [4];
+	int   argc;
+
+	argc = 3;
+
+	argv [0] = exec;
+	argv [1] = "--profile";
+	argv [2] = (char *) panel_gconf_get_profile ();
+	argv [3] = NULL;
+
+	gnome_client_set_restart_command (client, argc, argv);
+	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
+	gnome_client_set_priority (client, 40);
+}
 
 gboolean
 panel_session_save (GnomeClient        *client,
@@ -226,21 +238,7 @@ panel_session_save (GnomeClient        *client,
 		    int                 is_fast,
 		    gpointer            client_data)
 {
-	gchar **argv;
-	gint argc;
-
-	argv = g_malloc0 (sizeof (gchar *) * 4);
-
-	argc = 3;
-	argv[0] = client_data;
-	argv[1] = "--profile";
-      	argv[2] = (char *) panel_gconf_get_profile ();
-
-	gnome_client_set_restart_command (client, argc, argv);
-        gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
-        gnome_client_set_priority (client, 40);
-
-	g_free (argv);
+	panel_session_set_restart_command (client, client_data);
 
 	panel_session_do_save (client, TRUE, FALSE, FALSE);
 

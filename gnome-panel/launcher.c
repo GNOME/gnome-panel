@@ -650,7 +650,7 @@ launcher_save_to_gconf (Launcher   *launcher,
 	if (location) {
 		GConfClient *client;
 		const char  *profile;
-		char        *temp_key;
+		const char  *temp_key;
 
 		client  = panel_gconf_get_client ();
 		profile = panel_gconf_get_profile ();
@@ -658,7 +658,6 @@ launcher_save_to_gconf (Launcher   *launcher,
 		temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
 						 gconf_key, "launcher-location");
 		gconf_client_set_string (client, temp_key, location, NULL);
-		g_free (temp_key);
 	}
 }
 
@@ -669,7 +668,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 {
 	GConfClient *client;
 	const char  *profile;
-	char        *temp_key;
+	const char  *temp_key;
 	char        *launcher_location;
 
 	g_return_if_fail (panel_widget);
@@ -681,7 +680,6 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "launcher-location");
 	launcher_location = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
 

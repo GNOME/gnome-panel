@@ -32,7 +32,10 @@ void session_load (void);
 
 void session_add_dead_launcher (const gchar *location);
 
-void panel_session_setup_config_sync (void);
+void panel_session_setup_config_sync   (void);
+
+void panel_session_set_restart_command (GnomeClient *client,
+					char        *exec);
 
 G_END_DECLS
 

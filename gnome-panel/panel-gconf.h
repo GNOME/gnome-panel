@@ -13,15 +13,17 @@ typedef enum {
 
 G_CONST_RETURN char *panel_gconf_get_profile (void);
 
-GConfClient    *panel_gconf_get_client  (void);
-char           *panel_gconf_global_key  (const gchar *key);
-char           *panel_gconf_general_key (const gchar *profile,
-					 const gchar *key);
+GConfClient         *panel_gconf_get_client  (void);
 
-char           *panel_gconf_full_key    (PanelGConfKeyType  type,
-					 const gchar       *profile,
-					 const gchar       *panel_id,
-					 const gchar       *key);
+G_CONST_RETURN char *panel_gconf_sprintf     (const gchar *format,
+					      ...);
+G_CONST_RETURN char *panel_gconf_global_key  (const gchar *key);
+G_CONST_RETURN char *panel_gconf_general_key (const gchar *profile,
+					      const gchar *key);
+G_CONST_RETURN char *panel_gconf_full_key    (PanelGConfKeyType  type,
+					      const gchar       *profile,
+					      const gchar       *panel_id,
+					      const gchar       *key);
 
 GSList         *panel_gconf_all_global_entries (void);
 

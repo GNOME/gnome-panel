@@ -47,6 +47,9 @@ xstuff_atom_intern (Display *display, const char *name)
 	char *key;
 	Atom atom;
 
+	g_return_val_if_fail (display != NULL, None);
+	g_return_val_if_fail (name != NULL, None);
+
 	if (cache == 0)
 		cache = g_hash_table_new (g_str_hash, g_str_equal);
 

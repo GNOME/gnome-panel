@@ -197,11 +197,11 @@ main(int argc, char **argv)
 
 	client = gnome_master_client ();
 
-	/* FIXME - get the session stuff working properly */
+	panel_session_set_restart_command (client, argv [0]);
 
-	g_signal_connect (G_OBJECT (client), "save_yourself",
+	g_signal_connect (client, "save_yourself",
 			  G_CALLBACK (panel_session_save), argv[0]);
-	g_signal_connect (G_OBJECT (client), "die",
+	g_signal_connect (client, "die",
 			  G_CALLBACK (panel_session_die), NULL);
 
 	panel_tooltips = gtk_tooltips_new ();

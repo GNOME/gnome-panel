@@ -16,11 +16,13 @@
 #include <time.h>
 
 #include <libgnome/libgnome.h>
+#include <libgnomeui/gnome-window-icon.h>
+#include <gconf/gconf-client.h>
+#include <gdk/gdkkeysyms.h>
+
 /* Yes, yes I know, now bugger off ... */
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
-#include <gconf/gconf-client.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "foobar-widget.h"
 
@@ -423,7 +425,7 @@ append_format_items (FoobarWidget *foo,
 	GSList *group = NULL;
 	struct tm *das_tm;
 	time_t das_time = 0;
-	char *key;
+	const char *key;
 	char *str_utf8;
 	char *s;
 	int i;
@@ -440,7 +442,6 @@ append_format_items (FoobarWidget *foo,
 			PANEL_WIDGET (foo->panel)->unique_id,
 			"clock-format");
 	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
-	g_free (key);
 	
 	for (i = 0; i < FORMAT_ITEM_NUM; i++) {
 		das_tm = localtime (&das_time);
@@ -1242,8 +1243,7 @@ foobar_widget_new (const char *panel_id, int screen)
                 g_free (panel_icon);
         }
 
-	/* Ugly hack to reset the unique id back to the original one */	
-	if (panel_id != NULL) 
+	if (panel_id)
 		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
 
 	foo->screen = screen;

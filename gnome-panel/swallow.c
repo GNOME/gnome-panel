@@ -461,7 +461,7 @@ swallow_save_to_gconf (Swallow    *swallow,
 {
 	GConfClient *client;
 	const char  *profile;
-	char        *temp_key;
+	const char  *temp_key;
 
 	g_return_if_fail (swallow);
 
@@ -471,22 +471,18 @@ swallow_save_to_gconf (Swallow    *swallow,
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "exec-path");
 	gconf_client_set_string (client, temp_key, swallow->path, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "parameters");
 	gconf_client_set_string (client, temp_key, swallow->title, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "width");
 	gconf_client_set_int (client, temp_key, swallow->width, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "height");
 	gconf_client_set_int (client, temp_key, swallow->height, NULL);
-	g_free (temp_key);
 }
 
 void
@@ -496,7 +492,7 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 {
 	GConfClient *client;
 	const char  *profile;
-	char        *temp_key;
+	const char  *temp_key;
 	char        *path;
 	char        *params;
 	int          width;
@@ -512,25 +508,21 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 			PANEL_GCONF_OBJECTS, profile,
 			gconf_key, "exec-path");
 	path = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile,
 			gconf_key, "parameters");
 	params = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile,
 			gconf_key, "width");
 	width = gconf_client_get_int (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile,
 			gconf_key, "height");
 	height = gconf_client_get_int (client, temp_key, NULL);
-	g_free (temp_key);
 
 	load_swallow_applet (path, params, width, height, panel_widget,
 			     position, TRUE, gconf_key);

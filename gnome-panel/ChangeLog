@@ -1,3 +1,25 @@
+2002-03-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-gconf.[ch]: (panel_gconf_sprintf): impl new method to use a signle
+	static buffer for all our key creators to seriously cut down on the
+	amount of mallocs we do.
+	(panel_gconf_global_key), (panel_gconf_general_key):
+	(panel_gconf_full_key): use above.
+
+	* applet.c, drawer.c, foobar-widget.c, menu.c, panel-applet-frame.c,
+	  panel.c, swallow.c: update for panel-gconf changes. 
+
+	* gnome-panel-properties.c: update for panel-gconf changes and clean up
+	a bit.
+
+	* session.[ch]: (panel_session_set_restart_command): break out the
+	restart command setting to here and set the restart style to respawn.
+	(panel_session_save): use above.
+
+	* main.c: (main): call set_restart_command.
+
+	* xstuff.c: (xstuff_atom_intern): add some pre-conditions.
+
 2002-03-14  Glynn Foster  <glynn.foster@sun.com>
 
 	* Makefile.am: We now use panel_gconf_foo magic in 

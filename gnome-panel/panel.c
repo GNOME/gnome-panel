@@ -1906,7 +1906,7 @@ void
 panel_save_global_config (void)
 {
 	GConfChangeSet *change_set;
-	gchar *full_key;
+	const char     *full_key;
 
 	change_set = gconf_change_set_new ();
 
@@ -1922,78 +1922,60 @@ panel_save_global_config (void)
 
 	full_key = panel_gconf_global_key ("tooltips-enabled");
 	gconf_change_set_set_bool (change_set, full_key, global_config.tooltips_enabled);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("keep-menus-in-memory");
 	gconf_change_set_set_bool (change_set, full_key, global_config.keep_menus_in_memory);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("enable-animations");
 	gconf_change_set_set_bool (change_set, full_key, global_config.enable_animations);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("panel-minimized-size");
 	gconf_change_set_set_int (change_set, full_key, global_config.minimized_size);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("panel-show-delay");
 	gconf_change_set_set_int (change_set, full_key, global_config.show_delay);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("panel-animation-speed");
 	gconf_change_set_set_string (
 			change_set, full_key ,
 			gconf_enum_to_string (panel_speed_type_enum_map,
 					      global_config.animation_speed));
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("panel-hide-delay");
 	gconf_change_set_set_int (change_set, full_key, global_config.hide_delay);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("enable-key-bindings");
 	gconf_change_set_set_bool (change_set, full_key, global_config.keys_enabled);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("menu-key");
 	gconf_change_set_set_string (change_set, full_key, global_config.menu_key.str);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("run-key");
 	gconf_change_set_set_string (change_set, full_key, global_config.run_key.str);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("screenshot-key");
 	gconf_change_set_set_string (change_set, full_key, global_config.screenshot_key.str);
-	g_free (full_key);
 	
 	full_key = panel_gconf_global_key ("window-screenshot-key");
 	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("auto-raise-panel");
 	gconf_change_set_set_bool (change_set, full_key, global_config.autoraise);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("panel-window-layer");
 	gconf_change_set_set_string (
 			change_set, full_key,
 			gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
-	g_free (full_key);
 
 
 	full_key = panel_gconf_global_key ("drawer-autoclose");
 	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
-	g_free (full_key);
-
 
 	full_key = panel_gconf_global_key ("confirm-panel-remove");
 	gconf_change_set_set_bool (change_set, full_key, global_config.confirm_panel_remove);
-	g_free (full_key);
 
 	full_key = panel_gconf_global_key ("highlight-launchers-on-mouseover");
 	gconf_change_set_set_bool (change_set, full_key, global_config.highlight_when_over);
-	g_free (full_key);
 
 	gconf_client_commit_change_set (panel_gconf_get_client (), change_set, FALSE, NULL);
 
@@ -2104,14 +2086,12 @@ panel_get_string (const char *profile,
 		  const char *key,
 		  const char *default_val)
 {
-	gchar *full_key;
-	gchar *retval;
+	const char *full_key;
+	char       *retval;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-
 	retval = panel_gconf_get_string (full_key, default_val);
-	g_free (full_key);
 
 	return retval;
 }
@@ -2122,14 +2102,12 @@ panel_get_int (const char *profile,
 	       const char *key,
 	       gint        default_val)
 {
-	gchar *full_key;
-	gint   retval;
+	const char *full_key;
+	int         retval;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-	
 	retval = panel_gconf_get_int (full_key, default_val);
-	g_free (full_key);
 
 	return retval;
 }
@@ -2140,14 +2118,12 @@ panel_get_bool (const char *profile,
 		const char *key,
 		gboolean    default_val)
 {
-	gchar    *full_key;
-	gboolean  retval;
+	const char *full_key;
+	gboolean    retval;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-
 	retval = panel_gconf_get_bool (full_key, default_val);
-	g_free (full_key);
 
 	return retval;
 }
@@ -2158,14 +2134,11 @@ panel_set_string (const char *profile,
 		  const char *key,
 		  const char *value)
 {
-	char *full_key;
+	const char *full_key;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-
 	panel_gconf_set_string (full_key, value);	
-
-	g_free (full_key);
 }
 
 static void
@@ -2174,14 +2147,11 @@ panel_set_int (const char *profile,
 	       const char *key,
 	       int         value)
 {
-	gchar *full_key;
+	const char *full_key;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-
 	panel_gconf_set_int (full_key, value);	
-
-	g_free (full_key);
 }
 
 static void
@@ -2190,14 +2160,11 @@ panel_set_bool (const char *profile,
 		const char *key,
 		gboolean    value)
 {
-	char *full_key;
+	const char *full_key;
 
 	full_key = panel_gconf_full_key (
 			PANEL_GCONF_PANELS, profile, panel_id, key);
-
 	panel_gconf_set_bool (full_key, value);	
-
-	g_free (full_key);
 }
 
 void
@@ -2206,7 +2173,7 @@ panel_load_panels_from_gconf (void)
 	GSList     *panels;
 	GSList     *l;
 	const char *profile;
-	char       *key;
+	const char *key;
 
 	profile = panel_gconf_get_profile ();
 	
@@ -2215,8 +2182,6 @@ panel_load_panels_from_gconf (void)
 	panels = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
-	g_free (key);
-					  
 	for (l = panels; l; l = l->next) {
 		GtkWidget     *panel;
 		PanelType      type;
@@ -2482,7 +2447,7 @@ panel_save_to_gconf (PanelData *pd)
 	GSList      *panel_id_list;
 	GSList      *l;
 	const gchar *profile;
-	char        *key;
+	const char  *key;
 	char	    *color;
 
 	g_return_if_fail (pd != NULL);
@@ -2516,7 +2481,6 @@ panel_save_to_gconf (PanelData *pd)
 	}
 
 	panel_g_slist_deep_free (panel_id_list);
-	g_free (key);
 
 	panel_set_string (profile, panel->unique_id, "panel-type", 
 			  gconf_enum_to_string (panel_type_type_enum_map, pd->type));
@@ -2627,29 +2591,29 @@ panel_save_to_gconf (PanelData *pd)
 void
 panel_remove_from_gconf (PanelWidget *panel)
 {
-	GSList *new_panels = NULL;
-	GSList *panels;
-	GSList *l;
-        char   *key;
+	const char *key;
+	GSList     *new_panels = NULL;
+	GSList     *panels;
+	GSList     *l;
 
 	key = panel_gconf_general_key (panel_gconf_get_profile (), "panel-id-list");
 
-        panels = gconf_client_get_list (
+	panels = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
-        for (l = panels; l; l = l->next) {
+	for (l = panels; l; l = l->next) {
 		if (!strcmp (panel->unique_id, (char *) l->data)) {
 			char *dir;
-                        dir = g_strdup_printf ("/apps/panel/profiles/%s/panels/%s",
+
+			dir = g_strdup_printf ("/apps/panel/profiles/%s/panels/%s",
 					       panel_gconf_get_profile (),
 					       PANEL_WIDGET (panel)->unique_id);
 
-                        panel_gconf_clean_dir (panel_gconf_get_client (), dir);
+			panel_gconf_clean_dir (panel_gconf_get_client (), dir);
 			g_free (dir);
 			g_free (l->data);
-		} else {
+		} else
 			new_panels = g_slist_prepend (new_panels, l->data);
-		}
         }
 
 	g_slist_free (panels);
@@ -2661,6 +2625,4 @@ panel_remove_from_gconf (PanelWidget *panel)
 
 	if (new_panels)
 		panel_g_slist_deep_free (new_panels);
-
-	g_free (key);
 }

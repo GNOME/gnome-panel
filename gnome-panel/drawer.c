@@ -668,7 +668,7 @@ drawer_save_to_gconf (Drawer     *drawer,
 {
 	GConfClient *client;
 	const char  *profile;
-	char        *temp_key;
+	const char  *temp_key;
 
 	g_return_if_fail (drawer && BASEP_IS_WIDGET (drawer->drawer));
 	g_return_if_fail (PANEL_IS_WIDGET (BASEP_WIDGET (drawer->drawer)->panel));
@@ -681,25 +681,21 @@ drawer_save_to_gconf (Drawer     *drawer,
 	gconf_client_set_int (client, temp_key,
 			      g_slist_index (panels, BASEP_WIDGET (drawer->drawer)->panel),
 			      NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "unique-drawer-panel-id");
 	gconf_client_set_string (client, temp_key,
 				 PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel)->unique_id,
 				 NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "pixmap");
 	gconf_client_set_string (client, temp_key, drawer->pixmap, NULL);
-	g_free (temp_key);
 
 	if (drawer->tooltip) {
 		temp_key = panel_gconf_full_key (
 				PANEL_GCONF_OBJECTS, profile, gconf_key, "tooltip");
 		gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
-		g_free (temp_key);
 	}
 }
 
@@ -710,7 +706,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 {
 	GConfClient *client;
 	const char  *profile;
-	char        *temp_key;
+	const char  *temp_key;
 	int          panel;
 	char        *panel_id;
 	char        *pixmap;
@@ -725,22 +721,18 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
 					 gconf_key, "parameters");
 	panel = gconf_client_get_int (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
 					 gconf_key, "unique-drawer-panel-id");
 	panel_id = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
 					 gconf_key, "pixmap");
 	pixmap = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
 					 gconf_key, "tooltip");
 	tooltip = gconf_client_get_string (client, temp_key, NULL);
-	g_free (temp_key);
 
 	if (!panel_id < 0 && panel >= 0) {
 		PanelWidget *pw = g_slist_nth_data (panels, panel);
