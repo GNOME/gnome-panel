@@ -768,14 +768,99 @@ remove_pixmap_from_loaded (gpointer data, GObject *where_the_object_was)
 	g_free (key);
 }
 
+GdkPixbuf *
+panel_make_menu_icon (const char *icon,
+		      const char *fallback,
+		      int size,
+		      gboolean *long_operation)
+{
+	GdkPixbuf *pb;
+	char *file, *key;
+	gboolean loaded;
+
+	if (long_operation != NULL)
+		*long_operation = TRUE;
+
+	file = gnome_desktop_item_find_icon (icon,
+					     size /* desired size */,
+					     0 /* flags */);
+	if (file == NULL && fallback != NULL)
+		file = gnome_desktop_item_find_icon (fallback,
+						     size /* desired size */,
+						     0 /* flags */);
+
+	if (file == NULL) {
+		/* we didn't do anything long/hard */
+		if (long_operation != NULL)
+			*long_operation = FALSE;
+		return NULL;
+	}
+
+	pb = NULL;
+
+	loaded = FALSE;
+
+	key = g_strdup_printf ("%d:%s", size, file);
+
+	if (loaded_icons != NULL &&
+	    (pb = g_hash_table_lookup (loaded_icons, key)) != NULL) {
+		if (pb != NULL)
+			g_object_ref (G_OBJECT (pb));
+	}
+
+	if (pb == NULL) {
+		pb = gdk_pixbuf_new_from_file (file, NULL);
+		
+		/* add icon to the hash table so we don't load it again */
+		loaded = TRUE;
+	}
+
+	if (pb == NULL) {
+		g_free (file);
+		g_free (key);
+		return NULL;
+	}
+
+	if (loaded &&
+	    (gdk_pixbuf_get_width (pb) != size ||
+	     gdk_pixbuf_get_height (pb) != size)) {
+		GdkPixbuf *pb2;
+		pb2 = gdk_pixbuf_scale_simple (pb, size, size,
+					       GDK_INTERP_BILINEAR);
+		g_object_unref (G_OBJECT (pb));
+		pb = pb2;
+	}
+
+	if (loaded) {
+		if (loaded_icons == NULL)
+			loaded_icons = g_hash_table_new_full
+				(g_str_hash, g_str_equal,
+				 (GDestroyNotify) g_free,
+				 (GDestroyNotify) g_object_unref);
+		g_hash_table_replace (loaded_icons,
+				      g_strdup (key),
+				      g_object_ref (G_OBJECT (pb)));
+		g_object_weak_ref (G_OBJECT (pb),
+				   (GWeakNotify) remove_pixmap_from_loaded,
+				   g_strdup (key));
+	} else {
+		/* we didn't load from disk */
+		if (long_operation != NULL)
+			*long_operation = FALSE;
+	}
+
+	g_free (file);
+	g_free (key);
+
+	return pb;
+}
+
 static gboolean
 load_icons_handler (gpointer data)
 {
-	GtkImage *pixmap;
 	GdkPixbuf *pb;
 	IconToLoad *icon;
-	char *file, *key;
-	gboolean loaded;
+	gboolean long_operation;
 
 load_icons_handler_again:
 
@@ -795,87 +880,33 @@ load_icons_handler_again:
 		goto load_icons_handler_again;
 	}
 
-	file = gnome_desktop_item_find_icon (icon->image,
-					     icon->size /* desired size */,
-					     0 /* flags */);
-	if (file == NULL)
-		file = gnome_desktop_item_find_icon (icon->fallback_image,
-						     icon->size /* desired size */,
-						     0 /* flags */);
-
-	if (file == NULL) {
-		icon_to_load_free (icon);
-		/* we didn't do anything long/hard, so just do this again,
-		 * this is fun, don't go back to main loop */
-		goto load_icons_handler_again;
-	}
-
-	pb = NULL;
-
-	loaded = FALSE;
-	pixmap = NULL;
-
-	key = g_strdup_printf ("%d:%s", icon->size, file);
-
-	if (loaded_icons != NULL &&
-	    (pb = g_hash_table_lookup (loaded_icons, key)) != NULL) {
-		if (pb != NULL)
-			g_object_ref (G_OBJECT (pb));
-	}
-
+	pb = panel_make_menu_icon (icon->image,
+				   icon->fallback_image,
+				   icon->size,
+				   &long_operation);
 	if (pb == NULL) {
-		pb = gdk_pixbuf_new_from_file (file, NULL);
-		
-		/* add icon to the hash table so we don't load it again */
-		loaded = TRUE;
-	}
-
-	if (pb == NULL) {
-		g_free (file);
-		g_free (key);
 		icon_to_load_free (icon);
-		/* this may have been a long operation so jump back to
-		 * the main loop for a while */
-		return TRUE;
-	}
-
-	if (gdk_pixbuf_get_width (pb) != icon->size ||
-	    gdk_pixbuf_get_height (pb) != icon->size) {
-		GdkPixbuf *pb2;
-		pb2 = gdk_pixbuf_scale_simple (pb, icon->size, icon->size,
-					       GDK_INTERP_BILINEAR);
-		g_object_unref (G_OBJECT (pb));
-		pb = pb2;
+		if (long_operation) {
+			/* this may have been a long operation so jump back to
+			 * the main loop for a while */
+			return TRUE;
+		} else {
+			/* we didn't do anything long/hard, so just do this again,
+			 * this is fun, don't go back to main loop */
+			goto load_icons_handler_again;
+		}
 	}
 
 	gtk_image_set_from_pixbuf (GTK_IMAGE (icon->pixmap), pb);
 	g_object_unref (G_OBJECT (pb));
 
-	if (loaded) {
-		if (loaded_icons == NULL)
-			loaded_icons = g_hash_table_new_full
-				(g_str_hash, g_str_equal,
-				 (GDestroyNotify) g_free,
-				 (GDestroyNotify) g_object_unref);
-		g_hash_table_replace (loaded_icons,
-				      g_strdup (key),
-				      g_object_ref (G_OBJECT (pb)));
-		g_object_weak_ref (G_OBJECT (pb),
-				   (GWeakNotify) remove_pixmap_from_loaded,
-				   g_strdup (key));
-	} else {
-		g_free (file);
-		g_free (key);
-		icon_to_load_free (icon);
+	icon_to_load_free (icon);
 
-		/* we didn't load from disk, so just do this again,
+	if ( ! long_operation) {
+		/* we didn't do anything long/hard, so just do this again,
 		 * this is fun, don't go back to main loop */
 		goto load_icons_handler_again;
 	}
-
-	g_free (file);
-	g_free (key);
-	icon_to_load_free (icon);
 
 	/* if still more we'll come back */
 	return TRUE;

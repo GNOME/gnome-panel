@@ -5,6 +5,7 @@
 #include <gtk/gtk.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "button-widget.h"
 #include "panel-widget.h"
@@ -287,14 +288,14 @@ loadup_file(const char *file)
 	if (string_empty (file))
 		return NULL;
 
-	if (!g_path_is_absolute (file)) {
-		char *f;
+	if ( ! g_path_is_absolute (file)) {
+		char *full = gnome_desktop_item_find_icon (file,
+							   48 /* desired size */,
+							   0 /* flags */);
 
-		f = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-					       file, TRUE, NULL);
-		if (f) {
-			pb = gdk_pixbuf_new_from_file (f, NULL);
-			g_free (f);
+		if (full != NULL) {
+			pb = gdk_pixbuf_new_from_file (full, NULL);
+			g_free (full);
 		}
 	} else {
 		pb = gdk_pixbuf_new_from_file (file, NULL);

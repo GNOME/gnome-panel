@@ -666,25 +666,12 @@ get_default_image (void)
 	static GdkPixbuf *pixbuf = NULL;
 	static gboolean looked   = FALSE;
 
-	if (! looked) {
-		GdkPixbuf *pb = NULL, *scaled = NULL;
-		char *name = panel_pixmap_discovery ("gnome-tasklist.png", FALSE /* fallback */);
-		if (name == NULL)
-			/* evil fallback huh? */
-			name = panel_pixmap_discovery ("apple-red.png", FALSE /* fallback */);
-
-		if (name != NULL) {
-			pb = gdk_pixbuf_new_from_file (name, NULL);
-			g_free (name);
-		}
-		
-		if (pb != NULL) {
-			scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
-							  GDK_INTERP_BILINEAR);
-			g_object_unref (G_OBJECT (pb));
-
-			pixbuf = scaled;
-		}
+	if ( ! looked) {
+		pixbuf = panel_make_menu_icon ("gnome-tasklist.png",
+					       /* evil fallback huh? */
+					       "apple-red.png",
+					       20 /* size */,
+					       NULL /* long_operation */);
 
 		looked = TRUE;
 	}

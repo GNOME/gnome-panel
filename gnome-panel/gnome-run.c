@@ -774,31 +774,13 @@ fill_list (GtkWidget *list)
 		GtkTreeIter iter;
 		FileRec *fr;
 		GdkPixbuf *pixbuf;
-		char *icon;
 
 		fr = tmp->data;
 
-		icon = gnome_desktop_item_find_icon (fr->icon,
-						     ICON_SIZE /* desired size */,
-						     0 /* flags */);
-		if (icon != NULL) {
-			pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
-			g_free (icon);
-		} else {
-			pixbuf = NULL;
-		}
-
-		if (pixbuf != NULL &&
-		    (gdk_pixbuf_get_width (pixbuf) != ICON_SIZE ||
-		     gdk_pixbuf_get_height (pixbuf) != ICON_SIZE)) {
-			GdkPixbuf *scaled;
-			scaled = gdk_pixbuf_scale_simple (pixbuf,
-							  ICON_SIZE,
-							  ICON_SIZE,
-							  GDK_INTERP_BILINEAR);
-			g_object_unref (G_OBJECT (pixbuf));
-			pixbuf = scaled;
-		}
+		pixbuf = panel_make_menu_icon (fr->icon,
+					       NULL /* fallback */,
+					       ICON_SIZE,
+					       NULL /* long_operation */);
 
 		gtk_list_store_append (store, &iter);
 		gtk_list_store_set (store, &iter,

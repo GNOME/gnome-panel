@@ -20,6 +20,7 @@
 #include "logout.h"
 #include "menu-properties.h"
 #include "menu-util.h"
+#include "menu.h"
 #include "panel-config.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
@@ -521,36 +522,24 @@ applet_setup_panel_menu (gboolean is_basep)
 {
 	GtkWidget *menuitem;
 	GtkWidget *panel_menu;
-	gchar     *pixmap_path;
+	GdkPixbuf *pixbuf;
 
 	menuitem = gtk_image_menu_item_new ();
 
-	pixmap_path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-						 "gnome-panel.png", TRUE, NULL);
-	if (pixmap_path) {
-		GdkPixbuf *pixbuf, *scaled_pixbuf = NULL;
+	pixbuf = panel_make_menu_icon ("gnome-panel.png",
+				       NULL /* fallback */,
+				       SMALL_ICON_SIZE /* size */,
+				       NULL /* long_operation */);
+
+	if (pixbuf != NULL) {
 		GtkWidget *image = NULL;
 		
-		pixbuf = gdk_pixbuf_new_from_file (pixmap_path, NULL);
-
-		if (pixbuf != NULL) {
-			scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
-								 SMALL_ICON_SIZE,
-								 SMALL_ICON_SIZE,
-								 GDK_INTERP_BILINEAR);
-			g_object_unref (pixbuf);
-		}
-
-		if (scaled_pixbuf != NULL) {
-			image = gtk_image_new_from_pixbuf (scaled_pixbuf);
-			g_object_unref (scaled_pixbuf);
-		}
+		image = gtk_image_new_from_pixbuf (pixbuf);
+		g_object_unref (pixbuf);
 		
 		setup_menuitem (menuitem, 
 				image,
 				_("Panel"));
-
-		g_free (pixmap_path);
 	} else {
 		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
 

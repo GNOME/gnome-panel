@@ -1,3 +1,16 @@
+Wed Feb 20 19:13:33 2002  George Lebl <jirka@5z.com>
+
+	* menu.[ch], applet.c, foobar-widget.c, gnome-run.c:  Add
+	  panel_make_menu_icon, which exposes the pixbuf loading function
+	  from the menu icon cache so that we can use it in other places,
+	  such as the run box.
+
+	* button-widget.c: use the desktop-item icon finding function for
+	  icon finding
+
+	* launcher.c: when getting the best launcher icon look for 48x48 and
+	  not 20x20
+
 Wed Feb 20 18:15:38 2002  George Lebl <jirka@5z.com>
 
 	* menu-fentry.c: sure_string the fullname before making a collation

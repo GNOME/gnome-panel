@@ -136,6 +136,11 @@ void		panel_load_menu_image_deferred (GtkWidget *image_menu_item,
 /* Note, bind the following on 'show' or some such */
 void		panel_make_sure_menu_within_screen (GtkMenu *menu);
 
+GdkPixbuf *	panel_make_menu_icon (const char *icon,
+				      const char *fallback,
+				      int size,
+				      gboolean *long_operation);
+
 
 G_END_DECLS
 

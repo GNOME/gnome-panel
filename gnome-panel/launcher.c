@@ -789,7 +789,7 @@ ditem_set_icon (GnomeDesktopItem *ditem, const char *icon)
 	if (icon != NULL &&
 	    icon[0] != G_DIR_SEPARATOR) {
 		char *full = gnome_desktop_item_find_icon (icon,
-							   20 /* desired size */,
+							   48 /* desired size */,
 							   0 /* flags */);
 		if (full != NULL) {
 			gnome_desktop_item_set_string (ditem,
