@@ -540,7 +540,7 @@ main(int argc, char **argv)
 	char *mypath;
 
 	panel_corba_register_arguments ();
-	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
+	gnome_init("launcher_applet", NULL, argc, argv, 0, NULL);
 
 	/*we pass '#' plus a comment (our path) to the panel to start,
 	  that will tell the panel to doing nothing (next session),
@@ -551,7 +551,7 @@ main(int argc, char **argv)
 	if(!mypath)
 		return 1;
 	myinvoc = g_copy_strings("#",mypath,NULL);
-	free(mypath);
+	g_free(mypath);
 
 	launcher_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
 
