@@ -1220,15 +1220,16 @@ panel_stretch_events_to_toplevel (GtkWidget         *widget,
 
 /* stolen from gtk */
 void
-panel_signal_connect_while_alive (GObject     *object,
-				  const gchar *signal,
-				  GCallback    func,
-				  gpointer     func_data,
-				  GObject     *alive_object)
+panel_signal_connect_while_alive (gpointer    object,
+				  const char *signal,
+				  GCallback   func,
+				  gpointer    func_data,
+				  gpointer    alive_object)
 {
 	GClosure *closure;
 
 	g_return_if_fail (G_IS_OBJECT (object));
+	g_return_if_fail (G_IS_OBJECT (alive_object));
 
 	closure = g_cclosure_new (func, func_data, NULL);
 	g_object_watch_closure (G_OBJECT (alive_object), closure);
@@ -1239,17 +1240,18 @@ panel_signal_connect_while_alive (GObject     *object,
 }
 
 void
-panel_signal_connect_object_while_alive (GObject      *object,
-					 const gchar  *signal,
-					 GCallback     func,
-					 GObject      *alive_object)
+panel_signal_connect_object_while_alive (gpointer    object,
+					 const char *signal,
+					 GCallback   func,
+					 gpointer    alive_object)
 {
-  g_return_if_fail (G_IS_OBJECT (object));
+	g_return_if_fail (G_IS_OBJECT (object));
+	g_return_if_fail (G_IS_OBJECT (alive_object));
   
-  g_signal_connect_closure_by_id (object,
-				  g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
-				  g_cclosure_new_object_swap (func, G_OBJECT (alive_object)),
-				  FALSE);
+	g_signal_connect_closure_by_id (object,
+					g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
+					g_cclosure_new_object_swap (func, G_OBJECT (alive_object)),
+					FALSE);
 }
 
 gboolean

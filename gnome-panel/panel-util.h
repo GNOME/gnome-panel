@@ -121,15 +121,15 @@ char *		panel_pixmap_discovery	(const char *name,
 void		panel_stretch_events_to_toplevel (GtkWidget         *widget,
 						  PanelStretchFlags  flags);
 
-void		panel_signal_connect_while_alive (GObject     *object,
-						  const gchar *signal,
-						  GCallback    func,
-						  gpointer     func_data,
-						  GObject     *alive_object);
-void		panel_signal_connect_object_while_alive (GObject      *object,
-							 const gchar  *signal,
-							 GCallback     func,
-							 GObject      *alive_object);
+void		panel_signal_connect_while_alive        (gpointer     object,
+							 const gchar *signal,
+							 GCallback    func,
+							 gpointer     func_data,
+							 gpointer     alive_object);
+void		panel_signal_connect_object_while_alive (gpointer     object,
+							 const gchar *signal,
+							 GCallback    func,
+							 gpointer     alive_object);
 
 gboolean	panel_ensure_dir	(const char *dirname);
 

@@ -625,8 +625,18 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 				    int               response,
 				    PanelAppletFrame *frame)
 {
-	AppletInfo *info = frame->priv->applet_info;
-	
+	AppletInfo *info;
+
+	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
+
+	if (!GTK_WIDGET (frame)->parent) {
+		g_object_unref (frame);
+		gtk_widget_destroy (dialog);
+		return;
+	}
+
+	info = frame->priv->applet_info;
+
 	if (response == GTK_RESPONSE_YES) {
 		PanelWidget *panel;
 		char        *iid;
@@ -647,6 +657,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 	} else
 		panel_applet_clean (info, TRUE);
 
+	g_object_unref (frame);
 	gtk_widget_destroy (dialog);
 }
 
@@ -713,7 +724,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (panel_applet_frame_reload_response),
-			  frame);
+			  g_object_ref (frame));
 
 	gtk_widget_show (dialog);
 	g_free (applet_name);

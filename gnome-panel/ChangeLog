@@ -1,5 +1,16 @@
 2002-07-22  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c:
+	(panel_applet_reload_response): if our parent has disappeared
+	forget about reloading.
+	(panel_applet_frame_cnx_broken): take a ref on the frame. #88432.
+
+	* panel-util.[ch]: (panel_signal_connect_while_alive),
+	(panel_signal_connect_object_while_alive): upd signatures
+	to be more gobject like.
+
+2002-07-22  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet-frame.c: (panel_applet_frame_reload_response): 
 	Only reload the applet on GTK_RESPONSE_YES. #88098.
 
