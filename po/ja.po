@@ -1,5 +1,5 @@
 # gnome-panel ja.po.
-# Copyright (C) 1998-2002 Free Software Foundation, Inc.
+# Copyright (C) 1998-2003 Free Software Foundation, Inc.
 # Yukihiro Nakai <Nakai@abricot.co.jp>, 1998
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999
 # Eiichiro ITANI <emu@ceres.dti.ne.jp>, 1999
@@ -7,101 +7,100 @@
 # Yuusuke Tahara <tahara@gnome.gr.jp>, 2000
 # Shingo Akagaki <dora@kondara.org>, 2000
 # Akira TAGOH <tagoh@gnome.gr.jp>, 2001
+# Takeshi AIHANA <aihana@gnome.gr.jp>, 2003.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.0.0\n"
-"POT-Creation-Date: 2003-01-21 18:37+1300\n"
-"PO-Revision-Date: 2002-06-13 13:10+0900\n"
-"Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
+"Project-Id-Version: gnome-panel 2.2.0\n"
+"POT-Creation-Date: 2003-01-26 23:47+0900\n"
+"PO-Revision-Date: 2003-01-26 23:45+0900\n"
+"Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
+#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr ""
-"ヘルプを表示しようとしてエラーが起きました:\n"
-"\n"
-"%s"
+msgstr "ヘルプを表示する際にエラーが発生しました:%s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"警告: そのコマンドはなにか実用的なもののようです。\n"
-"このアプレットは役に立たないものなので、それは本意ではないで\n"
-"しょう。Wanda を「現実的」あるいは役に立つアプレットにしてし\n"
-"まうような使い方に反対するよう、強く勧告するものであります。"
+"[警告] \n"
+"\"コマンド\" というのは実際に何か役に立つものでなければなりません。\n"
+"このアプレットは役に立たないものなので、実行したくないかもしれません。\n"
+"アプレットを \"実用的なもの\"、または何か便利なものにすることを\n"
+"期待しながら %s を利用しようすることがないよう、強く勧告するものであります。"
 
 #: applets/fish/fish.c:378 applets/fish/fish.c:536
 #, no-c-format
 msgid "%s the Fish"
-msgstr "さかな君 %s"
+msgstr "おさかな君 %s"
 
 #: applets/fish/fish.c:379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. If "
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"このアプレットは何の役にも立ちません。 ディスクスペースと コンパイル時間を消"
-"費し、実行すれば貴重なパネルの空間と メモリを無駄使いします。このアプレットを"
-"使っている人を 見かけたら、カウンセリングを勧めて下さい。"
+"%s はホ〜ントに何の役にもたちません。ディスク容量とビルド時間を費やした挙げ句"
+"に、実行すると貴重なパネルのスペースとメモリを無駄遣いします。もしこのアプ"
+"レットを使っている人を見かけたら、直ぐにカウンセリングを勧めて下さいネ。"
 
 #: applets/fish/fish.c:400
 msgid "(with minor help from George)"
-msgstr "(あとGeorgeにちょっと手伝ってもらった)"
+msgstr "(あと George にちょっと手伝ってもらった)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:416
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
-msgstr "さかな君"
+msgstr "おさかな君"
 
 #: applets/fish/fish.c:448
 #, c-format
 msgid "%s the GNOME Fish"
-msgstr "GNOMEさかな君 %s"
+msgstr "GNOME おさかな君 %s"
 
 #: applets/fish/fish.c:449
 #, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "現代の神官 GNOME さかな君 %s"
+msgstr "現代の神官 GNOME おさかな君 %s"
 
 #: applets/fish/fish.c:496
 msgid "Unable to get the name of the command to execute"
-msgstr ""
+msgstr "実行するコマンド名を取得できません"
 
 #: applets/fish/fish.c:513
 msgid "Unable to locate the command to execute"
-msgstr ""
+msgstr "実行するコマンドの格納場所に移動できません"
 
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "GNOMEさかな君 %s"
+msgstr "GNOME おさかな君 %s が言うには:"
 
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>コマンドの実行に失敗しました:</b> '%s'\n"
+"'%s' を実行できません。\n"
 "\n"
 "詳細: %s"
 
@@ -112,43 +111,43 @@ msgid ""
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"fortune がインストールされておらず、実行するプログラムも指定されてません。\n"
+"Fortune がインストールされていない、または実行するプログラムを指定していませ"
+"ん。\n"
 "\n"
-"さかな君の設定ダイアログを参照してください。"
+"おさかな君の設定ダイアログを参照して下さい。"
 
 #: applets/fish/fish.c:1289
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
 msgstr ""
-"水を換えてくれぃ!\n"
-"(今日の日付をみてね)"
+"水を換えてくれぃ！\n"
+"(今日の日付をみてネ)"
 
 #: applets/fish/fish.c:1358
 msgid "GNOME Fish, the fortune teller"
-msgstr "占い師 GNOME さかな君"
+msgstr "占い師 GNOME おさかな君"
 
 #: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "参照"
 
 #: applets/fish/fish.glade.h:3
 msgid "Command to _execute when fish is clicked:"
-msgstr "さかな君がクリックされた時に実行するコマンド(_E):"
+msgstr "おさかな君がクリックされた時に実行するコマンド(_E):"
 
 #: applets/fish/fish.glade.h:4
 msgid "Frame_s in animation:"
 msgstr "アニメーションのフレーム(_S):"
 
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME Fish Preferences"
-msgstr "GNOME さかな君のプロパティ"
+msgstr "GNOME おさかな君の設定"
 
 #: applets/fish/fish.glade.h:6
 msgid "Pause _per frame (s):"
@@ -160,7 +159,7 @@ msgstr "アニメーションファイルの名前(_A):"
 
 #: applets/fish/fish.glade.h:8
 msgid "_Name of GNOME fish:"
-msgstr "GNOME さかな君の名前(_N)"
+msgstr "GNOME おさかな君の名前(_N)"
 
 #: applets/fish/fish.glade.h:9
 msgid "_Rotate on vertical panels"
@@ -171,16 +170,15 @@ msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"名無しのさかな君は、とてもさえないさかなです。名前を付けて命を吹きこみましょ"
-"う"
+"名無しのおさかな君はとてもさえない魚です。名前を付けて命を吹きこみましょう！"
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
-msgstr "さかな君がクリックされた時に実行するコマンド"
+msgstr "おさかな君がクリックされた時に実行するコマンド"
 
 #: applets/fish/fish.schemas.in.h:3
 msgid "Pause per frame"
-msgstr "フレーム間のポーズ"
+msgstr "フレーム毎のポーズ"
 
 #: applets/fish/fish.schemas.in.h:4
 msgid "Rotate on vertical panels"
@@ -188,19 +186,19 @@ msgstr "パネルが縦向きの時は回転する"
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
-msgstr "さかな君のアニメーション画像"
+msgstr "おさかな君のアニメーション画像"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
-msgstr "さかな君の名前"
+msgstr "おさかな君の名前"
 
 #: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
-msgstr "さかな君のアニメーションのフレーム数"
+msgstr "おさかな君のアニメーションのフレーム数"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
-msgstr "遊び"
+msgstr "お遊び"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
@@ -246,11 +244,11 @@ msgstr "設定(_P)..."
 
 #: applets/gen_util/clock.c:178
 msgid "%l:%M:%S %p"
-msgstr "%p %l:%M:%S"
+msgstr "%p%l:%M:%S"
 
 #: applets/gen_util/clock.c:178
 msgid "%l:%M %p"
-msgstr "%p %l:%M"
+msgstr "%p%l:%M"
 
 #: applets/gen_util/clock.c:180 applets/gen_util/clock.c:499
 msgid "%H:%M:%S"
@@ -274,6 +272,8 @@ msgid ""
 "%s\n"
 "%s"
 msgstr ""
+"%s\n"
+"%s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -282,7 +282,7 @@ msgstr ""
 #: applets/gen_util/clock.c:200
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s %s"
 
 #. Show date in tooltip
 #: applets/gen_util/clock.c:303
@@ -303,7 +303,7 @@ msgstr "%p %I:%M"
 
 #: applets/gen_util/clock.c:535
 msgid "%A, %B %d %Y"
-msgstr "%Y/%m/%d"
+msgstr "%Y/%m/%d (%a)"
 
 #: applets/gen_util/clock.c:957
 msgid "Clock Preferences"
@@ -322,9 +322,8 @@ msgid "_24 hour"
 msgstr "24時間制(_2)"
 
 #: applets/gen_util/clock.c:1007
-#, fuzzy
 msgid "UNI_X time"
-msgstr "UNIX 時間(_U)"
+msgstr "UNIX 時間(_X)"
 
 #: applets/gen_util/clock.c:1011
 msgid "_Internet time"
@@ -332,23 +331,24 @@ msgstr "インターネット時間(_I)"
 
 #: applets/gen_util/clock.c:1048
 msgid "Show _seconds"
-msgstr "秒を表示(_S)"
+msgstr "秒を表示する(_S)"
 
 #: applets/gen_util/clock.c:1058
 msgid "Show _date"
-msgstr "日付を表示(_D)"
+msgstr "日付を表示する(_D)"
 
 #: applets/gen_util/clock.c:1068
 msgid "Use _UTC"
-msgstr "UTC を使用(_U)"
+msgstr "UTC を使用する(_U)"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
+#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
+"Takeshi AIHANA (aihana@gnome.gr.jp>\n"
 "Akira TAGOH (tagoh@gnome.gr.jp)\n"
 "Eiichiro ITANI (emu@ceres.dti.ne.jp)\n"
 "Shingo Akagaki (dora@kondara.org)\n"
@@ -357,87 +357,83 @@ msgstr ""
 "Yukihiro Nakai (nakai@gnome.gr.jp)\n"
 "Yuusuke Tahara (tahara@gnome.gr.jp)"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1204
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "時計"
 
 #: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
-msgstr "現在の時間と日付を表示する時計"
+msgstr "現在の時刻と日付を表示する時計"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr ""
+"インターネット時間を表示します。これは世界中をとおして全て同じ時間です。"
 
 #: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
 msgid "Display date in the Clock, in addition to time"
-msgstr "時刻に加えて、日付も表示する"
+msgstr "時計に時刻に加えて、日付も表示します。"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
-msgstr "時刻で秒を表示"
+msgstr "時刻に秒を追加して表示します。"
 
 #: applets/gen_util/clock.schemas.in.h:5
-#, fuzzy
 msgid "Display time in Universal Coordinated Time zone"
-msgstr "グリニッジ標準時で時刻を表示"
+msgstr "グリニッジ標準時で時刻を表示します。"
 
 #: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Epoch ― 1970/1/1 からの秒数で時刻を表示"
+msgstr "Epoch (1970/1/1) からの秒数で時刻を表示します。"
 
 #: applets/gen_util/clock.schemas.in.h:7
 msgid "Hour format"
-msgstr "「時」の形式"
+msgstr "\"時\" の書式"
 
 #: applets/gen_util/clock.schemas.in.h:8
 msgid "Sets the hour format, may be either 12 or 24"
-msgstr "「時」の形式を設定します。12 か 24 です"
+msgstr "\"時\" の書式を設定します。12 か 24 です。"
 
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in Clock"
-msgstr "アプレットに日付を表示"
+msgstr "時計に日付を表示します"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "アプレットの上にマウスが来た時にツールチップで日付を表示"
+msgstr "時計の上にマウスがのった際に、ツールチップで日付を表示します"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
-msgstr "ツールチップに日付を表示"
+msgstr "ツールチップに日付を表示します"
 
 #: applets/gen_util/clock.schemas.in.h:12
 msgid "Show time with seconds"
-msgstr "秒を表示"
+msgstr "時刻を秒で表記します"
 
 #: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
-msgstr "インターネット時間を使用"
+msgstr "インターネット時間を使用します"
 
 #: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UNIX time"
-msgstr "UNIX 時間を使用"
+msgstr "UNIX 時間を使用します"
 
 #: applets/gen_util/clock.schemas.in.h:15
-#, fuzzy
 msgid "Use UTC"
-msgstr "UTC を使用(_U)"
+msgstr "UTC 時間を使用します"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
-msgstr "日付をコピー(_D)"
+msgstr "日付のコピー(_D)"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:2
 msgid "Copy _time"
-msgstr "時刻をコピー(_T)"
+msgstr "時刻のコピー(_T)"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -445,24 +441,24 @@ msgstr "アクセサリ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
 msgid "Alert you when new mail arrives"
-msgstr "新しいメールが届いた時に音を鳴らす"
+msgstr "新しいメールが届いた時に音を鳴らします"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 msgid "Button to hide application windows and show the desktop"
-msgstr ""
+msgstr "アプリのウィンドウを隠したり表示したりするボタン"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "GenUtil Applet Factory"
-msgstr "GenUtil アプレットファクトリ"
+msgstr "GenUtil アプレット・ファクトリ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 msgid "Get the current time and date"
-msgstr "現在の時間と日付を得る"
+msgstr "現在の時刻と日付を取得します"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
+#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
 msgid "Inbox Monitor"
-msgstr "Inbox モニタ"
+msgstr "受信箱モニタ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "Internet"
@@ -470,17 +466,16 @@ msgstr "インターネット"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 #: applets/gen_util/showdesktop.c:452
-#, fuzzy
 msgid "Show Desktop Button"
-msgstr "隠すボタンを表示"
+msgstr "デスクトップのボタンを表示します"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Switch between open windows"
-msgstr "開いたウインドウ間を切り換え"
+msgstr "ウィンドウを切り換えます"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
 msgid "Switch between workspaces"
-msgstr "ワークスペース間を切り換え"
+msgstr "ワークスペースを切り換えます"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
@@ -488,249 +483,241 @@ msgid "Utility"
 msgstr "ユーティリティ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
+#: applets/gen_util/tasklist.c:811
 msgid "Window List"
-msgstr "ウインドウリスト"
+msgstr "ウィンドウの一覧"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
+#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "ワークスペース切り換え器"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
 msgid "factory for creating some general applets"
-msgstr "汎用アプレット生成のためのファクトリ"
+msgstr "汎用アプレット生成のためのファクトリです"
 
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
 msgid "_Check for mail"
 msgstr "メールのチェック(_C)"
 
-#: applets/gen_util/mailcheck.c:200
-#, fuzzy, c-format
+#: applets/gen_util/mailcheck.c:204
+#, c-format
 msgid "There was an error executing %s: %s"
-msgstr ""
-"ヘルプを表示しようとしてエラーが起きました:\n"
-"\n"
-"%s"
+msgstr "%s を実行する際にエラーが発生しました: %s"
 
-#: applets/gen_util/mailcheck.c:328
+#: applets/gen_util/mailcheck.c:332
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"Inbox モニタの設定でパスワードを設定していません、\n"
-"なので、起動するたびに入力する必要があります。"
+"受信箱モニタの設定でパスワードが設定されていないので\n"
+"起動するたびに入力する必要があります。"
 
-#: applets/gen_util/mailcheck.c:336
+#: applets/gen_util/mailcheck.c:340
 msgid "Please enter your mailserver's _password:"
-msgstr "メールサーバのパスワードを入力してください(_P):"
+msgstr "メールサーバのパスワードを入力して下さい(_P):"
 
-#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
+#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
 msgid "Password Entry box"
-msgstr ""
+msgstr "パスワード入力ボックス"
 
-#: applets/gen_util/mailcheck.c:382
+#: applets/gen_util/mailcheck.c:386
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"Inbox モニタはメールのチェックに失敗しました。自動更新を一時的に無効にしま"
+"受信箱モニタがメールのチェックに失敗しました。自動更新を一時的に無効にしま"
 "す。\n"
-"サーバやユーザ名、パスワードが間違ってませんか?"
+"サーバやユーザ名、パスワードが間違ってませんか？"
 
-#: applets/gen_util/mailcheck.c:558
+#: applets/gen_util/mailcheck.c:573
 msgid "You have new mail."
-msgstr "新しくメールが届きました。"
+msgstr "新しいメールが届きました"
 
-#: applets/gen_util/mailcheck.c:560
+#: applets/gen_util/mailcheck.c:575
 msgid "You have mail."
-msgstr "メールが届いています。"
+msgstr "メールが届いています"
 
-#: applets/gen_util/mailcheck.c:564
+#: applets/gen_util/mailcheck.c:579
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d 通の未読のメッセージ (全 %d 通)"
 
-#: applets/gen_util/mailcheck.c:566
+#: applets/gen_util/mailcheck.c:581
 #, c-format
 msgid "%d messages"
 msgstr "%d 通のメッセージ"
 
-#: applets/gen_util/mailcheck.c:570
+#: applets/gen_util/mailcheck.c:585
 msgid "No mail."
-msgstr "メールがありません"
+msgstr "メールはありません"
 
-#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
-#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
+#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
+#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
 msgid "Status not updated"
 msgstr "ステータスが更新されていません"
 
-#: applets/gen_util/mailcheck.c:1263
+#: applets/gen_util/mailcheck.c:1278
 msgid "Mailbox _resides on:"
-msgstr "メールボックスの場所(_R):"
+msgstr "メールボックスの種類(_R):"
 
-#: applets/gen_util/mailcheck.c:1271
+#: applets/gen_util/mailcheck.c:1286
 msgid "Local mailspool"
 msgstr "ローカルのメールスプール"
 
-#: applets/gen_util/mailcheck.c:1279
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local maildir"
 msgstr "ローカルのメールディレクトリ"
 
-#: applets/gen_util/mailcheck.c:1287
+#: applets/gen_util/mailcheck.c:1302
 msgid "Remote POP3-server"
-msgstr "リモートのPOP3サーバー"
+msgstr "リモートの POP3 サーバ"
 
-#: applets/gen_util/mailcheck.c:1295
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote IMAP-server"
-msgstr "リモートのIMAPサーバー"
+msgstr "リモートの IMAP サーバ"
 
-#: applets/gen_util/mailcheck.c:1315
+#: applets/gen_util/mailcheck.c:1330
 msgid "Mail _spool file:"
-msgstr "メールスプールファイル(_S):"
+msgstr "メールスプールのファイル名(_S):"
 
-#: applets/gen_util/mailcheck.c:1334
+#: applets/gen_util/mailcheck.c:1349
 msgid "Mail s_erver:"
-msgstr "メールサーバー(_E):"
+msgstr "メール・サーバ(_E):"
 
-#: applets/gen_util/mailcheck.c:1340
+#: applets/gen_util/mailcheck.c:1355
 msgid "Mail Server Entry box"
-msgstr ""
+msgstr "メール・サーバ入力ボックス"
 
-#: applets/gen_util/mailcheck.c:1354
+#: applets/gen_util/mailcheck.c:1369
 msgid "_Username:"
 msgstr "ユーザ名(_U):"
 
-#: applets/gen_util/mailcheck.c:1362
+#: applets/gen_util/mailcheck.c:1377
 msgid "Username Entry box"
-msgstr ""
+msgstr "ユーザ名入力ボックス"
 
-#: applets/gen_util/mailcheck.c:1371
+#: applets/gen_util/mailcheck.c:1386
 msgid "_Password:"
 msgstr "パスワード(_P):"
 
-#: applets/gen_util/mailcheck.c:1392
+#: applets/gen_util/mailcheck.c:1407
 msgid "_Folder:"
 msgstr " フォルダ(_F):"
 
-#: applets/gen_util/mailcheck.c:1400
+#: applets/gen_util/mailcheck.c:1415
 msgid "Folder Entry box"
-msgstr ""
+msgstr "フォルダ入力ボックス"
 
-#: applets/gen_util/mailcheck.c:1412
+#: applets/gen_util/mailcheck.c:1427
 msgid "C_ommand to run before checking for mail:"
-msgstr "メールのチェックの前に実行するコマンド(_O):"
+msgstr "メールをチェックする前に実行するコマンド(_O):"
 
-#: applets/gen_util/mailcheck.c:1420
-#, fuzzy
+#: applets/gen_util/mailcheck.c:1435
 msgid "Command Entry box"
-msgstr "実行するコマンド"
+msgstr "コマンド入力ボックス"
 
-#: applets/gen_util/mailcheck.c:1445
+#: applets/gen_util/mailcheck.c:1460
 msgid "Execute"
-msgstr "この命令を"
-
-#: applets/gen_util/mailcheck.c:1456
-msgid "Before each _update:"
-msgstr "更新の直前(_U):"
+msgstr "実行プログラム"
 
 #: applets/gen_util/mailcheck.c:1471
-#, fuzzy
+msgid "Before each _update:"
+msgstr "更新する前に実行する(_U):"
+
+#: applets/gen_util/mailcheck.c:1486
 msgid "Command to execute before each update"
-msgstr "メールのチェックの時に実行するコマンド"
+msgstr "更新する前に実行するコマンドです"
 
-#: applets/gen_util/mailcheck.c:1481
+#: applets/gen_util/mailcheck.c:1496
 msgid "When new mail _arrives:"
-msgstr "新着メール時(_A):"
+msgstr "メールが届いたら実行する(_A):"
 
-#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
-msgstr "新着メールがあった時に実行するコマンド"
+msgstr "新しいメールが届いた時に実行するコマンドです"
 
-#: applets/gen_util/mailcheck.c:1504
+#: applets/gen_util/mailcheck.c:1519
 msgid "When clicke_d:"
-msgstr "クリック時(_D):"
+msgstr "クリック時に実行する(_D):"
 
-#: applets/gen_util/mailcheck.c:1517
-#, fuzzy
+#: applets/gen_util/mailcheck.c:1532
 msgid "Command to execute when clicked"
-msgstr "さかな君がクリックされた時に実行するコマンド(_E):"
+msgstr "アプレットをクリックしたら実行するコマンドです"
 
-#: applets/gen_util/mailcheck.c:1527
+#: applets/gen_util/mailcheck.c:1542
 msgid "Set the number of unread mails to _zero"
 msgstr "メールの未読数をゼロにする(_Z)"
 
-#: applets/gen_util/mailcheck.c:1538
+#: applets/gen_util/mailcheck.c:1553
 msgid "Check for mail _every"
-msgstr "メールのチェックを(_E)"
+msgstr "メール・チェックの周期(_E)"
 
-#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
+#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
 msgid "minutes"
 msgstr "分"
 
-#: applets/gen_util/mailcheck.c:1550
+#: applets/gen_util/mailcheck.c:1565
 msgid "Choose time interval in minutes to check mail"
-msgstr ""
+msgstr "メールをチェックする周期 (分) を指定します"
 
-#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
+#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
 msgid "seconds"
 msgstr "秒"
 
-#: applets/gen_util/mailcheck.c:1564
-#, fuzzy
+#: applets/gen_util/mailcheck.c:1579
 msgid "Choose time interval in seconds to check mail"
-msgstr "メールのチェックの間隔 (ミリ秒単位)"
+msgstr "メールをチェックする周期 (秒) を指定します"
 
-#: applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1591
 msgid "Play a _sound when new mail arrives"
-msgstr "新しいメールが届いた時に音を鳴らす(_S)"
+msgstr "新しいメールが届いた時に効果音を鳴らす(_S)"
 
-#: applets/gen_util/mailcheck.c:1587
+#: applets/gen_util/mailcheck.c:1602
 msgid "Select a_nimation"
 msgstr "アニメーションの選択(_N)"
 
-#: applets/gen_util/mailcheck.c:1664
+#: applets/gen_util/mailcheck.c:1679
 msgid "Inbox Monitor Preferences"
-msgstr "Inbox モニタ設定"
+msgstr "受信箱モニタの設定"
 
-#: applets/gen_util/mailcheck.c:1684
+#: applets/gen_util/mailcheck.c:1699
 msgid "_Mail check"
 msgstr "メールチェック(_M)"
 
-#: applets/gen_util/mailcheck.c:1688
+#: applets/gen_util/mailcheck.c:1703
 msgid "Mail_box"
 msgstr "メールボックス(_B)"
 
-#: applets/gen_util/mailcheck.c:1768
+#: applets/gen_util/mailcheck.c:1783
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "メールチェックはメールボックスに新しいメールが届くと知らせてくれます"
 
-#: applets/gen_util/mailcheck.c:1933
+#: applets/gen_util/mailcheck.c:1948
 msgid "Text only"
 msgstr "文字のみ"
 
-#: applets/gen_util/mailcheck.c:1959
+#: applets/gen_util/mailcheck.c:1974
 msgid "Mail check"
 msgstr "メールチェック"
 
-#: applets/gen_util/mailcheck.c:1960
+#: applets/gen_util/mailcheck.c:1975
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "メールチェックはメールボックスに新しいメールが届くと知らせてくれます"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
-msgstr "メールのチェックの時に実行するコマンド"
+msgstr "メールをチェックする際に実行するコマンドです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "さかな君がクリックされた時に実行するコマンド(_E):"
+msgstr "受信箱モニタをクリックすると実行するコマンドです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
-msgstr "メールのチェックの前に実行するコマンド:"
+msgstr "メールをチェックする前に実行するコマンドです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
@@ -742,7 +729,7 @@ msgstr "newmail-command を実行するかどうか"
 
 #: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
-msgstr "メールのチェックの間隔 (ミリ秒単位)"
+msgstr "メール・チェックの間隔 (ミリ秒単位) です"
 
 #: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
@@ -754,48 +741,47 @@ msgstr "これをセットすると update-freq ミリ秒毎にメールをチ�
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
-msgstr "これをセットすると、exec-command を実行するでしょう"
+msgstr "これをセットすると、exec-command を実行します"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr "これをチェックすると、newmail-command を実行するでしょう"
+msgstr "これをチェックすると、newmail-command を実行します"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
-msgstr "メールのチェックの間隔"
+msgstr "メールのチェックの間隔です"
 
 #: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
-msgstr "アニメーションファイルへのパス"
+msgstr "アニメーション・ファイルへのパスです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Play a sound when mail is recieved"
-msgstr "新しいメールが届いた時に音を鳴らす"
+msgstr "新しいメールが届いた時に音を鳴らします"
 
 #: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
-msgstr "メールを取得するリモートフォルダ"
+msgstr "メールを取得するリモート・フォルダです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-#, fuzzy
 msgid "Remote server to connect to for our mail"
-msgstr "メールをチェックするリモートサーバ"
+msgstr "接続するリモート・サーバです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
-msgstr "メールのチェックの前にこのコマンドを実行します"
+msgstr "メールをチェックする前に実行するコマンドです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "The mail server"
-msgstr "メールサーバー"
+msgstr "メール・サーバです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
-msgstr "ユーザのパスワード"
+msgstr "ユーザのパスワードです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
-msgstr "リモートサーバでのユーザのパスワード"
+msgstr "リモート・サーバに対するユーザのパスワードです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
@@ -806,30 +792,28 @@ msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "メールをどう処理するか、するか、するか..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
-#, fuzzy
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
-msgstr ""
-"これはメールチェックアプレットの通常の使用中に表示するアニメーションです"
+msgstr "通常の受信箱モニタで表示するアニメーションです"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
-msgstr "リモートサーバでのユーザ名"
+msgstr "リモート・サーバに対するユーザ名です"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "アプレットをクリックした時にこのコマンドを実行します"
+msgstr "ユーザが受信箱モニタをクリックしたら、コマンドを実行します"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "アプレットをクリックした時にメールの状態をリセットするかどうか"
+msgstr ""
+"ユーザが受信箱モニタをクリックしたら、メールのステータスをリセットするかどう"
+"か"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
-msgstr "メールが届いています!"
+msgstr "メールが届いています！"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -837,45 +821,42 @@ msgstr "メールチェック"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:2
 msgid "New Mail"
-msgstr "新しいメールがあります"
+msgstr "新しいメールが届いています"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "行"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
 msgid "Columns"
 msgstr "列"
 
-#: applets/gen_util/pager.c:378
-#, fuzzy, c-format
+#: applets/gen_util/pager.c:399
+#, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"ワークスペース切り替えアプレットの num_rows の値の読みこみでエラー: %s\n"
+msgstr "ワークスペース切り替え器で num_rows を読み込む際にエラー: %s\n"
 
-#: applets/gen_util/pager.c:389
-#, fuzzy, c-format
+#: applets/gen_util/pager.c:410
+#, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
-"ワークスペース切り替えアプレットの display_workspace_names の値の読みこみでエ"
-"ラー: %s\n"
+"ワークスペース切り替え器で display_workspace_names を読み込む際にエラー: %s\n"
 
-#: applets/gen_util/pager.c:404
-#, fuzzy, c-format
+#: applets/gen_util/pager.c:425
+#, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
-"ワークスペース切り替えアプレットの display_all_workspaces の値の読みこみでエ"
-"ラー: %s\n"
+"ワークスペース切り替え器で display_all_workspaces を読み込む際にエラー: %s\n"
 
-#: applets/gen_util/pager.c:549
+#: applets/gen_util/pager.c:570
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"ワークスペース切り換え器はウインドウの管理に使えるワークスペースの小さいのを"
-"表示します。"
+"ワークスペース切り換え器は、ウィンドウを管理するためのワークスペースの縮小版"
+"を表示します。"
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -883,15 +864,15 @@ msgstr "ワークスペースの数(_W):"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
-msgstr "すべてのワークスペースを表示(_A)"
+msgstr "全てのワークスペースを表示する(_A)"
 
 #: applets/gen_util/pager.glade.h:4
 msgid "Show only the _current workspace"
-msgstr "現在のワークスペースのみ表示(_C)"
+msgstr "現在のワークスペースのみ表示する(_C)"
 
 #: applets/gen_util/pager.glade.h:5
 msgid "Show workspace _names in the switcher"
-msgstr "切り換え器にワークスペース名を表示(_N)"
+msgstr "切り替え器にワークスペース名を表示する(_N)"
 
 #: applets/gen_util/pager.glade.h:6
 msgid "Workspace Names"
@@ -899,91 +880,86 @@ msgstr "ワークスペース名"
 
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "ワークスペース切り換え器 設定"
+msgstr "ワークスペース切り換え器の設定"
 
 #: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
 msgstr "ワークスペース"
 
 #: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
 msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"これが真なら、すべてのワークスペースを表示します。真でなければ現在のワークス"
-"ペースだけを表示します"
+"これが True の場合、全てのワークスペースを表示します。それ以外は、現在のワー"
+"クスペースだけを表示します"
 
 #: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the workspaces in the Workspace Switcher will display the "
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"これが真なら、ページャ中のワークスペースでワークスペースの名前を表示します。"
-"真でないなら、ワークスペースの内容のみを表示します"
+"これが True の場合、切り替え器の中にそれぞれワークスペース名を表示します。そ"
+"れ以外は、ワークスペースの内容のみを表示します"
 
 #: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
 msgid "Number of rows in the Workspace Switcher."
-msgstr "ページャ中の行数"
+msgstr "ワークスペース切り替え器の行の数です"
 
 #: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"すべてのワークスペースを表示する場合、ページャは(水平方向に)何行、(垂直方向"
-"に)何列、ワークスペースを表示するか"
+"全てのワークスペースを表示する際に、ワークスペースの中に (水平方向に) 何行、"
+"(垂直方向に) 何列あるか決定します"
 
 #: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
 msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "すべてのワークスペースをページャに表示するかどうか"
+msgstr ""
+"ワークスペース切り替え器の中に全てのワークスペースを表示するかどうかです"
 
 #: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
 msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "ワークスペースの名前をページャに表示するかどうか"
+msgstr ""
+"ワークスペース切り替え器の中にワークスペース毎の名前を表示するかどうかです"
 
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
-msgstr ""
+msgstr "隠したウィンドウを元に戻す場合は、ここをクリックして下さい。"
 
 #: applets/gen_util/showdesktop.c:220
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
+"全てのウィンドウを隠してデスクトップを表示する場合は、ここをクリックして下さ"
+"い。"
 
 #: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load %s: %s\n"
-msgstr ""
-"<b>ファイルを開くのに失敗しました:</b> '%s'\n"
-"\n"
-"%s"
+msgstr "%s の読み込みに失敗しました: %s\n"
 
 #: applets/gen_util/showdesktop.c:291
-#, fuzzy
 msgid "File not found"
-msgstr "ヘルプ文書が見つかりません"
+msgstr "ファイルが見つかりません"
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
+msgstr "このボタンは、全てのウィンドウを隠してデスクトップを表示させます"
 
-#: applets/gen_util/tasklist.c:810
+#: applets/gen_util/tasklist.c:813
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
-"ウインドウリストは表示されているウインドウの一覧を表示して閲覧できます。"
+"ウィンドウ一覧では表示可能なウィンドウの一覧と、それらを参照する機能を提供し"
+"ます"
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
-msgstr "狭い時にウインドウをグループ化(_S)"
+msgstr "狭い時にグループ化する(_S)"
 
 #: applets/gen_util/tasklist.glade.h:2
 msgid "M_inimum size:"
@@ -995,81 +971,84 @@ msgstr "最大サイズ(_X):"
 
 #: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
-msgstr "現在のワークスペースに復元(_W)"
+msgstr "現在のワークスペースに復元する(_W)"
 
 #: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
-msgstr "元のワークスペースに復元(_T)"
+msgstr "元のワークスペースに復元する(_T)"
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
-msgstr "現在のワークスペースのウインドウを表示(_C)"
+msgstr "現在のワークスペースにあるウィンドウを表示する(_C)"
 
 #: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
-msgstr "すべてのワークスペースのウインドウを表示(_L)"
+msgstr "全てのワークスペースにあるウィンドウを表示する(_L)"
 
 #: applets/gen_util/tasklist.glade.h:8
 msgid "When restoring minimized windows"
-msgstr "最小化したウインドウを復元した時"
+msgstr "最小化したウィンドウを復元する場合"
 
 #: applets/gen_util/tasklist.glade.h:9
 msgid "Window List Preferences"
-msgstr "ウインドウリスト設定"
+msgstr "ウィンドウ一覧の設定"
 
 #: applets/gen_util/tasklist.glade.h:10
 msgid "Window List content"
-msgstr "ウインドウリスト内容"
+msgstr "ウィンドウ一覧の内容"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "Window List size"
-msgstr "ウインドウリスト"
+msgstr "ウィンドウ一覧の大きさ"
 
 #: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
-msgstr "ウインドウ グループ化"
+msgstr "ウィンドウのグループ化"
 
 #: applets/gen_util/tasklist.glade.h:13
 msgid "_Always group windows"
-msgstr "つねにウインドウをグループ化(_A)"
+msgstr "常にグループ化する(_A)"
 
 #: applets/gen_util/tasklist.glade.h:14
 msgid "_Never group windows"
-msgstr "ウインドウをグループ化しない(_N)"
+msgstr "グループ化しない(_N)"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
+"いつウィンドウ一覧にある同じアプリをグループ化するかを決定します。指定可能な"
+"値は \"グループ化しない\", \"狭いときにグループ化\", \"常にグループ化\" のど"
+"れか一つです"
 
 #: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
-"これが真なら、すべてのワークスペースを表示します。真でなければ現在のワークス"
-"ペースだけを表示します"
+"True の場合、ウィンドウ一覧には全てのワークスペースのウィンドウを表示します。"
+"それ以外は、現在のワークスペースにあるウィンドウのみ表示します"
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
+"True の場合、復元時に現在のワークスペースにウィンドウを表示します。それ以外"
+"は、ウィンドウがあったワークスペースに表示します"
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size that Window List requests"
-msgstr ""
+msgstr "ウィンドウ一覧の最大サイズです"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size that Window List requests"
-msgstr ""
+msgstr "ウィンドウ一覧の最小サイズです"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
-msgstr "リストア時に、ウインドウを現在のワークスペースへ移動"
+msgstr "復元時に現在のワークスペースへウィンドウを表示します"
 
 #: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
@@ -1081,6 +1060,9 @@ msgid ""
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
+"この値はウィンドウ一覧の最大幅です。これはエッジ・パネルのような大きいパネル"
+"の中で、ウィンドウ一覧のサイズを限定する際に便利な設定です (ウィンドウ一覧は"
+"エッジ・パネルの全てのスペースを使用することができます)"
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
@@ -1088,6 +1070,9 @@ msgid ""
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
+"利用する場合は、ウィンドウ一覧の最小幅です。ウィンドウ一覧がこの最小幅を必要"
+"とします。これはスライド・パネルとエッジ・パネルで便利な設定です (両パネルと"
+"もにデフォルトで最小幅になります)"
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1095,19 +1080,19 @@ msgstr "ウインドウをグループ化する時"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr ""
+msgstr "通知アイコンを表示するスペース"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 msgid "Notification Area"
-msgstr ""
+msgstr "通知スペース"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr ""
+msgstr "通知スペース・ファクトリ"
 
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
-msgstr ""
+msgstr "パネル通知エリア"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1116,29 +1101,27 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
-#, fuzzy
+#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
-msgstr "パネルから取り除く"
+msgstr "パネルから削除(_R)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
-#, fuzzy
+#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
-msgstr "移動"
+msgstr "移動(_M)"
 
 #: gnome-panel/applet.c:793
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
+msgstr "ID %s のパネル・オブジェクトに object_type がありません。\n"
 
 #: gnome-panel/applet.c:813 gnome-panel/applet.c:921
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
+msgstr "ID %s のパネル・オブジェクトに panel_id がありません。\n"
 
 #: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
-msgstr "空いている場所を見つけられません"
+msgstr "空いているスペースを見つけられません"
 
 #: gnome-panel/basep-widget.c:159
 msgid "Mode"
@@ -1162,7 +1145,7 @@ msgstr "隠蔽ボタンが有効"
 
 #: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr "隠蔽ボタン(パネルを隠したり表示したりするボタン)は有効か?"
+msgstr "隠蔽ボタン (パネルを隠したり表示したりするボタン) は有効かどうか"
 
 #: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
@@ -1178,88 +1161,80 @@ msgstr "このパネルを隠す"
 
 #: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
-msgstr "このパネルを表示"
+msgstr "このパネルを表示する"
 
 #: gnome-panel/button-widget.c:322
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>ファイルを開くのに失敗しました:</b> '%s'\n"
+"画像 %s の読み込みに失敗しました。\n"
 "\n"
-"%s"
+"詳細: %s"
 
 #: gnome-panel/button-widget.c:537
-#, fuzzy
 msgid "none"
 msgstr "なし"
 
 #: gnome-panel/button-widget.c:542
-#, fuzzy
 msgid "file not found"
-msgstr "ヘルプ文書が見つかりません"
+msgstr "ファイルがありません"
 
 #: gnome-panel/button-widget.c:868
-#, fuzzy
 msgid "Size"
-msgstr "大きさ:"
+msgstr "大きさ"
 
 #: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
-msgstr ""
+msgstr "ButtonWidget の大きさです"
 
 #: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
-msgstr ""
+msgstr "矢印つき"
 
 #: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
-msgstr ""
+msgstr "矢印を描画するかどうかです"
 
 #: gnome-panel/button-widget.c:886
-#, fuzzy
 msgid "Orientation"
-msgstr "向き:"
+msgstr "向き"
 
 #: gnome-panel/button-widget.c:887
-#, fuzzy
 msgid "The ButtonWidget orientation"
-msgstr "アプレットを含むパネルの向き"
+msgstr "ButtonWiget の向きです"
 
 #: gnome-panel/button-widget.c:896
-#, fuzzy
 msgid "Icon Name"
-msgstr "セッション名"
+msgstr "アイコン名"
 
 #: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
-msgstr ""
+msgstr "ButtonWidget のアイコンです"
 
 #: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
-msgstr ""
+msgstr "ストック・アイコン ID"
 
 #: gnome-panel/button-widget.c:906
-#, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
-msgstr "パネル・ボタンにカスタム・アイコンを使う"
+msgstr "ButtonWidget のストック・アイコンです"
 
 #: gnome-panel/disclosure-widget.c:259
 msgid "Expander Size"
-msgstr "エクスパンダーの大きさ"
+msgstr "エクスパンダの大きさ"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Size of the expander arrow"
-msgstr "エクスパンダーの矢印の大きさ"
+msgstr "エクスパンダの矢印の大きさです"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
-#, fuzzy
 msgid "Debian Menu"
 msgstr "Debian メニュー"
 
@@ -1268,7 +1243,6 @@ msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
-#, fuzzy
 msgid "SuSE Menu"
 msgstr "SuSE メニュー"
 
@@ -1277,7 +1251,6 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
 msgstr "CDE メニュー"
 
@@ -1299,7 +1272,7 @@ msgstr "アプレットの外観"
 
 #: gnome-panel/drawer.c:151
 msgid "Drawer handle"
-msgstr "把手"
+msgstr "引き出しの取っ手"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
@@ -1317,9 +1290,8 @@ msgstr "引き出し"
 
 #: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
 #: gnome-panel/menu.c:3475 gnome-panel/panel-action-button.c:89
-#, fuzzy
 msgid "_Properties"
-msgstr "プロパティ"
+msgstr "プロパティ(_P)"
 
 #: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3818
 msgid "Run Program..."
@@ -1327,33 +1299,31 @@ msgstr "プログラムの実行..."
 
 #: gnome-panel/foobar-widget.c:180
 msgid "Run applications, if you know the correct command to type in"
-msgstr "正確にタイプできるコマンドを知っていれば、コマンドを実行します"
+msgstr "コマンドを正確に入力できれば、アプリを起動できます"
 
 #: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3834
 msgid "Search for Files..."
-msgstr "ファイルを検索..."
+msgstr "ファイルの検索..."
 
 #: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3837
 msgid "Find files, folders, and documents on your computer"
-msgstr "コンピュータのファイル、フォルダ、文書を検索"
+msgstr "お使いのシステムにあるファイル、フォルダ、ドキュメントを検索します"
 
 #: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3853
-#, fuzzy
 msgid "Screenshot..."
-msgstr "スクリーンショット"
+msgstr "スクリーンショット..."
 
 #: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3856
-#, fuzzy
 msgid "Take a screenshot of your desktop"
-msgstr "デスクトップのスクリーンショットを撮る"
+msgstr "お使いのデスクトップのスクリーンショットを撮ります"
 
 #: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3642
 msgid "Lock Screen"
-msgstr "スクリーンのロック"
+msgstr "画面のロック"
 
 #: gnome-panel/foobar-widget.c:233
 msgid "Protect your computer from unauthorized use"
-msgstr "不正使用からコンピュータを守ります"
+msgstr "不正な使用からコンピュータを守ります"
 
 #: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
 #: gnome-panel/menu.c:3654
@@ -1375,28 +1345,28 @@ msgstr "ウインドウが開いてません"
 
 #: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
 msgid "Menu Panel"
-msgstr "メニューパネル"
+msgstr "メニュー・パネル"
 
 #: gnome-panel/foobar-widget.c:716
 msgid "GNOME Menu Panel"
-msgstr "GNOME メニューパネル"
+msgstr "GNOME メニュー・パネル"
 
 #: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
 #: gnome-panel/menu.c:3127 gnome-panel/menu.c:3793
 msgid "Applications"
 msgstr "アプリケーション"
 
-#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
+#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
 msgid "Can't find the screenshot program"
-msgstr "スクリーンショットプゴウラムを見つけられません"
+msgstr "スクリーンショット・プログラムがありません"
 
-#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
+#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
 msgid "Can't execute the screenshot program"
-msgstr "スクリーンショットプログラムを実行できません!"
+msgstr "スクリーンショット・プログラムを実行できません"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
-msgstr "指定したディレクトリにファイルを新規作成"
+msgstr "新しいファイルを指定したフォルダに作成する"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
@@ -1413,16 +1383,16 @@ msgstr "ランチャを追加する位置"
 
 #: gnome-panel/gnome-panel-add-launcher.c:36
 msgid "The argument is a url to add, not a .desktop file"
-msgstr "引数は追加する URL であり、.desktop ファイルではない"
+msgstr "引数は .desktop ファイルではなく、追加する URL です"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
 msgid ""
 "You must supply a single argument with the .desktop file or url to use\n"
-msgstr "引数には使用する .desktop ファイルか URL を一つ指定してください\n"
+msgstr "引数には使用する .desktop ファイルか URL を一つ指定して下さい。\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
 msgid "No panel found\n"
-msgstr "パネルがみつかりません\n"
+msgstr "パネルがありません\n"
 
 #: gnome-panel/gnome-panel-preferences.c:259
 #: gnome-panel/gnome-panel-screenshot.c:862
@@ -1431,23 +1401,22 @@ msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
-"ヘルプを表示しようとしてエラーが起きました:\n"
+"ヘルプを表示する際にエラーが発生しました:\n"
 "\n"
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:307
-#, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr ""
-"システム管理者がパネルの設定の\n"
-"変更を許可していません"
+"システム管理者は\n"
+"パネルの変更を許可していません。"
 
 #: gnome-panel/gnome-panel-preferences.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading glade file %s"
-msgstr "ファイル '%s' 読み出し時にエラー: %s"
+msgstr "Glade ファイル %s の読み込み時にエラー"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
@@ -1455,32 +1424,29 @@ msgstr "パネル"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr ""
+msgstr "お使いの全てのパネルに対する設定を行います"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
-msgstr "アニメーションの描画速度(_A):"
+msgstr "アニメーションの速度(_S):"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
-#, fuzzy
 msgid "Close _drawer when launcher is clicked"
-msgstr "中のランチャが押されたら引き出しを閉じる(_C)"
+msgstr "ランチャがクリックされたら引き出しを閉じる(_D)"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "パネルアニメーションを有効にする(_E)"
+msgstr "引き出しとパネルのアニメーションを有効にする(_A)"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
-msgstr "高速"
+msgstr "速い"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 #: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
-msgstr "中速"
+msgstr "中ぐらい"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Panel Preferences"
@@ -1488,44 +1454,44 @@ msgstr "パネルの設定"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
-msgstr "低速"
+msgstr "遅い"
 
 #: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"png 構造体を初期化できません。\n"
-"システムの libpng のバージョンに問題があるかもしれません"
+"PNG 構造体を初期化できません。\n"
+"お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
 
 #: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"png 情報を作成できません。\n"
-"システムの libpng のバージョンに問題があるかもしれません"
+"PNG 情報を作成できません。\n"
+"お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
 
 #: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"png 情報を設定できません。\n"
-"システムの libpng のバージョンに問題があるかもしれません"
+"PNG 情報を設定できません。\n"
+"お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
 
 #: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
 msgstr ""
-"スクリーンショットを保存するのにメモリが足りません。\n"
-"リソースを確保した上で再度挑戦してください。"
+"スクリーンショットの保存に必要なメモリが足りません。\n"
+"リソースを確保した上で再度、実行して下さい。"
 
 #: gnome-panel/gnome-panel-screenshot.c:220
 #, c-format
 msgid "File %s already exists. Overwrite?"
-msgstr "ファイル %s は既に存在します。上書きしますか?"
+msgstr "ファイル %s は既に存在します。上書きしますか？"
 
 #: gnome-panel/gnome-panel-screenshot.c:237
 #: gnome-panel/gnome-panel-screenshot.c:743
@@ -1537,11 +1503,11 @@ msgid ""
 msgstr ""
 "ファイルを作成できません:\n"
 "\"%s\"\n"
-"親ディレクトリのパミッションをチェックしてください"
+"親ディレクトリのパーミッションを確認して下さい。"
 
 #: gnome-panel/gnome-panel-screenshot.c:509
 msgid "Print Screenshot"
-msgstr "スクリーンショットを印刷"
+msgstr "スクリーンショットの印刷"
 
 #: gnome-panel/gnome-panel-screenshot.c:557
 msgid "Screenshot Print Preview"
@@ -1574,72 +1540,70 @@ msgstr "%s%cScreenshot-%d.png"
 #: gnome-panel/gnome-panel-screenshot.c:764
 #, c-format
 msgid "Not enough room to write file %s"
-msgstr "ファイル %s を書き出すのに必要な空き容量がありません。"
+msgstr "ファイル %s の保存に必要な空き容量がありません。"
 
 #: gnome-panel/gnome-panel-screenshot.c:1213
 msgid "Grab a window instead of the entire screen"
-msgstr "画面全体ではなくウインドウの画像を取得"
+msgstr "画面全体ではなくウインドウの画像を取得する"
 
 #: gnome-panel/gnome-panel-screenshot.c:1214
 msgid "Take screenshot after specified delay [in seconds]"
-msgstr "指定した時間(秒単位)経過後にスクリーンショットを撮る"
+msgstr "指定した時間 (秒単位) が経過したらスクリーンショットを撮る"
 
 #: gnome-panel/gnome-panel-screenshot.c:1266
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
-"スクリーンショットプログラム用の Glade ファイルが見つかりません。\n"
-"gnome-panel が正しくインスールされているかチェックしてください"
+"スクリーンショット・プログラムの Glade ファイルが見つかりません。\n"
+"gnome-panel が正しくインスールされているか確認して下さい。"
 
 #: gnome-panel/gnome-panel-screenshot.c:1290
 msgid "Unable to take a screenshot of the current desktop."
-msgstr "現在のデスクトップのスクリーンショットを取得できません。"
+msgstr "このデスクトップのスクリーンショットが撮れません。"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "オプション"
+msgstr "<b>オプション</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "プレビュー"
+msgstr "<b>プレビュー</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "スクリーンショット"
+msgstr "スクリーンショットの保存"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
-msgstr "スクリーンショットをデスクトップに保存(_D)"
+msgstr "デスクトップに保存する(_D)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr "スクリーンショットを Web ページ (~/public_html) に保存(_W)"
+msgstr "Web ページ (~/public_html) に保存する(_W)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
-msgstr "スクリーンショットを印刷(_P)..."
+msgstr "スクリーンショットの印刷(_P)..."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
-msgstr "スクリーンショットをファイルに保存(_S):"
+msgstr "ファイルに保存する(_S):"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
 msgstr ""
+"Web で表示できるように、スクリーンショットを保存するユーザのフォルダです"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory."
-msgstr ""
+msgstr "Web ディレクトリです"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
-msgstr "GNOME パネル シェル"
+msgstr "GNOME パネル・シェル"
 
 #: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
 #, c-format
@@ -1648,7 +1612,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>このプログラムの実行に失敗しました</b>\n"
+"<b>このプログラムの起動に失敗しました</b>\n"
 "\n"
 "詳細: %s"
 
@@ -1670,6 +1634,9 @@ msgid ""
 "\n"
 "Details: no application available to open file"
 msgstr ""
+"<b>ファイルのオープンに失敗しました:</b> '%s'\n"
+"\n"
+"詳細: ファイルを開くアプリがありません"
 
 #: gnome-panel/gnome-run.c:510
 #, c-format
@@ -1678,17 +1645,17 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>ファイルを開くのに失敗しました:</b> '%s'\n"
+"<b>ファイルのオープンに失敗しました:</b> '%s'\n"
 "\n"
 "%s"
 
 #: gnome-panel/gnome-run.c:599
 msgid "Choose a file"
-msgstr "ファイルを選択"
+msgstr "ファイルの選択"
 
 #: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
 msgid "Known Applications"
-msgstr "既知のアプリケーション"
+msgstr "既存のアプリケーション"
 
 #: gnome-panel/gnome-run.c:970
 msgid "Command to run"
@@ -1696,16 +1663,16 @@ msgstr "実行するコマンド"
 
 #: gnome-panel/gnome-run.c:1005
 msgid "Run in _terminal"
-msgstr "端末内で実行(_T)"
+msgstr "端末内で起動する(_T)"
 
 #: gnome-panel/gnome-run.c:1010
 msgid "_Append File..."
-msgstr ""
+msgstr "ファイルの追加(_A)..."
 
 #: gnome-panel/gnome-run.c:1393
 #, c-format
 msgid "Will run command: '%s'"
-msgstr "コマンド実行: '%s'"
+msgstr "実行するコマンド: '%s'"
 
 #: gnome-panel/gnome-run.c:1402
 msgid "No application selected"
@@ -1713,11 +1680,11 @@ msgstr "アプリケーションが選択されていません"
 
 #: gnome-panel/gnome-run.c:1522
 msgid "List of known applications"
-msgstr "既知のアプリケーションの一覧"
+msgstr "既存のアプリケーション一覧"
 
 #: gnome-panel/gnome-run.c:1523
 msgid "Choose an application to run from the list"
-msgstr "実行するアプリケーションを一覧から選んでください"
+msgstr "実行するアプリケーションを一覧から選んで下さい"
 
 #: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
@@ -1758,17 +1725,17 @@ msgstr ""
 
 #: gnome-panel/launcher.c:391
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr ""
+msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
 
 #: gnome-panel/launcher.c:411
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) が開けません\n"
 
 #: gnome-panel/launcher.c:525
-#, fuzzy, c-format
+#, c-format
 msgid "Help on %s _Application"
-msgstr "アプリケーション %s のヘルプ"
+msgstr "アプリケーション %s のヘルプ(_A)"
 
 #: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
@@ -1778,11 +1745,11 @@ msgstr "ランチャのプロパティ"
 #: gnome-panel/launcher.c:758
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
+msgstr "キー %s がセットされていないので、ランチャを起動できません\n"
 
 #: gnome-panel/launcher.c:854 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
-msgstr "ランチャを作成"
+msgstr "ランチャの作成"
 
 #: gnome-panel/launcher.c:1076
 #, c-format
@@ -1791,7 +1758,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"ランチャをディスクに保存できません。以下のエラーが発生:\n"
+"ランチャを保存できません。エラーが発生しました:\n"
 "\n"
 "%s"
 
@@ -1809,16 +1776,14 @@ msgstr ""
 
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
-msgstr "読みこみたいプロファイルの名前を指定"
+msgstr "読み込むプロファイル名を指定して下さい"
 
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
 msgstr "もっともっとたくさんの人達..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-#, fuzzy
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "そして最後に...ニッ!の騎士"
 
@@ -1827,9 +1792,9 @@ msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
 msgstr ""
-"このプログラムを使って、他のアプリケーションを実行したり、 内部で小さなアプ"
-"レットを実行したり、世界を平和にしたり 時には突然Xをクラッシュさせたりするこ"
-"とができます。"
+"このプログラムを使って他のアプリケーションを実行したり、小さなアプレットを実"
+"行したり、世界を平和にしたり 時には突然 X Window をクラッシュさせたりする事が"
+"できます。"
 
 #: gnome-panel/menu.c:283
 msgid ""
@@ -1840,8 +1805,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"\"Lockdown\" モードで実行。パネルの設定の変更がシステム管理者によって禁止され"
-"ています。"
+"\"Lockdown\" モードで実行中です。パネル設定の変更がシステム管理者によって禁止"
+"されています。"
 
 #: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
@@ -1849,7 +1814,7 @@ msgstr "GNOME パネル"
 
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
-msgstr "世界から飢餓を無くしましょう!"
+msgstr "世界から飢餓を無くしましょう！"
 
 #: gnome-panel/menu.c:329
 #, c-format
@@ -1858,7 +1823,7 @@ msgid ""
 "\n"
 "Details: %s probably does not exist"
 msgstr ""
-"<b>「GNOME について」を実行できません</b>\n"
+"<b>\"GNOME について\" を実行できません</b>\n"
 "\n"
 "詳細: おそらく %s が存在しません"
 
@@ -1880,7 +1845,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>エントリをロードできません</b>\n"
+"<b>エントリを読み込めません</b>\n"
 "\n"
 "詳細: %s"
 
@@ -1903,7 +1868,7 @@ msgstr "パス名からファイル名を取得できません: %s"
 #: gnome-panel/menu.c:1083
 #, c-format
 msgid "Could not get directory name from path: %s"
-msgstr "パス名からディレクトリ名を取得できません: %s"
+msgstr "パス名からフォルダ名を取得できません: %s"
 
 #: gnome-panel/menu.c:1153
 msgid ""
@@ -1913,7 +1878,7 @@ msgid ""
 msgstr ""
 "<b>実行ボックスに追加できません</b>\n"
 "\n"
-"詳細: エントリに'Exec' あるいは 'URL' フィールドが定義されてません"
+"詳細: エントリに 'Exec' または 'URL' フィールドがありません"
 
 #: gnome-panel/menu.c:1463
 msgid "Add this launcher to panel"
@@ -1925,7 +1890,7 @@ msgstr "この項目を削除する"
 
 #: gnome-panel/menu.c:1487
 msgid "Put into run dialog"
-msgstr "「プログラムの実行」にセット"
+msgstr "起動ダイアログにセット"
 
 #: gnome-panel/menu.c:1505
 #, c-format
@@ -1999,67 +1964,55 @@ msgstr "GNOME フロート・パネル"
 
 #: gnome-panel/menu.c:2992
 msgid "You can only have one menu panel at a time."
-msgstr "メニューパネルは同時に一つしか持てません。"
+msgstr "メニュー・パネルは同時に一つしか持てません。"
 
 #: gnome-panel/menu.c:3037
-#, fuzzy
 msgid "C_orner Panel"
-msgstr "コーナー・パネル"
+msgstr "コーナー・パネル(_O)"
 
 #: gnome-panel/menu.c:3039
-#, fuzzy
 msgid "Create corner panel"
-msgstr "コーナー・パネル"
+msgstr "コーナー・パネルを生成します"
 
 #: gnome-panel/menu.c:3047
-#, fuzzy
 msgid "_Edge Panel"
-msgstr "エッジ・パネル"
+msgstr "エッジ・パネル(_E)"
 
 #: gnome-panel/menu.c:3049
-#, fuzzy
 msgid "Create edge panel"
-msgstr "新規パネルを作成"
+msgstr "エッジ・パネルを生成します"
 
 #: gnome-panel/menu.c:3057
-#, fuzzy
 msgid "_Floating Panel"
-msgstr "フロート・パネル"
+msgstr "フロート・パネル(_F)"
 
 #: gnome-panel/menu.c:3059
-#, fuzzy
 msgid "Create floating panel"
-msgstr "フロート・パネル"
+msgstr "フロート・パネルを生成します"
 
 #: gnome-panel/menu.c:3067
-#, fuzzy
 msgid "_Sliding Panel"
-msgstr "スライド・パネル"
+msgstr "スライド・パネル(_S)"
 
 #: gnome-panel/menu.c:3069
-#, fuzzy
 msgid "Create sliding panel"
-msgstr "新規パネルを作成"
+msgstr "スライド・パネルを生成します"
 
 #: gnome-panel/menu.c:3079
-#, fuzzy
 msgid "_Menu Panel"
-msgstr "メニューパネル"
+msgstr "メニュー・パネル(_M)"
 
 #: gnome-panel/menu.c:3081
-#, fuzzy
 msgid "Create menu panel"
-msgstr "新規パネルを作成"
+msgstr "メニュー・パネルを生成します"
 
 #: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3717
-#, fuzzy
 msgid "KDE Menu"
 msgstr "KDEメニュー"
 
 #: gnome-panel/menu.c:3233
-#, fuzzy
 msgid "Lock"
-msgstr "時計"
+msgstr "画面のロック"
 
 #: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
@@ -2067,60 +2020,51 @@ msgstr "スクリーンショット"
 
 #: gnome-panel/menu.c:3251
 msgid "Search"
-msgstr ""
+msgstr "ファイルの検索"
 
 #: gnome-panel/menu.c:3260
-#, fuzzy
 msgid "Run"
-msgstr "実行(_R)"
+msgstr "プログラムの実行"
 
 #: gnome-panel/menu.c:3332
 msgid "You cannot remove your last panel."
 msgstr "最後のパネルは削除できません。"
 
 #: gnome-panel/menu.c:3345
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
 "パネルを削除すると、パネルとそのアプレットの\n"
-"設定は失われてしまいます。このパネルを削除しますか?"
+"設定は失われてしまいます。このパネルを削除しますか？"
 
 #: gnome-panel/menu.c:3353
-#, fuzzy
 msgid "Delete Panel"
-msgstr "このパネルを削除"
+msgstr "パネルの削除"
 
 #: gnome-panel/menu.c:3419
-#, fuzzy
 msgid "_Delete This Panel..."
-msgstr "このパネルを削除..."
+msgstr "このパネルの削除(_D)..."
 
 #: gnome-panel/menu.c:3422 gnome-panel/menu.c:3460
-#, fuzzy
 msgid "_Delete This Panel"
-msgstr "このパネルを削除"
+msgstr "このパネルの削除(_D)"
 
 #: gnome-panel/menu.c:3444
-#, fuzzy
 msgid "_Add to Panel"
-msgstr "パネルに追加"
+msgstr "パネルに追加(_A)"
 
 #: gnome-panel/menu.c:3489
-#, fuzzy
 msgid "_New Panel"
-msgstr "ベースパネル"
+msgstr "新規パネル(_N)"
 
 #: gnome-panel/menu.c:3531
-#, fuzzy
 msgid "_About Panels"
-msgstr "パネルについて..."
+msgstr "パネルについて(_A)..."
 
 #: gnome-panel/menu.c:3544
-#, fuzzy
 msgid "About _GNOME"
-msgstr "GNOME について"
+msgstr "GNOME について(_G)"
 
 #: gnome-panel/menu.c:3584
 msgid "Launcher..."
@@ -2131,19 +2075,17 @@ msgid "Launcher from menu"
 msgstr "ランチャ (メニューから選択)"
 
 #: gnome-panel/menu.c:3601
-#, fuzzy
 msgid "Button"
-msgstr "実行ボタン"
+msgstr "ボタン"
 
 #: gnome-panel/menu.c:3611 gnome-panel/menu.c:3941 gnome-panel/menu.c:3969
 #: gnome-panel/menu.c:4165
 msgid "Main Menu"
-msgstr "メインメニュー"
+msgstr "メイン・メニュー"
 
 #: gnome-panel/menu.c:3648
-#, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "画面をロックし、一時的にコンピュータを離れることができます。"
+msgstr "画面をロックして一時的にコンピュータを離れることができます"
 
 #: gnome-panel/menu.c:3660
 msgid ""
@@ -2155,13 +2097,13 @@ msgstr ""
 
 #: gnome-panel/menu.c:3825
 msgid "Run a command"
-msgstr "コマンドを実行"
+msgstr "コマンドの実行"
 
 #: gnome-panel/menu.c:3871
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
+#: gnome-panel/menu.c:3889 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "メニュー"
 
@@ -2171,12 +2113,12 @@ msgstr "メニュー:"
 
 #: gnome-panel/menu.c:3963
 msgid "Can't create menu, using main menu!"
-msgstr "メニューを作成できません。メインメニューを使います!"
+msgstr "メニューを生成できません。メイン・メニューを使います！"
 
 #: gnome-panel/menu.c:4400
 #, c-format
 msgid "No path set at %s for panel menu object\n"
-msgstr ""
+msgstr "パネル・メニュー・オブジェクトの %s にセットしたパスではありません\n"
 
 #: gnome-panel/menu-ditem.c:123
 #, c-format
@@ -2191,11 +2133,11 @@ msgstr ""
 
 #: gnome-panel/menu-ditem.c:447
 msgid "You have to specify a name for the launcher."
-msgstr "ランチャの名前を指定しなくてはなりません"
+msgstr "ランチャの名前を指定して下さい。"
 
 #: gnome-panel/menu-ditem.c:463
 msgid "You have to specify a valid URL or command."
-msgstr "正しい URL かコマンドを指定しなくてはなりません"
+msgstr "正しい URL またはコマンドを指定して下さい。"
 
 #. class
 #: gnome-panel/menu-ditem.c:494
@@ -2205,7 +2147,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>メニューアイテムをディスクへ保存できません</b>\n"
+"<b>メニュー・アイテムを保存できません</b>\n"
 "\n"
 "詳細: %s"
 
@@ -2214,69 +2156,64 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
-"この場所に書きこみできないため新しいランチャをこの場所に作成できませんでした"
+"この場所に書きこみできないため、新しいランチャをこの場所に作成できませんでし"
+"た。"
 
 #: gnome-panel/panel-action-button.c:83
-#, fuzzy
 msgid "_Activate Screensaver"
-msgstr "スクリーンセーバを有効に"
+msgstr "スクリーンセーバを有効にする(_A)"
 
 #: gnome-panel/panel-action-button.c:84
-#, fuzzy
 msgid "_Lock Screen"
-msgstr "スクリーンのロック"
+msgstr "画面のロック(_L)"
 
 #: gnome-panel/panel-action-button.c:85
-#, fuzzy
 msgid "_Kill Screensaver Daemon"
-msgstr "スクリーンセーバ デーモンを強制終了"
+msgstr "スクリーンセーバの強制終了(_K)"
 
 #: gnome-panel/panel-action-button.c:86
-#, fuzzy
 msgid "Restart _Screensaver Daemon"
-msgstr "スクリーンセーバ デーモンを再起動"
+msgstr "スクリーンセーバの再起動(_S)"
 
 #: gnome-panel/panel-action-button.c:155
 msgid "Cannot execute gnome-search-tool"
-msgstr "gnome-search-tool を実行できません!"
+msgstr "gnome-search-tool を実行できません！"
 
 #: gnome-panel/panel-action-button.c:171
 msgid "Cannot execute gnome-panel-screenshot"
-msgstr "gnome-panel-screenshot を実行できません!"
+msgstr "gnome-panel-screenshot を実行できません！"
 
 #: gnome-panel/panel-action-button.c:191
 msgid "Lock screen"
-msgstr "スクリーンのロック"
+msgstr "画面のロック"
 
 #: gnome-panel/panel-action-button.c:198
 msgid "Log out of GNOME"
-msgstr "GNOMEのログアウト"
+msgstr "GNOME のログアウト"
 
 #: gnome-panel/panel-action-button.c:208
-#, fuzzy
 msgid "Search for Files"
-msgstr "ファイルを検索..."
+msgstr "ファイルの検索"
 
 #: gnome-panel/panel-action-button.c:364
-#, fuzzy
 msgid "Action Type"
-msgstr "アクション"
+msgstr "アクションの種類"
 
 #: gnome-panel/panel-action-button.c:365
 msgid "The type of action this button implements"
-msgstr ""
+msgstr "このボタンのアクションの種類の実装"
 
 #: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
-msgstr "コントロールウィジェットを登録できませんでした\n"
+msgstr "コントロール・ウィジットを登録できません\n"
 
 #: gnome-panel/panel-applet-frame.c:602
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "popup_menu '%s' から例外\n"
+msgstr "popup_menu '%s' から例外です\n"
 
 #: gnome-panel/panel-applet-frame.c:711
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
@@ -2285,29 +2222,29 @@ msgid ""
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"アプレット %s が突然異常終了しました。\n"
+"アプレット %s が突然、異常終了しました。\n"
 "\n"
-"このアプレットを再読込しますか?\n"
+"このアプレットを再度、読み込みますか？\n"
 "\n"
-"(いま再読込を選択しなくてもパネルで右クリックして「パネルへ追加」のサブメ"
-"ニューを選べばいつでも追加できます)"
+"(いま読み込まなくてもパネルを右クリックして \"パネルに追加\" を選べばいつでも"
+"追加できます)"
 
 #: gnome-panel/panel-applet-frame.c:746
-#, fuzzy
 msgid "D_on't Delete"
-msgstr "削除"
+msgstr "削除しない(_O)"
 
 #: gnome-panel/panel-applet-frame.c:780
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"<b>アプレット '%s' の読み込みで問題が発生しました</b>\n"
+"\"%s\" の読み込み中にパネルに問題が発生しました\n"
+"詳細: %s\n"
 "\n"
-"詳細: %s"
+"設定からこのアプレットを削除しますか？"
 
 #: gnome-panel/panel-applet-frame.c:878
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2322,86 +2259,74 @@ msgstr "URLを開く: %s"
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
-msgstr "パネルが設定されていません。パネルを作成します"
+msgstr "パネルが設定されていません。メニュー・パネルを生成します"
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:546
-#, fuzzy
 msgid "_Autohide"
-msgstr "自動的に隠す"
+msgstr "自動的に隠す(_A)"
 
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:557
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "隠すボタンを表示"
+msgstr "隠すボタンを表示する(_B)"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:569
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "隠すボタンに矢印を表示"
+msgstr "隠すボタンに矢印をつける(_W)"
 
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "その他"
+msgstr "その他:"
 
 #: gnome-panel/panel-config.c:642
 msgid "Current screen:"
-msgstr "現在のスクリーン:"
+msgstr "現在の画面:"
 
 #: gnome-panel/panel-config.c:658
-#, fuzzy
 msgid "Current monitor:"
-msgstr "現在のスクリーン:"
+msgstr "現在のモニタ:"
 
 #: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
-msgstr "スクリーン上でのパネルの位置と向きを示す"
+msgstr "画面上のパネルの位置と向きを示します"
 
 #: gnome-panel/panel-config.c:768
-#, fuzzy
 msgid "_Position:"
-msgstr "パネルの位置"
+msgstr "位置(_P):"
 
 #: gnome-panel/panel-config.c:993 libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "向き:"
 
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "水平方向レイアウト"
+msgstr "水平方向(_Z)"
 
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "垂直"
+msgstr "垂直方向(_V)"
 
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "パネルの位置"
+msgstr "位置:"
 
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "水平方向レイアウト"
+msgstr "水平方向(_O):"
 
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "垂直"
+msgstr "垂直方向(_T):"
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "端からの距離(_D):"
 
 #: gnome-panel/panel-config.c:1189
-#, fuzzy
 msgid "_Size:"
-msgstr "大きさ:"
+msgstr "大きさ(_S):"
 
 #: gnome-panel/panel-config.c:1197
 #: libpanel-applet/panel-test-applets.glade.h:15
@@ -2416,12 +2341,12 @@ msgstr "すこし小さい"
 #: gnome-panel/panel-config.c:1213
 #: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
-msgstr "小"
+msgstr "小さい"
 
 #: gnome-panel/panel-config.c:1229
 #: libpanel-applet/panel-test-applets.glade.h:3
 msgid "Large"
-msgstr "大"
+msgstr "大きい"
 
 #: gnome-panel/panel-config.c:1237
 #: libpanel-applet/panel-test-applets.glade.h:12
@@ -2434,9 +2359,8 @@ msgid "XX Large"
 msgstr "とても大きい"
 
 #: gnome-panel/panel-config.c:1420
-#, fuzzy
 msgid "_Type:"
-msgstr "種類:"
+msgstr "種類(_T):"
 
 #: gnome-panel/panel-config.c:1429
 msgid "Default"
@@ -2455,34 +2379,29 @@ msgid "Transparent"
 msgstr "透明"
 
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "色"
+msgstr "色(_C):"
 
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "画像"
+msgstr "画像:"
 
 #: gnome-panel/panel-config.c:1512
-#, fuzzy
 msgid "T_ile"
-msgstr "ファイル"
+msgstr "タイル状に配置する(_I)"
 
 #: gnome-panel/panel-config.c:1517
-#, fuzzy
 msgid "_Scale"
-msgstr "特殊"
+msgstr "引き伸ばす(比率を維持)(_S)"
 
 #: gnome-panel/panel-config.c:1521
 msgid "St_retch"
-msgstr ""
+msgstr "引き伸ばす(比率を変更)(_R)"
 
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "パネルが縦向きの時は画像を回転する"
+msgstr "パネルが縦向きの時は画像を回転させる(_V)"
 
 #: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
@@ -2501,7 +2420,6 @@ msgid "Floating panel"
 msgstr "フロート・パネル"
 
 #: gnome-panel/panel-config.c:1693
-#, fuzzy
 msgid "Panel Properties"
 msgstr "パネルのプロパティ"
 
@@ -2511,23 +2429,23 @@ msgstr "コーナー・パネル"
 
 #: gnome-panel/panel-config.c:1779
 msgid "Background"
-msgstr "背景"
+msgstr "バックグラウンド"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
 msgid "Display \"Run\" dialog"
-msgstr "「実行」ダイアログを表示"
+msgstr "\"実行ダイアログ\" の表示"
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr "FIXME - これは新しいメニュー機能で解決できる？"
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr "FIXME - 上限を定義する必要あり"
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
-msgstr "パネルメニューをポップアップ"
+msgstr "パネル・メニューのポップアップ"
 
 #: gnome-panel/panel-global-config.schemas.in.h:5
 msgid "Take a screen shot"
@@ -2539,42 +2457,42 @@ msgstr "ウインドウのスクリーンショットを撮る"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
 msgid "Enable the program listing in the run box"
-msgstr ""
+msgstr "\"実行ダイアログ\" の中にプログラム一覧の表示を可能にします"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
-msgstr ""
+msgstr "\"実行ダイアログ\" が開いたらデフォルトでプログラム一覧を表示します"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
-msgstr ""
+msgstr "\"実行ダイアログ\" の中にプログラム一覧を表示します"
 
 #: gnome-panel/panel-recent.c:56
-#, fuzzy
 msgid "Couldn't find a suitable application"
-msgstr "アプレットを登録できませんでした。"
+msgstr "適切なアプリケーションが見つかりませんでした"
 
 #: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
+"このファイルの種類に対するデフォルト・アプリはリモート・ファイルを扱えません"
 
 #: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
-msgstr ""
+msgstr "%s のオープンする際に不明なエラーが発生しました"
 
 #: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
-msgstr ""
+msgstr "最近開いたファイル"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
 msgstr ""
-"他のパネルが既に起動しているのを検知しました。\n"
-"終了します。"
+"他のパネルが既に起動しているのを検出したので\n"
+"今すぐ終了します。"
 
 #: gnome-panel/panel-shell.c:47
 #, c-format
@@ -2584,14 +2502,14 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"bonobo-activation サーバにパネルを登録する際にエラーが起きました。\n"
+"パネルを bonobo-activation サーバに登録する際にエラーが発生しました。\n"
 "エラーコード: %d\n"
-"パネルを終了します。"
+"パネルを今すぐ終了します。"
 
 #: gnome-panel/panel-stock-icons.c:113
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
-msgstr ""
+msgstr "パネルのストック・アイコン '%s' が読み込めません\n"
 
 #: gnome-panel/panel-stock-icons.c:142
 msgid "_Run"
@@ -2602,7 +2520,7 @@ msgstr "実行(_R)"
 #: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
 #: gnome-panel/panel-util.c:177
 msgid "Help document not found"
-msgstr "ヘルプ文書が見つかりません"
+msgstr "ヘルプが見つかりません"
 
 #: gnome-panel/panel-util.c:191
 msgid "No document to show"
@@ -2624,25 +2542,25 @@ msgstr ""
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "GNOME=2.0 パネルのテスト用の単純なアプレット"
+msgstr "GNOME-2.0 パネルの単純なアプレット (テスト用)"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
 msgid "Test Bonobo Applet"
-msgstr "テスト Bonobo アプレット"
+msgstr "Bonobo アプレット (テスト用)"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
-msgstr "テスト Bonobo アプレットファクトリ"
+msgstr "Bonobo アプレット・ファクトリ (テスト用)"
 
 #: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
-msgstr "背景の種類として不完全な '%s' を受信しました"
+msgstr "不完全なバックグラウンドの種類 '%s' を受けとりました"
 
 #: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
-msgstr "背景の種類として不完全な '%s' を受信しました: %s"
+msgstr "不完全なバックグラウンドの種類 '%s' を受け取りました: %s"
 
 #: libpanel-applet/panel-applet.c:885
 #, c-format
@@ -2651,7 +2569,7 @@ msgstr "画像 %s の取得に失敗しました"
 
 #: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
-msgstr "不明な背景の種類を受信しました"
+msgstr "不明なバックグラウンドの種類を受信しました"
 
 #: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
@@ -2659,11 +2577,11 @@ msgstr "アプレットを含むパネルの向き"
 
 #: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
-msgstr "アプレットを含むパネルの大きさ(ピクセル単位)"
+msgstr "アプレットを含むパネルの大きさ (ピクセル単位)"
 
 #: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "アプレットを含むパネルの背景色、あるいは画像"
+msgstr "アプレットを含むパネルのバックグラウンド色、あるいは画像"
 
 #: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
@@ -2700,3161 +2618,3 @@ msgstr "大きさ:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "上"
-
-#~ msgid "(C) 1998-2002 the Free Software Foundation"
-#~ msgstr "(c) 1998-2002 the Free Software Foundation"
-
-#~ msgid "(c) 1998-2000 the Free Software Foundation"
-#~ msgstr "(c) 1998-2000 the Free Software Foundation"
-
-#~ msgid "(c) 2001 Red Hat, Inc."
-#~ msgstr "(c) 2001 Red Hat, Inc."
-
-#~ msgid "Can't execute printer command"
-#~ msgstr "プリントコマンドが実行できません"
-
-#~ msgid "Printer properties"
-#~ msgstr "プリンタのプロパティ"
-
-#~ msgid "Printer name:"
-#~ msgstr "プリンタ名:"
-
-#~ msgid "Print command:"
-#~ msgstr "印刷コマンド:"
-
-#~ msgid "Printer"
-#~ msgstr "プリンタ"
-
-#~ msgid "Printer Applet"
-#~ msgstr "印刷アプレット"
-
-#~ msgid "(c) 1998 the Free Software Foundation"
-#~ msgstr "(c) 1998 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The printer applet lets you easily drag files to be printed via a print "
-#~ "command"
-#~ msgstr ""
-#~ "プリンタアプレットは、ファイルをドラッグするだけで プリントコマンド経由で"
-#~ "簡単に印刷できます"
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "アプレットが生成できませんでした\n"
-
-#~ msgid "Properties..."
-#~ msgstr "プロパティ..."
-
-#~ msgid "Help"
-#~ msgstr "ヘルプ"
-
-#~ msgid "About..."
-#~ msgstr "情報..."
-
-#, fuzzy
-#~ msgid "(C) 2002 Red Hat, Inc."
-#~ msgstr "(c) 2001 Red Hat, Inc."
-
-#~ msgid "(c) 2001 Red Hat, Inc"
-#~ msgstr "(c) 2001 Red Hat, Inc"
-
-#, fuzzy
-#~ msgid "Copyright 2002 Red Hat Inc."
-#~ msgstr "(c) 2001 Red Hat, Inc."
-
-#~ msgid "(C) 1997-2002 the Free Software Foundation"
-#~ msgstr "(c) 1997-2002 the Free Software Foundation"
-
-#~ msgid "Applets"
-#~ msgstr "アプレット"
-
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "<big><big>GNOMEさかな君 %s 曰く:</big></big>"
-
-#, fuzzy
-#~ msgid "_Animation"
-#~ msgstr "アニメーション"
-
-#~ msgid "GNOME Menu"
-#~ msgstr "GNOME メニュー"
-
-#, fuzzy
-#~ msgid "Log Out Button"
-#~ msgstr "ログアウトボタン"
-
-#, fuzzy
-#~ msgid "Lock Button"
-#~ msgstr "ロックボタン"
-
-#, fuzzy
-#~ msgid "Screenshot Button"
-#~ msgstr "スクリーンショット"
-
-#, fuzzy
-#~ msgid "Orient hori_zontally"
-#~ msgstr "水平パネル"
-
-#, fuzzy
-#~ msgid "Orient _vertically"
-#~ msgstr "垂直パネル"
-
-#, fuzzy
-#~ msgid "Ver_tical offset:"
-#~ msgstr "垂直方向レイアウト"
-
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "とても小さい (12ピクセル)"
-
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "小さい (24ピクセル)"
-
-#~ msgid "Small (36 pixels)"
-#~ msgstr "すこし小さい (36ピクセル)"
-
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "中ぐらい (48 ピクセル)"
-
-#~ msgid "Large (64 pixels)"
-#~ msgstr "すこし大きい (64ピクセル)"
-
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "大きい (80ピクセル)"
-
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "とても大きい (128 ピクセル)"
-
-#, fuzzy
-#~ msgid "Background _type:"
-#~ msgstr "背景の種類"
-
-#, fuzzy
-#~ msgid "Background co_lor:"
-#~ msgstr "背景色"
-
-#, fuzzy
-#~ msgid "_Do not scale image to fit"
-#~ msgstr "画像の大きさを変更しない"
-
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "アプレットがクリックされた時に実行するコマンド"
-
-#~ msgid "1.0"
-#~ msgstr "1.0"
-
-#~ msgid "Wanda"
-#~ msgstr "GNOME さかな君 Wanda"
-
-#, fuzzy
-#~ msgid "fortune"
-#~ msgstr "フォーチューン"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "小"
-
-#, fuzzy
-#~ msgid "auto"
-#~ msgstr "レイアウト"
-
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
-
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "&lt;Alt&gt;Print"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "プリンタ"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "時計アプレット"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "ページャ アプレット"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_TasklistApplet"
-#~ msgstr "タスクリスト アプレット"
-
-#, fuzzy
-#~ msgid "applications:///nautilus.desktop"
-#~ msgstr "全デスクトップ上の通常のアプリケーションを表示"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "テスト Bonobo アプレット"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "エッジ・パネル"
-
-#, fuzzy
-#~ msgid "launcher-object"
-#~ msgstr "ランチャ"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "メニューパネル"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "背景"
-
-#~ msgid "Log out"
-#~ msgstr "ログアウト"
-
-#~ msgid "Use GMT"
-#~ msgstr "GMT を使用"
-
-#~ msgid "Command to execute"
-#~ msgstr "実行するコマンド"
-
-#~ msgid "Tasklist size"
-#~ msgstr "タスクリストの大きさ"
-
-#~ msgid "Take a Screen Shot..."
-#~ msgstr "スクリーンショットを撮る..."
-
-#~ msgid "Lock Display"
-#~ msgstr "ディスプレイをロック"
-
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "グローバルなパネルの設定を変更"
-
-#~ msgid "General"
-#~ msgstr "一般"
-
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "グローバルなパネルの設定を実行できません"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "全体の設定..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "パネルマニュアル..."
-
-#~ msgid "About GNOME..."
-#~ msgstr "GNOME について..."
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "ディレクトリを開けません, メインメニューを使います!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "メニューの編集..."
-
-#~ msgid "Off"
-#~ msgstr "オフ"
-
-#~ msgid "In a submenu"
-#~ msgstr "サブメニューに"
-
-#~ msgid "On the main menu"
-#~ msgstr "メインメニューに"
-
-#~ msgid "Menu properties"
-#~ msgstr "メニューのプロパティ"
-
-#~ msgid "Menu type"
-#~ msgstr "メニューの種類"
-
-#~ msgid "Global main menu"
-#~ msgstr "一般メイン・メニュー"
-
-#~ msgid "Main menu"
-#~ msgstr "メインメニュー"
-
-#~ msgid "Normal menu"
-#~ msgstr "通常メニュー"
-
-#~ msgid "Programs: "
-#~ msgstr "プログラム:"
-
-#~ msgid "Applets: "
-#~ msgstr "アプレット:"
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "ディストリビューション・メニュー (検出時): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "KDEメニュー(検出時): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "パネルメニュー: "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "デスクトップメニュー: "
-
-#~ msgid "Menu path"
-#~ msgstr "メニューパス"
-
-#~ msgid "Hiding"
-#~ msgstr "隠す"
-
-#~ msgid "Enable Auto-hide"
-#~ msgstr "自動的に隠す"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "左上隅の位置: X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "画面端からのオフセット:"
-
-#~ msgid "Panel size:"
-#~ msgstr "パネルの大きさ:"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "注意: パネルは、最大のアプレットの大きさにあわせて\n"
-#~ "サイズを変更します。アプレットにはこのサイズ情報が\n"
-#~ "伝えられますが、従わないものもあります。"
-
-#~ msgid "Background Type: "
-#~ msgstr "背景の種類:"
-
-#~ msgid "Standard"
-#~ msgstr "標準"
-
-#~ msgid "Pixmap"
-#~ msgstr "ピクスマップ"
-
-#~ msgid "Color to use:"
-#~ msgstr "色使い:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "画像を引き伸ばす(比率を維持)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "画像を引き伸ばす(比率も変更)"
-
-#~ msgid "Debian menu: "
-#~ msgstr "Debian メニュー:"
-
-#~ msgid "mode"
-#~ msgstr "モード"
-
-#~ msgid "state"
-#~ msgstr "状態"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr ""
-#~ "パネルにはすでにステータスドックがあります。これは一つしかつくれません。"
-
-#~ msgid "Status dock"
-#~ msgstr "ステータスドック"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "GNOMEさかな君アプレット"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "メールチェックアプレット"
-
-#, fuzzy
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr ""
-#~ "コマンドの実行に失敗しました:\n"
-#~ "%s"
-
-#~ msgid "Choose a program to run"
-#~ msgstr "実行するプログラムを選択してください"
-
-#~ msgid "_Browse..."
-#~ msgstr "参照(_B)..."
-
-#, fuzzy
-#~ msgid "_Known Applications <<"
-#~ msgstr "アプリケーション"
-
-#, fuzzy
-#~ msgid "Hide the list of known applications"
-#~ msgstr "アプリケーションの一覧"
-
-#, fuzzy
-#~ msgid "_Known Applications >>"
-#~ msgstr "アプリケーション"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "'GNOME について'を実行できません"
-
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "xscreensaverを実行できません!"
-
-#~ msgid "Password:"
-#~ msgstr "パスワード:"
-
-#~ msgid "CDE Applications"
-#~ msgstr "CDE アプリケーション"
-
-#~ msgid "Screenshot Capture"
-#~ msgstr "スクリーンショット キャプチャ"
-
-#~ msgid "Take a picture of the current screen contents"
-#~ msgstr "スクリーンの内容の画像を撮る"
-
-#~ msgid "Executable name for selected application"
-#~ msgstr "選択したアプリケーションの実行名"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "上級(_A) <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "このボタンの下の上級コントロールを隠す"
-
-#~ msgid "_Advanced >>"
-#~ msgstr "上級(_A) >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr "一覧から選ぶかわりにコマンドラインをキーボードで入力するのを許可"
-
-#~ msgid ""
-#~ "Cannot create the launcher.\n"
-#~ "\n"
-#~ "No command or url specified."
-#~ msgstr ""
-#~ "ラウンチャを作成できません。\n"
-#~ "\n"
-#~ "コマンドも URL も指定されていません。"
-
-#~ msgid ""
-#~ "Cannot save menu item to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "メニューアイテムをディスクに保存できません。次のようなエラーが起こりまし"
-#~ "た:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Gnome Base Panel"
-#~ msgstr "GNOME ベースパネル"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "デスクトップエントリのプロパティ"
-
-#~ msgid "Create menu item"
-#~ msgstr "新規メニュー項目を作成します"
-
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "GNOME アライン・パネル"
-
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "GNOME エッジ・パネル"
-
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "GNOME スライド・パネル"
-
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "GNOME フロート・パネル"
-
-#~ msgid "Global Panel Properties"
-#~ msgstr "パネル全般の設定"
-
-#~ msgid "Panel Settings"
-#~ msgstr "パネルの設定"
-
-#~ msgid "_Raise panels when the mouse moves over them"
-#~ msgstr "マウスが来たとき、パネルを上げる(_R)"
-
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Nautilus を起動できません!"
-
-#~ msgid "Reread all menus"
-#~ msgstr "すべてのメニューを再読み込み"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "GNOMEさかな君の名前"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%p\n"
-#~ "%I:%M"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%m月%d日\n"
-#~ "%a"
-
-#~ msgid "Time Format"
-#~ msgstr "時間の表記"
-
-#~ msgid "Remove from panel"
-#~ msgstr "パネルから取り除く"
-
-#~ msgid "&lt;Alt&gt;F1F1"
-#~ msgstr "&lt;Alt&gt;F1F1"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;m"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;r"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;r"
-
-#~ msgid "Automatically re-check menus for newly installed software"
-#~ msgstr "新規にインストールされたソフトがないか自動的にメニューをチェック"
-
-#~ msgid "GNOME Menu:"
-#~ msgstr "GNOME メニュー:"
-
-#~ msgid "Grab key..."
-#~ msgstr "キーを入力..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "パネルを他のウィンドウの上に"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "パネルを他のウィンドウの下に"
-
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "パネルを他のウインドウと同じレベルに"
-
-#~ msgid "Run Program dialog:"
-#~ msgstr "プログラム実行ダイアログ:"
-
-#~ msgid "Shortcut keys"
-#~ msgstr "ショートカット キー"
-
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "ショートカットキーを有効に(_E)"
-
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "とても小さい (12ピクセル)"
-
-#~ msgid "Clock Properties"
-#~ msgstr "時計のプロパティ"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Gnomeカレンダーを実行できません。\n"
-#~ "おそらくインストールされていません。<\n"
-#~ "gnome-pim パッケージにありますよ。"
-
-#~ msgid "menu wasn't created"
-#~ msgstr "メニューが作成されませんでした"
-
-#~ msgid "Today"
-#~ msgstr "今日"
-
-#~ msgid "View the calendar for today."
-#~ msgstr "今日のカレンダーを表示"
-
-#~ msgid "This Week"
-#~ msgstr "今週"
-
-#~ msgid "View the calendar for this week."
-#~ msgstr "今週のカレンダーを表示"
-
-#~ msgid "This Month"
-#~ msgstr "今月"
-
-#~ msgid "View the calendar for this month."
-#~ msgstr "今月のカレンダーを表示"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "time-admin を呼び出せません\n"
-#~ "おそらく time-admin がインスールされていません"
-
-#~ msgid "Add Appointment..."
-#~ msgstr "アポイントメントを追加..."
-
-#~ msgid "Set Time..."
-#~ msgstr "時間の設定..."
-
-#~ msgid "Adjust the date and time."
-#~ msgstr "日付と時刻の調整"
-
-#~ msgid "Format"
-#~ msgstr "時間の表記"
-
-#~ msgid "Press a key..."
-#~ msgstr "何かキーを押してください..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "今すぐスクリーンを消す"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "今すぐスクリーンをロック"
-
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%p %I:%M:%S"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "スワロードアプリ..."
-
-#~ msgid ""
-#~ "A swallowed application appears to have died unexpectedly.\n"
-#~ "Attempt to reload it?"
-#~ msgstr ""
-#~ "スワローアプリケーションが突然異常終了したようです。\n"
-#~ "再読込してみますか?"
-
-#~ msgid "Reload"
-#~ msgstr "再読込"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "スワローアプレットを作成"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "飲み込むアプリケーションのタイトル"
-
-#~ msgid "Width"
-#~ msgstr "幅"
-
-#~ msgid "Height"
-#~ msgstr "高さ"
-
-#~ msgid "Run..."
-#~ msgstr "実行..."
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%m月%d日%a"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "クロックアプレットは、パネルに軽くて単純な日付と時刻を 表示する時計です"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "画像ファイル %s が見つかりません"
-
-#~ msgid "Programs"
-#~ msgstr "プログラム"
-
-#~ msgid "Panel Global Properties"
-#~ msgstr "パネル全体のプロパティ"
-
-#~ msgid "Key bindings"
-#~ msgstr "キーバインディング"
-
-#~ msgid "Popup menu key:"
-#~ msgstr "ポップアップメニューキー:<"
-
-#~ msgid "Run dialog key:"
-#~ msgstr "実行ダイアログ キー:"
-
-#~ msgid "_Enable key bindings"
-#~ msgstr "キーバインディングを有効に(_E)"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "アプレットをランチャとしてパネルに追加する"
-
-#~ msgid "Programs menu"
-#~ msgstr "プログラムメニュー"
-
-#~ msgid "Network"
-#~ msgstr "ネットワーク"
-
-#~ msgid "<Alt>F1"
-#~ msgstr "<Alt>F1"
-
-#~ msgid "<Alt>F1F1"
-#~ msgstr "<Alt>F1F1"
-
-#~ msgid "<Alt>F2"
-#~ msgstr "<Alt>F2"
-
-#~ msgid "<Control><Alt>m"
-#~ msgstr "<Control><Alt>m"
-
-#~ msgid "<Control><Alt>r"
-#~ msgstr "<Control><Alt>r"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "メールチェックのプロパティ"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "上級オプションを隠す"
-
-#~ msgid "Advanced..."
-#~ msgstr "上級..."
-
-#~ msgid "_Run ..."
-#~ msgstr "実行(_R)..."
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "メールチェックアプレット"
-
-#~ msgid "No name"
-#~ msgstr "名無し"
-
-#~ msgid "UTF-8"
-#~ msgstr "UTF-8"
-
-#~ msgid "No filename to save to"
-#~ msgstr "保存先のファイル名がわかりません"
-
-#~ msgid "No URL to launch"
-#~ msgstr "起動する URL がわかりません"
-
-#~ msgid "Not a launchable item"
-#~ msgstr "起動可能なアイテムではありません"
-
-#~ msgid "No command (Exec) to launch"
-#~ msgstr "起動するコマンドが指定されていません"
-
-#~ msgid "Bad command (Exec) to launch"
-#~ msgstr "起動するコマンドの指定がおかしいです"
-
-#~ msgid "Unknown encoding of: %s"
-#~ msgstr "不明なエンコーディングです: %s"
-
-#~ msgid "Error rewinding file '%s': %s"
-#~ msgstr "ファイル '%s' のリワインド中にエラー: %s"
-
-#~ msgid "Error writing file '%s': %s"
-#~ msgstr "ファイル '%s' の書き出し中にエラー: %s"
-
-#~ msgid "URL:"
-#~ msgstr "URL:"
-
-#~ msgid "Command:"
-#~ msgstr "コマンド:"
-
-#~ msgid "Name:"
-#~ msgstr "名前:"
-
-#~ msgid "Comment:"
-#~ msgstr "コメント:"
-
-#~ msgid "Icon:"
-#~ msgstr "アイコン:"
-
-#~ msgid "Browse icons"
-#~ msgstr "アイコンを参照"
-
-#~ msgid "Run in Terminal"
-#~ msgstr "端末内で実行"
-
-#~ msgid "Documentation:"
-#~ msgstr "ドキュメント:"
-
-#~ msgid "Name/Comment translations:"
-#~ msgstr "名前/コメントの翻訳:"
-
-#~ msgid "Name"
-#~ msgstr "名前"
-
-#~ msgid "Comment"
-#~ msgstr "コメント"
-
-#~ msgid "Add/Set"
-#~ msgstr "追加/設定"
-
-#~ msgid "Remove"
-#~ msgstr "消去"
-
-#~ msgid "Basic"
-#~ msgstr "初心者向け"
-
-#~ msgid "_Show Hints at Startup"
-#~ msgstr "起動時にヒントを表示(_S)"
-
-#~ msgid "GNOME Terminal"
-#~ msgstr "GNOME 端末"
-
-#~ msgid "The GNOME terminal emulation program."
-#~ msgstr "GNOMEターミナルエミュレーションプログラムです。"
-
-#~ msgid ""
-#~ "You have switched the class of this window. Do you\n"
-#~ " want to reconfigure this window to match the default\n"
-#~ "configuration of the new class?"
-#~ msgstr ""
-#~ "このウィンドウのクラスを変更します。新しいクラスでの\n"
-#~ "デフォルトの設定にあうように、このウィンドウを\n"
-#~ "設定しなおしますか?"
-
-#~ msgid "Linux console"
-#~ msgstr "Linuxコンソール"
-
-#~ msgid "Color Xterm"
-#~ msgstr "カラー Xterm"
-
-#~ msgid "rxvt"
-#~ msgstr "rxvt"
-
-#~ msgid "Custom"
-#~ msgstr "カスタム"
-
-#~ msgid "White on black"
-#~ msgstr "黒地に白文字"
-
-#~ msgid "Black on white"
-#~ msgstr "白地に黒文字"
-
-#~ msgid "Green on black"
-#~ msgstr "黒地に緑文字"
-
-#~ msgid "Black on light yellow"
-#~ msgstr "明るい黄色に黒文字"
-
-#~ msgid "Custom colors"
-#~ msgstr "カスタムカラー"
-
-#~ msgid "Hidden"
-#~ msgstr "隠す"
-
-#~ msgid "Color selector"
-#~ msgstr "色の選択"
-
-#~ msgid "Terminal"
-#~ msgstr "GNOME 端末"
-
-#~ msgid "Terminal class name"
-#~ msgstr "ターミナルクラス名"
-
-#~ msgid "TCLASS"
-#~ msgstr "TCLASS"
-
-#~ msgid "Specifies font name"
-#~ msgstr "フォント名称を指定"
-
-#~ msgid "FONT"
-#~ msgstr "フォント"
-
-#~ msgid "Do not start up shells as login shells"
-#~ msgstr "起動シェルをログインシェルにしない"
-
-#~ msgid "Start up shells as login shells"
-#~ msgstr "起動シェルをログインシェルにする"
-
-#~ msgid "Specifies the geometry for the main window"
-#~ msgstr "メインウィンドウの位置を指定"
-
-#~ msgid "GEOMETRY"
-#~ msgstr "位置座標"
-
-#~ msgid "Execute this program instead of a shell"
-#~ msgstr "シェルの代わりにこのプログラムを実行"
-
-#~ msgid "COMMAND"
-#~ msgstr "コマンド"
-
-#~ msgid "Execute this program the same way as xterm does"
-#~ msgstr "xterm と同じようにこのプログラムを実行"
-
-#~ msgid "Foreground color"
-#~ msgstr "前景色"
-
-#~ msgid "COLOR"
-#~ msgstr "色"
-
-#~ msgid "Background color"
-#~ msgstr "背景色"
-
-#~ msgid "Solid background"
-#~ msgstr "背景を一色に塗りつぶす"
-
-#~ msgid "SOLID"
-#~ msgstr "SOLID"
-
-#~ msgid "Background pixmap"
-#~ msgstr "背景画像"
-
-#~ msgid "PIXMAP"
-#~ msgstr "画像"
-
-#~ msgid "Background pixmap scrolls"
-#~ msgstr "背景画像をスクロールする"
-
-#~ msgid "BGSCROLL"
-#~ msgstr "BGSCROLL"
-
-#~ msgid "Background pixmap does not scroll"
-#~ msgstr "背景画像をスクロールしない"
-
-#~ msgid "BGNOSCROLL"
-#~ msgstr "BGNSCROLL"
-
-#~ msgid "Shade background"
-#~ msgstr "背景を暗くする"
-
-#~ msgid "SHADED"
-#~ msgstr "SHADED"
-
-#~ msgid "Do not shade background"
-#~ msgstr "背景を暗くしない"
-
-#~ msgid "NOSHADED"
-#~ msgstr "NOSHADED"
-
-#~ msgid "Transparent background"
-#~ msgstr "背景を透明に"
-
-#~ msgid "TRANSPARENT"
-#~ msgstr "TRANSPARENT"
-
-#~ msgid "Update utmp entry"
-#~ msgstr "utmp のエントリを更新"
-
-#~ msgid "UTMP"
-#~ msgstr "UTMP"
-
-#~ msgid "Do not update utmp entry"
-#~ msgstr "utmp のエントリを更新しない"
-
-#~ msgid "NOUTMP"
-#~ msgstr "NOUTMP"
-
-#~ msgid "Update wtmp entry"
-#~ msgstr "wtmp のエントリを更新"
-
-#~ msgid "WTMP"
-#~ msgstr "WTMP"
-
-#~ msgid "Do not update wtmp entry"
-#~ msgstr "wtmp のエントリを更新しない"
-
-#~ msgid "NOWTMP"
-#~ msgstr "NOWTMP"
-
-#~ msgid "Update lastlog entry"
-#~ msgstr "lastlog のエントリを更新"
-
-#~ msgid "LASTLOG"
-#~ msgstr "LASTLOG"
-
-#~ msgid "Do not update lastlog entry"
-#~ msgstr "lastlog のエントリを更新しない"
-
-#~ msgid "NOLASTLOG"
-#~ msgstr "NOLASTLOG"
-
-#~ msgid "Set the window title"
-#~ msgstr "ウィンドウのタイトルの設定"
-
-#~ msgid "TITLE"
-#~ msgstr "題名"
-
-#~ msgid "Set the window icon"
-#~ msgstr "ウィンドウのアイコンの設定"
-
-#~ msgid "ICON"
-#~ msgstr "アイコン"
-
-#~ msgid "Set the TERM variable"
-#~ msgstr "環境変数 TERM の設定"
-
-#~ msgid "TERMNAME"
-#~ msgstr "端末名"
-
-#~ msgid "Try to start a TerminalFactory"
-#~ msgstr "TerminalFactory を開始してみる"
-
-#~ msgid "Try to create the terminal with the TerminalFactory"
-#~ msgstr "TerminalFactory でターミナルを作成してみる"
-
-#~ msgid "Cannot gnome_program_init ()"
-#~ msgstr "gnome_program_init() 失敗"
-
-#~ msgid "Enter UNIX commands"
-#~ msgstr "GNOME用ターミナルエミュレータ"
-
-#~ msgid "Background should be shaded"
-#~ msgstr "背景を暗くする"
-
-#~ msgid "Blinking cursor"
-#~ msgstr "カーソルの点滅"
-
-#~ msgid "Color palette:"
-#~ msgstr "カラーパレット:"
-
-#~ msgid "Color scheme:"
-#~ msgstr "色使い"
-
-#~ msgid "Colors"
-#~ msgstr "カラー"
-
-#~ msgid "Delete generates DEL/^H"
-#~ msgstr "Delete は DEL/^H を生成"
-
-#~ msgid "Enable bold text"
-#~ msgstr "太文字を有効に"
-
-#~ msgid "Font:"
-#~ msgstr "フォント:"
-
-#~ msgid "Fore/Background Color:"
-#~ msgstr "文字/背景色:"
-
-#~ msgid "Foreground color:"
-#~ msgstr "文字色"
-
-#~ msgid "Hide menu bar"
-#~ msgstr "メニューバーを隠す"
-
-#~ msgid "Pick a color"
-#~ msgstr "色を選ぶ"
-
-#~ msgid "Pixmap file:"
-#~ msgstr "画像ファイル:"
-
-#~ msgid "Scroll on keystroke"
-#~ msgstr "キー入力でスクロール"
-
-#~ msgid "Scroll on output"
-#~ msgstr "出力でスクロール"
-
-#~ msgid "Scrollback lines:"
-#~ msgstr "スクロールバックの行数:"
-
-#~ msgid "Scrollbar position:"
-#~ msgstr "スクロールバーの位置:"
-
-#~ msgid "Scrolling"
-#~ msgstr "スクロール"
-
-#~ msgid "Select-by-word characters:"
-#~ msgstr "単語選択の文字:"
-
-#~ msgid "Silence terminal bell"
-#~ msgstr "ターミナルベルを鳴らさない"
-
-#~ msgid "Swap Delete/Backspace"
-#~ msgstr "DEL/Backspace を入れ換え"
-
-#~ msgid "Terminal Class:"
-#~ msgstr "ターミナルクラス:"
-
-#~ msgid "Use --login by default"
-#~ msgstr "デフォルトで --login を使う"
-
-#~ msgid "C_olor selector"
-#~ msgstr "色の選択(_O)"
-
-#~ msgid "Copy _link location"
-#~ msgstr "リンクの場所をコピー(_L)"
-
-#~ msgid "Edit"
-#~ msgstr "編集"
-
-#~ msgid "GNOME terminal users guide"
-#~ msgstr "GNOME ターミナル ユーザーガイド"
-
-#~ msgid "Reset and _clear"
-#~ msgstr "リセットして消去(_C)"
-
-#~ msgid "Settings"
-#~ msgstr "設定"
-
-#~ msgid "_Close terminal"
-#~ msgstr "端末を閉じる(_C)"
-
-#~ msgid "_Copy"
-#~ msgstr "コピー(_C)"
-
-#~ msgid "_Hide menubar"
-#~ msgstr "メニューバーを隠す(_H)"
-
-#~ msgid "_New terminal"
-#~ msgstr "新規端末(_N)"
-
-#~ msgid "_Open in browser"
-#~ msgstr "ブラウザで開く(_O)"
-
-#~ msgid "_Paste"
-#~ msgstr "貼り付け(_P)"
-
-#~ msgid "_Preferences"
-#~ msgstr "設定(_P)"
-
-#~ msgid "_Reset terminal"
-#~ msgstr "端末をリセット(_R)"
-
-#~ msgid "_Secure keyboard"
-#~ msgstr "セキュアキーボード(_S)"
-
-#~ msgid "Foundry:"
-#~ msgstr "ファウンダリ:"
-
-#~ msgid "Family:"
-#~ msgstr "ファミリー:"
-
-#~ msgid "Weight:"
-#~ msgstr "ウェイト:"
-
-#~ msgid "Slant:"
-#~ msgstr "傾き:"
-
-#~ msgid "Set Width:"
-#~ msgstr "幅を設定:"
-
-#~ msgid "Add Style:"
-#~ msgstr "スタイル追加:"
-
-#~ msgid "Pixel Size:"
-#~ msgstr "ピクセルサイズ:"
-
-#~ msgid "Point Size:"
-#~ msgstr "ポイントサイズ:"
-
-#~ msgid "Resolution X:"
-#~ msgstr "解像度 (X):"
-
-#~ msgid "Resolution Y:"
-#~ msgstr "解像度 (Y):"
-
-#~ msgid "Spacing:"
-#~ msgstr "間隔:"
-
-#~ msgid "Average Width:"
-#~ msgstr "平均幅:"
-
-#~ msgid "Charset:"
-#~ msgstr "文字セット:"
-
-#~ msgid "Font Property"
-#~ msgstr "フォントのプロパティ"
-
-#~ msgid "Requested Value"
-#~ msgstr "要求した値"
-
-#~ msgid "Actual Value"
-#~ msgstr "実際の値"
-
-#~ msgid "Font"
-#~ msgstr "フォント"
-
-#~ msgid "Font Style:"
-#~ msgstr "フォントスタイル:"
-
-#~ msgid "Reset Filter"
-#~ msgstr "フィルタのリセット"
-
-#~ msgid "Metric:"
-#~ msgstr "メトリック:"
-
-#~ msgid "Points"
-#~ msgstr "ポイント"
-
-#~ msgid "Pixels"
-#~ msgstr "ピクセル"
-
-#~ msgid "Preview:"
-#~ msgstr "プレビュー:"
-
-#~ msgid "Font Information"
-#~ msgstr "フォント情報"
-
-#~ msgid "Requested Font Name:"
-#~ msgstr "要求したフォント名:"
-
-#~ msgid "Actual Font Name:"
-#~ msgstr "実際のフォント名:"
-
-#~ msgid "%i fonts available with a total of %i styles."
-#~ msgstr "%i フォントが利用可能です。スタイルの数は %i です。"
-
-#~ msgid "Filter"
-#~ msgstr "フィルタ"
-
-#~ msgid "Font Types:"
-#~ msgstr "フォントの種類:"
-
-#~ msgid "Bitmap"
-#~ msgstr "ビットマップ"
-
-#~ msgid "The selected font is not a valid font."
-#~ msgstr "選択されたフォントはおかしなフォントです。"
-
-#~ msgid "This is a 2-byte font and may not be displayed correctly."
-#~ msgstr "2 バイトフォントなので正しく表示されないかもしれません。"
-
-#~ msgid "Font: (Filter Applied)"
-#~ msgstr "フォント: (フィルタ適用済)"
-
-#~ msgid "MAX_FONTS exceeded. Some fonts may be missing."
-#~ msgstr ""
-#~ "MAX_FONTS を越えました。いくつかのフォントが見えないかもしれません。"
-
-#~ msgid "Font Selection"
-#~ msgstr "フォント選択"
-
-#~ msgid "Select a font"
-#~ msgstr "フォントを選択する"
-
-#~ msgid "GNOME News Site"
-#~ msgstr "GNOMEニュースサイト"
-
-#~ msgid "http://www.gnome.org/"
-#~ msgstr "http://www.gnome.org/"
-
-#~ msgid "GNOME Main Site"
-#~ msgstr "GNOMEメインサイト"
-
-#~ msgid "GNOME Developers' Site"
-#~ msgstr "GNOME デベロッパーサイト"
-
-#~ msgid "GNOME was brought to you by"
-#~ msgstr "GNOME was brought to you by"
-
-#~ msgid "Timur I. Bakeyev"
-#~ msgstr "Timur I. Bakeyev"
-
-#~ msgid "Szabolcs 'Shooby' Ban"
-#~ msgstr "Szabolcs 'Shooby' Ban"
-
-#~ msgid "Jerome Bolliet"
-#~ msgstr "Jerome Bolliet"
-
-#~ msgid "Frederic Devernay"
-#~ msgstr "Frederic Devernay"
-
-#~ msgid "Gergo Erdi"
-#~ msgstr "Gergo Erdi"
-
-#~ msgid "Raul Perusquia Flores"
-#~ msgstr "Raul Perusquia Flores"
-
-#~ msgid "The Mysterious GEGL"
-#~ msgstr "ふしぎな GEGL"
-
-#~ msgid "Bjoern Giesler"
-#~ msgstr "Bjoern Giesler"
-
-#~ msgid "Dov Grobgeld"
-#~ msgstr "Dov Grobgeld"
-
-#~ msgid "Helmut Koeberle"
-#~ msgstr "Helmut Koeberle"
-
-#~ msgid "Matthew Marjanovic"
-#~ msgstr "Matthew Marjanovic"
-
-#~ msgid "Alexandre Muniz"
-#~ msgstr "Alexandre Muniz"
-
-#~ msgid "Sung-Hyun Nam"
-#~ msgstr "Sung-Hyun Nam"
-
-#~ msgid "Martin Norbaeck"
-#~ msgstr "Martin Norbaeck"
-
-#~ msgid "Tomas Oegren"
-#~ msgstr "Tomas Oegren"
-
-#~ msgid "Carlos Perello Marin"
-#~ msgstr "Carlos Perello Marin"
-
-#~ msgid "Kazuhiro Sasayama"
-#~ msgstr "笹山 和宏"
-
-#~ msgid "Inigo Serna"
-#~ msgstr "Inigo Serna"
-
-#~ msgid "Miroslav Silovic"
-#~ msgstr "Miroslav Silovic"
-
-#~ msgid "The Squeaky Rubber Gnome"
-#~ msgstr "The Squeaky Rubber Gnome"
-
-#~ msgid "Istvan Szekeres"
-#~ msgstr "Istvan Szekeres"
-
-#~ msgid "Manish Vachharajani"
-#~ msgstr "Manish Vachharajani"
-
-#~ msgid "Neil Vachharajani"
-#~ msgstr "Neil Vachharajani"
-
-#~ msgid "... and many more"
-#~ msgstr "... and many more"
-
-#~ msgid "GNOME Login"
-#~ msgstr "GNOMEログイン"
-
-#~ msgid "Login"
-#~ msgstr "ログイン"
-
-#~ msgid "Start with default programs"
-#~ msgstr "標準プログラムとともに起動"
-
-#~ msgid "Reset all user settings"
-#~ msgstr "ユーザ設定を全てリセットする"
-
-#~ msgid "Really reset all GNOME user settings for %s?"
-#~ msgstr "本当に%sの全GNOMEユーザ設定をリセットしますか?"
-
-#~ msgid ""
-#~ "The directory /tmp/orbit-%s is not owned\n"
-#~ "by the current user, %s.\n"
-#~ "Please correct the ownership of this directory."
-#~ msgstr ""
-#~ "ディレクトリ /tmp/orbit-%s は、現在のユーザ\n"
-#~ "%s のものではありません。\n"
-#~ "このディレクトリの所有権を修正してください。"
-
-#~ msgid "Try again"
-#~ msgstr "再試行"
-
-#~ msgid "Continue"
-#~ msgstr "続行"
-
-#~ msgid ""
-#~ "Could not look up internet address for %s.\n"
-#~ "This will prevent GNOME from operating correctly.\n"
-#~ "It may be possible to correct the problem by adding\n"
-#~ "%s to the file /etc/hosts."
-#~ msgstr ""
-#~ "%sのアドレスが見つかりません。\n"
-#~ "このためにGNOMEが正しく働かなくなるかも知れません。\n"
-#~ "これは、/etc/hosts に %s を追加する事で解決できる\n"
-#~ "場合もあります。"
-
-#~ msgid ""
-#~ "Your version of libICE has a bug which causes gnome-session\n"
-#~ "to not function correctly.\n"
-#~ "\n"
-#~ "If you are on Solaris, you should either upgrade to Solaris patch\n"
-#~ "#108376-16 or use the libICE.so.6 from the original Solaris 7.\n"
-#~ "Copy the file into /usr/openwin/lib.  (Thanks go to Andy Reitz\n"
-#~ "for information on this bug).\n"
-#~ "\n"
-#~ "Your GNOME session will terminate after closing this dialog."
-#~ msgstr ""
-#~ "インストールされている libICE はバグのあるバージョンなので\n"
-#~ "gnome-session は正しく動作しません。\n"
-#~ "\n"
-#~ "Solaris を使っているのでしたら Solaris patch #108376-16 を当てる\n"
-#~ "か、オリジナルの Solaris 7 の libICE.so.6 を使ってください。\n"
-#~ "/usr/openwin/lib にコピーしてください (このバグについての情報を\n"
-#~ "提供してくれた Andy Reitz に感謝)。\n"
-#~ "\n"
-#~ "このダイアログを閉じると、GNOMEセッションは終了します。"
-
-#~ msgid "Order: "
-#~ msgstr "順番:"
-
-#~ msgid "Style: "
-#~ msgstr "スタイル:"
-
-#~ msgid "Order"
-#~ msgstr "順番"
-
-#~ msgid "Style"
-#~ msgstr "スタイル"
-
-#~ msgid "Program"
-#~ msgstr "プログラム"
-
-#~ msgid "Inactive"
-#~ msgstr "停止中"
-
-#~ msgid "Waiting to start or already finished."
-#~ msgstr "開始または終了を待っています。"
-
-#~ msgid "Starting"
-#~ msgstr "開始中"
-
-#~ msgid "Started but has not yet reported state."
-#~ msgstr "開始されていますが、まだ状態はわかりません。"
-
-#~ msgid "Running"
-#~ msgstr "実行中"
-
-#~ msgid "A normal member of the session."
-#~ msgstr "セッション中の普通の状態のものです。"
-
-#~ msgid "Saving"
-#~ msgstr "保存"
-
-#~ msgid "Saving session details."
-#~ msgstr "セッションを保存"
-
-#~ msgid "Unknown"
-#~ msgstr "未知"
-
-#~ msgid "State not reported within timeout."
-#~ msgstr "タイムアウトまでに、状態が返ってきません。"
-
-#~ msgid "Normal"
-#~ msgstr "標準"
-
-#~ msgid "Unaffected by logouts but can die."
-#~ msgstr "ログアウトに影響しませんが、殺せます。"
-
-#~ msgid "Respawn"
-#~ msgstr "復活"
-
-#~ msgid "Never allowed to die."
-#~ msgstr "絶対に殺せません"
-
-#~ msgid "Trash"
-#~ msgstr "ゴミ"
-
-#~ msgid "Discarded on logout and can die."
-#~ msgstr "ログアウト時に殺されて捨てられます。"
-
-#~ msgid "Always started on every login."
-#~ msgstr "ログインのたびに常に開始されます。"
-
-#~ msgid "Remove Program"
-#~ msgstr "プログラムの削除"
-
-#~ msgid "Really log out?"
-#~ msgstr "本当にログアウトしますか?"
-
-#~ msgid "Save current setup"
-#~ msgstr "現在の設定を保存"
-
-#~ msgid "Logout"
-#~ msgstr "ログアウト"
-
-#~ msgid "Shut Down"
-#~ msgstr "シャットダウン"
-
-#~ msgid "Reboot"
-#~ msgstr "再起動"
-
-#~ msgid "Specify a session name to load"
-#~ msgstr "読みこむセッションの名前を指定"
-
-#~ msgid "Only read saved sessions from the default.session file"
-#~ msgstr "default.session ファイルから保存されたセッションを読み込むのみ"
-
-#~ msgid "Millisecond period spent waiting for clients to register (0=forever)"
-#~ msgstr ""
-#~ "クライアントを登録するまでに待つ時間 [100分の1秒単位] (0=ずっと待つ)"
-
-#~ msgid "Millisecond period spent waiting for clients to respond (0=forever)"
-#~ msgstr "クライアントの反応を待つ時間 [100分の1秒単位] (0=ずっと待つ)"
-
-#~ msgid "Millisecond period spent waiting for clients to die (0=forever)"
-#~ msgstr "クライアントの終了を待つ時間 [100分の1秒単位] (0=ずっと待つ)"
-
-#~ msgid "Wait abandoned due to conflict."
-#~ msgstr "衝突があったので、待つのを止めました。"
-
-#~ msgid "No response to the %s command."
-#~ msgstr "コマンド%sへの応答がありません"
-
-#~ msgid "The program may be slow, stopped or broken."
-#~ msgstr "プログラムが遅いか、止まったか壊れたようです。"
-
-#~ msgid "You may wait for it to respond or remove it."
-#~ msgstr "待つことも出来ますが、取り除くことも出来ます。"
-
-#~ msgid "Respawn abandoned due to failures."
-#~ msgstr "失敗したものを再実行します。"
-
-#~ msgid "A session shutdown is in progress."
-#~ msgstr "セッションのシャットダウンを実行中です。"
-
-#~ msgid "Kill session"
-#~ msgstr "セッションを強制終了"
-
-#~ msgid "Use dialog boxes"
-#~ msgstr "ダイアログボックスを使う"
-
-#~ msgid "Could not connect to the session manager"
-#~ msgstr "save-ssession: セッションマネージャに接続できませんでした。"
-
-#~ msgid "Could not connect to gnome-session"
-#~ msgstr "gnome-session に接続できません"
-
-#~ msgid "Your session has been saved"
-#~ msgstr "セッションは保存されました"
-
-#~ msgid "Save Current Session"
-#~ msgstr "現在のセッションを保存"
-
-#~ msgid "Try"
-#~ msgstr "試行"
-
-#~ msgid "Revert"
-#~ msgstr "戻す"
-
-#~ msgid "OK"
-#~ msgstr "了解"
-
-#~ msgid "Cancel"
-#~ msgstr "キャンセル"
-
-#~ msgid "Session Properties"
-#~ msgstr "セッションのプロパティ"
-
-#~ msgid "Session"
-#~ msgstr "セッション"
-
-#~ msgid "Session Chooser"
-#~ msgstr "セッション選択"
-
-#~ msgid "Start Session"
-#~ msgstr "セッション開始"
-
-#~ msgid "Cancel Login"
-#~ msgstr "ログインをキャンセル"
-
-#~ msgid "Initialize session settings"
-#~ msgstr "セッションの設定を初期化"
-
-#, fuzzy
-#~ msgid "Session Properties & Startup Programs"
-#~ msgstr "セッション管理でない自動起動プログラム"
-
-#~ msgid "Current session managed programs"
-#~ msgstr "セッションマネージメントにまつわる設定"
-
-#~ msgid "Audio Settings"
-#~ msgstr "音設定"
-
-#~ msgid "Sawfish Window Manager"
-#~ msgstr "Sawfish ウインドウマネージャ"
-
-#~ msgid "Enlightenment Window Manager"
-#~ msgstr "Enlightenment ウインドウマネージャ"
-
-#~ msgid "Background Settings"
-#~ msgstr "背景の設定"
-
-#~ msgid "Keyboard Bell"
-#~ msgstr "キーボード音"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "マウスの設定"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "キーボードの設定"
-
-#~ msgid "Session Manager Proxy"
-#~ msgstr "セッションマネージャ・プロキシ"
-
-#~ msgid "Nautilus"
-#~ msgstr "Nautilus"
-
-#~ msgid "Starting GNOME: %s"
-#~ msgstr "GNOME 起動中: %s"
-
-#~ msgid "Starting GNOME: done"
-#~ msgstr "GNOME 起動中: 完了"
-
-#~ msgid "GNOME"
-#~ msgstr "GNOME"
-
-#~ msgid "Starting GNOME"
-#~ msgstr "GNOME スタート"
-
-#~ msgid "Applications menu"
-#~ msgstr "アプリケーションメニュー"
-
-#~ msgid "Programming"
-#~ msgstr "開発ツール"
-
-#~ msgid "Tools for software development"
-#~ msgstr "開発のためのツール"
-
-#~ msgid "Emacs Text Editor"
-#~ msgstr "Emacs"
-
-#~ msgid "Create and edit images or photographs"
-#~ msgstr "GNU画像編集プログラム"
-
-#~ msgid "GIMP Image Editor"
-#~ msgstr "GIMP"
-
-#~ msgid "Games"
-#~ msgstr "ゲーム"
-
-#~ msgid "Games menu"
-#~ msgstr "ゲームメニュー"
-
-#~ msgid "Graphics"
-#~ msgstr "グラフィック"
-
-#~ msgid "Graphics menu"
-#~ msgstr "グラフィックメニュー"
-
-#~ msgid "Programs for Internet and networks"
-#~ msgstr "インターネットやネットワークに関するプログラム"
-
-#~ msgid "Multimedia menu"
-#~ msgstr "マルチメディアを扱うプログラム"
-
-#~ msgid "Sound & Video"
-#~ msgstr "マルチメディア"
-
-#~ msgid "Browse the world wide web"
-#~ msgstr "ネットスケープ・ブラウザ"
-
-#~ msgid "Netscape Web Browser"
-#~ msgstr "ネットスケープ"
-
-#, fuzzy
-#~ msgid "Office"
-#~ msgstr "オフ"
-
-#, fuzzy
-#~ msgid "Office Applications"
-#~ msgstr "アプリケーション"
-
-#~ msgid "Desktop Settings"
-#~ msgstr "デスクトップの設定"
-
-#~ msgid "System Tools"
-#~ msgstr "システム"
-
-#~ msgid "System menu"
-#~ msgstr "システムメニュー"
-
-#, fuzzy
-#~ msgid "XEmacs Text Editor"
-#~ msgstr "Emacs"
-
-#~ msgid "xemacs text editor"
-#~ msgstr "XEmacs テキストエディタ"
-
-#~ msgid "rxvt terminal"
-#~ msgstr "rxvt 端末"
-
-#~ msgid "Enter UNIX commands with the standard X Terminal"
-#~ msgstr "通常版 xterm"
-
-#~ msgid "X Terminal"
-#~ msgstr "xterm"
-
-#~ msgid "Looking up internet address for %s"
-#~ msgstr "インターネットアドレスを探しています %s"
-
-#~ msgid "Hide"
-#~ msgstr "隠す"
-
-#~ msgid "Can't get goad_id for applet, ignoring it"
-#~ msgstr "デスクトップエントリからgoad_idを取得できません! これを無効にします"
-
-#~ msgid "Execute a command line"
-#~ msgstr "コマンドラインを実行"
-
-#~ msgid ""
-#~ "This is the GNOME2 panel, it is likely that it will crash,\n"
-#~ "destroy configuration, cause another world war, and most\n"
-#~ "likely just plain not work.  Use at your own risk.\n"
-#~ "\n"
-#~ "Do you really want to run it?"
-#~ msgstr ""
-#~ "こちらは GNOME2 パネルです。クラッシュしたり、設定を壊したり、\n"
-#~ "新たな世界大戦を引き起こしたりしまいがちです。単に動かない\n"
-#~ "だけかもしれません。自己責任で使ってね。\n"
-#~ "\n"
-#~ "本当に起動しますか?"
-
-#~ msgid ""
-#~ "Cannot load help on %s.\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "%s のヘルプを表示できません。\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-#~ msgstr "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-
-#~ msgid "Pick a Font"
-#~ msgstr "フォントを選ぶ"
-
-#~ msgid "Mod1-F1"
-#~ msgstr "Mod1-F1"
-
-#~ msgid "Control-Mod1-m"
-#~ msgstr "Control-Mod1-m"
-
-#~ msgid "Mod1-F2"
-#~ msgstr "Mod1-F2"
-
-#~ msgid "Control-Mod1-r"
-#~ msgstr "Control-Mod1-r"
-
-#~ msgid "Available Programs"
-#~ msgstr "利用可能なプログラム"
-
-#~ msgid "Description"
-#~ msgstr "説明"
-
-#~ msgid "Hide delay (ms):"
-#~ msgstr "隠蔽時の遅延 (ms):"
-
-#~ msgid "Show delay (ms):"
-#~ msgstr "表示時の遅延 (ms):"
-
-#~ msgid ""
-#~ "An applet is not responding to a save request.\n"
-#~ "Remove the applet or continue waiting?"
-#~ msgstr ""
-#~ "あるアプレットが保存要求に答えませんが、\n"
-#~ "待つのを止めてこのアプレットを削除してもよいですか?"
-
-#~ msgid "Remove applet"
-#~ msgstr "アプレットを削除"
-
-#~ msgid "Continue waiting"
-#~ msgstr "続行中です。お待ちください。"
-
-#~ msgid "Timed out on sending session save to an applet"
-#~ msgstr "アプレットへのセッション保存要求が時間切れ"
-
-#~ msgid "Show tasklist arrow"
-#~ msgstr "タスクリストの矢印を表示"
-
-#~ msgid "Switch horizontal/vertical position of tasklist arrow"
-#~ msgstr "タスクリストの矢印の水平・垂直を切替"
-
-#~ msgid "Only show current desktop in pager"
-#~ msgstr "ページャにカレントデスクトップのみ表示"
-
-#~ msgid "Raise area grid over tasks"
-#~ msgstr "分割線をタスクの上に描画"
-
-#~ msgid "Thumb Nails"
-#~ msgstr "サム・ネイル"
-
-#~ msgid "Fill window thumbnails with screen contents"
-#~ msgstr "ウインドウのサム・ネイルに画面と同じものを描く"
-
-#~ msgid "Incremental update delay [ms]"
-#~ msgstr "更新間隔 [ms]"
-
-#~ msgid "Tooltips"
-#~ msgstr "ツールチップス"
-
-#~ msgid "Show Desk-Guide tooltips"
-#~ msgstr "デスクガイドのツールチップスを表示"
-
-#~ msgid "Desk-Guide tooltip delay [ms]"
-#~ msgstr "デスクガイドのツールチップス表示までの時間 [ms]"
-
-#~ msgid "Show desktop name tooltips"
-#~ msgstr "デスクトップ名ツールチップスを表示"
-
-#~ msgid "Desktop name tooltip delay [ms]"
-#~ msgstr "デスクトップ名ツールチップ表示までの時間 [ms]"
-
-#~ msgid "Tasks"
-#~ msgstr "タスク"
-
-#~ msgid "Visibility"
-#~ msgstr "表示・非表示"
-
-#~ msgid "Show hidden tasks (HIDDEN)"
-#~ msgstr "隠れたタスクも表示 (HIDDEN)"
-
-#~ msgid "Show shaded tasks (SHADED)"
-#~ msgstr "シェード状態のタスクも表示 (SHADED)"
-
-#~ msgid "Show tasks which hide from window list (SKIP-WINLIST)"
-#~ msgstr "ウインドウ一覧に無いタスクも表示 (SKIP-WINLIST)"
-
-#~ msgid "Show tasks which hide from taskbar (SKIP-TASKBAR)"
-#~ msgstr "タスクバーに無いタスクも表示 (SKIP-TASKBAR)"
-
-#~ msgid "Geometry"
-#~ msgstr "位置座標"
-
-#~ msgid "Desktop Height [pixels]"
-#~ msgstr "デスクトップの高さ [ピクセル]"
-
-#~ msgid "Override desktop height with panel size"
-#~ msgstr "デスクトップの高さをパネルの大きさに合わせる"
-
-#~ msgid "Divide height by number of vertical areas"
-#~ msgstr "高さを垂直方向の領域数で割る"
-
-#~ msgid "Rows of Desktops"
-#~ msgstr "デスクトップの行数"
-
-#~ msgid "Divide height by number of rows"
-#~ msgstr "高さを垂直方向の領域数で割る"
-
-#~ msgid "Desktop Width [pixels]"
-#~ msgstr "デスクトップの幅 [ピクセル]"
-
-#~ msgid "Override desktop width with panel size"
-#~ msgstr "デスクトップの幅をパネルの大きさに合わせる"
-
-#~ msgid "Divide width by number of horizontal areas"
-#~ msgstr "幅を水平方向の領域数で割る"
-
-#~ msgid "Columns of Desktops"
-#~ msgstr "デスクトップの列数"
-
-#~ msgid "Divide width by number of columns"
-#~ msgstr "幅をカラム数で割る"
-
-#~ msgid "Window Manager Workarounds"
-#~ msgstr "ウインドウマネージャごとの対策"
-
-#~ msgid ""
-#~ "Window manager moves decoration window instead\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-#~ msgstr ""
-#~ "ウインドウマネージャは飾りウインドウを動かす\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-
-#~ msgid ""
-#~ "Window manager changes active area on all desktops\n"
-#~ "(FVWM, Sawfish)"
-#~ msgstr ""
-#~ "ウインドウマネージャはすべてのデスクトップのアクティブ領域を変更\n"
-#~ "(FVWM, Sawfish)"
-
-#~ msgid ""
-#~ "Window manager expects pager to modify area+desktop properties directly\n"
-#~ "(Enlightenment, FVWM)"
-#~ msgstr ""
-#~ "ウインドウマネージャはページャが領域とデスクトップの設定を直接更新する こ"
-#~ "とを期待\n"
-#~ "(Enlightenment, FVWM)"
-
-#~ msgid "Behaviour"
-#~ msgstr "振る舞い"
-
-#~ msgid "Popdown task view automatically"
-#~ msgstr "タスクビューを自動的にポップダウンする"
-
-#~ msgid ""
-#~ "You are not running a GNOME Compliant\n"
-#~ "Window Manager. GNOME support by the \n"
-#~ "window manager is strongly recommended\n"
-#~ "for proper Desk Guide operation."
-#~ msgstr ""
-#~ "GNOME対応ウィンドウマネージャが起動していま\n"
-#~ "せん. GNOME対応のウインドウマネージャを強く\n"
-#~ "お勧めします.  そうしなければデスクガイドは\n"
-#~ "正常に動作しません."
-
-#~ msgid "Desk Guide Alert"
-#~ msgstr "デスクガイドからの警告"
-
-#~ msgid "Desk Guide Task View"
-#~ msgstr "デスクガイド・タスクビュー"
-
-#~ msgid "Global"
-#~ msgstr "全体"
-
-#~ msgid "Desk Guide Settings"
-#~ msgstr "デスクガイドの設定"
-
-#~ msgid "Don't know how to activate `%s'\n"
-#~ msgstr "`%s' をアクティブにできません\n"
-
-#~ msgid "Copyright (C) 1999 Anders Carlsson"
-#~ msgstr "Copyright (C) 1999 Anders Carlsson"
-
-#~ msgid ""
-#~ "A tasklist for the GNOME desktop environment.\n"
-#~ "Icons by Tuomas Kuosmanen (tigert@gimp.org)."
-#~ msgstr ""
-#~ "GNOME デスクトップ環境用タスクリスト\n"
-#~ "アイコン制作: Tuomas Kuosmanen (tigert@gimp.org)"
-
-#~ msgid "Tasklist: Unable to create applet widget"
-#~ msgstr "タスクリスト: アプレットウィジェットを作成できませんでした"
-
-#~ msgid ""
-#~ "Warning! Unsaved changes will be lost!\n"
-#~ "Proceed?"
-#~ msgstr ""
-#~ "警告! 保存していない情報は失われます!\n"
-#~ "続行しますか?"
-
-#~ msgid "Restore"
-#~ msgstr "リストア"
-
-#~ msgid "Iconify"
-#~ msgstr "アイコン化"
-
-#~ msgid "Unshade"
-#~ msgstr "シェード解除"
-
-#~ msgid "Shade"
-#~ msgstr "シェード"
-
-#~ msgid "Unstick"
-#~ msgstr "居座らない"
-
-#~ msgid "Stick"
-#~ msgstr "居座る"
-
-#~ msgid "To desktop"
-#~ msgstr "デスクトップへ"
-
-#~ msgid "Close window"
-#~ msgstr "ウィンドウを閉じる"
-
-#~ msgid "Kill app"
-#~ msgstr "殺す"
-
-#~ msgid "Restore All"
-#~ msgstr "すべてリストア"
-
-#~ msgid "Iconify All"
-#~ msgstr "すべてアイコン化"
-
-#~ msgid "Unshade All"
-#~ msgstr "すべてシェード解除"
-
-#~ msgid "Shade All"
-#~ msgstr "すべてシェード"
-
-#~ msgid "Unstick All"
-#~ msgstr "すべて居座らない"
-
-#~ msgid "Stick All"
-#~ msgstr "すべて居座る"
-
-#~ msgid "Close All"
-#~ msgstr "すべて閉じる"
-
-#~ msgid "Kill All"
-#~ msgstr "すべて殺す"
-
-#~ msgid "Follow panel size"
-#~ msgstr "パネルの大きさに合わせる"
-
-#~ msgid "Tasklist width:"
-#~ msgstr "タスク・リストの幅:"
-
-#~ msgid "Rows of tasks:"
-#~ msgstr "タスクの行数:"
-
-#~ msgid "Default task size:"
-#~ msgstr "デフォルトのタスクサイズ:"
-
-#~ msgid "Tasklist width is fixed"
-#~ msgstr "タスク・リストの幅を固定"
-
-#~ msgid "Tasklist width is dynamic"
-#~ msgstr "タスク・リストの幅を動的に変更"
-
-#~ msgid "Only use empty space"
-#~ msgstr "空のスペースのみ使用"
-
-#~ msgid "Tasklist height:"
-#~ msgstr "タスク・リストの高さ:"
-
-#~ msgid "Tasklist height is fixed"
-#~ msgstr "タスク・リストの高さを固定"
-
-#~ msgid "Tasklist height is dynamic"
-#~ msgstr "タスク・リストの高さを動的に変更"
-
-#~ msgid "Tasklist width is that of longest title"
-#~ msgstr "タスクリストの幅を最長のタイトルに合わせる"
-
-#~ msgid "Which tasks to show"
-#~ msgstr "表示するタスク"
-
-#~ msgid "Show normal applications"
-#~ msgstr "通常のアプリケーションを表示"
-
-#~ msgid "Show iconified (minimized) applications"
-#~ msgstr "アイコン化した (最小化した) アプリケーションを表示"
-
-#~ msgid "Show iconified (minimized) applications on all desktops"
-#~ msgstr "全デスクトップ上のアイコン化(最小化)されたアプリケーションを表示"
-
-#~ msgid "Show mini icons"
-#~ msgstr "小さなアイコンを表示"
-
-#~ msgid "Confirm before killing windows"
-#~ msgstr "ウインドウを殺す前に確認"
-
-#~ msgid "Display tooltips with full task names"
-#~ msgstr "タスク名全部をツールチップに表示"
-
-#~ msgid "Enable task grouping"
-#~ msgstr "タスクをグループ化できるようにする"
-
-#~ msgid "Number of tasks before grouping occurs"
-#~ msgstr "グループ化に必要な最小のタスク数"
-
-#~ msgid "Sink tasklist into panel"
-#~ msgstr "タスクリストをパネルに沈める"
-
-#~ msgid "Tasklist properties"
-#~ msgstr "タスク・リスト プロパティ"
-
-#~ msgid "Save"
-#~ msgstr "保存"
-
-#~ msgid "Favorites (user menus)"
-#~ msgstr "お気に入り(ユーザメニュー)"
-
-#~ msgid "Programs (system menus)"
-#~ msgstr "プログラム(システムメニュー)"
-
-#~ msgid "Applets (system menus)"
-#~ msgstr "アプレット(システムメニュー)"
-
-#~ msgid "Programs to be merged in (system menus)"
-#~ msgstr "組み込むプログラム (システムメニュー)"
-
-#~ msgid "_New Submenu..."
-#~ msgstr "新規サブメニュー(_N)..."
-
-#~ msgid "Create a new submenu"
-#~ msgstr "新しいサブメニューを作成"
-
-#~ msgid "New _Item..."
-#~ msgstr "新規項目(_F)..."
-
-#~ msgid "Create a new menu item"
-#~ msgstr "新規メニュー項目を作成"
-
-#~ msgid "_Delete..."
-#~ msgstr "削除(_D)..."
-
-#~ msgid "_Sort Submenu"
-#~ msgstr "サブメニューをソート(_S)"
-
-#~ msgid "Sort Submenu _Recursive"
-#~ msgstr "サブメニューを逆順ソート(_R)"
-
-#~ msgid "_Sort"
-#~ msgstr "並べかえ(_S)"
-
-#~ msgid "New Submenu"
-#~ msgstr "新規メニュー"
-
-#~ msgid "New Item"
-#~ msgstr "新規項目"
-
-#~ msgid "Create a new item"
-#~ msgstr "新規項目を作成"
-
-#~ msgid "Delete selected menu item"
-#~ msgstr "選択されたメニュー項目を削除"
-
-#~ msgid "Move up"
-#~ msgstr "上に移動"
-
-#~ msgid "Move selected menu up"
-#~ msgstr "選択したメニューを上に移動します"
-
-#~ msgid "Move down"
-#~ msgstr "下に移動"
-
-#~ msgid "Move selected menu down"
-#~ msgstr "選択したメニューを下に移動します"
-
-#~ msgid "Sort Submenu"
-#~ msgstr "ソート"
-
-#~ msgid "Sort selected submenu"
-#~ msgstr "選択されたサブメニューを並べかえ"
-
-#~ msgid "Sort _Recursive"
-#~ msgstr "再帰的にソート(_R)"
-
-#~ msgid "GNOME menu editor"
-#~ msgstr "GNOMEメニューエディタ"
-
-#~ msgid ""
-#~ "Released under the terms of the GNU Public License.\n"
-#~ "GNOME menu editor."
-#~ msgstr ""
-#~ "GNU一般使用許諾書に基づいてリリースされています。\n"
-#~ "GNOMEメニューエディタ"
-
-#~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "GNOMEがインストールされたディレクトリに入れません\n"
-
-#~ msgid "Unable to create file: %s\n"
-#~ msgstr "ファイルを作成できませんでした: %s\n"
-
-#~ msgid "unable to remove .order file: %s\n"
-#~ msgstr ".orderファイルを削除できませんでした: %s\n"
-
-#~ msgid "The menu item must have a name"
-#~ msgstr "メニュー項目には名前が必要です"
-
-#~ msgid "The menu entry must have a filename"
-#~ msgstr "メニューエントリはファイル名が必要です"
-
-#~ msgid "Save changes?"
-#~ msgstr "変更を保存しますか?"
-
-#~ msgid "This change conflicts with an existing menu item"
-#~ msgstr "この変更は既存のメニュー項目と衝突します"
-
-#~ msgid "Overwrite existing menu entry?"
-#~ msgstr "すでにあるメニュー・エントリを上書きしますか?"
-
-#~ msgid ""
-#~ "This change conflicts with an existing menu item.\n"
-#~ "No two menu items in a submenu can have the same name."
-#~ msgstr ""
-#~ "この変更は既存のメニュー項目と衝突します.\n"
-#~ "サブメニューに同名の二つのメニュー項目は作成できません."
-
-#~ msgid "One moment, reading menus..."
-#~ msgstr "お待ちください、メニューを読み込んでいます..."
-
-#~ msgid "Top of user menus"
-#~ msgstr "ユーザメニューのトップ"
-
-#~ msgid "Top of system menus"
-#~ msgstr "システムメニューのトップ"
-
-#~ msgid "Top of system merge menus"
-#~ msgstr "組み込むシステムメニューの先頭"
-
-#~ msgid "Top of applet menus"
-#~ msgstr "アプレットメニューのトップ"
-
-#~ msgid "You can not delete a top level submenu."
-#~ msgstr "トップレベルのサブメニューは削除できません!"
-
-#~ msgid "Delete this menu item?"
-#~ msgstr "このメニュー項目を削除しますか?"
-
-#~ msgid "Delete empty submenu?"
-#~ msgstr "空のサブメニューを削除しますか?"
-
-#~ msgid "Are you sure you want to delete this submenu and all its contents?"
-#~ msgstr "本当にこのサブメニューとその内容を全て削除しますか?"
-
-#~ msgid ""
-#~ "You can't add an entry to that submenu.\n"
-#~ "You do not have the proper permissions."
-#~ msgstr ""
-#~ "サブメニューにエントリを追加できません!\n"
-#~ "あなたには権限がありません。"
-
-#~ msgid "New Folder"
-#~ msgstr "新規フォルダ"
-
-#~ msgid "Failed to create directory"
-#~ msgstr "ディレクトリ作成に失敗しました"
-
-#~ msgid "untitled.desktop"
-#~ msgstr "untitled.desktop"
-
-#~ msgid "untitled"
-#~ msgstr "無題"
-
-#~ msgid "creating user directory: %s\n"
-#~ msgstr "ユーザディレクトリの作成中: %s\n"
-
-#~ msgid "unable to create user directory: %s\n"
-#~ msgstr "ユーザディレクトリを作成できませんでした: %s\n"
-
-#~ msgid ""
-#~ "Error during execution of chosen editor.\n"
-#~ "\n"
-#~ "The editor you have chosen is probably either not available,\n"
-#~ "or is not on your current path."
-#~ msgstr ""
-#~ "選択されたエディタの実行時にエラー。\n"
-#~ "\n"
-#~ "あなたが選択したエディタは存在しないか、\n"
-#~ "現在のパス中にないかのどちらかだと思われます。"
-
-#~ msgid ""
-#~ "Alternate editor types are not supported by gnome-edit yet.\n"
-#~ "Please choose a standard executable editor in the gnome-edit capplet\n"
-#~ "in the gnome control center."
-#~ msgstr ""
-#~ "他のエディタタイプはまだ gnome-edit でサポートされていません。\n"
-#~ "標準の実行可能なエディタを GNOMEコントロールセンターの\n"
-#~ "gnome-edit キャプレットで選択してください。"
-
-#~ msgid "Start in hint browsing mode"
-#~ msgstr "ヒント閲覧モードで起動"
-
-#~ msgid "Start in fortune mode"
-#~ msgstr "フォーチュンモードで起動"
-
-#~ msgid "Start in session login mode (used from gsm)"
-#~ msgstr "セッションへのログインモードで起動 (gsm が使用)"
-
-#~ msgid ""
-#~ "Click on the GNOME foot icon to open the\n"
-#~ "Main Menu.  This menu contains all\n"
-#~ "GNOME applications, tools, and commands."
-#~ msgstr ""
-#~ "GNOME 足アイコンをクリックするとメインメニューが開きます。 \n"
-#~ "このメニューにはすべての GNOME アプリケーション、ツール、\n"
-#~ "コマンドがあります。"
-
-#~ msgid "You do not have fortune installed."
-#~ msgstr "fortune がインストールされていません。"
-
-#~ msgid "fixed"
-#~ msgstr "-*-fixed-medium-r-normal--16-*-*-*-*-*-*"
-
-#~ msgid "Message of The Day"
-#~ msgstr "今日のメッセージ"
-
-#~ msgid "GNOME Hints"
-#~ msgstr "GNOME ヒント"
-
-#~ msgid "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-#~ msgstr "-*-helvetica-bold-r-normal--18-180-*-*-p-*-*-*,*-r-*"
-
-#~ msgid ""
-#~ "You've chosen to disable the startup hint.\n"
-#~ "To re-enable it, choose \"Startup Hint\"\n"
-#~ "in the GNOME Control Center"
-#~ msgstr ""
-#~ "スタートアップヒントが無効にされました。\n"
-#~ "もう一度有効にするには、GNOMEコントロールセンターから\n"
-#~ "\"スタートアップヒント\" を選択してください。"
-
-#~ msgid "No message of the day found!"
-#~ msgstr "\"今日のメッセージ\"が見つかりません!"
-
-#~ msgid "Gnome hint"
-#~ msgstr "Gnome ヒント"
-
-#~ msgid "Enable login hints"
-#~ msgstr "ログインヒントを有効にする"
-
-#~ msgid "Display normal hints"
-#~ msgstr "普通のヒントを表示"
-
-#~ msgid "Display fortunes instead of hints"
-#~ msgstr "ヒントの代わりに、フォーチューンメッセージを表示"
-
-#~ msgid "Display message of the day instead of hints"
-#~ msgstr "ヒントの代わりに、今日のメッセージを表示"
-
-#~ msgid "Message of the day file to use: "
-#~ msgstr "今日のメッセージに使用するファイル: "
-
-#~ msgid "The session name cannot be empty"
-#~ msgstr "セッション名は空にできません"
-
-#~ msgid "The session name already exists"
-#~ msgstr "そのセッション名は既に存在します"
-
-#~ msgid "Add a new session"
-#~ msgstr "新規セッションの追加"
-
-#~ msgid "Edit session name"
-#~ msgstr "セッション名の編集"
-
-#~ msgid "Show splash screen on login"
-#~ msgstr "ログイン時にスプラッシュスクリーンを表示"
-
-#~ msgid "Prompt on logout"
-#~ msgstr "ログアウト時に確認"
-
-#~ msgid "Automatically save changes to session"
-#~ msgstr "自動的にセッションの変更点を保存"
-
-#~ msgid "Choose Current Session"
-#~ msgstr "カレントセッションの選択"
-
-#~ msgid "Add..."
-#~ msgstr "追加..."
-
-#~ msgid "Edit..."
-#~ msgstr "編集..."
-
-#~ msgid "Session Options"
-#~ msgstr "セッションのオプション"
-
-#~ msgid "Priority"
-#~ msgstr "優先順位"
-
-#~ msgid "Browse Currently Running Programs..."
-#~ msgstr "現在動作中のプログラムを閲覧..."
-
-#~ msgid "Startup Programs"
-#~ msgstr "自動起動プログラム"
-
-#~ msgid "-adobe-helvetica-bold-r-normal-*-*-240-*-*-p-*-*-*"
-#~ msgstr "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*,*"
-
-#~ msgid "-adobe-helvetica-medium-r-normal-*-8-*-*-*-p-*-*-*"
-#~ msgstr "-misc-*-medium-r-normal-*-14-*-*-*-*-*-*-*,*"
-
-#~ msgid "Startup Command"
-#~ msgstr "自動起動コマンド"
-
-#~ msgid ""
-#~ "Programs with smaller values are started before programs with higher "
-#~ "values. The default value should be OK"
-#~ msgstr ""
-#~ "小さい値のプログラムは大きい値のプログラムよりも前に起動します。 デフォル"
-#~ "トの値で OK なはずです。"
-
-#~ msgid "The startup command cannot be empty"
-#~ msgstr "起動時のコマンドは空にできません"
-
-#~ msgid "Add Startup Program"
-#~ msgstr "自動起動プログラムの追加"
-
-#~ msgid "Edit Startup Program"
-#~ msgstr "自動起動プログラムの編集"
-
-#~ msgid "Bookmark"
-#~ msgstr "ブックマーク"
-
-#~ msgid "Page Title"
-#~ msgstr "ページの題名"
-
-#~ msgid "Gnome Help Bookmarks"
-#~ msgstr "Gnomeヘルプのブックマーク"
-
-#~ msgid "X position of window"
-#~ msgstr "ウィンドウのX座標"
-
-#~ msgid "X"
-#~ msgstr "X"
-
-#~ msgid "Y position of window"
-#~ msgstr "ウィンドウのY座標"
-
-#~ msgid "Width of window"
-#~ msgstr "ウィンドウの幅"
-
-#~ msgid "WIDTH"
-#~ msgstr "幅"
-
-#~ msgid "Height of window"
-#~ msgstr "ウィンドウの高さ"
-
-#~ msgid "HEIGHT"
-#~ msgstr "高さ"
-
-#~ msgid "Debug level"
-#~ msgstr "デバッグレベル"
-
-#~ msgid "Gnome Help Browser"
-#~ msgstr "Gnomeヘルプブラウザ"
-
-#~ msgid ""
-#~ "GNOME Help Browser allows easy access to various forms of documentation "
-#~ "on your system"
-#~ msgstr ""
-#~ "GNOMEヘルプブラウザを使って、システムにあるさま ざまな形式のドキュメントを"
-#~ "簡単に見ることができ ます"
-
-#~ msgid "History size"
-#~ msgstr "履歴の長さ"
-
-#~ msgid "History file"
-#~ msgstr "履歴ファイル"
-
-#~ msgid "Cache size"
-#~ msgstr "キャッシュの大きさ"
-
-#~ msgid "Cache file"
-#~ msgstr "キャッシュファイル"
-
-#~ msgid "Bookmark file"
-#~ msgstr "ブックマークファイル"
-
-#~ msgid "Man Path"
-#~ msgstr "Man Path"
-
-#~ msgid "Info Path"
-#~ msgstr "Info Path"
-
-#~ msgid "GNOME Help Path"
-#~ msgstr "GNOME Help Path"
-
-#~ msgid "Gnome Help Configure"
-#~ msgstr "Gnomeヘルプの設定"
-
-#~ msgid "History and cache"
-#~ msgstr "履歴とキャッシュ"
-
-#~ msgid "Paths"
-#~ msgstr "パス"
-
-#~ msgid "<body><h2>Error: file not found</h2></body>"
-#~ msgstr "<body><h2>エラー: ファイルが見つかりません。</h2></body>"
-
-#~ msgid "%b %d, %Y %H:%M"
-#~ msgstr "%Y/%m/%d %H:%M"
-
-#~ msgid "Gnome Help History"
-#~ msgstr "Gnomeヘルプ履歴"
-
-#~ msgid "<BODY BGCOLOR=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<BODY BGCOLOR=\"#FFFFFF\"><h1>目次</h1>\n"
-
-#~ msgid "<h2>Man Pages</h2>\n"
-#~ msgstr "<h2>Manページ</h2>\n"
-
-#~ msgid "<body bgcolor=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<body bgcolor=\"#FFFFFF\"><h1>目次</h1>\n"
-
-#~ msgid "<h2>Info Pages</h2>\n"
-#~ msgstr "<h2>Info ページ</h2>\n"
-
-#~ msgid "<h2>GNOME Help</h2>\n"
-#~ msgstr "<h2>GNOMEヘルプ</h2>\n"
-
-#~ msgid ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Results of the substring search for the string "
-#~ msgstr ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>文字列部分検索の結果"
-
-#~ msgid ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Manual Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Manページ</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Info Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Infoページ</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Help Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOMEヘルプページ</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid "<br><B>No matches found</B>\n"
-#~ msgstr "<br><B>マッチするものはありませんでした</B>\n"
-
-#~ msgid "User Commands"
-#~ msgstr "ユーザーコマンド"
-
-#~ msgid "System Calls"
-#~ msgstr "システムコール"
-
-#~ msgid "Library Functions"
-#~ msgstr "ライブラリ関数"
-
-#~ msgid "Special Files"
-#~ msgstr "特殊ファイル"
-
-#~ msgid "File Formats"
-#~ msgstr "ファイル形式"
-
-#~ msgid "Administration"
-#~ msgstr "管理用"
-
-#~ msgid "man9"
-#~ msgstr "man9"
-
-#~ msgid "mann"
-#~ msgstr "mann"
-
-#~ msgid "Man Pages"
-#~ msgstr "Manページ"
-
-#~ msgid "Info Pages"
-#~ msgstr "Infoページ"
-
-#~ msgid "<BODY>Could not load default TOC page</BODY>"
-#~ msgstr "<BODY>デフォルトTOCページを読み込むことができませんでした。</BODY>"
-
-#~ msgid "<BODY>Unknown TOC argument</BODY>"
-#~ msgstr "<BODY>不明なTOC引数です。</BODY>"
-
-#~ msgid "_New Window"
-#~ msgstr "ウインドウを新規に開く(_N)"
-
-#~ msgid "Open new browser window"
-#~ msgstr "ブラウザウインドウを新規に開く"
-
-#~ msgid "_Add Bookmark"
-#~ msgstr "ブックマークに追加する(_A)"
-
-#~ msgid "Add bookmark"
-#~ msgstr "ブックマークに追加する"
-
-#~ msgid "_Back"
-#~ msgstr "戻る(_B)"
-
-#~ msgid "_Forward"
-#~ msgstr "次へ(_F)"
-
-#~ msgid "_Reload"
-#~ msgstr "再読込(_R)"
-
-#~ msgid "_Index"
-#~ msgstr "目次(_I)"
-
-#~ msgid "_History"
-#~ msgstr "履歴(_H)"
-
-#~ msgid "Show History Window"
-#~ msgstr "履歴ウィンドウを表示する"
-
-#~ msgid "_Bookmarks"
-#~ msgstr "ブックマーク(_B)"
-
-#~ msgid "Show Bookmarks Window"
-#~ msgstr "ブックマークウィンドウを表示する"
-
-#~ msgid "_View"
-#~ msgstr "ビュー(_V)"
-
-#~ msgid "Go to the previous location in the history list"
-#~ msgstr "履歴リストで一つ戻る"
-
-#~ msgid "Forward"
-#~ msgstr "次へ"
-
-#~ msgid "Go to the next location in the history list"
-#~ msgstr "履歴リストで一つ進む"
-
-#~ msgid "Index"
-#~ msgstr "目次"
-
-#~ msgid "History"
-#~ msgstr "履歴"
-
-#~ msgid "BMarks"
-#~ msgstr "しおり"
-
-#~ msgid "Help on Help"
-#~ msgstr "ヘルプのヘルプ"
-
-#~ msgid "Location: "
-#~ msgstr "場所:"
-
-#~ msgid ""
-#~ "Error loading document:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "You probably don't\n"
-#~ "have this documentation\n"
-#~ "installed on your system."
-#~ msgstr ""
-#~ "ドキュメントの読みこみ中にエラーが発生しました\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "おそらくこのドキュメントがシステムに\n"
-#~ "インストールされていません"
-
-#~ msgid "Red Hat Linux"
-#~ msgstr "Red Hat Linux"
-
-#~ msgid "Red Hat menus"
-#~ msgstr "Red Hat メニュー"
-
-#~ msgid "Deskguide (the desktop pager)"
-#~ msgstr "デスクガイド (デスクトップページャ)"
-
-#~ msgid "The Battery"
-#~ msgstr "バッテリー"
-
-#~ msgid "Whoops! for some reason we can't add to the panel"
-#~ msgstr "ぐはぁ! なんかパネルを追加できないっす"
-
-#~ msgid "No socket was created"
-#~ msgstr "ソケットが作成されませんでした"
-
-#~ msgid ""
-#~ "Cannot execute the gmc-client program,\n"
-#~ "perhaps gmc is not installed"
-#~ msgstr ""
-#~ "gmc-client を実行できません。\n"
-#~ "たぶん gmc がインストールされていません"
-
-#~ msgid "News (www)"
-#~ msgstr "新着情報(www)"
-
-#~ msgid "http://gnotices.gnome.org/gnome-news/"
-#~ msgstr "http://gnotices.gnome.org/gnome-news/"
-
-#~ msgid "FAQ (www)"
-#~ msgstr "FAQ (www)"
-
-#~ msgid "http://www.gnome.org/gnomefaq/html/"
-#~ msgstr "http://www.gnome.org/gnomefaq/html/"
-
-#~ msgid "Mailing Lists (www)"
-#~ msgstr "メーリングリスト (www)"
-
-#~ msgid "http://mail.gnome.org/mailman/listinfo/"
-#~ msgstr "http://www.gnome.gr.jp/comm/ml.html"
-
-#~ msgid "Software (www)"
-#~ msgstr "ソフトウェア (www)"
-
-#~ msgid "http://www.gnome.org/applist/list-martin.phtml"
-#~ msgstr "http://www.gnome.org/applist/list-martin.phtml"
-
-#~ msgid "Development (www)"
-#~ msgstr "開発 (www)"
-
-#~ msgid "http://developer.gnome.org/"
-#~ msgstr "http://developer.gnome.org/"
-
-#~ msgid "Bug Tracking System (www)"
-#~ msgstr "バグ追跡システム (www)"
-
-#~ msgid "http://bugs.gnome.org/"
-#~ msgstr "http://bugzilla.gnome.org/"
-
-#~ msgid "By Type"
-#~ msgstr "種類順"
-
-#~ msgid "By Size"
-#~ msgstr "大きさ順"
-
-#~ msgid "By Time Last Accessed"
-#~ msgstr "アクセス日時順"
-
-#~ msgid "By Time Last Modified"
-#~ msgstr "更新日時順"
-
-#~ msgid "By Time Last Changed"
-#~ msgstr "作成日時順"
-
-#~ msgid "Arrange Icons"
-#~ msgstr "アイコンの並べかえ"
-
-#~ msgid "Rescan Desktop Directory"
-#~ msgstr "ディレクトリの再スキャン"
-
-#~ msgid "Rescan Desktop Devices"
-#~ msgstr "デバイスの再スキャン"
-
-#~ msgid " Desktop "
-#~ msgstr "デスクトップ "
-
-#~ msgid "can't fine real path"
-#~ msgstr "実際のパスを見つけられません"
-
-#~ msgid "Favorites"
-#~ msgstr "お気に入り"
-
-#~ msgid "Favorites: "
-#~ msgstr "お気に入り:"
-
-#~ msgid "Distribution: "
-#~ msgstr "ディストリビューション: "
-
-#~ msgid "KDE: "
-#~ msgstr "KDE: "
-
-#~ msgid "Panel: "
-#~ msgstr "パネル:"
-
-#~ msgid "Desktop: "
-#~ msgstr "デスクトップ:"
-
-#~ msgid "Size (pixels)"
-#~ msgstr "大きさ (ピクセル)"
-
-#~ msgid "Prelight buttons on mouseover"
-#~ msgstr "マウスが来たときボタンを明るくする"
-
-#~ msgid "In the menu"
-#~ msgstr "メニューに"
-
-#~ msgid "Menus"
-#~ msgstr "メニュー"
-
-#~ msgid "Use large icons"
-#~ msgstr "大きいアイコンを使う"
-
-#~ msgid "Show [...] buttons"
-#~ msgstr "[...]ボタンを表示"
-
-#~ msgid "Show popup menus outside of panels"
-#~ msgstr "パネルの外側にポップアップ・メニューを表示"
-
-#~ msgid "Keep menus in memory"
-#~ msgstr "メニューをメモリ内に保持"
-
-#~ msgid "Merge in system menus"
-#~ msgstr "システムメニューを組み込む"
-
-#~ msgid "Show menu titles"
-#~ msgstr "メニューのタイトルを表示"
-
-#~ msgid "Global menu"
-#~ msgstr "一般メニュー"
-
-#~ msgid "Tooltips enabled"
-#~ msgstr "ツールチップスを表示する"
-
-#~ msgid "Confirm the removal of panels with a dialog"
-#~ msgstr "パネルの削除をダイアログで確認する"
-
-#~ msgid "Try to avoid overlapping panels"
-#~ msgstr "パネルが重ならないように試みる"
-
-#~ msgid "Panel treatment (GNOME compliant window managers only)"
-#~ msgstr "パネルの配置 (GNOME 対応ウィンドウマネージャのみ)"
-
-#~ msgid "Take window screenshot key"
-#~ msgstr "ウインドウのスクリーンショットのキーを取得"
-
-#~ msgid "Add this program to Favorites"
-#~ msgstr "このプログラムをお気に入りへ追加"
-
-#~ msgid "Cannot create an item with an empty command"
-#~ msgstr "コマンドが空です。アイテムを作成できません"
-
-#~ msgid "Could not get file from path: %s"
-#~ msgstr "パスにファイルが見つかりません: %s"
-
-#~ msgid "Could not open .order file: %s"
-#~ msgstr ".orderファイルを開けません: %s"
-
-#~ msgid "Could not open file '%s' for writing"
-#~ msgstr "ファイル '%s' を書き込み用に開けません"
-
-#~ msgid ""
-#~ "Could not open .order file: %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ ".orderファイルを開けませんでした: %s\n"
-#~ "%s"
-
-#~ msgid "Could not remove old order file %s: %s\n"
-#~ msgstr "古い orderファイル %s を削除できませんでした: %s\n"
-
-#~ msgid ""
-#~ "Could not rename tmp file: %s to %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "一時ファイル%sから%sへの名前変更ができませんでした\n"
-#~ "%s"
-
-#~ msgid "Add this to Favorites menu"
-#~ msgstr "お気に入りへこれを追加する"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Can't get goad_id from desktop entry!"
-#~ msgstr "デスクトップエントリからgoad_idを取得できません!"
-
-#~ msgid "Add from menu"
-#~ msgstr "メニューから追加"
-
-#~ msgid " (empty)"
-#~ msgstr " (内容なし)"
-
-#~ msgid "Cannot find applets menu directory"
-#~ msgstr "アプレットメニューディレクトリを見つけられません"
-
-#~ msgid "No system menus found!"
-#~ msgstr "システムメニューが見つかりません!"
-
-#~ msgid "Explicit hide"
-#~ msgstr "手動で隠す"
-
-#~ msgid "With pixmap arrow"
-#~ msgstr "矢印つき"
-
-#~ msgid "Without pixmap"
-#~ msgstr "矢印なし"
-
-#~ msgid "Standard (48 pixels)"
-#~ msgstr "標準 (48ピクセル)"
-
-#~ msgid "Huge (80 pixels)"
-#~ msgstr "特大 (80ピクセル)"
-
-#~ msgid "Ridiculous (128 pixels)"
-#~ msgstr "超特大 (128ピクセル)"
-
-#~ msgid "Above"
-#~ msgstr "上"
-
-#~ msgid "Avoid on maximize"
-#~ msgstr "最大化の時に避ける"
-
-#~ msgid "Don't avoid on maximize"
-#~ msgstr "最大化の時に避けない"
-
-#~ msgid "Hiding policy"
-#~ msgstr "隠蔽方式"
-
-#~ msgid "Hide buttons"
-#~ msgstr "隠蔽ボタン"
-
-#~ msgid "Level"
-#~ msgstr "レベル"
-
-#~ msgid "Maximize mode"
-#~ msgstr "最大化モード"
-
-#~ msgid "Favorites menu"
-#~ msgstr "お気に入りメニュー"
-
-#~ msgid "All properties..."
-#~ msgstr "すべてのプロパティ..."
-
-#~ msgid "Avoid this panel when maximizing windows"
-#~ msgstr "ウインドウを最大化した時にパネルを避ける"
-
-#~ msgid "Panel window level:"
-#~ msgstr "パネルウインドウのレベル:"
-
-#~ msgid "Default (from global preferences)"
-#~ msgstr "初期値 (パネル全体の設定)"
-
-#~ msgid "Zvt terminal widget:     Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-#~ msgstr "Zvt terminal widget:     Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-
-#~ msgid "GNOME terminal:     Miguel de Icaza (miguel@kernel.org)"
-#~ msgstr "GNOME terminal:     Miguel de Icaza (miguel@kernel.org)"
-
-#~ msgid "    Erik Troan (ewt@redhat.com)"
-#~ msgstr "    Erik Troan (ewt@redhat.com)"
-
-#~ msgid "-*-fixed-medium-r-normal--14-*-*-*-*-*-*-*,*-r-*"
-#~ msgstr "-misc-*-medium-r-normal--14-*-*-*-*-*-*-*,*-r-*"
-
-#~ msgid "Creates a new terminal window"
-#~ msgstr "新規の端末を作成します"
-
-#~ msgid "_Show menubar"
-#~ msgstr "メニューバーを表示(_S)"
-
-#~ msgid "Toggles whether or not the menubar is displayed."
-#~ msgstr "メニューバーを表示するかどうか切替"
-
-#~ msgid "Toggles whether or not the keyboard is grabbed by the terminal."
-#~ msgstr "キーボードをターミナルが占有するかどうかを切替"
-
-#~ msgid "C_olor selector..."
-#~ msgstr "色の選択(_o)..."
-
-#~ msgid "The error was: %s"
-#~ msgstr "エラーは次の通りです: %s"
-
-#~ msgid ""
-#~ "If you are using Linux 2.2.x with glibc 2.1.x, this\n"
-#~ "is probably due to incorrectly setup Unix98 ptys.\n"
-#~ "\n"
-#~ "Please read linux/Documentation/Changes for how to\n"
-#~ "set them up correctly."
-#~ msgstr ""
-#~ "あなたの環境が Linux 2.2.x と glibc 2.1.x である場合、\n"
-#~ "Unix98仮想端末の設定が間違っているためかもしれません。\n"
-#~ "\n"
-#~ "linux/Documentation/Changes を読んで、正しい設定に\n"
-#~ "して下さい。"
-
-#~ msgid "Cannot activate a panel object"
-#~ msgstr "パネルオブジェクトをアクティブにできません"
-
-#~ msgid "Cannot start CORBA"
-#~ msgstr "CORBA をスタートできません"
-
-#~ msgid "CORBA Exception"
-#~ msgstr "CORBA 例外"
-
-#~ msgid "Cannot create object"
-#~ msgstr "オブジェクトを生成できませんでした"
-
-#~ msgid "Object created is not AppletWidget"
-#~ msgstr "作成されたオブジェクトは AppletWidget ではありません"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"
-#~ msgstr "-misc-*-medium-r-normal--14-*-*-*-*-*-*-*,*-r-*"
-
-#~ msgid "Constant speed animations"
-#~ msgstr "アニメーションは一定速度にする"
-
-#~ msgid "Drawer sliding"
-#~ msgstr "引出しのスライド"
-
-#~ msgid "Launcher icon"
-#~ msgstr "ランチャアイコン"
-
-#~ msgid "Menu icon"
-#~ msgstr "メニューアイコン"
-
-#~ msgid "Special icon"
-#~ msgstr "特殊アイコン"
-
-#~ msgid "Tiles enabled"
-#~ msgstr "タイルを使用"
-
-#~ msgid "Normal tile"
-#~ msgstr "通常タイル"
-
-#~ msgid "Clicked tile"
-#~ msgstr "クリックドタイル"
-
-#~ msgid "Border width (tile only)"
-#~ msgstr "境界線の幅(タイルのみ)"
-
-#~ msgid "Depth (displacement when pressed)"
-#~ msgstr "深さ"
-
-#~ msgid "Button type: "
-#~ msgstr "ボタンタイプ:"
-
-#~ msgid "Make buttons flush with panel edge"
-#~ msgstr "ボタンをパネルと同じ高さにする"
-
-#~ msgid "Show button tiles only when cursor is over the button"
-#~ msgstr "カーソルが上に来た時のみボタンのタイルを表示する"
-
-#~ msgid "Fast but low quality scaling of button icons"
-#~ msgstr "高速だが低画質のボタン・アイコン"
-
-#~ msgid "Default movement mode"
-#~ msgstr "デフォルトの移動方式"
-
-#~ msgid "Switched movement (or use Ctrl)"
-#~ msgstr "切替え移動(Ctrl同時押しで可能)"
-
-#~ msgid "Free movement (doesn't disturb other applets) (or use Alt)"
-#~ msgstr "自由に移動(他のアプレットの邪魔をしない) (Alt同時押しで可能)"
-
-#~ msgid "Push movement (or use Shift)"
-#~ msgstr "押し移動(Shift同時押しでも可能)"
-
-#~ msgid "Padding between applets"
-#~ msgstr "アプレット間の間隔"
-
-#~ msgid "Padding between applets and panel border"
-#~ msgstr "アプレットとパネルの端の間隔"
-
-#~ msgid "Panel Objects"
-#~ msgstr "パネルオブジェクト"
-
-#~ msgid "App"
-#~ msgstr "アプリ"
-
-#~ msgid "Adding tearoff when tearoffs are disabled"
-#~ msgstr "tearoff が無効のとき、 tearoff を表示する"
-
-#~ msgid "Translucent"
-#~ msgstr "透明"
-
-#~ msgid "Open IM (input method)"
-#~ msgstr "IM (インプットメソッド) を開く"
-
-#~ msgid "Enable multibyte support"
-#~ msgstr "マルチバイトサポートを有効にする"
-
-#~ msgid "Collapse"
-#~ msgstr "閉じる"
-
-#~ msgid "Japanese terminal emulation program"
-#~ msgstr "日本語ターミナルエミュレータ"
-
-#~ msgid "Kanji terminal"
-#~ msgstr "日本語端末 (kterm)"
-
-#~ msgid "Multimedia"
-#~ msgstr "マルチメディア"
-
-#~ msgid "Utilities"
-#~ msgstr "ユーティリティー"
-
-#~ msgid "Utilities menu"
-#~ msgstr "ユーティリティーメニュー"
-
-#~ msgid "Gtk+ port of Vim"
-#~ msgstr "Gtk+ 版 Vim"
-
-#~ msgid "Vim"
-#~ msgstr "Vim"
-
-#~ msgid "Vietnamese terminal"
-#~ msgstr "ベトナム語ターミナル (vnterm)"
-
-#~ msgid "Vietnamese terminal emulation program"
-#~ msgstr "ベトナム語ターミナルエミュレータ"
-
-#~ msgid "WordPerfect"
-#~ msgstr "WordPerfect"
-
-#~ msgid "WordPerfect for Linux"
-#~ msgstr "Linux 用の WordPerfect"
-
-#~ msgid "Ephemeris for X (Astronomy)"
-#~ msgstr "X 用l Ephemeris (天文)"
-
-#~ msgid "XEphem"
-#~ msgstr "XEphem"
-
-#~ msgid "Motif CD player w/ CDDB support"
-#~ msgstr "CDDB をサポートした Motif CD プレイヤー"
-
-#~ msgid "XMcd"
-#~ msgstr "XMcd"
-
-#~ msgid "XEmacs"
-#~ msgstr "XEmacs"
-
-#~ msgid "GNOME front-end to aspell "
-#~ msgstr "aspell の GNOME のフロントエンド"
-
-#~ msgid "gaspell Spell Checker"
-#~ msgstr "gaspell スペルチェッカ"
-
-#~ msgid "Lynx"
-#~ msgstr "Lynx"
-
-#~ msgid "Text based web browser"
-#~ msgstr "テキストベースの Web ブラウザ"
-
-#~ msgid "RealPlayer 7"
-#~ msgstr "RealPlayer"
-
-#~ msgid "RealPlayer multimedia player"
-#~ msgstr "RealPlayer マルチメディアプレイヤ"
-
-#~ msgid "XbmBrowser"
-#~ msgstr "Xbm ブラウザ"
-
-#~ msgid "xbm/xpm image browser"
-#~ msgstr "xmb/xpm 画像ブラウザ"
-
-#~ msgid "X Color Selector"
-#~ msgstr "X 色選択"
-
-#~ msgid "Xcolsel   "
-#~ msgstr "Xcolsel   "
-
-#~ msgid "Audio mixer"
-#~ msgstr "オーディオミキサ"
-
-#~ msgid "SMix"
-#~ msgstr "SMix"
-
-#~ msgid "xv"
-#~ msgstr "xv"
-
-#~ msgid "xv image viewer"
-#~ msgstr "xv 画像ブラウザ"
-
-#~ msgid "Clock applets"
-#~ msgstr "時計のアプレット"
-
-#~ msgid "Clocks"
-#~ msgstr "時計"
-
-#~ msgid "System Monitors (Processor, Diskspace, Memory, etc.)"
-#~ msgstr "システムモニタなどなど…"
-
-#~ msgid "Multimedia applets"
-#~ msgstr "マルチメディアアプレット"
-
-#~ msgid "Network applets"
-#~ msgstr "ネットワークメニュー"
-
-#~ msgid "Utility applets"
-#~ msgstr "ユーティリティアプレット"
-
-#~ msgid "Show task names"
-#~ msgstr "タスク名を表示"
-
-#~ msgid "Debian: "
-#~ msgstr "Debian: "
-
-#~ msgid ""
-#~ "No help is available/installed for these settings. Please make sure you\n"
-#~ "have the GNOME User's Guide installed on your system."
-#~ msgstr ""
-#~ "この設定のヘルプがないか、インストールされていません。\n"
-#~ "GNOME ユーザーズガイドをインストールしてみてください。"
-
-#~ msgid "Copy date to selection"
-#~ msgstr "日付をセレクションへコピー"
-
-#~ msgid "Copy timestamp to selection"
-#~ msgstr "「タイムスタンプ」をセレクションへコピー"
-
-#~ msgid "Halt"
-#~ msgstr "停止"
-
-#~ msgid "Only display warnings."
-#~ msgstr "警告の表示のみ"
-
-#~ msgid "/panel/Config/clock_format=%I:%M:%S %p"
-#~ msgstr "/panel/Config/clock_format= %p %I:%M:%S"
-
-#~ msgid "/panel/Config/clock_format=%l:%M:%S %p"
-#~ msgstr "/panel/Config/clock_format= %p %l:%M:%S"
-
-#~ msgid "Help system"
-#~ msgstr "ヘルプシステム"
-
-#~ msgid "Integrated help system (Info, man, HTML)"
-#~ msgstr "ヘルプシステム(Info, man, HTML)"
-
-#~ msgid "GNOME Tasklist"
-#~ msgstr "ウインドウ一覧"
-
-#~ msgid "Desk Guide"
-#~ msgstr "デスクガイド"
-
-#~ msgid "GNOME Desktop Guide (Pager)"
-#~ msgstr "GNOMEデスクトップガイド(ページャー)"
-
-#~ msgid "Startup Hint"
-#~ msgstr "スタートアップヒント"
-
-#~ msgid "Options for the startup hint dialog"
-#~ msgstr "スタートアップヒントダイアログの設定"
-
-#~ msgid "Menu editor"
-#~ msgstr "メニューエディタ"
-
-#~ msgid "the GNOME menu editor"
-#~ msgstr "GNOMEメニューエディタ"
