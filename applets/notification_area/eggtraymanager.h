@@ -44,9 +44,11 @@ struct _EggTrayManager
   Atom opcode_atom;
   Atom selection_atom;
   Atom message_data_atom;
+  Atom orientation_atom;
   
   GtkWidget *invisible;
   GdkScreen *screen;
+  GtkOrientation orientation;
 
   GList *messages;
   GHashTable *socket_table;
@@ -82,6 +84,9 @@ gboolean        egg_tray_manager_manage_screen   (EggTrayManager      *manager,
 						  GdkScreen           *screen);
 char           *egg_tray_manager_get_child_title (EggTrayManager      *manager,
 						  EggTrayManagerChild *child);
+void            egg_tray_manager_set_orientation (EggTrayManager      *manager,
+						  GtkOrientation       orientation);
+GtkOrientation  egg_tray_manager_get_orientation (EggTrayManager      *manager);
 
 G_END_DECLS
 

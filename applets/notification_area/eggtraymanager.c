@@ -17,13 +17,29 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <config.h>
 #include <string.h>
+#include <libintl.h>
+
+#include "eggtraymanager.h"
+
 #include <gdk/gdkx.h>
 #include <gtk/gtkinvisible.h>
 #include <gtk/gtksocket.h>
 #include <gtk/gtkwindow.h>
-#include "eggtraymanager.h"
+#include <X11/Xatom.h>
+
 #include "eggmarshalers.h"
+
+#ifndef EGG_COMPILATION
+#ifndef _
+#define _(x) dgettext (GETTEXT_PACKAGE, x)
+#define N_(x) x
+#endif
+#else
+#define _(x) x
+#define N_(x) x
+#endif
 
 /* Signals */
 enum
@@ -34,6 +50,11 @@ enum
   MESSAGE_CANCELLED,
   LOST_SELECTION,
   LAST_SIGNAL
+};
+
+enum {
+  PROP_0,
+  PROP_ORIENTATION
 };
 
 typedef struct
@@ -53,12 +74,23 @@ static guint manager_signals[LAST_SIGNAL] = { 0 };
 #define SYSTEM_TRAY_BEGIN_MESSAGE   1
 #define SYSTEM_TRAY_CANCEL_MESSAGE  2
 
+#define SYSTEM_TRAY_ORIENTATION_HORZ 0
+#define SYSTEM_TRAY_ORIENTATION_VERT 1
+
 static gboolean egg_tray_manager_check_running_xscreen (Screen *xscreen);
 
 static void egg_tray_manager_init (EggTrayManager *manager);
 static void egg_tray_manager_class_init (EggTrayManagerClass *klass);
 
-static void egg_tray_manager_finalize (GObject *object);
+static void egg_tray_manager_finalize     (GObject      *object);
+static void egg_tray_manager_set_property (GObject      *object,
+					   guint         prop_id,
+					   const GValue *value,
+					   GParamSpec   *pspec);
+static void egg_tray_manager_get_property (GObject      *object,
+					   guint         prop_id,
+					   GValue       *value,
+					   GParamSpec   *pspec);
 
 static void egg_tray_manager_unmanage (EggTrayManager *manager);
 
@@ -104,6 +136,17 @@ egg_tray_manager_class_init (EggTrayManagerClass *klass)
   gobject_class = (GObjectClass *)klass;
 
   gobject_class->finalize = egg_tray_manager_finalize;
+  gobject_class->set_property = egg_tray_manager_set_property;
+  gobject_class->get_property = egg_tray_manager_get_property;
+
+  g_object_class_install_property (gobject_class,
+				   PROP_ORIENTATION,
+				   g_param_spec_enum ("orientation",
+						      _("Orientation"),
+						      _("The orientation of the tray."),
+						      GTK_TYPE_ORIENTATION,
+						      GTK_ORIENTATION_HORIZONTAL,
+						      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
   
   manager_signals[TRAY_ICON_ADDED] =
     g_signal_new ("tray_icon_added",
@@ -167,6 +210,44 @@ egg_tray_manager_finalize (GObject *object)
   egg_tray_manager_unmanage (manager);
   
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+egg_tray_manager_set_property (GObject      *object,
+			       guint         prop_id,
+			       const GValue *value,
+			       GParamSpec   *pspec)
+{
+  EggTrayManager *manager = EGG_TRAY_MANAGER (object);
+
+  switch (prop_id)
+    {
+    case PROP_ORIENTATION:
+      egg_tray_manager_set_orientation (manager, g_value_get_enum (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
+}
+
+static void
+egg_tray_manager_get_property (GObject    *object,
+			       guint       prop_id,
+			       GValue     *value,
+			       GParamSpec *pspec)
+{
+  EggTrayManager *manager = EGG_TRAY_MANAGER (object);
+
+  switch (prop_id)
+    {
+    case PROP_ORIENTATION:
+      g_value_set_enum (value, manager->orientation);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+    }
 }
 
 EggTrayManager *
@@ -418,6 +499,28 @@ egg_tray_manager_unmanage (EggTrayManager *manager)
   g_object_unref (G_OBJECT (invisible));
 }
 
+static void
+egg_tray_manager_set_orientation_property (EggTrayManager *manager)
+{
+  gulong data[1];
+
+  if (!manager->invisible || !manager->invisible->window)
+    return;
+
+  g_assert (manager->orientation_atom != None);
+
+  data[0] = manager->orientation == GTK_ORIENTATION_HORIZONTAL ?
+		SYSTEM_TRAY_ORIENTATION_HORZ :
+		SYSTEM_TRAY_ORIENTATION_VERT;
+
+  XChangeProperty (GDK_WINDOW_XDISPLAY (manager->invisible->window),
+		   GDK_WINDOW_XWINDOW (manager->invisible->window),
+		   manager->orientation_atom,
+		   XA_CARDINAL, 32,
+		   PropModeReplace,
+		   (guchar *) &data, 1);
+}
+
 static gboolean
 egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 {
@@ -449,6 +552,11 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
   manager->selection_atom = XInternAtom (DisplayOfScreen (xscreen), selection_atom_name, False);
 
   g_free (selection_atom_name);
+
+  manager->orientation_atom = XInternAtom (DisplayOfScreen (xscreen),
+					   "_NET_SYSTEM_TRAY_ORIENTATION",
+					   FALSE);
+  egg_tray_manager_set_orientation_property (manager);
   
   timestamp = gdk_x11_get_server_time (invisible->window);
   XSetSelectionOwner (DisplayOfScreen (xscreen), manager->selection_atom,
@@ -590,4 +698,28 @@ egg_tray_manager_get_child_title (EggTrayManager *manager,
 
   return retval;
 
+}
+
+void
+egg_tray_manager_set_orientation (EggTrayManager *manager,
+				  GtkOrientation  orientation)
+{
+  g_return_if_fail (EGG_IS_TRAY_MANAGER (manager));
+
+  if (manager->orientation != orientation)
+    {
+      manager->orientation = orientation;
+
+      egg_tray_manager_set_orientation_property (manager);
+
+      g_object_notify (G_OBJECT (manager), "orientation");
+    }
+}
+
+GtkOrientation
+egg_tray_manager_get_orientation (EggTrayManager *manager)
+{
+  g_return_val_if_fail (EGG_IS_TRAY_MANAGER (manager), GTK_ORIENTATION_HORIZONTAL);
+
+  return manager->orientation;
 }
