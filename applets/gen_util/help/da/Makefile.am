@@ -1,0 +1,1 @@
+SUBDIRS = clock mailcheck printer
