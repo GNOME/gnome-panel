@@ -89,9 +89,9 @@ change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 }
 
 static void
-panel_realize(GtkWidget *widget, gpointer data)
+panel_realize (GtkWidget *widget, gpointer data)
 {
-	change_window_cursor(widget->window, GDK_LEFT_PTR);
+	change_window_cursor (widget->window, GDK_LEFT_PTR);
 	
 	if (IS_BASEP_WIDGET (widget))
 		basep_widget_enable_buttons(BASEP_WIDGET(widget));
@@ -100,22 +100,24 @@ panel_realize(GtkWidget *widget, gpointer data)
 
 	/*FIXME: this seems to fix the panel size problems on startup
 	  (from a report) but I don't think it's right*/
-	gtk_widget_queue_resize(GTK_WIDGET(widget));
+	gtk_widget_queue_resize (GTK_WIDGET (widget));
 }
 
 static void
-freeze_changes(AppletInfo *info)
+freeze_changes (AppletInfo *info)
 {
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
-		g_assert(ext);
+		g_assert (ext != NULL);
 		/*ingore this until we get an ior*/
-		if(ext->applet) {
+		if (ext->applet != CORBA_OBJECT_NIL) {
 			CORBA_Environment ev;
 			CORBA_exception_init(&ev);
 			GNOME_Applet_freeze_changes(ext->applet, &ev);
-			if(ev._major)
+			if(ev._major) {
 				panel_clean_applet(ext->info);
+				ext->info = NULL;
+			}
 			CORBA_exception_free(&ev);
 		}
 	}
@@ -126,15 +128,17 @@ thaw_changes(AppletInfo *info)
 {
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
-		g_assert(ext);
+		g_assert (ext != NULL);
 		/*ingore this until we get an ior*/
-		if(ext->applet) {
+		if (ext->applet != CORBA_OBJECT_NIL) {
 			CORBA_Environment ev;
-			CORBA_exception_init(&ev);
-			GNOME_Applet_thaw_changes(ext->applet, &ev);
-			if(ev._major)
-				panel_clean_applet(ext->info);
-			CORBA_exception_free(&ev);
+			CORBA_exception_init (&ev);
+			GNOME_Applet_thaw_changes (ext->applet, &ev);
+			if(ev._major) {
+				panel_clean_applet (ext->info);
+				ext->info = NULL;
+			}
+			CORBA_exception_free (&ev);
 		}
 	}
 }
@@ -200,8 +204,10 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 			GNOME_Applet_change_orient(ext->applet,
 						   orient,
 						   &ev);
-			if(ev._major)
+			if(ev._major) {
 				panel_clean_applet(ext->info);
+				ext->info = NULL;
+			}
 			CORBA_exception_free(&ev);
 
 			/* we have now sent this orientation thus we
@@ -292,8 +298,10 @@ size_change(AppletInfo *info, PanelWidget *panel)
 			GNOME_Applet_change_size(ext->applet,
 						 panel->sz,
 						 &ev);
-			if(ev._major)
+			if(ev._major) {
 				panel_clean_applet(ext->info);
+				ext->info = NULL;
+			}
 			CORBA_exception_free(&ev);
 		}
 	} else if(info->type == APPLET_STATUS) {
@@ -345,8 +353,10 @@ back_change(AppletInfo *info, PanelWidget *panel)
 				backing._u.c.blue = panel->back_color.blue;
 			}
 			GNOME_Applet_back_change(ext->applet, &backing, &ev);
-			if(ev._major)
-				panel_clean_applet(ext->info);
+			if (ev._major) {
+				panel_clean_applet (ext->info);
+				ext->info = NULL;
+			}
 			CORBA_exception_free(&ev);
 		}
 	} 
@@ -559,7 +569,7 @@ panel_move_timeout(gpointer data)
 }
 
 static void
-panel_destroy(GtkWidget *widget, gpointer data)
+panel_destroy (GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
 	PanelWidget *panel = NULL;
@@ -571,13 +581,15 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		
 	kill_config_dialog(widget);
 
-	if(IS_DRAWER_WIDGET(widget)) {
-		if(panel->master_widget) {
+	if (IS_DRAWER_WIDGET(widget)) {
+		if (panel->master_widget != NULL) {
 			AppletInfo *info = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
 							       "applet_info");
 			Drawer *drawer = info->data;
 			drawer->drawer = NULL;
-			panel_clean_applet(info);
+			panel_clean_applet (info);
+			gtk_object_remove_data (GTK_OBJECT (panel->master_widget),
+						"applet_info");
 		}
 	} else if ((IS_BASEP_WIDGET(widget)
 		    && !IS_DRAWER_WIDGET(widget))
@@ -1382,8 +1394,8 @@ panel_setup(GtkWidget *panelw)
 			      gtk_widget_get_events(panelw) |
 			      PANEL_EVENT_MASK);
  
-	gtk_signal_connect(GTK_OBJECT(panelw), "destroy",
-			   GTK_SIGNAL_FUNC(panel_destroy),NULL);
+	gtk_signal_connect (GTK_OBJECT (panelw), "destroy",
+			    GTK_SIGNAL_FUNC (panel_destroy), NULL);
 
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panelw)))

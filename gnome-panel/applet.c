@@ -53,18 +53,20 @@ move_applet_callback(GtkWidget *widget, AppletInfo *info)
 
 /*destroy widgets and call the above cleanup function*/
 void
-panel_clean_applet(AppletInfo *info)
+panel_clean_applet (AppletInfo *info)
 {
-	g_return_if_fail(info != NULL);
+	g_return_if_fail (info != NULL);
 
-	if(info->widget) {
+	if (info->widget != NULL) {
 		if(info->type == APPLET_STATUS) {
-			status_applet_put_offscreen(info->data);
+			status_applet_put_offscreen (info->data);
 		}
 		/* destroy will remove it from the panel */
-		gtk_widget_destroy(info->widget);
+		gtk_widget_destroy (info->widget);
 		info->widget = NULL;
 	}
+
+	info->data = NULL;
 }
 
 static gboolean

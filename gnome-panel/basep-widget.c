@@ -62,8 +62,9 @@ basep_widget_get_type (void)
 			sizeof (BasePWidgetClass),
 			(GtkClassInitFunc) basep_widget_class_init,
 			(GtkObjectInitFunc) basep_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
+			NULL
 		};
 
 		basep_widget_type = gtk_type_unique (gtk_window_get_type (),
@@ -266,13 +267,15 @@ basep_widget_size_allocate (GtkWidget *widget,
 static void
 basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
 {
-	basep_border_queue_recalc ();
+	if (IS_BORDER_WIDGET (basep))
+		basep_border_queue_recalc ();
 }
 
 static void
 basep_widget_state_change (BasePWidget *basep, BasePState state)
 {
-	basep_border_queue_recalc ();
+	if (IS_BORDER_WIDGET (basep))
+		basep_border_queue_recalc ();
 }
 
 static void
@@ -811,13 +814,16 @@ make_hidebutton(BasePWidget *basep,
 static void
 basep_widget_destroy (GtkObject *o)
 {
-	BasePWidget *basep = BASEP_WIDGET(o);
+	BasePWidget *basep = BASEP_WIDGET (o);
         /* check if there's a timeout set, and delete it if 
 	 * there was */
 	if (basep->leave_notify_timer_tag != 0)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
 	gtk_object_unref (GTK_OBJECT (basep->pos));
 	basep->pos = NULL;
+
+	if (IS_BORDER_WIDGET (basep))
+		basep_border_queue_recalc ();
 
 	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy (o);
@@ -1956,8 +1962,7 @@ basep_border_recalc (void)
 
 			panel = pd->panel;
 
-			if (IS_EDGE_WIDGET (panel) ||
-			    IS_ALIGNED_WIDGET (panel))
+			if (IS_BORDER_WIDGET (panel))
 				gtk_widget_queue_resize (panel);
 		}
 	}
