@@ -1,1 +1,2 @@
-SUBDIRS = pager
+SUBDIRS = pager tasklist
+
