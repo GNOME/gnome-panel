@@ -1135,6 +1135,7 @@ panel_profile_add_to_list (PanelGConfKeyType  type,
 
 	list = g_slist_append (list, id);
 
+	key = panel_gconf_general_key (current_profile, id_list);
 	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
 
 	for (l = list; l; l = l->next)
