@@ -120,6 +120,7 @@ static GtkWidget *keep_bottom_cb;
 static GtkWidget *keys_enabled_cb;
 static GtkWidget *menu_key_sb;
 static GtkWidget *run_key_sb;
+static GtkWidget *confirm_panel_remove_cb;
 
 static gboolean changing = TRUE;
 static GtkWidget *capplet;
@@ -756,6 +757,8 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				    conf->autoraise);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keep_bottom_cb),
 				    conf->keep_bottom);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(confirm_panel_remove_cb),
+				    conf->confirm_panel_remove);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keys_enabled_cb),
 				    conf->keys_enabled);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (menu_key_sb),
@@ -778,6 +781,8 @@ sync_config_with_misc_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(autoraise_cb)->active;
 	conf->keep_bottom =
 		GTK_TOGGLE_BUTTON(keep_bottom_cb)->active;
+	conf->confirm_panel_remove =
+		GTK_TOGGLE_BUTTON(confirm_panel_remove_cb)->active;
 	conf->keys_enabled =
 		GTK_TOGGLE_BUTTON(keys_enabled_cb)->active;
 	conf->menu_keycode = gtk_spin_button_get_value_as_int (
@@ -898,6 +903,11 @@ misc_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
 
+	/* Confirm panel removal */
+	confirm_panel_remove_cb = gtk_check_button_new_with_label (_("Confirm the removal of panels with a dialog"));
+	gtk_signal_connect (GTK_OBJECT (confirm_panel_remove_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_box_pack_start (GTK_BOX (box), confirm_panel_remove_cb, FALSE, FALSE, 0);
 
 	/* Key Bindings frame */
 	frame = gtk_frame_new (_("Key Bindings"));

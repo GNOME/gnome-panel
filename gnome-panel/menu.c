@@ -2007,9 +2007,9 @@ create_menu_at_fr (GtkWidget *menu,
 	/*add separator*/
 	if(add_separator) {
 		menuitem = gtk_menu_item_new();
-		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+		gtk_menu_insert(GTK_MENU(menu), menuitem, first_item);
 		gtk_widget_show(menuitem);
-		gtk_widget_set_sensitive(menuitem,FALSE);
+		gtk_widget_set_sensitive(menuitem, FALSE);
 		add_separator = FALSE;
 	}
 
@@ -2458,8 +2458,22 @@ status_unparent(GtkWidget *widget)
 }
 
 static void
-remove_panel (GtkWidget *w, gpointer data)
+remove_panel (BasePWidget *basep)
 {
+	status_unparent (GTK_WIDGET (basep));
+	gtk_widget_destroy (GTK_WIDGET (basep));
+}
+
+static void
+remove_panel_accept (GtkWidget *w, BasePWidget *basep)
+{
+	remove_panel(basep);
+}
+
+static void
+remove_panel_query (GtkWidget *w, gpointer data)
+{
+	GtkWidget *dialog;
 	BasePWidget *basep;
 	PanelWidget *panel;
 
@@ -2472,13 +2486,34 @@ remove_panel (GtkWidget *w, gpointer data)
 
 	basep = BASEP_WIDGET (panel->panel_parent);
 	
-	if (base_panels == 1) {
+	/* drawer widgets are not base panels and can be removed because
+	 * they're not counted in base_panels */
+	if (!IS_DRAWER_WIDGET(basep) && base_panels == 1) {
 		gnome_error_dialog (_("You cannot remove your last panel."));
 		return;
 	}
 
-	status_unparent (GTK_WIDGET (basep));
-	gtk_widget_destroy (GTK_WIDGET (basep));
+	/* if there are no applets just remove the panel */
+	if(!global_config.confirm_panel_remove || !panel->applet_list) {
+		remove_panel(basep);
+		return;
+	}
+
+	dialog = gnome_message_box_new (_("When a panel is removed, the panel "
+					  "and its\napplet settings are lost. "
+					  "Remove this panel?"),
+					GNOME_MESSAGE_BOX_QUESTION,
+					GNOME_STOCK_BUTTON_YES,
+					GNOME_STOCK_BUTTON_NO,
+					NULL);
+	
+	gnome_dialog_button_connect (GNOME_DIALOG(dialog), 0,
+				     GTK_SIGNAL_FUNC (remove_panel_accept),
+				     basep);
+	gtk_signal_connect_object_while_alive (GTK_OBJECT(basep), "destroy",
+					       GTK_SIGNAL_FUNC(gtk_widget_destroy),
+					       GTK_OBJECT(dialog));
+	gtk_widget_show (dialog);
 }
 
 static GtkWidget *
@@ -3307,6 +3342,49 @@ panel_config_global(void)
 		gnome_error_dialog(_("Cannot execute panel global properties"));
 }
 
+static void
+setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
+{
+	PanelWidget *panel = get_panel_from_menu_data(menu);
+	GtkWidget *label;
+
+	g_assert(panel->panel_parent);
+
+	if(!GTK_MENU(menu)->torn_off &&
+	   !IS_DRAWER_WIDGET(panel->panel_parent) &&
+	   base_panels == 1)
+		gtk_widget_set_sensitive(menuitem, FALSE);
+	else
+		gtk_widget_set_sensitive(menuitem, TRUE);
+
+	label = GTK_BIN(menuitem)->child;
+	if(GTK_IS_BOX(label)) {
+		GList *li, *list;
+		list = gtk_container_children(GTK_CONTAINER(label));
+		for(li = list; li; li = li->next) {
+			if(GTK_IS_LABEL(li->data)) {
+				label = li->data;
+				break;
+			}
+		}
+		g_list_free(list);
+	}
+	if(!GTK_IS_LABEL(label)) {
+		g_warning("We can't find the label of a menu item");
+		return;
+	}
+
+
+	/* this will not handle the case of menu being torn off
+	 * and then the confirm_panel_remove changed, but oh well */
+	if((GTK_MENU(menu)->torn_off || panel->applet_list) &&
+	   global_config.confirm_panel_remove)
+		gtk_label_set_text(GTK_LABEL(label), _("Remove this panel..."));
+	else
+		gtk_label_set_text(GTK_LABEL(label), _("Remove this panel"));
+}
+
+
 void
 make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 {
@@ -3348,14 +3426,18 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 				   create_add_panel_submenu(TRUE));
 
 	menuitem = gtk_menu_item_new ();
+
 	setup_menuitem (menuitem, 
 			gnome_stock_pixmap_widget (NULL,
 						   GNOME_STOCK_PIXMAP_REMOVE),
 			_("Remove this panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (remove_panel),
+			    GTK_SIGNAL_FUNC (remove_panel_query),
 			    NULL);
+	gtk_signal_connect (GTK_OBJECT (menu), "show",
+			    GTK_SIGNAL_FUNC(setup_remove_this_panel),
+			    menuitem);
 
 	add_menu_separator(menu);
 
