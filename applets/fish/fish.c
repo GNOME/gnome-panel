@@ -7,8 +7,7 @@
 #include <string.h>
 #include <gnome.h>
 #include <gdk_imlib.h>
-#include "applet-lib.h"
-#include "applet-widget.h"
+#include <applet-widget.h>
 
 typedef struct _fish_properties fish_properties;
 

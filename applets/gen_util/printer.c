@@ -14,8 +14,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <gnome.h>
-#include "applet-lib.h"
-#include "applet-widget.h"
+#include <applet-widget.h>
 #include <gdk_imlib.h>
 #include "print.xpm"
 
