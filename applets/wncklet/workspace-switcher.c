@@ -212,7 +212,8 @@ applet_scroll (PanelApplet    *applet,
 		break;
 	}
 
-	wnck_workspace_activate (wnck_screen_get_workspace (screen, index));
+	wnck_workspace_activate (wnck_screen_get_workspace (screen, index),
+				 event->time);
 	
 	return TRUE;
 }
