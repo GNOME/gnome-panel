@@ -385,6 +385,8 @@ snapped_widget_pop_up(SnappedWidget *snapped)
 {
 	if ((snapped->mode != SNAPPED_AUTO_HIDE) ||
 	    (snapped->state == SNAPPED_MOVING) ||
+	    (snapped->state == SNAPPED_HIDDEN_RIGHT) ||
+	    (snapped->state == SNAPPED_HIDDEN_LEFT) ||
 	    (snapped->state == SNAPPED_SHOWN))
 		return;
 

@@ -396,6 +396,7 @@ corner_widget_pop_up(CornerWidget *corner)
 {
 	if ((corner->mode != CORNER_AUTO_HIDE) ||
 	    (corner->state == CORNER_MOVING) ||
+	    (corner->state == CORNER_HIDDEN) ||
 	    (corner->state == CORNER_SHOWN))
 		return;
 
