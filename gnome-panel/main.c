@@ -54,43 +54,34 @@ load_default_applets(void)
 static void
 init_user_applets(void)
 {
-	void *iterator;
-	char *key;
-	char *realkey;
-	char *value;
 	char *applet_name;
 	char *applet_params;
+	char *applet_geometry;
 	int   xpos, ypos;
+	char  buf[256];
+	int   count,num;	
 
-	iterator = gnome_config_init_iterator("/panel/Applets");
-
-	if (!iterator)
+	count=gnome_config_get_int("/panel/Applets/count=0");
+	if(count<=0)
 		load_default_applets();
-	
-	while (iterator) {
-		iterator = gnome_config_iterator_next(iterator, &key, &value);
-		realkey = strchr(key, ',') + 1; /* Skip over number-for-unique-keys hack and go to applet id */
-		applet_params = strchr(realkey, ','); /* Everything after first comma is parameters to the applet */
-
-		if (applet_params)
-			*applet_params++ = '\0'; /* Terminate string at comma and skip over it */
-
-		/* If applet_params is NULL, then the applet will be queried for default params */
-
-		applet_name = realkey;
-
-		if (sscanf(value, "%d%d", &xpos, &ypos) != 2) {
+	for(num=1;num<=count;num++) {
+		sprintf(buf,"/panel/Applet_%d/id=Unknown",num);
+		applet_name = gnome_config_get_string(buf);
+		sprintf(buf,"/panel/Applet_%d/parameters=",num);
+		applet_params = gnome_config_get_string(buf);
+		sprintf(buf,"/panel/Applet_%d/geometry=0 0",num);
+		applet_geometry = gnome_config_get_string(buf);
+		if (sscanf(applet_geometry, "%d%d", &xpos, &ypos) != 2) {
 			fprintf(stderr,
 				"init_user_applets: using unknown applet position for \"%s\"\n",
 				applet_name);
 
-			xpos = ypos = PANEL_UNKNOWN_APPLET_POSITION;
+			xpos = ypos = 0; /*PANEL_UNKNOWN_APPLET_POSITION*/
 		}
-
 		load_applet(applet_name, applet_params, xpos, ypos);
-		
-		g_free (key);
-		g_free (value);
+		g_free(applet_name);
+		g_free(applet_params);
+		g_free(applet_geometry);
 	}
 }
 

@@ -463,6 +463,7 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 	char          *id;
 	char          *params;
 	char          *path;
+	char          *fullpath;
 	char           buf[256];
 	AppletCommand  cmd;
 
@@ -478,8 +479,13 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 
 	/* XXX: The increasing number is sort of a hack to guarantee unique keys */
 
-	sprintf(buf, "%d,", (*num)++);
-	path = g_copy_strings("/panel/Applets/", buf, id, ",", params, NULL);
+	sprintf(buf, "_%d/", (*num)++);
+	path = g_copy_strings("/panel/Applet", buf, NULL);
+
+	fullpath = g_copy_strings(path,"id",NULL);
+	gnome_config_set_string(fullpath, id);
+	g_free(fullpath);
+
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
@@ -493,7 +499,14 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 			break;
 	}
 
-	gnome_config_set_string(path, buf);
+	fullpath = g_copy_strings(path,"geometry",NULL);
+	gnome_config_set_string(fullpath, buf);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"parameters",NULL);
+	gnome_config_set_string(fullpath, params);
+	g_free(fullpath);
+
 
 	g_free(params);
 	g_free(path);
@@ -528,11 +541,20 @@ panel_session_save (gpointer client_data,
 		    int is_fast)
 {
 	int num;
+	char buf[256];
 
-	num = 0;
+	for(num=gnome_config_get_int("/panel/Applets/count=0");
+		num>0;num--) {
+		sprintf(buf,"/panel/Applet_%d",num);
+		gnome_config_clean_section(buf);
+	}
+
+	num = 1;
 	gnome_config_clean_section("/panel/Applets");
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
 			      save_applet_configuration, &num);
+
+	gnome_config_set_int("/panel/Applets/count",num);
 
 	gnome_config_set_int("/panel/Config/position",the_panel->pos);
 	gnome_config_set_int("/panel/Config/mode",the_panel->mode);
