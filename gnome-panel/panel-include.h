@@ -5,6 +5,7 @@
 #include "panel-types.h"
 
 #include "panel-widget.h"
+#include "basep-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
 #include "corner-widget.h"

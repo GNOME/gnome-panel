@@ -1,3 +1,17 @@
+Tue Jan 19 03:58:22 1999  George Lebl  <jirka@5z.com>
+
+	* basep-widget.[ch]: new files, combining some of the functionality
+	  of all the widgets, into a single base widget to reduce code
+	  size and ease maintanance (not to mention it reduces redundancy)
+
+	* {corner,snapped,drawer}-widget.[ch]: derive them all from
+	  basep-widget
+
+	* session.c,menu.c,panel_config.[ch],drawer.c,applet.c,extern.c:
+	  make changes to accomodate the above changes
+
+	* Makefile.am: build the new basep-widget
+
 Tue Jan 19 01:24:59 1999  Jeff Garzik  <jgarzik@pobox.com>
 
 	* launcher.c, menu.c, panel_config.c, panel_config_global.c,

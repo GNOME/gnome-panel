@@ -21,8 +21,9 @@ static void corner_widget_size_request	(GtkWidget         *widget,
 					 GtkRequisition    *requisition);
 static void corner_widget_size_allocate	(GtkWidget         *widget,
 					 GtkAllocation     *allocation);
+static void corner_widget_set_hidebuttons(BasePWidget      *basep);
 
-static GtkWindowClass *parent_class = NULL;
+static BasePWidgetClass *parent_class = NULL;
 
 /*global settings*/
 extern int pw_explicit_step;
@@ -55,7 +56,7 @@ corner_widget_get_type ()
 			(GtkArgGetFunc) NULL,
 		};
 
-		corner_widget_type = gtk_type_unique (gtk_window_get_type (),
+		corner_widget_type = gtk_type_unique (basep_widget_get_type (),
 						       &corner_widget_info);
 	}
 
@@ -109,13 +110,6 @@ corner_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}
-	
-	set_frame_colors(PANEL_WIDGET(corner->panel),
-			 corner->frame,
-			 corner->hidebutton_n,
-			 corner->hidebutton_e,
-			 corner->hidebutton_w,
-			 corner->hidebutton_s);
 }
 
 static void
@@ -123,8 +117,9 @@ corner_widget_class_init (CornerWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
+	BasePWidgetClass *basep_class = (BasePWidgetClass*) class;
 
-        parent_class = gtk_type_class (gtk_window_get_type ());
+        parent_class = gtk_type_class (basep_widget_get_type ());
         corner_widget_signals[POS_CHANGE_SIGNAL] =
 		gtk_signal_new("pos_change",
 			       GTK_RUN_LAST,
@@ -151,6 +146,8 @@ corner_widget_class_init (CornerWidgetClass *class)
 
 	class->pos_change = NULL;
 	class->state_change = NULL;
+
+	basep_class->set_hidebuttons = corner_widget_set_hidebuttons;
 	
 	widget_class->size_request = corner_widget_size_request;
 	widget_class->size_allocate = corner_widget_size_allocate;
@@ -165,6 +162,7 @@ corner_widget_size_request(GtkWidget *widget,
 			    GtkRequisition *requisition)
 {
 	CornerWidget *corner = CORNER_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
 	if(corner_widget_request_cube) {
 		requisition->width = 48;
 		requisition->height = 48;
@@ -172,16 +170,16 @@ corner_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (corner->table, &corner->table->requisition);
+	gtk_widget_size_request (basep->table, &basep->table->requisition);
 	
-	requisition->width = corner->table->requisition.width;
-	requisition->height = corner->table->requisition.height;
+	requisition->width = basep->table->requisition.width;
+	requisition->height = basep->table->requisition.height;
 }
 
 static void
 corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int height)
 {
-	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(corner)->panel);
 	
 	switch(corner->pos) {
 	case CORNER_NE:
@@ -189,13 +187,13 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 			*y = 0;
 			if(corner->state == CORNER_HIDDEN)
 				*x = gdk_screen_width() -
-					corner->hidebutton_w->requisition.width;
+					BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
 			else /*shown*/
 				*x = gdk_screen_width() - width;
 		} else { /*vertical*/
 			*x = gdk_screen_width() - width;
 			if(corner->state == CORNER_HIDDEN)
-				*y = corner->hidebutton_s->requisition.height -
+				*y = BASEP_WIDGET(corner)->hidebutton_s->requisition.height -
 					height;
 			else /*shown*/
 				*y = 0;
@@ -206,14 +204,14 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 			*y = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
 				*x = gdk_screen_width() -
-					corner->hidebutton_w->requisition.width;
+					BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
 			else /*shown*/
 				*x = gdk_screen_width() - width;
 		} else { /*vertical*/
 			*x = gdk_screen_width() - width;
 			if(corner->state == CORNER_HIDDEN)
 				*y = gdk_screen_height() -
-					corner->hidebutton_n->requisition.height;
+					BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
 			else /*shown*/
 				*y = gdk_screen_height() - height;
 		}
@@ -222,7 +220,7 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 		if(panel->orient == PANEL_HORIZONTAL) {
 			*y = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
-				*x = corner->hidebutton_e->requisition.width -
+				*x = BASEP_WIDGET(corner)->hidebutton_e->requisition.width -
 					width;
 			else /*shown*/
 				*x = 0;
@@ -230,7 +228,7 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 			*x = 0;
 			if(corner->state == CORNER_HIDDEN)
 				*y = gdk_screen_height() -
-					corner->hidebutton_n->requisition.height;
+					BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
 			else /*shown*/
 				*y = gdk_screen_height() - height;
 		}
@@ -239,14 +237,14 @@ corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int
 		if(panel->orient == PANEL_HORIZONTAL) {
 			*y = 0;
 			if(corner->state == CORNER_HIDDEN)
-				*x = corner->hidebutton_e->requisition.width -
+				*x = BASEP_WIDGET(corner)->hidebutton_e->requisition.width -
 					width;
 			else /*shown*/
 				*x = 0;
 		} else { /*vertical*/
 			*x = 0;
 			if(corner->state == CORNER_HIDDEN)
-				*y = corner->hidebutton_s->requisition.height -
+				*y = BASEP_WIDGET(corner)->hidebutton_s->requisition.height -
 					height;
 			else /*shown*/
 				*y = 0;
@@ -259,14 +257,15 @@ static void
 corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	CornerWidget *corner = CORNER_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 
 	/*we actually want to ignore the size_reqeusts since they are sometimes
 	  a cube for the flicker prevention*/
-	gtk_widget_size_request (corner->table, &corner->table->requisition);
+	gtk_widget_size_request (basep->table, &basep->table->requisition);
 	
-	allocation->width = corner->table->requisition.width;
-	allocation->height = corner->table->requisition.height;
+	allocation->width = basep->table->requisition.width;
+	allocation->height = basep->table->requisition.height;
 
 	corner_widget_get_pos(corner,
 			      &allocation->x,
@@ -288,7 +287,7 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
-	gtk_widget_size_allocate(corner->table,&challoc);
+	gtk_widget_size_allocate(basep->table,&challoc);
 }
 
 static void
@@ -375,24 +374,24 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 	width   = GTK_WIDGET(corner)->allocation.width;
 	height  = GTK_WIDGET(corner)->allocation.height;
 
-	if(PANEL_WIDGET(corner->panel)->orient == PANEL_HORIZONTAL) {
+	if(PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(corner, -width +
-				   corner->hidebutton_w->allocation.width, 0,
+				   BASEP_WIDGET(corner)->hidebutton_w->allocation.width, 0,
 				   pw_explicit_step);
 		else
 			move_horiz(corner, gdk_screen_width() -
-				   corner->hidebutton_e->allocation.width, 
+				   BASEP_WIDGET(corner)->hidebutton_e->allocation.width, 
 				   gdk_screen_width() - width,
 				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(corner, -height +
-				  corner->hidebutton_s->allocation.height, 0,
+				  BASEP_WIDGET(corner)->hidebutton_s->allocation.height, 0,
 				  pw_explicit_step);
 		else
 			move_vert(corner, gdk_screen_height() -
-				  corner->hidebutton_n->allocation.height, 
+				  BASEP_WIDGET(corner)->hidebutton_n->allocation.height, 
 				  gdk_screen_height() - height,
 				  pw_explicit_step);
 	}
@@ -422,25 +421,25 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 	width   = GTK_WIDGET(corner)->allocation.width;
 	height  = GTK_WIDGET(corner)->allocation.height;
 
-	if(PANEL_WIDGET(corner->panel)->orient == PANEL_HORIZONTAL) {
+	if(PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(corner, 0, -width +
-				   corner->hidebutton_w->allocation.width,
+				   BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
 				   pw_explicit_step);
 		else
 			move_horiz(corner, gdk_screen_width() - width,
 				   gdk_screen_width() -
-				   corner->hidebutton_e->allocation.width,
+				   BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
 				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(corner, 0, -height +
-				  corner->hidebutton_s->allocation.height,
+				  BASEP_WIDGET(corner)->hidebutton_s->allocation.height,
 				  pw_explicit_step);
 		else
 			move_vert(corner, gdk_screen_height() - height,
 				  gdk_screen_height() -
-				  corner->hidebutton_n->allocation.height,
+				  BASEP_WIDGET(corner)->hidebutton_n->allocation.height,
 				  pw_explicit_step);
 	}
 
@@ -468,7 +467,7 @@ is_north(CornerWidget *corner)
 static int
 is_right(CornerWidget *corner)
 {
-	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(corner)->panel);
 	if((panel->orient == PANEL_HORIZONTAL && !is_west(corner)) ||
 	   (panel->orient == PANEL_VERTICAL && !is_north(corner)))
 		return TRUE;
@@ -479,7 +478,7 @@ static void
 jump_to_opposite(CornerWidget *corner)
 {
 	CornerPos newpos = CORNER_NW;
-	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(corner)->panel);
 	
 	switch(corner->pos) {
 	case CORNER_NE:
@@ -554,26 +553,17 @@ corner_show_hide_left(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static int
-corner_enter_notify(CornerWidget *corner,
-		     GdkEventCrossing *event,
-		     gpointer data)
-{
-	if (!gnome_win_hints_wm_exists() &&
-	    global_config.autoraise)
-		gdk_window_raise(GTK_WIDGET(corner)->window);
-	return FALSE;
-}
-
 static void
-corner_widget_set_hidebuttons(CornerWidget *corner)
+corner_widget_set_hidebuttons(BasePWidget *basep)
 {
+	CornerWidget *corner = CORNER_WIDGET(basep);
+
 	/*hidebuttons are disabled*/
-	if(!corner->hidebuttons_enabled) {
-		gtk_widget_hide(corner->hidebutton_n);
-		gtk_widget_hide(corner->hidebutton_e);
-		gtk_widget_hide(corner->hidebutton_w);
-		gtk_widget_hide(corner->hidebutton_s);
+	if(!basep->hidebuttons_enabled) {
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
 		/*in case the panel was hidden, show it, since otherwise
 		  we wouldn't see it anymore*/
 		if(is_right(corner))
@@ -581,177 +571,26 @@ corner_widget_set_hidebuttons(CornerWidget *corner)
 		else
 			corner_widget_pop_show(corner,TRUE);
 	/* horizontal and enabled */
-	} else if(PANEL_WIDGET(corner->panel)->orient == PANEL_HORIZONTAL) {
-		gtk_widget_hide(corner->hidebutton_n);
-		gtk_widget_show(corner->hidebutton_e);
-		gtk_widget_show(corner->hidebutton_w);
-		gtk_widget_hide(corner->hidebutton_s);
+	} else if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_show(basep->hidebutton_e);
+		gtk_widget_show(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
 	} else { /*vertical*/
-		gtk_widget_show(corner->hidebutton_n);
-		gtk_widget_hide(corner->hidebutton_e);
-		gtk_widget_hide(corner->hidebutton_w);
-		gtk_widget_show(corner->hidebutton_s);
+		gtk_widget_show(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_show(basep->hidebutton_s);
 	}
-}
-
-static GtkWidget *
-make_hidebutton(CornerWidget *corner,
-		char *pixmaparrow,
-		GtkSignalFunc hidefunc,
-		int horizontal)
-{
-	GtkWidget *w;
-	GtkWidget *pixmap;
-	char *pixmap_name;
-
-	w=gtk_button_new();
-	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
-	if(horizontal)
-		gtk_widget_set_usize(w,0,PANEL_MINIMUM_WIDTH);
-	else
-		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
-
-	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
-	pixmap = gnome_pixmap_new_from_file(pixmap_name);
-	g_free(pixmap_name);
-	gtk_widget_show(pixmap);
-
-	gtk_container_add(GTK_CONTAINER(w),pixmap);
-	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
-	gtk_signal_connect(GTK_OBJECT(w), "clicked",
-			   GTK_SIGNAL_FUNC(hidefunc),
-			   corner);
-	return w;
 }
 
 static void
 corner_widget_init (CornerWidget *corner)
 {
-	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
-	gnome_win_hints_init();
-	if (gnome_win_hints_wm_exists())
-		GTK_WINDOW(corner)->type = GTK_WINDOW_TOPLEVEL;
-	else
-		GTK_WINDOW(corner)->type = GTK_WINDOW_POPUP;
-	GTK_WINDOW(corner)->allow_shrink = TRUE;
-	GTK_WINDOW(corner)->allow_grow = TRUE;
-	GTK_WINDOW(corner)->auto_shrink = TRUE;
-
-	/*this makes the popup "pop down" once the button is released*/
-	gtk_widget_set_events(GTK_WIDGET(corner),
-			      gtk_widget_get_events(GTK_WIDGET(corner)) |
-			      GDK_BUTTON_RELEASE_MASK);
-
-	corner->table = gtk_table_new(3,3,FALSE);
-	gtk_container_add(GTK_CONTAINER(corner),corner->table);
-	gtk_widget_show(corner->table);
-
-	/*we add all the hide buttons to the table here*/
-	/*EAST*/
-	corner->hidebutton_e =
-		make_hidebutton(corner,
-				"panel-arrow-left.png",
-				GTK_SIGNAL_FUNC(corner_show_hide_right),
-				TRUE);
-	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_e,
-			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
-	/*NORTH*/
-	corner->hidebutton_n =
-		make_hidebutton(corner,
-				"panel-arrow-up.png",
-				GTK_SIGNAL_FUNC(corner_show_hide_right),
-				FALSE);
-	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_n,
-			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
-	/*WEST*/
-	corner->hidebutton_w =
-		make_hidebutton(corner,
-				"panel-arrow-right.png",
-				GTK_SIGNAL_FUNC(corner_show_hide_left),
-				TRUE);
-	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_w,
-			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
-	/*SOUTH*/
-	corner->hidebutton_s =
-		make_hidebutton(corner,
-				"panel-arrow-down.png",
-				GTK_SIGNAL_FUNC(corner_show_hide_left),
-				FALSE);
-	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_s,
-			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
-
-	gtk_signal_connect(GTK_OBJECT(corner), "enter_notify_event",
-			   GTK_SIGNAL_FUNC(corner_enter_notify),
-			   NULL);
 	corner->pos = CORNER_NE;
 	corner->state = CORNER_SHOWN;
-
-	corner->hidebuttons_enabled = TRUE;
-	corner->hidebutton_pixmaps_enabled = TRUE;
 }
 
-static void
-show_hidebutton_pixmap(GtkWidget *hidebutton, int show)
-{
-	GtkWidget *pixmap;
-
-	pixmap = gtk_object_get_user_data(GTK_OBJECT(hidebutton));
-
-	if (!pixmap) return;
-
-	if (show)
-		gtk_widget_show(pixmap);
-	else
-		gtk_widget_hide(pixmap);
-}
-
-static void
-corner_widget_show_hidebutton_pixmaps(CornerWidget *corner)
-{
-	int show = corner->hidebutton_pixmaps_enabled;
-	show_hidebutton_pixmap(corner->hidebutton_n, show);
-	show_hidebutton_pixmap(corner->hidebutton_e, show);
-	show_hidebutton_pixmap(corner->hidebutton_w, show);
-	show_hidebutton_pixmap(corner->hidebutton_s, show);
-}
-
-static void
-c_back_change(PanelWidget *panel,
-	      PanelBackType type,
-	      char *pixmap,
-	      GdkColor *color,
-	      CornerWidget *corner)
-{
-	if(type == PANEL_BACK_PIXMAP &&
-	   corner->panel->parent == corner->frame) {
-		gtk_widget_hide(corner->frame);
-		gtk_widget_ref(corner->panel);
-		gtk_container_remove(GTK_CONTAINER(corner->frame),
-				     corner->panel);
-		gtk_table_attach(GTK_TABLE(corner->table),corner->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
-		gtk_widget_unref(corner->panel);
-	} else if(type != PANEL_BACK_PIXMAP &&
-		  corner->panel->parent == corner->table) {
-		gtk_widget_ref(corner->panel);
-		gtk_container_remove(GTK_CONTAINER(corner->table),
-				     corner->panel);
-		gtk_container_add(GTK_CONTAINER(corner->frame),
-				  corner->panel);
-		gtk_widget_unref(corner->panel);
-		gtk_widget_show(corner->frame);
-	}
-
-	set_frame_colors(panel,
-			 corner->frame,
-			 corner->hidebutton_n,
-			 corner->hidebutton_e,
-			 corner->hidebutton_w,
-			 corner->hidebutton_s);
-}
 
 GtkWidget*
 corner_widget_new (CornerPos pos,
@@ -765,52 +604,44 @@ corner_widget_new (CornerPos pos,
 		   GdkColor *back_color)
 {
 	CornerWidget *corner;
+	BasePWidget *basep;
 
 	corner = gtk_type_new(corner_widget_get_type());
 
-	corner->panel = panel_widget_new(TRUE,
-					 orient,
-					 back_type,
-					 back_pixmap,
-					 fit_pixmap_bg,
-					 back_color);
-	gtk_signal_connect_after(GTK_OBJECT(corner->panel), "back_change",
-				 GTK_SIGNAL_FUNC(c_back_change),
-				 corner);
-	gtk_object_set_data(GTK_OBJECT(corner->panel),PANEL_PARENT,
-			    corner);
-	PANEL_WIDGET(corner->panel)->drop_widget = GTK_WIDGET(corner);
+	basep = BASEP_WIDGET(corner);
 
-	gtk_widget_show(corner->panel);
+	basep_widget_construct(basep,
+			       TRUE,
+			       FALSE,
+			       orient,
+			       hidebuttons_enabled,
+			       hidebutton_pixmaps_enabled,
+			       back_type,
+			       back_pixmap,
+			       fit_pixmap_bg,
+			       back_color);
 
-	corner->frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(corner->frame),GTK_SHADOW_OUT);
-
-	if(back_type != PANEL_BACK_PIXMAP) {
-		gtk_widget_show(corner->frame);
-		gtk_container_add(GTK_CONTAINER(corner->frame),corner->panel);
-	} else {
-		gtk_table_attach(GTK_TABLE(corner->table),corner->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
-	}
-
-	gtk_table_attach(GTK_TABLE(corner->table),corner->frame,1,2,1,2,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 0,0);
-
-	corner->hidebuttons_enabled = hidebuttons_enabled;
-	corner->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
+	/*EAST*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e),"clicked",
+			   GTK_SIGNAL_FUNC(corner_show_hide_right),
+			   corner);
+	/*NORTH*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n),"clicked",
+			   GTK_SIGNAL_FUNC(corner_show_hide_right),
+			   corner);
+	/*WEST*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w),"clicked",
+			   GTK_SIGNAL_FUNC(corner_show_hide_left),
+			   corner);
+	/*SOUTH*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s),"clicked",
+			   GTK_SIGNAL_FUNC(corner_show_hide_left),
+			   corner);
 
 	corner->pos = pos;
 	if(state != CORNER_MOVING)
 		corner->state = state;
 
-	corner_widget_set_hidebuttons(corner);
-/* */	corner_widget_show_hidebutton_pixmaps(corner);
 	corner_widget_set_initial_pos(corner);
 
 	return GTK_WIDGET(corner);
@@ -838,23 +669,20 @@ corner_widget_change_params(CornerWidget *corner,
 	corner->pos = pos;
 	oldstate = corner->state;
 	corner->state = state;
-	corner->hidebuttons_enabled = hidebuttons_enabled;
-	corner->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
 	/*avoid flicker during size_request*/
-	if(PANEL_WIDGET(corner->panel)->orient != orient)
+	if(PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient != orient)
 		corner_widget_request_cube = TRUE;
-	
-	panel_widget_change_params(PANEL_WIDGET(corner->panel),
+
+	basep_widget_change_params(BASEP_WIDGET(corner),
 				   orient,
+				   hidebuttons_enabled,
+				   hidebutton_pixmaps_enabled,
 				   back_type,
 				   pixmap_name,
 				   fit_pixmap_bg,
 				   back_color);
-
-	corner_widget_set_hidebuttons(corner);
-/* */	corner_widget_show_hidebutton_pixmaps(corner);
-
+	
 	if(oldpos != corner->pos)
 	   	gtk_signal_emit(GTK_OBJECT(corner),
 	   			corner_widget_signals[POS_CHANGE_SIGNAL],
@@ -873,34 +701,16 @@ corner_widget_change_pos_orient(CornerWidget *corner,
 				CornerPos pos,
 				PanelOrientation orient)
 {
-	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	BasePWidget *basep = BASEP_WIDGET(corner);
+	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	corner_widget_change_params(corner,
 				    pos,
 				    orient,
 				    corner->state,
-				    corner->hidebuttons_enabled,
-				    corner->hidebutton_pixmaps_enabled,
+				    basep->hidebuttons_enabled,
+				    basep->hidebutton_pixmaps_enabled,
 				    panel->back_type,
 				    panel->back_pixmap,
 				    panel->fit_pixmap_bg,
 				    &panel->back_color);
-}
-
-void
-corner_widget_enable_buttons(CornerWidget *corner)
-{
-	gtk_widget_set_sensitive(corner->hidebutton_n,TRUE);
-	gtk_widget_set_sensitive(corner->hidebutton_e,TRUE);
-	gtk_widget_set_sensitive(corner->hidebutton_w,TRUE);
-	gtk_widget_set_sensitive(corner->hidebutton_s,TRUE);
-}
-
-
-void
-corner_widget_disable_buttons(CornerWidget *corner)
-{
-	gtk_widget_set_sensitive(corner->hidebutton_n,FALSE);
-	gtk_widget_set_sensitive(corner->hidebutton_e,FALSE);
-	gtk_widget_set_sensitive(corner->hidebutton_w,FALSE);
-	gtk_widget_set_sensitive(corner->hidebutton_s,FALSE);
 }

@@ -9,22 +9,19 @@ typedef struct _PerPanelConfig PerPanelConfig;
 struct _PerPanelConfig {
 	GtkWidget		*panel;
 
-	/*drawer types*/
-	int                     drawer_hidebutton;
-        int                     drawer_hidebutton_pixmap;
-	
+	/*basep types*/
+	int			hidebuttons;
+	int			hidebutton_pixmaps;
+
 	/*snapped types*/
 	SnappedPos		snapped_pos;
 	SnappedMode		snapped_mode;
-	int			snapped_hidebuttons;
-	int			snapped_hidebutton_pixmaps;
 	
 	/*corner types*/
 	CornerPos		corner_pos;
 	PanelOrientation	corner_orient;
-	int			corner_hidebuttons;
-	int			corner_hidebutton_pixmaps;
 
+	/*panel types*/
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;

@@ -7,7 +7,7 @@
 #define __CORNER_WIDGET_H__
 
 #include <gtk/gtk.h>
-#include "corner-widget.h"
+#include "basep-widget.h"
 
 BEGIN_GNOME_DECLS
 
@@ -32,28 +32,15 @@ typedef enum {
 
 struct _CornerWidget
 {
-	GtkWindow		window;
+	BasePWidget		basep;
 	
-	GtkWidget		*panel;
-
-	GtkWidget		*table;
-	GtkWidget		*hidebutton_n;
-	GtkWidget		*hidebutton_e;
-	GtkWidget		*hidebutton_w;
-	GtkWidget		*hidebutton_s;
-	
-	GtkWidget		*frame;
-
 	CornerPos		pos;
 	CornerState		state;
-
-	int			hidebuttons_enabled;
-	int			hidebutton_pixmaps_enabled;
 };
 
 struct _CornerWidgetClass
 {
-	GtkWindowClass parent_class;
+	BasePWidgetClass parent_class;
 
 	void (* pos_change) (CornerWidget *panel,
 			     CornerPos pos);
@@ -88,9 +75,6 @@ void		corner_widget_change_params	(CornerWidget *corner,
 void		corner_widget_change_pos_orient	(CornerWidget *corner,
 						 CornerPos pos,
 						 PanelOrientation orient);
-
-void		corner_widget_enable_buttons	(CornerWidget *corner);
-void		corner_widget_disable_buttons	(CornerWidget *corner);
 
 END_GNOME_DECLS
 

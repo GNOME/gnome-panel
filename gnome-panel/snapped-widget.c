@@ -21,8 +21,9 @@ static void snapped_widget_size_request	(GtkWidget          *widget,
 					 GtkRequisition     *requisition);
 static void snapped_widget_size_allocate(GtkWidget          *widget,
 					 GtkAllocation      *allocation);
+static void snapped_widget_set_hidebuttons(BasePWidget *basep);
 
-static GtkWindowClass *parent_class = NULL;
+static BasePWidgetClass *parent_class = NULL;
 
 /*global settings*/
 extern int pw_explicit_step;
@@ -55,7 +56,7 @@ snapped_widget_get_type ()
 			(GtkArgGetFunc) NULL,
 		};
 
-		snapped_widget_type = gtk_type_unique (gtk_window_get_type (),
+		snapped_widget_type = gtk_type_unique (basep_widget_get_type (),
 						       &snapped_widget_info);
 	}
 
@@ -113,12 +114,6 @@ snapped_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}    
-	set_frame_colors(PANEL_WIDGET(snapped->panel),
-			 snapped->frame,
-			 snapped->hidebutton_n,
-			 snapped->hidebutton_e,
-			 snapped->hidebutton_w,
-			 snapped->hidebutton_s);
 }
 
 static void
@@ -126,8 +121,9 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
+	BasePWidgetClass *basep_class = (BasePWidgetClass*) class;
 
-        parent_class = gtk_type_class (gtk_window_get_type ());
+        parent_class = gtk_type_class (basep_widget_get_type ());
         snapped_widget_signals[POS_CHANGE_SIGNAL] =
 		gtk_signal_new("pos_change",
 			       GTK_RUN_LAST,
@@ -155,6 +151,8 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 	class->pos_change = NULL;
 	class->state_change = NULL;
 	
+	basep_class->set_hidebuttons = snapped_widget_set_hidebuttons;
+	
 	widget_class->size_request = snapped_widget_size_request;
 	widget_class->size_allocate = snapped_widget_size_allocate;
 	widget_class->realize = snapped_widget_realize;
@@ -168,6 +166,7 @@ snapped_widget_size_request(GtkWidget *widget,
 			    GtkRequisition *requisition)
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
 
 	if(snapped_widget_request_cube) {
 		requisition->width = 48;
@@ -176,18 +175,18 @@ snapped_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (snapped->table, &snapped->table->requisition);
+	gtk_widget_size_request (basep->table, &basep->table->requisition);
 	
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			requisition->width = gdk_screen_width();
-			requisition->height = snapped->table->requisition.height;
+			requisition->height = basep->table->requisition.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			requisition->height = gdk_screen_height();
-			requisition->width = snapped->table->requisition.width;
+			requisition->width = basep->table->requisition.width;
 			break;
 	}
 }
@@ -199,7 +198,7 @@ snapped_widget_get_pos(SnappedWidget *snapped, gint16 *x, gint16 *y,
 	int xcor = 0;
 	int ycor = 0;
 	int thick;
-	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(snapped)->panel);
 	
 	if(snapped->pos == SNAPPED_BOTTOM ||
 	   snapped->pos == SNAPPED_TOP)
@@ -213,17 +212,17 @@ snapped_widget_get_pos(SnappedWidget *snapped, gint16 *x, gint16 *y,
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(snapped->state == SNAPPED_HIDDEN_LEFT)
 			xcor = - gdk_screen_width() +
-			       snapped->hidebutton_w->allocation.width;
+			       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width;
 		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
 			xcor = gdk_screen_width() -
-			       snapped->hidebutton_w->allocation.width;
+			       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width;
 	} else { /*vertical*/
 		if(snapped->state == SNAPPED_HIDDEN_LEFT)
 			xcor = - gdk_screen_height() +
-			       snapped->hidebutton_s->allocation.height;
+			       BASEP_WIDGET(snapped)->hidebutton_s->allocation.height;
 		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
 			xcor = gdk_screen_height() -
-			       snapped->hidebutton_n->allocation.height;
+			       BASEP_WIDGET(snapped)->hidebutton_n->allocation.height;
 	}
 
 	switch(snapped->pos) {
@@ -250,23 +249,24 @@ static void
 snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 
 	/*get us a size request (we ignored the one on allocation because
 	  we don't want to change our size, ever*/
-	gtk_widget_size_request (snapped->table, &snapped->table->requisition);
+	gtk_widget_size_request (basep->table, &basep->table->requisition);
 	
 	/*ignore the allocation we get, we want to be this large*/
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			allocation->width = gdk_screen_width();
-			allocation->height = snapped->table->requisition.height;
+			allocation->height = basep->table->requisition.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			allocation->height = gdk_screen_height();
-			allocation->width = snapped->table->requisition.width;
+			allocation->width = basep->table->requisition.width;
 			break;
 	}
 	
@@ -288,7 +288,7 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
-	gtk_widget_size_allocate(snapped->table,&challoc);
+	gtk_widget_size_allocate(basep->table,&challoc);
 	
 }
 
@@ -437,7 +437,7 @@ snapped_widget_pop_down(gpointer data)
 		return TRUE;
 
 	if(snapped->state != SNAPPED_SHOWN ||
-	   panel_widget_is_cursor(PANEL_WIDGET(snapped->panel),0)) {
+	   panel_widget_is_cursor(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel),0)) {
 		snapped->leave_notify_timer_tag = 0;
 		return FALSE;
 	}
@@ -508,23 +508,23 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 	width   = GTK_WIDGET(snapped)->allocation.width;
 	height  = GTK_WIDGET(snapped)->allocation.height;
 
-	if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
+	if(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(snapped, -width +
-				   snapped->hidebutton_w->allocation.width, 0,
+				   BASEP_WIDGET(snapped)->hidebutton_w->allocation.width, 0,
 				   pw_explicit_step);
 		else
 			move_horiz(snapped, width -
-				   snapped->hidebutton_e->allocation.width, 0,
+				   BASEP_WIDGET(snapped)->hidebutton_e->allocation.width, 0,
 				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(snapped, -height +
-				  snapped->hidebutton_s->allocation.height, 0,
+				  BASEP_WIDGET(snapped)->hidebutton_s->allocation.height, 0,
 				  pw_explicit_step);
 		else
 			move_vert(snapped, height -
-				  snapped->hidebutton_n->allocation.height, 0,
+				  BASEP_WIDGET(snapped)->hidebutton_n->allocation.height, 0,
 				  pw_explicit_step);
 	}
 
@@ -565,23 +565,23 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 	width   = GTK_WIDGET(snapped)->allocation.width;
 	height  = GTK_WIDGET(snapped)->allocation.height;
 
-	if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
+	if(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(snapped, 0, -width +
-				   snapped->hidebutton_w->allocation.width,
+				   BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
 				   pw_explicit_step);
 		else
 			move_horiz(snapped, 0, width -
-				   snapped->hidebutton_e->allocation.width,
+				   BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
 				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(snapped, 0, -height +
-				  snapped->hidebutton_s->allocation.height,
+				  BASEP_WIDGET(snapped)->hidebutton_s->allocation.height,
 				  pw_explicit_step);
 		else
 			move_vert(snapped, 0, height -
-				  snapped->hidebutton_n->allocation.height,
+				  BASEP_WIDGET(snapped)->hidebutton_n->allocation.height,
 				  pw_explicit_step);
 	}
 
@@ -626,10 +626,6 @@ snapped_enter_notify(SnappedWidget *snapped,
 		     GdkEventCrossing *event,
 		     gpointer data)
 {
-	if (!gnome_win_hints_wm_exists() &&
-	    global_config.autoraise)
-		gdk_window_raise(GTK_WIDGET(snapped)->window);
-
 	if ((snapped->mode == SNAPPED_EXPLICIT_HIDE) ||
 	    (event->detail == GDK_NOTIFY_INFERIOR) ||
 	    (snapped->state == SNAPPED_HIDDEN_LEFT) ||
@@ -679,14 +675,16 @@ snapped_leave_notify(SnappedWidget *snapped,
 }
 
 static void
-snapped_widget_set_hidebuttons(SnappedWidget *snapped)
+snapped_widget_set_hidebuttons(BasePWidget *basep)
 {
+	SnappedWidget *snapped = SNAPPED_WIDGET(basep);
+
 	/*hidebuttons are disabled*/
-	if(!snapped->hidebuttons_enabled) {
-		gtk_widget_hide(snapped->hidebutton_n);
-		gtk_widget_hide(snapped->hidebutton_e);
-		gtk_widget_hide(snapped->hidebutton_w);
-		gtk_widget_hide(snapped->hidebutton_s);
+	if(!basep->hidebuttons_enabled) {
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
 		/*in case the panel was hidden, show it, since otherwise
 		  we wouldn't see it anymore*/
 		if(snapped->state == SNAPPED_HIDDEN_RIGHT) {
@@ -697,130 +695,23 @@ snapped_widget_set_hidebuttons(SnappedWidget *snapped)
 			snapped_widget_queue_pop_down(snapped);
 		}
 	/* horizontal and enabled */
-	} else if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
-		gtk_widget_hide(snapped->hidebutton_n);
-		gtk_widget_show(snapped->hidebutton_e);
-		gtk_widget_show(snapped->hidebutton_w);
-		gtk_widget_hide(snapped->hidebutton_s);
+	} else if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_show(basep->hidebutton_e);
+		gtk_widget_show(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
 	} else { /*vertical*/
-		gtk_widget_show(snapped->hidebutton_n);
-		gtk_widget_hide(snapped->hidebutton_e);
-		gtk_widget_hide(snapped->hidebutton_w);
-		gtk_widget_show(snapped->hidebutton_s);
+		gtk_widget_show(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_show(basep->hidebutton_s);
 	}
 }
 
-static GtkWidget *
-make_hidebutton(SnappedWidget *snapped,
-		char *pixmaparrow,
-		GtkSignalFunc hidefunc,
-		int horizontal)
-{
-	GtkWidget *w;
-	GtkWidget *pixmap;
-	char *pixmap_name;
-
-	w=gtk_button_new();
-	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
-	if(horizontal)
-		gtk_widget_set_usize(w,0,PANEL_MINIMUM_WIDTH);
-	else
-		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
-
-	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
-	pixmap = gnome_pixmap_new_from_file(pixmap_name);
-	g_free(pixmap_name);
-	gtk_widget_show(pixmap);
-
-	gtk_container_add(GTK_CONTAINER(w),pixmap);
-	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
-	gtk_signal_connect(GTK_OBJECT(w), "clicked",
-			   GTK_SIGNAL_FUNC(hidefunc),
-			   snapped);
-	return w;
-}
-
-static void
-show_hidebutton_pixmap(GtkWidget *hidebutton, int show)
-{
-	GtkWidget *pixmap;
-
-	pixmap = gtk_object_get_user_data(GTK_OBJECT(hidebutton));
-
-	if (!pixmap) return;
-
-	if (show)
-		gtk_widget_show(pixmap);
-	else
-		gtk_widget_hide(pixmap);
-}
-
-static void
-snapped_widget_show_hidebutton_pixmaps(SnappedWidget *snapped)
-{
-	int show = snapped->hidebutton_pixmaps_enabled;
-	show_hidebutton_pixmap(snapped->hidebutton_n, show);
-	show_hidebutton_pixmap(snapped->hidebutton_e, show);
-	show_hidebutton_pixmap(snapped->hidebutton_w, show);
-	show_hidebutton_pixmap(snapped->hidebutton_s, show);
-}
 
 static void
 snapped_widget_init (SnappedWidget *snapped)
 {
-	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
-	gnome_win_hints_init();
-	if (gnome_win_hints_wm_exists())
-		GTK_WINDOW(snapped)->type = GTK_WINDOW_TOPLEVEL;
-	else
-		GTK_WINDOW(snapped)->type = GTK_WINDOW_POPUP;
-	GTK_WINDOW(snapped)->allow_shrink = TRUE;
-	GTK_WINDOW(snapped)->allow_grow = TRUE;
-	GTK_WINDOW(snapped)->auto_shrink = TRUE;
-
-	/*this makes the popup "pop down" once the button is released*/
-	gtk_widget_set_events(GTK_WIDGET(snapped),
-			      gtk_widget_get_events(GTK_WIDGET(snapped)) |
-			      GDK_BUTTON_RELEASE_MASK);
-
-	snapped->table = gtk_table_new(3,3,FALSE);
-	gtk_container_add(GTK_CONTAINER(snapped),snapped->table);
-	gtk_widget_show(snapped->table);
-
-	/*we add all the hide buttons to the table here*/
-	/*EAST*/
-	snapped->hidebutton_e =
-		make_hidebutton(snapped,
-				"panel-arrow-left.png",
-				GTK_SIGNAL_FUNC(snapped_show_hide_right),
-				TRUE);
-	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_e,
-			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
-	/*NORTH*/
-	snapped->hidebutton_n =
-		make_hidebutton(snapped,
-				"panel-arrow-up.png",
-				GTK_SIGNAL_FUNC(snapped_show_hide_right),
-				FALSE);
-	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_n,
-			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
-	/*WEST*/
-	snapped->hidebutton_w =
-		make_hidebutton(snapped,
-				"panel-arrow-right.png",
-				GTK_SIGNAL_FUNC(snapped_show_hide_left),
-				TRUE);
-	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_w,
-			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
-	/*SOUTH*/
-	snapped->hidebutton_s =
-		make_hidebutton(snapped,
-				"panel-arrow-down.png",
-				GTK_SIGNAL_FUNC(snapped_show_hide_left),
-				FALSE);
-	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_s,
-			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
-
 	gtk_signal_connect(GTK_OBJECT(snapped), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(snapped_enter_notify),
 			   NULL);
@@ -830,50 +721,10 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->pos = SNAPPED_BOTTOM;
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;
 	snapped->state = SNAPPED_SHOWN;
-	snapped->hidebuttons_enabled = TRUE;
-	snapped->hidebutton_pixmaps_enabled = TRUE;
 
 	snapped->leave_notify_timer_tag = 0;
 	snapped->autohide_inhibit = FALSE;
 	snapped->drawers_open = 0;
-}
-
-static void
-s_back_change(PanelWidget *panel,
-	      PanelBackType type,
-	      char *pixmap,
-	      GdkColor *color,
-	      SnappedWidget *snapped)
-{
-	if(type == PANEL_BACK_PIXMAP &&
-	   snapped->panel->parent == snapped->frame) {
-		gtk_widget_hide(snapped->frame);
-		gtk_widget_ref(snapped->panel);
-		gtk_container_remove(GTK_CONTAINER(snapped->frame),
-				     snapped->panel);
-		gtk_table_attach(GTK_TABLE(snapped->table),snapped->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
-		gtk_widget_unref(snapped->panel);
-	} else if(type != PANEL_BACK_PIXMAP &&
-		  snapped->panel->parent == snapped->table) {
-		gtk_widget_ref(snapped->panel);
-		gtk_container_remove(GTK_CONTAINER(snapped->table),
-				     snapped->panel);
-		gtk_container_add(GTK_CONTAINER(snapped->frame),
-				  snapped->panel);
-		gtk_widget_unref(snapped->panel);
-		gtk_widget_show(snapped->frame);
-	}
-
-	set_frame_colors(panel,
-			 snapped->frame,
-			 snapped->hidebutton_n,
-			 snapped->hidebutton_e,
-			 snapped->hidebutton_w,
-			 snapped->hidebutton_s);
 }
 
 GtkWidget*
@@ -890,53 +741,47 @@ snapped_widget_new (SnappedPos pos,
 	SnappedWidget *snapped;
 	PanelOrientation orient;
 	GtkWidget *frame;
+	BasePWidget *basep;
 
 	snapped = gtk_type_new(snapped_widget_get_type());
 
+	basep = BASEP_WIDGET(snapped);
 
 	if(pos == SNAPPED_TOP ||
 	   pos == SNAPPED_BOTTOM)
 		orient = PANEL_HORIZONTAL;
 	else
 		orient = PANEL_VERTICAL;
-
-	snapped->panel = panel_widget_new(FALSE,
-					  orient,
-					  back_type,
-					  back_pixmap,
-					  fit_pixmap_bg,
-					  back_color);
-	gtk_signal_connect_after(GTK_OBJECT(snapped->panel), "back_change",
-				 GTK_SIGNAL_FUNC(s_back_change),
-				 snapped);
-	gtk_object_set_data(GTK_OBJECT(snapped->panel),PANEL_PARENT,
-			    snapped);
-	PANEL_WIDGET(snapped->panel)->drop_widget = GTK_WIDGET(snapped);
-
-	gtk_widget_show(snapped->panel);
-
-	snapped->frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(snapped->frame),GTK_SHADOW_OUT);
-	if(back_type != PANEL_BACK_PIXMAP) {
-		gtk_widget_show(snapped->frame);
-		gtk_container_add(GTK_CONTAINER(snapped->frame),snapped->panel);
-	} else {
-		gtk_table_attach(GTK_TABLE(snapped->table),snapped->panel,
-				 1,2,1,2,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-				 0,0);
-	}
-
-	gtk_table_attach(GTK_TABLE(snapped->table),snapped->frame,1,2,1,2,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 0,0);
+	
+	basep_widget_construct(basep,
+			       FALSE,
+			       FALSE,
+			       orient,
+			       hidebuttons_enabled,
+			       hidebutton_pixmaps_enabled,
+			       back_type,
+			       back_pixmap,
+			       fit_pixmap_bg,
+			       back_color);
+	/*EAST*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e),"clicked",
+			   GTK_SIGNAL_FUNC(snapped_show_hide_right),
+			   snapped);
+	/*NORTH*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n),"clicked",
+			   GTK_SIGNAL_FUNC(snapped_show_hide_right),
+			   snapped);
+	/*WEST*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w),"clicked",
+			   GTK_SIGNAL_FUNC(snapped_show_hide_left),
+			   snapped);
+	/*SOUTH*/
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s),"clicked",
+			   GTK_SIGNAL_FUNC(snapped_show_hide_left),
+			   snapped);
 
 	snapped->pos = pos;
 	snapped->mode = mode;
-	snapped->hidebuttons_enabled = hidebuttons_enabled;
-	snapped->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 	if(state != SNAPPED_MOVING)
 		snapped->state = state;
 
@@ -947,8 +792,6 @@ snapped_widget_new (SnappedPos pos,
 	   snapped->state == SNAPPED_HIDDEN)
 		snapped->state = SNAPPED_SHOWN;
 
-	snapped_widget_set_hidebuttons(snapped);
-/* */	snapped_widget_show_hidebutton_pixmaps(snapped);
 	snapped_widget_set_initial_pos(snapped);
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE)
@@ -993,8 +836,6 @@ snapped_widget_change_params(SnappedWidget *snapped,
 			}
 		}
 	}
-	snapped->hidebuttons_enabled = hidebuttons_enabled;
-	snapped->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
 	if(snapped->pos == SNAPPED_TOP ||
 	   snapped->pos == SNAPPED_BOTTOM)
@@ -1012,15 +853,15 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	if(oldorient != orient)
 		snapped_widget_request_cube = TRUE;
 
-	panel_widget_change_params(PANEL_WIDGET(snapped->panel),
+	basep_widget_change_params(BASEP_WIDGET(snapped),
 				   orient,
+				   hidebuttons_enabled,
+				   hidebutton_pixmaps_enabled,
 				   back_type,
 				   pixmap_name,
 				   fit_pixmap_bg,
 				   back_color);
-
-	snapped_widget_set_hidebuttons(snapped);
-/* */	snapped_widget_show_hidebutton_pixmaps(snapped);
+				   
 	gtk_widget_queue_resize(GTK_WIDGET(snapped));
 
 	if(snapped->mode == SNAPPED_EXPLICIT_HIDE &&
@@ -1045,34 +886,16 @@ void
 snapped_widget_change_pos(SnappedWidget *snapped,
 			  SnappedPos pos)
 {
-	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
+	BasePWidget *basep = BASEP_WIDGET(snapped);
+	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	snapped_widget_change_params(snapped,
 				     pos,
 				     snapped->mode,
 				     snapped->state,
-				     snapped->hidebuttons_enabled,
-				     snapped->hidebutton_pixmaps_enabled,
+				     basep->hidebuttons_enabled,
+				     basep->hidebutton_pixmaps_enabled,
 				     panel->back_type,
 				     panel->back_pixmap,
 				     panel->fit_pixmap_bg,
 				     &panel->back_color);
-}
-
-void
-snapped_widget_enable_buttons(SnappedWidget *snapped)
-{
-	gtk_widget_set_sensitive(snapped->hidebutton_n,TRUE);
-	gtk_widget_set_sensitive(snapped->hidebutton_e,TRUE);
-	gtk_widget_set_sensitive(snapped->hidebutton_w,TRUE);
-	gtk_widget_set_sensitive(snapped->hidebutton_s,TRUE);
-}
-
-
-void
-snapped_widget_disable_buttons(SnappedWidget *snapped)
-{
-	gtk_widget_set_sensitive(snapped->hidebutton_n,FALSE);
-	gtk_widget_set_sensitive(snapped->hidebutton_e,FALSE);
-	gtk_widget_set_sensitive(snapped->hidebutton_w,FALSE);
-	gtk_widget_set_sensitive(snapped->hidebutton_s,FALSE);
 }

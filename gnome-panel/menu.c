@@ -619,7 +619,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	
 	drawer = info->data;
 	g_return_if_fail(drawer);
-	newpanel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
+	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 	
 	list = get_files_from_menudir(dirname);
 	for(li = list; li!= NULL; li = g_slist_next(li)) {
@@ -1807,7 +1807,7 @@ find_empty_spos(void)
 			posscore[(sw->pos+3)%4]++;
 		} else if(IS_CORNER_WIDGET(pd->panel)) {
 			CornerWidget *cw = CORNER_WIDGET(pd->panel);
-			PanelWidget *panel = PANEL_WIDGET(cw->panel);
+			PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(cw)->panel);
 			int cor = (cw->pos%2)?1-panel->orient:panel->orient;
 			posscore[(cw->pos+cor)%4]+=3;
 			posscore[(cw->pos+(1-cor))%4]++;
@@ -1841,7 +1841,7 @@ find_empty_cpos_cori(CornerPos *cpos, PanelOrientation *cori)
 			posscore[((sw->pos*2)+7)%8]++;
 		} else if(IS_CORNER_WIDGET(pd->panel)) {
 			CornerWidget *cw = CORNER_WIDGET(pd->panel);
-			PanelWidget *panel = PANEL_WIDGET(cw->panel);
+			PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(cw)->panel);
 			int cor = (cw->pos%2)?1-panel->orient:panel->orient;
 			posscore[(cw->pos*2)+cor]+=3;
 			posscore[(cw->pos*2)+(1-cor)]++;
@@ -2094,15 +2094,15 @@ convert_to_panel(GtkWidget *w, gpointer data)
 		panel = snapped_widget_new((cw->pos+cor)%4,
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
-					   cw->hidebuttons_enabled,
-					   cw->hidebutton_pixmaps_enabled,
+					   BASEP_WIDGET(cw)->hidebuttons_enabled,
+					   BASEP_WIDGET(cw)->hidebutton_pixmaps_enabled,
 					   current_panel->back_type,
 					   current_panel->back_pixmap,
 					   current_panel->fit_pixmap_bg,
 					   &current_panel->back_color);
 		panel_setup(panel);
 		gtk_widget_show(panel);
-		newpanel = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
+		newpanel = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 		break;
 	case CORNER_PANEL: 
 		/*we know that it's a snapped widget since only
@@ -2115,15 +2115,15 @@ convert_to_panel(GtkWidget *w, gpointer data)
 					   sw->pos==SNAPPED_BOTTOM)?
 					  PANEL_HORIZONTAL:PANEL_VERTICAL,
 					  CORNER_SHOWN,
-					  sw->hidebuttons_enabled,
-					  sw->hidebutton_pixmaps_enabled,
+					  BASEP_WIDGET(sw)->hidebuttons_enabled,
+					  BASEP_WIDGET(sw)->hidebutton_pixmaps_enabled,
 					  current_panel->back_type,
 					  current_panel->back_pixmap,
 					  current_panel->fit_pixmap_bg,
 					  &current_panel->back_color);
 		panel_setup(panel);
 		gtk_widget_show(panel);
-		newpanel = PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
+		newpanel = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 		break;
 	default: g_assert_not_reached();
 	}
@@ -3284,7 +3284,7 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 {
 	if(IS_DRAWER_WIDGET(pwidget)) {
 		PanelWidget *panel =
-			PANEL_WIDGET(DRAWER_WIDGET(pwidget)->panel);
+			PANEL_WIDGET(BASEP_WIDGET(pwidget)->panel);
 		if(panel->orient==PANEL_VERTICAL) {
 			*x = wx + ww;
 			*y += wy;
@@ -3313,7 +3313,7 @@ get_menu_position (GtkMenu *menu, int *x, int *y,
 		}
 	} else if(IS_CORNER_WIDGET(pwidget)) {
 		PanelWidget *panel =
-			PANEL_WIDGET(CORNER_WIDGET(pwidget)->panel);
+			PANEL_WIDGET(BASEP_WIDGET(pwidget)->panel);
 		if(panel->orient==PANEL_HORIZONTAL) {
 			switch(CORNER_WIDGET(pwidget)->pos) {
 			case CORNER_SE:

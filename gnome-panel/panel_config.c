@@ -130,8 +130,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					     ppc->snapped_pos,
 					     ppc->snapped_mode,
 					     SNAPPED_WIDGET(ppc->panel)->state,
-					     ppc->snapped_hidebuttons,
-					     ppc->snapped_hidebutton_pixmaps,
+					     ppc->hidebuttons,
+					     ppc->hidebutton_pixmaps,
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
@@ -141,8 +141,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->corner_pos,
 					    ppc->corner_orient,
 					    CORNER_WIDGET(ppc->panel)->state,
-					    ppc->corner_hidebuttons,
-					    ppc->corner_hidebutton_pixmaps,
+					    ppc->hidebuttons,
+					    ppc->hidebutton_pixmaps,
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
@@ -150,14 +150,14 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	else if(IS_DRAWER_WIDGET(ppc->panel)) {
 	        DrawerWidget *dw = DRAWER_WIDGET(ppc->panel);
 		drawer_widget_change_params(dw,
-					   dw->orient,
-					   dw->state, 
-					   ppc->back_type,
-					   ppc->back_pixmap,
-					   ppc->fit_pixmap_bg,
-					   &ppc->back_color,
-					   ppc->drawer_hidebutton_pixmap,
-					   ppc->drawer_hidebutton);
+					    dw->orient,
+					    dw->state, 
+					    ppc->back_type,
+					    ppc->back_pixmap,
+					    ppc->fit_pixmap_bg,
+					    &ppc->back_color,
+					    ppc->hidebutton_pixmaps,
+					    ppc->hidebuttons);
 	}
 	gtk_widget_queue_draw (ppc->panel);
 }
@@ -366,11 +366,11 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->snapped_hidebuttons)
+	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->snapped_hidebuttons);
+			    &ppc->hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -379,14 +379,14 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
 			    button);
-	if (!ppc->snapped_hidebuttons)
+	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->snapped_hidebutton_pixmaps)
+	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->snapped_hidebutton_pixmaps);
+			    &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -567,11 +567,11 @@ corner_notebook_page(PerPanelConfig *ppc)
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->corner_hidebuttons)
+	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->corner_hidebuttons);
+			    &ppc->hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -580,14 +580,14 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
 			    button);
-	if (!ppc->corner_hidebuttons)
+	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->corner_hidebutton_pixmaps)
+	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->corner_hidebutton_pixmaps);
+			    &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -803,6 +803,8 @@ panel_config(GtkWidget *panel)
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
+	BasePWidget *basep = BASEP_WIDGET(panel);
+	PanelWidget *pw = PANEL_WIDGET(basep->panel);
 	
 	ppc = get_config_struct(panel);
 	
@@ -817,39 +819,23 @@ panel_config(GtkWidget *panel)
 	ppc->register_changes = FALSE; /*don't notify property box of changes
 					 until everything is all set up*/
 
+	ppc->hidebuttons = basep->hidebuttons_enabled;
+	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
+	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
+	ppc->back_pixmap = g_strdup(pw->back_pixmap);
+	ppc->back_color = pw->back_color;
+	ppc->back_type = pw->back_type;
+
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SnappedWidget *snapped = SNAPPED_WIDGET(panel);
-		PanelWidget *pw = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
 		ppc->snapped_pos = snapped->pos;
 		ppc->snapped_mode = snapped->mode;
-		ppc->snapped_hidebuttons = snapped->hidebuttons_enabled;
-		ppc->snapped_hidebutton_pixmaps = snapped->hidebutton_pixmaps_enabled;
-		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
-		ppc->back_pixmap = g_strdup(pw->back_pixmap);
-		ppc->back_color = pw->back_color;
-		ppc->back_type = pw->back_type;
 	} else if(IS_CORNER_WIDGET(panel)) {
 		CornerWidget *corner = CORNER_WIDGET(panel);
-		PanelWidget *pw = PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
 		ppc->corner_pos = corner->pos;
 		ppc->corner_orient = pw->orient;
-		ppc->corner_hidebuttons = corner->hidebuttons_enabled;
-		ppc->corner_hidebutton_pixmaps = corner->hidebutton_pixmaps_enabled;
-		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
-		ppc->back_pixmap = g_strdup(pw->back_pixmap);
-		ppc->back_color = pw->back_color;
-		ppc->back_type = pw->back_type;
-	} else if(IS_DRAWER_WIDGET(panel)) {
-                DrawerWidget *drawer = DRAWER_WIDGET(panel);
-	        PanelWidget *pw = PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
-		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
-		ppc->back_pixmap = g_strdup(pw->back_pixmap);
-		ppc->back_color = pw->back_color;
-		ppc->back_type = pw->back_type;
-		ppc->drawer_hidebutton = drawer->hidebutton_enabled;
-		ppc->drawer_hidebutton_pixmap = drawer->hidebutton_pixmap_enabled;
 	}
-	
+
 	ppc->panel = panel;
 	
 	/* main window */

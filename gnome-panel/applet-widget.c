@@ -286,11 +286,24 @@ applet_widget_class_init (AppletWidgetClass *class)
 	class->tooltip_state = NULL;
 }
 
+/*static void
+sal(GtkWidget *applet, GtkAllocation *alloc)
+{
+	printf("req:   %dx%d\nalloc: %dx%d\n",
+	       applet->requisition.width,
+	       applet->requisition.height,
+	       applet->allocation.width,
+	       applet->allocation.height);
+}*/
+
 static void
 wapplet_widget_init (AppletWidget *applet)
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	
+	/*gtk_signal_connect_after(GTK_OBJECT(applet),"size_allocate",
+				 GTK_SIGNAL_FUNC(sal),NULL);*/
 
 	applet->corbadat = NULL;
 }

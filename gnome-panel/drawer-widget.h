@@ -9,7 +9,7 @@
 
 #include <gtk/gtk.h>
 #include "applet.h"
-#include "panel-widget.h"
+#include "basep-widget.h"
 
 BEGIN_GNOME_DECLS
 
@@ -28,7 +28,7 @@ typedef enum {
 
 struct _DrawerWidget
 {
-	GtkWindow		window;
+	BasePWidget		basep;
 
 	GtkWidget		*panel;
 	GtkWidget		*table;
@@ -41,13 +41,11 @@ struct _DrawerWidget
 
 	DrawerState		state;
 	PanelOrientType		orient;
-        int                     hidebutton_enabled;
-        int                     hidebutton_pixmap_enabled;
 };
 
 struct _DrawerWidgetClass
 {
-	GtkWindowClass parent_class;
+	BasePWidgetClass parent_class;
 
 	void (* state_change) (DrawerWidget *panel,
 			       DrawerState state);

@@ -137,11 +137,11 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	  on*/
 	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->drawer_hidebutton)
+	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->drawer_hidebutton);
+			    &ppc->hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -149,14 +149,14 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
 			    button);
-	if (!ppc->drawer_hidebutton)
+	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->drawer_hidebutton_pixmap)
+	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->drawer_hidebutton_pixmap);
+			    &ppc->hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 	gtk_container_add(GTK_CONTAINER(f),box_in);
@@ -322,9 +322,9 @@ drawer_move_foreach(GtkWidget *w, gpointer user_data)
 	
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
 		gtk_widget_queue_resize(drawer->drawer);
-		gtk_container_foreach(GTK_CONTAINER(dw->panel),
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      drawer_move_foreach,
 				      NULL);
 	}
@@ -382,7 +382,7 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 					     PANEL_PARENT);
 	} 
 
-	panel_widget_add_forbidden(PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel));
+	panel_widget_add_forbidden(PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel));
 
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);

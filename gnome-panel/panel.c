@@ -66,22 +66,6 @@ static GtkTargetEntry panel_drop_types[] = {
 static gint n_panel_drop_types = 
    sizeof(panel_drop_types) / sizeof(panel_drop_types[0]);
 
-/*get the default panel widget if the panel has more then one or
-  just get the that one*/
-PanelWidget *
-get_def_panel_widget(GtkWidget *panel)
-{
-	g_return_val_if_fail(panel!=NULL,NULL);
-	if(IS_SNAPPED_WIDGET(panel)) {
-		return PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
-	} else if(IS_CORNER_WIDGET(panel)) {
-		return PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
-	} else if(IS_DRAWER_WIDGET(panel)) {
-		return PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
-	}
-	g_warning("unknown panel type");
-	return NULL;
-}
 
 static PanelData *
 get_lowest_level_master_pd(PanelWidget *panel)
@@ -109,6 +93,7 @@ get_applet_orient(PanelWidget *panel)
 	PanelOrientation porient;
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(panel),
 						PANEL_PARENT);
+	BasePWidget *basep = BASEP_WIDGET(panelw);
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(panelw));
 	PanelData *tpd;
 	switch(pd->type) {
@@ -117,11 +102,11 @@ get_applet_orient(PanelWidget *panel)
 			ORIENT_RIGHT:ORIENT_UP;
 		break;*/
 	case DRAWER_PANEL:
-		porient = PANEL_WIDGET(DRAWER_WIDGET(panelw)->panel)->orient;
+		porient = panel->orient;
 		tpd = get_lowest_level_master_pd(
-			PANEL_WIDGET(DRAWER_WIDGET(panelw)->panel));
+			PANEL_WIDGET(basep->panel));
 		switch(tpd->type){
-		case FREE_PANEL:
+		/*case FREE_PANEL:*/
 		case DRAWER_PANEL:
 			orient=(porient==PANEL_VERTICAL)?
 				ORIENT_RIGHT:ORIENT_UP;
@@ -174,7 +159,7 @@ get_applet_orient(PanelWidget *panel)
 		}
 		break;
 	case CORNER_PANEL:
-		if(PANEL_WIDGET(CORNER_WIDGET(panelw)->panel)->orient ==
+		if(panel->orient ==
 		   PANEL_HORIZONTAL) {
 			switch(CORNER_WIDGET(panelw)->pos) {
 			case CORNER_SE: 
@@ -216,10 +201,7 @@ panel_realize(GtkWidget *widget, gpointer data)
 {
 	change_window_cursor(widget->window, GDK_LEFT_PTR);
 	
-	if(IS_SNAPPED_WIDGET(widget))
-		snapped_widget_enable_buttons(SNAPPED_WIDGET(widget));
-	else if(IS_CORNER_WIDGET(widget))
-		corner_widget_enable_buttons(CORNER_WIDGET(widget));
+	basep_widget_enable_buttons(BASEP_WIDGET(widget));
 	/*FIXME: this seems to fix the panel size problems on startup
 	  (from a report) but I don't think it's right*/
 	gtk_widget_queue_resize(GTK_WIDGET(widget));
@@ -250,12 +232,12 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 		set_menu_applet_orient(menu,get_applet_orient(panel));
 	} else if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
 		set_drawer_applet_orient(drawer,get_applet_orient(panel));
 		gtk_widget_queue_resize(drawer->drawer);
-		gtk_container_foreach(GTK_CONTAINER(dw->panel),
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      orient_change_foreach,
-				      (gpointer)dw->panel);
+				      (gpointer)basep->panel);
 	} else if(info->type == APPLET_SWALLOW) {
 		Swallow *swallow = info->data;
 
@@ -290,28 +272,14 @@ panel_orient_change(GtkWidget *widget,
 }
 
 static void
-snapped_pos_change(GtkWidget *widget,
+basep_pos_change(GtkWidget *widget,
 		   SnappedPos pos,
 		   gpointer data)
 {
-	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
-	gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+	BasePWidget *basep = BASEP_WIDGET(widget);
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
 			      orient_change_foreach,
-			      snapped->panel);
-	panels_to_sync = TRUE;
-	/*update the configuration box if it is displayed*/
-	update_config_orient(widget);
-}
-
-static void
-corner_pos_change(GtkWidget *widget,
-		  CornerPos pos,
-		  gpointer data)
-{
-	CornerWidget *corner = CORNER_WIDGET(widget);
-	gtk_container_foreach(GTK_CONTAINER(corner->panel),
-			      orient_change_foreach,
-			      corner->panel);
+			      basep->panel);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
@@ -380,12 +348,12 @@ state_restore_foreach(GtkWidget *w, gpointer data)
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
 		if(dw->state == DRAWER_SHOWN) {
 			drawer_widget_restore_state(dw);
-			gtk_container_foreach(GTK_CONTAINER(dw->panel),
+			gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(dw)->panel),
 					      state_restore_foreach,
 					      NULL);
 		} else { /*it's hidden*/
-			gtk_widget_hide(GTK_WIDGET(dw));
-			gtk_container_foreach(GTK_CONTAINER(dw->panel),
+			gtk_widget_hide(drawer->drawer);
+			gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(dw)->panel),
 					      state_hide_foreach,
 					      NULL);
 		}
@@ -399,9 +367,9 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		gtk_widget_hide(GTK_WIDGET(dw));
-		gtk_container_foreach(GTK_CONTAINER(dw->panel),
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
+		gtk_widget_hide(drawer->drawer);
+		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      state_hide_foreach,
 				      NULL);
 	}
@@ -414,11 +382,11 @@ snapped_state_change(GtkWidget *widget,
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
 	if(state==SNAPPED_SHOWN)
-		gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(snapped)->panel),
 				      state_restore_foreach,
 				      (gpointer)widget);
 	else
-		gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(snapped)->panel),
 				      state_hide_foreach,
 				      (gpointer)widget);
 
@@ -433,11 +401,11 @@ corner_state_change(GtkWidget *widget,
 {
 	CornerWidget *corner = CORNER_WIDGET(widget);
 	if(state==CORNER_SHOWN)
-		gtk_container_foreach(GTK_CONTAINER(corner->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(corner)->panel),
 				      state_restore_foreach,
 				      (gpointer)widget);
 	else
-		gtk_container_foreach(GTK_CONTAINER(corner->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(corner)->panel),
 				      state_hide_foreach,
 				      (gpointer)widget);
 
@@ -452,11 +420,11 @@ drawer_state_change(GtkWidget *widget,
 {
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	if(state==DRAWER_SHOWN)
-		gtk_container_foreach(GTK_CONTAINER(drawer->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(drawer)->panel),
 				      state_restore_foreach,
 				      (gpointer)widget);
 	else
-		gtk_container_foreach(GTK_CONTAINER(drawer->panel),
+		gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(drawer)->panel),
 				      state_hide_foreach,
 				      (gpointer)widget);
 
@@ -660,7 +628,7 @@ corner_panel_move(CornerWidget *corner, double x, double y)
 		}
 	}
 	if(newloc != corner->pos ||
-	   neworient != PANEL_WIDGET(corner->panel)->orient)
+	   neworient != PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient)
 		corner_widget_change_pos_orient(corner, newloc, neworient);
 }
 
@@ -696,7 +664,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	kill_config_dialog(widget);
 
 	if(IS_DRAWER_WIDGET(widget)) {
-		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
+		PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
 		if(panel->master_widget) {
 			AppletInfo *info = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
 							       "applet_info");
@@ -751,22 +719,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 			if(!panel_applet_in_drag) {
 				GtkWidget *panel_menu;
 				GtkWidget *rem;
-				/*slightly ugly, but current_panel needs to be
-				  set before we call panel_menu_get*/
-				if(IS_SNAPPED_WIDGET(widget)) {
-					SnappedWidget *snapped =
-						SNAPPED_WIDGET(widget);
-					current_panel =
-						PANEL_WIDGET(snapped->panel);
-				} else if(IS_CORNER_WIDGET(widget)) {
-					CornerWidget *corner =
-						CORNER_WIDGET(widget);
-					current_panel = PANEL_WIDGET(corner->panel);
-				} else if(IS_DRAWER_WIDGET(widget)) {
-					DrawerWidget *drawer =
-						DRAWER_WIDGET(widget);
-					current_panel = PANEL_WIDGET(drawer->panel);
-				}
+				current_panel =
+					PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
 				panel_menu = panel_menu_get(pd);
 				rem = gtk_object_get_data(GTK_OBJECT(panel_menu),
 							  "remove_item");
@@ -812,8 +766,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 			}
 			if(IS_DRAWER_WIDGET(widget) &&
 			   !panel_applet_in_drag) {
-				DrawerWidget *dw = DRAWER_WIDGET(widget);
-				PanelWidget *pw = PANEL_WIDGET(dw->panel);
+				BasePWidget *basep = BASEP_WIDGET(widget);
+				PanelWidget *pw = PANEL_WIDGET(basep->panel);
 				panel_widget_applet_drag_start(PANEL_WIDGET(pw->master_widget->parent),
 							       pw->master_widget);
 				return TRUE;
@@ -885,20 +839,6 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
-
-/* static void
-bind_panel_events(GtkWidget *widget, gpointer data) 
-{ 
-	if (!GTK_WIDGET_NO_WINDOW(widget)) 
-		gtk_signal_connect(GTK_OBJECT(widget), "event", 
-				   (GtkSignalFunc) panel_sub_event_handler, 
-				   NULL); 
-	
-	if (GTK_IS_CONTAINER(widget)) 
-		gtk_container_foreach (GTK_CONTAINER (widget), 
-				       bind_panel_events, NULL); 
-} */
-
 static void
 panel_widget_dnd_drop_internal (GtkWidget *widget,
 				GdkDragContext   *context,
@@ -925,7 +865,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		  gnome_uri_list_extract_filenames(selection_data->data);
 
 		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
-		  char *mimetype, *p;
+		  const char *mimetype, *p;
 
 		  if(stat(ltmp->data, &s) != 0)
 		    continue;
@@ -1022,6 +962,7 @@ void
 panel_setup(GtkWidget *panelw)
 {
 	PanelData *pd;
+	BasePWidget *basep = BASEP_WIDGET(panelw);
 	
 	pd = g_new(PanelData,1);
 	pd->menu = NULL;
@@ -1041,10 +982,22 @@ panel_setup(GtkWidget *panelw)
 	
 	gtk_object_set_user_data(GTK_OBJECT(panelw),pd);
 
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e), "event",
+			   (GtkSignalFunc) panel_sub_event_handler,
+			   panelw);
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w), "event",
+			   (GtkSignalFunc) panel_sub_event_handler,
+			   panelw);
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n), "event",
+			   (GtkSignalFunc) panel_sub_event_handler,
+			   panelw);
+	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s), "event",
+			   (GtkSignalFunc) panel_sub_event_handler,
+			   panelw);
+
 	if(IS_DRAWER_WIDGET(panelw)) {
-		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(panelw)->panel);
+		PanelWidget *panel = PANEL_WIDGET(basep->panel);
 		DrawerWidget *drawer = DRAWER_WIDGET(panelw);
-		GtkObject *button;
 		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
@@ -1054,93 +1007,40 @@ panel_setup(GtkWidget *panelw)
 				   "state_change",
 				   GTK_SIGNAL_FUNC(drawer_state_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(drawer->handle_e), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_e),"button");
-		if (button) gtk_signal_connect(button, "event",
-					       (GtkSignalFunc) panel_sub_event_handler,
-					       panelw);
-		gtk_signal_connect(GTK_OBJECT(drawer->handle_w), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_w),"button");
-		if (button) gtk_signal_connect(button, "event",
-					       (GtkSignalFunc) panel_sub_event_handler,
-					       panelw);
-		gtk_signal_connect(GTK_OBJECT(drawer->handle_n), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_n),"button");
-		if (button) gtk_signal_connect(button, "event",
-					       (GtkSignalFunc) panel_sub_event_handler,
-					       panelw);
-		gtk_signal_connect(GTK_OBJECT(drawer->handle_s), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_s),"button");
-		if (button) gtk_signal_connect(button, "event",
-					       (GtkSignalFunc) panel_sub_event_handler,
-					       panelw);
 	} else if(IS_SNAPPED_WIDGET(panelw)) {
 		PanelWidget *panel =
-			PANEL_WIDGET(SNAPPED_WIDGET(panelw)->panel);
+			PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
 		SnappedWidget *snapped = SNAPPED_WIDGET(panelw);
-		snapped_widget_disable_buttons(snapped);
 		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
-				   GTK_SIGNAL_FUNC(snapped_pos_change),
+				   GTK_SIGNAL_FUNC(basep_pos_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panelw), "state_change",
 				   GTK_SIGNAL_FUNC(snapped_state_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(snapped->hidebutton_e), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(snapped->hidebutton_w), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(snapped->hidebutton_n), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(snapped->hidebutton_s), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
 		
 		/*this is a base panel*/
 		base_panels++;
 	} else if(IS_CORNER_WIDGET(panelw)) {
 		PanelWidget *panel =
-			PANEL_WIDGET(CORNER_WIDGET(panelw)->panel);
+			PANEL_WIDGET(BASEP_WIDGET(panelw)->panel);
 		CornerWidget *corner = CORNER_WIDGET(panelw);
-		corner_widget_disable_buttons(corner);
 		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panel), "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
-				   GTK_SIGNAL_FUNC(corner_pos_change),
+				   GTK_SIGNAL_FUNC(basep_pos_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panelw), "state_change",
 				   GTK_SIGNAL_FUNC(corner_state_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(corner->hidebutton_e), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(corner->hidebutton_w), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(corner->hidebutton_n), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
-		gtk_signal_connect(GTK_OBJECT(corner->hidebutton_s), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   panelw);
 		
 		/*this is a base panel*/
 		base_panels++;
 	} else
 		g_warning("unknown panel type");
+	basep_widget_disable_buttons(basep);
 	gtk_signal_connect(GTK_OBJECT(panelw), "event",
 			   GTK_SIGNAL_FUNC(panel_event),pd);
 	

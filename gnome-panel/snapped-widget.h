@@ -7,7 +7,7 @@
 #define __SNAPPED_WIDGET_H__
 
 #include <gtk/gtk.h>
-#include "panel-widget.h"
+#include "basep-widget.h"
 
 BEGIN_GNOME_DECLS
 
@@ -38,23 +38,11 @@ typedef enum {
 
 struct _SnappedWidget
 {
-	GtkWindow		window;
+	BasePWidget		basep;
 	
-	GtkWidget		*panel;
-
-	GtkWidget		*table;
-	GtkWidget		*hidebutton_n;
-	GtkWidget		*hidebutton_e;
-	GtkWidget		*hidebutton_w;
-	GtkWidget		*hidebutton_s;
-	
-	GtkWidget		*frame;
-
 	SnappedPos		pos;
 	SnappedMode		mode;
 	SnappedState		state;
-	int			hidebuttons_enabled;
-	int			hidebutton_pixmaps_enabled;
 
 	int			leave_notify_timer_tag;
 
@@ -67,7 +55,7 @@ struct _SnappedWidget
 
 struct _SnappedWidgetClass
 {
-	GtkWindowClass parent_class;
+	BasePWidgetClass parent_class;
 
 	void (* pos_change) (SnappedWidget *panel,
 			     SnappedPos pos);
@@ -107,9 +95,6 @@ void		snapped_widget_pop_up		(SnappedWidget *snapped);
 
 /*queue a pop_down in autohide mode*/
 void		snapped_widget_queue_pop_down	(SnappedWidget *snapped);
-
-void		snapped_widget_enable_buttons	(SnappedWidget *snapped);
-void		snapped_widget_disable_buttons	(SnappedWidget *snapped);
 
 END_GNOME_DECLS
 

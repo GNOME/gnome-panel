@@ -281,7 +281,7 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_set_string("id", DRAWER_ID);
 
 			i = g_slist_index(panels,
-					  DRAWER_WIDGET(drawer->drawer)->panel);
+					  BASEP_WIDGET(drawer->drawer)->panel);
 			if(i>=0)
 				gnome_config_set_int("parameters",i);
 			else
@@ -351,7 +351,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	GString       *buf;
 	int           *num = user_data;
 	PanelData     *pd = data;
-	PanelWidget   *panel = get_def_panel_widget(pd->panel);
+	BasePWidget   *basep = BASEP_WIDGET(pd->panel);
+	PanelWidget   *panel = PANEL_WIDGET(basep->panel);
 	
 	buf = g_string_new(NULL);
 
@@ -361,6 +362,11 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_push_prefix (buf->str);
 
 	gnome_config_set_int("type",pd->type);
+
+	gnome_config_set_bool("hidebuttons_enabled",
+			      basep->hidebuttons_enabled);
+	gnome_config_set_bool("hidebutton_pixmaps_enabled",
+			      basep->hidebutton_pixmaps_enabled);
 	
 	switch(pd->type) {
 	case SNAPPED_PANEL:
@@ -369,10 +375,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("pos", snapped->pos);
 		gnome_config_set_int("mode", snapped->mode);
 		gnome_config_set_int("state", snapped->state);
-		gnome_config_set_bool("hidebuttons_enabled",
-				      snapped->hidebuttons_enabled);
-		gnome_config_set_bool("hidebutton_pixmaps_enabled",
-				      snapped->hidebutton_pixmaps_enabled);
 		break;
 		}
 	case CORNER_PANEL:
@@ -381,10 +383,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("pos", corner->pos);
 		gnome_config_set_int("orient",panel->orient);
 		gnome_config_set_int("state", corner->state);
-		gnome_config_set_bool("hidebuttons_enabled",
-				      corner->hidebuttons_enabled);
-		gnome_config_set_bool("hidebutton_pixmaps_enabled",
-				      corner->hidebutton_pixmaps_enabled);
 		break;
 		}
 	case DRAWER_PANEL:
@@ -392,10 +390,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		DrawerWidget *drawer = DRAWER_WIDGET(pd->panel);
 		gnome_config_set_int("orient",drawer->orient);
 		gnome_config_set_int("state", drawer->state);
-		gnome_config_set_bool("hidebutton_enabled",
-				      drawer->hidebutton_enabled);
-		gnome_config_set_bool("hidebutton_pixmap_enabled",
-				      drawer->hidebutton_pixmap_enabled);
 		break;
 		}
 	default:
@@ -875,6 +869,8 @@ init_user_panels(void)
 		char *back_pixmap, *color;
 		GdkColor back_color = {0,0,0,1};
 		int fit_pixmap_bg;
+		int hidebuttons_enabled;
+		int hidebutton_pixmaps_enabled;
 
 		g_string_sprintf(buf,"%spanel/Panel_%d/",
 				 old_panel_cfg_path, num);
@@ -899,14 +895,17 @@ init_user_panels(void)
 		g_string_sprintf(buf,"type=%d", SNAPPED_PANEL);
 		type = gnome_config_get_int(buf->str);
 
+		hidebuttons_enabled =
+			gnome_config_get_bool("hidebuttons_enabled=TRUE");
+		hidebutton_pixmaps_enabled =
+			gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
+
 		switch(type) {
 		case SNAPPED_PANEL:
 			{
 				SnappedPos pos;
 				SnappedMode mode;
 				SnappedState state;
-				int hidebuttons_enabled;
-				int hidebutton_pixmaps_enabled;
 
 				g_string_sprintf(buf,"pos=%d", SNAPPED_BOTTOM);
 				pos=gnome_config_get_int(buf->str);
@@ -917,11 +916,6 @@ init_user_panels(void)
 
 				g_string_sprintf(buf,"state=%d", SNAPPED_SHOWN);
 				state=gnome_config_get_int(buf->str);
-
-				hidebuttons_enabled =
-					gnome_config_get_bool("hidebuttons_enabled=TRUE");
-				hidebutton_pixmaps_enabled =
-					gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
 
 				panel = snapped_widget_new(pos,
 							   mode,
@@ -938,8 +932,6 @@ init_user_panels(void)
 			{
 				DrawerState state;
 				PanelOrientType orient;
-				int hidebutton_enabled;
-				int hidebutton_pixmap_enabled;
 
 				g_string_sprintf(buf,"state=%d", DRAWER_SHOWN);
 				state=gnome_config_get_int(buf->str);
@@ -947,19 +939,14 @@ init_user_panels(void)
 				g_string_sprintf(buf,"orient=%d", ORIENT_UP);
 				orient=gnome_config_get_int(buf->str);
 
-				hidebutton_enabled =
-					gnome_config_get_bool("hidebutton_enabled=TRUE");
-				hidebutton_pixmap_enabled =
-					gnome_config_get_bool("hidebutton_pixmap_enabled=TRUE");
-
 				panel = drawer_widget_new(orient,
 							  state,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,
 							  &back_color,
-							  hidebutton_pixmap_enabled,
-							  hidebutton_enabled);
+							  hidebutton_pixmaps_enabled,
+							  hidebuttons_enabled);
 				break;
 			}
 		case CORNER_PANEL:
@@ -967,8 +954,6 @@ init_user_panels(void)
 				CornerPos pos;
 				PanelOrientation orient;
 				CornerState state;
-				int hidebuttons_enabled;
-				int hidebutton_pixmaps_enabled;
 				
 				g_string_sprintf(buf,"pos=%d", CORNER_NE);
 				pos=gnome_config_get_int(buf->str);
@@ -980,11 +965,6 @@ init_user_panels(void)
 				g_string_sprintf(buf,"state=%d", CORNER_SHOWN);
 				state=gnome_config_get_int(buf->str);
 
-				hidebuttons_enabled =
-					gnome_config_get_bool("hidebuttons_enabled=TRUE");
-				hidebutton_pixmaps_enabled =
-					gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
-				
 				panel = corner_widget_new(pos,
 							  orient,
 							  state,

@@ -386,7 +386,7 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		if(drawer->drawer) {
 			GtkWidget *dw = drawer->drawer;
 			drawer->drawer = NULL;
-			PANEL_WIDGET(DRAWER_WIDGET(dw)->panel)->master_widget = NULL;
+			PANEL_WIDGET(BASEP_WIDGET(dw)->panel)->master_widget = NULL;
 			gtk_widget_destroy(dw);
 		}
 	}
@@ -452,7 +452,7 @@ register_toy(GtkWidget *applet,
 
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = data;
-		PanelWidget *assoc_panel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
+		PanelWidget *assoc_panel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 
 		gtk_object_set_data(GTK_OBJECT(applet),
 				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc_panel);

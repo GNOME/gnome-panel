@@ -76,6 +76,8 @@ base_panel_SOURCES=\
 	drawer.h  		\
 	panel-widget.c  	\
 	panel-widget.h		\
+	basep-widget.c  	\
+	basep-widget.h		\
 	snapped-widget.c  	\
 	snapped-widget.h	\
 	drawer-widget.c  	\

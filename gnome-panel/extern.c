@@ -219,6 +219,16 @@ extern_socket_destroy(GtkWidget *w, gpointer data)
 	extern_clean(ext);
 }
 
+/*static void
+sal(GtkWidget *applet, GtkAllocation *alloc)
+{
+	printf("SOCKET req:   %dx%d\nSOCKET alloc: %dx%d\n",
+	       applet->requisition.width,
+	       applet->requisition.height,
+	       applet->allocation.width,
+	       applet->allocation.height);
+}*/
+
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
 static CORBA_unsigned_long
@@ -234,6 +244,10 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 				 GDK_POINTER_MOTION_HINT_MASK));
 
 	socket = gtk_socket_new();
+
+	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
+				 GTK_SIGNAL_FUNC(sal),NULL);*/
+
 
 	g_return_val_if_fail(socket!=NULL,0);
 
