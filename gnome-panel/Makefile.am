@@ -28,7 +28,7 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
-bin_PROGRAMS = panel-2
+bin_PROGRAMS = gnome-panel-2
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -63,7 +63,7 @@ BUILT_SOURCES = \
 	panel-marshal.c		\
 	panel-marshal.h
 
-panel_sources = \
+panel_sources =			\
 	panel-typebuiltins.c	\
 	panel-typebuiltins.h	\
 	panel-marshal-main.c	\
@@ -109,7 +109,7 @@ panel_sources = \
 	quick-desktop-reader.c	\
 	$(NULL)
 
-panel_headers = \
+panel_headers =			\
 	panel-types.h		\
 	main.h			\
 	panel-widget.h		\
@@ -155,19 +155,19 @@ panel_headers = \
 	panel-shell.h		\
 	$(NULL)
 
-panel_2_SOURCES = \
+gnome_panel_2_SOURCES =		\
 	$(CORBA_SRCLIST)	\
 	gwmh.h			\
 	$(panel_sources)	\
 	$(panel_headers)	\
 	$(NULL)
 
-panel_2_LDADD=\
+gnome_panel_2_LDADD =		\
 	$(PANEL_LIBS)		\
 	$(XINERAMA_LIBS)	\
 	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
 
-panel_2_LDFLAGS=-export-dynamic
+gnome_panel_2_LDFLAGS = -export-dynamic
 
 EXTRA_DIST =					\
 	APPLET_WRITING				\
