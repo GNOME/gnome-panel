@@ -2579,8 +2579,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		"Dan Mueth <d-mueth@uchicago.edu>",
 		NULL
 	};
-	/* Translator credits */
-	const char *translator_credits = _("translator-credits");
 
 	if (cd->about) {
 		gtk_window_set_screen (GTK_WINDOW (cd->about),
@@ -2597,8 +2595,8 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "comments", _("The Clock displays the current time and date"),
 		      "authors", authors,
 		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "clock",
+		      "translator-credits", _("translator-credits"),
+		      "logo-icon-name", "clock",
 		      NULL);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
