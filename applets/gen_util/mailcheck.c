@@ -423,6 +423,9 @@ create_mail_widgets (MailCheck *mc)
 	char *fname = mail_animation_filename (mc);
 
 	mc->ebox = gtk_event_box_new();
+        gtk_widget_set_events(mc->ebox, 
+                              gtk_widget_get_events(mc->ebox) |
+                              GDK_BUTTON_PRESS_MASK);
 	gtk_widget_show (mc->ebox);
 	
 	/*
@@ -451,7 +454,6 @@ create_mail_widgets (MailCheck *mc)
 	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),
 			       mc->size, mc->size);
 	gtk_signal_connect (GTK_OBJECT(mc->da), "expose_event", (GtkSignalFunc)icon_expose, mc);
-	gtk_widget_set_events(GTK_WIDGET(mc->da),GDK_EXPOSURE_MASK);
 	gtk_widget_show (mc->da);
 
 	/* The label */
@@ -1208,10 +1210,6 @@ make_mailcheck_applet(const gchar *goad_id)
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
 	applet_widget_add (APPLET_WIDGET (applet), mailcheck);
-
-        gtk_widget_set_events(GTK_WIDGET(mc->ebox), 
-                              gtk_widget_get_events(GTK_WIDGET(mc->ebox)) |
-                              GDK_BUTTON_PRESS_MASK);
 
         gtk_signal_connect(GTK_OBJECT(mc->ebox), "button_press_event",
                            GTK_SIGNAL_FUNC(exec_clicked_cmd), mc);
