@@ -4003,7 +4003,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	if (main_menu) {
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Main Menu"), NULL);
+				      _("GNOME Menu"), NULL);
 	} else {
 		char *tooltip = get_menu_tooltip (menu->menu);
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
