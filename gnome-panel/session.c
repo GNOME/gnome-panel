@@ -720,9 +720,9 @@ static void
 load_default_applets(void)
 {
 	char *def_launchers[] =
-	      { "apps/gnome-help.desktop",
-		"apps/System/gnomecc.desktop",
-		"apps/Applications/Netscape.desktop",
+	      { "gnome/apps/gnome-help.desktop",
+		"gnome/apps/Settings/gnomecc.desktop",
+		"gnome/apps/Applications/Netscape.desktop",
 		NULL };
 	int i;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
