@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-03 00:48-0500\n"
+"POT-Creation-Date: 2004-12-03 19:12-0500\n"
 "PO-Revision-Date: 2004-12-03 18:58-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -46,7 +46,7 @@ msgstr "_About"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:605 gnome-panel/menu.c:1647
-#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:331
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Help"
@@ -1183,7 +1183,7 @@ msgstr "A_bout Panels"
 msgid "About _GNOME"
 msgstr "About _GNOME"
 
-#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:223
 msgid "Applications"
 msgstr "Applications"
 
@@ -1626,7 +1626,7 @@ msgstr "Take screenshot"
 msgid "Take window screenshot"
 msgstr "Take window screenshot"
 
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/panel-menu-bar.c:232
 msgid "Actions"
 msgstr "Actions"
 
@@ -1996,14 +1996,19 @@ msgstr "Cannot convert '%s' from UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Choose a file to append to the command..."
 
-#: gnome-panel/panel-run-dialog.c:1366
+#: gnome-panel/panel-run-dialog.c:1365
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Will run command: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1372 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Select an application to view its description."
+
+#: gnome-panel/panel-run-dialog.c:1406
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr "URI list dropped on run dialogue had wrong format (%d) or length (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
