@@ -1,3 +1,16 @@
+2005-01-25  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-menu-bar.c: (panel_menu_bar_create_places_menu): update the
+	Desktop tooltip and change string for "Desktop" so that it can be
+	correctly translated
+	(panel_menu_bar_instance_init): change string for "Desktop" so that it
+	can be correctly translated
+	Fix bug #164901
+
+	* panel-recent.c: (recent_documents_clear_cb): Actions menu is dead.
+	Now, the recent documents list is in the places menu. Update string
+	accordingly.
+
 2005-01-23  Vincent Untz  <vincent@vuntz.net>
 
 	* menu.c: (panel_make_menu_icon): only scale the icon if the height

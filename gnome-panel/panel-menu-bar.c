@@ -588,8 +588,14 @@ panel_menu_bar_create_places_menu (PanelMenuBar *menubar)
 				    DESKTOP_IS_HOME_DIR_KEY,
 				    NULL))
 		panel_menu_bar_append_place_item (menubar, "gnome-fs-desktop",
-						  _("Desktop"),
-						  _("Desktop directory"),
+						  /* Translators: Desktop is
+						   * used here as in "Desktop
+						   * Folder" (this is not the
+						   * Desktop environment). Do
+						   * not keep "Desktop Folder|"
+						   * in the translation */
+						  Q_("Desktop Folder|Desktop"),
+						  _("Open the desktop as a folder"),
 						  places_menu,
 						  G_CALLBACK (activate_uri),
 						  "Desktop");
@@ -774,7 +780,10 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->places_item);
 
-	menubar->priv->desktop_item = gtk_menu_item_new_with_label (_("Desktop"));
+	/* Translators: Desktop is used here as in "Desktop Environment" (this
+	 * is not the Desktop folder). Do not keep "Desktop Environment|" in
+	 * the translation. */
+	menubar->priv->desktop_item = gtk_menu_item_new_with_label (Q_("Desktop Environment|Desktop"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->desktop_item),
 				   menubar->priv->desktop_menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
