@@ -135,7 +135,7 @@ save_applet_configuration(gpointer data, gpointer user_data)
 
 	if(info->type==APPLET_EXTERN) {
 		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id,panel,pos);
+		send_applet_session_save(info->id,(*num)-2,panel,pos);
 		fullpath = g_copy_strings(path,"path",NULL);
 		gnome_config_set_string(fullpath, info->params);
 		g_free(fullpath);
@@ -292,9 +292,13 @@ panel_session_save (GnomeClient *client,
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
 			info = list->data;
 			if(info->type == APPLET_EXTERN) {
-				send_applet_shutdown_applet(info->id);
+				puts("EXTERN");
+				send_applet_shutdown_applet(info->id,i);
+				puts("DONE");
 			} else {
+				puts("INTERNAL");
 				gtk_widget_unref(info->widget);
+				puts("DONE");
 			}
 		}
 
@@ -307,10 +311,14 @@ panel_session_save (GnomeClient *client,
 			/*prevent searches through the g_list to speed
 					up this thing*/
 
+		puts("unreffing root menu");
 		gtk_widget_unref(root_menu);
+		puts("done");
 
 		/*FIXME: unref all menus here */
 	}
+
+	puts("AFTER_SESSION_SAVE");
 	
 
 	/* Always successful.  */
@@ -323,7 +331,9 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
+		puts("BEFORE_GTK_MAIN_QUIT");
 		gtk_main_quit ();
+		puts("AFTER_GTK_MAIN_QUIT");
 		/* We don't want to return, because we've probably been
 		   called from an applet which has since been dlclose()'d,
 		   and we'd end up with a SEGV when we tried to return to

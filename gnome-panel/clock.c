@@ -170,14 +170,14 @@ create_clock_widget (GtkWidget *window)
 
 /*these are commands sent over corba:*/
 void
-change_orient(int orient)
+change_orient(int id, int orient)
 {
 	PanelOrientType o = (PanelOrientType)orient;
 	puts("CHANGE_ORIENT");
 }
 
 void
-session_save(int panel, int pos)
+session_save(int id, int panel, int pos)
 {
 	/*FIXME: save the position*/
 	puts("SESSION_SAVE");
@@ -190,7 +190,7 @@ applet_die(gpointer data)
 }
 
 void
-shutdown_applet()
+shutdown_applet(int id)
 {
 	puts("SHUTDOWN_APPLET");
 	/*kill our window*/
