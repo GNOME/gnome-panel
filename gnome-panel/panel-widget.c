@@ -827,6 +827,8 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 			requisition->height = panel->size;
 		}
 	}
+	requisition->width = CLAMP (requisition->width, 12, gdk_screen_width ());
+	requisition->height = CLAMP (requisition->height, 12, gdk_screen_height ());
 }
 
 static void
