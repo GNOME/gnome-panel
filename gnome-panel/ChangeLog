@@ -1,3 +1,15 @@
+Fri May 17 21:34:44 2002  George Lebl <jirka@5z.com>
+
+	* panel-shell.c: fix #81437 by disconnecting the destroy
+	  function on response before we do gtk_dialog_run
+
+	* menu.c: don't do gtk_dialog_run on something returned from
+	  panel_error_dialog.  Hmmm, will need some better idea for the
+	  closing instead of hard destroying the thing which causes crashes
+
+	* panel-util.c: avoid warning when creating dialogs with
+	  parent == NULL
+
 Fri May 17 21:14:16 2002  George Lebl <jirka@5z.com>
 
 	* gnome-run.c: when getting an iterator check the result of the

@@ -2608,7 +2608,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 		}
 		dialog = panel_error_dialog ("only_one_foobar",
 					     _("You can only have one menu panel at a time."));
-		gtk_dialog_run (GTK_DIALOG (dialog));
 		break;
 	}
 	default: break;

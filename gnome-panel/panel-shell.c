@@ -54,8 +54,12 @@ panel_shell_register (void)
 		if (message) {
 			GtkWidget *dlg = panel_error_dialog
 				("panel_shell_register_error", "%s", message);
-			gtk_window_set_modal (GTK_WINDOW (dlg), TRUE);
+
+			/* FIXME: quick hack */
+			g_signal_handlers_disconnect_by_func
+				(dlg, G_CALLBACK (gtk_widget_destroy), dlg);
 			gtk_dialog_run (GTK_DIALOG (dlg));
+			gtk_widget_destroy (dlg);
 			return FALSE;
 		}
 	}

@@ -607,7 +607,7 @@ panel_dialog (GtkWidget *parent,
 {
 	GtkWidget *w;
 
-	w = gtk_message_dialog_new (GTK_WINDOW (parent), 0, type,
+	w = gtk_message_dialog_new ((GtkWindow *) parent, 0, type,
 				    GTK_BUTTONS_OK, "foo");
 	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (w), "event",
@@ -619,6 +619,8 @@ panel_dialog (GtkWidget *parent,
 
 	gtk_widget_show_all (w);
 
+	/* FIXME: this is ugly and makes it bad to run gtk_dialog_run
+	 * after this function */
 	g_signal_connect_swapped (G_OBJECT (w), "response",
 				  G_CALLBACK (gtk_widget_destroy),
 				  G_OBJECT (w));
