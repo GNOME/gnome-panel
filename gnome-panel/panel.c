@@ -58,11 +58,15 @@ extern PanelWidget *current_panel;
 
 enum {
 	TARGET_URL,
-	TARGET_COLOR
+	TARGET_DIRECTORY,
+	TARGET_COLOR,
+	TARGET_APPLET
 };
 
 static GtkTargetEntry panel_drop_types[] = {
 	{ "text/uri-list",       0, TARGET_URL },
+	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
+	{ "application/x-panel-applet", 0, TARGET_APPLET },
 	{ "application/x-color", 0, TARGET_COLOR }
 };
 
@@ -889,6 +893,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			char *file = (char *)files->data;
 			char *p = strrchr(file,'.');
 			int pos = panel_widget_get_cursorloc(panel);
+			
 			if(S_ISDIR(s.st_mode)) /*add a menu*/
 				load_menu_applet(file,MAIN_MENU_BOTH,
 						 panel,pos);
@@ -914,6 +919,25 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		c.pixel = 0;
 
 		panel_widget_set_back_color(panel, &c);
+		break;
+	}
+	case TARGET_DIRECTORY: {
+		int pos = panel_widget_get_cursorloc(panel);
+		load_menu_applet ((char *)selection_data->data, 0,
+				  panel, pos);
+		break;
+	}
+	case TARGET_APPLET: {
+		int pos = panel_widget_get_cursorloc(panel);
+		char *path = (char *)selection_data->data;
+		char *params = strchr (path, '\n');
+
+		if (params) {
+			*params = '\0';
+			params++;
+		}
+		
+		load_extern_applet(path,params,NULL,panel,pos);
 		break;
 	}
 	}

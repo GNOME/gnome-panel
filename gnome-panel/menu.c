@@ -526,6 +526,86 @@ destroy_item_menu(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+/* This is a _horrible_ hack to have this here. This needs to be added to the
+ * GTK+ menuing code in some manner.
+ */
+static void  
+drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
+{
+  GtkWidget *xgrab_shell;
+  GtkWidget *parent;
+  GdkEvent *current_event;
+  GtkMenuShell *menu_shell;
+
+  /* Find the last viewable ancestor, and make an X grab on it
+   */
+  parent = widget->parent;
+  xgrab_shell = NULL;
+  while (parent)
+    {
+      gboolean viewable = TRUE;
+      GtkWidget *tmp = parent;
+      
+      while (tmp)
+	{
+	  if (!GTK_WIDGET_MAPPED (tmp))
+	    {
+	      viewable = FALSE;
+	      break;
+	    }
+	  tmp = tmp->parent;
+	}
+      
+      if (viewable)
+	xgrab_shell = parent;
+      
+      parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+    }
+  
+  if (xgrab_shell)
+    {
+      GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
+
+      if ((gdk_pointer_grab (xgrab_shell->window, TRUE,
+			     GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+			     GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK |
+			     GDK_POINTER_MOTION_MASK,
+			     NULL, cursor, GDK_CURRENT_TIME) == 0))
+	{
+	  if (gdk_keyboard_grab (xgrab_shell->window, TRUE,
+				 GDK_CURRENT_TIME) == 0)
+	    GTK_MENU_SHELL (xgrab_shell)->have_xgrab = TRUE;
+	  else
+	    {
+	      gdk_pointer_ungrab (GDK_CURRENT_TIME);
+	    }
+	}
+
+      gdk_cursor_destroy (cursor);
+    }
+}
+
+static void  
+drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
+		       GtkSelectionData   *selection_data, guint info,
+		       guint time, GnomeDesktopEntry *dentry)
+{
+	gchar *uri_list = g_copy_strings ("file:", dentry->location, NULL);
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, uri_list,
+				strlen(uri_list));
+	g_free(uri_list);
+}
+
+static void  
+drag_data_get_dir_cb (GtkWidget *widget, GdkDragContext     *context,
+		      GtkSelectionData   *selection_data, guint info,
+		      guint time, char *directory)
+{
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, directory,
+				strlen(directory));
+}
 
 static void
 setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
@@ -597,6 +677,10 @@ static void
 setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		     GnomeDesktopEntry *dentry)
 {
+        static GtkTargetEntry menu_item_targets[] = {
+		{ "text/uri-list", 0, 0 }
+	};
+
 	GtkWidget *label, *hbox, *align;
 
 	label = gtk_label_new (title);
@@ -648,6 +732,16 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		/*this is not really a problem for large fonts but it
 		  makes the button smaller*/
 		gtk_widget_set_usize(w,0,16);
+
+		gtk_drag_source_set(menuitem,
+				    GDK_BUTTON1_MASK,
+				    menu_item_targets, 1,
+				    GDK_ACTION_COPY);
+
+		gtk_signal_connect(GTK_OBJECT(menuitem), "drag_data_get",
+				   drag_data_get_menu_cb, dentry);
+		gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
+				   drag_end_menu_cb, NULL);
 	}
 	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
@@ -658,6 +752,77 @@ void
 setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 {
 	setup_full_menuitem(menuitem,pixmap,title,NULL);
+}
+
+static void
+setup_directory_drag (GtkWidget *menuitem, char *directory)
+{
+        static GtkTargetEntry menu_item_targets[] = {
+		{ "application/x-panel-directory", 0, 0 }
+	};
+
+	gtk_drag_source_set(menuitem,
+			    GDK_BUTTON1_MASK,
+			    menu_item_targets, 1,
+			    GDK_ACTION_COPY);
+	
+	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
+			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb), NULL,
+			   g_strdup (directory), (GtkDestroyNotify)g_free,
+			   FALSE, FALSE);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
+			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
+}
+
+static void
+setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
+{
+        static GtkTargetEntry menu_item_targets[] = {
+		{ "application/x-panel-applet", 0, 0 }
+	};
+
+	char *path;
+	char *param;
+	char *data;
+	gint length;
+
+	path = ii->exec[0];
+
+	g_return_if_fail(path!=NULL);
+	
+	if((ii->exec[1])!=NULL)
+		param = gnome_string_joinv (" ", ii->exec + 1);
+	else
+		param = NULL;
+
+	data = g_new (gchar, strlen(path) + 1 + 
+		      (param ? (strlen(param) + 1) : 0));
+
+	length = 0;
+	strcpy(data, path);
+	length += strlen(path);
+	if (param) {
+		data[length] = '\n';
+		length++;
+		strcpy(data + length, param);
+		length += strlen(param);
+		data[length] = '\0';
+	}
+
+	if (param)
+		g_free(param);
+
+	gtk_drag_source_set(menuitem,
+			    GDK_BUTTON1_MASK,
+			    menu_item_targets, 1,
+			    GDK_ACTION_COPY);
+	
+	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
+			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb), NULL,
+			   data, (GtkDestroyNotify)g_free, FALSE, FALSE);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
+			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
+
 }
 
 static void
@@ -1112,6 +1277,9 @@ create_menu_at (GtkWidget *menu,
 		  a submenu or an applet, so that the item can be added*/
  		setup_full_menuitem (menuitem, pixmap, menuitem_name,
 				     (sub||applets)?NULL:item_info);
+		if (applets && !sub)
+			setup_applet_drag (menuitem, item_info);
+
 		if(add_separator) {
 			add_menu_separator(menu);
 			first_item++;
@@ -1145,8 +1313,9 @@ create_menu_at (GtkWidget *menu,
 	if(!applets && items>0) {
 		GtkWidget *pixmap;
 		menuitem = gtk_menu_item_new();
-		gtk_widget_show(menuitem);
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+
+		gtk_widget_show(menuitem);
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
@@ -1162,10 +1331,13 @@ create_menu_at (GtkWidget *menu,
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
+
 		menuitem = gtk_menu_item_new();
 		setup_title_menuitem(menuitem,pixmap,
 				     dir_name?dir_name:"Menu",mf);
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+
+		setup_directory_drag (menuitem, mf->menudir);
 	}
 
 	if(dir_info)
