@@ -373,6 +373,29 @@ applet_change_orient (PanelApplet       *applet,
 	(*cd->update_func) (cd, current_time);
 }
 
+static void
+applet_change_background (PanelApplet               *applet,
+			  PanelAppletBackgroundType  type,
+			  GdkColor                  *color,
+			  const gchar               *pixmap,
+			  ClockData                 *cd)
+{
+  if (type == PANEL_NO_BACKGROUND)
+    {
+      GtkRcStyle *rc_style = gtk_rc_style_new ();
+
+      gtk_widget_modify_style (cd->applet, rc_style);
+    }
+  else if (type == PANEL_COLOR_BACKGROUND)
+    {
+      gtk_widget_modify_bg (cd->applet,
+			    GTK_STATE_NORMAL,
+			    color);
+    } else { /* pixmap */
+      /* FIXME: Handle this when the panel support works again */
+    }
+}
+
 
 /* this is when the panel size changes */
 static void
@@ -576,6 +599,12 @@ make_clock_applet(void)
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 
+	g_signal_connect (G_OBJECT (cd->applet),
+			  "change_background",
+			  G_CALLBACK (applet_change_background),
+			  cd);
+
+	
 #ifdef FIXME
 	g_signal_connect (G_OBJECT (cd->applet),
 			  "save_session",

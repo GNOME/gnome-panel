@@ -204,7 +204,7 @@ panel_applet_frame_change_background_color (PanelAppletFrame *frame,
 {
 	gchar *bg_str;
 
-	bg_str = g_strdup_printf ("color:#%.2x%.2x%.2x", red, green, blue);
+	bg_str = g_strdup_printf ("color:#%.4x%.4x%.4x", red, green, blue);
 
 	bonobo_pbclient_set_string (frame->priv->property_bag, 
 				    "panel-applet-background",
