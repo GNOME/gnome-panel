@@ -1,0 +1,423 @@
+1998-02-02  Raja R Harinath  <harinath@cs.umn.edu>
+
+	Quick and dirty port of `panel/cdplayer' to Solaris.
+	* Makefile.am (SUBDIRS): Conditionally build `cdplayer'. 
+	* cdplayer/Makefile.am (libpanel_cdplayer_la_SOURCES): Build host
+	specific cdrom backend.
+	* cdplayer/cdrom-solaris.c: New backend for solaris.  Just a copy
+	of cdrom-linux.c, replacing include of <linux/cdrom.h> with
+	<sys/cdio.h>.
+	
+	* cdplayer/Makefile.am (dist-hook): Replace spaces with tab.
+
+Wed Jan 28 11:39:16 1998  Arturo Espinosa  <arturo@nuclecu.unam.mx>
+
+	* main.c (load_default_drawers): Added stub.
+
+Thu Jan 29 04:31:23 1998  Changwoo Ryu  <cwryu@adam.kaist.ac.kr>
+
+	* panel.c, batmon/batmon.c, launcher/launcher.c,
+	mailcheck/mailcheck.c, menu/main.c: Include <config.h>.  And
+	remove any `#ifdef HAVE_LIBINTL ... #endif', which is done by
+	gnome.h.
+
+	* main.c: Include <config.h>.
+	(main): Added textdomain().
+
+Tue Jan 27 09:17:08 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* menu/main.c (create_menu_at): Now directories are named
+	according to the Name field in the .directory desktop entry.
+
+	* menu/main.c (create_menu_at): Now menu items are named according
+	to the Name file in their respective desktop entries.
+
+Mon Jan 26 23:25:19 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: fixed a bunch of orientation bugs, make applet resize
+	only do set_panel_position if it needs to (this is still not
+	OOized)
+
+Mon Jan 26 15:04:28 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* applet_files.h: Removed #include "gnome-dl.h".
+
+	* launcher.c: Modified the launcher applet to use the new
+	name/comment fields in dentries instead of the old info field and
+	filename.
+
+Mon Jan 26 15:04:28 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* applet_files.h: Changed void *dl_handle to GnomeLibHandle
+	*dl_handle.
+
+Sun Jan 25 23:33:07 1998  George Lebl  <jirka@5z.com>
+
+	* panel.{c,h},applet_cmds.h: added orientation property to Panel
+
+Sun Jan 25 20:51:23 1998  George Lebl  <jirka@5z.com>
+
+	* main.c: can load drawers now
+
+Sun Jan 25 18:58:07 1998  George Lebl  <jirka@5z.com>
+
+	* menu/main.c: fixed orientation changes affecting only one menu
+
+	* panel.c: added "add main menu" to panel menu, switched "remove
+	  applet" with "move applet" to avoid removing teh applet by
+	  mistake
+
+	* applet_cmds.h: orientation is passed though params for greater
+	  flexibility and tolerance of older modules
+
+	* panel.[ch]: OOized the panel/drawer distinction, to help with
+	  doing drawers
+
+Sat Jan 24 19:31:32 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,menu/main.c: even more drawer code added. drawers aren't
+	  fully implemented yet though!
+
+Sat Jan 24 17:58:52 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: eliminated jerky movement by using an idle function for
+	  movement, merged move_applet functions into one.
+
+	* panel.c: a few cleanups, some more drawer code in.
+
+Fri Jan 23 14:36:42 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* mailcheck/mailcheck.c (create_mail_widgets): The properties 
+	dialog is now destroyed if the applet is removed from the panel
+	while the dialog is active.
+	(mailcheck_properties): We only allow one instance of the
+	properties dialog to be active.
+	(load_new_pixmap_callback): Removed unused variable cmd.
+	(mailcheck_notification_frame): Beautified the dialog a bit.
+	(mailcheck_destroy): If you removed the mailcheck applet from the
+	panel and later tried to re-add it from the panel menu, it didn't
+	work.  Fixed.
+
+Fri Jan 23 16:22:27 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,panel.h,panel_cmds.h: more "drawers" framework done,
+	  removed traces of visibility notify, removed applet size change
+	  notify since it is handled by allocate_size signal
+
+	* mailcheck/mailcheck.c: fixed a few bugs related to text only
+	  reporting
+
+Thu Jan 22 23:24:17 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: removed some unused code, fixed a bug when removing
+	  applets, made cells with applets not expand which improves the
+	  look and makes geometry seem more consistent
+
+Thu Jan 22 20:34:53 1998  George Lebl  <jirka@5z.com>
+
+	* mailcheck/mailcheck.c: made the property dialog an apply/close
+	  type
+
+Thu Jan 22 20:23:21 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: improved move performace, saner move position
+	  calculation.
+
+	* menu/main.c,launcher/launcher.c,logout/logout.c: the button is
+	  now set to the size of the pixmap
+
+Thu Jan 22 03:16:18 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: disabled raising when obscured sinceit was messing up
+	  with screensavers. need to find a better solution to this
+
+Thu Jan 22 01:20:15 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch]: panel is now a table instead of a fixed. This gives
+	  us far greater flexibility, and better applet geometry managment
+	  (though a bit odd sometimes)
+
+	* main.c,applet_cmds.h,panel_cmds.h,all applet files:
+	  changed to a one variable position system
+
+Wed Jan 21 01:18:34 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* panel.c (pop_down): return FALSE for timeout callback.
+
+	* mailcheck/mailcheck.c (mailcheck_properties): cast
+	property_window to GTK_WINDOW.
+
+Wed Jan 21 00:41:27 1998  Federico Mena <federico@bananoid.nuclecu.unam.mx>
+
+	Based on patch from Raja R. Harinath <harinath@cs.umn.edu>
+	* batmon/batmon.c (batmon_timeout_callback): Use non-surprising
+	values for non-Linux m/cs.
+
+Tue Jan 20 17:39:25 1998  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* menu/main.c: for now set the absolute size of the menu button.
+
+	* mailcheck/mailcheck.c: Provide a propery configurator that
+	allows setting the animation file.
+	(mailcheck_load_animation): use this to load new animations.
+	(create_mail_widgets): create both the drawing area and the label
+	always, and put them inside an hbox.
+	(mailcheck_get_animation_menu): create a menu filled with the
+	possible animation file names.
+	(load_new_pixmap_callback): configure the user settings and save
+	the configuration for this applet. 
+	(mailcheck_notification_frame): create the notification
+	configuration menu. 
+
+	* mailcheck/email-e.xpm: Put back this animation. 
+
+Tue Jan 20 01:13:34 1998  George Lebl  <jirka@5z.com>
+
+	* mailcheck/email.xpm: replaced the old xpm with a newer one from
+	  tigert which looks better
+
+Sun Jan 18 11:17:27 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* applet_files.c (init_applet_file): Made `error' const.
+	(get_dl_func): Likewise.
+
+Sun Jan 18 18:46:28 1998  George Lebl  <jirka@5z.com>
+
+	* mailcheck/mailcheck.c: now actually captures teh expose event
+	  and redraws itself
+
+	* panel_cmds.h,panel.c: added a change size notify command, the
+	  applets should send this when they change their size so the
+	  panel can correct their geometry
+
+	* panel.c: made a panel menu pop up when the right button is
+	  pressed on the panel
+
+	* applet_files.c: hopefully fixed a warning
+
+Sun Jan 18 05:07:42 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: cursor is now an arrow (it was a bug that it was not)
+	  and when window is compeltely obscured it now raises itself
+
+Sun Jan 18 01:59:25 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: gettexted ...
+
+	* launcher/launcher.c: made the config and apply/close type fo
+	  dialog, instead of ok/cancel
+
+	* menu/main.c: added configuration, done some restructuring, small
+	  icons can now be turn on or off
+
+Sat Jan 17 03:11:40 1998  George Lebl  <jirka@5z.com>
+
+	* menu/main.c: now uses a single button instead the old vbox bit,
+	  and uses the above xpms
+
+	* panel_config.c: fixed a mistake I caused earier
+
+Sat Jan 17 02:15:08 1998  George Lebl  <jirka@5z.com>
+
+	* launcher/launcher.c: a bit of restructuring, now properties can
+	  be changed, stuff will be updated in real time and teh dialog
+	  isn't modal
+
+Fri Jan 16 22:07:24 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: made "stays put" as the default mode as it's less
+	  confusing for new users and old users can just set the
+	  preferences
+
+	* panel.c,panel.h,panel_config.c: Tooltips now configurable
+
+Fri Jan 16 20:36:39 1998  George Lebl  <jirka@5z.com>
+
+	* programs/panel/menu/main.c: menu now takes screen size
+	  into account. took out the tooltip on this thing since
+	  interfered with the menu
+
+Fri Jan 16 19:05:27 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: reworked the geometry stuff once more
+
+	* main.c: now again default right justifying of the mail applet
+	  works again. (though setting the x to 9999)
+
+	* panel.c,panel_cmds.h: set up applet tooltips, added one more
+	  command for this
+
+	* launcher/launcher.c,menu/main.c,logout/logout.c: added the
+	  tooltips for these
+
+Fri Jan 16 16:48:22 EST 1998  Nathan Bryant <nbryan71@maine.edu>
+
+	* panel.c: added exit() to panel_quit(). Fixes SEGV when we try to
+	  return into a nonexistent code page from an applet that has been
+	  dlclose()'d.
+
+Fri Jan 16 03:57:27 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: slightly optimized the geometry routines though I don't
+	  get why it does slightly improve performance, but hey it works
+	  ....
+
+Fri Jan 16 03:17:15 1998  George Lebl  <jirka@5z.com>
+
+	* logout/logout.c: using term-night xpm for this button
+
+	* launcher/launcher.c: using the opaque icons and
+	  gnome-unknown.xpm instead of the wheel
+
+Fri Jan 16 01:45:30 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch]: tehre will allways be one menu,
+	  (last one can't get deleted) and moving from the menu now works
+
+Thu Jan 15 21:54:31 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,applet_cmds.h,menu/main.c,... applet .c files: added
+	  orientation change notify command.  fixed several bugs in
+	  panel_reconfigure, and menu now takes the orientation into
+	  account, so it's uasable in all orientations
+	  
+Thu Jan 15 01:49:50 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,main.c: the config file stuff revised, can now load
+	  launcher applets
+
+Wed Jan 14 21:46:59 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: changed the way free spots are found yet once more,
+	  this should be a faster and better way
+
+Wed Jan 14 17:11:16 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,main.c: default applets loaded all from,
+	  left. Configuration now saved. Lot of geometry fixes
+
+Wed Jan 14 14:53:56 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: better geometry when swicthing from to horizontal and
+	  back. width of bar is now dynamicly allocated during positioning
+
+Wed Jan 14 13:58:17 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: added pixmaps to the hide buttons
+
+Mon Jan 12 21:37:26 1998  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* mailcheck/mailcheck.c (mail_destroy): Two bug fixes (proper
+	destruction of the mail widget and proper use of the mailcheck
+	code).
+
+Tue Jan 13 19:17:28 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch]: the fixed is now inside a table widget, this makes
+	  it easy to "reconfigure" it on the fly, and such a function
+	  exists, though untested
+
+Tue Jan 13 16:14:13 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,main.c: reversed x and y loading for vertical panel. the
+	  initial loading is done through a "stack" so applets are added
+	  in the right order it seems.
+
+Tue Jan 13 15:41:01 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: will now handle all four positions for the geometry
+	  stuff, and the panel will have no hide button if in "autohide"
+	  mode
+
+Tue Jan 13 01:21:20 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: put the free place finding in one routine and now it
+	  will handle the geometry at strtup correctly (more or less),
+	  also I added an "autoraise" which helps it keep it on top
+
+Mon Jan 12 22:28:40 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch]: the "colision avoidance" of applets now works, even
+	  when adding new applets to the panel. There is now a hide button
+	  just like on other such panels in other desktops, and the
+	  default behaviour changed from autohide to this
+
+Mon Jan 12 19:43:08 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: fixed the code to check for widgets in the way
+
+Mon Jan 12 18:54:07 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: implemented applet positioning so they don't
+	  overlap. doesn't use the existing code for that and doesn't work
+	  too great (yet) :)
+
+Mon Jan 12 20:20:42 1998  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* netwatch/netwatch.c (get_interface_path): Do not access
+	new_devpath if nothing was added.
+
+Fri Jan  9 11:32:48 1998  Micah Stetson  <cnm@tco.net>
+
+	* batmon/*.xpm: Changed the pixmaps for the battery monitor.
+
+Fri Jan  2 14:53:14 1998  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* netwatch/netwatch.c (create_netwatch): Added parentheses around
+	assignment used as truth value.
+
+	* batmon/batmon.c (destroy_module): Replaced
+	gtk_tooltips_destroy() by gtk_tooltips_unref().
+
+	* mailcheck/mailcheck.c (next_frame): Make the timeout handler
+	return TRUE.
+	
+Wed Dec 17 22:22:27 1997  Tom Tromey  <tromey@cygnus.com>
+
+	* panel.c (panel_session_save): New function.
+	(panel_quit): Use session management commands when appropriate.
+
+	* applet_files.c (get_dl_func): Print function name in error message.
+	* main.c (init_session_management): New function.
+	(main): Call it.
+	* Makefile.am (SUBDIRS): Include logout directory.
+	* logout/Makefile.am: New file.
+	* logout/logout.c: New file.
+
+Wed Dec 10 17:46:07 1997  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (MYLIBS): Added x_libs.
+
+Mon Dec  1 11:36:30 1997  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (EXTRA_DIST): Include panelrc.in.
+
+	* Makefile.am (data_DATA): Renamed.
+	(panelrc): New target.
+	(MOSTLYCLEANFILES): New macro.
+	(EXTRA_DIST): Removed.
+	(install-data-local): Removed.
+
+Mon Nov 10 15:52:37 1997  Tom Tromey  <tromey@cygnus.com>
+
+	* mailcheck/mailcheck.c (mail_check_timeout): Use gettext to look
+	up messages.
+
+Tue Oct 28 17:02:57 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* clock/clock.c: Fixed creation of instances.  Made clock creation
+	more generic.  It should now be easy to create new clock styles.
+
+	* panel.c (save_applet_configuration): The panel was not
+	incrementing the unique numeric key correctly.
+
+Mon Oct 27 18:55:46 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* menu/main.c (add_applet_to_panel): Now the menu can add applets
+	to the panel.
+
+Thu Oct  9 20:54:55 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
+
+	* panel.c: Lots of bug fixes and new features.  Can now save
+	configuration properly, add new applets to the panel, etc.
+
