@@ -1,3 +1,4 @@
+#include <math.h>
 #include <config.h>
 #include <gtk/gtk.h>
 #include <gnome.h>
