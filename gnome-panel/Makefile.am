@@ -1,8 +1,9 @@
 test:
 	echo $(CXXCOMPILE)
 
-SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
-	@PROGRAMS_PANEL_CDPLAYER@
+## FIXME: convert all applets to CORBA
+#SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
+#	@PROGRAMS_PANEL_CDPLAYER@
 
 CXX = mico-c++
 CXXCOMPILE = $(CXX) -g $(INCLUDES)
