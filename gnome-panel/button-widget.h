@@ -9,8 +9,6 @@
 extern "C" {
 #endif /* __cplusplus */
 	
-#define MAX_TILES 4
-
 #define BUTTON_WIDGET(obj)          GTK_CHECK_CAST (obj, button_widget_get_type (), ButtonWidget)
 #define BUTTON_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, button_widget_get_type (), ButtonWidgetClass)
 #define IS_BUTTON_WIDGET(obj)       GTK_CHECK_TYPE (obj, button_widget_get_type ())
@@ -86,7 +84,7 @@ void		button_widget_load_tile		(int tile,
 						 int border,
 						 int depth);
 
-void		button_widget_tile_enable	(int enabled);
+void		button_widget_tile_enable	(int type, int enabled);
 
 #ifdef __cplusplus
 }

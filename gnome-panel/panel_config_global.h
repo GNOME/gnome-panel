@@ -18,7 +18,7 @@ struct _GlobalConfig {
 	PanelMovementType movement_type;
 	int disable_animations;
 	int applet_padding;
-	int tiles_enabled;
+	int tiles_enabled[LAST_TILE];
 	char *tile_up[LAST_TILE];
 	char *tile_down[LAST_TILE];
 	int tile_border[LAST_TILE];

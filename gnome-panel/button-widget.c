@@ -34,15 +34,15 @@ typedef void (*VoidSignal) (GtkObject * object,
 static GList *buttons=NULL;
 
 /*the tiles go here*/
-static GdkPixmap *tiles_up[MAX_TILES]={NULL,NULL,NULL,NULL};
-static GdkBitmap *tiles_up_mask[MAX_TILES]={NULL,NULL,NULL,NULL};
-static GdkPixmap *tiles_down[MAX_TILES]={NULL,NULL,NULL,NULL};
-static GdkBitmap *tiles_down_mask[MAX_TILES]={NULL,NULL,NULL,NULL};
-static int tile_border[MAX_TILES]={0,0,0,0};
-static int tile_depth[MAX_TILES]={0,0,0,0};
+static GdkPixmap *tiles_up[LAST_TILE]={NULL,NULL,NULL};
+static GdkBitmap *tiles_up_mask[LAST_TILE]={NULL,NULL,NULL};
+static GdkPixmap *tiles_down[LAST_TILE]={NULL,NULL,NULL};
+static GdkBitmap *tiles_down_mask[LAST_TILE]={NULL,NULL,NULL};
+static int tile_border[LAST_TILE]={0,0,0};
+static int tile_depth[LAST_TILE]={0,0,0};
 
 /*are tiles enabled*/
-static int tiles_enabled = FALSE;
+static int tiles_enabled[LAST_TILE]={FALSE,FALSE,FALSE};
 
 static GtkWidgetClass *parent_class;
 
@@ -244,7 +244,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	/*offset for pressed buttons*/
 	int off = button->in_button&&button->pressed?tile_depth[button->tile]:0;
 	/*border to not draw when drawing a tile*/
-	int border = tiles_enabled?tile_border[button->tile]:0;
+	int border = tiles_enabled[button->tile]?tile_border[button->tile]:0;
 	int i;
 	 
 	if(!GTK_WIDGET_REALIZED(button))
@@ -263,7 +263,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		}
 	}
 	
-	if(tiles_enabled) {
+	if(tiles_enabled[button->tile]) {
 		if(button->pressed && button->in_button) {
 			tile = tiles_down[button->tile];
 			tile_mask = tiles_down_mask[button->tile];
@@ -273,7 +273,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		}
 	}
 
-	if(tiles_enabled) {
+	if(tiles_enabled[button->tile]) {
 		if (tile_mask) {
 			gdk_gc_set_clip_mask (gc, tile_mask);
 			gdk_gc_set_clip_origin (gc, widget->allocation.x,
@@ -618,11 +618,11 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 }
 
 void
-button_widget_tile_enable(int enabled)
+button_widget_tile_enable(int i, int enabled)
 {
-	if(tiles_enabled != enabled) {
+	if(tiles_enabled[i] != enabled) {
 		GList *list;
-		tiles_enabled = enabled;
+		tiles_enabled[i] = enabled;
 
 		for(list = buttons;list!=NULL;list=g_list_next(list))
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(list->data)->parent),

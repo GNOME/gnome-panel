@@ -205,7 +205,7 @@ ask_about_swallowing(void)
 	GtkWidget *width_s;
 	GtkWidget *height_s;
 	GtkWidget *w;
-	GtkWidget *box;
+	GtkWidget *box, *i_box;
 	GtkAdjustment *adj;
 	d = gnome_dialog_new(_("Create swallow applet"),
 			     GNOME_STOCK_BUTTON_OK,
@@ -239,19 +239,27 @@ ask_about_swallowing(void)
 	box = gtk_hbox_new(FALSE,5);
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
 			   TRUE,TRUE,5);
-	w = gtk_label_new(_("Width (optional)"));
-	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
-	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
-						    5.0, 0.0);
-	width_s = gtk_spin_button_new(adj,0,0);
-	gtk_box_pack_start(GTK_BOX(box),width_s,TRUE,TRUE,0);
-	w = gtk_label_new(_("Height (optional)"));
-	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
-	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
-						    5.0, 0.0);
-	height_s = gtk_spin_button_new(adj,0,0);
-	gtk_box_pack_start(GTK_BOX(box),height_s,TRUE,TRUE,0);
 
+	w = gtk_label_new(_("Width"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
+						    5.0, 0.0);
+	gtk_adjustment_set_value(adj, 48.0); 
+	width_s = gtk_spin_button_new(adj,0,0);
+	gtk_box_pack_start(GTK_BOX(box),width_s,FALSE,FALSE,0);
+
+
+	i_box =gtk_hbox_new(FALSE,0);
+	gtk_box_pack_start(GTK_BOX(box), i_box, FALSE, FALSE, 5);
+	
+	w = gtk_label_new(_("Height"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
+						    5.0, 0.0);
+	gtk_adjustment_set_value(adj, 48.0); 
+	height_s = gtk_spin_button_new(adj,0,0);
+	gtk_box_pack_start(GTK_BOX(box),height_s,FALSE,FALSE,0);
+	
 	gtk_signal_connect(GTK_OBJECT(d),"clicked",
 			   GTK_SIGNAL_FUNC(really_add_swallow),NULL);
 	gtk_object_set_data(GTK_OBJECT(d),"title_e",title_e);
@@ -277,13 +285,12 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	GtkWidget *w;
 	GtkWidget *table;
 	GtkWidget *handle_box;
-
+	
 	swallow = g_new(Swallow,1);
 
 	swallow->ebox = gtk_event_box_new();
 	gtk_widget_show(swallow->ebox);
 
-	
 	swallow->socket=gtk_socket_new();
 	if(width != 0 || height != 0)
 		gtk_widget_set_usize(swallow->socket, width, height);
@@ -325,8 +332,8 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	  g_strdup(title));*/
 	gtk_container_add ( GTK_CONTAINER(w),
 			    swallow->socket );
-	gtk_widget_show(swallow->socket);
 
+	gtk_widget_show(swallow->socket);
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 
 	swallow->title = g_strdup(title);

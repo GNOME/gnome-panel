@@ -265,55 +265,54 @@ set_movement (GtkWidget *widget, gpointer data)
 static int
 set_icon_button_value(GtkWidget *w, gpointer data)
 {
-	int i;
+	int i = GPOINTER_TO_INT(data);
 	int active = GTK_TOGGLE_BUTTON(w)->active;
 
-	for(i=0;i<3;i++) {
-		gtk_widget_set_sensitive(tilefile[i],active);
-		gtk_widget_set_sensitive(tileborder[i],active);
-	}
-	temp_config.tiles_enabled = active;
+	gtk_widget_set_sensitive(tilefile[i],active);
+	gtk_widget_set_sensitive(tileborder[i],active);
+	temp_config.tiles_enabled[i] = active; 
 
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 	return FALSE;
 }
 
-static GtkWidget *
-genicon_notebook_page(void)
-{
-	GtkWidget *frame;
-	GtkWidget *w;
-	GtkWidget *box;
-	GtkWidget *vbox;
-	
-	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
-	
-	/* General frame */
-	frame = gtk_frame_new (_("General"));
-	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
-	
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
-	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	
-	/* Enable tiles frame */
-	w = gtk_check_button_new_with_label (_("Tiles enabled"));
-	if (temp_config.tiles_enabled)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (set_icon_button_value), 
-			    &(temp_config.tiles_enabled));
-	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
-			    CONFIG_PADDING_SIZE);
+//static GtkWidget *
+//genicon_notebook_page(void)
+//{
+//	  GtkWidget *frame;
+//	  GtkWidget *w;
+//	  GtkWidget *box;
+//	  GtkWidget *vbox;
+//	  
+//	  /* main vbox */
+//	  vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+//	  gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+//	  
+//	  /* General frame */
+//	  frame = gtk_frame_new (_("General"));
+//	  gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+//	  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
+//			      CONFIG_PADDING_SIZE);
+//	  
+//	  /* vbox for frame */
+//	  box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+//	  gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+//	  gtk_container_add (GTK_CONTAINER (frame), box);
+//	  
+//	  /* Enable tiles frame */
+//	  w = gtk_check_button_new_with_label (_("Tiles enabled"));
+//	  if (temp_config.tiles_enabled[0])
+//		  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+//	  gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+//			      GTK_SIGNAL_FUNC (set_icon_button_value), 
+//			      &(temp_config.tiles_enabled[0]));
+//	  gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
+//			      CONFIG_PADDING_SIZE);
+//
+//	  return (vbox);
+//}
 
-	return (vbox);
-}
 
 static GtkWidget *
 icon_notebook_page(int i, GtkWidget *config_box)
@@ -322,29 +321,40 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	GtkWidget *w;
 	GtkWidget *table;
 	GtkWidget *vbox;
+	GtkWidget *toggle;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+
+	/* toggle button */
+ 	toggle = gtk_check_button_new_with_label (_("Tiles enabled"));
+	if (temp_config.tiles_enabled[i])
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), TRUE);
+	gtk_signal_connect (GTK_OBJECT (toggle), "toggled", 
+			    GTK_SIGNAL_FUNC (set_icon_button_value), 
+			    GINT_TO_POINTER(i));
+	gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
 	
 	/* Image frame */
 	tilefile[i] = frame = gtk_frame_new (_("Image files"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_set_sensitive(frame,temp_config.tiles_enabled);
+	gtk_widget_set_sensitive(frame,temp_config.tiles_enabled[i]);
 	
 	/* table for frame */
-	table = gtk_table_new(2,2,FALSE);
+	table = gtk_table_new(3,3,FALSE);
 	gtk_container_border_width(GTK_CONTAINER (table), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* image file entry widgets */
-	entry_up[i] = create_file_entry(table,"tile_file",0,
+	entry_up[i] = create_file_entry(table,"tile_file",1,
 					_("Tile filename (up)"),
 					global_config.tile_up[i],
 					config_box);
-	entry_down[i] = create_file_entry(table,"tile_file",1,
+	entry_down[i] = create_file_entry(table,"tile_file",2,
 					  _("Tile filename (down)"),
 					  global_config.tile_down[i],
 					  config_box);
@@ -357,7 +367,7 @@ icon_notebook_page(int i, GtkWidget *config_box)
 						 0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_set_sensitive(w,temp_config.tiles_enabled);
+	gtk_widget_set_sensitive(w,temp_config.tiles_enabled[i]); 
 
 	/* Minimized size scale frame */
 	w = make_int_scale_frame(_("Depth (displacement when pressed)"),
@@ -537,11 +547,11 @@ panel_config_global(void)
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Animation")));
 
-	/* General icon notebook page */
-	page = genicon_notebook_page ();
-	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-				  page, gtk_label_new (_("General icon settings")));
-
+//	  /* General icon notebook page */
+//	  page = genicon_notebook_page ();
+//	  gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+//				    page, gtk_label_new (_("General icon settings")));
+//
 	/* Specific icon notebook pages */
 	for(i = 0; i<LAST_TILE; i++) {
 		page = icon_notebook_page (i,box);
