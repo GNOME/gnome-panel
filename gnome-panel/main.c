@@ -293,6 +293,8 @@ main(int argc, char **argv)
 	init_user_drawers();
 	init_user_applets();
 
+	panel_tooltips = gtk_tooltips_new();
+
 	apply_global_config();
 
 	gtk_main();
