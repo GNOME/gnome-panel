@@ -67,6 +67,23 @@ static void button_toggled_callback       (GtkWidget       *button,
 static void show_desktop_changed_callback (WnckScreen      *screen,
                                            ShowDesktopData *sdd);
 
+void
+show_desktop_connect_while_alive (gpointer    object,
+				  const char *signal,
+				  GCallback   func,
+				  gpointer    func_data,
+				  gpointer    alive_object)
+{
+        GClosure *closure;
+	
+        closure = g_cclosure_new (func, func_data, NULL);
+        g_object_watch_closure (G_OBJECT (alive_object), closure);
+        g_signal_connect_closure_by_id (object  ,
+					g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
+					closure,
+					FALSE);
+}
+
 static void
 set_tooltip (GtkWidget  *widget,
              const char *tip)
@@ -334,10 +351,11 @@ fill_show_desktop_applet (PanelApplet *applet)
                 wnck_screen_get (gdk_screen_get_number (gtk_widget_get_screen (sdd->applet)));
 
         if (sdd->wnck_screen != NULL)
-                g_signal_connect (G_OBJECT (sdd->wnck_screen),
-                                  "showing_desktop_changed",
-                                  G_CALLBACK (show_desktop_changed_callback),
-                                  sdd);
+		show_desktop_connect_while_alive (sdd->wnck_screen,
+						  "showing_desktop_changed",
+						  G_CALLBACK (show_desktop_changed_callback),
+						  sdd,
+						  sdd->applet);
         else
                 g_warning ("Could not get WnckScreen!");
 

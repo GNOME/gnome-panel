@@ -639,8 +639,9 @@ workspace_created (WnckScreen    *screen,
         
 	update_workspaces_model (pager);
 
-	pager_connect_while_alive (space, "name_changed",
-				   G_CALLBACK(workspace_renamed),
+	pager_connect_while_alive (space,
+                                   "name_changed",
+				   G_CALLBACK (workspace_renamed),
 				   pager,
 				   pager->applet);
 
@@ -786,20 +787,24 @@ setup_dialog (GladeXML  *xml,
 	g_signal_connect (G_OBJECT (pager->num_workspaces_spin), "value_changed",
 			  (GCallback) num_workspaces_value_changed, pager);
 	
-	pager_connect_while_alive (pager->screen, "workspace_created",
-				   G_CALLBACK(workspace_created),
+	pager_connect_while_alive (pager->screen,
+                                   "workspace_created",
+				   G_CALLBACK (workspace_created),
 				   pager,
 				   pager->applet);
 
-	pager_connect_while_alive (pager->screen, "workspace_destroyed",
-				   G_CALLBACK(workspace_destroyed),
+	pager_connect_while_alive (pager->screen,
+                                   "workspace_destroyed",
+				   G_CALLBACK (workspace_destroyed),
 				   pager,
 				   pager->applet);
 
 	pager->workspaces_store = gtk_list_store_new (1, G_TYPE_STRING, NULL);
 	update_workspaces_model (pager);
-	gtk_tree_view_set_model (GTK_TREE_VIEW (pager->workspaces_tree), GTK_TREE_MODEL (pager->workspaces_store));
+	gtk_tree_view_set_model (GTK_TREE_VIEW (pager->workspaces_tree),
+                                 GTK_TREE_MODEL (pager->workspaces_store));
 	g_object_unref (pager->workspaces_store);
+
 	cell = g_object_new (GTK_TYPE_CELL_RENDERER_TEXT, "editable", TRUE, NULL);
 	column = gtk_tree_view_column_new_with_attributes ("workspace",
 							   cell,
@@ -810,15 +815,13 @@ setup_dialog (GladeXML  *xml,
 			  (GCallback) workspace_name_edited, pager);
 	
 	nr_ws = wnck_screen_get_workspace_count (pager->screen);
-	for (i = 0; i < nr_ws; i++) {
-		pager_connect_while_alive (
-				G_OBJECT (wnck_screen_get_workspace (pager->screen, i)),
-				"name_changed",
-				G_CALLBACK(workspace_renamed),
-				pager,
-				pager->applet);
+	for (i = 0; i < nr_ws; i++)
+		pager_connect_while_alive (wnck_screen_get_workspace (pager->screen, i),
+                                           "name_changed",
+                                           G_CALLBACK (workspace_renamed),
+                                           pager,
+                                           pager->applet);
 
-	}
 }
 
 static void 

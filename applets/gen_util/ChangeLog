@@ -1,3 +1,16 @@
+2003-06-11  Mark McLoughlin  <mark@skynet.ie>
+
+	Backport patch from Arvind which makes sure we disconnect
+	from Wnck objects when the applet is destroyed. Should
+	fix bug #113153.
+
+	* showdesktop.c:
+	(show_desktop_connect_while_alive): add
+	(fill_show_desktop_applet): use it.
+	
+	* tasklist.c: (destroy_tasklist): destroy the properties
+	dialog
+
 2003-05-20  Muktha  <muktha.narayan@wipro.com>
 	
 	* mailcheck/mailcheck.c: Prevent creation of multiple processes for 

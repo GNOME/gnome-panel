@@ -260,6 +260,9 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 	if (tasklist->about)
 		gtk_widget_destroy (tasklist->about);
 
+	if (tasklist->properties_dialog)
+		gtk_widget_destroy (tasklist->properties_dialog);
+
         g_free (tasklist);
 }
 
