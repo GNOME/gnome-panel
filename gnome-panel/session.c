@@ -535,9 +535,6 @@ do_session_save(GnomeClient *client,
 		gboolean sync_panels)
 {
 	int num;
-#if PER_SESSION_CONFIGURATION
-	gchar *new_args[] = { "rm", "-r", NULL };
-#endif /* PER_SESSION_CONFIGURATION */
 
 	/* If in commie mode, then no saving is needed, the user
 	 * could have changed anything anyway */
@@ -547,18 +544,7 @@ do_session_save(GnomeClient *client,
 	if (panel_cfg_path)
 		g_free (panel_cfg_path);
 
-#ifdef PER_SESSION_CONFIGURATION
-	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED &&
-	    GNOME_CLIENT (client)->restart_style != GNOME_RESTART_NEVER)
-		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
-	else
-#endif /* PER_SESSION_CONFIGURATION */		
 		panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
-
-#ifdef PER_SESSION_CONFIGURATION
-	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
-	gnome_client_set_discard_command (client, 3, new_args);
-#endif /* PER_SESSION_CONFIGURATION */
 
 #ifdef SESSION_DEBUG	
 	printf("Saving to [%s]\n",PANEL_CONFIG_PATH);
@@ -621,25 +607,10 @@ panel_config_sync(void)
 	if(need_complete_save ||
 	   applets_to_sync ||
 	   panels_to_sync) {
-#ifdef PER_SESSION_CONFIGURATION
-		if (!(gnome_client_get_flags(client) & 
-		      GNOME_CLIENT_IS_CONNECTED)) {
-#endif
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			do_session_save (client, ncs, ats, pts);
-#ifdef PER_SESSION_CONFIGURATION
-		} else {
-			/*prevent possible races by doing this before requesting
-			  save*/
-			need_complete_save = FALSE;
-			applets_to_sync = FALSE;
-			panels_to_sync = FALSE;
-			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
-						   GNOME_INTERACT_NONE, FALSE, FALSE);
-		}
-#endif /* PER_SESSION_CONFIGURATION */
 	}
 }
 

@@ -432,6 +432,7 @@ tell_user_Im_on_crack (void)
 
 	gtk_widget_destroy (dialog);
 }
+
 static void
 session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *entry, gpointer user_data) {
 	session_read_global_config ();
@@ -490,15 +491,6 @@ main(int argc, char **argv)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
 		old_panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
-
-#ifndef PER_SESSION_CONFIGURATION
-	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
-	if ( ! g_file_test (real_global_path, G_FILE_TEST_EXISTS)) {
-		g_free (old_panel_cfg_path);
-		old_panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
-	}
-	g_free (real_global_path);
-#endif /* !PER_SESSION_CONFIGURATION */
 
 	gnome_client_set_global_config_prefix (client, PANEL_CONFIG_PATH);
 	
