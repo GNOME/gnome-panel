@@ -30,6 +30,7 @@
 #include <gtk/gtkmessagedialog.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/gnome-about.h>
+#include <libgnomeui/gnome-icon-theme.h>
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
 #include "egg-screen-help.h"
@@ -51,6 +52,8 @@ typedef struct {
         WnckScreen *wnck_screen;
 
         guint showing_desktop : 1;
+
+	GnomeIconTheme *icon_theme;
 } ShowDesktopData;
 
 static void display_help_dialog  (BonoboUIComponent *uic,
@@ -254,6 +257,7 @@ applet_destroyed (GtkWidget       *applet,
                   ShowDesktopData *sdd)
 {
         g_object_unref (G_OBJECT (sdd->icon));
+	g_object_unref (sdd->icon_theme);
 
         g_free (sdd);
 }
@@ -283,8 +287,10 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         sdd->applet = GTK_WIDGET (applet);
 
-        file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-                                          "gnome-show-desktop.png", TRUE, NULL);
+	sdd->icon_theme = gnome_icon_theme_new ();
+	file = gnome_icon_theme_lookup_icon (sdd->icon_theme,
+					     "gnome-fs-desktop", 48,
+					     NULL, NULL);
         error = NULL;
         if (file) {
                 sdd->icon = gdk_pixbuf_new_from_file (file, &error);

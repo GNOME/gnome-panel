@@ -1,3 +1,16 @@
+2003-10-13  Vincent Untz  <vincent@vuntz.net>
+
+	* GNOME_Wncklet_Factory.server.in.in: use gnome-fs-desktop.png as icon
+	for the Show Desktop applet.
+
+	* showdesktop.c: (applet_destroyed), (show_desktop_applet_fill): we
+	now use a GnomeIconTheme.
+	(show_desktop_applet_fill): use the (themed) gnome-fs-desktop.png icon.
+	Fix bug #105686.
+
+	* gnome-show-desktop.png: removed because we now use an icon from the
+	theme.
+
 2003-10-09  Vincent Untz  <vincent@vuntz.net>
 
 	* GNOME_Wncklet_Factory.server.in.in: use the new
@@ -5,11 +18,13 @@
 	Fix bug #108453.
 	Use the new panel-window-list.png for the Window List applet.
 
-	* window-menu.c: (window_menu_about): use panel-window-menu.png
-	instead of gnome-windows.png.
+	* window-menu.c: (window_menu_destroy), (window_menu_applet_fill): we
+	now use a GnomeIconTheme.
+	(window_menu_about): use (themed) panel-window-menu.png instead of
+	gnome-windows.png.
 
 	* window-list.c: (display_about_dialog), (display_properties_dialog):
-	use panel-window-list.png instead of gnome-windows.png.
+	use (themed) panel-window-list.png instead of gnome-windows.png.
 
 2003-10-09  Vincent Untz  <vincent@vuntz.net>
 
