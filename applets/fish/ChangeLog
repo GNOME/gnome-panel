@@ -1,3 +1,13 @@
+2003-12-09  Vincent Untz  <vincent@vuntz.net>
+
+	* fish.c: (update_fortune_dialog) set the accessibility name and
+	description for the fortune dialog here...
+	(display_fortune_dialog): ... and not there (now the name and
+	description are updated when the fish name changes)
+	(setup_fish_widget), (name_changed_notify): set/update the
+	accessibility name and description for the applet
+	Fix bug #128230.
+
 ==================== 2.4.1 ====================
 
 ==================== 2.4.0 ====================

@@ -609,6 +609,8 @@ update_fortune_dialog (FishApplet *fish)
 	g_free (text);
 
 	g_free (label_text);
+
+	set_ally_name_desc (fish->fortune_view, fish);
 }
 
 static void
@@ -716,7 +718,6 @@ display_fortune_dialog (FishApplet *fish)
 		gtk_widget_show_all (fish->fortune_dialog);
 	}
 
-	set_ally_name_desc (fish->fortune_view, fish);
 	gtk_window_set_screen (GTK_WINDOW (fish->fortune_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
 	gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
@@ -778,6 +779,7 @@ name_changed_notify (GConfClient *client,
 	fish->name = g_strdup (value);
 
 	update_fortune_dialog (fish);
+	set_ally_name_desc (GTK_WIDGET (fish), fish);
 
 	if (fish->name_entry &&
 	    strcmp (gtk_entry_get_text (GTK_ENTRY (fish->name_entry)), fish->name))
@@ -1469,6 +1471,7 @@ setup_fish_widget (FishApplet *fish)
 	setup_timeout (fish);
 
 	set_tooltip (fish);
+	set_ally_name_desc (GTK_WIDGET (fish), fish);
 
 	g_signal_connect (fish, "key_press_event",
 			  G_CALLBACK (handle_keypress), fish);
