@@ -339,7 +339,8 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 		return NULL;
 	}
 
-	menu = create_fake_menu_at (real_path, FALSE, label, NULL, FALSE);
+	menu = create_fake_menu_at (real_path, FALSE, FALSE,
+				    label, NULL, FALSE);
 	g_free (real_path);
 
 	if (menu == NULL) {

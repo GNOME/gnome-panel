@@ -13,6 +13,7 @@ typedef struct _DirRec DirRec;
 struct _MenuFinfo {
 	char *menudir;
 	gboolean applets;
+	gboolean launcher_add;
 	char *dir_name;
 	char *pixmap_name;	
 	gboolean fake_menu;

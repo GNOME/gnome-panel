@@ -92,6 +92,7 @@ void		load_tornoff		(void);
 GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,
 					 gboolean applets,
+					 gboolean launcher_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean fake_submenus,
@@ -99,6 +100,7 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 gboolean title);
 GtkWidget *	create_fake_menu_at	(const char *menudir,
 					 gboolean applets,
+					 gboolean launcher_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean title);
