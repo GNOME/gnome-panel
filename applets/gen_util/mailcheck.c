@@ -1,5 +1,6 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* GNOME panel mail check module.
- * (C) 1997, 1998, 1999 The Free Software Foundation
+ * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
  *
  * Authors: Miguel de Icaza
  *          Jacob Berkman
@@ -128,6 +129,8 @@ struct _MailCheck {
 	int size;
 };
 
+static int mail_check_timeout (gpointer data);
+
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
 static void close_callback (GtkWidget *widget, void *data);
@@ -172,6 +175,31 @@ calc_dir_contents (char *dir) {
        return size;
 }
 
+static void
+get_password_callback (gchar *string, gpointer data)
+{
+	gchar **pass = (gchar **)data;
+
+	*pass = string;
+
+	gtk_main_quit();
+}
+
+static gchar *
+get_remote_password ()
+{
+	gchar *pass;
+	GtkWidget *dialog;
+
+	dialog = gnome_request_dialog(TRUE, _("Password:"), "",
+				      256, get_password_callback, &pass, NULL);
+	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+	gtk_widget_show(dialog);
+	gtk_main();
+
+	return pass;
+}
+
 /*
  * Get file modification time, based upon the code
  * of Byron C. Darrah for coolmail and reused on fvwm95
@@ -183,16 +211,39 @@ check_mail_file_status (MailCheck *mc)
 	struct stat s;
 	off_t newsize;
 	int status, old_unreadmail;
+	static gchar *pass = NULL;
 	
 	if ((mc->mailbox_type == MAILBOX_POP3) || 
 	    (mc->mailbox_type == MAILBOX_IMAP)) {
 		int v;
-		
-		if (mc->mailbox_type == MAILBOX_POP3)
-			v = pop3_check(mc->remote_server, mc->remote_username, mc->remote_password);
+
+		if (mc->remote_password != NULL &&
+		    mc->remote_password[0] != '\0') {
+			if(pass && pass != mc->remote_password)
+				g_free(pass);
+			pass = mc->remote_password;
+		}
+		else if(pass == NULL) {
+			gtk_timeout_remove(mc->mail_timeout);
+			pass = get_remote_password();
+			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
+							   mail_check_timeout,
+							   mc);
+		}
+
+		if (pass && mc->remote_username && mc->remote_server) {
+			if (mc->mailbox_type == MAILBOX_POP3)
+				v = pop3_check(mc->remote_server,
+					       mc->remote_username,
+					       pass);
+			else
+				v = imap_check(mc->remote_server,
+					       mc->remote_username,
+					       pass);
+		}
 		else
-			v = imap_check(mc->remote_server, mc->remote_username, mc->remote_password);
-		
+			v = -1;
+
 		if (v == -1) {
 #if 0
 			/* don't notify about an error: think of people with
@@ -207,45 +258,47 @@ check_mail_file_status (MailCheck *mc)
 			mc->mailbox_type = MAILBOX_LOCAL;
 			mc->anymail = mc->newmail = 0;
 #endif
-		} else {
-		  old_unreadmail = mc->unreadmail;
-		  mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
-		  if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
-		    mc->newmail = 1;
-		  else
-		    mc->newmail = 0;
-		  mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
+		}
+		else {
+			old_unreadmail = mc->unreadmail;
+			mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
+			if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
+				mc->newmail = 1;
+			else
+				mc->newmail = 0;
+			mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
 		} 
-	} else if(mc->mailbox_type == MAILBOX_LOCAL) {
-	    status = stat (mc->mail_file, &s);
-	    if (status < 0) {
-	      oldsize = 0;
-	      mc->anymail = mc->newmail = mc->unreadmail = 0;
-	      return;
-	    }
+	}
+	else if (mc->mailbox_type == MAILBOX_LOCAL) {
+		status = stat (mc->mail_file, &s);
+		if (status < 0) {
+			oldsize = 0;
+			mc->anymail = mc->newmail = mc->unreadmail = 0;
+			return;
+		}
 		
-	    newsize = s.st_size;
-	    mc->anymail = newsize > 0;
-	    mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
+		newsize = s.st_size;
+		mc->anymail = newsize > 0;
+		mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 		
-	    if (newsize != oldsize && mc->unreadmail)
-	      mc->newmail = 1;
-	    else
-	      mc->newmail = 0;
+		if (newsize != oldsize && mc->unreadmail)
+			mc->newmail = 1;
+		else
+			mc->newmail = 0;
 		
-	    oldsize = newsize;
+		oldsize = newsize;
 	}
 	else { /* MAILBOX_LOCALDIR */
-	  int newmail, oldmail;
-	  char tmp[1024];
-	  snprintf(tmp, 1024, "%s/new", mc->mail_file);
-	  newmail = calc_dir_contents(tmp);
-	  snprintf(tmp, 1024, "%s/cur", mc->mail_file);
-	  oldmail = calc_dir_contents(tmp);
-	  mc->newmail = newmail > oldsize;
-	  mc->unreadmail = newmail;
-	  oldsize = newmail;
-	  mc->anymail = newmail || oldmail;
+		int newmail, oldmail;
+		char tmp[1024];
+		snprintf(tmp, 1024, "%s/new", mc->mail_file);
+		newmail = calc_dir_contents(tmp);
+		snprintf(tmp, 1024, "%s/cur", mc->mail_file);
+		oldmail = calc_dir_contents(tmp);
+		mc->newmail = newmail > oldsize;
+		mc->unreadmail = newmail;
+		oldsize = newmail;
+		mc->anymail = newmail || oldmail;
 	}	    
 }
 
@@ -617,8 +670,11 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 	/* do this here since we can no longer make the seconds
 	 * minimum 1
 	 */
-	if (mc->update_freq == 0)
-		mc->update_freq = 1000;
+	if (mc->update_freq == 0) {
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->sec_spin), 0.0);
+		gtk_spin_button_set_value(GTK_SPIN_BUTTON (mc->min_spin), 1.0);
+		mc->update_freq = 60*1000;
+	}
 
 	gtk_timeout_remove (mc->mail_timeout);
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
@@ -1097,8 +1153,8 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 		return;
 	}
 	
-	about = gnome_about_new ( _("Mail check Applet"), "1.0",
-				  _("(c) 1998 the Free Software Foundation"),
+	about = gnome_about_new ( _("Mail check Applet"), "1.1",
+				  _("(c) 1998-2000 the Free Software Foundation"),
 				  authors,
 				  _("Mail check notifies you when new mail is on your mailbox"),
 				  NULL);
@@ -1128,7 +1184,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 }
 
 static void
-help_cb (AppletWidget *widget, gpointer data)
+help_callback (AppletWidget *widget, gpointer data)
 {
 	GnomeHelpMenuEntry help_ref = { "mailcheck", "index.html"};
 	gnome_help_display (NULL, &help_ref);
@@ -1241,7 +1297,7 @@ make_mailcheck_applet(const gchar *goad_id)
 					      "help",
 					      GNOME_STOCK_PIXMAP_HELP,
 					      _("Help"),
-					      help_cb,
+					      help_callback,
 					      NULL);
 
 	gtk_widget_show (applet);

@@ -1,3 +1,14 @@
+2000-03-15  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gen_util/mailcheck.c (check_mail_file_status): if remote server
+	is to be polled and no password has been specified in properties,
+	query the user for a password.
+	(get_remote_password): query the user for a password.
+	(get_password_callback): callback for the password dialog.
+	(apply_properties_callback): set timeout spinbuttons to 1 minute and
+	0 seconds if the desired timeout was 0 minutes, 0 seconds.
+	* gen_util/help/C/mailcheck.sgml: small updates.
+
 2000-03-14  Jason Leach  <leach@wam.umd.edu>
 
 	* gen_util/printer.c (printer_about): Added About dialog, bug #7296

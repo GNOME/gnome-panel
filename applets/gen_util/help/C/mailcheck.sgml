@@ -48,7 +48,7 @@
     </menuchoice>
   </para>
   <para>
-    This document refers to version 1.0 of the applet as provided by
+    This document refers to version 1.1 of the applet as provided by
     the gnome-core package 1.1.x. The <application>mailcheck 
     applet</application> was written by: 
     Miguel de Icaza (<email>miguel@gnu.org</email>),
@@ -200,7 +200,7 @@
            
        <para>
          By clicking on the <guilabel>box with the mailbox location</guilabel>,
-         you can tell the mailcheck applet where to look for your incoing
+         you can tell the mailcheck applet where to look for your incoming
          email.
        </para>
        <itemizedlist>
@@ -217,8 +217,9 @@
           <para>
            When remote POP3 or remote IMAP are selected as the location for
            the mailbox, then you can fill in the details on the mail server,
-           username and password. The section about local filenames will be
-           greyed out.
+           username and password. If the you don't supply the password, the
+           applet will ask for it when it first tries to check for mail.
+           The section about local filenames will be greyed out.
          </para>
         </listitem>
        </itemizedlist>
@@ -230,12 +231,6 @@
   <sect2 id="mailcheck-bugs">
    <title> Known bugs and limitations</title>
    <itemizedlist>
-    <listitem>
-     <para>
-       You can set the mailchecking interval to zero minutes and zero
-       seconds. This may hang the panel.
-     </para>
-    </listitem>
     <listitem>
      <para>
        Setting something to be executed before each update can hang the
