@@ -1,6 +1,6 @@
 NULL =
 
-icondir   = $(datadir)/pixmaps
+icondir   = $(datadir)/icons/hicolor/48x48/apps
 icon_DATA =				\
 	panel-force-quit.png		\
 	cdeappmenu.png			\
@@ -9,12 +9,6 @@ icon_DATA =				\
 	gnome-gegl2-2.png		\
 	gnome-gegl2.png			\
 	gnome-gegl.png			\
-	gnome-panel.png			\
-	gnome-panel-type-corner.png	\
-	gnome-panel-type-edge.png	\
-	gnome-panel-type-floating.png	\
-	gnome-panel-type-menu.png	\
-	gnome-panel-type-sliding.png	\
 	gnome-run.png			\
 	gnome-screenshot.png		\
 	panel-drawer.png		\
