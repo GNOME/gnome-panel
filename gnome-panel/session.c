@@ -487,6 +487,8 @@ do_session_save(GnomeClient *client,
 				      global_config.autoraise);
 		gnome_config_set_bool("keep_bottom",
 				      global_config.keep_bottom);
+		gnome_config_set_bool("drawer_auto_close",
+				      global_config.drawer_auto_close);
 		buf = g_string_new(NULL);
 		for(i=0;i<LAST_TILE;i++) {
 			g_string_sprintf(buf,"tiles_enabled_%d",i);
@@ -1056,6 +1058,8 @@ load_up_globals(void)
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
 	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
+
+	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
 
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);

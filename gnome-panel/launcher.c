@@ -28,6 +28,7 @@ extern int applet_count;
 
 static char *default_app_pixmap=NULL;
 
+extern GlobalConfig global_config;
 
 
 static void
@@ -53,6 +54,14 @@ launch (GtkWidget *widget, void *data)
 		gnome_url_show(item->exec[0]);
 	else
 		gnome_desktop_entry_launch (item);
+	
+	if(global_config.drawer_auto_close) {
+		GtkWidget *parent =
+			gtk_object_get_data(GTK_OBJECT(widget->parent),PANEL_PARENT);
+		g_return_if_fail(parent!=NULL);
+		if(IS_DRAWER_WIDGET(parent))
+			drawer_widget_close_drawer(DRAWER_WIDGET(parent));
+	}
 }
 
 static void

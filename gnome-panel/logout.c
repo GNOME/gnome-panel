@@ -9,9 +9,19 @@
 
 extern GtkTooltips *panel_tooltips;
 
+extern GlobalConfig global_config;
+
 static void
-logout(void)
+logout(GtkWidget *widget)
 {
+	if(global_config.drawer_auto_close) {
+		GtkWidget *parent =
+			gtk_object_get_data(GTK_OBJECT(widget->parent),PANEL_PARENT);
+		g_return_if_fail(parent!=NULL);
+		if(IS_DRAWER_WIDGET(parent))
+			drawer_widget_close_drawer(DRAWER_WIDGET(parent));
+	}
+
 	panel_quit();
 }
 
