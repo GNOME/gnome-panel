@@ -224,7 +224,12 @@ update_timeformat (ClockData *cd)
 		clock_format = g_strdup (time_format);
 
 	else {
-		date_format = _("%a %b %d");
+		/* translators: replace %e with %d if, when the day of the
+		 *              month as a decimal number is a single digit, it
+		 *              should begin with a 0 in your locale (e.g. "May
+		 *              01" instead of "May  1").
+		 */
+		date_format = _("%a %b %e");
 
 		if (USE_TWO_LINE_FORMAT (cd))
 			/* translators: reverse the order of these arguments
