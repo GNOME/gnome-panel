@@ -959,6 +959,17 @@ init_user_panels(void)
 
 		g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
 		sz=gnome_config_get_int(buf->str);
+		if(sz<0) sz = 0;
+
+		/*a hack to allow for old config files to be read correctly*/
+		if(sz<4) {
+			switch(sz) {
+			case 0: sz = SIZE_TINY; break;
+			case 1: sz = SIZE_STANDARD; break;
+			case 2: sz = SIZE_LARGE; break;
+			case 3: sz = SIZE_HUGE; break;
+			default: break;
+		}
 		
 		/*now for type specific config*/
 
