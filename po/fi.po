@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-18 23:07+0300\n"
+"POT-Creation-Date: 2004-08-19 16:01+0100\n"
 "PO-Revision-Date: 2004-08-19 01:47+0300\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Finnish <gnome-fi-laatu@lists.sourceforge.net>\n"
@@ -304,62 +304,62 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Kello näyttää nykyisen ajan ja päiväyksen"
 
-#: applets/clock/clock.schemas.in.h:1
-msgid ""
-"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
+#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:2
+msgid "24"
 msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:2
-msgid ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
+# applets/gen_util/clock.c:959
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+msgid "24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Mukautettu ajan näyttömuoto"
 
 # applets/gen_util/clock.schemas.in.h:6
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Tuntimuoto"
 
 # applets/gen_util/clock.schemas.in.h:2
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Jos tosi, päiväys näkyy kellossa ajan lisäksi."
 
 # applets/gen_util/clock.schemas.in.h:3
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "Jos tosi, sekunnit näkyvät ajassa."
 
 # applets/gen_util/clock.schemas.in.h:4
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Jos tosi, näytä yleismaailmallista aikaa (UTC)"
 
 # applets/gen_util/clock.schemas.in.h:8
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Jos tosi, päiväys näkyy vinkissä, kun hiiri on sovelman yllä"
 
 # applets/gen_util/clock.schemas.in.h:9
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Näytä päiväys kellossa"
 
 # applets/gen_util/clock.schemas.in.h:10
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Näytä päiväys vinkissä"
 
 # applets/gen_util/clock.schemas.in.h:11
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Näytä sekunnit"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -367,7 +367,7 @@ msgstr ""
 "Tämän avaimen käyttö ei ole suositeltua GNOME 2.6:ssa. Käytä mieluummin "
 "\"format\"-avainta. Kaavain on olemassa yhteensopivuuden vuoksi."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -377,7 +377,7 @@ msgstr ""
 "\"format\" arvo on \"custom\" (mukautettu). Voit käyttää kaikkia strftime:n "
 "ymmärtämiä aikamääreitä."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -397,26 +397,26 @@ msgstr ""
 "Jos arvo on \"custom\", kello näyttää ajan käyttäjän avaimessa "
 "\"custom_format\" määrittelemässä muodossa."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Ohjelma, joka käynnistetään, kun aika-asetuksia halutaan muuttaa."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Ajan asetustyökalu"
 
 # applets/gen_util/clock.schemas.in.h:12
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Näytä Internet-aikaa"
 
 # applets/gen_util/clock.schemas.in.h:13
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Näytä Unix-aikaa"
 
 # applets/gen_util/clock.schemas.in.h:14
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Näytä UTC-aikaa"
 
@@ -542,12 +542,14 @@ msgstr "%s-kala, ennustaja"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
 # gnome-panel/gnome-panel-screenshot.glade.h:1
-#: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
+#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/panel-properties-dialog.glade.h:2
 #: gnome-panel/panel-run-dialog.glade.h:1
 msgid "*"
 msgstr "*"
@@ -1335,6 +1337,36 @@ msgstr "Kaappaa kuva vain ikkunasta, älä koko ruudusta"
 #: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Ota kuvakaappaus annetun ajan kuluttua [sekunteina]"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
+msgid "<b>Options</b>"
+msgstr "<b>Valinnat</b>"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:3
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
+msgid "<b>Preview</b>"
+msgstr "<b>Esikatselu</b>"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
+msgid "Save Screenshot"
+msgstr "Tallenna kuvakaappaus"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:4
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
+msgid "Save screenshot to _desktop"
+msgstr "Tallenna kuvakaappaus t_yöpöydälle"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:8
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
+msgid "Save screenshot to _file:"
+msgstr "Tallenna kuvakaappaus tie_dostoon:"
+
+# gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
+msgid "Save screenshot to _web page (save in ~/public__html)"
+msgstr "Tallenna kuvakaappaus _WWW-sivulle (kansioon ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -2470,34 +2502,34 @@ msgid "Clear Recent Documents"
 msgstr "Unohda viimeaikaiset asiakirjat"
 
 # gnome-panel/launcher.c:152
-#: gnome-panel/panel-run-dialog.c:288
+#: gnome-panel/panel-run-dialog.c:289
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Komentoa \"%s\" ei voi käynnistää"
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: gnome-panel/panel-run-dialog.c:314
+#: gnome-panel/panel-run-dialog.c:315
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Sijaintia \"%s\" ei voi näyttää"
 
-#: gnome-panel/panel-run-dialog.c:366
+#: gnome-panel/panel-run-dialog.c:367
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Tekstiä \"%s\" ei voi muuntaa UTF-8:sta"
 
-#: gnome-panel/panel-run-dialog.c:1045
+#: gnome-panel/panel-run-dialog.c:1046
 msgid "Choose a file to append to the command..."
 msgstr "Valitse komennon perään liitettävä tiedosto..."
 
 # gnome-panel/gnome-run.c:1268
-#: gnome-panel/panel-run-dialog.c:1323
+#: gnome-panel/panel-run-dialog.c:1324
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Suorittaa komennon \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1329 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1330 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Katsele sovelluksen kuvausta valitsemalla se."
 
@@ -3190,11 +3222,14 @@ msgstr "Erikoissuuri"
 msgid "XX Small"
 msgstr "Erikoispieni"
 
-#~ msgid "24"
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
 #~ msgstr "24"
 
-# applets/gen_util/clock.c:959
-#~ msgid "24-hour"
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"
 #~ msgstr "24-hour"
 
 # gnome-panel/gnome-panel-preferences.c:249
@@ -3239,30 +3274,6 @@ msgstr "Erikoispieni"
 # gnome-panel/gnome-panel-preferences.glade.h:4
 #~ msgid "Slow"
 #~ msgstr "Hidas"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:2
-#~ msgid "<b>Options</b>"
-#~ msgstr "<b>Valinnat</b>"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:3
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>Esikatselu</b>"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:6
-#~ msgid "Save Screenshot"
-#~ msgstr "Tallenna kuvakaappaus"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:4
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "Tallenna kuvakaappaus t_yöpöydälle"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:8
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "Tallenna kuvakaappaus tie_dostoon:"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:5
-#~ msgid "Save screenshot to _web page (save in ~/public__html)"
-#~ msgstr "Tallenna kuvakaappaus _WWW-sivulle (kansioon ~/public__html)"
 
 # gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
 # gnome-panel/menu.c:3447

@@ -54,6 +54,7 @@
 #include "menu.h"
 #include "menu-fentry.h"
 #include "panel-lockdown.h"
+#include "panel-xutils.h"
 
 #define ICON_SIZE 48.0
 
