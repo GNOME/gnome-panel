@@ -69,8 +69,8 @@
 #define DEFAULT_SIZE              48
 #define RESIZE_GRAB_AREA_SIZE     3
 #define DEFAULT_AUTO_HIDE_SIZE    6
-#define DEFAULT_HIDE_DELAY        100
-#define DEFAULT_UNHIDE_DELAY      100
+#define DEFAULT_HIDE_DELAY        500
+#define DEFAULT_UNHIDE_DELAY      500
 #define MINIMUM_WIDTH             100
 #define SNAP_TOLERANCE            20
 #define HIDE_BUTTON_SIZE          20
