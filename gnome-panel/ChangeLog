@@ -1,3 +1,12 @@
+Fri Jul 17 02:45:41 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,main.c,applet-{lib,widget}.*,menu.c, panel_config_global.c:
+	  made configuration syncing do partial saves instead of always
+	  dumping everything, everything is dumped only on end or during
+	  applet add/remove
+
+	* panel-widget.c,panel.c: made button 1 events work more sanely
+
 1998-07-16  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* panel.h (GPOINTER_TO_INT,GINT_TO_POINTER): 

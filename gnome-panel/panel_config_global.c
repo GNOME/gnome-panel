@@ -17,6 +17,11 @@
 GlobalConfig temp_config;
 
 extern GlobalConfig global_config;
+extern int config_sync_timeout;
+extern int panels_to_sync;
+extern GList *applets_to_sync;
+extern int globals_to_sync;
+extern int need_complete_save;
 
 extern GList *panels;
 
@@ -50,8 +55,9 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	memcpy(&global_config,&temp_config,sizeof(GlobalConfig));
 
 	apply_global_config();
-	
-	panel_sync_config();
+
+	globals_to_sync = TRUE;
+	panel_config_sync();
 }
 
 static void

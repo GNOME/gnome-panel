@@ -253,9 +253,9 @@ applet_widget_remove_from_panel(AppletWidget *applet)
 }
 
 void
-applet_widget_sync_config(void)
+applet_widget_sync_config(AppletWidget *applet)
 {
-	gnome_panel_sync_config();
+	gnome_panel_sync_config(applet->applet_id);
 }
 
 void

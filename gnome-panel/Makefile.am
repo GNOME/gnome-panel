@@ -100,14 +100,6 @@ panel_SOURCES = 		\
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
-#launcher_applet_SOURCES = \
-#	launcher-lib.cc   \
-#	launcher-lib.h    \
-#	launcher.c
-
-#launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
-#			$(GNOMEUI_LIBS) $(INTLLIBS)
-
 data_DATA = panelrc
 
 ## Why not just make this via configure?  Because @datadir@ will be

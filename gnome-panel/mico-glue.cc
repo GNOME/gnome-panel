@@ -14,6 +14,12 @@
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
+extern int config_sync_timeout;
+extern GList *panels_to_sync;
+extern GList *applets_to_sync;
+extern int globals_to_sync;
+extern int need_complete_save;
+
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
  * "instances" of the panel, as there is only one panel running on the
@@ -129,9 +135,13 @@ public:
 		CHECK_COOKIE_V (FALSE);
 		return panel_applet_in_drag;
 	}
-	void sync_config(const char *ccookie) {
+	void sync_config(const char *ccookie,
+			 CORBA::Short applet_id) {
 		CHECK_COOKIE ();
-		::panel_sync_config();
+		if(g_list_find(applets_to_sync,GINT_TO_POINTER(applet_id))==NULL)
+			applets_to_sync = g_list_prepend(applets_to_sync,
+							 GINT_TO_POINTER(applet_id));
+		panel_config_sync();
 	}
 	void quit(const char *ccookie) {
 		CHECK_COOKIE ();

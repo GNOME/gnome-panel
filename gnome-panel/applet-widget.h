@@ -165,7 +165,7 @@ int		applet_widget_get_applet_count	(void);
   this should be done when you change some of your config and want
   the panel to save it's config, you should NOT call this in the
   session_save handler as it will result in a locked panel*/
-void		applet_widget_sync_config	(void);
+void		applet_widget_sync_config	(AppletWidget *applet);
 
 /* Get the oprientation the applet should use */
 PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);

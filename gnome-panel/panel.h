@@ -6,6 +6,7 @@
 
 BEGIN_GNOME_DECLS
 
+#define EMPTY_ID "Empty" /*this applet should not be loaded*/
 #define MENU_ID "Menu"
 #define DRAWER_ID "Drawer"
 #define LOGOUT_ID "Logout"
@@ -105,7 +106,7 @@ int register_toy(GtkWidget *applet,
 
 void panel_quit(void);
 
-void panel_sync_config(void);
+void panel_config_sync(void);
 
 void apply_global_config(void);
 

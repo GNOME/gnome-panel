@@ -34,7 +34,11 @@
 			   GDK_POINTER_MOTION_HINT_MASK)
 
 extern int config_sync_timeout;
-extern int config_changed;
+extern int panels_to_sync;
+extern GList *applets_to_sync;
+extern int globals_to_sync;
+extern int need_complete_save;
+
 
 extern GArray *applets;
 extern int applet_count;
@@ -91,27 +95,37 @@ apply_global_config(void)
 }
 
 static void
-save_applet_configuration(AppletInfo *info, int *num)
+save_applet_configuration(int num)
 {
 	char           path[256];
 	int            panel_num;
 	PanelWidget   *panel;
 	AppletData    *ad;
+	AppletInfo    *info = get_applet_info(num);
+	
+	g_return_if_fail(info!=NULL);
+
+	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, num+1);
+	gnome_config_push_prefix(path);
 
 	/*obviously no need for saving*/
 	if(info->type==APPLET_EXTERN_PENDING ||
 	   info->type==APPLET_EXTERN_RESERVED ||
-	   info->type==APPLET_EMPTY)
+	   info->type==APPLET_EMPTY) {
+		gnome_config_set_string("config/id", EMPTY_ID);
+		gnome_config_pop_prefix();
 		return;
+	}
 
 	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 				    PANEL_APPLET_PARENT_KEY);
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
 
-	if((panel_num = g_list_index(panels,panel)) == -1)
+	if((panel_num = g_list_index(panels,panel)) == -1) {
+		gnome_config_set_string("config/id", EMPTY_ID);
+		gnome_config_pop_prefix();
 		return;
-
-	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, (*num)++);
+	}
 
 	if(info->type==APPLET_EXTERN) {
 		char *globalcfg;
@@ -127,8 +141,6 @@ save_applet_configuration(AppletInfo *info, int *num)
 		if(send_applet_session_save(info->id_str,info->applet_id,path,
 					    globalcfg)) {
 			
-			gnome_config_push_prefix(path);
-
 			gnome_config_set_string("config/id", EXTERN_ID);
 			gnome_config_set_int("config/position", ad->pos);
 			gnome_config_set_int("config/panel", panel_num);
@@ -138,14 +150,10 @@ save_applet_configuration(AppletInfo *info, int *num)
 			gnome_config_set_bool("config/right_stick",
 			      panel_widget_is_applet_stuck(panel,
 							   info->widget));
-
-			gnome_config_pop_prefix();
 		} else
-			(*num)--;
+			gnome_config_set_string("config/id", EMPTY_ID);
 		g_free(globalcfg);
 	} else {
-		gnome_config_push_prefix(path);
-
 		gnome_config_set_string("config/id", info->id_str);
 		gnome_config_set_int("config/position", ad->pos);
 		gnome_config_set_int("config/panel", panel_num);
@@ -180,9 +188,8 @@ save_applet_configuration(AppletInfo *info, int *num)
 				gnome_config_set_string("config/parameters",
 							info->params);
 		}
-
-		gnome_config_pop_prefix();
 	}
+	gnome_config_pop_prefix();
 }
 
 static void
@@ -235,20 +242,12 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_pop_prefix ();
 }
 
-/* This is called when the session manager requests a shutdown.  It
-   can also be run directly when we don't detect a session manager.
-   We assume no interaction is done by the applets.  And we ignore the
-   other arguments for now.  Yes, this is lame.  */
-/* update: some SM stuff implemented but we still ignore most of the
-   arguments now*/
-int
-panel_session_save (GnomeClient *client,
-		    int phase,
-		    GnomeSaveStyle save_style,
-		    int is_shutdown,
-		    GnomeInteractStyle interact_style,
-		    int is_fast,
-		    gpointer client_data)
+static void
+do_session_save(GnomeClient *client,
+		int complete_sync,
+		GList *sync_applets,
+		int sync_panels,
+		int sync_globals)
 {
 	int num;
 	char *buf;
@@ -263,7 +262,8 @@ panel_session_save (GnomeClient *client,
 		panel_cfg_path = g_copy_strings("/panel.d/Session-",session_id,
 						"/",NULL);
 
-		new_args[0] = (char *) client_data;
+		new_args[0] = (char *) gtk_object_get_data(GTK_OBJECT(client),
+							   "argv0");
 		new_args[1] = "--discard-session";
 		new_args[2] = session_id;
 		gnome_client_set_discard_command (client, 3, new_args);
@@ -280,47 +280,94 @@ panel_session_save (GnomeClient *client,
 	g_free(buf);
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
-	for(num=1,i=0;i<applet_count;i++)
-		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
-					  &num);
+	if(complete_sync) {
+		for(i=0;i<applet_count;i++)
+			save_applet_configuration(i);
+	} else {
+		while(sync_applets) {
+			save_applet_configuration(GPOINTER_TO_INT(sync_applets->data));
+			sync_applets = g_list_remove_link(sync_applets,
+							  sync_applets);
+		}
+	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
 	buf = g_copy_strings(panel_cfg_path,"panel/Config/",NULL);
 	gnome_config_push_prefix (buf);
 	g_free(buf);
 
-	gnome_config_set_int ("applet_count", num-1);
-	num = 1;
+	if(complete_sync)
+		gnome_config_set_int ("applet_count", applet_count);
 	/*DEBUG*/printf(" 3"); fflush(stdout);
-	g_list_foreach(panel_list, save_panel_configuration,&num);
+	if(complete_sync || sync_panels) {
+		num = 1;
+		g_list_foreach(panel_list, save_panel_configuration,&num);
+		gnome_config_set_int("panel_count",num-1);
+	}
 	/*DEBUG*/printf(" 4"); fflush(stdout);
-	gnome_config_set_int("panel_count",num-1);
 
-	/*global options*/
-	gnome_config_set_int("auto_hide_step_size",
-			     global_config.auto_hide_step_size);
-	gnome_config_set_int("explicit_hide_step_size",
-			     global_config.explicit_hide_step_size);
-	gnome_config_set_int("drawer_step_size",
-			     global_config.drawer_step_size);
-	gnome_config_set_int("minimized_size", global_config.minimized_size);
-	gnome_config_set_int("minimize_delay", global_config.minimize_delay);
-	gnome_config_set_int("movement_type",
-			     (int)global_config.movement_type);
-	gnome_config_set_bool("tooltips_enabled",
-			      global_config.tooltips_enabled);
-	gnome_config_set_bool("show_small_icons",
-			      global_config.show_small_icons);
-	gnome_config_set_bool("prompt_for_logout",
-			      global_config.prompt_for_logout);
-	gnome_config_set_bool("disable_animations",
-			      global_config.disable_animations);
+	if(complete_sync || sync_globals) {
+		/*global options*/
+		gnome_config_set_int("auto_hide_step_size",
+				     global_config.auto_hide_step_size);
+		gnome_config_set_int("explicit_hide_step_size",
+				     global_config.explicit_hide_step_size);
+		gnome_config_set_int("drawer_step_size",
+				     global_config.drawer_step_size);
+		gnome_config_set_int("minimized_size", global_config.minimized_size);
+		gnome_config_set_int("minimize_delay", global_config.minimize_delay);
+		gnome_config_set_int("movement_type",
+				     (int)global_config.movement_type);
+		gnome_config_set_bool("tooltips_enabled",
+				      global_config.tooltips_enabled);
+		gnome_config_set_bool("show_small_icons",
+				      global_config.show_small_icons);
+		gnome_config_set_bool("prompt_for_logout",
+				      global_config.prompt_for_logout);
+		gnome_config_set_bool("disable_animations",
+				      global_config.disable_animations);
+	}
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
 	
 	/*DEBUG*/puts("");
+}
 
+void
+panel_config_sync(void)
+{
+	if(need_complete_save ||
+	   applets_to_sync ||
+	   panels_to_sync ||
+	   globals_to_sync) {
+		do_session_save(client,need_complete_save,
+				applets_to_sync,panels_to_sync,globals_to_sync);
+		need_complete_save = FALSE;
+		g_list_free(applets_to_sync);
+		applets_to_sync = NULL;
+		panels_to_sync = FALSE;
+		globals_to_sync = FALSE;
+	}
+}
+
+
+/* This is called when the session manager requests a shutdown.  It
+   can also be run directly when we don't detect a session manager.
+   We assume no interaction is done by the applets.  And we ignore the
+   other arguments for now.  Yes, this is lame.  */
+/* update: some SM stuff implemented but we still ignore most of the
+   arguments now*/
+int
+panel_session_save (GnomeClient *client,
+		    int phase,
+		    GnomeSaveStyle save_style,
+		    int is_shutdown,
+		    GnomeInteractStyle interact_style,
+		    int is_fast,
+		    gpointer client_data)
+{
+	do_session_save(client,TRUE,NULL,FALSE,FALSE);
 	/* Always successful.  */
 	return TRUE;
 }
@@ -355,19 +402,6 @@ panel_session_die (GnomeClient *client,
 }
 
 /*save ourselves*/
-void
-panel_sync_config(void)
-{
-	if (! GNOME_CLIENT_CONNECTED (client)) {
-		panel_session_save (client, 1, GNOME_SAVE_BOTH, 0,
-				    GNOME_INTERACT_NONE, 0, NULL);
-	} else {
-		gnome_client_request_save (client, GNOME_SAVE_BOTH, 0,
-					   GNOME_INTERACT_NONE, 0, 0);
-	}
-	config_changed = FALSE;
-}
-
 static int
 panel_really_logout(GtkWidget *w, int button, gpointer data)
 {
@@ -398,7 +432,7 @@ ask_next_time(GtkWidget *w,gpointer data)
 {
 	global_config.prompt_for_logout = GTK_TOGGLE_BUTTON(w)->active!=FALSE;
 	
-	config_changed = TRUE;
+	globals_to_sync = TRUE;
 }
 
 /* the logout function */
@@ -898,9 +932,10 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 	if(event->button==3) {
 		if(!panel_applet_in_drag)
 			show_applet_menu(GPOINTER_TO_INT(data), event);
-		return TRUE;
 	}
-	return FALSE;
+	/*stop all button press events here so that they don't get to the
+	  panel*/
+	return TRUE;
 }
 
 void

@@ -40,6 +40,12 @@ int show_small_icons = TRUE;
 
 extern GlobalConfig global_config;
 
+extern int config_sync_timeout;
+extern int panels_to_sync;
+extern GList *applets_to_sync;
+extern int globals_to_sync;
+extern int need_complete_save;
+
 typedef struct _FileInfo FileInfo;
 struct _FileInfo {
 	char *name;
@@ -785,6 +791,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 		break;
 	default: break;
 	}
+	panels_to_sync = TRUE;
 }
 
 

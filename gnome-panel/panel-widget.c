@@ -1712,11 +1712,14 @@ static int
 panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	switch (event->type) {
+		GdkEventButton *bevent;
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
-			return gtk_widget_event(
-				listening_parent(widget->parent), event);
+			bevent = (GdkEventButton *)event;
+			if(bevent->button != 1)
+				return gtk_widget_event(
+				    listening_parent(widget->parent), event);
 
 			break;
 

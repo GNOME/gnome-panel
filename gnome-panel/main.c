@@ -48,7 +48,10 @@ static int panel_dragged = 0;
 int base_panels = 0;
 
 int config_sync_timeout = 0;
-int config_changed = FALSE;
+GList *applets_to_sync = NULL;
+int panels_to_sync = FALSE;
+int globals_to_sync = FALSE;
+int need_complete_save = FALSE;
 
 GArray *applets;
 int applet_count;
@@ -656,6 +659,9 @@ load_default_applets(void)
 			  PANEL_UNKNOWN_APPLET_POSITION,panels->data,NULL);
 	queue_load_applet(EXTERN_ID,"gen_util_applet","--clock",0,0,NULL,NULL,
 			  PANEL_UNKNOWN_APPLET_POSITION,panels->data,NULL);
+	/*we laoded default applets, so we didn't find the config or
+	  something else was wrong, so do complete save when next syncing*/
+	need_complete_save = TRUE;
 }
 
 static void
@@ -666,8 +672,6 @@ init_user_applets(void)
 
 	g_snprintf(buf,256,"%spanel/Config/applet_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
-	if(count<=0)
-		load_default_applets();
 	for(num=1;num<=count;num++) {
 		char *applet_name;
 		char *applet_params;
@@ -681,6 +685,11 @@ init_user_applets(void)
 		g_snprintf(buf,256,"%sApplet_%d/config/", old_panel_cfg_path, num);
 		gnome_config_push_prefix(buf);
 		applet_name = gnome_config_get_string("id=Unknown");
+		
+		if(strcmp(applet_name,EMPTY_ID)==0) {
+			g_free(applet_name);
+			continue;
+		}
 
 		applet_path = gnome_config_get_string("execpath=");
 		applet_params = gnome_config_get_string("parameters=");
@@ -793,7 +802,7 @@ panel_orient_change(GtkWidget *widget,
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
 			     widget);
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(gtk_object_get_data(GTK_OBJECT(widget),
 						 PANEL_PARENT));
@@ -807,7 +816,7 @@ snapped_pos_change(GtkWidget *widget,
 	panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
 			     orient_change_foreach,
 			     SNAPPED_WIDGET(widget)->panel);
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
 }
@@ -820,7 +829,7 @@ corner_pos_change(GtkWidget *widget,
 	panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
 			     orient_change_foreach,
 			     CORNER_WIDGET(widget)->panel);
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
 }
@@ -856,7 +865,7 @@ panel_back_change(GtkWidget *widget,
 		  GdkColor *color)
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),back_change_foreach,widget);
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_back(widget);
 }
@@ -916,7 +925,7 @@ snapped_state_change(GtkWidget *widget,
 				     state_hide_foreach,
 				     (gpointer)widget);
 
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 
 	return TRUE;
 }
@@ -934,7 +943,7 @@ corner_state_change(GtkWidget *widget,
 				     state_hide_foreach,
 				     (gpointer)widget);
 
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 
 	return TRUE;
 }
@@ -952,7 +961,7 @@ drawer_state_change(GtkWidget *widget,
 				     state_hide_foreach,
 				     (gpointer)widget);
 
-	config_changed = TRUE;
+	panels_to_sync = TRUE;
 
 	return TRUE;
 }
@@ -968,7 +977,7 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 
 		if(DRAWER_WIDGET(widget)->state == DRAWER_SHOWN)
 			reposition_drawer(drawer);
-		config_changed = TRUE;
+		panels_to_sync = TRUE;
 	}
 	return FALSE;
 }
@@ -984,8 +993,6 @@ panel_applet_added_idle(gpointer data)
 						 PANEL_APPLET_PARENT_KEY);
 
 	orientation_change(applet_id,panel);
-
-	config_changed = TRUE;
 
 	return FALSE;
 }
@@ -1020,6 +1027,8 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	gtk_idle_add(panel_applet_added_idle,GINT_TO_POINTER(applet_id));
+
+	need_complete_save = TRUE;
 }
 
 static void
@@ -1048,7 +1057,7 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
 	}
 
-	config_changed = TRUE;
+	need_complete_save = TRUE;
 }
 
 static void
@@ -1288,6 +1297,10 @@ applet_move_foreach(gpointer data, gpointer user_data)
 {
 	int applet_id = GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
+	
+	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,
+						 GINT_TO_POINTER(applet_id));
 
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -1303,7 +1316,6 @@ static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
 	applet_move_foreach(widget,NULL);
-	config_changed = TRUE;
 }
 
 
@@ -1613,7 +1625,10 @@ init_user_panels(void)
 	g_snprintf(buf,256,"%spanel/Config/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
 
-	/*load a default snapped panel on the bottom of the screen*/
+	/*load a default snapped panel on the bottom of the screen,
+	  it is required to have at least one panel for this all
+	  to work, so this is the way we find out if there was no
+	  config from last time*/
 	if(count<=0)  {
 		panel = snapped_widget_new(SNAPPED_BOTTOM,
 					   SNAPPED_EXPLICIT_HIDE,
@@ -1624,6 +1639,11 @@ init_user_panels(void)
 					   NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);
+
+		/*load up default applets on the default panel*/
+		load_default_applets();
+
+		return;
 	}
 
 	for(num=1;num<=count;num++) {
@@ -1866,9 +1886,7 @@ sigchld_handler(int type)
 static int
 try_config_sync(gpointer data)
 {
-	if(config_changed)
-		panel_sync_config();
-	config_changed = FALSE;
+	panel_config_sync();
 	return TRUE;
 }
 
@@ -1900,7 +1918,8 @@ main(int argc, char **argv)
 	client= gnome_master_client ();
 
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-			    GTK_SIGNAL_FUNC (panel_session_save), argv[0]);
+			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
+	gtk_object_set_data(GTK_OBJECT(client),"argv0",g_strdup(argv[0]));
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
