@@ -1,3 +1,8 @@
+2003-06-30  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* menu.c (panel_make_sure_menu_within_screen): Omit call to
+        our_gtk_menu_position as it is being called twice.
+
 Fri Jun 27 17:19:04 2003  George Lebl <jirka@5z.com>
 
 	* applet.c: (panel_applet_save_position) Only set things which are
