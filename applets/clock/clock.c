@@ -1389,7 +1389,6 @@ update_popup (ClockData *cd)
                 cd->calendar_popup = create_calendar (cd, gtk_widget_get_screen (cd->applet));
                 g_object_add_weak_pointer (G_OBJECT (cd->calendar_popup),
                                            (gpointer *) &cd->calendar_popup);
-                gtk_window_present (GTK_WINDOW (cd->calendar_popup));
         }
 
         if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
@@ -1399,6 +1398,7 @@ update_popup (ClockData *cd)
 #endif
 
                 present_calendar_popup (cd, cd->calendar_popup, cd->toggle);
+                gtk_window_present (GTK_WINDOW (cd->calendar_popup));
         }
 }
 
