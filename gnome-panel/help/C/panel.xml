@@ -288,7 +288,7 @@
 
 	  <listitem>
 	    <para>
-	      <guimenuitem>KDE menus</guimenuitem> This  shows the
+	      <guimenuitem>KDE menus.</guimenuitem> This  shows the
 	      menus of the K Desktop Environment (KDE) if you have it
 	      installed on your system
 	    </para>
@@ -297,7 +297,7 @@
 
 	  <listitem>
 	    <para>
-	      <guimenuitem> Another Level menus, Debian menus
+	      <guimenuitem> Another Level menus, Debian menus.
 	      </guimenuitem> These menus show the default application
 	      menus for Red Hat Linux (Another Level) and Debian
 	      GNU/Linux. They only make sense for the users of
@@ -330,12 +330,46 @@
     </sect2>
 
     <sect2 id="mainmenuconfig">
-      <title>Configuring the main menu</title> <para> FIXME
+      <title>Configuring the main menu</title> 
+      <para> To change configuration of the main menu, righ-click on
+      it and select <guimenuitem>Properties</guimenuitem>  from the
+      <guimenu>pop-up</guimenu> menu. This will show <interface>Menu
+      Properties dialog</interface>. In this dialog, for each of
+      the submenus  of the
+      Main menu listed above (<guisubmenu>Programs</guisubmenu>,
+      <guisubmenu>Favorites</guisubmenu>, &hellip;) you can choose
+      whether you want it  to be shown as part of the main menu, as a
+      submenu, or not shown at all.
+      </para>
+      <para>
+	You can also edit the contents of the
+	<guisubmenu>Favorites</guisubmenu> menu (or, if oyu are the
+	system administartor, also of the
+	<guisubmenu>Programs</guisubmenu> menu) using the
+	<application>GNOME Menu Editor</application>. To start it,
+	right-click on the main menu button and select
+	<guimenuitem>Edit Menus</guimenuitem>. LAternatively, you can
+	start <application>GNOME Menu Editor</application> by
+	selecting 
+	<menuchoice> <guisubmenu>Programs</guisubmenu>
+	  <guisubmenu>Settings</guisubmenu>
+	  <guimenuitem>Menu Editor</guimenuitem>
+	</menuchoice> from the <guimenu>Main Menu</guimenu> itself. 
       </para>
     </sect2>
 
     <sect2 id="kbdnav">
-      <title>Keyboard navigation in the main menu</title> <para> FIXME
+      <title>Keyboard navigation in the main menu</title> 
+      <para> 
+	If you prefer, you can use keyboard instead of the mouse to
+      navigate the main menu. To activate the main menu, press
+      <keycap>Menu</keycap> key on your keyboard (if you are using
+      standard PC keyboard, this key usually is located to the left of
+      the space bar and labelled with a picture of a menu). After
+      this, you can use <keycap>Up</keycap> and <keycap>Down</keycap>
+      arrows to move inside the menu,  <keycap>Right</keycap> arrow to
+      go to a submenu, and  <keycap>Enter</keycap> to select an
+      item. To hide the menu again, just press <keycap>Esc</keycap>. 
       </para>
     </sect2>
 
@@ -417,12 +451,16 @@
  <sect1 id="menus">
   <title>Menus</title>
   <para>
-   A Menu is a list containing applications and other nested
-   lists. Menus are typically created using the <application>Menu
-   Editor</application>. Once an Menu is created with the
-   <application>Menu Editor</application>, you can add it to your
-   panel by finding your Menu in the Main Menu and right click on it,
-   selecting "add this menu to panel".
+      In addition to the <guimenu>Main menu</guimenu>, discussed in
+      <xref linkend="mainmenu">, you can also add to the Panel "normal
+      menus". Unlike the Main menu, normal menus just contain
+      applications and submenus you put in them - no default submenus,
+      Run program, etc.  For example, you can add any submenu of your
+      <guimenu>Favorits</guimenu> menu or the
+      <guimenu>Program</guimenu> menu as a separate menu to the panel;
+      to do so, bring up this submenu from the Main Menu, right click
+      on the submenu title, and select <guimenuitem>add this menu to
+      panel</guimenuitem>.
   </para>
   <figure>
    <title>An Example Menu</title>
@@ -437,7 +475,38 @@
    The example above shows a menu titled "My Favorites" which includes
    three application launchers and one sub-menu titled "games".
   </para>
-  <figure>
+   <sect2 id="menusconf">
+      <title> Configuring the menus</title> 
+
+      <para> To learn how you can add new menus to the Panel, see <xref
+      linkend="add">.  
+      </para>
+
+      <para> You can easily change menu title and the icon used by the
+      menu. To do so, click on the menu button, right-click on the
+      menu title (at the very top of the list, above all other items),
+      and select <guimenuitem>properties</guimenuitem> from the
+      <guimenu>pop-up</guimenu> menu. This will bring up dialog, quite
+      similar to the <link linkend="launchers">Launcher
+      properties</link> dialog.  </para> <para> To add new item to the
+      menu, click on the menu button, right-click on the menu title,
+      and select <guimenuitem>Add new item to this
+      menu</guimenuitem>. FIXME To remove an item from the menu,
+      righ-click on it and choose <guimenuitem>Remove this
+      item</guimenuitem>.  
+      </para>
+      <para>
+	Finally, a frequently asked question is "How I can change the
+	font and the background used by the menus?" The answer is, it
+	is determined by the current GTK Theme, which can be changed
+	using <application>GNOME Control Center</application>, by
+	selecting <menuchoice> <guimenu>Main Menu</guimenu>
+	  <guisubmenu>Settings</guisubmenu> 
+          <guisubmenu>Desktop</guisubmenu> 
+	  <guimenuitem>Theme Selector</guimenuitem>
+	</menuchoice>.
+	</para>
+   <figure>
    <title>Menu Properties Dialog</title>
    <screenshot>
     <screeninfo>Menu Properties Dialog</screeninfo>
@@ -446,6 +515,7 @@
      </graphic>
    </screenshot>
   </figure>
+    </sect2>
  </sect1>
 
 
@@ -711,8 +781,10 @@
 	  pop-up menu. 
 	    </para>
 	</sect2>
-	<sect2 id="add"> 
-	  <title>Adding objects to the panel</title> 
+
+
+    <sect2 id="add"> 
+      <title>Adding objects to the panel</title> 
 
       <para> 
 	<indexterm id="idx-a13">
@@ -811,6 +883,36 @@
 		thin line) and selecting <guimenuitem>Add this as a
 		menu to the panel</guimenuitem>.
 	      </para>
+	    <para> Advanced users can also create new menus
+	      manually. To do so, you need to know that internally,
+	      GNOME represents a menu by a directory, with menu items
+	      presented by files of special type
+	      (<filename>.desktop</filename> files &mdash; these files
+	      also represent the application launchers), and submenus
+	      presented by directories. For example, the
+	      <guimenu>Favorites</guimenu> menu corresponds to the
+	      directory <filename>~/.gnome/apps</filename> (where
+	      <filename>~</filename> denotes your home directory),
+	      and the <guimenu>Programs</guimenu> menu corresponds to
+	      the directory
+	      <filename>/usr/share/gnome/apps</filename>. Thus, you
+	      can create a new directory, using the GNOME File
+	      Manager, drag and drop there any
+	      <filename>.desktop</filename> files from any other
+	      directories you might have (for example, from
+	      <filename>/usr/share/gnome/apps</filename>) or from the
+	      desktop, and then drag and drop this directory from the
+	      File Manager window to the panel. This will add this
+	      directory as a menu to the panel.
+	    </para>
+	    <para>
+	      After you have added a menu to the panel using any of
+	      the methods describee above, you can modify its
+	      properties (for example, add new items to this
+	      menu or change the icon used by the menu), as decribed
+	      in <xref linkend="menus">. 
+	    </para>
+
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
@@ -1244,10 +1346,11 @@
      </listitem>
      <listitem>
       <para>
-       <guilabel>Show popup menus outside of panels</guilabel> - When this
-       button is on it allows popup menus to appear away from the Panel. When
-       toggled off, the popups will appear over the Panel. This can be useful on
-       smaller screens or cluttered desktops.
+       <guilabel>Show popup menus outside of panels</guilabel> - When
+       this button is on it allows popup menus to appear away from the
+       Panel. When toggled off, the popups will appear over the
+       Panel. This can be useful on smaller screens or cluttered
+       desktops.
       </para>
      </listitem>
      <listitem>
@@ -1530,6 +1633,45 @@
     </itemizedlist>
    </sect2>
    </sect1>
+
+
+  <sect1 id="bugs"> 
+    <title>Current bugs and limitations</title>
+    <para>
+      Most of the things here are not really bugs; rather, they
+      describe situations when the Panel's behaviour is not what you
+      would expect. 
+    </para> 
+    <para> 
+      First of all: you can't place an ordinary file or directory on
+      the panel. If you try to drag and drop a file from the File
+      Manager window to the panel, it won't work, and similarly for
+      panels. The only type of file that can be placed on the panel
+      are <filename>.desktop</filename> files, which describe
+      launchers; any directory dropped on the panel will be
+      inetrpreted as a menu &mdash; that is, all the files other than
+      <filename>.desktop</filename> files will be ignored. 
+      </para>
+    <para> Editing menus other than the Main menu is rather
+      confusing. <application>Menu Editor</application> at the moment
+      can not be used for this, and
+      <guimenuitem>Properties</guimenuitem> item of the right-click
+      menu is not too helpful either - for example, it doesn't allow
+      one to change menu's icon (see <xref linkend="menusconf"> for
+      instructions for doing this). This will be improved in the next
+      release.
+    </para>
+
+    <para> The Main menu which you get by pressing the
+      <keycap>Menu</keycap> key on the keyboard does not reflect the
+      preference changes you did to the <guimenu>main menu</guimenu>
+      on the panel. The reason is that you can have several
+      <guimenu>Main Menu</guimenu> buttons on different panels.
+      </para>
+
+  </sect1>
+
+
   <sect1 id="authors">
     <title>Authors</title>
      <para>
@@ -1550,7 +1692,10 @@
       (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
       (<email>kirillov@math.sunysb.edu</email>). Please send all comments
       and suggestions regarding the manual to the GNOME Documentation
-      Project at <email>docs@gnome.org</email>. 
+      Project at <email>docs@gnome.org</email> or enter your comments
+      online using the <ulink type="http"
+      url="http://www.gnome.org/gdp/doctable">  GNOME Documentation
+      Status Table</ulink>.
       </para>
     </sect1>
 
