@@ -2,6 +2,10 @@
 
 	* menu.c (load_menu_applet): check before passing a NULL
 	params to strcmp
+	(make_properties_submenu): hide the types and modes menu 
+	if the panel is a drawer
+	(show_x_on_panels): modified to now hide the types/modes
+	menus
 
 	* hints.c (show_hint): I believe gnome_dialog_new () takes
 	a NULL terminated list... at least this gives me a dialog

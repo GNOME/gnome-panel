@@ -2791,32 +2791,27 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 				    &current_panel->back_color);
 }
 
-#if 0
-void
-show_x_on_panels(GtkWidget *menu)
+static void
+show_x_on_panels(GtkWidget *menu, gpointer data)
 {
 	GtkWidget *pw;
-	GtkWidget *convcorn = gtk_object_get_data(GTK_OBJECT(menu),"convcorn");
-	GtkWidget *convsnap = gtk_object_get_data(GTK_OBJECT(menu),"convsnap");
+	GtkWidget *types = gtk_object_get_data(GTK_OBJECT(menu),MENU_TYPES);
+	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu),MENU_MODES);
 	g_return_if_fail(current_panel != NULL);
-	g_return_if_fail(convcorn != NULL);
-	g_return_if_fail(convsnap != NULL);
+	g_return_if_fail(types != NULL);
+	g_return_if_fail(modes != NULL);
 	
 	pw = gtk_object_get_data(GTK_OBJECT(current_panel),"panel_parent");
 	g_return_if_fail(pw != NULL);
 	
-	if(IS_SNAPPED_WIDGET(pw)) {
-		gtk_widget_show(convcorn);
-		gtk_widget_hide(convsnap);
-	} else if(IS_CORNER_WIDGET(pw)) {
-		gtk_widget_hide(convcorn);
-		gtk_widget_show(convsnap);
+	if(IS_DRAWER_WIDGET(pw)) {
+		gtk_widget_hide(modes);
+		gtk_widget_hide(types);
 	} else {
-		gtk_widget_hide(convcorn);
-		gtk_widget_hide(convsnap);
+		gtk_widget_show(modes);
+		gtk_widget_show(types);
 	}
 }
-#endif
 
 static void
 update_type_menu (GtkWidget *menu, gpointer data)
@@ -3028,6 +3023,10 @@ make_properties_submenu (GtkWidget *menu)
 
 	add_radio_menu (menu, _("Background type"), backgrounds, MENU_BACKS,
 			change_background, update_back_menu);
+	
+	gtk_signal_connect (GTK_OBJECT (menu), "show",
+			    GTK_SIGNAL_FUNC (show_x_on_panels),
+			    NULL);
 }
 
 static void

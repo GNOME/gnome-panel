@@ -45,7 +45,7 @@ void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
 void make_panel_submenu (GtkWidget *menu, int fake_submenus);
 
 /*do this before showing the panel menu*/
-void show_x_on_panels(GtkWidget *menu);
+/*static void show_x_on_panels(GtkWidget *menu, gpointer data);*/
 GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 void menu_properties(Menu *menu);
