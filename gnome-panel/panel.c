@@ -825,8 +825,9 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 			 * activating the key binding we require here.
 			 */ 
 			if (kevent->keyval == GDK_F10 && kevent->state == GDK_CONTROL_MASK)
-				return gtk_bindings_activate (GTK_OBJECT (panel), kevent->keyval, kevent->state);
+				return gtk_bindings_activate (GTK_OBJECT (widget), kevent->keyval, kevent->state);
 		}
+
 		break;
 	default:
 		break;

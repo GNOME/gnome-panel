@@ -275,41 +275,84 @@ key_press_drawer (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	PanelWidget *parent;
 	GtkWidget *drawer_panel;
 	GtkDirectionType dir;
+	GtkOrientation orient;
 
 	if (event->state != gtk_accelerator_get_default_mod_mask ()) {
 		drawer = data;
 		parent = PANEL_WIDGET (drawer->button->parent);
 		drawerw = DRAWER_WIDGET (drawer->drawer);
 
+		orient = parent->orient;
+
 		switch (event->keyval) {
 		case GDK_Up:
 		case GDK_KP_Up:
+			if (orient == GTK_ORIENTATION_HORIZONTAL) {
+				switch (BASEP_WIDGET (drawerw)->state) {
+				case BASEP_SHOWN:
+				case BASEP_AUTO_HIDDEN:
+					dir = GTK_DIR_TAB_BACKWARD;
+					break;
+				default:
+                               		return TRUE;
+					break;
+				}
+			} else  /* orient == GTK_ORIENTATION_VERTICAL */ {
+				/* let default focus movement happen */
+				return FALSE;
+			}
+			break;
 		case GDK_Left:
 		case GDK_KP_Left:
-			switch (BASEP_WIDGET (drawerw)->state) {
-			case BASEP_SHOWN:
-			case BASEP_AUTO_HIDDEN:
-				dir = GTK_DIR_TAB_BACKWARD;
-				break;
-			default:
-                                return TRUE;
-				break;
+			if (orient == GTK_ORIENTATION_VERTICAL) {
+				switch (BASEP_WIDGET (drawerw)->state) {
+				case BASEP_SHOWN:
+				case BASEP_AUTO_HIDDEN:
+					dir = GTK_DIR_TAB_BACKWARD;
+					break;
+				default:
+                               		return TRUE;
+					break;
+				}
+			} else  /* orient == GTK_ORIENTATION_HORIZONTAL */ {
+				/* let default focus movement happen */
+				return FALSE;
 			}
 			break;
 		case GDK_Down:
 		case GDK_KP_Down:
+			if (orient == GTK_ORIENTATION_HORIZONTAL) {
+				switch (BASEP_WIDGET (drawerw)->state) {
+				case BASEP_SHOWN:
+				case BASEP_AUTO_HIDDEN:
+					dir = GTK_DIR_TAB_FORWARD;
+					break;
+				default:
+                               		return TRUE;
+					break;
+				}
+			} else  /* orient == GTK_ORIENTATION_VERTICAL */ {
+				/* let default focus movement happen */
+				return FALSE;
+			}
+			break;
 		case GDK_Right:
 		case GDK_KP_Right:
-			switch (BASEP_WIDGET (drawerw)->state) {
-			case BASEP_SHOWN:
-			case BASEP_AUTO_HIDDEN:
-				dir = GTK_DIR_TAB_FORWARD;
-				break;
-			default:
-                                return TRUE;
-				break;
+			if (orient == GTK_ORIENTATION_VERTICAL) {
+				switch (BASEP_WIDGET (drawerw)->state) {
+				case BASEP_SHOWN:
+				case BASEP_AUTO_HIDDEN:
+					dir = GTK_DIR_TAB_FORWARD;
+					break;
+				default:
+                               		return TRUE;
+					break;
+				}
+			} else  /* orient == GTK_ORIENTATION_HORIZONTAL */ {
+				/* let default focus movement happen */
+				return FALSE;
 			}
-                        break;
+			break;
 		case GDK_Escape:
 			switch (BASEP_WIDGET (drawerw)->state) {
 			case BASEP_SHOWN:
