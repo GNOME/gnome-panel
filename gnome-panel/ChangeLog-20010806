@@ -1,3 +1,13 @@
+Thu Apr 30 19:08:04 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: use a linked list for the list of
+	  with positions etc, should make it more robust and
+	  faster
+
+	* panel-widget.c: instead of re-reseting the size to
+	  the minumum all the time, get the exact size and
+	  use that
+
 Thu Apr 30 14:43:23 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: if adjust applet detects corruption

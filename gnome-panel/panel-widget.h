@@ -64,6 +64,10 @@ struct _AppletRecord
 
 struct _AppletData
 {
+	GtkWidget *applet;
+	gint pos;
+	gint cells;
+
 	gint prevx;
 	gint prevy;
 	gint prevwidth;
@@ -91,6 +95,7 @@ struct _PanelWidget
 
 	AppletRecord		applets[PANEL_MAX];
 	gint	 		applet_count;
+	GList			*applet_list;
 
 	gint			size;
 	PanelOrientation	orient;
