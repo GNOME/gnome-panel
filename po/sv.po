@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-21 13:49+0100\n"
-"PO-Revision-Date: 2004-09-18 17:34+0200\n"
+"POT-Creation-Date: 2004-12-31 00:36+0100\n"
+"PO-Revision-Date: 2004-12-31 00:36+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -244,7 +244,6 @@ msgstr "Använd UT_C"
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539
 #: gnome-panel/panel-context-menu.c:128
-#, fuzzy
 msgid "translator-credits"
 msgstr ""
 "Christian Rose\n"
@@ -297,7 +296,7 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "If true, show week numbers in the calendar."
-msgstr ""
+msgstr "Om detta är sant visas veckonummer i kalendern."
 
 #: applets/clock/clock.schemas.in.h:12
 msgid "Show date in clock"
@@ -312,9 +311,8 @@ msgid "Show time with seconds"
 msgstr "Visa tid med sekunder"
 
 #: applets/clock/clock.schemas.in.h:15
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Visa _namn på arbetsytor i bytaren"
+msgstr "Visa veckonummer i kalendern"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid ""
@@ -444,24 +442,24 @@ msgid "%s the Fish Says:"
 msgstr "Fisken %s säger:"
 
 #: applets/fish/fish.c:717
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Kan inte köra \"%s\"\n"
+"Kan inte läsa utdata från kommando\n"
 "\n"
 "Detaljer: %s"
 
 #: applets/fish/fish.c:782
 msgid "_Speak again"
-msgstr ""
+msgstr "_Tala igen"
 
 #: applets/fish/fish.c:863
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "Det konfigurerade kommandot fungerar inte och har ersatts av: %s"
 
 #: applets/fish/fish.c:886
 #, c-format
@@ -475,13 +473,13 @@ msgstr ""
 "Detaljer: %s"
 
 #: applets/fish/fish.c:902
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Kan inte köra \"%s\"\n"
+"Kan inte läsa från \"%s\"\n"
 "\n"
 "Detaljer: %s"
 
@@ -642,9 +640,8 @@ msgid "Orientation"
 msgstr "Orientering"
 
 #: applets/notification_area/eggtraymanager.c:146
-#, fuzzy
 msgid "The orientation of the tray."
-msgstr "Panelens orientering."
+msgstr "Orienteringen på lådan."
 
 #: applets/notification_area/main.c:128 applets/notification_area/main.c:341
 msgid "Panel Notification Area"
@@ -712,9 +709,8 @@ msgid "Show Desktop Button"
 msgstr "Visa skrivbordsknapp"
 
 #: applets/wncklet/showdesktop.c:482
-#, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
-msgstr "Denna knapp låter dig dölja alla fönster och visa skrivbordet"
+msgstr "Denna knapp låter dig dölja alla fönster och visa skrivbordet."
 
 #: applets/wncklet/showdesktop.c:523
 msgid ""
@@ -858,9 +854,8 @@ msgid "When to group windows"
 msgstr "När fönster ska grupperas"
 
 #: applets/wncklet/window-menu.c:129
-#, fuzzy
 msgid "Workspace Selector"
-msgstr "Arbetsytebytare"
+msgstr "Arbetsyteväljare"
 
 #: applets/wncklet/window-menu.c:134
 msgid ""
@@ -1041,11 +1036,10 @@ msgid "Drawer"
 msgstr "Låda"
 
 #: gnome-panel/drawer.c:599
-#, fuzzy
 msgid "_Add to drawer..."
-msgstr "_Lägg till i panelen..."
+msgstr "_Lägg till i lådan..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:828
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:837
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:283
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1059,7 +1053,7 @@ msgid "Cannot save launcher to disk"
 msgstr "Kan inte spara programstartare till disk"
 
 #: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:260
+#: gnome-panel/launcher.c:269
 msgid "Cannot launch icon"
 msgstr "Kan inte starta ikon"
 
@@ -1072,45 +1066,44 @@ msgstr "Denna programstartarikon anger ingen url att visa."
 msgid "Cannot show %s"
 msgstr "Kan inte visa %s"
 
-#: gnome-panel/launcher.c:454
+#: gnome-panel/launcher.c:463
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 
-#: gnome-panel/launcher.c:468
+#: gnome-panel/launcher.c:477
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
-#: gnome-panel/launcher.c:710 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:719 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:822
-#, fuzzy
+#: gnome-panel/launcher.c:831
 msgid "_Launch"
-msgstr "_Programstartare..."
+msgstr "_Starta"
 
-#: gnome-panel/launcher.c:899
+#: gnome-panel/launcher.c:908
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:954 gnome-panel/launcher.c:972
+#: gnome-panel/launcher.c:963 gnome-panel/launcher.c:981
 #: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
 #: gnome-panel/menu-ditem.c:535
 msgid "Cannot create launcher"
 msgstr "Kan inte skapa programstartare"
 
-#: gnome-panel/launcher.c:955 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:964 gnome-panel/menu-ditem.c:463
 msgid "You have to specify a name."
 msgstr "Du måste ange ett namn."
 
-#: gnome-panel/launcher.c:973 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:982 gnome-panel/menu-ditem.c:480
 msgid "You have to specify a valid URL or command."
 msgstr "Du måste ange en giltig URL eller ett giltigt kommando."
 
-#: gnome-panel/launcher.c:1016 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1025 gnome-panel/menu-ditem.c:543
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
@@ -1317,23 +1310,23 @@ msgstr "Undantag från popup_menu \"%s\"\n"
 #: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr ""
+msgstr "\"%s\" har oväntat avslutats"
 
 #: gnome-panel/panel-applet-frame.c:906
-#, fuzzy
 msgid "Panel object has quit unexpectedly"
-msgstr "Panelobjekttyp"
+msgstr "Panelobjekt har oväntat avslutats"
 
 #: gnome-panel/panel-applet-frame.c:913
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
+"Om du läser om ett panelobjekt kommer det att automatiskt läggas tillbaka på "
+"panelen."
 
 #: gnome-panel/panel-applet-frame.c:919
-#, fuzzy
 msgid "_Don't Reload"
-msgstr "_Läs om"
+msgstr "Läs _inte om"
 
 #: gnome-panel/panel-applet-frame.c:920
 msgid "_Reload"
@@ -1455,19 +1448,20 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
+"En boolesk flagga för att indikera huruvida användarens tidigare "
+"konfiguration i /apps/panel/profiles/default har kopierats till den nya "
+"platsen i /apps/panel."
 
 #: gnome-panel/panel-general.schemas.in.h:2
-#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 "En lista med panel-ID. Varje ID identifierar en individuell toppnivåpanel. "
-"Inställningarna för var och en av dessa paneler lagras i /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+"Inställningarna för var och en av dessa paneler lagras i /apps/panel/"
+"toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
@@ -1475,19 +1469,18 @@ msgid ""
 msgstr ""
 "En lista med panelprogram-ID. Varje ID identifierar ett individuellt "
 "panelprogram. Inställningarna för var och en av dessa panelprogram lagras i /"
-"apps/panel/general/$(profiles)/applets/$(id)."
+"apps/panel/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "En lista med panelobjekt-ID. Varje ID identifierar ett individuellt "
-"panelobjekt (dvs en programstartare, åtgärdsknapp eller menyknapp/menyrad). "
-"Inställningarna för vart och ett av dessa objekt lagras i /apps/panel/"
-"general/$(profiles)/objects/$(id)."
+"panelobjekt (t.ex. en programstartare, åtgärdsknapp eller menyknapp/"
+"menyrad). Inställningarna för vart och ett av dessa objekt lagras i /apps/"
+"panel/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1518,9 +1511,8 @@ msgstr ""
 "styrs av nyckeln show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Tidskonfigurationsverktyg"
+msgstr "Gammal profilkonfiguration är migrerad"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
@@ -1900,6 +1892,26 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Fel vid läsning av booleska GConf-värdet \"%s\": %s"
 
+#: gnome-panel/panel-properties-dialog.c:121
+#: libpanel-applet/panel-test-applets.c:52
+msgid "Top"
+msgstr "Överkant"
+
+#: gnome-panel/panel-properties-dialog.c:122
+#: libpanel-applet/panel-test-applets.c:53
+msgid "Bottom"
+msgstr "Nederkant"
+
+#: gnome-panel/panel-properties-dialog.c:123
+#: libpanel-applet/panel-test-applets.c:54
+msgid "Left"
+msgstr "Vänster"
+
+#: gnome-panel/panel-properties-dialog.c:124
+#: libpanel-applet/panel-test-applets.c:55
+msgid "Right"
+msgstr "Höger"
+
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>Opak</small>"
@@ -2029,9 +2041,9 @@ msgstr ""
 
 #. Translators: %s is a URI
 #: gnome-panel/panel-recent.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Open '%s'"
-msgstr "Öppna URL: %s"
+msgstr "Öppna \"%s\""
 
 #: gnome-panel/panel-recent.c:222
 msgid "Recent Documents"
@@ -2042,9 +2054,8 @@ msgid "Clear Recent Documents"
 msgstr "Töm senaste dokument"
 
 #: gnome-panel/panel-recent.c:255
-#, fuzzy
 msgid "Clear all items from the recent documents list"
-msgstr "Töm listan över senaste dokument"
+msgstr "Töm alla objekt i listan över senaste dokument"
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2078,6 +2089,8 @@ msgstr "Markera ett program för att visa dess beskrivning."
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
+"URI-listan som släpptes på kördialogen hade felaktigt format (%d) eller "
+"felaktig längd (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2589,23 +2602,20 @@ msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
 #: gnome-panel/panel.c:1237
-#, fuzzy
 msgid "Delete this drawer?"
-msgstr "Ta bort panel"
+msgstr "Ta bort denna låda?"
 
 #: gnome-panel/panel.c:1238
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
-"När en panel tas bort förloras panelen och dess\n"
-"inställningar. Vill du ta bort denna panel?"
+"När en låda tas bort förloras lådan och dess\n"
+"inställningar."
 
 #: gnome-panel/panel.c:1240
-#, fuzzy
 msgid "Delete Drawer"
-msgstr "Ta bort panel"
+msgstr "Ta bort låda"
 
 # SUN CHANGED MESSAGE
 #
@@ -2613,18 +2623,16 @@ msgstr "Ta bort panel"
 # Jag vill ha "Ta bort denna panel..."
 #
 #: gnome-panel/panel.c:1242
-#, fuzzy
 msgid "Delete this panel?"
-msgstr "_Ta bort denna panel"
+msgstr "Ta bort denna panel?"
 
 #: gnome-panel/panel.c:1243
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
-"inställningar. Vill du ta bort denna panel?"
+"inställningar."
 
 #: gnome-panel/panel.c:1245
 msgid "Delete Panel"
@@ -2711,22 +2719,6 @@ msgstr ""
 "Ange den ursprungliga orienteringen för panelprogrammet (överkant, "
 "nederkant, vänster eller höger)"
 
-#: libpanel-applet/panel-test-applets.c:52
-msgid "Top"
-msgstr "Överkant"
-
-#: libpanel-applet/panel-test-applets.c:53
-msgid "Bottom"
-msgstr "Nederkant"
-
-#: libpanel-applet/panel-test-applets.c:54
-msgid "Left"
-msgstr "Vänster"
-
-#: libpanel-applet/panel-test-applets.c:55
-msgid "Right"
-msgstr "Höger"
-
 #: libpanel-applet/panel-test-applets.c:60
 msgid "XX Small"
 msgstr "Jätteliten"
@@ -2756,19 +2748,53 @@ msgid "XX Large"
 msgstr "Jättestor"
 
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Test applet utility"
-msgstr "Lista med panelprogram-ID"
+msgstr "Testverktyg för panelprogram"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
 msgid "_Applet:"
-msgstr "Panelprogram:"
+msgstr "_Panelprogram:"
 
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "_Prefs Dir:"
-msgstr "Inställningskatalog:"
+msgstr "_Inställningskatalog:"
+
+#~ msgid "translator_credits"
+#~ msgstr ""
+#~ "Christian Rose\n"
+#~ "Martin Norbäck\n"
+#~ "Andreas Hydén\n"
+#~ "Johan Dahlin\n"
+#~ "Anders Carlsson\n"
+#~ "Martin Wahlén\n"
+#~ "Skicka synpunkter på översättningen till sv@li.org"
+
+#~ msgid "Old profile configuration migrated"
+#~ msgstr "Gammal profilkonfiguration är migrerad"
+
+#~ msgid "Open %s"
+#~ msgstr "Öppna %s"
+
+#~ msgid "Delete this drawer"
+#~ msgstr "Ta bort denna låda"
+
+#~ msgid "Delete this panel"
+#~ msgstr "Ta bort denna panel"
+
+#~ msgid "Applet:"
+#~ msgstr "Panelprogram:"
+
+#~ msgid "Applet"
+#~ msgstr "Panelprogram"
+
+#~ msgid "_Preferences Directory:"
+#~ msgstr "_Inställningskatalog:"
+
+#~ msgid "Prefs Dir:"
+#~ msgstr "Inställningskatalog:"
+
+#~ msgid "Preferences Directory:"
+#~ msgstr "Inställningskatalog:"
 
 #~ msgid ""
 #~ "\n"
@@ -2779,8 +2805,10 @@ msgstr "Inställningskatalog:"
 #~ "\n"
 #~ "Vill du ta bort panelprogrammet från din konfiguration?"
 
-#, fuzzy
 #~ msgid "Workspace List"
+#~ msgstr "Arbetsytelista"
+
+#~ msgid "Workspaces"
 #~ msgstr "Arbetsytor"
 
 #~ msgid "Specify a profile name to load"
@@ -3090,10 +3118,6 @@ msgstr "Inställningskatalog:"
 
 #~ msgid "Utility"
 #~ msgstr "Verktyg"
-
-#, fuzzy
-#~ msgid "Clear recent document history?"
-#~ msgstr "Senaste dokument"
 
 #~ msgid "Ad_just Date & Time..."
 #~ msgstr "St_äll datumet och tiden..."
