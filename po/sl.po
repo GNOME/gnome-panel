@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-03-07 12:30+0100\n"
+"POT-Creation-Date: 2002-03-10 19:11+0100\n"
 "PO-Revision-Date: 2001-07-29 12:32+0200\n"
 "Last-Translator: Andraz Tori <andraz.tori1@guest.arnes.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -236,13 +236,13 @@ msgstr ""
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:440
+#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:445
+#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
 #: gnome-panel/foobar-widget.c:431 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -268,7 +268,7 @@ msgstr "%a %d. %b"
 msgid "%A, %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/gen_util/clock.c:470
+#: applets/gen_util/clock.c:473
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
@@ -276,55 +276,55 @@ msgstr "%A, %d %B %Y"
 #. * should change is the number 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:673
+#: applets/gen_util/clock.c:676
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=24"
 
-#: applets/gen_util/clock.c:864
+#: applets/gen_util/clock.c:867
 msgid "Clock Properties"
 msgstr "Lastnosti ure"
 
-#: applets/gen_util/clock.c:885
+#: applets/gen_util/clock.c:888
 msgid "Time Format"
 msgstr "Oblika izpisa časa"
 
-#: applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:900
 msgid "12 hour"
 msgstr "12 urna"
 
-#: applets/gen_util/clock.c:905
+#: applets/gen_util/clock.c:908
 msgid "24 hour"
 msgstr "24 urna"
 
-#: applets/gen_util/clock.c:936
+#: applets/gen_util/clock.c:939
 msgid "Show date in applet"
 msgstr "Kaži datum v vstavku"
 
-#: applets/gen_util/clock.c:947
+#: applets/gen_util/clock.c:950
 msgid "Show date in tooltip"
 msgstr "Kaži datum v namigu"
 
-#: applets/gen_util/clock.c:958
+#: applets/gen_util/clock.c:961
 msgid "Use GMT"
 msgstr "Uporabi GMT"
 
-#: applets/gen_util/clock.c:969
+#: applets/gen_util/clock.c:972
 msgid "Unix time"
 msgstr "Unix čas"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:976
 msgid "Internet time"
 msgstr "Internetni čas"
 
-#: applets/gen_util/clock.c:1078
+#: applets/gen_util/clock.c:1081
 msgid "Clock Applet"
 msgstr "Vstavek Ura"
 
-#: applets/gen_util/clock.c:1079
+#: applets/gen_util/clock.c:1082
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "(c) 1998-2001 Fundacija za prosto programje"
 
-#: applets/gen_util/clock.c:1080
+#: applets/gen_util/clock.c:1083
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
@@ -508,10 +508,6 @@ msgstr "Lastnosti preklopnika delovnih površin"
 msgid "Workspaces"
 msgstr "Delovne površine"
 
-#: applets/gen_util/pager.glade.h:9 applets/gen_util/tasklist.glade.h:11
-msgid "_Done"
-msgstr "_Opravljeno"
-
 #: applets/gen_util/pager.c:418
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
@@ -604,7 +600,7 @@ msgstr "Skupinjenje oken"
 msgid "_Always group windows"
 msgstr "_Vedno daj okna v skupino"
 
-#: applets/gen_util/tasklist.glade.h:12
+#: applets/gen_util/tasklist.glade.h:11
 msgid "_Never group windows"
 msgstr "Oken _nikoli ne daj v skupino"
 
@@ -997,7 +993,7 @@ msgstr "Tipkovne vezi"
 msgid "Medium"
 msgstr "Srednji"
 
-#: gnome-panel/gnome-panel-properties.glade.h:18
+#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:301
 #: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3229
 #: gnome-panel/menu.c:3788 gnome-panel/menu.c:4013
 msgid "Menu"
@@ -1349,6 +1345,24 @@ msgstr "Nastavitve"
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Navedi ime profila, ki naj se naloži"
+
+#: gnome-panel/menu-ditem.c:119
+#, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ne morem shraniti sprememb v vnos menuja</b>\n"
+"\n"
+"Podrobnosti: %s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu-ditem.c:186 gnome-panel/menu-ditem.c:266
+msgid "Desktop entry properties"
+msgstr "Lastnosti vnosa na namizju"
 
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
@@ -1765,11 +1779,11 @@ msgstr "Ne morem ustvariti menujev, uporabljam glavni menu!"
 msgid "There was a problem loading the applet."
 msgstr "Z nalaganjem vstavka so bile težave."
 
-#: gnome-panel/panel-applet-frame.c:181
+#: gnome-panel/panel-applet-frame.c:183
 msgid "Cannot register control widget\n"
 msgstr "Ne morem registrirati nadzornega gradnika\n"
 
-#: gnome-panel/panel-applet-frame.c:449
+#: gnome-panel/panel-applet-frame.c:451
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Od nadzornika ne morem dobiti vmesnika AppletShell\n"
 
@@ -2039,6 +2053,9 @@ msgstr "Vstavek vsebuje barvo ozadja ali sliko v ozadj pulta"
 msgid "The Applet's flags"
 msgstr "Zastavice vstavka"
 
+#~ msgid "_Done"
+#~ msgstr "_Opravljeno"
+
 #~ msgid "Network"
 #~ msgstr "Omrežje"
 
@@ -2056,15 +2073,3 @@ msgstr "Zastavice vstavka"
 
 #~ msgid "<Control><Alt>r"
 #~ msgstr "<Control><Alt>r"
-
-#~ msgid ""
-#~ "<b>Cannot save changes to menu entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Ne morem shraniti sprememb v vnos menuja</b>\n"
-#~ "\n"
-#~ "Podrobnosti: %s"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Lastnosti vnosa na namizju"
