@@ -1,0 +1,937 @@
+<!-- ################# GNOME PANEL - CHAPTER #################### -->
+
+ <chapter id="paneluse">
+ <title>Using the GNOME Panel</title>
+  <sect1>
+   <title>Introduction</title>
+   <para>
+    <indexterm id="idx-a2">
+     <primary>Panel</primary>
+    </indexterm>
+    The Panel is the heart of the GNOME interface and acts as a repository for
+    all of your system applications, applets, and the Main Menu.  The Panel is
+    also designed to be highly configurable.  The Panel gives you a place that
+    always contains menus and applications as you want them to be.
+   </para>
+  </sect1>
+  <sect1 id="panelbasic"> 
+  <title>The Basics</title>
+   <para>
+    Using the GNOME Panel is very simple and will come easily to anyone who has
+    used a graphical based operating system. You may add new panels, add
+    applications to the panel, and add various applets. All of these functions
+    and more will be described in this section.
+   </para>
+   <sect2 id="panelmenu">
+    <title>Using the Main Menu</title>
+    <para>
+     <indexterm id="idx-a3">
+      <primary>Main Menu</primary>
+     </indexterm>
+      To start using any pre-loaded application click on the <guibutton>Main
+      Menu Button</guibutton>. The Main Menu has the picture of the stylized
+      foot and on first use is on the bottom left of the screen. You should
+      release the mouse after pressing the <guibutton>Main Menu</guibutton>
+      button so that you can take advantage of other mouse-activated features in
+      the Main Menu such as right mouse clicks and drag and drop from the menu.
+     <figure>
+      <title>The Main Menu Button</title>
+     <screenshot>
+      <screeninfo>The Main Menu Button.</screeninfo>
+       <Graphic Format="png" Fileref="./figs/mm-button" srccredit="dcm">
+       </graphic>
+     </screenshot>
+    </figure>
+    </para>
+    <para>
+     The Main Menu is the starting point for all of the applications on your
+     system. Later in this manual you will learn how to customize the Main Menu
+     to suit your work environment, but for now you can use the menu that is
+     established when you install GNOME. The Main Menu works like any other menu
+     you might have used in other graphical desktop environments. Simply press
+     the <guibutton>Main Menu</guibutton> Button and select from the menu that
+     pops up from the button.
+    </para>
+   </sect2>
+   <sect2 id="panelhide">
+    <title>Hiding the Panel</title>
+    <para>
+     <indexterm id="idx-a4">
+      <primary>Panel</primary>
+      <secondary>Hide Buttons</secondary>
+     </indexterm>
+     <indexterm id="idx-a5">
+      <primary>Panel</primary>
+      <secondary>Hiding</secondary>
+     </indexterm>
+     At any time you may hide the GNOME Panel by pressing the<guibutton> Hide
+     Button</guibutton>
+     <figure>
+      <title>The Hide Button</title>
+     <screenshot>
+      <screeninfo>The Hide Button</screeninfo>
+       <graphic Format="png" Fileref="./figs/hide-button" srccredit="dcm">
+       </graphic>
+     </screenshot> 
+     </figure>
+     </para>
+     <para>
+     This will hide the GNOME Panel in the direction of the arrow on the
+     <guibutton>Hide Button</guibutton>.  There are hide buttons on both sides
+     of a Panel so you can hide it in either direction.
+    </para>
+    <para>
+     <indexterm id="idx-a6">
+      <primary>Panel</primary> 
+      <secondary>Auto-Hide</secondary>
+     </indexterm>
+     You may decide that you want the Panel to hide on its own when you are not
+     using it. This can be a helpful function if you are unable to run your
+     system in a high resolution.  You can find out how to auto hide the Panel in
+     <xref Linkend="confpanel">.
+    </para>
+   </sect2>
+  </sect1>
+  <sect1 id="panelmove">
+   <title>Moving and Adding Panels</title>
+   <para>
+    <indexterm id="idx-a7">
+     <primary>Panel</primary>
+     <secondary>moving</secondary>
+    </indexterm>
+    <indexterm id="idx-a8">
+     <primary>Panel</primary>
+     <secondary>adding new</secondary>
+    </indexterm>
+    <indexterm id="idx-a9">
+     <primary>Panel</primary>
+     <secondary>Edge</secondary>
+    </indexterm>
+    <indexterm id="idx-a10">
+     <primary>Panel</primary>
+     <secondary>Corner</secondary>
+    </indexterm>
+    Any Panel you have on your desktop can be moved by using the middle mouse
+    button, or by simultaneously pressing the left and right mouse buttons, to
+    drag the panel to the desired edge of your screen. If you do not have a
+    middle mouse button and did not configure your mouse to emulate a middle
+    button you may also move a Panel by changing its location in the Panel
+    Configuration dialog.  You can read more about this in <xref
+    Linkend="confpanel"> of this documentation.
+   </para>
+   <para>
+    You may also add a new Panel to your desktop by selecting the
+    <guimenuitem>Add New Panel</guimenuitem> from the <guimenu>Main
+    Menu</guimenu> | <guimenuitem>Panel</guimenuitem> menu.  You will be given a
+    choice of Edge or Corner Panels. Both of these Panel types are described
+    below.
+   </para>
+   <ITEMIZEDLIST MARK="bullet">
+    <listitem>
+     <para>
+      Edge Panel - An Edge Panel is exactly like the main Panel that starts up
+      with GNOME. By selecting this type of panel you may add a new Panel to
+      another edge of your screen to give yourself more functionality.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      Corner Panel - The Corner Panel is a small Panel that will not stretch
+      across the entire edge of the screen it is on. The Corner Panel will,
+      however, stretch to the extent needed to display the icons and applets it
+      contains.  The hide buttons work just a bit differently with Corner
+      Panels. The hide button closest to the edge of your screen will hide the
+      Panel as usual but the other hide button will send the whole panel to the
+      opposite edge. When the latter move is made it will not hide the Panel
+      since it is changing the side of the screen it resides on.  If you want to
+      hide it you will have to press the hide button once again.
+     </para>
+    </listitem>
+   </itemizedlist>
+   <para>
+    <indexterm id="idx-a11">
+     <primary>Panel</primary>
+     <secondary>convert to Edge</secondary>
+    </indexterm>
+    <indexterm id="idx-a12">
+     <primary>Panel</primary>
+      <secondary>convert to Corner</secondary>
+    </indexterm>
+    At any time you can change the current panel to the opposite type by
+    selecting either the <guimenuitem>Convert to edge panel</guimenuitem> or the
+    <guimenuitem>Convert to corner panel</guimenuitem> from the pop-up menu. The
+    selection that is available depends on which type of panel you right mouse
+    click on. The selection displayed will be the opposite of the current panel.
+   </para>
+  </sect1>
+  <sect1 id="paneladd" >
+   <title>Adding Applications and Applets to the Panel</title>
+   <sect2 id="panelapplaunch">
+    <title>Adding Application Launchers</title>
+    <para>
+     <indexterm id="idx-a13">
+      <primary>Panel</primary>
+      <secondary>adding applications to</secondary>
+     </indexterm>
+     <indexterm id="idx-a14">
+      <primary>Panel</primary>
+      <secondary>launchers</secondary>
+     </indexterm>
+     <indexterm id="idx-a15">
+      <primary>Panel</primary>
+      <secondary>adding applets to</secondary><see>"Applets"</see>
+     </indexterm>
+     If you would like to add an Application Launcher (an icon that starts a
+     particular application) to the Panel, right mouse click the Panel and
+     select<guimenuitem> Add New Launcher</guimenuitem> from the
+     <guimenu>pop-up</guimenu>
+    </para>
+    <para>
+     After selecting the <guimenuitem>Add New Launcher</guimenuitem> menu item
+     you will see a dialog which will allow you to set the properties for the
+     application launcher you wish to add.
+     <figure>
+      <title>The Create Launcher Dialog</title>
+     <screenshot>
+      <screeninfo>Create launcher dialog</screeninfo>
+       <Graphic format="png" Fileref="./figs/launcher-props" srccredit="dcm">
+       </graphic>
+     </screenshot>
+     </figure>
+    </para>
+    <para>
+     <indexterm id="idx-a16">
+      <primary>Panel</primary>
+      <secondary>create new launcher</secondary>
+     </indexterm>
+     In the Create launcher applet dialog you may add a name for your launcher,
+     a comment, the command line to launch the application, and define the
+     application type.  You may also press the icon button and choose an icon to
+     represent the application from the icon picker. If no icon is chosen a
+     default icon will be used.
+    </para>
+    <para>
+     Another, quicker method of adding an application launcher to the Panel is
+     to go into the Main Menu and right mouse click on an application menu
+     item. You will be given another menu selection which contains
+     <guimenuitem>Add this launcher to Panel</guimenuitem>.  If you select this
+     menu item it will automatically add a launcher for that application to the
+     Panel in which you invoked the Main Menu.  At this point you may right
+     mouse click on the launcher and select the
+     <guimenuitem>Properties</guimenuitem> menu item to change any options for
+     that launcher.
+    </para>
+   </sect2>
+   <sect2 id="drawers">
+    <title>Grouping Items with Drawers</title>
+    <para>
+     <indexterm id="idx-a17">
+      <primary>Panel</primary>
+      <secondary>Drawers</secondary><see>Drawers</see>
+     </indexterm>
+     <indexterm id="idx-a18">
+      <primary>Drawers</primary>
+      <secondary>adding new</secondary>
+     </indexterm>
+     If you would like to group a subset of applications together you may use a
+     Drawer.  A Drawer is simply a small menu-like button that sits on your
+     panel that groups application launchers together is one place. Once you
+     have placed a Drawer on the Panel you may click on it to raise the menu of
+     applications and click again to lower them.
+     <figure>
+      <title>An open Drawer</title>
+     <screenshot>
+      <screeninfo>An open Drawer</screeninfo>
+       <Graphic format="png" Fileref="./figs/drawer" srccredit="dcm">
+       </graphic>
+     </screenshot>
+     </figure>
+    </para>
+    <para>
+     There are a couple of ways to place a Drawer on your Panel. First you may
+     right mouse click on the Panel and select the <guimenuitem>Add
+     drawer</guimenuitem> from the <guimenu>pop-up</guimenu> menu.  Second, if
+     you want a whole subset of menus from the Main Menu to become a drawer you
+     may right mouse click on the title bar of that menu and select the
+     <guimenuitem>Add this as drawer to panel</guimenuitem> from the
+     <guimenu>pop-up menu</guimenu>.
+    </para>
+    <para>
+     You can add menus to your panel in the same way you add Drawers. Menus are
+     very similar to Drawers except that they do not use large icons to
+     represent application launchers, instead they use a style similar to the
+     Main Menu, i.e. small icons and the application name. You may add a menu by
+     right mouse clicking on the title bar of a menu and select the
+     <guimenuitem>Add this as menu to panel</guimenuitem> from the
+     <guimenu>pop-up menu</guimenu>.  You may also add system directories to the
+     Panel as menus by dragging a directory out of the GNOME File Manager and
+     dropping it on the Panel.
+    </para>
+   </sect2>
+   <sect2 id="panelapplets">
+    <title>Adding Applets</title>
+    <para>
+     <indexterm id="idx-a19">
+      <primary>Applets</primary>
+      <secondary>adding to Panel</secondary>
+     </indexterm>
+     There are many applets which you can add to the Panel as well.  Applets are
+     small applications which can perform tasks within the Panel itself. There
+     are many applets you can add to the Panel and these are covered in more
+     detail in <xref Linkend="panelapps"> of this manual. As an example of how
+     to add an applet you can add another clock applet to your Panel. To add the
+     clock applet to your Panel:
+    </para>
+    <ITEMIZEDLIST  MARK="bullet"> 
+     <listitem>
+      <para>
+       Right mouse click on the Panel
+      </para>
+     </listitem>     
+     <listitem>
+      <para>
+       From the <guimenu>pop-up</guimenu> menu choose the
+       <guimenuitem>Add new applet</guimenuitem> menu item.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       This will bring up more levels of <guimenu>pop-up</guimenu> menus.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       Choose the <guimenuitem>Utility</guimenuitem> | <guimenuitem>Clock
+       </guimenuitem> menu item.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       The Clock will be added to your Panel.
+      </para>
+     </listitem>
+    </itemizedlist>
+    <figure>
+      <title>The Clock Applet</title>
+     <screenshot>
+      <screeninfo>Clock Applet</screeninfo>
+       <Graphic format="png" Fileref="./figs/clock" srccredit="dcm">
+       </graphic>
+     </screenshot>
+     </figure>
+    <para>
+     To remove the clock applet you added you can right mouse click on the clock
+     and select <guimenuitem>Remove from panel</guimenuitem> from the
+     <guimenuitem>pop-up</guimenuitem> menu.
+    </para>
+   </sect2>
+  </sect1>
+  <sect1 id="runapps">
+   <title>Running Applications</title>
+   <para>
+   <indexterm id="idx-a20">
+    <primary>Applications</primary>
+    <secondary>Launching</secondary>
+   </indexterm>
+   <indexterm id="idx-a21">
+    <primary>Applications</primary>
+    <secondary>Running</secondary>
+   </indexterm>
+    There are many ways to launch applications within GNOME. Remember that one
+    of GNOME's strong points is that it allows you to start and control
+    applications with an easy-to-use graphical interface.  There are many ways
+    to start the applications you wish to use:
+   </para>
+   <para>
+      As you saw in the previous section you may use the Main Menu to find
+      applications which have been pre-loaded or you provided using the Menu
+      Editor. You can read more about the Menu Editor in the <xref
+      Linkend="mainmenu">.
+   </para>
+   <para>
+      You may also add application launchers from the Panel, which was covered
+      in <xref Linkend="panelapplaunch">.
+   </para>
+   <para>
+      If you are using the GNOME File Manager, you may double click on any
+      executable file and it will run.
+   </para>
+   <para>
+   <indexterm id="idx-a22">
+    <primary>Applications</primary>
+    <secondary>Run program</secondary>
+   </indexterm>
+      You may use the GNOME Run program to launch any application.  To use it
+      select the <guimenuitem>Run program</guimenuitem> menu item from the
+      <guimenu>Main Menu</guimenu>.  This will launch a simple dialog that
+      allows you to type in the command for launching the application.  For
+      example, if you wish to start the <application>Emacs</application> editor
+      and it is not in a menu or on your panel you may select the GNOME Run
+      Program and type <command>emacs</command> in the text box on the dialog.
+   </para>
+  </sect1>
+  <sect1 id="logout">
+   <title>Logging Out of GNOME</title>
+   <para>
+    <indexterm id="idx-a23">
+     <primary>Log Out</primary><see>"Logging Out"</see>
+    </indexterm>
+    <indexterm id="idx-a24">
+     <primary>Logging Out</primary>
+    </indexterm>
+    GNOME has a couple of helpful methods for Logging out.  You may either use
+    the <guimenuitem>Logout</guimenuitem> menu item or the
+    <guibutton>Logout</guibutton> button.
+   </para>
+   <para>
+    <indexterm id="idx-a25">
+     <primary>Logging Out</primary>
+     <secondary>from the menu</secondary>
+    </indexterm>
+    The <guimenuitem>Logout</guimenuitem> menu item is the bottom menu item in
+    the <guimenu>Main Menu</guimenu>. Simply select the
+    <guimenuitem>Logout</guimenuitem> menu item and you will be prompted on
+    whether you would like to log out or not. Select <guibutton>Yes</guibutton>
+    and your GNOME session will end.
+   </para>
+   <para>
+    <indexterm id="idx-a26">
+     <primary>Logging Out</primary>
+     <secondary>with Logout Button</secondary>
+    </indexterm>
+    If you would like, you may add the <guibutton>Logout</guibutton> button to
+    the Panel. This is just another method for logging out.  It provides no
+    functionality beyond providing a pretty button.  To add the
+    <guibutton>Logout</guibutton> button to the Panel, right mouse click on the
+    Panel and select the <guimenuitem>Add logout button</guimenuitem> menu item
+    from the <guimenu>pop-up</guimenu> menu. Once the button is there you may
+    press it to log out.
+   </para>
+   <note>
+    <title>NOTE</title>
+    <para>
+     If you are running a window manager that is GNOME compliant, the logout
+     feature will quit the window manager as well as GNOME. If you are running a
+     non-compliant window manager you will have to end that window manager
+     yourself.
+    </para>
+   </note>
+   <para> 
+    The Logout dialog will display when you log out of GNOME. This dialog
+    will ask you whether or not you really want to log out. It also provides you
+    with different methods of quitting GNOME.
+   </para>
+   <para>
+    You have three choices on how to quit GNOME. You may
+    <guilabel>Logout</guilabel> which will simply take you to a terminal;
+    <guilabel>Halt</guilabel>, which will shut down the whole system; or
+    <guilabel>Reboot</guilabel>, which will reboot the whole system.
+   </para>
+   <para>
+    If you do not want to log out you may press the <guibutton>No</guibutton>
+    button and you will be returned to your GNOME session.
+   </para>
+   <figure>
+    <title>The Logout Dialog</title>
+    <screenshot>
+     <screeninfo>Logout</screeninfo>
+     <Graphic Format="png" Fileref="./figs/logout-screen" srccredit="dcm">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    Within the Logout Dialog there is one option you may choose before you leave
+    GNOME.
+   </para>
+   <para>
+    If you would like to save your current setup, you may select the
+    <guilabel>Save current setup</guilabel> checkbox. This will save those
+    programs you have open, and the configuration of your Panel.
+   </para>
+  </sect1>
+ </chapter>
+
+<!-- #################### CONFIGURING THE PANEL - CHAPTER #################### -->
+    
+ <chapter id="confpanel">
+  <title>Configuring the Panel</title> 
+  <sect1>
+  <title>Introduction</title>
+   <para>
+    <indexterm id="idx-a59">
+     <primary>Panel</primary>
+     <secondary>Configuring</secondary>
+    </indexterm>
+    <indexterm id="idx-a60">
+     <primary>Panel</primary>
+     <secondary>Customizing</secondary>
+    </indexterm>
+    The GNOME Panel is highly configurable and comes equipped with many
+    graphical tools to help you do the configuration.  In this section you will
+    learn how to configure any GNOME Panel the way you would like it.
+   </para>
+  </sect1>
+  <sect1 id="confglobal">
+   <title>Global Panel Properties</title>
+    <para>
+    <indexterm id="idx-a61">
+     <primary>Panel</primary>
+     <secondary>Global Panel Properties</secondary>
+    </indexterm>
+     To start configuring the GNOME panel right click on the panel and select
+     the <guimenuitem>Global Properties</guimenuitem> menu item.  You may also
+     press the <guibutton>Main Menu</guibutton> button and select the
+     <guimenu>Panel</guimenu> | <guimenuitem>Global Properties</guimenuitem>
+     menu item.
+    </para>
+    <para>
+     This will bring the Global Panel Configuration dialog up. With this dialog
+     you can set properties that will affect all Panels you use now and any
+     panels you add in the future.
+     <figure>
+      <title>The Global Panel Configuration Dialog</title>
+     <screenshot>
+      <screeninfo>The Global Panel Configuration Dialog</screeninfo>
+       <Graphic Format="png" Fileref="./figs/global-config" srccredit="dcm">
+       </graphic>
+     </screenshot>
+     </figure>
+    </para>
+    <para>
+     The Global Panel Configuration Dialog contains six tabs which help you
+     configure the global properties of the GNOME Panel: Animation, Launcher
+     Icon, Drawer Icon, Menu Icon, and Miscellaneous. Each of these tabs is
+     explained below.
+    </para>
+    <sect2 id="animtab">
+     <title>Animation  Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Enable animations</guilabel> - This allows the animations
+       configurable on this tab to be visible.  The animations must be enabled
+       to use the other features of this tab. The default position is on.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Auto-Hide Animation Speed</guilabel> - If you have the panel
+       hiding automatically this will control how fast it occurs.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Explicit-Hide Animation Speed</guilabel> - This controls the
+       hide speed when you press the Panel's Hide Button.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Drawer Animation Speed</guilabel> - If you use a Drawer panel
+       this will control how fast the drawer menu will raise.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Auto-Hide Minimize Delay(ms)</guilabel> - If you have the Panel
+       set to minimize automatically this will allow you to control how much
+       time passes before it minimizes.  The Panel will start the time count
+       once the mouse is no longer over it. It will appear again when the mouse
+       is passed over the portion of the Panel that remains visible. This time
+       is measured in milliseconds.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Auto-Hide Minimized Size(pixels)</guilabel> - If you have the
+       Panel hiding automatically this determines the number of pixels that will
+       show while the Panel is minimized.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="launchtab">
+    <title>Launcher icon Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
+       tiles for all icons on the Panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the up position (inactive,
+       not pressed) You may press the <guibutton>Browse</guibutton> button to
+       search for the file. Launcher tiles must be enabled to access this
+       option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the down position (active,
+       pressed).  You may press the <guibutton>Browse</guibutton> button to
+       search for the file. Launcher tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Border width (tile only)</guilabel> - This determines the width
+       of the border around an icon. This is very useful if you have an icon
+       that would normally cover up a tile. You can set the border to a smaller
+       size and still be able to see your tile.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
+       the depth an icon will displace when pressed. Launcher tiles must be
+       enabled to access this option.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="drawertab">
+    <title>Drawer icon Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
+       tiles for all drawers on the Panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the up position(inactive,
+       not pressed) You may press the <guibutton>Browse</guibutton> button to
+       search for the file. Drawer tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the down position(active,
+       pressed) You may press the <guibutton>Browse</guibutton> button to search
+       for the file.  Drawer tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Border width (tile only)</guilabel> - This determines the width
+       of the border around a tile. Drawer tiles must be enabled to access this
+       option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
+       the depth a tile will displace when pressed. Drawer tiles must be enabled
+       to access this option.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="menutab">
+    <title>Menu icon Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
+      tiles for the <guibutton>Main Menu</guibutton> button on the Panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the up position (inactive,
+       not pressed) You may press the <guibutton>Browse</guibutton> button to
+       search for the file.  Menu tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the down position(active,
+       pressed) You may press the <guibutton>Browse</guibutton> button to search
+       for the file. Menu tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Border width (tile only)</guilabel> - This determines the width
+       of the border around a tile. Menu tiles must be enabled to access this
+       option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
+       the depth a tile will displace when pressed.  Menu tiles must be enabled
+       to access this option.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="logouttab"
+    <title>Logout Icon Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
+       tiles for all Logout buttons on the Panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the up position (inactive,
+       not pressed) You may press the <guibutton>Browse</guibutton> button to
+       search for the file. Logout button tiles must be enabled to access this
+       option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
+       the image file you wish to use for the tile in the down position (active,
+       pressed) You may press the <guibutton>Browse</guibutton> button to search
+       for the file.  Logout button tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Border width (tile only)</guilabel> - This determines the width
+       of the border around a tile. Logout button tiles must be enabled to
+       access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
+       the depth a tile will displace when pressed. Logout button tiles must be
+       enabled to access this option.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="misctab">
+    <title>Miscellaneous Tab</title>
+     <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tooltips enabled</guilabel> - This enables tooltips for items
+       on the panel.  Tooltips are pop-up help dialogs that appear when you
+       mouse is over an element on the panel.
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+       <guilabel>Show Small Icons</guilabel> - This will show small icons in the
+       Main Menu.
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+       <guilabel>Show ... buttons</guilabel> - This will enable three small dots
+       to appear on Main Menu items that launch dialogs.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Show popup menus outside of panels</guilabel> - When this
+       button is on it allows popup menus to appear away from the Panel. When
+       toggled off, the popups will appear over the Panel. This can be useful on
+       smaller screens or cluttered desktops.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Keep menus in memory</guilabel> - This will keep your menus in
+       memory so that they do not rescan for added items. This can increase the
+       speed of GNOME, but may also result in you missing new items added to
+       your menu.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Switched movement</guilabel> - This allows launcher buttons on
+       the panel to switch places with other icons when being moved.
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+       <guilabel>Free Movement (doesn't disturb other applets)</guilabel> - This
+       feature locks the arrangement of your icons on the Panel (except the on
+       you are moving). This is a good feature to use if you like the way your
+       icons are arranged.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Prompt before logout</guilabel>  - This will bring up
+       a yes/no dialog that asks you  if you would really like to log
+       out.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Raise panels on mouse-over</guilabel> - If you are
+       using a window manager that is not GNOME compliant it will not
+       understand its relationship with the Panel. This can cause your
+       Panel to be covered by applications. If you enable this feature
+       you can have the Panel automatically raise when your mouse is
+       over it.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Keep panel below windows</guilabel> - If you are
+       using a GNOME compliant window manager the window manager will
+       understand its relationship with the Panel. If you choose this
+       feature the window manager and GNOME will allow applications to
+       appear over the Panel. This can be useful on smaller screens.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Close drawer if a launcher inside it is
+       pressed</guilabel> - By default drawers will remain open when you
+       select an item within one. This can be annoying as the drawer
+       will remain open until you close it with a mouse click. With
+       this option selected drawers will close automatically when you
+       select any item within one.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Applet padding</guilabel>  - This changes  the amount
+      of space (padding) between icons and applets.  </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   </sect1>
+   <sect1 id="confthis">
+    <title>This Panel Properties</title>
+    <para>
+     <indexterm id="idx-a62">
+      <primary>Panel</primary>
+      <secondary>This Panel Properties</secondary>
+     </indexterm>
+     <indexterm id="idx-a63">
+      <primary>Panel</primary>
+      <secondary>properties</secondary>
+     </indexterm>
+      Each  Panel's  properties  can  be configured  individually.  To
+      change the configuration of  the active Panel, right mouse click
+      on   the   Panel   and   select  the   <guimenuitem>This   panel
+      properties</guimenuitem>      menu       item      from      the
+      <guimenu>pop-up</guimenu>   menu.  You   may   also  press   the
+      <guibutton>Main   Menu</guibutton>   button   and   select   the
+      <guimenu>Panel</guimenu>      |      <guimenuitem>This     panel
+      properties</guimenuitem> menu item.
+    </para>
+    <para>
+     This will bring  up the Panel properties dialog  box. In this box
+     you can change the properties for the active Panel.
+    </para>
+    <figure>
+     <title>This Panel Properties Dialog</title>
+    <screenshot>
+     <screeninfo>The Panel Properties Dialog</screeninfo>
+      <Graphic Format="png" Fileref="./figs/thispanel" srccredit="dcm">
+      </graphic>
+    </screenshot>
+    </figure>
+    <para>
+     The Panel properties dialog contains two tabs to help you set the active
+     Panel properties: Edge Panel and Background. Both of these tabs are
+     explained below. If you have converted the panel to a corner panel, which
+     is accomplished by selecting this item in the main menu, a Corner Panel tab
+     will replace the Edge Panel tab.
+    </para>
+   <sect2 id="edgetab">
+    <title>Edge Panel Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Position</guilabel>  - This  changes the  position of
+       the Panel on the screen. You may select either Top, Right, Left
+       or Bottom. The Panel will change position once you have pressed
+       the <guibutton>Apply</guibutton> button.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+      <indexterm id="idx-a64">
+       <primary>Panel</primary>
+       <secondary>Auto-hide</secondary>
+      </indexterm>
+       <guilabel>Minimize Options</guilabel> - The options here will enable you
+       to either Explicitly hide the Panel yourself using the hide buttons or
+       have it Auto Hide when the mouse is not over the Panel. If you choose to
+       Auto Hide you might want to Disable the hide buttons here as well. You
+       may also disable the hide button arrows graphics on the Panel as well.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="panelbacktab">
+    <title>Background Tab</title>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+      <indexterm id="idx-a65">
+       <primary>Panel</primary>
+       <secondary>Background</secondary>
+      </indexterm>
+       <guilabel>Background</guilabel>  - These  options allow  you to
+       change the background  of the Panel itself. You  may choose, if
+       you   wish,   to   have   the  standard,   Pixmap,   or   Color
+       background. The  standard look for  the Panel is  determined by
+       the GTK  theme you are running  at the time.  The Pixmap option
+       allows  you  to  choose  an  image  to tile  or  scale  to  the
+       Panel.  The Color  option allows  you to  specify  a particular
+       color for the Panel.
+      </para>
+     </listitem>
+    </itemizedlist>
+    <important>
+     <title>IMPORTANT</title>
+     <para>
+      An easier way to change the  background of your panel is to drag
+      and  drop an image  file from  the GNOME  File Manager  onto the
+      Panel.  This will  automatically  change the  background of  the
+      panel to that image.
+     </para>
+    </important>
+    <ITEMIZEDLIST MARK="bullet">
+     <listitem>
+      <para>
+       <guilabel>Image file</guilabel> - If you wish to have a Pixmap for the
+       background of your Panel this section of the dialog is where you choose
+       which image to use.  If you press the <guibutton>Browse</guibutton>
+       button you can search for the file you want to use.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Scale image to fit panel</guilabel> - This allows a background
+       image to scale to the size of the panel.  If it is not checked, images
+       will tile to the panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Background color</guilabel>  - If you  choose to have
+       your Panel  one color  this button will  launch a  dialog which
+       allows you to specify which color to use.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   </sect1>
+ </chapter>
+
