@@ -30,10 +30,10 @@ struct _ClockData {
 	int timeout;
 	int timeouttime;
 	int hourformat;
-        int showdate;
-	int unixtime;
-	int gmt_time;
-	int showtooltip;
+        gboolean showdate;
+	gboolean unixtime;
+	gboolean gmt_time;
+	gboolean showtooltip;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
 	int size;
@@ -65,7 +65,7 @@ clock_timeout_callback(gpointer data)
 {
 	ClockData *cd = data;
 	time_t current_time;
-	
+
 	time(&current_time);
 
 	(*cd->update_func) (cd, current_time);
@@ -91,7 +91,7 @@ clock_timeout_callback(gpointer data)
 	return TRUE;
 }
 
-static gint
+static gboolean
 applet_save_session(GtkWidget * w,
 		    const char *privcfgpath,
 		    const char *globcfgpath,
@@ -240,10 +240,12 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 }
 
 static void
-destroy_clock(GtkWidget * widget, void *data)
+destroy_clock(GtkWidget * widget, gpointer data)
 {
 	ClockData *cd = data;
 	gtk_timeout_remove(cd->timeout);
+	if(cd->props)
+		gtk_widget_destroy(cd->props);
 	g_free(cd);
 }
 
@@ -333,7 +335,11 @@ make_clock_applet(const gchar * goad_id)
 		cd->showdate = gnome_config_get_int("clock/showdate=1");
 
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
-	cd->showtooltip = gnome_config_get_int("clock/showtooltip=0");
+	/* if on a small screen show tooltip with date by default */
+	if(gdk_screen_width()<=800)
+		cd->showtooltip = gnome_config_get_int("clock/showtooltip=1");
+	else
+		cd->showtooltip = gnome_config_get_int("clock/showtooltip=0");
 	cd->gmt_time = gnome_config_get_int("clock/gmt_time=0");
 	gnome_config_pop_prefix();
 
