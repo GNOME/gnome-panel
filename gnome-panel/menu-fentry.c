@@ -80,7 +80,10 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 	int i;
 	int constantlen = strlen("--activate-goad-server");
 	char *goad_id=NULL;
-	if (!ii || !ii->exec)
+
+	g_return_val_if_fail(ii!=NULL,NULL);
+
+	if (!ii->exec)
 		return NULL;
 	/*FIXME:
 	  this is a horrible horrible hack and should be taken out
