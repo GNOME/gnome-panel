@@ -25,7 +25,12 @@ G_CONST_RETURN char *panel_gconf_full_key    (PanelGConfKeyType  type,
 					      const gchar       *panel_id,
 					      const gchar       *key);
 
+
 GSList         *panel_gconf_all_global_entries (void);
+gboolean        panel_gconf_string_to_enum     (GConfEnumStringPair  lookup_table [],
+						const char          *str,
+						int                 *enum_value_retloc,
+						int                  fallback_value);
 
 int		panel_gconf_get_int     (const char *key,
 					 int         default_val);

@@ -1,5 +1,18 @@
 2002-07-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-gconf.[ch]: (panel_gconf_string_to_enum): impl
+	with a fallback argument. Fixes #87133.
+
+	* gnome-panel-preferences.c: (load_animation_menu): use
+	panel_gconf_string_to_enum.
+
+	* panel-config-global.c: (panel_global_config_set_entry):
+	ditto.
+
+	* panel.c: (panel_load_panels_from_gconf): ditto.
+
+2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-preferences.c:
 	(animation_menu_changed): rename from option_menu_changed.
 	(load_animation_menu): rename from load_option_menu, removing
