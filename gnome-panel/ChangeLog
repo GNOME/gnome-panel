@@ -1,5 +1,10 @@
 1998-06-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
+	* panel-widget.c (panel_try_to_set_back_color): Destroy the pixmap
+	in the widget style before setting the new style.  This fixes the
+	bug where dragging a color onto the panel after a pixmap was set
+	did not update the panel.
+
 	* panel.c (show_applet_menu): Use the event's time to make the
 	menu popup work correctly.
 

@@ -1803,14 +1803,16 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
   ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
   ns->bg[GTK_STATE_NORMAL].pixel = panel->back_color.pixel = 1; /* bogus */
 
-  gtk_widget_set_style(panel->fixed, ns);
-
   if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
 	  gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
 	  ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
   }
+
+  gtk_widget_set_style(panel->fixed, ns);
+
   g_free(panel->back_pixmap); panel->back_pixmap = NULL;
   gtk_style_unref(ns);
+  gtk_widget_queue_draw(GTK_WIDGET(panel));
 }
 
 static void
