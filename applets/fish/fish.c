@@ -835,27 +835,51 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_free (command);
 }
 
+static void
+something_fishy_going_on (const char *message)
+{
+	GtkWidget *dialog;
+
+	dialog = gtk_message_dialog_new (NULL,
+					 GTK_DIALOG_DESTROY_WITH_PARENT,
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_CLOSE,
+					 message);
+
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy),
+			  NULL);
+
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_widget_show (dialog);
+}
+
 static gchar *
 fish_locate_fortune_command (Fish *fish)
 {
-	gchar *command;
-	gchar *tmp;
+	char *retval = NULL;
 
-	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_COMMAND, NULL);
-	if (!tmp)
+	retval = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_COMMAND, NULL);
+	if (!retval) {
+		something_fishy_going_on (_("Unable to get the name of the command to execute"));
 		return NULL;
+	}
 
-	if (g_path_is_absolute (tmp))
-		return tmp;
+	if (!g_path_is_absolute (retval)) {
+		char *tmp;
 
-	command = g_find_program_in_path (tmp);
-	g_free (tmp);
+		tmp = retval;
+		retval = g_find_program_in_path (tmp);
+		g_free (tmp);
+	}
 
-	if (!command)
-		if (g_file_test ("/usr/games/fortune", G_FILE_TEST_EXISTS))
-			command = g_strdup ("/usr/games/fortune");
+	if (!retval && g_file_test ("/usr/games/fortune", G_FILE_TEST_EXISTS))
+		retval = g_strdup ("/usr/games/fortune");
 
-	return command;
+	if (!retval)
+		something_fishy_going_on (_("Unable to locate the command to execute"));
+
+	return retval;
 }
 
 static void
@@ -900,9 +924,14 @@ delete_event (GtkWidget *w, gpointer data)
 static void 
 update_fortune_dialog (Fish *fish)
 {
-	char *fortune_command;
-	gchar *output = NULL;
-	gchar *output_utf8;
+	GError *error = NULL;
+	char   *fortune_command;
+	char   *output = NULL;
+	char   *output_utf8;
+
+	fortune_command = fish_locate_fortune_command (fish);
+	if (!fortune_command)
+		return;
 
 	if ( fish->fortune_dialog == NULL ) {
 		GtkWidget *view;
@@ -969,9 +998,16 @@ update_fortune_dialog (Fish *fish)
 
 	text_clear (fish);
 
-	fortune_command = fish_locate_fortune_command (fish);
+	g_spawn_command_line_sync (fortune_command, &output, NULL, NULL, &error);
+	if (error) {
+		char *message;
 
-	g_spawn_command_line_sync (fortune_command, &output, NULL, NULL, NULL);
+		message = g_strdup_printf (_("Unable to execute '%s'\n\nDetails : %s"),
+					   fortune_command, error->message);
+		something_fishy_going_on (message);
+		g_free (message);
+		g_error_free (error);
+	}
 	
 	g_free (fortune_command);
 

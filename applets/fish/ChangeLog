@@ -1,3 +1,10 @@
+2002-07-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* fish.c: (something_fishy_going_on): impl.
+	(fish_locate_fortune_command), (update_fortune_dialog):
+	warn the user of fishy goings on if we can't either
+	locate the command or execure it. #75783.
+
 2002-07-06  Miguel Rodríguez Pérez  <migrax@terra.es>
 
 	* fish.c (update_fortune_dialog): Convert the fortune string from
