@@ -799,7 +799,7 @@ basep_widget_destroy (GtkObject *o)
 	basep->pos = NULL;
 
 	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
-		(* GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy) (o);
+		GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy (o);
 }	
 
 static void

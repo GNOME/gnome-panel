@@ -1,3 +1,11 @@
+2000-05-23  Jacob Berkman  <jacob@helixcode.com>
+
+	* panel.c (panel_destroy): don't go into the unexplored territory
+	that is the negative ref count.  Wait for GTK 1.4 for that.
+
+	* basep-widget.c (basep_widget_destroy): make this a little less
+	ugly
+
 2000-05-22  Fellmann Joaquim <joaquim@hrnet.fr>
 
 	* panel.hints: Updated French translations.

@@ -584,10 +584,19 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
+/* don't unref this, since we unref from a signal connected to the
+ * destroy signal of the panel
+ *
+ * Broken, maybe.  1.2 needs to go out, definitely.
+ *
+ * Oh, and null it anyway since we should be done with it.
+ */
+#if 0	
 	if(pd->menu)
 		gtk_widget_unref(pd->menu);
+#endif
 	pd->menu = NULL;
-	
+
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
 }
