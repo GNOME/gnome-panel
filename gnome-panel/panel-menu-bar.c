@@ -468,6 +468,8 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 	g_hash_table_destroy (table);
 	g_strfreev (lines);
 
+	add_files = g_slist_reverse (add_files);
+
 	if (g_slist_length (add_files) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
 	} else {
