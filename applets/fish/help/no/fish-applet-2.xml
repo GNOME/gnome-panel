@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.1">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "May 2002">
+  <!ENTITY applet "Fisk">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+-->
+
+<article id="index" lang="no">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>&applet; applet brukerhåndbok V&manrevision;</title> 
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+
+	<copyright>
+	    <year>2002</year>
+	    <holder>Kjartan Maraas (Norwegian translation)</holder>
+	</copyright>
+
+
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address> 
+		  </affiliation> 
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default. -->
+           <othercredit role="translator">
+	     <firstname>Kjartan</firstname> 
+	     <surname>Maraas</surname> 
+	     <affiliation> 
+	       <orgname>Norsk oversetter</orgname> 
+	       <address> <email>kmaraas@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Norsk oversettelse</contrib>
+           </othercredit>
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; applet brukerhåndbok V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Fish Applet Manual</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> Denne håndboken beskriver versjon &appletversion; av &applet;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Tilbakemelding</title> 
+		<para> Følg retningslinkene på
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME tilbakemelding</ulink>. </para>
+		  for å rapportere en feil eller komme med forslag til &applet; appleten eller 
+		  denne håndboken 
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Fisk</primary> 
+  </indexterm> 
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<sect1 id="fish-introduction">
+<title>Introduction</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"> 
+		<title>&applet; Applet</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Viser appleten Fisk.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+<para><application>Appleten &applet;</application> viser et animert bilde i et 
+  panel. For å legge til en <application>&applet;</application>-applet på et
+  panel høyreklikker du på panelet for å åpne panelets oppsprettmeny.
+  Velg deretter
+  <menuchoice>
+    <guimenu>Legg til på panelet</guimenu>
+    <guisubmenu> Underholdning </guisubmenu>
+    <guimenuitem> Fisk </guimenuitem>
+  </menuchoice>.
+</para>
+</sect1>
+<sect1 id="fish-usage">
+<title>Usage</title>
+<para>Klikk på appleten for å vise dialogen <guilabel>Fisken Wanda</guilabel>.
+  Dialogen viser typisk en "fortune cookie". Du kan konfigurere appleten for
+  å spesifisere kommandoen som skal kjøres når du klikker på appleten. Se på
+  <xref linkend="fish-settings"/> for mer informasjon.</para>
+</sect1>
+<!-- ============= Settings  ================================ -->
+<sect1 id="fish-settings">
+<title>Innstillinger</title>
+<para>For å konfigurere <application>&applet;</application> høyreklikker du på
+<application>&applet;</application>-appleten. Velg så
+<guimenu>Brukervalg</guimenu> fra appletmenyen. </para>
+<variablelist>
+<varlistentry>
+<term><guilabel>Navn på GNOME fisk</guilabel> </term>
+<listitem>
+<para>Bruk denne tekstboksen til å spesifisere navnet på fisken.</para>
+<para>Forvalg: Wanda</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Filnavn for animasjonen</guilabel> </term>
+<listitem>
+<para>Bruk dette feltet til å velge bildet som skal vises i appleten. Du kan 
+velge et bilde som følger med appleten eller et personlig bilde.</para>
+<para>Forvalg: <filename>fish/fishanim.png</filename></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Kommando som skal kjøres når fisken klikkes</guilabel> </term>
+<listitem>
+<para>Forvalgt handling for, <application>&applet;</application> er å kjøre
+kommandoen «fortune» når du klikker på den. Bruk denne tekstboksen til å oppgi
+en alternativ kommando som skal kjøres. </para>
+<para>Forvalg: fortune</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Bilder i animasjonen</guilabel> </term>
+<listitem>
+<para>
+  Bruk denne spinboksen til å oppgi antall bilder i animasjonen.
+</para>
+<para>Forvalg: 3</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Pasue per bilde</guilabel> </term>
+<listitem>
+<para>Bruk denne spinboksen til å oppgi pause i sekunder mellom hvert bilde
+ i animasjonen.</para>
+<para>Forvalg: 1.00</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Roter på vertikale paneler</guilabel> </term>
+<listitem>
+<para>Velg dette alternativet for å rotere appleten når du legger den til på
+et vertikalt panel.</para>
+<para>Forvalg: aktivert</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article> 
