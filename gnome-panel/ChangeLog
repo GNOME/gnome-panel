@@ -1,5 +1,13 @@
 2005-01-13  Vincent Untz  <vincent@vuntz.net>
 
+	Patch from Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-widget.c: (panel_widget_applet_motion_notify_event): If
+	the pointer moves to a screen other than where the object is, don't
+	continue with the action. Fixes #110890
+
+2005-01-13  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-menu-bar.c: (panel_menu_bar_append_gtk_bookmarks):
 	(panel_menu_bar_append_volumes): explicitly show the submenu item.
 	Fix item not showing after an update.

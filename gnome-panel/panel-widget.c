@@ -2250,6 +2250,9 @@ panel_widget_applet_motion_notify_event (GtkWidget      *widget,
 	
 	g_return_val_if_fail (PANEL_IS_WIDGET (widget->parent), FALSE);
 
+	if (gdk_event_get_screen (event) != gtk_widget_get_screen (widget))
+		return FALSE;
+
 	panel = PANEL_WIDGET (widget->parent);
 	
 	schedule_try_move (panel, FALSE);
