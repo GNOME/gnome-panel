@@ -3,6 +3,10 @@ module GNOME {
 	interface PanelSpot;
 	interface Applet;
 	interface StatusSpot;
+	interface PanelAppletBooter; /* a simple panel like interface other
+					things can implement with
+					launch_an_applet to be able to host
+					applets */
 
 	interface Panel {
 		struct Color {
@@ -42,22 +46,22 @@ module GNOME {
 		};
 
 		/*this inits a panelspot, it's called by the applet */
-		PanelSpot add_applet(in Applet panel_applet,
-				     in string goad_id,
-				     out string cfgpath,
-				     out string globcfgpath,
-				     out unsigned long winid);
+		PanelSpot add_applet (in Applet panel_applet,
+				      in string goad_id,
+				      out string cfgpath,
+				      out string globcfgpath,
+				      out unsigned long winid);
 		/*same as above but this is usefull if we know onto
 		  which panel we want to add, this is only to be called
 		  from an applet which was NOT started by the panel as
 		  those get the position from the panel itself*/
-		PanelSpot add_applet_full(in Applet panel_applet,
-					  in string goad_id,
-					  in short panel,
-					  in short pos,
-					  out string cfgpath,
-					  out string globcfgpath,
-					  out unsigned long winid);
+		PanelSpot add_applet_full (in Applet panel_applet,
+					   in string goad_id,
+					   in short panel,
+					   in short pos,
+					   out string cfgpath,
+					   out string globcfgpath,
+					   out unsigned long winid);
 		/* initiate a logout */
 		oneway void quit ();
 
@@ -101,6 +105,31 @@ module GNOME {
 		/* Some other panel functionality */
 		oneway void run_box (in string initial_string);
 		oneway void main_menu ();
+
+		/* you can use this to launch panel applets into 
+		   other then panel things, you have to implent PanelSpot
+		   completely.  Note that you do not need to care about,
+		   the in-process weirdness.  shlib applets are loaded
+		   into the panel because of this.  This call will also
+		   activate the server, so it's all you need to do.
+		   See gnome-old-applet-adaptor for Bonobo::Control
+		   implementation of this stuff. */
+		oneway void launch_an_applet (in string goad_id,
+					      in PanelAppletBooter booter);
+	};
+
+	/* this is a one shot applet booting interface, you implement this
+	   and pass it to launch_an_applet, it will then give you a buzz
+	   when your applet is ready and then dump you like a bad case of
+	   fleas.  So you have to make one of these for every applet you
+	   wish to start. */
+	interface PanelAppletBooter {
+		/*this inits a panelspot, it's called by the applet */
+		PanelSpot add_applet (in Applet panel_applet,
+				      in string goad_id,
+				      out string cfgpath,
+				      out string globcfgpath,
+				      out unsigned long winid);
 	};
 
 	interface PanelSpot { /* panel half of applets */
