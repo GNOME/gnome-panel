@@ -11,11 +11,51 @@
 #include <unistd.h>
 #include <string.h>
 #include <gnome.h>
+#include <gdk/gdkx.h>
+#include <X11/Xlib.h>
 #include "panel-widget.h"
 #include "panel.h"
 #include "panel_config_global.h"
 #include "swallow.h"
 #include "mico-glue.h"
+
+
+static gulong
+get_window_id(char *title)
+{
+	Window root_return;
+	Window parent_return;
+	Window *children;
+	unsigned int nchildren;
+	int i;
+	char *tit;
+	gulong wid=-1;
+
+	XQueryTree(GDK_DISPLAY(),
+		   GDK_ROOT_WINDOW(),
+		   &root_return,
+		   &parent_return,
+		   &children,
+		   &nchildren);
+
+	for(i=0;i<nchildren;i++) {
+		XFetchName(GDK_DISPLAY(),
+			   children[i],
+			   &tit);
+		if(tit) {
+			puts(tit);
+			if(strcmp(tit,title)==0) {
+				XFree(tit);
+				wid = children[i];
+				break;
+			}
+			XFree(tit);
+		}
+	}
+	if(children)
+		XFree(children);
+	return wid;
+}
 
 Swallow *
 create_swallow_applet(char *arguments, SwallowOrient orient)
@@ -80,12 +120,17 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 
 	/*FIXME: add the right window or wait for it or something here*/
 	gtk_widget_set_usize(swallow->socket,48,48);
-	/*{
+	{
 		long wid;
-		puts("window ID to get:");
-		scanf("%lX",&wid);
-		gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
-	}*/
+		char buf[256];
+		puts("window name to get:");
+		scanf("%s",buf);
+		wid = get_window_id(buf);
+		if(wid==-1)
+			puts("DANG!");
+		else
+			gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
+	}
 
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 
