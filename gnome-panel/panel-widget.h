@@ -28,6 +28,7 @@ typedef enum {
 } PanelOrientation;
 typedef enum {
 	PANEL_FREE,
+	PANEL_DRAWER,
 	PANEL_TOP,
 	PANEL_BOTTOM,
 	PANEL_LEFT,
@@ -40,13 +41,14 @@ typedef enum {
 typedef enum {
 	PANEL_SHOWN,
 	PANEL_MOVING,
-	PANEL_HIDDEN
+	PANEL_HIDDEN,
+	PANEL_HIDDEN_RIGHT,
+	PANEL_HIDDEN_LEFT
 } PanelState;
 
 struct _AppletRecord
 {
 	GtkWidget		*applet;
-	GtkWidget		*drawer;
 	gint			cells;
 };
 
@@ -94,22 +96,19 @@ struct _PanelWidgetClass
 };
 
 guint		panel_widget_get_type		(void);
-GtkWidget*	panel_widget_new		(gint length,
+GtkWidget*	panel_widget_new		(gint size,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
 						 PanelState state,
 						 gint step_size,
 						 gint minimized_size,
-						 gint minimize_delay);
+						 gint minimize_delay,
+						 gint pos_x,
+						 gint pos_y);
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
-						 gint pos);
-/*add a drawer (you supply the button) to the panel, preferably at
-  position pos*/
-gint		panel_widget_add_with_drawer	(PanelWidget *panel,
-						 GtkWidget *button,
 						 gint pos);
 /*move oldpos to newpos*/
 gint		panel_widget_move		(PanelWidget *panel,

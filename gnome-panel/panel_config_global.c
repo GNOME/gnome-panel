@@ -74,7 +74,7 @@ gint_scale_update (GtkAdjustment *adjustment, gpointer data)
 }
 
 GtkWidget *
-make_gint_scale_frame(gchar *title, gint *data)
+make_gint_scale_frame(gchar *title, gint *data, double min, double max)
 {
 	GtkWidget *frame;
 	GtkWidget *box;
@@ -93,7 +93,7 @@ make_gint_scale_frame(gchar *title, gint *data)
 
 	/* Animation step_size scale */
 	scale_data = gtk_adjustment_new((double) (*data),
-					3.0, 100.0, 1.0, 1.0, 0.0);
+					min, max, 1.0, 1.0, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
 	gtk_scale_set_digits (GTK_SCALE (scale), 0);
@@ -122,28 +122,32 @@ animation_notebook_page(void)
 
 	/* AutoHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Animation Speed"),
-				      &(temp_config.auto_hide_step_size));
+				      &(temp_config.auto_hide_step_size),
+				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
 
 	/* ExplicitHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Explicit-Hide Animation Speed"),
-				      &(temp_config.explicit_hide_step_size));
+				      &(temp_config.explicit_hide_step_size),
+				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
 
 	/* Minimize Delay scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
-				      &(temp_config.minimize_delay));
+				      &(temp_config.minimize_delay),
+				      30.0,1000.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
 
 	/* Minimized size scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
-				      &(temp_config.minimized_size));
+				      &(temp_config.minimized_size),
+				      1.0,10.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);

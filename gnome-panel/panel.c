@@ -144,6 +144,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	char          *path;
 	char          *fullpath;
 	char           buf[256];
+	int            x,y;
 	int           *num = user_data;
 	PanelWidget   *panel = data;
 
@@ -166,16 +167,27 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int(fullpath,panel->state);
 	g_free(fullpath);
 
-	/*fullpath = g_copy_strings(path,"step_size",NULL);
-	gnome_config_set_int(fullpath,panel->step_size);
-	g_free(fullpath);*/
-
 	fullpath = g_copy_strings(path,"minimized_size",NULL);
 	gnome_config_set_int(fullpath,panel->minimized_size);
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"minimize_delay",NULL);
 	gnome_config_set_int(fullpath,panel->minimize_delay);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"size",NULL);
+	gnome_config_set_int(fullpath,panel->size);
+	g_free(fullpath);
+
+	/*FIXME: this should be allocation.[xy] but those don't work!!!
+	  probably a gtk bug*/
+	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
+	fullpath = g_copy_strings(path,"position_x",NULL);
+	gnome_config_set_int(fullpath,x);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"position_y",NULL);
+	gnome_config_set_int(fullpath,y);
 	g_free(fullpath);
 
 	g_free(path);

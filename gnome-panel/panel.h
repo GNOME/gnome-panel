@@ -29,7 +29,6 @@ struct _PanelConfig {
 	PanelOrientation orient;
 	PanelSnapped snapped;
 	PanelMode mode;
-	PanelState state;
 };
 
 typedef enum {

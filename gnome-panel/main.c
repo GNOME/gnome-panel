@@ -176,21 +176,22 @@ init_user_panels(void)
 {
 	char  buf[256];
 	int   count,num;	
-	int   length,x,y;
+	int   size,x,y;
 	PanelConfig config;
 	GtkWidget *panel;
 	GtkWidget *panel_menu;
+	PanelState state;
 
 	count=gnome_config_get_int("/panel/Config/panel_count=0");
 	if(count<=0) count++; /*this will load up a single panel with
 				default settings*/
 	for(num=1;num<=count;num++) {
 		/*these are only for free floating non-drawer like panels */
-		sprintf(buf,"/panel/Panel_%d/length=%d",num, 300);
-		length=gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Panel_%d/geomx=0",num);
+		sprintf(buf,"/panel/Panel_%d/size=%d",num, 50);
+		size=gnome_config_get_int(buf);
+		sprintf(buf,"/panel/Panel_%d/position_x=0",num);
 		x=gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Panel_%d/geomy=0",num);
+		sprintf(buf,"/panel/Panel_%d/position_y=0",num);
 		y=gnome_config_get_int(buf);
 
 		sprintf(buf,"/panel/Panel_%d/snapped=%d",num,
@@ -207,19 +208,21 @@ init_user_panels(void)
 
 		sprintf(buf,"/panel/Panel_%d/state=%d",num,
 			PANEL_SHOWN);
-		config.state=gnome_config_get_int(buf);
+		state=gnome_config_get_int(buf);
 
 
-		panel = panel_widget_new(length,
+		panel = panel_widget_new(size,
 					 config.orient,
 					 config.snapped,
 					 config.mode,
-					 config.state,
+					 state,
 					 DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
 					 DEFAULT_MINIMIZED_SIZE,
-					 DEFAULT_MINIMIZE_DELAY);
+					 DEFAULT_MINIMIZE_DELAY,
 					/*the last three will get changed
 					  anyway, they are globals*/
+					 x,
+					 y);
 
 
 		/*FIXME: this should be made cleaner I guess*/

@@ -73,7 +73,7 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel_config_struct.orient,
 					   panel_config_struct.snapped,
 					   panel_config_struct.mode,
-					   panel_config_struct.state,
+					   panel->state,
 					   global_config.auto_hide_step_size,
 					   global_config.minimized_size,
 					   global_config.minimize_delay);
@@ -82,7 +82,7 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel_config_struct.orient,
 					   panel_config_struct.snapped,
 					   panel_config_struct.mode,
-					   panel_config_struct.state,
+					   panel->state,
 					   global_config.explicit_hide_step_size,
 					   global_config.minimized_size,
 					   global_config.minimize_delay);
@@ -225,7 +225,6 @@ panel_config(PanelWidget *panel)
 	panel_config_struct.orient = panel->orient;
 	panel_config_struct.snapped = panel->snapped;
 	panel_config_struct.mode = panel->mode;
-	panel_config_struct.state = panel->state;
 	
 	
 	/* main window */
