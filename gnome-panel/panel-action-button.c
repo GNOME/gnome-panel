@@ -84,10 +84,15 @@ panel_action_lock_setup_menu (PanelActionButton *button)
 {
 	panel_applet_add_callback (button->priv->info, "activate", NULL, _("_Activate Screensaver"));
 	panel_applet_add_callback (button->priv->info, "lock",     NULL, _("_Lock Screen"));
-	panel_applet_add_callback (button->priv->info, "exit",     NULL, _("_Kill Screensaver Daemon"));
+
+	/* in commie mode don't allow killing the screensaver */
+	if ( ! panel_profile_get_locked_down ())
+		panel_applet_add_callback (button->priv->info, "exit",     NULL, _("_Kill Screensaver Daemon"));
+
 	panel_applet_add_callback (button->priv->info, "restart",  NULL, _("Restart _Screensaver Daemon"));
 
-	if (!commie_mode)
+	/* in commie mode don't allow changing the screensaver properties */
+	if ( ! panel_profile_get_locked_down ())
 		panel_applet_add_callback (button->priv->info, "prefs", NULL, _("_Properties"));
 }
 
@@ -138,6 +143,9 @@ panel_action_logout (GtkWidget *widget)
 void
 panel_action_run_program (GtkWidget *widget)
 {
+	if (panel_profile_get_inhibit_command_line ())
+		return;
+
 	panel_run_dialog_present (gtk_widget_get_screen (widget));
 }
 
@@ -183,6 +191,9 @@ static void
 panel_action_force_quit (GtkWidget *widget)
 {
 	GdkScreen *screen;
+
+	if (panel_profile_get_inhibit_force_quit ())
+		return;
 
 	screen = gtk_widget_get_screen (widget);
 

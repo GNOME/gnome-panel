@@ -50,6 +50,7 @@
 #define PROPERTY_BACKGROUND "panel-applet-background"
 #define PROPERTY_FLAGS      "panel-applet-flags"
 #define PROPERTY_SIZE_HINTS "panel-applet-size-hints"
+#define PROPERTY_LOCKED_DOWN "panel-applet-locked-down"
 
 
 struct _PanelAppletFramePrivate {
@@ -85,7 +86,9 @@ static void
 panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 {
 	PanelWidget *panel_widget;
+	gboolean     locked_down;
 	gboolean     locked;
+	gboolean     panel_locked;
 	gboolean     lockable;
 	gboolean     movable;
 	gboolean     removable;
@@ -96,7 +99,15 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
 
+	locked_down = panel_profile_get_locked_down ();
+
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
+
+	panel_locked = panel_toplevel_get_locked_down (panel_widget->toplevel);
+
+	/* always lock applets on a locked panel */
+	if (panel_locked)
+		locked = TRUE;
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/popups/button3/placeholder/lock",
@@ -104,10 +115,11 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      locked ? _("Un_lock") : _("_Lock"),
 				      NULL);
 
+	/* First sensitivity */
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/LockAppletToPanel",
 				      "sensitive",
-				      lockable ? "1" : "0",
+				      lockable && ! panel_locked ? "1" : "0",
 				      NULL);
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
@@ -120,6 +132,25 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      "/commands/MoveApplet",
 				      "sensitive",
 				      locked ? "0" : (movable ? "1" : "0"),
+				      NULL);
+
+	/* Second visibility */
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/LockAppletToPanel",
+				      "hidden",
+				      locked_down ? "1" : "0",
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/RemoveAppletFromPanel",
+				      "hidden",
+				      locked_down ? "1" : "0",
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/MoveApplet",
+				      "hidden",
+				      locked_down ? "1" : "0",
 				      NULL);
 }
 
@@ -788,6 +819,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	GdkScreen *screen;
 	char      *applet_name = NULL;
 	char      *txt;
+	gboolean   locked;
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
@@ -796,14 +828,20 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	if (frame->priv->iid)
 		applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
+	locked = panel_profile_get_locked_down () ||
+		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
+
 	txt = g_strdup_printf (
 			_("The %s applet appears to have died "
 			  "unexpectedly\n\n"
-			  "Reload this applet?\n\n"
+			  "Reload this applet?%s"),
+			  applet_name ? applet_name : "",
+			  locked ? "" :
+			  _("\n\n"
 			  "(If you choose not to reload it at this time"
 			  " you can always add it by right clicking on "
 			  "the panel and clicking on the \"Add to Panel\""
-			  " submenu)"), applet_name ? applet_name : "");
+			  " submenu)"));
 
 	dialog = gtk_message_dialog_new (
 				NULL,
@@ -853,6 +891,11 @@ register_stock_item (void)
         }
 }
 
+enum {
+	LOADING_FAILED_RESPONSE_DONT_DELETE,
+	LOADING_FAILED_RESPONSE_DELETE
+};
+
 static void
 panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				   CORBA_Environment *ev,
@@ -862,35 +905,50 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 {
 	GtkWidget *dialog;
 	int        response;
+	gboolean   locked;
+
+	locked = panel_profile_get_locked_down () ||
+		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
 
 	if (ev != NULL) {
 		char *error = bonobo_exception_get_text (ev);
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
-					GTK_MESSAGE_QUESTION,
+					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
 					_("The panel encountered a problem while loading \"%s\"\n"
-					  "Details: %s\n\n"
-					  "Do you want to delete the applet from your configuration?"),
-					iid, error);
+					  "Details: %s%s"),
+					iid, error,
+					locked ? "" :
+					_("\n\n"
+					  "Do you want to delete the applet from your configuration?"));
 		g_free (error);
 	} else {
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
-					GTK_MESSAGE_QUESTION,
+					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
-					_("The panel encountered a problem while loading \"%s\"\n\n"
-					  "Do you want to delete the applet from your configuration?"),
-					iid);
+					_("The panel encountered a problem while loading \"%s\"%s"),
+					iid,
+					locked ? "" :
+					_("\n\n"
+					  "Do you want to delete the applet from your configuration?"));
 	}
 
 	register_stock_item ();
 
-	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				PANEL_STOCK_DONT_DELETE, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
-				NULL);
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+	if (locked) {
+		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+					GTK_STOCK_OK, LOADING_FAILED_RESPONSE_DONT_DELETE,
+					NULL);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog), LOADING_FAILED_RESPONSE_DONT_DELETE);
+	} else {
+		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+					PANEL_STOCK_DONT_DELETE, LOADING_FAILED_RESPONSE_DONT_DELETE,
+					GTK_STOCK_DELETE, LOADING_FAILED_RESPONSE_DELETE,
+					NULL);
+		gtk_dialog_set_default_response (GTK_DIALOG (dialog), LOADING_FAILED_RESPONSE_DELETE);
+	}
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_window_get_screen (panel));
@@ -899,11 +957,12 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	gtk_widget_destroy (dialog);
 
-	if (response == GTK_RESPONSE_OK) {
+	if (response == LOADING_FAILED_RESPONSE_DELETE) {
 		/* if we can't write to applets list we can't really delete
 		   it, so we'll just ignore this.  There's nothing we can
 		   do about it. */
-		if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+		if ( ! locked &&
+		    panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
 			panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
 	}
 }
@@ -1053,6 +1112,7 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 {
 	char *retval;
 	char *bg_str;
+	gboolean locked_down;
 
 	bg_str = panel_applet_frame_get_background_string (
 				frame, panel, panel->background.type);
@@ -1060,12 +1120,16 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	if (bg_str == NULL)
 		bg_str = g_strdup ("");
 
+	locked_down = panel_profile_get_locked_down () ||
+		panel_toplevel_get_locked_down (panel->toplevel);
+
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
-			"background=%s;orient=%s;size=%s",
+			"background=%s;orient=%s;size=%s;locked_down=%s",
 			iid, panel_profile_get_name (), id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
-			panel_applet_frame_get_size_string (frame, panel));
+			panel_applet_frame_get_size_string (frame, panel),
+			locked_down ? "true" : "false");
 
 	g_free (bg_str);
 

@@ -1491,7 +1491,7 @@ panel_run_dialog_present (GdkScreen *screen)
 	GladeXML *gui;
 	char     *glade_file;
 
-	if (no_run_box)
+	if (panel_profile_get_inhibit_command_line ())
 		return;
 
 	if (static_dialog) {

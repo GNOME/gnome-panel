@@ -1,3 +1,29 @@
+Mon Sep 15 15:05:27 2003  George Lebl <jirka@5z.com>
+
+	* panel-global.schemas.in, panel-toplevel.schemas.in:
+	  Add per panel locked_down item and a global locked_down
+	  item.
+
+	* applet.c, drawer.c, launcher.c, main.c, menu.c,
+	  panel-action-button.c, panel-applet-frame.c,
+	  panel-globals.h, panel-menu-bar.c, panel-profile.[ch],
+	  panel-run-dialog.c, panel-toplevel.[ch], panel-widget.c,
+	  panel.c:  Add toplevel panel locked_down flag and follow
+	  it everywhere appropriate and also add a global locked_down
+	  flag replacing any remaints of the commie_mode of 1.4.
+	  In addition support reading two keys (which don't have
+	  schemas yet since this is all kind of tenative and such
+	  schemas wouldn't belong to gnome-panel anyway) 
+	  /desktop/gnome/lockdown/inhibit_command_line and
+	  /desktop/gnome/lockdown/inhibit_force_quit.  Also set
+	  the lockdown flag appropriately for external applets so
+	  that they can load and behave approperiately.  All this
+	  currently requires a panel restart and no effort has been
+	  done to support on the fly updating, but I doubt it's
+	  worth the extra code baggage.  I suppose this should
+	  be followed by some mail to d-d-l about lockdown especially
+	  about the "need to be sorted out" bits.
+
 2003-09-12  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* menu.c (add_drawers_from_dir) : Don't load desktop files

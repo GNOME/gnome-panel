@@ -42,10 +42,6 @@ GtkTooltips *panel_tooltips = NULL;
 
 GnomeIconTheme *panel_icon_theme = NULL;
 
-/* FIXME: old lockdown globals */
-gboolean commie_mode = FALSE;
-gboolean no_run_box = FALSE;
-
 static char *profile_arg;
 
 static const struct poptOption options[] = {

@@ -37,9 +37,6 @@ extern GtkTooltips    *panel_tooltips;
 
 extern GnomeIconTheme *panel_icon_theme;
 
-extern gboolean        commie_mode;
-extern gboolean        no_run_box;
-
 G_END_DECLS
 
 #endif /* __PANEL_GLOBALS_H__ */

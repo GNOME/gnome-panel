@@ -901,6 +901,10 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 	if (!panel)
 		return FALSE;
 
+	if (panel_toplevel_get_locked_down (panel->toplevel) ||
+	    panel_profile_get_locked_down ())
+		return FALSE;
+
 	if (info == TARGET_APPLET_INTERNAL) {
 		GtkWidget *source_widget;
 
@@ -999,6 +1003,13 @@ panel_receive_dnd_data (PanelWidget      *panel,
 			guint             time_)
 {
 	gboolean success = FALSE;
+
+	if (panel_toplevel_get_locked_down (panel->toplevel) ||
+	    panel_profile_get_locked_down ()) {
+		gtk_drag_finish (context, FALSE, FALSE, time_);
+		return;
+	}
+
 	switch (info) {
 	case TARGET_URL:
 		success = drop_urilist (panel, pos, (char *)selection_data->data);

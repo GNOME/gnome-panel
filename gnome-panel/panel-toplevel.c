@@ -172,6 +172,10 @@ struct _PanelToplevelPrivate {
 	   if not then we're still loading and can ignore many things */
 	guint                   updated_geometry_initial : 1;
 
+	/* if the panel is in fact locked_down and can't be
+	 * touched by the user */
+	guint                   locked_down : 1;
+
 };
 
 enum {
@@ -4572,4 +4576,20 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 		return TRUE;
 
 	return FALSE;
+}
+
+gboolean
+panel_toplevel_get_locked_down (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
+
+	return toplevel->priv->locked_down;
+}
+
+void
+panel_toplevel_set_locked_down (PanelToplevel *toplevel, gboolean locked_down)
+{
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+
+	toplevel->priv->locked_down = locked_down ? 1 : 0;
 }

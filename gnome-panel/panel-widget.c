@@ -21,6 +21,7 @@
 #include "panel-typebuiltins.h"
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
+#include "panel-profile.h"
 
 #define MOVE_INCREMENT 2
 
@@ -2053,7 +2054,8 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			    panel_widget_is_cursor (new_panel,10) &&
 			    panel_screen_from_panel_widget (panel) ==
 			    panel_screen_from_panel_widget (new_panel) &&
-			    !g_slist_find (forb, new_panel)) {
+			    !g_slist_find (forb, new_panel) &&
+			    ! panel_toplevel_get_locked_down (new_panel->toplevel)) {
 				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
 
 				if (pos < 0) pos = 0;
@@ -2187,7 +2189,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event)
 				return TRUE;
 			}
 
-			if ( ! commie_mode &&
+			if ( ! panel_profile_get_locked_down () &&
 			    bevent->button == 2) {
 				guint32 time_ = bevent->time;
 				/* time on sent events seems to be bogus */
@@ -2699,7 +2701,9 @@ panel_widget_tab_move (PanelWidget *panel,
 	if (!new_panel && previous_panel)
 		new_panel = previous_panel;
 	
-	if (new_panel && (new_panel != panel))
+	if (new_panel &&
+	    (new_panel != panel) &&
+	    ! panel_toplevel_get_locked_down (new_panel->toplevel))
 		panel_widget_reparent (panel, new_panel, ad->applet, 0);
 }
 

@@ -390,6 +390,24 @@
         </long>
       </locale>
     </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/toplevels/locked_down</key>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Lock down the panel</short>
+        <long>
+          If true, the panel will be locked in place, properties won't
+          be changable.  The user won't be able to add, remove or even
+          move applets.  Also properties of all objects on this panel
+          will be locked down as well.  Properties of external applets
+	  may however have to be locked down separately.  The panel
+	  must be restarted for this to take effect.
+        </long>
+      </locale>
+    </schema>
           
   </schemalist>
   

@@ -587,7 +587,7 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
 
-	if (!commie_mode)
+	if ( ! panel_profile_get_locked_down ())
 		panel_applet_add_callback (drawer->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,

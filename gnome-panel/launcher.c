@@ -711,6 +711,9 @@ void
 launcher_properties (Launcher  *launcher,
 		     GdkScreen *screen)
 {
+	if (panel_profile_get_inhibit_command_line ())
+		return;
+
 	if (launcher->prop_dialog != NULL) {
 		gtk_window_set_screen (
 			GTK_WINDOW (launcher->prop_dialog), screen);
@@ -744,7 +747,7 @@ load_launcher_applet (const char       *location,
 	if (!launcher->info)
 		return NULL;
 
-	if (!commie_mode)
+	if ( ! panel_profile_get_locked_down ())
 		panel_applet_add_callback (launcher->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
@@ -836,7 +839,11 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	if (launcher) {
 		panel_launcher_ensure_hoarded (launcher, launcher_location, id);
 
-		if (launcher->non_writable) {
+		if (launcher->non_writable ||
+		    panel_toplevel_get_locked_down (panel_widget->toplevel) ||
+		    /* if the command line is inhibited, don't allow editting launchers,
+		       since that would allow running arbitrary commands */
+		    panel_profile_get_inhibit_command_line ()) {
 			AppletUserMenu *menu;
 			menu = panel_applet_get_callback (launcher->info->user_menu,
 							  "properties");

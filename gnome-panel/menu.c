@@ -1563,7 +1563,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 				   G_CALLBACK(add_menudrawer_to_panel),
 				   sim->mf);
-			gtk_widget_set_sensitive (menuitem, objects_writable && toplevels_writable);
+			gtk_widget_set_sensitive (menuitem,
+						  objects_writable &&
+						  toplevels_writable &&
+						  ! panel_toplevel_get_locked_down (panel_widget->toplevel));
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1572,7 +1575,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					   G_CALLBACK(add_menu_to_panel),
 					   sim->mf->menudir);
-			gtk_widget_set_sensitive (menuitem, objects_writable);
+			gtk_widget_set_sensitive (menuitem,
+						  objects_writable &&
+						  toplevels_writable &&
+						  ! panel_toplevel_get_locked_down (panel_widget->toplevel));
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1637,7 +1643,7 @@ menuitem_button_press_event (GtkWidget      *menuitem,
 			     ShowItemMenu   *sim)
 {
 	/* no item menu in commie mode */
-	if (commie_mode)
+	if (panel_profile_get_locked_down ())
 		return FALSE;
 	
 	if (event->button == 3) {
@@ -1865,7 +1871,7 @@ setup_full_menuitem (GtkWidget   *menuitem,
 				  G_CALLBACK (destroy_item_menu),
 				  sim);
 
-		if ( ! commie_mode) {
+		if ( ! panel_profile_get_locked_down ()) {
 			gtk_drag_source_set(menuitem,
 					    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 					    menu_item_targets, 1,
@@ -1900,7 +1906,7 @@ setup_applet_drag (GtkWidget *menuitem, const char *iid)
 	};
 	
 	if (iid == NULL ||
-	    commie_mode)
+	    panel_profile_get_locked_down ())
 		return;
 	
 	gtk_drag_source_set (menuitem,
@@ -1926,7 +1932,7 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 	};
 	
 	if (applet_type == NULL ||
-	    commie_mode)
+	    panel_profile_get_locked_down ())
 		return;
 	
 	gtk_drag_source_set (menuitem,
@@ -2670,8 +2676,18 @@ append_internal_applets (GSList *list)
 {
 	static gboolean translated = FALSE;
 	int             i;
+	gboolean inhibit_command_line = panel_profile_get_inhibit_command_line ();
+	gboolean inhibit_force_quit = panel_profile_get_inhibit_force_quit ();
 
 	for (i = 0; i < G_N_ELEMENTS (action_buttons_info); i++) {
+		if (inhibit_command_line && 
+		    action_buttons_info [i].action_type == PANEL_ACTION_RUN)
+			continue;
+
+		if (inhibit_force_quit && 
+		    action_buttons_info [i].action_type == PANEL_ACTION_FORCE_QUIT)
+			continue;
+
 		if (!translated) {
 			action_buttons_info [i].name = _(action_buttons_info [i].name);
 			action_buttons_info [i].category = _(action_buttons_info [i].category);
@@ -2935,7 +2951,8 @@ setup_remove_this_panel (GtkWidget *menu,
 
 	toplevels_writable = panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS);
 
-	if (panel_toplevel_is_last_unattached (panel_widget->toplevel))
+	if (panel_toplevel_is_last_unattached (panel_widget->toplevel) ||
+	    panel_toplevel_get_locked_down (panel_widget->toplevel))
 		gtk_widget_set_sensitive(menuitem, FALSE);
 	else
 		/* this can only be sensitive if we can actually write to
@@ -2977,7 +2994,6 @@ make_panel_submenu (PanelWidget *panel_widget,
 	Bonobo_ServerInfoList *applet_list;
 	GtkWidget             *menuitem, *submenu;
 
-
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
@@ -2992,8 +3008,9 @@ make_panel_submenu (PanelWidget *panel_widget,
 
 	applet_list = instrument_add_submenu_for_reload (GTK_MENU_ITEM (menuitem), submenu);
 
-	if ( ! panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
-	     ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS)) {
+	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
+	    ( ! panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
+	      ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))) {
 		/* if we can't write neither applets nor objects, just
 		   completely ignore this and make the whole submenu
 		   insensitive */
@@ -3030,6 +3047,9 @@ make_panel_submenu (PanelWidget *panel_widget,
 				  G_CALLBACK (panel_properties_dialog_present), 
 				  panel_widget->toplevel);
 
+	if (panel_toplevel_get_locked_down (panel_widget->toplevel))
+		gtk_widget_set_sensitive (menuitem, FALSE);
+
 	add_menu_separator (menu);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3042,8 +3062,6 @@ make_panel_submenu (PanelWidget *panel_widget,
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (create_new_panel), 
 			  NULL);
-	/* this can only be sensitive if we can actually write to the
-	   toplevels list */
 	gtk_widget_set_sensitive (menuitem, 
 				  panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS));
 
@@ -3066,7 +3084,7 @@ create_panel_context_menu (PanelWidget *panel)
 
 	retval = menu_new ();
 
-	if (!commie_mode)
+	if ( ! panel_profile_get_locked_down ())
 		make_panel_submenu (panel, retval);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3119,6 +3137,9 @@ ask_about_launcher_cb (GtkWidget *widget)
 	PanelData   *pd;
 	int          insertion_pos;
 
+	if (panel_profile_get_inhibit_command_line ())
+		return;
+
 	panel_widget = menu_get_panel (widget);
 
 	pd = g_object_get_data (G_OBJECT (panel_widget->toplevel), "PanelData");
@@ -3141,14 +3162,16 @@ make_add_submenu (GtkWidget             *menu,
 
 	create_applets_menu (menu, applet_list);
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher..."), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(ask_about_launcher_cb),NULL);
-	setup_internal_applet_drag(menuitem, "LAUNCHER:ASK");
-	gtk_widget_set_sensitive (menuitem, objects_writable);
+	if ( ! panel_profile_get_inhibit_command_line ()) {
+		menuitem = gtk_image_menu_item_new ();
+		setup_stock_menu_item (
+				       menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LAUNCHER, _("Launcher..."), TRUE);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		g_signal_connect (G_OBJECT(menuitem), "activate",
+				  G_CALLBACK(ask_about_launcher_cb),NULL);
+		setup_internal_applet_drag(menuitem, "LAUNCHER:ASK");
+		gtk_widget_set_sensitive (menuitem, objects_writable);
+	}
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
@@ -3341,7 +3364,7 @@ create_root_menu (GtkWidget   *root_menu,
 					  FALSE /*launcher_add */);
 	}
 
-	if ( ! no_run_box && extra_items) {
+	if ( ! panel_profile_get_inhibit_command_line () && extra_items) {
 		add_menu_separator (root_menu);
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (

@@ -114,17 +114,19 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menubar->priv->actions_menu);
 
-	panel_menu_bar_append_action_item (
-			menubar,
-			menubar->priv->actions_menu,
-			_("Run Application..."),
-			PANEL_STOCK_RUN,
-			_("Run an Application by entering a command"),
-			"ACTION:run:NEW",
-			G_CALLBACK (panel_action_run_program));
+	if ( ! panel_profile_get_inhibit_command_line ()) {
+		panel_menu_bar_append_action_item (
+						   menubar,
+						   menubar->priv->actions_menu,
+						   _("Run Application..."),
+						   PANEL_STOCK_RUN,
+						   _("Run an Application by entering a command"),
+						   "ACTION:run:NEW",
+						   G_CALLBACK (panel_action_run_program));
 
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+		item = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+	}
 
 	if (panel_is_program_in_path  ("gnome-search-tool"))
 		panel_menu_bar_append_action_item (

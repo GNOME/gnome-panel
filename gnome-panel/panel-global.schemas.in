@@ -194,7 +194,23 @@ Panel Global Config Schema File -  work in progress
           </long>
         </locale>
       </schema>
-      
+
+      <schema>
+        <key>/schemas/apps/panel/global/locked_down</key>
+        <applyto>/apps/panel/global/locked_down</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Complete panel lockdown</short>
+          <long>If true, the panel will not allow any changes to
+		the configuration of the panel.  Individual applets
+		may need to be locked down separately however.
+		The panel must be restarted for this to take effect.
+          </long>
+        </locale>
+      </schema>
+
   </schemalist>
   
 </gconfschemafile>
