@@ -57,6 +57,11 @@ load_default_applets(void)
 }
 
 static void
+load_default_drawers(void)
+{
+}
+
+static void
 init_user_drawers(void)
 {
 	char *drawer_name;
@@ -69,7 +74,7 @@ init_user_drawers(void)
 
 	count=gnome_config_get_int("/panel/Config/drawer_count=0");
 	if(count<=0)
-		load_default_applets();
+		load_default_drawers();
 	for(num=1;num<=count;num++) {
 		sprintf(buf,"/panel/Drawer_%d/name=Drawer",num);
 		drawer_name = gnome_config_get_string(buf);
