@@ -7,8 +7,8 @@
    has MANY interdependencies, which makes it almost impossible to use in
    anything else but the panel, what it would need is some serious
    cleaning up*/
-#ifndef __PANEL_WIDGET_H__
-#define __PANEL_WIDGET_H__
+#ifndef PANEL_WIDGET_H
+#define PANEL_WIDGET_H
 
 
 #include <gtk/gtk.h>
@@ -24,7 +24,7 @@ BEGIN_GNOME_DECLS
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
-#define PANEL_MINIMUM_WIDTH 24
+#define PANEL_MINIMUM_WIDTH 12
 
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
@@ -246,4 +246,4 @@ extern gboolean panel_applet_in_drag;
 
 END_GNOME_DECLS
 
-#endif /* __PANEL_WIDGET_H__ */
+#endif /* PANEL_WIDGET_H */

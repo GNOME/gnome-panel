@@ -36,6 +36,8 @@ extern PortableServer_POA thepoa;
 
 #define DOCKLET_SPOT 22
 
+#define MINIMUM_WIDTH 10
+
 /*this will show debug output and put the offscreen window on 10 10 to
   view it*/
 /*#define DEBUG_STATUS 1*/
@@ -100,16 +102,12 @@ status_applet_update(StatusApplet *s)
 	else
 		GTK_HANDLE_BOX(s->handle)->handle_position = GTK_POS_TOP;
 	
-	switch(s->size) {
-	case SIZE_TINY: sz = 24; break;
-	case SIZE_SMALL: sz = 36; break;
-	case SIZE_STANDARD: sz = 48; break;
-	case SIZE_LARGE: sz = 64; break;
-	case SIZE_HUGE: sz = 80; break;
-	default: sz = 48; break;
-	}
+	sz = s->size;
 	
-	rows = sz/DOCKLET_SPOT;
+	rows = s->size / DOCKLET_SPOT;
+
+	if (rows <= 0)
+		rows = 1;
 
 	if(nspots%rows == 0)
 		w = DOCKLET_SPOT*(nspots/rows);
@@ -117,7 +115,7 @@ status_applet_update(StatusApplet *s)
 		w = DOCKLET_SPOT*((nspots/rows)+1);
 	
 	/*make minimum size*/
-	if(w<10) w = 10;	
+	if(w < MINIMUM_WIDTH) w = MINIMUM_WIDTH;	
 
 	h = DOCKLET_SPOT*rows;
 

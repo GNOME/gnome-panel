@@ -150,21 +150,27 @@ update_config_size(GtkWidget *panel)
 		return;
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 	switch(p->sz) {
-	case SIZE_TINY:
+	case SIZE_ULTRA_TINY:
 		i = 0;
 		break;
-	case SIZE_SMALL:
+	case SIZE_TINY:
 		i = 1;
+		break;
+	case SIZE_SMALL:
+		i = 2;
 		break;
 	default:
 	case SIZE_STANDARD:
-		i = 2;
-		break;
-	case SIZE_LARGE:
 		i = 3;
 		break;
-	case SIZE_HUGE:
+	case SIZE_LARGE:
 		i = 4;
+		break;
+	case SIZE_HUGE:
+		i = 5;
+		break;
+	case SIZE_RIDICULOUS:
+		i = 6;
 		break;
 	}
 	
@@ -900,6 +906,14 @@ make_size_widget (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (activate_proper_item), 
 			    NULL);
 
+	menuitem = gtk_menu_item_new_with_label (_("Ultra Tiny (12 pixels)"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (size_set_size),
+			    GINT_TO_POINTER (SIZE_ULTRA_TINY));
+
 	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -940,6 +954,14 @@ make_size_widget (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (size_set_size),
 			    GINT_TO_POINTER (SIZE_HUGE));
 
+	menuitem = gtk_menu_item_new_with_label (_("Ridiculous (128 pixels)"));
+	gtk_widget_show(menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (size_set_size),
+			    GINT_TO_POINTER (SIZE_RIDICULOUS));
+
 	ppc->size_menu = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->size_menu), menu);
 	
@@ -955,21 +977,27 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
 	switch(ppc->sz) {
-	case SIZE_TINY:
+	case SIZE_ULTRA_TINY:
 		i = 0;
 		break;
-	case SIZE_SMALL:
+	case SIZE_TINY:
 		i = 1;
+		break;
+	case SIZE_SMALL:
+		i = 2;
 		break;
 	default:
 	case SIZE_STANDARD:
-		i = 2;
-		break;
-	case SIZE_LARGE:
 		i = 3;
 		break;
-	case SIZE_HUGE:
+	case SIZE_LARGE:
 		i = 4;
+		break;
+	case SIZE_HUGE:
+		i = 5;
+		break;
+	case SIZE_RIDICULOUS:
+		i = 6;
 		break;
 	}
 

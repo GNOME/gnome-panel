@@ -815,7 +815,9 @@ load_default_applets1(PanelWidget *panel)
 	char *p;
 	int sz;
 
-	if(gdk_screen_width() < 800)
+	if(gdk_screen_width() <= 320)
+		sz = SIZE_ULTRA_TINY;
+	else if(gdk_screen_width() < 800)
 		sz = SIZE_TINY;
 	else if(gdk_screen_width() < 1024)
 		sz = SIZE_SMALL;
@@ -1094,7 +1096,10 @@ init_user_panels(void)
 		int sz;
 		gboolean hidebutton_pixmaps;
 
-		if(gdk_screen_width() < 800) {
+		if(gdk_screen_width() <= 320) {
+			sz = SIZE_ULTRA_TINY;
+			hidebutton_pixmaps = FALSE;
+		} else if(gdk_screen_width() < 800) {
 			sz = SIZE_TINY;
 			hidebutton_pixmaps = FALSE;
 		} else if(gdk_screen_width() < 1024) {
@@ -1123,7 +1128,11 @@ init_user_panels(void)
 		/*load up default applets on the default panel*/
 		load_default_applets1(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
 
-		if(gdk_screen_height() < 600) {
+		/*
+		if(gdk_screen_height() <= 240) {
+			sz = SIZE_ULTRA_TINY;
+			hidebutton_pixmaps = FALSE;
+		} else if(gdk_screen_height() < 600) {
 			sz = SIZE_TINY;
 			hidebutton_pixmaps = FALSE;
 		} else if(gdk_screen_height() < 768) {
@@ -1134,7 +1143,7 @@ init_user_panels(void)
 			hidebutton_pixmaps = TRUE;
 		}
 
-		/*panel = aligned_widget_new(ALIGNED_LEFT,
+		panel = aligned_widget_new(ALIGNED_LEFT,
 					   BORDER_RIGHT,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,

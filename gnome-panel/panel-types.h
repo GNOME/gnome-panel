@@ -12,11 +12,13 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 #define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
 
 enum {
+	SIZE_ULTRA_TINY = 12,
 	SIZE_TINY = 24,
 	SIZE_SMALL = 36,
 	SIZE_STANDARD = 48,
 	SIZE_LARGE = 64,
-	SIZE_HUGE = 80
+	SIZE_HUGE = 80,
+	SIZE_RIDICULOUS = 128
 };
 
 typedef GNOME_Panel_BackType PanelBackType;

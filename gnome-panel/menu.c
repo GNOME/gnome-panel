@@ -3410,6 +3410,9 @@ update_size_menu (GtkWidget *menu, gpointer data)
 	char *s = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	switch (cur_panel->sz) {
+	case SIZE_ULTRA_TINY:
+		s = MENU_SIZE_ULTRA_TINY;
+		break;
 	case SIZE_TINY:
 		s = MENU_SIZE_TINY;
 		break;
@@ -3424,6 +3427,9 @@ update_size_menu (GtkWidget *menu, gpointer data)
 		break;
 	case SIZE_HUGE:
 		s = MENU_SIZE_HUGE;
+		break;
+	case SIZE_RIDICULOUS:
+		s = MENU_SIZE_RIDICULOUS;
 		break;
 	default:
 		return;
@@ -3603,11 +3609,13 @@ make_properties_submenu (GtkWidget *menu)
 	};
 
 	NameIdEnum sizes[] = {
+		{ N_("Ultra Tiny (12 pixels)"), MENU_SIZE_ULTRA_TINY, SIZE_ULTRA_TINY },
 		{ N_("Tiny (24 pixels)"), MENU_SIZE_TINY, SIZE_TINY },
 		{ N_("Small (36 pixels)"), MENU_SIZE_SMALL, SIZE_SMALL },
 		{ N_("Standard (48 pixels)"), MENU_SIZE_STANDARD, SIZE_STANDARD },
 		{ N_("Large (64 pixels)"), MENU_SIZE_LARGE, SIZE_LARGE },
 		{ N_("Huge (80 pixels)"), MENU_SIZE_HUGE, SIZE_HUGE },
+		{ N_("Ridiculous (128 pixels)"), MENU_SIZE_RIDICULOUS, SIZE_RIDICULOUS },
 		{ NULL, NULL, -1 }
 	};
 

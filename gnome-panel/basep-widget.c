@@ -765,12 +765,12 @@ make_hidebutton(BasePWidget *basep,
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	w=gtk_button_new();
-	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+	w = gtk_button_new();
+	GTK_WIDGET_UNSET_FLAGS(w, GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
 	if(horizontal)
-		gtk_widget_set_usize(w,0,PANEL_MINIMUM_WIDTH);
+		gtk_widget_set_usize(w, 0, PANEL_MINIMUM_WIDTH);
 	else
-		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
+		gtk_widget_set_usize(w, PANEL_MINIMUM_WIDTH, 0);
 
 	pixmap_name=gnome_pixmap_file(pixmaparrow);
 	if(pixmap_name) {
