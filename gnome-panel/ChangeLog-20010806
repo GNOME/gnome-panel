@@ -1,3 +1,38 @@
+1999-12-29  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	Right now floating a panel menu doesn't work.  I will fix
+	this when I'm not so tired.
+	
+	* session.c (load_default_applets1): change the defaults
+	to show a panel and desktop sub menu
+
+	* gnome-run.c (show_run_dialog): don't use pixmaps on
+	the buttons
+
+	* basep-widget.c (basep_widget_autohide): evi^H^H^Hvery
+	beautiful and elegant way of not hiding when an applet
+	pops up a menu (eg, tasklist), without adding any API
+
+	* menu-fentry.c (init_fr_chunks): use memchunks for the
+	file and dir recs.  This might help mem usage a little.
+
+	* menu.h: add flags for panel and desktop menus
+
+	* menu-properties.c (create_properties_dialog): 
+	(properties_apply_callback): deal with new menu flags
+	for panel and desktop
+
+	* nothing.cP: use the new and improved GEGL
+	* menu.c (about_cb): ditto
+
+1999-12-28  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* menu.c (about_cb): only show one about box
+	(add_drawers_from_dir): clean up code a little to not
+	indent so much
+	(add_menu_to_panel): don't mask with _MENU_* and _MENU_*_SUB,
+	only _MENU_*_SUB
+
 Wed Dec 15 14:59:17 1999  George Lebl <jirka@5z.com>
 
 	* panel.[ch],applet-widget.c: fix warnings

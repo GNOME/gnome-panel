@@ -25,6 +25,16 @@
 
 static GSList *dir_list = NULL;
 
+static GMemChunk *file_chunk = NULL;
+static GMemChunk *dir_chunk = NULL;
+
+void
+init_fr_chunks ()
+{
+	file_chunk = g_mem_chunk_create (FileRec, 64, G_ALLOC_AND_FREE);
+	dir_chunk  = g_mem_chunk_create (DirRec,  16, G_ALLOC_AND_FREE);
+}
+
 /*reads in the order file and makes a list*/
 static GSList *
 get_presorted_from(char *dir)
@@ -130,7 +140,10 @@ fr_free(FileRec *fr, int free_fr)
 	}
 	if(free_fr) {
 		dir_list = g_slist_remove(dir_list,fr);
-		g_free(fr);
+		if (fr->type == FILE_REC_DIR)
+			g_chunk_free (fr, dir_chunk);
+		else
+			g_chunk_free (fr, file_chunk);
 	} else  {
 		if(fr->type == FILE_REC_DIR)
 			memset(fr,0,sizeof(DirRec));
@@ -152,7 +165,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	g_return_if_fail(fr!=NULL);
 	g_return_if_fail(fr->name!=NULL);
 
-	ffr = g_new0(FileRec,1);
+	ffr = g_chunk_new0 (FileRec, file_chunk);
 	ffr->type = FILE_REC_EXTRA;
 	ffr->name = g_concat_dir_and_file(fr->name,".order");
 	ffr->parent = dr;
@@ -190,7 +203,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 			dentry = gnome_desktop_entry_load(name);
 			if(dentry) {
-				ffr = g_new0(FileRec,1);
+				ffr = g_chunk_new0 (FileRec, file_chunk);
 				ffr->type = FILE_REC_FILE;
 				ffr->name = name;
 				ffr->mtime = s.st_mtime;
@@ -224,7 +237,7 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 
 	/*this will zero all fields*/
 	if(!dr)
-		dr = g_new0(DirRec,1);
+		dr = g_chunk_new0 (DirRec, dir_chunk);
 	fr = (FileRec *)dr;
 
 	if(fr->last_stat < curtime-1) {

@@ -97,7 +97,7 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = gnome_unconditional_pixmap_file("gnome-gegl.png");
+		file = gnome_unconditional_pixmap_file("gnome-gegl2.png");
 		if(!file || !g_file_exists (file) ||
 		   !(pb=gdk_pixbuf_new_from_file (file))) {
 			g_warning("Goat is not available!");

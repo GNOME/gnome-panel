@@ -698,22 +698,22 @@ load_default_applets1(PanelWidget *panel)
 		"gnome/apps/Applications/Netscape.desktop",
 		NULL };
 	int i;
-	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER|
-		MAIN_MENU_SYSTEM_SUB|MAIN_MENU_USER_SUB|
-		MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB;
+	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
+		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
+		MAIN_MENU_DESKTOP_SUB;
 	char *p;
 
 	/*guess redhat menus*/
 	if(g_file_exists(REDHAT_MENUDIR))
-		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		flags |= MAIN_MENU_REDHAT_SUB;
 
 	/*guess KDE menus*/
 	if(g_file_exists(KDE_MENUDIR))
-		flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+		flags |= MAIN_MENU_KDE_SUB;
 
 	/*guess debian menus*/
 	if (g_file_exists(DEBIAN_MENUDIR))
-		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
+		flags |= MAIN_MENU_DEBIAN_SUB;
 	
 	load_menu_applet(NULL,flags, panels->data, 0);
 
@@ -839,21 +839,21 @@ init_user_applets(void)
 				if(type == X_MAIN_MENU_BOTH) {
 					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
 				} else if(type == X_MAIN_MENU_SYSTEM) {
-					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER|
+					flags |= MAIN_MENU_SYSTEM|
 						MAIN_MENU_USER_SUB;
 				} else {
-					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB|
+					flags |= MAIN_MENU_SYSTEM_SUB|
 						MAIN_MENU_USER;
 				}
 				/*guess redhat menus*/
 				if(g_file_exists("/etc/X11/wmconfig"))
-					flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+					flags |= MAIN_MENU_REDHAT_SUB;
 				/*guess KDE menus */
 				if(g_file_exists(KDE_MENUDIR))
-					flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+					flags |= MAIN_MENU_KDE_SUB;
 				/*guess debian menus*/
 				if (g_file_exists(DEBIAN_MENUDIR))
-					flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
+					flags |= MAIN_MENU_DEBIAN_SUB;
 			}
 			load_menu_applet(params,flags,panel,pos);
 			g_free(params);

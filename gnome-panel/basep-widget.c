@@ -1433,6 +1433,16 @@ basep_widget_autohide (gpointer data)
 	if (panel_applet_in_drag || basep->drawers_open>0)
 		return TRUE;
 
+	if (!gdk_pointer_is_grabbed ()) {
+		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+				      0, NULL, NULL, GDK_CURRENT_TIME)
+		    != GrabSuccess) {
+			return TRUE;
+		} else {
+			gdk_pointer_ungrab (GDK_CURRENT_TIME);
+		}
+	}
+
 	gnome_triggers_vdo("", NULL, supinfo);
 
 	if (GTK_WIDGET_REALIZED(basep)) {

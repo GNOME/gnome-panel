@@ -53,7 +53,7 @@ FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(char *mdir);
 
-
+void init_fr_chunks (void);
 END_GNOME_DECLS
 
 #endif

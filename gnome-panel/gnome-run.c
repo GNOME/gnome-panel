@@ -42,8 +42,11 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	s = gtk_editable_get_chars (GTK_EDITABLE (
 		gnome_file_entry_gtk_entry (fentry)),
 				    0, -1);
+	if (strlen (s) == 0) {
+		g_free (s);
+		return;
+	}
 
-	gnome_entry_load_history (entry);
 	gnome_entry_prepend_history (entry, 1, s);
 	gnome_entry_save_history (entry);
 	gnome_config_sync ();
@@ -70,27 +73,26 @@ show_run_dialog ()
 	GtkWidget *dialog;
 	GtkWidget *fentry;
 	GtkWidget *entry;
+	GtkWidget *gentry;
 
-	dialog = gnome_dialog_new(_("Run Program"), NULL);
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
-						_("Run"), 
-						GNOME_STOCK_PIXMAP_EXEC);
-	gnome_dialog_append_button (GNOME_DIALOG (dialog),
-				    GNOME_STOCK_BUTTON_CANCEL);
+	dialog = gnome_dialog_new(_("Run Program"), 
+				  _("Run"), _("Cancel"), NULL);
 
 	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog), TRUE);
 	
-	fentry = gnome_file_entry_new( "gnome-run",
+	fentry = gnome_file_entry_new ("gnome-run",
 				       _("Select a program to run"));
-	
-	gnome_entry_load_history (GNOME_ENTRY (
-		gnome_file_entry_gnome_entry (GNOME_FILE_ENTRY (fentry))));
+	gentry = gnome_file_entry_gnome_entry (GNOME_FILE_ENTRY (fentry));
+	gnome_entry_load_history (GNOME_ENTRY (gentry));
+	gnome_entry_prepend_history (GNOME_ENTRY (gentry), FALSE, "");
 	
 	gtk_window_set_focus (GTK_WINDOW (dialog),
 			      gnome_file_entry_gtk_entry (
 				      GNOME_FILE_ENTRY (fentry)));
-
+	gtk_combo_set_use_arrows_always (GTK_COMBO (
+		gnome_file_entry_gnome_entry (GNOME_FILE_ENTRY (fentry))),
+					 TRUE);
 	gtk_signal_connect(GTK_OBJECT (dialog), "clicked", 
 			   GTK_SIGNAL_FUNC (string_callback), fentry);
 

@@ -661,6 +661,10 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 				current_panel =
 					PANEL_WIDGET(basep->panel);
 				menu = make_popup_panel_menu ();
+				BASEP_WIDGET(basep)->autohide_inhibit 
+					= TRUE;
+				basep_widget_autohide (
+					BASEP_WIDGET (basep));
 				gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
 						global_config.off_panel_popups
 						? panel_menu_position : NULL,
@@ -830,10 +834,10 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 
 			  /*guess redhat menus*/
 			  if(g_file_exists("/etc/X11/wmconfig"))
-				  flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+				  flags |= MAIN_MENU_REDHAT_SUB;
 			  /* Guess KDE menus */
 			  if(g_file_exists(KDE_MENUDIR))
-				  flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+				  flags |= MAIN_MENU_KDE_SUB;
 			  load_menu_applet(ltmp->data, flags, panel, pos);
 		  } else if(S_IEXEC & s.st_mode) /*executable?*/
 		    ask_about_launcher(ltmp->data,panel,pos);
@@ -895,10 +899,10 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 
 			/*guess redhat menus*/
 			if(g_file_exists("/etc/X11/wmconfig"))
-				flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+				flags |= MAIN_MENU_REDHAT_SUB;
 			/* Guess KDE menus */
 			if(g_file_exists(KDE_MENUDIR))
-				flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+				flags |= MAIN_MENU_KDE_SUB;
 
 			load_menu_applet(NULL,flags, panel, pos);
 		} else if(strcmp(applet_type,"DRAWER:NEW")==0) {

@@ -88,18 +88,25 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
 	Menu *menu = data;
 	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget), "main_menu");
-	GtkWidget *system_off = gtk_object_get_data(GTK_OBJECT(widget), "system_off");
+	GtkWidget *system = gtk_object_get_data(GTK_OBJECT(widget), "system");
 	GtkWidget *system_sub = gtk_object_get_data(GTK_OBJECT(widget), "system_sub");
-	GtkWidget *user_off = gtk_object_get_data(GTK_OBJECT(widget), "user_off");
+	GtkWidget *user = gtk_object_get_data(GTK_OBJECT(widget), "user");
 	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
-	GtkWidget *applets_off = gtk_object_get_data(GTK_OBJECT(widget), "applets_off");
+	GtkWidget *applets = gtk_object_get_data(GTK_OBJECT(widget), "applets");
 	GtkWidget *applets_sub = gtk_object_get_data(GTK_OBJECT(widget), "applets_sub");
-	GtkWidget *redhat_off = gtk_object_get_data(GTK_OBJECT(widget), "redhat_off");
+	GtkWidget *redhat = gtk_object_get_data(GTK_OBJECT(widget), "redhat");
 	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
- 	GtkWidget *kde_off = gtk_object_get_data(GTK_OBJECT(widget), "kde_off");
+ 	GtkWidget *kde = gtk_object_get_data(GTK_OBJECT(widget), "kde");
  	GtkWidget *kde_sub = gtk_object_get_data(GTK_OBJECT(widget), "kde_sub");
-	GtkWidget *debian_off = gtk_object_get_data(GTK_OBJECT(widget), "debian_off");
+	GtkWidget *debian = gtk_object_get_data(GTK_OBJECT(widget), "debian");
 	GtkWidget *debian_sub = gtk_object_get_data(GTK_OBJECT(widget), "debian_sub");
+
+	GtkWidget *panel = gtk_object_get_data(GTK_OBJECT(widget), "panel");
+	GtkWidget *panel_sub = gtk_object_get_data(GTK_OBJECT(widget), "panel_sub");
+
+	GtkWidget *desktop = gtk_object_get_data(GTK_OBJECT(widget), "desktop");
+	GtkWidget *desktop_sub = gtk_object_get_data(GTK_OBJECT(widget), "desktop_sub");
+
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
 	char *s;
 
@@ -129,54 +136,46 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		else
 			menu->path = g_strdup(s);
 	}
-	if(GTK_TOGGLE_BUTTON(system_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB);
-	else if(GTK_TOGGLE_BUTTON(system_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB;
-	else {
+	menu->main_menu_flags = 0;
+	if (GTK_TOGGLE_BUTTON(system_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_SYSTEM_SUB;
+	else if (GTK_TOGGLE_BUTTON(system)->active)
 		menu->main_menu_flags |= MAIN_MENU_SYSTEM;
-		menu->main_menu_flags &=~ MAIN_MENU_SYSTEM_SUB;
-	}
-	if(GTK_TOGGLE_BUTTON(user_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_USER|MAIN_MENU_USER_SUB);
-	else if(GTK_TOGGLE_BUTTON(user_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_USER|MAIN_MENU_USER_SUB;
-	else {
+
+	if(GTK_TOGGLE_BUTTON(user_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_USER_SUB;
+	else if (GTK_TOGGLE_BUTTON (user)->active)
 		menu->main_menu_flags |= MAIN_MENU_USER;
-		menu->main_menu_flags &=~ MAIN_MENU_USER_SUB;
-	}
-	if(GTK_TOGGLE_BUTTON(applets_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB);
-	else if(GTK_TOGGLE_BUTTON(applets_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB;
-	else {
+
+	if(GTK_TOGGLE_BUTTON(applets_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_APPLETS_SUB;
+	else if (GTK_TOGGLE_BUTTON (applets)->active)
 		menu->main_menu_flags |= MAIN_MENU_APPLETS;
-		menu->main_menu_flags &=~ MAIN_MENU_APPLETS_SUB;
-	}
-	if(GTK_TOGGLE_BUTTON(redhat_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB);
-	else if(GTK_TOGGLE_BUTTON(redhat_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
-	else {
+
+	if(GTK_TOGGLE_BUTTON(redhat_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_REDHAT_SUB;
+	else if (GTK_TOGGLE_BUTTON (redhat)->active)
 		menu->main_menu_flags |= MAIN_MENU_REDHAT;
-		menu->main_menu_flags &=~ MAIN_MENU_REDHAT_SUB;
-	}
-	if(GTK_TOGGLE_BUTTON(debian_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB);
-	else if(GTK_TOGGLE_BUTTON(debian_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
-	else {
+
+	if(GTK_TOGGLE_BUTTON(debian_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_DEBIAN_SUB;
+	else if (GTK_TOGGLE_BUTTON (debian)->active)
 		menu->main_menu_flags |= MAIN_MENU_DEBIAN;
-		menu->main_menu_flags &=~ MAIN_MENU_DEBIAN_SUB;
-	}
-	if(GTK_TOGGLE_BUTTON(kde_off)->active)
-		menu->main_menu_flags &=~ (MAIN_MENU_KDE|MAIN_MENU_KDE_SUB);
-	else if(GTK_TOGGLE_BUTTON(kde_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
-	else {
+
+	if(GTK_TOGGLE_BUTTON(kde_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_KDE_SUB;
+	else if (GTK_TOGGLE_BUTTON (kde)->active)
 		menu->main_menu_flags |= MAIN_MENU_KDE;
-		menu->main_menu_flags &=~ MAIN_MENU_KDE_SUB;
-	}
+
+	if(GTK_TOGGLE_BUTTON(panel_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_PANEL_SUB;
+	else if (GTK_TOGGLE_BUTTON(panel)->active)
+		menu->main_menu_flags |= MAIN_MENU_PANEL;
+
+	if(GTK_TOGGLE_BUTTON(desktop_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_DESKTOP_SUB;
+	else if (GTK_TOGGLE_BUTTON(desktop)->active)
+		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
 	if(menu->menu)
 		gtk_widget_destroy(menu->menu);	
@@ -255,11 +254,11 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	char *p;
 	GtkWidget *w;
 	GtkWidget *rb;
-
+#if 0
 	/*sanity checks*/
 	if(!on)
 		sub = FALSE;
-	
+#endif
 	w = gtk_label_new(title);
 	gtk_table_attach_defaults(table,w,0,1,row,row+1);
 	
@@ -268,7 +267,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	p = g_strconcat(ident,"_off",NULL);
 	gtk_object_set_data(dialog,p,w);
 	g_free(p);
-	if(!on)
+	if(!on && !sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
@@ -288,8 +287,9 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("On the main menu"));
+	gtk_object_set_data (dialog, ident, w);
 	gtk_table_attach_defaults(table,w,1,2,row,row+1);
-	if(on && !sub)
+	if(on)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
@@ -351,7 +351,7 @@ create_properties_dialog(Menu *menu)
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_frame",f);
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
-	table = gtk_table_new(5,4,FALSE);
+	table = gtk_table_new(7,4,FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(table),GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f),table);
 
@@ -379,7 +379,15 @@ create_properties_dialog(Menu *menu)
 			      _("Debian menu (if found): "),"debian",
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN,
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN_SUB);
-	
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),6,
+			      _("Panel menu: "),"panel",
+			      menu->main_menu_flags&MAIN_MENU_PANEL,
+			      menu->main_menu_flags&MAIN_MENU_PANEL_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),7,
+			      _("Desktop menu: "),"desktop",
+			      menu->main_menu_flags&MAIN_MENU_DESKTOP,
+			      menu->main_menu_flags&MAIN_MENU_DESKTOP_SUB);
+
 	f = gtk_frame_new(_("Normal menu"));
 	if(!menu->path || strcmp(menu->path,".")==0)
 		gtk_widget_set_sensitive(f,FALSE);

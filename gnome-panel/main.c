@@ -261,6 +261,8 @@ main(int argc, char **argv)
 
 	/*set the globals*/
 	load_up_globals();
+
+	init_fr_chunks ();
 	
 	init_menus();
 	
