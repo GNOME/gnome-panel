@@ -44,4 +44,5 @@ endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
-         $(slashapp) $(fvwm_pager) $(esdmanager) $(gticker)
+         $(slashapp) $(fvwm_pager) $(esdmanager) $(gticker) $(bussign)
+
