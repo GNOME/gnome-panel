@@ -6,6 +6,7 @@
  */
 
 #include "config.h"
+#include "panel-marshal.h"
 #include "aligned-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
@@ -62,18 +63,21 @@ static guint aligned_pos_signals[LAST_SIGNAL] = { 0 };
 static void
 aligned_pos_class_init (AlignedPosClass *klass)
 {
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+
 	
 	aligned_pos_signals[ALIGN_CHANGE_SIGNAL] =
-		gtk_signal_new ("align_change",
-				GTK_RUN_LAST,
-				GTK_CLASS_TYPE (object_class),
-				GTK_SIGNAL_OFFSET (AlignedPosClass,
-						   align_change),
-				gtk_marshal_VOID__ENUM,
-				GTK_TYPE_NONE,
-				1, PANEL_TYPE_ALIGNED_ALIGNMENT);
+		g_signal_new ("align_change",
+			      G_SIGNAL_RUN_LAST,
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_STRUCT_OFFSET (AlignedPosClass, align_change),
+			      NULL,
+			      NULL,
+			      panel_marshal_VOID__ENUM,
+			      G_TYPE_NONE,
+			      1, 
+			      PANEL_TYPE_ALIGNED_ALIGNMENT);
 
 	pos_class->set_pos = aligned_pos_set_pos;
 	pos_class->get_pos = aligned_pos_get_pos;
@@ -301,9 +305,9 @@ aligned_widget_change_params (AlignedWidget *aligned,
 
 	if (pos->align != align) {
 		pos->align = align;
-		gtk_signal_emit (GTK_OBJECT (pos),
-				 aligned_pos_signals[ALIGN_CHANGE_SIGNAL],
-				 align);
+		g_signal_emit (G_OBJECT (pos),
+			       aligned_pos_signals[ALIGN_CHANGE_SIGNAL],
+			       0, align);
 	}
 
 	border_widget_change_params (BORDER_WIDGET (aligned),

@@ -241,7 +241,9 @@ get_mfiles_from_menudir (const char *menudir)
 static char *
 get_applet_goad_id_from_ditem(QuickDesktopItem *ii)
 {
+#ifdef MENU_FENTRY_DEBUG
   printf ("GET THAT GOAD OUT OF HERE...menu-fentry.c get_applet_gaod_id_from_ditem\n");
+#endif
   return NULL;
   /*
 	int i;

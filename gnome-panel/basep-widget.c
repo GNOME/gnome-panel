@@ -13,6 +13,7 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-macros.h>
+#include "panel-marshal.h"
 #include "panel-widget.h"
 #include "basep-widget.h"
 #include "panel-util.h"
@@ -183,45 +184,52 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                                              G_PARAM_READWRITE));
 
 	/*basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
-		g_signal_new("type_change",
-			     GTK_RUN_LAST,
-			     gtk_object_class->type,
-			     GTK_SIGNAL_OFFSET(BasePWidgetClass,
-			 		       type_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_PANEL_TYPE);*/
+		g_signal_new ("type_change",
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (BasePWidgetClass, type_change),
+			      NULL,
+			      NULL,
+			      panel_marshal_VOID__ENUM,
+			      G_TYPE_NONE,
+			      1,
+			      PANEL_TYPE_OBJECT_TYPE); */
 
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
-		gtk_signal_new("mode_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(gtk_object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 mode_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_BASE_PMODE);
+		g_signal_new	("mode_change",
+			       	G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BasePWidgetClass, mode_change),
+				NULL,
+				NULL,
+				panel_marshal_VOID__ENUM,
+				G_TYPE_NONE,
+				1,
+				PANEL_TYPE_BASE_PMODE);
 
 	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
-		gtk_signal_new("state_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(gtk_object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 state_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_BASE_PSTATE);
+		g_signal_new	("state_change",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BasePWidgetClass, state_change),
+				NULL,
+				NULL,
+				panel_marshal_VOID__ENUM,
+				G_TYPE_NONE,
+				1,
+				PANEL_TYPE_BASE_PSTATE);
 
 	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
-		gtk_signal_new("screen_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(gtk_object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 screen_change),
-			       gtk_marshal_NONE__INT,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_INT);
+		g_signal_new	("screen_change",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST,
+				G_STRUCT_OFFSET (BasePWidgetClass, screen_change),
+				NULL,
+				NULL,
+				panel_marshal_VOID__ENUM,
+				G_TYPE_NONE,
+				1,
+				G_TYPE_INT);
 
 }
 
@@ -1126,8 +1134,8 @@ basep_widget_instance_init (BasePWidget *basep)
 
 	/*don't let us close the window*/                                       
 	
-	gtk_signal_connect(GTK_OBJECT(basep),"delete_event",                    
-			   GTK_SIGNAL_FUNC(gtk_true),NULL);                     
+	g_signal_connect(G_OBJECT(basep),"delete_event",                    
+			 (GCallback) gtk_true,NULL);                     
 
 	basep->shown_alloc.x = basep->shown_alloc.y =
 		basep->shown_alloc.width = basep->shown_alloc.height = 0;
@@ -1429,8 +1437,8 @@ basep_widget_construct (BasePWidget *basep,
 					rotate_pixmap_bg,
 					back_color);
 
-	gtk_signal_connect_after(GTK_OBJECT(basep->panel), "back_change",
-				 GTK_SIGNAL_FUNC(basep_back_change),
+	g_signal_connect_after (G_OBJECT (basep->panel), "back_change",
+				(GCallback) basep_back_change,
 				 basep);
 
 	PANEL_WIDGET(basep->panel)->panel_parent = GTK_WIDGET(basep);
@@ -1455,9 +1463,9 @@ basep_widget_construct (BasePWidget *basep,
 					      TRUE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_w,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
-	gtk_signal_connect (GTK_OBJECT(basep->hidebutton_w), "clicked",
-			    GTK_SIGNAL_FUNC (basep_widget_west_clicked),
-			    basep);
+	g_signal_connect (G_OBJECT (basep->hidebutton_w), "clicked",
+			  (GCallback) basep_widget_west_clicked,
+			  basep);
 	/*NORTH*/
 	basep->hidebutton_n = make_hidebutton(basep,
 					      reverse_arrows?
@@ -1466,8 +1474,8 @@ basep_widget_construct (BasePWidget *basep,
 					      FALSE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
-	gtk_signal_connect (GTK_OBJECT(basep->hidebutton_n), "clicked",
-			    GTK_SIGNAL_FUNC (basep_widget_north_clicked),
+	g_signal_connect (G_OBJECT (basep->hidebutton_n), "clicked",
+			  (GCallback) basep_widget_north_clicked,
 			    basep);
 	/*EAST*/
 	basep->hidebutton_e = make_hidebutton(basep,
@@ -1477,8 +1485,8 @@ basep_widget_construct (BasePWidget *basep,
 					      TRUE);
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_e,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
-	gtk_signal_connect (GTK_OBJECT(basep->hidebutton_e), "clicked",
-			    GTK_SIGNAL_FUNC (basep_widget_east_clicked),
+	g_signal_connect (G_OBJECT (basep->hidebutton_e), "clicked",
+			  (GCallback) basep_widget_east_clicked,
 			    basep);
 	/*SOUTH*/
 	basep->hidebutton_s = make_hidebutton (basep,
@@ -1488,8 +1496,8 @@ basep_widget_construct (BasePWidget *basep,
 					      FALSE);
 	gtk_table_attach(GTK_TABLE(basep->table), basep->hidebutton_s,
 			 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-	gtk_signal_connect (GTK_OBJECT(basep->hidebutton_s), "clicked",
-			    GTK_SIGNAL_FUNC (basep_widget_south_clicked),
+	g_signal_connect (G_OBJECT (basep->hidebutton_s), "clicked",
+			  (GCallback) basep_widget_south_clicked,
 			    basep);
 
 	basep->screen = screen;
@@ -1556,18 +1564,18 @@ basep_widget_change_params (BasePWidget *basep,
 		basep->mode = mode;
 		if (mode == BASEP_AUTO_HIDE)
 			basep_widget_queue_autohide (basep);
-		gtk_signal_emit(GTK_OBJECT(basep),
-				basep_widget_signals[MODE_CHANGE_SIGNAL],
-				mode);
+		g_signal_emit (G_OBJECT(basep),
+			       basep_widget_signals[MODE_CHANGE_SIGNAL],
+			       0, mode);
 	}
 	
 	if (state != basep->state) {
 		basep->state = state;
 		if (state != BASEP_AUTO_HIDDEN)
 			basep_widget_autoshow (basep);
-		gtk_signal_emit(GTK_OBJECT(basep),
-				basep_widget_signals[STATE_CHANGE_SIGNAL],
-				state);
+		g_signal_emit (G_OBJECT(basep),
+			       basep_widget_signals[STATE_CHANGE_SIGNAL],
+			       0, state);
 		panels_to_sync = TRUE;
 	}
 
@@ -1637,9 +1645,9 @@ basep_widget_convert_to (BasePWidget *basep,
 	g_print ("-------------------------------------\n");
 	basep_widget_set_pos (basep, x, y);
 	basep->keep_in_screen = temp_keep;
-	gtk_signal_emit (GTK_OBJECT(basep),
-			 basep_widget_signals[TYPE_CHANGE_SIGNAL],
-			 type);
+	g_signal_emit (G_OBJECT(basep),
+		       basep_widget_signals[TYPE_CHANGE_SIGNAL],
+		       0, type);
 
 	/*gtk_widget_queue_resize (GTK_WIDGET (basep));*/
 	return TRUE;
@@ -1693,9 +1701,9 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		return;
 	}
 
-	gtk_signal_emit(GTK_OBJECT(basep),
-			basep_widget_signals[STATE_CHANGE_SIGNAL],
-			state);
+	g_signal_emit (GTK_OBJECT(basep),
+		       basep_widget_signals[STATE_CHANGE_SIGNAL],
+		       0, state);
 	panels_to_sync = TRUE;
 
 	/* if the app did any updating of the interface, flush that for us*/
@@ -1768,9 +1776,9 @@ basep_widget_explicit_show (BasePWidget *basep)
 	basep->state = BASEP_SHOWN;
 	basep_widget_update_winhints (basep);
 
-	gtk_signal_emit(GTK_OBJECT(basep),
-			basep_widget_signals[STATE_CHANGE_SIGNAL],
-			BASEP_SHOWN);
+	g_signal_emit (G_OBJECT(basep),
+		       basep_widget_signals[STATE_CHANGE_SIGNAL],
+		       0, BASEP_SHOWN);
 	panels_to_sync = TRUE;
 }
 
@@ -1818,9 +1826,9 @@ basep_widget_autoshow (gpointer data)
 	basep->state = BASEP_SHOWN;
 	basep_widget_update_winhints (basep);
 
-	gtk_signal_emit (GTK_OBJECT(basep),
-			 basep_widget_signals[STATE_CHANGE_SIGNAL],
-			 BASEP_SHOWN);
+	g_signal_emit (G_OBJECT(basep),
+		       basep_widget_signals[STATE_CHANGE_SIGNAL],
+		       0, BASEP_SHOWN);
 
 	basep->enter_notify_timer_tag = 0;
 	return FALSE;
@@ -1908,9 +1916,9 @@ basep_widget_autohide (gpointer data)
 		}
 	}
 
-	gtk_signal_emit(GTK_OBJECT(basep),
-			basep_widget_signals[STATE_CHANGE_SIGNAL],
-			BASEP_AUTO_HIDDEN);
+	g_signal_emit(G_OBJECT(basep),
+		      basep_widget_signals[STATE_CHANGE_SIGNAL],
+		      0, BASEP_AUTO_HIDDEN);
 
 	/* if the app did any updating of the interface, flush that for us*/
 	gdk_flush();
@@ -2184,9 +2192,9 @@ basep_widget_set_state (BasePWidget *basep, BasePState state,
 	basep->state = state;
 	
 	if (emit)
-		gtk_signal_emit(GTK_OBJECT(basep),
-				basep_widget_signals[STATE_CHANGE_SIGNAL],
-				state);
+		g_signal_emit (G_OBJECT(basep),
+			       basep_widget_signals[STATE_CHANGE_SIGNAL],
+			       0, state);
 	panels_to_sync = TRUE;
 }
 
@@ -2200,9 +2208,9 @@ basep_widget_screen_change (BasePWidget *basep, int screen)
 	if (basep->screen == screen)
 		return;
 
-	gtk_signal_emit (GTK_OBJECT (basep),
-			 basep_widget_signals[SCREEN_CHANGE_SIGNAL],
-			 screen);
+	g_signal_emit (G_OBJECT (basep),
+		       basep_widget_signals[SCREEN_CHANGE_SIGNAL],
+		       0, screen);
 }
 
 /*****
