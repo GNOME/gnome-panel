@@ -137,8 +137,8 @@ static char *read_line(int s)
 static int write_line(int s, char *p)
  {
   char *p2;
-  p2 = g_malloc(strlen(p)+2);
-  strcat(strcpy(p2, p), "\n");
+  p2 = g_malloc(strlen(p)+3);
+  strcat(strcpy(p2, p), "\r\n");
 
   if (write(s, p2, strlen(p2)) ==  strlen(p2))
    {
