@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-21 10:44+0300\n"
+"POT-Creation-Date: 2004-08-30 15:10+0100\n"
 "PO-Revision-Date: 2004-08-21 10:45+0300\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -18,7 +18,6 @@ msgstr ""
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
 msgstr "_Корегувати дату й час..."
-
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -247,59 +246,56 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Годинник показує поточну дату і час"
 
-#: applets/clock/clock.schemas.in.h:1
-msgid ""
-"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
-msgstr ""
-"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
-
+#. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
-msgid ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
+msgid "24"
 msgstr ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
 
-#: applets/clock/clock.schemas.in.h:3
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+#, fuzzy
+msgid "24-hour"
+msgstr "24 години"
+
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Власний формат годинника"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Формат відображення часу"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Чи показувати дату в годиннику, разом з часом."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "Чи показувати секунди в часі."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Чи показувати всесвітній (UCT) час."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Чи показувати дату в підказці, коли вказівник миші знаходиться над "
 "годинником."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Показувати дату в годиннику"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Показувати дату в підказці"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Показувати секунди"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -307,7 +303,7 @@ msgstr ""
 "Використання цього ключа небажане у GNOME 2.6, використовуйте ключ 'format'. "
 "Ця схема зберігається для сумісності з попередніми версіями."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -318,7 +314,7 @@ msgstr ""
 "використовувати специфікатори перетворення, що підтримуються функцією "
 "strftime()."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -338,23 +334,23 @@ msgstr ""
 "початку епохи, тобто з 01.01.1970. Якщо встановлено \"custom\", годинник "
 "відображає час відповідно до формату вказаному у ключі custom_format."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Цей ключ визначає програму, що запускатиметься для корегування часу."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Засіб корегування часу"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Показувати час у стилі Інтернет"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Показувати час у стилі UNIX"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Використовувати UTC"
 
@@ -1250,8 +1246,7 @@ msgstr "Не вдається зберегти пункт меню на диск
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr ""
-"Не можна створювати тут кнопку запуску тому, що запис сюди неможливий"
+msgstr "Не можна створювати тут кнопку запуску тому, що запис сюди неможливий"
 
 #: gnome-panel/menu.c:191
 msgid "And many, many others..."
@@ -1924,8 +1919,8 @@ msgid ""
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 "Місцезнаходження файла .desktop, що описує кнопку запуску. Цей параметр має "
-"сенс лише тоді, коли ключ типу об'єкта (object_type) містить \"launcher-object"
-"\"\"\"."
+"сенс лише тоді, коли ключ типу об'єкта (object_type) містить \"launcher-"
+"object\"\"\"."
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2303,67 +2298,67 @@ msgstr "Сховати панель"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1464
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Top Expanded Edge Panel"
 msgstr "Верхня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1465
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Top Centered Panel"
 msgstr "Верхня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Top Floating Panel"
 msgstr "Верхня відірвана панель"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Top Edge Panel"
 msgstr "Верхня бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Bottom Expanded Edge Panel"
 msgstr "Нижня розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Bottom Centered Panel"
 msgstr "Нижня центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Bottom Floating Panel"
 msgstr "Нижня відірвана панель"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Bottom Edge Panel"
 msgstr "Нижня бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Left Expanded Edge Panel"
 msgstr "Ліва розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Left Centered Panel"
 msgstr "Ліва центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Left Floating Panel"
 msgstr "Ліва відірвана панель"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Left Edge Panel"
 msgstr "Ліва бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1493
 msgid "Right Expanded Edge Panel"
 msgstr "Права розширена бічна панель"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Right Centered Panel"
 msgstr "Права центрована панель"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Right Floating Panel"
 msgstr "Права відірвана панель"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Right Edge Panel"
 msgstr "Права бічна панель"
 
@@ -2416,8 +2411,9 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Якщо встановлено, то на боках панелі буде розміщено кнопки приховування панелі. "
-"Цей параметр має сенс лише тоді, коли встановлено параметр enable_buttons."
+"Якщо встановлено, то на боках панелі буде розміщено кнопки приховування "
+"панелі. Цей параметр має сенс лише тоді, коли встановлено параметр "
+"enable_buttons."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
@@ -2843,3 +2839,17 @@ msgstr "Дуже-дуже великий"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Дуже-дуже малий"
+
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
+#~ msgstr ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
+
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"
+#~ msgstr ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"

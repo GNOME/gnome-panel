@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"POT-Creation-Date: 2004-08-25 21:57+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-08-30 15:10+0100\n"
 "PO-Revision-Date: 2004-08-25 23:17+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -249,73 +249,77 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Uneko data eta ordua erakusten ditu erlojuak"
 
-#: applets/clock/clock.schemas.in.h:1
-msgid "<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
-msgstr "24"
-
+#. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
-msgid ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
-msgstr "24-hour"
+msgid "24"
+msgstr ""
 
-#: applets/clock/clock.schemas.in.h:3
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+#, fuzzy
+msgid "24-hour"
+msgstr "24 ordu"
+
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Orduaren formatu pertsonalizatua"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Ordu-formatua"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Ezarrita badago, orduaz gain data ere erakusten du."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "Ezarrita badago, segundoak erakusten ditu orduan."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Ezarrita badago, UCT (Universal Coordinated Time) zonako ordua erakusten du."
+msgstr ""
+"Ezarrita badago, UCT (Universal Coordinated Time) zonako ordua erakusten du."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Ezarrita badago, data argibide gisa erakusten du erakuslea erlojuan "
 "dagoenean."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Erakutsi data erlojuan"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Erakutsi data argibide moduan"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Erakutsi ordua segungoekin"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"Giltza honen erabilera GNOME 2.6 bertsioan zaharkitua gelditu zen, 'format' giltzaren "
-"alde. Eskema hau bertsio zaharkituekin parekotasuna mantentzeko jarraitzen da."
+"Giltza honen erabilera GNOME 2.6 bertsioan zaharkitua gelditu zen, 'format' "
+"giltzaren alde. Eskema hau bertsio zaharkituekin parekotasuna mantentzeko "
+"jarraitzen da."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
-"Giltza honek ordulari-appletak darabilen formatua zehazten du, giltzaren formatua "
-"\"pertsonalizatua\" bezala ezartzen denean. Bihurtzaile bereziak"
-"(strftime()-ek ulertzen dituenak) erabil dezakezu formatu berezi bat lortzeko."
+"Giltza honek ordulari-appletak darabilen formatua zehazten du, giltzaren "
+"formatua \"pertsonalizatua\" bezala ezartzen denean. Bihurtzaile bereziak"
+"(strftime()-ek ulertzen dituenak) erabil dezakezu formatu berezi bat "
+"lortzeko."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -327,30 +331,32 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Giltza honek ordulari-appletak darabilen formatua zehazten du. Dauden "
-"balioak: \"12-hour\", \"24-hour\", \"internet\", \"unix\" eta \"pertsonalizatua\". \"internet\"  "
-"balioarekin ezartzen bada, ordulariak Interneteko ordua bistaratuko du. Interneteko "
-"ordu-sistemak eguna 1000 \".beats\"-etan zatitzen du. sistema honetan ez dago ordu-zonarik. "
-"\"unix\" balioarekin jartzen bada, ordulariak Epoch garaitik (hau da, 1970-01-01) "
-"hasita zenbatuz denbora segundotan bistaratuko du. \"pertsonalizatua\" aukeratuz "
-"ordua \"custom_format\" giltzan zehaztutakoaren arabera bistaratuko du."
+"balioak: \"12-hour\", \"24-hour\", \"internet\", \"unix\" eta "
+"\"pertsonalizatua\". \"internet\"  balioarekin ezartzen bada, ordulariak "
+"Interneteko ordua bistaratuko du. Interneteko ordu-sistemak eguna 1000 \"."
+"beats\"-etan zatitzen du. sistema honetan ez dago ordu-zonarik. \"unix\" "
+"balioarekin jartzen bada, ordulariak Epoch garaitik (hau da, 1970-01-01) "
+"hasita zenbatuz denbora segundotan bistaratuko du. \"pertsonalizatua\" "
+"aukeratuz ordua \"custom_format\" giltzan zehaztutakoaren arabera "
+"bistaratuko du."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Gako honek ordua konfiguratzeko exekutatuko den programa zehazten du."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Ordua konfiguratzeko tresna"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Erabili Interneteko ordua"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Erabili UNIX ordua"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Erabili UTC"
 
@@ -537,7 +543,8 @@ msgid "Frames in fish's animation"
 msgstr "Arrainaren animazioko irudiak"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Hautatzen bada, animazioa biratu egingo da panel bertikaletan."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -576,7 +583,8 @@ msgstr ""
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "Gako honek zehazten du zenbat irudi bistaratuko diren arrainaren animazioan."
+msgstr ""
+"Gako honek zehazten du zenbat irudi bistaratuko diren arrainaren animazioan."
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -806,7 +814,8 @@ msgid "When to group windows"
 msgstr "Noiz elkartu leihoak"
 
 #: applets/wncklet/window-menu.c:152
-msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Leiho hautatzaileak dauden leihoen zerrenda ematen du eta batetik bestera "
 "aldatzeko aukera ematen du."
@@ -841,7 +850,8 @@ msgstr "Errorea laneko arearen aldatzailearen num_rows balioa kargatzean: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Errorea laneko arearen aldatzailearen display_workspace_names balioa "
 "kargatzean: %s\n"
@@ -1571,8 +1581,10 @@ msgid "Error getting value for '%s': %s"
 msgstr "Errorea '%s'(r)en balioa lortzean: %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Aplikazioa ixtera behartzeko, egin klik leiho batean. Uzteko, sakatu <IHES>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Aplikazioa ixtera behartzeko, egin klik leiho batean. Uzteko, sakatu <IHES>."
 
 #: gnome-panel/panel-force-quit.c:186
 msgid ""
@@ -1619,7 +1631,8 @@ msgstr "Gaitu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Zabaldu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
+msgstr ""
+"Zabaldu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
@@ -1660,10 +1673,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"Panelak ezikusi egingo dien apleten IID-en zerrenda. Honela zenbait aplet kargatzetik, "
-"edo menuan erakusteaz, sahietsiko du. Adibidez, 'mini-commander' appleta desgaitzeko "
-"gehitu 'OAFIID:GNOME_MiniCommanderApplet' zerrenda honetan. Panela berrabiarazi "
-"beharra dago aldaketak eragina izan dezan."
+"Panelak ezikusi egingo dien apleten IID-en zerrenda. Honela zenbait aplet "
+"kargatzetik, edo menuan erakusteaz, sahietsiko du. Adibidez, 'mini-"
+"commander' appleta desgaitzeko gehitu 'OAFIID:GNOME_MiniCommanderApplet' "
+"zerrenda honetan. Panela berrabiarazi beharra dago aldaketak eragina izan "
+"dezan."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1700,7 +1714,8 @@ msgstr "Desgaitu saioaren amaiera"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr "\"Exekutatu aplikazioa\" elkarrizketa-koadroa bistaratzeko laster-teklak"
+msgstr ""
+"\"Exekutatu aplikazioa\" elkarrizketa-koadroa bistaratzeko laster-teklak"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
@@ -1744,7 +1759,8 @@ msgstr ""
 "abiarazle batean klik egiten duenean."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Hautatzen bada, abiarazlea nabarmendu egingo da erakuslea gainean jartzen "
 "zaionean."
@@ -1758,22 +1774,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Egia bada, panelak ez dio erabiltzaileari aplikazio baten irteera derrigortzen "
-"utziko (derrigorrezko irteerako botoia ezabatuz)"
+"Egia bada, panelak ez dio erabiltzaileari aplikazio baten irteera "
+"derrigortzen utziko (derrigorrezko irteerako botoia ezabatuz)"
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Egia bada, panelak ez dio erabiltzaileari bere pantaila blokeatzen utziko, horretarako "
-"menuko sarreretatik pantailako blokeoa kenduz."
+"Egia bada, panelak ez dio erabiltzaileari bere pantaila blokeatzen utziko, "
+"horretarako menuko sarreretatik pantailako blokeoa kenduz."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
-msgstr "Egia bada, panelak ez dio erabiltzaileari saioa amaitzen utziko, menuko sarreretatik saio amaierako botoia kenduz."
+msgstr ""
+"Egia bada, panelak ez dio erabiltzaileari saioa amaitzen utziko, menuko "
+"sarreretatik saio amaierako botoia kenduz."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1781,9 +1799,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Egia bada, panelak ez dio eraibltzaileari paneleko konfigurazioa aldatzen utziko. Halaere, agian applet "
-"bakunak independenteki blokeatu beharko dira. Panela berrabiarazi beharko da aldaketa hauek eragina "
-"izan dezaten."
+"Egia bada, panelak ez dio eraibltzaileari paneleko konfigurazioa aldatzen "
+"utziko. Halaere, agian applet bakunak independenteki blokeatu beharko dira. "
+"Panela berrabiarazi beharko da aldaketa hauek eragina izan dezaten."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -2133,7 +2151,8 @@ msgid "Couldn't find a suitable application"
 msgstr "Ezin da aurkitu aplikazio egokirik"
 
 #: gnome-panel/panel-recent.c:87
-msgid "The default application for this type of file cannot handle remote files"
+msgid ""
+"The default application for this type of file cannot handle remote files"
 msgstr ""
 "Mota honetako fitxategientzat lehenetsitako aplikazioak ezin du urruneko "
 "fitxategirik maneiatu"
@@ -2152,11 +2171,12 @@ msgid "Clear the Recent Documents list?"
 msgstr "Garbitu azken dokumentuen zerrenda?"
 
 #: gnome-panel/panel-recent.c:213
+#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-" All items from the Actions  Recent Documents menu item.\n"
-" All items from the recent documents list in all applications."
+"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 "Azken dokumentuen zerrenda garbitzen baduzu, ondorengoa ere garbituko da:\n"
 "\n"
@@ -2294,67 +2314,67 @@ msgstr "Ezkutatu panela"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1464
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Top Expanded Edge Panel"
 msgstr "Goian zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1465
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Top Centered Panel"
 msgstr "Goian zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Top Floating Panel"
 msgstr "Goiko panel mugikorra"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Top Edge Panel"
 msgstr "Goiko ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Bottom Expanded Edge Panel"
 msgstr "Behean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Bottom Centered Panel"
 msgstr "Behean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Bottom Floating Panel"
 msgstr "Beheko panel mugikorra"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Bottom Edge Panel"
 msgstr "Beheko ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Left Expanded Edge Panel"
 msgstr "Ezkerrean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Left Centered Panel"
 msgstr "Ezkerrean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Left Floating Panel"
 msgstr "Ezkerreko panel mugikorra"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Left Edge Panel"
 msgstr "Ezkerreko ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1493
 msgid "Right Expanded Edge Panel"
 msgstr "Eskuinean zabaldutako ertzeko panela"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Right Centered Panel"
 msgstr "Eskuinean zentratutako panela"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Right Floating Panel"
 msgstr "Eskuineko panel mugikorra"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Right Edge Panel"
 msgstr "Eskuineko ertzeko panela"
 
@@ -2776,15 +2796,18 @@ msgid "Specify an applet IID to load"
 msgstr "Zehatu applet IID bat kargatzeko"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr "Zehaztu applet-aren hobespenak biltegiratzeko gconf kokaleku bat"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr "Zehaztu applet-aren hasierako tamaina (oso txikia, tartekoa, handia, etab.)"
+msgstr ""
+"Zehaztu applet-aren hasierako tamaina (oso txikia, tartekoa, handia, etab.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Zehaztu applet-aren hasierako orientazioa (goian, behean, ezkerrean edo "
 "eskuinean)"
@@ -2833,3 +2856,12 @@ msgstr "Oso handia"
 msgid "XX Small"
 msgstr "Oso txikia"
 
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
+#~ msgstr "24"
+
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"
+#~ msgstr "24-hour"
