@@ -1,3 +1,8 @@
+2002-09-11  Arvind Samptur <arvind.samptur@wipro.com>
+
+	* gnome-panel-screenshot.c: Avoid the defunct process
+	by doing waitpid at  the point you fork. Fixes #92651.
+
 2002-09-11  Pasupathi Duraisamy <pasupathi.duraisamy@wipro.com>
 
 	* launcher.c: Add mnemonic to 'Help on %s Application'.
