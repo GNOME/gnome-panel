@@ -4328,7 +4328,11 @@ menu_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "path");
 	path = gconf_client_get_string (client, temp_key, NULL);
-
+	if (!path) {
+		g_printerr (_("No path set at %s for panel menu object\n"), temp_key);
+		return;
+	}
+        
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "main-menu");
 	main_menu = gconf_client_get_bool (client, temp_key, NULL);

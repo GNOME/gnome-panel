@@ -1,5 +1,12 @@
 2002-07-12  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (panel_applet_load_from_unique_id):
+	* launcher.c: (create_launcher), (launcher_load_from_gconf):
+	* menu.c: (menu_load_from_gconf): patch from Havoc to 
+	check for and print warnings about broken gconf settings. #84808.
+
+2002-07-12  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: (load_launcher_applet_full): revert the disabling
 	of the 'Help' menuitem that Glynn snuck past me in another
 	patch.

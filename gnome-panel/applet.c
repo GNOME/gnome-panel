@@ -792,7 +792,11 @@ panel_applet_load_from_unique_id (AppletType   type,
 	temp_key = panel_applet_get_full_gconf_key (
 			type, profile, unique_id, "object_type");
 	type_string = gconf_client_get_string (gconf_client, temp_key, NULL);
-
+	if (!type_string) {
+		g_printerr (_("No object_type set for panel object with ID %s\n"), unique_id);
+		return;
+	}
+        
 	if (!gconf_string_to_enum (object_type_enum_map,
 				   type_string,
 				   (int *) &applet_type)) {
@@ -810,7 +814,11 @@ panel_applet_load_from_unique_id (AppletType   type,
 	temp_key = panel_applet_get_full_gconf_key (
 			type, profile, unique_id, "panel_id");
 	panel_id = gconf_client_get_string (gconf_client, temp_key, NULL);
-
+	if (!panel_id) {
+		g_printerr (_("No panel_id set for panel object with ID %s\n"), unique_id);
+		return;
+	}
+        
 	temp_key = panel_applet_get_full_gconf_key (
 			type, profile, unique_id, "panel_right_stick");
 	right_stick = gconf_client_get_bool (gconf_client, temp_key, NULL);

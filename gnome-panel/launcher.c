@@ -314,36 +314,44 @@ static Launcher *
 create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 {
 	Launcher *launcher;
+	GError   *error = NULL;
+
         static GtkTargetEntry dnd_targets[] = {
 		{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
 		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};
 
-	if (ditem == NULL) {
-		if (parameters == NULL) {
+	if (!ditem) {
+		if (!parameters) {
+			g_printerr (_("No URI provided for panel launcher desktop file\n"));
 			return NULL;
 		}
 
-		ditem = gnome_desktop_item_new_from_uri (parameters,
-							 0 /* flags */,
-							 NULL /* error */);
+		ditem = gnome_desktop_item_new_from_uri (parameters, 0, &error);
+	}
 
-		if (ditem == NULL) {
-			gchar *entry;
+	if (!ditem) {
+		char *entry;
 
-			entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-							   parameters, TRUE, NULL);
+		entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+						   parameters, TRUE, NULL);
 
-			if (!entry)
-				return NULL;
-
+		if (entry != NULL) {
 			ditem = gnome_desktop_item_new_from_file (entry, 0, NULL);
-
 			g_free (entry);
 		}
 	}
-	if (ditem == NULL)
+
+	if (!ditem) {
+		g_printerr (_("Unable to open desktop file %s for panel launcher%s%s\n"),
+			    parameters,
+			    error ? ": " : "",
+			    error ? error->message : "");
+		if (error)
+			g_error_free (error);
+
 		return NULL; /*button is null*/
+	}
 
 	launcher = g_new0 (Launcher, 1);
 
@@ -670,7 +678,11 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (
 			PANEL_GCONF_OBJECTS, profile, gconf_key, "launcher_location");
 	launcher_location = gconf_client_get_string (client, temp_key, NULL);
-
+	if (!launcher_location) {
+		g_printerr (_("Key %s is not set, can't load launcher\n"), temp_key);
+		return;
+	}
+        
 	load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
 
 	g_free (launcher_location);
