@@ -94,10 +94,7 @@ panel_init_stock_icons (GtkIconFactory *factory)
 {
 	GtkIconSource *source;
 	int            i;
-	int            icon_height = PANEL_DEFAULT_MENU_ICON_SIZE;
 
-	if (!gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
-		return;
 
 	source = gtk_icon_source_new ();
 
@@ -108,8 +105,12 @@ panel_init_stock_icons (GtkIconFactory *factory)
 		if (!stock_icons [i].icon)
 			continue;
 
+		/* Look up the icon at an arbitrary large size; if we are
+		 * adding at only one size, we want the largest image
+		 * available
+		 */
 		filename = gnome_desktop_item_find_icon (
-				panel_icon_theme, stock_icons [i].icon, icon_height, 0);
+				panel_icon_theme, stock_icons [i].icon, 1000, 0);
 		if (!filename) {
 			g_warning (_("Unable to load panel stock icon '%s'\n"), stock_icons [i].icon);
 
