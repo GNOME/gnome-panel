@@ -1330,46 +1330,78 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 	}
 }
 
-static void
-panel_toplevel_update_description (PanelToplevel *toplevel)
+static const char *
+panel_toplevel_construct_description (PanelToplevel *toplevel)
 {
-	char *orientation = NULL;
-	char *type;
-	char  description [255];
+	int orientation, type;
+
+	static const char *description[4][4] = {
+		{
+			N_("Top Expanded Edge Panel"),
+			N_("Top Centered Panel"),
+	     		N_("Top Floating Panel"),
+	     		N_("Top Edge Panel"),
+		},
+		
+		{
+			N_("Bottom Expanded Edge Panel"),
+	     		N_("Bottom Centered Panel"),
+	     		N_("Bottom Floating Panel"),
+	     		N_("Bottom Edge Panel"),
+		},
+
+		{
+			N_("Left Expanded Edge Panel"),
+			N_("Left Centered Panel"),
+			N_("Left Floating Panel"),
+			N_("Left Edge Panel"),
+		},
+
+		{
+			N_("Right Expanded Edge Panel"),
+			N_("Right Centered Panel"),
+			N_("Right Floating Panel"),
+			N_("Right Edge Panel"),
+		},
+	};
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		orientation = _("Top");
+		orientation = 0;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		orientation = _("Bottom");
+		orientation = 1;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		orientation = _("Left");
+		orientation = 2;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		orientation = _("Right");
+		orientation = 3;
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
 
-	if (toplevel->priv->floating)
-		type = _("Floating");
+	if (toplevel->priv->expand)
+		type = 0;
 	else if (toplevel->priv->x_centered ||
 		 toplevel->priv->y_centered)
-		type = _("Centered");
-	else if (toplevel->priv->expand)
-		type = _("Expanded Edge");
+		type = 1;
+	else if (toplevel->priv->floating)
+		type = 2;
 	else
-		type = _("Edge");
+		type = 3;
 	
-	/* Translators: the first argument is the current orientation
-	 * (Top, Bottom, Left or Right) and the second argument is the
-	 * type of panel (Expanded Edge, Edge, Floating or Centered).
-	 */
-	g_snprintf (description, sizeof (description), _("%s %s Panel"), orientation, type);
+	return description[orientation][type];
+}
+
+static void
+panel_toplevel_update_description (PanelToplevel *toplevel)
+{
+	const char *description;
+
+	description = panel_toplevel_construct_description (toplevel);
 
 	if (toplevel->priv->description &&
 	    !strcmp (toplevel->priv->description, description))

@@ -1,3 +1,12 @@
+2003-06-06  Ray Strode  <halfline@hawaii.rr.com>
+
+	* panel-profile.c: 
+	(panel_toplevel_update_description): Remove code that 
+	constructs description piecewise, and instead call 
+	panel_toplevel_construct_description to pull the description 
+	from a static array, which is better for i18n (Bug #113383).
+	(panel_toplevel_construct_description): New helper function.
+
 ==================== 2.3.3 ====================
 
 2003-06-05 Mark Finlay <sisob@eircom.net>
