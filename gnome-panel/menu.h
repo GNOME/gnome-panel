@@ -126,6 +126,12 @@ gboolean panel_menu_have_icons   (void);
 #define PANEL_MENU_HAVE_TEAROFF_KEY "/desktop/gnome/interface/menus-have-tearoff"
 gboolean panel_menu_have_tearoff (void);
 
+GtkWidget *	panel_menu_new		(void);
+void		panel_load_menu_image_deferred (GtkWidget *image_menu_item,
+						const char *image_filename,
+						const char *fallback_image_filename,
+						gboolean force_image);
+
 
 G_END_DECLS
 

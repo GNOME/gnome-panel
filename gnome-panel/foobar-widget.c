@@ -109,51 +109,15 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 }
 
 static GtkWidget *
-pixmap_menu_item_new (const char *text, const char *try_file)
+pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_image)
 {
 	GtkWidget *item;
 	GtkWidget *label;
 
 	item = gtk_image_menu_item_new ();
 
-	/* FIXME: listen to this gconf client key */
-	if (try_file != NULL && panel_menu_have_icons ()) {
-		GtkWidget *image;
-		GdkPixbuf *pixbuf;
-		char *file;
-
-		if (g_path_is_absolute (try_file))
-			file = g_strdup (try_file);
-		else
-			file = panel_pixmap_discovery (try_file,
-						       TRUE /* fallback */);
-
-		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-		if (pixbuf != NULL &&
-		    (gdk_pixbuf_get_width (pixbuf) != ICON_SIZE ||
-		     gdk_pixbuf_get_height (pixbuf) != ICON_SIZE)) {
-			GdkPixbuf *scaled;
-
-			scaled = gdk_pixbuf_scale_simple (pixbuf,
-							  ICON_SIZE,
-							  ICON_SIZE,
-							  GDK_INTERP_BILINEAR);
-
-			gdk_pixbuf_unref (pixbuf);
-
-			pixbuf = scaled;
-		}
-
-		if (pixbuf != NULL) {
-			image = gtk_image_new_from_pixbuf (pixbuf);
-			gtk_widget_show (image);
-
-			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
-						       image);
-
-			gdk_pixbuf_unref (pixbuf);
-		}
-	}
+	panel_load_menu_image_deferred (item, try_file, NULL /* fallback */,
+					force_image);
 
 	if (text) {
 		label = gtk_label_new (text);
@@ -169,11 +133,9 @@ add_tearoff (GtkMenuShell *menu)
 {
 	GtkWidget *item;
 
-	if (!panel_menu_have_tearoff ())
-		return;
-	
 	item = gtk_tearoff_menu_item_new ();
-	gtk_widget_show (item);
+	if (panel_menu_have_tearoff ())
+		gtk_widget_show (item);
 	gtk_menu_shell_prepend (menu, item);
 }
 
@@ -219,14 +181,14 @@ append_actions_menu (GtkWidget *menu_bar)
 {
 	GtkWidget *menu, *item;
 
-	menu = gtk_menu_new ();
-
+	menu = panel_menu_new ();
 
 	add_tearoff (GTK_MENU_SHELL (menu));
 
-	menu = gtk_menu_new ();
+	menu = panel_menu_new ();
 
-	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png");
+	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png",
+				     FALSE /* force_image */);
 	gtk_tooltips_set_tip (panel_tooltips, item,
 			      _("Run applications, if you know the "
 				"correct command to type in"),
@@ -241,7 +203,8 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = pixmap_menu_item_new (_("Lock Display"), 
-					       "gnome-lockscreen.png");
+					     "gnome-lockscreen.png",
+					     FALSE /* force_image */);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 				      _("Protect your computer from "
 					"unauthorized use"),
@@ -252,7 +215,8 @@ append_actions_menu (GtkWidget *menu_bar)
 		setup_internal_applet_drag(item, "LOCK:NEW");
 	}
 
-	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
+	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png",
+				     FALSE /* force_image */);
 	gtk_tooltips_set_tip (panel_tooltips, item,
 			      _("Quit from the GNOME desktop"),
 			      NULL);
@@ -299,7 +263,8 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	}
 
 	if (pixmap != NULL)
-		item = pixmap_menu_item_new (label, pixmap);
+		item = pixmap_menu_item_new (label, pixmap,
+					     FALSE /* force_image */);
 	else
 		item = gtk_menu_item_new_with_label (label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -335,7 +300,8 @@ append_gnomecal_items (GtkWidget *menu)
 	};
 	
 	for (i=0; cals[i]; i+=4) {
-		item = pixmap_menu_item_new (cals[i], cals[i+2]);
+		item = pixmap_menu_item_new (cals[i], cals[i+2],
+					     FALSE /* force_image */);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 			      	      cals[i+1],
 			      	      NULL);
@@ -479,7 +445,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	GtkWidget *item, *menu, *menu2;
 	gchar *time_admin_path;
 
-	menu = gtk_menu_new ();
+	menu = panel_menu_new ();
 	append_gnomecal_items (menu);
 
 #if 0 /* put back when evolution can do this */
@@ -492,7 +458,8 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	/* check for time-admin (part of ximian-setup-tools) */
 	time_admin_path = g_find_program_in_path  ("time-admin");
 	if (time_admin_path != NULL) {
-		item = pixmap_menu_item_new (_("Set Time..."), "gnome-set-time.png");
+		item = pixmap_menu_item_new (_("Set Time..."), "gnome-set-time.png",
+					     FALSE /* force_image */);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 			      	      _("Adjust the date and time."),
 			      	      NULL);	
@@ -503,7 +470,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 				  time_admin_path);			
 	}
 
-	menu2 = gtk_menu_new ();
+	menu2 = panel_menu_new ();
 	append_format_items (menu2); 
 
 	add_tearoff (GTK_MENU_SHELL (menu2));
@@ -929,7 +896,6 @@ window_closed (WnckScreen *screen,
 {
 	if (window == foo->icon_window)
 		set_das_pixmap (foo, NULL);
-	/* FIXME: Whoa; leak? */
 	if (foo->windows != NULL) {
 		GtkWidget *item;
 		item = g_hash_table_lookup (foo->windows, window);
@@ -1056,7 +1022,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 			     "panel-foobar-menubar");
 	
 	menuitem = pixmap_menu_item_new (_("Applications"),
-					 "gnome-logo-icon-transparent.png");
+					 "gnome-logo-icon-transparent.png",
+					 TRUE /* force_image */);
 	flags = MAIN_MENU_SYSTEM;
 	if (got_kde_menus ())
 		flags |= MAIN_MENU_KDE_SUB;

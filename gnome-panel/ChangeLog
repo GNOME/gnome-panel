@@ -1,3 +1,17 @@
+Sat Dec 22 17:14:50 2001  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c, menu.[ch], main.c: redo how the updating of
+	  icons and tearoffs keys is done, load the foobar items in the
+	  deffered way as well and sanitize this whole bit somewhat more.
+	  It now fully nicely updates when you set/unset the icons/tearoff
+	  keys.  And without having to reread folders.
+
+	* gnome-panel-properties.c, gnome-run.c, launcher.c,
+	  menu-properties.c, menu.c, panel-config.c, swallow.c:
+	  Make dialog window settings sane after mucking with them.
+
+	* gnome-panel-screenshot.c: get rid of tempnam usage to avoid warning
+
 Sat Dec 22 15:12:42 2001  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c, gnome-run.c, panel-config.c, swallow.c: fix up

@@ -1154,7 +1154,7 @@ show_run_dialog (void)
 	g_object_set (G_OBJECT (run_dialog),
 		      "allow_grow", FALSE,
 		      "allow_shrink", TRUE,
-		      "resizable", FALSE,
+		      "resizable", TRUE,
 		      NULL);
 
         /* Get some reasonable height in simple list mode */

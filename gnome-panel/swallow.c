@@ -260,12 +260,6 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 					 NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (d),
 				"create_swallow", "Panel");
-	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
-	g_object_set (G_OBJECT (d),
-		      "allow_grow", FALSE,
-		      "allow_shrink", FALSE,
-		      "resizable", TRUE,
-		      NULL);
 
 	g_object_set_data (G_OBJECT (d), "panel", panel);
 	g_object_set_data (G_OBJECT (d), "pos", GINT_TO_POINTER (pos));

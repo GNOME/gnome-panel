@@ -262,6 +262,7 @@ main(int argc, char **argv)
 	load_system_wide (); */
 
 	panel_gconf_add_dir ("/apps/panel/global");
+	panel_gconf_add_dir ("/desktop/gnome/menus");
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */

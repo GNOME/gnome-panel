@@ -158,14 +158,13 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	GtkWidget *label;
 	grab_dialog = gtk_window_new (GTK_WINDOW_POPUP);
 
-
 	gdk_keyboard_grab (GDK_ROOT_PARENT(), FALSE, GDK_CURRENT_TIME);
 	gdk_window_add_filter (GDK_ROOT_PARENT(), grab_key_filter, data);
 
 	g_object_set (G_OBJECT (grab_dialog),
 		      "allow_grow", FALSE,
 		      "allow_shrink", FALSE,
-		      "resizable", TRUE,
+		      "resizable", FALSE,
 		      NULL);
 	gtk_window_set_position (GTK_WINDOW (grab_dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal (GTK_WINDOW (grab_dialog), TRUE);

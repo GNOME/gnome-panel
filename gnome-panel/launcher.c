@@ -557,11 +557,6 @@ create_properties_dialog (Launcher *launcher)
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "launcher_properties", "Panel");
-	g_object_set (G_OBJECT (dialog),
-		      "allow_grow", FALSE,
-		      "allow_shrink", FALSE,
-		      "resizable", TRUE,
-		      NULL);
 	
 	if (launcher->revert_ditem != NULL)
 		gnome_desktop_item_unref (launcher->revert_ditem);

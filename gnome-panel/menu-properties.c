@@ -432,12 +432,6 @@ create_properties_dialog (Menu *menu)
 
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "menu_properties", "Panel");
-	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
-	g_object_set (G_OBJECT (dialog),
-		      "allow_grow", FALSE,
-		      "allow_shrink", FALSE,
-		      "resizable", TRUE,
-		      NULL);
 	
 	vbox = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),GNOME_PAD_SMALL);

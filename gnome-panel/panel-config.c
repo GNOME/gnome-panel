@@ -1651,12 +1651,6 @@ panel_config (GtkWidget *panel)
 	gtk_widget_set_events (ppc->config_window,
 			       gtk_widget_get_events (ppc->config_window) |
 			       GDK_BUTTON_PRESS_MASK);
-	/*gtk_window_set_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);*/
-	g_object_set (G_OBJECT (ppc->config_window),
-		      "allow_grow", FALSE,
-		      "allow_shrink", FALSE,
-		      "resizable", TRUE,
-		      NULL);
 
 	g_signal_connect (G_OBJECT (ppc->config_window), "destroy",
 			  G_CALLBACK (config_destroy), ppc);
