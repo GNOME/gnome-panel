@@ -534,6 +534,19 @@ panel_remove_applets (PanelWidget *panel)
 }
 
 static void
+panel_remove_open_create_launcher_dialogs (PanelWidget *panel)
+{
+	GSList *l;
+
+	for (l = panel->create_launcher_dialog_list; l ; l = l->next) {
+		GtkWidget *dialog = l->data;
+
+		if (GTK_IS_WIDGET (dialog))
+			gtk_widget_destroy (dialog);
+	}
+}
+
+static void
 panel_destroy (GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = g_object_get_data (G_OBJECT (widget), "PanelData");
@@ -546,6 +559,8 @@ panel_destroy (GtkWidget *widget, gpointer data)
 
 	panel_remove_applets (panel);
 		
+	panel_remove_open_create_launcher_dialogs (panel);
+
 	kill_config_dialog (widget);
 
 	if ((BASEP_IS_WIDGET (widget) && !DRAWER_IS_WIDGET (widget)) ||
