@@ -1,3 +1,11 @@
+2004-12-22  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-multiscreen.c: (panel_multiscreen_reinit): disconnect the
+	size-changed signal handlers if they exist because they will be added
+	again in panel_multiscreen_init(). The panel should not take 100% CPU
+	when changing monitor resolution...
+	Fix bug #160097
+
 2004-12-21  Vincent Untz  <vincent@vuntz.net>
 
 	* launcher.c: (launcher_launch): close parent drawers of a drawer when
