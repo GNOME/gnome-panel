@@ -857,13 +857,16 @@ static FILE *
 egg_recent_model_open_file (EggRecentModel *model)
 {
 	FILE *file;
+	mode_t prev_umask;
 	
 	file = fopen (model->priv->path, "r+");
 	if (file == NULL) {
 		/* be paranoid */
-		umask (077);
+		prev_umask = umask (077);
 
 		file = fopen (model->priv->path, "w+");
+
+		umask (prev_umask);
 
 		g_return_val_if_fail (file != NULL, NULL);
 	}
