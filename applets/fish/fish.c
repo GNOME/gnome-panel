@@ -981,6 +981,23 @@ update_fortune_dialog (Fish *fish)
 
 }
 
+static void
+change_water (Fish *fish)
+{
+	GtkWidget *w;
+	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
+				    GTK_BUTTONS_OK,
+				    _("The water needs changing!\n"
+				    "(Look at today's date)"));
+	gtk_window_set_wmclass (GTK_WINDOW (w), "fish", "Fish");
+
+	gtk_widget_show_all (w);
+
+	g_signal_connect_swapped (G_OBJECT (w), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  G_OBJECT (w));
+}
+
 static gboolean 
 fish_clicked_cb (GtkWidget * widget, GdkEventButton * e, Fish *fish)
 {
@@ -991,24 +1008,40 @@ fish_clicked_cb (GtkWidget * widget, GdkEventButton * e, Fish *fish)
 
 	/* on 1st of april the fish is dead damnit */
 	if (fish->april_fools) {
-		GtkWidget *w;
-		w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
-					    GTK_BUTTONS_OK,
-					    _("The water needs changing!\n"
-					      "(Look at today's date)"));
-		gtk_window_set_wmclass (GTK_WINDOW (w), "fish", "Fish");
-
-		gtk_widget_show_all (w);
-
-		g_signal_connect_swapped (G_OBJECT (w), "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  G_OBJECT (w));
+		change_water (fish);
 		return TRUE;
 	}
 
 	update_fortune_dialog(fish);
 
 	return TRUE; 
+}
+
+static gboolean
+fish_keypress_cb (GtkWidget * widget, GdkEventKey * e, Fish *fish)
+{
+	/* Invoke fortune dialog when Enter or Space key is pressed */
+	switch (e->keyval)
+	{
+		case GDK_space:
+		case GDK_KP_Space:
+		case GDK_Return:
+		case GDK_KP_Enter:
+		case GDK_ISO_Enter:
+		case GDK_3270_Enter:
+			if (fish->april_fools) {
+				change_water (fish);
+				return TRUE;
+			}
+
+			update_fortune_dialog(fish);
+			break;
+		default:
+			/* Other keys are not handled here */
+			return FALSE;
+	}
+
+	return TRUE;
 }
 
 static int
@@ -1306,6 +1339,9 @@ fish_applet_fill (PanelApplet *applet)
 	gtk_container_add (GTK_CONTAINER (fish->applet), fish->frame);
 
 	set_tooltip (GTK_WIDGET (fish->applet));
+
+	gtk_signal_connect (GTK_OBJECT (fish->applet), "key_press_event",
+			    GTK_SIGNAL_FUNC (fish_keypress_cb), fish);
 
 	gtk_widget_show_all (GTK_WIDGET (fish->frame));
 
