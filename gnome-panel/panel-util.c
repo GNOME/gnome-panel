@@ -116,3 +116,85 @@ string_is_in_list(GList *list,char *text)
 			return TRUE;
 	return FALSE;
 }
+
+
+/*these ones are used in internal property dialogs:*/
+static void
+notify_entry_change (GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+
+	gnome_property_box_changed (box);
+}
+
+/*FIXME: use gnome_entry*/
+GtkWidget *
+create_text_entry(GtkWidget *table,
+		  char *history_id,
+		  int row,
+		  char *label,
+		  char *text,
+		  GtkWidget *w)
+{
+	GtkWidget *wlabel;
+	GtkWidget *entry;
+
+	wlabel = gtk_label_new(label);
+	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	gtk_table_attach(GTK_TABLE(table), wlabel,
+			 0, 1, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+	gtk_widget_show(wlabel);
+
+	entry = gtk_entry_new();
+	if (text)
+		gtk_entry_set_text(GTK_ENTRY(entry), text);
+	gtk_table_attach(GTK_TABLE(table), entry,
+			 1, 2, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+
+	gtk_signal_connect (GTK_OBJECT (entry), "changed",
+			    GTK_SIGNAL_FUNC(notify_entry_change), w);
+	return entry;
+}
+
+GtkWidget *
+create_file_entry(GtkWidget *table,
+		  char *history_id,
+		  int row,
+		  char *label,
+		  char *text,
+		  GtkWidget *w)
+{
+	GtkWidget *wlabel;
+	GtkWidget *entry;
+	GtkWidget *t;
+
+	wlabel = gtk_label_new(label);
+	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	gtk_table_attach(GTK_TABLE(table), wlabel,
+			 0, 1, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+	gtk_widget_show(wlabel);
+
+	entry = gnome_file_entry_new(history_id,_("Browse"));
+	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (entry));
+	if (text)
+		gtk_entry_set_text(GTK_ENTRY(t), text);
+	gtk_table_attach(GTK_TABLE(table), entry,
+			 1, 2, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC(notify_entry_change), w);
+	return t;
+}
+

@@ -4,6 +4,7 @@
 BEGIN_GNOME_DECLS
 
 void load_applet(char *id, char *path, char *params,
+		 char *pixmap, char *tooltip,
 		 int pos, int panel, char *cfgpath);
 void orientation_change(gint applet_id, PanelWidget *panel);
 void back_change(gint applet_id, PanelWidget *panel);

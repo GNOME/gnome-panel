@@ -17,6 +17,7 @@
 #include "main.h"
 #include "menu.h"
 #include "launcher.h"
+#include "drawer.h"
 #include "mulapp.h"
 #include "mico-glue.h"
 #include "panel_config.h"
@@ -167,12 +168,15 @@ save_applet_configuration(AppletInfo *info, gint *num)
 
 		if(strcmp(info->id_str,DRAWER_ID) == 0) {
 			int i;
+			Drawer *drawer = info->data;
 
 			i = find_panel(PANEL_WIDGET(info->assoc));
 			if(i>=0)
 				gnome_config_set_int("parameters",i);
 			else
 				g_warning("Drawer not associated with applet!");
+			gnome_config_set_string("pixmap", drawer->pixmap);
+			gnome_config_set_string("tooltip", drawer->tooltip);
 		} else {
 			if(info->params)
 				gnome_config_set_string("parameters", info->params);
@@ -549,6 +553,9 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	} else if(info->type == APPLET_LAUNCHER) {
 		if(strcmp(menu->name,"properties")==0)
 			launcher_properties(info->data);
+	} else if(info->type == APPLET_DRAWER) {
+		if(strcmp(menu->name,"properties")==0)
+			drawer_properties(info->data);
 	}
 }
 
@@ -1166,7 +1173,7 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 	PanelWidget *panel = data;
 	gint panel_num = find_panel(panel);
 
-	load_applet(MENU_ID,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(MENU_ID,NULL,NULL,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
 		    panel_num!=-1?panel_num:0,NULL);
 
 	return TRUE;

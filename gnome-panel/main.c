@@ -69,6 +69,8 @@ struct _LoadApplet {
 	gchar *id_str;
 	gchar *path;
 	gchar *params;
+	gchar *pixmap;
+	gchar *tooltip;
 	gint pos;
 	gint panel;
 	gchar *cfgpath;
@@ -251,6 +253,7 @@ exec_prog(gint applet_id, gchar *path, gchar *param)
 
 static void
 queue_load_applet(gchar *id_str, gchar *path, gchar *params,
+		  gchar *pixmap, gchar *tooltip,
 		  gint pos, gint panel, gchar *cfgpath)
 {
 	LoadApplet *l;
@@ -260,6 +263,8 @@ queue_load_applet(gchar *id_str, gchar *path, gchar *params,
 	if(path) l->path=g_strdup(path);
 	else l->path = NULL;
 	l->params=g_strdup(params);
+	l->pixmap=g_strdup(pixmap);
+	l->tooltip=g_strdup(tooltip);
 	l->pos=pos;
 	l->panel=panel;
 	l->cfgpath=g_strdup(cfgpath);
@@ -343,6 +348,7 @@ get_applet_orient(PanelWidget *panel)
 
 void
 load_applet(gchar *id_str, gchar *path, gchar *params,
+	    gchar *pixmap, gchar *tooltip,
 	    gint pos, gint panel, gchar *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
@@ -368,11 +374,10 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 
 		/*VERY UGLY compatibility hack for the old launcher applet*/
 		if(strcmp(path,"#panel.application.launcher")==0) {
-			gchar *p;
-			p = g_copy_strings(cfgpath,"path=",NULL);
-			fullpath = gnome_config_get_string(p);
-			g_free(p);
-			load_applet(LAUNCHER_ID,NULL,fullpath,pos,panel,
+			gnome_config_push_prefix(cfgpath);
+			fullpath = gnome_config_get_string("path=");
+			gnome_config_pop_prefix();
+			load_applet(LAUNCHER_ID,NULL,fullpath,NULL,NULL,pos,panel,
 				    cfgpath);
 			g_free(cfgpath);
 			g_free(fullpath);
@@ -439,6 +444,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 
 		if(!params) {
 			drawer = create_empty_drawer_applet(
+				tooltip,pixmap,
 				get_applet_orient(parent));
 			panel_setup(PANEL_WIDGET(drawer->drawer));
 			panels = g_list_append(panels,drawer->drawer);
@@ -447,6 +453,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 
 			sscanf(params,"%d",&i);
 			drawer=create_drawer_applet(g_list_nth(panels,i)->data,
+						    tooltip,pixmap,
 						    get_applet_orient(parent));
 		}
 
@@ -461,14 +468,23 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 		gtk_signal_connect(GTK_OBJECT(drawer->button), "clicked",
 				   GTK_SIGNAL_FUNC(monitor_drawers),
 				   panelarr);
-		/*default is open so we track it*/
-		panelarr[1]->drawers_open++;
-		/*pop up, if popped down*/
-		panel_widget_pop_up(panelarr[1]);
+		if(PANEL_WIDGET(drawer->drawer)->mode == PANEL_SHOWN) {
+			/*drawer is open so we track it*/
+			panelarr[1]->drawers_open++;
+			/*pop up, if popped down*/
+			panel_widget_pop_up(panelarr[1]);
+		} else 
+			gtk_widget_hide(drawer->drawer);
 
 		reposition_drawer(drawer);
-
 		panel_widget_add_forbidden(PANEL_WIDGET(drawer->drawer));
+
+		gtk_tooltips_set_tip (panel_tooltips,drawer->button->parent,
+				      drawer->tooltip,NULL);
+
+		applet_add_callback(applet_count-1,"properties",
+				    GNOME_STOCK_MENU_PROP,
+				    _("Properties..."));
 	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
@@ -494,10 +510,13 @@ load_queued_applets(void)
 	for(list = load_queue;list!=NULL;list=g_list_next(list)) {
 		LoadApplet *l=list->data;
 		load_applet(l->id_str,l->path,l->params,
+			    l->pixmap,l->tooltip,
 			    l->pos,l->panel,l->cfgpath);
 		g_free(l->id_str);
 		if(l->path) g_free(l->path);
 		g_free(l->params);
+		g_free(l->pixmap);
+		g_free(l->tooltip);
 		g_free(l->cfgpath); 
 		g_free(l);
 	}
@@ -519,9 +538,9 @@ add_forbidden_to_panels(void)
 static void
 load_default_applets(void)
 {
-	queue_load_applet(MENU_ID, NULL, ".",
+	queue_load_applet(MENU_ID, NULL, ".", NULL, NULL,
 			  PANEL_UNKNOWN_APPLET_POSITION, 0,NULL);
-	queue_load_applet(EXTERN_ID, "gen_util_applet", "--clock",
+	queue_load_applet(EXTERN_ID, "gen_util_applet", "--clock", NULL, NULL,
 			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 }
 
@@ -530,6 +549,8 @@ init_user_applets(void)
 {
 	char *applet_name;
 	char *applet_params;
+	char *applet_pixmap;
+	char *applet_tooltip;
 	char *applet_path;
 	int   pos=0,panel;
 	char  buf[256];
@@ -552,6 +573,8 @@ init_user_applets(void)
 			applet_path = NULL;
 			applet_params = gnome_config_get_string("parameters=");
 		}
+		applet_pixmap = gnome_config_get_string("pixmap=");
+		applet_tooltip = gnome_config_get_string("tooltip=");
 
 		g_snprintf(buf,256,"position=%d",
 			   PANEL_UNKNOWN_APPLET_POSITION);
@@ -567,6 +590,7 @@ init_user_applets(void)
 		  loads*/
 		g_snprintf(buf,256,"%sApplet_%d/",old_panel_cfg_path,num);
 		queue_load_applet(applet_name, applet_path, applet_params,
+				  applet_pixmap, applet_tooltip,
 				  pos, panel, buf);
 
 		gnome_config_pop_prefix();
@@ -574,6 +598,8 @@ init_user_applets(void)
 		g_free(applet_name);
 		if(applet_path) g_free(applet_path);
 		g_free(applet_params);
+		g_free(applet_pixmap);
+		g_free(applet_tooltip);
 	}
 }
 

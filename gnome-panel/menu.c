@@ -150,7 +150,7 @@ free_string (GtkWidget *widget, void *data)
 static gint
 add_to_panel (char *applet, char *path, char *arg)
 {
-	load_applet(applet,path,arg,
+	load_applet(applet,path,arg,NULL,NULL,
 		    PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 	return TRUE;
 }

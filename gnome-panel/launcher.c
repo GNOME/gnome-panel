@@ -16,12 +16,13 @@
 #include <string.h>
 #include "gnome.h"
 #include "panel.h"
+#include "panel-util.h"
 
 #define LAUNCHER_PROPERTIES "launcher_properties"
 
 extern GtkTooltips *panel_tooltips;
 
-static char *default_app_pixmap;
+static char *default_app_pixmap=NULL;
 
 typedef struct {
 	int                applet_id;
@@ -98,7 +99,7 @@ create_launcher (char *parameters)
 		if (default_app_pixmap)
 			pixmap = gnome_pixmap_new_from_file (default_app_pixmap);
 		else
-			pixmap = gtk_label_new ("App");
+			pixmap = gtk_label_new (_("App"));
 	}
 	gtk_container_add (GTK_CONTAINER(launcher->button), pixmap);
 	gtk_widget_show (pixmap);
@@ -110,7 +111,8 @@ create_launcher (char *parameters)
 	
 	gtk_widget_show (launcher->button);
 
-	launcher->signal_click_tag = gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
+	launcher->signal_click_tag = gtk_signal_connect (GTK_OBJECT(launcher->button),
+							 "clicked",
 							 (GtkSignalFunc) launch,
 							 dentry);
 
@@ -124,43 +126,6 @@ create_launcher (char *parameters)
 			    LAUNCHER_PROPERTIES,NULL);
 
 	return launcher;
-}
-
-static void
-notify_entry_change (GtkWidget *widget, void *data)
-{
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-
-	gnome_property_box_changed (box);
-}
-
-static GtkWidget *
-create_text_entry(GtkWidget *table, int row, char *label, char *text, GtkWidget *w)
-{
-	GtkWidget *wlabel;
-	GtkWidget *entry;
-
-	wlabel = gtk_label_new(label);
-	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
-	gtk_table_attach(GTK_TABLE(table), wlabel,
-			 0, 1, row, row + 1,
-			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
-			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
-	gtk_widget_show(wlabel);
-
-	entry = gtk_entry_new();
-	if (text)
-		gtk_entry_set_text(GTK_ENTRY(entry), text);
-	gtk_table_attach(GTK_TABLE(table), entry,
-			 1, 2, row, row + 1,
-			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
-			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
-
-	gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			    GTK_SIGNAL_FUNC(notify_entry_change), w);
-	return entry;
 }
 
 static void
@@ -297,8 +262,22 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	Properties *prop = data;
 	gtk_object_set_data(GTK_OBJECT(prop->launcher->button),
 			    LAUNCHER_PROPERTIES,NULL);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->name_entry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->comment_entry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->execute_entry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->icon_entry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->documentation_entry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->terminal_toggle),widget);
 	g_free (prop);
 	return FALSE;
+}
+
+static void
+notify_entry_change (GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+
+	gnome_property_box_changed (box);
 }
 
 static GtkWidget *
@@ -325,13 +304,28 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
 
-	prop->name_entry          = create_text_entry(table, 0, _("Name"), dentry->name, dialog);
-	prop->comment_entry       = create_text_entry(table, 1, _("Comment"), dentry->comment, dialog);
+	prop->name_entry          = create_text_entry(table,
+						      "launcher_name", 0,
+						      _("Name"), dentry->name,
+						      dialog);
+	prop->comment_entry       = create_text_entry(table,
+						      "launcher_comment", 1,
+						      _("Comment"),
+						      dentry->comment, dialog);
 	exec = gnome_string_joinv (" ", dentry->exec);
-	prop->execute_entry       = create_text_entry(table, 2, _("Execute"), exec, dialog);
+	prop->execute_entry       = create_file_entry(table,
+						      "execute", 2,
+						      _("Execute"), exec,
+						      dialog);
 	g_free (exec);
-	prop->icon_entry          = create_text_entry(table, 3, _("Icon"), dentry->icon, dialog);
-	prop->documentation_entry = create_text_entry(table, 4, _("Documentation"), dentry->docpath, dialog);
+	prop->icon_entry          = create_file_entry(table,
+						      "icon", 3,
+						      _("Icon"), dentry->icon,
+						      dialog);
+	prop->documentation_entry = create_text_entry(table,
+						      "launcher_document", 4,
+						      _("Documentation"),
+						      dentry->docpath, dialog);
 
 	prop->terminal_toggle = toggle =
 		gtk_check_button_new_with_label(_("Run inside terminal"));
@@ -347,7 +341,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 			 0, 0);
 
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX (prop->dialog),
-					table, gtk_label_new ("Item properties"));
+					table, gtk_label_new (_("Item properties")));
 	
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) properties_close_callback,
