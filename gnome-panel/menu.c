@@ -666,8 +666,6 @@ panel_make_sure_menu_within_screen (GtkMenu *menu)
 
 	menu->position_func = menu_on_screen;
 	menu->position_func_data = repo;
-
-	our_gtk_menu_position (menu);
 }
 
 static void
