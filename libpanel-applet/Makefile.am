@@ -71,6 +71,7 @@ EXTRA_DIST =					\
 	GNOME_Panel_TestApplet.server.in	\
 	panel-applet-marshal.list		\
 	libpanelapplet-2.0.pc.in		\
+	libpanelapplet-2.0-uninstalled.pc.in	\
 	panel-test-applets.glade
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
