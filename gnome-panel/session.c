@@ -640,6 +640,7 @@ load_default_applets(void)
 	      { "gnome/apps/gnome-help.desktop",
 		"gnome/apps/Settings/gnomecc.desktop",
 		"gnome/apps/Applications/Netscape.desktop",
+		"gnome/apps/Utilities/gnome-terminal.desktop",
 		NULL };
 	int i;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
