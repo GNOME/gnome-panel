@@ -309,6 +309,7 @@ gnome_panel_applet_request_id (char *path,
 		}
 		if(*id!=-1)
 			break;
+		sleep(1);
 	}
 	/*if the request_id never completed*/
 	if(*id == -1)
