@@ -1,3 +1,17 @@
+Sat Jul 11 03:05:20 1998  George Lebl  <jirka@5z.com>
+
+	* swallow.c: made below changes compile ... still does not work
+	  for me though
+
+Fri Jul 10 18:35:20 1998  Michael Lausch  <mla@loki.gams.co.at>
+
+	* swallow.c (ignore_x_error): just ignores X Errors
+	(get_window_id): set error handler temporarily to ignore_x_error
+	during traversion of the window tree. Some windows won't exist
+	anymore, causing the panel to bail out with a gtk error.
+	(create_swallow_applet): Don't call gtk_container_add for the
+	swallow->socket widget. It's already part of the table.
+
 Thu Jul 09 16:49:27 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: fixed reparenting, for some reason the applet

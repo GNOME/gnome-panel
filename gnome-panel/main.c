@@ -822,6 +822,7 @@ void
 back_change(int applet_id,
 	    PanelWidget *panel)
 {
+  
 	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
 		send_applet_change_back(info->id_str, info->applet_id,
@@ -1865,7 +1866,8 @@ sigchld_handler(int type)
 			for(i=0,info=(AppletInfo *)applets->data;
 			    i<applet_count;
 			    i++,info++) {
-				if(strcmp(info->id_str,s)==0)
+				if(info->id_str &&
+				   strcmp(info->id_str,s)==0)
 					panel_clean_applet(info->applet_id);
 			}
 			g_free(s);

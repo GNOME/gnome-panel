@@ -19,6 +19,12 @@
 #include "swallow.h"
 #include "mico-glue.h"
 
+static int
+ignore_x_error(Display* d, XErrorEvent* e)
+{
+	fprintf(stderr, "ignore_x_error called\n");
+	return 0;
+}
 
 static int
 get_window_id(Window win, char *title, guint32 *wid)
@@ -30,7 +36,9 @@ get_window_id(Window win, char *title, guint32 *wid)
 	unsigned int i;
 	char *tit;
 	int ret = FALSE;
+	int (*oldErrorHandler)(Display*, XErrorEvent*);
 
+		
 	XQueryTree(GDK_DISPLAY(),
 		   win,
 		   &root_return,
@@ -38,10 +46,13 @@ get_window_id(Window win, char *title, guint32 *wid)
 		   &children,
 		   &nchildren);
 
+	oldErrorHandler = XSetErrorHandler(ignore_x_error);
 	for(i=0;i<nchildren;i++) {
-		XFetchName(GDK_DISPLAY(),
-			   children[i],
-			   &tit);
+		if (!XFetchName(GDK_DISPLAY(),
+				children[i],
+				&tit)) {
+			continue;
+		}
 		if(tit) {
 			if(strcmp(tit,title)==0) {
 				XFree(tit);
@@ -52,6 +63,7 @@ get_window_id(Window win, char *title, guint32 *wid)
 			XFree(tit);
 		}
 	}
+	XSetErrorHandler(oldErrorHandler);
 	for(i=0;!ret && i<nchildren;i++)
 		ret=get_window_id(children[i],title,wid);
 	if(children)
@@ -74,18 +86,7 @@ socket_realized(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));
 
-	if(swallow->title==NULL) {
-		char buf[256];
-		/*FIXME: ask for one with a dialog box!*/
-		printf("Enter the name of the window to get: ");
-		fflush(stdout);
-		fgets(buf,255,stdin);
-		if(buf[strlen(buf)-1]=='\n')
-			buf[strlen(buf)-1]='\0';
-		swallow->title=g_strdup(buf);
-	}
-	if(swallow->title==NULL)
-		return FALSE;
+	g_return_val_if_fail(swallow->title!=NULL,FALSE);
 
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid))
 		gtk_timeout_add(500,(GtkFunction)socket_getwindow_timeout,
@@ -148,22 +149,18 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 	gtk_widget_show(w);
 	
 	swallow->socket=gtk_socket_new();
+	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
+			         GTK_SIGNAL_FUNC(socket_realized), NULL);
 
 	gtk_table_attach(GTK_TABLE(swallow->table),swallow->socket,
 			 1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
-
-
-	gtk_container_add(GTK_CONTAINER(w),swallow->socket);
-
+	
 	gtk_widget_show(swallow->socket);
 
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
-
-	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
-			         GTK_SIGNAL_FUNC(socket_realized), NULL);
 
 	if(arguments)
 		swallow->title=g_strdup(arguments);
