@@ -3211,7 +3211,7 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "launcher-program.png",
-				   _("Launcher"), SMALL_ICON_SIZE);
+				   _("Launcher..."), SMALL_ICON_SIZE);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_launcher_cb),NULL);
@@ -3251,7 +3251,7 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	setup_menuitem (menuitem, 
 			gnome_stock_pixmap_widget (menu,
 						   GNOME_STOCK_PIXMAP_ADD),
-			_("Swallowed app"));
+			_("Swallowed app..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_swallowing_cb),NULL);
