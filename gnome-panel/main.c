@@ -38,8 +38,35 @@ GlobalConfig global_config = {
 		TRUE /*show small icons*/
 	};
 
+typedef struct _LoadApplet LoadApplet;
+struct _LoadApplet {
+	char *id;
+	char *params;
+	int pos;
+	int panel;
+	char *cfgpath;
+};
+
+GList *load_queue=NULL;
+	
+
 /*needed for drawers*/
 static void panel_setup(PanelWidget *panel);
+
+void
+queue_load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
+{
+	LoadApplet *l;
+	l = g_new(LoadApplet,1);
+
+	l->id=g_strdup(id);
+	l->params=g_strdup(params);
+	l->pos=pos;
+	l->panel=panel;
+	l->cfgpath=g_strdup(cfgpath);
+
+	load_queue = g_list_append(load_queue,l);
+}
 
 void
 load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
@@ -137,14 +164,31 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 			     panel,NULL,APPLET_SWALLOW);
 	}
 }
+static void
+load_queued_applets(void)
+{
+	GList *list;
+
+	for(list = load_queue;list!=NULL;list=g_list_next(list)) {
+		LoadApplet *l=list->data;
+		load_applet(l->id,l->params,l->pos,l->panel,l->cfgpath);
+		g_free(l->id);
+		g_free(l->params);
+		g_free(l->cfgpath); 
+		g_free(l);
+	}
+	while(load_queue)	
+		load_queue = g_list_remove_link(load_queue,load_queue);
+}
 
 static void
 load_default_applets(void)
 {
-	load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	queue_load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 	/* FIXME: this for some reason segfaults rather frequently*/
-	load_applet(EXTERN_ID, "clock_applet", PANEL_UNKNOWN_APPLET_POSITION,0,
-		    NULL);
+	/*queue_load_applet(EXTERN_ID, "clock_applet",
+			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	*/
 }
 
 static void
@@ -173,7 +217,7 @@ init_user_applets(void)
 		/*this is the config path to be passed to the applet when it
 		  loads*/
 		sprintf(buf,"/panel/Applet_%d/",num);
-		load_applet(applet_name, applet_params, pos, panel, buf);
+		queue_load_applet(applet_name, applet_params, pos, panel, buf);
 		g_free(applet_name);
 		g_free(applet_params);
 	}
@@ -630,6 +674,7 @@ gint
 call_launcher_timeout(gpointer data)
 {
 	puts("Waiting for launcher ...");
+
 	return !(panel_corba_restart_launchers());
 }
 	
@@ -680,6 +725,9 @@ main(int argc, char **argv)
 	apply_global_config();
 
 	gtk_timeout_add(300,call_launcher_timeout,NULL);
+
+	/*everything is erady ... load up the applets*/
+	load_queued_applets();
 
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");
