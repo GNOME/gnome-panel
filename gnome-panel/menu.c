@@ -130,7 +130,7 @@ static AppletMenuInfo action_buttons_info [] = {
 	{ N_("Force Quit"),
 	  N_("Actions"),
 	  "Actions",
-	  "Force a misbehaving application to quit",
+	  N_("Force a misbehaving application to quit"),
 	  NULL,
 	  PANEL_STOCK_FORCE_QUIT,
 	  PANEL_ACTION_FORCE_QUIT,
