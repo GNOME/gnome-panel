@@ -758,11 +758,7 @@ mailbox_properties_page(MailCheck *mc)
   
 	gtk_signal_connect(GTK_OBJECT(l), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
-	/*
-	hbox = gtk_hbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbox);  
-	*/
+
 	mc->remote_password_label = l = gtk_label_new(_("Password:"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
@@ -803,16 +799,9 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_widget_show(table);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 
-	/*
-	  hbox = gtk_hbox_new (FALSE, 6);
-	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	  gtk_widget_show (hbox);  
-	*/
-
 	l = gtk_label_new(_("Before each update:"));
 	gtk_widget_show(l);
 	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
-	/* gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0); */
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
 				   
 	
@@ -823,23 +812,12 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_signal_connect(GTK_OBJECT(mc->pre_check_cmd_entry), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(mc->pre_check_cmd_entry);
-	/*gtk_box_pack_start (GTK_BOX (hbox), mc->pre_check_cmd_entry, TRUE, TRUE, 0);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->pre_check_cmd_entry,
 				   1, 2, 0, 1);
-	/*
-	  l = gtk_label_new(_("before each update"));
-	  gtk_widget_show(l);
-	  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-	*/
-	/*
-	  hbox = gtk_hbox_new (FALSE, 6);
-	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	  gtk_widget_show(hbox);
-	*/
+
 	l = gtk_label_new (_("When new mail arrives:"));
 	gtk_widget_show(l);
 	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
-	/*gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);*/
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
 
 	mc->newmail_cmd_entry = gtk_entry_new();
@@ -850,23 +828,12 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_signal_connect(GTK_OBJECT (mc->newmail_cmd_entry), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(mc->newmail_cmd_entry);
-	/*gtk_box_pack_start(GTK_BOX(hbox), mc->newmail_cmd_entry, TRUE, TRUE, 0);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->newmail_cmd_entry,
 				    1, 2, 1, 2);
-	/*
-	  l = gtk_label_new (_("when new mail arrives."));
-	  gtk_widget_show(l);
-	  gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
-	*/
-	/*
-	  hbox = gtk_hbox_new (FALSE, 6);
-	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	  gtk_widget_show (hbox);
-	*/
+
         l = gtk_label_new (_("When clicked:"));
 	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
         gtk_widget_show(l);
-        /*gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);*/
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
 
         mc->clicked_cmd_entry = gtk_entry_new();
@@ -877,14 +844,9 @@ mailcheck_properties_page (MailCheck *mc)
         gtk_signal_connect(GTK_OBJECT(mc->clicked_cmd_entry), "changed",
                            GTK_SIGNAL_FUNC(property_box_changed), mc);
         gtk_widget_show(mc->clicked_cmd_entry);
-        /*gtk_box_pack_start (GTK_BOX (hbox), mc->clicked_cmd_entry, TRUE, TRUE, 0);*/
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->clicked_cmd_entry,
 				   1, 2, 2, 3);
-        /*
-	  l = gtk_label_new (_("when clicked."));
-	  gtk_widget_show(l);
-	  gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
-	*/
+
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_widget_show (hbox); 
