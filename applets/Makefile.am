@@ -1,4 +1,4 @@
 
 SUBDIRS  = applet-dirs \
-	   clock #mailcheck batmon netwatch \
-#	   @PROGRAMS_PANEL_CDPLAYER@
+	   clock mailcheck \
+	   @PROGRAMS_PANEL_CDPLAYER@
