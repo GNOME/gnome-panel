@@ -519,6 +519,26 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 	g_free (foo->clock_format);
 	foo->clock_format = g_strdup (clock_format);
 
+	if(foo->clock_label) {
+		time_t das_time;
+		struct tm *das_tm;
+		char hour[256];
+		gchar *str_utf8;
+		int width;
+		PangoLayout *layout;
+
+		das_time = 0;
+		das_tm = localtime (&das_time);
+		strftime(hour, sizeof(hour), _(clock_format), das_tm);
+		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+		if(str_utf8) {
+			layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
+			pango_layout_get_pixel_size (layout, &width, NULL);
+			width += 8; /* Padding */
+			gtk_widget_set_size_request (foo->clock_label, width, 0);
+			g_object_unref (G_OBJECT(layout));
+		}
+	}
 	update_clock (foo);
 }
 
@@ -671,6 +691,18 @@ add_window (WnckWindow *window, FoobarWidget *foo)
 	if (pb == NULL)
 		pb = get_default_image ();
 	if (pb != NULL) {
+		double pix_x, pix_y;
+		pix_x = gdk_pixbuf_get_width (pb);
+		pix_y = gdk_pixbuf_get_height (pb);
+		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
+			double greatest;
+
+			greatest = pix_x > pix_y ? pix_x : pix_y;
+			pb = gdk_pixbuf_scale_simple (pb,
+						     (ICON_SIZE / greatest) * pix_x,
+						     (ICON_SIZE / greatest) * pix_y,
+						      GDK_INTERP_BILINEAR);
+		}
 		image = gtk_image_new_from_pixbuf (pb);
 		gtk_widget_show (image);
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
@@ -771,6 +803,18 @@ set_das_pixmap (FoobarWidget *foo, WnckWindow *window)
 		pb = get_default_image ();
 
 	if (pb != NULL) {
+		double pix_x, pix_y;
+		pix_x = gdk_pixbuf_get_width (pb);
+		pix_y = gdk_pixbuf_get_height (pb);
+		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
+			double greatest;
+
+			greatest = pix_x > pix_y ? pix_x : pix_y;
+			pb = gdk_pixbuf_scale_simple (pb,
+						     (ICON_SIZE / greatest) * pix_x,
+						     (ICON_SIZE / greatest) * pix_y,
+						      GDK_INTERP_BILINEAR);
+		}
 		foo->task_image = gtk_image_new_from_pixbuf (pb);
 		gtk_widget_show (foo->task_image);
 
