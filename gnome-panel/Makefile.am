@@ -5,6 +5,8 @@ test:
 #SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 #	@PROGRAMS_PANEL_CDPLAYER@
 
+SUBDIRS  = clock @PROGRAMS_PANEL_CDPLAYER@
+
 CXX = mico-c++
 CXXCOMPILE = $(CXX) -g $(INCLUDES)
 
@@ -12,7 +14,7 @@ INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(X_CFLAGS)
 
-bin_PROGRAMS = panel clock_applet
+bin_PROGRAMS = panel
 
 CORBA_SOURCES = 		\
 	gnome-panel.cc		\
@@ -50,17 +52,6 @@ MICO_VERS = 2.0.3
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
-
-## FIXME: move clock applet into clock
-clock_applet_SOURCES = \
-	clock.c		\
-	applet-lib.cc	\
-	applet-lib.h	\
-	applet-widget.c	\
-	applet-widget.h	\
-	$(CORBA_SOURCES)
-
-clock_applet_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
