@@ -242,10 +242,10 @@ EXTRA_DIST = \
 	appletsConf.sh.in		\
 	dockletsConf.sh.in		\
 	panel.gnorba			\
-	panel.soundlist			\
+	panel.soundlist.in			\
 	APPLET_WRITING			\
 	panel.hints			\
-	gnome-panel-properties.desktop	\
+	gnome-panel-properties.desktop.in	\
 	nothing.cP			\
 	title-item.gob			\
 	gnome-panel-screenshot.glade	\
@@ -282,7 +282,9 @@ panelgnorbadir  = $(sysconfdir)/CORBA/servers
 panelgnorba_DATA = panel.gnorba
 
 soundlistdir = $(sysconfdir)/sound/events
-soundlist_DATA = panel.soundlist
+soundlist_in_files = panel.soundlist.in
+soundlist_DATA = $(soundlist_in_files:.soundlist.in=.soundlist)
+@XML_I18N_MERGE_SOUNDLIST_RULE@
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =gnome-panel-screenshot.glade
@@ -291,9 +293,13 @@ hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
 
 sysdir = $(datadir)/control-center/Desktop/
-sys_DATA = gnome-panel-properties.desktop
+sys_in_files = gnome-panel-properties.desktop.in
+sys_DATA = $(sys_in_files:.desktop.in=.desktop)
+@XML_I18N_MERGE_DESKTOP_RULE@
 
 deskdir = $(datadir)/gnome/apps/Settings/Desktop/
-desk_DATA = gnome-panel-properties.desktop
+desk_in_files = gnome-panel-properties.desktop.in
+desk_DATA = $(desk_in_files:.desktop.in=.desktop)
+@XML_I18N_MERGE_DESKTOP_RULE@
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)

@@ -30,7 +30,7 @@ libfish_applet_la_SOURCES = fish.c
 FISH_BITMAPS = fishanim.png oldwanda.png footguy.png monkey.png
 
 EXTRA_DIST = \
-	fish_applet.desktop \
+	fish_applet.desktop.in \
 	$(FISH_BITMAPS)	\
 	gnome-fish.png \
 	fish_applet.gnorba
@@ -42,7 +42,9 @@ pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-fish.png
 
 sysdir = $(datadir)/applets/Amusements
-sys_DATA = fish_applet.desktop
+sys_in_files = fish_applet.desktop.in
+sys_DATA = $(sys_in_files:.desktop.in=.desktop)
+@XML_I18N_MERGE_DESKTOP_RULE@
 
 gnorbadir  = $(sysconfdir)/CORBA/servers
 gnorba_DATA = fish_applet.gnorba
