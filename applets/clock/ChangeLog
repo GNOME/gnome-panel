@@ -1,3 +1,10 @@
+1998-09-30  Havoc Pennington  <hp@pobox.com>
+
+	* diskusage/properties.c: color set callbacks use guint8 instead
+	of int. (I think there's another problem, that they use _get_i8
+	instead of having proper callback args, but I didn't cause that
+	one so I'll let someone else fix it. ;-)
+
 1998-09-23  Michael Lausch  <mla@gams.at>
 
 	* Makefile.am (fvwm_pager): Added conditional for fvwm-pager
