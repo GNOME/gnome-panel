@@ -5,10 +5,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
-"POT-Creation-Date: 2002-04-29 03:19+0100\n"
-"PO-Revision-Date: 2002-04-16 16:35-0400\n"
+"POT-Creation-Date: 2002-05-06 09:20+0200\n"
+"PO-Revision-Date: 2002-05-05 00:31-0400\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
-"Language-Team: GnomeVN\n"
+"Language-Team: GnomeVI <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,9 +27,9 @@ msgstr "Giới thiệu..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:3994 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Trợ giúp"
 
@@ -229,7 +229,7 @@ msgid "Window List"
 msgstr "Danh sách cửa sổ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:432
 msgid "Workspace Switcher"
 msgstr "Bộ chuyển workspace"
 
@@ -535,35 +535,6 @@ msgstr ""
 "Bộ chuyển workspace hiển thị một phiên bản thu nhỏ của workspace, cho phép "
 "bạn quản lý các cửa sổ."
 
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Số _workspace:"
-
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Hàng"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Hiện _mọi workspace:"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Chỉ hiện workspace _hiện thời"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Hiện _tên workspace trong bộ chuyển workspace"
-
-#: applets/gen_util/pager.glade.h:7
-#, fuzzy
-msgid "Workspace Switcher Preferences"
-msgstr "Thuộc tính bộ chuyển workspace"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspaces"
-msgstr "Workspace"
-
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
 msgstr "Không thể thực hiện lệnh in"
@@ -603,9 +574,9 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Không thể tạo applet!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
+#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3992
 msgid "Properties..."
 msgstr "Thuộc tính..."
 
@@ -619,51 +590,6 @@ msgid ""
 msgstr ""
 "Danh sách cửa sổ hiển thị danh sách tất cả các cửa sổ và cho phép bạn duyệt "
 "chúng."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Nhóm các cửa sổ lại khi _không gian bị giới hạn"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "Restore to current _workspace"
-msgstr "Phục hồi _workspace hiện thời"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Restore to na_tive workspace"
-msgstr "Phục hồi workspace _nguyên thủy"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Show windows from _current workspace"
-msgstr "Hiện các cửa sổ trên workspace hiện thời"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Show windows from a_ll workspaces"
-msgstr "Hiện các cửa sổ trên mọi workspace "
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "When restoring minimized windows"
-msgstr "Khi phục hồi cửa sổ bị thu nhỏ"
-
-#: applets/gen_util/tasklist.glade.h:7
-#, fuzzy
-msgid "Window List Preferences"
-msgstr "Thuộc tính danh sách cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "Window List content"
-msgstr "Nội dung danh sách cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window grouping"
-msgstr "Nhóm cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "_Always group windows"
-msgstr "_Luôn nhóm các cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "_Never group windows"
-msgstr "Không bao giờ nhóm các cửa sổ"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -693,7 +619,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
@@ -783,68 +709,82 @@ msgstr "Cho phép ẩn panel"
 msgid "Enable hidebutton arrow"
 msgstr "Hiện mũi tên"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3133
 msgid "Drawer"
 msgstr "Ngăn kéo"
 
-#: gnome-panel/foobar-widget.c:214
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:281
+#, fuzzy
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Không thể thực hiện xscreensaver"
+
+#: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:291
 #, fuzzy
 msgid "Cannot execute gnome-search-tool"
 msgstr "Không thể thực hiện xscreensaver"
 
-#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3562
 msgid "Run Program..."
 msgstr "Chạy chương trình..."
 
-#: gnome-panel/foobar-widget.c:227
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Chạy ứng dụng, nếu bạn biết lệnh cần thiết phải nhập vào"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3574
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3577
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:251
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3587
+msgid "Take a Screen Shot..."
+msgstr ""
+
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3590
+#, fuzzy
+msgid "Take a screen shot of your desktop"
+msgstr "Lưu screenshot vào desktop"
+
+#: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
 msgstr "Khóa màn hình"
 
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:257
 msgid "Protect your computer from unauthorized use"
 msgstr "Tránh sự quấy nhiễu máy tính của những người dùng không được phép"
 
-#: gnome-panel/foobar-widget.c:264
+#: gnome-panel/foobar-widget.c:266
 msgid "Log Out"
 msgstr "Thoát"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:269
 msgid "Quit from the GNOME desktop"
 msgstr "Thoát khỏi GNOME Desktop"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:276
+#: gnome-panel/foobar-widget.c:278
 msgid "Actions"
 msgstr "Hoạt động"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:493
 msgid "No windows open"
 msgstr "Không có cửa sổ nào"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
+#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2707
 #: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
 msgid "Applications"
 msgstr "Ứng dụng"
 
-#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
+#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2591
 #: gnome-panel/menu.c:2636
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Panel menu"
 
-#: gnome-panel/foobar-widget.c:769
+#: gnome-panel/foobar-widget.c:778
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "Menu GNOME"
@@ -894,7 +834,6 @@ msgid ""
 msgstr "System administrator không được phép thay đổi cấu hình panel"
 
 #: gnome-panel/gnome-panel-preferences.c:310
-#: gnome-panel/gnome-panel-preferences.glade.h:5
 #, fuzzy
 msgid "Panel Preferences"
 msgstr "Thông số toàn cục..."
@@ -904,49 +843,11 @@ msgstr "Thông số toàn cục..."
 msgid "Modify the global panel preferences"
 msgstr "Thuộc tính của panel chung"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3604
 msgid "Panel"
 msgstr "Panel"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation"
-msgstr "Hoạt cảnh"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Fast"
-msgstr "Nhanh"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "General"
-msgstr "Chung"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Medium"
-msgstr "Trung bình"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6 gnome-panel/logout.c:217
-msgid "Properties"
-msgstr "Thuộc tính"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Chậm"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:8
-#, fuzzy
-msgid "_Animation Speed:"
-msgstr "Tốc độ hoạt cảnh:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:9
-msgid "_Close drawer if a launcher inside it is pressed"
-msgstr "Đóng ngăn kéo nếu launcher trong đó được nhấn"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:10
-#, fuzzy
-msgid "_Enable panel animation"
-msgstr "Bật hoạt cảnh"
-
-#: gnome-panel/gnome-panel-screenshot.c:128
+#: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -954,7 +855,7 @@ msgstr ""
 "Không thể khởi động cấu trúc png structure.\n"
 "Có lẽ libpng bị hỏng"
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -962,7 +863,7 @@ msgstr ""
 "Không thể tạo PNG info.\n"
 "Có lẽ libpng bị hỏng"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:141
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -970,7 +871,7 @@ msgstr ""
 "Không thể chỉnh png info.\n"
 "Có lẽ libpng bị hỏng"
 
-#: gnome-panel/gnome-panel-screenshot.c:157
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -978,13 +879,13 @@ msgstr ""
 "Không đủ bộ nhớ để lưu screenshot.\n"
 "Hãy giải phóng tài nguyên và thử lại."
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:202
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Tập tin %s đã tồn tại. Ghi đè lên nó?"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:704
+#: gnome-panel/gnome-panel-screenshot.c:214
+#: gnome-panel/gnome-panel-screenshot.c:702
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -995,52 +896,52 @@ msgstr ""
 "\"%s\"\n"
 "Hãy xem lại quyền truy cập của thư mục cha"
 
-#: gnome-panel/gnome-panel-screenshot.c:479
+#: gnome-panel/gnome-panel-screenshot.c:477
 msgid "Print Screenshot"
 msgstr "In Screenshot"
 
-#: gnome-panel/gnome-panel-screenshot.c:527
+#: gnome-panel/gnome-panel-screenshot.c:525
 msgid "Screenshot Print Preview"
 msgstr "Xem trước Screenshot cần in"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:553
+#: gnome-panel/gnome-panel-screenshot.c:551
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cScreenshot-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:558
+#: gnome-panel/gnome-panel-screenshot.c:556
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cScreenshot.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:573
+#: gnome-panel/gnome-panel-screenshot.c:571
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cScreenshot-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:578
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cScreenshot-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:724
+#: gnome-panel/gnome-panel-screenshot.c:722
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Không đủ chỗ để ghi tập tin %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1034
+#: gnome-panel/gnome-panel-screenshot.c:1021
 msgid "Grab a window instead of the entire screen"
 msgstr "Lưu một cửa sổ thay vì cả màn hình"
 
-#: gnome-panel/gnome-panel-screenshot.c:1035
+#: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1078
+#: gnome-panel/gnome-panel-screenshot.c:1064
 #, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
@@ -1049,137 +950,99 @@ msgstr ""
 "Tập tin glade cho chương trình screenshot bị thiếu.\n"
 "Hãy kiểm tra lại bản cài đặt của gnome-core"
 
-#: gnome-panel/gnome-panel-screenshot.c:1100
+#: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Không thể tạo screenshot cho desktop hiện thời."
 
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
-#, fuzzy
-msgid "Screenshot Capture"
-msgstr "Screenshot"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
-msgid "Take a picture of the current screen contents"
-msgstr ""
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:1
-msgid "Options"
-msgstr "Tùy chọn"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:2
-msgid "Preview"
-msgstr "Xem trước"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:3
-msgid "Save screenshot to _desktop"
-msgstr "Lưu screenshot vào desktop"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:4
-msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr "Lưu screenshot vào trang _web (thư mục ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:5
-msgid "Screenshot"
-msgstr "Screenshot"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:6
-msgid "_Print screenshot..."
-msgstr "_In screenshot..."
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:7
-msgid "_Save screenshot to file:"
-msgstr "Lưu screenshot vào tập tin:"
-
-#: gnome-panel/gnome-run.c:224 gnome-panel/gnome-run.c:240
-#, c-format
-msgid ""
-"Failed to load this program!\n"
-"%s"
+#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
+#, fuzzy, c-format
+msgid "Failed to run this program: '%s'"
 msgstr ""
 "Lỗi khi nạp chương trình này!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:333
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s"
+#: gnome-panel/gnome-run.c:325
+#, fuzzy, c-format
+msgid "Failed to execute command: '%s'"
 msgstr ""
 "Lỗi khi thực hiện lệnh:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:390
-#, c-format
+#: gnome-panel/gnome-run.c:384
+#, fuzzy, c-format
 msgid ""
-"Failed to execute command:\n"
-"%s\n"
-"%s"
+"Failed to execute command: '%s'\n"
+"\n"
+"Details: %s"
 msgstr ""
 "Lỗi khi thực hiện lệnh:\n"
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr "Chọn chương trình cần thực hiện"
 
-#: gnome-panel/gnome-run.c:679
-msgid "Executable name for selected application"
-msgstr ""
+#: gnome-panel/gnome-run.c:664
+#, fuzzy
+msgid "Command to run"
+msgstr "Lệnh (tùy chọn)"
 
-#: gnome-panel/gnome-run.c:692
+#: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
 msgstr "_Duyệt..."
 
-#: gnome-panel/gnome-run.c:701
+#: gnome-panel/gnome-run.c:688
 msgid "Run in _terminal"
 msgstr "Chạy trong _terminal"
 
-#: gnome-panel/gnome-run.c:927
-#, c-format
-msgid "Will run '%s'"
+#: gnome-panel/gnome-run.c:922
+#, fuzzy, c-format
+msgid "Will run command: '%s'"
 msgstr "Sẽ chạy '%s'"
 
-#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
-msgid "No program selected"
+#: gnome-panel/gnome-run.c:931
+#, fuzzy
+msgid "No application selected"
 msgstr "Không có chương trình nào được chọn"
 
-#: gnome-panel/gnome-run.c:1061
-msgid "A_pplications:"
+#: gnome-panel/gnome-run.c:1051
+#, fuzzy
+msgid "Known A_pplications:"
 msgstr "Ứng _dụng:"
 
-#: gnome-panel/gnome-run.c:1071
+#: gnome-panel/gnome-run.c:1061
 #, fuzzy
-msgid "List of Applications"
-msgstr "Ứng dụng"
+msgid "List of known applications"
+msgstr "Tựa đề ứng dụng cần bao"
 
-#: gnome-panel/gnome-run.c:1072
+#: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1181
-msgid "_Advanced <<"
-msgstr "_Nâng cao <<"
+#: gnome-panel/gnome-run.c:1160
+#, fuzzy
+msgid "_Known Applications <<"
+msgstr "Ứng dụng"
 
-#: gnome-panel/gnome-run.c:1184
-msgid "Hide the advanced controls below this button."
-msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
+#: gnome-panel/gnome-run.c:1163
+msgid "Hide the list of known applications"
+msgstr ""
 
-#: gnome-panel/gnome-run.c:1195
-msgid "_Advanced >>"
-msgstr "_Nâng cao >>"
+#: gnome-panel/gnome-run.c:1177
+#, fuzzy
+msgid "_Known Applications >>"
+msgstr "Ứng dụng"
+
+#: gnome-panel/gnome-run.c:1180
+msgid "Display a list of known applications from the applications menu"
+msgstr ""
 
 #: gnome-panel/gnome-run.c:1198
-msgid ""
-"Allow typing in a command line instead of choosing an application from the "
-"list"
-msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
-
-#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "_Thực hiện"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1255
 msgid "Run Program"
 msgstr "Thực hiện chương trình"
 
@@ -1219,13 +1082,13 @@ msgstr "Trợ giúp cho ứng dụng %s"
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
-#: gnome-panel/menu-ditem.c:254
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
+#: gnome-panel/menu-ditem.c:256
 #, fuzzy
 msgid "Launcher Properties"
 msgstr "Thuộc tính Launcher"
 
-#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
 #, fuzzy
 msgid "Create Launcher"
 msgstr "Không thể tạo applet launcher"
@@ -1244,11 +1107,11 @@ msgstr ""
 
 #: gnome-panel/logout.c:84 gnome-panel/menu.c:3384
 msgid "Log out"
-msgstr "Thoát"
+msgstr "Đăng xuất"
 
 #: gnome-panel/logout.c:103
 msgid "Log out of GNOME"
-msgstr "Thoát khỏi GNOME"
+msgstr "Thoát khỏi GNOME (logout)"
 
 #: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3371
 msgid "Lock screen"
@@ -1281,14 +1144,18 @@ msgstr "Kết thúc Daemon Screensaver"
 msgid "Restart Screensaver Daemon"
 msgstr "Khởi động lại Daemon Screensaver"
 
+#: gnome-panel/logout.c:217
+msgid "Properties"
+msgstr "Thuộc tính"
+
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Xác định tên profile cần nạp"
 
-#: gnome-panel/menu-ditem.c:117
-#, c-format
+#: gnome-panel/menu-ditem.c:119
+#, fuzzy, c-format
 msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
+"<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
@@ -1296,34 +1163,32 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3643 gnome-panel/menu.c:3868
 msgid "Menu"
 msgstr "Menu"
 
-#: gnome-panel/menu-ditem.c:437
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
 msgstr ""
-"Không thể tạo Launcher.\n"
-"\n"
-"Không thấy lệnh nào hoặc URL nào."
+
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
+msgstr ""
 
 #. class
-#: gnome-panel/menu-ditem.c:458
-#, c-format
+#: gnome-panel/menu-ditem.c:480
+#, fuzzy, c-format
 msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
+"<b>Cannot save menu item to disk</b>\n"
 "\n"
-"%s"
+"Details: %s"
 msgstr ""
-"Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
+"<b>Không thể lưu các thay đổi trên menu</b>\n"
 "\n"
-"%s"
+"Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:482
+#: gnome-panel/menu-ditem.c:503
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1695,19 +1560,19 @@ msgstr "Applet"
 msgid "Run a command"
 msgstr "Thực hiện lệnh"
 
-#: gnome-panel/menu.c:3586
+#: gnome-panel/menu.c:3612
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3645
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
+#: gnome-panel/menu.c:3695 gnome-panel/menu.c:3723 gnome-panel/menu.c:3908
 msgid "Main Menu"
 msgstr "Menu chính"
 
-#: gnome-panel/menu.c:3691
+#: gnome-panel/menu.c:3717
 msgid "Can't create menu, using main menu!"
 msgstr "Không thể tạo menu, dùng menu chính!"
 
@@ -1715,16 +1580,16 @@ msgstr "Không thể tạo menu, dùng menu chính!"
 msgid "Cannot register control widget\n"
 msgstr "Không thể đăng ký ô điều khiển Control\n"
 
-#: gnome-panel/panel-applet-frame.c:597
+#: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:685
+#: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Không thể lấy giao diện AppletShell từ Control\n"
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:812
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1958,225 +1823,347 @@ msgstr "Kiểm tra Applet Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:643
+#: libpanel-applet/panel-applet.c:654
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s'"
 
-#: libpanel-applet/panel-applet.c:657
+#: libpanel-applet/panel-applet.c:668
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s': %s"
 
-#: libpanel-applet/panel-applet.c:666
+#: libpanel-applet/panel-applet.c:677
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Lỗi khi lấy pixmap %s"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:684
 msgid "Unknown background type received"
 msgstr "Nhận được một kiểu nền lạ"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:853
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet chứa hướng Panel"
 
-#: libpanel-applet/panel-applet.c:850
+#: libpanel-applet/panel-applet.c:861
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet chứa kích thước Panel (pixel)"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:869
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet chứa màu nền hoặc pixmap nền của Panel"
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:877
 msgid "The Applet's flags"
 msgstr "Cờ hiệu của Applet"
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:885
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
+msgid "Wanda"
+msgstr "Wanda"
 
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Tên con cá GNOME của bạn:"
+msgid "Your GNOME Fish's Name:"
+msgstr "Tên con cá GNOME của bạn:"
 
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
+msgid ""
+"%I:%M\n"
+"%p"
+msgstr ""
+"%I:%M\n"
+"%p"
 
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
+msgid ""
+"%a\n"
+"%b %d"
+msgstr ""
+"%a\n"
+"%b %d"
 
-#~ msgid "Clock Properties"
-#~ msgstr "Thuộc tính đồng hồ"
+msgid "Clock Properties"
+msgstr "Thuộc tính đồng hồ"
 
-#~ msgid "Time Format"
-#~ msgstr "Dạng thức thời gian"
+msgid "Time Format"
+msgstr "Dạng thức thời gian"
 
-#~ msgid "Remove from panel"
-#~ msgstr "Loại bỏ khỏi panel"
+msgid "Number of _workspaces:"
+msgstr "Số _workspace:"
 
-#~ msgid "CDE Menus"
-#~ msgstr "Menu CDE"
+msgid "Rows"
+msgstr "Hàng"
 
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Không thể thực hiện Lịch GNOME,\n"
-#~ "có lẽ nó chưa được cài đặt.\n"
-#~ "Nó nằm trong gói gnome-pim."
+msgid "Show _all workspaces"
+msgstr "Hiện _mọi workspace:"
 
-#~ msgid "menu wasn't created"
-#~ msgstr "menu không được tạo"
+msgid "Show only the _current workspace"
+msgstr "Chỉ hiện workspace _hiện thời"
 
-#~ msgid "Today"
-#~ msgstr "Hôm nay"
+msgid "Show workspace _names in the switcher"
+msgstr "Hiện _tên workspace trong bộ chuyển workspace"
 
-#~ msgid "View the calendar for today."
-#~ msgstr "Xem lịch ngày hôm nay."
+msgid "Workspace Switcher Properties"
+msgstr "Thuộc tính bộ chuyển workspace"
 
-#~ msgid "This Week"
-#~ msgstr "Tuần này"
+msgid "Workspaces"
+msgstr "Workspace"
 
-#~ msgid "View the calendar for this week."
-#~ msgstr "Xem lịch tuần này"
+msgid "Group windows when _space is limited"
+msgstr "Nhóm các cửa sổ lại khi _không gian bị giới hạn"
 
-#~ msgid "This Month"
-#~ msgstr "Tháng này"
+msgid "Restore to current _workspace"
+msgstr "Phục hồi _workspace hiện thời"
 
-#~ msgid "View the calendar for this month."
-#~ msgstr "Xem lịch tháng này"
+msgid "Restore to na_tive workspace"
+msgstr "Phục hồi workspace _nguyên thủy"
 
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
+msgid "Show windows from _current workspace"
+msgstr "Hiện các cửa sổ trên workspace hiện thời"
 
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
+msgid "Show windows from a_ll workspaces"
+msgstr "Hiện các cửa sổ trên mọi workspace "
 
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Không thể thực hiện chương trình time-admin\n"
-#~ "Có lẽ time-admin chưa được cài đặt"
+msgid "When restoring minimized windows"
+msgstr "Khi phục hồi cửa sổ bị thu nhỏ"
 
-#~ msgid "Add Appointment..."
-#~ msgstr "Đặt cuộc hẹn..."
+msgid "Window List Properties"
+msgstr "Thuộc tính danh sách cửa sổ"
 
-#~ msgid "Set Time..."
-#~ msgstr "Chỉnh giờ..."
+msgid "Window List content"
+msgstr "Nội dung danh sách cửa sổ"
 
-#~ msgid "Adjust the date and time."
-#~ msgstr "Chỉnh ngày giờ"
+msgid "Window grouping"
+msgstr "Nhóm cửa sổ"
 
-#~ msgid "Format"
-#~ msgstr "Dạng thức"
+msgid "_Always group windows"
+msgstr "_Luôn nhóm các cửa sổ"
 
-#~ msgid "Global Panel Properties"
-#~ msgstr "Thuộc tính của panel chung"
+msgid "_Never group windows"
+msgstr "Không bao giờ nhóm các cửa sổ"
 
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
+msgid "Remove from panel"
+msgstr "Loại bỏ khỏi panel"
 
-#~ msgid "&lt;Alt&gt;F1F1"
-#~ msgstr "&lt;Alt&gt;F1F1"
+msgid "CDE Menus"
+msgstr "Menu CDE"
 
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
+msgid ""
+"Cannot execute the gnome calendar,\n"
+"perhaps it's not installed.\n"
+"It is in the gnome-pim package."
+msgstr ""
+"Không thể thực hiện Lịch GNOME,\n"
+"có lẽ nó chưa được cài đặt.\n"
+"Nó nằm trong gói gnome-pim."
 
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;m"
+msgid "menu wasn't created"
+msgstr "menu không được tạo"
 
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;r"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;r"
+msgid "Today"
+msgstr "Hôm nay"
 
-#~ msgid "Automatically re-check menus for newly installed software"
-#~ msgstr "Tự động kiểm tra menu để tìm các phần mềm mới cài đặt"
+msgid "View the calendar for today."
+msgstr "Xem lịch ngày hôm nay."
 
-#~ msgid "GNOME Menu:"
-#~ msgstr "Menu GNOME:"
+msgid "This Week"
+msgstr "Tuần này"
 
-#~ msgid "Grab key..."
-#~ msgstr "Bắt lấy phím..."
+msgid "View the calendar for this week."
+msgstr "Xem lịch tuần này"
 
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Giữ panel ở trên các cửa sổ khác"
+msgid "This Month"
+msgstr "Tháng này"
 
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Giữ panel ở dưới các cửa sổ khác"
+msgid "View the calendar for this month."
+msgstr "Xem lịch tháng này"
 
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Giữ panel ở cùng mức với các cửa sổ khác"
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
 
-#~ msgid "Panel Settings"
-#~ msgstr "Thông số panel"
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
 
-#~ msgid "Run Program dialog:"
-#~ msgstr "Chạy hộp thoại Chương trình:"
+msgid ""
+"Could not call time-admin\n"
+"Perhaps time-admin is not installed"
+msgstr ""
+"Không thể thực hiện chương trình time-admin\n"
+"Có lẽ time-admin chưa được cài đặt"
 
-#~ msgid "Shortcut keys"
-#~ msgstr "Phím tắt"
+msgid "Add Appointment..."
+msgstr "Đặt cuộc hẹn..."
 
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "Bật phím tắt"
+msgid "Set Time..."
+msgstr "Chỉnh giờ..."
 
-#~ msgid "_Raise panels when the mouse moves over them"
-#~ msgstr "Hiện panel khi chuột di chuyển ngang qua"
+msgid "Adjust the date and time."
+msgstr "Chỉnh ngày giờ"
 
-#~ msgid "Desktop entry properties"
-#~ msgstr "Thuộc tính Desktop"
+msgid "Format"
+msgstr "Dạng thức"
 
-#~ msgid "Create menu item"
-#~ msgstr "Tạo menu item"
+msgid "Global Panel Properties"
+msgstr "Thuộc tính của panel chung"
 
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I: %M: %S: %p"
+msgid "&lt;Alt&gt;F1"
+msgstr "&lt;Alt&gt;F1"
 
-#~ msgid "Swallowed app..."
-#~ msgstr "Ứng dụng bao..."
+msgid "&lt;Alt&gt;F1F1"
+msgstr "&lt;Alt&gt;F1F1"
 
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Không thể thực hiện Nautilus!"
+msgid "&lt;Alt&gt;F2"
+msgstr "&lt;Alt&gt;F2"
 
-#~ msgid "Reread all menus"
-#~ msgstr "Đọc lại toàn bộ menu"
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr "&lt;Control&gt;&lt;Alt&gt;m"
 
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "XX Small Tiny (12 pixels)"
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr "&lt;Control&gt;&lt;Alt&gt;r"
 
-#~ msgid ""
-#~ "A swallowed application appears to have died unexpectedly.\n"
-#~ "Attempt to reload it?"
-#~ msgstr ""
-#~ "Có lẽ một ứng dụng bao đã chết.\n"
-#~ "Thử nạp nó lại?"
+msgid "Animation"
+msgstr "Hoạt cảnh"
 
-#~ msgid "Reload"
-#~ msgstr "Nạp lại"
+msgid "Animation speed:"
+msgstr "Tốc độ hoạt cảnh:"
 
-#~ msgid "Create swallow applet"
-#~ msgstr "Tạo applet bao"
+msgid "Automatically re-check menus for newly installed software"
+msgstr "Tự động kiểm tra menu để tìm các phần mềm mới cài đặt"
 
-#~ msgid "Title of application to swallow"
-#~ msgstr "Tựa đề ứng dụng cần bao"
+msgid "Fast"
+msgstr "Nhanh"
 
-#~ msgid "Command (optional)"
-#~ msgstr "Lệnh (tùy chọn)"
+msgid "GNOME Menu:"
+msgstr "Menu GNOME:"
 
-#~ msgid "Width"
-#~ msgstr "Độ rộng"
+msgid "General"
+msgstr "Chung"
 
-#~ msgid "Height"
-#~ msgstr "Độ cao"
+msgid "Grab key..."
+msgstr "Bắt lấy phím..."
+
+msgid "Keep panels above other windows"
+msgstr "Giữ panel ở trên các cửa sổ khác"
+
+msgid "Keep panels below other windows"
+msgstr "Giữ panel ở dưới các cửa sổ khác"
+
+msgid "Keep panels on same level as other windows"
+msgstr "Giữ panel ở cùng mức với các cửa sổ khác"
+
+msgid "Medium"
+msgstr "Trung bình"
+
+msgid "Panel Settings"
+msgstr "Thông số panel"
+
+msgid "Run Program dialog:"
+msgstr "Chạy hộp thoại Chương trình:"
+
+msgid "Shortcut keys"
+msgstr "Phím tắt"
+
+msgid "Slow"
+msgstr "Chậm"
+
+msgid "_Close drawer if a launcher inside it is pressed"
+msgstr "Đóng ngăn kéo nếu launcher trong đó được nhấn"
+
+msgid "_Enable animation"
+msgstr "Bật hoạt cảnh"
+
+msgid "_Enable shortcut keys"
+msgstr "Bật phím tắt"
+
+msgid "_Raise panels when the mouse moves over them"
+msgstr "Hiện panel khi chuột di chuyển ngang qua"
+
+msgid "Options"
+msgstr "Tùy chọn"
+
+msgid "Preview"
+msgstr "Xem trước"
+
+msgid "Save screenshot to _web page (save in ~/public__html)"
+msgstr "Lưu screenshot vào trang _web (thư mục ~/public__html)"
+
+msgid "Screenshot"
+msgstr "Screenshot"
+
+msgid "_Print screenshot..."
+msgstr "_In screenshot..."
+
+msgid "_Save screenshot to file:"
+msgstr "Lưu screenshot vào tập tin:"
+
+msgid "_Advanced <<"
+msgstr "_Nâng cao <<"
+
+msgid "Hide the advanced controls below this button."
+msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
+
+msgid "_Advanced >>"
+msgstr "_Nâng cao >>"
+
+msgid ""
+"Allow typing in a command line instead of choosing an application from "
+"the list"
+msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
+
+msgid "Desktop entry properties"
+msgstr "Thuộc tính Desktop"
+
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+"Không thể tạo Launcher.\n"
+"\n"
+"Không thấy lệnh nào hoặc URL nào."
+
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
+"\n"
+"%s"
+
+msgid "Create menu item"
+msgstr "Tạo menu item"
+
+msgid "%I: %M: %S: %p"
+msgstr "%I: %M: %S: %p"
+
+msgid "Swallowed app..."
+msgstr "Ứng dụng bao..."
+
+msgid "Cannot launch nautilus!"
+msgstr "Không thể thực hiện Nautilus!"
+
+msgid "Reread all menus"
+msgstr "Đọc lại toàn bộ menu"
+
+msgid "XX Small Tiny (12 pixels)"
+msgstr "XX Small Tiny (12 pixels)"
+
+msgid ""
+"A swallowed application appears to have died unexpectedly.\n"
+"Attempt to reload it?"
+msgstr ""
+"Có lẽ một ứng dụng bao đã chết.\n"
+"Thử nạp nó lại?"
+
+msgid "Reload"
+msgstr "Nạp lại"
+
+msgid "Create swallow applet"
+msgstr "Tạo applet bao"
+
+msgid "Width"
+msgstr "Độ rộng"
+
+msgid "Height"
+msgstr "Độ cao"
