@@ -60,7 +60,7 @@ hello_applet_fill (PanelApplet *applet,
 {
         GtkWidget *label;
 
-        if (strcmp (iid, "OAFIID:GNOME_HelloApplet") != 0)
+        if (strcmp (iid, "OAFIID:My_HelloApplet") != 0)
 		return FALSE;
 
         label = gtk_label_new ("Hello World");
@@ -72,7 +72,7 @@ hello_applet_fill (PanelApplet *applet,
 }
 
 
-PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_HelloApplet_Factory",
+PANEL_APPLET_BONOBO_FACTORY ("OAFIID:My_HelloApplet_Factory",
                              PANEL_TYPE_APPLET,
                              "The Hello World Applet",
                              "0",
