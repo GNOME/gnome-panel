@@ -234,8 +234,7 @@ static void
 load_checkboxes (void)
 {
 	gchar* checkboxes[] = {"drawer-autoclose", "auto-raise-panel",
-        	"confirm-panel-remove", "keep-menus-in-memory",
-		"enable-animations", "enable-key-bindings",
+        	"enable-animations", "enable-key-bindings",
 		"auto-update-menus", NULL };
 	int i = 0;
 
@@ -248,11 +247,12 @@ load_checkboxes (void)
 		checked = gconf_client_get_bool(gconf_client,key,NULL);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), 
 			checked);
-		g_signal_connect(G_OBJECT(checkbox),"clicked",
-			G_CALLBACK(checkbox_clicked), key);
+		g_signal_connect_data(G_OBJECT(checkbox),"clicked",
+			G_CALLBACK(checkbox_clicked), key,
+			(GClosureNotify)g_free, 
+			0 /* connect_flags */);
 		update_sensitive_for_checkbox(key, checked);
 		i++;
-		/*g_free(key);*/
 	}
 }
 
