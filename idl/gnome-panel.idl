@@ -111,6 +111,8 @@ module GNOME {
 					  in string stock_item,
 					  in string menuitem_text);
 		oneway void remove_callback (in string callback_name);
+		oneway void callback_set_sensitive (in string callback_name,
+						    in boolean sensitive);
 		oneway void sync_config ();
 		oneway void done_session_save(in boolean ret,
 					      in unsigned long cookie);
