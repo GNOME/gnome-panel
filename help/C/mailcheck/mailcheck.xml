@@ -41,7 +41,7 @@
  
 
 <articleinfo>
-  <title>Mailcheck Applet Manual</title>
+  <title>Inbox Monitor Manual</title>
  <!-- According to GFDL, the Title Page "should use  a title distinct from that of 
       the Document, and from those of previous versions (which should, if there were 
       any, be listed in the History section of the Document). You may use the same 
@@ -56,6 +56,8 @@
   </copyright>
   <copyright>
 	<year>2000</year>
+	<year>2001</year>
+	<year>2002</year>
 	<holder>Eric Baudais</holder>
   </copyright>
 
@@ -105,6 +107,7 @@
 	  <surname> Gwynne</surname>
 	  <affiliation>
 		<orgname>GNOME Documentation Project</orgname>
+		<address> <email>telsa@linuxchix.org</email> </address>
 	  </affiliation>
 	</author>
 	<author>
@@ -112,6 +115,7 @@
 	  <surname> Baudais</surname>
 	  <affiliation>
 		<orgname>GNOME Documentation Project</orgname>
+		<address><email>baudais@kkpsi.org</email></address>
 	  </affiliation>
 	</author>
   </authorgroup>
@@ -123,6 +127,16 @@
 
 
   <revhistory>
+
+	  <revision>
+		<revnumber>2.0</revnumber>
+		<date>November 2001</date>
+		<revdescription>
+		  <para role="author">Eric Baudais</para>
+		  <para role="publisher">GNOME Documentation Project</para>
+		  <para>This was the second release for GNOME 1.4</para>
+		</revdescription>
+	  </revision>
 
 
 	<revision>
@@ -153,7 +167,7 @@
   <title>The Inbox Monitor</title> 
 
   <para>
-    The <application>mailcheck applet</application> is an applet which
+    The &app; is an applet which
     sits in your panel and tells you when you have new email. To add 
     this applet to the panel, right-click on the panel and choose
     <menuchoice>
@@ -229,7 +243,7 @@
    <sect2 id="inbox-monitor-prefs">
     <title>Preferences</title>
     <para>
-       The mailcheck <interface>properties dialogue box</interface> is
+       The inbox monitor <interface>properties dialogue box</interface> is
        divided into two sections, one for what the mail check applet
        does, and one for where it checks for email.
     </para>
@@ -381,8 +395,7 @@
            
        <para>
          By clicking on the <guilabel>box with the mailbox location</guilabel>,
-         you can tell the mailcheck applet where to look for your incoming
-         email.
+         you can tell the &app; where to look for your incoming email.
        </para>
        <itemizedlist>
         <listitem>
@@ -409,7 +422,7 @@
    </variablelist>
   </sect2>
  
-  <sect2 id="mailcheck-bugs">
+  <sect2 id="inbox-monitor-bugs">
    <title> Known bugs and limitations</title>
    <itemizedlist>
     <listitem>
