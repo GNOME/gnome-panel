@@ -34,7 +34,6 @@ static menu_count=0; /*how many "menu" applets we have ....*/
 			   GDK_POINTER_MOTION_HINT_MASK)
 
 extern GList *panels;
-extern GList *drawers;
 extern GList *applets;
 
 extern GtkTooltips *panel_tooltips;
@@ -198,43 +197,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 }
 
 static void
-save_drawer_configuration(gpointer data, gpointer user_data)
-{
-	/*FIXME: drawers*/
-	/*char          *path;
-	char          *fullpath;
-	char           buf[256];
-	GtkWidget     *widget = data;
-	int           *num = user_data;
-	
-	sprintf(buf, "_%d/", (*num)++);
-	path = g_copy_strings("/panel/Drawer", buf, NULL);
-
-	fullpath = g_copy_strings(path,"name",NULL);
-	gnome_config_set_string(fullpath, drawer->name);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"iconopen",NULL);
-	gnome_config_set_string(fullpath, drawer->iconopen);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"iconclosed",NULL);
-	gnome_config_set_string(fullpath, drawer->iconclosed);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"geometry",NULL);
-	gnome_config_set_int(fullpath, pos);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"step_size",NULL);
-	gnome_config_set_int(fullpath, drawer->panel->step_size);
-	g_free(fullpath);
-
-	g_free(path);*/
-}
-
-
-static void
 destroy_widget_list(gpointer data, gpointer user_data)
 {
 	gtk_widget_destroy(GTK_WIDGET(data));
@@ -277,9 +239,6 @@ panel_session_save (GnomeClient *client,
 	g_list_foreach(applets,save_applet_configuration,&num);
 	gnome_config_set_int("/panel/Config/applet_count",num-1);
 	num = 1;
-	/* g_list_foreach(drawers,save_drawer_configuration,&num); */
-	gnome_config_set_int("/panel/Config/drawer_count",num-1);
-	num = 1;
 	g_list_foreach(panels,save_panel_configuration,&num);
 	gnome_config_set_int("/panel/Config/panel_count",num-1);
 
@@ -298,7 +257,6 @@ panel_session_save (GnomeClient *client,
 	if(is_shutdown) {
 		/*FIXME: tell applets to go kill themselves*/
 
-		g_list_foreach(drawers,destroy_widget_list,NULL);
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
 		gtk_widget_unref(applet_menu);
@@ -647,12 +605,4 @@ register_toy(GtkWidget *applet,
 		menu_count++;
 
 	printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));
-}
-
-static void
-create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
-	int pos, int drawer)
-{
-	/*FIXME: add drawers*/
-	return;
 }

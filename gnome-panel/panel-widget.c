@@ -52,7 +52,7 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->leave_notify_timer_tag = 0;
 	panel_widget->currently_dragged_applet = NULL;
 	panel_widget->drawer_drop_zone = NULL;
-	panel_widget->drawer_drop_zone_pos = DRAWER_LEFT;
+	panel_widget->drawer_drop_zone_pos = DROP_ZONE_LEFT;
 }
 
 static void
@@ -964,18 +964,6 @@ panel_widget_new (gint size,
 			      gtk_widget_get_events(GTK_WIDGET(panel)) |
 			      GDK_BUTTON_RELEASE_MASK);
 
-	panel->thick = PANEL_CELL_SIZE;
-
-	/*sanity sets, ignore settings that would cause bad behaviour*/
-	if(snapped == PANEL_FREE) {
-		panel->size = size;
-		panel->mode = PANEL_EXPLICIT_HIDE;
-	} else if(snapped == PANEL_DRAWER) {
-		panel->size = PANEL_DRAWER_DROP_TARGET_SIZE;
-		panel->mode = PANEL_EXPLICIT_HIDE;
-	} else {
-		panel->size = PANEL_MAX;
-	}
 
 	panel->table = gtk_table_new(3,3,FALSE);
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
@@ -1048,6 +1036,25 @@ panel_widget_new (gint size,
 	panel->step_size = step_size;
 	panel->minimized_size = minimized_size;
 	panel->minimize_delay = minimize_delay;
+
+	panel->thick = PANEL_CELL_SIZE;
+
+	/*sanity sets, ignore settings that would/might cause bad behaviour*/
+	if(snapped == PANEL_FREE) {
+		panel->size = size;
+		panel->mode = PANEL_EXPLICIT_HIDE;
+		if(panel->state == PANEL_HIDDEN_LEFT ||
+		   panel->state == PANEL_HIDDEN_RIGHT)
+			panel->state = PANEL_HIDDEN;
+	} else if(snapped == PANEL_DRAWER) {
+		panel->size = PANEL_DRAWER_DROP_TARGET_SIZE;
+		panel->mode = PANEL_EXPLICIT_HIDE;
+		if(panel->state == PANEL_HIDDEN_LEFT ||
+		   panel->state == PANEL_HIDDEN_RIGHT)
+			panel->state = PANEL_HIDDEN;
+	} else {
+		panel->size = PANEL_MAX;
+	}
 
 	/*sanity check*/
 	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
@@ -1303,13 +1310,13 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 
 	if(panel->snapped == PANEL_DRAWER) {
 		if(pos >= panel->size &&
-		   panel->drawer_drop_zone_pos == DRAWER_LEFT) {
+		   panel->drawer_drop_zone_pos == DROP_ZONE_LEFT) {
 			i = panel->size++;
 			panel_widget_set_size(panel,panel->size);
 		} else {
 			if(pos >= panel->size)
 				pos = panel->size-1;
-			if(panel->drawer_drop_zone_pos == DRAWER_LEFT)
+			if(panel->drawer_drop_zone_pos == DROP_ZONE_LEFT)
 				while(pos<PANEL_MAX &&
 				      panel->applets[pos].applet ==
 				      panel->drawer_drop_zone)
@@ -1496,7 +1503,6 @@ panel_widget_change_params(PanelWidget *panel,
 {
 	/*FIXME: change drop_zone_pos!!!!!!!!*/
 	PanelOrientation oldorient;
-	int i;
 
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
@@ -1529,6 +1535,45 @@ panel_widget_change_params(PanelWidget *panel,
 	panel->thick = PANEL_CELL_SIZE;
 	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
 		panel->state = PANEL_SHOWN;
+
+	if(panel->snapped == PANEL_DRAWER &&
+	   drop_zone_pos != panel->drawer_drop_zone_pos) {
+		int i;
+		if(drop_zone_pos == DROP_ZONE_LEFT) {
+			for(i=PANEL_DRAWER_DROP_TARGET_SIZE;i<panel->size;i++) {
+				panel->applets[i-PANEL_DRAWER_DROP_TARGET_SIZE].
+					applet = panel->applets[i].applet;
+				panel->applets[i-PANEL_DRAWER_DROP_TARGET_SIZE].
+					cells = panel->applets[i].cells;
+			}
+			for(i=panel->size - PANEL_DRAWER_DROP_TARGET_SIZE;
+			    i<panel->size;i++) {
+				panel->applets[i].applet =
+					panel->drawer_drop_zone;
+				panel->applets[i].cells =
+					PANEL_DRAWER_DROP_TARGET_SIZE;
+			}
+		} else {
+			for(i=panel->size-1-PANEL_DRAWER_DROP_TARGET_SIZE;
+			    i>=0;i++) {
+				panel->applets[i].applet =
+					panel->applets[i+
+					PANEL_DRAWER_DROP_TARGET_SIZE].applet;
+				panel->applets[i].cells =
+					panel->applets[i+
+					PANEL_DRAWER_DROP_TARGET_SIZE].cells;
+			}
+			for(i=0;i<PANEL_DRAWER_DROP_TARGET_SIZE;i++) {
+				panel->applets[i].applet =
+					panel->drawer_drop_zone;
+				panel->applets[i].cells =
+					PANEL_DRAWER_DROP_TARGET_SIZE;
+			}
+		}
+		for(i=0;i<panel->size;i+=panel->applets[i].cells)
+			panel_widget_applet_put(panel,i);
+	}
+	panel->drawer_drop_zone_pos = drop_zone_pos;
 
 	panel_widget_set_size(panel,panel->size);
 

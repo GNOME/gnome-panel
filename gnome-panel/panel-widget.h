@@ -50,8 +50,8 @@ typedef enum {
 	PANEL_HIDDEN_LEFT
 } PanelState;
 typedef enum {
-	DRAWER_LEFT,
-	DRAWER_RIGHT
+	DROP_ZONE_LEFT,
+	DROP_ZONE_RIGHT
 } DrawerDropZonePos;
 
 struct _AppletRecord

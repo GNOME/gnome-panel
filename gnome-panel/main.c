@@ -12,9 +12,9 @@
 #include "panel.h"
 #include "panel_config_global.h"
 #include "menu.h"
+#include "drawer.h"
 
 GList *panels = NULL;
-GList *drawers = NULL;
 GList *applets = NULL;
 
 extern GtkWidget * root_menu;
@@ -49,14 +49,15 @@ load_applet(char *id, char *params, int pos, int panel)
 		
 		register_toy(menu->button,menu->menu,MENU_ID,params,pos,
 			     panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
-	}
-}
+	} else if(strcmp(id,DRAWER_ID) == 0) {
+		Drawer *drawer;
 
-void
-load_drawer(char *name, char *iconopen, char *iconclosed, int step_size,
-	int pos, int panel)
-{
-	/*FIXME: drawers*/
+		/*FIXME: create an applet, if params is NULL create a whole
+		  new panel*/
+
+		register_toy(drawer->button,drawer->drawer,DRAWER_ID,params,
+			     pos, panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
+	}
 }
 
 static void
@@ -70,47 +71,6 @@ load_default_applets(void)
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 */
 /*FIXME: fix applet loading with corba*/
-}
-
-static void
-init_user_drawers(void)
-{
-	/*FIXME: DRAWERS*/
-
-	/*
-	char *drawer_name;
-	char *drawer_iconopen;
-	char *drawer_iconclosed;
-	int   pos,panel;
-	int   step_size;
-	char  buf[256];
-	int   count,num;	
-
-
-	count=gnome_config_get_int("/panel/Config/drawer_count=0");
-	for(num=1;num<=count;num++) {
-		sprintf(buf,"/panel/Drawer_%d/name=Drawer",num);
-		drawer_name = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Drawer_%d/iconopen=",num);
-		drawer_iconopen = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Drawer_%d/iconclosed=",num);
-		drawer_iconclosed = gnome_config_get_string(buf);
-
-		sprintf(buf,"/panel/Drawer_%d/step_size=%d",num,
-			DEFAULT_STEP_SIZE);
-		step_size = gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Drawer_%d/geometry=%d",num,
-			PANEL_UNKNOWN_APPLET_POSITION);
-		pos = gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Drawer_%d/panel=0",num);
-		panel = gnome_config_get_int(buf);
-		load_drawer(drawer_name,drawer_iconopen,drawer_iconclosed,
-			    step_size,pos,panel);
-		g_free(drawer_name);
-		g_free(drawer_iconopen);
-		g_free(drawer_iconclosed);
-	}
-	*/
 }
 
 static void
@@ -300,7 +260,6 @@ main(int argc, char **argv)
 	global_config.minimized_size=gnome_config_get_int(buf);
 
 	init_user_panels();
-	init_user_drawers();
 	init_user_applets();
 
 	panel_tooltips = gtk_tooltips_new();

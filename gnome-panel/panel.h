@@ -7,11 +7,11 @@
 BEGIN_GNOME_DECLS
 
 #define MENU_ID "Menu"
-#define LAUNCHER_ID "Launcher"
+/*FIXME: maybe add a temporary launcher but these will be provided by the
+  filemanager*/
+/*#define LAUNCHER_ID "Launcher"*/
 #define DRAWER_ID "Drawer"
 
-/*FIXME: maintain two global step sizes, one for autohide, one for
-  drawers, and explicit (side) hide panels*/
 #define DEFAULT_AUTO_HIDE_STEP_SIZE 10
 #define DEFAULT_EXPLICIT_HIDE_STEP_SIZE 50
 
@@ -19,7 +19,7 @@ BEGIN_GNOME_DECLS
 #define DEFAULT_MINIMIZE_DELAY 300
 
 /* number of pixels it'll stick up from the bottom when using
- * PANEL_AUTO_HIDE */
+   PANEL_AUTO_HIDE */
 #define DEFAULT_MINIMIZED_SIZE 6
 
 #define DEFAULT_PANEL_NUM 0
@@ -83,11 +83,6 @@ void apply_global_config(void);
 
 /*these are in main.c*/
 void load_applet(char *id, char *params, int pos, int panel);
-
-void load_drawer(char *name, char *iconopen, char *iconclosed, int step_size,
-	int pos, int panel);
-
-
 
 END_GNOME_DECLS
 
