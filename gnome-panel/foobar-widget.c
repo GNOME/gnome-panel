@@ -1,5 +1,6 @@
 /* GNOME panel: foobar widget
- * Copyright 1999 Helix Code, Inc.
+ * Copyright 1999,2000 Helix Code, Inc.
+ * Copyright 2000 Eazel, Inc.
  *
  * Author: Jacob Berkman
  *

@@ -1,5 +1,6 @@
 /* Gnome panel: Initialization routines
- * (C) 1997 the Free Software Foundation
+ * (C) 1997,1998,1999,2000 the Free Software Foundation
+ * (C) 2000 Eazel, Inc.
  *
  * Authors: Federico Mena
  *          Miguel de Icaza

@@ -1,6 +1,7 @@
 /*
  * GNOME panel swallow module.
- * (C) 1997 The Free Software Foundation
+ * (C) 1997,1998,1999,2000 The Free Software Foundation
+ * (C) 2000 Eazel, Inc.
  *
  * Author: George Lebl
  */

@@ -1,5 +1,6 @@
 /* Gnome panel: extern applet functions
- * (C) 1997 the Free Software Foundation
+ * (C) 1997,1998,1999,2000 the Free Software Foundation
+ * (C) 2000 Eazel, Inc.
  *
  * Authors:  George Lebl
  *           Federico Mena

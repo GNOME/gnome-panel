@@ -1,7 +1,8 @@
 /*
  * GNOME panel menu module.
  * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
- * Copyright 200 Helix Code, Inc.
+ * Copyright 2000 Helix Code, Inc.
+ * Copyright 2000 Eazel, Inc.
  *
  * Authors: Miguel de Icaza
  *          Federico Mena

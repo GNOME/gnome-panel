@@ -1,3 +1,9 @@
+/*
+ * GNOME panel x stuff
+ * Copyright 2000 Eazel, Inc.
+ *
+ * Authors: George Lebl
+ */
 #include <config.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>

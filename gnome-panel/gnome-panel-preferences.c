@@ -2,6 +2,7 @@
  *
  *   Copyright (C) 1999 Free Software Foundation
  *   Copyright 2000 Helix Code, Inc.
+ *   Copyright 2000 Eazel, Inc.
  *   Authors: George Lebl <jirka@5z.com>
  *            Jacob Berkman <jacob@helixcode.com>
  *

@@ -1,3 +1,13 @@
+/*
+ * GNOME panel utils
+ * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
+ * Copyright 2000 Helix Code, Inc.
+ * Copyright 2000 Eazel, Inc.
+ *
+ * Authors: George Lebl
+ *          Jacob Berkman
+ */
+
 #include <config.h>
 #include <string.h>
 #include <glib.h>
