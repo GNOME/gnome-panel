@@ -12,14 +12,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.4.x\n"
-"POT-Creation-Date: 2003-07-15 16:45+0100\n"
-"PO-Revision-Date: 2003-07-12 22:52+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-16 20:50+0200\n"
+"PO-Revision-Date: 2003-07-16 20:47+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -98,7 +98,7 @@ msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
-"Es konnte kein Programm Anpassen von Datum und Zeit gefunden werden. "
+"Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
 "Vermutlich ist keines installiert."
 
 #: applets/clock/clock.c:1277 applets/clock/clock.c:1548
@@ -151,7 +151,7 @@ msgstr "_Koordinierte Weltzeit (UTC) verwenden"
 #: applets/clock/clock.c:1583 applets/notification_area/main.c:112
 #: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:786
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:493
-#: gnome-panel/menu.c:290
+#: gnome-panel/menu.c:287
 msgid "translator_credits"
 msgstr ""
 "Karl Eichwalder <ke@suse.de>\n"
@@ -300,7 +300,7 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3090
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3057
 #: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -1078,8 +1078,8 @@ msgstr "Pfeil auf Verbergen-Knopf aktivieren"
 msgid "Drawer"
 msgstr "Schublade"
 
-#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1508
-#: gnome-panel/menu.c:3038 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1505
+#: gnome-panel/menu.c:3005 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
@@ -1141,7 +1141,7 @@ msgstr "Mittel"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Panel Preferences"
-msgstr "Einstellungen des Panels"
+msgstr "Panel-Einstellungen"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
@@ -1346,16 +1346,16 @@ msgstr "Schlüssel %s ist nicht festgelegt, Starter kann nicht geladen werden\n"
 msgid "Create Launcher"
 msgstr "Einen Starter anlegen"
 
-#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1189
+#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1186
 #: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "Ein Hilfedokument konnte nicht dargestellt werden"
 
-#: gnome-panel/main.c:104
+#: gnome-panel/main.c:52
 msgid "Specify a profile name to load"
 msgstr "Geben Sie den Namen des zu ladenden Profils an"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3199
 msgid "Log Out"
 msgstr "Abmelden"
 
@@ -1385,7 +1385,7 @@ msgstr "Beenden erzwingen"
 msgid "Screenshot"
 msgstr "Bildschirmfoto"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3434
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3367
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
@@ -1394,7 +1394,7 @@ msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
 msgid "Search"
 msgstr "Suchen"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3415
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3348
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Auf dem Computer nach Dateien, Ordnern und Dokumenten suchen"
@@ -1407,15 +1407,15 @@ msgstr "Ausführen"
 msgid "Run a command"
 msgstr "Einen Befehl ausführen"
 
-#: gnome-panel/menu.c:280
+#: gnome-panel/menu.c:277
 msgid "And many, many others..."
 msgstr "Und viele, viele andere..."
 
-#: gnome-panel/menu.c:303
+#: gnome-panel/menu.c:300
 msgid "The GNOME Panel"
 msgstr "Das GNOME-Panel"
 
-#: gnome-panel/menu.c:306
+#: gnome-panel/menu.c:303
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1424,167 +1424,163 @@ msgstr ""
 "Einbetten von kleinen Applets in sich selbst, den Weltfrieden, sowie "
 "grundlose X-Abstürze."
 
-#: gnome-panel/menu.c:334 gnome-panel/panel-action-button.c:157
+#: gnome-panel/menu.c:331 gnome-panel/panel-action-button.c:157
 #: gnome-panel/panel-action-button.c:175
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "»%s« konnte nicht ausgeführt werden"
 
-#: gnome-panel/menu.c:335 gnome-panel/panel-util.c:958
+#: gnome-panel/menu.c:332 gnome-panel/panel-util.c:958
 #, c-format
 msgid "%s - command not found"
 msgstr "%s - Befehl nicht gefunden"
 
-#: gnome-panel/menu.c:336
+#: gnome-panel/menu.c:333
 msgid "About GNOME"
 msgstr "Info zu GNOME"
 
-#: gnome-panel/menu.c:358
+#: gnome-panel/menu.c:355
 msgid "Cannot launch entry"
 msgstr "Eintrag konnte nicht gestartet werden"
 
-#: gnome-panel/menu.c:369 gnome-panel/menu.c:1163 gnome-panel/menu.c:1201
+#: gnome-panel/menu.c:366 gnome-panel/menu.c:1160 gnome-panel/menu.c:1198
 msgid "Cannot load entry"
 msgstr "Eintrag konnte nicht geladen werden"
 
-#: gnome-panel/menu.c:1068
+#: gnome-panel/menu.c:1065
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "Menüobjekt %s konnte nicht entfernt werden"
 
-#: gnome-panel/menu.c:1078
+#: gnome-panel/menu.c:1075
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Dateiname konnte dem Pfad nicht entnommen werden: %s"
 
-#: gnome-panel/menu.c:1085
+#: gnome-panel/menu.c:1082
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Verzeichnisname konnte dem Pfad nicht entnommen werden: %s"
 
-#: gnome-panel/menu.c:1154
+#: gnome-panel/menu.c:1151
 msgid "Cannot add to run box"
 msgstr "Konnte nicht zum Ausführen-Feld hinzugefügt werden"
 
-#: gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:1152
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Kein »Exec« oder »URL«-Feld im Eintrag"
 
-#: gnome-panel/menu.c:1437
+#: gnome-panel/menu.c:1434
 msgid "Add this launcher to panel"
 msgstr "Als Starter zum Panel hinzufügen"
 
-#: gnome-panel/menu.c:1446
+#: gnome-panel/menu.c:1443
 msgid "Remove this item"
 msgstr "Diesen Eintrag entfernen"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1459
 msgid "Put into run dialog"
 msgstr "In den Ausführen-Dialog aufnehmen"
 
-#: gnome-panel/menu.c:1480
+#: gnome-panel/menu.c:1477
 #, c-format
 msgid "Help on %s"
 msgstr "Hilfe zu %s"
 
-#: gnome-panel/menu.c:1481
+#: gnome-panel/menu.c:1478
 msgid "Application"
 msgstr "Anwendung"
 
-#: gnome-panel/menu.c:1529
+#: gnome-panel/menu.c:1526
 msgid "Entire menu"
 msgstr "Gesamtes Menü"
 
-#: gnome-panel/menu.c:1538
+#: gnome-panel/menu.c:1535
 msgid "Add this as drawer to panel"
 msgstr "Als Schublade zum Panel hinzufügen"
 
-#: gnome-panel/menu.c:1547
+#: gnome-panel/menu.c:1544
 msgid "Add this as menu to panel"
 msgstr "Als Menü zum Panel hinzufügen"
 
-#: gnome-panel/menu.c:1556
+#: gnome-panel/menu.c:1553
 msgid "Add new item to this menu"
 msgstr "Neuen Eintrag zum Menü hinzufügen"
 
-#: gnome-panel/menu.c:1582
+#: gnome-panel/menu.c:1579
 msgid "Properties"
 msgstr "Eigenschaften"
 
-#: gnome-panel/menu.c:2562 gnome-panel/menu.c:2617
+#: gnome-panel/menu.c:2559 gnome-panel/menu.c:2614
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "Anfrage lieferte Ausnahmefehler %s\n"
 
-#: gnome-panel/menu.c:2813 gnome-panel/menu.c:2818 gnome-panel/menu.c:3371
+#: gnome-panel/menu.c:2810 gnome-panel/menu.c:2815 gnome-panel/menu.c:3308
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: gnome-panel/menu.c:2861 gnome-panel/menu.c:2867 gnome-panel/menu.c:3296
-msgid "KDE Menu"
-msgstr "KDE-Menü"
-
-#: gnome-panel/menu.c:2918
+#: gnome-panel/menu.c:2885
 msgid "You cannot remove your last panel."
 msgstr "Sie können das einzig verbleibende Panel nicht entfernen."
 
-#: gnome-panel/menu.c:2980
+#: gnome-panel/menu.c:2947
 msgid "_Delete This Panel..."
 msgstr "Dieses Panel _löschen..."
 
-#: gnome-panel/menu.c:2983 gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:2950 gnome-panel/menu.c:2990
 msgid "_Delete This Panel"
 msgstr "Dieses Panel _löschen"
 
-#: gnome-panel/menu.c:2998
+#: gnome-panel/menu.c:2965
 msgid "_Add to Panel"
 msgstr "Zum Panel _hinzufügen"
 
-#: gnome-panel/menu.c:3052
+#: gnome-panel/menu.c:3019
 msgid "_New Panel"
 msgstr "Panel a_nlegen"
 
-#: gnome-panel/menu.c:3101
+#: gnome-panel/menu.c:3068
 msgid "_About Panels"
 msgstr "_Info zu den Panels"
 
-#: gnome-panel/menu.c:3115
+#: gnome-panel/menu.c:3082
 msgid "About _GNOME"
 msgstr "Info zu _GNOME"
 
-#: gnome-panel/menu.c:3159
+#: gnome-panel/menu.c:3126
 msgid "_Launcher..."
 msgstr "_Starter..."
 
-#: gnome-panel/menu.c:3168
+#: gnome-panel/menu.c:3135
 msgid "Launcher _from menu"
 msgstr "S_tarter aus Menü"
 
-#: gnome-panel/menu.c:3178
+#: gnome-panel/menu.c:3145
 msgid "Main _Menu"
 msgstr "Haupt_menü"
 
-#: gnome-panel/menu.c:3188
+#: gnome-panel/menu.c:3155
 msgid "Menu _Bar"
 msgstr "Menü_leiste"
 
-#: gnome-panel/menu.c:3197
+#: gnome-panel/menu.c:3164
 msgid "_Drawer"
 msgstr "Schu_blade"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3187
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/menu.c:3226
+#: gnome-panel/menu.c:3193
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Den Bildschirm sperren, sodass Sie den Computer vorübergehend verlassen "
 "können"
 
-#: gnome-panel/menu.c:3238
+#: gnome-panel/menu.c:3205
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1592,23 +1588,23 @@ msgstr ""
 "Von dieser Sitzung abmelden, um sich als ein anderer Benutzer anzumelden "
 "oder den Computer herunterzufahren"
 
-#: gnome-panel/menu.c:3396
+#: gnome-panel/menu.c:3329
 msgid "Run Application..."
 msgstr "Anwendung ausführen..."
 
-#: gnome-panel/menu.c:3403 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3336 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Eine Anwendung durch Eingabe eines Befehls ausführen"
 
-#: gnome-panel/menu.c:3412
+#: gnome-panel/menu.c:3345
 msgid "Search for Files..."
 msgstr "Nach Dateien suchen..."
 
-#: gnome-panel/menu.c:3431
+#: gnome-panel/menu.c:3364
 msgid "Take Screenshot..."
 msgstr "Bildschirmfoto aufnehmen..."
 
-#: gnome-panel/menu.c:3449
+#: gnome-panel/menu.c:3382
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -2331,7 +2327,7 @@ msgstr "_Einfärben"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
 msgid "Some of these properties are locked down"
-msgstr ""
+msgstr "Einige dieser Eigenschaften sind gesperrt"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
@@ -2481,7 +2477,7 @@ msgid "When this is selected the list of known applications is displayed."
 msgstr ""
 "Wenn dies aktiviert ist, wird die Liste bekannter Anwendungen angezeigt."
 
-#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:148
+#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:143
 msgid "_Run"
 msgstr "Aus_führen"
 
@@ -2506,12 +2502,12 @@ msgstr ""
 "Die Fehlerkennung ist: %d\n"
 "Das Panel wird nun beendet."
 
-#: gnome-panel/panel-stock-icons.c:119
+#: gnome-panel/panel-stock-icons.c:114
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "Panel-Symbol »%s« konnte nicht aus dem Repertoire geladen werden\n"
 
-#: gnome-panel/panel-stock-icons.c:149
+#: gnome-panel/panel-stock-icons.c:144
 msgid "_Force quit"
 msgstr "Beenden _erzwingen"
 
@@ -2812,7 +2808,6 @@ msgstr ""
 "angepasst. Das Ansichtsverhältnis des Bildes bleibt dabei nicht erhalten."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
-#, fuzzy
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
@@ -3144,62 +3139,63 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Bereiche, die die akzeptierbaren Größen für das Applet verbergen"
 
 #: libpanel-applet/panel-test-applets.c:33
-#, fuzzy
 msgid "Specify an applet IID to load"
-msgstr "Geben Sie den Namen des zu ladenden Profils an"
+msgstr "Eine zu ladende Applet-IID angeben"
 
 #: libpanel-applet/panel-test-applets.c:34
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
+"Einen GConf-Speicherort angeben, an dem die Applet-Einstellungen gespeichert "
+"werden sollen"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
+"Die anfängliche Größe des Applets angeben (xx-small, medium, large etc.)"
 
 #: libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
+"Die anfängliche Ausrichtung des Applets angeben (top, bottom, left or right)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
-msgstr ""
+msgstr "Applet:"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
 msgid "Large"
-msgstr ""
+msgstr "Groß"
 
 #: libpanel-applet/panel-test-applets.glade.h:6
-#, fuzzy
 msgid "Orientation:"
-msgstr "Ausrichtung"
+msgstr "Ausrichtung:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
-msgstr ""
+msgstr "Einstellungsverzeichnis:"
 
 #: libpanel-applet/panel-test-applets.glade.h:9
-#, fuzzy
 msgid "Size:"
-msgstr "Größe"
+msgstr "Größe:"
 
 #: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
-msgstr ""
+msgstr "Klein"
 
 #: libpanel-applet/panel-test-applets.glade.h:12
 msgid "X Large"
-msgstr ""
+msgstr "Sehr groß"
 
 #: libpanel-applet/panel-test-applets.glade.h:13
 msgid "X Small"
-msgstr ""
+msgstr "Sehr klein"
 
 #: libpanel-applet/panel-test-applets.glade.h:14
 msgid "XX Large"
-msgstr ""
+msgstr "Extrem groß"
 
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
-msgstr ""
+msgstr "Extrem klein"
