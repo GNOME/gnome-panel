@@ -51,7 +51,9 @@ extern gboolean commie_mode;
 extern char *merge_merge_dir;
 
 enum {
-	HELP_BUTTON = 0,
+	HELP_BUTTON,
+	OK_BUTTON,
+	CANCEL_BUTTON,
 	REVERT_BUTTON,
 	CLOSE_BUTTON
 };
@@ -543,17 +545,17 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-window_clicked (GtkWidget *w, int button, gpointer data)
+window_response (GtkWidget *w, int response, gpointer data)
 {
 	Launcher *launcher = data;
 
-	if (button == HELP_BUTTON) {
+	if (response == HELP_BUTTON) {
 		panel_show_help ("launchers", NULL);
-	} else if (button == REVERT_BUTTON) { /* revert */
+	} else if (response == REVERT_BUTTON) { /* revert */
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
 					    launcher->revert_ditem);
 	} else {
-		gnome_dialog_close (GNOME_DIALOG (w));
+		gtk_widget_destroy (w);
 	}
 }
 
@@ -571,16 +573,19 @@ create_properties_dialog (Launcher *launcher)
 	GtkWidget *dialog;
 
 	/* watch the enum at the top of the file */
-	dialog = gnome_dialog_new (_("Launcher properties"),
-				   GNOME_STOCK_BUTTON_HELP,
-				   _("Revert"),
-				   GNOME_STOCK_BUTTON_CLOSE,
-				   NULL);
-	gnome_dialog_set_close (GNOME_DIALOG (dialog),
-				FALSE /* click_closes */);
+	dialog = gtk_dialog_new_with_buttons (_("Launcher properties"),
+					      NULL /* parent */,
+					      0 /* flags */,
+					      GTK_STOCK_CLOSE,
+					      CLOSE_BUTTON,
+					      GTK_STOCK_REVERT_TO_SAVED,
+					      REVERT_BUTTON,
+					      GTK_STOCK_HELP,
+					      HELP_BUTTON,
+					      NULL);
 
 	launcher->dedit = gnome_ditem_edit_new ();
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    launcher->dedit, TRUE, TRUE, 0);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
@@ -622,8 +627,8 @@ create_properties_dialog (Launcher *launcher)
 			    launcher);
 
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
-			    GTK_SIGNAL_FUNC (window_clicked),
+	gtk_signal_connect (GTK_OBJECT (dialog), "response",
+			    GTK_SIGNAL_FUNC (window_response),
 			    launcher);
 
 	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (launcher->dedit));
@@ -683,7 +688,7 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 }
 
 static void
-really_add_launcher(GtkWidget *dialog, int button, gpointer data)
+really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 {
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"pos"));
@@ -691,7 +696,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(dialog),"panel");
 	GnomeDesktopItem *ditem;
 	
-	if (button == 0/*ok*/) {
+	if (response == OK_BUTTON) {
 		Launcher *launcher;
 
 		ditem = gnome_ditem_edit_get_ditem (dedit);
@@ -702,7 +707,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 			launcher_hoard (launcher);
 
 		panel_config_sync_schedule ();
-	} else if (button == 2/*help*/) {
+	} else if (response == HELP_BUTTON) {
 		panel_show_help ("launchers", "LAUNCHERS");
 		/* just return as we don't want to close */
 		return;
@@ -718,17 +723,23 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	GnomeDItemEdit *dee;
 	GnomeDesktopItem *ditem;
 
-	dialog = gnome_dialog_new (_("Create launcher applet"),
-				   GNOME_STOCK_BUTTON_HELP,
-				   GNOME_STOCK_BUTTON_CANCEL,
-				   GNOME_STOCK_BUTTON_OK,
-				   NULL);
+	dialog = gtk_dialog_new_with_buttons (_("Create launcher applet"),
+					      NULL /* parent */,
+					      0 /* flags */,
+					      GTK_STOCK_CANCEL,
+					      CANCEL_BUTTON,
+					      GTK_STOCK_OK,
+					      OK_BUTTON,
+					      GTK_STOCK_HELP,
+					      HELP_BUTTON,
+					      NULL);
+
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");
 	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, TRUE);
 	
 	dee = GNOME_DITEM_EDIT (gnome_ditem_edit_new ());
-	gtk_box_pack_start (GTK_BOX(GNOME_DIALOG(dialog)->vbox),
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    GTK_WIDGET (dee),
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
@@ -763,13 +774,11 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 			     GINT_TO_POINTER (exactpos));
 	gtk_object_set_data (GTK_OBJECT (dialog), "panel", panel);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+	gtk_signal_connect (GTK_OBJECT (dialog), "response",
 			    GTK_SIGNAL_FUNC (really_add_launcher),
 			    dee);
 
-	gnome_dialog_close_hides(GNOME_DIALOG(dialog),FALSE);
-
-	gnome_dialog_set_default(GNOME_DIALOG(dialog),0);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), OK_BUTTON);
 
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);

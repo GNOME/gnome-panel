@@ -27,6 +27,11 @@
 
 #include "panel-util.h"
 
+enum {
+	CLOSE_BUTTON,
+	HELP_BUTTON
+};
+
 #undef MENU_PROPERTIES_DEBUG
 
 struct _MenuDialogInfo {
@@ -121,8 +126,6 @@ get_pixmap(const char *menudir, gboolean main_menu)
 	return pixmap_name;
 }
 
-#ifdef FIXME
-/* Cache this, we don't want to check in the path all the time */
 static gboolean
 got_gmenu (void)
 {
@@ -145,9 +148,7 @@ got_gmenu (void)
 
 	return got_it;
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 properties_apply_callback (Menu *menu)
 {
@@ -174,7 +175,7 @@ properties_apply_callback (Menu *menu)
 		change_icon = TRUE;
 	}
 
-	s = hack_icon_entry_get_icon (GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
+	s = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
 	if (menu->custom_icon_file == NULL ||
 	    s == NULL ||
 	    strcmp (menu->custom_icon_file, s) != 0) {
@@ -310,9 +311,7 @@ properties_apply_callback (Menu *menu)
 					 pixmap_name, -1);
 	}
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
@@ -323,9 +322,7 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	g_free (menu->dialog_info);
 	menu->dialog_info = NULL;
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 toggle_prop(GtkWidget *widget, gpointer data)
 {
@@ -334,24 +331,20 @@ toggle_prop(GtkWidget *widget, gpointer data)
 	if(GTK_TOGGLE_BUTTON(widget)->active)
 		properties_apply_callback (menu);
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
-toggle_global_main(GtkWidget *widget, gpointer data)
+toggle_global_main (GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
 
-	if(GTK_TOGGLE_BUTTON(widget)->active) {
+	if (GTK_TOGGLE_BUTTON (widget)->active) {
 		gtk_widget_set_sensitive(menu->dialog_info->main_frame, FALSE);
 		gtk_widget_set_sensitive(menu->dialog_info->normal_frame, FALSE);
 
 		properties_apply_callback (menu);
 	}
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 toggle_main_menu(GtkWidget *widget, gpointer data)
 {
@@ -364,9 +357,7 @@ toggle_main_menu(GtkWidget *widget, gpointer data)
 		properties_apply_callback (menu);
 	}
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 toggle_custom_icon(GtkWidget *widget, gpointer data)
 {
@@ -380,9 +371,7 @@ toggle_custom_icon(GtkWidget *widget, gpointer data)
 
 	properties_apply_callback (menu);
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 toggle_normal_menu(GtkWidget *widget, gpointer data)
 {
@@ -395,9 +384,7 @@ toggle_normal_menu(GtkWidget *widget, gpointer data)
 		properties_apply_callback (menu);
 	}
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 textbox_changed (GtkWidget *widget, gpointer data)
 {
@@ -405,9 +392,7 @@ textbox_changed (GtkWidget *widget, gpointer data)
 
 	properties_apply_callback (menu);
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
 add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 		      char *title, GtkWidget **widget, GtkWidget **widget_sub,
@@ -450,29 +435,25 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    menu);
 }
-#endif /* FIXME */
 
-#ifdef FIXME
 static void
-dialog_clicked (GtkWidget *widget, int button, gpointer data)
+dialog_response (GtkWidget *dialog, int response, gpointer data)
 {
 	Menu *menu = data;
 
-	if (button == 0 /* close */) {
-		gnome_dialog_close (GNOME_DIALOG (widget));
-	} else if (button == 1 /* help */) {
+	if (response == CLOSE_BUTTON) {
+		gtk_widget_destroy (dialog);
+	} else if (response == HELP_BUTTON) {
 		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
 			panel_show_help ("mainmenu", "MAINMENUCONFIG");
 		else
 			panel_show_help ("menus", NULL);
 	}
 }
-#endif /* FIXME */
 
 static GtkWidget *
-create_properties_dialog(Menu *menu)
+create_properties_dialog (Menu *menu)
 {
-#ifdef FIXME
 	GtkWidget *dialog, *notebook;
 	GtkWidget *vbox;
 	GtkWidget *box;
@@ -482,24 +463,25 @@ create_properties_dialog(Menu *menu)
 	GtkWidget *t;
 	GtkWidget *main_menu, *global_main;
 
-	dialog = gnome_dialog_new (_("Menu properties"),
-				   GNOME_STOCK_BUTTON_CLOSE,
-				   GNOME_STOCK_BUTTON_HELP,
-				   NULL);
-	gnome_dialog_set_close (GNOME_DIALOG (dialog),
-				FALSE /* click_closes */);
+	dialog = gtk_dialog_new_with_buttons (_("Menu properties"),
+					      NULL /* parent */,
+					      0 /* flags */,
+					      GTK_STOCK_CLOSE,
+					      CLOSE_BUTTON,
+					      GTK_STOCK_HELP,
+					      HELP_BUTTON,
+					      NULL);
 
 	menu->prop_dialog = dialog;
 
 	menu->dialog_info = g_new0 (MenuDialogInfo, 1);
 
 	notebook = gtk_notebook_new ();
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    notebook, TRUE, TRUE, 0);
 
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "menu_properties", "Panel");
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
@@ -664,11 +646,10 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gnome_icon_entry_new("icon", _("Browse"));
-	hack_icon_entry (GNOME_ICON_ENTRY (w));
 	menu->dialog_info->custom_icon_entry = w;
 	if (menu->custom_icon_file != NULL) {
-		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(w),
-					 menu->custom_icon_file);
+		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (w),
+					       menu->custom_icon_file);
 	}
 	if ( ! menu->custom_icon) {
 		gtk_widget_set_sensitive (w, FALSE);
@@ -687,14 +668,11 @@ create_properties_dialog(Menu *menu)
 			    GTK_SIGNAL_FUNC (properties_close_callback),
 			    menu);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
-			    GTK_SIGNAL_FUNC (dialog_clicked),
+	gtk_signal_connect (GTK_OBJECT (dialog), "response",
+			    GTK_SIGNAL_FUNC (dialog_response),
 			    menu);
 
 	return dialog;
-#else
-	return NULL;
-#endif
 }
 
 void

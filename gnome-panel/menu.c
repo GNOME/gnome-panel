@@ -1518,19 +1518,15 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 static void
 edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 {
-  g_warning ("FIXME: edit_direntry() is not implemented");
-#ifdef FIXME
-	GtkWidget *dialog, *notebook;
+	GtkWidget *dialog;
 	GtkWidget *dedit;
 	char *dirfile = g_build_filename (sim->mf->menudir, ".directory", NULL);
-	GnomeDesktopEntry *dentry;
-	GList *types = NULL;
+	GnomeDesktopItem *ditem;
 
-	dentry = gnome_desktop_entry_load_unconditional(dirfile);
-	/* We'll screw up a KDE menu entry if we edit it */
-	if (dentry != NULL &&
-	    dentry->is_kde) {
-		gnome_desktop_entry_free (dentry);
+	ditem = gnome_desktop_item_new_from_file (dirfile,
+						  0 /* flags */,
+						  NULL /* error */);
+	if (ditem == NULL) {
 		return;
 	}
 
@@ -1546,44 +1542,47 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 					      CLOSE_BUTTON,
 					      NULL);
 
-	notebook = gtk_notebook_new ();
-	gtk_widget_show (notebook);
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-			    notebook, TRUE, TRUE, 0);
-
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"desktop_entry_properties", "Panel");
 	gtk_window_set_policy (GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
-	dedit = gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook));
-	hack_dentry_edit (GNOME_DENTRY_EDIT (dedit));
+	dedit = gnome_ditem_edit_new ();
+	gtk_widget_show (dedit);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+			    dedit, TRUE, TRUE, 0);
 
-	types = NULL;
-	types = g_list_append (types, "Directory");
-	gtk_combo_set_popdown_strings (GTK_COMBO (GNOME_DENTRY_EDIT (dedit)->type_combo), types);
-	g_list_free (types);
-	types = NULL;
-
-	if (dentry != NULL) {
-		gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (dedit), dentry);
-		gtk_object_set_data_full (dedit, "location",
-					  g_strdup (dentry->location),
+	if (ditem != NULL) {
+		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (dedit), ditem);
+		gtk_object_set_data_full (GTK_OBJECT (dedit), "location",
+					  g_strdup (gnome_desktop_item_get_location (ditem)),
 					  (GtkDestroyNotify)g_free);
 		g_free (dirfile);
 		dirfile = NULL;
 	} else {
-		dentry = g_new0 (GnomeDesktopEntry, 1);
-		if (sim->mf->dir_name == NULL)
-			dentry->name = g_strdup (_("Menu"));
-		else
-			dentry->name = g_strdup (sim->mf->dir_name);
-		dentry->type = g_strdup ("Directory");
+		ditem = gnome_desktop_item_new ();
+		if (sim->mf->dir_name == NULL) {
+			gnome_desktop_item_set_string (ditem,
+						       GNOME_DESKTOP_ITEM_NAME,
+						       "Menu");
+			gnome_desktop_item_set_localestring
+				(ditem,
+				 GNOME_DESKTOP_ITEM_NAME,
+				 _("Menu"));
+		} else {
+			gnome_desktop_item_set_string (ditem,
+						       GNOME_DESKTOP_ITEM_NAME,
+						       sim->mf->dir_name);
+		}
+		gnome_desktop_item_set_string (ditem,
+					       GNOME_DESKTOP_ITEM_TYPE,
+					       "Directory");
 		/*we don't have to free dirfile here it will be freed as if
 		  we had strduped it here*/
-		gtk_object_set_data_full (dedit, "location", dirfile,
+		gtk_object_set_data_full (GTK_OBJECT (dedit),
+					  "location", dirfile,
 					  (GtkDestroyNotify)g_free);
 		dirfile = NULL;
-		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(dedit), dentry);
+		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (dedit), ditem);
 	}
 
 	/* This sucks, but there is no other way to do this with the current
@@ -1605,14 +1604,16 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 #undef SETUP_EDITABLE
 #endif
 
+	/* FIXME:
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->exec_entry, FALSE);
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->tryexec_entry, FALSE);
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->doc_entry, FALSE);
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->type_combo, FALSE);
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->terminal_button, FALSE);
+	*/
 
 	set_ditem_sensitive (GTK_DIALOG (dialog),
-			     GNOME_DENTRY_EDIT (dedit), sim);
+			     GNOME_DITEM_EDIT (dedit), sim);
 
 	gtk_signal_connect (GTK_OBJECT (dedit), "changed",
 			    GTK_SIGNAL_FUNC (ditem_properties_changed),
@@ -1632,13 +1633,13 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 
 	gtk_object_set_user_data (GTK_OBJECT (dialog), dedit);
 
-	if (dentry != NULL) {
+	if (ditem != NULL) {
 		/* pass the dentry as the data to clicked */
 		gtk_signal_connect_full (GTK_OBJECT (dialog), "response",
 					 GTK_SIGNAL_FUNC (ditem_properties_clicked),
 					 NULL,
-					 dentry,
-					 (GtkDestroyNotify) gnome_desktop_entry_free,
+					 ditem,
+					 (GtkDestroyNotify) gnome_desktop_item_unref,
 					 FALSE, FALSE);
 	} else {
 		gtk_signal_connect (GTK_OBJECT (dialog), "response",
@@ -1646,11 +1647,9 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 				    NULL);
 	}
 
-	gtk_widget_show(dialog);
+	gtk_widget_show (dialog);
 
-	gtk_widget_grab_focus
-		(gnome_dentry_get_name_entry (GNOME_DENTRY_EDIT (dedit)));
-#endif
+	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dedit));
 }
 
 static void

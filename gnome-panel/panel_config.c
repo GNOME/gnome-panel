@@ -32,6 +32,11 @@
 #include "rgb-stuff.h"
 #include "multiscreen-stuff.h"
 
+enum {
+	HELP_BUTTON,
+	CLOSE_BUTTON
+};
+
 /*
  * FIXME
  */
@@ -1796,13 +1801,13 @@ update_config_type (BasePWidget *w)
 }
 
 static void
-window_clicked (GtkWidget *w, int button, gpointer data)
+window_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkWidget *notebook = data;
 	const char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
 	const char *help_linkid = gtk_object_get_data (GTK_OBJECT (w), "help_linkid");
 
-	if (button == 1) { /* help */
+	if (response == HELP_BUTTON) {
 		int tab;
 
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
@@ -1812,7 +1817,7 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 		else
 			panel_show_help (help_path, help_linkid);
 	} else {
-		gnome_dialog_close (GNOME_DIALOG (w));
+		gtk_widget_destroy (w);
 	}
 }
 	     
@@ -1867,24 +1872,25 @@ panel_config (GtkWidget *panel)
 	ppc->config_window = gtk_dialog_new_with_buttons (_("Panel properties"),
 							  NULL, 0,
 							  GTK_STOCK_CLOSE,
+							  CLOSE_BUTTON,
 							  GTK_STOCK_HELP,
+							  HELP_BUTTON,
 							  NULL);
-	gnome_dialog_set_close (GNOME_DIALOG (ppc->config_window),
-				FALSE /* click_closes */);
-	gtk_window_set_wmclass (GTK_WINDOW(ppc->config_window),
+	gtk_window_set_wmclass (GTK_WINDOW (ppc->config_window),
 				"panel_properties", "Panel");
 	gtk_widget_set_events (ppc->config_window,
 			       gtk_widget_get_events (ppc->config_window) |
 			       GDK_BUTTON_PRESS_MASK);
 	/*gtk_window_set_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy(GTK_WINDOW(ppc->config_window), FALSE, FALSE, TRUE);
+	gtk_window_set_policy (GTK_WINDOW (ppc->config_window),
+			       FALSE, FALSE, TRUE);
 
-	gtk_signal_connect(GTK_OBJECT(ppc->config_window), "destroy",
-			   GTK_SIGNAL_FUNC (config_destroy), ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "destroy",
+			    GTK_SIGNAL_FUNC (config_destroy), ppc);
 	
 	prop_nbook = gtk_notebook_new ();
 
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (ppc->config_window)->vbox),
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ppc->config_window)->vbox),
 			    prop_nbook, TRUE, TRUE, 0);
 
 	if(EDGE_IS_WIDGET(panel)) {
@@ -1952,8 +1958,8 @@ panel_config (GtkWidget *panel)
 			     help_path);
 	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_linkid",
 			     help_linkid);
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "clicked",
-			    GTK_SIGNAL_FUNC (window_clicked),
+	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "response",
+			    GTK_SIGNAL_FUNC (window_response),
 			    prop_nbook);
 	
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
