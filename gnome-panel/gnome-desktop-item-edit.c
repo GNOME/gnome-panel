@@ -78,6 +78,10 @@ main (int argc, char * argv[])
 	int i;
 	GnomeVFSFileInfo *info;
 
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+	textdomain (GETTEXT_PACKAGE);
+
 	program = gnome_program_init ("gnome-desktop-item-edit", VERSION,
 				      LIBGNOMEUI_MODULE,
 				      argc, argv,
