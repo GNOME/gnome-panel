@@ -25,6 +25,7 @@
 #include <config.h>
 #include <libgnome/gnome-i18n.h>
 
+#include <string.h>
 #include <gtk/gtk.h>
 
 #include "panel-shell.h"
@@ -48,17 +49,29 @@ panel_shell_register (void)
 		Bonobo_RegistrationResult  reg_res;
 		char                      *message = NULL;
 		char                      *iid;
+		char			  *display;
+		char			  *p;
 
 		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
 		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
 
+		/* Strip off the screen portion of the display */
+		display = g_strdup (g_getenv ("DISPLAY"));
+		p = strrchr (display, ':');
+		if (p) {
+			p = strchr (p, '.');
+			if (p)
+				p [0] = '\0';
+		}
+
 		iid = bonobo_activation_make_registration_id (
-				"OAFIID:GNOME_PanelShell", g_getenv ("DISPLAY"));
+				"OAFIID:GNOME_PanelShell", display);
 
 		reg_res = bonobo_activation_active_server_register (
 				iid, BONOBO_OBJREF (panel_shell));
 
 		g_free (iid);
+		g_free (display);
 
 		switch (reg_res) {
 		case Bonobo_ACTIVATION_REG_SUCCESS:
