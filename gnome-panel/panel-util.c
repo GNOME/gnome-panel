@@ -12,7 +12,11 @@ get_full_path(char *argv0)
 	int cmdsize=100;
 	char *cmdbuf;
 	int i;
+#if 0
 	int fd[2];
+#else
+	FILE *fwhich;
+#endif
 
 	if(!argv0)
 		return NULL;
@@ -36,6 +40,7 @@ get_full_path(char *argv0)
 		return g_strdup(buf);
 	}
 
+#if 0
 	if(pipe(fd) == -1)
 		return NULL;
 
@@ -65,6 +70,21 @@ get_full_path(char *argv0)
 
 	if(buf[0]=='\0')
 		return NULL;
+
+#else
+	cmdbuf = g_copy_strings("/usr/bin/which ", argv0, NULL);
+	fwhich = popen(cmdbuf, "r");
+	g_free(cmdbuf);
 	
+	if (fwhich == NULL)
+	  return NULL;
+	if (fgets(buf, PATH_MAX+1, fwhich) == NULL) {
+	  	pclose(fwhich);
+		return NULL;
+	}
+
+	pclose(fwhich);
+
+#endif
 	return g_strdup(buf);
 }
