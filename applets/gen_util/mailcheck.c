@@ -561,7 +561,7 @@ make_mailcheck_applet(const gchar *param)
 
 	applet = applet_widget_new_with_param(param);
 	if (!applet)
-		g_error("Can't create applet!\n");
+		g_error(_("Can't create applet!\n"));
 
 	if(APPLET_WIDGET(applet)->cfgpath &&
            *(APPLET_WIDGET(applet)->cfgpath)) {
@@ -585,7 +585,7 @@ make_mailcheck_applet(const gchar *param)
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),
 					"properties",
-					_("Properties"),
+					_("Properties..."),
 					mailcheck_properties,
 					mc);
 
