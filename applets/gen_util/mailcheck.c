@@ -1386,7 +1386,7 @@ mailcheck_properties_page (MailCheck *mc)
 	if(mc->pre_check_cmd)
 		gtk_entry_set_text(GTK_ENTRY(mc->pre_check_cmd_entry), 
 				   mc->pre_check_cmd);
-	set_atk_name_description (mc->pre_check_cmd_entry, _("Command to execute"), _(""));
+	set_atk_name_description (mc->pre_check_cmd_entry, _("Command to execute"), "");
 	set_atk_relation (mc->pre_check_cmd_entry, mc->pre_check_cmd_check, ATK_RELATION_CONTROLLED_BY);
 	set_atk_relation (mc->pre_check_cmd_check, mc->pre_check_cmd_entry, ATK_RELATION_CONTROLLER_FOR);
 	gtk_widget_set_sensitive (mc->pre_check_cmd_entry, mc->pre_check_enabled);
@@ -1409,7 +1409,7 @@ mailcheck_properties_page (MailCheck *mc)
 		gtk_entry_set_text(GTK_ENTRY(mc->newmail_cmd_entry),
 				   mc->newmail_cmd);
 	}
-	set_atk_name_description (mc->newmail_cmd_entry, _("Command to execute"), _(""));
+	set_atk_name_description (mc->newmail_cmd_entry, _("Command to execute"), "");
 	set_atk_relation (mc->newmail_cmd_entry, mc->newmail_cmd_check, ATK_RELATION_CONTROLLED_BY);
 	set_atk_relation (mc->newmail_cmd_check, mc->newmail_cmd_entry, ATK_RELATION_CONTROLLER_FOR);
 	gtk_widget_set_sensitive (mc->newmail_cmd_entry, mc->newmail_enabled);
@@ -1432,7 +1432,7 @@ mailcheck_properties_page (MailCheck *mc)
 		gtk_entry_set_text(GTK_ENTRY(mc->clicked_cmd_entry), 
 				   mc->clicked_cmd);
         }
-		set_atk_name_description (mc->clicked_cmd_entry, _("Command to execute"), _(""));
+		set_atk_name_description (mc->clicked_cmd_entry, _("Command to execute"), "");
 		set_atk_relation (mc->clicked_cmd_entry, mc->clicked_cmd_check, ATK_RELATION_CONTROLLED_BY);
 		set_atk_relation (mc->clicked_cmd_check, mc->clicked_cmd_entry, ATK_RELATION_CONTROLLER_FOR);
 		gtk_widget_set_sensitive (mc->clicked_cmd_entry, mc->clicked_enabled);
@@ -1465,7 +1465,7 @@ mailcheck_properties_page (MailCheck *mc)
 	g_signal_connect (G_OBJECT (mc->min_spin), "value_changed",
 			  G_CALLBACK (update_spin_changed), mc);			  
 	gtk_box_pack_start (GTK_BOX (hbox), mc->min_spin,  FALSE, FALSE, 0);
-	set_atk_name_description (mc->min_spin, _("minutes"), _(""));
+	set_atk_name_description (mc->min_spin, _("minutes"), "");
 	set_atk_relation (mc->min_spin, check_box, ATK_RELATION_CONTROLLED_BY);
 	gtk_widget_show(mc->min_spin);
 	
@@ -1479,7 +1479,7 @@ mailcheck_properties_page (MailCheck *mc)
 	g_signal_connect (G_OBJECT (mc->sec_spin), "value_changed",
 			  G_CALLBACK (update_spin_changed), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->sec_spin,  FALSE, FALSE, 0);
-	set_atk_name_description (mc->sec_spin, _("seconds"), _(""));
+	set_atk_name_description (mc->sec_spin, _("seconds"), "");
 	set_atk_relation (mc->sec_spin, check_box, ATK_RELATION_CONTROLLED_BY);
 	gtk_widget_show(mc->sec_spin);
 	
