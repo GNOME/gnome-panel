@@ -30,7 +30,7 @@ extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
 static GList *extern_applets = NULL;
-static char *goad_id_starting = "???"; /*the goad id of the applet that is
+static char *goad_id_starting = NULL; /*the goad id of the applet that is
 					 being started right now, before it
 					 does applet_register*/
 static GList *start_queue = NULL; /*the queue of the applets to be
@@ -194,7 +194,7 @@ applet_abort_id(int applet_id)
 
 	g_return_if_fail(e != NULL);
 	
-	if(strcmp(e->goad_id,goad_id_starting)==0)
+	if(goad_id_starting && strcmp(e->goad_id,goad_id_starting)==0)
 		extern_start_next();
 
 	/*only reserved spots can be canceled, if an applet
@@ -336,7 +336,7 @@ applet_register (CORBA_Object obj,
 	g_free(s);
 	
 	/*if we should start the next applet*/
-	if(strcmp(goad_id,goad_id_starting)==0)
+	if(goad_id_starting && strcmp(goad_id,goad_id_starting)==0)
 		extern_start_next();
 
 

@@ -708,6 +708,7 @@ init_user_applets(void)
 		} else
 			g_warning("Unknown applet type!");
 		gnome_config_pop_prefix();
+		g_free(applet_name);
 	}
 }
 

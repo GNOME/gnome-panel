@@ -160,10 +160,13 @@ server_applet_request_id(POA_GNOME_Panel *servant,
     g_free(cfg);
   } else 
     *cfgpath = CORBA_string_dup("");
+
   if(globcfg) {
     *globcfgpath = CORBA_string_dup(globcfg);
+    g_free(globcfg);
   } else
     *globcfgpath = CORBA_string_dup("");
+
   return applet_id;
 }
 

@@ -867,6 +867,8 @@ add_applet (GtkWidget *w, gpointer data)
 	}
 	load_extern_applet(goad_id,NULL,current_panel,0);
 
+	g_free(goad_id);
+
 	return TRUE;
 }
 
