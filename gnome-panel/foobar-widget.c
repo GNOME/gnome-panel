@@ -13,10 +13,8 @@
 #include <config.h>
 #include <unistd.h>
 #include <string.h>
-#include <time.h>
 
 #include <libgnome/libgnome.h>
-#include <gconf/gconf-client.h>
 #include <gdk/gdkkeysyms.h>
 
 /* Yes, yes I know, now bugger off ... */
@@ -36,16 +34,12 @@
 #include "drawer-widget.h"
 #include "gnome-run.h"
 #include "multiscreen-stuff.h"
-#include "panel-gconf.h"
 #include "panel-marshal.h"
 
 #define ICON_SIZE 20
 
 extern GlobalConfig global_config;
 extern GSList *panel_list;
-
-#define FORMAT_ITEM_NUM 4
-static GtkWidget *format_items[FORMAT_ITEM_NUM] = { NULL };
 
 extern GtkTooltips *panel_tooltips;
 
@@ -193,18 +187,6 @@ foobar_enter_notify (GtkWidget *widget,
 }
 
 static void
-gnomecal_client (GtkWidget *w, gpointer data)
-{
-	char *v[4] = { "gnomecal", "--view", NULL, NULL };
-	v[2] = data;
-	if(gnome_execute_async (g_get_home_dir (), 3, v) < 0)
-		panel_error_dialog("cannot_execute_gnome_calendar",
-				   _("Cannot execute the gnome calendar,\n"
-				     "perhaps it's not installed.\n"
-				     "It is in the gnome-pim package."));
-}
-
-static void
 append_actions_menu (GtkWidget *menu_bar)
 {
 	GtkWidget *menu, *item;
@@ -254,376 +236,6 @@ append_actions_menu (GtkWidget *menu_bar)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
 	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
-}
-
-#if 0
-/* sure we won't need this????
- * -George */
-static GtkWidget *
-append_folder_menu (GtkWidget *menu_bar, const char *label,
-		    const char *pixmap, const char *path,
-		    gboolean stretch_left,
-		    gboolean stretch_top,
-		    gboolean stretch_right)
-{
-	GtkWidget *item, *menu;
-
-	menu = create_fake_menu_at (path,
-				    FALSE /* launcher_add */,
-				    label /* dir_name */,
-				    NULL /* pixmap_name */,
-				    FALSE /* title */);
-
-	if (menu == NULL) {
-		g_warning (_("menu wasn't created"));
-		return NULL;
-	}
-
-	if (pixmap != NULL)
-		item = pixmap_menu_item_new (label, pixmap,
-					     FALSE /* force_image */);
-	else
-		item = gtk_menu_item_new_with_label (label);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
-
-	g_signal_connect (G_OBJECT (menu), "show",
-			  G_CALLBACK (submenu_to_display),
-			  NULL);
-
-	if (stretch_left || stretch_top || stretch_right) {
-		PanelStretchFlags flags = PANEL_STRETCH_NONE;
-
-		flags |= stretch_left  ? PANEL_STRETCH_LEFT  : 0;
-		flags |= stretch_top   ? PANEL_STRETCH_TOP   : 0;
-		flags |= stretch_right ? PANEL_STRETCH_RIGHT : 0;
-
-		panel_stretch_events_to_toplevel (item, flags);
-	}
-		
-	return menu;
-}
-#endif
-
-static void
-append_gnomecal_items (GtkWidget *menu)
-{
-	GtkWidget *item;
-	int i;
-	
-	const char *cals[] = { 
-		N_("Today"),      N_("View the calendar for today."),      "gnome-day.png",   "dayview",
-		N_("This Week"),  N_("View the calendar for this week."),  "gnome-week.png",  "weekview",
-		N_("This Month"), N_("View the calendar for this month."), "gnome-month.png", "monthview",
-		NULL
-	};
-	
-	for (i=0; cals[i]; i+=4) {
-		item = pixmap_menu_item_new (_(cals[i]), cals[i+2],
-					     FALSE /* force_image */);
-		gtk_tooltips_set_tip (panel_tooltips, item,
-			      	      _(cals[i+1]),
-			      	      NULL);
-	
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (gnomecal_client),
-				  (char *)cals[i+3]);
-	}
-}
-
-static void
-update_clock (FoobarWidget *foo)
-{
-	static int day = 0;
-	struct tm *das_tm;
-	time_t das_time;
-	char hour[256];
-	PangoLayout *layout;
-	char *str_utf8;
-	int width;
-
-	if (foo->clock_label == NULL)
-		return;
-
-	time (&das_time);
-	das_tm = localtime (&das_time);
-
-	if (das_tm->tm_mday != day) {
-		if(strftime(hour, sizeof(hour), _("%A %B %d"), das_tm) == 0) {
-			/* according to docs, if the string does not fit, the
-			 * contents of hour are undefined, thus just use
-			 * ??? */
-			strcpy(hour, "???");
-		}
-		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
-
-		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-
-		gtk_tooltips_set_tip (panel_tooltips, foo->clock_ebox,
-				      sure_string (str_utf8), NULL);
-		g_free (str_utf8);
-
-		day = das_tm->tm_mday;
-	}
-
-	if(strftime(hour, sizeof(hour), foo->clock_format, das_tm) == 0) {
-		/* according to docs, if the string does not fit, the
-		 * contents of hour are undefined, thus just use
-		 * ??? */
-		strcpy(hour, "???");
-	}
-	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
-
-	str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-
-	if (str_utf8 != NULL) {
-		layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
-		pango_layout_get_pixel_size (layout, &width, NULL);
-		width += 8; /* Padding */
-		g_object_unref (G_OBJECT(layout));
-
-		if (width > foo->clock_label->requisition.width)
-			gtk_widget_set_size_request (foo->clock_label, width, -1);
-
-		gtk_label_set_text (GTK_LABEL (foo->clock_label), str_utf8);
-
-		g_free (str_utf8);
-	}
-}
-
-static int
-timeout_cb (gpointer data)
-{
-	FoobarWidget *foo = FOOBAR_WIDGET (data);
-
-	if (foo->clock_label == NULL) {
-		foo->clock_timeout = 0;
-		return FALSE;
-	}
-
-	update_clock (foo);
-
-	return TRUE;
-}
-
-static void
-set_fooclock_format (GtkWidget *w, const char *format)
-{
-	if ( ! GTK_CHECK_MENU_ITEM (w)->active)
-		return;
-
-	foobar_widget_global_set_clock_format (format);
-}
-
-static void
-append_format_items (FoobarWidget *foo,
-		     GtkWidget    *menu)
-{
-	char hour[256];
-	GSList *group = NULL;
-	struct tm *das_tm;
-	time_t das_time = 0;
-	const char *key;
-	char *str_utf8;
-	char *s;
-	int i;
-	const char *formats[FORMAT_ITEM_NUM] = {
-		N_("%H:%M"),
-		N_("%H:%M:%S"),
-		N_("%l:%M %p"),
-		N_("%l:%M:%S %p")
-	};
-
-	key = panel_gconf_full_key (
-			PANEL_GCONF_PANELS,
-			panel_gconf_get_profile (),
-			PANEL_WIDGET (foo->panel)->unique_id,
-			"clock_format");
-	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
-	
-	for (i = 0; i < FORMAT_ITEM_NUM; i++) {
-		das_tm = localtime (&das_time);
-		if (strftime (hour, sizeof(hour), _(formats[i]), das_tm) == 0) {
- 			/* according to docs, if the string does not fit, the
- 		 	 * contents of hour are undefined, thus just use
- 		 	 * ??? */
-			strcpy(hour, "???");
-		}
-		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
-
-		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		format_items[i] = gtk_radio_menu_item_new_with_label (group, sure_string (str_utf8));
-		g_object_set_data (G_OBJECT (format_items[i]),
-				   "Format", _(formats[i]));
-
-		g_free (str_utf8);
-
-		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (format_items[i]));
-	
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), format_items[i]);	
-		g_signal_connect (G_OBJECT (format_items[i]), "activate",
-				  G_CALLBACK (set_fooclock_format),
-				  _(formats[i]));
-
-		if (!strcmp (sure_string (s), _(formats[i])))
-			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), TRUE);
-	}
-
-	g_free (s);
-}
-
-static void
-set_time_cb (GtkWidget *menu_item, char *path)
-{
-	char *v[2] = { path };
-	
-	if (gnome_execute_async (g_get_home_dir (), 1, v) < 0)
-		panel_error_dialog ("could_not_call_time_admin",
-				    _("Could not call time-admin\n"
-				      "Perhaps time-admin is not installed"));
-}
-
-static GtkWidget *
-append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
-{
-	GtkWidget *item, *menu, *menu2;
-	gchar *time_admin_path;
-
-	menu = panel_menu_new ();
-	append_gnomecal_items (menu);
-
-#if 0 /* put back when evolution can do this */
-	item = gtk_image_menu_item_new_with_label (_("Add Appointment..."));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-#endif
-
-	add_menu_separator (menu);
-
-	/* check for time-admin (part of ximian-setup-tools) */
-	time_admin_path = g_find_program_in_path  ("time-admin");
-	if (time_admin_path != NULL) {
-		item = pixmap_menu_item_new (_("Set Time..."), "gnome-set-time.png",
-					     FALSE /* force_image */);
-		gtk_tooltips_set_tip (panel_tooltips, item,
-			      	      _("Adjust the date and time."),
-			      	      NULL);	
-		
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (set_time_cb),
-				  time_admin_path);			
-	}
-
-	menu2 = panel_menu_new ();
-	append_format_items (foo, menu2); 
-
-	item = gtk_image_menu_item_new_with_label (_("Format"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	item = gtk_menu_item_new ();
-
-	foo->clock_label = gtk_label_new ("");
-	foo->clock_timeout = g_timeout_add (1000, timeout_cb, foo);
-
-	foo->clock_ebox = item;
-	gtk_container_add (GTK_CONTAINER (item), foo->clock_label);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
-
-	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
-
-	return item;
-}
-
-void
-foobar_widget_global_set_clock_format (const char *format)
-{
-	GList *li;
-
-	for (li = foobars; li != NULL; li = li->next) {
-		foobar_widget_set_clock_format (FOOBAR_WIDGET (li->data),
-						format);
-	}
-}
-
-/*
- * FIXME: we should be only saving Foobar specific prefs
- */
-static void
-foobar_save_to_gconf (FoobarWidget *foo)
-{
-	PanelData *pd;
-
-	pd = g_object_get_data (G_OBJECT (foo), "PanelData");
-
-	if (pd)
-		panel_save_to_gconf (pd);
-}
-
-void
-foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
-{
-	int i;
-
-	g_return_if_fail (FOOBAR_IS_WIDGET (foo));
-
-	if (foo->clock_format != NULL)
-		g_free (foo->clock_format);
-	foo->clock_format = g_strdup (clock_format);
-
-	if(foo->clock_label) {
-		time_t das_time;
-		struct tm *das_tm;
-		char hour[256];
-		gchar *str_utf8;
-		int width;
-		PangoLayout *layout;
-
-		das_time = 0;
-		das_tm = localtime (&das_time);
-		if (strftime (hour, sizeof(hour), _(clock_format), das_tm) == 0) {
-			/* according to docs, if the string does not fit, the
-			 * contents of hour are undefined, thus just use
-			 * ??? */
-			strcpy(hour, "???");
-		}
-		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
-
-		str_utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
-		if (str_utf8 != NULL) {
-			layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
-			pango_layout_get_pixel_size (layout, &width, NULL);
-			width += 8; /* Padding */
-			gtk_widget_set_size_request (foo->clock_label, width, -1);
-			g_object_unref (G_OBJECT(layout));
-		}
-		g_free (str_utf8);
-	}
-
-	/* update the menu */
-	for (i = 0; i < FORMAT_ITEM_NUM; i++) {
-		const char *item_format;
-
-		/* sanity (or insanity?) */
-		if (format_items[i] == NULL)
-			break;
-
-		item_format = g_object_get_data (G_OBJECT (format_items[i]), "Format");
-		if (strcmp (sure_string (item_format), sure_string (clock_format)) == 0) {
-			if ( ! GTK_CHECK_MENU_ITEM (format_items[i])->active)
-				gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), TRUE);
-			break;
-		} else if (GTK_CHECK_MENU_ITEM (format_items[i])->active) {
-			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), FALSE);
-		}
-	}
-
-	update_clock (foo);
-
-	foobar_save_to_gconf (foo);
 }
 
 void
@@ -1054,10 +666,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	foo->task_bin   = NULL;
 	foo->icon_window = NULL;
 
-	foo->clock_format = g_strdup (_("%H:%M"));
-	foo->clock_timeout = 0;
-	foo->clock_label = NULL;
-
 	foo->compliant_wm = xstuff_is_compliant_wm ();
 	if(foo->compliant_wm)
 		GTK_WINDOW(foo)->type = GTK_WINDOW_TOPLEVEL;
@@ -1144,8 +752,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	gtk_widget_set_name (menu_bar,
 			     "panel-foobar-menubar");
 
-	append_clock_menu (foo, menu_bar);
-
 	append_task_menu (foo, GTK_MENU_SHELL (bar));
 
 
@@ -1176,15 +782,6 @@ foobar_widget_destroy (GtkObject *o)
 	FoobarWidget *foo = FOOBAR_WIDGET (o);
 
 	foobars = g_list_remove (foobars, foo);
-
-	if (foo->clock_timeout != 0)
-		g_source_remove (foo->clock_timeout);
-	foo->clock_timeout = 0;
-	
-	foo->clock_label = NULL;
-
-	g_free (foo->clock_format);
-	foo->clock_format = NULL;
 
 	g_slist_foreach (panel_list, queue_panel_resize, NULL);
 

@@ -2567,8 +2567,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 			
 			panel = foobar_widget_new (NULL, screen);
 			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
-
-			foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), _("%I: %M: %S: %p"));
 			
 			panel_setup (panel);
 			gtk_widget_show (panel);

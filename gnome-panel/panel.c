@@ -2395,18 +2395,8 @@ panel_load_panels_from_gconf (void)
 						     &back_color);
 			}
 			break;
-		case FOOBAR_PANEL: {
-			char *timestring;
-
+		case FOOBAR_PANEL:
 			panel = foobar_widget_new (panel_id, screen);
-
-			timestring = panel_get_string (profile, panel_id,
-						       "clock_format", _("%I:%M:%S %p"));
-			if (timestring) {
-				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), timestring);
-				g_free (timestring);
-			}
-			}
 			break;
 		default:
 			panel = NULL;

@@ -31,9 +31,6 @@ struct _FoobarWidget
 	GtkWidget *ebox;
 	GtkWidget *hbox;
 	GtkWidget *panel;
-	GtkWidget *clock_ebox;
-	GtkWidget *clock_label;
-	guint clock_timeout;
 
 	GtkWidget *programs;
 
@@ -67,16 +64,10 @@ GtkWidget *	foobar_widget_new		(const char *panel_id, int screen);
 void		foobar_widget_update_winhints	(FoobarWidget *foo);
 void		foobar_widget_redo_window	(FoobarWidget *foo);
 
-void		foobar_widget_set_clock_format	(FoobarWidget *foo,
-						 const char *format);
-
-
 gboolean	foobar_widget_exists		(int screen);
 gint		foobar_widget_get_height	(int screen);
 
 void		foobar_widget_force_menu_remake	(void);
-
-void		foobar_widget_global_set_clock_format (const char *format);
 
 G_END_DECLS
 

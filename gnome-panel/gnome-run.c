@@ -294,10 +294,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                         goto return_and_close;
 
                 /* evil eggies, do not translate! */
-                if (strcmp (s, "time shall be unixey") == 0) {
-                        foobar_widget_global_set_clock_format ("%s");
-                        goto return_and_close;
-                } else if (strcmp (s, "you shall bring us a shrubbery") == 0) {
+                if (strcmp (s, "you shall bring us a shrubbery") == 0) {
                         panel_info_dialog ("ni_ni_ni_ni",
 					   "NI! NI! NI! NI! NI! NI!");
                         goto return_and_close;
