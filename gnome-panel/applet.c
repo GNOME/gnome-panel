@@ -513,15 +513,6 @@ panel_applet_create_menu (AppletInfo *info)
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, removable);
-
-		menuitem = gtk_check_menu_item_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Lock To Panel"), FALSE);
-		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
-						locked);
-		g_signal_connect (menuitem, "toggled",
-				  G_CALLBACK (panel_applet_lock), info);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, lockable);
 		
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Move"), FALSE);
@@ -535,6 +526,19 @@ panel_applet_create_menu (AppletInfo *info)
 		info->move_item = menuitem;
 		g_object_add_weak_pointer (G_OBJECT (menuitem),
 					   (gpointer *) &info->move_item);
+
+		menuitem = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_show (menuitem);
+
+		menuitem = gtk_check_menu_item_new ();
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Lock To Panel"), FALSE);
+		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
+						locked);
+		g_signal_connect (menuitem, "toggled",
+				  G_CALLBACK (panel_applet_lock), info);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_set_sensitive (menuitem, lockable);
 
 		added_anything = TRUE;
 	}
