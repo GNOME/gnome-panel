@@ -50,7 +50,8 @@ typedef struct {
 	GtkWidget     *default_radio;
 	GtkWidget     *color_radio;
 	GtkWidget     *image_radio;
-	GtkWidget     *transparent_radio;
+	GtkWidget     *color_widgets;
+	GtkWidget     *image_widgets;
 	GtkWidget     *color_picker;
 	GtkWidget     *image_entry;
 	GtkWidget     *opacity_scale;
@@ -341,6 +342,16 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 }
 
 static void
+panel_properties_dialog_upd_sensitivity (PanelPropertiesDialog *dialog,
+					 PanelBackgroundType    background_type)
+{
+	gtk_widget_set_sensitive (dialog->color_widgets,
+				  background_type == PANEL_BACK_COLOR);
+	gtk_widget_set_sensitive (dialog->image_widgets,
+				  background_type == PANEL_BACK_IMAGE);
+}
+
+static void
 panel_properties_dialog_background_toggled (PanelPropertiesDialog *dialog,
 					    GtkWidget             *radio)
 {
@@ -358,10 +369,7 @@ panel_properties_dialog_background_toggled (PanelPropertiesDialog *dialog,
 	else if (radio == dialog->image_radio)
 		background_type = PANEL_BACK_IMAGE;
 
-	else if (radio == dialog->transparent_radio) {
-		panel_profile_set_background_opacity (dialog->toplevel, 0);
-		background_type = PANEL_BACK_COLOR;
-	}
+	panel_properties_dialog_upd_sensitivity (dialog, background_type);
 
 	panel_profile_set_background_type (dialog->toplevel, background_type);
 }
@@ -376,7 +384,8 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 	dialog->default_radio     = glade_xml_get_widget (gui, "default_radio");
 	dialog->color_radio       = glade_xml_get_widget (gui, "color_radio");
 	dialog->image_radio       = glade_xml_get_widget (gui, "image_radio");
-	dialog->transparent_radio = glade_xml_get_widget (gui, "transparent_radio");
+	dialog->color_widgets     = glade_xml_get_widget (gui, "color_widgets");
+	dialog->image_widgets     = glade_xml_get_widget (gui, "image_widgets");
 
 	background_type = panel_profile_get_background_type (dialog->toplevel);
 	switch (background_type) {
@@ -384,10 +393,7 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 		active_radio = dialog->default_radio;
 		break;
 	case PANEL_BACK_COLOR:
-		if (panel_profile_get_background_opacity (dialog->toplevel))
-			active_radio = dialog->color_radio;
-		else
-			active_radio = dialog->transparent_radio;
+		active_radio = dialog->color_radio;
 		break;
 	case PANEL_BACK_IMAGE:
 		active_radio = dialog->image_radio;
@@ -399,6 +405,8 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (active_radio), TRUE);
 
+	panel_properties_dialog_upd_sensitivity (dialog, background_type);
+
 	g_signal_connect_swapped (dialog->default_radio, "toggled",
 				  G_CALLBACK (panel_properties_dialog_background_toggled),
 				  dialog);
@@ -406,9 +414,6 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_background_toggled),
 				  dialog);
 	g_signal_connect_swapped (dialog->image_radio, "toggled",
-				  G_CALLBACK (panel_properties_dialog_background_toggled),
-				  dialog);
-	g_signal_connect_swapped (dialog->transparent_radio, "toggled",
 				  G_CALLBACK (panel_properties_dialog_background_toggled),
 				  dialog);
 }
@@ -531,10 +536,7 @@ panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
 		active_radio = dialog->default_radio;
 		break;
 	case PANEL_BACK_COLOR:
-		if (panel_profile_get_background_opacity (dialog->toplevel))
-			active_radio = dialog->color_radio;
-		else
-			active_radio = dialog->transparent_radio;
+		active_radio = dialog->color_radio;
 		break;
 	case PANEL_BACK_IMAGE:
 		active_radio = dialog->image_radio;

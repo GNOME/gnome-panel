@@ -1,5 +1,25 @@
 2003-04-09  Mark McLoughlin  <mark@skynet.ie>
 
+	Update the sensitivity of the image/color configuration
+	widgets as appropriate to the selected background type.
+	Fixes #107609.
+
+	* panel-properties-dialog.c:
+	(panel_properties_dialog_upd_sensitivity): impl. making
+	the color/image configuration widgets insentive as
+	appropriate.
+	(panel_properties_dialog_background_toggled),
+	(panel_properties_dialog_setup_background_radios),
+	(panel_properties_dialog_update_background_type): use it.
+	Also remove all references to the transparency radio
+	button. It doesn't exist anymore.
+
+	* panel-properties-dialog.glade: name the containers of
+	the image/color widgets sensibly so we can get a handle
+	to them.
+
+2003-04-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel.c: (panel_key_press_event): only activate the
 	binding if its Ctrl-F10. Fixes #109791, Shift-F10 was
 	popping up the panel's context menu not the applet's
