@@ -136,7 +136,9 @@ panel_SOURCES=\
 	xstuff.c		\
 	xstuff.h		\
 	foobar-widget.h		\
-	foobar-widget.c
+	foobar-widget.c		\
+	title-item.h		\
+	title-item.c
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
 	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@
@@ -183,7 +185,8 @@ EXTRA_DIST = \
 	APPLET_WRITING			\
 	panel.hints			\
 	gnome-panel-properties.desktop	\
-	nothing.cP
+	nothing.cP			\
+	title-item.gob
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.

@@ -24,8 +24,8 @@
 #include "panel-widget.h"
 #include "tearoffitem.h"
 #include "gnome-run.h"
+#include "title-item.h"
 
-#define TEAROFF_MENUS 1
 /*#define PANEL_DEBUG 1*/
 
 typedef enum {
@@ -962,7 +962,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
-			       "desktop_entry_properties","Panel");
+			       "desktop_entry_properties", "Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
@@ -1303,7 +1303,7 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 				selection_data->target, 8, (guchar *)string,
 				strlen(string));
 }
-
+ 
 static void
 setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		      MenuFinfo *mf)
@@ -1347,15 +1347,15 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 			       it's not ours!*/
 		sim->type = 0;
 		sim->menuitem = menuitem;
-		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
+		gtk_signal_connect(GTK_OBJECT(menuitem), "event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"destroy",
+		gtk_signal_connect(GTK_OBJECT(menuitem), "destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
 		if(global_config.show_dot_buttons) {
 			GtkWidget *w = gtk_button_new_with_label(_("..."));
-			gtk_signal_connect(GTK_OBJECT(w),"event",
+			gtk_signal_connect(GTK_OBJECT(w), "event",
 					   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
 					   sim);
 			gtk_widget_show(w);
@@ -1369,9 +1369,6 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 	gtk_widget_show (menuitem);
 
-	gtk_signal_connect_object(GTK_OBJECT(menuitem),"select",
-				  GTK_SIGNAL_FUNC(gtk_item_deselect),
-				  GTK_OBJECT(menuitem));
 }
 
 static void
@@ -1868,7 +1865,7 @@ show_tearoff_menu(GtkWidget *menu, char *title, gboolean cursor_position,
 static void
 tearoff_destroyed(GtkWidget *tearoff, TearoffMenu *tm)
 {
-	tearoffs = g_slist_remove(tearoffs,tm);
+	tearoffs = g_slist_remove(tearoffs, tm);
 	g_free(tm->title);
 	g_free(tm->wmclass);
 	g_free(tm->special);
@@ -1915,12 +1912,12 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 					 TRUE);
 		
 		if(list!=mfl)
-			g_string_append_c(title,' ');
-		g_string_append(title,mf->dir_name);
+			g_string_append_c(title, ' ');
+		g_string_append(title, mf->dir_name);
 	}
 
 	wmclass = get_unique_tearoff_wmclass();
-	show_tearoff_menu(menu,title->str,TRUE,0,0,wmclass);
+	show_tearoff_menu(menu, title->str, TRUE, 0, 0, wmclass);
 
 	tm = g_new0(TearoffMenu,1);
 	tm->menu = menu;
@@ -1931,9 +1928,9 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
 			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
 
-	tearoffs = g_slist_prepend(tearoffs,tm);
+	tearoffs = g_slist_prepend(tearoffs, tm);
 
-	g_string_free(title,FALSE);
+	g_string_free(title, FALSE);
 
 	need_complete_save = TRUE;
 }
@@ -1944,7 +1941,7 @@ add_tearoff(GtkMenu *menu)
 	GtkWidget *w;
 
 	if (!gnome_preferences_get_menus_have_tearoff ()){
-		g_warning ("Adding tearoff when tearoffs are disabled");
+		g_warning (_("Adding tearoff when tearoffs are disabled"));
 		return;
 	}
 
@@ -1996,12 +1993,10 @@ try_menu_reread(GtkWidget *menuw, gboolean position)
 	if(need_reread) {
 		while(GTK_MENU_SHELL(menuw)->children)
 			gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
-#ifdef TEAROFF_MENUS
 		if (gnome_preferences_get_menus_have_tearoff ())
 			add_tearoff(GTK_MENU(menuw));
-#endif
 
-		gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
+		gtk_object_set_data(GTK_OBJECT(menuw), "mf", NULL);
 		for(list = mfl; list != NULL;
 		    list = g_slist_next(list)) {
 			MenuFinfo *mf = list->data;
@@ -2091,7 +2086,7 @@ create_menuitem(GtkWidget *menu,
 	} else {
 		char *p;
 		itemname = g_strdup(g_basename(fr->name));
-		p = strrchr(itemname,'.');
+		p = strrchr(itemname, '.');
 		if(p) *p = '\0';
 	}
 
@@ -2121,7 +2116,7 @@ create_menuitem(GtkWidget *menu,
 	gtk_widget_lock_accelerators (menuitem);
 	if (sub) {
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
-		gtk_signal_connect(GTK_OBJECT(sub),"show",
+		gtk_signal_connect(GTK_OBJECT(sub), "show",
 				   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
 	}
 
@@ -2134,7 +2129,7 @@ create_menuitem(GtkWidget *menu,
 		}
 	}
 
-	if(!sub && strstr(fr->name,"/applets/") &&  fr->goad_id) {
+	if(!sub && strstr(fr->name,"/applets/") && fr->goad_id) {
 		setup_applet_drag (menuitem, fr->goad_id);
 		setup_full_menuitem_with_size (menuitem, pixmap,itemname,
 					       fr->name, TRUE, size);
@@ -2144,7 +2139,7 @@ create_menuitem(GtkWidget *menu,
 		  we can be sure that the FileRec will live that long,
 		  (when it dies, the menu will not be used again, it will
 		  be recreated at the next available opportunity)*/
-		setup_full_menuitem_with_size (menuitem, pixmap,itemname,
+		setup_full_menuitem_with_size (menuitem, pixmap, itemname,
 					       sub?NULL:fr->name, FALSE, size);
 	}
 
@@ -2214,14 +2209,12 @@ create_menu_at_fr (GtkWidget *menu,
 	
 	if(!menu) {
 		menu = menu_new ();
-#ifdef TEAROFF_MENUS
 		if (gnome_preferences_get_menus_have_tearoff ()) {
 			add_tearoff(GTK_MENU(menu));
 			first_item++;
 		}
-#endif
-		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
-				   GTK_SIGNAL_FUNC(menu_destroy),NULL);
+		gtk_signal_connect(GTK_OBJECT(menu), "destroy",
+				   GTK_SIGNAL_FUNC(menu_destroy), NULL);
 	} else {
 		first_item = g_list_length(GTK_MENU_SHELL(menu)->children);
 		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
@@ -2280,7 +2273,7 @@ create_menu_at_fr (GtkWidget *menu,
 
 		if (pixmap)
 			gtk_widget_show (pixmap);
-		menuitem = gtk_menu_item_new();
+		menuitem = title_item_new();
 		gtk_widget_lock_accelerators (menuitem);
 		setup_title_menuitem(menuitem,pixmap,menu_name,mf);
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
@@ -2300,9 +2293,9 @@ create_menu_at_fr (GtkWidget *menu,
 		add_separator = FALSE;
 	}
 
-	mfl = g_slist_append(mfl,mf);
+	mfl = g_slist_append(mfl, mf);
 
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
+	gtk_object_set_data(GTK_OBJECT(menu), "mf", mfl);
 
 	return menu;
 }
@@ -2339,12 +2332,10 @@ static GtkWidget *
 create_applets_menu(GtkWidget *menu, gboolean fake_submenus, gboolean title)
 {
 	GtkWidget *applet_menu;
-	char *menu_base = gnome_unconditional_datadir_file ("applets");
-	char *menudir;
+	char *menudir = gnome_datadir_file ("applets");
 
-	menudir = g_concat_dir_and_file (menu_base, ".");
-	g_free (menu_base);
-	if (!g_file_exists (menudir)) {
+	if (!menudir ||
+	    !g_file_test (menudir, G_FILE_TEST_ISDIR)) {
 		g_free (menudir);
 		return NULL;
 	}
@@ -2665,12 +2656,10 @@ static GtkWidget *
 create_system_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake,
 		   gboolean title)
 {
-	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
-	char *menudir;
+	char *menudir = gnome_datadir_file ("gnome/apps");
 
-	menudir = g_concat_dir_and_file (menu_base, ".");
-	g_free (menu_base);
-	if (g_file_exists (menudir)) {
+	if (menudir &&
+	    g_file_test (menudir, G_FILE_TEST_ISDIR)) {
 		if(!fake || menu) {
 			menu = create_menu_at (menu, menudir, FALSE, _("Programs"),
 					       "gnome-logo-icon-transparent.png",
@@ -2700,11 +2689,14 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
 		 gboolean fake_submenus, gboolean force, gboolean fake,
 		 gboolean gottitle)
 {
-	char *menu_base = gnome_util_home_file (dir);
-	char *menudir = g_concat_dir_and_file (menu_base, ".");
+	char *menudir = gnome_util_home_file (dir);
 	if (!g_file_exists (menudir))
-		mkdir (menu_base, 0755);
-	g_free (menu_base);
+		mkdir (menudir, 0755);
+	if (!g_file_test (menudir, G_FILE_TEST_ISDIR)) {
+		g_warning(_("Can't create the user menu directory"));
+		g_free (menudir); 
+		return menu;
+	}
 	
 	if(!fake || menu) {
 		menu = create_menu_at (menu, menudir, FALSE,
@@ -3746,7 +3738,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		gtk_widget_show(menuitem);
 		gtk_menu_prepend(GTK_MENU(submenu),menuitem);
 	
-		gtk_signal_connect(GTK_OBJECT(menuitem),"activate",
+		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 				   GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
 				   NULL);
 	}
@@ -4378,14 +4370,8 @@ create_menu_applet(PanelWidget *panel, char *arguments,
 	if (!this_menu)
 		return NULL;
 
-	if(!gnome_folder) {
-		gnome_folder =
-			gnome_unconditional_pixmap_file("gnome-folder.png");
-		if (!g_file_exists (gnome_folder)) {
-			g_free (gnome_folder);
-			gnome_folder = NULL;
-		}
-	}
+	if(!gnome_folder)
+		gnome_folder = gnome_pixmap_file("gnome-folder.png");
 
 	main_menu = (!arguments ||
 		     !*arguments ||

@@ -1,3 +1,21 @@
+Mon Mar 20 17:02:20 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c: catch more corba exceptions and give warnings
+
+	* menu.c: fix some braindamages with respect to getting menu
+	  directories, don't use unconditional versions where not approriate,
+	  properly test for files being directories
+
+	* title-item.(c|h|gob),menu.c: use a special title-item widget.  The
+	  Beast hack didn't work right for me.  This eliminates flicker.  And
+	  no we don't require gob, so if you want to rebuild the .[ch] file,
+	  run gob on the .gob file by hand.  All it does is override the
+	  "select" with an empty method which has the same result as what we
+	  have now but without any flicker.
+
+	* foobar-widget.c: bind submenu_to_display on the main "programs"
+	  menu
+
 Mon Mar 20 06:01:40 2000  George Lebl <jirka@5z.com>
 
 	* extern.c: apply patch from John Ellis <johne@bellatlantic.net>

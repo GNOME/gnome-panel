@@ -1017,30 +1017,6 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 
 	win = gdk_window_lookup(corbadat->winid);
 
-#if 0
-	/* if local case */
-	if(win) {
-		GdkWindow *temp_window;
-		GdkWindowAttr attributes;
-		gint attributes_mask;
-
-		attributes.window_type = GDK_WINDOW_TEMP;
-
-		attributes.width = 10;
-		attributes.height = 10;
-		attributes.wclass = GDK_INPUT_OUTPUT;
-		attributes.visual = gtk_widget_get_visual (GTK_WIDGET(applet));
-		attributes.colormap = gtk_widget_get_colormap (GTK_WIDGET(applet));
-		attributes.event_mask = 0;
-
-		attributes_mask = GDK_WA_VISUAL | GDK_WA_COLORMAP;
-   
-		temp_window = gdk_window_new(NULL, &attributes,
-					     attributes_mask);
-
-		corbadat->winid = GDK_WINDOW_XWINDOW(temp_window);
-	}
-#endif
 	gtk_plug_construct(GTK_PLUG(applet), corbadat->winid);
 
 	/* after doing all that we just take the socket and put it in limbo */
@@ -1184,17 +1160,25 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
 	if(applet->_priv->ebox) {
-		gtk_container_add(GTK_CONTAINER(applet->_priv->ebox),widget);
+		gtk_container_add(GTK_CONTAINER(applet->_priv->ebox), widget);
 		gtk_signal_connect(GTK_OBJECT(widget), "destroy",
 				   GTK_SIGNAL_FUNC(destroy_the_applet),
 				   applet);
 	} else
-		gtk_container_add(GTK_CONTAINER(applet),widget);
+		gtk_container_add(GTK_CONTAINER(applet), widget);
 
 
 	CORBA_exception_init(&ev);
   
 	GNOME_PanelSpot_register_us(CD(applet)->pspot, &ev);
+
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		gtk_widget_destroy(widget);
+		return;
+	}
+
 	CORBA_exception_free(&ev);
 
 	if(bind_events) {
@@ -1220,7 +1204,7 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 void
 applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 {
-	applet_widget_add_full(applet,widget,TRUE);
+	applet_widget_add_full(applet, widget, TRUE);
 }
 
 /**
@@ -1289,6 +1273,11 @@ applet_widget_set_tooltip(AppletWidget *applet, const char *text)
 
 	CORBA_exception_init(&ev);
 	GNOME_PanelSpot__set_tooltip(CD(applet)->pspot, text?text:"", &ev);
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		return;
+	}
 	CORBA_exception_free(&ev);
 }
 
@@ -1327,7 +1316,7 @@ applet_widget_get_panel_orient(AppletWidget *applet)
 int
 applet_widget_get_panel_pixel_size(AppletWidget *applet)
 {
-	g_return_val_if_fail(applet != NULL,PIXEL_SIZE_STANDARD);
+	g_return_val_if_fail(applet != NULL, PIXEL_SIZE_STANDARD);
 	g_return_val_if_fail(IS_APPLET_WIDGET(applet), PIXEL_SIZE_STANDARD);
 
 	return applet->size;
@@ -1349,11 +1338,16 @@ applet_widget_get_free_space(AppletWidget *applet)
 {
 	CORBA_Environment ev;
 	int r;
-	g_return_val_if_fail(applet != NULL,0);
+	g_return_val_if_fail(applet != NULL, 0);
 	g_return_val_if_fail(IS_APPLET_WIDGET(applet), 0);
 	
 	CORBA_exception_init(&ev);
 	r = GNOME_PanelSpot__get_free_space(CD(applet)->pspot, &ev);
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		return 0;
+	}
 	CORBA_exception_free(&ev);
 	return r;
 }
@@ -1378,6 +1372,11 @@ applet_widget_send_position(AppletWidget *applet, gboolean enable)
 	
 	CORBA_exception_init(&ev);
 	GNOME_PanelSpot__set_send_position(CD(applet)->pspot, enable, &ev);
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		return;
+	}
 	CORBA_exception_free(&ev);
 }
 
@@ -1400,6 +1399,11 @@ applet_widget_send_draw(AppletWidget *applet, gboolean enable)
 	
 	CORBA_exception_init(&ev);
 	GNOME_PanelSpot__set_send_draw(CD(applet)->pspot, enable, &ev);
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		return;
+	}
 	CORBA_exception_free(&ev);
 }
 
@@ -1432,7 +1436,7 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 	CORBA_exception_init(&ev);
 	image = GNOME_PanelSpot__get_rgb_background(CD(applet)->pspot, &ev);
 	if(ev._major) {
-		g_warning("CORBA Exception");
+		g_warning(_("CORBA Exception"));
 		CORBA_exception_free(&ev);
 		return;
 	}
@@ -1564,6 +1568,11 @@ applet_widget_panel_quit (void)
 
 	CORBA_exception_init(&ev);
 	GNOME_Panel_quit(panel_client, &ev);
+	if(ev._major) {
+		g_warning(_("CORBA Exception"));
+		CORBA_exception_free(&ev);
+		return;
+	}
 	CORBA_exception_free(&ev);
 }
 
@@ -1999,9 +2008,11 @@ void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 	g_return_if_fail(afunc);
 
 	CORBA_exception_init(&ev);
+
 	f = g_new0(AppletFactory, 1);
 	f->servant.vepv = &applet_factory_vepv;
-	f->afunc = afunc; f->qfunc = qfunc;
+	f->afunc = afunc;
+	f->qfunc = qfunc;
 	POA_GNOME_GenericFactory__init((PortableServer_Servant)f, &ev);
 
 	CORBA_exception_free(&ev);

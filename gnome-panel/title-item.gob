@@ -1,0 +1,10 @@
+class :Title:Item from Gtk:Menu:Item {
+	override (Gtk:Item)
+	void select (Gtk:Item *self);
+
+	public GtkWidget *
+	new(void)
+	{
+		return GTK_WIDGET(GET_NEW);
+	}
+} 

@@ -316,7 +316,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 
-	gtk_signal_connect (GTK_OBJECT (menu),"show",
+	gtk_signal_connect (GTK_OBJECT (menu), "show",
 			    GTK_SIGNAL_FUNC (submenu_to_display),
 			    NULL);
 }
@@ -474,6 +474,9 @@ foobar_widget_init (FoobarWidget *foo)
 	menu = create_root_menu (TRUE, flags, TRUE, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menu), "show",
+			    GTK_SIGNAL_FUNC (submenu_to_display),
+			    NULL);
 
 	append_folder_menu  (menu_bar, _("Favorites"), NULL, FALSE, "apps/.");
 	append_folder_menu  (menu_bar, _("Settings"),  NULL, TRUE,
@@ -515,7 +518,6 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_widget_show_all (foo->ebox);
 }
 
-#warning This is probably hackish
 static void
 queue_panel_resize (gpointer data, gpointer user_data)
 {
