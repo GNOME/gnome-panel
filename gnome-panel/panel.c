@@ -454,6 +454,14 @@ call_applet(GtkWidget *applet, AppletCommand *cmd)
 	return (*cmd_func) (cmd);
 }
 
+static void
+applet_orientation_notify(GtkWidget *widget, gpointer data)
+{
+	AppletCommand  cmd;
+
+	cmd.cmd = APPLET_CMD_ORIENTATION_CHANGE_NOTIFY;
+	call_applet(widget, &cmd);
+}
 
 static void
 save_applet_configuration(GtkWidget *widget, gpointer data)
@@ -554,7 +562,7 @@ panel_session_save (gpointer client_data,
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
 			      save_applet_configuration, &num);
 
-	gnome_config_set_int("/panel/Applets/count",num);
+	gnome_config_set_int("/panel/Applets/count",num-1);
 
 	gnome_config_set_int("/panel/Config/position",the_panel->pos);
 	gnome_config_set_int("/panel/Config/mode",the_panel->mode);
@@ -1610,6 +1618,9 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
+
+	/*notify the applet of the orientation of the panel!*/
+	applet_orientation_notify(eventbox,NULL);
 }
 
 static void
@@ -1649,13 +1660,14 @@ static void
 panel_fix_all_applets(void)
 {
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		      fix_an_applet_foreach,NULL);
+		              fix_an_applet_foreach,NULL);
 }
 
 void
 panel_reconfigure(Panel *newconfig)
 {
-	int oldpos;
+	gint oldpos;
+	gint oldmode;
 
 	if(the_panel->mode == PANEL_GETS_HIDDEN) {
 		the_panel->step_size=0;
@@ -1665,33 +1677,48 @@ panel_reconfigure(Panel *newconfig)
 	  it would require more work to keep the state to be persistent
 	  accross sessions or even reconfigurations*/
 	the_panel->state = PANEL_SHOWN;
+	oldmode = the_panel->mode;
 	the_panel->mode = newconfig->mode;
 	oldpos=the_panel->pos;
 	the_panel->pos = newconfig->pos;
-	set_panel_position();
-	set_show_hide_buttons_visibility();
 	if(newconfig->pos != oldpos) {
-		switch (the_panel->pos) {
+		set_show_hide_buttons_visibility();
+		set_panel_position();
+		switch (oldpos) {
 			case PANEL_POS_TOP:
 				if(newconfig->pos != PANEL_POS_BOTTOM)
 					panel_change_orient();
+				else
+					panel_fix_all_applets();
 				break;
 			case PANEL_POS_BOTTOM:
 				if(newconfig->pos != PANEL_POS_TOP)
 					panel_change_orient();
+				else
+					panel_fix_all_applets();
 				break;
 			case PANEL_POS_LEFT:
 				if(newconfig->pos != PANEL_POS_RIGHT)
 					panel_change_orient();
+				else
+					panel_fix_all_applets();
 				break;
 			case PANEL_POS_RIGHT:
 				if(newconfig->pos != PANEL_POS_LEFT)
 					panel_change_orient();
+				else
+					panel_fix_all_applets();
 				break;
 		}
-	} else {
+		/*notify each applet that we're changing orientation!*/
+		gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+				      applet_orientation_notify,NULL);
+	} else if(oldmode != newconfig->mode) {
+		set_show_hide_buttons_visibility();
+		set_panel_position();
 		panel_fix_all_applets();
 	}
+
 	the_panel->step_size = newconfig->step_size;
 	the_panel->delay = newconfig->delay;
 	the_panel->minimize_delay = newconfig->minimize_delay;

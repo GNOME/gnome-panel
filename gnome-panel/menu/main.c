@@ -33,6 +33,8 @@
 
 static char *gnome_folder;
 
+static gint panel_pos=PANEL_POS_BOTTOM;
+
 static PanelCmdFunc panel_cmd_func;
 
 gpointer applet_cmd_func(AppletCommand *cmd);
@@ -262,10 +264,26 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
-	/* FIXME: This should take the panel position into account */
+	/* FIXME: This should take the screen size into account */
 	
-	*x = wx;
-	*y = wy - GTK_WIDGET (menu)->allocation.height;
+	switch(panel_pos) {
+		case PANEL_POS_TOP:
+			*x = wx;
+			*y = wy + widget->allocation.height;
+			break;
+		case PANEL_POS_BOTTOM:
+			*x = wx;
+			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			break;
+		case PANEL_POS_LEFT:
+			*x = wx + widget->allocation.width;
+			*y = wy;
+			break;
+		case PANEL_POS_RIGHT:
+			*x = wx - GTK_WIDGET (menu)->allocation.width;
+			*y = wy;
+			break;
+	}
 }
 
 void
@@ -633,6 +651,10 @@ applet_cmd_func(AppletCommand *cmd)
 			/* FIXME: this should return the stuff from current properties */
 			
 			return g_strdup(gtk_object_get_data(GTK_OBJECT(cmd->applet), MENU_PATH));
+
+		case APPLET_CMD_ORIENTATION_CHANGE_NOTIFY:
+			panel_pos=cmd->panel->pos;
+			break;
 
 		case APPLET_CMD_PROPERTIES:
 			fprintf(stderr, "Menu properties not yet implemented\n"); /* FIXME */

@@ -96,7 +96,7 @@ position_notebook_page(void)
 			  "Bottom");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
-			    PANEL_POS_BOTTOM);
+			    (gpointer)PANEL_POS_BOTTOM);
 	if (config_panel.pos == PANEL_POS_BOTTOM) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -109,7 +109,7 @@ position_notebook_page(void)
 			  "Left");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
-			    PANEL_POS_LEFT);
+			    (gpointer)PANEL_POS_LEFT);
 	if (config_panel.pos == PANEL_POS_LEFT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -122,7 +122,7 @@ position_notebook_page(void)
 			  "Right");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
-			    PANEL_POS_RIGHT);
+			    (gpointer)PANEL_POS_RIGHT);
 	if (config_panel.pos == PANEL_POS_RIGHT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -145,7 +145,7 @@ position_notebook_page(void)
 	button = gtk_radio_button_new_with_label (NULL, "Explicitly Hide");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
-			    PANEL_STAYS_PUT);
+			    (gpointer)PANEL_STAYS_PUT);
 	if (config_panel.mode == PANEL_STAYS_PUT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -158,7 +158,7 @@ position_notebook_page(void)
 			  "Auto Hide");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
-			    PANEL_GETS_HIDDEN);
+			    (gpointer)PANEL_GETS_HIDDEN);
 	if (config_panel.mode == PANEL_GETS_HIDDEN) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -358,7 +358,7 @@ panel_config(void)
 	button = gtk_button_new_with_label("Close");
 	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				   GTK_SIGNAL_FUNC (gtk_widget_destroy), 
-				   config_window);
+				   (gpointer)config_window);
 	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (button);
 
