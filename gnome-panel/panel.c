@@ -181,17 +181,25 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 {
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
+		int orient = get_applet_orient(panel);
 		g_assert(ext);
 		/*ingore this until we get an ior*/
-		if(ext->applet) {
+		if(ext->applet && ext->orient != orient) {
 			CORBA_Environment ev;
+
 			CORBA_exception_init(&ev);
 			GNOME_Applet_change_orient(ext->applet,
-						   get_applet_orient(panel),
+						   orient,
 						   &ev);
 			if(ev._major)
 				panel_clean_applet(ext->info);
 			CORBA_exception_free(&ev);
+
+			/* we have now sent this orientation thus we
+			   save it and don't send it again unless it
+			   changes */
+			ext->orient = orient;
+
 		}
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
@@ -213,8 +221,10 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 			set_swallow_applet_orient(swallow,SWALLOW_HORIZONTAL);
 	} else if(info->type == APPLET_STATUS) {
 		StatusApplet *status = info->data;
-		status->orient = panel->orient;
-		status_applet_update(status);
+		if(status->orient != panel->orient) {
+			status->orient = panel->orient;
+			status_applet_update(status);
+		}
 	}
 }
 
@@ -988,6 +998,17 @@ basep_pos_connect_signals (BasePWidget *basep)
 	}
 }
 
+static void
+floating_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
+{
+	if(!GTK_WIDGET_REALIZED(basep))
+		return;
+
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
+			      orient_change_foreach,
+			      basep->panel);
+}
+
 void
 panel_setup(GtkWidget *panelw)
 {
@@ -1077,6 +1098,11 @@ panel_setup(GtkWidget *panelw)
 	else
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "realize",
 					 GTK_SIGNAL_FUNC(panel_realize),
+					 NULL);
+
+	if(IS_FLOATING_WIDGET(panelw))
+		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
+					 GTK_SIGNAL_FUNC(floating_size_alloc),
 					 NULL);
 }
 

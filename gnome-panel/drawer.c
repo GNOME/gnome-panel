@@ -331,23 +331,34 @@ drawer_setup(Drawer *drawer)
 }
 
 static void
-drawer_move_foreach(GtkWidget *w, gpointer user_data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-	
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		gtk_widget_queue_resize(drawer->drawer);
-	}
-}
-
-static void
 button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 {
 	if(!GTK_WIDGET_REALIZED(widget))
 		return;
-	drawer_move_foreach(widget,NULL);
+
+	gtk_widget_queue_resize(drawer->drawer);
+
 	gtk_object_set_data(GTK_OBJECT(widget),"allocated",GINT_TO_POINTER(1));
+}
+
+static void
+drawer_orient_change_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	PanelWidget *panel = data;
+	
+	orientation_change(info,panel);
+}
+
+static void
+drawer_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
+{
+	if(!GTK_WIDGET_REALIZED(basep))
+		return;
+
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
+			      drawer_orient_change_foreach,
+			      basep->panel);
 }
 
 void
@@ -379,6 +390,11 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		return;
 
 	register_toy(drawer->button,drawer, panel, pos, APPLET_DRAWER);
+
+	gtk_signal_connect_after(GTK_OBJECT(drawer->drawer),
+				 "size_allocate",
+				 GTK_SIGNAL_FUNC(drawer_size_alloc),
+				 NULL);
 
 	gtk_signal_connect_after(GTK_OBJECT(drawer->button),
 				 "size_allocate",

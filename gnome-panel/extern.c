@@ -492,9 +492,11 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 	ext->started = FALSE;
 	ext->send_position = FALSE;
 	ext->send_draw = FALSE;
+	ext->orient = -1;
 
 	ext->send_draw_timeout = 0;
 	ext->send_draw_queued = FALSE;
+
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -615,6 +617,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	ext->started = FALSE;
 	ext->send_position = FALSE;
 	ext->send_draw = FALSE;
+	ext->orient = -1;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;

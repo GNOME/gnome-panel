@@ -145,7 +145,7 @@ floating_pos_get_applet_orient (BasePWidget *basep)
 			gdk_screen_height () / 2)
 			? ORIENT_DOWN : ORIENT_UP;
 	else
-		return (FLOATING_POS (basep->pos)->x > 
+		return (FLOATING_POS (basep->pos)->x < 
 			gdk_screen_width () /2)
 			? ORIENT_RIGHT : ORIENT_LEFT;
 }

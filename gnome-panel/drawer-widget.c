@@ -128,65 +128,40 @@ drawer_pos_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
-static PanelData *
-get_lowest_level_master_pd(PanelWidget *panel)
+static void
+get_widget_pos(GtkWidget *widget, int *x, int *y)
 {
-	GtkObject *parent;
-	PanelData *pd;
-
-	while(panel->master_widget)
-		panel = PANEL_WIDGET(panel->master_widget->parent);
-	parent = GTK_OBJECT(panel->panel_parent);
-	g_return_val_if_fail(parent!=NULL,NULL);
-	
-	pd = gtk_object_get_user_data(parent);
-	g_return_val_if_fail(pd!=NULL,NULL);
-	
-	return pd;
+       if(!widget->window) {
+               *x = *y = 0;
+               return;
+       }
+       gdk_window_get_origin (widget->window, x, y);
+       if(GTK_WIDGET_NO_WINDOW(widget)) {
+               *x += widget->allocation.x;
+               *y += widget->allocation.y;
+       }
 }
 
 static PanelOrientType
 drawer_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
-	PanelData *tpd = get_lowest_level_master_pd (panel);
-	PanelOrientType orient = ORIENT_UP;
 	PanelOrientation porient = panel->orient;
+	int x,y;
 
-	/* unfortunately we must do this */
-	if (IS_BORDER_WIDGET (tpd->panel)) {
-		switch (BORDER_POS (BASEP_WIDGET (tpd->panel)->pos)->edge) {
-		case BORDER_TOP:
-			orient = (porient == PANEL_VERTICAL)
-				? ORIENT_RIGHT : ORIENT_DOWN;
-			break;
-		case BORDER_BOTTOM:
-		case BORDER_LEFT:
-			orient = (porient == PANEL_VERTICAL)
-				? ORIENT_RIGHT : ORIENT_UP;
-			break;
-		case BORDER_RIGHT:
-			orient = (porient == PANEL_VERTICAL)
-				? ORIENT_LEFT : ORIENT_UP;
-			break;
-		}
-	} else if (IS_FLOATING_WIDGET (tpd->panel)) {
-		if (porient == PANEL_VERTICAL)
-			orient = (FLOATING_POS (BASEP_WIDGET (tpd->panel)->pos)->y <
-				  gdk_screen_height () / 2)
-				? ORIENT_DOWN : ORIENT_UP;
+	get_widget_pos(GTK_WIDGET(basep),&x,&y);
+
+	if(porient == PANEL_VERTICAL) {
+		if(x > (gdk_screen_width()/2))
+			return ORIENT_LEFT;
 		else
-			orient = (FLOATING_POS (BASEP_WIDGET (tpd->panel)->pos)->x <
-				  gdk_screen_width () / 2)
-				? ORIENT_RIGHT : ORIENT_LEFT;
-	} else if (IS_DRAWER_WIDGET (tpd->panel)) {
-		orient = (porient == PANEL_VERTICAL)
-			? ORIENT_RIGHT : ORIENT_UP;
-	} else { 
-		g_warning (_("Don't know about base panel type: %d\n"), tpd->type);
+			return ORIENT_RIGHT;
+	} else {
+		if(y > (gdk_screen_height()/2))
+			return ORIENT_UP;
+		else
+			return ORIENT_DOWN;
 	}
-	
-	return orient;
 }
 
 static PanelOrientType

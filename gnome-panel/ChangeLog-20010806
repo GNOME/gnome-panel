@@ -1,3 +1,16 @@
+Wed Dec 29 20:48:59 1999  George Lebl <jirka@5z.com>
+
+	* drawer.c,panel.c: send orientation changes to children on size
+	  allocate of drawer and floating widget
+
+	* floating-widget.c,drawer-widget.c: use correct orientation
+	  depending on the position of the widget on screen, so that we
+	  always point towards the center of the screen.
+
+	* panel.c,extern.c: be a bit gentler with orientation changes and
+	  don't issue orientation changes for extern and status unless
+	  orientation really changed.
+
 1999-12-29  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c: get rid of warnings, and fix panel submenu tearoff

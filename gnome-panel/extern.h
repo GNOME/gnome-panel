@@ -22,6 +22,8 @@ struct _Extern {
 	int started;
 	gboolean send_position;
 	gboolean send_draw;
+	PanelOrientation orient; /* current orient, if it doesn't change,
+				    don't send any orient change */
 	
 	int send_draw_timeout;
 	gboolean send_draw_queued;
