@@ -236,7 +236,7 @@ create_fish_widget(GtkWidget *window)
 			      GDK_BUTTON_PRESS_MASK);
 	gtk_signal_connect(GTK_OBJECT(darea), "button_press_event",
 			   GTK_SIGNAL_FUNC(fish_clicked_cb), NULL);
-	gtk_signal_connect_after(GTK_OBJECT(darea), "realized",
+	gtk_signal_connect_after(GTK_OBJECT(darea), "realize",
 			   GTK_SIGNAL_FUNC(fish_draw), NULL);
 	gtk_signal_connect(GTK_OBJECT(darea), "expose_event",
 			   GTK_SIGNAL_FUNC(fish_expose), NULL);
