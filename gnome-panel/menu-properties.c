@@ -259,6 +259,8 @@ properties_apply_callback (Menu *menu)
 		button_widget_set_pixmap(BUTTON_WIDGET(menu->button),
 					 pixmap_name, -1);
 	}
+
+	panel_applet_save_to_gconf (menu->info);
 }
 
 static void

@@ -1,3 +1,10 @@
+2002-02-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu-properties.c: (properties_apply_callback): save to gconf.
+
+	* menu.c: (menu_save_to_gconf): check icon file is set before
+	setting it in gconf.
+
 2002-02-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* session.[ch]: (panel_session_save): don't dup string. it

@@ -4503,7 +4503,7 @@ menu_save_to_gconf (Menu       *menu,
         gconf_client_set_bool (client, temp_key, menu->custom_icon, NULL);
         g_free (temp_key);
 
-	if (menu->custom_icon) {
+	if (menu->custom_icon && menu->custom_icon_file) {
 		temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "custom-icon-file");
 		gconf_client_set_string (client, temp_key, menu->custom_icon_file, NULL);
 		g_free (temp_key);
