@@ -18,6 +18,15 @@ struct _Extern {
 
 	int refcount; /* primitive refcounting */
 
+	gboolean clean_remove; /* normally FALSE, if TRUE, the user or the
+				  applet requested to be killed, thus the
+				  panel should not ask about putting the
+				  applet back as if it may have crashed,
+			          this is why it is important that applets
+				  use the _remove method (unregister_us
+				  corba call), so that this gets set, when
+			       	  they want to leave cleanly */
+
 	char *goad_id;
 	char *cfg;
 	GtkWidget *ebox;
@@ -34,19 +43,27 @@ struct _Extern {
 
 	AppletInfo *info;
 };
-void extern_clean(Extern *ext);
 
-void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
-			int pos, gboolean exactpos, gboolean queue);
-void load_queued_externs(void);
+void	extern_clean		(Extern *ext);
 
-void panel_corba_clean_up(void);
-gint panel_corba_gtk_init(CORBA_ORB panel_orb);
+void	extern_before_remove	(Extern *ext);
+
+void	load_extern_applet	(const char *goad_id,
+				 const char *cfgpath,
+				 PanelWidget *panel,
+				 int pos,
+				 gboolean exactpos,
+				 gboolean queue);
+void	load_queued_externs	(void);
+
+void	panel_corba_clean_up	(void);
+gint	panel_corba_gtk_init	(CORBA_ORB panel_orb);
 
 /* to be called when we want to send a draw signal to an applet */
-void extern_send_draw(Extern *ext);
+void	extern_send_draw 	(Extern *ext);
 
-void save_applet(AppletInfo *info, gboolean ret);
+void	save_applet		(AppletInfo *info,
+				 gboolean ret);
 
 END_GNOME_DECLS
 

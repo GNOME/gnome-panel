@@ -321,7 +321,7 @@ send_applet_session_save (AppletInfo *info,
 						(CORBA_char *)cfgpath,
 						(CORBA_char *)globcfgpath,
 						&ev);
-			save_applet(info, ret);
+			save_applet (info, ret);
 		}
 	} else if(ev._major) {
 		gtk_timeout_remove(timeout);
@@ -360,9 +360,9 @@ save_applet_configuration(AppletInfo *info)
 	gnome_config_push_prefix(buf->str);
 
 	/*obviously no need for saving*/
-	if(info->type==APPLET_EXTERN_PENDING ||
-	   info->type==APPLET_EXTERN_RESERVED ||
-	   info->type==APPLET_EMPTY) {
+	if (info->type == APPLET_EXTERN_PENDING ||
+	    info->type == APPLET_EXTERN_RESERVED ||
+	    info->type == APPLET_EMPTY) {
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		g_string_free(buf,TRUE);
@@ -372,7 +372,8 @@ save_applet_configuration(AppletInfo *info)
 	panel = PANEL_WIDGET(info->widget->parent);
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
 
-	if((panel_num = g_slist_index(panels,panel)) == -1) {
+	panel_num = g_slist_index (panels, panel);
+	if (panel_num == -1) {
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		g_string_free(buf,TRUE);
@@ -399,7 +400,7 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_pop_prefix();
 			gnome_config_sync();*/
 			/* but gnome-config.[ch] is broken ! */
-			s = gnome_config_get_real_path(buf->str);
+			s = gnome_config_get_real_path (buf->str);
 			unlink(s);
 			g_free(s);
 
@@ -410,10 +411,13 @@ save_applet_configuration(AppletInfo *info)
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 PANEL_CONFIG_PATH, info->applet_id+1);
 			/*have the applet do it's own session saving*/
-			send_applet_session_save(info,ext->applet,
+			send_applet_session_save(info, ext->applet,
 						 buf->str,
 						 PANEL_CONFIG_PATH
 						 "Applet_All_Extern/");
+			/* update the configuration string */
+			g_free (ext->cfg);
+			ext->cfg = g_strdup (buf->str);
 			return FALSE; /*here we'll wait for done_session_save*/
 		}
 	case APPLET_DRAWER: 
@@ -783,12 +787,12 @@ panel_session_save (GnomeClient *client,
 		    int is_fast,
 		    gpointer client_data)
 {
-	if(is_shutdown) {
+	if (is_shutdown) {
 		ss_timeout = 1500;
 		ss_interactive = TRUE;
 	}
 	do_session_save(client,TRUE,FALSE,FALSE);
-	if(is_shutdown) {
+	if (is_shutdown) {
 		GSList *li;
 		for(li=panel_list;li;li=g_slist_next(li)) {
 			PanelData *pd = li->data;
@@ -820,7 +824,9 @@ panel_session_die (GnomeClient *client,
 	for(li=applets; li!=NULL; li=g_slist_next(li)) {
 		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
-			gtk_widget_destroy(info->widget);
+			Extern *ext = info->data;
+			ext->clean_remove = TRUE;
+			gtk_widget_destroy (info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			if(GTK_SOCKET(swallow->socket)->plug_window)
@@ -1030,17 +1036,18 @@ init_user_applets(void)
 		
 		if(strcmp(applet_name, EXTERN_ID) == 0) {
 			char *goad_id = gnome_config_get_string("goad_id");
-			if(goad_id && *goad_id &&
-			   /* if we try an evil hack such as loading tasklist
-			    * and deskguide instead of the desguide don't
-			    * try to load this applet in the first place */
-			   !try_evil_config_hacks(goad_id, panel, pos)) {
+			if (goad_id != NULL &&
+			    *goad_id != '\0' &&
+			    /* if we try an evil hack such as loading tasklist
+			     * and deskguide instead of the desguide don't
+			     * try to load this applet in the first place */
+			    ! try_evil_config_hacks (goad_id, panel, pos)) {
 				/*this is the config path to be passed to the
 				  applet when it loads*/
-				g_string_sprintf(buf, "%sApplet_%d_Extern/",
-						 PANEL_CONFIG_PATH, num);
-				load_extern_applet(goad_id, buf->str, 
-						   panel, pos, TRUE, TRUE);
+				g_string_sprintf (buf, "%sApplet_%d_Extern/",
+						  PANEL_CONFIG_PATH, num);
+				load_extern_applet (goad_id, buf->str, 
+						    panel, pos, TRUE, TRUE);
 			}
 			g_free(goad_id);
 		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 

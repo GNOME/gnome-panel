@@ -73,14 +73,14 @@ launch (Launcher *launcher, int argc, char *argv[])
 	} else if(item->type && strcmp(item->type,"PanelApplet")==0) {
 		char *goad_id;
 
-		goad_id = get_applet_goad_id_from_dentry(item);
+		goad_id = get_applet_goad_id_from_dentry (item);
 
-		if(goad_id) {
-			load_extern_applet(goad_id, NULL,
-					   panels->data,
-					   0, FALSE, FALSE);
+		if (goad_id != NULL) {
+			load_extern_applet (goad_id, NULL,
+					    panels->data,
+					    0, FALSE, FALSE);
 		} else {
-			g_warning(_("Can't get goad_id from desktop entry!"));
+			g_warning (_("Can't get goad_id from desktop entry!"));
 		}
 
 		g_free(goad_id);

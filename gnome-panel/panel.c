@@ -633,6 +633,21 @@ panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
 		extern_send_draw(info->data);
 }
 
+static void
+panel_applet_about_to_die (GtkWidget *panel, GtkWidget *widget, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data (GTK_OBJECT (widget),
+						"applet_info");
+
+	g_return_if_fail (info != NULL);
+
+	/* this needs to be befor we null the widget field */
+	if (info->type == APPLET_EXTERN &&
+	    info->data != NULL) {
+		extern_before_remove (info->data);
+	}
+}
+
 static GtkWidget *
 panel_menu_get(PanelWidget *panel, PanelData *pd)
 {
@@ -1211,6 +1226,10 @@ panel_widget_setup(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "applet_draw",
 			   GTK_SIGNAL_FUNC(panel_applet_draw),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_about_to_die",
+			   GTK_SIGNAL_FUNC(panel_applet_about_to_die),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "back_change",

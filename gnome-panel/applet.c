@@ -73,6 +73,10 @@ static gboolean
 kill_applet_in_idle(gpointer data)
 {
 	AppletInfo *info = data;
+	if (info->type == APPLET_EXTERN) {
+		Extern *ext = info->data;
+		ext->clean_remove = TRUE;
+	}
 	panel_clean_applet (info);
 	return FALSE;
 }
@@ -80,7 +84,7 @@ kill_applet_in_idle(gpointer data)
 static void
 remove_applet_callback(GtkWidget *widget, AppletInfo *info)
 {
-	gtk_idle_add(kill_applet_in_idle, info);
+	gtk_idle_add (kill_applet_in_idle, info);
 }
 
 static void
@@ -580,11 +584,11 @@ remove_unused_launchers (void)
 }
 
 static void
-applet_destroy(GtkWidget *w, AppletInfo *info)
+applet_destroy (GtkWidget *w, AppletInfo *info)
 {
 	GList *li;
 	
-	g_return_if_fail(info != NULL);
+	g_return_if_fail (info != NULL);
 
 	info->widget = NULL;
 
@@ -623,6 +627,7 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 
 	if (info->data_destroy)
 		info->data_destroy (info->data);
+	info->data_destroy = NULL;
 	info->data = NULL;
 
 	/*free the user menu*/
@@ -752,9 +757,9 @@ register_toy (GtkWidget *applet,
 	gtk_widget_dnd_drag_set (GTK_WIDGET(applet), TRUE,
 				 applet_drag_types, 1);*/
 
-	orientation_change(info,panel);
-	size_change(info,panel);
-	back_change(info,panel);
+	orientation_change (info, panel);
+	size_change (info, panel);
+	back_change (info, panel);
 
 	return TRUE;
 }

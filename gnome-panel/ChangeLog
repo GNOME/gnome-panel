@@ -1,3 +1,14 @@
+Wed Nov 08 21:40:46 2000  George Lebl <jirka@5z.com>
+
+	* applet.c, extern.[ch], launcher.c, panel-widget.[ch], panel.c,
+	  session.c:  Remember the last known config for applets, add a
+	  signal (quite hackish) to figure out when an applet is about to
+	  die.  If an applet dies unexpectadly (without being removed by user
+	  or calling unregister_us), then display a dialog box and allow the
+	  user to readd the applet with it's last saved settings.  This
+	  should reduce the "where did my <insert name of applet>" go and
+	  how do I get it back.
+
 Mon Nov 06 02:06:57 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: some cleanup, mostly cosmetic
