@@ -47,6 +47,8 @@ struct _Fish {
 
 #define IS_ROT(f) ((f)->prop.rotate && ((f)->orient == ORIENT_LEFT || (f)->orient == ORIENT_RIGHT))
 
+GtkWidget *bah_window = NULL;
+
 static void
 load_image_file(Fish *fish)
 {
@@ -57,28 +59,40 @@ load_image_file(Fish *fish)
 		gdk_pixmap_unref(fish->pix);
 	
 	pix = gdk_imlib_load_image(fish->prop.image);
-	
-	if(fish->size==SIZE_TINY && pix->rgb_height>24) {
-		h = 24;
-		w = pix->rgb_width*(24.0/pix->rgb_height);
+	if(pix) {
+		if(fish->size==SIZE_TINY && pix->rgb_height>24) {
+			h = 24;
+			w = pix->rgb_width*(24.0/pix->rgb_height);
+		} else {
+			h = pix->rgb_height;
+			w = pix->rgb_width;
+		}
+
+		if(IS_ROT(fish)) {
+			int t;
+			t = w; w = h; h = t;
+			gdk_imlib_rotate_image(pix,90);
+		}
+
+		gdk_imlib_render (pix, w, h);
+		fish->w = w;
+		fish->h = h;
+		fish->pix = gdk_imlib_move_image(pix);
+		gdk_imlib_destroy_image(pix);
 	} else {
-		h = pix->rgb_height;
-		w = pix->rgb_width;
+ 		g_assert(bah_window);
+ 		g_assert(bah_window->window);
+		if(IS_ROT(fish)) {
+			fish->w = 24;
+			fish->h = fish->prop.frames*24;
+		} else {
+			fish->w = fish->prop.frames*24;
+			fish->h = 24;
+		}
+ 		fish->pix = gdk_pixmap_new(bah_window->window,
+ 					   fish->w,fish->h,-1);
 	}
-
-	if(IS_ROT(fish)) {
-		int t;
-		t = w; w = h; h = t;
-		gdk_imlib_rotate_image(pix,90);
-	}
-
-	gdk_imlib_render (pix, w, h);
-	fish->w = w;
-	fish->h = h;
-	fish->pix = gdk_imlib_move_image(pix);
-	gdk_imlib_destroy_image(pix);
 }
-
 
 static void
 load_properties(Fish *fish)
@@ -609,6 +623,11 @@ wanda_activator(PortableServer_POA poa,
   fish->orient = ORIENT_UP;
 
   fish->applet = applet_widget_new(goad_id);
+
+  bah_window = gtk_window_new(GTK_WINDOW_POPUP);
+  gtk_widget_set_uposition(bah_window,gdk_screen_width()+1,
+			   gdk_screen_height()+1);
+  gtk_widget_show_now(GTK_WINDOW(bah_window));
   
   load_properties(fish);
   
