@@ -1415,16 +1415,16 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 
 	/* We don't want any bevels with a color/image background */
 	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
-		if (toplevel->priv->geometry.y != 0)
+		if (toplevel->priv->geometry.y > 0)
 			edges |= PANEL_EDGE_TOP;
 
-		if (toplevel->priv->geometry.x != 0)
+		if (toplevel->priv->geometry.x > 0)
 			edges |= PANEL_EDGE_LEFT;
 
-		if (toplevel->priv->geometry.y != (monitor_height - height))
+		if (toplevel->priv->geometry.y < (monitor_height - height))
 			edges |= PANEL_EDGE_BOTTOM;
 
-		if (toplevel->priv->geometry.x != (monitor_width - width))
+		if (toplevel->priv->geometry.x < (monitor_width - width))
 			edges |= PANEL_EDGE_RIGHT;
 
 		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_left) ||
