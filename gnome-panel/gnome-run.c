@@ -1384,9 +1384,6 @@ unset_selected (GtkWidget *dialog)
 
         g_free (text);
         
-	if (gpixmap != NULL)
-		unset_pixmap (gpixmap);
-
         g_object_set_data (G_OBJECT (dialog), "use_list",
 			   GPOINTER_TO_INT (FALSE));
 	gtk_tree_selection_unselect_all
