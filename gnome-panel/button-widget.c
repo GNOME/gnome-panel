@@ -421,10 +421,8 @@ button_load_pixbuf (const char  *file,
 	if (string_empty (file))
 		return NULL;
 
-	if (g_path_is_absolute (file))
-		retval = load_pixbuf (file, PREFERRED_SIZE, error);
-
-	if (retval == NULL) {
+	retval = load_pixbuf (file, PREFERRED_SIZE, NULL);
+	if (!retval) {
 		char *tmp;
 
 		if (error && *error) {
