@@ -759,7 +759,7 @@ icon_to_load_copy (IconToLoad *icon)
 }
 
 static void
-remove_pixmap_from_loaded (GtkWidget *pixmap, gpointer data)
+remove_pixmap_from_loaded (gpointer data, GObject *where_the_object_was)
 {
 	if (loaded_icons != NULL) 
 		g_hash_table_remove (loaded_icons, data);
@@ -813,8 +813,7 @@ load_icons_handler_again:
 	pixmap = NULL;
 
 	if (loaded_icons != NULL &&
-	    (pixmap = g_hash_table_lookup (loaded_icons, file)) != NULL) {
-		pb = gtk_image_get_pixbuf (GTK_IMAGE (pixmap));
+	    (pb = g_hash_table_lookup (loaded_icons, file)) != NULL) {
 		if (pb != NULL)
 			g_object_ref (G_OBJECT (pb));
 	}
@@ -832,11 +831,9 @@ load_icons_handler_again:
 		g_hash_table_replace (loaded_icons,
 				      g_strdup (file),
 				      g_object_ref (G_OBJECT (pb)));
-		g_signal_connect_data (G_OBJECT (pb), "destroy",
-				       G_CALLBACK (remove_pixmap_from_loaded),
-				       g_strdup (file),
-				       (GClosureNotify) g_free,
-				       0 /* connect_flags */);
+		g_object_weak_ref (G_OBJECT (pb),
+				   (GWeakNotify) &remove_pixmap_from_loaded,
+				   g_strdup (file));
 	}
 
 	if (pb == NULL) {

@@ -1,5 +1,13 @@
 2002-02-16  Seth Nickell  <snickell@stanford.edu>
 
+	* menu.c: (remove_pixmap_from_loaded), (load_icons_handler):
+
+	Use weak refs rather than destroy signal, so we can
+	use the pixbufs directly rather than needing a
+	GtkWidget.
+
+2002-02-16  Seth Nickell  <snickell@stanford.edu>
+
 	* menu.c: (load_icons_handler), (create_kde_menu):
 
 	Only cache the pixbufs as directly loaded from the icon
