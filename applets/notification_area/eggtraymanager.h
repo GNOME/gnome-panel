@@ -75,17 +75,11 @@ struct _EggTrayManagerClass
 };
 
 GType           egg_tray_manager_get_type        (void);
-#if EGG_TRAY_ENABLE_MULTIHEAD
+
 gboolean        egg_tray_manager_check_running   (GdkScreen           *screen);
-#else
-gboolean        egg_tray_manager_check_running_default_screen (void);
-#endif
 EggTrayManager *egg_tray_manager_new             (void);
-#if EGG_TRAY_ENABLE_MULTIHEAD
-gboolean        egg_tray_manager_manage_screen      (EggTrayManager      *manager,
-						     GdkScreen           *screen);
-#endif
-gboolean        egg_tray_manager_manage             (EggTrayManager      *manager);
+gboolean        egg_tray_manager_manage_screen   (EggTrayManager      *manager,
+						  GdkScreen           *screen);
 char           *egg_tray_manager_get_child_title (EggTrayManager      *manager,
 						  EggTrayManagerChild *child);
 
