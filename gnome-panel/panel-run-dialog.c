@@ -464,7 +464,7 @@ panel_run_dialog_append_file_utf8 (PanelRunDialog *dialog,
 	char       *quoted, *temp;
 	
 	/* Don't allow filenames beginning with '-' */
-	if (!file || file[0] == '-')
+	if (!file || !file[0] || file[0] == '-')
 		return;
 	
 	quoted = quote_string (file);
@@ -1372,7 +1372,7 @@ entry_drag_data_received (GtkEditable      *entry,
 	}
 
 	for (i = 0; uris [i]; i++) {
-		if (!uris [i] || !uris [i])
+		if (!uris [i] || !uris [i][0])
 			continue;
 		
 		file = gnome_vfs_get_local_path_from_uri (uris [i]);
