@@ -2365,11 +2365,11 @@ create_debian_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake)
 {
 	if (!fake || menu) {
 		menu = create_menu_at (menu, DEBIAN_MENUDIR, FALSE,
-				       _("Debian menus"), NULL,
+				       _("Debian menus"), "debian.png",
 				       fake_submenus, FALSE);
 	} else {
-		menu = create_fake_menu_at (DEBIAN_MENUDIR, FALSE,
-					    _("Debian menus"), NULL);
+		menu = create_fake_menu_at (DEBIAN_MENUDIR, NULL,
+					    _("Debian menus"), "debian.png");
 	}
 
 	return menu;
@@ -3671,8 +3671,9 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 	if (flags & MAIN_MENU_DEBIAN_SUB) {
 		menu = create_debian_menu(NULL,fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem_with_size (menuitem, 0, _("Debian menus"),
-					  size);
+		setup_menuitem_try_pixmap (menuitem,
+					   "debian.png",
+					   _("Debian menus"), size);
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		if(menu) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
