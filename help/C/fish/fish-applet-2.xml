@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.5.17">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "May 2002">
+  <!ENTITY applet "Fish">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+-->
+
+<article id="index" lang="en">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>&applet; Applet Manual V&manrevision;</title> 
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address> 
+		  </affiliation> 
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Fish Applet Manual</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> This manual describes version &appletversion; of &applet;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Feedback</title> 
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this
+		  manual, follow the directions in the 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Fish</primary> 
+  </indexterm> 
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<sect1 id="fish-introduction">
+<title>Introduction</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"> 
+		<title>&applet; Applet</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Shows the Fish applet.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+<para>The <application>&applet;</application> applet displays an animated image in a panel. To add <application>&applet;</application> to a panel, right-click on the panel to open the panel popup menu, then choose  <menuchoice>
+<guimenu>Add to Panel </guimenu>
+<guisubmenu> Amusements </guisubmenu>
+<guimenuitem> Fish</guimenuitem>
+</menuchoice>.</para>
+</sect1>
+<sect1 id="fish-usage">
+<title>Usage</title>
+<para>Click on the applet to display the <guilabel>Wanda the Fish</guilabel> dialog. The dialog typically displays a fortune cookie. You can configure the applet to specify the command to run when you click on the applet. See <xref linkend="fish-settings"/> for more information.</para>
+</sect1>
+<!-- ============= Settings  ================================ -->
+<sect1 id="fish-settings">
+<title>Settings</title>
+<para>To configure <application>&applet;</application>, right-click on the <application>
+&applet;</application> applet, then choose <guimenu>Preferences</guimenu> from the applet popup menu. </para>
+<variablelist>
+<varlistentry>
+<term><guilabel>Name of GNOME fish</guilabel> </term>
+<listitem>
+<para>Use this text box to specify the name of the fish.</para>
+<para>Default: Wanda</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Animation filename</guilabel> </term>
+<listitem>
+<para>Use this field to select the image to display in the applet. You can select an image that is supplied with the applet or a personal image.</para>
+<para>Default: <filename>fish/fishanim.png</filename></para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Command to execute when fish is clicked</guilabel> </term>
+<listitem>
+<para>By default, <application>&applet;</application> runs the fortune command when you click on the applet. Use this text box to specify an alternative command to run. </para>
+<para>Default: fortune</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Frames in animation</guilabel> </term>
+<listitem>
+<para>Use this spin box to specify the number of frames in the animation. </para>
+<para>Default: 3</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Pause per frame</guilabel> </term>
+<listitem>
+<para>Use this spin box to specify the pause in seconds between each frame in the animation.</para>
+<para>Default: 1.00</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Rotate on vertical panels</guilabel> </term>
+<listitem>
+<para>Select this option to rotate the applet image when you add the applet to a vertical panel.</para>
+<para>Default: selected</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article> 

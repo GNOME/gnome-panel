@@ -1,10 +1,10 @@
 figs = \
-	figures/fish_applet.png			\
-	figures/fish_settings.png
-docname = fish_applet
+	figures/fish_applet.png
+
+docname = fish-applet-2
 lang = C
-omffile = fish_applet-C.omf
-sgml_ents = fish.sgml
-include $(top_srcdir)/sgmldocs.make
+omffile = fish-applet-2-C.omf
+entities = legal.xml
+include $(top_srcdir)/xmldocs.make
 dist-hook: app-dist-hook
 
