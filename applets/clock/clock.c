@@ -55,6 +55,8 @@
 
 #define N_GCONF_PREFS 7
 
+#define NEVER_SENSITIVE "never_sensitive"
+
 static const char* KEY_HOUR_FORMAT   = "hour_format";
 static const char* KEY_SHOW_SECONDS  = "show_seconds";
 static const char* KEY_SHOW_DATE     = "show_date";
@@ -1120,10 +1122,36 @@ fill_clock_applet (PanelApplet *applet)
 }
 
 static void
+setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label, const char *key)
+{
+	char *fullkey;
+	GConfClient *client;
+
+	client = gconf_client_get_default ();
+
+	fullkey = panel_applet_gconf_get_full_key
+		(PANEL_APPLET (clock->applet), key);
+
+	if ( ! gconf_client_key_is_writable (client, fullkey, NULL)) {
+		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (1));
+		gtk_widget_set_sensitive (w, FALSE);
+		if (label != NULL) {
+			g_object_set_data (G_OBJECT (label), NEVER_SENSITIVE,
+					   GINT_TO_POINTER (1));
+			gtk_widget_set_sensitive (label, FALSE);
+		}
+	}
+
+	g_free (fullkey);
+}
+
+static void
 set_data_sensitive_cb (GtkWidget *w,
 		      GtkWidget *wid)
 {
-	gtk_widget_set_sensitive (wid, TRUE);
+	if ( ! g_object_get_data (G_OBJECT (wid), NEVER_SENSITIVE))
+		gtk_widget_set_sensitive (wid, TRUE);
 }
 
 static void
@@ -1452,6 +1480,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
 	g_signal_connect (G_OBJECT (cd->props), "response",
 			  G_CALLBACK (properties_response_cb), cd);
+
+	/* Now set up the sensitivity based on gconf key writability */
+	setup_writability_sensitivity (cd, option_menu, label, KEY_HOUR_FORMAT);
+	setup_writability_sensitivity (cd, option_menu, label, KEY_UNIX_TIME);
+	setup_writability_sensitivity (cd, option_menu, label, KEY_INTERNET_TIME);
+	setup_writability_sensitivity (cd, showseconds, NULL, KEY_SHOW_SECONDS);
+	setup_writability_sensitivity (cd, showdate, NULL, KEY_SHOW_DATE);
+	setup_writability_sensitivity (cd, use_gmt_time, NULL, KEY_GMT_TIME);
 
 	/* sets up atk relation  */
 	list = g_slist_append (NULL, twelvehour);
