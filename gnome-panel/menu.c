@@ -293,7 +293,6 @@ about_cb (GtkWidget *widget, gpointer data)
 		return;
 	}
 
-#ifdef ENABLE_NLS
 	{
 		int i=0;
 		while (authors[i] != NULL) {
@@ -301,7 +300,6 @@ about_cb (GtkWidget *widget, gpointer data)
 			i++;
 		}
 	}
-#endif
 
 	logo = NULL;
 	logo_file = panel_pixmap_discovery ("gnome-gegl2.png",
