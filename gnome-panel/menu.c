@@ -3414,7 +3414,7 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_SCREENSHOT, _("Screenshot..."));
+			PANEL_STOCK_SCREENSHOT, _("Take Screenshot..."));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Take a screenshot of your desktop"),
