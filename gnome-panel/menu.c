@@ -3979,7 +3979,7 @@ menu_button_menu_popup (Menu    *menu,
 			NULL,
 			NULL, 
 			(GtkMenuPositionFunc) panel_position_applet_menu,
-			menu->info,
+			menu->info->widget,
 			button,
 			activate_time);
 }
