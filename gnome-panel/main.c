@@ -346,6 +346,11 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 		else
 			param = params;
 
+		if(!cfgpath || !*cfgpath)
+			/*FIXME: fix this minor leak*/
+			cfgpath = g_copy_strings(old_panel_cfg_path,
+						 "Applet_Dummy/",NULL);
+
 		/*VERY UGLY compatibility hack for the old launcher applet*/
 		if(strcmp(path,"#panel.application.launcher")==0) {
 			gchar *p;

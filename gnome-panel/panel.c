@@ -872,7 +872,7 @@ applet_request_id (const char *path, const char *param,
 		*cfgpath = NULL;
 		return -1;
 	}
-	*cfgpath = NULL;
+	*cfgpath = g_copy_strings(old_panel_cfg_path,"Applet_Dummy/",NULL);
 	*globcfgpath = g_strdup(old_panel_cfg_path);
 
 	info = get_applet_info(applet_count-1);

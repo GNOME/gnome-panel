@@ -1147,7 +1147,7 @@ move_horiz(PanelWidget *panel, gint src_x, gint dest_x, gint step)
 {
 	gint x, y;
 
-	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
+	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (!pw_disable_animations && step != 0) {
 		if (src_x < dest_x) {
@@ -1170,7 +1170,7 @@ move_vert(PanelWidget *panel, gint src_y, gint dest_y, gint step)
 {
 	gint x, y;
 
-	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
+	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (!pw_disable_animations && step != 0) {
 		if (src_y < dest_y) {
@@ -1247,11 +1247,14 @@ panel_widget_pop_down(gpointer data)
 
 	if((panel->state != PANEL_SHOWN) ||
 	   (panel->snapped == PANEL_DRAWER) ||
-	   (panel->snapped == PANEL_FREE))
+	   (panel->snapped == PANEL_FREE)) {
+		panel->leave_notify_timer_tag = 0;
 		return FALSE;
+	}
 	/*we are moving, or have drawers open, so wait with the
 	  pop_down*/
-	if(panel->currently_dragged_applet || panel->drawers_open>0)
+	if(panel->currently_dragged_applet ||
+	   panel->drawers_open>0)
 		return TRUE;
 
 	gtk_signal_emit(GTK_OBJECT(panel),
@@ -1565,9 +1568,8 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 	/* check if there's already a timeout set, and delete it if 
 	 * there was */
-	if (panel->leave_notify_timer_tag != 0) {
+	if (panel->leave_notify_timer_tag != 0)
 		gtk_timeout_remove (panel->leave_notify_timer_tag);
-	}
 	
 	/* set up our delay for popup. */
 	panel->leave_notify_timer_tag =

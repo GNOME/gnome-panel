@@ -1,3 +1,12 @@
+Sun May 24 01:19:50 1998  George Lebl  <jirka@5z.com>
+
+	* main.c, panel.c: if there is no config file, pass a dummy
+	  path to the applet so that the applets can use it just as if
+	  it was real
+
+	* panel-widget.c: fix a problem with hiding and unhiding,
+	  autohidden panels, and another minor fix
+
 Sun May 24 00:20:56 1998  George Lebl  <jirka@5z.com>
 
 	* main.c,menu.[ch],drawer.[ch]: clean up the ORIENT_ mess and
