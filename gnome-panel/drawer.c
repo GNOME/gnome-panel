@@ -309,6 +309,20 @@ drag_data_get_cb (GtkWidget          *widget,
 	g_free (foo);
 }
 
+static void
+set_tooltip_and_name (Drawer     *drawer,
+		      const char *tooltip)
+{
+	g_return_if_fail (drawer != NULL);
+	g_return_if_fail (tooltip != NULL);
+
+	if (tooltip && !tooltip [0])
+		tooltip = NULL;
+
+	panel_toplevel_set_name (drawer->toplevel, tooltip ? tooltip : _("Drawer"));
+	gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
+}
+
 static Drawer *
 create_drawer_applet (PanelToplevel    *toplevel,
 		      PanelToplevel    *parent_toplevel,
@@ -321,6 +335,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	AtkObject *atk_obj;
 	
 	drawer = g_new0 (Drawer, 1);
+
+	drawer->toplevel = toplevel;
 
 	if (!use_custom_icon || !custom_icon || !custom_icon [0]) {
 		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER,
@@ -339,13 +355,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	atk_obj = gtk_widget_get_accessible (drawer->button);
 	atk_object_set_name (atk_obj, _("Drawer")); 
 
-	if (tooltip && tooltip [0]) {
-		panel_toplevel_set_name (toplevel, tooltip);
-		gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
-	} else {
-		panel_toplevel_set_name (toplevel, _("Drawer"));
-	}
-	
+	set_tooltip_and_name (drawer, tooltip);
+
 	gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0); 
 
 	g_signal_connect (drawer->button, "drag_data_get",
@@ -369,8 +380,6 @@ create_drawer_applet (PanelToplevel    *toplevel,
 			  G_CALLBACK (toplevel_destroyed), drawer);
 
 	gtk_widget_show (drawer->button);
-
-	drawer->toplevel = toplevel;
 
 	g_signal_connect (drawer->toplevel, "key_press_event",
 			  G_CALLBACK (key_press_drawer_widget), drawer);
@@ -498,10 +507,8 @@ panel_drawer_tooltip_changed (GConfClient *client,
 
 	tooltip = gconf_value_get_string (entry->value);
 
-	if (tooltip && tooltip [0]) {
-		panel_toplevel_set_name (drawer->toplevel, tooltip);
-		gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
-	}
+	set_tooltip_and_name (drawer,
+			      gconf_value_get_string (entry->value));
 }
 
 static void

@@ -1,5 +1,15 @@
 2004-05-13  Mark McLoughlin  <mark@skynet.ie>
 
+	Based on a patch from Vinay M R <vinay.mandyakoppal@wipro.com>
+	in bug #141796.
+
+	* drawer.c:
+	(set_tooltip_and_name): split out tooltip setting to here
+	and unset the tooltip correctly if empty.
+	(create_drawer_applet),	(panel_drawer_tooltip_changed): upd.
+
+2004-05-13  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-screenshot.c: (update_window_icon): remove
 	assertion. Fixes bug #140921.
 
