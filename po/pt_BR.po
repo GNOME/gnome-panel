@@ -7,18 +7,19 @@
 # Gustavo Maciel Dias Vieira <gdvieira@zaz.com.br>, 2000-2001.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002.
 # Evandro Fernandes Giovanini <evandrofg@ig.com.br>, 2002, 2003.
+# Gustavo Noronha Silva <kov@debian.org>, 2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.4.0\n"
-"POT-Creation-Date: 2004-03-09 18:46+0000\n"
-"PO-Revision-Date: 2003-12-19 01:17-0200\n"
-"Last-Translator: Gustavo Noronha Silva <kov@debian.org>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-10 15:24-0500\n"
+"PO-Revision-Date: 2004-03-10 15:23-0500\n"
+"Last-Translator: Raphael Higino <raphaelh@uai.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -138,15 +139,15 @@ msgstr "%A %d de %B"
 
 #: applets/clock/clock.c:818
 msgid "Tasks"
-msgstr ""
+msgstr "Tarefas"
 
 #: applets/clock/clock.c:950
 msgid "All Day"
-msgstr ""
+msgstr "O Dia Todo"
 
 #: applets/clock/clock.c:984
 msgid "Appointments"
-msgstr ""
+msgstr "Compromissos"
 
 #: applets/clock/clock.c:1205
 msgid "Calendar"
@@ -182,9 +183,8 @@ msgstr ""
 "Talvez não haja um instalado?"
 
 #: applets/clock/clock.c:2047
-#, fuzzy
 msgid "Custom format"
-msgstr "Ícone Customizado"
+msgstr "Formato personalizado"
 
 #: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
@@ -221,9 +221,8 @@ msgid "Internet time"
 msgstr "Hora da Internet"
 
 #: applets/clock/clock.c:2260
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Formato da Hora"
+msgstr "_Formato personalizado:"
 
 #: applets/clock/clock.c:2279
 msgid "Show _seconds"
@@ -249,7 +248,8 @@ msgstr ""
 "Gustavo Maciel Dias Vieira <gdvieira@zaz.com.br>\n"
 "Ricardo Soares Guimarães <ricardo@conectiva.com.br>\n"
 "Rodrigo Stulzer Lopes <rodrigo@conectiva.com.br>\n"
-"Sandro Nunes Henrique <sandro@conectiva.com.br>"
+"Sandro Nunes Henrique <sandro@conectiva.com.br>\n"
+"Raphael Higino <raphaelh@uai.com.br>"
 
 #: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
@@ -265,7 +265,7 @@ msgstr "24 horas"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Personalizar o formato do relógio"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -317,9 +317,12 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Essa chave especifica o formato usado pelo mini-aplicativo do relógio quando "
+"a chave de formato está configurada como \"personalizado\". Você pode usar "
+"especificadores de conversão entendidos por strftime() para obter um formato "
+"específico."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -331,12 +334,15 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Essa chave especifica o formato de hora usado pelo mini-aplicativo de "
-"relógio. Os valores possíveis são \"12-hour\", \"24-hour\", \"internet\" e "
-"\"unix\". Se definido para \"internet\", o relógio mostrará a hora da "
-"internet. O sistema de hora da internet divide o dia em 1000 \".batidas\". "
-"Não há fusos horários nesse sistema, então a hora é a mesma em todo o mundo. "
-"Se definido para \"unix\", o relógio mostrará o tempo em segundos desde a "
-"Epoch, ou seja, 01 de janeiro de 1970."
+"relógio. Os valores possíveis são \"12 Horas\", \"24 Horas\", \"Hora da "
+"Internet\", \"Hora Unix\" e \"Personalizado\". Se definido para \"Hora da "
+"Internet\", o relógio mostrará a hora da internet. O sistema de hora da "
+"internet divide o dia em 1000 \".batidas\" (.beats). Não há fusos horários "
+"nesse sistema, então a hora é a mesma em todo o mundo. Se definido para "
+"\"Hora Unix\", o relógio mostrará o tempo em segundos desde a Epoch, ou "
+"seja, 01 de janeiro de 1970. Se definido para \"Personalizado\", o relógio "
+"mostrará a hora de acordo com o formato especificado na chave Formato "
+"personalizado."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -1787,18 +1793,16 @@ msgid "Confirm panel removal"
 msgstr "Confirmar remoção de painel"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Fechar Forçado"
+msgstr "Desabilitar Fechar Forçado"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Travar tela"
+msgstr "Desabilitar Travar Tela"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Desabilitar Sair"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1862,18 +1866,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um usuário force a finalização de "
+"um aplicativo, removendo o acesso ao botão Forçar Sair"
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um usuário trave sua tela, "
+"removendo o acesso à opção Travar Tela do menu."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Se verdadeiro, o painel não permitirá que um usuário saia, removendo o "
+"acesso à opção Sair do menu."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -2371,9 +2381,8 @@ msgid "_Force quit"
 msgstr "_Fechar forçado"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Espera para esconder"
+msgstr "Esconder o Painel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2920,346 +2929,3 @@ msgstr "XX Grande"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Pequeno"
-
-#, fuzzy
-#~ msgid "Log Out %s"
-#~ msgstr "Sair"
-
-#, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Sair desta sessão para entrar como um usuário diferente ou para desligar "
-#~ "o seu computador"
-
-#, fuzzy
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "Sair do ambiente de trabalho GNOME"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Procurar"
-
-#~ msgid "Has Arrow"
-#~ msgstr "Tem Seta"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Se uma seta indicadora deve ser ou não desenhada"
-
-#~ msgid "Drag and drop Highlight"
-#~ msgstr "Realçar Arrastar & Soltar"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "Se deve ou não realçar o ícone quando arrastado"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientação"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "A orientação do ButtonWidget"
-
-#~ msgid "Icon Name"
-#~ msgstr "Nome do Ícone"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "O ícone desejado para o ButtonWidget"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "ID do Ícone do Stock"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "O ícone do stock desejado para o ButtonWidget"
-
-#~ msgid "Action Type"
-#~ msgstr "Tipo de Ação"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "O tipo de ação que esse botão implementa"
-
-#~ msgid "Drag and drop enabled"
-#~ msgstr "Arrastar & Soltar ativado"
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Se o arrastar e soltar deve estar ativado no widget"
-
-#~ msgid "Edges"
-#~ msgstr "Cantos"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "Que cantos desenhar"
-
-#~ msgid "Menu Path"
-#~ msgstr "Caminho do Menu"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "O caminho do qual construir o menu"
-
-#~ msgid "Custom Icon"
-#~ msgstr "Ícone Customizado"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "O ícone customizado para o menu"
-
-#~ msgid "Tooltip"
-#~ msgstr "Dica de ferramenta"
-
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "Dica de ferramenta exibida para o menu"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Usar Caminho do Menu"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Usar o caminho especificado pela propriedade menu-path"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "Usar Ícone Customizado"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Usar o ícone especificado pela propriedade custom-icon"
-
-#~ msgid "Name"
-#~ msgstr "Nome"
-
-#~ msgid "The name of this panel"
-#~ msgstr "O nome desse painel"
-
-#~ msgid "Expand"
-#~ msgstr "Expandir"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Expandir para tomar toda a altura/largura do monitor"
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "A orientação do painel"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "A altura (ou largura, quando for vertical) do painel"
-
-#~ msgid "X position"
-#~ msgstr "Posição X:"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "A posição X do painel"
-
-#~ msgid "X centered"
-#~ msgstr "X centralizado"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "A coordenada x é relativa ao centro da tela"
-
-#~ msgid "Y position"
-#~ msgstr "Posição Y:"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "A posição Y do painel"
-
-#~ msgid "Y centered"
-#~ msgstr "Y centralizado"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "A coordenada y é relativa ao centro da tela"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "Monitor Xinerama"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "O monitor (em termos do Xinerama) em que o painel está"
-
-#~ msgid "Auto hide"
-#~ msgstr "Esconder automaticamente"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "Esconder automaticamente o painel quando o mouse sair dele"
-
-#~ msgid "Hide delay"
-#~ msgstr "Espera para esconder"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr ""
-#~ "O número de mili-segundos a esperar antes de esconder automaticamente"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "Espera para mostrar"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr ""
-#~ "O número de mili-segundos a esperar antes de automaticamente mostrar"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "Tamanho do painel escondido"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr ""
-#~ "O número de pixels visíveis quando o painel foi automaticamente escondido"
-
-#~ msgid "Animate"
-#~ msgstr "Animação"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Ativar exibir/esconder animações"
-
-#~ msgid "Animation Speed"
-#~ msgstr "Velocidade de animação"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr "A velocidade de animação para exibir/esconder o painel"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "Botões ativados"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Ativar botão mostrar/esconder"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "Setas ativadas"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Ativar setas nos botões mostrar/esconder"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Cor de fundo"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Opacidade da cor de fundo"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Cor de fundo"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Cor de fundo"
-
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "Cor de fundo"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "Estica_r"
-
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Tamanho do painel"
-
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Fundo"
-
-#~ msgid ""
-#~ "If true, the panel will be locked in place, properties won't be "
-#~ "changable. The user won't be able to add, remove or even move applets. "
-#~ "Also properties of all objects on this panel will be locked down as well. "
-#~ "Properties of external applets may however have to be locked down "
-#~ "separately. The panel must be restarted for this to take effect."
-#~ msgstr ""
-#~ "Se verdadeiro, o painel será trancado, as propriedades não serão "
-#~ "modificáveis. O usuário não poderá adicionar, remover ou mesmo mover mini-"
-#~ "aplicativos. Além disso as propriedades de todos os objetos nesse painel "
-#~ "serão trancadas também. As propriedades de mini-aplicativos externos "
-#~ "podem, no entanto, ter que ser trancadas separadamente. O painel deve ser "
-#~ "reiniciado para que isso tenha efeito."
-
-#~ msgid "Lock down the panel"
-#~ msgstr "Travar o painel"
-
-#~ msgid "%s - command not found"
-#~ msgstr "%s - comando não encontrado"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "Não foi possível executar %s"
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr ""
-#~ "Se verdadeiro, mostrar hora em segundos desde a Época, ou seja, 01/01/1970"
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Esta chave especifica o formato da hora usado pelo relógio do painel. "
-#~ "Valores possíveis são 12 e 24."
-
-#~ msgid "Window Menu"
-#~ msgstr "Menu de Janelas"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Imprimir tela capturada"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Visualizar impressão da tela capturada"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Imprimir tela capturada..."
-
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "O painel encontrou um problema ao carregar \"%s\"\n"
-#~ "Detalhes: %s%s"
-
-#~ msgid "Open Recent"
-#~ msgstr "Abrir Recentes"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr ""
-#~ "Se verdadeiro, mostrar a hora da Internet, que é a mesma em todo o mundo."
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s o Peixe GNOME"
-
-#~ msgid "Expander Size"
-#~ msgstr "Tamanho do Expansor"
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Tamanho da seta do expansor"
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "Ajuda sobre a _Aplicação %s"
-
-#~ msgid "Help on %s"
-#~ msgstr "Ajuda sobre %s"
-
-#~ msgid "Application"
-#~ msgstr "Aplicação"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Nome:</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Orientação:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Tamanho:</b>"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Uma descrição da aplicação atualmente selecionada ou informação do "
-#~ "comando que será executado."
-
-#~ msgid "Application description"
-#~ msgstr "Descrição da aplicação"
-
-#~ msgid "List of known applications"
-#~ msgstr "Lista de Aplicações conhecidas"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Selecionar uma aplicação da lista para executá-la"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr ""
-#~ "Quando isto está selecionado é exibida a lista de aplicações conhecidas."
-
-#~ msgid "Help document not found"
-#~ msgstr "Documento de ajuda não encontrado"
-
-#~ msgid "No document to show"
-#~ msgstr "Nenhum documento para mostrar"
