@@ -27,9 +27,6 @@
 
 #include "mailcheck.h"
 #include "clock.h"
-#include "pager.h"
-#include "showdesktop.h"
-#include "tasklist.h"
 
 static gboolean
 genutil_factory (PanelApplet *applet,
@@ -41,18 +38,9 @@ genutil_factory (PanelApplet *applet,
 	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
 		retval = fill_clock_applet(applet);
 	
-	if (!strcmp (iid, "OAFIID:GNOME_PagerApplet"))
-		retval = fill_pager_applet(applet);
-
-	if (!strcmp (iid, "OAFIID:GNOME_TasklistApplet"))
-		retval = fill_tasklist_applet(applet);
-		
 	if (!strcmp (iid, "OAFIID:GNOME_MailcheckApplet"))
 		retval = fill_mailcheck_applet(applet);
 
-	if (!strcmp (iid, "OAFIID:GNOME_ShowDesktopApplet"))
-		retval = fill_show_desktop_applet(applet);
-        
 	return retval;
 }
 
