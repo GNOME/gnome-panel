@@ -965,6 +965,9 @@ applet_change_orient (PanelApplet       *applet,
 		      PanelAppletOrient  orient,
 		      Fish              *fish)
 {
+	if (fish->orient == orient)
+		return;
+
 	fish->orient = orient;
 	
 	load_image_file (fish);
@@ -979,6 +982,9 @@ applet_change_pixel_size (PanelApplet *applet,
 			  gint         size,
 			  Fish        *fish)
 {
+	if (fish->size == size)
+		return;
+
 	fish->size = size;
 	
 	load_image_file (fish);
@@ -1014,8 +1020,8 @@ fish_applet_fill (PanelApplet *applet)
 	fish = g_new0 (Fish, 1);
 
 	fish->applet = GTK_WIDGET (applet);
-	fish->size   = GNOME_Vertigo_PANEL_MEDIUM;
-	fish->orient = PANEL_APPLET_ORIENT_UP;
+	fish->size   = panel_applet_get_size (applet);
+	fish->orient = panel_applet_get_orient (applet);
 
 	panel_applet_add_preferences (applet, "/schemas/apps/fish-applet/prefs", NULL);
 
