@@ -3,9 +3,9 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f
 
-#enable swallows for testing only, not for release!
-#(it's after 0.20 so I guess swallows can be enabled,
-#maybe someone will fix it up)
+# enable swallows for testing only, not for release!
+# (it's after 0.20 so I guess swallows can be enabled,
+# maybe someone will fix it up)
 CFLAGS += -D_SWALLOW_
 CFLAGS += -D_DRAWER_
 
@@ -122,4 +122,21 @@ panelrc: panelrc.in Makefile
 
 MOSTLYCLEANFILES = panelrc
 
-EXTRA_DIST = panelrc.in panel.in gnome-panel.idl
+EXTRA_DIST = panelrc.in panel.in gnome-panel.idl appletsConf.sh.in
+
+## Put `exec' in the name because this should be installed by
+## `install-exec', not `install-data'.
+confexecdir = $(libdir)
+confexec_DATA = appletsConf.sh
+
+#
+# Create the appletsConf.sh file from the .sh.in file
+#
+appletsConf.sh: appletsConf.sh.in Makefile
+	sed -e 's,\@GNOME_LIBDIR\@,$(GNOME_LIBDIR),g' \
+	    -e 's,\@GNOMEUI_LIBS\@,$(GNOMEUI_LIBS),g' \
+	    -e 's,\@GNOME_INCLUDEDIR\@,$(GNOME_INCLUDEDIR),g' \
+	    -e 's,\@MICO_LIBS\@,$(MICO_LIBS),g' \
+	    -e 's,\@INTLLIBS\@,$(INTLLIBS),g' \
+	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
+	  && mv appletsConf.tmp appletsConf.sh
