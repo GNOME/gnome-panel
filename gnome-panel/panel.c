@@ -347,7 +347,8 @@ panel_session_die (GnomeClient *client,
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
-	gtk_exit (0);
+	gtk_main_quit ();
+	return TRUE;
 }
 
 /*save ourselves*/
@@ -376,6 +377,7 @@ panel_really_logout(GtkWidget *w, gint button, gpointer data)
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 					    GNOME_INTERACT_NONE, 0, NULL);
 			panel_session_die (client, NULL);
+			gtk_exit (0);
 		} else {
 			/* We request a completely interactive, full,
 			   slow shutdown.  */

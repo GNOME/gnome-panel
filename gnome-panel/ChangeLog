@@ -1,3 +1,13 @@
+1998-06-06  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
+
+	* panel.c (panel_session_die): Replaced 'gtk_exit' with
+ 	'gtk_main_quit' call.
+
+	* main.c (main): Changed to use changed session management stuff.
+
+	* applet-widget.c (applet_widget_init): Added call to
+ 	'gnome_client_disable_master_connection'.
+
 Fri Jun 05 02:11:11 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: the pixmap resizing now doesn't read the file

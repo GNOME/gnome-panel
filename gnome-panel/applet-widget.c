@@ -320,6 +320,7 @@ applet_widget_init(char *app_id,
 
 	panel_corba_register_arguments();
 
+	gnome_client_disable_master_connection ();
 	ret = gnome_init(app_id,app_parser,argc,argv,flags,arg_index);
 
 	if (!gnome_panel_applet_init_corba())

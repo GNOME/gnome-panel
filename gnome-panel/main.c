@@ -1227,15 +1227,6 @@ main(int argc, char **argv)
 	sa.sa_flags   = 0;
 	sigaction (SIGCHLD, &sa, NULL);
 
-	client = gnome_client_new_default ();
-
-	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-			    GTK_SIGNAL_FUNC (panel_session_save), argv[0]);
-	gtk_signal_connect (GTK_OBJECT (client), "connect",
-			    GTK_SIGNAL_FUNC (panel_connect_client), NULL);
-	gtk_signal_connect (GTK_OBJECT (client), "die",
-			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
-
 	panel_corba_register_arguments ();
 
 	gnome_init("panel", &parser, argc, argv, 0, NULL);
@@ -1244,6 +1235,28 @@ main(int argc, char **argv)
 
 	if (just_exit)
 		return 0;
+
+	client= gnome_master_client ();
+
+	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
+			    GTK_SIGNAL_FUNC (panel_session_save), argv[0]);
+	gtk_signal_connect (GTK_OBJECT (client), "die",
+			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
+
+	if (GNOME_CLIENT_CONNECTED (client))
+	  {
+	    gchar *session_id;
+
+	    session_id= gnome_client_get_id (gnome_cloned_client ());
+
+	    if(session_id) {
+	      g_free(old_panel_cfg_path);
+	      old_panel_cfg_path = g_copy_strings("/panel-Session-",
+						  session_id,"/",NULL);
+	    }
+	    puts("connected");
+	    puts(old_panel_cfg_path);
+	  }
 
 	/* Tell session manager how to run us.  */
 	gnome_client_set_clone_command (client, 1, argv);
