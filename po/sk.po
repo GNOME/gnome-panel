@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME gnome-panel.HEAD\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-19 16:35+0100\n"
 "PO-Revision-Date: 2003-09-09 11:19+0200\n"
 "Last-Translator: Stanislav Visnovsky <visnov@suse.cz>\n"
 "Language-Team: Slovak <sk-i18n@linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "<bobo@bobo.bspc.sk>\n"
 "X-Generator: KBabel 1.2\n"
 
@@ -968,7 +968,7 @@ msgstr "_Odomknúť"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1093
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "Nepodarilo sa nájsť prázdne miesto"
 
@@ -1013,7 +1013,7 @@ msgstr "CDE menu"
 msgid "Drawer"
 msgstr "Vykresľovač"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Vlastnosti"
@@ -1172,7 +1172,7 @@ msgstr "Zachytiť okno namiesto celej obrazovky"
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Zachytiť obrazovku po danej dobe [v sekundách]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1193
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1180,7 +1180,7 @@ msgstr ""
 "Súbor Glade pre program na zachytenie obrazovky chýba.\n"
 "Prosím, skontrolujte inštaláciu gnome-panel."
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1209
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nepodarilo sa zachytiť obsah aktuálnej plochy."
 
@@ -1220,58 +1220,58 @@ msgstr ""
 msgid "Web directory"
 msgstr "Webový priečinok"
 
-#: gnome-panel/launcher.c:102
+#: gnome-panel/launcher.c:139
 msgid "Cannot save launcher to disk"
 msgstr "Nepodarilo sa uložiť spúšťač na disk"
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
-#: gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
 msgstr "Nie je možné spustiť ikonu"
 
-#: gnome-panel/launcher.c:131
+#: gnome-panel/launcher.c:170
 msgid "This launch icon does not specify a url to show."
 msgstr "Táto spúštacia ikona neuvádza, ktoré URL zobraziť."
 
-#: gnome-panel/launcher.c:139
+#: gnome-panel/launcher.c:181
 #, c-format
 msgid "Cannot show %s"
 msgstr "Nie je možné zobraziť %s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:456
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Pre spúšťač nie je v súbore desktop uvedené URI\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:470
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nepodarilo sa otvoriť súbor desktop %s pre spúšťač %s%s\n"
 
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Vlastnosti spúštača"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:864
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Kľúč %s nie je nastavený, nie je možné načítať spúšťač\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
+#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Nie je možné vytvoriť spúšťač"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Musíte zadať meno."
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Musíte zadať platné URL alebo príkaz."
 
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Vytvoriť spúšťač"
 
@@ -2065,11 +2065,6 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Chyba pri čítaní pravdivostnej hodnoty z GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:2131
-#, c-format
-msgid "Error reading GConf list value '%s': %s"
-msgstr "Chyba pri čítaní zoznamu z GConf '%s': %s"
-
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>Nepriehľadný</small>"
@@ -2854,6 +2849,9 @@ msgstr "Extra extra veľký"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra extra malý"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "Chyba pri čítaní zoznamu z GConf '%s': %s"
 
 #, fuzzy
 #~ msgid "Log Out %s"

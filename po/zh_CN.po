@@ -11,14 +11,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-19 16:35+0100\n"
 "PO-Revision-Date: 2004-03-12 23:25+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -1039,7 +1039,7 @@ msgid "???"
 msgstr "???"
 
 # panel/menu.c:2069
-#: gnome-panel/applet.c:1093
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
@@ -1094,7 +1094,7 @@ msgid "Drawer"
 msgstr "抽屉"
 
 # applets/fvwm-pager/fvwm-pager.c:412
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "属性(_P)"
@@ -1262,7 +1262,7 @@ msgstr "抓取一个窗口而不是整个屏幕的抓图"
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "在指定的延迟之后抓取抓图[以秒为单位]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1193
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1270,7 +1270,7 @@ msgstr ""
 "屏幕抓图程序需要的 Glade 文件可能丢失。\n"
 "请检查您的 gnome-core 的安装"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1209
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "无法抓取当前桌面的抓图。"
 
@@ -1310,62 +1310,62 @@ msgstr "保存屏幕截图的用户目录，以便显示在网页上。"
 msgid "Web directory"
 msgstr "Web 目录"
 
-#: gnome-panel/launcher.c:102
+#: gnome-panel/launcher.c:139
 msgid "Cannot save launcher to disk"
 msgstr "无法将启动器存入磁盘"
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
-#: gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
 msgstr "无法启动图标"
 
 # panel/launcher.c:41
-#: gnome-panel/launcher.c:131
+#: gnome-panel/launcher.c:170
 msgid "This launch icon does not specify a url to show."
 msgstr "该启动图标未指定要显示的 URL。"
 
-#: gnome-panel/launcher.c:139
+#: gnome-panel/launcher.c:181
 #, c-format
 msgid "Cannot show %s"
 msgstr "无法显示 %s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:456
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "没有给出面板启动器的 desktop 文件的 URI\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:470
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "无法打开面板启动器的 desktop 文件 %s%s%s\n"
 
 # panel/launcher.c:276
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "启动器属性"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:864
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "没有设置 GConf 项 %s，无法载入启动器\n"
 
 # panel/launcher.c:386
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
+#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "无法建立启动器"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "您必须指定一个名字。"
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "您必须指定一个合法的 URL 或命令。"
 
 # panel/launcher.c:386
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "创建启动器"
 
@@ -2193,11 +2193,6 @@ msgstr "面板“%s”被设置为显示在当前不可用的屏幕 %d 上。未
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "读入 GConf 布尔值“%s”出错：%s"
 
-#: gnome-panel/panel-profile.c:2131
-#, c-format
-msgid "Error reading GConf list value '%s': %s"
-msgstr "读入 GConf 列表值“%s”出错：%s"
-
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>不透明</small>"
@@ -3007,3 +3002,6 @@ msgstr "极大"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "极小"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "读入 GConf 列表值“%s”出错：%s"

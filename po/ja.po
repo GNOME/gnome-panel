@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-19 16:35+0100\n"
 "PO-Revision-Date: 2004-02-26 23:32+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -987,7 +987,7 @@ msgstr "ロック解除(_L)"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1093
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
@@ -1032,7 +1032,7 @@ msgstr "CDE メニュー"
 msgid "Drawer"
 msgstr "引き出し"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "プロパティ(_P)"
@@ -1193,7 +1193,7 @@ msgstr "画面全体ではなくウインドウの画像を取得する"
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "指定した時間 (秒単位) が経過したらスクリーンショットを撮る"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1193
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1201,7 +1201,7 @@ msgstr ""
 "スクリーンショット・プログラムの Glade ファイルが見つかりません。\n"
 "gnome-panel が正しくインスールされているか確認して下さい。"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1209
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "このデスクトップのスクリーンショットが撮れません。"
 
@@ -1240,58 +1240,58 @@ msgstr ""
 msgid "Web directory"
 msgstr "Web ディレクトリ"
 
-#: gnome-panel/launcher.c:102
+#: gnome-panel/launcher.c:139
 msgid "Cannot save launcher to disk"
 msgstr "ランチャを保存できません"
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
-#: gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
 msgstr "アイコンを起動できません"
 
-#: gnome-panel/launcher.c:131
+#: gnome-panel/launcher.c:170
 msgid "This launch icon does not specify a url to show."
 msgstr "このランチャ・アイコンには表示する URL が指定されていません。"
 
-#: gnome-panel/launcher.c:139
+#: gnome-panel/launcher.c:181
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s を表示できません"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:456
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:470
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) が開けません\n"
 
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "ランチャのプロパティ"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:864
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "キー %s がセットされていないので、ランチャを起動できません\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
+#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "ランチャを生成できません"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "ランチャの名前を指定して下さい。"
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "正しい URL またはコマンドを指定して下さい。"
 
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "ランチャの作成"
 
@@ -2102,11 +2102,6 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf の bool 値 '%s' の読み込みでエラー: %s"
 
-#: gnome-panel/panel-profile.c:2131
-#, c-format
-msgid "Error reading GConf list value '%s': %s"
-msgstr "GConf の list 値 '%s' の読み込みでエラー: %s"
-
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>不透明</small>"
@@ -2893,6 +2888,9 @@ msgstr "とても大きい"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "とても小さい"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "GConf の list 値 '%s' の読み込みでエラー: %s"
 
 #~ msgid "Log Out %s"
 #~ msgstr "%s のログアウト"

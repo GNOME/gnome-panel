@@ -7,7 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-19 16:35+0100\n"
 "PO-Revision-Date: 2004-03-07 10:09+0300\n"
 "Last-Translator: Priit Laes <amd@tt.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -988,7 +989,7 @@ msgstr "Va_basta"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1093
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "Ei leia tühja kohta"
 
@@ -1033,7 +1034,7 @@ msgstr "CDE menüü"
 msgid "Drawer"
 msgstr "Sahtel"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Omadused"
@@ -1203,7 +1204,7 @@ msgstr "Terve ekraani asemel haara ainult ühte akent"
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Tee kuvatõmmis peale määratud viidet [sekundites]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1193
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1211,7 +1212,7 @@ msgstr ""
 "Kuvatõmmise tegemise Glade fail on kadunud.\n"
 "Palun kontrolli oma gnome-panel installi"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1209
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Aktiivse töölaua kuvatõmmise tegemine ei õnnestunud."
 
@@ -1250,59 +1251,59 @@ msgstr ""
 msgid "Web directory"
 msgstr "Veebikataloog"
 
-#: gnome-panel/launcher.c:102
+#: gnome-panel/launcher.c:139
 msgid "Cannot save launcher to disk"
 msgstr "Ei saa käivitajat kettale salvestada"
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
-#: gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
 msgstr "Ei saa ikooni käivitada ikooni"
 
-#: gnome-panel/launcher.c:131
+#: gnome-panel/launcher.c:170
 #, fuzzy
 msgid "This launch icon does not specify a url to show."
 msgstr "See käivitusikoon ei määra, millist url'i näidata"
 
-#: gnome-panel/launcher.c:139
+#: gnome-panel/launcher.c:181
 #, c-format
 msgid "Cannot show %s"
 msgstr "Ei saa näidata %s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:456
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:470
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Ei saa avada töölaua (desktop) faili %s paneeli käivitajale %s%s\n"
 
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Käivitaja häälestus"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:864
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Võti %s on määramata, ei saa käivitajat laadida\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
+#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Ei saa käivitajat luua"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Sa pead nime määrama."
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Sa pead korrektse URLi või käsu määrama."
 
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Loo käivitaja"
 
@@ -2065,11 +2066,6 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Viga Gconf tõeväärtuse '%s' lugemisel: %s"
 
-#: gnome-panel/panel-profile.c:2131
-#, c-format
-msgid "Error reading GConf list value '%s': %s"
-msgstr "Viga GConf nimekirja väärtuse '%s' lugemisel: %s"
-
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>Läbipaistmatu</small>"
@@ -2791,6 +2787,9 @@ msgstr "Ülisuur"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Tilluke"
+
+#~ msgid "Error reading GConf list value '%s': %s"
+#~ msgstr "Viga GConf nimekirja väärtuse '%s' lugemisel: %s"
 
 #, fuzzy
 #~ msgid "Log Out %s"

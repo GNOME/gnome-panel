@@ -7,7 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel-2.0.hi\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-19 16:35+0100\n"
 "PO-Revision-Date: 2004-03-18 17:50+0530\n"
 "Last-Translator:  Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Gnome Hindi Team <indlinux-hindi-gnome@lists.sourceforge."
@@ -948,7 +949,7 @@ msgstr "ताला खोलें (_l)"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1093
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "खाली स्थान ढूंढ नहीं सका"
 
@@ -993,7 +994,7 @@ msgstr "सीडीई (CDE) मेनू "
 msgid "Drawer"
 msgstr "ड्राअर"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "विशेषताएँ (_P)"
@@ -1153,7 +1154,7 @@ msgstr "समस्त स्क्रीन के बदले खिड़�
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "निर्दिष्ट देरी (सेकण्ड में) के बाद स्क्रीनशॉट लें"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1193
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1161,7 +1162,7 @@ msgstr ""
 "स्क्रीनशॉट प्रोग्राम के लिए ग्लेड फाइल नहीं है.\n"
 "कृपया अपने गनोम पेनल के इंस्टालेशन चेक करें"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1209
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "वर्तमान डेस्कटॉप का स्क्रीनशॉट लेने में अक्षम."
 
@@ -1199,58 +1200,58 @@ msgstr "वेब में जैसा दिखे वह उपयोगक�
 msgid "Web directory"
 msgstr "वेब डायरेक्ट्री"
 
-#: gnome-panel/launcher.c:102
+#: gnome-panel/launcher.c:139
 msgid "Cannot save launcher to disk"
 msgstr ""
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
-#: gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
+#: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
 msgstr "आइकन लांच नहीं कर सकते"
 
-#: gnome-panel/launcher.c:131
+#: gnome-panel/launcher.c:170
 msgid "This launch icon does not specify a url to show."
 msgstr "यह लांच आइकन किसी यूआरएल को दिखाने हेतु निर्दिष्ट नहीं करता"
 
-#: gnome-panel/launcher.c:139
+#: gnome-panel/launcher.c:181
 #, c-format
 msgid "Cannot show %s"
 msgstr "नही दिखा सके %s"
 
-#: gnome-panel/launcher.c:409
+#: gnome-panel/launcher.c:456
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "पेनल लांचर डेस्कटॉप फाइल हेतु कोई यूआरआई URI नहीं दिया है\n"
 
-#: gnome-panel/launcher.c:423
+#: gnome-panel/launcher.c:470
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "डेस्कटॉप फाइल %s पेनल लांचर %s%s के लिए  खोलने में अक्षम \n"
 
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "लांचर विशेषताएं"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:864
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "कुंजी%s सेट नहीं है अतः लांचर लोड नहीं कर सका\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
+#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "लांचर का निर्माण नहीं हो सकता"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "आपको कोई नाम निर्दिष्ट करना होगा."
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "आपको उचित यूआरएल (URL) या कमांड निश्चित करना होगा."
 
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "लांचर बनाएं"
 
@@ -1988,11 +1989,6 @@ msgstr ""
 #: gnome-panel/panel-profile.c:1587
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
-msgstr ""
-
-#: gnome-panel/panel-profile.c:2131
-#, c-format
-msgid "Error reading GConf list value '%s': %s"
 msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
