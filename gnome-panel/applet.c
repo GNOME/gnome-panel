@@ -373,6 +373,7 @@ static void
 applet_destroy(GtkWidget *w, AppletInfo *info)
 {
 	AppletType type;
+	GList *li;
 	
 	g_return_if_fail(info != NULL);
 
@@ -399,8 +400,8 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 	info->data=NULL;
 
 	/*free the user menu*/
-	while(info->user_menu) {
-		AppletUserMenu *umenu = info->user_menu->data;
+	for(li = info->user_menu; li != NULL; li = g_list_next(li)) {
+		AppletUserMenu *umenu = li->data;
 		if(umenu->name)
 			g_free(umenu->name);
 		if(umenu->stock_item)
@@ -408,8 +409,8 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		if(umenu->text)
 			g_free(umenu->text);
 		g_free(umenu);
-		info->user_menu = my_g_list_pop_first(info->user_menu);
 	}
+	g_list_free(info->user_menu);
 }
 
 int

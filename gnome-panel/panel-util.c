@@ -274,36 +274,6 @@ resize_window(GtkWidget *widget, int w, int h)
 	gtk_widget_draw(widget, NULL);
 }
 
-GList *
-my_g_list_pop_first(GList *list)
-{
-	GList *r;
-	
-	if(!list)
-		return NULL;
-       
-	r = list->next;
-	list->next = NULL;
-	if(r)
-		r->prev = NULL;
-	g_list_free_1(list);
-	return r;
-}
-
-GSList *
-my_g_slist_pop_first(GSList *list)
-{
-	GSList *r;
-	
-	if(!list)
-		return NULL;
-       
-	r = list->next;
-	list->next = NULL;
-	g_slist_free_1(list);
-	return r;
-}
-
 /*following code shamelessly stolen from gtk*/
 static void
 rgb_to_hls (gdouble *r,

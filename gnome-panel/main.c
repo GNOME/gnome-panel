@@ -161,8 +161,8 @@ main(int argc, char **argv)
 		if(session_id) {
 			g_free(old_panel_cfg_path);
 			old_panel_cfg_path = g_strconcat("/panel.d/Session-",
-							    session_id,"/",
-							    NULL);
+							 session_id,"/",
+							 NULL);
 		}
 		puts("connected to session manager");
 	}

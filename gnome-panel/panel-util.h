@@ -39,11 +39,6 @@ GList * my_g_list_swap_prev(GList *list, GList *dl);
  it resorts a single item in the list*/
 GList * my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func);
 
-/*pop and free the first list link*/
-GList * my_g_list_pop_first(GList *list);
-GSList * my_g_slist_pop_first(GSList *list);
-
-
 /*this is used to do an immediate move instead of set_uposition, which
 queues one*/
 void move_resize_window(GtkWidget *widget, int x, int y, int w, int h);

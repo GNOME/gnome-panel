@@ -174,7 +174,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	char *dentry_name;
 	char *subdir_name;
 	char *pixmap_name;
-	GSList *list;
+	GSList *list, *li;
 
 	if(!g_file_exists(dirname))
 		return;
@@ -202,9 +202,8 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	newpanel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
 	
 	list = get_files_from_menudir(dirname);
-	while(list) {
-		char *filename = g_concat_dir_and_file(dirname,
-						       list->data);
+	for(li = list; li!= NULL; li = g_slist_next(li)) {
+		char *filename = g_concat_dir_and_file(dirname, li->data);
 		struct stat s;
 		if (stat (filename, &s) == 0) {
 			if (S_ISDIR (s.st_mode)) {
@@ -221,9 +220,9 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 			}
 		}
 		g_free(filename);
-		g_free(list->data);
-		list = my_g_slist_pop_first(list);
+		g_free(li->data);
 	}
+	g_slist_free(list);
 }
 
 /*add a drawer with the contents of a menu to the panel*/
@@ -521,6 +520,8 @@ show_item_menu_mi_cb(GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 static void
 destroy_item_menu(GtkWidget *w, ShowItemMenu *sim)
 {
+	/*NOTE: don't free item_loc or mf.. it's not ours and will be free'd
+	  elsewhere*/
 	if(sim->menu)
 		gtk_widget_destroy(sim->menu);
 	g_free(sim);
@@ -645,7 +646,8 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
-		sim->mf = mf;
+		sim->mf = mf;/*make sure you don't free this,
+			       it's not ours!*/
 		sim->type = 0;
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
@@ -716,7 +718,8 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(item_loc) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
-		sim->item_loc = item_loc;
+		sim->item_loc = item_loc; /*make sure you don't free this,
+					    it's not ours!*/
 		sim->type = 1;
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
@@ -1142,8 +1145,8 @@ create_menu_at (GtkWidget *menu,
 	FileInfo *fi;
 	GSList *finfo = NULL;
 	GSList *flist = NULL;
+	GSList *li = NULL;
 	GSList *mfl = NULL;
-	char *thisfile;
 	int add_separator = FALSE;
 	int first_item = 0;
 	GtkWidget *menuitem;
@@ -1202,14 +1205,13 @@ create_menu_at (GtkWidget *menu,
 
 	flist = get_files_from_menudir(menudir);
 	
-	while (flist) {
-		GtkWidget     *sub, *pixmap;
-		char          *pixmap_name;
-		char          *menuitem_name;
+	for(li = flist; li != NULL; li = g_list_next(li)) {
+		char *thisfile = li->data;
+		GtkWidget *sub, *pixmap;
+		char *pixmap_name;
+		char *menuitem_name;
 		
-		thisfile = flist->data;
 		filename = g_concat_dir_and_file(menudir,thisfile);
-		flist = my_g_slist_pop_first(flist);
 		
 		if (stat (filename, &s) == -1) {
 			g_warning("Something is wrong, "
@@ -1323,6 +1325,7 @@ create_menu_at (GtkWidget *menu,
 		g_free(filename);
 		g_free(thisfile);
 	}
+	g_slist_free(flist);
 	
 	mf = g_new(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
