@@ -1,12 +1,15 @@
-INCLUDES = -I. -I$(srcdir) 				\
-	-I$(srcdir)/../../panel				\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-I$(includedir) $(GNOME_INCLUDEDIR)
-
+# trick Automake into defining $(CXXLINK)
+if FALSE
 BUILT_SOURCES = dummy.cc
 
 dummy.cc:
 	@touch dummy.cc
+endif
+
+INCLUDES = -I. -I$(srcdir) 				\
+	-I$(srcdir)/../../panel				\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
+	-I$(includedir) $(GNOME_INCLUDEDIR)
 
 bin_PROGRAMS = fish_applet
 
