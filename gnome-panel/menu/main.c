@@ -565,11 +565,12 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 		
 	/* main button */
 	button = gtk_button_new ();
-	gtk_widget_set_usize (button, 48, 48);
 	
 	/*make the pixmap*/
 	pixmap = gnome_create_pixmap_widget (window, button, pixmap_name);
 	gtk_widget_show(pixmap);
+	gtk_widget_set_usize (button, pixmap->requisition.width,
+			      pixmap->requisition.height);
 
 	/* put pixmap in button */
 	gtk_container_add (GTK_CONTAINER(button), pixmap);

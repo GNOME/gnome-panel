@@ -42,6 +42,7 @@ typedef struct {
 	GtkWidget    *hidebutton_r_h;
 	GtkWidget    *hidebutton_l_v;
 	GtkWidget    *hidebutton_r_v;
+	GtkWidget    *panel_eb;
 	GtkWidget    *panel;
 	PanelApplet **applets;        
 	gint          applet_count;
