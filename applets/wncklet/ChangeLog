@@ -1,3 +1,14 @@
+2002-03-14  Benedikt Roth  <Benedikt.Roth@gmx.net>
+
+	* mailcheck.c: (get_remote_password), (mailcheck_load_animation),
+	(animation_selected), (applet_load_prefs):
+	Hide the password in the passwort dialog.
+	Correctly load and save the preferences for animation and remote user.
+	Correctly display the animation if there is mail.
+
+	* mailcheck.schemas: Fix to correctly load/save preferences.
+	* tasklist.schemas: Fix typo.
+
 2002-03-12  Mark McLoughlin  <mark@skynet.ie>
 
 	* pager.c: (display_help_dialog): update for new docs

@@ -219,6 +219,7 @@ get_remote_password (void)
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
 	entry = gtk_entry_new ();
+	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
 	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
 	gtk_widget_show_all (hbox);
 
@@ -411,6 +412,8 @@ mailcheck_load_animation (MailCheck *mc, const char *fname)
 		return FALSE;
 	else if (mc->frames == 3)
 		mc->report_mail_mode = REPORT_MAIL_USE_BITMAP;
+	else
+		mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
 	mc->nframe = 0;
 
 	gdk_pixbuf_render_pixmap_and_mask(pb,
@@ -732,7 +735,7 @@ animation_selected (GtkMenuItem *item, gpointer data)
 	
 	load_new_pixmap (mc);
 	panel_applet_gconf_set_string(mc->applet, "animation-file", 
-				      mc->animation_file, NULL);
+				      mc->animation_file ? mc->animation_file : "", NULL);
 }
 
 static void
@@ -1460,20 +1463,11 @@ check_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 static void
 applet_load_prefs(MailCheck *mc)
 {
-	gchar *query;
-
-	query = gnome_program_locate_file (
-			NULL, GNOME_FILE_DOMAIN_PIXMAP,
-			"mailcheck/email.png", FALSE, NULL);
-
 	mc->animation_file = panel_applet_gconf_get_string(mc->applet, "animation-file", NULL);
-	if(!mc->animation_file || strcmp(mc->animation_file, "none")) {
+	if(!mc->animation_file) {
 		g_free(mc->animation_file);
-		mc->animation_file = g_strdup(query);
+		mc->animation_file = NULL;
 	}
-
-	g_free(query);
-
 	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update-frequency", NULL);
 	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec-command", NULL);
 	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec-enabled", NULL);
@@ -1484,7 +1478,7 @@ applet_load_prefs(MailCheck *mc)
 	mc->remote_server = panel_applet_gconf_get_string(mc->applet, "remote-server", NULL);
 	mc->pre_remote_command = panel_applet_gconf_get_string(mc->applet, "pre-remote-command", NULL);
 	mc->remote_username = panel_applet_gconf_get_string(mc->applet, "remote-username", NULL);
-	if(!mc->remote_username || strcmp(mc->remote_username, "none")) {
+	if(!mc->remote_username) {
 		g_free(mc->remote_username);
 		mc->remote_username = g_strdup(g_getenv("USER"));
 	}
