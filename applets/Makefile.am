@@ -1,6 +1,5 @@
 SUBDIRS =		\
 	clock		\
-	mailcheck	\
 	fish		\
 	notification_area \
 	wncklet
