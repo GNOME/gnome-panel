@@ -12,6 +12,7 @@
 
 
 #include <gtk/gtk.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gnome.h>
 #include "button-widget.h"
 #include "panel-types.h"
@@ -85,6 +86,8 @@ struct _PanelWidget
 					        widget itself*/
 	
 	GtkWidget		*panel_parent;
+	
+	GdkPixBuf		*backpix;
 };
 
 struct _PanelWidgetClass
