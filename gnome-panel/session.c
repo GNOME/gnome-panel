@@ -265,8 +265,13 @@ save_applet_configuration(AppletInfo *info)
 	g_return_val_if_fail(info!=NULL,TRUE);
 
 	buf = g_string_new(NULL);
-	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH, info->applet_id+1);
+
+	gnome_config_push_prefix("");
+	g_string_sprintf(buf, "%sApplet_Config/Applet_%d", PANEL_CONFIG_PATH, info->applet_id+1);
 	gnome_config_clean_section(buf->str);
+	gnome_config_pop_prefix();
+
+	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH, info->applet_id+1);
 	gnome_config_push_prefix(buf->str);
 
 	/*obviously no need for saving*/
@@ -404,8 +409,14 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	
 	buf = g_string_new(NULL);
 
-	g_string_sprintf(buf, "%spanel/Panel_%d/", PANEL_CONFIG_PATH, (*num)++);
+	gnome_config_push_prefix ("");
+	g_string_sprintf(buf, "%spanel/Panel_%d", PANEL_CONFIG_PATH, *num);
 	gnome_config_clean_section(buf->str);
+	gnome_config_pop_prefix ();
+
+	g_string_sprintf(buf, "%spanel/Panel_%d/", PANEL_CONFIG_PATH, *num);
+
+	(*num)++;
 
 	gnome_config_push_prefix (buf->str);
 
@@ -1230,6 +1241,7 @@ convert_read_old_config(void)
 	GString *buf;
 	int i,is_def;
 	int applet_count; /*store this so that we can clean*/
+	int panel_count; /*store this so that we can clean*/
 
 	buf = g_string_new(NULL);
 	g_string_sprintf(buf,"%spanel/Config/",PANEL_CONFIG_PATH);
@@ -1314,8 +1326,11 @@ convert_read_old_config(void)
 
 	/* preserve applet count */
 	applet_count = gnome_config_get_int("applet_count=0");
+	panel_count = gnome_config_get_int("panel_count=0");
 
 	gnome_config_pop_prefix();
+
+	gnome_config_push_prefix("");
 
 	g_string_sprintf(buf,"%spanel/Config",PANEL_CONFIG_PATH);
 
@@ -1323,6 +1338,10 @@ convert_read_old_config(void)
 
 	g_string_sprintf(buf,"%spanel/Config/applet_count",PANEL_CONFIG_PATH);
 	gnome_config_set_int(buf->str,applet_count);
+	g_string_sprintf(buf,"%spanel/Config/panel_count",PANEL_CONFIG_PATH);
+	gnome_config_set_int(buf->str,panel_count);
+
+	gnome_config_pop_prefix();
 
 	gnome_config_sync();
 	g_string_free(buf,TRUE);

@@ -1,3 +1,9 @@
+Thu Oct 07 20:17:31 1999  George Lebl  <jirka@5z.com>
+
+	* session.c: protect panel_count when converting from old panel
+	  confings, and protect clean_section's from prefixes and make em
+	  not get the trailing '/' so they actually work now
+
 Thu Oct 07 18:58:30 1999  George Lebl  <jirka@5z.com>
 
 	* Makefile.am: take out the CORBA_SOURCES from the panel sources
