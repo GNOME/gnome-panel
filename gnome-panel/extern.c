@@ -40,6 +40,7 @@ extern int need_complete_save;
 extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
+extern gboolean commie_mode;
 
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
@@ -1713,6 +1714,13 @@ s_panelspot_add_callback(PortableServer_Servant servant,
 
 	g_assert(ext != NULL);
 	g_assert(ext->info != NULL);
+
+	if (commie_mode &&
+	    callback_name != NULL &&
+	    (strcmp (callback_name, "preferences") == 0 ||
+	     strcmp (callback_name, "properties") == 0))
+		return;
+
 	applet_add_callback(ext->info, callback_name, stock_item,
 			    menuitem_text);
 }

@@ -13,6 +13,7 @@ extern GSList *applets_last;
 extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
+extern gboolean commie_mode;
 
 static void
 logout (GtkWidget *widget)
@@ -189,8 +190,9 @@ load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
 			    NULL, _("Kill Daemon"));
 	applet_add_callback(applets_last->data, "restart",
 			    NULL, _("Restart Daemon"));
-	applet_add_callback(applets_last->data, "prefs",
-			    NULL, _("Preferences"));
+	if ( ! commie_mode)
+		applet_add_callback(applets_last->data, "prefs",
+				    NULL, _("Preferences"));
 	applet_add_callback(applets_last->data, "help",
 			    GNOME_STOCK_PIXMAP_HELP,
 			    _("Help"));

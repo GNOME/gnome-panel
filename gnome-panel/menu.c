@@ -226,6 +226,16 @@ about_cb (GtkWidget *widget, gpointer data)
 			    hbox, TRUE, FALSE, 0);
 	gtk_widget_show_all (hbox);
 
+	if (commie_mode) {
+		l = gtk_label_new (_("Running in \"Lockdown\" mode.  This "
+				     "means your system administrator has "
+				     "prohibited any changes to the panel's "
+				     "configuration to take place."));
+		gtk_widget_show (l);
+		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (about)->vbox),
+				    l, FALSE, FALSE, 0);
+	}
+
 	gtk_widget_show (about);
 }
 
@@ -5670,14 +5680,16 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 
 		menu->info = applets_last->data;
 
-		applet_add_callback(menu->info, "properties",
-				    GNOME_STOCK_MENU_PROP,
-				    _("Properties..."));
-		if(params && strcmp(params, ".")==0 &&
-		   (tmp = panel_is_program_in_path("gmenu")))  {
-			g_free(tmp);
-			applet_add_callback(menu->info, "edit_menus",
-					    NULL, _("Edit menus..."));
+		if ( ! commie_mode) {
+			applet_add_callback(menu->info, "properties",
+					    GNOME_STOCK_MENU_PROP,
+					    _("Properties..."));
+			if(params && strcmp(params, ".")==0 &&
+			   (tmp = panel_is_program_in_path("gmenu")))  {
+				g_free(tmp);
+				applet_add_callback(menu->info, "edit_menus",
+						    NULL, _("Edit menus..."));
+			}
 		}
 		applet_add_callback(applets_last->data, "help",
 				    GNOME_STOCK_PIXMAP_HELP,

@@ -33,6 +33,7 @@ extern int applet_count;
 static char *default_app_pixmap = NULL;
 
 extern GlobalConfig global_config;
+extern gboolean commie_mode;
 
 extern GSList *panels;
 
@@ -651,9 +652,10 @@ load_launcher_applet_full (const char *params, GnomeDesktopEntry *dentry,
 			      launcher->dentry->comment,
 			      NULL);
 
-	applet_add_callback (applets_last->data,"properties",
-			     GNOME_STOCK_MENU_PROP,
-			     _("Properties..."));
+	if ( ! commie_mode)
+		applet_add_callback (applets_last->data,"properties",
+				     GNOME_STOCK_MENU_PROP,
+				     _("Properties..."));
 	applet_add_callback (applets_last->data, "help",
 			     GNOME_STOCK_PIXMAP_HELP,
 			     _("Help"));

@@ -1735,6 +1735,12 @@ load_system_wide (void)
 	commie_mode = gnome_config_get_bool ("LockDown=FALSE");
 	no_run_box = gnome_config_get_bool ("NoRunBox=FALSE");
 	gnome_config_pop_prefix ();
+
+	/* Root shall always be allowed to do whatever */
+	if (getuid () == 0) {
+		commie_mode = FALSE;
+		no_run_box = FALSE;
+	}
 }
 
 

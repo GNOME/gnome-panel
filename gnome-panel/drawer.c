@@ -25,6 +25,7 @@ extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
 extern GlobalConfig global_config;
+extern gboolean commie_mode;
 
 extern int applets_to_sync;
 extern int panels_to_sync;
@@ -478,13 +479,14 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);
-	drawer_setup(drawer);
+	drawer_setup (drawer);
 
-	g_assert(applets_last!=NULL);
+	g_assert (applets_last != NULL);
 
-	applet_add_callback(applets_last->data,"properties",
-			    GNOME_STOCK_MENU_PROP,
-			    _("Properties..."));
+	if ( ! commie_mode)
+		applet_add_callback(applets_last->data,"properties",
+				    GNOME_STOCK_MENU_PROP,
+				    _("Properties..."));
 	applet_add_callback(applets_last->data, "help",
 			    GNOME_STOCK_PIXMAP_HELP,
 			    _("Help"));
