@@ -16,7 +16,7 @@
 #include "panel_config_global.h"
 #include "rgb-stuff.h"
 
-#undef BUTTON_WIDGET_DEBUG 
+#undef BUTTON_WIDGET_DEBUG  
 
 #define BUTTON_WIDGET_DISPLACEMENT 5
 
@@ -578,9 +578,6 @@ button_widget_draw(ButtonWidget *button,
 	if(!global_config.highlight_when_over || !button->in_button) {
 		pb = button->pixbuf;
 	} else {
-#ifdef BUTTON_WIDGET_DEBUG
-	printf ("Using highlighted pixbuf\n");
-#endif
 		pb = button->pixbuf_hc;
 	}
 	if(pb != NULL) {
@@ -789,6 +786,9 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	if ((event_widget == widget) &&
 	    (event->detail != GDK_NOTIFY_INFERIOR)) {
 		ButtonWidget *button = BUTTON_WIDGET (widget);
+#ifdef BUTTON_WIDGET_DEBUG
+	printf ("We should be getting events here!!\n");
+#endif
 		button->in_button = TRUE;
 		if (button->cache)
 			gdk_pixmap_unref (button->cache);

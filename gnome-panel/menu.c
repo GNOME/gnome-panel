@@ -3045,9 +3045,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
-			s = conditional_get_string
-				("/panel/Config/clock_format",
-				 _("%I:%M:%S %p"), NULL);
+			s = panel_gconf_global_config_get_string ("clock-format");
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);

@@ -51,7 +51,7 @@
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
-#undef SESSION_DEBUG
+#undef SESSION_DEBUG 
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
@@ -473,7 +473,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		/*gnome_config_set_int ("temp_hidden", DRAWER_POS (basep->pos)->temp_state);*/
 		break;
 	case FOOBAR_PANEL:
-		gnome_config_set_string ("/panel/Config/clock_format", FOOBAR_WIDGET (pd->panel)->clock_format);
+		panel_gconf_global_config_set_string ("clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
 		gnome_config_set_int ("screen", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
@@ -1268,9 +1268,7 @@ session_init_user_panels(void)
 			panel = foobar_widget_new (screen);
 
 			push_correct_global_prefix ();
-			s = conditional_get_string ("clock_format",
-						    _("%I:%M:%S %p"),
-						    NULL);
+			s = panel_gconf_global_config_get_string ("clock-format");
 			gnome_config_pop_prefix ();
 
 			if (s != NULL)
@@ -1502,11 +1500,17 @@ session_read_global_config (void)
 		else if (!strcmp (key, "avoid-panel-overlap"))
 			global_config.avoid_collisions =
 				gconf_value_get_bool (value);
-
-		else
+		else if (!strcmp (key, "clock-format")) {
+			g_free (key);
+			gconf_entry_free (l->data);
+			g_slist_free (l);
+			return;
+		}
+		else 
 			g_warning ("%s not handled", key);
 
 		g_free (key);
+		gconf_entry_free (l->data);
 	}
 
 	g_slist_free (l);
