@@ -83,6 +83,7 @@ apply_global_config(void)
 					  done there are no menu applets*/
 	static int small_icons_old = 0; /*same here*/
 	static int keep_bottom_old = -1;
+	static int autohide_size_old = -1;
 	GSList *li;
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
@@ -151,13 +152,20 @@ apply_global_config(void)
 					global_config.tile_down[i],
 					global_config.tile_border[i],
 					global_config.tile_depth[i]);
-	}
+	}	
 
 	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 		PanelData *pd = li->data;
-		if (IS_BASEP_WIDGET (pd->panel))
+		if (IS_BASEP_WIDGET (pd->panel)) {
+			if ((autohide_size_old != global_config.minimized_size) &&
+			    (BASEP_WIDGET (pd->panel)->state == 
+			     BASEP_AUTO_HIDDEN)) {
+				gtk_widget_queue_resize (GTK_WIDGET (pd->panel));
+			}
 			basep_update_frame (BASEP_WIDGET (pd->panel));
+		}
 	}
+	autohide_size_old = global_config.minimized_size;
 }
 
 static void
