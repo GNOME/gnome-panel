@@ -1235,9 +1235,9 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	   exception can happen, so handle it */
 	if (BONOBO_EX (ev) || object == CORBA_OBJECT_NIL) {
 		error = bonobo_exception_get_text (ev);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_warning (G_STRLOC ": failed to load applet %s:\n%s",
 			   frame->priv->iid, error);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		g_free (error);
@@ -1255,9 +1255,9 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	bonobo_object_release_unref (object, NULL);
 
 	if (!widget) {
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_warning (G_STRLOC ": failed to load applet %s",
 			   frame->priv->iid);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_free (frame_act->id);
 		g_free (frame_act);
 		return;
@@ -1265,9 +1265,9 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 	if (control_frame == NULL) {
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(can't get control frame)", frame->priv->iid);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
 		g_free (frame_act);
@@ -1279,11 +1279,11 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 							       &corba_ev);
 	if (frame->priv->property_bag == NULL || BONOBO_EX (&corba_ev)) {
 		error = bonobo_exception_get_text (&corba_ev);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(can't get property bag):\n%s",
 			   frame->priv->iid, error);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
 		g_free (frame_act);
@@ -1302,11 +1302,11 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 							  &corba_ev);
 	if (frame->priv->ui_component == NULL || BONOBO_EX (&corba_ev)) {
 		error = bonobo_exception_get_text (&corba_ev);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		CORBA_exception_free (&corba_ev);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(can't get popup component):\n%s",
 			   frame->priv->iid, error);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
 		g_free (frame_act);
@@ -1323,9 +1323,9 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	control = bonobo_control_frame_get_control (control_frame);
 	if (!control) {
 		CORBA_exception_free (&corba_ev);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(can't get control)", frame->priv->iid);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
 		g_free (frame_act);
@@ -1335,9 +1335,9 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 	if (frame->priv->applet_shell == CORBA_OBJECT_NIL) {
 		CORBA_exception_free (&corba_ev);
-		panel_applet_frame_loading_failed (frame, frame_act->id);
 		g_warning (G_STRLOC ": failed to load applet %s "
 			   "(can't get applet shell)", frame->priv->iid);
+		panel_applet_frame_loading_failed (frame, frame_act->id);
 		gtk_object_sink (GTK_OBJECT (widget));
 		g_free (frame_act->id);
 		g_free (frame_act);
