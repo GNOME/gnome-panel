@@ -3,15 +3,19 @@ always_built_SUBDIRS = applet-dirs gen_util asclock \
 	 drivemount clockmail fifteen battery charpick \
 	 gnome-pager mini-commander 
 
-# if HAVE_LIBESD
-# esdmanager = esd-manager
-# else
+if FALSE
+if HAVE_LIBESD
+esdmanager = esd-manager
+else
 esdmanager = 
-# endif
+endif
+endif
 
-# if HAVE_FVWM
-# fvwm = fvwm-pager
-# endif
+if FALSE
+if HAVE_FVWM
+fvwm = fvwm-pager
+endif
+endif
 
 if HAVE_LIBGTOP
 libgtop_SUBDIRS = cpumemusage diskusage multiload netload
@@ -36,9 +40,9 @@ if APPLET_MODEMLIGHTS
 modemlights = modemlights
 endif
 
-# if FALSE
-# winlist = winlist
-# endif
+if FALSE
+winlist = winlist
+endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
