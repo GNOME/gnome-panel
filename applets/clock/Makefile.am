@@ -1,3 +1,5 @@
+SUBDIRS = cut-n-paste
+
 INCLUDES = 						\
 	-I$(srcdir)/../../libpanel-applet 		\
 	-I$(top_builddir)/libpanel-applet 		\
@@ -11,18 +13,26 @@ INCLUDES = 						\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
 
-libclock_applet_2_la_SOURCES = clock.c
+if HAVE_LIBECAL
+CALENDAR_SOURCES =		\
+	calendar-client.c	\
+	calendar-client.h	\
+	calendar-sources.c	\
+	calendar-sources.h	\
+	calendar-debug.h
+endif
 
-libclock_applet_2_la_LDFLAGS = -module -avoid-version -no-undefined
-libclock_applet_2_la_LIBADD =			\
+clock_applet_SOURCES = clock.c $(CALENDAR_SOURCES)
+
+clock_applet_LDADD =					\
 	../../libpanel-applet/libpanel-applet-2.la	\
+	cut-n-paste/libclockcnp.la 				\
 	$(CLOCK_LIBS)
 
-appletdir = $(libdir)
-applet_LTLIBRARIES = libclock-applet-2.la
+libexec_PROGRAMS = clock-applet
 
 GNOME_ClockApplet_Factory.server.in: GNOME_ClockApplet_Factory.server.in.in
-	sed -e "s|\@APPLET_LIBDIR\@|$(appletdir)|" $< > $@
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
 
 uidir 	= $(datadir)/gnome-2.0/ui
 ui_DATA	= GNOME_ClockApplet.xml	

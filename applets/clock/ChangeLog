@@ -1,3 +1,44 @@
+2004-01-12  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch to make the calendar popup display your tasks and
+	appointments from Evolution. Based on patches from
+	William Jon McCann <mccann@jhu.edu> (bug #128283)
+	and Martin Grimme  <martin@pycage.de> and
+	Christian Kellner  <gicmo@xatom.net> (bug #128283).
+
+	Still in need of work. UI loving, mainly. Small TODO
+	list in clock.c.
+
+	* GNOME_ClockApplet_Factory.server.in.in: make the applet
+	out of process.
+	
+	* Makefile.am: build the cut-n-paste subdir, make a binary
+	instead of an shlib, build the calendar bits.
+	
+	* clock.c: add tasks and appointments to the calendar popup.
+	
+	* calendar-client.[ch]: hide all the book-keeping behind
+	a nice API.
+
+	* calendar-debug.h: debugging utils.
+	
+	* calendar-sources.[ch]: keep track of Evolution's selected
+	sources.
+
+	* cut-n-paste/eel-pango-extensions.[ch]: copy eel's method
+	for creating a PangoLayout with text ellipsized at a given
+	width.
+	
+	* cut-n-paste/eggcellrenderertext.[ch]: copy GtkCellRendererText
+	and add ellipsizing support.
+
+	* cut-n-paste/eggintl.h: i18n support.
+	
+	* cut-n-paste/eggmarshalers.list: marhsallers.
+	
+	* cut-n-paste/eggtreeprivate.h: copy bit from gtktreeprivate.h,
+	but they're not really used.
+	
 2004-01-09  Kaushal Kumar  <kaushal.kumar@wipro.com>
 
 	* GNOME_ClockApplet_Factory.server.in.in: Added info for bug-reporting.
