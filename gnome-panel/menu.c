@@ -2927,7 +2927,7 @@ create_rh_menu(int dofork)
 			/*we're in a child, so fork once more and
 			  exit the parent to not leave any zombies
 			  around*/
-			if(fork()==0) {
+			if(fork()>0) {
 				_exit(0);
 			}
 		}
