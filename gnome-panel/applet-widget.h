@@ -26,6 +26,7 @@ typedef struct _AppletWidget		AppletWidget;
 typedef struct _AppletWidgetClass	AppletWidgetClass;
 
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
+typedef void (*AppletStartNewFunc)(const gchar *param, gpointer data);
 
 struct _AppletWidget
 {
@@ -36,8 +37,6 @@ struct _AppletWidget
 	/* use these as prefixes when loading saving data */
 	gchar			*cfgpath;
 	gchar			*globcfgpath;
-
-	gint			multi;
 };
 
 struct _AppletWidgetClass
@@ -59,39 +58,18 @@ struct _AppletWidgetClass
 			       gchar *cfgpath,
 			       gchar *globcfgpath);
 
-	/*bind this signal if you want to manage multiple applets, the
-	  panel will signal you the next applet to start with the same
-	  pathname instead of launching the executable, you have to create
-	  your widget with _new_multi_ in order to use this,
-	  NOTE!: this signal is passed to only one applet (which is most
-	  likely the first applet-widget, but if that one was removed it
-	  might be ANY so bind this signal for every applet-widget you 
-	  create!!!!*/
-	void (* start_new_applet) (AppletWidget *applet,
-			           gchar *param);
 };
 
 guint		applet_widget_get_type		(void);
 
 /*start one but add a parameter that the panel should use next time
   to start us*/
-GtkWidget*	applet_widget_new_param_multi	(gchar *argv0,
-						 gchar *param,
-						 gint multi);
+GtkWidget*	applet_widget_new_with_param	(const gchar *param);
 
 
 /*start a normal applet*/
-#define applet_widget_new(argv)	\
-	applet_widget_new_param_multi(argv,"",FALSE)
-#define applet_widget_new_with_param(argv,param)	\
-	applet_widget_new_param_multi(argv,param,FALSE)
-
-/*start an applet which handeles multiple "applet widgets"*/
-#define applet_widget_new_multi_with_param(argv,param)	\
-	applet_widget_new_param_multi(argv,param,TRUE)
-#define applet_widget_new_multi(argv)	\
-	applet_widget_new_param_multi(argv,"",TRUE)
-
+#define applet_widget_new()	\
+	applet_widget_new_with_param("")
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
@@ -122,6 +100,32 @@ AppletWidget*	applet_widget_get_by_id		(gint applet_id);
 
 /*get thenumber of applets*/
 gint		applet_widget_get_applet_count	(void);
+
+
+/*FIXME: implement*/
+PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
+
+/*use this instead of gnome init, if you want multi applet, you also
+  have to specify a "start new applet" function which will launch a new
+  applet*/
+error_t		applet_widget_init		(char *app_id,
+						 struct argp *app_parser,
+						 int argc,
+						 char **argv,
+						 unsigned int flags,
+						 int *arg_index,
+						 gchar *argv0,
+						 gint last_die,
+						 gint multi_applet,
+						 AppletStartNewFunc new_func,
+						 gpointer new_func_data);
+
+/*defaults init for use with "normal" non-multi applets*/
+#define \
+applet_widget_init_defaults(app_id,app_parser,argc,argv,flags,arg_index,argv0) \
+applet_widget_init(app_id,app_parser,argc,argv,flags,arg_index, \
+		   argv0,TRUE,FALSE,NULL,NULL)
+
 
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);

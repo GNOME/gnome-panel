@@ -4,7 +4,7 @@
 #include <applet-lib.h>
 
 static void applet_widget_class_init	(AppletWidgetClass *klass);
-static void applet_widget_init		(AppletWidget      *applet_widget);
+static void wapplet_widget_init		(AppletWidget      *applet_widget);
 
 typedef void (*AppletWidgetOrientSignal) (GtkObject * object,
 					  PanelOrientType orient,
@@ -18,8 +18,15 @@ typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
 static GList *applet_widgets = NULL;
 static gint applet_count = 0;
 
+static gint do_multi = FALSE;
+static gint die_on_last = TRUE;
+
 static GtkPlugClass *parent_class;
 
+static AppletStartNewFunc start_new_func=NULL;
+static gpointer start_new_func_data=NULL;
+
+static gchar *myinvoc= NULL;
 
 guint
 applet_widget_get_type ()
@@ -32,7 +39,7 @@ applet_widget_get_type ()
 			sizeof (AppletWidget),
 			sizeof (AppletWidgetClass),
 			(GtkClassInitFunc) applet_widget_class_init,
-			(GtkObjectInitFunc) applet_widget_init,
+			(GtkObjectInitFunc) wapplet_widget_init,
 			(GtkArgSetFunc) NULL,
 			(GtkArgGetFunc) NULL,
 		};
@@ -46,11 +53,10 @@ applet_widget_get_type ()
 enum {
 	CHANGE_ORIENT_SIGNAL,
 	SESSION_SAVE_SIGNAL,
-	START_NEW_APPLET_SIGNAL,
 	LAST_SIGNAL
 };
 
-static gint applet_widget_signals[LAST_SIGNAL] = {0,0,0};
+static gint applet_widget_signals[LAST_SIGNAL] = {0,0};
 
 static void
 gtk_applet_widget_marshal_signal_orient (GtkObject * object,
@@ -114,30 +120,18 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       2,
 			       GTK_TYPE_STRING,
 			       GTK_TYPE_STRING);
-	applet_widget_signals[START_NEW_APPLET_SIGNAL] =
-		gtk_signal_new("start_new_applet",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
-			       			 start_new_applet),
-			       gtk_applet_widget_marshal_signal_orient,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_STRING);
 
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
 
 	class->change_orient = NULL;
 	class->session_save = NULL;
-	class->start_new_applet = NULL;
 }
 
 static void
-applet_widget_init (AppletWidget *applet_widget)
+wapplet_widget_init (AppletWidget *applet_widget)
 {
 	applet_widget->applet_id = -1;
-	applet_widget->multi = FALSE;
 }
 
 static gint
@@ -155,6 +149,10 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 		gnome_panel_applet_abort_id(applet->applet_id);
 
 	applet_count--;
+
+	if(die_on_last && applet_count == 0)
+		gtk_exit(0);
+
 	return FALSE;
 }
 
@@ -176,33 +174,20 @@ applet_widget_register_callback(AppletWidget *applet,
 }
 
 GtkWidget *
-applet_widget_new_param_multi(gchar *argv0, gchar *param, gint multi)
+applet_widget_new_with_param(const gchar *param)
 {
 	AppletWidget *applet;
 	char *result;
 	char *cfgpath;
 	char *globcfgpath;
 	guint32 winid;
-	char *myinvoc;
 	gint applet_id;
-
-	/*keep track if we already initted corba or not, so that we can
-	  safely start new applets*/
-	static gint do_corba_init = TRUE;
-
-	myinvoc = get_full_path(argv0);
-	if(!myinvoc)
-		return 0;
 
 	if(!param)
 		param="";
 
-	if (do_corba_init && !gnome_panel_applet_init_corba())
-		g_error("Could not communicate with the panel\n");
-
-	do_corba_init = FALSE;
-
-	result = gnome_panel_applet_request_id(myinvoc, param,multi?FALSE:TRUE,
+	result = gnome_panel_applet_request_id(myinvoc, param,
+					       do_multi?FALSE:TRUE,
 					       &applet_id,
 					       &cfgpath, &globcfgpath,
 					       &winid);
@@ -219,8 +204,6 @@ applet_widget_new_param_multi(gchar *argv0, gchar *param, gint multi)
 	applet->applet_id = applet_id;
 	applet->cfgpath = cfgpath;
 	applet->globcfgpath = globcfgpath;
- 
-	applet->multi = multi;
 
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
@@ -261,6 +244,13 @@ applet_widget_set_tooltip(AppletWidget *applet, gchar *text)
 		gnome_panel_applet_remove_tooltip (applet->applet_id);
 }
 
+PanelOrientType
+applet_widget_get_panel_orient(AppletWidget *applet)
+{
+	/*FIXME: implement*/
+	return (PanelOrientType)0;
+}
+
 AppletWidget*
 applet_widget_get_by_id(gint applet_id)
 {
@@ -272,6 +262,47 @@ applet_widget_get_by_id(gint applet_id)
 	}
 	return NULL;
 }
+
+error_t
+applet_widget_init(char *app_id,
+		   struct argp *app_parser,
+		   int argc,
+		   char **argv,
+		   unsigned int flags,
+		   int *arg_index,
+		   gchar *argv0,
+		   gint last_die,
+		   gint multi_applet,
+		   AppletStartNewFunc new_func,
+		   gpointer new_func_data)
+{
+	error_t ret;
+
+	if(!argv0)
+		g_error("Invalid argv0 argument!\n");
+
+	if(argv0[0]!='#')
+		myinvoc = get_full_path(argv0);
+	else
+		myinvoc = g_strdup(argv0);
+	if(!myinvoc)
+		g_error("Invalid argv0 argument!\n");
+
+	do_multi = (multi_applet!=FALSE);
+	start_new_func = new_func;
+	start_new_func_data = new_func_data;
+	die_on_last = last_die;
+
+	panel_corba_register_arguments();
+
+	ret = gnome_init(app_id,app_parser,argc,argv,flags,arg_index);
+
+	if (!gnome_panel_applet_init_corba())
+		g_error("Could not communicate with the panel\n");
+
+	return ret;
+}
+
 
 void
 applet_widget_gtk_main(void)
@@ -305,8 +336,7 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 	applet = applet_widget_get_by_id(applet_id);
 	if(applet) {
 		gtk_signal_emit(GTK_OBJECT(applet),
-				applet_widget_signals[
-					SESSION_SAVE_SIGNAL],
+				applet_widget_signals[SESSION_SAVE_SIGNAL],
 				cfg,globcfg,&return_val);
 	}
 	g_free(cfg);
@@ -321,26 +351,9 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 void
 _gnome_applet_start_new_applet(const char *param)
 {
-	AppletWidget *applet;
-
-	if(!applet_widgets)
-		return;
-
-	/*the first one*/
-	applet = applet_widgets->data;
-
-	if(applet) {
-		gtk_signal_emit(GTK_OBJECT(applet),
-				applet_widget_signals[START_NEW_APPLET_SIGNAL],
-				param);
-	}
+	if(!do_multi)
+		g_warning("This applet was not started as a multiapplet, yet "
+			  "it recieved a start_new_applet, weird!");
+	else if(start_new_func)
+		(*start_new_func)(param,start_new_func_data);
 }
-
-/*for slight binary compatiility only*/
-#undef applet_widget_new
-GtkWidget *
-applet_widget_new(gchar *argv0)
-{
-	return applet_widget_new_param_multi(argv0,"",FALSE);
-}
-
