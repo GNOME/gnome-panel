@@ -79,7 +79,6 @@ static GtkAdjustment *tile_depth[LAST_TILE];
 static GtkWidget *entry_up[LAST_TILE];
 static GtkWidget *entry_down[LAST_TILE];
 
-static GtkWidget *hide_panel_frame_cb;
 static GtkWidget *tile_when_over_cb;
 static GtkWidget *saturate_when_over_cb;
 
@@ -362,8 +361,6 @@ static void
 sync_buttons_page_with_config(GlobalConfig *conf)
 {
 	int i;
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(hide_panel_frame_cb),
-				    conf->hide_panel_frame);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tile_when_over_cb),
 				    conf->tile_when_over);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(saturate_when_over_cb),
@@ -388,8 +385,6 @@ static void
 sync_config_with_buttons_page(GlobalConfig *conf)
 {
 	int i;
-	conf->hide_panel_frame =
-		GTK_TOGGLE_BUTTON(hide_panel_frame_cb)->active;
 	conf->tile_when_over =
 		GTK_TOGGLE_BUTTON(tile_when_over_cb)->active;
 	conf->saturate_when_over =
@@ -574,14 +569,6 @@ buttons_notebook_page (void)
 	  gtk_box_pack_start (GTK_BOX (vbox), notebook, FALSE, FALSE, 0);
 	  gtk_widget_show (notebook);
 	  
-	  
-	  /* show/hide frame */
-	  hide_panel_frame_cb = gtk_check_button_new_with_label (_("Make buttons flush with panel edge"));
-	  gtk_signal_connect (GTK_OBJECT (hide_panel_frame_cb), "toggled",
-			      GTK_SIGNAL_FUNC (changed_cb), NULL);
-	  gtk_box_pack_start (GTK_BOX (vbox), hide_panel_frame_cb, FALSE, FALSE, 0);
-	  
-
 	  /* only show tiles when mouse is over the button */
 	  tile_when_over_cb = gtk_check_button_new_with_label (_("Show button tiles only when cursor is over the button"));
 	  gtk_signal_connect (GTK_OBJECT (tile_when_over_cb), "toggled",
@@ -1377,8 +1364,6 @@ loadup_vals (void)
 
 	global_config.drawer_auto_close =
 		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.hide_panel_frame =
-		conditional_get_bool ("hide_panel_frame", FALSE, NULL);
 	global_config.tile_when_over =
 		conditional_get_bool ("tile_when_over", FALSE, NULL);
 	global_config.saturate_when_over =
@@ -1502,8 +1487,6 @@ write_config (GlobalConfig *conf)
 			      conf->normal_layer);
 	gnome_config_set_bool("drawer_auto_close",
 			      conf->drawer_auto_close);
-	gnome_config_set_bool("hide_panel_frame",
-			      conf->hide_panel_frame);
 	gnome_config_set_bool("tile_when_over",
 			      conf->tile_when_over);
 	gnome_config_set_bool("saturate_when_over",

@@ -1,3 +1,11 @@
+2001-10-19  Glynn Foster  <glynn.foster@sun.com>
+
+	* basep-widget.c, gnome-panel-properties.c,
+	* panel_config_global.h, session.c: Remove
+	'hide_panel_frame' which now defaults to FALSE. So whether
+	buttons are flush with the panel depends on background type
+	only. Another useless property best removed :)
+
 2001-10-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (create_menu_at_fr), (create_desktop_menu),

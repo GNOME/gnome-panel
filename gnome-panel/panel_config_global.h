@@ -27,7 +27,6 @@ struct _GlobalConfig {
 	char *tile_down[LAST_TILE];
 	int tile_border[LAST_TILE];
 	int tile_depth[LAST_TILE];
-	gboolean hide_panel_frame;
 	gboolean tile_when_over;
 	gboolean saturate_when_over;
 	gboolean confirm_panel_remove;
