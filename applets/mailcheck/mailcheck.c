@@ -1589,9 +1589,10 @@ phelp_cb (GtkDialog *w, gint tab, MailCheck *mc)
      						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	egg_screen_help_display_desktop (
+	egg_help_display_desktop_on_screen (
+			applet_program, "mailcheck", "mailcheck", "mailcheck-prefs",
 			gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
-			applet_program, "mailcheck", "mailcheck","mailcheck-prefs", &error);
+			&error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (GTK_WINDOW (w),
@@ -1796,9 +1797,10 @@ help_callback (BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	egg_screen_help_display_desktop (
+	egg_help_display_desktop_on_screen (
+		applet_program, "mailcheck", "mailcheck",NULL,
 		gtk_widget_get_screen (GTK_WIDGET (mc->applet)),
-		applet_program, "mailcheck", "mailcheck",NULL, &error);
+		&error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,

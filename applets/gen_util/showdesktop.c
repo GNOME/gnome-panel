@@ -398,10 +398,10 @@ display_help_dialog (BonoboUIComponent *uic,
                                                      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
         }
 
-        egg_screen_help_display_desktop (
+        egg_help_display_desktop_on_screen (
+                applet_program, "show-desktop", "show-desktop", NULL,
                 gtk_widget_get_screen (sdd->applet),
-                applet_program, "show-desktop", "show-desktop",
-                NULL, &error);
+		&error);
 
         if (error) {
                 GtkWidget *dialog;

@@ -172,10 +172,11 @@ response_cb(GtkWidget * widget,int id, PagerData *pager)
 							     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 		}
 
-		egg_screen_help_display_desktop (
-			gtk_widget_get_screen (pager->applet),
+		egg_help_display_desktop_on_screen (
 			applet_program, "workspace-switcher",
-			"workspace-switcher", "workspacelist-prefs", &error);
+			"workspace-switcher", "workspacelist-prefs",
+			gtk_widget_get_screen (pager->applet),
+			&error);
 		if (error) {
 			GtkWidget *dialog;
 			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
@@ -483,10 +484,11 @@ display_help_dialog (BonoboUIComponent *uic,
 						     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	egg_screen_help_display_desktop (
-		gtk_widget_get_screen (pager->applet),
+	egg_help_display_desktop_on_screen (
 		applet_program, "workspace-switcher",
-		"workspace-switcher", NULL, &error);
+		"workspace-switcher", NULL,
+		gtk_widget_get_screen (pager->applet),
+		&error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,

@@ -105,10 +105,11 @@ response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 							     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
 		}
 
-		egg_screen_help_display_desktop (
-			gtk_widget_get_screen (tasklist->applet),
+		egg_help_display_desktop_on_screen (
 			applet_program, "window-list",
-			"window-list","windowlist-prefs", &error);
+			"window-list", "windowlist-prefs",
+			gtk_widget_get_screen (tasklist->applet),
+			&error);
 		if (error) {
 			GtkWidget *dialog;
 			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
@@ -706,10 +707,11 @@ display_help_dialog (BonoboUIComponent *uic,
 						     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
 	}
 
-	egg_screen_help_display_desktop (
-			gtk_widget_get_screen (tasklist->applet),
+	egg_help_display_desktop_on_screen (
 			applet_program, "window-list",
-			"window-list",NULL, &error);
+			"window-list", NULL,
+			gtk_widget_get_screen (tasklist->applet),
+			&error);
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,
