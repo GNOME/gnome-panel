@@ -1,9 +1,11 @@
 # Danish translation of gnome-panel.
 # Copyright (C) 1998, 99, 2000, 01, 02, 03, 04 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-panel package.
 # Kenneth Christiansen <kenneth@ripen.dk>, 1998-2000.
 # Birger Langkjer <birger.langkjer@image.dk>, 1999.
 # Keld Simonsen <keld@dkuug.dk>, 2000-2001.
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04.
+# Martin Willemoes Hansen <mwh@sysrq.dk>, 2004.
 #
 # Konventioner:
 #
@@ -17,23 +19,23 @@
 #   URL -> adresse
 #
 # Se i øvrigt po-filen til gnome-applets.
+# Husk at tilføje dig i credit-listen (besked id "translator-credits")
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 08:31+0100\n"
-"PO-Revision-Date: 2004-03-03 19:04+0100\n"
-"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
+"POT-Creation-Date: 2004-07-30 12:58+0200\n"
+"PO-Revision-Date: 2004-07-30 12:30+0200\n"
+"Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "_Sæt dato og tid..."
+msgstr "_Justér dato og tid"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -50,9 +52,8 @@ msgstr "Kopiér _tid"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "_Om..."
+msgstr "_Om"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -71,9 +72,8 @@ msgstr "_Hjælp"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "_Indstillinger..."
+msgstr "_Indstillinger"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -153,11 +153,8 @@ msgstr "%A den %-d. %B"
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr ""
-"%a\n"
-"%-d. %b"
+msgstr "%b %d"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -264,7 +261,12 @@ msgstr "Benyt _UTC"
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:206
 msgid "translator_credits"
-msgstr "Ole Laursen <olau@hardworking.dk>"
+msgstr ""
+"Birger Langkjer <birger.langkjer@image.dk>\n"
+"Keld Simonsen <keld@dkuug.dk>\n"
+"Kenneth Christiansen <kenneth@ripen.dk>\n"
+"Martin Willemoes Hansen <mwh@sysrq.dk>\n"
+"Ole Laursen <olau@hardworking.dk>"
 
 #: applets/clock/clock.c:2545
 msgid "The Clock displays the current time and date"
@@ -334,7 +336,6 @@ msgstr ""
 "strftime() til at opnå et specifikt format."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -346,7 +347,7 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Denne nøgle angiver det tidsformat der benyttes af urpanelprogrammet. Mulige "
-"værdier er \"12-hour\", \"24-hour\", \"internet\", \"unix\" og \"custom\". "
+"værdier er \"12-timer\", \"24-timer\", \"internet\", \"unix\" og \"custom\". "
 "Hvis sat til \"internet\" viser uret internettiden der deler dagen ind i "
 "1000 slag uden tidszoner så tiden er den samme over hele verden. Hvis sat "
 "til \"unix\" vil uret vise tiden i sekunder siden d. 1. jan. 1970. Hvis sat "
@@ -362,7 +363,6 @@ msgid "Time configuration tool"
 msgstr "Tidskonfigureringsværktøj"
 
 #: applets/clock/clock.schemas.in.h:17
-#, fuzzy
 msgid "Use Internet time"
 msgstr "Benyt internettid"
 
@@ -1209,9 +1209,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kunne ikke tage et billede af det aktuelle skrivebord."
 
 #: gnome-panel/gnome-panel-screenshot.c:1255
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "Gem skærmbillede under _internetside (gem i ~/public__html)"
+msgstr "Gem skærmbillede under _internetside (gem i %s)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1311
 msgid "Grab a window instead of the entire screen"
@@ -1440,9 +1440,8 @@ msgid "_Delete This Panel"
 msgstr "_Fjern dette panel"
 
 #: gnome-panel/menu.c:2371
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "_Tilføj til panel"
+msgstr "_Tilføj til panel..."
 
 #: gnome-panel/menu.c:2416
 msgid "_New Panel"
@@ -1573,28 +1572,24 @@ msgid "Run a command"
 msgstr "Kør en kommando"
 
 #: gnome-panel/panel-addto.c:168
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Kør program"
+msgstr "Brugerdefineret programgenvej"
 
 #: gnome-panel/panel-addto.c:169
-#, fuzzy
 msgid "Create a new launcher"
 msgstr "Opret genvej"
 
 #: gnome-panel/panel-addto.c:179
-#, fuzzy
 msgid "Application Launcher..."
-msgstr "Kør program..."
+msgstr "Programgenvej..."
 
 #: gnome-panel/panel-addto.c:180
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Kør et program der allerede er i Gnomemenuen"
 
 #: gnome-panel/panel-addto.c:191
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "I hovedmenuen"
+msgstr "Gnomehovedmenuen"
 
 #: gnome-panel/panel-addto.c:201
 msgid "Menu Bar"
@@ -1602,15 +1597,15 @@ msgstr "Menulinje"
 
 #: gnome-panel/panel-addto.c:202
 msgid "A custom menu bar"
-msgstr ""
+msgstr "En brugerdefineret menulinje"
 
 #: gnome-panel/panel-addto.c:213
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "En pop-ud-skuffe til at gemme andre ting i"
 
 #: gnome-panel/panel-addto.c:301
 msgid "(empty)"
-msgstr ""
+msgstr "(tom)"
 
 #: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1618,23 +1613,22 @@ msgid "query returned exception %s\n"
 msgstr "forespørgsel returnerede undtagelsen %s\n"
 
 #: gnome-panel/panel-addto.c:831
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "_Tilføj til panel"
+msgstr "Tilføj til %s"
 
 #: gnome-panel/panel-addto.c:833
-#, fuzzy
 msgid "Add to the panel"
-msgstr "_Tilføj til panel"
+msgstr "Tilføj til panel"
 
 #: gnome-panel/panel-addto.c:839
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "Vælg og t_ilføj en genstand til %s:"
 
 #: gnome-panel/panel-addto.c:842
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "Vælg og t_ilføj en genstand til panelet:"
 
 #: gnome-panel/panel-applet-frame.c:746
 #, c-format
@@ -2292,22 +2286,20 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "En ukendt fejl opstod under forsøg på at åbne %s"
 
 #: gnome-panel/panel-recent.c:210
-#, fuzzy
 msgid "Clear recent document history?"
-msgstr "Seneste dokumenter"
+msgstr "Ryd historik for seneste dokumenter"
 
 #: gnome-panel/panel-recent.c:211
 msgid "This will clear the contents of the Recent Documents menu."
-msgstr ""
+msgstr "Dette vil ryde indholdet af menuen for seneste dokumenter"
 
 #: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
 msgstr "Seneste dokumenter"
 
 #: gnome-panel/panel-recent.c:271
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Seneste dokumenter"
+msgstr "Ryd seneste dokumenter"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2416,9 +2408,8 @@ msgid "_Force quit"
 msgstr "_Tving afslutning"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Kalender"
+msgstr "_Ryd"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2983,7 +2974,6 @@ msgstr "Mikroskopisk"
 #~ msgid "Log Out %s"
 #~ msgstr "Log %s ud"
 
-#, fuzzy
 #~ msgid ""
 #~ "Log out %s of this session to log in as a different user or to shut down "
 #~ "your computer"
