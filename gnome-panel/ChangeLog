@@ -1,7 +1,13 @@
+2003-10-31  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler):
+	Don't unhide if we are not in the vicinity of the panel.
+	Fix bug #122589
+	
 2003-10-30  Vijaykumar Patwari <vijaykumar.patwari@wipro.com>
-	*gnome-panel/gnome-panel/panel-widget.c: 
-	(panel_widget_applet_drag_start): block the autohide 
-	when dragging objects on the panel
+
+	* panel-widget.c: (panel_widget_applet_drag_start): block the 
+	autohide when dragging objects on the panel.
 	(panel_widget_applet_drag_end): enable autohide when dragging
 	is done. Fix bug #122863
  
