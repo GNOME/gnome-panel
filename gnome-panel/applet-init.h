@@ -3,6 +3,8 @@
 
 #include <libbonobo.h>
 
+G_BEGIN_DECLS
+
 int applet_factory_main (int                     argc,
 			 char                  **argv,
 			 const gchar            *iid,
@@ -17,5 +19,7 @@ int main (int argc, char *argv [])                                              
         return applet_factory_main (argc, argv, iid, name,                      \
 				    version, callback, data);                   \
 }
+
+G_END_DECLS
 
 #endif /* __APPLET_INIT_H__ */

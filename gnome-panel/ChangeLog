@@ -1,5 +1,25 @@
 2001-11-01  Mark McLoughlin  <mark@skynet.ie>
 
+	A first stab at BonoboControl based applets. It works
+	suprisingly well for 84 lines of code :)
+
+	* panel-applet-frame.c, panel-applet-frame.h: new files.
+	BonoboControl based applet support.
+
+	* applet.h: add new AppletType - APPLET_BONOBO.
+
+	* menu.c: (add_test_bonobo_applet): impl.
+	(make_add_submenu): add new menuitem to activate a
+	test bonobo applet.
+
+	* test-bonobo-applet.c: BonoboControl based test applet.
+
+	* GNOME_Panel_TestApplet.server.in: add TestBonoboApplet.
+
+	* Makefile.am: upd.
+
+2001-11-01  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet-object.c: (applet_object_panel_quit), (applet_object_new):
 	free panel CORBA refs.
 

@@ -56,6 +56,7 @@
 #include "tasklist_icon.h"
 #include "tearoffitem.h"
 #include "title-item.h"
+#include "panel-applet-frame.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -2279,10 +2280,26 @@ static void
 add_test_applet (GtkWidget *widget,
 		 gpointer   dummy)
 {
+	PanelWidget *panel;
+
+	panel = get_panel_from_menu_data (widget, TRUE);
+
 	extern_load_applet ("OAFIID:GNOME_Panel_TestApplet",
-			    NULL,
-                            get_panel_from_menu_data (widget, TRUE),
-                            -1, FALSE, FALSE);
+			    NULL, panel, -1, FALSE, FALSE);
+}
+
+/*
+ * FIXME: only a temporary testing menuitem
+ */
+static void
+add_test_bonobo_applet (GtkWidget *widget,
+			gpointer   dummy)
+{
+	PanelWidget *panel;
+
+	panel = get_panel_from_menu_data (widget, TRUE);
+
+	panel_applet_load ("OAFIID:GNOME_Panel_TestBonoboApplet", panel, -1);
 }
 
 static void
@@ -5013,6 +5030,17 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (add_test_applet), NULL);
+
+	/*
+	 * FIXME: only a temporary testing menuitem
+	 */
+	menuitem = gtk_menu_item_new ();
+	gtk_widget_lock_accelerators (menuitem);
+	setup_menuitem (menuitem, 0, _("Test Bonobo Applet"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (add_test_bonobo_applet), NULL);
+
 }
 
 static void

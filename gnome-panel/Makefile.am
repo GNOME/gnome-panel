@@ -34,6 +34,7 @@ INCLUDES =							\
 bin_PROGRAMS =			\
 	panel-2			\
 	test-applet		\
+	test-bonobo-applet	\
 	$(NULL)
 
 lib_LTLIBRARIES =		\
@@ -47,6 +48,14 @@ test_applet_SOURCES =		\
 test_applet_LDADD =					\
 	$(PANEL_LIBS)					\
 	$(top_builddir)/panel/libpanel-applet-2.la	\
+	$(NULL)
+
+test_bonobo_applet_SOURCES =	\
+	test-bonobo-applet.c	\
+	$(NULL)
+
+test_bonobo_applet_LDADD =	\
+	$(PANEL_LIBS)		\
 	$(NULL)
 
 libpanel_applet_2_la_SOURCES = 	\
@@ -143,6 +152,7 @@ panel_sources = \
 	menu-properties.c	\
 	launcher.c		\
 	extern.c  		\
+	panel-applet-frame.c	\
 	panel-shell.c		\
 	$(NULL)
 
@@ -187,6 +197,7 @@ panel_headers = \
 	menu-properties.h	\
 	launcher.h		\
 	extern.h  		\
+	panel-applet-frame.h	\
 	$(NULL)
 
 panel_2_SOURCES = \

@@ -1,5 +1,9 @@
 <oaf_info>
 
+<!--
+	Old Type Applet.
+ -->
+
 <oaf_server iid="OAFIID:GNOME_Panel_TestApplet_Factory"
 	    type="exe"
 	    location="test-applet">
@@ -22,6 +26,36 @@
 		<item value="IDL:Bonobo/Unknown:1.0"/>
 	</oaf_attribute>
 	<oaf_attribute name="name" type="string" value="Test Applet"/>
+	<oaf_attribute name="description" type="string" value="A simple applet for testing the GNOME-2.0 panel"/>
+
+</oaf_server>
+
+<!--
+	New Type Applet.
+ -->
+
+<oaf_server iid="OAFIID:GNOME_Panel_TestBonoboApplet_Factory"
+	    type="exe"
+	    location="test-bonobo-applet">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" value="Test Bonobo Applet Factory"/>
+	<oaf_attribute name="description" type="string" value="Test Bonobo Applet Factory"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_Panel_TestBonoboApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_Panel_TestBonoboApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" value="Test Bonobo Applet"/>
 	<oaf_attribute name="description" type="string" value="A simple applet for testing the GNOME-2.0 panel"/>
 
 </oaf_server>
