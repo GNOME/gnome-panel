@@ -23,6 +23,9 @@ struct _ButtonWidget
 	GdkPixmap		*pixmap; /*this is the one we start from*/
 	GdkBitmap		*mask;
 	
+	char			*filename;
+	int			size;
+	
 	GdkWindow               *event_window;
 	
 	char			*text;
@@ -54,13 +57,16 @@ struct _ButtonWidgetClass
 
 guint		button_widget_get_type		(void);
 
-GtkWidget*	button_widget_new		(GdkPixmap *pixmap,
+GtkWidget*	button_widget_new		(char *filename,
+						 GdkPixmap *pixmap,
 						 GdkBitmap *mask,
+						 int size,
 						 guint tile,
 						 guint arrow,
 						 PanelOrientType orient,
 						 char *text);
 GtkWidget*	button_widget_new_from_file	(char *pixmap,
+						 int size,
 						 guint tile,
 						 guint arrow,
 						 PanelOrientType orient,
@@ -72,10 +78,13 @@ void		button_widget_draw		(ButtonWidget *button,
 						 int offy);
 
 void		button_widget_set_pixmap	(ButtonWidget *button,
+						 char *filename,
+						 int size,
 						 GdkPixmap *pixmap,
 						 GdkBitmap *mask);
 int		button_widget_set_pixmap_from_file(ButtonWidget *button,
-						   char *pixmap);
+						   char *pixmap,
+						   int size);
 
 void		button_widget_set_text		(ButtonWidget *button,
 						 char *text);

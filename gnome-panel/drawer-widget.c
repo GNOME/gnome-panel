@@ -141,7 +141,7 @@ drawer_widget_class_init (DrawerWidgetClass *class)
 	widget_class->realize = drawer_widget_realize;
 }
 
-/*if this is true the size request will request a 48x48 cube, this is used
+/*if this is true the size request will request a 24x24 cube, this is used
   during orientation changes to make no flicker*/
 static int drawer_widget_request_cube = FALSE;
 static void
@@ -167,21 +167,14 @@ drawer_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	/* do a minimal 48x48 size*/
-	if(chreq.width<48)
-		chreq.width=48;
-	if(chreq.height<48)
-		chreq.height=48;
-	/*FIXME: this makes the drawers too small and I want them to
-	  be large!, once proper sizing is in place this won't be
-	  necessary*/
-	/*if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(chreq.width<PANEL_MINIMUM_WIDTH)
-			chreq.width=PANEL_MINIMUM_WIDTH;
+	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+		if(chreq.width<48)
+			chreq.width=48;
 	} else {
-		if(chreq.height<PANEL_MINIMUM_WIDTH)
-			chreq.height=PANEL_MINIMUM_WIDTH;
-	}*/
+		if(chreq.height<48)
+			chreq.height=48;
+	}
+
 	requisition->width = chreq.width;
 	requisition->height = chreq.height;
 }
@@ -263,21 +256,13 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	  are sometimes a cube for the flicker prevention*/
 	gtk_widget_size_request (basep->ebox, &chreq);
 
-	/* do a minimal 48x48 size*/
-	if(chreq.width<48)
-		chreq.width=48;
-	if(chreq.height<48)
-		chreq.height=48;
-	/*FIXME: this makes the drawers too small and I want them to
-	  be large!, once proper sizing is in place this won't be
-	  necessary*/
-	/*if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(chreq.width<PANEL_MINIMUM_WIDTH)
-			chreq.width=PANEL_MINIMUM_WIDTH;
+	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+		if(chreq.width<48)
+			chreq.width=48;
 	} else {
-		if(chreq.height<PANEL_MINIMUM_WIDTH)
-			chreq.height=PANEL_MINIMUM_WIDTH;
-	}*/
+		if(chreq.height<48)
+			chreq.height=48;
+	}
 	allocation->width = chreq.width;
 	allocation->height = chreq.height;
 

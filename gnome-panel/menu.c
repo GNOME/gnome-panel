@@ -3278,7 +3278,7 @@ create_panel_menu (char *menudir, int main_menu,
 	menu->main_menu_flags = main_menu_flags;
 
 	/*make the pixmap*/
-	menu->button = button_widget_new_from_file (pixmap_name,
+	menu->button = button_widget_new_from_file (pixmap_name,-1,
 						    MENU_TILE,
 						    TRUE,orient,
 						    _("Menu"));
@@ -3435,7 +3435,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
 		button_widget_set_pixmap_from_file (BUTTON_WIDGET(menu->button),
-						    pixmap_name);
+						    pixmap_name, -1);
 		g_free(pixmap_name);
 		
 		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);

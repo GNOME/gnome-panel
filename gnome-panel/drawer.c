@@ -49,14 +49,14 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	if(!s || !*s) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 		button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
-						    drawer->pixmap);
+						    drawer->pixmap,-1);
 	} else {
-		if(button_widget_set_pixmap_from_file(BUTTON_WIDGET(drawer->button), s))
+		if(button_widget_set_pixmap_from_file(BUTTON_WIDGET(drawer->button), s, -1))
 			drawer->pixmap = g_strdup(s);
 		else {
 			drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 			button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
-							    drawer->pixmap);
+							    drawer->pixmap,-1);
 		}
 	}
 	g_free(s);
@@ -236,7 +236,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 	} else {
 		drawer->pixmap = g_strdup(pixmap);
 	}
-	drawer->button = button_widget_new_from_file (drawer->pixmap,
+	drawer->button = button_widget_new_from_file (drawer->pixmap, -1,
 						      DRAWER_TILE,
 						      TRUE,orient,
 						      _("Drawer"));

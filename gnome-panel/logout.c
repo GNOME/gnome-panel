@@ -44,7 +44,7 @@ create_logout_widget(void)
 
 	pixmap_name = gnome_pixmap_file("gnome-term-night.png");
 
-	button = button_widget_new_from_file(pixmap_name,
+	button = button_widget_new_from_file(pixmap_name,-1,
 					     MISC_TILE,
 					     FALSE,
 					     ORIENT_UP,
@@ -78,7 +78,7 @@ create_lock_widget(void)
 
 	pixmap_name = gnome_pixmap_file("gnome-lockscreen.png");
 
-	button = button_widget_new_from_file(pixmap_name,
+	button = button_widget_new_from_file(pixmap_name,-1,
 					     MISC_TILE,
 					     FALSE,
 					     ORIENT_UP,

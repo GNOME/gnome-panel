@@ -158,6 +158,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 			g_free (icon);
 		}
 		launcher->button = button_widget_new_from_file(dentry->icon,
+							       -1,
 							       LAUNCHER_TILE,
 							       FALSE,
 							       ORIENT_UP,
@@ -165,7 +166,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	}
 	if (!launcher->button) {
 		launcher->button =
-			button_widget_new_from_file(default_app_pixmap,
+			button_widget_new_from_file(default_app_pixmap,-1,
 						    LAUNCHER_TILE,
 						    FALSE,ORIENT_UP,
 						    _("App"));
@@ -247,12 +248,14 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			g_free (icon);
 		}
 		if(!button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
-							launcher->dentry->icon))
+							launcher->dentry->icon,
+							-1))
 			button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
-							    default_app_pixmap);
+							    default_app_pixmap,
+							    -1);
 	} else {
 		button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
-						    default_app_pixmap);
+						    default_app_pixmap, -1);
 	}
 }
 

@@ -387,6 +387,9 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	default:
 		g_assert_not_reached();
 	}
+
+	gnome_config_set_int("sz", panel->sz);
+
 	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
 
 	gnome_config_set_string("backpixmap",

@@ -1042,12 +1042,10 @@ panel_config(GtkWidget *panel)
 		add_drawer_properties_page(ppc, info->data);
 	}
 						
-#if 0
 	/* Size configuration */
 	page = size_notebook_page (ppc);
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Size")));
-#endif
 
 	/* Backing configuration */
 	page = background_page (ppc);
