@@ -63,8 +63,6 @@ ditem_properties_apply_timeout (gpointer data)
 		g_object_set_data (G_OBJECT (dedit), "SavingError", NULL);
 	}
 
-	gnome_desktop_item_unref (ditem);
-
 	return FALSE;
 }
 
