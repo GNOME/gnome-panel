@@ -52,7 +52,7 @@
 #define CALENDAR_SOURCES_SELECTED_APPOINTMENT_SOURCES_KEY CALENDAR_SOURCES_SELECTED_APPOINTMENT_SOURCES_DIR "/selected_calendars"
 #define CALENDAR_SOURCES_TASK_SOURCES_KEY                 CALENDAR_SOURCES_EVO_DIR "/tasks/sources"
 #define CALENDAR_SOURCES_SELECTED_TASK_SOURCES_DIR        CALENDAR_SOURCES_EVO_DIR "/calendar/tasks"
-#define CALENDAR_SOURCES_SELECTED_TASK_SOURCES_KEY        CALENDAR_SOURCES_SELECTED_APPOINTMENT_SOURCES_DIR "/selected_tasks"
+#define CALENDAR_SOURCES_SELECTED_TASK_SOURCES_KEY        CALENDAR_SOURCES_SELECTED_TASK_SOURCES_DIR "/selected_tasks"
 
 typedef struct _CalendarSourceData CalendarSourceData;
 
@@ -402,7 +402,8 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
 	  ESource *esource = E_SOURCE (s->data);
 	  ECal    *client;
 
-	  dprintf ("      uid = '%s', name = '%s', relative uri = '%s': \n",
+	  dprintf ("      type = '%s' uid = '%s', name = '%s', relative uri = '%s': \n",
+                   source_data->source_type == E_CAL_SOURCE_TYPE_EVENT ? "appointment" : "task",
 		   e_source_peek_uid (esource),
 		   e_source_peek_name (esource),
 		   e_source_peek_relative_uri (esource));
@@ -416,6 +417,11 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
     }
   dprintf ("\n");
 
+  for (l = source_data->clients; l; l = l->next)
+    g_object_unref (l->data);
+  g_slist_free (source_data->clients);
+  source_data->clients = g_slist_reverse (loaded_clients);
+
   if (source_data->loaded && 
       !compare_ecal_lists (source_data->clients, loaded_clients))
     {
@@ -423,11 +429,6 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
 	       source_data->source_type == E_CAL_SOURCE_TYPE_EVENT ? "appointment" : "task");
       g_signal_emit (source_data->sources, source_data->changed_signal, 0);
     }
-
-  for (l = source_data->clients; l; l = l->next)
-    g_object_unref (l->data);
-  g_slist_free (source_data->clients);
-  source_data->clients = g_slist_reverse (loaded_clients);
 
   debug_dump_ecal_list (source_data->clients);
 }
