@@ -19,7 +19,6 @@ struct _MenuFinfo {
 	char *dir_name;
 	char *pixmap_name;	
 	gboolean fake_menu;
-	gboolean title;
 	FileRec *fr;
 };
 

@@ -1,3 +1,15 @@
+Sun Dec 09 03:25:13 2001  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c, menu-util.[ch]: initial crack at porting the
+	  tasklist thing to libwnck, reenable the clock menu thing, use main
+	  menu stuff for the "applications" menu so that we can get a KDE
+	  and/or distribution submenu and remove some dead code
+
+	* menu.[ch], foobar-widget.c, menu-fentry.h: whack the title flags
+	  from things.  Menu titles are long dead
+
+	* applet.c: also launch nautilus for edit menus
+
 Sat Dec 08 23:16:39 2001  George Lebl <jirka@5z.com>
 
 	* menu.[ch], menu-fentry.h, menu-util.c, menu-properties.c,

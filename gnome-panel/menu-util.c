@@ -199,3 +199,23 @@ get_default_menu_flags (void)
 
 	return flags;
 }
+
+gboolean
+got_kde_menus (void)
+{
+	/*guess KDE menus*/
+	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
+		return TRUE;
+	else
+		return FALSE;
+}
+
+gboolean
+got_distro_menus (void)
+{
+	/*guess distribution menus*/
+	if (get_distribution_type () != DISTRIBUTION_UNKNOWN)
+		return TRUE;
+	else
+		return FALSE;
+}

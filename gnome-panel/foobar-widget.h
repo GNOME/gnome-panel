@@ -37,17 +37,16 @@ struct _FoobarWidget
 	guint clock_timeout;
 
 	GtkWidget *programs;
-	GtkWidget *settings;
 
-	GHashTable *tasks;
+	GHashTable *windows;
 	GtkWidget *task_item;
 	GtkWidget *task_menu;
 	GtkWidget *task_image;
 	GtkWidget *task_bin;
-	GwmhTask *icon_task; /* the task whoose icon is shown,
-			      * hopefully should be always OK,
-			      * but we only use the pointer value
-			      * and never dereference this */
+	gpointer icon_window; /* the task whoose icon is shown,
+			       * hopefully should be always OK,
+			       * but we only use the pointer value
+			       * and never dereference this */
 
 	gboolean compliant_wm;
 	char *clock_format;

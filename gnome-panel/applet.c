@@ -158,10 +158,11 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
 		else if(strcmp(menu->name,"edit_menus")==0) {
-			char *tmp;
-			if((tmp = g_find_program_in_path ("gmenu")))  {
-				gnome_execute_async (g_get_home_dir (), 1, &tmp);
-				g_free(tmp);
+			char *tmp[3] = { NULL, NULL, NULL };
+			if((tmp[0] = g_find_program_in_path ("nautilus")) != NULL)  {
+				tmp[1] = "programs:/";
+				gnome_execute_async (g_get_home_dir (), 2, tmp);
+				g_free (tmp[0]);
 			}
 		} else if (strcmp (menu->name, "help") == 0) {
 			Menu *menu2 = menu->info->data;

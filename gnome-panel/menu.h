@@ -92,14 +92,12 @@ GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean fake_submenus,
-					 gboolean force,
-					 gboolean title);
+					 gboolean force);
 GtkWidget *	create_fake_menu_at	(const char *menudir,
 					 gboolean applets,
 					 gboolean launcher_add,
 					 const char *dir_name,
-					 const char *pixmap_name,
-					 gboolean title);
+					 const char *pixmap_name);
 
 void		submenu_to_display	(GtkWidget *menuw, gpointer data);
 gboolean	menu_need_reread	(GtkWidget *menuw);
@@ -111,7 +109,7 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 					 int flags,
 					 gboolean tearoff,
 					 gboolean is_basep,
-					 gboolean title);
+					 gboolean run_item);
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);

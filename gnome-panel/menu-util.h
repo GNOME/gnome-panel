@@ -20,6 +20,8 @@ void       panel_menu_position    (GtkMenu  *menu,
 GtkWidget *add_menu_separator     (GtkWidget *menu);
 
 int        get_default_menu_flags (void);
+gboolean   got_kde_menus (void);
+gboolean   got_distro_menus (void);
 
 G_END_DECLS
 
