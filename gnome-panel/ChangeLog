@@ -1,3 +1,13 @@
+2001-12-19  Glynn Foster  <glynn.foster@sun.com>
+
+	* main.c, menu.c, panel-applet-frame.c, panel-gconf.c,
+	* panel-gconf.h, session.c, session.h:
+
+	Move the get and set methods for the profiles to session where 
+	they probably belong. Start saving the panel config per profile.
+	It's like totally buggy right now, but it's sort of getting there.
+	Panels crash because of lack of schema.
+
 2001-12-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: add panel-main.h.

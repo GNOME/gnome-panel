@@ -332,7 +332,7 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
 
 	moniker = g_strdup_printf ("%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs", 
 				   iid,
-				   panel_main_get_current_profile (),
+				   session_get_current_profile (),
 				   frame->priv->unique_key);
 
         widget = bonobo_widget_new_control (moniker, NULL);

@@ -25,6 +25,10 @@ gboolean	panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, c
 gchar *		panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
 gint		panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
 
+void		panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *panel_id, const gchar *key, gint value);
+void		panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean value);
+void		panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_id, const gchar *key, const gchar *value);
+
 /* FIXME - Probably not need anymore */
 gchar *		panel_gconf_get_session_key (void);
 

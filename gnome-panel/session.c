@@ -84,6 +84,19 @@ GtkWidget *ss_timeout_dlg = NULL;
 static gboolean ss_interactive = FALSE;
 static int ss_timeout = 500;
 
+static gchar *panel_profile_name = NULL;
+
+gchar *
+session_get_current_profile (void) {
+	return panel_profile_name;
+}
+
+void
+session_set_current_profile (const gchar *profile_name) {
+	g_free (panel_profile_name);
+	panel_profile_name = g_strdup (profile_name);
+}
+
 void
 apply_global_config (void)
 {
@@ -371,12 +384,17 @@ save_applet_configuration(AppletInfo *info)
 static void
 save_panel_configuration(gpointer data, gpointer user_data)
 {
-	GString       *buf;
-	int           *num = user_data;
-	PanelData     *pd = data;
-	BasePWidget   *basep = NULL; 
-	PanelWidget   *panel = NULL;
-	gchar *panel_profile_key;
+	BasePWidget *basep = NULL; 
+	PanelWidget *panel = NULL;
+	PanelData *pd = data;
+	GString	*buf;
+	gchar *panel_profile;
+	
+	/* FIXME: Do we need user_data anymore?? */
+
+	buf = g_string_new (NULL);
+
+	panel_profile = session_get_current_profile ();
 
 	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
@@ -384,41 +402,58 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
-
-	buf = g_string_new (NULL);
-	gnome_config_set_int("type",pd->type);
+	
+	panel_gconf_panel_profile_set_int (panel_profile,
+					   (gchar *) panel->unique_id,	
+					   "panel-type", pd->type);
 
 	if (basep != NULL) {
-		gnome_config_set_bool("hidebuttons_enabled",
-				      basep->hidebuttons_enabled);
-		gnome_config_set_bool("hidebutton_pixmaps_enabled",
-				      basep->hidebutton_pixmaps_enabled);
-	
-		gnome_config_set_int ("mode", basep->mode);
-		gnome_config_set_int ("state", basep->state);
-
-		gnome_config_set_int ("screen",
-				      basep->screen);
+		panel_gconf_panel_profile_set_bool (panel_profile,
+						    (gchar *) panel->unique_id,
+						    "hide-buttons-enabled", basep->hidebuttons_enabled);
+		panel_gconf_panel_profile_set_bool (panel_profile,
+						    (gchar *) panel->unique_id,
+						    "hide-button-pixmaps-enabled", basep->hidebutton_pixmaps_enabled);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,
+						   "panel-hide-mode", basep->mode);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,
+						   "panel-hide-state", basep->state);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,
+						   "screen-id", basep->screen);
 	}
 
-	gnome_config_set_int("unique_id", panel->unique_id);
+	panel_gconf_panel_profile_set_int (panel_profile,
+					   (gchar *) panel->unique_id,	
+					   "panel-size", panel->sz);
+	panel_gconf_panel_profile_set_bool (panel_profile,
+					    (gchar *) panel->unique_id,	
+					    "panel-backgroun-pixmap-fit", panel->fit_pixmap_bg);
+	panel_gconf_panel_profile_set_bool (panel_profile,
+					    (gchar *) panel->unique_id,	
+					    "panel-background-pixmap-stretch", panel->stretch_pixmap_bg);
+	panel_gconf_panel_profile_set_bool (panel_profile,
+					    (gchar *) panel->unique_id,	
+					    "panel-background-pixmap-rotate", panel->rotate_pixmap_bg);
+	panel_gconf_panel_profile_set_string (panel_profile,
+					      (gchar *) panel->unique_id,	
+					      "panel-background-pixmap", sure_string (panel->back_pixmap));
 
-	gnome_config_set_int("sz", panel->sz);
-
-	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
-	gnome_config_set_bool("stretch_pixmap_bg", panel->stretch_pixmap_bg);
-	gnome_config_set_bool("rotate_pixmap_bg", panel->rotate_pixmap_bg);
-
-	gnome_config_set_string ("backpixmap",
-				 sure_string (panel->back_pixmap));
 
 	g_string_sprintf(buf, "#%02x%02x%02x",
 			 (guint)panel->back_color.red/256,
 			 (guint)panel->back_color.green/256,
 			 (guint)panel->back_color.blue/256);
-	gnome_config_set_string("backcolor", buf->str);
+	
+	panel_gconf_panel_profile_set_string (panel_profile,
+					      (gchar *) panel->unique_id,	
+					      "panel-background-color", buf->str);
 
-	gnome_config_set_int("back_type", panel->back_type);
+	panel_gconf_panel_profile_set_int (panel_profile,
+					   (gchar *) panel->unique_id,	
+					   "panel-background-type", panel->back_type);
 	
 	/* now do different types */
 	if (BORDER_IS_WIDGET(pd->panel))
@@ -426,35 +461,48 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	switch (pd->type) {
 	case ALIGNED_PANEL:
-		gnome_config_set_int ("align", ALIGNED_POS (basep->pos)->align);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-align", ALIGNED_POS (basep->pos)->align);
 		break;
 	case SLIDING_PANEL:
-		gnome_config_set_int ("offset", SLIDING_POS (basep->pos)->offset);
-		gnome_config_set_int ("anchor", SLIDING_POS (basep->pos)->anchor);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-offset", SLIDING_POS (basep->pos)->offset);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-anchor", SLIDING_POS (basep->pos)->anchor);
 		break;
 	case FLOATING_PANEL:
-		gnome_config_set_int ("orient", PANEL_WIDGET (basep->panel)->orient);
-		gnome_config_set_int ("x", FLOATING_POS (basep->pos)->x);
-		gnome_config_set_int ("y", FLOATING_POS (basep->pos)->y);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-orient", PANEL_WIDGET (basep->pos)->orient);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-x-position", FLOATING_POS (basep->pos)->x);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-y-position", FLOATING_POS (basep->pos)->y);
 		break;
 	case DRAWER_PANEL:
-		gnome_config_set_int ("orient", DRAWER_POS (basep->pos)->orient);
-		/*gnome_config_set_int ("temp_hidden", DRAWER_POS (basep->pos)->temp_state);*/
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "panel-orient", DRAWER_POS (basep->pos)->orient);
 		break;
 	case FOOBAR_PANEL:
-	g_string_sprintf(buf, "%spanel/Panel_%d", PANEL_CONFIG_PATH, *num);
-		panel_profile_key = panel_gconf_global_config_get_full_key ("clock-format");
-		panel_gconf_set_string (panel_profile_key, FOOBAR_WIDGET (pd->panel)->clock_format);
-		g_free (panel_profile_key);
-		gnome_config_set_int ("screen", FOOBAR_WIDGET (pd->panel)->screen);
+		panel_gconf_panel_profile_set_string (panel_profile,
+						      (gchar *) panel->unique_id,	
+						      "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
+		panel_gconf_panel_profile_set_int (panel_profile,
+						   (gchar *) panel->unique_id,	
+						   "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
 	}
 	
-	g_string_free(buf,TRUE);
+	g_string_free (buf,TRUE);
 
-	gnome_config_pop_prefix ();
 }
 
 void
@@ -968,7 +1016,7 @@ session_init_panels(void)
 	GSList *temp;
 	gchar *timestring;
 
-	panel_profile_key = panel_gconf_general_profile_get_full_key (panel_main_get_current_profile (), "panel-id-list");
+	panel_profile_key = panel_gconf_general_profile_get_full_key (session_get_current_profile (), "panel-id-list");
 
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
 		/* FIXME: We need to resort to another fallback default panel config 
@@ -1001,7 +1049,7 @@ session_init_panels(void)
 		int hidebutton_pixmaps_enabled;
 		int screen;
 
-		back_pixmap = panel_gconf_panel_profile_get_conditional_string (panel_main_get_current_profile (), 
+		back_pixmap = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (), 
 										      (const gchar *) temp->data,
 										      "panel-background-pixmap",
 										      use_default);
@@ -1010,7 +1058,7 @@ session_init_panels(void)
 			back_pixmap = NULL;
 		}
 
-		color = panel_gconf_panel_profile_get_conditional_string (panel_main_get_current_profile (),
+		color = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 								   	  (const gchar *) temp->data,
 									  "panel-background-color",
 									  use_default);
@@ -1018,27 +1066,27 @@ session_init_panels(void)
 			gdk_color_parse (color, &back_color);
 
 		
-		back_type = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		back_type = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								  	   (const gchar *) temp->data,
 									   "panel-background-type",
 									   use_default);
 		
-		fit_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (panel_main_get_current_profile (),
+		fit_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-background-pixmap-fit",
 										use_default);
 
-		stretch_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (panel_main_get_current_profile (),
+		stretch_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										    (const gchar *) temp->data,
 										    "panel-background-pixmap-stretch",
 										    use_default);
 
-		rotate_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (panel_main_get_current_profile (),
+		rotate_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										  (const gchar *) temp->data,
 								       		  "panel-background-pixmap-rotate",
 								       		  use_default);
 		
-		sz = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		sz = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								    (const gchar *) temp->data,
 								    "panel-size",
 								    use_default);
@@ -1046,32 +1094,32 @@ session_init_panels(void)
 
 		/* Now for type specific config */
 
-		type = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		type = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								      (const gchar *) temp->data,
 								      "panel-type",
 								      use_default);
 		
-		hidebuttons_enabled = panel_gconf_panel_profile_get_conditional_bool (panel_main_get_current_profile (),
+		hidebuttons_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										      (const gchar *) temp->data,
 										      "hide-buttons-enabled",
 										      use_default);
 		
-		hidebutton_pixmaps_enabled = panel_gconf_panel_profile_get_conditional_bool (panel_main_get_current_profile (),
+		hidebutton_pixmaps_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
 										   	     (const gchar *) temp->data,
 										   	     "hide-button-pixmaps-enabled",
 										   	     use_default);
 
-		state = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		state = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								       (const gchar *) temp->data,
 									"panel-hide-state",
 									use_default);
 
-		mode = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		mode = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								      (const gchar *) temp->data,
 								      "panel-hide-mode",
 								      use_default);
 
-		screen = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+		screen = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 								        (const gchar *) temp->data,
 									"screen-id",
 									use_default);
@@ -1079,7 +1127,7 @@ session_init_panels(void)
 		switch (type) {
 			
 		case EDGE_PANEL:
-			edge = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
 									      use_default);
@@ -1099,12 +1147,12 @@ session_init_panels(void)
 		case ALIGNED_PANEL: {
 			AlignedAlignment align;
 			
-			edge = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
 									      use_default);
 			
-			align = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			align = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "panel-align",
 									      use_default);
@@ -1133,17 +1181,17 @@ session_init_panels(void)
 			gint16 offset;
 			SlidingAnchor anchor;
 			
-			edge = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			edge = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									      (const gchar *) temp->data,
 									      "screen-edge",
 									      use_default);
 
-			anchor = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			anchor = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 									        "panel-anchor",
 										use_default);
 			
-			offset = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			offset = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-offset",
 										use_default);
@@ -1175,7 +1223,7 @@ session_init_panels(void)
 		case DRAWER_PANEL: {
 			PanelOrient orient;
 			
-			orient = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			orient = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-orient",
 										use_default);
@@ -1205,17 +1253,17 @@ session_init_panels(void)
 			GtkOrientation orient;
 			int x, y;
 			
-			orient = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			orient = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 										(const gchar *) temp->data,
 										"panel-orient",
 										use_default);
 
-			x = panel_gconf_panel_profile_get_conditional_int (panel_main_get_current_profile (),
+			x = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
 									   (const gchar *) temp->data,
 									   "panel-x-position",
 									   use_default);
 
-			y = panel_gconf_panel_profile_get_conditional_int  (panel_main_get_current_profile (),
+			y = panel_gconf_panel_profile_get_conditional_int  (session_get_current_profile (),
 									    (const gchar *) temp->data,
 									    "panel-y-position",
 									    use_default);
@@ -1249,7 +1297,7 @@ session_init_panels(void)
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new (screen);
 
-			timestring = panel_gconf_panel_profile_get_conditional_string (panel_main_get_current_profile (),
+			timestring = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 										       (const gchar *) temp->data,
 										       "clock-format",
 										       use_default);
