@@ -41,7 +41,6 @@ CORBA::BOA_ptr boa_ptr;
 BEGIN_GNOME_DECLS
 void change_orient(int applet_id, int orient);
 void session_save(int applet_id, const char *cfgpath, const char *globcfgpath);
-void shutdown_applet(int applet_id);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
@@ -55,9 +54,6 @@ public:
 			   const char *cfgpath,
 			   const char *globcfgpath) {
 		::session_save(applet_id,cfgpath,globcfgpath);
-	}
-	void shutdown_applet (CORBA::Short applet_id) {
-		::shutdown_applet(applet_id);
 	}
         void do_callback (CORBA::Short applet_id,
 			  const char *callback_name)

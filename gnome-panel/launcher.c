@@ -73,14 +73,6 @@ find_launcher(int applet_id)
 
 
 static void
-free_user_data(GtkWidget *widget, gpointer data)
-{
-	Launcher *launcher = gtk_object_get_user_data(GTK_OBJECT(widget));
-	gnome_desktop_entry_free(launcher->dentry);
-	g_free(launcher);
-}
-
-static void
 launch (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
@@ -150,10 +142,6 @@ create_launcher (GtkWidget *window, char *parameters)
 
 	launcher->applet_id = -1;
 	launcher->plug = NULL;
-
-	gtk_signal_connect(GTK_OBJECT(launcher->button), "destroy",
-			   (GtkSignalFunc) free_user_data,
-			   NULL);
 
 	return launcher;
 }
@@ -417,20 +405,20 @@ session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 	gnome_config_drop_all();
 }
 
-void
-shutdown_applet(int applet_id)
+static gint
+destroy_plug(GtkWidget *widget, gpointer data)
 {
-	Launcher *launcher = find_launcher(applet_id);
+	Launcher *launcher = data;
 
 	g_return_if_fail(launcher != NULL);
 
-	/*FIXME: somehow unref or something this, so we don't leak,
-	  unref gives me a bunch of warnings here*/
-	if(launcher->plug)
-		gtk_widget_destroy(launcher->plug);
-
 	launcher_count--;
 	launchers = g_list_remove(launchers,launcher);
+
+	gnome_desktop_entry_free(launcher->dentry);
+	g_free(launcher);
+
+	return FALSE;
 }
 
 void
@@ -451,7 +439,7 @@ start_new_launcher(const char *path)
 	if (result)
 		g_error ("Could not talk to the Panel: %s\n", result);
 
-	plug = gtk_plug_new(winid);;
+	plug = gtk_plug_new(winid);
 
 	launcher = NULL;
 	/*no path given, try getting it from config*/
@@ -480,6 +468,9 @@ start_new_launcher(const char *path)
 	launcher->applet_id = applet_id;
 	gtk_container_add (GTK_CONTAINER (plug), launcher->button);
 	gtk_widget_show (plug);
+	gtk_signal_connect(GTK_OBJECT(plug),"destroy",
+			   GTK_SIGNAL_FUNC(destroy_plug),
+			   launcher);
 
 	result = gnome_panel_applet_register(plug,applet_id);
 	if (result)

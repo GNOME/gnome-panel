@@ -237,27 +237,7 @@ panel_session_save (GnomeClient *client,
 						"/",NULL);
 	}
 
-	/*we can clean the whole file right????*/
 	gnome_config_clean_file(panel_cfg_path);
-
-	/*for(num=gnome_config_get_int("/panel/Config/applet_count=0");
-		num>0;num--) {
-		sprintf(buf,"/panel/Applet_%d",num);
-		if(gnome_config_has_section(buf))
-			gnome_config_clean_section(buf);
-	}
-	for(num=gnome_config_get_int("/panel/Config/drawer_count=0");
-		num>0;num--) {
-		sprintf(buf,"/panel/Drawer_%d",num);
-		if(gnome_config_has_section(buf))
-			gnome_config_clean_section(buf);
-	}
-	for(num=gnome_config_get_int("/panel/Config/panel_count=0");
-		num>0;num--) {
-		sprintf(buf,"/panel/Panel_%d",num);
-		if(gnome_config_has_section(buf))
-			gnome_config_clean_section(buf);
-	}*/
 
 	num = 1;
 	g_list_foreach(applets,save_applet_configuration,&num);
@@ -289,19 +269,14 @@ panel_session_save (GnomeClient *client,
 		int i;
 		AppletInfo *info;
 
+		g_list_foreach(panels,destroy_widget_list,NULL);
+
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
 			info = list->data;
-			if(info->type == APPLET_EXTERN) {
-				gtk_container_remove(
-					GTK_CONTAINER(info->widget),
-					info->applet_widget);
-				send_applet_shutdown_applet(info->id_str,i);
-			}
 			if(info->menu)
 				gtk_widget_unref(info->menu);
+			g_free(info);
 		}
-
-		g_list_foreach(panels,destroy_widget_list,NULL);
 
 		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 

@@ -649,7 +649,7 @@ init_user_panels(void)
 	PanelState state;
 	DrawerDropZonePos drop_pos;
 
-	sprintf(buf,"%sConfig/panel_count=%d",old_panel_cfg_path,num);
+	sprintf(buf,"%sConfig/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
 	if(count<=0) count++; /*this will load up a single panel with
 				default settings*/

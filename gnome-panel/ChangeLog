@@ -1,3 +1,14 @@
+Wed Apr 15 20:14:55 1998  George Lebl  <jirka@5z.com>
+
+	* gnome-panel.idl, applet-lib.cc: no more shutdown_applet
+	  mess. now it's handeled by the destroy signal on the plug.
+
+	* panel.c: now only destroys teh panel, doesn't send any
+	  corba messages to shutdown
+
+	* main.c: fixed a nasty bug on startup where I was using an
+	  uninitialized value
+
 Wed Apr 15 16:38:45 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c,main.c: get current session_id when

@@ -21,17 +21,10 @@ session_save(int id, const char *cfgpath, const char *globcfgpath)
 }
 
 static gint
-quit_logout(gpointer data)
+destroy_plug(GtkWidget *widget, gpointer data)
 {
-	exit(0);
-}
-
-
-void
-shutdown_applet(int id)
-{
-	gtk_widget_destroy(plug);
-	gtk_idle_add(quit_logout, NULL);
+	gtk_exit(0);
+	return FALSE;
 }
 
 static void
@@ -104,6 +97,10 @@ main(int argc, char *argv[])
 	gtk_widget_show(logout);
 	gtk_container_add(GTK_CONTAINER(plug), logout);
 	gtk_widget_show(plug);
+	gtk_signal_connect(GTK_OBJECT(plug),"destroy",
+			   GTK_SIGNAL_FUNC(destroy_plug),
+			   NULL);
+
 
 	result = gnome_panel_applet_register(plug, applet_id);
 	if (result)
