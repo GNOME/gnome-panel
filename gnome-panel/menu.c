@@ -2435,6 +2435,12 @@ compare_filerecs (FileRec *fr1, FileRec *fr2)
     return -1;
   } else {
     /* sort by locale ordering */
+    if ((fr1 == NULL) || (fr1->fullname == NULL)) {
+      return 1;
+    }
+    if ((fr2 == NULL) || (fr2->fullname == NULL)) {
+      return -1;
+    }
     return g_utf8_collate (fr1->fullname, fr2->fullname);
   }
 }
