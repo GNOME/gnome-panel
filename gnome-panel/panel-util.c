@@ -38,6 +38,7 @@ get_full_path(char *argv0)
 		free(curpath);
 
 		realpath(outbuf,buf);
+		g_free(outbuf);
 	
 		return g_strdup(buf);
 	}
