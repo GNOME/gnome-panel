@@ -2724,6 +2724,59 @@ create_add_panel_submenu (void)
 	menu = menu_new ();
 
 	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-corner.png", 
+				   _("C_orner Panel"));
+	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
+			      _("Create corner panel"), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (G_OBJECT(menuitem), "activate",
+			   G_CALLBACK(create_new_panel),
+			   GINT_TO_POINTER(ALIGNED_PANEL));
+
+ 	
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
+				   _("_Edge Panel"));
+	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
+			      _("Create edge panel"), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (G_OBJECT(menuitem), "activate",
+			   G_CALLBACK(create_new_panel),
+			   GINT_TO_POINTER(EDGE_PANEL));
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-floating.png", 
+				   _("_Floating Panel"));
+	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
+			      _("Create floating panel"), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (G_OBJECT(menuitem), "activate",
+			   G_CALLBACK(create_new_panel),
+			   GINT_TO_POINTER(FLOATING_PANEL));
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-sliding.png", 
+				   _("_Sliding Panel"));
+	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
+			      _("Create sliding panel"), NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (G_OBJECT(menuitem), "activate",
+			   G_CALLBACK(create_new_panel),
+			   GINT_TO_POINTER(SLIDING_PANEL));
+
+	menuitem = add_menu_separator (menu);
+
+	/* HACK, initial hide/show based on screen 0,
+	 * this works most of the time and we get it correctly in
+	 * the show/hide thingie below */
+	if (foobar_widget_exists (0))
+		gtk_widget_hide (menuitem);
+
+	g_signal_connect (G_OBJECT (menu), "show",
+			  G_CALLBACK (foobar_item_showhide),
+			  menuitem);
+
+	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
 				   _("_Menu Panel"));
 	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
@@ -2743,46 +2796,6 @@ create_add_panel_submenu (void)
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (foobar_item_showhide),
 			  menuitem);
- 	
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
-				   _("_Edge Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create edge panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(EDGE_PANEL));
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-corner.png", 
-				   _("C_orner Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create corner panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(ALIGNED_PANEL));
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-sliding.png", 
-				   _("_Sliding Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create sliding panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(SLIDING_PANEL));
-	
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-floating.png", 
-				   _("_Floating Panel"));
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, 
-			      _("Create floating panel"), NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(FLOATING_PANEL));
 
 	return menu;
 }
