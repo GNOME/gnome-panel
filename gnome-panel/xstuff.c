@@ -472,7 +472,7 @@ xstuff_get_current_workspace (GdkScreen *screen)
 				     panel_atom_get ("_NET_CURRENT_DESKTOP"),
 				     0, G_MAXLONG,
 				     False, XA_CARDINAL, &type, &format, &nitems,
-				     &bytes_after, (guchar **) &num);
+				     &bytes_after, (gpointer) &num);
 	if (gdk_error_trap_pop () || result != Success)
 		return -1;
  

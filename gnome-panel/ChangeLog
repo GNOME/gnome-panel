@@ -1,3 +1,15 @@
+2003-09-20  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* gnome-panel-screenshot.c: (find_toplevel_window):
+	* panel-action-button.c: (panel_action_button_load_from_drag):
+	* panel-background-monitor.c:
+	(panel_background_monitor_setup_pixmap):
+	* panel-background.c: (panel_background_prepare):
+	* panel-force-quit.c: (wm_state_set):
+	* panel-toplevel.c: (panel_toplevel_button_press_event):
+	* xstuff.c: (xstuff_get_current_workspace): Get rid of warnings
+	wrt pointer conversion with newer gcc.
+
 2003-09-19  Christian Neumair  <chris@gnome-de.org>
 
 	* menu.c: Fix sn i18n (#122564).
