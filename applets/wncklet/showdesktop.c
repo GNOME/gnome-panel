@@ -400,7 +400,7 @@ display_help_dialog (BonoboUIComponent *uic,
                 dialog = gtk_message_dialog_new (NULL,
                                                  GTK_DIALOG_MODAL,
                                                  GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
+                                                 GTK_BUTTONS_OK,
                                                  _("There was an error displaying help: %s"),
                                                  error->message);
 
@@ -482,7 +482,7 @@ button_toggled_callback (GtkWidget       *button,
                 dialog = gtk_message_dialog_new (NULL,
                                                  GTK_DIALOG_MODAL,
                                                  GTK_MESSAGE_ERROR,
-                                                 GTK_BUTTONS_CLOSE,
+                                                 GTK_BUTTONS_OK,
                                                  _("Your window manager does not support the show desktop button, or you are not running a window manager."));
 
                 g_object_add_weak_pointer (G_OBJECT (dialog),

@@ -255,7 +255,7 @@ preferences_response (GtkWindow *window,
 				dialog = gtk_message_dialog_new (window,
 								 GTK_DIALOG_DESTROY_WITH_PARENT,
 								 GTK_MESSAGE_ERROR,
-								 GTK_BUTTONS_CLOSE,
+								 GTK_BUTTONS_OK,
 								 _("There was an error displaying help: \n%s"),
 								 error->message);
 
@@ -281,7 +281,7 @@ error_dialog (const char *message)
 	GtkWidget *dialog;
 
 	dialog = gtk_message_dialog_new (NULL, 0,
-					 GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+					 GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
 					 message);
 
 	g_signal_connect (dialog, "response",

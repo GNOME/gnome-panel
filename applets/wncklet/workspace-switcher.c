@@ -163,7 +163,7 @@ response_cb (GtkWidget *widget,
 			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
 							 GTK_DIALOG_DESTROY_WITH_PARENT,
 							 GTK_MESSAGE_ERROR,
-							 GTK_BUTTONS_CLOSE,
+							 GTK_BUTTONS_OK,
 							  _("There was an error displaying help: %s"),
 							 error->message);
 
@@ -446,7 +446,7 @@ display_help_dialog (BonoboUIComponent *uic,
 		dialog = gtk_message_dialog_new (NULL,
 						 GTK_DIALOG_MODAL,
 						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_CLOSE,
+						 GTK_BUTTONS_OK,
 						  _("There was an error displaying help: %s"),
 						 error->message);
 

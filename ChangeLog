@@ -1,3 +1,13 @@
+2003-05-13  Greg Merchan  <merchan@phys.lsu.edu>
+	* applets/fish/fish.c, applets/notification_area/main.c,
+	  applets/clock/clock.c, applets/wncklet/showdesktop.c,
+	  applets/wncklet/window-list.c, applets/wncklet/window-menu.c,
+	  applets/wncklet/workspace-switcher.c,
+	  gnome-panel/gnome-panel-preferences.c,
+	  gnome-panel/gnome-panel-screenshot.c
+	Change GTK_BUTTONS_CLOSE to GTK_BUTTONS_OK for HIG compliance
+	Fixes bug 112202
+
 2003-05-13  Mark McLoughlin  <mark@skynet.ie>
 
 	* icons/Makefile.am: install them.
@@ -35,7 +45,7 @@
 	* configure.in: Removed "sp" and added "sr@Latn" to ALL_LINGUAS.
 
 2003-05-05  Telsa Gwynne  <hobbit@aloss.ukuu.org.uk>
-                                                                                
+
         * configure.in: Added cy to ALL_LINGUAS
 
         * po/cy.po: Added

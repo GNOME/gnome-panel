@@ -124,7 +124,7 @@ show_help (FishApplet *fish, const char *link_id)
 				NULL,
 				GTK_DIALOG_DESTROY_WITH_PARENT,
 				GTK_MESSAGE_ERROR,
-				GTK_BUTTONS_CLOSE,
+				GTK_BUTTONS_OK,
 				_("There was an error displaying help: %s"),
 				error->message);
 
@@ -474,7 +474,7 @@ something_fishy_going_on (FishApplet *fish,
 	dialog = gtk_message_dialog_new (NULL,
 					 GTK_DIALOG_DESTROY_WITH_PARENT,
 					 GTK_MESSAGE_ERROR,
-					 GTK_BUTTONS_CLOSE,
+					 GTK_BUTTONS_OK,
 					 message);
 
 	g_signal_connect (dialog, "response",
