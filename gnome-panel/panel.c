@@ -619,8 +619,8 @@ panel_menu_get(PanelData *pd)
 	return pd->menu;
 }
 
-void
-popup_panel_menu (long time)
+GtkWidget *
+make_popup_panel_menu ()
 {
 	BasePWidget *basep;
 	PanelData *pd;
@@ -643,9 +643,7 @@ popup_panel_menu (long time)
 	}
 
 	pd->menu_age = 0;
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
-			NULL, NULL, 0, time);
-		
+	return menu;
 }
 
 static int
@@ -659,9 +657,15 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		switch(bevent->button) {
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
+				GtkWidget *menu;
 				current_panel =
 					PANEL_WIDGET(basep->panel);
-				popup_panel_menu (bevent->time);
+				menu = make_popup_panel_menu ();
+				gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
+						global_config.off_panel_popups
+						? panel_menu_position : NULL,
+						widget, bevent->button,
+						bevent->time);
 				return TRUE;
 			}
 			break;

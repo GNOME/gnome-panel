@@ -77,8 +77,12 @@ panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 	case KeyRelease:
 		if(kev->keycode == global_config.menu_keycode) {
 			winkey_depth--;
-			if(!num_subkeys)
-				popup_panel_menu (GDK_CURRENT_TIME);
+			if(!num_subkeys) {
+				GtkWidget *menu = 
+					make_popup_panel_menu ();
+				gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+						NULL, NULL, 0, GDK_CURRENT_TIME);
+			}
 			return GDK_FILTER_REMOVE;
 		}
 		break;

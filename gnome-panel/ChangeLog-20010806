@@ -1,5 +1,11 @@
 1999-12-13  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* panel.c (make_popup_panel_menu): only make the menu, don't pop
+	it up
+	(panel_event): popup menu here
+
+	* global-keys.c (panel_global_keys_filter): popup menu here
+
 	* session.c (apply_global_config): (re)init keystuff here
 	(load_up_globals): load up keystuff config
 
