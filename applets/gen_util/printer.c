@@ -131,8 +131,10 @@ applet_session_save(GtkWidget *w,
 	Printer *pr = data;
 
 	gnome_config_push_prefix (cfgpath);
-	gnome_config_set_string ("print_command", pr->print_command ? pr->print_command : "");
-	gnome_config_set_string ("title", pr->print_title ? pr->print_title : "");
+	gnome_config_set_string ("print_command",
+				 pr->print_command ? pr->print_command : "");
+	gnome_config_set_string ("title",
+				 pr->print_title ? pr->print_title : "");
 	gnome_config_pop_prefix ();
 	gnome_config_sync ();
 	gnome_config_drop_all ();
