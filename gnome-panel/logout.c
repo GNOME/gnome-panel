@@ -1,4 +1,5 @@
 /* logout.c - Panel applet to end current session.  */
+/* Original author unknown. CORBAized by Elliot Lee */
 
 #include "gnome.h"
 #include "applet-lib.h"
@@ -10,6 +11,29 @@
 
 GtkWidget *aw;
 int applet_id=-1;
+
+void
+change_orient(int id, int orient)
+{
+  PanelOrientType o = (PanelOrientType)orient;
+  puts("CHANGE_ORIENT");
+}
+
+void
+session_save(int id, const char *cfgpath)
+{
+  /*FIXME: save the position*/
+  puts("SESSION_SAVE");
+}
+
+void
+shutdown_applet(int id)
+{
+  puts("SHUTDOWN_APPLET");
+  /*kill our window*/
+  gtk_widget_unref(aw);
+  exit(0);
+}
 
 static void
 logout(void)
@@ -40,7 +64,7 @@ create_logout_widget (GtkWidget *aw)
 
   gtk_signal_connect (GTK_OBJECT (button), "clicked", GTK_SIGNAL_FUNC (logout), NULL);
 
-  gtk_container_add(GTK_CONTAINER(aw), button);
+  return button;
 }
 
 int
@@ -48,8 +72,10 @@ main(int argc, char *argv[])
 {
   GtkWidget *logout;
   char *result;
+  char *cfgpath;
 
   panel_corba_register_arguments ();
+
   gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
   if(!gnome_panel_applet_init_corba ())
@@ -62,14 +88,35 @@ main(int argc, char *argv[])
 
   logout = create_logout_widget(GTK_WIDGET(aw));
   gtk_widget_show(logout);
-  applet_widget_add(APPLET_WIDGET(aw), clock);
+  applet_widget_add(APPLET_WIDGET(aw), GTK_WIDGET(logout));
   gtk_widget_show(aw);
-  result = gnome_panel_prepare_and_transfer(aw, argv[0], &applet_id, 0, 0);
+
+  {
+    char *mypath, *myinvoc;
+
+    if(argv[0][0] == '/')
+      myinvoc = g_strdup(argv[0]);
+    else
+      {
+	mypath = getcwd(NULL, 0);
+	myinvoc = g_copy_strings(mypath, "/", argv[0], NULL);
+	free(mypath);
+      }
+    
+    result = gnome_panel_applet_request_id (GTK_WIDGET(aw),
+					    myinvoc, &applet_id,
+					    &cfgpath);
+    if(result)
+      g_error("Could not talk to the panel: %s\n", result);
+
+    g_free(myinvoc);
+  }
+
+  g_free(cfgpath); /* We should load up config data first... */
+
+  result = gnome_panel_prepare_and_transfer(aw, applet_id);
   if (result)
-    {
-      printf ("Could not talk to the Panel: %s\n", result);
-      exit (1);
-    }
+    g_error("Could not talk to the Panel: %s\n", result);
   
   applet_corba_gtk_main ("IDL:GNOME/Applet:1.0");
   
