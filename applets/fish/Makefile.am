@@ -38,7 +38,7 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	$(glade_DATA)
 
-gladedir   = $(datadir)/fish
+gladedir   = $(datadir)/gnome-panel/glade
 glade_DATA = fish.glade
 
 fishbitmapsdir = $(datadir)/pixmaps/fish

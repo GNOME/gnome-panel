@@ -114,6 +114,6 @@ else
 install-data-local:
 endif
 
-gladedir   = $(datadir)/gen_util
+gladedir   = $(datadir)/gnome-panel/glade
 glade_DATA = workspace-switcher.glade window-list.glade
 
