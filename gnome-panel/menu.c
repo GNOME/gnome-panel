@@ -4374,6 +4374,7 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 	if (event->keyval == GDK_F10 && event->state == GDK_SHIFT_MASK) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
+		retval = TRUE;
 		if (menu_shell->active_menu_item &&
 		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
 			ShowItemMenu* sim;
@@ -4386,7 +4387,6 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 				bevent.button = 3;
 				bevent.time = GDK_CURRENT_TIME;
 				show_item_menu (menu_item, &bevent, sim);
-				retval = TRUE;
 			}
 		}
 		

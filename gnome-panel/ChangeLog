@@ -1,3 +1,12 @@
+2002-07-24 Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* drawer.c (key_press_drawer): Allow any arrow key to move focus to
+	object in drawer when focus is on drawer icon. Ensure that arrow keys 
+	have no effect if drawer is closed. (bug #88782)
+
+	* menu.c (panel_menu_key_press_handler): Ensure that Shift+F10 has
+	no effect for menus without context menus. (bug #88861)
+
 2002-07-23  Frank Worsley  <fworsley@shaw.ca>
 
 	* gnome-panel-screenshot.glade:

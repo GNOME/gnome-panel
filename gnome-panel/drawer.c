@@ -323,32 +323,32 @@ key_press_drawer (GtkWidget *widget, GdkEventKey *event, gpointer data)
 		switch (event->keyval) {
 		case GDK_Up:
 		case GDK_KP_Up:
-			if (parent->orient == GTK_ORIENTATION_HORIZONTAL)
-				dir = GTK_DIR_TAB_BACKWARD;
-			else
-				return TRUE;
-			break;
 		case GDK_Left:
 		case GDK_KP_Left:
-			if (parent->orient == GTK_ORIENTATION_VERTICAL)
+			switch (BASEP_WIDGET (drawerw)->state) {
+			case BASEP_SHOWN:
+			case BASEP_AUTO_HIDDEN:
 				dir = GTK_DIR_TAB_BACKWARD;
-			else
-				return TRUE;
+				break;
+			default:
+                                return TRUE;
+				break;
+			}
 			break;
 		case GDK_Down:
 		case GDK_KP_Down:
-			if (parent->orient == GTK_ORIENTATION_HORIZONTAL)
-				dir = GTK_DIR_TAB_FORWARD;
-			else
-				return TRUE;
-			break;
 		case GDK_Right:
 		case GDK_KP_Right:
-			if (parent->orient == GTK_ORIENTATION_VERTICAL)
+			switch (BASEP_WIDGET (drawerw)->state) {
+			case BASEP_SHOWN:
+			case BASEP_AUTO_HIDDEN:
 				dir = GTK_DIR_TAB_FORWARD;
-			else
-				return TRUE;
-			break;
+				break;
+			default:
+                                return TRUE;
+				break;
+			}
+                        break;
 		case GDK_Escape:
 			switch (BASEP_WIDGET (drawerw)->state) {
 			case BASEP_SHOWN:
