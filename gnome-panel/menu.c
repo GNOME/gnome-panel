@@ -1175,7 +1175,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 			   GTK_SIGNAL_FUNC(dentry_apply_callback), o);
 	gtk_signal_connect(GTK_OBJECT(o), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
-	gtk_signal_connect (GTK_OBJECT(dialog), "apply",
+	gtk_signal_connect (GTK_OBJECT(dialog), "help",
 			    GTK_SIGNAL_FUNC (panel_pbox_help_cb),
 			    "launchers.html");
 	gtk_widget_show(dialog);
