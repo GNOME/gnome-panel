@@ -113,7 +113,7 @@ public:
 		::applet_set_tooltip(applet_id,NULL);
 	}
 	CORBA::Short applet_in_drag (const char *ccookie) {
-		CHECK_COOKIE ();
+		CHECK_COOKIE_V (FALSE);
 		return panel_applet_in_drag;
 	}
 	void quit(const char *ccookie) {

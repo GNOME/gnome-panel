@@ -858,8 +858,11 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 
 	if(ad->prevwidth!=widget->allocation.width ||
 	   ad->prevheight!=widget->allocation.height||
-	   ad->prevx!=widget->allocation.x||
-	   ad->prevy!=widget->allocation.y) {
+	   ad->prevx!=widget->allocation.x ||
+	   ad->prevy!=widget->allocation.y ||
+	   ad->prevpanelthick!=panel->thick) {
+		ad->prevpanelthick = panel->thick;
+
 		thick = panel_widget_get_thick(panel);
 		if(panel->thick != thick) {
 			panel->thick = thick;
@@ -870,12 +873,11 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				widget);
+		ad->prevwidth = widget->allocation.width;
+		ad->prevheight = widget->allocation.height;
+		ad->prevx = widget->allocation.x;
+		ad->prevy = widget->allocation.y;
 	}
-
-	ad->prevwidth = widget->allocation.width;
-	ad->prevheight = widget->allocation.height;
-	ad->prevx = widget->allocation.x;
-	ad->prevy = widget->allocation.y;
 
 	return TRUE;
 }
@@ -2354,6 +2356,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	ad->prevheight = -1;
 	ad->prevx = -1;
 	ad->prevx = -1;
+	ad->prevpanelthick = -1;
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_DATA,ad);
 
 	bind_top_applet_events(applet);
@@ -2436,6 +2439,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 		ad->prevheight = -1;
 		ad->prevx = -1;
 		ad->prevy = -1;
+		ad->prevpanelthick = -1;
 	}
 
 	gtk_signal_emit(GTK_OBJECT(old_panel),
