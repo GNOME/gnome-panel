@@ -953,9 +953,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->x);
-	g_signal_connect (G_OBJECT (button), "changed",
-			  G_CALLBACK (floating_set_xy),
-			  &ppc->x);
+	g_signal_connect (button, "value-changed",
+			  G_CALLBACK (floating_set_xy), &ppc->x);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	label = gtk_label_new (_("Y"));
@@ -967,9 +966,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
-	g_signal_connect (G_OBJECT (button), "changed",
-			  G_CALLBACK (floating_set_xy),
-			  &ppc->y);
+	g_signal_connect (button, "value-changed",
+			  G_CALLBACK (floating_set_xy), &ppc->y);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);

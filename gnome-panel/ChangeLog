@@ -1,5 +1,10 @@
 2002-03-29  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-config.c: (floating_notebook_page): connect to the
+	"value-changed" signal on the spinbutton, not "changed".
+
+2002-03-29  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am: kill swallow.[ch].
 
 	* applet.[ch]: (applet_idle_remove), (applet_callback_callback),
