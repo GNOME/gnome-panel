@@ -422,13 +422,13 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 }
 
 static PanelWidget *
-get_panel_from_menu_data(GtkMenuShell *menu)
+get_panel_from_menu_data(GtkWidget *menu)
 {
 	while(menu) {
 		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
 							 "menu_panel");
 		if(panel) return panel;
-		menu = GTK_MENU_SHELL(menu->parent_menu_shell);
+		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
 	}
 	return current_panel;
 }
@@ -1106,24 +1106,24 @@ setup_applet_drag (GtkWidget *menuitem, char *goad_id)
 static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_drawer_applet(-1,NULL,NULL, get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent)), 0);
+	load_drawer_applet(-1,NULL,NULL, get_panel_from_menu_data(widget->parent), 0);
 }
 
 static void
 add_logout_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_logout_applet(get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent)), 0);
+	load_logout_applet(get_panel_from_menu_data(widget->parent), 0);
 }
 
 static void
 add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_lock_applet(get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent)), 0);
+	load_lock_applet(get_panel_from_menu_data(widget->parent), 0);
 }
 static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
-	if(!load_status_applet(get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent)), 0)) {
+	if(!load_status_applet(get_panel_from_menu_data(widget->parent), 0)) {
 		GtkWidget *mbox;
 		mbox = gnome_message_box_new(_("You already have a status "
 					       "dock on the panel. You can "
@@ -1157,7 +1157,7 @@ add_applet (GtkWidget *w, char *item_loc)
 		return;
 	}
 	load_extern_applet(goad_id,NULL,
-			   get_panel_from_menu_data(GTK_MENU_SHELL(w->parent)),
+			   get_panel_from_menu_data(w->parent),
 			   0,FALSE);
 
 	g_free(goad_id);
@@ -1694,7 +1694,9 @@ create_menu_at_fr (GtkWidget *menu,
 	} else {
 		first_item = g_list_length(GTK_MENU_SHELL(menu)->children);
 		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
-		if(GTK_MENU_SHELL(menu)->children)
+		if(GTK_MENU_SHELL(menu)->children &&
+		   !(GTK_MENU_SHELL(menu)->children->next == NULL &&
+		     IS_TEAROFF_ITEM(GTK_MENU_SHELL(menu)->children->data)))
 			add_separator = TRUE;
 	}
 	
@@ -2341,8 +2343,7 @@ create_panel_root_menu(GtkWidget *panel, int tearoff)
 static void
 current_panel_config(GtkWidget *w, gpointer data)
 {
-	PanelWidget *panel =
-		get_panel_from_menu_data(GTK_MENU_SHELL(w->parent));
+	PanelWidget *panel = get_panel_from_menu_data(w->parent);
 	GtkWidget *parent = gtk_object_get_data(GTK_OBJECT(panel),
 						PANEL_PARENT);
 	panel_config(parent);
@@ -2351,13 +2352,13 @@ current_panel_config(GtkWidget *w, gpointer data)
 static void
 ask_about_launcher_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_launcher(NULL,get_panel_from_menu_data(GTK_MENU_SHELL(w->parent)),0);
+	ask_about_launcher(NULL,get_panel_from_menu_data(w->parent),0);
 }
 
 static void
 ask_about_swallowing_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_swallowing(get_panel_from_menu_data(GTK_MENU_SHELL(w->parent)),0);
+	ask_about_swallowing(get_panel_from_menu_data(w->parent),0);
 }
 
 static void
@@ -2379,7 +2380,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	BasePWidget *basep;
 	BasePPos *old_pos;
 	PanelWidget *panel;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent));
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
@@ -2487,7 +2488,7 @@ static void
 change_hiding_mode (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent));
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
@@ -2512,7 +2513,7 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 static void
 change_size (GtkWidget *widget, gpointer data)
 {
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent));
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 	g_return_if_fail(cur_panel != NULL);
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -2529,7 +2530,7 @@ change_size (GtkWidget *widget, gpointer data)
 static void
 change_background (GtkWidget *widget, gpointer data)
 {
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent));
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 	g_return_if_fail(cur_panel != NULL);
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
@@ -2549,7 +2550,7 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep;
 	gboolean hidebutton_pixmaps_enabled, hidebuttons_enabled;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(widget->parent));
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
 
 	g_return_if_fail(cur_panel != NULL);
 
@@ -2595,7 +2596,7 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 	GtkWidget *pw;
 	GtkWidget *types = gtk_object_get_data(GTK_OBJECT(menu),MENU_TYPES);
 	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu),MENU_MODES);
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(types != NULL);
 	g_return_if_fail(modes != NULL);
@@ -2617,7 +2618,7 @@ update_type_menu (GtkWidget *menu, gpointer data)
 {
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	GtkWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
 					       PANEL_PARENT);
 	if (IS_EDGE_WIDGET (basep))
@@ -2641,7 +2642,7 @@ update_size_menu (GtkWidget *menu, gpointer data)
 {
 	GtkWidget *menuitem = NULL;
 	char *s = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	switch (cur_panel->sz) {
 	case SIZE_TINY:
 		s = MENU_SIZE_TINY;
@@ -2670,7 +2671,7 @@ update_back_menu (GtkWidget *menu, gpointer data)
 {
 	GtkWidget *menuitem = NULL;
 	char *s = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	switch (cur_panel->back_type) {
 	case PANEL_BACK_NONE:
 		s = MENU_BACK_NONE;
@@ -2697,7 +2698,7 @@ update_hidebutton_menu (GtkWidget *menu, gpointer data)
 {
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	BasePWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
 						 PANEL_PARENT);
 
@@ -2718,7 +2719,7 @@ update_hiding_menu (GtkWidget *menu, gpointer data)
 {
 	char *s = NULL;
 	GtkWidget *menuitem = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(GTK_MENU_SHELL(menu));
+	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	BasePWidget *basep = gtk_object_get_data(GTK_OBJECT(cur_panel),
 						 PANEL_PARENT);
 	s =  (basep->mode == BASEP_EXPLICIT_HIDE)
