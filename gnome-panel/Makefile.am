@@ -3,9 +3,7 @@ AUTOMAKE_OPTIONS = 1.3
 
 NULL =
 
-#SUBDIRS =
-
-EXTRA_SUBDIRS = help
+SUBDIRS = help
 
 INCLUDES =							\
 	-I.							\

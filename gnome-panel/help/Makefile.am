@@ -1,2 +1,2 @@
-SUBDIRS = C de es it ja
+SUBDIRS = C
 

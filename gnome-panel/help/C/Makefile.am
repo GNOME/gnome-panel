@@ -1,26 +1,32 @@
 figs = \
-	figures/create_launcher.png	\
-	figures/drawer_open.png		\
-	figures/drawer_properties.png	\
-	figures/example_menu.png	\
-	figures/example_panel.png	\
-	figures/glob_pref_anim.png	\
-	figures/hide-button.png		\
-	figures/launcher_advprops.png	\
-	figures/launcher_props.png	\
-	figures/logout-screen.png	\
-	figures/menu_properties.png	\
-	figures/mm-button.png		\
-	figures/panel_applets.png	\
-	figures/panel_lockbut.png	\
-	figures/panel_logoutbut.png	\
-	figures/panel_props_back.png	\
-	figures/panel_props_edge.png	\
-	figures/panel_swallow.png	\
-	figures/status_dock.png
+	figures/controlcenter_icon.png \
+	figures/drawerprop_dialog.png  \
+	figures/footprint_icon.png     \
+	figures/four_hide_button.png  \
+	figures/gnome_panel.png        \
+	figures/gnometerminal_icon.png \
+	figures/help_icon.png \
+	figures/launcherprop1_dialog.png \
+	figures/launcherprop2_dialog.png \
+	figures/lockscreen_icon.png \
+	figures/logout_icon.png \
+	figures/menu_panel.png \
+	figures/netscape_icon.png \
+	figures/open_drawer.png\
+	figures/panel_object_popup_menu.png \
+	figures/panelprop_dialog.png \
+	figures/runprogram_dialog.png \
+	figures/runprogram_icon.png \
+	figures/sample_applet.png \
+	figures/statusdock2_button.png \
+	figures/statusdock_button.png \
+	figures/swallapp_dialog.png \
+	figures/swallow_applet.png \
+	figures/typical_menu.png \
+	figures/tasklist_applet.png
 docname = panel
 lang = C
 omffile = panel-C.omf
-sgml_ents =
-include $(top_srcdir)/sgmldocs.make
+entities = legal.xml
+include $(top_srcdir)/xmldocs.make
 dist-hook: app-dist-hook
