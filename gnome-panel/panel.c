@@ -27,7 +27,7 @@
 #define APPLET_CMD_FUNC "panel_applet_cmd_func"
 #define APPLET_FLAGS    "panel_applet_flags"
 
-#define DEFAULT_STEP_SIZE 6
+#define DEFAULT_STEP_SIZE 40
 #define DEFAULT_DELAY     0
 #define DEFAULT_HEIGHT    DEFAULT_APPLET_HEIGHT
 
@@ -463,6 +463,16 @@ get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 		*height = applet->allocation.height;
 }
 
+static gint
+find_applet(Panel *panel, GtkWidget *applet)
+{
+	int i;
+	for(i=0;i<PANEL_TABLE_SIZE;i++)
+		if(panel->applets[i]->applet==applet)
+			return i;
+	return -1;
+}
+
 
 static gpointer
 call_applet(GtkWidget *applet, AppletCommand *cmd)
@@ -487,10 +497,8 @@ applet_orientation_notify(GtkWidget *widget, gpointer data)
 }
 
 static void
-save_applet_configuration(GtkWidget *widget, gpointer data)
+save_applet_configuration(GtkWidget *widget, int *num)
 {
-	int           *num;
-	int            xpos, ypos;
 	char          *id;
 	char          *params;
 	char          *path;
@@ -498,16 +506,12 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 	char           buf[256];
 	AppletCommand  cmd;
 
-	num = data;
-
 	cmd.cmd = APPLET_CMD_QUERY;
 	id      = call_applet(widget, &cmd);
 
 	cmd.cmd = APPLET_CMD_GET_INSTANCE_PARAMS;
 	params  = call_applet(widget, &cmd);
 	
-	get_applet_geometry(widget, &xpos, &ypos, NULL, NULL);
-
 	/* XXX: The increasing number is sort of a hack to guarantee unique keys */
 
 	sprintf(buf, "_%d/", (*num)++);
@@ -517,19 +521,7 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 	gnome_config_set_string(fullpath, id);
 	g_free(fullpath);
 
-	switch (the_panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			sprintf(buf, "%d %d", xpos, ypos);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			/*x and y are reversed!*/
-			/*this is done for loading the app position as well!!!*/
-			sprintf(buf, "%d %d", ypos, xpos);
-			break;
-	}
-
+	sprintf(buf,"%d",find_applet(the_panel,widget));
 	fullpath = g_copy_strings(path,"geometry",NULL);
 	gnome_config_set_string(fullpath, buf);
 	g_free(fullpath);
@@ -571,6 +563,7 @@ panel_session_save (gpointer client_data,
 		    GnomeInteractStyle interact_style,
 		    int is_fast)
 {
+	int i;
 	int num;
 	char buf[256];
 
@@ -582,8 +575,10 @@ panel_session_save (gpointer client_data,
 
 	num = 1;
 	gnome_config_clean_section("/panel/Applets");
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-			      save_applet_configuration, &num);
+	for(i=0;i<PANEL_TABLE_SIZE;i++)
+		if(!the_panel->applets[i]->placeholder)
+			save_applet_configuration(the_panel->applets[i]->applet,
+						  &num);
 
 	gnome_config_set_int("/panel/Applets/count",num-1);
 
@@ -631,11 +626,231 @@ panel_quit(void)
     }
 }
 
+static gint
+put_applet_in_free_slot_starting_at(Panel *panel, GtkWidget *applet, int start)
+{
+	int i;
+	for(i=start;i<PANEL_TABLE_SIZE;i++)
+		if(panel->applets[i]->placeholder)
+			break;
+
+	/*panel is full to the right*/
+	if(i==PANEL_TABLE_SIZE) {
+		for(i=start-1;i>=0;i--)
+			if(panel->applets[i]->placeholder)
+				break;
+		/*panel is full!*/
+		if(i<=0)
+			return FALSE;
+	}
+
+	gtk_container_remove(GTK_CONTAINER(panel->panel),
+			     panel->applets[i]->applet);
+	gtk_widget_destroy(panel->applets[i]->applet);
+	
+
+	panel->applets[i]->applet = applet;
+	panel->applets[i]->placeholder = FALSE;
+	panel->applet_count++;
+
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			gtk_table_attach(GTK_TABLE(panel->panel),applet,
+					 i,i+1,0,1,
+					 GTK_SHRINK|GTK_EXPAND,
+					 GTK_SHRINK|GTK_EXPAND,0,0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			gtk_table_attach(GTK_TABLE(panel->panel),applet,
+					 0,1,i,i+1,
+					 GTK_SHRINK|GTK_EXPAND,
+					 GTK_SHRINK|GTK_EXPAND,0,0);
+			break;
+	}
+	return TRUE;
+}
+
+static gint
+put_applet_in_free_slot(Panel *panel, GtkWidget *applet)
+{
+	return put_applet_in_free_slot_starting_at(panel,applet,0);
+}
+
+static gint
+move_applet_right_by_pos(Panel *panel, int pos)
+{
+	GtkWidget *tmpw;
+	gint tmpi;
+	
+	pos++;
+	if(pos>=PANEL_TABLE_SIZE)
+		return FALSE;
+
+	gtk_container_remove(GTK_CONTAINER(panel->panel),
+			     panel->applets[pos-1]->applet);
+	gtk_container_remove(GTK_CONTAINER(panel->panel),
+			     panel->applets[pos]->applet);
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos-1]->applet,
+					 pos,pos+1,0,1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos-1]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos-1]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos]->applet,
+					 pos-1,pos,0,1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos-1]->applet,
+					 0,1,pos,pos+1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos-1]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos-1]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos]->applet,
+					 0,1,pos-1,pos,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			break;
+	}
+	tmpi = panel->applets[pos]->placeholder;
+	panel->applets[pos]->placeholder = panel->applets[pos-1]->placeholder;
+	panel->applets[pos-1]->placeholder = tmpi;
+
+	tmpw = panel->applets[pos]->applet;
+	panel->applets[pos]->applet = panel->applets[pos-1]->applet;
+	panel->applets[pos-1]->applet = tmpw;
+
+	return TRUE;
+}
+
+static gint
+move_applet_left_by_pos(Panel *panel, int pos)
+{
+	GtkWidget *tmpw;
+	gint tmpi;
+	
+	pos--;
+	if(pos<0)
+		return FALSE;
+
+	gtk_container_remove(GTK_CONTAINER(panel->panel),
+			     panel->applets[pos+1]->applet);
+	gtk_container_remove(GTK_CONTAINER(panel->panel),
+			     panel->applets[pos]->applet);
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos+1]->applet,
+					 pos,pos+1,0,1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos+1]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos+1]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos]->applet,
+					 pos+1,pos+2,0,1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos+1]->applet,
+					 0,1,pos,pos+1,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos+1]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos+1]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			gtk_table_attach(GTK_TABLE(panel->panel),
+					 panel->applets[pos]->applet,
+					 0,1,pos+1,pos+2,
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 GTK_SHRINK|GTK_EXPAND|
+					 (panel->applets[pos]->
+					  placeholder?GTK_FILL:0),
+					 0,0);
+			break;
+	}
+	tmpi = panel->applets[pos]->placeholder;
+	panel->applets[pos]->placeholder = panel->applets[pos+1]->placeholder;
+	panel->applets[pos+1]->placeholder = tmpi;
+
+	tmpw = panel->applets[pos]->applet;
+	panel->applets[pos]->applet = panel->applets[pos+1]->applet;
+	panel->applets[pos+1]->applet = tmpw;
+
+	return TRUE;
+}
+
+static gint
+move_applet_left(Panel *panel, GtkWidget *applet)
+{
+	int i;
+	i = find_applet(panel,applet);
+	if(i == -1)
+		return FALSE;
+	return move_applet_left_by_pos(panel,i);
+}
+
+static gint
+move_applet_right(Panel *panel, GtkWidget *applet)
+{
+	int i;
+	i = find_applet(panel,applet);
+	if(i == -1)
+		return FALSE;
+	return move_applet_right_by_pos(panel,i);
+}
+
+
 
 static void
 applet_drag_start(GtkWidget *applet, int warp)
 {
 	the_panel->applet_being_dragged = applet;
+	the_panel->applet_id_being_dragged = find_applet(the_panel,applet);
 
 	if (warp)
 		gdk_pointer_warp(NULL, applet->window,
@@ -643,15 +858,6 @@ applet_drag_start(GtkWidget *applet, int warp)
 				 applet->allocation.width / 2,
 				 applet->allocation.height / 2);
 	
-	gtk_widget_get_pointer(the_panel->window,
-			       &the_panel->applet_drag_click_x,
-			       &the_panel->applet_drag_click_y);
-	get_applet_geometry(applet,
-			    &the_panel->applet_drag_orig_x,
-			    &the_panel->applet_drag_orig_y,
-			    NULL,
-			    NULL);
-
 	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
 			 TRUE,
@@ -669,7 +875,6 @@ applet_drag_end(void)
 	gtk_grab_remove(the_panel->applet_being_dragged);
 	the_panel->applet_being_dragged = NULL;
 }
-
 
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
@@ -835,236 +1040,42 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
-typedef struct _applet_pos {
-	gint x,y,width,height;
-	gint xlimit,ylimit;
-	gint repaired;
-	GtkWidget *w;
-} applet_pos;
-
 static gint
-is_applet_pos_ok(GList *list, applet_pos *newpos)
+find_delta(Panel *panel, gint x, gint y, gint id)
 {
-	int x, y, width, height;
-	int diffx, diffy;
-	int nx, ny;
+	int i;
 
-	GtkWidget *applet;
-
-	for(;list;list=list->next) {
-		applet = list->data;
-		if(applet==newpos->w)
-			continue;
-
-		get_applet_geometry(applet, &x, &y, &width, &height);
-
-		if((	newpos->x<(x+width) &&
-			(newpos->x+newpos->width)>x) &&
-			(newpos->y<(y+height) &&
-			(newpos->y+newpos->height)>y)) {
-			/*it's overlapping some other applet so scratch that*/
-			if(newpos->repaired)
-				return FALSE;
-			diffx=(newpos->x+(newpos->width/2))-(x+(width/2));
-			diffy=(newpos->y+(newpos->height/2))-(y+(height/2));
-			nx=newpos->x+x-(newpos->x+newpos->width);
-			ny=newpos->y+y-(newpos->y+newpos->height);
-			if(diffx>0) nx+=width+newpos->width;
-			if(diffy>0) ny+=height+newpos->height;
-			if( (abs(diffy)<abs(diffx)
-				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-				newpos->x=nx;
-				newpos->repaired=TRUE;
-				return FALSE;
-			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-				newpos->y=ny;
-				newpos->repaired=TRUE;
-				return FALSE;
-			}
-			if(diffx>0) nx-=width+newpos->width;
-			if(diffy>0) ny-=height+newpos->height;
-			if( (abs(diffy)<abs(diffx)
-				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-				newpos->x=nx;
-				newpos->repaired=TRUE;
-				return FALSE;
-			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-				newpos->y=ny;
-				newpos->repaired=TRUE;
-				return FALSE;
-			}
-			nx+=width+newpos->width;
-			ny+=height+newpos->height;
-			if( (abs(diffy)<abs(diffx)
-				|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
-				&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
-				newpos->x=nx;
-				newpos->repaired=TRUE;
-				return FALSE;
-			} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
-				newpos->y=ny;
-				newpos->repaired=TRUE;
-				return FALSE;
-			}
-			newpos->repaired=FALSE;
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
-
-static gint
-panel_find_clean_spot(GtkWidget *widget, GList *applets, gint *x, gint *y,
-	gint width, gint height)
-{
-	/*set up the applet_pos structure*/
-	applet_pos newpos={*x,*y,width,height,0,0,FALSE,widget};
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
-			newpos.xlimit=the_panel->fixed->allocation.width;
-			newpos.ylimit=the_panel->window->allocation.height;
+			for(i=0;i<PANEL_TABLE_SIZE;i++)
+				if(panel->applets[i]->applet->allocation.x > x-
+				   panel->applets[i]->applet->allocation.width)
+					break;
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
-			newpos.xlimit=the_panel->window->allocation.width;
-			newpos.ylimit=the_panel->fixed->allocation.height;
+			for(i=0;i<PANEL_TABLE_SIZE;i++)
+				if(panel->applets[i]->applet->allocation.y > y-
+				   panel->applets[i]->applet->allocation.height)
+					break;
 			break;
 	}
-
-	if(!is_applet_pos_ok(applets,&newpos)) {
-		if(newpos.repaired) {
-			if(!is_applet_pos_ok(applets,&newpos))
-				return FALSE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	*x=newpos.x;
-	*y=newpos.y;
-	return TRUE;
+	return i-id;
 }
 
 static void
-fix_coordinates_to_limits(int *x,int *y, int width, int height)
+move_dragged_by_delta(int delta)
 {
-	switch (the_panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			if ((*x+width) > the_panel->fixed->allocation.width)
-				*x=the_panel->fixed->allocation.width-width;
-
-			if ((*y+height) > the_panel->window->allocation.height)
-				*y=the_panel->window->allocation.height-height;
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			if ((*x+width) > the_panel->window->allocation.width)
-				*x=the_panel->window->allocation.width-width;
-
-			if ((*y+height) > the_panel->fixed->allocation.height)
-				*y=the_panel->fixed->allocation.height-height;
-			break;
-	}
-
-	if (*x < 0)
-		*x = 0;
-
-	if (*y < 0)
-		*y = 0;
-}
-
-/*find a free spot for the applet*/
-static void
-fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
-	gint height,gint useoldlist)
-{
-	gint movedown; /*used for moving the applet (it would be move right
-			 for horizontal but we use only one .. i.e. move
-			 down the panel (down or right)!)
-			 into acceptable position*/
-	gint noturn;    /*set once a turn around has been made on one end,
-			     it will prevent a hang when tehpanel is full*/
-	gint *adjvar;	/*this points to the variable that we are adjusting*/
-	gint adjdef;	/*default for the above*/
-	gint adjlim;	/*limit to the above*/
-	gint xpos,ypos;
-
-	static GList *applets=NULL;
-
-
-	if(!widget)
-		return;
-
-	xpos=widget->allocation.x;
-	ypos=widget->allocation.y;
-
-	fix_coordinates_to_limits(x,y,width,height);
-	
-	/*change the adjustment variables for horizontal/vertical
-	  position*/
-	switch (the_panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			/*where did we move?*/
-			movedown=(xpos<*x || xpos<=0 ||
-				xpos>=the_panel->fixed->allocation.width)?
-				TRUE:FALSE;
-			adjvar=x;
-			adjdef=*x;
-			adjlim=the_panel->fixed->allocation.width-width;
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			/*where did we move?*/
-			movedown=(ypos<*y || ypos<=0 ||
-				ypos>=the_panel->fixed->allocation.height)?
-				TRUE:FALSE;
-			adjvar=y;
-			adjdef=*y;
-			adjlim=the_panel->fixed->allocation.height-height;
-			break;
-	}
-
-	if(!useoldlist && applets) {
-		g_list_free(applets);
-		applets=NULL;
-	}
-		
-
-	if(!applets)
-		applets=gtk_container_children(GTK_CONTAINER(the_panel->fixed));
-
-	/*move the applet as close as we can to the
-	  one blocking it*/
-	noturn=FALSE;
-	while(!panel_find_clean_spot(widget,applets,x,y,width,height)) {
-		if(movedown) {
-			if(--(*adjvar)<0) {
-				movedown=FALSE;
-				*adjvar=adjdef;
-				if(noturn)
-					break;
-				noturn=TRUE;
-			}
-		} else {
-			if(++(*adjvar)>adjlim) {
-				movedown=TRUE;
-				*adjvar=adjdef;
-				if(noturn)
-					break;
-				noturn=TRUE;
-			}
-		}
-	}
-
-	/*ajust positions to limits again!, in the worst case
-	  we don't have enough room and we will have
-	  to overlap applets*/
-	fix_coordinates_to_limits(x,y,width,height);
+	int i;
+	for(i=0;i<delta;i++)
+		if(move_applet_right_by_pos(the_panel,
+					    the_panel->applet_id_being_dragged))
+			the_panel->applet_id_being_dragged++;
+	for(i=0;i>delta;i--)
+		if(move_applet_left_by_pos(the_panel,
+					   the_panel->applet_id_being_dragged))
+			the_panel->applet_id_being_dragged--;
 }
 
 static gint
@@ -1072,8 +1083,8 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	GdkEventButton *bevent;
 	gint            x, y;
-	int             x1, y1;
-	int             dx, dy;
+	gint            delta;
+	int             i, pos;
 	int             xpos, ypos;
 	int             width, height;
 
@@ -1121,26 +1132,13 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				gtk_widget_get_pointer(the_panel->window,
 						       &x, &y);
 
-				dx = x - the_panel->applet_drag_click_x;
-				dy = y - the_panel->applet_drag_click_y;
+				move_dragged_by_delta(
+					find_delta(the_panel,x,y,
+					the_panel->applet_id_being_dragged));
 
-				x1 = the_panel->applet_drag_orig_x + dx;
-				y1 = the_panel->applet_drag_orig_y + dy;
-
-				fixup_applet_position(the_panel->
-						      applet_being_dragged,
-						      &x1,&y1,width,height,
-						      TRUE);
-
-				if ((x1 != xpos) || (y1 != ypos))
-					gtk_fixed_move(GTK_FIXED(the_panel->
-						       fixed), the_panel->
-						       applet_being_dragged,
-						       x1, y1);
-
+	
 				return TRUE;
 			}
-
 			break;
 
 		default:
@@ -1237,14 +1235,17 @@ set_panel_position(void)
 	int width=DEFAULT_HEIGHT,height=DEFAULT_HEIGHT;
 	int buttonswidth=0;
 	int buttonsheight=0;
+	int i;
 	GtkAllocation newalloc;
 
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		      get_max_applet_width,
-		      &width);
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		      get_max_applet_height,
-		      &height);
+	for(i=0;i<PANEL_TABLE_SIZE;i++)
+		if(!the_panel->applets[i]->placeholder)
+			get_max_applet_width(
+				the_panel->applets[i]->applet,&width);
+	for(i=0;i<PANEL_TABLE_SIZE;i++)
+		if(!the_panel->applets[i]->placeholder)
+			get_max_applet_height(
+				the_panel->applets[i]->applet,&height);
 
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
@@ -1311,9 +1312,9 @@ set_panel_position(void)
 			break;
 	}
 	gtk_widget_size_allocate(the_panel->window,&newalloc);
-	newalloc.width-=buttonswidth;
+	/*newalloc.width-=buttonswidth;
 	newalloc.height-=buttonsheight;
-	gtk_widget_size_allocate(the_panel->fixed,&newalloc);
+	gtk_widget_size_allocate(the_panel->fixed,&newalloc);*/
 }
 
 
@@ -1326,6 +1327,7 @@ panel_init(void)
 	GtkWidget *pixmap;
 	char *pixmap_name;
 	char buf[256];
+	int i;
 
 	the_panel = g_new(Panel, 1);
 
@@ -1380,13 +1382,24 @@ panel_init(void)
 	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->hidebutton_l_v,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	
-	/*fixed*/
-	the_panel->fixed = gtk_fixed_new();
+	/*the panel table*/
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
+							 FALSE);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
+							 FALSE);
+			break;
+	}
 
-	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->fixed,
+	gtk_table_attach(GTK_TABLE(the_panel->table),the_panel->panel,
 			 1,2,1,2,GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,0,0);
-	gtk_widget_show(the_panel->fixed);
+	gtk_widget_show(the_panel->panel);
 
 	/*show buttons (one for vertical one for horizontal)*/
 	the_panel->hidebutton_r_h=gtk_button_new();
@@ -1419,9 +1432,6 @@ panel_init(void)
 	/*add this whole thing to the window*/
 	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->table);
 	gtk_widget_show(the_panel->table);
-
-	/*set the position and size of the panel*/
-	set_panel_position();
 
 	the_panel->enter_notify_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "enter_notify_event",
 							(GtkSignalFunc) panel_enter_notify,
@@ -1459,6 +1469,39 @@ panel_init(void)
 		gtk_tooltips_enable(panel_tooltips);
 	else
 		gtk_tooltips_disable(panel_tooltips);
+
+	the_panel->applets = g_new(PanelApplet *,PANEL_TABLE_SIZE);
+	/*set set up the applets array*/
+	for(i=0;i<PANEL_TABLE_SIZE;i++) {
+		the_panel->applets[i] = g_new(PanelApplet,1);
+		the_panel->applets[i]->applet = gtk_event_box_new();
+		switch (the_panel->pos) {
+			case PANEL_POS_TOP:
+			case PANEL_POS_BOTTOM:
+				gtk_table_attach(GTK_TABLE(the_panel->panel),
+						 the_panel->applets[i]->applet,
+						 i,i+1,0,1,
+						 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
+						 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
+						 0,0);
+				break;
+			case PANEL_POS_LEFT:
+			case PANEL_POS_RIGHT:
+				gtk_table_attach(GTK_TABLE(the_panel->panel),
+						 the_panel->applets[i]->applet,
+						 0,1,i,i+1,
+						 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
+						 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
+						 0,0);
+				break;
+		}
+		gtk_widget_show(the_panel->applets[i]->applet);
+		the_panel->applets[i]->placeholder = TRUE;
+	}
+	the_panel->applet_count = 0;
+
+	/*set the position and size of the panel*/
+	set_panel_position();
 }
 
 
@@ -1487,7 +1530,7 @@ panel_init_applet_modules(void)
 
 
 static void
-create_applet(char *id, char *params, int xpos, int ypos)
+create_applet(char *id, char *params, int pos)
 {
 	AppletCommand cmd;
 	AppletCmdFunc cmd_func;
@@ -1525,8 +1568,7 @@ create_applet(char *id, char *params, int xpos, int ypos)
 	cmd.panel  = the_panel;
 	cmd.applet = NULL;
 	cmd.params.create_instance.params = params;
-	cmd.params.create_instance.xpos   = xpos;
-	cmd.params.create_instance.ypos   = ypos;
+	cmd.params.create_instance.pos   = pos;
 
 	(*cmd_func) (&cmd);
 
@@ -1558,165 +1600,6 @@ bind_applet_events(GtkWidget *widget, void *data)
 }
 
 static void
-sort_applet_by_pos(GtkWidget *applet, gpointer data)
-{
-	GList     **list;
-	GtkWidget *w;
-	int        pos;
-
-	list = data;
-	pos  = 0;
-
-	while (*list) {
-		w = (*list)->data;
-		
-		if (applet->allocation.x < w->allocation.x)
-			break;
-
-		pos++;
-		*list = (*list)->next;
-	}
-
-	*list = g_list_insert(*list, applet, pos);
-}
-
-
-
-static void
-fix_applet_position(GtkWidget *applet, int *xpos, int *ypos)
-{
-	GList         *applets;
-	GtkWidget     *w;
-	GtkRequisition requisition;
-	int            req_width;
-	int            found;
-	int            x;
-	int            size;
-	int            largest;
-	int            x_for_largest;
-	
-	/* FIXME!!!  This is not working at all --- the widgets have
-         * no allocation when I need them to :-(
-	 */
-
-	/* FIXME: This routine currently only handles the horizontal case of the panel */
-	
-	if ((*xpos != PANEL_UNKNOWN_APPLET_POSITION) &&
-	    (*ypos != PANEL_UNKNOWN_APPLET_POSITION))
-		return;
-
-	*ypos = 0;
-
-	applets = NULL;
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-			      sort_applet_by_pos,
-			      &applets);
-
-	gtk_widget_size_request(applet, &requisition);
-	req_width = requisition.width;
-
-	/* Find first fit */
-
-	found         = FALSE;
-	x             = 0;
-	largest       = 0;
-	x_for_largest = 0;
-
-	for (; applets; applets = applets->next) {
-		w = applets->data;
-
-		size = w->allocation.x - x;
-
-		if (size >= req_width) {
-			found = TRUE;
-			break;
-		}
-
-		if (size > largest) {
-			largest = size;
-			x_for_largest = x;
-		}
-
-		x = w->allocation.x + w->allocation.width;
-	}
-
-	if (found)
-		*xpos = x;
-	else {
-		size = gdk_screen_width() - x;
-
-		if (size >= req_width)
-			*xpos = x;
-		else
-			*xpos = x_for_largest;
-	}
-
-	g_list_free(applets);
-}
-
-static applet_pos applet_stack[100];
-static gint applet_stacktop=-1;
-static gint have_idle_func=FALSE;
-
-static gint
-fix_an_applet_idle_func(gpointer data)
-{
-	int xpos;
-	int ypos;
-	GtkWidget *applet;
-
-	if(applet_stacktop<0) {
-		have_idle_func=FALSE;
-		return FALSE;
-	}
-
-	applet=applet_stack[applet_stacktop].w;
-	xpos=applet_stack[applet_stacktop].x;
-	ypos=applet_stack[applet_stacktop].y;
-
-	if(the_panel->window->allocation.width<=1 ||
-		the_panel->fixed->allocation.width<=1 ||
-		GTK_WIDGET(applet)->allocation.width<=1)
-		return TRUE;
-
-	/*we probably want to do something like this but we need to
-	  refine that function*/
-	/*fix_applet_position(applet, &xpos, &ypos);*/
-
-	fixup_applet_position(applet,&xpos,&ypos,
-		GTK_WIDGET(applet)->allocation.width,
-		GTK_WIDGET(applet)->allocation.height,FALSE);
-	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
-	if((--applet_stacktop)<0) {
-		set_panel_position();
-		have_idle_func=FALSE;
-		return FALSE;
-	}
-	return TRUE;
-}
-
-/*add an applet to the stack of applets to fix up and create an
-  idle function if we haven't made it yet*/
-static gint
-fix_an_applet(GtkWidget *applet,gint x, gint y)
-{
-	if((++applet_stacktop)>=100) {
-		applet_stacktop--;
-		return FALSE;
-	}
-	applet_stack[applet_stacktop].w=applet;
-	applet_stack[applet_stacktop].x=x;
-	applet_stack[applet_stacktop].y=y;
-	/*we don't use the rest of applet_pos structure*/
-	if(have_idle_func)
-		return TRUE;
-
-	gtk_idle_add((void *)fix_an_applet_idle_func, NULL);
-	have_idle_func=TRUE;
-	return TRUE;
-}
-
-static void
 set_tooltip(GtkWidget *applet, char *tooltip)
 {
 	if(!applet)
@@ -1726,7 +1609,7 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 
 
 static void
-register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
+register_toy(GtkWidget *applet, char *id, int pos, long flags)
 {
 	GtkWidget     *eventbox;
 	
@@ -1747,21 +1630,12 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC, get_applet_cmd_func(id));
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
 
-	switch (the_panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			fix_an_applet(eventbox,xpos,ypos);
-			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
-				      0, 0);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			/*x and y are reversed!*/
-			/*this is done for saving the app position as well!!!*/
-			fix_an_applet(eventbox,ypos,xpos);
-			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
-				      0, 0);
-			break;
+	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
+		put_applet_in_free_slot(the_panel, eventbox);
+	else {
+		if(pos>=PANEL_TABLE_SIZE)
+			pos=PANEL_TABLE_SIZE-1;
+		put_applet_in_free_slot_starting_at(the_panel, eventbox, pos);
 	}
 
 	gtk_widget_show(eventbox);
@@ -1777,50 +1651,63 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 static void
 change_size_notify(GtkWidget *applet)
 {
-	fix_an_applet(applet,applet->allocation.x,applet->allocation.y);
+	/*kind of FIXME: PROBABLY WILL NOT BE USED!*/
 }
 
-
-static void
-swap_applet_coords(GtkWidget *applet, gpointer data)
-{
-	gint x,y,width,height;
-
-	get_applet_geometry(applet, &x, &y, &width, &height);
-
-	/*swap the coordinates around*/
-	fix_coordinates_to_limits(&y,&x,width,height);
-	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, y, x);
-	fix_an_applet(applet,y,x);
-}
 
 static void
 panel_change_orient(void)
 {
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		      swap_applet_coords,NULL);
+	int i;
+	for(i=0;i<PANEL_TABLE_SIZE;i++)
+		gtk_container_remove(GTK_CONTAINER(the_panel->panel),
+				     the_panel->applets[i]->applet);
+	gtk_widget_destroy(the_panel->panel);
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
+							 FALSE);
+			gtk_table_attach(GTK_TABLE(the_panel->table),
+					 the_panel->panel,1,2,1,2,
+					 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+					 GTK_FILL|GTK_EXPAND|GTK_SHRINK,0,0);
+			gtk_widget_show(the_panel->panel);
+			for(i=0;i<PANEL_TABLE_SIZE;i++)
+				gtk_table_attach(GTK_TABLE(the_panel->panel),
+						 the_panel->applets[i]->applet,
+						 i,i+1,0,1,
+						 GTK_SHRINK|GTK_EXPAND|
+						 (the_panel->applets[i]->
+						  placeholder?GTK_FILL:0),
+						 GTK_SHRINK|GTK_EXPAND|
+						 (the_panel->applets[i]->
+						  placeholder?GTK_FILL:0),
+						 0,0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
+							 FALSE);
+			gtk_table_attach(GTK_TABLE(the_panel->table),
+					 the_panel->panel,1,2,1,2,
+					 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+					 GTK_FILL|GTK_EXPAND|GTK_SHRINK,0,0);
+			gtk_widget_show(the_panel->panel);
+			for(i=0;i<PANEL_TABLE_SIZE;i++)
+				gtk_table_attach(GTK_TABLE(the_panel->panel),
+						 the_panel->applets[i]->applet,
+						 0,1,i,i+1,
+						 GTK_SHRINK|GTK_EXPAND|
+						 (the_panel->applets[i]->
+						  placeholder?GTK_FILL:0),
+						 GTK_SHRINK|GTK_EXPAND|
+						 (the_panel->applets[i]->
+						  placeholder?GTK_FILL:0),
+						 0,0);
+			break;
+	}
 }
-
-static void
-fix_an_applet_foreach(GtkWidget *applet, gpointer data)
-{
-	gint x,y,width,height;
-
-	get_applet_geometry(applet, &x, &y, &width, &height);
-
-	/*swap the coordinates around*/
-	fix_coordinates_to_limits(&x,&y,width,height);
-	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, x, y);
-	fix_an_applet(applet,x,y);
-}
-
-static void
-panel_fix_all_applets(void)
-{
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-		              fix_an_applet_foreach,NULL);
-}
-
 
 
 void
@@ -1828,6 +1715,7 @@ panel_reconfigure(Panel *newconfig)
 {
 	gint oldpos;
 	gint oldmode;
+	int i;
 
 	if(the_panel->mode == PANEL_GETS_HIDDEN) {
 		the_panel->step_size=0;
@@ -1848,35 +1736,28 @@ panel_reconfigure(Panel *newconfig)
 			case PANEL_POS_TOP:
 				if(newconfig->pos != PANEL_POS_BOTTOM)
 					panel_change_orient();
-				else
-					panel_fix_all_applets();
 				break;
 			case PANEL_POS_BOTTOM:
 				if(newconfig->pos != PANEL_POS_TOP)
 					panel_change_orient();
-				else
-					panel_fix_all_applets();
 				break;
 			case PANEL_POS_LEFT:
 				if(newconfig->pos != PANEL_POS_RIGHT)
 					panel_change_orient();
-				else
-					panel_fix_all_applets();
 				break;
 			case PANEL_POS_RIGHT:
 				if(newconfig->pos != PANEL_POS_LEFT)
 					panel_change_orient();
-				else
-					panel_fix_all_applets();
 				break;
 		}
 		/*notify each applet that we're changing orientation!*/
-		gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
-				      applet_orientation_notify,NULL);
+		for(i=0;i<PANEL_TABLE_SIZE;i++)
+			if(!the_panel->applets[i]->placeholder)
+				applet_orientation_notify(
+					the_panel->applets[i]->applet,NULL);
 	} else if(oldmode != newconfig->mode) {
 		set_show_hide_buttons_visibility();
 		set_panel_position();
-		panel_fix_all_applets();
 	}
 
 	the_panel->step_size = newconfig->step_size;
@@ -1915,15 +1796,13 @@ panel_command(PanelCommand *cmd)
 		case PANEL_CMD_CREATE_APPLET:
 			create_applet(cmd->params.create_applet.id,
 				      cmd->params.create_applet.params,
-				      cmd->params.create_applet.xpos,
-				      cmd->params.create_applet.ypos);
+				      cmd->params.create_applet.pos);
 			break;
 			
 		case PANEL_CMD_REGISTER_TOY:
 			register_toy(cmd->params.register_toy.applet,
 				     cmd->params.register_toy.id,
-				     cmd->params.register_toy.xpos,
-				     cmd->params.register_toy.ypos,
+				     cmd->params.register_toy.pos,
 				     cmd->params.register_toy.flags);
 			break;
 

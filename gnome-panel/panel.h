@@ -9,6 +9,8 @@ BEGIN_GNOME_DECLS
 #define DEFAULT_APPLET_WIDTH 50
 #define DEFAULT_APPLET_HEIGHT 50
 
+#define PANEL_TABLE_SIZE 50
+
 
 typedef enum {
 	PANEL_POS_TOP,
@@ -29,32 +31,37 @@ typedef enum {
 } PanelMode;
 
 typedef struct {
-	GtkWidget  *window;
-	GtkWidget  *table;
-	GtkWidget  *hidebutton_l_h;
-	GtkWidget  *hidebutton_r_h;
-	GtkWidget  *hidebutton_l_v;
-	GtkWidget  *hidebutton_r_v;
-	GtkWidget  *fixed;
-	PanelPos    pos;
-	PanelState  state;
-	PanelMode   mode;
-	gint        step_size;
-	gint        delay;
-	gint        tooltips_enabled;
-	gint        enter_notify_id;
-	gint        leave_notify_id;
-	gint        visibility_notify_id;
-	gint        button_press_id;
-	gint        leave_notify_timer_tag;
-	gint        minimize_delay;
-	gint        minimized_size;
-	GtkWidget  *applet_being_dragged;
-	gint        applet_drag_click_x;
-	gint        applet_drag_click_y;
-	gint        applet_drag_orig_x;
-	gint        applet_drag_orig_y;
+	GtkWidget    *applet;
+	gint          placeholder;
+} PanelApplet;
+
+typedef struct {
+	GtkWidget    *window;
+	GtkWidget    *table;
+	GtkWidget    *hidebutton_l_h;
+	GtkWidget    *hidebutton_r_h;
+	GtkWidget    *hidebutton_l_v;
+	GtkWidget    *hidebutton_r_v;
+	GtkWidget    *panel;
+	PanelApplet **applets;        
+	gint          applet_count;
+	PanelPos      pos;
+	PanelState    state;
+	PanelMode     mode;
+	gint          step_size;
+	gint          delay;
+	gint          tooltips_enabled;
+	gint          enter_notify_id;
+	gint          leave_notify_id;
+	gint          visibility_notify_id;
+	gint          button_press_id;
+	gint          leave_notify_timer_tag;
+	gint          minimize_delay;
+	gint          minimized_size;
+	GtkWidget    *applet_being_dragged;
+	gint          applet_id_being_dragged;
 } Panel;
+
 
 
 extern Panel *the_panel;

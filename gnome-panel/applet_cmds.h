@@ -33,8 +33,7 @@ typedef struct {
 		/* Create instance parameters */
 		struct {
 			char *params;
-			int   xpos;
-			int   ypos;
+			int   pos;
 		} create_instance;
 	} params;
 } AppletCommand;

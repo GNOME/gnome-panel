@@ -131,8 +131,7 @@ add_to_panel (char *applet, char *arg)
 	cmd.cmd = PANEL_CMD_CREATE_APPLET;
 	cmd.params.create_applet.id     = applet;
 	cmd.params.create_applet.params = arg;
-	cmd.params.create_applet.xpos   = PANEL_UNKNOWN_APPLET_POSITION;
-	cmd.params.create_applet.ypos   = PANEL_UNKNOWN_APPLET_POSITION;
+	cmd.params.create_applet.pos   = PANEL_UNKNOWN_APPLET_POSITION;
 
 	(*panel_cmd_func) (&cmd);
 }
@@ -616,7 +615,7 @@ set_show_small_icons(gpointer data, gpointer user_data)
 
 
 static void
-create_instance (Panel *panel, char *params, int xpos, int ypos)
+create_instance (Panel *panel, char *params, int pos)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *this_menu;
@@ -672,8 +671,7 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 	cmd.cmd = PANEL_CMD_REGISTER_TOY;
 	cmd.params.register_toy.applet = menu->button;
 	cmd.params.register_toy.id     = APPLET_ID;
-	cmd.params.register_toy.xpos   = xpos;
-	cmd.params.register_toy.ypos   = ypos;
+	cmd.params.register_toy.pos    = pos;
 	cmd.params.register_toy.flags  = APPLET_HAS_PROPERTIES;
 
 	(*panel_cmd_func) (&cmd);
@@ -723,7 +721,7 @@ set_orientation(GtkWidget *applet, Panel *panel)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (panel->fixed, applet, pixmap_name);
+	pixmap = gnome_create_pixmap_widget (panel->panel, applet, pixmap_name);
 
 	gtk_container_add (GTK_CONTAINER(applet), pixmap);
 	gtk_widget_show (pixmap);
@@ -862,8 +860,7 @@ applet_cmd_func(AppletCommand *cmd)
 		case APPLET_CMD_CREATE_INSTANCE:
 			create_instance(cmd->panel,
 					cmd->params.create_instance.params,
-					cmd->params.create_instance.xpos,
-					cmd->params.create_instance.ypos);
+					cmd->params.create_instance.pos);
 			break;
 
 		case APPLET_CMD_GET_INSTANCE_PARAMS:

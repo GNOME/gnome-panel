@@ -14,15 +14,14 @@
 
 
 static void
-load_applet(char *id, char *params, int xpos, int ypos)
+load_applet(char *id, char *params, int pos)
 {
 	PanelCommand  cmd;
 
 	cmd.cmd = PANEL_CMD_CREATE_APPLET;
 	cmd.params.create_applet.id     = id;
 	cmd.params.create_applet.params = params;
-	cmd.params.create_applet.xpos   = xpos;
-	cmd.params.create_applet.ypos   = ypos;
+	cmd.params.create_applet.pos    = pos;
 
 	panel_command(&cmd);
 }
@@ -34,20 +33,11 @@ load_default_applets(void)
 	/* XXX: the IDs for these applets are hardcoded here. */
 
 	/* Here we use NULL to request querying of default applet parameters */
-
-#if 0
-	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
-	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
-	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
-#endif
-	/* FIXME: we are not using the code above because automatic
-	 * positioning of applets is not working right now.  So we use
-	 * explicit coordinates :-(
-	 */
-
-	load_applet("Menu", NULL, 0, 0);
-	load_applet("Clock", NULL, 0, 0);
-	load_applet("Mail check", NULL, 9999, 0);
+	/* as position we give unknown or 0 to load from left or
+	   PANEL_TABLE_SIZE-1 to load from right */
+	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION);
+	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION);
+	load_applet("Mail check", NULL, PANEL_TABLE_SIZE-1);
 }
 
 
@@ -57,7 +47,7 @@ init_user_applets(void)
 	char *applet_name;
 	char *applet_params;
 	char *applet_geometry;
-	int   xpos, ypos;
+	int   pos=0;
 	char  buf[256];
 	int   count,num;	
 
@@ -71,14 +61,14 @@ init_user_applets(void)
 		applet_params = gnome_config_get_string(buf);
 		sprintf(buf,"/panel/Applet_%d/geometry=0 0",num);
 		applet_geometry = gnome_config_get_string(buf);
-		if (sscanf(applet_geometry, "%d%d", &xpos, &ypos) != 2) {
+		if (sscanf(applet_geometry, "%d", &pos) != 1) {
 			fprintf(stderr,
 				"init_user_applets: using unknown applet position for \"%s\"\n",
 				applet_name);
 
-			xpos = ypos = 0; /*PANEL_UNKNOWN_APPLET_POSITION*/
+			pos = PANEL_UNKNOWN_APPLET_POSITION;
 		}
-		load_applet(applet_name, applet_params, xpos, ypos);
+		load_applet(applet_name, applet_params, pos);
 		g_free(applet_name);
 		g_free(applet_params);
 		g_free(applet_geometry);

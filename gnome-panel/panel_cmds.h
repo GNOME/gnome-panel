@@ -35,16 +35,14 @@ typedef struct {
 		struct {
 			char *id;
 			char *params;
-			int   xpos;
-			int   ypos;
+			int   pos;
 		} create_applet;
 		
 		/* Register toy parameters */
 		struct {
 			GtkWidget *applet;
 			char      *id;
-			int        xpos;
-			int        ypos;
+			int        pos;
 			long       flags;
 		} register_toy;
 
