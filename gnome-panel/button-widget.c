@@ -157,11 +157,11 @@ setup_no_alpha(ButtonWidget *button)
 		return;
 	if(button->pressed) {
 		if(tiles.tiles_down[button->tile] &&
-		   !gdk_pixbuf_get_has_alpha(tiles.tiles_down[button->tile]))
+		   !tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
 			button->no_alpha = 1;
 	} else {
 		if(tiles.tiles_up[button->tile] &&
-		   !gdk_pixbuf_get_has_alpha(tiles.tiles_up[button->tile]))
+		   !tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
 			button->no_alpha = 1;
 	}
 }
@@ -528,11 +528,11 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  gdk_pixbuf_get_width(pb),
-						  gdk_pixbuf_get_height(pb),
+						  pb->art_pixbuf->width,
+						  pb->art_pixbuf->height,
 						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       gdk_pixbuf_get_artpixbuf(pb),
+						       pb->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
 			}
 		} else if (!global_config.tile_when_over || button->in_button) {
@@ -546,11 +546,11 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  gdk_pixbuf_get_width(pb),
-						  gdk_pixbuf_get_height(pb),
+						  pb->art_pixbuf->width,
+						  pb->art_pixbuf->height,
 						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       gdk_pixbuf_get_artpixbuf(pb),
+						       pb->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
 			}
 		}
@@ -568,8 +568,8 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			double transl[6];
 			int w,h;
 			make_scale_affine(affine,
-					  gdk_pixbuf_get_width(pb),
-					  gdk_pixbuf_get_height(pb),
+					  pb->art_pixbuf->width,
+					  pb->art_pixbuf->height,
 					  size, &w, &h);
 			art_affine_translate(transl,
 					     -border+off + (size-w)/2,
@@ -580,7 +580,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 					      0, 0,
 					      size-2*border, size-2*border,
 					      rowstride,
-					      gdk_pixbuf_get_artpixbuf(pb),
+					      pb->art_pixbuf,
 					      affine, ART_FILTER_NEAREST, NULL);
 		}
 	}
