@@ -1,3 +1,9 @@
+Mon Apr 15 10:16:13 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: fix crash reported in #78559 by just using the
+	  run_dialog variable, which is NULL if the widget is dead
+	  instead of using a potentially out of date data parameter.
+
 Mon Apr 15 10:04:14 2002  George Lebl <jirka@5z.com>
 
 	* launcher.c: Applied patch from Christophe Fergeau

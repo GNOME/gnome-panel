@@ -628,21 +628,23 @@ static void
 entry_changed (GtkWidget *entry,
                gpointer   data)
 {
-        sync_entry_to_list (GTK_WIDGET (data));
+	if (run_dialog != NULL)
+		sync_entry_to_list (run_dialog);
 }
 
 /* Called when advanced contents are switched to or first shown */
 static void
-advanced_contents_shown (GtkWidget *vbox,
-                         GtkWidget *dialog)
+advanced_contents_shown (GtkWidget *vbox, gpointer data)
 {
         /* does nothing at the moment */
 }
 
 static void
-activate_run (GtkWidget *entry, GtkWidget *dialog)
+activate_run (GtkWidget *entry, gpointer data)
 {
-	gtk_dialog_response (GTK_DIALOG (dialog), PANEL_RESPONSE_RUN);
+	if (run_dialog != NULL)
+		gtk_dialog_response (GTK_DIALOG (run_dialog),
+				     PANEL_RESPONSE_RUN);
 }
 
 static GtkWidget*
@@ -680,12 +682,12 @@ create_advanced_contents (void)
         g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
 
 	g_signal_connect (G_OBJECT (entry), "activate",
-			    G_CALLBACK (activate_run),
-			    run_dialog);
+			  G_CALLBACK (activate_run),
+			  NULL);
         g_signal_connect (G_OBJECT (entry),
-                            "changed",
-                            G_CALLBACK (entry_changed),
-                            run_dialog);
+			  "changed",
+			  G_CALLBACK (entry_changed),
+			  NULL);
         
         w = gtk_button_new_with_mnemonic (_("_Browse..."));
         g_signal_connect(G_OBJECT(w), "clicked",
@@ -714,7 +716,7 @@ create_advanced_contents (void)
         g_signal_connect (G_OBJECT (vbox),
 			  "show",
 			  G_CALLBACK (advanced_contents_shown),
-			  run_dialog);
+			  NULL);
 
         return vbox;
 }
