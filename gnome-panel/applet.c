@@ -14,7 +14,6 @@
 
 #include "panel-include.h"
 #include "gnome-panel.h"
-#include "scroll-menu.h"
 
 #define SMALL_ICON_SIZE 20
 

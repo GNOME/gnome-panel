@@ -29,7 +29,6 @@
 #include "panel-util.h"
 #include "drawer-widget.h"
 #include "gnome-run.h"
-#include "scroll-menu.h"
 #include "gwmh.h"
 #include "tasklist_icon.h"
 #include "multiscreen-stuff.h"

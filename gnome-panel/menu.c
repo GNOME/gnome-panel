@@ -29,7 +29,6 @@
 #include "tearoffitem.h"
 #include "gnome-run.h"
 #include "title-item.h"
-#include "scroll-menu.h"
 #include "multiscreen-stuff.h"
 #include "conditional.h"
 

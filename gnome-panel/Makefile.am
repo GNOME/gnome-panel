@@ -99,7 +99,7 @@ BUILT_SOURCES = \
 	panel-marshal.c		\
 	panel-marshal.h
 
-panel_temp_SOURCES=\
+panel_SOURCES=\
 	$(CORBA_SRCLIST)	\
 	panel-include.h		\
 	panel-types.h		\
@@ -180,22 +180,9 @@ panel_temp_SOURCES=\
 	extern.h  		\
 	$(NULL)
 
-panel_temp_LDADD=\
+panel_LDADD=\
 	$(PANEL_LIBS)		\
 	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
-
-panel_SOURCES=\
-	things-will-not-compile-below-this-line		\
-	gnome-run.c		\
-	gnome-run.h		\
-	icon-entry-hack.c	\
-	icon-entry-hack.h
-
-panel_LDADD = \
-	libpanel_applet.la	\
-	$(PANEL_LIBS)		\
-	$(INTLLIBS)		\
-	$(XINERAMA_LIBS)
 
 panel_LDFLAGS=-export-dynamic
 
