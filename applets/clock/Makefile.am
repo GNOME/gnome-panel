@@ -28,7 +28,6 @@ EGGFILES =                      \
 
 libclock_applet_2_la_SOURCES = \
 	clock.c \
-	clock.h	\
 	$(EGGFILES)
 
 libclock_applet_2_la_LDFLAGS = -module -avoid-version
