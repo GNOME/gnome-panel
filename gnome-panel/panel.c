@@ -578,8 +578,8 @@ panel_session_save (gpointer client_data,
 			     the_panel->minimize_delay);
 	gnome_config_set_int("/panel/Config/minimized_size",
 			     the_panel->minimized_size);
-	gnome_config_set_int("/panel/Config/tooltips_enabled",
-			     the_panel->tooltips_enabled);
+	gnome_config_set_bool("/panel/Config/tooltips_enabled",
+			      the_panel->tooltips_enabled);
 	gnome_config_sync();
 
 	gdk_cursor_destroy(fleur_cursor);
@@ -1286,8 +1286,8 @@ panel_init(void)
 	the_panel->minimize_delay=gnome_config_get_int(buf);
 	sprintf(buf,"/panel/Config/minimized_size=%d",DEFAULT_MINIMIZED_SIZE);
 	the_panel->minimized_size=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/tooltips_enabled=%d",TRUE);
-	the_panel->tooltips_enabled=gnome_config_get_int(buf);
+	the_panel->tooltips_enabled=gnome_config_get_bool(
+		"/panel/Config/tooltips_enabled=true");
 
 
 	the_panel->table = gtk_table_new(3,3,FALSE);

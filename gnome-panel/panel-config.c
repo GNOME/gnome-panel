@@ -1,4 +1,10 @@
 #include <gtk/gtk.h>
+#ifdef HAVE_LIBINTL
+#include <libintl.h>
+#define _(String) gettext(String)
+#else
+#define _(String) (String)
+#endif
 
 #include "gnome.h"
 #include "panel.h"
@@ -77,7 +83,7 @@ position_notebook_page(void)
 	gtk_widget_show (vbox);
 	
 	/* Position frame */
-	frame = gtk_frame_new ("Position");
+	frame = gtk_frame_new (_("Position"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -89,7 +95,7 @@ position_notebook_page(void)
 	gtk_widget_show (box);
 	
 	/* Top Position */
-	button = gtk_radio_button_new_with_label (NULL, "Top");
+	button = gtk_radio_button_new_with_label (NULL, _("Top"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_TOP);
@@ -102,7 +108,7 @@ position_notebook_page(void)
 	/* Bottom Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  "Bottom");
+			  _("Bottom"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_BOTTOM);
@@ -115,7 +121,7 @@ position_notebook_page(void)
 	/* Left Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  "Left");
+			  _("Left"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_LEFT);
@@ -128,7 +134,7 @@ position_notebook_page(void)
 	/* Right Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  "Right");
+			  _("Right"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_RIGHT);
@@ -139,7 +145,7 @@ position_notebook_page(void)
 	gtk_widget_show (button);
 
 	/* Auto-hide/stayput frame */
-	frame = gtk_frame_new ("Minimize Options");
+	frame = gtk_frame_new (_("Minimize Options"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -151,7 +157,7 @@ position_notebook_page(void)
 	gtk_widget_show (box);
 	
 	/* Stay Put */
-	button = gtk_radio_button_new_with_label (NULL, "Explicitly Hide");
+	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
 			    (gpointer)PANEL_STAYS_PUT);
@@ -164,7 +170,7 @@ position_notebook_page(void)
 	/* Auto-hide */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  "Auto Hide");
+			  _("Auto Hide"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
 			    (gpointer)PANEL_GETS_HIDDEN);
@@ -218,7 +224,7 @@ animation_notebook_page(void)
 
 
 	/* Animation step_size scale frame */
-	frame = gtk_frame_new ("Animation Speed");
+	frame = gtk_frame_new (_("Animation Speed"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -244,7 +250,7 @@ animation_notebook_page(void)
 	gtk_widget_show (scale);
 
 	/* Minimized Delay scale frame */
-	frame = gtk_frame_new ("Minimize Delay (ms)");
+	frame = gtk_frame_new (_("Minimize Delay (ms)"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -270,7 +276,7 @@ animation_notebook_page(void)
 	gtk_widget_show (scale);
 
 	/* Minimized size scale frame */
-	frame = gtk_frame_new ("Minimized Size (pixels)");
+	frame = gtk_frame_new (_("Minimized Size (pixels)"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -312,7 +318,7 @@ misc_notebook_page(void)
 	gtk_widget_show (vbox);
 	
 	/* Tooltips frame */
-	frame = gtk_frame_new ("Tooltips");
+	frame = gtk_frame_new (_("Tooltips"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -324,7 +330,7 @@ misc_notebook_page(void)
 	gtk_widget_show (box);
 	
 	/* Tooltips enable */
-	button = gtk_check_button_new_with_label ("Tooltips enabled");
+	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(config_panel.tooltips_enabled));
@@ -370,7 +376,8 @@ panel_config(void)
 			   GTK_SIGNAL_FUNC (config_delete), NULL);
 	gtk_signal_connect(GTK_OBJECT(config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
-	gtk_window_set_title (GTK_WINDOW(config_window), "Panel Configuration");
+	gtk_window_set_title (GTK_WINDOW(config_window),
+			      _("Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
 	/* main vbox */
@@ -384,7 +391,7 @@ panel_config(void)
 	gtk_widget_show(notebook);
 	
 	/* label for Position notebook page */
-	label = gtk_label_new ("Orientation");
+	label = gtk_label_new (_("Orientation"));
 	gtk_widget_show (label);
 	
 	/* Position notebook page */
@@ -392,7 +399,7 @@ panel_config(void)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
 	
 	/* label for Animation notebook page */
-	label = gtk_label_new ("Animation");
+	label = gtk_label_new (_("Animation"));
 	gtk_widget_show (label);
 	
 	/* Animation notebook page */
@@ -400,7 +407,7 @@ panel_config(void)
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
 
 	/* label for Miscellaneous notebook page */
-	label = gtk_label_new ("Miscellaneous");
+	label = gtk_label_new (_("Miscellaneous"));
 	gtk_widget_show (label);
 	
 	/* Miscellaneous notebook page */
@@ -413,7 +420,7 @@ panel_config(void)
 	gtk_widget_show (box2);
 	
 	/* close button */
-	button = gtk_button_new_with_label("Close");
+	button = gtk_button_new_with_label(_("Close"));
 	gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 				   GTK_SIGNAL_FUNC (gtk_widget_destroy), 
 				   (gpointer)config_window);
@@ -421,7 +428,7 @@ panel_config(void)
 	gtk_widget_show (button);
 
 	/* apply button */
-	button = gtk_button_new_with_label("Apply");
+	button = gtk_button_new_with_label(_("Apply"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    GTK_SIGNAL_FUNC (config_apply), 
 			    NULL);

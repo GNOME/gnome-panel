@@ -30,6 +30,18 @@
 
 #define MENU_PATH "menu_path"
 
+typedef struct {
+	GtkWidget *button;
+	char *path;
+	GList *small_icons;
+	int show_small_icons;
+} Menu;
+
+typedef struct {
+	GtkWidget *dialog;
+	Menu *menu;
+} Properties;
+
 
 static char *gnome_folder;
 
@@ -55,7 +67,8 @@ activate_app_def (GtkWidget *widget, void *data)
 }
 
 void
-setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
+setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
+	GList ** small_icons)
 {
 	GtkWidget *label, *hbox, *align;
 
@@ -64,10 +77,12 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 	gtk_widget_show (label);
 	
 	hbox = gtk_hbox_new (FALSE, 0);
+	
 	align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_container_border_width (GTK_CONTAINER (align), 1);
 
 	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
+
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
@@ -76,7 +91,9 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 		gtk_widget_set_usize (align, 22, 16);
 	} else
 		gtk_widget_set_usize (align, 22, 16);
-	
+
+	(*small_icons)=g_list_prepend(*small_icons,align);
+
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
 	gtk_widget_show (menuitem);
@@ -135,7 +152,8 @@ add_dir_to_panel (GtkWidget *widget, void *data)
 }
 
 GtkWidget *
-create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
+create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
+	GList ** small_icons)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -172,16 +190,17 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 		sub = 0;
 		item_info = 0;
 		if (S_ISDIR (s.st_mode)){
-			sub = create_menu_at (window, filename, create_app_menu);
+			sub = create_menu_at (window, filename,
+					      create_app_menu, small_icons);
 			if (!sub){
 				g_free (filename);
 				continue;
 			}
 			/* just for now */
-			pixmap_name = 0;
+			pixmap_name = NULL;
 
 			if (create_app_menu){
-				GtkWidget *pixmap = 0;
+				GtkWidget *pixmap = NULL;
 				char *text;
 
 				text = g_copy_strings ("Menu: ", thisfile, NULL);
@@ -195,7 +214,8 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 					pixmap =gnome_create_pixmap_widget (window, menuitem, gnome_folder);
 					gtk_widget_show (pixmap);
 				}
-				setup_menuitem (menuitem, pixmap, text);
+				setup_menuitem (menuitem, pixmap, text,
+					small_icons);
 				g_free (text);
 				text = g_strdup (filename);
 				gtk_menu_prepend (GTK_MENU (sub), menuitem);
@@ -224,9 +244,10 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 		if (sub)
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
 
-		pixmap = 0;
+		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)){
-			pixmap = gnome_create_pixmap_widget (window, menuitem, pixmap_name);
+			pixmap = gnome_create_pixmap_widget (window, menuitem,
+							     pixmap_name);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -235,7 +256,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 		if (p)
 			*p = '\0';  /* Remove the .desktop part */
 		
-		setup_menuitem (menuitem, pixmap, thisfile);
+		setup_menuitem (menuitem, pixmap, thisfile, small_icons);
 
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 
@@ -291,9 +312,10 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 void
 activate_menu (GtkWidget *widget, void *closure)
 {
-        GtkWidget *menu = closure;
+	GtkMenu *menu = closure;
 
-	gtk_menu_popup (GTK_MENU (menu), 0, 0, menu_position, widget, 1, 0);
+	gtk_menu_popup (GTK_MENU (menu), 0, 0, menu_position, widget,
+			1, 0);
 }
 
 void
@@ -306,11 +328,13 @@ panel_configure (GtkWidget *widget, void *data)
 	(*panel_cmd_func) (&cmd);
 }
 
+/* FIXME: panel is dynamicly configured! so we shouldn't need this*/
+/*
 void
 panel_reload (GtkWidget *widget, void *data)
 {
-	fprintf(stderr, "Panel reload not yet implemented\n"); /* FIXME */
-}
+	fprintf(stderr, "Panel reload not yet implemented\n");
+}*/
 
 static AppletItem *
 applet_item_new(char *translated, char *original_id)
@@ -372,14 +396,16 @@ append_applet_item_to_menu(gpointer data, gpointer user_data)
 	GtkWidget  *menuitem;
 	AppletItem *ai;
 	char       *oid;
+	GList     **small_icons;
 
 	ai = data;
 	menu = GTK_MENU(user_data);
+	small_icons = gtk_object_get_user_data(GTK_OBJECT(menu));
 
 	oid = g_strdup(ai->original_id);
 
 	menuitem = gtk_menu_item_new();
-	setup_menuitem(menuitem, NULL, ai->translated);
+	setup_menuitem(menuitem, NULL, ai->translated,small_icons);
 	gtk_object_set_user_data(GTK_OBJECT(menuitem), oid);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_applet_to_panel,
@@ -396,7 +422,7 @@ append_applet_item_to_menu(gpointer data, gpointer user_data)
 }
 
 static GtkWidget *
-create_applets_menu(void)
+create_applets_menu(GList ** small_icons)
 {
 	GtkWidget    *menu;
 	GList        *list;
@@ -418,6 +444,7 @@ create_applets_menu(void)
 	g_list_free(list);
 
 	menu = gtk_menu_new();
+	gtk_object_set_user_data(GTK_OBJECT(menu),(gpointer)small_icons);
 
 	g_list_foreach(applets_list, append_applet_item_to_menu, menu);
 
@@ -430,33 +457,37 @@ create_applets_menu(void)
 }
 
 static GtkWidget *
-create_panel_submenu (GtkWidget *app_menu)
+create_panel_submenu (GtkWidget *app_menu, GList ** small_icons)
 {
 	GtkWidget *menu, *menuitem;
 
 	menu = gtk_menu_new ();
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add to panel"));
+	setup_menuitem (menuitem, 0, _("Add to panel"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), app_menu);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add applet"));
+	setup_menuitem (menuitem, 0, _("Add applet"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), create_applets_menu());
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+		create_applets_menu(small_icons));
 
 	add_menu_separator(menu);
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Configure"));
+	setup_menuitem (menuitem, 0, _("Configure"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
         gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_configure, 0);
 
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Reload configuration"));
+	/*FIXME: this is not needed, or is it?, so take it out unless we
+	  do need it!
+	*/
+	/*menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Reload configuration"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-        gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_reload, 0);
+        gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_reload, 0);*/
 
 	return menu;
 }
@@ -477,7 +508,7 @@ panel_logout (GtkWidget *widget, void *data)
 }
 
 static void
-add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
+add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GList ** small_icons)
 {
 	GtkWidget *menuitem;
 	
@@ -486,25 +517,26 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 	add_menu_separator (menu);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Panel"));
+	setup_menuitem (menuitem, 0, _("Panel"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), create_panel_submenu (app_menu));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), create_panel_submenu (app_menu,small_icons));
 
 	add_menu_separator (menu);
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Lock screen"));
+	setup_menuitem (menuitem, 0, _("Lock screen"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_lock, 0);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Log out"));
+	setup_menuitem (menuitem, 0, _("Log out"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_logout, 0);
 }
 
 static GtkWidget *
-create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
+create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
+	GList ** small_icons)
 {
 	GtkWidget *button;
 	GtkWidget *pixmap;
@@ -543,38 +575,64 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 	gtk_container_add (GTK_CONTAINER(button), pixmap);
 	gtk_widget_show (button);
 
-	menu = create_menu_at (window, menudir, 0);
+	menu = create_menu_at (window, menudir, 0, small_icons);
 	if (main_menu) {
-		app_menu = create_menu_at (window, menudir, 1);
-		add_special_entries (menu, app_menu);
+		app_menu = create_menu_at (window, menudir, 1, small_icons);
+		add_special_entries (menu, app_menu, small_icons);
 	}
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", (GtkSignalFunc) activate_menu, menu);
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    GTK_SIGNAL_FUNC (activate_menu), menu);
 
 	g_free (pixmap_name);
 	return button;
 }
 
 static GtkWidget *
-create_menu_widget (GtkWidget *window, char *arguments, char *menudir)
+create_menu_widget (GtkWidget *window, char *arguments, char *menudir,
+	GList ** small_icons)
 {
 	GtkWidget *menu;
 	int main_menu;
 	
 	main_menu = (strcmp (arguments, ".") == 0);
-	menu = create_panel_menu (window, menudir, main_menu);
+	menu = create_panel_menu (window, menudir, main_menu, small_icons);
 	return menu;
 }
 
 static void
+set_show_small_icons(gpointer data, gpointer user_data)
+{
+	if(*(int *)user_data)
+		gtk_widget_show(GTK_WIDGET(data));
+	else
+		gtk_widget_hide(GTK_WIDGET(data));
+}
+
+
+static void
 create_instance (Panel *panel, char *params, int xpos, int ypos)
 {
-	GtkWidget *menu_component;
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *this_menu;
+	char *p;
+	Menu *menu;
 	PanelCommand cmd;
+	int show_small_icons;
 
 	if (!getenv ("PATH"))
 		return;
+
+	if(!params)
+		return;
+
+	/*parse up the params*/
+	p = strchr(params,':');
+	show_small_icons = TRUE;
+	if(p) {
+		*(p++)='\0';
+		if(*(p++)=='0')
+			show_small_icons = FALSE;
+	}
 
 	if (*params == '/')
 		this_menu = strdup (params);
@@ -592,17 +650,20 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 		free (gnome_folder);
 		gnome_folder = NULL;
 	}
-	
-	menu_component = create_menu_widget (panel->window, params, this_menu);
 
-	/* FIXME: this is a hack to remember the menu path.  It should
-	 * really be carried around by the menu's properties
-	 */
+	menu = g_new(Menu,1);
+	menu->button = create_menu_widget (panel->window, params, this_menu,
+					   &(menu->small_icons));
+	menu->path = g_strdup(params);
+	menu->show_small_icons = show_small_icons;
+
+	g_list_foreach(menu->small_icons,set_show_small_icons,
+		       &show_small_icons);
 	
-	gtk_object_set_data(GTK_OBJECT(menu_component), MENU_PATH, g_strdup(params));
+	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 	
 	cmd.cmd = PANEL_CMD_REGISTER_TOY;
-	cmd.params.register_toy.applet = menu_component;
+	cmd.params.register_toy.applet = menu->button;
 	cmd.params.register_toy.id     = APPLET_ID;
 	cmd.params.register_toy.xpos   = xpos;
 	cmd.params.register_toy.ypos   = ypos;
@@ -616,24 +677,34 @@ set_orientation(GtkWidget *applet, Panel *panel)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
+	Menu *menu;
 
 	if(panel_pos==panel->pos)
 		return;
 	panel_pos=panel->pos;
 
-	if (strcmp(gtk_object_get_data(GTK_OBJECT(applet),MENU_PATH),".")==0)
+
+	menu = gtk_object_get_user_data(GTK_OBJECT(applet));
+	if(!menu || !menu->path)
+		return;
+
+	if (strcmp(menu->path,".")==0)
 		switch(panel_pos) {
 			case PANEL_POS_TOP:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file(
+					"gnome-menu-down.xpm");
 				break;
 			case PANEL_POS_BOTTOM:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file(
+					"gnome-menu-up.xpm");
 				break;
 			case PANEL_POS_LEFT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file(
+					"gnome-menu-right.xpm");
 				break;
 			case PANEL_POS_RIGHT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file(
+					"gnome-menu-left.xpm");
 				break;
 		}
 	else
@@ -653,10 +724,119 @@ set_orientation(GtkWidget *applet, Panel *panel)
 	g_free(pixmap_name);
 }
 
+static void
+properties_apply_callback(GtkWidget *widget, gpointer data)
+{
+	Properties *prop = data;
+	Menu *menu;
+
+	menu = gtk_object_get_user_data(GTK_OBJECT(prop->menu->button));
+	if(!menu)
+		return;
+
+	menu->show_small_icons=prop->menu->show_small_icons;
+	g_list_foreach(menu->small_icons,set_show_small_icons,
+		       &(menu->show_small_icons));
+}
+
+static void
+properties_close_callback(GtkWidget *widget, gpointer data)
+{
+	Properties *prop = data;
+
+	gtk_widget_destroy(prop->dialog);
+	g_free(prop->menu);
+	g_free(prop);
+}
+
+static void 
+set_toggle_button_value (GtkWidget *widget, gpointer data)
+{
+	if(GTK_TOGGLE_BUTTON(widget)->active)
+		*(int *)data=TRUE;
+	else
+		*(int *)data=FALSE;
+}
+
+static void
+properties(GtkWidget *applet)
+{
+	GtkWidget *table;
+	GtkWidget *w;
+	Menu *menu;
+	Properties *prop;
+
+	menu = gtk_object_get_user_data(GTK_OBJECT(applet));
+	if(!menu)
+		return;
+
+	prop = g_new(Properties,1);
+	prop->menu = g_new(Menu,1);
+
+	prop->menu->button=menu->button;
+	prop->menu->show_small_icons=menu->show_small_icons;
+
+	/*make us a dialog*/
+	prop->dialog = gtk_dialog_new();
+
+	gtk_window_set_title(GTK_WINDOW(prop->dialog), _("Menu properties"));
+	gtk_window_position(GTK_WINDOW(prop->dialog), GTK_WIN_POS_CENTER);
+	gtk_window_set_policy(GTK_WINDOW(prop->dialog), FALSE, FALSE, TRUE);
+	
+	table = gtk_table_new(1, 2, FALSE);
+	gtk_container_border_width(GTK_CONTAINER(table), 4);
+	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
+	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(prop->dialog)->vbox), table,
+		FALSE, FALSE, 0);
+	gtk_widget_show(table);
+
+	/*the different properties go here*/
+	w = gtk_check_button_new_with_label(_("Enable small icons in menu"));
+	gtk_signal_connect (GTK_OBJECT (w), "clicked", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(prop->menu->show_small_icons));
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),
+		prop->menu->show_small_icons ? TRUE : FALSE);
+	gtk_table_attach(GTK_TABLE(table), w,
+			 0, 2, 0, 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+	gtk_widget_show(w);
+
+	/*close and apply buttons*/
+	gtk_container_border_width(
+		GTK_CONTAINER(GTK_DIALOG(prop->dialog)->action_area), 4);
+	
+	w = gtk_button_new_with_label(_("Close"));
+	gtk_signal_connect(GTK_OBJECT(w), "clicked",
+			   GTK_SIGNAL_FUNC (properties_close_callback),
+			   prop);
+	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(prop->dialog)->action_area),
+			 w,TRUE,TRUE,0);
+	gtk_widget_show(w);
+
+	w = gtk_button_new_with_label(_("Apply"));
+	gtk_signal_connect(GTK_OBJECT(w), "clicked",
+			   GTK_SIGNAL_FUNC(properties_apply_callback),
+			   prop);
+	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(prop->dialog)->action_area),
+			 w, TRUE, TRUE, 0);
+	gtk_widget_show(w);
+
+	gtk_signal_connect(GTK_OBJECT(prop->dialog), "delete_event",
+			   GTK_SIGNAL_FUNC(properties_close_callback),
+			   prop);
+	gtk_widget_show(prop->dialog);
+}
+
 gpointer
 applet_cmd_func(AppletCommand *cmd)
 {
+	Menu *menu;
 	g_assert(cmd != NULL);
+
 
 	switch (cmd->cmd) {
 		case APPLET_CMD_QUERY:
@@ -670,7 +850,7 @@ applet_cmd_func(AppletCommand *cmd)
 			break;
 
 		case APPLET_CMD_GET_DEFAULT_PARAMS:
-			return g_strdup(".");
+			return g_strdup(".:1");
 
 		case APPLET_CMD_CREATE_INSTANCE:
 			create_instance(cmd->panel,
@@ -680,16 +860,19 @@ applet_cmd_func(AppletCommand *cmd)
 			break;
 
 		case APPLET_CMD_GET_INSTANCE_PARAMS:
-			/* FIXME: this should return the stuff from current properties */
-			
-			return g_strdup(gtk_object_get_data(GTK_OBJECT(cmd->applet), MENU_PATH));
+			menu = gtk_object_get_user_data(
+				GTK_OBJECT(cmd->applet));
+			if(!menu) return NULL;
+			return g_copy_strings(menu->path,":",
+					      menu->show_small_icons?"1":"0",
+					      NULL);
 
 		case APPLET_CMD_ORIENTATION_CHANGE_NOTIFY:
 			set_orientation(cmd->applet,cmd->panel);
 			break;
 
 		case APPLET_CMD_PROPERTIES:
-			fprintf(stderr, "Menu properties not yet implemented\n"); /* FIXME */
+			properties(cmd->applet);
 			break;
 
 		default:
