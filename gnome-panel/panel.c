@@ -40,6 +40,9 @@ static int panel_been_moved = FALSE;
   go below 1*/
 int base_panels = 0;
 
+extern GSList *applets;
+extern GSList *applets_last;
+
 extern int config_sync_timeout;
 extern int applets_to_sync;
 extern int panels_to_sync;
@@ -1031,8 +1034,12 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 }
 
 static void
-drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type)
+drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
+		      int action)
 {
+	int applet_num = -1;
+	gboolean remove_applet = FALSE;
+
 	if (applet_type == NULL)
 		return;
 
@@ -1042,20 +1049,43 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type)
 			drop_menu (panel, pos, NULL);
 		else
 			drop_menu (panel, pos, menu);
-	} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
+
+	} else if (strcmp(applet_type,"DRAWER:NEW")==0) {
 		load_drawer_applet(-1, NULL, NULL, panel, pos, TRUE);
-	} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
-		load_logout_applet(panel, pos, TRUE);
-	} else if(strcmp(applet_type,"LOCK:NEW")==0) {
-		load_lock_applet(panel, pos, TRUE);
-	} else if(strcmp(applet_type,"SWALLOW:ASK")==0) {
+
+	} else if (strcmp (applet_type, "LOGOUT:NEW") == 0) {
+		load_logout_applet (panel, pos, TRUE);
+
+	} else if (sscanf (applet_type, "LOGOUT:%d", &applet_num) == 1) {
+		load_logout_applet (panel, pos, TRUE);
+		remove_applet = TRUE;
+
+	} else if (strcmp (applet_type, "LOCK:NEW") == 0) {
+		load_lock_applet (panel, pos, TRUE);
+
+	} else if (sscanf (applet_type, "LOCK:%d", &applet_num) == 1) {
+		load_lock_applet (panel, pos, TRUE);
+		remove_applet = TRUE;
+
+	} else if (strcmp (applet_type, "SWALLOW:ASK") == 0) {
 		ask_about_swallowing(panel, pos, TRUE);
+
 	} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
 		ask_about_launcher(NULL, panel, pos, TRUE);
+
 	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
 		load_status_applet(panel, pos, TRUE);
+
 	} else if(strcmp(applet_type,"RUN:NEW")==0) {
 		load_run_applet(panel, pos, TRUE);
+	}
+
+	if (remove_applet &&
+	    action == GDK_ACTION_MOVE) {
+		AppletInfo *info = g_slist_nth_data (applets, applet_num);
+
+		if (info != NULL)
+			panel_clean_applet (info);
 	}
 }
 
@@ -1152,15 +1182,20 @@ drag_motion_cb (GtkWidget	  *widget,
 	if ( ! is_this_drop_ok (widget, context, &info, NULL))
 		return FALSE;
 
-	/* always prefer copy, except for internal icons, where we prefer move */
-	if (info != TARGET_ICON_INTERNAL &&
-	    (context->actions & GDK_ACTION_COPY))
+	/* always prefer copy, except for internal icons/applets,
+	 * where we prefer move */
+	if (info == TARGET_ICON_INTERNAL ||
+	    info == TARGET_APPLET_INTERNAL) {
+		if (context->actions & GDK_ACTION_MOVE) {
+			gdk_drag_status (context, GDK_ACTION_MOVE, time);
+		} else {
+			gdk_drag_status (context, context->suggested_action, time);
+		}
+	} else if (context->actions & GDK_ACTION_COPY) {
 		gdk_drag_status (context, GDK_ACTION_COPY, time);
-	else if (info == TARGET_ICON_INTERNAL &&
-		 (context->actions & GDK_ACTION_MOVE))
-		gdk_drag_status (context, GDK_ACTION_MOVE, time);
-	else
+	} else {
 		gdk_drag_status (context, context->suggested_action, time);
+	}
 
 	do_highlight (widget, TRUE);
 
@@ -1266,7 +1301,8 @@ drag_data_recieved_cb (GtkWidget	*widget,
 				    panel, pos, TRUE, FALSE);
 		break;
 	case TARGET_APPLET_INTERNAL:
-		drop_internal_applet (panel, pos, (char *)selection_data->data);
+		drop_internal_applet (panel, pos, (char *)selection_data->data,
+				      context->action);
 		break;
 	case TARGET_ICON_INTERNAL:
 		drop_internal_icon (panel, pos, (char *)selection_data->data,
