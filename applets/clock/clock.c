@@ -216,19 +216,16 @@ clock_timeout_callback (gpointer data)
 	if (!cd->showseconds &&
 	    cd->format != CLOCK_FORMAT_UNIX &&
 	    cd->format != CLOCK_FORMAT_CUSTOM) {
-		if (cd->format != CLOCK_FORMAT_INTERNET && 
-		    new_time % 60 != cd->current_time % 60)
-		{
-				update_clock (cd);
+		if (cd->format == CLOCK_FORMAT_INTERNET && 
+		    (long)get_itime (new_time) !=
+		    (long)get_itime (cd->current_time)) {
+			update_clock (cd);
+		} else if ((cd->format == CLOCK_FORMAT_12 ||
+			    cd->format == CLOCK_FORMAT_24) &&
+			   new_time / 60 != cd->current_time / 60) {
+			update_clock (cd);
 		}
-		else if ((long)get_itime (new_time) !=
-			 (long)get_itime (cd->current_time))
-		{
-				update_clock (cd);
-		}
-	}
-	else
-	{
+	} else {
 		update_clock (cd);
 	}
 
