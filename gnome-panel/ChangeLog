@@ -1,3 +1,10 @@
+Fri Feb 18 23:15:42 2000  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: fix usability issues, browse now adds to the command
+	  line instead of replacing it, and we add a "run in terminal", and
+	  we use the pop string parsing routine and use gnome_execute_async
+	  so that we can easily check if we failed
+
 Fri Feb 18 20:43:56 2000  George Lebl <jirka@5z.com>
 
 	* global-keys.c: cleanup the filter function and remove dead code
