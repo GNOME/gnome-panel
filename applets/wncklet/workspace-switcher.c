@@ -141,7 +141,7 @@ applet_change_orient (PanelApplet       *applet,
 	pager->orientation = new_orient;
 	pager_update (pager);
 	if (pager->label_row_col) 
-		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("Rows") : _("Columns"));	
+		gtk_label_set_text (GTK_LABEL (pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));	
 }
 
 static void 
@@ -734,7 +734,7 @@ setup_dialog (GladeXML  *xml,
 			  (GCallback) num_rows_value_changed, pager);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
-	gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("Rows") : _("Columns"));
+	gtk_label_set_text (GTK_LABEL (pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));
 
 	g_signal_connect (pager->properties_dialog, "delete_event",
 			  G_CALLBACK (delete_event),
@@ -806,6 +806,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
+	gnome_window_icon_set_from_file (GTK_WINDOW (pager->properties_dialog),
+	                                 GNOME_ICONDIR "/gnome-workspace.png");
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));

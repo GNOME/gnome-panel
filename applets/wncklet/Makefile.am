@@ -17,6 +17,7 @@ INCLUDES = \
 	$(DISABLE_DEPRECATED) \
 	$(WARN_CFLAGS) \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
+	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\"" \
 	-DPAGER_GLADEDIR=\""$(gladedir)"\" \
 	-DTASKLIST_GLADEDIR=\""$(gladedir)"\" \
 	-DPREFIX=\"$(prefix)\" \
