@@ -2474,6 +2474,10 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	/*reparent applet*/
 	if (IS_BUTTON_WIDGET (applet)) {
+		ButtonWidget *button = BUTTON_WIDGET(applet);
+		if(button->cache)
+			gdk_pixmap_unref(button->cache);
+		button->cache = NULL;
 		gtk_widget_ref (applet);
 		gtk_container_remove (GTK_CONTAINER (applet->parent), applet);
 		gtk_container_add (GTK_CONTAINER (new_panel), applet);
