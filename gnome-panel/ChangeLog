@@ -1,5 +1,26 @@
 2002-07-10  Mark McLoughlin  <mark@skynet.ie>
 
+	* button-widget.c:
+	(button_load_pixbuf): rename and handle GErrors.
+	(button_widget_new): display an error dialog if we
+	can't load the pixbuf.
+	(button_widget_set_pixmap): ditto.
+	* drawer.c:
+	(drawer_click): kill debug.
+	(free_drawer): implement.
+	(create_drawer_applet): if creating button fails, free
+	the drawer and return.
+	(load_drawer_applet): use free_drawer as destroy notify
+	handler.
+
+	* logout.c: (create_logout_widget), (create_lock_widget),
+	(load_lock_applet): return if we failed to create the
+	button.
+
+	* menu.c: (create_panel_menu): ditto.
+
+2002-07-10  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-preferences.desktop.in: patch from Glynn
 	to change tooltip. #87755.
 

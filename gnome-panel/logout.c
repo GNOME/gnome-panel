@@ -82,6 +82,9 @@ create_logout_widget (void)
 				    FALSE,
 				    PANEL_ORIENT_UP,
 				    _("Log out"));
+	g_free (pixmap_name);
+	if (!button)
+		return NULL;
 
 	/*A hack since this function only pretends to work on window
 	  widgets (which we actually kind of are) this will select
@@ -99,7 +102,6 @@ create_logout_widget (void)
 			    G_CALLBACK (drag_data_get_cb),
 			    "LOGOUT");
 
-	g_free (pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Log out of GNOME"), NULL);
 
 	g_signal_connect (G_OBJECT (button), "clicked",
@@ -133,7 +135,7 @@ load_logout_applet (PanelWidget *panel,
 }
 
 static GtkWidget *
-create_lock_widget(void)
+create_lock_widget (void)
 {
         static GtkTargetEntry dnd_targets[] = {
 		{ "application/x-panel-applet-internal", 0, 0 }
@@ -149,6 +151,9 @@ create_lock_widget(void)
 				    FALSE,
 				    PANEL_ORIENT_UP,
 				    _("Lock screen"));
+	g_free (pixmap_name);
+	if (!button)
+		return NULL;
 
 	/*A hack since this function only pretends to work on window
 	  widgets (which we actually kind of are) this will select
@@ -166,7 +171,6 @@ create_lock_widget(void)
 			    G_CALLBACK (drag_data_get_cb),
 			    "LOCK");
 
-	g_free (pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Lock screen"), NULL);
 
 	g_signal_connect (button, "clicked",
@@ -187,7 +191,6 @@ load_lock_applet (PanelWidget *panel,
 	g_return_if_fail (panel != NULL);
 
 	lock = create_lock_widget ();
-
 	if (!lock)
 		return;
 

@@ -208,23 +208,14 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
 	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
 	GtkWidget *panelw = parent->panel_parent;
-#ifdef DRAWER_DEBUG
-	printf ("Registering drawer click \n");
-#endif	
 
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
 	case BASEP_AUTO_HIDDEN:
-#ifdef DRAWER_DEBUG
-	printf ("Drawer closing\n");
-#endif
 		drawer_widget_close_drawer (drawerw, panelw);
 		break;
 	case BASEP_HIDDEN_LEFT:
 	case BASEP_HIDDEN_RIGHT:
-#ifdef DRAWER_DEBUG
-	printf ("Drawer opening\n");
-#endif
 		drawer_widget_open_drawer (drawerw, panelw);
 		break;
 	}
@@ -412,10 +403,23 @@ drag_data_get_cb (GtkWidget          *widget,
 	g_free (foo);
 }
 
+static void
+free_drawer (Drawer *drawer)
+{
+	if (drawer->tooltip)
+		g_free (drawer->tooltip);
+
+	if (drawer->pixmap)
+		g_free (drawer->pixmap);
+
+	g_free (drawer);
+}
+
 static Drawer *
-create_drawer_applet(GtkWidget * drawer_panel,
-		     const char *tooltip, const char *pixmap,
-		     PanelOrient orient)
+create_drawer_applet (GtkWidget   *drawer_panel,
+		      const char  *tooltip,
+		      const char  *pixmap,
+		      PanelOrient  orient)
 {
         static GtkTargetEntry dnd_targets[] = {
 		{ "application/x-panel-applet-internal", 0, 0 }
@@ -440,6 +444,10 @@ create_drawer_applet(GtkWidget * drawer_panel,
 	drawer->button = button_widget_new (drawer->pixmap, -1,
 					    TRUE, orient,
 					    _("Drawer"));
+	if (!drawer->button) {
+		free_drawer (drawer);
+		return NULL;
+	}
 
 	/*A hack since this function only pretends to work on window
 	  widgets (which we actually kind of are) this will select
@@ -589,7 +597,7 @@ load_drawer_applet (gchar       *mypanel_id,
 
 		drawer->info = panel_applet_register (
 					drawer->button, drawer,
-					(GDestroyNotify) g_free,
+					(GDestroyNotify) free_drawer,
 					panel, pos, exactpos,
 					APPLET_DRAWER, gconf_key);
 

@@ -3958,7 +3958,6 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	menu->path = g_strdup (menudir);
 
-
 	menu->custom_icon = custom_icon;
 	if ( ! string_empty (custom_icon_file))
 		menu->custom_icon_file = g_strdup (custom_icon_file);
@@ -3978,6 +3977,11 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	/*make the pixmap*/
 	menu->button = button_widget_new (pixmap_name, -1,
 					  TRUE, orient, _("Menu"));
+	g_free (pixmap_name);
+	if (!menu->button) {
+		free_menu (menu);
+		return NULL;
+	}
 
 	/*A hack since this function only pretends to work on window
 	  widgets (which we actually kind of are) this will select
@@ -4024,8 +4028,6 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 				      tooltip, NULL);
 		g_free (tooltip);
 	}
-
-	g_free (pixmap_name);
 
 	return menu;
 }

@@ -300,27 +300,28 @@ button_widget_destroy (GtkObject *obj)
 }
 
 static GdkPixbuf *
-loadup_file(const char *file)
+button_load_pixbuf (const char  *file,
+		    GError     **error)
 {
-	GdkPixbuf *pb = NULL;
+	GdkPixbuf *retval = NULL;
 	
-	if (string_empty (file))
+	if (!file || !file [0])
 		return NULL;
 
-	if ( ! g_path_is_absolute (file)) {
-		char *full = gnome_desktop_item_find_icon (panel_icon_loader,
-							   file,
-							   48 /* desired size */,
-							   0 /* flags */);
+	if (g_path_is_absolute (file))
+		retval = gdk_pixbuf_new_from_file (file, error);
 
-		if (full != NULL) {
-			pb = gdk_pixbuf_new_from_file (full, NULL);
+	else {
+		char *full = gnome_desktop_item_find_icon (
+					panel_icon_loader, file, 48, 0);
+
+		if (full) {
+			retval = gdk_pixbuf_new_from_file (full, error);
 			g_free (full);
 		}
-	} else {
-		pb = gdk_pixbuf_new_from_file (file, NULL);
 	}
-	return pb;
+
+	return retval;
 }
 
 /* colorshift a pixbuf */
@@ -700,18 +701,29 @@ button_widget_button_released (GtkButton *button)
         gtk_widget_queue_draw (GTK_WIDGET (button));
 }
 
-GtkWidget*
-button_widget_new(const char *filename,
-		  int size,
-		  gboolean arrow,
-		  PanelOrient orient,
-		  const char *text)
+GtkWidget *
+button_widget_new (const char  *filename,
+		   int          size,
+		   gboolean     arrow,
+		   PanelOrient  orient,
+		   const char  *text)
 {
 	ButtonWidget *button;
+	GdkPixbuf    *pixbuf = NULL;
+	GError       *error = NULL;
+
+	if (filename && !(pixbuf = button_load_pixbuf (filename, &error))) {
+		panel_error_dialog ("cannot_load_pixbuf",
+				    _("Failed to load image %s\n\n"
+				      "Details: %s"),
+				    filename,
+				    error ? error->message : _("none"));
+		return NULL;
+	}
 
 	button = BUTTON_WIDGET (g_object_new (button_widget_get_type (), NULL));
 	
-	button->pixbuf = loadup_file (filename);
+	button->pixbuf = pixbuf;
 	button->scaled = NULL;
 	button->scaled_hc = NULL;
 	button->filename = g_strdup (filename);
@@ -724,21 +736,33 @@ button_widget_new(const char *filename,
 }
 
 gboolean
-button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
+button_widget_set_pixmap (ButtonWidget *button,
+			  const char   *pixmap,
+			  int           size)
 {
-	g_return_val_if_fail(BUTTON_IS_WIDGET(button), FALSE);
+	GdkPixbuf *pixbuf;
+	GError    *error = NULL;
+
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	if (!(pixbuf = button_load_pixbuf (pixmap, &error))) {
+		panel_error_dialog ("cannot_load_pixbuf",
+				    _("Failed to load image %s\n\n"
+				      "Details: %s"),
+				    pixmap,
+				    error ? error->message : _("none"));
+		return FALSE;
+	} else {
+		if (button->pixbuf)
+			g_object_unref (button->pixbuf);
+		button->pixbuf = pixbuf;
+
+		g_free (button->filename);
+		button->filename = g_strdup (pixmap);
+	}
 
 	if (size < 0)
-		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
-	
-	if (button->pixbuf != NULL)
-		g_object_unref (G_OBJECT (button->pixbuf));
-
-	button->pixbuf = loadup_file(pixmap);
-
-	
-	g_free(button->filename);
-	button->filename = g_strdup(pixmap);
+		size = PANEL_WIDGET (GTK_WIDGET (button)->parent)->sz;
 	button->size = size;
 
 	/* TODO: Is this guaranteed to trigger the size_allocate call to
@@ -746,9 +770,6 @@ button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
 	gtk_widget_queue_resize (GTK_WIDGET (button));
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 
-	if (button->pixbuf == NULL)
-		return FALSE;
-	
 	return TRUE;
 }
 
