@@ -1,22 +1,25 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
+# translation of gnome-panel.HEAD.gu.po to Gujarati
+# Copyright (C) 2004 Free Software Foundation, Inc.
 # MagNet <magnet@magnet-i.com>, 2004.
+# Ankit Patel <ankit@redhat.com>, 2004.
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel-2.6\n"
+"Project-Id-Version: gnome-panel.HEAD.gu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-20 08:31+0100\n"
-"PO-Revision-Date: 2004-02-29 20:47+0530\n"
-"Last-Translator: Nirav, Ankit, Ankur, Atit, Bhavin, Kartik, Khushbu, Sweta. "
+"PO-Revision-Date: 2004-08-07 15:34+0530\n"
+"Last-Translator: Ankit Patel <ankit@redhat.com>\n"
 "<magnet@magnet-i.com>\n"
-"Language-Team: MagNet <magnet@magnet-i.com>\n"
+"Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.3.1\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=(n!=1);\n\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time"
-msgstr "તારીખ & સમય ગોઠવો... (_j)"
+msgstr "તારીખ અને સમય સુયોજિત કરો (_j)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -24,7 +27,7 @@ msgstr "તારીખની નકલ કરો ( _D)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:3
 msgid "Copy _Time"
-msgstr "સમયની નકલ કરો ( _T)"
+msgstr "સમયની નકલ કરો (_T)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:4
 #: applets/fish/GNOME_FishApplet.xml.h:1
@@ -34,7 +37,7 @@ msgstr "સમયની નકલ કરો ( _T)"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About"
-msgstr "વિશે... (_A)"
+msgstr "વિશે (_A)"
 
 # #-#-#-#-#  gnome-applets.gnome-2-2.hi.po (gnome-applets 2.x)  #-#-#-#-#
 # #-#-#-#-#  gtk+.gtk-2-0.hi.po (PACKAGE VERSION)  #-#-#-#-#
@@ -63,7 +66,7 @@ msgstr "મદદ (_H)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences"
-msgstr "પસંદગીઓ...(_P)"
+msgstr "પસંદગીઓ (_P)"
 
 # #-#-#-#-#  gnome-applets.gnome-2-2.hi.po (gnome-applets 2.x)  #-#-#-#-#
 # desktop-links/Accessories.directory.in.h:1
@@ -145,7 +148,7 @@ msgstr "%A %B %d"
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
 msgid "%b %d"
-msgstr "%a %b %e"
+msgstr "%b %d"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -157,7 +160,7 @@ msgstr "બધા દિવસે"
 
 #: applets/clock/clock.c:1096
 msgid "Appointments"
-msgstr "નિયોજિત મુલાકાત"
+msgstr "મુલાકાતો"
 
 # libgnomeui/gnome-dateedit.c:745
 #: applets/clock/clock.c:1327
@@ -217,11 +220,11 @@ msgstr "ઘડિયાળનો પ્રકાર: (_t)"
 
 #: applets/clock/clock.c:2381
 msgid "12 hour"
-msgstr "12 કલાક"
+msgstr "૧૨ કલાક"
 
 #: applets/clock/clock.c:2382
 msgid "24 hour"
-msgstr "24 કલાક"
+msgstr "૨૪ કલાક"
 
 #: applets/clock/clock.c:2383
 msgid "UNIX time"
@@ -233,7 +236,7 @@ msgstr "ઇન્ટરનેટ સમય"
 
 #: applets/clock/clock.c:2392
 msgid "Custom _format:"
-msgstr "કસ્ટમ બંધારણઃ  (_f)"
+msgstr "કસ્ટમ બંધારણ (_f):"
 
 #: applets/clock/clock.c:2411
 msgid "Show _seconds"
@@ -269,11 +272,11 @@ msgstr "ઘડિયાળ હાલનો સમય અને તારીખ �
 
 #: applets/clock/clock.schemas.in.h:1
 msgid "24"
-msgstr "24"
+msgstr "૨૪"
 
 #: applets/clock/clock.schemas.in.h:2
 msgid "24-hour"
-msgstr "24-કલાક"
+msgstr "૨૪-કલાક"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
@@ -340,6 +343,14 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display Internet time. The Internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -545,8 +556,7 @@ msgid "Frames in fish's animation"
 msgstr "માછલીના એનિમેશનમાંના ચોકઠાઓ"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "જો ખરુ હોય તો, માછલીનું એનિમેશન ઊભી પેનલો પર ફરતુ દેખાશે."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -569,8 +579,7 @@ msgstr "માછલીનું નામ"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
+msgstr "જ્યારે માછલી ને ક્લિક કરવામાં આવે ત્યારે જે આદેશ ચલાવવાનો પ્રયત્ન કરવાનો છે તે સ્પષ્ટ કરો."
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -693,8 +702,7 @@ msgstr ""
 
 #: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr ""
-"વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
+msgstr "વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -824,10 +832,8 @@ msgid "When to group windows"
 msgstr "વિન્ડોના જૂથ ક્યારે પાડવા"
 
 #: applets/wncklet/window-menu.c:138
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgstr "વિન્ડોની મેનુ તમને બધી દ્રશ્યમાન વિન્ડોની મેનુ બતાડે છે અને તેમને જોવાની પરવાનગી આપે છે."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -859,8 +865,7 @@ msgstr "કામ કરવાની જગ્યાની ફેરબદલી
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "કામ કરવાની જગ્યાની ફેરબદલી કરનાર માટે કામ કરવાની જગ્યાના નામ પ્રદર્શિત કરવા માટેી "
 "કિંમતો મેળવવામાં થતી ભૂલ: %s\n"
@@ -1189,9 +1194,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "વર્તમાન ડેસ્કટોપની સ્ક્રીનની છબી લેવામાં અસમર્થ."
 
 #: gnome-panel/gnome-panel-screenshot.c:1255
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "વેબ પેજ પર સ્ક્રીનની છબી સંગ્રહિત કરો ( ~/public__htmlમાં સંગ્રહિત કરો) (_w)"
+msgstr "સ્ક્રીનશોટને વેબ પાના પર સગ્રહો (%s માં સંગ્રહો) (_w)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1311
 msgid "Grab a window instead of the entire screen"
@@ -1229,8 +1234,7 @@ msgstr "વેબ પેજ પર સ્ક્રીનની છબી સં�
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
-"વપરાશકર્તાની ડિરેક્ટરી કે જેમાં સ્ક્રીનની છબીને સંગ્રહીત કરવી જેથી કરીને તે વેબ પર દેખાય."
+msgstr "વપરાશકર્તાની ડિરેક્ટરી કે જેમાં સ્ક્રીનની છબીને સંગ્રહીત કરવી જેથી કરીને તે વેબ પર દેખાય."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory"
@@ -1450,8 +1454,7 @@ msgstr "બહાર નીકળો"
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
-msgstr ""
-"અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યુટરબંધ કરો"
+msgstr "અન્ય વપરાશકર્તા તરીકે પ્રવેશ કરવા માટે આ સત્રમાંથી બહાર નીકળો અથવા તમારું કમ્પ્યુટરબંધ કરો"
 
 #: gnome-panel/menu.c:2661 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
@@ -1563,7 +1566,7 @@ msgstr "કાર્યક્રમ ચલાવો..."
 
 #: gnome-panel/panel-addto.c:180
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "કાર્યક્રમ લાવો કે જે પહેલાથી જીનોમ મેનુમાં છે"
 
 #: gnome-panel/panel-addto.c:191
 msgid "The main GNOME menu"
@@ -1575,15 +1578,15 @@ msgstr "મેનુદર્શક પટ્ટી"
 
 #: gnome-panel/panel-addto.c:202
 msgid "A custom menu bar"
-msgstr ""
+msgstr "કસ્ટમ મેનુબાર"
 
 #: gnome-panel/panel-addto.c:213
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "માં બીજી વસ્તુઓ સંગ્રહવા માટે દોરનાર બતાવો"
 
 #: gnome-panel/panel-addto.c:301
 msgid "(empty)"
-msgstr ""
+msgstr "(ખાલી)"
 
 #: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1591,9 +1594,9 @@ msgid "query returned exception %s\n"
 msgstr "કોયડાએ વળતરમાં અપવાદ %s મોકલાવયો\n"
 
 #: gnome-panel/panel-addto.c:831
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "પેનલમાં ઉમેરો (_A)"
+msgstr "%s માં ઉમેરો"
 
 #: gnome-panel/panel-addto.c:833
 msgid "Add to the panel"
@@ -1602,11 +1605,11 @@ msgstr "પેનલમાં ઉમેરો (_A)"
 #: gnome-panel/panel-addto.c:839
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "%s માં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
 #: gnome-panel/panel-addto.c:842
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "પેનલમાં ઉમેરવા માટે વસ્તુ પસંદ કરો (_i):"
 
 #: gnome-panel/panel-applet-frame.c:746
 #, c-format
@@ -1681,10 +1684,8 @@ msgid "Error getting value for '%s': %s"
 msgstr "'%s' ની કિંમત મેળવવામાં ભૂલ : %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "કાર્યક્રમને જબરદસ્તી બહાર કાઢવા માટે વિન્ડો પર ક્લિક કરો. રદ કરવા માટે <ESC> દબાવો."
 
 #: gnome-panel/panel-force-quit.c:186
 msgid ""
@@ -1769,6 +1770,9 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"એપ્લેટ IIDs કે જેની પેનલ અવગણના કરે છે તેની યાદી. આ રીતે તમે "
+"તમે અમુક એપ્લેટો મેનુમાં લાવવા અથવા બતાવવા માટે નિષ્ક્રિય કરી શકો છો. ઉદાહરણ તરીકે mini-commander નિષ્ક્રિય કરવા માટે 'OAFIID:GNOME_MiniCommanderApplet' ને આ યાદીમાં ઉમેરો."
+"આની અસર જોવા માટે પેનલ શરુ કરેલી જ હોવી જોઈએ."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1838,19 +1842,16 @@ msgstr "શરૂ કરનાર ઉપર માઉસ આવે ત્યા�
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તાને પેનલ કાઢવી હોય તો ખાતરી કરવા માટે સંવાદદર્શાવાય છે."
 
 #: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
-"જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
+msgstr "જો ખરુ હોય તો, જો વપરાશકર્તા ડ્રોઅરમાં શરૂ કરનાર પર ક્લિક કરશે તો તેઆપમેળે બંધ થઇ જશે."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr "જો ખરુ હોય તો, વપરાશકર્તા શરૂ કરનાર પર નિર્દેશક લાવે તો તે પ્રકાશિત થશે."
 
 #: gnome-panel/panel-global.schemas.in.h:20
@@ -2245,8 +2246,7 @@ msgid "Couldn't find a suitable application"
 msgstr "ઉચિત કાર્યક્રમ શોધી શકાયો નહિં."
 
 #: gnome-panel/panel-recent.c:87
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr "આ પ્રકારની ફાઇલો માટેનો મૂળભૂત કાર્યક્રમ દૂરસ્થ ફાઇલોને સાચવી શકતો નથી"
 
 #: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
@@ -2264,7 +2264,7 @@ msgstr "છેલ્લે ખોલેલા દસ્તાવેજો"
 
 #: gnome-panel/panel-recent.c:211
 msgid "This will clear the contents of the Recent Documents menu."
-msgstr ""
+msgstr "છેલ્લા દસ્તાવેજના મેનુના સમાવિષ્ટોને આ સાફ કરી દેશે."
 
 #: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
@@ -2524,8 +2524,7 @@ msgstr ""
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr ""
-"જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
+msgstr "જો ખરુ હોય તો, આ પેનલને સંતાડવાનુ અને પાછુ દેખીતુ કરવાનું તુરંત થવા કરતા એનિમેટ થતુ રહેશે."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
@@ -2545,8 +2544,7 @@ msgstr ""
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr ""
-"જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે. "
+msgstr "જો ખરુ હોય તો, પેનલના પરિમાણ પ્રમાણે ચિત્રનું માપ બદલાશે. ચિત્રની ગુણવત્તા બદલાઇ જાય છે. "
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2861,8 +2859,7 @@ msgid "Specify an applet IID to load"
 msgstr "લાવવા માટેના અેપ્લેટની IID સ્પષ્ટ કરો"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "જીકૉન્ફનું સ્થાન દર્શાવો કે જેમાં અેપ્લેટની પસંદગીઓ સંગ્રહાય છે"
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2870,8 +2867,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "અેપ્લેટનું શરુઆતનું માપ દર્શાવો (xx-નાનું, મધ્યમ, મોટું વગેરે.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "અેપ્લેટની શરુઆતની દિશા સ્પષ્ટ કરો (ઉપર, નીચે, ડાબે અથવા જમણે)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2914,20 +2910,3 @@ msgstr "XX મોટું"
 msgid "XX Small"
 msgstr "XX નાનું"
 
-#~ msgid "Launcher..."
-#~ msgstr "શરૂ કરનાર..."
-
-#~ msgid "Launcher from menu"
-#~ msgstr "મેનુમાંથી શરૂ કરનાર"
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "ચલાવો પેટીમાં ઉમેરી શકાતું નથી"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "પ્રવેશમાં 'ચલાવો' અથવા 'URL' ખાના નથી"
-
-#~ msgid "Put into run dialog"
-#~ msgstr "ચલાવો સંવાદમાં મૂકો"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "જીકોન્ફ યાદીની કિંમત '%s' વાંચવામાં ભૂલઃ  '%s'"
