@@ -27,7 +27,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.10\n"
-"POT-Creation-Date: 2003-01-07 14:28+0200\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2003-01-07 14:19+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gmx.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -38,10 +38,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Προέκυψε σφάλμα κατά την προβολή βοήθειας: %s"
@@ -81,8 +82,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(με λίγη βοήθεια από το George)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Ψάρι"
 
@@ -232,20 +233,22 @@ msgstr "Εργοστάσιο Wanda"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "_Περί..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -254,8 +257,8 @@ msgstr "_Βοήθεια"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "_Προτιμήσεις..."
 
@@ -360,9 +363,9 @@ msgstr "Χρήση _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Κώστας Παπαδήμας <pkst@gmx.net>, 2002,2003\n"
@@ -370,8 +373,8 @@ msgstr ""
 "Σαράντης Πασχάλης <paskalis@di.uoa.gr>, 2000\n"
 "Σπύρος Παπαδημητρίου <spapadim+@cs.cmu.edu>, 1999"
 
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Ρολόι"
 
@@ -380,59 +383,63 @@ msgid "The Clock displays the current time and date"
 msgstr "Το Ρολόϊ προβάλλει την τρέχουσα ημερομηνία και ώρα"
 
 #: applets/gen_util/clock.schemas.in.h:1
+msgid "24"
+msgstr "24"
+
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Προβολή ώρας διαδικτύου, η οποία είναι ίδια σε όλο τον κόσμο"
 
-#: applets/gen_util/clock.schemas.in.h:2
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display date in the Clock, in addition to time"
 msgstr "Εμφανίζει εκτός από την ώρα και  την ημερομηνία στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:3
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
 msgstr "Εμφάνιση δευτερολέπτων στην ώρα"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Προβάλλει την ώρα σε ζώνη UTC"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Τύπος ώρας"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Ορίζει το τύπο της ώρας, που μπορεί να είναι είτε 12 ή 24"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in Clock"
 msgstr "Εμφάνιση ημερομηνίας στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in a tooltip when a mouse is over the Clock"
 msgstr ""
 "Προβάλλει την ώρα σαν συμβουλή όταν περνάει το ποντίκι πάνω από το Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
 msgstr "Εμφάνιση ημερομηνίας στο βοήθημα"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Show time with seconds"
 msgstr "Εμφάνιση  ώρας με δευτερόλεπτα"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Χρήση ώρας Διαδικτύου"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UNIX time"
 msgstr "Χρήση ώρας Unix"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Χρήση UTC"
 
@@ -452,59 +459,24 @@ msgstr "Βοηθήματα"
 msgid "Alert you when new mail arrives"
 msgstr "Ειδοποίηση όταν καταφθάνει νέα αλληλογραφία"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr ""
-"Κουμπί που αποκρύπτει τα παράθυρα των εφαρμογών και εμφανίζει την επιφάνεια "
-"εργασίας"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "GenUtil Applet Factory"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Λήψη της τρέχουσας ημερομηνίας και ώρας"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Παρακολούθηση αλληλογραφίας"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "Δίκτυο"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-msgid "Show Desktop Button"
-msgstr "Εμφάνιση κουμπιού Επιφάνειας Εργασίας"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Εναλλαγή μεταξύ ανοικτών παραθύρων"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Εναλλαγή μεταξύ χώρων εργασίας"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "Εργαλείο"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "Λίστα παραθύρων"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Εναλλάκτης χώρων εργασίας"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "εργοστάσιο για τη δημιουργία μερικών γενικών εφαρμογιδίων"
 
@@ -784,7 +756,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Απομακρυσμένος φάκελος για αλληλογραφία"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Απομακρυσμένος διακομιστής για σύνδεση για την αλληλογραφία σας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -847,270 +820,6 @@ msgstr "Έλεγχος Αλληλογραφίας"
 msgid "New Mail"
 msgstr "Νέα αλληλογραφία"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Γραμμές"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "Στήλες"
-
-#: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Σφάλμα φόρτωσης τιμής αριθμού γραμμών για το εφαρμογίδιο εναλλαγής χώρων "
-"εργασίας : %s\n"
-
-#: applets/gen_util/pager.c:387
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Σφάλμα φόρτωσης τιμής προβολής_όλων_των ονομάτων_χώρων_εργασίας για το "
-"εφαρμογίδιο εναλλαγής χώρων εργασίας : %s\n"
-
-#: applets/gen_util/pager.c:402
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Σφάλμα φόρτωσης τιμής προβολής_όλων_των_χώρων_εργασίας για το εφαρμογίδιο "
-"εναλλαγής χώρων εργασίας : %s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Ο Εναλλάκτης Χώρων Εργασίας σας δείχνει μια μικρογραφία των χώρων σας και "
-"σας επιτρέπει να διαχειριστείτε τα παράθυρα σας."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Αριθμός χώρων_εργασίας"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Προβολή_όλων των χώρων εργασίας"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Προβολή μόνο_του τρέχοντος χώρου εργασίας"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Προβολή ονομάτων_χώρων εργασίας στον εναλλάκτη"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "Ονόματα χώρων εργασίας"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "Προτιμήσεις αλλαγής χώρων εργασίας"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "Χώροι εργασίας"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Αν αυτό είναι true, o Εναλλάκτης χώρων εργασίας θα εμφανίζει όλους του "
-"χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τον τρέχοντα χώρο."
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Αν αυτό είναι true, οι χώροι εργασίας στον εναλλάκτη χώρων εργασίας θα "
-"εμφανίζουν τα όνοματα τους, αλλιώς θα εμφανίζουν τα περιέχομενα του χώρου."
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Αριθμός γραμμών στον εναλλάκτη χώρων εργασίας"
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Κατά την προβολή όλων των χώρων εργασίας αυτό καθορίζει σε πόσες γραμμές "
-"(για οριζόντια διάταξη)  ή στήλες (για κάθετη διάταξη) θα εμφανίζει ο "
-"εναλλάκτης χώρων εργασίας τους χώρους."
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr ""
-"Αν θα εμφανίζονται όλοι οι χώροι εργασίας στον εναλλάκτη χώρων εργασίας."
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"Αν θα εμφανίζονται τα ονόματα των  χώρων εργασίας στον εναλλάκτη χώρων "
-"εργασίας."
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr "Πατήστε εδώ για επαναφορά των κρυμμένων παραθύρων."
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-"Πατήστε εδώ για απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
-
-#: applets/gen_util/showdesktop.c:290
-#, c-format
-msgid "Failed to load %s: %s\n"
-msgstr "Αποτυχία φόρτωσης %s: %s\n"
-
-#: applets/gen_util/showdesktop.c:291
-msgid "File not found"
-msgstr "Το αρχείο δε βρέθηκε"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-"Αυτό το κουμπί επιτρέπει την απόκρυψη όλων των παραθύρων και εμφάνιση της "
-"επιφάνειας εργασίας."
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"Η Λίστα Παραθύρων εμφανίζει μια λίστα από τα ορατά παράθυρα και σας "
-"επιτρέπει να τα ξεφυλλίσετε."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Ομαδοποίηση παραθύρων όταν_ο χώρος είναι περιορισμένος"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "Ε_λάχιστο μέγεθος:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "Μέ_γιστο μέγεθος:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Επαναφορά στον τρέχοντα_χώρο εργασίας"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Επαναφορά στο αρχι_κό χώρο εργασίας"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Προβολή παραθύρων από_τον τρέχοντα χώρο εργασίας"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Προβολή παραθύρων από ό_λους τους χώρους εργασίας"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "Κατα την επαναφορά ελαχιστοποιημένων παραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "Προτιμήσεις λίστας παραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "Περιεχόμενα λίστας οαραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "Μέγεθος λίστας παραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Ομαδοποίηση Παραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "_Να γίνεται πάντα ομαδοποίηση παραθύρων"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "_Να μη γίνεται ποτέ ομαδοποίηση παραθύρων"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Αποφασίζει αν θα ομαδοποιούνται παράθυρα από την ίδια εφαρμογή στην Λίστα "
-"παραθύρων. Έγκυρες τιμές είναι \"ποτέ\", \"\" and \"alκαιs\"πάνταόμα"
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Αν αυτό true, η λίστα εργασιών θα προβάλλει τα παράθυρα από όλους τους "
-"χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τα παράθυρα του τρέχοντος χώρου "
-"εργασίας."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Αν  true, κατά την επαναφορά παραθύρου, θα το εμφανίζει στον τρέχοντα χώρο "
-"εργασίας. Αλλιώς, αλλαγή στον χώρο εργασίας του παραθύρου."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "Μέγιστο μέγεθος που θα απαιτεί η Λίστα παραθύρων"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "Ελάχιστο μέγεθος που θα απαιτεί η Λίστα παραθύρων"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr ""
-"Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά τη επαναφορά τους"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Προβάλλει τα παράθυρα από όλους τους χώρους εργασίας"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Αυτή η τιμή είναι το μέγιστο πλάτος που θα ζητηθεί από την Λίστα παραθύρων. "
-"Αυτό χρησιμεύει στον περιορισμό του μεγέθους των μεγάλων ταμπλώ έτσι ώστε να "
-"μην καταλαμβάνουν ολόκληρο το χώρο, όπως στα ακραία ταμπλώ."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"Η Λίστα παραθύρων χρειάζεται ένα ελάχιστο πλάτος για να είναι χρήσιμο. Αυτή "
-"η τιμή είναι το ελάχιστο πλάτος που το εφαρμογίδιο απαιτεί. Αυτο χρησιμεύει "
-"για τα συρόμενα και ακραία ταμπλώ που αλλιώς θα ζητούσαν εξ'ορισμού ενα πολύ "
-"μικρό πλάτος."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Πότε θα ομαδοποιούνται τα παράθυρα"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr "Περιοχή όπου θα εμφανίζονται εικονίδια ειδοποίησης"
@@ -1123,22 +832,346 @@ msgstr "Περιοχή ειδοποίησης"
 msgid "Notification Area Factory"
 msgstr "Εργοστάσιο περιοχής ειδοποίησης"
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "Εργαλείο"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr "Περιοχή ειδοποίησης ταμπλώ"
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr ""
+"Κουμπί που αποκρύπτει τα παράθυρα των εφαρμογών και εμφανίζει την επιφάνεια "
+"εργασίας"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "εργοστάσιο για τη δημιουργία μερικών γενικών εφαρμογιδίων"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+msgid "Show Desktop Button"
+msgstr "Εμφάνιση κουμπιού Επιφάνειας Εργασίας"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Εναλλαγή μεταξύ ανοικτών παραθύρων"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Εναλλαγή μεταξύ χώρων εργασίας"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "Λίστα παραθύρων"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "Κύριο Μενού"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil Applet Factory"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Εναλλάκτης χώρων εργασίας"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr "Πατήστε εδώ για επαναφορά των κρυμμένων παραθύρων."
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+"Πατήστε εδώ για απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
+
+#: applets/wncklet/showdesktop.c:290
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Αποτυχία φόρτωσης %s: %s\n"
+
+#: applets/wncklet/showdesktop.c:291
+msgid "File not found"
+msgstr "Το αρχείο δε βρέθηκε"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+"Αυτό το κουμπί επιτρέπει την απόκρυψη όλων των παραθύρων και εμφάνιση της "
+"επιφάνειας εργασίας."
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"Η Λίστα Παραθύρων εμφανίζει μια λίστα από τα ορατά παράθυρα και σας "
+"επιτρέπει να τα ξεφυλλίσετε."
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "Ομαδοποίηση παραθύρων όταν_ο χώρος είναι περιορισμένος"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "Ε_λάχιστο μέγεθος:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "Μέ_γιστο μέγεθος:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "Επαναφορά στον τρέχοντα_χώρο εργασίας"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "Επαναφορά στο αρχι_κό χώρο εργασίας"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "Προβολή παραθύρων από_τον τρέχοντα χώρο εργασίας"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "Προβολή παραθύρων από ό_λους τους χώρους εργασίας"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "Κατα την επαναφορά ελαχιστοποιημένων παραθύρων"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "Προτιμήσεις λίστας παραθύρων"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "Περιεχόμενα λίστας οαραθύρων"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "Μέγεθος λίστας παραθύρων"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "Ομαδοποίηση Παραθύρων"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "_Να γίνεται πάντα ομαδοποίηση παραθύρων"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "_Να μη γίνεται ποτέ ομαδοποίηση παραθύρων"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Αποφασίζει αν θα ομαδοποιούνται παράθυρα από την ίδια εφαρμογή στην Λίστα "
+"παραθύρων. Έγκυρες τιμές είναι \"ποτέ\", \"\" and \"alκαιs\"πάνταόμα"
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"Αν αυτό true, η λίστα εργασιών θα προβάλλει τα παράθυρα από όλους τους "
+"χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τα παράθυρα του τρέχοντος χώρου "
+"εργασίας."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"Αν  true, κατά την επαναφορά παραθύρου, θα το εμφανίζει στον τρέχοντα χώρο "
+"εργασίας. Αλλιώς, αλλαγή στον χώρο εργασίας του παραθύρου."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum size that Window List requests"
+msgstr "Μέγιστο μέγεθος που θα απαιτεί η Λίστα παραθύρων"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum size that Window List requests"
+msgstr "Ελάχιστο μέγεθος που θα απαιτεί η Λίστα παραθύρων"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr ""
+"Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά τη επαναφορά τους"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Προβάλλει τα παράθυρα από όλους τους χώρους εργασίας"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Αυτή η τιμή είναι το μέγιστο πλάτος που θα ζητηθεί από την Λίστα παραθύρων. "
+"Αυτό χρησιμεύει στον περιορισμό του μεγέθους των μεγάλων ταμπλώ έτσι ώστε να "
+"μην καταλαμβάνουν ολόκληρο το χώρο, όπως στα ακραία ταμπλώ."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Η Λίστα παραθύρων χρειάζεται ένα ελάχιστο πλάτος για να είναι χρήσιμο. Αυτή "
+"η τιμή είναι το ελάχιστο πλάτος που το εφαρμογίδιο απαιτεί. Αυτο χρησιμεύει "
+"για τα συρόμενα και ακραία ταμπλώ που αλλιώς θα ζητούσαν εξ'ορισμού ενα πολύ "
+"μικρό πλάτος."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Πότε θα ομαδοποιούνται τα παράθυρα"
+
+#: applets/wncklet/window-menu.c:341
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "Δεν υπάρχουν ανοιχτά παράθυρα"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "Γραμμές"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "Στήλες"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Σφάλμα φόρτωσης τιμής αριθμού γραμμών για το εφαρμογίδιο εναλλαγής χώρων "
+"εργασίας : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Σφάλμα φόρτωσης τιμής προβολής_όλων_των ονομάτων_χώρων_εργασίας για το "
+"εφαρμογίδιο εναλλαγής χώρων εργασίας : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Σφάλμα φόρτωσης τιμής προβολής_όλων_των_χώρων_εργασίας για το εφαρμογίδιο "
+"εναλλαγής χώρων εργασίας : %s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Ο Εναλλάκτης Χώρων Εργασίας σας δείχνει μια μικρογραφία των χώρων σας και "
+"σας επιτρέπει να διαχειριστείτε τα παράθυρα σας."
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "Αριθμός χώρων_εργασίας"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "Προβολή_όλων των χώρων εργασίας"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "Προβολή μόνο_του τρέχοντος χώρου εργασίας"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "Προβολή ονομάτων_χώρων εργασίας στον εναλλάκτη"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "Ονόματα χώρων εργασίας"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "Προτιμήσεις αλλαγής χώρων εργασίας"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "Χώροι εργασίας"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"Αν αυτό είναι true, o Εναλλάκτης χώρων εργασίας θα εμφανίζει όλους του "
+"χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τον τρέχοντα χώρο."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"Αν αυτό είναι true, οι χώροι εργασίας στον εναλλάκτη χώρων εργασίας θα "
+"εμφανίζουν τα όνοματα τους, αλλιώς θα εμφανίζουν τα περιέχομενα του χώρου."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Αριθμός γραμμών στον εναλλάκτη χώρων εργασίας"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"Κατά την προβολή όλων των χώρων εργασίας αυτό καθορίζει σε πόσες γραμμές "
+"(για οριζόντια διάταξη)  ή στήλες (για κάθετη διάταξη) θα εμφανίζει ο "
+"εναλλάκτης χώρων εργασίας τους χώρους."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr ""
+"Αν θα εμφανίζονται όλοι οι χώροι εργασίας στον εναλλάκτη χώρων εργασίας."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr ""
+"Αν θα εμφανίζονται τα ονόματα των  χώρων εργασίας στον εναλλάκτη χώρων "
+"εργασίας."
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr ";;;"
 
-#: gnome-panel/applet.c:490 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:490
 msgid "_Remove From Panel"
 msgstr "_Αφαίρεση από το ταμπλώ"
 
-#: gnome-panel/applet.c:502 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:502
 msgid "_Move"
 msgstr "_Μετακίνηση"
 
@@ -1328,65 +1361,61 @@ msgstr "Συρτάρι"
 msgid "_Properties"
 msgstr "_Ιδιότητες"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Εκτέλεση Προγράμματος..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Εκτελεί προγράμματα, αν γνωρίζετε το ακριβές όνομα εντολής"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Αναζήτηση Αρχείων..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Εύρεση αρχείων, φακέλων και εγγράφων στον υπολογιστή σας"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Αρπαγή οθόνης..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Αρπαγή οθόνης της επιφάνειας εργασίας σας"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Κλείδωμα Οθόνης"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "Προστασία του υπολογιστή από μη εξουσιοδοτημένη χρήση"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Αποσύνδεση Χρήστη"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "Έξοδος από το περιβάλλον εργασίας GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "Δεν υπάρχουν ανοιχτά παράθυρα"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Μενού Ταμπλώ"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Εφαρμογές"
@@ -2146,7 +2175,7 @@ msgstr "Εκτέλεση εντολής"
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: gnome-panel/menu.c:3861 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3861
 msgid "Menu"
 msgstr "Μενού"
 
@@ -2669,9 +2698,6 @@ msgstr "Μέγεθος:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Πάνω"
-
-#~ msgid "24"
-#~ msgstr "24"
 
 #~ msgid "(C) 1998-2002 the Free Software Foundation"
 #~ msgstr "(C) 1997-2002 το Free Software Foundation"

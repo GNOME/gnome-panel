@@ -23,6 +23,7 @@
 #include "panel-main.h"
 #include "panel-util.h"
 #include "menu.h"
+#include "panel-stock-icons.h"
 
 #undef MENU_UTIL_DEBUG
 

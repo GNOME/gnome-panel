@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2003-01-07 23:36+0100\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2003-01-07 23:36+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -15,10 +15,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Det oppsto en feil ved visning av hjelp: %s"
@@ -209,20 +210,22 @@ msgstr "Wanda-factory"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "_Om..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -231,8 +234,8 @@ msgstr "_Hjelp"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "_Brukervalg..."
 
@@ -337,13 +340,13 @@ msgstr "Bruk _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Klokke"
@@ -428,57 +431,24 @@ msgstr "Tilbehør"
 msgid "Alert you when new mail arrives"
 msgstr "Gi beskjed når det kommer ny post"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr "Knapp for å skjule applikasjonsvinduer og vise skrivebordet"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "GenUtil-applet factory"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Hent tid og dato"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Innboksovervåker"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "Internett"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-msgid "Show Desktop Button"
-msgstr "Vis skrivebordsknapp"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Bytt mellom åpne vinduer"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Spill en lyd"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "Verktøy"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "Vinduliste"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Bytt arbeidsområde"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "factory for oppretting av generelle appleter"
 
@@ -810,259 +780,6 @@ msgstr "E-postsjekk"
 msgid "New Mail"
 msgstr "Ny e-post"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Rader"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "Kolonner"
-
-#: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Feil ved lasting av num_rows verdi for arbeidsområdebytter: %s\n"
-
-#: applets/gen_util/pager.c:387
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Feil ved lasting av display_workspace_names verdi for arbeidsområdebytter: %"
-"s\n"
-
-#: applets/gen_util/pager.c:402
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Feil ved lasting av display_all_workspaces verdi for arbeidsområdebytter: %"
-"s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Arbeidsområdebytteren viser deg en miniatyr av dine arbeidsområder slik at "
-"du kan håndtere vinduene."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Antall _arbeidsområder"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Vis _alle arbeidsområder"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Vis kun _aktivt arbeidsområde"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Vis arbeidsområde_navn i bytteren"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "Navn på arbeidsområder"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "Brukervalg for arbeidsområdebytter"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "Arbeidsområder"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Hvis dette er sant vil arbeidsområdebytter vise alle arbeidsområder, ellers "
-"vil kun aktivt arbeidsområde vises."
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Hvis dette er aktivert vil arbeidsområdene i arbeidsområdebytter vise navn "
-"på arbeidsområdene, ellers vil innholdet vises."
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Antall rader i applet for bytte av arbeidsområde."
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Når alle arbeidsområder vises bestemmer dette hvor mange rader (for "
-"horisontal plassering) eller kolonner (for vertikal plassering) "
-"arbeidsområdebytteren viser arbeidsområdene i."
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "Om alle arbeidsområdene skal vises i arbeidsområdebytter."
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "Om navn på arbeidsområdene skal vises i arbeidsområdebytter."
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr "Klikk her for å gjenopprette skjulte vinduer."
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr "Klikk her for å skjule alle vinduer og vise skrivebordet."
-
-#: applets/gen_util/showdesktop.c:290
-#, c-format
-msgid "Failed to load %s: %s\n"
-msgstr "Kunne ikke laste %s: %s\n"
-
-#: applets/gen_util/showdesktop.c:291
-msgid "File not found"
-msgstr "Fil ikke funnet"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr "Denne knappen lar deg skjule alle vinduer og vise skrivebordet"
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"Vindulisten viser en liste med alle synlige vinduer og lar deg bla gjennom "
-"dem."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Grupper vinduer når pla_ssen er begrenset"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "M_inimumstørrelse:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "Ma_ksimumstørrelse:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Gjeno_pprett til aktivt arbeidsområde"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Gjenoppre_tt til opprinnelig arbeidsområde"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Vis vinuder fra a_ktivt arbeidsområde"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Vis vinduer fra a_lle arbeidsområder"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "Når minimerte vinduer gjenopprettes"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "Brukervalg for vinduliste"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "Innhold i vinduliste"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "Størrelse på vinduliste"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Gruppering av vinduer"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "_Alltid grupper vinduer"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "A_ldri grupper vinduer"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Bestemmer når vinduer fra samme applikasjon skal grupperes i oppgavelisten. "
-"Gyldige verdier er «never», «auto» og «always»."
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Hvis denne settes til sann vil oppgavelisten vise vinduer fra alle "
-"arbeidsområder. Ellers vil kun vinduer fra aktivt arbeidsområde vises."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Hvis sann hent vinduer til aktivt arbeidsområde ved gjenoppretting. Ellers "
-"bytt til vinduets arbeidsområde."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "Maksimal størrelse oppgavelisten forespør"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "Minimumstørrelse oppgavelisten forespør"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Flytt vinuder til aktivt arbeidsområde ved gjenoppretting"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Vis vinduer fra alle arbeidsområder"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Denne verdien er maksimal bredde vinduslisten vil be om. Dette er nyttig for "
-"å begrense størrelsen som brukes i store paneler hvor vinduslisten ellers "
-"ville fylt all tilgjengelig plass. For eksempel kantpaneler."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"Vinduslisten trenger en minste bredde for å fungere. Denne verdien er "
-"minimumsbredden appleten vil be om. Dette er nyttig for glidende paneler og "
-"kantpaneler som ellers ville bedt om en meget liten forvalgt bredde."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Når skal vinduer grupperes"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr "Område hvor varselsikoner kommer til syne"
@@ -1075,14 +792,325 @@ msgstr "Varslingsområde"
 msgid "Notification Area Factory"
 msgstr "Factory for varslingsområde"
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "Verktøy"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr "Varslingsområde for panelet"
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr "Knapp for å skjule applikasjonsvinduer og vise skrivebordet"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "factory for oppretting av generelle appleter"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+msgid "Show Desktop Button"
+msgstr "Vis skrivebordsknapp"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Bytt mellom åpne vinduer"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Spill en lyd"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "Vinduliste"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "Hovedmeny"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil-applet factory"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Bytt arbeidsområde"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr "Klikk her for å gjenopprette skjulte vinduer."
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Klikk her for å skjule alle vinduer og vise skrivebordet."
+
+#: applets/wncklet/showdesktop.c:290
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "Kunne ikke laste %s: %s\n"
+
+#: applets/wncklet/showdesktop.c:291
+msgid "File not found"
+msgstr "Fil ikke funnet"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "Denne knappen lar deg skjule alle vinduer og vise skrivebordet"
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"Vindulisten viser en liste med alle synlige vinduer og lar deg bla gjennom "
+"dem."
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "Grupper vinduer når pla_ssen er begrenset"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "M_inimumstørrelse:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "Ma_ksimumstørrelse:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "Gjeno_pprett til aktivt arbeidsområde"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "Gjenoppre_tt til opprinnelig arbeidsområde"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "Vis vinuder fra a_ktivt arbeidsområde"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "Vis vinduer fra a_lle arbeidsområder"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "Når minimerte vinduer gjenopprettes"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "Brukervalg for vinduliste"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "Innhold i vinduliste"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "Størrelse på vinduliste"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "Gruppering av vinduer"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "_Alltid grupper vinduer"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "A_ldri grupper vinduer"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Bestemmer når vinduer fra samme applikasjon skal grupperes i oppgavelisten. "
+"Gyldige verdier er «never», «auto» og «always»."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"Hvis denne settes til sann vil oppgavelisten vise vinduer fra alle "
+"arbeidsområder. Ellers vil kun vinduer fra aktivt arbeidsområde vises."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"Hvis sann hent vinduer til aktivt arbeidsområde ved gjenoppretting. Ellers "
+"bytt til vinduets arbeidsområde."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum size that Window List requests"
+msgstr "Maksimal størrelse oppgavelisten forespør"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum size that Window List requests"
+msgstr "Minimumstørrelse oppgavelisten forespør"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "Flytt vinuder til aktivt arbeidsområde ved gjenoppretting"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Vis vinduer fra alle arbeidsområder"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Denne verdien er maksimal bredde vinduslisten vil be om. Dette er nyttig for "
+"å begrense størrelsen som brukes i store paneler hvor vinduslisten ellers "
+"ville fylt all tilgjengelig plass. For eksempel kantpaneler."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Vinduslisten trenger en minste bredde for å fungere. Denne verdien er "
+"minimumsbredden appleten vil be om. Dette er nyttig for glidende paneler og "
+"kantpaneler som ellers ville bedt om en meget liten forvalgt bredde."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Når skal vinduer grupperes"
+
+#: applets/wncklet/window-menu.c:341
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "Ingen åpne vinduer"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "Rader"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "Kolonner"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "Feil ved lasting av num_rows verdi for arbeidsområdebytter: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Feil ved lasting av display_workspace_names verdi for arbeidsområdebytter: %"
+"s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Feil ved lasting av display_all_workspaces verdi for arbeidsområdebytter: %"
+"s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Arbeidsområdebytteren viser deg en miniatyr av dine arbeidsområder slik at "
+"du kan håndtere vinduene."
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "Antall _arbeidsområder"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "Vis _alle arbeidsområder"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "Vis kun _aktivt arbeidsområde"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "Vis arbeidsområde_navn i bytteren"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "Navn på arbeidsområder"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "Brukervalg for arbeidsområdebytter"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "Arbeidsområder"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"Hvis dette er sant vil arbeidsområdebytter vise alle arbeidsområder, ellers "
+"vil kun aktivt arbeidsområde vises."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"Hvis dette er aktivert vil arbeidsområdene i arbeidsområdebytter vise navn "
+"på arbeidsområdene, ellers vil innholdet vises."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Antall rader i applet for bytte av arbeidsområde."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"Når alle arbeidsområder vises bestemmer dette hvor mange rader (for "
+"horisontal plassering) eller kolonner (for vertikal plassering) "
+"arbeidsområdebytteren viser arbeidsområdene i."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "Om alle arbeidsområdene skal vises i arbeidsområdebytter."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "Om navn på arbeidsområdene skal vises i arbeidsområdebytter."
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1279,65 +1307,61 @@ msgstr "Skuff"
 msgid "_Properties"
 msgstr "_Egenskaper"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Kjør program..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kjør applikasjoner, hvis du vet hvilken kommando som skal skrives inn"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Søk etter filer..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Finn filer, mapper og dokumenter på din datamaskin"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Skjermdump..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Ta et skjermdump av ditt skrivebord"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Lås skjerm"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "Beskytt din datamaskin mot uautorisert bruk"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Logg ut"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "Avslutt GNOME skrivebordet"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "Handlinger"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "Ingen åpne vinduer"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Menypanel"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "GNOME menypanel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Applikasjoner"

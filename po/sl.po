@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2002-06-09 21:35+0200\n"
 "Last-Translator: Andraz Tori <andraz.tori1@guest.arnes.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -15,10 +15,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ob prikazovanju pomoči se je zgodila napaka: %s"
@@ -210,20 +211,22 @@ msgstr "Tovarna wanda"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "_O programu..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -232,8 +235,8 @@ msgstr "_Pomoč"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "_Nastavitve..."
 
@@ -337,13 +340,13 @@ msgstr "Uporabi _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Andraž Tori"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Ura"
@@ -433,58 +436,24 @@ msgstr "Pripomočki"
 msgid "Alert you when new mail arrives"
 msgstr "Vas opozori, ko prispe nova pošta"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "Tovarna vstavkov GenUtil"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Dobi trenutno uro in datum"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Nadzornik prihodne pošte"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "Internet"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "Kaži gumbe za skrivanje"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Preklopi med odprtimi okni"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Preklopi med delovnimi površinami"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "Pripomoček"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "Seznam oken"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Preklopnik med delovnimi površinami"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "tovarna za ustvarjanje nekaj splošnih vstavkov"
 
@@ -760,7 +729,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Oddajena mapa za prenos pošte"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Odstrani strežnik za povezavo za našo pošto"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -822,276 +792,6 @@ msgstr "Preverjalnik pošte"
 msgid "New Mail"
 msgstr "Nova pošta"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Vrstice"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "Stolpci"
-
-#: applets/gen_util/pager.c:376
-#, fuzzy, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Napaka ob nalaganju vrednosti num_rows za vstavek preklopnika delovnih "
-"površin: %s\n"
-
-#: applets/gen_util/pager.c:387
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Napaka ob nalaganju vrednosti display_workspace_names za vstavek preklopnika "
-"delovnih površin: %s\n"
-
-#: applets/gen_util/pager.c:402
-#, fuzzy, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Napaka ob nalaganju vrednosti display_all_workspaces za vstavek preklopnika "
-"delovnih površin: %s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Preklopnik delovnih površin vam kaže majhne različice vaših delovnih "
-"površin, ki vam omogočajo upravljanje vaših oken."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Število _delavnih površin:"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Kaži _vse delovne površine"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Kaži le _trenutno delovno površino"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Kaži imena _delovnih površin v preklopniku"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "Imena delovnih površin"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "Nastavitve preklopnika delovnih površin"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "Delovne površine"
-
-#: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Če je to resnično, bo preklopnik kazal vse delovne površine, sicer bo kazal "
-"le trenutno."
-
-#: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Če je to resnično, bodo v preklopniku prikazana imena delovnih površin, "
-"sicer bo prikazana njihova vsebina."
-
-#: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Število vrstic v preklopniku"
-
-#: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Kadar se kaže vse delovne površine, to določa koliko vrstic (za vodoravno "
-"postavitev) in stolpcov (za navpično postavitev) se kaže v preklopniku."
-
-#: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "Ali naj se v preklopniku prikažejo vse delovne površine."
-
-#: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "Ali naj se v preklopniku kažejo imena delovnih površin."
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
-msgid "Failed to load %s: %s\n"
-msgstr ""
-"<b>Nisem mogel odpreti datoteke:<b>'%s'\n"
-" \n"
-"Podrobnosti: %s"
-
-#: applets/gen_util/showdesktop.c:291
-#, fuzzy
-msgid "File not found"
-msgstr "Dokument pomoči ni bil najden"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"Seznam oken kaže seznam vseh vidnih oken in vam omogoča brskanje po njih."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Daj okna v skupino, ko je _prostor omejen"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "Naj_manjša velikost:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "Naj_večja velikost:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Povrni trenutno _delovno površino"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Povrni _domačo delovno površino"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Kaži okna _trenutne delovne površine"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Kaži okna _vseh delovnih površin"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "Ko obnavljaš pomanjšano okno"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "Nastavitve seznama oken"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "Vsebina seznama oken"
-
-#: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
-msgid "Window List size"
-msgstr "Seznam oken"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Skupinjenje oken"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "_Vedno daj okna v skupino"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "Oken _nikoli ne daj v skupino"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Določi, kdaj se v seznamu poslov v isto skupino da okna istega programa. "
-"Veljavne vrednosti so never (nikoli), auto (samodejno) in always (vedno)."
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Če je to resnično, bo seznam poslov kazal okna vseh delovnih površin, sicer "
-"bo kazal le okna trenutne."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Če je resnično, potem bo ob odpomanjšanju okna to postavljeno na trenutno "
-"delovno površino, sicer se preklopi na delovno površino okna."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
-msgid "Maximum size that Window List requests"
-msgstr "Največja velikost, ki jo bo zahteval vstavek seznama poslov"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
-msgid "Minimum size that Window List requests"
-msgstr "Najmanjša velikost, ki jo bo zahteval vstavek seznama poslov"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Ko so okna odpomanjšana jih prestavi trenutno delovno površino"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Kaži okna vseh delovnih površin"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Ta vrednost je največja širina, ki jo bo vstavek zahteval To je uporabno v "
-"velikih pultih, kjer bi sicer lahko ta vstavek zapolnil ves dan prostor, na "
-"primer v robnih pultih."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"Seznam poslov potrebuje najmanjšo širino, če naj bo uporaben. To je "
-"najmanjša širina, ki jo bo vstavek zahteval. To je uporabno za plavajoče in "
-"robne pulte, ki bi sicer lahko vprašali za zelo majhno privzeto širino."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Kdaj se da okna v skupino"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr ""
@@ -1104,14 +804,343 @@ msgstr ""
 msgid "Notification Area Factory"
 msgstr ""
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "Pripomoček"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr ""
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "tovarna za ustvarjanje nekaj splošnih vstavkov"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "Kaži gumbe za skrivanje"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Preklopi med odprtimi okni"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Preklopi med delovnimi površinami"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "Seznam oken"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "Glavni menu"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "Tovarna vstavkov GenUtil"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Preklopnik med delovnimi površinami"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"<b>Nisem mogel odpreti datoteke:<b>'%s'\n"
+" \n"
+"Podrobnosti: %s"
+
+#: applets/wncklet/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "Dokument pomoči ni bil najden"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"Seznam oken kaže seznam vseh vidnih oken in vam omogoča brskanje po njih."
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "Daj okna v skupino, ko je _prostor omejen"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "Naj_manjša velikost:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "Naj_večja velikost:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "Povrni trenutno _delovno površino"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "Povrni _domačo delovno površino"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "Kaži okna _trenutne delovne površine"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "Kaži okna _vseh delovnih površin"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "Ko obnavljaš pomanjšano okno"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "Nastavitve seznama oken"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "Vsebina seznama oken"
+
+#: applets/wncklet/window-list.glade.h:11
+#, fuzzy
+msgid "Window List size"
+msgstr "Seznam oken"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "Skupinjenje oken"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "_Vedno daj okna v skupino"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "Oken _nikoli ne daj v skupino"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Določi, kdaj se v seznamu poslov v isto skupino da okna istega programa. "
+"Veljavne vrednosti so never (nikoli), auto (samodejno) in always (vedno)."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"Če je to resnično, bo seznam poslov kazal okna vseh delovnih površin, sicer "
+"bo kazal le okna trenutne."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"Če je resnično, potem bo ob odpomanjšanju okna to postavljeno na trenutno "
+"delovno površino, sicer se preklopi na delovno površino okna."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+#, fuzzy
+msgid "Maximum size that Window List requests"
+msgstr "Največja velikost, ki jo bo zahteval vstavek seznama poslov"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+#, fuzzy
+msgid "Minimum size that Window List requests"
+msgstr "Najmanjša velikost, ki jo bo zahteval vstavek seznama poslov"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "Ko so okna odpomanjšana jih prestavi trenutno delovno površino"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Kaži okna vseh delovnih površin"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Ta vrednost je največja širina, ki jo bo vstavek zahteval To je uporabno v "
+"velikih pultih, kjer bi sicer lahko ta vstavek zapolnil ves dan prostor, na "
+"primer v robnih pultih."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Seznam poslov potrebuje najmanjšo širino, če naj bo uporaben. To je "
+"najmanjša širina, ki jo bo vstavek zahteval. To je uporabno za plavajoče in "
+"robne pulte, ki bi sicer lahko vprašali za zelo majhno privzeto širino."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Kdaj se da okna v skupino"
+
+#: applets/wncklet/window-menu.c:341
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "Ni odprtih oken"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "Vrstice"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "Stolpci"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Napaka ob nalaganju vrednosti num_rows za vstavek preklopnika delovnih "
+"površin: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, fuzzy, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Napaka ob nalaganju vrednosti display_workspace_names za vstavek preklopnika "
+"delovnih površin: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Napaka ob nalaganju vrednosti display_all_workspaces za vstavek preklopnika "
+"delovnih površin: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Preklopnik delovnih površin vam kaže majhne različice vaših delovnih "
+"površin, ki vam omogočajo upravljanje vaših oken."
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "Število _delavnih površin:"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "Kaži _vse delovne površine"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "Kaži le _trenutno delovno površino"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "Kaži imena _delovnih površin v preklopniku"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "Imena delovnih površin"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "Nastavitve preklopnika delovnih površin"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "Delovne površine"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+#, fuzzy
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"Če je to resnično, bo preklopnik kazal vse delovne površine, sicer bo kazal "
+"le trenutno."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"Če je to resnično, bodo v preklopniku prikazana imena delovnih površin, "
+"sicer bo prikazana njihova vsebina."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+#, fuzzy
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Število vrstic v preklopniku"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"Kadar se kaže vse delovne površine, to določa koliko vrstic (za vodoravno "
+"postavitev) in stolpcov (za navpično postavitev) se kaže v preklopniku."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "Ali naj se v preklopniku prikažejo vse delovne površine."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "Ali naj se v preklopniku kažejo imena delovnih površin."
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1321,67 +1350,63 @@ msgstr "predal"
 msgid "_Properties"
 msgstr "Lastnosti"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Poženi program..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Požene programe, če veste pravilen ukaz zanje"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Išči datoteke..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Poišči datoteke, mape in dokumente na vašem računalniku"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 #, fuzzy
 msgid "Screenshot..."
 msgstr "Zajem zaslona"
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Zajemi sliko zaslona vašega namizja"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Zakleni zaslon"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "Zavaruje vaš računalnik pred neavtorizirano uporabo"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Odjava"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "Izhod iz namizja GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "Dejanja"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "Ni odprtih oken"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Menujski pult"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "Pult menuja GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Programi"

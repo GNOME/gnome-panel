@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2002-09-13 12:39+0800\n"
 "Last-Translator: Wang Li <charles@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -18,10 +18,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "显示求助时发生错误：%s"
@@ -235,10 +236,11 @@ msgstr "Wanda Factory"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "关于(_A)..."
 
@@ -248,10 +250,11 @@ msgstr "关于(_A)..."
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -260,8 +263,8 @@ msgstr "帮助(_H)"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "首选项(_P)..."
 
@@ -379,9 +382,9 @@ msgstr "使用 _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Wang Jian <lark@linux.net.cn>\n"
@@ -391,7 +394,7 @@ msgstr ""
 
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "时钟"
@@ -483,60 +486,24 @@ msgstr "附件"
 msgid "Alert you when new mail arrives"
 msgstr "新邮件到达时提醒您"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "GenUtil 插件车间"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "获取当前时间和日期"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "收件箱监视器"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "互联网"
 
-# panel/panel_config_global.c:446
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "显示隐藏按钮(_B)"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "在打开的窗口间切换"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "在工作区间切换"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "工具"
-
-# help-browser/window.c:180
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "窗口列表"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "工作区切换器"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "创建某些通用插件的车间"
 
@@ -824,7 +791,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "邮件检索的远程文件夹"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "您的邮件要连接的远程服务器"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -887,269 +855,6 @@ msgstr "邮件检查程序"
 msgid "New Mail"
 msgstr "新建邮件"
 
-# applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
-# panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
-# panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "行"
-
-# help-browser/history.c:257
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "列"
-
-#: applets/gen_util/pager.c:376
-#, fuzzy, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 num_rows 值时出错：%s\n"
-
-#: applets/gen_util/pager.c:387
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_workspace_names 值时出错：%s\n"
-
-#: applets/gen_util/pager.c:402
-#, fuzzy, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_all_workspaces 值时出错：%s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr "工作区切换器显示了您的工作区的缩影以便于您管理您的窗口。"
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "工作区的数量(_W)："
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "显示所有工作区(_A)"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "只显示当前工作区(_C)"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "在切换器中显示工作区名称(_N)"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "工作区名称"
-
-# applets/gen_util/printer.c:341
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "工作区切换器首选项"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "工作区"
-
-#: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr "为真则 pager 显示所有工作区，否则只显示当前工作区。"
-
-#: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr "为真则显示 pager 中工作区的名称，否则显示工作区的内容。"
-
-#: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
-msgid "Number of rows in the Workspace Switcher."
-msgstr "pager 的行数"
-
-#: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"当显示所有工作区时这决定了 pager 将使用多少行(水平布局)或列(垂直布局)来显示工"
-"作区。"
-
-#: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "是否在 pager 中显示所有工作区。"
-
-#: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "是否在 pager 中显示工作区的名称。"
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
-msgid "Failed to load %s: %s\n"
-msgstr ""
-"载入图像文件 %s 失败\n"
-"\n"
-"细节：%s"
-
-#: applets/gen_util/showdesktop.c:291
-#, fuzzy
-msgid "File not found"
-msgstr "找不到文件"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "当空间有限时将窗口编组(_S)"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "最小尺寸(_I)："
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "最大尺寸(_X)："
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "回到当前工作区(_W)"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "回到原始工作区(_T)"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "显示当前工作区中的窗口(_C)"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "显示所有工作区中的窗口(_L)"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "在恢复最小化的窗口时"
-
-# help-browser/window.c:180
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "窗口列表首选项"
-
-# help-browser/window.c:180
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "窗口列表内容"
-
-# help-browser/window.c:180
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "窗口列表大小"
-
-# applets/desk-guide/deskguide_applet.c:134
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "窗口编组"
-
-# applets/tasklist/tasklist_menu.c:240
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "总是对窗口编组(_A)"
-
-# gnome-terminal/gnome-terminal.c:2447
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "从不对窗口编组(_N)"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"决定何时在任务列表中将同一个应用程序的窗口编组。合法的值有从不、自动、总是。"
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr "若为真则任务列表将显示所有工作区的窗口，否则只显示当前工作区中的窗口。"
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"若为真则在解除窗口最小化的时候将其放入当前工作区。否则切换到窗口所在的工作"
-"区。"
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
-msgid "Maximum size that Window List requests"
-msgstr "任务列表插件将请求的最大尺寸"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
-msgid "Minimum size that Window List requests"
-msgstr "任务列表插件将请求的最小尺寸"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "解除窗口最小化时将窗口移动到当前工作区"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "显示所有工作区中的窗口"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"这是插件将请求的最大宽度。这将用于限制插件在诸如边缘面板之类的大面板中的宽"
-"度，否则插件将充满整个可用的空间。"
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"任务列表需要一个最小宽度以使其能够发挥作用。这个值是插件将请求的最小宽度。在"
-"滑动和边缘对齐时这将发挥作用，否则可能导致一个非常小的默认宽度。"
-
-# gnome-terminal/gnome-terminal.c:2447
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "何时对对窗口编组"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr ""
@@ -1162,15 +867,341 @@ msgstr ""
 msgid "Notification Area Factory"
 msgstr ""
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "工具"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr ""
 
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "创建某些通用插件的车间"
+
+# panel/panel_config_global.c:446
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "显示隐藏按钮(_B)"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "在打开的窗口间切换"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "在工作区间切换"
+
+# help-browser/window.c:180
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "窗口列表"
+
+# panel/menu.c:3523 panel/menu.c:3543
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "主菜单"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil 插件车间"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "工作区切换器"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"载入图像文件 %s 失败\n"
+"\n"
+"细节：%s"
+
+#: applets/wncklet/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "找不到文件"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "当空间有限时将窗口编组(_S)"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "最小尺寸(_I)："
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "最大尺寸(_X)："
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "回到当前工作区(_W)"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "回到原始工作区(_T)"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "显示当前工作区中的窗口(_C)"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "显示所有工作区中的窗口(_L)"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "在恢复最小化的窗口时"
+
+# help-browser/window.c:180
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "窗口列表首选项"
+
+# help-browser/window.c:180
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "窗口列表内容"
+
+# help-browser/window.c:180
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "窗口列表大小"
+
+# applets/desk-guide/deskguide_applet.c:134
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "窗口编组"
+
+# applets/tasklist/tasklist_menu.c:240
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "总是对窗口编组(_A)"
+
+# gnome-terminal/gnome-terminal.c:2447
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "从不对窗口编组(_N)"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"决定何时在任务列表中将同一个应用程序的窗口编组。合法的值有从不、自动、总是。"
+
+#: applets/wncklet/window-list.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr "若为真则任务列表将显示所有工作区的窗口，否则只显示当前工作区中的窗口。"
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"若为真则在解除窗口最小化的时候将其放入当前工作区。否则切换到窗口所在的工作"
+"区。"
+
+#: applets/wncklet/window-list.schemas.in.h:4
+#, fuzzy
+msgid "Maximum size that Window List requests"
+msgstr "任务列表插件将请求的最大尺寸"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+#, fuzzy
+msgid "Minimum size that Window List requests"
+msgstr "任务列表插件将请求的最小尺寸"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "解除窗口最小化时将窗口移动到当前工作区"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "显示所有工作区中的窗口"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"这是插件将请求的最大宽度。这将用于限制插件在诸如边缘面板之类的大面板中的宽"
+"度，否则插件将充满整个可用的空间。"
+
+#: applets/wncklet/window-list.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"任务列表需要一个最小宽度以使其能够发挥作用。这个值是插件将请求的最小宽度。在"
+"滑动和边缘对齐时这将发挥作用，否则可能导致一个非常小的默认宽度。"
+
+# gnome-terminal/gnome-terminal.c:2447
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "何时对对窗口编组"
+
+#: applets/wncklet/window-menu.c:341
+#, fuzzy
+msgid "Unknown Window"
+msgstr "未知"
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "没有打开窗口"
+
+# applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
+# panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
+# panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "行"
+
+# help-browser/history.c:257
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "列"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr "载入工作区切换器的 num_rows 值时出错：%s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, fuzzy, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "载入工作区切换器的 display_workspace_names 值时出错：%s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr "载入工作区切换器的 display_all_workspaces 值时出错：%s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr "工作区切换器显示了您的工作区的缩影以便于您管理您的窗口。"
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "工作区的数量(_W)："
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "显示所有工作区(_A)"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "只显示当前工作区(_C)"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "在切换器中显示工作区名称(_N)"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "工作区名称"
+
+# applets/gen_util/printer.c:341
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "工作区切换器首选项"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "工作区"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+#, fuzzy
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr "为真则 pager 显示所有工作区，否则只显示当前工作区。"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr "为真则显示 pager 中工作区的名称，否则显示工作区的内容。"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+#, fuzzy
+msgid "Number of rows in the Workspace Switcher."
+msgstr "pager 的行数"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"当显示所有工作区时这决定了 pager 将使用多少行(水平布局)或列(垂直布局)来显示工"
+"作区。"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "是否在 pager 中显示所有工作区。"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "是否在 pager 中显示工作区的名称。"
+
 # panel/applet.c:297
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1403,72 +1434,68 @@ msgid "_Properties"
 msgstr "属性(_P)"
 
 # applets/gkb/gkb.c:262
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "运行程序..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "如果您知道输入正确的命令，运行应用程序"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "搜索文件..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "在您的计算机中寻找文件、文件夹以及文档"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "屏幕抓图..."
 
 # gsm/logout.c:221
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "获取一个您的桌面的抓图"
 
 # panel/menu.c:2591
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "锁住屏幕"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "保护您的计算机免遭未授权的使用"
 
 # panel/logout.c:51 panel/menu.c:2290 panel/menu.c:2625
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "注销"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "从 GNOME 桌面退出"
 
 # gsm/logout.c:240
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "动作"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "没有打开窗口"
-
 # panel/menu.c:3516
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "菜单面板"
 
 # panel/menu.c:543
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "GNOME 菜单面板"
 
 # gsm/logout.c:240
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "应用程序"
@@ -4527,9 +4554,6 @@ msgstr "顶部"
 # gsm/session-properties.c:350
 #~ msgid "Saving session details."
 #~ msgstr "正在保存会话细节。"
-
-#~ msgid "Unknown"
-#~ msgstr "未知"
 
 #~ msgid "State not reported within timeout."
 #~ msgstr "限定时间内没有报告其状态。"

@@ -8,6 +8,7 @@
 #ifndef FOOBAR_WIDGET_H
 #define FOOBAR_WIDGET_H
 
+#include <gtk/gtk.h>
 #include "panel-types.h"
 
 G_BEGIN_DECLS
@@ -34,16 +35,6 @@ struct _FoobarWidget
 	GtkWidget *panel;
 
 	GtkWidget *programs;
-
-	GHashTable *windows;
-	GtkWidget *task_item;
-	GtkWidget *task_menu;
-	GtkWidget *task_image;
-	GtkWidget *task_bin;
-	gpointer icon_window; /* the task whoose icon is shown,
-			       * hopefully should be always OK,
-			       * but we only use the pointer value
-			       * and never dereference this */
 
 	gboolean compliant_wm;
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.0\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2002-08-28 02:59+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -17,10 +17,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "S'ha produït un error al mostrar l'ajuda: %s"
@@ -212,20 +213,22 @@ msgstr "Factoria Wanda"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "_Quant a..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -234,8 +237,8 @@ msgstr "A_juda"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "_Preferències..."
 
@@ -339,16 +342,16 @@ msgstr "Utilitza _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Ivan Vilata i Balaguer <ivan@selidor.net>\n"
 "Quico Llach <quico@softcatala.org>\n"
 "Jordi Mallach <jordi@sindominio.net>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Rellotge"
@@ -437,60 +440,24 @@ msgstr "Accesoris"
 msgid "Alert you when new mail arrives"
 msgstr "Avisa quan arribi correu nou"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#, fuzzy
-msgid "Button to hide application windows and show the desktop"
-msgstr "Amaga totes les finestres i focalitza l'escriptori"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "Factoria d'applets GenUtil"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Dona la hora i data actual"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Comprovador del correu"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "Internet"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "Mostra l'escriptori "
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Canvia entre finestres obertes"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Canvia entre espais de treball"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "Utilitat"
-
-# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "Llista de finestres"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Canviador de espais de treball"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "factoria per a crear applets generals"
 
@@ -762,7 +729,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Carpeta remota d'on rebre el correu"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "Elimina el servidor al qual conectar per a comprovar el correu"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -826,279 +794,6 @@ msgstr "Avís de Correu"
 msgid "New Mail"
 msgstr "Nou correu"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Files"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "Columnes"
-
-#: applets/gen_util/pager.c:376
-#, fuzzy, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al carregar el valor num_rows per a l'applet canviador d'espais de "
-"treball %s\n"
-
-#: applets/gen_util/pager.c:387
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al carregar el valor display_workspace_names per a l'applet canviador "
-"d'espais de treball %s\n"
-
-#: applets/gen_util/pager.c:402
-#, fuzzy, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Error al carregar el valor display_all_workspaces per a l'applet canviador "
-"d'espais de treball %s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"El Canviador d'espais de treball vos mostra una versió petita dels vostres "
-"espais de treball que vos permet administrar les vostres finestres."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Número d'_espais de treball:"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Mostra tots els e_spais de treball"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Mostra només l'espai de treball a_ctual"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Mostra els _noms dels espais de treball en el canviador"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "Noms dels espais de treball"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "Preferències del canviador d'espais de treball"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "Espais de treball"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Si açò s'habilita, el canviador d'espais de treball mostrarà tots els espais "
-"de treball; d'altra forma només mostrará l'espai de treball actual."
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Si açò s'habilita, els espais de treball en el canviador d'espais de treball "
-"mostraràn els noms dels espais de treball; d'altra manera mostraràn els "
-"continguts del espai de treball."
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Nombre de files en el canviador d'espais de treball."
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Quan es mostren tots els espais de treball, açò determina en quantes files "
-"(per al emplaçament horitzontal) o columnes (per al emplaçament vertical) "
-"mostrarà els espais de treball el canviador d'espais de treball."
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr ""
-"Mostrar o no tots els espais de treball en el canviador d'espais de treball."
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"Mostrar o no els noms dels espais de treball en el canviador d'espais de "
-"treball."
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:220
-#, fuzzy
-msgid "Click here to hide all windows and show the desktop."
-msgstr "Amaga totes les finestres i focalitza l'escriptori"
-
-#: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
-msgid "Failed to load %s: %s\n"
-msgstr ""
-"No s'ha pogut carregar l'imatge %s\n"
-"\n"
-"Detalls: %s"
-
-#: applets/gen_util/showdesktop.c:291
-#, fuzzy
-msgid "File not found"
-msgstr "no s'ha trobat el fitxer"
-
-#: applets/gen_util/showdesktop.c:454
-#, fuzzy
-msgid "This button lets you hide all windows and show the desktop"
-msgstr "Amaga totes les finestres i focalitza l'escriptori"
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"La llista de finestres mostra una llista de totes les finestres visibles i "
-"vos permet fullejarles."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Agrupa les finestres quan l'e_spai és limitat"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "Mida mín_ima:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "Mida mà_xima:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Restaura a l'es_pai de treball actual"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Restaura a l'espai de treball _natiu"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Mostra les finestres de l'espai de treball a_ctual"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Mostra les finestres de t_ots els espais de treball"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "Al restaurar finestres minimitzades"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "Propietats de la llista de finestres"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "Contingut de la llista de finestres"
-
-# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "Mida de la llista de finestres"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Agrupació de finestres"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "Sempre a_grupar les finestres"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "_Mai agrupar les finestres"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Decideix quan agrupar finestres de la mateixa aplicació en la llista de "
-"finestres. Els valors vàlids són mai, auto i sempre."
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Si açò s'habilita, la llista de finestres mostrarà finestres de tots els "
-"espais de treball; d'altra forma, només mostrarà les finestres de l'espai de "
-"treball actual."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Si açò s'habilita, quan es desminimitze una finestra, la torna a l'espai de "
-"treball actual. D'altra forma, canvia a l'espai de treball de la finestra."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
-msgid "Maximum size that Window List requests"
-msgstr "Mida màxima que demanarà l'applet de llistat de finestres"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
-msgid "Minimum size that Window List requests"
-msgstr "Mida mínima que demanarà l'applet de llistat de finestres"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Moure les finestres a l'espai de treball actual en restaurar"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Mostra les finestres de tots els espais de treball"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Aquest valor és l'amplària màxima que l'applet demanarà. Açò és útil per a "
-"limitar la mida utilitzada en quadres grans, en els quals aquesta applet "
-"podria ocupar tot l'espai disponible, com en els quadres a un costat.\""
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"L'applet de la llista de finestres necessita una amplària mínima per a que "
-"siga útil. Aquest valor és l'amplària mínima que l'applet demanarà. Açò és "
-"útil amb quadres lliscants i a un costat, que d'altra manera demanarien per "
-"una amplària molt petita per omisió."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Quan agrupar les finestres"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr ""
@@ -1111,14 +806,349 @@ msgstr ""
 msgid "Notification Area Factory"
 msgstr ""
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "Utilitat"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr ""
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+#, fuzzy
+msgid "Button to hide application windows and show the desktop"
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "factoria per a crear applets generals"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "Mostra l'escriptori "
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Canvia entre finestres obertes"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Canvia entre espais de treball"
+
+# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "Llista de finestres"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "Menú principal"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "Factoria d'applets GenUtil"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Canviador de espais de treball"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:220
+#, fuzzy
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
+#: applets/wncklet/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"No s'ha pogut carregar l'imatge %s\n"
+"\n"
+"Detalls: %s"
+
+#: applets/wncklet/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "no s'ha trobat el fitxer"
+
+#: applets/wncklet/showdesktop.c:454
+#, fuzzy
+msgid "This button lets you hide all windows and show the desktop"
+msgstr "Amaga totes les finestres i focalitza l'escriptori"
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"La llista de finestres mostra una llista de totes les finestres visibles i "
+"vos permet fullejarles."
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "Agrupa les finestres quan l'e_spai és limitat"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "Mida mín_ima:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "Mida mà_xima:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "Restaura a l'es_pai de treball actual"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "Restaura a l'espai de treball _natiu"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "Mostra les finestres de l'espai de treball a_ctual"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "Mostra les finestres de t_ots els espais de treball"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "Al restaurar finestres minimitzades"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "Propietats de la llista de finestres"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "Contingut de la llista de finestres"
+
+# Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "Mida de la llista de finestres"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "Agrupació de finestres"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "Sempre a_grupar les finestres"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "_Mai agrupar les finestres"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Decideix quan agrupar finestres de la mateixa aplicació en la llista de "
+"finestres. Els valors vàlids són mai, auto i sempre."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"Si açò s'habilita, la llista de finestres mostrarà finestres de tots els "
+"espais de treball; d'altra forma, només mostrarà les finestres de l'espai de "
+"treball actual."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"Si açò s'habilita, quan es desminimitze una finestra, la torna a l'espai de "
+"treball actual. D'altra forma, canvia a l'espai de treball de la finestra."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+#, fuzzy
+msgid "Maximum size that Window List requests"
+msgstr "Mida màxima que demanarà l'applet de llistat de finestres"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+#, fuzzy
+msgid "Minimum size that Window List requests"
+msgstr "Mida mínima que demanarà l'applet de llistat de finestres"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "Moure les finestres a l'espai de treball actual en restaurar"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Mostra les finestres de tots els espais de treball"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Aquest valor és l'amplària màxima que l'applet demanarà. Açò és útil per a "
+"limitar la mida utilitzada en quadres grans, en els quals aquesta applet "
+"podria ocupar tot l'espai disponible, com en els quadres a un costat.\""
+
+#: applets/wncklet/window-list.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"L'applet de la llista de finestres necessita una amplària mínima per a que "
+"siga útil. Aquest valor és l'amplària mínima que l'applet demanarà. Açò és "
+"útil amb quadres lliscants i a un costat, que d'altra manera demanarien per "
+"una amplària molt petita per omisió."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Quan agrupar les finestres"
+
+#: applets/wncklet/window-menu.c:341
+#, fuzzy
+msgid "Unknown Window"
+msgstr "Desconegut"
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "No hi ha finestres obertes"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "Files"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "Columnes"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Error al carregar el valor num_rows per a l'applet canviador d'espais de "
+"treball %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, fuzzy, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Error al carregar el valor display_workspace_names per a l'applet canviador "
+"d'espais de treball %s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Error al carregar el valor display_all_workspaces per a l'applet canviador "
+"d'espais de treball %s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"El Canviador d'espais de treball vos mostra una versió petita dels vostres "
+"espais de treball que vos permet administrar les vostres finestres."
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "Número d'_espais de treball:"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "Mostra tots els e_spais de treball"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "Mostra només l'espai de treball a_ctual"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "Mostra els _noms dels espais de treball en el canviador"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "Noms dels espais de treball"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "Preferències del canviador d'espais de treball"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "Espais de treball"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"Si açò s'habilita, el canviador d'espais de treball mostrarà tots els espais "
+"de treball; d'altra forma només mostrará l'espai de treball actual."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"Si açò s'habilita, els espais de treball en el canviador d'espais de treball "
+"mostraràn els noms dels espais de treball; d'altra manera mostraràn els "
+"continguts del espai de treball."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Nombre de files en el canviador d'espais de treball."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"Quan es mostren tots els espais de treball, açò determina en quantes files "
+"(per al emplaçament horitzontal) o columnes (per al emplaçament vertical) "
+"mostrarà els espais de treball el canviador d'espais de treball."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr ""
+"Mostrar o no tots els espais de treball en el canviador d'espais de treball."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr ""
+"Mostrar o no els noms dels espais de treball en el canviador d'espais de "
+"treball."
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1325,65 +1355,61 @@ msgstr "Calaix"
 msgid "_Properties"
 msgstr "_Propietats"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Executa un programa..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Executa aplicacions, si sabeu l'ordre correcta a introduir"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Cercar fitxers..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Captura de pantalla..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Bloqueja la pantalla"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Surt"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "Surt de l'escriptori GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "Accions"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "No hi ha finestres obertes"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Quadre de menú"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "Quadre de menú del GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Aplicacions"
@@ -3745,9 +3771,6 @@ msgstr "Superior"
 
 #~ msgid "Saving session details."
 #~ msgstr "S'estan desant els detalls de la sessió."
-
-#~ msgid "Unknown"
-#~ msgstr "Desconegut"
 
 #~ msgid "State not reported within timeout."
 #~ msgstr "L'estat no s'ha reportat en el temps establert"

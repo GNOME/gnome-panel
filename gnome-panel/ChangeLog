@@ -1,3 +1,15 @@
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* foobar-widget.[ch]: (foobar_widget_realize),
+	(foobar_widget_instance_init), (foobar_widget_destroy),
+	(foobar_widget_popup_panel_menu): remove the old
+	window menu.
+
+	* menu-util.c: include panel-stock-icons.h to fix warning.
+
+	* panel-per-panel-config.schemas.in: add a window menu
+	applet to the default menu panel.
+
 2003-01-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-util.c: (set_color_back): don't try to set the

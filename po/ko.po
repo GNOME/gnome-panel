@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.2\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2002-07-21 21:14+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <gnome-kr-translation@lists.sourceforge.net>\n"
@@ -17,10 +17,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "도움말을 표시하는 데 오류가 발생했습니다: %s"
@@ -212,20 +213,22 @@ msgstr "완다 팩토리"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "정보(_A)..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -234,8 +237,8 @@ msgstr "도움말(_H)"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "기본 설정(_P)..."
 
@@ -341,16 +344,16 @@ msgstr "UTC 사용(_U)"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "남성현 <namsh@kldp.org>\n"
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@chollian.net>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "시계"
@@ -438,58 +441,24 @@ msgstr "액세서리"
 msgid "Alert you when new mail arrives"
 msgstr "새 편지가 오면 알려 주기"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "GenUtil 애플릿 팩토리"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "받은 편지함 모니터"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "인터넷"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "숨기기단추 보임(_B)"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "열려 있는 창 사이로 전환"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "작업 공간 사이로 전환"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "유틸리티"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "창 목록"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "작업공간 전환"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "몇몇 일반적인 애플릿을 만드는 데 쓰이는 팩토리"
 
@@ -761,7 +730,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "편지 받아 오는 원격 폴더"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr "편지를 받으려고 연결하는 원격 서버"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
@@ -821,275 +791,6 @@ msgstr "편지 확인"
 msgid "New Mail"
 msgstr "새 편지"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "행"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "열"
-
-#: applets/gen_util/pager.c:376
-#, fuzzy, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"작업공간 전환 애플릿의 num_rows 값을 읽어들이는 데 오류가 발생했습니다: %s\n"
-
-#: applets/gen_util/pager.c:387
-#, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"작업공간 전환 애플릿의 display_workspace_names 값을 읽어들이는 데 오류가 발생"
-"했습니다: %s\n"
-
-#: applets/gen_util/pager.c:402
-#, fuzzy, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"작업공간 전환 애플릿의 display_all_workspaces 값을 읽어들이는 데 오류가 발생"
-"했습니다: %s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"작업 공간 전환은 여러분의 작업공간의 축소판에서 창을 관리할 수 있도록 해 줍니"
-"다"
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "작업 공간의 개수(_W)"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "모든 작업 공간 보여 주기(_A)"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "현재 작업 공간만 보여 주기(_C)"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "전환기에 작업 공간의 이름 보여 주기(_N)"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "작업 공간 이름"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "작업 공간 전환 기본 설정"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "작업 공간"
-
-#: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"참이면, 페이저에서 모든 작업 공간을 표시합니다. 거짓이면 현재 작업 공간만 표"
-"시합니다."
-
-#: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"참이면, 페이저의 작업 공간에서 작업 공간의 이름을 표시합니다. 거짓이면 작업 "
-"공간의 내용을 표시합니다."
-
-#: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
-msgid "Number of rows in the Workspace Switcher."
-msgstr "페이저에서 행 수"
-
-#: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"모든 작업 공간을 표시하는 경우, 이 값은 몇 열(수평 배치)과 몇 행(수직 배치)으"
-"로 페이저에서 작업 공간을 표시할 것인지 결정합니다."
-
-#: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "페이저에 모든 작업 공간을 표시할 것인지 여부."
-
-#: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "페이저에 작업 공간의 이름을 표시할 것인지 여부."
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-
-#: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
-msgid "Failed to load %s: %s\n"
-msgstr ""
-"%s 그림을 읽어들이는 데 실패했습니다\n"
-"\n"
-"자세한 정보: %s"
-
-#: applets/gen_util/showdesktop.c:291
-#, fuzzy
-msgid "File not found"
-msgstr "파일을 찾을 수 없습니다"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"창 목록은 표시되는 모든 창의 목록을 보여주고 창을 찾을 수 있도록 해 줍니다"
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "공간이 제한되어 있을 때 창 모으기(_S)"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "최소 크기(_I):"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "최대 크기(_X):"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "현재 작업 공간으로 복귀(_W)"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "본래 작업 공간으로 복귀(_T)"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "현재 작업 공간의 창 보여주기(_C)"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "모든 작업 공간의 창 보여주기(_C)"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "최소화된 창을 복구할 때"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "창 목록 기본 설정"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "창 목록 내용"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "창 목록 크기"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "창 그룹"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "언제나 창을 모음(_A)"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "창을 모으지 않음(_N)"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"언제 같은 프로그램의 창을 작업 목록에서 모을 것인지 결정합니다. 쓸 수 있는 값"
-"은 never, auto 그리고 always입니다."
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"참이면, 작업 목록이 모든 작업 공간의 창을 표시합니다. 거짓이면 현재 작업 공간"
-"에 있는 창만 표시합니다."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"참이면, 창의 최소화를 해제할 때 현재 작업 공간으로 창을 불러 옵니다. 거짓이"
-"면 그 창의 작업 공간으로 이동합니다."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
-msgid "Maximum size that Window List requests"
-msgstr "작업 목록 애플릿이 요청할 최대 크기"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
-msgid "Minimum size that Window List requests"
-msgstr "작업 목록 애플릿이 요청할 최소 크기"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "최소화 해제할 때 창을 현재 작업 공간으로 이동"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "모든 작업 공간의 창 보여주기"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"이 값은 애플릿이 요청할 최대 너비입니다. 이 값은 큰 패널에서 애플릿의 크기를 "
-"제한할 때 쓰입니다. 제한하지 않으면 애플릿이 가장자리 패널같은 곳에서 전체 패"
-"널을 가득 채울 수도 있습니다."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"작업 목록 애플릿을 제대로 사용하려면 최소한의 너비가 필요합니다. 이 값은 애플"
-"릿이 요청할 최소의 값입니다. 이 값은 슬라이딩 패널 및 가장자리 패널에 대해 유"
-"용합니다. 이 패널에서 최소한의 너비를 요청하지 않으면 아주 작은 기본 너비를 "
-"갖게 됩니다."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "창을 모을 상황"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr ""
@@ -1102,14 +803,342 @@ msgstr ""
 msgid "Notification Area Factory"
 msgstr ""
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "유틸리티"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr ""
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "몇몇 일반적인 애플릿을 만드는 데 쓰이는 팩토리"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "숨기기단추 보임(_B)"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "열려 있는 창 사이로 전환"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "작업 공간 사이로 전환"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "창 목록"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "데비안 메뉴"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil 애플릿 팩토리"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "작업공간 전환"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+
+#: applets/wncklet/showdesktop.c:290
+#, fuzzy, c-format
+msgid "Failed to load %s: %s\n"
+msgstr ""
+"%s 그림을 읽어들이는 데 실패했습니다\n"
+"\n"
+"자세한 정보: %s"
+
+#: applets/wncklet/showdesktop.c:291
+#, fuzzy
+msgid "File not found"
+msgstr "파일을 찾을 수 없습니다"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"창 목록은 표시되는 모든 창의 목록을 보여주고 창을 찾을 수 있도록 해 줍니다"
+
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "공간이 제한되어 있을 때 창 모으기(_S)"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "최소 크기(_I):"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "최대 크기(_X):"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "현재 작업 공간으로 복귀(_W)"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "본래 작업 공간으로 복귀(_T)"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "현재 작업 공간의 창 보여주기(_C)"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "모든 작업 공간의 창 보여주기(_C)"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "최소화된 창을 복구할 때"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "창 목록 기본 설정"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "창 목록 내용"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "창 목록 크기"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "창 그룹"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "언제나 창을 모음(_A)"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "창을 모으지 않음(_N)"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+#, fuzzy
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"언제 같은 프로그램의 창을 작업 목록에서 모을 것인지 결정합니다. 쓸 수 있는 값"
+"은 never, auto 그리고 always입니다."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"참이면, 작업 목록이 모든 작업 공간의 창을 표시합니다. 거짓이면 현재 작업 공간"
+"에 있는 창만 표시합니다."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"참이면, 창의 최소화를 해제할 때 현재 작업 공간으로 창을 불러 옵니다. 거짓이"
+"면 그 창의 작업 공간으로 이동합니다."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+#, fuzzy
+msgid "Maximum size that Window List requests"
+msgstr "작업 목록 애플릿이 요청할 최대 크기"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+#, fuzzy
+msgid "Minimum size that Window List requests"
+msgstr "작업 목록 애플릿이 요청할 최소 크기"
+
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "최소화 해제할 때 창을 현재 작업 공간으로 이동"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "모든 작업 공간의 창 보여주기"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+#, fuzzy
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"이 값은 애플릿이 요청할 최대 너비입니다. 이 값은 큰 패널에서 애플릿의 크기를 "
+"제한할 때 쓰입니다. 제한하지 않으면 애플릿이 가장자리 패널같은 곳에서 전체 패"
+"널을 가득 채울 수도 있습니다."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+#, fuzzy
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"작업 목록 애플릿을 제대로 사용하려면 최소한의 너비가 필요합니다. 이 값은 애플"
+"릿이 요청할 최소의 값입니다. 이 값은 슬라이딩 패널 및 가장자리 패널에 대해 유"
+"용합니다. 이 패널에서 최소한의 너비를 요청하지 않으면 아주 작은 기본 너비를 "
+"갖게 됩니다."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "창을 모을 상황"
+
+#: applets/wncklet/window-menu.c:341
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "열린 창 없음"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "행"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "열"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, fuzzy, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"작업공간 전환 애플릿의 num_rows 값을 읽어들이는 데 오류가 발생했습니다: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, fuzzy, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"작업공간 전환 애플릿의 display_workspace_names 값을 읽어들이는 데 오류가 발생"
+"했습니다: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, fuzzy, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"작업공간 전환 애플릿의 display_all_workspaces 값을 읽어들이는 데 오류가 발생"
+"했습니다: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"작업 공간 전환은 여러분의 작업공간의 축소판에서 창을 관리할 수 있도록 해 줍니"
+"다"
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "작업 공간의 개수(_W)"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "모든 작업 공간 보여 주기(_A)"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "현재 작업 공간만 보여 주기(_C)"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "전환기에 작업 공간의 이름 보여 주기(_N)"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "작업 공간 이름"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "작업 공간 전환 기본 설정"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "작업 공간"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+#, fuzzy
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"참이면, 페이저에서 모든 작업 공간을 표시합니다. 거짓이면 현재 작업 공간만 표"
+"시합니다."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+#, fuzzy
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"참이면, 페이저의 작업 공간에서 작업 공간의 이름을 표시합니다. 거짓이면 작업 "
+"공간의 내용을 표시합니다."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+#, fuzzy
+msgid "Number of rows in the Workspace Switcher."
+msgstr "페이저에서 행 수"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+#, fuzzy
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"모든 작업 공간을 표시하는 경우, 이 값은 몇 열(수평 배치)과 몇 행(수직 배치)으"
+"로 페이저에서 작업 공간을 표시할 것인지 결정합니다."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+#, fuzzy
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr "페이저에 모든 작업 공간을 표시할 것인지 여부."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+#, fuzzy
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr "페이저에 작업 공간의 이름을 표시할 것인지 여부."
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1312,65 +1341,61 @@ msgstr "서랍"
 msgid "_Properties"
 msgstr "등록 정보(_P)"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "프로그램 실행..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "입력한 명령이 올바르다면, 응용프로그램을 실행합니다"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "파일 찾기..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "컴퓨터에 있는 파일, 폴더, 문서를 찾습니다"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "스크린샷..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "바탕화면의 스크린샷 잡기"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "화면 잠금"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "인증되지 사용을 막기위해 컴퓨터를 잠급니다"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "로그아웃"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "그놈 바탕화면에서 마칩니다"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "명령"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "열린 창 없음"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "메뉴 패널"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "그놈 메뉴 패널"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "프로그램"

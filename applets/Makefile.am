@@ -1,4 +1,5 @@
 SUBDIRS =		\
 	gen_util	\
 	fish		\
-	notification_area
+	notification_area \
+	wncklet

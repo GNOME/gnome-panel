@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-01-07 18:31+1300\n"
+"POT-Creation-Date: 2003-01-10 11:26+1300\n"
 "PO-Revision-Date: 2002-12-14 23:44+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -22,10 +22,11 @@ msgstr ""
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
-#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
-#: applets/notification_area/main.c:80
+#: applets/gen_util/mailcheck.c:1831 applets/notification_area/main.c:80
+#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:123
+#: applets/wncklet/window-list.c:762 applets/wncklet/window-menu.c:81
+#: applets/wncklet/workspace-switcher.c:187
+#: applets/wncklet/workspace-switcher.c:501
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
@@ -219,20 +220,22 @@ msgstr "Wanda-Fabrik"
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
 msgstr "_Info..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3493
 #: gnome-panel/menu.c:4215 gnome-panel/panel-action-button.c:500
 msgid "_Help"
@@ -241,8 +244,8 @@ msgstr "_Hilfe"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences..."
 msgstr "_Einstellungen..."
 
@@ -347,9 +350,9 @@ msgstr "Koordinierte Weltzeit (_UTC) verwenden"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/notification_area/main.c:112 applets/wncklet/showdesktop.c:443
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:108
+#: applets/wncklet/workspace-switcher.c:534 gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
 "Karl Eichwalder <ke@suse.de>\n"
@@ -359,7 +362,7 @@ msgstr ""
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Christian Neumair <chris@gnome-de.org>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Uhr"
@@ -447,58 +450,25 @@ msgstr "Zubehör"
 msgid "Alert you when new mail arrives"
 msgstr "Benachrichtigen, wenn neue Mail eintrifft"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Button to hide application windows and show the desktop"
-msgstr "Knopf zum Verbergen der Anwendungsfenster und Anzeigen des Desktops"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
 msgstr "GenUtil-Applet-Fabrik"
 
 # CHECK
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Die aktuelle Zeit und das Datum holen"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "E-Mail-Eingangsmonitor"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
 msgstr "Internet"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
-msgid "Show Desktop Button"
-msgstr "Desktop-Knopf anzeigen"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Switch between open windows"
-msgstr "Zwischen offenen Fenstern wechseln"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-msgid "Switch between workspaces"
-msgstr "Zwischen den Arbeitsflächen wecheln"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-msgid "Utility"
-msgstr "Werkzeug"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:808
-msgid "Window List"
-msgstr "Fensterliste"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Arbeitsflächen-Umschalter"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:15
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
 msgstr "Fabrik um einige allgemeine Applets zu erzeugen"
 
@@ -773,7 +743,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "Entfernter Ordner für E-Mail-Empfang"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
+#, fuzzy
+msgid "Remote server to connect to for our mail"
 msgstr ""
 "Entfernter Server mit dem wir die Verbindung aufnehmen, um nach E-Mail zu "
 "sehen"
@@ -842,275 +813,6 @@ msgstr "E-Mail-Anzeige"
 msgid "New Mail"
 msgstr "Neue E-Mail"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-#: applets/gen_util/pager.glade.h:2
-msgid "Rows"
-msgstr "Zeilen"
-
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
-msgid "Columns"
-msgstr "Spalten"
-
-#: applets/gen_util/pager.c:376
-#, c-format
-msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
-"Fehler beim Laden des »num_rows«-Wertes des Arbeitsflächen-Umschalters: %s\n"
-
-#: applets/gen_util/pager.c:387
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Fehler beim Laden des »display_workspace_names«-Wertes des Arbeitsflächen-"
-"Umschalters: %s\n"
-
-#: applets/gen_util/pager.c:402
-#, c-format
-msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Fehler beim Laden des »display_all_workspaces«-Wertes des Arbeitsflächen-"
-"Umschalters: %s\n"
-
-#: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Der Arbeitsflächen-Umschalter zeigt Ihnen eine kleine Version Ihrer "
-"Arbeitsflächen, die es Ihnen ermöglicht, die Fenster zu verwalten."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "An_zahl der Arbeitsflächen:"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "_Alle Arbeitsflächen anzeigen"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Nur die aktuelle Arbeitsfläche a_nzeigen"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "_Namen der Arbeitsflächen im Umschalter zeigen"
-
-#: applets/gen_util/pager.glade.h:6
-msgid "Workspace Names"
-msgstr "Namen der Arbeitsflächen"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspace Switcher Preferences"
-msgstr "Einstellungen des Arbeitsflächen-Umschalters"
-
-#: applets/gen_util/pager.glade.h:9
-msgid "Workspaces"
-msgstr "Arbeitsflächen"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Soll der Arbeitsflächen-Umschalter alle Arbeitsflächen anzeigen? Andernfalls "
-"zeigt er lediglich die Aktuelle."
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Soll der Arbeitsflächen-Umschalter auf den Mini-Arbeitsflächen im Umschalter "
-"deren Namen anzeigen? Andernfalls enthalten diese den Inhalt der "
-"Arbeitsflächen."
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Anzahl der Zeilen im Arbeitsflächen-Umschalter."
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Beim Anzeigen aller Arbeitsflächen legt dieser Wert die Anzahl der Zeilen "
-"(bei horizontaler Darstellung) oder Spalten (bei vertikaler Darstellung), in "
-"denen der Umschalter die Arbeitsflächen anzeigt."
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr ""
-"Sollen alle Arbeitsflächen im Arbeitsflächen-Umschalter angezeigt werden?"
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"Sollen die Namen der Arbeitsflächen im Arbeitsflächen-Umschalter angezeigt "
-"werden?"
-
-#: applets/gen_util/showdesktop.c:217
-msgid "Click here to restore hidden windows."
-msgstr "Klicken Sie hier, um die verborgenen Fenster wieder hervorzuholen."
-
-#: applets/gen_util/showdesktop.c:220
-msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-"Klicken Sie hier, um alle Fenster zu verbergen und den Desktop anzuzeigen."
-
-#: applets/gen_util/showdesktop.c:290
-#, c-format
-msgid "Failed to load %s: %s\n"
-msgstr "»%s« konnte nicht geladen werden: %s\n"
-
-#: applets/gen_util/showdesktop.c:291
-msgid "File not found"
-msgstr "Datei nicht gefunden"
-
-#: applets/gen_util/showdesktop.c:454
-msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
-"Beim Anklicken dieses Knopfes werden alle Fenster verborgen und der Desktop "
-"angezeigt"
-
-#: applets/gen_util/tasklist.c:810
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
-msgstr ""
-"Die Fensterliste zeigt eine Liste aller sichtbaren Fenster an und lässt Sie "
-"durch diese wechseln."
-
-# missing accelerator
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Fenster gruppieren, falls _Platz begrenzt ist"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr "_Minimale Größe:"
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr "Ma_ximale Größe:"
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Auf a_ktueller Arbeitsfläche wiederherstellen"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Auf _ursprünglicher Arbeitsfläche wiederherstellen"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Fenster von _aktueller Arbeitsfläche zeigen"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Fenster von a_llen Arbeitsflächen zeigen"
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "When restoring minimized windows"
-msgstr "Wenn minimierte Fenster wiederhergestellt werden"
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "Window List Preferences"
-msgstr "Einstellungen der Fensterliste"
-
-#: applets/gen_util/tasklist.glade.h:10
-msgid "Window List content"
-msgstr "Inhalt der Fensterliste"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List size"
-msgstr "Größe der Fensterliste"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Fenster gruppieren"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "Fenster _immer gruppieren"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "Fenster _nie gruppieren"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Dieser Schlüssel legt fest, wann Fenster der selben Anwendung in der "
-"Fensterliste gruppiert werden. Gültige Werte sind »never« (Nie), »auto« (Bei "
-"Platzmangel) sowie »always« (Immer)."
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Soll die Fensterliste alle geöffneten Fenster einschließlich derer, die sich "
-"auf anderen Arbeitsflächen befinden, anzeigen? Ansonsten zeigt es lediglich "
-"die auf der aktuellen Arbeitsfläche dargestellten Fenster."
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Soll ein Fenster beim Wiederherstellen auf der aktuellen Arbeitsfläche "
-"angezeigt werden? Ansonsten wird zur Arbeitsfläche, auf dem sich das Fenster "
-"befindet, gewechselt."
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "Maximale Größe die die Fensterliste anfordern darf"
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "Minimale Größe die die Fensterliste anfordern darf"
-
-# CHECK
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr ""
-"Fenster beim Wiederherstellen auf die aktuelle Arbeitsfläche verschieben"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Fenster von allen Arbeitsflächen zeigen"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Dieser Wert ist die maximale Breite, die die Fensterliste anfordern darf. "
-"Dies ist nützlich, um in großen Panels die Größe zu begrenzen, in denen "
-"diese Fensterliste andernfalls die gesamte verfügbare Breite belegen würde, "
-"so z.B. in Kantenpanels."
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"Die Fensterliste benötigt eine minimale Breite, um überhaupt einen Nutzen zu "
-"haben. Dieser Wert ist die minmale Breite, die das Applet anfordern darf. "
-"Dies ist für gleitende und Kantenpanels nützlich, die sonst nur eine sehr "
-"kleine Vorgabe-Breite anfordern würden."
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Wann Fenster gruppiert werden"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr "Feld, in dem Benachrichtigungsicons angezeigt werden"
@@ -1123,14 +825,341 @@ msgstr "Benachrichtigungsfeld"
 msgid "Notification Area Factory"
 msgstr "Benachrichtigungsfeld-Fabrik"
 
+#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+msgid "Utility"
+msgstr "Werkzeug"
+
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr "Panel-Benachrichtigungsfeld"
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:426 gnome-panel/foobar-widget.c:393
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
+msgid "Button to hide application windows and show the desktop"
+msgstr "Knopf zum Verbergen der Anwendungsfenster und Anzeigen des Desktops"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
+#, fuzzy
+msgid "Factory for the window navigation related applets"
+msgstr "Fabrik um einige allgemeine Applets zu erzeugen"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/showdesktop.c:452
+msgid "Show Desktop Button"
+msgstr "Desktop-Knopf anzeigen"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+msgid "Switch between open windows"
+msgstr "Zwischen offenen Fenstern wechseln"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+msgid "Switch between workspaces"
+msgstr "Zwischen den Arbeitsflächen wecheln"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
+#: applets/wncklet/window-list.c:808
+msgid "Window List"
+msgstr "Fensterliste"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:127
+#, fuzzy
+msgid "Window Menu"
+msgstr "Hauptmenü"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#, fuzzy
+msgid "Window Navigation Applet Factory"
+msgstr "GenUtil-Applet-Fabrik"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/workspace-switcher.c:547
+#: applets/wncklet/workspace-switcher.c:840
+#: applets/wncklet/workspace-switcher.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Arbeitsflächen-Umschalter"
+
+#: applets/wncklet/showdesktop.c:217
+msgid "Click here to restore hidden windows."
+msgstr "Klicken Sie hier, um die verborgenen Fenster wieder hervorzuholen."
+
+#: applets/wncklet/showdesktop.c:220
+msgid "Click here to hide all windows and show the desktop."
+msgstr ""
+"Klicken Sie hier, um alle Fenster zu verbergen und den Desktop anzuzeigen."
+
+#: applets/wncklet/showdesktop.c:290
+#, c-format
+msgid "Failed to load %s: %s\n"
+msgstr "»%s« konnte nicht geladen werden: %s\n"
+
+#: applets/wncklet/showdesktop.c:291
+msgid "File not found"
+msgstr "Datei nicht gefunden"
+
+#: applets/wncklet/showdesktop.c:454
+msgid "This button lets you hide all windows and show the desktop"
+msgstr ""
+"Beim Anklicken dieses Knopfes werden alle Fenster verborgen und der Desktop "
+"angezeigt"
+
+#: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
+msgid ""
+"The Window List shows a list of all visible windows and lets you browse them."
+msgstr ""
+"Die Fensterliste zeigt eine Liste aller sichtbaren Fenster an und lässt Sie "
+"durch diese wechseln."
+
+# missing accelerator
+#: applets/wncklet/window-list.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr "Fenster gruppieren, falls _Platz begrenzt ist"
+
+#: applets/wncklet/window-list.glade.h:2
+msgid "M_inimum size:"
+msgstr "_Minimale Größe:"
+
+#: applets/wncklet/window-list.glade.h:3
+msgid "Ma_ximum size:"
+msgstr "Ma_ximale Größe:"
+
+#: applets/wncklet/window-list.glade.h:4
+msgid "Restore to current _workspace"
+msgstr "Auf a_ktueller Arbeitsfläche wiederherstellen"
+
+#: applets/wncklet/window-list.glade.h:5
+msgid "Restore to na_tive workspace"
+msgstr "Auf _ursprünglicher Arbeitsfläche wiederherstellen"
+
+#: applets/wncklet/window-list.glade.h:6
+msgid "Show windows from _current workspace"
+msgstr "Fenster von _aktueller Arbeitsfläche zeigen"
+
+#: applets/wncklet/window-list.glade.h:7
+msgid "Show windows from a_ll workspaces"
+msgstr "Fenster von a_llen Arbeitsflächen zeigen"
+
+#: applets/wncklet/window-list.glade.h:8
+msgid "When restoring minimized windows"
+msgstr "Wenn minimierte Fenster wiederhergestellt werden"
+
+#: applets/wncklet/window-list.glade.h:9
+msgid "Window List Preferences"
+msgstr "Einstellungen der Fensterliste"
+
+#: applets/wncklet/window-list.glade.h:10
+msgid "Window List content"
+msgstr "Inhalt der Fensterliste"
+
+#: applets/wncklet/window-list.glade.h:11
+msgid "Window List size"
+msgstr "Größe der Fensterliste"
+
+#: applets/wncklet/window-list.glade.h:12
+msgid "Window grouping"
+msgstr "Fenster gruppieren"
+
+#: applets/wncklet/window-list.glade.h:13
+msgid "_Always group windows"
+msgstr "Fenster _immer gruppieren"
+
+#: applets/wncklet/window-list.glade.h:14
+msgid "_Never group windows"
+msgstr "Fenster _nie gruppieren"
+
+#: applets/wncklet/window-list.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the Window List. "
+"Valid values are \"never\", \"auto\" and \"always\"."
+msgstr ""
+"Dieser Schlüssel legt fest, wann Fenster der selben Anwendung in der "
+"Fensterliste gruppiert werden. Gültige Werte sind »never« (Nie), »auto« (Bei "
+"Platzmangel) sowie »always« (Immer)."
+
+#: applets/wncklet/window-list.schemas.in.h:2
+msgid ""
+"If this is true, the Window List will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
+"Soll die Fensterliste alle geöffneten Fenster einschließlich derer, die sich "
+"auf anderen Arbeitsflächen befinden, anzeigen? Ansonsten zeigt es lediglich "
+"die auf der aktuellen Arbeitsfläche dargestellten Fenster."
+
+#: applets/wncklet/window-list.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+"Soll ein Fenster beim Wiederherstellen auf der aktuellen Arbeitsfläche "
+"angezeigt werden? Ansonsten wird zur Arbeitsfläche, auf dem sich das Fenster "
+"befindet, gewechselt."
+
+#: applets/wncklet/window-list.schemas.in.h:4
+msgid "Maximum size that Window List requests"
+msgstr "Maximale Größe die die Fensterliste anfordern darf"
+
+#: applets/wncklet/window-list.schemas.in.h:5
+msgid "Minimum size that Window List requests"
+msgstr "Minimale Größe die die Fensterliste anfordern darf"
+
+# CHECK
+#: applets/wncklet/window-list.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr ""
+"Fenster beim Wiederherstellen auf die aktuelle Arbeitsfläche verschieben"
+
+#: applets/wncklet/window-list.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Fenster von allen Arbeitsflächen zeigen"
+
+#: applets/wncklet/window-list.schemas.in.h:8
+msgid ""
+"This value is the maximum width that Window List requests. The maximum width "
+"setting is useful to limit the size of Window List in large panels such as "
+"edge panels, where Window List could fill the entire space available."
+msgstr ""
+"Dieser Wert ist die maximale Breite, die die Fensterliste anfordern darf. "
+"Dies ist nützlich, um in großen Panels die Größe zu begrenzen, in denen "
+"diese Fensterliste andernfalls die gesamte verfügbare Breite belegen würde, "
+"so z.B. in Kantenpanels."
+
+#: applets/wncklet/window-list.schemas.in.h:9
+msgid ""
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
+"panels, which usually request a small default width."
+msgstr ""
+"Die Fensterliste benötigt eine minimale Breite, um überhaupt einen Nutzen zu "
+"haben. Dieser Wert ist die minmale Breite, die das Applet anfordern darf. "
+"Dies ist für gleitende und Kantenpanels nützlich, die sonst nur eine sehr "
+"kleine Vorgabe-Breite anfordern würden."
+
+#: applets/wncklet/window-list.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Wann Fenster gruppiert werden"
+
+#: applets/wncklet/window-menu.c:341
+msgid "Unknown Window"
+msgstr ""
+
+#: applets/wncklet/window-menu.c:555
+#, fuzzy
+msgid "No Windows Open"
+msgstr "Keine Fenster geöffnet"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+#: applets/wncklet/workspace-switcher.glade.h:2
+msgid "Rows"
+msgstr "Zeilen"
+
+#: applets/wncklet/workspace-switcher.c:157
+#: applets/wncklet/workspace-switcher.c:761
+msgid "Columns"
+msgstr "Spalten"
+
+#: applets/wncklet/workspace-switcher.c:378
+#, c-format
+msgid "Error loading num_rows value for Workspace Switcher: %s\n"
+msgstr ""
+"Fehler beim Laden des »num_rows«-Wertes des Arbeitsflächen-Umschalters: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:389
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr ""
+"Fehler beim Laden des »display_workspace_names«-Wertes des Arbeitsflächen-"
+"Umschalters: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:404
+#, c-format
+msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
+msgstr ""
+"Fehler beim Laden des »display_all_workspaces«-Wertes des Arbeitsflächen-"
+"Umschalters: %s\n"
+
+#: applets/wncklet/workspace-switcher.c:549
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
+msgstr ""
+"Der Arbeitsflächen-Umschalter zeigt Ihnen eine kleine Version Ihrer "
+"Arbeitsflächen, die es Ihnen ermöglicht, die Fenster zu verwalten."
+
+#: applets/wncklet/workspace-switcher.glade.h:1
+msgid "Number of _workspaces:"
+msgstr "An_zahl der Arbeitsflächen:"
+
+#: applets/wncklet/workspace-switcher.glade.h:3
+msgid "Show _all workspaces"
+msgstr "_Alle Arbeitsflächen anzeigen"
+
+#: applets/wncklet/workspace-switcher.glade.h:4
+msgid "Show only the _current workspace"
+msgstr "Nur die aktuelle Arbeitsfläche a_nzeigen"
+
+#: applets/wncklet/workspace-switcher.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr "_Namen der Arbeitsflächen im Umschalter zeigen"
+
+#: applets/wncklet/workspace-switcher.glade.h:6
+msgid "Workspace Names"
+msgstr "Namen der Arbeitsflächen"
+
+#: applets/wncklet/workspace-switcher.glade.h:8
+msgid "Workspace Switcher Preferences"
+msgstr "Einstellungen des Arbeitsflächen-Umschalters"
+
+#: applets/wncklet/workspace-switcher.glade.h:9
+msgid "Workspaces"
+msgstr "Arbeitsflächen"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:1
+msgid ""
+"If this is true, the Workspace Switcher will show all workspaces, otherwise "
+"it will only show the current workspace."
+msgstr ""
+"Soll der Arbeitsflächen-Umschalter alle Arbeitsflächen anzeigen? Andernfalls "
+"zeigt er lediglich die Aktuelle."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the Workspace Switcher will display the "
+"names of the workspaces, otherwise they will display the contents of the "
+"workspace."
+msgstr ""
+"Soll der Arbeitsflächen-Umschalter auf den Mini-Arbeitsflächen im Umschalter "
+"deren Namen anzeigen? Andernfalls enthalten diese den Inhalt der "
+"Arbeitsflächen."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:3
+msgid "Number of rows in the Workspace Switcher."
+msgstr "Anzahl der Zeilen im Arbeitsflächen-Umschalter."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
+msgstr ""
+"Beim Anzeigen aller Arbeitsflächen legt dieser Wert die Anzahl der Zeilen "
+"(bei horizontaler Darstellung) oder Spalten (bei vertikaler Darstellung), in "
+"denen der Umschalter die Arbeitsflächen anzeigt."
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:5
+msgid "Whether to display the all workspaces in the Workspace Switcher."
+msgstr ""
+"Sollen alle Arbeitsflächen im Arbeitsflächen-Umschalter angezeigt werden?"
+
+#: applets/wncklet/workspace-switcher.schemas.in.h:6
+msgid ""
+"Whether to display the names of the workspaces in the Workspace Switcher."
+msgstr ""
+"Sollen die Namen der Arbeitsflächen im Arbeitsflächen-Umschalter angezeigt "
+"werden?"
+
+#: gnome-panel/applet.c:426
 msgid "???"
 msgstr "???"
 
@@ -1328,65 +1357,61 @@ msgstr "Schublade"
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Programm ausführen..."
 
-#: gnome-panel/foobar-widget.c:180
+#: gnome-panel/foobar-widget.c:172
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Anwendungen ausführen; wenn Sie den korrekten Befehl wissen"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3806
+#: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
 msgstr "Nach Dateien suchen..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3809
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
 msgstr "Dateien, Ordner und Dokumente auf dem Computer finden"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3825
 msgid "Screenshot..."
 msgstr "Bildschirmfoto..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3828
+#: gnome-panel/foobar-widget.c:209 gnome-panel/menu.c:3828
 msgid "Take a screenshot of your desktop"
 msgstr "Ein Bildschirmfoto Ihres Desktops aufnehmen"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3614
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3614
 msgid "Lock Screen"
 msgstr "Bildschirm sperren"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:225
 msgid "Protect your computer from unauthorized use"
 msgstr "Schützen Sie Ihren Computer vor unberechtigter Benutzung"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3196
+#: gnome-panel/foobar-widget.c:234 gnome-panel/menu.c:3196
 #: gnome-panel/menu.c:3626
 msgid "Log Out"
 msgstr "Abmelden"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:238
 msgid "Quit from the GNOME desktop"
 msgstr "Den GNOME-Desktop beenden"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:247
 msgid "Actions"
 msgstr "Aktionen"
 
-#: gnome-panel/foobar-widget.c:477
-msgid "No windows open"
-msgstr "Keine Fenster geöffnet"
-
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2956
+#: gnome-panel/foobar-widget.c:333 gnome-panel/menu.c:2956
 msgid "Menu Panel"
 msgstr "Menüpanel"
 
-#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/foobar-widget.c:333
 msgid "GNOME Menu Panel"
 msgstr "GNOME-Menüpanel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3094
+#: gnome-panel/foobar-widget.c:353 gnome-panel/menu.c:3094
 #: gnome-panel/menu.c:3099 gnome-panel/menu.c:3765
 msgid "Applications"
 msgstr "Anwendungen"

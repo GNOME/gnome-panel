@@ -14,14 +14,10 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "foobar-widget.h"
+
 #include <libgnome/libgnome.h>
 #include <gdk/gdkkeysyms.h>
-
-/* Yes, yes I know, now bugger off ... */
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-
-#include "foobar-widget.h"
 
 #include "menu.h"
 #include "menu-util.h"
@@ -40,7 +36,6 @@
 #include "panel-action-button.h"
 #include "panel-recent.h"
 
-#define ICON_SIZE 20
 #define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
 
 extern GlobalConfig global_config;
@@ -61,9 +56,6 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_widget_popup_panel_menu (FoobarWidget *foobar);
-
-static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
-static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
 
@@ -282,15 +274,12 @@ foobar_widget_realize (GtkWidget *w)
 	foobar_widget_update_winhints (FOOBAR_WIDGET (w));
 	xstuff_set_no_group_and_no_input (w->window);
 
-	setup_task_menu (FOOBAR_WIDGET (w));
-
 	xstuff_set_wmspec_strut (w->window,
 				 0 /* left */,
 				 0 /* right */,
 				 w->allocation.height /* top */,
 				 0 /* bottom */);
 }
-
 
 static void
 programs_menu_to_display (GtkWidget    *menu,
@@ -307,376 +296,11 @@ programs_menu_to_display (GtkWidget    *menu,
 }
 
 static void
-set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
-{
-	foo->task_menu = gtk_menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
-	/*g_message ("setting...");*/
-	g_object_set_data (G_OBJECT (foo->task_menu),
-			   "menu_panel", foo->panel);
-	g_signal_connect (G_OBJECT (foo->task_menu), "show",
-			  G_CALLBACK (panel_make_sure_menu_within_screen),
-			  NULL);
-	g_signal_connect (G_OBJECT (foo->task_menu), "show",
-			  G_CALLBACK (our_gtk_menu_position),
-			  NULL);
-}
-
-static void
-focus_window (GtkWidget *w, WnckWindow *window)
-{
-	WnckWorkspace* space;
-
-	/* Make sure that the current workspace is the same as the app'
-	 * Same behaviour as GNOME 1.4 */
-	space = wnck_window_get_workspace (window);
-	wnck_workspace_activate (space);
-
-	if (wnck_window_is_minimized (window)) 
-		wnck_window_unminimize (window);
-
-	wnck_window_activate (window);
-}
-
-/* No need to unref, in fact do NOT unref the return */
-static GdkPixbuf *
-get_default_image (void)
-{
-	static GdkPixbuf *pixbuf = NULL;
-	static gboolean looked   = FALSE;
-
-	if ( ! looked) {
-		pixbuf = panel_make_menu_icon ("gnome-tasklist.png",
-					       /* evil fallback huh? */
-					       "gnome-gmenu.png",
-					       20 /* size */,
-					       NULL /* long_operation */);
-
-		looked = TRUE;
-	}
-
-	return pixbuf;
-}
-
-static void
-add_window (WnckWindow *window, FoobarWidget *foo)
-{
-	WnckScreen    *screen;
-	WnckWorkspace *wspace;
-	GtkWidget     *item, *label;
-	GtkWidget     *image = NULL;
-	GdkPixbuf     *pb;
-	const char    *name;
-	char          *title = NULL;
-	int            slen;
-
-	g_assert (foo->windows != NULL);
-
-	screen = wnck_screen_get (foo->screen);
-	wspace = wnck_screen_get_active_workspace (screen);
-
-	if (wnck_window_is_skip_tasklist (window))
-		return;
-
-	name = wnck_window_get_name (window);
-
-	if (name != NULL) {
-		slen = strlen (name);
-		if (slen > 443)
-			title = g_strdup_printf ("%.420s...%s", name, name + slen - 20);
-		else
-			title = g_strdup (name);
-	} else {
-		/* Translators: Task with no name, should not really happen, so
-		 * this should signal that the panel is confused by this task
-		 * (thus question marks) */
-		title = g_strdup (_("???"));
-	}
-
-	if (wnck_window_is_minimized (window)) {
-		char *tmp = title;
-		title = g_strdup_printf ("[%s]", title);
-		g_free (tmp);
-	}
-	
-	item = gtk_image_menu_item_new ();
-	pb = wnck_window_get_mini_icon (window);
-	if (pb == NULL)
-		pb = get_default_image ();
-	if (pb != NULL) {
-		double pix_x, pix_y;
-		pix_x = gdk_pixbuf_get_width (pb);
-		pix_y = gdk_pixbuf_get_height (pb);
-		if (pix_x > ICON_SIZE || pix_y > ICON_SIZE) {
-			double greatest;
-			GdkPixbuf *scaled;
-
-			greatest = pix_x > pix_y ? pix_x : pix_y;
-			scaled = gdk_pixbuf_scale_simple (pb,
-							  (ICON_SIZE / greatest) * pix_x,
-							  (ICON_SIZE / greatest) * pix_y,
-							  GDK_INTERP_BILINEAR);
-			image = gtk_image_new_from_pixbuf (scaled);
-			g_object_unref (G_OBJECT (scaled));
-		} else {
-			image = gtk_image_new_from_pixbuf (pb);
-		}
-		gtk_widget_show (image);
-		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
-					       GTK_WIDGET (image));
-	}
-
-	label = gtk_label_new (title);
-	g_free (title);
-
-	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	gtk_container_add (GTK_CONTAINER (item), label);
-	g_hash_table_insert (foo->windows, window, item);
-	g_signal_connect (G_OBJECT (item), "activate", 
-			  G_CALLBACK (focus_window),
-			  window);
-	gtk_widget_show_all (item);
-	
-	if (wspace == wnck_window_get_workspace (window)) {
-		gtk_menu_shell_prepend (GTK_MENU_SHELL (foo->task_menu), item);
-	} else {
-		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
-	}
-}
-
-static void
-create_task_menu (GtkWidget *w, gpointer data)
-{
-	FoobarWidget *foo = FOOBAR_WIDGET (data);
-	GtkWidget    *separator;
-	WnckScreen   *screen;
-	GList        *windows;
-	GList        *list;
-
-	screen  = wnck_screen_get (foo->screen);
-	windows = wnck_screen_get_windows (screen);
-
-	foo->windows = g_hash_table_new (g_direct_hash, g_direct_equal);
-
-	separator = add_menu_separator (foo->task_menu);
-
-	g_list_foreach (windows, (GFunc) add_window, foo);
-
-	list = g_list_last (GTK_MENU_SHELL (foo->task_menu)->children);
-
-	if (list != NULL &&
-	    separator == list->data) {
-		/* if the separator is the last item wipe it.
-		 * We leave it as the first though */
-		gtk_widget_destroy (separator);
-	}
-
-	list = g_list_last (GTK_MENU_SHELL (foo->task_menu)->children);
-	if (list == NULL) {
-		GtkWidget *item;
-		item = gtk_image_menu_item_new_with_label (_("No windows open"));
-		gtk_widget_set_sensitive (item, FALSE);
-		gtk_widget_show_all (item);
-	
-		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
-	}
-
-	if (GTK_WIDGET_VISIBLE (foo->task_menu))
-		our_gtk_menu_position (GTK_MENU (foo->task_menu));
-}
-
-static void
-destroy_task_menu (GtkWidget *w, gpointer data)
-{
-	FoobarWidget *foo = FOOBAR_WIDGET (data);
-	/*g_message ("removing...");*/
-	gtk_menu_item_remove_submenu (GTK_MENU_ITEM (w));
-	g_hash_table_destroy (foo->windows);
-	foo->windows = NULL;
-	set_the_task_submenu (foo, w);
-}
-
-static void
-set_das_pixmap (FoobarWidget *foo,
-		WnckWindow   *window)
-{
-	GdkPixbuf *pixbuf = NULL;
-
-	if (!GTK_WIDGET_REALIZED (foo))
-		return;
-
-	foo->icon_window = window;
-
-	if (window)
-		pixbuf = wnck_window_get_mini_icon (window);
-
-	if (!pixbuf)
-		pixbuf = get_default_image ();
-
-	if (pixbuf) {
-		double pix_x, pix_y;
-
-		pix_x = gdk_pixbuf_get_width (pixbuf);
-		pix_y = gdk_pixbuf_get_height (pixbuf);
-
-		if (pix_x <= ICON_SIZE && pix_y <= ICON_SIZE) 
-			gtk_image_set_from_pixbuf (
-				GTK_IMAGE (foo->task_image), pixbuf);
-		else {
-			GdkPixbuf *scaled;
-			double     greatest;
-
-			greatest = pix_x > pix_y ? pix_x : pix_y;
-			scaled = gdk_pixbuf_scale_simple (
-					pixbuf,
-					(ICON_SIZE / greatest) * pix_x,
-					(ICON_SIZE / greatest) * pix_y,
-					GDK_INTERP_BILINEAR);
-			gtk_image_set_from_pixbuf (
-				GTK_IMAGE (foo->task_image), scaled);
-			g_object_unref (scaled);
-		}
-	}
-}
-
-static void
-append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
-{
-	foo->task_item = gtk_menu_item_new ();
-	gtk_widget_show (foo->task_item);
-
-	foo->task_bin = gtk_alignment_new (0.3, 0.5, 0.0, 0.0);
-	gtk_widget_set_size_request (foo->task_bin, 25, 20);
-	gtk_widget_show (foo->task_bin);
-	gtk_container_add (GTK_CONTAINER (foo->task_item), foo->task_bin);
-
-	foo->task_image = gtk_image_new ();
-	gtk_widget_show (foo->task_image);
-	gtk_container_add (GTK_CONTAINER (foo->task_bin), foo->task_image);
-
-	gtk_menu_shell_append (menu_bar, foo->task_item);
-
-	panel_stretch_events_to_toplevel (
-		foo->task_item, PANEL_STRETCH_TOP | PANEL_STRETCH_RIGHT);
-}
-
-static void
-icon_changed (WnckWindow *window, FoobarWidget *foo)
-{
-	if (foo->icon_window == window)
-		set_das_pixmap (foo, window);
-}
-
-static void
-bind_window_changes (WnckWindow *window, FoobarWidget *foo)
-{
-	panel_signal_connect_while_alive (G_OBJECT (window), "icon_changed",
-					  G_CALLBACK (icon_changed),
-					  foo,
-					  G_OBJECT (foo));
-	/* XXX: do we care about names changing? */
-}
-
-static void
-active_window_changed (WnckScreen   *screen,
-		       FoobarWidget *foo)
-{
-	WnckWindow *window = wnck_screen_get_active_window (screen);
-
-	/* icon might have changed */
-	if (foo->icon_window != window)
-		set_das_pixmap (foo, window);
-}
-
-static void
-window_opened (WnckScreen   *screen,
-	       WnckWindow   *window,
-	       FoobarWidget *foo)
-{
-	if (foo->windows != NULL)
-		add_window (window, foo);
-
-	bind_window_changes (window, foo);
-}
-
-static void
-window_closed (WnckScreen   *screen,
-	       WnckWindow   *window,
-	       FoobarWidget *foo)
-{
-	if (window == foo->icon_window)
-		set_das_pixmap (foo, NULL);
-
-	if (foo->windows != NULL) {
-		GtkWidget *item;
-		item = g_hash_table_lookup (foo->windows, window);
-		if (item != NULL) {
-			g_hash_table_remove (foo->windows, window);
-			gtk_widget_hide (item);
-			gtk_menu_reposition (GTK_MENU (item->parent));
-		} else {
-			g_warning ("Could not find item for task '%s'",
-				   sure_string (wnck_window_get_name (window)));
-		}
-	}
-}
-
-static void
-setup_task_menu (FoobarWidget *foo)
-{
-	WnckScreen *screen;
-	GList      *windows, *l;
-
-	g_assert (foo->task_item != NULL);
-
-	g_signal_connect (G_OBJECT (foo->task_item), "select",
-			  G_CALLBACK (create_task_menu), foo);
-	g_signal_connect (G_OBJECT (foo->task_item), "deselect",
-			  G_CALLBACK (destroy_task_menu), foo);
-
-	set_the_task_submenu (foo, foo->task_item);
-
-	screen = wnck_screen_get (foo->screen);
-
-	/* setup the pixmap to the focused task */
-	windows = wnck_screen_get_windows (screen);
-	for (l = windows; l; l = l->next)
-		if (wnck_window_is_active (l->data)) {
-			set_das_pixmap  (foo, l->data);
-			break;
-		}
-
-	/* if no focused task found, then just set it to default */
-	if (!l)
-		set_das_pixmap  (foo, NULL);
-
-	g_list_foreach (windows, (GFunc) bind_window_changes, foo);
-
-	panel_signal_connect_while_alive (G_OBJECT (screen),
-					  "active_window_changed",
-					  G_CALLBACK (active_window_changed),
-					  foo,
-					  G_OBJECT (foo));
-	panel_signal_connect_while_alive (G_OBJECT (screen),
-					  "window_opened",
-					  G_CALLBACK (window_opened),
-					  foo,
-					  G_OBJECT (foo));
-	panel_signal_connect_while_alive (G_OBJECT (screen),
-					  "window_closed",
-					  G_CALLBACK (window_closed),
-					  foo,
-					  G_OBJECT (foo));
-
-}
-
-static void
 foobar_widget_instance_init (FoobarWidget *foo)
 {
 	GtkWindow *window;
 	GtkWidget *bufmap;
 	GtkWidget *menu_bar;
-	GtkWidget *task_bar;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *align;
@@ -687,13 +311,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	foo->screen  = 0;
 	foo->monitor = 0;
-
-	foo->windows    = NULL;
-	foo->task_item  = NULL;
-	foo->task_menu  = NULL;
-	foo->task_image = NULL;
-	foo->task_bin   = NULL;
-	foo->icon_window = NULL;
 
 	foo->compliant_wm = xstuff_is_compliant_wm ();
 	if(foo->compliant_wm)
@@ -768,12 +385,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 		gtk_box_pack_end (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
 	}
 
-	task_bar = gtk_menu_bar_new ();
-	gtk_widget_set_name (task_bar, "panel-foobar-menubar");
-
-	append_task_menu (foo, GTK_MENU_SHELL (task_bar));
-
-	gtk_box_pack_end (GTK_BOX (foo->hbox), task_bar, FALSE, FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (foo), foo->ebox);
 
 	gtk_widget_show_all (foo->ebox);
@@ -803,10 +414,6 @@ foobar_widget_destroy (GtkObject *o)
 	foobars = g_list_remove (foobars, foo);
 
 	g_slist_foreach (panel_list, queue_panel_resize, NULL);
-
-	if (foo->windows != NULL)
-		g_hash_table_destroy (foo->windows);
-	foo->windows = NULL;
 
 	if (GTK_OBJECT_CLASS (foobar_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (foobar_widget_parent_class)->destroy (o);
@@ -1083,4 +690,3 @@ foobar_widget_popup_panel_menu (FoobarWidget *foobar)
 
 	return retval;
 }
-
