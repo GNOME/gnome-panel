@@ -146,3 +146,6 @@ appletsConf.sh: appletsConf.sh.in Makefile
 
 panelgnorbadir  = $(sysconfdir)/CORBA/servers
 panelgnorba_DATA = panel.gnorba
+
+soundlistdir = $(sysconfdir)/sound/events
+soundlist_DATA = panel.soundlist

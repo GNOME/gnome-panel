@@ -533,10 +533,13 @@ static void
 snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 {
 	int width, height;
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 
 	if ((snapped->state == SNAPPED_MOVING) ||
 	    (snapped->state == SNAPPED_SHOWN))
 		return;
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	snapped->state = SNAPPED_MOVING;
 
@@ -574,10 +577,12 @@ static void
 snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 {
 	int width, height;
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 
 	if((snapped->state != SNAPPED_SHOWN))
 		return;
 	
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	if (snapped->leave_notify_timer_tag != 0) {
 		gtk_timeout_remove (snapped->leave_notify_timer_tag);
