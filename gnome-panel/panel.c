@@ -260,8 +260,9 @@ panel_session_save (GnomeClient *client,
 		/*don't catch these either*/
 		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
 		    i++,info++)
-			gtk_signal_disconnect(GTK_OBJECT(info->widget),
-					      info->destroy_callback);
+		    	if(info->widget)
+				gtk_signal_disconnect(GTK_OBJECT(info->widget),
+						      info->destroy_callback);
 
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
@@ -318,7 +319,7 @@ panel_clean_applet(gint applet_id)
 	g_return_if_fail(info != NULL);
 
 	/*fixes reentrancy problem with this routine*/
-	if(info->type== APPLET_EMPTY)
+	if(info->type == APPLET_EMPTY)
 		return;
 
 	type = info->type;

@@ -837,8 +837,17 @@ sigchld_handler(int type)
 	for(list=children;list!=NULL;list=g_list_next(list)) {
 		AppletChild *child=list->data;
 		if(child->pid == pid) {
+			AppletInfo *info = get_applet_info(child->applet_id);
+			if(!info) return;
+			if(info->type!=APPLET_EXTERN_RESERVED &&
+			   info->type!=APPLET_EXTERN_PENDING)
+			   	info->widget = NULL;
+
 			panel_clean_applet(child->applet_id);
-			break;
+
+			g_free(child);
+			children=g_list_remove_link(children,list);
+			return;
 		}
 	}
 }
