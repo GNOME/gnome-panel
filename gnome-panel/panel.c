@@ -20,6 +20,9 @@
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
 
+/*FIXME: BAD HACK!!*/
+#include <gdk/gdkprivate.h>
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -359,6 +362,12 @@ panel_clean_applet(gint applet_id)
 
 		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
+
+		/*FIXME: VERY BAD HACK*/
+		if(GTK_IS_SOCKET(info->applet_widget))
+			((GdkWindowPrivate *)
+				GTK_SOCKET(info->applet_widget)->
+					plug_window)->colormap = NULL;
 
 		if(panel)
 			panel_widget_remove(panel,w);
