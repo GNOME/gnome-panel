@@ -3,24 +3,20 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f
 
-CFLAGS += $(ORBIT_CFLAGS)
-
 if ORBIT_INSTALLED
-CXX = $(CC)
+# nothing
 else
 CXX = mico-c++
-endif
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
 ## on Linux boxes, the compilation will fail with the default
 ## CXXFLAGS.
 CXXFLAGS =
-
-test:
-	echo $(CXXCOMPILE)
+panel_LINK = $(CXXLINK)
+endif
 
 INCLUDES = -I. -I$(srcdir) 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-I$(includedir) $(GNOME_INCLUDEDIR)
+	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
 bin_PROGRAMS = panel #launcher_applet
 
@@ -29,15 +25,29 @@ libpanel_appletincludedir = $(includedir)
 lib_LTLIBRARIES = libpanel_applet.la
 
 if ORBIT_INSTALLED
-CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
-else
-CORBA_SRCLIST = gnome-panel.cc gnome-panel.h
-endif
 
-if ORBIT_INSTALLED
-APPLET_LIB=orbit-applet-lib.c
+CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
+
+$(CORBA_SRCLIST): gnome-panel.idl
+	orbit-idl $(srcdir)/gnome-panel.idl
+
+APPLET_LIB = orbit-applet-lib.c
+
+PANEL_ORB_SRCLIST= orbit-glue.c mico-glue.h
+
 else
+
+CORBA_SRCLIST = gnome-panel.cc gnome-panel.h
+
+gnome-panel.cc gnome-panel.h: gnome-panel.idl
+## `idl' lamely fails to strip the path part of the file
+## name when computing the name of the output file, so we prod it a
+## little.
+	idl --name gnome-panel $(srcdir)/gnome-panel.idl
+
 APPLET_LIB=applet-lib.cc mico-parse.cc mico-parse.h
+
+PANEL_ORB_SRCLIST= mico-glue.cc mico-glue.h mico-parse.cc mico-parse.h
 endif
 
 libpanel_applet_la_SOURCES = \
@@ -46,37 +56,15 @@ libpanel_applet_la_SOURCES = \
 	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SRCLIST)
-#else
 
 libpanel_appletinclude_HEADERS = \
 	applet-lib.h \
 	applet-widget.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
+libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
-
-if ORBIT_INSTALLED
-$(CORBA_SRCLIST): gnome-panel.idl
-	orbit-idl $(srcdir)/gnome-panel.idl
-else
-gnome-panel.cc gnome-panel.h: gnome-panel.idl
-## `idl' lamely fails to strip the path part of the file
-## name when computing the name of the output file, so we prod it a
-## little.
-	idl --name gnome-panel $(srcdir)/gnome-panel.idl
-endif
-
-if ORBIT_INSTALLED
-PANEL_ORB_SRCLIST= orbit-glue.c \
-	mico-glue.h
-else
-PANEL_ORB_SRCLIST= mico-glue.cc \
-	mico-glue.h		\
-	mico-parse.cc		\
-	mico-parse.h
-endif
 
 panel_SOURCES = 		\
 	drawer.c  		\
@@ -116,13 +104,6 @@ panel_SOURCES = 		\
 	logout.h		\
 	$(CORBA_SRCLIST)
 
-if ORBIT_INSTALLED
-ORB_LIBS=$(ORBIT_LIBS)
-MICO_LIBS=$(ORBIT_LIBS)
-else
-ORB_LIBS=$(MICO_LIBS)
-endif
-
 panel_LDADD = $(GNOME_LIBDIR) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
@@ -154,20 +135,11 @@ confexec_DATA = appletsConf.sh
 #
 # Create the appletsConf.sh file from the .sh.in file
 #
-if ORBIT_INSTALLED
 appletsConf.sh: appletsConf.sh.in Makefile
 	sed -e 's,\@GNOME_LIBDIR\@,$(GNOME_LIBDIR),g' \
 	    -e 's,\@GNOMEUI_LIBS\@,$(GNOMEUI_LIBS),g' \
 	    -e 's,\@GNOME_INCLUDEDIR\@,$(GNOME_INCLUDEDIR),g' \
-	    -e 's,\@ORBIT_LIBS\@,$(ORBIT_LIBS),g' \
+	    -e 's,\@ORB_LIBS\@,$(ORB_LIBS),g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
-else
-appletsConf.sh: appletsConf.sh.in Makefile
-	sed -e 's,\@GNOME_LIBDIR\@,$(GNOME_LIBDIR),g' \
-	    -e 's,\@GNOMEUI_LIBS\@,$(GNOMEUI_LIBS),g' \
-	    -e 's,\@GNOME_INCLUDEDIR\@,$(GNOME_INCLUDEDIR),g' \
-	    -e 's,\@MICO_LIBS\@,$(MICO_LIBS),g' \
-	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
-	  && mv appletsConf.tmp appletsConf.sh
-endif
+

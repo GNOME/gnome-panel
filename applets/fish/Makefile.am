@@ -16,7 +16,7 @@ bin_PROGRAMS = fish_applet
 fish_applet_SOURCES = fish.c
 
 fish_applet_LDADD = ../../panel/libpanel_applet.la \
-		     $(GNOME_LIBDIR) $(MICO_LIBS) \
+		     $(GNOME_LIBDIR) $(ORB_LIBS) \
 		     $(GNOMEUI_LIBS) $(INTLLIBS) 
 
 fish_applet_LINK = $(CXXLINK)
