@@ -1,3 +1,9 @@
+Thu May 21 03:45:42 1998  George Lebl  <jirka@5z.com>
+
+	* clock/clock.c: clock is now a multi applet, meaning if it's
+	  already started, adding a clock won't run anotehr process,
+	  but just contact the running clock for a new copy
+
 Sun May 17 12:44:46 1998  Havoc Pennington  <hp@pobox.com>
 
 	* Imported modemlights applet, and added it to the Makefile.am
