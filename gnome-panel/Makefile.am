@@ -28,6 +28,9 @@ if ORBIT_INSTALLED
 
 CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
 
+# try to make these get cleaned properly
+CLEANFILES += $(CORBA_SRCLIST)
+
 $(CORBA_SRCLIST): gnome-panel.idl
 	orbit-idl $(srcdir)/gnome-panel.idl
 
