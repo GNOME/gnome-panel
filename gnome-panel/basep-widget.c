@@ -303,12 +303,12 @@ basep_widget_realize (GtkWidget *w)
 	basep_widget_update_winhints (basep);
 	xstuff_set_no_group_and_no_input (w->window);
 
-	set_frame_colors (PANEL_WIDGET (basep->panel),
-			  basep->frame,
-			  basep->hidebutton_n,
-			  basep->hidebutton_e,
-			  basep->hidebutton_w,
-			  basep->hidebutton_s);
+	panel_set_frame_colors (PANEL_WIDGET (basep->panel),
+				basep->frame,
+				basep->hidebutton_n,
+				basep->hidebutton_e,
+				basep->hidebutton_w,
+				basep->hidebutton_s);
 
 	if (basep->strut_left != 0 ||
 	    basep->strut_right != 0 ||
@@ -1413,12 +1413,12 @@ basep_back_change (PanelWidget *panel,
 {
 	basep_update_frame (basep);
 
-	set_frame_colors (panel,
-			  basep->frame,
-			  basep->hidebutton_n,
-			  basep->hidebutton_e,
-			  basep->hidebutton_w,
-			  basep->hidebutton_s);
+	panel_set_frame_colors (panel,
+				basep->frame,
+				basep->hidebutton_n,
+				basep->hidebutton_e,
+				basep->hidebutton_w,
+				basep->hidebutton_s);
 }
 
 static void
@@ -1439,12 +1439,12 @@ basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
 	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->style_set)
 		GTK_WIDGET_CLASS (basep_widget_parent_class)->style_set (widget, previous_style);
 
-	set_frame_colors (panel,
-			  basep->frame,
-			  basep->hidebutton_n,
-			  basep->hidebutton_e,
-			  basep->hidebutton_w,
-			  basep->hidebutton_s);
+	panel_set_frame_colors (panel,
+				basep->frame,
+				basep->hidebutton_n,
+				basep->hidebutton_e,
+				basep->hidebutton_w,
+				basep->hidebutton_s);
 }
 
 static void

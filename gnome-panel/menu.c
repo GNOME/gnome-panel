@@ -341,7 +341,7 @@ activate_app_def (GtkWidget *widget, const char *item_loc)
 					   0 /* flags */,
 					   &error);
 		if (error != NULL) {
-			panel_error_dialog ("cant_load_entry",
+			panel_error_dialog ("cant_launch_entry",
 					    _("<b>Can't launch entry</b>\n\n"
 					      "Details: %s"), error->message);
 			g_clear_error (&error);
@@ -3877,7 +3877,7 @@ drag_data_get_cb (GtkWidget          *widget,
 {
 	char *foo;
 
-	foo = g_strdup_printf ("MENU:%d", find_applet (widget));
+	foo = g_strdup_printf ("MENU:%d", panel_find_applet (widget));
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)foo,

@@ -1017,7 +1017,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 
 	switch (applet_info->type) {
 	case APPLET_BONOBO:
-		panel_applet_frame_save_to_gconf (PANEL_APPLET_FRAME (applet_info->data),
+		panel_applet_frame_save_to_gconf (PANEL_APPLET_FRAME (applet_info->widget),
 						  applet_info->gconf_key);
 		break;
 	case APPLET_DRAWER:

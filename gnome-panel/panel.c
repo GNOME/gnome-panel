@@ -213,7 +213,7 @@ orientation_change (AppletInfo  *info,
 
 	switch (info->type) {
 	case APPLET_BONOBO:
-		panel_applet_frame_change_orient ((PanelAppletFrame *) info->data,
+		panel_applet_frame_change_orient (PANEL_APPLET_FRAME (info->widget),
 						  get_applet_orient (panel));
 		break;
 	case APPLET_MENU:
@@ -308,7 +308,7 @@ size_change (AppletInfo  *info,
 	switch (info->type) {
 	case APPLET_BONOBO:
 		panel_applet_frame_change_size (
-			PANEL_APPLET_FRAME (info->data), size);
+			PANEL_APPLET_FRAME (info->widget), size);
 		break;
 	case APPLET_STATUS: {
 		StatusApplet *status = info->data;
@@ -350,7 +350,7 @@ back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
 	if (info->type == APPLET_BONOBO) {
-		PanelAppletFrame *frame = PANEL_APPLET_FRAME (info->data);
+		PanelAppletFrame *frame = PANEL_APPLET_FRAME (info->widget);
 
 		switch (panel->back_type) {
 		case PANEL_BACK_PIXMAP:

@@ -63,29 +63,29 @@ socket_realized (GtkWidget *w, gpointer data)
 static void
 swallow_launch (Swallow *swallow)
 {
-	if (swallow->path && swallow->path [0] != '\0') {
-		char *p = strrchr (swallow->path, '.');
+	if ( ! string_empty (swallow->path)) {
 		GnomeDesktopItem *item;
 
 		/*only if such a file exists and ends in a .desktop, should
 		  we try to launch it as such*/
-		if(p != NULL &&
-		   (strcmp (p, ".desktop") == 0 ||
-		    strcmp (p, ".kdelnk") == 0) &&
-		   g_file_test (swallow->path, G_FILE_TEST_EXISTS) &&
-		   (item = gnome_desktop_item_new_from_file (swallow->path, 0, NULL)) != NULL) {
-			char *curdir = g_get_current_dir ();
-			chdir (g_get_home_dir ());
+		if (is_ext2 (swallow->path, ".desktop", ".kdelnk") &&
+		    g_file_test (swallow->path, G_FILE_TEST_EXISTS) &&
+		    (item = gnome_desktop_item_new_from_file (swallow->path, 0, NULL)) != NULL) {
+			GError *error = NULL;
 
 			gnome_desktop_item_launch (item,
 						   NULL /* file_list */,
 						   0 /* flags */,
-						   NULL /* error */);
-			/* FIXME: handle_errors */
+						   &error);
+
 			gnome_desktop_item_unref (item);
 
-			chdir (curdir);
-			g_free (curdir);
+			if (error != NULL) {
+				panel_error_dialog ("cant_launch_entry",
+						    _("<b>Can't launch entry</b>\n\n"
+						      "Details: %s"), error->message);
+				g_clear_error (&error);
+			}
 		} else {
 			gnome_execute_shell (g_get_home_dir (), swallow->path);
 		}

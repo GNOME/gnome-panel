@@ -10,9 +10,10 @@ G_BEGIN_DECLS
 
 typedef void (*UpdateFunction) (gpointer);
 
-/* return TRUE if string is NULL or the first character is '\0' */
-gboolean	string_empty		(const char *string);
-#define		sure_string(s)		((s)!=NULL?(s):"")
+/* TRUE if string is NULL or the first character is '\0' */
+#define		string_empty(s)		((s)==NULL||((char *)(s))[0]=='\0')
+
+#define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
 GtkWidget *	create_text_entry	(GtkWidget *table,
 					 const char *history_id,
@@ -47,19 +48,12 @@ GList *		panel_g_list_resort_item(GList *list,
 void		panel_g_list_deep_free	(GList *list);
 void		panel_g_slist_deep_free	(GSList *list);
 
-void		set_frame_colors	(PanelWidget *panel,
+void		panel_set_frame_colors	(PanelWidget *panel,
 					 GtkWidget *frame,
 					 GtkWidget *but1,
 					 GtkWidget *but2,
 					 GtkWidget *but3,
 					 GtkWidget *but4);
-
-/* recursively remove directory, if just_clean is true, then
-   the directory itself is also removed, otherwise just it's
-   contents, it does not give any error output and will fail
-   silently, but it will remove as much as possible */
-void		remove_directory	(const char *dirname,
-					 gboolean just_clean);
 
 gboolean	convert_string_to_keysym_state (const char *string,
 						guint *keysym,
@@ -80,7 +74,7 @@ gboolean	is_ext2			(const char *file,
 					 const char *ext1,
 					 const char *ext2);
 
-int		find_applet		(GtkWidget *widget);
+int		panel_find_applet	(GtkWidget *widget);
 
 int		get_requisition_width	(GtkWidget *widget);
 int		get_requisition_height	(GtkWidget *widget);

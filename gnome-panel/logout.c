@@ -53,7 +53,7 @@ drag_data_get_cb (GtkWidget          *widget,
 
 	g_return_if_fail (type != NULL);
 
-	foo = g_strdup_printf ("%s:%d", type, find_applet (widget));
+	foo = g_strdup_printf ("%s:%d", type, panel_find_applet (widget));
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)foo,

@@ -1,3 +1,15 @@
+Thu Jan 17 01:43:20 2002  George Lebl <jirka@5z.com>
+
+	* panel-util.[ch], applet.c, basep-widget.c, drawer.c, logout.c,
+	  menu.c: Some renaming of functions and minor cleanup of cruft.
+
+	* panel-applet-frame.c, applet.c, panel.c:  Don't use the 'data'
+	  field to store the frame, that's what the 'widget' item is for
+
+	* xstuff.c, swallow.c: port the status and swallow checking to
+	  libwnck and some swallowing cleanup including a ditem launch
+	  error dialog
+
 Wed Jan 16 18:14:43 2002  George Lebl <jirka@5z.com>
 
 	* panel-util.[ch], applet.c , launcher.c, menu.c: Reenable the

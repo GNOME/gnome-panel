@@ -550,9 +550,9 @@ set_color_back (GtkWidget *widget, PanelWidget *panel)
 }
 
 void
-set_frame_colors (PanelWidget *panel, GtkWidget *frame,
-		  GtkWidget *but1, GtkWidget *but2,
-		  GtkWidget *but3, GtkWidget *but4)
+panel_set_frame_colors (PanelWidget *panel, GtkWidget *frame,
+			GtkWidget *but1, GtkWidget *but2,
+			GtkWidget *but3, GtkWidget *but4)
 {
 	if (panel->back_type == PANEL_BACK_COLOR) {
 		set_color_back (frame, panel);
@@ -567,36 +567,6 @@ set_frame_colors (PanelWidget *panel, GtkWidget *frame,
 		gtk_widget_set_style (but3, NULL);
 		gtk_widget_set_style (but4, NULL);
 	}
-}
-
-
-void
-remove_directory(const char *dirname, gboolean just_clean)
-{
-	DIR *dir;
-	struct dirent *dent;
-	char *oldcwd;
-
-	dir = opendir (dirname);
-	if(!dir) return;
-	oldcwd = g_get_current_dir();
-
-	chdir(dirname);
-	while((dent = readdir (dir)) != NULL) {
-		if(strcmp(dent->d_name,".")==0 ||
-		   strcmp(dent->d_name,"..")==0)
-			continue;
-		if(g_file_test(dent->d_name,G_FILE_TEST_IS_DIR))
-			remove_directory(dent->d_name, FALSE);
-		else
-			unlink(dent->d_name);
-	}
-	closedir(dir);
-	chdir(oldcwd);
-
-	if(!just_clean)
-		rmdir(dirname);
-	g_free(oldcwd);
 }
 
 gboolean
@@ -711,16 +681,6 @@ panel_info_dialog (const char *class,
 }
 
 gboolean
-string_empty (const char *string)
-{
-	if (string == NULL ||
-	    string[0] == '\0')
-		return TRUE;
-	else
-		return FALSE;
-}
-
-gboolean
 is_ext (const char *file, const char *ext)
 {
 	const char *p;
@@ -758,7 +718,7 @@ is_ext2 (const char *file,
 }
 
 int
-find_applet (GtkWidget *widget)
+panel_find_applet (GtkWidget *widget)
 {
 	int i;
 	GSList *li;

@@ -174,8 +174,8 @@ panel_applet_frame_load (const gchar *iid,
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, 
-				      frame,     /* FIXME: ref? */
-				      NULL,      /* FIXME: data_destroy */
+				      NULL /* data */,
+				      NULL /* data_destroy */,
 				      panel,
 				      pos,
 				      FALSE,

@@ -296,7 +296,7 @@ drag_data_get_cb (GtkWidget          *widget,
 {
 	char *foo;
 
-	foo = g_strdup_printf ("DRAWER:%d", find_applet (widget));
+	foo = g_strdup_printf ("DRAWER:%d", panel_find_applet (widget));
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, (guchar *)foo,

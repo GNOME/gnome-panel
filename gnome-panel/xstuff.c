@@ -75,7 +75,6 @@ steal_statusspot(StatusSpot *ss, Window winid)
 					 protocol, TRUE);
 }
 
-#ifdef FIXME
 static void
 try_adding_status(guint32 winid)
 {
@@ -101,19 +100,24 @@ try_adding_status(guint32 winid)
 }
 
 static void
-try_checking_swallows (GwmhTask *task)
+try_checking_swallows (WnckWindow *window)
 {
+	gulong xid;
+	const char *name;
 	GList *li;
 
-	if (!task->name)
+	name = wnck_window_get_name (window);
+	xid = wnck_window_get_xid (window);
+
+	if (name == NULL)
 		return;
 
 	for (li = check_swallows; li; li = li->next) {	     
 		Swallow *swallow = li->data;
-		if (strstr (task->name, swallow->title) != NULL) {
-			swallow->wid = task->xwin;
-			gtk_socket_steal (GTK_SOCKET (swallow->socket),
-					  swallow->wid);
+		if (strstr (name, swallow->title) != NULL) {
+			swallow->wid = xid;
+			gtk_socket_add_id (GTK_SOCKET (swallow->socket),
+					   (GdkNativeWindow)xid);
 			check_swallows = 
 				g_list_remove (check_swallows, swallow);
 			break;
@@ -121,29 +125,36 @@ try_checking_swallows (GwmhTask *task)
 	}
 }
 
-#endif /* FIXME */
-
 void
 xstuff_go_through_client_list (void)
 {
-#ifdef FIXME
-	GList *li;
+	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
+	GList *windows, *li;
+
+	windows = g_list_copy (wnck_screen_get_windows (screen));
 
 	gdk_error_trap_push ();
+
+	/* FIXME: is this a possible race?  Can the WnckWindows disappear while
+	 * we're traversing them?  I think they can, fix this! */
+
 	/* just for status dock stuff for now */
-	for (li = gwmh_task_list_get (); li != NULL; li = li->next) {
-		GwmhTask *task = li->data;
+	for (li = windows; li != NULL; li = li->next) {
+		WnckWindow *window = li->data;
+		const char *name = wnck_window_get_name (window);
 		/* skip own windows */
-		if (task->name != NULL &&
-		    strcmp (task->name, "panel") == 0)
+		if (name != NULL &&
+		    strcmp (name, "panel") == 0)
 			continue;
 		if (check_swallows != NULL)
-			try_checking_swallows (task);
-		try_adding_status (task->xwin);
+			try_checking_swallows (window);
+		try_adding_status (wnck_window_get_xid (window));
 	}
+
 	gdk_flush();
 	gdk_error_trap_pop ();
-#endif
+
+	g_list_free (windows);
 }
 
 void
