@@ -116,12 +116,19 @@ ditem_properties_close (GtkWidget *dialog,
 
 	saving_error = g_object_get_data (G_OBJECT (dedit), "SavingError");
 
-	if (saving_error)
+	if (saving_error) {
+		char *msg;
+		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
+			_("Cannot save changes to launcher"),
+			_("Details"), saving_error);
+
 		panel_error_dialog (
 			gtk_window_get_screen (GTK_WINDOW (dialog)),
 			"cannot_save_entry",
-			_("<b>Cannot save changes to launcher</b>\n\n"
-			  "Details: %s"), saving_error);
+			msg);
+
+		g_free (msg);
+	}
 }
 
 static gboolean
@@ -488,12 +495,17 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 TRUE /* force */,
 				 &error);
 	if (error) {
+		char *msg;
+		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
+			_("Cannot save menu item to disk"),
+			_("Details"), error->message);
+
 		panel_error_dialog (
 			gtk_window_get_screen (GTK_WINDOW (d)),
 			"cannot_save_menu_item" /* class */,
-			_("<b>Cannot save menu item to disk</b>\n\n"
-			  "Details: %s"),
-			error->message);
+			msg);
+
+		g_free (msg);
 		g_clear_error (&error);
 	}
 

@@ -167,11 +167,17 @@ launch_cb (GtkWidget *widget,
 		panel_ditem_launch (
 			item, NULL, 0, launcher_get_screen (launcher), &error);
 		if (error) {
+			char *msg;
+			msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
+				_("Cannot launch icon"),
+				_("Details"), error->message);
+
 			panel_error_dialog (
 				launcher_get_screen (launcher),
 				"cannot_launch_icon",
-				_("<b>Cannot launch icon</b>\n\n"
-				"Details: %s"), error->message);
+				msg);
+
+			g_free (msg);
 			g_clear_error (&error);
 		}
 	}
@@ -1080,11 +1086,17 @@ launcher_show_help (Launcher  *launcher,
 				launcher->ditem, "X-GNOME-DocPath");
 	panel_show_gnome_kde_help (screen, docpath, &error);
 	if (error) {
+		char *msg;
+		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
+			_("Cannot display help document"),
+			_("Details"), error->message);
+
 		panel_error_dialog (
 			screen,
 			"cannot_show_gnome_kde_help",
-			_("<b>Cannot display help document</b>\n\nDetails: %s"),
-			error->message);
+			msg);
+
+		g_free (msg);
 		g_error_free (error);
 	}
 }

@@ -1,3 +1,19 @@
+2003-06-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Re-order message construction throughout the panel so
+	that Pango markup is not marked for translation. Patch
+	from Thomas Benson <tbenson@cs.utk.edu> in #113433.
+
+	* launcher.c: (launch_cb), (launcher_show_help):
+	* menu-ditem.c: (ditem_properties_close),
+	(really_add_new_menu_item):
+	* menu.c: (about_gnome_cb), (activate_app_def), (remove_menuitem),
+	(add_to_run_dialog), (show_help_on):
+	* panel-run-dialog.c: (panel_run_dialog_launch_command),
+	(panel_run_dialog_show_url):
+	* panel-util.c: (panel_show_help), (panel_lock_screen):
+	Don't translate pango markup.
+
 2003-06-06  Ray Strode  <halfline@hawaii.rr.com>
 
 	* panel-profile.c: 

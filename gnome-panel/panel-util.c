@@ -70,12 +70,17 @@ panel_show_help (GdkScreen  *screen,
 	GError *error = NULL;
 
 	if (!egg_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
+		char *msg;
+		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
+			_("Cannot display help document"),
+			_("Details"), error != NULL ? error->message : "");
+
 		panel_error_dialog (
 			screen,
 			"cannot_show_help",
-			_("<b>Cannot display help document</b>\n\n"
-			  "Details: %s"),
-			error != NULL ? error->message : "");
+			msg);
+
+		g_free (msg);
 		g_clear_error (&error);
 	}
 }
@@ -922,11 +927,18 @@ panel_lock_screen (GdkScreen *screen)
 	if (!screen)
 		screen = gdk_screen_get_default ();
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0)
+	if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0) {
+		char *msg;
+		msg = g_strdup_printf ("<b>%s</b>\n\n%s",
+			_("Cannot execute xscreensaver"),
+			_("Details: xscreensaver-command not found"));
+
 		panel_error_dialog (screen,
-				    "cannot_exec_xscreensaver",
-				    _("<b>Cannot execute xscreensaver</b>\n\n"
-				    "Details: xscreensaver-command not found"));
+			"cannot_exec_xscreensaver",
+			msg);
+
+		g_free (msg);
+	}
 }
 
 
