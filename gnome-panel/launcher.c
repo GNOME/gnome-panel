@@ -447,7 +447,6 @@ create_launcher (const char *location)
 
 	/* Icon will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
-					      -1,
 					      FALSE,
 					      PANEL_ORIENTATION_TOP);
 

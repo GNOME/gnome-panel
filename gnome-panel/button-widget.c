@@ -19,13 +19,12 @@
 #include "panel-globals.h"
 
 
+
 static GdkPixbuf *button_load_pixbuf (const char  *file,
-				      int          preffered_size,
 				      char       **error);
 
 enum {
 	PROP_0,
-	PROP_SIZE,
 	PROP_HAS_ARROW,
 	PROP_ORIENT,
 	PROP_ICON_NAME,
@@ -267,8 +266,7 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button,
 		else {
 			char *error = NULL;
 
-			button->pixbuf = button_load_pixbuf (
-						button->filename, button->size, &error);
+			button->pixbuf = button_load_pixbuf (button->filename, &error);
 			if (error) {
 				panel_error_dialog (gdk_screen_get_default (),
 						    "cannot_load_pixbuf",
@@ -366,9 +364,6 @@ button_widget_get_property (GObject    *object,
 	button = BUTTON_WIDGET (object);
 
 	switch (prop_id) {
-	case PROP_SIZE:
-		g_value_set_int (value, button->size);
-		break;
 	case PROP_HAS_ARROW:
 		g_value_set_boolean (value, button->arrow);
 		break;
@@ -403,10 +398,6 @@ button_widget_set_property (GObject      *object,
 		const char *icon_name;
 		const char *stock_id;
 
-	case PROP_SIZE:
-		button->size = g_value_get_int (value);
-		gtk_widget_queue_resize (GTK_WIDGET (button));
-		break;
 	case PROP_HAS_ARROW:
 		button->arrow = g_value_get_boolean (value) ? 1 : 0;
 		gtk_widget_queue_draw (GTK_WIDGET (button));
@@ -502,20 +493,19 @@ load_pixbuf (const char  *file,
 
 static GdkPixbuf *
 button_load_pixbuf (const char  *file,
-		    int          preffered_size,
 		    char       **error)
 {
+/* FIXME: this should be based on the panel size */
+#define PREFERRED_SIZE 48
+
 	GdkPixbuf *retval = NULL;
 	char *tmp;
 
-	if (preffered_size <= 0)
-		preffered_size = 48;
-	
 	if (string_empty (file))
-		return get_missing (preffered_size);
+		return get_missing (PREFERRED_SIZE);
 
 	tmp = g_path_get_basename (file);
-	retval = load_pixbuf (tmp, preffered_size, error);
+	retval = load_pixbuf (tmp, PREFERRED_SIZE, error);
 	g_free (tmp);
 
 	if (!retval && g_path_is_absolute (file)) {
@@ -524,13 +514,15 @@ button_load_pixbuf (const char  *file,
 			*error = NULL;
 		}
 
-		retval = load_pixbuf (file, preffered_size, error);
+		retval = load_pixbuf (file, PREFERRED_SIZE, error);
 	}
 
 	if (!retval)
-		retval = get_missing (preffered_size);
+		retval = get_missing (PREFERRED_SIZE);
 
 	return retval;
+
+#undef PREFERRED_SIZE
 }
 
 #define SCALE(x) (((x)*size)/48.0)
@@ -811,7 +803,6 @@ button_widget_instance_init (ButtonWidget *button)
 	button->scaled_hc = NULL;
 	
 	button->arrow       = 0;
-	button->size        = -1;
 	button->orientation = PANEL_ORIENTATION_TOP;
 	
 	button->ignore_leave  = FALSE;
@@ -848,15 +839,6 @@ button_widget_class_init (ButtonWidgetClass *klass)
 
 	button_class->pressed  = button_widget_button_pressed;
 	button_class->released = button_widget_button_released;
-
-	g_object_class_install_property (
-			gobject_class,
-			PROP_SIZE,
-			g_param_spec_int ("size",
-					  _("Size"),
-					  _("The desired ButtonWidget size"),
-					  G_MININT, G_MAXINT, -1,
-					  G_PARAM_READWRITE));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -923,7 +905,6 @@ button_widget_get_type (void)
 
 GtkWidget *
 button_widget_new (const char       *filename,
-		   int               size,
 		   gboolean          arrow,
 		   PanelOrientation  orientation)
 {
@@ -931,7 +912,6 @@ button_widget_new (const char       *filename,
 
 	retval = g_object_new (
 			BUTTON_TYPE_WIDGET,
-			"size", size,
 			"has-arrow", arrow,
 			"orient", orientation,
 			"icon-name", filename,
@@ -942,7 +922,6 @@ button_widget_new (const char       *filename,
 
 GtkWidget *
 button_widget_new_from_stock (const char       *stock_id,
-			      int               size,
 			      gboolean          arrow,
 			      PanelOrientation  orientation)
 {
@@ -950,7 +929,6 @@ button_widget_new_from_stock (const char       *stock_id,
 
 	retval = g_object_new (
 			BUTTON_TYPE_WIDGET,
-			"size", size,
 			"has-arrow", arrow,
 			"orient", orientation,
 			"stock-id", stock_id,

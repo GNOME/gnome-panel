@@ -486,11 +486,11 @@ create_drawer_applet (PanelToplevel    *toplevel,
 
 	if (!pixmap || !pixmap [0]) {
 		drawer->pixmap = NULL;
-		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER, -1,
+		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER,
 							       TRUE, orientation);
 	} else {
 		drawer->pixmap = g_strdup (pixmap);
-		drawer->button = button_widget_new (drawer->pixmap, -1,
+		drawer->button = button_widget_new (drawer->pixmap,
 						    TRUE, orientation);
 	}
 

@@ -26,8 +26,6 @@ struct _ButtonWidget {
 	char             *filename;
 	char             *stock_id;
 
-	int               size;
-
 	PanelOrientation  orientation;
 
 	guint             pressed_timeout;
@@ -44,11 +42,9 @@ struct _ButtonWidgetClass {
 GType      button_widget_get_type          (void) G_GNUC_CONST;
 
 GtkWidget *button_widget_new               (const char        *pixmap,
-					    int                size,
 					    gboolean           arrow,
 					    PanelOrientation   orientation);
 GtkWidget *button_widget_new_from_stock    (const char        *stock_id,
-					    int                size,
 					    gboolean           arrow,
 					    PanelOrientation   orientation);
 void       button_widget_set_pixmap        (ButtonWidget      *button,
