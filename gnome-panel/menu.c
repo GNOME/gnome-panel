@@ -961,9 +961,9 @@ load_icons_handler_again:
 }
 
 static void
-add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
+add_new_app_to_menu (GtkWidget *widget, ShowItemMenu *sim)
 {
-	panel_new_launcher (item_loc);
+	panel_new_launcher (sim->mf->menudir);
 }
 
 static void

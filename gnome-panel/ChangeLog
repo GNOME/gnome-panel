@@ -1,3 +1,8 @@
+2002-10-03  Alex Graveley  <alex@ximian.com>
+
+	* menu.c (add_new_app_to_menu): The user data passed here is a
+	ShowItemMenu not a uri.  Fixes creating launchers from the panel.
+
 2002-09-19  Arvind Samptur <arvind.samptur@wipro.com>
 	* gnome-panel-screenshot.c: waitpid could fail
 	due to a interuptted system call, loop till you
