@@ -11,6 +11,7 @@
 #include "applet_files.h"
 #include "panel_cmds.h"
 #include "applet_cmds.h"
+#include "panel-widget.h"
 #include "panel.h"
 
 
@@ -49,8 +50,6 @@ load_default_applets(void)
 	/* XXX: the IDs for these applets are hardcoded here. */
 
 	/* Here we use NULL to request querying of default applet parameters */
-	/* as position we give unknown or 0 to load from left or
-	   PANEL_TABLE_SIZE-1 to load from right */
 	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION);
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION);
@@ -151,7 +150,7 @@ main(int argc, char **argv)
 	init_user_drawers();
 	init_user_applets();
 
-	gtk_widget_show(the_panel->panel->window);
+	gtk_widget_show(GTK_WIDGET(the_panel));
 
 	gtk_main();
 	return 0;

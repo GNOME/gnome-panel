@@ -2,106 +2,12 @@
 #define PANEL_H
 
 #include "panel_cmds.h"
+#include "panel-widget.h"
 #include "libgnomeui/gnome-session.h"
 
 BEGIN_GNOME_DECLS
 
-#define DEFAULT_APPLET_WIDTH 50
-#define DEFAULT_APPLET_HEIGHT 50
-
-#define PANEL_TABLE_SIZE 50
-
-typedef enum {
-	PANEL_POS_TOP,
-	PANEL_POS_BOTTOM,
-	PANEL_POS_LEFT,
-	PANEL_POS_RIGHT
-} PanelPos;
-
-typedef enum {
-	PANEL_ORIENT_HORIZ,
-	PANEL_ORIENT_VERT
-} PanelOrient;
-
-typedef enum {
-	PANEL_HIDDEN,
-	PANEL_MOVING,
-	PANEL_SHOWN
-} PanelState;
-
-typedef enum {
-	PANEL_STAYS_PUT,
-	PANEL_GETS_HIDDEN
-} PanelMode;
-
-typedef enum {
-	APPLET_EMPTY,
-	APPLET_NORMAL,
-	APPLET_PLACEHOLDER,
-	APPLET_DRAWER
-} AppletType;
-
-typedef struct _PanelApplet PanelApplet;
-typedef struct _PanelDrawer PanelDrawer;
-typedef struct _PanelMain PanelMain;
-typedef struct _Panel Panel;
-
-
-struct _PanelApplet {
-	GtkWidget    *applet;
-	PanelDrawer  *drawer;
-	AppletType    type;
-};
-
-/*this is a structure where the applets are actually stored, the table 
-  on which they are placed and their array*/
-struct _Panel {
-	GtkWidget    *window;
-	GtkWidget    *panel_eb;
-	GtkWidget    *panel;
-	PanelApplet **applets;        
-	gint          applet_count;
-	PanelPos      pos;
-	PanelOrient   orient;
-	PanelState    state;
-	gint          step_size;
-	GtkWidget    *applet_being_dragged;
-	gint          applet_id_being_dragged;
-};
-	
-
-struct _PanelDrawer {
-	Panel        *panel;
-	gchar        *name;
-	gchar        *iconopen;
-	gchar        *iconclosed;
-};
-
-struct _PanelMain {
-	/*regular panel structure*/
-	Panel        *panel;
-	GtkWidget    *table;
-	/*extra widgets for main panel*/
-	GtkWidget    *hidebutton_l_h;
-	GtkWidget    *hidebutton_r_h;
-	GtkWidget    *hidebutton_l_v;
-	GtkWidget    *hidebutton_r_v;
-	/*main panel properties*/
-	PanelMode     mode;
-	gint          drawer_step_size;
-	gint          delay;
-	gint          tooltips_enabled;
-	gint          enter_notify_id;
-	gint          leave_notify_id;
-	gint          button_press_id;
-	gint          leave_notify_timer_tag;
-	gint          minimize_delay;
-	gint          minimized_size;
-};
-
-
-
-extern PanelMain *the_panel;
+extern PanelWidget *the_panel;
 
 
 void panel_init(void);
@@ -114,9 +20,6 @@ int panel_session_save (gpointer client_data,
 			int is_shutdown,
 			GnomeInteractStyle interact_style,
 			int is_fast);
-
-void panel_reconfigure(PanelMain *newconfig);
-
 
 END_GNOME_DECLS
 

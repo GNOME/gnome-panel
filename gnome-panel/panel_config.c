@@ -8,6 +8,7 @@
 
 #include "gnome.h"
 #include "panel.h"
+#include "panel-widget.h"
 #include "config.h"
 
 /* Used for all the packing and padding options */
@@ -16,8 +17,15 @@
 
 /* used to temporarily store config values until the 'Apply'
  * button is pressed. */
-PanelMain config_panel;
-Panel config_panel_gen;
+struct {
+	PanelOrientation orient;
+	PanelSnapped snapped;
+	PanelMode mode;
+	PanelState state;
+	gint step_size;
+	gint minimized_size;
+	gint minimize_delay;
+} panel_config_struct;
 
 
 GtkWidget *config_window;
@@ -36,11 +44,11 @@ config_destroy(GtkWidget *widget, gpointer data)
 }
 
 static void 
-set_position (GtkWidget *widget, gpointer data)
+set_snapped (GtkWidget *widget, gpointer data)
 {
-	PanelPos position = (PanelPos) data;
+	PanelSnapped snapped = (PanelSnapped) data;
 	
-	config_panel.panel->pos = position;
+	panel_config_struct.snapped = snapped;
 }
 
 static void 
@@ -48,7 +56,7 @@ set_mode (GtkWidget *widget, gpointer data)
 {
 	PanelMode mode = (PanelMode) data;
 	
-	config_panel.mode = mode;
+	panel_config_struct.mode = mode;
 }
 
 static void 
@@ -63,7 +71,15 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 static void
 config_apply (GtkWidget *widget, gpointer data)
 {
-	panel_reconfigure(&config_panel);
+	PanelWidget *panel = data;
+	panel_widget_change_params(panel,
+				   panel_config_struct.orient,
+				   panel_config_struct.snapped,
+				   panel_config_struct.mode,
+				   panel_config_struct.state,
+				   panel_config_struct.step_size,
+				   panel_config_struct.minimized_size,
+				   panel_config_struct.minimize_delay);
 }
 
 /* FIXME: I think these should probly go in a notebook.. I have to
@@ -98,9 +114,9 @@ position_notebook_page(void)
 	/* Top Position */
 	button = gtk_radio_button_new_with_label (NULL, _("Top"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_position), 
-			    (gpointer)PANEL_POS_TOP);
-	if (config_panel.panel->pos == PANEL_POS_TOP) {
+			    GTK_SIGNAL_FUNC (set_snapped), 
+			    (gpointer)PANEL_TOP);
+	if (panel_config_struct.snapped == PANEL_TOP) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -111,9 +127,9 @@ position_notebook_page(void)
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Bottom"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_position), 
-			    (gpointer)PANEL_POS_BOTTOM);
-	if (config_panel.panel->pos == PANEL_POS_BOTTOM) {
+			    GTK_SIGNAL_FUNC (set_snapped), 
+			    (gpointer)PANEL_BOTTOM);
+	if (panel_config_struct.snapped == PANEL_BOTTOM) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -124,9 +140,9 @@ position_notebook_page(void)
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Left"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_position), 
-			    (gpointer)PANEL_POS_LEFT);
-	if (config_panel.panel->pos == PANEL_POS_LEFT) {
+			    GTK_SIGNAL_FUNC (set_snapped), 
+			    (gpointer)PANEL_LEFT);
+	if (panel_config_struct.snapped == PANEL_LEFT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -137,9 +153,9 @@ position_notebook_page(void)
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Right"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
-			    GTK_SIGNAL_FUNC (set_position), 
-			    (gpointer)PANEL_POS_RIGHT);
-	if (config_panel.panel->pos == PANEL_POS_RIGHT) {
+			    GTK_SIGNAL_FUNC (set_snapped), 
+			    (gpointer)PANEL_RIGHT);
+	if (panel_config_struct.snapped == PANEL_RIGHT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -161,8 +177,8 @@ position_notebook_page(void)
 	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
-			    (gpointer)PANEL_STAYS_PUT);
-	if (config_panel.mode == PANEL_STAYS_PUT) {
+			    (gpointer)PANEL_EXPLICIT_HIDE);
+	if (panel_config_struct.mode == PANEL_EXPLICIT_HIDE) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
@@ -174,8 +190,8 @@ position_notebook_page(void)
 			  _("Auto Hide"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_mode), 
-			    (gpointer)PANEL_GETS_HIDDEN);
-	if (config_panel.mode == PANEL_GETS_HIDDEN) {
+			    (gpointer)PANEL_AUTO_HIDE);
+	if (panel_config_struct.mode == PANEL_AUTO_HIDE) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
@@ -188,21 +204,21 @@ static void
 step_size_scale_update (GtkAdjustment *adjustment, gpointer data)
 {
 	double scale_val = adjustment->value;
-	config_panel.panel->step_size = (gint) scale_val;
+	panel_config_struct.step_size = (gint) scale_val;
 }
 
 static void
 delay_scale_update (GtkAdjustment *adjustment, gpointer data)
 {
 	double scale_val = adjustment->value;
-	config_panel.minimize_delay = (gint) scale_val;
+	panel_config_struct.minimize_delay = (gint) scale_val;
 }
 
 static void
 minimized_size_scale_update (GtkAdjustment *adjustment, gpointer data)
 {
 	double scale_val = adjustment->value;
-	config_panel.minimized_size = (gint) scale_val;
+	panel_config_struct.minimized_size = (gint) scale_val;
 }
 
 
@@ -237,7 +253,7 @@ animation_notebook_page(void)
 	gtk_widget_show (box);
 
 	/* Animation step_size scale */
-	step_size_scale_data = gtk_adjustment_new ((double) config_panel.panel->step_size, 
+	step_size_scale_data = gtk_adjustment_new ((double) panel_config_struct.step_size, 
 						   3.0, 100.0, 1.0, 1.0, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (step_size_scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -263,7 +279,7 @@ animation_notebook_page(void)
 	gtk_widget_show (box);
 
 	/* minimize_delay scale */
-	delay_scale_data = gtk_adjustment_new ((double) config_panel.minimize_delay, 
+	delay_scale_data = gtk_adjustment_new ((double) panel_config_struct.minimize_delay, 
 					       30.0, 1000.0, 1.0, 1.0, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (delay_scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -289,7 +305,7 @@ animation_notebook_page(void)
 	gtk_widget_show (box);
 
 	/* minimized_size scale */
-	minimized_size_scale_data = gtk_adjustment_new ((double) config_panel.minimized_size, 
+	minimized_size_scale_data = gtk_adjustment_new ((double) panel_config_struct.minimized_size, 
 					       1.0, 10.0, 1.0, 1.0, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (minimized_size_scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -332,12 +348,13 @@ misc_notebook_page(void)
 	
 	/* Tooltips enable */
 	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
-	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+	/*FIXME: tooltips!*/
+	/*gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(config_panel.tooltips_enabled));
-	if (config_panel.tooltips_enabled) {
+			    &(panel_config_struct.tooltips_enabled));
+	if (panel_config_struct.tooltips_enabled) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
-	}
+	}*/
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (button);
 	
@@ -346,7 +363,7 @@ misc_notebook_page(void)
 
 
 void 
-panel_config(void)
+panel_config(PanelWidget *panel)
 {
 	GtkWidget *box1;
 	GtkWidget *box2;
@@ -358,18 +375,21 @@ panel_config(void)
 	/* return if the window is already up. */
 	if (config_window)
 		return;
+	/*FIXME: I should be able to get windows up for other panels I
+	  guess*/
 
 	/* so far, these are the only ones that can be set */
-	config_panel.panel = &config_panel_gen;
-	config_panel.mode = the_panel->mode;
-	config_panel.panel->pos = the_panel->panel->pos;
+	panel_config_struct.orient = panel->orient;
+	panel_config_struct.snapped = panel->snapped;
+	panel_config_struct.mode = panel->mode;
+	panel_config_struct.state = panel->state;
 	
-	config_panel.panel->step_size = the_panel->panel->step_size;
-	config_panel.delay = the_panel->delay;
-	config_panel.minimize_delay = the_panel->minimize_delay;
-	config_panel.minimized_size = the_panel->minimized_size;
+	panel_config_struct.step_size = panel->step_size;
+	panel_config_struct.minimize_delay = panel->minimize_delay;
+	panel_config_struct.minimized_size = panel->minimized_size;
 
-	config_panel.tooltips_enabled = the_panel->tooltips_enabled;
+	/*panel_config_struct.tooltips_enabled = panel->tooltips_enabled;
+	FIXME: TOOLTIPS*/
  
 	
 	/* main window */
@@ -433,7 +453,7 @@ panel_config(void)
 	button = gtk_button_new_with_label(_("Apply"));
 	gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			    GTK_SIGNAL_FUNC (config_apply), 
-			    NULL);
+			    panel);
 	gtk_box_pack_start(GTK_BOX (box2), button, TRUE, TRUE, 
 			   CONFIG_PADDING_SIZE);
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);

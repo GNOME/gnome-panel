@@ -15,6 +15,7 @@
 #include <string.h>
 #include "gnome.h"
 #include "../panel_cmds.h"
+#include "../panel-widget.h"
 #include "../applet_cmds.h"
 #include "../panel.h"
 
@@ -40,7 +41,7 @@ typedef struct {
 
 static char *gnome_folder;
 
-static gint panel_pos=PANEL_POS_BOTTOM;
+static PanelSnapped panel_snapped=PANEL_BOTTOM;
 
 static PanelCmdFunc panel_cmd_func;
 
@@ -311,20 +312,21 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
-	switch(panel_pos) {
-		case PANEL_POS_TOP:
+	switch(panel_snapped) {
+		case PANEL_TOP:
 			*x = wx;
 			*y = wy + widget->allocation.height;
 			break;
-		case PANEL_POS_BOTTOM:
+		case PANEL_FREE:
+		case PANEL_BOTTOM:
 			*x = wx;
 			*y = wy - GTK_WIDGET (menu)->allocation.height;
 			break;
-		case PANEL_POS_LEFT:
+		case PANEL_LEFT:
 			*x = wx + widget->allocation.width;
 			*y = wy;
 			break;
-		case PANEL_POS_RIGHT:
+		case PANEL_RIGHT:
 			*x = wx - GTK_WIDGET (menu)->allocation.width;
 			*y = wy;
 			break;
@@ -579,17 +581,18 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	char *pixmap_name;
 
 	if (main_menu)
-		switch(panel_pos) {
-			case PANEL_POS_TOP:
+		switch(panel_snapped) {
+			case PANEL_TOP:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
 				break;
-			case PANEL_POS_BOTTOM:
+			case PANEL_FREE:
+			case PANEL_BOTTOM:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
 				break;
-			case PANEL_POS_LEFT:
+			case PANEL_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
 				break;
-			case PANEL_POS_RIGHT:
+			case PANEL_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
 				break;
 		}
@@ -648,9 +651,8 @@ set_show_small_icons(gpointer data, gpointer user_data)
 		gtk_widget_hide(w);
 }
 
-
 static void
-create_instance (Panel *panel, char *params, int pos)
+create_instance (PanelWidget *panel, char *params, int pos)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *this_menu;
@@ -693,7 +695,7 @@ create_instance (Panel *panel, char *params, int pos)
 
 	menu = g_new(Menu,1);
 	menu->small_icons = NULL;
-	menu->button = create_menu_widget (panel->window, params, this_menu,
+	menu->button = create_menu_widget (GTK_WIDGET(panel), params, this_menu,
 					   &(menu->small_icons));
 	menu->path = g_strdup(params);
 	menu->show_small_icons = show_small_icons;
@@ -713,33 +715,34 @@ create_instance (Panel *panel, char *params, int pos)
 }
 
 static void
-set_orientation(GtkWidget *applet, Panel *panel, PanelPos pos)
+set_orientation(GtkWidget *applet, PanelWidget *panel, PanelSnapped snapped)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
 	Menu *menu;
 
-	panel_pos = pos; /*FIXME: this should probably be in the structure*/
+	panel_snapped = snapped; /*FIXME: this should probably be in the structure*/
 
 	menu = gtk_object_get_user_data(GTK_OBJECT(applet));
 	if(!menu || !menu->path)
 		return;
 
 	if (strcmp (menu->path, ".") == 0)
-		switch (panel_pos) {
-			case PANEL_POS_TOP:
+		switch (panel_snapped) {
+			case PANEL_TOP:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-down.xpm");
 				break;
-			case PANEL_POS_BOTTOM:
+			case PANEL_FREE:
+			case PANEL_BOTTOM:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-up.xpm");
 				break;
-			case PANEL_POS_LEFT:
+			case PANEL_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-right.xpm");
 				break;
-			case PANEL_POS_RIGHT:
+			case PANEL_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-left.xpm");
 				break;
@@ -753,7 +756,7 @@ set_orientation(GtkWidget *applet, Panel *panel, PanelPos pos)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (panel->window,applet,pixmap_name);
+	pixmap = gnome_create_pixmap_widget (GTK_WIDGET(panel),applet,pixmap_name);
 
 	gtk_container_add (GTK_CONTAINER(applet), pixmap);
 	gtk_widget_show (pixmap);
@@ -905,7 +908,7 @@ applet_cmd_func(AppletCommand *cmd)
 
 		case APPLET_CMD_ORIENTATION_CHANGE_NOTIFY:
 			set_orientation(cmd->applet,cmd->panel,
-					cmd->params.orientation_change_notify.pos);
+					cmd->params.orientation_change_notify.snapped);
 			break;
 
 		case APPLET_CMD_PROPERTIES:

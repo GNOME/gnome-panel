@@ -2,6 +2,7 @@
 #define APPLET_CMDS_H
 
 #include "panel_cmds.h"
+#include "panel-widget.h"
 #include "panel.h"
 
 BEGIN_GNOME_DECLS
@@ -21,8 +22,8 @@ typedef enum {
 typedef struct {
 	AppletCommandType cmd;
 
-	Panel      *panel;
-	GtkWidget  *applet;
+	PanelWidget  *panel;
+	GtkWidget    *applet;
 
 	union {
 		/* Init module parameters */
@@ -33,13 +34,13 @@ typedef struct {
 		/* Create instance parameters */
 		struct {
 			char *params;
-			int   pos;
+		int   pos;
 		} create_instance;
 
 		/* Orientation change notify parameters */
 		struct {
-			PanelPos    pos;
-			PanelOrient orient;
+			PanelSnapped     snapped;
+			PanelOrientation orient;
 		} orientation_change_notify;
 	} params;
 } AppletCommand;

@@ -38,9 +38,6 @@ panel_widget_get_type ()
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
-	GtkWidgetClass *widget_class;
-
-	widget_class = (GtkWidgetClass*) class;
 }
 
 static void
@@ -55,6 +52,78 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->leave_notify_timer_tag = 0;
 	panel_widget->currently_dragged_applet = NULL;
 }
+
+static void
+panel_widget_set_size(PanelWidget *panel, gint length)
+{
+	gint buttonswidth;
+	switch(panel->snapped) {
+		case PANEL_FREE:
+			if(length == 0 && panel->orient == PANEL_HORIZONTAL)
+				length = GTK_WIDGET(panel)->allocation.width;
+			else if(length == 0 && panel->orient == PANEL_VERTICAL)
+				length = GTK_WIDGET(panel)->allocation.height;
+			if(panel->orient == PANEL_HORIZONTAL)
+				gtk_widget_set_usize(GTK_WIDGET(panel),
+						     length, panel->thick);
+			else
+				gtk_widget_set_usize(GTK_WIDGET(panel),
+						     panel->thick, length);
+			panel->size = length/PANEL_CELL_SIZE;
+			break;
+		case PANEL_TOP:
+		case PANEL_BOTTOM:
+			buttonswidth = panel->hidebutton_w->allocation.width +
+				       panel->hidebutton_e->allocation.width;
+			panel->orient = PANEL_HORIZONTAL;
+			gtk_widget_set_usize(GTK_WIDGET(panel),
+					     gdk_screen_width(),
+					     panel->thick);
+			panel->size = (gdk_screen_width()-buttonswidth) /
+				       PANEL_CELL_SIZE;
+			break;
+		case PANEL_LEFT:
+		case PANEL_RIGHT:
+			buttonswidth = panel->hidebutton_n->allocation.height +
+				       panel->hidebutton_s->allocation.height;
+			panel->orient = PANEL_VERTICAL;
+			gtk_widget_set_usize(GTK_WIDGET(panel),
+					     panel->thick,
+					     gdk_screen_height());
+			panel->size = (gdk_screen_height()-buttonswidth) /
+				       PANEL_CELL_SIZE;
+			break;
+	}
+
+	switch(panel->snapped) {
+		case PANEL_TOP:
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
+					         0,
+					         0);
+			break;
+		case PANEL_BOTTOM:
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
+					         0,
+					         gdk_screen_height() -
+					         panel->thick);
+			break;
+		case PANEL_LEFT:
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
+					         0,
+					         0);
+			break;
+		case PANEL_RIGHT:
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
+					         gdk_screen_width() -
+					         panel->thick,
+					         0);
+			break;
+		default: break; /*to get rid of a warning*/
+	}
+}
+
+
+
 
 static void
 panel_widget_shrink_wrap(PanelWidget *panel,
@@ -76,6 +145,48 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 		panel->applets[i].drawer=NULL;
 		panel->applets[i].cells=1;
 	}
+}
+
+
+static gint
+panel_widget_push_right(PanelWidget *panel,gint pos)
+{
+	gint i;
+	gint freepos;
+
+	for(i=0;pos+i<panel->size && panel->applets[pos+i].applet;i++)
+		;
+	if(pos+i >= panel->size)
+		return FALSE;
+
+	freepos=i;
+
+	for(;i>0;i--) {
+		panel->applets[pos+i].applet=
+			panel->applets[pos+i-1].applet;
+		panel->applets[pos+i].drawer =
+			panel->applets[pos+i-1].drawer;
+		panel->applets[pos+i].cells =
+			panel->applets[pos+i-1].cells;
+	}
+
+	for(i=0;i<freepos;i+=panel->applets[pos+i].cells) {
+		if(panel->orient == PANEL_HORIZONTAL)
+			gtk_fixed_move(GTK_FIXED(panel->fixed),
+				       panel->applets[pos+i].applet,
+				       panel->applets[pos+i].applet->
+				       	allocation.x-PANEL_CELL_SIZE,
+				       panel->applets[pos+i].applet->
+				       	allocation.y);
+		else
+			gtk_fixed_move(GTK_FIXED(panel->fixed),
+				       panel->applets[pos+i].applet,
+				       panel->applets[pos+i].applet->
+				       	allocation.x,
+				       panel->applets[pos+i].applet->
+				       	allocation.y-PANEL_CELL_SIZE);
+	}
+	return TRUE;
 }
 
 static gint
@@ -103,18 +214,19 @@ panel_widget_seize_space(PanelWidget *panel,
 		allocated++;
 	for(i=1;(pos-i >= 0) &&
 		(allocated < width) &&
-		(panel->applets[pos-i].applet == applet ||
-		 panel->applets[pos-i].applet == NULL);i++)
+		(panel->applets[pos-i].applet == NULL);i++)
 		allocated++;
 	pos = pos-i+1;
 
 	if(allocated < width) {
-		/*FIXME: push apart other applets if neccessary!*/
+		while(allocated < width &&
+		      panel_widget_push_right(panel,pos+allocated))
+			allocated++;
 	}
 
 	for(i=0;i<allocated;i++) {
 		panel->applets[pos+i].applet = applet;
-		panel->applets[pos+i].applet = drawer;
+		panel->applets[pos+i].drawer = drawer;
 		panel->applets[pos+i].cells = allocated;
 	}
 	return pos;
@@ -126,7 +238,6 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	gint width, height;
 	gint x,y;
 	gint oldx,oldy;
-	gint panel_thick;
 	gint pos;
 
 	width = applet->allocation.width;
@@ -135,16 +246,10 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	oldy = applet->allocation.y;
 	pos = panel_widget_get_pos(panel,applet);
 	if(panel->orient==PANEL_HORIZONTAL) {
-		panel_thick = GTK_WIDGET(panel)->allocation.height;
-		if(panel_thick<PANEL_CELL_SIZE)
-			panel_thick = PANEL_CELL_SIZE;
-
-		if(height > panel_thick) {
-			/*FIXME: schedhule window resize, this has to
-			  be done after all applets has been added,
-			  so probably this would be done by an idle
-			  function which then adjusts the vertical
-			  position of applets*/
+		if(height > panel->thick) {
+			panel->thick = height;
+			panel_widget_set_size(panel,
+					GTK_WIDGET(panel)->allocation.width);
 		}
 
 		/*if smaller then it's allocation, we are OK*/
@@ -153,37 +258,31 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 			x = (PANEL_CELL_SIZE*pos) +
 			    ((PANEL_CELL_SIZE*panel->applets[pos].cells)/2) -
 			    (width/2);
-		        y = (panel_thick/2) - (height/2);
+		        y = (panel->thick/2) - (height/2);
 		} else {
 			pos = panel_widget_seize_space(panel,width,pos);
 			x = (PANEL_CELL_SIZE*pos) +
 			    ((PANEL_CELL_SIZE*panel->applets[pos].cells)/2) -
 			    (width/2);
-		        y = (panel_thick/2) - (height/2);
+		        y = (panel->thick/2) - (height/2);
 		}
 	} else { /* panel->orient==PANEL_VERTICAL */
-		panel_thick = GTK_WIDGET(panel)->allocation.width;
-		if(panel_thick<PANEL_CELL_SIZE)
-			panel_thick = PANEL_CELL_SIZE;
-
-		if(width > panel_thick) {
-			/*FIXME: schedhule window resize, this has to
-			  be done after all applets has been added,
-			  so probably this would be done by an idle
-			  function which then adjusts the vertical
-			  position of applets*/
+		if(width > panel->thick) {
+			panel->thick = width;
+			panel_widget_set_size(panel,
+					GTK_WIDGET(panel)->allocation.height);
 		}
 
 		/*if smaller then it's allocation, we are OK*/
 		if(height<=(PANEL_CELL_SIZE*panel->applets[pos].cells)) {
 			panel_widget_shrink_wrap(panel,width,pos);
-		        x = (panel_thick/2) - (width/2);
+		        x = (panel->thick/2) - (width/2);
 			y = (PANEL_CELL_SIZE*pos) +
 			    ((PANEL_CELL_SIZE*panel->applets[pos].cells)/2) -
 			    (height/2);
 		} else {
 			pos = panel_widget_seize_space(panel,width,pos);
-		        x = (panel_thick/2) - (width/2);
+		        x = (panel->thick/2) - (width/2);
 			y = (PANEL_CELL_SIZE*pos) +
 			    ((PANEL_CELL_SIZE*panel->applets[pos].cells)/2) -
 			    (height/2);
@@ -192,6 +291,7 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	if(oldx!=x || oldy!=y)
 		gtk_fixed_move(GTK_FIXED(panel->fixed),applet,x,y);
 }
+
 
 static gint
 panel_widget_switch_applet_right(PanelWidget *panel, gint pos)
@@ -239,6 +339,22 @@ panel_widget_switch_applet_left(PanelWidget *panel, gint pos)
 }
 
 static gint
+panel_widget_get_right_switch_pos(PanelWidget *panel, gint pos)
+{
+	pos+=panel->applets[pos + panel->applets[pos].cells].cells;
+	return pos;
+}
+
+static gint
+panel_widget_get_left_switch_pos(PanelWidget *panel, gint pos)
+{
+	pos -= panel->applets[pos-1].cells;
+	panel_widget_get_right_switch_pos(panel,pos);
+	return pos;
+}
+
+
+static gint
 panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 {
 	gint width;
@@ -255,13 +371,16 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 	else if(finalpos < 0)
 		finalpos = 0;
 
-	for(;;) {
-		if((pos+width-1)<finalpos)
-			pos = panel_widget_switch_applet_right(panel,pos);
-		else if(pos>finalpos)
-			pos = panel_widget_switch_applet_left(panel,pos);
-		else
-			break;
+	while((pos+width-1)<finalpos) {
+		if(panel_widget_get_right_switch_pos(panel,pos) > finalpos)
+			return pos;
+		pos = panel_widget_switch_applet_right(panel,pos);
+	}
+	while(pos>finalpos) {
+		if((panel_widget_get_left_switch_pos(panel,pos)+width-1) < 
+		   finalpos)
+			return pos;
+		pos = panel_widget_switch_applet_left(panel,pos);
 	}
 
 	return pos;
@@ -585,68 +704,6 @@ panel_widget_set_hidebuttons(PanelWidget *panel)
 }
 
 static void
-panel_widget_set_size(PanelWidget *panel, gint length)
-{
-	switch(panel->snapped) {
-		case PANEL_FREE:
-			if(length == 0 && panel->orient == PANEL_HORIZONTAL)
-				length = GTK_WIDGET(panel)->allocation.width;
-			else if(length == 0 && panel->orient == PANEL_VERTICAL)
-				length = GTK_WIDGET(panel)->allocation.height;
-			if(panel->orient == PANEL_HORIZONTAL)
-				gtk_widget_set_usize(GTK_WIDGET(panel),
-						     length, PANEL_CELL_SIZE);
-			else
-				gtk_widget_set_usize(GTK_WIDGET(panel),
-						     PANEL_CELL_SIZE, length);
-			panel->size = length/PANEL_CELL_SIZE;
-			break;
-		case PANEL_TOP:
-		case PANEL_BOTTOM:
-			panel->orient = PANEL_HORIZONTAL;
-			gtk_widget_set_usize(GTK_WIDGET(panel),
-					     gdk_screen_width(),
-					     PANEL_CELL_SIZE);
-			panel->size = (gdk_screen_width()/PANEL_CELL_SIZE) - 1;
-			break;
-		case PANEL_LEFT:
-		case PANEL_RIGHT:
-			panel->orient = PANEL_VERTICAL;
-			gtk_widget_set_usize(GTK_WIDGET(panel),
-					     PANEL_CELL_SIZE,
-					     gdk_screen_height());
-			panel->size = (gdk_screen_height()/PANEL_CELL_SIZE) - 1;
-			break;
-	}
-
-	switch(panel->snapped) {
-		case PANEL_TOP:
-			gtk_widget_set_uposition(GTK_WIDGET(panel),
-					         0,
-					         0);
-			break;
-		case PANEL_BOTTOM:
-			gtk_widget_set_uposition(GTK_WIDGET(panel),
-					         0,
-					         gdk_screen_height() -
-					         PANEL_CELL_SIZE);
-			break;
-		case PANEL_LEFT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel),
-					         0,
-					         0);
-			break;
-		case PANEL_RIGHT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel),
-					         gdk_screen_width() -
-					         PANEL_CELL_SIZE,
-					         0);
-			break;
-		default: break; /*to get rid of a warning*/
-	}
-}
-
-static void
 panel_widget_apply_size_limit(GtkWidget *widget, gpointer data)
 {
 	gint i;
@@ -664,11 +721,12 @@ panel_widget_apply_size_limit(GtkWidget *widget, gpointer data)
 	if(length%PANEL_CELL_SIZE) length--; /*just so that I get size*/
 	panel->size = length/PANEL_CELL_SIZE;
 
-
 	for(i=panel->size;i<PANEL_MAX;i += panel->applets[i].cells)
 		if(panel->applets[i].applet)
 			/*FIXME: move drawers as well!*/
 			if(!panel->applets[i].drawer)
+				/*FIXME: USE MOVE! this migth actually
+				  segfault!*/
 				panel_widget_add(panel,
 						 panel->applets[i].applet,
 						 panel->size-1);
@@ -699,9 +757,7 @@ panel_widget_new (gint length,
 	panel = gtk_type_new(panel_widget_get_type());
 	GTK_WINDOW(panel)->type = GTK_WINDOW_POPUP;
 
-	panel->snapped = snapped;
-	panel->orient = orient;
-	panel_widget_set_size(panel,length);
+	panel->thick = PANEL_CELL_SIZE;
 
 	panel->table = gtk_table_new(3,3,FALSE);
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
@@ -766,6 +822,10 @@ panel_widget_new (gint length,
 			   GTK_SIGNAL_FUNC(panel_show_hide_left),panel);
 	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
+
+	panel->snapped = snapped;
+	panel->orient = orient;
+	panel_widget_set_size(panel,length);
 
 	panel->mode = mode;
 	panel->state = PANEL_SHOWN; /*state;*/

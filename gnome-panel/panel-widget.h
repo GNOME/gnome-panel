@@ -4,7 +4,6 @@
 
 #include <gtk/gtk.h>
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -14,11 +13,9 @@ extern "C" {
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
-/*this is not actually used in this code, but is a constant one should
-  use when calculating how many cells a panel should have*/
-#define PANEL_CELL_SIZE 48
+#define PANEL_CELL_SIZE 10
 
-#define PANEL_MAX 100
+#define PANEL_MAX 800 /*8000 long screen, FIXME! make dynamic*/
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
@@ -87,6 +84,8 @@ struct _PanelWidget
 
 	GtkWidget		*currently_dragged_applet;
 	gint			currently_dragged_applet_pos;
+
+	gint			thick;
 };
 
 struct _PanelWidgetClass
