@@ -246,12 +246,14 @@ calendar_sources_finalize (GObject *object)
 CalendarSources *
 calendar_sources_get (void)
 {
+  gpointer singleton_location = &calendar_sources_singleton;
+
   if (calendar_sources_singleton)
     return g_object_ref (calendar_sources_singleton);
 
   calendar_sources_singleton = g_object_new (CALENDAR_TYPE_SOURCES, NULL);
   g_object_add_weak_pointer (G_OBJECT (calendar_sources_singleton),
-			     (gpointer *) &calendar_sources_singleton);
+			     singleton_location);
 
   return calendar_sources_singleton;
 }

@@ -563,10 +563,11 @@ get_ical_end_time (icalcomponent *ical,
 
 static gboolean
 get_ical_is_all_day (icalcomponent *ical,
-                     GTime          start_time,
+                     GTime          start_gtime,
                      icaltimezone  *default_zone)
 {
   icalproperty            *prop;
+  time_t                   start_time;
   struct tm               *start_tm;
   GTime                    end_time;
   struct icaldurationtype  duration;
@@ -576,7 +577,8 @@ get_ical_is_all_day (icalcomponent *ical,
   if (start_icaltime.is_date)
     return TRUE;
 
-  start_tm = gmtime ((time_t *)&start_time);
+  start_time = (time_t) start_gtime;
+  start_tm = gmtime (&start_time);
   if (start_tm->tm_sec  != 0 ||
       start_tm->tm_min  != 0 ||
       start_tm->tm_hour != 0)
