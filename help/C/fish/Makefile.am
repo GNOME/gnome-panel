@@ -1,4 +1,4 @@
-figs =
+figs = fish_applet.png  fish_settings.png
 applet = fish
 lang = C
 sgml_ents = 

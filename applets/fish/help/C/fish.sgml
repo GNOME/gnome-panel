@@ -1,0 +1,247 @@
+ <sect1 id="fish">
+  <title>Fish Applet</title>
+
+   <para>
+   <application>Fish</application> applet, shown in <xref
+   linkend="fishapplet-fig">, displays a small
+    fish in your <interface>panel</interface> and does nothing useful 
+    whatsoever beyond that.  To add this
+   applet to a <interface>Panel</interface>, 
+   right-click on the <interface>Panel</interface> and choose
+   <menuchoice>
+    <guimenu>Panel</guimenu>
+    <guisubmenu>Add to panel</guisubmenu>
+    <guisubmenu>Applet</guisubmenu>
+    <guisubmenu>Amusements</guisubmenu>
+    <guimenuitem>Fish</guimenuitem>
+   </menuchoice>.
+  </para>
+
+  <figure id="fishapplet-fig">
+   <title>Fish Applet</title>
+   <screenshot>
+    <screeninfo>Fish Applet</screeninfo>
+    <graphic format="png" fileref="fish_applet" 
+    srccredit="muet">
+    </graphic>
+   </screenshot>
+  </figure>
+
+  <!-- ============= Usage  ================================ -->
+  <sect2 id="APPLET-usage">
+   <title>Usage</title>
+   <para>
+     Unlike most fishes, this fish requires little care and no fishbowl
+     cleaning. It swims happily about in its water. If you ask it, it
+     will tell you interesting thoughts.
+   </para>
+
+   <para>
+    Right-clicking on the applet brings up a menu containing the
+    following items:
+    <itemizedlist>
+
+     <listitem>
+      <para>
+       <guimenuitem>Properties&hellip;</guimenuitem> &mdash;
+       opens the <link linkend="fish-prefs">
+       <guilabel>Properties</guilabel></link> dialog.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>Help</guimenuitem> &mdash;
+       displays this document.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>About&hellip;</guimenuitem> &mdash;
+       shows basic information about <application>APPLET
+       Applet</application>, inluding the applet's version and the
+       author's name.
+      </para>
+     </listitem>
+
+    </itemizedlist>
+   </para>
+  </sect2>
+
+
+  <!-- ============= Customization ============================= -->
+  <sect2 id="fish-prefs">
+    <title>Customization</title>
+    <para>
+      You can customize <application>Fish</application>
+      applet by right-clicking on it and choosing
+      <guimenuitem>Properties&hellip;</guimenuitem>. This will open the
+      <interface>Properties</interface> dialog(shown in <xref
+      linkend="fish-settings-fig">), which allows you to
+      change various settings.
+    </para>
+
+    <figure id="fish-settings-fig">
+     <title>Properties dialog</title>
+     <screenshot>
+      <screeninfo>Properties dialog</screeninfo>
+      <graphic format="png" fileref="fish_settings"
+      srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     The properties are:
+     <itemizedlist>
+
+      <listitem>
+       <para>
+        Your GNOME Fish's Name &mdash;  You can change your fish's
+        name here. The default name is Wanda. 
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        The Animation Filename &mdash; You can select a different set
+        of pictures here. By default,
+        the list of pictures is in <filename>$PREFIX/pixmaps/fish/</filename>,
+        which you can browse and choose from. You may also put a different
+        pathname in pointing to your own pictures.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Frames In Animation &mdash; The number of frames in the
+        animation. The default is three, but the range is from 1 to 255.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Pause per frame (s) &mdash;  The period in seconds before
+        updating the picture. The default is one second, but the range
+        is from 0.10 to 10 seconds.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Rotate on vertical panels &mdash; This checkbox is used for
+        vertical panels, and when checked, the
+        fish will appear swimming downwards on a vertical panel. If it is 
+        not checked, it will appear the same way as on a horizontal panel,
+        which forces the vertical panel to widen to accomodate it.
+       </para>
+      </listitem>
+
+
+     </itemizedlist>
+    </para>
+
+    <para> 
+      After you have made all the changes you want, click on
+      <guibutton>OK</guibutton> to apply the changes and close the
+      <interface>Properties</interface> dialog. To cancel the changes
+      and return to previous values, click the
+      <guibutton>Cancel</guibutton> button.
+    </para>
+  </sect2>
+
+
+  <!-- ============= Bugs ================================== -->
+  <!-- This section should describe known bugs and limitations of
+       the program if there are any - please be frank and list all
+       problems you know of -->
+  <sect2 id="fish-bugs">
+   <title>Known Bugs and Limitations</title>
+   <para>
+    This applet has no known bugs.
+   </para>
+  </sect2>
+
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="fish-authors">
+   <title>Authors</title>
+   <para>
+    <application>Fish</application> was written by George Lebl 
+    (<email>jirka@5z.com</email>).  Please send all comments,
+    suggestions, and bug 
+    reports to the <ulink url="http://bugs.gnome.org" type="http">GNOME
+    bug tracking database</ulink>. (Instructions for submitting bug
+    reports can be found <ulink
+    url="http://bugs.gnome.org/Reporting.html" type="http">
+    on-line</ulink>. If you are using
+    GNOME 1.1 or later, you can also use <application>Bug Report
+    Tool</application> (<command>bug-buddy</command>), available in the
+    <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
+    Menu</guimenu>, for submitting bug reports.
+   </para>
+
+   <para>
+    This manual was written by Telsa Gwynne
+    (<email>hobbit@aloss.ukuu.org.uk</email>). Please send all comments and
+    suggestions regarding this manual to the <ulink type="http"
+    url="http://www.gnome.org/gdp">GNOME Documentation Project</ulink> 
+    by sending an email to <email>docs@gnome.org</email>. You can also
+    submit comments online by using the <ulink type="http"
+    url="http://www.gnome.org/gdp/doctable/">GNOME Documentation Status
+    Table</ulink>.
+   </para>
+
+   <!-- For translations: uncomment this:
+
+   <para>
+    Latin translation was done by ME
+    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
+    suggestions regarding this translation to SOMEWHERE.
+   </para>
+
+   -->
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>License</title>
+   <para>
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the <citetitle>GNU General Public
+    License</citetitle> as published by the Free Software Foundation;
+    either version 2 of the License, or (at your option) any later
+    version.
+   </para>
+   <para>
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    <citetitle>GNU General Public License</citetitle> for more details.
+   </para>
+   <para>
+    A copy of the <citetitle>GNU General Public License</citetitle> is
+    included as an appendix to the <citetitle>GNOME Users
+    Guide</citetitle>.  You may also obtain a copy of the
+    <citetitle>GNU General Public License</citetitle> from the Free
+    Software Foundation by visiting <ulink type="http"
+    url="http://www.fsf.org">their Web site</ulink> or by writing to
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+     <country>USA</country>
+    </address>
+   </para>
+  </sect2>
+
+ </sect1>
+
+
+
+
