@@ -15,6 +15,7 @@
 #include "panel-util.h"
 #include "egg-screen-exec.h"
 #include "eggaccelerators.h"
+#include "xstuff.h"
 
 extern GlobalConfig global_config;
 extern GSList *panels;
@@ -73,8 +74,7 @@ all_combinations (guint mask_to_traverse,
 static void
 do_grab_key (guint mod, ModAndKey* data)
 {
-	XGrabKey (GDK_DISPLAY(), data->key, (mod | data->mods),
-		  GDK_ROOT_WINDOW(), True, GrabModeAsync, GrabModeAsync);
+	xstuff_grab_key_on_all_screens (data->key, (mod | data->mods), TRUE);
 }
 
 static void
@@ -97,8 +97,7 @@ grab_key (guint mod, guint key)
 static void
 do_ungrab_key (guint mod, ModAndKey* data)
 {
-	XUngrabKey(GDK_DISPLAY(), data->key, (mod | data->mods),
-		   GDK_ROOT_WINDOW());
+	xstuff_grab_key_on_all_screens (data->key, (mod | data->mods), FALSE);
 }
 
 static void 

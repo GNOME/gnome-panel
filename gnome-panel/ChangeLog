@@ -1,3 +1,14 @@
+2003-01-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Makes keybindings work on multi-screen setups.
+	Fixes #93757 - based on a patch from Erwann.
+
+	* xstuff.[ch]: (xstuff_grab_key_on_all_screens):
+	Grab/Ungrab the key on all screens.
+
+	* global-keys.c: (do_grab_key), (do_ungrab_key):
+	use it here.
+
 2003-01-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-compatibility.c:

@@ -29,5 +29,8 @@ void xstuff_zoom_animate                (GtkWidget    *widget,
 
 int  xstuff_get_current_workspace       (GdkScreen *screen);
 
+void xstuff_grab_key_on_all_screens     (int      keycode,
+					 guint    modifiers,
+					 gboolean grab);
 
 #endif /* __XSTUFF_H__ */
