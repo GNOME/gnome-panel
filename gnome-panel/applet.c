@@ -104,8 +104,6 @@ panel_applet_lock (GtkWidget  *menuitem,
 
 	if (info->move_item)
 		gtk_widget_set_sensitive (info->move_item, !locked);
-	if (info->remove_item)
-		gtk_widget_set_sensitive (info->remove_item, !locked);
 }
 
 static void
@@ -457,13 +455,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, !locked && removable);
-
-		g_assert (info->remove_item == NULL);
-
-		info->remove_item = menuitem;
-		g_object_add_weak_pointer (G_OBJECT (menuitem),
-					   (gpointer *) &info->remove_item);
+		gtk_widget_set_sensitive (menuitem, removable);
 
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
@@ -1058,7 +1050,6 @@ panel_applet_register (GtkWidget       *applet,
 	info->data_destroy = data_destroy;
 	info->user_menu    = NULL;
 	info->move_item    = NULL;
-	info->remove_item  = NULL;
 	info->id           = g_strdup (id);
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);

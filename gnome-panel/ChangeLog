@@ -1,5 +1,19 @@
 2004-06-02  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.[ch]:
+	(panel_applet_lock), (panel_applet_create_menu),
+	(panel_applet_register): Allow all other panel objects to be
+	removed even when locked.
+
+2004-06-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from  Christian Neumair <chris@gnome-de.org> in bug #142605.
+	
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state): Allow
+	applets to be removed even when locked.
+
+2004-06-02  Mark McLoughlin  <mark@skynet.ie>
+
 	Patch from Chris Lahey <clahey@ximian.com> in bug #138720
 	to fix a crash while menu editing.
 
