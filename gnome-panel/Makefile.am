@@ -147,3 +147,5 @@ panelgnorba_DATA = panel.gnorba
 
 soundlistdir = $(sysconfdir)/sound/events
 soundlist_DATA = panel.soundlist
+
+$(srcdir)/panel-util.c: $(CORBA_SRCLIST)
