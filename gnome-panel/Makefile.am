@@ -56,6 +56,11 @@ APPLET_LIB=applet-lib.cc mico-parse.cc mico-parse.h
 
 PANEL_ORB_SRCLIST= mico-glue.cc mico-parse.cc mico-parse.h
 
+# We need explicit dependencies here for people building out
+# of the tarballs.
+
+applet-lib.cc mico-parse.cc mico-glue.cc: gnome-panel.h
+
 endif
 
 libpanel_applet_la_SOURCES = \
