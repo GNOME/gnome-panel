@@ -19,8 +19,6 @@ panel_SOURCES = \
 	panel.c		\
 	panel.h
 
-panel_DATA = panelrc
-
 module_test_SOURCES = \
 	module_test.c 
 
@@ -34,7 +32,14 @@ panel_LDADD = $(MYLIBS)
 
 module_test_LDADD = $(MYLIBS)
 
-EXTRA_DIST = panelrc
+data_DATA = panelrc
 
-install-data-local:
-	$(INSTALL_DATA) $(srcdir)/panelrc $(datadir)/
+## Why not just make this via configure?  Because @datadir@ will be
+## expanded incorrectly.
+panelrc: panelrc.in Makefile
+## Why do a sed and then an mv?  To avoid problems if the user
+## interrupts.
+	sed -e 's,\@datadir\@,$(datadir),g' < $(srcdir)/panelrc.in \
+	  > panelrc.tmp && mv -f panelrc.tmp panelrc
+
+MOSTLYCLEANFILES = panelrc
