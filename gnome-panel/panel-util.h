@@ -7,7 +7,10 @@ BEGIN_GNOME_DECLS
 
 typedef void (*UpdateFunction) (gpointer);
 
-gboolean string_is_in_list(const GSList *list, const char *text);
+gboolean string_is_in_list (const GSList *list, const char *text);
+
+/* return TRUE if string is NULL or the first character is '\0' */
+gboolean string_empty (const char *string);
 
 GtkWidget * create_text_entry(GtkWidget *table,
 			      char *history_id,

@@ -543,13 +543,15 @@ convert_string_to_keysym_state(char *string,
 {
 	char *s, *p;
 
-	g_return_val_if_fail(keysym != NULL, FALSE);
-	g_return_val_if_fail(state != NULL, FALSE);
+	g_return_val_if_fail (keysym != NULL, FALSE);
+	g_return_val_if_fail (state != NULL, FALSE);
 	
 	*state = 0;
 	*keysym = 0;
 
-	if(!string || !*string || strcmp(string, _("Disabled"))==0)
+	if(string_empty (string) ||
+	   strcmp (string, "Disabled") == 0 ||
+	   strcmp (string, _("Disabled")) == 0)
 		return FALSE;
 
 	s = g_strdup(string);
@@ -707,3 +709,12 @@ panel_error_dialog(char *format, ...)
 	return w;
 }
 
+gboolean
+string_empty (const char *string)
+{
+	if (string == NULL ||
+	    string[0] == '\0')
+		return TRUE;
+	else
+		return FALSE;
+}

@@ -467,7 +467,7 @@ create_properties_dialog(Launcher *launcher)
 {
 	GtkWidget *dialog;
 	GtkWidget *notebook;
-	GList *types = NULL;
+	GList *types;
 
 	dialog = gnome_dialog_new (_("Launcher properties"),
 				   GNOME_STOCK_BUTTON_CLOSE,
@@ -477,7 +477,6 @@ create_properties_dialog(Launcher *launcher)
 				FALSE /* click_closes */);
 
 	notebook = gtk_notebook_new ();
-
 	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
 			    notebook, TRUE, TRUE, 0);
 
@@ -487,17 +486,17 @@ create_properties_dialog(Launcher *launcher)
 	
 	launcher->dedit =
 		gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook));
-	gtk_object_ref(launcher->dedit);
-	gtk_object_sink(launcher->dedit);
 	
-	types = g_list_append(types, "Application");
-	types = g_list_append(types, "URL");
-	types = g_list_append(types, "PanelApplet");
-	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(launcher->dedit)->type_combo), types);
-	g_list_free(types);
+	types = NULL;
+	types = g_list_append (types, "Application");
+	types = g_list_append (types, "URL");
+	types = g_list_append (types, "PanelApplet");
+	gtk_combo_set_popdown_strings (GTK_COMBO (GNOME_DENTRY_EDIT (launcher->dedit)->type_combo), types);
+	g_list_free (types);
+	types = NULL;
 
-	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
-				     launcher->dentry);
+	gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (launcher->dedit),
+				      launcher->dentry);
 
 	/* This sucks, but there is no other way to do this with the current
 	   GnomeDEntry API.  */
@@ -516,15 +515,22 @@ create_properties_dialog(Launcher *launcher)
 
 #undef SETUP_EDITABLE
 	
-	gtk_signal_connect (GTK_OBJECT(launcher->dedit), "changed",
-			    GTK_SIGNAL_FUNC(launcher_changed),
+	gtk_signal_connect (GTK_OBJECT (launcher->dedit), "changed",
+			    GTK_SIGNAL_FUNC (launcher_changed),
 			    launcher);
 
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   GTK_SIGNAL_FUNC(properties_close_callback),
-			   launcher);
-	gtk_signal_connect(GTK_OBJECT(launcher->dedit), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
+	gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
+			    GTK_SIGNAL_FUNC (properties_close_callback),
+			    launcher);
+
+	/* YAIKES, the problem here is that the notebook will attempt
+	 * to destroy the dedit, so if we unref it in the close handler,
+	 * it will be finalized by the time the notebook will destroy it,
+	 * dedit is just a horrible thing */
+	gtk_signal_connect (GTK_OBJECT (launcher->dedit), "destroy",
+			    GTK_SIGNAL_FUNC (gtk_object_unref),
+			    NULL);
+
 
 	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
 			    GTK_SIGNAL_FUNC (window_clicked),
@@ -581,12 +587,12 @@ load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
 }
 
 static void
-really_add_launcher(GtkWidget *d, int button, gpointer data)
+really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 {
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
-	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
-	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"exactpos"));
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
+	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"pos"));
+	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"exactpos"));
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(dialog),"panel");
 	GnomeDesktopEntry *dentry;
 	
 	if(button == 0/*ok*/) {
@@ -613,83 +619,102 @@ really_add_launcher(GtkWidget *d, int button, gpointer data)
 		return;
 	}
 
-	gtk_widget_destroy(d);
+	gtk_widget_destroy(dialog);
 }
 
 void
 ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 {
-	GtkWidget *d;
+	GtkWidget *dialog;
 	GtkWidget *notebook;
 	GnomeDEntryEdit *dee;
-	GList *types = NULL;
+	GList *types;
 
-	d = gnome_dialog_new(_("Create launcher applet"),
-			     GNOME_STOCK_BUTTON_OK,
-			     GNOME_STOCK_BUTTON_CANCEL,
-			     GNOME_STOCK_BUTTON_HELP,
-			     NULL);
-	gtk_window_set_wmclass(GTK_WINDOW(d),
-			       "create_launcher","Panel");
-	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
+	dialog = gnome_dialog_new (_("Create launcher applet"),
+				   GNOME_STOCK_BUTTON_OK,
+				   GNOME_STOCK_BUTTON_CANCEL,
+				   GNOME_STOCK_BUTTON_HELP,
+				   NULL);
+	gtk_window_set_wmclass (GTK_WINDOW (dialog),
+				"create_launcher", "Panel");
+	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, TRUE);
 	
-	notebook = gtk_notebook_new();
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
-			   TRUE,TRUE,GNOME_PAD_SMALL);
+	notebook = gtk_notebook_new ();
+	gtk_box_pack_start (GTK_BOX(GNOME_DIALOG(dialog)->vbox), notebook,
+			    TRUE, TRUE, GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
-	gtk_object_ref(GTK_OBJECT(dee));
-	gtk_object_sink(GTK_OBJECT(dee));
 
+	types = NULL;
 	types = g_list_append(types, "Application");
 	types = g_list_append(types, "URL");
 	types = g_list_append(types, "PanelApplet");
 	gtk_combo_set_popdown_strings(GTK_COMBO(dee->type_combo), types);
 	g_list_free(types);
+	types = NULL;
+
+#define SETUP_EDITABLE(entry_name)					\
+	gnome_dialog_editable_enters					\
+		(GNOME_DIALOG (dialog),					\
+		 GTK_EDITABLE (gnome_dentry_get_##entry_name##_entry (dee)));
+
+	SETUP_EDITABLE (name);
+	SETUP_EDITABLE (comment);
+	SETUP_EDITABLE (exec);
+	SETUP_EDITABLE (tryexec);
+	SETUP_EDITABLE (doc);
+
+#undef SETUP_EDITABLE
 	
-	if(file)
+	if (file != NULL)
 		gtk_entry_set_text(GTK_ENTRY(dee->exec_entry), file);
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
 			   "Application");
 	
 	
-	gtk_object_set_data(GTK_OBJECT(d),"pos", GINT_TO_POINTER(pos));
-	gtk_object_set_data(GTK_OBJECT(d),"exactpos",
-			    GINT_TO_POINTER(exactpos));
-	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
+	gtk_object_set_data (GTK_OBJECT(dialog), "pos", GINT_TO_POINTER (pos));
+	gtk_object_set_data (GTK_OBJECT(dialog), "exactpos",
+			     GINT_TO_POINTER (exactpos));
+	gtk_object_set_data (GTK_OBJECT (dialog), "panel", panel);
 
-	gtk_signal_connect(GTK_OBJECT(d),"clicked",
-			   GTK_SIGNAL_FUNC(really_add_launcher),
-			   dee);
-	gtk_signal_connect(GTK_OBJECT(dee), "destroy",
-			   GTK_SIGNAL_FUNC(gtk_object_unref), NULL);
+	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+			    GTK_SIGNAL_FUNC (really_add_launcher),
+			    dee);
+	/* YAIKES, the problem here is that the notebook will attempt
+	 * to destroy the dedit, so if we unref it in the close handler,
+	 * it will be finalized by the time the notebook will destroy it,
+	 * dedit is just a horrible thing */
+	gtk_signal_connect (GTK_OBJECT (dee), "destroy",
+			    GTK_SIGNAL_FUNC (gtk_object_unref), NULL);
 
-	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
+	gnome_dialog_close_hides(GNOME_DIALOG(dialog),FALSE);
 
-	gnome_dialog_set_default(GNOME_DIALOG(d),0);
+	gnome_dialog_set_default(GNOME_DIALOG(dialog),0);
 
-	gtk_widget_show_all (d);
-	panel_set_dialog_layer (d);
+	gtk_widget_show_all (dialog);
+	panel_set_dialog_layer (dialog);
 }
 
 Launcher *
-load_launcher_applet_from_info(char *name, char *comment,
-			       char **exec, int execn, char *icon,
-			       PanelWidget *panel, int pos,
-			       gboolean exactpos)
+load_launcher_applet_from_info (char *name, char *comment,
+				char **exec, int execn, char *icon,
+				PanelWidget *panel, int pos,
+				gboolean exactpos)
 {
-	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+	GnomeDesktopEntry *dentry = g_new0 (GnomeDesktopEntry, 1);
 	Launcher *launcher;
 
-	dentry->name = g_strdup(name);
-	dentry->comment = g_strdup(comment);
+	dentry->name = g_strdup (name);
+	dentry->comment = g_strdup (comment);
 	dentry->exec_length = execn;
-	dentry->exec = g_copy_vector(exec);
-	if(icon && *icon != '/')
-		dentry->icon = gnome_pixmap_file(icon);
+	dentry->exec = g_copy_vector (exec);
+
+	if (icon != NULL &&
+	    icon[0] != '/')
+		dentry->icon = gnome_pixmap_file (icon);
 	else
-		dentry->icon = g_strdup(icon);
+		dentry->icon = g_strdup (icon);
 	
-	dentry->type = g_strdup("Application");
+	dentry->type = g_strdup ("Application");
 
 	launcher = load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 	if (launcher != NULL)
@@ -701,27 +726,29 @@ load_launcher_applet_from_info(char *name, char *comment,
 }
 
 Launcher *
-load_launcher_applet_from_info_url(char *name, char *comment,
-				   char *url, char *icon,
-				   PanelWidget *panel, int pos,
-				   gboolean exactpos)
+load_launcher_applet_from_info_url (char *name, char *comment,
+				    char *url, char *icon,
+				    PanelWidget *panel, int pos,
+				    gboolean exactpos)
 {
 	char *exec[] = { NULL, NULL };
-	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+	GnomeDesktopEntry *dentry = g_new0 (GnomeDesktopEntry, 1);
 	Launcher *launcher;
 
-	dentry->name = g_strdup(name);
-	dentry->comment = g_strdup(comment);
+	dentry->name = g_strdup (name);
+	dentry->comment = g_strdup (comment);
 	dentry->exec_length = 1;
 	exec[0] = url;
-	dentry->exec = g_copy_vector(exec);
-	if(icon && *icon != '/')
-		dentry->icon = gnome_pixmap_file(icon);
-	else
-		dentry->icon = g_strdup(icon);
-	dentry->type = g_strdup("URL");
+	dentry->exec = g_copy_vector (exec);
 
-	launcher = load_launcher_applet_full(NULL, dentry, panel, pos, exactpos);
+	if (icon != NULL &&
+	    icon[0] != '/')
+		dentry->icon = gnome_pixmap_file (icon);
+	else
+		dentry->icon = g_strdup (icon);
+	dentry->type = g_strdup ("URL");
+
+	launcher = load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 	if (launcher != NULL)
 		launcher_save (launcher);
 
@@ -731,16 +758,16 @@ load_launcher_applet_from_info_url(char *name, char *comment,
 }
 
 Launcher *
-load_launcher_applet(char *params, PanelWidget *panel, int pos,
-		     gboolean exactpos)
+load_launcher_applet (char *params, PanelWidget *panel, int pos,
+		      gboolean exactpos)
 {
-	return load_launcher_applet_full(params, NULL, panel, pos, exactpos);
+	return load_launcher_applet_full (params, NULL, panel, pos, exactpos);
 }
 
 /* an imperfect conversion to gnome style, it's mostly the same but not
  * completely, this should work for 90% of cases */
 static void
-convert_dentry_to_gnome(GnomeDesktopEntry *dentry)
+convert_dentry_to_gnome (GnomeDesktopEntry *dentry)
 {
 	int i;
 
@@ -814,7 +841,7 @@ launcher_save (Launcher *launcher)
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->dentry != NULL);
 
-	if(launcher->dentry->is_kde)
+	if (launcher->dentry->is_kde)
 		convert_dentry_to_gnome(launcher->dentry);
 
 	if (launcher->dentry->location == NULL)
