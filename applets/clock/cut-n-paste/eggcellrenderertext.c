@@ -1133,20 +1133,6 @@ get_layout (EggCellRendererText *celltext,
   PangoAttrList *attr_list;
   PangoLayout *layout;
   PangoUnderline uline;
-  
-  layout = gtk_widget_create_pango_layout (widget, NULL);
-
-  if (!ellipsize)
-    {
-      pango_layout_set_text (layout, celltext->text, -1);
-    }
-  else
-    {
-      eel_pango_layout_set_text_ellipsized (layout,
-					    celltext->text,
-					    alloc_width,
-					    EEL_ELLIPSIZE_END);
-    }
 
   if (celltext->extra_attrs)
     attr_list = pango_attr_list_copy (celltext->extra_attrs);
@@ -1210,11 +1196,25 @@ get_layout (EggCellRendererText *celltext,
   if (celltext->rise_set)
     add_attr (attr_list, pango_attr_rise_new (celltext->rise));
   
+  layout = gtk_widget_create_pango_layout (widget, NULL);
+
   pango_layout_set_attributes (layout, attr_list);
   pango_layout_set_width (layout, -1);
 
   pango_attr_list_unref (attr_list);
   
+  if (!ellipsize)
+    {
+      pango_layout_set_text (layout, celltext->text, -1);
+    }
+  else
+    {
+      eel_pango_layout_set_text_ellipsized (layout,
+					    celltext->text,
+					    alloc_width,
+					    EEL_ELLIPSIZE_END);
+    }
+
   return layout;
 }
 
