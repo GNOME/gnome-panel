@@ -805,11 +805,14 @@ config_date (BonoboUIComponent *uic,
 
 	screen = gtk_widget_get_screen (cd->applet);
 
-	/* FIXME add GST, etc. */
+	/* FIXME add other time config tools. */
 	if (cd->config_tool && try_config_tool (screen, cd->config_tool))
 		return;
 
 	else if (try_config_tool (screen, "redhat-config-date"))
+		return;
+		
+	else if (try_config_tool (screen, "time-admin"))
 		return;
 		
 	dialog = gtk_message_dialog_new (NULL,
