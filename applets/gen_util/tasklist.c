@@ -467,7 +467,7 @@ display_help_dialog (BonoboUIComponent *uic,
 	GError *error = NULL;
 
 	gnome_help_display_desktop (
-			NULL, "tasklist", "tasklist", NULL, &error);
+			NULL, "window-list", "window-list", NULL, &error);
 	if (error) {
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
