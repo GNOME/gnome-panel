@@ -234,7 +234,6 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	GtkWidget *item, *menu;
 
 	menu = create_fake_menu_at (path,
-				    FALSE /* applets */,
 				    FALSE /* launcher_add */,
 				    label /* dir_name */,
 				    NULL /* pixmap_name */,

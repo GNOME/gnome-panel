@@ -118,7 +118,6 @@ static GList *icons_to_load = NULL;
 
 static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 				      FileRec *fr,
-				      gboolean applets,
 				      gboolean launcher_add,
 				      const char *dir_name,
 				      const char *pixmap_name,
@@ -256,6 +255,15 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Ian Main (imain@gtk.org)",
 	  "Elliot Lee (sopwith@redhat.com)",
 	  "Owen Taylor (otaylor@redhat.com)",
+	  "Mark McLoughlin (mark@skynet.ie)",
+	  "Alex Larsson (alexl@redhat.com)",
+	  "Martin Baulig (baulig@suse.de)",
+	  "Seth Nickell (snickell@stanford.edu)",
+	  "Darin Adler (darin@bentspoon.com)",
+	  "Glynn Foster (glynn.foster@sun.com)",
+	  "Stephen Browne (stephen.browne@sun.com)",
+	  "Anders Carlsson (andersca@gnu.org)",
+	  "Padraig O'Briain (padraig.obriain@sun.com)",
 	N_("Many many others ..."),
 	/* ... from the Monty Pythons show...  */
 	N_("and finally, The Knights Who Say ... NI!"),
@@ -283,7 +291,7 @@ about_cb (GtkWidget *widget, gpointer data)
 #endif
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			_("(C) 1997-2000 the Free Software Foundation"),
+			_("(C) 1997-2002 the Free Software Foundation"),
 			_("This program is responsible for launching "
 			"other applications, embedding small applets "
 			"within itself, world peace, and random X crashes."),
@@ -1941,8 +1949,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 				  G_CALLBACK (destroy_item_menu),
 				  sim);
 
-		/*applets have their own drag'n'drop*/
-		if ( ! applet && ! commie_mode) {
+		if ( ! commie_mode) {
 			gtk_drag_source_set(menuitem,
 					    GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 					    menu_item_targets, 1,
@@ -1963,6 +1970,32 @@ void
 setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, const char *title)
 {
 	setup_full_menuitem (menuitem, pixmap, title, NULL, FALSE, NULL);
+}
+
+static void
+setup_applet_drag (GtkWidget *menuitem, const char *iid)
+{
+        static GtkTargetEntry menu_item_targets[] = {
+		{ "application/x-panel-applet-iid", 0, 0 }
+	};
+	
+	if (iid == NULL ||
+	    commie_mode)
+		return;
+	
+	gtk_drag_source_set (menuitem,
+			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
+			     menu_item_targets, 1,
+			     GDK_ACTION_COPY);
+	
+	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
+			       G_CALLBACK (drag_data_get_string_cb),
+			       g_strdup (iid),
+			       (GClosureNotify)g_free,
+			       0 /* connect_flags */);
+	g_signal_connect (G_OBJECT (menuitem), "drag_end",
+			  G_CALLBACK (drag_end_menu_cb), NULL);
+
 }
 
 void
@@ -1988,30 +2021,6 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
 			  G_CALLBACK (drag_end_menu_cb), NULL);
-
-}
-
-static void
-setup_applet_drag (GtkWidget *menuitem, const char *goad_id)
-{
-        static GtkTargetEntry menu_item_targets[] = {
-		{ "application/x-panel-applet", 0, 0 }
-	};
-	
-	if (goad_id == NULL)
-		return;
-	
-	gtk_drag_source_set (menuitem,
-			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
-			     menu_item_targets, 1,
-			     GDK_ACTION_COPY);
-
-	/*note: goad_id should be alive long enough!!*/
-	g_signal_connect (G_OBJECT (menuitem), "drag_data_get",
-			    G_CALLBACK (drag_data_get_string_cb),
-			    (gpointer)goad_id);
-	g_signal_connect (G_OBJECT (menuitem), "drag_end",
-			    G_CALLBACK (drag_end_menu_cb), NULL);
 
 }
 
@@ -2050,14 +2059,6 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 				       "no_more_status_dialog","Panel");
 		gtk_widget_show_all (mbox);
 	}
-}
-
-static void
-add_applet (GtkWidget *w, const char *item_loc)
-{
-	/*
-	 * FIXME: remove all old applet's menu code
-	 */
 }
 
 static void
@@ -2231,7 +2232,6 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 
 			menuw = create_menu_at_fr (menuw,
 						   mf->fr,
-						   mf->applets,
 						   mf->launcher_add,
 						   mf->dir_name,
 						   mf->pixmap_name,
@@ -2247,7 +2247,6 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 
 GtkWidget *
 create_fake_menu_at (const char *menudir,
-		     gboolean applets,
 		     gboolean launcher_add,
 		     const char *dir_name,
 		     const char *pixmap_name)
@@ -2260,7 +2259,6 @@ create_fake_menu_at (const char *menudir,
 
 	mf = g_new0 (MenuFinfo, 1);
 	mf->menudir = g_strdup (menudir);
-	mf->applets = applets;
 	mf->launcher_add = launcher_add;
 	mf->dir_name = g_strdup (dir_name);
 	mf->pixmap_name = g_strdup (pixmap_name);
@@ -2279,7 +2277,6 @@ create_fake_menu_at (const char *menudir,
 static gboolean
 create_menuitem (GtkWidget *menu,
 		 FileRec *fr,
-		 gboolean applets,
 		 gboolean launcher_add,
 		 gboolean fake_submenus,
 		 gboolean *add_separator,
@@ -2295,12 +2292,6 @@ create_menuitem (GtkWidget *menu,
 	if(fr->type == FILE_REC_EXTRA)
 		return FALSE;
 
-
-	if(fr->type == FILE_REC_FILE && applets &&
-	   !fr->goad_id) {
-		g_warning(_("Can't get goad_id for applet, ignoring it"));
-		return FALSE;
-	}
 
 	sub = NULL;
 	if(fr->fullname) {
@@ -2324,13 +2315,11 @@ create_menuitem (GtkWidget *menu,
 
 		if(fake_submenus)
 			sub = create_fake_menu_at (fr->name,
-						   applets,
 						   launcher_add,
 						   itemname,
 						   fr->icon);
 		else
 			sub = create_menu_at_fr (NULL, fr,
-						 applets,
 						 launcher_add,
 						 itemname,
 						 fr->icon,
@@ -2355,18 +2344,14 @@ create_menuitem (GtkWidget *menu,
 						FALSE /* force_image */);
 	}
 
-	if (sub)
+	if (sub) {
 	        setup_full_menuitem (menuitem, NULL, itemname,
 				     NULL, FALSE, mf);
 
-	else if (strstr (fr->name,"/applets/") && fr->goad_id) {
-		setup_applet_drag (menuitem, fr->goad_id);
-		setup_full_menuitem (menuitem, NULL, itemname,
-				     fr->name, TRUE, mf);
-
-	} else
+	} else {
 	        setup_full_menuitem (menuitem, NULL, itemname,
 				     fr->name, FALSE, mf);
+	}
 
 
 	if(*add_separator) {
@@ -2385,10 +2370,6 @@ create_menuitem (GtkWidget *menu,
 			g_signal_connect (G_OBJECT (menuitem), "activate",
 					    G_CALLBACK (add_launcher),
 					    fr->name);
-		else if (applets)
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					    G_CALLBACK (add_applet),
-					    fr->name);
 		else
 			g_signal_connect (G_OBJECT (menuitem), "activate",
 					    G_CALLBACK (activate_app_def),
@@ -2403,7 +2384,6 @@ create_menuitem (GtkWidget *menu,
 GtkWidget *
 create_menu_at (GtkWidget *menu,
 		const char *menudir,
-		gboolean applets,
 		gboolean launcher_add,
 		const char *dir_name,
 		const char *pixmap_name,
@@ -2412,7 +2392,6 @@ create_menu_at (GtkWidget *menu,
 {
 	return create_menu_at_fr (menu,
 				  fr_get_dir (menudir),
-				  applets,
 				  launcher_add,
 				  dir_name,
 				  pixmap_name,
@@ -2423,7 +2402,6 @@ create_menu_at (GtkWidget *menu,
 static GtkWidget *
 create_menu_at_fr (GtkWidget *menu,
 		   FileRec *fr,
-		   gboolean applets,
 		   gboolean launcher_add,
 		   const char *dir_name,
 		   const char *pixmap_name,
@@ -2483,7 +2461,6 @@ create_menu_at_fr (GtkWidget *menu,
 			if (tfr->type == FILE_REC_SEP)
 				add_menu_separator (menu);				
 			else if (create_menuitem (menu, tfr,
-						  applets,
 						  launcher_add,
 						  fake_submenus,
 						  &add_separator,
@@ -2493,7 +2470,6 @@ create_menu_at_fr (GtkWidget *menu,
 		}
 	}
 
-	mf->applets        = applets;
 	mf->launcher_add   = launcher_add;
 	mf->dir_name       = g_strdup (dir_name);
 	mf->pixmap_name    = g_strdup (pixmap_name);
@@ -2624,8 +2600,6 @@ add_bonobo_applet (GtkWidget  *widget,
 	panel = get_panel_from_menu_data (widget, TRUE);
 
 	panel_applet_frame_load (iid, panel, -1, NULL);
-
-	/*g_free (iid);*/
 }
 
 static const gchar applet_requirements [] = 
@@ -2708,10 +2682,14 @@ create_applets_menu (GtkWidget *menu)
 
 		menuitem = applet_menu_append (prev_menu, name, icon);
 
-		g_signal_connect (G_OBJECT (menuitem),
-				  "activate",
-				  G_CALLBACK (add_bonobo_applet),
-				  g_strdup (iid));
+		setup_applet_drag (menuitem, iid);
+
+		g_signal_connect_data (G_OBJECT (menuitem),
+				       "activate",
+				       G_CALLBACK (add_bonobo_applet),
+				       g_strdup (iid),
+				       (GClosureNotify)g_free,
+				       0 /* flags */);
 	}
 
 	CORBA_free (list);
@@ -3012,14 +2990,12 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 	if ( ! fake ||
 	     menu != NULL) {
 		menu = create_menu_at (menu, "applications:/",
-				       FALSE /* applets */,
 				       launcher_add,
 				       _("Applications"),
 				       "gnome-logo-icon-transparent.png",
 				       fake_submenus, FALSE);
 	} else {
 		menu = create_fake_menu_at ("applications:/",
-					    FALSE /* applets */,
 					    launcher_add,
 					    _("Applications"),
 					    "gnome-logo-icon-transparent.png");
@@ -3048,13 +3024,11 @@ create_distribution_menu (GtkWidget *menu,
 
 	if (!fake || menu) {
 		menu = create_menu_at (menu, info->menu_path,
-				       FALSE /* applets */,
 				       launcher_add,
 				       info->menu_name, pixmap_file,
 				       fake_submenus, FALSE);
 	} else {
 		menu = create_fake_menu_at (info->menu_path,
-					    FALSE /* applets */,
 					    launcher_add,
 					    info->menu_name, pixmap_file);
 	}
@@ -3085,7 +3059,6 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 	    menu != NULL) {
 		menu = create_menu_at (menu, 
 				       uri,
-				       FALSE /* applets */,
 				       launcher_add,
 				       _("KDE menus"), 
 				       pixmap_name,
@@ -3093,7 +3066,6 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 				       force);
 	} else {
 		menu = create_fake_menu_at (uri,
-					    FALSE /* applets */,
 					    launcher_add,
 					    _("KDE menus"),
 					    pixmap_name);
@@ -3412,14 +3384,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	/* Add Menu */
 
 	m = create_applets_menu (menu);
-	/*if (m) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
-					   _("Applet"));
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
-		}*/
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3869,8 +3833,7 @@ create_root_menu (GtkWidget *root_menu,
 	/* in commie mode the applets menu doesn't make sense */
 	if ( ! commie_mode &&
 	    flags & MAIN_MENU_APPLETS) {
-		/* FIXME: this doesn't work! */
-		/*create_applets_menu (); */
+		create_applets_menu (root_menu);
 	}
 
 	if (flags & MAIN_MENU_DISTRIBUTION &&
@@ -3911,7 +3874,7 @@ create_root_menu (GtkWidget *root_menu,
 	/* in commie mode the applets menu doesn't make sense */
 	if (!commie_mode && (flags & MAIN_MENU_APPLETS_SUB)) {
 		menu = create_applets_menu (NULL);
-		if (menu) {
+		if (menu != NULL) {
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
 			                           _("Applets"));
@@ -4019,7 +3982,6 @@ add_menu_widget (Menu *menu,
 		menu->menu = NULL;
 		for(li = menudirl; li != NULL; li = li->next)
 			menu->menu = create_menu_at (menu->menu, li->data,
-						     FALSE /* applets */,
 						     FALSE /* launcher_add */,
 						     NULL, NULL,
 						     fake_subs, FALSE);

@@ -1285,7 +1285,7 @@ get_target_list (void)
 		{ "x-url/ftp",                           0, TARGET_NETSCAPE_URL },
 		{ "_NETSCAPE_URL",                       0, TARGET_NETSCAPE_URL },
 		{ "application/x-panel-directory",       0, TARGET_DIRECTORY },
-		{ "application/x-panel-applet",          0, TARGET_APPLET },
+		{ "application/x-panel-applet-iid",      0, TARGET_APPLET },
 		{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
 		{ "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
 		{ "application/x-color",                 0, TARGET_COLOR },
@@ -1529,9 +1529,8 @@ drag_data_recieved_cb (GtkWidget	*widget,
 			gtk_drag_finish (context, FALSE, FALSE, time);
 			return;
 		}
-		/*
-		 * FIXME: sort out applet's drag and drop
-		 */
+		panel_applet_frame_load ((char *)selection_data->data,
+					 panel, pos, NULL);
 		break;
 	case TARGET_APPLET_INTERNAL:
 		drop_internal_applet (panel, pos, (char *)selection_data->data,

@@ -203,45 +203,6 @@ get_mfiles_from_menudir (const char *menuuri)
 	return g_slist_reverse (list);
 }
 
-static char *
-get_applet_goad_id_from_ditem(QuickDesktopItem *ii)
-{
-#ifdef MENU_FENTRY_DEBUG
-  printf ("GET THAT GOAD OUT OF HERE...menu-fentry.c get_applet_gaod_id_from_ditem\n");
-#endif
-  return NULL;
-  /*
-	int i;
-	int constantlen = strlen ("--activate-goad-server");
-
-	g_return_val_if_fail (ii != NULL, NULL);
-
-	if (ii->exec == NULL ||
-	    ii->type == NULL)
-		return NULL;
-	
-	if (strcmp (ii->type, "PanelApplet") == 0) {
-		return g_strjoinv (" ", ii->exec);
-	} else {
-		if (ii->exec[0] == NULL)
-			return NULL;
-		//this is here as a horrible hack since that's the way it
-		//  used to work, but now one should make the .desktop type
-		//  PanelApplet
-		for(i=1;ii->exec[i];i++) {
-			if(strncmp("--activate-goad-server",
-				   ii->exec[i],constantlen)==0) {
-				if(strlen(ii->exec[i])>constantlen)
-					return g_strdup(&ii->exec[i][constantlen+1]);
-				else
-					return g_strdup(ii->exec[i+1]);
-			}
-		}
-	}
-	return NULL;
-*/
-}
-
 static void
 fr_free (FileRec *fr, gboolean free_fr)
 {
@@ -256,8 +217,6 @@ fr_free (FileRec *fr, gboolean free_fr)
 	fr->comment = NULL;
 	g_free (fr->icon);
 	fr->icon = NULL;
-	g_free (fr->goad_id);
-	fr->goad_id = NULL;
 	g_free (fr->tryexec_path);
 	fr->tryexec_path = NULL;
 
@@ -392,10 +351,6 @@ fr_fill_dir (FileRec *fr, int sublevels)
 				ffr->comment = qitem->comment;
 				qitem->comment = NULL;
 				ffr->tryexec_path = tryexec_path;
-
-				/* FIXME: we don't need this shit I don't think */
-				ffr->goad_id =
-					get_applet_goad_id_from_ditem (qitem);
 
 				quick_desktop_item_destroy (qitem);
 

@@ -14,7 +14,6 @@ typedef struct _MFile MFile;
 
 struct _MenuFinfo {
 	char *menudir;
-	gboolean applets;
 	gboolean launcher_add;
 	char *dir_name;
 	char *pixmap_name;	
@@ -42,7 +41,6 @@ struct _FileRec {
 	char *comment;
 	char *fullname;
 	char *icon;
-	char *goad_id;
 	char *tryexec_path;
 	DirRec *parent;
 	time_t mtime;
@@ -58,8 +56,6 @@ struct _DirRec {
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/
 };
-
-char * get_applet_goad_id_from_dentry(GnomeDesktopItem *ii);
 
 GSList * get_mfiles_from_menudir(const char *menudir);
 

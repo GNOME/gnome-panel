@@ -86,14 +86,12 @@ void		init_menus		(void);
 
 GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,
-					 gboolean applets,
 					 gboolean launcher_add,
 					 const char *dir_name,
 					 const char *pixmap_name,
 					 gboolean fake_submenus,
 					 gboolean force);
 GtkWidget *	create_fake_menu_at	(const char *menudir,
-					 gboolean applets,
 					 gboolean launcher_add,
 					 const char *dir_name,
 					 const char *pixmap_name);
