@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-03-07 00:02+0300\n"
+"POT-Creation-Date: 2002-03-11 19:24+0000\n"
 "PO-Revision-Date: 2002-03-07 00:26+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -206,7 +206,7 @@ msgid "Window List"
 msgstr "Список окон"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:417
+#: applets/gen_util/pager.c:431 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Переключатель рабочих мест"
 
@@ -236,13 +236,13 @@ msgstr ""
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:440
+#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:445
+#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
 #: gnome-panel/foobar-widget.c:431 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -268,7 +268,7 @@ msgstr "%a %d %b"
 msgid "%A, %B %d"
 msgstr "%a %d %b"
 
-#: applets/gen_util/clock.c:470
+#: applets/gen_util/clock.c:473
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
@@ -276,55 +276,55 @@ msgstr "%A, %B %d %Y"
 #. * should change is the number 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:673
+#: applets/gen_util/clock.c:676
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=24"
 
-#: applets/gen_util/clock.c:864
+#: applets/gen_util/clock.c:867
 msgid "Clock Properties"
 msgstr "Свойства часов"
 
-#: applets/gen_util/clock.c:885
+#: applets/gen_util/clock.c:888
 msgid "Time Format"
 msgstr "Формат времени"
 
-#: applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:900
 msgid "12 hour"
 msgstr "12-часовой"
 
-#: applets/gen_util/clock.c:905
+#: applets/gen_util/clock.c:908
 msgid "24 hour"
 msgstr "24-часовой"
 
-#: applets/gen_util/clock.c:936
+#: applets/gen_util/clock.c:939
 msgid "Show date in applet"
 msgstr "Показывать дату в апплете"
 
-#: applets/gen_util/clock.c:947
+#: applets/gen_util/clock.c:950
 msgid "Show date in tooltip"
 msgstr "Показывать дату в подсказке"
 
-#: applets/gen_util/clock.c:958
+#: applets/gen_util/clock.c:961
 msgid "Use GMT"
 msgstr "Использовать GMT"
 
-#: applets/gen_util/clock.c:969
+#: applets/gen_util/clock.c:972
 msgid "Unix time"
 msgstr "Unix-время"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:976
 msgid "Internet time"
 msgstr "Время Internet"
 
-#: applets/gen_util/clock.c:1078
+#: applets/gen_util/clock.c:1081
 msgid "Clock Applet"
 msgstr "Апплет 'Часы'"
 
-#: applets/gen_util/clock.c:1079
+#: applets/gen_util/clock.c:1082
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "(с) 1998-2001 Фонд Свободного Программного Обеспечения"
 
-#: applets/gen_util/clock.c:1080
+#: applets/gen_util/clock.c:1083
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
@@ -478,15 +478,68 @@ msgstr "Проверка почты"
 msgid "New Mail"
 msgstr "Новая почта"
 
-#: applets/gen_util/pager.c:418
+#: applets/gen_util/pager.glade.h:1
+msgid "Number of _workspaces:"
+msgstr ""
+
+#: applets/gen_util/pager.glade.h:2
+#, fuzzy
+msgid "Rows"
+msgstr "Обзор"
+
+#: applets/gen_util/pager.glade.h:3
+#, fuzzy
+msgid "Show _all workspaces"
+msgstr "Переключиться между рабочими местами"
+
+#: applets/gen_util/pager.glade.h:4
+msgid "Show only the _current workspace"
+msgstr ""
+
+#: applets/gen_util/pager.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr ""
+
+#: applets/gen_util/pager.glade.h:7
+#, fuzzy
+msgid "Workspace Switcher Properties"
+msgstr "Переключатель рабочих мест"
+
+#: applets/gen_util/pager.glade.h:8
+#, fuzzy
+msgid "Workspaces"
+msgstr "Переключатель рабочих мест"
+
+#: applets/gen_util/pager.c:296
+#, c-format
+msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:307
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:322
+#, c-format
+msgid ""
+"Error loading display_all_workspaces value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:432
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(C) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:419
+#: applets/gen_util/pager.c:433
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
-msgstr "Переключатель рабочих мест показывает уменьшенную версию рабочих мест, которая позволяет управлять окнами."
+msgstr ""
+"Переключатель рабочих мест показывает уменьшенную версию рабочих мест, "
+"которая позволяет управлять окнами."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -520,11 +573,60 @@ msgstr "(с) 1998-2001 Фонд Свободного Программного Обеспечения"
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
-msgstr "Апплет принтера позволяет перетаскивать файлы для печати с помощью указанной команды"
+msgstr ""
+"Апплет принтера позволяет перетаскивать файлы для печати с помощью указанной "
+"команды"
 
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
 msgstr "Невозможно создать апплет!\n"
+
+#: applets/gen_util/tasklist.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:2
+msgid "Restore to current _workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Restore to na_tive workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
+msgid "Show windows from _current workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:5
+msgid "Show windows from a_ll workspaces"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:6
+msgid "When restoring minimized windows"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:7
+#, fuzzy
+msgid "Window List Properties"
+msgstr "Свойства индикатора входящей почты"
+
+#: applets/gen_util/tasklist.glade.h:8
+#, fuzzy
+msgid "Window List content"
+msgstr "Список окон"
+
+#: applets/gen_util/tasklist.glade.h:9
+#, fuzzy
+msgid "Window grouping"
+msgstr "Список окон"
+
+#: applets/gen_util/tasklist.glade.h:10
+msgid "_Always group windows"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:11
+msgid "_Never group windows"
+msgstr ""
 
 #: applets/gen_util/tasklist.c:508
 msgid "(c) 2001 Red Hat, Inc"
@@ -533,7 +635,8 @@ msgstr "(c) 2001 Red Hat, Inc"
 #: applets/gen_util/tasklist.c:509
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
-msgstr "Список окон показывает список всех видимых окон и позволяет просматривать их."
+msgstr ""
+"Список окон показывает список всех видимых окон и позволяет просматривать их."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -843,24 +946,24 @@ msgid "Global panel properties"
 msgstr "Глобальные свойства панели"
 
 #: gnome-panel/gnome-panel-properties.glade.h:1
-msgid "<Alt>F1"
-msgstr "<Alt>F1"
+msgid "&lt;Alt&gt;F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:2
-msgid "<Alt>F1F1"
-msgstr "<<Alt>F1F1"
+msgid "&lt;Alt&gt;F1F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:3
-msgid "<Alt>F2"
-msgstr "<Alt>F2"
+msgid "&lt;Alt&gt;F2"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:4
-msgid "<Control><Alt>m"
-msgstr "<Control><Alt>m"
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:5
-msgid "<Control><Alt>r"
-msgstr "<Control><Alt>r"
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:6
 msgid "Animation"
@@ -911,7 +1014,7 @@ msgstr "Назначение клавиш"
 msgid "Medium"
 msgstr "Средняя"
 
-#: gnome-panel/gnome-panel-properties.glade.h:18
+#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:301
 #: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3229
 #: gnome-panel/menu.c:3788 gnome-panel/menu.c:4013
 msgid "Menu"
@@ -1251,6 +1354,25 @@ msgstr "Настройки"
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Задать название профиля для загрузки"
+
+#: gnome-panel/menu-ditem.c:119
+#, fuzzy, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Не удалось запустить</b>\n"
+"\n"
+"Подробности: %s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu-ditem.c:186 gnome-panel/menu-ditem.c:266
+#, fuzzy
+msgid "Desktop entry properties"
+msgstr "Свойства меню"
 
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
@@ -1659,11 +1781,11 @@ msgstr "Невозможно создать меню, используется главное меню!"
 msgid "There was a problem loading the applet."
 msgstr "При загрузке апплета возникла проблема."
 
-#: gnome-panel/panel-applet-frame.c:181
+#: gnome-panel/panel-applet-frame.c:183
 msgid "Cannot register control widget\n"
 msgstr "Не удалось зарегистрировать управляющий виджет\n"
 
-#: gnome-panel/panel-applet-frame.c:449
+#: gnome-panel/panel-applet-frame.c:451
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
@@ -1827,7 +1949,8 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"Возникла проблема при регистрации панели с помощью сервера bonobo-activation.\n"
+"Возникла проблема при регистрации панели с помощью сервера bonobo-"
+"activation.\n"
 "Код ошибки: %d\n"
 "Панель будет закрыта."
 
@@ -1931,3 +2054,18 @@ msgstr "Апплет содержит цвет фона панели или изображение"
 #: libpanel-applet/panel-applet.c:816
 msgid "The Applet's flags"
 msgstr "Флаги апплета"
+
+#~ msgid "<Alt>F1"
+#~ msgstr "<Alt>F1"
+
+#~ msgid "<Alt>F1F1"
+#~ msgstr "<<Alt>F1F1"
+
+#~ msgid "<Alt>F2"
+#~ msgstr "<Alt>F2"
+
+#~ msgid "<Control><Alt>m"
+#~ msgstr "<Control><Alt>m"
+
+#~ msgid "<Control><Alt>r"
+#~ msgstr "<Control><Alt>r"

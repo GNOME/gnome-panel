@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.0\n"
-"POT-Creation-Date: 2002-03-06 00:39+0000\n"
+"POT-Creation-Date: 2002-03-11 19:24+0000\n"
 "PO-Revision-Date: 2002-03-06 00:45+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <happyguy_pt@hotmail.com>\n"
@@ -46,7 +46,7 @@ msgstr "Sobre..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
 #: gnome-panel/drawer.c:660 gnome-panel/launcher.c:725
-#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4155
+#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4147
 #: gnome-panel/status.c:375 gnome-panel/swallow.c:453
 msgid "Help"
 msgstr "Ajuda"
@@ -56,7 +56,7 @@ msgstr "Ajuda"
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
 #: gnome-panel/drawer.c:657 gnome-panel/launcher.c:723 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:1560 gnome-panel/menu.c:3439 gnome-panel/menu.c:4145
+#: gnome-panel/menu.c:1560 gnome-panel/menu.c:3431 gnome-panel/menu.c:4137
 msgid "Properties..."
 msgstr "Propriedades..."
 
@@ -207,7 +207,7 @@ msgid "Window List"
 msgstr "Lista Janelas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:417 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:431 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Alternador Ambientes"
 
@@ -237,13 +237,13 @@ msgstr ""
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:440
+#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:445
+#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
 #: gnome-panel/foobar-widget.c:431 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -269,7 +269,7 @@ msgstr "%a %d %b"
 msgid "%A, %B %d"
 msgstr "%A, %B %d"
 
-#: applets/gen_util/clock.c:470
+#: applets/gen_util/clock.c:473
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
@@ -277,55 +277,55 @@ msgstr "%A, %B %d %Y"
 #. * should change is the number 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:673
+#: applets/gen_util/clock.c:676
 msgid "clock/hourformat=12"
 msgstr "relógio/formatohora=12"
 
-#: applets/gen_util/clock.c:864
+#: applets/gen_util/clock.c:867
 msgid "Clock Properties"
 msgstr "Propriedades do Relógio"
 
-#: applets/gen_util/clock.c:885
+#: applets/gen_util/clock.c:888
 msgid "Time Format"
 msgstr "Formato da Hora"
 
-#: applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:900
 msgid "12 hour"
 msgstr "12 horas"
 
-#: applets/gen_util/clock.c:905
+#: applets/gen_util/clock.c:908
 msgid "24 hour"
 msgstr "24 horas"
 
-#: applets/gen_util/clock.c:936
+#: applets/gen_util/clock.c:939
 msgid "Show date in applet"
 msgstr "Mostrar data na applet"
 
-#: applets/gen_util/clock.c:947
+#: applets/gen_util/clock.c:950
 msgid "Show date in tooltip"
 msgstr "Mostrar data na dica"
 
-#: applets/gen_util/clock.c:958
+#: applets/gen_util/clock.c:961
 msgid "Use GMT"
 msgstr "Usar GMT"
 
-#: applets/gen_util/clock.c:969
+#: applets/gen_util/clock.c:972
 msgid "Unix time"
 msgstr "Hora Unix"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:976
 msgid "Internet time"
 msgstr "Hora Internet"
 
-#: applets/gen_util/clock.c:1078
+#: applets/gen_util/clock.c:1081
 msgid "Clock Applet"
 msgstr "Applet Relógio"
 
-#: applets/gen_util/clock.c:1079
+#: applets/gen_util/clock.c:1082
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "(c) 1998-2001 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1080
+#: applets/gen_util/clock.c:1083
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
@@ -512,15 +512,30 @@ msgstr "Propriedades do Alternador Ambientes"
 msgid "Workspaces"
 msgstr "Ambientes"
 
-#: applets/gen_util/pager.glade.h:9 applets/gen_util/tasklist.glade.h:11
-msgid "_Done"
-msgstr "Termina_do"
+#: applets/gen_util/pager.c:296
+#, c-format
+msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+msgstr ""
 
-#: applets/gen_util/pager.c:418
+#: applets/gen_util/pager.c:307
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:322
+#, c-format
+msgid ""
+"Error loading display_all_workspaces value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:432
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:419
+#: applets/gen_util/pager.c:433
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -608,7 +623,7 @@ msgstr "Agrupamento janelas"
 msgid "_Always group windows"
 msgstr "_Agrupar sempre janelas"
 
-#: applets/gen_util/tasklist.glade.h:12
+#: applets/gen_util/tasklist.glade.h:11
 msgid "_Never group windows"
 msgstr "_Nunca agrupar janelas"
 
@@ -620,7 +635,8 @@ msgstr "(c) 2001 Red Hat, Inc"
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
-"A Lista de Janelas mostra uma lista de todas as janelas visíveis e permite-lhe pesquisa-las."
+"A Lista de Janelas mostra uma lista de todas as janelas visíveis e permite-"
+"lhe pesquisa-las."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -657,7 +673,7 @@ msgid "???"
 msgstr "???"
 
 #: gnome-panel/applet.c:547 gnome-panel/applet.c:551
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3757
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3749
 msgid "Panel"
 msgstr "Painel"
 
@@ -670,7 +686,7 @@ msgstr "Incapaz de encontrar ficheiro de imagem %s"
 msgid "Remove from panel"
 msgstr "Remover do painel"
 
-#: gnome-panel/applet.c:1186
+#: gnome-panel/applet.c:1225
 msgid "Can't find an empty spot"
 msgstr "Incapaz de encontrar um espaço vazio"
 
@@ -755,7 +771,7 @@ msgstr "Mostrar botão de esconder"
 msgid "Enable hidebutton arrow"
 msgstr "Mostrar seta no botão de esconder"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3284
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3276
 msgid "Drawer"
 msgstr "Gaveta"
 
@@ -769,7 +785,7 @@ msgstr ""
 "talvez não esteja instalado.\n"
 "Encontra-se no pacote gnome-pim."
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3741
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3733
 msgid "Run..."
 msgstr "Executar..."
 
@@ -841,7 +857,7 @@ msgstr "%l:%M %p"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/foobar-widget.c:442 gnome-panel/panel.c:2440
+#: gnome-panel/foobar-widget.c:442 gnome-panel/panel.c:2438
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -873,8 +889,8 @@ msgstr "Formato"
 msgid "No windows open"
 msgstr "Nenhuma janela aberta"
 
-#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2820
-#: gnome-panel/menu.c:2826
+#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2812
+#: gnome-panel/menu.c:2818
 msgid "Applications"
 msgstr "Aplicações"
 
@@ -1003,9 +1019,9 @@ msgstr "Atalhos de teclado"
 msgid "Medium"
 msgstr "Média"
 
-#: gnome-panel/gnome-panel-properties.glade.h:18
-#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3237
-#: gnome-panel/menu.c:3796 gnome-panel/menu.c:4021
+#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:301
+#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3229
+#: gnome-panel/menu.c:3788 gnome-panel/menu.c:4013
 msgid "Menu"
 msgstr "Menu"
 
@@ -1311,7 +1327,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3573
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3565
 msgid "Log out"
 msgstr "Terminar sessão"
 
@@ -1319,7 +1335,7 @@ msgstr "Terminar sessão"
 msgid "Log out of GNOME"
 msgstr "Sair do GNOME"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3560
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3552
 msgid "Lock screen"
 msgstr "Trancar ecrã"
 
@@ -1358,12 +1374,30 @@ msgstr "Preferências"
 msgid "Specify a profile name to load"
 msgstr "Especificar um nome de perfil a carregar"
 
+#: gnome-panel/menu-ditem.c:119
+#, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Incapaz de gravar alterações à entrada de menu</b>\n"
+"\n"
+"Detalhes: %s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu-ditem.c:186 gnome-panel/menu-ditem.c:266
+msgid "Desktop entry properties"
+msgstr "Propriedades da entrada Ambiente"
+
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
 msgstr "Incapaz de abrir directório, a utilizar o menu principal!"
 
-#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3460
-#: gnome-panel/menu.c:4151
+#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3452
+#: gnome-panel/menu.c:4143
 msgid "Edit menus..."
 msgstr "Editar menus..."
 
@@ -1392,7 +1426,7 @@ msgid "Global main menu"
 msgstr "Menu principal global"
 
 #: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
-#: gnome-panel/menu.c:3246
+#: gnome-panel/menu.c:3238
 msgid "Main menu"
 msgstr "Menu principal"
 
@@ -1606,48 +1640,48 @@ msgstr "Você já tem um objecto de estados no painel. Apenas pode ter um"
 msgid "query returned exception %s\n"
 msgstr "pesquisa devolveu excepção %s\n"
 
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2723
 msgid "%I: %M: %S: %p"
 msgstr "%I: %M: %S: %p"
 
-#: gnome-panel/menu.c:2738
+#: gnome-panel/menu.c:2730
 msgid "You can only have one menu panel at a time."
 msgstr "Apenas pode ter um painel de menu de cada vez."
 
-#: gnome-panel/menu.c:2760
+#: gnome-panel/menu.c:2752
 msgid "Menu panel"
 msgstr "Painel de menu"
 
-#: gnome-panel/menu.c:2768 gnome-panel/panel-config.c:1497
+#: gnome-panel/menu.c:2760 gnome-panel/panel-config.c:1497
 #: gnome-panel/panel-config.c:1619
 msgid "Edge panel"
 msgstr "Painel lateral"
 
-#: gnome-panel/menu.c:2776 gnome-panel/panel-config.c:1504
+#: gnome-panel/menu.c:2768 gnome-panel/panel-config.c:1504
 #: gnome-panel/panel-config.c:1630
 msgid "Corner panel"
 msgstr "Painel de canto"
 
-#: gnome-panel/menu.c:2784 gnome-panel/panel-config.c:1510
+#: gnome-panel/menu.c:2776 gnome-panel/panel-config.c:1510
 #: gnome-panel/panel-config.c:1641
 msgid "Sliding panel"
 msgstr "Painel deslizante"
 
-#: gnome-panel/menu.c:2792 gnome-panel/panel-config.c:1516
+#: gnome-panel/menu.c:2784 gnome-panel/panel-config.c:1516
 #: gnome-panel/panel-config.c:1652
 msgid "Floating panel"
 msgstr "Painel flutuante"
 
 #. force_image
-#: gnome-panel/menu.c:2889 gnome-panel/menu.c:2896 gnome-panel/menu.c:3633
+#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2888 gnome-panel/menu.c:3625
 msgid "KDE menus"
 msgstr "Menus KDE"
 
-#: gnome-panel/menu.c:2969
+#: gnome-panel/menu.c:2961
 msgid "You cannot remove your last panel."
 msgstr "Não pode remover o seu último painel."
 
-#: gnome-panel/menu.c:2981
+#: gnome-panel/menu.c:2973
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1655,88 +1689,88 @@ msgstr ""
 "Quando um painel é removido, o painel e as suas\n"
 "configurações de applets são perdidas. Remover este painel?"
 
-#: gnome-panel/menu.c:3256
+#: gnome-panel/menu.c:3248
 msgid "Programs menu"
 msgstr "Menu de aplicações"
 
-#: gnome-panel/menu.c:3266
+#: gnome-panel/menu.c:3258
 msgid "Launcher..."
 msgstr "Iniciador..."
 
-#: gnome-panel/menu.c:3274
+#: gnome-panel/menu.c:3266
 msgid "Launcher from menu"
 msgstr "Iniciar do menu"
 
-#: gnome-panel/menu.c:3294
+#: gnome-panel/menu.c:3286
 msgid "Log out button"
 msgstr "Botão para terminar sessão"
 
-#: gnome-panel/menu.c:3304
+#: gnome-panel/menu.c:3296
 msgid "Lock button"
 msgstr "Botão para trancar ecrã"
 
-#: gnome-panel/menu.c:3314
+#: gnome-panel/menu.c:3306
 msgid "Swallowed app..."
 msgstr "Aplicação \"engolida\"..."
 
-#: gnome-panel/menu.c:3321
+#: gnome-panel/menu.c:3313
 msgid "Status dock"
 msgstr "Objecto de estados"
 
-#: gnome-panel/menu.c:3335
+#: gnome-panel/menu.c:3327
 msgid "Cannot execute panel global properties"
 msgstr "Incapaz de executar propriedades genéricas do painel"
 
-#: gnome-panel/menu.c:3373
+#: gnome-panel/menu.c:3365
 msgid "Remove this panel..."
 msgstr "Remover este painel..."
 
-#: gnome-panel/menu.c:3375 gnome-panel/menu.c:3423
+#: gnome-panel/menu.c:3367 gnome-panel/menu.c:3415
 msgid "Remove this panel"
 msgstr "Apagar este painel"
 
-#: gnome-panel/menu.c:3390
+#: gnome-panel/menu.c:3382
 msgid "Cannot launch nautilus!"
 msgstr "Incapaz de lançar nautilus!"
 
-#: gnome-panel/menu.c:3402
+#: gnome-panel/menu.c:3394
 msgid "Add to panel"
 msgstr "Adicionar ao painel"
 
-#: gnome-panel/menu.c:3414
+#: gnome-panel/menu.c:3406
 msgid "Create panel"
 msgstr "Criar painel"
 
-#: gnome-panel/menu.c:3451
+#: gnome-panel/menu.c:3443
 msgid "Global Preferences..."
 msgstr "Preferências globais..."
 
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3462
 msgid "Reread all menus"
 msgstr "Reler todos os menus"
 
-#: gnome-panel/menu.c:3484
+#: gnome-panel/menu.c:3476
 msgid "Panel Manual..."
 msgstr "Manual do Painel..."
 
-#: gnome-panel/menu.c:3496
+#: gnome-panel/menu.c:3488
 msgid "Cannot execute xscreensaver"
 msgstr "Incapaz de executar o xscreensaver"
 
-#: gnome-panel/menu.c:3515
+#: gnome-panel/menu.c:3507
 msgid "About the panel..."
 msgstr "Sobre o painel..."
 
-#: gnome-panel/menu.c:3529
+#: gnome-panel/menu.c:3521
 msgid "About GNOME..."
 msgstr "Sobre o GNOME..."
 
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3558
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr ""
 "Tranque o ecrã para que possa abandonar temporariamente o seu computador"
 
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3571
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1744,31 +1778,31 @@ msgstr ""
 "Termine esta sessão para fazer log in com um utilizador diferente ou para "
 "desligar o seu computador"
 
-#: gnome-panel/menu.c:3707
+#: gnome-panel/menu.c:3699
 msgid "Programs"
 msgstr "Aplicações"
 
-#: gnome-panel/menu.c:3724
+#: gnome-panel/menu.c:3716
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3747
+#: gnome-panel/menu.c:3739
 msgid "Run a command"
 msgstr "Executar um comando"
 
-#: gnome-panel/menu.c:3765
+#: gnome-panel/menu.c:3757
 msgid "Desktop"
 msgstr "Ambiente"
 
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3790
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3848 gnome-panel/menu.c:3876 gnome-panel/menu.c:4061
+#: gnome-panel/menu.c:3840 gnome-panel/menu.c:3868 gnome-panel/menu.c:4053
 msgid "Main Menu"
 msgstr "Menu Principal"
 
-#: gnome-panel/menu.c:3870
+#: gnome-panel/menu.c:3862
 msgid "Can't create menu, using main menu!"
 msgstr "Incapaz de criar menu, a utilizar o menu principal!"
 
@@ -1776,11 +1810,11 @@ msgstr "Incapaz de criar menu, a utilizar o menu principal!"
 msgid "There was a problem loading the applet."
 msgstr "Ocorreu um problema ao carregar a applet."
 
-#: gnome-panel/panel-applet-frame.c:181
+#: gnome-panel/panel-applet-frame.c:183
 msgid "Cannot register control widget\n"
 msgstr "Incapaz de registar widget de controlo\n"
 
-#: gnome-panel/panel-applet-frame.c:449
+#: gnome-panel/panel-applet-frame.c:451
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Incapaz de obter interface AppletShell do controlo\n"
 
@@ -1959,12 +1993,12 @@ msgstr "Documento de ajuda não encontrado"
 msgid "No document to show"
 msgstr "Nenhum documento para mostrar"
 
-#: gnome-panel/panel.c:976
+#: gnome-panel/panel.c:974
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:2466
+#: gnome-panel/panel.c:2464
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2016,55 +2050,46 @@ msgstr "Tetsar Applet Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Testar Fábrica Applets Bonobo"
 
-#: libpanel-applet/panel-applet.c:608
+#: libpanel-applet/panel-applet.c:607
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Recebido tipo de fundo '%s' incompleto"
 
-#: libpanel-applet/panel-applet.c:622
+#: libpanel-applet/panel-applet.c:621
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Recebido tipo de fundo '%s' incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:631
+#: libpanel-applet/panel-applet.c:630
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Falha ao obter pixmap %s"
 
-#: libpanel-applet/panel-applet.c:638
+#: libpanel-applet/panel-applet.c:637
 msgid "Unknown background type received"
 msgstr "Recebido tipo de fundo desconhecido"
 
-#: libpanel-applet/panel-applet.c:793
+#: libpanel-applet/panel-applet.c:792
 msgid "The Applet's containing Panel's orientation"
 msgstr "A Applet que contém a orientação do Painel"
 
-#: libpanel-applet/panel-applet.c:801
+#: libpanel-applet/panel-applet.c:800
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "A Applet que contém o tamanho do Painel em pixels"
 
-#: libpanel-applet/panel-applet.c:809
+#: libpanel-applet/panel-applet.c:808
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "A Applet que contém a cor ou imagem de fundo do Painel"
 
-#: libpanel-applet/panel-applet.c:817
+#: libpanel-applet/panel-applet.c:816
 msgid "The Applet's flags"
 msgstr "As bandeiras da Applet"
 
+#~ msgid "_Done"
+#~ msgstr "Termina_do"
+
 #~ msgid "Network"
 #~ msgstr "Rede"
-
-#~ msgid ""
-#~ "<b>Cannot save changes to menu entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Incapaz de gravar alterações à entrada de menu</b>\n"
-#~ "\n"
-#~ "Detalhes: %s"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Propriedades da entrada Ambiente"
 
 #~ msgid "<Alt>F1"
 #~ msgstr "<Alt>F1"

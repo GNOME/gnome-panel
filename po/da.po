@@ -18,7 +18,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-03-07 22:02+0100\n"
+"POT-Creation-Date: 2002-03-11 19:24+0000\n"
 "PO-Revision-Date: 2002-03-07 22:09+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -140,7 +140,8 @@ msgid ""
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"Du har ikke 'fortune' installeret, eller du har ikke angivet et program der skal køres.\n"
+"Du har ikke 'fortune' installeret, eller du har ikke angivet et program der "
+"skal køres.\n"
 "\n"
 "Tag et kig på indstillingerne for fisken."
 
@@ -218,7 +219,7 @@ msgid "Window List"
 msgstr "Vinduesliste"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:417 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:431 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Arbejdsområdeskifter"
 
@@ -246,13 +247,13 @@ msgstr "%I:%M"
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:440
+#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:445
+#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
 #: gnome-panel/foobar-widget.c:431 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
@@ -278,7 +279,7 @@ msgstr "%a %-d. %b"
 msgid "%A, %B %d"
 msgstr "%A, %-d. %B"
 
-#: applets/gen_util/clock.c:470
+#: applets/gen_util/clock.c:473
 msgid "%A, %B %d %Y"
 msgstr "%A, %-d. %B %Y"
 
@@ -286,57 +287,57 @@ msgstr "%A, %-d. %B %Y"
 #. * should change is the number 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:673
+#: applets/gen_util/clock.c:676
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=24"
 
-#: applets/gen_util/clock.c:864
+#: applets/gen_util/clock.c:867
 msgid "Clock Properties"
 msgstr "Indstillinger for ur"
 
-#: applets/gen_util/clock.c:885
+#: applets/gen_util/clock.c:888
 msgid "Time Format"
 msgstr "Tidsformat"
 
-#: applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:900
 msgid "12 hour"
 msgstr "12 timer"
 
-#: applets/gen_util/clock.c:905
+#: applets/gen_util/clock.c:908
 msgid "24 hour"
 msgstr "24 timer"
 
 # dækker betydningen fint - "vis dato i panelprogram" virker lidt
 # kunstigt
-#: applets/gen_util/clock.c:936
+#: applets/gen_util/clock.c:939
 msgid "Show date in applet"
 msgstr "Vis dato sammen med tid"
 
-#: applets/gen_util/clock.c:947
+#: applets/gen_util/clock.c:950
 msgid "Show date in tooltip"
 msgstr "Vis dato i værktøjstip"
 
-#: applets/gen_util/clock.c:958
+#: applets/gen_util/clock.c:961
 msgid "Use GMT"
 msgstr "Brug GMT"
 
-#: applets/gen_util/clock.c:969
+#: applets/gen_util/clock.c:972
 msgid "Unix time"
 msgstr "Unix-tid"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:976
 msgid "Internet time"
 msgstr "Internet-tid"
 
-#: applets/gen_util/clock.c:1078
+#: applets/gen_util/clock.c:1081
 msgid "Clock Applet"
 msgstr "Ur-panelprogram"
 
-#: applets/gen_util/clock.c:1079
+#: applets/gen_util/clock.c:1082
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "© 1998-2001 Free Software Fundation"
 
-#: applets/gen_util/clock.c:1080
+#: applets/gen_util/clock.c:1083
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
@@ -521,15 +522,30 @@ msgstr "Indstillinger for arbejdsområdeskifter"
 msgid "Workspaces"
 msgstr "Arbejdsområder"
 
-#: applets/gen_util/pager.glade.h:9 applets/gen_util/tasklist.glade.h:11
-msgid "_Done"
-msgstr "_Færdig"
+#: applets/gen_util/pager.c:296
+#, c-format
+msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+msgstr ""
 
-#: applets/gen_util/pager.c:418
+#: applets/gen_util/pager.c:307
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:322
+#, c-format
+msgid ""
+"Error loading display_all_workspaces value for workspace switcher applet: %"
+"s\n"
+msgstr ""
+
+#: applets/gen_util/pager.c:432
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:419
+#: applets/gen_util/pager.c:433
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -615,7 +631,7 @@ msgstr "Vindueslistegruppering"
 msgid "_Always group windows"
 msgstr "Gruppér _altid vinduer"
 
-#: applets/gen_util/tasklist.glade.h:12
+#: applets/gen_util/tasklist.glade.h:11
 msgid "_Never group windows"
 msgstr "Gruppér al_drig vinduer"
 
@@ -1012,7 +1028,7 @@ msgstr "Tastaturgenveje"
 msgid "Medium"
 msgstr "Mellem"
 
-#: gnome-panel/gnome-panel-properties.glade.h:18
+#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:301
 #: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3229
 #: gnome-panel/menu.c:3788 gnome-panel/menu.c:4013
 msgid "Menu"
@@ -1366,6 +1382,25 @@ msgstr "Indstillinger"
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Angiv et profilnavn som skal indlæses"
+
+#: gnome-panel/menu-ditem.c:119
+#, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Kan ikke gemme ændringer i menupunkt</b>\n"
+"\n"
+"Detaljer: %s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu-ditem.c:186 gnome-panel/menu-ditem.c:266
+#, fuzzy
+msgid "Desktop entry properties"
+msgstr "Menuindstillinger"
 
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
@@ -1785,11 +1820,11 @@ msgstr "Kan ikke oprette menu, bruger hovedmenu!"
 msgid "There was a problem loading the applet."
 msgstr "Der opstod et problem under indlæsning af panelprogrammet."
 
-#: gnome-panel/panel-applet-frame.c:181
+#: gnome-panel/panel-applet-frame.c:183
 msgid "Cannot register control widget\n"
 msgstr "Kan ikke registrere kontrollerende kontrol\n"
 
-#: gnome-panel/panel-applet-frame.c:449
+#: gnome-panel/panel-applet-frame.c:451
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke skaffe AppletShell-grænseflade fra kontrol\n"
 
@@ -2065,14 +2100,8 @@ msgstr ""
 msgid "The Applet's flags"
 msgstr "Panelprogrammets tilvalg"
 
+#~ msgid "_Done"
+#~ msgstr "_Færdig"
+
 #~ msgid "Network"
 #~ msgstr "Netværk"
-
-#~ msgid ""
-#~ "<b>Cannot save changes to menu entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Kan ikke gemme ændringer i menupunkt</b>\n"
-#~ "\n"
-#~ "Detaljer: %s"
