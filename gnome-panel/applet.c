@@ -22,7 +22,6 @@
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "panel-applet-frame.h"
-#include "egg-screen-exec.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"

@@ -21,6 +21,7 @@
 #include <libgnome/libgnome.h>
 #include <libgnome/gnome-desktop-item.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-url.h>
 #include <libgnomeui/gnome-ditem-edit.h>
 #include <libgnomevfs/gnome-vfs.h>
 #include <gdk/gdkx.h>
@@ -38,11 +39,9 @@
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
 #include "panel-globals.h"
+#include "panel-multiscreen.h"
 
 #include "quick-desktop-reader.h"
-
-#include "egg-screen-exec.h"
-#include "egg-screen-url.h"
 
 #undef LAUNCHER_DEBUG
 
@@ -133,7 +132,7 @@ launch_url (Launcher *launcher)
 		return;
 	}
 
-	egg_url_show_on_screen (url, screen, &error);
+	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
 		panel_error_dialog (screen,
 				    "cannot_show_url_dialog",
@@ -199,13 +198,11 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-	GError *error = NULL;
-	char **envp = NULL;
+	GdkScreen  *screen = launcher_get_screen (launcher);
+	GError     *error = NULL;
+	char      **envp = NULL;
 
-	GdkScreen *screen = launcher_get_screen (launcher);
-
-	if (gdk_screen_get_default () != screen)
-		envp = egg_screen_exec_environment (screen);
+	envp = panel_make_environment_for_screen (screen, NULL);
 
 	gnome_desktop_item_drop_uri_list_with_env (launcher->ditem,
 						   (const char *)selection_data->data,

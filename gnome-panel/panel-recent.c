@@ -31,7 +31,6 @@
 #include "egg-recent-view.h"
 #include "egg-recent-view-gtk.h"
 #include "egg-recent-item.h"
-#include "egg-screen-exec.h"
 #include "menu.h"
 #include "menu-util.h"
 #include "panel-util.h"
@@ -115,7 +114,7 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	cmd = g_string_free (str, FALSE);
 
 	if (cmd != NULL &&
-	    !egg_screen_execute_command_line_async (screen, cmd, error)) {
+	    !gdk_spawn_command_line_on_screen (screen, cmd, error)) {
 		ret = FALSE;
 	}
 

@@ -31,7 +31,6 @@
 #include <libgnome/gnome-i18n.h>
 
 #include "applet.h"
-#include "egg-screen-exec.h"
 #include "menu.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
@@ -105,21 +104,20 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 {
 	char *command = NULL;
 
-	if (!strcmp (callback_name, "restart"))
-		command = g_strdup ("xscreensaver-command -exit ; xscreensaver &");
-
-	else if (!strcmp (callback_name, "prefs"))
+	if (!strcmp (callback_name, "prefs"))
 		command = g_strdup ("xscreensaver-demo");
 
 	else if (!strcmp (callback_name, "activate") ||
 		 !strcmp (callback_name, "lock") ||
-		 !strcmp (callback_name, "exit"))
+		 !strcmp (callback_name, "exit") ||
+		 !strcmp (callback_name, "restart"))
 		command = g_strdup_printf ("xscreensaver-command -%s", callback_name);
 
 	if (command)
-		egg_screen_execute_shell (
+		gdk_spawn_command_line_on_screen (
 			gtk_widget_get_screen (GTK_WIDGET (button)),
-					       g_get_home_dir (), command);
+			command,
+			NULL);
 
 	g_free (command);
 }
@@ -158,16 +156,22 @@ void
 panel_action_search (GtkWidget *widget)
 {
 	GdkScreen *screen;
+	GError    *error = NULL;
 	char      *argv[2] = {"gnome-search-tool", NULL};
 
 	screen = gtk_widget_get_screen (widget);
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
+	if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
+				  G_SPAWN_SEARCH_PATH,
+				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
 				    "cannot_exec_gnome-search-tool",
 				    _("Cannot execute '%s'"),
-				    NULL,
-				    "gnome-search-tool");
+				    "%s",
+				    "gnome-search-tool",
+				    error->message);
+		g_error_free (error);
+	}
 }
 
 /* Take Screenshot
@@ -176,16 +180,22 @@ void
 panel_action_screenshot (GtkWidget *widget)
 {
 	GdkScreen *screen;
+	GError    *error = NULL;
 	char      *argv [2] = {"gnome-panel-screenshot", NULL};
 
 	screen = gtk_widget_get_screen (widget);
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
+	if (!gdk_spawn_on_screen (screen, NULL, argv, NULL,
+				  G_SPAWN_SEARCH_PATH,
+				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
 				    "cannot_exec_gnome-panel-screenshot",
 				    _("Cannot execute '%s'"),
-				    NULL,
-				    "gnome-panel-screenshot");
+				    "%s",
+				    "gnome-panel-screenshot",
+				    error->message);
+		g_error_free (error);
+	}
 }
 
 /* Force Quit

@@ -52,7 +52,6 @@
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
-#include "egg-screen-exec.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
 #include "panel-recent.h"
@@ -321,14 +320,17 @@ about_gnome_cb (GtkWidget *menuitem,
 		char      *program_path)
 {
 	GdkScreen *screen = menuitem_to_screen (menuitem);
+	GError    *error = NULL;
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, &program_path) < 0)
+	if (!gdk_spawn_command_line_on_screen (screen, program_path, &error)) {
 		panel_error_dialog (screen,
 				    "cannot_exec_about_gnome",
 				    _("Cannot execute '%s'"),
-				    _("%s - command not found"),
+				    _("%s: %s"),
 				    _("About GNOME"),
-				    program_path);
+				    program_path, error->message);
+		g_error_free (error);
+	}
 }
 
 static void

@@ -25,6 +25,7 @@
 #include <sys/wait.h>
 
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <libgnome/libgnome.h>
 
 #include <libgnomevfs/gnome-vfs-uri.h>
@@ -36,9 +37,6 @@
 #include "nothing.h"
 #include "panel.h"
 #include "panel-a11y.h"
-#include "egg-screen-exec.h"
-#include "egg-screen-url.h"
-#include "egg-screen-help.h"
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "launcher.h"
@@ -65,7 +63,7 @@ panel_show_help (GdkScreen  *screen,
 {
 	GError *error = NULL;
 
-	if (!egg_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
+	if (!gnome_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
 		panel_error_dialog (
 			screen,
 			"cannot_show_help",
@@ -708,18 +706,23 @@ missing_pixbuf (int size)
 void
 panel_lock_screen (GdkScreen *screen)
 {
-	char *argv[3] = {"xscreensaver-command", "-lock", NULL};
+#define XSCREENSAVER_LOCK_COMMAND "xscreensaver-command -lock"
 
-	if (!screen)
-		screen = gdk_screen_get_default ();
+	GError *error = NULL;
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0)
+	g_return_if_fail (GDK_IS_SCREEN (screen));
+
+	if (!gdk_spawn_command_line_on_screen (screen, XSCREENSAVER_LOCK_COMMAND, &error)) {
 		panel_error_dialog (screen,
-			"cannot_exec_xscreensaver",
-			 _("Cannot execute %s"),
-			 _("%s - command not found"),
-			 "xscreensaver",
-			 "xscreensaver");
+				    "cannot_exec_xscreensaver",
+				    _("Cannot execute '%s'"),
+				    "%s",
+				    XSCREENSAVER_LOCK_COMMAND,
+				    error->message);
+		g_error_free (error);
+	}
+	
+#undef XSCREENSAVER_LOCK_COMMAND
 }
 
 

@@ -3308,17 +3308,9 @@ static gboolean
 panel_toplevel_focus_in_event (GtkWidget     *widget,
 			       GdkEventFocus *event)
 {
-	PanelToplevel *toplevel;
-
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
-
-	toplevel = PANEL_TOPLEVEL (widget);
-
-	/* It appears that sometimes we don't get a leave notify event,
-	   but just a focus in/out, so queue the autohide in that case.
-	   If the pointer is inside the panel then obviously we won't hide */
-	if (toplevel->priv->auto_hide)
-		panel_toplevel_queue_auto_hide (toplevel);
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
+	
+	panel_toplevel_unhide (toplevel);
 
 	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
 		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
@@ -3330,11 +3322,7 @@ static gboolean
 panel_toplevel_focus_out_event (GtkWidget     *widget,
 				GdkEventFocus *event)
 {
-	PanelToplevel *toplevel;
-
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
-
-	toplevel = PANEL_TOPLEVEL (widget);
+	PanelToplevel *toplevel = PANEL_TOPLEVEL (widget);
 
 	/* It appears that sometimes we don't get a leave notify event,
 	   but just a focus in/out, so queue the autohide in that case.

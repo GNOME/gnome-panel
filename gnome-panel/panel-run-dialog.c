@@ -43,8 +43,6 @@
 #include <libgnomevfs/gnome-vfs-utils.h>
 #include <gconf/gconf-client.h>
 
-#include "egg-screen-exec.h"
-
 #include "nothing.h"
 #include "panel-gconf.h"
 #include "panel-util.h"
@@ -261,7 +259,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	gboolean    result;	
 	GError     *error = NULL;
 	char      **argv;
-	char      **envp;
 	int         argc;
 	
 	if (!command_is_executable (command))
@@ -274,19 +271,19 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	argv [2] = g_strdup (command);
 	
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));	
-	envp = egg_screen_exec_environment (screen);
 		
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->terminal_checkbox)))
 		gnome_prepend_terminal_to_vector (&argc, &argv);
 		   
-	result = g_spawn_async (NULL, /* working directory */
-				argv,
-				envp,
-				G_SPAWN_SEARCH_PATH,
-				NULL, /* child setup func */
-				NULL, /* user data */
-				NULL, /* child pid */
-				&error);
+	result = gdk_spawn_on_screen (screen,
+				      NULL, /* working directory */
+				      argv,
+				      NULL, /* envp */
+				      G_SPAWN_SEARCH_PATH,
+				      NULL, /* child setup func */
+				      NULL, /* user data */
+				      NULL, /* child pid */
+				      &error);
 			
 	if (!result) {
 		panel_error_dialog (screen, "cannot_spawn_command",
@@ -299,7 +296,6 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	}
 				
 	g_strfreev (argv);
-	g_strfreev (envp);
 	
 	return result;
 }
@@ -309,17 +305,12 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 	                   const char     *url,
 	                   const char     *escaped)
 {
-	GError     *error = NULL;
-	GdkScreen  *screen;
-	char      **envp;
+	GError    *error = NULL;
+	GdkScreen *screen;
 	
 	screen = gtk_window_get_screen (GTK_WINDOW (dialog->run_dialog));
-	envp = egg_screen_exec_environment (screen);
-	
-	gnome_url_show_with_env (url, envp, &error);
 
-	g_strfreev (envp);
-
+	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
 		panel_error_dialog (screen, "cannot_show_url",
 				    _("Cannot display location '%s'"),

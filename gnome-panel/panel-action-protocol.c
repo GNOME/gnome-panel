@@ -31,7 +31,6 @@
 #include <X11/Xlib.h>
 #include <libgnome/gnome-i18n.h>
 
-#include "egg-screen-exec.h"
 #include "menu.h"
 #include "applet.h"
 #include "panel-globals.h"

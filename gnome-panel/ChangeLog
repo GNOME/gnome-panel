@@ -1,3 +1,21 @@
+2003-12-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Use the new multiscreen support for application launching
+	in libgnomeui and gdk instead of the egg-screen stuff.
+
+	* Makefile.am: don't build the egg-screen stuff
+	anymore.
+	* egg-screen-exec.[ch], egg-screen-help.[ch],
+	  egg-screen-url.[ch]: kill.
+	
+	* panel-multiscreen.[ch]: (panel_make_environment_for_screen):
+	Add this - its not public in GDK.
+	
+	* launcher.c, menu.c, panel-action-button.c, panel-action-protocol.c,
+	  panel-recent.c, panel-run-dialog.c, panel-toplevel.c, panel-util.c:
+	Replace egg-screen stuff with the functions that ended up in
+	libgnomeui and gdk.
+
 2003-12-10  Vincent Untz  <vincent@vuntz.net>
 
 	Patch from Thomas Benson <tbenson@cs.utk.edu>
