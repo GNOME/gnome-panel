@@ -1,5 +1,20 @@
 1999-06-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* gen_util/mailcheck.c: added an enum for mailbox types; fixed
+	indentation; added disabling/enabling of commands
+	(check_mail_file_status): moved the sound playing from here to
+	where the newmail command gets exec()'d; use the new enum
+	(mail_check_timeout): moved sound playing here; use the enabled
+	status for the commands
+	(exec_clicked_cmd): use enabled status
+	(apply_properties_callback): enabled status stuff
+	(mailbox_properties_page): use new enums
+	(mailcheck_properties_page): use check boxes instead of labels
+	for commands
+	(applet_save_session): save enabling stuff
+	(mailcheck_about): *cough*
+	(make_mailcheck_applet): load enabling stuff
+
 	* cdplayer/cdplayer.c (main): don't do a stock_callback, just
 	a normal one (fixes a crash)
 
