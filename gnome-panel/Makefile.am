@@ -226,7 +226,6 @@ gnome_panel_screenshot_LDADD = 	\
 gladedir = $(datadir)/gnome/panel/glade
 glade_DATA =					\
 	gnome-panel-screenshot.glade		\
-	gnome-panel-screenshot2.glade		\
 	panel-properties-dialog.glade		\
 	panel-run-dialog.glade
 
