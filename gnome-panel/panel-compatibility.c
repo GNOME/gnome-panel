@@ -417,9 +417,10 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 }
 
 static void
-panel_compatibility_migrate_panel_types (GConfClient *client,
-					 const char  *toplevel_dir,
-					 const char  *panel_dir)
+panel_compatibility_migrate_panel_type (GConfClient *client,
+					const char  *toplevel_dir,
+					const char  *panel_dir,
+					gboolean    *is_drawer)
 {
 	PanelType   type;
 	const char *key;
@@ -441,6 +442,7 @@ panel_compatibility_migrate_panel_types (GConfClient *client,
 		break;
 	case DRAWER_PANEL:
 		panel_compatibility_migrate_drawer_panel_settings (client, toplevel_dir, panel_dir);
+		*is_drawer = TRUE;
 		break;
 	case ALIGNED_PANEL:
 		panel_compatibility_migrate_corner_panel_settings (client, toplevel_dir, panel_dir);
@@ -463,7 +465,8 @@ panel_compatibility_migrate_panel_types (GConfClient *client,
 static char *
 panel_compatibility_migrate_panel_settings (GConfClient *client,
 					    GSList      *toplevel_id_list,
-					    const char  *panel_id)
+					    const char  *panel_id,
+					    gboolean    *is_drawer)
 {
 	const char *profile;
 	const char *key;
@@ -480,7 +483,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 
 	profile = panel_profile_get_name ();
 
-	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS, toplevel_id_list);
+	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 
 	toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s", profile, toplevel_id);
 	panel_dir    = g_strdup_printf (PANEL_CONFIG_DIR "/%s/panels/%s", profile, panel_id);
@@ -535,7 +538,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	gconf_client_set_bool (client, key, auto_hide, NULL);
 
 	/* migrate different panel types to toplevels */
-	panel_compatibility_migrate_panel_types (client, toplevel_dir, panel_dir);
+	panel_compatibility_migrate_panel_type (client, toplevel_dir, panel_dir, is_drawer);
 
 	/* background settings */
 	panel_compatibility_migrate_background_settings (client, toplevel_dir, panel_dir);
@@ -766,12 +769,17 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 	panel_id_list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
 	for (l = panel_id_list; l; l = l->next) {
-		char *new_id;
+		char     *new_id;
+		gboolean  is_drawer = FALSE;
 
 		new_id = panel_compatibility_migrate_panel_settings (client,
 								     toplevel_id_list,
-								     l->data);
-		toplevel_id_list = g_slist_prepend (toplevel_id_list, new_id);
+								     l->data,
+								     &is_drawer);
+
+		/* Drawer toplevels don't belong on the toplevel list */
+		if (!is_drawer)
+			toplevel_id_list = g_slist_prepend (toplevel_id_list, new_id);
 
 		g_hash_table_insert (panel_id_hash, l->data, new_id);
 	}

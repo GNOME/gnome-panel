@@ -119,26 +119,19 @@ panel_applet_frame_load (const gchar *iid,
 {
 	GtkWidget  *frame = NULL;
 	AppletInfo *info;
-	char       *real_id;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
+	g_return_if_fail (id != NULL);
 
-	real_id = id ? g_strdup (id) : panel_profile_find_new_id (PANEL_GCONF_APPLETS, NULL);
-
-	frame = panel_applet_frame_new (panel, iid, real_id);
-
-	if (!frame) {
-		g_free (real_id);
+	frame = panel_applet_frame_new (panel, iid, id);
+	if (!frame)
 		return;
-	}
 	
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, frame, NULL, panel, position,
-				      exactpos, PANEL_OBJECT_BONOBO, real_id);
-
-	g_free (real_id);
+				      exactpos, PANEL_OBJECT_BONOBO, id);
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
 }

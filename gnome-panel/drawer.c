@@ -528,6 +528,7 @@ create_empty_drawer_applet (PanelToplevel    *parent_toplevel,
 	screen_width  = gdk_screen_get_width  (screen);
 	screen_height = gdk_screen_get_height (screen);
 
+	/* FIXME_FOR_NEW_TOPLEVEL: this is bogus */
 	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
 				 "x", screen_width  + 10,
 				 "y", screen_height + 10,
@@ -663,6 +664,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	GConfClient *client;
 	const char  *profile;
 	const char  *key;
+	char        *profile_dir;
 	char        *toplevel_id;
 	char        *pixmap;
 	char        *tooltip;
@@ -673,8 +675,12 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
+	profile_dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, profile);
+
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_toplevel_id");
 	toplevel_id = gconf_client_get_string (client, key, NULL);
+
+	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
 
 	/* FIXME_FOR_NEW_TOLEVEL: get the use_custom_icon setting */
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
@@ -691,6 +697,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    TRUE,
 			    id);
 
+	g_free (profile_dir);
 	g_free (toplevel_id);
 	g_free (pixmap);
 	g_free (tooltip);

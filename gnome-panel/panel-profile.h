@@ -41,8 +41,7 @@ const char *panel_profile_get_name (void);
 
 const char    *panel_profile_get_toplevel_id    (PanelToplevel     *toplevel);
 PanelToplevel *panel_profile_get_toplevel_by_id (const char        *toplevel_id);
-char          *panel_profile_find_new_id        (PanelGConfKeyType  type,
-						 GSList            *existing_ids);
+char          *panel_profile_find_new_id        (PanelGConfKeyType  type);
 
 
 gboolean    panel_profile_get_show_program_list   (void);
@@ -55,6 +54,10 @@ void        panel_profile_add_to_list            (PanelGConfKeyType  type,
 void        panel_profile_remove_from_list       (PanelGConfKeyType  type,
 						  const char        *id);
 void        panel_profile_create_toplevel        (void);
+void        panel_profile_load_toplevel          (GConfClient       *client,
+						  const char        *profile_dir,
+						  PanelGConfKeyType  type,
+						  char              *toplevel_id);
 void        panel_profile_delete_toplevel        (PanelToplevel     *toplevel);
 char       *panel_profile_prepare_object         (PanelObjectType    object_type,
 						  PanelToplevel     *toplevel,

@@ -1,5 +1,32 @@
 2003-03-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Don't include drawer toplevels in the toplevel_id_list
+	anymore. We just use the id from the drawer settings.
+	This will prevent loading "orphaned" toplevels.
+
+	* drawer.c:
+	(create_empty_drawer_applet): add FIXME.
+	(drawer_load_from_gconf): load the drawer toplevel from
+	here.
+
+	* panel-applet-frame.c: (panel_applet_frame_load): kill bogus
+	creation of new ids.
+
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_panel_type): set a flag if the
+	panel is a drawer panel.
+	(panel_compatibility_migrate_panel_settings): upd.
+	(panel_compatibility_migrate_panel_id_list): remove drawer
+	panels from the panel_id_list - drawer toplevels aren't on
+	the toplevel_id_list now.
+
+	* panel-profile.[ch]:
+	(panel_profile_find_new_id): make sure new ids are unique
+	within the directories, not only the id_lists. Requires
+	ix just committed to GConf.
+
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* install-defaults.sh: install the config into /apps/panel
 	instead of /apps/new_panel.
 
