@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel 2.5.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-01-31 14:17+0100\n"
-"PO-Revision-Date: 2004-01-31 14:18+0100\n"
+"PO-Revision-Date: 2004-02-01 16:31+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -315,14 +315,14 @@ msgstr "Vis tid med csekunder"
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr ""
+msgstr "Bruk av denne nøkkelen gikk ut i GNOME 2.6 til fordel for «format»-nøkkelen. Denne bevares for kompatibilitet med eldre versjoner."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr ""
+msgstr "Denne nøkkelen spesifiserer formatet som brukes av panelklokken når formatnøkkslen er satt til «custom». Du kan bruke formatspesifikasjonene som er gyldige i strftime() for å tilpasse formatet."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -334,7 +334,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
+msgstr "Denne nøkkelen spesifiserer timeformatet som brukes av panelklokken. Mulige verdier er «12-hour», «24-hour», «internet», «unix» og «custom». Hvis den settes til «internet» vil klokken vise Internett-tid. Internett-tidsystemet deler dagen inn i 1000 pulser. Det er ingen tidssoner i dette systemet så tiden er den samme over hele verden. Hvis den settes til «unix» vil klokken vise tiden i sekunder siden Epoch, altså 1. januar 1970. Hvis den settes til «custom» vil den vise tiden i henhold til formatet som oppgis i nøkkelen «custom_key»."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -1765,14 +1765,14 @@ msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
-msgstr ""
+msgstr "En liste med IDer for panelprogrammer. Hver ID identifiserer et individuelt panelprogram. Innstillingene for hvert av disse programmene lagres i /apps/panel/general/$(profiles)/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
-msgstr ""
+msgstr "En liste med IDer for panelobjekter. Hver ID identifiserer et individuelt panelobjekt, f.eks en oppstarter, handlingsknapp eller meny-knapp/linje. Innstillingene for hvert av disse objektene lagres i /apps/panel/general/$(profiles)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid "Enable program list in \"Run Application\" dialog"
@@ -2076,13 +2076,13 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr ""
+msgstr "Identifikator for toppnivåpanelet som inneholder dette objektet."
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
-msgstr ""
+msgstr "Lokasjon for .desktop-filen som beskriver oppstarteren. Denne nøkkelen er kun relevant hvis nøkkelen «object_type» er satt til «launcher-object»."
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2102,20 +2102,20 @@ msgstr ""
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr ""
+msgstr "Posisjon for dette panelobjektet. Posisjonen spesifiseres med antall piksler fra venstre (eller øverste hvis vertikalt) kant av panelet."
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
-msgstr ""
+msgstr "Tekst som skal vises i verktøytips for denne skuffen eller menyen. Nøkkelen er kun relevant hvis nøkkelen «object_type» er «drawer-object» eller «menu-object»."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
-msgstr ""
+msgstr "Type for dette panelobjektet. Mulige verdier er «drawer-object», «menu-object», «launcher-object», «bonobo-applet», «action-applet» og «menu-bar»."
 
 #: gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer or menu"
@@ -2659,13 +2659,13 @@ msgstr "Tilpass bildet til panelet"
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
-msgstr ""
+msgstr "Hvis denne er satt til «true» vil piler plasseres på knappene for skjuling. Denne nøkkelen er kun relevant hvis nøkkelen «enable_buttons» er «true»."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
-msgstr ""
+msgstr "Hvis denne er satt til «true» vil knapper som kan brukes til å skjule panelet til en av sidene plasseres på hver side av panelet."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
