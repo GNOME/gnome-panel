@@ -2575,7 +2575,7 @@ clock_factory (PanelApplet *applet,
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_ClockApplet_Factory",
                              PANEL_TYPE_APPLET,
-                             "Clock Applet factory",
+                             "ClockApplet",
                              "0",
                              clock_factory,
                              NULL);
