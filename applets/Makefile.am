@@ -1,5 +1,5 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
-	 fish netload dialer webcontrol icewm-pager \
+	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
 	 gnome-pager
 
@@ -10,7 +10,7 @@ esdmanager =
 endif
 
 if HAVE_LIBGTOP
-libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload
+libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload netload
 else
 libgtop_SUBDIRS =
 endif
