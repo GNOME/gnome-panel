@@ -1,175 +1,56 @@
 <!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+ <!ENTITY fish.sgml SYSTEM "fish.sgml">
+ 
 ]>
 
-<article id="index">
- <artheader>
-  <title>GNOME fisken</title>
+<article id="index"> <!-- please do not change the id -->
 
+ <!-- ============= Document Header ============================= -->
+ <artheader>
+  <title>GNOME fisk håndbok</title>
   <copyright>
    <year>2000</year>
    <holder>Telsa Gwynne</holder>
   </copyright>
 
-  <legalnotice id="legalnotice"> 
+  <!-- translator: uncomment this: -->
+
+  <copyright>
+   <year>2001</year>
+   <holder>Kjartan Maraas (Norsk oversettelse)</holder>
+  </copyright>
+
+  <!-- do not put authorname in the header except in copyright - use
+  section "authors" below -->
+
+    <legalnotice id="legalnotice"> 
     
-    <para>Permission is granted to copy, distribute and/or modify this
-    document under the terms of the <ulink type="help"
-    url="gnome-help:fdl"><citetitle>GNU Free Documentation
-    License</citetitle></ulink>, Version 1.1 or any later version
-    published by the Free Software Foundation with no Invariant
-    Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy
-    of the license can be found <ulink type="help"
-    url="gnome-help:fdl">here</ulink>.  </para>
+      <para>Permission is granted to copy, distribute and/or modify this
+      document under the terms of the <ulink type="help"
+      url="gnome-help:fdl"><citetitle>GNU Free Documentation
+      License</citetitle></ulink>, Version 1.1 or any later version
+      published by the Free Software Foundation with no Invariant
+      Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy
+      of the license can be found <ulink type="help"
+      url="gnome-help:fdl">here</ulink>.  </para>
 
-    <para>Many of the names used by companies to distinguish their
-    products and services are claimed as trademarks. Where those names
-    appear in any GNOME documentation, and those trademarks are made
-    aware to the members of the GNOME Documentation Project, the names
-    have been printed in caps or initial caps.
-    </para>
+      <para>Many of the names used by companies to distinguish their
+      products and services are claimed as trademarks. Where those names
+      appear in any GNOME documentation, and those trademarks are made
+      aware to the members of the GNOME Documentation Project, the names
+      have been printed in caps or initial caps.
+      </para>
 
-  </legalnotice>
+    </legalnotice>
 
   <releaseinfo>
-     Dette er versjon 0.1 av dette dokumentet: første utgave.
+   Dette er versjon 1.0 av håndboken for GNOME fisk.
   </releaseinfo>
  </artheader>
 
+ <!-- =========== Document body =========================== -->
 
- <sect1 id="wanda-intro">
-  <title>GNOME fisk appleten</title>
+ &fish.sgml;
 
-  <para>
-    <application>GNOME fisk appleten</application> viser en liten fisk
-    på ditt <interface>panel</interface> og gjør ikke noe nyttig 
-    i det hele tatt utover dette. Den er en del av gnome-core pallen. 
-    Denne beskrivelsen av den refererer til fisken som vist i 
-    gnome-core-1.1.2.
-  </para>
-  <para>
-    Den finnes vanligvis i <interface>panelet</interface> som standard, 
-    men hvis du ikke ser den, kan du starte den ved å klikke <mousebutton>knapp
-    3</mousebutton> på en tom del av <interface>panelet</interface> og følge menyene
-   <menuchoice>
-   <guimenu>Appleter</guimenu>
-    <guisubmenu>Underholdning</guisubmenu>
-    <guimenuitem>Fisk</guimenuitem>
-   </menuchoice>
-  </para>
-  <para>
-    Fisk appleten er skrevet av George Lebl (<email>jirka@5z.com</email>). 
-    Vennligst rapportér feil i den til
-    <ulink type="http" url="http://bugs.gnome.org/">GNOME feilhåndterings-
-    systemet</ulink>. Du kan gjøre dette ved å følge retningslinjene på dette 
-    web-steder eller ved å bruke <command>bug-buddy</command> fra kommandolinjen.
-    Velg gnome-core for pakke.
-  </para>
-
-  <sect2 id="wanda-usage">
-   <title>Bruk</title>
-
-   <para>
-     Ulikt de fleste fisker trenger denne fisken lite ettersyn og rens av
-     fiskebollen. Den svømmer lykkelig rundt i sitt vann. Hvis du spød den, vil
-     den fortelle deg sine interessante tanker. Forskjellige alternativer er
-     tilgjengelig ved hjelp av musen:
-   </para>
-
-   <orderedlist>
-    <listitem>
-     <para>
-       Hvis du har <application>fortune</application> pakken installert,
-       vil du ved å trykke <mousebutton>musknapp 1</mousebutton> få opp en
-       <guilabel>dialogboks</guilabel> som inneholder en spådom.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-      Ved å trykke <mousebutton>musknapp 2</mousebutton> og holde den nede
-      kan du dra fisken rundt på panelet.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-       Ved å trykke <mousebutton>musknapp 3</mousebutton> får du opp en
-       meny som inkluderer en <guisubmenu>brukervalg meny</guisubmenu> og
-       en <guimenuitem>Om</guimenuitem> boks. 
-     </para>
-    </listitem>
-   </orderedlist>
-
-  </sect2>
-
-  <sect2 id="wanda-prefs">
-   <title>Brukervalg</title>
-   <para>
-     <guilabel>Brukervalg dialogboksen</guilabel> (kalt
-     GNOME Fisk egenskaper) er enkel, med fem valg du kan 
-     konfigurere.
-   </para>
-
-   <variablelist>
-    <varlistentry>
-     <term>Din GNOME fisks navn</term>
-     <listitem>
-      <para>
-        Du kan endre navnet på din fisk her. Standard navn er Wanda.
-      </para>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>Filnavn for animasjonen</term>
-     <listitem>
-      <para>
-        Du kan velge et annet sett med bilder her. Som standard finnes listen
-        med bilder du kan velge fra i <filename>$PREFIX/pixmaps/fish/</filename>,
-        Du kan også sette inn et annet stinavn for å peke til dine
-        egne bilder.
-      </para>
-     </listitem>
-    </varlistentry>
-
-    <varlistentry>
-     <term>Bilder i animasjonen</term>
-     <listitem>
-      <para>
-        Som det står her, antall bilder i animasjonen. Standardvalgert er 
-        tre, men man kan velge fra 1 til 255.
-      </para>
-     </listitem>
-    </varlistentry>
- 
-    <varlistentry>
-     <term>Pause per bilde</term>
-     <listitem>
-      <para>
-        Tiden i sekunder før bildet oppdateres. Standardverdien er 
-        ett sekund, men du kan velge mellom 0.10 til 10 sekunder.
-      </para>
-     </listitem>
-    </varlistentry>
-    <varlistentry>
-     <term>Rotér på vertikale paneler</term>
-     <listitem>
-      <para>
-        Denne avkrysningsboksen brukes for vertikale paneler, og når den er
-        krysset av vil fisken se ut til å svømme nedover på et vertikalt panel. 
-	Hvis den ikke er krysset av vil fisken svømme på samme måte som på et
-	horisontalt panel, noe som tvinger det vertikale panelet til å endre 
-	størrelse for å gjøre plass til den.
-      </para>
-     </listitem>
-    </varlistentry>
-   </variablelist>
-  </sect2>
-
-  <sect2 id="wanda-bugs">
-   <title>Feil og begrensninger</title>
-   <para>
-     Ingen kjente feil.
-   </para>
-  </sect2>
- 
- </sect1>
 </article>
+

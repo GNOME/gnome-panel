@@ -1,0 +1,241 @@
+ <sect1 id="fish">
+  <title>Fisk applet</title>
+
+   <para>
+    <application>Fisk</application>-applet, vist i <xref
+    linkend="fishapplet-fig">, viser en liten fisk
+    på ditt <interface>panel</interface> og gjør ikke noe nyttig 
+    i det hele tatt utover dette. Høyreklikk på
+    <interface>Panelet</interface> for å legge til denne
+    appleten og velg
+    <menuchoice>
+     <guimenu>Panel</guimenu>
+     <guisubmenu>Legg til på panelet</guisubmenu>
+     <guisubmenu>Applet</guisubmeu>
+     <guisubmenu>Underholdning</guisubnenu>
+     <guimenuitem>Fisk</guimenuitem>
+    </menuchoice>.
+   </para>
+   
+   <figure id="fishapplet-fig">
+    <title>Fisk applet</title>
+    <screenshot>
+     <screeninfo>Fisk applet</screeninfo>
+     <graphic format="png" fileref="fish_appket"
+     srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+
+  <sect2 id="fish-usage">
+   <title>Bruk</title>
+   <para>
+     Ulikt de fleste fisker trenger denne fisken lite ettersyn og rens av
+     fiskebollen. Den svømmer lykkelig rundt i sitt vann. Hvis du spør den, vil
+     den fortelle deg sine interessante tanker. 
+   </para>
+
+   <para>
+    Ved å høyreklikke på appleten henter du opp en meny som inneholder
+    følgende oppføringer:
+    <itemizedlist>
+
+     <listitem>
+      <para>
+       <guimenuitem>Egenskaper&hellip;</guimenuitem> &mdash;
+       åpner <link linkend="fish-prefs">
+       <guilabel>Egenskaper</guilabel>-dialogen.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>Hjelp</guimenuitem> &mdash;
+       viser dette dokumentet.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>Om&hellip;</guimenuitem> &mdash;
+       viser grunnleggende informasjon om <application>Fisk
+       appleten</application>, inkludert appletens versjon og navn
+       på forfatteren.
+      </para>
+     </listitem>
+
+    </itemizedlist>
+   </para>
+  </sect2>
+
+
+  <!-- ============ Tilpasning =============================== -->
+  <sect2 id="fish-prefs">
+    <title>Tilpasning</title>
+    <para>
+      Du kan tilpasse <application>Fisk</application>
+      appleten ved å høyreklikke på den og velge
+      <guimenuitem>Egenskaper&hellip;</guimenuitem>. Dette vil åpne
+      <interface>Egenskaper</interface>-dialogen (vist i <xref
+      linkend="fish-settings-fig">), som lar deg endre forskjellige
+      innstillinger.
+    </para>
+
+    <figure id="fish-settings-fig">
+      <title>Egenskaper-dialog</title>
+      <screenshot>
+       <screeninfo>Egenskaper-dialog</screeninfo>
+       <graphic format="png" fileref="fish_settings"
+       srccredit="muet">
+       </graphic>
+      </screenshot>
+    </figure>
+
+    <para>
+     Egenskapene er:
+     <itemizedlist>
+
+      <listitem>
+       <para>
+        Navnet på din GNOME fisk &mdash; Du kan endre navnet på fisken
+        her. Forvalgt navn er Wanda.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Filnavn på animasjonen &mdash; Du kan velge et annet sett
+        bilder her. Som standard finnes denne listen i <filename>
+        $PREFIX/pixmaps/fish</filename>, og du kan velge mellom disse.
+        Du kan også skrive inn en annen sti som peker til dine egne bilder.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Rammer i animasjonen &mdash; Antall rammer i animasjonen.
+        Standardverdien er tre, men du kan bruke verdier fra 1 til 255.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Pause per ramme &mdash; Antall sekunder før hvert bilde
+        oppdateres. Standardverdien er ett sekund, men du kan bruke
+        verdier fra 0.10 til 10 sekunder.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Rotér på vertikale paneler &mdash; Denne avkrysningsboksen
+        brukes for vertikale paneler, og når den er avkrysset vil fisken
+        svømme nedover på et vertikalt panel. Hvis den ikke er avkrysset
+        vil fisken vises på samme måte som på et horisontalt panel,
+        hvilket tvinger det vertikale panelet til å endre størrelse
+        for å vise den.
+       </para>
+      </listitem>
+
+     </itemizedlist>
+    </para>
+
+    <para>
+     Når du har gjort alle endringene du ønsker klikker du på
+     <guibutton>OK</guibutton> for å påføre endringene og lukke
+     <interface>Egenskaper</interface>-dialogen. For å avbryte
+     endringene og gå tilbake til tidligere innstillinger, klikk
+     <guibutton>Avbryt</guibutton> knappen.
+    </para>
+  </sect2>
+
+
+  <!-- =========== Bugs =================================== -->
+  <!-- This section should describe known bugs and limitations of
+       the program if there are any - please be frank and list all
+       problems you know of -->
+  <sect2 id="fish-bugs">
+   <title>Kjente feil og begrensninger</title>
+   <para>
+    Denne appleten har ingen kjente feil.
+   </para>
+  </sect2>
+
+
+  <!-- =========== Authors =================================== -->
+
+  <sect2 id="fish-authors">
+   <title>Forfattere</title>
+   <para>
+    <application>Fisk</application> ble skrevet av George Lebl
+    (<email>jirka@5z.com</email>). Vennligst send alle kommentarer,
+    forslag og feilrapporter til
+    <ulink url="http://bugzilla.gnome.org/" type="http">GNOME
+    feilrapporteringsdatabasen</ulink>. Du kan også bruke <application
+    Bug Buddy</application>, som finnes i <guisubmenu>Verktøy</guisubmenu>
+    undermenyen i <guimenu>Hovedmenyen</guimenu>, til å sende inn
+    feilrapporter.
+   </para>
+
+   <para>
+    Denne håndboken er skrevet av Telsa Gwynne
+    (<email>hobbit@aloss.ukuu.org.uk</email>). Vennligst send alle
+    kommentarer og forslag angående denne håndboken til <ulink
+    type="http" url="http://developer.gnome.org/projects/gdp/">GNOME
+    dokumentasjonsprosjektet</ulink> ved å sende en e-post til
+    <email>docs@gnome.org</email>. Du kan også sende inn kommentarer
+    på nett ved å bruke <ulink type="http"
+    url="http://developer.gnome.org/projects/gdp/doctable/">Statustabell
+    for GNOME dokumentasjon</ulink>.
+   </para>
+
+   <!-- For translations: uncomment this: -->
+
+   <para>
+    Norwegian translation by Kjartan Maraas
+    <email>kmaraas@gnome.org</email>. Vennligst send alle kommentarer
+    og forslag angående denne oversettelsen til <email>kmaraas@gnome.org</email>.
+   </para>
+
+  </sect2>
+
+
+  <!-- =========== Application License ============================= -->
+
+  <sect2 id=license">
+   <title>Lisens</title>
+   <para>
+    Dette programmet er fri programvare; du kan redistribuere det
+    og/eller endre det etter betingelsene gitt i <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> som publisert av Free Software
+    Foundation; enten versjon 2 av lisensen, eller (valgfritt)
+    enhver senere versjon.
+   </para>
+   <para>
+    Dette programmet distribueres i håp om at det skal være nyttig,
+    men UTEN NOEN SOM HELST GARANTI; selv uten "warranty of MERCHANTABILITY
+    or FITNESS FOR A PARTICULAR PURPOSE". Se <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> for detaljer.
+   </para>
+   <para>
+    En kopi av <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> er inkludert i GNOME dokumentasjonen.
+    Du kan også få en kopi av <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> fra Free Software Foundation ved å
+    besøke <ulink type="http" url="http://www.fsf.org/"deres nettsider
+    </ulink> eller ved å skrive til
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode<02111-1307</postcode>
+     <country>USA</country>
+    </address>
+   </para>
+  <sect2>
+
+ </sect1>
+
