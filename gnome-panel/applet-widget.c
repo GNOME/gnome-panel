@@ -782,15 +782,25 @@ GtkWidget *
 applet_widget_new(const char *goad_id)
 {
 	AppletWidget *applet;
+
+	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type()));
+	applet_widget_construct(applet, goad_id);
+
+	return GTK_WIDGET(applet);
+}
+
+GtkWidget *
+applet_widget_construct(AppletWidget* applet, const char *goad_id)
+{
 	CustomAppletServant *corbadat;
 	
-	g_return_val_if_fail(goad_id != NULL,NULL);
+	g_return_if_fail(goad_id != NULL,NULL);
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 
 	CD(applet) = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
-	g_return_val_if_fail(corbadat!=NULL,NULL);
+	g_return_if_fail(corbadat!=NULL,NULL);
 
 	corbadat->appwidget = applet;
 
@@ -803,8 +813,6 @@ applet_widget_new(const char *goad_id)
 			   NULL);
 
 	applet_count++;
-
-	return GTK_WIDGET(applet);
 }
 
 int

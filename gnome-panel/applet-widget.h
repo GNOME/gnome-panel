@@ -154,6 +154,8 @@ void            applet_factory_new(const char *goad_id,
 				   AppletFactoryActivator afunc);
 GtkWidget*	applet_widget_new(const char *goad_id);
 
+void		applet_widget_construct(AppletWidget* applet, const char *goad_id);
+
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
 						 char *text);
