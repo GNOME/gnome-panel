@@ -392,13 +392,13 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			*y = wy;
 		} else {
 			*x = wx;
-			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			*y = wy - GTK_WIDGET (menu)->requisition.height;
 		}
 	} else if(IS_SNAPPED_WIDGET(w)) {
 		switch(SNAPPED_WIDGET(w)->pos) {
 		case SNAPPED_BOTTOM:
 			*x = wx;
-			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			*y = wy - GTK_WIDGET (menu)->requisition.height;
 			break;
 		case SNAPPED_TOP:
 			*x = wx;
@@ -409,7 +409,7 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			*y = wy;
 			break;
 		case SNAPPED_RIGHT:
-			*x = wx - GTK_WIDGET (menu)->allocation.width;
+			*x = wx - GTK_WIDGET (menu)->requisition.width;
 			*y = wy;
 			break;
 		}
@@ -419,7 +419,7 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			case CORNER_SE:
 			case CORNER_SW:
 				*x = wx;
-				*y = wy - GTK_WIDGET (menu)->allocation.height;
+				*y = wy - GTK_WIDGET (menu)->requisition.height;
 				break;
 			case CORNER_NE:
 			case CORNER_NW:
@@ -436,19 +436,19 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 				break;
 			case CORNER_NE:
 			case CORNER_SE:
-				*x = wx - GTK_WIDGET (menu)->allocation.width;
+				*x = wx - GTK_WIDGET (menu)->requisition.width;
 				*y = wy;
 				break;
 			}
 		}
 	}
 
-	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
-		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*x + GTK_WIDGET (menu)->requisition.width > gdk_screen_width())
+		*x=gdk_screen_width() - GTK_WIDGET (menu)->requisition.width;
 	if(*x < 0) *x =0;
 
-	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
-		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
+	if(*y + GTK_WIDGET (menu)->requisition.height > gdk_screen_height())
+		*y=gdk_screen_height() - GTK_WIDGET (menu)->requisition.height;
 	if(*y < 0) *y =0;
 }
 

@@ -557,14 +557,14 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 		} else {
 			gtk_widget_get_pointer(w, x, NULL);
 			*x += wx;
-			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			*y = wy - GTK_WIDGET (menu)->requisition.height;
 		}
 	} else if(IS_SNAPPED_WIDGET(w)) {
 		switch(SNAPPED_WIDGET(w)->pos) {
 		case SNAPPED_BOTTOM:
 			gtk_widget_get_pointer(w, x, NULL);
 			*x += wx;
-			*y = wy - GTK_WIDGET (menu)->allocation.height;
+			*y = wy - GTK_WIDGET (menu)->requisition.height;
 			break;
 		case SNAPPED_TOP:
 			gtk_widget_get_pointer(w, x, NULL);
@@ -578,7 +578,7 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			break;
 		case SNAPPED_RIGHT:
 			gtk_widget_get_pointer(w, NULL, y);
-			*x = wx - GTK_WIDGET (menu)->allocation.width;
+			*x = wx - GTK_WIDGET (menu)->requisition.width;
 			*y += wy;
 			break;
 		}
@@ -596,7 +596,7 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			case CORNER_SW:
 				gtk_widget_get_pointer(w, x, NULL);
 				*x += wx;
-				*y = wy - GTK_WIDGET (menu)->allocation.height;
+				*y = wy - GTK_WIDGET (menu)->requisition.height;
 				break;
 			}
 		} else { /*vertical*/
@@ -604,7 +604,7 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			case CORNER_NE:
 			case CORNER_SE:
 				gtk_widget_get_pointer(w, NULL, y);
-				*x = wx - GTK_WIDGET (menu)->allocation.width;
+				*x = wx - GTK_WIDGET (menu)->requisition.width;
 				*y += wy;
 				break;
 			case CORNER_SW:
@@ -617,12 +617,12 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 		}
 	}
 
-	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
-		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*x + GTK_WIDGET (menu)->requisition.width > gdk_screen_width())
+		*x=gdk_screen_width() - GTK_WIDGET (menu)->requisition.width;
 	if(*x < 0) *x =0;
 
-	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
-		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
+	if(*y + GTK_WIDGET (menu)->requisition.height > gdk_screen_height())
+		*y=gdk_screen_height() - GTK_WIDGET (menu)->requisition.height;
 	if(*y < 0) *y =0;
 }
 
