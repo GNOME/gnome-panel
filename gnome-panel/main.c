@@ -79,7 +79,10 @@ main (int argc, char **argv)
 
         init_menus ();
 
-	panel_gconf_add_dir ("/desktop/gnome/interface");
+	gconf_client_add_dir (panel_gconf_get_client (),
+			      "/desktop/gnome/interface",
+			      GCONF_CLIENT_PRELOAD_NONE,
+			      NULL);
 
 	panel_global_config_load ();
 	panel_profile_load (profile_arg);

@@ -1867,14 +1867,20 @@ panel_profile_delete_dir (GConfClient       *client,
 		break;
 	}
 
+	if (type == PANEL_GCONF_TOPLEVELS) {
+		key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s/background",
+					   current_profile, type_str, id);
+		gconf_client_remove_dir (client, key, NULL);
+	}
+
 	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s",
 				   current_profile, type_str, id);
+	gconf_client_remove_dir (client, key, NULL);
 
-	if (type == PANEL_GCONF_TOPLEVELS)
-	    gconf_client_remove_dir (client, key, NULL);
-
-	gconf_client_recursive_unset (
-	  client, key, GCONF_UNSET_INCLUDING_SCHEMA_NAMES, NULL);
+	gconf_client_recursive_unset (client,
+				      key,
+				      GCONF_UNSET_INCLUDING_SCHEMA_NAMES,
+				      NULL);
 }
 
 static gboolean

@@ -1,3 +1,24 @@
+2003-12-03  Mark McLoughlin  <mark@skynet.ie>
+
+	Be a bit more paranoid about removing directories from
+	the GConfClient cache - especially directories we want
+	to get deleted.
+
+	* panel-profile.c: (panel_profile_delete_dir): remove all the
+	added dirs from the client.
+
+	* panel-menu-button.c: Don't keep a pointer to the AppletInfo
+	when all we need from it is the applet id.
+	(panel_menu_button_disconnect_from_gconf): implement a function
+	to remove the notify and the dir from the client.
+	
+	
+	* main.c: (main): use gconf_client_add_dir() instead of
+	panel_gconf_add_dir().
+	
+	* panel-gconf.[ch]: (panel_gconf_add_dir): kill this. Its only
+	useful if we want a pointless extra stack frame.
+
 2003-12-03  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-properties-dialog.glade: Add labelled-by relation for size_spin.

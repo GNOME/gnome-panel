@@ -227,13 +227,6 @@ panel_gconf_notify_add_while_alive (const char            *key,
 }
 
 void
-panel_gconf_add_dir (const char *key)
-{
-	gconf_client_add_dir (
-		panel_gconf_get_client (), key, GCONF_CLIENT_PRELOAD_NONE, NULL);
-}
-
-void
 panel_gconf_copy_dir (GConfClient  *client,
 		      const char   *src_dir,
 		      const char   *dest_dir)

@@ -52,9 +52,9 @@ enum {
 };
 
 struct _PanelMenuButtonPrivate {
-	AppletInfo            *info;
 	PanelToplevel         *toplevel;
 	guint                  gconf_notify;
+	char                  *applet_id;
 
 	GtkMenu               *menu;
 
@@ -67,6 +67,8 @@ struct _PanelMenuButtonPrivate {
 	guint                  dnd_enabled : 1;
 };
 
+static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
+
 static GObjectClass *parent_class;
 
 static void
@@ -75,7 +77,7 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 {
 	button->priv = PANEL_MENU_BUTTON_GET_PRIVATE (button);
 
-	button->priv->info         = NULL;
+	button->priv->applet_id    = NULL;
 	button->priv->toplevel     = NULL;
 	button->priv->gconf_notify = 0;
 
@@ -94,16 +96,16 @@ panel_menu_button_finalize (GObject *object)
 {
 	PanelMenuButton *button = PANEL_MENU_BUTTON (object);
 
-	button->priv->info = NULL;
-
-	gconf_client_notify_remove (panel_gconf_get_client (), button->priv->gconf_notify);
-	button->priv->gconf_notify = 0;
+	panel_menu_button_disconnect_from_gconf (button);
 
 	if (button->priv->menu) {
 		/* detaching the menu will kill our reference */
 		gtk_menu_detach (button->priv->menu);
 		button->priv->menu = NULL;
 	}
+
+	g_free (button->priv->applet_id);
+	button->priv->applet_id = NULL;
 
 	g_free (button->priv->menu_path);
 	button->priv->menu_path = NULL;
@@ -536,12 +538,35 @@ panel_menu_button_connect_to_gconf (PanelMenuButton *button)
 
 	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s",
 				   profile,
-				   button->priv->info->id);
+				   button->priv->applet_id);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	button->priv->gconf_notify =
 		gconf_client_notify_add (client, key,
 					 (GConfClientNotifyFunc) panel_menu_button_gconf_notify,
 					 button, NULL, NULL);
+}
+
+static void
+panel_menu_button_disconnect_from_gconf (PanelMenuButton *button)
+{
+	GConfClient *client;
+	const char  *key;
+	const char  *profile;
+
+	if (!button->priv->gconf_notify)
+		return;
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+
+	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s",
+				   profile,
+				   button->priv->applet_id);
+
+	gconf_client_notify_remove (client, button->priv->gconf_notify);
+	button->priv->gconf_notify = 0;
+
+	gconf_client_remove_dir (client, key, NULL);
 }
 
 static void
@@ -557,6 +582,7 @@ panel_menu_button_load (const char  *menu_path,
 			const char  *id)
 {
 	PanelMenuButton *button;
+	AppletInfo      *info;
 
 	g_return_if_fail (panel != NULL);
 
@@ -569,17 +595,17 @@ panel_menu_button_load (const char  *menu_path,
 			       "has-arrow", TRUE,
 			       NULL);
 
-	button->priv->info = panel_applet_register (
-					GTK_WIDGET (button), NULL, NULL,
-					panel, locked, position, exactpos,
-					PANEL_OBJECT_MENU, id);
-	if (!button->priv->info) {
+	info = panel_applet_register (GTK_WIDGET (button), NULL, NULL,
+				      panel, locked, position, exactpos,
+				      PANEL_OBJECT_MENU, id);
+	if (!info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
 	}
 
-	panel_applet_add_callback (
-		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
+	button->priv->applet_id = g_strdup (info->id);
+
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
@@ -744,9 +770,6 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
-
-	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s", profile, id);
-	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
 	menu_path = gconf_client_get_string (client, key, NULL);

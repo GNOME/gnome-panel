@@ -57,8 +57,6 @@ guint		panel_gconf_notify_add_while_alive (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    GObject               *alive_object);
 
-void 		panel_gconf_add_dir       (const char   *key);
-
 void            panel_gconf_copy_dir      (GConfClient  *client,
 					   const char   *src_dir,
 					   const char   *dest_dir);
