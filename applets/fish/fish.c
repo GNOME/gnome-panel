@@ -415,7 +415,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	fish->about_dialog =
 		gnome_about_new (_("Fish"),
 				 "3.4.7.4ac19",
-				 "(C) 1998 Free Software Foundation, Inc.",
+				 "(C) 1998 the Free Software Foundation",
 				 descr,
 				 (const char **) authors,
 				 NULL,

@@ -123,7 +123,7 @@ about_cb (PanelApplet *applet,
   g_free (file);
 
   about = gnome_about_new (_("Panel Notification Area"), VERSION,
-                           _("(C) 2002 Red Hat, Inc."),
+                           _("Copyright 2002 Red Hat Inc."),
                            NULL,
                            (const char **)authors,
                            (const char **)documenters,
