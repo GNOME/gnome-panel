@@ -193,6 +193,9 @@ update_icon (ShowDesktopData *sdd)
         int icon_size;
 	GError *error;
 
+	if (!sdd->icon_theme)
+		return;
+
 #define SPACE_FOR_BUTTON_BORDER 4
 	icon_size = sdd->size - SPACE_FOR_BUTTON_BORDER;
 

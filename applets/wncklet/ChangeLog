@@ -1,5 +1,10 @@
 2005-02-02  Vincent Untz  <vincent@vuntz.net>
 
+	* showdesktop.c: (update_icon): don't update the icon if we don't have
+	the icon theme yet
+
+2005-02-02  Vincent Untz  <vincent@vuntz.net>
+
 	* window-menu.c: (window_menu_size_allocate): update the background if
 	we needed to change the allocated size
 	Fix bug #165979
