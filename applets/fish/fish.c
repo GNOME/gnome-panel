@@ -41,6 +41,7 @@ struct _Fish {
 	GtkWidget * pb;
 };
 
+GtkWidget *bah_window = NULL;
 
 
 static void
@@ -76,12 +77,21 @@ load_properties(Fish *fish)
 		gdk_pixmap_unref(fish->pix);
 	
 	pix = gdk_imlib_load_image(fish->prop.image);
-	gdk_imlib_render (pix, pix->rgb_width,
-			  pix->rgb_height);
-	fish->w = pix->rgb_width;
-	fish->h = pix->rgb_height;
-	fish->pix = gdk_imlib_move_image(pix);
-	gdk_imlib_destroy_image(pix);
+	if(pix) {
+		gdk_imlib_render (pix, pix->rgb_width,
+				  pix->rgb_height);
+		fish->w = pix->rgb_width;
+		fish->h = pix->rgb_height;
+		fish->pix = gdk_imlib_move_image(pix);
+		gdk_imlib_destroy_image(pix);
+	} else {
+		g_assert(bah_window);
+		g_assert(bah_window->window);
+		fish->w = fish->prop.frames*48;
+		fish->h = 48;
+		fish->pix = gdk_pixmap_new(bah_window->window,
+					   fish->w,fish->h,-1);
+	}
 }
 
 static char *
@@ -496,6 +506,11 @@ wanda_activator(PortableServer_POA poa,
   fish = g_new0(Fish,1);
   
   fish->applet = applet_widget_new(goad_id);
+  
+  bah_window = gtk_window_new(GTK_WINDOW_POPUP);
+  gtk_widget_set_uposition(bah_window,gdk_screen_width()+1,
+			   gdk_screen_height()+1);
+  gtk_widget_show_now(bah_window);
   
   load_properties(fish);
 
