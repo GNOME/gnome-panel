@@ -496,7 +496,7 @@ update_workspaces_model (PagerData *pager)
 
 	gtk_list_store_clear (pager->workspaces_store);
 	for (i = 0; i < nr_ws; i++) {
-		workspace = wnck_workspace_get (i);
+		workspace = wnck_screen_get_workspace (pager->screen, i);
 		gtk_list_store_append (pager->workspaces_store, &iter);
 		gtk_list_store_set (pager->workspaces_store,
 				    &iter,
@@ -677,7 +677,7 @@ setup_dialog (GladeXML  *xml,
 	
 	nr_ws = wnck_screen_get_workspace_count (pager->screen);
 	for (i = 0; i < nr_ws; i++) {
-		g_signal_connect (G_OBJECT (wnck_workspace_get (i)), "name_changed",
+		g_signal_connect (G_OBJECT (wnck_screen_get_workspace (pager->screen, i)), "name_changed",
 				  (GCallback) workspace_renamed, pager);
 	}
 }
