@@ -23,14 +23,15 @@
 #include "global-keys.h"
 
 static Atom
-panel_atom_get (Display    *display,
-		const char *atom_name)
+panel_atom_get (const char *atom_name)
 {
 	static GHashTable *atom_hash;
+	Display           *xdisplay;
 	Atom               retval;
 
-	g_return_val_if_fail (display != NULL, None);
 	g_return_val_if_fail (atom_name != NULL, None);
+
+	xdisplay = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
 
 	if (!atom_hash)
 		atom_hash = g_hash_table_new_full (
@@ -38,7 +39,7 @@ panel_atom_get (Display    *display,
 
 	retval = GPOINTER_TO_UINT (g_hash_table_lookup (atom_hash, atom_name));
 	if (!retval) {
-		retval = XInternAtom (display, atom_name, FALSE);
+		retval = XInternAtom (xdisplay, atom_name, FALSE);
 
 		if (retval != None)
 			g_hash_table_insert (atom_hash, g_strdup (atom_name),
@@ -163,7 +164,7 @@ xstuff_is_compliant_wm (void)
          */
 	data = get_typed_property_data (
 			xdisplay, root_window,
-			panel_atom_get (xdisplay ,"_NET_SUPPORTED"),
+			panel_atom_get ("_NET_SUPPORTED"),
 			XA_ATOM, &size, 32);
 
 	if (!data)
@@ -174,6 +175,12 @@ xstuff_is_compliant_wm (void)
 	return TRUE;
 }
 
+gboolean
+xstuff_net_wm_supports (const char *hint)
+{
+	return gdk_net_wm_supports (gdk_atom_intern (hint, FALSE));
+}
+
 void
 xstuff_set_no_group_and_no_input (GdkWindow *win)
 {
@@ -182,8 +189,7 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 
 	XDeleteProperty (GDK_WINDOW_XDISPLAY (win),
 			 GDK_WINDOW_XWINDOW (win),
-			 panel_atom_get (GDK_WINDOW_XDISPLAY (win),
-					 "WM_CLIENT_LEADER"));
+			 panel_atom_get ("WM_CLIENT_LEADER"));
 
 	old_wmhints = XGetWMHints (GDK_WINDOW_XDISPLAY (win),
 				   GDK_WINDOW_XWINDOW (win));
@@ -259,19 +265,15 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window,
         Atom atoms [2] = { None, None };
         
 	if (!autohide)
-		atoms [0] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
-					    "_NET_WM_WINDOW_TYPE_DOCK");
+		atoms [0] = panel_atom_get ("_NET_WM_WINDOW_TYPE_DOCK");
 	else {
-		atoms [0] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
-					    "_GNOME_WINDOW_TYPE_AUTOHIDE_PANEL");
-		atoms [1] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
-					    "_NET_WM_WINDOW_TYPE_DOCK");
+		atoms [0] = panel_atom_get ("_GNOME_WINDOW_TYPE_AUTOHIDE_PANEL");
+		atoms [1] = panel_atom_get ("_NET_WM_WINDOW_TYPE_DOCK");
 	}
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
-			 panel_atom_get (GDK_WINDOW_XDISPLAY (window),
-					 "_NET_WM_WINDOW_TYPE"),
+			 panel_atom_get ("_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
                          (unsigned char *) atoms, 
 			 autohide ? 2 : 1);
@@ -293,8 +295,7 @@ xstuff_set_wmspec_strut (GdkWindow *window,
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
-			 panel_atom_get (GDK_WINDOW_XDISPLAY (window),
-					 "_NET_WM_STRUT"),
+			 panel_atom_get ("_NET_WM_STRUT"),
                          XA_CARDINAL, 32, PropModeReplace,
                          (unsigned char *) vals, 4);
 }
@@ -306,7 +307,7 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 	Window   xwindow  = GDK_WINDOW_XWINDOW (window);
 
         XDeleteProperty (xdisplay, xwindow,
-			 panel_atom_get (xdisplay, name));
+			 panel_atom_get (name));
 }
 
 void
@@ -333,4 +334,35 @@ xstuff_init (void)
 	gdk_window_add_filter (gdk_get_default_root_window (),
 			       panel_global_keys_filter, NULL);
 #endif
+}
+
+void
+xstuff_show_desktop (void)
+{
+	Display *display;
+	Window   root_window;
+	XEvent   event;
+
+	display     = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
+	root_window = GDK_WINDOW_XWINDOW (gdk_get_default_root_window ());
+
+#define _NET_HIDE_DESKTOP 0
+#define _NET_SHOW_DESKTOP 1
+
+	event.xclient.type         = ClientMessage;
+	event.xclient.serial       = 0;
+	event.xclient.send_event   = True;
+	event.xclient.display      = display;
+	event.xclient.window       = root_window;
+	event.xclient.message_type = panel_atom_get ("_NET_SHOW_DESKTOP");
+	event.xclient.format       = 32;
+	event.xclient.data.l [0]   = _NET_SHOW_DESKTOP;
+	event.xclient.data.l [1]   = 0;
+	event.xclient.data.l [2]   = 0;
+
+	XSendEvent (display,
+		    root_window,
+		    False,
+		    SubstructureRedirectMask | SubstructureNotifyMask,
+		    &event);
 }

@@ -7,6 +7,7 @@ void xstuff_init			(void);
 void xstuff_delete_property		(GdkWindow *window,
 					 const char *name);
 gboolean xstuff_is_compliant_wm		(void);
+gboolean xstuff_net_wm_supports         (const char *hint);
 
 void xstuff_set_no_group_and_no_input	(GdkWindow *win);
 
@@ -21,5 +22,8 @@ void xstuff_set_wmspec_strut		(GdkWindow *window,
 					 int right,
 					 int top,
 					 int bottom);
+
+void xstuff_show_desktop                (void);
+
 
 #endif /* __XSTUFF_H__ */

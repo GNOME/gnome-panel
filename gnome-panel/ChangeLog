@@ -1,5 +1,16 @@
 2002-08-05  Mark McLoughlin  <mark@skynet.ie>
 
+	* foobar-widget.c: (append_actions_menu): if the wm
+	supports it, add a 'Show Desktop' item. #61988.
+
+	* xstuff.[ch]:
+	(panel_atom_get): remove display arg. We always use the
+	default display - no multidisplay support here.
+	(xstuff_net_wm_supports): impl.
+	(xstuff_show_desktop): send _NET_SHOW_DESKTOP ClientMessage.
+
+2002-08-05  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet-frame.c: (register_stock_item),
 	(panel_applet_frame_loading_failed): determine
 	whether or not the user wants to remove the 

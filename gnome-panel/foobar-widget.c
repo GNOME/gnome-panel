@@ -216,6 +216,16 @@ append_actions_menu (FoobarWidget *foo,
 	item = gtk_separator_menu_item_new ();
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
+	if (xstuff_net_wm_supports ("_NET_SHOW_DESKTOP")) {
+		item = pixmap_menu_item_new (_("Show Desktop"), "gnome-ccdesktop.png", FALSE);
+		gtk_tooltips_set_tip (panel_tooltips, item,
+			      	      _("Hide all windows and focus the desktop"),
+			              NULL);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+        	g_signal_connect (item, "activate",
+			  	  G_CALLBACK (xstuff_show_desktop), NULL);	 
+	}
+
 	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					     "gnome-lockscreen.png",
