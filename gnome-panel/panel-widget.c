@@ -422,6 +422,51 @@ panel_widget_set_drop_zone(PanelWidget *panel)
 }
 
 static void
+panel_widget_applet_put(PanelWidget *panel,AppletData *ad, gint force)
+{
+	gint width, height;
+	gint x,y;
+	gint oldx,oldy;
+
+	g_return_if_fail(ad->applet!=NULL);
+
+	gdk_window_get_geometry(ad->applet->window,&oldx,&oldy,	
+				&width,&height,NULL);
+
+	if(panel->orient==PANEL_HORIZONTAL) {
+		x = (PANEL_CELL_SIZE*ad->pos) +
+		    ((PANEL_CELL_SIZE*ad->cells)/2) -
+		    (width/2);
+		y = (panel->thick/2) - (height/2);
+	} else { /* panel->orient==PANEL_VERTICAL */
+		x = (panel->thick/2) - (width/2);
+		y = (PANEL_CELL_SIZE*ad->pos) +
+		    ((PANEL_CELL_SIZE*ad->cells)/2) -
+		    (height/2);
+	}
+
+	if(oldx!=x || oldy!=y || force) {
+		gtk_fixed_move(GTK_FIXED(panel->fixed),ad->applet,x,y);
+
+		/*postion now unknown*/
+		ad->prevx = -1;
+		ad->prevy = -1;
+		ad->prevwidth = -1;
+		ad->prevheight = -1;
+	}
+}
+
+static void
+panel_widget_put_all(PanelWidget *panel,gint force)
+{
+	GList *list;
+
+	for(list=panel->applet_list;list!=NULL;list=g_list_next(list))
+		panel_widget_applet_put(panel,list->data,force);
+}
+
+
+static void
 panel_widget_set_size(PanelWidget *panel, gint size)
 {
 	GList *list;
@@ -469,6 +514,7 @@ panel_widget_set_size(PanelWidget *panel, gint size)
 		ad->prevwidth = -1;
 		ad->prevheight = -1;
 	}
+	panel_widget_put_all(panel,TRUE);
 }
 
 /*get the number of applets*/
@@ -496,52 +542,6 @@ get_applet_data_pos(PanelWidget *panel, gint pos)
 	return NULL;
 }
 
-/*temporairly using _, we will switch over to this function completely
-  in time*/
-static void
-panel_widget_applet_put(PanelWidget *panel,AppletData *ad)
-{
-	gint width, height;
-	gint x,y;
-	gint oldx,oldy;
-
-	g_return_if_fail(ad->applet!=NULL);
-
-	gdk_window_get_geometry(ad->applet->window,&oldx,&oldy,	
-				&width,&height,NULL);
-
-	if(panel->orient==PANEL_HORIZONTAL) {
-		x = (PANEL_CELL_SIZE*ad->pos) +
-		    ((PANEL_CELL_SIZE*ad->cells)/2) -
-		    (width/2);
-		y = (panel->thick/2) - (height/2);
-	} else { /* panel->orient==PANEL_VERTICAL */
-		x = (panel->thick/2) - (width/2);
-		y = (PANEL_CELL_SIZE*ad->pos) +
-		    ((PANEL_CELL_SIZE*ad->cells)/2) -
-		    (height/2);
-	}
-
-	if(oldx!=x || oldy!=y) {
-		gtk_fixed_move(GTK_FIXED(panel->fixed),ad->applet,x,y);
-
-		/*postion now unknown*/
-		ad->prevx = -1;
-		ad->prevy = -1;
-		ad->prevwidth = -1;
-		ad->prevheight = -1;
-	}
-}
-
-static void
-panel_widget_put_all(PanelWidget *panel)
-{
-	GList *list;
-
-	for(list=panel->applet_list;list!=NULL;list=g_list_next(list))
-		panel_widget_applet_put(panel,list->data);
-}
-
 static void
 panel_widget_pack_applets(PanelWidget *panel)
 {
@@ -556,7 +556,7 @@ panel_widget_pack_applets(PanelWidget *panel)
 
 	panel->size = i;
 
-	panel_widget_put_all(panel);
+	panel_widget_put_all(panel,FALSE);
 }
 
 
@@ -615,7 +615,7 @@ panel_widget_right_stick(PanelWidget *panel,gint old_size)
 	} while(ad->pos+ad->cells == i);
 
 	for(list = prev;list!=NULL;list=g_list_next(list))
-		panel_widget_applet_put(panel,list->data);
+		panel_widget_applet_put(panel,list->data,FALSE);
 }
 
 static gint
@@ -652,7 +652,7 @@ panel_widget_push_left(PanelWidget *panel,AppletData *oad)
 		ad=list->data;
 		ad->pos--;
 
-		panel_widget_applet_put(panel,ad);
+		panel_widget_applet_put(panel,ad,FALSE);
 		if(ad == oad)
 			break;
 	}
@@ -701,7 +701,7 @@ panel_widget_push_right(PanelWidget *panel,AppletData *oad)
 		ad=list->data;
 		ad->pos++;
 
-		panel_widget_applet_put(panel,ad);
+		panel_widget_applet_put(panel,ad,FALSE);
 		if(ad == oad)
 			break;
 	}
@@ -760,7 +760,7 @@ panel_widget_seize_space(PanelWidget *panel,
 		if(wad->pos+wad->cells-1 < ad->pos+ad->cells-width) {
 			ad->pos = ad->pos+ad->cells-width;
 			ad->cells = width;
-			panel_widget_applet_put(panel,ad);
+			panel_widget_applet_put(panel,ad,FALSE);
 			return;
 		}
 		ad->cells += ad->pos-(wad->pos+wad->cells);
@@ -769,7 +769,7 @@ panel_widget_seize_space(PanelWidget *panel,
 		if(0 <= ad->pos+ad->cells-width) {
 			ad->pos = ad->pos+ad->cells-width;
 			ad->cells = width;
-			panel_widget_applet_put(panel,ad);
+			panel_widget_applet_put(panel,ad,FALSE);
 			return;
 		}
 		ad->cells += ad->pos;
@@ -791,7 +791,7 @@ panel_widget_seize_space(PanelWidget *panel,
 		}
 	}
 
-	panel_widget_applet_put(panel,ad);
+	panel_widget_applet_put(panel,ad,FALSE);
 }
 
 static void
@@ -821,7 +821,7 @@ panel_widget_adjust_applet(PanelWidget *panel, AppletData *ad)
 		else
 			panel_widget_seize_space(panel,height,ad);
 	}
-	panel_widget_applet_put(panel,ad);
+	panel_widget_applet_put(panel,ad,FALSE);
 }
 
 
@@ -837,15 +837,15 @@ panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
 		nad = nlist->data;
 	if(!nlist || nad->pos > ad->pos+ad->cells) {
 		ad->pos++;
-		panel_widget_applet_put(panel,ad);
+		panel_widget_applet_put(panel,ad,FALSE);
 		return;
 	}
 	nad->pos = ad->pos;
 	ad->pos = nad->pos+nad->cells;
 	panel->applet_list = my_g_list_swap_prev(panel->applet_list,nlist);
 
-	panel_widget_applet_put(panel,ad);
-	panel_widget_applet_put(panel,nad);
+	panel_widget_applet_put(panel,ad,FALSE);
+	panel_widget_applet_put(panel,nad,FALSE);
 }
 
 static void
@@ -860,15 +860,15 @@ panel_widget_switch_applet_left(PanelWidget *panel, GList *list)
 		pad = nlist->data;
 	if(!nlist || pad->pos+pad->cells < ad->pos) {
 		ad->pos--;
-		panel_widget_applet_put(panel,ad);
+		panel_widget_applet_put(panel,ad,FALSE);
 		return;
 	}
 	ad->pos = pad->pos;
 	pad->pos = ad->pos+ad->cells;
 	panel->applet_list = my_g_list_swap_next(panel->applet_list,nlist);
 
-	panel_widget_applet_put(panel,ad);
-	panel_widget_applet_put(panel,pad);
+	panel_widget_applet_put(panel,ad,FALSE);
+	panel_widget_applet_put(panel,pad,FALSE);
 }
 
 static gint
@@ -978,7 +978,7 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 	ad = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_DATA);
 
 	if(ad->pos == -1)
-		return TRUE;
+		return FALSE;
 
 	if(ad->prevwidth!=widget->allocation.width ||
 	   ad->prevheight!=widget->allocation.height||
@@ -994,13 +994,14 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				widget);
+
 		ad->prevwidth = widget->allocation.width;
 		ad->prevheight = widget->allocation.height;
 		ad->prevx = widget->allocation.x;
 		ad->prevy = widget->allocation.y;
 	}
 
-	return TRUE;
+	return FALSE;
 }
 
 static gint
@@ -1627,13 +1628,35 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 			         gpointer data)
 {
 	PanelWidget *panel = data;
+	GList *list;
 
 	if(!GTK_WIDGET_REALIZED(widget))
 		return FALSE;
 
 	panel_widget_set_position(panel);
 	panel_widget_apply_size_limit(panel);
-	return TRUE;
+
+	return FALSE;
+}
+
+static gint
+panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
+			   gpointer data)
+{
+	PanelWidget *panel = PANEL_WIDGET(widget);
+	GList *list;
+
+	if(!GTK_WIDGET_REALIZED(widget))
+		return FALSE;
+
+	for(list = panel->applet_list;list != NULL;list = g_list_next(list)) {
+		AppletData *ad = list->data;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[APPLET_MOVE_SIGNAL],
+				ad->applet);
+	}
+
+	return FALSE;
 }
 
 
@@ -1959,6 +1982,10 @@ panel_widget_new (gint size,
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(
 				 	panel_widget_fixed_size_allocate),
+				 panel);
+	gtk_signal_connect_after(GTK_OBJECT(panel),
+				 "size_allocate",
+				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
 				 panel);
 
 	panel_widget_set_size(panel,panel->size);
@@ -2293,7 +2320,7 @@ panel_widget_nice_move(PanelWidget *panel, AppletData *ad, gint pos)
 		my_g_list_resort(panel->applet_list,ad,
 				 (GCompareFunc)applet_data_compare);
 
-	panel_widget_applet_put(panel,ad);
+	panel_widget_applet_put(panel,ad,FALSE);
 }
 
 static gint
@@ -2574,7 +2601,7 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 		panel_widget_pack_applets(panel);
 
 	thick = panel_widget_get_thick(panel);
-	if(panel->thick != thick) {
+	if(panel->thick != thick || panel->snapped==PANEL_DRAWER) {
 		panel->thick = thick;
 		panel_widget_set_size(panel, panel->size);
 	}
@@ -2882,7 +2909,7 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, gint pos)
 		g_list_insert_sorted(panel->applet_list,ad,
 				     (GCompareFunc)applet_data_compare);
 
-	panel_widget_applet_put(panel,ad);
+	panel_widget_applet_put(panel,ad,FALSE);
 
 	return pos;
 }
@@ -2923,7 +2950,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 
 
 	thick = panel_widget_get_thick(panel);
-	if(panel->thick != thick) {
+	if(panel->thick != thick || panel->snapped==PANEL_DRAWER) {
 		panel->thick = thick;
 		panel_widget_set_size(panel, panel->size);
 	}

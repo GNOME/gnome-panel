@@ -817,6 +817,29 @@ panel_destroy(GtkWidget *widget, gpointer data)
 }
 
 static void
+applet_move_foreach(gpointer data, gpointer user_data)
+{
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	AppletInfo *info = get_applet_info(applet_id);
+
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		reposition_drawer(drawer);
+		panel_widget_foreach(PANEL_WIDGET(info->assoc),
+				     applet_move_foreach,
+				     NULL);
+	}
+}
+
+static gint
+panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
+{
+	applet_move_foreach(widget,NULL);
+	return TRUE;
+}
+
+
+static void
 panel_setup(PanelWidget *panel)
 {
 	GtkWidget *panel_menu;
@@ -841,6 +864,10 @@ panel_setup(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "applet_removed",
 			   GTK_SIGNAL_FUNC(panel_applet_removed),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_move",
+			   GTK_SIGNAL_FUNC(panel_applet_move),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "button_press_event",
