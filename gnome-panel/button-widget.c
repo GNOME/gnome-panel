@@ -302,6 +302,23 @@ button_widget_destroy (GtkObject *obj)
 static char *default_pixmap = NULL;
 
 static GdkPixbuf *
+get_missing (int preffered_size)
+{
+	GdkPixbuf *retval = NULL;
+
+	if (default_pixmap == NULL)
+		default_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
+							 FALSE /* fallback */);
+	if (default_pixmap != NULL)
+		retval = gdk_pixbuf_new_from_file (default_pixmap,
+						   NULL);
+	if (retval == NULL)
+		retval = missing_pixbuf (preffered_size);
+
+	return retval;
+}
+
+static GdkPixbuf *
 button_load_pixbuf (const char *file,
 		    int preffered_size,
 		    char **error)
@@ -313,10 +330,8 @@ button_load_pixbuf (const char *file,
 	if (preffered_size <= 0)
 		preffered_size = 48;
 	
-	if (!file || !file [0]) {
-		*error = g_strdup (_("none"));
-		return missing_pixbuf (preffered_size);
-	}
+	if (string_empty (file))
+		return get_missing (preffered_size);
 
 	full = gnome_desktop_item_find_icon (panel_icon_loader, file,
 					     preffered_size, 0);
@@ -331,16 +346,8 @@ button_load_pixbuf (const char *file,
 		*error = g_strdup (_("file not found"));
 	}
 
-	if (retval == NULL) {
-		if (default_pixmap == NULL)
-			default_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
-								 FALSE /* fallback */);
-		if (default_pixmap != NULL)
-			retval = gdk_pixbuf_new_from_file (default_pixmap,
-							   NULL);
-		if (retval == NULL)
-			retval = missing_pixbuf (preffered_size);
-	}
+	if (retval == NULL)
+		retval = get_missing (preffered_size);
 
 	return retval;
 }
