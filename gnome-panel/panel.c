@@ -133,28 +133,36 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_string(fullpath, info->id);
 	g_free(fullpath);
 
-	fullpath = g_copy_strings(path,"position",NULL);
-	gnome_config_set_int(fullpath, pos);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"panel",NULL);
-	gnome_config_set_int(fullpath, panel);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"parameters",NULL);
-	if(strcmp(info->id,DRAWER_ID) == 0) {
-		int i;
-
-		i = find_panel(PANEL_WIDGET(info->assoc));
-		if(i>=0)
-			gnome_config_set_int(fullpath,i);
-		else
-			g_warning("Drawer not associated with applet!");
+	if(info->type==APPLET_EXTERN) {
+		/*have the applet do it's own session saving*/
+		send_applet_session_save(info->id,((*num)++)-1,panel,pos);
+		fullpath = g_copy_strings(path,"path",NULL);
+		gnome_config_set_string(fullpath, info->params);
+		g_free(fullpath);
 	} else {
-		if(info->params)
-			gnome_config_set_string(fullpath, info->params);
+		fullpath = g_copy_strings(path,"position",NULL);
+		gnome_config_set_int(fullpath, pos);
+		g_free(fullpath);
+
+		fullpath = g_copy_strings(path,"panel",NULL);
+		gnome_config_set_int(fullpath, panel);
+		g_free(fullpath);
+
+		fullpath = g_copy_strings(path,"parameters",NULL);
+		if(strcmp(info->id,DRAWER_ID) == 0) {
+			int i;
+
+			i = find_panel(PANEL_WIDGET(info->assoc));
+			if(i>=0)
+				gnome_config_set_int(fullpath,i);
+			else
+				g_warning("Drawer not associated with applet!");
+		} else {
+			if(info->params)
+				gnome_config_set_string(fullpath, info->params);
+		}
+		g_free(fullpath);
 	}
-	g_free(fullpath);
 
 	g_free(path);
 }
@@ -277,7 +285,18 @@ panel_session_save (GnomeClient *client,
 	gnome_config_sync();
 
 	if(is_shutdown) {
-		/*FIXME: tell applets to go kill themselves*/
+		GList *list;
+		int i;
+
+		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
+			AppletInfo *info = list->data;
+
+			if(info->type == APPLET_EXTERN) {
+				send_applet_do_shutdown(info->id,i);
+			} else {
+				gtk_widget_unref(info->widget);
+			}
+		}
 
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
@@ -486,7 +505,7 @@ add_main_menu(GtkWidget *widget, gpointer data)
 {
 	PanelWidget *panel = data;
 	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
-	create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
+	//create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
 int
@@ -542,7 +561,7 @@ reparent_window_id (unsigned long winid, int id)
 }
 
 int
-reserve_applet_spot (int panel, int pos)
+reserve_applet_spot (const char * ior, const char *path, int panel, int pos)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
@@ -554,7 +573,9 @@ reserve_applet_spot (int panel, int pos)
 	eb = gtk_event_box_new();
 	gtk_widget_show (eb);
 
-	register_toy(eb,NULL,"External",NULL,pos,panel,0,APPLET_EXTERN);
+	/*we save the ior in the id field of the appletinfo and the 
+	  path in the params field*/
+	register_toy(eb,NULL,g_strdup(ior),g_strdup(path),pos,panel,0,APPLET_EXTERN);
 
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
 		i++;
@@ -575,16 +596,9 @@ add_reparent(GtkWidget *widget, gpointer data)
 	puts("Enter window ID to reparent:");
 	scanf("%d",&id);
 
-	appletid = reserve_applet_spot(0,0);
+	appletid = reserve_applet_spot("???","echo",0,0);
 
 	reparent_window_id (id,appletid);
-}
-
-static void
-invoke_corba_in_applet(GtkWidget *widget, gpointer data)
-{
-	/* This invokes CORBA in the C++ file */
-	ask_first_applet_to_print_a_message ();
 }
 
 GtkWidget *
@@ -612,13 +626,6 @@ create_panel_root_menu(PanelWidget *panel)
 	menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_reparent,
-			   panel);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new_with_label(_("TESTING:  Invoke a function in a panel trough CORBA"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) invoke_corba_in_applet,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);

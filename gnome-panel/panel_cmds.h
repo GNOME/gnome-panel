@@ -4,9 +4,6 @@
 BEGIN_GNOME_DECLS
 
 
-#define PANEL_UNKNOWN_APPLET_POSITION -1
-#define PANEL_UNKNOWN_STEP_SIZE -1
-
 
 /*
 typedef enum {

@@ -21,6 +21,7 @@
 #include <gdk/gdkx.h>
 #include <applet-lib.h>
 #include <applet-widget.h>
+#include "panel.h"
 
 #define CLOCK_DATA "clock_data"
 
@@ -165,6 +166,29 @@ create_clock_widget (GtkWidget *window)
 	return clock;
 }
 
+/*these are commands sent over corba:*/
+void
+change_orient(int id, int orient)
+{
+	PanelOrientType o = (PanelOrientType)orient;
+	puts("CHANGE_ORIENT");
+}
+
+void
+session_save(int id, int panel, int pos)
+{
+	/*FIXME: save the position*/
+	puts("SESSION_SAVE");
+}
+
+void
+do_shutdown(int id)
+{
+	puts("DO_SHUTDOWN");
+	exit(0);
+}
+
+
 int
 main(int argc, char **argv)
 {
@@ -188,7 +212,7 @@ main(int argc, char **argv)
 
 	/*FIXME: do session saving, find out panel and pos from the panel
 		 so we can restore them on the next startup*/
-	result = gnome_panel_prepare_and_transfer(aw,&applet_id,0,0);
+	result = gnome_panel_prepare_and_transfer(aw,argv[0],&applet_id,0,0);
 	printf ("Done\n");
 	if (result){
 		printf ("Could not talk to the Panel: %s\n", result);

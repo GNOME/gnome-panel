@@ -1,7 +1,6 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-#include "panel_cmds.h"
 #include "panel-widget.h"
 
 BEGIN_GNOME_DECLS
@@ -24,6 +23,10 @@ BEGIN_GNOME_DECLS
 
 #define DEFAULT_PANEL_NUM 0
 
+#define PANEL_UNKNOWN_APPLET_POSITION -1
+#define PANEL_UNKNOWN_STEP_SIZE -1
+
+
 typedef struct _PanelConfig PanelConfig;
 struct _PanelConfig {
 	PanelOrientation orient;
@@ -42,19 +45,24 @@ typedef enum {
 	APPLET_LAUNCHER
 } AppletType;
 
+typedef enum {
+	ORIENT_UP,
+	ORIENT_DOWN,
+	ORIENT_LEFT,
+	ORIENT_RIGHT
+} PanelOrientType;
+
 typedef struct _AppletInfo AppletInfo;
 struct _AppletInfo {
+	AppletType type;
 	GtkWidget *widget;
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	gpointer data;
-	AppletType type;
-	AppletFlags flags;
+	AppletFlags flags; /*flags: probably obscolete*/
 	gchar *id;
 	gchar *params;
 };
 
-
-gpointer panel_command(PanelCommand *cmd);
 
 gint panel_session_save (GnomeClient *client,
 			 gint phase,
@@ -82,7 +90,7 @@ void panel_quit(void);
 void apply_global_config(void);
 
 void reparent_window_id (unsigned long winid, int id);
-int reserve_applet_spot (int panel, int pos);
+int reserve_applet_spot (const char * ior, const char * path, int panel, int pos);
 
 /*stuff for corba*/
 int applet_get_panel(int id);

@@ -12,8 +12,6 @@
  * screen.
  * */
    
-char *first_ior_sent;
-
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
 	void reparent_window_id (CORBA::ULong wid,
@@ -23,20 +21,13 @@ public:
 		::reparent_window_id (wid,id);
 	}
 	CORBA::Short reserve_applet_spot (const char *ior,
+					  const char *path,
 					  CORBA::Short panel,
 					  CORBA::Short pos) {
 		printf ("RESERVE_APPLET_SPOT!\n");
 		printf ("applet registered with IOR: %s\n", ior);
 
-		/* 
-		 * Ultra bad hack: this is only used to illustrate how to
-		 * call the applet.  
-		 * the IOR should actually be stored somewhere in the panel applet
-		 * structure
-		 */
-		first_ior_sent = g_strdup (ior);
-
-		return ::reserve_applet_spot (panel,pos);
+		return ::reserve_applet_spot (ior,path,panel,pos);
 	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
 		printf ("APPLET_GET_PANEL!\n");
@@ -93,12 +84,34 @@ panel_corba_gtk_main (int *argc, char ***argv, char *service_name)
 }
 
 void
-ask_first_applet_to_print_a_message ()
+send_applet_session_save (const char *ior, int id, int panel, int pos)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
-	CORBA::Object_var obj = orb_ptr->string_to_object (first_ior_sent);
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->print_string ("1, 2, 3, testing");
+	applet->session_save(id,panel,pos);
+}
+
+void
+send_applet_do_shutdown (const char *ior, int id)
+{
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	applet->do_shutdown(id);
+}
+
+void
+send_applet_change_orient (const char *ior, int id, int orient)
+{
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	applet->change_orient(id,orient);
 }
