@@ -3356,7 +3356,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "gnome-lockscreen.png",
-				   _("Lock button"));
+				   _("Lock Button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_lock_to_panel),
