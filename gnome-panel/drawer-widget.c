@@ -106,7 +106,7 @@ drawer_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_state(w,
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(w, WIN_LAYER_BELOW);
+		gnome_win_hints_set_layer(w, WIN_LAYER_ABOVE_DOCK);
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}
