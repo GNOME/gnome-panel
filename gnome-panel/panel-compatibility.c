@@ -33,6 +33,27 @@
 
 extern GSList *panels;
 
+/* Incompatibilities:
+ *
+ *   Toplevels:
+ *     + toplevel_id_list instead of panel_id_list.
+ *     + the schemas for toplevels and panels are completely different.
+ *
+ *   Drawers:
+ *     + we ignore the old "parameters" setting.
+ *     + s/unique-drawer-panel-id/attached_panel_id/
+ *     + s/pixmap/custom_icon/
+ *     + we should use the "usr_custom_icon" setting.
+ *
+ *   Menu buttons:
+ *     + we ignore "main-menu", "global-main" and "main-menu-flags".
+ *     + s/custom-icon/use_custom_icon/
+ *     + s/custom-icon-file/custom_icon/
+ *     + s/path/menu_path/
+ *     + we now have use_menu_path. Need to figure out how this
+ *       relates to the old main_menu and global_main flags.
+ */
+
 #ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
 panel_compatibility_warn (const char *message)

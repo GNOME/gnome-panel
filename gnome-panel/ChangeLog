@@ -1,5 +1,16 @@
 2003-02-18  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-object.schemas.in: add a set of schemas for
+	applets/launchers etc. Wow, I'd forgotten how big a mess
+	it was before.
+
+	* panel-compatibility.c: list where the new schemas are
+	incompatible from the old keys.
+
+	* Makefile.am: build and install panel-object.schemas.
+
+2003-02-18  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (create_new_panel), (remove_panel_accept):
 	use panel_profile_(create|delete)_toplevel().
 

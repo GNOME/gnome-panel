@@ -323,6 +323,7 @@ schemas_in_files =				\
 	panel-global.schemas.in 		\
 	panel-general.schemas.in		\
 	panel-toplevel.schemas.in		\
+	panel-object.schemas.in			\
 	gnome-panel-screenshot.schemas.in	\
 	$(NULL)
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
