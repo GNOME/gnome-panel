@@ -565,6 +565,60 @@ After that you only create two .desktop entries, one with:
 and one with:
 "hello_goodbye_applet --goodbye"
 
+Building the applets:
+=====================
+
+Here's a simple makefile you can use (this one is for the fish applet) if
+you want to compile applets outside of the gnome-core source tree. It was
+sent to me by John Ellis <johne@bellatlantic.net>.
+
+------------------8<-------------------
+#set PREFIX to gnome's location:
+PREFIX = /usr
+BINARY = fish_applet
+DESKTOP_FILE = fish_applet.desktop
+DESKTOP_DIR = Amusements
+# i18n does not like this, but:
+PACKAGE = gnome-core
+
+include $(PREFIX)/lib/gnomeConf.sh
+
+#Parse out those nasty quotes.
+GNOME_INCLUDEDIR_PARSED = $(subst ",,$(GNOME_INCLUDEDIR))
+GNOME_LIBS_PARSED = $(subst ",,$(GNOME_LIBS))
+GNOMEUI_LIBS_PARSED = $(subst ",,$(GNOMEUI_LIBS))
+
+GTK_INCLUDE = `gtk-config --cflags`
+GTK_LIB = `gtk-config --libs`
+CFLAGS = $(GTK_INCLUDE) $(GNOME_INCLUDEDIR_PARSED) -I.
+LDFLAGS = $(GTK_LIB) $(GNOMEUI_LIBS_PARSED) $(PREFIX)/lib/libpanel_applet.so    \
+          -lmicocoss2.0.5 -lmicoaux2.0.5 -lmico2.0.5
+CC = gcc -Wall $(CFLAGS)
+CCPLUS = c++ -Wall
+
+OBJS = fish.o
+
+$(BINARY): $(OBJS)
+        $(CCPLUS) $(OBJS) -o $(BINARY) $(LDFLAGS)
+
+fish.o : fish.c
+        echo "#define PACKAGE \"$(PACKAGE)\"" > config.h
+        $(CC) -c fish.c
+
+install:
+        install -c $(BINARY) $(PREFIX)/bin/$(BINARY)
+        install -c $(DESKTOP_FILE) $(PREFIX)/share/applets/$(DESKTOP_DIR)/$(DESK
+TOP_FILE)
+
+uninstall:
+        rm -f $(PREFIX)/bin/$(BINARY)
+        rm -f $(PREFIX)/share/applets/$(DESKTOP_DIR)/$(DESKTOP_FILE)
+
+clean:
+        rm -f *.o *~ $(BINARY) core
+
+------------------8<-------------------
+
 It's all quite simple isn't it?
 
 George <jirka@5z.com>
