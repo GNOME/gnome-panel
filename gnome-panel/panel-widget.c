@@ -13,6 +13,7 @@ gint panel_applet_in_drag = FALSE;
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
 static int  panel_try_to_set_pixmap     (PanelWidget *panel, char *pixmap);
+static void panel_resize_pixmap         (PanelWidget *panel);
 static void panel_try_to_set_back_color (PanelWidget *panel, GdkColor *color);
 
 static GdkCursor *fleur_cursor;
@@ -1721,7 +1722,8 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 	panel_widget_apply_size_limit(panel);
 
 	if(panel->fit_pixmap_bg && panel->back_type == PANEL_BACK_PIXMAP)
-		panel_try_to_set_pixmap (panel, panel->back_pixmap);
+		panel_resize_pixmap(panel);
+		/*panel_try_to_set_pixmap (panel, panel->back_pixmap);*/
 	
 	return FALSE;
 }
@@ -1866,10 +1868,50 @@ panel_widget_dnd_drop_internal(GtkWidget *widget,
 	return;
 }
 
+static void
+panel_resize_pixmap(PanelWidget *panel)
+{
+	GdkImlibImage *im;
+	GdkPixmap *p;
+	GtkStyle *ns;
+	int w, h;
+
+	im = gtk_object_get_data(GTK_OBJECT(panel),"gdk_image");
+	if(!im) return;
+
+	w = im->rgb_width;
+	h = im->rgb_height;
+
+	switch (panel->orient) {
+	case PANEL_HORIZONTAL:
+		gdk_imlib_render (im, w * panel->thick / h, panel->thick);
+		break;
+
+	case PANEL_VERTICAL:
+		gdk_imlib_render (im, panel->thick, h * panel->thick / w);
+		break;
+
+	default:
+		g_assert_not_reached ();
+	}
+
+	p = gdk_imlib_move_image (im);
+
+	ns = gtk_style_copy(panel->fixed->style);
+	gtk_style_ref(ns);
+
+	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
+
+	gtk_widget_set_style(panel->fixed, ns);
+	
+	gtk_style_unref(ns);
+}
+
 static int
 panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 {
 	GdkImlibImage *im;
+	GdkImlibImage *im2;
 	GdkPixmap *p;
 	GtkStyle *ns;
 
@@ -1893,6 +1935,9 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	im = gdk_imlib_load_image (pixmap);
 	if (!im)
 		return 0;
+
+	im2 = gtk_object_get_data(GTK_OBJECT(panel),"gdk_image");
+	if(im2) gdk_imlib_destroy_image (im2);
 	
 	if (panel->fit_pixmap_bg) {
 		int w, h;
@@ -1925,7 +1970,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	gtk_widget_set_style(panel->fixed, ns);
 	
 	gtk_style_unref(ns);
-	gdk_imlib_destroy_image (im);
+	gtk_object_set_data(GTK_OBJECT(panel),"gdk_image",im);
 	return 1;
 }
 
@@ -1980,6 +2025,18 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	}
 
+	return FALSE;
+}
+
+static gint
+panel_widget_destroy(GtkWidget *w, gpointer data)
+{
+	GdkImlibImage *im;
+
+	im = gtk_object_get_data(GTK_OBJECT(w),"gdk_image");
+	if(im) gdk_imlib_destroy_image (im);
+	gtk_object_set_data(GTK_OBJECT(w),"gdk_image",NULL);
+	
 	return FALSE;
 }
 
@@ -2055,7 +2112,6 @@ panel_widget_new (gint size,
 		panel->back_color.blue = 0;
 		panel->back_color.pixel = 1;
 	}
-
 	
 	/*we add all the hide buttons to the table here*/
 	/*EAST*/
@@ -2143,6 +2199,10 @@ panel_widget_new (gint size,
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
 				 panel);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(panel_widget_destroy),
+			   NULL);
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel))) {
 		if(panel->back_type == PANEL_BACK_PIXMAP) {
@@ -2212,8 +2272,7 @@ panel_widget_new (gint size,
 				 applet_drop_types, 1, FALSE);
 	*/
 
-
-  return GTK_WIDGET(panel);
+	return GTK_WIDGET(panel);
 }
 
 static void
