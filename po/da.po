@@ -5,7 +5,7 @@
 # Birger Langkjer <birger.langkjer@image.dk>, 1999.
 # Keld Simonsen <keld@dkuug.dk>, 2000-2001.
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04.
-# Martin Willemoes Hansen <mwh@sysrq.dk>, 2004.
+# Martin Willemoes Hansen <mwh@sysrq.dk>, 2004, 05.
 #
 # Konventioner:
 #
@@ -25,8 +25,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 09:36+0000\n"
-"PO-Revision-Date: 2004-11-30 15:17+0100\n"
+"POT-Creation-Date: 2005-02-03 10:34+0100\n"
+"PO-Revision-Date: 2005-02-03 09:27+0100\n"
 "Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -203,10 +203,7 @@ msgstr "Brugerdefineret format"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
-#: applets/wncklet/workspace-switcher.c:267
-#: applets/wncklet/workspace-switcher.c:575
+#: applets/wncklet/window-list.c:114 applets/wncklet/workspace-switcher.c:240
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Der opstod en fejl ved visning af hjælp: %s"
@@ -253,9 +250,9 @@ msgstr "Benyt _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
-#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
-#: applets/wncklet/workspace-switcher.c:606
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:510
+#: applets/wncklet/window-list.c:736 applets/wncklet/window-menu.c:75
+#: applets/wncklet/workspace-switcher.c:554
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
 msgstr ""
@@ -531,7 +528,6 @@ msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
 #: gnome-panel/panel-run-dialog.glade.h:1
-#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -690,7 +686,7 @@ msgid "Switch between workspaces"
 msgstr "Skift mellem arbejdsområder"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:805
+#: applets/wncklet/window-list.c:739
 msgid "Window List"
 msgstr "Vinduesliste"
 
@@ -699,42 +695,41 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fabrik til panelprogrammer til vinduesnavigation"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Vinduesvælger"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:617
+#: applets/wncklet/workspace-switcher.c:557
 msgid "Workspace Switcher"
 msgstr "Arbejdsområdeskifter"
 
-#: applets/wncklet/showdesktop.c:205
+#: applets/wncklet/showdesktop.c:171
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kunne ikke indlæse %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
-#, fuzzy
+#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:567
 msgid "Icon not found"
-msgstr "%s - kommando ikke fundet"
+msgstr "Ikon ikke fundet"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Klik her for at gendanne skjulte vinduer"
 
-#: applets/wncklet/showdesktop.c:267
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik her for at skjule alle vinduer og vise skrivebordet"
 
-#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
+#: applets/wncklet/showdesktop.c:429 applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
 msgstr "Vis skrivebord-knap"
 
-#: applets/wncklet/showdesktop.c:582
+#: applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Denne knap lader dig skjule alle vinduerne og vise skrivebordet."
 
-#: applets/wncklet/showdesktop.c:623
+#: applets/wncklet/showdesktop.c:545
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -742,7 +737,7 @@ msgstr ""
 "Din vindueshåndtering understøtter ikke knappen til at vise skrivebordet, "
 "eller også kører du ikke en vindueshåndtering."
 
-#: applets/wncklet/window-list.c:808
+#: applets/wncklet/window-list.c:741
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Vindueslisten viser en liste over alle synlige vinduer og lader dig gennemse."
@@ -874,31 +869,31 @@ msgstr "Minimal størrelse som vindueslisten forespørger."
 msgid "When to group windows"
 msgstr "Hvornår vinduer skal grupperes"
 
-#: applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-menu.c:82
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Vinduesvælgeren viser en liste over alle synlige vinduer og lader dig "
 "gennemse dem."
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "rækker"
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 msgid "columns"
 msgstr "kolonner"
 
-#: applets/wncklet/workspace-switcher.c:455
+#: applets/wncklet/workspace-switcher.c:428
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Fejl ved indlæsning af num_rows-værdien for arbejdsområdeomskifteren: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:466
+#: applets/wncklet/workspace-switcher.c:439
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -906,14 +901,14 @@ msgstr ""
 "Fejl ved indlæsning af display_workspace_names-værdien for "
 "arbejdsområdeomskifteren: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:481
+#: applets/wncklet/workspace-switcher.c:454
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fejl ved indlæsning af display_all_workspaces-værdien for "
 "arbejdsområdeomskifteren: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:620
+#: applets/wncklet/workspace-switcher.c:559
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1001,9 +996,8 @@ msgid "GNOME Panel Shell"
 msgstr "Gnome-panelskal"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
-#, fuzzy
 msgid "_Lock To Panel"
-msgstr "Lås panelet ned"
+msgstr "_Lås til panel"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
@@ -1032,9 +1026,8 @@ msgid "Drawer"
 msgstr "Skuffe"
 
 #: gnome-panel/drawer.c:596
-#, fuzzy
 msgid "_Add to Drawer..."
-msgstr "_Tilføj til panel..."
+msgstr "_Tilføj til skuffe..."
 
 #: gnome-panel/drawer.c:602 gnome-panel/launcher.c:846
 #: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
@@ -1078,9 +1071,8 @@ msgid "Launcher Properties"
 msgstr "Egenskaber for genvej"
 
 #: gnome-panel/launcher.c:840
-#, fuzzy
 msgid "_Launch"
-msgstr "Genvej..."
+msgstr "_Start"
 
 #: gnome-panel/launcher.c:918
 #, c-format
@@ -1178,7 +1170,7 @@ msgstr "Kan ikke køre \"%s\""
 
 #: gnome-panel/panel-action-button.c:282
 msgid "Cannot connect to server"
-msgstr ""
+msgstr "Kan ikke tilslutte serveren"
 
 #: gnome-panel/panel-action-button.c:313
 msgid "Lock Screen"
@@ -1235,12 +1227,11 @@ msgstr "Tving et program der opfører sig forkert, til at slutte"
 #. FIXME icon
 #: gnome-panel/panel-action-button.c:373
 msgid "Connect to Server..."
-msgstr ""
+msgstr "Tilslut server..."
 
 #: gnome-panel/panel-action-button.c:374
-#, fuzzy
 msgid "Connect to a remote server"
-msgstr "Brugernavn på serveren"
+msgstr "Forbind til en fjern server"
 
 #: gnome-panel/panel-addto.c:102
 msgid "Custom Application Launcher"
@@ -1282,32 +1273,29 @@ msgstr "En pop-ud-skuffe til at gemme andre ting i"
 msgid "(empty)"
 msgstr "(tom)"
 
-#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:400 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "forespørgsel returnerede undtagelsen %s\n"
 
-#: gnome-panel/panel-addto.c:913
-#, fuzzy, c-format
+#: gnome-panel/panel-addto.c:940
+#, c-format
 msgid "Select an _item to add to \"%s\":"
-msgstr "Vælg og t_ilføj en genstand til %s:"
+msgstr "Vælg og føj en _genstand til \"%s\":"
 
-#: gnome-panel/panel-addto.c:917
-#, fuzzy
+#: gnome-panel/panel-addto.c:944
 msgid "Add to Drawer"
-msgstr "_Tilføj til panel..."
+msgstr "Føj til skuffe"
 
-#: gnome-panel/panel-addto.c:919
-#, fuzzy
+#: gnome-panel/panel-addto.c:946
 msgid "Select an _item to add to the drawer:"
-msgstr "Vælg og t_ilføj en genstand til panelet:"
+msgstr "Vælg og føj en _genstand til skuffen:"
 
-#: gnome-panel/panel-addto.c:921
-#, fuzzy
+#: gnome-panel/panel-addto.c:948
 msgid "Add to Panel"
-msgstr "_Tilføj til panel..."
+msgstr "Føj til panel"
 
-#: gnome-panel/panel-addto.c:923
+#: gnome-panel/panel-addto.c:950
 msgid "Select an _item to add to the panel:"
 msgstr "Vælg og t_ilføj en genstand til panelet:"
 
@@ -1665,7 +1653,7 @@ msgstr "Kan ikke vise placering \"%s\""
 
 #: gnome-panel/panel-menu-bar.c:470
 msgid "Bookmarks"
-msgstr ""
+msgstr "Bogmærker"
 
 #. Translators: %s is a URI
 #: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
@@ -1674,39 +1662,20 @@ msgid "Open '%s'"
 msgstr "Åbn \"%s\""
 
 #: gnome-panel/panel-menu-bar.c:545
-#, fuzzy
 msgid "Network Places"
-msgstr "Netværk"
+msgstr "Netværkssteder"
 
 #: gnome-panel/panel-menu-bar.c:547
 msgid "Removable Media"
-msgstr ""
-
-#. Translators: Desktop is
-#. * used here as in "Desktop
-#. * Folder" (this is not the
-#. * Desktop environment). Do
-#. * not keep "Desktop Folder|"
-#. * in the translation
-#: gnome-panel/panel-menu-bar.c:606
-#, fuzzy
-msgid "Desktop Folder|Desktop"
-msgstr "Internetmappe"
+msgstr "Flytbart medie"
 
 #: gnome-panel/panel-menu-bar.c:607
 msgid "Open the desktop as a folder"
-msgstr ""
+msgstr "Åbn skrivebordet i en mappe"
 
 #: gnome-panel/panel-menu-bar.c:786
 msgid "Places"
-msgstr ""
-
-#. Translators: Desktop is used here as in "Desktop Environment" (this
-#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
-#. * the translation.
-#: gnome-panel/panel-menu-bar.c:795
-msgid "Desktop Environment|Desktop"
-msgstr ""
+msgstr "Steder"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1932,9 +1901,8 @@ msgid "Right"
 msgstr "Højre"
 
 #: gnome-panel/panel-properties-dialog.c:412
-#, fuzzy
 msgid "Images"
-msgstr "Billede"
+msgstr "Billeder"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
@@ -1989,9 +1957,8 @@ msgid "S_tyle:"
 msgstr "_Type:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
-#, fuzzy
 msgid "Select background"
-msgstr "Baggrund"
+msgstr "Vælg baggrund"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
@@ -2022,7 +1989,7 @@ msgid "_None (use system theme)"
 msgstr "_Ingen (benyt systemtema)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#: libpanel-applet/panel-test-applets.glade.h:4
+#: libpanel-applet/panel-test-applets.glade.h:3
 msgid "_Orientation:"
 msgstr "_Orientering:"
 
@@ -2031,7 +1998,7 @@ msgid "_Scale"
 msgstr "_Skalér"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: libpanel-applet/panel-test-applets.glade.h:6
+#: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Size:"
 msgstr "_Størrelse:"
 
@@ -2057,7 +2024,6 @@ msgid "Clear the Recent Documents list?"
 msgstr "Ryd listen over seneste dokumenter?"
 
 #: gnome-panel/panel-recent.c:157
-#, fuzzy
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -2066,7 +2032,7 @@ msgid ""
 msgstr ""
 "Hvis du ryder listen over seneste dokumenter, ryder du følgende:\n"
 "\n"
-"• Alle elementerne fra seneste dokumenter i menuen handlinger.\n"
+"• Alle elementerne fra Steder → seneste dokumenter-menupunktet.\n"
 "• Alle elementerne fra seneste dokumenter i alle programmer."
 
 #: gnome-panel/panel-recent.c:222
@@ -2108,6 +2074,8 @@ msgstr "Vælg et program for et se dets beskrivelse."
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
+"URI-listen som blev droppet på kør-vinduet havde ugyldigt format (%d) eller "
+"længde (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2611,36 +2579,32 @@ msgid "Open URL: %s"
 msgstr "Åbn adresse: %s"
 
 #: gnome-panel/panel.c:1254
-#, fuzzy
 msgid "Delete this drawer?"
-msgstr "Fjern skuffe"
+msgstr "Fjern denne skuffe?"
 
 #: gnome-panel/panel.c:1255
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
 "Når en skuffe fjernes, mister du både skuffen\n"
-"og dens opsætning. Fjern denne skuffe?"
+"og dens opsætning."
 
 #: gnome-panel/panel.c:1257
 msgid "Delete Drawer"
 msgstr "Fjern skuffe"
 
 #: gnome-panel/panel.c:1259
-#, fuzzy
 msgid "Delete this panel?"
-msgstr "_Fjern dette panel"
+msgstr "Fjern dette panel?"
 
 #: gnome-panel/panel.c:1260
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Når et panel fjernes, mister du både panelet\n"
-"og dets indstillinger. Fjern dette panel?"
+"og dets opsætning."
 
 #: gnome-panel/panel.c:1262
 msgid "Delete Panel"
@@ -2753,17 +2717,20 @@ msgstr "Meget stor"
 msgid "XX Large"
 msgstr "Enorm"
 
-#: libpanel-applet/panel-test-applets.glade.h:2
+#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Test applet utility"
 msgstr "Testpanelprogramredskab"
 
-#: libpanel-applet/panel-test-applets.glade.h:3
+#: libpanel-applet/panel-test-applets.glade.h:2
 msgid "_Applet:"
 msgstr "_Panelprogram:"
 
-#: libpanel-applet/panel-test-applets.glade.h:5
+#: libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Prefs Dir:"
 msgstr "_Indstillingsmappe:"
+
+#~ msgid "Desktop Folder|Desktop"
+#~ msgstr "Internetmappe"
 
 #~ msgid "File not found"
 #~ msgstr "Fil ikke fundet"
