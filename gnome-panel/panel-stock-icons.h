@@ -31,7 +31,7 @@
 G_BEGIN_DECLS
 
 /* themeable size - "panel-menu" */
-#define PANEL_DEFAULT_MENU_ICON_SIZE 	20 
+#define PANEL_DEFAULT_MENU_ICON_SIZE 	24
 #define PANEL_DEFAULT_BUTTON_ICON_SIZE  12
 
 /* stock icons */
