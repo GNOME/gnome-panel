@@ -9,6 +9,7 @@
 #include <libintl.h>
 #endif
 #include <string.h>
+#include <gdk/gdkx.h>
 #include "gnome.h"
 #include "applet_files.h"
 #include "gdkextra.h"
@@ -793,8 +794,11 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 			 for horizontal but we use only one .. i.e. move
 			 down the panel (down or right)!)
 			 into acceptable position*/
+	gint noturn=FALSE; /*set once a turn around has been made on one end,
+			     it will prevent a hang when tehpanel is full*/
 	gint *adjvar;	/*this points to the variable that we are adjusting*/
 	gint adjdef;	/*default for the above*/
+	gint adjlim;	/*limit to the above*/
 	gint xpos,ypos;
 
 
@@ -817,6 +821,7 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 				TRUE:FALSE;
 			adjvar=x;
 			adjdef=*x;
+			adjlim=the_panel->fixed->allocation.width;
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
@@ -826,6 +831,7 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 				TRUE:FALSE;
 			adjvar=y;
 			adjdef=*y;
+			adjlim=the_panel->fixed->allocation.height;
 			break;
 	}
 
@@ -838,9 +844,19 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 			if(--(*adjvar)<0) {
 				movedown=FALSE;
 				*adjvar=adjdef;
+				if(noturn)
+					break;
+				noturn=TRUE;
 			}
-		} else
-			(*adjvar)++;
+		} else {
+			if(++(*adjvar)>adjlim) {
+				movedown=TRUE;
+				*adjvar=adjdef;
+				if(noturn)
+					break;
+				noturn=TRUE;
+			}
+		}
 	}
 
 	/*ajust positions to limits again!, in the worst case
@@ -858,6 +874,9 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	int             dx, dy;
 	int             xpos, ypos;
 	int             width, height;
+
+	GdkGC		*gc;
+	GdkColor	color={1,100,200,150};
 
 	get_applet_geometry(widget, &xpos, &ypos, &width, &height);
 
@@ -895,7 +914,8 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 		case GDK_MOTION_NOTIFY:
 			if (the_panel->applet_being_dragged == widget) {
-				gtk_widget_get_pointer(the_panel->window, &x, &y);
+				gtk_widget_get_pointer(the_panel->window,
+						       &x, &y);
 
 				dx = x - the_panel->applet_drag_click_x;
 				dy = y - the_panel->applet_drag_click_y;
@@ -1405,6 +1425,7 @@ fix_an_applet_idle_func(gpointer data)
 		GTK_WIDGET(applet)->allocation.height);
 	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
 	if((--applet_stacktop)<0) {
+		set_panel_position();
 		have_idle_func=FALSE;
 		return FALSE;
 	}
