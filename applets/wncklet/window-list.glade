@@ -3,7 +3,7 @@
 
 <glade-interface>
   <widget class="GtkDialog" id="tasklist_properties_dialog">
-    <property name="title" translatable="yes">Tasklist properties</property>
+    <property name="title" translatable="yes">Window List Properties</property>
     <property name="type">GTK_WINDOW_TOPLEVEL</property>
     <property name="modal">no</property>
     <property name="allow_shrink">no</property>
@@ -79,7 +79,7 @@
 
                 <child>
                   <widget class="GtkFrame" id="frame2">
-                    <property name="label" translatable="yes">Tasklist content</property>
+                    <property name="label" translatable="yes">Window List content</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow">GTK_SHADOW_ETCHED_IN</property>
                     <property name="visible">yes</property>
@@ -135,7 +135,7 @@
 
                 <child>
                   <widget class="GtkFrame" id="frame4">
-                    <property name="label" translatable="yes">When unminimizing windows</property>
+                    <property name="label" translatable="yes">When restoring minimized windows</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow">GTK_SHADOW_ETCHED_IN</property>
                     <property name="visible">yes</property>
@@ -150,7 +150,7 @@
                         <child>
                           <widget class="GtkRadioButton" id="move_minimized_radio">
                             <property name="can_focus">yes</property>
-                            <property name="label" translatable="yes">_Move window to the current workspace</property>
+                            <property name="label" translatable="yes">Restore to _current workspace</property>
                             <property name="active">no</property>
                             <property name="draw_indicator">yes</property>
                             <property name="visible">yes</property>
@@ -166,7 +166,7 @@
                         <child>
                           <widget class="GtkRadioButton" id="change_workspace_radio">
                             <property name="can_focus">yes</property>
-                            <property name="label" translatable="yes">Change to window's _workspace</property>
+                            <property name="label" translatable="yes">Restore to _native workspace</property>
                             <property name="active">no</property>
                             <property name="draw_indicator">yes</property>
                             <property name="visible">yes</property>

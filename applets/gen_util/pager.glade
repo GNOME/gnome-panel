@@ -3,7 +3,7 @@
 
 <glade-interface>
   <widget class="GtkDialog" id="pager_properties_dialog">
-    <property name="title" translatable="yes">Pager Properties</property>
+    <property name="title" translatable="yes">Workspace List Properties</property>
     <property name="type">GTK_WINDOW_TOPLEVEL</property>
     <property name="modal">no</property>
     <property name="allow_shrink">no</property>
@@ -62,7 +62,7 @@
 
             <child>
               <widget class="GtkFrame" id="frame2">
-                <property name="label" translatable="yes">Pager</property>
+                <property name="label" translatable="yes">Workspace List</property>
                 <property name="label_xalign">0</property>
                 <property name="shadow">GTK_SHADOW_ETCHED_IN</property>
                 <property name="visible">yes</property>
@@ -172,7 +172,7 @@
                     <child>
                       <widget class="GtkCheckButton" id="workspace_name_toggle">
                         <property name="can_focus">yes</property>
-                        <property name="label" translatable="yes">Show workspace _names in pager</property>
+                        <property name="label" translatable="yes">Show workspace _names in workspace list</property>
                         <property name="active">no</property>
                         <property name="draw_indicator">yes</property>
                         <property name="visible">yes</property>
@@ -193,7 +193,7 @@
                     <child>
                       <widget class="GtkRadioButton" id="current_only_radio">
                         <property name="can_focus">yes</property>
-                        <property name="label" translatable="yes">Show only _current workspace in pager</property>
+                        <property name="label" translatable="yes">Show only _current workspace in workspace list</property>
                         <property name="active">no</property>
                         <property name="draw_indicator">yes</property>
                         <property name="visible">yes</property>
@@ -280,7 +280,7 @@
 
                         <child>
                           <widget class="GtkLabel" id="label3">
-                            <property name="label" translatable="yes">Number of _Workspaces:</property>
+                            <property name="label" translatable="yes">Number of _workspaces:</property>
                             <property name="justify">GTK_JUSTIFY_CENTER</property>
                             <property name="wrap">no</property>
                             <property name="xalign">0.5</property>

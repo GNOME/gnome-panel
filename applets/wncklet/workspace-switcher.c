@@ -398,9 +398,9 @@ display_about_dialog (BonoboUIComponent *uic,
 		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	}
 
-	about = gnome_about_new (_("Pager Applet"), "1.0",
+	about = gnome_about_new (_("Workspace List"), "1.0",
 				 _("(c) 2001 Red Hat, Inc."),
-				 _("The pager applet shows you a small version of your workspaces that lets you manage the windows."),
+				 _("The Workspace List shows you a small version of your workspaces that lets you manage the windows."),
 				 authors,
 				 NULL, /* documenters */
 				 NULL, /* translator_credits */

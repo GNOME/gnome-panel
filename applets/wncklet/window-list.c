@@ -428,9 +428,9 @@ display_about_dialog (BonoboUIComponent *uic,
 		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	}
 
-	about = gnome_about_new (_("Tasklist Applet"), "1.0",
+	about = gnome_about_new (_("Window List"), "1.0",
 				 _("(c) 2001 Red Hat, Inc"),
-				 _("The tasklist applet shows a list of all visible windows and let you browse them."),
+				 _("The Window List shows a list of all visible windows and let you browse them."),
 				 authors,
 				 NULL, /* documenters */
 				 NULL, /* translator_credits */
