@@ -38,6 +38,8 @@ struct _Menu {
 
 void load_menu_applet(char *params, int main_menu_flags,
 		      PanelWidget *panel, int pos);
+void add_menu_widget (Menu *menu, GSList *menudirl, int main_menu,
+		      int fake_subs);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 
@@ -50,14 +52,48 @@ GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 void menu_properties(Menu *menu);
 
-/*menu related utility functions .. also used elswhere*/
-void applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data);
-void panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data);
-
 void panel_lock (GtkWidget *widget, void *data);
 
 /*to be called on startup to load in some of the directories*/
 void init_menus(void);
+
+#define MENU_PATH "menu_path"
+
+#define MENU_PROPERTIES "menu_properties"
+
+#define DEBIAN_MENUDIR "/var/lib/gnome/Debian/."
+
+#define MENU_TYPES "types_menu"
+#define MENU_TYPE_EDGE "Edge panel"
+#define MENU_TYPE_ALIGNED "Aligned panel"
+#define MENU_TYPE_SLIDING "Sliding panel"
+
+#define MENU_MODES "modes_menu"
+#define MENU_MODE_EXPLICIT_HIDE "Explicit hide"
+#define MENU_MODE_AUTO_HIDE "Auto hide"
+
+#define MENU_HIDEBUTTONS "hidebuttons_menu"
+#define MENU_HIDEBUTTONS_PIXMAP "With pixmap arrow"
+#define MENU_HIDEBUTTONS_PLAIN "Without pixmap"
+#define MENU_HIDEBUTTONS_NONE "None"
+
+/* perhaps into basep-widget.h? */
+enum {
+	HIDEBUTTONS_PIXMAP,
+	HIDEBUTTONS_PLAIN,
+	HIDEBUTTONS_NONE
+};
+
+#define MENU_SIZES "sizes_menu"
+#define MENU_SIZE_TINY "Tiny (24 pixels)"
+#define MENU_SIZE_STANDARD "Standard (48 pixels)"
+#define MENU_SIZE_LARGE "Large (64 pixels)"
+#define MENU_SIZE_HUGE "Huge (80 pixels"
+
+#define MENU_BACKS "background_menu"
+#define MENU_BACK_NONE "Standard"
+#define MENU_BACK_PIXMAP "Pixmap"
+#define MENU_BACK_COLOR "Color"
 
 END_GNOME_DECLS
 

@@ -64,6 +64,14 @@ base_panel_SOURCES=\
 	panel_config_global.h  	\
 	menu.c  		\
 	menu.h  		\
+	menu-fentry.c  		\
+	menu-fentry.h  		\
+	menu-rh.c  		\
+	menu-rh.h  		\
+	menu-properties.c	\
+	menu-properties.h	\
+	menu-util.c		\
+	menu-util.h		\
 	launcher.c		\
 	launcher.h		\
 	logout.c		\

@@ -23,6 +23,10 @@
 #include "panel_config_global.h"
 
 #include "menu.h"
+#include "menu-fentry.h"
+#include "menu-rh.h"
+#include "menu-properties.h"
+#include "menu-util.h"
 #include "drawer.h"
 #include "swallow.h"
 #include "launcher.h"
