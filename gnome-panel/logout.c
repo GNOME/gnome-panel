@@ -43,7 +43,7 @@ logout(void)
 }
 
 static GtkWidget *
-create_logout_widget (GtkWidget *plug)
+create_logout_widget (void)
 {
   GtkWidget *button;
   GtkWidget *pixmap;
@@ -114,7 +114,7 @@ main(int argc, char *argv[])
 
   plug = gtk_plug_new(winid);
 
-  logout = create_logout_widget(plug);
+  logout = create_logout_widget();
   gtk_widget_show(logout);
   gtk_container_add(GTK_CONTAINER(plug), logout);
   gtk_widget_show(plug);
