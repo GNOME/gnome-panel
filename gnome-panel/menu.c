@@ -1054,7 +1054,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				menuitem = gtk_menu_item_new ();
 				gtk_widget_lock_accelerators (menuitem);
 				setup_menuitem (menuitem, 0,
-						_("Add this to personal menu"));
+						_("Add this to Favorites menu"));
 				gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 				gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 						   GTK_SIGNAL_FUNC(add_app_to_personal),
@@ -1101,7 +1101,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);
 			setup_menuitem (menuitem, 0,
-					_("Add this to personal menu"));
+					_("Add this to Favorites menu"));
 			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_app_to_personal),
