@@ -106,7 +106,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			("Run Program..."),
+			_("Run Program..."),
 			PANEL_STOCK_RUN,
 			_("Run applications, if you know the correct command to type in"),
 			"ACTION:run:NEW",
