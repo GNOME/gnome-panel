@@ -605,7 +605,7 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
   CORBA_ORB orb;
   CORBA_char *privcfg;
   CORBA_char *globcfg;
-  static int stop_here = 0;
+  static volatile int stop_here = 0;
 
   CORBA_exception_init(&ev);
 
@@ -674,7 +674,7 @@ applet_widget_new(const char *goad_id)
 	CustomAppletServant *corbadat;
 	CORBA_unsigned_long wid;
 	
-	g_return_val_if_fail(goad_id!=NULL,NULL);
+	g_return_val_if_fail(goad_id != NULL,NULL);
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 
