@@ -230,9 +230,20 @@ panel_gconf_add_dir (const gchar *key) {
 
 gboolean
 panel_gconf_dir_exists (const gchar *key) {
-	return gconf_client_dir_exists (panel_gconf_get_client (),
-				 	key,
-				 	NULL);
+	GError   *error = NULL;
+	gboolean  retval;
+
+	g_return_val_if_fail (key != NULL, FALSE);
+	
+	retval = gconf_client_dir_exists (panel_gconf_get_client (), key, &error);
+	if (error) {
+		g_warning (G_STRLOC ": gconf error from dir_exists(): %s", error->message);
+		g_error_free (error);
+	}
+
+	g_print ("dir_exists: %s %s\n", key, retval ? "(true)" : "(false)");
+
+	return retval;
 }
 
 char *
