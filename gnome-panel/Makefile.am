@@ -43,7 +43,7 @@ libpanel_applet_la_SOURCES = \
 #	applet-widget.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB) -lcrypt
+libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SOURCES)
 
@@ -87,7 +87,7 @@ launcher_applet_SOURCES = \
 	launcher.c
 
 launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
-			$(GNOMEUI_LIBS) $(INTLLIBS) -lcrypt
+			$(GNOMEUI_LIBS) $(INTLLIBS)
 
 logout_applet_SOURCES = \
 	logout.c

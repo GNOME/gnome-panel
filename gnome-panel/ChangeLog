@@ -1,5 +1,9 @@
 Sun Apr 26 01:06:07 1998  Tom Tromey  <tromey@cygnus.com>
 
+	* Makefile.am (libpanel_applet_la_LIBADD): Don't include -lcrypt;
+	configure finds it if it is needed.
+	(launcher_applet_LDADD): Likewise.
+
 	* cookie.h: Only include <crypt.h> if HAVE_CRYPT_H defined.
 
 Sat Apr 25 14:20:27 1998  George Lebl  <jirka@5z.com>
