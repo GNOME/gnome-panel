@@ -21,7 +21,6 @@ module GNOME {
 		/*abort the applet load (before we register)*/
 		void applet_abort_id(in short applet_id);
 
-		void applet_request_glob_cfg(out string globcfgpath);
 		void applet_remove_from_panel(in short applet_id);
 		short applet_get_panel (in short applet_id);
 		short applet_get_pos (in short applet_id);
