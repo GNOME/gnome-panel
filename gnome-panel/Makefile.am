@@ -5,7 +5,7 @@ NULL =
 
 #SUBDIRS =
 
-EXTRA_SUBDIRS = config help
+EXTRA_SUBDIRS = help
 
 INCLUDES =							\
 	-I.							\
@@ -22,7 +22,6 @@ INCLUDES =							\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DGNOME_DATADIR=\""$(datadir)"\"			\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
-	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-DPREFIX=\""$(prefix)"\"				\
 	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
 	-DDATADIR=\""$(datadir)"\"				\

@@ -1871,8 +1871,6 @@ panel_session_init_global_config (void)
 
 	list = panel_gconf_all_global_entries ();
 
-	printf ("Loading up global preferences . . .\n");
-
 	for (li = list; li != NULL ; li = li->next) {
 		GConfEntry *entry;
 		GConfValue *value;
@@ -1935,7 +1933,7 @@ panel_session_init_global_config (void)
 				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "auto-update-menus"))
-			g_warning ("\nGman: So guys, are we actually gonne do something with this in some sort of GNOME 2.0 timeframe?\n");
+			;
 
 		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
 			global_config.highlight_when_over =
@@ -2213,7 +2211,6 @@ panel_session_init_panels(void)
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
 		/* FIXME: We need to resort to another fallback default panel config 
 		          and do some sort of check for screen sizes */
-		printf ("We are loading from a default setup - no current profile detected\n");
 		use_default = TRUE;
 		panel_default_profile = "medium";
 		g_free (panel_profile_key);

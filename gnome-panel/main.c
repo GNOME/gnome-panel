@@ -215,7 +215,6 @@ main(int argc, char **argv)
 
 	if (profile_name == NULL) {
 		/* FIXME: Do this properly. just a temporary hack */
-		printf ("Couldn't find profile! - Loading up default . . .\n");
 		session_set_current_profile ("default");
 	} else {
 		session_set_current_profile (profile_name);

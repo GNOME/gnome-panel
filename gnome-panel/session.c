@@ -318,6 +318,7 @@ panel_quit (void)
 				   GNOME_INTERACT_ANY, 0, 1);
 }
 
+#ifdef FIXME
 static gboolean
 is_among_users (const char *username, const char *users)
 {
@@ -380,6 +381,7 @@ load_system_wide (void)
 
 	gnome_config_pop_prefix ();
 }
+#endif
 
 void session_load (void) {
 	/* FIXME : We still have to load up system preferences
