@@ -27,7 +27,6 @@
 
 #include "clock.h"
 
-#include "multihead-hacks.h"
 #include "egg-screen-help.h"
 
 #define INTERNETSECOND (864)

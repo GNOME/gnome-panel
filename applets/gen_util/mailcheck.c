@@ -28,7 +28,6 @@
 #include "remote-helper.h"
 #include "mailcheck.h"
 
-#include "multihead-hacks.h"
 #include "egg-screen-help.h"
 
 typedef enum {

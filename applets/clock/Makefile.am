@@ -48,7 +48,6 @@ libgen_util_applet_2_la_SOURCES = \
 	popcheck.h \
 	remote-helper.c \
 	remote-helper.h \
-	multihead-hacks.h \
 	$(EGGFILES)
 
 libgen_util_applet_2_la_LDFLAGS = -module -avoid-version

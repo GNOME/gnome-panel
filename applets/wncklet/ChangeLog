@@ -1,5 +1,14 @@
 2002-09-16  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am, multihead-hacks.h: kill
+	multihead-hacks.h.
+
+	* clock.c, mailcheck.c, pager.c, tasklist.c:
+	Remove HAVE_GTK_MUTLIEHAD conditionals since
+	we require gtk+ 2.1.0 now.
+
+2002-09-16  Mark McLoughlin  <mark@skynet.ie>
+
 	* pager.c: (applet_realized):
 	* tasklist.c: (applet_realized): require
 	libwnck HEAD.

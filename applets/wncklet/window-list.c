@@ -28,7 +28,6 @@
 
 #include "tasklist.h"
 
-#include "multihead-hacks.h"
 #include "egg-screen-help.h"
 
 typedef struct {
@@ -137,7 +136,6 @@ response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 static WnckScreen *
 applet_get_screen (GtkWidget *applet)
 {
-#ifdef HAVE_GTK_MULTIHEAD
 	int screen_num;
 
 	if (!gtk_widget_has_screen (applet))
@@ -146,9 +144,6 @@ applet_get_screen (GtkWidget *applet)
 	screen_num = gdk_screen_get_number (gtk_widget_get_screen (applet));
 
 	return wnck_screen_get (screen_num);
-#else
-	return wnck_screen_get_default ();
-#endif /* HAVE_GTK_MULTIHEAD */
 }
 
 static void
