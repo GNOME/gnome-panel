@@ -4,6 +4,7 @@
  *   Copyright (C) 2000 Helix Code, Inc.
  *   Copyright (C) 2000 Eazel, Inc.
  *   Copyright (C) 2002 Sun Microsystems Inc.
+ *   Copyright (C) 2003 Red Hat, Inc.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -38,7 +39,13 @@
 
 #define GLADE_FILE   GLADEDIR "/gnome-panel-preferences.glade"
 
+/* if this is set on a widget, never make it sensitive */
 #define NEVER_SENSITIVE "never-sensitive"
+/* you ask why this is a negative?  That's because the default
+   for data is NULL, and the default for sensitivity is TRUE */
+#define IS_INSENSITIVE "is-insensitive"
+/* if this is set on a widget, set sensitive on this value instead */
+#define MY_TOP_WIDGET "my-top-widget"
 
 static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
@@ -52,6 +59,29 @@ void preferences_response (GtkWindow *window,
 			   gpointer   data);
 
 static void
+update_writability (GtkWidget *widget, GConfEntry *entry)
+{
+	GtkWidget *top = g_object_get_data (G_OBJECT (widget), MY_TOP_WIDGET);
+	if (top == NULL)
+		top = widget;
+	if ( ! gconf_entry_get_is_writable (entry)) {
+		g_object_set_data (G_OBJECT (top), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (1));
+		gtk_widget_set_sensitive (top, FALSE);
+	} else {
+		gboolean sensitive;
+		g_object_set_data (G_OBJECT (top), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (0));
+		if (g_object_get_data (G_OBJECT (top), IS_INSENSITIVE))
+			sensitive = FALSE;
+		else
+			sensitive = TRUE;
+		gtk_widget_set_sensitive (top, sensitive);
+	}
+}
+
+
+static void
 update_sensitive_for_checkbox (GladeXML *gui,
 			       char     *key,
 			       gboolean  checked)
@@ -62,6 +92,9 @@ update_sensitive_for_checkbox (GladeXML *gui,
                 associate = glade_xml_get_widget (gui, "panel_animation_hbox");
 
         if (associate) {
+		g_object_set_data (G_OBJECT (associate), 
+				   IS_INSENSITIVE,
+				   GINT_TO_POINTER ( ! checked));
 		if (g_object_get_data (G_OBJECT (associate), 
 				       NEVER_SENSITIVE))
 			checked = FALSE;
@@ -95,6 +128,8 @@ bool_value_changed_notify (GConfClient     *client,
 			basename, value);
 		g_free (basename);
 	}
+
+	update_writability (GTK_WIDGET (toggle), entry);
 }
 
 static void
@@ -196,6 +231,8 @@ enum_value_changed_notify (GConfClient   *client,
 
 	if (gtk_option_menu_get_history (GTK_OPTION_MENU (option)) != speed)
 		gtk_option_menu_set_history (GTK_OPTION_MENU (option), speed);
+
+	update_writability (GTK_WIDGET (option), entry);
 }
 
 static void
@@ -206,6 +243,7 @@ load_animation_menu (GladeXML    *gui,
 	char       *tmpstr;
 	int         speed = PANEL_SPEED_SLOW;
 	const char *key;
+	GtkWidget  *hbox;
 
 	option = glade_xml_get_widget (gui, "panel_animation_speed");
 
@@ -226,8 +264,9 @@ load_animation_menu (GladeXML    *gui,
 	g_signal_connect (option, "changed",
 			  G_CALLBACK (animation_menu_changed), NULL);
 
+	hbox = glade_xml_get_widget (gui, "panel_animation_hbox");
+	g_object_set_data (G_OBJECT (option), MY_TOP_WIDGET, hbox);
 	if ( ! gconf_client_key_is_writable (client, key, NULL)) {
-                GtkWidget *hbox = glade_xml_get_widget (gui, "panel_animation_hbox");
 		g_object_set_data (G_OBJECT (hbox), NEVER_SENSITIVE,
 				   GINT_TO_POINTER (1));
 		gtk_widget_set_sensitive (hbox, FALSE);
@@ -314,6 +353,29 @@ error_dialog (const char *message)
 
 }
 
+static void
+preferences_locked_notify (GConfClient     *client,
+			   guint            cnxn_id,
+			   GConfEntry      *entry,
+			   GladeXML        *gui)
+{
+	gboolean value;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	gtk_widget_set_sensitive (
+		glade_xml_get_widget (gui, "panel_animation_hbox"),
+		! value);
+	gtk_widget_set_sensitive (
+		glade_xml_get_widget (gui, "drawer_autoclose"),
+		! value);
+	gtk_widget_set_sensitive (
+		glade_xml_get_widget (gui, "enable_animations"),
+		! value);
+}
+
 static gboolean
 check_lockdown (void)
 {
@@ -322,12 +384,12 @@ check_lockdown (void)
 
 	client = gconf_client_get_default ();
 
+	/* FIXME: rename lock-down, it's not even listed anywhere in schemas */
 	locked_down = gconf_client_get_bool (
 				client, panel_gconf_global_key ("lock-down"), NULL);
 	if (locked_down)
 		error_dialog (_("The system administrator has disallowed\n"
 			        "modification of the panel configuration"));
-
 	g_object_unref (client);
 
 	return locked_down;
@@ -347,12 +409,14 @@ main (int argc, char **argv)
 			    GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 
 	if (!check_lockdown ()) {
-		GtkWidget *dialog;
-		char      *panel_icon;
+		GConfClient *client;
+		GtkWidget   *dialog;
+		char        *panel_icon;
+		const char  *key;
 
 		gui = glade_xml_new (
 				GLADE_FILE, "gnome_panel_preferences_dialog", NULL);
-		if (!gui) {
+		if (gui == NULL) {
 			char *error;
 
 			error = g_strdup_printf (_("Error loading glade file %s"), GLADE_FILE);
@@ -360,12 +424,24 @@ main (int argc, char **argv)
 			g_free (error);
 		
 			gtk_main ();
+
+			exit (1);
 		}
 
 		glade_xml_signal_autoconnect (gui);
 
 		dialog = glade_xml_get_widget (
 				gui, "gnome_panel_preferences_dialog");
+
+		/* FIXME: rename lock-down, it's not even listed anywhere */
+		client = gconf_client_get_default ();
+		key = panel_gconf_global_key ("lock-down");
+
+		/* watch for the lock down key going to true */
+		gconf_client_notify_add (client, key,
+					 (GConfClientNotifyFunc) preferences_locked_notify,
+					 dialog, NULL, NULL);
+		g_object_unref (client);
 
 		load_config_into_gui (gui);
 
