@@ -68,17 +68,12 @@ panel_show_help (GdkScreen  *screen,
 	GError *error = NULL;
 
 	if (!egg_help_display_desktop_on_screen (NULL, "user-guide", doc_name, linkid, screen, &error)) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Cannot display help document"),
-			_("Details"), error != NULL ? error->message : "");
-
 		panel_error_dialog (
 			screen,
 			"cannot_show_help",
-			msg);
+			_("Cannot display help document"),
+			error != NULL ? error->message : "");
 
-		g_free (msg);
 		g_clear_error (&error);
 	}
 }
@@ -470,20 +465,35 @@ panel_dialog (GdkScreen  *screen,
 GtkWidget *
 panel_error_dialog (GdkScreen  *screen,
 		    const char *class,
-		    const char *format,
+		    const char *primary_format,
+		    const char *secondary_format,
 		    ...)
 {
 	GtkWidget *w;
-	char *s;
+	char *sec = NULL, *format, *s;
 	va_list ap;
 
-	if (format == NULL) {
-		g_warning ("NULL error dialog");
+	if (primary_format == NULL) {
+		g_warning ("NULL dialog");
 		s = g_strdup ("(null)");
 	} else {
-		va_start (ap, format);
+		if (secondary_format == NULL)
+			format = (char *)primary_format;
+		else {
+			sec = g_strdup_printf (_("Details: %s"), secondary_format);
+
+			format = g_strdup_printf ("<b>%s</b>\n\n%s",
+						  primary_format,
+						  sec);
+
+			g_free (sec);
+		}
+
+		va_start (ap, secondary_format);
 		s = g_strdup_vprintf (format, ap);
 		va_end (ap);
+
+		g_free (format);
 	}
 
 	w = panel_dialog (screen, GTK_MESSAGE_ERROR, class, s);
@@ -941,18 +951,13 @@ panel_lock_screen (GdkScreen *screen)
 	if (!screen)
 		screen = gdk_screen_get_default ();
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s",
-			_("Cannot execute xscreensaver"),
-			_("Details: xscreensaver-command not found"));
-
+	if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0)
 		panel_error_dialog (screen,
 			"cannot_exec_xscreensaver",
-			msg);
-
-		g_free (msg);
-	}
+			 _("Cannot execute %s"),
+			 _("%s - command not found"),
+			 "xscreensaver",
+			 "xscreensaver");
 }
 
 

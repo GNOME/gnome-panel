@@ -138,14 +138,17 @@ recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
 
 	if (show_uri (uri, mime_type, screen, &error) != TRUE) {
 		if (error != NULL) {
-			panel_error_dialog (screen, "cannot_open_recent_doc",
+			panel_error_dialog (screen,
+					    "cannot_open_recent_doc",
+					    _("Cannot open recently used document"),
 					    error->message);
 			g_error_free (error);
 		} else
 			panel_error_dialog (screen,
-					"cannot_open_recent_doc_unknown",
-					_("An unknown error occurred while trying"
-					  " to open %s"), uri_utf8);
+					    "cannot_open_recent_doc_unknown",
+					    _("Cannot open recently used document"),
+					    _("An unknown error occurred while trying to open %s"),
+					    uri_utf8);
 	}
 
 	g_free (uri);

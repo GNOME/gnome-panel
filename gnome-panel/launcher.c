@@ -98,12 +98,11 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 
 	gnome_desktop_item_save (ditem, NULL, TRUE, &error);
 	if (error) {
-		panel_error_dialog (
-			screen,
-			"cannot_save_launcher",
-			_("Cannot save launcher to disk, "
-			  "the following error occured:\n\n%s"),
-			error->message);
+		panel_error_dialog (screen,
+				    "cannot_save_launcher",
+				    _("Cannot save launcher to disk"),
+				    error->message);
+
 		g_error_free (error);
 	}
 }
@@ -126,20 +125,21 @@ launch_url (Launcher *launcher)
 	screen = launcher_get_screen (launcher);
 
 	if (!url) {
-		panel_error_dialog (
-			screen,
-			"no_url_dialog",
-			_("This launch icon does not specify a url to show"));
+		panel_error_dialog (screen,
+				    "no_url_dialog",
+				    _("Cannot launch icon"),
+				    _("This launch icon does not specify a url to show."));
 		return;
 	}
 
 	egg_url_show_on_screen (url, screen, &error);
 	if (error) {
-		panel_error_dialog (
-			screen,
-			"cant_show_url_dialog",
-			_("Cannot show %s\n%s"),
-			url, error->message);
+		panel_error_dialog (screen,
+				    "cannot_show_url_dialog",
+				    _("Cannot show %s"),
+				    error->message,
+				    url);
+
 		g_clear_error (&error);
 	}
 }
@@ -167,17 +167,11 @@ launch_cb (GtkWidget *widget,
 		panel_ditem_launch (
 			item, NULL, 0, launcher_get_screen (launcher), &error);
 		if (error) {
-			char *msg;
-			msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-				_("Cannot launch icon"),
-				_("Details"), error->message);
+			panel_error_dialog (launcher_get_screen (launcher),
+					    "cannot_launch_icon",
+					    _("Cannot launch icon"),
+					    error->message);
 
-			panel_error_dialog (
-				launcher_get_screen (launcher),
-				"cannot_launch_icon",
-				msg);
-
-			g_free (msg);
 			g_clear_error (&error);
 		}
 	}
@@ -218,11 +212,10 @@ drag_data_received_cb (GtkWidget        *widget,
 	g_strfreev (envp);
 
 	if (error) {
-		panel_error_dialog (
-			launcher_get_screen (launcher),
-			"cannot_launch_icon",
-			_("Cannot launch icon\n%s"),
-			error->message);
+		panel_error_dialog (launcher_get_screen (launcher),
+				    "cannot_launch_icon",
+				    _("Cannot launch icon"),
+				    error->message);
 		g_clear_error (&error);
 	}
 
@@ -1110,17 +1103,11 @@ launcher_show_help (Launcher  *launcher,
 				launcher->ditem, "X-GNOME-DocPath");
 	panel_show_gnome_kde_help (screen, docpath, &error);
 	if (error) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Cannot display help document"),
-			_("Details"), error->message);
+		panel_error_dialog (screen,
+				    "cannot_show_gnome_kde_help",
+				    _("Cannot display help document"),
+				    error->message);
 
-		panel_error_dialog (
-			screen,
-			"cannot_show_gnome_kde_help",
-			msg);
-
-		g_free (msg);
 		g_error_free (error);
 	}
 }

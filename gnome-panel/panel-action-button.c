@@ -154,7 +154,9 @@ panel_action_search (GtkWidget *widget)
 	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
 		panel_error_dialog (screen,
 				    "cannot_exec_gnome-search-tool",
-				    _("Cannot execute gnome-search-tool"));
+				    _("Cannot execute '%s'"),
+				    NULL,
+				    "gnome-search-tool");
 }
 
 /* Take Screenshot
@@ -170,7 +172,9 @@ panel_action_screenshot (GtkWidget *widget)
 	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
 		panel_error_dialog (screen,
 				    "cannot_exec_gnome-panel-screenshot",
-				    _("Cannot execute gnome-panel-screenshot"));
+				    _("Cannot execute '%s'"),
+				    NULL,
+				    "gnome-panel-screenshot");
 }
 
 /* Force Quit

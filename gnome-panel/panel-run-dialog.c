@@ -272,14 +272,11 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				&error);
 			
 	if (!result) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s: '%s'</b>\n\n%s: %s",
-			_("Error launching command"), escaped,
-			_("Details"), error->message);
+		panel_error_dialog (screen, "cannot_spawn_command",
+				    _("Cannot launch command '%s'"),
+				    error->message,
+				    escaped);
 
-		panel_error_dialog (screen, "error_spawning_command", msg);
-
-		g_free (msg);
 		g_error_free (error);
 	}
 				
@@ -306,14 +303,11 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 	g_strfreev (envp);
 
 	if (error) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s: '%s'</b>\n\n%s: %s",
-			_("Error displaying location"), escaped,
-			_("Details"), error->message);
+		panel_error_dialog (screen, "cannot_show_url",
+				    _("Cannot display location '%s'"),
+				    error->message,
+				    escaped);
 
-		panel_error_dialog (screen, "error_showing_url", msg);
-
-		g_free (msg);
 		g_error_free (error);
 		return FALSE;
 	}

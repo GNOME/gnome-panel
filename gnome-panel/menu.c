@@ -327,19 +327,13 @@ about_gnome_cb (GtkWidget *menuitem,
 {
 	GdkScreen *screen = menuitem_to_screen (menuitem);
 
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, &program_path) < 0) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s %s",
-			_("Can't execute 'About GNOME'"),
-			_("Details"), program_path,
-			_("probably does not exist"));
-
+	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, &program_path) < 0)
 		panel_error_dialog (screen,
-		                    "cannot_exec_about_gnome",
-		                    msg);
-
-		g_free (msg);
-	}
+				    "cannot_exec_about_gnome",
+				    _("Cannot execute '%s'"),
+				    _("%s - command not found"),
+				    _("About GNOME"),
+				    program_path);
 }
 
 static void
@@ -358,34 +352,22 @@ activate_app_def (GtkWidget  *menuitem,
 		panel_ditem_launch (
 			item, NULL, 0, menuitem_to_screen (menuitem), &error);
 		if (error) {
-			char *msg;
-			msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-				_("Can't launch entry"),
-				_("Details"), error->message);
+			panel_error_dialog (menuitem_to_screen (menuitem),
+					    "cannot_launch_entry",
+					    _("Cannot launch entry"),
+					    error->message);
 
-			panel_error_dialog (
-				menuitem_to_screen (menuitem),
-				"cant_launch_entry",
-				msg);
-
-			g_free (msg);
 			g_clear_error (&error);
 		}
 		gnome_desktop_item_unref (item);
 	} else {
-		char *msg;
 		g_assert (error != NULL);
 
-		msg = g_strdup_printf ("<b>%s</b>%s: %s",
-			_("Can't load entry"),
-			_("Details"), error->message);
+		panel_error_dialog (menuitem_to_screen (menuitem),
+				    "cannot_load_entry",
+				    _("Cannot load entry"),
+				    error->message);
 
-		panel_error_dialog (
-			menuitem_to_screen (menuitem),
-			"cant_load_entry",
-			msg);
-
-		g_free (msg);
 		g_clear_error (&error);
 	}
 }
@@ -1076,21 +1058,16 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	result = gnome_vfs_unlink (sim->item_loc);
 
 	if (result != GNOME_VFS_OK) {
-		char *esc, *msg;
+		char *esc;
 
 		esc = g_markup_escape_text (sim->item_loc, -1);
-		msg = g_strdup_printf ("<b>%s %s</b>\n\n%s: %s\n",
-			_("Could not remove the menu item"),
-			esc,
-			_("Details"),
-			gnome_vfs_result_to_string (result));
 
-		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
-			"cant_remove_menu_item",
-			msg);
+		panel_error_dialog (menuitem_to_screen (sim->menuitem),
+				    "cannot_remove_menu_item",
+				    _("Cannot remove menu item %s"),
+				    gnome_vfs_result_to_string (result),
+				    esc);
 
-		g_free (msg);
 		g_free (esc);
 		return;
 	}
@@ -1170,35 +1147,21 @@ add_to_run_dialog (GtkWidget    *widget,
 
 		if (exec != NULL)
 			panel_run_dialog_present_with_text (menuitem_to_screen (sim->menuitem), exec);
-		else {
-			char *msg;
-			msg = g_strdup_printf ("<b>%s</b>\n\n%s",
-				_("Can't add to run box"),
-				_("Details: No 'Exec' or 'URL' field in entry"));
-
-			panel_error_dialog (
-				menuitem_to_screen (sim->menuitem),
-				"no_exec_or_url_field",
-				msg);
-
-			g_free (msg);
-		}
+		else
+			panel_error_dialog (menuitem_to_screen (sim->menuitem),
+					    "no_exec_or_url_field",
+					    _("Cannot add to run box"),
+					    _("No 'Exec' or 'URL' field in entry"));
 
 		gnome_desktop_item_unref (item);
 	} else {
-		char *msg;
 		g_assert (error != NULL);
 
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Can't load entry"),
-			_("Details"), error->message);
+		panel_error_dialog (menuitem_to_screen (sim->menuitem),
+				    "cannot_load_entry",
+				    _("Cannot load entry"),
+				    error->message);
 
-		panel_error_dialog (
-			menuitem_to_screen (sim->menuitem),
-			"cant_load_entry",
-			msg);
-
-		g_free (msg);
 		g_clear_error (&error);
 	}
 }
@@ -1220,35 +1183,23 @@ show_help_on (GtkWidget    *widget,
 		const char *docpath = gnome_desktop_item_get_string
 			(item, "X-GNOME-DocPath");
 		if ( ! panel_show_gnome_kde_help (screen, docpath, &error)) {
-			char *msg;
-			msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-				_("Cannot display help document"),
-				_("Details"), error->message);
+			panel_error_dialog (screen,
+					    "cannot_show_gnome_kde_help",
+					    _("Cannot display help document"),
+					    error->message);
 
-			panel_error_dialog (
-				screen,
-				"cannot_show_gnome_kde_help",
-				msg);
-
-			g_free (msg);
 			g_clear_error (&error);
 		}
 
 		gnome_desktop_item_unref (item);
 	} else {
-		char *msg;
 		g_assert (error != NULL);
 
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Can't load entry"),
-			_("Details"), error->message);
+		panel_error_dialog (screen,
+				    "cannot_load_entry",
+				    _("Cannot load entry"),
+				    error->message);
 
-		panel_error_dialog (
-			screen,
-			"cant_load_entry",
-			msg);
-
-		g_free (msg);
 		g_clear_error (&error);
 	}
 }
@@ -2952,10 +2903,10 @@ remove_panel (GtkWidget *menuitem,
 	toplevel     = panel_widget->toplevel;
 
 	if (panel_toplevel_is_last_unattached (toplevel)) {
-		panel_error_dialog (
-			menuitem_to_screen (menuitem),
-			"cannot_remove_last_panel",
-			_("You cannot remove your last panel."));
+		panel_error_dialog (menuitem_to_screen (menuitem),
+				    "cannot_remove_last_panel",
+				    _("You cannot remove your last panel."),
+				    NULL);
 		return;
 	}
 

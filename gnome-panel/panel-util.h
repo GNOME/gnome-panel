@@ -63,8 +63,9 @@ void   panel_g_slist_deep_free    (GSList       *list);
 
 GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
-					 const char *format,
-					 ...) G_GNUC_PRINTF (3, 4);
+					 const char *primary_format,
+					 const char *secondary_format,
+					 ...) G_GNUC_PRINTF (4, 5);
 
 int		panel_find_applet_index	(GtkWidget *widget);
 

@@ -111,19 +111,11 @@ ditem_properties_close (GtkWidget *dialog,
 
 	saving_error = g_object_get_data (G_OBJECT (dedit), "SavingError");
 
-	if (saving_error) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Cannot save changes to launcher"),
-			_("Details"), saving_error);
-
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (dialog)),
-			"cannot_save_entry",
-			msg);
-
-		g_free (msg);
-	}
+	if (saving_error)
+		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
+				    "cannot_save_entry",
+				    _("Cannot save changes to launcher"),
+				    saving_error);
 }
 
 static gboolean
@@ -451,10 +443,11 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 
 	/* check for valid name */
 	if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
-		dialog = panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (d)),
-				"cannot_create_launcher",
-				_("You have to specify a name for the launcher."));
+		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
+					     "cannot_create_launcher",
+					     _("Cannot create launcher"),
+					     _("You have to specify a name."));
+
 		g_signal_connect_swapped (G_OBJECT (dialog),
 					  "destroy",
 					  G_CALLBACK (panel_pop_window_busy),
@@ -467,10 +460,10 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
 	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
-		dialog = panel_error_dialog (
-				gtk_window_get_screen (GTK_WINDOW (d)),
-				"cannot_create_launcher",
-				_("You have to specify a valid URL or command."));
+		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
+					     "cannot_create_launcher",
+					     _("Cannot create launcher"),
+					     _("You have to specify a valid URL or command."));
 		g_signal_connect_swapped (G_OBJECT (dialog),
 					  "destroy",
 					  G_CALLBACK (panel_pop_window_busy),
@@ -498,17 +491,11 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 TRUE /* force */,
 				 &error);
 	if (error) {
-		char *msg;
-		msg = g_strdup_printf ("<b>%s</b>\n\n%s: %s",
-			_("Cannot save menu item to disk"),
-			_("Details"), error->message);
+		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
+				    "cannot_save_menu_item" /* class */,
+				    _("Cannot save menu item to disk"),
+				    error->message);
 
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (d)),
-			"cannot_save_menu_item" /* class */,
-			msg);
-
-		g_free (msg);
 		g_clear_error (&error);
 	}
 
@@ -528,11 +515,10 @@ panel_new_launcher (const char *item_loc,
 	GtkWidget *dee;
 
 	if (!is_item_writable (item_loc, NULL)) {
-		dialog = panel_error_dialog (
-				screen,
-				"cannot_create_launcher",
-				_("You can not create a new launcher at this location "
-				  "since the location is not writable."));
+		dialog = panel_error_dialog (screen,
+					     "cannot_create_launcher",
+					     _("Cannot create launcher"),
+					     _("This location since the location is not writable."));
 
 		return dialog;
 	}
