@@ -19,6 +19,8 @@
 #include "swallow.h"
 #include "mico-glue.h"
 
+extern PanelWidget *current_panel;
+
 static int
 ignore_x_error(Display* d, XErrorEvent* e)
 {
@@ -97,8 +99,128 @@ socket_realized(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+static int
+socket_destroyed(GtkWidget *w, gpointer data)
+{
+	Swallow *swallow = data;
+	
+	g_free(swallow->title);
+	g_free(swallow);
+
+	return FALSE;
+}
+
+
+static void
+really_add_swallow(GtkWidget *d,int button, gpointer data)
+{
+	GtkWidget *title_e = gtk_object_get_data(GTK_OBJECT(d),"title_e");
+	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d),"exec_e");
+	GtkWidget *width_s = gtk_object_get_data(GTK_OBJECT(d),"width_s");
+	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d),"height_s");
+
+
+	if(button!=0) {
+		gtk_widget_destroy(d);
+		return;
+	}
+	
+	load_applet(SWALLOW_ID,
+		    gtk_entry_get_text(GTK_ENTRY(exec_e)),
+		    gtk_entry_get_text(GTK_ENTRY(title_e)),
+		    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(width_s)),
+		    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(height_s)),
+		    NULL,NULL,
+		    PANEL_UNKNOWN_APPLET_POSITION,
+		    current_panel,NULL);
+	gtk_widget_destroy(d);
+}
+
+static void
+act_really_add_swallow(GtkWidget *w, gpointer data)
+{
+	GtkWidget *d = data;
+	
+	/*just call the above handler for the dialog*/
+	really_add_swallow(d,0,NULL);
+}
+
+/*I couldn't resist the naming of this function*/
+void
+ask_about_swallowing(void)
+{
+	GtkWidget *d;
+
+	GtkWidget *title_e;
+	GtkWidget *exec_e;
+	GtkWidget *width_s;
+	GtkWidget *height_s;
+	GtkWidget *w;
+	GtkWidget *box;
+	GtkAdjustment *adj;
+	d = gnome_dialog_new(_("Create swallow applet"),
+			     GNOME_STOCK_BUTTON_OK,
+			     GNOME_STOCK_BUTTON_CANCEL,
+			     NULL);
+
+	box = gtk_hbox_new(FALSE,5);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
+			   TRUE,TRUE,5);
+	w = gtk_label_new(_("Title of application to swallow"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	w = gnome_entry_new("swallow_title");
+	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
+	title_e = gnome_entry_gtk_entry(GNOME_ENTRY(w));
+	gtk_signal_connect(GTK_OBJECT(title_e),"activate",
+			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
+
+	box = gtk_hbox_new(FALSE,5);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
+			   TRUE,TRUE,5);
+	w = gtk_label_new(_("Command (optional)"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	w = gnome_file_entry_new("execute",_("Browse"));
+	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
+	exec_e = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
+	gtk_signal_connect(GTK_OBJECT(exec_e),"activate",
+			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
+
+	box = gtk_hbox_new(FALSE,5);
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
+			   TRUE,TRUE,5);
+	w = gtk_label_new(_("Width (optional)"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
+						    5.0, 0.0);
+	width_s = gtk_spin_button_new(adj,0,0);
+	gtk_box_pack_start(GTK_BOX(box),width_s,TRUE,TRUE,0);
+	w = gtk_label_new(_("Height (optional)"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
+						    5.0, 0.0);
+	height_s = gtk_spin_button_new(adj,0,0);
+	gtk_box_pack_start(GTK_BOX(box),height_s,TRUE,TRUE,0);
+
+	gtk_signal_connect(GTK_OBJECT(d),"clicked",
+			   GTK_SIGNAL_FUNC(really_add_swallow),NULL);
+	gtk_object_set_data(GTK_OBJECT(d),"title_e",title_e);
+	gtk_object_set_data(GTK_OBJECT(d),"exec_e",exec_e);
+	gtk_object_set_data(GTK_OBJECT(d),"width_s",width_s);
+	gtk_object_set_data(GTK_OBJECT(d),"height_s",height_s);
+
+
+	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
+
+	gnome_dialog_set_default(GNOME_DIALOG(d),0);
+
+	gtk_widget_grab_focus(title_e);
+
+	gtk_widget_show_all(d);
+}
+
+
 Swallow *
-create_swallow_applet(char *arguments, SwallowOrient orient)
+create_swallow_applet(char *title, int width, int height, SwallowOrient orient)
 {
 	Swallow *swallow;
 	GtkWidget *w;
@@ -116,14 +238,17 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 			 0,0);
 
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,48,0);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,48,0);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,48,0);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
@@ -136,21 +261,28 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 			 0,0);
 
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,0,48);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,0,48);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
 	w = gtk_frame_new(NULL);
+	gtk_widget_set_usize(w,0,48);
 	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
 	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
 	gtk_widget_show(w);
 	
 	swallow->socket=gtk_socket_new();
+	if(width != 0 || height != 0)
+		gtk_widget_set_usize(swallow->socket,width,height);
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
 			         GTK_SIGNAL_FUNC(socket_realized), NULL);
+	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"destroy",
+			         GTK_SIGNAL_FUNC(socket_destroyed), swallow);
 
 	gtk_table_attach(GTK_TABLE(swallow->table),swallow->socket,
 			 1,2,1,2,
@@ -162,10 +294,9 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 
-	if(arguments)
-		swallow->title=g_strdup(arguments);
-	else
-		swallow->title=NULL;
+	swallow->title = g_strdup(title);
+	swallow->width = width;
+	swallow->height = height;
 	swallow->wid = -1;
 
 	set_swallow_applet_orient(swallow, orient);

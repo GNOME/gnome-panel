@@ -22,6 +22,7 @@
 #include "main.h"
 #include "panel_config_global.h"
 #include "menu.h"
+#include "swallow.h"
 #include "mico-glue.h"
 
 #define SMALL_ICON_SIZE 20
@@ -58,7 +59,7 @@ struct _MenuFinfo {
 /*???? this might be ugly, but I guess we can safely assume that we can only
   have one menu open and that nothing weird will happen to the panel that
   opened that menu whilethe user is looking over the choices*/
-static PanelWidget *current_panel = NULL;
+PanelWidget *current_panel = NULL;
 
 /*the most important dialog in the whole application*/
 void
@@ -168,7 +169,8 @@ free_string (GtkWidget *widget, void *data)
 static int
 add_to_panel (char *applet, char *path, char *arg)
 {
-	load_applet(applet,path,arg,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(applet,path,arg,0,0,NULL,NULL,
+		    PANEL_UNKNOWN_APPLET_POSITION,
 		    current_panel,NULL);
 	return TRUE;
 }
@@ -730,75 +732,6 @@ add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 	add_to_panel((char *)data, NULL, NULL);
 }
 
-#ifdef _SWALLOW_
-static int
-act_really_add_swallow(GtkWidget *w, gpointer data)
-{
-	GtkWidget *entry = data;
-	GtkWidget *d = gtk_object_get_user_data(GTK_OBJECT(entry));
-
-	gtk_widget_hide(d);
-	add_to_panel(SWALLOW_ID, NULL, gtk_entry_get_text(GTK_ENTRY(entry)));
-
-	return TRUE;
-}
-
-static int
-really_add_swallow(GtkWidget *d,int button, gpointer data)
-{
-	GtkWidget *entry = data;
-
-	gtk_widget_hide(d);
-	if(button == 0)
-		add_to_panel(SWALLOW_ID, NULL,
-			     gtk_entry_get_text(GTK_ENTRY(entry)));
-	return TRUE;
-}
-
-static void
-add_swallow_to_panel(GtkWidget *widget, gpointer data)
-{
-	static GtkWidget *d=NULL;
-
-	if(!d) {
-		GtkWidget *w;
-		GtkWidget *box;
-		d = gnome_dialog_new(_("Create swallow applet"),
-				     GNOME_STOCK_BUTTON_OK,
-				     GNOME_STOCK_BUTTON_CANCEL,
-				     NULL);
-		box = gtk_hbox_new(FALSE,5);
-		gtk_widget_show(box);
-		gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,
-				   TRUE,TRUE,5);
-
-		w = gtk_label_new(_("Title of application to swallow"));
-		gtk_widget_show(w);
-		gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,5);
-		w = gtk_entry_new();
-		gtk_widget_show(w);
-		gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,5);
-
-		gtk_object_set_user_data(GTK_OBJECT(w),d);
-
-		gtk_signal_connect(GTK_OBJECT(d),"clicked",
-				   GTK_SIGNAL_FUNC(really_add_swallow),
-				   w);
-		gtk_signal_connect(GTK_OBJECT(w),"activate",
-				   GTK_SIGNAL_FUNC(act_really_add_swallow),
-				   w);
-
-		gnome_dialog_close_hides(GNOME_DIALOG(d),TRUE);
-
-		gnome_dialog_set_default(GNOME_DIALOG(d),0);
-
-		gtk_widget_grab_focus(w);
-	}
-	gtk_widget_show(d);
-}
-#endif
-
-
 static GtkWidget *
 create_applets_menu(int fake_submenus)
 {
@@ -931,7 +864,7 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_swallow_to_panel,NULL);
+			   (GtkSignalFunc) ask_about_swallowing,NULL);
 #endif
 
 	add_menu_separator(menu);

@@ -76,6 +76,8 @@ struct _LoadApplet {
 	char *id_str;
 	char *path;
 	char *params;
+	int width;
+	int height;
 	char *pixmap;
 	char *tooltip;
 	int pos;
@@ -265,7 +267,7 @@ get_def_panel_widget(GtkWidget *panel)
 
 
 static void
-queue_load_applet(char *id_str, char *path, char *params,
+queue_load_applet(char *id_str, char *path, char *params, int width, int height,
 		  char *pixmap, char *tooltip,
 		  int pos, PanelWidget *panel, char *cfgpath)
 {
@@ -276,6 +278,8 @@ queue_load_applet(char *id_str, char *path, char *params,
 	if(path) l->path=g_strdup(path);
 	else l->path = NULL;
 	l->params=g_strdup(params);
+	l->width=width;
+	l->height=height;
 	l->pixmap=g_strdup(pixmap);
 	l->tooltip=g_strdup(tooltip);
 	l->pos=pos;
@@ -441,7 +445,7 @@ drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 
 
 void
-load_applet(char *id_str, char *path, char *params,
+load_applet(char *id_str, char *path, char *params, int width, int height,
 	    char *pixmap, char *tooltip,
 	    int pos, PanelWidget *panel, char *cfgpath)
 {
@@ -599,12 +603,20 @@ load_applet(char *id_str, char *path, char *params,
 	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
-		swallow = create_swallow_applet(params, SWALLOW_HORIZONTAL);
-		
-		if(swallow)
-			register_toy(swallow->table,NULL,swallow,SWALLOW_ID,
-				     NULL, params,pos, panel,NULL,
-				     APPLET_SWALLOW);
+		swallow = create_swallow_applet(params, width, height,
+						SWALLOW_HORIZONTAL);
+		if(!swallow)
+			return;
+
+		register_toy(swallow->table,NULL,swallow,SWALLOW_ID,
+			     path, params,pos, panel,NULL,
+			     APPLET_SWALLOW);
+
+		if(path && *path) {
+			char *s = g_copy_strings("(true; ",path," &)",NULL);
+			system(s);
+			g_free(s);
+		}
 	} else if(strcmp(id_str,LOGOUT_ID) == 0) {
 		GtkWidget *logout;
 
@@ -623,7 +635,7 @@ load_queued_applets(void)
 
 	for(list = load_queue;list!=NULL;list=g_list_next(list)) {
 		LoadApplet *l=list->data;
-		load_applet(l->id_str,l->path,l->params,
+		load_applet(l->id_str,l->path,l->params,l->width,l->height,
 			    l->pixmap,l->tooltip,
 			    l->pos,l->panel,l->cfgpath);
 		g_free(l->id_str);
@@ -640,10 +652,10 @@ load_queued_applets(void)
 static void
 load_default_applets(void)
 {
-	queue_load_applet(MENU_ID, NULL, ".", NULL, NULL,
-			  PANEL_UNKNOWN_APPLET_POSITION, panels->data,NULL);
-	queue_load_applet(EXTERN_ID, "gen_util_applet", "--clock", NULL, NULL,
-			  PANEL_UNKNOWN_APPLET_POSITION, panels->data,NULL);
+	queue_load_applet(MENU_ID,NULL,".",0,0,NULL,NULL,
+			  PANEL_UNKNOWN_APPLET_POSITION,panels->data,NULL);
+	queue_load_applet(EXTERN_ID,"gen_util_applet","--clock",0,0,NULL,NULL,
+			  PANEL_UNKNOWN_APPLET_POSITION,panels->data,NULL);
 }
 
 static void
@@ -662,6 +674,7 @@ init_user_applets(void)
 		char *applet_pixmap;
 		char *applet_tooltip;
 		char *applet_path;
+		int applet_width,applet_height;
 		int   pos=0,panel_num;
 		PanelWidget *panel;
 
@@ -673,6 +686,8 @@ init_user_applets(void)
 		applet_params = gnome_config_get_string("parameters=");
 		applet_pixmap = gnome_config_get_string("pixmap=");
 		applet_tooltip = gnome_config_get_string("tooltip=");
+		applet_width = gnome_config_get_int("width=0");
+		applet_height = gnome_config_get_int("height=0");
 
 		g_snprintf(buf,256,"position=%d",
 			   PANEL_UNKNOWN_APPLET_POSITION);
@@ -699,6 +714,7 @@ init_user_applets(void)
 		  loads*/
 		g_snprintf(buf,256,"%sApplet_%d/",old_panel_cfg_path,num);
 		queue_load_applet(applet_name, applet_path, applet_params,
+				  applet_width,applet_height,
 				  applet_pixmap, applet_tooltip,
 				  pos, panel, buf);
 

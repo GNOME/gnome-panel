@@ -14,12 +14,18 @@ typedef struct {
 	GtkWidget *handle_w;
 	GtkWidget *socket;
 	char *title;
+	int width;
+	int height;
 	guint32 wid;
 } Swallow;
 
-Swallow * create_swallow_applet(char *arguments, SwallowOrient orient);
+Swallow * create_swallow_applet(char *title, int width, int height,
+				SwallowOrient orient);
 
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
+
+/*I couldn't resist the naming of this function*/
+void ask_about_swallowing(void);
 
 END_GNOME_DECLS
 

@@ -21,6 +21,7 @@
 #include "menu.h"
 #include "launcher.h"
 #include "drawer.h"
+#include "swallow.h"
 #include "mulapp.h"
 #include "mico-glue.h"
 #include "panel_config.h"
@@ -166,6 +167,14 @@ save_applet_configuration(AppletInfo *info, int *num)
 						drawer->pixmap);
 			gnome_config_set_string("config/tooltip",
 						drawer->tooltip);
+		} else if(strcmp(info->id_str,SWALLOW_ID) == 0) {
+			Swallow *swallow = info->data;
+			gnome_config_set_string("config/parameters",
+						info->params);
+			gnome_config_set_string("config/execpath",
+						info->path);
+			gnome_config_set_int("config/width",swallow->width);
+			gnome_config_set_int("config/height",swallow->height);
 		} else {
 			if(info->params)
 				gnome_config_set_string("config/parameters",
@@ -1153,7 +1162,8 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = get_def_panel_widget(data);
 
-	load_applet(MENU_ID,NULL,NULL,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(MENU_ID,NULL,NULL,0,0,NULL,NULL,
+		    PANEL_UNKNOWN_APPLET_POSITION,
 		    panel,NULL);
 }	
 
