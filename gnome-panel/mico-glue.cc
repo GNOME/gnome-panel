@@ -119,6 +119,27 @@ panel_corba_gtk_main (char *service_name)
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
 }
 
+void
+panel_corba_clean_up(void)
+{
+	char hostname [4096];
+	char *name;
+
+	gethostname (hostname, sizeof (hostname));
+	if (hostname [0] == 0)
+		strcpy (hostname, "unknown-host");
+
+
+	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, NULL);
+	puts("cleaning...");
+	puts(name);
+	if(gnome_config_has_section(name))
+		gnome_config_clean_section(name);
+
+	gnome_config_sync ();
+	g_free (name);
+}
+
 int
 panel_corba_call_launcher(const char *path)
 {

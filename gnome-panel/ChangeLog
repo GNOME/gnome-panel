@@ -1,3 +1,11 @@
+Sat Apr 04 00:29:11 1998  George Lebl  <jirka@5z.com>
+
+	* mico-glue.cc: cleanup function to clean up the
+	  gnome-config hack to spitting out the iior.
+
+	* panel.c: call the cleanup and call has_section
+	  before clean_section
+
 Fri Apr  3 22:43:35 1998  Tom Tromey  <tromey@cygnus.com>
 
 	* Makefile.am (logout_applet_LINK): New macro.
@@ -115,7 +123,7 @@ Wed Mar 18 23:10:27 1998  George Lebl  <jirka@5z.com>
 	  then tell it to reread launchers
 
 	* launcher.c: does not contact the panel, but waits until the
-	  teh panel contacts it
+	  the panel contacts it
 
 Wed Mar 18 18:13:35 1998  George Lebl  <jirka@5z.com>
 
@@ -248,7 +256,7 @@ Thu Mar 12 02:01:30 1998  George Lebl  <jirka@5z.com>
 	  menu is built on the applet side and code is there to do a
 	  unified applet menu stuff on the panel side, but I'd have to
 	  find a sane way of sending the button press event so that the
-	  menu would work, probably some hacking on teh grabs could make
+	  menu would work, probably some hacking on the grabs could make
 	  it work (release grab on the applet side, add grab on the panel
 	  side...)
 

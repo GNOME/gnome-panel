@@ -265,17 +265,20 @@ panel_session_save (GnomeClient *client,
 	for(num=gnome_config_get_int("/panel/Config/applet_count=0");
 		num>0;num--) {
 		sprintf(buf,"/panel/Applet_%d",num);
-		gnome_config_clean_section(buf);
+		if(gnome_config_has_section(buf))
+			gnome_config_clean_section(buf);
 	}
 	for(num=gnome_config_get_int("/panel/Config/drawer_count=0");
 		num>0;num--) {
 		sprintf(buf,"/panel/Drawer_%d",num);
-		gnome_config_clean_section(buf);
+		if(gnome_config_has_section(buf))
+			gnome_config_clean_section(buf);
 	}
 	for(num=gnome_config_get_int("/panel/Config/panel_count=0");
 		num>0;num--) {
 		sprintf(buf,"/panel/Panel_%d",num);
-		gnome_config_clean_section(buf);
+		if(gnome_config_has_section(buf))
+			gnome_config_clean_section(buf);
 	}
 
 	num = 1;
@@ -328,7 +331,8 @@ panel_session_save (GnomeClient *client,
 		gtk_widget_unref(root_menu);
 		/*puts("done");*/
 
-		/*FIXME: unref all menus here */
+		/*clean up corba stuff*/
+		panel_corba_clean_up();
 	}
 
 	/*puts("AFTER_SESSION_SAVE");*/
