@@ -626,10 +626,8 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 				    PanelAppletFrame *frame)
 {
 	AppletInfo *info = frame->priv->applet_info;
-
-	if (response == GTK_RESPONSE_NO)
-		panel_applet_clean (info, TRUE);
-	else {
+	
+	if (response == GTK_RESPONSE_YES) {
 		PanelWidget *panel;
 		char        *iid;
 		char        *gconf_key;
@@ -646,7 +644,8 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 
 		g_free (iid);
 		g_free (gconf_key);
-	}
+	} else
+		panel_applet_clean (info, TRUE);
 
 	gtk_widget_destroy (dialog);
 }
