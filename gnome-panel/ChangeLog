@@ -1,3 +1,9 @@
+Mon Aug 11 11:40:00 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.c: when queing unhide, first check if the panel
+	  contains the pointer before whacking the unhide delay, this fixes
+	  bugs where panel sometimes would never pop up.
+
 Mon Aug 11 11:22:24 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: Fix #119380 by ignoring motion event coming
