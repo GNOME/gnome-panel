@@ -444,8 +444,6 @@ fill_tasklist_applet(PanelApplet *applet)
 	
 	panel_applet_setup_menu (PANEL_APPLET (tasklist->applet), tasklist_menu_xml, tasklist_menu_verbs, tasklist);
 	
-	setup_gconf (tasklist);
-	
 	return TRUE;
 }
 
