@@ -518,6 +518,7 @@ static int inv_first_col = 0;
 static int inv_last_col = INV_COLS-1;
 static int inv_level = 0;
 static int inv_lives = 0;
+static gboolean inv_do_pause = FALSE;
 static gboolean inv_reverse = FALSE;
 static gboolean inv_game_over = FALSE;
 static gboolean inv_left_pressed = FALSE;
@@ -636,6 +637,11 @@ inv_draw (gpointer data)
 			   0, 0,
 			   0, 0,
 			   inv_width, inv_height);
+
+	if (inv_do_pause) {
+		sleep (1);
+		inv_do_pause = FALSE;
+	}
 
 	inv_draw_idle = 0;
 	return FALSE;
@@ -810,12 +816,16 @@ geginv_timeout (gpointer data)
 				} else if (invs[i][j].y >= 530 &&
 					   invs[i][j].x + 40 > inv_our_x - 25 &&
 					   invs[i][j].x - 40 < inv_our_x + 25) {
+					whack_gegl (i,j);
 					inv_lives --;
 					if (inv_lives <= 0) {
 						inv_do_game_over ();
 					} else {
-						sleep (1);
+						g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
+						g_slist_free (inv_shots);
+						inv_shots = NULL;
 						inv_our_x = 400;
+						inv_do_pause = TRUE;
 						inv_show_status ();
 					}
 				}
@@ -922,11 +932,13 @@ geginv_move_timeout (gpointer data)
 				if (inv_lives <= 0) {
 					inv_do_game_over ();
 				} else {
-					sleep (1);
+					g_slist_foreach (inv_shots, (GFunc)g_free, NULL);
+					g_slist_free (inv_shots);
+					inv_shots = NULL;
 					inv_our_x = 400;
+					inv_do_pause = TRUE;
 					inv_show_status ();
-					/* hack */
-					shot->y = 600;
+					return TRUE;
 				}
 			}
 
