@@ -33,6 +33,7 @@ main.c: egg-marshal.c
 
 notification_area_applet_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
+	$(X_LIBS)					\
 	$(PANEL_LIBS)
 
 serverdir       = $(libdir)/bonobo/servers
