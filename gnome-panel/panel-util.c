@@ -1241,6 +1241,28 @@ panel_ensure_dir (const char *dirname)
 	return TRUE;
 }
 
+void
+panel_g_list_deep_free	(GList *list)
+{
+	GList *li;
+	for (li = list; li != NULL; li = li->next) {
+		g_free (li->data);
+		li->data = NULL;
+	}
+	g_list_free (list);
+}
+
+void
+panel_g_slist_deep_free	(GSList *list)
+{
+	GSList *li;
+	for (li = list; li != NULL; li = li->next) {
+		g_free (li->data);
+		li->data = NULL;
+	}
+	g_slist_free (list);
+}
+
 #if 0
 /* hmmm, we need to use this I think to add a battery applet
  *  -George */

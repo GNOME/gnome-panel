@@ -2599,8 +2599,7 @@ panel_session_init_panels(void)
 		gtk_widget_show (panel);
 	}
 
-	g_slist_foreach (panel_ids, (GFunc)g_free, NULL);
-	g_slist_free (panel_ids);
+	panel_g_slist_deep_free (panel_ids);
 }
 
 static void
@@ -2706,8 +2705,7 @@ panel_session_save_panel (PanelData *pd)
 	}
 
 	g_free (panel_id_key);
-	g_slist_foreach (panel_id_list, (GFunc)g_free, NULL);
-	g_slist_free (panel_id_list);
+	panel_g_slist_deep_free (panel_id_list);
 
 	panel_gconf_panel_profile_set_string (panel_profile,
 					      panel->unique_id,
@@ -2854,8 +2852,7 @@ panel_session_remove_panel_from_config (PanelWidget *panel) {
                                new_panel_ids,
                                NULL);
 	if (new_panel_ids != NULL) {	
-		g_slist_foreach (new_panel_ids, (GFunc) g_free, NULL);
-		g_slist_free (new_panel_ids);
+		panel_g_slist_deep_free (new_panel_ids);
 	}
 	gconf_client_suggest_sync (panel_gconf_get_client (), NULL);
 }

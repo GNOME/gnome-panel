@@ -45,6 +45,8 @@ typedef struct {
 	gpointer        data;
 	GDestroyNotify  data_destroy;
 
+	guint		remove_idle;
+
 	char           *gconf_key;
 } AppletInfo;
 

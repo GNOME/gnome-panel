@@ -44,6 +44,9 @@ GList *		my_g_list_resort_item	(GList *list,
 					 gpointer data,
 					 GCompareFunc func);
 
+void		panel_g_list_deep_free	(GList *list);
+void		panel_g_slist_deep_free	(GSList *list);
+
 void		set_frame_colors	(PanelWidget *panel,
 					 GtkWidget *frame,
 					 GtkWidget *but1,
@@ -110,7 +113,6 @@ void		panel_signal_connect_object_while_alive (GObject      *object,
 							 const gchar  *signal,
 							 GCallback     func,
 							 GObject      *alive_object);
-
 
 gboolean	panel_ensure_dir	(const char *dirname);
 

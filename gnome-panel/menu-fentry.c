@@ -288,8 +288,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 		dr->recs = NULL;
 
 		if (dr->tryexecs != NULL) {
-			g_slist_foreach (dr->tryexecs, (GFunc) g_free, NULL);
-			g_slist_free (dr->tryexecs);
+			panel_g_slist_deep_free (dr->tryexecs);
 			dr->tryexecs = NULL;
 		}
 		dir_list = g_slist_remove (dir_list, fr);

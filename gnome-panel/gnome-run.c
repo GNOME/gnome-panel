@@ -100,8 +100,7 @@ fill_executables (void)
 	const char *path;
 	char **pathv;
 
-	g_list_foreach (executables, (GFunc) g_free, NULL);
-	g_list_free (executables);
+	panel_g_list_deep_free (executables);
 	executables = NULL;
 
 	path = g_getenv ("PATH");
@@ -133,8 +132,7 @@ static void
 kill_completion (void)
 {
 	if (executables != NULL) {
-		g_list_foreach (executables, (GFunc) g_free, NULL);
-		g_list_free (executables);
+		panel_g_list_deep_free (executables);
 		executables = NULL;
 	}
 
@@ -163,8 +161,7 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 	}
 
 	if (moveby == *argc) {
-		g_list_foreach (envar, (GFunc) g_free, NULL);
-		g_list_free (envar);
+		panel_g_list_deep_free (envar);
 		return;
 	}
 

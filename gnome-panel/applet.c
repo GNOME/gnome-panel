@@ -117,8 +117,7 @@ panel_applet_clean_gconf (AppletInfo *info)
         }
 
         g_free (temp_key);
-        g_slist_foreach (id_list, (GFunc) g_free, NULL);
-        g_slist_free (id_list);
+	panel_g_slist_deep_free (id_list);
 }
 
 /*destroy widgets and call the above cleanup function*/
@@ -127,30 +126,36 @@ panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
 
+	if (info->remove_idle != 0) {
+		g_source_remove (info->remove_idle);
+		info->remove_idle = 0;
+	}
+
 	panel_applet_clean_gconf (info);
 
 	applets = g_slist_remove (applets, info);
 
 	if (info->widget != NULL) {
+		GtkWidget *widget = info->widget;
 		if(info->type == APPLET_STATUS) {
 			status_applet_put_offscreen (info->data);
 		}
 		/* destroy will remove it from the panel */
-		gtk_widget_destroy (info->widget);
 		info->widget = NULL;
+		gtk_widget_destroy (widget);
 	}
 
 	info->data = NULL;
 
-	/*
-	 * FIXME: where are we supposed to free the structure?
-	 */
+	g_free (info);
 }
 
 static gboolean
 applet_idle_remove (gpointer data)
 {
 	AppletInfo *info = data;
+
+	info->remove_idle = 0;
 
 	panel_applet_save_position (info, info->gconf_key);
 
@@ -169,7 +174,8 @@ static void
 applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
-	g_idle_add (applet_idle_remove, info);
+	if (info->remove_idle == 0)
+		info->remove_idle = g_idle_add (applet_idle_remove, info);
 }
 
 static void
@@ -728,10 +734,12 @@ applet_button_press (GtkWidget      *widget,
 static void
 applet_destroy (GtkWidget *w, AppletInfo *info)
 {
+	GtkWidget *old_widget;
 	GList *li;
-	
+
 	g_return_if_fail (info != NULL);
 
+	old_widget = info->widget;
 	info->widget = NULL;
 
 	if (info->type == APPLET_DRAWER) {
@@ -786,6 +794,11 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 	}
 	g_list_free (info->user_menu);
 	info->user_menu = NULL;
+
+	/* If this was not called from the panel_applet_clean
+	 * itself.  That is if the widget entry was still set */
+	if (old_widget != NULL)
+		panel_applet_clean (info);
 }
 
 static char *
@@ -913,8 +926,7 @@ panel_applet_load_list (AppletType   type,
 		panel_applet_load_from_unique_id (type, client, profile, (char *) l->data, use_default);
 
         g_free (temp_key);
-        g_slist_foreach (id_list, (GFunc) g_free, NULL);
-        g_slist_free (id_list);
+	panel_g_slist_deep_free (id_list);
 }
 
 void
@@ -992,8 +1004,7 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	}
 
 	g_free (temp_key);
-	g_slist_foreach (id_list, (GFunc) g_free, NULL);
-	g_slist_free (id_list);
+	panel_g_slist_deep_free (id_list);
 
 	temp_key = panel_applet_get_full_gconf_key (applet_info->type, profile,
 						    applet_info->gconf_key, "object-type", FALSE);
@@ -1120,11 +1131,10 @@ panel_applet_register (GtkWidget      *applet,
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/
-			gtk_widget_destroy(applet);
 			info->widget = NULL;
-			panel_applet_clean(info);
+			gtk_widget_destroy (applet);
+			panel_applet_clean (info);
 			g_warning(_("Can't find an empty spot"));
-			g_free (info);
 			return NULL;
 		}
 		panel = PANEL_WIDGET(list->data);
@@ -1136,9 +1146,9 @@ panel_applet_register (GtkWidget      *applet,
 				   G_CALLBACK(applet_button_press),
 				   info);
 
-	g_signal_connect(G_OBJECT(applet), "destroy",
-			   G_CALLBACK(applet_destroy),
-			   info);
+	g_signal_connect (G_OBJECT (applet), "destroy",
+			  G_CALLBACK (applet_destroy),
+			  info);
 
 	gtk_widget_show_all(applet);
 

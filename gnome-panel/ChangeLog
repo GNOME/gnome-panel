@@ -1,3 +1,12 @@
+Wed Jan 16 01:01:38 2002  George Lebl <jirka@5z.com>
+
+	* applet.[ch], panel-applet-frame.c: Make sure the AppletInfo is
+	  freed, fix a possible race with applet destruction.  There are
+	  some somewhat evil things still around here.  Fear.
+
+	* panel-util.[ch], applet.c, gnome-run.c, menu-fentry.c, menu.c, 
+	  panel.c: make deep_free list functions and use them
+
 Tue Jan 15 15:05:46 2002  George Lebl <jirka@5z.com>
 
 	* button-widget.[ch], panel-types.h, drawer.c, menu.c, launcher.c,

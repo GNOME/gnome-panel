@@ -1903,8 +1903,7 @@ check_and_reread_applet (Menu *menu)
 			}
 			add_menu_widget (menu, NULL, dirlist, TRUE);
 
-			g_slist_foreach (dirlist, (GFunc)g_free, NULL);
-			g_slist_free (dirlist);
+			panel_g_slist_deep_free (dirlist);
 		}
 	}
 }

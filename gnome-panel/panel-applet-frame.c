@@ -95,7 +95,9 @@ popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
 		     const gchar       *verbname)
 {
-	panel_applet_clean (frame->priv->applet_info);
+	AppletInfo *info = frame->priv->applet_info;
+	frame->priv->applet_info = NULL;
+	panel_applet_clean (info);
 }
 
 static void
@@ -302,6 +304,7 @@ panel_applet_frame_finalize (GObject *object)
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
 
 	g_free (frame->priv->iid);
+	frame->priv->iid = NULL;
 
         g_free (frame->priv);
         frame->priv = NULL;
