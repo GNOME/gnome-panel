@@ -965,9 +965,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 		if(access(sim->mf->menudir,W_OK)==0 &&
 		   /*A HACK: but it works, don't have it edittable if it's redhat
 		     menus as they are auto generated!*/
-		   !strstr(sim->mf->menudir,".gnome/apps-redhat/") &&
-		   /*if it's a kdelnk file, don't let it be editted*/
-		   !is_ext(sim->item_loc,".kdelnk"))
+		   !strstr(sim->mf->menudir,".gnome/apps-redhat/"))
 			gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	}
 	
