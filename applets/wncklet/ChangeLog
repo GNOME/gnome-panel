@@ -1,3 +1,16 @@
+2002-04-06  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* clock.c: Add "Show seconds" option (#75108), implement seconds for
+	normal time and show 1/100s of internet time only when option is
+	enabled, fix updating intervals.
+	Make clock updating more efficient.
+	Move Internet & UNIX time inside Clock type radio group to make
+	prefs dialog more easy to use.
+	Fix spacing in prefs and applet
+	(this resolves last remaining bits of #72201)
+
+	* clock.schemas: add show_seconds option
+
 2002-04-02  Mark McLoughlin  <mark@skynet.ie>
 
 	* clock.c: (fill_clock_applet): add padding around clock (76948)

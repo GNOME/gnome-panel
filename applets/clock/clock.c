@@ -27,9 +27,11 @@
 
 #include "clock.h"
 
-#define INTERNETSECOND (864/4)
+#define INTERNETSECOND (864)
+#define INTERNETBEAT   (86400)
 
 static const char* KEY_HOUR_FORMAT	= "hour_format";
+static const char* KEY_SHOW_SECONDS 	= "show_seconds";
 static const char* KEY_SHOW_DATE 	= "show_date";
 static const char* KEY_GMT_TIME		= "gmt_time";
 static const char* KEY_UNIX_TIME	= "unix_time";
@@ -40,20 +42,25 @@ extern GtkTooltips *panel_tooltips;
 typedef struct _ClockData ClockData;
 
 struct _ClockData {
+	/* widgets */
 	GtkWidget *applet;
 	GtkWidget *clockw;
+	GtkWidget *props;
   
-	guint timeout;
-	int timeouttime;
+	/* preferences */
 	int hourformat;
-        gboolean showdate;
+	gboolean showseconds;
+	gboolean showdate;
 	gboolean unixtime;
 	gboolean internettime;
 	gboolean gmt_time;
+	
+	/* runtime data */
+	char *timeformat;
+	guint timeout;
+	int timeouttime;
 	PanelAppletOrient orient;
 	int size;
-
-	GtkWidget *props;
 };
 
 static void update_clock (ClockData * cd, time_t current_time);
@@ -81,15 +88,35 @@ clock_timeout_callback (gpointer data)
 
 	update_clock (cd, current_time);
 
-	if (!cd->unixtime && !cd->internettime) {
-		int sec = current_time % 60;
-		if (sec != 0 || cd->timeouttime != 60000) {
-			/* ensure next update is exactly on 0 seconds */
-			cd->timeouttime = (60 - sec)*1000;
-			cd->timeout = g_timeout_add (cd->timeouttime,
-			                             clock_timeout_callback,
-			                             cd);
-			return FALSE;
+	if (!cd->showseconds && !cd->unixtime) {
+		if (!cd->internettime) {
+			int sec = current_time % 60;
+			if (sec != 0 || cd->timeouttime != 60000) {
+				/* ensure next update is exactly on 0 seconds */
+				cd->timeouttime = (60 - sec)*1000;
+				cd->timeout = g_timeout_add (cd->timeouttime,
+							     clock_timeout_callback,
+							     cd);
+				return FALSE;
+			}
+		} else {
+			struct tm *tm;
+			time_t bmt;
+			long isec;
+
+			/* BMT (Biel Mean Time) is GMT+1 */
+			bmt = current_time + 3600;
+			tm = gmtime (&bmt);
+			isec = ((tm->tm_hour*3600 + tm->tm_min*60 + tm->tm_sec)*10) % 864;
+			
+			if (isec != 0 || cd->timeouttime != INTERNETBEAT) {
+				/* ensure next update is exactly on beat limit */
+				cd->timeouttime = (864 - isec)*100;
+				cd->timeout = g_timeout_add (cd->timeouttime,
+							     clock_timeout_callback,
+							     cd);
+				return FALSE;
+			}
 		}
 	}
 
@@ -103,35 +130,69 @@ get_itime (time_t current_time)
 	float itime;
 	time_t bmt;
 
+	/* BMT (Biel Mean Time) is GMT+1 */
 	bmt = current_time + 3600;
 	tm = gmtime (&bmt);
-	itime = (tm->tm_hour*60 + tm->tm_min + tm->tm_sec/60.0)*1000.0/1440.0;
+	itime = (tm->tm_hour*3600.0 + tm->tm_min*60.0 + tm->tm_sec)/86.4;
 
 	return itime;
+}
+
+static void
+update_timeformat(ClockData *cd)
+{
+	const char *time;
+
+	if (cd->hourformat == 12) {
+		if (cd->showseconds)
+			time = _("%I:%M:%S %p");
+		else
+			time = _("%I:%M %p");
+	} else {
+		if (cd->showseconds)
+			time = _("%H:%M:%S");
+		else
+			time = _("%H:%M");
+	}
+
+	g_free (cd->timeformat);
+	if (cd->showdate) {
+		/* Show date in another line if panel is vertical, or
+		 * horizontal but large enough to hold two lines of text */
+		if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
+		    cd->orient == PANEL_APPLET_ORIENT_RIGHT ||
+		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM)
+			cd->timeformat = g_strconcat (time, "\n",
+					              _("%a %b %d"), NULL);
+		else
+			cd->timeformat = g_strconcat (time, " ",
+					              _("%a %b %d"), NULL);
+	} else {
+		cd->timeformat = g_strdup (time);
+	}
 }
 
 /* sets accessible name and description for the widget */
 static void
 set_atk_name_description (GtkWidget *widget, const char *name, const char *desc)
 {
-        AtkObject *obj;
-        obj = gtk_widget_get_accessible (widget);
+	AtkObject *obj;
+	obj = gtk_widget_get_accessible (widget);
 
 	/* return if gail is not loaded */
 	if (!GTK_IS_ACCESSIBLE (obj))
 		return;
 
-        if ( desc != NULL)
-                atk_object_set_description (obj, desc);
-        if ( name != NULL)
-                atk_object_set_name (obj, name);
+	if (desc != NULL)
+		atk_object_set_description (obj, desc);
+	if (name != NULL)
+		atk_object_set_name (obj, name);
 } 
 
 static void
 update_clock (ClockData * cd, time_t current_time)
 {
 	struct tm *tm;
-	GString *gs = g_string_new("");
 	char date[256], hour[256];
 	char *utf8;
 	
@@ -150,82 +211,28 @@ update_clock (ClockData * cd, time_t current_time)
 		} else {
 			g_snprintf (hour, sizeof(hour), "%lu", (unsigned long)current_time);
 		} 
-		g_string_append (gs, hour);
 	} else if (cd->internettime) {
 		float itime = get_itime (current_time);
-		g_snprintf (hour, sizeof(hour), "@%3.2f", itime);
-		g_string_append (gs, hour);
-	} else if (cd->hourformat == 12) {
-		/* This format string is used, to display the actual time in
-		   12 hour format.  */
-		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
-			if (strftime (hour, sizeof (hour), _("%I:%M\n%p"), tm) <= 0)
-				strcpy (hour, "???");
-		} else {
-			if (strftime (hour, sizeof (hour), _("%I:%M %p"), tm) <= 0)
-				strcpy (hour, "???");
-		} 
-		g_string_append (gs, hour);
-	} else if (cd->hourformat == 24) {
-		/* This format string is used, to display the actual time in
-		   24 hour format.  */
-		if (strftime (hour, sizeof (hour), _("%H:%M"), tm) <= 0)
-			strcpy (hour, "???");
-		g_string_append (gs,hour);
-	}
-
-	if (cd->showdate && !cd->unixtime && !cd->internettime) {
-		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
-			/* This format string is used, to display the actual day,
-			   when showing a vertical panel.  For an explanation of
-			   this format string type 'man strftime'.  */
-			if (strftime (date, sizeof (date), _("%a\n%b %d"), tm) <= 0)
-				strcpy (date, "???");
-		} else {
-			/* This format string is used, to display the actual day,
-			   when showing a horizontal panel.  */
-			if (strftime (date, sizeof (date), _("%a %b %d"), tm) <= 0)
-				strcpy (date, "???");
-		}
-		if (cd->size < GNOME_Vertigo_PANEL_MEDIUM)
-			g_string_append_c (gs,' ');
+		if (cd->showseconds)
+			g_snprintf (hour, sizeof (hour), "@%3.2f", itime);
 		else
-			g_string_append_c (gs,'\n');
-		g_string_append (gs, date);
+			g_snprintf (hour, sizeof (hour), "@%3.0f", itime);
+	} else {
+		if (strftime (hour, sizeof (hour), cd->timeformat, tm) <= 0)
+			strcpy (hour, "???");
 	}
 
-	/* Set the applet's tooltip */
+	utf8 = g_locale_to_utf8 (hour, -1, NULL, NULL, NULL);
+	gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
+	g_free (utf8);
+
+	/* Show date in tooltip */
 	if (strftime (date, sizeof (date), _("%A %B %d"), tm) <= 0)
 		strcpy (date, "???");
+
 	utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
 			      utf8, NULL);
-	g_free (utf8);
-	
-	/*if we are vertical, just make it char per line */
-	if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-	     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-	    cd->size < GNOME_Vertigo_PANEL_MEDIUM) {
-		char *p;
-		GString *gst = g_string_new ("");
-		
-		for(p = gs->str; *p; p++) {
-			if (p != gs->str)
-				g_string_append_c (gst, '\n');
-			g_string_append_c (gst, *p);
-		}
-		g_string_free (gs, TRUE);
-		gs = gst;
-	}
-
-	utf8 = g_locale_to_utf8 (gs->str, -1, NULL, NULL, NULL);
-
-	gtk_label_set_text (GTK_LABEL (cd->clockw), utf8);
-	g_string_free (gs, TRUE);
 	g_free (utf8);
 }
 
@@ -243,16 +250,31 @@ refresh_clock_timeout(ClockData *cd)
 {
 	time_t current_time;
 	
+	update_timeformat (cd);
+
 	if (cd->timeout)
 		g_source_remove (cd->timeout);
 
 	time (&current_time);
 	update_clock (cd, current_time);
 	
-	if(cd->unixtime)
+	if (cd->internettime) {
+		if (cd->showseconds)
+			cd->timeouttime = INTERNETSECOND;
+		else {
+			struct tm *tm;
+			time_t bmt;
+			long isec;
+
+			/* BMT (Biel Mean Time) is GMT+1 */
+			bmt = current_time + 3600;
+			tm = gmtime (&bmt);
+			isec = ((tm->tm_hour*3600 + tm->tm_min*60 + tm->tm_sec)*10) % 864;
+			cd->timeouttime = (864 - isec)*100;
+		}
+	}
+	else if(cd->unixtime || cd->showseconds)
 		cd->timeouttime = 1000;
-        else if (cd->internettime)
-                cd->timeouttime = INTERNETSECOND;
 	else
 		cd->timeouttime = (60 - current_time % 60)*1000;
 	
@@ -284,6 +306,7 @@ create_clock_widget (ClockData *cd)
 
 	clock = gtk_label_new ("hmm?");
 	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
+	gtk_label_set_line_wrap (GTK_LABEL (clock), TRUE);
 	gtk_widget_show (clock);
 
 	cd->clockw = clock;
@@ -352,6 +375,8 @@ applet_change_pixel_size (PanelApplet *applet,
 	
 	time (&current_time);
 	cd->size = size;
+
+	update_timeformat (cd);
 	update_clock (cd, current_time);
 }
 
@@ -362,30 +387,40 @@ copy_time (BonoboUIComponent *uic,
 	   const gchar       *verbname)
 {
 	time_t current_time = time (NULL);
-	struct tm *tm;
 	char string[256];
 	char *utf8;
-
-	if (cd->gmt_time)
-		tm = gmtime (&current_time);
-	else
-		tm = localtime (&current_time);
 
 	if (cd->unixtime) {
 		g_snprintf (string, sizeof(string), "%lu",
 			    (unsigned long)current_time);
 	} else if (cd->internettime) {
 		float itime = get_itime (current_time);
-		g_snprintf (string, sizeof (string), "@%3.2f", itime);
-	} else if (cd->hourformat == 12) {
-		/* This format string is used, to display the actual time in
-		   12 hour format.  */
-		if (strftime (string, sizeof (string), _("%I:%M %p"), tm) <= 0)
-			strcpy (string, "???");
-	} else if (cd->hourformat == 24) {
-		/* This format string is used, to display the actual time in
-		   24 hour format.  */
-		if (strftime (string, sizeof (string), _("%H:%M"), tm) <= 0)
+		if (cd->showseconds)
+			g_snprintf (string, sizeof (string), "@%3.2f", itime);
+		else
+			g_snprintf (string, sizeof (string), "@%3.0f", itime);
+	} else {
+		const char *format;
+		struct tm *tm;
+
+		if (cd->hourformat == 12) {
+			if (cd->showseconds)
+				format = _("%I:%M:%S %p");
+			else
+				format = _("%I:%M %p");
+		} else {
+			if (cd->showseconds)
+				format = _("%H:%M:%S");
+			else
+				format = _("%H:%M");
+		}
+
+		if (cd->gmt_time)
+			tm = gmtime (&current_time);
+		else
+			tm = localtime (&current_time);
+
+		if (strftime (string, sizeof (string), format, tm) <= 0)
 			strcpy (string, "???");
 	}
 
@@ -447,7 +482,25 @@ hour_format_changed (GConfClient  *client,
 	else
 		clock->hourformat = 12;
 
+	update_timeformat (clock);
 	refresh_clock (clock);
+}
+
+static void
+show_seconds_changed (GConfClient  *client,
+                   guint         cnxn_id,
+                   GConfEntry   *entry,
+                   ClockData    *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->showseconds = (value != 0);
+	refresh_clock_timeout (clock);
 }
 
 static void
@@ -464,6 +517,7 @@ show_date_changed (GConfClient  *client,
 	value = gconf_value_get_bool (entry->value);
 	
 	clock->showdate = (value != 0);
+	update_timeformat (clock);
 	refresh_clock (clock);
 }
 
@@ -535,6 +589,14 @@ setup_gconf (ClockData *clock)
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_SHOW_SECONDS);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)show_seconds_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_SHOW_DATE);
 	gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)show_date_changed,
@@ -592,6 +654,8 @@ fill_clock_applet(PanelApplet *applet)
 			g_error_free (error);
 	}
 
+	cd->showseconds = panel_applet_gconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
+	
 	error = NULL;
 	cd->showdate = panel_applet_gconf_get_bool (applet, KEY_SHOW_DATE, &error);
 	if (error) {
@@ -607,9 +671,11 @@ fill_clock_applet(PanelApplet *applet)
 	cd->unixtime = panel_applet_gconf_get_bool (applet, KEY_UNIX_TIME, NULL);
 	cd->internettime = panel_applet_gconf_get_bool (applet, KEY_INTERNET_TIME, NULL);
 
+	cd->timeformat = NULL;
+
 	create_clock_widget (cd);
 
-	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), GNOME_PAD);
+	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), 4);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->clockw);
 
 	gtk_widget_show (cd->applet);
@@ -663,6 +729,16 @@ set_hour_format_cb (GtkWidget *w,
 					    GPOINTER_TO_INT (data),
 					    NULL);
 	}
+}
+
+static void
+set_show_seconds_cb (GtkWidget *w,
+                     ClockData *clock)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_SHOW_SECONDS,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
 }
 
 static void
@@ -730,12 +806,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   ClockData         *cd,
 			   const gchar       *verbname)
 {
-        GtkWidget *hbox;
-        GtkWidget *vbox;
-        GtkWidget *hour_frame;
-	GtkWidget *table;
+	GtkWidget *hbox;
+	GtkWidget *hour_frame;
+	GtkWidget *type_box;
+	GtkWidget *options_frame;
+	GtkWidget *vbox;
 	GtkWidget *twelvehour;
 	GtkWidget *twentyfourhour;
+	GtkWidget *showseconds;
 	GtkWidget *showdate;
 	GtkWidget *unixtime;
 	GtkWidget *internettime;
@@ -769,135 +847,129 @@ display_properties_dialog (BonoboUIComponent *uic,
 	else
 		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
 
-	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
+	hbox = gtk_hbox_new (FALSE, 3);
+	gtk_widget_show (hbox);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), hbox, FALSE, FALSE, 0);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
 	
-	hour_frame = gtk_frame_new (_("Time Format"));
-	gtk_container_set_border_width (GTK_CONTAINER (hour_frame), GNOME_PAD);
+	hour_frame = gtk_frame_new (_("Clock type"));
 	gtk_box_pack_start (GTK_BOX (hbox), hour_frame, FALSE, FALSE, 0);
+	gtk_widget_show (hour_frame);
+	gtk_container_set_border_width (GTK_CONTAINER (hour_frame), 3);
 
-	table = gtk_table_new (2, 2, FALSE);
-	gtk_container_add (GTK_CONTAINER (hour_frame), table);
-	gtk_widget_show (table);
-
-	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
-	gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
-	gtk_table_set_col_spacings (GTK_TABLE (table), GNOME_PAD_SMALL);
+	type_box = gtk_vbox_new (FALSE, 3);
+	gtk_container_add (GTK_CONTAINER (hour_frame), type_box);
+	gtk_widget_show (type_box);
+	gtk_container_set_border_width (GTK_CONTAINER (type_box), 3);
 
 	twelvehour = gtk_radio_button_new_with_mnemonic (NULL, _("_12 hour"));
-	gtk_table_attach (GTK_TABLE (table), twelvehour, 0, 1, 0, 1,
-			  GTK_FILL, GTK_FILL | GTK_EXPAND,
-			  0, 0);
-	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
+	gtk_box_pack_start (GTK_BOX (type_box), twelvehour, FALSE, FALSE, 0);
 	gtk_widget_show (twelvehour);
+	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
 
 	twentyfourhour = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)),
-							  _("_24 hour"));
-
-	gtk_table_attach (GTK_TABLE (table), twentyfourhour, 0, 1, 1, 2,
-			  GTK_FILL, GTK_FILL | GTK_EXPAND,
-			  0, 0);
-	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
+							     _("_24 hour"));
+	gtk_box_pack_start (GTK_BOX (type_box), twentyfourhour, FALSE, FALSE, 0);
 	gtk_widget_show (twentyfourhour);
+	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
 
-	switch (cd->hourformat) {
-	case 12:
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (twelvehour),
-					      TRUE);
-		break;
+	unixtime = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)), _("_UNIX time"));
+	gtk_box_pack_start (GTK_BOX (type_box), unixtime, FALSE, FALSE, 0);
+	gtk_widget_show (unixtime);
 
-	case 24:
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (twentyfourhour),
-					      TRUE);
-		break;
-	}
-
+	internettime = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)), _("_Internet time"));
+	gtk_box_pack_start (GTK_BOX (type_box), internettime, FALSE, FALSE, 0);
+	gtk_widget_show (internettime);
+   
+	if (cd->unixtime)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unixtime), TRUE);
+	else if (cd->internettime)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (internettime), TRUE);
+	else if (cd->hourformat == 12)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (twelvehour), TRUE);
+	else if (cd->hourformat == 24)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (twentyfourhour), TRUE);
+   
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
+			  G_CALLBACK (set_unixtime_cb),
+			  cd);
+	g_signal_connect (G_OBJECT (internettime), "toggled",
+			  G_CALLBACK (set_internettime_cb),
+			  cd);
 	g_signal_connect (G_OBJECT (twelvehour), "toggled",
 			  G_CALLBACK (set_hour_format_cb),
 			  GINT_TO_POINTER (12));
 	g_signal_connect (G_OBJECT (twentyfourhour), "toggled",
 			  G_CALLBACK (set_hour_format_cb),
 			  GINT_TO_POINTER (24));
+
+	options_frame = gtk_frame_new ("");
+	gtk_box_pack_start (GTK_BOX (hbox), options_frame, FALSE, FALSE, 0);
+	gtk_widget_show (options_frame);
+	gtk_container_set_border_width (GTK_CONTAINER (options_frame), 3);
+	gtk_frame_set_shadow_type (GTK_FRAME (options_frame), GTK_SHADOW_NONE);
 	
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start_defaults (GTK_BOX (hbox), vbox);
+	vbox = gtk_vbox_new (FALSE, 3);
+	gtk_container_add (GTK_CONTAINER (options_frame), vbox);
 	gtk_widget_show (vbox);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
+
+	showseconds = gtk_check_button_new_with_mnemonic (_("Show _seconds"));
+	gtk_box_pack_start (GTK_BOX (vbox), showseconds, FALSE, FALSE, 0);
+	gtk_widget_show (showseconds);
+	
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showseconds),
+	                              cd->showseconds);
+	g_signal_connect (G_OBJECT (showseconds), "toggled",
+			  G_CALLBACK (set_show_seconds_cb),
+			  cd);	   
 
 	showdate = gtk_check_button_new_with_mnemonic (_("Show _date"));
-	gtk_box_pack_start_defaults (GTK_BOX (vbox), showdate);
+	gtk_box_pack_start (GTK_BOX (vbox), showdate, FALSE, FALSE, 0);
 	gtk_widget_show (showdate);
 	
-	if (cd->showdate)
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showdate),
-					TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showdate),
+	                              cd->showdate);
 	g_signal_connect (G_OBJECT (showdate), "toggled",
 			  G_CALLBACK (set_show_date_cb),
 			  cd);	   
 
 	use_gmt_time = gtk_check_button_new_with_mnemonic (_("Use _GMT"));
-	gtk_box_pack_start_defaults (GTK_BOX (vbox), use_gmt_time);
+	gtk_box_pack_start (GTK_BOX (vbox), use_gmt_time, FALSE, FALSE, 0);
 	gtk_widget_show (use_gmt_time);
 	
-	if (cd->gmt_time)
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_gmt_time),
-					TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_gmt_time),
+	                              cd->gmt_time);
 	g_signal_connect (G_OBJECT (use_gmt_time), "toggled",
 			  G_CALLBACK (set_gmt_time_cb),
 			  cd);	
 
-	unixtime = gtk_check_button_new_with_mnemonic (_("_UNIX time"));
-	gtk_box_pack_start_defaults (GTK_BOX (vbox), unixtime);
-	gtk_widget_show (unixtime);
-
-        internettime = gtk_check_button_new_with_mnemonic (_("_Internet time"));
-	gtk_box_pack_start_defaults (GTK_BOX (vbox), internettime);
-	gtk_widget_show (internettime);
-   
-        g_signal_connect (G_OBJECT (unixtime), "toggled",
+	/* Some combinations of options do not make sense */
+	if (cd->unixtime) {
+		gtk_widget_set_sensitive (showseconds, FALSE);
+		gtk_widget_set_sensitive (showdate, FALSE);
+		gtk_widget_set_sensitive (use_gmt_time, FALSE);
+	}
+	if (cd->internettime) {
+		gtk_widget_set_sensitive (showdate, FALSE);
+		gtk_widget_set_sensitive (use_gmt_time, FALSE);
+	}
+	g_signal_connect (G_OBJECT (unixtime), "toggled",
 			  G_CALLBACK (set_datasensitive_cb),
-			  hour_frame);
+			  showseconds);
 	g_signal_connect (G_OBJECT (unixtime), "toggled",
 			  G_CALLBACK (set_datasensitive_cb),
 			  showdate);
 	g_signal_connect (G_OBJECT (unixtime), "toggled",
 			  G_CALLBACK (set_datasensitive_cb),
 			  use_gmt_time);
-	g_signal_connect (G_OBJECT (unixtime), "toggled",
-			  G_CALLBACK (set_datasensitive_cb),
-			  internettime);
-			   
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unixtime),
-				      cd->unixtime);
-
-	/* internet time */
-	g_signal_connect (G_OBJECT (internettime), "toggled",
-			  G_CALLBACK (set_datasensitive_cb),
-			  hour_frame);
 	g_signal_connect (G_OBJECT (internettime), "toggled",
 			  G_CALLBACK (set_datasensitive_cb),
 			  showdate);
 	g_signal_connect (G_OBJECT (internettime), "toggled",
 			  G_CALLBACK (set_datasensitive_cb),
 			  use_gmt_time);   
-	g_signal_connect (G_OBJECT (internettime), "toggled",
-			  G_CALLBACK (set_datasensitive_cb),
-			  unixtime);   
    
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (internettime),
-				      cd->internettime);
-   
-	g_signal_connect (G_OBJECT (unixtime), "toggled",
-			  G_CALLBACK (set_unixtime_cb),
-			    cd);
-	g_signal_connect (G_OBJECT (internettime), "toggled",
-			  G_CALLBACK (set_internettime_cb),
-			  cd);
-
-	gtk_widget_show (hour_frame);
-	gtk_widget_show (hbox);
-
-	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), hbox, FALSE, FALSE, 0);
-
-	
 	g_signal_connect (G_OBJECT (cd->props), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
 	g_signal_connect (G_OBJECT (cd->props), "response",
