@@ -617,10 +617,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			double affine[6];
 			GdkInterpType interp;
 
-			if (global_config.fast_button_scaling)
-				interp = GDK_INTERP_NEAREST;
-			else
-				interp = GDK_INTERP_HYPER;
+			interp = GDK_INTERP_HYPER;
 
 			scaled_pb = scale_pixbuf_to_square (pb, size,
 							    NULL, NULL,
@@ -649,10 +646,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			GdkPixbuf *scaled_pb;
 			GdkInterpType interp;
 
-			if (global_config.fast_button_scaling)
-				interp = GDK_INTERP_NEAREST;
-			else
-				interp = GDK_INTERP_HYPER;
+			interp = GDK_INTERP_HYPER;
 
 			scaled_pb = scale_pixbuf_to_square (pb, size, &w, &h,
 							    interp);

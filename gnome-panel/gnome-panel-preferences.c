@@ -85,7 +85,6 @@ static GtkWidget *entry_down[LAST_TILE];
 static GtkWidget *hide_panel_frame_cb;
 static GtkWidget *tile_when_over_cb;
 static GtkWidget *saturate_when_over_cb;
-static GtkWidget *fast_button_scaling_cb;
 
 
 /* applet page*/
@@ -411,8 +410,6 @@ sync_buttons_page_with_config(GlobalConfig *conf)
 				    conf->tile_when_over);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(saturate_when_over_cb),
 				    conf->saturate_when_over);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(fast_button_scaling_cb),
-				    conf->fast_button_scaling);
 	
 	for(i=0;i<LAST_TILE;i++) {
 		char *file;
@@ -439,8 +436,6 @@ sync_config_with_buttons_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(tile_when_over_cb)->active;
 	conf->saturate_when_over =
 		GTK_TOGGLE_BUTTON(saturate_when_over_cb)->active;
-	conf->fast_button_scaling =
-		GTK_TOGGLE_BUTTON(fast_button_scaling_cb)->active;
 
 	for(i=0;i<LAST_TILE;i++) {
 		conf->tiles_enabled[i] =
@@ -642,12 +637,6 @@ buttons_notebook_page (void)
 			      GTK_SIGNAL_FUNC (changed_cb), NULL);
 	  gtk_box_pack_start (GTK_BOX (vbox), saturate_when_over_cb, FALSE, FALSE, 0);
 
-	  /* Fast but low quality scaling (Nearest versus Hyperbolic) */
-	  fast_button_scaling_cb = gtk_check_button_new_with_label (_("Fast but low quality scaling of button icons"));
-	  gtk_signal_connect (GTK_OBJECT (fast_button_scaling_cb), "toggled",
-			      GTK_SIGNAL_FUNC (changed_cb), NULL);
-	  gtk_box_pack_start (GTK_BOX (vbox), fast_button_scaling_cb, FALSE, FALSE, 0);
-	  
 	  return (vbox);
 }
 
@@ -1448,8 +1437,6 @@ loadup_vals (void)
 		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
 		conditional_get_bool ("confirm_panel_remove", TRUE, NULL);
-	global_config.fast_button_scaling =
-		conditional_get_bool ("fast_button_scaling", FALSE, NULL);
 	global_config.avoid_collisions =
 		conditional_get_bool ("avoid_collisions", TRUE, NULL);
 	
@@ -1589,7 +1576,6 @@ write_config (GlobalConfig *conf)
 	gnome_config_set_string("run_key", conf->run_key);
 	gnome_config_set_string("screenshot_key", conf->screenshot_key);
 	gnome_config_set_string("window_screenshot_key", conf->window_screenshot_key);
-	gnome_config_set_bool("fast_button_scaling", conf->fast_button_scaling);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

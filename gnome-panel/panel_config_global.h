@@ -50,7 +50,6 @@ struct _GlobalConfig {
 	int menu_flags;
 	gboolean use_large_icons;
 	gboolean merge_menus;
-	gboolean fast_button_scaling;
 	gboolean avoid_collisions;
 	gboolean menu_check;
 };

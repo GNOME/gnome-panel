@@ -114,7 +114,6 @@ apply_global_config (void)
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
 	static int old_menu_check = -1;
-	static int old_fast_button_scaling = -1;
 	static int old_avoid_collisions = -1;
 	GSList *li;
 
@@ -223,11 +222,6 @@ apply_global_config (void)
 					 global_config.tile_border[i],
 					 global_config.tile_depth[i]);
 	}
-
-	if (old_fast_button_scaling != global_config.fast_button_scaling) {
-		button_widget_redo_all ();
-	}
-	old_fast_button_scaling = global_config.fast_button_scaling;
 
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
@@ -1798,8 +1792,6 @@ load_up_globals (void)
 		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
 		conditional_get_bool ("confirm_panel_remove", TRUE, NULL);
-	global_config.fast_button_scaling =
-		conditional_get_bool ("fast_button_scaling", FALSE, NULL);
 	global_config.avoid_collisions =
 		conditional_get_bool ("avoid_collisions", TRUE, NULL);
 	
@@ -1917,8 +1909,6 @@ write_global_config (void)
 				 global_config.screenshot_key);
 	gnome_config_set_string ("window_screenshot_key",
 				 global_config.window_screenshot_key);
-	gnome_config_set_bool ("fast_button_scaling",
-			       global_config.fast_button_scaling);
 	gnome_config_set_bool ("avoid_collisions",
 			       global_config.avoid_collisions);
 			     
