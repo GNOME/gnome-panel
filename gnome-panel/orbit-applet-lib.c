@@ -141,8 +141,8 @@ int gnome_panel_applet_reinit_corba(void)
   if (hostname [0] == 0)
     strcpy (hostname, "unknown-host");
 
-	/*do a 20 second timeout until we get the iior*/
-  for(i=0;i<20;i++) {
+  /*do a 30 second timeout until we get the iior*/
+  for(i=0;i<30;i++) {
     name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
 			   "/DISPLAY-", getenv ("DISPLAY"), NULL);
 
@@ -421,10 +421,10 @@ gnome_panel_applet_request_id (const char *path,
 	int i;
 
 	/*this is the first call to panel so we'll do a loop and timeout
-	  after 20 seconds if we don't find a panel*/
+	  after 30 seconds if we don't find a panel*/
 	*applet_id = -1;
 
-	for(i=0;i<20;i++) {
+	for(i=0;i<30;i++) {
 		  /*reserve a spot and get an id for this applet*/
 	  *applet_id = GNOME_Panel_applet_request_id(panel_client,
 						     cookie,
@@ -434,11 +434,10 @@ gnome_panel_applet_request_id (const char *path,
 						     &cfg,
 						     &globcfg,
 						     &wid, &ev);
-	  sleep(1);
-	  gnome_panel_applet_reinit_corba ();
 	  if(*applet_id!=-1)
 	    break;
 	  sleep(1);
+	  gnome_panel_applet_reinit_corba ();
 	}
 	/*if the request_id never completed*/
 	if(*applet_id == -1)

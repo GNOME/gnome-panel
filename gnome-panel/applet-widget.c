@@ -215,12 +215,12 @@ applet_widget_class_init (AppletWidgetClass *class)
 }
 
 static void
-wapplet_widget_init (AppletWidget *applet_widget)
+wapplet_widget_init (AppletWidget *applet)
 {
-	g_return_if_fail(applet_widget != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet_widget));
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
 
-	applet_widget->applet_id = -1;
+	applet->applet_id = -1;
 }
 
 static int
@@ -364,12 +364,11 @@ applet_widget_new_with_param(const char *param)
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
 	
-	printf("got winid: %lu\n",winid);
+	printf("got winid: %lu\n",(gulong)winid);
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 	
-	GTK_PLUG(applet)->socket_window = gdk_window_foreign_new (winid);
-	GTK_PLUG(applet)->same_app = FALSE;
+	gtk_plug_construct(GTK_PLUG(applet),winid);
 
 	applet->applet_id = applet_id;
 	applet->privcfgpath = privcfgpath;

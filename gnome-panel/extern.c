@@ -332,7 +332,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	if(!GTK_WIDGET_REALIZED(socket))
 		gtk_widget_realize(socket);
 
-	printf("socket wid: %lu\n", GDK_WINDOW_XWINDOW(socket->window));
+	printf("socket wid: %lu\n", (gulong)GDK_WINDOW_XWINDOW(socket->window));
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
 
