@@ -1,3 +1,12 @@
+Thu Mar 02 23:07:03 2000  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c,session.c: after a widget is remove, queue_resize
+	  all the panels, fixes bug #6763 also when "keep panels on bottom"
+	  is on, put it in the "BELOW" layer, fixes bug #6764
+	  
+	* menu.: store flags on the menu to correctly tearoff the main menu.
+	  store even through saves. Partly fixes bug #6765
+
 2000-03-02 Alexander Kirillov <kirillov@math.sunysb.edu>
 
         * help/C/panel.sgml: made some corrections suggested by drake (part

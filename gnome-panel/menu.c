@@ -2826,9 +2826,11 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 	GtkWidget *menu = NULL;
 	PanelWidget *menu_panel;
 
+	int flags = GPOINTER_TO_INT(data);
+
 	menu_panel = get_panel_from_menu_data(w);
 
-	menu = create_root_menu (TRUE, global_config.menu_flags, FALSE,
+	menu = create_root_menu (TRUE, flags, FALSE,
 				 IS_BASEP_WIDGET (menu_panel->panel_parent),
 				 TRUE);
 
@@ -2843,7 +2845,7 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 	tm->menu = menu;
 	tm->mfl = NULL;
 	tm->title = g_strdup(_("Panel"));
-	tm->special = g_strdup("PANEL");
+	tm->special = g_strdup_printf("PANEL:%d", flags);
 	tm->wmclass = g_strdup(wmclass);
 	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
 			   GTK_SIGNAL_FUNC(tearoff_destroyed), tm);
@@ -4036,7 +4038,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
 		gtk_menu_prepend (GTK_MENU (root_menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
-				    NULL);
+				    GINT_TO_POINTER(flags));
 	}
 	
 	if (flags & MAIN_MENU_SYSTEM)
@@ -4504,18 +4506,21 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 {
 	GtkWidget *menu = NULL;
 
-	if(strcmp(special,"ADD_PANEL")==0) {
+	if(strcmp(special, "ADD_PANEL")==0) {
 		menu = create_add_panel_submenu(FALSE);
-	} else if(strcmp(special,"PANEL")==0) {
-		menu = create_root_menu (TRUE, global_config.menu_flags, FALSE,
+	} else if(strncmp(special, "PANEL", strlen("PANEL"))==0) {
+		int flags;
+		if(sscanf(special, "PANEL:%d", &flags)!=1)
+			flags = global_config.menu_flags;
+		menu = create_root_menu (TRUE, flags, FALSE,
 					 IS_BASEP_WIDGET (menu_panel_widget->panel_parent),
 					 TRUE);
-	} else if(strcmp(special,"DESKTOP")==0) {
+	} else if(strcmp(special, "DESKTOP")==0) {
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
-	} else if(strcmp(special,"ADD_TO_PANEL")==0) {
+	} else if(strcmp(special, "ADD_TO_PANEL")==0) {
 		menu = menu_new();
 		make_add_submenu(menu, TRUE);
-	} else if(strcmp(special,"PANEL_SUBMENU")==0) {
+	} else if(strcmp(special, "PANEL_SUBMENU")==0) {
 		menu = create_panel_submenu (
 			NULL, TRUE, FALSE,
 			IS_BASEP_WIDGET (menu_panel_widget->panel_parent));

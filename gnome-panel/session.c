@@ -145,6 +145,8 @@ apply_global_config(void)
 				continue;
 			if (IS_BASEP_WIDGET (pd->panel))
 				basep_widget_update_winhints (BASEP_WIDGET (pd->panel));
+			else if (IS_FOOBAR_WIDGET (pd->panel))
+				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
 		}
 	}
 	keep_bottom_old = global_config.keep_bottom;

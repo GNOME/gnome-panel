@@ -411,8 +411,11 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 	gnome_win_hints_set_state (w, WIN_STATE_STICKY |
 				   WIN_STATE_FIXED_POSITION);
 	
-	gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS | WIN_HINTS_DO_NOT_COVER);	
-	gnome_win_hints_set_layer (w, WIN_LAYER_DOCK);
+	gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
+				   WIN_HINTS_DO_NOT_COVER);	
+	gnome_win_hints_set_layer (w, global_config.keep_bottom
+				   ? WIN_LAYER_BELOW
+				   : WIN_LAYER_DOCK);
 }
 
 
@@ -537,16 +540,24 @@ queue_panel_resizes (GtkWidget *w, gpointer data)
 	g_list_foreach (panel_list, queue_panel_resize, data);
 }
 
+static void
+foobar_destroyed(GtkWidget *w, gpointer data)
+{
+	das_global_foobar = NULL;
+	g_list_foreach (panel_list, queue_panel_resize, data);
+}
+
 GtkWidget *
 foobar_widget_new (void)
 {
 	g_return_val_if_fail (das_global_foobar == NULL, NULL);
 	das_global_foobar =  gtk_type_new (FOOBAR_WIDGET_TYPE);
-	gtk_signal_connect_after (GTK_OBJECT (das_global_foobar), "size-allocate",
+	gtk_signal_connect_after (GTK_OBJECT (das_global_foobar),
+				  "size-allocate",
 				  GTK_SIGNAL_FUNC (queue_panel_resizes), NULL);
 	gtk_signal_connect (GTK_OBJECT (das_global_foobar), "destroy",
-			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
-			    &das_global_foobar);
+			    GTK_SIGNAL_FUNC (foobar_destroyed),
+			    NULL);
 	return das_global_foobar;
 }
 
