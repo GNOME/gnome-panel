@@ -13,7 +13,7 @@ INCLUDES = -I. -I$(srcdir) \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
-bin_PROGRAMS = panel
+bin_PROGRAMS = panel bad-applet
 
 libpanel_appletincludedir = $(includedir)
 
@@ -50,6 +50,20 @@ libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
+
+bad_applet_SOURCES=bad-applet.c
+
+bad_applet_LDADD=libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+
+EXTRA_DIST = \
+	bad-applet.desktop \
+	bad-applet.goad
+
+sysdir=$(datadir)/applets/Utility
+sys_DATA=bad-applet.desktop
+
+gnorbadir=$(sysconfdir)/CORBA/servers
+gnorba_DATA=bad-applet.goad
 
 base_panel_SOURCES=\
 	panel-include.h		\
