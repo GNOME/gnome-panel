@@ -71,6 +71,7 @@ FileRec * fr_get_dir(const char *mdir);
 gboolean fr_is_subdir (const char *dir, const char *superdir, int superdir_len);
 char * fr_get_mergedir (const char *dir);
 void fr_force_reread(void);
+GSList* fr_get_all_dirs (void);
 
 void init_fr_chunks (void);
 

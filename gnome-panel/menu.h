@@ -125,6 +125,7 @@ void		our_gtk_menu_position	(GtkMenu *menu);
  * scroll-menu, since people copy it around */
 GtkWidget *	hack_scroll_menu_new	(void);
 
+void panel_add_favorite         (const char *source_dentry);
 
 #define MENU_PATH "menu_path"
 

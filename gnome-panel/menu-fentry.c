@@ -797,6 +797,13 @@ fr_get_dir (const char *mdir)
 	return fr_read_dir (NULL, mdir, NULL, NULL, 1);
 }
 
+/* Get all directories we have in memory */
+GSList*
+fr_get_all_dirs (void)
+{
+  return dir_list;
+}
+
 void
 fr_force_reread (void)
 {

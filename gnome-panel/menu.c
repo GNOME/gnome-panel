@@ -364,6 +364,12 @@ add_app_to_personal (GtkWidget *widget, const char *item_loc)
 	g_free (to);
 }
 
+void
+panel_add_favorite (const char *source_dentry)
+{
+  add_app_to_personal (NULL, source_dentry);
+}
+
 static PanelWidget *
 get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 {
