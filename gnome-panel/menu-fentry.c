@@ -86,7 +86,7 @@ static GSList *
 get_presorted_from(GSList *list, const char *dir, gboolean merged)
 {
 	char buf[PATH_MAX+1];
-	char *fname = g_concat_dir_and_file(dir, ".order");
+	char *fname = g_build_filename (dir, ".order", NULL);
 	FILE *fp = fopen(fname, "r");
 	
 	if(!fp) {
@@ -367,7 +367,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 	ffr = g_chunk_new0 (FileRec, file_chunk);
 	ffr->type = FILE_REC_EXTRA;
-	ffr->name = g_concat_dir_and_file (fr->name, ".order");
+	ffr->name = g_build_filename (fr->name, ".order", NULL);
 	ffr->parent = dr;
 	if (stat (ffr->name, &s) != -1)
 		ffr->mtime = s.st_mtime;
@@ -386,9 +386,9 @@ fr_fill_dir(FileRec *fr, int sublevels)
 		g_slist_free_1(tmp);
 
 		if ( ! mfile->merged) {
-			name = g_concat_dir_and_file (fr->name, mfile->name);
+			name = g_build_filename (fr->name, mfile->name, NULL);
 		} else if (mergedir != NULL) {
-			name = g_concat_dir_and_file (mergedir, mfile->name);
+			name = g_build_filename (mergedir, mfile->name, NULL);
 		} else {
 			free_mfile (mfile);
 			continue;
@@ -530,7 +530,7 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 	fr->name = g_strdup (mdir);
 
 	s.st_mtime = 0;
-	fname = g_concat_dir_and_file (mdir, ".directory");
+	fname = g_build_filename (mdir, ".directory", NULL);
 	if (dr->ditemlast_stat >= curtime-STAT_EVERY ||
 	    stat (fname, &s) != -1) {
 		GnomeDesktopItem *ditem;
@@ -671,8 +671,9 @@ fr_check_and_reread (FileRec *fr)
 			switch(ffr->type) {
 			case FILE_REC_DIR:
 				ddr = (DirRec *)ffr;
-				p = g_concat_dir_and_file(ffr->name,
-							  ".directory");
+				p = g_build_filename (ffr->name,
+						      ".directory",
+						      NULL);
 				if (ddr->ditemlast_stat >= curtime-STAT_EVERY) {
 					g_free (p);
 					break;

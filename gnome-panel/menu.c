@@ -25,6 +25,9 @@
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
 
+#include <gnome-desktop-item.h>
+#include <gnome-ditem-edit.h>
+
 #include "panel-include.h"
 #include "panel-widget.h"
 #include "tearoffitem.h"
@@ -199,9 +202,9 @@ check_for_screen (GtkWidget *w, GdkEvent *ev, gpointer data)
 static void
 about_cb (GtkWidget *widget, gpointer data)
 {
-#ifdef FIXME
 	static GtkWidget *about;
 	GtkWidget *hbox, *l;
+	/* FIXME: fill in all the wankers who did stuff */
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
 	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
@@ -215,6 +218,11 @@ about_cb (GtkWidget *widget, gpointer data)
 	/* ... from the Monty Pythons show...  */
 	N_("and finally, The Knights Who Say ... NI!"),
 	  NULL
+	  };
+	char *documenters[] = {
+		/* FIXME: */
+		"Joe Documentor",
+		NULL
 	  };
 
 	if (about) {
@@ -235,11 +243,13 @@ about_cb (GtkWidget *widget, gpointer data)
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
 			_("(C) 1997-2000 the Free Software Foundation"),
-			(const gchar **)authors,
 			_("This program is responsible for launching "
 			"other applications, embedding small applets "
 			"within itself, world peace, and random X crashes."),
-			"gnome-gegl2.png");
+			(const char **)authors,
+			(const char **)documenters,
+			"foo" /* FIXME: ??? translator_credits */,
+			NULL /* FIXME: logo "gnome-gegl2.png" */);
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	gtk_signal_connect (GTK_OBJECT (about), "destroy",
 			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
@@ -251,7 +261,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	l = gnome_href_new ("http://www.wfp.org/",
 			    _("End world hunger"));
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (about)->vbox),
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
 			    hbox, TRUE, FALSE, 0);
 	gtk_widget_show_all (hbox);
 
@@ -261,12 +271,11 @@ about_cb (GtkWidget *widget, gpointer data)
 				     "prohibited any changes to the panel's "
 				     "configuration to take place."));
 		gtk_widget_show (l);
-		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (about)->vbox),
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
 				    l, FALSE, FALSE, 0);
 	}
 
 	gtk_widget_show (about);
-#endif
 }
 
 static void
@@ -308,12 +317,16 @@ copy_file_to_dir (const char *item, const char *to, mode_t mode)
 	int chars;
 	char buf[1024];
 	char *toname;
+	char *base;
 
 	fdin = open (item, O_RDONLY);
 	if (fdin < 0)
 		return;
 
-	toname = g_concat_dir_and_file (to, g_basename (item));
+	base = g_path_get_basename (item);
+	toname = g_build_filename (to, base, NULL);
+	g_free (base);
+
 	fdout = open (toname, O_WRONLY | O_CREAT, mode);
 	g_free (toname);
 	if (fdout < 0) {
@@ -340,36 +353,44 @@ copy_fr_dir (DirRec *dr, const char *to)
 	g_return_if_fail (dr != NULL);
 	g_return_if_fail (to != NULL);
 
-	file_name = g_concat_dir_and_file (dr->frec.name, ".directory");
+	file_name = g_build_filename (dr->frec.name, ".directory", NULL);
 	copy_file_to_dir (file_name, to, 0600);
 	g_free (file_name);
 
-	file_name = g_concat_dir_and_file (to, ".order");
+	file_name = g_build_filename (to, ".order", NULL);
 	order_file = fopen (file_name, "a");
 	g_free (file_name);
 
 	for (li = dr->recs; li != NULL; li = li->next) {
 		FileRec *fr = li->data;
+		char *base;
 		
 		if (fr->type == FILE_REC_FILE) {
 			copy_file_to_dir (fr->name, to, 0600);
 		} else if (fr->type == FILE_REC_DIR) {
-			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
+			char *base = g_path_get_basename (fr->name);
+			char *newdir = g_build_filename (to, base, NULL);
+			g_free (base);
 			if (g_file_test (newdir, G_FILE_TEST_IS_DIR) ||
 			    mkdir (newdir, 0700) == 0)
 				copy_fr_dir ((DirRec *)fr, newdir);
 			g_free (newdir);
 		} else if (fr->type == FILE_REC_EXTRA) {
-			if (strcmp (g_basename (fr->name),
-				    ".order") != 0)
+			base = g_path_get_basename (fr->name);
+			if (base != NULL &&
+			    strcmp (base, ".order") != 0)
 				copy_file_to_dir (fr->name, to, 0600);
+			g_free (base);
 		} else {
 			continue;
 		}
 
+		base = g_path_get_basename (fr->name);
+
 		if (order_file != NULL &&
-		    g_basename (fr->name) != NULL)
-			fprintf (order_file, "%s\n", g_basename (fr->name));
+		    base != NULL)
+			fprintf (order_file, "%s\n", base);
+		g_free (base);
 	}
 
 	if (order_file != NULL)
@@ -386,7 +407,9 @@ add_app_to_personal (GtkWidget *widget, const char *item_loc)
 	if (g_file_test (item_loc, G_FILE_TEST_IS_DIR)) {
 		FileRec *fr = fr_get_dir (item_loc);
 		if (fr != NULL) {
-			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
+			char *base = g_path_get_basename (fr->name);
+			char *newdir = g_build_filename (to, base, NULL);
+			g_free (base);
 			if (g_file_test (newdir, G_FILE_TEST_IS_DIR) ||
 			    mkdir (newdir, 0700) == 0)
 				copy_fr_dir ((DirRec *)fr, newdir);
@@ -777,11 +800,12 @@ validate_for_filename(char *file)
 static void
 really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 {
-#ifdef FIXME
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
 	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d), "dir");
-	GnomeDesktopEntry *dentry;
+	GnomeDesktopItem *ditem;
 	FILE *fp;
+	int i;
+	char *name, *loc;
 
 	if (button != 0) {
 		gtk_widget_destroy (d);
@@ -790,8 +814,9 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 
 	g_return_if_fail (dir != NULL);
 
-	dentry = gnome_dentry_get_dentry (dedit);
+	ditem = gnome_ditem_edit_get_ditem (dedit);
 
+#if 0
 	if(dentry->exec == NULL ||
 	   dentry->exec_length <= 0) {
 		gnome_desktop_entry_free (dentry);
@@ -799,76 +824,68 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 				      "command"));
 		return;
 	}
-
-	if(string_empty (dentry->name)) {
-		g_free (dentry->name);
-		dentry->name = g_strdup (_("untitled"));
-	}
+#endif
 
 	/* assume we are making a new file */
-	if (dentry->location == NULL) {
-		int i = 2;
-		char *name = g_strdup (dentry->name);
+	name = g_strdup (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_NAME));
 
-		if (string_empty (name)) {
-			g_free (name);
-			name = g_strdup ("huh-no-name");
-		}
+	validate_for_filename (name);
 
-		validate_for_filename (name);
+	loc = g_strdup_printf ("%s/%s.desktop", dir, name);
 
-		dentry->location = g_strdup_printf ("%s/%s.desktop",
-						    dir, name);
-
-		while (g_file_test (dentry->location, G_FILE_TEST_EXISTS)) {
-			g_free (dentry->location);
-			dentry->location = g_strdup_printf ("%s/%s%d.desktop",
-							    dir, name,
-							    i ++);
-		}
-		g_free (name);
+	i = 2;
+	while (g_file_test (loc, G_FILE_TEST_EXISTS)) {
+		g_free (loc);
+		loc = g_strdup_printf ("%s/%s%d.desktop",
+				       dir, name,
+				       i ++);
 	}
+	gnome_desktop_item_set_location (ditem, loc);
+	g_free (name);
 
-	g_assert (dentry->location != NULL);
-
-	file = g_concat_dir_and_file (dir, ".order");
+	file = g_build_filename (dir, ".order", NULL);
 	fp = fopen (file, "a");
 	if (fp != NULL) {
-		char *file2 = g_basename (dentry->location);
+		char *file2 = g_path_get_basename (loc);
 		if (file2 != NULL)
 			fprintf(fp, "%s\n", file2);
 		else
-			g_warning (_("Could not get file from path: %s"), 
-				   dentry->location);
+			g_warning (_("Could not get file from path: %s"), loc);
 		fclose (fp);
+		g_free (file2);
 	} else {
 		g_warning (_("Could not open .order file: %s"), file);
 	}
 	g_free (file);
 
-	/* open for append, which will not harm any file and we will see if
-	 * we have write privilages */
-	fp = fopen (dentry->location, "a");
+	/* HACK: open for append, which will not harm any file and we
+	 * will see if we have write privilages */
+	fp = fopen (loc, "a");
 	if(fp == NULL) {
-		panel_error_dialog (_("Could not open file '%s' for writing"),
-				    dentry->location);
+		panel_error_dialog ("cant_open_for_writing",
+				    _("Could not open file '%s' for writing"),
+				    loc);
+		g_free (loc);
 		return;
 	}
-	fclose(fp);
+	fclose (fp);
 
-	gnome_desktop_entry_save(dentry);
-	gnome_desktop_entry_free(dentry);
+	gnome_desktop_item_save (ditem,
+				 NULL /* under */,
+				 TRUE /* force */,
+				 NULL /* FIXME: error */);
+	/* FIXME: handle errors, better then the above hack */
+	gnome_desktop_item_unref (ditem);
 
-	gtk_widget_destroy(d);
-#endif
+	gtk_widget_destroy (d);
+	g_free (loc);
 }
 
 static void
 add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 {
-#ifdef FIXME
-	GtkWidget *dialog, *notebook;
-	GnomeDEntryEdit *dee;
+	GtkWidget *dialog;
+	GtkWidget *dee;
 	GList *types;
 
 	dialog = gnome_dialog_new (_("Create menu item"),
@@ -879,35 +896,11 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 			       "create_menu_item", "Panel");
 	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, TRUE);
 	
-	notebook = gtk_notebook_new ();
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox), notebook,
+	dee = gnome_ditem_edit_new ();
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox), dee,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
-	dee = GNOME_DENTRY_EDIT (gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook)));
-	hack_dentry_edit (dee);
 
-	types = NULL;
-	types = g_list_append(types, "Application");
-	types = g_list_append(types, "URL");
-	types = g_list_append(types, "PanelApplet");
-	gtk_combo_set_popdown_strings (GTK_COMBO (dee->type_combo), types);
-	g_list_free(types);
-	types = NULL;
-
-#define SETUP_EDITABLE(entry_name)					\
-	gnome_dialog_editable_enters					\
-		(GNOME_DIALOG (dialog),					\
-		 GTK_EDITABLE (gnome_dentry_get_##entry_name##_entry (dee)));
-
-	SETUP_EDITABLE (name);
-	SETUP_EDITABLE (comment);
-	SETUP_EDITABLE (exec);
-	SETUP_EDITABLE (tryexec);
-	SETUP_EDITABLE (doc);
-
-#undef SETUP_EDITABLE
-	
-	gtk_entry_set_text (GTK_ENTRY (GTK_COMBO (dee->type_combo)->entry),
-			    "Application");
+	/* FIXME: set type to Application by default */
 
 	gtk_object_set_data_full (GTK_OBJECT (dialog), "dir",
 				  g_strdup (item_loc),
@@ -917,14 +910,6 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 			    GTK_SIGNAL_FUNC (really_add_new_menu_item),
 			    dee);
 
-	/* YAIKES, the problem here is that the notebook will attempt
-	 * to destroy the dedit, so if we unref it in the close handler,
-	 * it will be finalized by the time the notebook will destroy it,
-	 * dedit is just a horrible thing */
-	gtk_signal_connect (GTK_OBJECT (dee), "destroy",
-			    GTK_SIGNAL_FUNC (gtk_object_unref),
-			    NULL);
-
 	gnome_dialog_close_hides (GNOME_DIALOG(dialog), FALSE);
 
 	gnome_dialog_set_default (GNOME_DIALOG(dialog), 0);
@@ -932,14 +917,13 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);
 
-	gtk_widget_grab_focus (gnome_dentry_get_name_entry (dee));
-#endif
+	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dee));
 }
 
 static void
 remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 {
-	const char *file;
+	char *file;
 	char *dir, buf[256], *order_in_name, *order_out_name;
 	FILE *order_in_file, *order_out_file;
 
@@ -949,12 +933,13 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	gtk_widget_hide (sim->menuitem);
 
 	if (unlink (sim->item_loc) < 0) {
-		panel_error_dialog(_("Could not remove the menu item %s: %s\n"), 
+		panel_error_dialog("cant_remove_menu_item",
+				   _("Could not remove the menu item %s: %s\n"), 
 				    sim->item_loc, g_strerror(errno));
 		return;
 	}
 
-	file = g_basename (sim->item_loc);
+	file = g_path_get_basename (sim->item_loc);
 	if (file == NULL) {
 		g_warning (_("Could not get file name from path: %s"),
 			  sim->item_loc);
@@ -965,31 +950,35 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	if (dir == NULL) {
 		g_warning (_("Could not get directory name from path: %s"),
 			  sim->item_loc);
+		g_free (file);
 		return;
 	}
 	
-	order_in_name = g_concat_dir_and_file(dir, ".order");
+	order_in_name = g_build_filename (dir, ".order", NULL);
 	order_in_file = fopen(order_in_name, "r");
 
 	if (order_in_file == NULL) {
 		/*no .order file so we can just leave*/
 		g_free (order_in_name);
+		g_free (file);
 		g_free (dir);
 		return;
 	}
 
-	order_out_name = g_concat_dir_and_file(dir, ".order.tmp");
+	order_out_name = g_build_filename (dir, ".order.tmp", NULL);
 	order_out_file = fopen(order_out_name, "w");
 
 	g_free (dir);
 
 	if (order_out_file == NULL) {
-		panel_error_dialog(_("Could not open .order file: %s\n%s"),
+		panel_error_dialog("cannot_open_order_file",
+				   _("Could not open .order file: %s\n%s"),
 				   order_out_name,
 				   g_unix_error_string(errno));
 
 		g_free (order_in_name);
 		g_free (order_out_name);
+		g_free (file);
 		fclose (order_in_file);
 		return;
 	}
@@ -1004,67 +993,78 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	fclose (order_in_file);
 
 	if (unlink (order_in_name) < 0) {
-		panel_error_dialog(_("Could not remove old order file %s: %s\n"), 
-				    order_in_name, g_strerror(errno));
+		panel_error_dialog("cannot_remove_old_order_file",
+				   _("Could not remove old order file %s: %s\n"), 
+				    order_in_name, g_strerror (errno));
 		g_free (order_out_name);
 		g_free (order_in_name);
+		g_free (file);
 		return;
 	}
 
 	if (rename (order_out_name, order_in_name) == -1) {
-		panel_error_dialog(_("Could not rename tmp file: %s to %s\n%s"),
+		panel_error_dialog("cannot_rename_tmp_file",
+				   _("Could not rename tmp file: %s to %s\n%s"),
 				   order_out_name, order_in_name,
 				   g_unix_error_string(errno));
 	}
 
 	g_free (order_out_name);
 	g_free (order_in_name);
+	g_free (file);
 }
 
 static void
 add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 {
-#ifdef FIXME
-	GnomeDesktopEntry *item =
-		gnome_desktop_entry_load_unconditional (item_loc);
+	GnomeDesktopItem *item =
+		gnome_desktop_item_new_from_file (item_loc,
+						  0 /* flags */,
+						  NULL /* error */);
 	if (item != NULL) {
-		if (item->exec != NULL &&
-		    item->exec[0] != NULL) {
-			char *s;
-			char **cmd = item->exec;
-			if (strcmp (cmd[0], "NO_XALF") == 0) {
-				cmd++;
-			}
-			s = g_strjoinv (" ", cmd);
-			show_run_dialog_with_text (s);
-			g_free (s);
+		const char *exec;
+
+		exec = gnome_desktop_item_get_string
+			(item, GNOME_DESKTOP_ITEM_EXEC);
+		if (exec == NULL)
+			exec = gnome_desktop_item_get_string
+				(item, GNOME_DESKTOP_ITEM_URL);
+
+		if (exec != NULL) {
+			show_run_dialog_with_text (exec);
 		} else {
-			panel_error_dialog (_("No 'Exec' field in entry"));
+			panel_error_dialog ("no_exec_or_url_field",
+					    _("No 'Exec' or 'URL' field in entry"));
 		}
-		gnome_desktop_entry_free (item);
+		gnome_desktop_item_unref (item);
 	} else {
-		panel_error_dialog (_("Can't load entry"));
+		panel_error_dialog ("cant_load_entry",
+				    _("Can't load entry"));
 	}
-#endif
 }
 
 static void
 show_help_on (GtkWidget *widget, const char *item_loc)
 {
-#ifdef FIXME
-	GnomeDesktopEntry *item =
-		gnome_desktop_entry_load_unconditional (item_loc);
+	GnomeDesktopItem *item =
+		gnome_desktop_item_new_from_file (item_loc,
+						  0 /* flags */,
+						  NULL /* error */);
 	if (item != NULL) {
-		char *path = panel_gnome_kde_help_path (item->docpath);
+		const char *docpath = gnome_desktop_item_get_string
+			(item, "DocPath");
+		char *path = panel_gnome_kde_help_path (docpath);
 		if (path != NULL) {
-			gnome_url_show (path);
+			gnome_url_show (path, NULL);
+			/* FIXME: handle errors, this should prolly
+			 * use gnome_help as well */
 			g_free (path);
 		}
-		gnome_desktop_entry_free (item);
+		gnome_desktop_item_unref (item);
 	} else {
-		panel_error_dialog (_("Can't load entry"));
+		panel_error_dialog ("cant_load_entry",
+				    _("Can't load entry"));
 	}
-#endif
 }
 
 static void
@@ -1100,8 +1100,9 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	if ( ! g_file_test (dirname, G_FILE_TEST_IS_DIR))
 		return;
 
-	dentry_name = g_concat_dir_and_file (dirname,
-					     ".directory");
+	dentry_name = g_build_filename (dirname,
+					".directory",
+					NULL);
 	item_info = gnome_desktop_entry_load (dentry_name);
 	g_free (dentry_name);
 
@@ -1138,9 +1139,9 @@ add_drawers_from_dir (const char *dirname, const char *name,
 
 		g_free (filename);
 		if ( ! mfile->merged) {
-			filename = g_concat_dir_and_file(dirname, mfile->name);
+			filename = g_build_filename (dirname, mfile->name, NULL);
 		} else if (mergedir != NULL) {
-			filename = g_concat_dir_and_file(mergedir, mfile->name);
+			filename = g_build_filename (mergedir, mfile->name, NULL);
 		} else {
 			filename = NULL;
 			continue;
@@ -1268,37 +1269,39 @@ restore_grabs(GtkWidget *w, gpointer data)
 static void
 ditem_properties_clicked (GtkWidget *w, int button, gpointer data)
 {
-#ifdef FIXME
-	GnomeDEntryEdit *dee = gtk_object_get_user_data (GTK_OBJECT (w));
-	GnomeDesktopEntry *dentry = data;
+	GnomeDItemEdit *dee = gtk_object_get_user_data (GTK_OBJECT (w));
+	GnomeDesktopItem *ditem = data;
 
 	if (button == HELP_BUTTON) {
-		panel_show_help ("launchers.html");
+		panel_show_help ("launchers", NULL);
 	} else if (button == REVERT_BUTTON) {
-		if (dentry != NULL)
-			gnome_dentry_edit_set_dentry (dee, dentry);
+		if (ditem != NULL)
+			gnome_ditem_edit_set_ditem (dee, ditem);
 		else
-			gnome_dentry_edit_clear (dee);
+			gnome_ditem_edit_clear (dee);
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
-#endif
 }
 
 static gboolean
 ditem_properties_apply_timeout (gpointer data)
 {
-#ifdef FIXME
-	GtkObject *dedit = data;
-	GnomeDesktopEntry *dentry;
+	GtkWidget *dedit = data;
+	GnomeDesktopItem *ditem;
+	const char *loc;
 
-	gtk_object_remove_data (dedit, "apply_timeout");
+	gtk_object_remove_data (GTK_OBJECT (dedit), "apply_timeout");
 
-	dentry = gnome_dentry_get_dentry (GNOME_DENTRY_EDIT (dedit));
-	dentry->location = g_strdup (gtk_object_get_data (dedit, "location"));
-	gnome_desktop_entry_save (dentry);
-	gnome_desktop_entry_free (dentry);
-#endif
+	ditem = gnome_ditem_edit_get_ditem (GNOME_DITEM_EDIT (dedit));
+	loc = gtk_object_get_data (GTK_OBJECT (dedit), "location");
+	gnome_desktop_item_save (ditem,
+				 loc /* under */,
+				 TRUE /* force */,
+				 NULL /* error */);
+	/* FIXME: handle errors */
+	gnome_desktop_item_unref (ditem);
+
 	return FALSE;
 }
 
@@ -1308,12 +1311,13 @@ ditem_properties_apply_timeout (gpointer data)
  * then just saving every N seconds.
  */
 static void
-ditem_properties_changed (GtkObject *dedit, gpointer data)
+ditem_properties_changed (GtkWidget *dedit, gpointer data)
 {
-	gpointer timeout_data = gtk_object_get_data (dedit, "apply_timeout");
+	gpointer timeout_data = gtk_object_get_data (GTK_OBJECT (dedit),
+						     "apply_timeout");
 	guint timeout = GPOINTER_TO_UINT (timeout_data);
 
-	gtk_object_remove_data (dedit, "apply_timeout");
+	gtk_object_remove_data (GTK_OBJECT (dedit), "apply_timeout");
 
 	if (timeout != 0)
 		gtk_timeout_remove (timeout);
@@ -1323,7 +1327,7 @@ ditem_properties_changed (GtkObject *dedit, gpointer data)
 				   ditem_properties_apply_timeout,
 				   dedit);
 
-	gtk_object_set_data (dedit, "apply_timeout",
+	gtk_object_set_data (GTK_OBJECT (dedit), "apply_timeout",
 			     GUINT_TO_POINTER (timeout));
 }
 
@@ -1331,11 +1335,12 @@ ditem_properties_changed (GtkObject *dedit, gpointer data)
 static void
 ditem_properties_close (GtkWidget *widget, gpointer data)
 {
-	GtkObject *dedit = data;
-	gpointer timeout_data = gtk_object_get_data (dedit, "apply_timeout");
+	GtkWidget *dedit = data;
+	gpointer timeout_data = gtk_object_get_data (GTK_OBJECT (dedit),
+						     "apply_timeout");
 	guint timeout = GPOINTER_TO_UINT (timeout_data);
 
-	gtk_object_remove_data (dedit, "apply_timeout");
+	gtk_object_remove_data (GTK_OBJECT (dedit), "apply_timeout");
 
 	if (timeout != 0) {
 		gtk_timeout_remove (timeout);
@@ -1374,44 +1379,34 @@ is_item_writable (const ShowItemMenu *sim)
 	return FALSE;
 }
 
-#ifdef FIXME
 static void
 set_ditem_sensitive (GnomeDialog *dialog,
-		     GnomeDEntryEdit *dedit,
+		     GnomeDItemEdit *dedit,
 		     ShowItemMenu *sim)
 {
 	gboolean sensitive;
 
 	sensitive = is_item_writable (sim);
 
-	gtk_widget_set_sensitive (gnome_dentry_edit_child1 (dedit),
-				  sensitive);
-	gtk_widget_set_sensitive (gnome_dentry_edit_child2 (dedit),
-				  sensitive);
+	gnome_ditem_edit_set_editable (dedit, sensitive);
 
 	gnome_dialog_set_sensitive (dialog, REVERT_BUTTON, sensitive);
 }
-#endif
 
 static void
 edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 {
-#ifdef FIXME
-	GtkWidget *dialog, *notebook;
-	GtkObject *dedit;
-	GnomeDesktopEntry *dentry;
+	GtkWidget *dialog;
+	GtkWidget *dedit;
+	GnomeDesktopItem *ditem;
 	GList *types = NULL;
 	
 	g_return_if_fail (sim != NULL);
 	g_return_if_fail (sim->item_loc != NULL);
 
-	dentry = gnome_desktop_entry_load_unconditional (sim->item_loc);
-	/* We'll screw up a KDE menu entry if we edit it */
-	if (dentry != NULL &&
-	    dentry->is_kde) {
-		gnome_desktop_entry_free (dentry);
-		return;
-	}
+	ditem = gnome_desktop_item_new_from_file (sim->item_loc,
+						  0 /* flags */,
+						  NULL /* error */);
 
 	/* watch the enum at the top of the file */
 	dialog = gnome_dialog_new (_("Desktop entry properties"),
@@ -1422,52 +1417,25 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 	gnome_dialog_set_close (GNOME_DIALOG (dialog),
 				FALSE /* click_closes */);
 
-	notebook = gtk_notebook_new ();
-	gtk_widget_show (notebook);
+	dedit = gnome_ditem_edit_new ();
+
+	gtk_widget_show (dedit);
 	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
-			    notebook, TRUE, TRUE, 0);
+			    dedit, TRUE, TRUE, 0);
 
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "desktop_entry_properties","Panel");
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
-	dedit = gnome_dentry_edit_new_notebook (GTK_NOTEBOOK (notebook));
-	hack_dentry_edit (GNOME_DENTRY_EDIT (dedit));
-
-	types = NULL;
-	types = g_list_append (types, "Application");
-	types = g_list_append (types, "URL");
-	types = g_list_append (types, "PanelApplet");
-	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(dedit)->type_combo), types);
-	g_list_free(types);
-	types = NULL;
-
-	/* This sucks, but there is no other way to do this with the current
-	   GnomeDEntry API.  */
-
-#define SETUP_EDITABLE(entry_name)					\
-	gnome_dialog_editable_enters					\
-		(GNOME_DIALOG (dialog),					\
-		 GTK_EDITABLE (gnome_dentry_get_##entry_name##_entry  	\
-			       (GNOME_DENTRY_EDIT (dedit))));
-
-	SETUP_EDITABLE (name);
-	SETUP_EDITABLE (comment);
-	SETUP_EDITABLE (exec);
-	SETUP_EDITABLE (tryexec);
-	SETUP_EDITABLE (doc);
-
-#undef SETUP_EDITABLE
-
-	gtk_object_set_data_full (dedit, "location",
+	gtk_object_set_data_full (GTK_OBJECT (dedit), "location",
 				  g_strdup (sim->item_loc),
 				  (GtkDestroyNotify)g_free);
 
-	if (dentry != NULL)
-		gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (dedit), dentry);
+	if (ditem != NULL)
+		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (dedit), ditem);
 
 	set_ditem_sensitive (GNOME_DIALOG (dialog),
-			     GNOME_DENTRY_EDIT (dedit), sim);
+			     GNOME_DITEM_EDIT (dedit), sim);
 
 	gtk_signal_connect (GTK_OBJECT (dedit), "changed",
 			    GTK_SIGNAL_FUNC (ditem_properties_changed),
@@ -1477,23 +1445,15 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 			    GTK_SIGNAL_FUNC (ditem_properties_close),
 			    dedit);
 
-	/* YAIKES, the problem here is that the notebook will attempt
-	 * to destroy the dedit, so if we unref it in the close handler,
-	 * it will be finalized by the time the notebook will destroy it,
-	 * dedit is just a horrible thing */
-	gtk_signal_connect (GTK_OBJECT (dedit), "destroy",
-			    GTK_SIGNAL_FUNC (gtk_object_unref),
-			    NULL);
-
 	gtk_object_set_user_data (GTK_OBJECT (dialog), dedit);
 
-	if (dentry != NULL) {
-		/* pass the dentry as the data to clicked */
+	if (ditem != NULL) {
+		/* pass the ditem as the data to clicked */
 		gtk_signal_connect_full (GTK_OBJECT (dialog), "clicked",
 					 GTK_SIGNAL_FUNC (ditem_properties_clicked),
 					 NULL,
-					 dentry,
-					 (GtkDestroyNotify) gnome_desktop_entry_free,
+					 ditem,
+					 (GtkDestroyNotify) gnome_desktop_item_unref,
 					 FALSE, FALSE);
 	} else {
 		gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
@@ -1503,9 +1463,7 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 
 	gtk_widget_show (dialog);
 
-	gtk_widget_grab_focus
-		(gnome_dentry_get_name_entry (GNOME_DENTRY_EDIT (dedit)));
-#endif
+	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dedit));
 }
 
 static void
@@ -1513,8 +1471,8 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 {
 #ifdef FIXME
 	GtkWidget *dialog, *notebook;
-	GtkObject *dedit;
-	char *dirfile = g_concat_dir_and_file (sim->mf->menudir, ".directory");
+	GtkWidget *dedit;
+	char *dirfile = g_build_filename (sim->mf->menudir, ".directory", NULL);
 	GnomeDesktopEntry *dentry;
 	GList *types = NULL;
 
@@ -2267,9 +2225,7 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 static void
 add_run_to_panel (GtkWidget *widget, gpointer data)
 {
-#ifdef FIXME
 	load_run_applet (get_panel_from_menu_data(widget, TRUE), 0, FALSE);
-#endif
 }
 
 static void
@@ -2300,7 +2256,8 @@ add_applet (GtkWidget *w, const char *item_loc)
 
 	ii = gnome_desktop_entry_load(item_loc);
 	if (ii == NULL) {
-		panel_error_dialog (_("Can't load entry"));
+		panel_error_dialog ("cannot_load_entry",
+				    _("Can't load entry"));
 		return;
 	}
 
@@ -2308,7 +2265,8 @@ add_applet (GtkWidget *w, const char *item_loc)
 	gnome_desktop_entry_free(ii);
 	
 	if(!goad_id) {
-		panel_error_dialog(_("Can't get goad_id from desktop entry!"));
+		panel_error_dialog("cannot_get_goad_id_from_entry",
+				   _("Can't get goad_id from desktop entry!"));
 		return;
 	}
 	load_extern_applet(goad_id, NULL,
@@ -3003,7 +2961,7 @@ create_menuitem (GtkWidget *menu,
 		itemname = g_strdup(fr->fullname);
 	} else {
 		char *p;
-		itemname = g_strdup(g_basename(fr->name));
+		itemname = g_path_get_basename (fr->name);
 		p = strrchr(itemname, '.');
 		if(p) *p = '\0';
 	}
@@ -3840,7 +3798,7 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 {
 	char *pixmap_name;
 
-	pixmap_name = g_concat_dir_and_file (kde_icondir, "exec.xpm");
+	pixmap_name = g_build_filename (kde_icondir, "exec.xpm", NULL);
 
 	if(!fake || menu) {
 		menu = create_menu_at (menu, 
@@ -3964,7 +3922,6 @@ remove_panel_query (GtkWidget *w, gpointer data)
 		return;
 	}
 
-#ifdef FIXME
 	dialog = gnome_message_box_new (_("When a panel is removed, the panel "
 					  "and its\napplet settings are lost. "
 					  "Remove this panel?"),
@@ -3981,7 +3938,6 @@ remove_panel_query (GtkWidget *w, gpointer data)
 					       GTK_OBJECT(dialog));
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);
-#endif
 }
 
 static void
@@ -5072,7 +5028,7 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 static void
 show_panel_help (GtkWidget *w, gpointer data)
 {
-	panel_show_help ("index.html");
+	panel_show_help ("index", NULL);
 }
 
 static void
@@ -5335,9 +5291,7 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 static void
 run_cb (GtkWidget *w, gpointer data)
 {
-#ifdef FIXME
 	show_run_dialog ();
-#endif
 }
 
 static GtkWidget *
@@ -5444,7 +5398,7 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 
 	menu = create_kde_menu (NULL, fake_submenus, TRUE, TRUE,
 				TRUE, launcher_add, favourites_add);
-	pixmap_path = g_concat_dir_and_file (kde_icondir, "exec.xpm");
+	pixmap_path = g_build_filename (kde_icondir, "exec.xpm", NULL);
 
 	if (g_file_test (pixmap_path, G_FILE_TEST_EXISTS)) {
 		pixmap = fake_pixmap_at_size (pixmap_path, size);
@@ -6275,6 +6229,10 @@ load_tornoff(void)
 	}
 }
 
+#ifdef FIXME
+/* FIXME: maybe should be removed, but I want to investigate the
+ * possibility of multiscreen xinerama correctness for gtk menus
+ * as well */
 static void
 menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 {
@@ -6335,23 +6293,4 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 		gtk_widget_set_uposition (menutop, x, y);
 	}
 }
-
-
-/* Why the hell do we have a "hack", when we have scroll-menu in
- * our own codebase?  Well cuz I don't want to require panel code in
- * scroll-menu, since people copy it around */
-GtkWidget *
-hack_scroll_menu_new (void)
-{
-#ifdef FIXME
-	GtkWidget *menu = scroll_menu_new ();
-
-	gtk_signal_connect_after (GTK_OBJECT (menu), "size_allocate",
-				  GTK_SIGNAL_FUNC (menu_allocated),
-				  NULL);
-
-	return menu;
-#else
-	return NULL;
 #endif
-}

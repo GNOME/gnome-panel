@@ -1,3 +1,15 @@
+Thu Sep 27 01:03:48 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: port more things to ditem
+
+	* main.c: fix segfault, change the warning dialog so that people
+	  don't have to set evil env variables
+
+	* *.c: fix includes, replace g_concat_dir_and_file with
+	  g_build_filename, and g_basename with g_path_get_basename,
+	  uncomment a couple more things that now compile.  Whack the
+	  references to the hacks.  Use new help API for the help stuff.
+
 2001-09-26  Christian Rose  <menthos@menthos.com>
 
 	* panel.hints: Fix reported "medans" typo.

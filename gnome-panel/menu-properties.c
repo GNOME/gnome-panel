@@ -18,6 +18,8 @@
 #include <limits.h>
 #include <errno.h>
 
+#include <libgnomeui/libgnomeui.h>
+
 #include "panel-include.h"
 
 /*#define PANEL_DEBUG 1*/
@@ -69,8 +71,8 @@ get_real_menu_path(const char *arguments)
 	else if (*arguments == '/')
 		this_menu = g_strdup (arguments);
 	else if (*arguments == '~')
-		this_menu = g_concat_dir_and_file (g_get_home_dir(),
-						   &arguments[1]);
+		this_menu = g_build_filename (g_get_home_dir(),
+					      &arguments[1], NULL);
 	else
 		this_menu = gnome_unconditional_datadir_file (arguments);
 
@@ -90,25 +92,27 @@ get_pixmap(const char *menudir, gboolean main_menu)
 	char *pixmap_name = NULL;
 	if (main_menu) {
 		pixmap_name = gnome_unconditional_pixmap_file("gnome-logo-icon-transparent.png");
-#ifdef FIXME
 	} else {
 		char *dentry_name;
 		GnomeDesktopItem *item_info;
 
-		dentry_name = g_concat_dir_and_file (menudir,
-						     ".directory");
-		item_info = gnome_desktop_entry_load (dentry_name);
+		dentry_name = g_build_filename (menudir,
+						".directory",
+						NULL);
+		item_info = gnome_desktop_item_new_from_file (dentry_name,
+							      0 /* flags */,
+							      NULL /* error */);
 		g_free (dentry_name);
 
-		if(item_info && item_info->icon)
-			pixmap_name = g_strdup(item_info->icon);
-		else
+		if (item_info != NULL)
+			pixmap_name = gnome_desktop_item_get_icon (item_info);
+
+		if (pixmap_name == NULL)
 			pixmap_name =
 				gnome_unconditional_pixmap_file ("gnome-folder.png");
 
-		if (item_info)
-			gnome_desktop_entry_free(item_info);
-#endif
+		if (item_info != NULL)
+			gnome_desktop_item_unref (item_info);
 	}
 	return pixmap_name;
 }
@@ -427,18 +431,16 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 static void
 dialog_clicked (GtkWidget *widget, int button, gpointer data)
 {
-#ifdef FIXME
 	Menu *menu = data;
 
 	if (button == 0 /* close */) {
 		gnome_dialog_close (GNOME_DIALOG (widget));
 	} else if (button == 1 /* help */) {
 		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
-			panel_show_help ("mainmenu.html#MAINMENUCONFIG");
+			panel_show_help ("mainmenu", "MAINMENUCONFIG");
 		else
-			panel_show_help ("menus.html");
+			panel_show_help ("menus", NULL);
 	}
-#endif
 }
 
 static GtkWidget *

@@ -253,7 +253,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	};
 	
 	
-	menu = hack_scroll_menu_new ();
+	menu = gtk_menu_new ();
 	
 	for (i=0; url[i][1]; i++)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu),
@@ -352,7 +352,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	};
 	GList *gmc_menu_items = NULL;
 
-	menu = hack_scroll_menu_new ();
+	menu = gtk_menu_new ();
 
 	for (i=0; arrange[i]; i+=2)
 		append_gmc_item (menu, _(arrange[i]), arrange[i+1]);
@@ -363,7 +363,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 
 	add_tearoff (GTK_MENU_SHELL (menu));
 
-	menu = hack_scroll_menu_new ();
+	menu = gtk_menu_new ();
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
@@ -591,7 +591,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 		NULL
 	};
 
-	menu = hack_scroll_menu_new ();
+	menu = gtk_menu_new ();
 	
 #if 0 /* put back when evolution can do this */
 	item = gtk_menu_item_new_with_label (_("Add appointement..."));
@@ -614,7 +614,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	add_menu_separator (menu);
 
-	menu2 = hack_scroll_menu_new ();
+	menu2 = gtk_menu_new ();
 	for (i=0; formats[i]; i++)
 		append_format_item (menu2, formats[i]);
 
@@ -730,7 +730,7 @@ programs_menu_to_display(GtkWidget *menu)
 static void
 set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 {
-	foo->task_menu = hack_scroll_menu_new ();
+	foo->task_menu = gtk_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
 	/*g_message ("setting...");*/
 }

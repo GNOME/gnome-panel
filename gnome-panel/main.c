@@ -347,9 +347,9 @@ find_kde_directory(void)
 		NULL
 	};
 	if(kdedir) {
-		kde_menudir = g_concat_dir_and_file(kdedir,"share/applnk");
-		kde_icondir = g_concat_dir_and_file(kdedir,"share/icons");
-		kde_mini_icondir = g_concat_dir_and_file(kdedir,"share/icons/mini");
+		kde_menudir = g_build_filename (kdedir, "share", "applnk", NULL);
+		kde_icondir = g_build_filename (kdedir, "share", "icons", NULL);
+		kde_mini_icondir = g_build_filename (kdedir, "share", "icons", "mini", NULL);
 		return;
 	}
 
@@ -363,11 +363,11 @@ find_kde_directory(void)
 
 	for(i=0;try_prefixes[i];i++) {
 		char *try;
-		try = g_concat_dir_and_file(try_prefixes[i],"share/applnk");
+		try = g_build_filename (try_prefixes[i], "share", "applnk", NULL);
 		if(g_file_test(try,G_FILE_TEST_IS_DIR)) {
 			kde_menudir = try;
-			kde_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons");
-			kde_mini_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons/mini");
+			kde_icondir = g_build_filename (try_prefixes[i], "share", "icons", NULL);
+			kde_mini_icondir = g_build_filename (try_prefixes[i], "share", "icons", "mini", NULL);
 			return;
 		}
 		g_free(try);
@@ -430,38 +430,24 @@ kill_free_drawers (void)
 }
 
 static void
-do_the_roswell_check (void)
+tell_user_Im_on_crack (void)
 {
 	GtkWidget *dialog;
 
-	/*
-	 * Even if this warning sounds funny - do NOT turn this
-	 * startup protection off unless you know exactly what
-	 * you're doing - you have been warned.
-	 */
-
-	if (g_getenv ("GNOME_WATCHED_ROSWELL_IN_TV"))
-	    return;
-
 	dialog = gtk_message_dialog_new
-	    (NULL, 0, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK,
-	     "Hi there,\n\n"
-	     "I'm the GNOME 2 version of the panel.\n\n"
-	     "Unfortunately, I'm still very unstable and clumsy - and most\n"
-	     "likely I'll ruin your whole desktop if you try to run me.\n\n"
-	     "However, as a well-behaving child I'm following my creator's\n"
-	     "advice and won't go anywhere without his guidance.\n\n"
-	     "So, I suggest you just lean back in your chair, have a cool\n"
-	     "Koelsch and watch Roswell in your TV, it's really a cool\n"
-	     "series :-)\n\n"
-	     "Hopefully I will be grown-up soon and I promise - we'll still\n"
-	     "have a lot of fun ....");
+	    (NULL /* parent */,
+	     0 /* flags */,
+	     GTK_MESSAGE_WARNING,
+	     GTK_BUTTONS_YES_NO,
+	     _("This is the GNOME2 panel, it is likely that it will crash,\n"
+	       "destroy configuration, cause another world war, and most\n"
+	       "likely just plain not work.  Use at your own risk.\n\n"
+	       "Do you really want to run it?"));
 
-	gtk_dialog_run (GTK_DIALOG (dialog));
+	if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_YES)
+		exit (0);
 
 	gtk_widget_destroy (dialog);
-
-	exit (0);
 }
 
 int
@@ -478,7 +464,7 @@ main(int argc, char **argv)
 			    LIBGNOMEUI_MODULE,
 			    argc, argv, NULL);
 
-	do_the_roswell_check ();
+	tell_user_Im_on_crack ();
 
 	orb = bonobo_orb ();
 #ifdef FIXME
@@ -539,7 +525,6 @@ main(int argc, char **argv)
 
 #ifndef PER_SESSION_CONFIGURATION
 	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
-	real_global_path = "";
 	if ( ! g_file_test (real_global_path, G_FILE_TEST_EXISTS)) {
 		g_free (old_panel_cfg_path);
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");

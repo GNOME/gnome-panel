@@ -15,6 +15,8 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
+#include <libgnomeui/libgnomeui.h>
+
 #include "gnome-desktop-item.h"
 
 #include "panel-include.h"
@@ -82,7 +84,6 @@ swallow_launch (Swallow *swallow)
 static gboolean
 before_remove (Swallow *swallow)
 {
-#ifdef FIXME
 	GtkWidget *dlg;
 
 	if (swallow->clean_remove)
@@ -131,7 +132,6 @@ before_remove (Swallow *swallow)
 		
 		return FALSE;
 	}
-#endif
 
 	return TRUE;
 }
@@ -195,7 +195,7 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 		gtk_widget_destroy(d);
 		return;
 	case 2: /* help */
-		panel_show_help ("specialobjects.html#SWALLOWEDAPPS");
+		panel_show_help ("specialobjects", "SWALLOWEDAPPS");
 		return;
 	default:
 		break;
@@ -224,7 +224,6 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 void
 ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 {
-#ifdef FIXME
 	GtkWidget *d;
 	
 	GtkWidget *title_e;
@@ -310,7 +309,6 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 
 	gtk_widget_show_all (d);
 	panel_set_dialog_layer (d);
-#endif
 }
 
 static int

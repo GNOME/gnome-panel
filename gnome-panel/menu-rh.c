@@ -214,7 +214,7 @@ add_redhat_entry(GSList *list, char *file)
 					rh->u.item.icon = NULL;
 				}
 			} else {
-				rh->u.item.icon = g_concat_dir_and_file("/usr/share/icons", s);
+				rh->u.item.icon = g_build_filename ("/usr/share/icons", s, NULL);
 				if ( ! g_file_test (rh->u.item.icon,
 						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.icon);
@@ -233,7 +233,7 @@ add_redhat_entry(GSList *list, char *file)
 					rh->u.item.mini_icon = NULL;
 				}
 			} else {
-				rh->u.item.mini_icon = g_concat_dir_and_file("/usr/share/icons/mini", s);
+				rh->u.item.mini_icon = g_build_filename ("/usr/share/icons/mini", s, NULL);
 				if ( ! g_file_test (rh->u.item.mini_icon,
 						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.mini_icon);
@@ -286,7 +286,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 	GSList *li;
 	FILE *fp;
 	char *order_file;
-	order_file = g_concat_dir_and_file(dir,".order");
+	order_file = g_build_filename (dir,".order", NULL);
 	fp = fopen(order_file,"w");
 	g_free(order_file);
 	for(li = rhlist;li!=NULL;li = g_slist_next(li)) {
@@ -300,11 +300,11 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			dentry.type = "Directory";
 			while((p=strchr(s,' '))) *p='_';
 
-			p = g_concat_dir_and_file(dir,s);
+			p = g_build_filename (dir, s, NULL);
 			g_free(s);
 			if(fp) fprintf(fp,"%s\n",sure_string(g_basename(p)));
 			mkdir(p,0755);
-			dentry.location = g_concat_dir_and_file(p,".directory");
+			dentry.location = g_build_filename (p, ".directory", NULL);
 			
 			make_rh_submenu(p,ri->u.items);
 			/* free up the strings */
@@ -323,7 +323,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			gnome_config_make_vector(ri->u.item.exec,
 						 &dentry.exec_length,
 						 &dentry.exec);
-			dentry.location = g_concat_dir_and_file(dir,s);
+			dentry.location = g_build_filename (dir, s, NULL);
 			if(fp) fprintf(fp,"%s\n",s);
 			/* free up the location */
 			g_free(s);

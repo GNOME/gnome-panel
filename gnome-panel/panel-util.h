@@ -29,7 +29,8 @@ GtkWidget *	create_icon_entry	(GtkWidget *table,
 					 UpdateFunction func,
 					 gpointer data);
 
-void		panel_show_help		(const char *path);
+void		panel_show_help		(const char *path,
+					 const char *linkid);
 
 GList *		my_g_list_swap_next	(GList *list,
 					 GList *dl);

@@ -120,7 +120,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if (strcmp (menu->name, "properties") == 0) {
 			launcher_properties (menu->info->data);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("launchers.html");
+			panel_show_help ("launchers", NULL);
 		} else if (strcmp (menu->name, "help_on_app") == 0) {
 			Launcher * launcher = menu->info->data;
 			if (launcher->ditem != NULL) {
@@ -143,12 +143,12 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			g_assert(drawer);
 			panel_config(drawer->drawer);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help ("drawers.html");
+			panel_show_help ("drawers", NULL);
 		}
 		break;
 	case APPLET_SWALLOW:
  		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects.html#SWALLOWEDAPP");
+			panel_show_help ("specialobjects", "SWALLOWEDAPP");
 #if 0
 		if(strcmp(menu->name,"properties")==0) {
 			Swallow *swallow = info->data;
@@ -170,8 +170,8 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			Menu *menu2 = menu->info->data;
 			char *page;
 			page = (menu2->path && strcmp (menu2->path,"."))
-				? "menus.html" : "mainmenu.html";
-			panel_show_help (page);
+				? "menus" : "mainmenu";
+			panel_show_help (page, NULL);
 		}
 		break;
 	case APPLET_LOCK: {
@@ -189,7 +189,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		char *command = NULL;
 		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects.html#LOCKBUTTON");
+			panel_show_help ("specialobjects", "LOCKBUTTON");
 		else if (!strcmp (menu->name, "restart")) {
 			command = "xscreensaver-command -exit ; xscreensaver &";
 		} else if (!strcmp (menu->name, "prefs")) {
@@ -207,15 +207,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	}
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects.html#LOGOUTBUTTON");
+			panel_show_help ("specialobjects", "LOGOUTBUTTON");
 		break;
 	case APPLET_STATUS:
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects.html#STATUSDOC");
+			panel_show_help ("specialobjects", "STATUSDOC");
 		break;
 	case APPLET_RUN:
 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects.html#RUNBUTTON");
+			panel_show_help ("specialobjects", "RUNBUTTON");
 		break;
 	default: break;
 	}
@@ -383,7 +383,7 @@ setup_an_item(AppletUserMenu *menu,
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
-		menu->submenu = hack_scroll_menu_new();
+		menu->submenu = gtk_menu_new ();
 	}
 
 	if(menu->submenu) {
@@ -445,7 +445,7 @@ add_to_submenus (AppletInfo *info,
 	}
 	
 	if (s_menu->submenu == NULL) {
-		s_menu->submenu = hack_scroll_menu_new();
+		s_menu->submenu = gtk_menu_new ();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
 		if (s_menu->menuitem != NULL) {
@@ -469,7 +469,7 @@ create_applet_menu (AppletInfo *info, gboolean is_basep)
 	GList *user_menu = info->user_menu;
 	gchar *pixmap;
 
-	info->menu = hack_scroll_menu_new ();
+	info->menu = gtk_menu_new  ();
 
 	if ( ! commie_mode) {
 		menuitem = gtk_menu_item_new();
@@ -490,7 +490,7 @@ create_applet_menu (AppletInfo *info, gboolean is_basep)
 		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
 	}
 
-	panel_menu = hack_scroll_menu_new();
+	panel_menu = gtk_menu_new ();
 	make_panel_submenu (panel_menu, TRUE, is_basep);
 	menuitem = gtk_menu_item_new ();
 

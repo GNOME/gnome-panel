@@ -16,8 +16,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-program.h>
+#include <libgnomeui/libgnomeui.h>
 
 #include "panel-include.h"
 
@@ -27,13 +26,14 @@ extern GSList *applets;
 extern GSList *applets_last;
 
 void
-panel_show_help (const char *path)
+panel_show_help (const char *doc_name, const char *linkid)
 {
-#ifdef FIXME
-	GnomeHelpMenuEntry help_entry = { "panel" };
-	help_entry.path = (char *)path;
-	gnome_help_display (NULL, &help_entry);
-#endif
+	gnome_help_display (NULL /* program */,
+			    doc_name,
+			    linkid,
+			    NULL);
+
+	/* FIXME: handle error */
 }
 
 static char *
@@ -147,7 +147,6 @@ create_text_entry(GtkWidget *table,
 		  UpdateFunction func,
 		  gpointer data)
 {
-#ifdef FIXME
 	GtkWidget *wlabel;
 	GtkWidget *entry;
 	GtkWidget *t;
@@ -178,9 +177,6 @@ create_text_entry(GtkWidget *table,
 				    data);
 	}
 	return entry;
-#else
-	return NULL;
-#endif
 }
 
 GtkWidget *
@@ -193,10 +189,8 @@ create_icon_entry(GtkWidget *table,
 		  UpdateFunction func,
 		  gpointer data)
 {
-#ifdef FIXME
 	GtkWidget *wlabel;
 	GtkWidget *entry;
-	GtkWidget *t;
 
 	wlabel = gtk_label_new(label);
 	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
@@ -207,14 +201,12 @@ create_icon_entry(GtkWidget *table,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
-	entry = gnome_icon_entry_new(history_id,_("Browse"));
-	hack_icon_entry (GNOME_ICON_ENTRY (entry));
+	entry = gnome_icon_entry_new (history_id, _("Browse"));
 
-	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry), subdir);
-	if (text)
-		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(entry),text);
+	gnome_icon_entry_set_pixmap_subdir (GNOME_ICON_ENTRY(entry), subdir);
+	if (text != NULL)
+		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY(entry), text);
 
-	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry));
 	gtk_table_attach(GTK_TABLE(table), entry,
 			 cols, cole, 1, 2,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
@@ -222,16 +214,13 @@ create_icon_entry(GtkWidget *table,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	if(func) {
-		gtk_object_set_data (GTK_OBJECT (t), "update_function", func);
-		gtk_signal_connect (GTK_OBJECT (t), "changed",
+		gtk_object_set_data (GTK_OBJECT (entry), "update_function", func);
+		gtk_signal_connect (GTK_OBJECT (entry), "changed",
 				    GTK_SIGNAL_FUNC (updated), 
 				    data);
 	}
 
 	return entry;
-#else
-	return NULL;
-#endif
 }
 
 GList *

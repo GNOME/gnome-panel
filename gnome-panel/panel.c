@@ -979,7 +979,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 {
 	char *tmp;
 
-	tmp = g_concat_dir_and_file (dir, ".directory");
+	tmp = g_build_filename (dir, ".directory", NULL);
 	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
@@ -987,7 +987,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	}
 	g_free (tmp);
 
-	tmp = g_concat_dir_and_file (dir, ".order");
+	tmp = g_build_filename (dir, ".order", NULL);
 	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
@@ -1000,9 +1000,12 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 		/* nautilus */
 		char *exec = g_strdup_printf ("nautilus %s",
 					      panel_quote_string (dir));
+		char *base;
 		g_free (tmp);
 
-		load_launcher_applet_from_info (g_basename (dir),
+		base = g_path_get_basename (dir);
+
+		load_launcher_applet_from_info (base,
 						dir,
 						exec,
 						"gnome-folder.png",
@@ -1010,6 +1013,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 						pos,
 						TRUE);
 		g_free (exec);
+		g_free (base);
 	} else {
 		tmp = gnome_is_program_in_path ("gmc-client");
 		if (tmp != NULL) {

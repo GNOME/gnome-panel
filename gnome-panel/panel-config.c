@@ -1787,9 +1787,9 @@ update_config_type (BasePWidget *w)
 static void
 window_clicked (GtkWidget *w, int button, gpointer data)
 {
-#ifdef FIXME
 	GtkWidget *notebook = data;
-	char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
+	const char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
+	const char *help_linkid = gtk_object_get_data (GTK_OBJECT (w), "help_linkid");
 
 	if (button == 1) { /* help */
 		int tab;
@@ -1797,13 +1797,12 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
 		if (tab == 1)
-			panel_show_help ("panelproperties.html#PANELBACKTAB");
+			panel_show_help ("panelproperties", "PANELBACKTAB");
 		else
-			panel_show_help (help_path);
+			panel_show_help (help_path, help_linkid);
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
-#endif
 }
 	     
 void 
@@ -1816,6 +1815,7 @@ panel_config (GtkWidget *panel)
 	BasePWidget *basep = BASEP_WIDGET (panel);
 	PanelWidget *pw = PANEL_WIDGET (basep->panel);
 	char *help_path = "";
+	char *help_linkid = NULL;
 	ppc = get_config_struct(panel);
 	
 	/* return if the window is already up. */
@@ -1879,7 +1879,8 @@ panel_config (GtkWidget *panel)
 
 	if(IS_EDGE_WIDGET(panel)) {
 		/* edge notebook page */
-		help_path = "panelproperties.html#EDGETAB";
+		help_path = "panelproperties";
+		help_linkid = "EDGETAB";
 		page = edge_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1889,7 +1890,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_ALIGNED_WIDGET(panel)) {
 		/* aligned notebook page */
-		help_path = "panelproperties.html#EDGETAB";
+		help_path = "panelproperties";
+		help_linkid = "EDGETAB";
 		page = aligned_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1899,7 +1901,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_SLIDING_WIDGET(panel)) {
 		/* sliding notebook page */
-		help_path = "panelproperties.html#EDGETAB";
+		help_path = "panelproperties";
+		help_linkid = "EDGETAB";
 		page = sliding_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1909,7 +1912,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(IS_FLOATING_WIDGET(panel)) {
 		/* floating notebook page */
-		help_path = "panelproperties.html#EDGETAB";
+		help_path = "panelproperties";
+		help_linkid = "EDGETAB";
 		page = floating_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1923,7 +1927,8 @@ panel_config (GtkWidget *panel)
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, GTK_NOTEBOOK (prop_nbook), info->data);
-		help_path = "drawers.html";
+		help_path = "drawers";
+		help_linkid = NULL;
 		/* we can't change to/from drawers anyhow */
 		ppc->type_tab = NULL;
  	}
@@ -1935,6 +1940,8 @@ panel_config (GtkWidget *panel)
 
 	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_path",
 			     help_path);
+	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_linkid",
+			     help_linkid);
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "clicked",
 			    GTK_SIGNAL_FUNC (window_clicked),
 			    prop_nbook);

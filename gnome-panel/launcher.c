@@ -534,7 +534,7 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 	Launcher *launcher = data;
 
 	if (button == HELP_BUTTON) {
-		panel_show_help ("launchers.html");
+		panel_show_help ("launchers", NULL);
 	} else if (button == REVERT_BUTTON) { /* revert */
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
 					    launcher->revert_ditem);
@@ -690,7 +690,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 
 		panel_config_sync_schedule ();
 	} else if (button == 2/*help*/) {
-		panel_show_help ("launchers.html#LAUNCHERS");
+		panel_show_help ("launchers", "LAUNCHERS");
 		/* just return as we don't want to close */
 		return;
 	}

@@ -1304,7 +1304,7 @@ misc_notebook_page(void)
 static void
 help (GtkWidget *capplet)
 {
-	panel_show_help ("globalpanelprefs.html");
+	panel_show_help ("globalpanelprefs", NULL);
 }
 
 static void

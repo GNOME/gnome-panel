@@ -193,7 +193,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
 	if (button_num == 2/*help*/) {
-		panel_show_help ("specialobjects.html#RUNBUTTON");
+		panel_show_help ("specialobjects", "RUNBUTTON");
 		/* just return as we don't want to close */
 		return;
 	} else if (button_num == 1/*cancel*/) {
