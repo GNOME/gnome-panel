@@ -77,7 +77,8 @@ tasklist_update (TasklistData *tasklist)
 				    tasklist->grouping);
 	wnck_tasklist_set_include_all_workspaces (WNCK_TASKLIST (tasklist->tasklist),
 						  tasklist->include_all_workspaces);
-	/* TODO: Set move_unminimized_windows */
+	wnck_tasklist_set_switch_workspace_on_unminimize (WNCK_TASKLIST (tasklist->tasklist),
+							  tasklist->move_unminimized_windows);
 }
 
 
