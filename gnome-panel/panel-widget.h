@@ -41,6 +41,11 @@ struct _AppletData
 	GtkWidget *	applet;
 	int		pos;
 	int		cells;
+	int             min_cells;
+
+	gboolean        expand_major;
+	gboolean        expand_minor;
+	
 	gboolean	dirty;
 
 	int		drag_off; /* offset on the applet where drag
@@ -141,8 +146,10 @@ int		panel_widget_add_full		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos,
 						 gboolean bind_lower_events,
-						 gboolean insert_at_pos);
-#define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE))
+						 gboolean insert_at_pos,
+						 gboolean expand_major,
+						 gboolean expand_minor);
+#define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE,FALSE,FALSE))
 
 PanelWidget *	panel_widget_get_by_id		(gint32 id);
 void		panel_widget_set_id		(PanelWidget *panel,

@@ -1,6 +1,7 @@
 /*
  * libwnck based pager applet.
  * (C) 2001 Alexander Larsson 
+ * (C) 2001 Red Hat, Inc
  *
  * Authors: Alexander Larsson
  *
@@ -227,7 +228,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	}
 
 	about = gnome_about_new (_("Pager Applet"), "1.0",
-				 _("(c) 2001 the Free Software Foundation"),
+				 _("(c) 2001 Red Hat, Inc."),
 				 _("The pager applet shows you a small version of your workspaces that lets you manage the windows."),
 				 authors,
 				 NULL, /* documenters */

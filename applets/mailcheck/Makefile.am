@@ -17,7 +17,9 @@ libgen_util_applet_2_la_SOURCES = \
 	clock.c		\
 	clock.h		\
 	pager.c		\
-	pager.h
+	pager.h		\
+	tasklist.c	\
+	tasklist.h
 
 #	mailcheck.c	\
 #	mailcheck.h	\

@@ -31,6 +31,9 @@ struct _PanelAppletPrivate {
 
 	gchar             *global_key;
 	gchar             *private_key;
+
+	gboolean           expand_major;
+	gboolean           expand_minor;
 };
 
 static GObjectClass *parent_class;
@@ -71,6 +74,24 @@ panel_applet_get_private_key (PanelApplet *applet)
 		return NULL;
 
 	return g_strdup (applet->priv->private_key);
+}
+
+void
+panel_applet_get_expand_flags (PanelApplet *applet,
+			       gboolean    *expand_major,
+			       gboolean    *expand_minor)
+{
+	*expand_major = applet->priv->expand_major;
+	*expand_minor = applet->priv->expand_minor;
+}
+
+void
+panel_applet_set_expand_flags (PanelApplet *applet,
+			       gboolean     expand_major,
+			       gboolean     expand_minor)
+{
+	applet->priv->expand_major = expand_major;
+	applet->priv->expand_minor = expand_minor;
 }
 
 void

@@ -82,6 +82,13 @@ guint              panel_applet_get_size  (PanelApplet *applet);
 gchar             *panel_applet_get_global_key  (PanelApplet *applet);
 gchar             *panel_applet_get_private_key (PanelApplet *applet);
 
+void      	   panel_applet_get_expand_flags (PanelApplet *applet,
+						  gboolean    *expand_major,
+						  gboolean    *expand_minor);
+void      	   panel_applet_set_expand_flags (PanelApplet *applet,
+						  gboolean     expand_major,
+						  gboolean     expand_minor);
+
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
 

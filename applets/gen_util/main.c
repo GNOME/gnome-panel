@@ -28,6 +28,7 @@
 //#include "mailcheck.h"
 #include "clock.h"
 #include "pager.h"
+#include "tasklist.h"
 //#include "printer.h"
 
 
@@ -45,6 +46,9 @@ genutil_factory (BonoboGenericFactory *this,
 	
 	if (!strcmp (iid, "OAFIID:GNOME_PagerApplet"))
 		applet = make_pager_applet();
+
+	if (!strcmp (iid, "OAFIID:GNOME_TasklistApplet"))
+		applet = make_tasklist_applet();
 
 	return applet;
 }

@@ -1,3 +1,15 @@
+2001-12-04  Alex Larsson  <alexl@redhat.com>
+
+	* applet.c (panel_applet_register):
+	Call panel_applet_frame_get_expand_flags
+	set insert_at_pos to FALSE if !exactpos.
+
+	* panel-applet-frame.[ch]
+	(panel_applet_frame_get_expand_flags): new function
+
+	* panel-widget.[ch]:
+	Implement expand_major and expand_minor for applets.
+
 2001-12-04  Mark McLoughlin  <mark@skynet.ie>
 
 	Load all global entries at once.

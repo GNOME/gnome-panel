@@ -72,6 +72,10 @@ void       panel_applet_frame_save_position            (PanelAppletFrame *frame)
 
 void       panel_applet_frame_save_session             (PanelAppletFrame *frame);
 
+void       panel_applet_frame_get_expand_flags         (PanelAppletFrame *frame,
+							gboolean         *expand_major,
+							gboolean         *expand_minor);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_CONTROL_H__ */

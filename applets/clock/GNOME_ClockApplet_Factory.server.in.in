@@ -45,4 +45,19 @@
 
 </oaf_server>
 
+<oaf_server iid="OAFIID:GNOME_TasklistApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_GenUtilApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" value="TasklistApplet"/>
+	<oaf_attribute name="description" type="string" value="Tasklist Applet"/>
+	<oaf_attribute name="panel:icon" type="string" value="gnome-clock.png"/>
+	<oaf_attribute name="panel:category" type="string" value="Utility"/>
+
+</oaf_server>
 </oaf_info>

@@ -152,6 +152,31 @@ panel_applet_frame_save_session (PanelAppletFrame *frame)
 }
 
 void
+panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
+				     gboolean         *expand_major,
+				     gboolean         *expand_minor)
+{
+	CORBA_Environment  env;
+	CORBA_boolean major = 0, minor = 0;
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelAppletShell_getExpandFlags (frame->priv->applet_shell,
+					       &major, &minor,
+					       &env);
+	
+	if (BONOBO_EX (&env))
+		g_warning (G_STRLOC " : exception return from getExpandFlags '%s'",
+			   BONOBO_EX_REPOID (&env));
+	else {
+		*expand_major = major;
+		*expand_minor = minor;
+	}
+	
+	CORBA_exception_free (&env);
+}
+
+void
 panel_applet_frame_change_orient (PanelAppletFrame *frame,
 				  PanelOrient       orient)
 {

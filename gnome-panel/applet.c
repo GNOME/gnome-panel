@@ -742,6 +742,7 @@ panel_applet_register (GtkWidget      *applet,
 	AppletInfo *info;
 	int newpos;
 	gboolean insert_at_pos;
+	gboolean expand_major = FALSE, expand_minor = FALSE;
 	
 	g_return_val_if_fail (applet && panel, NULL);
 
@@ -775,7 +776,13 @@ panel_applet_register (GtkWidget      *applet,
 
 	gtk_object_set_data (GTK_OBJECT (applet),
 			     PANEL_APPLET_FORBIDDEN_PANELS, NULL);
-		
+
+	if (type == APPLET_BONOBO) {
+		panel_applet_frame_get_expand_flags (applet,
+						     &expand_major,
+						     &expand_minor);
+	}
+	
 	applets = g_slist_append (applets, info);
 
 	applet_count++;
@@ -789,18 +796,21 @@ panel_applet_register (GtkWidget      *applet,
 		insert_at_pos = FALSE;
 	} else {
 		newpos = 0;
-		insert_at_pos = TRUE;
+		insert_at_pos = FALSE;
 	}
 	/* if exact pos is on then insert at that precise location */
 	if (exactpos)
 		insert_at_pos = TRUE;
 
+
+	
+
 	if (panel_widget_add_full (panel, applet, newpos, TRUE,
-				   insert_at_pos)==-1) {
+				   insert_at_pos, expand_major, expand_minor)==-1) {
 		GSList *list;
 		for(list = panels; list != NULL; list = g_slist_next(list))
 			if (panel_widget_add_full (panel, applet, 0,
-						   TRUE, TRUE)!=-1)
+						   TRUE, TRUE, expand_major, expand_minor)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/

@@ -63,6 +63,14 @@ module GNOME {
 		 */
 		void saveYourself (in string global_key,
 				   in string private_key);
+	  
+		/*
+		 * GNOME::PanelAppletShell::getExpandFlags
+		 * @expand_major: Whether to expand the applet in the major direction
+		 * @expand_minor: Whether to expand the applet in the minor direction
+		 */
+		void getExpandFlags (out boolean expand_major,
+				     out boolean expand_minor);
 	};
 
 };
