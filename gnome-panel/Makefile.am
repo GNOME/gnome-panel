@@ -33,11 +33,10 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 
 bin_PROGRAMS = \
 	gnome-panel 			\
-	gnome-panel-preferences		\
 	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
-$(gnome_panel_OBJECTS) $(gnome_panel_preferences_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+$(gnome_panel_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -189,18 +188,6 @@ gnome_panel_LDADD =		\
 
 gnome_panel_LDFLAGS = -export-dynamic
 
-gnome_panel_preferences_SOURCES =	\
-	gnome-panel-preferences.c	\
-	panel-gconf.c			\
-	panel-a11y.c
-
-gnome_panel_preferences_LDADD =		\
-	$(X_LIBS)			\
-	$(PANELCONFIG_LIBS)
-
-gnome_panel_preferences_LDFLAGS =	\
-	-export-dynamic
-
 gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
 	menu-ditem.c		  \
@@ -221,21 +208,19 @@ gnome_panel_screenshot_SOURCES = \
 gnome_panel_screenshot_LDFLAGS = -export-dynamic
 
 gnome_panel_screenshot_LDADD = 	\
-	$(XSHAPE_LIBS)		\
-	$(X_LIBS)		\
-	$(PANELCONFIG_LIBS)	\
+	$(XSHAPE_LIBS)		 \
+	$(X_LIBS)		 \
+	$(PANEL_SCREENSHOT_LIBS) \
 	$(PNG_LIBS)
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
-	gnome-panel-preferences.glade		\
 	gnome-panel-screenshot.glade		\
 	panel-properties-dialog.glade		\
 	panel-run-dialog.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
-	gnome-panel-preferences.desktop.in	\
 	$(glade_DATA)				\
 	nothing.cP				\
 	nothing.h				\
@@ -246,10 +231,6 @@ EXTRA_DIST =					\
 	update-from-egg.sh			\
 	gnome-panelrc				\
 	panel-default-setup.entries
-
-sysdir = $(datadir)/control-center-2.0/capplets
-sys_in_files = gnome-panel-preferences.desktop.in
-sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
 
