@@ -54,7 +54,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Tom Tromey (tromey@cygnus.com)",
 	  "Ian Main (slow@intergate.bc.ca)",
 	  "and finally, The Knights Who Say ... NI!",
-	  "gnome-gegl.png"
+	  NULL
 	  };
 
 	about = gnome_about_new ( "The GNOME Panel", VERSION,
@@ -63,7 +63,7 @@ about_cb (GtkWidget *widget, gpointer data)
 			"This program is responsible for launching "
 			"other applications, embedding small applets "
 			"within itself, world peace, and random X crashes.",
-			NULL);
+			"gnome-gegl.png");
 	gtk_widget_show (about);
 
 	return;
