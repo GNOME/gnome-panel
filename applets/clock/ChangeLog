@@ -1,3 +1,11 @@
+2002-04-20  Benedikt Roth  <Benedikt.Roth@gmx.net>
+
+	* mailcheck.c: (got_remote_answer), (set_mailbox_selection),
+	(fill_mailcheck_applet):
+	Real fix for #78182: First disable automatic updating,
+	then show the dialog.
+	Add some tooltips if the status is not updated.
+
 2002-04-17  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* mailcheck.c: (got_remote_answer): removed model message 

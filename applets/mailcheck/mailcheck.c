@@ -247,20 +247,6 @@ get_remote_password (void)
 }
 
 static void
-remove_dialog (GtkWidget *w, int response, gpointer *data)
-{
-	MailCheck *mc = (MailCheck *) data;
-	
-	gtk_widget_destroy (w);
-	
-	if(mc->mail_timeout != 0) {
-		gtk_timeout_remove(mc->mail_timeout);
-		mc->mail_timeout = 0;
-	}
-	mc->auto_update = FALSE;
-}
-
-static void
 got_remote_answer (int mails, gpointer data)
 {
 	MailCheck *mc = data;
@@ -269,18 +255,27 @@ got_remote_answer (int mails, gpointer data)
 	mc->remote_handle = NULL;
 	
 	if (mails == -1) {
+		GtkWidget *dialog;
+
+		/* Disable automatic updating */
+		mc->auto_update = FALSE;
+
+		if(mc->mail_timeout != 0) {
+			gtk_timeout_remove(mc->mail_timeout);
+			mc->mail_timeout = 0;
+		}
+
 		/* Notify about an error and keep the current mail status */
-		GtkWidget *dialog = gtk_message_dialog_new (NULL,
-							    0,/* Flags */
-							    GTK_MESSAGE_ERROR,
-							    GTK_BUTTONS_CLOSE,
-							    _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
-		
-		g_signal_connect (G_OBJECT (dialog), "response",
-					G_CALLBACK (remove_dialog),
-					mc);
-		
-		gtk_widget_show_all (dialog);				
+		dialog = gtk_message_dialog_new (NULL,
+						 0,/* Flags */
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						 _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
+
+		g_signal_connect_swapped (G_OBJECT (dialog), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  dialog);
+		gtk_widget_show_all (dialog);
 
 	} else {
 		old_unreadmail = mc->unreadmail;
@@ -1013,6 +1008,8 @@ set_mailbox_selection (GtkWidget *widget, gpointer data)
 		mc->remote_handle = NULL;
 	}
 	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
+	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
+			      _("Status not updated"), NULL);
 }
 
 static void
@@ -1735,6 +1732,8 @@ fill_mailcheck_applet(PanelApplet *applet)
 					   mc);
 	
 	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
+	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
+			      _("Status not updated"), NULL);
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	/*
