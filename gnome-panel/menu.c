@@ -3311,7 +3311,7 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 static void
 show_panel_help (GtkWidget *w, gpointer data)
 {
-	panel_show_help ("wgospanel.xml", "gospanel-1");
+	panel_show_help ("wgospanel.xml", NULL);
 }
 
 static void
