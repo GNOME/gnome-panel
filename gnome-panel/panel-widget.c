@@ -13,6 +13,15 @@ static GdkCursor *fleur_cursor;
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
+typedef void (*PanelWidgetOrientSignal) (GtkObject * object,
+					 PanelOrientation orient,
+					 PanelSnapped snapped,
+					 gpointer data);
+
+typedef void (*PanelWidgetStateSignal) (GtkObject * object,
+				        PanelState state,
+				        gpointer data);
+
 guint
 panel_widget_get_type ()
 {
@@ -45,6 +54,35 @@ enum {
 static gint panel_widget_signals[LAST_SIGNAL] = {0,0,0};
 
 static void
+gtk_panel_widget_marshal_signal_state (GtkObject * object,
+				       GtkSignalFunc func,
+				       gpointer func_data,
+				       GtkArg * args)
+{
+  PanelWidgetStateSignal rfunc;
+
+  rfunc = (PanelWidgetStateSignal) func;
+
+  (*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+	    func_data);
+}
+
+static void
+gtk_panel_widget_marshal_signal_orient (GtkObject * object,
+					GtkSignalFunc func,
+					gpointer func_data,
+					GtkArg * args)
+{
+  PanelWidgetOrientSignal rfunc;
+
+  rfunc = (PanelWidgetOrientSignal) func;
+
+  (*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+	    GTK_VALUE_ENUM (args[1]),
+	    func_data);
+}
+
+static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
 	GtkObjectClass *object_class;
@@ -53,32 +91,32 @@ panel_widget_class_init (PanelWidgetClass *class)
 
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
 		gtk_signal_new("orient_change",
-			       GTK_RUN_FIRST,
+			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 orient_change),
-			       gtk_signal_default_marshaller,
+			       gtk_panel_widget_marshal_signal_orient,
 			       GTK_TYPE_NONE,
 			       2,
 			       GTK_TYPE_ENUM,
 			       GTK_TYPE_ENUM);
 	panel_widget_signals[STATE_CHANGE_SIGNAL] =
 		gtk_signal_new("state_change",
-			       GTK_RUN_FIRST,
+			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 state_change),
-			       gtk_signal_default_marshaller,
+			       gtk_panel_widget_marshal_signal_state,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
 	panel_widget_signals[RESTORE_STATE_SIGNAL] =
 		gtk_signal_new("restore_state",
-			       GTK_RUN_FIRST,
+			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 restore_state),
-			       gtk_signal_default_marshaller,
+			       gtk_panel_widget_marshal_signal_state,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);

@@ -95,7 +95,7 @@ load_applet(char *id, char *params, int pos, int panel)
 
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
 			     params, pos, panel,
-			     APPLET_HAS_PROPERTIES,APPLET_MENU);
+			     APPLET_HAS_PROPERTIES,APPLET_DRAWER);
 	}
 }
 
@@ -162,6 +162,8 @@ orient_change_foreach(gpointer data, gpointer user_data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
 	PanelWidget *panel = user_data;
+
+	if(!info) return;
 
 	if(info->type == APPLET_EXTERN) {
 		/*FIXME: call corba*/
@@ -231,6 +233,60 @@ panel_orient_change(GtkWidget *widget,
 
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
 			     (gpointer)widget);
+}
+
+static void
+state_restore_foreach(gpointer data, gpointer user_data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	PanelWidget *panel = user_data;
+
+	if(!info) return;
+
+	if(info->type == APPLET_DRAWER) {
+		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
+			panel_widget_restore_state(PANEL_WIDGET(info->assoc));
+			panel_widget_foreach(PANEL_WIDGET(info->assoc),
+					     state_restore_foreach,
+					     (gpointer)info->assoc);
+		}
+	}
+}
+
+static void
+state_hide_foreach(gpointer data, gpointer user_data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	PanelWidget *panel = user_data;
+
+	if(!info) return;
+
+	if(info->type == APPLET_DRAWER) {
+		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
+			gtk_widget_hide(info->assoc);
+			panel_widget_foreach(PANEL_WIDGET(info->assoc),
+					     state_restore_foreach,
+					     (gpointer)info->assoc);
+		}
+	}
+}
+
+static int
+panel_state_change(GtkWidget *widget,
+		    PanelState state,
+		    gpointer data)
+{
+	puts("PANEL_STATE_CHANGE");
+
+	if(state==PANEL_SHOWN) {
+		puts("PANEL_SHOW");
+		panel_widget_foreach(PANEL_WIDGET(widget),state_restore_foreach,
+				     (gpointer)widget);
+	} else {
+		puts("PANEL_HIDE");
+		panel_widget_foreach(PANEL_WIDGET(widget),state_hide_foreach,
+				     (gpointer)widget);
+	}
 }
 
 static int
@@ -313,6 +369,10 @@ init_user_panels(void)
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
+				   NULL);
+		gtk_signal_connect(GTK_OBJECT(panel),
+				   "state_change",
+				   GTK_SIGNAL_FUNC(panel_state_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",

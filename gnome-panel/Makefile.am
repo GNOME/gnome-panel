@@ -5,7 +5,8 @@ test:
 #SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 #	@PROGRAMS_PANEL_CDPLAYER@
 
-SUBDIRS  = @PROGRAMS_PANEL_CDPLAYER@ batmon mailcheck netwatch
+#FIXME: without libapplet in a separate dir, cdplayer won't compile
+#SUBDIRS  = @PROGRAMS_PANEL_CDPLAYER@ batmon mailcheck netwatch
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
