@@ -4,9 +4,7 @@
 #include <gtk/gtk.h>
 #include "panel-types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+G_BEGIN_DECLS
 	
 #define BUTTON_TYPE_WIDGET		(button_widget_get_type ())
 #define BUTTON_WIDGET(object)          	(G_TYPE_CHECK_INSTANCE_CAST ((object), BUTTON_TYPE_WIDGET, ButtonWidget))
@@ -17,30 +15,26 @@ extern "C" {
 typedef struct _ButtonWidget		ButtonWidget;
 typedef struct _ButtonWidgetClass	ButtonWidgetClass;
 
-struct _ButtonWidget
-{
-	GtkButton		parent;
+struct _ButtonWidget {
+	GtkButton    parent;
 	
-	GdkPixbuf		*pixbuf;
-  
-	GdkPixbuf		*scaled;
-	GdkPixbuf		*scaled_hc;
+	GdkPixbuf   *pixbuf;
+	GdkPixbuf   *scaled;
+	GdkPixbuf   *scaled_hc;
 
-	char			*filename;
-	int			size;
-	
-	guint			ignore_leave:1; /*ignore the leave notify,
-						  if you do this remember to
-						  set the in_button properly
-						  later!*/
+	/* Invariant: assert (!filename || !stock_id) */
+	char        *filename;
+	char        *stock_id;
 
-	guint			arrow:1; /*0 no arrow, 1 simple arrow, more
-					   to do*/
-	guint			dnd_highlight:1;
+	int          size;
 
-	PanelOrient		orient;
+	PanelOrient  orient;
 
-	guint			pressed_timeout;
+	guint        pressed_timeout;
+
+	guint        ignore_leave  : 1;
+	guint        arrow         : 1;
+	guint        dnd_highlight : 1;
 };
 
 struct _ButtonWidgetClass
@@ -48,25 +42,26 @@ struct _ButtonWidgetClass
 	GtkButtonClass parent_class;
 };
 
-GType		button_widget_get_type		(void) G_GNUC_CONST;
+GType      button_widget_get_type          (void) G_GNUC_CONST;
 
-GtkWidget*	button_widget_new		(const char *pixmap,
-						 int size,
-						 gboolean arrow,
-						 PanelOrient orient);
+GtkWidget *button_widget_new               (const char   *pixmap,
+					    int           size,
+					    gboolean      arrow,
+					    PanelOrient   orient);
+GtkWidget *button_widget_new_from_stock    (const char   *stock_id,
+					    int           size,
+					    gboolean      arrow,
+					    PanelOrient   orient);
+void       button_widget_set_pixmap        (ButtonWidget *button,
+					    const char   *pixmap);
+void       button_widget_set_stock_id      (ButtonWidget *button,
+					    const char   *stock_id);
+void       button_widget_set_params        (ButtonWidget *button,
+					    gboolean      arrow,
+					    PanelOrient   orient);
+void       button_widget_set_dnd_highlight (ButtonWidget *button,
+					    gboolean      highlight);
 
-void		button_widget_set_pixmap	(ButtonWidget *button,
-						 const char   *pixmap);
-
-void		button_widget_set_params	(ButtonWidget *button,
-						 gboolean arrow,
-						 PanelOrient orient);
-
-void		button_widget_set_dnd_highlight	(ButtonWidget *button,
-						 gboolean highlight);
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
+G_END_DECLS
 
 #endif /* __BUTTON_WIDGET_H__ */

@@ -29,7 +29,8 @@ enum {
 	PROP_SIZE,
 	PROP_HAS_ARROW,
 	PROP_ORIENT,
-	PROP_ICON_NAME
+	PROP_ICON_NAME,
+	PROP_STOCK_ID,
 };
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
@@ -299,22 +300,35 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button,
 	int    height;
 
 	if (!button->pixbuf) {
-		char *error = NULL;
+		g_assert (!button->filename || !button->stock_id);
 
-		if (!button->filename || !button->filename [0])
+		if (!button->filename && !button->stock_id)
 			return;
 
-		button->pixbuf = button_load_pixbuf (
-					button->filename, button->size, &error);
-		if (error) {
-			panel_error_dialog (gdk_screen_get_default (),
-					    "cannot_load_pixbuf",
-					    _("Failed to load image %s\n\n"
-					      "Details: %s"),
-					    button->filename,
-					    error);
-			g_free (error);
+		if (button->stock_id)
+			button->pixbuf = gtk_widget_render_icon (
+						GTK_WIDGET (button),
+						button->stock_id,
+						(GtkIconSize) -1,
+						NULL);
+		else {
+			char *error = NULL;
+
+			button->pixbuf = button_load_pixbuf (
+						button->filename, button->size, &error);
+			if (error) {
+				panel_error_dialog (gdk_screen_get_default (),
+						    "cannot_load_pixbuf",
+						    _("Failed to load image %s\n\n"
+						    "Details: %s"),
+						    button->filename,
+						    error);
+				g_free (error);
+			}
 		}
+
+		if (!button->pixbuf)
+			return;
 	}
 
 	width  = gdk_pixbuf_get_width  (button->pixbuf);
@@ -346,6 +360,21 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button,
 }
 
 static void
+button_widget_reload_pixbuf (ButtonWidget *button)
+{
+	button_widget_unset_pixbufs (button);
+	if (GTK_WIDGET (button)->allocation.width  <= 1 ||
+	    GTK_WIDGET (button)->allocation.height <= 1)
+		return;
+
+	button_widget_load_pixbuf_and_scale (
+		button,
+		GTK_WIDGET (button)->allocation.width,
+		GTK_WIDGET (button)->allocation.height);
+	gtk_widget_queue_draw (GTK_WIDGET (button));
+}
+
+static void
 button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
@@ -358,6 +387,9 @@ button_widget_finalize (GObject *object)
 
 	g_free (button->filename);
 	button->filename = NULL;
+
+	g_free (button->stock_id);
+	button->stock_id = NULL;
 	
 	parent_class->finalize (object);
 }
@@ -387,6 +419,9 @@ button_widget_get_property (GObject    *object,
 	case PROP_ICON_NAME:
 		g_value_set_string (value, button->filename);
 		break;
+	case PROP_STOCK_ID:
+		g_value_set_string (value, button->stock_id);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -407,6 +442,7 @@ button_widget_set_property (GObject      *object,
 
 	switch (prop_id) {
 		const char *icon_name;
+		const char *stock_id;
 
 	case PROP_SIZE:
 		button->size = g_value_get_int (value);
@@ -423,24 +459,44 @@ button_widget_set_property (GObject      *object,
 	case PROP_ICON_NAME:
 		icon_name = g_value_get_string (value);
 
+		g_assert (!button->filename || !button->stock_id);
+
 		if (icon_name && button->filename &&
 		    !strcmp (button->filename, icon_name))
 			break;
 
+		if (button->stock_id) {
+			g_free (button->stock_id);
+			button->stock_id = NULL;
+		}
+
 		if (button->filename)
 			g_free (button->filename);
-		
 		button->filename = g_strdup (icon_name);
 
-		button_widget_unset_pixbufs (button);
-		if (GTK_WIDGET (button)->allocation.width  > 1 &&
-		    GTK_WIDGET (button)->allocation.height >1)
-			button_widget_load_pixbuf_and_scale (
-				button,
-				GTK_WIDGET (button)->allocation.width,
-				GTK_WIDGET (button)->allocation.height);
-		gtk_widget_queue_draw (GTK_WIDGET (button));
+		button_widget_reload_pixbuf (button);
 		break;
+	case PROP_STOCK_ID:
+		stock_id = g_value_get_string (value);
+
+		g_assert (!button->filename || !button->stock_id);
+
+		if (stock_id && button->stock_id &&
+		    !strcmp (button->stock_id, stock_id))
+			break;
+
+		if (button->filename) {
+			g_free (button->filename);
+			button->filename = NULL;
+		}
+
+		if (button->stock_id)
+			g_free (button->stock_id);
+		button->stock_id = g_strdup (stock_id);
+
+		button_widget_reload_pixbuf (button);
+		break;
+
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -860,6 +916,15 @@ button_widget_class_init (ButtonWidgetClass *klass)
 					     _("The desired icon for the ButtonWidget"),
 					     NULL,
 					     G_PARAM_READWRITE));
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_STOCK_ID,
+			g_param_spec_string ("stock-id",
+					     _("Stock Icon ID"),
+					     _("The desired stock icon for the ButtonWidget"),
+					     NULL,
+					     G_PARAM_READWRITE));
 }
 
 GType
@@ -906,6 +971,25 @@ button_widget_new (const char  *filename,
 	return retval;
 }
 
+GtkWidget *
+button_widget_new_from_stock (const char  *stock_id,
+			      int          size,
+			      gboolean     arrow,
+			      PanelOrient  orient)
+{
+	GtkWidget *retval;
+
+	retval = g_object_new (
+			BUTTON_TYPE_WIDGET,
+			"size", size,
+			"has-arrow", arrow,
+			"orient", orient,
+			"stock-id", stock_id,
+			NULL);
+	
+	return retval;
+}
+
 void
 button_widget_set_pixmap (ButtonWidget *button,
 			  const char   *pixmap)
@@ -913,6 +997,15 @@ button_widget_set_pixmap (ButtonWidget *button,
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
 	g_object_set (G_OBJECT (button), "icon-name", pixmap, NULL);
+}
+
+void
+button_widget_set_stock_id (ButtonWidget *button,
+			    const char   *stock_id)
+{
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	g_object_set (G_OBJECT (button), "stock-id", stock_id, NULL);
 }
 
 void

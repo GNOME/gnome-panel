@@ -1,5 +1,23 @@
 2002-09-24  Mark McLoughlin  <mark@skynet.ie>
 
+	Implement support for stock ids in ButtonWidget and
+	use them for the lock button and logout button.
+
+	* button-widget.[ch]:
+	(button_widget_load_pixbuf_and_scale): add support for
+	loading stock icons.
+	(button_widget_reload_pixbuf): split out from set_property().
+	(button_widget_finalize): free the stock ids.
+	(button_widget_get_property), (button_widget_set_property):
+	(button_widget_class_init), impl "stock-id" property.
+	(button_widget_new_from_stock), (button_widget_set_stock_id):
+	impl.
+
+	* logout.c: (create_logout_widget), (create_lock_widget):
+	use stock ids for icons.
+
+2002-09-24  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: include xstuff.h.
 
 	* xstuff.c: (draw_zoom_animation): don't

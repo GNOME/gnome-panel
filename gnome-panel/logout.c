@@ -15,6 +15,7 @@
 #include "panel-config-global.h"
 #include "panel.h"
 #include "session.h"
+#include "panel-stock-icons.h"
 
 extern GtkTooltips *panel_tooltips;
 
@@ -73,15 +74,9 @@ create_logout_widget (void)
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
 	GtkWidget *button;
-	char *pixmap_name;
 
-	pixmap_name = panel_pixmap_discovery ("gnome-term-night.png",
-					      TRUE /* fallback */);
-
-	button = button_widget_new (pixmap_name, -1,
-				    FALSE,
-				    PANEL_ORIENT_UP);
-	g_free (pixmap_name);
+	button = button_widget_new_from_stock (
+			PANEL_STOCK_LOGOUT, -1, FALSE, PANEL_ORIENT_UP);
 	if (!button)
 		return NULL;
 
@@ -146,15 +141,9 @@ create_lock_widget (void)
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
 	GtkWidget *button;
-	char *pixmap_name;
 
-	pixmap_name = panel_pixmap_discovery ("gnome-lockscreen.png",
-					      TRUE /* fallback */);
-
-	button = button_widget_new (pixmap_name, -1,
-				    FALSE,
-				    PANEL_ORIENT_UP);
-	g_free (pixmap_name);
+	button = button_widget_new_from_stock (
+			PANEL_STOCK_LOCKSCREEN, -1, FALSE, PANEL_ORIENT_UP);
 	if (!button)
 		return NULL;
 
