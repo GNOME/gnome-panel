@@ -184,15 +184,16 @@ drawer_pos_get_hide_orient (BasePWidget *basep)
 }
 	
 void
-drawer_widget_open_drawer (DrawerWidget *drawer, BasePWidget *parentp)
+drawer_widget_open_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
-	parentp->drawers_open++;
+	if (IS_BASEP_WIDGET (parentp))
+		BASEP_WIDGET (parentp)->drawers_open++;
 	/*gtk_widget_show (GTK_WIDGET (drawer));*/
 	basep_widget_explicit_show (BASEP_WIDGET (drawer));
 }
 
 void
-drawer_widget_close_drawer (DrawerWidget *drawer, BasePWidget *parentp)
+drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
 	BasePWidget *basep = BASEP_WIDGET (drawer);
 
@@ -210,7 +211,8 @@ drawer_widget_close_drawer (DrawerWidget *drawer, BasePWidget *parentp)
 		break;
 	}
 	/*gtk_widget_hide (GTK_WIDGET (drawer));*/
-	parentp->drawers_open--;
+	if (IS_BASEP_WIDGET (parentp))
+		BASEP_WIDGET (parentp)->drawers_open--;
 }
 
 static void
@@ -219,7 +221,7 @@ drawer_pos_hidebutton_click (BasePWidget *basep)
 	Drawer *drawer = gtk_object_get_data (GTK_OBJECT (basep),
 					      DRAWER_PANEL_KEY);
 	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
-	BasePWidget *parent = BASEP_WIDGET(panel->panel_parent);
+	GtkWidget *parent = panel->panel_parent;
 
 	drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
 }

@@ -140,6 +140,7 @@ panel_SOURCES=\
 	foobar-widget.h		\
 	foobar-widget.c		\
 	title-item.h		\
+	title-item-private.h	\
 	title-item.c		\
 	scroll-menu.h		\
 	scroll-menu.c
