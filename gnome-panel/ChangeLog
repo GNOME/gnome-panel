@@ -1,3 +1,22 @@
+Sat Feb 21 16:48:35 1998  Miguel de Icaza  <miguel@nuclecu.unam.mx>
+
+	* panel.c: Simple stub routine that demostrates calling a CORBA
+	function in the client code.   
+
+	* gnome-panel.idl: New applet interface, right now it only serves
+	for demostration purposes;
+
+	* clock.c (main): It now uses applet_corba_gtk_main for its main
+	loop.  Note that all of this glue that I am putting in the panel
+	is to avoid putting C++ code in our nice Panel for now at least. 
+
+	* applet-lib.cc (Applet_impl): Class that implements the
+	Applet-server, this is the one that receives messages from the
+	CORBA panel.
+
+	All of this was so much easier than I though, all of this CORBA
+	stuff just fits so nicely together once you figure it out :-). 
+
 Sat Feb 21 01:21:40 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c: implemented corba events, but it now dies

@@ -208,7 +208,8 @@ main(int argc, char **argv)
 		printf ("Could not talk to the Panel: %s\n", result);
 		exit (1);
 	}
-	gtk_main ();
+
+	applet_corba_gtk_main ("IDL:GNOME/Applet:1.0");
 
 	return 0;
 }

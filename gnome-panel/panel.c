@@ -595,6 +595,13 @@ add_reparent(GtkWidget *widget, gpointer data)
 	(void)reparent_window_id (id,0,0);
 }
 
+static void
+invoke_corba_in_applet(GtkWidget *widget, gpointer data)
+{
+	/* This invokes CORBA in the C++ file */
+	ask_first_applet_to_print_a_message ();
+}
+
 GtkWidget *
 create_panel_root_menu(PanelWidget *panel)
 {
@@ -620,6 +627,13 @@ create_panel_root_menu(PanelWidget *panel)
 	menuitem = gtk_menu_item_new_with_label(_("Add reparent (testing)"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_reparent,
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("TESTING:  Invoke a function in a panel trough CORBA"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) invoke_corba_in_applet,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
