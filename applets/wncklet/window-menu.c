@@ -183,6 +183,7 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->menu)
 		gtk_widget_destroy (window_menu->menu);
 	window_menu->menu = NULL;
+	window_menu->no_windows_item = NULL;
 
 	if (window_menu->icon_pixbuf)
 		g_object_unref (window_menu->icon_pixbuf);
@@ -191,10 +192,6 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->icon_theme)
 		g_object_unref (window_menu->icon_theme);
         window_menu->icon_theme = NULL;
-
-	if (window_menu->no_windows_item)
-		g_object_unref (window_menu->no_windows_item);
-	window_menu->no_windows_item = NULL;
 
 	if (window_menu->about_dialog) {
 		gtk_widget_destroy (window_menu->about_dialog);
@@ -550,9 +547,6 @@ window_menu_destroy_menu (GtkWidget  *widget,
 	if (window_menu->window_hash)
 		g_hash_table_destroy (window_menu->window_hash);
 	window_menu->window_hash = NULL;
-
-	if (window_menu->no_windows_item)
-		g_object_unref (window_menu->no_windows_item);
 	window_menu->no_windows_item = NULL;
 }
 
@@ -615,9 +609,6 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	for (l = list; l; l = l->next)
 		gtk_container_remove (GTK_CONTAINER (window_menu->menu), l->data);
 	g_list_free (list);
-
-	if (window_menu->no_windows_item)
-		g_object_unref (window_menu->no_windows_item);
 	window_menu->no_windows_item = NULL;
 
 

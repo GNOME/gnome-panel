@@ -1,3 +1,12 @@
+2004-10-23  Crispin Flowerday  <gnome@flowerday.cx>
+
+	* window-menu.c (window_menu_destroy), (window_menu_destroy_menu) 
+	(window_menu_popup_menu): 
+
+	Don't unref() the no_windows_item element, it is automatically
+	destroyed by the container_remove() and widget_destroy()
+	calls. Fixes bug #152397
+
 2004-10-22  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	Re-worked patch based on Crispin Flowerday <gnome@flowerday.cx>
