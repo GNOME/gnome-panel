@@ -1,5 +1,23 @@
 2001-11-09  Mark McLoughlin  <mark@skynet.ie>
 
+	reviewed by: <delete if not using a buddy>
+
+	* applet.c, applet.h: (panel_register_applet): renamed from
+	register_toy. Return an AppletInfo *.
+
+	* drawer.c: (load_drawer_applet):
+	* extern.c: (reserve_applet_spot):
+	* gnome-run.c: (load_run_applet):
+	* launcher.c: (load_launcher_applet_full):
+	* logout.c: (load_logout_applet), (load_lock_applet):
+	* menu.c: (load_menu_applet):
+	* panel-applet-frame.c: (panel_bonobo_applet_load):
+	* panel.c: (panel_applet_added), (drag_data_recieved_cb):
+	* status.c: (load_status_applet):
+	* swallow.c: (load_swallow_applet): update.
+
+2001-11-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: tidy up popup menu handling.
 
 	* applet.h: (show_applet_menu): privatise.

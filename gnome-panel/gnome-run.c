@@ -1303,16 +1303,20 @@ create_run_widget(void)
 }
 
 void
-load_run_applet(PanelWidget *panel, int pos, gboolean exactpos)
+load_run_applet (PanelWidget *panel,
+		 int          pos,
+		 gboolean     exactpos)
 {
-	GtkWidget *run;
+	GtkWidget  *run;
+	AppletInfo *info;
 
-	run = create_run_widget();
-	if(!run)
+	run = create_run_widget ();
+	if (!run)
 		return;
 
-	if (!register_toy(run, NULL, NULL, panel,
-			  pos, exactpos, APPLET_RUN))
+	info = panel_register_applet (run, NULL, NULL, panel,
+				      pos, exactpos, APPLET_RUN);
+	if (!info)
 		return;
 
 	applet_add_callback (applets_last->data,

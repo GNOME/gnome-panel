@@ -29,18 +29,19 @@ panel_bonobo_applet_load (const gchar *iid,
 			  PanelWidget *panel,
 			  gint         pos)
 {
-	GtkWidget *widget;
-	gboolean   success;
+	GtkWidget  *widget;
+	AppletInfo *info;
 
 	widget = panel_bonobo_applet_widget (iid);
 
-	success = register_toy (widget, 
-				NULL,     /* FIXME: data */
-				NULL,     /* FIXME: data_destroy */
-				panel,
-				pos,
-				FALSE,
-				APPLET_BONOBO);
-	if (!success)
+	info = panel_register_applet (widget, 
+				      NULL,     /* FIXME: data */
+				      NULL,     /* FIXME: data_destroy */
+				      panel,
+				      pos,
+				      FALSE,
+				      APPLET_BONOBO);
+
+	if (!info)
 		g_warning ("Cannot register control widget\n");
 }

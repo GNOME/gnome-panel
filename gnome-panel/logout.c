@@ -109,16 +109,20 @@ create_logout_widget (void)
 }
 
 void
-load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos)
+load_logout_applet (PanelWidget *panel,
+		    gint         pos,
+		    gboolean     exactpos)
 {
-	GtkWidget *logout;
+	GtkWidget  *logout;
+	AppletInfo *info;
 
-	logout = create_logout_widget();
-	if(!logout)
+	logout = create_logout_widget ();
+	if (!logout)
 		return;
 
-	if (!register_toy(logout, NULL, NULL, panel,
-			  pos, exactpos, APPLET_LOGOUT))
+	info = panel_register_applet (logout, NULL, NULL, panel,
+				      pos, exactpos, APPLET_LOGOUT);
+	if (!info)
 		return;
 
 	applet_add_callback(applets_last->data, "help",
@@ -171,15 +175,21 @@ create_lock_widget(void)
 }
 
 void
-load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
+load_lock_applet (PanelWidget *panel,
+		  gint         pos,
+		  gboolean     exactpos)
 {
-	GtkWidget *lock;
-	lock = create_lock_widget();
+	GtkWidget  *lock;
+	AppletInfo *info;
 
-	if(!lock)
+	lock = create_lock_widget ();
+
+	if (!lock)
 		return;
-	if (!register_toy(lock, NULL, NULL, panel, pos, 
-			  exactpos, APPLET_LOCK))
+
+	info = panel_register_applet (lock, NULL, NULL, panel, pos,
+				      exactpos, APPLET_LOCK);
+	if (!info)
 		return;
 
         /*

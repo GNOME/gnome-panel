@@ -332,8 +332,10 @@ reparent_fixed(GtkWidget *frame)
 gboolean
 load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 {
-	GtkWidget *ebox;
-	if(the_status)
+	GtkWidget  *ebox;
+	AppletInfo *info;
+
+	if (the_status)
 		return FALSE;
 
 	DPUTS("LOAD_STATUS_APPLET");
@@ -371,9 +373,11 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_widget_show(ebox);
 	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
-	if(!register_toy(ebox, the_status, free_status,
-			 panel, pos, exactpos, APPLET_STATUS))
+	info = panel_register_applet (ebox, the_status, free_status, panel,
+				      pos, exactpos, APPLET_STATUS);
+	if (!info)
 		return TRUE;
+
 	the_status->info = applets_last->data;
 	applet_add_callback(applets_last->data, "help",
 			    GTK_STOCK_HELP,

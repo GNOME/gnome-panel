@@ -414,18 +414,18 @@ void
 load_swallow_applet (const char *path, const char *params, int width, int height,
 		     PanelWidget *panel, int pos, gboolean exactpos)
 {
-	Swallow *swallow;
+	Swallow    *swallow;
+	AppletInfo *info;
 
 	swallow = create_swallow_applet (params, path, width, height,
 					 SWALLOW_HORIZONTAL);
 	if (swallow == NULL)
 		return;
 
-	if ( ! register_toy (swallow->ebox,
-			     ref_swallow (swallow),
-			     (GDestroyNotify) unref_swallow,
-			     panel, pos,
-			     exactpos, APPLET_SWALLOW))
+	info = panel_register_applet (swallow->ebox, ref_swallow (swallow),
+				      (GDestroyNotify) unref_swallow,
+				      panel, pos, exactpos, APPLET_SWALLOW);
+	if (!info)
 		return;
 
 	swallow->clean_remove = FALSE;

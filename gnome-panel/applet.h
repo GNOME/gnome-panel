@@ -64,13 +64,13 @@ struct _AppletInfo {
 	GDestroyNotify data_destroy;
 };
 
-gboolean register_toy(GtkWidget *applet,
-		      gpointer data,
-		      GDestroyNotify data_destroy,
-		      PanelWidget *panel,
-		      int pos,
-		      gboolean exactpos,
-		      AppletType type);
+AppletInfo *panel_register_applet (GtkWidget      *applet,
+				   gpointer        data,
+				   GDestroyNotify  data_destroy,
+				   PanelWidget    *panel,
+				   gint            pos,
+				   gboolean        exactpos,
+				   AppletType      type);
 
 void panel_clean_applet(AppletInfo *info);
 

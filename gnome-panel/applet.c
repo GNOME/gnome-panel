@@ -742,21 +742,20 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 	info->user_menu = NULL;
 }
 
-gboolean
-register_toy (GtkWidget *applet,
-	      gpointer data,
-	      GDestroyNotify data_destroy,
-	      PanelWidget *panel,
-	      int pos,
-	      gboolean exactpos,
-	      AppletType type)
+AppletInfo *
+panel_register_applet (GtkWidget      *applet,
+		       gpointer        data,
+		       GDestroyNotify  data_destroy,
+		       PanelWidget    *panel,
+		       gint            pos,
+		       gboolean        exactpos,
+		       AppletType      type)
 {
 	AppletInfo *info;
 	int newpos;
 	gboolean insert_at_pos;
 	
-	g_return_val_if_fail (applet != NULL, FALSE);
-	g_return_val_if_fail (panel != NULL, FALSE);
+	g_return_val_if_fail (applet && panel, NULL);
 
 	if ( ! GTK_WIDGET_NO_WINDOW (applet))
 		gtk_widget_set_events (applet, (gtk_widget_get_events (applet) |
@@ -825,7 +824,8 @@ register_toy (GtkWidget *applet,
 			info->widget = NULL;
 			panel_clean_applet(info);
 			g_warning(_("Can't find an empty spot"));
-			return FALSE;
+			g_free (info);
+			return NULL;
 		}
 		panel = PANEL_WIDGET(list->data);
 	}
@@ -854,5 +854,5 @@ register_toy (GtkWidget *applet,
 	size_change (info, panel);
 	back_change (info, panel);
 
-	return TRUE;
+	return info;
 }

@@ -643,19 +643,22 @@ Launcher *
 load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 			   PanelWidget *panel, int pos, gboolean exactpos)
 {
-	Launcher *launcher;
+	Launcher   *launcher;
+	AppletInfo *info;
 
 	launcher = create_launcher (params, ditem);
 
 	if (launcher == NULL)
 		return NULL;
 
-	if ( ! register_toy (launcher->button,
-			     launcher, free_launcher,
-			     panel, pos, exactpos,
-			     APPLET_LAUNCHER)) {
-		/* Don't free launcher here, the button has been destroyed
-		   above and the launcher structure freed */
+	info = panel_register_applet (launcher->button, launcher ,free_launcher,
+				      panel, pos, exactpos, APPLET_LAUNCHER);
+	if (!info) {
+		/* 
+		 * Don't free launcher here, the button has 
+		 * been destroyed above and the launcher 
+		 * structure freed.
+		 */
 		return NULL;
 	}
 

@@ -458,14 +458,19 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		return FALSE;
 
 	{
-		GtkWidget *dw = drawer->drawer;
+		GtkWidget  *dw = drawer->drawer;
+		AppletInfo *info;
 
-		if(!register_toy(drawer->button,
-				 drawer, (GDestroyNotify)g_free,
-				 panel, pos, exactpos, APPLET_DRAWER)) {
-			/* by this time drawer has been freed as register_toy
-			   has destroyed drawer->button */
-			gtk_widget_destroy(dw);
+		info = panel_register_applet (drawer->button,
+					      drawer,
+					      (GDestroyNotify) g_free,
+					      panel,
+					      pos,
+					      exactpos,
+					      APPLET_DRAWER);
+
+		if (!info) {
+			gtk_widget_destroy (dw);
 			return FALSE;
 		}
 	}

@@ -1072,14 +1072,15 @@ reserve_applet_spot (Extern       ext,
 		     int          pos,
 		     AppletType   type)
 {
-	GtkWidget *socket;
-	gint       events;
-	gint       size;
+	GtkWidget  *socket;
+	AppletInfo *info;
+	gint        events;
+	gint        size;
 
 	ext->ebox = gtk_event_box_new ();
 
 	/*
-	 * FIXME: duplicated in applet.c:register_toy ?
+	 * FIXME: duplicated in panel_register_applet ?
 	 */
 	events  = gtk_widget_get_events (ext->ebox) | APPLET_EVENT_MASK;
 	events &= ~(GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
@@ -1109,10 +1110,12 @@ reserve_applet_spot (Extern       ext,
 	 */
 	ext->info = NULL;
 
-	if (!register_toy (ext->ebox, ext, (GDestroyNotify)extern_clean,
-			   panel, pos, ext->exactpos, type)) {
+	info = panel_register_applet (ext->ebox, ext,
+				      (GDestroyNotify)extern_clean,
+				      panel, pos, ext->exactpos, type);
+	if (!info) {
 		/*
-		 * the ebox is destroyed in register_toy
+		 * the ebox is destroyed in panel_register_applet.
 		 */
 		ext->ebox = NULL;
 

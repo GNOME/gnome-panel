@@ -5950,12 +5950,13 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 				  main_menu_flags, global_main,
 				  custom_icon, custom_icon_file);
 
-	if(menu != NULL) {
-		char *tmp;
+	if (menu != NULL) {
+		AppletInfo *info;
+		gchar      *tmp;
 
-		if(!register_toy(menu->button,
-				 menu, free_menu,
-				 panel, pos, exactpos, APPLET_MENU))
+		info = panel_register_applet (menu->button, menu, free_menu, panel, 
+					      pos, exactpos, APPLET_MENU);
+		if (!info)
 			return;
 
 		menu->info = applets_last->data;
