@@ -85,8 +85,8 @@ wncklet_display_about (GtkWidget   *applet,
 		      "comments", comments,
 		      "authors", authors,
 		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", icon_name,
+		      "translator-credits", translator_credits,
+		      "logo-icon-name", icon_name,
 		      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (*dialog),
