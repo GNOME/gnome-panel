@@ -1017,8 +1017,8 @@ panel_make_unique_path (const char *dir,
 		int   rnd;
 		int   word;
 
-		rnd = rand ();
-		word = rand () % NUM_OF_WORDS;
+		rnd = g_random_int ();
+		word = g_random_int () % NUM_OF_WORDS;
 
 		filename = g_strdup_printf ("%s-%010x%s",
 					    words [word],

@@ -814,6 +814,7 @@ panel_applet_queue_applet_to_load (char            *id,
 
 	if (!toplevel_id) {
 		g_warning ("No toplevel on which to load object '%s'\n", id);
+		g_free (id);
 		return;
 	}
 

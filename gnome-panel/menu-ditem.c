@@ -406,7 +406,7 @@ get_unique_name (const char *dir, const char *name)
 
 		/* randomize further same name desktops */
 		if (i > 5)
-			i = rand ();
+			i = g_random_int ();
 
 		full = g_build_path ("/", dir, nameext, NULL);
 		if ( ! panel_uri_exists (full)) {

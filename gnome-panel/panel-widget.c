@@ -113,7 +113,6 @@ debug_panel_widget_dump_applet_data (AppletData *data)
 	printf ("===== Applet Dumped =====\n");
 	printf ("\tPosition : %d\n", data->pos);
 	printf ("\tCells : %d\n", data->cells);
-	printf ("\tDirty : %d\n", data->dirty);
 	printf ("\tDrag Off: %d\n", data->drag_off);
 }
 #endif
@@ -700,105 +699,6 @@ get_size_from_hints (AppletData *ad, int cells)
 	return MAX (cells, ad->min_cells);
 }
 
-static int
-allocate_dirty_child(gpointer data)
-{
-	AppletData *ad = data;
-	AppletData *nad;
-	PanelWidget *panel;
-	GtkWidget *widget;
-	GtkAllocation challoc;
-	GtkRequisition chreq;
-	
-	g_return_val_if_fail(ad != NULL,FALSE);
-	g_return_val_if_fail(ad->applet != NULL,FALSE);
-	g_return_val_if_fail(PANEL_IS_WIDGET(ad->applet->parent),FALSE);
-
-	panel = PANEL_WIDGET (ad->applet->parent);
-	widget = GTK_WIDGET (panel);
-	
-	if(!ad->dirty)
-		return FALSE;
-
-	/* If a packed panel is not given all the space it wants
-	   and this is an expanding applet we must reallocate everything */
-	if (panel->packed &&
-	    ad->expand_major &&
-	    (widget->requisition.width > widget->allocation.width ||
-	     widget->requisition.height > widget->allocation.height)) {
-		gtk_widget_queue_resize (widget);
-		return FALSE;
-	}
-		
-	
-	gtk_widget_get_child_requisition(ad->applet,&chreq);
-
-	challoc.width = chreq.width;
-	challoc.height = chreq.height;
-	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-		if (ad->expand_minor)
-			challoc.height = GTK_WIDGET (panel)->allocation.height;
-
-		if (panel->packed && ad->expand_major && ad->size_hints)
-			challoc.width = CLAMP (MAX (ad->size_hints [0], chreq.width),
-					       chreq.width,
-					       GTK_WIDGET (panel)->allocation.width - ad->constrained);
-
-		ad->cells = challoc.width; 
-		challoc.x = ad->constrained;
-		challoc.y = GTK_WIDGET(panel)->allocation.height / 2 -
-			     challoc.height / 2;
-	} else {
-		if (ad->expand_minor)
-			challoc.width = GTK_WIDGET (panel)->allocation.width;
-
-		if (panel->packed && ad->expand_major && ad->size_hints)
-			challoc.height = CLAMP (MAX (ad->size_hints [0], chreq.height),
-						chreq.height,
-						GTK_WIDGET (panel)->allocation.height - ad->constrained);
-
-		ad->cells = challoc.height;
-		challoc.x = GTK_WIDGET(panel)->allocation.width / 2 -
-			    challoc.width / 2;
-		challoc.y = ad->constrained;
-	}
-
-	ad->min_cells = ad->cells;
-
-	if (!panel->packed && ad->expand_major) {
-		GList *l = g_list_find (panel->applet_list, ad);
-		
-		if (l) {
-			if (l->next) {
-				nad = l->next->data;
-				ad->cells = nad->constrained - ad->constrained - 1;
-			} else {
-				ad->cells = panel->size - ad->constrained - 1;
-			}
-
-			if (ad->size_hints) 
-				ad->cells = get_size_from_hints (ad, ad->cells);
-			
-			if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-				challoc.width = ad->cells;
-			} else {
-				challoc.height = ad->cells;
-			}
-		}
-	}
-
-	gtk_widget_size_allocate(ad->applet,&challoc);
-
-	return FALSE;
-}
-
-static void
-panel_widget_queue_applet_for_resize(AppletData *ad)
-{
-	ad->dirty = TRUE;
-	g_idle_add(allocate_dirty_child,ad);
-}
-
 static void
 panel_widget_jump_applet_right (PanelWidget *panel,
 				GList       *list,
@@ -830,7 +730,7 @@ panel_widget_jump_applet_right (PanelWidget *panel,
 	ad->pos = ad->constrained = pos;
 	panel->applet_list = g_list_remove_link (panel->applet_list, list);
 	panel->applet_list = panel_g_list_insert_before (panel->applet_list, next, list);
-	panel_widget_queue_applet_for_resize (ad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 }
 
@@ -852,7 +752,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 
 	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + MOVE_INCREMENT) {
 		ad->pos = ad->constrained += MOVE_INCREMENT;
-		panel_widget_queue_applet_for_resize (ad);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return;
 	}
@@ -869,8 +769,7 @@ panel_widget_switch_applet_right (PanelWidget *panel,
 	ad->constrained = ad->pos = ad->constrained + nad->min_cells;
 	panel->applet_list = panel_g_list_swap_next (panel->applet_list, list);
 
-	panel_widget_queue_applet_for_resize (ad);
-	panel_widget_queue_applet_for_resize (nad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 
 	emit_applet_moved (panel, ad);
 	emit_applet_moved (panel, nad);
@@ -907,9 +806,7 @@ panel_widget_jump_applet_left (PanelWidget *panel,
 	ad->pos = ad->constrained = pos;
 	panel->applet_list = g_list_remove_link (panel->applet_list, list);
 	panel->applet_list = panel_g_list_insert_after (panel->applet_list, prev, list);
-	panel_widget_queue_applet_for_resize (ad);
-	if (pad && (pad->constrained + pad->cells) >= ad->constrained)
-		panel_widget_queue_applet_for_resize (pad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 }
 
@@ -929,9 +826,7 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - MOVE_INCREMENT) {
 		ad->pos = ad->constrained -= MOVE_INCREMENT;
-		panel_widget_queue_applet_for_resize (ad);
-		if (pad && (pad->constrained + pad->cells) >= ad->constrained)
-			panel_widget_queue_applet_for_resize (pad);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return;
 	}
@@ -948,8 +843,7 @@ panel_widget_switch_applet_left (PanelWidget *panel,
 	pad->constrained = pad->pos = ad->constrained + ad->min_cells;
 	panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
 
-	panel_widget_queue_applet_for_resize (ad);
-	panel_widget_queue_applet_for_resize (pad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 
 	emit_applet_moved (panel, ad);
 	emit_applet_moved (panel, pad);
@@ -1129,7 +1023,7 @@ panel_widget_switch_move (PanelWidget *panel,
 		if (list->prev) {
 			pad = list->prev->data;
 			if (pad->expand_major)
-				panel_widget_queue_applet_for_resize (pad);
+				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 
 		while (ad->constrained < finalpos) {
@@ -1145,7 +1039,7 @@ panel_widget_switch_move (PanelWidget *panel,
 		if (list->prev) {
 			pad = list->prev->data;
 			if (pad->expand_major)
-				panel_widget_queue_applet_for_resize (pad);
+				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 	} else {
 		AppletData *nad;
@@ -1153,7 +1047,7 @@ panel_widget_switch_move (PanelWidget *panel,
 		if (list->next) {
 			nad = list->next->data;
 			if (nad->expand_major)
-				panel_widget_queue_applet_for_resize (nad);
+				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 
 		while (ad->constrained > finalpos) {
@@ -1190,7 +1084,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 
 	if (!nad || nad->constrained >= ad->constrained + ad->min_cells + push) {
 		ad->pos = ad->constrained += push;
-		panel_widget_queue_applet_for_resize (ad);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return TRUE;
 	}
@@ -1201,7 +1095,7 @@ panel_widget_push_applet_right (PanelWidget *panel,
 		return FALSE;
 
 	ad->pos = ad->constrained += push;;
-	panel_widget_queue_applet_for_resize (ad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 	
 	return TRUE;
@@ -1229,7 +1123,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 
 	if (!pad || pad->constrained + pad->min_cells <= ad->constrained - push) {
 		ad->pos = ad->constrained -= push;
-		panel_widget_queue_applet_for_resize (ad);
+		gtk_widget_queue_resize (GTK_WIDGET (panel));
 		emit_applet_moved (panel, ad);
 		return TRUE;
 	}
@@ -1240,7 +1134,7 @@ panel_widget_push_applet_left (PanelWidget *panel,
 		return FALSE;
 
 	ad->pos = ad->constrained -= push;
-	panel_widget_queue_applet_for_resize (ad);
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 	emit_applet_moved (panel, ad);
 	
 	return TRUE;
@@ -1274,7 +1168,7 @@ panel_widget_push_move (PanelWidget *panel,
                 if (list->prev) {
 			pad = list->prev->data;
 			if (pad->expand_major)
-				panel_widget_queue_applet_for_resize(pad);
+				gtk_widget_queue_resize (GTK_WIDGET (panel));
 		}
 	} else {
                 while (ad->constrained > finalpos)
@@ -1534,19 +1428,19 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.y = ad->constrained;
 			}
 			ad->min_cells  = ad->cells;
-			ad->dirty = FALSE;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
 		}
 	} else { /*not packed*/
-		i = panel->size;
-		for(list = g_list_last(panel->applet_list);
-		    list!=NULL;
-		    list = g_list_previous(list)) {
+
+		/* First make sure there's enough room on the left */
+		i = 0;
+		for (list = panel->applet_list;
+		     list != NULL;
+		     list = g_list_next (list)) {
 			AppletData *ad = list->data;
 			GtkRequisition chreq;
-			int cells;
-			
+
 			gtk_widget_get_child_requisition(ad->applet,&chreq);
 
 			if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
@@ -1557,6 +1451,23 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			ad->min_cells = ad->cells;
 
 			ad->constrained = ad->pos;
+
+			if (ad->constrained < i)
+				ad->constrained = i;
+
+			i = ad->constrained + ad->cells;
+		}
+
+		/* Now expand from the right */
+		i = panel->size;
+		for(list = g_list_last(panel->applet_list);
+		    list!=NULL;
+		    list = g_list_previous(list)) {
+			AppletData *ad = list->data;
+			int cells;
+			
+			if (ad->constrained + ad->min_cells > i)
+				ad->constrained = i - ad->min_cells;
 			
 			if (ad->expand_major) {
 				cells = (i - ad->constrained) - 1;
@@ -1568,11 +1479,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				ad->cells = cells;
 			}
 
-			if (ad->constrained + ad->min_cells > i)
-				ad->constrained = i - ad->min_cells;
-
 			i = ad->constrained;
 		}
+
+		/* EEEEK, there's not enough room, so shift applets even
+		 * at the expense of perhaps running out of room on the
+		 * right if there is no free space in the middle */
 		if(i < 0) {
 			i = 0;
 			for(list = panel->applet_list;
@@ -1611,7 +1523,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.x = allocation->width / 2 - challoc.width / 2;
 				challoc.y = ad->constrained;
 			}
-			ad->dirty = FALSE;
 			
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
@@ -2095,15 +2006,7 @@ panel_widget_nice_move (PanelWidget *panel,
 		pad2 = l->prev->data;
 	}
 
-	panel_widget_queue_applet_for_resize (ad);
-
-	if (pad1 && pad1->expand_major) {
-		panel_widget_queue_applet_for_resize (pad1);
-	}
-	
-	if (pad2 && pad2 != pad1 && pad2->expand_major) {
-		panel_widget_queue_applet_for_resize (pad2);
-	}
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 
 	emit_applet_moved (panel, ad);
 }
@@ -2536,7 +2439,6 @@ panel_widget_add (PanelWidget *panel,
 		ad->pos = pos;
 		ad->constrained = pos;
 		ad->drag_off = 0;
-		ad->dirty = FALSE;
 		ad->no_die = 0;
 		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
@@ -2601,13 +2503,12 @@ panel_widget_reparent (PanelWidget *old_panel,
 	
 	info = g_object_get_data (G_OBJECT (ad->applet), "applet_info");
 
-	/*we'll resize both panels anyway*/
-	ad->dirty = FALSE;
-	
 	ad->pos = ad->constrained = panel_widget_get_free_spot (new_panel, ad, pos);
 	if (ad->pos == -1)
 		ad->pos = ad->constrained = 0;
-	panel_widget_queue_applet_for_resize (ad);
+
+	gtk_widget_queue_resize (GTK_WIDGET (new_panel));
+	gtk_widget_queue_resize (GTK_WIDGET (old_panel));
 
 	ad->no_die++;
 

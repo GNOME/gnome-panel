@@ -50,9 +50,6 @@ struct _AppletData
 	int		cells;
 	int             min_cells;
 
-	
-	gboolean	dirty;
-
 	int		drag_off; /* offset on the applet where drag
 				     was started */
 

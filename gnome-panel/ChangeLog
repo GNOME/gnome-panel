@@ -1,5 +1,36 @@
 2003-09-05  Mark McLoughlin  <mark@skynet.ie>
 
+	Patch from George to fix bug #120107 and some other
+	stuff.
+
+	* applet.c: (panel_applet_queue_applet_to_load):
+	fix leak.
+	
+	* menu-ditem.c: (get_unique_name): use g_random_int()
+	instead of rand().
+	
+	* panel-util.c: (panel_make_unique_path): ditto.
+	
+	* panel-profile.c: (panel_profile_load_object): fix leak.
+	
+	* panel-widget.[ch]:
+	(allocate_dirty_child): kill this ugly hack and just resize
+	the entire panel when moving an applet.
+	(panel_widget_jump_applet_right),
+	(panel_widget_switch_applet_right),
+	(panel_widget_jump_applet_left), (panel_widget_switch_applet_left),
+	(panel_widget_switch_move), (panel_widget_push_applet_right),
+	(panel_widget_push_applet_left), (panel_widget_push_move):
+	Update all these to resize the entire panel.
+	(panel_widget_size_allocate): first normalize the positions
+	based on minimum sizes of the applets/objects, basically
+	shifting them right such that they need not ever be shifted
+	right again. Then allocate sizes to applets (starting from the
+	right corner) and finally shift	everything right in case we
+	overshot.
+
+2003-09-05  Mark McLoughlin  <mark@skynet.ie>
+
 	Schemas to maintain compatibility with the 2.0/2.2
 	configurations. 
 	
