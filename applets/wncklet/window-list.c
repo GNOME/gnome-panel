@@ -521,7 +521,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	about = gnome_about_new (_("Window List"), "1.0",
 				 _("(c) 2001 Red Hat, Inc"),
-				 _("The Window List shows a list of all visible windows and let you browse them."),
+				 _("The Window List shows a list of all visible windows and lets you browse them."),
 				 authors,
 				 documenters,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
