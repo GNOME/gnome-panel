@@ -1,3 +1,11 @@
+Thu Apr 16 19:44:40 1998  George Lebl  <jirka@5z.com>
+
+	* cdplayer/cdplayer.c: recover gracefully from errors
+	  when creating widget, if you can't open the cdrom
+	  don't give up, but try again when something is about
+	  to happen. this pervents it from dieing when there was
+	  no disc sometimes.
+
 Wed Apr 15 20:13:24 1998  George Lebl  <jirka@5z.com>
 
 	* batmon/batmon.c,cdplayer/cdplayer.c,clock/clock.c,
