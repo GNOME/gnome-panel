@@ -51,16 +51,38 @@ struct _MultiLoadQueue {
 	gchar *path;
 	gchar *ior;
 	GList *params;
+	gint applet_id;
 };
 static GList *multiple_applet_load_queue=NULL;
+
+static void
+mulapp_remove_emptyfrom_queue(void)
+{
+	GList *list;
+	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
+		MultiLoadQueue *mq = list->data;
+		AppletInfo *info = get_applet_info(mq->applet_id);
+		if(info->type == APPLET_EMPTY) {
+			multiple_applet_load_queue =
+				g_list_remove_link(multiple_applet_load_queue,
+						   list);
+			/*since we should restart the loop now*/
+			mulapp_remove_emptyfrom_queue();
+			return;
+		}
+	}
+}
 
 gint
 mulapp_is_in_queue(gchar *path)
 {
 	GList *list;
-	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list))
-		if(strcmp(((MultiLoadQueue *)list->data)->path,path)==0)
+	mulapp_remove_emptyfrom_queue();
+	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
+		MultiLoadQueue *mq = list->data;
+		if(strcmp(mq->path,path)==0)
 			return TRUE;
+	}
 	return FALSE;
 }
 
@@ -70,6 +92,8 @@ void
 mulapp_load_or_add_to_queue(gchar *path,gchar *param)
 {
 	GList *list;
+	mulapp_remove_emptyfrom_queue();
+
 	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
@@ -84,7 +108,7 @@ mulapp_load_or_add_to_queue(gchar *path,gchar *param)
 }
 
 void
-mulapp_add_to_queue(gchar *path)
+mulapp_add_to_queue(gchar *path, gint applet_id)
 {
 	MultiLoadQueue *mq;
 
@@ -92,6 +116,7 @@ mulapp_add_to_queue(gchar *path)
 	mq->path = g_strdup(path);
 	mq->ior = NULL;
 	mq->params = NULL;
+	mq->applet_id = applet_id;
 	multiple_applet_load_queue = g_list_prepend(multiple_applet_load_queue,
 				                    mq);
 }
@@ -100,6 +125,7 @@ static void
 mulapp_add_ior_and_free_queue(gchar *path, gchar *ior)
 {
 	GList *list;
+	mulapp_remove_emptyfrom_queue();
 	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
@@ -553,6 +579,7 @@ panel_clean_applet(gint applet_id)
 		info->user_menu = g_list_remove_link(info->user_menu,
 						     info->user_menu);
 	}
+	mulapp_remove_emptyfrom_queue();
 }
 
 static void

@@ -142,7 +142,7 @@ gint mulapp_is_in_queue(gchar *path);
   into a queue*/
 void mulapp_load_or_add_to_queue(gchar *path,gchar *param);
 
-void mulapp_add_to_queue(gchar *path);
+void mulapp_add_to_queue(gchar *path, gint applet_id);
 
 
 extern char *cookie;

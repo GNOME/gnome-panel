@@ -196,7 +196,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 				g_free(fullpath);
 				return;
 			} else {
-				mulapp_add_to_queue(fullpath);
+				mulapp_add_to_queue(fullpath,applet_count-1);
 			}
 		}
 
