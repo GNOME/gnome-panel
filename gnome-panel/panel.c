@@ -417,12 +417,9 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	} else if(menu->info->type != APPLET_EXTERN_PENDING &&
 	   menu->info->type != APPLET_EMPTY) {
 		/*handle internal applet callbacks here*/
-		;
 	}
 }
 
-/*the menu is not used for corba applets right now, but it might be used
-  if invoked from some other place*/
 static GtkWidget *
 create_applet_menu(AppletInfo *info, GList *user_menu)
 {
@@ -508,8 +505,23 @@ panel_log_out_callback(GtkWidget *widget, gpointer data)
 void
 applet_show_menu(int id)
 {
+	static GdkCursor *arrow = NULL;
 	AppletInfo *info = g_list_nth(applets,id)->data;
-	show_applet_menu(info);
+
+	if (!info->menu)
+		info->menu = create_applet_menu(info,info->user_menu);
+
+	if(!arrow)
+		arrow = gdk_cursor_new(GDK_ARROW);
+
+	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
+	gtk_grab_add(info->menu);
+	gdk_pointer_grab(info->menu->window,
+			 TRUE,
+			 APPLET_EVENT_MASK,
+			 NULL,
+			 arrow,
+			 GDK_CURRENT_TIME);
 }
 
 

@@ -48,10 +48,6 @@ applet_widget_init (AppletWidget *applet_widget)
 
 	if(!fleur_cursor)
 		fleur_cursor = gdk_cursor_new(GDK_FLEUR);
-
-	/*FIXME: add some code to destroy this on exit*/
-	applet_widget->applet_menu = NULL;
-	applet_widget->menu_items = NULL;
 }
 
 GtkWidget*

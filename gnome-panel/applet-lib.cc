@@ -18,7 +18,6 @@ static int currently_dragged_id = -1;
 typedef struct _CallbackInfo CallbackInfo;
 struct _CallbackInfo {
 	gint applet_id;
-	gchar *menutext;
 	AppletCallbackFunc func;
 	gpointer data;
 };
@@ -27,7 +26,6 @@ GHashTable *applet_callbacks=NULL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
-#define APPLET_MENU_KEY "applet_menu_key"
 
 CORBA::ORB_ptr orb_ptr;
 static CORBA::BOA_ptr boa_ptr;
@@ -64,13 +62,11 @@ public:
 		list = (GList *)g_hash_table_lookup(applet_callbacks,
 						    (char *)callback_name);
 
-		if(list) {
-			for(;list!=NULL;list = g_list_next(list)) {
-				CallbackInfo *info = (CallbackInfo *)list->data;
-				if(info->applet_id == id) {
-					(*(info->func))(id,info->data);
-					return;
-				}
+		for(;list!=NULL;list = g_list_next(list)) {
+			CallbackInfo *info = (CallbackInfo *)list->data;
+			if(info->applet_id == id) {
+				(*(info->func))(id,info->data);
+				return;
 			}
 		}
 	}
@@ -124,131 +120,19 @@ gnome_panel_applet_register_callback(AppletWidget *aw,
 		 applet_callbacks = g_hash_table_new (g_str_hash, g_str_equal);
 
 	info->applet_id = id;
-	info->menutext = g_strdup(menutext);
 	info->func = func;
 	info->data = data;
 
-	aw->menu_items = g_list_append(aw->menu_items,info);
-	
 	list = (GList *)g_hash_table_lookup(applet_callbacks,name);
 
-	if(list) {
+	if(list)
 		g_hash_table_remove(applet_callbacks,name);
-		list = g_list_prepend(list,info);
-	}
-	g_hash_table_insert(applet_callbacks,name,info);
+	list = g_list_prepend(list,info);
+	g_hash_table_insert(applet_callbacks,name,list);
 
-	/*make sure the menu is rebuilt*/
-	if(aw->applet_menu) {
-		gtk_widget_unref(aw->applet_menu);
-		aw->applet_menu = NULL;
-	}
-
-	/*register the callback with the panel since it might want to use
-	  it*/
+	/*register the callback with the panel*/
 	panel_client->applet_add_callback(id,name,menutext);
 }
-
-static void
-move_applet_callback(GtkWidget *widget, gpointer data)
-{
-	GtkWidget *applet_menu = GTK_WIDGET(data);
-	int ourid = (int)gtk_object_get_data(GTK_OBJECT(applet_menu),
-					     APPLET_ID_KEY);
-	GtkWidget *applet = (GtkWidget *)gtk_object_get_data(GTK_OBJECT(
-							      applet_menu),
-							     APPLET_WIDGET_KEY);
-
-	if(currently_dragged_id==-1) {
-		panel_client->applet_drag_start(ourid);
-		currently_dragged_id = ourid;
-		applet_widget_move_grab_add(APPLET_WIDGET(applet));
-	}
-}
-
-
-static void
-remove_applet_callback(GtkWidget *widget, gpointer data)
-{
-	GtkWidget *applet_menu = GTK_WIDGET(data);
-	int ourid = (int)gtk_object_get_data(GTK_OBJECT(applet_menu),
-					     APPLET_ID_KEY);
-
-	panel_client->applet_remove_from_panel(ourid);
-}
-
-
-static void
-applet_callback_callback(GtkWidget *widget, gpointer data)
-{
-	CallbackInfo *info = (CallbackInfo *)data;
-
-	(*(info->func))(info->applet_id,info->data);
-}
-
-GtkWidget *
-create_applet_menu(AppletWidget *aw)
-{
-	GtkWidget *menuitem;
-	GtkWidget *applet_menu;
-	GList *list;
-
-	applet_menu = gtk_menu_new();
-
-	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) remove_applet_callback,
-			   applet_menu);
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	
-	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) move_applet_callback,
-			   applet_menu);
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-	
-
-	if(aw->menu_items) {
-		menuitem = gtk_menu_item_new();
-		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-		gtk_widget_show(menuitem);
-	}
-	for(list = aw->menu_items;list!=NULL;list=g_list_next(list)) {
-		CallbackInfo *info = (CallbackInfo *)list->data;
-		menuitem = gtk_menu_item_new_with_label(info->menutext);
-		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-				   (GtkSignalFunc) applet_callback_callback,
-				   info);
-		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-		gtk_widget_show(menuitem);
-	}
-
-	return applet_menu;
-}
-
-
-static void
-show_applet_menu(GtkWidget *widget, int id)
-{
-
-	AppletWidget *aw = APPLET_WIDGET(widget);
-
-	if (!aw->applet_menu)
-		aw->applet_menu = create_applet_menu(aw);
-
-	gtk_object_set_data(GTK_OBJECT(aw->applet_menu), APPLET_ID_KEY,
-			    (gpointer)id);
-	gtk_object_set_data(GTK_OBJECT(aw->applet_menu), APPLET_WIDGET_KEY,
-			    (gpointer)widget);
-
-	gtk_menu_popup(GTK_MENU(aw->applet_menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
-	/*FIXME: make it pop-up on some title bar of the applet menu or
-	  somehow avoid pressing remove applet being under the cursor!*/
-}
-
 
 /*catch events relevant to the panel and notify the panel*/
 static gint
@@ -273,7 +157,9 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					APPLET_WIDGET(widget));
 				return TRUE;
 			} else if(bevent->button == 3) {
-				show_applet_menu(widget,ourid);
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gtk_grab_remove(widget);
+				panel_client->applet_show_menu(ourid);
 				return TRUE;
 			}
 			break;

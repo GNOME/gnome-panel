@@ -47,6 +47,11 @@ public:
 
 		return ::applet_get_pos (id);
 	}
+	void applet_show_menu (CORBA::Short id) {
+		printf ("APPLET_SHOW_MENU!\n");
+
+		::applet_show_menu (id);
+	}
 	void applet_drag_start (CORBA::Short id) {
 		printf ("APPLET_DRAG_START!\n");
 
