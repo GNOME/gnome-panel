@@ -505,9 +505,9 @@ drop_nautilus_uri (PanelWidget *panel,
 static gboolean
 drop_directory (PanelWidget *panel, int pos, const char *dir)
 {
-	if (panel_is_program_in_path ("nautilus"))
+	if (!panel_is_program_in_path ("nautilus"))
 		return FALSE;
-	  
+
 	return drop_nautilus_uri (panel, pos, dir, "gnome-fs-directory.png");
 }
 
