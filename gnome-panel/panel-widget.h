@@ -118,6 +118,7 @@ struct _PanelWidget
 						 it is 0 .. it's set by the
 						 app not the widget*/
 	char                    *back_pixmap;
+	gint			pixmap_enabled;
 };
 
 struct _PanelWidgetClass
@@ -205,7 +206,8 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelSnapped snapped,
 						 PanelMode mode,
 						 PanelState state,
-						 DrawerDropZonePos drop_zone_pos,
+						 DrawerDropZonePos
+						 	drop_zone_pos,
 						 char *pixmap_name);
 
 /* changing parameters (orient only) */

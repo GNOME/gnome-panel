@@ -1671,6 +1671,15 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	GdkImlibImage *im;
 	GdkPixmap *p;
 
+	if(!pixmap || strcmp(pixmap,"")==0) {
+		/*gdk_gc_set_background (GTK_WIDGET(panel)->gc,
+			    &(GTK_WIDGET(panel)->style->bg[GTK_STATE_NORMAL]));*/
+		gdk_window_set_background (panel->fixed->window, 
+			    &(GTK_WIDGET(panel)->style->bg[GTK_STATE_NORMAL]));
+		//gdk_window_set_back_pixmap (panel->fixed->window, NULL, 0);
+		return 1;
+	}
+	
 	if (panel->back_pixmap && pixmap &&
 	    strcmp (panel->back_pixmap, pixmap) == 0)
 		return 1;

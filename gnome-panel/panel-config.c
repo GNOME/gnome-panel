@@ -69,9 +69,13 @@ static void
 config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	PanelWidget *panel = data;
-	char *text;
+	char *back_pixmap;
 	
-	text = GTK_ENTRY (gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry)))->text;
+	if(panel_config_struct.pixmap_enable)
+		back_pixmap = GTK_ENTRY (gnome_file_entry_gtk_entry (
+				GNOME_FILE_ENTRY (file_entry)))->text;
+	else
+		back_pixmap = "";
 	
 	panel_widget_change_params(panel,
 				   panel_config_struct.orient,
@@ -79,7 +83,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 				   panel_config_struct.mode,
 				   panel->state,
 				   panel->drawer_drop_zone_pos,
-				   text);
+				   back_pixmap);
 	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
 
@@ -206,24 +210,60 @@ value_changed ()
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
 }
 
+static void 
+set_pixmap_enable (GtkWidget *widget, gpointer data)
+{
+	GtkWidget *entry = data;
+	gint enabled = GTK_TOGGLE_BUTTON(widget)->active;
+
+	panel_config_struct.pixmap_enable = enabled;
+
+	gtk_widget_set_sensitive(entry,enabled);
+
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+}
+
+
+
 static GtkWidget *
 pixmap_page (PanelWidget *panel)
 {
 	GtkWidget *box, *f, *t;
+	GtkWidget *vbox;
+	GtkWidget *w;
+
+	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
 
 	f = gtk_frame_new (_("Image file"));
-	gtk_container_border_width (GTK_CONTAINER (f), 2);
-	
+	gtk_container_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 
+			    CONFIG_PADDING_SIZE);
+
 	box = gtk_vbox_new (0, 0);
 	gtk_container_add (GTK_CONTAINER (f), box);
 	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC (value_changed), NULL);
-	gtk_box_pack_start (GTK_BOX (box), file_entry, 0, 0, 2);
+	gtk_box_pack_start (GTK_BOX (box), file_entry, FALSE, FALSE, 
+			    CONFIG_PADDING_SIZE);
 	
-	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ? panel->back_pixmap : "");
-	return f;
+	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ?
+			    panel->back_pixmap : "");
+
+	w = gtk_check_button_new_with_label (_("Enable Background Image"));
+	gtk_signal_connect (GTK_OBJECT (w), "clicked", 
+			    GTK_SIGNAL_FUNC (set_pixmap_enable), 
+			    file_entry);
+	/*always set to true, because in the beginning we don't have
+	  any pixmap so it's not gonna be set by default anyhow*/
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
+	return vbox;
 }
 	     
 void 
@@ -232,13 +272,16 @@ panel_config(PanelWidget *panel)
 	GtkWidget *page;
 	
 	/* return if the window is already up. */
-	if (config_window)
+	if (config_window) {
+		gdk_window_raise(config_window->window);
 		return;
+	}
 
 	/* so far, these are the only ones that can be set */
 	panel_config_struct.orient = panel->orient;
 	panel_config_struct.snapped = panel->snapped;
 	panel_config_struct.mode = panel->mode;
+	panel_config_struct.pixmap_enable = panel->back_pixmap != NULL;
 	
 	
 	/* main window */
