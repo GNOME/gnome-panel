@@ -252,6 +252,12 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = panelglobalconfig.schema
 
+serverdir       = $(libdir)/bonobo/servers
+server_in_files = GNOME_Panel.server.in
+server_DATA     = $(server_in_files:.server.in=.server)
+
+@INTLTOOL_SERVER_RULE@
+
 install-data-local:
 	GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
 
