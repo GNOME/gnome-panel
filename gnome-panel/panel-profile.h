@@ -47,6 +47,7 @@ gboolean    panel_profile_get_show_program_list   (void);
 void        panel_profile_set_show_program_list   (gboolean show_program_list);
 gboolean    panel_profile_is_writable_show_program_list (void);
 gboolean    panel_profile_get_enable_program_list (void);
+gboolean    panel_profile_get_enable_autocomplete (void);
 
 
 void           panel_profile_add_to_list            (PanelGConfKeyType  type,

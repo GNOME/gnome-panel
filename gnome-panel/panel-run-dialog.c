@@ -1352,6 +1352,9 @@ entry_event (GtkEditable    *entry,
 	if (event->type == GDK_KEY_PRESS)
 		dialog->use_program_list = FALSE;
 
+	if (!panel_profile_get_enable_autocomplete ())
+		return FALSE;
+
 	/* tab completion */
 	if (event->type == GDK_KEY_PRESS &&
 	    event->keyval == GDK_Tab) {

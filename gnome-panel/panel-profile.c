@@ -2417,6 +2417,12 @@ panel_profile_get_enable_program_list (void)
 	return get_program_listing_setting ("enable_program_list");
 }
 
+gboolean
+panel_profile_get_enable_autocomplete (void)
+{
+	return get_program_listing_setting ("enable_autocomplete");
+}
+
 void
 panel_profile_set_show_program_list (gboolean show_program_list)
 {
