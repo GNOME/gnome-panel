@@ -573,7 +573,6 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 {
 	GSList *li;
 	Extern *ext;
-	char *p;
 	POA_GNOME_PanelSpot *panelspot_servant;
 	GNOME_PanelSpot acc;
 	
@@ -663,9 +662,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 		*cfgpath = NULL;
 		return CORBA_OBJECT_NIL;
 	}
-	p = g_strconcat(PANEL_CONFIG_PATH,"Applet_Dummy/",NULL);
-	*cfgpath = CORBA_string_dup(p);
-	g_free(p);
+	*cfgpath = CORBA_string_dup(PANEL_CONFIG_PATH "Applet_Dummy/");
 	*globcfgpath = CORBA_string_dup (PANEL_CONFIG_PATH);
 
 	return CORBA_Object_duplicate(acc, ev);

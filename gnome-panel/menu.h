@@ -44,17 +44,15 @@ struct _Menu {
 
 void load_menu_applet(char *params, int main_menu_flags,
 		      PanelWidget *panel, int pos, gboolean exactpos);
-void add_menu_widget (Menu *menu, GSList *menudirl, int main_menu,
-		      int fake_subs);
+void add_menu_widget (Menu *menu, GSList *menudirl, gboolean main_menu,
+		      gboolean fake_subs);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
-void make_panel_submenu (GtkWidget *menu, int fake_submenus);
+void make_panel_submenu (GtkWidget *menu, gboolean fake_submenus);
 
-/*do this before showing the panel menu*/
-/*static void show_x_on_panels(GtkWidget *menu, gpointer data);*/
-GtkWidget * create_panel_root_menu(GtkWidget *panel, int tearoff);
+GtkWidget * create_panel_root_menu(GtkWidget *panel, gboolean tearoff);
 
 void menu_properties(Menu *menu);
 
@@ -73,19 +71,19 @@ void load_tornoff(void);
 #define DEBIAN_MENUDIR "/var/lib/gnome/Debian/."
 
 #define MENU_TYPES "types_menu"
-#define MENU_TYPE_EDGE "Edge panel"
-#define MENU_TYPE_ALIGNED "Aligned panel"
-#define MENU_TYPE_SLIDING "Sliding panel"
-#define MENU_TYPE_FLOATING "Floating panel"
+#define MENU_TYPE_EDGE "type-edge"
+#define MENU_TYPE_ALIGNED "type-aligned"
+#define MENU_TYPE_SLIDING "type-sliding"
+#define MENU_TYPE_FLOATING "type-floating"
 
 #define MENU_MODES "modes_menu"
-#define MENU_MODE_EXPLICIT_HIDE "Explicit hide"
-#define MENU_MODE_AUTO_HIDE "Auto hide"
+#define MENU_MODE_EXPLICIT_HIDE "mode-explicit-hide"
+#define MENU_MODE_AUTO_HIDE "mode-auto-hide"
 
 #define MENU_HIDEBUTTONS "hidebuttons_menu"
-#define MENU_HIDEBUTTONS_PIXMAP "With pixmap arrow"
-#define MENU_HIDEBUTTONS_PLAIN "Without pixmap"
-#define MENU_HIDEBUTTONS_NONE "None"
+#define MENU_HIDEBUTTONS_PIXMAP "hidebuttons-pixmap"
+#define MENU_HIDEBUTTONS_PLAIN "hidebuttons-plain"
+#define MENU_HIDEBUTTONS_NONE "hidebuttons-none"
 
 /* perhaps into basep-widget.h? */
 enum {
@@ -96,20 +94,20 @@ enum {
 
 
 #define MENU_SIZES "sizes_menu"
-#define MENU_SIZE_TINY "Tiny (24 pixels)"
-#define MENU_SIZE_SMALL "Small (36 pixels)"
-#define MENU_SIZE_STANDARD "Standard (48 pixels)"
-#define MENU_SIZE_LARGE "Large (64 pixels)"
-#define MENU_SIZE_HUGE "Huge (80 pixels)"
+#define MENU_SIZE_TINY "size-tiny"
+#define MENU_SIZE_SMALL "size-small"
+#define MENU_SIZE_STANDARD "size-standard"
+#define MENU_SIZE_LARGE "size-large"
+#define MENU_SIZE_HUGE "size-huge"
 
 #define MENU_BACKS "background_menu"
-#define MENU_BACK_NONE "Standard"
-#define MENU_BACK_PIXMAP "Pixmap"
-#define MENU_BACK_COLOR "Color"
+#define MENU_BACK_NONE "back-none"
+#define MENU_BACK_PIXMAP "back-pixmap"
+#define MENU_BACK_COLOR "back-color"
 
 #define MENU_ORIENTS "orients_menu"
-#define MENU_ORIENT_HORIZONTAL "Horizontal"
-#define MENU_ORIENT_VERTICAL "Vertical"
+#define MENU_ORIENT_HORIZONTAL "orient-horizontal"
+#define MENU_ORIENT_VERTICAL "orient-vertical"
 
 END_GNOME_DECLS
 

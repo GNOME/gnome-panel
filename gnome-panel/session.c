@@ -272,11 +272,13 @@ save_applet_configuration(AppletInfo *info)
 	buf = g_string_new(NULL);
 
 	gnome_config_push_prefix("");
-	g_string_sprintf(buf, "%sApplet_Config/Applet_%d", PANEL_CONFIG_PATH, info->applet_id+1);
+	g_string_sprintf(buf, "%sApplet_Config/Applet_%d", PANEL_CONFIG_PATH,
+			 info->applet_id+1);
 	gnome_config_clean_section(buf->str);
 	gnome_config_pop_prefix();
 
-	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH, info->applet_id+1);
+	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH,
+			 info->applet_id+1);
 	gnome_config_push_prefix(buf->str);
 
 	/*obviously no need for saving*/
@@ -302,16 +304,12 @@ save_applet_configuration(AppletInfo *info)
 	switch(info->type) {
 	case APPLET_EXTERN:
 		{
-			char *globalcfg;
 			char *s;
 			Extern *ext = info->data;
 
 			/*just in case the applet times out*/
 			gnome_config_set_string("id", EMPTY_ID);
 			gnome_config_pop_prefix();
-
-			globalcfg = g_concat_dir_and_file(PANEL_CONFIG_PATH,
-							  "Applet_All_Extern/");
 
 			/*this is the file path we must kill first */
 			g_string_sprintf(buf, "%sApplet_%d_Extern",
@@ -335,8 +333,9 @@ save_applet_configuration(AppletInfo *info)
 					 PANEL_CONFIG_PATH, info->applet_id+1);
 			/*have the applet do it's own session saving*/
 			send_applet_session_save(info,ext->applet,
-						 buf->str, globalcfg);
-			g_free(globalcfg);
+						 buf->str,
+						 PANEL_CONFIG_PATH
+						 "Applet_All_Extern/");
 			return FALSE; /*here we'll wait for done_session_save*/
 		}
 	case APPLET_DRAWER: 
@@ -536,7 +535,6 @@ do_session_save(GnomeClient *client,
 		int sync_panels)
 {
 	int num;
-	char *s;
 #if PER_SESSION_CONFIGURATION
 	gchar *new_args[] = { "rm", "-r", NULL };
 #endif /* PER_SESSION_CONFIGURATION */
@@ -565,9 +563,7 @@ do_session_save(GnomeClient *client,
 	printf(" 2"); fflush(stdout);
 #endif
 
-	s = g_concat_dir_and_file(PANEL_CONFIG_PATH,"panel/Config/");
-	gnome_config_push_prefix (s);
-	g_free(s);
+	gnome_config_push_prefix (PANEL_CONFIG_PATH "panel/Config/");
 
 	if(complete_sync || sync_applets)
 		gnome_config_set_int ("applet_count", applet_count);
@@ -773,18 +769,17 @@ void
 init_user_applets(void)
 {
 	GString *buf;
-	int   count,num;	
+	int count, num;	
 
+	count = gnome_config_get_int(PANEL_CONFIG_PATH
+				     "panel/Config/applet_count=0");
 	buf = g_string_new(NULL);
-	g_string_sprintf(buf,"%spanel/Config/applet_count=0",
-			 PANEL_CONFIG_PATH);
-	count=gnome_config_get_int(buf->str);
 	for(num=1;num<=count;num++) {
 		char *applet_name;
 		int   pos=0,panel_num;
 		PanelWidget *panel;
 
-		g_string_sprintf(buf,"%sApplet_Config/Applet_%d/",
+		g_string_sprintf(buf, "%sApplet_Config/Applet_%d/",
 				 PANEL_CONFIG_PATH, num);
 		gnome_config_push_prefix(buf->str);
 		applet_name = gnome_config_get_string("id=Unknown");
@@ -931,13 +926,11 @@ void
 init_user_panels(void)
 {
 	GString *buf;
-	int   count,num;	
+	int count, num;	
 	GtkWidget *panel=NULL;
 
-	buf = g_string_new(NULL);
-	g_string_sprintf(buf,"%spanel/Config/panel_count=0",
-			 PANEL_CONFIG_PATH);
-	count=gnome_config_get_int(buf->str);
+	count = gnome_config_get_int(PANEL_CONFIG_PATH
+				     "panel/Config/panel_count=0");
 
 	/*load a default snapped panel on the bottom of the screen,
 	  it is required to have at least one panel for this all
@@ -986,9 +979,10 @@ init_user_panels(void)
 		  next syncing*/
 		need_complete_save = TRUE;
 
-		g_string_free(buf,TRUE);
 		return;
 	}
+
+	buf = g_string_new(NULL);
 
 	for(num=1;num<=count;num++) {
 		PanelType type;
@@ -1453,17 +1447,16 @@ convert_read_old_config(void)
 	int applet_count; /*store this so that we can clean*/
 	int panel_count; /*store this so that we can clean*/
 
-	buf = g_string_new(NULL);
-	g_string_sprintf(buf,"%spanel/Config/",PANEL_CONFIG_PATH);
-	gnome_config_push_prefix(buf->str);
+	gnome_config_push_prefix(PANEL_CONFIG_PATH "panel/Config/");
 
 	gnome_config_get_bool_with_default("tooltips_enabled=TRUE",&is_def);
 	if(is_def) {
 		gnome_config_pop_prefix();
-		g_string_free(buf,TRUE);
 		return FALSE;
 	}
 	
+	buf = g_string_new(NULL);
+
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("tooltips_enabled=TRUE");
 
@@ -1539,14 +1532,12 @@ convert_read_old_config(void)
 
 	gnome_config_push_prefix("");
 
-	g_string_sprintf(buf,"%spanel/Config",PANEL_CONFIG_PATH);
+	gnome_config_clean_section(PANEL_CONFIG_PATH "panel/Config");
 
-	gnome_config_clean_section(buf->str);
-
-	g_string_sprintf(buf,"%spanel/Config/applet_count",PANEL_CONFIG_PATH);
-	gnome_config_set_int(buf->str,applet_count);
-	g_string_sprintf(buf,"%spanel/Config/panel_count",PANEL_CONFIG_PATH);
-	gnome_config_set_int(buf->str,panel_count);
+	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/applet_count",
+			     applet_count);
+	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/panel_count",
+			     panel_count);
 
 	gnome_config_pop_prefix();
 

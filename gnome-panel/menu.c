@@ -52,6 +52,8 @@ extern int panels_to_sync;
 extern int applets_to_sync;
 extern int need_complete_save;
 
+extern int base_panels;
+
 extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
@@ -1052,7 +1054,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 static void
 setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap, 
-			       char *title, char *item_loc, int applet, 
+			       char *title, char *item_loc, gboolean applet, 
 			       IconSize icon_size)
 			       
 {
@@ -1139,7 +1141,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 
 static void
 setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
-		     char *item_loc, int applet)
+		     char *item_loc, gboolean applet)
 {
 	setup_full_menuitem_with_size (menuitem, pixmap, title, 
 				       item_loc, applet, SMALL_ICON_SIZE);
@@ -1148,7 +1150,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 void
 setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 {
-	setup_full_menuitem(menuitem,pixmap,title,NULL,FALSE);
+	setup_full_menuitem(menuitem, pixmap, title, NULL, FALSE);
 }
 
 static void
@@ -1317,13 +1319,13 @@ menu_destroy(GtkWidget *menu, gpointer data)
 }
 
 static GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
-				   int applets, char *dir_name,
-				   char *pixmap_name, int fake_submenus,
-				   int force);
+				   gboolean applets, char *dir_name,
+				   char *pixmap_name, gboolean fake_submenus,
+				   gboolean force);
 static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
-				      int applets, char *dir_name,
-				      char *pixmap_name, int fake_submenus,
-				      int force);
+				      gboolean applets, char *dir_name,
+				      char *pixmap_name, gboolean fake_submenus,
+				      gboolean force);
 
 /*reread the applet menu, not a submenu*/
 static void
@@ -1725,9 +1727,9 @@ create_fake_menu_at (char *menudir,
 static void
 create_menuitem(GtkWidget *menu,
 		FileRec *fr,
-		int applets,
-		int fake_submenus,
-		int *add_separator,
+		gboolean applets,
+		gboolean fake_submenus,
+		gboolean *add_separator,
 		int *first_item)
 {
 	GtkWidget *menuitem, *sub, *pixmap;
@@ -1829,11 +1831,11 @@ create_menuitem(GtkWidget *menu,
 static GtkWidget *
 create_menu_at (GtkWidget *menu,
 		char *menudir,
-		int applets,
+		gboolean applets,
 		char *dir_name,
 		char *pixmap_name,
-		int fake_submenus,
-		int force)
+		gboolean fake_submenus,
+		gboolean force)
 {
 	return create_menu_at_fr(menu,fr_get_dir(menudir),
 				 applets,dir_name,pixmap_name,
@@ -1843,15 +1845,15 @@ create_menu_at (GtkWidget *menu,
 static GtkWidget *
 create_menu_at_fr (GtkWidget *menu,
 		   FileRec *fr,
-		   int applets,
+		   gboolean applets,
 		   char *dir_name,
 		   char *pixmap_name,
-		   int fake_submenus,
-		   int force)
+		   gboolean fake_submenus,
+		   gboolean force)
 {	
 	GSList *li;
 	GSList *mfl = NULL;
-	int add_separator = FALSE;
+	gboolean add_separator = FALSE;
 	int first_item = 0;
 	GtkWidget *menuitem;
 	MenuFinfo *mf = NULL;
@@ -1993,7 +1995,7 @@ menu_deactivate(GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_applets_menu(GtkWidget *menu, int fake_submenus)
+create_applets_menu(GtkWidget *menu, gboolean fake_submenus)
 {
 	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("applets");
@@ -2006,10 +2008,10 @@ create_applets_menu(GtkWidget *menu, int fake_submenus)
 		return NULL;
 	}
 	
-	applet_menu = create_menu_at(menu,menudir,TRUE,
+	applet_menu = create_menu_at(menu, menudir, TRUE,
 				     _("Applets"),
 				     GNOME_STOCK_PIXMAP_EXEC,
-				     fake_submenus,FALSE);
+				     fake_submenus, FALSE);
 	g_free (menudir);
 	return applet_menu;
 }
@@ -2101,12 +2103,12 @@ find_empty_edge (void)
 }
 
 static void
-create_new_panel(GtkWidget *w,gpointer data)
+create_new_panel(GtkWidget *w, gpointer data)
 {
 	PanelType type = GPOINTER_TO_INT(data);
 	GdkColor bcolor = {0,0,0,1};
 	gint16 x, y;
-	GtkWidget *panel=NULL;
+	GtkWidget *panel = NULL;
     
 	g_return_if_fail (type != DRAWER_PANEL);
 
@@ -2181,7 +2183,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 	panels_to_sync = TRUE;
 }
 
-static GtkWidget * create_add_panel_submenu (int tearoff);
+static GtkWidget * create_add_panel_submenu (gboolean tearoff);
 
 static void
 add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
@@ -2204,7 +2206,7 @@ add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_add_panel_submenu (int tearoff)
+create_add_panel_submenu (gboolean tearoff)
 {
 	GtkWidget *menu, *menuitem;
 
@@ -2279,7 +2281,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 	  
 
 static GtkWidget *
-create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
+create_system_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 	char *menudir;
@@ -2312,7 +2314,7 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 
 static GtkWidget *
 create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
-		 int fake_submenus, int force, int fake)
+		 gboolean fake_submenus, gboolean force, gboolean fake)
 {
 	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
@@ -2321,7 +2323,7 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
 	g_free (menu_base);
 	
 	if(!fake || menu) {
-		menu = create_menu_at (menu,menudir, FALSE,
+		menu = create_menu_at (menu, menudir, FALSE,
 				       title, pixmap,
 				       fake_submenus,
 				       force);
@@ -2334,7 +2336,7 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
 }
 
 static GtkWidget *
-create_debian_menu(GtkWidget *menu, int fake_submenus, int fake)
+create_debian_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake)
 {
 	if (!fake || menu) {
 		menu = create_menu_at (menu, DEBIAN_MENUDIR, FALSE,
@@ -2349,8 +2351,8 @@ create_debian_menu(GtkWidget *menu, int fake_submenus, int fake)
 }
 
 static GtkWidget *
-create_kde_menu(GtkWidget *menu, int fake_submenus,
-		int force, int fake)
+create_kde_menu(GtkWidget *menu, gboolean fake_submenus,
+		gboolean force, gboolean fake)
 {
 	char *pixmap_name;
 
@@ -2390,7 +2392,6 @@ status_unparent(GtkWidget *widget)
 	}
 }
 
-extern int base_panels;
 static void
 remove_panel (GtkWidget *w, gpointer data)
 {
@@ -2411,15 +2412,13 @@ remove_panel (GtkWidget *w, gpointer data)
 	gtk_widget_destroy (GTK_WIDGET (basep));
 }
 
-GtkWidget * create_panel_root_menu(GtkWidget *panel, int tearoff);
-
 static void
 panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
 {
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
 
-	GtkWidget *menu = create_panel_root_menu(panel,FALSE);
+	GtkWidget *menu = create_panel_root_menu(panel, FALSE);
 
 	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
@@ -2439,10 +2438,10 @@ panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
 }
 
 static GtkWidget *
-create_root_menu(int fake_submenus, int flags, int tearoff);
+create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff);
 
 GtkWidget *
-create_panel_root_menu(GtkWidget *panel, int tearoff)
+create_panel_root_menu(GtkWidget *panel, gboolean tearoff)
 {
 	GtkWidget *menu;
 
@@ -2785,8 +2784,8 @@ static void
 show_x_on_panels(GtkWidget *menu, gpointer data)
 {
 	GtkWidget *pw;
-	GtkWidget *types = gtk_object_get_data(GTK_OBJECT(menu),MENU_TYPES);
-	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu),MENU_MODES);
+	GtkWidget *types = gtk_object_get_data(GTK_OBJECT(menu), MENU_TYPES);
+	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu), MENU_MODES);
 	GtkWidget *orient = gtk_object_get_data (GTK_OBJECT (menu), MENU_ORIENTS);
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	g_return_if_fail(cur_panel != NULL);
@@ -2948,27 +2947,28 @@ update_orient_menu (GtkWidget *menu, gpointer data)
 }
 
 typedef struct {
-	char *s;
+	char *name;
+	char *id;
 	int i;
-} StringEnumPair;
+} NameIdEnum;
 
 static void
-add_radios_to_menu (GtkWidget *menu, StringEnumPair *items,
+add_radios_to_menu (GtkWidget *menu, NameIdEnum *items,
 		    GtkSignalFunc func)
 {
 	int i;
 	GSList *radio_group = NULL;
 	GtkWidget *menuitem;
 
-	for (i=0; items[i].s; i++) {
+	for (i=0; items[i].name; i++) {
 		menuitem = gtk_radio_menu_item_new (radio_group);
 		radio_group = gtk_radio_menu_item_group (
 			GTK_RADIO_MENU_ITEM (menuitem));
-		setup_menuitem (menuitem, NULL, _(items[i].s));
+		setup_menuitem (menuitem, NULL, _(items[i].name));
 		gtk_menu_append (GTK_MENU (menu), 
 				 menuitem);
 		gtk_object_set_data (GTK_OBJECT (menu),
-				     items[i].s, menuitem);
+				     items[i].id, menuitem);
 		gtk_check_menu_item_set_show_toggle (
 			GTK_CHECK_MENU_ITEM (menuitem), TRUE);
 		gtk_check_menu_item_set_active (
@@ -2981,7 +2981,7 @@ add_radios_to_menu (GtkWidget *menu, StringEnumPair *items,
 
 static void
 add_radio_menu (GtkWidget *menu, char *menutext, 
-		StringEnumPair *items, char *menu_key,
+		NameIdEnum *items, char *menu_key,
 		GtkSignalFunc change_func,
 		GtkSignalFunc update_func)
 {
@@ -3007,36 +3007,48 @@ add_radio_menu (GtkWidget *menu, char *menutext,
 static void
 make_properties_submenu (GtkWidget *menu)
 {
-	StringEnumPair types[] = { { N_(MENU_TYPE_EDGE), EDGE_PANEL },
-				   { N_(MENU_TYPE_ALIGNED), ALIGNED_PANEL },
-				   { N_(MENU_TYPE_SLIDING), SLIDING_PANEL },
-				   { N_(MENU_TYPE_FLOATING), FLOATING_PANEL },
-				   { NULL, -1 } };
+	NameIdEnum types[] = {
+		{ N_("Edge panel"), MENU_TYPE_EDGE, EDGE_PANEL },
+		{ N_("Aligned panel"), MENU_TYPE_ALIGNED, ALIGNED_PANEL },
+		{ N_("Sliding panel"), MENU_TYPE_SLIDING, SLIDING_PANEL },
+		{ N_("Floating panel"), MENU_TYPE_FLOATING, FLOATING_PANEL },
+		{ NULL, NULL, -1 }
+	};
 	
-	StringEnumPair modes[] = { { N_(MENU_MODE_EXPLICIT_HIDE), BASEP_EXPLICIT_HIDE },
-				   { N_(MENU_MODE_AUTO_HIDE), BASEP_AUTO_HIDE },
-				   { NULL, -1 } };
+	NameIdEnum modes[] = {
+		{ N_("Explicit hide"), MENU_MODE_EXPLICIT_HIDE, BASEP_EXPLICIT_HIDE },
+		{ N_("Auto hide"), MENU_MODE_AUTO_HIDE, BASEP_AUTO_HIDE },
+		{ NULL, NULL, -1 }
+	};
 
-	StringEnumPair hidebuttons[] = { { N_(MENU_HIDEBUTTONS_PIXMAP), HIDEBUTTONS_PIXMAP },
-				       { N_(MENU_HIDEBUTTONS_PLAIN), HIDEBUTTONS_PLAIN },
-				       { N_(MENU_HIDEBUTTONS_NONE), HIDEBUTTONS_NONE },
-				       { NULL, -1 } };
+	NameIdEnum hidebuttons[] = {
+		{ N_("With pixmap arrow"), MENU_HIDEBUTTONS_PIXMAP, HIDEBUTTONS_PIXMAP },
+		{ N_("Without pixmap"), MENU_HIDEBUTTONS_PLAIN, HIDEBUTTONS_PLAIN },
+		{ N_("None"), MENU_HIDEBUTTONS_NONE, HIDEBUTTONS_NONE },
+		{ NULL, NULL, -1 }
+	};
 
-	StringEnumPair orients[] = { { N_(MENU_ORIENT_HORIZONTAL), PANEL_HORIZONTAL },
-				     { N_(MENU_ORIENT_VERTICAL), PANEL_VERTICAL },
-				     { NULL, -1 } };
+	NameIdEnum orients[] = {
+		{ N_("Horizontal"), MENU_ORIENT_HORIZONTAL, PANEL_HORIZONTAL },
+		{ N_("Vertical"), MENU_ORIENT_VERTICAL, PANEL_VERTICAL },
+		{ NULL, NULL, -1 }
+	};
 
-	StringEnumPair sizes[] = { { N_(MENU_SIZE_TINY), SIZE_TINY },
-				   { N_(MENU_SIZE_SMALL), SIZE_SMALL },
-				   { N_(MENU_SIZE_STANDARD), SIZE_STANDARD },
-				   { N_(MENU_SIZE_LARGE), SIZE_LARGE },
-				   { N_(MENU_SIZE_HUGE), SIZE_HUGE },
-				   { NULL, -1 } };
+	NameIdEnum sizes[] = {
+		{ N_("Tiny (24 pixels)"), MENU_SIZE_TINY, SIZE_TINY },
+		{ N_("Small (36 pixels)"), MENU_SIZE_SMALL, SIZE_SMALL },
+		{ N_("Standard (48 pixels)"), MENU_SIZE_STANDARD, SIZE_STANDARD },
+		{ N_("Large (64 pixels)"), MENU_SIZE_LARGE, SIZE_LARGE },
+		{ N_("Huge (80 pixels)"), MENU_SIZE_HUGE, SIZE_HUGE },
+		{ NULL, NULL, -1 }
+	};
 
-	StringEnumPair backgrounds[] = { { N_(MENU_BACK_NONE), PANEL_BACK_NONE },
-					 { N_(MENU_BACK_COLOR), PANEL_BACK_COLOR },
-					 { N_(MENU_BACK_PIXMAP), PANEL_BACK_PIXMAP },
-					 { NULL, -1 } };
+	NameIdEnum backgrounds[] = {
+		{ N_("Standard"), MENU_BACK_NONE, PANEL_BACK_NONE },
+		{ N_("Pixmap"), MENU_BACK_COLOR, PANEL_BACK_COLOR },
+		{ N_("Color"), MENU_BACK_PIXMAP, PANEL_BACK_PIXMAP },
+		{ NULL, NULL, -1 }
+	};
 
 	add_radio_menu (menu, _("Type"), types, MENU_TYPES,
 			convert_to_panel, update_type_menu);
@@ -3199,7 +3211,7 @@ panel_config_global(void)
 }
 
 void
-make_panel_submenu (GtkWidget *menu, int fake_submenus)
+make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 {
 	GtkWidget *menuitem, *submenu, *submenuitem;
 
@@ -3304,8 +3316,10 @@ panel_lock (GtkWidget *widget, gpointer data)
 		gnome_error_dialog(_("Cannot execute xscreensaver"));
 }
 
-static GtkWidget *create_panel_submenu (GtkWidget *m, int fake_sub, int tearoff);
-static GtkWidget *create_desktop_menu (GtkWidget *m, int fake_sub, int tear);
+static GtkWidget *create_panel_submenu (GtkWidget *m, gboolean fake_sub,
+					gboolean tearoff);
+static GtkWidget *create_desktop_menu (GtkWidget *m, gboolean fake_sub,
+				       gboolean tearoff);
 
 static void
 panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
@@ -3356,7 +3370,7 @@ desktop_menu_tearoff_new_menu (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_panel_submenu(GtkWidget *menu, int fake_submenus, int tearoff)
+create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 {
 	GtkWidget *menuitem;
 	char *char_tmp;
@@ -3417,7 +3431,7 @@ run_cb (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_desktop_menu (GtkWidget *menu, int fake_submenus, int tearoff)
+create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 {
 	GtkWidget *menuitem;
 	char *char_tmp;
@@ -3465,22 +3479,30 @@ create_desktop_menu (GtkWidget *menu, int fake_submenus, int tearoff)
 }
 
 static GtkWidget *
-create_root_menu(int fake_submenus, int flags, int tearoff)
+create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 {
 	GtkWidget *root_menu;
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 
-	int has_inline = (flags & (MAIN_MENU_SYSTEM | MAIN_MENU_USER |
-				   MAIN_MENU_APPLETS | MAIN_MENU_KDE |
-				   MAIN_MENU_REDHAT | MAIN_MENU_DEBIAN));
+	gboolean has_inline = (flags & (MAIN_MENU_SYSTEM |
+					MAIN_MENU_USER |
+					MAIN_MENU_APPLETS |
+					MAIN_MENU_KDE |
+					MAIN_MENU_REDHAT |
+					MAIN_MENU_DEBIAN));
 
-	int has_subs = (flags & (MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
-				 MAIN_MENU_APPLETS_SUB | MAIN_MENU_KDE_SUB |
-				 MAIN_MENU_REDHAT_SUB | MAIN_MENU_DEBIAN_SUB));
+	gboolean has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
+				      MAIN_MENU_USER_SUB |
+				      MAIN_MENU_APPLETS_SUB |
+				      MAIN_MENU_KDE_SUB |
+				      MAIN_MENU_REDHAT_SUB |
+				      MAIN_MENU_DEBIAN_SUB));
 
-	int has_inline2 = (flags & (MAIN_MENU_DESKTOP | MAIN_MENU_PANEL));
-	int has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB|MAIN_MENU_PANEL_SUB));
+	gboolean has_inline2 = (flags & (MAIN_MENU_DESKTOP |
+					 MAIN_MENU_PANEL));
+	gboolean has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
+				       MAIN_MENU_PANEL_SUB));
 
 	IconSize size = global_config.use_large_icons 
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
@@ -3670,7 +3692,8 @@ create_root_menu(int fake_submenus, int flags, int tearoff)
 }
 	
 void
-add_menu_widget (Menu *menu, GSList *menudirl, int main_menu, int fake_subs)
+add_menu_widget (Menu *menu, GSList *menudirl,
+		 gboolean main_menu, gboolean fake_subs)
 {
 	GSList *li;
 	if(menu->menu)
@@ -3745,7 +3768,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 }
 
 static Menu *
-create_panel_menu (char *menudir, int main_menu,
+create_panel_menu (char *menudir, gboolean main_menu,
 		   PanelOrientType orient, int main_menu_flags)
 {
 	Menu *menu;
@@ -3785,10 +3808,10 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 		   int main_menu_flags)
 {
 	Menu *menu;
-	int main_menu;
+	gboolean main_menu;
 
 	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
-	char *this_menu = get_real_menu_path(arguments,menu_base);
+	char *this_menu = get_real_menu_path(arguments, menu_base);
 
 	if (!this_menu) {
 		g_free (menu_base);
@@ -3804,12 +3827,18 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 		}
 	}
 
-	main_menu = (!arguments || !*arguments || (strcmp (arguments, ".") == 0));
+	main_menu = (!arguments ||
+		     !*arguments ||
+		     (strcmp (arguments, ".") == 0));
 
-	menu = create_panel_menu (this_menu, main_menu, orient,main_menu_flags);
-	menu->path=g_strdup((arguments && *arguments)?arguments:".");
+	menu = create_panel_menu (this_menu, main_menu,
+				  orient, main_menu_flags);
+	if (arguments && *arguments)
+		menu->path = g_strdup(arguments);
+	else
+		menu->path = g_strdup(".");
 
-	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
+	gtk_object_set_user_data(GTK_OBJECT(menu->button), menu);
 
 	g_free(menu_base);
 	g_free (this_menu);
@@ -3822,7 +3851,7 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	g_return_if_fail(menu!=NULL);
 
 	button_widget_set_params(BUTTON_WIDGET(menu->button),
-				 MENU_TILE,TRUE,orient);
+				 MENU_TILE, TRUE, orient);
 }
 
 void
@@ -3848,8 +3877,7 @@ load_menu_applet(char *params, int main_menu_flags,
 		   (tmp = gnome_is_program_in_path("gmenu")))  {
 			g_free(tmp);
 			applet_add_callback(menu->info, "edit_menus",
-					    NULL,
-					    _("Edit menus..."));
+					    NULL, _("Edit menus..."));
 		}
 	}
 }
@@ -3858,12 +3886,9 @@ void
 save_tornoff(void)
 {
 	GSList *li;
-	char *s;
 	int i;
 
-	s = g_concat_dir_and_file(PANEL_CONFIG_PATH,"panel/Config/");
-	gnome_config_push_prefix (s);
-	g_free(s);
+	gnome_config_push_prefix (PANEL_CONFIG_PATH "panel/Config/");
 
 	gnome_config_set_int("tearoffs_count",g_slist_length(tearoffs));
 
@@ -3876,6 +3901,7 @@ save_tornoff(void)
 		int menu_panel = 0;
 		PanelWidget *menu_panel_widget = NULL;
 		GSList *l;
+		char *s;
 		int j;
 
 		s = g_strdup_printf("%spanel/TornoffMenu_%d/",
@@ -4093,9 +4119,7 @@ load_tornoff(void)
 	char *s;
 	int i,length;
 
-	s = g_strdup_printf("%spanel/Config/", PANEL_CONFIG_PATH);
-	gnome_config_push_prefix(s);
-	g_free(s);
+	gnome_config_push_prefix(PANEL_CONFIG_PATH "panel/Config/");
 	length = gnome_config_get_int("tearoffs_count=0");
 	gnome_config_pop_prefix();
 
