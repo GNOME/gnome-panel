@@ -180,10 +180,10 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 {
 	button_widget_unset_pixbufs (button);
 
-	if (button->size <= 1)
+	if (button->size <= 1 || button->icon_theme == NULL)
 		return;
 
-	if (button->filename != NULL) {
+	if (button->filename != NULL && button->filename [0] != '\0') {
 		char *error = NULL;
 
 		button->pixbuf = panel_load_icon (button->icon_theme,
@@ -584,16 +584,20 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 static void
 button_widget_instance_init (ButtonWidget *button)
 {
-	button->pixbuf    = NULL;
-	button->pixbuf_hc = NULL;
+	button->icon_theme = NULL;
+	button->pixbuf     = NULL;
+	button->pixbuf_hc  = NULL;
+
+	button->filename   = NULL;
 	
-	button->arrow       = 0;
 	button->orientation = PANEL_ORIENTATION_TOP;
-	
-	button->ignore_leave  = FALSE;
-	button->dnd_highlight = FALSE;
 
 	button->size = 0;
+	
+	button->activatable   = FALSE;
+	button->ignore_leave  = FALSE;
+	button->arrow         = FALSE;
+	button->dnd_highlight = FALSE;
 }
 
 static void

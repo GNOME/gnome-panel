@@ -1,3 +1,13 @@
+2005-02-17  Vincent Untz  <vincent@vuntz.net>
+
+	* button-widget.c: (button_widget_reload_pixbuf): don't load a pixbuf
+	if we don't have an icon theme yet, don't try to load the "" icon...
+	(button_widget_instance_init): correctly initialize all the fields
+	Fix bug #167652
+
+	* panel-default-setup.entries.in: fix the path for default launchers
+	Thanks to Sébastien Bacher for pointing this out.
+
 2005-02-16  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-util.c: (panel_load_icon): don't set the error message if the
