@@ -30,7 +30,8 @@ libgen_util_applet_2_la_SOURCES = \
 	remote-helper.c \
 	remote-helper.h
 
-libgen_util_applet_2_la_LIBADD = \
+libgen_util_applet_2_la_LDFLAGS = -module -avoid-version
+libgen_util_applet_2_la_LIBADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(WNCKLET_LIBS)
 
