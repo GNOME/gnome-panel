@@ -201,6 +201,7 @@ EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
 	panel.hints				\
 	gnome-panel-properties.desktop.in	\
+	gnome-panel-screenshot.desktop.in	\
 	gnome-panel-properties			\
 	$(glade_DATA)				\
 	nothing.cP				\
@@ -215,6 +216,11 @@ hints_DATA = panel.hints
 sysdir = $(datadir)/gnome/capplets
 sys_in_files = gnome-panel-properties.desktop.in
 sys_DATA = $(sys_in_files:.desktop.in=.desktop)
+
+appdir = $(datadir)/applications
+app_in_files = gnome-panel-screenshot.desktop.in
+app_DATA = $(app_in_files:.desktop.in=.desktop)
+
 @INTLTOOL_DESKTOP_RULE@
 
 panel_enum_headers =					\
