@@ -160,6 +160,34 @@ static void set_atk_relation (GtkWidget *label, GtkWidget *entry, AtkRelationTyp
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
+static void
+mailcheck_execute_shell (const char *command)
+{
+	GError *error = NULL;
+
+	g_spawn_command_line_async (command, &error);
+	if (error) {
+		GtkWidget *dialog;
+
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_DESTROY_WITH_PARENT,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						 _("There was an error executing %s : %s"),
+						 command,
+						 error->message);
+
+		g_signal_connect (dialog, "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
+		gtk_widget_show (dialog);
+
+		g_error_free (error);
+	}
+}
 
 static G_CONST_RETURN char *
 mail_animation_filename (MailCheck *mc)
@@ -503,7 +531,7 @@ after_mail_check (MailCheck *mc)
 		if (mc->newmail_enabled &&
 		    mc->newmail_cmd && 
 		    (strlen(mc->newmail_cmd) > 0))
-			gnome_execute_shell(NULL, mc->newmail_cmd);
+			mailcheck_execute_shell (mc->newmail_cmd);
 	}
 
 	switch (mc->report_mail_mode) {
@@ -572,8 +600,9 @@ mail_check_timeout (gpointer data)
 			gtk_timeout_remove (mc->mail_timeout);
 			mc->mail_timeout = 0;
 		}
-		if (system(mc->pre_check_cmd) == 127)
-			g_warning("Couldn't execute command");
+
+		mailcheck_execute_shell (mc->pre_check_cmd);
+
 		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
 	}
 
@@ -612,7 +641,7 @@ exec_clicked_cmd (GtkWidget *widget, GdkEventButton *event, gpointer data)
 	if (event->button == 1) {
 		
 		if (mc->clicked_enabled && mc->clicked_cmd && (strlen(mc->clicked_cmd) > 0))
-			gnome_execute_shell(NULL, mc->clicked_cmd);
+			mailcheck_execute_shell (mc->clicked_cmd);
 		
 		if (mc->reset_on_clicked) {
 			mc->newmail = mc->unreadmail = 0;
@@ -1654,7 +1683,7 @@ applet_load_prefs(MailCheck *mc)
 	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote_password", NULL);
 	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote_folder", NULL);
 	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox_type", NULL);
-	mc->mail_file = panel_applet_gconf_get_int (mc->applet, "mail_file", NULL);
+	mc->mail_file = panel_applet_gconf_get_string (mc->applet, "mail_file", NULL);
 	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play_sound", NULL);
 }
 

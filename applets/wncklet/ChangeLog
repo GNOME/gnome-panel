@@ -1,3 +1,12 @@
+2002-07-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* mailcheck.c:
+	(mailcheck_execute_shell): impl using gspawn.
+	(after_mail_check), (mail_check_timeout),
+	(exec_clicked_cmd): use it here.
+	(applet_load_prefs): "mail_file" is a string, not
+	an int.
+
 2002-07-02  Arvind Samptur   <arvind.samptur@wipro.com>
 
 	* pager.c : (close_dialog) hack to get the
