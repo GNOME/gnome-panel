@@ -9,7 +9,7 @@
       <type>string</type>
       <default></default>
       <locale name="C">
-        <short>A name with which to identify this panel.</short>
+        <short>Name to identify panel</short>
         <long>
           This is a human readable name which you can use to indentify
           a panel. Its main purpose is to serve as the panel's window
@@ -24,7 +24,7 @@
       <type>int</type>
       <default>0</default>
       <locale name="C">
-        <short>The X screen the panel is on.</short>
+        <short>X screen panel is on</short>
         <long>
           With a multi-screen setup, you may have panels on each
           individual screen. This key identifies the current screen
@@ -39,7 +39,7 @@
       <type>int</type>
       <default>0</default>
       <locale name="C">
-        <short>The Xinerama monitor the panel is on.</short>
+        <short>Xinerama monitor panel is on</short>
         <long>
           In a Xinerama setup, you may have panels on each individual
           monitor. This key identifies the current monitor the panel
@@ -54,7 +54,7 @@
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Expand to occupy entire screen width.</short>
+        <short>Expand to occupy entire screen width</short>
         <long>
           If true, the panel will occupy the entire screen width
           (height if this is a vertical panel). In this mode the panel
@@ -71,10 +71,10 @@
       <type>string</type>
       <default>top</default>
       <locale name="C">
-        <short>The orientation of the panel.</short>
+        <short>Panel orientatio</short>
         <long>
-          The orientation of the panel. There are four possible values;
-          "top", "bottom", "left", "right". In expanded mode the value
+          The orientation of the panel. Possible values are "top",
+	  "bottom", "left", "right". In expanded mode the key
           specifies which screen edge the panel is on. In un-expanded
           mode the difference between "top" and "bottom" is less
           important - both indicate that this is a horizontal panel -
@@ -92,7 +92,7 @@
       <type>int</type>
       <default>48</default>
       <locale name="C">
-        <short>The size of the panel.</short>
+        <short>Panel size</short>
         <long>
           The height (width for a vertical panel) of the panel. The
           panel will determine at runtime a minimum size based on
@@ -108,12 +108,12 @@
       <type>int</type>
       <default>0</default>
       <locale name="C">
-        <short>The X co-ordinate of the panel.</short>
+        <short>X co-ordinate of panel</short>
         <long>
-          The location of the panel along the x-axis. This value only
-          has meaning in un-expanded mode. In expanded mode the value
-          is ignored and the panel is placed at the screen edge
-	  indicated by the orientation.
+          The location of the panel along the x-axis. This key is
+          only relevant in un-expanded mode. In expanded mode this
+          key is ignored and the panel is placed at the screen edge
+          specified by the orientation key.
         </long>
       </locale>
     </schema>
@@ -124,12 +124,12 @@
       <type>int</type>
       <default>0</default>
       <locale name="C">
-        <short>The Y co-ordinate of the panel.</short>
+        <short>Y co-ordinate of panel</short>
         <long>
-          The location of the panel along the y-axis. This value only
-          has meaning in un-expanded mode. In expanded mode the value
-          is ignored and the panel is placed at the screen edge
-	  indicated by the orientation.
+          The location of the panel along the y-axis. This key is
+          only relevant in un-expanded mode. In expanded mode this
+          key is ignored and the panel is placed at the screen edge
+          specified by the orientation key.
         </long>
       </locale>
     </schema>
@@ -140,12 +140,12 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Center the panel on the x-axis.</short>
+        <short>Center panel on x-axis</short>
         <long>
-          If true the x setting is ignored and the panel is placed at
+          If true, the x key is ignored and the panel is placed at
           the center of the x-axis of the screen. If the panel is
-	  resized it will remain in that position - i.e. the panel
-	  will grow on both sides. If false the x setting determines
+          resized it will remain at that position - i.e. the panel
+          will grow on both sides. If false, the x key specifies 
           the location of the panel.
         </long>
       </locale>
@@ -157,12 +157,12 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Center the panel on the y-axis.</short>
+        <short>Center panel on y-axis</short>
         <long>
-          If true the x setting is ignored and the panel is placed at
+          If true, the x key is ignored and the panel is placed at
           the center of the x-axis of the screen. If the panel is
-	  resized it will remain in that position - i.e. the panel
-	  will grow on both sides. If false the x setting determines
+          resized it will remain at that position - i.e. the panel
+          will grow on both sides. If false, the x key determines
           the location of the panel.
         </long>
       </locale>
@@ -174,10 +174,10 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Automatically hide the panel into the corner.</short>
+        <short>Automatically hide panel into corner</short>
         <long>
-          If true, when the pointer leaves the panel area, it is
-          automatically hidden into a corner of the screen. Moving the
+          If true, the pointer is automatically hidden into a corner
+          of the screen when it leaves the panel area. Moving the
           pointer to that corner will cause the panel to re-appear.
         </long>
       </locale>
@@ -189,10 +189,10 @@
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Enable animations.</short>
+        <short>Enable animations</short>
         <long>
           If true, hiding and un-hiding of this panel will be animated
-          rather than happening instantaneously.
+          rather than happening instantly.
         </long>
       </locale>
     </schema>
@@ -203,7 +203,7 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Enable hide buttons.</short>
+        <short>Enable hide buttons</short>
         <long>
           If true, buttons will be placed on each side of the panel
           which may be used to move the panel to edge of the screen,
@@ -218,10 +218,10 @@
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Enable arrows on the hide buttons.</short>
+        <short>Enable arrows on hide buttons</short>
         <long>
           If true, arrows will be placed on the hide buttons. This
-	  preference only has meaning if enable_buttons is true.
+          key is only relevant if the enable_buttons key is true.
         </long>
       </locale>
     </schema>
@@ -232,11 +232,11 @@
       <type>int</type>
       <default>500</default>
       <locale name="C">
-        <short>Delay before automatically hiding the panel.</short>
+        <short>Panel autohide delay</short>
         <long>
           Specifies the number of milliseconds delay after the pointer
-	  leaves the panel area before the panel is automatically
-          hidden. This preference is only relevant if auto_hide is true.
+          leaves the panel area before the panel is automatically hidden.
+          This key is only relevant if the auto_hide key is true.
         </long>
       </locale>
     </schema>
@@ -247,11 +247,11 @@
       <type>int</type>
       <default>500</default>
       <locale name="C">
-        <short>Delay before automatically un-hiding the panel.</short>
+        <short>Panel autounhide delay</short>
         <long>
           Specifies the number of milliseconds delay after the pointer
-	  enters the panel area before the panel is automatically
-          re-shown. This preference is only relevant if auto_hide is
+          enters the panel area before the panel is automatically
+          re-shown. This key is only relevant if the auto_hide key is
           true.
         </long>
       </locale>
@@ -263,11 +263,11 @@
       <type>int</type>
       <default>6</default>
       <locale name="C">
-        <short>Number of visible pixels with a hidden panel.</short>
+        <short>Visible pixels when hidden</short>
         <long>
           Specifies the number of pixels visible when the panel is
-          automatically hidden into a corner. This preference only has
-          relevance when auto_hide is true.
+          automatically hidden into a corner. This key is only
+          relevant if the auto_hide key is true.
         </long>
       </locale>
     </schema>
@@ -278,11 +278,11 @@
       <type>string</type>
       <default>medium</default>
       <locale name="C">
-        <short>The speed of animations.</short>
+        <short>Animation speed</short>
         <long>
-          The speed which animations should occur. There are three
-          possible values; "slow", "medium" and "fast". This
-          preference only has relevance if enable_animations is true.
+          The speed in which panel animations should occur. Possible
+          values are "slow", "medium" and "fast". This key is only
+          relevant if the enable_animations key is true.
         </long>
       </locale>
     </schema>
@@ -293,14 +293,13 @@
       <type>string</type>
       <default>gtk</default>
       <locale name="C">
-        <short>The background type.</short>
+        <short>Background type</short>
         <long>
           Which type of background should be used for this panel.
-          There are three possible values; "gtk", the default GTK+
-          widget background will be used, "color", the color
-          preference will be used as the background color or "image",
-          the image specified in the image preference will be used as
-          the background.
+          Possible values are "gtk" - the default GTK+ widget
+          background will be used, "color" - the color key will
+          be used as background color or "image" - the image
+          specified by the image key will be used as background.
         </long>
       </locale>
     </schema>
@@ -311,7 +310,7 @@
       <type>string</type>
       <default>#000000</default>
       <locale name="C">
-        <short>The background color.</short>
+        <short>Background color</short>
         <long>
           Specifies the background color for the panel in #RGB
           format.
@@ -325,7 +324,7 @@
       <type>int</type>
       <default>65535</default>
       <locale name="C">
-        <short>The background color opacity.</short>
+        <short>Background color opacity</short>
         <long>
           Specifies the opacity of the background color format. If the
           color is not completely opaque (a value of less than 65535),
@@ -341,7 +340,7 @@
       <type>string</type>
       <default></default>
       <locale name="C">
-        <short>The background image.</short>
+        <short>Background image</short>
         <long>
           Specifies the file to be used for the background image. If
           the image contains an alpha channel it will be composited
@@ -356,7 +355,7 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Fit the image to the panel.</short>
+        <short>Fit image to panel</short>
         <long>
           If true, the image will be scaled (retaining the aspect
           ratio of the image) to the panel height (if horizontal).
@@ -370,9 +369,9 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Stretch the image to the panel.</short>
+        <short>Stretch image to panel</short>
         <long>
-          If true the image will be scaled to the panel dimensions.
+          If true, the image will be scaled to the panel dimensions.
           The aspect ratio of the image will not be maintained.
         </long>
       </locale>
@@ -384,7 +383,7 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Rotate the image on vertical panels.</short>
+        <short>Rotate image on vertical panels</short>
         <long>
           If true, the background image will be rotated when the panel
           is oriented vertically.

@@ -9,12 +9,12 @@
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Enable the program list in the "Run Application" dialog.</short>
+        <short>Enable program list in "Run Application" dialog</short>
         <long>
-          If true the "Known Applications" listing in the "Run
-          Program" dialog is made available. Whether or not the
-          listing is expanded when the dialog is shown is controlled
-          by the show_program_list setting.
+          If true, the "Known Applications" listing in the "Run
+          Application" dialog is made available. Whether or not
+          the listing is expanded when the dialog is shown is
+          controlled by the show_program_list key.
         </long>
       </locale>
     </schema>
@@ -25,11 +25,12 @@
       <type>bool</type>
       <default>false</default>
       <locale name="C">
-        <short>Expand the program list in the "Run Application" dialog</short>
+        <short>Expand program list in "Run Application" dialog</short>
         <long>
-          If true the "Known Applications" listing in the "Run
-          Program" is expanded when the dialog is opened. This
-          setting is only relevant if enable_program_list is true.
+          If true, the "Known Applications" listing in the "Run
+          Application" dialog is expanded when the dialog is opened.
+          This key is only relevant if the enable_program_list key
+          is true.
         </long>
       </locale>
     </schema>
@@ -41,10 +42,10 @@
       <list_type>string</list_type>
       <default>[]</default>
       <locale name="C">
-        <short>A list of panel IDs</short>
+        <short>Panel ID list</short>
         <long>
           A list of panel IDs. Each ID identifies an individual
-          toplevel panel. The settings for each of these panels is
+          toplevel panel. The setttings for each of these panels are
           stored in /apps/panel/general/$(profile)/toplevels/$(id).
         </long>
       </locale>
@@ -57,11 +58,11 @@
       <type>list</type>
       <default>[]</default>
       <locale name="C">
-        <short>A list of panel applet IDs</short>
+        <short>Panel applet ID list</short>
         <long>
           A list of panel applet IDs. Each ID identifies an
-          individual panel applet. The settings for each of these
-          applets is stored in
+          individual panel applet. The settings for each of
+          these applets are stored in
           /apps/panel/general/$(profiles)/applets/$(id).
         </long>
       </locale>
@@ -74,11 +75,11 @@
       <list_type>string</list_type>
       <default>[]</default>
       <locale name="C">
-        <short>A list of panel object IDs</short>
+        <short>Panel object ID list</short>
         <long>
           A list of panel object IDs. Each ID identifies an individual
           panel object (e.g. a launcher, action button or menu
-          button/bar). The settings for each of these objects is
+          button/bar). The settings for each of these objects are
           stored in
           /apps/panel/general/$(profiles)/objects/$(id).
         </long>
