@@ -99,7 +99,7 @@ static int connect_socket(char *h, int def)
 
 static char *read_line(int s)
  {
-  static char response[256];
+  static char response[1024];
   char *c;
   int m = sizeof(response);
   
@@ -175,7 +175,7 @@ int pop3_check(char *h, char* n, char* e)
       return -1;
     }
 
-    c = g_strdup_printf(c, "USER %s", n);
+    c = g_strdup_printf("USER %s", n);
     if (!write_line(s, c) ||
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
@@ -184,7 +184,7 @@ int pop3_check(char *h, char* n, char* e)
     }
     g_free(c);
 
-    c = g_strdup_printf(c, "PASS %s", e);
+    c = g_strdup_printf("PASS %s", e);
     if (!write_line(s, c) ||
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
@@ -195,12 +195,14 @@ int pop3_check(char *h, char* n, char* e)
 
     if (write_line(s, "STAT") &&
         is_pop3_answer_ok(x = read_line(s)) &&
+	x != NULL &&
         sscanf(x, "%*s %d %*d", &msg) == 1)
       r = ((unsigned int)msg & 0x0000FFFFL);
 
     if (r != -1 &&
         write_line(s, "LAST") &&
         is_pop3_answer_ok(x = read_line(s)) &&
+	x != NULL &&
         sscanf(x, "%*s %d", &last) == 1)
       r |= (unsigned int)(msg - last) << 16;
 
@@ -276,7 +278,8 @@ int imap_check(char *h, char* n, char* e)
             int total = 0, unseen = 0;
             
               x = read_line(s);
-            sscanf(x, "%*s %*s %*s %*s %d %*s %d", &total, &unseen);
+	      if (x != NULL)
+		      sscanf(x, "%*s %*s %*s %*s %d %*s %d", &total, &unseen);
              r = (((unsigned int) unseen ) << 16) | /* lt unseen only */
 	       ((unsigned int) total & 0x0000FFFFL);
 
