@@ -165,7 +165,7 @@ computer_clock_update_func (ClockData * cd,
 	ComputerClock *cc;
 	struct tm *tm;
 	GString *gs = g_string_new("");
-	char date[256], hour[256], tooltip[256];
+	char date[256], hour[256];
 	char *utf8;
 	
 	cc = g_object_get_data (G_OBJECT (cd->clockw), "cc");

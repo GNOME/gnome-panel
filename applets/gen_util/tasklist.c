@@ -140,7 +140,7 @@ applet_change_pixel_size (PanelApplet  *applet,
 static void
 destroy_tasklist(GtkWidget * widget, gpointer data)
 {
-	TasklistData *tasklist = data;
+	/* TasklistData *tasklist = data; */
 }
 
 static const BonoboUIVerb tasklist_menu_verbs [] = {

@@ -1172,7 +1172,7 @@ foobar_widget_new (const char *panel_id, int screen)
 {
 	FoobarWidget *foo;
 
-	g_return_val_if_fail (screen >= 0, NULL);
+	g_return_val_if_fail (screen >=0, NULL);
 
 	if (foobar_widget_exists (screen))
 		return NULL;

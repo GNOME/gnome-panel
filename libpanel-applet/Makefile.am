@@ -11,7 +11,7 @@ LTVERSION = 0:0:0
 INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOME_DATADIR=\""$(datadir)"\"			\
-	$(PANEL_CFLAGS)						\
+	$(LIBPANEL_APPLET_CFLAGS)						\
 	$(WARN_CFLAGS)
 
 lib_LTLIBRARIES = libpanel-applet-2.la
@@ -31,7 +31,7 @@ libpanel_applet_2_la_SOURCES =		\
 	$(CORBA_SRCLIST)
 
 libpanel_applet_2_la_LDFLAGS = -version-info $(LTVERSION)
-libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS)
+libpanel_applet_2_la_LIBADD  = $(LIBPANEL_APPLET_LIBS)
 
 libpanel_appletincludedir = $(includedir)/panel-2.0
 
@@ -55,8 +55,8 @@ bin_PROGRAMS = test-bonobo-applet
 
 test_bonobo_applet_SOURCES = test-bonobo-applet.c
 
-test_bonobo_applet_LDADD =	\
-	$(PANEL_LIBS)		\
+test_bonobo_applet_LDADD =		\
+	$(LIBPANEL_APPLET_LIBS)		\
 	libpanel-applet-2.la
 
 
