@@ -1710,7 +1710,7 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 static GtkWidget *
 create_fake_menu_at (char *menudir,
-		     int applets,
+		     gboolean applets,
 		     char *dir_name,
 		     char *pixmap_name)
 {	
@@ -2368,8 +2368,9 @@ create_debian_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake)
 				       _("Debian menus"), "gnome-debian.png",
 				       fake_submenus, FALSE);
 	} else {
-		menu = create_fake_menu_at (DEBIAN_MENUDIR, NULL,
-					    _("Debian menus"), "gnome-debian.png");
+		menu = create_fake_menu_at (DEBIAN_MENUDIR, FALSE,
+					    _("Debian menus"),
+					    "gnome-debian.png");
 	}
 
 	return menu;
@@ -2424,12 +2425,15 @@ remove_panel (GtkWidget *w, gpointer data)
 	PanelWidget *panel;
 
 	panel = get_panel_from_menu_data(w);
+
+	/* if these ever we're in deep doodoo I guess */
+	g_return_if_fail (IS_PANEL_WIDGET (panel));
+	if(!IS_BASEP_WIDGET (panel->panel_parent))
+		return;
+
+	basep = BASEP_WIDGET (panel->panel_parent);
 	
-	basep = data 
-		? BASEP_WIDGET (data)
-		: BASEP_WIDGET (panel->panel_parent);
-	
-	if (base_panels == 1 && !IS_DRAWER_WIDGET (basep)) {
+	if (base_panels == 1) {
 		gnome_error_dialog (_("You cannot remove your last panel."));
 		return;
 	}

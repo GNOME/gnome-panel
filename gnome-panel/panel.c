@@ -629,6 +629,7 @@ panel_menu_get(PanelWidget *panel, PanelData *pd)
 		return pd->menu;
 	
 	pd->menu = create_panel_root_menu(panel, TRUE);
+	gtk_object_set_data (GTK_OBJECT (pd->menu), "menu_panel", panel);
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
 	return pd->menu;
@@ -649,7 +650,6 @@ make_popup_panel_menu (PanelWidget *panel)
 	
 	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
 	menu = panel_menu_get (panel, pd);
-	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
 	pd->menu_age = 0;
 	return menu;
 }
