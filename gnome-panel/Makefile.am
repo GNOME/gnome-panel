@@ -323,6 +323,7 @@ install-data-local:
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
 		done ; \
 		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries ; \
+		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries /apps/panel/profiles/default ; \
 	fi
 else
 install-data-local:

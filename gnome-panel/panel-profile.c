@@ -2113,69 +2113,6 @@ panel_profile_load_list (GConfClient           *client,
 	g_slist_free (list);
 }
 
-static void
-panel_profile_apply_schemas (GConfClient *client,
-			     const char  *profile_dir,
-			     const char  *schemas_dir,
-			     const char  *id_list_key,
-			     const char  *type)
-{
-
-	const char *key;
-	GSList     *list, *l;
-	GError     *error = NULL;
-
-	key = panel_gconf_sprintf ("%s/general/%s", profile_dir, id_list_key);
-	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, &error);
-	if (error) {
-		g_warning (_("Error reading GConf list value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-		return;
-	}
-
-	for (l = list; l; l = l->next) {
-		char *dir;
-		char *id = l->data;
-
-		dir = g_strdup_printf ("%s/%s/%s", profile_dir, type, id);
-		panel_gconf_associate_schemas_in_dir (client, dir, schemas_dir);
-		g_free (dir);
-		g_free (id);
-	}
-
-	g_slist_free (list);
-}
-
-static void
-panel_profile_copy_defaults (GConfClient *client,
-			     const char  *profile_dir)
-{
-	char *dir;
-
-	panel_gconf_copy_dir (client, PANEL_DEFAULTS_DIR, profile_dir);
-
-	dir = gconf_concat_dir_and_key (profile_dir, "general");
-	panel_gconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/general");
-	g_free (dir);
-
-	panel_profile_apply_schemas (client,
-				     profile_dir,
-				     PANEL_SCHEMAS_DIR "/toplevels",
-				     "toplevel_id_list",
-				     "toplevels");
-	panel_profile_apply_schemas (client,
-				     profile_dir,
-				     PANEL_SCHEMAS_DIR "/objects",
-				     "applet_id_list",
-				     "applets");
-	panel_profile_apply_schemas (client,
-				     profile_dir,
-				     PANEL_SCHEMAS_DIR "/objects",
-				     "object_id_list",
-				     "objects");
-}
-
 static GSList *
 panel_profile_copy_defaults_for_screen (GConfClient       *client,
 					const char        *profile_dir,
@@ -2216,7 +2153,6 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 		char *new_id;
 		char *src_dir;
 		char *dest_dir;
-		char *schema_key;
 
 		new_id = g_strdup_printf ("%s_screen%d", default_id, screen_n);
 
@@ -2224,11 +2160,6 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 		dest_dir = g_strdup_printf ("%s/%s/%s", profile_dir, type_str, new_id);
 
 		panel_gconf_copy_dir (client, src_dir, dest_dir);
-
-		schema_key = g_strdup_printf (PANEL_SCHEMAS_DIR "/%s", 
-			                      schemas_str);
-		panel_gconf_associate_schemas_in_dir (client, dest_dir, schema_key);
-		g_free (schema_key);
 
 		new_ids = g_slist_prepend (new_ids, new_id);
 
@@ -2413,7 +2344,7 @@ panel_profile_load (char *profile_name)
 
 	dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, current_profile);
 	if (!gconf_client_dir_exists (client, dir, NULL))
-		panel_profile_copy_defaults (client, dir);
+		panel_gconf_copy_dir (client, PANEL_DEFAULTS_DIR, dir);
 
 	panel_compatibility_migrate_panel_id_list (client);
 

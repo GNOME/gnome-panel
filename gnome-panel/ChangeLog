@@ -1,3 +1,25 @@
+2004-04-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Some work on making things relatively sane for people trying
+	to deply/lockdown the panel.
+
+	* Makefile.am: install the default setup in
+	/apps/panel/profiles/default as well as
+	/apps/panel/default_setup.
+	
+	* panel-default-setup.entries: apply schemas to the keys
+	we don't set as well as the ones we do.
+	
+	* panel-gconf.c: (panel_gconf_copy_dir): copy schema names as
+	well as values.
+	
+	* panel-profile.c:
+	(panel_profile_apply_schemas),
+	(panel_profile_copy_defaults): kill these.
+	(panel_profile_copy_defaults_for_screen),
+	(panel_profile_load): no need to associate schemas when copying
+	default_setup now, since we do that at install time.
+
 2004-03-24  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.c,

@@ -243,7 +243,13 @@ panel_gconf_copy_dir (GConfClient  *client,
 		key = panel_gconf_sprintf ("%s/%s", dest_dir, tmp);
 		g_free (tmp);
 
-		gconf_client_set (client, key, entry->value, NULL);
+		gconf_engine_associate_schema (client->engine,
+					       key,
+					       gconf_entry_get_schema_name (entry),
+					       NULL);
+
+		if (!gconf_entry_get_is_default (entry))
+			gconf_client_set (client, key, entry->value, NULL);
 
 		gconf_entry_free (entry);
 	}
