@@ -2133,15 +2133,24 @@ check_and_reread_applet (Menu *menu)
 void
 our_gtk_menu_position (GtkMenu *menu)
 {
-	/* HACK! */
-	gboolean old_visible = GTK_WIDGET_VISIBLE (menu);
-	gboolean old_mapped = GTK_WIDGET_MAPPED (menu);
-	GTK_WIDGET_SET_FLAGS (menu, GTK_VISIBLE | GTK_MAPPED);
-	gtk_menu_reposition (menu);
-	if ( ! old_visible)
-		GTK_WIDGET_UNSET_FLAGS (menu, GTK_VISIBLE);
-	if ( ! old_mapped)
-		GTK_WIDGET_UNSET_FLAGS (menu, GTK_MAPPED);
+	GtkWidget *window = GTK_MENU_SHELL (menu)->active ?
+		menu->toplevel : menu->tearoff_hbox;
+
+	if (window != NULL) {
+		/* HACK! reposition works even when not
+		 * yet visible/mapped, as long as we have a window
+		 * since is uses gtk_window_move.  Yes, we
+		 * depend on how gtk works internally, but hey,
+		 * who cares. */
+		gboolean old_visible = GTK_WIDGET_VISIBLE (menu);
+		gboolean old_mapped = GTK_WIDGET_MAPPED (menu);
+		GTK_WIDGET_SET_FLAGS (menu, GTK_VISIBLE | GTK_MAPPED);
+		gtk_menu_reposition (menu);
+		if ( ! old_visible)
+			GTK_WIDGET_UNSET_FLAGS (menu, GTK_VISIBLE);
+		if ( ! old_mapped)
+			GTK_WIDGET_UNSET_FLAGS (menu, GTK_MAPPED);
+	}
 }
 
 /*BTW, this also updates the fr entires */
