@@ -15,7 +15,7 @@
 #include "panel_cmds.h"
 #include "applet_cmds.h"
 #include "panel.h"
-#include "config.h"
+#include "panel_config.h"
 
 #ifdef HAVE_LIBINTL
 #define _(String) gettext(String)
