@@ -1,3 +1,8 @@
+2002-09-19  Arvind Samptur <arvind.samptur@wipro.com
+	* gnome-panel-screenshot.c: waitpid could fail
+	due to a interuptted system call, loop till you
+	succeed. Fixes #92651
+
 2002-09-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* launcher.c: Change the launchers icon when the
