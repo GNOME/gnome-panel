@@ -2300,7 +2300,7 @@ panel_session_init_panels(void)
 										     	panel_id,
 										     	"panel-size",
 										     	use_default, "panel-size-small"),
-				      (gint *) &sz);
+				      &sz);
 		
 
 		/* Now for type specific config */
@@ -2436,7 +2436,7 @@ panel_session_init_panels(void)
 			break;
 		}
 		case DRAWER_PANEL: {
-			PanelOrient orient;
+			int orient;
 			
 			gconf_string_to_enum (panel_orient_type_enum_map,
 					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
@@ -2447,7 +2447,7 @@ panel_session_init_panels(void)
 
 
 			panel = drawer_widget_new (panel_id,
-						   orient,
+						   (PanelOrient) orient,
 						   BASEP_EXPLICIT_HIDE, 
 						   state,
 						   sz,

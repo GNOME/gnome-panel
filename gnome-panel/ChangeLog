@@ -1,3 +1,10 @@
+2002-02-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel.c: (panel_session_init_panels): audit use of
+	gconf_enum_to_string to make sure all (gint *) casts
+	are correct. Solaris refuses to entertain mis-aligned
+	pointers.
+
 2002-02-04  jacob berkman  <jacob@ximian.com>
 
 	* Makefile.am: our object files require the built sources
