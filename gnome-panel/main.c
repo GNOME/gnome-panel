@@ -34,36 +34,15 @@ GnomeClient *client = NULL;
 extern GList * children;
 
 /* True if parsing determined that all the work is already done.  */
-int just_exit = 0;
+char *just_exit = NULL;
 
 /* The security cookie */
 char *cookie = NULL;
 
-/* These are the arguments that our application supports.  */
-static struct argp_option arguments[] =
-{
-#define DISCARD_KEY -1
-  { "discard-session", DISCARD_KEY, N_("ID"), 0, N_("Discard session"), 1 },
-  { NULL, 0, NULL, 0, NULL, 0 }
-};
-
-/* Forward declaration of the function that gets called when one of
-   our arguments is recognized.  */
-static error_t parse_an_arg (int key, char *arg, struct argp_state *state);
-
-/* This structure defines our parser.  It can be used to specify some
-   options for how our parsing function should be called.  */
-static struct argp parser =
-{
-	arguments,			/* Options.  */
-	parse_an_arg,			/* The parser function.  */
-	NULL,				/* Some docs.  */
-	NULL,				/* Some more docs.  */
-	NULL,				/* Child arguments -- gnome_init fills
-					   this in for us.  */
-	NULL,				/* Help filter.  */
-	NULL				/* Translation domain; for the app it
-					   can always be NULL.  */
+static struct poptOption options[] = {
+  {"discard-session", '\0', POPT_ARG_STRING, &just_exit, N_("Discard session"),
+   N_("ID")},
+  {NULL, '\0', 0, NULL, 0}
 };
 
 /*I guess this should be called after we load up, but the problem is
@@ -83,21 +62,6 @@ discard_session (char *id)
 	gnome_config_sync ();
 
 	return;
-}
-
-	
-static error_t
-parse_an_arg (int key, char *arg, struct argp_state *state)
-{
-	if (key == DISCARD_KEY) {
-		gnome_client_disable_master_connection ();
-		discard_session (arg);
-		just_exit = 1;
-		return 0;
-	}
-
-	/* We didn't recognize it.  */
-	return ARGP_ERR_UNKNOWN;
 }
 
 static int
@@ -121,7 +85,8 @@ main(int argc, char **argv)
 
 	panel_corba_register_arguments ();
 
-	gnome_init("panel", &parser, argc, argv, 0, NULL);
+	gnome_init_with_popt_table("panel", VERSION,
+				   argc, argv, options, 0, NULL);
 
 	/* Setup the cookie */
 	cookie = create_cookie ();
@@ -131,8 +96,11 @@ main(int argc, char **argv)
 	
 	panel_corba_gtk_init();
 
-	if (just_exit)
-		return 0;
+	if (just_exit) {
+	  gnome_client_disable_master_connection ();
+	  discard_session (just_exit);
+	  return 0;
+	}
 
 	client= gnome_master_client ();
 

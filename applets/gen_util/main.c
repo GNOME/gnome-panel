@@ -25,40 +25,14 @@
 #include "clock.h"
 #include "printer.h"
 
-/* These are the arguments that our application supports.  */
-static struct argp_option arguments[] =
-{
-  { "clock", -1, NULL, 0, N_("Start in clock mode"), 1 },
-  { "mailcheck", -1, NULL, 0, N_("Start in mailcheck mode"), 1 },
-  { "printer", -1, NULL, 0, N_("Start in printer mode"), 1 },
-  { NULL, 0, NULL, 0, NULL, 0 }
+int start_clock = 0, start_mailcheck = 0, start_printer = 0;
+
+static const struct poptOption options[] = {
+  {"clock", '\0', POPT_ARG_NONE, &start_clock, 0, N_("Start in clock mode"), NULL},
+  {"mailcheck", '\0', POPT_ARG_NONE, &start_mailcheck, 0, N_("Start in mailcheck mode"), NULL},
+  {"printer", '\0', POPT_ARG_NONE, &start_printer, 0, N_("Start in printer mode"), NULL},
+  {NULL, '\0', 0, NULL, 0}
 };
-
-/* Forward declaration of the function that gets called when one of
-   our arguments is recognized.  */
-/* we ignore the arguments */
-static error_t
-parse_an_arg (int key, char *arg, struct argp_state *state)
-{
-	return 0;
-}
-
-/* This structure defines our parser.  It can be used to specify some
-   options for how our parsing function should be called.  */
-static struct argp parser =
-{
-  arguments,			/* Options.  */
-  parse_an_arg,			/* The parser function.  */
-  NULL,				/* Some docs.  */
-  NULL,				/* Some more docs.  */
-  NULL,				/* Child arguments -- gnome_init fills
-				   this in for us.  */
-  NULL,				/* Help filter.  */
-  NULL				/* Translation domain; for the app it
-				   can always be NULL.  */
-};
-
-
 
 static void
 make_new_applet(const gchar *param)
@@ -67,7 +41,7 @@ make_new_applet(const gchar *param)
 		make_mailcheck_applet(param);
 	else if(strstr(param,"--printer"))
 		make_printer_applet(param);
-	else
+	else if(strstr(param,"--clock"))
 		make_clock_applet(param);
 }
 
@@ -82,6 +56,7 @@ int
 main(int argc, char **argv)
 {
 	gchar *param;
+	char *argstr = NULL;
 
 	/*this is needed for printer applet*/
 	struct sigaction sa;
@@ -95,16 +70,20 @@ main(int argc, char **argv)
         bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	/*we make a param string, instead of first parsing the params with
-	  argp, we will allways use a string, since the panel will only
-	  give us a string */
-	param = make_param_string(argc,argv);
+	applet_widget_init("gen_util_applet", VERSION, argc, argv,
+			   options, 0, NULL, TRUE, TRUE,
+			   applet_start_new_applet, NULL);
 
-	applet_widget_init("gen_util_applet", &parser, argc, argv, 0, NULL,
-			   argv[0],TRUE,TRUE,applet_start_new_applet,NULL);
+	argstr = g_strjoinv(" ", argv+1);
 
-	make_new_applet(param);
-	g_free(param);
+	if(start_mailcheck)
+	  make_mailcheck_applet(argstr);
+	if(start_printer)
+	  make_printer_applet(argstr);
+	if(start_clock || (!start_mailcheck && !start_printer))
+	  make_clock_applet(argstr);
+
+	g_free(argstr);
 
 	applet_widget_gtk_main();
 

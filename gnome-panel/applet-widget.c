@@ -481,28 +481,24 @@ applet_widget_get_by_id(int applet_id)
 	return NULL;
 }
 
-error_t
-applet_widget_init(char *app_id,
-		   struct argp *app_parser,
-		   int argc,
-		   char **argv,
-		   unsigned int flags,
-		   int *arg_index,
-		   char *argv0,
-		   int last_die,
-		   int multi_applet,
-		   AppletStartNewFunc new_func,
-		   gpointer new_func_data)
+int		applet_widget_init		(const char *app_id,
+						 const char *app_version,
+						 int argc,
+						 char **argv,
+						 struct poptOption *options,
+						 unsigned int flags,
+						 poptContext *return_ctx,
+						 int last_die,
+						 int multi_applet,
+						 AppletStartNewFunc new_func,
+						 gpointer new_func_data)
 {
-	error_t ret;
+	int ret;
 
-	if(!argv0)
-		g_error("Invalid argv0 argument!\n");
-
-	if(argv0[0]!='#')
-		myinvoc = get_full_path(argv0);
+	if(argv[0][0] != '#')
+		myinvoc = get_full_path(argv[0]);
 	else
-		myinvoc = g_strdup(argv0);
+		myinvoc = g_strdup(argv[0]);
 	if(!myinvoc)
 		g_error("Invalid argv0 argument!\n");
 
@@ -511,10 +507,9 @@ applet_widget_init(char *app_id,
 	start_new_func_data = new_func_data;
 	die_on_last = last_die;
 
-	panel_corba_register_arguments();
-
 	gnome_client_disable_master_connection ();
-	ret = gnome_init(app_id,app_parser,argc,argv,flags,arg_index);
+	ret = gnome_init_with_popt_table(app_id,VERSION,argc,argv,
+					 options,flags,return_ctx);
 
 	if (!gnome_panel_applet_init_corba())
 		g_error("Could not communicate with the panel\n");

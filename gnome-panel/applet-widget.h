@@ -178,13 +178,13 @@ PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new
   applet*/
-error_t		applet_widget_init		(char *app_id,
-						 struct argp *app_parser,
+int		applet_widget_init		(const char *app_id,
+						 const char *app_version,
 						 int argc,
 						 char **argv,
+						 struct poptOption *options,
 						 unsigned int flags,
-						 int *arg_index,
-						 char *argv0,
+						 poptContext *return_ctx,
 						 int last_die,
 						 int multi_applet,
 						 AppletStartNewFunc new_func,
@@ -192,10 +192,9 @@ error_t		applet_widget_init		(char *app_id,
 
 /*defaults init for use with "normal" non-multi applets*/
 #define \
-applet_widget_init_defaults(app_id,app_parser,argc,argv,flags,arg_index,argv0) \
-applet_widget_init(app_id,app_parser,argc,argv,flags,arg_index, \
-		   argv0,TRUE,FALSE,NULL,NULL)
-
+applet_widget_init_defaults(app_id,app_version,argc,argv,options,flags,return_ctx) \
+applet_widget_init(app_id,app_version,argc,argv,options,flags,return_ctx, \
+		   TRUE,FALSE,NULL,NULL)
 
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);

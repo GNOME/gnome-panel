@@ -425,8 +425,8 @@ main(int argc, char *argv[])
         bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	applet_widget_init_defaults("fish_applet", NULL, argc, argv, 0, NULL,
-				    argv[0]);
+	applet_widget_init_defaults("fish_applet", VERSION, argc, argv, NULL, 0,
+				    NULL);
 
 	applet = applet_widget_new();
 	if (!applet)

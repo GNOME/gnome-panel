@@ -791,7 +791,7 @@ setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
 	g_return_if_fail(path!=NULL);
 	
 	if((ii->exec[1])!=NULL)
-		param = gnome_string_joinv (" ", ii->exec + 1);
+		param = g_strjoinv (" ", ii->exec + 1);
 	else
 		param = NULL;
 
@@ -871,7 +871,7 @@ add_applet (GtkWidget *w, gpointer data)
 	g_return_val_if_fail(path!=NULL,FALSE);
 	
 	if((ii->exec[1])!=NULL)
-		param = gnome_string_joinv (" ", ii->exec + 1);
+		param = g_strjoinv (" ", ii->exec + 1);
 	else
 		param = NULL;
 
