@@ -972,7 +972,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (set_show_date_cb),
 			  cd);	   
 
-	use_gmt_time = gtk_check_button_new_with_mnemonic (_("Use _GMT"));
+	use_gmt_time = gtk_check_button_new_with_mnemonic (_("Use _UTC"));
 	gtk_box_pack_start (GTK_BOX (vbox), use_gmt_time, FALSE, FALSE, 0);
 	gtk_widget_show (use_gmt_time);
 	

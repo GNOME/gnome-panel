@@ -431,6 +431,8 @@ fill_tasklist_applet(PanelApplet *applet)
 		break;
 	}
 
+	foo_handle_set_orientation (tasklist->frame, tasklist->orientation);
+
 	/* FIXME: Needs to get the screen number from DISPLAY or the panel. */
 	tasklist->screen = wnck_screen_get (0);
 
