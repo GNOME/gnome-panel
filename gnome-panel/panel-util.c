@@ -441,6 +441,7 @@ panel_dialog (GdkScreen  *screen,
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog), class, "Panel");
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	gtk_widget_show_all (dialog);
 

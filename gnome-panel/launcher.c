@@ -650,6 +650,8 @@ create_properties_dialog (Launcher  *launcher,
 
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Launcher Properties"));
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 5);
+	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
 	help = gtk_dialog_add_button (
 			GTK_DIALOG (dialog), GTK_STOCK_HELP, GTK_RESPONSE_HELP);
@@ -662,6 +664,7 @@ create_properties_dialog (Launcher  *launcher,
 			GTK_DIALOG (dialog), GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
 	launcher->dedit = gnome_ditem_edit_new ();
+	gtk_container_set_border_width (GTK_CONTAINER (launcher->dedit), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    launcher->dedit, TRUE, TRUE, 0);
 
