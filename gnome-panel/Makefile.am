@@ -25,8 +25,6 @@ INCLUDES = \
 	-I$(includedir)		\
 	$(PANEL_CFLAGS) -Werror
 
-gwmh_dir = $(top_srcdir)/applets/desk-guide
-
 bin_PROGRAMS = \
 	panel				\
 	gnome-panel-properties-capplet	\
@@ -96,21 +94,8 @@ bad_applet_LDADD = \
 	$(PANEL_LIBS)		\
 	$(INTLLIBS)
 
-GWMH_SRCLIST = \
-	gwmh.c		\
-	gwmh.h		\
-	gstc.c		\
-	gstc.h
-
-$(GWMH_SRCLIST):
-	for file in $(GWMH_SRCLIST); do \
-		echo $$file ; \
-		ln -sf $(gwmh_dir)/$$file . ; \
-	done
-
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
-	$(GWMH_SRCLIST)		\
 	panel-marshal.c		\
 	panel-marshal.h
 
@@ -191,7 +176,6 @@ panel_temp_LDADD=\
 	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
 
 panel_SOURCES=\
-	$(GWMH_SRCLIST)		\
 	things-will-not-compile-below-this-line		\
 	menu-properties.c	\
 	menu-properties.h	\
