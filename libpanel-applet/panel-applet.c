@@ -592,6 +592,8 @@ panel_applet_position_menu (GtkMenu   *menu,
 	GdkScreen      *screen;
 	int             menu_x = 0;
 	int             menu_y = 0;
+	int             pointer_x;
+	int             pointer_y;
 
 	g_return_if_fail (PANEL_IS_APPLET (widget));
 
@@ -602,17 +604,24 @@ panel_applet_position_menu (GtkMenu   *menu,
 	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
 	gdk_window_get_origin (widget->window, &menu_x, &menu_y);
+	gtk_widget_get_pointer (widget, &pointer_x, &pointer_y);
 
 	menu_x += widget->allocation.x;
 	menu_y += widget->allocation.y;
 
 	if (applet->priv->orient == PANEL_APPLET_ORIENT_UP ||
 	    applet->priv->orient == PANEL_APPLET_ORIENT_DOWN) {
+		if (requisition.width < pointer_x)
+			menu_x += MIN (pointer_x, widget->allocation.width - requisition.width);
+
 		if (menu_y > gdk_screen_get_height (screen) / 2)
 			menu_y -= requisition.height;
 		else
 			menu_y += widget->allocation.height;
 	} else  {
+		if (requisition.height < pointer_y)
+			menu_y += MIN (pointer_y, widget->allocation.height - requisition.height);
+
 		if (menu_x > gdk_screen_get_width (screen) / 2)
 			menu_x -= requisition.width;
 		else
