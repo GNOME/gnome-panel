@@ -166,13 +166,13 @@ panel_applet_frame_load (const gchar *iid,
 
 	frame = panel_applet_frame_new (panel, iid, real_key);
 
-	if (!frame)
+	if (!frame) {
+		g_free (real_key);
 		return;
+	}
 	
 	gtk_widget_show_all (frame);
 
-	/* Pass frame as 2nd argument, since it is used in
-	 * panel_remove_applets()  */
 	info = panel_applet_register (frame, frame, NULL, panel, position,
 				      exactpos, APPLET_BONOBO, real_key);
 
@@ -932,6 +932,19 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 			 _("<b>There was a problem loading applet '%s'</b>\n\n"
 			   "Details: %s"),
 			  iid, err);
+
+		/* FIXME: 2.2.x addition: #89173
+		 * 
+		 * Instead of automatically removing the applet from the
+		 * configuration the above dialog should read:
+		 *
+		 * There was a problem loading applet 'blah'.
+		 * 
+		 * Remove this applet from you configuration ?
+		 *
+		 *                              [Don't Remove] [[Remove]]
+		 */
+		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
 
 		CORBA_exception_free (&ev);
 

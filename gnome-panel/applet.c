@@ -69,8 +69,9 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 					PW_DRAG_OFF_CENTER);
 }
 
-static void
-panel_applet_clean_gconf (AppletInfo *info,
+void
+panel_applet_clean_gconf (AppletType  type,
+			  const char *gconf_key,
 			  gboolean    clean_gconf)
 {
 	GConfClient *client;
@@ -78,13 +79,12 @@ panel_applet_clean_gconf (AppletInfo *info,
 	const char  *temp_key = NULL;
 	const char  *profile;
 
-	g_return_if_fail (info != NULL);
-	g_return_if_fail (info->gconf_key != NULL);
+	g_return_if_fail (gconf_key != NULL);
 
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
 
-	if (info->type == APPLET_BONOBO)
+	if (type == APPLET_BONOBO)
 		temp_key = panel_gconf_general_key (profile, "applet_id_list");
 	else
 		temp_key = panel_gconf_general_key (profile, "object_id_list");
@@ -94,7 +94,7 @@ panel_applet_clean_gconf (AppletInfo *info,
 			GCONF_VALUE_STRING, NULL);
 
         for (l = id_list; l; l = l->next)
-                if (strcmp (info->gconf_key, (char *) l->data) == 0)
+                if (strcmp (gconf_key, (char *) l->data) == 0)
                         break;
 
         if (l) {
@@ -104,23 +104,20 @@ panel_applet_clean_gconf (AppletInfo *info,
 
                 gconf_client_set_list (client, temp_key, GCONF_VALUE_STRING, id_list, NULL);
 
-		if (info->type == APPLET_BONOBO)
+		if (type == APPLET_BONOBO)
 			temp_key = panel_gconf_sprintf (
 					"/apps/panel/profiles/%s/applets/%s",
-					profile, info->gconf_key);
+					profile, gconf_key);
 		else
 			temp_key = panel_gconf_sprintf (
 					"/apps/panel/profiles/%s/objects/%s",
-					profile, info->gconf_key);
+					profile, gconf_key);
 
 		if (clean_gconf)
 			panel_gconf_clean_dir (client, temp_key);
         }
 
 	panel_g_slist_deep_free (id_list);
-
-	g_free (info->gconf_key);
-	info->gconf_key = NULL;
 }
 
 /*destroy widgets and call the above cleanup function*/
@@ -146,7 +143,10 @@ panel_applet_clean (AppletInfo *info,
 
 	info->data = NULL;
 
-	panel_applet_clean_gconf (info, clean_gconf);
+	panel_applet_clean_gconf (info->type, info->gconf_key, clean_gconf);
+
+	g_free (info->gconf_key);
+	info->gconf_key = NULL;
 
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);

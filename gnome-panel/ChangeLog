@@ -1,3 +1,16 @@
+2002-07-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c:
+	(panel_applet_clean_gconf): don't take AppletInfo as an
+	arg so we can clean an unregistered applet. Don't free
+	the gconf key here.
+	(panel_applet_clean): upd for above.
+
+	* panel-applet-frame.c:
+	(panel_applet_frame_construct): if loading fails, delete
+	applet from the configuration - fixes #89051. This should
+	be optional but will have to wait until 2.2.x - see #89713.
+
 2002-07-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.c:
