@@ -49,7 +49,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	s = gtk_entry_get_text(GTK_ENTRY(pixentry));
 	if(!s || !*s)
 		drawer->pixmap =
-			gnome_unconditional_pixmap_file ("gnome-default.png");
+			gnome_unconditional_pixmap_file ("panel-drawer.png");
 	else
 		drawer->pixmap = g_strdup(s);
 	s = gtk_entry_get_text(GTK_ENTRY(tipentry));
@@ -238,7 +238,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 	drawer = g_new(Drawer,1);
 
 	if (!default_drawer_pixmap)
-		default_drawer_pixmap = gnome_pixmap_file ("gnome-unknown.png");
+		default_drawer_pixmap = gnome_pixmap_file ("panel-drawer.png");
 
 	if(!tooltip ||
 	   !*tooltip)
@@ -248,7 +248,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 	if(!pixmap ||
 	   !*pixmap)
 		drawer->pixmap =
-			gnome_unconditional_pixmap_file ("gnome-default.png");
+			gnome_unconditional_pixmap_file ("panel-drawer.png");
 	else
 		drawer->pixmap = g_strdup(pixmap);
 

@@ -382,8 +382,7 @@ drawer_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 
 
 static GtkWidget *
-make_hidebutton(char *pixmaphandle,
-		int wi, int he)
+make_handle(char *pixmaphandle, int wi, int he)
 {
 	GtkWidget *w;
 	GtkWidget *pixmap;
@@ -430,19 +429,19 @@ drawer_widget_init (DrawerWidget *drawer)
 
 	/*we add all the handles to the table here*/
 	/*EAST*/
-	drawer->handle_e = make_hidebutton("panel-menu-main.xpm",40,0);
+	drawer->handle_e = make_handle("panel-knob.png",0,40);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_e,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*NORTH*/
-	drawer->handle_n = make_hidebutton("panel-menu-main.xpm",0,40);
+	drawer->handle_n = make_handle("panel-knob.png",40,0);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	/*WEST*/
-	drawer->handle_w = make_hidebutton( "panel-menu-main.xpm",40,0);
+	drawer->handle_w = make_handle( "panel-knob.png",0,40);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_w,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*SOUTH*/
-	drawer->handle_s = make_hidebutton("panel-menu-main.xpm",0,40);
+	drawer->handle_s = make_handle("panel-knob.png",40,0);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 
