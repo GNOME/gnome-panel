@@ -155,6 +155,8 @@ main(int argc, char **argv)
 
 	client = gnome_master_client ();
 	gnome_client_set_priority(client,40);
+	gnome_client_set_restart_style(client,
+				       GNOME_RESTART_IMMEDIATELY);
 
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
