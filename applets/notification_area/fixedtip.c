@@ -59,21 +59,16 @@ fixed_tip_show (int screen_number,
   if (tip == NULL)
     {      
       tip = gtk_window_new (GTK_WINDOW_POPUP);
-#ifdef HAVE_GTK_MULTIHEAD
       {
         GdkScreen *gdk_screen;
 
-        gdk_screen = gdk_display_get_screen (gdk_get_default_display (),
+        gdk_screen = gdk_display_get_screen (gdk_display_get_default (),
                                              screen_number);
         gtk_window_set_screen (GTK_WINDOW (tip),
                                gdk_screen);
         screen_width = gdk_screen_get_width (gdk_screen);
         screen_height = gdk_screen_get_height (gdk_screen);
       }
-#else
-      screen_width = gdk_screen_width ();
-      screen_height = gdk_screen_height ();      
-#endif
       
       gtk_widget_set_app_paintable (tip, TRUE);
       gtk_window_set_resizable (GTK_WINDOW (tip), FALSE);
