@@ -530,9 +530,9 @@ gtk_style_shade (GdkColor *a,
   gdouble green;
   gdouble blue;
 
-  red = (gdouble) a->red / 65535.0;
+  red   = (gdouble) a->red / 65535.0;
   green = (gdouble) a->green / 65535.0;
-  blue = (gdouble) a->blue / 65535.0;
+  blue  = (gdouble) a->blue / 65535.0;
 
   rgb_to_hls (&red, &green, &blue);
 
@@ -550,9 +550,9 @@ gtk_style_shade (GdkColor *a,
 
   hls_to_rgb (&red, &green, &blue);
 
-  b->red = red * 65535.0;
+  b->red   = red * 65535.0;
   b->green = green * 65535.0;
-  b->blue = blue * 65535.0;
+  b->blue  = blue * 65535.0;
 }
 
 #define LIGHTNESS_MULT  1.3
@@ -562,30 +562,34 @@ static void
 set_color_back (GtkWidget *widget, PanelWidget *panel)
 {
 	GtkStyle *ns;
-	int i;
+	GdkColor  gdkcolor = {0, };
+	int       i;
+
+	gdkcolor.red   = panel->back_color.red;
+	gdkcolor.green = panel->back_color.green;
+	gdkcolor.blue  = panel->back_color.blue;
 
 	gtk_widget_set_style (widget, NULL);
 	ns = gtk_style_copy (gtk_widget_get_style (widget));
 
-	ns->bg[GTK_STATE_NORMAL] =
-		panel->back_color;
-	gtk_style_shade (&panel->back_color,
-			 &ns->bg[GTK_STATE_PRELIGHT],1.5);
-	gtk_style_shade (&panel->back_color,
-			 &ns->bg[GTK_STATE_ACTIVE],0.8);
-	ns->bg[GTK_STATE_INSENSITIVE] = 
-		panel->back_color;
+	ns->bg [GTK_STATE_NORMAL] = gdkcolor;
+	ns->bg [GTK_STATE_INSENSITIVE] = gdkcolor;
+
+	gtk_style_shade (&gdkcolor, &ns->bg [GTK_STATE_PRELIGHT], 1.5);
+	gtk_style_shade (&gdkcolor, &ns->bg [GTK_STATE_ACTIVE], 0.8);
 
 	for (i = 0; i < 5; i++) {
-		gtk_style_shade (&ns->bg[i], &ns->light[i], LIGHTNESS_MULT);
-		gtk_style_shade (&ns->bg[i], &ns->dark[i], DARKNESS_MULT);
+		gtk_style_shade (&ns->bg [i], &ns->light [i], LIGHTNESS_MULT);
+		gtk_style_shade (&ns->bg [i], &ns->dark  [i], DARKNESS_MULT);
 
-		ns->mid[i].red = (ns->light[i].red + ns->dark[i].red) / 2;
-		ns->mid[i].green = (ns->light[i].green + ns->dark[i].green) / 2;
-		ns->mid[i].blue = (ns->light[i].blue + ns->dark[i].blue) / 2;
+		ns->mid [i].red   = (ns->light [i].red   + ns->dark [i].red) / 2;
+		ns->mid [i].green = (ns->light [i].green + ns->dark [i].green) / 2;
+		ns->mid [i].blue  = (ns->light [i].blue  + ns->dark [i].blue) / 2;
 	}
+
 	gtk_widget_set_style (widget, ns);
-	g_object_unref (G_OBJECT (ns));
+
+	g_object_unref (ns);
 }
 
 void

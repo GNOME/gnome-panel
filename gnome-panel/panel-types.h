@@ -53,4 +53,11 @@ typedef enum {
 	PANEL_SPEED_FAST
 } PanelSpeed;
 
+typedef struct {
+	guint16 red;
+	guint16 green;
+	guint16 blue;
+	guint16 alpha;
+} PanelColor;
+
 #endif

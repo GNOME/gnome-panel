@@ -191,7 +191,7 @@ GtkWidget*	basep_widget_construct		(gchar *panel_id,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
-						 GdkColor *back_color);
+						 PanelColor *back_color);
 
 /* changing parameters */
 void		basep_widget_change_params	(BasePWidget *basep,
@@ -208,7 +208,7 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
-						 GdkColor *back_color);
+						 PanelColor *back_color);
 
 void            basep_widget_screen_size_changed (BasePWidget *basep,
 						  GdkScreen   *screen);

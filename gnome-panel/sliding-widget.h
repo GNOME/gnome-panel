@@ -69,7 +69,7 @@ GtkWidget *sliding_widget_new (gchar *panel_id,
 			       gboolean fit_pixmap_bg,
 			       gboolean stretch_pixmap_bg,
 			       gboolean rotate_pixmap_bg,
-			       GdkColor *back_color);
+			       PanelColor *back_color);
 
 void sliding_widget_change_params (SlidingWidget *slidingw,
 				   int screen,
@@ -87,7 +87,7 @@ void sliding_widget_change_params (SlidingWidget *slidingw,
 				   gboolean fit_pixmap_bg,
 				   gboolean stretch_pixmap_bg,
 				   gboolean rotate_pixmap_bg,
-				   GdkColor *back_color);
+				   PanelColor *back_color);
 
 void sliding_widget_change_anchor (SlidingWidget *sliding,
 				   SlidingAnchor anchor);

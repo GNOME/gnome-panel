@@ -385,7 +385,7 @@ floating_widget_change_params (FloatingWidget *floating,
 			       gboolean fit_pixmap_bg,
 			       gboolean stretch_pixmap_bg,
 			       gboolean rotate_pixmap_bg,
-			       GdkColor *back_color)
+			       PanelColor *back_color)
 {
 	BasePWidget *basep = BASEP_WIDGET (floating);
 	FloatingPos *pos = FLOATING_POS (basep->pos);
@@ -467,7 +467,7 @@ floating_widget_new (gchar *panel_id,
 		     gboolean fit_pixmap_bg,
 		     gboolean stretch_pixmap_bg,
 		     gboolean rotate_pixmap_bg,
-		     GdkColor *back_color)
+		     PanelColor *back_color)
 {
 	FloatingWidget *floating;
 	FloatingPos *pos;

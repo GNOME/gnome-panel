@@ -286,7 +286,7 @@ update_config_back (PanelWidget *pw)
 					   pw->back_color.red,
 					   pw->back_color.green,
 					   pw->back_color.blue,
-					   65535);
+					   pw->back_color.alpha);
 		break;
 	case PANEL_BACK_PIXMAP: {
 		GtkWidget   *t;
@@ -1305,6 +1305,7 @@ color_set_cb (GtkWidget *w, int r, int g, int b, int a, gpointer data)
 	ppc->back_color.red = r;
 	ppc->back_color.green = g;
 	ppc->back_color.blue = b;
+	ppc->back_color.alpha = a;
 	
 	panel_config_register_changes (ppc);
 }
@@ -1400,6 +1401,9 @@ background_page (PerPanelConfig *ppc)
 
 	ppc->backsel = gnome_color_picker_new();
 
+	gnome_color_picker_set_use_alpha (
+		GNOME_COLOR_PICKER (ppc->backsel), TRUE);
+
 	gtk_widget_set_sensitive (ppc->backsel, ppc->back_type == PANEL_BACK_COLOR);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (ppc->col_label), ppc->backsel);
 	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
@@ -1408,7 +1412,8 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.red,
 				   ppc->back_color.green,
 				   ppc->back_color.blue,
-				   65535);
+				   ppc->back_color.alpha);
+
 	panel_set_atk_relation (ppc->backsel, GTK_LABEL (ppc->col_label));
 
 	gtk_table_attach (GTK_TABLE (table), ppc->backsel,

@@ -1507,15 +1507,24 @@ basep_widget_update_winhints (BasePWidget *basep)
 void
 basep_update_frame (BasePWidget *basep)
 {
-	gboolean hide_frame = PANEL_WIDGET (basep->panel)->back_type == PANEL_BACK_PIXMAP;
+	PanelWidget *panel;
+	gboolean     hide_frame = FALSE;
+
+	g_return_if_fail (PANEL_IS_WIDGET (basep->panel));
+
+	panel = PANEL_WIDGET (basep->panel);
+
+	if (panel->back_type == PANEL_BACK_PIXMAP ||
+	    panel->back_type == PANEL_BACK_COLOR)
+		hide_frame = TRUE;
 
 	if (hide_frame && GTK_WIDGET_VISIBLE (basep->frame)) {
 		gtk_widget_show (basep->innerebox);
-		gtk_widget_reparent (basep->panel, basep->innerebox);
+		gtk_widget_reparent (GTK_WIDGET (panel), basep->innerebox);
 		gtk_widget_hide (basep->frame);
 	} else if (!hide_frame && !GTK_WIDGET_VISIBLE (basep->frame)) {
 		gtk_widget_show (basep->frame);
-		gtk_widget_reparent (basep->panel, basep->frame);
+		gtk_widget_reparent (GTK_WIDGET (panel), basep->frame);
 		gtk_widget_hide (basep->innerebox);
 	}
 }
@@ -1641,7 +1650,7 @@ basep_widget_construct (gchar *panel_id,
 			gboolean fit_pixmap_bg,
 			gboolean stretch_pixmap_bg,
 			gboolean rotate_pixmap_bg,
-			GdkColor *back_color)
+			PanelColor *back_color)
 {
 	BasePPosClass *klass = basep_widget_get_pos_class (basep);
 	GList         *focus_chain = NULL;
@@ -1786,7 +1795,7 @@ basep_widget_change_params (BasePWidget *basep,
 			    gboolean fit_pixmap_bg,
 			    gboolean stretch_pixmap_bg,
 			    gboolean rotate_pixmap_bg,
-			    GdkColor *back_color)
+			    PanelColor *back_color)
 {
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(basep)));
 

@@ -299,7 +299,7 @@ aligned_widget_change_params (AlignedWidget *aligned,
 			      gboolean fit_pixmap_bg,
 			      gboolean stretch_pixmap_bg,
 			      gboolean rotate_pixmap_bg,
-			      GdkColor *back_color)
+			      PanelColor *back_color)
 {
 	AlignedPos *pos = ALIGNED_POS (BASEP_WIDGET (aligned)->pos);
 
@@ -398,7 +398,7 @@ aligned_widget_new (gchar *panel_id,
 		    gboolean fit_pixmap_bg,
 		    gboolean stretch_pixmap_bg,
 		    gboolean rotate_pixmap_bg,
-		    GdkColor *back_color)
+		    PanelColor *back_color)
 {
 	AlignedWidget *aligned;
 	AlignedPos    *pos;

@@ -9,14 +9,11 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-
-#include <libart_lgpl/art_misc.h>
-#include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_filterlevel.h>
 
 #include "applet.h"
 #include "panel-widget.h"
@@ -24,10 +21,11 @@
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-marshal.h"
-#include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
 #include "drawer-widget.h"
 #include "panel-applet-frame.h"
+#include "panel-background-monitor.h"
+#include "panel-gdk-pixbuf-extensions.h"
 
 #define MOVE_INCREMENT 2
 
@@ -36,6 +34,24 @@ typedef enum {
 	PANEL_FREE_MOVE,
 	PANEL_PUSH_MOVE
 } PanelMovementType;
+
+enum {
+	ORIENT_CHANGE_SIGNAL,
+	SIZE_CHANGE_SIGNAL,
+	APPLET_MOVE_SIGNAL,
+	APPLET_ADDED_SIGNAL,
+	APPLET_REMOVED_SIGNAL,
+	BACK_CHANGE_SIGNAL,
+	PUSH_MOVE_SIGNAL,
+	SWITCH_MOVE_SIGNAL,
+	FREE_MOVE_SIGNAL,
+	TAB_MOVE_SIGNAL,
+	END_MOVE_SIGNAL,
+	POPUP_PANEL_MENU_SIGNAL,
+	LAST_SIGNAL
+};
+
+static guint panel_widget_signals [LAST_SIGNAL] = {0};
 
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
@@ -52,11 +68,6 @@ extern gboolean commie_mode;
 
 static void panel_widget_class_init     (PanelWidgetClass *klass);
 static void panel_widget_instance_init  (PanelWidget      *panel_widget);
-static int  panel_try_to_set_pixmap     (PanelWidget      *panel,
-					 const char       *pixmap);
-static void panel_resize_pixmap         (PanelWidget      *panel);
-static void panel_try_to_set_back_color (PanelWidget      *panel,
-					 GdkColor         *color);
 static void panel_widget_size_request   (GtkWidget        *widget,
 					 GtkRequisition   *requisition);
 static void panel_widget_size_allocate  (GtkWidget        *widget,
@@ -72,6 +83,7 @@ static void panel_widget_finalize       (GObject        *obj);
 static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 static void panel_widget_realize        (GtkWidget        *widget);
+static gboolean setup_background_image  (PanelWidget      *panel);
 
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
@@ -85,12 +97,8 @@ static void panel_widget_end_move           (PanelWidget      *panel);
 static gboolean panel_widget_real_focus     (GtkWidget        *widget,
                                              GtkDirectionType  direction);
 
-
-typedef void (*BackSignal) (GtkObject * object,
-			    PanelBackType type,
-			    char *pixmap,
-			    GdkColor *color,
-			    gpointer data);
+static void panel_widget_load_background_pixmap (PanelWidget *panel);
+static void panel_widget_load_background_color  (PanelWidget *panel);
 
 /************************
  debugging
@@ -159,24 +167,6 @@ panel_widget_get_type (void)
 
 	return object_type;
 }
-
-enum {
-	ORIENT_CHANGE_SIGNAL,
-	SIZE_CHANGE_SIGNAL,
-	APPLET_MOVE_SIGNAL,
-	APPLET_ADDED_SIGNAL,
-	APPLET_REMOVED_SIGNAL,
-	BACK_CHANGE_SIGNAL,
-	PUSH_MOVE_SIGNAL,
-	SWITCH_MOVE_SIGNAL,
-	FREE_MOVE_SIGNAL,
-	TAB_MOVE_SIGNAL,
-	END_MOVE_SIGNAL,
-	POPUP_PANEL_MENU_SIGNAL,
-	LAST_SIGNAL
-};
-
-static guint panel_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 add_tab_bindings (GtkBindingSet    *binding_set,
@@ -1204,105 +1194,79 @@ queue_resize_on_all_applets(PanelWidget *panel)
 }
 
 static void
-setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
-		 gboolean *rotate)
+reset_background_image (PanelWidget *panel)
 {
-	GtkWidget *widget = GTK_WIDGET(panel);
-	GdkPixmap *bg_pixmap;
-	
-	*pb = NULL;
-	*scale_w = *scale_h = 0;
-	*rotate = FALSE;
+	if (panel->desktop_image)
+		g_object_unref (panel->desktop_image);
+	panel->desktop_image = NULL;
 
-	bg_pixmap = widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)];
+	if (panel->background_image)
+		g_object_unref (panel->background_image);
+	panel->background_image = NULL;
 
-	if(panel->back_type == PANEL_BACK_NONE) {
-		if(bg_pixmap && !panel->backpix) {
-			int w, h;
-			gdk_drawable_get_size (bg_pixmap, &w, &h);
-			panel->backpix = gdk_pixbuf_get_from_drawable
-				(NULL, bg_pixmap, widget->style->colormap,
-				 0, 0, 0, 0, w, h);
-		} else if(!bg_pixmap && panel->backpix) {
-			g_object_unref (G_OBJECT (panel->backpix));
-			panel->backpix = NULL;
-		}
-		*pb = panel->backpix;
-	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
-		if(!panel->backpixmap)
-			panel_resize_pixmap(panel);
+	if (panel->background_pixmap)
+		g_object_unref (panel->background_pixmap);
+	panel->background_pixmap = NULL;
 
-		*pb = panel->backpix;
-
-		if(panel->fit_pixmap_bg ||
-		   panel->stretch_pixmap_bg) {
-			*scale_w = panel->scale_w;
-			*scale_h = panel->scale_h;
-			if(panel->orient == GTK_ORIENTATION_VERTICAL &&
-			   panel->rotate_pixmap_bg)
-				*rotate = TRUE;
-		} else {
-			if(panel->orient == GTK_ORIENTATION_VERTICAL &&
-			   panel->rotate_pixmap_bg) {
-				/* we need to set scales to rotate*/
-				*scale_w = gdk_pixbuf_get_width((*pb));
-				*scale_h = gdk_pixbuf_get_height((*pb));
-				*rotate = TRUE;
-			}
-		}
-	} 
+	if (panel->backpix_scaled)
+		g_object_unref (panel->backpix_scaled);
+	panel->backpix_scaled = NULL;
 }
 
 static int
-panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
+panel_widget_expose (GtkWidget      *widget,
+		     GdkEventExpose *event)
 {
 	PanelWidget *panel;
-	GdkGC *gc;
-	GdkPixbuf *pb = NULL;
-	int scale_w = 0,scale_h = 0;
-	int rotate = FALSE;
 
-	g_return_val_if_fail(PANEL_IS_WIDGET(widget),FALSE);
-	g_return_val_if_fail(event!=NULL,FALSE);
+	g_return_val_if_fail (PANEL_IS_WIDGET (widget), FALSE);
+	g_return_val_if_fail (event != NULL, FALSE);
 
-	panel = PANEL_WIDGET(widget);
+	panel = PANEL_WIDGET (widget);
 
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_EXPOSE");
-#endif
-
-	if(!GTK_WIDGET_DRAWABLE(widget) ||
-	   widget->allocation.width <= 0 ||
-	   widget->allocation.height <= 0)
+	if (!GTK_WIDGET_DRAWABLE (widget) ||
+	    widget->allocation.width <= 0 ||
+	    widget->allocation.height <= 0)
 		return FALSE;
 
-	setup_background (panel, &pb, &scale_w, &scale_h, &rotate);
-	
-	gc = gdk_gc_new (widget->window);
-	gdk_gc_copy (gc, widget->style->bg_gc[GTK_WIDGET_STATE(widget)]);
+	if (panel->back_type == PANEL_BACK_NONE &&
+	    widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]) {
+		GdkGC *gc;
 
-	if (panel->back_type == PANEL_BACK_NONE) {
-		if (widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]) {
-			gdk_gc_set_fill (gc, GDK_TILED);
-			gdk_gc_set_tile (gc,
-					 widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)]);
-		}
-	} else if (panel->back_type == PANEL_BACK_PIXMAP) {
-		if(panel->backpixmap) {
-			gdk_gc_set_fill (gc, GDK_TILED);
-			gdk_gc_set_tile (gc, panel->backpixmap);
-		}
-	} else /*COLOR*/ {
-		gdk_gc_set_foreground (gc, &panel->back_color);
-	}
+		gc = gdk_gc_new (widget->window);
 
-	gdk_draw_rectangle (widget->window, gc, TRUE,
-			    event->area.x, event->area.y, event->area.width, event->area.height);
+		gdk_gc_copy (
+			gc, widget->style->bg_gc [GTK_WIDGET_STATE (widget)]);
 
-	g_object_unref (G_OBJECT (gc));
+		gdk_gc_set_fill (gc, GDK_TILED);
+		gdk_gc_set_tile (
+			gc, widget->style->bg_pixmap [GTK_WIDGET_STATE (widget)]);
+
+		gdk_draw_rectangle (
+			widget->window, gc, TRUE,
+			event->area.x, event->area.y,
+			event->area.width, event->area.height);
+
+		g_object_unref (gc);
+	} else if (panel->background_image || setup_background_image (panel)) {
+		int width, height;
+
+		width = MIN (event->area.width,
+			     gdk_pixbuf_get_width (panel->background_image)   - event->area.x);
+		height = MIN (event->area.height,
+			      gdk_pixbuf_get_height (panel->background_image) - event->area.y);
+
+		gdk_draw_pixbuf (GDK_DRAWABLE (widget->window),
+				 widget->style->bg_gc [GTK_WIDGET_STATE (widget)],
+				 panel->background_image,
+				 event->area.x, event->area.y,
+				 event->area.x, event->area.y,
+				 width, height,
+				 GDK_RGB_DITHER_NONE, 0, 0);
+        }
 
 	/* Chain up to get no-window widget exposes */
-	return (* GTK_WIDGET_CLASS (panel_widget_parent_class)->expose_event) (widget, event);
+	return GTK_WIDGET_CLASS (panel_widget_parent_class)->expose_event (widget, event);
 }
 
 static void
@@ -1476,16 +1440,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	else
 		panel->thick = allocation->width;
 
-	if(panel->back_type == PANEL_BACK_PIXMAP &&
-	   (panel->fit_pixmap_bg || panel->stretch_pixmap_bg) &&
-	   (old_alloc.width != allocation->width ||
-	    old_alloc.height != allocation->height)) {
-		if(panel->backpixmap) {
-			g_object_unref (G_OBJECT (panel->backpixmap));
-			panel->backpixmap = NULL;
-		}
-	}
-
+	if (panel->background_image &&
+	    (old_alloc.x  != allocation->x ||
+	     old_alloc.y  != allocation->y ||
+	     old_alloc.width  != allocation->width ||
+	     old_alloc.height != allocation->height))
+		reset_background_image (panel);
 	
 	for(li=send_move;li!=NULL;li=g_slist_next(li)) {
 		AppletData *ad = li->data;
@@ -1525,201 +1485,189 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 }
 
 void
-panel_widget_set_back_pixmap (PanelWidget *panel, const char *file)
+panel_widget_set_back_pixmap (PanelWidget *panel,
+			      const char  *image_path)
 {
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(file!=NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (panel->back_type != PANEL_BACK_PIXMAP);
+	g_return_if_fail (image_path != NULL);
 
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_SET_BACK_PIXMAP");
-#endif
+	g_free (panel->back_pixmap);
+	panel->back_pixmap = g_strdup (image_path);
 
-	if (panel_try_to_set_pixmap (panel, file)) {
-		g_free (panel->back_pixmap);
-		panel->back_pixmap = g_strdup (file);
-		panel->back_type = PANEL_BACK_PIXMAP;
-		gtk_widget_queue_draw (GTK_WIDGET (panel));
+	panel_widget_load_background_pixmap (panel);
 
-		g_signal_emit (G_OBJECT(panel),
-			       panel_widget_signals[BACK_CHANGE_SIGNAL],
-			       0, panel->back_type,
-				panel->back_pixmap,
-				&panel->back_color);
-	}
-	else
-		gtk_widget_queue_draw (GTK_WIDGET (panel));
+	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
 
 static void
-panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
+panel_widget_load_background_color (PanelWidget *panel)
 {
 	GdkColormap *cmap;
+	GdkColor     gdkcolor;
 
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(color!=NULL);
-	
-	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (panel->back_type == PANEL_BACK_COLOR);
 
-	if(gdk_colormap_alloc_color(cmap,color,FALSE,TRUE)) {
-		panel->back_color = *color;
-	}
+	gdkcolor.red   = panel->back_color.red;
+	gdkcolor.green = panel->back_color.green;
+	gdkcolor.blue  = panel->back_color.blue;
+
+	cmap = gtk_widget_get_colormap (GTK_WIDGET (panel));
+	gdk_colormap_alloc_color (cmap, &gdkcolor, FALSE, TRUE);
+
+	if (panel->background_image)
+		g_object_unref (panel->background_image);
+	panel->background_image = NULL;
+
+	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0,
+		       panel->back_type,
+		       panel->back_pixmap, 
+		       &panel->back_color);
 }
 
 void
-panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
+panel_widget_set_back_color (PanelWidget *panel,
+			     PanelColor  *color)
 {
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(color!=NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (color != NULL);
 
 	panel->back_type = PANEL_BACK_COLOR;
-	panel_try_to_set_back_color(panel, color);
+	panel->back_color = *color;
+
+	panel_widget_load_background_color (panel);
+
 	gtk_widget_queue_draw (GTK_WIDGET (panel));
-
-	g_signal_emit(G_OBJECT(panel),
-		      panel_widget_signals[BACK_CHANGE_SIGNAL],
-		      0,
-		      panel->back_type,
-		      panel->back_pixmap,
-		      &panel->back_color);
 }
 
-static GdkPixmap *
-get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
-		       int rotate)
+static GdkPixbuf *
+get_scaled_and_rotated_pixbuf (PanelWidget *panel)
 {
-	GdkGC *gc;
-	GdkPixmap *p;
-	gdouble affine[6];
-	guchar *rgb;
-	
-	affine[1] = affine[2] = affine[4] = affine[5] = 0;
+	GdkPixbuf *scaled;
+	GdkPixbuf *retval;
+	int        orig_width, orig_height;
+	int        panel_width, panel_height;
+	int        width, height;
 
-	affine[0] = scale_w / (double)(gdk_pixbuf_get_width(pb));
-	affine[3] = scale_h / (double)(gdk_pixbuf_get_height(pb));
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), NULL);
+	g_return_val_if_fail (panel->backpix != NULL, NULL);
 
-	if(rotate) {
-		int tmp;
-		gdouble aff[6];
+	orig_width  = gdk_pixbuf_get_width (panel->backpix);
+	orig_height = gdk_pixbuf_get_height (panel->backpix);
 
-		art_affine_rotate(aff,270);
-		art_affine_multiply(affine,affine,aff);
-		art_affine_translate(aff,0,scale_w);
-		art_affine_multiply(affine,affine,aff);
-		
-		tmp = scale_h;
-		scale_h = scale_w;
-		scale_w = tmp;
-	}
-	
-	rgb = g_new0(guchar,scale_h*scale_w*3);
-#ifdef PANEL_WIDGET_DEBUG
-	printf("scale_w %d scale_h %d\n",scale_w,scale_h);
-#endif
-	transform_pixbuf(rgb,
-		         0,0,scale_w,scale_h,scale_w*3,
-		         pb,affine,ART_FILTER_NEAREST,NULL);
-	p = gdk_pixmap_new(w->window, scale_w,scale_h,
-			   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
-	gc = gdk_gc_new(p);
-	gdk_draw_rgb_image(p,gc,0,0,
-			   scale_w,scale_h,
-			   GDK_RGB_DITHER_NORMAL,
-			   rgb, scale_w*3);
-	g_free(rgb);
-	g_object_unref (G_OBJECT (gc));
+	panel_width  = GTK_WIDGET (panel)->allocation.width;
+	panel_height = GTK_WIDGET (panel)->allocation.height;
 
-	return p;
-}
+	width  = orig_width;
+	height = orig_height;
 
-
-static void
-panel_resize_pixmap(PanelWidget *panel)
-{
-	int w, h;
-	int pw, ph;
-
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-
-	if(panel->backpixmap)
-		g_object_unref (G_OBJECT (panel->backpixmap));
-	panel->backpixmap = NULL;
-	
-	if(!panel->backpix) return;
-	
-	panel->scale_w = w = gdk_pixbuf_get_width(panel->backpix);
-	panel->scale_h = h = gdk_pixbuf_get_height(panel->backpix);
-	
-	pw = GTK_WIDGET(panel)->allocation.width;
-	ph = GTK_WIDGET(panel)->allocation.height;
-
-	if(panel->fit_pixmap_bg) {
+	if (panel->fit_pixmap_bg) {
 		switch (panel->orient) {
 		case GTK_ORIENTATION_HORIZONTAL:
-			panel->scale_w = w * ph / h;
-			panel->scale_h = ph;
+			width  = orig_width * panel_height / orig_height;
+			height = panel_height;
 			break;
-
 		case GTK_ORIENTATION_VERTICAL:
-			if(panel->rotate_pixmap_bg) {
-				panel->scale_w = w * pw / h;
-				panel->scale_h = pw;
+			if (panel->rotate_pixmap_bg) {
+				width  = orig_width * panel_width / orig_height;
+				height = panel_width;
 			} else {
-				panel->scale_w = pw;
-				panel->scale_h = h * pw / w;
+				width  = panel_width;
+				height = orig_height * panel_width / orig_width;
 			}
 			break;
-
 		default:
 			g_assert_not_reached ();
+			break;
 		}
-	} else if(panel->stretch_pixmap_bg) {
-		if(panel->orient == GTK_ORIENTATION_VERTICAL &&
-		   panel->rotate_pixmap_bg) {
-			panel->scale_w = ph;
-			panel->scale_h = pw;
+	} else if (panel->stretch_pixmap_bg) {
+		if (panel->orient == GTK_ORIENTATION_VERTICAL &&
+		    panel->rotate_pixmap_bg) {
+			width  = panel_height;
+			height = panel_width;
 		} else {
-			panel->scale_w = pw;
-			panel->scale_h = ph;
+			width  = panel_width;
+			height = panel_height;
 		}
 	}
-	
-	panel->backpixmap = get_pixmap_from_pixbuf(
-					GTK_WIDGET(panel),
-					panel->backpix,
-					panel->scale_w,
-					panel->scale_h,
-					panel->orient == GTK_ORIENTATION_VERTICAL &&
-					panel->rotate_pixmap_bg);
+
+	scaled = gdk_pixbuf_scale_simple (
+			panel->backpix, width, height, GDK_INTERP_BILINEAR);
+
+	if (panel->rotate_pixmap_bg &&
+	    panel->orient == GTK_ORIENTATION_VERTICAL) {
+		gulong *dest;
+		gulong *src;
+		int     x, y;
+
+		retval = gdk_pixbuf_new (
+				GDK_COLORSPACE_RGB, TRUE, 8, height, width);
+
+		dest = (gulong *) gdk_pixbuf_get_pixels (retval);
+		src  = (gulong *) gdk_pixbuf_get_pixels (scaled);
+
+		for (y = 0; y < height; y++)
+			for (x = 0; x < width; x++)
+				dest [y + height * (width - x - 1)] =
+					src [y * width + x];
+
+		g_object_unref (scaled);
+	} else
+		retval = scaled;
+
+	return retval;
 }
 
-static int
-panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
+static void
+panel_widget_load_background_pixmap (PanelWidget *panel)
 {
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
+	GdkPixbuf *loaded_pixbuf;
+	GError    *error = NULL;
 
-	if(panel->backpix)
-		g_object_unref (G_OBJECT (panel->backpix));
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (panel->back_type == PANEL_BACK_PIXMAP);
+
+	if (panel->backpix)
+		g_object_unref (panel->backpix);
 	panel->backpix = NULL;
-	if (panel->backpixmap != NULL)
-		g_object_unref (G_OBJECT (panel->backpixmap));
-	panel->backpixmap = NULL;
 
-	if (string_empty (pixmap)) {
-		return TRUE;
+	if (panel->backpix_scaled)
+		g_object_unref (panel->backpix_scaled);
+	panel->backpix_scaled = NULL;
+
+	if (panel->background_image)
+		g_object_unref (panel->background_image);
+	panel->background_image = NULL;
+
+	if (!panel->back_pixmap || !panel->back_pixmap [0])
+		goto failed;
+
+	if (!g_file_test (panel->back_pixmap, G_FILE_TEST_EXISTS))
+		goto failed;
+	
+	loaded_pixbuf = gdk_pixbuf_new_from_file (panel->back_pixmap, &error);
+	if (!loaded_pixbuf) {
+		g_assert (error != NULL);
+		g_warning (G_STRLOC ": unable to '%s' : %s", panel->back_pixmap, error->message);
+		g_error_free (error);
+		goto failed;
 	}
 
-	if ( ! g_file_test (pixmap, G_FILE_TEST_EXISTS))
-		return FALSE;
-	
-	panel->backpix = gdk_pixbuf_new_from_file (pixmap, NULL);
-	if (panel->backpix == NULL)
-		return FALSE;
+	panel->backpix = gdk_pixbuf_add_alpha (loaded_pixbuf, FALSE, 0, 0, 0);
+	g_object_unref (loaded_pixbuf);
 
-	panel->scale_w = gdk_pixbuf_get_width (panel->backpix);
-	panel->scale_h = gdk_pixbuf_get_height (panel->backpix);
+	g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0,
+		       panel->back_type,
+		       panel->back_pixmap,
+		       &panel->back_color);
 
-	return TRUE;
+	return;
+
+failed:
+	g_free (panel->back_pixmap);
+	panel->back_pixmap = NULL;
+	panel->back_type = PANEL_BACK_NONE;
 }
 
 static void
@@ -1734,12 +1682,115 @@ panel_widget_realize (GtkWidget *widget)
 	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->realize)
 		GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 	
-	if (panel->back_type == PANEL_BACK_PIXMAP) {
-		if (!panel_try_to_set_pixmap (panel, panel->back_pixmap))
-			panel->back_type = PANEL_BACK_NONE;
+	if (panel->back_type == PANEL_BACK_PIXMAP)
+		panel_widget_load_background_pixmap (panel);
 
-	} else if (panel->back_type == PANEL_BACK_COLOR)
-		panel_try_to_set_back_color (panel, &panel->back_color);
+	else if (panel->back_type == PANEL_BACK_COLOR)
+		panel_widget_load_background_color (panel);
+}
+
+static void
+setup_desktop_image (PanelWidget *panel)
+{
+	if (panel->desktop_image)
+		g_object_unref (panel->desktop_image);
+
+	panel->desktop_image =
+		panel_background_monitor_get_widget_background (
+			panel_background_monitor_get (),
+			GTK_WIDGET (panel));
+}
+
+static gboolean
+setup_background_image (PanelWidget *panel)
+{
+	if (panel->background_image)
+		g_object_unref (panel->background_image);
+	panel->background_image = NULL;
+
+	if (panel->back_type == PANEL_BACK_PIXMAP) {
+		ArtIRect rect;
+		int      width, height;
+		int      tilewidth, tileheight;
+
+		if (!panel->desktop_image)
+			setup_desktop_image (panel);
+
+		if (!panel->backpix_scaled)
+			panel->backpix_scaled = 
+				get_scaled_and_rotated_pixbuf (panel);
+
+		panel->background_image = 
+			gdk_pixbuf_copy (panel->desktop_image);
+
+		width  = gdk_pixbuf_get_width  (panel->desktop_image);
+		height = gdk_pixbuf_get_height (panel->desktop_image);
+
+		tilewidth  = gdk_pixbuf_get_width (panel->backpix_scaled);
+		tileheight = gdk_pixbuf_get_height (panel->backpix_scaled);
+
+		rect.x0 = 0;
+		rect.y0 = 0;
+		rect.x1 = width;
+		rect.y1 = height;
+
+		panel_gdk_pixbuf_draw_to_pixbuf_tiled (
+				panel->backpix_scaled,
+				panel->background_image, rect,
+				tilewidth, tileheight, 0, 0, 255,
+				GDK_INTERP_NEAREST);
+	} else if (panel->back_type == PANEL_BACK_COLOR) {
+		guint32 color;
+
+		if (!panel->desktop_image)
+			setup_desktop_image (panel);
+
+		color = ((panel->back_color.red & 0xFF00)<< 8) +
+			 (panel->back_color.green & 0xFF00) +
+			 (panel->back_color.blue >> 8);
+
+		panel->background_image =
+			gdk_pixbuf_composite_color_simple (
+				panel->desktop_image, 
+				gdk_pixbuf_get_width (panel->desktop_image),
+				gdk_pixbuf_get_height (panel->desktop_image),
+				GDK_INTERP_NEAREST,
+				(255 - (panel->back_color.alpha >> 8)),
+				255, color, color);
+	} else {
+		if (panel->background_image)
+			g_object_unref (panel->background_image);
+		panel->background_image = NULL;
+	}
+
+	if (panel->background_image) {
+		GdkBitmap *bitmap = NULL;
+
+		if (panel->background_pixmap)
+			g_object_unref (panel->background_pixmap);
+
+		gdk_pixbuf_render_pixmap_and_mask (
+			panel->background_image,
+			&panel->background_pixmap,
+			&bitmap, 128);
+
+		if (bitmap)
+			g_object_unref (bitmap);
+	}
+
+	return panel->background_image != NULL;
+}
+
+static void
+background_changed (PanelBackgroundMonitor *monitor,
+		    PanelWidget            *panel) 
+{
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+
+	setup_desktop_image (panel);
+	setup_background_image (panel);
+
+	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
 
 static void
@@ -1754,11 +1805,16 @@ panel_widget_finalize (GObject *obj)
 	g_free (panel->back_pixmap);
 	panel->back_pixmap = NULL;
 
+	reset_background_image (panel);
+
 	g_free (panel->unique_id);
 	panel->unique_id = NULL;
 
-	if (G_OBJECT_CLASS (panel_widget_parent_class)->finalize)
-		G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
+	G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
+
+	g_signal_handler_disconnect (
+			panel_background_monitor_get (),
+			panel->background_changed_signal_handler);
 }
 
 static void
@@ -1784,18 +1840,19 @@ panel_widget_destroy (GtkObject *obj)
 }
 
 static void
-panel_widget_style_set(GtkWidget *widget,
-		       GtkStyle  *previous_style)
+panel_widget_style_set (GtkWidget *widget,
+			GtkStyle  *previous_style)
 {
 	PanelWidget *panel = PANEL_WIDGET (widget);
+
 	if (panel->back_type == PANEL_BACK_NONE) {
-		if(panel->backpix)
-			g_object_unref (G_OBJECT (panel->backpix));
+		if (panel->backpix)
+			g_object_unref (panel->backpix);
 		panel->backpix = NULL;
 	}
 
 	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set)
-		(* GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set) (widget, previous_style);
+		GTK_WIDGET_CLASS (panel_widget_parent_class)->style_set (widget, previous_style);
 
 }
 
@@ -1888,7 +1945,7 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->back_color.red = 0;
 	panel->back_color.green = 0;
 	panel->back_color.blue = 0;
-	panel->back_color.pixel = 1;
+	panel->back_color.alpha = 65535;
 	panel->packed = FALSE;
 	panel->orient = GTK_ORIENTATION_HORIZONTAL;
 	panel->thick = PANEL_MINIMUM_WIDTH;
@@ -1897,10 +1954,18 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
 	panel->backpix = NULL;
-	panel->backpixmap = NULL;
+	panel->backpix_scaled = NULL;
 	panel->inhibit_draw = FALSE;
+	panel->desktop_image = NULL;
+	panel->background_image = NULL;
+	panel->background_pixmap = NULL;
 
-	panels = g_slist_append(panels,panel);
+	panels = g_slist_append (panels, panel);
+
+	panel->background_changed_signal_handler = 
+		g_signal_connect (
+			panel_background_monitor_get (), "changed",
+			G_CALLBACK (background_changed), panel);
 }
 
 GtkWidget *
@@ -1913,7 +1978,7 @@ panel_widget_new (gchar *panel_id,
 		  gboolean fit_pixmap_bg,
 		  gboolean stretch_pixmap_bg,
 		  gboolean rotate_pixmap_bg,
-		  GdkColor *back_color)
+		  PanelColor *back_color)
 {
 	PanelWidget *panel;
 
@@ -1942,7 +2007,7 @@ panel_widget_new (gchar *panel_id,
 		panel->back_color.red = 0;
 		panel->back_color.green = 0;
 		panel->back_color.blue = 0;
-		panel->back_color.pixel = 1;
+		panel->back_color.alpha = 65535;
 	}	
 
 	panel->orient = orient;
@@ -2777,7 +2842,7 @@ panel_widget_change_params(PanelWidget *panel,
 			   gboolean fit_pixmap_bg,
 			   gboolean stretch_pixmap_bg,
 			   gboolean rotate_pixmap_bg,
-			   GdkColor *back_color)
+			   PanelColor *back_color)
 {
 	GtkOrientation oldorient;
 	int oldsz;
@@ -2808,16 +2873,15 @@ panel_widget_change_params(PanelWidget *panel,
 	   		       panel_widget_signals[SIZE_CHANGE_SIGNAL],
 	   		       0);
 	}
-	if(back_color) {
-		/*this will allways trigger, but so what*/
-		if(back_type == PANEL_BACK_COLOR)
+	if (back_color) {
+		if (back_type == PANEL_BACK_COLOR)
 			change_back = TRUE;
-		panel->back_color = *back_color;
-	} /*if we didn't pass a color, then don't set a new color!*/
 
-	/*only change the pixmap name if we passed a non-null value*/
-	if(pixmap && pixmap != panel->back_pixmap) {
-		if(back_type == PANEL_BACK_PIXMAP)
+		panel->back_color = *back_color;
+	}
+
+	if (pixmap && pixmap != panel->back_pixmap) {
+		if (back_type == PANEL_BACK_PIXMAP)
 			change_back = TRUE;
 
 		g_free (panel->back_pixmap);
@@ -2825,24 +2889,24 @@ panel_widget_change_params(PanelWidget *panel,
 	}
 
 	/*clearly a signal should be sent*/
-	if(panel->back_type != back_type ||
-	   panel->fit_pixmap_bg != fit_pixmap_bg ||
-	   panel->stretch_pixmap_bg != stretch_pixmap_bg ||
-	   panel->rotate_pixmap_bg != rotate_pixmap_bg)
+	if (panel->back_type != back_type ||
+	    panel->fit_pixmap_bg != fit_pixmap_bg ||
+	    panel->stretch_pixmap_bg != stretch_pixmap_bg ||
+	    panel->rotate_pixmap_bg != rotate_pixmap_bg)
 		change_back = TRUE;
 	
 	/*this bit is not optimal, it allways sets the pixmap etc etc ...
 	  but this function isn't called too often*/
-	panel->back_type = back_type;
-	panel->fit_pixmap_bg = fit_pixmap_bg;
+	panel->back_type         = back_type;
+	panel->fit_pixmap_bg     = fit_pixmap_bg;
 	panel->stretch_pixmap_bg = stretch_pixmap_bg;
-	panel->rotate_pixmap_bg = rotate_pixmap_bg;
-	if(back_type == PANEL_BACK_PIXMAP) {
-		panel_try_to_set_pixmap (panel, panel->back_pixmap);
-		/* we will queue resize and redraw anyhow */
-	} else if(back_type == PANEL_BACK_COLOR) {
-		panel_try_to_set_back_color(panel, &panel->back_color);
-	}
+	panel->rotate_pixmap_bg  = rotate_pixmap_bg;
+
+	if (back_type == PANEL_BACK_PIXMAP)
+		panel_widget_load_background_pixmap (panel);
+
+	else if (back_type == PANEL_BACK_COLOR)
+		panel_widget_load_background_color (panel);
 
 	/* let the applets know we changed the background */
 	if (change_back) {

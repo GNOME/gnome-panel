@@ -218,7 +218,6 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	GdkPixbuf *logo;
 	GString *comment;
 	char *logo_file;
-	/* FIXME: fill in all the wankers who did stuff */
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
 	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
@@ -237,6 +236,7 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	  "Stephen Browne (stephen.browne@sun.com)",
 	  "Anders Carlsson (andersca@gnu.org)",
 	  "Padraig O'Briain (padraig.obriain@sun.com)",
+	  "Ian McKellar <yakk@yakk.net>",
 	N_("Many many others ..."),
 	/* ... from the Monty Pythons show...  */
 	N_("and finally, The Knights Who Say ... NI!"),
@@ -2667,9 +2667,9 @@ static void
 create_new_panel (GtkWidget *w, gpointer data)
 {
 	PanelType  type = GPOINTER_TO_INT (data);
-	GdkColor   bcolor = {0, 0, 0, 1};
-	GtkWidget *panel = NULL;
+	PanelColor bcolor = {0, 0, 0, 1};
 	gint16     x, y;
+	GtkWidget *panel = NULL;
 	int        screen;
 	int        monitor;
 

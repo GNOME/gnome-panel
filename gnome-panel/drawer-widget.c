@@ -346,7 +346,7 @@ drawer_widget_change_params (DrawerWidget  *drawer,
 			     gboolean       fit_pixmap_bg,
 			     gboolean       stretch_pixmap_bg,
 			     gboolean       rotate_pixmap_bg,
-			     GdkColor      *back_color)
+			     PanelColor    *back_color)
 {
 	GtkOrientation porient;
 	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
@@ -446,7 +446,7 @@ drawer_widget_new (char          *panel_id,
 		   gboolean       fit_pixmap_bg,
 		   gboolean       stretch_pixmap_bg,
 		   gboolean       rotate_pixmap_bg,
-		   GdkColor      *back_color)
+		   PanelColor    *back_color)
 {
 	DrawerWidget *drawer;
 	DrawerPos *pos;

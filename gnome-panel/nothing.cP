@@ -5,11 +5,12 @@
 #include <libgnomecanvas/libgnomecanvas.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_rgb_affine.h>
+#include <libart_lgpl/art_rgb_rgba_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
 #include <libgnome/libgnome.h>
 
 #include "panel-util.h"
-#include "rgb-stuff.h"
 #include "nothing.h"
 
 /*code snippet, not to be compiled separately*/
@@ -24,6 +25,28 @@ static int goat_x = -1, goat_y = -1;
 static int goat_accx = -1, goat_accy = -1;
 
 static char *goat_filename = NULL;
+
+static void
+transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+		 GdkPixbuf *pixbuf, double affine[6],
+		 int level, ArtAlphaGamma *ag)
+{
+	gint w, h, rs;
+
+	rs = gdk_pixbuf_get_rowstride(pixbuf);
+	h =  gdk_pixbuf_get_height(pixbuf);
+	w =  gdk_pixbuf_get_width(pixbuf);
+
+        if (gdk_pixbuf_get_has_alpha(pixbuf)) { 
+	        art_rgb_rgba_affine(dst, x0, y0, x1, y1, drs,
+                                    gdk_pixbuf_get_pixels(pixbuf),
+                                    w, h, rs, affine, level, ag);
+        } else {
+                art_rgb_affine(dst, x0, y0, x1, y1, drs,
+                               gdk_pixbuf_get_pixels(pixbuf),
+                               w, h, rs, affine, level, ag);
+	}
+}
 
 static char *
 find_me_the_damn_pixmap (const char *name, gboolean fallback)

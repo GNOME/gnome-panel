@@ -290,12 +290,12 @@ panel_applet_frame_get_background_string (PanelAppletFrame *frame,
 		 * then don't force the applet to copy from our
 		 * window.
 		 */
-		if (!panel->backpixmap)
+		if (!panel->background_pixmap)
 			return panel_applet_frame_get_background_string (
 					frame, panel, PANEL_BACK_NONE);
 
 		pixmap_xid = gdk_x11_drawable_get_xid (
-				GDK_DRAWABLE (GTK_WIDGET (panel)->window));
+				GDK_DRAWABLE (panel->background_pixmap));
 
 		retval = g_strdup_printf (
 				"pixmap:%d,%d,%d", pixmap_xid,

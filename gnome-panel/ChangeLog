@@ -1,3 +1,55 @@
+2002-11-01  Mark McLoughlin  <mark@skynet.ie>
+
+	Add support for translucent panels. Based on a patch
+	from Ian McKellar <yakk@yakk.net>. This is still
+	quite buggy but its a step forward.
+
+	* Makefile.am: remove rgb-stuff.[ch] from the build
+	and add panel-gdk-pixbuf-extensions.[ch] and
+	panel-background-monitor.[ch].
+
+	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],
+	  drawer-widget.[ch], edge-widget.[ch], floating-widget.[ch],
+	  sliding-widget.[ch]: all the _new() and change_params()
+	functions take a PanelColor instead of a GdkColor now.
+
+	* basep-widget.c: (basep_update_frame): remove the frame
+	if its a colour background also.
+
+	* menu.c: (about_cb): Add Ian.
+
+	* panel-applet-frame.c: (panel_applet_frame_get_background_string):
+	pass the xid of the background pixmap, not the panel window, to
+	the applet. Doh.
+
+	* panel-background-monitor.[ch]: New object to monitor changes
+	on the desktop background.
+
+	* panel-config.[ch]: (update_config_back), (color_set_cb),
+	(background_page): Add support for configuring the alpha channel
+	in the background colour.
+
+	* panel-gdk-pixbuf-extensions.[ch]: copy from eel-gdk-pixbuf-extensions
+	for eel_gdk_pixbuf_draw_to_pixbuf_tiled(), but remove all other
+	extensions, reduce dependancies and remove the abstraction to allow
+	rendering into either a drawable or a pixbuf.
+
+	* panel-types.h: add PanelColor.
+
+	* panel-util.c: (set_color_back): upd for use of PanelColor.
+
+	* panel-widget.[ch]: More or less completely re-write the background
+	rendering code. Both image and color backgrounds are not composited
+	onto the desktop background image. This still needs work - bugs
+	abound.
+
+	* panel.c:
+	(panel_load_panels_from_gconf),
+	(panel_save_to_gconf): save the alpha channel of the color background.
+
+	* rgb-stuff.[ch]: remove. We no longer use libart to scale and rotate
+	pixbufs. We just use gdk-pixbuf directly.
+
 2002-10-27  Anders Carlsson  <andersca@gnu.org>
 
 	* gnome-panel-screenshot.c: Fix a bug with alpha, fix the

@@ -115,7 +115,6 @@ panel_sources =			\
 	sliding-widget.c	\
 	floating-widget.c	\
 	disclosure-widget.c	\
-	rgb-stuff.c		\
 	panel.c			\
 	applet.c		\
 	drawer.c  		\
@@ -135,9 +134,11 @@ panel_sources =			\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
 	panel-access.c		\
+	panel-background-monitor.c \
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-recent.c		\
+	panel-gdk-pixbuf-extensions.c \
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -158,7 +159,6 @@ panel_headers =			\
 	sliding-widget.h	\
 	floating-widget.h	\
 	disclosure-widget.h	\
-	rgb-stuff.h		\
 	panel.h         	\
 	applet.h         	\
 	drawer.h  		\
@@ -177,9 +177,11 @@ panel_headers =			\
 	panel-applet-frame.h	\
 	quick-desktop-reader.h	\
 	panel-shell.h		\
+	panel-background-monitor.h \
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-recent.h		\
+	panel-gdk-pixbuf-extensions.h \
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
@@ -218,8 +220,7 @@ gnome_desktop_item_edit_SOURCES = \
 	panel-access.c		  \
 	egg-screen-exec.c	  \
 	egg-screen-help.c	  \
-	egg-screen-url.c	  \
-	rgb-stuff.c
+	egg-screen-url.c
 
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 

@@ -177,7 +177,7 @@ border_widget_change_params (BorderWidget *border,
 			     gboolean fit_pixmap_bg,
 			     gboolean stretch_pixmap_bg,
 			     gboolean rotate_pixmap_bg,
-			     GdkColor *back_color)
+			     PanelColor *back_color)
 {
 	GtkOrientation new_orient;
 	g_return_if_fail (GTK_WIDGET_REALIZED (GTK_WIDGET (border)));
@@ -293,7 +293,7 @@ border_widget_construct (gchar *panel_id,
 			 gboolean fit_pixmap_bg,
 			 gboolean stretch_pixmap_bg,
 			 gboolean rotate_pixmap_bg,
-			 GdkColor *back_color)
+			 PanelColor *back_color)
 {
 	BasePWidget *basep = BASEP_WIDGET (border);
 	GtkOrientation orient;

@@ -291,7 +291,7 @@ sliding_widget_new (gchar *panel_id,
 		    gboolean fit_pixmap_bg,
 		    gboolean stretch_pixmap_bg,
 		    gboolean rotate_pixmap_bg,
-		    GdkColor *back_color)
+		    PanelColor *back_color)
 {
 	SlidingWidget *sliding = g_object_new (SLIDING_TYPE_WIDGET, NULL);
 	SlidingPos *pos = g_object_new (SLIDING_TYPE_POS, NULL);
@@ -339,7 +339,7 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      gboolean fit_pixmap_bg,
 			      gboolean stretch_pixmap_bg,
 			      gboolean rotate_pixmap_bg,
-			      GdkColor *back_color)
+			      PanelColor *back_color)
 {
 	SlidingPos *pos = SLIDING_POS (BASEP_WIDGET (sliding)->pos);
 

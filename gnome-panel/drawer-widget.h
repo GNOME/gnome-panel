@@ -65,7 +65,7 @@ GtkWidget *drawer_widget_new (gchar         *panel_id,
 			      gboolean       fit_pixmap_bg,
 			      gboolean       stretch_pixmap_bg,
 			      gboolean       rotate_pixmap_bg,
-			      GdkColor      *back_color);
+			      PanelColor    *back_color);
 
 void drawer_widget_change_params (DrawerWidget  *drawer,
 				  int            screen,
@@ -81,7 +81,7 @@ void drawer_widget_change_params (DrawerWidget  *drawer,
 				  gboolean       fit_pixmap_bg,
 				  gboolean       stretch_pixmap_bg,
 				  gboolean       rotate_pixmap_bg,
-				  GdkColor      *back_color);
+				  PanelColor    *back_color);
 
 void drawer_widget_change_orient (DrawerWidget *drawer,
 				  PanelOrient orient);

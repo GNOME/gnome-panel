@@ -42,7 +42,7 @@ struct _PerPanelConfig {
 	gboolean		rotate_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;
-	GdkColor		back_color;
+	PanelColor		back_color;
 	
 	gboolean		register_changes; /*used for startup*/
 	gboolean		ppc_origin_change; /* if true then the dialog

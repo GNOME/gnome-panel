@@ -1198,18 +1198,21 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 }
 
 static void
-drop_color(PanelWidget *panel, int pos, guint16 *dropped)
+drop_color (PanelWidget *panel,
+	    int          pos,
+	    guint16     *dropped)
 {
-	GdkColor c;
+	PanelColor c;
 
-	if(!dropped) return;
+	if (!dropped)
+		return;
 
-	c.red = dropped[0];
-	c.green = dropped[1];
-	c.blue = dropped[2];
-	c.pixel = 0;
+	c.red   = dropped [0];
+	c.green = dropped [1];
+	c.blue  = dropped [2];
+	c.alpha = 65535;
 
-	panel_widget_set_back_color(panel, &c);
+	panel_widget_set_back_color (panel, &c);
 }
 
 static GtkTargetList *
@@ -1971,7 +1974,8 @@ panel_load_panels_from_gconf (void)
 		PanelBackType  back_type;
 		BasePState     state;
 		BasePMode      mode;
-		GdkColor       back_color = {0,0,0,1};
+		PanelColor     back_color = {0, 0, 0, 0xFFFF};
+		GdkColor       gdkcolor = {0, 0, 0, 1};
 		gboolean       fit_pixmap_bg;
 		gboolean       stretch_pixmap_bg;
 		gboolean       rotate_pixmap_bg;
@@ -2009,9 +2013,16 @@ panel_load_panels_from_gconf (void)
 		}
 
 		tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
-		if (!string_empty (tmp_str))
-			gdk_color_parse (tmp_str, &back_color);
+		if (!tmp_str || !tmp_str [0]) {
+			gdk_color_parse (tmp_str, &gdkcolor);
+			back_color.red   = gdkcolor.red;
+			back_color.green = gdkcolor.green;
+			back_color.blue  = gdkcolor.blue;
+		}
 		g_free (tmp_str);
+
+		back_color.alpha = panel_get_int (
+					profile, panel_id, "panel_background_color_alpha", 0xFFFF);
 
 		tmp_str = panel_get_string (
 				profile, panel_id, "panel_background_type", "no_background");
@@ -2331,6 +2342,10 @@ panel_save_to_gconf (PanelData *pd)
 	panel_set_string (profile, panel->unique_id,
 			  "panel_background_color", color);
 	g_free (color);
+
+	panel_set_int (profile, panel->unique_id,
+		       "panel_background_color_alpha",
+		       panel->back_color.alpha);
 
 	panel_set_string (profile, panel->unique_id,
 			  "panel_background_type", 

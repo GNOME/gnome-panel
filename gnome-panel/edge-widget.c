@@ -214,7 +214,7 @@ edge_widget_new (gchar *panel_id,
 		 gboolean fit_pixmap_bg,
 		 gboolean stretch_pixmap_bg,
 		 gboolean rotate_pixmap_bg,
-		 GdkColor *back_color)
+		 PanelColor *back_color)
 {
 	EdgeWidget  *edgew;
 	BasePWidget *basep;

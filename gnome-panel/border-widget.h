@@ -70,7 +70,7 @@ GtkWidget *border_widget_construct (gchar *panel_id,
 				    gboolean fit_pixmap_bg,
 				    gboolean stretch_pixmap_bg,
 				    gboolean rotate_pixmap_bg,
-				    GdkColor *back_color);
+				    PanelColor *back_color);
 
 void border_widget_change_params (BorderWidget *border,
 				  int screen,
@@ -86,7 +86,7 @@ void border_widget_change_params (BorderWidget *border,
 				  gboolean fit_pixmap_bg,
 				  gboolean stretch_pixmap_bg,
 				  gboolean rotate_pixmap_bg,
-				  GdkColor *back_color);
+				  PanelColor *back_color);
 
 
 void border_widget_change_edge (BorderWidget *border, BorderEdge edge);
