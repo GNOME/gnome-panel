@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
-#include "panel-util.h"
+#include "panel-a11y.h"
 
 static int
 is_gail_loaded (GtkWidget *widget)
@@ -35,9 +35,9 @@ is_gail_loaded (GtkWidget *widget)
 }
 
 void
-panel_set_atk_name_desc (GtkWidget *widget,
-			 char      *name, 
-			 char      *desc)
+panel_a11y_set_atk_name_desc (GtkWidget  *widget,
+			      const char *name, 
+			      const char *desc)
 {
 	AtkObject *aobj;
 
@@ -56,7 +56,7 @@ panel_set_atk_name_desc (GtkWidget *widget,
 }
 
 /**
- * panel_set_atk_relation
+ * panel_a11y_set_atk_relation
  * @widget : The Gtk widget which is labelled by @label
  * @label : The label for the @widget.
  *
@@ -64,8 +64,8 @@ panel_set_atk_name_desc (GtkWidget *widget,
  * between a gtk widget and a label.
  */
 void
-panel_set_atk_relation (GtkWidget *widget,
-			GtkLabel  *label)
+panel_a11y_set_atk_relation (GtkWidget *widget,
+			     GtkLabel  *label)
 {
 	AtkObject      *aobject;
 	AtkRelationSet *relation_set;

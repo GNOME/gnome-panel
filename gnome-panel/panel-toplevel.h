@@ -1,0 +1,143 @@
+/*
+ * panel-toplevel.h: The panel's toplevel window object.
+ *
+ * Copyright (C) 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+
+ * Authors:
+ *	Mark McLoughlin <mark@skynet.ie>
+ */
+
+#ifndef __PANEL_TOPLEVEL_H__
+#define __PANEL_TOPLEVEL_H__
+
+#include <gtk/gtk.h>
+
+#include "panel-enums.h"
+
+G_BEGIN_DECLS
+
+#define PANEL_TYPE_TOPLEVEL         (panel_toplevel_get_type ())
+#define PANEL_TOPLEVEL(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_TOPLEVEL, PanelToplevel))
+#define PANEL_TOPLEVEL_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_TOPLEVEL, PanelToplevelClass))
+#define PANEL_IS_TOPLEVEL(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_TOPLEVEL))
+#define PANEL_IS_TOPLEVEL_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_TOPLEVEL))
+#define PANEL_TOPLEVEL_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelClass))
+
+typedef struct _PanelToplevel        PanelToplevel;
+typedef struct _PanelToplevelClass   PanelToplevelClass;
+typedef struct _PanelToplevelPrivate PanelToplevelPrivate;
+
+struct _PanelToplevel {
+	GtkWindow              window_instance;
+
+	PanelToplevelPrivate  *priv;
+};
+
+struct _PanelToplevelClass {
+	GtkWindowClass         window_class;
+
+	void      (*hiding)           (PanelToplevel *toplevel);
+	void      (*unhiding)         (PanelToplevel *toplevel);
+	gboolean  (*popup_panel_menu) (PanelToplevel *toplevel);
+};
+
+GType                panel_toplevel_get_type            (void) G_GNUC_CONST;
+GtkWidget           *panel_toplevel_new                 (void);
+
+gpointer             panel_toplevel_get_panel_widget    (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_set_name            (PanelToplevel       *toplevel,	
+							 const char          *name);
+G_CONST_RETURN char *panel_toplevel_get_name            (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_expand          (PanelToplevel       *toplevel,
+							 gboolean             expand);
+gboolean             panel_toplevel_get_expand          (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_orientation     (PanelToplevel       *toplevel,
+							 PanelOrientation     orientation);
+PanelOrientation     panel_toplevel_get_orientation     (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_size            (PanelToplevel       *toplevel,
+							 int                  size);
+int                  panel_toplevel_get_size            (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_monitor         (PanelToplevel       *toplevel,
+							 int                  monitor);
+int                  panel_toplevel_get_monitor         (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_auto_hide_size  (PanelToplevel       *toplevel,
+							 int                  autohide_size);
+int                  panel_toplevel_get_auto_hide_size  (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_position        (PanelToplevel       *toplevel,
+							 int                  x,
+							 gboolean             x_centered,
+							 int                  y,
+							 gboolean             y_centered);
+void                 panel_toplevel_get_position        (PanelToplevel       *toplevel,
+							 int                 *x,
+							 int                 *y);
+gboolean             panel_toplevel_get_x_centered      (PanelToplevel       *toplevel);
+gboolean             panel_toplevel_get_y_centered      (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_monitor         (PanelToplevel       *toplevel,
+							 int                  monitor);
+int                  panel_toplevel_get_monitor         (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_rotate              (PanelToplevel       *toplevel,
+							 gboolean             clockwise);
+
+void                 panel_toplevel_attach_to_widget    (PanelToplevel       *toplevel,
+							 PanelToplevel       *atatch_toplevel,
+							 GtkWidget           *attach_widget);
+void                 panel_toplevel_detach              (PanelToplevel       *toplevel);
+gboolean             panel_toplevel_get_is_attached     (PanelToplevel       *toplevel);
+
+gboolean             panel_toplevel_get_is_hidden       (PanelToplevel       *toplevel);
+PanelState           panel_toplevel_get_state           (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_hide                (PanelToplevel       *toplevel,
+							 gboolean             auto_hide,
+							 GtkDirectionType     direction);
+void                 panel_toplevel_unhide              (PanelToplevel       *toplevel);
+void                 panel_toplevel_queue_auto_hide     (PanelToplevel       *toplevel);
+void                 panel_toplevel_queue_auto_unhide   (PanelToplevel       *toplevel);
+void                 panel_toplevel_block_auto_hide     (PanelToplevel       *toplevel);
+void                 panel_toplevel_unblock_auto_hide   (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_set_auto_hide       (PanelToplevel       *toplevel,
+							 gboolean             autohide);
+gboolean             panel_toplevel_get_auto_hide       (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_hide_delay      (PanelToplevel       *toplevel,
+							 int                  hide_delay);
+int                  panel_toplevel_get_hide_delay      (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_unhide_delay    (PanelToplevel       *toplevel,
+							 int                  unhide_delay);
+int                  panel_toplevel_get_unhide_delay    (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_set_animate         (PanelToplevel       *toplevel,
+							 gboolean             animate);
+gboolean             panel_toplevel_get_animate         (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_animation_speed (PanelToplevel       *toplevel,
+							 PanelAnimationSpeed  animation_speed);
+PanelAnimationSpeed  panel_toplevel_get_animation_speed (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_set_enable_buttons  (PanelToplevel       *toplevel,
+							 gboolean             enable_buttons);
+gboolean             panel_toplevel_get_enable_buttons  (PanelToplevel       *toplevel);
+void                 panel_toplevel_set_enable_arrows   (PanelToplevel       *toplevel,
+							 gboolean             enable_arrows);
+gboolean             panel_toplevel_get_enable_arrows   (PanelToplevel       *toplevel);
+
+G_END_DECLS
+
+#endif /* __PANEL_TOPLEVEL_H__ */
