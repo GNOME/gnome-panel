@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel for gnome v.2.1.x\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-29 15:26+0100\n"
-"PO-Revision-Date: 2004-09-08 13:32+0700\n"
+"PO-Revision-Date: 2004-12-20 20:37+0700\n"
 "Last-Translator: pclouds <pclouds@vnlinux.org>\n"
 "Language-Team: Gnome-Vi <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -236,7 +236,6 @@ msgstr "Dùng _UTC"
 #: applets/notification_area/main.c:117 applets/wncklet/showdesktop.c:466
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
-#, fuzzy
 msgid "translator-credits"
 msgstr "Nhóm Việt hoá GNOME (http://gnomevi.sourceforge.net)"
 
@@ -280,7 +279,7 @@ msgstr "Nếu đúng, hiện ngày trong tooltip khi trỏ lên đồng hồ."
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "If true, show week numbers in the calendar."
-msgstr ""
+msgstr "Nếu đúng, hiện số tuần trong lịch."
 
 #: applets/clock/clock.schemas.in.h:12
 msgid "Show date in clock"
@@ -295,9 +294,8 @@ msgid "Show time with seconds"
 msgstr "Hiện thời gian theo giây"
 
 #: applets/clock/clock.schemas.in.h:15
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Hiện _tên vùng làm việc trong bộ chuyển vùng làm việc"
+msgstr "Hiện số tuần trong lịch"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid ""
@@ -422,24 +420,24 @@ msgid "%s the Fish Says:"
 msgstr "Cá %s phán rằng:"
 
 #: applets/fish/fish.c:717
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Không thể thực thi '%s'\n"
+"Không thể đọc từ lệnh\n"
 "\n"
 "Chi tiết: %s"
 
 #: applets/fish/fish.c:782
 msgid "_Speak again"
-msgstr ""
+msgstr "_Nói lại"
 
 #: applets/fish/fish.c:863
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "Lệnh được cấu hình không hoạt động và đã được thay thế bằng: %s"
 
 #: applets/fish/fish.c:886
 #, c-format
@@ -453,13 +451,13 @@ msgstr ""
 "Chi tiết: %s"
 
 #: applets/fish/fish.c:902
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Không thể thực thi '%s'\n"
+"Không thể đọc từ '%s'\n"
 "\n"
 "Chi tiết: %s"
 
@@ -618,9 +616,8 @@ msgid "Orientation"
 msgstr "Định Hướng"
 
 #: applets/notification_area/eggtraymanager.c:146
-#, fuzzy
 msgid "The orientation of the tray."
-msgstr "Hướng của Bảng điều khiển."
+msgstr "Hướng của khay."
 
 #: applets/notification_area/main.c:130 applets/notification_area/main.c:358
 msgid "Panel Notification Area"
@@ -688,9 +685,8 @@ msgid "Show Desktop Button"
 msgstr "Hiện nút desktop"
 
 #: applets/wncklet/showdesktop.c:480
-#, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
-msgstr "Nút này để bạn ẩn dấu mọi cửa sổ và hiện desktop"
+msgstr "Nút này cho phép bạn ẩn mọi cửa sổ và hiện desktop."
 
 #: applets/wncklet/showdesktop.c:521
 msgid ""
@@ -835,9 +831,8 @@ msgid "When to group windows"
 msgstr "Khi nhóm cửa sổ"
 
 #: applets/wncklet/window-menu.c:129
-#, fuzzy
 msgid "Workspace Selector"
-msgstr "Bộ chuyển Vùng làm việc"
+msgstr "Bộ chọn Vùng làm việc"
 
 #: applets/wncklet/window-menu.c:134
 msgid ""
@@ -1328,28 +1323,25 @@ msgstr "Lỗi ngoại lệ từ popup_menu '%s'\n"
 #: gnome-panel/panel-applet-frame.c:871
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr ""
+msgstr "\"%s\" kết thúc bất thường"
 
 #: gnome-panel/panel-applet-frame.c:873
-#, fuzzy
 msgid "Panel object has quit unexpectedly"
-msgstr "Kiểu đối tượng Bảng điều khiển"
+msgstr "Đối tượng Panel đã kết thúc bất thường"
 
 #: gnome-panel/panel-applet-frame.c:880
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr ""
+msgstr "Nếu nạp lại bảng điểu khiển, nó sẽ tự động được thêm vào bảng điều khiển."
 
 #: gnome-panel/panel-applet-frame.c:886
-#, fuzzy
 msgid "_Don't Reload"
-msgstr "Nạp lại"
+msgstr "_Không nạp"
 
 #: gnome-panel/panel-applet-frame.c:887
-#, fuzzy
 msgid "_Reload"
-msgstr "Nạp lại"
+msgstr "Nạp _lại"
 
 #: gnome-panel/panel-applet-frame.c:913
 msgid "D_on't Delete"
@@ -1412,40 +1404,27 @@ msgid ""
 "A boolean flag to indicate whether the user's previous configuration in /"
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
-msgstr ""
+msgstr "Cờ luận lý chỉ thị cấu hình trước của người dùng trong /apps/panel/profiles/default có được chép sang vị trí mới /apps/panel hay không."
 
 #: gnome-panel/panel-general.schemas.in.h:2
-#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"Danh sách ID Bảng điều khiển. Mỗi ID xác định Bảng điều khiển đơn lẻ cấp cao "
-"nhất. Thiết lập cho mỗi bảng điều khiển này được lưu trong /apps/panel/"
-"general/$(profile)/toplevels/$(id)."
+msgstr "Danh sách ID Bảng điều khiển. Mỗi ID xác định Bảng điều khiển đơn lẻ cấp cao nhất. Thiết lập cho mỗi bảng điều khiển này được lưu trong /apps/panel/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
-msgstr ""
-"Danh sách ID Applet Bảng điều khiển. Mỗi ID xác định một Applet Bảng điều "
-"khiển đơn lẻ. Thiết lập cho mỗi applet này được lưu trong /apps/panel/"
-"general/$(profiles)/applets/$(id)."
+msgstr "Danh sách ID Applet Bảng điều khiển. Mỗi ID xác định một Applet Bảng điều khiển đơn lẻ. Thiết lập cho mỗi applet này được lưu trong /apps/panel/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"Danh sách ID Đối tượng Bảng điều khiển. Mỗi ID xác định một Đối tượng Bảng "
-"điều khiển đơn lẻ (vd, Bộ kích hoạt, nút hành động, nút menu, thanh menu). "
-"Thiết lập cho mỗi đối tượng này được lưu trong /apps/panel/general/"
-"$(profiles)/objects/$(id)."
+msgstr "Danh sách ID Đối tượng Bảng điều khiển. Mỗi ID xác định một Đối tượng Bảng điều khiển đơn lẻ (vd, Bộ kích hoạt, nút hành động, nút menu, thanh menu). Thiết lập cho mỗi đối tượng này được lưu trong /apps/panel/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1476,9 +1455,8 @@ msgstr ""
 "khóa show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Công cụ cấu hình thời gian"
+msgstr "Các thông số cấu hình đã được chuyển đổi"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
@@ -1507,7 +1485,7 @@ msgstr "Tốc độ hoạt cảnh"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "Applet IID để tắt khỏi nạp"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -1972,9 +1950,9 @@ msgstr ""
 
 #. Translators: %s is a URI
 #: gnome-panel/panel-recent.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Open '%s'"
-msgstr "Mở URL: %s"
+msgstr "Mở '%s'"
 
 #: gnome-panel/panel-recent.c:220
 msgid "Recent Documents"
@@ -1985,9 +1963,8 @@ msgid "Clear Recent Documents"
 msgstr "Xóa Danh sách Tài liệu gần đây"
 
 #: gnome-panel/panel-recent.c:253
-#, fuzzy
 msgid "Clear all items from the recent documents list"
-msgstr "Xóa danh sách Tài liệu gần đây chứ?"
+msgstr "Xóa mọi mục từ danh sách tài liệu gần đây"
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2508,29 +2485,24 @@ msgid "Open URL: %s"
 msgstr "Mở URL: %s"
 
 #: gnome-panel/panel.c:1205
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost. Delete this drawer?"
 msgstr ""
-"Khi một Bảng điều khiển bị loại bỏ, Bảng điều khiển và các thông số applet "
-"của Bảng điều khiển đó sẽ bị mất. Bạn có muốn loại bỏ Bảng điều khiển này "
-"không?"
+"Khi một ngăn kéo bị xóa, ngăn kéo và\n"
+"những thiết lập của nó sẽ mất. Xóa ngăn kéo chứ?"
 
 #: gnome-panel/panel.c:1207
-#, fuzzy
 msgid "Delete Drawer"
-msgstr "Xóa Bảng điều khiển"
+msgstr "Xóa Ngăn kéo"
 
 #: gnome-panel/panel.c:1209
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost. Delete this panel?"
 msgstr ""
-"Khi một Bảng điều khiển bị loại bỏ, Bảng điều khiển và các thông số applet "
-"của Bảng điều khiển đó sẽ bị mất. Bạn có muốn loại bỏ Bảng điều khiển này "
-"không?"
+"Khi một bảng điều khiển bị xóa, bảng điều khiển và\n"
+"những thiết lập của nó sẽ mất. Xóa bảng điều khiển chứ?"
 
 #: gnome-panel/panel.c:1211
 msgid "Delete Panel"
@@ -2654,23 +2626,19 @@ msgid "XX Large"
 msgstr "XX Lớn"
 
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Test applet utility"
-msgstr "Danh sách ID Applet Bảng điều khiển"
+msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
 msgid "_Applet:"
-msgstr "Applet:"
+msgstr "_Applet:"
 
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "_Prefs Dir:"
-msgstr "Thư mục thông số:"
+msgstr "Thư mục _thông số:"
 
-#, fuzzy
 msgid "Workspace List"
-msgstr "Tên Vùng làm việc"
+msgstr "Danh sách Vùng làm việc"
 
 msgid "Specify a profile name to load"
 msgstr "Xác định tên profile cần nạp"
