@@ -83,8 +83,8 @@ ditem_properties_changed (GtkWidget *dedit, gpointer data)
 	if (timeout != 0)
 		g_source_remove (timeout);
 
-	/* Will delay save for after 5 seconds */
-	timeout = g_timeout_add (5 * 1000,
+	/* Will delay save for after 2 seconds */
+	timeout = g_timeout_add (2 * 1000,
 				 ditem_properties_apply_timeout,
 				 dedit);
 

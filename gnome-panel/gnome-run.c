@@ -32,6 +32,7 @@
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
+#include <libgnomevfs/gnome-vfs-utils.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-file-info.h>
 
@@ -781,7 +782,7 @@ drag_data_received (GtkWidget        *widget,
 		    guint32           time,
 		    gpointer          data)
 {
-	GtkEntry *entry = data;
+	GtkWidget *entry = data;
 	char **uris;
 	int i;
 
@@ -1272,19 +1273,20 @@ unset_selected (GtkWidget *dialog)
                 char *msg;
                 msg = g_strdup_printf (_("Will run command: '%s'"),
                                        text);
-                if (desc_label)
+                if (desc_label != NULL)
                         gtk_label_set_text (GTK_LABEL (desc_label), msg);
 
                 g_free (msg);
         } else {
                 
-                if (desc_label)
+                if (desc_label != NULL)
                         gtk_label_set_text (GTK_LABEL (desc_label), _("No application selected"));
         }
 
         g_free (text);
         
-        unset_pixmap (gpixmap);
+	if (gpixmap != NULL)
+		unset_pixmap (gpixmap);
 
         g_object_set_data (G_OBJECT (dialog), "use_list",
 			   GPOINTER_TO_INT (FALSE));
@@ -1331,7 +1333,7 @@ selection_changed (GtkTreeSelection *selection,
         gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
         desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
 
-        if (name != NULL) {
+        if (name != NULL && gpixmap != NULL) {
                 QuickDesktopItem *qitem;
 
 		qitem = quick_desktop_item_load_uri (name /*file */,

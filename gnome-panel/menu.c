@@ -1240,6 +1240,8 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 	if (sim->menu == NULL) {
 		sim->menu = menu_new ();
+		g_object_ref (G_OBJECT (sim->menu));
+		gtk_object_sink (GTK_OBJECT (sim->menu));
 
 		g_object_set_data (G_OBJECT (sim->menu), "menu_panel",
 				   get_panel_from_menu_data (sim->menuitem,
@@ -1254,7 +1256,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 			/* eek */
 			if (ii == NULL) {
-				gtk_widget_destroy (sim->menu);
+				g_object_unref (G_OBJECT (sim->menu));
 				sim->menu = NULL;
 				return;
 			}
