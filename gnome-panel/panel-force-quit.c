@@ -119,7 +119,7 @@ wm_state_set (Window window)
 	result = XGetWindowProperty (gdk_display, window, wm_state_atom,
 				     0, G_MAXLONG, False, wm_state_atom,
 				     &ret_type, &ret_format, &nitems,
-				     &bytes_after, (guchar **) &prop);
+				     &bytes_after, (gpointer) &prop);
 
 	if (gdk_error_trap_pop ())
 		return FALSE;

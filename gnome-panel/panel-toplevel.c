@@ -2783,7 +2783,7 @@ panel_toplevel_button_press_event (GtkWidget      *widget,
 	if (toplevel->priv->animating)
 		return FALSE;
 
-	gdk_window_get_user_data (event->window, (gpointer *)&event_widget);
+	gdk_window_get_user_data (event->window, (gpointer)&event_widget);
 	g_assert (GTK_IS_WIDGET (event_widget));
 	gtk_widget_translate_coordinates (event_widget,
 					  widget,

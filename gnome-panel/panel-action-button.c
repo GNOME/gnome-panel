@@ -680,7 +680,7 @@ panel_action_button_load_from_drag (PanelToplevel *toplevel,
 		return retval;
 	}
 
-	if (!gconf_string_to_enum (panel_action_type_map, elements [1], (int *) &type)) {
+	if (!gconf_string_to_enum (panel_action_type_map, elements [1], (gpointer) &type)) {
 		g_strfreev (elements);
 		return retval;
 	}
