@@ -471,7 +471,10 @@ create_properties_dialog(Launcher *launcher)
 
 	dialog = gnome_dialog_new (_("Launcher properties"),
 				   GNOME_STOCK_BUTTON_CLOSE,
-				   GNOME_STOCK_BUTTON_HELP);
+				   GNOME_STOCK_BUTTON_HELP,
+				   NULL);
+	gnome_dialog_set_close (GNOME_DIALOG (dialog),
+				FALSE /* click_closes */);
 
 	notebook = gtk_notebook_new ();
 

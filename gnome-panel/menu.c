@@ -2520,15 +2520,16 @@ static void
 destroy_menu (GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
-	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(menu->button),
-						     MENU_PROPERTIES);
-	gtk_object_set_data(GTK_OBJECT(menu->button), MENU_PROPERTIES, NULL);
+	GtkWidget *prop_dialog = menu->prop_dialog;
+
+	menu->prop_dialog = NULL;
+
 	if (prop_dialog != NULL)
 		gtk_widget_unref (prop_dialog);
 
 	menu->button = NULL;
 
-	if(menu->menu)
+	if (menu->menu != NULL)
 		gtk_widget_unref(menu->menu);
 	menu->menu = NULL;
 }

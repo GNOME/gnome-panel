@@ -33,17 +33,22 @@ enum {
 	MAIN_MENU_DESKTOP_SUB = 1<<15
 };
 
+/* this is defined in menu-properties.c */
+typedef struct _MenuDialogInfo MenuDialogInfo;
+
 typedef struct _Menu Menu;
 struct _Menu {
-	GtkWidget *button;
-	GtkWidget *menu;
-	gboolean custom_icon;
-	char *custom_icon_file;
-	char *path;
-	int main_menu_flags;
-	gboolean global_main;
-	int age;
-	AppletInfo *info;
+	GtkWidget		*button;
+	GtkWidget		*menu;
+	gboolean		 custom_icon;
+	char			*custom_icon_file;
+	char			*path;
+	int			 main_menu_flags;
+	gboolean		 global_main;
+	int			 age;
+	GtkWidget		*prop_dialog;
+	MenuDialogInfo		*dialog_info;
+	AppletInfo		*info;
 };
 
 void load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
@@ -98,8 +103,6 @@ void our_gtk_menu_position (GtkMenu *menu);
 
 
 #define MENU_PATH "menu_path"
-
-#define MENU_PROPERTIES "menu_properties"
 
 #define MENU_TYPES "types_menu"
 #define MENU_TYPE_EDGE "type-edge"

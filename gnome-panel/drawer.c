@@ -102,7 +102,6 @@ add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer 
         GtkWidget *table;
 	GtkWidget *f;
 	GtkWidget *box, *box_in;
-	GtkWidget *nbook;
 	GtkWidget *w;
 	GtkWidget *button;
 	

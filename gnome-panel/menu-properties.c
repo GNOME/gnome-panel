@@ -30,6 +30,32 @@ extern int panels_to_sync;
 extern int applets_to_sync;
 extern int need_complete_save;
 
+
+struct _MenuDialogInfo {
+	GtkWidget *main_menu;
+	GtkWidget *global_main;
+	GtkWidget *system;
+	GtkWidget *system_sub;
+	GtkWidget *user;
+	GtkWidget *user_sub;
+	GtkWidget *applets;
+	GtkWidget *applets_sub;
+	GtkWidget *distribution;
+	GtkWidget *distribution_sub;
+ 	GtkWidget *kde;
+ 	GtkWidget *kde_sub;
+	GtkWidget *panel;
+	GtkWidget *panel_sub;
+	GtkWidget *desktop;
+	GtkWidget *desktop_sub;
+	GtkWidget *pathentry;
+	GtkWidget *custom_icon;
+	GtkWidget *custom_icon_entry;
+
+	GtkWidget *main_frame;
+	GtkWidget *normal_frame;
+};
+
 char *
 get_real_menu_path(char *arguments)
 {
@@ -87,54 +113,20 @@ get_pixmap(char *menudir, gboolean main_menu)
 }
 
 static void
-properties_apply_callback(GtkWidget *widget, int page, gpointer data)
+properties_apply_callback (Menu *menu)
 {
-	Menu *menu = data;
-	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget),
-						   "main_menu");
-	GtkWidget *global_main = gtk_object_get_data(GTK_OBJECT(widget),
-						     "global_main");
-	GtkWidget *system = gtk_object_get_data(GTK_OBJECT(widget),
-						"system");
-	GtkWidget *system_sub = gtk_object_get_data(GTK_OBJECT(widget),
-						    "system_sub");
-	GtkWidget *user = gtk_object_get_data(GTK_OBJECT(widget), "user");
-	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget),
-						  "user_sub");
-	GtkWidget *applets = gtk_object_get_data(GTK_OBJECT(widget), "applets");
-	GtkWidget *applets_sub = gtk_object_get_data(GTK_OBJECT(widget),
-						     "applets_sub");
-	GtkWidget *distribution = gtk_object_get_data(GTK_OBJECT(widget),
-						      "distribution");
-	GtkWidget *distribution_sub = gtk_object_get_data(GTK_OBJECT(widget),
-							  "distribution_sub");
- 	GtkWidget *kde = gtk_object_get_data(GTK_OBJECT(widget), "kde");
- 	GtkWidget *kde_sub = gtk_object_get_data(GTK_OBJECT(widget), "kde_sub");
-
-	GtkWidget *panel = gtk_object_get_data(GTK_OBJECT(widget), "panel");
-	GtkWidget *panel_sub = gtk_object_get_data(GTK_OBJECT(widget),
-						   "panel_sub");
-
-	GtkWidget *desktop = gtk_object_get_data(GTK_OBJECT(widget), "desktop");
-	GtkWidget *desktop_sub = gtk_object_get_data(GTK_OBJECT(widget),
-						     "desktop_sub");
-
-	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
-
-	GtkWidget *custom_icon = gtk_object_get_data(GTK_OBJECT(widget), "custom_icon");
-	GtkWidget *custom_icon_entry = gtk_object_get_data(GTK_OBJECT(widget), "custom_icon_entry");
 	char *s;
 
-	if (page != -1)
-		return;
+	/* FIXME: this function needs to really only do the really neccessary things,
+	 * because it gets executed a lot */
 
-	menu->custom_icon = GTK_TOGGLE_BUTTON (custom_icon)->active ? TRUE : FALSE;
+	menu->custom_icon = GTK_TOGGLE_BUTTON (menu->dialog_info->custom_icon)->active ? TRUE : FALSE;
 	g_free (menu->custom_icon_file);
-	menu->custom_icon_file = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(custom_icon_entry));
+	menu->custom_icon_file = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
 	
 	applet_remove_callback(menu->info, "edit_menus");
-	if(GTK_TOGGLE_BUTTON(main_menu)->active ||
-	   GTK_TOGGLE_BUTTON(global_main)->active) {
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->main_menu)->active ||
+	   GTK_TOGGLE_BUTTON(menu->dialog_info->global_main)->active) {
 		char *tmp;
 		g_free(menu->path);
 		menu->path = g_strdup(".");
@@ -146,7 +138,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		}
 	} else {
 		g_free(menu->path);
-		s = gnome_file_entry_get_full_path(GNOME_FILE_ENTRY(pathentry),
+		s = gnome_file_entry_get_full_path(GNOME_FILE_ENTRY(menu->dialog_info->pathentry),
 						   TRUE);
 		if(s == NULL) {
 			g_warning(_("Can't open directory, using main menu!"));
@@ -157,45 +149,45 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			menu->path = g_strdup(s);
 	}
 
-	if (GTK_TOGGLE_BUTTON(global_main)->active)
+	if (GTK_TOGGLE_BUTTON(menu->dialog_info->global_main)->active)
 		 menu->global_main = TRUE;
 	else
 		 menu->global_main = FALSE;
 
 	menu->main_menu_flags = 0;
-	if (GTK_TOGGLE_BUTTON(system_sub)->active)
+	if (GTK_TOGGLE_BUTTON(menu->dialog_info->system_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_SYSTEM_SUB;
-	else if (GTK_TOGGLE_BUTTON(system)->active)
+	else if (GTK_TOGGLE_BUTTON(menu->dialog_info->system)->active)
 		menu->main_menu_flags |= MAIN_MENU_SYSTEM;
 
-	if(GTK_TOGGLE_BUTTON(user_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->user_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_USER_SUB;
-	else if (GTK_TOGGLE_BUTTON (user)->active)
+	else if (GTK_TOGGLE_BUTTON (menu->dialog_info->user)->active)
 		menu->main_menu_flags |= MAIN_MENU_USER;
 
-	if(GTK_TOGGLE_BUTTON(applets_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->applets_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_APPLETS_SUB;
-	else if (GTK_TOGGLE_BUTTON (applets)->active)
+	else if (GTK_TOGGLE_BUTTON (menu->dialog_info->applets)->active)
 		menu->main_menu_flags |= MAIN_MENU_APPLETS;
 
-	if(GTK_TOGGLE_BUTTON(distribution_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->distribution_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_DISTRIBUTION_SUB;
-	else if (GTK_TOGGLE_BUTTON (distribution)->active)
+	else if (GTK_TOGGLE_BUTTON (menu->dialog_info->distribution)->active)
 		menu->main_menu_flags |= MAIN_MENU_DISTRIBUTION;
 
-	if(GTK_TOGGLE_BUTTON(kde_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->kde_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_KDE_SUB;
-	else if (GTK_TOGGLE_BUTTON (kde)->active)
+	else if (GTK_TOGGLE_BUTTON (menu->dialog_info->kde)->active)
 		menu->main_menu_flags |= MAIN_MENU_KDE;
 
-	if(GTK_TOGGLE_BUTTON(panel_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->panel_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_PANEL_SUB;
-	else if (GTK_TOGGLE_BUTTON(panel)->active)
+	else if (GTK_TOGGLE_BUTTON(menu->dialog_info->panel)->active)
 		menu->main_menu_flags |= MAIN_MENU_PANEL;
 
-	if(GTK_TOGGLE_BUTTON(desktop_sub)->active)
+	if(GTK_TOGGLE_BUTTON(menu->dialog_info->desktop_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP_SUB;
-	else if (GTK_TOGGLE_BUTTON(desktop)->active)
+	else if (GTK_TOGGLE_BUTTON(menu->dialog_info->desktop)->active)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
 	/* FIXME: notice changes and only apply if neccessary */
@@ -241,91 +233,88 @@ static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
-	gtk_object_set_data(GTK_OBJECT(menu->button),
-			    MENU_PROPERTIES,NULL);
+
+	menu->prop_dialog = NULL;
+
+	g_free (menu->dialog_info);
+	menu->dialog_info = NULL;
 }
 
 static void
 toggle_prop(GtkWidget *widget, gpointer data)
 {
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+	Menu *menu = data;
 
 	if(GTK_TOGGLE_BUTTON(widget)->active)
-		gnome_property_box_changed (box);
+		properties_apply_callback (menu);
 }
 
 static void
 toggle_global_main(GtkWidget *widget, gpointer data)
 {
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
-						    "main_frame");
-	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
-						      "normal_frame");
+	Menu *menu = data;
+
 	if(GTK_TOGGLE_BUTTON(widget)->active) {
-		gtk_widget_set_sensitive(main_frame, FALSE);
-		gtk_widget_set_sensitive(normal_frame, FALSE);
-		gnome_property_box_changed (box);
+		gtk_widget_set_sensitive(menu->dialog_info->main_frame, FALSE);
+		gtk_widget_set_sensitive(menu->dialog_info->normal_frame, FALSE);
+
+		properties_apply_callback (menu);
 	}
 }
 
 static void
 toggle_main_menu(GtkWidget *widget, gpointer data)
 {
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
-						    "main_frame");
-	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
-						      "normal_frame");
-
-	g_assert (main_frame != NULL);
-	g_assert (normal_frame != NULL);
+	Menu *menu = data;
 
 	if(GTK_TOGGLE_BUTTON(widget)->active) {
-		gtk_widget_set_sensitive(main_frame, TRUE);
-		gtk_widget_set_sensitive(normal_frame, FALSE);
-		gnome_property_box_changed (box);
+		gtk_widget_set_sensitive(menu->dialog_info->main_frame, TRUE);
+		gtk_widget_set_sensitive(menu->dialog_info->normal_frame, FALSE);
+
+		properties_apply_callback (menu);
 	}
 }
 
 static void
 toggle_custom_icon(GtkWidget *widget, gpointer data)
 {
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-	GtkWidget *custom_icon_entry = gtk_object_get_data(GTK_OBJECT(box),
-							   "custom_icon_entry");
-
-	g_assert (custom_icon_entry != NULL);
+	Menu *menu = data;
 
 	if(GTK_TOGGLE_BUTTON(widget)->active) {
-		gtk_widget_set_sensitive(custom_icon_entry, TRUE);
+		gtk_widget_set_sensitive(menu->dialog_info->custom_icon_entry, TRUE);
 	} else {
-		gtk_widget_set_sensitive(custom_icon_entry, FALSE);
+		gtk_widget_set_sensitive(menu->dialog_info->custom_icon_entry, FALSE);
 	}
 
-	gnome_property_box_changed (box);
+	properties_apply_callback (menu);
 }
 
 static void
 toggle_normal_menu(GtkWidget *widget, gpointer data)
 {
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
-						    "main_frame");
-	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
-						      "normal_frame");
+	Menu *menu = data;
+
 	if(GTK_TOGGLE_BUTTON(widget)->active) {
-		gtk_widget_set_sensitive(main_frame, FALSE);
-		gtk_widget_set_sensitive(normal_frame, TRUE);
-		gnome_property_box_changed (box);
+		gtk_widget_set_sensitive(menu->dialog_info->main_frame, FALSE);
+		gtk_widget_set_sensitive(menu->dialog_info->normal_frame, TRUE);
+
+		properties_apply_callback (menu);
 	}
 }
 
 static void
-add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
-		      char *title, char *ident, int on, int sub)
+textbox_changed (GtkWidget *widget, gpointer data)
 {
-	char *p;
+	Menu *menu = data;
+
+	properties_apply_callback (menu);
+}
+
+static void
+add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
+		      char *title, GtkWidget **widget, GtkWidget **widget_sub,
+		      gboolean on, gboolean sub)
+{
 	GtkWidget *w;
 	GtkWidget *rb;
 
@@ -334,51 +323,59 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	
 	rb = w = gtk_radio_button_new_with_label (NULL, _("Off"));
 	gtk_table_attach_defaults(table,w,3,4,row,row+1);
-	p = g_strconcat(ident,"_off",NULL);
-	gtk_object_set_data(dialog,p,w);
-	g_free(p);
+
 	if(!on && !sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
+			    menu);
 	
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("In a submenu"));
-	gtk_table_attach_defaults(table,w,2,3,row,row+1);
-	p = g_strconcat(ident,"_sub",NULL);
-	gtk_object_set_data(dialog,p,w);
-	g_free(p);
-	if(sub)
+	gtk_table_attach_defaults(table, w, 2, 3, row, row+1);
+
+	*widget_sub = w;
+
+	if (sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
+			    menu);
 	
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("On the main menu"));
-	gtk_object_set_data (dialog, ident, w);
-	gtk_table_attach_defaults(table,w,1,2,row,row+1);
-	if(on)
+	*widget = w;
+	gtk_table_attach_defaults(table, w, 1, 2, row, row+1);
+	if (on)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
+			    menu);
 }
 
 static void
-phelp_cb (GtkWidget *w, gint tab, gpointer data)
+dialog_clicked (GtkWidget *widget, int button, gpointer data)
 {
-	char *page = GTK_TOGGLE_BUTTON (data)->active
-		? "mainmenu.html#MAINMENUCONFIG"
-		: "menus.html";
-	panel_pbox_help_cb (NULL, 0, page);
-}      
+	Menu *menu = data;
+
+	if (button == 0 /* close */) {
+		gnome_dialog_close (GNOME_DIALOG (widget));
+	} else if (button == 1 /* help */) {
+		GnomeHelpMenuEntry help_entry = { "panel" };
+
+		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
+			help_entry.path = "mainmenu.html#MAINMENUCONFIG";
+		else
+			help_entry.path = "menus.html";
+
+		gnome_help_display(NULL, &help_entry);
+	}
+}
 
 static GtkWidget *
 create_properties_dialog(Menu *menu)
 {
-	GtkWidget *dialog;
+	GtkWidget *dialog, *notebook;
 	GtkWidget *vbox;
 	GtkWidget *box;
 	GtkWidget *table;
@@ -387,7 +384,21 @@ create_properties_dialog(Menu *menu)
 	GtkWidget *t;
 	GtkWidget *main_menu, *global_main;
 
-	dialog = gnome_property_box_new();
+	dialog = gnome_dialog_new (_("Menu properties"),
+				   GNOME_STOCK_BUTTON_CLOSE,
+				   GNOME_STOCK_BUTTON_HELP,
+				   NULL);
+	gnome_dialog_set_close (GNOME_DIALOG (dialog),
+				FALSE /* click_closes */);
+
+	menu->prop_dialog = dialog;
+
+	menu->dialog_info = g_new0 (MenuDialogInfo, 1);
+
+	notebook = gtk_notebook_new ();
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
+			    notebook, TRUE, TRUE, 0);
+
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "menu_properties", "Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
@@ -406,28 +417,28 @@ create_properties_dialog(Menu *menu)
 	
 	w = gtk_radio_button_new_with_label (NULL, _("Global main menu"));
 	global_main = w;
-	gtk_object_set_data(GTK_OBJECT(dialog), "global_main", w);
+	menu->dialog_info->global_main = w;
 	if((menu->path == NULL ||
 	    strcmp(menu->path, ".") == 0) &&
 	   menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_global_main), 
-			    dialog);
+			    menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gtk_radio_button_new_with_label (
 		  gtk_radio_button_group (GTK_RADIO_BUTTON (global_main)),
 		  _("Main menu"));
 	main_menu = w;
-	gtk_object_set_data(GTK_OBJECT(dialog), "main_menu", w);
+	menu->dialog_info->main_menu = w;
 	if((menu->path == NULL ||
 	    strcmp(menu->path, ".") == 0) &&
 	   ! menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_main_menu), 
-			    dialog);
+			    menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w2 = gtk_radio_button_new_with_label (
@@ -437,7 +448,7 @@ create_properties_dialog(Menu *menu)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_normal_menu), 
-			    dialog);
+			    menu);
 	gtk_box_pack_start(GTK_BOX(box), w2, TRUE, TRUE, 0);
 
 	f = gtk_frame_new(_("Main menu"));
@@ -445,47 +456,68 @@ create_properties_dialog(Menu *menu)
 	    strcmp(menu->path, ".") != 0) ||
 	   menu->global_main)
 		gtk_widget_set_sensitive(f, FALSE);
-	gtk_object_set_data(GTK_OBJECT(dialog), "main_frame", f);
+	menu->dialog_info->main_frame = f;
 	gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 0);
 	
 	table = gtk_table_new(7, 4, FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f), table);
 
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),0,
-			      _("Programs: "),"system",
-			      menu->main_menu_flags&MAIN_MENU_SYSTEM,
-			      menu->main_menu_flags&MAIN_MENU_SYSTEM_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),1,
-			      _("Favorites: "),"user",
-			      menu->main_menu_flags&MAIN_MENU_USER,
-			      menu->main_menu_flags&MAIN_MENU_USER_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
-			      _("Applets: "),"applets",
-			      menu->main_menu_flags&MAIN_MENU_APPLETS,
-			      menu->main_menu_flags&MAIN_MENU_APPLETS_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
-			      _("Distribution menu (if found): "),"distribution",
-			      menu->main_menu_flags&MAIN_MENU_DISTRIBUTION,
-			      menu->main_menu_flags&MAIN_MENU_DISTRIBUTION_SUB);
- 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),4,
- 			      _("KDE menu (if found): "),"kde",
- 			      menu->main_menu_flags&MAIN_MENU_KDE,
- 			      menu->main_menu_flags&MAIN_MENU_KDE_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),6,
-			      _("Panel menu: "),"panel",
-			      menu->main_menu_flags&MAIN_MENU_PANEL,
-			      menu->main_menu_flags&MAIN_MENU_PANEL_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),7,
-			      _("Desktop menu: "),"desktop",
-			      menu->main_menu_flags&MAIN_MENU_DESKTOP,
-			      menu->main_menu_flags&MAIN_MENU_DESKTOP_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),0,
+			      _("Programs: "),
+			      &menu->dialog_info->system,
+			      &menu->dialog_info->system_sub,
+			      menu->main_menu_flags & MAIN_MENU_SYSTEM,
+			      menu->main_menu_flags & MAIN_MENU_SYSTEM_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),1,
+			      _("Favorites: "),
+			      &menu->dialog_info->user,
+			      &menu->dialog_info->user_sub,
+			      menu->main_menu_flags & MAIN_MENU_USER,
+			      menu->main_menu_flags & MAIN_MENU_USER_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),2,
+			      _("Applets: "),
+			      &menu->dialog_info->applets,
+			      &menu->dialog_info->applets_sub,
+			      menu->main_menu_flags & MAIN_MENU_APPLETS,
+			      menu->main_menu_flags & MAIN_MENU_APPLETS_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),3,
+			      _("Distribution menu (if found): "),
+			      &menu->dialog_info->distribution,
+			      &menu->dialog_info->distribution_sub,
+			      menu->main_menu_flags & MAIN_MENU_DISTRIBUTION,
+			      menu->main_menu_flags & MAIN_MENU_DISTRIBUTION_SUB);
+ 	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),4,
+ 			      _("KDE menu (if found): "),
+			      &menu->dialog_info->kde,
+			      &menu->dialog_info->kde_sub,
+ 			      menu->main_menu_flags & MAIN_MENU_KDE,
+ 			      menu->main_menu_flags & MAIN_MENU_KDE_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),6,
+			      _("Panel menu: "),
+			      &menu->dialog_info->panel,
+			      &menu->dialog_info->panel_sub,
+			      menu->main_menu_flags & MAIN_MENU_PANEL,
+			      menu->main_menu_flags & MAIN_MENU_PANEL_SUB);
+	add_menu_type_options(menu,
+			      GTK_OBJECT(dialog), GTK_TABLE(table),7,
+			      _("Desktop menu: "),
+			      &menu->dialog_info->desktop,
+			      &menu->dialog_info->desktop_sub,
+			      menu->main_menu_flags & MAIN_MENU_DESKTOP,
+			      menu->main_menu_flags & MAIN_MENU_DESKTOP_SUB);
 
 	f = gtk_frame_new(_("Normal menu"));
 	if(menu->path == NULL ||
 	   strcmp(menu->path, ".") == 0)
 		gtk_widget_set_sensitive(f, FALSE);
-	gtk_object_set_data(GTK_OBJECT(dialog), "normal_frame", f);
+	menu->dialog_info->normal_frame = f;
 	gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 0);
 	
 	box = gtk_hbox_new(FALSE, GNOME_PAD_SMALL);
@@ -499,18 +531,18 @@ create_properties_dialog(Menu *menu)
 	gnome_file_entry_set_directory(GNOME_FILE_ENTRY(w), TRUE);
 
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
-	gtk_object_set_data(GTK_OBJECT(dialog),"path",w);
+	menu->dialog_info->pathentry = w;
 	if (menu->path) {
 		char *s = get_real_menu_path(menu->path);
 		gtk_entry_set_text(GTK_ENTRY(t), s);
 		g_free(s);
 	}
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed),
-					       GTK_OBJECT(dialog));
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC (textbox_changed),
+			    menu);
 	
-	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
+	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Menu")));
 
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD_SMALL);
@@ -524,17 +556,17 @@ create_properties_dialog(Menu *menu)
 	gtk_container_add(GTK_CONTAINER(f), box);
 
 	w = gtk_check_button_new_with_label (_("Use custom icon for panel button"));
-	gtk_object_set_data(GTK_OBJECT(dialog), "custom_icon", w);
+	menu->dialog_info->custom_icon = w;
 	if(menu->custom_icon &&
 	   menu->custom_icon_file != NULL)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_custom_icon), 
-			    dialog);
+			    menu);
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gnome_icon_entry_new("icon", _("Browse"));
-	gtk_object_set_data(GTK_OBJECT(dialog), "custom_icon_entry", w);
+	menu->dialog_info->custom_icon_entry = w;
 	if (menu->custom_icon_file != NULL) {
 		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(w),
 					  menu->custom_icon_file);
@@ -544,42 +576,37 @@ create_properties_dialog(Menu *menu)
 	}
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (w));
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
-					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
-					       GTK_OBJECT(dialog));
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC (textbox_changed),
+			    menu);
 
-
-	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
+	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Icon")));
 	
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) properties_close_callback,
-			   menu);
+	gtk_signal_connect (GTK_OBJECT(dialog), "destroy",
+			    GTK_SIGNAL_FUNC (properties_close_callback),
+			    menu);
 
-	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
-			   GTK_SIGNAL_FUNC(properties_apply_callback),
-			   menu);
-	gtk_signal_connect(GTK_OBJECT(dialog), "help",
-			   GTK_SIGNAL_FUNC(phelp_cb), main_menu);
+	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+			    GTK_SIGNAL_FUNC (dialog_clicked),
+			    menu);
 
 	return dialog;
 }
 
 void
-menu_properties(Menu *menu)
+menu_properties (Menu *menu)
 {
 	GtkWidget *dialog;
 
-	dialog = gtk_object_get_data(GTK_OBJECT(menu->button),
-				     MENU_PROPERTIES);
-	if(dialog) {
-		gdk_window_raise(dialog->window);
-		gtk_widget_show(dialog);
+	g_return_if_fail (menu != NULL);
+
+	if (menu->prop_dialog != NULL) {
+		gtk_widget_show_now (menu->prop_dialog);
+		gdk_window_raise (menu->prop_dialog->window);
 		return;
 	}
 
-	dialog = create_properties_dialog(menu);
-	gtk_object_set_data(GTK_OBJECT(menu->button),
-			    MENU_PROPERTIES, dialog);
+	dialog = create_properties_dialog (menu);
 	gtk_widget_show_all (dialog);
 }
