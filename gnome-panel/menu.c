@@ -3160,14 +3160,14 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	setup_internal_applet_drag(menuitem, "STATUS:TRY");
 }
 
-/* just run the gnome-panel-properties */
+/* just run the gnome-panel-preferences */
 static void
 panel_config_global(void)
 {
-	char *argv[2] = {"gnome-panel-properties", NULL};
+	char *argv[2] = {"gnome-panel-preferences", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
 		panel_error_dialog("cannot_exec_global_props",
-				   _("Cannot execute panel global properties"));
+				   _("Cannot execute panel global preferences"));
 }
 
 static void

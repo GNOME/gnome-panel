@@ -1,4 +1,4 @@
-/*   gnome-panel-properties: crapplet for global panel properties
+/*   gnome-panel-preferences: crapplet for global panel properties
  *
  *   Copyright (C) 1999 Free Software Foundation
  *   Copyright 2000 Helix Code, Inc.
@@ -207,7 +207,7 @@ setup_the_ui(GtkWidget *main_window)
 	GtkWidget *widget;
 	gchar *icon_name;
 
-	glade_file = GLADEDIR "/gnome-panel-properties.glade2";
+	glade_file = GLADEDIR "/gnome-panel-preferences.glade";
 
 	glade_gui = glade_xml_new(glade_file, "main_notebook",NULL);
 	if (!glade_gui) {
@@ -270,7 +270,7 @@ main (int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain(GETTEXT_PACKAGE);
 
-	gnome_program_init("gnome-panel-properties",VERSION,
+	gnome_program_init("gnome-panel-preferences",VERSION,
                 LIBGNOMEUI_MODULE, argc, argv,
 		GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 

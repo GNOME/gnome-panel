@@ -1,5 +1,31 @@
 2002-04-18  Mark McLoughlin  <mark@skynet.ie>
 
+	Might as well rename the files while I'm at it.
+
+	* menu.c: (panel_config_global): upd binary name.
+
+	* gnome-panel-preferences.c: (setup_the_ui), (main): upd
+	name and glade file etc.
+
+	* gnome-panel-preferences.desktop.in: update tooltip
+	and exec.
+
+	* gnome-panel-properties.c:
+	* gnome-panel-properties.desktop.in: replace with
+	gnome-panel-preferences variants.
+
+	* gnome-panel-properties.glade:
+	* gnome-panel-properties.glade2: replace with
+	gnome-panel-preferences.glade (the glade2 version)
+
+	* Makefile.am: install the .desktop file in
+	  control-center-2.0/capplets and update for the rest of the
+	  changes.
+
+	* .cvsignore: upd.
+
+2002-04-18  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-properties.c: (main):
 	* gnome-panel-properties.glade2: rename dialog to
 	'Panel Preferences'.

@@ -45,7 +45,7 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 
 bin_PROGRAMS = \
 	gnome-panel 			\
-	gnome-panel-properties		\
+	gnome-panel-preferences		\
 	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
@@ -165,11 +165,18 @@ gnome_panel_LDADD =		\
 
 gnome_panel_LDFLAGS = -export-dynamic
 
-gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c panel-gconf.c panel-access.c
+gnome_panel_preferences_SOURCES =	\
+	gnome-panel-preferences.c	\
+	panel-util.c			\
+	panel-gconf.c			\
+	panel-access.c
 
-gnome_panel_properties_LDADD = $(X_LIBS) $(PANELCONFIG_LIBS)           
+gnome_panel_preferences_LDADD =		\
+	$(X_LIBS)			\
+	$(PANELCONFIG_LIBS)           
 
-gnome_panel_properties_LDFLAGS = -export-dynamic
+gnome_panel_preferences_LDFLAGS =	\
+	-export-dynamic
 
 gnome_desktop_item_edit_SOURCES = \
 	gnome-desktop-item-edit.c \
@@ -196,14 +203,13 @@ gnome_panel_screenshot_LDADD = 	\
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
-	gnome-panel-properties.glade2		\
+	gnome-panel-preferences.glade		\
 	gnome-panel-screenshot.glade2
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
-	gnome-panel-properties.desktop.in	\
+	gnome-panel-preferences.desktop.in	\
 	gnome-panel-screenshot.desktop.in	\
-	gnome-panel-properties			\
 	$(glade_DATA)				\
 	nothing.cP				\
 	nothing.h				\
@@ -211,8 +217,8 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	panel-marshal.list
 
-sysdir = $(datadir)/gnome/capplets
-sys_in_files = gnome-panel-properties.desktop.in
+sysdir = $(datadir)/control-center-2.0/capplets
+sys_in_files = gnome-panel-preferences.desktop.in
 sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 
 appdir = $(datadir)/applications
