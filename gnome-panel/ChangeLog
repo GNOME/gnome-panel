@@ -1,3 +1,15 @@
+Fri Dec 14 16:41:23 2001  George Lebl <jirka@5z.com>
+
+	* menu.[ch], launcher.c: some deFIXMEization.  Remove some dead
+	  code, add some error handeling, fix some comments.  Directory
+	  only ditem entry set, and also init type for applications.  Also
+	  what the hint stuff from the tearoff menus.  It wouldn't work
+	  properly anyway and it's supposed to be handled by the WM
+	  anyway.  Also hardcode default to true for icons and tearoff keys,
+	  and re-enable the use of the gconf key in the icons thing.  Also
+	  use the new key for icons.  I can't find a tearoff one.  Is there
+	  one?
+
 2001-12-14  Alex Larsson  <alexl@redhat.com>
 
 	* panel-applet-frame.c (panel_applet_frame_change_background_color):

@@ -485,7 +485,7 @@ properties_apply (Launcher *launcher)
 {
 	char *location;
 
-	/* save (steal) location */
+	/* save location */
 	location = g_strdup (gnome_desktop_item_get_location (launcher->ditem));
 
 	gnome_desktop_item_unref (launcher->ditem);
@@ -572,25 +572,6 @@ create_properties_dialog (Launcher *launcher)
 	gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
 				    launcher->ditem);
 
-	/* FIXME: this is 1) ugly, 2) needs to be done in a better way,
-	 * FIXME: read the dialog proposal */
-
-#if 0
-#define SETUP_EDITABLE(entry_name)					\
-	gnome_dialog_editable_enters					\
-		(GNOME_DIALOG (dialog),					\
-		 GTK_EDITABLE (gnome_ditem_get_##entry_name##_entry  	\
-			       (GNOME_DITEM_EDIT (launcher->dedit))));
-
-	SETUP_EDITABLE (name);
-	SETUP_EDITABLE (comment);
-	SETUP_EDITABLE (exec);
-	SETUP_EDITABLE (tryexec);
-	SETUP_EDITABLE (doc);
-
-#undef SETUP_EDITABLE
-#endif
-	
 	g_signal_connect (G_OBJECT (launcher->dedit), "changed",
 			    G_CALLBACK (launcher_changed),
 			    launcher);
@@ -713,24 +694,6 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    GTK_WIDGET (dee),
 			    TRUE, TRUE, GNOME_PAD_SMALL);
-
-	/* FIXME: this is 1) ugly, 2) needs to be done in a better way,
-	 * FIXME: read the dialog proposal */
-
-#if 0
-#define SETUP_EDITABLE(entry_name)					\
-	gnome_dialog_editable_enters					\
-		(GNOME_DIALOG (dialog),					\
-		 GTK_EDITABLE (gnome_ditem_get_##entry_name##_entry (dee)));
-
-	SETUP_EDITABLE (name);
-	SETUP_EDITABLE (comment);
-	SETUP_EDITABLE (exec);
-	SETUP_EDITABLE (tryexec);
-	SETUP_EDITABLE (doc);
-
-#undef SETUP_EDITABLE
-#endif
 
 	ditem = gnome_desktop_item_new ();
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, file);
@@ -913,6 +876,8 @@ launcher_file_name (const char *base)
 void
 launcher_save (Launcher *launcher)
 {
+	GError *error;
+
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
 
@@ -920,11 +885,19 @@ launcher_save (Launcher *launcher)
 		gnome_desktop_item_set_location (launcher->ditem,
 						 launcher_get_unique_uri ());
 
+	error = NULL;
 	gnome_desktop_item_save (launcher->ditem,
 				 NULL /* under */,
 				 TRUE /* force */,
-				 NULL /* FIXME: error */);
-	/* FIXME: handle errors */
+				 &error);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_save_launcher" /* class */,
+				    _("Cannot save launcher to disk, "
+				      "the following error occured:\n\n"
+				      "%s"),
+				    error->message);
+		g_clear_error (&error);
+	}
 }
 
 void
