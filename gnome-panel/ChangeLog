@@ -13,6 +13,15 @@ Tue Oct 15 19:54:28 2002  HideToshi Tajima  <hidetoshi.tajima@sun.com>
 	and try to run command with utf8 name when it failes with
 	locale name.
 
+2002-10-15  Brian Cameron <Brian.Cameron@sun.com>
+
+	* gnome-panel/panel.c, gnome-panel/session.c,
+	 gnome-panel/applet.c:  Removeved calls to
+	gconf_client_suggest_sync since this synching is
+	not necessary.  Performance analysis highlighted
+	that gnome-panel was causing >100 syncs to happen
+	(with ~10 items in the panel).
+
 2002-10-11  Arvind Samptur <arvind.samptur@wipro.com>
 	* gnome-run.c: (show_run_dialog_with_text)
 	Remove the parameters from the exec field when putting a menu
