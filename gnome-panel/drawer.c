@@ -759,3 +759,46 @@ panel_drawer_set_dnd_enabled (Drawer   *drawer,
 	} else
 		gtk_drag_source_unset (drawer->button);
 }
+
+static void
+drawer_deletion_response (GtkWidget     *dialog,
+                        int            response,
+                        Drawer         *drawer)
+{
+        if (response == GTK_RESPONSE_OK)
+		panel_profile_delete_object (drawer->info);
+
+        gtk_widget_destroy (dialog);
+}
+
+void 
+drawer_query_deletion (Drawer *drawer)
+{
+	GtkWidget *dialog;
+
+	 if (drawer->toplevel) {
+		PanelWidget *panel_widget;
+
+		panel_widget = panel_toplevel_get_panel_widget (
+							drawer->toplevel);
+
+		if (!panel_global_config_get_confirm_panel_remove () ||
+		    !g_list_length (panel_widget->applet_list)) {
+			panel_profile_delete_object (drawer->info);
+			return;
+		}
+
+		dialog = panel_deletion_dialog (drawer->toplevel);
+
+		g_signal_connect (dialog, "response",
+			  	  G_CALLBACK (drawer_deletion_response),
+			  	  drawer);
+
+		panel_signal_connect_object_while_alive (
+				G_OBJECT (drawer->toplevel), "destroy",
+				G_CALLBACK (gtk_widget_destroy),
+				G_OBJECT (dialog));
+
+        	gtk_widget_show_all (dialog);
+	}
+}

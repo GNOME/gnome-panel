@@ -41,6 +41,8 @@ void  drawer_load_from_gconf       (PanelWidget   *panel_widget,
 				    gint           position,
 				    const char    *id);
 
+void  drawer_query_deletion        (Drawer *drawer);
+
 G_END_DECLS
 
 #endif

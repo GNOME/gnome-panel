@@ -50,6 +50,8 @@ gboolean panel_check_drop_forbidden (PanelWidget    *panel,
 
 void panel_delete (PanelToplevel *toplevel);
 
+GtkWidget  *panel_deletion_dialog  (PanelToplevel *toplevel);
+
 G_END_DECLS
 
 #endif

@@ -1,3 +1,15 @@
+2003-09-18  Arvind Samptur <arvind.samptur@wipro.com>
+
+	* drawer.[ch]:(drawer_deletion_response) (drawer_query_deletion):
+	Query user before  deleting a "loaded" drawer.
+
+	* applet.c: (applet_remove_callback) Use drawer_deletion_query()
+	if the applet is a drawer.
+
+	* panel.[ch]: Isolate the "Delete Panel" dialog creation
+	so that we can re-use the same code.
+	Fix bug #122604
+
 2003-09-18  Mark McLoughlin  <mark@skynet.ie>
 
 	* button-widget.c: (button_load_pixbuf): fix loading of
