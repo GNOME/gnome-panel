@@ -1,3 +1,11 @@
+Tue Sep 05 17:10:33 2000  George Lebl <jirka@5z.com>
+
+	* scroll-menu.c: make sure we call the leave_notify handler
+	  when we really leave.  It still seems to be missing the case
+	  of leave event from scroll button directly onto the root, but
+	  god didn't intend for that to work right in the first place and
+	  it's not really needed.
+
 Tue Sep 05 01:17:32 2000  George Lebl <jirka@5z.com>
 
 	* scroll-menu.c: when keyboard traversing, make sure we "show" the
