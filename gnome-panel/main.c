@@ -46,7 +46,6 @@ static char *profile_arg;
 
 static const struct poptOption options[] = {
   {"profile", '\0', POPT_ARG_STRING, &profile_arg, 0, N_("Specify a profile name to load"), NULL},
-  POPT_AUTOHELP
   {NULL, '\0', 0, NULL, 0}
 };
 
