@@ -1086,6 +1086,7 @@ panel_run_dialog_fill_executables_from (PanelRunDialog *dialog,
 	struct dirent *dent;
 	DIR           *dir;
 	char          *file;
+	struct stat    file_stat;
 
 	dir = opendir (dirname);
 
@@ -1095,7 +1096,8 @@ panel_run_dialog_fill_executables_from (PanelRunDialog *dialog,
 	while ((dent = readdir (dir))) {
 		file = g_build_filename (dirname, dent->d_name, NULL);
 
-		if (!access (file, X_OK))
+		if (!access (file, X_OK) &&
+		    !stat (file, &file_stat) && !S_ISDIR (file_stat.st_mode))
 			dialog->executables = g_list_prepend (dialog->executables,
 							      g_strdup (dent->d_name));
 		
