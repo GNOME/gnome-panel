@@ -483,6 +483,7 @@ setup_button (Launcher *launcher)
 	const char *docpath;
 	char *str;
 	const char *icon;
+	char *unescaped_str;
 	
 	g_return_if_fail (launcher != NULL);
 
@@ -496,13 +497,16 @@ setup_button (Launcher *launcher)
 		str = g_strdup_printf ("%s\n%s", name, comment);
 	else
 		str = g_strdup (name);
+
+	unescaped_str = gnome_vfs_unescape_string (str, NULL);
 	gtk_tooltips_set_tip (panel_tooltips, launcher->button,
-			      str, NULL);
+			      unescaped_str, NULL);
 
 	/* Setup accessible name */
-	panel_set_atk_name_desc (launcher->button, str, NULL);
+	panel_set_atk_name_desc (launcher->button, unescaped_str, NULL);
 
 	g_free (str);
+	g_free (unescaped_str);
 
 	/* Setup icon */
 	icon = gnome_desktop_item_get_string (launcher->ditem,
