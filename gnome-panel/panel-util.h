@@ -13,7 +13,7 @@ typedef void (*UpdateFunction) (gpointer);
 
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
-int             panel_ditem_launch         (const GnomeDesktopItem       *item,
+int             panel_ditem_launch         (GnomeDesktopItem             *item,
 					    GList                        *file_list,
 					    GnomeDesktopItemLaunchFlags   flags,
 					    GdkScreen                    *screen,

@@ -1,5 +1,11 @@
 2005-02-17  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-util.[ch]: (panel_ditem_launch): the GnomeDesktopItem is now
+	modified since we use gnome_desktop_item_set_launch_time(). So remove
+	the const.
+
+2005-02-17  Vincent Untz  <vincent@vuntz.net>
+
 	* button-widget.c: (button_widget_reload_pixbuf): don't load a pixbuf
 	if we don't have an icon theme yet, don't try to load the "" icon...
 	(button_widget_instance_init): correctly initialize all the fields
