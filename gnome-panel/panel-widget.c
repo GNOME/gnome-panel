@@ -267,6 +267,7 @@ static void
 remove_panel_from_forbidden(PanelWidget *panel, PanelWidget *r)
 {
 	GList *list;
+	GtkWidget *parent_panel;
 	if(!panel->master_widget)
 		return;
 
@@ -278,15 +279,16 @@ remove_panel_from_forbidden(PanelWidget *panel, PanelWidget *r)
 				    PANEL_APPLET_FORBIDDEN_PANELS,
 				    list);
 	}
-	panel = PANEL_WIDGET(panel->master_widget->parent);
-	if(panel)
-		remove_panel_from_forbidden(panel, r);
+	parent_panel = panel->master_widget->parent;
+	if (parent_panel)
+		remove_panel_from_forbidden(PANEL_WIDGET(parent_panel), r);
 }
 
 static void
 add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
 {
 	GList *list;
+	GtkWidget *parent_panel;
 	if(!panel->master_widget)
 		return;
 
@@ -299,10 +301,9 @@ add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
 				    PANEL_APPLET_FORBIDDEN_PANELS,
 				    list);
 	}
-
-	panel = PANEL_WIDGET(panel->master_widget->parent);
-	if (panel)
-		add_panel_to_forbidden(panel, r);
+	parent_panel = panel->master_widget->parent;
+	if (parent_panel)
+		add_panel_to_forbidden(PANEL_WIDGET(parent_panel), r);
 }
 
 static void

@@ -1,3 +1,8 @@
+Thu Sep  3 13:26:41 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* panel-widget.c ([add/remove]_panel_[from/to]_forbidden):
+	Check for NULL _before_ cast to avoid warnings.
+
 Wed Sep 02 23:53:23 1998  George Lebl  <jirka@5z.com>
 
 	* session.c: clear the list of applets after do_session_save
