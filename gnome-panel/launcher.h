@@ -84,6 +84,8 @@ Launcher *	find_launcher			(const char *path);
 
 void            launcher_show_help              (Launcher *launcher);
 
+void            launcher_properties_destroy     (Launcher *launcher);
+
 G_END_DECLS
 
 #endif

@@ -1,5 +1,15 @@
 2002-07-19  Mark McLoughlin  <mark@skynet.ie>
 
+	Based on patch from Arvind to fix #88430.
+
+	* launcher.[ch]:
+	(launcher_properties_destroy): impl to destroy the properties dialog.
+	(destroy_launcher): use it.
+
+	* panel.c: (panel_remove_applets): ditto.
+
+2002-07-19  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-preferences.glade: fix clash in mnemonics.
 
 2002-07-18  Mark McLoughlin  <mark@skynet.ie>

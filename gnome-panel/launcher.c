@@ -158,15 +158,22 @@ drag_data_received_cb (GtkWidget        *widget,
 }
 
 static void
-destroy_launcher (GtkWidget *widget, gpointer data)
+destroy_launcher (GtkWidget *widget,
+		  Launcher  *launcher)
 {
-	Launcher *launcher = data;
-	GtkWidget *prop_dialog = launcher->prop_dialog;
+	launcher_properties_destroy (launcher);
+}
 
+void
+launcher_properties_destroy (Launcher *launcher)
+{
+	GtkWidget *dialog;
+
+	dialog = launcher->prop_dialog;
 	launcher->prop_dialog = NULL;
 
-	if (prop_dialog != NULL)
-		gtk_widget_destroy (prop_dialog);
+	if (dialog)
+		gtk_widget_destroy (dialog);
 }
 
 static void

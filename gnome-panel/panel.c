@@ -532,6 +532,9 @@ panel_remove_applets (PanelWidget *panel)
 		if (info && info->type == APPLET_BONOBO)
 			panel_applet_frame_set_clean_remove (
 					PANEL_APPLET_FRAME (info->data), TRUE);
+		else if (info && info->type == APPLET_LAUNCHER)
+			launcher_properties_destroy (info->data);
+			
 	}
 }
 
