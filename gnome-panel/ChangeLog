@@ -1,3 +1,18 @@
+Thu May 14 03:28:25 1998  George Lebl  <jirka@5z.com>
+
+	* main.c: use fork again to start applets so that we don't
+	  swallow stdout from the applet, this makes the posibilities
+	  of param stuff less viable, but we still support a single
+	  applet cmdline parameter
+
+	* gnome-panel.idl,main.c,panel.[ch],applet-widget.[ch],
+	  mico-glue.(cc|h),applet-lib.(cc|h): dorestart varaible,
+	  (stored in AppletInfo's ->data field (slightly hackish:))
+	  which makes it possible for multiple type applets, all
+	  kinds of weird queue stuff added to make this work, but
+	  NO testing whatsoever, except that it doesn't seem to
+	  break the older stuff
+
 Tue May 12 01:29:19 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl,mico-glue.cc,applet-lib.cc:

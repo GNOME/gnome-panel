@@ -45,6 +45,83 @@ extern char *old_panel_cfg_path;
 
 extern gint main_menu_count;
 
+/*multiple applet load queue*/
+typedef struct _MultiLoadQueue MultiLoadQueue;
+struct _MultiLoadQueue {
+	gchar *path;
+	gchar *ior;
+	GList *params;
+};
+static GList *multiple_applet_load_queue=NULL;
+
+gint
+mulapp_is_in_queue(gchar *path)
+{
+	GList *list;
+	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list))
+		if(strcmp(((MultiLoadQueue *)list->data)->path,path)==0)
+			return TRUE;
+	return FALSE;
+}
+
+/*if the parent is already in queue, load the applet or add the param,
+  into a queue*/
+void
+mulapp_load_or_add_to_queue(gchar *path,gchar *param)
+{
+	GList *list;
+	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
+		MultiLoadQueue *mq = list->data;
+		if(strcmp(mq->path,path)==0) {
+			if(mq->ior)
+				send_applet_start_new_applet(mq->ior,param);
+			else
+				mq->params = g_list_prepend(mq->params,
+							    g_strdup(param));
+			return;
+		}
+	}
+}
+
+void
+mulapp_add_to_queue(gchar *path)
+{
+	MultiLoadQueue *mq;
+
+	mq = g_new(MultiLoadQueue,1);
+	mq->path = g_strdup(path);
+	mq->ior = NULL;
+	mq->params = NULL;
+	multiple_applet_load_queue = g_list_prepend(multiple_applet_load_queue,
+				                    mq);
+}
+
+static void
+mulapp_add_ior_and_free_queue(gchar *path, gchar *ior)
+{
+	GList *list;
+	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
+		MultiLoadQueue *mq = list->data;
+		if(strcmp(mq->path,path)==0) {
+			GList *li;
+			if(mq->ior)
+				g_warning("What? An IOR existed before, this "
+					  "is most likely a bug!");
+			mq->ior = g_strdup(ior);
+			if(!mq->params)
+				return;
+			for(li=mq->params;li!=NULL;li=g_list_next(li)) {
+				gchar *param = li->data;
+				send_applet_start_new_applet(mq->ior,param);
+				g_free(param);
+			}
+			g_list_free(mq->params);
+			mq->params = NULL;
+			return;
+		}
+	}
+}
+
 void
 apply_global_config(void)
 {
@@ -140,6 +217,12 @@ save_applet_configuration(AppletInfo *info, gint *num)
 
 			fullpath = g_copy_strings(path,"parameters2",NULL);
 			gnome_config_set_string(fullpath, info->params);
+			g_free(fullpath);
+
+			/*we use the data field to store if we should or
+			  should not restart the applet*/
+			fullpath = g_copy_strings(path,"dorestart",NULL);
+			gnome_config_set_bool(fullpath, info->data!=0);
 			g_free(fullpath);
 		} else
 			(*num)--;
@@ -778,7 +861,8 @@ applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
 }
 
 int
-applet_request_id (const char *path, const char *param, char **cfgpath,
+applet_request_id (const char *path, const char *param,
+		   gint dorestart, char **cfgpath,
 		   char **globcfgpath, guint32 * winid)
 {
 	AppletInfo *info;
@@ -799,8 +883,8 @@ applet_request_id (const char *path, const char *param, char **cfgpath,
 		}
 	}
 
-	*winid = reserve_applet_spot (EXTERN_ID, path, param, 0, 0, NULL,
-				      APPLET_EXTERN_RESERVED);
+	*winid = reserve_applet_spot (EXTERN_ID, path, param, dorestart, 0, 0,
+				      NULL, APPLET_EXTERN_RESERVED);
 	if(*winid == 0) {
 		*globcfgpath = NULL;
 		*cfgpath = NULL;
@@ -837,13 +921,16 @@ applet_register (const char * ior, int applet_id)
 	info->id_str = g_strdup(ior);
 
 	orientation_change(applet_id,panel);
+
+	mulapp_add_ior_and_free_queue(info->path, info->id_str);
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
 guint32
 reserve_applet_spot (const char *id_str, const char *path, const char *param,
-		     int panel, int pos, char *cfgpath, AppletType type)
+		     gint dorestart, int panel, int pos, char *cfgpath,
+		     AppletType type)
 {
 	GtkWidget *socket;
 
@@ -855,7 +942,8 @@ reserve_applet_spot (const char *id_str, const char *path, const char *param,
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/
-	if(!register_toy(socket,NULL,NULL,g_strdup(id_str),g_strdup(path),
+	if(!register_toy(socket,NULL,(gpointer)(dorestart?1L:0L),
+			 g_strdup(id_str),g_strdup(path),
 			 g_strdup(param), pos,panel,cfgpath, type)) {
 		g_warning("Couldn't add applet");
 		return 0;
@@ -876,7 +964,7 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 	PanelWidget *panel = data;
 	gint panel_num = find_panel(panel);
 
-	load_applet(MENU_ID,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(MENU_ID,NULL,NULL,TRUE,PANEL_UNKNOWN_APPLET_POSITION,
 		    panel_num!=-1?panel_num:0,NULL);
 
 	return TRUE;

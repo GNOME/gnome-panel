@@ -36,6 +36,8 @@ struct _AppletWidget
 	/* use these as prefixes when loading saving data */
 	gchar			*cfgpath;
 	gchar			*globcfgpath;
+
+	gint			multi;
 };
 
 struct _AppletWidgetClass
@@ -56,11 +58,28 @@ struct _AppletWidgetClass
 	gint (* session_save) (AppletWidget *applet,
 			       gchar *cfgpath,
 			       gchar *globcfgpath);
+
+	/*bind this signal if you want to manage multiple applets, the
+	  panel will signal you the next applet to start with the same
+	  pathname instead of launching the executable, you have to create
+	  your widget with _new_multi_ in order to use this*/
+	gint (* start_new_applet) (AppletWidget *applet,
+			           gchar *param);
 };
 
 guint		applet_widget_get_type		(void);
+
+/*start a normal applet*/
 GtkWidget*	applet_widget_new		(gchar *argv0);
-GtkWidget*	applet_widget_new_with_param	(gchar *argv0, gchar *param);
+
+/*start one but add a parameter that the panel should use next time
+  to start us*/
+GtkWidget*	applet_widget_new_with_param	(gchar *argv0,
+						 gchar *param);
+
+/*start an applet which handeles multiple "applet widgets"*/
+GtkWidget*	applet_widget_new_multi_with_param	(gchar *argv0,
+							 gchar *param);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
@@ -88,6 +107,9 @@ void		applet_widget_register_callback	(AppletWidget *applet,
 
 /* get the applet widget with the id of applet_id */
 AppletWidget*	applet_widget_get_by_id		(gint applet_id);
+
+/*get thenumber of applets*/
+gint		applet_widget_get_applet_count	(void);
 
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);

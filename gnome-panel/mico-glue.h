@@ -14,6 +14,7 @@ int send_applet_session_save (const char *ior, int id,
 			       const char *globcfgpath);
 void send_applet_change_orient (const char *ior, int id,  int orient);
 void send_applet_do_callback (const char *ior, int id, char *callback_name);
+void send_applet_start_new_applet (const char *ior, char *param);
 
 END_GNOME_DECLS
 

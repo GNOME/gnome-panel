@@ -16,6 +16,7 @@ typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
 				        gpointer data);
 
 static GList *applet_widgets=NULL;
+static gint applet_count=0;
 
 static GtkPlugClass *parent_class;
 
@@ -123,6 +124,7 @@ static void
 applet_widget_init (AppletWidget *applet_widget)
 {
 	applet_widget->applet_id = -1;
+	applet_widget->multi = FALSE;
 }
 
 static gint
@@ -138,6 +140,8 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 	gnome_panel_applet_cleanup(applet->applet_id);
 	if(GTK_BIN(w)->child == NULL)
 		gnome_panel_applet_abort_id(applet->applet_id);
+
+	applet_count--;
 	return FALSE;
 }
 
@@ -158,14 +162,8 @@ applet_widget_register_callback(AppletWidget *applet,
 					      menutext,func,data);
 }
 
-GtkWidget *
-applet_widget_new(gchar *argv0)
-{
-	return applet_widget_new_with_param(argv0,"");
-}
-
-GtkWidget *
-applet_widget_new_with_param(gchar *argv0, gchar *param)
+static GtkWidget *
+_applet_widget_new_with_param(gchar *argv0, gchar *param, gint multi)
 {
 	AppletWidget *applet;
 	char *result;
@@ -185,7 +183,8 @@ applet_widget_new_with_param(gchar *argv0, gchar *param)
 	if (!gnome_panel_applet_init_corba())
 		g_error("Could not communicate with the panel\n");
 
-	result = gnome_panel_applet_request_id(myinvoc, param, &applet_id,
+	result = gnome_panel_applet_request_id(myinvoc, param,multi?FALSE:TRUE,
+					       &applet_id,
 					       &cfgpath, &globcfgpath,
 					       &winid);
 	if (result)
@@ -201,6 +200,8 @@ applet_widget_new_with_param(gchar *argv0, gchar *param)
 	applet->applet_id = applet_id;
 	applet->cfgpath = cfgpath;
 	applet->globcfgpath = globcfgpath;
+ 
+	applet->multi = multi;
 
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
@@ -208,7 +209,31 @@ applet_widget_new_with_param(gchar *argv0, gchar *param)
 
 	applet_widgets = g_list_prepend(applet_widgets,applet);
 
+	applet_count++;
+
 	return GTK_WIDGET(applet);
+}
+
+GtkWidget *
+applet_widget_new(gchar *argv0)
+{
+	return _applet_widget_new_with_param(argv0,"",FALSE);
+}
+GtkWidget *
+applet_widget_new_with_param(gchar *argv0, gchar *param)
+{
+	return _applet_widget_new_with_param(argv0,param,FALSE);
+}
+GtkWidget *
+applet_widget_new_multi_with_param(gchar *argv0, gchar *param)
+{
+	return _applet_widget_new_with_param(argv0,param,TRUE);
+}
+
+gint
+applet_widget_get_applet_count()
+{
+	return applet_count;
 }
 
 void

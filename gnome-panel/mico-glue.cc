@@ -22,6 +22,7 @@ public:
 	CORBA::Short applet_request_id (const char *ccookie,
 					const char *path,
 					const char *param,
+					CORBA::Short dorestart,
 					char *&cfgpath,
 					char *&globcfgpath,
 					CORBA::ULong &wid) {
@@ -31,7 +32,8 @@ public:
 		guint32 winid;
 
 		CHECK_COOKIE_V (0);
-		applet_id = ::applet_request_id (path,param,&cfg,&globcfg,&winid);
+		applet_id = ::applet_request_id (path,param,dorestart,
+						 &cfg,&globcfg,&winid);
 		wid = winid;
 
 		if(cfg) {
@@ -201,4 +203,15 @@ send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
 
 	/* Now, use corba to invoke the routine in the panel */
 	applet->do_callback(cookie,applet_id, callback_name);
+}
+
+void
+send_applet_start_new_applet (const char *ior, char *param)
+{
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	applet->start_new_applet(cookie,param);
 }

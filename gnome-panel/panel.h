@@ -113,12 +113,13 @@ void apply_global_config(void);
 void panel_clean_applet(gint applet_id);
 
 /*stuff for corba*/
-int applet_request_id (const char *path, const char *param, char **cfgpath,
+int applet_request_id (const char *path, const char *param,
+		       gint dorestart, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
 void applet_register (const char * ior, int applet_id);
 void applet_request_glob_cfg (char **globcfgpath);
 guint32 reserve_applet_spot (const char *id_str, const char *path,
-			     const char *param,
+			     const char *param, gint dorestart,
 			     int panel, int pos, char *cfgpath,
 			     AppletType type);
 void applet_abort_id(gint applet_id);
@@ -133,11 +134,22 @@ void applet_add_callback(gint applet_id,
 void applet_set_tooltip(gint applet_id, const char *tooltip);
 void applet_remove_from_panel(gint applet_id);
 
+/*multi applet que functions*/
+
+gint mulapp_is_in_queue(gchar *path);
+
+/*if the parent is already in queue, load the applet or add the param,
+  into a queue*/
+void mulapp_load_or_add_to_queue(gchar *path,gchar *param);
+
+void mulapp_add_to_queue(gchar *path);
+
+
 extern char *cookie;
 
 /*this is in main.c*/
-void load_applet(char *id, char *path, char *params, int pos, int panel,
-		 char *cfgpath);
+void load_applet(char *id, char *path, char *params, int dorestart,
+		 int pos, int panel, char *cfgpath);
 void orientation_change(gint applet_id, PanelWidget *panel);
 
 #define get_applet_info(applet_id) \

@@ -8,6 +8,7 @@ module GNOME {
 		short applet_request_id(in string cookie,
 					in string path,
 					in string param,
+					in short dorestart,
 					out string cfgpath,
 					out string globcfgpath,
 					out unsigned long wid);

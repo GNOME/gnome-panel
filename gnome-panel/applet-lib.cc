@@ -301,6 +301,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 char *
 gnome_panel_applet_request_id (char *path,
 			       char *param,
+			       int dorestart,
 			       int *applet_id,
 			       char **cfgpath,
 			       char **globcfgpath,
@@ -322,6 +323,7 @@ gnome_panel_applet_request_id (char *path,
 			*applet_id = panel_client->applet_request_id(cookie,
 								     path,
 								     param,
+								     dorestart,
 								     cfg,
 							             globcfg,
 								     wid);
