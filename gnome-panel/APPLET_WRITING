@@ -129,12 +129,194 @@ should NOT be translated as the label (the 3rd argument) should be.
 Session Saving:
 ===============
 
-FIXME: do this
+The panel is session manager aware but the applets don't have to be,
+they can depend on the panel to save their information in a proper
+place. Basically session saving has two parts, loading the info, and 
+saving the info. Loading is pretty simple, after you do
+applet_widget_new, you can get the correct paths to load your properties
+from the widget's structure. For example:
+
+gnome_config_push_prefix(APPLET_WIDGET(applet)->cfgpath);
+hello = gnome_config_get_bool("hello=true");
+gnome_config_pop_prefix();
+
+will do the trick.
+
+For saving it's a little bit more complicated but not by much, let's
+make our original example save a global variable hello.
+
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+/* useless variable that we want to save the state of*/
+gint hello = TRUE;
+
+/* sesion save signal handler*/
+static gint
+applet_session_save(GtkWidget *w,
+		    const char *cfgpath,
+		    const char *globcfgpath)
+{
+	gnome_config_push_prefix(cfgpath);
+	gnome_config_set_string("hello",hello);
+	gnome_config_pop_prefix(cfgpath);
+
+	gnome_config_sync();
+	/* you need to use the drop_all here since we're all writing to
+	   one file, without it, things might not work too well */
+	gnome_config_drop_all();
+
+	/* make sure you return FALSE, otherwise your applet might not
+	   work compeltely, there are very few circumstances where you
+	   want to return TRUE. This behaves similiar to GTK events, in
+	   that if you return FALSE it means that you haven't done
+	   everything yourself, meaning you want the panel to save your
+	   other state such as the panel you are on, position,
+	   parameter, etc ... */
+	return FALSE;
+}
+
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* intialize, this will basicallys et up the applet, corba and
+	   call gnome_init */
+	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
+				    NULL, argv[0]);
+
+	/* create a new applet_widget */
+	applet = applet_widget_new();
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* read the contents of the stored value of hello from the
+	   config file */
+	gnome_config_push_prefix(APPLET_WIDGET(applet)->cfgpath);
+	hello = gnome_config_get_bool("hello=true");
+	gnome_config_pop_prefix();
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* bind the session save signal */
+	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
+			   GTK_SIGNAL_FUNC(applet_session_save),
+			   NULL);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+
+	/* special corba main loop */
+	applet_widget_gtk_main ();
+
+	return 0;
+}
+
+That's basically it. Make sure you return FALSE from the session_save
+handler, else the panel will not remember your applet next time. Also
+note the presence of gnome_config_drop_all, that needs to be done,
+especially for multi applets (discussed below), or your info might get
+lost.
+
+If you need to store information global to all applets you can use the
+globcfgpath counterpart of cfgpath, which gives you path to the actual
+file of the panel configuration. Make sure you only use one level of
+config path below cfgpath and two levels below globcfgpath. Which means
+for cfgpath, you tack on only "key" to the data, to globcfgpath you tack
+on "section/key". Both of them will be the same file, but cfgpath
+already points to an applet specific section. An example of a global
+config would be:
+
+gnome_config_push_prefix(APPLET_WIDGET(applet)->globcfgpath);
+hello = gnome_config_get_bool("all_hello_applets/hello=true");
+gnome_config_pop_prefix();
+
+Similiarly for the session_save.
 
 Panel Orientation:
 ==================
 
-FIXME: do this
+How to tell which way the panel on which your applet sits is oriented,
+fairly simply. You bind the "change_orient" signal to the applet, so to
+modify our original hello applet, we'd do:
+
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+/*this is when the panel orientation changes*/
+static void
+applet_change_orient(GtkWidget *w, PanelOrientType o, gpointer data)
+{
+	switch(o) {
+		case ORIENT_UP: puts("ORIENT UP"); break;
+		case ORIENT_DOWN: puts("ORIENT DOWN"); break;
+		case ORIENT_LEFT: puts("ORIENT LEFT"); break;
+		case ORIENT_RIGHT: puts("ORIENT RIGHT"); break;
+	}
+}
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* intialize, this will basicallys et up the applet, corba and
+	   call gnome_init */
+	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
+				    NULL, argv[0]);
+
+	/* create a new applet_widget */
+	applet = applet_widget_new();
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/*we have to bind change_orient before we do applet_widget_add 
+	  since we need to get an initial change_orient signal to set our
+	  initial oriantation, and we get that during the _add call*/
+	gtk_signal_connect(GTK_OBJECT(applet),"change_orient",
+			   GTK_SIGNAL_FUNC(applet_change_orient),
+			   NULL);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+
+	/* special corba main loop */
+	applet_widget_gtk_main ();
+
+	return 0;
+}
+
+Now we get a signal every time the panel changes it's orientation and we
+can change ours as well. The different values represent the orientation
+a menu/drawer would take were it on the panel, not the actual position
+of the panel. If the Panel "sits" on the bottom edge of the screen you
+will get ORIENT_UP, if it sits on the left edge, you get ORIENT_RIGHT,
+and so on, if the panel is a vertical drawer you get ORIENT_RIGHT, if
+it's a horizontal drawer you get ORIENT_UP.
+
+Also note that you should bind the event before you do applet_widget_add,
+as the event will be triggered during the add, so that you can set your
+initial orientation.
 
 Multiple Applet Support:
 ========================
