@@ -1,3 +1,11 @@
+2003-12-10  Vincent Untz  <vincent@vuntz.net>
+
+	Patch from Thomas Benson <tbenson@cs.utk.edu>
+	Fix bug #128130.
+
+	* panel-run-dialog.c: (panel_run_dialog_execute): check that the
+	command was successfully converted from UTF-8.
+
 2003-12-01  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-button.c: (panel_menu_button_handle_event): kill
