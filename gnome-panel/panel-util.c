@@ -85,6 +85,10 @@ get_full_path(char *argv0)
 
 	pclose(fwhich);
 
+	i = strlen(buf)-1;
+	if(buf[i]=='\n')
+		buf[i]='\0';
+
 #endif
 	return g_strdup(buf);
 }
