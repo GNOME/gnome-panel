@@ -17,6 +17,7 @@
 #define HAVE_APPLET_BIND_EVENTS 1
 #define HAVE_PANEL_PIXEL_SIZE 1
 #define HAVE_PANEL_DRAW_SIGNAL 1
+#define HAVE_APPLET_QUEUE_RESIZE 1
 
 BEGIN_GNOME_DECLS
 
@@ -251,6 +252,10 @@ void		applet_widget_get_rgb_bg	(AppletWidget *applet,
 						 guchar **rgb,
 						 int *w, int *h,
 						 int *rowstride);
+
+/* queue resize on the socket in the panel for shlib applets or
+   just the applet for external applets */
+void		applet_widget_queue_resize	(AppletWidget *applet);
 
 /*use this instead of gnome init*/
 gboolean	applet_widget_init		(const char *app_id,

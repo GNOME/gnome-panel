@@ -401,6 +401,10 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 		gdk_window_get_user_data (plug->socket_window,
 					  (gpointer *)&socket);
 		if(socket) {
+			GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET(socket));
+			if (toplevel && GTK_IS_WINDOW (toplevel))
+				gtk_window_remove_embedded_xid (GTK_WINDOW (toplevel), 
+								GDK_WINDOW_XWINDOW (socket->plug_window));
 			socket->plug_window = NULL;
 			socket->same_app = FALSE;
 			plug->socket_window = NULL;
@@ -1338,6 +1342,40 @@ applet_widget_panel_quit (void)
 	CORBA_exception_init(&ev);
 	GNOME_Panel_quit(panel_client, &ev);
 	CORBA_exception_free(&ev);
+}
+
+/**
+ * applet_widget_queue_resize:
+ * @applet: #AppletWidget to work on
+ *
+ * Description:  For shared library applets this calls
+ * #gtk_widget_queue_resize on the socket, for external applets this
+ * just calls this on the #AppletWidget itself, but in both cases
+ * it forces a resize of the socket on the panel
+ *
+ * Returns:
+ **/
+void
+applet_widget_queue_resize(AppletWidget *applet)
+{
+	GtkPlug *plug;
+
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
+	plug = GTK_PLUG(applet);
+
+	/* XXX: hackaround to broken gtkplug/gtksocket, we must manually
+	   queue resize on the socket as the plug does not have a parent */
+	if(plug->same_app && plug->socket_window) {
+		GtkWidget *socket;
+		gdk_window_get_user_data (plug->socket_window,
+					  (gpointer *)&socket);
+		if(socket)
+			gtk_widget_queue_resize(socket);
+	} else {
+		gtk_widget_queue_resize(GTK_WIDGET(applet));
+	}
 }
 
 static void

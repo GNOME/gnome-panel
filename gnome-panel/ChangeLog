@@ -1,3 +1,10 @@
+Mon Feb 07 16:48:34 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.[ch]: add a new call, applet_widget_queue_resize
+	  which can queue resize on the socket for shlib applets since
+	  they can't use it on the applet-widget itself as it has now
+	  "parent".
+
 Mon Feb 07 16:18:12 2000  George Lebl <jirka@5z.com>
 
 	* extern.c,applet-widget.c: hackarounds around broken
