@@ -11,15 +11,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.5.3.1\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
-"PO-Revision-Date: 2004-01-22 22:04+0100\n"
+"Project-Id-Version: gnome-panel 2.5.9.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-06 17:02+0100\n"
+"PO-Revision-Date: 2004-03-06 17:00+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -68,7 +68,7 @@ msgid "Accessories"
 msgstr "Zubehör"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2410
 msgid "Clock"
 msgstr "Uhr"
 
@@ -84,20 +84,20 @@ msgstr "Fabrik zum Erzeugen von Uhrenapplets."
 msgid "Get the current time and date"
 msgstr "Die aktuelle Zeit und das heutige Datum ermitteln"
 
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:281
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:281 applets/clock/clock.c:599
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:283 applets/clock/clock.c:1523
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:283 applets/clock/clock.c:601
+#: applets/clock/clock.c:1525
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -106,7 +106,7 @@ msgstr "%H.%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:285
+#: applets/clock/clock.c:294
 msgid "%a %b %e"
 msgstr "%a, %d. %b"
 
@@ -114,7 +114,7 @@ msgstr "%a, %d. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:292
+#: applets/clock/clock.c:301
 #, c-format
 msgid ""
 "%1$s\n"
@@ -127,54 +127,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:299
+#: applets/clock/clock.c:308
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:392
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:818
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:950
 msgid "All Day"
 msgstr "Ganztägig"
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:984
 msgid "Appointments"
 msgstr "Termine"
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1205
 msgid "Calendar"
 msgstr "Kalender"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1436
 msgid "Computer Clock"
 msgstr "Computer-Uhr"
 
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1518
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1520
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1560
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1602
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
 
-#: applets/clock/clock.c:1667
+#: applets/clock/clock.c:1641
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -182,7 +182,11 @@ msgstr ""
 "Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
 "Vermutlich ist keines installiert."
 
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
+#: applets/clock/clock.c:2047
+msgid "Custom format"
+msgstr "Benutzerdefiniertes Format"
+
+#: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -192,52 +196,48 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2203
 msgid "Clock Preferences"
 msgstr "Einstellungen der Uhr"
 
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2239
 msgid "Clock _type:"
 msgstr "Uhren_typ:"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2249
 msgid "12 hour"
 msgstr "12 Stunden"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2250
 msgid "24 hour"
 msgstr "24 Stunden"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2251
 msgid "UNIX time"
 msgstr "UNIX-Zeit"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2252
 msgid "Internet time"
 msgstr "Internet-Zeit"
 
-#: applets/clock/clock.c:2273
-msgid "Custom format"
-msgstr "Benutzerdefiniertes Format"
-
-#: applets/clock/clock.c:2289
+#: applets/clock/clock.c:2260
 msgid "Custom _format:"
 msgstr "_Benutzerdefiniertes Format"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2279
 msgid "Show _seconds"
 msgstr "_Sekunden anzeigen"
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2288
 msgid "Show _date"
 msgstr "_Datum anzeigen"
 
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2297
 msgid "Use _UTC"
 msgstr "_Koordinierte Weltzeit (UTC) verwenden"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2391 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -250,7 +250,7 @@ msgstr ""
 "Jörgen Scheibengruber <mfcn@gmx.de>\n"
 "Matthias Warkus <mawarkus@gnome.org>"
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2412
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
@@ -2427,9 +2427,8 @@ msgid "_Force quit"
 msgstr "Beenden _erzwingen"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Verzögerung beim Verbergen"
+msgstr "Panel verbergen"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2989,228 +2988,3 @@ msgstr "Extrem groß"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extrem klein"
-
-#~ msgid "Log Out %s"
-#~ msgstr "%s abmelden"
-
-#, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "%s von dieser Sitzung abmelden, um sich als ein anderer Benutzer "
-#~ "anzumelden oder den Computer herunterzufahren"
-
-# CHECK - der Benutzername wirkt im Deutschen deplaziert
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "Den GNOME-Desktop beenden%.0s"
-
-#~ msgid "Day"
-#~ msgstr "Tag"
-
-#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-#~ msgstr ""
-#~ "Der momentan überwachte Tag zwischen 1 und 31 (0 bedeutet nicht "
-#~ "festgelegt)"
-
-#~ msgid "Month"
-#~ msgstr "Monat"
-
-#~ msgid "The currently monitored month between 0 and 11"
-#~ msgstr "Der momentan überwachte Monat zwischen 0 und 11"
-
-#~ msgid "Year"
-#~ msgstr "Jahr"
-
-#~ msgid "The currently monitored year"
-#~ msgstr "Das momentan überwachte Jahr"
-
-#~ msgid "Activatable"
-#~ msgstr "Aktivierbar"
-
-#~ msgid "Whether the button is activatable"
-#~ msgstr "Ob der Knopf aktivierbar ist"
-
-#~ msgid "Has Arrow"
-#~ msgstr "Hat Pfeil"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Soll ein Pfeil-Anzeiger dargestellt werden?"
-
-#~ msgid "Drag and drop Highlight"
-#~ msgstr "Hervorheben durch Ziehen und Ablegen"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "Soll das Symbol beim Ziehen und Ablegen hervorgehoben werden?"
-
-#~ msgid "Orientation"
-#~ msgstr "Ausrichtung"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "Die Ausrichtung des Knopfwidgets"
-
-#~ msgid "Icon Name"
-#~ msgstr "Symbolname"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "Das gewünschte Symbol für das Knopfwidget"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "Repertoirekennung des Symbols"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "Das gewünschte Repertoire-Symbol für das Knopfwidget"
-
-#~ msgid "Action Type"
-#~ msgstr "Aktionstyp"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "Der Typ der Aktion, die dieser Knopf beim Anklicken ausführt"
-
-#~ msgid "Drag and drop enabled"
-#~ msgstr "Ziehen und Ablegen aktiviert"
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Soll für das Widget Ziehen und Ablegen aktiviert werden?"
-
-#~ msgid "Edges"
-#~ msgstr "Kanten"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "Welche Kanten gezeichnet werden sollen"
-
-#~ msgid "Menu Path"
-#~ msgstr "Menüpfad"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "Der Pfad, aus dem das Menü konstruiert werden soll"
-
-#~ msgid "Custom Icon"
-#~ msgstr "Benutzerdefiniertes Symbol"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "Das benutzerdefinierte Symbol für das Menü"
-
-#~ msgid "Tooltip"
-#~ msgstr "Minihilfe"
-
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "Für das Menü angezeigte Minihilfe"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Menüpfad verwenden"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Den von der »menu-path«-Eigenschaft angegebenen Pfad verwenden"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "Benutzerdefiniertes Symbol verwenden"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Das von der »custom-icon«-Eigenschaft angegebene Symbol verwenden"
-
-#~ msgid "Name"
-#~ msgstr "Name"
-
-#~ msgid "The name of this panel"
-#~ msgstr "Der Name dieses Panels"
-
-#~ msgid "Expand"
-#~ msgstr "Ausdehnen"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Ausdehnen und so die gesamte Breite/Höhe des Bildschirms belegen"
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "Die Ausrichtung des Panels"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "Die Höhe (bzw. Breite, falls vertikal) des Panels"
-
-#~ msgid "X position"
-#~ msgstr "X-Position"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "Die X-Position dieses Panels"
-
-#~ msgid "X centered"
-#~ msgstr "X-zentriert"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "Die X-Koordinate wird relativ zur Mitte des Bildschirms berechnet"
-
-#~ msgid "Y position"
-#~ msgstr "Y-Position"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "Die Y-Position des Panels"
-
-#~ msgid "Y centered"
-#~ msgstr "Y-zentriert"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "Die Y-Koordinate wird relativ zur Mitte des Bildschirms berechnet"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "Xinerama-Monitor"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr ""
-#~ "Der (für Xinerama relevante) Monitor, auf dem sich das Panel befindet"
-
-#~ msgid "Auto hide"
-#~ msgstr "Auto-Verbergen"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "Das Panel automatisch verbergen, sobald die Maus es verlässt"
-
-#~ msgid "Hide delay"
-#~ msgstr "Verzögerung beim Verbergen"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr ""
-#~ "Die Anzahl der Millisekunden, die vor dem automatischen Verbergen "
-#~ "gewartet werden sollen"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "Verzögerung beim Wiederanzeigen"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr ""
-#~ "Die Anzahl der Millisekunden, die vor dem automatischen Wiederanzeigen "
-#~ "gewartet werden sollen"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "Größe beim Auto-Verbergen"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr ""
-#~ "Die Anzahl der sichtbaren Pixel, wenn das Panel automatisch verborgen "
-#~ "wurde"
-
-#~ msgid "Animate"
-#~ msgstr "Animieren"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Animationen beim Anzeigen/Verbergen aktivieren"
-
-#~ msgid "Animation Speed"
-#~ msgstr "Animationsgeschwindigkeit"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr ""
-#~ "Die Geschwindigkeit, in der der Anzeige-/Verbergeanimation des Panels "
-#~ "dargestellt werden soll"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "Knöpfe aktivieren"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Anzeigen/Verbergen-Knöpfe anzeigen"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "Pfeile aktivieren"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Pfeile auf den Anzeigen/Verbergen-Knöpfen anzeigen"
