@@ -146,7 +146,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 	if(gnome_execute_async (NULL, 3, v) < 0)
 		gnome_error_dialog(_("Cannot execute the gnome calendar,\n"
 				     "perhaps it's not installed.\n"
-				     "It is in the gnome-pimp package."));
+				     "It is in the gnome-pim package."));
 }
 
 static GtkWidget *
