@@ -792,7 +792,7 @@ main(int argc, char **argv)
 
 	gnome_init("panel", &parser, argc, argv, 0, NULL);
 
-	puts("need old_cfg");
+	puts("debug: need old_cfg here");
 
 	if (just_exit)
 		return 0;
