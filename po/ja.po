@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-15 01:59+0900\n"
-"PO-Revision-Date: 2003-12-15 01:57+0900\n"
+"POT-Creation-Date: 2003-12-22 15:19+0900\n"
+"PO-Revision-Date: 2003-12-22 15:18+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -54,11 +54,11 @@ msgstr "%b%d日 (%a)"
 #: applets/clock/clock.c:248
 #, c-format
 msgid ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -66,13 +66,13 @@ msgstr ""
 #.
 #: applets/clock/clock.c:255
 #, c-format
-msgid "%s, %s"
-msgstr "%s %s"
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:358
 msgid "%A %B %d"
-msgstr "%B %d日 %A"
+msgstr "%B%d日 %A"
 
 #: applets/clock/clock.c:487
 msgid "Calendar"
@@ -1309,7 +1309,11 @@ msgstr "画面をロックして一時的にコンピュータを離れること
 
 #: gnome-panel/menu.c:130 gnome-panel/panel-action-button.c:260
 msgid "Force Quit"
-msgstr "強制的に終了"
+msgstr "アプリの強制終了"
+
+#: gnome-panel/menu.c:133
+msgid "Force a misbehaving application to quit"
+msgstr "おかしな動作をするアプリを強制的に終了します"
 
 #: gnome-panel/menu.c:140 gnome-panel/panel-action-button.c:255
 msgid "Screenshot"
@@ -1335,7 +1339,7 @@ msgstr "プログラムの実行"
 
 #: gnome-panel/menu.c:163
 msgid "Run a command"
-msgstr "コマンドの実行"
+msgstr "コマンドを実行します"
 
 #: gnome-panel/menu.c:273
 msgid "And many, many others..."
@@ -1464,7 +1468,7 @@ msgstr "このパネルの削除(_D)"
 
 #: gnome-panel/menu.c:2996
 msgid "_Add to Panel"
-msgstr "パネルに追加(_A)"
+msgstr "パネルへ追加(_A)"
 
 #: gnome-panel/menu.c:3051
 msgid "_New Panel"
@@ -1574,11 +1578,11 @@ msgstr "スクリーンセーバの再起動(_S)"
 
 #: gnome-panel/panel-action-button.c:233
 msgid "Lock screen"
-msgstr "画面のロック"
+msgstr "画面をロックします"
 
 #: gnome-panel/panel-action-button.c:240
 msgid "Log out of GNOME"
-msgstr "GNOME のログアウト"
+msgstr "GNOME デスクトップからログアウトします"
 
 #: gnome-panel/panel-action-button.c:245
 #: gnome-panel/panel-run-dialog.glade.h:7
@@ -1679,7 +1683,7 @@ msgstr "'%s' の値の取得でエラー: %s"
 #: gnome-panel/panel.c:433
 #, c-format
 msgid "Open URL: %s"
-msgstr "URLを開く: %s"
+msgstr "URL を開く: %s"
 
 #: gnome-panel/panel.c:1228
 msgid ""
@@ -1705,8 +1709,8 @@ msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
-"このアプリケーションを強制終了させますか?\n"
-"(開いている文書は失なわれます。)"
+"このアプリケーションを強制終了させますか？\n"
+"(開いているドキュメントは失なわれます。)"
 
 #: gnome-panel/panel-frame.c:268
 msgid "Edges"
@@ -2233,7 +2237,7 @@ msgstr "隠すボタンを表示する(_B)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "Solid c_olor"
-msgstr "単一色(_O)"
+msgstr "単色(_O)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "Some of these properties are locked down"
@@ -2270,7 +2274,7 @@ msgstr "向き(_O):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
-msgstr "引き伸ばす(比率を維持)(_S)"
+msgstr "引き伸ばす(比率は維持する)(_S)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Size:"
@@ -2301,7 +2305,7 @@ msgstr "%s のオープンする際に不明なエラーが発生しました"
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr "現在のドキュメント"
+msgstr "最近開いたドキュメント"
 
 #: gnome-panel/panel-run-dialog.c:284
 #, c-format
@@ -2356,7 +2360,7 @@ msgstr "コマンドのアイコン"
 
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
-msgstr "実行するコマンド文字列をここに入力して下さい。"
+msgstr "ここに実行するコマンド文字列を入力して下さい。"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2368,7 +2372,7 @@ msgstr "ファイルを引数として実行(_F)..."
 
 #: gnome-panel/panel-run-dialog.glade.h:11
 msgid "Select this box to run the command in a terminal window."
-msgstr "コマンドを端末内で実行するにはこのボックスを選んでください。"
+msgstr "コマンドを端末内で実行するにはこのボックスを選んで下さい。"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
