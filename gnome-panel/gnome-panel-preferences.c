@@ -308,7 +308,7 @@ preferences_response (GtkWindow *window,
 
 		case GTK_RESPONSE_HELP:
 			gnome_help_display_desktop (NULL, "user-guide",
-				"wgoscustlookandfeel.xml", "goscustdesk-10", &error);
+				"user-guide.xml", "goscustdesk-10", &error);
 			if (error) {
 				GtkWidget *dialog;
 

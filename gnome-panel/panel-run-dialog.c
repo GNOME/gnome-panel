@@ -422,7 +422,7 @@ panel_run_dialog_response (PanelRunDialog *dialog,
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (run_dialog)),
-				 "wgoseditmainmenu.xml", "gospanel-23");
+				 "user-guide.xml", "gospanel-23");
 		break;
 	default:
 		break;

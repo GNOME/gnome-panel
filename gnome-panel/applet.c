@@ -207,7 +207,7 @@ applet_callback_callback (GtkWidget      *widget,
 
 			panel_properties_dialog_present (drawer->toplevel);
 		} else if (strcmp (menu->name, "help") == 0) {
-			panel_show_help (screen, "wgospanel.xml", "gospanel-18");
+			panel_show_help (screen, "user-guide.xml", "gospanel-18");
 		}
 		break;
 	case PANEL_OBJECT_MENU:

@@ -404,7 +404,7 @@ display_help_dialog (BonoboUIComponent *uic,
         GError *error = NULL;
 
         gnome_help_display_desktop_on_screen (
-                NULL, "user-guide", "wgospanel.xml", "gospanel-564",
+                NULL, "user-guide", "user-guide.xml", "gospanel-564",
                 gtk_widget_get_screen (sdd->applet),
 		&error);
 

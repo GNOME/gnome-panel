@@ -864,7 +864,7 @@ panel_menu_button_invoke_menu (PanelMenuButton *button,
 
 	screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
-	panel_show_help (screen, "wgospanel.xml", "gospanel-37");
+	panel_show_help (screen, "user-guide.xml", "gospanel-37");
 }
 
 void

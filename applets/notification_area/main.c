@@ -68,7 +68,7 @@ help_cb (PanelApplet *applet,
 
   err = NULL;  
   gnome_help_display_desktop_on_screen (NULL, "user-guide",
-                                        "wgospanel.xml", "gospanel-567",
+                                        "user-guide.xml", "gospanel-567",
 					gtk_widget_get_screen (GTK_WIDGET (applet)),
 					&err);
 

@@ -640,7 +640,7 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "wgospanel.xml", "gospanel-28");
+				 "user-guide.xml", "gospanel-28");
 		break;
 	default:
 		break;

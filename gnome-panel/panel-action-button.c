@@ -702,7 +702,7 @@ panel_action_button_invoke_menu (PanelActionButton *button,
 
 		screen = gtk_widget_get_screen (GTK_WIDGET (button));
 
-		panel_show_help (screen, "wgospanel.xml",
+		panel_show_help (screen, "user-guide.xml",
 				 actions [button->priv->type].help_index);
 
 		return;

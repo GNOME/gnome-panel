@@ -71,7 +71,7 @@ window_menu_help (BonoboUIComponent *uic,
 	GError *error = NULL;
 
 	gnome_help_display_desktop_on_screen (
-		NULL, "user-guide", "wgosmetacity.xml", "gosmetacity-27",
+		NULL, "user-guide", "user-guide.xml", "gosmetacity-27",
 		gtk_widget_get_screen (window_menu->applet),
 		&error);
 
