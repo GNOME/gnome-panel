@@ -1276,7 +1276,7 @@ load_up_globals(void)
 	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
 
 	g_free(global_config.menu_key);
-	global_config.menu_key = gnome_config_get_string("menu_key=Hyper_L");
+	global_config.menu_key = gnome_config_get_string("menu_key=Menu");
 	convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);

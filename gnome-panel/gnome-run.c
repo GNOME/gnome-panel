@@ -76,6 +76,7 @@ show_run_dialog ()
 	GtkWidget *gentry;
 
 	dialog = gnome_dialog_new(_("Run Program"), NULL);
+	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
 						_("Run"),
 						GNOME_STOCK_PIXMAP_EXEC);

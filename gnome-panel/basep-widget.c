@@ -1002,6 +1002,7 @@ basep_widget_update_winhints (BasePWidget *basep)
 	
 	switch (basep->state) {
 	case BASEP_SHOWN:
+	case BASEP_MOVING:
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
 					   WIN_HINTS_DO_NOT_COVER);
 		gnome_win_hints_set_layer (w, global_config.keep_bottom
@@ -1419,6 +1420,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 			h : w;
 		
 		basep->state = BASEP_MOVING;
+		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
 					size, pw_explicit_step);
 	}
@@ -1461,7 +1463,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 			h : w;
 
 		basep->state = BASEP_MOVING;
-		
+		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
 					 size, pw_explicit_step);
 	}
@@ -1506,7 +1508,7 @@ basep_widget_autoshow (BasePWidget *basep)
 			h : w;
 
 		basep->state = BASEP_MOVING;
-
+		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
@@ -1584,7 +1586,7 @@ basep_widget_autohide (gpointer data)
 			? h : w;
 
 		basep->state = BASEP_MOVING;
-
+		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep,
 					hide_orient,
 					size,

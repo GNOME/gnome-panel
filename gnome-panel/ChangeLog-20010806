@@ -1,3 +1,17 @@
+Fri Feb 18 19:22:23 2000  George Lebl <jirka@5z.com>
+
+	* global-keys.c: fix grabing of all keys when the keycode was not
+	  found
+
+	* gnome-run.c: always place at mouse position always
+
+	* basep-widget.c: fix some issues with on-bottom panels and hiding
+	  and showing
+
+	* gnome-panel-properties.c,session.c: default to "Menu" and not
+	  "Hyper_L".  It seems that xfree binds the "Menu" correctly when
+	  104/105 keyboard is selected
+
 2000-02-18  Daniel Mueth <d-mueth@uchicago.edu>
 
 	* help/C/figures/menu_properties.png: changed screenshot

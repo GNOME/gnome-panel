@@ -935,9 +935,9 @@ misc_notebook_page(void)
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 1, 2);
 	
 
-	list = g_list_append(NULL, "Hyper_L");
+	list = g_list_append(NULL, "Menu");
+	list = g_list_append(list, "Hyper_L");
 	list = g_list_append(list, "Hyper_R");
-	list = g_list_append(list, "Menu");
 	list = g_list_append(list, "Control-Mod1-m");
 	list = g_list_append(list, _("Disabled"));
 	w = gtk_combo_new();
@@ -1065,7 +1065,7 @@ loadup_vals(void)
 
 	global_config.keys_enabled = gnome_config_get_bool("keys_enabled=TRUE");
 
-	global_config.menu_key = gnome_config_get_string("menu_key=Hyper_L");
+	global_config.menu_key = gnome_config_get_string("menu_key=Menu");
 	/*convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);*/

@@ -45,9 +45,10 @@ panel_global_keys_setup(void)
 		lastkey_menu = XKeysymToKeycode(GDK_DISPLAY(),
 						global_config.menu_keysym);
 		laststate_menu = global_config.menu_state;
-		XGrabKey (GDK_DISPLAY(), lastkey_menu, laststate_menu, 
-			  GDK_ROOT_WINDOW(), True,
-			  GrabModeAsync, GrabModeAsync);
+		if(lastkey_menu)
+			XGrabKey (GDK_DISPLAY(), lastkey_menu, laststate_menu, 
+				  GDK_ROOT_WINDOW(), True,
+				  GrabModeAsync, GrabModeAsync);
 	} else
 		lastkey_menu = 0;
 
@@ -56,8 +57,9 @@ panel_global_keys_setup(void)
 		lastkey_run = XKeysymToKeycode(GDK_DISPLAY(),
 						global_config.run_keysym);
 		laststate_run = global_config.run_state;
-		if(lastkey_menu != lastkey_run ||
-		   laststate_menu != laststate_run)
+		if(lastkey_run &&
+		   (lastkey_menu != lastkey_run ||
+		    laststate_menu != laststate_run))
 			XGrabKey (GDK_DISPLAY(), lastkey_run, laststate_run, 
 				  GDK_ROOT_WINDOW(), True,
 				  GrabModeAsync, GrabModeAsync);
