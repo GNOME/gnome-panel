@@ -45,10 +45,9 @@
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
-
-#include "egg-screen-help.h"
 
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
@@ -857,9 +856,8 @@ try_config_tool (GdkScreen  *screen,
 	argv [0] = app;
 	argv [1] = NULL;		
 
-	/* FIXME: use egg_spawn_async_on_screen */
 	err = NULL;
-	if (g_spawn_async (NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
+	if (gdk_spawn_on_screen (screen, NULL, argv, NULL, 0, NULL, NULL, NULL, &err)) {
 		g_free (app);
 		return TRUE;
 	}
@@ -1324,7 +1322,7 @@ properties_response_cb (GtkWidget *widget,
 	if (id == GTK_RESPONSE_HELP) {
 		GError *error = NULL;
 
-		egg_help_display_desktop_on_screen (
+		gnome_help_display_desktop_on_screen (
 				NULL, "clock", "clock", "clock-settings",
 				gtk_widget_get_screen (cd->applet),
 				&error);
@@ -1590,7 +1588,7 @@ display_help_dialog (BonoboUIComponent *uic,
 						      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 	}
 
-	egg_help_display_desktop_on_screen (
+	gnome_help_display_desktop_on_screen (
 			applet_program, "clock", "clock",NULL,
 			gtk_widget_get_screen (cd->applet),
 			&error);

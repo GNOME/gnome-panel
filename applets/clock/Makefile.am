@@ -11,17 +11,7 @@ INCLUDES = 						\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
 
-EGGFILES =                      \
-	egg-screen-exec.h       \
-	egg-screen-exec.c       \
-	egg-screen-help.h       \
-	egg-screen-help.c       \
-	egg-screen-url.h        \
-	egg-screen-url.c
-
-libclock_applet_2_la_SOURCES = \
-	clock.c \
-	$(EGGFILES)
+libclock_applet_2_la_SOURCES = clock.c
 
 libclock_applet_2_la_LDFLAGS = -module -avoid-version -no-undefined
 libclock_applet_2_la_LIBADD =			\
@@ -67,8 +57,3 @@ EXTRA_DIST =						\
 	$(ui_DATA)
 
 CLEANFILES = $(server_in_files) $(server_DATA) $(schemas_DATA)
-
-EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
-
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
