@@ -1,5 +1,5 @@
 /*
- * panel-applet-frame.h:
+ * panel-applet-frame.c:
  *
  * Copyright (C) 2001 Sun Microsystems, Inc.
  *
