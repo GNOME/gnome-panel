@@ -1,34 +1,24 @@
 2002-12-19  Mark McLoughlin  <mark@skynet.ie>
 
-	reviewed by: <delete if not using a buddy>
+	No, this isn't purely random re-factoring. Its
+	needed to fix something else.
 
-	* aligned-widget.c: (aligned_widget_new):
-	* aligned-widget.h:
-	* basep-widget.c: (basep_widget_construct),
-	(basep_widget_change_params):
-	* basep-widget.h:
-	* border-widget.c: (border_widget_construct):
-	* border-widget.h:
-	* drawer-widget.c: (drawer_widget_change_params),
-	(drawer_widget_new):
-	* drawer-widget.h:
-	* edge-widget.c: (edge_widget_new):
-	* edge-widget.h:
-	* floating-widget.c: (floating_widget_change_params),
-	(floating_widget_new):
-	* floating-widget.h:
-	* panel-gconf.c: (panel_gconf_load_default_panels_for_screen):
-	* panel-gconf.h:
-	* panel-widget.c: (panel_widget_new), (panel_widget_change_params):
-	* panel-widget.h:
-	* panel.c: (panel_load_edge_panel_from_gconf),
+	* panel.c:
+	(panel_load_panels_from_gconf): split this gigantic
+	function into several smaller ones.
+	(panel_load_edge_panel_from_gconf),
 	(panel_load_aligned_panel_from_gconf),
 	(panel_load_sliding_panel_from_gconf),
 	(panel_load_drawer_panel_from_gconf),
 	(panel_load_floating_panel_from_gconf),
-	(panel_load_panel_from_gconf), (panel_load_panels_from_gconf):
-	* sliding-widget.c: (sliding_widget_new):
-	* sliding-widget.h:
+	(panel_load_panel_from_gconf): split our from
+	load_panels_from_gconf().
+
+	* aligned-widget.[ch], basep-widget.[ch],
+	  border-widget.[ch], drawer-widget.[ch],
+	  edge-widget.[ch], floating-widget.[ch]
+	  panel-widget.[ch], sliding-widget.[ch]:
+	s/char */const char */ for couple of params.
 
 2002-12-19  Mark McLoughlin  <mark@skynet.ie>
 
