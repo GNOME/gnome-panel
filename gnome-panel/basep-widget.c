@@ -449,6 +449,10 @@ basep_widget_init (BasePWidget *basep)
 	GTK_WINDOW(basep)->allow_grow = TRUE;
 	GTK_WINDOW(basep)->auto_shrink = TRUE;
 	
+	/*don't let us close the window*/
+	gtk_signal_connect(GTK_OBJECT(basep),"delete_event",
+			   GTK_SIGNAL_FUNC(gtk_true),NULL);
+	
 	basep->shown_alloc.x = basep->shown_alloc.y =
 		basep->shown_alloc.width = basep->shown_alloc.height = 0;
 	
