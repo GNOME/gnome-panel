@@ -488,9 +488,31 @@ add_main_menu(GtkWidget *widget, gpointer data)
 	create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
+struct  reparent_struct {
+	GdkWindow *win;
+	GdkWindow *target;
+};
+	
+int
+delayed_reparent_window_id (gpointer data)
+{
+	struct reparent_struct *rs = data;
+	int i;
+	
+	printf ("delayed in\n");
+	for (i = 0; i < 1; i++){
+		gdk_window_reparent(rs->win,rs->target,0,0);
+		gdk_flush ();
+	}
+	g_free (rs);
+	printf ("delayed out\n");
+	return 0;
+}
+
 void
 reparent_window_id (unsigned long id)
 {
+	struct reparent_struct *rs = g_new (struct reparent_struct, 1);
 	GtkWidget *eb;
 	GdkWindow *win;
 	int w,h;
@@ -501,18 +523,18 @@ reparent_window_id (unsigned long id)
 	
 	win = gdk_window_foreign_new(id);
 	gdk_window_get_size(win,&w,&h);
+	printf ("setting window size to: %d %d\n", w, h);
 	gtk_widget_set_usize(eb,w,h);
 	gtk_widget_show (eb);
 
 	panel_widget_add(PANEL_WIDGET(panels->data), eb, 0);
 
-	/* We dont know why, but that is how it goes */
-	for (i = 0; i < 200; i++){
-		gdk_window_reparent(win,eb->window,0,0);
-		gdk_flush ();
-	}
-	gtk_widget_queue_resize (PANEL_WIDGET (panels->data));
-	gtk_main_iteration ();
+
+	rs->win = win;
+	rs->target = eb->window;
+	
+	gtk_idle_add (delayed_reparent_window_id, (gpointer) rs);
+	
 	printf ("leaving reparent\n");
 }
 

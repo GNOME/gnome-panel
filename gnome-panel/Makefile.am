@@ -36,7 +36,10 @@ panel_SOURCES = 		\
 	panel-widget.h		\
 	$(CORBA_SOURCES)
 
-panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lmicocoss2.0.2 $(MICOAUX_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+MICO_VERS = 2.0.2
+MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
+
+panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 ## FIXME: move clock applet into clock
 clock_applet_SOURCES = \
@@ -44,7 +47,7 @@ clock_applet_SOURCES = \
 	applet-lib.cc	\
 	$(CORBA_SOURCES)
 
-clock_applet_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lmicocoss2.0.2 $(MICOAUX_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+clock_applet_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
