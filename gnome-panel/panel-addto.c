@@ -239,7 +239,7 @@ panel_addto_make_text (const char *name,
 
 	real_name = name ? name : _("(empty)");
 
-	if (desc != NULL && desc[0] != '\0') {
+	if (!string_empty (desc)) {
 		result = g_markup_printf_escaped ("<span size=\"larger\" weight=\"bold\">%s</span>\n%s",
 						  real_name, desc);
 	} else {
@@ -881,7 +881,7 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 	char *title;
 	char *markup_title;
 
-	if (name) {
+	if (!string_empty (name)) {
 		title = g_strdup_printf (_("Add to %s"), name);
 	} else {
 		title = g_strdup_printf (_("Add to the panel"));
@@ -889,7 +889,7 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 	gtk_window_set_title (GTK_WINDOW (dialog->addto_dialog), title);
 	g_free (title);
 
-	if (name) {
+	if (!string_empty (name)) {
 		title = g_strdup_printf (_("Select an _item to add to %s:"),
 					 name);
 	} else {
