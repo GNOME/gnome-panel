@@ -74,6 +74,11 @@ GdkPixbuf *	panel_make_menu_icon (const char *icon,
 				      int size,
 				      gboolean *long_operation);
 
+gboolean
+menu_dummy_button_press_event (GtkWidget      *menuitem,
+			       GdkEventButton *event,
+			       gpointer       data);
+
 
 G_END_DECLS
 

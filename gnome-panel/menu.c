@@ -1619,6 +1619,17 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			bevent->time);
 }
 
+gboolean
+menu_dummy_button_press_event (GtkWidget      *menuitem,
+				   GdkEventButton *event,
+				   gpointer	 data)
+{
+	if (event->button == 3)
+		return TRUE;
+
+	return FALSE;
+}
+
 static gboolean
 menuitem_button_press_event (GtkWidget      *menuitem,
 			     GdkEventButton *event,
@@ -1628,8 +1639,10 @@ menuitem_button_press_event (GtkWidget      *menuitem,
 	if (commie_mode)
 		return FALSE;
 	
-	if (event->button == 3)
+	if (event->button == 3) {
 		show_item_menu (menuitem, event, sim);
+		return TRUE;
+	}
 	
 	return FALSE;
 }
@@ -2198,6 +2211,8 @@ create_menuitem (GtkWidget *menu,
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
 		g_signal_connect (G_OBJECT(sub), "show",
 				  G_CALLBACK(submenu_to_display), NULL);
+		g_signal_connect (sub, "button_press_event",
+				  G_CALLBACK (menu_dummy_button_press_event), NULL);
 	}
 
 	if (icon)

@@ -168,6 +168,9 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	menu = panel_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
 
+	g_signal_connect (G_OBJECT (menu), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+
 	gtk_menu_shell_append (GTK_MENU_SHELL (top_menu), menu_item);
 	gtk_widget_show_all (menu_item);
 	

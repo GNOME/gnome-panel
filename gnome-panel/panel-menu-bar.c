@@ -88,7 +88,8 @@ panel_menu_bar_append_action_item (PanelMenuBar *menubar,
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (item, "activate", callback, NULL);
-
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 	setup_internal_applet_drag (item, drag_id);
 }
 

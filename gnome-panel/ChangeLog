@@ -1,3 +1,15 @@
+2003-03-14  Arvind Samptur  <arvind.samptur@wipro.com>
+	* menu.[ch]: (menu_dummy_button_press_event) :
+	On a right click on a menuitem, stop the propogation
+	of the button_press_event to the Menu Bar applet.
+	(create_menuitem) : Use menu_dummy_button_press_event().
+
+	* panel-menu-bar.c : (panel_menu_bar_append_action_item) :
+	* panel-recent.c : (panel_recent_append_documents_menu) :
+	Use menu_dummy_button_press_event().
+
+	Fixes bug #107737
+
 2003-03-14  Matthias Clasen  <maclas@gmx.de>
 
 	* main.c (main): Move session registration after profile loading
