@@ -516,8 +516,8 @@ fish_clicked_cb(GtkWidget * widget, GdkEventButton * e, Fish *fish)
 
 	/* on 1st of april the fish is dead damnit */
 	if(fish->april_fools) {
-		gnome_ok_dialog(_("The water is polluted!\n"
-				  "(Look at todays date)"));
+		gnome_ok_dialog(_("The water needs changing!\n"
+				  "(Look at today's date)"));
 		return TRUE;
 	}
 
