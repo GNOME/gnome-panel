@@ -1178,10 +1178,16 @@ show_help_on (GtkWidget *widget, const char *item_loc)
 static void
 add_app_to_panel (GtkWidget *widget, const char *item_loc)
 {
-	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
 	Launcher *launcher;
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
 
-	launcher = load_launcher_applet (item_loc, panel, 0, FALSE, NULL);
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+
+	launcher = load_launcher_applet (item_loc, panel, insertion_pos, FALSE, NULL);
 
 	if (launcher != NULL)
 		launcher_hoard (launcher);
@@ -1270,13 +1276,20 @@ add_drawers_from_dir (const char *dirname, const char *name,
 
 /*add a drawer with the contents of a menu to the panel*/
 static void
-add_menudrawer_to_panel(GtkWidget *w, gpointer data)
+add_menudrawer_to_panel(GtkWidget *widget, gpointer data)
 {
 	MenuFinfo *mf = data;
-	PanelWidget *panel = get_panel_from_menu_data (w, TRUE);
-	g_return_if_fail(mf);
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	g_return_if_fail (mf != 0);
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
 	
-	add_drawers_from_dir (mf->menudir, mf->dir_name, 0, panel);
+	add_drawers_from_dir (mf->menudir, mf->dir_name, insertion_pos, panel);
 }
 
 static void
@@ -1285,9 +1298,15 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 	const char *menudir = data;
 	gboolean main_menu;
 	PanelWidget *panel;
+	PanelData *pd;
+	int insertion_pos = -1;
 	int flags = get_default_menu_flags ();
 
 	panel = get_panel_from_menu_data (widget, TRUE);
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
 
 	if (menudir == NULL) {
 		main_menu = TRUE;
@@ -1300,8 +1319,8 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 			  TRUE /* global_main */,
 			  FALSE /* custom_icon */,
 			  NULL /* custom_icon_file */,
-			  panel,
-			  0 /* pos */,
+			  panel /* panel */,
+			  insertion_pos /* pos */,
 			  FALSE /* exactpos */,
 			  NULL);
 }
@@ -2103,27 +2122,58 @@ setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
 static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+	
 	load_drawer_applet (NULL, NULL, NULL,
-			    get_panel_from_menu_data(widget, TRUE), 0, FALSE, NULL);
+			    panel, insertion_pos, FALSE, NULL);
 }
 
 static void
 add_logout_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_logout_applet (get_panel_from_menu_data(widget, TRUE), 0, FALSE, FALSE);
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+	
+	load_logout_applet (panel, insertion_pos, FALSE, FALSE);
 }
 
 static void
 add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_lock_applet (get_panel_from_menu_data(widget, TRUE), 0, FALSE, FALSE);
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+	
+	load_lock_applet (panel, insertion_pos, FALSE, FALSE);
 }
 
 static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
-	if(!load_status_applet(get_panel_from_menu_data(widget, TRUE),
-			       0, FALSE, FALSE)) {
+	PanelWidget *panel = get_panel_from_menu_data (widget, TRUE);
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+	
+	if ( ! load_status_applet (panel, insertion_pos, FALSE, FALSE)) {
 		GtkWidget *mbox;
 		mbox = gtk_message_dialog_new (NULL, 0,
 					       GTK_MESSAGE_INFO,
@@ -2138,12 +2188,20 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 }
 
 static void
-add_launcher (GtkWidget *w, const char *item_loc)
+add_launcher (GtkWidget *widget, const char *item_loc)
 {
 	Launcher *launcher;
+	PanelWidget *panel;
+	PanelData *pd;
+	int insertion_pos = -1;
 
-	launcher = load_launcher_applet
-		(item_loc, get_panel_from_menu_data (w, TRUE), 0, FALSE, NULL);
+	panel = get_panel_from_menu_data (widget, TRUE);
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+
+	launcher = load_launcher_applet (item_loc, panel, insertion_pos, FALSE, NULL);
 
 	if (launcher != NULL)
 		launcher_hoard (launcher);
@@ -2674,10 +2732,16 @@ add_bonobo_applet (GtkWidget  *widget,
 		   const char *iid)
 {
 	PanelWidget *panel;
+	PanelData *pd;
+	int insertion_pos = -1;
 
 	panel = get_panel_from_menu_data (widget, TRUE);
 
-	panel_applet_frame_load (iid, panel, -1, NULL);
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+
+	panel_applet_frame_load (iid, panel, insertion_pos, NULL);
 }
 
 static const gchar applet_requirements [] = 
@@ -3286,15 +3350,35 @@ current_panel_config(GtkWidget *w, gpointer data)
 }
 
 static void
-ask_about_launcher_cb(GtkWidget *w, gpointer data)
+ask_about_launcher_cb(GtkWidget *widget, gpointer data)
 {
-	ask_about_launcher(NULL, get_panel_from_menu_data(w, TRUE), 0, FALSE);
+	PanelWidget *panel;
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	panel = get_panel_from_menu_data (widget, TRUE);
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+
+	ask_about_launcher(NULL, panel, insertion_pos, FALSE);
 }
 
 static void
-ask_about_swallowing_cb(GtkWidget *w, gpointer data)
+ask_about_swallowing_cb(GtkWidget *widget, gpointer data)
 {
-	ask_about_swallowing(get_panel_from_menu_data(w, TRUE), 0, FALSE);
+	PanelWidget *panel;
+	PanelData *pd;
+	int insertion_pos = -1;
+
+	panel = get_panel_from_menu_data (widget, TRUE);
+
+	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
+	if (pd != NULL)
+		insertion_pos = pd->insertion_pos;
+
+	ask_about_swallowing (panel, insertion_pos, FALSE);
 }
 
 #ifdef FIXME

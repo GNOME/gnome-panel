@@ -522,10 +522,23 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 }
 
+static gboolean
+deactivate_idle (gpointer data)
+{
+	PanelData *pd = data;
+	pd->deactivate_idle = 0;
+
+	pd->insertion_pos = -1;
+
+	return FALSE;
+}
+
 static void
 menu_deactivate(GtkWidget *w, PanelData *pd)
 {
 	pd->menu_age = 0;
+	if (pd->deactivate_idle == 0)
+		pd->deactivate_idle = g_idle_add (deactivate_idle, pd);
 	if(BASEP_IS_WIDGET(pd->panel))
 		BASEP_WIDGET(pd->panel)->autohide_inhibit = FALSE;
 }
@@ -615,6 +628,10 @@ panel_destroy (GtkWidget *widget, gpointer data)
 	pd->menu = NULL;
 
 	pd->panel = NULL;
+
+	if (pd->deactivate_idle != 0)
+		g_source_remove (pd->deactivate_idle);
+	pd->deactivate_idle = 0;
 
 	panel_list = g_slist_remove (panel_list, pd);
 	g_free (pd);
@@ -783,9 +800,11 @@ static gboolean pointer_in_widget (GtkWidget *widget, GdkEventButton *event)
 static gboolean
 panel_event(GtkWidget *widget, GdkEvent *event)
 {
+	PanelData *pd;
 	PanelWidget *panel = NULL;
 	BasePWidget *basep = NULL;
 	GdkEventButton *bevent;
+	int x, y;
 
 	if (BASEP_IS_WIDGET (widget)) {
 		basep = BASEP_WIDGET (widget);
@@ -799,6 +818,15 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 		bevent = (GdkEventButton *) event;
 		switch(bevent->button) {
 		case 3:
+			/* Store the point where the popup menu was started to
+			 * insert applets at that point */
+			pd = g_object_get_data (G_OBJECT (widget), "PanelData");
+			gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
+			if (panel->orient == GTK_ORIENTATION_VERTICAL)
+				pd->insertion_pos = y;
+			else
+				pd->insertion_pos = x;
+
 			if (panel_do_popup_menu (panel, basep, widget, bevent->button, bevent->time))
 				return TRUE;
 			break;
@@ -1652,10 +1680,12 @@ panel_setup(GtkWidget *panelw)
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (panelw)->panel);
 	}
 
-	pd = g_new(PanelData,1);
+	pd = g_new0 (PanelData,1);
 	pd->menu = NULL;
 	pd->menu_age = 0;
 	pd->panel = panelw;
+	pd->insertion_pos = -1;
+	pd->deactivate_idle = 0;
 
 	if (FOOBAR_IS_WIDGET (panelw) || 
 	    (BASEP_IS_WIDGET (panelw) &&
