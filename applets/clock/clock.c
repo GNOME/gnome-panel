@@ -326,7 +326,12 @@ make_clock_applet(const gchar * goad_id)
 
 	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
 	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
-	cd->showdate = gnome_config_get_int("clock/showdate=1");
+	/* if on a small screen don't show data by default */
+	if(gdk_screen_width()<=800)
+		cd->showdate = gnome_config_get_int("clock/showdate=0");
+	else
+		cd->showdate = gnome_config_get_int("clock/showdate=1");
+
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
 	cd->showtooltip = gnome_config_get_int("clock/showtooltip=0");
 	cd->gmt_time = gnome_config_get_int("clock/gmt_time=0");
