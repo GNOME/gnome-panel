@@ -128,16 +128,21 @@ test_applet_handle_background_change (PanelApplet               *applet,
 static BonoboObject *
 test_applet_new (void)
 {
-	PanelApplet *applet;
-	GtkWidget   *label;
+	GtkWidget *applet;
+	GtkWidget *label;
 
 	label = gtk_label_new (NULL);
 
 	applet = panel_applet_new (label);
 
-	test_applet_handle_size_change (applet, GNOME_PANEL_MEDIUM, GTK_LABEL (label));
+	test_applet_handle_size_change (PANEL_APPLET (applet),
+					GNOME_PANEL_MEDIUM,
+					GTK_LABEL (label));
 
-	panel_applet_setup_menu (applet, test_applet_menu_xml, test_applet_menu_verbs, NULL);
+	panel_applet_setup_menu (PANEL_APPLET (applet),
+				 test_applet_menu_xml,
+				 test_applet_menu_verbs,
+				 NULL);
 
 	test_applet_setup_tooltips (GTK_WIDGET (applet));
 
@@ -156,7 +161,7 @@ test_applet_new (void)
 			  G_CALLBACK (test_applet_handle_background_change),
 			  label);
 			  
-	return BONOBO_OBJECT (panel_applet_get_control (applet));
+	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (applet)));
 }
 
 static BonoboObject *

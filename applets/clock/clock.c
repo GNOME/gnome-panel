@@ -35,8 +35,7 @@ typedef struct _ClockData ClockData;
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
 
 struct _ClockData {
-  
-	PanelApplet *applet;
+	GtkWidget *applet;
 	GtkWidget *clockw;
   
 	guint timeout;
@@ -555,6 +554,8 @@ make_clock_applet(void)
 
 	cd->applet = panel_applet_new (cd->clockw);
 
+	gtk_widget_show (cd->applet);
+
 	/* FIXME: Update this comment. */
 	/* we have to bind change_orient before we do applet_widget_add 
 	   since we need to get an initial change_orient signal to set our
@@ -577,9 +578,9 @@ make_clock_applet(void)
 			  cd);
 #endif
 
-	panel_applet_setup_menu (cd->applet, clock_menu_xml, clock_menu_verbs, cd);
+	panel_applet_setup_menu (PANEL_APPLET (cd->applet), clock_menu_xml, clock_menu_verbs, cd);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (cd->applet));
+	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (cd->applet)));
 }
 
 static void

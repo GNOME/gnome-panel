@@ -43,7 +43,7 @@ static FishProp defaults = {
 typedef struct {
 	FishProp           prop;
 
-	PanelApplet       *applet;
+	GtkWidget         *applet;
 	GtkWidget         *frame;
 	GtkWidget         *darea;
 	GdkPixmap         *pix;
@@ -1012,6 +1012,8 @@ fish_applet_new ()
 
 	fish->applet = panel_applet_new (fish->frame);
 
+	gtk_widget_show_all (fish->applet);
+
 #ifdef FIXME
 	g_signal_connect (G_OBJECT (fish->applet),
 			  "save_session",
@@ -1034,9 +1036,12 @@ fish_applet_new ()
 			  G_CALLBACK (applet_change_pixel_size),
 			  fish);
 
-	panel_applet_setup_menu (fish->applet, fish_menu_xml, fish_menu_verbs, fish);
+	panel_applet_setup_menu (PANEL_APPLET (fish->applet),
+				 fish_menu_xml,
+				 fish_menu_verbs,
+				 fish);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (fish->applet));
+	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (fish->applet)));
 }
 
 static BonoboObject *

@@ -68,7 +68,7 @@ struct _PanelAppletClass {
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;
 
-PanelApplet       *panel_applet_new       (GtkWidget *widget);
+GtkWidget         *panel_applet_new       (GtkWidget *widget);
 
 void               panel_applet_construct (PanelApplet *applet,
 					   GtkWidget   *widget);

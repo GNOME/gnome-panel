@@ -1,5 +1,16 @@
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet.h: make panel_applet_new return
+	a GtkWidget.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c: (panel_applet_construct): remove
+	  lame gtk_widget_show_all. applets should show
+	  themselves.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet.[ch]: (panel_applet_get_size),
 	(panel_applet_get_orient): new accessor methods.
 

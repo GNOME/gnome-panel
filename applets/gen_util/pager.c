@@ -19,7 +19,7 @@
 #include "pager.h"
 
 typedef struct {
-	PanelApplet *applet;
+	GtkWidget *applet;
 
 	GtkWidget *frame;
 	GtkWidget *pager;
@@ -163,6 +163,7 @@ make_pager_applet(void)
 	gtk_widget_show (pager->frame);
 	
 	pager->applet = panel_applet_new (pager->frame);
+	gtk_widget_show (pager->applet);
 
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
@@ -173,9 +174,9 @@ make_pager_applet(void)
 			  G_CALLBACK (applet_change_pixel_size),
 			  pager);
 	
-	panel_applet_setup_menu (pager->applet, pager_menu_xml, pager_menu_verbs, pager);
+	panel_applet_setup_menu (PANEL_APPLET (pager->applet), pager_menu_xml, pager_menu_verbs, pager);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (pager->applet));
+	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (pager->applet)));
 }
 
 

@@ -498,8 +498,6 @@ panel_applet_construct (PanelApplet *applet,
 
 	gtk_container_add (GTK_CONTAINER (applet), widget);
 
-	gtk_widget_show_all (GTK_WIDGET (applet));
-
 	priv->control = bonobo_control_new (GTK_WIDGET (applet));
 
 	bonobo_control_set_properties (priv->control,
@@ -519,9 +517,9 @@ panel_applet_construct (PanelApplet *applet,
  *
  * Creates a new #PanelApplet which exposes @widget.
  *
- * Return value: A #PanelApplet on success, %NULL on failure.
+ * Return value: A #GtkWidget on success, %NULL on failure.
  */
-PanelApplet *
+GtkWidget *
 panel_applet_new (GtkWidget *widget)
 {
 	PanelApplet *applet;
