@@ -505,7 +505,7 @@ mailcheck_properties_page (MailCheck *mc)
   mc->cmd_entry = gtk_entry_new();
   if(mc->cmd)
     gtk_entry_set_text(GTK_ENTRY(mc->cmd_entry), mc->cmd);
-  gtk_signal_connect(GTK_OBJECT(mc->cmd_entry), "activate",
+  gtk_signal_connect(GTK_OBJECT(mc->cmd_entry), "changed",
                      GTK_SIGNAL_FUNC(property_box_changed), mc);
   gtk_widget_show(mc->cmd_entry);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->cmd_entry, FALSE, FALSE, 0);
