@@ -1375,7 +1375,7 @@ load_up_globals(void)
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
-	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
+	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=TRUE");
 
 	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
 	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
