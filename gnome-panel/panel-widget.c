@@ -63,6 +63,18 @@ debug_dump_panel(PanelWidget *panel)
 #endif
 
 
+/*this is used to do an immediate move instead of set_uposition, which
+queues one*/
+void
+move_resize_window(GtkWidget *widget, int x, int y, int w, int h)
+{
+	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
+	gdk_window_set_hints(widget->window, x, y, w, h, w, h,
+			     GDK_HINT_POS|GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
+	gdk_window_move_resize(widget->window, x, y, w, h);
+	/* FIXME: this should draw only the newly exposed area! */
+	gtk_widget_draw(widget, NULL);
+}
 
 
 
@@ -876,6 +888,117 @@ move_step(gint src, gint dest, gint pos, gint step)
 }
 
 static void
+move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
+{
+	gint orig_x, x, y;
+	gint orig_w, w, h;
+	gint final_x;
+
+	gdk_window_get_geometry(GTK_WIDGET(panel)->window,&x,&y,&w,&h,NULL);
+
+	orig_x = x;
+	orig_w = w;
+
+	final_x = dest_x;
+
+	if (step != 0) {
+		if (src_x < dest_x) {
+			for( x = src_x; x < dest_x;
+			     x+= move_step(src_x,dest_x,x,step)) {
+				if(hide) {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, y, w, h);
+					w-=move_step(src_x,dest_x,x,step);
+				} else {
+					move_resize_window(GTK_WIDGET(panel),
+							   orig_x, y, w, h);
+					w+=move_step(src_x,dest_x,x,step);
+				}
+			}
+			if(!hide)
+				final_x = orig_x;
+		} else {
+			for (x = src_x; x > dest_x;
+			     x-= move_step(src_x,dest_x,x,step)) {
+				if(hide) {
+					move_resize_window(GTK_WIDGET(panel),
+							   orig_x, y, w, h);
+					w-=move_step(src_x,dest_x,x,step);
+				} else {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, y, w, h);
+					w+=move_step(src_x,dest_x,x,step);
+				}
+			}
+			if(hide)
+				final_x = orig_x;
+		}
+	}
+	
+	if(hide)
+		w = orig_w - abs(src_x-dest_x);
+	else
+		w = orig_w + abs(src_x-dest_x);
+	move_resize_window(GTK_WIDGET(panel), final_x, y,w,h);
+}
+
+
+static void
+move_vert_d(PanelWidget *panel, gint src_y, gint dest_y, gint step, gint hide)
+{
+	gint orig_y, x, y;
+	gint orig_h, w, h;
+	gint final_y;
+
+	gdk_window_get_geometry(GTK_WIDGET(panel)->window,&x,&y,&w,&h,NULL);
+
+	orig_y = y;
+	orig_h = h;
+
+	final_y = dest_y;
+
+	if (step != 0) {
+		if (src_y < dest_y) {
+			for( y = src_y; y < dest_y;
+			     y+= move_step(src_y,dest_y,y,step)) {
+				if(hide) {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, y, w, h);
+					h-=move_step(src_y,dest_y,y,step);
+				} else {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, orig_y, w, h);
+					h+=move_step(src_y,dest_y,y,step);
+				}
+			}
+			if(!hide)
+				final_y = orig_y;
+		} else {
+			for (y = src_y; y > dest_y;
+			     y-= move_step(src_y,dest_y,y,step)) {
+				if(hide) {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, orig_y, w, h);
+					h-=move_step(src_y,dest_y,y,step);
+				} else {
+					move_resize_window(GTK_WIDGET(panel),
+							   x, y, w, h);
+					h+=move_step(src_y,dest_y,y,step);
+				}
+			}
+			if(hide)
+				final_y = orig_y;
+		}
+	}
+	
+	if(hide)
+		h = orig_y + abs(src_y-dest_y);
+	else
+		h = orig_y - abs(src_y-dest_y);
+	move_resize_window(GTK_WIDGET(panel), x, final_y,w,h);
+}
+
+static void
 move_horiz(PanelWidget *panel, gint src_x, gint dest_x, gint step)
 {
 	gint x, y;
@@ -884,13 +1007,13 @@ move_horiz(PanelWidget *panel, gint src_x, gint dest_x, gint step)
 
 	if (step != 0) {
 		if (src_x < dest_x) {
-			for (x = src_x; x < dest_x;
+			for( x = src_x; x < dest_x;
 			     x+= move_step(src_x,dest_x,x,step))
-				move_window(GTK_WIDGET(panel), x, y);
+				move_window(GTK_WIDGET(panel),x,y);
 		} else {
 			for (x = src_x; x > dest_x;
 			     x-= move_step(src_x,dest_x,x,step))
-				move_window(GTK_WIDGET(panel), x, y);
+				move_window(GTK_WIDGET(panel),x,y);
 		}
 	}
 	
@@ -1137,7 +1260,8 @@ panel_widget_open_drawer(PanelWidget *panel)
 	gint width, height;
 
 	if((panel->state == PANEL_SHOWN) ||
-	   (panel->snapped != PANEL_DRAWER))
+	   (panel->snapped != PANEL_DRAWER) ||
+	   (panel->state == PANEL_MOVING))
 		return;
 
 	panel->state = PANEL_MOVING;
@@ -1148,29 +1272,39 @@ panel_widget_open_drawer(PanelWidget *panel)
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
-			move_window(GTK_WIDGET(panel),x+width,y);
+			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_horiz(panel, x+width, x,
-				   pw_explicit_step);
+			move_resize_window(GTK_WIDGET(panel),x+width,y,
+					   0,height);
+			move_horiz_d(panel, x+width, x,
+				     pw_explicit_step,FALSE);
 		} else {
-			move_window(GTK_WIDGET(panel),x-width,y);
+			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_horiz(panel, x-width, x,
-				   pw_explicit_step);
+			move_resize_window(GTK_WIDGET(panel),x,y,
+					   0,height);
+			move_horiz_d(panel, x-width, x,
+				     pw_explicit_step,FALSE);
 		}
 	} else {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
-			move_window(GTK_WIDGET(panel),x,y+height);
+			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_vert(panel, y+height, y,
-				  pw_explicit_step);
+			move_resize_window(GTK_WIDGET(panel),x,y+height,
+					   width,0);
+			move_vert_d(panel, y+height, y,
+				  pw_explicit_step,FALSE);
 		} else {
-			move_window(GTK_WIDGET(panel),x,y-height);
+			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
-			move_vert(panel, y-height, y,
-				  pw_explicit_step);
+			move_resize_window(GTK_WIDGET(panel),x,y,
+					   width,0);
+			move_vert_d(panel, y-height, y,
+				    pw_explicit_step,FALSE);
 		}
 	}
+
+	move_resize_window(GTK_WIDGET(panel),x,y,width,height);
 
 	panel->state = PANEL_SHOWN;
 
@@ -1187,7 +1321,8 @@ panel_widget_close_drawer(PanelWidget *panel)
 	gint width, height;
 
 	if((panel->state != PANEL_SHOWN) ||
-	   (panel->snapped != PANEL_DRAWER))
+	   (panel->snapped != PANEL_DRAWER) ||
+	   (panel->state == PANEL_MOVING))
 		return;
 
 	gtk_signal_emit(GTK_OBJECT(panel),
@@ -1202,25 +1337,27 @@ panel_widget_close_drawer(PanelWidget *panel)
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
-			move_horiz(panel, x, x+width,
-				   pw_explicit_step);
+			move_horiz_d(panel, x, x+width,
+				     pw_explicit_step, TRUE);
 		else
-			move_horiz(panel, x, x-width,
-				   pw_explicit_step);
+			move_horiz_d(panel, x, x-width,
+				     pw_explicit_step, TRUE);
 	} else {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
-			move_vert(panel, y, y+height,
-				  pw_explicit_step);
+			move_vert_d(panel, y, y+height,
+				    pw_explicit_step, TRUE);
 		else
-			move_vert(panel, y, y-height,
-				  pw_explicit_step);
+			move_vert_d(panel, y, y-height,
+				    pw_explicit_step, TRUE);
 	}
-
-	panel->state = PANEL_HIDDEN;
 
 	gtk_widget_hide(GTK_WIDGET(panel));
 
 	move_window(GTK_WIDGET(panel),x,y);
+
+	panel->state = PANEL_HIDDEN;
+
+	move_resize_window(GTK_WIDGET(panel),x,y,width,height);
 }
 
 
@@ -1421,7 +1558,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	GdkImlibImage *im;
 	GdkPixmap *p;
 
-	if (panel->back_pixmap && pixmap && strcmp (panel->back_pixmap, pixmap) == 0)
+	if (panel->back_pixmap && pixmap &&
+	    strcmp (panel->back_pixmap, pixmap) == 0)
 		return 1;
 	
 	if (!g_file_exists (pixmap))
@@ -1454,7 +1592,6 @@ panel_widget_new (gint size,
 	gint i;
 	gchar *pixmap_name;
 	GtkWidget *pixmap;
-	GtkWidget *frame;
 
 	if(snapped == PANEL_FREE)
 		g_return_val_if_fail(size>=0,NULL);
@@ -1477,10 +1614,10 @@ panel_widget_new (gint size,
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
 	gtk_widget_show(panel->table);
 
-	frame = gtk_frame_new(NULL);
-	gtk_widget_show(frame);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
-	gtk_table_attach(GTK_TABLE(panel->table),frame,1,2,1,2,
+	panel->frame = gtk_frame_new(NULL);
+	gtk_widget_show(panel->frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(panel->frame),GTK_SHADOW_OUT);
+	gtk_table_attach(GTK_TABLE(panel->table),panel->frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
@@ -1491,7 +1628,7 @@ panel_widget_new (gint size,
 	panel->fixed = gtk_fixed_new();
 	gtk_widget_pop_colormap ();
 	gtk_widget_pop_visual ();
-	gtk_container_add(GTK_CONTAINER(frame),panel->fixed);
+	gtk_container_add(GTK_CONTAINER(panel->frame),panel->fixed);
 	gtk_widget_show(panel->fixed);
 	gtk_widget_realize (panel->fixed);
 
@@ -2532,6 +2669,25 @@ panel_widget_change_global(gint explicit_step,
 		pw_minimized_size=minimized_size;
 	if(minimize_delay>=0)
 		pw_minimize_delay=minimize_delay;
+}
+
+void
+panel_widget_enable_buttons(PanelWidget *panel)
+{
+	gtk_widget_set_sensitive(panel->hidebutton_n,TRUE);
+	gtk_widget_set_sensitive(panel->hidebutton_e,TRUE);
+	gtk_widget_set_sensitive(panel->hidebutton_w,TRUE);
+	gtk_widget_set_sensitive(panel->hidebutton_s,TRUE);
+}
+
+
+void
+panel_widget_disable_buttons(PanelWidget *panel)
+{
+	gtk_widget_set_sensitive(panel->hidebutton_n,FALSE);
+	gtk_widget_set_sensitive(panel->hidebutton_e,FALSE);
+	gtk_widget_set_sensitive(panel->hidebutton_w,FALSE);
+	gtk_widget_set_sensitive(panel->hidebutton_s,FALSE);
 }
 
 

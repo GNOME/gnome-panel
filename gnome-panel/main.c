@@ -337,6 +337,8 @@ static void
 panel_realize(GtkWidget *widget, gpointer data)
 {
 	change_window_cursor(widget->window, GDK_ARROW);
+
+	panel_widget_enable_buttons(PANEL_WIDGET(widget));
 }
 
 /*we call this recursively*/
@@ -690,9 +692,12 @@ panel_setup(PanelWidget *panel)
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
 
-	gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
-				 GTK_SIGNAL_FUNC(panel_realize),
-				 NULL);
+	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
+		panel_realize(GTK_WIDGET(panel),NULL);
+	else
+		gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
+					 GTK_SIGNAL_FUNC(panel_realize),
+					 NULL);
 }
 
 
@@ -758,6 +763,7 @@ init_user_panels(void)
 					 drop_pos,
 					 back_pixmap
 					 );
+		panel_widget_disable_buttons(PANEL_WIDGET(panel));
 
 		panel_setup(PANEL_WIDGET(panel));
 

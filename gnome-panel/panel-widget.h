@@ -80,6 +80,7 @@ struct _PanelWidget
 {
 	GtkWindow		window;
 
+	GtkWidget		*frame;
 	GtkWidget		*fixed;
 	GtkWidget		*table;
 	GtkWidget		*hidebutton_n;
@@ -214,6 +215,9 @@ void		panel_widget_change_global	(gint explicit_step,
 
 /*popup the widget if it's popped down (autohide)*/
 void		panel_widget_pop_up		(PanelWidget *panel);
+
+void		panel_widget_enable_buttons	(PanelWidget *panel);
+void		panel_widget_disable_buttons	(PanelWidget *panel);
 
 
 extern GList *panels;

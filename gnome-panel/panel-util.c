@@ -101,7 +101,8 @@ move_window(GtkWidget *widget, int x, int y)
 {
 	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
 	gdk_window_move(widget->window, x, y);
-	gtk_widget_draw(widget, NULL); /* FIXME: this should draw only the newly exposed area! */
+	/* FIXME: this should draw only the newly exposed area! */
+	gtk_widget_draw(widget, NULL);
 }
 
 
