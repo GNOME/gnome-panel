@@ -1,3 +1,14 @@
+1999-06-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* cdplayer/cdplayer.c (main): don't do a stock_callback, just
+	a normal one (fixes a crash)
+
+	* multiload/swapload.c (make_swapload_applet): ditto
+
+	* multiload/cpuload.c (make_cpuload_applet): same
+
+	* multiload/memload.c (make_memload_applet): one more time
+
 1999-05-22  George Lebl <jirka@5z.com>
 
 	* life/life.c: fixed a leak
