@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-04 01:23+0200\n"
-"PO-Revision-Date: 2002-07-04 01:23+0200\n"
+"POT-Creation-Date: 2002-07-06 00:03+0200\n"
+"PO-Revision-Date: 2002-07-06 00:03+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -69,7 +69,7 @@ msgstr "_Namnet på GNOME-fisken:"
 msgid "_Animation filename:"
 msgstr "_Animationsfilnamnet:"
 
-#: applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
+#: applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1247
 #: gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Bläddra"
@@ -237,7 +237,7 @@ msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/mailcheck.c:1549 applets/gen_util/mailcheck.c:1754
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
@@ -281,7 +281,7 @@ msgid "Use _UTC"
 msgstr "Använd _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1679
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:242
 msgid "translator_credits"
@@ -388,7 +388,7 @@ msgid "Get the current time and date"
 msgstr "Visa aktuell tid och aktuellt datum"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1692
 msgid "Inbox Monitor"
 msgstr "Inkorgsövervakare"
 
@@ -439,7 +439,11 @@ msgstr ""
 msgid "Please enter your mailserver's _password:"
 msgstr "Ange lösenordet för din e-postserver:"
 
-#: applets/gen_util/mailcheck.c:278
+#: applets/gen_util/mailcheck.c:237 applets/gen_util/mailcheck.c:1307
+msgid "Password Entry box"
+msgstr "Lösenordsinmatningsfält"
+
+#: applets/gen_util/mailcheck.c:280
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -449,161 +453,188 @@ msgstr ""
 "automatisk uppdatering inaktiverats tills vidare.\n"
 "Du kanske använde fel server, användarnamn eller lösenord?"
 
-#: applets/gen_util/mailcheck.c:483
+#: applets/gen_util/mailcheck.c:485
 msgid "You have new mail."
 msgstr "Du har ny post."
 
-#: applets/gen_util/mailcheck.c:485
+#: applets/gen_util/mailcheck.c:487
 msgid "You have mail."
 msgstr "Du har post."
 
-#: applets/gen_util/mailcheck.c:489
+#: applets/gen_util/mailcheck.c:491
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:491
+#: applets/gen_util/mailcheck.c:493
 #, c-format
 msgid "%d messages"
 msgstr "%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:495
+#: applets/gen_util/mailcheck.c:497
 msgid "No mail."
 msgstr "Ingen post."
 
-#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
+#: applets/gen_util/mailcheck.c:1017 applets/gen_util/mailcheck.c:1019
+#: applets/gen_util/mailcheck.c:1877 applets/gen_util/mailcheck.c:1879
 msgid "Status not updated"
 msgstr "Status är inte uppdaterad"
 
-#: applets/gen_util/mailcheck.c:1189
+#: applets/gen_util/mailcheck.c:1191
 msgid "Mailbox _resides on:"
 msgstr "Brevlådan _finns på:"
 
-#: applets/gen_util/mailcheck.c:1197
+#: applets/gen_util/mailcheck.c:1199
 msgid "Local mailspool"
 msgstr "Lokal brevlåda"
 
-#: applets/gen_util/mailcheck.c:1205
+#: applets/gen_util/mailcheck.c:1207
 msgid "Local maildir"
 msgstr "Lokal e-postkatalog"
 
-#: applets/gen_util/mailcheck.c:1213
+#: applets/gen_util/mailcheck.c:1215
 msgid "Remote POP3-server"
 msgstr "POP3-server"
 
-#: applets/gen_util/mailcheck.c:1221
+#: applets/gen_util/mailcheck.c:1223
 msgid "Remote IMAP-server"
 msgstr "IMAP-server"
 
-#: applets/gen_util/mailcheck.c:1241
+#: applets/gen_util/mailcheck.c:1243
 msgid "Mail _spool file:"
 msgstr "_Postlådefil (mail spool):"
 
-#: applets/gen_util/mailcheck.c:1260
+#: applets/gen_util/mailcheck.c:1262
 msgid "Mail s_erver:"
 msgstr "_E-postserver:"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1268
+msgid "Mail Server Entry box"
+msgstr "E-postserverinmatningsfält"
+
+#: applets/gen_util/mailcheck.c:1282
 msgid "_Username:"
 msgstr "_Användarnamn:"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1290
+msgid "Username Entry box"
+msgstr "Användarnamnsinmatningsfält"
+
+#: applets/gen_util/mailcheck.c:1299
 msgid "_Password:"
 msgstr "_Lösenord:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1320
 msgid "_Folder:"
 msgstr "_Mapp:"
 
-#: applets/gen_util/mailcheck.c:1332
+#: applets/gen_util/mailcheck.c:1328
+msgid "Folder Entry box"
+msgstr "Mappinmatningsfält"
+
+#: applets/gen_util/mailcheck.c:1340
 msgid "C_ommand to run before checking for mail:"
 msgstr "K_ommando som ska köras innan kontroll av post:"
 
-#: applets/gen_util/mailcheck.c:1363
+#: applets/gen_util/mailcheck.c:1348
+msgid "Command Entry box"
+msgstr "Kommandoinmatningsfält"
+
+#: applets/gen_util/mailcheck.c:1373
 msgid "Execute"
 msgstr "Kör program"
 
-#: applets/gen_util/mailcheck.c:1374
+#: applets/gen_util/mailcheck.c:1384
 msgid "Before each _update:"
 msgstr "Före varje _uppdatering:"
 
-#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
-#: applets/gen_util/mailcheck.c:1435
-msgid "Command to execute"
-msgstr "Kommando att köra"
-
 #: applets/gen_util/mailcheck.c:1399
+msgid "Command to execute before each update"
+msgstr "Kommando som ska utföras före varje uppdatering"
+
+#: applets/gen_util/mailcheck.c:1409
 msgid "When new mail _arrives:"
 msgstr "När ny post _ankommer:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1422 applets/gen_util/mailcheck.schemas.in.h:2
+msgid "Command to execute when new mail arrives"
+msgstr "Kommando som ska utföras när ny post ankommer"
+
+#: applets/gen_util/mailcheck.c:1432
 msgid "When clicke_d:"
 msgstr "Vid _klick:"
 
 #: applets/gen_util/mailcheck.c:1445
+msgid "Command to execute when clicked"
+msgstr "Kommando som ska utföras vid klick"
+
+#: applets/gen_util/mailcheck.c:1455
 msgid "Set the number of unread mails to _zero"
 msgstr "Ställ in antalet olästa brev till _noll"
 
-#: applets/gen_util/mailcheck.c:1456
+#: applets/gen_util/mailcheck.c:1466
 msgid "Check for mail _every"
 msgstr "Kontrollera _post var"
 
-#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
+#: applets/gen_util/mailcheck.c:1478 applets/gen_util/mailcheck.c:1482
 msgid "minutes"
 msgstr "minut"
 
-#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1478
+msgid "Choose time interval in minutes to check mail"
+msgstr "Välj tidsintervall i minuter för e-postkontroll"
+
+#: applets/gen_util/mailcheck.c:1492 applets/gen_util/mailcheck.c:1496
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1492
+msgid "Choose time interval in seconds to check mail"
+msgstr "Välj tidsintervall i sekunder för e-postkontroll"
+
+#: applets/gen_util/mailcheck.c:1504
 msgid "Play a _sound when new mail arrives"
 msgstr "Spela ett _ljud när ny post ankommer"
 
-#: applets/gen_util/mailcheck.c:1505
+#: applets/gen_util/mailcheck.c:1515
 msgid "Select a_nimation"
 msgstr "Välj ani_mation"
 
-#: applets/gen_util/mailcheck.c:1580
+#: applets/gen_util/mailcheck.c:1590
 msgid "Inbox Monitor Preferences"
 msgstr "Inställningar för inkorgsövervakare"
 
-#: applets/gen_util/mailcheck.c:1599
+#: applets/gen_util/mailcheck.c:1609
 msgid "_Mail check"
 msgstr "_E-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1603
+#: applets/gen_util/mailcheck.c:1613
 msgid "Mail_box"
 msgstr "_Brevlåda"
 
-#: applets/gen_util/mailcheck.c:1681
+#: applets/gen_util/mailcheck.c:1693
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "© 1998-2000 Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1682
+#: applets/gen_util/mailcheck.c:1694
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Inkorgsövervakaren meddelar dig när nya brev hamnar i din brevlåda"
 
-#: applets/gen_util/mailcheck.c:1841
+#: applets/gen_util/mailcheck.c:1853
 msgid "Text only"
 msgstr "Endast text"
 
-#: applets/gen_util/mailcheck.c:1868
+#: applets/gen_util/mailcheck.c:1880
 msgid "Mail check"
 msgstr "E-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1869
+#: applets/gen_util/mailcheck.c:1881
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "E-postkontroll meddelar dig när nya brev hamnar i din brevlåda"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
 msgstr "Kommando som ska utföras vid kontroll av post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "Command to execute when new mail arrives"
-msgstr "Kommando som ska utföras när ny post ankommer"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
@@ -2460,6 +2491,9 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Command to execute"
+#~ msgstr "Kommando att köra"
 
 #~ msgid ""
 #~ "When a panel is deleted, the panel and its\n"
