@@ -914,7 +914,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 					      (char *)ltmp->data);
 			  load_launcher_applet_from_info(ltmp->data,
 							 p,exec,2,
-							 "netscape.png",
+							 "gnome-html.png",
 							 panel,pos);
 			  g_free(p);
 		  }

@@ -1,7 +1,8 @@
 always_built_SUBDIRS = applet-dirs gen_util asclock \
-	 fish dialer webcontrol \
-	 drivemount clockmail fifteen life battery charpick \
-	 gnome-pager mini-commander gkb jbc another_clock
+	fish dialer webcontrol \
+	drivemount clockmail fifteen life battery charpick \
+	gnome-pager mini-commander gkb jbc another_clock \
+	desk-guide tasklist
 
 if FALSE
 if HAVE_LIBESD
