@@ -1,16 +1,14 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 module GNOME {
-	interface caplet {
+	interface capplet {
                 void try();
-                void revert();
-                void ok ();
-                void cancel ();
+                boolean revert();
+                boolean ok ();
                 void help ();
 	};
 	interface control_center {
-		/* requests an ID on the panel */
+                void register_capplet (in long id, in capplet cap);
                 void state_saved (in long id);
-                void state_changed (in long id);
+                void state_changed (in long id, in boolean undoable);
 	};
 };
-
