@@ -1,3 +1,11 @@
+1998-12-23  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
+
+	* main.c (main): Fixed the error, that preventend the panel from
+ 	restoring a saved session, if it's used with gnome-session.  Due
+ 	to some changes of Felix, the 'gnome_cloned_client' call does
+ 	nothing anymore, so the panel always thought, it has to restore
+ 	the default session.
+
 Tue Dec 22 14:38:00 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c,panel-widget.c: with timeouts finally working on my box

@@ -120,15 +120,7 @@ main(int argc, char **argv)
 	if (GNOME_CLIENT_CONNECTED (client)) {
 		char *session_id;
 
-		if (gnome_cloned_client ())
-		  {
-		    /* This client has been resumed or is a clone of
-                       another panel (i.e. gnome_cloned_client !=
-                       NULL).  */
-		    session_id= gnome_client_get_id (gnome_cloned_client ());
-		  }
-		else
-		  session_id= NULL;
+		session_id= gnome_client_get_previous_id (client);
 
 		if(session_id) {
 			g_free(old_panel_cfg_path);
