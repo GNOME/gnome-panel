@@ -191,9 +191,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	toplevel = PANEL_WIDGET (widget)->toplevel;
 	info = g_object_get_data (G_OBJECT (applet), "applet_info");
 
-	panel_toplevel_unhide (toplevel);
-	panel_toplevel_queue_auto_hide (toplevel);
-
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
 #ifdef FIXME_FOR_NEW_CONFIG

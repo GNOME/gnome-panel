@@ -1,5 +1,11 @@
 2003-04-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel.c: (panel_applet_added): don't unhide the panel
+	when applets are added. Fixes panel unhiding on login,
+	bug #109604.
+
+2003-04-09  Mark McLoughlin  <mark@skynet.ie>
+
 	Update the sensitivity of the image/color configuration
 	widgets as appropriate to the selected background type.
 	Fixes #107609.
