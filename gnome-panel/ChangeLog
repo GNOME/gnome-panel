@@ -1,3 +1,9 @@
+2004-05-13  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c: (calc_arrow), (button_widget_expose): use
+	gtk_paint_arrow() to draw the little triangle on menu buttons
+	rather than drawing a rectangle manually. Fixes bug #103342.
+
 2004-04-21  Kaushal Kumar  <kaushal.kumar@wipro.com>
 
 	* menu.c (show_panel_help): Set the help link id for

@@ -443,50 +443,47 @@ button_load_pixbuf (const char  *file,
 #undef PREFERRED_SIZE
 }
 
-static void
-draw_arrow (GdkPoint         *points,
-	    PanelOrientation  orientation,
-	    int               width,
-	    int               height)
+static GtkArrowType
+calc_arrow (PanelOrientation  orientation,
+	    int               button_width,
+	    int               button_height,
+	    int              *x,
+	    int              *y,
+	    int              *width,
+	    int              *height)
 {
+	GtkArrowType retval = GTK_ARROW_UP;
 	double scale;
 
-	scale = (orientation & PANEL_HORIZONTAL_MASK ? height : width) / 48.0;
+	scale = (orientation & PANEL_HORIZONTAL_MASK ? button_height : button_width) / 48.0;
+
+	*width  = 12 * scale;
+	*height = 12 * scale;
 
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		points [0].x = 4 * scale;
-		points [0].y = height - 10 * scale;
-		points [1].x = 12 * scale;
-		points [1].y = height - 10 * scale;
-		points [2].x = 8 * scale;
-		points [2].y = height - 3 * scale;
+		*x     = scale * 3;
+		*y     = scale * (48 - 13);
+		retval = GTK_ARROW_DOWN;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		points [0].x = width - 12 * scale;
-		points [0].y = 10 * scale;
-		points [1].x = width - 4 * scale;
-		points [1].y = 10 * scale;
-		points [2].x = width - 8 * scale;
-		points [2].y = 3 * scale;
+		*x     = scale * (48 - 13);
+		*y     = scale * 1;
+		retval = GTK_ARROW_UP;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		points [0].x = width  - 10 * scale;
-		points [0].y = height - 12 * scale;
-		points [1].x = width  - 10 * scale;
-		points [1].y = height - 4 * scale;
-		points [2].x = width  - 3 * scale;
-		points [2].y = height - 8 * scale;
+		*x     = scale * (48 - 13);
+		*y     = scale * 3;
+		retval = GTK_ARROW_RIGHT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		points [0].x = 10 * scale;
-		points [0].y = 4  * scale;
-		points [1].x = 10 * scale;
-		points [1].y = 12 * scale;
-		points [2].x = 3  * scale;
-		points [2].y = 8  * scale;
+		*x     = scale * 1;
+		*y     = scale * 3;
+		retval = GTK_ARROW_LEFT;
 		break;
 	}
+
+	return retval;
 }
 
 static gboolean
@@ -554,15 +551,32 @@ button_widget_expose (GtkWidget         *widget,
 	g_object_unref (pb);
 	
 	if (button_widget->arrow) {
-		int i;
-		GdkPoint points[3];
-		draw_arrow (points, button_widget->orientation, widget->allocation.width, widget->allocation.height);
-		for (i = 0; i < 3; i++) {
-			points[i].x += off + widget->allocation.x;
-			points[i].y += off + widget->allocation.y;
-		}
-		gdk_draw_polygon (widget->window, widget->style->white_gc, TRUE, points, 3);
-		gdk_draw_polygon (widget->window, widget->style->black_gc, FALSE, points, 3);
+		GtkArrowType arrow_type;
+		int          x, y, width, height;
+
+		x = y = width = height = -1;
+
+		arrow_type = calc_arrow (button_widget->orientation,
+					 widget->allocation.width,
+					 widget->allocation.height,
+					 &x,
+					 &y,
+					 &width,
+					 &height);
+
+		gtk_paint_arrow (widget->style,
+				 widget->window,
+				 GTK_STATE_NORMAL,
+				 GTK_SHADOW_NONE,
+				 NULL,
+				 widget,
+				 NULL,
+				 arrow_type,
+				 TRUE,
+				 widget->allocation.x + x,
+				 widget->allocation.y + y,
+				 width,
+				 height);
 	}
 
 	if (button_widget->dnd_highlight) {
