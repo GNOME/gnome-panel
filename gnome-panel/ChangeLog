@@ -1,3 +1,11 @@
+2004-02-28  Mark McLoughlin  <mark@skynet.ie>
+
+	Makes moving launchers with button2 work again. Bug #134006.
+
+	* button-widget.c: (button_widget_button_press): Don't assume
+	GtkButton returns false if button != 1. Why? Because it doesn't,
+	that's why.
+
 2004-02-28  Rob Adams  <readams@readams.net>
 
 	Some fixes for xinerama positioning and collision detection code.

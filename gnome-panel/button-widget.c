@@ -654,17 +654,13 @@ button_widget_activate (GtkButton *button)
 static gboolean
 button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
- 	ButtonWidget *button;
-
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	button = BUTTON_WIDGET (widget);
+	if (event->button == 1 && BUTTON_WIDGET (widget)->activatable)
+		return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
 
-	if (!button->activatable)
-		return TRUE;
-
-	return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
+	return FALSE;
 }
 
 static gboolean
