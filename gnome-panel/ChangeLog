@@ -1,3 +1,13 @@
+2002-10-10  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
+
+	Fixes the Issue of drag and drop to the panel always launches the
+	application in primary screen.Bug #94258 .
+
+	* launcher.c : drag_data_received_cb(). Changed to call the new API
+	  of gnome-desktop gnome_desktop_item_drop_uri_list_with_env and
+	  passed the environment to it. So that gnome-desktop can launch the
+	  application in appropriate screen.
+
 2002-11-28  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-util.[ch]: (panel_ditem_launch):

@@ -172,11 +172,20 @@ drag_data_received_cb (GtkWidget        *widget,
 		       Launcher         *launcher)
 {
 	GError *error = NULL;
+	char **envp = NULL;
 
-	gnome_desktop_item_drop_uri_list (launcher->ditem,
-					  (const char *)selection_data->data,
-					  0 /* flags */,
-					  &error);
+	GdkScreen *screen = launcher_get_screen (launcher);
+
+	if (gdk_screen_get_default () != screen)
+		envp = egg_screen_exec_environment (screen);
+
+	gnome_desktop_item_drop_uri_list_with_env (launcher->ditem,
+						   (const char *)selection_data->data,
+						   0 /* flags */,
+						   envp,
+						   &error);
+	g_strfreev (envp);
+
 	if (error) {
 		panel_error_dialog (
 			launcher_get_screen (launcher),
