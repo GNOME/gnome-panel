@@ -21,8 +21,9 @@ INCLUDES = \
 	-I$(includedir)		\
 	$(GNOME_INCLUDEDIR)	\
 	$(ORB_CFLAGS)		\
-	@GLADE_CFLAGS@		\
-	@PIXBUF_CFLAGS@
+	$(GNOME_PRINT_CFLAGS)	\
+	$(GLADE_CFLAGS)		\
+	$(PIXBUF_CFLAGS)
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
@@ -193,8 +194,8 @@ panel_LDADD = \
 	$(ORB_LIBS)		\
 	$(GNOMEUI_LIBS)		\
 	$(INTLLIBS)		\
-	@PIXBUF_LIBS@		\
-	@XINERAMA_LIBS@
+	$(PIXBUF_LIBS)		\
+	$(XINERAMA_LIBS)
 
 panel_LDFLAGS=-export-dynamic
 
@@ -209,7 +210,7 @@ gnome_panel_properties_capplet_LDADD = \
 	$(GNOME_LIBDIR)		\
 	$(GNOME_CAPPLET_LIBS)	\
 	$(INTLLIBS)		\
-	@PIXBUF_LIBS@
+	$(PIXBUF_LIBS)
 
 gnome_panel_add_launcher_SOURCES = \
 	gnome-panel-add-launcher.c	\
@@ -224,15 +225,16 @@ gnome_panel_add_launcher_LDADD = \
 	$(GNORBA_LIBS)		\
 	$(ORB_LIBS)		\
 	$(INTLLIBS)		\
-	@PIXBUF_LIBS@
+	$(PIXBUF_LIBS)
 
 gnome_panel_screenshot_LDADD = \
 	$(GNOME_LIBDIR)		\
 	$(GNOMEUI_LIBS)		\
-	@GLADE_LIBS@		\
+	$(GLADE_LIBS)		\
+	$(GNOME_PRINT_LIBS)	\
 	$(INTLLIBS)		\
-	@PNG_LIBS@		\
-	@PIXBUF_LIBS@
+	$(PNG_LIBS)		\
+	$(PIXBUF_LIBS)
 
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
