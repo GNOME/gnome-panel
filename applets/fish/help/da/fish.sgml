@@ -1,0 +1,180 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
+]>
+
+<article id="index">
+ <artheader>
+  <title>Gnome-fisken</title>
+
+  <copyright>
+   <year>2000</year>
+   <holder>Telsa Gwynne</holder>
+  </copyright>
+
+  <legalnotice>
+   <para>
+     Permission is granted to make and distribute verbatim copies of this
+     manual provided the copyright notice and this permission notice are
+     preserved on all copies.
+   </para>
+   <para>
+     Permission is granted to copy and distribute modified versions of
+     this manual under the conditions for verbatim copying, provided that
+     the entire resulting derived work is distributed under the terms of a
+     permission notice identical to this one.
+   </para>
+   <para>
+     Permission is granted to copy and distribute translations of this
+     manual into another language, under the above conditions for modified
+     versions, except that this permission notice may be stated in a
+     translation approved by the Foundation.
+   </para>
+  </legalnotice>
+
+  <releaseinfo>
+     Dette er version 0.1 af dette dokument: første udgave.
+  </releaseinfo>
+ </artheader>
+
+
+ <sect1 id="wanda-intro">
+  <title>Gnome fisk-appleten</title>
+
+  <para>
+    <application>Gnome fisk-appleten</application> viser en lille fisk
+    på dit <interface>panel</interface> og ikke gør noget nyttigt 
+    i det hele taget udover dette. Den er en del af gnome-core pakken. 
+    Denne beskrivelsen af den refererer til fisken som vist i 
+    gnome-core-1.1.2.
+  </para>
+  <para>
+    Den findes normal i <interface>panelet</interface> som standard, 
+    men hvis du ikke ser den, kan du starte den ved at klikke på
+    <mousebutton>knap
+    3</mousebutton> på en tom del af <interface>panelet</interface> og
+    følge menuene
+   <menuchoice>
+   <guimenu>Appletter</guimenu>
+    <guisubmenu>Underholdning</guisubmenu>
+    <guimenuitem>Fisk</guimenuitem>
+   </menuchoice>
+  </para>
+  <para>
+    Fisk appleten er skrevet af George Lebl (<email>jirka@5z.com</email>). 
+    Rapportér venligst fejl i den til
+    <ulink type="http" url="http://bugs.gnome.org">Gnome fejlhåndterings-
+    systemet</ulink>. Du kan gøre dette ved at følge retningslinjene på
+    dette 
+    websted eller ved at bruge <command>bug-buddy</command> fra kommandolinjen.
+    Vælg gnome-core for pakke.
+  </para>
+
+  <sect2 id="wanda-usage">
+   <title>Bruk</title>
+
+   <para>
+     Ulig de fleste fisk kræver denne fisk ikke eftersyn og rens af
+     fiskebollen. Den svømmer lykkelig rundt i sit vand. Hvis du spørg den, vil
+     den fortælle dig sine interessante tanker. Forskellige indstillinger er
+     tilgængelige ved hjælp af musen:
+   </para>
+
+   <orderedlist>
+    <listitem>
+     <para>
+       Hvis du har <application>fortune</application> pakken installeret,
+       vil du ved at trykke på <mousebutton>museknap 1</mousebutton> få
+       <guilabel>dialogboks</guilabel> frem som indeholder en spådom.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+      Ved at trykke på <mousebutton>museknap 2</mousebutton> og holde den
+      nede kan du trække fisken rundt på panelet.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+       Ved at trykke <mousebutton>museknap 3</mousebutton> får du en
+       menu frem  som inkluderer en <guisubmenu>brugervalgsmenu</guisubmenu> og
+       en <guimenuitem>Om</guimenuitem>-boks. 
+     </para>
+    </listitem>
+   </orderedlist>
+
+  </sect2>
+
+  <sect2 id="wanda-prefs">
+   <title>Brugervalg</title>
+   <para>
+     <guilabel>Brugervalgsdialogboksen</guilabel> (kaldt
+     Gnome fisk-egenskaber) er enkel, med fem valg du kan 
+     konfigurere.
+   </para>
+
+   <variablelist>
+    <varlistentry>
+     <term>Din GNOME fisks navn</term>
+     <listitem>
+      <para>
+        Du kan ændre navnet på din fisk her. Standard navn er Wanda.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>Filnavn for animationen</term>
+     <listitem>
+      <para>
+        Du kan vælge et andet sæt med billeder her. Som standard findes
+        listen med billeder du kan vælge fra i
+        <filename>$PREFIX/pixmaps/fish/</filename>,
+        Du kan også indsætte et andet stinavn for at pege på dine
+        egne bilder.
+      </para>
+     </listitem>
+    </varlistentry>
+
+    <varlistentry>
+     <term>Bilder i animationen</term>
+     <listitem>
+      <para>
+        Som det står her, antal billeder i animationen. Standardvalget er 
+        tre, men man kan vælge fra 1 til 255.
+      </para>
+     </listitem>
+    </varlistentry>
+ 
+    <varlistentry>
+     <term>Pause per billede</term>
+     <listitem>
+      <para>
+        Tiden i sekunder før bildet opdateres. Standardværdien er 
+        et sekund, men du kan vælge mellem 0.10 til 10 sekunder.
+      </para>
+     </listitem>
+    </varlistentry>
+    <varlistentry>
+     <term>Rotér på vertikale paneler</term>
+     <listitem>
+      <para>
+        Denne afkrysningsboks bruges for vertikale paneler, og når den er
+        krydset af vil fisken se ud til at svømme nedover på et lodret panel. 
+	Hvis den ikke er krydset af vil fisken svømme på samme måde som på
+        et
+	vandret panel, noget som tvinger det lodrette panel til at ændre 
+	størrelse for at gøre plads til den.
+      </para>
+     </listitem>
+    </varlistentry>
+   </variablelist>
+  </sect2>
+
+  <sect2 id="wanda-bugs">
+   <title>Fejl og begrænsninger</title>
+   <para>
+     Ingen kendte fejl.
+   </para>
+  </sect2>
+ 
+ </sect1>
+</article>

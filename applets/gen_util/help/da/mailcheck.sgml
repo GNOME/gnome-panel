@@ -1,0 +1,260 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
+]>
+
+<article id="index">
+ <artheader>
+  <title>E-posttjek-appleten</title>
+  <copyright>
+   <year>2000</year>
+   <holder>Telsa Gwynne</holder>
+  </copyright>
+
+  <legalnotice>
+   <para>
+     Permission is granted to make and distribute verbatim copies of this
+     manual provided the copyright notice and this permission notice are
+     preserved on all copies.
+   </para>
+   <para>
+     Permission is granted to copy and distribute modified versions of
+     this manual under the conditions for verbatim copying, provided that
+     the entire resulting derived work is distributed under the terms of a
+     permission notice identical to this one.
+   </para>
+   <para>
+     Permission is granted to copy and distribute translations of this
+     manual into another language, under the above conditions for modified
+     versions, except that this permission notice may be stated in a
+     translation approved by the Foundation.
+   </para>
+  </legalnotice>
+
+  <releaseinfo>
+     Dette er version 0.1 af dette dokument: første utgave.
+  </releaseinfo>
+ </artheader>
+
+ <sect1 id="applets-core-mailcheck">
+  <title>E-posttjek-appleten</title> 
+
+  <para>
+    <application>E-posttjek-appleten</application> er en applet som sidder
+    på dit panel og giver dig besked når du får ny e-post. For at tilføje
+    denne applet til på panelet højreklikker du på panelet og vælger
+    <menuchoice>
+     <guimenu>Tilføj applet</guimenu>
+     <guisubmenu>Netværk</guisubmenu>
+     <guimenuitem>E-posttjek</guimenuitem>
+    </menuchoice>
+  </para>
+  <para>
+    Dette dokument refererer til version 1.1 af appleten som findes i 
+    gnome-core-1.1.x pakken. <application>E-posttjek 
+    appleten</application> er skrevet af: 
+    Miguel de Icaza (<email>miguel@gnu.org</email>),
+    Jacob Berkman (<email>jberkman@andrew.cmu.edu</email>),
+    Jaka Mocnik (<email>jaka.mocnik@kiss.uni-lj.si</email>) og
+    Lennart Poettering (<email>poettering@gmx.net</email>). Hvis du får
+    problemer med den, rapportér venligst fejl eller forslag til
+    <ulink type="http" url="http://bugs.gnome.org">Gnome
+    fejlrapporteringssystemet</ulink>
+    via e-post eller ved at bruge <command>bug-buddy</command>.
+  </para>
+
+   <sect2 id="mailcheck-usage">
+    <title>Brug</title>
+    <para>
+      Du kræver ikke at gøre noget spesielt for at køre denne applet.
+      Forudsat at den ser efter e-post på rette sted, vil den køre 
+      uden problemer. De følgende alternativene er tilgængelige:
+    </para>
+ 
+    <itemizedlist>
+     <listitem>
+      <para>
+        Klik med <mousebutton>museknap 1</mousebutton> gør ingenting
+        hvis ikke du har sagt at et program skal startes når du gør dette.
+        Du kan gøre dette via egenskaber-boksen som er beskrevet <link
+        linkend="mailcheck-prefs">under</link>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+        Ved at holde <mousebutton>museknap 2</mousebutton> nede kan du
+        trække appletten rundt på panelet (og mellem flere paneler).
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+        Hvis du klikker på <mousebutton>museknap 3</mousebutton> dukker
+        <guimenu>applet-menuen</guimenu> frem, som inkluderer en Om-boks
+        og et punkt for <link linkend="mailcheck-prefs">egenskaber</link>
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+ 
+   <sect2 id="mailcheck-prefs">
+    <title>Brugervalg</title>
+    <para>
+       <interface>Egenskaber-dialogboksen</interface> for e-posttjek er
+       delt op i to sektioner, en for at styre hvad e-posttjek-appleten
+       gør, og en for at styre hvor den tjekker efter e-post.
+    </para>
+  
+    <variablelist>
+     <varlistentry>
+      <term>E-posttjek indstillinger</term>
+      <listitem>
+       <para>
+         E-posttjek indstillinger har seks sektioner:
+       </para>
+ 
+       <variablelist>
+        <varlistentry>
+         <term>Kør...før hver opdatering</term>
+         <listitem>
+          <para>
+            Nogen gange vil du måske køre noget så smart som
+            <application>fetchmail</application> før appleten tjekker
+            efter nye e-breve. For at gøre dette, krydser du af i denne
+            boks og skriver programnavnet ind i dette felt.
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Kør...når ny e-post ankommer</term>
+         <listitem>
+          <para>
+            Nogle gange ønsker du måske at andre programmer køres når
+            ny post ankommer. Det er sædvanligt at lade maskinen spille 
+            en lyd for eksempel. Ved at krydse af i denne boks og indtaste
+            kommandoen (slik som <command>mpg123 e-postlyd.mpg</command>
+            eller <command>esdplay e-postlyd.wav</command>) vil dette
+            blive gjort.
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Kør...ved museklik</term>
+         <listitem>
+          <para>
+    	    Ved at indsætte et programnavn (normalvis en postlæser som
+            f.eks <application>balsa</application> eller
+            <application>spruce</application>
+            her i tillæg til at krydse af i boksen, kan du nemt indstille
+            at programmet køres automatisk når du klikker på
+	    <mousebutton>knap 1</mousebutton> på appleten
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Tjek efter post hver(t)...</term>
+         <listitem>
+          <para>
+            Du kan justere tidspunktet for tjek efter ny e-post i området
+            mellem 1440 minutter (en gang om dagen) og aldrig. At sætte
+            den til aldrig er dumt og vil forvirre programmet.
+            Standardværdien er en gang hvert andet sekund.
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Afspil en lyd når det kommer ny post</term>
+         <listitem>
+          <para>
+            Lyden som spilles hvis du krydser af i denne
+            <guibutton>boks</guibutton>
+            er en alarmbjælle. Den findes i
+            <filename>$prefix/sound/events/mailcheck.soundlist</filename>;
+            hvis du ønsker at ændre den til en anden lyd ændrer du det
+            hér, og
+            pladserer lydfilen i <filename>$prefix/sounds/</filename>.
+          </para>
+         </listitem>
+        </varlistentry>
+  
+        <varlistentry>
+         <term>Vælg animation</term>
+         <listitem>
+          <para>
+            Ved at klikke på <guilabel>boksen med
+            animationsnavnet</guilabel>,
+            kan du få en liste frem med forskellige billeder som har
+            forskellige animationer når ny e-post ankommer.
+          </para>
+         </listitem>
+        </varlistentry>
+       </variablelist>
+      </listitem>   
+     </varlistentry>
+    
+     <varlistentry>
+      <term>Indstillinger for postboks</term>
+      <listitem>
+       <para>
+         Indstillinger for postboks har fire sektioner hvor nogle vil være
+         "grået ud".
+       </para>
+           
+       <para>
+         Ved at klikke på <guilabel>boksen med pladsering af
+         postboks</guilabel>,
+         kan du fortælle e-posttjeksappleten hvor den skal se efter
+         indkommende e-breve.
+       </para>
+       <itemizedlist>
+        <listitem>
+         <para>
+           Når lokal e-postkø eller lokal e-postmappe er valgt som pladsering
+           for postboksen, kan du udfylle detaljer om hvilken fil eller
+           katalog appleten skal tjekke efter ny e-post i. Du kan kun
+           indsætte ét filnavn her. Sektionen om e-postjenere vil være
+           utilgængelig.
+          </para>
+         </listitem>
+         <listitem>
+          <para>
+           Når ekstern POP3 eller ekstern IMAP er valgt som pladsering for
+           postboksen kan du udfylde detaljer om e-posttjeneren,
+           brugernavn og adgangskode. Hvis du ikke opgiver adgangskoden,
+           vil appleten
+           spørge dig når den prøver at tjekke efter e-post første gang.
+           Sektionen om lokale filnavn vil være utilgængelig.
+         </para>
+        </listitem>
+       </itemizedlist>
+      </listitem>
+     </varlistentry>    
+   </variablelist>
+  </sect2>
+ 
+  <sect2 id="mailcheck-bugs">
+   <title>Kendte fejl og begrænsninger</title>
+   <itemizedlist>
+    <listitem>
+     <para>
+       Hvis du sætter op køring af et program før hver opdatering kan
+       du risikere at appleten og panelet "hænger".
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+       Nogle gange stopper animationen med at virke efter langtids brug.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+       Hvis du bruger et e-postfilter som f.eks <application>procmail</application>,
+       som sorterer e-breve til forskellige mapper, vil appleten ikke
+       tjekke alle disse efter ny post. Den vil bare se i én fil.
+     </para>
+    </listitem>
+   </itemizedlist>
+  </sect2>
+ </sect1>
+</article>
