@@ -274,7 +274,7 @@ imap_check(const char *h, const char* n, const char* e, const char* f)
 		return r;
 	
 	x = read_line(s);
-	/* The greeting us untagged */
+	/* The greeting is untagged */
 	if (!is_imap_answer_untagged(x))
 		goto return_from_imap_check;
 	
