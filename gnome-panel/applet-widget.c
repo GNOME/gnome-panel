@@ -707,52 +707,55 @@ applet_widget_get_applet_count()
 static int
 applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
-  GdkEventButton *bevent;
-  int in_drag;
-  GtkWidget *w;
-  CORBA_Environment ev;
-  int retval = TRUE;
+	GdkEventButton *bevent;
+	int in_drag;
+	GtkWidget *w;
+	CORBA_Environment ev;
+	int retval = FALSE;
 
-  CORBA_exception_init(&ev);
+	CORBA_exception_init(&ev);
 
-  switch (event->type) {
-  case GDK_BUTTON_PRESS:
-    in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
-    bevent = (GdkEventButton *) event;
+	switch (event->type) {
+	case GDK_BUTTON_PRESS:
+		in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
+		bevent = (GdkEventButton *) event;
 
-    if(in_drag) {
-      GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
+		if(in_drag) {
+			GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
+			retval = TRUE;
+		} else if(bevent->button == 2) {
+			if((w = gtk_grab_get_current()))
+				gtk_grab_remove(w);
+			gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+			gdk_pointer_ungrab(GDK_CURRENT_TIME);
+			gdk_flush();
+			GNOME_PanelSpot_drag_start(CD(widget)->pspot, &ev);
+			retval = TRUE;
+		} else if(bevent->button == 3) {
+			if((w = gtk_grab_get_current()))
+				gtk_grab_remove(w);
+			gdk_pointer_ungrab(GDK_CURRENT_TIME);
+			gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+			gdk_flush();
+			GNOME_PanelSpot_show_menu(CD(widget)->pspot, &ev);
+			retval = TRUE;
+		}
+		break;
 
-    } else if(bevent->button == 2) {
-      if((w = gtk_grab_get_current()))
-	gtk_grab_remove(w);
-      gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-      gdk_pointer_ungrab(GDK_CURRENT_TIME);
-      gdk_flush();
-      GNOME_PanelSpot_drag_start(CD(widget)->pspot, &ev);
-    } else if(bevent->button == 3) {
-      if((w = gtk_grab_get_current()))
-	gtk_grab_remove(w);
-      gdk_pointer_ungrab(GDK_CURRENT_TIME);
-      gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-      gdk_flush();
-      GNOME_PanelSpot_show_menu(CD(widget)->pspot, &ev);
-    }
-    break;
+	case GDK_BUTTON_RELEASE:
+		in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
+		if(in_drag) {
+			GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
+			retval = TRUE;
+		}
+		break;
 
-  case GDK_BUTTON_RELEASE:
-    in_drag = GNOME_Panel__get_in_drag(panel_client, &ev);
-    if(in_drag)
-	    GNOME_PanelSpot_drag_stop(CD(widget)->pspot, &ev);
-    break;
+	default:
+		break;
+	}
+	CORBA_exception_free(&ev);
 
-  default:
-    retval = FALSE;
-    break;
-  }
-  CORBA_exception_free(&ev);
-
-  return retval;
+	return retval;
 }
 
 static int
