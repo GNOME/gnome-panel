@@ -438,31 +438,24 @@
      linked to any button. To access the  <guimenu>Global
      Menu</guimenu>, right-click on any empty place on the
      <interface>Panel</interface>. You can also  access  
-      the <guimenu>Global  Menu</guimenu> by  pressing  the
-      <keycap>Menu</keycap> key on your keyboard (if you are using a
-      standard PC keyboard, this key usually is located to the left of
-      the space bar and labelled with a picture of a menu); you can
-      change the default key for activating the <guimenu>Global 
-      Menu</guimenu> in the <link
-      linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
-      of the <interface><link linkend="globalpanelprefs">Global Panel
-      Preferences</link> dialog</interface>.
-      </para>
+     the <guimenu>Global  Menu</guimenu> by  pressing 
+     Alt-F1. (You can
+     change the default key for activating the <guimenu>Global 
+     Menu</guimenu> in the <link
+     linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
+     of the <interface><link linkend="globalpanelprefs">Global Panel
+     Preferences</link> dialog</interface>.)
+    </para>
+    <para>
+     Note that the <guimenu>Global Menu</guimenu> is configured
+     independently from the <guimenu>Main Menu</guimenu>, by using
+     the <guilabel>Menu</guilabel> tab in the <link
+     linkend="globalpanelprefs"><interface>Global Panel
+     Preferences</interface></link> dialog.
+    </para>
+   </sect2>
 
-      <para>
-	Note that the <guimenu>Global Menu</guimenu> is configured
-	independently from the <guimenu>Main Menu</guimenu>, by using
-	the <guilabel>Menu</guilabel> tab in the <link
-	linkend="globalpanelprefs"><interface>Global Panel
-	Preferences</interface></link> dialog.
-      </para>
-    </sect2>
-
-
-
-
-
-    <sect2 id="submenus">
+   <sect2 id="submenus">
      <title> Components of the Main Menu</title>
      <para>
       The primary component of the <guimenu>Main Menu</guimenu> is the
@@ -484,13 +477,6 @@
         GNOME graphical file manager.
        </para>
       </listitem>
-   <!-- this was made obsolete by "run..." (see below)
-     <listitem>
-       <para>
-        <guimenuitem>Run program&hellip;</guimenuitem> &mdash; gives
-        you the command line prompt where you can enter any command.
-       </para>
-      </listitem> -->
       <listitem>
        <para>
         <guimenuitem>Help system</guimenuitem> &mdash; launches the
@@ -585,28 +571,10 @@
 
       <listitem id="runcommand">
        <para>
-        <guimenuitem>Run &hellip;</guimenuitem> &mdash; This command
-        gives you the command line prompt. It is not a full-blown
-        shell, so it is not a replacement for <application>GNOME
-        terminal</application>, but it is very convenient when you
-        need to enter just one command quickly. You can also launch
-        this command line prompt by using a keyboard shortcut (you
-        will need to specify the key you want to use in the <link
-        linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
-        tab of <interface><link linkend="globalpanelprefs">Global
-        Panel Preferences</link> dialog</interface>).
-       </para>
-       <para>
-        The command line prompt has history buffer (you can recall a
-        previously entered command by pressing the down arrow located
-        to the right of the text field and selecting the command) and
-        <guibutton>Browse</guibutton> button, which allows you to
-        choose a file &mdash; the filename will be added at the end of
-        your command. For example, you can enter
-        <userinput>emacs</userinput> (an extremely powerful text
-        editor) on the command line and then use the
-        <guibutton>Browse</guibutton> button to select the file to be
-        edited.
+        <guimenuitem>Run &hellip;</guimenuitem> &mdash; This menu item
+        opens the <interface>Run Program</interface> dialog for
+        executing shell commands (see <xref
+        linkend="runbutton">). 
        </para>
       </listitem>
      </itemizedlist>
@@ -1084,6 +1052,55 @@
     desktop environment.  It initiates the logout sequence, bringing
     up the <interface>Logout Dialog</interface>, as described in <xref
     linkend="loggingout">.
+   </para>
+  </sect2>
+  <sect2 id="runbutton">
+   <title>The Run Button</title>
+   <figure id="runbuttonfig">
+    <title>The Run Button</title>
+    <screenshot>
+     <screeninfo>The Run Button</screeninfo>
+     <graphic fileref="./figures/panel_runbutton"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    The <guibutton>Run</guibutton> button opens the <interface>Run
+    Program</interface> dialog, shown in <xref
+    linkend="runprogramdialog-fig">.  This gives you access to the
+    command 
+    line prompt. It is not a full-blown shell, so it is not a
+    replacement for <application>GNOME terminal</application>, but it
+    is very convenient when you need to enter just one command
+    quickly. You can also open the <interface>Run Program</interface>
+    dialog by using a 
+    keyboard shortcut. The default keyboard shortcut is Alt-F2, but
+    you can change this in the <link
+    linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab of
+    <interface><link linkend="globalpanelprefs">Global Panel
+    Preferences</link> dialog</interface>.
+   </para>
+   <figure id="runprogramdialog-fig">
+    <title>The Run Program Dialog</title>
+    <screenshot>
+     <screeninfo>The Run Program Dialog</screeninfo>
+     <graphic fileref="./figures/panel_runprogram"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    The command entry has a history buffer which allows you to execute a
+    previously entered command by pressing the <guiicon>down
+    arrow</guiicon> icon located to the right of the text field and
+    selecting the command. It also has a 
+    <guibutton>Browse&hellip;</guibutton> button, which allows you to choose a
+    file &mdash; this filename will be appended to the end of your
+    command. For example, you can enter <userinput>emacs</userinput>
+    (an extremely powerful text editor) on the command line and then
+    use the <guibutton>Browse&hellip;</guibutton> button to select the file to
+    be edited.
    </para>
   </sect2>
   <sect2 id="swallowedapps">
@@ -1893,23 +1910,18 @@
 	  </listitem>
 
     </itemizedlist>
-      <para>
-      This tab also allows you to configure some global key
-      bindings. At the moment, you can define key bindings for <link
-      linkend="globalmenu"><guimenu>Global Menu</guimenu></link> and
-      for Run Command dialog.  For example, if you are using a
-      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
-      (this key is usually located to the left of the space bar and
-      labelled with a picture of a menu) to the <guimenu>Global
-      Menu</guimenu>, so that pressing this key will bring up the
-      <guimenu>Global Menu</guimenu>; similarly, the common key
-      binding for the Run command dialog is the so-called
-      <keycap>Windows</keycap> key (called so because on most PC
-      keyboards this key is indeed labelled with a flying window).  To
-      change the key bound to <guimenu>Global Menu</guimenu> or to the
-      Run Dialog, you can either select a key from the drop-down list,
-      or click on the <guibutton>Grab</guibutton> button and then
-      press the desired key. </para>
+    <para>
+     This tab also allows you to configure some global key
+     bindings. You can define key bindings for the <link
+     linkend="globalmenu"><guimenu>Global Menu</guimenu></link>(ie.
+     <guimenu>Popup Menu</guimenu>) and
+     for the <link linkend="runbutton"><interface>Run
+     Program</interface></link> dialog. (The default key bindings for
+     these are Alt-F1 and Alt-F2 respectively.)  To
+     change these key bindings,  select a key from the drop-down list
+     or press the <guibutton>Grab key&hellip;</guibutton> button and then
+     press the desired key. 
+    </para>
       <note>
 	<title>NOTE</title>
 	<para>

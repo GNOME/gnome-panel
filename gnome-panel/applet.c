@@ -175,7 +175,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		break;
 	case APPLET_RUN:
 		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#RUN");
+			panel_pbox_help_cb (NULL, 0, "specialobjects.html#RUNBUTTON");
 		break;
 	default: break;
 	}
