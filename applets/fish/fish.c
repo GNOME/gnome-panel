@@ -3,7 +3,8 @@
  * to break the monotony of finals
  */
 
-#include "gnome.h"
+#include <string.h>
+#include <gnome.h>
 #include "applet-lib.h"
 #include "applet-widget.h"
 
@@ -31,14 +32,16 @@ static gint curpix = 0;
 static GtkWidget * fortune_dialog = NULL;
 static GtkWidget * fortune_label;
 
-#define NAME_KEY "/fish_applet/general/name"
-
 static void
-load_properties()
+load_properties(char *cfgpath)
 {
+  char *query;
+
   if (properties.name) g_free(properties.name);
 
-  properties.name = gnome_config_get_string(NAME_KEY);
+  query = g_copy_strings(cfgpath,"name",NULL);
+  properties.name = gnome_config_get_string(query);
+  g_free(query);
 
   if (properties.name == NULL) properties.name = g_strdup(defaults.name);
 }
@@ -70,9 +73,6 @@ apply_properties()
     gtk_label_set(GTK_LABEL(fortune_label), tmp);
     g_free(tmp);
   }
-
-  gnome_config_set_string(NAME_KEY, properties.name);
-  gnome_config_sync();
 }
 
 static void
@@ -232,8 +232,6 @@ create_fish_widget(GtkWidget *window)
         gtk_container_add(GTK_CONTAINER(event_box),pixmap);
         gtk_container_add(GTK_CONTAINER(frame),event_box);
 
-	load_properties();
-
         return frame;
 }
 
@@ -267,6 +265,24 @@ about_cb (AppletWidget *widget, gpointer data)
 	return;
 }
 
+static gint
+applet_session_save(GtkWidget *w,
+		    const char *cfgpath,
+		    const char *globcfgpath)
+{
+	char *query;
+
+	query = g_copy_strings(cfgpath,"name",NULL);
+	gnome_config_set_string(query,properties.name);
+	g_free(query);
+
+	gnome_config_sync();
+	gnome_config_drop_all();
+
+	return FALSE;
+}
+
+
 
 int
 main(int argc, char *argv[])
@@ -284,10 +300,16 @@ main(int argc, char *argv[])
 	gtk_widget_realize(applet);
 	fish = create_fish_widget(applet);
 	gtk_widget_show(fish);
+
+	load_properties(APPLET_WIDGET(applet)->cfgpath);
+
 	applet_widget_add(APPLET_WIDGET(applet), fish);
 	gtk_widget_show(applet);
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(destroy_applet),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
+			   GTK_SIGNAL_FUNC(applet_session_save),
 			   NULL);
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),
