@@ -486,7 +486,14 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 static GtkWidget *
 create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 {
-	GtkWidget *vbox, *button, *pixmap, *button_pixmap, *menu, *app_menu;
+	GtkWidget *vbox;
+	GtkWidget *button;
+	GtkWidget *pixmap;
+	GtkWidget *button_pixmap;
+	GtkWidget *menu;
+	GtkWidget *app_menu;
+	GtkWidget *button_vbox;
+	
 	static char *button_pixmap_name;
 	char *pixmap_name;
 
@@ -498,17 +505,29 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 	if (!button_pixmap_name)
 		button_pixmap_name = gnome_pixmap_file ("arrowup.xpm");
 
+	/* main vbox */
 	vbox   = gtk_vbox_new (FALSE, 0);
-	button = gtk_button_new ();
 	gtk_widget_show (vbox);
+
+	/* main button */
+	button = gtk_button_new ();
 	gtk_widget_show (button);
 
 	button_pixmap = gnome_create_pixmap_widget (window, button, button_pixmap_name);
 	pixmap        = gnome_create_pixmap_widget (window, button, pixmap_name);
 
-	gtk_container_add (GTK_CONTAINER (button), button_pixmap);
+	/* box to put in button */
+	button_vbox = gtk_vbox_new (FALSE, 0);
+	gtk_widget_show (button_vbox);
+	gtk_container_add (GTK_CONTAINER (button), button_vbox);
+	
+	/* pack pixmaps into button_box */
+	gtk_box_pack_start (GTK_BOX (button_vbox), button_pixmap, 
+			    FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (button_vbox), pixmap, FALSE, FALSE, 0);
+	
+	/* pack button into main vbox */
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-	gtk_box_pack_start (GTK_BOX (vbox), pixmap, FALSE, FALSE, 0);
 
 	gtk_widget_show (button_pixmap);
 	gtk_widget_show (button);
@@ -516,7 +535,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu)
 	gtk_widget_show (vbox);
 
 	menu = create_menu_at (window, menudir, 0);
-	if (main_menu){
+	if (main_menu) {
 		app_menu = create_menu_at (window, menudir, 1);
 		add_special_entries (menu, app_menu);
 	}

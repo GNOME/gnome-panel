@@ -33,6 +33,8 @@ typedef struct {
 	GtkWidget  *hidebutton_v;
 	GtkWidget  *showbutton_v;
 	GtkWidget  *fixed;
+	GtkWidget  *showbutton;
+	GtkWidget  *box;
 	PanelPos    pos;
 	PanelState  state;
 	PanelMode   mode;

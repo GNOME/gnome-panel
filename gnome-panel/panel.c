@@ -15,6 +15,7 @@
 #include "panel_cmds.h"
 #include "applet_cmds.h"
 #include "panel.h"
+#include "config.h"
 
 #ifdef HAVE_LIBINTL
 #define _(String) gettext(String)
@@ -977,8 +978,8 @@ panel_init(void)
 	/*the_panel->pos   = PANEL_POS_RIGHT;*/
 	the_panel->pos   = PANEL_POS_BOTTOM;
 	the_panel->state = PANEL_SHOWN;
-	/*the_panel->mode  = PANEL_GETS_HIDDEN;*/
-	the_panel->mode  = PANEL_STAYS_PUT;
+	the_panel->mode  = PANEL_GETS_HIDDEN;
+	/* the_panel->mode  = PANEL_STAYS_PUT; */
 
 	the_panel->table = gtk_table_new(3,3,FALSE);
 
@@ -1002,6 +1003,39 @@ panel_init(void)
 			 1,2,1,2,GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,0,0);
 	gtk_widget_show(the_panel->fixed);
+
+	the_panel->showbutton=gtk_button_new_with_label(">");
+	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton), "clicked",
+				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
+	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->showbutton,
+		FALSE,FALSE,0);
+
+	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->box);
+	gtk_widget_show(the_panel->box);
+
+	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
+	gtk_widget_set_uposition(the_panel->window, 0, gdk_screen_height() - DEFAULT_HEIGHT);
+#if 0
+	the_panel->pos   = PANEL_POS_TOP;
+	the_panel->state = PANEL_SHOWN;
+	the_panel->mode  = PANEL_GETS_HIDDEN;
+	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
+	gtk_widget_set_uposition(the_panel->window, 0, 0);
+#endif
+#if 0
+	the_panel->pos   = PANEL_POS_RIGHT;
+	the_panel->state = PANEL_SHOWN;
+	the_panel->mode  = PANEL_GETS_HIDDEN;
+	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
+	gtk_widget_set_uposition(the_panel->window, gdk_screen_width() - DEFAULT_HEIGHT, 0);
+#endif
+#if 0
+	the_panel->pos   = PANEL_POS_LEFT;
+	the_panel->state = PANEL_SHOWN;
+	the_panel->mode  = PANEL_GETS_HIDDEN;
+	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
+	gtk_widget_set_uposition(the_panel->window, 0, 0);
+#endif
 
 	/*show buttons (one for vertical one for horizontal)*/
 	the_panel->showbutton_h=gtk_button_new_with_label(">");
@@ -1406,7 +1440,7 @@ panel_reconfigure(Panel newconfig)
 static void
 properties(void)
 {
-	fprintf(stderr, "Panel properties not yet implemented\n");
+	panel_config();
 }
 
 

@@ -17,7 +17,9 @@ panel_SOURCES = \
 	panel_cmds.h	\
 	main.c		\
 	panel.c		\
-	panel.h
+	panel.h         \
+	config.c        \
+	config.h
 
 MYLIBS = \
 	$(top_builddir)/libgnomeui/libgnomeui.la 	\
