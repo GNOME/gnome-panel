@@ -739,18 +739,22 @@ load_default_applets1(PanelWidget *panel)
 		NULL };
 	int i;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER|
-		MAIN_MENU_SYSTEM_SUB|MAIN_MENU_USER_SUB;
+		MAIN_MENU_SYSTEM_SUB|MAIN_MENU_USER_SUB|
+		MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB;
 	char *p;
 
 	/*guess redhat menus*/
-	if(g_file_exists("/etc/X11/wmconfig"))
+	if(g_file_exists(REDHAT_MENUDIR))
 		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
-	/*guess KDE menus */
+
+	/*guess KDE menus*/
 	if(g_file_exists(KDE_MENUDIR))
 		flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+
 	/*guess debian menus*/
-	if (g_file_exists("/etc/menu-methods/gnome"))
+	if (g_file_exists(DEBIAN_MENUDIR))
 		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
+	
 	load_menu_applet(NULL,flags, panels->data, 0);
 
 	/*load a Programs menu*/
