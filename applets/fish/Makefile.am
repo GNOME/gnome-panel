@@ -4,9 +4,9 @@ INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
-	$(GNOME_INCLUDEDIR)					\
+	-DFISH_GLADEDIR=\""$(gladedir)"\"			\
 	$(WARN_CFLAGS)						\
-	$(PANEL_CFLAGS)
+	$(FISH_CFLAGS)
 
 SUBDIRS = help
 
@@ -24,7 +24,7 @@ fish_applet_2_SOURCES = fish.c $(EGGFILES)
 
 fish_applet_2_LDADD =					\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	$(PANEL_LIBS)
+	$(FISH_LIBS)
 
 FISH_BITMAPS =		\
 	fishanim.png	\
@@ -37,7 +37,11 @@ EXTRA_DIST =					\
 	GNOME_FishApplet_Factory.server.in.in	\
 	gnome-fish.png				\
 	fish.schemas.in				\
-	$(ui_DATA)
+	$(ui_DATA)				\
+	$(glade_DATA)
+
+gladedir   = $(datadir)/fish
+glade_DATA = fish.glade
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)

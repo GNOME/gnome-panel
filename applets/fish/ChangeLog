@@ -1,3 +1,12 @@
+2002-12-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* fish.c: make the prefs dialog instant
+	apply, fixing #77044. In the process,
+	substantially clean up this applet. Gladify
+	the dialog, make it handle gconf key changes,
+	derive from PanelApplet, respect the widget
+	size allocation and more ...
+
 2002-12-04  Mark McLoughlin  <mark@skynet.ie>
 
 	* fish.c: (update_fortune_dialog): no whitespace
