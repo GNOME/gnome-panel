@@ -1626,6 +1626,7 @@ applet_load_prefs(MailCheck *mc)
 	}
 
 	mc->auto_update = panel_applet_gconf_get_bool(mc->applet, "auto_update", NULL);
+	mc->reset_on_clicked = panel_applet_gconf_get_bool (mc->applet, "reset_on_clicked", NULL);
 	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update_frequency", NULL);
 	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec_command", NULL);
 	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec_enabled", NULL);
@@ -1643,6 +1644,7 @@ applet_load_prefs(MailCheck *mc)
 	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote_password", NULL);
 	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote_folder", NULL);
 	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox_type", NULL);
+	mc->mail_file = panel_applet_gconf_get_int (mc->applet, "mail_file", NULL);
 	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play_sound", NULL);
 }
 
