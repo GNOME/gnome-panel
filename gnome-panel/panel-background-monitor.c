@@ -360,6 +360,9 @@ panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
 
 	subwidth  = MIN (width,  monitor->width - x);
 	subheight = MIN (height, monitor->height - y);
+	/* if x or y are negative numbers */
+	subwidth  = MIN (subwidth, width + x);
+	subheight  = MIN (subheight, height + y);
 
 	subx = MAX (x, 0);
 	suby = MAX (y, 0);
@@ -367,20 +370,17 @@ panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
 	if ((subwidth <= 0) || (subheight <= 0) ||
 	    (monitor->width-x < 0) || (monitor->height-y < 0) )
 		/* region is completely offscreen */
-		return gdk_pixbuf_new (
-				GDK_COLORSPACE_RGB, FALSE, 8, width, height);
+		return gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+				       width, height);
 
 	pixbuf = gdk_pixbuf_new_subpixbuf (
 			monitor->gdkpixbuf, subx, suby, subwidth, subheight);
 
-	/* FIXME: don't handle regions off the top or left edge
-	 */
 	if ((subwidth < width) || (subheight < height)) {
-		tmpbuf = gdk_pixbuf_new (
-				GDK_COLORSPACE_RGB, FALSE, 8, width, height);
-		gdk_pixbuf_composite (
-			pixbuf, tmpbuf, 0, 0, subwidth, subheight,
-			0.0, 0.0, 1.0, 1.0, GDK_INTERP_NEAREST, 255);
+		tmpbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+					 width, height);
+		gdk_pixbuf_copy_area (pixbuf, 0, 0, subwidth, subheight,
+				      tmpbuf, (x < 0) ? -x : 0, (y < 0) ? -y : 0);
 		g_object_unref (pixbuf);
 		pixbuf = tmpbuf;
 	}

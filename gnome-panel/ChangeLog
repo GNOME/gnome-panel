@@ -1,5 +1,12 @@
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-background-monitor.c: (panel_background_monitor_get_region):
+	copy the area at the right place, so we get the expected pixbuf when
+	the panel is autohidden at the top or the left of the screen.
+	Fix bug #110701. And kill a FIXME.
+
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
 	Fix removal of the last applet/object that could not get removed,
 	which could cause a crash if the user tried to remove it again.
 
