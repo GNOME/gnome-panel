@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2002-07-02 15:45+0200\n"
-"PO-Revision-Date: 2002-07-02 15:49+0200\n"
+"POT-Creation-Date: 2002-07-03 09:58+0200\n"
+"PO-Revision-Date: 2002-07-03 09:59+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -305,8 +305,8 @@ msgid "Display seconds in time"
 msgstr "Vis sekunder i tid"
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
-msgstr "Vis tiden i Greenwich Mean Time sonen"
+msgid "Display time in Universal Coordinated Time zone"
+msgstr "Vis tiden i Universal Coordinated Time"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
@@ -337,16 +337,16 @@ msgid "Show time with seconds"
 msgstr "Vis tid med csekunder"
 
 #: applets/gen_util/clock.schemas.in.h:12
-msgid "Use GMT"
-msgstr "Bruk GMT"
-
-#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Bruk Internett-tid"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "Bruk UNIX tid"
+
+#: applets/gen_util/clock.schemas.in.h:14
+msgid "Use UTC"
+msgstr "Bruk UTC"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -2050,7 +2050,8 @@ msgstr ""
 "\n"
 "Start denne appleten på nytt?\n"
 "\n"
-"(Hvis du velger å ikke starte den på nytt nå, kan du alltid legge den til ved å høyreklikke på panelet og klikke på undermenyen  «Legg til på panelet»)"
+"(Hvis du velger å ikke starte den på nytt nå, kan du alltid legge den til "
+"ved å høyreklikke på panelet og klikke på undermenyen  «Legg til på panelet»)"
 
 #: gnome-panel/panel-applet-frame.c:796
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2317,42 +2318,42 @@ msgstr "Test Bonobo-applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Factory for test Bonobo-applet"
 
-#: libpanel-applet/panel-applet.c:748
+#: libpanel-applet/panel-applet.c:751
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ukomplett bakgrunnstype «%s» mottatt"
 
-#: libpanel-applet/panel-applet.c:762
+#: libpanel-applet/panel-applet.c:765
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ukomplett bakgrunnstype «%s» mottatt: %s"
 
-#: libpanel-applet/panel-applet.c:771
+#: libpanel-applet/panel-applet.c:774
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Feil under henting av pixmap %s"
 
-#: libpanel-applet/panel-applet.c:778
+#: libpanel-applet/panel-applet.c:781
 msgid "Unknown background type received"
 msgstr "Ukjent bakgrunnstype mottatt"
 
-#: libpanel-applet/panel-applet.c:953
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's orientation"
 msgstr "Orientering for panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:961
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Størrelse i piksler på panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:969
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Bakgrunnsfarge eller bilde for panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:977
+#: libpanel-applet/panel-applet.c:980
 msgid "The Applet's flags"
 msgstr "Appletens flagg"
 
-#: libpanel-applet/panel-applet.c:985
+#: libpanel-applet/panel-applet.c:988
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Områder som gir hint om hvilke størrelser som er akseptable for appleten"
@@ -2412,6 +2413,9 @@ msgstr "Ekstra stor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Ekstra liten"
+
+#~ msgid "Use GMT"
+#~ msgstr "Bruk GMT"
 
 #~ msgid "Tasklist size"
 #~ msgstr "Størrelse på oppgaveliste"
