@@ -405,13 +405,14 @@ get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 	while(menu) {
 		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
 							 "menu_panel");
+
 		if (panel != NULL) {
 			if(PANEL_IS_WIDGET(panel))
 				return panel;
 			else
 				g_warning("Menu is on crack");
 		}
-		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
+		menu = gtk_menu_get_attach_widget (GTK_MENU (menu))->parent;
 	}
 	if (must_have) {
 		g_warning("Something went quite terribly wrong and we can't "
@@ -3328,9 +3329,12 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	GtkWidget *panelw;
 	PanelWidget *panel;
 
+	g_print ("-------\n");
 	panel = get_panel_from_menu_data(w, TRUE);
 	panelw = panel->panel_parent;
 
+	g_print ("woo, in the remove panel query: %p!\n", panel);
+	
 	if (!DRAWER_IS_WIDGET (panelw) && base_panels == 1) {
 		panel_error_dialog ("cannot_remove_last_panel",
 				    _("You cannot remove your last panel."));
@@ -3756,6 +3760,8 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 	PanelWidget *panel = get_panel_from_menu_data(menu, TRUE);
 	GtkWidget *label;
 
+	g_print ("woo, setting up remove this panel: %p\n", panel);
+	
 	g_assert(panel->panel_parent);
 
 	if(!GTK_MENU(menu)->torn_off &&
@@ -3781,7 +3787,6 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 		g_warning("We can't find the label of a menu item");
 		return;
 	}
-
 
 	/* this will not handle the case of menu being torn off
 	 * and then the confirm_panel_remove changed, but oh well */

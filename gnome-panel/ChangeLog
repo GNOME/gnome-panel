@@ -1,5 +1,9 @@
 2001-12-09  Anders Carlsson  <andersca@gnu.org>
 
+	* menu.c (get_panel_from_menu_data): Use gtk_menu_get_attach_widget
+	to traverse up in the menu hierchary. Thanks to Owen Taylor for
+	suggesting this.
+
 	* applet.c: (panel_applet_add_callback), (setup_an_item),
 	(applet_setup_panel_menu), (panel_applet_create_menu):
 	Ref/Sink our menu, scale the panel menu icon.
