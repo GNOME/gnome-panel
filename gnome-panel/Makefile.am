@@ -145,9 +145,11 @@ gnome_panel_2_LDADD =		\
 
 gnome_panel_2_LDFLAGS = -export-dynamic
 
-gnome_panel_properties_SOURCES = gnome-panel-properties.c
+gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c
 
 gnome_panel_properties_LDADD = $(PANELCONFIG_LIBS)           
+
+gnome_panel_properties_LDFLAGS = -export-dynamic
 
 EXTRA_DIST =					\
 	APPLET_WRITING				\

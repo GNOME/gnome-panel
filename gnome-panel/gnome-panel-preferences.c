@@ -30,6 +30,7 @@
 
 #include <gdk/gdkx.h>
 #include "global-keys.h"
+#include "panel-util.h"
 
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
@@ -40,21 +41,12 @@
 
 #include <gconf/gconf-client.h>
 
-/*This array is the names of the checkboxes in the gnome-panel-properties.glade
-  file. The names also correspond directly to the gconf-keys which they 
-  represent.  If you add a new checkbox to the interface make sure its name is 
-  the same as the gconf-key it is to edit and make sure you add its name to 
-  this array.*/
+/* Just so we can link with panel-util.c for the convert keys stuff*/
+GSList *applets;
 
-gchar* checkboxes[] = {
-	"drawer-autoclose",
-	"auto-raise-panel",
-	"confirm-panel-remove",
-	"avoid-panel-overlap",
-	"keep-menus-in-memory",
-	"enable-animations",
-	NULL
-	};
+/* Ugly globals to help reduce code size */
+GladeXML *glade_gui;
+GConfClient *gconf_client;
 
 /*
  * GEGL Wants Winners,
@@ -90,9 +82,8 @@ void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
         }
 }
 
-
 #include "nothing.cP"
-/*
+
 static GtkWidget *grab_dialog;
 
 static gboolean 
@@ -120,7 +111,6 @@ is_modifier (guint keycode)
 
 	return retval;
 }
-
 
 static GdkFilterReturn
 grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
@@ -189,137 +179,184 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	gtk_widget_show_all (grab_dialog);
 	return;
 }
-*/
+
+static void
+update_sensitive_for_checkbox(gchar *key, int checked)
+{
+	GtkWidget *associate = NULL;
+
+	if (strcmp(key,"/apps/panel/global/enable-animations") == 0)
+                associate = glade_xml_get_widget(glade_gui,"animation-vbox");
+        if (strcmp(key,"/apps/panel/global/enable-key-bindings") == 0)
+                associate = glade_xml_get_widget(glade_gui,"kb-table");
+        if (associate !=NULL)
+                gtk_widget_set_sensitive(associate,checked);
+}
 
 static void
 checkbox_clicked (GtkWidget *widget, gpointer data)
 {
+	int checked = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 	gchar *key = (gchar*)data;
-	
-	gconf_client_set_bool(gconf_client_get_default(),key,
-		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)),NULL);
+
+	gconf_client_set_bool(gconf_client,key,checked,NULL);
+	update_sensitive_for_checkbox(key, checked);
 }
 
 static void
-enable_animations_clicked (GtkWidget *widget, gpointer data)
+option_menu_changed (GtkWidget *widget, gpointer data)
 {
-	GtkWidget *vbox = GTK_WIDGET(data);
-	int enable = GTK_TOGGLE_BUTTON(widget)->active;
+	gchar *key = (gchar *)data;
 
-	gtk_widget_set_sensitive(vbox,enable);
-}
-
-static void
-animation_speed_changed (GtkWidget *widget, gpointer data)
-{
-	gconf_client_set_int(gconf_client_get_default(),
-		"/apps/panel/global/panel-animation-speed",
+	gconf_client_set_int(gconf_client,key,
 		gtk_option_menu_get_history(GTK_OPTION_MENU(widget)),NULL);	
 }
 
 static void
-hide_delay_changed (GtkWidget *widget, gpointer data)
+spin_button_changed (GtkWidget *widget, gpointer data)
 {
-	gconf_client_set_int(gconf_client_get_default(),
-		"/apps/panel/global/panel-hide-delay",
+	gchar *key = (gchar *)data;
+
+	gconf_client_set_int(gconf_client,key,
 		gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget)),NULL);
 }
 
 static void
-show_delay_changed (GtkWidget *widget, gpointer data)
+entry_changed (GtkWidget *widget, gpointer data)
 {
-	gconf_client_set_int(gconf_client_get_default(),
-		"/apps/panel/global/panel-show-delay",
-		gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget)),NULL);
+        gchar *key = (gchar *)data;
+
+        gconf_client_set_string(gconf_client,key,
+                gtk_entry_get_text(GTK_ENTRY(widget)),NULL);
 }
 
 static void
-load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
+load_checkboxes()
 {
-	GtkWidget *checkbox;
-	GtkWidget *anim_vbox;
-	gchar *key;
-	int i=0;
+	gchar* checkboxes[] = {"drawer-autoclose", "auto-raise-panel",
+        	"confirm-panel-remove", "avoid-panel-overlap",
+		"keep-menus-in-memory", "enable-animations", 
+		"enable-key-bindings", NULL };
+	int i = 0;
 
 	while(checkboxes[i]!=NULL){
-		checkbox= glade_xml_get_widget(gui,checkboxes[i]);
+		GtkWidget *checkbox;
+		gchar *key;
+		int checked;
+		checkbox= glade_xml_get_widget(glade_gui,checkboxes[i]);
 		key = g_strdup_printf("/apps/panel/global/%s",checkboxes[i]);
+		checked = gconf_client_get_bool(gconf_client,key,NULL);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), 
-			gconf_client_get_bool(client,key,NULL));
+			checked);
 		g_signal_connect(G_OBJECT(checkbox),"clicked",
-			G_CALLBACK(checkbox_clicked),key);
+			G_CALLBACK(checkbox_clicked), key);
+		update_sensitive_for_checkbox(key, checked);
 		i++;
+		/*g_free(key);*/
 	}
-	/*if (key) {
-		g_free(key);
-		key = NULL;
-	}*/
-
-	checkbox = glade_xml_get_widget(gui,"enable-animations");
-	anim_vbox =  glade_xml_get_widget(gui,"animation-vbox");
-	gtk_widget_set_sensitive(anim_vbox,
-		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox)));
-	g_signal_connect(G_OBJECT(checkbox),"clicked",
-                        G_CALLBACK(enable_animations_clicked),anim_vbox);
 }
 
 static void
-load_config_into_gui(GladeXML *gui, GConfClient *client)
+load_option_menus()
 {
-	
-	GtkWidget *option, *hide_delay, *show_delay;
+	gchar *optionmenus[] = {"panel-animation-speed", "panel-window-layer",
+				 NULL };
+	int i = 0;
 
-	load_booleans_for_checkboxes(gui,client);
+	while(optionmenus[i]!=NULL){
+		GtkWidget *option;
+		gchar *key;
 
-	/* animation speed selection */
-        option = glade_xml_get_widget(gui,"panel-animation-speed");
-        gtk_option_menu_set_history(GTK_OPTION_MENU(option),
-                gconf_client_get_int(client,
-                "/apps/panel/global/panel-animation-speed",NULL));
-        g_signal_connect(G_OBJECT(option),"changed",
-                        G_CALLBACK(animation_speed_changed),NULL);
-
-	/* hide delay */
-	hide_delay = glade_xml_get_widget(gui,"panel-hide-delay");
-	gtk_spin_button_configure(GTK_SPIN_BUTTON(hide_delay),
-		GTK_ADJUSTMENT(gtk_adjustment_new(30.0,30.0,
-		3000.0,10.0,10.0,0.0)),10.0,0);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(hide_delay),
-		(double)gconf_client_get_int(client,
-		"/apps/panel/global/panel-hide-delay",NULL));
-	g_signal_connect(G_OBJECT(hide_delay),"value-changed",
-		G_CALLBACK(hide_delay_changed),NULL);
-
-	/* show delay */	
-	show_delay = glade_xml_get_widget(gui,"panel-show-delay");
-	gtk_spin_button_configure(GTK_SPIN_BUTTON(show_delay),
-		GTK_ADJUSTMENT(gtk_adjustment_new(0.0,0.0,
-		3000.0,10.0,10.0,0.0)),10.0,0);
-	gtk_spin_button_set_value(GTK_SPIN_BUTTON(show_delay),
-		(double)gconf_client_get_int(client,
-		"/apps/panel/global/panel-show-delay",NULL));
-	g_signal_connect(G_OBJECT(show_delay),"value-changed",
-		G_CALLBACK(show_delay_changed),NULL);
-	
+        	option = glade_xml_get_widget(glade_gui,optionmenus[i]);
+        	key = g_strdup_printf("/apps/panel/global/%s",optionmenus[i]);
+        	gtk_option_menu_set_history(GTK_OPTION_MENU(option),
+                	gconf_client_get_int(gconf_client,key,NULL));
+        	g_signal_connect(G_OBJECT(option),"changed",
+                        G_CALLBACK(option_menu_changed),key);
+		i++;
+		/*g_free(key);*/
+	}
 }
 
 static void
-setup_the_ui(GtkWidget *main_window, GConfClient* client)
+load_spin_buttons()
 {
-	GladeXML *gui;
+	/* keep the spin buttons and their associated adjustment in sync */
+	gchar *spinbuttons[] = {"panel-hide-delay", "panel-show-delay", NULL };
+	GtkAdjustment *adjustments[] = {GTK_ADJUSTMENT(gtk_adjustment_new(30.0,
+						30.0,3000.0,10.0,10.0,0.0)),
+				        GTK_ADJUSTMENT(gtk_adjustment_new(0.0,
+						0.0, 3000.0,10.0,10.0,0.0))
+					};
+        int i = 0;
+
+        while(spinbuttons[i]!=NULL){
+		GtkWidget *spin_button;
+		gchar* key;
+
+        	spin_button = glade_xml_get_widget(glade_gui,spinbuttons[i]);
+        	gtk_spin_button_configure(GTK_SPIN_BUTTON(spin_button),
+                	adjustments[i],10.0,0);
+		key = g_strdup_printf("/apps/panel/global/%s",spinbuttons[i]);
+        	gtk_spin_button_set_value(GTK_SPIN_BUTTON(spin_button),
+                	(double)gconf_client_get_int(gconf_client, key, NULL));
+        	g_signal_connect(G_OBJECT(spin_button),"value-changed",
+                	G_CALLBACK(spin_button_changed), key);
+		i++;
+		/*g_free(key);*/
+        }
+}
+
+static void
+load_key_bindings()
+{
+        gchar *entries[] = {"menu-key", "run-key", NULL };
+        int i = 0;
+
+        while(entries[i]!=NULL){
+                GtkWidget *button, *entry;
+		gchar *button_name, *key;
+
+                entry = glade_xml_get_widget(glade_gui,entries[i]);
+		key = g_strdup_printf("/apps/panel/global/%s",entries[i]);
+		gtk_entry_set_text(entry, gconf_client_get_string(gconf_client,
+			key,NULL));
+		button_name = g_strdup_printf("grab-%s", entries[i]);
+		button = glade_xml_get_widget(glade_gui, button_name);
+                g_signal_connect(G_OBJECT(button),"clicked",
+                        G_CALLBACK(grab_button_pressed), entry);
+		g_signal_connect(G_OBJECT(entry),"changed",
+			G_CALLBACK(entry_changed),key);
+                i++;
+                /*g_free(button_name);*/
+        }
+}
+
+static void
+load_config_into_gui()
+{
+	load_checkboxes();
+	load_option_menus();
+	load_spin_buttons();
+	load_key_bindings();
+}
+
+static void
+setup_the_ui(GtkWidget *main_window)
+{
 	gchar *glade_file;
 	GtkWidget *notebook;
 
 	glade_file = GLADEDIR "/gnome-panel-properties.glade2";
 
-	gui = glade_xml_new(glade_file, "main_notebook",NULL);
-	if (!gui) {
+	glade_gui = glade_xml_new(glade_file, "main_notebook",NULL);
+	if (!glade_gui) {
 		g_warning("Error loading `%s'",glade_file);
 		return;
 	}
-	glade_xml_signal_autoconnect(gui);
+	glade_xml_signal_autoconnect(glade_gui);
 
-	notebook=glade_xml_get_widget(gui,"main_notebook");
+	notebook=glade_xml_get_widget(glade_gui,"main_notebook");
 
 	g_signal_connect (G_OBJECT (notebook), "event",
                           G_CALLBACK (config_event),
@@ -328,7 +365,7 @@ setup_the_ui(GtkWidget *main_window, GConfClient* client)
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(main_window)->vbox),notebook,
 		TRUE,TRUE,0);
 
-	load_config_into_gui(gui, client);
+	load_config_into_gui();
 }
 
 static void
@@ -347,7 +384,6 @@ int
 main (int argc, char **argv)
 {
   	GtkWidget *main_window;
-	GConfClient *gconf_client;
 
 	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -362,8 +398,11 @@ main (int argc, char **argv)
 	gtk_dialog_add_button (GTK_DIALOG(main_window),
 		GTK_STOCK_OK, GTK_RESPONSE_OK);
 
-	 gtk_signal_connect(GTK_OBJECT(main_window), "response",
-                     GTK_SIGNAL_FUNC(main_dialog_response), main_window);
+	gtk_signal_connect(GTK_OBJECT(main_window), "response",
+        	GTK_SIGNAL_FUNC(main_dialog_response), main_window);
+
+	g_signal_connect(G_OBJECT(main_window), "destroy",
+		G_CALLBACK(gtk_main_quit),NULL);
 
 	gconf_client = gconf_client_get_default();
 
@@ -385,10 +424,11 @@ main (int argc, char **argv)
 	}
 	else
 	{
-		setup_the_ui(main_window, gconf_client);
+		setup_the_ui(main_window);
 	}
 
-	gtk_window_set_title(main_window, _("Panel Global Properties"));
+	gtk_window_set_title(GTK_WINDOW(main_window),
+		_("Panel Global Properties"));
 
 	gtk_widget_show_all(main_window);
 
