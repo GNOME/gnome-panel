@@ -461,22 +461,28 @@ queue_resize_foreach(GtkWidget *w, gpointer data)
 	}
 }
 
-static int
-basep_state_change(GtkWidget *widget,
+static void
+basep_state_change(BasePWidget *basep,
 		   BasePState state,
 		   gpointer data)
 {
-	BasePWidget *basep = BASEP_WIDGET(widget);
 	gtk_container_foreach (GTK_CONTAINER (basep->panel),
 			       (state == BASEP_SHOWN)
 			       ? state_restore_foreach
 			       : state_hide_foreach,
-			       (gpointer)widget);
+			       (gpointer)basep);
 
 	panels_to_sync = TRUE;
-
-	return TRUE;
 }
+
+/*static void
+basep_type_change(BasePWidget *basep,
+		  PanelType type,
+		  gpointer data)
+{
+	update_config_type(basep);
+	panels_to_sync = TRUE;
+}*/
 
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
@@ -1133,6 +1139,10 @@ panel_setup(GtkWidget *panelw)
 			    "state_change",
 			    GTK_SIGNAL_FUNC (basep_state_change),
 			    NULL);
+	/*gtk_signal_connect (GTK_OBJECT (basep),
+			    "type_change",
+			    GTK_SIGNAL_FUNC (basep_type_change),
+			    NULL);*/
 
 	basep_pos_connect_signals (basep);
 
@@ -1169,7 +1179,7 @@ send_state_change(void)
 	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
 		PanelData *pd = list->data;
 		if(!IS_DRAWER_WIDGET(pd->panel))
-			basep_state_change(pd->panel,
+			basep_state_change(BASEP_WIDGET(pd->panel),
 					   BASEP_WIDGET(pd->panel)->state,
 					   NULL);
 	}

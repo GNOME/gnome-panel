@@ -2456,6 +2456,7 @@ convert_setup (BasePWidget *basep, GtkType type)
 	basep->pos->basep = basep;
 	basep_widget_pre_convert_hook (basep);
 	basep_pos_connect_signals (basep);
+	update_config_type (basep);
 }
 
 static void

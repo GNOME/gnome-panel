@@ -1,3 +1,16 @@
+Tue Jan 25 01:13:49 2000  George Lebl <jirka@5z.com>
+
+	* menu.c,panel_config.[ch]: when types are changed change the
+	  type notebook of the panel properties if it exists.  Also
+	  use GtkFrame instead of GtkViewport for the empty space in the
+	  position widget to avoid blackness
+
+	* panel.c: small cleanup, and add a commented out binding of
+	  the type_change signal
+
+	* basep-widget.[ch]: comment out the type_change signal as it
+	  is never in fact even emitted, but perhaps it should
+
 Mon Jan 24 15:11:05 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: set menu_panel for each menu when shown.  Also correctly

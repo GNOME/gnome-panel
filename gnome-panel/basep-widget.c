@@ -74,7 +74,7 @@ basep_widget_get_type ()
 }
 
 enum {
-	TYPE_CHANGE_SIGNAL,
+	/*TYPE_CHANGE_SIGNAL,*/
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	WIDGET_LAST_SIGNAL
@@ -249,7 +249,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 
         basep_widget_parent_class = gtk_type_class (gtk_window_get_type ());
 
-	basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
+	/*basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
 		gtk_signal_new("type_change",
 			       GTK_RUN_LAST,
 			       object_class->type,
@@ -257,7 +257,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 						 type_change),
 			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);
+			       1, GTK_TYPE_ENUM);*/
 
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
 		gtk_signal_new("mode_change",

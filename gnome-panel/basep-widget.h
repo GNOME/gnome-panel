@@ -85,8 +85,11 @@ struct _BasePWidgetClass
 	GtkWindowClass parent_class;
 
 	/* signals */
-	void (*type_change)  (BasePWidget *basep,
-			      PanelType type);
+	/*FIXME: perhaps the type_change signal should be implemented
+	  so that we don't have to handle the update_config_type in menu.c
+	  but in panel.c along with the other update stuff */
+	/*void (*type_change)  (BasePWidget *basep,
+			      PanelType type);*/
 
 	void (*mode_change)  (BasePWidget *basep,
 			      BasePMode mode);

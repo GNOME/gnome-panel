@@ -40,8 +40,15 @@ struct _PerPanelConfig {
 	char			*back_pixmap;
 	GdkColor		back_color;
 	
-	int			register_changes; /*used for startup*/
+	gboolean		register_changes; /*used for startup*/
 	GtkWidget		*config_window;
+	GtkWidget		*type_tab; /* the type specific tab of
+					      the notebook, this is just
+					      an eventbox, which we will
+					      be able to change contents
+					      of */
+	GtkWidget		*type_tab_label;
+
 	GtkWidget		*pix_entry;
 
 	/*size*/
@@ -70,14 +77,15 @@ struct _PerPanelConfig {
 	GtkObject               *offset_adj;
 };
 
-void panel_config(GtkWidget *panel);
-void update_config_size(GtkWidget *panel);
-void update_config_back(PanelWidget *panel);
+void panel_config (GtkWidget *panel);
+void update_config_size (GtkWidget *panel);
+void update_config_back (PanelWidget *panel);
 void update_config_edge (BasePWidget *w);
 void update_config_anchor (BasePWidget *w);
 void update_config_offset (BasePWidget *w);
 void update_config_align (BasePWidget *w);
 void update_config_floating_pos (BasePWidget *w);
 void update_config_floating_orient (BasePWidget *w);
-void kill_config_dialog(GtkWidget *panel);
+void update_config_type (BasePWidget *w);
+void kill_config_dialog (GtkWidget *panel);
 #endif /* PANEL_CONFIG_H */

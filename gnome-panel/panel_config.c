@@ -57,6 +57,8 @@ static void
 update_position_toggles (PerPanelConfig *ppc)
 {
 	GtkWidget *toggle = ppc->toggle[ppc->edge][ppc->align];
+	/* this could happen during type changes */
+	if(!toggle) return;
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
 }
 
@@ -219,6 +221,7 @@ update_config_align (BasePWidget *w)
 	ppc->align = ALIGNED_POS (w->pos)->align;
 	update_position_toggles (ppc);
 }
+
 
 static void
 config_destroy(GtkWidget *widget, gpointer data)
@@ -538,7 +541,8 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 
 	update_position_toggles (ppc);
 
-	w = gtk_viewport_new (NULL, NULL);
+	w = gtk_frame_new (NULL);
+	gtk_frame_set_shadow_type(GTK_FRAME(w), GTK_SHADOW_IN);
 	gtk_table_attach (GTK_TABLE (table), w, 
 			  1, 1 + aligns,
 			  1, 1 + aligns,
@@ -1151,6 +1155,54 @@ background_page (PerPanelConfig *ppc)
 	return vbox;
 }
 
+void
+update_config_type (BasePWidget *w)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+	int i,j;
+	GtkWidget *page;
+
+	if (!ppc)
+		return;
+
+	g_return_if_fail(ppc->type_tab);
+
+	ppc->register_changes = FALSE;
+	gtk_widget_destroy(GTK_BIN(ppc->type_tab)->child);
+
+	/*FIXME: magic numbers */
+	for(i=0;i<4;i++)
+		for(j=0;j<3;j++)
+			ppc->toggle[i][j] = NULL;
+	if(IS_EDGE_WIDGET(w)) {
+		/* edge notebook page */
+		page = edge_notebook_page(ppc);
+		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
+			      _("Edge panel"));
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+	} else if(IS_ALIGNED_WIDGET(w)) {
+		/* aligned notebook page */
+		page = aligned_notebook_page(ppc);
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
+			      _("Aligned panel"));
+	} else if(IS_SLIDING_WIDGET(w)) {
+		/* sliding notebook page */
+		page = sliding_notebook_page(ppc);
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
+			      _("Sliding panel"));
+	} else if(IS_FLOATING_WIDGET(w)) {
+		/* floating notebook page */
+		page = floating_notebook_page(ppc);
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
+			      _("Floating panel"));
+ 	}
+	gtk_widget_show_all(ppc->type_tab);
+	ppc->register_changes = TRUE;
+}
+
 static void
 panelcfg_help(void)
 {
@@ -1238,34 +1290,49 @@ panel_config(GtkWidget *panel)
 
 	if(IS_EDGE_WIDGET(panel)) {
 		/* edge notebook page */
-		page = edge_notebook_page (ppc);
-		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-					  page,
-					  gtk_label_new (_("Edge panel")));
+		page = edge_notebook_page(ppc);
+		ppc->type_tab = gtk_event_box_new();
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		ppc->type_tab_label = gtk_label_new (_("Edge panel"));
+		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
+					 ppc->type_tab,
+					 ppc->type_tab_label);
 	} else if(IS_ALIGNED_WIDGET(panel)) {
 		/* aligned notebook page */
-		page = aligned_notebook_page (ppc);
-		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-					  page,
-					  gtk_label_new (_("Aligned panel")));
-	}else if (IS_SLIDING_WIDGET (panel)) {
+		page = aligned_notebook_page(ppc);
+		ppc->type_tab = gtk_event_box_new();
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		ppc->type_tab_label = gtk_label_new (_("Aligned panel"));
+		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
+					 ppc->type_tab,
+					 ppc->type_tab_label);
+	} else if(IS_SLIDING_WIDGET(panel)) {
 		/* sliding notebook page */
-		page = sliding_notebook_page (ppc);
-		gtk_notebook_append_page (GTK_NOTEBOOK (prop_nbook),
-					  page,
-					  gtk_label_new (_("Sliding panel")));
-	} else if (IS_FLOATING_WIDGET (panel)) {
+		page = sliding_notebook_page(ppc);
+		ppc->type_tab = gtk_event_box_new();
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		ppc->type_tab_label = gtk_label_new (_("Sliding panel"));
+		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
+					 ppc->type_tab,
+					 ppc->type_tab_label);
+	} else if(IS_FLOATING_WIDGET(panel)) {
 		/* floating notebook page */
-		page = floating_notebook_page (ppc);
-		gtk_notebook_append_page (GTK_NOTEBOOK (prop_nbook),
-					  page,
-					  gtk_label_new (_("Floating panel")));
+		page = floating_notebook_page(ppc);
+		ppc->type_tab = gtk_event_box_new();
+		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
+		ppc->type_tab_label = gtk_label_new (_("Floating panel"));
+		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
+					 ppc->type_tab,
+					 ppc->type_tab_label);
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		BasePWidget *basep = BASEP_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, info->data);
+
+		/* we can't change to/from drawers anyhow */
+		ppc->type_tab = NULL;
  	}
 
 	/* Backing configuration */
