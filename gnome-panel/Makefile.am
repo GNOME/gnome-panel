@@ -12,8 +12,9 @@ INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
-bin_PROGRAMS = panel clock_applet launcher_applet logout_applet
+bin_PROGRAMS = panel clock_applet  
 
+# launcher_applet logout_applet
 CORBA_SOURCES = \
 	gnome-panel.cc \
 	gnome-panel.h
@@ -72,15 +73,15 @@ clock_applet_SOURCES = \
 
 clock_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
-launcher_applet_SOURCES = \
-	launcher.c
+#launcher_applet_SOURCES = \
+3	launcher.c
 
-launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+#launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
-logout_applet_SOURCES = \
+#logout_applet_SOURCES = \
 	logout.c
 
-logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+#logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
