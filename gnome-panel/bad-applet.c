@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 {
   GtkWidget *w, *l;
   poptContext ctx;
-  char *mystage_str;
+  const char *mystage_str;
 
   applet_widget_init("bad-applet", "0.0", argc, argv, NULL, 0, &ctx);
 
