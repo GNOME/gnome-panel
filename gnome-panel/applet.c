@@ -208,15 +208,17 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 		BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
-static AppletUserMenu *
-applet_get_callback(GList *user_menu, const char *name)
+AppletUserMenu *
+applet_get_callback (GList *user_menu, const char *name)
 {
-	GList *list;
-	for(list=user_menu;list!=NULL;list=g_list_next(list)) {
-		AppletUserMenu *menu = list->data;
-		if(strcmp(menu->name,name)==0)
+	GList *li;
+
+	for (li = user_menu; li != NULL; li = li->next) {
+		AppletUserMenu *menu = li->data;
+		if (strcmp (menu->name, name) == 0)
 			return menu;
 	}
+
 	return NULL;	
 }
 
@@ -228,25 +230,26 @@ applet_add_callback(AppletInfo *info,
 {
 	AppletUserMenu *menu;
 
-	g_return_if_fail(info != NULL);
+	g_return_if_fail (info != NULL);
 	
-	if((menu=applet_get_callback(info->user_menu,callback_name))==NULL) {
-		menu = g_new0(AppletUserMenu,1);
-		menu->name = g_strdup(callback_name);
-		menu->stock_item = g_strdup(stock_item);
-		menu->text = g_strdup(menuitem_text);
+	menu = applet_get_callback (info->user_menu, callback_name);
+	if (menu == NULL) {
+		menu = g_new0 (AppletUserMenu, 1);
+		menu->name = g_strdup (callback_name);
+		menu->stock_item = g_strdup (stock_item);
+		menu->text = g_strdup (menuitem_text);
 		menu->sensitive = TRUE;
 		menu->info = info;
 		menu->menuitem = NULL;
 		menu->submenu = NULL;
-		info->user_menu = g_list_append(info->user_menu,menu);
+		info->user_menu = g_list_append (info->user_menu, menu);
 	} else {
-		if(menu->stock_item)
-			g_free(menu->stock_item);
-		if(menu->text)
-			g_free(menu->text);
-		menu->text = g_strdup(menuitem_text);
-		menu->stock_item = g_strdup(stock_item);
+		g_free (menu->stock_item);
+		menu->stock_item = NULL;
+		g_free (menu->text);
+		menu->text = NULL;
+		menu->text = g_strdup (menuitem_text);
+		menu->stock_item = g_strdup (stock_item);
 	}
 
 	/*make sure the menu is rebuilt*/
@@ -272,7 +275,7 @@ applet_remove_callback(AppletInfo *info, const char *callback_name)
 	
 	menu = applet_get_callback (info->user_menu, callback_name);
 	if (menu != NULL) {
-		info->user_menu = g_list_remove(info->user_menu,menu);
+		info->user_menu = g_list_remove (info->user_menu, menu);
 		g_free(menu->name);
 		menu->name = NULL;
 		g_free(menu->stock_item);
@@ -304,7 +307,8 @@ applet_callback_set_sensitive(AppletInfo *info, const char *callback_name, int s
 
 	g_return_if_fail(info != NULL);
 	
-	if((menu=applet_get_callback(info->user_menu,callback_name))!=NULL)
+	menu = applet_get_callback(info->user_menu, callback_name);
+	if (menu != NULL)
 		menu->sensitive = sensitive;
 	else
 		return; /*it just isn't there*/
@@ -371,22 +375,22 @@ setup_an_item(AppletUserMenu *menu,
 }
 
 static void
-add_to_submenus(AppletInfo *info,
-		char *path,
-		char *name,
-	       	AppletUserMenu *menu,
-	       	GtkWidget *submenu,
-		GList *user_menu)
+add_to_submenus (AppletInfo *info,
+		 const char *path,
+		 const char *name,
+		 AppletUserMenu *menu,
+		 GtkWidget *submenu,
+		 GList *user_menu)
 {
-	char *n = g_strdup(name);
-	char *p = strchr(n,'/');
+	char *n = g_strdup (name);
+	char *p = strchr (n, '/');
 	char *t;
 	AppletUserMenu *s_menu;
 
 	/*this is the last one*/
-	if(p==NULL) {
-		g_free(n);
-		setup_an_item(menu,submenu,FALSE);
+	if (p == NULL) {
+		g_free (n);
+		setup_an_item (menu, submenu, FALSE);
 		return;
 	}
 	
@@ -400,50 +404,49 @@ add_to_submenus(AppletInfo *info,
 	*p = '\0';
 	p++;
 	
-	t = g_strconcat(path,n,"/",NULL);
-	s_menu = applet_get_callback(user_menu,t);
+	t = g_strconcat (path, n, "/", NULL);
+	s_menu = applet_get_callback (user_menu, t);
 	/*the user did not give us this sub menu, whoops, will create an empty
 	  one then*/
-	if(!s_menu) {
-		s_menu = g_new0(AppletUserMenu,1);
-		s_menu->name = g_strdup(t);
+	if (s_menu == NULL) {
+		s_menu = g_new0 (AppletUserMenu,1);
+		s_menu->name = g_strdup (t);
 		s_menu->stock_item = NULL;
-		s_menu->text = g_strdup(_("???"));
+		s_menu->text = g_strdup (_("???"));
 		s_menu->sensitive = TRUE;
 		s_menu->info = info;
 		s_menu->menuitem = NULL;
 		s_menu->submenu = NULL;
-		info->user_menu = g_list_append(info->user_menu,s_menu);
+		info->user_menu = g_list_append (info->user_menu,s_menu);
 		user_menu = info->user_menu;
-
 	}
 	
-	if(!s_menu->submenu) {
+	if (s_menu->submenu == NULL) {
 		s_menu->submenu = scroll_menu_new();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
-		if (s_menu->menuitem) {
+		if (s_menu->menuitem != NULL) {
 			gtk_widget_destroy (s_menu->menuitem);
 			s_menu->menuitem = NULL;
 		}
 	}
-	if(!s_menu->menuitem)
-		setup_an_item(s_menu,submenu,TRUE);
+	if (s_menu->menuitem == NULL)
+		setup_an_item (s_menu, submenu, TRUE);
 	
-	add_to_submenus(info,t,p,menu,s_menu->submenu,user_menu);
+	add_to_submenus (info, t, p, menu, s_menu->submenu, user_menu);
 	
 	g_free(t);
 	g_free(n);
 }
 
 void
-create_applet_menu(AppletInfo *info, gboolean is_basep)
+create_applet_menu (AppletInfo *info, gboolean is_basep)
 {
 	GtkWidget *menuitem, *panel_menu;
 	GList *user_menu = info->user_menu;
 	gchar *pixmap;
 
-	info->menu = scroll_menu_new();
+	info->menu = scroll_menu_new ();
 
 	menuitem = gtk_menu_item_new();
 	setup_menuitem(menuitem,
@@ -466,7 +469,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 	menuitem = gtk_menu_item_new ();
 
 	pixmap = gnome_pixmap_file ("gnome-panel.png");
-	if (!pixmap) {
+	if (pixmap == NULL) {
 		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
 		setup_menuitem (menuitem, NULL, _("Panel"));
 	} else {
@@ -489,15 +492,15 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 
 	for(;user_menu!=NULL;user_menu = g_list_next(user_menu)) {
 		AppletUserMenu *menu=user_menu->data;
-		add_to_submenus(info,"",menu->name,menu,info->menu,
-				info->user_menu);
+		add_to_submenus (info, "", menu->name, menu, info->menu,
+				 info->user_menu);
 	}
 
 	/*connect the deactivate signal, so that we can "re-allow" autohide
 	  when the menu is deactivated*/
-	gtk_signal_connect(GTK_OBJECT(info->menu), "deactivate",
-			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
-			   info);
+	gtk_signal_connect (GTK_OBJECT (info->menu), "deactivate",
+			    GTK_SIGNAL_FUNC (applet_menu_deactivate),
+			    info);
 }
 
 static void
@@ -505,16 +508,16 @@ set_data(GtkWidget *menu, gpointer panel)
 {
 	GList *children, *li;
 
-	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", panel);
+	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
 
-	children = gtk_container_children(GTK_CONTAINER(menu));
+	children = gtk_container_children (GTK_CONTAINER (menu));
 
 	for(li = children; li; li = li->next) {
 		GtkMenuItem *item = li->data;
-		if(item->submenu)
-			set_data(item->submenu, panel);
+		if (item->submenu != NULL)
+			set_data (item->submenu, panel);
 	}
-	g_list_free(children);
+	g_list_free (children);
 }
 
 void
@@ -526,8 +529,9 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 	panel = get_panel_parent(info->widget);
 
-	if (!info->menu)
+	if (info->menu == NULL)
 		create_applet_menu (info, IS_BASEP_WIDGET (panel));
+	g_assert (info->menu != NULL);
 
 	if(IS_BASEP_WIDGET(panel)) {
 		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
@@ -535,11 +539,17 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	}
 	info->menu_age = 0;
 
-	set_data(info->menu, info->widget->parent);
+	set_data (info->menu, info->widget->parent);
 
-	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL,
-		       global_config.off_panel_popups?applet_menu_position:NULL,
-		       info, event->button, event->time);
+	gtk_menu_popup (GTK_MENU (info->menu),
+			NULL,
+			NULL,
+			global_config.off_panel_popups ?
+			  applet_menu_position :
+			  NULL,
+			info,
+			event->button,
+			event->time);
 }
 
 
@@ -547,15 +557,16 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 static gboolean
 applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
 {
-	if(event->button==3) {
-		if(!panel_applet_in_drag) {
+	if (event->button == 3) {
+		if ( ! panel_applet_in_drag) {
 			if(info->type == APPLET_SWALLOW) {
 				Swallow *swallow = info->data;
 				GtkWidget *handle_box = swallow->handle_box;
 				if(!GTK_HANDLE_BOX(handle_box)->child_detached)
 					show_applet_menu(info, event);
-			} else
-				show_applet_menu(info, event);
+			} else {
+				show_applet_menu (info, event);
+			}
 		}
 	}
 	/* don't let any button click events to the panel or moving the applets
@@ -572,12 +583,11 @@ remove_unused_launchers (void)
 
 	for (li = launchers_to_kill; li != NULL; li = li->next) {
 		char *file = li->data;
+		li->data = NULL;
 
 		unlink (file);
 
 		g_free (file);
-
-		li->data = NULL;
 	}
 
 	g_list_free (launchers_to_kill);
@@ -635,6 +645,8 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 	for(li = info->user_menu; li != NULL; li = g_list_next(li)) {
 		AppletUserMenu *umenu = li->data;
 
+		li->data = NULL;
+
 		g_free(umenu->name);
 		umenu->name = NULL;
 		g_free(umenu->stock_item);
@@ -643,10 +655,8 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 		umenu->text = NULL;
 
 		g_free(umenu);
-
-		li->data = NULL;
 	}
-	g_list_free(info->user_menu);
+	g_list_free (info->user_menu);
 	info->user_menu = NULL;
 }
 

@@ -74,10 +74,11 @@ void applet_add_callback(AppletInfo *info,
 			 const char *menuitem_text);
 void applet_remove_callback(AppletInfo *info,
 			    const char *callback_name);
+AppletUserMenu * applet_get_callback (GList *user_menu, const char *name);
 void applet_callback_set_sensitive(AppletInfo *info,
 				   const char *callback_name,
 				   int sensitive);
-void show_applet_menu(AppletInfo *info, GdkEventButton *event);
+void show_applet_menu (AppletInfo *info, GdkEventButton *event);
 
 /* during session save, we call this to unlink the .desktop files of
  * removed launchers */

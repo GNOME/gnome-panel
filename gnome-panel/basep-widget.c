@@ -1051,6 +1051,7 @@ basep_widget_update_winhints (BasePWidget *basep)
 				layer = WIN_LAYER_NORMAL;
 			else
 				layer = WIN_LAYER_DOCK;
+			gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
 			gnome_win_hints_set_layer (w, layer);
 		} else {
 			if (global_config.normal_layer) {

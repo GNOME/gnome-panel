@@ -440,8 +440,8 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	const char *formats[] = {
 		N_("%H:%M"),
 		N_("%H:%M:%S"),
-		N_("%I:%M %p"),
-		N_("%I:%M:%S %p"),
+		N_("%l:%M %p"),
+		N_("%l:%M:%S %p"),
 		NULL
 	};
 

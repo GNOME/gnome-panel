@@ -1,3 +1,16 @@
+Tue Nov 14 00:47:51 2000  George Lebl <jirka@5z.com>
+
+	* basep-widget.c: set the panel hints on drawers again (doh!)
+
+	* applet.[ch], menu-properties.c:  A bunch of cleanup, also in
+	  the apply function we only do things when they are really
+	  neccessary, also reduce the amount of statting on each apply by
+	  caching the availability of gmenu
+
+	* foobar-widget.c: use %l and not %I for the 12 hour format hour
+	  thing, this will not zero pad the hours which is wrong (it looks
+	  like 24 hour format then)
+
 Sat Nov 11 17:27:10 2000  George Lebl <jirka@5z.com>
 
 	* applet.c: minor cleanup

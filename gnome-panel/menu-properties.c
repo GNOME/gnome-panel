@@ -112,42 +112,105 @@ get_pixmap(const char *menudir, gboolean main_menu)
 	return pixmap_name;
 }
 
+/* Cache this, we don't want to check in the path all the time */
+static gboolean
+got_gmenu (void)
+{
+	static gboolean checked = FALSE;
+	static gboolean got_it = FALSE;
+	char *tmp;
+
+	if (checked)
+		return got_it;
+
+	tmp = gnome_is_program_in_path ("gmenu");
+	if (tmp != NULL)
+		got_it = TRUE;
+	else
+		got_it = FALSE;
+
+	g_free (tmp);
+
+	checked = TRUE;
+
+	return got_it;
+}
+
 static void
 properties_apply_callback (Menu *menu)
 {
 	char *s;
+	gboolean bool;
+	gboolean change_icon = FALSE;
+	gboolean need_reload = FALSE;
+	char *old_path;
+	gboolean old_global_main;
+	int old_main_menu_flags;
+	gboolean need_edit_menus, got_edit_menus;
 
-	/* FIXME: this function needs to really only do the really neccessary things,
-	 * because it gets executed a lot */
+	/* Store some old config */
+	old_path = g_strdup (menu->path);
+	old_global_main = menu->global_main;
+	old_main_menu_flags = menu->main_menu_flags;
 
-	menu->custom_icon = GTK_TOGGLE_BUTTON (menu->dialog_info->custom_icon)->active ? TRUE : FALSE;
-	g_free (menu->custom_icon_file);
-	menu->custom_icon_file = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
-	
-	applet_remove_callback(menu->info, "edit_menus");
-	if(GTK_TOGGLE_BUTTON(menu->dialog_info->main_menu)->active ||
-	   GTK_TOGGLE_BUTTON(menu->dialog_info->global_main)->active) {
-		char *tmp;
-		g_free(menu->path);
-		menu->path = g_strdup(".");
-		if((tmp = gnome_is_program_in_path("gmenu")))  {
-			g_free(tmp);
-			applet_add_callback(menu->info, "edit_menus",
-					    NULL,
-					    _("Edit menus..."));
+
+	/* Start with the icon stuff */
+	bool = GTK_TOGGLE_BUTTON (menu->dialog_info->custom_icon)->active;
+	if (( ! menu->custom_icon && bool) ||
+	    (menu->custom_icon && ! bool)) {
+		menu->custom_icon = bool;
+		change_icon = TRUE;
+	}
+
+	s = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(menu->dialog_info->custom_icon_entry));
+	if (menu->custom_icon_file == NULL ||
+	    s == NULL ||
+	    strcmp (menu->custom_icon_file, s) != 0) {
+		g_free (menu->custom_icon_file);
+		menu->custom_icon_file = s;
+		change_icon = TRUE;
+	} else {
+		g_free (s);
+	}
+
+	need_edit_menus = FALSE;
+	if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active ||
+	    GTK_TOGGLE_BUTTON (menu->dialog_info->global_main)->active) {
+		g_free (menu->path);
+		menu->path = g_strdup (".");
+
+		if (got_gmenu ()) {
+			need_edit_menus = TRUE;
 		}
 	} else {
-		g_free(menu->path);
-		s = gnome_file_entry_get_full_path(GNOME_FILE_ENTRY(menu->dialog_info->pathentry),
-						   TRUE);
+		g_free (menu->path);
+		s = gnome_file_entry_get_full_path (GNOME_FILE_ENTRY (menu->dialog_info->pathentry),
+						    TRUE);
 		if(s == NULL) {
-			g_warning(_("Can't open directory, using main menu!"));
-			menu->path = g_strdup(".");
-		} else if(!*s)
-			menu->path = g_strdup(".");
-		else
-			menu->path = g_strdup(s);
+			g_warning (_("Can't open directory, using main menu!"));
+			menu->path = g_strdup (".");
+		} else if (*s == '\0') {
+			menu->path = g_strdup (".");
+		} else {
+			menu->path = g_strdup (s);
+		}
 	}
+
+
+	/* Setup the edit_menus callback */
+	if (applet_get_callback (menu->info->user_menu, "edit_menus") != NULL)
+		got_edit_menus = TRUE;
+	else
+		got_edit_menus = FALSE;
+
+	if (need_edit_menus && ! got_edit_menus)
+		applet_add_callback (menu->info, "edit_menus",
+				     NULL,
+				     _("Edit menus..."));
+	else if ( ! need_edit_menus && got_edit_menus)
+		applet_remove_callback (menu->info, "edit_menus");
+
+
 
 	if (GTK_TOGGLE_BUTTON(menu->dialog_info->global_main)->active)
 		 menu->global_main = TRUE;
@@ -190,31 +253,36 @@ properties_apply_callback (Menu *menu)
 	else if (GTK_TOGGLE_BUTTON(menu->dialog_info->desktop)->active)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
-	/* FIXME: notice changes and only apply if neccessary */
-
-	/* Apply menu changes */
-	{
-		char *this_menu = get_real_menu_path(menu->path);
-		GSList *list = g_slist_append(NULL, this_menu);
-		char *pixmap_name = get_pixmap(this_menu,
-					       strcmp(menu->path, ".")==0);
-		/*make the pixmap*/
-		button_widget_set_pixmap (BUTTON_WIDGET(menu->button),
-					  pixmap_name, -1);
-		g_free(pixmap_name);
-		
-		add_menu_widget(menu, PANEL_WIDGET(menu->button->parent),
-				list, strcmp(menu->path, ".")==0, TRUE);
-		
-		g_free(this_menu);
-
-		g_slist_free(list);
+	if (strcmp (old_path, menu->path) != 0) {
+		need_reload = TRUE;
+		change_icon = TRUE;
 	}
 
-	/* FIXME: notice changes and only apply if neccessary */
+	if (old_main_menu_flags != menu->main_menu_flags ||
+	    ( ! menu->global_main && old_global_main) ||
+	    (menu->global_main && ! old_global_main)) {
+		need_reload = TRUE;
+	}
+
+	g_free (old_path);
+
+
+	/* Apply menu changes */
+	if (need_reload) {
+		char *this_menu = get_real_menu_path (menu->path);
+		GSList *list = g_slist_append (NULL, this_menu);
+		gboolean main_menu = strcmp (menu->path, ".") == 0;
+		
+		add_menu_widget (menu, PANEL_WIDGET (menu->button->parent),
+				 list, main_menu, TRUE);
+		
+		g_free (this_menu);
+
+		g_slist_free (list);
+	}
 
 	/* Apply icon changes */
-	{
+	if (change_icon) {
 		char *this_menu = get_real_menu_path(menu->path);
 		char *pixmap_name;
 
