@@ -298,14 +298,6 @@ size_change(AppletInfo *info, PanelWidget *panel)
 				panel_clean_applet(ext->info);
 			CORBA_exception_free(&ev);
 		}
-	} else if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		set_drawer_applet_orient(drawer,get_applet_orient(panel));
-		gtk_widget_queue_resize(drawer->drawer);
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      orient_change_foreach,
-				      (gpointer)basep->panel);
 	}
 }
 
