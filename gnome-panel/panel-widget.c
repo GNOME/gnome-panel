@@ -1684,6 +1684,11 @@ panel_widget_new (gint size,
 		GtkWidget *frame = gtk_frame_new(NULL);
 		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
 		gtk_widget_show(frame);
+		pixmap_name=gnome_unconditional_pixmap_file("panel-menu-main.xpm");
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		gtk_widget_show(pixmap);
+		g_free(pixmap_name);
+		gtk_container_add(GTK_CONTAINER(frame),pixmap);
 		panel->hidebutton_e = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_e);
 		gtk_container_add(GTK_CONTAINER(panel->hidebutton_e),frame);
@@ -1707,6 +1712,11 @@ panel_widget_new (gint size,
 		GtkWidget *frame = gtk_frame_new(NULL);
 		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
 		gtk_widget_show(frame);
+		pixmap_name=gnome_unconditional_pixmap_file("panel-menu-main.xpm");
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		gtk_widget_show(pixmap);
+		g_free(pixmap_name);
+		gtk_container_add(GTK_CONTAINER(frame),pixmap);
 		panel->hidebutton_n = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_n);
 		gtk_container_add(GTK_CONTAINER(panel->hidebutton_n),frame);
@@ -1730,6 +1740,11 @@ panel_widget_new (gint size,
 		GtkWidget *frame = gtk_frame_new(NULL);
 		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
 		gtk_widget_show(frame);
+		pixmap_name=gnome_unconditional_pixmap_file("panel-menu-main.xpm");
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		gtk_widget_show(pixmap);
+		g_free(pixmap_name);
+		gtk_container_add(GTK_CONTAINER(frame),pixmap);
 		panel->hidebutton_w = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_w);
 		gtk_container_add(GTK_CONTAINER(panel->hidebutton_w),frame);
@@ -1753,6 +1768,11 @@ panel_widget_new (gint size,
 		GtkWidget *frame = gtk_frame_new(NULL);
 		gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
 		gtk_widget_show(frame);
+		pixmap_name=gnome_unconditional_pixmap_file("panel-menu-main.xpm");
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		gtk_widget_show(pixmap);
+		g_free(pixmap_name);
+		gtk_container_add(GTK_CONTAINER(frame),pixmap);
 		panel->hidebutton_s = gtk_event_box_new();
 		gtk_widget_show(panel->hidebutton_s);
 		gtk_container_add(GTK_CONTAINER(panel->hidebutton_s),frame);
