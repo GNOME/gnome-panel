@@ -710,7 +710,7 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 		finalpos = 0;
 
 	while((pos+width-1)<finalpos) {
-		if((panel_widget_get_right_switch_pos(panel,pos)+width-1) >
+		if((panel_widget_get_right_switch_pos(panel,pos)) >
 		   finalpos)
 			return pos;
 		pos = panel_widget_switch_applet_right(panel,pos);
