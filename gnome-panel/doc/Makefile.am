@@ -31,13 +31,13 @@ panel_doc_DATA = \
 EXTRA_DIST = $(panel_doc_DATA)
 
 if ENABLE_GTK_DOC
-panel.html: html/book1.html
-	-cp $(srcdir)/html/book1.html $(srcdir)/panel.html
+panel.html: html/index.html
+	-cp $(srcdir)/html/index.html $(srcdir)/panel.html
 else
 panel.html:
 endif
 
-html/book1.html: sgml/panel-doc.bottom
+html/index.html: sgml/panel-doc.bottom
 	$(MAKE) html
 
 sgml/panel-doc.bottom: $(tmpl_sources)

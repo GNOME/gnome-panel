@@ -391,13 +391,13 @@ gtk_style_shade (GdkColor *a,
 #define DARKNESS_MULT   0.7
 
 static void
-set_color_back(GtkWidget *widget, PanelWidget *panel)
+set_color_back (GtkWidget *widget, PanelWidget *panel)
 {
 	GtkStyle *ns;
 	int i;
 
-	ns = gtk_style_copy(widget->style);
-	gtk_style_ref(ns);
+	gtk_widget_set_rc_style (widget);
+	ns = gtk_style_copy (gtk_widget_get_style (widget));
 
 	ns->bg[GTK_STATE_NORMAL] =
 		panel->back_color;
@@ -416,26 +416,27 @@ set_color_back(GtkWidget *widget, PanelWidget *panel)
 		ns->mid[i].green = (ns->light[i].green + ns->dark[i].green) / 2;
 		ns->mid[i].blue = (ns->light[i].blue + ns->dark[i].blue) / 2;
 	}
-	gtk_widget_set_style(widget, ns);
-	gtk_style_unref(ns);
+	gtk_widget_set_style (widget, ns);
+	gtk_style_unref (ns);
 }
 
 void
-set_frame_colors(PanelWidget *panel, GtkWidget *frame,
-		 GtkWidget *but1, GtkWidget *but2, GtkWidget *but3, GtkWidget *but4)
+set_frame_colors (PanelWidget *panel, GtkWidget *frame,
+		  GtkWidget *but1, GtkWidget *but2,
+		  GtkWidget *but3, GtkWidget *but4)
 {
-	if(panel->back_type == PANEL_BACK_COLOR) {
-		set_color_back(frame,panel);
-		set_color_back(but1,panel);
-		set_color_back(but2,panel);
-		set_color_back(but3,panel);
-		set_color_back(but4,panel);
+	if (panel->back_type == PANEL_BACK_COLOR) {
+		set_color_back (frame, panel);
+		set_color_back (but1, panel);
+		set_color_back (but2, panel);
+		set_color_back (but3, panel);
+		set_color_back (but4, panel);
 	} else {
-		gtk_widget_set_rc_style(frame);
-		gtk_widget_set_rc_style(but1);
-		gtk_widget_set_rc_style(but2);
-		gtk_widget_set_rc_style(but3);
-		gtk_widget_set_rc_style(but4);
+		gtk_widget_set_rc_style (frame);
+		gtk_widget_set_rc_style (but1);
+		gtk_widget_set_rc_style (but2);
+		gtk_widget_set_rc_style (but3);
+		gtk_widget_set_rc_style (but4);
 	}
 }
 
