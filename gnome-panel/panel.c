@@ -5,9 +5,7 @@
  *          Miguel de Icaza
  */
 
-#ifdef HAVE_LIBINTL
-#include <libintl.h>
-#endif
+#include <config.h>
 #include <string.h>
 #include "gnome.h"
 #include "applet_files.h"
@@ -16,12 +14,6 @@
 #include "applet_cmds.h"
 #include "panel.h"
 #include "panel_config.h"
-
-#ifdef HAVE_LIBINTL
-#define _(String) gettext(String)
-#else
-#define _(String) (String)
-#endif
 
 
 #define APPLET_CMD_FUNC "panel_applet_cmd_func"

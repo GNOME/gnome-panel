@@ -6,13 +6,8 @@
  *          Federico Mena
  */
 
+#include <config.h>
 #include <stdio.h>
-#ifdef HAVE_LIBINTL
-#include <libintl.h>
-#define _(String) gettext(String)
-#else
-#define _(String) (String)
-#endif
 #include <sys/stat.h>
 #include <dlfcn.h>
 #include <unistd.h>
