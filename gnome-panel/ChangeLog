@@ -1,3 +1,9 @@
+Mon Jan 31 14:02:56 2000  George Lebl <jirka@5z.com>
+
+	* button-widget.c: (setup_no_alpha) check for NULLness of the
+	  tiles before looking into them.  Fixes crashes if tiles can't
+	  be loaded
+
 Sun Jan 30 15:11:25 2000  George Lebl <jirka@5z.com>
 
 	* basep-widget.c: move the drag_motion out of here

@@ -155,10 +155,12 @@ setup_no_alpha(ButtonWidget *button)
 	   global_config.tile_when_over)
 		return;
 	if(button->pressed) {
-		if(!tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
+		if(tiles.tiles_down[button->tile] &&
+		   !tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
 			button->no_alpha = TRUE;
 	} else {
-		if(!tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
+		if(tiles.tiles_up[button->tile] &&
+		   !tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
 			button->no_alpha = TRUE;
 	}
 }
@@ -418,7 +420,8 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			}
 		} else if (!global_config.tile_when_over || button->in_button) {
 			GdkPixbuf *pb;
-			if(global_config.saturate_when_over && !button->in_button) {
+			if(global_config.saturate_when_over &&
+			   !button->in_button) {
 				pb = tiles.tiles_up_lc[button->tile];
 			} else {
 				pb = tiles.tiles_up[button->tile];
