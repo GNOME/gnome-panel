@@ -504,6 +504,11 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	gtk_idle_add(panel_applet_added_idle,GINT_TO_POINTER(applet_id));
+
+	/*we will need to save this applet's config now*/
+	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,
+						 GINT_TO_POINTER(applet_id));
 }
 
 static void

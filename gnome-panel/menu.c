@@ -1675,10 +1675,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		char *pixmap_name = get_pixmap(this_menu,
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
-		gnome_pixmap_load_file_at_size (GNOME_PIXMAP(menu->button),
-						pixmap_name,
-						BIG_ICON_SIZE,
-						BIG_ICON_SIZE);
+		button_widget_set_pixmap_from_file (BUTTON_WIDGET(menu->button),
+						    pixmap_name);
 		g_free(pixmap_name);
 		
 		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);
