@@ -10,9 +10,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 1.5.12\n"
-"POT-Creation-Date: 2002-03-18 14:10+0000\n"
-"PO-Revision-Date: 2002-03-10 21:46+0900\n"
+"Project-Id-Version: gnome-panel 1.5.14\n"
+"POT-Creation-Date: 2002-03-25 01:48+0900\n"
+"PO-Revision-Date: 2002-03-25 01:54+0900\n"
 "Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -22,26 +22,32 @@ msgstr ""
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/gen_util/printer.c:479
 msgid "About..."
 msgstr "情報..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
-#: gnome-panel/drawer.c:660 gnome-panel/launcher.c:723
-#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4003
-#: gnome-panel/status.c:375 gnome-panel/swallow.c:453
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:660
+#: gnome-panel/launcher.c:723 gnome-panel/logout.c:130
+#: gnome-panel/logout.c:215 gnome-panel/menu.c:4009 gnome-panel/status.c:375
+#: gnome-panel/swallow.c:453
 msgid "Help"
 msgstr "ヘルプ"
 
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
-#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:721 gnome-panel/menu.c:1363
-#: gnome-panel/menu.c:1435 gnome-panel/menu.c:3287 gnome-panel/menu.c:3993
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:657
+#: gnome-panel/launcher.c:721 gnome-panel/menu.c:1363 gnome-panel/menu.c:1435
+#: gnome-panel/menu.c:3293 gnome-panel/menu.c:3999
 msgid "Properties..."
 msgstr "プロパティ..."
 
@@ -213,12 +219,12 @@ msgid "Utility"
 msgstr "ユーティリティ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:506
+#: applets/gen_util/tasklist.c:501
 msgid "Window List"
 msgstr "ウインドウリスト"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:430 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "ワークスペース切り換え器"
 
@@ -230,7 +236,7 @@ msgstr "汎用アプレット生成のためのファクトリ"
 msgid "Check for mail"
 msgstr "メイルのチェック"
 
-#: applets/gen_util/clock.c:174
+#: applets/gen_util/clock.c:164
 msgid ""
 "%I:%M\n"
 "%p"
@@ -240,21 +246,21 @@ msgstr ""
 
 #. This format string is used, to display the actual time in
 #. 12 hour format.
-#: applets/gen_util/clock.c:177 applets/gen_util/clock.c:443
+#: applets/gen_util/clock.c:167 applets/gen_util/clock.c:383
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
 #. This format string is used, to display the actual time in
 #. 24 hour format.
-#: applets/gen_util/clock.c:184 applets/gen_util/clock.c:448
-#: gnome-panel/foobar-widget.c:433 gnome-panel/foobar-widget.c:1058
+#: applets/gen_util/clock.c:174 applets/gen_util/clock.c:388
+#: gnome-panel/foobar-widget.c:432 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H:%M"
 
 #. This format string is used, to display the actual day,
 #. when showing a vertical panel.  For an explanation of
 #. this format string type 'man strftime'.
-#: applets/gen_util/clock.c:196
+#: applets/gen_util/clock.c:186
 msgid ""
 "%a\n"
 "%b %d"
@@ -264,65 +270,58 @@ msgstr ""
 
 #. This format string is used, to display the actual day,
 #. when showing a horizontal panel.
-#: applets/gen_util/clock.c:201
+#: applets/gen_util/clock.c:191
 msgid "%a %b %d"
 msgstr "%m月%d日 (%a)"
 
-#: applets/gen_util/clock.c:213
-msgid "%A, %B %d"
-msgstr "%m月%d日%a"
+#. Set the applet's tooltip
+#: applets/gen_util/clock.c:202 gnome-panel/foobar-widget.c:353
+msgid "%A %B %d"
+msgstr "%m月%d日 (%a)"
 
-#: applets/gen_util/clock.c:473
+#: applets/gen_util/clock.c:301
+msgid "Computer Clock"
+msgstr "コンピュータ時計"
+
+#: applets/gen_util/clock.c:413
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%d"
 
-#. Do NOT translate the clock/hourformat= part.  What you
-#. * should change is the number 12.  If your country code should use
-#. * 12 hour format by default, leave it at 12, otherwise use 24
-#. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:676
-msgid "clock/hourformat=12"
-msgstr "clock/hourformat=12"
-
-#: applets/gen_util/clock.c:867
+#: applets/gen_util/clock.c:749
 msgid "Clock Properties"
 msgstr "時計のプロパティ"
 
-#: applets/gen_util/clock.c:888
+#: applets/gen_util/clock.c:772
 msgid "Time Format"
 msgstr "時間の表記"
 
-#: applets/gen_util/clock.c:900
-msgid "12 hour"
-msgstr "12時間制"
+#: applets/gen_util/clock.c:784
+msgid "_12 hour"
+msgstr "12時間制(_1)"
 
-#: applets/gen_util/clock.c:908
-msgid "24 hour"
-msgstr "24時間制"
+#: applets/gen_util/clock.c:792
+msgid "_24 hour"
+msgstr "24時間制(_2)"
 
-#: applets/gen_util/clock.c:939
-msgid "Show date in applet"
-msgstr "アプレットに日付を表示"
+#: applets/gen_util/clock.c:823
+msgid "Show _date"
+msgstr "日付を表示(_D)"
 
-#: applets/gen_util/clock.c:950
-msgid "Show date in tooltip"
-msgstr "ツールチップに日付を表示"
+#: applets/gen_util/clock.c:834
+msgid "Use _GMT"
+msgstr "GMT を使用(_G)"
 
-#: applets/gen_util/clock.c:961
-msgid "Use GMT"
-msgstr "GMTで"
+#: applets/gen_util/clock.c:845
+msgid "_UNIX time"
+msgstr "UNIX 時間(_U)"
 
-#: applets/gen_util/clock.c:972
-msgid "Unix time"
-msgstr "UNIX時刻"
-
-#: applets/gen_util/clock.c:976
-msgid "Internet time"
-msgstr "インターネット時間"
+#: applets/gen_util/clock.c:849
+msgid "_Internet time"
+msgstr "インターネット時間(_I)"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1069 applets/gen_util/mailcheck.c:1509
-#: applets/gen_util/pager.c:418 applets/gen_util/tasklist.c:494
+#: applets/gen_util/clock.c:942 applets/gen_util/mailcheck.c:1509
+#: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:489
 #: gnome-panel/menu.c:280
 msgid "translator_credits"
 msgstr ""
@@ -334,20 +333,17 @@ msgstr ""
 "Yukihiro Nakai <nakai@gnome.gr.jp>, 1998.\n"
 "Yuusuke Tahara <tahara@gnome.gr.jp>, 2000."
 
-#: applets/gen_util/clock.c:1081
+#: applets/gen_util/clock.c:960
 msgid "Clock Applet"
 msgstr "時計アプレット"
 
-#: applets/gen_util/clock.c:1082
-msgid "(c) 1998-2001 the Free Software Foundation"
-msgstr "(c) 1998-2001 the Free Software Foundation"
+#: applets/gen_util/clock.c:961
+msgid "(C) 1998-2002 the Free Software Foundation"
+msgstr "(c) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1083
-msgid ""
-"The clock applet gives your panel a lightweight and simple display of the "
-"date and time"
-msgstr ""
-"クロックアプレットは、パネルに軽くて単純な日付と時刻を 表示する時計です"
+#: applets/gen_util/clock.c:962
+msgid "The Clock Applet displays current time and date"
+msgstr "現在の時間と日付を表示する時計アプレット"
 
 #: applets/gen_util/mailcheck.c:208 applets/gen_util/mailcheck.c:1522
 msgid "Mail check Applet"
@@ -499,30 +495,35 @@ msgstr "メールチェック"
 msgid "New Mail"
 msgstr "新しいメイルがあります"
 
-#: applets/gen_util/pager.c:296
+#: applets/gen_util/pager.c:298
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
+"ワークスペース切り替えアプレットの num_rows の値の読みこみでエラー: %s\n"
 
-#: applets/gen_util/pager.c:307
+#: applets/gen_util/pager.c:309
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
 msgstr ""
+"ワークスペース切り替えアプレットの display_workspace_names の値の読みこみでエ"
+"ラー: %s\n"
 
-#: applets/gen_util/pager.c:322
+#: applets/gen_util/pager.c:324
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
 "s\n"
 msgstr ""
+"ワークスペース切り替えアプレットの display_all_workspaces の値の読みこみでエ"
+"ラー: %s\n"
 
-#: applets/gen_util/pager.c:431
+#: applets/gen_util/pager.c:433
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:432
+#: applets/gen_util/pager.c:434
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -598,11 +599,11 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "アプレットが生成できませんでした\n"
 
-#: applets/gen_util/tasklist.c:507
+#: applets/gen_util/tasklist.c:502
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:508
+#: applets/gen_util/tasklist.c:503
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
@@ -659,7 +660,7 @@ msgstr "GNOME パネル シェル"
 #.
 #. * FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:592
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:558
 msgid "Move"
 msgstr "移動"
 
@@ -667,7 +668,7 @@ msgstr "移動"
 msgid "Remove From Panel"
 msgstr "パネルから取り除く"
 
-#: gnome-panel/applet.c:210 gnome-panel/menu.c:1030
+#: gnome-panel/applet.c:216 gnome-panel/menu.c:1030
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -682,49 +683,39 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:495 gnome-panel/foobar-widget.c:757
+#: gnome-panel/applet.c:501 gnome-panel/foobar-widget.c:756
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:544 gnome-panel/applet.c:548
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3605
-msgid "Panel"
-msgstr "パネル"
-
 #: gnome-panel/applet.c:546
-#, c-format
-msgid "Cannot find pixmap file %s"
-msgstr "画像ファイル %s が見つかりません"
-
-#: gnome-panel/applet.c:578
 msgid "Remove from panel"
 msgstr "パネルから取り除く"
 
-#: gnome-panel/applet.c:1209
+#: gnome-panel/applet.c:1166
 msgid "Can't find an empty spot"
 msgstr "空いている場所を見つけられません"
 
-#: gnome-panel/basep-widget.c:156 gnome-panel/basep-widget.c:157
+#: gnome-panel/basep-widget.c:155 gnome-panel/basep-widget.c:156
 msgid "mode"
 msgstr "モード"
 
-#: gnome-panel/basep-widget.c:164 gnome-panel/basep-widget.c:165
+#: gnome-panel/basep-widget.c:163 gnome-panel/basep-widget.c:164
 msgid "state"
 msgstr "状態"
 
-#: gnome-panel/basep-widget.c:173 gnome-panel/basep-widget.c:174
+#: gnome-panel/basep-widget.c:172 gnome-panel/basep-widget.c:173
 msgid "hidebuttons_enabled"
 msgstr "隠蔽ボタンが有効"
 
-#: gnome-panel/basep-widget.c:181 gnome-panel/basep-widget.c:182
+#: gnome-panel/basep-widget.c:180 gnome-panel/basep-widget.c:181
 msgid "hidebutton_pixmaps_enabled"
 msgstr "隠蔽ボタンのピクスマップが有効"
 
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "このパネルを隠す"
 
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "このパネルを表示"
 
@@ -785,11 +776,11 @@ msgstr "隠蔽ボタンを使う"
 msgid "Enable hidebutton arrow"
 msgstr "隠蔽ボタンに矢印ボタンを使う"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3132
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3138
 msgid "Drawer"
 msgstr "引き出し"
 
-#: gnome-panel/foobar-widget.c:203
+#: gnome-panel/foobar-widget.c:202
 msgid ""
 "Cannot execute the gnome calendar,\n"
 "perhaps it's not installed.\n"
@@ -799,83 +790,79 @@ msgstr ""
 "おそらくインストールされていません。<\n"
 "gnome-pim パッケージにありますよ。"
 
-#: gnome-panel/foobar-widget.c:215 gnome-panel/menu.c:3589
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3595
 msgid "Run..."
 msgstr "実行..."
 
-#: gnome-panel/foobar-widget.c:218
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "正確にタイプできるコマンドを知っていれば、コマンドを実行します"
 
-#: gnome-panel/foobar-widget.c:230
+#: gnome-panel/foobar-widget.c:229
 msgid "Lock Display"
 msgstr "ディスプレイをロック"
 
-#: gnome-panel/foobar-widget.c:234
+#: gnome-panel/foobar-widget.c:233
 msgid "Protect your computer from unauthorized use"
 msgstr "不正使用からコンピュータを守ります"
 
-#: gnome-panel/foobar-widget.c:243
+#: gnome-panel/foobar-widget.c:242
 msgid "Log Out"
 msgstr "ログアウト"
 
-#: gnome-panel/foobar-widget.c:246
+#: gnome-panel/foobar-widget.c:245
 msgid "Quit from the GNOME desktop"
 msgstr "GNOME デスクトップを終了します"
 
-#: gnome-panel/foobar-widget.c:253
+#: gnome-panel/foobar-widget.c:252
 msgid "Actions"
 msgstr "アクション"
 
-#: gnome-panel/foobar-widget.c:279
+#: gnome-panel/foobar-widget.c:278
 msgid "menu wasn't created"
 msgstr "メニューが作成されませんでした"
 
-#: gnome-panel/foobar-widget.c:316
+#: gnome-panel/foobar-widget.c:315
 msgid "Today"
 msgstr "今日"
 
-#: gnome-panel/foobar-widget.c:316
+#: gnome-panel/foobar-widget.c:315
 msgid "View the calendar for today."
 msgstr "今日のカレンダーを表示"
 
-#: gnome-panel/foobar-widget.c:317
+#: gnome-panel/foobar-widget.c:316
 msgid "This Week"
 msgstr "今週"
 
-#: gnome-panel/foobar-widget.c:317
+#: gnome-panel/foobar-widget.c:316
 msgid "View the calendar for this week."
 msgstr "今週のカレンダーを表示"
 
-#: gnome-panel/foobar-widget.c:318
+#: gnome-panel/foobar-widget.c:317
 msgid "This Month"
 msgstr "今月"
 
-#: gnome-panel/foobar-widget.c:318
+#: gnome-panel/foobar-widget.c:317
 msgid "View the calendar for this month."
 msgstr "今月のカレンダーを表示"
 
-#: gnome-panel/foobar-widget.c:354
-msgid "%A %B %d"
-msgstr "%m月%d日 (%a)"
-
-#: gnome-panel/foobar-widget.c:434
+#: gnome-panel/foobar-widget.c:433
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: gnome-panel/foobar-widget.c:435
+#: gnome-panel/foobar-widget.c:434
 msgid "%l:%M %p"
 msgstr "%p %l:%M"
 
-#: gnome-panel/foobar-widget.c:436
+#: gnome-panel/foobar-widget.c:435
 msgid "%l:%M:%S %p"
 msgstr "%p %l:%M:%S"
 
-#: gnome-panel/foobar-widget.c:444 gnome-panel/panel.c:2403
+#: gnome-panel/foobar-widget.c:443 gnome-panel/panel.c:2404
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:483
 msgid ""
 "Could not call time-admin\n"
 "Perhaps time-admin is not installed"
@@ -883,28 +870,28 @@ msgstr ""
 "time-admin を呼び出せません\n"
 "おそらく time-admin がインスールされていません"
 
-#: gnome-panel/foobar-widget.c:498
+#: gnome-panel/foobar-widget.c:497
 msgid "Add Appointment..."
 msgstr "アポイントメントを追加..."
 
-#: gnome-panel/foobar-widget.c:507
+#: gnome-panel/foobar-widget.c:506
 msgid "Set Time..."
 msgstr "時間の設定..."
 
-#: gnome-panel/foobar-widget.c:510
+#: gnome-panel/foobar-widget.c:509
 msgid "Adjust the date and time."
 msgstr "日付と時刻の調整"
 
-#: gnome-panel/foobar-widget.c:522
+#: gnome-panel/foobar-widget.c:521
 msgid "Format"
 msgstr "時間の表記"
 
-#: gnome-panel/foobar-widget.c:839
+#: gnome-panel/foobar-widget.c:838
 msgid "No windows open"
 msgstr "ウインドウが開いてません"
 
-#: gnome-panel/foobar-widget.c:1098 gnome-panel/menu.c:2687
-#: gnome-panel/menu.c:2693
+#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2693
+#: gnome-panel/menu.c:2699 gnome-panel/menu.c:3561
 msgid "Applications"
 msgstr "アプリケーション"
 
@@ -917,9 +904,8 @@ msgid "Can't execute the screenshot program"
 msgstr "スクリーンショットプログラムを実行できません!"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
-#, fuzzy
 msgid "Create new file in the given directory"
-msgstr "ユーザメニューディレクトリを作成できません"
+msgstr "指定したディレクトリにファイルを新規作成"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
@@ -960,13 +946,16 @@ msgstr ""
 "変更を許可していません"
 
 #: gnome-panel/gnome-panel-properties.c:461
-#, fuzzy
 msgid "Global Panel Properties"
 msgstr "パネル全般の設定"
 
 #: gnome-panel/gnome-panel-properties.desktop.in.h:1
 msgid "Global panel properties"
 msgstr "パネル全般の設定"
+
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3611
+msgid "Panel"
+msgstr "パネル"
 
 #: gnome-panel/gnome-panel-properties.glade.h:1
 msgid "&lt;Alt&gt;F1"
@@ -1010,9 +999,8 @@ msgid "Fast"
 msgstr "高速"
 
 #: gnome-panel/gnome-panel-properties.glade.h:11
-#, fuzzy
 msgid "GNOME Menu:"
-msgstr "GNOMEヘルプ"
+msgstr "GNOME メニュー:"
 
 #: gnome-panel/gnome-panel-properties.glade.h:12
 msgid "General"
@@ -1039,8 +1027,8 @@ msgid "Medium"
 msgstr "中速"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:290
-#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3644
-#: gnome-panel/menu.c:3869
+#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3650
+#: gnome-panel/menu.c:3875
 msgid "Menu"
 msgstr "メニュー"
 
@@ -1049,13 +1037,12 @@ msgid "Panel Settings"
 msgstr "パネルの設定"
 
 #: gnome-panel/gnome-panel-properties.glade.h:20
-#, fuzzy
 msgid "Run Program dialog:"
-msgstr "プログラムの実行"
+msgstr "プログラム実行ダイアログ:"
 
 #: gnome-panel/gnome-panel-properties.glade.h:21
 msgid "Shortcut keys"
-msgstr ""
+msgstr "ショートカット キー"
 
 #: gnome-panel/gnome-panel-properties.glade.h:22
 msgid "Slow"
@@ -1071,7 +1058,7 @@ msgstr "アニメーションを有効にする(_E)"
 
 #: gnome-panel/gnome-panel-properties.glade.h:25
 msgid "_Enable shortcut keys"
-msgstr ""
+msgstr "ショートカットキーを有効に(_E)"
 
 #: gnome-panel/gnome-panel-properties.glade.h:26
 msgid "_Raise panels when the mouse moves over them"
@@ -1207,7 +1194,7 @@ msgstr "スクリーンショットを印刷(_P)..."
 msgid "_Save screenshot to file:"
 msgstr "スクリーンショットをファイルに保存(_S):"
 
-#: gnome-panel/gnome-run.c:266 gnome-panel/gnome-run.c:274
+#: gnome-panel/gnome-run.c:269 gnome-panel/gnome-run.c:277
 #, c-format
 msgid ""
 "Failed to load this program!\n"
@@ -1216,7 +1203,7 @@ msgstr ""
 "このプログラムのロードに失敗!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:328
+#: gnome-panel/gnome-run.c:331
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1225,7 +1212,7 @@ msgstr ""
 "コマンドの実行に失敗しました:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:382
+#: gnome-panel/gnome-run.c:385
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1236,54 +1223,54 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:425
+#: gnome-panel/gnome-run.c:428
 msgid "Choose a program to run"
 msgstr "実行するプログラムを選択してください"
 
-#: gnome-panel/gnome-run.c:672
+#: gnome-panel/gnome-run.c:683
 msgid "_Browse..."
 msgstr "参照(_B)..."
 
-#: gnome-panel/gnome-run.c:681
+#: gnome-panel/gnome-run.c:692
 msgid "Run in _terminal"
 msgstr "端末内で実行(_T)"
 
-#: gnome-panel/gnome-run.c:914
+#: gnome-panel/gnome-run.c:916
 #, c-format
 msgid "Will run '%s'"
 msgstr "'%s' を実行します"
 
-#: gnome-panel/gnome-run.c:925 gnome-panel/gnome-run.c:928
+#: gnome-panel/gnome-run.c:927 gnome-panel/gnome-run.c:930
 msgid "No program selected"
 msgstr "プログラムが選択されていません"
 
-#: gnome-panel/gnome-run.c:1032
+#: gnome-panel/gnome-run.c:1034
 msgid "A_pplications:"
 msgstr "アプリケーション(_P)"
 
-#: gnome-panel/gnome-run.c:1144
+#: gnome-panel/gnome-run.c:1151
 msgid "_Advanced <<"
 msgstr "上級(_A) <<"
 
-#: gnome-panel/gnome-run.c:1147
+#: gnome-panel/gnome-run.c:1154
 msgid "Hide the advanced controls below this button."
 msgstr "このボタンの下の上級コントロールを隠す"
 
-#: gnome-panel/gnome-run.c:1156
+#: gnome-panel/gnome-run.c:1163
 msgid "_Advanced >>"
 msgstr "上級(_A) >>"
 
-#: gnome-panel/gnome-run.c:1159
+#: gnome-panel/gnome-run.c:1166
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
 msgstr "一覧から選ぶかわりにコマンドラインをキーボードで入力するのを許可"
 
-#: gnome-panel/gnome-run.c:1176
+#: gnome-panel/gnome-run.c:1183
 msgid "_Run"
 msgstr "実行(_R)"
 
-#: gnome-panel/gnome-run.c:1226
+#: gnome-panel/gnome-run.c:1240
 msgid "Run Program"
 msgstr "プログラムの実行"
 
@@ -1345,7 +1332,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3421
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3427
 msgid "Log out"
 msgstr "ログアウト"
 
@@ -1353,7 +1340,7 @@ msgstr "ログアウト"
 msgid "Log out of GNOME"
 msgstr "GNOMEのログアウト"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3408
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3414
 msgid "Lock screen"
 msgstr "スクリーンのロック"
 
@@ -1440,8 +1427,8 @@ msgstr "新規メニュー項目を作成します"
 msgid "Can't open directory, using main menu!"
 msgstr "ディレクトリを開けません, メインメニューを使います!"
 
-#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3308
-#: gnome-panel/menu.c:3999
+#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3314
+#: gnome-panel/menu.c:4005
 msgid "Edit menus..."
 msgstr "メニューの編集..."
 
@@ -1644,53 +1631,53 @@ msgid "You already have a status dock on the panel. You can only have one"
 msgstr ""
 "パネルにはすでにステータスドックがあります。これは一つしかつくれません。"
 
-#: gnome-panel/menu.c:2327 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2331 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
-#: gnome-panel/menu.c:2598
+#: gnome-panel/menu.c:2604
 msgid "%I: %M: %S: %p"
 msgstr "%p %I:%M:%S"
 
-#: gnome-panel/menu.c:2605
+#: gnome-panel/menu.c:2611
 msgid "You can only have one menu panel at a time."
 msgstr "メニューパネルは同時に一つしか持てません。"
 
-#: gnome-panel/menu.c:2627
+#: gnome-panel/menu.c:2633
 msgid "Menu panel"
 msgstr "メニューパネル"
 
-#: gnome-panel/menu.c:2635 gnome-panel/panel-config.c:1497
+#: gnome-panel/menu.c:2641 gnome-panel/panel-config.c:1497
 #: gnome-panel/panel-config.c:1619
 msgid "Edge panel"
 msgstr "エッジ・パネル"
 
-#: gnome-panel/menu.c:2643 gnome-panel/panel-config.c:1504
+#: gnome-panel/menu.c:2649 gnome-panel/panel-config.c:1504
 #: gnome-panel/panel-config.c:1630
 msgid "Corner panel"
 msgstr "コーナー・パネル"
 
-#: gnome-panel/menu.c:2651 gnome-panel/panel-config.c:1510
+#: gnome-panel/menu.c:2657 gnome-panel/panel-config.c:1510
 #: gnome-panel/panel-config.c:1641
 msgid "Sliding panel"
 msgstr "スライド・パネル"
 
-#: gnome-panel/menu.c:2659 gnome-panel/panel-config.c:1516
+#: gnome-panel/menu.c:2665 gnome-panel/panel-config.c:1516
 #: gnome-panel/panel-config.c:1652
 msgid "Floating panel"
 msgstr "フロート・パネル"
 
 #. force_image
-#: gnome-panel/menu.c:2756 gnome-panel/menu.c:2763 gnome-panel/menu.c:3481
+#: gnome-panel/menu.c:2762 gnome-panel/menu.c:2769 gnome-panel/menu.c:3487
 msgid "KDE menus"
 msgstr "KDEメニュー"
 
-#: gnome-panel/menu.c:2836
+#: gnome-panel/menu.c:2842
 msgid "You cannot remove your last panel."
 msgstr "最後のパネルは削除できません。"
 
-#: gnome-panel/menu.c:2848
+#: gnome-panel/menu.c:2854
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1698,88 +1685,87 @@ msgstr ""
 "パネルを削除すると、そのパネルとアプレット\n"
 "の設定は失われます。本当に削除しますか?"
 
-#: gnome-panel/menu.c:3104
+#: gnome-panel/menu.c:3110
 msgid "Launcher..."
 msgstr "ランチャ..."
 
-#: gnome-panel/menu.c:3112
+#: gnome-panel/menu.c:3118
 msgid "Launcher from menu"
 msgstr "ランチャ (メニューから選択)"
 
-#: gnome-panel/menu.c:3122
-#, fuzzy
+#: gnome-panel/menu.c:3128
 msgid "GNOME Menu"
-msgstr "GNOMEヘルプ"
+msgstr "GNOME メニュー"
 
-#: gnome-panel/menu.c:3142
+#: gnome-panel/menu.c:3148
 msgid "Log out button"
 msgstr "ログアウトボタン"
 
-#: gnome-panel/menu.c:3152
+#: gnome-panel/menu.c:3158
 msgid "Lock button"
 msgstr "ロックボタン"
 
-#: gnome-panel/menu.c:3162
+#: gnome-panel/menu.c:3168
 msgid "Swallowed app..."
 msgstr "スワロードアプリ..."
 
-#: gnome-panel/menu.c:3169
+#: gnome-panel/menu.c:3175
 msgid "Status dock"
 msgstr "ステータスドック"
 
-#: gnome-panel/menu.c:3183
+#: gnome-panel/menu.c:3189
 msgid "Cannot execute panel global properties"
 msgstr "パネルの全体のプロパティを実行できません"
 
-#: gnome-panel/menu.c:3221
+#: gnome-panel/menu.c:3227
 msgid "Remove this panel..."
 msgstr "このパネルを削除..."
 
-#: gnome-panel/menu.c:3223 gnome-panel/menu.c:3271
+#: gnome-panel/menu.c:3229 gnome-panel/menu.c:3277
 msgid "Remove this panel"
 msgstr "このパネルを削除する"
 
-#: gnome-panel/menu.c:3238
+#: gnome-panel/menu.c:3244
 msgid "Cannot launch nautilus!"
 msgstr "Nautilus を起動できません!"
 
-#: gnome-panel/menu.c:3250
+#: gnome-panel/menu.c:3256
 msgid "Add to panel"
 msgstr "パネルに追加"
 
-#: gnome-panel/menu.c:3262
+#: gnome-panel/menu.c:3268
 msgid "Create panel"
 msgstr "新規パネルを作成"
 
-#: gnome-panel/menu.c:3299
+#: gnome-panel/menu.c:3305
 msgid "Global Preferences..."
 msgstr "全体の設定..."
 
-#: gnome-panel/menu.c:3318
+#: gnome-panel/menu.c:3324
 msgid "Reread all menus"
 msgstr "すべてのメニューを再読み込み"
 
-#: gnome-panel/menu.c:3332
+#: gnome-panel/menu.c:3338
 msgid "Panel Manual..."
 msgstr "パネルマニュアル..."
 
-#: gnome-panel/menu.c:3344
+#: gnome-panel/menu.c:3350
 msgid "Cannot execute xscreensaver"
 msgstr "xscreensaverを実行できません!"
 
-#: gnome-panel/menu.c:3363
+#: gnome-panel/menu.c:3369
 msgid "About the panel..."
 msgstr "パネルについて..."
 
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3383
 msgid "About GNOME..."
 msgstr "GNOME について..."
 
-#: gnome-panel/menu.c:3414
+#: gnome-panel/menu.c:3420
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "画面をロックし、一時的にコンピュータを離れることができます。"
 
-#: gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:3433
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1787,46 +1773,42 @@ msgstr ""
 "このセッションからログアウトして、別のユーザでログインするか、コンピュータを"
 "シャットダウンできます"
 
-#: gnome-panel/menu.c:3555
-msgid "Programs"
-msgstr "プログラム"
-
-#: gnome-panel/menu.c:3572
+#: gnome-panel/menu.c:3578
 msgid "Applets"
 msgstr "アプレット"
 
-#: gnome-panel/menu.c:3595
+#: gnome-panel/menu.c:3601
 msgid "Run a command"
 msgstr "コマンドを実行"
 
-#: gnome-panel/menu.c:3613
+#: gnome-panel/menu.c:3619
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: gnome-panel/menu.c:3646
+#: gnome-panel/menu.c:3652
 msgid "Menu:"
 msgstr "メニュー:"
 
-#: gnome-panel/menu.c:3696 gnome-panel/menu.c:3724 gnome-panel/menu.c:3909
+#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
 msgid "Main Menu"
 msgstr "メインメニュー"
 
-#: gnome-panel/menu.c:3718
+#: gnome-panel/menu.c:3724
 msgid "Can't create menu, using main menu!"
 msgstr "メニューを作成できません。メインメニューを使います!"
 
-#: gnome-panel/panel-applet-frame.c:169
+#: gnome-panel/panel-applet-frame.c:171
 msgid "Cannot register control widget\n"
 msgstr "コントロールウィジェットを登録できませんでした\n"
 
-#: gnome-panel/panel-applet-frame.c:437
+#: gnome-panel/panel-applet-frame.c:448
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "コントロールから AppletShell インターフェイスを取得できません\n"
 
-#: gnome-panel/panel-applet-frame.c:564
-#, fuzzy, c-format
+#: gnome-panel/panel-applet-frame.c:574
+#, c-format
 msgid "There was a problem loading applet '%s': %s"
-msgstr "アプレットの読み込みで問題が発生しました。"
+msgstr "アプレット '%s' の読み込みで問題が発生しました: %s"
 
 #: gnome-panel/panel-config.c:540
 msgid "Hiding"
@@ -2003,12 +1985,12 @@ msgstr "ヘルプ文書が見つかりません"
 msgid "No document to show"
 msgstr "表示するドキュメントがありません"
 
-#: gnome-panel/panel.c:974
+#: gnome-panel/panel.c:975
 #, c-format
 msgid "Open URL: %s"
 msgstr "URLを開く: %s"
 
-#: gnome-panel/panel.c:2429
+#: gnome-panel/panel.c:2430
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2058,40 +2040,67 @@ msgstr "テスト Bonobo アプレット"
 msgid "Test Bonobo Applet Factory"
 msgstr "テスト Bonobo アプレットファクトリ"
 
-#: libpanel-applet/panel-applet.c:609
+#: libpanel-applet/panel-applet.c:606
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "背景の種類として不完全な '%s' を受信しました"
 
-#: libpanel-applet/panel-applet.c:623
+#: libpanel-applet/panel-applet.c:620
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "背景の種類として不完全な '%s' を受信しました: %s"
 
-#: libpanel-applet/panel-applet.c:632
+#: libpanel-applet/panel-applet.c:629
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "画像 %s の取得に失敗しました"
 
-#: libpanel-applet/panel-applet.c:639
+#: libpanel-applet/panel-applet.c:636
 msgid "Unknown background type received"
 msgstr "不明な背景の種類を受信しました"
 
-#: libpanel-applet/panel-applet.c:794
+#: libpanel-applet/panel-applet.c:791
 msgid "The Applet's containing Panel's orientation"
 msgstr "アプレットを含むパネルの向き"
 
-#: libpanel-applet/panel-applet.c:802
+#: libpanel-applet/panel-applet.c:799
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "アプレットを含むパネルの大きさ(ピクセル単位)"
 
-#: libpanel-applet/panel-applet.c:810
+#: libpanel-applet/panel-applet.c:807
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "アプレットを含むパネルの背景色、あるいは画像"
 
-#: libpanel-applet/panel-applet.c:818
+#: libpanel-applet/panel-applet.c:815
 msgid "The Applet's flags"
 msgstr "アプレットのフラグ"
+
+#~ msgid "%A, %B %d"
+#~ msgstr "%m月%d日%a"
+
+#~ msgid "clock/hourformat=12"
+#~ msgstr "clock/hourformat=12"
+
+#~ msgid "Show date in applet"
+#~ msgstr "アプレットに日付を表示"
+
+#~ msgid "Show date in tooltip"
+#~ msgstr "ツールチップに日付を表示"
+
+#~ msgid "(c) 1998-2001 the Free Software Foundation"
+#~ msgstr "(c) 1998-2001 the Free Software Foundation"
+
+#~ msgid ""
+#~ "The clock applet gives your panel a lightweight and simple display of the "
+#~ "date and time"
+#~ msgstr ""
+#~ "クロックアプレットは、パネルに軽くて単純な日付と時刻を 表示する時計です"
+
+#~ msgid "Cannot find pixmap file %s"
+#~ msgstr "画像ファイル %s が見つかりません"
+
+#~ msgid "Programs"
+#~ msgstr "プログラム"
 
 #~ msgid "Panel Global Properties"
 #~ msgstr "パネル全体のプロパティ"
