@@ -1,4 +1,11 @@
 2003-03-01  Arvind Samptur <arvind.samptur@wipro.com>
+
+	Based on fix from Sunil Mohan Adapa (sunilmohanadapa@postmark.net)
+
+	* panel-widget.c: (panel_widget_switch_move) : Modify the conditon
+	to break the loop. Fixes panel hang when moving applets. #106832
+
+2003-03-01  Arvind Samptur <arvind.samptur@wipro.com>
 	* menu.c (panel_delete_query) : Make the delete dialog
 	modal. Avoids deleting of all the panels by accident.
 	Fixes #107099
