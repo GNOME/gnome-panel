@@ -142,6 +142,14 @@ find_kde_directory(void)
 	kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
 }
 
+static void
+setup_visuals (void)
+{
+	gdk_rgb_init ();
+	gtk_widget_push_visual (gdk_rgb_get_visual ());
+	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+}
+
 int
 main(int argc, char **argv)
 {
@@ -158,6 +166,7 @@ main(int argc, char **argv)
 			       &argc, argv,
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
+	setup_visuals ();
 
 	switch (panel_corba_gtk_init (orb)) {
 	case 0: 

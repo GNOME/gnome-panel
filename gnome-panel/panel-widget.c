@@ -1785,13 +1785,7 @@ panel_widget_new (gboolean packed,
 {
 	PanelWidget *panel;
 
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-
 	panel = gtk_type_new(panel_widget_get_type());
-
-	gtk_widget_pop_colormap ();
-	gtk_widget_pop_visual ();
 
 	panel->back_type = back_type;
 

@@ -1,3 +1,10 @@
+2000-04-14  Miguel de Icaza  <root@the-dot-in.helixcode.com>
+
+	* main.c (setup_visuals): Always setup the visuals here.
+	
+	* menu.c (menu_new): Do not change the colormap/visual here, it is
+	useless.  There are too many places where items with parent-relative are created
+
 2000-04-14  Fatih Demir	<kabalak@gmx.net>
 
 	* panel.soundlist & panel.hints & \ 

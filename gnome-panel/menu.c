@@ -215,15 +215,7 @@ static GtkWidget *
 menu_new(void)
 {
 	GtkWidget *ret;
-	if (gnome_preferences_get_menus_have_icons ()) {
-		gtk_widget_push_visual (gdk_rgb_get_visual ());
-		gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-	}
 	ret = gtk_menu_new();
-	if (gnome_preferences_get_menus_have_icons ()) {
-		gtk_widget_pop_colormap ();
-		gtk_widget_pop_visual ();
-	}
 	gtk_signal_connect(GTK_OBJECT(ret), "show",
 			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
 
