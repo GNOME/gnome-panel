@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-21 03:34+0100\n"
-"PO-Revision-Date: 2003-11-21 03:36+0100\n"
+"POT-Creation-Date: 2003-11-29 13:31+0100\n"
+"PO-Revision-Date: 2003-11-29 13:33+0100\n"
 "Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1024,7 +1024,7 @@ msgid "Create new file in the given directory"
 msgstr "Napravi novu datoteku u datom direktorijumu"
 
 #: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:896
+#: gnome-panel/gnome-panel-screenshot.c:705
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1083,7 +1083,7 @@ msgstr "Postavke panela"
 msgid "Slow"
 msgstr "Sporo"
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1091,7 +1091,7 @@ msgstr ""
 "Ne može da inicijalizuje PNG strukturu.\n"
 "Verovatno imate neodgovarajuće izdanje libpng na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:129
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1099,7 +1099,7 @@ msgstr ""
 "Ne može da napravi informacije o PNG-u.\n"
 "Verovatno imate neodgovarajuće izdanje libpng na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:150
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1107,7 +1107,7 @@ msgstr ""
 "Ne može da postavi PNG informacije.\n"
 "Verovatno imate neodgovarajuće izdanje libpng na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:168
+#: gnome-panel/gnome-panel-screenshot.c:154
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1115,13 +1115,13 @@ msgstr ""
 "Nedovoljno memorije za snimanje ekrana.\n"
 "Oslobodite nešto memorije i probajte ponovo."
 
-#: gnome-panel/gnome-panel-screenshot.c:226
+#: gnome-panel/gnome-panel-screenshot.c:212
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Datoteka „%s“ već postoji. Presnimiti preko nje?"
 
-#: gnome-panel/gnome-panel-screenshot.c:247
-#: gnome-panel/gnome-panel-screenshot.c:763
+#: gnome-panel/gnome-panel-screenshot.c:233
+#: gnome-panel/gnome-panel-screenshot.c:582
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1132,52 +1132,44 @@ msgstr ""
 "„%s“\n"
 "Proverite ovlašćenja i dozvole za tekući direktorijum"
 
-#: gnome-panel/gnome-panel-screenshot.c:520
-msgid "Print Screenshot"
-msgstr "Štampaj snimak ekrana"
-
-#: gnome-panel/gnome-panel-screenshot.c:568
-msgid "Screenshot Print Preview"
-msgstr "Pregled snimka ekrana pre štampe"
-
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:595
+#: gnome-panel/gnome-panel-screenshot.c:414
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%csnimak-ekrana-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:602
+#: gnome-panel/gnome-panel-screenshot.c:421
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%csnimak-ekrana.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:619
+#: gnome-panel/gnome-panel-screenshot.c:438
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%csnimak-ekrana-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:626
+#: gnome-panel/gnome-panel-screenshot.c:445
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%csnimak-ekrana-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:787
+#: gnome-panel/gnome-panel-screenshot.c:606
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nedovoljno mesta za upis datoteke „%s“"
 
-#: gnome-panel/gnome-panel-screenshot.c:1287
+#: gnome-panel/gnome-panel-screenshot.c:1096
 msgid "Grab a window instead of the entire screen"
 msgstr "Snimi prozor umesto celog ekrana"
 
-#: gnome-panel/gnome-panel-screenshot.c:1288
+#: gnome-panel/gnome-panel-screenshot.c:1097
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Snimi ekran nakon određenog vremena (u sekundama)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1340
+#: gnome-panel/gnome-panel-screenshot.c:1149
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1185,7 +1177,7 @@ msgstr ""
 "Glade datoteka za snimanje ekrana nedostaje.\n"
 "Proverite instalaciju (paket „gnome-panel“)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1364
+#: gnome-panel/gnome-panel-screenshot.c:1165
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Ne može da snimi ekran sa tekućeg desktopa."
 
@@ -1212,10 +1204,6 @@ msgstr "Sačuvaj snimak ekrana u _datoteku:"
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Postavi snimak ekrana na veb stranicu (snimi u ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:9
-msgid "_Print screenshot..."
-msgstr "_Štampaj snimak ekrana..."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1604,18 +1592,18 @@ msgstr "Da li je omogućeno prevlačenje i puštanje na element"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Greška u popup_menu: „%s“\n"
 
-#: gnome-panel/panel-applet-frame.c:860
+#: gnome-panel/panel-applet-frame.c:861
 #, c-format
 msgid ""
-"The %s applet appears to have died unexpectedly\n"
+"The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
-"Reload this applet?%s"
+"Do you want to reload this applet?"
 msgstr ""
-"Čini se da se programče %s neočekivano ugasilo\n"
+"Čini se da je programče „%s“ neočekivano ugašeno.\n"
 "\n"
-"Ponovo učitati ovo programče?%s"
+"Ponovo učitati ovo programče?"
 
-#: gnome-panel/panel-applet-frame.c:865
+#: gnome-panel/panel-applet-frame.c:867
 msgid ""
 "\n"
 "\n"
@@ -1627,20 +1615,21 @@ msgstr ""
 "(Ako se odlučite da ga ne učitate ponovo, možete ga svakako dodati desnim "
 "klikom na panel, i izborom podmenija „Dodaj na panel“)"
 
-#: gnome-panel/panel-applet-frame.c:900
+#: gnome-panel/panel-applet-frame.c:907
 msgid "D_on't Delete"
 msgstr "_Ne uklanjaj"
 
-#: gnome-panel/panel-applet-frame.c:942
+#: gnome-panel/panel-applet-frame.c:944
 #, c-format
-msgid ""
-"The panel encountered a problem while loading \"%s\"\n"
-"Details: %s%s"
-msgstr ""
-"Ovaj panel je naišao na nepriliku pri učitavanju „%s“\n"
-"Detalji: %s%s"
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "Ovaj panel je naišao na nepriliku pri učitavanju „%s“."
 
-#: gnome-panel/panel-applet-frame.c:946 gnome-panel/panel-applet-frame.c:957
+#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:357
+#, c-format
+msgid "Details: %s"
+msgstr "Detalji: %s"
+
+#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
 msgid ""
 "\n"
 "\n"
@@ -1650,12 +1639,7 @@ msgstr ""
 "\n"
 "Da li želite da uklonite ovo programče iz vaših postavki?"
 
-#: gnome-panel/panel-applet-frame.c:954
-#, c-format
-msgid "The panel encountered a problem while loading \"%s\"%s"
-msgstr "Ovaj panel je naišao na nepriliku pri učitavanju „%s“%s"
-
-#: gnome-panel/panel-applet-frame.c:1068
+#: gnome-panel/panel-applet-frame.c:1084
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Ne može dobiti AppletShell interfejs od kontrole\n"
 
@@ -2956,11 +2940,6 @@ msgstr "Uspravna koordinata panela"
 msgid "Cannot display help document"
 msgstr "Ne može da prikaže pomoć"
 
-#: gnome-panel/panel-util.c:357
-#, c-format
-msgid "Details: %s"
-msgstr "Detalji: %s"
-
 #: gnome-panel/panel-util.c:814
 #, c-format
 msgid "Cannot execute %s"
@@ -3080,6 +3059,22 @@ msgstr "Gigantski"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Patuljasti"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Štampaj snimak ekrana"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "Pregled snimka ekrana pre štampe"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "_Štampaj snimak ekrana..."
+
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s%s"
+#~ msgstr ""
+#~ "Ovaj panel je naišao na nepriliku pri učitavanju „%s“\n"
+#~ "Detalji: %s%s"
 
 #~ msgid "Window Menu"
 #~ msgstr "Meni prozora"
