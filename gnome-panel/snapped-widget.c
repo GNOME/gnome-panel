@@ -16,10 +16,10 @@ extern int panel_applet_in_drag;
 
 static void snapped_widget_class_init	(SnappedWidgetClass *klass);
 static void snapped_widget_init		(SnappedWidget      *snapped);
-static void snapped_widget_size_request (GtkWidget      *widget,
-					 GtkRequisition *requisition);
-static void snapped_widget_size_allocate(GtkWidget      *widget,
-					 GtkAllocation  *allocation);
+static void snapped_widget_size_request	(GtkWidget          *widget,
+					 GtkRequisition     *requisition);
+static void snapped_widget_size_allocate(GtkWidget          *widget,
+					 GtkAllocation      *allocation);
 
 extern GdkCursor *fleur_cursor;
 
@@ -123,11 +123,21 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 	widget_class->size_request = snapped_widget_size_request;
 	widget_class->size_allocate = snapped_widget_size_allocate;
 }
+
+/*if this is true the size request will request a 48x48 cube, this is used
+  during orientation changes to make no flicker*/
+static int snapped_widget_request_cube = FALSE;
 static void
 snapped_widget_size_request(GtkWidget *widget,
 			    GtkRequisition *requisition)
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	if(snapped_widget_request_cube) {
+		requisition->width = 48;
+		requisition->height = 48;
+		snapped_widget_request_cube = FALSE;
+		return;
+	}
 
 	gtk_widget_size_request (snapped->table, &snapped->table->requisition);
 	
@@ -146,97 +156,19 @@ snapped_widget_size_request(GtkWidget *widget,
 }
 
 static void
-snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
+snapped_widget_get_pos(SnappedWidget *snapped, gint16 *x, gint16 *y,
+		       int width, int height)
 {
-	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
 	int xcor = 0;
 	int ycor = 0;
 	int thick;
 	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
-	GtkAllocation challoc;
-
+	
 	if(snapped->pos == SNAPPED_BOTTOM ||
 	   snapped->pos == SNAPPED_TOP)
-		thick = allocation->height;
+		thick = height;
 	else
-		thick = allocation->width;
-
-	if(snapped->mode == SNAPPED_AUTO_HIDE &&
-	   snapped->state == SNAPPED_HIDDEN)
-		ycor = thick - pw_minimized_size;
-	if(panel->orient == PANEL_HORIZONTAL) {
-		if(snapped->state == SNAPPED_HIDDEN_LEFT)
-			xcor = - gdk_screen_width() +
-			       snapped->hidebutton_w->requisition.width;
-		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
-			xcor = gdk_screen_width() -
-			       snapped->hidebutton_w->requisition.width;
-	} else { /*vertical*/
-		if(snapped->state == SNAPPED_HIDDEN_LEFT)
-			xcor = - gdk_screen_height() +
-			       snapped->hidebutton_s->requisition.height;
-		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
-			xcor = gdk_screen_height() -
-			       snapped->hidebutton_n->requisition.height;
-	}
-
-	switch(snapped->pos) {
-		case SNAPPED_TOP:
-			allocation->x = xcor;
-			allocation->y = -ycor;
-			break;
-		case SNAPPED_BOTTOM:
-			allocation->x = xcor;
-			allocation->y = gdk_screen_height() - thick + ycor;
-			break;
-		case SNAPPED_LEFT:
-			allocation->x = -ycor;
-			allocation->y = xcor;
-			break;
-		case SNAPPED_RIGHT:
-			allocation->x = gdk_screen_width() - thick + ycor;
-			allocation->y = xcor;
-			break;
-	}
-
-	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
-					allocation->x, 
-					allocation->y,
-					allocation->width, 
-					allocation->height);
-
-	challoc.x = challoc.y = 0;
-	challoc.width = allocation->width;
-	challoc.height = allocation->height;
-	gtk_widget_size_allocate(snapped->table,&challoc);
-	
-}
-
-static void
-snapped_widget_set_initial_pos(SnappedWidget *snapped)
-{
-	int xcor = 0;
-	int ycor = 0;
-	int thick;
-	int x,y,width,height;
-	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
-
-	switch(snapped->pos) {
-		case SNAPPED_BOTTOM:
-		case SNAPPED_TOP:
-			width = gdk_screen_width();
-			height = 48;
-			break;
-		case SNAPPED_LEFT:
-		case SNAPPED_RIGHT:
-			height = gdk_screen_height();
-			width = 48;
-			break;
-	}
-	
-	thick = 48;
+		thick = width;
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE &&
 	   snapped->state == SNAPPED_HIDDEN)
@@ -259,23 +191,93 @@ snapped_widget_set_initial_pos(SnappedWidget *snapped)
 
 	switch(snapped->pos) {
 		case SNAPPED_TOP:
-			x = xcor;
-			y = -ycor;
+			*x = xcor;
+			*y = -ycor;
 			break;
 		case SNAPPED_BOTTOM:
-			x = xcor;
-			y = gdk_screen_height() - thick + ycor;
+			*x = xcor;
+			*y = gdk_screen_height() - thick + ycor;
 			break;
 		case SNAPPED_LEFT:
-			x = -ycor;
-			y = xcor;
+			*x = -ycor;
+			*y = xcor;
 			break;
 		case SNAPPED_RIGHT:
-			x = gdk_screen_width() - thick + ycor;
-			y = xcor;
+			*x = gdk_screen_width() - thick + ycor;
+			*y = xcor;
+			break;
+	}
+}
+
+static void
+snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
+{
+	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	GtkAllocation challoc;
+
+	/*get us a size request (we ignored the one on allocation because
+	  we don't want to change our size, ever*/
+	gtk_widget_size_request (snapped->table, &snapped->table->requisition);
+	
+	/*ignore the allocation we get, we want to be this large*/
+	switch(snapped->pos) {
+		case SNAPPED_BOTTOM:
+		case SNAPPED_TOP:
+			allocation->width = gdk_screen_width();
+			allocation->height = snapped->table->requisition.height;
+			break;
+		case SNAPPED_LEFT:
+		case SNAPPED_RIGHT:
+			allocation->height = gdk_screen_height();
+			allocation->width = snapped->table->requisition.width;
 			break;
 	}
 	
+	snapped_widget_get_pos(snapped,
+			       &allocation->x,
+			       &allocation->y,
+			       allocation->width,
+			       allocation->height);
+
+
+	widget->allocation = *allocation;
+	if (GTK_WIDGET_REALIZED (widget))
+		gdk_window_move_resize (widget->window,
+					allocation->x, 
+					allocation->y,
+					allocation->width, 
+					allocation->height);
+
+	challoc.x = challoc.y = 0;
+	challoc.width = allocation->width;
+	challoc.height = allocation->height;
+	gtk_widget_size_allocate(snapped->table,&challoc);
+	
+}
+
+static void
+snapped_widget_set_initial_pos(SnappedWidget *snapped)
+{
+	gint16 x,y;
+
+	switch(snapped->pos) {
+		case SNAPPED_BOTTOM:
+		case SNAPPED_TOP:
+			snapped_widget_get_pos(snapped,
+					       &x,
+					       &y,
+					       gdk_screen_width(),
+					       48);
+			break;
+		case SNAPPED_LEFT:
+		case SNAPPED_RIGHT:
+			snapped_widget_get_pos(snapped,
+					       &x,
+					       &y,
+					       48,
+					       gdk_screen_height());
+			break;
+	}
 	gtk_widget_set_uposition(GTK_WIDGET(snapped),x,y);
 }
 
@@ -856,22 +858,9 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	else
 		oldorient = PANEL_VERTICAL;
 
-	/*
-	if(oldorient != orient) {
-		int w,h,t;
-		GList *list;
-		PanelWidget *panel = PANEL_WIDGET(snapped->panel);
-		gdk_window_get_size(GTK_WIDGET(snapped)->window,&w,&h);
-		t = h>w?w:h;
-		resize_window(GTK_WIDGET(snapped),t,t);
-		
-		for(list = panel->applet_list;
-		    list != NULL;
-		    list = g_list_next(list)) {
-			AppletData *ad = list->data;
-			gtk_fixed_move(GTK_FIXED(panel),ad->applet,0,0);
-		}
-	}*/
+	/*avoid flicker during size_request*/
+	if(oldorient != orient)
+		snapped_widget_request_cube = TRUE;
 
 	panel_widget_change_params(PANEL_WIDGET(snapped->panel),
 				   orient,

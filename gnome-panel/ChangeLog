@@ -1,3 +1,13 @@
+Fri Jul 31 00:34:06 1998  George Lebl  <jirka@5z.com>
+
+	* snapped-widget.c: fixed up the size_alloc and size_request,
+	  it's now using a slight hack which seems to work nicely, we
+	  do a size_request during size_alloc which fixes a race condition
+	  and we sometimes do a cube size request in case we are changing
+	  orientation to prevent flicker
+
+	* corner-widget.c: fixed up in style of snapped-widget
+
 Thu Jul 30 13:17:15 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: fixed size_allocate to allow applets all the

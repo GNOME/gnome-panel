@@ -16,6 +16,10 @@ extern int panel_applet_in_drag;
 
 static void corner_widget_class_init	(CornerWidgetClass *klass);
 static void corner_widget_init		(CornerWidget      *corner);
+static void corner_widget_size_request	(GtkWidget         *widget,
+					 GtkRequisition    *requisition);
+static void corner_widget_size_allocate	(GtkWidget         *widget,
+					 GtkAllocation     *allocation);
 
 extern GdkCursor *fleur_cursor;
 
@@ -86,9 +90,8 @@ marshal_signal_int (GtkObject * object,
 static void
 corner_widget_class_init (CornerWidgetClass *class)
 {
-	GtkObjectClass *object_class;
-
-	object_class = (GtkObjectClass*) class;
+	GtkObjectClass *object_class = (GtkObjectClass*) class;
+	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 
 	corner_widget_signals[POS_CHANGE_SIGNAL] =
 		gtk_signal_new("pos_change",
@@ -116,104 +119,152 @@ corner_widget_class_init (CornerWidgetClass *class)
 
 	class->pos_change = NULL;
 	class->state_change = NULL;
+	
+	widget_class->size_request = corner_widget_size_request;
+	widget_class->size_allocate = corner_widget_size_allocate;
+}
+
+
+/*if this is true the size request will request a 48x48 cube, this is used
+  during orientation changes to make no flicker*/
+static int corner_widget_request_cube = FALSE;
+static void
+corner_widget_size_request(GtkWidget *widget,
+			    GtkRequisition *requisition)
+{
+	CornerWidget *corner = CORNER_WIDGET(widget);
+	if(corner_widget_request_cube) {
+		requisition->width = 48;
+		requisition->height = 48;
+		corner_widget_request_cube = FALSE;
+		return;
+	}
+
+	gtk_widget_size_request (corner->table, &corner->table->requisition);
+	
+	requisition->width = corner->table->requisition.width;
+	requisition->height = corner->table->requisition.height;
 }
 
 static void
-corner_widget_set_position(CornerWidget *corner)
+corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int height)
 {
-	int x,y;
-	int newx,newy;
-	int width,height;
 	PanelWidget *panel = PANEL_WIDGET(corner->panel);
-	
-	if(corner->state == CORNER_MOVING)
-		return;
-
-	if(GTK_WIDGET(corner)->window)
-		gdk_window_get_geometry(GTK_WIDGET(corner)->window,&x,&y,
-					&width,&height,NULL);
-	else {
-		x = y = -3000;
-		width = height = 48;
-	}
-	newx = x;
-	newy = y;
 	
 	switch(corner->pos) {
 	case CORNER_NE:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			newy = 0;
+			*y = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newx = gdk_screen_width() -
+				*x = gdk_screen_width() -
 					corner->hidebutton_w->allocation.width;
 			else /*shown*/
-				newx = gdk_screen_width() - width;
+				*x = gdk_screen_width() - width;
 		} else { /*vertical*/
-			newx = gdk_screen_width() - width;
+			*x = gdk_screen_width() - width;
 			if(corner->state == CORNER_HIDDEN)
-				newy = corner->hidebutton_s->allocation.height -
+				*y = corner->hidebutton_s->allocation.height -
 					height;
 			else /*shown*/
-				newy = 0;
+				*y = 0;
 		}
 		break;
 	case CORNER_SE:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			newy = gdk_screen_height() - height;
+			*y = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
-				newx = gdk_screen_width() -
+				*x = gdk_screen_width() -
 					corner->hidebutton_w->allocation.width;
 			else /*shown*/
-				newx = gdk_screen_width() - width;
+				*x = gdk_screen_width() - width;
 		} else { /*vertical*/
-			newx = gdk_screen_width() - width;
+			*x = gdk_screen_width() - width;
 			if(corner->state == CORNER_HIDDEN)
-				newy = gdk_screen_height() -
+				*y = gdk_screen_height() -
 					corner->hidebutton_n->allocation.height;
 			else /*shown*/
-				newy = gdk_screen_height() - height;
+				*y = gdk_screen_height() - height;
 		}
 		break;
 	case CORNER_SW:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			newy = gdk_screen_height() - height;
+			*y = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
-				newx = corner->hidebutton_e->allocation.width -
+				*x = corner->hidebutton_e->allocation.width -
 					width;
 			else /*shown*/
-				newx = 0;
+				*x = 0;
 		} else { /*vertical*/
-			newx = 0;
+			*x = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newy = gdk_screen_height() -
+				*y = gdk_screen_height() -
 					corner->hidebutton_n->allocation.height;
 			else /*shown*/
-				newy = gdk_screen_height() - height;
+				*y = gdk_screen_height() - height;
 		}
 		break;
 	case CORNER_NW:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			newy = 0;
+			*y = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newx = corner->hidebutton_e->allocation.width -
+				*x = corner->hidebutton_e->allocation.width -
 					width;
 			else /*shown*/
-				newx = 0;
+				*x = 0;
 		} else { /*vertical*/
-			newx = 0;
+			*x = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newy = corner->hidebutton_s->allocation.height -
+				*y = corner->hidebutton_s->allocation.height -
 					height;
 			else /*shown*/
-				newy = 0;
+				*y = 0;
 		}
 		break;
 	}
-	if(!GTK_WIDGET(corner)->window)
-		gtk_widget_set_uposition(GTK_WIDGET(corner),newx,newy);
-	else if(newx != x || newy != y)
-		move_window(GTK_WIDGET(corner),newx,newy);
 }
+
+static void
+corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
+{
+	CornerWidget *corner = CORNER_WIDGET(widget);
+	GtkAllocation challoc;
+
+	/*we actually want to ignore the size_reqeusts since they are sometimes
+	  a cube for the flicker prevention*/
+	gtk_widget_size_request (corner->table, &corner->table->requisition);
+	
+	allocation->width = corner->table->requisition.width;
+	allocation->height = corner->table->requisition.height;
+
+	corner_widget_get_pos(corner,
+			      &allocation->x,
+			      &allocation->y,
+			      allocation->width,
+			      allocation->height);
+
+
+	widget->allocation = *allocation;
+	if (GTK_WIDGET_REALIZED (widget))
+		gdk_window_move_resize (widget->window,
+					allocation->x, 
+					allocation->y,
+					allocation->width, 
+					allocation->height);
+
+	challoc.x = challoc.y = 0;
+	challoc.width = allocation->width;
+	challoc.height = allocation->height;
+	gtk_widget_size_allocate(corner->table,&challoc);
+}
+
+static void
+corner_widget_set_initial_pos(CornerWidget *corner)
+{
+	gint16 x,y;
+	corner_widget_get_pos(corner, &x, &y, 48, 48);
+	gtk_widget_set_uposition(GTK_WIDGET(corner),x,y);
+}
+
 
 static int
 move_step(int src, int dest, int pos, int step)
@@ -530,14 +581,6 @@ corner_widget_destroy(GtkWidget *w, gpointer data)
 }
 
 static void
-corner_widget_configure_event (CornerWidget *corner,
-			       GdkEventConfigure *event,
-			       gpointer data)
-{
-	corner_widget_set_position(corner);
-}
-
-static void
 corner_widget_init (CornerWidget *corner)
 {
 	/*if we set the icewm hints it will have to be changed to TOPLEVEL*/
@@ -589,9 +632,6 @@ corner_widget_init (CornerWidget *corner)
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 
-	gtk_signal_connect(GTK_OBJECT(corner), "configure_event",
-			   GTK_SIGNAL_FUNC(corner_widget_configure_event),
-			   NULL);
 	gtk_signal_connect(GTK_OBJECT(corner), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(corner_enter_notify),
 			   NULL);
@@ -647,7 +687,7 @@ corner_widget_new (CornerPos pos,
 
 	corner_widget_set_hidebuttons(corner);
 
-	corner_widget_set_position(corner);
+	corner_widget_set_initial_pos(corner);
 
 	return GTK_WIDGET(corner);
 }
@@ -675,23 +715,11 @@ corner_widget_change_params(CornerWidget *corner,
 	corner->state = state;
 
 	oldorient = PANEL_WIDGET(corner->panel)->orient;
-	
-	if(oldorient != orient) {
-		int w,h,t;
-		GList *list;
-		PanelWidget *panel = PANEL_WIDGET(corner->panel);
-		gdk_window_get_size(GTK_WIDGET(corner)->window,&w,&h);
-		t = h>w?w:h;
-		resize_window(GTK_WIDGET(corner),t,t);
-		
-		for(list = panel->applet_list;
-		    list != NULL;
-		    list = g_list_next(list)) {
-			AppletData *ad = list->data;
-			gtk_fixed_move(GTK_FIXED(panel),ad->applet,0,0);
-		}
-	}
 
+	/*avoid flicker during size_request*/
+	if(oldorient != orient)
+		corner_widget_request_cube = TRUE;
+	
 	panel_widget_change_params(PANEL_WIDGET(corner->panel),
 				   orient,
 				   back_type,
@@ -699,7 +727,6 @@ corner_widget_change_params(CornerWidget *corner,
 				   fit_pixmap_bg,
 				   back_color);
 
-	corner_widget_set_position(corner);
 	corner_widget_set_hidebuttons(corner);
 
 	if(oldpos != corner->pos)
@@ -710,6 +737,8 @@ corner_widget_change_params(CornerWidget *corner,
 	   	gtk_signal_emit(GTK_OBJECT(corner),
 	   			corner_widget_signals[STATE_CHANGE_SIGNAL],
 	   			corner->state);
+	
+	gtk_widget_queue_resize(GTK_WIDGET(corner));
 }
 
 
