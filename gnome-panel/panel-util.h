@@ -155,6 +155,8 @@ void		readbuf_close		(ReadBuf *rb);
 void add_atk_name_desc (GtkWidget *widget, gchar *name, gchar *desc);
 void set_relation (GtkWidget *widget, GtkLabel *label, int set_for);
 
+GdkPixbuf *	missing_pixbuf		(int size);
+
 
 G_END_DECLS
 

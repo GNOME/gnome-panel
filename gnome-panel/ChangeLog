@@ -1,3 +1,11 @@
+Wed Jul 10 16:50:27 2002  George Lebl <jirka@5z.com>
+
+	* button-widget.[ch], launcher.c, logout.c, darawer.c, menu.c,
+	  panel-util.h: redo the icon loading logic a bit and leave more
+	  logic up to the loading code in button_widget.  Failsafe code so
+	  that we always succeed even if we can't find gnome-unknown.png,
+	  in which case we make a white rectangle with a red X thorough it.
+
 Wed Jul 10 15:13:37 2002  George Lebl <jirka@5z.com>
 
 	* quick-desktop-reader.c: revert all the patches that broke

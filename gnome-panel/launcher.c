@@ -49,8 +49,6 @@ extern GtkTooltips *panel_tooltips;
 
 extern GSList *applets;
 
-static char *default_app_pixmap = NULL;
-
 extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
@@ -321,9 +319,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};
 
-	if (!default_app_pixmap)
-		default_app_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
-							     FALSE /* fallback */);
 	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;
@@ -438,12 +433,9 @@ setup_button (Launcher *launcher)
 	button_widget_set_text (BUTTON_WIDGET (launcher->button), name);
 
 	/* Setup icon */
-	icon = gnome_desktop_item_get_icon (launcher->ditem, panel_icon_loader);
-	if (icon == NULL ||
-	    ! button_widget_set_pixmap (BUTTON_WIDGET (launcher->button),
-					icon, -1))
-		button_widget_set_pixmap (BUTTON_WIDGET (launcher->button),
-					  default_app_pixmap, -1);
+	icon = gnome_desktop_item_get_string (launcher->ditem,
+					      GNOME_DESKTOP_ITEM_ICON);
+	button_widget_set_pixmap (BUTTON_WIDGET (launcher->button), icon, -1);
 	g_free (icon);
 
 	/* Setup help */

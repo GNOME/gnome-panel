@@ -55,24 +55,14 @@ properties_apply_callback(gpointer data)
 	drawer->pixmap = NULL;
 	g_free (drawer->tooltip);
 	drawer->tooltip = NULL;
-	s = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY (pixentry));
-	if (string_empty (s)) {
+	drawer->pixmap = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY (pixentry));
+	if (string_empty (drawer->pixmap) ||
+	    access (drawer->pixmap, R_OK) != 0) {
 		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 							    "panel-drawer.png", TRUE, NULL);
-		button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
-					  drawer->pixmap,-1);
-	} else {
-		if(button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), s, -1))
-			drawer->pixmap = g_strdup (s);
-		else {
-			drawer->pixmap = gnome_program_locate_file (NULL, 
-								    GNOME_FILE_DOMAIN_PIXMAP, 
-								    "panel-drawer.png",
-								     TRUE, NULL);
-			button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
-						  drawer->pixmap, -1);
-		}
 	}
+	button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
+				  drawer->pixmap, -1);
 	g_free(s);
 	cs = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
 	if (string_empty (cs))

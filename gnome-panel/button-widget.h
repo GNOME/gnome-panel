@@ -58,7 +58,7 @@ GtkWidget*	button_widget_new		(const char *pixmap,
 						 PanelOrient orient,
 						 const char *text);
 
-gboolean	button_widget_set_pixmap	(ButtonWidget *button,
+void		button_widget_set_pixmap	(ButtonWidget *button,
 						 const char *pixmap,
 						 int size);
 
