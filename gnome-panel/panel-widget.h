@@ -104,8 +104,8 @@ struct _PanelWidget
 
 	gint			leave_notify_timer_tag;
 
-	GtkWidget		*currently_dragged_applet;
-	gint			currently_dragged_applet_pos;
+	AppletData		*currently_dragged_applet;
+	gint			drag_blocked;
 
 	DrawerDropZonePos	drawer_drop_zone_pos;
 	gint			x;
