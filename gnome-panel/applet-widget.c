@@ -3,6 +3,7 @@
 #include <gnome.h>
 #include <applet-widget.h>
 #include <applet-lib.h>
+#include "mico-parse.h"
 
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);
@@ -16,6 +17,16 @@ typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
 				        char *globcfgpath,
 				        gpointer data);
 
+typedef void (*AppletWidgetBackSignal) (GtkObject * object,
+					PanelBackType type,
+					gchar *pixmap,
+					GdkColor *color,
+					gpointer data);
+
+typedef void (*AppletWidgetTooltipSignal) (GtkObject * object,
+					   gint enabled,
+					   gpointer data);
+
 static GList *applet_widgets = NULL;
 static gint applet_count = 0;
 
@@ -28,6 +39,8 @@ static AppletStartNewFunc start_new_func=NULL;
 static gpointer start_new_func_data=NULL;
 
 static gchar *myinvoc= NULL;
+
+static GtkTooltips *applet_tooltips=NULL;
 
 guint
 applet_widget_get_type ()
@@ -54,16 +67,18 @@ applet_widget_get_type ()
 enum {
 	CHANGE_ORIENT_SIGNAL,
 	SESSION_SAVE_SIGNAL,
+	BACK_CHANGE_SIGNAL,
+	TOOLTIP_STATE_SIGNAL,
 	LAST_SIGNAL
 };
 
 static gint applet_widget_signals[LAST_SIGNAL] = {0,0};
 
 static void
-gtk_applet_widget_marshal_signal_orient (GtkObject * object,
-				         GtkSignalFunc func,
-				         gpointer func_data,
-				         GtkArg * args)
+applet_widget_marshal_signal_orient (GtkObject * object,
+				     GtkSignalFunc func,
+				     gpointer func_data,
+				     GtkArg * args)
 {
 	AppletWidgetOrientSignal rfunc;
 
@@ -74,10 +89,10 @@ gtk_applet_widget_marshal_signal_orient (GtkObject * object,
 }
 
 static void
-gtk_applet_widget_marshal_signal_save (GtkObject * object,
-				       GtkSignalFunc func,
-				       gpointer func_data,
-				       GtkArg * args)
+applet_widget_marshal_signal_save (GtkObject * object,
+				   GtkSignalFunc func,
+				   gpointer func_data,
+				   GtkArg * args)
 {
 	AppletWidgetSaveSignal rfunc;
 	gint *retval;
@@ -89,6 +104,36 @@ gtk_applet_widget_marshal_signal_save (GtkObject * object,
 	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
 		  	    GTK_VALUE_STRING (args[1]),
 		  	    func_data);
+}
+
+static void
+applet_widget_marshal_signal_back (GtkObject * object,
+				   GtkSignalFunc func,
+				   gpointer func_data,
+				   GtkArg * args)
+{
+	AppletWidgetBackSignal rfunc;
+
+	rfunc = (AppletWidgetBackSignal) func;
+
+	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+		  GTK_VALUE_POINTER (args[1]),
+		  GTK_VALUE_POINTER (args[2]),
+		  func_data);
+}
+
+static void
+applet_widget_marshal_signal_tooltip (GtkObject * object,
+				      GtkSignalFunc func,
+				      gpointer func_data,
+				      GtkArg * args)
+{
+	AppletWidgetTooltipSignal rfunc;
+
+	rfunc = (AppletWidgetTooltipSignal) func;
+
+	(*rfunc) (object, GTK_VALUE_INT (args[0]),
+		  func_data);
 }
 
 static void
@@ -106,7 +151,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 change_orient),
-			       gtk_applet_widget_marshal_signal_orient,
+			       applet_widget_marshal_signal_orient,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
@@ -116,11 +161,33 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 session_save),
-			       gtk_applet_widget_marshal_signal_save,
+			       applet_widget_marshal_signal_save,
 			       GTK_TYPE_BOOL,
 			       2,
 			       GTK_TYPE_STRING,
 			       GTK_TYPE_STRING);
+	applet_widget_signals[BACK_CHANGE_SIGNAL] =
+		gtk_signal_new("back_change",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 back_change),
+			       applet_widget_marshal_signal_back,
+			       GTK_TYPE_NONE,
+			       3,
+			       GTK_TYPE_ENUM,
+			       GTK_TYPE_POINTER,
+			       GTK_TYPE_POINTER);
+	applet_widget_signals[TOOLTIP_STATE_SIGNAL] =
+		gtk_signal_new("tooltip_state",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 tooltip_state),
+			       applet_widget_marshal_signal_tooltip,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_INT);
 
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
@@ -261,6 +328,14 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 }
 
 void
+applet_widget_set_widget_tooltip(AppletWidget *applet,
+				 GtkWidget *widget,
+				 gchar *text)
+{
+	gtk_tooltips_set_tip (applet_tooltips,widget,text,NULL);
+}
+
+void
 applet_widget_set_tooltip(AppletWidget *applet, gchar *text)
 {
 	if(text)
@@ -325,6 +400,8 @@ applet_widget_init(char *app_id,
 
 	if (!gnome_panel_applet_init_corba())
 		g_error("Could not communicate with the panel\n");
+	
+	applet_tooltips = gtk_tooltips_new();
 
 	return ret;
 }
@@ -383,6 +460,39 @@ _gnome_applet_start_new_applet(const char *param)
 	else if(start_new_func)
 		(*start_new_func)(param,start_new_func_data);
 }
+
+void
+_gnome_applet_back_change(int applet_id,
+			  int back_type,
+			  const char *pixmap,
+			  GdkColor *color)
+{
+	AppletWidget *applet;
+
+	applet = applet_widget_get_by_id(applet_id);
+	if(applet) {
+		gtk_signal_emit(GTK_OBJECT(applet),
+				applet_widget_signals[BACK_CHANGE_SIGNAL],
+				back_type,pixmap,color);
+	}
+}
+
+void
+_gnome_applet_tooltips_state(int enabled)
+{
+	GList *list;
+	if(enabled)
+		gtk_tooltips_enable(applet_tooltips);
+	else
+		gtk_tooltips_disable(applet_tooltips);
+
+	for(list=applet_widgets;list!=NULL;list=g_list_next(list)) {
+		gtk_signal_emit(GTK_OBJECT(list->data),
+				applet_widget_signals[TOOLTIP_STATE_SIGNAL],
+				enabled);
+	}
+}
+
 
 /* convenience function for multi applets */
 gchar *

@@ -249,3 +249,36 @@ send_applet_start_new_applet (const char *ior, const char *param)
 		g_warning(_("Error on sending 'start new applet' to applet!"));
 	}
 }
+
+void
+send_applet_change_back (const char *ior, int applet_id,
+			 PanelBackType back_type, const char *pixmap,
+			 const GdkColor* color)
+{
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	try {
+		applet->back_change(cookie,applet_id, back_type, pixmap,
+				    color->red,color->green,color->blue);
+	} catch(...) {
+		g_warning(_("Error on sending 'change back' to applet!"));
+	}
+}
+
+void
+send_applet_tooltips_state (const char *ior, int enabled)
+{
+	/* Use the ior that was sent to us to get an Applet CORBA object */
+	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
+	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
+
+	/* Now, use corba to invoke the routine in the panel */
+	try {
+		applet->tooltips_state(cookie, enabled);
+	} catch(...) {
+		g_warning(_("Error on sending 'tooltips state' to applet!"));
+	}
+}

@@ -307,7 +307,6 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	Properties *prop;
 	GtkWidget  *dialog;
 	GtkWidget  *table;
-	GtkWidget  *button;
 	GtkWidget  *toggle;
 	gchar *exec;
 

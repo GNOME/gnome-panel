@@ -54,6 +54,12 @@ typedef void (*PanelWidgetStateSignal) (GtkObject * object,
 				        PanelState state,
 				        gpointer data);
 
+typedef void (*PanelWidgetBackSignal) (GtkObject * object,
+				       PanelBackType type,
+				       gchar *pixmap,
+				       GdkColor *color,
+				       gpointer data);
+
 typedef void (*PanelWidgetAppletSignal) (GtkObject * object,
 				         GtkWidget * applet,
 				         gpointer data);
@@ -61,6 +67,7 @@ typedef void (*PanelWidgetAppletSignal) (GtkObject * object,
 /************************
  debugging
  ************************/
+/*
 static void
 debug_dump_panel_list(PanelWidget *panel)
 {
@@ -71,7 +78,7 @@ debug_dump_panel_list(PanelWidget *panel)
 		printf("pos: %d cells: %d\n",ad->pos,ad->cells);
 	}
 	puts("\nDUMP END\n");
-}
+}*/
 
 /************************
  convenience functions
@@ -210,16 +217,17 @@ enum {
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
+	BACK_CHANGE_SIGNAL,
 	LAST_SIGNAL
 };
 
 static gint panel_widget_signals[LAST_SIGNAL] = {0,0,0};
 
 static void
-gtk_panel_widget_marshal_signal_state (GtkObject * object,
-				       GtkSignalFunc func,
-				       gpointer func_data,
-				       GtkArg * args)
+panel_widget_marshal_signal_state (GtkObject * object,
+				   GtkSignalFunc func,
+				   gpointer func_data,
+				   GtkArg * args)
 {
 	PanelWidgetStateSignal rfunc;
 
@@ -230,10 +238,10 @@ gtk_panel_widget_marshal_signal_state (GtkObject * object,
 }
 
 static void
-gtk_panel_widget_marshal_signal_orient (GtkObject * object,
-					GtkSignalFunc func,
-					gpointer func_data,
-					GtkArg * args)
+panel_widget_marshal_signal_orient (GtkObject * object,
+				    GtkSignalFunc func,
+				    gpointer func_data,
+				    GtkArg * args)
 {
 	PanelWidgetOrientSignal rfunc;
 
@@ -245,16 +253,32 @@ gtk_panel_widget_marshal_signal_orient (GtkObject * object,
 }
 
 static void
-gtk_panel_widget_marshal_signal_applet (GtkObject * object,
-					GtkSignalFunc func,
-					gpointer func_data,
-					GtkArg * args)
+panel_widget_marshal_signal_applet (GtkObject * object,
+				    GtkSignalFunc func,
+				    gpointer func_data,
+				    GtkArg * args)
 {
 	PanelWidgetAppletSignal rfunc;
 
 	rfunc = (PanelWidgetAppletSignal) func;
 
 	(*rfunc) (object, GTK_VALUE_POINTER (args[0]),
+		  func_data);
+}
+
+static void
+panel_widget_marshal_signal_back (GtkObject * object,
+				  GtkSignalFunc func,
+				  gpointer func_data,
+				  GtkArg * args)
+{
+	PanelWidgetBackSignal rfunc;
+
+	rfunc = (PanelWidgetBackSignal) func;
+
+	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+		  GTK_VALUE_POINTER (args[1]),
+		  GTK_VALUE_POINTER (args[2]),
 		  func_data);
 }
 
@@ -271,7 +295,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 orient_change),
-			       gtk_panel_widget_marshal_signal_orient,
+			       panel_widget_marshal_signal_orient,
 			       GTK_TYPE_NONE,
 			       2,
 			       GTK_TYPE_ENUM,
@@ -282,7 +306,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 state_change),
-			       gtk_panel_widget_marshal_signal_state,
+			       panel_widget_marshal_signal_state,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
@@ -292,7 +316,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_move),
-			       gtk_panel_widget_marshal_signal_applet,
+			       panel_widget_marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -302,7 +326,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_added),
-			       gtk_panel_widget_marshal_signal_applet,
+			       panel_widget_marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
@@ -312,9 +336,21 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 applet_removed),
-			       gtk_panel_widget_marshal_signal_applet,
+			       panel_widget_marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       0);
+	panel_widget_signals[BACK_CHANGE_SIGNAL] =
+		gtk_signal_new("back_change",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 back_change),
+			       panel_widget_marshal_signal_back,
+			       GTK_TYPE_NONE,
+			       3,
+			       GTK_TYPE_ENUM,
+			       GTK_TYPE_POINTER,
+			       GTK_TYPE_POINTER);
 
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
@@ -324,6 +360,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
+	class->back_change = NULL;
 }
 
 static void
@@ -1723,7 +1760,6 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 
 	if(panel->fit_pixmap_bg && panel->back_type == PANEL_BACK_PIXMAP)
 		panel_resize_pixmap(panel);
-		/*panel_try_to_set_pixmap (panel, panel->back_pixmap);*/
 	
 	return FALSE;
 }
@@ -1788,7 +1824,9 @@ panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEvent *event, gpointer data
 }*/
 
 static void
-panel_widget_dnd_dropped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
+panel_widget_dnd_dropped_filename (GtkWidget *widget,
+				   GdkEventDropDataAvailable *event,
+				   PanelWidget *panel)
 {
 	if (panel_try_to_set_pixmap (panel, event->data)) {
 		if (panel->back_pixmap)
@@ -1796,6 +1834,11 @@ panel_widget_dnd_dropped_filename (GtkWidget *widget, GdkEventDropDataAvailable 
 		panel->back_pixmap = g_strdup (event->data);
 		gtk_widget_queue_draw (widget);
 		panel->back_type = PANEL_BACK_PIXMAP;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[BACK_CHANGE_SIGNAL],
+				panel->back_type,
+				panel->back_pixmap,
+				&panel->back_color);
 	}
 }
 
@@ -1822,7 +1865,8 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 	gtk_style_ref(ns);
 
 	ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
-	ns->bg[GTK_STATE_NORMAL].pixel = panel->back_color.pixel = 1; /* bogus */
+	ns->bg[GTK_STATE_NORMAL].pixel =
+		panel->back_color.pixel = 1; /* bogus */
 
 	if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
 		gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
@@ -1864,6 +1908,11 @@ panel_widget_dnd_drop_internal(GtkWidget *widget,
 	} else if(!strcmp(event->data_type, "application/x-color")) {
 		panel_widget_dnd_dropped_color(widget, event, panel);
 		panel->back_type = PANEL_BACK_COLOR;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[BACK_CHANGE_SIGNAL],
+				panel->back_type,
+				panel->back_pixmap,
+				&panel->back_color);
 	}
 	return;
 }
@@ -1900,6 +1949,8 @@ panel_resize_pixmap(PanelWidget *panel)
 	ns = gtk_style_copy(panel->fixed->style);
 	gtk_style_ref(ns);
 
+	if(ns->bg_pixmap[GTK_STATE_NORMAL])
+		gdk_imlib_free_pixmap (ns->bg_pixmap[GTK_STATE_NORMAL]);
 	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
 
 	gtk_widget_set_style(panel->fixed, ns);
@@ -1920,7 +1971,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 		gtk_style_ref(ns);
 
 		p = ns->bg_pixmap[GTK_STATE_NORMAL];
-		gdk_imlib_free_pixmap (p);
+		if(p)
+			gdk_imlib_free_pixmap (p);
 		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
 
 		gtk_widget_set_style(panel->fixed, ns);
@@ -1965,6 +2017,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	ns = gtk_style_copy(panel->fixed->style);
 	gtk_style_ref(ns);
 
+	if(ns->bg_pixmap[GTK_STATE_NORMAL])
+		gdk_imlib_free_pixmap (ns->bg_pixmap[GTK_STATE_NORMAL]);
 	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
 
 	gtk_widget_set_style(panel->fixed, ns);
@@ -3242,6 +3296,8 @@ panel_widget_change_params(PanelWidget *panel,
 	PanelOrientation oldorient;
 	PanelSnapped oldsnapped;
 	PanelState oldstate;
+	
+	gint change_back = FALSE;
 
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
@@ -3312,25 +3368,29 @@ panel_widget_change_params(PanelWidget *panel,
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 
-	if(back_color)
+	if(back_color) {
+		/*this will allways trigger, but so what*/
+		if(back_type == PANEL_BACK_COLOR)
+			change_back = TRUE;
 		panel->back_color = *back_color;
-	else {
-		panel->back_color.red = 0;
-		panel->back_color.green = 0;
-		panel->back_color.blue = 0;
-		panel->back_color.pixel = 1;
-	}
+	} /*if we didn't pass a color, then don't set a new color!*/
 
-	if(pixmap != panel->back_pixmap) {
+	/*only change the pixmap name if we passed a non-null value*/
+	if(pixmap && pixmap != panel->back_pixmap) {
+		if(back_type == PANEL_BACK_PIXMAP)
+			change_back = TRUE;
 		if (panel->back_pixmap)
 			g_free (panel->back_pixmap);
 
-		if(pixmap)
-			panel->back_pixmap = g_strdup (pixmap);
-		else 
-			panel->back_pixmap = NULL;
+		panel->back_pixmap = g_strdup (pixmap);
 	}
 
+	/*clearly a signal should be sent*/
+	if(panel->back_type != back_type)
+		change_back = TRUE;
+	
+	/*this bit is not optimal, it allways sets the pixmap etc etc ...
+	  but this function isn't called too often*/
 	panel->back_type = back_type;
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	if(back_type == PANEL_BACK_PIXMAP) {
@@ -3339,6 +3399,15 @@ panel_widget_change_params(PanelWidget *panel,
 		panel_try_to_set_back_color(panel, &panel->back_color);
 	} else {
 		panel_try_to_set_default_back(panel);
+	}
+
+	/* let the applets know we changed the background */
+	if(change_back) {
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[BACK_CHANGE_SIGNAL],
+				panel->back_type,
+				panel->back_pixmap,
+				&panel->back_color);
 	}
 }
 

@@ -18,7 +18,9 @@ module GNOME {
 		void applet_register(in string cookie, in string ior,
 				     in short applet_id);
 
+		/*abort the applet load (before we register)*/
 		void applet_abort_id(in string cookie, in short applet_id);
+		
 		void applet_request_glob_cfg(in string cookie,
 					     out string globcfgpath);
 		void applet_remove_from_panel (in string cookie,
@@ -57,10 +59,19 @@ module GNOME {
 				    in short applet_id,
 				    in string cfgpath,
 				    in string globcfgpath);
-
 		/* params is only used if the applet process handeles more
 		   applet types */
-		void start_new_applet (in string cookie, in string param);
+		void start_new_applet (in string cookie,
+				       in string param);
+		void back_change (in string cookie,
+				  in short applet_id,
+				  in short back_type,
+				  in string pixmap,
+				  in short c_red,
+				  in short c_green,
+				  in short c_blue);
+		void tooltips_state (in string cookie,
+				     in short enabled);
 	};
 };
 

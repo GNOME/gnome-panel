@@ -55,6 +55,9 @@ void _gnome_applet_change_orient(int applet_id, int orient);
 int _gnome_applet_session_save(int applet_id, const char *cfgpath,
 			       const char *globcfgpath);
 int _gnome_applet_start_new_applet(const char *params);
+void _gnome_applet_back_change(int applet_id, int back_type,
+			       const char *pixmap, GdkColor *color);
+void _gnome_applet_tooltips_state(int enabled);
 
 END_GNOME_DECLS
 
@@ -98,6 +101,31 @@ public:
 	{
 		CHECK_COOKIE ();
 		::_gnome_applet_start_new_applet(param);
+	}
+	void back_change (const char *ccookie,
+			  CORBA::Short applet_id,
+			  CORBA::Short back_type,
+			  const char *pixmap,
+			  CORBA::Short c_red,
+			  CORBA::Short c_green,
+			  CORBA::Short c_blue)
+	{
+		GdkColor color;
+		CHECK_COOKIE ();
+		
+		color.pixel = 1;
+		color.red = c_red;
+		color.green = c_green;
+		color.blue = c_blue;
+
+		::_gnome_applet_back_change(applet_id,back_type,
+					    pixmap, &color);
+	}
+	void tooltips_state (const char *ccookie,
+			     CORBA::Short enabled)
+	{
+		CHECK_COOKIE ();
+		::_gnome_applet_tooltips_state(enabled);
 	}
 };
 

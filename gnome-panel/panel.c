@@ -14,6 +14,7 @@
 #include "panel-widget.h"
 #include "gdkextra.h"
 #include "panel.h"
+#include "main.h"
 #include "menu.h"
 #include "launcher.h"
 #include "mulapp.h"
@@ -50,6 +51,32 @@ extern gint main_menu_count;
 
 extern gint panel_widget_inhibit_allocates;
 
+static gint
+string_is_in_list(GList *list,gchar *text)
+{
+	for(;list!=NULL;list=g_list_next(list))
+		if(strcmp(text,list->data)==0)
+			return TRUE;
+	return FALSE;
+}
+
+/*will send only once to multi applets*/
+static void
+send_tooltips_state(gint enabled)
+{
+	AppletInfo *info;
+	gint i;
+	GList *sent=NULL;
+	for(i=0,info=(AppletInfo *)applets->data;i<applet_count; i++,info++) {
+		if(info->type == APPLET_EXTERN &&
+		   !string_is_in_list(sent,info->id_str)) {
+			send_applet_tooltips_state(info->id_str,enabled);
+			sent=g_list_prepend(sent,info->id_str);
+		}
+	}
+	g_list_free(sent);
+}
+
 void
 apply_global_config(void)
 {
@@ -65,7 +92,7 @@ apply_global_config(void)
 	else
 		gtk_tooltips_disable(panel_tooltips);
 	g_list_foreach(small_icons,set_show_small_icons,NULL);
-	
+	send_tooltips_state(global_config.tooltips_enabled);
 }
 
 static gint
@@ -647,7 +674,6 @@ static void
 add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkWidget *submenu,
 		GList *user_menu)
 {
-	GList *list;
 	char *n = g_strdup(name);
 	char *p = strchr(n,'/');
 	char *t;
@@ -838,8 +864,6 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 	if(event->button==3) {
 		AppletInfo *info = get_applet_info(PTOI(data));
 		PanelWidget *panel;
-
-		g_return_if_fail(info!=NULL);
 
 		g_return_val_if_fail(info != NULL,-1);
 
@@ -1092,6 +1116,9 @@ applet_register (const char * ior, int applet_id)
 	info->id_str = g_strdup(ior);
 
 	orientation_change(applet_id,panel);
+	back_change(applet_id,panel);
+	send_applet_tooltips_state(info->id_str,
+				   global_config.tooltips_enabled);
 
 	mulapp_add_ior_and_free_queue(info->path, info->id_str);
 }

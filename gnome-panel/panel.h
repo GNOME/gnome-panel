@@ -29,18 +29,6 @@ BEGIN_GNOME_DECLS
 #define PANEL_UNKNOWN_APPLET_POSITION -1
 #define PANEL_UNKNOWN_STEP_SIZE -1
 
-
-typedef struct {
-	PanelOrientation orient;
-	PanelSnapped     snapped;
-	PanelMode        mode;
-	gboolean         fit_pixmap_bg;
-	PanelBackType	 back_type;
-	gchar 		*back_pixmap;
-	GdkColor	 back_color;
-	GtkWidget       *config_box;
-} PanelConfig;
-
 typedef enum {
 	APPLET_EXTERN,
 	APPLET_EXTERN_RESERVED,

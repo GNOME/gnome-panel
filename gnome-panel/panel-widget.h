@@ -141,6 +141,10 @@ struct _PanelWidgetClass
 	void (* applet_added) (PanelWidget *panel,
 			       GtkWidget *applet);
 	void (* applet_removed) (PanelWidget *panel);
+	void (* back_change) (PanelWidget *panel,
+			      PanelBackType type,
+			      gchar *pixmap,
+			      GdkColor *color);
 };
 
 guint		panel_widget_get_type		(void);

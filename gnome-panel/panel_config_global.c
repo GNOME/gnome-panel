@@ -112,6 +112,7 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+	return FALSE;
 }
 
 GtkWidget *

@@ -1,3 +1,23 @@
+Sun Jun 07 00:23:16 1998  George Lebl  <jirka@5z.com>
+
+	* *.[ch]: cleaned up compilation with -Wall
+
+	* gnome-panel.idl,mico-glue.(cc|h),applet-lib.(cc|h),
+	  panel-widget.[ch],applet-widget.[ch],main.c,panel.c:
+	  implemented and applet signal for the changing backgrounds
+
+	* panel_config.[ch],main.c: modify the config dialog
+	  on the fly if it is display and the user changes the
+	  config by dnd (panel position and background)
+
+	* gnome-panel.idl,mico-glue.(cc|h),applet-widget.[ch],
+	  main.c,panel.c: implemented tooltips inside applets,
+	  by implementing applet side tooltips, but which enable
+	  and disable tooltips just like the panel side ones
+
+	* panel_config.c: allowing more then one config box for
+	  per-panel config (one per panel)
+
 1998-06-06  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
 
 	* panel.c (panel_session_die): Replaced 'gtk_exit' with

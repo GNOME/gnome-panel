@@ -13,6 +13,7 @@
 #include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
+#include "panel_config.h"
 #include "panel_config_global.h"
 #include "menu.h"
 #include "drawer.h"
@@ -628,16 +629,52 @@ orient_change_foreach(gpointer data, gpointer user_data)
 }
 
 
-static gint
+static void
 panel_orient_change(GtkWidget *widget,
 		    PanelOrientation orient,
 		    PanelSnapped snapped,
 		    gpointer data)
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
-			     (gpointer)widget);
+			     widget);
 	config_changed = TRUE;
-	return TRUE;
+	/*update the configuration box if it is displayed*/
+	update_config_orient(PANEL_WIDGET(widget));
+}
+
+void
+back_change(gint applet_id,
+	    PanelWidget *panel)
+{
+	AppletInfo *info = get_applet_info(applet_id);
+	if(info->type == APPLET_EXTERN) {
+		send_applet_change_back(info->id_str, info->applet_id,
+					panel->back_type,panel->back_pixmap,
+					&panel->back_color);
+	}
+	/*FIXME: probably set the launcher background as well*/
+}
+
+
+static void
+back_change_foreach(gpointer data, gpointer user_data)
+{
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
+	PanelWidget *panel = user_data;
+
+	back_change(applet_id,panel);
+}
+
+static void
+panel_back_change(GtkWidget *widget,
+		  PanelBackType type,
+		  gchar *pixmap,
+		  GdkColor *color)
+{
+	panel_widget_foreach(PANEL_WIDGET(widget),back_change_foreach,widget);
+	config_changed = TRUE;
+	/*update the configuration box if it is displayed*/
+	update_config_back(PANEL_WIDGET(widget));
 }
 
 static void
@@ -810,8 +847,6 @@ menu_deactivate(GtkWidget *w, gpointer data)
 static void
 panel_move(PanelWidget *panel, double x, double y)
 {
-	gint panel_space;
-	gint width, height;
 	PanelSnapped newloc;
 
 	if(panel->snapped == PANEL_DRAWER || panel->snapped == PANEL_FREE)
@@ -891,8 +926,10 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 			{
 				panel->autohide_inhibit = TRUE;
 				panel_widget_queue_pop_down(panel);
-				gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
-			       		widget, event->button, event->time);
+				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
+					       panel_menu_position,
+					       widget, event->button,
+					       event->time);
 				return TRUE;
 			}
 			break;
@@ -995,6 +1032,10 @@ panel_setup(PanelWidget *panel)
 			   "button_release_event",
 			   GTK_SIGNAL_FUNC(panel_button_release_callback),
 			   panel);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "back_change",
+			   GTK_SIGNAL_FUNC(panel_back_change),
+			   NULL);
 	/* DOES NOT WORK!
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "motion_notify_event",
@@ -1024,7 +1065,10 @@ init_user_panels(void)
 	char  buf[256];
 	int   count,num;	
 	int   size,x,y;
-	PanelConfig config;
+	PanelSnapped snapped;
+	PanelOrientation orient;
+	PanelMode mode;
+	gint fit_pixmap_bg;
 	GtkWidget *panel;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
@@ -1056,15 +1100,15 @@ init_user_panels(void)
 		y    = gnome_config_get_int("position_y=0");
 
 		g_snprintf(buf,256,"snapped=%d", PANEL_BOTTOM);
-		config.snapped=gnome_config_get_int(buf);
+		snapped=gnome_config_get_int(buf);
 
 		g_snprintf(buf,256,"orient=%d", PANEL_HORIZONTAL);
-		config.orient=gnome_config_get_int(buf);
+		orient=gnome_config_get_int(buf);
 
 		g_snprintf(buf,256,"mode=%d", PANEL_EXPLICIT_HIDE);
-		config.mode=gnome_config_get_int(buf);
+		mode=gnome_config_get_int(buf);
 
-		config.fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
+		fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
 
 		g_snprintf(buf,256,"state=%d", PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
@@ -1095,16 +1139,16 @@ init_user_panels(void)
 		}
 		gnome_config_pop_prefix ();
 		panel = panel_widget_new(size,
-					 config.orient,
-					 config.snapped,
-					 config.mode,
+					 orient,
+					 snapped,
+					 mode,
 					 state,
 					 x,
 					 y,
 					 drop_pos,
 					 back_type,
 					 back_pixmap,
-					 config.fit_pixmap_bg,
+					 fit_pixmap_bg,
 					 &back_color);
 		
 		g_free(color);
@@ -1152,6 +1196,7 @@ parse_an_arg (int key, char *arg, struct argp_state *state)
 	return ARGP_ERR_UNKNOWN;
 }
 
+/*
 static void
 panel_connect_client (GnomeClient *client,
 		      gint was_restarted,
@@ -1169,7 +1214,7 @@ panel_connect_client (GnomeClient *client,
 	puts("connected");
 	puts(old_panel_cfg_path);
 }
-	
+*/
 
 void
 sigchld_handler(int type)
@@ -1243,20 +1288,20 @@ main(int argc, char **argv)
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
-	if (GNOME_CLIENT_CONNECTED (client))
-	  {
-	    gchar *session_id;
+	if (GNOME_CLIENT_CONNECTED (client)) {
+		gchar *session_id;
 
-	    session_id= gnome_client_get_id (gnome_cloned_client ());
+		session_id= gnome_client_get_id (gnome_cloned_client ());
 
-	    if(session_id) {
-	      g_free(old_panel_cfg_path);
-	      old_panel_cfg_path = g_copy_strings("/panel-Session-",
-						  session_id,"/",NULL);
-	    }
-	    puts("connected");
-	    puts(old_panel_cfg_path);
-	  }
+		if(session_id) {
+			g_free(old_panel_cfg_path);
+			old_panel_cfg_path = g_copy_strings("/panel-Session-",
+							    session_id,"/",
+							    NULL);
+		}
+		puts("connected");
+		puts(old_panel_cfg_path);
+	}
 
 	/* Tell session manager how to run us.  */
 	gnome_client_set_clone_command (client, 1, argv);

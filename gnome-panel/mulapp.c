@@ -9,6 +9,7 @@
 #include <string.h>
 #include "panel.h"
 #include "mulapp.h"
+#include "mico-glue.h"
 
 extern GArray *applets;
 extern gint applet_count;

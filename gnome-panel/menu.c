@@ -15,6 +15,7 @@
 #include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
+#include "main.h"
 #include "panel_config_global.h"
 #include "menu.h"
 #include "mico-glue.h"
@@ -430,6 +431,7 @@ add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 	add_to_panel((char *)data, NULL, NULL);
 }
 
+#ifdef _SWALLOW_
 static gint
 act_really_add_swallow(GtkWidget *w, gpointer data)
 {
@@ -495,6 +497,7 @@ add_swallow_to_panel(GtkWidget *widget, gpointer data)
 	}
 	gtk_widget_show(d);
 }
+#endif
 
 
 static GtkWidget *
