@@ -1,5 +1,14 @@
 2002-08-11  Mark McLoughlin  <mark@skynet.ie>
 
+	* drawer.c: (drawer_save_to_gconf): save the
+	associated panel when saving the drawer.
+
+	* main.c: (main): don't kill free drawers. They're
+	not used at this point because we're loading drawers
+	in idle now. Fixes #90443.
+
+2002-08-11  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-screenshot.glade: kill the seperator.
 
 2002-08-11  Mark McLoughlin  <mark@skynet.ie>
