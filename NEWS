@@ -1,4 +1,32 @@
 ===============
+Version 2.3.3.3
+===============
+
+  o Panel
+
+	* Fix location of arrow on rectangular menu buttons (Mark)
+	* Fix issue with buttons refusing to get smalled with the panel (Mark)
+	* Fix unnecessary padding around some applets (Mark)
+	* Fix re-entrancy issues with applet loading (George)
+	* Only delete an applet from configuration if writable (George)
+	* Delete the drawer panel when deleting the drawer button (Mark)
+	* Implement a fallback panel for when the default configuration
+	  cannot be found (Mark)
+	* Clean up the about dialog immensely (Mark)
+	* Register the panel correctly with bonobo-activation on multihead (Kaushal Kumar)
+	* Remove some unnecessary gnome-vfs includes (Christophe Fergeau)
+
+  o Applets
+
+	* Make Window List and Workspace Swicther respect readonly keys (George)
+	* Make clock applet use time admin from system tools (Carlos Garnacho Parro)
+
+  o Misc
+
+	* Fix issue with taking screenshots of obscured windows (Fernando Herrera)
+	* Fix inconsistency in schemas (Daniel Baeyens)
+
+===============
 Version 2.3.3.2
 ===============
 
