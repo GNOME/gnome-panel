@@ -34,8 +34,11 @@ struct _StatusDocklet
 {
 	GtkObject		object;
 	
-	GtkWidget		*plug;
+	/*< public >*/
+	GtkWidget		*plug; /* a pointer to the current GtkPlug
+					  holding the docklet */
 	
+	/*< private >*/
 	GNOME_StatusSpot	sspot;
 	
 	int			tries; /*if we are set to trying to find the panel,

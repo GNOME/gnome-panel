@@ -22,9 +22,9 @@ static void status_docklet_build_plug	(StatusDocklet      *docklet,
 					 GtkWidget          *plug);
 
 
-typedef int (*BuildSignal) (GtkObject * object,
-			    GtkWidget * wid,
-			    gpointer data);
+typedef void (*BuildSignal) (GtkObject * object,
+			     GtkWidget * wid,
+			     gpointer data);
 
 static GtkObjectClass *parent_class;
 
@@ -156,10 +156,17 @@ status_docklet_build_plug(StatusDocklet *docklet, GtkWidget *plug)
 /**
  * status_docklet_new:
  *
- * Description: creates a new status docklet with the default numbers of
- * retries.
+ * Description:  Creates a new status docklet object with the default
+ * parameters.  By default the docklet object will try to contact a panel
+ * %STATUS_DOCKLET_DEFAULT_RETRIES times (20).  It will try to find a
+ * panel every 15 seconds.  You need to bind the build_plug signal
+ * in which you build your own widget and add it to the provided container.
+ * By default the docklet object will handle a panel restart, in which case
+ * your widget will be destroyed and when the panel is contacted again the
+ * build_plug signal will be emitted again.  You also must call the
+ * #status_docklet_run function after you bind the build_plug signal.
  *
- * Returns: new status docklet.
+ * Returns: new status docklet object.
  **/
 GtkObject*
 status_docklet_new(void)
@@ -266,12 +273,13 @@ try_getting_plug(StatusDocklet *docklet)
 
 /**
  * status_docklet_new_full:
- * @maximum_retries:
- * @handle_restarts:
+ * @maximum_retries:  Maximum number of times to try to contact panel
+ * @handle_restarts:  If you handle panel restarts
  *
- * Description:
+ * Description:  Creates a neew status docklet object with the sepcified
+ * parameters.  See the description of #status_docklet_new for desctiption.
  *
- * Returns: a new docklet applet
+ * Returns:  a new docklet object
  **/
 GtkObject*
 status_docklet_new_full(int maximum_retries, gboolean handle_restarts)
@@ -306,9 +314,13 @@ try_timeout(gpointer data)
  * status_docklet_run:
  * @docklet: #StatusDocklet to run
  *
- * Description: search for the panel and add the plug if it finds it.  This
+ * Description:  Search for the panel and add the plug if it finds it.  This
  * function is also called internally from the timeout.  If called externally
- * more times, a panel lookup will be forced and one try will be wasted.
+ * more times, a panel lookup will be forced and one try will be wasted.  You
+ * need to call this function at least once after binding the build_plug
+ * signal to tell the status docklet to start looking for the panel.
+ * If the status docklet handles restarts you don't have to call this
+ * function ever again.
  **/
 void
 status_docklet_run(StatusDocklet *docklet)

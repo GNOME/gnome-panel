@@ -479,9 +479,11 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
  * applet_widget_abort_load:
  * @applet: #AppletWidget to work on.
  *
- * Description: abort the applet loading, once applet has been created, this is
+ * Description:  Abort the applet loading, once applet has been created, this is
  * a way to tell the panel to forget about us if we decide we want to quit
- * before we add the actual applet to the applet-widget.
+ * before we add the actual applet to the applet-widget.  This is only useful
+ * to abort after #applet_widget_new was called but before #applet_widget_add
+ * is called.
  **/
 void
 applet_widget_abort_load(AppletWidget *applet)
@@ -496,7 +498,8 @@ applet_widget_abort_load(AppletWidget *applet)
  * applet_widget_remove:
  * @applet: #AppletWidget to work on.
  *
- * Description: remove the plug from the panel, this will destroy the applet.
+ * Description:  Remove the plug from the panel, this will destroy the applet.
+ * You can only call this once for each applet.
  **/
 void
 applet_widget_remove(AppletWidget *applet)
@@ -519,10 +522,17 @@ applet_widget_remove(AppletWidget *applet)
  * applet_widget_sync_config:
  * @applet: #AppletWidget to work on.
  *
- * Description: tell the panel to save our session here (just saves no
- * shutdown), this should be done when you change some of your config and want
+ * Description:  Tell the panel to save our session here (just saves, no
+ * shutdown).  This should be done when you change some of your config and want
  * the panel to save it's config, you should NOT call this in the session_save
- * handler as it will result in a locked panel
+ * handler as it will result in a locked panel, as it will actually trigger
+ * another session_save signal for you.  However it also asks for a complete
+ * panel save, so you should not do this too often, and only when the user
+ * has changed some preferences and you want to sync them to disk. 
+ * Theoretically you don't even need to do that if you don't mind loosing
+ * settings on a panel crash or when the user kills the session without
+ * logging out properly, since the panel will always save your session when
+ * it exists.
  **/
 void
 applet_widget_sync_config(AppletWidget *applet)
@@ -611,7 +621,10 @@ gnome_panel_applet_register_callback(GtkWidget *applet,
  * @func: #AppletCallbacFunc to call when the menu item is activated.
  * @data: data passed to @func.
  *
- * Description: Adds a menu item to the applet's context menu.
+ * Description:  Adds a menu item to the applet's context menu.  The name
+ * should be a path that is separated by '/' and ends in the name of this
+ * item.  You need to add any submenus with
+ * #applet_widget_register_callback_dir.
  **/
 void
 applet_widget_register_callback(AppletWidget *applet,
@@ -639,8 +652,9 @@ applet_widget_register_callback(AppletWidget *applet,
  * @func: #AppletCallbacFunc to call when the menu item is activated.
  * @data: data passed to @func.
  *
- * Description: dds a menu item to the applet's context menu with a stock 
- * GNOME pixmap.
+ * Description:  Adds a menu item to the applet's context menu with a stock 
+ * GNOME pixmap.  This works almost exactly the same as
+ * #applet_widget_register_callback.
  **/
 void
 applet_widget_register_stock_callback(AppletWidget *applet,
@@ -667,7 +681,9 @@ applet_widget_register_stock_callback(AppletWidget *applet,
  * @applet: #AppletWidget to work on.
  * @name: path to the menu item.
  *
- * Description: Remove a menu item from the applet's context menu.
+ * Description:  Remove a menu item from the applet's context menu.  The
+ * @name should be the full path to the menu item.  This will not remove
+ * any submenus.
  **/
 void
 applet_widget_unregister_callback(AppletWidget *applet,
@@ -732,7 +748,10 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
  * @name: path to the menu item.
  * @menutext: text for the menu item.
  *
- * Description: Adds a submenu to the applet's context menu.
+ * Description:  Adds a submenu to the applet's context menu.  The @name
+ * should be the full path of the new submenu with the name of the new
+ * submenu as the last part of the path.  The @name can, but doesn't
+ * have to be terminated with a '/'.
  **/
 void
 applet_widget_register_callback_dir(AppletWidget *applet,
@@ -756,8 +775,8 @@ applet_widget_register_callback_dir(AppletWidget *applet,
  * @stock_type: GNOME_STOCK string to use for the pixmap
  * @menutext: text for the menu item.
  *
- * Description: Adds a submenu to the applet's context menu with a stock 
- * GNOME pixmap.
+ * Description:  Adds a submenu to the applet's context menu with a stock 
+ * GNOME pixmap.  This is similiar to #applet_widget_register_callback_dir.
  **/
 void
 applet_widget_register_stock_callback_dir(AppletWidget *applet,
@@ -780,7 +799,12 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
  * @applet: #AppletWidget to work on.
  * @name: path to the menu item.
  *
- * Description: Removes a submenu from the applet's context menu.
+ * Description:  Removes a submenu from the applet's context menu.  Use
+ * this instead of #applet_widget_unregister_callback to remove submenus.
+ * The @name can be, but doesn't have to be terminated with a '/'.  If you
+ * have not removed the subitems of this menu, it will still be shown but
+ * without it's title or icon.  So make sure to first remove any items and
+ * submenus before calling this function.
  **/
 void
 applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
@@ -812,7 +836,7 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
  * @name: path to the menu item.
  * @sensitive: whether menu item should be sensitive.
  *
- * Description: Sets the sensitivity of a menu item in the applet's 
+ * Description:  Sets the sensitivity of a menu item in the applet's 
  * context menu.
  **/
 void
@@ -1274,6 +1298,10 @@ applet_widget_set_tooltip(AppletWidget *applet, const char *text)
  *
  * Description:  Gets the orientation of the panel this widget is on.
  * it can be one of ORIENT_UP, ORIENT_DOWN, ORIENT_LEFT and ORIENT_RIGHT.
+ * This is not the position of the panel, but rather the direction that the
+ * applet should be "reaching out".  So any arrows should for example point
+ * in this direction.  It will be ORIENT_UP or ORIENT_DOWN for horizontal
+ * panels and ORIENT_LEFT or ORIENT_RIGHT for vertical panels
  *
  * Returns:  PanelOrientType enum of the orientation
  **/
