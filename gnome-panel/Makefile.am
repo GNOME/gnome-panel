@@ -9,10 +9,6 @@ bin_PROGRAMS = panel clock_applet
 panel_SOURCES = \
 	gdkextra.c	\
 	gdkextra.h	\
-	applet_files.c	\
-	applet_files.h	\
-	applet_cmds.h	\
-	panel_cmds.h	\
 	main.c		\
 	panel.c		\
 	panel.h         \
@@ -23,6 +19,8 @@ panel_SOURCES = \
 
 panel_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(DL_LIB)
 
+
+## FIXME: move clock applet into clock
 clock_applet_SOURCES = \
 	clock.c
 

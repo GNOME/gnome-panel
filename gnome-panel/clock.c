@@ -152,7 +152,6 @@ create_clock_widget (GtkWidget *window)
 	gtk_signal_connect(GTK_OBJECT(clock), "destroy",
 			   (GtkSignalFunc) destroy_clock,
 			   NULL);
-
 	/* Call the clock's update function so that it paints its first state */
 
 	time(&current_time);
@@ -166,22 +165,16 @@ int
 main(int argc, char **argv)
 {
 	GtkWidget *clock;
-	GtkWidget *eb;
 	GtkWidget *window;
 
 	gnome_init(&argc, &argv);
-
-	eb = gtk_event_box_new();
-	gtk_widget_show(eb);
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
 	clock = create_clock_widget (GTK_WIDGET(window));
 	gtk_widget_show(clock);
 
-	gtk_container_add(GTK_CONTAINER(eb),clock);
-	
-	gtk_container_add(GTK_CONTAINER(window),eb);
+	gtk_container_add(GTK_CONTAINER(window),clock);
 
 	gtk_widget_show(window);
 

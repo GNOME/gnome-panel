@@ -8,21 +8,8 @@
 #include <config.h>
 #include <string.h>
 #include "gnome.h"
-#include "applet_files.h"
-#include "panel_cmds.h"
-#include "applet_cmds.h"
 #include "panel-widget.h"
 #include "panel.h"
-
-#define DEFAULT_STEP_SIZE 40
-
-/* amount of time in ms. to wait before lowering panel */
-#define DEFAULT_MINIMIZE_DELAY 300
-
-/* number of pixels it'll stick up from the bottom when using
- * PANEL_AUTO_HIDE */
-#define DEFAULT_MINIMIZED_SIZE 6
-
 
 GList *panels = NULL;
 GList *drawers = NULL;
@@ -36,32 +23,17 @@ gint tooltips_enabled = TRUE;
 static void
 load_applet(char *id, char *params, int pos, int panel)
 {
-	PanelCommand  cmd;
-
-	cmd.cmd = PANEL_CMD_CREATE_APPLET;
-	cmd.params.create_applet.id     = id;
-	cmd.params.create_applet.params = params;
-	cmd.params.create_applet.pos    = pos;
-	cmd.params.create_applet.panel  = panel;
-
-	panel_command(&cmd);
+	/*FIXME: somehow load the applet and call register_toy ... this
+	  thing has to exec the applet or if it is a local applet then it
+	  just calls a function to create the appropriate widget and use
+	  register_toy*/
 }
 
 static void
 load_drawer(char *name, char *iconopen, char *iconclosed, int step_size,
 	int pos, int panel)
 {
-	PanelCommand  cmd;
-
-	cmd.cmd = PANEL_CMD_CREATE_DRAWER;
-	cmd.params.create_drawer.name       = name;
-	cmd.params.create_drawer.iconopen   = iconopen;
-	cmd.params.create_drawer.iconclosed = iconclosed;
-	cmd.params.create_drawer.step_size  = step_size;
-	cmd.params.create_drawer.pos        = pos;
-	cmd.params.create_drawer.panel      = panel;
-
-	panel_command(&cmd);
+	/*FIXME: drawers*/
 }
 
 static void
@@ -70,9 +42,12 @@ load_default_applets(void)
 	/* XXX: the IDs for these applets are hardcoded here. */
 
 	/* Here we use NULL to request querying of default applet parameters */
+/*
 	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
+*/
+/*FIXME: fix applet loading with corba*/
 }
 
 static void
@@ -119,6 +94,7 @@ init_user_drawers(void)
 static void
 init_user_applets(void)
 {
+	/*FIXME: change fields so that we can start corba applets*/
 	char *applet_name;
 	char *applet_params;
 	int   pos=0,panel;
@@ -275,8 +251,6 @@ main(int argc, char **argv)
 
 	init_session_management (argc, argv);
 
-	applet_files_init();
-
 	create_applet_menu();
 
 	/*set up the tooltips*/
@@ -289,9 +263,6 @@ main(int argc, char **argv)
 		gtk_tooltips_disable(panel_tooltips);
 
 	init_user_panels();
-
-	panel_init_applet_modules();
-
 	init_user_drawers();
 	init_user_applets();
 

@@ -11,19 +11,12 @@
 
 #include "panel-widget.h"
 
-#include "applet_files.h"
 #include "gdkextra.h"
-#include "panel_cmds.h"
-#include "applet_cmds.h"
 #include "panel.h"
 #include "menu.h"
 #include "panel_config.h"
 
 #include <gdk/gdkx.h>
-
-
-#define APPLET_CMD_FUNC "panel_applet_cmd_func"
-#define APPLET_FLAGS    "panel_applet_flags"
 
 static GtkWidget *applet_menu;
 static GtkWidget *applet_menu_remove_item;
@@ -50,26 +43,12 @@ extern gint tooltips_enabled;
 /*extern GtkMenu *root_menu;
 extern GList *small_icons;*/
 
-/*FIXME: a hack for current code to work*/
-#define the_panel (PANEL_WIDGET(panels->data))
-
-
-/* some prototypes */
-static void properties(PanelWidget *panel);
-
-
-static AppletCmdFunc
-applet_cmd_func(GtkWidget *applet)
+static void
+properties(PanelWidget *panel)
 {
-	return gtk_object_get_data(GTK_OBJECT(applet), APPLET_CMD_FUNC);
+	panel_config(panel);
 }
 
-
-static long
-applet_flags(GtkWidget *applet)
-{
-	return (long) gtk_object_get_data(GTK_OBJECT(applet), APPLET_FLAGS);
-}
 
 
 static void
@@ -88,77 +67,15 @@ get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 		*height = applet->allocation.height;
 }
 
-static gpointer
-call_applet(GtkWidget *applet, AppletCommand *cmd)
-{
-	AppletCmdFunc cmd_func;
-	
-	cmd->panel  = the_panel;
-	cmd->applet = GTK_BIN(applet)->child;
-
-	cmd_func = applet_cmd_func(applet);
-
-	return (*cmd_func) (cmd);
-}
-
 /*FIXME this should be somehow done through signals and panel-widget*/
 static void
 applet_orientation_notify(GtkWidget *widget, gpointer data)
 {
-	AppletCommand  cmd;
-
-	cmd.cmd = APPLET_CMD_ORIENTATION_CHANGE_NOTIFY;
-	cmd.params.orientation_change_notify.snapped = the_panel->snapped;
-	cmd.params.orientation_change_notify.orient = the_panel->orient;
-
-	call_applet(widget, &cmd);
-}
-
-static char *
-get_applet_id(AppletInfo *info)
-{
-	AppletCommand  cmd;
-
-	switch(info->type) {
-		case APPLET_EXTERN: 
-			cmd.cmd = APPLET_CMD_QUERY;
-			return call_applet(info->widget, &cmd);
-		case APPLET_DRAWER:
-			/*FIXME: is this the way I want to do drawers?????*/
-			return DRAWER_ID;
-		case APPLET_MENU:
-			return MENU_ID;
-		case APPLET_LAUNCHER:
-			return LAUNCHER_ID;
-	}
-}
-
-static char *
-get_applet_params(AppletInfo *info)
-{
-	AppletCommand  cmd;
-
-	switch(info->type) {
-		case APPLET_EXTERN: 
-			cmd.cmd = APPLET_CMD_GET_INSTANCE_PARAMS;
-			return call_applet(info->widget, &cmd);
-		case APPLET_DRAWER:
-			/*FIXME: is this the way I want to do drawers?????*/
-			return NULL /*FIXME:?????*/;
-		case APPLET_MENU:
-			/*FIXME: integrate menu.[ch]*/
-			/*return g_strdup(((Menu *)info->data)->path);*/
-			return NULL;
-		case APPLET_LAUNCHER:
-			return NULL /*FIXME:?????*/;
-	}
 }
 
 static void
 save_applet_configuration(gpointer data, gpointer user_data)
 {
-	char          *id;
-	char          *params = NULL;
 	char          *path;
 	char          *fullpath;
 	char           buf[256];
@@ -178,14 +95,11 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	if(pos == -1)
 		return;
 
-	id = get_applet_id(info);
-	params = get_applet_params(info);
-
 	sprintf(buf, "_%d/", (*num)++);
 	path = g_copy_strings("/panel/Applet", buf, NULL);
 
 	fullpath = g_copy_strings(path,"id",NULL);
-	gnome_config_set_string(fullpath, id);
+	gnome_config_set_string(fullpath, info->id);
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"position",NULL);
@@ -197,11 +111,9 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"parameters",NULL);
-	gnome_config_set_string(fullpath, params);
+	gnome_config_set_string(fullpath, info->params);
 	g_free(fullpath);
 
-
-	if(params) g_free(params);
 	g_free(path);
 }
 
@@ -285,22 +197,6 @@ save_drawer_configuration(gpointer data, gpointer user_data)
 }
 
 
-
-static void
-destroy_applet_module(gpointer key, gpointer value, gpointer user_data)
-{
-	AppletCommand  cmd;
-	AppletFile    *af;
-
-	cmd.cmd    = APPLET_CMD_DESTROY_MODULE;
-	cmd.panel  = NULL; /*the_panel;*/
-	cmd.applet = NULL;
-
-	af = value;
-
-	(*af->cmd_func) (&cmd);
-}
-
 static void
 destroy_widget_list(gpointer data, gpointer user_data)
 {
@@ -354,11 +250,10 @@ panel_session_save (gpointer client_data,
 
 	gnome_config_sync();
 
+	/*FIXME: tell applets to go kill themselves*/
+
 	g_list_foreach(drawers,destroy_widget_list,NULL);
 	g_list_foreach(panels,destroy_widget_list,NULL);
-
-	g_hash_table_foreach(applet_files_ht, destroy_applet_module, NULL);
-	applet_files_destroy();
 
 	gtk_widget_unref(applet_menu);
 	gtk_widget_unref(panel_tooltips);
@@ -380,69 +275,26 @@ panel_session_save (gpointer client_data,
 static void
 panel_quit(void)
 {
-  if (! gnome_session_connected_p ())
-    {
-      panel_session_save (NULL, GNOME_SAVE_BOTH, 1, GNOME_INTERACT_NONE, 0);
-      gtk_main_quit ();
-      /* We don't want to return, because we've probably been called from an
-       * applet which has since been dlclose()'d, and we'd end up with a SEGV
-       * when we tried to return to the now-nonexistent code page. */
-      exit(0);
-    }
-  else
-    {
-      /* We request a completely interactive, full, slow shutdown.  */
-      gnome_session_request_save (GNOME_SAVE_BOTH, 1, GNOME_INTERACT_ANY,
-				  0, 1);
-    }
+	if (! gnome_session_connected_p ()) {
+		panel_session_save (NULL, GNOME_SAVE_BOTH, 1,
+				    GNOME_INTERACT_NONE, 0);
+		gtk_main_quit ();
+		/* We don't want to return, because we've probably been
+		   called from an applet which has since been dlclose()'d,
+		   and we'd end up with a SEGV when we tried to return to
+		   the now-nonexistent code page. */
+		exit(0);
+	} else {
+		/* We request a completely interactive, full, slow shutdown.  */
+		gnome_session_request_save (GNOME_SAVE_BOTH, 1,
+					    GNOME_INTERACT_ANY, 0, 1);
+	}
 }
 
+/*FIXME: how will we handle adding of applets????*/
 static void
 create_applet(char *id, char *params, int pos, int panel)
 {
-	AppletCommand cmd;
-	AppletCmdFunc cmd_func;
-	int           requested;
-	
-	g_assert(id != NULL);
-	
-	cmd_func = get_applet_cmd_func(id);
-	if (!cmd_func) {
-		fprintf(stderr, "create_applet: could not find applet \"%s\"\n", id);
-		return;
-	}
-
-	requested = FALSE;
-	
-	if (!params) {
-		cmd.cmd    = APPLET_CMD_GET_DEFAULT_PARAMS;
-		cmd.panel  = the_panel;
-		cmd.applet = NULL;
-		
-		params = (*cmd_func) (&cmd);
-
-		if (!params) {
-			fprintf(stderr,
-				"create_applet: warning: applet \"%s\" returned NULL default parameters\n"
-				"               using empty parameter string \"\"\n",
-				id);
-			params = g_strdup("");
-		}
-
-		requested = TRUE;
-	}
-
-	cmd.cmd    = APPLET_CMD_CREATE_INSTANCE;
-	cmd.panel  = PANEL_WIDGET(g_list_nth(panels,panel)->data);
-	cmd.applet = NULL;
-	cmd.params.create_instance.params = params;
-	cmd.params.create_instance.pos    = pos;
-	cmd.params.create_instance.panel  = panel;
-
-	(*cmd_func) (&cmd);
-
-	if (requested)
-		g_free(params);
 }
 
 static PanelWidget *
@@ -461,33 +313,30 @@ find_applet_panel(GtkWidget *applet)
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
-	GtkWidget      *applet;
+	AppletInfo     *info;
 	PanelWidget    *panel;
 
-	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
+	info = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 
-	if(!(panel = find_applet_panel(applet)))
+	if(!(panel = find_applet_panel(info->widget)))
 		return;
 
-	panel_widget_applet_drag_start(panel,applet);
+	panel_widget_applet_drag_start(panel,info->widget);
 }
 
 
 static void
 remove_applet_callback(GtkWidget *widget, gpointer data)
 {
-	GtkWidget *applet;
 	AppletInfo *info;
 	gchar *id;
 	gint pos;
 	PanelWidget *panel;
 
-	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
-	info = gtk_object_get_user_data(GTK_OBJECT(applet));
+	info = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 
-	id      = get_applet_id(info);
-
-	if(strcmp(id,"Menu")==0) {
+	/*FIXME: this will go*/
+	if(strcmp(info->id,"Menu")==0) {
 		if(menu_count<=1)
 			return;
 		/*FIXME: do something to make the user aware that this was
@@ -496,27 +345,24 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	}
 	applets=g_list_remove(applets,info);
 
-	if(!(panel = find_applet_panel(applet)))
+	if(!(panel = find_applet_panel(info->widget)))
 		return;
 
-	panel_widget_remove(panel,applet);
-	gtk_widget_unref(applet);
+	panel_widget_remove(panel,info->widget);
+	gtk_widget_unref(info->widget);
 	if(info->assoc)
 		gtk_widget_unref(info->assoc);
+
+	g_free(info->id);
+	if(info->params) g_free(info->params);
+	g_free(info);
 }
 
 
+/*tell applet to do properties*/
 static void
 applet_properties_callback(GtkWidget *widget, gpointer data)
 {
-	GtkWidget     *applet;
-	AppletCommand  cmd;
-
-	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
-
-	cmd.cmd = APPLET_CMD_PROPERTIES;
-
-	call_applet(applet, &cmd);
 }
 
 void
@@ -559,17 +405,9 @@ create_applet_menu(void)
 
 
 static void
-show_applet_menu(GtkWidget *applet)
+show_applet_menu(AppletInfo *info)
 {
-	long flags;
-	AppletCommand  cmd;
-	gchar *id;
-
-	/*FIXME: DRAWERS crash on this, fix that */
-
-	flags = applet_flags(applet);
-
-	if (flags & APPLET_HAS_PROPERTIES) {
+	if (info->flags & APPLET_HAS_PROPERTIES) {
 		gtk_widget_show(applet_menu_prop_separator);
 		gtk_widget_show(applet_menu_prop_item);
 	} else {
@@ -577,14 +415,12 @@ show_applet_menu(GtkWidget *applet)
 		gtk_widget_hide(applet_menu_prop_item);
 	}
 
-	cmd.cmd = APPLET_CMD_QUERY;
-	id      = call_applet(applet, &cmd);
-
-	if(strcmp(id,"Menu")!=0 || menu_count>1)
+	/*FIMXE: this should go*/
+	if(strcmp(info->id,"Menu")!=0 || menu_count>1)
 		gtk_widget_show(applet_menu_remove_item);
 	else
 		gtk_widget_hide(applet_menu_remove_item);
-	gtk_object_set_user_data(GTK_OBJECT(applet_menu), applet);
+	gtk_object_set_user_data(GTK_OBJECT(applet_menu), info);
 
 	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 3, time(NULL));
 	/*FIXME: make it pop-up on some title bar of the applet menu or
@@ -595,7 +431,7 @@ static gint
 applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	if(event->button==3) {
-		show_applet_menu(widget);
+		show_applet_menu((AppletInfo *)data);
 		return TRUE;
 	}
 	return FALSE;
@@ -621,6 +457,7 @@ add_main_menu(GtkWidget *widget, gpointer data)
 	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
+/*FIXME: add a function that does this, so generalize register_toy for this*/
 static void
 add_reparent(GtkWidget *widget, gpointer data)
 {
@@ -689,47 +526,6 @@ create_panel_root_menu(PanelWidget *panel)
 
 
 static void
-get_applet_type(gpointer key, gpointer value, gpointer user_data)
-{
-	GList **list = user_data;
-
-	*list = g_list_prepend(*list, g_strdup(key));
-}
-
-
-GList *
-get_applet_types(void)
-{
-	GList *list = NULL;
-
-	g_hash_table_foreach(applet_files_ht, get_applet_type, &list);
-	return list;
-}
-
-static void
-init_applet_module(gpointer key, gpointer value, gpointer user_data)
-{
-	AppletCommand  cmd;
-	AppletFile    *af;
-
-	cmd.cmd    = APPLET_CMD_INIT_MODULE;
-	cmd.panel  = the_panel;
-	cmd.applet = NULL;
-	cmd.params.init_module.cmd_func = panel_command;
-
-	af = value;
-
-	(*af->cmd_func) (&cmd);
-}
-
-
-void
-panel_init_applet_modules(void)
-{
-	g_hash_table_foreach(applet_files_ht, init_applet_module, NULL);
-}
-
-static void
 set_tooltip(GtkWidget *applet, char *tooltip)
 {
 	if(!applet)
@@ -738,8 +534,15 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 }
 
 
-static void
-register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
+void
+register_toy(GtkWidget *applet,
+	     GtkWidget * assoc,
+	     char *id,
+	     char *params,
+	     int pos,
+	     int panel,
+	     long flags,
+	     AppletType type)
 {
 	GtkWidget     *eventbox;
 	AppletInfo    *info;
@@ -756,14 +559,12 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 
 	info = g_new(AppletInfo,1);
 
-	/* Attach our private data to the applet */
-	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC,
-			    get_applet_cmd_func(id));
-	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS,
-			    (gpointer) flags);
+	info->flags = flags;
 	info->widget = eventbox;
-	info->type = APPLET_EXTERN;
-	info->assoc = NULL;
+	info->type = type;
+	info->assoc = assoc;
+	info->id = g_strdup(id);
+	info->params = g_strdup(params);
 
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
 
@@ -780,10 +581,10 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",
 			   GTK_SIGNAL_FUNC(applet_button_press),
-			   NULL);
+			   info);
 
 	/*notify the applet of the orientation of the panel!*/
-	applet_orientation_notify(eventbox,NULL);
+	/*applet_orientation_notify(eventbox,NULL);*/
 
 	if(strcmp(id,"Menu")==0)
 		menu_count++;
@@ -797,72 +598,4 @@ create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
 {
 	/*FIXME: add drawers*/
 	return;
-}
-
-static void
-properties(PanelWidget *panel)
-{
-	panel_config(panel);
-}
-
-gpointer
-panel_command(PanelCommand *cmd)
-{
-	g_assert(cmd != NULL);
-	
-	switch (cmd->cmd) {
-		case PANEL_CMD_QUIT:
-			panel_quit();
-			return NULL;
-
-		case PANEL_CMD_GET_APPLET_TYPES:
-			return get_applet_types();
-
-		case PANEL_CMD_GET_APPLET_CMD_FUNC:
-			return get_applet_cmd_func(cmd->params.get_applet_cmd_func.id);
-
-		case PANEL_CMD_CREATE_APPLET:
-			create_applet(cmd->params.create_applet.id,
-				      cmd->params.create_applet.params,
-				      cmd->params.create_applet.pos,
-				      cmd->params.create_applet.panel);
-			break;
-			
-		case PANEL_CMD_REGISTER_TOY:
-			/*FIXME: fix it so that applets pass panel*/
-			cmd->params.register_toy.panel = 0;
-			register_toy(cmd->params.register_toy.applet,
-				     cmd->params.register_toy.id,
-				     cmd->params.register_toy.pos,
-				     cmd->params.register_toy.panel,
-				     cmd->params.register_toy.flags);
-			break;
-
-		case PANEL_CMD_CREATE_DRAWER:
-			create_drawer(cmd->params.create_drawer.name,
-				      cmd->params.create_drawer.iconopen,
-				      cmd->params.create_drawer.iconclosed,
-				      cmd->params.create_drawer.step_size,
-				      cmd->params.create_drawer.pos,
-				      cmd->params.create_drawer.panel);
-			break;
-
-		case PANEL_CMD_SET_TOOLTIP:
-			set_tooltip(cmd->params.set_tooltip.applet,
-				    cmd->params.set_tooltip.tooltip);
-			break;
-
-		case PANEL_CMD_PROPERTIES:
-			/*FIXME: this gotta be fixed, but we'll do it after
-			  move dl -> CORBA*/
-			properties(the_panel);
-			break;
-
-		default:
-			fprintf(stderr, "panel_command: Oops, unknown command type %d\n",
-				(int) cmd->cmd);
-			break;
-	}
-
-	return NULL;
 }
