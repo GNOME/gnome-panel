@@ -995,6 +995,102 @@ panel_widget_pop_hide(PanelWidget *panel, int fromright)
 		panel->state = PANEL_HIDDEN_RIGHT;
 }
 
+
+void
+panel_widget_open_drawer(PanelWidget *panel)
+{
+	gint x,y;
+	gint width, height;
+
+	if((panel->state == PANEL_SHOWN) ||
+	   (panel->snapped != PANEL_DRAWER))
+		return;
+
+	panel->state = PANEL_MOVING;
+
+	width   = GTK_WIDGET(panel)->allocation.width;
+	height  = GTK_WIDGET(panel)->allocation.height;
+	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
+
+	if(panel->orient == PANEL_HORIZONTAL) {
+		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
+			move_window(GTK_WIDGET(panel),x+width,y);
+			gtk_widget_show(GTK_WIDGET(panel));
+			move_horiz(panel, x+width, x,
+				   pw_explicit_step);
+		} else {
+			move_window(GTK_WIDGET(panel),x-width,y);
+			gtk_widget_show(GTK_WIDGET(panel));
+			move_horiz(panel, x-width, x,
+				   pw_explicit_step);
+		}
+	} else {
+		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
+			move_window(GTK_WIDGET(panel),x,y+height);
+			gtk_widget_show(GTK_WIDGET(panel));
+			move_vert(panel, y+height, y,
+				  pw_explicit_step);
+		} else {
+			move_window(GTK_WIDGET(panel),x,y-height);
+			gtk_widget_show(GTK_WIDGET(panel));
+			move_vert(panel, y-height, y,
+				  pw_explicit_step);
+		}
+	}
+
+	panel->state = PANEL_SHOWN;
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[STATE_CHANGE_SIGNAL],
+			PANEL_SHOWN);
+
+}
+
+void
+panel_widget_close_drawer(PanelWidget *panel)
+{
+	gint x,y;
+	gint width, height;
+
+	if((panel->state != PANEL_SHOWN) ||
+	   (panel->snapped != PANEL_DRAWER))
+		return;
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[STATE_CHANGE_SIGNAL],
+			PANEL_HIDDEN);
+
+	panel->state = PANEL_MOVING;
+
+	width   = GTK_WIDGET(panel)->allocation.width;
+	height  = GTK_WIDGET(panel)->allocation.height;
+	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
+
+	if(panel->orient == PANEL_HORIZONTAL) {
+		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
+			move_horiz(panel, x, x+width,
+				   pw_explicit_step);
+		else
+			move_horiz(panel, x, x-width,
+				   pw_explicit_step);
+	} else {
+		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
+			move_vert(panel, y, y+height,
+				  pw_explicit_step);
+		else
+			move_vert(panel, y, y-height,
+				  pw_explicit_step);
+	}
+
+	panel->state = PANEL_HIDDEN;
+
+	gtk_widget_hide(GTK_WIDGET(panel));
+
+	move_window(GTK_WIDGET(panel),x,y);
+}
+
+
+
 static gint
 panel_show_hide_right(GtkWidget *widget, gpointer data)
 {
@@ -1544,7 +1640,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		PanelWidget *assoc = gtk_object_get_data(GTK_OBJECT(applet),
 						PANEL_APPLET_ASSOC_PANEL_KEY);
 
-		if(!panel_widget_is_cursor(panel,0)) {
+		if(!panel_widget_is_cursor(panel,10)) {
 			GList *list;
 			for(list=panels;
 			    list!=NULL;
@@ -1553,8 +1649,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    		PANEL_WIDGET(list->data);
 
 			    	if(panel != new_panel &&
-			    	   panel_widget_is_cursor(new_panel,
-					panel->snapped==PANEL_DRAWER?20:0) &&
+			    	   panel_widget_is_cursor(new_panel,0) &&
 				   new_panel != assoc) {
 					pos = panel_widget_get_moveby(panel,0);
 					panel_widget_reparent(panel,
@@ -1570,6 +1665,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    	   	return FALSE;
 			    	}
 			}
+			return TRUE;
 		}
 
 		gtk_widget_get_pointer(panel->fixed, &x, &y);

@@ -158,6 +158,12 @@ void		panel_widget_foreach		(PanelWidget *panel,
   state to drawers and such*/
 void		panel_widget_restore_state	(PanelWidget *panel);
 
+
+
+/*open and close drawers*/
+void		panel_widget_open_drawer	(PanelWidget *panel);
+void		panel_widget_close_drawer	(PanelWidget *panel);
+
 /*initiate drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);

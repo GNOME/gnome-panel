@@ -39,22 +39,6 @@ extern GlobalConfig global_config;
 
 extern char *panel_cfg_path;
 
-/*static void
-get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
-{
-	if (x)
-		*x = applet->allocation.x;
-
-	if (y)
-		*y = applet->allocation.y;
-
-	if (width)
-		*width = applet->allocation.width;
-
-	if (height)
-		*height = applet->allocation.height;
-}*/
-
 void
 apply_global_config(void)
 {

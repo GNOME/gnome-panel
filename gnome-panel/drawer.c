@@ -22,36 +22,43 @@
 
 extern GlobalConfig global_config;
 
+/*taken from panel-widget*/
+static void
+move_window(GtkWidget *widget, int x, int y)
+{
+	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
+	gdk_window_move(widget->window, x, y);
+	gtk_widget_draw(widget, NULL); /* FIXME: this should draw only the newly exposed area! */
+}
+
 void
 reposition_drawer(Drawer *drawer)
 {
-	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
-		gint x=0,y=0;
-		gint wx, wy;
+	gint x=0,y=0;
+	gint wx, wy;
 
-		gdk_window_get_origin (drawer->button->window, &wx, &wy);
+	gdk_window_get_origin (drawer->button->window, &wx, &wy);
 
-		switch(drawer->orient) {
-			case DRAWER_UP:
-				x = wx;
-				y = wy - drawer->drawer->allocation.height;
-				break;
-			case DRAWER_DOWN:
-				x = wx;
-				y = wy + drawer->button->allocation.height;
-				break;
-			case DRAWER_LEFT:
-				x = wx - drawer->drawer->allocation.width;
-				y = wy;
-				break;
-			case DRAWER_RIGHT:
-				x = wx + drawer->button->allocation.width;
-				y = wy;
-				break;
-		}
-
-		gtk_widget_set_uposition(drawer->drawer,x,y);
+	switch(drawer->orient) {
+		case DRAWER_UP:
+			x = wx;
+			y = wy - drawer->drawer->allocation.height;
+			break;
+		case DRAWER_DOWN:
+			x = wx;
+			y = wy + drawer->button->allocation.height;
+			break;
+		case DRAWER_LEFT:
+			x = wx - drawer->drawer->allocation.width;
+			y = wy;
+			break;
+		case DRAWER_RIGHT:
+			x = wx + drawer->button->allocation.width;
+			y = wy;
+			break;
 	}
+
+	move_window(drawer->drawer,x,y);
 }
 
 static gint
@@ -59,14 +66,12 @@ drawer_click(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
 
-	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
-		gtk_widget_hide(drawer->drawer);
-		PANEL_WIDGET(drawer->drawer)->state = PANEL_HIDDEN;
-	} else {
-		PANEL_WIDGET(drawer->drawer)->state = PANEL_SHOWN;
-		reposition_drawer(drawer);
-		gtk_widget_show(drawer->drawer);
-	}
+	reposition_drawer(drawer);
+
+	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN)
+		panel_widget_close_drawer(PANEL_WIDGET(drawer->drawer));
+	else
+		panel_widget_open_drawer(PANEL_WIDGET(drawer->drawer));
 	return TRUE;
 }
 
@@ -113,8 +118,9 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 	gtk_widget_show(pixmap);
 	/*FIXME:this is not right, but it's how we can get the buttons to
 	  be 48x48 (given the icons are 48x48)*/
-	gtk_widget_set_usize (drawer->button, pixmap->requisition.width,
-			      pixmap->requisition.height);
+	gtk_widget_set_usize (drawer->button,48,48);
+	/*gtk_widget_set_usize (drawer->button, pixmap->requisition.width,
+			      pixmap->requisition.height);*/
 
 	/* put pixmap in button */
 	gtk_container_add (GTK_CONTAINER(drawer->button), pixmap);
