@@ -107,28 +107,38 @@ free_string (GtkWidget *widget, void *data)
 	g_free (data);
 }
 
-void
+static gint
 add_to_panel (char *applet, char *arg)
 {
 	load_applet(applet,arg,PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	return TRUE;
 }
 
-void
+static gint
 add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 
 	panel_corba_call_launcher(ii->location);
+
+	return TRUE;
 }
 
-void
+static gint
 add_dir_to_panel (GtkWidget *widget, void *data)
 {
-	add_to_panel (MENU_ID, data);
+	return add_to_panel (MENU_ID, data);
+}
+
+static gint
+add_applet (GtkWidget *w, gpointer data)
+{
+	GnomeDesktopEntry *ii = data;
+	return add_to_panel(EXTERN_ID,ii->exec);
 }
 
 static GtkWidget *
-create_menu_at (char *menudir, int create_app_menu)
+create_menu_at (char *menudir, int create_app_menu, int applets)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -167,8 +177,8 @@ create_menu_at (char *menudir, int create_app_menu)
 		if (S_ISDIR (s.st_mode)) {
 			char *dentry_name;
 
-			sub = create_menu_at (filename,
-					      create_app_menu);
+			sub = create_menu_at (filename, create_app_menu,
+					      applets);
 			if (!sub) {
 				g_free (filename);
 				continue;
@@ -259,6 +269,8 @@ create_menu_at (char *menudir, int create_app_menu)
 			activate_func = create_app_menu ?
 				GTK_SIGNAL_FUNC(add_app_to_panel) :
 				GTK_SIGNAL_FUNC(activate_app_def);
+			if(applets && activate_app_def)
+				activate_func = GTK_SIGNAL_FUNC(add_applet);
 			gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 					    activate_func, item_info);
 		}
@@ -360,7 +372,7 @@ create_applets_menu(void)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at(menudir,0);
+	applet_menu = create_menu_at(menudir,0,TRUE);
 	g_free (menudir);
 	return applet_menu;
 }
@@ -512,13 +524,13 @@ create_panel_menu (char *menudir, int main_menu,
 		/*this should not happen init root menu should have
 		  been called (unless there are no panels*/
 		if(!root_menu) {
-			root_menu = create_menu_at(menudir,0);
-			app_menu = create_menu_at (menudir, 1);
+			root_menu = create_menu_at(menudir,0,FALSE);
+			app_menu = create_menu_at (menudir, 1,FALSE);
 			add_special_entries (root_menu, app_menu);
 		}
 		menu->menu = root_menu;
 	} else {
-		menu->menu = create_menu_at (menudir, 0);
+		menu->menu = create_menu_at (menudir, 0, FALSE);
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->button), "button_press_event",
 			    GTK_SIGNAL_FUNC (menu_button_press), menu);
@@ -543,8 +555,8 @@ init_main_menu(void)
 		return;
 	}
 
-	root_menu = create_menu_at(menudir,0);
-	app_menu = create_menu_at (menudir, 1);
+	root_menu = create_menu_at(menudir,0,FALSE);
+	app_menu = create_menu_at (menudir, 1,FALSE);
 	add_special_entries (root_menu, app_menu);
 	g_free (menudir);
 }
