@@ -766,7 +766,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	g_object_set_data (G_OBJECT (menu_bar), "menu_panel", foo->panel);
 
-	add_atk_name_desc (foo->panel, _("Base Panel"), _("Gnome Base Panel"));
+	add_atk_name_desc (foo->panel, _("Menu Panel"), _("GNOME Menu Panel"));
 
 	path = panel_pixmap_discovery ("panel-corner-right.png", FALSE /* fallback */);
 	if (path != NULL) {
@@ -862,6 +862,7 @@ foobar_widget_new (const char *panel_id, int screen)
 		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
 
 	foo->screen = screen;
+
 	gtk_window_move (GTK_WINDOW (foo),
 			 multiscreen_x (foo->screen),
 			 multiscreen_y (foo->screen));

@@ -2510,11 +2510,12 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    TRUE, FALSE, TRUE,
 					    &bcolor);
 		panel_setup (panel);
+		gtk_window_set_title (GTK_WINDOW (panel->window), _("Aligned Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
 				   _("Aligned Panel"),
-				   _("Gnome Aligned Panel"));
+				   _("GNOME Aligned Panel"));
 		break;
 	case EDGE_PANEL: 
 		panel = edge_widget_new (NULL,
@@ -2530,10 +2531,11 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 TRUE, FALSE, TRUE,
 					 &bcolor);
 		panel_setup (panel);
+		gtk_window_set_title (GTK_WINDOW (panel->window), _("Edge Panel"));
 		gtk_widget_show (panel);	
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
-				   _("Egde Panel"),
-				   _("Gnome Egde Panel"));
+				   _("Edge Panel"),
+				   _("GNOME Edge Panel"));
 		break;
 	case SLIDING_PANEL:
 		find_empty_pos (screen, &x, &y);
@@ -2549,11 +2551,12 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    NULL, TRUE, FALSE, TRUE,
 					    &bcolor);
 		panel_setup (panel);
+		gtk_window_set_title (GTK_WINDOW (panel->window), _("Sliding Panel"));
 		gtk_widget_show (panel);	
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
 				   _("Sliding Panel"),
-				   _("Gnome Sliding Panel"));
+				   _("GNOME Sliding Panel"));
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (screen, &x, &y);
@@ -2569,11 +2572,12 @@ create_new_panel (GtkWidget *w, gpointer data)
 					     NULL, TRUE, FALSE, TRUE,
 					     &bcolor);
 		panel_setup (panel);
+		gtk_window_set_title (GTK_WINDOW (panel->window), _("Floating Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
 				   _("Floating Panel"),
-				   _("Gnome Floating Panel"));
+				   _("GNOME Floating Panel"));
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
@@ -2584,6 +2588,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
 			
 			panel_setup (panel);
+			gtk_window_set_title (GTK_WINDOW (panel->window), _("Menu Panel"));
 			gtk_widget_show (panel);
 			break;
 		}
@@ -2628,7 +2633,7 @@ create_add_panel_submenu (void)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
-				   _("Menu panel"));
+				   _("Menu Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	g_signal_connect (menuitem, "activate",
@@ -2647,7 +2652,7 @@ create_add_panel_submenu (void)
  	
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
-				   _("Edge panel"));
+				   _("Edge Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
@@ -2655,7 +2660,7 @@ create_add_panel_submenu (void)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-corner.png", 
-				   _("Corner panel"));
+				   _("Corner Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
@@ -2663,7 +2668,7 @@ create_add_panel_submenu (void)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-sliding.png", 
-				   _("Sliding panel"));
+				   _("Sliding Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
@@ -2671,7 +2676,7 @@ create_add_panel_submenu (void)
 	
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-floating.png", 
-				   _("Floating panel"));
+				   _("Floating Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),

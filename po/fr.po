@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.17\n"
-"POT-Creation-Date: 2002-04-22 11:41+0100\n"
+"POT-Creation-Date: 2002-04-29 03:19+0100\n"
 "PO-Revision-Date: 2002-04-21 15:37+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -32,7 +32,7 @@ msgstr "À propos..."
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3963 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Aide"
 
@@ -612,7 +612,7 @@ msgstr "Ne peut créer l'applet !\n"
 
 #: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
 #: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3265 gnome-panel/menu.c:3961
+#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
 msgid "Properties..."
 msgstr "Propriétés..."
 
@@ -699,7 +699,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:405
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
 msgid "???"
 msgstr "???"
 
@@ -723,11 +723,11 @@ msgstr "hidebuttons_enabled"
 msgid "hidebutton_pixmaps_enabled"
 msgstr "hidebutton_pixmaps_enabled"
 
-#: gnome-panel/basep-widget.c:593
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "Cacher ce tableau de bord"
 
-#: gnome-panel/basep-widget.c:596
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Afficher ce tableau de bord"
 
@@ -788,69 +788,72 @@ msgstr "Activer le bouton de masquage"
 msgid "Enable hidebutton arrow"
 msgstr "Activer la flèche du bouton de masquage"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3128
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
 msgid "Drawer"
 msgstr "Tiroir"
 
-#: gnome-panel/foobar-widget.c:217
+#: gnome-panel/foobar-widget.c:214
 msgid "Cannot execute gnome-search-tool"
 msgstr "Ne peut exécuter gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3557
+#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
 msgid "Run Program..."
 msgstr "Exécuter un programme..."
 
-#: gnome-panel/foobar-widget.c:230
+#: gnome-panel/foobar-widget.c:227
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Exécute une application, si vous connaissez son nom exact"
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:237
 msgid "Search for Files..."
 msgstr "Rechercher des fichiers..."
 
-#: gnome-panel/foobar-widget.c:243
+#: gnome-panel/foobar-widget.c:240
 msgid "Find files, folders, and documents on your computer"
 msgstr "Recherche des fichiers, dossiers ou documents sur votre ordinateur"
 
-#: gnome-panel/foobar-widget.c:254
+#: gnome-panel/foobar-widget.c:251
 msgid "Lock Display"
 msgstr "Verrouiller l'écran"
 
-#: gnome-panel/foobar-widget.c:258
+#: gnome-panel/foobar-widget.c:255
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 "Interdit les utilisations non désirées de votre ordinateur pendant votre "
 "absence"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:264
 msgid "Log Out"
 msgstr "Clore la session"
 
-#: gnome-panel/foobar-widget.c:270
+#: gnome-panel/foobar-widget.c:267
 msgid "Quit from the GNOME desktop"
 msgstr "Quitte l'environnement GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:279
+#: gnome-panel/foobar-widget.c:276
 msgid "Actions"
 msgstr "Actions"
 
-#: gnome-panel/foobar-widget.c:487
+#: gnome-panel/foobar-widget.c:484
 msgid "No windows open"
 msgstr "Aucune fenêtre ouverte"
 
-#: gnome-panel/foobar-widget.c:739 gnome-panel/menu.c:2702
-#: gnome-panel/menu.c:2708 gnome-panel/menu.c:3523
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
 msgid "Applications"
 msgstr "Applications"
 
-#: gnome-panel/foobar-widget.c:772
-msgid "Base Panel"
-msgstr "Tableau de bord de base"
+#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
+#: gnome-panel/menu.c:2636
+#, fuzzy
+msgid "Menu Panel"
+msgstr "Tableau de bord « menu »"
 
-#: gnome-panel/foobar-widget.c:772
-msgid "Gnome Base Panel"
-msgstr "Tableau de bord GNOME de base"
+#: gnome-panel/foobar-widget.c:769
+#, fuzzy
+msgid "GNOME Menu Panel"
+msgstr "Menu GNOME"
 
 #: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
 msgid "Can't find the screenshot program"
@@ -909,7 +912,7 @@ msgstr "Préférences du tableau de bord"
 msgid "Modify the global panel preferences"
 msgstr "Modifie les préférences globales du tableau de bord"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3573
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
 msgid "Panel"
 msgstr "Tableau de bord"
 
@@ -949,7 +952,7 @@ msgstr "_Fermer le tiroir si un de ses lanceurs est pressé"
 msgid "_Enable panel animation"
 msgstr "_Activer l'animation du tableau de bord"
 
-#: gnome-panel/gnome-panel-screenshot.c:127
+#: gnome-panel/gnome-panel-screenshot.c:128
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -957,7 +960,7 @@ msgstr ""
 "Incapable d'initialiser la structure PNG.\n"
 "Vous avez probablement une mauvaise version de libpng sur votre système."
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -965,7 +968,7 @@ msgstr ""
 "Incapable de créer l'information PNG.\n"
 "Vous avez probablement une mauvaise version de libpng sur votre système."
 
-#: gnome-panel/gnome-panel-screenshot.c:142
+#: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -973,7 +976,7 @@ msgstr ""
 "Incapable de définir l'information PNG.\n"
 "Vous avez probablement une mauvaise version de libpng sur votre système."
 
-#: gnome-panel/gnome-panel-screenshot.c:156
+#: gnome-panel/gnome-panel-screenshot.c:157
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -981,13 +984,13 @@ msgstr ""
 "Pas assez de mémoire pour enregistrer la capture d'écran.\n"
 "Veuillez libérer quelques ressources et réessayer."
 
-#: gnome-panel/gnome-panel-screenshot.c:203
+#: gnome-panel/gnome-panel-screenshot.c:204
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Le fichier %s existe déjà. L'écraser ?"
 
-#: gnome-panel/gnome-panel-screenshot.c:215
-#: gnome-panel/gnome-panel-screenshot.c:703
+#: gnome-panel/gnome-panel-screenshot.c:216
+#: gnome-panel/gnome-panel-screenshot.c:704
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -998,56 +1001,61 @@ msgstr ""
 "\"%s\"\n"
 "Veuillez vérifier les permissions de votre répertoire parent"
 
-#: gnome-panel/gnome-panel-screenshot.c:478
+#: gnome-panel/gnome-panel-screenshot.c:479
 msgid "Print Screenshot"
 msgstr "Imprimer la capture d'écran"
 
-#: gnome-panel/gnome-panel-screenshot.c:526
+#: gnome-panel/gnome-panel-screenshot.c:527
 msgid "Screenshot Print Preview"
 msgstr "Aperçu de l'impression de la capture d'écran"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:552
+#: gnome-panel/gnome-panel-screenshot.c:553
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cCapture-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:557
+#: gnome-panel/gnome-panel-screenshot.c:558
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cCapture.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:572
+#: gnome-panel/gnome-panel-screenshot.c:573
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cCapture-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:577
+#: gnome-panel/gnome-panel-screenshot.c:578
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cCapture-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:723
+#: gnome-panel/gnome-panel-screenshot.c:724
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Pas assez de place pour écrire le fichier %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1021
+#: gnome-panel/gnome-panel-screenshot.c:1034
 msgid "Grab a window instead of the entire screen"
 msgstr "Capture une fenêtre à la place de l'écran entier"
 
-#: gnome-panel/gnome-panel-screenshot.c:1059
+#: gnome-panel/gnome-panel-screenshot.c:1035
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr ""
+
+#: gnome-panel/gnome-panel-screenshot.c:1078
+#, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
-"Please check your installation of gnome-core"
+"Please check your installation of gnome-panel"
 msgstr ""
 "Le fichier glade du programme de capture d'écran est manquant.\n"
 "Veuillez vérifier votre installation de gnome-core"
 
-#: gnome-panel/gnome-panel-screenshot.c:1081
+#: gnome-panel/gnome-panel-screenshot.c:1100
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Incapable de prendre une capture d'écran du bureau actuel."
 
@@ -1219,13 +1227,19 @@ msgstr ""
 msgid "Help on %s Application"
 msgstr "Aide sur l'application %s"
 
-#: gnome-panel/launcher.c:572
-msgid "Launcher properties"
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
+#: gnome-panel/menu-ditem.c:254
+#, fuzzy
+msgid "Launcher Properties"
 msgstr "Propriétés du lanceur"
 
 # hum, j'ai un doute... 
-#: gnome-panel/launcher.c:761
-msgid "Create launcher applet"
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
+#, fuzzy
+msgid "Create Launcher"
 msgstr "Créer une applet englobante"
 
 #. class
@@ -1240,7 +1254,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3379
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3384
 msgid "Log out"
 msgstr "Clore la session"
 
@@ -1248,7 +1262,7 @@ msgstr "Clore la session"
 msgid "Log out of GNOME"
 msgstr "Clore la session GNOME"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3366
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3371
 msgid "Lock screen"
 msgstr "Verrouiller l'écran"
 
@@ -1294,15 +1308,8 @@ msgstr ""
 "\n"
 "Détails : %s"
 
-#. flags
-#. error
-#. watch the enum at the top of the file
-#: gnome-panel/menu-ditem.c:177 gnome-panel/menu-ditem.c:253
-msgid "Desktop entry properties"
-msgstr "Propriétés de l'entrée de bureau"
-
-#: gnome-panel/menu-ditem.c:288 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3612 gnome-panel/menu.c:3837
+#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
 msgid "Menu"
 msgstr "Menu"
 
@@ -1329,9 +1336,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/menu-ditem.c:479
-msgid "Create menu item"
-msgstr "Créer un élement de menu"
+#: gnome-panel/menu-ditem.c:482
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
 
 #: gnome-panel/menu-properties.c:107
 msgid "Can't open directory, using main menu!"
@@ -1547,76 +1556,62 @@ msgstr ""
 msgid "query returned exception %s\n"
 msgstr "la requête a retourné l'exception %s\n"
 
-#: gnome-panel/menu.c:2516
+#: gnome-panel/menu.c:2513 gnome-panel/menu.c:2517
 msgid "Aligned Panel"
 msgstr "Tableau de bord aligné"
 
-#: gnome-panel/menu.c:2517
-msgid "Gnome Aligned Panel"
-msgstr "Tableau de bord GNOME aligné"
+#: gnome-panel/menu.c:2518
+#, fuzzy
+msgid "GNOME Aligned Panel"
+msgstr "Tableau de bord aligné"
 
-#: gnome-panel/menu.c:2535
-msgid "Egde Panel"
+#: gnome-panel/menu.c:2534 gnome-panel/menu.c:2537 gnome-panel/menu.c:2655
+#, fuzzy
+msgid "Edge Panel"
 msgstr "Tableau de bord latéral"
 
-#: gnome-panel/menu.c:2536
-msgid "Gnome Egde Panel"
-msgstr "Tableau de bord GNOME latéral"
+#: gnome-panel/menu.c:2538
+#, fuzzy
+msgid "GNOME Edge Panel"
+msgstr "Le tableau de bord GNOME"
 
-#: gnome-panel/menu.c:2555
+#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2558 gnome-panel/menu.c:2671
 msgid "Sliding Panel"
 msgstr "Tableau de bord coulissant"
 
-#: gnome-panel/menu.c:2556
-msgid "Gnome Sliding Panel"
-msgstr "Tableau de bord GNOME coulissant"
+#: gnome-panel/menu.c:2559
+#, fuzzy
+msgid "GNOME Sliding Panel"
+msgstr "Tableau de bord coulissant"
 
-#: gnome-panel/menu.c:2575
+#: gnome-panel/menu.c:2575 gnome-panel/menu.c:2579 gnome-panel/menu.c:2679
 msgid "Floating Panel"
 msgstr "Tableau de bord flottant"
 
-#: gnome-panel/menu.c:2576
-msgid "Gnome Floating Panel"
-msgstr "Tableau de bord GNOME flottant"
+#: gnome-panel/menu.c:2580
+#, fuzzy
+msgid "GNOME Floating Panel"
+msgstr "Tableau de bord flottant"
 
-#: gnome-panel/menu.c:2591
+#: gnome-panel/menu.c:2596
 msgid "You can only have one menu panel at a time."
 msgstr "Vous ne pouvez avoir qu'un seul tableau de bord « menu » à la fois."
 
-#: gnome-panel/menu.c:2631
-msgid "Menu panel"
-msgstr "Tableau de bord « menu »"
-
-#: gnome-panel/menu.c:2650 gnome-panel/panel-config.c:1488
-#: gnome-panel/panel-config.c:1610
-msgid "Edge panel"
-msgstr "Tableau de bord latéral"
-
-#: gnome-panel/menu.c:2658 gnome-panel/panel-config.c:1495
-#: gnome-panel/panel-config.c:1621
-msgid "Corner panel"
+#: gnome-panel/menu.c:2663
+#, fuzzy
+msgid "Corner Panel"
 msgstr "Tableau de bord de coin"
 
-#: gnome-panel/menu.c:2666 gnome-panel/panel-config.c:1501
-#: gnome-panel/panel-config.c:1632
-msgid "Sliding panel"
-msgstr "Tableau de bord coulissant"
-
-#: gnome-panel/menu.c:2674 gnome-panel/panel-config.c:1507
-#: gnome-panel/panel-config.c:1643
-msgid "Floating panel"
-msgstr "Tableau de bord flottant"
-
 #. force_image
-#: gnome-panel/menu.c:2771 gnome-panel/menu.c:2778 gnome-panel/menu.c:3439
+#: gnome-panel/menu.c:2776 gnome-panel/menu.c:2783 gnome-panel/menu.c:3444
 msgid "KDE menus"
 msgstr "Menus KDE"
 
-#: gnome-panel/menu.c:2848
+#: gnome-panel/menu.c:2853
 msgid "You cannot remove your last panel."
 msgstr "Vous ne pouvez pas supprimer votre dernier tableau de bord."
 
-#: gnome-panel/menu.c:2860
+#: gnome-panel/menu.c:2865
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Delete this panel?"
@@ -1625,77 +1620,77 @@ msgstr ""
 "du tableau de bord et de ses applets est perdue.\n"
 "Voulez-vous supprimer ce tableau de bord ?"
 
-#: gnome-panel/menu.c:3100
+#: gnome-panel/menu.c:3105
 msgid "Launcher..."
 msgstr "Lanceur..."
 
-#: gnome-panel/menu.c:3108
+#: gnome-panel/menu.c:3113
 msgid "Launcher from menu"
 msgstr "Lanceur depuis le menu"
 
-#: gnome-panel/menu.c:3118
+#: gnome-panel/menu.c:3123
 msgid "GNOME Menu"
 msgstr "Menu GNOME"
 
-#: gnome-panel/menu.c:3138
+#: gnome-panel/menu.c:3143
 msgid "Log out button"
 msgstr "Bouton de fermeture de session"
 
-#: gnome-panel/menu.c:3148
+#: gnome-panel/menu.c:3153
 msgid "Lock button"
 msgstr "Bouton de verrouillage de session"
 
-#: gnome-panel/menu.c:3156
+#: gnome-panel/menu.c:3161
 msgid "Status dock"
 msgstr "Status dock"
 
-#: gnome-panel/menu.c:3170
+#: gnome-panel/menu.c:3175
 msgid "Cannot execute panel global preferences"
 msgstr "Ne peut exécuter les préférences globales du tableau de bord"
 
-#: gnome-panel/menu.c:3208
+#: gnome-panel/menu.c:3213
 msgid "Delete this panel..."
 msgstr "Supprimer ce tableau de bord..."
 
-#: gnome-panel/menu.c:3210 gnome-panel/menu.c:3249
+#: gnome-panel/menu.c:3215 gnome-panel/menu.c:3254
 msgid "Delete this panel"
 msgstr "Supprime ce tableau de bord"
 
-#: gnome-panel/menu.c:3228
+#: gnome-panel/menu.c:3233
 msgid "Add to panel"
 msgstr "Ajouter au tableau de bord"
 
-#: gnome-panel/menu.c:3240
+#: gnome-panel/menu.c:3245
 msgid "Create panel"
 msgstr "Créer un tableau de bord"
 
-#: gnome-panel/menu.c:3277
+#: gnome-panel/menu.c:3282
 msgid "Global Preferences..."
 msgstr "Préférences globales..."
 
-#: gnome-panel/menu.c:3290
+#: gnome-panel/menu.c:3295
 msgid "Panel Manual..."
 msgstr "Manuel du tableau de bord..."
 
-#: gnome-panel/menu.c:3302
+#: gnome-panel/menu.c:3307
 msgid "Cannot execute xscreensaver"
 msgstr "Ne peut exécuter xscreensaver"
 
-#: gnome-panel/menu.c:3321
+#: gnome-panel/menu.c:3326
 msgid "About the panel..."
 msgstr "À propos du tableau de bord..."
 
-#: gnome-panel/menu.c:3335
+#: gnome-panel/menu.c:3340
 msgid "About GNOME..."
 msgstr "À propos de GNOME..."
 
-#: gnome-panel/menu.c:3372
+#: gnome-panel/menu.c:3377
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr ""
 "Verrouille l'écran de sorte que vous puissiez laisser temporairement votre "
 "ordinateur"
 
-#: gnome-panel/menu.c:3385
+#: gnome-panel/menu.c:3390
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1703,27 +1698,27 @@ msgstr ""
 "Se déconnecte de cette session afin de se reconnecter sous un autre "
 "identifiant ou pour éteindre votre ordinateur"
 
-#: gnome-panel/menu.c:3540
+#: gnome-panel/menu.c:3545
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3563
+#: gnome-panel/menu.c:3568
 msgid "Run a command"
 msgstr "Lancer une commande"
 
-#: gnome-panel/menu.c:3581
+#: gnome-panel/menu.c:3586
 msgid "Desktop"
 msgstr "Bureau"
 
-#: gnome-panel/menu.c:3614
+#: gnome-panel/menu.c:3619
 msgid "Menu:"
 msgstr "Menu :"
 
-#: gnome-panel/menu.c:3664 gnome-panel/menu.c:3692 gnome-panel/menu.c:3877
+#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: gnome-panel/menu.c:3686
+#: gnome-panel/menu.c:3691
 msgid "Can't create menu, using main menu!"
 msgstr "Ne peut créer de menu, utilisation du menu principal !"
 
@@ -1886,6 +1881,22 @@ msgstr "Étirer l'image (modifie les proportions)"
 msgid "Rotate image for vertical panels"
 msgstr "Pivote l'image pour les tableaux de bord verticaux"
 
+#: gnome-panel/panel-config.c:1488 gnome-panel/panel-config.c:1610
+msgid "Edge panel"
+msgstr "Tableau de bord latéral"
+
+#: gnome-panel/panel-config.c:1495 gnome-panel/panel-config.c:1621
+msgid "Corner panel"
+msgstr "Tableau de bord de coin"
+
+#: gnome-panel/panel-config.c:1501 gnome-panel/panel-config.c:1632
+msgid "Sliding panel"
+msgstr "Tableau de bord coulissant"
+
+#: gnome-panel/panel-config.c:1507 gnome-panel/panel-config.c:1643
+msgid "Floating panel"
+msgstr "Tableau de bord flottant"
+
 #. main window
 #: gnome-panel/panel-config.c:1579
 msgid "Panel properties"
@@ -1994,6 +2005,30 @@ msgstr "Les drapeaux de l'applet"
 #: libpanel-applet/panel-applet.c:874
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Intervalle de taille acceptable pour l'applet"
+
+#~ msgid "Base Panel"
+#~ msgstr "Tableau de bord de base"
+
+#~ msgid "Gnome Base Panel"
+#~ msgstr "Tableau de bord GNOME de base"
+
+#~ msgid "Desktop entry properties"
+#~ msgstr "Propriétés de l'entrée de bureau"
+
+#~ msgid "Create menu item"
+#~ msgstr "Créer un élement de menu"
+
+#~ msgid "Gnome Aligned Panel"
+#~ msgstr "Tableau de bord GNOME aligné"
+
+#~ msgid "Gnome Egde Panel"
+#~ msgstr "Tableau de bord GNOME latéral"
+
+#~ msgid "Gnome Sliding Panel"
+#~ msgstr "Tableau de bord GNOME coulissant"
+
+#~ msgid "Gnome Floating Panel"
+#~ msgstr "Tableau de bord GNOME flottant"
 
 #~ msgid "Global Panel Properties"
 #~ msgstr "Propriétés globales du tableau de bord"
