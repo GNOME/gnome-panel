@@ -1,6 +1,7 @@
 /*code snippet, not to be compiled separately*/
 static int goat_pages=0;
 static GdkPixmap *goat_pix = NULL;
+static GdkPixmap *goat_pix_rev = NULL;
 static GtkWidget *goat_darea = NULL;
 static char *goat_filename = NULL;
 static int goat_width = 0,goat_height = 0;
@@ -65,7 +66,7 @@ goat_timeout_func(gpointer data)
 	
 	gdk_draw_pixmap(goat_darea->window,
 			goat_darea->style->white_gc,
-			goat_pix,
+			goat_accx>0?goat_pix_rev:goat_pix,
 			0,0,goat_x,goat_y,
 			goat_width,goat_height);
 
@@ -92,7 +93,7 @@ goat_realize(GtkWidget *widget)
 		GdkPixbuf *pb;
 		guchar *rgb;
 		GdkGC *gc;
-		int i;
+		int i,j;
 		gdouble affine[6];
 		char *file;
 
@@ -116,6 +117,7 @@ goat_realize(GtkWidget *widget)
 				      pb->art_pixbuf,affine,
 				      ART_FILTER_NEAREST,NULL);
 		gdk_pixbuf_unref(pb);
+
 		goat_pix = gdk_pixmap_new(widget->window,
 					  goat_width,goat_height,
 					  gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
@@ -124,8 +126,31 @@ goat_realize(GtkWidget *widget)
 				   goat_width,goat_height,
 				   GDK_RGB_DITHER_NORMAL,
 				   rgb, goat_width*3);
-		g_free(rgb);
 		gdk_gc_destroy(gc);
+
+#define GUCHARSWAP(x,y) { guchar tmp=(x); (x)=(y); (y)=tmp; }
+		for(i=0;i<goat_width/2;i++)
+			for(j=0;j<goat_height;j++) {
+				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)),
+					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)))
+				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)+1),
+					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)+1))
+				GUCHARSWAP(*(rgb+(j*goat_width*3)+(i*3)+2),
+					*(rgb+(j*goat_width*3)+((goat_width-i-1)*3)+2))
+			}
+#undef GUCHARSWAP
+
+		goat_pix_rev = gdk_pixmap_new(widget->window,
+					  goat_width,goat_height,
+					  gtk_widget_get_visual(GTK_WIDGET(widget))->depth);
+		gc = gdk_gc_new(goat_pix_rev);
+		gdk_draw_rgb_image(goat_pix_rev,gc,0,0,
+				   goat_width,goat_height,
+				   GDK_RGB_DITHER_NORMAL,
+				   rgb, goat_width*3);
+
+		gdk_gc_destroy(gc);
+		g_free(rgb);
 	}
 }
 
