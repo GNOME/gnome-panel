@@ -233,17 +233,19 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 }
 
 static int
-ignore_1st_click(GtkWidget *w, GdkEvent *e)
+ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 {
-	GdkEventButton *be = (GdkEventButton *)e;
-	if(e->type == GDK_BUTTON_PRESS &&
-	   be->button == 1) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(w),"event");
-		return TRUE;
+	GdkEventButton *buttonevent = (GdkEventButton *)event;
+
+	if((event->type == GDK_BUTTON_PRESS &&
+	    buttonevent->button == 1) ||
+	   (event->type == GDK_BUTTON_RELEASE &&
+	    buttonevent->button == 1)) {
+		buttonevent->button = 2;
 	}
+	 
 	return FALSE;
 }
-
 
 static Swallow *
 create_swallow_applet(char *title, char *path, int width, int height, SwallowOrient orient)

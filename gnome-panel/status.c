@@ -242,15 +242,11 @@ ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 {
 	GdkEventButton *buttonevent = (GdkEventButton *)event;
 
-	if (event->type == GDK_BUTTON_PRESS &&
-	    buttonevent->button == 1) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),"event");
-		return TRUE;
-	}
-	if (event->type == GDK_BUTTON_RELEASE &&
-	    buttonevent->button == 1) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),"event");
-		return TRUE;
+	if((event->type == GDK_BUTTON_PRESS &&
+	    buttonevent->button == 1) ||
+	   (event->type == GDK_BUTTON_RELEASE &&
+	    buttonevent->button == 1)) {
+		buttonevent->button = 2;
 	}
 	 
 	return FALSE;
