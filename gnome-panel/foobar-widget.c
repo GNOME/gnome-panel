@@ -36,7 +36,7 @@
 #include "tasklist_icon.h"
 #include "multiscreen-stuff.h"
 
-#define SMALL_ICON_SIZE 20
+#define ICON_SIZE 20
 
 extern GlobalConfig global_config;
 extern GSList *panel_list;
@@ -108,19 +108,30 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 
 	item = gtk_image_menu_item_new ();
 
-	if (try_file && gconf_client_get_bool (panel_gconf_get_client (),
-					       "/desktop/gnome/interface/menus-have-tearoff",
-					       NULL)) {
+	/* FIXME: listen to this gconf client key */
+	if (try_file != NULL &&
+	    gconf_client_get_bool (panel_gconf_get_client (),
+				   "/desktop/gnome/interface/menus-have-icons",
+				   NULL)) {
 		GtkWidget *image;
 		GdkPixbuf *pixbuf;
+		char *file;
 
-		pixbuf = gdk_pixbuf_new_from_file (try_file, NULL);
-		if (pixbuf) {
+		if (g_path_is_absolute (try_file))
+			file = g_strdup (try_file);
+		else
+			file = panel_pixmap_discovery (try_file,
+						       TRUE /* fallback */);
+
+		pixbuf = gdk_pixbuf_new_from_file (file, NULL);
+		if (pixbuf != NULL &&
+		    (gdk_pixbuf_get_width (pixbuf) != ICON_SIZE ||
+		     gdk_pixbuf_get_height (pixbuf) != ICON_SIZE)) {
 			GdkPixbuf *scaled;
 
 			scaled = gdk_pixbuf_scale_simple (pixbuf,
-							  SMALL_ICON_SIZE,
-							  SMALL_ICON_SIZE,
+							  ICON_SIZE,
+							  ICON_SIZE,
 							  GDK_INTERP_BILINEAR);
 
 			gdk_pixbuf_unref (pixbuf);
@@ -128,7 +139,7 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 			pixbuf = scaled;
 		}
 
-		if (pixbuf) {
+		if (pixbuf != NULL) {
 			image = gtk_image_new_from_pixbuf (pixbuf);
 
 			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
@@ -147,7 +158,6 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 	return item;
 }
 
-#if 0
 static void
 add_tearoff (GtkMenuShell *menu)
 {
@@ -162,7 +172,6 @@ add_tearoff (GtkMenuShell *menu)
 	gtk_widget_show (item);
 	gtk_menu_shell_prepend (menu, item);
 }
-#endif
 
 static gboolean
 foobar_leave_notify (GtkWidget *widget,
@@ -454,43 +463,85 @@ append_desktop_menu (GtkWidget *menu_bar)
 }
 #endif /* FIXME */
 
-static GtkWidget *
-append_folder_menu (GtkWidget *menu_bar, const char *label,
-		    const char *pixmap, gboolean system, const char *path)
+static void
+append_actions_menu (GtkWidget *menu_bar)
 {
-	GtkWidget *item, *menu;
-	char *real_path;
+	GtkWidget *menu, *item;
 
-	if (system)
-		real_path = gnome_program_locate_file (NULL, 
-						       GNOME_FILE_DOMAIN_DATADIR,
-						       path, FALSE, NULL);
-	else
-		real_path = gnome_util_home_file (path);
+	menu = gtk_menu_new ();
 
-	if (!real_path) {
-		g_warning (_("can't fine real path"));
-		return NULL;
+
+	add_tearoff (GTK_MENU_SHELL (menu));
+
+	menu = gtk_menu_new ();
+
+	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png");
+	gtk_tooltips_set_tip (panel_tooltips, item,
+			      _("Run applications, if you know the "
+				"correct command to type in"),
+			      NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (show_run_dialog), 0);
+	setup_internal_applet_drag (item, "RUN:NEW");
+
+	/* FIXME: search */
+	/* FIXME: shutdown or reboot */
+
+	if (panel_is_program_in_path  ("xscreensaver")) {
+		item = pixmap_menu_item_new (_("Lock Display"), 
+					       "gnome-lockscreen.png");
+		gtk_tooltips_set_tip (panel_tooltips, item,
+				      _("Protect your computer from "
+					"unauthorized use"),
+				      NULL);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_signal_connect (G_OBJECT (item), "activate",
+				  G_CALLBACK (panel_lock), 0);
+		setup_internal_applet_drag(item, "LOCK:NEW");
 	}
 
-	menu = create_fake_menu_at (real_path,
+	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
+	gtk_tooltips_set_tip (panel_tooltips, item,
+			      _("Quit from the GNOME desktop"),
+			      NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (panel_quit), 0);
+	setup_internal_applet_drag (item, "LOGOUT:NEW");
+
+	add_tearoff (GTK_MENU_SHELL (menu));
+
+	item = gtk_menu_item_new_with_label (_("Actions"));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
+	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
+}
+
+static GtkWidget *
+append_folder_menu (GtkWidget *menu_bar, const char *label,
+		    const char *pixmap, const char *path)
+{
+	GtkWidget *item, *menu;
+
+	menu = create_fake_menu_at (path,
 				    FALSE /* applets */,
 				    FALSE /* launcher_add */,
 				    FALSE /* favourites_add */,
 				    label /* dir_name */,
 				    NULL /* pixmap_name */,
 				    FALSE /* title */);
-	g_free (real_path);
+#ifdef FIXME /*EVIL!!*/
 	if (path != NULL && strcmp (path, "apps") == 0)
 		/* This will add the add submenu thingie */
 		start_favourites_menu (menu, TRUE /* fake_submenus */);
+#endif
 
 	if (menu == NULL) {
 		g_warning (_("menu wasn't created"));
 		return NULL;
 	}
 
-	if (pixmap)
+	if (pixmap != NULL)
 		item = pixmap_menu_item_new (label, pixmap);
 	else
 		item = gtk_menu_item_new_with_label (label);
@@ -769,6 +820,7 @@ foobar_widget_realize (GtkWidget *w)
 	setup_task_menu (FOOBAR_WIDGET (w));
 }
 
+#ifdef FIXME
 static void
 programs_menu_to_display(GtkWidget *menu)
 {
@@ -786,6 +838,7 @@ programs_menu_to_display(GtkWidget *menu)
 		create_root_menu (menu, TRUE, flags, TRUE, FALSE, FALSE);
 	}
 }
+#endif
 
 #ifdef FIXME
 static void
@@ -1091,9 +1144,9 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	GtkWindow *window = GTK_WINDOW (foo);
 	/*GtkWidget *bufmap;*/
 	GtkWidget *menu_bar, *bar;
-	GtkWidget *menu, *menuitem;
+	/*GtkWidget *menu, *menuitem;*/
 	/*GtkWidget *align;*/
-	gint flags;
+	/*gint flags;*/
 
 	foo->screen = 0;
 
@@ -1146,6 +1199,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	menu_bar = gtk_menu_bar_new ();	
 	
 	
+#if 0
 	menuitem = pixmap_menu_item_new (_("Applications"),
 					 "gnome-logo-icon-transparent.png");
 	flags = (get_default_menu_flags() & 
@@ -1159,16 +1213,27 @@ foobar_widget_instance_init (FoobarWidget *foo)
 			  G_CALLBACK (programs_menu_to_display),
 			  NULL);
 	foo->programs = menu;
+#endif
 
+	/* FIXME: need to append some other menus such as KDE
+	 * or whatever is not merged!!!!! */
+	foo->programs =
+		append_folder_menu (menu_bar, _("Applications"),
+				    "gnome-logo-icon-transparent.png",
+				    "programs:/");
+
+#if 0
 	foo->favorites =
 		append_folder_menu(menu_bar, _("Favorites"), NULL,
-				   FALSE, "apps");
+				   "favorites:/");
 	foo->settings =
-		append_folder_menu(menu_bar, _("Settings"),  NULL, TRUE,
-			           "gnome/apps/Settings");
+		append_folder_menu(menu_bar, _("Settings"),  NULL,
+			           "programs:/Settings/");
+#endif
 #ifdef FIXME
 	append_desktop_menu (menu_bar);
 #endif
+	append_actions_menu (menu_bar);
 
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
 	
