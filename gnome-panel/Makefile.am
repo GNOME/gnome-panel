@@ -4,7 +4,7 @@
 AUTOMAKE_OPTIONS = 1.2f
 
 if ORBIT_INSTALLED
-# nothing
+panel_LINK = $(LINK)
 else
 CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,

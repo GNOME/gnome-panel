@@ -1,6 +1,8 @@
 1998-07-19  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* Makefile.am (panel_LDADD): s/MICO_LIBS/ORB_LIBS/g.
+	(panel_LINK): Define to $(LINK) or $(CXXLINK) depending on if
+	ORBit or MICO is used.
 
 	* appletsConf.sh.in (APPLETS_LIBS): s/MICO_LIBS/ORB_LIBS/g.
 
