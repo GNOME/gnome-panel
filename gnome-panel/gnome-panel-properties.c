@@ -945,12 +945,42 @@ sync_config_with_misc_page(GlobalConfig *conf)
 
 static GtkWidget *grab_dialog;
 
+static gboolean 
+is_modifier (guint keycode)
+{
+	gint i;
+	gint map_size;
+	XModifierKeymap *mod_keymap;
+	gboolean retval = FALSE;
+
+	mod_keymap = XGetModifierMapping (gdk_display);
+
+	map_size = 8 * mod_keymap->max_keypermod;
+	i = 0;
+	while (i < map_size) {
+		
+		if (keycode == mod_keymap->modifiermap[i]) {
+			retval = TRUE;
+			break;
+		}
+		++i;
+	}
+
+	XFreeModifiermap (mod_keymap);
+
+	return retval;
+}
+
+
 static GdkFilterReturn
 grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
 	XEvent *xevent = (XEvent *)gdk_xevent;
 	GtkEntry *entry;
 	char *key;
+	guint keycode, state;
+	char buf[10];
+	KeySym keysym;
 
 	if (xevent->type != KeyPress && xevent->type != KeyRelease)
 	/*if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)*/
@@ -958,12 +988,18 @@ grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	
 	entry = GTK_ENTRY (data);
 
-	/* note: GDK has already translated the keycode to a keysym for us */
-	g_message ("keycode: %d\tstate: %d",
-		   event->key.keyval, event->key.state);
+	keycode = xevent->xkey.keycode;
 
-	key = convert_keysym_state_to_string (event->key.keyval,
-					      event->key.state);
+	if (is_modifier (keycode))
+		return GDK_FILTER_CONTINUE;
+
+	state = xevent->xkey.state;
+
+	XLookupString (&xevent->xkey, buf, 0, &keysym, NULL);
+  
+	key = convert_keysym_state_to_string (keysym,
+					      state);
+
 	gtk_entry_set_text (entry, key != NULL ? key : "");
 	g_free (key);
 
@@ -984,7 +1020,7 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	grab_dialog = gtk_window_new (GTK_WINDOW_POPUP);
 
 
-	gdk_keyboard_grab (GDK_ROOT_PARENT(), TRUE, GDK_CURRENT_TIME);
+	gdk_keyboard_grab (GDK_ROOT_PARENT(), FALSE, GDK_CURRENT_TIME);
 	gdk_window_add_filter (GDK_ROOT_PARENT(), grab_key_filter, data);
 
 	gtk_window_set_policy (GTK_WINDOW (grab_dialog), FALSE, FALSE, TRUE);
