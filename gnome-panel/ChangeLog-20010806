@@ -1,3 +1,9 @@
+Sun Dec 17 00:04:20 2000  George Lebl <jirka@5z.com>
+
+	* extern.c: always check if ext->applet isn't by any chance %NULL.
+	  I think it can happen when an applet dies too quickly, but it's
+	  just a guess.  Anyway, it's good to be paranoid.
+
 Tue Dec 05 20:03:09 2000  George Lebl <jirka@5z.com>
 
 	* applet-widget.c: initialize frozen stuff, just being fussy, that

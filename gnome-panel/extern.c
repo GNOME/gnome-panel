@@ -1291,8 +1291,11 @@ s_panelspot_register_us(PortableServer_Servant servant,
 		send_position_change(ext);
 	thaw_changes (ext->info);
 
-	GNOME_Applet_set_tooltips_state (ext->applet,
-					 global_config.tooltips_enabled, ev);
+	/* just sanity */
+	if (ext->applet != NULL)
+		GNOME_Applet_set_tooltips_state
+			(ext->applet, global_config.tooltips_enabled, ev);
+
 	if (ev->_major) {
 		/* well, we haven't really gotten anywhere, so it's not
 		 * a good idea to bother the user with restarting us */
@@ -1648,7 +1651,8 @@ send_draw(Extern *ext)
 	CORBA_Environment ev;
 
 	CORBA_exception_init (&ev);
-	GNOME_Applet_draw (ext->applet, &ev);
+	if (ext->applet != NULL) /* sanity */
+		GNOME_Applet_draw (ext->applet, &ev);
 	if (ev._major)
 		panel_clean_applet (ext->info);
 	CORBA_exception_free (&ev);
