@@ -53,8 +53,6 @@ struct _PerPanelConfig {
 
 	/*size*/
 	GtkWidget               *size_menu;
-	GtkWidget               *size_menu_items[NUMBER_OF_SIZES];
-
 
 	/*color buttons*/
 	GtkWidget		*non;
