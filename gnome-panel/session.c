@@ -52,7 +52,7 @@
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
-#undef SESSION_DEBUG 
+#define SESSION_DEBUG  12
 
 int config_sync_timeout = 0;
 int applets_to_sync = FALSE;
@@ -88,12 +88,16 @@ static gchar *panel_profile_name = NULL;
 
 gchar *
 session_get_current_profile (void) {
-	return panel_profile_name;
+	return g_strdup (panel_profile_name);
 }
 
 void
 session_set_current_profile (const gchar *profile_name) {
-	g_free (panel_profile_name);
+
+	g_return_if_fail (profile_name != NULL);
+
+	if (panel_profile_name != NULL);
+		g_free (panel_profile_name);
 	panel_profile_name = g_strdup (profile_name);
 }
 
@@ -388,8 +392,12 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	PanelWidget *panel = NULL;
 	PanelData *pd = data;
 	GString	*buf;
+	GSList *panel_id_list;
+	GSList *temp;
+	gboolean check = FALSE;
 	gchar *panel_profile;
-	char *panel_id;
+	gchar *panel_id_key;
+	gchar *panel_id;
 	
 	/* FIXME: Do we need user_data anymore?? */
 
@@ -397,18 +405,45 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	panel_profile = session_get_current_profile ();
 
+	panel_id_key = panel_gconf_general_profile_get_full_key (panel_profile, "panel-id-list");
+
 	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
 		panel = PANEL_WIDGET (basep->panel);
 	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
-
-
+	/* Get the widget unique_id */	
 	panel_id = g_strdup_printf ("%u", (guint)panel->unique_id);
+
+	/* Get the current list from gconf */	
+	panel_id_list = gconf_client_get_list (panel_gconf_get_client (),
+					   panel_id_key,
+					   GCONF_VALUE_STRING,
+					   NULL);
+
 	
 	/* We need to go through the panel-id-list and add stuff to the panel */
+
+	for (temp = panel_id_list; temp; temp = temp->next) {
+		if (strcmp (panel_id, temp->data) == 0)
+			check = TRUE;
+	}	
 	
+	/* We need to add this key */
+	if (check == FALSE) {
+		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel_id));	
+	}
+
+	gconf_client_set_list (panel_gconf_get_client (),
+			       panel_id_key,
+			       GCONF_VALUE_STRING,
+			       panel_id_list,
+			       NULL);
+
+	g_free (panel_id_key);
+	g_slist_free (panel_id_list);
+
 	panel_gconf_panel_profile_set_int (panel_profile,
 					   panel_id,
 					   "panel-type", pd->type);
@@ -1027,6 +1062,7 @@ session_init_panels(void)
 	GSList *temp;
 	gchar *timestring;
 
+	printf ("Current profile is %s\n", session_get_current_profile ());
 	panel_profile_key = panel_gconf_general_profile_get_full_key (session_get_current_profile (), "panel-id-list");
 
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
@@ -1063,6 +1099,9 @@ session_init_panels(void)
 
 		panel_id = temp->data;
 
+#ifdef SESSION_DEBUG
+	printf ("Loading panel id %s\n", panel_id);
+#endif
 		back_pixmap = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (), 
 										panel_id,
 										"panel-background-pixmap",

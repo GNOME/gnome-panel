@@ -1801,7 +1801,7 @@ setup_applet_drag (GtkWidget *menuitem, const char *goad_id)
 static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_drawer_applet (-1, NULL, NULL,
+	load_drawer_applet (NULL, NULL, NULL,
 			    get_panel_from_menu_data(widget, TRUE), 0, FALSE);
 }
 
@@ -4718,7 +4718,7 @@ save_tornoff (void)
 		int x = 0, y = 0;
 		GtkWidget *tw;
 		int menu_panel = 0;
-		int menu_panel_id = 0;
+		gchar *menu_panel_id = NULL;
 		PanelWidget *menu_panel_widget = NULL;
 		GSList *l;
 		char *s;
@@ -4750,14 +4750,13 @@ save_tornoff (void)
 		menu_panel_widget = gtk_object_get_data(GTK_OBJECT(tm->menu),
 							"menu_panel");
 		menu_panel = g_slist_index(panels, menu_panel_widget);
-		if(menu_panel < 0)
-			menu_panel = 0;
+		
 		if (menu_panel_widget != NULL)
 			menu_panel_id = menu_panel_widget->unique_id;
-
+#ifdef FIXME
 		gnome_config_set_int("menu_panel", menu_panel);
-		gnome_config_set_int("menu_unique_panel_id", menu_panel_id);
-
+		gnome_config_set_int("menu_unique_panel_id", menu_panel_id); 
+#endif
 		gnome_config_set_string("special",
 					sure_string (tm->special));
 

@@ -230,7 +230,10 @@ main(int argc, char **argv)
 
 	if (profile_name == NULL) {
 		/* FIXME: Do this properly. just a temporary hack */
+		g_warning ("Couldn't find profile!");
 		session_set_current_profile ("default");
+	} else {
+		session_set_current_profile (profile_name);
 	}
 
 	/*
