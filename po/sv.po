@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-02-13 19:06+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-13 19:06+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -49,8 +49,8 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Hjälp"
@@ -82,31 +82,6 @@ msgstr "fabrik för skapande av klockpanelprogram."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Visa aktuell tid och aktuellt datum"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Dag"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-"Den för tillfället bevakade dagen mellan 1 och 31 (0 betyder inte inställd)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Månad"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "Den för tillfället bevakade månaden mellan 0 och 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "År"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "Det för tillfället bevakade året"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -207,7 +182,7 @@ msgstr ""
 "tiden. Kanske inga sådana är installerade?"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -261,7 +236,7 @@ msgid "Use _UTC"
 msgstr "Använd UT_C"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -641,7 +616,7 @@ msgstr "Fabrik för notifieringsyta"
 msgid "Utility"
 msgstr "Verktyg"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Panelnotifieringsyta"
 
@@ -779,7 +754,7 @@ msgstr "V_isa fönster från aktuell arbetsyta"
 msgid "Show windows from a_ll workspaces"
 msgstr "Visa fönster från a_lla arbetsytor"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Storlek"
 
@@ -1014,7 +989,7 @@ msgstr "_Lås upp"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
@@ -1030,54 +1005,6 @@ msgstr "inga"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "filen hittades inte"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Aktiveringsbar"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Huruvida knappen är aktiveringsbar"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Har pil"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Huruvida en pilindikator ska ritas eller inte"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Upplysning vid drag och släpp"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Huruvida ikonen lyses upp under drag och släpp"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Orientering"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Orienteringen på ButtonWidgeten"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Ikonnamn"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Den önskade ikonen för ButtonWidgeten"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "Standardikon-ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Den önskade standardikonen för ButtonWidgeten"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1107,8 +1034,8 @@ msgstr "CDE-meny"
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Egenskaper"
 
@@ -1414,7 +1341,7 @@ msgstr "Lås"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Tvinga avslutande"
 
@@ -1422,7 +1349,7 @@ msgstr "Tvinga avslutande"
 msgid "Force a misbehaving application to quit"
 msgstr "Tvinga ett program som beter sig fel att avsluta"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Skärmdump"
 
@@ -1464,8 +1391,8 @@ msgstr ""
 "Detta program ansvarar för att starta andra program och att bädda in små "
 "panelprogram i sig själv."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kan inte köra \"%s\""
@@ -1649,54 +1576,38 @@ msgstr "Ta skärmdump..."
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Aktivera skärmsläckare"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "_Döda skärmsläckardemon"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Starta om _skärmsläckardemon"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Logga ut ur GNOME"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Kör program"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Sök efter filer"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Åtgärdstyp"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Typen av åtgärd som denna knapp implementerar"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Drag och släpp aktiverat"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Huruvida drag och släpp är aktiverat på widgeten eller inte"
 
 # SUN NEW TRANSLATION
 #
@@ -1791,14 +1702,6 @@ msgid ""
 msgstr ""
 "Tvinga detta program att avsluta?\n"
 "(Alla öppna dokument kommer att gå förlorade)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Kanter"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Vilka kanter som ska ritas"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2035,46 +1938,6 @@ msgstr "Skydda din dator mot obehörig användning"
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "Avsluta från %ss skrivbord"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Menysökväg"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "Sökvägen vilken menyn ska konstrueras från"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Anpassad ikon"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Den anpassade ikonen för menyn"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Verktygstips"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Verktygstips som visas för menyn"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Använd menysökväg"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Använd den sökväg som är angiven av menu-path-egenskapen"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Använd anpassad ikon"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Använd ikonen som är angiven av custom-icon-egenskapen"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2612,135 +2475,6 @@ msgstr "Flytande högerkantspanel"
 msgid "Right Edge Panel"
 msgstr "Högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Namn"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "Namnet på denna panel"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Fäll ut"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Expandera så att hela bildskärmshöjden/-bredden tas upp"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "Panelens orientering"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "Panelens höjd (eller bredd då den är vertikal)"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "X-position"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "Panelens X-position"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "X-centrerad"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "X-koordinaten är relativ till skärmens mitt"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Y-position"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "Panelens Y-position"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Y-centrerad"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Y-koordinaten är relativ till skärmens mitt"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama-bildskärm"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "Bildskärmen (i Xinerama-termer) som panelen är på"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Dölj automatiskt"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Dölj automatiskt panelen då muspekaren lämnar panelen"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Döljningsfördröjning"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Antalet millisekunder att dröja innan panelen automatiskt döljs"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Visningsfördröjning"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Storlek för automatisk döljning"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "Antalet bildpunkter som är synliga när panelen automatiskt har dolts"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Animera"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Aktivera animationer för döljning/visning"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Animationshastighet"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "Hastigheten med vilken paneldöljning/-visning ska animeras"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Knappar aktiverade"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Aktivera dölj-/visningsdöljknappar"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Pilar aktiverade"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Aktivera pilar på dölj-/visningsknappar"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Dölj automatiskt panelen i hörnet"
@@ -3085,7 +2819,7 @@ msgstr "Y-koordinaten för panelen"
 msgid "Cannot display help document"
 msgstr "Kan inte visa hjälpdokument"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
@@ -3095,7 +2829,7 @@ msgstr "Öppna URL: %s"
 # Sun skrev "panalen"
 # Jag ändrade till "panelen"
 #
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3103,7 +2837,7 @@ msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
 " inställningar. Vill du ta bort denna panel?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Ta bort panel"
 
@@ -3227,6 +2961,208 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Day"
+#~ msgstr "Dag"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr ""
+#~ "Den för tillfället bevakade dagen mellan 1 och 31 (0 betyder inte "
+#~ "inställd)"
+
+#~ msgid "Month"
+#~ msgstr "Månad"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Den för tillfället bevakade månaden mellan 0 och 11"
+
+#~ msgid "Year"
+#~ msgstr "År"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Det för tillfället bevakade året"
+
+#~ msgid "Activatable"
+#~ msgstr "Aktiveringsbar"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Huruvida knappen är aktiveringsbar"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Har pil"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Huruvida en pilindikator ska ritas eller inte"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Upplysning vid drag och släpp"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "Huruvida ikonen lyses upp under drag och släpp"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientering"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Orienteringen på ButtonWidgeten"
+
+#~ msgid "Icon Name"
+#~ msgstr "Ikonnamn"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Den önskade ikonen för ButtonWidgeten"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Standardikon-ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Den önskade standardikonen för ButtonWidgeten"
+
+#~ msgid "Action Type"
+#~ msgstr "Åtgärdstyp"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Typen av åtgärd som denna knapp implementerar"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Drag och släpp aktiverat"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Huruvida drag och släpp är aktiverat på widgeten eller inte"
+
+#~ msgid "Edges"
+#~ msgstr "Kanter"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Vilka kanter som ska ritas"
+
+#~ msgid "Menu Path"
+#~ msgstr "Menysökväg"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Sökvägen vilken menyn ska konstrueras från"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Anpassad ikon"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Den anpassade ikonen för menyn"
+
+#~ msgid "Tooltip"
+#~ msgstr "Verktygstips"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Verktygstips som visas för menyn"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Använd menysökväg"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Använd den sökväg som är angiven av menu-path-egenskapen"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Använd anpassad ikon"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Använd ikonen som är angiven av custom-icon-egenskapen"
+
+#~ msgid "Name"
+#~ msgstr "Namn"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Namnet på denna panel"
+
+#~ msgid "Expand"
+#~ msgstr "Fäll ut"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Expandera så att hela bildskärmshöjden/-bredden tas upp"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "Panelens orientering"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Panelens höjd (eller bredd då den är vertikal)"
+
+#~ msgid "X position"
+#~ msgstr "X-position"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Panelens X-position"
+
+#~ msgid "X centered"
+#~ msgstr "X-centrerad"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "X-koordinaten är relativ till skärmens mitt"
+
+#~ msgid "Y position"
+#~ msgstr "Y-position"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Panelens Y-position"
+
+#~ msgid "Y centered"
+#~ msgstr "Y-centrerad"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Y-koordinaten är relativ till skärmens mitt"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama-bildskärm"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Bildskärmen (i Xinerama-termer) som panelen är på"
+
+#~ msgid "Auto hide"
+#~ msgstr "Dölj automatiskt"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Dölj automatiskt panelen då muspekaren lämnar panelen"
+
+#~ msgid "Hide delay"
+#~ msgstr "Döljningsfördröjning"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Antalet millisekunder att dröja innan panelen automatiskt döljs"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Visningsfördröjning"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Storlek för automatisk döljning"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "Antalet bildpunkter som är synliga när panelen automatiskt har dolts"
+
+#~ msgid "Animate"
+#~ msgstr "Animera"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Aktivera animationer för döljning/visning"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Animationshastighet"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Hastigheten med vilken paneldöljning/-visning ska animeras"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Knappar aktiverade"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Aktivera dölj-/visningsdöljknappar"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Pilar aktiverade"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Aktivera pilar på dölj-/visningsknappar"
 
 #~ msgid "_Hide Panel"
 #~ msgstr "_Dölj panel"

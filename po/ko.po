@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.3.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-07 19:44+0900\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-07 19:47+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -43,8 +43,8 @@ msgstr "정보(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "도움말(_H)"
@@ -76,30 +76,6 @@ msgstr "시계 애플릿을 만드는 데 쓰이는 팩토리."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "일"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "현재 보고 있는 일, 1과 31 사이 (값이 없으면 0)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "월"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "현재 보고 있는 월, 0과 11 사이"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "연"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "현재 보고 있는 연도"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -200,7 +176,7 @@ msgstr ""
 "니다?"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -254,7 +230,7 @@ msgid "Use _UTC"
 msgstr "UTC 사용(_U)"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -618,7 +594,7 @@ msgstr "알림 영역 팩토리"
 msgid "Utility"
 msgstr "유틸리티"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "패널 알림 영역"
 
@@ -755,7 +731,7 @@ msgstr "현재 작업 공간의 창 보여주기(_O)"
 msgid "Show windows from a_ll workspaces"
 msgstr "모든 작업 공간의 창 보여주기(_C)"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "크기"
 
@@ -889,7 +865,9 @@ msgstr ""
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr "작업 공간 바꾸기 프로그램은 여러분의 작업공간의 축소판에서 창을 관리할 수 있도록 해 줍니다."
+msgstr ""
+"작업 공간 바꾸기 프로그램은 여러분의 작업공간의 축소판에서 창을 관리할 수 있"
+"도록 해 줍니다."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Switcher</b>"
@@ -992,7 +970,7 @@ msgid "???"
 msgstr "???"
 
 # 패널에 애플릿을 놓을 공간이 없음을 말한다.
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "비어 있는 위치가 없음"
 
@@ -1008,54 +986,6 @@ msgstr "없음"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "파일을 찾을 수 없습니다"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "활성화 가능"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "단추가 활성화 가능한 지 여부"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "화살표 가짐"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "서랍에 화살표 표시가 있는지 없는지"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "드래그앤드롭 강조"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "드래그앤드롭 하는 동안 아이콘을 강조할 지 여부"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "방향"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "단추위젯 방향"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "아이콘 이름"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "단추위젯에 있어야할 아이콘"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "스톡 아이콘 ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "단추위젯에 있어야할 스톡 아이콘"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1085,8 +1015,8 @@ msgstr "CDE 메뉴"
 msgid "Drawer"
 msgstr "서랍"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "등록 정보(_P)"
 
@@ -1390,7 +1320,7 @@ msgstr "잠그기"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "화면을 잠그고 컴퓨터 앞을 잠시 떠납니다"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "강제로 끝내기"
 
@@ -1398,7 +1328,7 @@ msgstr "강제로 끝내기"
 msgid "Force a misbehaving application to quit"
 msgstr "잘못 동작하는 응용 프로그램을 강제로 끝냅니다"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "스크린샷"
 
@@ -1440,8 +1370,8 @@ msgstr ""
 "이 프로그램은 다른 프로그램을 실행하고, 내부에 작은 애플릿들을 포함하는 일을 "
 "합니다."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s'을(를) 실행할 수 없습니다"
@@ -1615,54 +1545,38 @@ msgstr "스크린샷 잡기..."
 msgid "Desktop"
 msgstr "바탕화면"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "화면 보호기 활성(_A)"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "화면 잠그기(_L)"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "화면 보호기 데몬 종료(_K)"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "화면 보호기 데몬 다시 시작(_S)"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "화면 잠그기"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "그놈 로그아웃"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "프로그램 실행"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "파일 찾기..."
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "실행 형식"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "이 단추 구현행동의 형식"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "드래그앤드롭 사용"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "이 위젯에서 드래그 앤 드롭을 사용할 지 여부"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1749,14 +1663,6 @@ msgid ""
 msgstr ""
 "이 프로그램을 강제로 끝낼까요?\n"
 "(프로그램이 사용중인 문서가 있으면 그 내용을 잃게 됩니다)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "가장자리"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "어떤 가장자리에 그릴 것인가"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1979,46 +1885,6 @@ msgstr "인증되지 않은 사용을 막기 위해 컴퓨터를 잠급니다"
 msgid "Quit from %s's desktop"
 msgstr "%s의 데스크탑을 끝냅니다"
 
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "메뉴 경로"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "메뉴를 만들 경로"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "사용자 지정 아이콘"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "메뉴의 사용자 지정 아이콘"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "도구 설명"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "이 메뉴에 표시할 도구 설명"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "메뉴 경로 사용"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "menu-path 정보에서 지정한 경로 사용하기"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "사용자 지정 아이콘 사용"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "custom-icon 정보에서 지정한 아이콘 사용하기"
-
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
 msgstr "실행 단추 종류"
@@ -2099,7 +1965,9 @@ msgstr "패널 오브젝트 종류"
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr "애플릿의 보노보 구현 ID - 예를 들어 \"OAFIID:GNOME_ClockApplet\". 이 키는 object_type이 \"bonobo-object\"일 경우에만 의미가 있습니다."
+msgstr ""
+"애플릿의 보노보 구현 ID - 예를 들어 \"OAFIID:GNOME_ClockApplet\". 이 키는 "
+"object_type이 \"bonobo-object\"일 경우에만 의미가 있습니다."
 
 #: gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2541,135 +2409,6 @@ msgstr "오른쪽 떠다니는 패널"
 msgid "Right Edge Panel"
 msgstr "오른쪽 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "이름"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "이 패널의 이름"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "확장"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "모니터 너비/높이를 꽉 채우도록 확장"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "패널의 방향"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "패널의 높이 (세로일 경우 너비)"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "가로 위치"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "패널의 가로 위치"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "가로로 가운데"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "가로 좌표가 화면 중앙에 상대적인 값입니다"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "세로 위치"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "패널의 세로 위치"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "세로로 가운데"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "세로 좌표가 화면 중앙에 상대적인 값입니다"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama 모니터"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "(Xinerama에서) 패널이 들어 있는 모니터"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "자동 숨기기"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "마우스가 패널을 떠났을 때 패널을 자동으로 숨깁니다"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "숨김 지연시간"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "자동으로 숨기기 전에 지연시간 (천분의 일초 단위)"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "보여주기 지연 시간"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "숨겼다가 자동으로 다시 보여주기 전에 지연 시간 (천분의 일초 단위)"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "자동 숨김 크기"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "패널을 자동으로 숨겼을 때 보이는 픽셀 수"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "애니메이션"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "숨기기/보여주기 애니메이션 사용"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "애니매이션 속도"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "패널 숨기기/보여주기 애니메이션의 속도"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "단추 사용"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "숨기기/보이기 단추 사용"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "화살표 사용"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "숨기기/보이기 단추 위에 화살표 사용"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "자동으로 패널을 구석으로 감춥니다"
@@ -2880,7 +2619,9 @@ msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
-msgstr "바탕색 형식의 불투명도를 지정합니다. 색이 완전히 불투명한 경우가 아니면 (65535보다 작은 값), 이 색은 데스크탑 바탕 이미지와 결합됩니다."
+msgstr ""
+"바탕색 형식의 불투명도를 지정합니다. 색이 완전히 불투명한 경우가 아니면 "
+"(65535보다 작은 값), 이 색은 데스크탑 바탕 이미지와 결합됩니다."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
@@ -2963,7 +2704,10 @@ msgid ""
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
-msgstr "이 패널의 바탕에 사용할 종류. 가능한 값은 \"gtk\" - 기본 GTK+ 위젯 바탕을 사용, \"color\" - color 키를 바탕색으로 사용하고, \"image\"는 image 키에서 지정한 이미지를 바탕에 사용합니다."
+msgstr ""
+"이 패널의 바탕에 사용할 종류. 가능한 값은 \"gtk\" - 기본 GTK+ 위젯 바탕을 사"
+"용, \"color\" - color 키를 바탕색으로 사용하고, \"image\"는 image 키에서 지정"
+"한 이미지를 바탕에 사용합니다."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
@@ -2993,12 +2737,12 @@ msgstr "패널의 세로 좌표"
 msgid "Cannot display help document"
 msgstr "도움말 문서를 보일 수 없습니다"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL 열기: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3006,7 +2750,7 @@ msgstr ""
 "패널이 지우면, 패널과 그안의 애플릿 설정들이\n"
 "지워집니다. 이 패널을 지울까요?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "패널 지우기"
 
@@ -3122,3 +2866,202 @@ msgstr "아주아주 크게"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "아주아주 작게"
+
+#~ msgid "Day"
+#~ msgstr "일"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "현재 보고 있는 일, 1과 31 사이 (값이 없으면 0)"
+
+#~ msgid "Month"
+#~ msgstr "월"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "현재 보고 있는 월, 0과 11 사이"
+
+#~ msgid "Year"
+#~ msgstr "연"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "현재 보고 있는 연도"
+
+#~ msgid "Activatable"
+#~ msgstr "활성화 가능"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "단추가 활성화 가능한 지 여부"
+
+#~ msgid "Has Arrow"
+#~ msgstr "화살표 가짐"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "서랍에 화살표 표시가 있는지 없는지"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "드래그앤드롭 강조"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "드래그앤드롭 하는 동안 아이콘을 강조할 지 여부"
+
+#~ msgid "Orientation"
+#~ msgstr "방향"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "단추위젯 방향"
+
+#~ msgid "Icon Name"
+#~ msgstr "아이콘 이름"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "단추위젯에 있어야할 아이콘"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "스톡 아이콘 ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "단추위젯에 있어야할 스톡 아이콘"
+
+#~ msgid "Action Type"
+#~ msgstr "실행 형식"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "이 단추 구현행동의 형식"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "드래그앤드롭 사용"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "이 위젯에서 드래그 앤 드롭을 사용할 지 여부"
+
+#~ msgid "Edges"
+#~ msgstr "가장자리"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "어떤 가장자리에 그릴 것인가"
+
+#~ msgid "Menu Path"
+#~ msgstr "메뉴 경로"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "메뉴를 만들 경로"
+
+#~ msgid "Custom Icon"
+#~ msgstr "사용자 지정 아이콘"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "메뉴의 사용자 지정 아이콘"
+
+#~ msgid "Tooltip"
+#~ msgstr "도구 설명"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "이 메뉴에 표시할 도구 설명"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "메뉴 경로 사용"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "menu-path 정보에서 지정한 경로 사용하기"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "사용자 지정 아이콘 사용"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "custom-icon 정보에서 지정한 아이콘 사용하기"
+
+#~ msgid "Name"
+#~ msgstr "이름"
+
+#~ msgid "The name of this panel"
+#~ msgstr "이 패널의 이름"
+
+#~ msgid "Expand"
+#~ msgstr "확장"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "모니터 너비/높이를 꽉 채우도록 확장"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "패널의 방향"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "패널의 높이 (세로일 경우 너비)"
+
+#~ msgid "X position"
+#~ msgstr "가로 위치"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "패널의 가로 위치"
+
+#~ msgid "X centered"
+#~ msgstr "가로로 가운데"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "가로 좌표가 화면 중앙에 상대적인 값입니다"
+
+#~ msgid "Y position"
+#~ msgstr "세로 위치"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "패널의 세로 위치"
+
+#~ msgid "Y centered"
+#~ msgstr "세로로 가운데"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "세로 좌표가 화면 중앙에 상대적인 값입니다"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama 모니터"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "(Xinerama에서) 패널이 들어 있는 모니터"
+
+#~ msgid "Auto hide"
+#~ msgstr "자동 숨기기"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "마우스가 패널을 떠났을 때 패널을 자동으로 숨깁니다"
+
+#~ msgid "Hide delay"
+#~ msgstr "숨김 지연시간"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "자동으로 숨기기 전에 지연시간 (천분의 일초 단위)"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "보여주기 지연 시간"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "숨겼다가 자동으로 다시 보여주기 전에 지연 시간 (천분의 일초 단위)"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "자동 숨김 크기"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "패널을 자동으로 숨겼을 때 보이는 픽셀 수"
+
+#~ msgid "Animate"
+#~ msgstr "애니메이션"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "숨기기/보여주기 애니메이션 사용"
+
+#~ msgid "Animation Speed"
+#~ msgstr "애니매이션 속도"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "패널 숨기기/보여주기 애니메이션의 속도"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "단추 사용"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "숨기기/보이기 단추 사용"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "화살표 사용"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "숨기기/보이기 단추 위에 화살표 사용"

@@ -11,14 +11,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 20:10+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-14 02:13+0100\n"
 "Last-Translator: Sanlig Badral <badral@openmn.org>\n"
 "Language-Team: Mongolian <openmn-core@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -50,8 +50,8 @@ msgstr "_Тухай..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Тусламж"
@@ -83,30 +83,6 @@ msgstr "Цаг апплет үүсгэх үйлдвэр."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Идэвхитэй цаг ба огноог авах"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Өдөр"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "Одоогоор дэлгэцэнд харагдаж байгаа өдөр 1 - 31 байна. (0 утгагүйг тэмдэглэнэ)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Сар"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "Одоогоор дэлгэцэнд харагдаж байгаа сарууд 0 - 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "Жил"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "Одоогоор дэлгэцэнд харагдаж байгаа жил"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -205,7 +181,7 @@ msgid ""
 msgstr ""
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:82
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -259,9 +235,9 @@ msgid "Use _UTC"
 msgstr "_UTC хэрэглэх"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
-#: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -341,13 +317,13 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Энэ түлхүүр цаг апплетад хэрэглэгдэж байгаа цагийн хэлбэрийг заана. Боломжит "
-"утгууд нь \"12-цаг\", \"24-цаг\", \"интернэт\", \"юникс\" ба \"хэрэглэгч тодорхойлсон\". "
-"Хэрэв \"интернэт\" утгатай бол цагийг интерэт цагаар дүрслэнэ. Интернэт цагийн "
-"систем өдрийг 1000 \".beats\" -р хуваадаг. Энэ системт цагийн бүс гэсэн "
-"ойлголт байхгүй бөгөөд тиймээс цаг нь бүх дэлхий дээр яг ижил явж байдаг. "
-"Хэрвээ \"юникс\", гэж авбал Epoch-оос хойшхи цагийг секундээр харуулна. Ө.х. "
-"1970-01-01 -нээс хойш. Хэрэв \"хэрэглэгч тодорхойлсон\" бол, цаг custom_format "
-"түлхүүрт тодорхойлогдсоноор гарна."
+"утгууд нь \"12-цаг\", \"24-цаг\", \"интернэт\", \"юникс\" ба \"хэрэглэгч "
+"тодорхойлсон\". Хэрэв \"интернэт\" утгатай бол цагийг интерэт цагаар "
+"дүрслэнэ. Интернэт цагийн систем өдрийг 1000 \".beats\" -р хуваадаг. Энэ "
+"системт цагийн бүс гэсэн ойлголт байхгүй бөгөөд тиймээс цаг нь бүх дэлхий "
+"дээр яг ижил явж байдаг. Хэрвээ \"юникс\", гэж авбал Epoch-оос хойшхи цагийг "
+"секундээр харуулна. Ө.х. 1970-01-01 -нээс хойш. Хэрэв \"хэрэглэгч "
+"тодорхойлсон\" бол, цаг custom_format түлхүүрт тодорхойлогдсоноор гарна."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -378,7 +354,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Загас сэлж байгааг эсвэл өөр хөдөлгөөнт апплет үзүүлэх"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:496
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Загас"
 
@@ -399,7 +375,7 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 
-#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s загас"
@@ -413,29 +389,29 @@ msgid ""
 "evaluation."
 msgstr ""
 
-#: applets/fish/fish.c:480
+#: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(Жоржын бяцхан тусламж)"
 
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:534
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s Загас, орчин үеийн мэрэг"
 
-#: applets/fish/fish.c:576
+#: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
 msgstr "Биелүүлэх командын нэр тохирохгүй байна"
 
-#: applets/fish/fish.c:593
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "Командыг биелүүлэх боломжгүй"
 
-#: applets/fish/fish.c:621
+#: applets/fish/fish.c:626
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s загас хэлж байна:"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -446,7 +422,7 @@ msgstr ""
 "\n"
 "Дэлгэрэнгүй: %s"
 
-#: applets/fish/fish.c:768
+#: applets/fish/fish.c:773
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -454,7 +430,7 @@ msgid ""
 "Please refer to fish properties dialog."
 msgstr ""
 
-#: applets/fish/fish.c:1372
+#: applets/fish/fish.c:1377
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -462,7 +438,7 @@ msgstr ""
 "Ус сэлгэх хэрэгтэй!\n"
 "(Өнөөдрийн огноог хараач)"
 
-#: applets/fish/fish.c:1432
+#: applets/fish/fish.c:1437
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s Загас, үзмэрч"
@@ -543,7 +519,8 @@ msgid "Frames in fish's animation"
 msgstr "Загасны хөдөлгөөний кадрууд"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Хэрэв үнэн бол загасны хөдөлгөөн босоо самбарт эргэлдэнэ."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -566,7 +543,8 @@ msgstr "Загасны нэр"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Загасан дээр дарахад биелүүлэхийг оролдох тушаалыг энэ түлхүүрээр тогтооно."
+msgstr ""
+"Загасан дээр дарахад биелүүлэхийг оролдох тушаалыг энэ түлхүүрээр тогтооно."
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -601,7 +579,7 @@ msgstr "Сонордуулгын мужийн үйлдвэр"
 msgid "Utility"
 msgstr "Утилит"
 
-#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Самбарын сонордуулга муж"
 
@@ -633,7 +611,7 @@ msgid "Switch between workspaces"
 msgstr "Ажлын талбаруудын хооронд сэлгэгч"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "Цонх самбар"
 
@@ -642,13 +620,13 @@ msgid "Window Navigation Applet Factory"
 msgstr "Цонх жолоодогч апплет үүсгүүр"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
 msgid "Window Selector"
 msgstr "Цонх сонгогч"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:517
-#: applets/wncklet/workspace-switcher.c:926
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "Ажлын талбар сонгуур"
 
@@ -669,21 +647,21 @@ msgstr "%s ачаалагдсангүй: %s\n"
 msgid "File not found"
 msgstr "Файл олдсонгүй"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:455
+#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
 msgstr "Ажлын талбарын товч үзүүлэх"
 
-#: applets/wncklet/showdesktop.c:457
+#: applets/wncklet/showdesktop.c:458
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Энэ товч нь бүх далдлагдсан цонхнуудыг сонгох ба дэлгэцэнд үзүүлнэ "
 
-#: applets/wncklet/showdesktop.c:497
+#: applets/wncklet/showdesktop.c:498
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
@@ -738,7 +716,7 @@ msgstr "Идэвхитэй ажлын талбараас цонхнуудыг ү
 msgid "Show windows from a_ll workspaces"
 msgstr "_Бүх ажлын талбарын цонхнуудыг үзүүлэх"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Хэмжээ"
 
@@ -814,33 +792,34 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Цонхнуудыг бүлэглэх"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:138
 #, fuzzy
-msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Цонх самбар нь бүх харагдаж болох цонхуудыг харуулах болон тэднийг "
 "үзүүлэхийг зөвшөөрүүлнэ."
 
-#: applets/wncklet/window-menu.c:415
+#: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
 msgstr "Тодорхойгүй цонх"
 
-#: applets/wncklet/window-menu.c:618
+#: applets/wncklet/window-menu.c:621
 msgid "No Windows Open"
 msgstr "Нээх цонх алга"
 
-#: applets/wncklet/window-menu.c:706
+#: applets/wncklet/window-menu.c:709
 msgid "Tool to switch between windows"
 msgstr "Цонхнуудын хооронд сэлгэгч хэрэгсэл"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "Мөрүүд"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 msgid "columns"
 msgstr "Баганууд"
 
@@ -851,7 +830,8 @@ msgstr "Ажлын талбар сонгуурийн утгаар num_rows ач�
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Ажлын талбар сонгуурийн утгаар горимуудын нэрсийг үзүүлэхээр ачаалахад алдаа "
 "гарлаа: %s\n"
@@ -863,7 +843,7 @@ msgstr ""
 "Ажлын талбар сонгуурийн утгаар бүх горимуудыг үзүүлэхээр ачаалахад  алдаа "
 "гарлаа: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -968,7 +948,7 @@ msgstr "_Суллах"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Хоосон зай байхгүй"
 
@@ -984,54 +964,6 @@ msgstr "үгүй"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "файл олдсонгүй"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Идэвхижхүйц"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Товч идэвхижхүйц эсэх"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Сумтай"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Сумтай заагч зурах эсэх"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Татаж тавих онцгойлолт"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Чиглэл"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Товчны байршил"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Эмблемийн нэр"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Товчны эмблемийн зохиох"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "Эмблемийн ТТ"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Товчны эмблемийг зохиох"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1061,8 +993,8 @@ msgstr "CDE цэс"
 msgid "Drawer"
 msgstr "Шүүгээ"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Тохиргоо"
 
@@ -1345,7 +1277,8 @@ msgstr "Диск рүү цэсийн элемент хадгалах болом�
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr "Энэ байрлалд бичих боломжгүй учраас энд та шинэ лаунчер үүсгэж чадахгүй"
+msgstr ""
+"Энэ байрлалд бичих боломжгүй учраас энд та шинэ лаунчер үүсгэж чадахгүй"
 
 #: gnome-panel/menu.c:111
 msgid "Log Out"
@@ -1367,7 +1300,7 @@ msgstr "Түгжих"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Түр компьютераасаа холдох бол та дэлгэцээ түгжиж болно"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Хүчээр гарах"
 
@@ -1375,7 +1308,7 @@ msgstr "Хүчээр гарах"
 msgid "Force a misbehaving application to quit"
 msgstr "Дүрсгүйтдэг програмаас гарахыг шаардах"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Агшин дэлгэц"
 
@@ -1415,8 +1348,8 @@ msgid ""
 "small applets within itself."
 msgstr ""
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s'-г гүйцэтгэх боломжгүй"
@@ -1567,8 +1500,8 @@ msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"Компьютерийг унтраах эсвэл өөр хэрэглэгчийн горимоор орох бол энэ суултын "
-"%s-с гар "
+"Компьютерийг унтраах эсвэл өөр хэрэглэгчийн горимоор орох бол энэ суултын %s-"
+"с гар "
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
@@ -1590,54 +1523,38 @@ msgstr "Агшин дэлгэц авах..."
 msgid "Desktop"
 msgstr "Дэлгэц"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "Агшин дэлгэц _идэвхжүүлэх"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Дэлгэц түгжих"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "Агшин дэлгэц хэвтүүлийг _устгах"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Агшин дэлгэц хэвтүүлийг дахин эхлүүлэх"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Дэлгэц түгжих"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "ГНОМЕ-оос гарах"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Програм ажиллуулах"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Файл хайх"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Үйлдлийн төрөл"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Энэ товчний биелүүлэх үйлдлийн төрөл"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Дарж чирэх боломжтой"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Энэ вижетэд дарж чирэх боломжтой эсэх"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1711,7 +1628,8 @@ msgid "Error getting value for '%s': %s"
 msgstr "%s -н утгыг авахад алдаа гарлаа : %s"
 
 #: gnome-panel/panel-force-quit.c:73
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
 #: gnome-panel/panel-force-quit.c:185
@@ -1721,14 +1639,6 @@ msgid ""
 msgstr ""
 "Энэ програмаас хүчээр гарах уу?\n"
 "(Нээлттэй баримтууд устана шүү.)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Зангилаа"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Зурах ёстой зангилаа"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1868,7 +1778,8 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:20
@@ -1924,46 +1835,6 @@ msgstr "Зөвшөөрөгдөөгүй ашиглалтаас өөрийн ко�
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr " %s-н дэлгэцээс гарах"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Цэсийн зам"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Өөрийн эмблем"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Цэсийн эмблемийг тодорхойлох"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Зөвлөгч"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Цэсний хувьд зөвлөгч үзүүлэх"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Цэсийн зам хэрэглэх"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Өөрийн эмблем хэрэглэх"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2263,7 +2134,8 @@ msgid "Couldn't find a suitable application"
 msgstr "Тохирох програм олдсонгүй"
 
 #: gnome-panel/panel-recent.c:82
-msgid "The default application for this type of file cannot handle remote files"
+msgid ""
+"The default application for this type of file cannot handle remote files"
 msgstr "Файлын энэ төрөлд гадаад файлуудын хандаж болохгүй анхдагч програм "
 
 #: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
@@ -2453,134 +2325,6 @@ msgstr "Баруунтаа гүйдэг самбар"
 #: gnome-panel/panel-toplevel.c:1481
 msgid "Right Edge Panel"
 msgstr "Баруун ирмэгийн самбар"
-
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Нэр"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "Энэ самбарын нэр"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Өргөтгөх"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Дэлгэцийг бүрэн дүүргэж задал"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "Самбарын чиглэл"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "Самбарын өндөр (хэрэв босоо бол өргөн)"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "Х байрлал"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "Самбарын Х байрлал"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "Голын Х "
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "Дэлгэцийн төвтэй харьцуулсан Х хуваарь"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Ү байрлал"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "Самбарын Ү байрлал"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Голын Ү"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Дэлгэцийн төвтэй харьцуулсан Ү хуваарь"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama монитор"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "Самбар асаах монитор (Xinerama-н хугацаанд)"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Автоматаар далдлах"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Далдлах хугацаа"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Автоматаар далдлахын өмнө хүлээх миллисекунт"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Үзүүлэх хугацаа"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "Автоматаар ил гаргахын өмнө хүлээх миллисекунт"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Автоматаар нуух хэмжээ"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid "The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Хөдөлгөх"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Далдлах/харуулах хөдөлгөөн идэвхжүүлэх"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Хөдөлгөөний хурд:"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Товчнууд нээгдсэн"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Товчнууд үзүүлэх/далдлах"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Сумнуудтай"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Далдлах/үзүүлэх үед товчин дээр сум харуулах"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2851,12 +2595,12 @@ msgstr "Самбарын Ү-хуваарь"
 msgid "Cannot display help document"
 msgstr "Тусламж баримт үзүүлэх боломжгүй"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "%s URL нээх:"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2864,7 +2608,7 @@ msgstr ""
 "Самбарыг устгавал самбарын тохиргоо хаягдана\n"
 "Энэ самбарыг устгах уу?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Самбар устгах"
 
@@ -2929,7 +2673,8 @@ msgid "Specify an applet IID to load"
 msgstr "Ачаалах IID апплетын нэрийг өгөх"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2937,7 +2682,8 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2979,6 +2725,185 @@ msgstr "Дэндүү том"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Дэндүү жижиг"
+
+#~ msgid "Day"
+#~ msgstr "Өдөр"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr ""
+#~ "Одоогоор дэлгэцэнд харагдаж байгаа өдөр 1 - 31 байна. (0 утгагүйг "
+#~ "тэмдэглэнэ)"
+
+#~ msgid "Month"
+#~ msgstr "Сар"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Одоогоор дэлгэцэнд харагдаж байгаа сарууд 0 - 11"
+
+#~ msgid "Year"
+#~ msgstr "Жил"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Одоогоор дэлгэцэнд харагдаж байгаа жил"
+
+#~ msgid "Activatable"
+#~ msgstr "Идэвхижхүйц"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Товч идэвхижхүйц эсэх"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Сумтай"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Сумтай заагч зурах эсэх"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Татаж тавих онцгойлолт"
+
+#~ msgid "Orientation"
+#~ msgstr "Чиглэл"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Товчны байршил"
+
+#~ msgid "Icon Name"
+#~ msgstr "Эмблемийн нэр"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Товчны эмблемийн зохиох"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Эмблемийн ТТ"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Товчны эмблемийг зохиох"
+
+#~ msgid "Action Type"
+#~ msgstr "Үйлдлийн төрөл"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Энэ товчний биелүүлэх үйлдлийн төрөл"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Дарж чирэх боломжтой"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Энэ вижетэд дарж чирэх боломжтой эсэх"
+
+#~ msgid "Edges"
+#~ msgstr "Зангилаа"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Зурах ёстой зангилаа"
+
+#~ msgid "Menu Path"
+#~ msgstr "Цэсийн зам"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Өөрийн эмблем"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Цэсийн эмблемийг тодорхойлох"
+
+#~ msgid "Tooltip"
+#~ msgstr "Зөвлөгч"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Цэсний хувьд зөвлөгч үзүүлэх"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Цэсийн зам хэрэглэх"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Өөрийн эмблем хэрэглэх"
+
+#~ msgid "Name"
+#~ msgstr "Нэр"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Энэ самбарын нэр"
+
+#~ msgid "Expand"
+#~ msgstr "Өргөтгөх"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Дэлгэцийг бүрэн дүүргэж задал"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "Самбарын чиглэл"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Самбарын өндөр (хэрэв босоо бол өргөн)"
+
+#~ msgid "X position"
+#~ msgstr "Х байрлал"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Самбарын Х байрлал"
+
+#~ msgid "X centered"
+#~ msgstr "Голын Х "
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Дэлгэцийн төвтэй харьцуулсан Х хуваарь"
+
+#~ msgid "Y position"
+#~ msgstr "Ү байрлал"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Самбарын Ү байрлал"
+
+#~ msgid "Y centered"
+#~ msgstr "Голын Ү"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Дэлгэцийн төвтэй харьцуулсан Ү хуваарь"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama монитор"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Самбар асаах монитор (Xinerama-н хугацаанд)"
+
+#~ msgid "Auto hide"
+#~ msgstr "Автоматаар далдлах"
+
+#~ msgid "Hide delay"
+#~ msgstr "Далдлах хугацаа"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Автоматаар далдлахын өмнө хүлээх миллисекунт"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Үзүүлэх хугацаа"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Автоматаар ил гаргахын өмнө хүлээх миллисекунт"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Автоматаар нуух хэмжээ"
+
+#~ msgid "Animate"
+#~ msgstr "Хөдөлгөх"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Далдлах/харуулах хөдөлгөөн идэвхжүүлэх"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Хөдөлгөөний хурд:"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Товчнууд нээгдсэн"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Товчнууд үзүүлэх/далдлах"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Сумнуудтай"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Далдлах/үзүүлэх үед товчин дээр сум харуулах"
 
 #, fuzzy
 #~ msgid "Text"
@@ -3772,4 +3697,3 @@ msgstr "Дэндүү жижиг"
 
 #~ msgid "Show the program listing in the Run box"
 #~ msgstr "Ажиллуулах цонхонд програмын цувааг үзүүлэх"
-

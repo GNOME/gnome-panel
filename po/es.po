@@ -18,14 +18,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel-gnome-2.6\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-07 00:28+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-07 00:28+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
@@ -57,8 +57,8 @@ msgstr "A_cerca de..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "A_yuda"
@@ -90,30 +90,6 @@ msgstr "Fábrica para crear miniaplicaciones de reloj."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Obtener la fecha y hora actual"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Día"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "El día actualmente mostrado entre 1 y 31 (0 denota no establecido)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Mes"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "El mes actualmente mostrado entre 0 y 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "Año"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "El año actualmente mostrado"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -214,7 +190,7 @@ msgstr ""
 "Quizás no hay ninguno instalado."
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -268,7 +244,7 @@ msgid "Use _UTC"
 msgstr "Usar _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -656,7 +632,7 @@ msgstr "Fábrica de áreas de notificación"
 msgid "Utility"
 msgstr "Utilidad"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Área del panel de notificación"
 
@@ -795,7 +771,7 @@ msgstr "M_ostrar las ventanas del área de trabajo actual"
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrar las ventanas de tod_os los áreas de trabajo"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Tamaño"
 
@@ -1039,7 +1015,7 @@ msgstr "De_sbloquear"
 msgid "???"
 msgstr "¿?"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "No se pudo encontrar un espacio vacío"
 
@@ -1055,54 +1031,6 @@ msgstr "ninguno"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "archivo no encontrado"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Activable"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Indica si el botón es activable"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Tiene flecha"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Indica si se debe dibujar o no un indicador de flecha"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Resaltar arrastrar y soltar"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Define si se debe o no resaltar el icono mientras se arrastra y suelta"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Orientación"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "La orientación de ButtonWidget"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Nombre del icono"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "El icono deseado para el ButtonWidget"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "ID del icono de fábrica"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "El icono de almacén deseado para el elemento del botón"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1133,8 +1061,8 @@ msgstr "Menú CDE"
 msgid "Drawer"
 msgstr "Cajón"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Propiedades"
 
@@ -1447,7 +1375,7 @@ msgstr "Bloquear"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Bloquear la pantalla para que pueda dejar temporalmente su computadora"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Forzar el cierre"
 
@@ -1455,7 +1383,7 @@ msgstr "Forzar el cierre"
 msgid "Force a misbehaving application to quit"
 msgstr "Forzar la salida de la aplicación de comportamiento errático"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
@@ -1497,8 +1425,8 @@ msgstr ""
 "Este programa es responsable de lanzar otras aplicaciones e incluir pequeñas "
 "miniaplicaciones dentro de sí mismo."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "No se puede ejecutar «%s»"
@@ -1672,54 +1600,38 @@ msgstr "Capturar la pantalla..."
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Activar el protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "B_loquear la pantalla"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "_Matar el demonio del protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Reiniciar el _demonio del protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Bloquear la pantalla"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Terminar la sesión de GNOME"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Ejecutar un programa"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Buscar archivos"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Tipo de acción"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "El tipo de acción que implementa este botón"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Arrastrar y soltar habilitado"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Indicar si se encuentra o no activado arrastrar y soltar en el widget"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1807,14 +1719,6 @@ msgid ""
 msgstr ""
 "¿Forzar esta aplicación a terminar?\n"
 "(Cualquier documento abierto se perderá.)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Bordes"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Qué bordes dibujar"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2055,46 +1959,6 @@ msgstr "Proteja su computadora del uso no autorizado"
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "Salir del escritorio de %s"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Ruta del menú"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "La ruta a partir de la cual se construye el menú"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Icono personalizado"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "El icono personalizado para el menú"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Sugerencia"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Sugerencia mostrada para el menú"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Usar la ruta de menú"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Usar la ruta especificada por la propiedad de ruta de menú"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Usar icono personalizado"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Usar el icono especificado por la propiedad de icono personalizado"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2634,140 +2498,6 @@ msgstr "Panel flotante derecho"
 msgid "Right Edge Panel"
 msgstr "Panel lateral derecho"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Nombre"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "El nombre de este panel"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Expandir"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Expandir para cubrir la altura y anchura del monitor completo"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "La orientación del panel"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "La altura (o la anchura cuando es vertical) del panel"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "Posición X"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "La posición X del panel"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "Centrado en X"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "La coordenada de x es relativa al centro de la pantalla"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Posición Y"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "La posición de Y del panel"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Centrado en Y"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "La coordenada y es relativa al centro de la pantalla"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Monitor Xinerama "
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "El monitor (en términos de Xinerama ) en el cual está el panel"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Ocultar automáticamente"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Ocultar el panel automáticamente cuando el ratón deja el panel"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Retardo de la ocultación"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
-"La cantidad de milisegundos de retardo antes de ocultarse automáticamente"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Retardo para mostrar"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-"La cantidad de milisegundos de retardo antes de que se muestre "
-"automáticamente"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Tamaño cuando está oculto"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-"El número de píxeles visibles cuando el panel ha sido ocultado "
-"automáticamente"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Animar"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Activar las animaciones al ocultar/mostrar"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Velocidad de la animación"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "La velocidad a la cual animar la ocultación/muestra del panel"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Botones activados"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Activa los botones de ocultación"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Flechas activadas"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Activa las flechas en los botones de ocultación"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Ocultar automáticamente el panel en la esquina"
@@ -3119,12 +2849,12 @@ msgstr "Coordenada Y del panel"
 msgid "Cannot display help document"
 msgstr "No se puede mostrar el documento de ayuda"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3132,7 +2862,7 @@ msgstr ""
 "Cuando se quita un panel, el panel y sus\n"
 "preferencias se pierden. ¿Desea quitar este panel?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Borrar panel"
 
@@ -3254,6 +2984,212 @@ msgstr "Enorme"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Diminuto"
+
+#~ msgid "Day"
+#~ msgstr "Día"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "El día actualmente mostrado entre 1 y 31 (0 denota no establecido)"
+
+#~ msgid "Month"
+#~ msgstr "Mes"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "El mes actualmente mostrado entre 0 y 11"
+
+#~ msgid "Year"
+#~ msgstr "Año"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "El año actualmente mostrado"
+
+#~ msgid "Activatable"
+#~ msgstr "Activable"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Indica si el botón es activable"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Tiene flecha"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Indica si se debe dibujar o no un indicador de flecha"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Resaltar arrastrar y soltar"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr ""
+#~ "Define si se debe o no resaltar el icono mientras se arrastra y suelta"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientación"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "La orientación de ButtonWidget"
+
+#~ msgid "Icon Name"
+#~ msgstr "Nombre del icono"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "El icono deseado para el ButtonWidget"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID del icono de fábrica"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "El icono de almacén deseado para el elemento del botón"
+
+#~ msgid "Action Type"
+#~ msgstr "Tipo de acción"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "El tipo de acción que implementa este botón"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Arrastrar y soltar habilitado"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr ""
+#~ "Indicar si se encuentra o no activado arrastrar y soltar en el widget"
+
+#~ msgid "Edges"
+#~ msgstr "Bordes"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Qué bordes dibujar"
+
+#~ msgid "Menu Path"
+#~ msgstr "Ruta del menú"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "La ruta a partir de la cual se construye el menú"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Icono personalizado"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "El icono personalizado para el menú"
+
+#~ msgid "Tooltip"
+#~ msgstr "Sugerencia"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Sugerencia mostrada para el menú"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Usar la ruta de menú"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Usar la ruta especificada por la propiedad de ruta de menú"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Usar icono personalizado"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Usar el icono especificado por la propiedad de icono personalizado"
+
+#~ msgid "Name"
+#~ msgstr "Nombre"
+
+#~ msgid "The name of this panel"
+#~ msgstr "El nombre de este panel"
+
+#~ msgid "Expand"
+#~ msgstr "Expandir"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Expandir para cubrir la altura y anchura del monitor completo"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "La orientación del panel"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "La altura (o la anchura cuando es vertical) del panel"
+
+#~ msgid "X position"
+#~ msgstr "Posición X"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "La posición X del panel"
+
+#~ msgid "X centered"
+#~ msgstr "Centrado en X"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "La coordenada de x es relativa al centro de la pantalla"
+
+#~ msgid "Y position"
+#~ msgstr "Posición Y"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "La posición de Y del panel"
+
+#~ msgid "Y centered"
+#~ msgstr "Centrado en Y"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "La coordenada y es relativa al centro de la pantalla"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monitor Xinerama "
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "El monitor (en términos de Xinerama ) en el cual está el panel"
+
+#~ msgid "Auto hide"
+#~ msgstr "Ocultar automáticamente"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Ocultar el panel automáticamente cuando el ratón deja el panel"
+
+#~ msgid "Hide delay"
+#~ msgstr "Retardo de la ocultación"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr ""
+#~ "La cantidad de milisegundos de retardo antes de ocultarse automáticamente"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Retardo para mostrar"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr ""
+#~ "La cantidad de milisegundos de retardo antes de que se muestre "
+#~ "automáticamente"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Tamaño cuando está oculto"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "El número de píxeles visibles cuando el panel ha sido ocultado "
+#~ "automáticamente"
+
+#~ msgid "Animate"
+#~ msgstr "Animar"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Activar las animaciones al ocultar/mostrar"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Velocidad de la animación"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "La velocidad a la cual animar la ocultación/muestra del panel"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Botones activados"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Activa los botones de ocultación"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Flechas activadas"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Activa las flechas en los botones de ocultación"
 
 #~ msgid "Text"
 #~ msgstr "Texto"

@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-02-04 16:26+0000\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2003-08-04 18:11+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -64,8 +64,8 @@ msgstr "关于(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -99,31 +99,6 @@ msgstr "创建时钟小程序的车间"
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "获取当前时间和日期"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr ""
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr ""
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr ""
-
-#: applets/clock/calendar-client.c:193
-#, fuzzy
-msgid "Year"
-msgstr "查找"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr ""
 
 # applets/gen_util/clock.c:157
 #: applets/clock/clock.c:271
@@ -233,7 +208,7 @@ msgid ""
 msgstr "找不到用于配置日期和时间的程序。可能没有安装？"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:82
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -295,9 +270,9 @@ msgid "Use _UTC"
 msgstr "使用 _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
-#: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -415,7 +390,7 @@ msgstr "显示一条正在游泳的鱼或其它活动的生物"
 
 # applets/fish/fish.c:290
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:496
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "小鱼"
 
@@ -441,7 +416,7 @@ msgstr ""
 "或有用的事情。"
 
 # applets/fish/fish.c:136 applets/fish/fish.c:427
-#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "小鱼 %s"
@@ -460,31 +435,31 @@ msgstr ""
 "况喔。"
 
 # applets/fish/fish.c:436
-#: applets/fish/fish.c:480
+#: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(还有 George 的小帮助)"
 
 # applets/fish/fish.c:137
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:534
 #, fuzzy, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s GNOME 小鱼，当代祭司"
 
-#: applets/fish/fish.c:576
+#: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
 msgstr "无法得到要执行的命令名"
 
-#: applets/fish/fish.c:593
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "无法找到要执行的命令"
 
 # applets/fish/fish.c:137
-#: applets/fish/fish.c:621
+#: applets/fish/fish.c:626
 #, fuzzy, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s GNOME 小鱼说："
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -495,7 +470,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: applets/fish/fish.c:768
+#: applets/fish/fish.c:773
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -506,7 +481,7 @@ msgstr ""
 "\n"
 "请参见小鱼的属性对话框。"
 
-#: applets/fish/fish.c:1372
+#: applets/fish/fish.c:1377
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -514,7 +489,7 @@ msgstr ""
 "需要给我换水了！\n"
 "(看看今天几号了)"
 
-#: applets/fish/fish.c:1432
+#: applets/fish/fish.c:1437
 #, fuzzy, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "GNOME 小鱼，幸运的宣示者"
@@ -672,7 +647,7 @@ msgstr "通知区域车间"
 msgid "Utility"
 msgstr "工具"
 
-#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "面板通知区域"
 
@@ -707,7 +682,7 @@ msgstr "在工作区间切换"
 
 # help-browser/window.c:180
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "窗口列表"
 
@@ -717,14 +692,14 @@ msgstr "窗口导航小程序车间"
 
 # help-browser/window.c:180
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
 #, fuzzy
 msgid "Window Selector"
 msgstr "窗口列表"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:517
-#: applets/wncklet/workspace-switcher.c:926
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "工作区切换器"
 
@@ -746,21 +721,21 @@ msgid "File not found"
 msgstr "未找到文件"
 
 # panel/panel_config_global.c:446
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:455
+#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
 msgstr "显示桌面按钮"
 
-#: applets/wncklet/showdesktop.c:457
+#: applets/wncklet/showdesktop.c:458
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "这个按钮让您隐藏所有的窗口并显示桌面"
 
-#: applets/wncklet/showdesktop.c:497
+#: applets/wncklet/showdesktop.c:498
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr "您的窗口管理器不支持显示桌面按钮，或者您未运行桌面管理器。"
 
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
@@ -818,7 +793,7 @@ msgstr "显示所有工作区中的窗口(_L)"
 
 # applets/mini-commander/src/preferences.c:487
 # applets/tasklist/tasklist_properties.c:220
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "尺寸"
 
@@ -899,21 +874,21 @@ msgstr "窗口列表请求使用的最小宽度。"
 msgid "When to group windows"
 msgstr "何时对窗口编组"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:138
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
 
-#: applets/wncklet/window-menu.c:415
+#: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
 msgstr "未知窗口"
 
-#: applets/wncklet/window-menu.c:618
+#: applets/wncklet/window-menu.c:621
 msgid "No Windows Open"
 msgstr "没有打开的窗口"
 
-#: applets/wncklet/window-menu.c:706
+#: applets/wncklet/window-menu.c:709
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "在打开的窗口间切换"
@@ -922,14 +897,14 @@ msgstr "在打开的窗口间切换"
 # panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
 # panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "行"
 
 # help-browser/history.c:257
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 msgid "columns"
 msgstr "列"
 
@@ -949,7 +924,7 @@ msgstr "载入工作区切换器的 display_workspace_names 数值时出错：%s
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 display_all_workspaces 数值时出错：%s\n"
 
-#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1061,7 +1036,7 @@ msgid "???"
 msgstr "???"
 
 # panel/menu.c:2069
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
@@ -1078,57 +1053,6 @@ msgstr "无"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "找不到文件"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "绘制箭头"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "是否绘制箭头符号"
-
-#: gnome-panel/button-widget.c:772
-#, fuzzy
-msgid "Drag and drop Highlight"
-msgstr "拖放加亮"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "是否在拖放图标时突出显示"
-
-# panel/panel_config.c:538
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "方向"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "按钮部件的方向"
-
-# gsm/session-properties.c:264
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "图标名称"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "所期望的按钮部件图标"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "库存图标的 ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "按钮部件期望使用的库存图标"
 
 # panel/menu.c:2138 panel/menu.c:2142 panel/menu.c:2233 panel/menu.c:3075
 #: gnome-panel/distribution.c:27
@@ -1167,8 +1091,8 @@ msgid "Drawer"
 msgstr "抽屉"
 
 # applets/fvwm-pager/fvwm-pager.c:412
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "属性(_P)"
 
@@ -1489,7 +1413,7 @@ msgstr "锁定"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "锁住屏幕，以便您暂时离开您的计算机"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "强制退出"
 
@@ -1497,7 +1421,7 @@ msgstr "强制退出"
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "屏幕抓图"
 
@@ -1541,8 +1465,8 @@ msgid ""
 "small applets within itself."
 msgstr "本程序负责启动其它应用程序、向其自身嵌入小程序。"
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "无法执行“%s”"
@@ -1751,61 +1675,43 @@ msgstr "屏幕抓图..."
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "激活屏幕保护程序(_A)"
 
 # panel/menu.c:2591
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "锁住屏幕(_L)"
 
 # gsm/save-session.c:41
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "杀死屏幕保护守护进程(_K)"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "重启屏幕保护守护进程(_S)"
 
 # panel/menu.c:2591
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "锁住屏幕"
 
 # panel/logout.c:53
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "注销 GNOME"
 
 # gsm/logout.c:240
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "运行应用程序"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "搜索文件"
-
-# gsm/logout.c:240
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "动作类型"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "这个按钮实现的操作类型"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-#, fuzzy
-msgid "Drag and drop enabled"
-msgstr "拖放已启用"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "是否启用部件的拖放"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1895,16 +1801,6 @@ msgid ""
 msgstr ""
 "强制退出此应用程序吗？\n"
 "(所有打开的文档都将丢失。)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "边缘"
-
-# applets/gnome-pager/gnomepager_applet.c:353
-# applets/tasklist/tasklist_properties.c:233
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "绘制哪边"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2120,52 +2016,6 @@ msgstr "保护您的计算机免遭未授权的使用"
 #, fuzzy, c-format
 msgid "Quit from %s's desktop"
 msgstr "从 GNOME 桌面退出"
-
-# panel/menu.c:3584
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "菜单路径"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "从此处创建菜单的路径"
-
-# gnome-terminal/gnome-terminal.c:932
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "定制图标"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "菜单的定制图标"
-
-#: gnome-panel/panel-menu-button.c:447
-#, fuzzy
-msgid "Tooltip"
-msgstr "顶部"
-
-#: gnome-panel/panel-menu-button.c:448
-#, fuzzy
-msgid "Tooltip displayed for the menu"
-msgstr "抽屉的工具提示"
-
-# panel/menu.c:3584
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "使用菜单路径"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "使用由菜单路径属性指定的路径"
-
-# gnome-terminal/gnome-terminal.c:932
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "使用定制图标"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "使用由定制图标属性指定的图标"
 
 # gsm/logout.c:240
 #: gnome-panel/panel-object.schemas.in.h:1
@@ -2723,149 +2573,6 @@ msgstr "右方浮动面板"
 msgid "Right Edge Panel"
 msgstr "右方边缘面板"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "名字"
-
-# panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "该面板的名字"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "扩展"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "扩展以占据整个监视器的宽度/高度"
-
-# panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "面板的走向"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "面板的高度(或垂直面板的宽度)"
-
-# panel/panel_config.c:283 panel/panel_config.c:462
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "水平位置"
-
-# help-browser/gnome-help-browser.c:121
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "面板的水平位置"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "水平中心"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "水平坐标相对于屏幕中心"
-
-# panel/panel_config.c:283 panel/panel_config.c:462
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "垂直位置"
-
-# help-browser/gnome-help-browser.c:122
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "窗口的垂直位置"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "垂直中心"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "垂直坐标相对于屏幕中心"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama 监视器"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "面板所在的监视器 (按 Xinerama 的术语)"
-
-# panel/panel_config.c:366 panel/panel_config.c:580
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "自动隐藏"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "当鼠标离开面板时自动隐藏面板"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "隐藏延迟"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "在自动隐藏前延迟的毫秒数"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "取消隐藏延迟"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "在自动取消隐藏前延迟的毫秒数"
-
-# panel/panel_config.c:366 panel/panel_config.c:580
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "自动隐藏尺寸"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "当面板自动隐藏时显示的像素数"
-
-# panel/panel_config_global.c:603
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "动画"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "启动隐藏/显示动画"
-
-# panel/panel_config_global.c:238
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "动画速度"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "面板隐藏/显示动画的速度"
-
-# panel/panel_config.c:376 panel/panel_config.c:590
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "按钮已启用"
-
-# panel/drawer.c:132
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "启用隐藏/显示按钮"
-
-# panel/panel_config_global.c:418
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "箭头已启用"
-
-# applets/gnome-pager/gnomepager_applet.c:324
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "启用隐藏/显示按钮上的箭头"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "将面板自动隐藏到角落"
@@ -3187,12 +2894,12 @@ msgstr "面板的 Y 坐标"
 msgid "Cannot display help document"
 msgstr "无法显示帮助文档"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "打开 URL：%s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3201,7 +2908,7 @@ msgstr ""
 "都会丢失。真要删除该面板？"
 
 # panel/menu.c:2276
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "删除面板"
 
@@ -3323,6 +3030,212 @@ msgstr "极大"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "极小"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "查找"
+
+#~ msgid "Has Arrow"
+#~ msgstr "绘制箭头"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "是否绘制箭头符号"
+
+#, fuzzy
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "拖放加亮"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "是否在拖放图标时突出显示"
+
+# panel/panel_config.c:538
+#~ msgid "Orientation"
+#~ msgstr "方向"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "按钮部件的方向"
+
+# gsm/session-properties.c:264
+#~ msgid "Icon Name"
+#~ msgstr "图标名称"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "所期望的按钮部件图标"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "库存图标的 ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "按钮部件期望使用的库存图标"
+
+# gsm/logout.c:240
+#~ msgid "Action Type"
+#~ msgstr "动作类型"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "这个按钮实现的操作类型"
+
+#, fuzzy
+#~ msgid "Drag and drop enabled"
+#~ msgstr "拖放已启用"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "是否启用部件的拖放"
+
+#~ msgid "Edges"
+#~ msgstr "边缘"
+
+# applets/gnome-pager/gnomepager_applet.c:353
+# applets/tasklist/tasklist_properties.c:233
+#~ msgid "Which edges to draw"
+#~ msgstr "绘制哪边"
+
+# panel/menu.c:3584
+#~ msgid "Menu Path"
+#~ msgstr "菜单路径"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "从此处创建菜单的路径"
+
+# gnome-terminal/gnome-terminal.c:932
+#~ msgid "Custom Icon"
+#~ msgstr "定制图标"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "菜单的定制图标"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "顶部"
+
+#, fuzzy
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "抽屉的工具提示"
+
+# panel/menu.c:3584
+#~ msgid "Use Menu Path"
+#~ msgstr "使用菜单路径"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "使用由菜单路径属性指定的路径"
+
+# gnome-terminal/gnome-terminal.c:932
+#~ msgid "Use Custom Icon"
+#~ msgstr "使用定制图标"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "使用由定制图标属性指定的图标"
+
+#~ msgid "Name"
+#~ msgstr "名字"
+
+# panel/menu.c:2276
+#~ msgid "The name of this panel"
+#~ msgstr "该面板的名字"
+
+#~ msgid "Expand"
+#~ msgstr "扩展"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "扩展以占据整个监视器的宽度/高度"
+
+# panel/menu.c:2276
+#~ msgid "The orientation of the panel"
+#~ msgstr "面板的走向"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "面板的高度(或垂直面板的宽度)"
+
+# panel/panel_config.c:283 panel/panel_config.c:462
+#~ msgid "X position"
+#~ msgstr "水平位置"
+
+# help-browser/gnome-help-browser.c:121
+#~ msgid "The X position of the panel"
+#~ msgstr "面板的水平位置"
+
+#~ msgid "X centered"
+#~ msgstr "水平中心"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "水平坐标相对于屏幕中心"
+
+# panel/panel_config.c:283 panel/panel_config.c:462
+#~ msgid "Y position"
+#~ msgstr "垂直位置"
+
+# help-browser/gnome-help-browser.c:122
+#~ msgid "The Y position of the panel"
+#~ msgstr "窗口的垂直位置"
+
+#~ msgid "Y centered"
+#~ msgstr "垂直中心"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "垂直坐标相对于屏幕中心"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama 监视器"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "面板所在的监视器 (按 Xinerama 的术语)"
+
+# panel/panel_config.c:366 panel/panel_config.c:580
+#~ msgid "Auto hide"
+#~ msgstr "自动隐藏"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "当鼠标离开面板时自动隐藏面板"
+
+#~ msgid "Hide delay"
+#~ msgstr "隐藏延迟"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "在自动隐藏前延迟的毫秒数"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "取消隐藏延迟"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "在自动取消隐藏前延迟的毫秒数"
+
+# panel/panel_config.c:366 panel/panel_config.c:580
+#~ msgid "Auto-hide size"
+#~ msgstr "自动隐藏尺寸"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "当面板自动隐藏时显示的像素数"
+
+# panel/panel_config_global.c:603
+#~ msgid "Animate"
+#~ msgstr "动画"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "启动隐藏/显示动画"
+
+# panel/panel_config_global.c:238
+#~ msgid "Animation Speed"
+#~ msgstr "动画速度"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "面板隐藏/显示动画的速度"
+
+# panel/panel_config.c:376 panel/panel_config.c:590
+#~ msgid "Buttons Enabled"
+#~ msgstr "按钮已启用"
+
+# panel/drawer.c:132
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "启用隐藏/显示按钮"
+
+# panel/panel_config_global.c:418
+#~ msgid "Arrows Enabled"
+#~ msgstr "箭头已启用"
+
+# applets/gnome-pager/gnomepager_applet.c:324
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "启用隐藏/显示按钮上的箭头"
 
 #, fuzzy
 #~ msgid "Background color name"

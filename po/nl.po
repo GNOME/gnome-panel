@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.x\n"
-"POT-Creation-Date: 2004-02-16 00:02+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-16 00:48+0100\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -51,8 +51,8 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Hulp"
@@ -84,31 +84,6 @@ msgstr "Fabriek om klok-applets aan te maken."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Huidige tijd en datum"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Dag"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-"De momenteel geobserveerde dag tussen 1 en 31 (0 betekent niet ingesteld)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Maand"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "De momenteel geobserveerde maand tussen 0 en 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "Jaar"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "Het momenteel geobserveerde jaar"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -263,7 +238,7 @@ msgid "Use _UTC"
 msgstr "_UTC gebruiken"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -344,10 +319,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
-"Deze sleutel geeft aan welke formattering het klok-applet gebruik wanneer "
-"de formatteersleutel is ingsteld op \"custom\". U kunt de conversie-"
-"opstellers gebruiken die de functie strftime() begrijpt om een bepaalde "
-"formattering te verkrijgen."
+"Deze sleutel geeft aan welke formattering het klok-applet gebruik wanneer de "
+"formatteersleutel is ingsteld op \"custom\". U kunt de conversie-opstellers "
+"gebruiken die de functie strftime() begrijpt om een bepaalde formattering te "
+"verkrijgen."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -364,10 +339,10 @@ msgstr ""
 "waarden zijn \"12-hour\", \"24-hour\", \"internet\", \"unix\" en \"custom\". "
 "Als ingesteld op \"internet\", dan geeft de klok internettijd weer. Het "
 "internet-tijdssysteem verdeelt de dag in 1000 \".beats\". Er zijn geen "
-"tijdzones in  dit systeem, dus de tijd is overal ter wereld hetzelfde. "
-"Als ingesteld op \"unix\", dan geeft de klok het aantal seconden weer sinds "
-"Epoch, oftewel 01-01-1970. Als ingesteld op \"custom\", dan geeft de klok "
-"de tijd weer aan de hand van het formaat dat is aangegeven in de sleutel "
+"tijdzones in  dit systeem, dus de tijd is overal ter wereld hetzelfde. Als "
+"ingesteld op \"unix\", dan geeft de klok het aantal seconden weer sinds "
+"Epoch, oftewel 01-01-1970. Als ingesteld op \"custom\", dan geeft de klok de "
+"tijd weer aan de hand van het formaat dat is aangegeven in de sleutel "
 "custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
@@ -651,7 +626,7 @@ msgstr "Fabriek voor mededelingengebieden"
 msgid "Utility"
 msgstr "Hulpmiddel"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:354
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Paneel-mededelingengebied"
 
@@ -791,7 +766,7 @@ msgstr "Vensters van _huidige werkblad tonen"
 msgid "Show windows from a_ll workspaces"
 msgstr "Vensters van a_lle werkbladen tonen"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Afmetingen"
 
@@ -1033,7 +1008,7 @@ msgstr "_Losmaken"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Kan geen lege plaats vinden"
 
@@ -1049,54 +1024,6 @@ msgstr "geen"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "bestand niet gevonden"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Activeerbaar"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Of de knop activeerbaar is"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Heeft pijltje"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Al of niet een pijlindicator tekenen"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Oplichten bij slepen"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Of het pictogram al of niet oplicht tijdens het slepen en neerzetten"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Oriëntatie"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Oriëntatie van het ButtonWidget"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Pictogramnaam"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Het gewenste pictogram voor het ButtonWidget"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "Standaardpictogram-ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Het gewenste standaardpictogram voor het ButtonWidget"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1126,8 +1053,8 @@ msgstr "CDE-menu"
 msgid "Drawer"
 msgstr "Opberglade"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
@@ -1438,7 +1365,7 @@ msgstr "Vergrendelen"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Het scherm vergrendelen zodat u uw computer tijdelijk kunt verlaten"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Afsluiten forceren"
 
@@ -1446,7 +1373,7 @@ msgstr "Afsluiten forceren"
 msgid "Force a misbehaving application to quit"
 msgstr "Een zich misdragende toepassing dwingen tot afsluiten"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Schermafdruk"
 
@@ -1488,8 +1415,8 @@ msgstr ""
 "Dit programma is verantwoordelijk voor het starten van andere toepassingen "
 "en het in zichzelf inbedden van applets."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kan '%s' niet uitvoeren"
@@ -1663,54 +1590,38 @@ msgstr "Schermafdruk maken..."
 msgid "Desktop"
 msgstr "Bureaublad"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Schermbeveiliging inschakelen"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Beeldscherm vergrendelen"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "Schermbeveiliging-_daemon stoppen"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Schermbeveiliging-daemon _herstarten"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Beeldscherm vergrendelen"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Afmelden van GNOME"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Toepassing uitvoeren"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Zoeken naar bestanden"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Soort actie"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Het type actie dat deze knop implementeert"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Slepen en neerzetten ingeschakeld"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Of slepen en neerzetten al dan niet is ingeschakeld voor dit element"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1800,15 +1711,6 @@ msgid ""
 msgstr ""
 "Deze toepassing dwingen om af te sluiten?\n"
 "(Eventueel geopende documenten zullen verloren gaan.)"
-
-# Evt. 'kaders' of 'begrenzingen'? Wat is de context?
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Randen"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Welke randen te tekenen"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1986,8 +1888,7 @@ msgstr ""
 #: gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, panel-specific keybindings are enabled."
 msgstr ""
-"Als waar, dan zijn paneelspecifieke toetsenbord-snelkoppelingen "
-"ingeschakeld."
+"Als waar, dan zijn paneelspecifieke toetsenbord-snelkoppelingen ingeschakeld."
 
 #: gnome-panel/panel-global.schemas.in.h:21
 msgid ""
@@ -2004,8 +1905,8 @@ msgid ""
 "access to the lock screen menu entries."
 msgstr ""
 "Als waar, dan staat het paneel een gebruiker niet toe om het scherm te "
-"vergrendelen, door geen toegang te geven tot de schermvergrendelings-"
-"menu-items."
+"vergrendelen, door geen toegang te geven tot de schermvergrendelings-menu-"
+"items."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
@@ -2049,46 +1950,6 @@ msgstr "Uw computer tegen ongeautoriseerd gebruik beschermen"
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "Werkblad van %s verlaten"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Menu-pad"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "Het pad waarvandaan het menu te construeren"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Aangepast pictogram"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Het aangepaste pictogram voor het menu"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Zwevende tip"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Weer te geven zwevende tip voor het menu"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Menu-pad gebruiken"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Het pad gebruiken gespecificeerd in de menu-path-eigenschap"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Aangepast pictogram gebruiken"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Het pictogram gebruiken gespecificeerd in de custom-icon-eigenschap"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2634,138 +2495,6 @@ msgstr "Rechts zwevend paneel"
 msgid "Right Edge Panel"
 msgstr "Rechterrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Naam"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "De naam van dit paneel"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Uitschuiven"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Uitschuiven zodat de hele monitorbreedte/-hoogte gebruikt wordt"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "De oriëntatie van dit paneel"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "De hoogte (of breedte als verticaal) van het paneel"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "X-positie"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "De X-positie van het paneel"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "X-gecentreerd"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "Het x-coördinaat is relatief aan het schermmidden"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Y-positie"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "De Y-positie van het paneel"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Y-gecentreerd"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Het y-coördinaat is relatief aan het schermmidden"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama-monitor"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "De monitor (in Xinerama-termen) waarop het paneel zich bevindt"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Automatisch verbergen"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Het paneel automatisch verbergen wanneer de muis het paneel verlaat"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Verbergvertraging"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Het aantal milliseconden vertraging voor automatisch verbergen"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Vertraging tot weer zichtbaar maken"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-"Het aantal te wachten milliseconden voor automatisch weer zichtbaar maken"
-
-# Waar staat dit voor?
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Automatisch verbergen-grootte"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-"Het aantal zichtbare pixels wanneer het paneel automatisch verborgen is"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Animeren"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Verbergen/tonen van animaties inschakelen"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Animatiesnelheid"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "De snelheid waarmee paneel verborgen/getoond wordt"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Knoppen ingeschakeld"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Verbergen/tonen-knoppen inschakelen"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Pijltjes ingeschakeld"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Pijltjes op verbergen/tonen-knoppen inschakelen"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Paneel automatisch in de hoek verbergen"
@@ -3115,12 +2844,12 @@ msgstr "Y-coördinaat van het paneel"
 msgid "Cannot display help document"
 msgstr "Niet in staat het hulpdocument weer te geven"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3128,7 +2857,7 @@ msgstr ""
 "Wanneer een paneel verwijderd wordt, gaan alle\n"
 "instellingen hiervan verloren. Paneel toch verwijderen?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Paneel verwijderen"
 
@@ -3249,6 +2978,212 @@ msgstr "Gigantisch"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Miniem"
+
+#~ msgid "Day"
+#~ msgstr "Dag"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr ""
+#~ "De momenteel geobserveerde dag tussen 1 en 31 (0 betekent niet ingesteld)"
+
+#~ msgid "Month"
+#~ msgstr "Maand"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "De momenteel geobserveerde maand tussen 0 en 11"
+
+#~ msgid "Year"
+#~ msgstr "Jaar"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Het momenteel geobserveerde jaar"
+
+#~ msgid "Activatable"
+#~ msgstr "Activeerbaar"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Of de knop activeerbaar is"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Heeft pijltje"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Al of niet een pijlindicator tekenen"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Oplichten bij slepen"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr ""
+#~ "Of het pictogram al of niet oplicht tijdens het slepen en neerzetten"
+
+#~ msgid "Orientation"
+#~ msgstr "Oriëntatie"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Oriëntatie van het ButtonWidget"
+
+#~ msgid "Icon Name"
+#~ msgstr "Pictogramnaam"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Het gewenste pictogram voor het ButtonWidget"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Standaardpictogram-ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Het gewenste standaardpictogram voor het ButtonWidget"
+
+#~ msgid "Action Type"
+#~ msgstr "Soort actie"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Het type actie dat deze knop implementeert"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Slepen en neerzetten ingeschakeld"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr ""
+#~ "Of slepen en neerzetten al dan niet is ingeschakeld voor dit element"
+
+# Evt. 'kaders' of 'begrenzingen'? Wat is de context?
+#~ msgid "Edges"
+#~ msgstr "Randen"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Welke randen te tekenen"
+
+#~ msgid "Menu Path"
+#~ msgstr "Menu-pad"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Het pad waarvandaan het menu te construeren"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Aangepast pictogram"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Het aangepaste pictogram voor het menu"
+
+#~ msgid "Tooltip"
+#~ msgstr "Zwevende tip"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Weer te geven zwevende tip voor het menu"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Menu-pad gebruiken"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Het pad gebruiken gespecificeerd in de menu-path-eigenschap"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Aangepast pictogram gebruiken"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Het pictogram gebruiken gespecificeerd in de custom-icon-eigenschap"
+
+#~ msgid "Name"
+#~ msgstr "Naam"
+
+#~ msgid "The name of this panel"
+#~ msgstr "De naam van dit paneel"
+
+#~ msgid "Expand"
+#~ msgstr "Uitschuiven"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Uitschuiven zodat de hele monitorbreedte/-hoogte gebruikt wordt"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "De oriëntatie van dit paneel"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "De hoogte (of breedte als verticaal) van het paneel"
+
+#~ msgid "X position"
+#~ msgstr "X-positie"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "De X-positie van het paneel"
+
+#~ msgid "X centered"
+#~ msgstr "X-gecentreerd"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Het x-coördinaat is relatief aan het schermmidden"
+
+#~ msgid "Y position"
+#~ msgstr "Y-positie"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "De Y-positie van het paneel"
+
+#~ msgid "Y centered"
+#~ msgstr "Y-gecentreerd"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Het y-coördinaat is relatief aan het schermmidden"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama-monitor"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "De monitor (in Xinerama-termen) waarop het paneel zich bevindt"
+
+#~ msgid "Auto hide"
+#~ msgstr "Automatisch verbergen"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Het paneel automatisch verbergen wanneer de muis het paneel verlaat"
+
+#~ msgid "Hide delay"
+#~ msgstr "Verbergvertraging"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Het aantal milliseconden vertraging voor automatisch verbergen"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Vertraging tot weer zichtbaar maken"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr ""
+#~ "Het aantal te wachten milliseconden voor automatisch weer zichtbaar maken"
+
+# Waar staat dit voor?
+#~ msgid "Auto-hide size"
+#~ msgstr "Automatisch verbergen-grootte"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "Het aantal zichtbare pixels wanneer het paneel automatisch verborgen is"
+
+#~ msgid "Animate"
+#~ msgstr "Animeren"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Verbergen/tonen van animaties inschakelen"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Animatiesnelheid"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "De snelheid waarmee paneel verborgen/getoond wordt"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Knoppen ingeschakeld"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Verbergen/tonen-knoppen inschakelen"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Pijltjes ingeschakeld"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Pijltjes op verbergen/tonen-knoppen inschakelen"
 
 #~ msgid "Text"
 #~ msgstr "Tekst"

@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-02-04 16:26+0000\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2002-06-11 12:13+0200\n"
 "Last-Translator: Jesús Bravo Álvarez <suso@trasno.net>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -49,8 +49,8 @@ msgstr "_Acerca..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "A_xuda"
@@ -84,31 +84,6 @@ msgstr "fábrica para crear diversas applets xerais"
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Obter a hora e data actuais"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr ""
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr ""
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr ""
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr ""
-
-#: applets/clock/calendar-client.c:194
-#, fuzzy
-msgid "The currently monitored year"
-msgstr "Pantalla actual:"
 
 #: applets/clock/clock.c:271
 #, fuzzy
@@ -213,7 +188,7 @@ msgid ""
 msgstr ""
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:82
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -274,9 +249,9 @@ msgid "Use _UTC"
 msgstr "Usar _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
-#: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -393,7 +368,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Mostrar un peixe nadando ou algunha outra criatura animada"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:496
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Peixe"
 
@@ -418,7 +393,7 @@ msgstr ""
 "O uso de Wanda para algo que faga a applet \"práctica\" ou útil\n"
 "está totalmente desaconsellado."
 
-#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "O peixe %s"
@@ -436,29 +411,29 @@ msgstr ""
 "memoria. Se alguén for atopado usando esta applet, deberíaselle facer un "
 "exame psiquiátrico."
 
-#: applets/fish/fish.c:480
+#: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(cunha pequena axuda do George)"
 
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:534
 #, fuzzy, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s o peixe de GNOME, un oráculo contemporáneo"
 
-#: applets/fish/fish.c:576
+#: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
 msgstr ""
 
-#: applets/fish/fish.c:593
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr ""
 
-#: applets/fish/fish.c:621
+#: applets/fish/fish.c:626
 #, fuzzy, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s, o peixe de GNOME"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:752
 #, fuzzy, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -469,7 +444,7 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: applets/fish/fish.c:768
+#: applets/fish/fish.c:773
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -480,7 +455,7 @@ msgstr ""
 "\n"
 "Pode usar o diálogo de propiedades do peixe."
 
-#: applets/fish/fish.c:1372
+#: applets/fish/fish.c:1377
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -488,7 +463,7 @@ msgstr ""
 "¡A auga quere cambiada!\n"
 "(Mire a data de hoxe)"
 
-#: applets/fish/fish.c:1432
+#: applets/fish/fish.c:1437
 #, fuzzy, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "O peixe de GNOME, o narrador de fortunes"
@@ -643,7 +618,7 @@ msgstr ""
 msgid "Utility"
 msgstr "Utilidade"
 
-#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr ""
 
@@ -677,7 +652,7 @@ msgid "Switch between workspaces"
 msgstr "Seleccionar os distintos escritorios"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "Lista de fiestras"
 
@@ -687,14 +662,14 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fábrica da applet GenUtil"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
 #, fuzzy
 msgid "Window Selector"
 msgstr "Lista de fiestras"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:517
-#: applets/wncklet/workspace-switcher.c:926
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "Selector de escritorio"
 
@@ -719,22 +694,22 @@ msgstr ""
 msgid "File not found"
 msgstr "Documento de axuda non atopado"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:455
+#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 #, fuzzy
 msgid "Show Desktop Button"
 msgstr "Mostrar os botóns de agochamento"
 
-#: applets/wncklet/showdesktop.c:457
+#: applets/wncklet/showdesktop.c:458
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:497
+#: applets/wncklet/showdesktop.c:498
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "A lista de fiestras permite examinar a lista das fiestras visibles."
@@ -792,7 +767,7 @@ msgstr "Mostrar as fiestras do escritorio a_ctual"
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostras as fiestras de _tódolos escritorios"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 #, fuzzy
 msgid "Size"
 msgstr "Tamaño:"
@@ -880,35 +855,35 @@ msgstr "Tamaño mínimo que solicitará a applet de lista de tarefas"
 msgid "When to group windows"
 msgstr "Cando agrupar fiestras"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:138
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "A lista de fiestras permite examinar a lista das fiestras visibles."
 
-#: applets/wncklet/window-menu.c:415
+#: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
 msgstr ""
 
-#: applets/wncklet/window-menu.c:618
+#: applets/wncklet/window-menu.c:621
 #, fuzzy
 msgid "No Windows Open"
 msgstr "Non hai fiestras abertas"
 
-#: applets/wncklet/window-menu.c:706
+#: applets/wncklet/window-menu.c:709
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Seleccionar as distintas fiestras abertas"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #: applets/wncklet/workspace-switcher.glade.h:11
 #, fuzzy
 msgid "rows"
 msgstr "Examinar"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #, fuzzy
 msgid "columns"
 msgstr "Columnas"
@@ -935,7 +910,7 @@ msgstr ""
 "Erro ao cargar o valor de display_all_workspaces para a applet de selección "
 "de escritorio: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1058,7 +1033,7 @@ msgstr "Reloxo"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Non se atopa un sitio baleiro"
 
@@ -1078,59 +1053,6 @@ msgstr ""
 #, fuzzy
 msgid "file not found"
 msgstr "Documento de axuda non atopado"
-
-#: gnome-panel/button-widget.c:754
-#, fuzzy
-msgid "Activatable"
-msgstr "Deshabilitado"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr ""
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr ""
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr ""
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-#, fuzzy
-msgid "Orientation"
-msgstr "Orientación:"
-
-#: gnome-panel/button-widget.c:782
-#, fuzzy
-msgid "The ButtonWidget orientation"
-msgstr "A applet contén a orientación do panel"
-
-#: gnome-panel/button-widget.c:791
-#, fuzzy
-msgid "Icon Name"
-msgstr "Icona"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr ""
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr ""
-
-#: gnome-panel/button-widget.c:801
-#, fuzzy
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Usar icona personalizada para o botón no panel"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1163,8 +1085,8 @@ msgstr "Menús de CDE"
 msgid "Drawer"
 msgstr "Caixón"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 #, fuzzy
 msgid "_Properties"
 msgstr "Propiedades"
@@ -1501,7 +1423,7 @@ msgstr "Reloxo"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Bloquear a pantalla para poder abandonar temporalmente o ordenador"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr ""
 
@@ -1509,7 +1431,7 @@ msgstr ""
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
@@ -1555,8 +1477,8 @@ msgstr ""
 "Este programa é responsable de lanzar outras aplicacións, embeber pequenas "
 "applets, a paz no mundo e erros aleatorios en X."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, fuzzy, c-format
 msgid "Cannot execute '%s'"
 msgstr "Non se pode executar o gnome-panel-screenshot"
@@ -1757,61 +1679,44 @@ msgstr "Facer unha captura de pantalla..."
 msgid "Desktop"
 msgstr "Escritorio"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 #, fuzzy
 msgid "_Activate Screensaver"
 msgstr "Activar o protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 #, fuzzy
 msgid "_Lock Screen"
 msgstr "Bloquear pantalla"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 #, fuzzy
 msgid "_Kill Screensaver Daemon"
 msgstr "Matar o daemon do protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 #, fuzzy
 msgid "Restart _Screensaver Daemon"
 msgstr "Reiniciar o daemon do protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Bloquear a pantalla"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Saír de GNOME"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 #, fuzzy
 msgid "Run Application"
 msgstr "Aplicación"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 #, fuzzy
 msgid "Search for Files"
 msgstr "Procurar ficheiros..."
-
-#: gnome-panel/panel-action-button.c:439
-#, fuzzy
-msgid "Action Type"
-msgstr "Accións"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr ""
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr ""
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1897,14 +1802,6 @@ msgstr ""
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
-msgstr ""
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr ""
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:1
@@ -2117,50 +2014,6 @@ msgstr "Protexer o ordenador dun uso non autorizado"
 #, fuzzy, c-format
 msgid "Quit from %s's desktop"
 msgstr "Saír do escritorio GNOME"
-
-#: gnome-panel/panel-menu-button.c:429
-#, fuzzy
-msgid "Menu Path"
-msgstr "Camiño do menú"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:439
-#, fuzzy
-msgid "The custom icon for the menu"
-msgstr "Usar icona personalizada para o botón no panel"
-
-#: gnome-panel/panel-menu-button.c:447
-#, fuzzy
-msgid "Tooltip"
-msgstr "Tooltip/Nome"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:456
-#, fuzzy
-msgid "Use Menu Path"
-msgstr "Camiño do menú"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
 #, fuzzy
@@ -2702,149 +2555,6 @@ msgstr "Panel flotante"
 msgid "Right Edge Panel"
 msgstr "Panel lateral"
 
-#: gnome-panel/panel-toplevel.c:3587
-#, fuzzy
-msgid "Name"
-msgstr "Icona"
-
-#: gnome-panel/panel-toplevel.c:3588
-#, fuzzy
-msgid "The name of this panel"
-msgstr "Modo deste panel"
-
-#: gnome-panel/panel-toplevel.c:3597
-#, fuzzy
-msgid "Expand"
-msgstr "Tamaño do expansor"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3608
-#, fuzzy
-msgid "The orientation of the panel"
-msgstr "Estado actual deste panel"
-
-#: gnome-panel/panel-toplevel.c:3619
-#, fuzzy
-msgid "The height (or width when vertical) of the panel"
-msgstr "Estado actual deste panel"
-
-#: gnome-panel/panel-toplevel.c:3631
-#, fuzzy
-msgid "X position"
-msgstr "Posición do panel"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3653
-#, fuzzy
-msgid "Y position"
-msgstr "Posición do panel"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3687
-#, fuzzy
-msgid "Auto hide"
-msgstr "Activar agochamento automático"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3721
-#, fuzzy
-msgid "Auto-hide size"
-msgstr "Activar agochamento automático"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3733
-#, fuzzy
-msgid "Animate"
-msgstr "Animación"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3743
-#, fuzzy
-msgid "Animation Speed"
-msgstr "_Velocidade da animación:"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3754
-#, fuzzy
-msgid "Buttons Enabled"
-msgstr "Botóns de agochamento habilitados"
-
-#: gnome-panel/panel-toplevel.c:3755
-#, fuzzy
-msgid "Enable hide/show buttons"
-msgstr "Mostrar os botóns de agochamento"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3765
-#, fuzzy
-msgid "Enable arrows on hide/show buttons"
-msgstr "Mostrar frechas nos botóns de agochamento"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr ""
@@ -3132,12 +2842,12 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -3146,7 +2856,7 @@ msgstr ""
 "Cando se elimina un panel, a súa configuración\n"
 "e a das applets pérdese. ¿Quere eliminalo?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 #, fuzzy
 msgid "Delete Panel"
 msgstr "Eliminar este panel"
@@ -3265,6 +2975,106 @@ msgstr "Xigante"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Minúsculo"
+
+#, fuzzy
+#~ msgid "The currently monitored year"
+#~ msgstr "Pantalla actual:"
+
+#, fuzzy
+#~ msgid "Activatable"
+#~ msgstr "Deshabilitado"
+
+#, fuzzy
+#~ msgid "Orientation"
+#~ msgstr "Orientación:"
+
+#, fuzzy
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "A applet contén a orientación do panel"
+
+#, fuzzy
+#~ msgid "Icon Name"
+#~ msgstr "Icona"
+
+#, fuzzy
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Usar icona personalizada para o botón no panel"
+
+#, fuzzy
+#~ msgid "Action Type"
+#~ msgstr "Accións"
+
+#, fuzzy
+#~ msgid "Menu Path"
+#~ msgstr "Camiño do menú"
+
+#, fuzzy
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Usar icona personalizada para o botón no panel"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "Tooltip/Nome"
+
+#, fuzzy
+#~ msgid "Use Menu Path"
+#~ msgstr "Camiño do menú"
+
+#, fuzzy
+#~ msgid "Name"
+#~ msgstr "Icona"
+
+#, fuzzy
+#~ msgid "The name of this panel"
+#~ msgstr "Modo deste panel"
+
+#, fuzzy
+#~ msgid "Expand"
+#~ msgstr "Tamaño do expansor"
+
+#, fuzzy
+#~ msgid "The orientation of the panel"
+#~ msgstr "Estado actual deste panel"
+
+#, fuzzy
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Estado actual deste panel"
+
+#, fuzzy
+#~ msgid "X position"
+#~ msgstr "Posición do panel"
+
+#, fuzzy
+#~ msgid "Y position"
+#~ msgstr "Posición do panel"
+
+#, fuzzy
+#~ msgid "Auto hide"
+#~ msgstr "Activar agochamento automático"
+
+#, fuzzy
+#~ msgid "Auto-hide size"
+#~ msgstr "Activar agochamento automático"
+
+#, fuzzy
+#~ msgid "Animate"
+#~ msgstr "Animación"
+
+#, fuzzy
+#~ msgid "Animation Speed"
+#~ msgstr "_Velocidade da animación:"
+
+#, fuzzy
+#~ msgid "Buttons Enabled"
+#~ msgstr "Botóns de agochamento habilitados"
+
+#, fuzzy
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Mostrar os botóns de agochamento"
+
+#, fuzzy
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Mostrar frechas nos botóns de agochamento"
 
 #, fuzzy
 #~ msgid "Text"

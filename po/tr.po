@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.tr\n"
-"POT-Creation-Date: 2004-02-04 16:26+0000\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2003-12-31 00:28+0000\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -45,8 +45,8 @@ msgstr "_Hakkında..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Yardım"
@@ -80,33 +80,6 @@ msgstr "Genel applet üretme fabrikası"
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Güncel zamanı ve tarihi al"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr ""
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-
-#: applets/clock/calendar-client.c:185
-#, fuzzy
-msgid "Month"
-msgstr "Yazıtipi:"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr ""
-
-#: applets/clock/calendar-client.c:193
-#, fuzzy
-msgid "Year"
-msgstr "Ara"
-
-#: applets/clock/calendar-client.c:194
-#, fuzzy
-msgid "The currently monitored year"
-msgstr "Şuanki ekran:"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -207,7 +180,7 @@ msgid ""
 msgstr ""
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:82
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -263,9 +236,9 @@ msgid "Use _UTC"
 msgstr "_UTC kullan"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
-#: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr "Görkem Çetin"
@@ -376,7 +349,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Yüzen Balıkları veya Diğer Hayvanları Göster"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:496
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Balık"
 
@@ -401,7 +374,7 @@ msgstr ""
 "Takıyı \"pratik\" veya kullanışlı yapmak için\n"
 "%s programını kullanmamanızı tavsiye ederiz."
 
-#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s Balığı"
@@ -418,29 +391,29 @@ msgstr ""
 "panel alanınızı azaltır . Eğer birisi bu takının çok faydalı olduğunu "
 "söylüyorsa, onu hemen bir ruh doktoruna gönderin."
 
-#: applets/fish/fish.c:480
+#: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(George'un naçizane yardımlarıyla)"
 
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:534
 #, fuzzy, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s Gnome Balığı"
 
-#: applets/fish/fish.c:576
+#: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
 msgstr "Çalıştırılacak komut bulunamıyor"
 
-#: applets/fish/fish.c:593
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "Çalıştırılacak komutun konumuna ulaşılamıyor"
 
-#: applets/fish/fish.c:621
+#: applets/fish/fish.c:626
 #, fuzzy, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s Gnome Balığı Diyorki:"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -451,7 +424,7 @@ msgstr ""
 "\n"
 "Ayrıntılar: %s"
 
-#: applets/fish/fish.c:768
+#: applets/fish/fish.c:773
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -462,7 +435,7 @@ msgstr ""
 "\n"
 "Lütfen balık özellikleri diyaloğuna bakın."
 
-#: applets/fish/fish.c:1372
+#: applets/fish/fish.c:1377
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -470,7 +443,7 @@ msgstr ""
 "Suyunun değiştirilmesi lazım!\n"
 "(Bugün ayın kaçı?)"
 
-#: applets/fish/fish.c:1432
+#: applets/fish/fish.c:1437
 #, fuzzy, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "GNOME Fish"
@@ -612,7 +585,7 @@ msgstr "Uyarı alanı fabrikası"
 msgid "Utility"
 msgstr "Yardımcı"
 
-#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Panle uyarı alanı"
 
@@ -645,7 +618,7 @@ msgid "Switch between workspaces"
 msgstr "Çalışma alanları arasında geçiş yap"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "Pencere Listesi"
 
@@ -654,14 +627,14 @@ msgid "Window Navigation Applet Factory"
 msgstr "Pencere dolaşımı programcıkları fabrikası"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
 #, fuzzy
 msgid "Window Selector"
 msgstr "Renk seçici"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:517
-#: applets/wncklet/workspace-switcher.c:926
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "Çalışma Alanı Geçişi"
 
@@ -683,21 +656,21 @@ msgstr "%s: %s yüklenirken hata oluştu\n"
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:455
+#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
 msgstr "Masaüstü butonunu göster"
 
-#: applets/wncklet/showdesktop.c:457
+#: applets/wncklet/showdesktop.c:458
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Bu buton bütün pencereleri küçültüp masaüstünü görmenizi sağlar"
 
-#: applets/wncklet/showdesktop.c:497
+#: applets/wncklet/showdesktop.c:498
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
 
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
@@ -753,7 +726,7 @@ msgstr "Mevcut kullanım alanındaki pencereleri göster"
 msgid "Show windows from a_ll workspaces"
 msgstr "_Bütün kullanım alanındaki pencereleri göster"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Boyut"
 
@@ -839,7 +812,7 @@ msgstr "Pencere Listesinin isteklerinin en küçük boyutu."
 msgid "When to group windows"
 msgstr "Pencereleri gruplayınca"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:138
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
@@ -847,27 +820,27 @@ msgstr ""
 "Pencere listesi, açık olan bütün pencereleri göstererek bunların arasında "
 "dolaşmanızı sağlar."
 
-#: applets/wncklet/window-menu.c:415
+#: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
 msgstr "Bilinmeyen Pencere"
 
-#: applets/wncklet/window-menu.c:618
+#: applets/wncklet/window-menu.c:621
 msgid "No Windows Open"
 msgstr "Açık pencereler yok"
 
-#: applets/wncklet/window-menu.c:706
+#: applets/wncklet/window-menu.c:709
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Açık pencereler arasında geçiş yap"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "satır"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 msgid "columns"
 msgstr "sütun"
 
@@ -893,7 +866,7 @@ msgstr ""
 "Çalışma alanı değiştiricideki bütün çalışma alanlarını göster değeri "
 "yüklenirken hata oluştur :%s \n"
 
-#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1007,7 +980,7 @@ msgstr "_Kilidi aç"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Boş bir nokta bulunamadı"
 
@@ -1023,55 +996,6 @@ msgstr "yok"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "dosya bulunamadı"
-
-#: gnome-panel/button-widget.c:754
-#, fuzzy
-msgid "Activatable"
-msgstr "Düzenle"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Oku var"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Ok işaretleyicisi çizip çimemek için"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr ""
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Konumlandırma"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Düğme parçacığı yönelmesi"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Simge ismi"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Tanımlanmış Düğme parçacığı ikonu"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "Stok ikonu ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Tanımlanmış Düğme parçacığı için stok ikonu"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1101,8 +1025,8 @@ msgstr "CDE menüleri"
 msgid "Drawer"
 msgstr "Sürgü"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Özellikler"
 
@@ -1424,7 +1348,7 @@ msgstr "Kilit"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Bilgisayar başından geçici bir süre ayrılmak için ekranı kilitleyin"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr ""
 
@@ -1432,7 +1356,7 @@ msgstr ""
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Ekran Görüntüsü"
 
@@ -1476,8 +1400,8 @@ msgstr ""
 "Bu uygulama başka uygulamaları başlatmaktan, küçük takıları içine gömmekten, "
 "dünya barışı ve ani X çökmelerinden suçlu bulunmuştur."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, fuzzy, c-format
 msgid "Cannot execute '%s'"
 msgstr "xscreensaver çalıştırılamıyor"
@@ -1665,55 +1589,38 @@ msgstr "Masaüstü Görüntüsü Al..."
 msgid "Desktop"
 msgstr "Masaüstü"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "Ekran _Koruyucuyu Etkinleştir"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "Ekranı _Kilitle"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "Ekran Koruyucuyusu servisini _Öldür"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Ekran Koruyucuyusu servisini _Yeniden Başlat"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Ekranı kilitle"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "GNOME'dan çık"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Uygulama Çalıştır"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Dosyalar için Ara"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Eylem türü"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Bu düğmenin gerkeçekleştirceği eylem"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr ""
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-#, fuzzy
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Ok işaretleyicisi çizip çimemek için"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1803,14 +1710,6 @@ msgstr ""
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
-msgstr ""
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr ""
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:1
@@ -2018,47 +1917,6 @@ msgstr "Bilgisayarı yetkisiz kişilerin kullanımına kapat"
 #, fuzzy, c-format
 msgid "Quit from %s's desktop"
 msgstr "GNOME masaüstünden çık"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Menü Yolu"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Özel Simge"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Menü için özel simge"
-
-#: gnome-panel/panel-menu-button.c:447
-#, fuzzy
-msgid "Tooltip"
-msgstr "Balon Yardımı/İsmi"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Menü Yolu"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr ""
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Özel Simge Kullan"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2571,142 +2429,6 @@ msgstr "Sağ Yüzen Panel"
 msgid "Right Edge Panel"
 msgstr "Sağ Kenar Paneli"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "İsim"
-
-#: gnome-panel/panel-toplevel.c:3588
-#, fuzzy
-msgid "The name of this panel"
-msgstr "Bu panelin kipi"
-
-#: gnome-panel/panel-toplevel.c:3597
-#, fuzzy
-msgid "Expand"
-msgstr "Büyültücü boyutu"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3608
-#, fuzzy
-msgid "The orientation of the panel"
-msgstr "Bu panelin şuanki durumu"
-
-#: gnome-panel/panel-toplevel.c:3619
-#, fuzzy
-msgid "The height (or width when vertical) of the panel"
-msgstr "Bu panelin şuanki durumu"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "X konumu"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Y konumu"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Otomatik gizle"
-
-#: gnome-panel/panel-toplevel.c:3688
-#, fuzzy
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "İmleç üzerindeyken paneli yükselt"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Gizlenme gecikmesi"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Canlandırma"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Canlandırma Hızı"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Tuşlar Etkin"
-
-#: gnome-panel/panel-toplevel.c:3755
-#, fuzzy
-msgid "Enable hide/show buttons"
-msgstr "Gizle düğmesini etkinleştir"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3765
-#, fuzzy
-msgid "Enable arrows on hide/show buttons"
-msgstr "Gizli düğmelerde _oklar"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 #, fuzzy
 msgid "Automatically hide panel into corner"
@@ -2985,12 +2707,12 @@ msgstr ""
 "\n"
 "Ayrıntılar: %s"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL Aç: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2998,7 +2720,7 @@ msgstr ""
 "Bir panel silinince, panel ve ayarları kaybolacaktır.\n"
 " Bu panel silinsin mi?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Paneli Sil"
 
@@ -3115,6 +2837,127 @@ msgstr "Kocaman"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Minicik"
+
+#, fuzzy
+#~ msgid "Month"
+#~ msgstr "Yazıtipi:"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Ara"
+
+#, fuzzy
+#~ msgid "The currently monitored year"
+#~ msgstr "Şuanki ekran:"
+
+#, fuzzy
+#~ msgid "Activatable"
+#~ msgstr "Düzenle"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Oku var"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Ok işaretleyicisi çizip çimemek için"
+
+#~ msgid "Orientation"
+#~ msgstr "Konumlandırma"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Düğme parçacığı yönelmesi"
+
+#~ msgid "Icon Name"
+#~ msgstr "Simge ismi"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Tanımlanmış Düğme parçacığı ikonu"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Stok ikonu ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Tanımlanmış Düğme parçacığı için stok ikonu"
+
+#~ msgid "Action Type"
+#~ msgstr "Eylem türü"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Bu düğmenin gerkeçekleştirceği eylem"
+
+#, fuzzy
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Ok işaretleyicisi çizip çimemek için"
+
+#~ msgid "Menu Path"
+#~ msgstr "Menü Yolu"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Özel Simge"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Menü için özel simge"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "Balon Yardımı/İsmi"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Menü Yolu"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Özel Simge Kullan"
+
+#~ msgid "Name"
+#~ msgstr "İsim"
+
+#, fuzzy
+#~ msgid "The name of this panel"
+#~ msgstr "Bu panelin kipi"
+
+#, fuzzy
+#~ msgid "Expand"
+#~ msgstr "Büyültücü boyutu"
+
+#, fuzzy
+#~ msgid "The orientation of the panel"
+#~ msgstr "Bu panelin şuanki durumu"
+
+#, fuzzy
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Bu panelin şuanki durumu"
+
+#~ msgid "X position"
+#~ msgstr "X konumu"
+
+#~ msgid "Y position"
+#~ msgstr "Y konumu"
+
+#~ msgid "Auto hide"
+#~ msgstr "Otomatik gizle"
+
+#, fuzzy
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "İmleç üzerindeyken paneli yükselt"
+
+#~ msgid "Hide delay"
+#~ msgstr "Gizlenme gecikmesi"
+
+#~ msgid "Animate"
+#~ msgstr "Canlandırma"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Canlandırma Hızı"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Tuşlar Etkin"
+
+#, fuzzy
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Gizle düğmesini etkinleştir"
+
+#, fuzzy
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Gizli düğmelerde _oklar"
 
 #, fuzzy
 #~ msgid "Text"

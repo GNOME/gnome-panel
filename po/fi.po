@@ -9,8 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-10 22:49+0200\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-11 00:46+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
@@ -18,6 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -60,8 +60,8 @@ msgstr "_Tietoja..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Ohje"
@@ -104,30 +104,6 @@ msgstr "Tehdas kellosovelmien tuottamiseen."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Hae nykyinen aika ja päiväys"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Päivä"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "Nyt näkyvä päivä, väliltä 1-31 (0 merkitsee asettamatonta)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Kuukausi"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "Nyt näkyvä kuukausi, väliltä 0-11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "Vuosi"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "Nyt näkyvä vuosi"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 #: applets/clock/clock.c:271
@@ -243,7 +219,7 @@ msgstr ""
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -310,7 +286,7 @@ msgstr "Näytä _UTC-aikaa"
 # applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 # gnome-panel/menu.c:242
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -726,7 +702,7 @@ msgstr "Ilmoitusaluetehdas"
 msgid "Utility"
 msgstr "Työkalut"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Paneelin ilmoitusalue"
 
@@ -828,7 +804,8 @@ msgstr "Ikkunointiohjelma ei tue työpöytäpainiketta tai se ei ole käynnissä
 # applets/gen_util/tasklist.c:715
 #: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr "Ikkunaluettelolla voi selata kaikkia ikkunoita, jotka näkyvät listassa."
+msgstr ""
+"Ikkunaluettelolla voi selata kaikkia ikkunoita, jotka näkyvät listassa."
 
 # applets/gen_util/tasklist.glade.h:8
 #: applets/wncklet/window-list.glade.h:2
@@ -890,7 +867,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Näytä k_aikkien työtilojen ikkunat"
 
 # libpanel-applet/panel-test-applets.glade.h:9
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Koko"
 
@@ -987,7 +964,8 @@ msgstr "Milloin ikkunat ryhmittyvät"
 #: applets/wncklet/window-menu.c:138
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
-msgstr "Ikkunavalitsimella voi selata kaikkia ikkunoita, jotka näkyvät listassa."
+msgstr ""
+"Ikkunavalitsimella voi selata kaikkia ikkunoita, jotka näkyvät listassa."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -1174,7 +1152,7 @@ msgid "???"
 msgstr "???"
 
 # gnome-panel/applet.c:1123
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Tyhjää paikkaa ei löydy"
 
@@ -1193,57 +1171,6 @@ msgstr "ei mikään"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "tiedostoa ei löydy"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Aktivoitavissa"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Onko painike aktivoitavissa"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Nuoli on"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Näkyykö nuoli-ilmaisin"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Hiirellä veto ja pudotus -korostus"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Korostuuko kuvake hiirellä vedon aikana"
-
-# libpanel-applet/panel-test-applets.glade.h:6
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Suunta"
-
-# libpanel-applet/panel-applet.c:956
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "ButtonWidgetin suunta"
-
-# gnome-panel/drawer.c:150
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Kuvakenimi"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Haluttu ButtonWidgetin kuvake"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "Oletuskuvake-ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Haluttu ButtonWidgetin oletuskuvake"
 
 # gnome-panel/distribution.c:26
 #: gnome-panel/distribution.c:27
@@ -1281,8 +1208,8 @@ msgid "Drawer"
 msgstr "Vetolaatikko"
 
 # gnome-panel/menu.c:3351
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Ominaisuudet"
 
@@ -1643,7 +1570,7 @@ msgstr "Lukitse"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Lukitse näyttö, jotta voit poistua tietokoneesi äärestä hetkeksi"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Sulje väkisin"
 
@@ -1652,7 +1579,7 @@ msgid "Force a misbehaving application to quit"
 msgstr "Pakota väärin toimiva sovellus sulkeutumaan"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Kuvakaappaus"
 
@@ -1702,8 +1629,8 @@ msgstr ""
 "sovelmien nielaisemisesta."
 
 # gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3534
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Suorittaminen ei onnistunut: %s"
@@ -1922,63 +1849,46 @@ msgid "Desktop"
 msgstr "Työpöytä"
 
 # gnome-panel/logout.c:211
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Käynnistä näytönsäästäjä"
 
 # gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
 # gnome-panel/menu.c:3447
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Lukitse näyttö"
 
 # gnome-panel/logout.c:213
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "Sulje _näytönsäästäjädemoni"
 
 # gnome-panel/logout.c:214
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Käynnistä näytönsäästäjädemoni _uudelleen"
 
 # gnome-panel/logout.c:151 gnome-panel/logout.c:170
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Lukitse näyttö"
 
 # gnome-panel/logout.c:103
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Kirjaudu ulos"
 
 # gnome-panel/menu.c:1392
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Suorita sovellus"
 
 # gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3680
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Etsi tiedostoja"
-
-# gnome-panel/foobar-widget.c:224
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Toimintotyyppi"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Tämän painikkeen toteuttaman toiminnon tyyppi"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Hiirellä veto käytössä"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Onko hiirellä veto säätimelle käytössä"
 
 # gnome-panel/panel-applet-frame.c:607
 #: gnome-panel/panel-applet-frame.c:745
@@ -2071,14 +1981,6 @@ msgid ""
 msgstr ""
 "Suljetaanko tämä sovellus väkisin?\n"
 "(Tallentamattomat tiedot häviävät.)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Reunat"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Mitkä reunat piirtyvät"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2325,49 +2227,6 @@ msgstr "Estä tietokoneesi luvatonta käyttöä"
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "Poistu käyttäjän %s Gnome-ympäristöstä"
-
-# gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Valikkopolku"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "Polku, josta valikko rakentuu"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Mukautettu kuvake"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Mukautettu kuvake valikolle"
-
-# libpanel-applet/panel-test-applets.glade.h:11
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Vinkki"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Valikon kohdan vinkki"
-
-# gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Käytä valikkopolkua"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Käytä \"menu-path\"-ominaisuuden määrittelemää polkua"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Käytä mukautettua kuvaketta"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Käytä \"custom-icon\"-ominaisuuden määrittelemää kuvaketta"
 
 # gnome-panel/foobar-widget.c:224
 #: gnome-panel/panel-object.schemas.in.h:1
@@ -2944,149 +2803,6 @@ msgstr "Irrallinen oikea paneeli"
 msgid "Right Edge Panel"
 msgstr "Oikea reunapaneeli"
 
-# gnome-panel/drawer.c:150
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Nimi"
-
-# gnome-panel/basep-widget.c:155
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "Tämän paneelin nimi"
-
-# gnome-panel/disclosure-widget.c:260
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Laajenna"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Laajenna viemään koko näytön leveyden tai korkeuden"
-
-# gnome-panel/basep-widget.c:163
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "Tämän paneelin asento"
-
-# gnome-panel/basep-widget.c:163
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "Tämän paneelin korkeus (tai leveys kun pystyssä)"
-
-# gnome-panel/panel-config.c:726
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "X-sijainti"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "Paneelin x-sijainti"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "X-keskitetty"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "X-koordinaatti suhteessa näytön keskipisteeseen"
-
-# gnome-panel/panel-config.c:726
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Y-sijainti"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "Paneelin y-sijainti"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Y-keskitetty"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Y-koordinaatti suhteessa näytön keskipisteeseen"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama-näyttö"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "Näyttö (Xinerama-mielessä), jolla paneeli on"
-
-# gnome-panel/panel-config.c:545
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Itsestään piilotus"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Piilota paneeli itsestään kun hiiri ei ole sen päällä"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Piilotusviive"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Aika millisekunteina ennen itsensä piilottamista"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Ilmestymisviive"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "Aika millisekunteina ennen itsensä näyttämistä"
-
-# gnome-panel/panel-config.c:545
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Koko piiloutuneena"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-"Näkyvissä olevien kuvapisteiden määrä, kun paneeli on piilottanut itsensä"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Animaatiot"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Näytä piilotus- ja ilmestymisanimaatiot"
-
-# gnome-panel/gnome-panel-preferences.glade.h:6
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Animaationopeus"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "Nopeus, jolla paneelin piilotus- ja ilmestymisanimaatiot näkyvät"
-
-# gnome-panel/basep-widget.c:171
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Painikkeet käytössä"
-
-# gnome-panel/drawer.c:166
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Näytä piilotuspainikkeet"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Nuolet käytössä"
-
-# gnome-panel/panel-config.c:567
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Näytä piilotuspainikkeiden nuolet"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Piilota paneeli itsestään nurkkaan"
@@ -3436,13 +3152,13 @@ msgid "Cannot display help document"
 msgstr "Ohjetta ei voi näyttää"
 
 # gnome-panel/panel.c:881
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Avaa URL: %s"
 
 # gnome-panel/menu.c:2964
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3452,7 +3168,7 @@ msgstr ""
 "Haluatko poistaa tämän paneelin?"
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Poista paneeli"
 
@@ -3592,3 +3308,223 @@ msgstr "Erikoissuuri"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Erikoispieni"
+
+#~ msgid "Day"
+#~ msgstr "Päivä"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "Nyt näkyvä päivä, väliltä 1-31 (0 merkitsee asettamatonta)"
+
+#~ msgid "Month"
+#~ msgstr "Kuukausi"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Nyt näkyvä kuukausi, väliltä 0-11"
+
+#~ msgid "Year"
+#~ msgstr "Vuosi"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Nyt näkyvä vuosi"
+
+#~ msgid "Activatable"
+#~ msgstr "Aktivoitavissa"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Onko painike aktivoitavissa"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Nuoli on"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Näkyykö nuoli-ilmaisin"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Hiirellä veto ja pudotus -korostus"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "Korostuuko kuvake hiirellä vedon aikana"
+
+# libpanel-applet/panel-test-applets.glade.h:6
+#~ msgid "Orientation"
+#~ msgstr "Suunta"
+
+# libpanel-applet/panel-applet.c:956
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "ButtonWidgetin suunta"
+
+# gnome-panel/drawer.c:150
+#~ msgid "Icon Name"
+#~ msgstr "Kuvakenimi"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Haluttu ButtonWidgetin kuvake"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "Oletuskuvake-ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Haluttu ButtonWidgetin oletuskuvake"
+
+# gnome-panel/foobar-widget.c:224
+#~ msgid "Action Type"
+#~ msgstr "Toimintotyyppi"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Tämän painikkeen toteuttaman toiminnon tyyppi"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Hiirellä veto käytössä"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Onko hiirellä veto säätimelle käytössä"
+
+#~ msgid "Edges"
+#~ msgstr "Reunat"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Mitkä reunat piirtyvät"
+
+# gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
+#~ msgid "Menu Path"
+#~ msgstr "Valikkopolku"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Polku, josta valikko rakentuu"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Mukautettu kuvake"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Mukautettu kuvake valikolle"
+
+# libpanel-applet/panel-test-applets.glade.h:11
+#~ msgid "Tooltip"
+#~ msgstr "Vinkki"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Valikon kohdan vinkki"
+
+# gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
+#~ msgid "Use Menu Path"
+#~ msgstr "Käytä valikkopolkua"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Käytä \"menu-path\"-ominaisuuden määrittelemää polkua"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Käytä mukautettua kuvaketta"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Käytä \"custom-icon\"-ominaisuuden määrittelemää kuvaketta"
+
+# gnome-panel/drawer.c:150
+#~ msgid "Name"
+#~ msgstr "Nimi"
+
+# gnome-panel/basep-widget.c:155
+#~ msgid "The name of this panel"
+#~ msgstr "Tämän paneelin nimi"
+
+# gnome-panel/disclosure-widget.c:260
+#~ msgid "Expand"
+#~ msgstr "Laajenna"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Laajenna viemään koko näytön leveyden tai korkeuden"
+
+# gnome-panel/basep-widget.c:163
+#~ msgid "The orientation of the panel"
+#~ msgstr "Tämän paneelin asento"
+
+# gnome-panel/basep-widget.c:163
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Tämän paneelin korkeus (tai leveys kun pystyssä)"
+
+# gnome-panel/panel-config.c:726
+#~ msgid "X position"
+#~ msgstr "X-sijainti"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Paneelin x-sijainti"
+
+#~ msgid "X centered"
+#~ msgstr "X-keskitetty"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "X-koordinaatti suhteessa näytön keskipisteeseen"
+
+# gnome-panel/panel-config.c:726
+#~ msgid "Y position"
+#~ msgstr "Y-sijainti"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Paneelin y-sijainti"
+
+#~ msgid "Y centered"
+#~ msgstr "Y-keskitetty"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Y-koordinaatti suhteessa näytön keskipisteeseen"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama-näyttö"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Näyttö (Xinerama-mielessä), jolla paneeli on"
+
+# gnome-panel/panel-config.c:545
+#~ msgid "Auto hide"
+#~ msgstr "Itsestään piilotus"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Piilota paneeli itsestään kun hiiri ei ole sen päällä"
+
+#~ msgid "Hide delay"
+#~ msgstr "Piilotusviive"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Aika millisekunteina ennen itsensä piilottamista"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Ilmestymisviive"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Aika millisekunteina ennen itsensä näyttämistä"
+
+# gnome-panel/panel-config.c:545
+#~ msgid "Auto-hide size"
+#~ msgstr "Koko piiloutuneena"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr ""
+#~ "Näkyvissä olevien kuvapisteiden määrä, kun paneeli on piilottanut itsensä"
+
+#~ msgid "Animate"
+#~ msgstr "Animaatiot"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Näytä piilotus- ja ilmestymisanimaatiot"
+
+# gnome-panel/gnome-panel-preferences.glade.h:6
+#~ msgid "Animation Speed"
+#~ msgstr "Animaationopeus"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Nopeus, jolla paneelin piilotus- ja ilmestymisanimaatiot näkyvät"
+
+# gnome-panel/basep-widget.c:171
+#~ msgid "Buttons Enabled"
+#~ msgstr "Painikkeet käytössä"
+
+# gnome-panel/drawer.c:166
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Näytä piilotuspainikkeet"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Nuolet käytössä"
+
+# gnome-panel/panel-config.c:567
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Näytä piilotuspainikkeiden nuolet"

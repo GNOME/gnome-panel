@@ -8,14 +8,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-12 02:55+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-12 02:56+0100\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -46,8 +46,8 @@ msgstr "_О програму..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Помоћ"
@@ -79,30 +79,6 @@ msgstr "Производња програмчета за часовник."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Сазнај тренутно време и датум"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "Дан"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "Тренутно праћен дан између 1 и 31 (0 означава непостављено)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "Месец"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "Тренутно праћен месец између 0 и 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "Година"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "Тренутно праћена година"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -203,7 +179,7 @@ msgstr ""
 "није инсталиран?"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -257,7 +233,7 @@ msgid "Use _UTC"
 msgstr "Користи _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -627,7 +603,7 @@ msgstr "Фабрика за Обавештајну зону"
 msgid "Utility"
 msgstr "Алат"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Обавештајна зона панела"
 
@@ -764,7 +740,7 @@ msgstr "Прикажи прозоре са _текуће радне површи
 msgid "Show windows from a_ll workspaces"
 msgstr "Прикажи прозоре са _свих радних површина"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Величина"
 
@@ -1001,7 +977,7 @@ msgstr "Од_вежи"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Не може да нађе празно место"
 
@@ -1017,55 +993,6 @@ msgstr "ниједан"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "датотека није нађена"
-
-# bug: SUCKS, crap to translate
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "Притискиво"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "Да ли се дугме може притиснути"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Има стрелицу"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Да ли да прикаже стрелицу"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "Истицање за превлачење и пуштање"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Да ли се икона истиче приликом превлачења и пуштања"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Оријентација"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Оријентација дугмића"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Име иконице"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Жељена иконица за дугмиће"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "ID испоручене иконице"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Жељена иконица за дугмиће"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1095,8 +1022,8 @@ msgstr "CDE мени"
 msgid "Drawer"
 msgstr "Фиока"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Поставке"
 
@@ -1404,7 +1331,7 @@ msgstr "Закључај"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Закључај екран како би могли да се привремено удаљите од рачунара"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Приморај затварање"
 
@@ -1412,7 +1339,7 @@ msgstr "Приморај затварање"
 msgid "Force a misbehaving application to quit"
 msgstr "Приморај недолични програм на затварање"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Снимак екрана"
 
@@ -1454,8 +1381,8 @@ msgstr ""
 "Овај програм је задужен за покретање других програма и уметање малих "
 "програмчета у њих саме."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Не може да покрене „%s“"
@@ -1632,54 +1559,38 @@ msgid "Desktop"
 msgstr "Радна површина"
 
 # Zar nije dobar prevod, a?
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Покрени чување екрана"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Закључај екран"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "_Угаси сервис за чување екрана"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Изнова покрени сервис за _чување екрана"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Закључај екран"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Напуштање Гнома"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Покрени програм"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Потражи датотеке"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Врста акције"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Врста акције коју ово дугме изводи"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "Укључено превлачење и пуштање"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Да ли је омогућено превлачење и пуштање на елемент"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1766,14 +1677,6 @@ msgid ""
 msgstr ""
 "Окончајте овај програм?\n"
 "(Сви отворени документи ће бити изгубљени.)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Ивице"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Које ивице да исцрта"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2008,46 +1911,6 @@ msgstr "Заштитите ваш рачунар од неовлашћене у�
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "%s: напустите окружење"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Путања менија"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "Путања од које направити мени"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Икона по избору"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Икона по избору за мени"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "Облачић"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "Приказује се облачић за мени"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Користи путању менија"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Користи путању садржану у особини menu-path"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Користи икону по избору"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Користи икону наведену помоћу особине custom-icon"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2579,135 +2442,6 @@ msgstr "Плутајући панел десно"
 msgid "Right Edge Panel"
 msgstr "Ивични панел десно"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Име"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "Име овог панела"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Рашири"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Рашири тако да заузме пуну ширину/висину екрана"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "Усмерење овог панела"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "Висина (или ширина када је усправан) панела"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "Водоравна позиција"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "Водоравна позиција панела"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "Водоравно центриран"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "Водоравна координата је дата у односу на средиште екрана"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Усправна позиција"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "Усправна позиција панела"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Усправно центриран"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Усправна координата је дата у односу на средиште екрана"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Ксинерама екран"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "Екран (како је назван у Ксинерами) на ком је панел"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Самоскривање"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Када миш напусти панел, сам га сакриј"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Време скривања"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Колико милисекунди се чека пре него што се сакрије"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Време откривања"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "Колико милисекунди се чека пре него што се открије"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Величина за самоскривање"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "Колико тачака се види када је панел самоскривен"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Анимирај"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Укључи анимацију при скривању/откривању"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Брзина анимације"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "Брзина којом се анимира сакривање/откривање панела"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Омогућени дугмићи"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Омогући дугмиће за скривање/откривање"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Стрелице укључене"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Прикажи стрелице на дугмићима за скривање и откривање"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Аутоматски сакриј панел у ћошак"
@@ -3046,12 +2780,12 @@ msgstr "Усправна координата панела"
 msgid "Cannot display help document"
 msgstr "Не може да прикаже помоћ"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Отвори URL: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3059,7 +2793,7 @@ msgstr ""
 "Када се панел уклони, панел и његове поставке се \n"
 "неповратно губе. Сигурно желите да уклоните панел?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Уклони панел"
 
@@ -3177,6 +2911,206 @@ msgstr "Гигантски"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Патуљасти"
+
+#~ msgid "Day"
+#~ msgstr "Дан"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "Тренутно праћен дан између 1 и 31 (0 означава непостављено)"
+
+#~ msgid "Month"
+#~ msgstr "Месец"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "Тренутно праћен месец између 0 и 11"
+
+#~ msgid "Year"
+#~ msgstr "Година"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "Тренутно праћена година"
+
+# bug: SUCKS, crap to translate
+#~ msgid "Activatable"
+#~ msgstr "Притискиво"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "Да ли се дугме може притиснути"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Има стрелицу"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Да ли да прикаже стрелицу"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Истицање за превлачење и пуштање"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "Да ли се икона истиче приликом превлачења и пуштања"
+
+#~ msgid "Orientation"
+#~ msgstr "Оријентација"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Оријентација дугмића"
+
+#~ msgid "Icon Name"
+#~ msgstr "Име иконице"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Жељена иконица за дугмиће"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID испоручене иконице"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Жељена иконица за дугмиће"
+
+#~ msgid "Action Type"
+#~ msgstr "Врста акције"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Врста акције коју ово дугме изводи"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Укључено превлачење и пуштање"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Да ли је омогућено превлачење и пуштање на елемент"
+
+#~ msgid "Edges"
+#~ msgstr "Ивице"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Које ивице да исцрта"
+
+#~ msgid "Menu Path"
+#~ msgstr "Путања менија"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Путања од које направити мени"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Икона по избору"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Икона по избору за мени"
+
+#~ msgid "Tooltip"
+#~ msgstr "Облачић"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Приказује се облачић за мени"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Користи путању менија"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Користи путању садржану у особини menu-path"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Користи икону по избору"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Користи икону наведену помоћу особине custom-icon"
+
+#~ msgid "Name"
+#~ msgstr "Име"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Име овог панела"
+
+#~ msgid "Expand"
+#~ msgstr "Рашири"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Рашири тако да заузме пуну ширину/висину екрана"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "Усмерење овог панела"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Висина (или ширина када је усправан) панела"
+
+#~ msgid "X position"
+#~ msgstr "Водоравна позиција"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Водоравна позиција панела"
+
+#~ msgid "X centered"
+#~ msgstr "Водоравно центриран"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Водоравна координата је дата у односу на средиште екрана"
+
+#~ msgid "Y position"
+#~ msgstr "Усправна позиција"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Усправна позиција панела"
+
+#~ msgid "Y centered"
+#~ msgstr "Усправно центриран"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Усправна координата је дата у односу на средиште екрана"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Ксинерама екран"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Екран (како је назван у Ксинерами) на ком је панел"
+
+#~ msgid "Auto hide"
+#~ msgstr "Самоскривање"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Када миш напусти панел, сам га сакриј"
+
+#~ msgid "Hide delay"
+#~ msgstr "Време скривања"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Колико милисекунди се чека пре него што се сакрије"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Време откривања"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Колико милисекунди се чека пре него што се открије"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Величина за самоскривање"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "Колико тачака се види када је панел самоскривен"
+
+#~ msgid "Animate"
+#~ msgstr "Анимирај"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Укључи анимацију при скривању/откривању"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Брзина анимације"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Брзина којом се анимира сакривање/откривање панела"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Омогућени дугмићи"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Омогући дугмиће за скривање/откривање"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Стрелице укључене"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Прикажи стрелице на дугмићима за скривање и откривање"
 
 #~ msgid "Text"
 #~ msgstr "Текст"

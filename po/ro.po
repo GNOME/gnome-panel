@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.90\n"
-"POT-Creation-Date: 2004-02-04 16:26+0000\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2003-10-05 16:35+0300\n"
 "Last-Translator: Mişu Moldovan <dumol@go.ro>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
@@ -45,8 +45,8 @@ msgstr "_Despre..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Ajutor"
@@ -78,31 +78,6 @@ msgstr "Fabrică pentru crearea apleturilor ceas"
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "Obţine timpul şi data curentă"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr ""
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr ""
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr ""
-
-#: applets/clock/calendar-client.c:193
-#, fuzzy
-msgid "Year"
-msgstr "Caută"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr ""
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -204,7 +179,7 @@ msgstr ""
 "timpului. Poate nu este niciunul instalat?"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:82
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -260,9 +235,9 @@ msgid "Use _UTC"
 msgstr "Utilizează _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
-#: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -376,7 +351,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Arată un peşte ce înoată sau altă creatură animată"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:496
+#: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Peşte"
 
@@ -401,7 +376,7 @@ msgstr ""
 "Vă sfătuim insistent să nu încercaţi utilizarea %s pentru orice\n"
 "scop ce ar putea face acest progrămel practic sau util."
 
-#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
+#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Peştele %s"
@@ -419,29 +394,29 @@ msgstr ""
 "memorie. Dacă cineva este prins folosind acest progrămel, ar trebui trimis"
 "(ă) de urgenţă pentru o evaluare psihologică completă."
 
-#: applets/fish/fish.c:480
+#: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(cu puţin ajutor de la George)"
 
-#: applets/fish/fish.c:529
+#: applets/fish/fish.c:534
 #, fuzzy, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "Peştele GNOME %s, un oracol contemporan"
 
-#: applets/fish/fish.c:576
+#: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
 msgstr "Nu pot obţine numele comenzii de executat"
 
-#: applets/fish/fish.c:593
+#: applets/fish/fish.c:598
 msgid "Unable to locate the command to execute"
 msgstr "Nu pot localiza comanda de executat"
 
-#: applets/fish/fish.c:621
+#: applets/fish/fish.c:626
 #, fuzzy, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Peştele GNOME %s spune:"
 
-#: applets/fish/fish.c:747
+#: applets/fish/fish.c:752
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -452,7 +427,7 @@ msgstr ""
 "\n"
 "Detalii: %s"
 
-#: applets/fish/fish.c:768
+#: applets/fish/fish.c:773
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -463,7 +438,7 @@ msgstr ""
 "\n"
 "Vă rog să consultaţi dialogul de proprietăţi al peştelui."
 
-#: applets/fish/fish.c:1372
+#: applets/fish/fish.c:1377
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -471,7 +446,7 @@ msgstr ""
 "Apa trebuie schimbată!\n"
 "(Ia uitaţi-vă ce data e azi..)"
 
-#: applets/fish/fish.c:1432
+#: applets/fish/fish.c:1437
 #, fuzzy, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Peştele GNOME, povestitorul de zicători"
@@ -618,7 +593,7 @@ msgstr "Fabrica zonei de notificare"
 msgid "Utility"
 msgstr "Utilitare"
 
-#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Zonă de notificare în panou"
 
@@ -650,7 +625,7 @@ msgid "Switch between workspaces"
 msgstr "Schimbă ecranul activ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "Listă ferestre"
 
@@ -659,14 +634,14 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fabrica progrămelelor de navigare ferestre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
 #, fuzzy
 msgid "Window Selector"
 msgstr "Listă ferestre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:517
-#: applets/wncklet/workspace-switcher.c:926
+#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "Schimbător ecrane"
 
@@ -687,16 +662,16 @@ msgstr "Nu am reuşit să încarc imaginea %s: %s\n"
 msgid "File not found"
 msgstr "Fişierul nu a fost găsit"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:455
+#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
 msgstr "Arată butonul „Desktop“"
 
-#: applets/wncklet/showdesktop.c:457
+#: applets/wncklet/showdesktop.c:458
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Acest buton vă permite să ascundeţi toate ferestrele şi să arătaţi desktopul"
 
-#: applets/wncklet/showdesktop.c:497
+#: applets/wncklet/showdesktop.c:498
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -704,7 +679,7 @@ msgstr ""
 "Administratorul de ferestre curent nu suportă butonul „Desktop“ sau nici un "
 "administrator de ferestre nu e pornit."
 
-#: applets/wncklet/window-list.c:821
+#: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
@@ -759,7 +734,7 @@ msgstr "Arată _doar ferestrele din ecranul curent"
 msgid "Show windows from a_ll workspaces"
 msgstr "Arată _ferestrele din toate ecranele"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "Mărime"
 
@@ -838,7 +813,7 @@ msgstr "Această cheie specifică lăţimea minimă cerută de lista ferestrelor
 msgid "When to group windows"
 msgstr "Când sunt ferestrele grupate"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:138
 #, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
@@ -846,27 +821,27 @@ msgstr ""
 "Progrămelul „Listă ferestre“ arată o listă cu toate ferestrele vizibile şi "
 "vă permite să schimbaţi fereastra activă."
 
-#: applets/wncklet/window-menu.c:415
+#: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
 msgstr "Fereastră necunoscută"
 
-#: applets/wncklet/window-menu.c:618
+#: applets/wncklet/window-menu.c:621
 msgid "No Windows Open"
 msgstr "Nici o fereastră deschisă"
 
-#: applets/wncklet/window-menu.c:706
+#: applets/wncklet/window-menu.c:709
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Schimbă fereastra activă"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "rânduri"
 
 #: applets/wncklet/workspace-switcher.c:147
-#: applets/wncklet/workspace-switcher.c:830
+#: applets/wncklet/workspace-switcher.c:832
 msgid "columns"
 msgstr "coloane"
 
@@ -892,7 +867,7 @@ msgstr ""
 "Eroare la încărcarea valorii „display_all_workspace“ pentru schimbătorul "
 "spaţiilor de lucru: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:519
+#: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1000,7 +975,7 @@ msgstr "De_blochează"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "Nu am putut găsi un loc liber"
 
@@ -1016,55 +991,6 @@ msgstr "nimic"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "fişierul nu a fost găsit"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "Are săgeată"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "Dacă să arate sau nu o săgeată indicatoare"
-
-#: gnome-panel/button-widget.c:772
-#, fuzzy
-msgid "Drag and drop Highlight"
-msgstr "Evidenţiere DnD"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "Dacă să evidenţieze sau nu iconiţa la tragere şi plasare cu mouse-ul"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "Orientare"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "Orientarea „ButtonWidget“-ului"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "Nume iconiţă"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "Iconiţa dorită pentru „ButtonWidget“"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "ID iconiţă standard"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "Iconiţa standard dorită pentru „ButtonWidget“"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1094,8 +1020,8 @@ msgstr "Meniu CDE"
 msgid "Drawer"
 msgstr "Sertar"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Proprietăţi"
 
@@ -1403,7 +1329,7 @@ msgstr "Blochează"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Blochează ecranul astfel încât să puteţi părăsi temporar calculatorul"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "Forţează închiderea"
 
@@ -1411,7 +1337,7 @@ msgstr "Forţează închiderea"
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Capturează ecranul"
 
@@ -1453,8 +1379,8 @@ msgstr ""
 "Acest program este responsabil pentru lansarea altor aplicaţii şi înglobarea "
 "de progrămele utile."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nu pot porni „%s“"
@@ -1628,55 +1554,38 @@ msgstr "Captură de ecran..."
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "_Activează protecţia ecranului"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_Blochează ecranul"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "_Omoară daemonul xscreensaver"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "Reporneşte daemonul _xscreensaver"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "Blochează ecranul"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Ieşire din GNOME"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Porneşte o aplicaţie"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "Caută fişiere"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "Tip acţiune"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "Tipul acţiunii implementate de acest buton"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-#, fuzzy
-msgid "Drag and drop enabled"
-msgstr "Activare „tragere şi plasare“"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Dacă să activez sau nu tragerea şi plasarea în widget"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1767,14 +1676,6 @@ msgid ""
 msgstr ""
 "Forţaţi închiderea aplicaţiei?\n"
 "(Toate documentele deschise vor fi pierdute.)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "Margini"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "Care margini să fie afişate"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1995,48 +1896,6 @@ msgstr "Protejaţi-vă calculatorul de utilizatori neautorizaţi"
 #, fuzzy, c-format
 msgid "Quit from %s's desktop"
 msgstr "Ieşiţi din desktopul GNOME"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "Cale meniu"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "Calea din care se construieşte meniul"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "Iconiţă personalizată"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "Iconiţă personalizată pentru meniu"
-
-#: gnome-panel/panel-menu-button.c:447
-#, fuzzy
-msgid "Tooltip"
-msgstr "Sus"
-
-#: gnome-panel/panel-menu-button.c:448
-#, fuzzy
-msgid "Tooltip displayed for the menu"
-msgstr "Pont afişat pentru sertar"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "Utilizează calea meniului"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "Utilizează calea specificată de propritatea „menu-path“"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "Utilizează o iconiţă personalizată"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "Utilizează iconiţa specificată de proprietatea „custom-icon“"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2580,135 +2439,6 @@ msgstr "Panou flotant dreapta"
 msgid "Right Edge Panel"
 msgstr "Panou margine dreapta"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "Nume"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "Numele acestui panou"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "Extinde"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "Extinde pentru a ocupa întreaga margine a ecranului"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "Orientarea acestui panou"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "Înălţimea (sau lăţimea dacă e vertical) acestui panou"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "Poziţie X"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "Poziţia X a panoului"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "X de la centru"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "Coordonata X este relativă la centrul ecranului"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Poziţie Y"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "Poziţia Y a panoului"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "Y de la centru"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "Coordonata Y este relativă la centrul ecranului"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Monitor Xinerama"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "Monitorul (în terminologie Xinerama) în care e panoul"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "Ascundere automată"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "Ascunde automat panoul când mouse-ul părăseşte panoul"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "Întârziere ascundere"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "Întârzierea în milisecunde înainte de ascunderea automată"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "Întârziere reapariţie"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "Întârzierea în milisecunde înainte de reapariţia automată"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "Mărimea porţiunii vizibile"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "Numărul de pixeli vizibili când panoul se ascunde automat"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "Animează"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "Activează animaţiile la ascundere şi reapariţie"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "Viteză animaţie"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "Viteza animaţiei la ascunderea şi reapariţia panoului"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "Arată butoanele"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "Arată butoanele de ascundere şi reapariţie"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "Arată săgeţile"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "Arată săgeţile pe butoanele de ascundere"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Ascunde automat panoul într-un colţ"
@@ -3052,12 +2782,12 @@ msgstr "Coordonata Y a acestui panou"
 msgid "Cannot display help document"
 msgstr "Nu pot afişa documentul de ajutor"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "Deschide URL-ul: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3065,7 +2795,7 @@ msgstr ""
 "Când un panou este eliminat, panoul şi setările\n"
 "sale sunt pierdute. Elimin acest panou?"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "Elimină panoul"
 
@@ -3185,6 +2915,190 @@ msgstr "Enorm"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Minuscul"
+
+#, fuzzy
+#~ msgid "Year"
+#~ msgstr "Caută"
+
+#~ msgid "Has Arrow"
+#~ msgstr "Are săgeată"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "Dacă să arate sau nu o săgeată indicatoare"
+
+#, fuzzy
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "Evidenţiere DnD"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr ""
+#~ "Dacă să evidenţieze sau nu iconiţa la tragere şi plasare cu mouse-ul"
+
+#~ msgid "Orientation"
+#~ msgstr "Orientare"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "Orientarea „ButtonWidget“-ului"
+
+#~ msgid "Icon Name"
+#~ msgstr "Nume iconiţă"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "Iconiţa dorită pentru „ButtonWidget“"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ID iconiţă standard"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "Iconiţa standard dorită pentru „ButtonWidget“"
+
+#~ msgid "Action Type"
+#~ msgstr "Tip acţiune"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "Tipul acţiunii implementate de acest buton"
+
+#, fuzzy
+#~ msgid "Drag and drop enabled"
+#~ msgstr "Activare „tragere şi plasare“"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "Dacă să activez sau nu tragerea şi plasarea în widget"
+
+#~ msgid "Edges"
+#~ msgstr "Margini"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "Care margini să fie afişate"
+
+#~ msgid "Menu Path"
+#~ msgstr "Cale meniu"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "Calea din care se construieşte meniul"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Iconiţă personalizată"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "Iconiţă personalizată pentru meniu"
+
+#, fuzzy
+#~ msgid "Tooltip"
+#~ msgstr "Sus"
+
+#, fuzzy
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "Pont afişat pentru sertar"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Utilizează calea meniului"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "Utilizează calea specificată de propritatea „menu-path“"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "Utilizează o iconiţă personalizată"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "Utilizează iconiţa specificată de proprietatea „custom-icon“"
+
+#~ msgid "Name"
+#~ msgstr "Nume"
+
+#~ msgid "The name of this panel"
+#~ msgstr "Numele acestui panou"
+
+#~ msgid "Expand"
+#~ msgstr "Extinde"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "Extinde pentru a ocupa întreaga margine a ecranului"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "Orientarea acestui panou"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "Înălţimea (sau lăţimea dacă e vertical) acestui panou"
+
+#~ msgid "X position"
+#~ msgstr "Poziţie X"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "Poziţia X a panoului"
+
+#~ msgid "X centered"
+#~ msgstr "X de la centru"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "Coordonata X este relativă la centrul ecranului"
+
+#~ msgid "Y position"
+#~ msgstr "Poziţie Y"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "Poziţia Y a panoului"
+
+#~ msgid "Y centered"
+#~ msgstr "Y de la centru"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "Coordonata Y este relativă la centrul ecranului"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monitor Xinerama"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "Monitorul (în terminologie Xinerama) în care e panoul"
+
+#~ msgid "Auto hide"
+#~ msgstr "Ascundere automată"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "Ascunde automat panoul când mouse-ul părăseşte panoul"
+
+#~ msgid "Hide delay"
+#~ msgstr "Întârziere ascundere"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "Întârzierea în milisecunde înainte de ascunderea automată"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "Întârziere reapariţie"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "Întârzierea în milisecunde înainte de reapariţia automată"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "Mărimea porţiunii vizibile"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "Numărul de pixeli vizibili când panoul se ascunde automat"
+
+#~ msgid "Animate"
+#~ msgstr "Animează"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "Activează animaţiile la ascundere şi reapariţie"
+
+#~ msgid "Animation Speed"
+#~ msgstr "Viteză animaţie"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "Viteza animaţiei la ascunderea şi reapariţia panoului"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "Arată butoanele"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "Arată butoanele de ascundere şi reapariţie"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "Arată săgeţile"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "Arată săgeţile pe butoanele de ascundere"
 
 #, fuzzy
 #~ msgid "Background color name"

@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-06 23:59+0900\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-06 23:56+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -51,8 +51,8 @@ msgstr "情報(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "ヘルプ(_H)"
@@ -84,30 +84,6 @@ msgstr "Clock アプレットを生成するためのファクトリです。"
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "現在の時刻と日付を取得します"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "日"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "現在、表示している日で 1〜31 で表示します (0 :未設定)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "月"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "現在、表示している月で 0 〜 11 で表示します"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "年"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "現在、表示している年です"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -208,7 +184,7 @@ msgstr ""
 "されていないかも？"
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -262,7 +238,7 @@ msgid "Use _UTC"
 msgstr "UTC を使用する(_U)"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -636,7 +612,7 @@ msgstr "通知スペース・ファクトリ"
 msgid "Utility"
 msgstr "ユーティリティ"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "パネル通知エリア"
 
@@ -776,7 +752,7 @@ msgstr "現在のワークスペースにあるウィンドウを表示する(_O
 msgid "Show windows from a_ll workspaces"
 msgstr "全てのワークスペースにあるウィンドウを表示する(_L)"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "大きさ"
 
@@ -1011,7 +987,7 @@ msgstr "ロック解除(_L)"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
@@ -1027,54 +1003,6 @@ msgstr "なし"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "ファイルがありません"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr "アクティブ可否"
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr "ボタンがアクティブ可能かどうか"
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "矢印つき"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr "矢印を描画するかどうかを指定します"
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "ドラッグ & ドロップの強調表示"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "アイコンをドラッグ & ドロップする際に強調表示するかどうかを指定します"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "向き"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "ButtonWiget の向きです"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "アイコン名"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "ButtonWidget のアイコンです"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "ストック・アイコン ID"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "ButtonWidget のストック・アイコンです"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1104,8 +1032,8 @@ msgstr "CDE メニュー"
 msgid "Drawer"
 msgstr "引き出し"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
@@ -1412,7 +1340,7 @@ msgstr "画面のロック"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "画面をロックして一時的にコンピュータを離れることができます"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "アプリの強制終了"
 
@@ -1420,7 +1348,7 @@ msgstr "アプリの強制終了"
 msgid "Force a misbehaving application to quit"
 msgstr "おかしな動作をするアプリを強制的に終了します"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "スクリーンショット"
 
@@ -1462,8 +1390,8 @@ msgstr ""
 "このプログラムは他のアプリケーションを実行したり、小さなアプレットを埋め込ん"
 "だりすることができます。"
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' を実行できません"
@@ -1637,54 +1565,38 @@ msgstr "スクリーンショット..."
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "スクリーンセーバを有効にする(_A)"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "画面のロック(_L)"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "スクリーンセーバの強制終了(_K)"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "スクリーンセーバの再起動(_S)"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "画面をロックします"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "GNOME デスクトップからログアウトします"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "アプリケーションの実行"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "ファイルの検索"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "アクションの種類"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "このボタンのアクションの種類の実装"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "ドラッグ & ドロップを有効にする"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "ウィジェットでドラッグ & ドロップを有効にするかどうか設定します"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1771,14 +1683,6 @@ msgid ""
 msgstr ""
 "このアプリケーションを強制終了させますか？\n"
 "(開いているドキュメントは失なわれます。)"
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "エッジ"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "どのエッジを描画するか"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -2010,46 +1914,6 @@ msgstr "不正な使用からコンピュータを守ります"
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "%s の GNOME デスクトップを終了します"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "メニュー・パス"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "メニューを構成するパス"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "カスタム・アイコン"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "メニューのカスタム・アイコンです"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "ツールチップ"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "メニューにツールチップを表示する"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "メニュー・パスを使用する"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "プロパティ menu-path が指定するパスを使用します"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "カスタム・アイコンを使用する"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr "プロパティ custom-icon が指定するアイコンを使用します"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2582,135 +2446,6 @@ msgstr "右側フロート・パネル"
 msgid "Right Edge Panel"
 msgstr "右側エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "名前"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "このパネルの名前"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "広げる"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "モニタの幅/高さに合わせて広げる"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "このパネルの向き"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "パネルの高さ (縦向きの場合は幅)"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "X 座標"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "パネルを配置する X座標"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "中心の X 座標"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr "スクリーンの中心に対する X 座標"
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "Y 座標"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "パネルを配置する Y 座標"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "中心の Y 座標"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr "スクリーンの中心に対する Y 座標"
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "Xinerama モニタ"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr "パネルを表示する (Xinerama 対応の) モニタ"
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "自動的に隠す"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr "マウスがパネルから離れたら自動的にパネルを隠す"
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "隠すまでの遅延時間"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr "自動的に隠すまでの遅れ時間 (ミリ秒)"
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "表示するまでの遅延時間"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr "自動的に戻るまでの遅れ時間 (ミリ秒) です"
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "自動的に隠すサイズ"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr "パネルが自動的に隠れた際に表示する部分のピクセル値です"
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "アニメーション"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr "パネルの隠す/戻すにアニメーション効果を有効にします"
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "アニメーションの速度"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "パネルを隠す/戻す際のアニメーションの速度です"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr "隠すボタンを有効にする"
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr "隠すボタンを使う"
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr "矢印をつける"
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr "隠すボタンに矢印をつける"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "自動的にパネルを端に隠す"
@@ -3046,12 +2781,12 @@ msgstr "パネルの Y 軸方向の座標"
 msgid "Cannot display help document"
 msgstr "ヘルプを表示できません"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3059,7 +2794,7 @@ msgstr ""
 "パネルを削除すると、パネルとそのアプレットの\n"
 "設定は失われてしまいます。このパネルを削除しますか？"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "パネルの削除"
 
@@ -3176,3 +2911,203 @@ msgstr "とても大きい"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "とても小さい"
+
+#~ msgid "Day"
+#~ msgstr "日"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "現在、表示している日で 1〜31 で表示します (0 :未設定)"
+
+#~ msgid "Month"
+#~ msgstr "月"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "現在、表示している月で 0 〜 11 で表示します"
+
+#~ msgid "Year"
+#~ msgstr "年"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "現在、表示している年です"
+
+#~ msgid "Activatable"
+#~ msgstr "アクティブ可否"
+
+#~ msgid "Whether the button is activatable"
+#~ msgstr "ボタンがアクティブ可能かどうか"
+
+#~ msgid "Has Arrow"
+#~ msgstr "矢印つき"
+
+#~ msgid "Whether or not to draw an arrow indicator"
+#~ msgstr "矢印を描画するかどうかを指定します"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "ドラッグ & ドロップの強調表示"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr ""
+#~ "アイコンをドラッグ & ドロップする際に強調表示するかどうかを指定します"
+
+#~ msgid "Orientation"
+#~ msgstr "向き"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "ButtonWiget の向きです"
+
+#~ msgid "Icon Name"
+#~ msgstr "アイコン名"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "ButtonWidget のアイコンです"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "ストック・アイコン ID"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "ButtonWidget のストック・アイコンです"
+
+#~ msgid "Action Type"
+#~ msgstr "アクションの種類"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "このボタンのアクションの種類の実装"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "ドラッグ & ドロップを有効にする"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "ウィジェットでドラッグ & ドロップを有効にするかどうか設定します"
+
+#~ msgid "Edges"
+#~ msgstr "エッジ"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "どのエッジを描画するか"
+
+#~ msgid "Menu Path"
+#~ msgstr "メニュー・パス"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "メニューを構成するパス"
+
+#~ msgid "Custom Icon"
+#~ msgstr "カスタム・アイコン"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "メニューのカスタム・アイコンです"
+
+#~ msgid "Tooltip"
+#~ msgstr "ツールチップ"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "メニューにツールチップを表示する"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "メニュー・パスを使用する"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "プロパティ menu-path が指定するパスを使用します"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "カスタム・アイコンを使用する"
+
+#~ msgid "Use the icon specified by the custom-icon property"
+#~ msgstr "プロパティ custom-icon が指定するアイコンを使用します"
+
+#~ msgid "Name"
+#~ msgstr "名前"
+
+#~ msgid "The name of this panel"
+#~ msgstr "このパネルの名前"
+
+#~ msgid "Expand"
+#~ msgstr "広げる"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "モニタの幅/高さに合わせて広げる"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "このパネルの向き"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "パネルの高さ (縦向きの場合は幅)"
+
+#~ msgid "X position"
+#~ msgstr "X 座標"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "パネルを配置する X座標"
+
+#~ msgid "X centered"
+#~ msgstr "中心の X 座標"
+
+#~ msgid "The x co-ordinate is relative to center screen"
+#~ msgstr "スクリーンの中心に対する X 座標"
+
+#~ msgid "Y position"
+#~ msgstr "Y 座標"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "パネルを配置する Y 座標"
+
+#~ msgid "Y centered"
+#~ msgstr "中心の Y 座標"
+
+#~ msgid "The y co-ordinate is relative to center screen"
+#~ msgstr "スクリーンの中心に対する Y 座標"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Xinerama モニタ"
+
+#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
+#~ msgstr "パネルを表示する (Xinerama 対応の) モニタ"
+
+#~ msgid "Auto hide"
+#~ msgstr "自動的に隠す"
+
+#~ msgid "Automatically hide the panel when the mouse leaves the panel"
+#~ msgstr "マウスがパネルから離れたら自動的にパネルを隠す"
+
+#~ msgid "Hide delay"
+#~ msgstr "隠すまでの遅延時間"
+
+#~ msgid "The number of milliseconds to delay before automatically hiding"
+#~ msgstr "自動的に隠すまでの遅れ時間 (ミリ秒)"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "表示するまでの遅延時間"
+
+#~ msgid "The number of milliseconds to delay before automatically un-hiding"
+#~ msgstr "自動的に戻るまでの遅れ時間 (ミリ秒) です"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "自動的に隠すサイズ"
+
+#~ msgid ""
+#~ "The number of pixels visible when the panel has been automatically hidden"
+#~ msgstr "パネルが自動的に隠れた際に表示する部分のピクセル値です"
+
+#~ msgid "Animate"
+#~ msgstr "アニメーション"
+
+#~ msgid "Enable hiding/showing animations"
+#~ msgstr "パネルの隠す/戻すにアニメーション効果を有効にします"
+
+#~ msgid "Animation Speed"
+#~ msgstr "アニメーションの速度"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "パネルを隠す/戻す際のアニメーションの速度です"
+
+#~ msgid "Buttons Enabled"
+#~ msgstr "隠すボタンを有効にする"
+
+#~ msgid "Enable hide/show buttons"
+#~ msgstr "隠すボタンを使う"
+
+#~ msgid "Arrows Enabled"
+#~ msgstr "矢印をつける"
+
+#~ msgid "Enable arrows on hide/show buttons"
+#~ msgstr "隠すボタンに矢印をつける"

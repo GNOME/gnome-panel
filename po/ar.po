@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-13 04:50+0100\n"
+"POT-Creation-Date: 2004-02-16 21:07+0000\n"
 "PO-Revision-Date: 2004-02-14 18:43+0100\n"
 "Last-Translator: Isam Bayazidi <bayazidi@arabeyes.org>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -45,8 +45,8 @@ msgstr "_حول..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "م_ساعدة"
@@ -78,30 +78,6 @@ msgstr "مصنع لانشاء بريمجات الساعة."
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
 msgstr "تلقى الوقت والتاريخ الحالي"
-
-#: applets/clock/calendar-client.c:177
-msgid "Day"
-msgstr "اليوم"
-
-#: applets/clock/calendar-client.c:178
-msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr "اليوم المعروض حاليا بين 1 و 31 (مشيرات 0 ملغات)"
-
-#: applets/clock/calendar-client.c:185
-msgid "Month"
-msgstr "الشهر"
-
-#: applets/clock/calendar-client.c:186
-msgid "The currently monitored month between 0 and 11"
-msgstr "الشهر المعوض حاليا بين 0 و 11"
-
-#: applets/clock/calendar-client.c:193
-msgid "Year"
-msgstr "السنة"
-
-#: applets/clock/calendar-client.c:194
-msgid "The currently monitored year"
-msgstr "السنة المعروضة حاليا"
 
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
@@ -200,7 +176,7 @@ msgid ""
 msgstr ""
 
 #: applets/clock/clock.c:2157 applets/clock/clock.c:2514
-#: applets/fish/fish.c:127 applets/notification_area/main.c:83
+#: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
@@ -254,15 +230,15 @@ msgid "Use _UTC"
 msgstr "ا_ستخدام UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2549 applets/notification_area/main.c:119
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
-msgstr "تحت إشراف عربايز (http://www.arabeyes.org):\n"
+msgstr ""
+"تحت إشراف عربايز (http://www.arabeyes.org):\n"
 "\n"
-"عرفات المديني، تونس"
-"سيد جعفر الموسوي، البحرين"
+"عرفات المديني، تونسسيد جعفر الموسوي، البحرين"
 
 #: applets/clock/clock.c:2570
 msgid "The Clock displays the current time and date"
@@ -298,7 +274,9 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "إذا ضبط لـtrue، سيعرض اليوم على شكل تلميحة أداة عند وضع مؤشر الفأرة فوق الساعة."
+msgstr ""
+"إذا ضبط لـtrue، سيعرض اليوم على شكل تلميحة أداة عند وضع مؤشر الفأرة فوق "
+"الساعة."
 
 #: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
@@ -317,8 +295,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"الغي استخدام هذا المفتاح في جنوم 2.6 دعما لمفاتح "
-"'التهيئة'. ابقي على المخطط فقط للتطابق مع إصدارات قديمة."
+"الغي استخدام هذا المفتاح في جنوم 2.6 دعما لمفاتح 'التهيئة'. ابقي على المخطط "
+"فقط للتطابق مع إصدارات قديمة."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -529,8 +507,7 @@ msgstr "ثواني"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
-"سمكة بدون أسم سمكة مملة. أحيي سمكتك باعطائها إسما."
+msgstr "سمكة بدون أسم سمكة مملة. أحيي سمكتك باعطائها إسما."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -565,22 +542,19 @@ msgstr "اسم السمكة"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"يحدد هذا المفاتح الأمر الذي سيحاول تنفيذه عند نقر السمكة."
+msgstr "يحدد هذا المفاتح الأمر الذي سيحاول تنفيذه عند نقر السمكة."
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
-""
 
 #: applets/fish/fish.schemas.in.h:11
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr ""
-"يحدد هذا المفاتلح عدد الإطارات التي ستعرض فالرسم المتحرك للسمكة."
+msgstr "يحدد هذا المفاتلح عدد الإطارات التي ستعرض فالرسم المتحرك للسمكة."
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -603,7 +577,7 @@ msgstr "مصنع مساحة التبليغ"
 msgid "Utility"
 msgstr "مرفق"
 
-#: applets/notification_area/main.c:131 applets/notification_area/main.c:342
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "مساحة التبليغ في الشريط"
 
@@ -683,8 +657,7 @@ msgstr ""
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
-msgstr ""
-"مدير نوافك لا يدعم زر إظهار سطح المكتب، أو أنك لا تدير مدير نوافذ."
+msgstr "مدير نوافك لا يدعم زر إظهار سطح المكتب، أو أنك لا تدير مدير نوافذ."
 
 #: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
@@ -738,7 +711,7 @@ msgstr "إ_ظهار نوافذ مساحات العمل الحالية"
 msgid "Show windows from a_ll workspaces"
 msgstr "إظهار نوافذ _جميع مساحات العمل"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
+#: applets/wncklet/window-list.glade.h:14
 msgid "Size"
 msgstr "الحجم"
 
@@ -764,8 +737,8 @@ msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"يقرر متى تجميع نوافذ نفس التطبيق في قائمة النوافذ. القيم الممكنة هي "
-"\"أبدا\"، \"آليا\"، \"دائما\"."
+"يقرر متى تجميع نوافذ نفس التطبيق في قائمة النوافذ. القيم الممكنة هي \"أبدا"
+"\"، \"آليا\"، \"دائما\"."
 
 #: applets/wncklet/window-list.schemas.in.h:2
 msgid ""
@@ -813,8 +786,7 @@ msgstr "متى تجمّع النوافذ"
 #: applets/wncklet/window-menu.c:138
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"يعرض منتقي النوافذ قائمة لكل النوافذ و يمكنك من تصفحها."
+msgstr "يعرض منتقي النوافذ قائمة لكل النوافذ و يمكنك من تصفحها."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -854,14 +826,16 @@ msgstr ""
 #: applets/wncklet/workspace-switcher.c:384
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "حدث خطأ عند تحميل قيمة 'display_all_workspaces' لمحول مساحات العمل: %s\n"
+msgstr ""
+"حدث خطأ عند تحميل قيمة 'display_all_workspaces' لمحول مساحات العمل: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:521
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"يظهر لك محول مساحات العمل صورا صغيرة لمساحات عملك يمكنك من خلالها إدارة نوافذك."
+"يظهر لك محول مساحات العمل صورا صغيرة لمساحات عملك يمكنك من خلالها إدارة "
+"نوافذك."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Switcher</b>"
@@ -934,8 +908,8 @@ msgid ""
 "only relevant if the display_all_workspaces key is true."
 msgstr ""
 "يحدد المفاتاح عدد السطور (للتصميم الأفقي) أو عدد الأعمدة (للتصميم العمودي) "
-"التي سيعرض فيها محول مساحات العمل مساحات العمل. هذا المفتاح مفيد فقط عند"
-"ضبط مفتاح display_all_workspaces لـ true."
+"التي سيعرض فيها محول مساحات العمل مساحات العمل. هذا المفتاح مفيد فقط عندضبط "
+"مفتاح display_all_workspaces لـ true."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -963,7 +937,7 @@ msgstr "_فتح القفل"
 msgid "???"
 msgstr "؟؟؟"
 
-#: gnome-panel/applet.c:1094
+#: gnome-panel/applet.c:1093
 msgid "Can't find an empty spot"
 msgstr "لم يمكن العثور على بقعة فارغة"
 
@@ -979,54 +953,6 @@ msgstr "لا شيء"
 #: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "لم يوجد الملف"
-
-#: gnome-panel/button-widget.c:754
-msgid "Activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:755
-msgid "Whether the button is activatable"
-msgstr ""
-
-#: gnome-panel/button-widget.c:763
-msgid "Has Arrow"
-msgstr "له سهم"
-
-#: gnome-panel/button-widget.c:764
-msgid "Whether or not to draw an arrow indicator"
-msgstr ""
-
-#: gnome-panel/button-widget.c:772
-msgid "Drag and drop Highlight"
-msgstr "إبراز السحب و الإسقاط"
-
-#: gnome-panel/button-widget.c:773
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr "فيما إذا سيقع إبراز الأيقونة عند عملية السحب و الإسقاط"
-
-#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
-msgid "Orientation"
-msgstr "الاتجاه"
-
-#: gnome-panel/button-widget.c:782
-msgid "The ButtonWidget orientation"
-msgstr "إتجاه ButtonWidget"
-
-#: gnome-panel/button-widget.c:791
-msgid "Icon Name"
-msgstr "إسم الأيقونة"
-
-#: gnome-panel/button-widget.c:792
-msgid "The desired icon for the ButtonWidget"
-msgstr "الأيقونة المطلوبة للـ ButtonWidget"
-
-#: gnome-panel/button-widget.c:800
-msgid "Stock Icon ID"
-msgstr "هوية أيقونة المخزون"
-
-#: gnome-panel/button-widget.c:801
-msgid "The desired stock icon for the ButtonWidget"
-msgstr "أيقونة المخزون المطلوبة لـ ButtonWidget"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1056,8 +982,8 @@ msgstr "قوائم سي دي إي"
 msgid "Drawer"
 msgstr "الراسم"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "ال_خصائص"
 
@@ -1256,8 +1182,7 @@ msgstr "حفظ صورة الشاشة في _صفحة أنترنت (تحفظ في 
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
-"دليل المستخدم الذي فيه ستحفظ صور الشاشة لتظهر في اﻹنترنت."
+msgstr "دليل المستخدم الذي فيه ستحفظ صور الشاشة لتظهر في اﻹنترنت."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory"
@@ -1339,8 +1264,7 @@ msgstr "لا يمكن حفظ عنصر القائمة على القرص"
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr ""
-"لا يمكنك إنشاء مطلق جديد في هذا الموقع ﻷن الموقع غير قابل للكتابة."
+msgstr "لا يمكنك إنشاء مطلق جديد في هذا الموقع ﻷن الموقع غير قابل للكتابة."
 
 #: gnome-panel/menu.c:111
 msgid "Log Out"
@@ -1350,8 +1274,7 @@ msgstr "تسجيل الخروج"
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
-msgstr ""
-"تسجيل الخروج من هذه الجلسة لتسجيل الدخول كمستخدم آخر أو لإطفاء الحاسوب"
+msgstr "تسجيل الخروج من هذه الجلسة لتسجيل الدخول كمستخدم آخر أو لإطفاء الحاسوب"
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
@@ -1361,7 +1284,7 @@ msgstr "قفل"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "اقفل الشاشة حتى تتمكن من مغادرة حاسوبك مؤقتا"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr "إجبار الإنهاء"
 
@@ -1369,7 +1292,7 @@ msgstr "إجبار الإنهاء"
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "صورة شاشة"
 
@@ -1410,8 +1333,8 @@ msgid ""
 msgstr ""
 "هذا البرنامج مسؤول عن تشغيل تطبيقات اخرى و تضمين بريمجات صغيرة ضمن نفسه."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
-#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "لا يمكن تنفيذ '%s'"
@@ -1561,8 +1484,7 @@ msgstr "تسجيل خروج %s"
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
-msgstr ""
-"سجل خروج %s من هذه الجلسة لستجيل الدخول كمستخدم آخر أو لتطفئ حاسوبك"
+msgstr "سجل خروج %s من هذه الجلسة لستجيل الدخول كمستخدم آخر أو لتطفئ حاسوبك"
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
@@ -1584,54 +1506,38 @@ msgstr "اخذ صورة شاشة..."
 msgid "Desktop"
 msgstr "سطح المكتب"
 
-#: gnome-panel/panel-action-button.c:101
+#: gnome-panel/panel-action-button.c:107
 msgid "_Activate Screensaver"
 msgstr "ت_نشيط حافظ الشاشة"
 
-#: gnome-panel/panel-action-button.c:107
+#: gnome-panel/panel-action-button.c:113
 msgid "_Lock Screen"
 msgstr "_قفل الشاشة"
 
-#: gnome-panel/panel-action-button.c:113
+#: gnome-panel/panel-action-button.c:119
 msgid "_Kill Screensaver Daemon"
 msgstr "_قتل جني حافظ الشاشة"
 
-#: gnome-panel/panel-action-button.c:119
+#: gnome-panel/panel-action-button.c:125
 msgid "Restart _Screensaver Daemon"
 msgstr "إعادة تشغيل جنّي _حافظ الشاشة"
 
-#: gnome-panel/panel-action-button.c:252
+#: gnome-panel/panel-action-button.c:258
 msgid "Lock screen"
 msgstr "قفل الشاشة"
 
-#: gnome-panel/panel-action-button.c:260
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "تسجيل الخروج من جنوم"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:272
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "تشغيل تطبيق"
 
-#: gnome-panel/panel-action-button.c:272
+#: gnome-panel/panel-action-button.c:278
 msgid "Search for Files"
 msgstr "بحث عن ملفات"
-
-#: gnome-panel/panel-action-button.c:439
-msgid "Action Type"
-msgstr "نوع العمل"
-
-#: gnome-panel/panel-action-button.c:440
-msgid "The type of action this button implements"
-msgstr "نوع العمل الذي ستنفذه هذه الأزرار"
-
-#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-msgid "Drag and drop enabled"
-msgstr "السحب و الإسقاط مفعل"
-
-#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
-msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "فيما إذا وجب تفعيل السحب و الإسقاط في القطعة"
 
 #: gnome-panel/panel-applet-frame.c:745
 #, c-format
@@ -1658,8 +1564,8 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"(إذ اخترت عدم إعادة تحميله الآن يمكنك إضافته مستقبلا بالنقر اﻷيمن "
-"على الشريط ثم النقر على القائمة الفرعية \"إضافة للشريط\")"
+"(إذ اخترت عدم إعادة تحميله الآن يمكنك إضافته مستقبلا بالنقر اﻷيمن على الشريط "
+"ثم النقر على القائمة الفرعية \"إضافة للشريط\")"
 
 #: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
@@ -1707,23 +1613,13 @@ msgstr "خطأ تلقي قيمة لـ '%s':·%s"
 #: gnome-panel/panel-force-quit.c:73
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"أنقر على نافذة لإجبار التطبيق على الإنهاء. للإلغاء أنقر <ESC>."
+msgstr "أنقر على نافذة لإجبار التطبيق على الإنهاء. للإلغاء أنقر <ESC>."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
-""
-
-#: gnome-panel/panel-frame.c:268
-msgid "Edges"
-msgstr "الحواف"
-
-#: gnome-panel/panel-frame.c:269
-msgid "Which edges to draw"
-msgstr "أي الحواف سترسم"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1731,8 +1627,8 @@ msgid ""
 "settings for each of these panels are stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
 msgstr ""
-"قائمة لهويات الشرائط. كل هوية تعرف شريط مستوا أعلى شخصي. تعيينات "
-"كل من هذه الشرائط مخزونة في /apps/panel/general/$(profile)/toplevels/$(id)."
+"قائمة لهويات الشرائط. كل هوية تعرف شريط مستوا أعلى شخصي. تعيينات كل من هذه "
+"الشرائط مخزونة في /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1740,9 +1636,9 @@ msgid ""
 "The settings for each of these applets are stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
-"قائمة·لهويات بريمجات·الشرائط.·كل·هوية·تعرف بريمج·شريط شخصي.تعيينات·"
-"كل·من·هذه·البريمجات·مخزونة·في·/apps/panel/general/"
-"$(profiles)/applets/$(id)."
+"قائمة·لهويات بريمجات·الشرائط.·كل·هوية·تعرف بريمج·شريط شخصي."
+"تعيينات·كل·من·هذه·البريمجات·مخزونة·في·/apps/panel/general/$(profiles)/"
+"applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
 msgid ""
@@ -1750,10 +1646,9 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
-"قائمة·لهويات·أجسام الشرائط.·كل·هوية·تعرف جسم·"
-"شريط·شخصي(مثلا مطلق أو زر عمل أو زر/عمود قائمة).·تعيينات·"
-"كل·من·هذه·الأجسام·مخزونة·في"
-"/apps/panel/general/$(profiles)/objects/$(id)."
+"قائمة·لهويات·أجسام الشرائط.·كل·هوية·تعرف جسم·شريط·شخصي(مثلا مطلق أو زر عمل "
+"أو زر/عمود قائمة).·تعيينات·كل·من·هذه·الأجسام·مخزونة·في/apps/panel/general/"
+"$(profiles)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1929,46 +1824,6 @@ msgstr "احمي حاسوبك من الاستخدامات الغير مرخّص 
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "خروج من مكتب %s"
-
-#: gnome-panel/panel-menu-button.c:429
-msgid "Menu Path"
-msgstr "مسار القائمة"
-
-#: gnome-panel/panel-menu-button.c:430
-msgid "The path from which to construct the menu"
-msgstr "المسار الذي منه ستبنى القائمة"
-
-#: gnome-panel/panel-menu-button.c:438
-msgid "Custom Icon"
-msgstr "أيقونة خاصة"
-
-#: gnome-panel/panel-menu-button.c:439
-msgid "The custom icon for the menu"
-msgstr "الأيقونة الخاصة للقائمة"
-
-#: gnome-panel/panel-menu-button.c:447
-msgid "Tooltip"
-msgstr "تلميحة أدات"
-
-#: gnome-panel/panel-menu-button.c:448
-msgid "Tooltip displayed for the menu"
-msgstr "تلميحة الأدات المعروضة في القائمة"
-
-#: gnome-panel/panel-menu-button.c:456
-msgid "Use Menu Path"
-msgstr "استخدام مسار القائمة"
-
-#: gnome-panel/panel-menu-button.c:457
-msgid "Use the path specified by the menu-path property"
-msgstr "استخدام مسار القائمة المخدد من خاصية مسار القائمة"
-
-#: gnome-panel/panel-menu-button.c:465
-msgid "Use Custom Icon"
-msgstr "استخدام أيقونة خاصة"
-
-#: gnome-panel/panel-menu-button.c:466
-msgid "Use the icon specified by the custom-icon property"
-msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2461,135 +2316,6 @@ msgstr ""
 msgid "Right Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3587
-msgid "Name"
-msgstr "الإسم"
-
-#: gnome-panel/panel-toplevel.c:3588
-msgid "The name of this panel"
-msgstr "إسم هذا الشريط"
-
-#: gnome-panel/panel-toplevel.c:3597
-msgid "Expand"
-msgstr "بسط"
-
-#: gnome-panel/panel-toplevel.c:3598
-msgid "Expand to take up the full monitor width/height"
-msgstr "بسط لملأ كامل عرض/ارتفاع الشاشة"
-
-#: gnome-panel/panel-toplevel.c:3608
-msgid "The orientation of the panel"
-msgstr "اتجاه الشريط"
-
-#: gnome-panel/panel-toplevel.c:3619
-msgid "The height (or width when vertical) of the panel"
-msgstr "ارتفاع الشريط (عندما يكون الشريط عموديا)"
-
-#: gnome-panel/panel-toplevel.c:3631
-msgid "X position"
-msgstr "موقع س"
-
-#: gnome-panel/panel-toplevel.c:3632
-msgid "The X position of the panel"
-msgstr "موقع س للشريط"
-
-#: gnome-panel/panel-toplevel.c:3643
-msgid "X centered"
-msgstr "موسط س"
-
-#: gnome-panel/panel-toplevel.c:3644
-msgid "The x co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3653
-msgid "Y position"
-msgstr "موقع ص"
-
-#: gnome-panel/panel-toplevel.c:3654
-msgid "The Y position of the panel"
-msgstr "موقع ص للشريط"
-
-#: gnome-panel/panel-toplevel.c:3665
-msgid "Y centered"
-msgstr "موسط ص"
-
-#: gnome-panel/panel-toplevel.c:3666
-msgid "The y co-ordinate is relative to center screen"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3675
-msgid "Xinerama monitor"
-msgstr "شاشة كسيناراما"
-
-#: gnome-panel/panel-toplevel.c:3676
-msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3687
-msgid "Auto hide"
-msgstr "إخفاء آلي"
-
-#: gnome-panel/panel-toplevel.c:3688
-msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3697
-msgid "Hide delay"
-msgstr "تأخير الإخفاء"
-
-#: gnome-panel/panel-toplevel.c:3698
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3709
-msgid "Un-hide delay"
-msgstr "تأخير إلغاء الإخفاء"
-
-#: gnome-panel/panel-toplevel.c:3710
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3721
-msgid "Auto-hide size"
-msgstr "حجم الإخفاء الآلي"
-
-#: gnome-panel/panel-toplevel.c:3722
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3733
-msgid "Animate"
-msgstr "تحريك"
-
-#: gnome-panel/panel-toplevel.c:3734
-msgid "Enable hiding/showing animations"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3743
-msgid "Animation Speed"
-msgstr "سرعة الحركة"
-
-#: gnome-panel/panel-toplevel.c:3744
-msgid "The speed at which to animate panel hiding/showing"
-msgstr "السرعة التي بها يحرك اخفاء/اظهار الشريط"
-
-#: gnome-panel/panel-toplevel.c:3754
-msgid "Buttons Enabled"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3755
-msgid "Enable hide/show buttons"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3764
-msgid "Arrows Enabled"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3765
-msgid "Enable arrows on hide/show buttons"
-msgstr ""
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr ""
@@ -2859,12 +2585,12 @@ msgstr "إحداث الشريط الصادي"
 msgid "Cannot display help document"
 msgstr "لا يمكن عرض مستند المساعدة"
 
-#: gnome-panel/panel.c:445
+#: gnome-panel/panel.c:446
 #, c-format
 msgid "Open URL: %s"
 msgstr "فتح العنوان: %s"
 
-#: gnome-panel/panel.c:1241
+#: gnome-panel/panel.c:1242
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2872,7 +2598,7 @@ msgstr ""
 "سيضيع الشريط و تعييناته إذا حذفته\n"
 "هل تريد حذف الشريط؟"
 
-#: gnome-panel/panel.c:1250
+#: gnome-panel/panel.c:1251
 msgid "Delete Panel"
 msgstr "حذف الشريط"
 
@@ -2938,8 +2664,7 @@ msgstr "تحديد هوية الواجهة لبريمج لتحميلها"
 #: libpanel-applet/panel-test-applets.c:34
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
-"تحديد موقع gconf يجب أن تخزن فيه تفضيلات البريمج"
+msgstr "تحديد موقع gconf يجب أن تخزن فيه تفضيلات البريمج"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
@@ -2949,7 +2674,8 @@ msgstr "تحديد الحجم الأصلي للبريمج (صغير جدا جد�
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
-"تحديد الاتجاه الأصلي للبريمج (إلى الأعلى أو إلى الأسفل أو إلى اليسار أو إلى اليمين)"
+"تحديد الاتجاه الأصلي للبريمج (إلى الأعلى أو إلى الأسفل أو إلى اليسار أو إلى "
+"اليمين)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -2990,6 +2716,156 @@ msgstr "كبير جدا جدا"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "صغير جدا جدا"
+
+#~ msgid "Day"
+#~ msgstr "اليوم"
+
+#~ msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+#~ msgstr "اليوم المعروض حاليا بين 1 و 31 (مشيرات 0 ملغات)"
+
+#~ msgid "Month"
+#~ msgstr "الشهر"
+
+#~ msgid "The currently monitored month between 0 and 11"
+#~ msgstr "الشهر المعوض حاليا بين 0 و 11"
+
+#~ msgid "Year"
+#~ msgstr "السنة"
+
+#~ msgid "The currently monitored year"
+#~ msgstr "السنة المعروضة حاليا"
+
+#~ msgid "Has Arrow"
+#~ msgstr "له سهم"
+
+#~ msgid "Drag and drop Highlight"
+#~ msgstr "إبراز السحب و الإسقاط"
+
+#~ msgid "Whether or not to highlight the icon during drag and drop"
+#~ msgstr "فيما إذا سيقع إبراز الأيقونة عند عملية السحب و الإسقاط"
+
+#~ msgid "Orientation"
+#~ msgstr "الاتجاه"
+
+#~ msgid "The ButtonWidget orientation"
+#~ msgstr "إتجاه ButtonWidget"
+
+#~ msgid "Icon Name"
+#~ msgstr "إسم الأيقونة"
+
+#~ msgid "The desired icon for the ButtonWidget"
+#~ msgstr "الأيقونة المطلوبة للـ ButtonWidget"
+
+#~ msgid "Stock Icon ID"
+#~ msgstr "هوية أيقونة المخزون"
+
+#~ msgid "The desired stock icon for the ButtonWidget"
+#~ msgstr "أيقونة المخزون المطلوبة لـ ButtonWidget"
+
+#~ msgid "Action Type"
+#~ msgstr "نوع العمل"
+
+#~ msgid "The type of action this button implements"
+#~ msgstr "نوع العمل الذي ستنفذه هذه الأزرار"
+
+#~ msgid "Drag and drop enabled"
+#~ msgstr "السحب و الإسقاط مفعل"
+
+#~ msgid "Whether or not drag and drop is enabled on the widget"
+#~ msgstr "فيما إذا وجب تفعيل السحب و الإسقاط في القطعة"
+
+#~ msgid "Edges"
+#~ msgstr "الحواف"
+
+#~ msgid "Which edges to draw"
+#~ msgstr "أي الحواف سترسم"
+
+#~ msgid "Menu Path"
+#~ msgstr "مسار القائمة"
+
+#~ msgid "The path from which to construct the menu"
+#~ msgstr "المسار الذي منه ستبنى القائمة"
+
+#~ msgid "Custom Icon"
+#~ msgstr "أيقونة خاصة"
+
+#~ msgid "The custom icon for the menu"
+#~ msgstr "الأيقونة الخاصة للقائمة"
+
+#~ msgid "Tooltip"
+#~ msgstr "تلميحة أدات"
+
+#~ msgid "Tooltip displayed for the menu"
+#~ msgstr "تلميحة الأدات المعروضة في القائمة"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "استخدام مسار القائمة"
+
+#~ msgid "Use the path specified by the menu-path property"
+#~ msgstr "استخدام مسار القائمة المخدد من خاصية مسار القائمة"
+
+#~ msgid "Use Custom Icon"
+#~ msgstr "استخدام أيقونة خاصة"
+
+#~ msgid "Name"
+#~ msgstr "الإسم"
+
+#~ msgid "The name of this panel"
+#~ msgstr "إسم هذا الشريط"
+
+#~ msgid "Expand"
+#~ msgstr "بسط"
+
+#~ msgid "Expand to take up the full monitor width/height"
+#~ msgstr "بسط لملأ كامل عرض/ارتفاع الشاشة"
+
+#~ msgid "The orientation of the panel"
+#~ msgstr "اتجاه الشريط"
+
+#~ msgid "The height (or width when vertical) of the panel"
+#~ msgstr "ارتفاع الشريط (عندما يكون الشريط عموديا)"
+
+#~ msgid "X position"
+#~ msgstr "موقع س"
+
+#~ msgid "The X position of the panel"
+#~ msgstr "موقع س للشريط"
+
+#~ msgid "X centered"
+#~ msgstr "موسط س"
+
+#~ msgid "Y position"
+#~ msgstr "موقع ص"
+
+#~ msgid "The Y position of the panel"
+#~ msgstr "موقع ص للشريط"
+
+#~ msgid "Y centered"
+#~ msgstr "موسط ص"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "شاشة كسيناراما"
+
+#~ msgid "Auto hide"
+#~ msgstr "إخفاء آلي"
+
+#~ msgid "Hide delay"
+#~ msgstr "تأخير الإخفاء"
+
+#~ msgid "Un-hide delay"
+#~ msgstr "تأخير إلغاء الإخفاء"
+
+#~ msgid "Auto-hide size"
+#~ msgstr "حجم الإخفاء الآلي"
+
+#~ msgid "Animate"
+#~ msgstr "تحريك"
+
+#~ msgid "Animation Speed"
+#~ msgstr "سرعة الحركة"
+
+#~ msgid "The speed at which to animate panel hiding/showing"
+#~ msgstr "السرعة التي بها يحرك اخفاء/اظهار الشريط"
 
 #, fuzzy
 #~ msgid "Text"
