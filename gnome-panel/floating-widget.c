@@ -191,13 +191,26 @@ floating_pos_get_menu_pos (BasePWidget *basep,
 			   int ww, int wh)
 {	
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
+	PanelOrientType menu_orient = floating_pos_get_applet_orient (basep);
 	
-	if(panel->orient==PANEL_VERTICAL) {
-		*x = wx + ww;
+	switch (menu_orient) {
+	case ORIENT_DOWN:
+		*x += wx;
+		*y = wy + wh;
+		break;
+	case ORIENT_LEFT:
+		*x = wx - mreq->width;
 		*y += wy;
-	} else {
+		break;
+	default:
+	case ORIENT_UP:
 		*x += wx;
 		*y = wy - mreq->height;
+		break;
+	case ORIENT_RIGHT:
+		*x = wx + ww;
+		*y += wy;
+		break;
 	}
 }
 
