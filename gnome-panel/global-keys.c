@@ -71,86 +71,46 @@ panel_global_keys_setup(void)
 GdkFilterReturn
 panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 {
-	XKeyEvent *kev = gdk_xevent;
-	switch (kev->type) {
-#if 0
-	case KeyPress:
-		g_message ("PRESS (%ld) %d [%x]: %s", 
-			   (long)event->key.keyval,
-			   (int)kev->keycode, (int)kev->keycode,
-			   gdk_keyval_name (event->key.keyval));
-		/* gdk has already translated to keysym for us */
-		if(event->key.keyval == global_config.menu_keysym &&
-		   event->key.state == global_config.menu_state) {
-			/* check if anybody else has a grab */
-			if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
-					      0, NULL, NULL, GDK_CURRENT_TIME)
-			    != GrabSuccess) {
-				return GDK_FILTER_CONTINUE;
-			} else {
-				gdk_pointer_ungrab (GDK_CURRENT_TIME);
-			}
+	if(((XEvent *)gdk_xevent)->type != KeyRelease)
+		return GDK_FILTER_CONTINUE;
 
-#ifdef PANEL_DEBUG
-			g_message ("(%ld) %d [%x]: %s", 
-				   event->key.keyval,
-				   kev->keycode, kev->keycode,
-				   gdk_keyval_name (event->key.keyval));
-#endif
-			winkey_depth++;
-			num_subkeys = 0;
-			return GDK_FILTER_REMOVE;
-		} else if(winkey_depth > 0 &&
-			  event->key.keyval == global_config.run_keysym &&
-			  event->key.state == global_config.run_state) {
-			/* Do Win+key hotkeys */
-
-			num_subkeys++;
-			show_run_dialog ();
-			return GDK_FILTER_REMOVE;
+	if(event->key.keyval == global_config.menu_keysym &&
+	   event->key.state == global_config.menu_state) {
+		PanelWidget *panel;
+		GtkWidget *menu, *basep;
+		/* check if anybody else has a grab */
+		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+				      0, NULL, NULL, GDK_CURRENT_TIME)
+		    != GrabSuccess) {
+			return GDK_FILTER_CONTINUE;
+		} else {
+			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 		}
-		break;
-#endif
-	case KeyRelease:
-		g_message ("RELEASE (%ld) %d [%x]: %s", 
-			   (long)event->key.keyval,
-			   (int)kev->keycode, (int)kev->keycode,
-			   gdk_keyval_name (event->key.keyval));
-		if(event->key.keyval == global_config.menu_keysym &&
-		   event->key.state == global_config.menu_state) {
-			/* check if anybody else has a grab */
-			if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
-					      0, NULL, NULL, GDK_CURRENT_TIME)
-			    != GrabSuccess) {
-				return GDK_FILTER_CONTINUE;
-			} else {
-				gdk_pointer_ungrab (GDK_CURRENT_TIME);
-			}
 
-			{
-				PanelWidget *panel = panels->data;
-				GtkWidget *menu = 
-					make_popup_panel_menu (panel);
-				GtkWidget *basep = panel->panel_parent;
-				if (IS_BASEP_WIDGET(basep)) {
-					BASEP_WIDGET(basep)->autohide_inhibit 
-						= TRUE;
-					basep_widget_autohide (
-						BASEP_WIDGET (basep));
-				}
-				gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
-						NULL, NULL, 0, GDK_CURRENT_TIME);
-			}
-			return GDK_FILTER_REMOVE;
-		} else if(event->key.keyval == global_config.run_keysym &&
-			  event->key.state == global_config.run_state) {
-			/* Do Win+key hotkeys */
-
-			show_run_dialog ();
-			return GDK_FILTER_REMOVE;
+		panel = panels->data;
+		menu = make_popup_panel_menu (panel);
+		basep = panel->panel_parent;
+		if (IS_BASEP_WIDGET(basep)) {
+			BASEP_WIDGET(basep)->autohide_inhibit = TRUE;
+			basep_widget_autohide (BASEP_WIDGET (basep));
 		}
-		break;
+		gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+				NULL, NULL, 0, GDK_CURRENT_TIME);
+		return GDK_FILTER_REMOVE;
+	} else if(event->key.keyval == global_config.run_keysym &&
+		  event->key.state == global_config.run_state) {
+		/* check if anybody else has a grab */
+		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+				      0, NULL, NULL, GDK_CURRENT_TIME)
+		    != GrabSuccess) {
+			return GDK_FILTER_CONTINUE;
+		} else {
+			gdk_pointer_ungrab (GDK_CURRENT_TIME);
+		}
+
+		show_run_dialog ();
+		return GDK_FILTER_REMOVE;
 	}
-	
+
 	return GDK_FILTER_CONTINUE;
 }
