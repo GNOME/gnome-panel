@@ -190,7 +190,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			      G_STRUCT_OFFSET (BasePWidgetClass, type_change),
 			      NULL,
 			      NULL,
-			      panel_marshal_VOID__ENUM,
+			      g_cclosure_marshal_VOID__ENUM,
 			      G_TYPE_NONE,
 			      1,
 			      PANEL_TYPE_OBJECT_TYPE); */
@@ -213,7 +213,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_STRUCT_OFFSET (BasePWidgetClass, mode_change),
 				NULL,
 				NULL,
-				panel_marshal_VOID__ENUM,
+				g_cclosure_marshal_VOID__ENUM,
 				G_TYPE_NONE,
 				1,
 				PANEL_TYPE_BASE_PMODE);
@@ -225,7 +225,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_STRUCT_OFFSET (BasePWidgetClass, state_change),
 				NULL,
 				NULL,
-				panel_marshal_VOID__ENUM,
+				g_cclosure_marshal_VOID__ENUM,
 				G_TYPE_NONE,
 				1,
 				PANEL_TYPE_BASE_PSTATE);

@@ -74,7 +74,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
                               G_STRUCT_OFFSET (SlidingPosClass, anchor_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
                               PANEL_TYPE_SLIDING_ANCHOR);
@@ -86,7 +86,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
                               G_STRUCT_OFFSET (SlidingPosClass, offset_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               2,
                               G_TYPE_INT, G_TYPE_INT); 

@@ -86,7 +86,7 @@ border_pos_class_init (BorderPosClass *klass)
 			     G_STRUCT_OFFSET (BorderPosClass, edge_change),
 			     NULL,
 			     NULL,
-			     panel_marshal_VOID__ENUM,
+			     g_cclosure_marshal_VOID__ENUM,
 			     G_TYPE_NONE,
 			     1,
 			     PANEL_TYPE_BORDER_EDGE);

@@ -381,7 +381,7 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			      G_STRUCT_OFFSET (PanelAppletFrameClass, move_focus_out_of_applet),
 			      NULL,
 			      NULL,
-			      panel_marshal_VOID__ENUM,
+			      g_cclosure_marshal_VOID__ENUM,
 			      G_TYPE_NONE,
 			      1,
 			      GTK_TYPE_DIRECTION_TYPE);

@@ -292,7 +292,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, orient_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_ORIENTATION); 
@@ -352,7 +352,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, back_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__ENUM_POINTER_POINTER,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               3,
 			      PANEL_TYPE_PANEL_BACK_TYPE,
@@ -378,7 +378,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, push_move),
                               NULL,
                               NULL,
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
@@ -390,7 +390,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, switch_move),
                               NULL,
                               NULL,
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
@@ -402,7 +402,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, free_move),
                               NULL,
                               NULL,
-                              panel_marshal_VOID__ENUM,
+                              g_cclosure_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
                               GTK_TYPE_DIRECTION_TYPE);
