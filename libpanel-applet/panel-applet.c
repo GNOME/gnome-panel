@@ -623,7 +623,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 
 			g_object_unref (G_OBJECT (pixmap));
 		} else {
-			g_warning (_("panel_applet_set_prop: Unknown backgound type received"));
+			g_warning (_("panel_applet_set_prop: Unknown background type received"));
 			return;
 		}
 
