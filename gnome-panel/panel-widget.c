@@ -35,9 +35,60 @@ panel_widget_get_type ()
 	return panel_widget_type;
 }
 
+enum {
+	ORIENT_CHANGE_SIGNAL,
+	STATE_CHANGE_SIGNAL,
+	RESTORE_STATE_SIGNAL,
+	LAST_SIGNAL
+};
+
+static gint panel_widget_signals[LAST_SIGNAL] = {0,0,0};
+
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
+	GtkObjectClass *object_class;
+
+	object_class = (GtkObjectClass*) class;
+
+	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
+		gtk_signal_new("orient_change",
+			       GTK_RUN_FIRST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 orient_change),
+			       gtk_signal_default_marshaller,
+			       GTK_TYPE_NONE,
+			       2,
+			       GTK_TYPE_ENUM,
+			       GTK_TYPE_ENUM);
+	panel_widget_signals[STATE_CHANGE_SIGNAL] =
+		gtk_signal_new("state_change",
+			       GTK_RUN_FIRST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 state_change),
+			       gtk_signal_default_marshaller,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_ENUM);
+	panel_widget_signals[RESTORE_STATE_SIGNAL] =
+		gtk_signal_new("restore_state",
+			       GTK_RUN_FIRST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 restore_state),
+			       gtk_signal_default_marshaller,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_ENUM);
+
+	gtk_object_class_add_signals(object_class,panel_widget_signals,
+				     LAST_SIGNAL);
+
+	class->orient_change = NULL;
+	class->state_change = NULL;
+	class->restore_state = NULL;
 }
 
 static void
@@ -649,6 +700,10 @@ panel_widget_pop_up(PanelWidget *panel)
 	}
 
 	panel->state = PANEL_SHOWN;
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[STATE_CHANGE_SIGNAL],
+			PANEL_SHOWN);
 }
 
 static gint
@@ -669,6 +724,10 @@ panel_widget_pop_down(gpointer data)
 					 panel_widget_pop_down, panel);
 		return FALSE;
 	}
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[STATE_CHANGE_SIGNAL],
+			PANEL_HIDDEN);
 
 	panel->state = PANEL_MOVING;
 
@@ -739,6 +798,10 @@ panel_widget_pop_show(PanelWidget *panel, int fromright)
 	}
 
 	panel->state = PANEL_SHOWN;
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[STATE_CHANGE_SIGNAL],
+			PANEL_SHOWN);
 }
 
 static void
@@ -755,6 +818,15 @@ panel_widget_pop_hide(PanelWidget *panel, int fromright)
 		gtk_timeout_remove (panel->leave_notify_timer_tag);
 		panel->leave_notify_timer_tag = 0;
 	}
+
+	if(fromright)
+	   	gtk_signal_emit(GTK_OBJECT(panel),
+	   			panel_widget_signals[STATE_CHANGE_SIGNAL],
+	   			PANEL_HIDDEN_LEFT);
+	else
+	   	gtk_signal_emit(GTK_OBJECT(panel),
+	   			panel_widget_signals[STATE_CHANGE_SIGNAL],
+	   			PANEL_HIDDEN_RIGHT);
 
 	panel->state = PANEL_MOVING;
 
@@ -1517,13 +1589,6 @@ panel_widget_foreach(PanelWidget *panel, GFunc func, gpointer user_data)
 			(*func)(panel->applets[i].applet,user_data);
 }
 
-/*static void
-panel_widget_switch_orient(PanelWidget *panel)
-{
-	panel->thick = PANEL_MINIMUM_WIDTH;
-	panel_widget_set_size(panel,panel->size*PANEL_CELL_SIZE);
-}*/
-
 void
 panel_widget_change_params(PanelWidget *panel,
 			   PanelOrientation orient,
@@ -1535,18 +1600,19 @@ panel_widget_change_params(PanelWidget *panel,
 			   gint minimize_delay,
 			   DrawerDropZonePos drop_zone_pos)
 {
-	/*FIXME: change drop_zone_pos!!!!!!!!*/
 	PanelOrientation oldorient;
+	PanelSnapped oldsnapped;
+	PanelState oldstate;
 
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
 
-	/*the set_size will make it shown, this may change!  it would
-	  require more work to keep the state to be persistent accross
-	  sessions or even reconfigurations*/
+	oldorient = panel->orient;
+	oldsnapped = panel->snapped;
+	oldstate = panel->state;
+
 	panel->state = state;
 	panel->mode = mode;
-	oldorient = panel->orient;
 
 	/*so that there are no shifts necessary before size_allocate*/
 	panel->snapped = snapped;
@@ -1611,8 +1677,16 @@ panel_widget_change_params(PanelWidget *panel,
 
 	panel_widget_set_size(panel,panel->size);
 
-	/*if(oldorient != panel->orient)
-		panel_widget_switch_orient(panel);*/
+	if(oldorient != panel->orient ||
+	   oldsnapped != panel->snapped)
+	   	gtk_signal_emit(GTK_OBJECT(panel),
+	   			panel_widget_signals[ORIENT_CHANGE_SIGNAL],
+	   			panel->orient,
+	   			panel->snapped);
+	if(oldstate != panel->state)
+	   	gtk_signal_emit(GTK_OBJECT(panel),
+	   			panel_widget_signals[STATE_CHANGE_SIGNAL],
+	   			panel->state);
 
 	/*FIXME: notify each applet that we're changing orientation!*/
 	/*NOTE: this will probably be handeled by the app itself since
@@ -1625,6 +1699,18 @@ panel_widget_change_params(PanelWidget *panel,
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
+}
+
+void
+panel_widget_restore_state(PanelWidget *panel)
+{
+	gtk_widget_show(GTK_WIDGET(panel));
+	/*is this needed, probably ... in case we move the panel, this
+	  function should do a complete restore*/
+	panel_widget_set_size(panel,panel->size);
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[RESTORE_STATE_SIGNAL],
+			panel->state);
 }
 
 #if 0

@@ -271,6 +271,9 @@ main(int argc, char **argv)
 
 	gnome_init("panel", &argc, &argv);
 
+	gtk_widget_push_visual (gdk_imlib_get_visual ());
+        gtk_widget_push_colormap (gdk_imlib_get_colormap ());
+
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 

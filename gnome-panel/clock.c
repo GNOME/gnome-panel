@@ -183,7 +183,7 @@ session_save(int panel, int pos)
 	puts("SESSION_SAVE");
 }
 
-static void
+static gint
 applet_die(gpointer data)
 {
 	exit(0);

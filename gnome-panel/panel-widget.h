@@ -105,6 +105,14 @@ struct _PanelWidget
 struct _PanelWidgetClass
 {
 	GtkWindowClass parent_class;
+
+	void (* orient_change) (PanelWidget *panel,
+				PanelOrientation orient,
+				PanelSnapped snapped);
+	void (* state_change) (PanelWidget *panel,
+			       PanelState state);
+	void (* restore_state) (PanelWidget *panel,
+				PanelState state);
 };
 
 guint		panel_widget_get_type		(void);
@@ -141,6 +149,12 @@ GList*		panel_widget_get_applets	(PanelWidget *panel);
 void		panel_widget_foreach		(PanelWidget *panel,
 						 GFunc func,
 						 gpointer user_data);
+
+/*restore the current state, used after it was gtk_widget_hiden
+  emits "restore_state" signal so you can propagate the restore
+  state to drawers and such*/
+void		panel_widget_restore_state	(PanelWidget *panel);
+
 /*initiate drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);
