@@ -1212,6 +1212,9 @@ create_menu_at (GtkWidget *menu,
 		flist = my_g_slist_pop_first(flist);
 		
 		if (stat (filename, &s) == -1) {
+			g_warning("Something is wrong, "
+				  "file %s can't be stated",
+				  filename);
 			g_free (filename);
 			g_free(thisfile);
 			continue;
@@ -1224,12 +1227,9 @@ create_menu_at (GtkWidget *menu,
 							     ".directory");
 			item_info = gnome_desktop_entry_load (dentry_name);
 
-			/*add the .directory file to the checked files list,
-			  but only if we can stat it (if we can't it probably
-			  doesn't exist)*/
-			fi = make_finfo(dentry_name,FALSE);
-			if(fi)
-				finfo = g_slist_prepend(finfo,fi);
+			/*add the .directory file to the checked files list*/
+			fi = make_finfo(dentry_name,TRUE);
+			finfo = g_slist_prepend(finfo,fi);
 			g_free (dentry_name);
 
 			menuitem_name = item_info?item_info->name:thisfile;
@@ -1273,12 +1273,7 @@ create_menu_at (GtkWidget *menu,
 			
 			/*add file to the checked files list*/
 			fi = make_finfo_s(filename,&s);
-			if(!fi)
-				g_warning("Something is wrong, "
-					  "file %s can't be stated",
-					  filename);
-			else
-				finfo = g_slist_prepend(finfo,fi);
+			finfo = g_slist_prepend(finfo,fi);
 		}
 		
 		items++;
@@ -2186,7 +2181,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			dentry->type = g_strdup("Directory");
 			while((p=strchr(s,' '))) *p='_';
 			p = g_concat_dir_and_file(dir,s);
-			if(fp) fprintf(fp,"%s\n",p);
+			if(fp) fprintf(fp,"%s\n",g_basename(p));
 			mkdir(p,0755);
 			dentry->location = g_concat_dir_and_file(p,".directory");
 			g_free(s);
@@ -2208,7 +2203,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 						 &dentry->exec_length,
 						 &dentry->exec);
 			dentry->location = g_concat_dir_and_file(dir,s);
-			if(fp) fprintf(fp,"%s\n",dentry->location);
+			if(fp) fprintf(fp,"%s\n",g_basename(dentry->location));
 			g_free(s);
 		}
 		gnome_desktop_entry_save(dentry);
