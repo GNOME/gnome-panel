@@ -15,6 +15,8 @@
 #include "panel-include.h"
 #include "gnome-panel.h"
 
+#define SMALL_ICON_SIZE 20
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -364,6 +366,7 @@ create_applet_menu(AppletInfo *info)
 {
 	GtkWidget *menuitem, *panel_menu;
 	GList *user_menu = info->user_menu;
+	char *pixmap_file;
 
 	info->menu = gtk_menu_new();
 
@@ -386,7 +389,21 @@ create_applet_menu(AppletInfo *info)
 	panel_menu = gtk_menu_new();
 	make_panel_submenu(panel_menu,TRUE);
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Panel"));
+	pixmap_file = gnome_pixmap_file("gnome-panel.png");
+	if (!pixmap_file)
+	  {
+		g_warning("Cannot find pixmap file %s", "gnome-panel.png");
+		setup_menuitem (menuitem, 
+						NULL
+						_("Panel"));
+	  }
+	else
+	  setup_menuitem (menuitem, 
+					  gnome_stock_pixmap_widget_at_size(
+					      NULL,
+						  pixmap_file,
+						  SMALL_ICON_SIZE, SMALL_ICON_SIZE),
+					  _("Panel"));
 	gtk_menu_append (GTK_MENU (info->menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 

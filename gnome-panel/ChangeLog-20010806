@@ -1,3 +1,15 @@
+1999-09-11  Matthias Warkus  <mawa@iname.com>
+
+	* applet.c (create_applet_menu): Uses pixmap for "Panel" menu
+	entry, checks properly.
+
+	* menu.c (setup_menuitem_try_pixmap): Added this function to do
+	proper checking whether pixmaps exist so no assertions
+	fail. Changed calls to setup_menuitem to calls to
+	setup_menuitem_try_pixmap wherever appropriate.
+
+	Permission to commit has been granted by George.
+
 1999-09-09  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* applet.c (setup_an_item): use gtk_widget_destroyed

@@ -1968,6 +1968,27 @@ create_add_panel_submenu (void)
 	return menu;
 }
 
+static void
+setup_menuitem_try_pixmap(GtkWidget *menuitem, char *try_file, char *title)
+{
+  char *file;
+  
+  file = gnome_pixmap_file(try_file);
+  if (!file)
+	{
+	  g_warning(_("Cannot find pixmap file %s"), try_file);
+	  setup_menuitem(menuitem, NULL, title);
+	}
+  else
+	setup_menuitem(menuitem,
+				   gnome_stock_pixmap_widget_at_size(
+				       NULL,
+					   file,
+					   SMALL_ICON_SIZE, SMALL_ICON_SIZE),
+				   title);
+}
+	  
+
 static GtkWidget *
 create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 {
@@ -1979,7 +2000,7 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 	if (g_file_exists (menudir)) {
 		if(!fake || menu) {
 			menu = create_menu_at (menu,menudir,FALSE,_("Programs"),
-					       gnome_pixmap_file ("gnome-logo-icon-transparent.png"),
+					       gnome_unconditional_pixmap_file ("gnome-logo-icon-transparent.png"),
 					       fake_submenus, FALSE);
 		} else {
 			menu = create_fake_menu_at (menudir, FALSE,
@@ -2066,12 +2087,9 @@ create_panel_root_menu(GtkWidget *panel)
 	menu = create_system_menu(NULL,TRUE,TRUE);
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 
-				gnome_stock_pixmap_widget_at_size (
-					NULL,
-					gnome_pixmap_file ("gnome-logo-icon-transparent.png"),
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-				_("Programs"));
+		setup_menuitem_try_pixmap (menuitem, 
+								   "gnome-logo-icon-transparent.png",
+								   _("Programs"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -2082,12 +2100,9 @@ create_panel_root_menu(GtkWidget *panel)
 	menu = create_user_menu(_("Favorites"),"apps",NULL,TRUE,TRUE,TRUE);
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 
-				gnome_stock_pixmap_widget_at_size (
-					NULL,
-					gnome_pixmap_file ("gnome-squeak.png"), 
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-				_("Favorites"));
+		setup_menuitem_try_pixmap (menuitem, 
+								   "gnome-squeak.png",
+								   _("Favorites"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -2665,12 +2680,9 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 			   menuitem);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget_at_size (
-				NULL,
-				gnome_pixmap_file ("gnome-gmenu.png"),
-				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-			_("Menu"));
+	setup_menuitem_try_pixmap (menuitem, 
+							   "gnome-gmenu.png",
+							   _("Menu"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
 	submenu = gtk_menu_new ();
@@ -2686,24 +2698,18 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget_at_size (
-				NULL,
-					gnome_pixmap_file ("launcher-program.png"),
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-			_("Launcher"));
+	setup_menuitem_try_pixmap (menuitem, 
+							   "launcher-program.png",
+							   _("Launcher"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_launcher_cb),NULL);
 	setup_internal_applet_drag(menuitem, "LAUNCHER:ASK");
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget_at_size (
-				NULL,
-				gnome_pixmap_file ("panel-drawer.png"),
-				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-			_("Drawer"));
+	setup_menuitem_try_pixmap (menuitem, 
+							   "panel-drawer.png",
+							   _("Drawer"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_drawer_to_panel,
@@ -2711,12 +2717,9 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	setup_internal_applet_drag(menuitem, "DRAWER:NEW");
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget_at_size (
-				NULL,
-				gnome_pixmap_file ("gnome-term-night.png"),
-				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-			_("Log out button"));
+	setup_menuitem_try_pixmap (menuitem,
+					"gnome-term-night.png",
+					_("Log out button"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_logout_to_panel),
@@ -2724,12 +2727,9 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget_at_size (
-				NULL,
-				gnome_pixmap_file ("gnome-lockscreen.png"),
-				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-			_("Lock button"));
+	setup_menuitem_try_pixmap (menuitem, 
+					"gnome-lockscreen.png",
+					_("Lock button"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_lock_to_panel),
@@ -2865,7 +2865,9 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	panel_menu = gtk_menu_new();
 	make_panel_submenu(panel_menu,fake_submenus);
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Panel"));
+	setup_menuitem_try_pixmap (menuitem, 
+					"gnome-panel.png",
+				    _("Panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 	
@@ -2896,12 +2898,9 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem,
-				gnome_stock_pixmap_widget_at_size (
-					NULL,
-					gnome_pixmap_file ("gnome-lockscreen.png"),
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-				_("Lock screen"));
+		setup_menuitem_try_pixmap (menuitem,
+						"gnome-lockscreen.png",
+						_("Lock screen"));
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC(panel_lock), 0);
@@ -2965,12 +2964,9 @@ create_root_menu(int fake_submenus, int flags)
 		need_separ = FALSE;
 		menu = create_system_menu(NULL,fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem,
-				gnome_stock_pixmap_widget_at_size (
-					NULL,
-					gnome_pixmap_file ("gnome-logo-icon-transparent.png"),
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-				_("Programs"));
+		setup_menuitem_try_pixmap (menuitem,
+						"gnome-logo-icon-transparent.png",
+						_("Programs"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		if(menu) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
@@ -2987,12 +2983,9 @@ create_root_menu(int fake_submenus, int flags)
 		menu = create_user_menu(_("Favorites"), "apps", NULL,
 					fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 					
-				gnome_stock_pixmap_widget_at_size (
-					NULL,
-					gnome_pixmap_file ("gnome-squeak.png"),
-					SMALL_ICON_SIZE, SMALL_ICON_SIZE), 
-				_("Favorites"));
+		setup_menuitem_try_pixmap (menuitem, 					
+					"gnome-squeak.png",
+						_("Favorites"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
