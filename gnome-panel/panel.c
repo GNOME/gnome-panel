@@ -66,16 +66,19 @@ move_horiz(int src_x, int dest_x)
 	if (the_panel->step_size != 0)
 		if (src_x < dest_x)
 			for (x = src_x; x < dest_x; x += the_panel->step_size) {
-				move_window(GTK_WINDOW(the_panel->window), x, 0); 
+				move_window(GTK_WINDOW(the_panel->window), x,
+					the_panel->window->allocation.y); 
 				/* FIXME: do delay */
 			}
 		else
 			for (x = src_x; x > dest_x; x -= the_panel->step_size) {
-				move_window(GTK_WINDOW(the_panel->window), x, 0); 
+				move_window(GTK_WINDOW(the_panel->window), x,
+					the_panel->window->allocation.y); 
 				/* FIXME: do delay */
 			}
 	
-	move_window(GTK_WINDOW(the_panel->window), dest_x, 0);
+	move_window(GTK_WINDOW(the_panel->window), dest_x,
+		the_panel->window->allocation.y);
 }
 
 static void
@@ -86,16 +89,19 @@ move_vert(int src_y, int dest_y)
 	if (the_panel->step_size != 0)
 		if (src_y < dest_y)
 			for (y = src_y; y < dest_y; y += the_panel->step_size) {
-				move_window(GTK_WINDOW(the_panel->window), 0, y);
+				move_window(GTK_WINDOW(the_panel->window),
+					the_panel->window->allocation.x, y);
 				/* FIXME: do delay */
 			}
 		else
 			for (y = src_y; y > dest_y; y -= the_panel->step_size) {
-				move_window(GTK_WINDOW(the_panel->window), 0, y);
+				move_window(GTK_WINDOW(the_panel->window),
+					the_panel->window->allocation.x, y);
 				/* FIXME: do delay */
 			}
 
-	move_window(GTK_WINDOW(the_panel->window), 0, dest_y);
+	move_window(GTK_WINDOW(the_panel->window),
+		the_panel->window->allocation.x, dest_y);
 }
 
 
@@ -175,6 +181,88 @@ pop_down(void)
 	the_panel->state = PANEL_HIDDEN;
 }
 
+static void
+pop_show(void)
+{
+	int width, height;
+	int swidth, sheight;
+
+	if ((the_panel->state == PANEL_MOVING) ||
+	    (the_panel->state == PANEL_SHOWN))
+		return;
+
+	gtk_widget_show(the_panel->hidebutton);
+	gtk_widget_hide(the_panel->showbutton);
+
+	the_panel->state = PANEL_MOVING;
+
+	width   = the_panel->window->allocation.width;
+	height  = the_panel->window->allocation.height;
+	swidth  = gdk_screen_width();
+	sheight = gdk_screen_height();
+
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			move_horiz(-width +
+				the_panel->hidebutton->allocation.width, 0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			move_vert(-height +
+				the_panel->hidebutton->allocation.height, 0);
+			break;
+	}
+
+	the_panel->state = PANEL_SHOWN;
+}
+
+static void
+pop_hide(void)
+{
+	int width, height;
+	int swidth, sheight;
+
+	if ((the_panel->state == PANEL_MOVING) ||
+	    (the_panel->state == PANEL_HIDDEN))
+		return;
+
+	gtk_widget_hide(the_panel->hidebutton);
+	gtk_widget_show(the_panel->showbutton);
+
+	the_panel->state = PANEL_MOVING;
+
+	width   = the_panel->window->allocation.width;
+	height  = the_panel->window->allocation.height;
+	swidth  = gdk_screen_width();
+	sheight = gdk_screen_height();
+
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			move_horiz(0, -width +
+				the_panel->hidebutton->allocation.width);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			move_vert(0, -height +
+				the_panel->hidebutton->allocation.height);
+			break;
+	}
+
+	the_panel->state = PANEL_HIDDEN;
+}
+
+static void
+panel_show_hide(GtkWidget *widget, gpointer data)
+{
+	if(the_panel->state == PANEL_MOVING) 
+		return;
+	else if(the_panel->state == PANEL_HIDDEN)
+		pop_show();
+	else
+		pop_hide();
+}
 
 static gint
 panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
@@ -603,11 +691,11 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				x2 = x1 + width;
 				y2 = y1 + height;
 
-				if (x2 > the_panel->window->allocation.width)
-					x1 = the_panel->window->allocation.width - width;
+				if (x2 > the_panel->fixed->allocation.width)
+					x1 = the_panel->fixed->allocation.width - width;
 
-				if (y2 > the_panel->window->allocation.height)
-					y1 = the_panel->window->allocation.height - height;
+				if (y2 > the_panel->fixed->allocation.height)
+					y1 = the_panel->fixed->allocation.height - height;
 
 				if (x1 < 0)
 					x1 = 0;
@@ -616,16 +704,19 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					y1 = 0;
 
 				/*where did we move?*/
-				moveright=xpos<x1?TRUE:FALSE;
-				movedown=ypos<y1?TRUE:FALSE;
+				moveright=(xpos<x1 || xpos<=0)?TRUE:FALSE;
+				movedown=(ypos<y1 || ypos<=0)?TRUE:FALSE;
 
 				/*move the applet as close as we can to the
 				  one blocking it*/
 				while(!panel_is_spot_clean(widget,x1,y1,
 					width,height)) {
-					if(moveright)
-						x1--;
-					else
+					if(moveright) {
+						if(--x1<0) {
+							moveright=FALSE;
+							x1=xpos;
+						}
+					} else
 						x1++;
 					/* FIXME: should be done for
 					   vertical bar as well */
@@ -637,11 +728,11 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				x2 = x1 + width;
 				y2 = y1 + height;
 
-				if (x2 > the_panel->window->allocation.width)
-					x1 = the_panel->window->allocation.width - width;
+				if (x2 > the_panel->fixed->allocation.width)
+					x1 = the_panel->fixed->allocation.width - width;
 
-				if (y2 > the_panel->window->allocation.height)
-					y1 = the_panel->window->allocation.height - height;
+				if (y2 > the_panel->fixed->allocation.height)
+					y1 = the_panel->fixed->allocation.height - height;
 
 				if (x1 < 0)
 					x1 = 0;
@@ -650,7 +741,7 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					y1 = 0;
 
 				if ((x1 != xpos) || (y1 != ypos))
-					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1+i, y1);
+					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1, y1);
 
 				return TRUE;
 			}
@@ -738,13 +829,37 @@ panel_init(void)
 
 	the_panel->window = gtk_window_new(GTK_WINDOW_POPUP);
 
+	the_panel->box = gtk_hbox_new(FALSE,0); /*FIXME: this will have to be
+							vbox for a vertical
+							one!*/
+	/*FIXME: the hide button should only be shown if the panel
+	  is staying put*/
+	the_panel->hidebutton=gtk_button_new_with_label("<");
+	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton), "clicked",
+				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
+	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->hidebutton,
+		FALSE,FALSE,0);
+	gtk_widget_show(the_panel->hidebutton);
+
 	the_panel->fixed = gtk_fixed_new();
-	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->fixed);
+
+	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->fixed,
+		TRUE,TRUE,0);
 	gtk_widget_show(the_panel->fixed);
+
+	the_panel->showbutton=gtk_button_new_with_label(">");
+	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton), "clicked",
+				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
+	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->showbutton,
+		FALSE,FALSE,0);
+
+	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->box);
+	gtk_widget_show(the_panel->box);
 
 	the_panel->pos   = PANEL_POS_BOTTOM;
 	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
+	/*the_panel->mode  = PANEL_GETS_HIDDEN;*/
+	the_panel->mode  = PANEL_STAYS_PUT;
 	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
 	gtk_widget_set_uposition(the_panel->window, 0, gdk_screen_height() - DEFAULT_HEIGHT);
 #if 0
@@ -785,6 +900,10 @@ panel_init(void)
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
 	create_applet_menu();
+
+	GTK_WIDGET_SET_FLAGS(the_panel->window,
+		GTK_OBJECT_FLAGS(the_panel->window) | GTK_PROPAGATE_STATE);
+
 }
 
 
@@ -980,6 +1099,36 @@ fix_applet_position(GtkWidget *applet, int *xpos, int *ypos)
 }
 
 
+static gint
+fix_an_applet(gpointer data)
+{
+	int xpos;
+	int ypos;
+	GtkWidget* applet;
+
+	if(!data)
+		return FALSE;
+
+	applet=(GtkWidget *)data;
+
+	if(GTK_WIDGET(applet)->allocation.width<=1)
+		return TRUE;
+
+	xpos=GTK_WIDGET(applet)->allocation.x;
+	ypos=GTK_WIDGET(applet)->allocation.y;
+
+	while(!panel_is_spot_clean(applet,xpos,ypos,
+		GTK_WIDGET(applet)->allocation.width,
+		GTK_WIDGET(applet)->allocation.height)) {
+		xpos++;
+		/* FIXME: should be done for
+		   vertical bar as well */
+	}
+	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
+	return FALSE;
+}
+
+
 static void
 register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 {
@@ -1002,19 +1151,10 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC, get_applet_cmd_func(id));
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
 
-	fix_applet_position(eventbox, &xpos, &ypos);
-	printf("w=%d\n",(int)GTK_WIDGET(eventbox)->allocation.width);
+	/*fix_applet_position(eventbox, &xpos, &ypos);*/
 
-	/* FIXME: somehow find the size or schedhule rellocation a bit
-	   later*/
-	while(!panel_is_spot_clean(NULL,xpos,ypos,50,50)) {
-		/*GTK_WIDGET(eventbox)->allocation.width,
-		GTK_WIDGET(eventbox)->allocation.height)) {*/
-		xpos++;
-		printf("%d\n",xpos);
-		/* FIXME: should be done for
-		   vertical bar as well */
-	}
+	gtk_idle_add((void *)fix_an_applet, eventbox);
+
 	gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox, xpos, ypos);
 
 	gtk_widget_show(eventbox);
