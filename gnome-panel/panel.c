@@ -898,6 +898,23 @@ applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
 	info->user_menu = g_list_append(info->user_menu,menu);
 }
 
+static gint
+compare_params(const gchar *p1,const gchar *p2)
+{
+	if(!p1) {
+		if(!p2 || *p2=='\0')
+			return TRUE;
+		else
+			return FALSE;
+	} else if(!p2) {
+		if(!p1 || *p1=='\0')
+			return TRUE;
+		else
+			return FALSE;
+	}
+	return (strcmp(p1,p2)==0);
+}
+
 int
 applet_request_id (const char *path, const char *param,
 		   gint dorestart, char **cfgpath,
@@ -909,7 +926,7 @@ applet_request_id (const char *path, const char *param,
 	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
 		if(info && info->type == APPLET_EXTERN_PENDING &&
 		   strcmp(info->path,path)==0 &&
-		   strcmp(info->params,param)==0) {
+		   compare_params(param,info->params)) {
 			/*we started this and already reserved a spot
 			  for it, including the socket widget*/
 			*cfgpath = info->cfg;
