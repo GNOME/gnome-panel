@@ -1,8 +1,6 @@
 <!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
 ]>
-
 <article id="index" lang="it">
- 
  <artheader> 
   <title>Il pannello di GNOME</title>
   <copyright>
@@ -146,186 +144,178 @@
       <formalpara>
        <title>Applet</title> 
        <para>  
-	Applets are applications which
-        run inside a small part of the
-        <interface>Panel</interface>. The fourth through eighth icons
-        in the example <interface>Panel</interface> are applets. The
-        first applet shown is the <application>GNOME
-        Weather</application> applet, which periodically downloads the
-        current weather conditions off the Web and displays the
-        information. The second applet shown is the <application>Drive
-        Mount</application> applet, which shows whether a disk (in
-        this case, the floppy drive) is mounted and allows you to
-        mount and unmount the drive with a single click of the mouse.
-        The third applet shown is the <application>Quick
-        Launch</application> applet, which acts as a container for
-        launchers, but saves more space than placing your launchers
-        directly on the <interface>Panel</interface>. In the example
-        shown the <application>Quick Launch</application> applet
-        contains six application launchers.  Next is the
-        <application>GNOME Desk Guide</application>, which allows you
-        to control multiple virtual desktops, each of which can have
-        multiple screens.  You can move between desktops and screens
-        by clicking with your left mouse button.  The final  applet
-        shown is the <application>Tasklist</application>, which allows
-        you to control your application windows in various ways,
-        including changing the focus,  iconifying windows, closing
-        windows, and killing applications.  The
-        <application>Tasklist</application> shown is for a screen with
-        only two windows, both of which are <application>Electric
-        Eyes</application>.  For more information on applets, see
-        <xref linkend="applets">.
-        </para>
-       </formalpara>
-      </listitem>
-      <listitem>
-       <formalpara>
-        <title>Drawers</title>  <para>   Drawers are essentially
-        extensions of a <interface>Panel</interface> which can be
-        opened or closed.  They can hold anything the
-        <interface>Panel</interface> can.  The brown icon of a drawer
-        in the example  <interface>Panel</interface> is the default
-        icon for drawers, although any icon can be used. Click on the
-        <guiicon>Drawer</guiicon> icon with the left mouse button to
-        open or close it.  For more information on drawers, see <xref
-        linkend="drawers">.
-        </para>
-       </formalpara>
-      </listitem>
-      <listitem>
-       <formalpara>
-        <title>Special Objects</title>
-        <para>
-         Special objects are items you can add to a
-         <interface>Panel</interface> which perform functions which
-         are generally not available through the other
-         <interface>Panel</interface> objects. The last item in the
-         example <interface>Panel</interface> is a special object
-         called the <guibutton>Logout Button</guibutton>. Pressing
-         this with the left mouse button  begins the logout sequence
-         to end your GNOME session. For more information on special
-         objects, see <xref linkend="specialobjects">.
-        </para>
-       </formalpara>
-      </listitem>
-     </itemizedlist>
-    </para>
-    <para>
-     Each of these object types is described in detail in the
-     following sections. You can easily add, move, or remove Panel
-     objects (see <xref linkend="appletadd">).
-    </para>
-   </sect2>
-
- 
-   <sect2 id="rightclick">
-    <title>Right-Click Menu</title>
-    <para>
-     Clicking on any Panel object with the right mouse button brings
-     up the Panel object's <guimenu>right-click</guimenu> menu. This
-     menu contains <guimenuitem>Remove from panel</guimenuitem> for
-     removing the object from the <interface>Panel</interface>,
-     <guimenuitem>Move</guimenuitem> for  moving objects within the
-     <interface>Panel</interface> or between two
-     <interface>Panels</interface>,  the
-     <guisubmenu>Panel</guisubmenu> submenu described below, and
-     typically one or more object-specific menu items.  For drawers,
-     menus, and launchers the only object-specific item is
-     <guimenuitem>Properties...</guimenuitem> which allows you to
-     customize the properties and settings of the object. For applets,
-     the <guimenu>right-click</guimenu> menu will often contain
-     <guimenuitem>About...</guimenuitem> for viewing information about
-     the applet such as the author's name and the applet version,
-     <guimenuitem>Help</guimenuitem> for viewing the applet's
-     documentation,  and <guimenuitem>Properties...</guimenuitem> for
-     configuring preferences and settings for the applet.  Applets
-     often have other applet-specific controls in their
-     <guimenu>right-click</guimenu> menus.
-    </para>
-    <para>
-     The <guisubmenu>Panel</guisubmenu> submenu allows you to <link
-     linkend="panelmove">create and remove
-     <interface>Panels</interface></link> and <link
-     linkend="appletadd">add objects</link> to the
-     <interface>Panel</interface>.  It also allows you to modify the
-     properties of the particular <interface>Panel</interface> of
-     interest using the  <guimenuitem>Properties</guimenuitem> menu
-     item (see <xref linkend="panelproperties">) or the properties of
-     all <interface>Panels</interface> using the <guimenuitem>Global
-     Preferences...</guimenuitem> menu item (see <xref
-     linkend="globalpanelprefs">).
-    </para>
-    <para>
-     You can also right-click on the <interface>Panel</interface>
-     itself. This will bring up the <link
-     linkend="mainmenu"><guimenu>Main Menu</guimenu></link>. In
-     particular, this menu also contains the
-     <guisubmenu>Panel</guisubmenu> submenu described above.
-    </para>
-   </sect2>
-
-   <sect2 id="panelhide">
-    <title>Hiding the Panel</title>
-    <para>
-     <indexterm id="idx-a4">
-      <primary>Panel</primary> <secondary>Hide Buttons</secondary>
-     </indexterm>
-     <indexterm id="idx-a5">
-      <primary>Panel</primary> <secondary>Hiding</secondary>
-     </indexterm>
-     The left and right arrow icons seen at either end of the example
-     <interface>Panel</interface> and in <xref linkend="fig2"> are
-     used to hide the <interface>Panel</interface>.
+	Le applet sono applicazioni che risiedono in piccole aree del
+       <interface>pannello</interface>. Le icone dalla quarta all'ottava
+       mostrate nel <interface>pannello</interface> di esempio sono applet. La
+       prima applet è <application>GNOME Weather</application>, che
+       periodicamente preleva dalla rete le informazioni meteorologiche e le
+       visualizza. La seconda applet mostrata è
+       <application>MontaDischi</application>, la quale mostra se un disco (in
+       questo caso, il disco floppy) è montato o meno e la quale permette di
+       montarlo/smontarlo tramite un singolo click del mouse. La terza applet
+       invece è <application>QuickLaunch</application>, che può contenere al suo
+       interno pulsanti di avvio, per ridurre lo spazio occupati da questi sul
+       pannello. Nell'esempio mostrato questa applet contiene sei pulsanti di
+       avvio. La successiva è la <application>GNOME DeskGuide</application>, che
+       permette il controllo dei desktop virtuali multipli. È possibile muoversi
+       tra questi selezionandoli con un singolo click del pulsante sinistro del
+       mouse. L'ultima applet è la <application>Lista dei Task</application>,
+       che permette di eseguire svariate operazioni sulle finestre delle
+       applicazioni, inclusa la selezione, la riduzione a icona, la chiusura
+       delle finestre o la terminazione delle applicazioni ad esse collegate. La
+       <application>Lista dei task</application> in questo esempio mostra uno
+       schermo con due sole finestre, entrambi le quali corrispondono
+       all'applicazione <application>Electric Eyes</application>. Per maggiori
+       informazioni sulle applet, consultate <xref linkend="applets">.
+       </para>
+      </formalpara>
+     </listitem>
+     <listitem>
+      <formalpara>
+       <title>
+	Cassetti
+       </title>  
+       <para>   
+	I cassetti sono essenziali estensioni del
+	<interface>pannello</interface> i quali possono essere aperti o
+	chiusi. Possono contenere tutto ciò che può contenere il pannello.
+	L'icona marrone del cassetto mostrata nel
+       <interface>pannello</interface> di esempio è quella predefinita per
+       questo tipo di oggetto, ma può essere sostituita con una
+       qualunque. Cliccando sul <guiicon>Cassetto</guiicon> con il tasto
+       sinistro del mouse questo si aprirà o chiuderà. Per maggiori informazioni
+       sui cassetti, consultate <xref linkend="drawers">.
+       </para>
+      </formalpara>
+     </listitem>
+     <listitem>
+      <formalpara>
+       <title>Oggetti speciali</title>
+       <para>
+	Gli oggetti speciali sonoquelli che possono essere inseriti nel
+         <interface>pannello</interface> i quali eseguono operazioni che non
+         vengono svolte da nessun altro tipo di oggetto. L'ultima icona presente
+         nel <interface>pannello</interface> di esempio è un oggetto speciale
+         chiamato <guibutton>Pulsante di Uscita</guibutton>. Premendo questo
+         pulsante con il tasto sinitro del mouse verrà iniziata la sequenza di
+         uscita dalla sessione di GNOME. Per maggiori informazioni sugli oggetti
+         speciali, consultate <xref linkend="specialobject">.
+       </para>
+      </formalpara>
+     </listitem>
+    </itemizedlist>
+   </para>
+   <para>
+    Ciascuno di questi oggetti speciale viene descritto in dettaglio nelle
+    sezioni seguenti. È possibile aggiungere, spostare o rimuovere con estrema
+    facilità questi oggetti dal pannello (<xref linkend="appletadd">).
+   </para>
+  </sect2>
+  
+  
+  <sect2 id="rightclick">
+   <title>Menu tasto-destro</title>
+   <para>
+    Cliccando su qualunque oggetto del pannello con il tasto destro del mouse
+    verrà visualizzato il menu <guimenu>tasto-destro</guimenu>. Questo menu
+    contiene la voce <guimenuitem>Rimuovi dal pannello</guimenuitem> per la
+    rimozione dell'oggetto dal <interface>pannello</interface>, la voce
+    <guimenuitem>Sposta</guimenuitem> per lo spostamento degli oggetti
+    all'interno del <interface>pannello</interface> oppure tra più pannelli, il
+    sottomenu <guisubmenu>Pannello</guisubmenu> (descritto più avanti), e
+    tipicamente una o più voci specifiche all'oggetto selezionato. Per i
+    cassetti, menu e pulsanti di avvio l'unica voce specifica è
+    <guimenuitem>Proprietà...</guimenuitem>, che permette la personalizzazione e
+    le impostazioni di questi oggetti. Per le applet, questo menu contiene
+    solitamente la voce <guimenu>Informazioni su...</guimenu> per la
+    visualizzazione di informazioni riguardanti l'applet, come il nome del suo
+    autore o la versione, la voce <guimenuitem>Aiuto</guimenuitem> per la
+    visualizzazione del manuale relativo all'applet, e la voce
+    <guimenuitem>Proprietà...</guimenuitem> per la configurazione delle
+    preferenze e delle impostazioni. Le applet possono avere anche controlli
+    specifici rappresentati da voci apposite presenti in questo menu.
+   </para>
+   <para>
+    Il sottomenu <guisubmenu>Pannello</guisubmenu> vi permette di <link
+    linkend="panelmove">creare e rimuovere
+    <interface>pannelli</interface></link> e <link
+    linkend="appletadd">aggiungere oggetti</link> al
+    <interface>pannello</interface> stesso. Permette inoltre di modificare
+    le proprietà del <interface>pannello</interface> selezionato utilizzando la
+    voce del menu <guimenuitem>Proprietà</guimenuitem> (<xref
+    linkend="panelproperties">) oppure le proprietà di tutti i
+     <interface>pannelli</interface> utilizzando la voce <guimenuitem>Proprietà
+    globali...</guimenuitem> (<xref linkend="globalpanelprefs">).
+   </para>
+   <para>
+    È inoltre possibile cliccare con il tasto destro direttamente sul
+    <interface>pannello</interface> stesso. Questo mostrerà un menu
+    particolare, il quale conterrà il sottomenu
+    <guisubmenu>Pannello</guisubmenu> descritto precedentemente.
+   </para>
+  </sect2>
+  
+  <sect2 id="panelhide">
+   <title>Nascondere il pannello</title>
+   <para>
+    <indexterm id="idx-a4">
+     <primary>Pannello</primary> 
+     <secondary>Pulsanti di minimizzazione</secondary>
+    </indexterm>
+    <indexterm id="idx-a5">
+     <primary>Pannello</primary> <secondary>Minimizzazione</secondary>
+    </indexterm>
+    Le icone con la freccia indicanti la destra e la sinitra presenti alle due
+    estremità del <interface>pannello</interface> di esempio e nella <xref
+    linkend="fig2"> vengono utilizzate per minimizzare il
+    <interface>pannello</interface>. 
      <figure id="fig2">
-      <title>The Hide Button</title>
+      <title>I pulsanti di minimizzazione</title>
       <screenshot>
-       <screeninfo>The Hide Button</screeninfo>
-        <graphic fileref="./figures/hide-button" format="png"
-        srccredit="dcm">
-        </graphic>
+       <screeninfo>I pulsanti di minimizzazione</screeninfo>
+       <graphic fileref="./figures/hide-button" format="png"
+		srccredit="dcm">
+       </graphic>
       </screenshot>
      </figure>
-    </para>
-    <para>
-     Pressing one of these arrows will hide the
-     <interface>Panel</interface> by sliding   it in the direction of
-     the arrow pressed, so that the only part of the
-     <interface>Panel</interface> which remains visible is the
-     <guibutton>Hide</guibutton> button itself.   Pressing it a second
-     time will expand the <interface>Panel</interface>.
-    </para>
-    <para>
-     <interface>Panels</interface> can be configured to automatically
-     hide when you are  not using it and reappear when you move the
-     mouse to the part of the screen where the
-     <interface>Panel</interface> resides. This can be useful if you
-     are unable to run your system in a high resolution.  To learn how
-     to have a <interface>Panel</interface> auto-hide, see <xref
-     linkend="panelproperties">.
-    </para>
-   </sect2>
-
-   <sect2 id="loggingout">
-    <title>Logging Out</title>
-    <para>
-     To log out of GNOME, right click on the
-     <interface>Panel</interface> and select <guimenuitem>Log
-     out</guimenuitem>. This will bring up the
-     <interface>Logout</interface> dialog, shown in <xref
-     linkend="logoutdialog-fig">.
-    </para>
-    <figure id="logoutdialog-fig">
-     <title>The Logout Dialog</title>
-     <screenshot>
-      <screeninfo>Logout</screeninfo>
-      <graphic fileref="./figures/logout-screen" format="png"
-      srccredit="dcm">
-      </graphic>
-     </screenshot>
-    </figure>
-    <para>
-     If you would like to save your current setup, select the
-     <guilabel>Save current setup</guilabel> checkbox. This will save
+   </para>
+   <para>
+    Premendo una di queste due freccie il <interface>pannello</interface> verrà
+    minimizzato, scorrendo nelle direzione della freccia premuta, in modo tale
+    che l'unica parte del pannello che rimarrà visibile sia il pulsante
+    stesso. Premendolo una seconda volta il <interface>pannello</interface>
+    verrà nuovamente mostrato nella sua interezza.
+   </para>
+   <para>
+    I <interface>pannelli</interface> possono essere configurati per nascondersi
+    automaticamente quando non vengono utilizzati e apparire quando il cursore
+    si trova sopra di essi. Questa soluzione può risultare utile se non è
+    possibile utilizzare il sistema ad alte risoluzioni. Per comprendere come
+    nascondere automaticamente il <interface>pannello</interface>, fate
+    riferimento al<xref linkend="panelproperties">.
+   </para>
+  </sect2>
+  
+  <sect2 id="loggingout">
+   <title>Terminare la sessione</title>
+   <para>
+    Per uscire da Gnome è sufficiente cliccare con il tasto destro sul
+    <interface>pannello</interface> e selezionare la voce
+    <guimenuitem>Esci</guimenuitem>. Questo mostrerà una finestra di dialogo per
+    la conferma, mostrata nella <xref linkend="logoutdialog-fig">.
+   </para>
+   <figure id="logoutdialog-fig">
+    <title>La finestra di dialogoThe Logout Dialog</title>
+    <screenshot>
+     <screeninfo>Logout</screeninfo>
+     <graphic fileref="./figures/logout-screen" format="png"
+	      srccredit="dcm">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    If you would like to save your current setup, select the
+    <guilabel>Save current setup</guilabel> checkbox. This will save
      any GNOME applications you have open and configuration changes
      you may have made in the <application>Control
      Center</application>.
