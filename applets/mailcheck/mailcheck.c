@@ -19,6 +19,16 @@
 
 #include "mailcheck.h"
 
+/* 
+   The launching of an email program when the applet is
+   clicked would be better implemented with CORBA, and 
+   configured with a capplet.  Until then, just save
+   the email program as a property and gnome_execute_shell()
+   the program name.  -- Jacob Berkman <jberk+@cmu.edu>
+*/
+#define REDO_PROG_LAUNCH_WITH_CORBA
+
+
 #define WIDGET_HEIGHT 48
 
 GtkWidget *applet = NULL;
@@ -40,6 +50,11 @@ struct _MailCheck {
 	int unreadmail;
 
 	guint update_freq;
+
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+        /* command launched when applet is clicked */
+        char *mail_prog_cmd;
+#endif
 
 	char *cmd;
 	
@@ -82,6 +97,9 @@ struct _MailCheck {
 	/* The property window */
 	GtkWidget *property_window;
 	GtkWidget *spin, *cmd_entry;
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+        GtkWidget *mail_prog_entry;
+#endif
 	gboolean anim_changed;
 
 	char *mailcheck_text_only;
@@ -190,7 +208,7 @@ mail_check_timeout (gpointer data)
 {
 	MailCheck *mc = data;
 
-	if (mc->cmd){
+	if (mc->cmd && (strlen(mc->cmd) > 0)){
 		/*
 		 * if we have to execute a command before checking for mail, we
 		 * remove the mail-check timeout and re-add it after the command
@@ -271,6 +289,18 @@ icon_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 	return TRUE;
 }
 
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+static gint
+exec_mail_prog (GtkWidget *widget, GdkEvent *evt, gpointer data)
+{
+         MailCheck *mc = data;
+	 if (mc->mail_prog_cmd && (strlen(mc->mail_prog_cmd)) > 0)
+	        gnome_execute_shell(NULL, mc->mail_prog_cmd);
+	 return TRUE;
+}
+
+#endif
+
 static void
 mailcheck_destroy (GtkWidget *widget, gpointer data)
 {
@@ -283,6 +313,10 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	if(mc->cmd)
 		g_free (mc->cmd);
 
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+	if (mc->mail_prog_cmd)
+	        g_free(mc->mail_prog_cmd);
+#endif
 	gtk_timeout_remove (mc->mail_timeout);
 }
 
@@ -488,6 +522,18 @@ apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
 	if (strlen (text) > 0)
 		mc->cmd = g_strdup (text);
 	
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+        if (mc->mail_prog_cmd) {
+                g_free(mc->mail_prog_cmd);
+                mc->mail_prog_cmd = NULL;
+        }
+
+        text = gtk_entry_get_text (GTK_ENTRY(mc->mail_prog_entry));
+
+        if (strlen(text) > 0)
+                mc->mail_prog_cmd = g_strdup(text);
+#endif
+
 	if (mc->anim_changed)
 		load_new_pixmap (mc);
 	
@@ -523,12 +569,35 @@ mailcheck_properties_page (MailCheck *mc)
 	l = gtk_label_new(_("before each update"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-	
-	hbox = gtk_hbox_new (FALSE, 6);
+
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+ 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);
 	
-	l = gtk_label_new (_("Check for mail every"));
+        l = gtk_label_new (_("Execute"));
+        gtk_widget_show(l);
+        gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+
+        mc->mail_prog_entry = gtk_entry_new();
+        if(mc->mail_prog_cmd) {
+          gtk_entry_set_text(GTK_ENTRY(mc->mail_prog_entry), 
+                             mc->mail_prog_cmd);
+        }
+        gtk_signal_connect(GTK_OBJECT(mc->mail_prog_entry), "changed",
+                           GTK_SIGNAL_FUNC(property_box_changed), mc);
+        gtk_widget_show(mc->mail_prog_entry);
+        gtk_box_pack_start (GTK_BOX (hbox), mc->mail_prog_entry, FALSE, FALSE, 0);      
+        l = gtk_label_new (_("when clicked."));
+        gtk_widget_show(l);
+        gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+#endif
+
+        hbox = gtk_hbox_new (FALSE, 6);
+        gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+        gtk_widget_show (hbox); 
+
+        l = gtk_label_new (_("Check for mail every"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
@@ -609,6 +678,10 @@ applet_save_session(GtkWidget *w,
 	gnome_config_set_int("mail/update_frequency", mc->update_freq);
 	gnome_config_set_string("mail/exec_command",
 				mc->cmd?mc->cmd:"");
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+	gnome_config_set_string("mail/mail_prog_command",
+				mc->mail_prog_cmd?mc->mail_prog_cmd:"");
+#endif
 	gnome_config_pop_prefix();
 
 	gnome_config_sync();
@@ -687,14 +760,29 @@ make_mailcheck_applet(const gchar *goad_id)
 			    "mail/exec_command", NULL);
 	mc->cmd = gnome_config_get_string(query);
 	g_free(query);
-	
+
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA
+        query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+                            "mail/mail_prog_command", NULL);
+        mc->mail_prog_cmd = gnome_config_get_string(query);
+        g_free(query);         
+#endif	
 	if(emailfile) g_free(emailfile);
 	
 	mc->mailcheck_text_only = _("Text only");
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
 	applet_widget_add (APPLET_WIDGET (applet), mailcheck);
-	gtk_widget_show (applet);
+
+#ifdef REDO_PROG_LAUNCH_WITH_CORBA                        	
+        gtk_widget_set_events(GTK_WIDGET(applet), 
+                              gtk_widget_get_events(GTK_WIDGET(applet)) |
+                              GDK_BUTTON_PRESS_MASK);
+
+        gtk_signal_connect(GTK_OBJECT(applet), "button_press_event",
+                           GTK_SIGNAL_FUNC(exec_mail_prog), mc);
+#endif
+
 	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
 			   GTK_SIGNAL_FUNC(applet_save_session),
 			   mc);
@@ -712,5 +800,6 @@ make_mailcheck_applet(const gchar *goad_id)
 					      _("About..."),
 					      mailcheck_about,
 					      NULL);
+	gtk_widget_show (applet);
 	return applet;
 }
