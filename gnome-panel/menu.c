@@ -83,7 +83,8 @@ activate_app_def (GtkWidget *widget, void *data)
 static void
 kill_small_icon(GtkWidget *widget, gpointer data)
 {
-	if(small_icons) small_icons = g_list_remove(small_icons,widget);
+	if(small_icons)
+		small_icons = g_list_remove(small_icons,widget);
 }
 
 void
@@ -253,6 +254,29 @@ make_finfo_s(gchar *name, struct stat *s)
 	return fi;
 }
 
+/*reads in the order file and makes a list*/
+static GList *
+get_presorted_from(char *dir)
+{
+	char buf[PATH_MAX+1];
+	GList *list;
+	char *fname = g_concat_dir_and_file(dir,".order");
+	FILE *fp = fopen(fname,"r");
+	
+	if(!fp) {
+		g_free(fname);
+		return NULL;
+	}
+	while(fgets(buf,PATH_MAX+1,fp)!=NULL)
+		list = g_list_append(list,g_strdup(buf));
+	fclose(fp);
+	g_free(fname);
+	return list;
+}
+
+
+
+
 static GtkWidget *
 create_menu_at (char *menudir,
 		int create_app_menu,
@@ -267,6 +291,9 @@ create_menu_at (char *menudir,
 	DIR *dir;
 	int items = 0;
 	FileInfo *fi;
+	GList *presorted = NULL;
+	GList *done = NULL;
+	char *thisfile;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
@@ -279,27 +306,41 @@ create_menu_at (char *menudir,
 			  menudir);
 	else
 		*finfo = g_list_prepend(*finfo,fi);
+	
+	presorted = get_presorted_from(menudir);
 
 	menu = gtk_menu_new ();
 	
-	while ((dent = readdir (dir)) != NULL) {
+	while (presorted ||
+	       (dent = readdir (dir)) != NULL) {
 		GtkWidget     *menuitem, *sub, *pixmap;
 		GtkSignalFunc  activate_func;
-		char          *thisfile, *pixmap_name;
+		char          *pixmap_name;
 		char          *menuitem_name;
+		
+		if(presorted) {
+			thisfile = presorted->data;
+			filename = g_concat_dir_and_file(menudir,thisfile);
+			presorted = g_list_remove_link(presorted,presorted);
+		} else {
+			thisfile = g_strdup(dent->d_name);
+			/* Skip over . and .. */
+			if ((thisfile [0] == '.' && thisfile [1] == 0) ||
+			    (thisfile [0] == '.' && thisfile [1] == '.' &&
+			     thisfile [2] == 0)) {
+				g_free(thisfile);
+				continue;
+			}
 
-		thisfile = dent->d_name;
-		/* Skip over . and .. */
-		if ((thisfile [0] == '.' && thisfile [1] == 0) ||
-		    (thisfile [0] == '.' && thisfile [1] == '.' &&
-		     thisfile [2] == 0))
-			continue;
-
-		filename = g_concat_dir_and_file (menudir, thisfile);
-		if (stat (filename, &s) == -1) {
+			filename = g_concat_dir_and_file (menudir, thisfile);
+		}
+		if (stat (filename, &s) == -1 ||
+		    string_is_in_list(done,filename)) {
 			g_free (filename);
+			g_free(thisfile);
 			continue;
 		}
+		done = g_list_prepend(done,g_strdup(filename));
 
 		sub = 0;
 		item_info = 0;
@@ -310,6 +351,7 @@ create_menu_at (char *menudir,
 					      applets,finfo);
 			if (!sub) {
 				g_free (filename);
+				g_free(thisfile);
 				continue;
 			}
 
@@ -363,11 +405,13 @@ create_menu_at (char *menudir,
 		} else {
 			if (strstr (filename, ".desktop") == 0) {
 				g_free (filename);
+				g_free(thisfile);
 				continue;
 			}
 			item_info = gnome_desktop_entry_load (filename);
 			if (!item_info) {
 				g_free (filename);
+				g_free(thisfile);
 				continue;
 			}
 			menuitem_name = item_info->name;
@@ -415,6 +459,7 @@ create_menu_at (char *menudir,
 		}
 
 		g_free (filename);
+		g_free(thisfile);
 	}
 	closedir (dir);
 
@@ -422,6 +467,9 @@ create_menu_at (char *menudir,
 		gtk_widget_destroy (menu);
 		menu = NULL;
 	}
+	
+	g_list_foreach(done,(GFunc)g_free,NULL);
+	g_list_free(done);
 	
 	return menu;
 }

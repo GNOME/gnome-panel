@@ -108,3 +108,11 @@ move_window(GtkWidget *widget, int x, int y)
 
 
 
+int
+string_is_in_list(GList *list,char *text)
+{
+	for(;list!=NULL;list=g_list_next(list))
+		if(strcmp(text,list->data)==0)
+			return TRUE;
+	return FALSE;
+}

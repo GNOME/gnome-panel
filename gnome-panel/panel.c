@@ -51,14 +51,6 @@ extern gint main_menu_count;
 
 extern gint panel_widget_inhibit_allocates;
 
-static gint
-string_is_in_list(GList *list,gchar *text)
-{
-	for(;list!=NULL;list=g_list_next(list))
-		if(strcmp(text,list->data)==0)
-			return TRUE;
-	return FALSE;
-}
 
 /*will send only once to multi applets*/
 static void
