@@ -2456,7 +2456,8 @@ create_panel_root_menu(GtkWidget *panel)
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 
-				gnome_pixmap_new_from_file_at_size (
+				gnome_stock_pixmap_widget_at_size (
+					NULL,
 					gnome_pixmap_file ("gnome-logo-icon-transparent.png"),
 					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 				_("Programs"));
@@ -3049,7 +3050,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 
-			gnome_pixmap_new_from_file_at_size (
+			gnome_stock_pixmap_widget_at_size (
+				NULL,
 				gnome_pixmap_file ("gnome-gmenu.png"),
 				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 			_("Menu"));
@@ -3069,7 +3071,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 
-			gnome_pixmap_new_from_file_at_size (
+			gnome_stock_pixmap_widget_at_size (
+				NULL,
 					gnome_pixmap_file ("launcher-program.png"),
 					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 			_("Launcher"));
@@ -3080,7 +3083,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 
-			gnome_pixmap_new_from_file_at_size (
+			gnome_stock_pixmap_widget_at_size (
+				NULL,
 				gnome_pixmap_file ("panel-drawer.png"),
 				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 			_("Drawer"));
@@ -3092,7 +3096,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
-			gnome_pixmap_new_from_file_at_size (
+			gnome_stock_pixmap_widget_at_size (
+				NULL,
 				gnome_pixmap_file ("gnome-term-night.png"),
 				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 			_("Log out button"));
@@ -3104,7 +3109,8 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 
-			gnome_pixmap_new_from_file_at_size (
+			gnome_stock_pixmap_widget_at_size (
+				NULL,
 				gnome_pixmap_file ("gnome-lockscreen.png"),
 				SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 			_("Lock button"));
@@ -3272,8 +3278,9 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 
-				gnome_pixmap_new_from_file_at_size (
+		setup_menuitem (menuitem,
+				gnome_stock_pixmap_widget_at_size (
+					NULL,
 					gnome_pixmap_file ("gnome-lockscreen.png"),
 					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 				_("Lock screen"));
@@ -3676,8 +3683,9 @@ create_root_menu(int fake_submenus, int flags)
 		need_separ = FALSE;
 		menu = create_system_menu(NULL,fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 
-				gnome_pixmap_new_from_file_at_size (
+		setup_menuitem (menuitem,
+				gnome_stock_pixmap_widget_at_size (
+					NULL,
 					gnome_pixmap_file ("gnome-logo-icon-transparent.png"),
 					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
 				_("Programs"));
