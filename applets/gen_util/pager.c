@@ -39,6 +39,8 @@ typedef struct {
 	
 	GtkOrientation orientation;
 	int n_rows;
+	WnckPagerDisplayMode display_mode;
+	gboolean display_all;
 	int size;
   
 } PagerData;
@@ -73,6 +75,10 @@ pager_update (PagerData *pager)
 				    pager->orientation);
 	wnck_pager_set_n_rows (WNCK_PAGER (pager->pager),
 			       pager->n_rows);
+	wnck_pager_set_display_mode (WNCK_PAGER (pager->pager),
+				     pager->display_mode);
+	wnck_pager_set_show_all (WNCK_PAGER (pager->pager),
+				 pager->display_all);
 }
 
 static void
@@ -117,7 +123,6 @@ applet_change_pixel_size (PanelApplet *applet,
 static void
 destroy_pager(GtkWidget * widget, gpointer data)
 {
-	PagerData *pager = data;
 }
 
 static const BonoboUIVerb pager_menu_verbs [] = {
@@ -159,6 +164,63 @@ num_rows_changed (GConfClient *client,
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
 }
 
+static void
+display_workspace_names_changed (GConfClient *client,
+				 guint        cnxn_id,
+				 GConfEntry  *entry,
+				 PagerData   *pager)
+{
+	gboolean value = FALSE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+
+	g_print ("display_workspace_names_changed, value=%d\n", value);
+
+	if (value) {
+		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
+	} else {
+		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
+	}
+	pager_update (pager);
+	
+	if (pager->display_workspaces_toggle &&
+	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle)) != value) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle),
+					      value);
+	}
+}
+
+
+static void
+all_workspaces_changed (GConfClient *client,
+			guint        cnxn_id,
+			GConfEntry  *entry,
+			PagerData   *pager)
+{
+	gboolean value = TRUE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+
+	pager->display_all = value;
+	pager_update (pager);
+
+	if (pager->all_workspaces_radio){
+		if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio)) != value) {
+			if (value) {
+				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
+			} else {
+				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
+			}
+		}
+		gtk_widget_set_sensitive (pager->num_rows_spin, value);
+	}
+}
 
 static void
 setup_gconf (PagerData *pager)
@@ -176,6 +238,26 @@ setup_gconf (PagerData *pager)
 				NULL, NULL);
 		
 	g_free (key);
+
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
+					       "display_workspace_names");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)display_workspace_names_changed,
+				pager,
+				NULL, NULL);
+		
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
+					       "display_all_workspaces");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)all_workspaces_changed,
+				pager,
+				NULL, NULL);
+		
+	g_free (key);
+
 }
 
 gboolean
@@ -183,6 +265,7 @@ fill_pager_applet(PanelApplet *applet)
 {
 	PagerData *pager;
 	GError *error;
+	gboolean display_names;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/pager-applet/prefs", NULL);
 	
@@ -195,6 +278,26 @@ fill_pager_applet(PanelApplet *applet)
 	if (error) {
 		g_error_free (error);
 		pager->n_rows = 2; /* Default value */
+	}
+
+	error = NULL;
+	display_names = panel_applet_gconf_get_bool (applet, "display_workspace_names", &error);
+	if (error) {
+		g_error_free (error);
+		display_names = FALSE; /* Default value */
+	}
+
+	if (display_names) {
+		pager->display_mode = WNCK_PAGER_DISPLAY_NAME;
+	} else {
+		pager->display_mode = WNCK_PAGER_DISPLAY_CONTENT;
+	}
+
+	error = NULL;
+	pager->display_all = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
+	if (error) {
+		g_error_free (error);
+		pager->display_all = TRUE; /* Default value */
 	}
 	
 	/* FIXME: We need to get the real initial panel data here */
@@ -318,28 +421,6 @@ display_workspace_names_toggled (GtkToggleButton *button,
 }
 
 static void
-display_workspace_names_changed (GConfClient *client,
-				 guint        cnxn_id,
-				 GConfEntry  *entry,
-				 PagerData   *pager)
-{
-	gboolean value = FALSE; /* Default value */
-	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
-
-	g_print ("display_workspace_names_changed, value=%d\n", value);
-	
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle),
-				     value);
-
-	/* TODO: Actually change whether workspace names are shown or not */
-	
-}
-
-static void
 all_workspaces_toggled (GtkToggleButton *button,
 			PagerData       *pager)
 {
@@ -359,41 +440,13 @@ num_rows_value_changed (GtkSpinButton *button,
 				    NULL);
 }
 
-static void
-all_workspaces_changed (GConfClient *client,
-			guint        cnxn_id,
-			GConfEntry  *entry,
-			PagerData   *pager)
-{
-	gboolean value = TRUE; /* Default value */
-	
-	if (entry->value != NULL &&
-	    entry->value->type == GCONF_VALUE_BOOL) {
-		value = gconf_value_get_bool (entry->value);
-	}
-
-	g_print ("all_workspaces_changed, value=%d\n", value);
-	
-	if (value) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
-		gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
-	} else {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
-		gtk_widget_set_sensitive (pager->num_rows_spin, FALSE);
-	}
-
-	/* TODO: Actually change whether ... */
-	
-}
 
 
 static void
 setup_dialog (GladeXML  *xml,
 	      PagerData *pager)
 {
-	gchar *key;
 	gboolean value;
-	GError *error;
 	GConfClient *client;
 
 	client = gconf_client_get_default ();
@@ -408,42 +461,19 @@ setup_dialog (GladeXML  *xml,
 	g_signal_connect (G_OBJECT (pager->display_workspaces_toggle), "toggled",
 			  (GCallback) display_workspace_names_toggled, pager);
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
-					       "display_workspace_names");
-	gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)display_workspace_names_changed,
-				pager,
-				NULL, NULL);
-
-	error = NULL;
-	value = gconf_client_get_bool (client, key, &error);
-	if (error) {
-		g_error_free (error);
-		value = FALSE; /* Default value */
+	if (pager->display_mode == WNCK_PAGER_DISPLAY_NAME) {
+		value = TRUE;
+	} else {
+		value = FALSE;
 	}
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->display_workspaces_toggle),
 				      value);
-	g_free (key);
-
 
 	/* Display all workspaces: */
 	g_signal_connect (G_OBJECT (pager->all_workspaces_radio), "toggled",
 			  (GCallback) all_workspaces_toggled, pager);
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
-					       "display_all_workspaces");
-	gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)all_workspaces_changed,
-				pager,
-				NULL, NULL);
-
-	error = NULL;
-	value = gconf_client_get_bool (client, key, &error);
-	if (error) {
-		g_error_free (error);
-		value = TRUE; /* Default value */
-	}
-	if (value) {
+	if (pager->display_all) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
 		gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
 	} else {
@@ -451,13 +481,15 @@ setup_dialog (GladeXML  *xml,
 		gtk_widget_set_sensitive (pager->num_rows_spin, FALSE);
 	}
 		
-	g_free (key);
-
 	/* Num rows: */
 	g_signal_connect (G_OBJECT (pager->num_rows_spin), "value_changed",
 			  (GCallback) num_rows_value_changed, pager);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
+
+	
+	g_signal_connect_swapped (WID ("done_button"), "pressed",
+				  (GCallback) gtk_widget_hide, pager->properties_dialog);
 }
 
 static void 
@@ -472,8 +504,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 		pager->properties_dialog = glade_xml_get_widget (xml, "pager_properties_dialog");
 
 		setup_dialog (xml, pager);
-		
-
 		
 		g_object_unref (G_OBJECT (xml));
 	}
