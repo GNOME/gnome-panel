@@ -554,7 +554,7 @@ static void
 window_menu_menu_hidden (GtkWidget  *menu,
 			 WindowMenu *window_menu)
 {
-	gtk_frame_set_shadow_type (GTK_FRAME (window_menu->frame), GTK_SHADOW_NONE);
+	gtk_widget_set_state (GTK_WIDGET (window_menu->applet), GTK_STATE_NORMAL);
 }
 
 static void
@@ -649,11 +649,11 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	gtk_menu_set_screen (GTK_MENU (window_menu->menu),
 			     gtk_widget_get_screen (window_menu->applet));
 
-	gtk_frame_set_shadow_type (GTK_FRAME (window_menu->frame), GTK_SHADOW_IN);
+	gtk_widget_set_state (GTK_WIDGET (window_menu->applet), GTK_STATE_SELECTED);
 
 	gtk_menu_popup (GTK_MENU (window_menu->menu),
 			NULL, NULL,
-			window_menu_position_menu, window_menu->frame,
+			window_menu_position_menu, window_menu->applet,
 			button, activate_time);
 }
 
@@ -730,6 +730,27 @@ set_tooltip (GtkWidget  *widget,
 	gtk_tooltips_set_tip (tooltips, widget, tip, NULL);
 }
 
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
+        gboolean first_time = TRUE;
+
+        if (first_time) {
+                gtk_rc_parse_string ("\n"
+                                     "   style \"window-menu-applet-button-style\"\n"
+                                     "   {\n"
+                                     "      GtkWidget::focus-line-width=0\n"
+                                     "      GtkWidget::focus-padding=0\n"
+                                     "   }\n"
+                                     "\n"
+                                     "    widget \"*.window-menu-applet-button\" style \"window-menu-applet-button-style\"\n"
+                                     "\n");
+                first_time = FALSE;
+        }
+
+        gtk_widget_set_name (widget, "window-menu-applet-button");
+}
+
 gboolean
 window_menu_applet_fill (PanelApplet *applet)
 {
@@ -740,6 +761,8 @@ window_menu_applet_fill (PanelApplet *applet)
 	window_menu = g_new0 (WindowMenu, 1);
 
 	window_menu->applet = GTK_WIDGET (applet);
+	force_no_focus_padding (window_menu->applet);
+
 	atk_obj = gtk_widget_get_accessible (window_menu->applet);
 	atk_object_set_name (atk_obj, _("Window Selector"));
 	atk_object_set_description (atk_obj, _("Tool to switch between windows"));
@@ -756,14 +779,9 @@ window_menu_applet_fill (PanelApplet *applet)
 		applet, NULL, "GNOME_WindowMenuApplet.xml",
 		NULL, window_menu_verbs, window_menu);
 
-	window_menu->frame = gtk_frame_new (NULL);
-	gtk_container_set_border_width (GTK_CONTAINER (window_menu->frame), 0);
-	gtk_frame_set_shadow_type (GTK_FRAME (window_menu->frame), GTK_SHADOW_NONE);
-	gtk_widget_show (window_menu->frame);
-
 	alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_widget_show (alignment);
-	gtk_container_add (GTK_CONTAINER (window_menu->frame), alignment);
+	gtk_container_add (GTK_CONTAINER (window_menu->applet), alignment);
 
 	window_menu->image = gtk_image_new ();
 	gtk_widget_show (window_menu->image);
@@ -775,8 +793,6 @@ window_menu_applet_fill (PanelApplet *applet)
 	g_signal_connect (window_menu->image, "size_allocate",
 			  G_CALLBACK (window_menu_size_allocate), window_menu);
  
-	gtk_container_add (GTK_CONTAINER (window_menu->applet), window_menu->frame); 
-
 	window_menu_setup_menu (window_menu);
 
 	g_signal_connect (window_menu->applet, "button_press_event",

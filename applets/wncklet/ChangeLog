@@ -1,3 +1,12 @@
+2004-10-27  Vincent Noel  <vnoel@cox.net>
+
+	* window-menu.c (force_no_focus_padding): New. Added the dreaded trick
+	from the clock applet to hide the focus line padding (see bug 147999).
+	(window_menu_menu_hidden, window_menu_popup_menu): Change from a
+	gtk_frame_set_shadow_type to a gtk_widget_set_state. Fixes bug 111026.
+	(window_menu_applet_fill): Remove the now useless frame
+	container. Act directly on the applet container.
+
 2004-10-23  Crispin Flowerday  <gnome@flowerday.cx>
 
 	* window-menu.c (window_menu_destroy), (window_menu_destroy_menu) 
