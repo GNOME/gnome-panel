@@ -237,8 +237,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_received",
 			   drag_data_received_cb, launcher);
 
-	gtk_signal_connect (GTK_OBJECT(launcher->button),
-			    "clicked",
+	gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
 			    (GtkSignalFunc) launch_cb,
 			    launcher);
 	
@@ -277,12 +276,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		launcher->dentry->name=g_strdup("???");
 	}
 
-	/* and install the new one with the right dentry pointer */
-	gtk_signal_connect (GTK_OBJECT(launcher->button),
-			    "clicked",
-			    (GtkSignalFunc) launch,
-			    launcher->dentry);
-
 	gtk_tooltips_set_tip (panel_tooltips,launcher->button,
 			      launcher->dentry->comment,NULL);
 	
@@ -306,6 +299,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		button_widget_set_pixmap(BUTTON_WIDGET(launcher->button),
 					 default_app_pixmap, -1);
 	}
+	panel_config_sync();
 }
 
 static void
