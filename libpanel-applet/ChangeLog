@@ -1,3 +1,10 @@
+2004-01-15  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix bug #131515 - reliable crashing with latest ORBit2.
+
+	* panel-applet.c: (panel_applet_set_size_hints): don't pass
+	NULL for the environment to a CORBA call.
+
 ==================== 2.5.3 ====================
 
 ==================== 2.5.2 ====================
