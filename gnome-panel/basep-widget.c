@@ -107,6 +107,10 @@ basep_widget_realize (GtkWidget *w)
 	BasePPosClass *klass;
 
 	g_return_if_fail (IS_BASEP_WIDGET (basep));
+
+	gtk_window_set_wmclass (GTK_WINDOW (basep),
+				"panel_window", "Panel");
+
 	GTK_WIDGET_CLASS (basep_widget_parent_class)->realize (w);
 
 	basep_widget_update_winhints (basep);

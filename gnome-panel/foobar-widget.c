@@ -570,6 +570,9 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 static void
 foobar_widget_realize (GtkWidget *w)
 {
+	gtk_window_set_wmclass (GTK_WINDOW (w),
+				"panel_window", "Panel");
+
 	if (GTK_WIDGET_CLASS (parent_class)->realize)
 		GTK_WIDGET_CLASS (parent_class)->realize (w);
 
