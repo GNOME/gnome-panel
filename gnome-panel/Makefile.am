@@ -126,7 +126,9 @@ panel_SOURCES=\
 	tearoffitem.c		\
 	tearoffitem.h		\
 	rgb-stuff.h		\
-	rgb-stuff.c
+	rgb-stuff.c		\
+	global-keys.c		\
+	global-keys.h
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
 	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@

@@ -1,3 +1,16 @@
+1999-12-10  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel.c (panel_destroy): reset current_panel if we destroy
+	the current panel
+	(panel_menu_get): make this non-static so that the windows
+	key thing can call it
+
+	* global-keys.c (panel_global_keys_filter): open a panel's
+	right click menu instead
+
+1999-12-09  Elliot Lee <sopwith@redhat.com>
+	* global-keys.[ch]: Allow hooking the Windows key.
+
 1999-12-05  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* session.c (init_user_applets): chenge the detection of the

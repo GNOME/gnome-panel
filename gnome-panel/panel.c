@@ -561,11 +561,11 @@ static void
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
-
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+		
 	kill_config_dialog(widget);
 
 	if(IS_DRAWER_WIDGET(widget)) {
-		PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
 		if(panel->master_widget) {
 			AppletInfo *info = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
 							       "applet_info");
@@ -579,11 +579,15 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
+	if (current_panel == panel)
+		current_panel = NULL;
+
 	if(pd->menu)
 		gtk_widget_destroy(pd->menu);
 	
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
+	
 }
 
 static void
@@ -603,7 +607,7 @@ panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
 		extern_send_draw(info->data);
 }
 
-static GtkWidget *
+GtkWidget *
 panel_menu_get(PanelData *pd)
 {
 	if(pd->menu)

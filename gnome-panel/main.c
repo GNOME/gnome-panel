@@ -16,6 +16,7 @@
 #include <X11/Xlib.h>
 
 #include "panel-include.h"
+#include "global-keys.h"
 
 extern int config_sync_timeout;
 extern int applets_to_sync;
@@ -142,6 +143,10 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	XEvent *xevent;
 
 	xevent = (XEvent *)gdk_xevent;
+
+	if (xevent->type == KeyPress || xevent->type == KeyRelease)
+		return panel_global_keys_filter(gdk_xevent, event);
+
 	if (xevent->type == MapNotify && check_swallows) {
 		int (*oldErrorHandler)(Display*, XErrorEvent*);
 		GList *li;
@@ -280,6 +285,8 @@ main(int argc, char **argv)
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
 	load_queued_externs();
+
+	panel_global_keys_setup();
 
 	/* set up a filter on the root window to get map requests */
 	/* we will select the events later when we actually need them */
