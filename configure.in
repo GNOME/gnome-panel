@@ -23,7 +23,6 @@ AC_PROG_INTLTOOL([0.31])
 AC_ISC_POSIX
 AC_PROG_CC
 AC_STDC_HEADERS
-AC_ARG_PROGRAM
 AC_LIBTOOL_WIN32_DLL
 AM_PROG_LIBTOOL
 AC_PATH_PROGS(PATH_TO_XRDB, "xrdb")
@@ -119,10 +118,6 @@ PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI
 AC_SUBST(CLOCK_CFLAGS)
 AC_SUBST(CLOCK_LIBS)
 
-PKG_CHECK_MODULES(MAILCHECK, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED)
-AC_SUBST(MAILCHECK_CFLAGS)
-AC_SUBST(MAILCHECK_LIBS)
-
 PKG_CHECK_MODULES(FISH, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
@@ -176,41 +171,11 @@ AC_SUBST(BONOBO_ACT_IDLDIR)
 dnl  Language Support 
 
 GETTEXT_PACKAGE=gnome-panel-2.0
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE")
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Define the gettext package to be used])
 AC_SUBST(GETTEXT_PACKAGE)
 
 ALL_LINGUAS="af am ar az be bg bn bs ca cs cy da de el en_CA en_GB eo es et eu fa fi fr ga gl gu he hi hr hu id it ja ko li lt lv mi mk ml mn mr ms nb nl nn no nso or pa pl pt pt_BR ro ru sk sl sq sr sr@ije sr@Latn sv ta th tr uk vi wa yi zh_CN zh_TW zu"
 AM_GLIB_GNU_GETTEXT
-
-
-
-dnl Place to look for KDE menus 
-
-AC_ARG_WITH(kde-datadir, [  --with-kde-datadir=DIR  Location of KDE data])
-
-if test "x$with_kde_datadir" = x ; then
-  kde_datadir=/usr/share
-else
-  kde_datadir=$with_kde_datadir
-fi
-
-AC_DEFINE_UNQUOTED(KDE_MENUDIR, "$kde_datadir/applnk")
-AC_DEFINE_UNQUOTED(KDE_ICONDIR, "$kde_datadir/icons")
-AC_DEFINE_UNQUOTED(KDE_MINI_ICONDIR, "$kde_datadir/icons/mini")
-
-
-dnl Place to look for KDE docs
-
-AC_ARG_WITH(kde-docdir, [  --with-kde-docdir=DIR   Location of KDE documentation])
-
-if test "x$with_kde_docdir" = x ; then
-  kde_docdir=/usr/doc/kde
-else
-  kde_docdir=$with_kde_docdir
-fi
-
-AC_DEFINE_UNQUOTED(KDE_DOCDIR, "$kde_docdir")
-
 
 dnl gtk-doc stuff
 

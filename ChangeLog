@@ -1,3 +1,13 @@
+2005-01-03  Vincent Untz  <vincent@vuntz.net>
+
+	Fix bug #140574
+
+	* acconfig.h: killed
+	* configure.in: removed AC_ARG_PROGRAM since it's in AM_INIT_AUTOMAKE,
+	don't pkgcheck packages for MAILCHECK, add description for
+	GETTEXT_PACKAGE, kill KDE_MENUDIR, KDE_ICONDIR, KDE_MINI_ICONDIR,
+	KDE_DOCDIR
+
 2005-01-02  Vincent Untz  <vincent@vuntz.net>
 
 	* gnome-panel.spec.in: update based on Fedora spec file
