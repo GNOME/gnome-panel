@@ -61,6 +61,9 @@ struct _MailCheck {
 	char *pre_check_cmd;
 	gboolean pre_check_enabled;	
 
+	/* This is the event box for catching events */
+	GtkWidget *ebox;
+
 	/* This holds either the drawing area or the label */
 	GtkWidget *bin;
 
@@ -419,16 +422,20 @@ create_mail_widgets (MailCheck *mc)
 {
 	char *fname = mail_animation_filename (mc);
 
-	mc->bin = gtk_hbox_new (0, 0);
-
+	mc->ebox = gtk_event_box_new();
+	gtk_widget_show (mc->ebox);
+	
 	/*
 	 * This is so that the properties dialog is destroyed if the
 	 * applet is removed from the panel while the dialog is
 	 * active.
 	 */
-	gtk_signal_connect (GTK_OBJECT (mc->bin), "destroy",
+	gtk_signal_connect (GTK_OBJECT (mc->ebox), "destroy",
 			    (GtkSignalFunc) mailcheck_destroy,
 			    mc);
+
+	mc->bin = gtk_hbox_new (0, 0);
+	gtk_container_add(GTK_CONTAINER(mc->ebox), mc->bin);
 
 	gtk_widget_show (mc->bin);
 	
@@ -461,7 +468,7 @@ create_mail_widgets (MailCheck *mc)
 	}
 	free (fname);
 	gtk_container_add (GTK_CONTAINER (mc->bin), mc->containee);
-	return mc->bin;
+	return mc->ebox;
 }
 
 static void
@@ -1197,7 +1204,7 @@ make_mailcheck_applet(const gchar *goad_id)
                               gtk_widget_get_events(GTK_WIDGET(applet)) |
                               GDK_BUTTON_PRESS_MASK);
 
-        gtk_signal_connect(GTK_OBJECT(applet), "button_press_event",
+        gtk_signal_connect(GTK_OBJECT(mailcheck), "button_press_event",
                            GTK_SIGNAL_FUNC(exec_clicked_cmd), mc);
 
 	gtk_signal_connect(GTK_OBJECT(applet),"save_session",

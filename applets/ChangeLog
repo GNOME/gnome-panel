@@ -1,3 +1,9 @@
+Sat Feb 19 17:26:17 2000  George Lebl <jirka@5z.com>
+
+	* gen_util/mailcheck.c: create an event box for the sole purpose
+	  of catching events.  Catching events on the applet widget won't
+	  work for shlib applets
+
 Sun Feb 13 21:56:45 2000  George Lebl <jirka@5z.com>
 
 	* gen_util/{gen_util.gnorba,printer.c,Makefile.am}: build the printer
