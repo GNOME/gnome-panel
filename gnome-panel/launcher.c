@@ -849,6 +849,7 @@ ensure_item_localefiled (GnomeDesktopItem *ditem, const char *field)
 static void
 really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 {
+	GtkWidget *err_dialog;
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
 	int pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
 	PanelWidget *panel = g_object_get_data (G_OBJECT (dialog), "panel");
@@ -858,6 +859,36 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		const char *location;
 
 		ditem = gnome_ditem_edit_get_ditem (dedit);
+
+		/* check for valid name */
+		if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
+			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
+						         "cannot_create_launcher",
+						         _("Cannot create launcher"),
+						         _("You have to specify a name."));
+			g_signal_connect_swapped (G_OBJECT (err_dialog),
+						  "destroy",
+						   G_CALLBACK (panel_pop_window_busy),
+						   G_OBJECT (dialog));
+			return;
+		}
+		
+
+		/* check for valid URL or command */
+		if ((gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_APPLICATION && 
+		     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
+		    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
+		     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
+			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
+							 "cannot_create_launcher",
+							 _("Cannot create launcher"),
+							 _("You have to specify a valid URL or command."));
+			g_signal_connect_swapped (G_OBJECT (err_dialog),
+						  "destroy",
+						  G_CALLBACK (panel_pop_window_busy),
+						  G_OBJECT (dialog));
+			return;
+		}
 
 		/* Make sure we set the "C" locale strings to the terms we set
 		   here.  This is so that if the user logs into another locale
