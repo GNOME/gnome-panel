@@ -5,14 +5,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.6.2\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
-"PO-Revision-Date: 2003-08-24 00:00+0900\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-11-03 05:06+0900\n"
+"PO-Revision-Date: 2003-11-03 05:05+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GTP Korean <gnome-kr-translation@gnome.or.kr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:219
 msgid "%l:%M:%S %p"
@@ -186,7 +186,7 @@ msgstr "참이면, 협정 세계시(UTC) 시간대의 시각을 보여줍니다.
 
 #: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "참이면, 기준점, 1970-01-01부터 지난 초로 시간을 보여줍니다."
+msgstr "참이면, 기준점 1970년 1월 1일부터 몇 초가 지난 지로 시간을 보여줍니다."
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
@@ -318,10 +318,9 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"%s(은)는 전혀 아무 쓸모가 없습니다.  디스크 공간과 컴파일 시간을 잡아먹을 뿐"
-"이고, 실행된 경우에는 소중한 패널의 공간과 메모리까지 차지합니다.  만약 누군"
-"가 이 애플릿을 쓰고 있다면, 그 사람은 빨리 정신 감정을 받으러 가야 할것입니"
-"다."
+"%s(은)는 아무데도 쓸모가 없습니다.  디스크 공간과 컴파일 시간을 잡아먹을 뿐이"
+"고, 실행할 경우에는 소중한 패널의 공간과 메모리까지 차지합니다.  만약 누군가 "
+"이 애플릿을 쓰고 있다면, 그 사람은 빨리 정신 감정을 받으러 가야 할것입니다."
 
 #: applets/fish/fish.c:464
 msgid "(with minor help from George)"
@@ -353,7 +352,7 @@ msgstr "실행할 명령어의 위치를 알 수 없습니다"
 #: applets/fish/fish.c:605
 #, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "그놈 물고기 %s(이)가 말하기를:"
+msgstr "그놈 물고기 %s 말하길:"
 
 #: applets/fish/fish.c:730
 #, c-format
@@ -382,7 +381,7 @@ msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
 msgstr ""
-"물을 교환해주어야 합니다!\n"
+"어항 물 좀 바꿔 주세요!\n"
 "(오늘 날짜를 확인하세요)"
 
 #: applets/fish/fish.c:1421
@@ -416,7 +415,7 @@ msgstr "찾아보기"
 
 #: applets/fish/fish.glade.h:6
 msgid "Co_mmand to run when clicked:"
-msgstr "클릭했을때 실행할 명령어(_M):"
+msgstr "클릭하면 실행할 명령어(_M):"
 
 #: applets/fish/fish.glade.h:7
 msgid "Fish Preferences"
@@ -428,15 +427,15 @@ msgstr "파일(_F):"
 
 #: applets/fish/fish.glade.h:9
 msgid "_Name of fish:"
-msgstr "물고기의 이름(_N):"
+msgstr "물고기 이름(_N):"
 
 #: applets/fish/fish.glade.h:10
 msgid "_Pause per frame:"
-msgstr "프레임마다 쉬는 시간(_P):"
+msgstr "프레임 사이사이의 시간(_P):"
 
 #: applets/fish/fish.glade.h:11
 msgid "_Rotate on vertical panels"
-msgstr "수직 패널에서 90도 회전(_R)"
+msgstr "세로 패널에서 90도 회전(_R)"
 
 #: applets/fish/fish.glade.h:12
 msgid "_Total frames in animation:"
@@ -470,7 +469,7 @@ msgstr "물고기 애니메이션의 프레임 수"
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
-"참이면, 수직 패널에서 물고기 애니메이션도 수직 방향으로 회전되어 보여줍니다."
+"참이면, 세로 패널에서 물고기 애니메이션도 세로 방향으로 회전되어 보여줍니다."
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -478,7 +477,7 @@ msgstr "프레임마다 쉬는 시간"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
-msgstr "수직 패널에서 회전"
+msgstr "세로 패널에서 회전"
 
 #: applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
@@ -604,18 +603,18 @@ msgstr "누르면 숨긴 창을 되돌립니다."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "누르면 모든 창을 숨기고 바탕화면을 보여줍니다."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "바탕화면 보여주기 단추"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:295
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "%s(을)를 읽어 들이는데 실패: %s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:296
 msgid "File not found"
 msgstr "파일을 찾을 수 없습니다"
+
+#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:447
+msgid "Show Desktop Button"
+msgstr "바탕화면 보여주기 단추"
 
 #: applets/wncklet/showdesktop.c:449
 msgid "This button lets you hide all windows and show the desktop"
@@ -683,7 +682,7 @@ msgstr "현재 작업 공간의 창 보여주기(_O)"
 msgid "Show windows from a_ll workspaces"
 msgstr "모든 작업 공간의 창 보여주기(_C)"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3610
 msgid "Size"
 msgstr "크기"
 
@@ -941,7 +940,7 @@ msgstr "드래그앤드롭 강조"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "드래그앤드롭 하는 동안 아이콘을 강조할 지 여부"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3599
 msgid "Orientation"
 msgstr "방향"
 
@@ -967,11 +966,11 @@ msgstr "단추위젯에 있어야할 스톡 아이콘"
 
 #: gnome-panel/disclosure-widget.c:259
 msgid "Expander Size"
-msgstr "확장자 크기"
+msgstr "늘리기 크기"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Size of the expander arrow"
-msgstr "확장자 화살표의 크기"
+msgstr "늘리기 화살표의 크기"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
@@ -1051,7 +1050,7 @@ msgstr "서랍과 패널 애니메이션(_A)"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
-msgstr "빠름"
+msgstr "빠르게"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 #: libpanel-applet/panel-test-applets.glade.h:5
@@ -1064,7 +1063,7 @@ msgstr "패널 기본 설정"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
-msgstr "느림"
+msgstr "느리게"
 
 #: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
@@ -1121,31 +1120,35 @@ msgstr "스크린샷 인쇄"
 
 #: gnome-panel/gnome-panel-screenshot.c:568
 msgid "Screenshot Print Preview"
-msgstr "스크린샷 인쇄 미리보기"
+msgstr "스크린샷 인쇄 미리 보기"
 
+# 한글 파일이름은 아직 좀 곤란하므로 영문 그대로 쓴다
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:595
 #, c-format
 msgid "%s%cScreenshot-%s.png"
-msgstr "%s%c스크린샷-%s.png"
+msgstr "%s%cScreenshot-%s.png"
 
+# 한글 파일이름은 아직 좀 곤란하므로 영문 그대로 쓴다
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:602
 #, c-format
 msgid "%s%cScreenshot.png"
-msgstr "%s%c스크린샷.png"
+msgstr "%s%cScreenshot.png"
 
+# 한글 파일이름은 아직 좀 곤란하므로 영문 그대로 쓴다
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:619
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
-msgstr "%s%c스크린샷-%s-%d.png"
+msgstr "%s%cScreenshot-%s-%d.png"
 
+# 한글 파일이름은 아직 좀 곤란하므로 영문 그대로 쓴다
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:626
 #, c-format
 msgid "%s%cScreenshot-%d.png"
-msgstr "%s%c스크린샷-%d.png"
+msgstr "%s%cScreenshot-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:778
 #, c-format
@@ -1154,11 +1157,11 @@ msgstr "%s 파일을 쓸 공간이 부족합니다"
 
 #: gnome-panel/gnome-panel-screenshot.c:1239
 msgid "Grab a window instead of the entire screen"
-msgstr "전체화면 대신 창만 잡습니다"
+msgstr "전체화면 대신에 창 한 개만 잡습니다"
 
 #: gnome-panel/gnome-panel-screenshot.c:1240
 msgid "Take screenshot after specified delay [in seconds]"
-msgstr "지정한 시간(초) 뒤에 스크린샷 잡기"
+msgstr "지정한 시간(초) 뒤에 스크린샷을 잡습니다"
 
 #: gnome-panel/gnome-panel-screenshot.c:1292
 msgid ""
@@ -1166,11 +1169,11 @@ msgid ""
 "Please check your installation of gnome-panel"
 msgstr ""
 "스크린샷 프로그램의 Glade파일이 없습니다.\n"
-"gnome-panel의 설치를 확인하십시오."
+"gnome-panel 설치를 확인하십시오."
 
 #: gnome-panel/gnome-panel-screenshot.c:1316
 msgid "Unable to take a screenshot of the current desktop."
-msgstr "현재 바탕화면의 스크린샷을 찍을 수 없습니다."
+msgstr "현재 데스크탑의 스크린샷을 찍을 수 없습니다."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1178,7 +1181,7 @@ msgstr "<b>옵션</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "<b>Preview</b>"
-msgstr "<b>미리보기</b>"
+msgstr "<b>미리 보기</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save Screenshot"
@@ -1301,7 +1304,7 @@ msgstr "스크린샷"
 #: gnome-panel/menu.c:144 gnome-panel/menu.c:3408
 #: gnome-panel/panel-menu-bar.c:150
 msgid "Take a screenshot of your desktop"
-msgstr "바탕화면의 스크린샷 잡기"
+msgstr "바탕화면의 스크린샷을 잡습니다"
 
 #: gnome-panel/menu.c:151
 msgid "Search"
@@ -1318,7 +1321,7 @@ msgstr "실행"
 
 #: gnome-panel/menu.c:164
 msgid "Run a command"
-msgstr "명령 실행"
+msgstr "명령을 실행합니다"
 
 #: gnome-panel/menu.c:272
 msgid "And many, many others..."
@@ -1556,7 +1559,7 @@ msgstr "화면 보호기 활성(_A)"
 
 #: gnome-panel/panel-action-button.c:87
 msgid "_Lock Screen"
-msgstr "화면 잠금(_L)"
+msgstr "화면 잠그기(_L)"
 
 #: gnome-panel/panel-action-button.c:88
 msgid "_Kill Screensaver Daemon"
@@ -1564,11 +1567,11 @@ msgstr "화면 보호기 데몬 종료(_K)"
 
 #: gnome-panel/panel-action-button.c:89
 msgid "Restart _Screensaver Daemon"
-msgstr "화면 보호기 데몬 재시작(_S)"
+msgstr "화면 보호기 데몬 다시 시작(_S)"
 
 #: gnome-panel/panel-action-button.c:210
 msgid "Lock screen"
-msgstr "화면 잠금"
+msgstr "화면 잠그기"
 
 #: gnome-panel/panel-action-button.c:217
 msgid "Log out of GNOME"
@@ -1655,7 +1658,7 @@ msgstr "컨트롤에서 AppletShell 인터페이스를 가져올 수 없습니�
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr "gconf 키 '%s'을(를) 찾는 데 애러가 발생했습니다: %s"
+msgstr "gconf 키 '%s'을(를) 찾는 데 오류가 발생했습니다: %s"
 
 #: gnome-panel/panel-bindings.c:185
 #, c-format
@@ -1933,7 +1936,7 @@ msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
-"참이면 오브젝트의 위치를 패널의 오른쪽(수직인 경우 아래쪽) 가장자리부터 상대"
+"참이면 오브젝트의 위치를 패널의 오른쪽(세로인 경우 아래쪽) 가장자리부터 상대"
 "적인 값으로 해석합니다."
 
 #: gnome-panel/panel-object.schemas.in.h:7
@@ -2034,7 +2037,7 @@ msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"이 패널 오브젝트의 위치. 이 위치는 패널의 왼쪽(수직일 경우 위쪽)에서부터 픽셀"
+"이 패널 오브젝트의 위치. 이 위치는 패널의 왼쪽(세로인 경우 위쪽)에서부터 픽셀"
 "수로 지정됩니다."
 
 #: gnome-panel/panel-object.schemas.in.h:23
@@ -2149,7 +2152,7 @@ msgstr "색상(_L):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:14
 msgid "E_xpand"
-msgstr "확장(_X)"
+msgstr "펼치기(_X)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "General"
@@ -2187,7 +2190,7 @@ msgstr "형식(_T):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "Show hide _buttons"
-msgstr "숨기기단추 보임(_B)"
+msgstr "숨기기단추 보이기(_B)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
 msgid "Solid c_olor"
@@ -2208,7 +2211,7 @@ msgstr "위"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_Autohide"
-msgstr "자동 숨김(_A)"
+msgstr "자동 숨기기(_A)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_None (use system theme)"
@@ -2312,11 +2315,11 @@ msgstr "터미널에서 실행(_T)"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Run with _file..."
-msgstr "파일과 같이 실행(_F)..."
+msgstr "파일 실행(_F)..."
 
 #: gnome-panel/panel-run-dialog.glade.h:13
 msgid "Select an application from the list to run it"
-msgstr "목록에서 실행할 프로그램을 선택하십시오"
+msgstr "다음 목록에서 실행할 프로그램을 선택하십시오"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
@@ -2369,196 +2372,196 @@ msgstr "강제로 끝냄(_F)"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr "위의 확장 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 msgid "Top Centered Panel"
 msgstr "위의 가운데 패널"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 msgid "Top Floating Panel"
 msgstr "위의 떠 다니는 패널"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 msgid "Top Edge Panel"
 msgstr "위의 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr "아래 확장 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr "아래 가운데 패널"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr "아래 떠 다니는 패널"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr "아래 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Left Expanded Edge Panel"
 msgstr "왼쪽 확장 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Left Centered Panel"
 msgstr "왼쪽 가운데 패널"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Left Floating Panel"
 msgstr "왼쪽 떠다니는 패널"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Left Edge Panel"
 msgstr "왼쪽 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr "오른쪽 확장 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr "오른쪽 가운데 패널"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr "오른쪽 떠다니는 패널"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr "오른쪽 가장자리 패널"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3579
 msgid "Name"
 msgstr "이름"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3580
 msgid "The name of this panel"
 msgstr "이 패널의 이름"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3589
 msgid "Expand"
 msgstr "확장"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3590
 msgid "Expand to take up the full monitor width/height"
 msgstr "모니터 너비/높이를 꽉 채우도록 확장"
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3600
 msgid "The orientation of the panel"
 msgstr "패널의 방향"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3611
 msgid "The height (or width when vertical) of the panel"
-msgstr "패널의 높이 (수직일 경우 너비)"
+msgstr "패널의 높이 (세로일 경우 너비)"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3623
 msgid "X position"
 msgstr "가로 위치"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3624
 msgid "The X position of the panel"
 msgstr "패널의 가로 위치"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3635
 msgid "X centered"
 msgstr "가로로 가운데"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3636
 msgid "The x co-ordinate is relative to center screen"
 msgstr "가로 좌표가 화면 중앙에 상대적인 값입니다"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3645
 msgid "Y position"
 msgstr "세로 위치"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3646
 msgid "The Y position of the panel"
 msgstr "패널의 세로 위치"
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3657
 msgid "Y centered"
 msgstr "세로로 가운데"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3658
 msgid "The y co-ordinate is relative to center screen"
 msgstr "세로 좌표가 화면 중앙에 상대적인 값입니다"
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3667
 msgid "Xinerama monitor"
 msgstr "Xinerama 모니터"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3668
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "(Xinerama에서) 패널이 들어 있는 모니터"
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3679
 msgid "Auto hide"
 msgstr "자동 숨김"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3680
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "마우스가 패널을 떠났을 때 패널을 자동으로 숨깁니다"
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3689
 msgid "Hide delay"
 msgstr "숨김 지연시간"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3690
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "자동으로 숨기기 전에 지연시간 (천분의 일초 단위)"
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3701
 msgid "Un-hide delay"
 msgstr "보여주기 지연 시간"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3702
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "숨겼다가 자동으로 다시 보여주기 전에 지연 시간 (천분의 일초 단위)"
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3713
 msgid "Auto-hide size"
 msgstr "자동 숨김 크기"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3714
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "패널을 자동으로 숨겼을 때 보이는 픽셀 수"
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3725
 msgid "Animate"
 msgstr "애니메이션"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3726
 msgid "Enable hiding/showing animations"
 msgstr "숨기기/보여주기 애니메이션 사용"
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3735
 msgid "Animation Speed"
 msgstr "애니매이션 속도"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3736
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "패널 숨기기/보여주기 애니메이션의 속도"
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3746
 msgid "Buttons Enabled"
 msgstr "단추 사용"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3747
 msgid "Enable hide/show buttons"
 msgstr "숨기기/보이기 단추 사용"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3756
 msgid "Arrows Enabled"
 msgstr "화살표 사용"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3757
 msgid "Enable arrows on hide/show buttons"
 msgstr "숨기기/보이기 단추 위에 화살표 사용"
 
@@ -2634,14 +2637,14 @@ msgstr ""
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
-msgstr "참이면, 패널 방향이 수직으로 바뀌었을 때 바탕 이미지도 회전합니다."
+msgstr "참이면, 패널 방향이 세로로 바뀌었을 때 바탕 이미지도 회전합니다."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"참이면, 이미지의 크기를 패널 높이(수평 방향의 패널인 경우)에 맞게 바꿉니다 "
+"참이면, 이미지의 크기를 패널 높이(가로 방향의 패널인 경우)에 맞게 바꿉니다 "
 "(이미지의 가로세로 비율 유지)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
@@ -2668,7 +2671,7 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
-"참이면, 패널 너비가 전체 화면 너비만큼 차지합니다 (수직 패널이면 패널 높이). "
+"참이면, 패널 너비가 전체 화면 너비만큼 차지합니다 (세로 패널이면 패널 높이). "
 "이 모드에서 패널은 화면 가장자리에만 놓을 수 있습니다. 거짓이면, 패널은 그 안"
 "의 애플릿, 실행 아이콘, 단추를 집어 넣을 수 있을 만큼의 너비만 차지합니다."
 
@@ -2724,7 +2727,7 @@ msgstr "패널 크기"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
-msgstr "수직 패널에서 그림 회전해 방향 바꾸기"
+msgstr "세로 패널에서 그림 회전해 방향 바꾸기"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
@@ -2787,7 +2790,7 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
-"패널의 높이 (수직 패널의 경우 너비). 패널은 실행할 때 글꼴 크기와 그 외 사항"
+"패널의 높이 (세로 패널의 경우 너비). 패널은 실행할 때 글꼴 크기와 그 외 사항"
 "들을 이용해 최소 크기를 결정합니다. 최대 크기는 화면 높이(혹은 너비)의 사분"
 "의 일입니다."
 
@@ -2919,42 +2922,42 @@ msgstr "테스트 보노보 애플릿"
 msgid "Test Bonobo Applet Factory"
 msgstr "테스트 보노보 애플릿 팩토리"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:834
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "완전하지 않은 바탕그림  형식 '%s' 받음"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:848
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "완전하지 않은 바탕그림 형식 '%s' 받음: %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:857
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "그림 %s 받기 실패"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:864
 msgid "Unknown background type received"
 msgstr "알 수 없는 바탕그림 형식 받음"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1043
 msgid "The Applet's containing Panel's orientation"
 msgstr "애플릿에 패널의 방향정보이 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1051
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "애플릿에 패널의 크기정보가 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1059
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "애플릿에 패널의 바탕색과 그림정보가 포함되어 있습니다"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1067
 msgid "The Applet's flags"
 msgstr "애플릿의 플래그"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1075
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "애플릿에서 가능한 크기 범위 알려줌"
 
