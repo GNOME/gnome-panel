@@ -803,6 +803,7 @@ panel_applet_get_full_gconf_key (AppletType   type,
 	else
 		retval = use_default ? panel_gconf_objects_default_profile_get_full_key (profile, object_id, key) :
 			panel_gconf_objects_profile_get_full_key (profile, object_id, key);
+
 	return retval;
 }
 
@@ -823,14 +824,14 @@ panel_applet_load_from_unique_id (AppletType   type,
 
 	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "object-type", use_default);
 	type_string = gconf_client_get_string (gconf_client, temp_key, NULL);
+	g_free (temp_key);
 
 	if (!gconf_string_to_enum (object_type_enum_map, type_string, (int *) &applet_type)) {
+		g_free (type_string);
 		g_warning ("Unkown applet type %s from %s", type_string, temp_key);
 		return;
-
 	}
 	
-	g_free (temp_key);
 	g_free (type_string);
 
 	temp_key = panel_applet_get_full_gconf_key (type, profile, unique_id, "position", use_default);
@@ -888,15 +889,14 @@ panel_applet_load_list (AppletType   type,
 			gboolean    use_default)
 {
 	GConfClient *client;
-	GSList *id_list, *l;
-	char   *profile;
-	char   *temp_key = NULL;
+	GSList      *id_list, *l;
+	char        *profile;
+	char        *temp_key = NULL;
 	
 	client = panel_gconf_get_client ();
 
-	/* This needs to be vastly improved */
 	if (use_default)
-		profile = g_strdup ("medium");
+		profile = PANEL_GCONF_DEFAULT_PROFILE;
 	else 
 		profile = session_get_current_profile ();
 
@@ -920,8 +920,8 @@ panel_applet_load_list (AppletType   type,
 void
 panel_applet_load_applets_from_gconf (void)
 {
-      	char        *profile_key;
-	gboolean    use_default = FALSE;
+      	char     *profile_key;
+	gboolean  use_default = FALSE;
 
 	profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
 

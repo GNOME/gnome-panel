@@ -1,3 +1,13 @@
+2002-01-11  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c:
+	(panel_applet_load_from_unique_id), (panel_applet_load_list):
+	fix memleaks.
+
+	* panel-gconf.h: add PANEL_GCONF_DEFAULT_PROFILE.
+
+	* panel.c: (panel_session_init_panels): use it.
+
 Thu Jan 10 23:27:54 2002  George Lebl <jirka@5z.com>
 
 	* Makefile.am, foobar-widget.c, menu.[ch], panel-config.c,

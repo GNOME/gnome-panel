@@ -2255,7 +2255,7 @@ panel_session_init_panels(void)
 		/* FIXME: We need to resort to another fallback default panel config 
 		          and do some sort of check for screen sizes */
 		use_default = TRUE;
-		panel_default_profile = "medium";
+		panel_default_profile = PANEL_GCONF_DEFAULT_PROFILE;
 		g_free (panel_profile_key);
 		panel_profile_key = panel_gconf_general_default_profile_get_full_key (panel_default_profile, "panel-id-list");
 	} else {

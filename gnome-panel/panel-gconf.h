@@ -6,6 +6,8 @@
 
 G_BEGIN_DECLS
 
+#define PANEL_GCONF_DEFAULT_PROFILE	"medium"
+
 /* FIXME : I guess we really need to do some sort of error checking with all of this */
 
 GConfClient*	panel_gconf_get_client (void);
