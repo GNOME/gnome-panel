@@ -5,34 +5,26 @@
   <title>Il pannello di GNOME</title>
   <copyright>
    <year>2000</year>
-   <holder>Red Hat, Inc., Dan Mueth e Alexander Kirillov</holder>
+   <holder>Red Hat, Inc. </holder> 
+   <holder>Dan Mueth</holder> 
+   <holder>Alexander Kirillov</holder>
   </copyright>
   
-  <legalnotice>
+  <legalnotice id="legalnotice">
+    <para>Permission is granted to copy, distribute and/or modify this
+   document under the terms of the <ulink type="help"
+   url="gnome-help:fdl"><citetitle>GNU Free Documentation
+   License</citetitle></ulink>, Version 1.1 or any later version
+   published by the Free Software Foundation with no Invariant
+   Sections, no Front-Cover Texts, and no Back-Cover Texts.  A copy of
+   the license can be found <ulink type="help"
+   url="gnome-help:fdl">here</ulink>.</para>
+
    <para>
-    La copia, la distribuzione e/o modifica di questo documento è permessa nei
-    termini della licenza GNU Free Documentation License, versione 1.1 o
-    successiva pubblicata dalla Free Software Foundation. 
-    Permission is granted to copy, distribute and/or modify this
-    document under the terms of the GNU Free Documentation License,
-    Version 1.1 or any later version published by the Free Software
-    Foundation; with no Invariant Sections, with no  Front-Cover
-    Texts, and with no Back-Cover Texts.  A copy of the license is
-    available from the Free Software Foundation and can be viewed 
-    <ulink url="http://www.gnu.org/copyleft/fdl.html"type="http">online</ulink>.
-   </para>
-   
-   <para>
-    UNIX è un marchio registrato di X/Open Group.
-   </para>
-   <para>
-    Linux è un marchio registrato di Linus Torvalds.
-   </para>
-   <para>
-    X Window System è un marchio registrato del X Consortium, Inc.
-   </para>
-   <para>
-    Windows è un marchio registrato di Microsoft Corporation.
+    Molti dei nomi utilizzati dalle aziende per distinguere i loro prodotti e
+    servizi sono marchi registrati. Quando questi nomi appaiono in qualunque
+    documentazione di GNOME, o questi marchi sono stati resi noti al progetto di
+    documentazione di GNOME, questi sono evidenziati in maiuscolo.
    </para>
   </legalnotice>
   
@@ -64,7 +56,7 @@
    flessibilità permette di creare, in modo molto semplice e comodo un ambiete
    di lavoro personalizzato e completo. 
   </para>
-  <para>Questo documento descrive la versione 1.2 del
+  <para>Questo documento descrive la versione 1.4 del
    <interface>pannello</interface> di GNOME.
   </para>
  </sect1>
@@ -692,55 +684,47 @@
     trasformato in una finestra a se stante sul vostro desktop, e resterà
     staccato anche spostando altrove il puntatore del mouse. Questo risulta
     molto conveniente quando è necessario utilizzare lo stesso comando più volte
-    che si trova in un sottomenu molto annidato
-
-    All menus in GNOME have the tear-off feature: if you left-click on
-    the "perforation" (thin dashed line at the top of the menu, right
-    above the menu title), the menu will be turned into a separate
-    window on your desktop, which will stay there even after you move
-    the mouse cursor elsewhere. This is very convenient if you will be
-    using the same command from some deeply nested submenu
-    frequently. To remove a "torn-off" menu from your desktop, click
-    on the <guibutton>Close</guibutton> button in the window title
-    (its appearance and location depends on the window manager you are
-    using, but usually it is the rightmost button, labelled by an "x").
+    che si trova in un sottomenu molto annidato. Per rimuovere questo tipo di
+    menu dal vostro desktop cliccate sul pulsante <guibutton>Chiudi</guibutton>
+    presente nella barra del titolo della finestra (la posizione e aspetta
+    dipendono da gestore di finestre che state utilzzando, ma genericamente
+    viene posizionato sulla destra e marcato con una "X").
    </para>
   </sect2>
-
-   <sect2 id="menusconf">
-    <title> Configuring a Menu</title>
-    <para>
-     You can easily change a menu name and icon (for user menus
-     only, not for submenus taken from the <guimenu>Main
-     Menu</guimenu>). To do so, click on the menu, right-click
-     on the menu title (at the very top of the list, above all other
-     items), and select <guimenuitem>Properties&hellip;</guimenuitem>
-     from the pop-up menu. This will bring up the 
-     <interface>Desktop Entry Properties</interface> dialog, quite similar to
-     the <link linkend="launchers"><interface>Launcher
-     Properties</interface> dialog</link>. 
-    </para>
-    <para>  
-     To add a new item to the menu, click on the menu button,
-     right-click on the Menu name, and select <guimenuitem>Add new
-     item to this menu</guimenuitem>. This will bring  up
-     <interface>Create Menu Item</interface> dialog, in which you
-     can enter the menu item name, comment, command, and type (see <xref
-     linkend="launchers"> for more information).  To remove an item
-     from the menu, right-click on the item and choose <guimenuitem>Remove
-     this item</guimenuitem>.
-    </para>
-    <para>
-     Finally, a frequently asked question is "How I can change the
-     font and the background used by the menus?" The answer is that it
-     is determined by the current GTK Theme, which can be changed
-     using the <application>GNOME Control Center</application> by
-     selecting <menuchoice> <guimenu>Main Menu</guimenu>
-     <guisubmenu>Settings</guisubmenu>
-     <guisubmenu>User Interface</guisubmenu>
-     <guimenuitem>Themes</guimenuitem> 
-     </menuchoice>.
-    </para>
+  
+  <sect2 id="menusconf">
+   <title>Configurare un menu</title>
+   <para>
+    È facilmente possibile modificare una voce del menu e la sua icona (solo per
+    i menu dell'utente, non per i sottomenu del <guimenu>Menu
+    Principale</guimenu>). Per fare questo, cliccate sul menu, premete il tasto
+    destro del mouse sul titolo (la prima voce in alto, prima di tutte quelle
+    del menu) e selezionate <guimenuitem>Proprietà</guimenuitem> dal menu a
+    tendina. Questo vi mostrerà la finestra di dialogo <interface>Proprietà
+    degli elementi del desktop</interface>, molto simila al <link
+    linkend="launchers">dialogo <interface>Proprietà pulsante di
+    avvio</interface></link>. 
+   </para>
+   <para>  
+    Per aggiungere una nuova voce al menu, cliccate sul pulsante del menu,
+    premete il tasto destro del mouse sul nome del menu, e selezionate
+    <guimenuitem>Aggiungi nuovi elementi</guimenuitem>. Questo mostrerà il
+    dialogo <interface>Crea nuova voce nel menu</interface>, nel quale è
+    possibile inserire il nome della voce del menu, un commento, il comando, e
+    il tipo (vedi <xref linkend="launchers"> per maggiori informazioni). Per
+     rimuovere un oggetto dal menu, cliccateci sopra con il tasto destro del
+     mouse e selezionate <guimenuitem>Rimuovi questo elemento</guimenuitem>.
+   </para>
+   <para>
+    Infine, una domanda posta di frequente è "Come posso cambiare il font e lo
+     sfondo utilizzato nei menu?". La risposta è che questo aspetto dipende dal
+    tema GTK utilizzato, che può essere cambiato utilizzando il
+    <application>GNOME Control Center</application>, che trovate in
+     <menuchoice> <guimenu>Menu Principale</guimenu>
+     <guisubmenu>Impostazioni</guisubmenu>
+     <guisubmenu>Deskstop</guisubmenu><guimenuitem>Selettore
+      temi</guimenuitem></menuchoice>
+   </para>
    </sect2>
   </sect1>
 
