@@ -475,7 +475,7 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
-					    ppc->strech_pixmap_bg,
+					    ppc->stretch_pixmap_bg,
 					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
 	else if(SLIDING_IS_WIDGET(ppc->panel))
@@ -492,7 +492,7 @@ config_apply (PerPanelConfig *ppc)
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
-					     ppc->strech_pixmap_bg,
+					     ppc->stretch_pixmap_bg,
 					     ppc->rotate_pixmap_bg,
 					     &ppc->back_color);
 	else if (ALIGNED_IS_WIDGET (ppc->panel))
@@ -508,7 +508,7 @@ config_apply (PerPanelConfig *ppc)
 					      ppc->back_type,
 					      ppc->back_pixmap,
 					      ppc->fit_pixmap_bg,
-					      ppc->strech_pixmap_bg,
+					      ppc->stretch_pixmap_bg,
 					      ppc->rotate_pixmap_bg,
 					      &ppc->back_color);
 	else if (FLOATING_IS_WIDGET (ppc->panel))
@@ -525,7 +525,7 @@ config_apply (PerPanelConfig *ppc)
 					       ppc->back_type,
 					       ppc->back_pixmap,
 					       ppc->fit_pixmap_bg,
-					       ppc->strech_pixmap_bg,
+					       ppc->stretch_pixmap_bg,
 					       ppc->rotate_pixmap_bg,
 					       &ppc->back_color);
 	else if(DRAWER_IS_WIDGET(ppc->panel)) {
@@ -540,7 +540,7 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
-					    ppc->strech_pixmap_bg,
+					    ppc->stretch_pixmap_bg,
 					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
 	}
@@ -1289,10 +1289,10 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 }
 
 static void
-set_strech_pixmap_bg (GtkToggleButton *toggle, gpointer data)
+set_stretch_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 {
 	PerPanelConfig *ppc = data;
-	ppc->strech_pixmap_bg = toggle->active;
+	ppc->stretch_pixmap_bg = toggle->active;
 
 	panel_config_register_changes (ppc);
 }
@@ -1351,7 +1351,7 @@ static GtkWidget *
 background_page (PerPanelConfig *ppc)
 {
 	GtkWidget *box, *f, *t;
-	GtkWidget *vbox, *noscale, *fit, *strech;
+	GtkWidget *vbox, *noscale, *fit, *stretch;
 	GtkWidget *w, *m;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -1450,22 +1450,22 @@ background_page (PerPanelConfig *ppc)
 		_("Scale image (keep proportions)"));
 	gtk_box_pack_start (GTK_BOX (box), fit, FALSE, FALSE,0);
 
-	strech = gtk_radio_button_new_with_label (
+	stretch = gtk_radio_button_new_with_label (
 		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
 		_("Stretch image (change proportions)"));
-	gtk_box_pack_start (GTK_BOX (box), strech, FALSE, FALSE,0);
+	gtk_box_pack_start (GTK_BOX (box), stretch, FALSE, FALSE,0);
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (noscale),
-				      ppc->strech_pixmap_bg &&
-				      ppc->strech_pixmap_bg);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (strech),
-				      ppc->strech_pixmap_bg);
+				      ppc->stretch_pixmap_bg &&
+				      ppc->stretch_pixmap_bg);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (stretch),
+				      ppc->stretch_pixmap_bg);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fit),
 				      ppc->fit_pixmap_bg);
 	g_signal_connect (G_OBJECT (fit), "toggled",
 			  G_CALLBACK (set_fit_pixmap_bg), ppc);
-	g_signal_connect (G_OBJECT (strech), "toggled",
-			  G_CALLBACK (set_strech_pixmap_bg), ppc);
+	g_signal_connect (G_OBJECT (stretch), "toggled",
+			  G_CALLBACK (set_stretch_pixmap_bg), ppc);
 
 	w = gtk_check_button_new_with_label (_("Rotate image for vertical panels"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w),
@@ -1623,7 +1623,7 @@ panel_config (GtkWidget *panel)
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
 	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
-	ppc->strech_pixmap_bg = pw->strech_pixmap_bg;
+	ppc->stretch_pixmap_bg = pw->stretch_pixmap_bg;
 	ppc->rotate_pixmap_bg = pw->rotate_pixmap_bg;
 	ppc->back_pixmap = g_strdup(pw->back_pixmap);
 	ppc->back_color = pw->back_color;

@@ -1052,7 +1052,7 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 		*pb = panel->backpix;
 
 		if(panel->fit_pixmap_bg ||
-		   panel->strech_pixmap_bg) {
+		   panel->stretch_pixmap_bg) {
 			*scale_w = panel->scale_w;
 			*scale_h = panel->scale_h;
 			if(panel->orient == GTK_ORIENTATION_VERTICAL &&
@@ -1424,7 +1424,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		panel->thick = allocation->width;
 
 	if(panel->back_type == PANEL_BACK_PIXMAP &&
-	   (panel->fit_pixmap_bg || panel->strech_pixmap_bg) &&
+	   (panel->fit_pixmap_bg || panel->stretch_pixmap_bg) &&
 	   (old_alloc.width != allocation->width ||
 	    old_alloc.height != allocation->height)) {
 		if(panel->backpixmap) {
@@ -1629,7 +1629,7 @@ panel_resize_pixmap(PanelWidget *panel)
 		default:
 			g_assert_not_reached ();
 		}
-	} else if(panel->strech_pixmap_bg) {
+	} else if(panel->stretch_pixmap_bg) {
 		if(panel->orient == GTK_ORIENTATION_VERTICAL &&
 		   panel->rotate_pixmap_bg) {
 			panel->scale_w = ph;
@@ -1845,7 +1845,7 @@ panel_widget_instance_init (PanelWidget *panel)
 	
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
-	panel->strech_pixmap_bg = FALSE;
+	panel->stretch_pixmap_bg = FALSE;
 	panel->back_pixmap = NULL;
 	panel->back_color.red = 0;
 	panel->back_color.green = 0;
@@ -1883,7 +1883,7 @@ panel_widget_new (gboolean packed,
 		  PanelBackType back_type,
 		  char *back_pixmap,
 		  gboolean fit_pixmap_bg,
-		  gboolean strech_pixmap_bg,
+		  gboolean stretch_pixmap_bg,
 		  gboolean rotate_pixmap_bg,
 		  GdkColor *back_color)
 {
@@ -1895,7 +1895,7 @@ panel_widget_new (gboolean packed,
 	panel->back_type = back_type;
 
 	panel->fit_pixmap_bg = fit_pixmap_bg;
-	panel->strech_pixmap_bg = strech_pixmap_bg;
+	panel->stretch_pixmap_bg = stretch_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
 	panel->back_pixmap = g_strdup (sure_string (back_pixmap));
 	
@@ -2856,7 +2856,7 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelBackType back_type,
 			   char *pixmap,
 			   gboolean fit_pixmap_bg,
-			   gboolean strech_pixmap_bg,
+			   gboolean stretch_pixmap_bg,
 			   gboolean rotate_pixmap_bg,
 			   GdkColor *back_color)
 {
@@ -2911,7 +2911,7 @@ panel_widget_change_params(PanelWidget *panel,
 	/*clearly a signal should be sent*/
 	if(panel->back_type != back_type ||
 	   panel->fit_pixmap_bg != fit_pixmap_bg ||
-	   panel->strech_pixmap_bg != strech_pixmap_bg ||
+	   panel->stretch_pixmap_bg != stretch_pixmap_bg ||
 	   panel->rotate_pixmap_bg != rotate_pixmap_bg)
 		change_back = TRUE;
 	
@@ -2919,7 +2919,7 @@ panel_widget_change_params(PanelWidget *panel,
 	  but this function isn't called too often*/
 	panel->back_type = back_type;
 	panel->fit_pixmap_bg = fit_pixmap_bg;
-	panel->strech_pixmap_bg = strech_pixmap_bg;
+	panel->stretch_pixmap_bg = stretch_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
 	if(back_type == PANEL_BACK_PIXMAP) {
 		panel_try_to_set_pixmap (panel, panel->back_pixmap);
@@ -2953,7 +2953,7 @@ panel_widget_change_orient(PanelWidget *panel,
 				   panel->back_type,
 				   panel->back_pixmap,
 				   panel->fit_pixmap_bg,
-				   panel->strech_pixmap_bg,
+				   panel->stretch_pixmap_bg,
 				   panel->rotate_pixmap_bg,
 				   &panel->back_color);
 }

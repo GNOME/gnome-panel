@@ -56,7 +56,7 @@ GtkWidget *edge_widget_new (int screen,
 			    PanelBackType back_type,
 			    char *back_pixmap,
 			    gboolean fit_pixmap_bg,
-			    gboolean strech_pixmap_bg,
+			    gboolean stretch_pixmap_bg,
 			    gboolean rotate_pixmap_bg,
 			    GdkColor *back_color);
 

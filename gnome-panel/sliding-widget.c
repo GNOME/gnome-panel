@@ -290,7 +290,7 @@ sliding_widget_new (int screen,
 		    PanelBackType back_type,
 		    char *back_pixmap,
 		    gboolean fit_pixmap_bg,
-		    gboolean strech_pixmap_bg,
+		    gboolean stretch_pixmap_bg,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
@@ -314,7 +314,7 @@ sliding_widget_new (int screen,
 				 hidebutton_pixmaps_enabled,
 				 back_type,
 				 back_pixmap,
-				 fit_pixmap_bg, strech_pixmap_bg,
+				 fit_pixmap_bg, stretch_pixmap_bg,
 				 rotate_pixmap_bg,
 				 back_color);
 
@@ -335,7 +335,7 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      PanelBackType back_type,
 			      char *pixmap_name,
 			      gboolean fit_pixmap_bg,
-			      gboolean strech_pixmap_bg,
+			      gboolean stretch_pixmap_bg,
 			      gboolean rotate_pixmap_bg,
 			      GdkColor *back_color)
 {
@@ -367,7 +367,7 @@ sliding_widget_change_params (SlidingWidget *sliding,
 				     back_type,
 				     pixmap_name,
 				     fit_pixmap_bg,
-				     strech_pixmap_bg,
+				     stretch_pixmap_bg,
 				     rotate_pixmap_bg,
 				     back_color);
 }
@@ -395,7 +395,7 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
-				      panel->strech_pixmap_bg,
+				      panel->stretch_pixmap_bg,
 				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
@@ -423,7 +423,7 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
-				      panel->strech_pixmap_bg,
+				      panel->stretch_pixmap_bg,
 				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
@@ -450,7 +450,7 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
-				      panel->strech_pixmap_bg,
+				      panel->stretch_pixmap_bg,
 				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }

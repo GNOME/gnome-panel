@@ -258,7 +258,7 @@ append_actions_menu (GtkWidget *menu_bar)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
-	panel_strech_events_to_toplevel (item,
+	panel_stretch_events_to_toplevel (item,
 					 TRUE /* top */,
 					 FALSE /* right */,
 					 FALSE /* bottom */,
@@ -271,9 +271,9 @@ append_actions_menu (GtkWidget *menu_bar)
 static GtkWidget *
 append_folder_menu (GtkWidget *menu_bar, const char *label,
 		    const char *pixmap, const char *path,
-		    gboolean strech_left,
-		    gboolean strech_top,
-		    gboolean strech_right)
+		    gboolean stretch_left,
+		    gboolean stretch_top,
+		    gboolean stretch_right)
 {
 	GtkWidget *item, *menu;
 
@@ -300,12 +300,12 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 			  G_CALLBACK (submenu_to_display),
 			  NULL);
 
-	if (strech_left || strech_top || strech_right)
-		panel_strech_events_to_toplevel (item,
-						 strech_top,
-						 strech_right,
+	if (stretch_left || stretch_top || stretch_right)
+		panel_stretch_events_to_toplevel (item,
+						 stretch_top,
+						 stretch_right,
 						 FALSE,
-						 strech_left);
+						 stretch_left);
 		
 
 	return menu;
@@ -492,7 +492,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
-	panel_strech_events_to_toplevel (item,
+	panel_stretch_events_to_toplevel (item,
 					 TRUE /* top */,
 					 FALSE /* right */,
 					 FALSE /* bottom */,
@@ -843,7 +843,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 
 	gtk_menu_shell_append (menu_bar, foo->task_item);
 
-	panel_strech_events_to_toplevel (foo->task_item,
+	panel_stretch_events_to_toplevel (foo->task_item,
 					 TRUE /* top */,
 					 TRUE /* right */,
 					 FALSE /* bottom */,
@@ -1036,7 +1036,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	foo->programs = menu;
 
 	/* Strech the applications menu to the corner */
-	panel_strech_events_to_toplevel (menuitem,
+	panel_stretch_events_to_toplevel (menuitem,
 					 TRUE /* top */,
 					 FALSE /* right */,
 					 FALSE /* bottom */,

@@ -1038,7 +1038,7 @@ drop_bgimage (PanelWidget *panel, const char *bgimage)
 						    PANEL_BACK_NONE,
 						    panel->back_pixmap,
 						    panel->fit_pixmap_bg,
-						    panel->strech_pixmap_bg,
+						    panel->stretch_pixmap_bg,
 						    panel->rotate_pixmap_bg,
 						    &panel->back_color);
 		} else {

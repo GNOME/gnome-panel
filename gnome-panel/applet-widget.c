@@ -683,7 +683,7 @@ applet_widget_get_panel_orient (AppletWidget *applet)
  * @applet: the #AppletWidget to work with
  *
  * Description:  Gets the width of the panel in pixels.  This is not the
- * actual size, but the recomended one.  The panel may be streched if the
+ * actual size, but the recomended one.  The panel may be stretched if the
  * applets use larger sizes then this.
  *
  * Returns:  Size of panel in pixels

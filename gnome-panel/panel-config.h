@@ -37,7 +37,7 @@ struct _PerPanelConfig {
 	/*panel types*/
 	int			sz;
 	gboolean		fit_pixmap_bg;
-	gboolean		strech_pixmap_bg;
+	gboolean		stretch_pixmap_bg;
 	gboolean		rotate_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;

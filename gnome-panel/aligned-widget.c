@@ -295,7 +295,7 @@ aligned_widget_change_params (AlignedWidget *aligned,
 			      PanelBackType back_type,
 			      char *pixmap_name,
 			      gboolean fit_pixmap_bg,
-			      gboolean strech_pixmap_bg,
+			      gboolean stretch_pixmap_bg,
 			      gboolean rotate_pixmap_bg,
 			      GdkColor *back_color)
 {
@@ -319,7 +319,7 @@ aligned_widget_change_params (AlignedWidget *aligned,
 				     back_type,
 				     pixmap_name,
 				     fit_pixmap_bg,
-				     strech_pixmap_bg,
+				     stretch_pixmap_bg,
 				     rotate_pixmap_bg,
 				     back_color);
 }
@@ -347,7 +347,7 @@ aligned_widget_change_align (AlignedWidget *aligned,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
-				      panel->strech_pixmap_bg,
+				      panel->stretch_pixmap_bg,
 				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
@@ -372,7 +372,7 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
-				      panel->strech_pixmap_bg,
+				      panel->stretch_pixmap_bg,
 				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
@@ -389,7 +389,7 @@ aligned_widget_new (int screen,
 		    PanelBackType back_type,
 		    char *back_pixmap,
 		    gboolean fit_pixmap_bg,
-		    gboolean strech_pixmap_bg,
+		    gboolean stretch_pixmap_bg,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
@@ -412,7 +412,7 @@ aligned_widget_new (int screen,
 				 back_type,
 				 back_pixmap,
 				 fit_pixmap_bg,
-				 strech_pixmap_bg,
+				 stretch_pixmap_bg,
 				 rotate_pixmap_bg,
 				 back_color);
 

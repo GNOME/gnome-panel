@@ -190,12 +190,55 @@ panel_gconf_dir_exists (const gchar *key) {
 }
 
 gchar *
-panel_gconf_panel_profile_get_conditional_key (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+	gchar *panel_profile_key;
+	gchar *return_val;
+
 	/* FIXME: Make this check screen sizes and stuff */
                 if (use_default) {
-                        return panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
 		}
                 else {
-                        return panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 		}
+
+	return_val = panel_gconf_get_string (panel_profile_key);
+	g_free (panel_profile_key);
+	return return_val;
+}
+
+gint
+panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+	gchar *panel_profile_key;
+	gint return_val;
+
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+		}
+                else  {
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+		}
+	
+	return_val = panel_gconf_get_int (panel_profile_key);
+	g_free (panel_profile_key);
+	return return_val;
+}
+
+gboolean
+panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default) {
+	gchar *panel_profile_key;
+	gboolean return_val;
+
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+		}
+                else {
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+		}
+
+	return_val = panel_gconf_get_bool (panel_profile_key);
+	g_free (panel_profile_key);
+	return return_val;
 }

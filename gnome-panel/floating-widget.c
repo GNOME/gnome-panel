@@ -432,7 +432,7 @@ floating_widget_change_params (FloatingWidget *floating,
 			       PanelBackType back_type,
 			       char *back_pixmap,
 			       gboolean fit_pixmap_bg,
-			       gboolean strech_pixmap_bg,
+			       gboolean stretch_pixmap_bg,
 			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color)
 {
@@ -464,7 +464,7 @@ floating_widget_change_params (FloatingWidget *floating,
 				    back_type,
 				    back_pixmap,
 				    fit_pixmap_bg,
-				    strech_pixmap_bg,
+				    stretch_pixmap_bg,
 				    rotate_pixmap_bg,
 				    back_color);
 				    
@@ -491,7 +491,7 @@ floating_widget_change_orient (FloatingWidget *floating,
 					       panel->back_type,
 					       panel->back_pixmap,
 					       panel->fit_pixmap_bg,
-					       panel->strech_pixmap_bg,
+					       panel->stretch_pixmap_bg,
 					       panel->rotate_pixmap_bg,
 					       &panel->back_color);
 	}
@@ -518,7 +518,7 @@ floating_widget_change_coords (FloatingWidget *floating,
 					       panel->back_type,
 					       panel->back_pixmap,
 					       panel->fit_pixmap_bg,
-					       panel->strech_pixmap_bg,
+					       panel->stretch_pixmap_bg,
 					       panel->rotate_pixmap_bg,
 					       &panel->back_color);
 	}
@@ -537,7 +537,7 @@ floating_widget_new (int screen,
 		     PanelBackType back_type,
 		     char *back_pixmap,
 		     gboolean fit_pixmap_bg,
-		     gboolean strech_pixmap_bg,
+		     gboolean stretch_pixmap_bg,
 		     gboolean rotate_pixmap_bg,
 		     GdkColor *back_color)
 {
@@ -563,7 +563,7 @@ floating_widget_new (int screen,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
-				strech_pixmap_bg,
+				stretch_pixmap_bg,
 				rotate_pixmap_bg,
 				back_color);
 

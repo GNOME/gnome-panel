@@ -1421,7 +1421,7 @@ basep_widget_construct (BasePWidget *basep,
 			PanelBackType back_type,
 			char *back_pixmap,
 			gboolean fit_pixmap_bg,
-			gboolean strech_pixmap_bg,
+			gboolean stretch_pixmap_bg,
 			gboolean rotate_pixmap_bg,
 			GdkColor *back_color)
 {
@@ -1433,7 +1433,7 @@ basep_widget_construct (BasePWidget *basep,
 					back_type,
 					back_pixmap,
 					fit_pixmap_bg,
-					strech_pixmap_bg,
+					stretch_pixmap_bg,
 					rotate_pixmap_bg,
 					back_color);
 
@@ -1538,7 +1538,7 @@ basep_widget_change_params (BasePWidget *basep,
 			    PanelBackType back_type,
 			    char *pixmap_name,
 			    gboolean fit_pixmap_bg,
-			    gboolean strech_pixmap_bg,
+			    gboolean stretch_pixmap_bg,
 			    gboolean rotate_pixmap_bg,
 			    GdkColor *back_color)
 {
@@ -1580,7 +1580,7 @@ basep_widget_change_params (BasePWidget *basep,
 				   back_type,
 				   pixmap_name,
 				   fit_pixmap_bg,
-				   strech_pixmap_bg,
+				   stretch_pixmap_bg,
 				   rotate_pixmap_bg,
 				   back_color);
 

@@ -367,7 +367,7 @@ drawer_widget_change_params (DrawerWidget *drawer,
 			     PanelBackType back_type,
 			     char *back_pixmap,
 			     gboolean fit_pixmap_bg,
-			     gboolean strech_pixmap_bg,
+			     gboolean stretch_pixmap_bg,
 			     gboolean rotate_pixmap_bg,
 			     GdkColor *back_color)
 {
@@ -421,7 +421,7 @@ drawer_widget_change_params (DrawerWidget *drawer,
 				    back_type,
 				    back_pixmap,
 				    fit_pixmap_bg,
-				    strech_pixmap_bg,
+				    stretch_pixmap_bg,
 				    rotate_pixmap_bg,
 				    back_color);
 				    
@@ -445,7 +445,7 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 					     panel->back_type,
 					     panel->back_pixmap,
 					     panel->fit_pixmap_bg,
-					     panel->strech_pixmap_bg,
+					     panel->stretch_pixmap_bg,
 					     panel->rotate_pixmap_bg,
 					     &panel->back_color);
 	}
@@ -461,7 +461,7 @@ drawer_widget_new (PanelOrient orient,
 		   PanelBackType back_type,
 		   char *back_pixmap,
 		   gboolean fit_pixmap_bg,
-		   gboolean strech_pixmap_bg,
+		   gboolean stretch_pixmap_bg,
 		   gboolean rotate_pixmap_bg,
 		   GdkColor *back_color)
 {
@@ -494,7 +494,7 @@ drawer_widget_new (PanelOrient orient,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
-				strech_pixmap_bg,
+				stretch_pixmap_bg,
 				rotate_pixmap_bg,
 				back_color);
 

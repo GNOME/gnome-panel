@@ -21,7 +21,9 @@ gchar *		panel_gconf_general_default_profile_get_full_key (const gchar *profile,
 gchar *		panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key); 
 gchar *		panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
 
-gchar *		panel_gconf_panel_profile_get_conditional_key (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
+gboolean	panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
+gchar *		panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
+gint		panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default);
 
 /* FIXME - Probably not need anymore */
 gchar *		panel_gconf_get_session_key (void);

@@ -70,7 +70,7 @@ struct _PanelWidget
 	int			sz;
 	gboolean		fit_pixmap_bg;  /* fit pixmap while keeping
 						   ratio*/
-	gboolean		strech_pixmap_bg; /*strech pixmap to the size
+	gboolean		stretch_pixmap_bg; /*stretch pixmap to the size
 						    of the panel */
 	gboolean		rotate_pixmap_bg; /*rotate pixmap on vertical
 						    panels */
@@ -137,7 +137,7 @@ GtkWidget *	panel_widget_new		(gboolean packed,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 gboolean fit_pixmap_bg,
-						 gboolean strech_pixmap_bg,
+						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
@@ -200,7 +200,7 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 gboolean fit_pixmap_bg,
-						 gboolean strech_pixmap_bg,
+						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 

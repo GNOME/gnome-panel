@@ -1187,7 +1187,7 @@ typedef struct {
 } StrechSides;
 
 static void
-strech_widget_realize (GtkWidget *widget)
+stretch_widget_realize (GtkWidget *widget)
 {
 	GdkWindowAttr attributes = {0};
 	int attributes_mask;
@@ -1256,7 +1256,7 @@ strech_widget_realize (GtkWidget *widget)
 }
 
 static void
-strech_widget_unrealize (GtkWidget *widget)
+stretch_widget_unrealize (GtkWidget *widget)
 {
 	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
 						 "StrechEventWindow");
@@ -1289,7 +1289,7 @@ raise_in_idle (gpointer data)
 
 
 static void
-strech_widget_map (GtkWidget *widget)
+stretch_widget_map (GtkWidget *widget)
 {
 	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
 						 "StrechEventWindow");
@@ -1305,7 +1305,7 @@ strech_widget_map (GtkWidget *widget)
 }
 
 static void
-strech_widget_unmap (GtkWidget *widget)
+stretch_widget_unmap (GtkWidget *widget)
 {
 	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
 						 "StrechEventWindow");
@@ -1317,7 +1317,7 @@ strech_widget_unmap (GtkWidget *widget)
 
 
 static void
-strech_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
+stretch_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 {
 	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
 						 "StrechEventWindow");
@@ -1325,22 +1325,22 @@ strech_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 		return;
 
 	/* somewhat evil */
-	strech_widget_unrealize (widget);
-	strech_widget_realize (widget);
-	strech_widget_map (widget);
+	stretch_widget_unrealize (widget);
+	stretch_widget_realize (widget);
+	stretch_widget_map (widget);
 }
 
 static void
-strech_widget_hierarchy_changed (GtkWidget *widget,
+stretch_widget_hierarchy_changed (GtkWidget *widget,
 				 GtkWidget *previous_toplevel)
 {
-	strech_widget_unrealize (widget);
-	strech_widget_realize (widget);
-	strech_widget_map (widget);
+	stretch_widget_unrealize (widget);
+	stretch_widget_realize (widget);
+	stretch_widget_map (widget);
 }
 
 void
-panel_strech_events_to_toplevel (GtkWidget *widget,
+panel_stretch_events_to_toplevel (GtkWidget *widget,
 				 gboolean top,
 				 gboolean right,
 				 gboolean bottom,
@@ -1349,22 +1349,22 @@ panel_strech_events_to_toplevel (GtkWidget *widget,
 	StrechSides *sides;
 
 	g_signal_connect_after (GTK_WIDGET (widget), "realize",
-				G_CALLBACK (strech_widget_realize),
+				G_CALLBACK (stretch_widget_realize),
 				NULL);
 	g_signal_connect (GTK_WIDGET (widget), "unrealize",
-			  G_CALLBACK (strech_widget_unrealize),
+			  G_CALLBACK (stretch_widget_unrealize),
 			  NULL);
 	g_signal_connect_after (GTK_WIDGET (widget), "size_allocate",
-				G_CALLBACK (strech_widget_size_allocate),
+				G_CALLBACK (stretch_widget_size_allocate),
 				NULL);
 	g_signal_connect_after (GTK_WIDGET (widget), "map",
-				G_CALLBACK (strech_widget_map),
+				G_CALLBACK (stretch_widget_map),
 				NULL);
 	g_signal_connect_after (GTK_WIDGET (widget), "unmap",
-				G_CALLBACK (strech_widget_unmap),
+				G_CALLBACK (stretch_widget_unmap),
 				NULL);
 	g_signal_connect_after (GTK_WIDGET (widget), "hierarchy_changed",
-				G_CALLBACK (strech_widget_hierarchy_changed),
+				G_CALLBACK (stretch_widget_hierarchy_changed),
 				NULL);
 
 	sides = g_new0 (StrechSides, 1);

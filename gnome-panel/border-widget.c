@@ -245,7 +245,7 @@ border_widget_change_params (BorderWidget *border,
 			     PanelBackType back_type,
 			     char *pixmap_name,
 			     gboolean fit_pixmap_bg,
-			     gboolean strech_pixmap_bg,
+			     gboolean stretch_pixmap_bg,
 			     gboolean rotate_pixmap_bg,
 			     GdkColor *back_color)
 {
@@ -275,7 +275,7 @@ border_widget_change_params (BorderWidget *border,
 				    back_type,
 				    pixmap_name,
 				    fit_pixmap_bg,
-				    strech_pixmap_bg,
+				    stretch_pixmap_bg,
 				    rotate_pixmap_bg,
 				    back_color);
 }
@@ -338,7 +338,7 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 				     panel->back_type,
 				     panel->back_pixmap,
 				     panel->fit_pixmap_bg,
-				     panel->strech_pixmap_bg,
+				     panel->stretch_pixmap_bg,
 				     panel->rotate_pixmap_bg,
 				     &panel->back_color);
 }
@@ -357,7 +357,7 @@ border_widget_construct (BorderWidget *border,
 			 PanelBackType back_type,
 			 char *back_pixmap,
 			 gboolean fit_pixmap_bg,
-			 gboolean strech_pixmap_bg,
+			 gboolean stretch_pixmap_bg,
 			 gboolean rotate_pixmap_bg,
 			 GdkColor *back_color)
 {
@@ -386,7 +386,7 @@ border_widget_construct (BorderWidget *border,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
-				strech_pixmap_bg,
+				stretch_pixmap_bg,
 				rotate_pixmap_bg,
 				back_color);
 

@@ -89,6 +89,9 @@ extern int base_panels;
 extern char *kde_menudir;
 extern char *kde_icondir;
 
+
+extern gchar *panel_profile_name;
+
 extern GtkTooltips *panel_tooltips;
 
 enum {
@@ -3044,15 +3047,15 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
-		gchar *panel_profile_key;
 		gchar *s;
 		if (!foobar_widget_exists (screen)) {
 			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
-			panel_profile_key = panel_gconf_global_config_get_full_key ("clock-format");
-			s = panel_gconf_get_string (panel_profile_key);
-			g_free (panel_profile_key);	
+			s = panel_gconf_panel_profile_get_conditional_string (panel_profile_name,
+										       (gchar *) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id,
+										       "clock-format",
+										       TRUE);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);

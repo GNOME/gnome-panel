@@ -110,7 +110,7 @@ gboolean	panel_is_program_in_path (const char *program);
 char *		panel_pixmap_discovery	(const char *name,
 					 gboolean fallback);
 
-void		panel_strech_events_to_toplevel (GtkWidget *widget,
+void		panel_stretch_events_to_toplevel (GtkWidget *widget,
 						 gboolean top,
 						 gboolean right,
 						 gboolean bottom,

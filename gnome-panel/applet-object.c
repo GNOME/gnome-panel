@@ -273,7 +273,7 @@ applet_object_set_tooltip (AppletObject *applet,
  *
  * Description:  Gets the free space left that you can use for your applet.
  * This is the number of pixels around your applet to both sides.  If you
- * strech by this amount you will not disturb any other applets.  If you
+ * stretch by this amount you will not disturb any other applets.  If you
  * are on a packed panel 0 will be returned.
  *
  * Returns:  Free space left for your applet.
