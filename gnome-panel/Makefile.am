@@ -1,7 +1,11 @@
+test:
+	echo $(CXXCOMPILE)
+
 SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 	@PROGRAMS_PANEL_CDPLAYER@
 
 CXX = mico-c++
+CXXCOMPILE = $(CXX) -g $(INCLUDES)
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
@@ -38,7 +42,7 @@ panel_SOURCES = 		\
 	panel-widget.h		\
 	$(CORBA_SOURCES)
 
-MICO_VERS = 2.0.2
+MICO_VERS = 2.0.3
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
