@@ -252,7 +252,7 @@ static char *wait_for_imap_answer(int s, char *tag)
   return 0; 
  }
 
-int imap_check(const char *h, const char* n, const char* e)
+int imap_check(const char *h, const char* n, const char* e, const char* f)
  {
   int s;
   char *c;
@@ -260,6 +260,10 @@ int imap_check(const char *h, const char* n, const char* e)
   unsigned int r = (unsigned int) -1;
   
   if (!h || !n || !e) return -1;
+
+  if (f == NULL ||
+      f[0] == '\0')
+	  f = "INBOX";
   
   s = connect_socket(h, 143);
   
@@ -275,7 +279,8 @@ int imap_check(const char *h, const char* n, const char* e)
          g_free(c);
          if (is_imap_answer_ok(wait_for_imap_answer(s, "A1"))) 
          {
-          if (write_line(s, "A2 STATUS INBOX (MESSAGES UNSEEN)"))
+          c = g_strdup_printf("A2 STATUS \"%s\" (MESSAGES UNSEEN)",f);
+          if (write_line(s, c))
            {
             int total = 0, unseen = 0;
             
@@ -288,6 +293,7 @@ int imap_check(const char *h, const char* n, const char* e)
             if (write_line(s, "A3 LOGOUT"))
              read_line(s);
            }     
+         g_free(c);
          }
        }
       else

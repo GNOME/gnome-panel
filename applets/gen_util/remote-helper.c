@@ -191,14 +191,14 @@ gpointer
 helper_imap_check (RemoteHandler handler, gpointer data,
 		   GDestroyNotify destroy_notify,
 		   const char *command,
-		   const char *h, const char* n, const char* e)
+		   const char *h, const char* n, const char* e, const char *f)
 {
 	RemoteHandlerData *handler_data;
 
 	handler_data = fork_new_handler (handler, data, destroy_notify);
 
 	if (handler_data == NULL) {
-		handler (imap_check (h, n, e), data);
+		handler (imap_check (h, n, e, f), data);
 		return NULL;
 	}
 
@@ -209,7 +209,7 @@ helper_imap_check (RemoteHandler handler, gpointer data,
 		    command[0] != '\0')
 			system (command);
 	       
-		mails = imap_check (h, n, e);
+		mails = imap_check (h, n, e, f);
 
 		write (handler_data->fd, &mails, sizeof (mails));
 

@@ -17,7 +17,8 @@ gpointer helper_pop3_check (RemoteHandler handler, gpointer data,
 gpointer helper_imap_check (RemoteHandler handler, gpointer data,
 			    GDestroyNotify destroy_notify,
 			    const char *command,
-			    const char *h, const char* n, const char* e);
+			    const char *h, const char* n, const char* e,
+			    const char *f);
 void helper_whack_handle (gpointer handle);
 
 #endif

@@ -123,13 +123,13 @@ struct _MailCheck {
 	char *animation_file;
         
 	GtkWidget *mailfile_entry, *mailfile_label, *mailfile_fentry;
-	GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
-	GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
+	GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry, *remote_folder_entry;
+	GtkWidget *remote_server_label, *remote_username_label, *remote_password_label, *remote_folder_label;
 	GtkWidget *pre_remote_command_label, *pre_remote_command_entry;
 	GtkWidget *remote_option_menu;
 	GtkWidget *play_sound_check;
         
-	char *pre_remote_command, *remote_server, *remote_username, *remote_password, *real_password;
+	char *pre_remote_command, *remote_server, *remote_username, *remote_password, *real_password, *remote_folder;
 	MailboxType mailbox_type; /* local = 0; maildir = 1; pop3 = 2; imap = 3 */
         MailboxType mailbox_type_temp;
 
@@ -309,7 +309,8 @@ check_mail_file_status (MailCheck *mc)
 							   mc->pre_remote_command,
 							   mc->remote_server,
 							   mc->remote_username,
-							   mc->real_password);
+							   mc->real_password,
+							   mc->remote_folder);
 		}
 	}
 	else if (mc->mailbox_type == MAILBOX_LOCAL) {
@@ -564,6 +565,7 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	g_free (mc->pre_remote_command);
 	g_free (mc->remote_username);
 	g_free (mc->remote_password);
+	g_free (mc->remote_folder);
 	g_free (mc->real_password);
 
 	g_free (mc->animation_file);
@@ -882,6 +884,16 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 	if (strlen(text) > 0)
 		mc->remote_password = g_strdup(text);
 
+        if (mc->remote_folder) {
+                g_free(mc->remote_folder);
+                mc->remote_folder = NULL;
+        }
+ 
+        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_folder_entry));
+ 
+        if (strlen(text) > 0)
+                mc->remote_folder = g_strdup(text);
+
 	if (mc->pre_remote_command) {
 		g_free(mc->pre_remote_command);
 		mc->pre_remote_command = NULL;
@@ -909,6 +921,7 @@ make_remote_widgets_sensitive(MailCheck *mc)
 {
 	gboolean b = mc->mailbox_type_temp != MAILBOX_LOCAL &&
 	             mc->mailbox_type_temp != MAILBOX_LOCALDIR;
+        gboolean f = mc->mailbox_type_temp == MAILBOX_IMAP;
 	
 	gtk_widget_set_sensitive (mc->mailfile_fentry, !b);
 	gtk_widget_set_sensitive (mc->mailfile_label, !b);
@@ -916,9 +929,11 @@ make_remote_widgets_sensitive(MailCheck *mc)
 	gtk_widget_set_sensitive (mc->remote_server_entry, b);
 	gtk_widget_set_sensitive (mc->remote_password_entry, b);
 	gtk_widget_set_sensitive (mc->remote_username_entry, b);
+        gtk_widget_set_sensitive (mc->remote_folder_entry, f);
 	gtk_widget_set_sensitive (mc->remote_server_label, b);
 	gtk_widget_set_sensitive (mc->remote_password_label, b);
 	gtk_widget_set_sensitive (mc->remote_username_label, b);
+        gtk_widget_set_sensitive (mc->remote_folder_label, f);
 	gtk_widget_set_sensitive (mc->pre_remote_command_entry, b);
 	gtk_widget_set_sensitive (mc->pre_remote_command_label, b);
 }
@@ -1064,6 +1079,24 @@ mailbox_properties_page(MailCheck *mc)
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
+
+        mc->remote_folder_label = l = gtk_label_new(_("Folder:"));
+        gtk_widget_show(l);
+        gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+ 
+        mc->remote_folder_entry = l = gtk_entry_new();
+        if (mc->remote_folder)
+                gtk_entry_set_text(GTK_ENTRY(l), mc->remote_folder);
+  
+        gtk_widget_show(l);
+        gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+  
+        gtk_signal_connect(GTK_OBJECT(l), "changed",
+                           GTK_SIGNAL_FUNC(property_box_changed), mc);
+ 
+        hbox = gtk_hbox_new (FALSE, 6);
+        gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+        gtk_widget_show (hbox);  
 
 	mc->pre_remote_command_label = l = gtk_label_new(_("Command to run before we check for mail:"));
 	gtk_widget_show(l);
@@ -1306,6 +1339,8 @@ applet_save_session(GtkWidget *w,
 				mc->remote_username?mc->remote_username:"");
         gnome_config_private_set_string("mail/remote_password", 
 				mc->remote_password?mc->remote_password:"");
+        gnome_config_set_string("mail/remote_folder",
+                                mc->remote_folder?mc->remote_folder:"");
         gnome_config_private_set_string("mail/pre_remote_command", 
 				mc->pre_remote_command ? mc->pre_remote_command : "");
         gnome_config_set_int("mail/mailbox_type", (int) mc->mailbox_type);
@@ -1450,6 +1485,7 @@ make_mailcheck_applet(const gchar *goad_id)
 	g_free(query);
 
 	mc->remote_password = gnome_config_private_get_string("mail/remote_password");
+        mc->remote_folder = gnome_config_get_string("mail/remote_folder");
 	mc->mailbox_type = gnome_config_get_int("mail/mailbox_type=0");
 
 	mc->play_sound = gnome_config_get_bool("mail/play_sound=false");
