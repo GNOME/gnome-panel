@@ -39,10 +39,10 @@ struct _MailCheck {
 	/* Does the user have unread mail? */
 	int unreadmail;
 
-  guint update_freq;
+	guint update_freq;
 
-  char *cmd;
-
+	char *cmd;
+	
 	/* This holds either the drawing area or the label */
 	GtkWidget *bin;
 
@@ -81,8 +81,8 @@ struct _MailCheck {
 
 	/* The property window */
 	GtkWidget *property_window;
-  GtkWidget *spin, *cmd_entry;
-  gboolean anim_changed;
+	GtkWidget *spin, *cmd_entry;
+	gboolean anim_changed;
 
 	char *mailcheck_text_only;
 
@@ -98,22 +98,22 @@ static void close_callback (GtkWidget *widget, void *data);
 static char *
 mail_animation_filename (MailCheck *mc)
 {
-	if(!mc->animation_file) {
+	if (!mc->animation_file){
 		mc->animation_file =
-			gnome_unconditional_pixmap_file("mailcheck/email.png");
+			gnome_unconditional_pixmap_file ("mailcheck/email.png");
 		if (g_file_exists (mc->animation_file))
-			return g_strdup(mc->animation_file);
+			return g_strdup (mc->animation_file);
 		g_free (mc->animation_file);
 		mc->animation_file = NULL;
 		return NULL;
 	} else if (*mc->animation_file){
 		if (g_file_exists (mc->animation_file))
-			return g_strdup(mc->animation_file);
+			return g_strdup (mc->animation_file);
 		g_free (mc->animation_file);
 		mc->animation_file = NULL;
 		return NULL;
 	} else
-		/*we are using text only, since the filename was ""!*/
+		/* we are using text only, since the filename was "" */
 		return NULL;
 }
 
@@ -190,16 +190,19 @@ mail_check_timeout (gpointer data)
 {
 	MailCheck *mc = data;
 
-  if(mc->cmd) {
-    /* if we have to execute a command before checking for mail, we
-       remove the mail-check timeout and re-add it after the command
-       returns, just in case the execution takes too long. */
-    gtk_timeout_remove(mc->mail_timeout);
-    if(system(mc->cmd) == 127)
-      g_warning("Couldn't execute command");
-    mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
-  }
-                                      
+	if (mc->cmd){
+		/*
+		 * if we have to execute a command before checking for mail, we
+		 * remove the mail-check timeout and re-add it after the command
+		 * returns, just in case the execution takes too long.
+		 */
+		
+		gtk_timeout_remove (mc->mail_timeout);
+		if (system(mc->cmd) == 127)
+			g_warning("Couldn't execute command");
+		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
+	}
+	
 	check_mail_file_status (mc);
 
 	switch (mc->report_mail_mode){
@@ -277,8 +280,8 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	if (mc->property_window)
 		close_callback (NULL, mc);
 
-  if(mc->cmd)
-    g_free(mc->cmd);
+	if(mc->cmd)
+		g_free (mc->cmd);
 
 	gtk_timeout_remove (mc->mail_timeout);
 }
@@ -290,7 +293,8 @@ create_mail_widgets (MailCheck *mc)
 
 	mc->bin = gtk_hbox_new (0, 0);
 
-	/* This is so that the properties dialog is destroyed if the
+	/*
+	 * This is so that the properties dialog is destroyed if the
 	 * applet is removed from the panel while the dialog is
 	 * active.
 	 */
@@ -337,17 +341,18 @@ static void
 set_selection (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = gtk_object_get_user_data(GTK_OBJECT(widget));
-  mc->selected_pixmap_name = data;
-  mc->anim_changed = TRUE;
+	mc->selected_pixmap_name = data;
+	mc->anim_changed = TRUE;
 
 	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
 }
 
 static void
-property_box_changed(GtkWidget *widget, gpointer data) {
-  MailCheck *mc = data;
-
-  gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
+property_box_changed(GtkWidget *widget, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
 }
 
 static void
@@ -464,32 +469,35 @@ load_new_pixmap (MailCheck *mc)
 }
 
 static void
-apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data) {
-  MailCheck *mc = (MailCheck *)data;
+apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
+{
+	MailCheck *mc = (MailCheck *)data;
+	
+	mc->update_freq = (guint)(gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (mc->spin))*1000);
+	gtk_timeout_remove (mc->mail_timeout);
+	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
+	
+	if(mc->cmd){
+		g_free(mc->cmd);
+		mc->cmd = NULL;
+	}
 
-  mc->update_freq = (guint)(gtk_spin_button_get_value_as_float(GTK_SPIN_BUTTON(mc->spin))*1000);
-  gtk_timeout_remove(mc->mail_timeout);
-  mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
-
-  if(mc->cmd) {
-    g_free(mc->cmd);
-    mc->cmd = NULL;
-  }
-
-  if(strlen(gtk_entry_get_text(GTK_ENTRY(mc->cmd_entry))) > 0)
-    mc->cmd = g_strdup(gtk_entry_get_text(GTK_ENTRY(mc->cmd_entry)));
-
-  if(mc->anim_changed)
-    load_new_pixmap(mc);
-
-  mc->anim_changed = FALSE;
+	text = gtk_entry_get_text (GTK_ENTRY(mc->cmd_entry));
+	
+	if (strlen (text) > 0)
+		mc->cmd = g_strdup (text);
+	
+	if (mc->anim_changed)
+		load_new_pixmap (mc);
+	
+	mc->anim_changed = FALSE;
 }
       
 static GtkWidget *
 mailcheck_properties_page (MailCheck *mc)
 {
 	GtkWidget *freq, *vbox, *hbox, *l, *entry;
-  GtkObject *freq_a;
+	GtkObject *freq_a;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -499,47 +507,47 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
 
-  l = gtk_label_new(_("Execute"));
-  gtk_widget_show(l);
+	l = gtk_label_new(_("Execute"));
+	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-
-  mc->cmd_entry = gtk_entry_new();
-  if(mc->cmd)
-    gtk_entry_set_text(GTK_ENTRY(mc->cmd_entry), mc->cmd);
-  gtk_signal_connect(GTK_OBJECT(mc->cmd_entry), "changed",
-                     GTK_SIGNAL_FUNC(property_box_changed), mc);
-  gtk_widget_show(mc->cmd_entry);
+	
+	mc->cmd_entry = gtk_entry_new();
+	if(mc->cmd)
+		gtk_entry_set_text(GTK_ENTRY(mc->cmd_entry), mc->cmd);
+	gtk_signal_connect(GTK_OBJECT(mc->cmd_entry), "changed",
+			   GTK_SIGNAL_FUNC(property_box_changed), mc);
+	gtk_widget_show(mc->cmd_entry);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->cmd_entry, FALSE, FALSE, 0);
-
-  l = gtk_label_new(_("before each update"));
-  gtk_widget_show(l);
+	
+	l = gtk_label_new(_("before each update"));
+	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-
+	
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);
-
+	
 	l = gtk_label_new (_("Check for mail every"));
-  gtk_widget_show(l);
+	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-
+	
 	freq_a = gtk_adjustment_new((float)mc->update_freq/1000, 0.1, 3600, 0.1, 5, 5);
 	mc->spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 0.1, 1);
-  gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
-                     GTK_SIGNAL_FUNC(property_box_changed), mc);
-  gtk_signal_connect(GTK_OBJECT(mc->spin), "changed",
-                     GTK_SIGNAL_FUNC(property_box_changed), mc);
+	gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
+			   GTK_SIGNAL_FUNC(property_box_changed), mc);
+	gtk_signal_connect(GTK_OBJECT(mc->spin), "changed",
+			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->spin);
-
+	
 	l = gtk_label_new (_("s"));
-  gtk_widget_show(l);
+	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-
+	
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
-
+	
 	l = gtk_label_new (_("Select animation"));
 	gtk_misc_set_alignment (GTK_MISC (l), 0.0, 0.5);
 	gtk_widget_show (l);
@@ -552,8 +560,9 @@ mailcheck_properties_page (MailCheck *mc)
 static void
 mailcheck_properties (AppletWidget *applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { NULL,
-						 "properties-mailcheck" };
+        static GnomeHelpMenuEntry help_entry = {
+		NULL, "properties-mailcheck"
+	};
 	GtkWidget *p;
 
 	MailCheck *mc = data;
@@ -596,9 +605,9 @@ applet_save_session(GtkWidget *w,
 	gnome_config_push_prefix(privcfgpath);
 	gnome_config_set_string("mail/animation_file",
                           mc->animation_file?mc->animation_file:"");
-  gnome_config_set_int("mail/update_frequency", mc->update_freq);
-  gnome_config_set_string("mail/exec_command",
-                          mc->cmd?mc->cmd:"");
+	gnome_config_set_int("mail/update_frequency", mc->update_freq);
+	gnome_config_set_string("mail/exec_command",
+				mc->cmd?mc->cmd:"");
 	gnome_config_pop_prefix();
 
 	gnome_config_sync();
@@ -612,9 +621,11 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 {
 	GtkWidget *about = NULL;
 	static const gchar     *authors [] =
-	{ "Miguel de Icaza <miguel@kernel.org>",
-	  "Jaka Mocnik <jaka.mocnik@kiss.uni-lj.si>",
-	  NULL };
+	{
+		"Miguel de Icaza <miguel@kernel.org>",
+		"Jaka Mocnik <jaka.mocnik@kiss.uni-lj.si>",
+		NULL
+	};
 	
 	about = gnome_about_new ( _("Mail check Applet"), "1.0",
 				    _("(c) 1998 the Free Software Foundation"),
@@ -636,9 +647,9 @@ make_mailcheck_applet(const gchar *goad_id)
 	mc->animation_tag = -1;
 	mc->animation_file = NULL;
 	mc->property_window = NULL;
-  mc->anim_changed = FALSE;
+	mc->anim_changed = FALSE;
 
-  mc->cmd = NULL;
+	mc->cmd = NULL;
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
@@ -666,18 +677,18 @@ make_mailcheck_applet(const gchar *goad_id)
 	mc->animation_file = gnome_config_get_string(query);
 	g_free(query);
 
-  query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
-                         "mail/update_frequency=2000", NULL);
-  mc->update_freq = gnome_config_get_int(query);
-  g_free(query);
-
-  query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
-                         "mail/exec_command", NULL);
-  mc->cmd = gnome_config_get_string(query);
-  g_free(query);
-
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+			    "mail/update_frequency=2000", NULL);
+	mc->update_freq = gnome_config_get_int(query);
+	g_free(query);
+	
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+			    "mail/exec_command", NULL);
+	mc->cmd = gnome_config_get_string(query);
+	g_free(query);
+	
 	if(emailfile) g_free(emailfile);
-
+	
 	mc->mailcheck_text_only = _("Text only");
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
