@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-10 20:27+0100\n"
-"PO-Revision-Date: 2004-11-09 08:25+0200\n"
+"POT-Creation-Date: 2005-01-17 15:13+0200\n"
+"PO-Revision-Date: 2005-01-17 15:12+0200\n"
 "Last-Translator: Vladimir Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
 "MIME-Version: (null)\n"
@@ -47,8 +47,8 @@ msgstr "_Относно"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:942
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Помощ"
@@ -186,7 +186,7 @@ msgid "Custom format"
 msgstr "Личен формат"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
-#: applets/fish/fish.c:144 applets/notification_area/main.c:81
+#: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
 #: applets/wncklet/workspace-switcher.c:261
@@ -237,7 +237,7 @@ msgstr "Използване на _Гринуич"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:529
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
 #: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
@@ -286,7 +286,7 @@ msgstr "Показване на датата в подсказката, кога
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "If true, show week numbers in the calendar."
-msgstr ""
+msgstr "Ако е вярно, в календара да се показват номерата на седмиците."
 
 #: applets/clock/clock.schemas.in.h:12
 msgid "Show date in clock"
@@ -301,9 +301,8 @@ msgid "Show time with seconds"
 msgstr "Показване на секундите във времето"
 
 #: applets/clock/clock.schemas.in.h:15
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Показване на име_ната на работните места"
+msgstr "Показване на номерата на седмиците в календара"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid ""
@@ -616,7 +615,7 @@ msgid "Area where notification icons appear"
 msgstr "Област, в която се появяват иконите за уведомяване"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
-#: applets/notification_area/main.c:128
+#: applets/notification_area/main.c:129
 msgid "Notification Area"
 msgstr "Област за Уведомяване"
 
@@ -632,7 +631,7 @@ msgstr "Ориентация"
 msgid "The orientation of the tray."
 msgstr "Ориентация на панела"
 
-#: applets/notification_area/main.c:341
+#: applets/notification_area/main.c:342
 msgid "Panel Notification Area"
 msgstr "Област за уведомяване"
 
@@ -666,8 +665,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Фабрика за аплетите за навигация между прозорците"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
-#: applets/wncklet/window-menu.c:873
+#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
+#: applets/wncklet/window-menu.c:903
 msgid "Window Selector"
 msgstr "Избор на прозорци"
 
@@ -854,15 +853,15 @@ msgid ""
 msgstr ""
 "Списъкът с прозорци показва всички прозорци и Ви позволява да ги избирате."
 
-#: applets/wncklet/window-menu.c:310
+#: applets/wncklet/window-menu.c:340
 msgid "Unknown Window"
 msgstr "Неизвестен Прозорец"
 
-#: applets/wncklet/window-menu.c:691
+#: applets/wncklet/window-menu.c:721
 msgid "No Windows Open"
 msgstr "Няма Отворени Прозорци"
 
-#: applets/wncklet/window-menu.c:872
+#: applets/wncklet/window-menu.c:902
 msgid "Tool to switch between windows"
 msgstr "Инструмент за превключване между прозорци"
 
@@ -987,9 +986,8 @@ msgid "GNOME Panel Shell"
 msgstr "Обвивката панел на GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
-#, fuzzy
 msgid "_Lock To Panel"
-msgstr "_Премахване от панела"
+msgstr "_Заключване към панела"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
 msgid "_Move"
@@ -1003,7 +1001,7 @@ msgstr "_Премахване от панела"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1194
+#: gnome-panel/applet.c:1208
 msgid "Can't find an empty spot"
 msgstr "Не мога да намеря празно място"
 
@@ -1021,17 +1019,16 @@ msgid "file not found"
 msgstr "файлът не е открит"
 
 #: gnome-panel/drawer.c:356 gnome-panel/panel-addto.c:151
-#: gnome-panel/panel-toplevel.c:1500
+#: gnome-panel/panel-toplevel.c:1511
 msgid "Drawer"
 msgstr "Шкаф"
 
 #: gnome-panel/drawer.c:599
-#, fuzzy
 msgid "_Add to Drawer..."
-msgstr "_Добавяне към панела..."
+msgstr "_Добавяне към шкаф..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:840
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:265
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:854
+#: gnome-panel/panel-action-button.c:133 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_Настройки"
 
@@ -1066,36 +1063,35 @@ msgstr "Не е даден URI за файл на средата за панел
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Не мога да отворя файла на средата %s за панелния стартер %s%s\n"
 
-#: gnome-panel/launcher.c:722 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:736 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Настройки на стартера"
 
-#: gnome-panel/launcher.c:834
-#, fuzzy
+#: gnome-panel/launcher.c:848
 msgid "_Launch"
-msgstr "Стартер..."
+msgstr "_Стартиране"
 
-#: gnome-panel/launcher.c:911
+#: gnome-panel/launcher.c:925
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Ключът %s не е установен, не мога да заредя стартера\n"
 
-#: gnome-panel/launcher.c:966 gnome-panel/launcher.c:984
-#: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
-#: gnome-panel/menu-ditem.c:535
+#: gnome-panel/launcher.c:980 gnome-panel/launcher.c:998
+#: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
+#: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Стартерът не може да бъде създаден"
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:981 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "Трябва да укажете име."
 
-#: gnome-panel/launcher.c:985 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:999 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "Трябва да укажете валиден URL или команда"
 
-#: gnome-panel/launcher.c:1028 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1042 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Създаване на стартер"
 
@@ -1108,11 +1104,11 @@ msgid "Menu"
 msgstr "Меню"
 
 #. class
-#: gnome-panel/menu-ditem.c:510
+#: gnome-panel/menu-ditem.c:517
 msgid "Cannot save menu item to disk"
 msgstr "Елемента от менюто не може да бъде запазен върху диска"
 
-#: gnome-panel/menu-ditem.c:536
+#: gnome-panel/menu-ditem.c:543
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1143,45 +1139,49 @@ msgstr "Добавяне на това като шкаф в панела"
 msgid "Add this as menu to panel"
 msgstr "Добавяне на това като меню в панела"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:748
+#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
 msgid "Applications"
 msgstr "Програми"
 
-#: gnome-panel/panel-action-button.c:108
+#: gnome-panel/panel-action-button.c:109
 msgid "_Activate Screensaver"
 msgstr "_Активиране на предпазителя на екрана"
 
-#: gnome-panel/panel-action-button.c:114
+#: gnome-panel/panel-action-button.c:115
 msgid "_Lock Screen"
 msgstr "_Заключване на екрана"
 
-#: gnome-panel/panel-action-button.c:120
+#: gnome-panel/panel-action-button.c:121
 msgid "_Kill Screensaver Daemon"
 msgstr "_Убиване на демона на Предпазителя на екрана"
 
-#: gnome-panel/panel-action-button.c:126
+#: gnome-panel/panel-action-button.c:127
 msgid "Restart _Screensaver Daemon"
 msgstr "_Рестартиране на демона на предпазителя на екрана"
 
-#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:542
+#: gnome-panel/panel-action-button.c:210 gnome-panel/panel-action-button.c:223
+#: gnome-panel/panel-action-button.c:247 gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' не може да бъде стартиран"
 
-#: gnome-panel/panel-action-button.c:289
+#: gnome-panel/panel-action-button.c:283
+msgid "Cannot connect to server"
+msgstr "Неуспех при свързването към сървър"
+
+#: gnome-panel/panel-action-button.c:316
 msgid "Lock Screen"
 msgstr "Заключване на екрана"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:317
 msgid "Protect your computer from unauthorized use"
 msgstr "Защита на компютъра Ви от непозволен достъп"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:329
 msgid "Log Out"
 msgstr "Изход"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:330
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1189,37 +1189,46 @@ msgstr ""
 "Излизане от тази сесия, за да влезете като различен потребител или да спрете "
 "компютъра"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:340
 msgid "Run Application..."
 msgstr "Стартиране на програма..."
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:341
 msgid "Run an Application by entering a command"
 msgstr "Стартиране на програма, чрез въвеждане на команда"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:351
 msgid "Search for Files..."
 msgstr "Търсене за файлове..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:352
 msgid "Find files, folders, and documents on your computer"
 msgstr "Търсене за файлове, папки и документи във Вашия компютър"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:361
 msgid "Take Screenshot..."
 msgstr "Снимане на екрана..."
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:362
 msgid "Take a screenshot of your desktop"
 msgstr "Създаване на снимка на екрана Ви"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:371
 msgid "Force Quit"
 msgstr "Насилствено спиране"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:372
 msgid "Force a misbehaving application to quit"
 msgstr "Заставяне на блокирала програма да спре"
+
+#. FIXME icon
+#: gnome-panel/panel-action-button.c:382
+msgid "Connect to Server..."
+msgstr "Свързване към сървър..."
+
+#: gnome-panel/panel-action-button.c:383
+msgid "Connect to a remote server"
+msgstr "Свързване към отдалечен сървър"
 
 #: gnome-panel/panel-addto.c:103
 msgid "Custom Application Launcher"
@@ -1267,24 +1276,21 @@ msgid "query returned exception %s\n"
 msgstr "запитването върна изключение %s\n"
 
 #: gnome-panel/panel-addto.c:914
-#, fuzzy, c-format
+#, c-format
 msgid "Select an _item to add to \"%s\":"
-msgstr "Избор на обект за добавяне към %s:"
+msgstr "Избор на _обект за добавяне към \"%s\":"
 
 #: gnome-panel/panel-addto.c:918
-#, fuzzy
 msgid "Add to Drawer"
-msgstr "_Добавяне към панела..."
+msgstr "Добавяне към шкаф"
 
 #: gnome-panel/panel-addto.c:920
-#, fuzzy
 msgid "Select an _item to add to the drawer:"
-msgstr "Избор на _обект за добавяне към панела:"
+msgstr "Избор на _обект за добавяне към шкафа:"
 
 #: gnome-panel/panel-addto.c:922
-#, fuzzy
 msgid "Add to Panel"
-msgstr "_Добавяне към панела..."
+msgstr "Добавяне към панела"
 
 #: gnome-panel/panel-addto.c:924
 msgid "Select an _item to add to the panel:"
@@ -1296,20 +1302,20 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Изключение от изскачащото меню \"%s\"\n"
 
 #: gnome-panel/panel-applet-frame.c:934
-#, fuzzy, c-format
+#, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr "\"%s\" приключи неочаквано"
+msgstr "\"%s\" спря неочаквано"
 
 #: gnome-panel/panel-applet-frame.c:936
-#, fuzzy
 msgid "Panel object has quit unexpectedly"
-msgstr "Панелен обект приключи неочаквано"
+msgstr "Панелен обект спря неочаквано"
 
 #: gnome-panel/panel-applet-frame.c:943
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr ""
+"Ако заредите обект на панела, той ще бъде добавен автоматично към панела."
 
 #: gnome-panel/panel-applet-frame.c:949
 msgid "_Don't Reload"
@@ -1329,12 +1335,8 @@ msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Панелът имаше трудности при зареждането на \"%s\"."
 
 #: gnome-panel/panel-applet-frame.c:1041
-#, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
-msgstr ""
-"\n"
-"\n"
-"Искате ли да изтриете аплета от вашите настройки?"
+msgstr "Искате ли да изтриете аплета от вашите настройки?"
 
 #: gnome-panel/panel-applet-frame.c:1138
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -1416,40 +1418,37 @@ msgid ""
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
 msgstr ""
+"Булев флаг, който показва дали предишната конфигурация на потребителя в /"
+"apps/panel/profiles/default е била копирана в новото място - /apps/panel."
 
 #: gnome-panel/panel-general.schemas.in.h:2
-#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
 msgstr ""
 "Списък от идентификации за панела. Всяка идентифицира индивидуален горен "
-"панел. Настройките за всеки от тези панели са запазени в /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+"панел. Настройките за всеки от тези панели са запазени в /apps/panel/"
+"toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
 msgstr ""
-"Списък·от·идентификации·за·аплетите на панела."
-"·Всяка·идентифицира·индивидуален·аплет от панела."
-"·Настройките·за·всеки·от·тези·аплети·са·запазени·в·/apps/panel/general/"
-"$(profiles)/applets/$(id)."
+"Списък от идентификации за аплетите на панела. Всяка идентифицира "
+"индивидуален аплет от панела. Настройките за всеки от тези аплети са "
+"запазени в /apps/panel/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
 msgstr ""
 "Списък от идентификации за обектите·в·панела. Всяка идентифицира "
-"индивидуален обект·от·панела ( т.е. стартер, бутон или меню). Настройките за "
-"всеки от тези обекти са запазени в /apps/panel/general/$(profiles)/objects/"
-"$(id)."
+"индивидуален обект от панела ( т.е. стартер, бутон или меню). Настройките за "
+"всеки от тези обекти са запазени в /apps/panel/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1482,9 +1481,8 @@ msgstr ""
 "показва зависи от show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Инструмент за настройка на времето"
+msgstr "Настройките на старите профили са мигрирани"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
@@ -1655,37 +1653,35 @@ msgstr "Снимане на прозорец"
 msgid "Cannot display location '%s'"
 msgstr "Местоположението \"%s\" не може да бъде показано"
 
-#: gnome-panel/panel-menu-bar.c:455
-#, fuzzy
+#: gnome-panel/panel-menu-bar.c:461
 msgid "Bookmarks"
-msgstr "_Отбелязки"
+msgstr "Отметки"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:470 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:478 gnome-panel/panel-recent.c:200
 #, c-format
 msgid "Open '%s'"
 msgstr "Отваряне на \"%s\""
 
-#: gnome-panel/panel-menu-bar.c:528
+#: gnome-panel/panel-menu-bar.c:536
 msgid "Network Places"
-msgstr ""
+msgstr "Мрежови места"
 
-#: gnome-panel/panel-menu-bar.c:530
+#: gnome-panel/panel-menu-bar.c:538
 msgid "Removable Media"
-msgstr ""
+msgstr "Преносими носители"
 
-#: gnome-panel/panel-menu-bar.c:581 gnome-panel/panel-menu-bar.c:765
+#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
 msgid "Desktop"
 msgstr "Работно място"
 
-#: gnome-panel/panel-menu-bar.c:582
-#, fuzzy
+#: gnome-panel/panel-menu-bar.c:592
 msgid "Desktop directory"
-msgstr "Опресни работно пространство"
+msgstr "Директория на работния плот"
 
-#: gnome-panel/panel-menu-bar.c:759
+#: gnome-panel/panel-menu-bar.c:771
 msgid "Places"
-msgstr ""
+msgstr "Места"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1912,9 +1908,8 @@ msgid "Right"
 msgstr "Десен"
 
 #: gnome-panel/panel-properties-dialog.c:406
-#, fuzzy
 msgid "Images"
-msgstr "изображение"
+msgstr "Изображения"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
@@ -1969,9 +1964,8 @@ msgid "S_tyle:"
 msgstr "С_тил:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
-#, fuzzy
 msgid "Select background"
-msgstr "Плътен фон"
+msgstr "Избор на фон"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
@@ -2071,23 +2065,25 @@ msgstr "Командата \"%s\" не може да бъде стартиран
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Не може да обърне \"%s\" от UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1076
 msgid "Choose a file to append to the command..."
 msgstr "Избор на файл, към който да се приложи командата..."
 
-#: gnome-panel/panel-run-dialog.c:1365
+#: gnome-panel/panel-run-dialog.c:1353
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ще се изпълни командата: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1371 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1359 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Избор на програма за преглед на нейното описание."
 
-#: gnome-panel/panel-run-dialog.c:1406
+#: gnome-panel/panel-run-dialog.c:1394
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
+"Списъкът с URI-та, който е бил пуснат на диалога за стартиране, е с "
+"неправилен формат (%d) или дължина (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2174,73 +2170,73 @@ msgstr "_Насилствено спиране"
 msgid "C_lear"
 msgstr "Изчистване"
 
-#: gnome-panel/panel-toplevel.c:1110
+#: gnome-panel/panel-toplevel.c:1121
 msgid "Hide Panel"
 msgstr "Скриване на панела"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Top Expanded Edge Panel"
 msgstr "Горен разширен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Top Centered Panel"
 msgstr "Горен центриран панел"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Top Floating Panel"
 msgstr "Горен плаващ панел"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Top Edge Panel"
 msgstr "Горен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Bottom Expanded Edge Panel"
 msgstr "Долен разширен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Bottom Centered Panel"
 msgstr "Долен центриран панел"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Bottom Floating Panel"
 msgstr "Долен плаващ панел"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Bottom Edge Panel"
 msgstr "Долен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Left Expanded Edge Panel"
 msgstr "Ляв разширен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1497
 msgid "Left Centered Panel"
 msgstr "Ляв центриран панел"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1498
 msgid "Left Floating Panel"
 msgstr "Ляв плаващ панел"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1499
 msgid "Left Edge Panel"
 msgstr "Ляв ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1503
 msgid "Right Expanded Edge Panel"
 msgstr "Десен разширен ъглов панел"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1504
 msgid "Right Centered Panel"
 msgstr "Десен центриран панел"
 
-#: gnome-panel/panel-toplevel.c:1494
+#: gnome-panel/panel-toplevel.c:1505
 msgid "Right Floating Panel"
 msgstr "Десен плаващ панел"
 
-#: gnome-panel/panel-toplevel.c:1495
+#: gnome-panel/panel-toplevel.c:1506
 msgid "Right Edge Panel"
 msgstr "Десен ъглов панел"
 
@@ -2598,36 +2594,32 @@ msgid "Open URL: %s"
 msgstr "Отваряне на URL: %s"
 
 #: gnome-panel/panel.c:1237
-#, fuzzy
 msgid "Delete this drawer?"
-msgstr "Премахване шкаф"
+msgstr "Премахване на този шкаф?"
 
 #: gnome-panel/panel.c:1238
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
 msgstr ""
 "Когато един шкаф бъде премахнат, настройките му \n"
-"се губят. Да бъде ли премахнат този шкаф?"
+"се губят."
 
 #: gnome-panel/panel.c:1240
 msgid "Delete Drawer"
 msgstr "Премахване шкаф"
 
 #: gnome-panel/panel.c:1242
-#, fuzzy
 msgid "Delete this panel?"
-msgstr "_Премахване на този панел"
+msgstr "Премахване на този панел?"
 
 #: gnome-panel/panel.c:1243
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
 msgstr ""
 "Когато един панел бъде премахнат, настройките му \n"
-"се губят. Да бъде ли премахнат този панел?"
+"се губят."
 
 #: gnome-panel/panel.c:1245
 msgid "Delete Panel"
@@ -2645,46 +2637,46 @@ msgstr "Аплет за изпробване на Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Фабрика за аплети за изпробване на Bonobo"
 
-#: libpanel-applet/panel-applet.c:984
+#: libpanel-applet/panel-applet.c:993
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Полученият тип на фона \"%s\" е непълен"
 
-#: libpanel-applet/panel-applet.c:998
+#: libpanel-applet/panel-applet.c:1007
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Полученият тип на фона \"%s\" е непълен: %s"
 
-#: libpanel-applet/panel-applet.c:1007
+#: libpanel-applet/panel-applet.c:1016
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Не успях да открия изображението %s"
 
-#: libpanel-applet/panel-applet.c:1014
+#: libpanel-applet/panel-applet.c:1023
 msgid "Unknown background type received"
 msgstr "Получен е непознат вид на фона"
 
-#: libpanel-applet/panel-applet.c:1199
+#: libpanel-applet/panel-applet.c:1208
 msgid "The Applet's containing Panel's orientation"
 msgstr "Ориентация на панела съдържащ аплета"
 
-#: libpanel-applet/panel-applet.c:1207
+#: libpanel-applet/panel-applet.c:1216
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Размер в пиксели на панела съдържащ аплета"
 
-#: libpanel-applet/panel-applet.c:1215
+#: libpanel-applet/panel-applet.c:1224
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Фон на панела, съдържащ аплета"
 
-#: libpanel-applet/panel-applet.c:1223
+#: libpanel-applet/panel-applet.c:1232
 msgid "The Applet's flags"
 msgstr "Флагове на аплета"
 
-#: libpanel-applet/panel-applet.c:1231
+#: libpanel-applet/panel-applet.c:1240
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Интервал подсказващ подходящите размери за аплета"
 
-#: libpanel-applet/panel-applet.c:1239
+#: libpanel-applet/panel-applet.c:1248
 msgid "The Applet's containing Panel is locked down"
 msgstr "Аплетът съдържащ Панела е заключен"
 
@@ -2746,3986 +2738,3 @@ msgstr "_Аплет:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Директория с предпочитания:"
-
-#~ msgid "Workspace Selector"
-#~ msgstr "Превключвател на работни места"
-
-#~ msgid "_Lock"
-#~ msgstr "Зак_лючване"
-
-#~ msgid "Un_lock"
-#~ msgstr "Отк_лючване"
-
-#~ msgid "Lock screen"
-#~ msgstr "Заключване на екрана"
-
-#~ msgid "Add to %s"
-#~ msgstr "Добавяне към %s"
-
-#~ msgid "Add to the panel"
-#~ msgstr "Добавяне към панела"
-
-#~ msgid "%s: %s"
-#~ msgstr "%s: %s"
-
-#~ msgid "About GNOME"
-#~ msgstr "Относно GNOME"
-
-#~ msgid "About _GNOME"
-#~ msgstr "Относно _GNOME"
-
-#~ msgid "Actions"
-#~ msgstr "Действия"
-
-#~ msgid "Workspace List"
-#~ msgstr "Списък на работните места"
-
-#~ msgid "Specify a profile name to load"
-#~ msgstr "Указване на име на профила, който да се зареди"
-
-#~ msgid "Cannot remove menu item %s"
-#~ msgstr "Елементът %s не може да бъде премахнат"
-
-#~ msgid "Could not get file name from path: %s"
-#~ msgstr "Не мога да взема името на файла от пътя: %s"
-
-#~ msgid "Could not get directory name from path: %s"
-#~ msgstr "Не мога да взема името на директорията от пътя: %s"
-
-#~ msgid "Remove this item"
-#~ msgstr "Премахване на този елемент"
-
-#~ msgid "Add new item to this menu"
-#~ msgstr "Добавяне на нов елемент в това меню"
-
-#~ msgid "Properties"
-#~ msgstr "Настройки"
-
-#~ msgid "_Name:"
-#~ msgstr "И_ме:"
-
-#~ msgid ""
-#~ "The default application for this type of file cannot handle remote files"
-#~ msgstr ""
-#~ "Програмата по подразбиране за този вид файлове не може да обработва "
-#~ "отдалечени файлове"
-
-#~ msgid "Unable to get the name of the command to execute"
-#~ msgstr "Не успях да получа името на командата, която да изпълня"
-
-#~ msgid ""
-#~ "You do not have fortune installed or you have not specified a program to "
-#~ "run.\n"
-#~ "\n"
-#~ "Please refer to fish properties dialog."
-#~ msgstr ""
-#~ "Програмата fortune не е инсталирана или не сте задали команда за "
-#~ "изпълнение.\n"
-#~ "\n"
-#~ "Проверете настройките на рибата."
-
-#~ msgid "Debian GNU/Linux"
-#~ msgstr "Дебиан ГНУ/Линукс"
-
-#~ msgid "Debian Menu"
-#~ msgstr "Дебиан менюта"
-
-#~ msgid "SuSE Linux"
-#~ msgstr "СуСЕ Линукс"
-
-#~ msgid "SuSE Menu"
-#~ msgstr "СуСе менюта"
-
-#~ msgid "Solaris"
-#~ msgstr "Соларис"
-
-#~ msgid "CDE Menu"
-#~ msgstr "CDE менюта"
-
-#~ msgid ""
-#~ "Unable to initialize png structure.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Не мога да инициализирам png структурата.\n"
-#~ "Вероятно имате грешна версия на libpng в системата."
-
-#~ msgid ""
-#~ "Unable to create png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Не мога да създам информация за png.\n"
-#~ "Вероятно имате грешна версия на libpng в системата."
-
-#~ msgid ""
-#~ "Unable to set png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "Не мога да задам информация за png.\n"
-#~ "Вероятно имате грешна версия на libpng в системата."
-
-#~ msgid ""
-#~ "Insufficient memory to save the screenshot.\n"
-#~ "Please free up some resources and try again."
-#~ msgstr ""
-#~ "Недостатъчна памет за запазване снимката на екрана.\n"
-#~ "Освободете малко ресурси и опитайте отново."
-
-#~ msgid "File %s already exists. Overwrite?"
-#~ msgstr "Файлът %s вече съществува. Презаписване?"
-
-#~ msgid ""
-#~ "Unable to create the file:\n"
-#~ "\"%s\"\n"
-#~ "Please check your permissions of the parent directory"
-#~ msgstr ""
-#~ "Не мога да създам файл:\n"
-#~ "\"%s\"\n"
-#~ "Проверете правата за достъп до съдържащата директория"
-
-#~ msgid "Screenshot-%s.png"
-#~ msgstr "Screenshot-%s.png"
-
-#~ msgid "Screenshot.png"
-#~ msgstr "Screenshot.png"
-
-#~ msgid "Screenshot-%s-%d.png"
-#~ msgstr "Screenshot-%s-%d.png"
-
-#~ msgid "Screenshot-%d.png"
-#~ msgstr "Screenshot-%d.png"
-
-#~ msgid "Not enough room to write file %s"
-#~ msgstr "Няма достатъчно място за запис на файл %s"
-
-#~ msgid ""
-#~ "There was an error displaying help: \n"
-#~ "%s"
-#~ msgstr ""
-#~ "Грешка при показването на помощта: \n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Glade file for the screenshot program is missing.\n"
-#~ "Please check your installation of gnome-panel"
-#~ msgstr ""
-#~ "Glade интерфейсът за програмата за снимки \n"
-#~ "липсва. Проверете инсталацията на gnome-panel"
-
-#~ msgid "Unable to take a screenshot of the current desktop."
-#~ msgstr "Не мога да заснема на текущото работно място"
-
-#~ msgid "Save screenshot to _web page (save in %s)"
-#~ msgstr "Запазване на снимката в _уеб страница (заказване в %s)"
-
-#~ msgid "Grab a window instead of the entire screen"
-#~ msgstr "Снимане на отделен прозорец вместо целия екран"
-
-#~ msgid "Take screenshot after specified delay [in seconds]"
-#~ msgstr "Снима след указаното забавяне [в секунди]"
-
-#~ msgid "<b>Options</b>"
-#~ msgstr "<b>Настройки</b>"
-
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>Предварителен преглед</b>"
-
-#~ msgid "Save Screenshot"
-#~ msgstr "Запазване на снимката"
-
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "Запазване на снимката върху _работното място"
-
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "_Запазва снимката на екрана във файл:"
-
-#~ msgid "Save screenshot to _web page (save in ~/public__html)"
-#~ msgstr "Записва снимката в _уеб страница (запазва в ~/public__html)"
-
-#~ msgid ""
-#~ "The user's directory in which screenshots should be saved so as to appear "
-#~ "on the web."
-#~ msgstr ""
-#~ "Потребителска директория, в която да се записват снимките на екрана, за "
-#~ "да се появят в Интернет."
-
-#~ msgid "Web directory"
-#~ msgstr "Директория за световната мрежа"
-
-#~ msgid ""
-#~ "The \"%s\" applet appears to have died unexpectedly.\n"
-#~ "\n"
-#~ "Do you want to reload this applet?"
-#~ msgstr ""
-#~ "Аплетът \"%s\" изглежда е загинал неочаквано.\n"
-#~ "\n"
-#~ "Искате ли да го презаредите?"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "(If you choose not to reload it at this time you can always add it by "
-#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "(Ако изберете да не го презаредите в момента, винаги можете да го "
-#~ "добавите като натиснете с дясното копче на мишката върху панела и след "
-#~ "това изберете подменюто \"Добавяне към панела\")"
-
-#~ msgid "Unable to load panel stock icon '%s'\n"
-#~ msgstr "Не успях да заредя стандартната икона на панела \"%s\"\n"
-
-#~ msgid "Orientation:"
-#~ msgstr "Ориентация:"
-
-#~ msgid "Size:"
-#~ msgstr "Размер:"
-
-#~ msgid ""
-#~ "The system administrator has disallowed\n"
-#~ "modification of the panel configuration"
-#~ msgstr ""
-#~ "Системният администратор е забранил \n"
-#~ "промените в настройките на панела"
-
-#~ msgid "Error loading glade file %s"
-#~ msgstr "Грешка при зареждане на glade файл %s"
-
-#~ msgid "Panel"
-#~ msgstr "Панел"
-
-#~ msgid "Select preferences for all your panels"
-#~ msgstr "Избиране на настройките за всички панели"
-
-#~ msgid "Animation _speed:"
-#~ msgstr "_Скорост на анимацията"
-
-#~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "Затваряне на _шкафовете, ако е натиснат стартер"
-
-#~ msgid "Drawer and panel _animation"
-#~ msgstr "_Анимация на шкафове и панели"
-
-#~ msgid "Fast"
-#~ msgstr "Бърза"
-
-#~ msgid "Panel Preferences"
-#~ msgstr "Настройки на панела"
-
-#~ msgid "Slow"
-#~ msgstr "Бавна"
-
-#~ msgid "Lock the screen so that you can temporarily leave your computer"
-#~ msgstr ""
-#~ "Заключване на екрана, така че може временно да оставите компютъра си без "
-#~ "надзор"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Излизане от GNOME"
-
-#~ msgid "Search for Files"
-#~ msgstr "Търсене за Файлове"
-
-#~ msgid "Screenshot"
-#~ msgstr "Снимка на екрана"
-
-#~ msgid "Lock"
-#~ msgstr "Заключване"
-
-#~ msgid "Lock the screen so you can temporarily leave your computer"
-#~ msgstr ""
-#~ "Заключване на екрана, така че може временно да оставите компютъра си без "
-#~ "наблюдение"
-
-#~ msgid "Search"
-#~ msgstr "Търсене"
-
-#~ msgid "Run"
-#~ msgstr "Стартиране"
-
-#~ msgid "Run a command"
-#~ msgstr "Стартиране на команда"
-
-#~ msgid "Accessories"
-#~ msgstr "Помощни"
-
-#~ msgid "Amusements"
-#~ msgstr "Забавления"
-
-#~ msgid "Utility"
-#~ msgstr "Полезни"
-
-#~ msgid "Clear recent document history?"
-#~ msgstr "Изчистване списъка със скорошните документи?"
-
-#~ msgid "This will clear the contents of the Recent Documents menu."
-#~ msgstr "Това ще изчисти съдържанието на менюто \"Скорошни документи\""
-
-#~ msgid "_Preferences..."
-#~ msgstr "_Настройки..."
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "Не мога да го добавя"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "Липсват полета \"Exec\" и \"URL\" в обекта"
-
-#~ msgid "Put into run dialog"
-#~ msgstr "Добавя към диалога \"Стартира...\""
-
-#~ msgid "Launcher from menu"
-#~ msgstr "Стартер от меню"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Грешка при четенето на списъка от GConf '%s':·%s"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr "Показва интернет времето, което е едно и също по целия свят"
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr "Показва времето в секунди след епоха, напр. 01.01.1970г."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "От тук се задава в какъв формат ще се показва часа в аплета. Възможни "
-#~ "стойности са 12 и 24."
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "Рибата на GNOME %s"
-
-#~ msgid "Window Menu"
-#~ msgstr "Меню на Прозореца"
-
-#~ msgid "Has Arrow"
-#~ msgstr "Има стрелки за скриване"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Дали да се чертаят индикатори на стрелките"
-
-#~ msgid "DnD Highlight"
-#~ msgstr "Не безпокой"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "Дали да осветява иконите по времв на влачене и пускане или не"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "Ориентацията на обектите-бутони"
-
-#~ msgid "Icon Name"
-#~ msgstr "Име на икона"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "Желаната икона за обект-бутон"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "ID на стандартна икона"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "Желаната стандартна икона за обект-бутон"
-
-#~ msgid "Expander Size"
-#~ msgstr "Размер на разширителя"
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Размер на стрелката за разширяване"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Отпечатва снимка на екрана"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Преглед преди печат на снимка на екрана"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Отпечатва снимката на екрана..."
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "Помощ за _приложението %s"
-
-#~ msgid "%s - command not found"
-#~ msgstr "Kомандата %s не е открита"
-
-#~ msgid "Help on %s"
-#~ msgstr "Помощ за %s"
-
-#~ msgid "Application"
-#~ msgstr "Приложение"
-
-#~ msgid ""
-#~ "Log out of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Излиза от тази сесия, за да влезете като различен потребител или да "
-#~ "спрете машината"
-
-#~ msgid "Action Type"
-#~ msgstr "Вид действие"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "Видът на действието изпълнявано от бутона"
-
-#~ msgid "Drag N' Drop enabled"
-#~ msgstr "Включено е \"Влачене и Пускане\""
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Дали е позволено \"влачене\" и \"пускане\""
-
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s\n"
-#~ "\n"
-#~ "Do you want to delete the applet from your configuration?"
-#~ msgstr ""
-#~ "Панелът имаше трудности при зареждането на \"%s\"\n"
-#~ "Подробности: %s\n"
-#~ "\n"
-#~ "Искате ли да изтриете аплета?"
-
-#~ msgid "Edges"
-#~ msgstr "Ръбове"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "Кои задачи да се показват"
-
-#~ msgid "Quit from the GNOME desktop"
-#~ msgstr "Излиза от средата Гном"
-
-#~ msgid "Menu Path"
-#~ msgstr "Път на Менюто"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "Пътя спрямо който се създава менюто"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "Желаната икона за менюто"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Използва Пътя за Менюто"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Използва пътя посочен от настройката за път на менюто"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "Използва Друга Икона"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Използва иконата определена от настройката за обичайна икона"
-
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>_Икона:</b>"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Име</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Ориентация:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>Големина:</b>"
-
-#~ msgid "Open Recent"
-#~ msgstr "Последно Отваряни"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Описание на избраната в момента програма или информация за командата "
-#~ "която тя ще изпълни."
-
-#~ msgid "Application description"
-#~ msgstr "Описание на приложението"
-
-#~ msgid "List of known applications"
-#~ msgstr "Списък с познатите приложения"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Изберете приложение от списъка, което да се изпълни"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "Когато това е избрани се показва списък с инсталираните програми."
-
-#~ msgid "The name of this panel"
-#~ msgstr "Името на този панел"
-
-#~ msgid "Expand"
-#~ msgstr "Раширява"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Разширява за заеме пълната ширина/дължина на монитора."
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "Ориентацията на панела"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "Височината ( или ширината когато е вертикално) на панела"
-
-#~ msgid "X position"
-#~ msgstr "Позиция по оста Х"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "Позицията по оста Х на панела"
-
-#~ msgid "X centered"
-#~ msgstr "Центрирано по Х"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "Координатата х се отнася само към центъра на екрана"
-
-#~ msgid "Y position"
-#~ msgstr "Позиция по оста Y"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "Позиция·по·оста·Y върху панела"
-
-#~ msgid "Y centered"
-#~ msgstr "Центрирано по Y"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "Координатата·y·се·отнася·само·към·центъра·на·екрана"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "Използване на 2 монитора тип (xinerama)"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "Мониторът (за режим \"xinerama\") на който е панела"
-
-#~ msgid "Auto hide"
-#~ msgstr "_Скрива автоматично"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "Автоматично скрива панела когато мишката не е върху него"
-
-#~ msgid "Hide delay"
-#~ msgstr "Забавяне на скриването (ms)"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "Номер милисекундите за забавяне преди автоматично да се скрие"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "Забавяне при показване"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr "Номер милисекунди забавяне преди автоматично да се покаже"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "_Скрива автоматично"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr "Номер видими пиксели когато панела е автоматично скрит"
-
-#~ msgid "Animate"
-#~ msgstr "Анимация"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Позволява анимации при скриване/показване"
-
-#~ msgid "Animation Speed"
-#~ msgstr "_Скорост на анимацията"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr "Скорост с която да анимира скриването/показването на панела"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "Включени бутони"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Показва бутона за скриване"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "Разрешава стрелки"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Показва ст_релки на бутоните за скриване"
-
-#~ msgid "Help document not found"
-#~ msgstr "Документът с помощта не е открит"
-
-#~ msgid "No document to show"
-#~ msgstr "Няма документ за показване"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "Не мога да стартирам %s"
-
-#~ msgid ""
-#~ "Failed to load image %s\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Не успях да заредя изображението %s\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Size and Position"
-#~ msgstr "Размер"
-
-#~ msgid "Tooltip/Name"
-#~ msgstr "Подсказка/име"
-
-#~ msgid "Icon"
-#~ msgstr "Икона"
-
-#~ msgid "Applet appearance"
-#~ msgstr "Външен вид"
-
-#~ msgid "Drawer handle"
-#~ msgstr "Дръжки"
-
-#~ msgid "Enable hidebutton"
-#~ msgstr "Показвай бутона за скриване"
-
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "Показвай стрелките на бутона за скриване"
-
-#~ msgid "KDE Menu"
-#~ msgstr "KDE менюта"
-
-#, fuzzy
-#~ msgid "_Drawer"
-#~ msgstr "Шкаф"
-
-#, fuzzy
-#~ msgid "_Run Application..."
-#~ msgstr "Приложение"
-
-#, fuzzy
-#~ msgid "_Search for Files..."
-#~ msgstr "Търси..."
-
-#, fuzzy
-#~ msgid "_Take Screenshot..."
-#~ msgstr "Клавиш за снемане на екрана"
-
-#, fuzzy
-#~ msgid "_Log Out"
-#~ msgstr "Изход"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Задава формата на часа, може да е или 12, или 24"
-
-#~ msgid "Maximum size that Window List requests"
-#~ msgstr "Максималният размер, който списъка с прозорци ще поиска"
-
-#~ msgid ""
-#~ "To be usable, Window List requires a minimum width. Window List requests "
-#~ "this minimum width. The minimum width setting is useful for sliding and "
-#~ "edge panels, which usually request a small default width."
-#~ msgstr ""
-#~ "За да бъде полезен, списъкът с прозорци изисква минимален размер, който е "
-#~ "указан в тази стойност. Настройката за минималната широчина е полезна при "
-#~ "плъзгащите панели, които обикновено изискван малка широчина по "
-#~ "подразбиране."
-
-#~ msgid "Number of rows in the Workspace Switcher."
-#~ msgstr "Брой на редовете в превключвателя на работни места"
-
-#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
-#~ msgstr "Дали да се показват всички работни места в превключвателя."
-
-#~ msgid ""
-#~ "Whether to display the names of the workspaces in the Workspace Switcher."
-#~ msgstr "Дали да се показват имената на работните места в превключвателя."
-
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Но мога да запиша стартера на диска, появи се следната грешка:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Не мога да стартирам 'Относно GNOME'"
-
-#, fuzzy
-#~ msgid "Could not remove the menu item"
-#~ msgstr ""
-#~ "<b>Не мога да махна елемента %s от менюто</b>\n"
-#~ "\n"
-#~ "Подробности: %s\n"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Не мога да изпълня gnome-search-tool"
-
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Не мога да изпълня gnome-panel-screenshot"
-
-#, fuzzy
-#~ msgid "A list of panel IDs"
-#~ msgstr "Потапя списъка от задачи в панела"
-
-#, fuzzy
-#~ msgid "A list of panel object IDs"
-#~ msgstr "Не е указан panel_id за панелен обект с ID %s\n"
-
-#~ msgid "Take a screen shot"
-#~ msgstr "Снимай екана"
-
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "Снимай прозорец"
-
-#, fuzzy
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "Аплет за тестване на бонобо"
-
-#, fuzzy
-#~ msgid "The location of the launcher"
-#~ msgstr "Място, на което да се добави стартерът"
-
-#, fuzzy
-#~ msgid "The type of action button"
-#~ msgstr "Видът на действието изпълнявано от бутона"
-
-#, fuzzy
-#~ msgid "The type of panel object"
-#~ msgstr "Не мога да активирам обект от панела"
-
-#, fuzzy
-#~ msgid "Error launching command"
-#~ msgstr ""
-#~ "<b>Не мога да стартирам иконата</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#, fuzzy
-#~ msgid "The background color."
-#~ msgstr "Цвят на фона"
-
-#, fuzzy
-#~ msgid "The background image."
-#~ msgstr "Засенчен фон"
-
-#, fuzzy
-#~ msgid "The background type."
-#~ msgstr "Фон"
-
-#, fuzzy
-#~ msgid "The size of the panel."
-#~ msgstr "Текущо състояние на панела"
-
-#, fuzzy
-#~ msgid "The speed of animations."
-#~ msgstr "Анимациите са с постоянна скорост"
-
-#~ msgid "and finally, The Knights Who Say... NI!"
-#~ msgstr "и най-накрая Рицарите-Които-Казват ... НИ!"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
-#~ "prohibited any changes to the panel's configuration to take place."
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Работи в \"заключен\" режим. Това означава, че системният администратор е "
-#~ "забранил всякакви промени в настройките на панела."
-
-#~ msgid "End world hunger"
-#~ msgstr "Да премахнем световния глад"
-
-#~ msgid "The desired ButtonWidget size"
-#~ msgstr "Желаният размер на обектите-бутони"
-
-#~ msgid "Screenshot..."
-#~ msgstr "Снимай..."
-
-#~ msgid ""
-#~ "<b>Cannot launch icon</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не мога да стартирам иконата</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Can't execute 'About GNOME'</b>\n"
-#~ "\n"
-#~ "Details: %s probably does not exist"
-#~ msgstr ""
-#~ "<b>Не мога да изпълня \"Информация за Гном\"</b>\n"
-#~ "\n"
-#~ "Подробности: вероятно %s не съществува"
-
-#~ msgid ""
-#~ "<b>Can't launch entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не мога да стартирам елемента</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Can't load entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не мога да заредя елемента</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#, fuzzy
-#~ msgid "Floating"
-#~ msgstr "Плаващ панел"
-
-#, fuzzy
-#~ msgid "Centered"
-#~ msgstr "Интернет"
-
-#, fuzzy
-#~ msgid "%s %s Panel"
-#~ msgstr "Панел"
-
-#~ msgid ""
-#~ "<b>Failed to run this program</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не успях да стартирам програмата</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Failed to execute command:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не успях да изпълня командата:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: no application available to open file"
-#~ msgstr ""
-#~ "<b>Не успях да отворя файла:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: няма приложение, с което да отворя файла"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Не успях да отворя файла:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Choose a file"
-#~ msgstr "Избери файл"
-
-#~ msgid "Known Applications"
-#~ msgstr "Познати приложения"
-
-#~ msgid "No application selected"
-#~ msgstr "Няма избрано приложение"
-
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "_Команда за изпълнение при щракване на рибата:"
-
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "_Пауза на кадър [s]:"
-
-#~ msgid "_Animation filename:"
-#~ msgstr "Име на _файла с анимацията:"
-
-#~ msgid "Rows"
-#~ msgstr "реда"
-
-#~ msgid "_Append File..."
-#~ msgstr "_Добави файла..."
-
-#~ msgid "Run Program"
-#~ msgstr "Стартирай програма"
-
-#~ msgid "Run Program..."
-#~ msgstr "Стартирай..."
-
-#~ msgid "Transparent"
-#~ msgstr "прозрачен"
-
-#, fuzzy
-#~ msgid "_Transparent background:"
-#~ msgstr "Прозрачен фон"
-
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Изсвирвай звук при пристигането на нова поща"
-
-#~ msgid "Inbox Monitor"
-#~ msgstr "Датчик за поща"
-
-#~ msgid "_Check for mail"
-#~ msgstr "_Проверявай пощата"
-
-#~ msgid "There was an error executing %s: %s"
-#~ msgstr "Имаше грешка при изпълнението на %s: %s"
-
-#~ msgid ""
-#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
-#~ "so you have to enter it each time it starts up."
-#~ msgstr ""
-#~ "Не сте задали парола в настройките на датчика за поща \n"
-#~ "и ще трябва да я въвеждате всеки път, когато той стартира."
-
-#~ msgid "Please enter your mailserver's _password:"
-#~ msgstr "Въведете _паролата на сървъра за поща:"
-
-#~ msgid "Password Entry box"
-#~ msgstr "Кутия за въвеждане на паролата"
-
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Датчикът за поща не успя да я провери и засега автоматично е "
-#~ "деактивиран.\n"
-#~ "Да не сте въвели грешен сървър, потребителско име или парола?"
-
-#~ msgid "You have new mail."
-#~ msgstr "Имате нова поща."
-
-#~ msgid "You have mail."
-#~ msgstr "Имате поща."
-
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d съобщения"
-
-#~ msgid "%d messages"
-#~ msgstr "%d съобщения"
-
-#~ msgid "No mail."
-#~ msgstr "Нямате поща."
-
-#~ msgid "Status not updated"
-#~ msgstr "Съст. не е обнов."
-
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "Пощенската кутия се _намира в:"
-
-#~ msgid "Local mailspool"
-#~ msgstr "локална пощенска опашка"
-
-#~ msgid "Local maildir"
-#~ msgstr "локална пощенска директория"
-
-#~ msgid "Remote POP3-server"
-#~ msgstr "отдалечен POP3 сървър"
-
-#~ msgid "Remote IMAP-server"
-#~ msgstr "отдалечен IMAP сървър"
-
-#~ msgid "Mail _spool file:"
-#~ msgstr "Име на файла с пощенската _опашка:"
-
-#~ msgid "Mail s_erver:"
-#~ msgstr "Пощенски _сървър:"
-
-#~ msgid "Mail Server Entry box"
-#~ msgstr "Кутия за въвеждане на пощенския сървър"
-
-#~ msgid "_Username:"
-#~ msgstr "По_требител:"
-
-#~ msgid "Username Entry box"
-#~ msgstr "Кутия за въвеждане на потребителското име"
-
-#~ msgid "_Password:"
-#~ msgstr "_Парола:"
-
-#~ msgid "_Folder:"
-#~ msgstr "П_апка:"
-
-#~ msgid "Folder Entry box"
-#~ msgstr "Кутия за въвеждане на папката"
-
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "_Команда, която да се изпълни преди проверка на поща:"
-
-#~ msgid "Execute"
-#~ msgstr "Изпълни"
-
-#~ msgid "Before each _update:"
-#~ msgstr "Преди всяко _обновяване:"
-
-#~ msgid "Command to execute before each update"
-#~ msgstr "Команда, която да се изпълни преди всяко обновяване"
-
-#~ msgid "When new mail _arrives:"
-#~ msgstr "Когато пристигне _поща:"
-
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Команда, която да се изпълни при получаване на поща"
-
-#~ msgid "When clicke_d:"
-#~ msgstr "При _щракване:"
-
-#~ msgid "Set the number of unread mails to _zero"
-#~ msgstr "Задай броя на непрочетените съобщения да е _нула"
-
-#~ msgid "Check for mail _every"
-#~ msgstr "Проверявай пощата _всеки"
-
-#~ msgid "minutes"
-#~ msgstr "минути"
-
-#~ msgid "Choose time interval in minutes to check mail"
-#~ msgstr "Изберете през колко минути да се проверява пощата"
-
-#~ msgid "Choose time interval in seconds to check mail"
-#~ msgstr "Изберете през колко секунди да се проверява пощата"
-
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "Изсвирвай _звук при пристигането на нова поща"
-
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Настройки на датчика за поща"
-
-#~ msgid "_Mail check"
-#~ msgstr "_Проверка на поща"
-
-#~ msgid "Mail_box"
-#~ msgstr "Пощенска _кутия"
-
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr "Датчикът за поща Ви уведомява при получаването на нова поща"
-
-#~ msgid "Text only"
-#~ msgstr "само текст"
-
-#~ msgid "Mail check"
-#~ msgstr "Проверка за поща"
-
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr "Проверката за поща Ви уведомява, че сте получили нова поща"
-
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Команда, която да се изпълни при проверка за поща"
-
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr "Команда, която да се изпълни при щракване на датчика за поща"
-
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Команда, която да се изпълни преди проверката за поща"
-
-#~ msgid "Do we run the exec-command"
-#~ msgstr "Да изпълня ли командата exec"
-
-#~ msgid "Do we run the newmail-command"
-#~ msgstr "Да изпълня ли командата за нова поща"
-
-#~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Колко често (в милисекунди) да проверявам пощата"
-
-#~ msgid "If mail should be checked automatically"
-#~ msgstr "Дали пощата да се проверява автоматично"
-
-#~ msgid "If this is set mail will be checked every update-freq milliseconds"
-#~ msgstr ""
-#~ "Ако това е зададено, пощата ще се проверява всеки update-freq милисекунди"
-
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "Ако това е зададено, трябва да се изпълни  командата exec"
-
-#~ msgid "If this is set, we should run the newmail-command"
-#~ msgstr "Ако това е зададено, трябва да се изпълни командата за нова поща"
-
-#~ msgid "Interval for checking mail"
-#~ msgstr "Интервал за проверка на пощата"
-
-#~ msgid "Path to the animation file"
-#~ msgstr "Път към файла с анимация"
-
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr "Изсвирвай звук при получаването на поща"
-
-#~ msgid "Remote folder for mail retrieval"
-#~ msgstr "Отдалечена папка за получаване на поща"
-
-#~ msgid "Remote server to connect to for our mail"
-#~ msgstr "Отдалечен сървър, с който да се свържа за пощата"
-
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Изпълни тази команда преди да провериш пощата"
-
-#~ msgid "The mail server"
-#~ msgstr "Пощенският сървър"
-
-#~ msgid "The user's password"
-#~ msgstr "Паролата на потребителя"
-
-#~ msgid "The user's password for the remote server"
-#~ msgstr "Паролата на потребителя на отдалечения сървър"
-
-#~ msgid "This is how we check the mail, check the mail, check the mail..."
-#~ msgstr "Така проверяваме пощата, проверяваме пощата, проверяваме пощата..."
-
-#~ msgid ""
-#~ "This is how we process the mail, process the mail, process the mail..."
-#~ msgstr "Така обработваме пощата, обработваме пощата, обработваме пощата..."
-
-#~ msgid ""
-#~ "This is the animation that will be displayed during normal Inbox Monitor "
-#~ "usage"
-#~ msgstr ""
-#~ "Това е анимацията, която се показва при нормално използване на датчика за "
-#~ "поща"
-
-#~ msgid "Username on the remote server"
-#~ msgstr "Потребителско име на отдалечения сървър"
-
-#~ msgid "We run this command when the user clicks on Inbox Monitor"
-#~ msgstr ""
-#~ "Тази команда се изпълнява, когато потребителят щракне върху датчика за "
-#~ "поща"
-
-#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
-#~ msgstr ""
-#~ "Дали състоянието на пощата да се изчисти при щракването на датчика за поща"
-
-#~ msgid "You've got mail!"
-#~ msgstr "Имате поща!"
-
-#~ msgid "Mailcheck"
-#~ msgstr "Проверка на пощата"
-
-#~ msgid "New Mail"
-#~ msgstr "Нова поща"
-
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr "Не е указан object_type за панелен обект с ID %s\n"
-
-#~ msgid "Mode"
-#~ msgstr "Режим"
-
-#~ msgid "State"
-#~ msgstr "Състояние"
-
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr "Дали бутоните за скриване на панел са включени."
-
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Картинки на бутоните за скриване"
-
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "Бутоните за скриване имат картинки"
-
-#~ msgid "Hide this panel"
-#~ msgstr "Скрий панела"
-
-#~ msgid "Show this panel"
-#~ msgstr "Покажи панела"
-
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Не мога да намеря програмата за снимки"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Не мога да стартирам програмата за снимки на екрана"
-
-#~ msgid "Panel to add the launcher to"
-#~ msgstr "Към кой панел да се добави стартерът"
-
-#~ msgid "NUMBER"
-#~ msgstr "НОМЕР"
-
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "Аргументът е url за добавяне, а не .desktop файл"
-
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr "Трябва да зададете единичен аргумент с .desktop файла или url\n"
-
-#~ msgid "No panel found\n"
-#~ msgstr "Не е намерен панел\n"
-
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Подравнен Гном панел"
-
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "Ръбов Гном панел"
-
-#~ msgid "Sliding Panel"
-#~ msgstr "Плъзгащ панел"
-
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Плъзгащ Гном панел"
-
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Плаващ Гном панел"
-
-#~ msgid "C_orner Panel"
-#~ msgstr "_Ъглов панел"
-
-#~ msgid "Create corner panel"
-#~ msgstr "Създай ъглов панел"
-
-#~ msgid "Create edge panel"
-#~ msgstr "Създай ръбов панел"
-
-#~ msgid "Create floating panel"
-#~ msgstr "Създай плаващ панел"
-
-#~ msgid "_Sliding Panel"
-#~ msgstr "_Плъзгащ панел"
-
-#~ msgid "Create sliding panel"
-#~ msgstr "Създай плъзгащ панел"
-
-#~ msgid "Button"
-#~ msgstr "Бутон"
-
-#~ msgid "Menu:"
-#~ msgstr "Меню:"
-
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Не мога да създам меню. Ще използвам главното меню!"
-
-#~ msgid "No path set at %s for panel menu object\n"
-#~ msgstr "Не е указан път в %s за обектите в менюто на панела\n"
-
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "Не мога да регистрирам контролиращ обект\n"
-
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr "В текущата конфигурация липсват панели. Ще създам панел-меню."
-
-#~ msgid "Miscellaneous:"
-#~ msgstr "Разни:"
-
-#~ msgid "Current screen:"
-#~ msgstr "Текущ екран:"
-
-#~ msgid "Current monitor:"
-#~ msgstr "Текущ монитор:"
-
-#~ msgid "Indicates the panel position and orientation on screen"
-#~ msgstr "Показва положението и ориентацията на панела спрямо екрана"
-
-#~ msgid "_Position:"
-#~ msgstr "_Положение:"
-
-#~ msgid "Hori_zontal"
-#~ msgstr "_хоризонтално"
-
-#~ msgid "_Vertical"
-#~ msgstr "_вертикално"
-
-#~ msgid "H_orizontal:"
-#~ msgstr "_хоризонтално:"
-
-#~ msgid "Ver_tical:"
-#~ msgstr "_вертикално:"
-
-#~ msgid "_Distance from edge:"
-#~ msgstr "_Разстояние от ръба:"
-
-#~ msgid "_Type:"
-#~ msgstr "_Вид:"
-
-#~ msgid "Default"
-#~ msgstr "по подразбиране"
-
-#~ msgid "Image:"
-#~ msgstr "Изображение:"
-
-#~ msgid "Edge panel"
-#~ msgstr "Ръбов панел"
-
-#~ msgid "Sliding panel"
-#~ msgstr "Плъзгащ панел"
-
-#~ msgid "Floating panel"
-#~ msgstr "Плаващ панел"
-
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr "По подразбиране показвай списъка с програми в диалога за стартиране"
-
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr "Показвай списъка с програми в диалога за стартиране  "
-
-#~ msgid "Disabled"
-#~ msgstr "Забранен"
-
-#~ msgid "Menu Panel"
-#~ msgstr "Панел-меню"
-
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Гном панел-меню"
-
-#~ msgid "You can only have one menu panel at a time."
-#~ msgstr "Не може да имате повече от един панел-меню."
-
-#~ msgid "_Menu Panel"
-#~ msgstr "Панел-_меню"
-
-#~ msgid "Create menu panel"
-#~ msgstr "Създай панел-меню"
-
-#, fuzzy
-#~ msgid "(C) 1998-2002 the Free Software Foundation"
-#~ msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
-
-#~ msgid "(c) 1998-2000 the Free Software Foundation"
-#~ msgstr "(c) 1998-2000 Фондация за Свободен Софтуер"
-
-#, fuzzy
-#~ msgid "(c) 2001 Red Hat, Inc."
-#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
-#~ msgid "Can't execute printer command"
-#~ msgstr "Не мога да изпълня команда към принтера"
-
-#~ msgid "Printer properties"
-#~ msgstr "Настройки на принтера"
-
-#~ msgid "Printer name:"
-#~ msgstr "Име на принтера:"
-
-#, fuzzy
-#~ msgid "Print command:"
-#~ msgstr "Команда за печатане:"
-
-#~ msgid "Printer"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "Printer Applet"
-#~ msgstr "Настройки на принтера"
-
-#~ msgid "(c) 1998 the Free Software Foundation"
-#~ msgstr "(c) 1998 Фондация за Свободен Софтуер"
-
-#~ msgid ""
-#~ "The printer applet lets you easily drag files to be printed via a print "
-#~ "command"
-#~ msgstr ""
-#~ "Аплетът Принтер Ви позволява лесно да печатате файлове като ги пускате в "
-#~ "него"
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "Не мога да създам аплет!\n"
-
-#~ msgid "Properties..."
-#~ msgstr "Настройки..."
-
-#~ msgid "Help"
-#~ msgstr "Помощ"
-
-#, fuzzy
-#~ msgid "About..."
-#~ msgstr "Информация..."
-
-#, fuzzy
-#~ msgid "(C) 2002 Red Hat, Inc."
-#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
-#, fuzzy
-#~ msgid "Copyright 2002 Red Hat Inc."
-#~ msgstr "Правата запазени (c) 1998 Red Hat Software, Inc."
-
-#, fuzzy
-#~ msgid "(C) 1997-2002 the Free Software Foundation"
-#~ msgstr "(C) 1997-2000 Фондация за Свободен Софтуер"
-
-#~ msgid "Applets"
-#~ msgstr "Аплети"
-
-#, fuzzy
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "%s Рибата казва:"
-
-#, fuzzy
-#~ msgid "GNOME Menu"
-#~ msgstr "GNOME Помощ"
-
-#, fuzzy
-#~ msgid "Log Out Button"
-#~ msgstr "Бутон за изход"
-
-#, fuzzy
-#~ msgid "Lock Button"
-#~ msgstr "Бутон за заключване"
-
-#, fuzzy
-#~ msgid "Screenshot Button"
-#~ msgstr "Снимка на екран"
-
-#, fuzzy
-#~ msgid "Orient hori_zontally"
-#~ msgstr "Ориентирай панела хоризонтално"
-
-#, fuzzy
-#~ msgid "Orient _vertically"
-#~ msgstr "Ориентирай панела вертикално"
-
-#, fuzzy
-#~ msgid "Ver_tical offset:"
-#~ msgstr "Вертикално разположение"
-
-#, fuzzy
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "Малък (36 пиксела)"
-
-#, fuzzy
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "Малък (36 пиксела)"
-
-#~ msgid "Small (36 pixels)"
-#~ msgstr "Малък (36 пиксела)"
-
-#, fuzzy
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "Миниатюрен (24 пиксела)"
-
-#~ msgid "Large (64 pixels)"
-#~ msgstr "Голям (64 пиксела)"
-
-#, fuzzy
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "Голям (64 пиксела)"
-
-#, fuzzy
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "Голям (64 пиксела)"
-
-#, fuzzy
-#~ msgid "_Do not scale image to fit"
-#~ msgstr "Не променяй картинката, за да се побира"
-
-#, fuzzy
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "Команда за изпълнение при кликване на рибата:"
-
-#, fuzzy
-#~ msgid "Wanda"
-#~ msgstr "Стандартен"
-
-#, fuzzy
-#~ msgid "fortune"
-#~ msgstr "Късметче"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Нямате поща."
-
-#, fuzzy
-#~ msgid "auto"
-#~ msgstr "Разположение"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "Часовник"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "Настройки на принтера"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_TasklistApplet"
-#~ msgstr "Аплет"
-
-#, fuzzy
-#~ msgid "applications:///nautilus.desktop"
-#~ msgstr "Показвай нормалните приложения от всички работни пространства"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Аплет"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Ръбов панел"
-
-#, fuzzy
-#~ msgid "launcher-object"
-#~ msgstr "Стартер"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Панел-меню"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Фон"
-
-#~ msgid "Log out"
-#~ msgstr "Изход"
-
-#, fuzzy
-#~ msgid "Use GMT"
-#~ msgstr "Използвай GMT"
-
-#, fuzzy
-#~ msgid "Tasklist size"
-#~ msgstr "Задачи"
-
-#, fuzzy
-#~ msgid "Lock Display"
-#~ msgstr "Екран"
-
-#, fuzzy
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Настройки на панела"
-
-#, fuzzy
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Не мога да покажа глобалните настройки на панела"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Глобални настройки..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Ръководство за панела"
-
-#~ msgid "About GNOME..."
-#~ msgstr "Информация за GNOME..."
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "Не мога да отворя директорията. Ще използвам главното меню!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Редактирай менютата..."
-
-#~ msgid "Off"
-#~ msgstr "Изключен"
-
-#~ msgid "In a submenu"
-#~ msgstr "В подменю"
-
-#~ msgid "Menu properties"
-#~ msgstr "Настройки на менюто"
-
-#~ msgid "Menu type"
-#~ msgstr "Тип на менюто"
-
-#~ msgid "Global main menu"
-#~ msgstr "Глобално главно меню"
-
-#~ msgid "Main menu"
-#~ msgstr "Главно меню"
-
-#~ msgid "Normal menu"
-#~ msgstr "Нормално меню"
-
-#~ msgid "Programs: "
-#~ msgstr "Програми: "
-
-#~ msgid "Applets: "
-#~ msgstr "Аплети: "
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Меню на дистрибуцията (ако е намерено): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "KDE меню (ако е намерено): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Меню 'Панел': "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Меню 'Работно пространство': "
-
-#~ msgid "Hiding"
-#~ msgstr "Криещ се"
-
-#~ msgid "Enable Auto-hide"
-#~ msgstr "Автоматично скриващ се"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Позиция на горния ляв ъгъл: X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Отместване от ръба на екрана"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Забележка: Панелът автоматично ще\n"
-#~ "променя размерите си в съответствиеt\n"
-#~ "с най-големия аплет и не всички аплети ще\n"
-#~ "спазват тези размери."
-
-#~ msgid "Pixmap"
-#~ msgstr "Картинка"
-
-#~ msgid "Color to use:"
-#~ msgstr "Цвят:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Мащабирай картинката (пропорционално)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Разтегляй картинката (промени пропорциите)"
-
-#, fuzzy
-#~ msgid "mode"
-#~ msgstr "Премахни"
-
-#, fuzzy
-#~ msgid "state"
-#~ msgstr "Състояние"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr "Вече има един status dock на панела. Повече не може."
-
-#~ msgid "Status dock"
-#~ msgstr "Док за статус"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "Аплетът GNOME Риба"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Аплет Mail check"
-
-#, fuzzy
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr ""
-#~ "Не мога да изпълня:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "_Browse..."
-#~ msgstr "Избери..."
-
-#, fuzzy
-#~ msgid "_Known Applications <<"
-#~ msgstr "Приложение"
-
-#, fuzzy
-#~ msgid "_Known Applications >>"
-#~ msgstr "Приложение"
-
-#~ msgid "Password:"
-#~ msgstr "Парола:"
-
-#, fuzzy
-#~ msgid "CDE Applications"
-#~ msgstr "Приложение"
-
-#, fuzzy
-#~ msgid "Screenshot Capture"
-#~ msgstr "Снимка на екран"
-
-#, fuzzy
-#~ msgid "_Advanced <<"
-#~ msgstr "Допълнителни опции"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Скрива допълнителните под този бутон"
-
-#, fuzzy
-#~ msgid "_Advanced >>"
-#~ msgstr "Допълнителни опции"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr ""
-#~ "Позволява да се напише команда вместо избор на приложението от списъка"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Свойства на елемент"
-
-#~ msgid "Create menu item"
-#~ msgstr "Създай елемент на менюто"
-
-#, fuzzy
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "Подравнен панел"
-
-#, fuzzy
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "Ръбов панел"
-
-#, fuzzy
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Плъзгащ се панел"
-
-#, fuzzy
-#~ msgid "Global Panel Properties"
-#~ msgstr "Настройки на панела"
-
-#, fuzzy
-#~ msgid "Panel Settings"
-#~ msgstr "Звукови Настройки"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Препрочита всички менюта"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Името на Вашата GNOME риба:"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid "Time Format"
-#~ msgstr "Формат на часа"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Премахни от панела"
-
-#, fuzzy
-#~ msgid "Automatically re-check menus for newly installed software"
-#~ msgstr ""
-#~ "Автоматично проверява менюта\n"
-#~ "за нов инсталиран софтуер"
-
-#, fuzzy
-#~ msgid "GNOME Menu:"
-#~ msgstr "GNOME Помощ"
-
-#~ msgid "Grab key..."
-#~ msgstr "Прихвани клавиша..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Дръж панела над другите прозорци"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Дръж панела под другите прозорци"
-
-#, fuzzy
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Запазва панелите на същото ниво като другите прозорци"
-
-#, fuzzy
-#~ msgid "Run Program dialog:"
-#~ msgstr "Стартирай програма"
-
-#, fuzzy
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "Миниатюрен (24 пиксела)"
-
-#, fuzzy
-#~ msgid "Clock Properties"
-#~ msgstr "Настройки на часовника"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Не мога да изпълня програмата календар,\n"
-#~ "вероятно не е инсталирана.\n"
-#~ "Тя е част от пакета gnome-pim."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "менюто не беше създадено"
-
-#~ msgid "Today"
-#~ msgstr "Днес"
-
-#~ msgid "This Week"
-#~ msgstr "Тази седмица"
-
-#~ msgid "This Month"
-#~ msgstr "Този месец"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Не мога да извикам time-admin\n"
-#~ "Може би time-admin не е инсталиран"
-
-#, fuzzy
-#~ msgid "Set Time..."
-#~ msgstr "Задава време"
-
-#~ msgid "Format"
-#~ msgstr "Формат"
-
-#~ msgid "Press a key..."
-#~ msgstr "Натиснете клавиш..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "Загаси екрана сега"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "Заключи екрана веднага"
-
-#, fuzzy
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I:%M:%S %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Погълнато приложение..."
-
-#~ msgid "Reload"
-#~ msgstr "Презареди"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Създай поглъщащ аплет"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "Заглавие на приложението за поглъщане"
-
-#~ msgid "Width"
-#~ msgstr "Ширина"
-
-#~ msgid "Height"
-#~ msgstr "Височина"
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%A, %B %d"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "Аплетът Часовник добавя малко прозорче с датата и/или часът във Вашия "
-#~ "панел"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "Не мога да намеря картинката %s"
-
-#~ msgid "Run..."
-#~ msgstr "Стартирай..."
-
-#~ msgid "Programs"
-#~ msgstr "Програми"
-
-#, fuzzy
-#~ msgid "Panel Global Properties"
-#~ msgstr "Настройки на панела"
-
-#, fuzzy
-#~ msgid "Key bindings"
-#~ msgstr "Действия с клавиши"
-
-#, fuzzy
-#~ msgid "Popup menu key:"
-#~ msgstr "Клавиш за изкачащо меню"
-
-#, fuzzy
-#~ msgid "Run dialog key:"
-#~ msgstr "Клавиш за диалога за стартиране"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "Добави този аплет като стартер към панела"
-
-#~ msgid "Programs menu"
-#~ msgstr "Меню с програми"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "Настройки на Mail check"
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "Аплет Mail check"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "Скрий разширените опции"
-
-#~ msgid "Advanced..."
-#~ msgstr "Разширени опции..."
-
-#, fuzzy
-#~ msgid "_Run ..."
-#~ msgstr "Стартирай..."
-
-#, fuzzy
-#~ msgid "No name"
-#~ msgstr "Без фон"
-
-#, fuzzy
-#~ msgid "URL:"
-#~ msgstr "URL"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Команда"
-
-#, fuzzy
-#~ msgid "Comment:"
-#~ msgstr "Команда"
-
-#, fuzzy
-#~ msgid "Browse icons"
-#~ msgstr "Икона на шкафовете"
-
-#, fuzzy
-#~ msgid "Run in Terminal"
-#~ msgstr "Стартирай в терминал"
-
-#, fuzzy
-#~ msgid "Documentation:"
-#~ msgstr "Показва заглавната страница"
-
-#, fuzzy
-#~ msgid "Comment"
-#~ msgstr "Команда"
-
-#~ msgid "Remove"
-#~ msgstr "Премахни"
-
-#, fuzzy
-#~ msgid "Basic"
-#~ msgstr "Назад"
-
-#~ msgid "GNOME Terminal"
-#~ msgstr "GNOME Терминал"
-
-#~ msgid "The GNOME terminal emulation program."
-#~ msgstr "GNOME Програма за терминална емулация"
-
-#~ msgid ""
-#~ "You have switched the class of this window. Do you\n"
-#~ " want to reconfigure this window to match the default\n"
-#~ "configuration of the new class?"
-#~ msgstr ""
-#~ "Сменихте класа на този прозорец. Искате ли\n"
-#~ " да го реконфигурирате, така че да съвпада с\n"
-#~ " конфигурацията по подразбиране на новият клас?"
-
-#~ msgid "Linux console"
-#~ msgstr "Linux конзола"
-
-#~ msgid "Color Xterm"
-#~ msgstr "Цветен Xterm"
-
-#~ msgid "rxvt"
-#~ msgstr "rxvt"
-
-#~ msgid "Custom"
-#~ msgstr "Потребителска насторйка"
-
-#~ msgid "White on black"
-#~ msgstr "Бяло на черно"
-
-#~ msgid "Black on white"
-#~ msgstr "Черно на бяло"
-
-#~ msgid "Green on black"
-#~ msgstr "Зелено на черно"
-
-#~ msgid "Black on light yellow"
-#~ msgstr "Черно на светло жълто"
-
-#~ msgid "Hidden"
-#~ msgstr "Скрит"
-
-#~ msgid "Terminal"
-#~ msgstr "Терминал"
-
-#~ msgid "Terminal class name"
-#~ msgstr "Име на терминалния клас"
-
-#~ msgid "TCLASS"
-#~ msgstr "КЛАС"
-
-#~ msgid "Specifies font name"
-#~ msgstr "Указва името на шрифта"
-
-#~ msgid "FONT"
-#~ msgstr "ШРИФТ"
-
-#~ msgid "Do not start up shells as login shells"
-#~ msgstr "Не стартирай shell-а като login shell"
-
-#~ msgid "Start up shells as login shells"
-#~ msgstr "Стартирай shell-а като login shell"
-
-#~ msgid "GEOMETRY"
-#~ msgstr "РАЗМЕРИ"
-
-#~ msgid "Execute this program instead of a shell"
-#~ msgstr "Стартирай тази програма, вместо shell"
-
-#~ msgid "COMMAND"
-#~ msgstr "КОМАНДА"
-
-#~ msgid "Execute this program the same way as xterm does"
-#~ msgstr "Стартирай тази програма по същия начин като xterm."
-
-#~ msgid "Foreground color"
-#~ msgstr "Цвят на буквите"
-
-#~ msgid "COLOR"
-#~ msgstr "ЦВЯТ"
-
-#~ msgid "SOLID"
-#~ msgstr "ПЛЪТЕН"
-
-#~ msgid "Background pixmap"
-#~ msgstr "Картинка"
-
-#~ msgid "PIXMAP"
-#~ msgstr "КАРТИНКА"
-
-#~ msgid "Background pixmap scrolls"
-#~ msgstr "Картинката на фона може да се скролира"
-
-#~ msgid "BGSCROLL"
-#~ msgstr "BGSCROLL"
-
-#~ msgid "Background pixmap does not scroll"
-#~ msgstr "Картинката на фона не се скролира"
-
-#~ msgid "BGNOSCROLL"
-#~ msgstr "BGNOSCROLL"
-
-#~ msgid "SHADED"
-#~ msgstr "ЗАСЕНЧЕН"
-
-#~ msgid "Do not shade background"
-#~ msgstr "Не засенчва фон"
-
-#~ msgid "NOSHADED"
-#~ msgstr "NOSHADED"
-
-#~ msgid "TRANSPARENT"
-#~ msgstr "ПРОЗРАЧЕН"
-
-#~ msgid "Update utmp entry"
-#~ msgstr "Обновявай utmp записа"
-
-#~ msgid "UTMP"
-#~ msgstr "UTMP"
-
-#~ msgid "Do not update utmp entry"
-#~ msgstr "Не обновявай utmp записа"
-
-#~ msgid "NOUTMP"
-#~ msgstr "NOUTMP"
-
-#~ msgid "Update wtmp entry"
-#~ msgstr "Обновявай wtmp записа"
-
-#~ msgid "WTMP"
-#~ msgstr "WTMP"
-
-#~ msgid "Do not update wtmp entry"
-#~ msgstr "Не обновявай wtmp записа"
-
-#~ msgid "NOWTMP"
-#~ msgstr "NOWTMP"
-
-#~ msgid "Update lastlog entry"
-#~ msgstr "Обновявай lastlog записа"
-
-#~ msgid "LASTLOG"
-#~ msgstr "LASTLOG"
-
-#~ msgid "Do not update lastlog entry"
-#~ msgstr "Не обновявай lastlog записа"
-
-#~ msgid "NOLASTLOG"
-#~ msgstr "NOLASTLOG"
-
-#~ msgid "Set the window title"
-#~ msgstr "Заглавие на прозореца"
-
-#~ msgid "TITLE"
-#~ msgstr "ЗАГЛАВИЕ"
-
-#~ msgid "Set the window icon"
-#~ msgstr "Задай икона за прозореца"
-
-#~ msgid "ICON"
-#~ msgstr "ИКОНА"
-
-#~ msgid "Set the TERM variable"
-#~ msgstr "Стойност на TERM променливата"
-
-#~ msgid "TERMNAME"
-#~ msgstr "TERMNAME"
-
-#~ msgid "Try to start a TerminalFactory"
-#~ msgstr "Опитай да включиш Терминалната фабрика"
-
-#~ msgid "Try to create the terminal with the TerminalFactory"
-#~ msgstr "Опитай да създадеш терминал с Терминалната фабрика"
-
-#, fuzzy
-#~ msgid "Enter UNIX commands"
-#~ msgstr "Команда за печатане:"
-
-#~ msgid "Background should be shaded"
-#~ msgstr "Фонът трябва да е засенчен"
-
-#~ msgid "Blinking cursor"
-#~ msgstr "Мигащ курсор"
-
-#~ msgid "Color palette:"
-#~ msgstr "Палитра:"
-
-#~ msgid "Color scheme:"
-#~ msgstr "Цветова схема:"
-
-#~ msgid "Colors"
-#~ msgstr "Цветове"
-
-#~ msgid "Delete generates DEL/^H"
-#~ msgstr "Изтрива генерираните DEL/^H"
-
-#~ msgid "Font:"
-#~ msgstr "Щрифт"
-
-#~ msgid "Fore/Background Color:"
-#~ msgstr "Цветове: "
-
-#~ msgid "Foreground color:"
-#~ msgstr "Цвят на буквите:"
-
-#~ msgid "Hide menu bar"
-#~ msgstr "Скривай лентата с менюто"
-
-#~ msgid "Pixmap file:"
-#~ msgstr "Файл с картинката"
-
-#~ msgid "Scroll on keystroke"
-#~ msgstr "Скролирай при натискане на клавиш"
-
-#~ msgid "Scroll on output"
-#~ msgstr "Скролирай при извеждане на нова информация"
-
-#~ msgid "Scrollback lines:"
-#~ msgstr "Брой линии за скролиране:"
-
-#~ msgid "Scrollbar position:"
-#~ msgstr "Разположение  на лентата за скролиране:"
-
-#~ msgid "Scrolling"
-#~ msgstr "Скролиране"
-
-#~ msgid "Select-by-word characters:"
-#~ msgstr "Символи, които определят дума:"
-
-#~ msgid "Silence terminal bell"
-#~ msgstr "Спри терминалния звънец"
-
-#~ msgid "Swap Delete/Backspace"
-#~ msgstr "Размени Delete/Backspace"
-
-#~ msgid "Browse..."
-#~ msgstr "Избери..."
-
-#~ msgid "Terminal Class:"
-#~ msgstr "Терминален клас:"
-
-#~ msgid "Use --login by default"
-#~ msgstr "Използвай --login по подразбиране"
-
-#, fuzzy
-#~ msgid "C_olor selector"
-#~ msgstr "Избор на цвят"
-
-#, fuzzy
-#~ msgid "Copy _link location"
-#~ msgstr "Приложение"
-
-#, fuzzy
-#~ msgid "Edit"
-#~ msgstr "Редактиране..."
-
-#, fuzzy
-#~ msgid "GNOME terminal users guide"
-#~ msgstr "GNOME Терминал"
-
-#~ msgid "Settings"
-#~ msgstr "Настройки"
-
-#, fuzzy
-#~ msgid "_Close terminal"
-#~ msgstr "Цветен Xterm"
-
-#, fuzzy
-#~ msgid "_Hide menubar"
-#~ msgstr "Скривай лентата с менюто"
-
-#, fuzzy
-#~ msgid "_New terminal"
-#~ msgstr "Нов елемент"
-
-#, fuzzy
-#~ msgid "_Open in browser"
-#~ msgstr "Отваря нов прозорец за разглеждане"
-
-#, fuzzy
-#~ msgid "_Paste"
-#~ msgstr "Последен"
-
-#, fuzzy
-#~ msgid "_Reset terminal"
-#~ msgstr "Стартирай в терминал"
-
-#, fuzzy
-#~ msgid "Foundry:"
-#~ msgstr "Папка:"
-
-#, fuzzy
-#~ msgid "Weight:"
-#~ msgstr "Височина"
-
-#, fuzzy
-#~ msgid "Set Width:"
-#~ msgstr "Ширина"
-
-#, fuzzy
-#~ msgid "Add Style:"
-#~ msgstr "Стил: "
-
-#, fuzzy
-#~ msgid "Pixel Size:"
-#~ msgstr "Размер на панела"
-
-#, fuzzy
-#~ msgid "Point Size:"
-#~ msgstr "Размер на панела"
-
-#, fuzzy
-#~ msgid "Spacing:"
-#~ msgstr "Запазвам"
-
-#, fuzzy
-#~ msgid "Font Property"
-#~ msgstr "Настройки на сесията"
-
-#, fuzzy
-#~ msgid "Font"
-#~ msgstr "Щрифт"
-
-#, fuzzy
-#~ msgid "Font Style:"
-#~ msgstr "Стил: "
-
-#, fuzzy
-#~ msgid "Points"
-#~ msgstr "минути и"
-
-#, fuzzy
-#~ msgid "Preview:"
-#~ msgstr "Предварителен преглед"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "Папка:"
-
-#, fuzzy
-#~ msgid "Font Types:"
-#~ msgstr "Щрифт"
-
-#, fuzzy
-#~ msgid "Bitmap"
-#~ msgstr "Картинка"
-
-#, fuzzy
-#~ msgid "(unknown)"
-#~ msgstr "Неизвестно"
-
-#, fuzzy
-#~ msgid "roman"
-#~ msgstr "manx"
-
-#, fuzzy
-#~ msgid "proportional"
-#~ msgstr "Хоризонтално"
-
-#, fuzzy
-#~ msgid "Font Selection"
-#~ msgstr "Избери анимация"
-
-#, fuzzy
-#~ msgid "Select a font"
-#~ msgstr "Избери анимация"
-
-#~ msgid "GNOME News Site"
-#~ msgstr "Страница за GNOME новини"
-
-#~ msgid "http://www.gnome.org/"
-#~ msgstr "http://www.gnome.org/"
-
-#~ msgid "GNOME Main Site"
-#~ msgstr "Главна страница на GNOME"
-
-#~ msgid "GNOME Developers' Site"
-#~ msgstr "Сайт на разработчиците"
-
-#~ msgid "GNOME was brought to you by"
-#~ msgstr "GNOME е създаден от"
-
-#~ msgid "Timur I. Bakeyev"
-#~ msgstr "Timur I. Bakeyev"
-
-#~ msgid "Szabolcs 'Shooby' Ban"
-#~ msgstr "Szabolcs 'Shooby' Ban"
-
-#~ msgid "Jerome Bolliet"
-#~ msgstr "Jerome Bolliet"
-
-#~ msgid "Frederic Devernay"
-#~ msgstr "Frederic Devernay"
-
-#~ msgid "Gergo Erdi"
-#~ msgstr "Gergo Erdi"
-
-#~ msgid "Raul Perusquia Flores"
-#~ msgstr "Raul Perusquia Flores"
-
-#~ msgid "The Mysterious GEGL"
-#~ msgstr "Мистериозния GEGL"
-
-#~ msgid "Bjoern Giesler"
-#~ msgstr "Bjoern Giesler"
-
-#~ msgid "Dov Grobgeld"
-#~ msgstr "Dov Grobgeld"
-
-#~ msgid "Helmut Koeberle"
-#~ msgstr "Helmut Koeberle"
-
-#~ msgid "Matthew Marjanovic"
-#~ msgstr "Matthew Marjanovic"
-
-#~ msgid "Alexandre Muniz"
-#~ msgstr "Alexandre Muniz"
-
-#~ msgid "Sung-Hyun Nam"
-#~ msgstr "Sung-Hyun Nam"
-
-#~ msgid "Martin Norbaeck"
-#~ msgstr "Martin Norbaeck"
-
-#~ msgid "Tomas Oegren"
-#~ msgstr "Tomas Oegren"
-
-#~ msgid "Carlos Perello Marin"
-#~ msgstr "Carlos Perello Marin"
-
-#~ msgid "Kazuhiro Sasayama"
-#~ msgstr "Kazuhiro Sasayama"
-
-#~ msgid "Inigo Serna"
-#~ msgstr "Inigo Serna"
-
-#~ msgid "Miroslav Silovic"
-#~ msgstr "Miroslav Silovic"
-
-#~ msgid "The Squeaky Rubber Gnome"
-#~ msgstr "Скърцащия Гумен Гном"
-
-#~ msgid "Istvan Szekeres"
-#~ msgstr "Istvan Szekeres"
-
-#~ msgid "Manish Vachharajani"
-#~ msgstr "Manish Vachharajani"
-
-#~ msgid "Neil Vachharajani"
-#~ msgstr "Neil Vachharajani"
-
-#~ msgid "... and many more"
-#~ msgstr "... и много други"
-
-#~ msgid "GNOME Login"
-#~ msgstr "GNOME Login"
-
-#~ msgid "Login"
-#~ msgstr "Име"
-
-#~ msgid "Start with default programs"
-#~ msgstr "Започни с програмите по подразбиране"
-
-#~ msgid "Reset all user settings"
-#~ msgstr "Нулирай всички потребителски настройки"
-
-#~ msgid "Really reset all GNOME user settings for %s?"
-#~ msgstr "Наистина ли да нулирам всички настройки за потребител %s?"
-
-#~ msgid ""
-#~ "The directory /tmp/orbit-%s is not owned\n"
-#~ "by the current user, %s.\n"
-#~ "Please correct the ownership of this directory."
-#~ msgstr ""
-#~ "Директорията /tmp/orbit-%s не е притежание\n"
-#~ "на текущия потребител, %s.\n"
-#~ "Моля, поправете собствеността на директорията."
-
-#~ msgid "Try again"
-#~ msgstr "Пробвай отново"
-
-#~ msgid "Continue"
-#~ msgstr "Продължи"
-
-#~ msgid ""
-#~ "Could not look up internet address for %s.\n"
-#~ "This will prevent GNOME from operating correctly.\n"
-#~ "It may be possible to correct the problem by adding\n"
-#~ "%s to the file /etc/hosts."
-#~ msgstr ""
-#~ "Не мога да открия интернет адреса на %s.\n"
-#~ "Това ще попречи на GNOME да работи нормално.\n"
-#~ "Вероятно е проблема да се оправи чрез добавяне на\n"
-#~ "%s във файла /etc/hosts."
-
-#~ msgid ""
-#~ "Your version of libICE has a bug which causes gnome-session\n"
-#~ "to not function correctly.\n"
-#~ "\n"
-#~ "If you are on Solaris, you should either upgrade to Solaris patch\n"
-#~ "#108376-16 or use the libICE.so.6 from the original Solaris 7.\n"
-#~ "Copy the file into /usr/openwin/lib.  (Thanks go to Andy Reitz\n"
-#~ "for information on this bug).\n"
-#~ "\n"
-#~ "Your GNOME session will terminate after closing this dialog."
-#~ msgstr ""
-#~ "Вашата версия на libICE има грешка което ще попречи на\n"
-#~ "сесията на GNOME да работи нормално.\n"
-#~ "\n"
-#~ "Ако сте със Solaris, трябва да обновите с пач #108376-16\n"
-#~ "или да използвате libICE.so.6 от оригиналния Solaris 7.\n"
-#~ "Копирайте файла в /usr/openwin/lib..\n"
-#~ "\n"
-#~ "Вашата сесия с GNOME ще завърши след затваряне на този диалог."
-
-#~ msgid "Order: "
-#~ msgstr "Подредба: "
-
-#~ msgid "Order"
-#~ msgstr "Подредба"
-
-#~ msgid "Style"
-#~ msgstr "Стил"
-
-#~ msgid "Program"
-#~ msgstr "Програма"
-
-#~ msgid "Inactive"
-#~ msgstr "Неактивен"
-
-#~ msgid "Waiting to start or already finished."
-#~ msgstr "Чакащ да започне или вече приключил."
-
-#~ msgid "Starting"
-#~ msgstr "Стартиране на"
-
-#~ msgid "Started but has not yet reported state."
-#~ msgstr "Стартиран, но без отговор за състоянието."
-
-#~ msgid "Running"
-#~ msgstr "Стартирам"
-
-#~ msgid "A normal member of the session."
-#~ msgstr "Нормален член на сесията"
-
-#~ msgid "Saving"
-#~ msgstr "Запазвам"
-
-#~ msgid "Saving session details."
-#~ msgstr "Запис на сесията."
-
-#~ msgid "State not reported within timeout."
-#~ msgstr "Без отговор за състоянието в дадения интервал от време"
-
-#~ msgid "Normal"
-#~ msgstr "Нормално"
-
-#~ msgid "Unaffected by logouts but can die."
-#~ msgstr "Не се влияе от изходи, но може да умре"
-
-#~ msgid "Respawn"
-#~ msgstr "Прераждане"
-
-#~ msgid "Never allowed to die."
-#~ msgstr "Без позволение да умира"
-
-#~ msgid "Trash"
-#~ msgstr "Боклук"
-
-#~ msgid "Discarded on logout and can die."
-#~ msgstr "Отхвърля се при изход и може да умре."
-
-#~ msgid "Always started on every login."
-#~ msgstr "Винаги стартиран при всеки login."
-
-#~ msgid "Remove Program"
-#~ msgstr "Премахни програма"
-
-#~ msgid "Really log out?"
-#~ msgstr "Сигурни ли сте, че искате да излезете?"
-
-#~ msgid "Save current setup"
-#~ msgstr "Запази текущата обстановка"
-
-#~ msgid "Logout"
-#~ msgstr "Изход"
-
-#~ msgid "Shut Down"
-#~ msgstr "Спира системата"
-
-#~ msgid "Reboot"
-#~ msgstr "Рестартиране"
-
-#~ msgid "Specify a session name to load"
-#~ msgstr "Име на сесия"
-
-#~ msgid "Only read saved sessions from the default.session file"
-#~ msgstr "Прочитай само запазените сесии от default.session файла"
-
-#~ msgid "Millisecond period spent waiting for clients to register (0=forever)"
-#~ msgstr ""
-#~ "Време за изчакване на клиентите да се регистрират (0=до безкрайност) [ms]"
-
-#~ msgid "Millisecond period spent waiting for clients to respond (0=forever)"
-#~ msgstr ""
-#~ "Време за изчакване на клиентите да отговорят (0=до брезкрайност) [ms]"
-
-#~ msgid "Millisecond period spent waiting for clients to die (0=forever)"
-#~ msgstr "Време за изчакване на клиентите да умрат (0=до брезкрайност) [ms]"
-
-#~ msgid "Wait abandoned due to conflict."
-#~ msgstr "Чакането е преустановено поради конфликт."
-
-#~ msgid "No response to the %s command."
-#~ msgstr "Няма отговор на командата %s"
-
-#~ msgid "The program may be slow, stopped or broken."
-#~ msgstr "Програмата може да е бавна, спряна или развалена."
-
-#~ msgid "You may wait for it to respond or remove it."
-#~ msgstr "Може да почакате да отговори или да я премахнете"
-
-#~ msgid "Respawn abandoned due to failures."
-#~ msgstr "Повторното стартиране е прекратено поради грешки."
-
-#~ msgid "A session shutdown is in progress."
-#~ msgstr "В действие е край на сесия."
-
-#~ msgid "Kill session"
-#~ msgstr "Убии сесията"
-
-#~ msgid "Use dialog boxes"
-#~ msgstr "Използвай диалогови кутии"
-
-#~ msgid "Could not connect to the session manager"
-#~ msgstr "Не мога да се свържа със session manager-а"
-
-#~ msgid "Could not connect to gnome-session"
-#~ msgstr "Не мога да се свържа с gnome-session"
-
-#~ msgid "Your session has been saved"
-#~ msgstr "Сесията ви е запазена"
-
-#, fuzzy
-#~ msgid "Save Current Session"
-#~ msgstr "Избор на текуща сесия"
-
-#~ msgid "Try"
-#~ msgstr "Опитай"
-
-#~ msgid "Revert"
-#~ msgstr "Възстанови"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgid "Cancel"
-#~ msgstr "Откажи"
-
-#~ msgid "Session Properties"
-#~ msgstr "Настройки на сесията"
-
-#~ msgid "Session"
-#~ msgstr "Сесия"
-
-#~ msgid "Session Chooser"
-#~ msgstr "Избор на сесия"
-
-#~ msgid "Start Session"
-#~ msgstr "Започни сесия"
-
-#~ msgid "Cancel Login"
-#~ msgstr "Прекъсни Login"
-
-#~ msgid "Initialize session settings"
-#~ msgstr "Инициализирай настройките на сесията"
-
-#, fuzzy
-#~ msgid "Session Properties & Startup Programs"
-#~ msgstr "Програми без контрол на сесията"
-
-#, fuzzy
-#~ msgid "Current session managed programs"
-#~ msgstr "Програми без контрол на сесията"
-
-#~ msgid "Audio Settings"
-#~ msgstr "Звукови Настройки"
-
-#~ msgid "Sawfish Window Manager"
-#~ msgstr "Мениджър на прозорци Sawfish"
-
-#~ msgid "Enlightenment Window Manager"
-#~ msgstr "Мениджър на прозорци Enlightenment"
-
-#~ msgid "Keyboard Bell"
-#~ msgstr "Клавиатурен звук"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Настройки на мишка"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Настройки на клавиатура"
-
-#~ msgid "Session Manager Proxy"
-#~ msgstr "Мениджър на сесии за Прокси"
-
-#~ msgid "Nautilus"
-#~ msgstr "Nautilus"
-
-#~ msgid "Starting GNOME: %s"
-#~ msgstr "Стартиране на GNOME: %s"
-
-#~ msgid "Starting GNOME: done"
-#~ msgstr "Стартиране на GNOME: готово"
-
-#~ msgid "GNOME"
-#~ msgstr "ГНОМ"
-
-#~ msgid "Starting GNOME"
-#~ msgstr "Стартиране на GNOME"
-
-#~ msgid "Programming"
-#~ msgstr "Разработка"
-
-#~ msgid "Tools for software development"
-#~ msgstr "Инструменти за разработка на софтуер"
-
-#~ msgid "Emacs Text Editor"
-#~ msgstr "Emacs"
-
-#~ msgid "Create and edit images or photographs"
-#~ msgstr "Програма за Обработка на Изображения / GNU"
-
-#~ msgid "GIMP Image Editor"
-#~ msgstr "GIMP"
-
-#~ msgid "Games menu"
-#~ msgstr "Меню с игри"
-
-#~ msgid "Graphics"
-#~ msgstr "Графика"
-
-#~ msgid "Graphics menu"
-#~ msgstr "Меню с графични програми"
-
-#~ msgid "Programs for Internet and networks"
-#~ msgstr "Програми за Интернет и Мрежи"
-
-#~ msgid "Multimedia menu"
-#~ msgstr "Меню с мултимедийни програми"
-
-#~ msgid "Sound & Video"
-#~ msgstr "Мултимедия"
-
-#~ msgid "Browse the world wide web"
-#~ msgstr "Netscape Навигатор"
-
-#~ msgid "Netscape Web Browser"
-#~ msgstr "Netscape"
-
-#, fuzzy
-#~ msgid "Office"
-#~ msgstr "Изключен"
-
-#, fuzzy
-#~ msgid "Office Applications"
-#~ msgstr "Приложение"
-
-#~ msgid "Desktop Settings"
-#~ msgstr "Настройки на средата"
-
-#~ msgid "System Tools"
-#~ msgstr "Система"
-
-#~ msgid "System menu"
-#~ msgstr "Системно меню"
-
-#, fuzzy
-#~ msgid "XEmacs Text Editor"
-#~ msgstr "Emacs"
-
-#, fuzzy
-#~ msgid "xemacs text editor"
-#~ msgstr "Emacs"
-
-#, fuzzy
-#~ msgid "rxvt terminal"
-#~ msgstr "Стартирай в терминал"
-
-#~ msgid "Enter UNIX commands with the standard X Terminal"
-#~ msgstr "Обикновен XТерминал"
-
-#~ msgid "X Terminal"
-#~ msgstr "XТерминал"
-
-#~ msgid "Looking up internet address for %s"
-#~ msgstr "Търся интернет адреса на %s"
-
-#~ msgid "Hide"
-#~ msgstr "Скрий"
-
-#~ msgid "Can't get goad_id for applet, ignoring it"
-#~ msgstr "Не мога да взема goad_id за този аплет, игнорирам го"
-
-#, fuzzy
-#~ msgid ""
-#~ "Cannot load help on %s.\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr "Не мога да стартирам gmenu!"
-
-#~ msgid "Execute a command line"
-#~ msgstr "Изпълнение в команден ред"
-
-#~ msgid "The session name cannot be empty"
-#~ msgstr "Името на сесията не може да е празно"
-
-#~ msgid "The session name already exists"
-#~ msgstr "Името на сесията вече съществува"
-
-#~ msgid "Add a new session"
-#~ msgstr "Добавя нова сесия"
-
-#~ msgid "Edit session name"
-#~ msgstr "Редактирай име на сесия"
-
-#~ msgid "Show splash screen on login"
-#~ msgstr "Покажи прозореца със зареждането на сесията"
-
-#~ msgid "Prompt on logout"
-#~ msgstr "Пита при излизане от сесия"
-
-#~ msgid "Add..."
-#~ msgstr "Добавя..."
-
-#~ msgid "Session Options"
-#~ msgstr "Опции за сесия"
-
-#~ msgid "Priority"
-#~ msgstr "Приоритет"
-
-#~ msgid "Command"
-#~ msgstr "Команда"
-
-#~ msgid "Browse Currently Running Programs..."
-#~ msgstr "Преглед на програмите в изпълнение..."
-
-#~ msgid "Startup Programs"
-#~ msgstr "Стартирани програми"
-
-#~ msgid "-adobe-helvetica-bold-r-normal-*-*-240-*-*-p-*-*-*"
-#~ msgstr "-adobe-helvetica-bold-r-normal-*-*-240-*-*-p-*-*-cp1251"
-
-#~ msgid "-adobe-helvetica-medium-r-normal-*-8-*-*-*-p-*-*-*"
-#~ msgstr "-adobe-helvetica-medium-r-normal-*-8-*-*-*-p-*-*-cp1251"
-
-#~ msgid "Startup Command"
-#~ msgstr "Начална команда"
-
-#~ msgid ""
-#~ "Programs with smaller values are started before programs with higher "
-#~ "values. The default value should be OK"
-#~ msgstr ""
-#~ "Програмите с малка стойност се изпълняват преди тези с голяма. "
-#~ "Подразбиращата се стойност е добра."
-
-#~ msgid "The startup command cannot be empty"
-#~ msgstr "Името на командата за стартиране не може да бъде празно"
-
-#~ msgid "Add Startup Program"
-#~ msgstr "Добави програма"
-
-#~ msgid "Edit Startup Program"
-#~ msgstr "Редактиране на програма за стартиране"
-
-#, fuzzy
-#~ msgid "(c) 2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 the Free Software Foundation"
-
-#, fuzzy
-#~ msgid "level"
-#~ msgstr "Ниво"
-
-#~ msgid ""
-#~ "Cannot execute the gmc-client program,\n"
-#~ "perhaps gmc is not installed"
-#~ msgstr ""
-#~ "Не мога да изпълня програмата gmc-client,\n"
-#~ "вероятно gmc не е инсталиран"
-
-#~ msgid "News (www)"
-#~ msgstr "Новини (www)"
-
-#~ msgid "http://gnotices.gnome.org/gnome-news/"
-#~ msgstr "http://gnotices.gnome.org/gnome-news/"
-
-#~ msgid "FAQ (www)"
-#~ msgstr "FAQ (www)"
-
-#~ msgid "http://www.gnome.org/gnomefaq/html/"
-#~ msgstr "http://www.gnome.org/gnomefaq/html/"
-
-#~ msgid "Mailing Lists (www)"
-#~ msgstr "Пощенски списъци (www)"
-
-#~ msgid "http://mail.gnome.org/mailman/listinfo/"
-#~ msgstr "http://mail.gnome.org/mailman/listinfo/"
-
-#~ msgid "Software (www)"
-#~ msgstr "Софтуер (www)"
-
-#~ msgid "http://www.gnome.org/applist/list-martin.phtml"
-#~ msgstr "http://www.gnome.org/applist/list-martin.phtml"
-
-#~ msgid "Development (www)"
-#~ msgstr "Разработка (www)"
-
-#~ msgid "http://developer.gnome.org/"
-#~ msgstr "http://developer.gnome.org/"
-
-#~ msgid "Bug Tracking System (www)"
-#~ msgstr "Система за следене на грешките (www)"
-
-#~ msgid "http://bugs.gnome.org/"
-#~ msgstr "http://bugs.gnome.org/"
-
-#~ msgid "By Name"
-#~ msgstr "По име"
-
-#~ msgid "By Type"
-#~ msgstr "По тип"
-
-#~ msgid "By Size"
-#~ msgstr "По Размер"
-
-#~ msgid "By Time Last Accessed"
-#~ msgstr "По последен достъп"
-
-#~ msgid "By Time Last Modified"
-#~ msgstr "По последна модификация"
-
-#~ msgid "By Time Last Changed"
-#~ msgstr "По последна промяна"
-
-#~ msgid "Arrange Icons"
-#~ msgstr "Подреди иконите"
-
-#~ msgid "Rescan Desktop Devices"
-#~ msgstr "Опресни устройствата"
-
-#~ msgid " Desktop "
-#~ msgstr " Работно пространство"
-
-#~ msgid "can't fine real path"
-#~ msgstr "не мога да намеря истинския път"
-
-#~ msgid "Favorites"
-#~ msgstr "Обичайни"
-
-#~ msgid "Available Programs"
-#~ msgstr "Достъпни програми"
-
-#~ msgid "Description"
-#~ msgstr "Описание"
-
-#~ msgid "Add this program to Favorites"
-#~ msgstr "Добави това към менюто 'Обичайни'"
-
-#~ msgid "Cannot create an item with an empty command"
-#~ msgstr "Не мога да създам елемент без команда"
-
-#~ msgid "Could not get file from path: %s"
-#~ msgstr "Не мога да намеря файла в: %s"
-
-#~ msgid "Could not open .order file: %s"
-#~ msgstr "Не мога да отворя .order файла: %s"
-
-#~ msgid "Could not open file '%s' for writing"
-#~ msgstr "Не мога да отворя файл '%s' за запис"
-
-#~ msgid ""
-#~ "Could not open .order file: %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Не мога да отворя .order файла: %s\n"
-#~ "%s"
-
-#~ msgid "Could not remove old order file %s: %s\n"
-#~ msgstr "Не мога да премахна стар файл за подреждане %s: %s\n"
-
-#~ msgid ""
-#~ "Could not rename tmp file: %s to %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Не мога да преименувам временния файл: %s на %s\n"
-#~ "%s"
-
-#~ msgid "Add this to Favorites menu"
-#~ msgstr "Добави това към менюто 'Обичайни'"
-
-#~ msgid "Favorites menu"
-#~ msgstr "Меню с обичайни неща"
-
-#~ msgid "Favorites: "
-#~ msgstr "Обичайни: "
-
-#~ msgid "Avoid this panel when maximizing windows"
-#~ msgstr "Избягвай този панел при максимизиране на прозорци"
-
-#~ msgid "Panel window level:"
-#~ msgstr "Прозоречно ниво на панела:"
-
-#~ msgid "Default (from global preferences)"
-#~ msgstr "По подразбиране (от глобалните настройки)"
-
-#~ msgid ""
-#~ "An applet is not responding to a save request.\n"
-#~ "Remove the applet or continue waiting?"
-#~ msgstr ""
-#~ "Един аплет не отговаря на заявка за запис.\n"
-#~ "Да го премахна ли или да почакам?"
-
-#~ msgid "Remove applet"
-#~ msgstr "Премахни го"
-
-#~ msgid "Continue waiting"
-#~ msgstr "Почакай"
-
-#~ msgid "Timed out on sending session save to an applet"
-#~ msgstr "Не мога да чакам повече аплета"
-
-#~ msgid "Show tasklist arrow"
-#~ msgstr "Покажи стрелката със задачите"
-
-#~ msgid "Switch horizontal/vertical position of tasklist arrow"
-#~ msgstr ""
-#~ "Превключва хоризонтална/вертикална позиция на стрелката със списък от "
-#~ "задачи"
-
-#~ msgid "Only show current desktop in pager"
-#~ msgstr "Показвай само текущото работно пространство в пейджъра"
-
-#~ msgid "Raise area grid over tasks"
-#~ msgstr "Изпъкнала граница над задачите"
-
-#~ msgid "Thumb Nails"
-#~ msgstr "Малки снимки"
-
-#~ msgid "Fill window thumbnails with screen contents"
-#~ msgstr "Показвай съдържанието на прозорците от екрана"
-
-#~ msgid "Incremental update delay [ms]"
-#~ msgstr "Задръжка на нарастващо обновяване [мс]"
-
-#~ msgid "Tooltips"
-#~ msgstr "Подсказки"
-
-#~ msgid "Show Desk-Guide tooltips"
-#~ msgstr "Показвай подсказките от Desk-Guide"
-
-#~ msgid "Desk-Guide tooltip delay [ms]"
-#~ msgstr "Задържай подсказките [ms]"
-
-#~ msgid "Show desktop name tooltips"
-#~ msgstr "Показвай подсказки с името на работното пространство"
-
-#~ msgid "Desktop name tooltip delay [ms]"
-#~ msgstr "Задържай подсказките с имената [ms]"
-
-#~ msgid "Visibility"
-#~ msgstr "Видимост"
-
-#~ msgid "Show hidden tasks (HIDDEN)"
-#~ msgstr "Показвай скритите задачи (HIDDEN)"
-
-#~ msgid "Show shaded tasks (SHADED)"
-#~ msgstr "Показвай засенчените задачи (SHADED)"
-
-#~ msgid "Show tasks which hide from window list (SKIP-WINLIST)"
-#~ msgstr ""
-#~ "Показвай задачите, които се крият от списъка с прозорци (SKIP-WINLIST)"
-
-#~ msgid "Show tasks which hide from taskbar (SKIP-TASKBAR)"
-#~ msgstr ""
-#~ "Показвай задачите, които се крият от лентата със задачи (SKIP-TASKBAR)"
-
-#~ msgid "Geometry"
-#~ msgstr "Размери"
-
-#~ msgid "Desktop Height [pixels]"
-#~ msgstr "Височина на работното пространство [в пиксели]"
-
-#~ msgid "Override desktop height with panel size"
-#~ msgstr ""
-#~ "Съобразявай височината на работното пространство с размера на панела"
-
-#~ msgid "Divide height by number of vertical areas"
-#~ msgstr "Разделяй височината в зависимост от броя на вертикалните площи"
-
-#~ msgid "Rows of Desktops"
-#~ msgstr "Редове работни пространства"
-
-#~ msgid "Divide height by number of rows"
-#~ msgstr "Разделяй височината по броя редове"
-
-#~ msgid "Desktop Width [pixels]"
-#~ msgstr "Ширина на работното пространство [пиксели]"
-
-#~ msgid "Override desktop width with panel size"
-#~ msgstr "Съобразявай ширината на работното пространство с размера на панела"
-
-#~ msgid "Divide width by number of horizontal areas"
-#~ msgstr "Разделяй ширината по броя хоризонтални пространства"
-
-#~ msgid "Columns of Desktops"
-#~ msgstr "Колони от работни пространства"
-
-#~ msgid "Divide width by number of columns"
-#~ msgstr "Разделяй ширината по броя колони"
-
-#~ msgid "Window Manager Workarounds"
-#~ msgstr "Проблеми с прозоречни мениджъри"
-
-#~ msgid ""
-#~ "Window manager moves decoration window instead\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-#~ msgstr ""
-#~ "Прозоречния мениджър мести декорацията сам\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-
-#~ msgid ""
-#~ "Window manager changes active area on all desktops\n"
-#~ "(FVWM, Sawfish)"
-#~ msgstr ""
-#~ "Мениджъра на прозорци променя активната област на всички раб. места\n"
-#~ "(FVWM, Sawfish)"
-
-#~ msgid ""
-#~ "Window manager expects pager to modify area+desktop properties directly\n"
-#~ "(Enlightenment, FVWM)"
-#~ msgstr ""
-#~ "Прозоречния мениджър очаква пейджъра да модифицира област/работно поле "
-#~ "директно\n"
-#~ "(Enlightenment, FVWM)"
-
-#~ msgid "Popdown task view automatically"
-#~ msgstr "Скривай листа автоматично"
-
-#~ msgid "GNOME Desktop Guide (Pager)"
-#~ msgstr "GNOME Работни Полета (Пейджър)"
-
-#~ msgid ""
-#~ "You are not running a GNOME Compliant\n"
-#~ "Window Manager. GNOME support by the \n"
-#~ "window manager is strongly recommended\n"
-#~ "for proper Desk Guide operation."
-#~ msgstr ""
-#~ "Вие използвате window manager, който\n"
-#~ "не поддържа GNOME. GNOME подръжка на\n"
-#~ "window manager-а е изключително важна\n"
-#~ "за правилната работа на Desk Guide."
-
-#~ msgid "Desk Guide Alert"
-#~ msgstr "Desk Guide: Внимание!"
-
-#~ msgid "Desk Guide Task View"
-#~ msgstr "Desk Guide Списък със Задачи"
-
-#~ msgid "Global"
-#~ msgstr "Глобални"
-
-#~ msgid "Desk Guide Settings"
-#~ msgstr "Настройки на Desk Guide"
-
-#~ msgid "Copyright (C) 1999 Anders Carlsson"
-#~ msgstr "Правата запазени (C) 1999 Anders Carlsson"
-
-#~ msgid ""
-#~ "A tasklist for the GNOME desktop environment.\n"
-#~ "Icons by Tuomas Kuosmanen (tigert@gimp.org)."
-#~ msgstr ""
-#~ "Списък от задачи за обкръжението на раб. място на GNOME.\n"
-#~ "Икони от Tuomas Kuosmanen (tigert@gimp.org)."
-
-#~ msgid "Tasklist: Unable to create applet widget"
-#~ msgstr "Tasklist: Не мога да създам аплет"
-
-#~ msgid "Don't know how to activate `%s'\n"
-#~ msgstr "Не знам как да акривирам '%s'\n"
-
-#~ msgid ""
-#~ "Warning! Unsaved changes will be lost!\n"
-#~ "Proceed?"
-#~ msgstr ""
-#~ "Внимание! Незапазените промени ще бъдат изгубени!\n"
-#~ "Да продължа ли?"
-
-#~ msgid "Restore"
-#~ msgstr "Възстанови"
-
-#~ msgid "Iconify"
-#~ msgstr "Скрий"
-
-#~ msgid "Unshade"
-#~ msgstr "Отсенчи"
-
-#~ msgid "Shade"
-#~ msgstr "Засенчи"
-
-#~ msgid "Unstick"
-#~ msgstr "Отлепи"
-
-#~ msgid "Stick"
-#~ msgstr "Залепи"
-
-#~ msgid "To desktop"
-#~ msgstr "Към работно пространство"
-
-#~ msgid "Close window"
-#~ msgstr "Затвори прозореца"
-
-#~ msgid "Kill app"
-#~ msgstr "Убий приложението"
-
-#~ msgid "Restore All"
-#~ msgstr "Възстанови всички"
-
-#~ msgid "Iconify All"
-#~ msgstr "Скрий всички"
-
-#~ msgid "Unshade All"
-#~ msgstr "Отсенчи всички"
-
-#~ msgid "Shade All"
-#~ msgstr "Засенчи всички"
-
-#~ msgid "Unstick All"
-#~ msgstr "Отлепи всички"
-
-#~ msgid "Stick All"
-#~ msgstr "Залепи всички"
-
-#~ msgid "Close All"
-#~ msgstr "Затвори всички"
-
-#~ msgid "Kill All"
-#~ msgstr "Убий всички"
-
-#~ msgid "Follow panel size"
-#~ msgstr "Следи големината на панела"
-
-#~ msgid "Tasklist width:"
-#~ msgstr "Ширина на списъка:"
-
-#~ msgid "Rows of tasks:"
-#~ msgstr "Редове със задачи:"
-
-#~ msgid "Default task size:"
-#~ msgstr "Размери по подразбиране:"
-
-#~ msgid "Tasklist width is fixed"
-#~ msgstr "Ширината на списъка е фиксирана"
-
-#~ msgid "Tasklist width is dynamic"
-#~ msgstr "Ширината на списъка е динамична"
-
-#~ msgid "Only use empty space"
-#~ msgstr "Използва само празното място"
-
-#~ msgid "Tasklist height:"
-#~ msgstr "Височина на списъка:"
-
-#~ msgid "Tasklist height is fixed"
-#~ msgstr "Височината на списъка е фиксирана"
-
-#~ msgid "Tasklist height is dynamic"
-#~ msgstr "Височината на списъка е динамична"
-
-#~ msgid "Tasklist width is that of longest title"
-#~ msgstr "Ширината на списъка е тази на най-дългото заглавие"
-
-#~ msgid "Show normal applications"
-#~ msgstr "Показвай нормалните приложения"
-
-#~ msgid "Show iconified (minimized) applications"
-#~ msgstr "Показвай скритите (minimized) приложения"
-
-#~ msgid "Show iconified (minimized) applications on all desktops"
-#~ msgstr ""
-#~ "Показвай скритите (minimized) приложения от всички работни пространства"
-
-#~ msgid "Show mini icons"
-#~ msgstr "Показваи мини-икони"
-
-#~ msgid "Confirm before killing windows"
-#~ msgstr "Искай потвърждение преди убиването на прозорци"
-
-#~ msgid "Display tooltips with full task names"
-#~ msgstr "Показва подсещания с пълните имена на задачите"
-
-#~ msgid "Enable task grouping"
-#~ msgstr "Разрешава групиране на задачи"
-
-#~ msgid "Number of tasks before grouping occurs"
-#~ msgstr "Брой задачи преди групиране"
-
-#~ msgid "Tasklist properties"
-#~ msgstr "Настройки на списъка със задачи"
-
-#~ msgid "Save"
-#~ msgstr "Запиши"
-
-#~ msgid "Favorites (user menus)"
-#~ msgstr "Обичайни (потребителски менюта)"
-
-#~ msgid "Programs (system menus)"
-#~ msgstr "Програми (системни менюта)"
-
-#~ msgid "Applets (system menus)"
-#~ msgstr "Аплети (системни менюта)"
-
-#~ msgid "Programs to be merged in (system menus)"
-#~ msgstr "Програмите да се вмъкнат (системни менюта)"
-
-#~ msgid "_New Submenu..."
-#~ msgstr "_Ново подменю..."
-
-#~ msgid "Create a new submenu"
-#~ msgstr "Създай ново подменю"
-
-#~ msgid "New _Item..."
-#~ msgstr "Нов _елемент"
-
-#~ msgid "Create a new menu item"
-#~ msgstr "Създай нов елемент на менюто"
-
-#~ msgid "_Delete..."
-#~ msgstr "_Изтрий"
-
-#~ msgid "_Sort Submenu"
-#~ msgstr "_Сортирай подменюто"
-
-#~ msgid "Sort Submenu _Recursive"
-#~ msgstr "_Рекурсивно сортирай подменюто"
-
-#~ msgid "_Sort"
-#~ msgstr "_Сортирай"
-
-#~ msgid "New Submenu"
-#~ msgstr "Ново подменю"
-
-#~ msgid "Create a new item"
-#~ msgstr "Създай нов елемент"
-
-#~ msgid "Delete selected menu item"
-#~ msgstr "Изтрий избрания елемент от менюто"
-
-#~ msgid "Move up"
-#~ msgstr "Премести нагоре"
-
-#~ msgid "Move selected menu up"
-#~ msgstr "Премести избраното меню нагоре"
-
-#~ msgid "Move down"
-#~ msgstr "Премести надолу"
-
-#~ msgid "Move selected menu down"
-#~ msgstr "Премести избраното меню надолу"
-
-#~ msgid "Sort Submenu"
-#~ msgstr "Сортирай подменюто"
-
-#~ msgid "Sort selected submenu"
-#~ msgstr "Сортирай избраното подменю"
-
-#~ msgid "Sort _Recursive"
-#~ msgstr "Сортирай _рекурсивно"
-
-#~ msgid "GNOME menu editor"
-#~ msgstr "GNOME Редактор на менюта"
-
-#~ msgid ""
-#~ "Released under the terms of the GNU Public License.\n"
-#~ "GNOME menu editor."
-#~ msgstr ""
-#~ "Разпространен под условията на GNU Public License.\n"
-#~ "GNOME Редактор на менюта."
-
-#~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "Не мога да намеря инсталационната директория на GNOME\n"
-
-#~ msgid "Unable to create file: %s\n"
-#~ msgstr "Не мога да създам файла %s\n"
-
-#~ msgid "unable to remove .order file: %s\n"
-#~ msgstr "не мога да премахна .order файла: %s\n"
-
-#~ msgid "The menu item must have a name"
-#~ msgstr "Елементът от менюто трябва да има име"
-
-#~ msgid "The menu entry must have a filename"
-#~ msgstr "Елементът от менюто трябва да има име на файл"
-
-#~ msgid "Save changes?"
-#~ msgstr "Да запазя ли промените?"
-
-#~ msgid "This change conflicts with an existing menu item"
-#~ msgstr "Тази промяна е в конфликт със съществуващо вече меню"
-
-#~ msgid "Overwrite existing menu entry?"
-#~ msgstr "Да презапиша ли съществуващия елемент от менюто"
-
-#~ msgid ""
-#~ "This change conflicts with an existing menu item.\n"
-#~ "No two menu items in a submenu can have the same name."
-#~ msgstr ""
-#~ "Тази промяна е в конфликт със съществуващо вече меню.\n"
-#~ "Два елемента от менюто не могат да имат едно и също име."
-
-#~ msgid "One moment, reading menus..."
-#~ msgstr "Един момент, докато се прочетат менютата"
-
-#~ msgid "Top of user menus"
-#~ msgstr "Над потребителските менюта"
-
-#~ msgid "Top of system menus"
-#~ msgstr "Над системните менюта"
-
-#~ msgid "Top of system merge menus"
-#~ msgstr "Начало на системното меню"
-
-#~ msgid "Top of applet menus"
-#~ msgstr "Над менютата с аплети"
-
-#~ msgid "You can not delete a top level submenu."
-#~ msgstr "Не може да изтривате подменю от най-високо ниво."
-
-#~ msgid "Delete this menu item?"
-#~ msgstr "Да изтрия ли този елемент?"
-
-#~ msgid "Delete empty submenu?"
-#~ msgstr "Да изтрия ли празното подменю?"
-
-#~ msgid "Are you sure you want to delete this submenu and all its contents?"
-#~ msgstr ""
-#~ "Сигурни ли сте, че искате да изтриете това подменю и цялото му съдържание?"
-
-#~ msgid ""
-#~ "You can't add an entry to that submenu.\n"
-#~ "You do not have the proper permissions."
-#~ msgstr ""
-#~ "Не може да добавате елементи към това подменю.\n"
-#~ "Нямате необходимите права на достъп."
-
-#~ msgid "New Folder"
-#~ msgstr "Нова папка"
-
-#~ msgid "Failed to create directory"
-#~ msgstr "Не мога да създам директория"
-
-#~ msgid "untitled.desktop"
-#~ msgstr "untitled.desktop"
-
-#~ msgid "untitled"
-#~ msgstr "безименен"
-
-#~ msgid "creating user directory: %s\n"
-#~ msgstr "създаване на потребителска директория: %s\n"
-
-#~ msgid "unable to create user directory: %s\n"
-#~ msgstr "потребителската директория %s не може да бъде създадена\n"
-
-#~ msgid ""
-#~ "Error during execution of chosen editor.\n"
-#~ "\n"
-#~ "The editor you have chosen is probably either not available,\n"
-#~ "or is not on your current path."
-#~ msgstr ""
-#~ "Не мога да стартирам избрания редактор.\n"
-#~ "\n"
-#~ "Редакторът, който сте избрали, вероятно или не е достъпен,\n"
-#~ "или не е в текущия път."
-
-#~ msgid ""
-#~ "Alternate editor types are not supported by gnome-edit yet.\n"
-#~ "Please choose a standard executable editor in the gnome-edit capplet\n"
-#~ "in the gnome control center."
-#~ msgstr ""
-#~ "Алтернативни типове редкатори не се поддържат все още от gnome-edit.\n"
-#~ "Моля изберете стандарен изпълним файл за редактор в конфигурационния\n"
-#~ "аплет на gnome-edit от контролният център на GNOME."
-
-#~ msgid "Start in hint browsing mode"
-#~ msgstr "Показвай съвети"
-
-#~ msgid "Start in fortune mode"
-#~ msgstr "Показвай fortune"
-
-#~ msgid "Start in session login mode (used from gsm)"
-#~ msgstr "Стартирай в режим на сесия (използва се от gsm)"
-
-#~ msgid ""
-#~ "Click on the GNOME foot icon to open the\n"
-#~ "Main Menu.  This menu contains all\n"
-#~ "GNOME applications, tools, and commands."
-#~ msgstr ""
-#~ "Щракнете върху иконата стъпка за да отворите\n"
-#~ "Главното Меню. Там ще намерите всички GNOME\n"
-#~ "приложения, инструменти и команди."
-
-#~ msgid "You do not have fortune installed."
-#~ msgstr "Нямате инсталиран fortune."
-
-#~ msgid "fixed"
-#~ msgstr "фиксиран"
-
-#~ msgid "Message of The Day"
-#~ msgstr "Съобщение за деня"
-
-#~ msgid "GNOME Hints"
-#~ msgstr "Съвети относно GNOME"
-
-#~ msgid "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-#~ msgstr "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-cp1251"
-
-#~ msgid ""
-#~ "You've chosen to disable the startup hint.\n"
-#~ "To re-enable it, choose \"Startup Hint\"\n"
-#~ "in the GNOME Control Center"
-#~ msgstr ""
-#~ "Избрахте да спрете съветите при стартиране.\n"
-#~ "За да ги разрешите отново, изберете \"Startup Hint\"\n"
-#~ "в Контролния Център на GNOME"
-
-#~ msgid "No message of the day found!"
-#~ msgstr "Няма съобщение за деня!"
-
-#~ msgid "Gnome hint"
-#~ msgstr "Gnome съвет"
-
-#~ msgid "Enable login hints"
-#~ msgstr "Разреши съветите при login"
-
-#~ msgid "Display normal hints"
-#~ msgstr "Показвай нормални съвети"
-
-#~ msgid "Display fortunes instead of hints"
-#~ msgstr "Показвай късметчета вместо съвети"
-
-#~ msgid "Display message of the day instead of hints"
-#~ msgstr "Показвай съобщение за деня вместо съвети"
-
-#~ msgid "Message of the day file to use: "
-#~ msgstr "Име на файла със съобщение за деня: "
-
-#~ msgid "Bookmark"
-#~ msgstr "Отметка"
-
-#~ msgid "Page Title"
-#~ msgstr "Заглавие на страница"
-
-#~ msgid "Gnome Help Bookmarks"
-#~ msgstr "Gnome Помощ bookmark-и"
-
-#~ msgid "X"
-#~ msgstr "X"
-
-#~ msgid "Width of window"
-#~ msgstr "Ширина на прозореца"
-
-#~ msgid "WIDTH"
-#~ msgstr "ШИРИНА"
-
-#~ msgid "Height of window"
-#~ msgstr "Височина на прозореца"
-
-#~ msgid "HEIGHT"
-#~ msgstr "ВИСОЧИНА"
-
-#~ msgid "Debug level"
-#~ msgstr "Debug ниво"
-
-#~ msgid "Gnome Help Browser"
-#~ msgstr "Gnome браузър на помощта"
-
-#~ msgid ""
-#~ "GNOME Help Browser allows easy access to various forms of documentation "
-#~ "on your system"
-#~ msgstr ""
-#~ "GNOME браузърът на помощта, позволява лесен достъп до различните форми на "
-#~ "документацияна системата ви"
-
-#~ msgid "History size"
-#~ msgstr "Големина на историята"
-
-#~ msgid "History file"
-#~ msgstr "Файл с историята"
-
-#~ msgid "Cache size"
-#~ msgstr "Размер на кеша"
-
-#~ msgid "Cache file"
-#~ msgstr "Файл с кеша"
-
-#~ msgid "Bookmark file"
-#~ msgstr "Файл с bookmark-ите"
-
-#~ msgid "Info Path"
-#~ msgstr "Директория с информациите"
-
-#~ msgid "GNOME Help Path"
-#~ msgstr "Директория с GNOME Помощ"
-
-#~ msgid "Gnome Help Configure"
-#~ msgstr "Настройки на Gnome Помощ"
-
-#~ msgid "History and cache"
-#~ msgstr "История и кеш"
-
-#~ msgid "Paths"
-#~ msgstr "Директории"
-
-#~ msgid "<body><h2>Error: file not found</h2></body>"
-#~ msgstr "<body><h2>Грешка: файлът не е намерен</h2></body>"
-
-#~ msgid "%b %d, %Y %H:%M"
-#~ msgstr "%b %d, %Y %H:%M"
-
-#~ msgid "Gnome Help History"
-#~ msgstr "История на GNOME Помощ"
-
-#~ msgid "<BODY BGCOLOR=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<BODY BGCOLOR=\"#FFFFFF\"><h1>Съдържание</h1>\n"
-
-#~ msgid "<h2>Man Pages</h2>\n"
-#~ msgstr "<h2>Страници с ръководства</h2>\n"
-
-#~ msgid "<body bgcolor=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<body bgcolor=\"#FFFFFF\"><h1>Съдържание</h1>\n"
-
-#~ msgid "<h2>Info Pages</h2>\n"
-#~ msgstr "<h2>Инфо страници</h2>\n"
-
-#~ msgid "<h2>GNOME Help</h2>\n"
-#~ msgstr "<h2>GNOME Помощ</h2>\n"
-
-#~ msgid ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Results of the substring search for the string "
-#~ msgstr ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Резултати от търсенето"
-
-#~ msgid ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Manual Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Страници с ръководства</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Info Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Информационни страници</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Help Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Помощ страници</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid "<br><B>No matches found</B>\n"
-#~ msgstr "<br><B>Не са открити съвпадения</B>\n"
-
-#~ msgid "User Commands"
-#~ msgstr "Потребителски команди"
-
-#~ msgid "System Calls"
-#~ msgstr "Състемни извиквания"
-
-#~ msgid "Library Functions"
-#~ msgstr "Библиотечни функции"
-
-#~ msgid "File Formats"
-#~ msgstr "Файлови формати"
-
-#~ msgid "Administration"
-#~ msgstr "Администриране"
-
-#~ msgid "man9"
-#~ msgstr "man9"
-
-#~ msgid "mann"
-#~ msgstr "mann"
-
-#~ msgid "Man Pages"
-#~ msgstr "Страници с ръководства"
-
-#~ msgid "Info Pages"
-#~ msgstr "Информационни страници"
-
-#~ msgid "<BODY>Could not load default TOC page</BODY>"
-#~ msgstr ""
-#~ "<BODY>Не мога да заредя страницата със съдържанието по подразбиране</BODY>"
-
-#~ msgid "<BODY>Unknown TOC argument</BODY>"
-#~ msgstr "<BODY>Непознат TOC аргумент</BODY>"
-
-#~ msgid "_New Window"
-#~ msgstr "_Нов прозорец"
-
-#~ msgid "_Add Bookmark"
-#~ msgstr "_Добави отбелязка"
-
-#~ msgid "Add bookmark"
-#~ msgstr "Добавя отбелязка"
-
-#~ msgid "_Back"
-#~ msgstr "_Назад"
-
-#~ msgid "_Forward"
-#~ msgstr "_Напред"
-
-#~ msgid "_Index"
-#~ msgstr "_Начало"
-
-#~ msgid "_History"
-#~ msgstr "_История"
-
-#~ msgid "Show History Window"
-#~ msgstr "Показва прозореца с историята"
-
-#~ msgid "Show Bookmarks Window"
-#~ msgstr "Показва прозореца с bookmark-ите"
-
-#~ msgid "_View"
-#~ msgstr "_Изглед"
-
-#~ msgid "Go to the previous location in the history list"
-#~ msgstr "Отиди на предното място от списъка на историята"
-
-#~ msgid "Forward"
-#~ msgstr "Напред"
-
-#~ msgid "Go to the next location in the history list"
-#~ msgstr "Отиди на следващото място от списъка на историята"
-
-#~ msgid "Index"
-#~ msgstr "Начало"
-
-#~ msgid "History"
-#~ msgstr "История"
-
-#~ msgid "BMarks"
-#~ msgstr "Отметки"
-
-#~ msgid "Help on Help"
-#~ msgstr "Помощ с помощта"
-
-#~ msgid "Location: "
-#~ msgstr "Адрес: "
-
-#~ msgid ""
-#~ "Error loading document:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "You probably don't\n"
-#~ "have this documentation\n"
-#~ "installed on your system."
-#~ msgstr ""
-#~ "Грешка при зареждането на следния документ:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Вероятно нямате инсталирана\n"
-#~ "тази документация на системата си."
-
-#~ msgid "Deskguide (the desktop pager)"
-#~ msgstr "Deskguide (виртуални работни пространства)"
-
-#~ msgid "The Battery"
-#~ msgstr "Батерии"
-
-#~ msgid "Whoops! for some reason we can't add to the panel"
-#~ msgstr "Опа! По някаква причина не можем да добавяме към панела"
-
-#~ msgid "No socket was created"
-#~ msgstr "Не беше създаден socket"
-
-#~ msgid "Distribution: "
-#~ msgstr "Дистрибуция:"
-
-#~ msgid "KDE: "
-#~ msgstr "KDE: "
-
-#~ msgid "Desktop: "
-#~ msgstr "Работно пространство"
-
-#~ msgid "Show delay (ms)"
-#~ msgstr "Забавяне на показването (ms)"
-
-#~ msgid "In the menu"
-#~ msgstr "В менюто"
-
-#~ msgid "Menus"
-#~ msgstr "Менюта"
-
-#~ msgid "Use large icons"
-#~ msgstr "Използвай големи икони"
-
-#~ msgid "Show [...] buttons"
-#~ msgstr "Показвай [...] бутоните"
-
-#~ msgid "Show popup menus outside of panels"
-#~ msgstr "Показвай изскачащите менюта извън панелите"
-
-#~ msgid "Keep menus in memory"
-#~ msgstr "Пази менютата в паметта"
-
-#~ msgid "Merge in system menus"
-#~ msgstr "Слей със системните менюта"
-
-#~ msgid "Show menu titles"
-#~ msgstr "Показвай заглавия на менюта"
-
-#~ msgid "Global menu"
-#~ msgstr "Глобално меню"
-
-#~ msgid "Confirm the removal of panels with a dialog"
-#~ msgstr "Изисквай потвърждение за премахването на панели"
-
-#~ msgid "Try to avoid overlapping panels"
-#~ msgstr "Опитва да избегне припокриване на панели"
-
-#~ msgid "Panel treatment (GNOME compliant window managers only)"
-#~ msgstr "Поведение на панела (само за GNOME съвместими прозоречни менаджери)"
-
-#~ msgid "Can't get goad_id from desktop entry!"
-#~ msgstr "Не мога да взема goad_id от стартера!"
-
-#~ msgid "Pick a Font"
-#~ msgstr "Избор на шрифт"
-
-#~ msgid "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-#~ msgstr ""
-#~ "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz \n"
-#~ "АаБбВвГгДдЕеЖжЗзИиКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя"
-
-#~ msgid "Red Hat Linux"
-#~ msgstr "Red Hat Linux"
-
-#~ msgid "Red Hat menus"
-#~ msgstr "Red Hat меню"
-
-#~ msgid ""
-#~ "Zvt terminal widget: \n"
-#~ "    Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-#~ msgstr ""
-#~ "Zvt терминален обект:\n"
-#~ "    Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-
-#~ msgid ""
-#~ "GNOME terminal: \n"
-#~ "    Miguel de Icaza (miguel@kernel.org)"
-#~ msgstr ""
-#~ "GNOME терминал:\n"
-#~ "    Miguel de Icaza (miguel@kernel.org)"
-
-#~ msgid "    Erik Troan (ewt@redhat.com)"
-#~ msgstr "    Ерик Троан (ewt@redhat.com)"
-
-#~ msgid "    Jacob Berkman (jacob@ximian.com)"
-#~ msgstr "    Jacob Berkman (jacom@ximian.com)"
-
-#~ msgid ""
-#~ "GNOME Terminal Version %s\n"
-#~ "\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "\n"
-#~ "The GNOME terminal emulation program.\n"
-#~ "\n"
-#~ "(C) 1998, 1999 the Free Software Foundation\n"
-#~ "Copyright 2001 Ximian, Inc."
-#~ msgstr ""
-#~ "GNOME Терминал Версия %s\n"
-#~ "\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Терминална емулация за GNOME.\n"
-#~ "\n"
-#~ "(c) 1998, 1999 the Free Software Foundation\n"
-#~ "Copyright 2001 Ximian, Inc."
-
-#~ msgid "Cannot start CORBA"
-#~ msgstr "Не мога да стартирам CORBA"
-
-#~ msgid "CORBA Exception"
-#~ msgstr "CORBA Изключение"
-
-#~ msgid "Cannot create object"
-#~ msgstr "Не мога да създам обект"
-
-#~ msgid "Object created is not AppletWidget"
-#~ msgstr "Създаденият обект не е AppletWidget"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"
-#~ msgstr "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-cp1251"
-
-#~ msgid "Explicit hide"
-#~ msgstr "При изрично скриване"
-
-#~ msgid "Drawer sliding"
-#~ msgstr "Плъзгане на шкафовете"
-
-#~ msgid "Menu icon"
-#~ msgstr "Икона на менютата"
-
-#~ msgid "Special icon"
-#~ msgstr "Специална икона"
-
-#~ msgid "Tiles enabled"
-#~ msgstr "Разреши плочките"
-
-#~ msgid "Normal tile"
-#~ msgstr "Обикновена плочка"
-
-#~ msgid "Clicked tile"
-#~ msgstr "Натисната плочка"
-
-#~ msgid "Border width (tile only)"
-#~ msgstr "Ширина на рамката (на плочката само)"
-
-#~ msgid "Depth (displacement when pressed)"
-#~ msgstr "Дълбочина (преместване, когато е натисната)"
-
-#~ msgid "Button type: "
-#~ msgstr "Тип на бутона: "
-
-#~ msgid "Make buttons flush with panel edge"
-#~ msgstr "Бутоните са наравно с ръба на панела"
-
-#~ msgid "Fast but low quality scaling of button icons"
-#~ msgstr "Бързо, но ниско качество на иконите на бутони"
-
-#~ msgid "Default movement mode"
-#~ msgstr "Режим на движение по подразбиране"
-
-#~ msgid "Switched movement (or use Ctrl)"
-#~ msgstr "Чрез разместване (или използвайте Ctrl)"
-
-#~ msgid "Free movement (doesn't disturb other applets) (or use Alt)"
-#~ msgstr "Свободно движение (не влияе на други аплети) (или използвайте Alt)"
-
-#~ msgid "Push movement (or use Shift)"
-#~ msgstr "Чрез избутване (или използвайте Shift) "
-
-#~ msgid "Padding between applets"
-#~ msgstr "Подложка между аплетите"
-
-#~ msgid "Padding between applets and panel border"
-#~ msgstr "Подложка между аплетите и рамката на панела"
-
-#~ msgid "App"
-#~ msgstr "Приложение"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Adding tearoff when tearoffs are disabled"
-#~ msgstr "Добавяне на откачащо меню, когато те са забранени"
-
-#~ msgid "No system menus found!"
-#~ msgstr "Не мога да намеря системни менюта"
-
-#~ msgid "With pixmap arrow"
-#~ msgstr "С картинка - стрелка"
-
-#~ msgid "Without pixmap"
-#~ msgstr "Без картинка"
-
-#~ msgid "Standard (48 pixels)"
-#~ msgstr "Стандартен (48 пиксела)"
-
-#~ msgid "Huge (80 pixels)"
-#~ msgstr "Огромен (80 пиксела)"
-
-#~ msgid "Ridiculous (128 pixels)"
-#~ msgstr "Миниатюрен (24 пиксела)"
-
-#~ msgid "Above"
-#~ msgstr "Над"
-
-#~ msgid "Avoid on maximize"
-#~ msgstr "Избягвай при максимизиране"
-
-#~ msgid "Don't avoid on maximize"
-#~ msgstr "Не избягвай при максимизиране"
-
-#~ msgid "Hiding policy"
-#~ msgstr "Условия за скриване"
-
-#~ msgid "Maximize mode"
-#~ msgstr "Режим на максимизиране"
-
-#~ msgid "All properties..."
-#~ msgstr "Настройки..."
