@@ -351,7 +351,7 @@ printer_about (AppletWidget *applet, gpointer data)
 	}
 	
 	pr->about = gnome_about_new (_("Printer Applet"), "1.0",
-				     _("(c) 1998 the Free Software Foundation"),
+				     "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
 				     authors,
 				     _("The printer applet lets you easily drag files to be printed via a print command"),
 				     NULL);

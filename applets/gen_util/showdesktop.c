@@ -450,7 +450,7 @@ display_about_dialog (BonoboUIComponent *uic,
         }
 
         about = gnome_about_new (_("Show Desktop Button"), VERSION,
-                                 _("(C) 2002 Red Hat, Inc."),
+                                 "Copyright \xc2\xa9 2002 Red Hat, Inc.",
                                  _("This button lets you hide all windows and show the desktop"),
                                  authors,
                                  documenters,
