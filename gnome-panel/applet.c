@@ -910,6 +910,21 @@ panel_applet_load_applets_from_gconf (void)
 	g_idle_add (panel_applet_load_idle_handler, NULL);
 }
 
+static G_CONST_RETURN char *
+panel_applet_get_panel_id (AppletInfo *applet)
+{
+	PanelWidget *panel;
+
+	g_return_val_if_fail (applet != NULL, NULL);
+	g_return_val_if_fail (GTK_IS_WIDGET (applet->widget), NULL);
+
+	panel = PANEL_WIDGET (applet->widget->parent);
+	if (!panel)
+		return NULL;
+
+	return panel->unique_id;
+}
+
 static gboolean
 panel_applet_position_save_timeout (gpointer dummy)
 {
@@ -937,6 +952,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	GConfClient  *client;
 	const char   *profile;
 	const char   *temp_key;
+	const char   *panel_id;
 	gboolean      right_stick;
 	int           position;
 
@@ -956,8 +972,15 @@ panel_applet_save_position (AppletInfo *applet_info,
 		return;
 	}
 
+	if (!(panel_id = panel_applet_get_panel_id (applet_info)))
+		return;
+
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
+
+	temp_key = panel_applet_get_full_gconf_key (
+			applet_info->type, profile, gconf_key, "panel_id");
+	gconf_client_set_string (client, temp_key, panel_id, NULL);
 
 	right_stick = panel_is_applet_right_stick (applet_info->widget);
 	temp_key = panel_applet_get_full_gconf_key (
@@ -971,10 +994,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 	temp_key = panel_applet_get_full_gconf_key (
 			applet_info->type, profile, gconf_key, "position");
 	gconf_client_set_int (client, temp_key, position, NULL);
-
-	temp_key = panel_applet_get_full_gconf_key (
-			applet_info->type, profile, gconf_key, "panel_id");
-	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (applet_info), NULL);
 }
 
 void
@@ -1187,17 +1206,4 @@ panel_applet_get_position (AppletInfo *applet)
 	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
 
 	return applet_data->pos;
-}
-
-gchar *
-panel_applet_get_panel_id (AppletInfo *applet)
-{
-	PanelWidget *panel;
-
-	g_return_val_if_fail (applet != NULL, NULL);
-	g_return_val_if_fail (G_IS_OBJECT (applet->widget), NULL);
-
-	panel = PANEL_WIDGET (applet->widget->parent);
-
-	return panel->unique_id;
 }
