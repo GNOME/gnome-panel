@@ -430,7 +430,13 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 	//dialog if there's a bookmarks to sftp://something?
 	for (i = 0; lines[i]; i++) {
 		if (lines[i][0] && !g_hash_table_lookup (table, lines[i])) {
-			uri = gnome_vfs_uri_new (lines[i]);
+			char *unescaped_uri;
+
+			unescaped_uri = gnome_vfs_unescape_string (lines[i],
+								   "");
+			uri = gnome_vfs_uri_new (unescaped_uri);
+			g_free (unescaped_uri);
+
 			if (!gnome_vfs_uri_exists (uri)) {
 				gnome_vfs_uri_unref (uri);
 				continue;
