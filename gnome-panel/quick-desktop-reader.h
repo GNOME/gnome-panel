@@ -46,6 +46,7 @@ struct _QuickDesktopItem {
 	char *comment;
 
 	char *icon;
+	char *exec;
 	char *tryexec;
 	char *sort_order;
 };

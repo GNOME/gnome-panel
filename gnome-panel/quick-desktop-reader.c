@@ -398,6 +398,9 @@ quick_desktop_item_load_uri (const char *uri,
 		} else if ((val = IS_KEY ("Icon", buf)) != NULL) {
 			g_free (retval->icon);
 			retval->icon = g_strdup (val);
+		} else if ((val = IS_KEY ("Exec", buf)) != NULL) {
+			g_free (retval->exec);
+			retval->exec = g_strdup (val);
 		} else if ((val = IS_KEY ("Encoding", buf)) != NULL) {
 			if (strcmp (val, "UTF-8") == 0) {
 				encoding = ENCODING_UTF8;
@@ -515,6 +518,9 @@ quick_desktop_item_destroy (QuickDesktopItem *item)
 	g_free (item->sort_order);
 	item->sort_order = NULL;
 
+	g_free (item->exec);
+	item->exec = NULL;
+
 	g_free (item);
 }
 
@@ -529,6 +535,7 @@ _quick_desktop_item_copy (gpointer boxed)
 	newitem->icon = g_strdup (item->icon);
 	newitem->tryexec = g_strdup (item->tryexec);
 	newitem->sort_order = g_strdup (item->sort_order);
+	newitem->exec = g_strdup (item->exec);
 	return newitem;
 }
 

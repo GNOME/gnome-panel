@@ -29,6 +29,11 @@
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-ops.h>
+#include <libgnomevfs/gnome-vfs-mime.h>
+#include <libgnomevfs/gnome-vfs-mime-handlers.h>
+#include <libgnomevfs/gnome-vfs-file-info.h>
 
 #include "gnome-run.h"
 
@@ -42,6 +47,7 @@
 #include "applet.h"
 #include "button-widget.h"
 #include "foobar-widget.h"
+#include "disclosure-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
 #include "multiscreen-stuff.h"
@@ -56,6 +62,7 @@ enum {
 	COLUMN_FULLNAME,
 	COLUMN_COMMENT,
 	COLUMN_NAME,
+	COLUMN_EXEC,
 	NUM_COLUMNS
 };
 
@@ -65,6 +72,9 @@ typedef enum {
 
 #define PANEL_STOCK_RUN "panel-run"
 
+#define ENABLE_LIST_DEFAULT TRUE
+#define SHOW_LIST_DEFAULT FALSE
+
 extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
 
@@ -72,12 +82,16 @@ static GtkWidget *run_dialog = NULL;
 static GSList *add_icon_iters = NULL;
 static guint add_icon_idle_id = 0;
 static guint add_items_idle_id = 0;
+static guint find_icon_timeout_id = 0;
 
 static GList *executables = NULL;
 static GCompletion *exe_completion = NULL;
 
 static void       update_contents          (GtkWidget *dialog);
 static void       unset_selected           (GtkWidget *dialog);
+static void	  unset_pixmap		   (GtkWidget *gpixmap);
+static gboolean	  find_icon_timeout	   (gpointer   data);
+
 
 static void
 fill_executables_from (const char *dirname)
@@ -220,7 +234,8 @@ launch_selected (GtkTreeModel *model,
 
 	if (!ditem) {
 		panel_error_dialog ("failed_to_load_desktop",
-				    _("Failed to run this program: '%s'"),
+				    _("<b>Failed to run this program</b>\n\n"
+				      "Details: %s"),
 				    error->message);
 		g_clear_error (&error);
 		return;
@@ -236,7 +251,8 @@ launch_selected (GtkTreeModel *model,
 
 	if (!gnome_desktop_item_launch (ditem, NULL, 0, &error)) {
 		panel_error_dialog ("failed_to_load_desktop",
-				    _("Failed to run this program: '%s'"),
+				    _("<b>Failed to run this program</b>\n\n"
+				      "Details: %s"),
 				    error->message);
 		g_clear_error (&error);
 		return;
@@ -248,14 +264,16 @@ launch_selected (GtkTreeModel *model,
 static void 
 run_dialog_response (GtkWidget *w, int response, gpointer data)
 {
-	GtkEntry *entry;
+	GtkWidget *entry;
         GtkWidget *list;
 	char **argv = NULL;
 	char **temp_argv = NULL;
 	int argc, temp_argc;
-	const char *s;
+	char *s = NULL;
+	char *escaped = NULL;
 	char **envv = NULL;
 	int envc;
+	GError *error = NULL;
 
 	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("specialobjects", "RUNBUTTON");
@@ -282,9 +300,10 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
         } else {
 		GtkToggleButton *terminal;
 
-                entry = GTK_ENTRY (g_object_get_data (G_OBJECT (w), "entry"));
+                entry = g_object_get_data (G_OBJECT (w), "entry");
 
-                s = gtk_entry_get_text(entry);
+                s = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+		escaped = g_markup_escape_text (s, -1);
 
                 if (string_empty (s))
                         goto return_and_close;
@@ -320,11 +339,11 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                         goto return_and_close;
                 }
 
-                if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, NULL)) {
-                        panel_error_dialog ("run_error",
-					    _("Failed to execute command: '%s'"),
-					    s);
-					    
+                if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, &error)) {
+			panel_error_dialog ("run_error",
+					    _("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
+					    escaped, error->message);
+			g_clear_error (&error);
                         goto return_and_close;
                 }
 
@@ -380,9 +399,67 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 if (gnome_execute_async_with_env (g_get_home_dir (),
                                                   argc, argv,
                                                   envc, envv) < 0) {
-                        panel_error_dialog("run_error",
-					   _("Failed to execute command: '%s'\n\nDetails: %s"),
-                                           s, g_strerror (errno));
+
+			/* if all else fails we try to open the file with an app */
+			char *path;
+			char *command = NULL;
+			GError *error = NULL;
+			GnomeVFSFileInfo *info = NULL;
+
+			if (!g_path_is_absolute (s)) {
+				path = g_strconcat (g_get_home_dir (), "/", s, NULL);
+			} else {
+				path = g_strdup (s);
+			}
+			
+			info = gnome_vfs_file_info_new ();
+			if (gnome_vfs_get_file_info (path, info, 0) != GNOME_VFS_OK) {
+				panel_error_dialog("run_error",
+						   _("<b>Failed to execute command:</b> '%s'\n\nDetails: %s"),
+                	                           escaped, g_strerror (errno));
+				g_free (path);
+				gnome_vfs_file_info_unref (info);
+				goto return_and_close;
+			}
+			
+			if (info->type == GNOME_VFS_FILE_TYPE_REGULAR) {
+				char *mime_info;
+				GnomeVFSMimeApplication *app;				
+				
+				mime_info = gnome_vfs_get_mime_type (path);
+				app = gnome_vfs_mime_get_default_application (mime_info);
+						
+				if (app != NULL) {
+					command = g_strconcat (app->command, " ", path, NULL);
+				}
+				
+				gnome_vfs_mime_application_free (app);
+				g_free (mime_info);				
+				
+				if (command == NULL) {
+					panel_error_dialog ("run_error",
+							    _("<b>Failed to open file:</b> '%s'\n\nDetails: no application available to open file"),
+							    escaped);
+
+					gnome_vfs_file_info_unref (info);
+					g_free (path);
+					goto return_and_close;
+				}
+
+			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+				command = g_strconcat ("nautilus ", path, NULL);
+			}
+			
+			if (!g_spawn_command_line_async (command, &error)) {
+				panel_error_dialog ("run_error",
+						    _("<b>Failed to open file:</b> '%s'\n\nDetails: %s"),
+						    escaped, error->message);
+				g_error_free (error);
+			}
+	
+			gnome_vfs_file_info_unref (info);
+			g_free (path);
+			g_free (command);
                 }
         }
         
@@ -390,6 +467,8 @@ return_and_close:
 	g_strfreev (argv);
 	g_strfreev (temp_argv);
 	g_strfreev (envv);
+	g_free (s);
+	g_free (escaped);
 	gtk_widget_destroy (w);
 }
 
@@ -397,6 +476,7 @@ static void
 browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 {
 	const char *fname;
+	char *text, *new;
 	GtkWidget *entry;
 
 	g_return_if_fail (GTK_IS_FILE_SELECTION (fsel));
@@ -405,24 +485,28 @@ browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 
 	fname = gtk_file_selection_get_filename (fsel);
 	if (fname != NULL) {
-		const char *s = gtk_entry_get_text (GTK_ENTRY (entry));
-		if (string_empty (s)) {
-			gtk_entry_set_text (GTK_ENTRY (entry), fname);
-		} else {
-			char *str = g_strconcat (s, " ", fname, NULL);
-			gtk_entry_set_text (GTK_ENTRY (entry), str);
-			g_free (str);
-		}
+		text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+		new = g_strconcat (text, " ", fname, NULL);
+		gtk_entry_set_text (GTK_ENTRY (entry), new);
+		g_free (text);
+		g_free (new);
 	}
+	
 	gtk_widget_destroy (GTK_WIDGET (fsel));
 }
 
 static void
 browse (GtkWidget *w, GtkWidget *entry)
 {
+	char *home;
 	GtkFileSelection *fsel;
 
-	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Choose a program to run")));
+	fsel = GTK_FILE_SELECTION (gtk_file_selection_new (_("Choose a file")));
+	
+	home = g_strconcat (g_get_home_dir (), "/", NULL);
+	gtk_file_selection_set_filename (fsel, home);
+	g_free (home);
+	
 	gtk_window_set_transient_for (GTK_WINDOW (fsel),
 				      GTK_WINDOW (run_dialog));
 	g_object_set_data (G_OBJECT (fsel), "entry", entry);
@@ -486,19 +570,38 @@ entry_event (GtkEntry * entry, GdkEventKey * event, gpointer data)
 static void
 sync_entry_to_list (GtkWidget *dialog)
 {
-        GtkWidget *clist;
-        GtkWidget *entry;
         gboolean blocked;
+	gboolean enable_program_list;
+	GtkWidget *entry;
+	const char *key;
 
         blocked = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
 						      "sync_entry_to_list_blocked"));
         if (blocked)
                 return;
-        
-        clist = g_object_get_data (G_OBJECT (dialog), "program_list");
-        entry = g_object_get_data (G_OBJECT (dialog), "entry");
 
-        unset_selected (dialog);
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "enable_program_list"),
+	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
+	
+	if (enable_program_list) {
+	        unset_selected (dialog);
+
+		entry = g_object_get_data (G_OBJECT (dialog), "entry");
+	
+		if (find_icon_timeout_id != 0) {
+			/* already a timeout registered so delay it for another half-second. */
+			g_source_remove (find_icon_timeout_id);
+			find_icon_timeout_id =
+				g_timeout_add_full (G_PRIORITY_LOW, 250, find_icon_timeout,
+				 		    entry, NULL);		
+		} else {
+			/* no timeout registered so start a new one. */
+			find_icon_timeout_id =
+				g_timeout_add_full (G_PRIORITY_LOW, 250, find_icon_timeout,
+			 			    entry, NULL);	
+		}
+	}
 }
 
 static void
@@ -572,54 +675,62 @@ sync_list_to_entry (GtkWidget *dialog)
 }
 
 static void
-toggle_contents (GtkWidget *button,
+toggle_contents (GtkWidget *disclosure,
                  GtkWidget *dialog)
 {
-        gboolean show_program_list_box;
-        
-	show_program_list_box = gconf_client_get_bool (
-				panel_gconf_get_client (),
-				panel_gconf_general_key (
-					panel_gconf_get_profile (), "show_program_list_box"),
-				NULL);
+	const char *key;
 
-	gconf_client_set_bool (
-		panel_gconf_get_client (),
-		panel_gconf_general_key (
-			panel_gconf_get_profile (), "show_program_list_box"),
-		!show_program_list_box,
-		NULL);
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "show_program_list"),
+
+	panel_gconf_set_bool (key, GTK_TOGGLE_BUTTON (disclosure)->active);
 
         update_contents (dialog);
 }
 
 static GtkWidget*
-create_toggle_advanced_button (const char *label)
+create_disclosure_widget (void)
 {
-        GtkWidget *align;
-        GtkWidget *button;
+        GtkWidget *disclosure;
+        gboolean show_program_list;
+	const char *key;
 
-        align = gtk_alignment_new (1.0, 0.5, 0.0, 0.0);
+        disclosure = cddb_disclosure_new (_("Known Applications"),
+					  _("Known Applications"));
 
-        button = gtk_button_new_with_label (label);
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "show_program_list"),
+	show_program_list = panel_gconf_get_bool (key, SHOW_LIST_DEFAULT);
 
-        gtk_container_add (GTK_CONTAINER (align), button);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (disclosure),
+				      show_program_list);
+		
+	g_object_set_data (G_OBJECT (run_dialog), "disclosure", disclosure);
+	  
+        g_signal_connect (G_OBJECT (disclosure), "toggled",
+			  G_CALLBACK (toggle_contents),
+			  run_dialog);
 
-        g_signal_connect (G_OBJECT (button), "clicked",
-                            G_CALLBACK (toggle_contents),
-                            run_dialog);
-
-        g_object_set_data (G_OBJECT (run_dialog),
-			   "toggle_label",
-			   GTK_BIN (button)->child);
-        
-        return align;
+        return disclosure;
 }
 
 static void
 entry_changed (GtkWidget *entry,
                gpointer   data)
 {
+	GtkWidget *button;
+	char *text;
+	
+	/* desensitize run button if no text entered */
+	text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
+	button = g_object_get_data (G_OBJECT (run_dialog), "run_button");
+	if (strlen (text) == 0) {
+		gtk_widget_set_sensitive (GTK_WIDGET (button), FALSE);
+	} else {
+		gtk_widget_set_sensitive (GTK_WIDGET (button), TRUE);
+	}
+	g_free (text);
+
 	if (run_dialog != NULL)
 		sync_entry_to_list (run_dialog);
 }
@@ -638,21 +749,44 @@ create_simple_contents (void)
         GtkWidget *vbox;
         GtkWidget *entry;
         GtkWidget *gentry;
+	GtkWidget *pixmap;
         GtkWidget *hbox;
+	GtkWidget *vbox2;
+	GtkWidget *hbox2;
         GtkWidget *w;
+	const char *key;
+	gboolean enable_program_list;
         
         vbox = gtk_vbox_new (FALSE, 0);
-	
+
         hbox = gtk_hbox_new (FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), hbox,
+                            TRUE, TRUE, GNOME_PAD_SMALL);
+			    
+        w = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+        pixmap = gtk_image_new ();
+	g_object_set_data (G_OBJECT (run_dialog), "pixmap", pixmap);
+	gtk_container_add (GTK_CONTAINER (w), pixmap);
+        gtk_box_pack_start (GTK_BOX (hbox), w,
+			    FALSE, FALSE, 10);
+        unset_pixmap (pixmap);
+	
+	vbox2 = gtk_vbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox2,
+			    TRUE, TRUE, GNOME_PAD_SMALL);
 	
         gentry = gnome_entry_new ("gnome-run");
-        gtk_box_pack_start (GTK_BOX (hbox), gentry, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox2), gentry,
+			    TRUE, TRUE, GNOME_PAD_SMALL);
+
         /* 1/4 the width of the first screen should be a good value */
-	g_object_set (G_OBJECT (gentry),
-		      "width_request", (int)(multiscreen_width (0) / 4),
-		      NULL);
+	g_object_set (G_OBJECT (gentry),"width_request",
+		      (int)(multiscreen_width (0) / 4), NULL);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
+	gtk_tooltips_set_tip (panel_tooltips, entry, _("Command to run"), NULL);
+        gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
+        g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
 
         g_signal_connect (G_OBJECT (entry), "event",
 			  G_CALLBACK (entry_event),
@@ -661,58 +795,51 @@ create_simple_contents (void)
 			  G_CALLBACK (kill_completion),
 			  NULL);
 
-	gtk_tooltips_set_tip (panel_tooltips, entry, _("Command to run"), NULL);
- 
-        gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
-        g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
-
 	g_signal_connect (G_OBJECT (entry), "activate",
 			  G_CALLBACK (activate_run),
 			  NULL);
-        g_signal_connect (G_OBJECT (entry),
-			  "changed",
+			  
+        g_signal_connect (G_OBJECT (entry), "changed",
 			  G_CALLBACK (entry_changed),
 			  NULL);
-        
-        w = gtk_button_new_with_mnemonic (_("_Browse..."));
-        g_signal_connect(G_OBJECT(w), "clicked",
-                           G_CALLBACK (browse), entry);
-        gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE,
-                            GNOME_PAD_SMALL);
 
-        gtk_box_pack_start (GTK_BOX (vbox), hbox,
-                            FALSE, FALSE, GNOME_PAD_SMALL);
+	hbox2 = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox2), hbox2,
+			    TRUE, TRUE, GNOME_PAD_SMALL);
 
 	hbox = gtk_hbox_new (FALSE, 0);
 
         w = gtk_check_button_new_with_mnemonic(_("Run in _terminal"));
-        g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
-	
-        gtk_box_pack_start (GTK_BOX (hbox), w,
-                            TRUE, TRUE, GNOME_PAD_SMALL);
-        
-        g_object_set_data_full (G_OBJECT (run_dialog),
-				"advanced",
-				g_object_ref (vbox),
-				(GDestroyNotify) g_object_unref);
+	g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
+        gtk_box_pack_start (GTK_BOX (hbox2), w,
+                            TRUE, TRUE, 0);
+
+        w = gtk_button_new_with_mnemonic (_("Append File..."));
+        g_signal_connect(G_OBJECT(w), "clicked",
+                         G_CALLBACK (browse), entry);
+	gtk_box_pack_start (GTK_BOX (hbox2), w,
+			    FALSE, FALSE, 0);
+
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "enable_program_list"),
+	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
+
+	/* only create disclosure widget if really needed */
+	if (enable_program_list) {
+	        w = create_disclosure_widget ();
+		gtk_box_pack_start (GTK_BOX (vbox), w,
+				    FALSE, FALSE, GNOME_PAD_SMALL);
+	}
+
+        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
+                            vbox,
+                            FALSE, FALSE, 0);
 
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"advanced-entry",
 				g_object_ref (entry),
 				(GDestroyNotify) g_object_unref);
 	
-        w = create_toggle_advanced_button ("");
-        
-	gtk_box_pack_start (GTK_BOX (hbox), w,
-			    FALSE, FALSE, GNOME_PAD_SMALL);
-
-        gtk_box_pack_start (GTK_BOX (vbox), hbox,
-                            FALSE, FALSE, GNOME_PAD_SMALL);
-
-        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
-                            vbox,
-                            TRUE, TRUE, 0);
-
 	gtk_widget_show_all (vbox);
         
         return vbox;
@@ -739,6 +866,134 @@ add_columns (GtkTreeView *treeview)
                                              "text", COLUMN_FULLNAME,
                                              NULL);
 	gtk_tree_view_append_column (treeview, column);
+}
+
+static gboolean
+fuzzy_command_match (const char *cmd1, const char *cmd2, gboolean *fuzzy)
+{
+	char **tokens;
+	char *word1, *word2;
+
+	if (strcmp (cmd1, cmd2) == 0) {
+		*fuzzy = FALSE;
+		return TRUE;
+	}
+
+	/* find basename of exec from desktop item.
+	   strip of all arguments after the initial command */
+	tokens = g_strsplit (cmd1, " ", -1);
+	if (tokens == NULL || tokens[0] == NULL) {
+		g_strfreev (tokens);
+		return FALSE;
+	}
+	word1 = g_path_get_basename (tokens[0]);
+	g_strfreev (tokens);
+
+	/* same for the user command */
+	tokens = g_strsplit (cmd2, " ", -1);
+	word2 = g_path_get_basename (tokens[0]);
+	if (tokens == NULL || tokens[0] == NULL) {
+		g_free (word1);
+		g_strfreev (tokens);
+		return FALSE;
+	}
+	g_strfreev (tokens);
+
+	if (strcmp (word1, word2) == 0) {
+		g_free (word1);
+		g_free (word2);
+		*fuzzy = TRUE;
+		return TRUE;
+	}
+
+	g_free (word1);
+	g_free (word2);
+	return FALSE;
+}
+
+static gboolean
+find_icon_timeout (gpointer data)
+{
+	GtkWidget *entry = data;
+	GdkPixbuf *pixbuf;
+	GtkListStore *list;
+	GtkTreeIter iter;
+	GtkTreeModel *model;
+	GtkTreePath *path;
+	GtkWidget *pixmap;
+	GValue value;
+	char *exec, *icon;
+	char *found_icon = NULL;
+
+	pixmap = g_object_get_data (G_OBJECT (run_dialog), "pixmap");
+	list = g_object_get_data (G_OBJECT (run_dialog), "program_list");
+	model = gtk_tree_view_get_model (GTK_TREE_VIEW (list));
+	path = gtk_tree_path_new_root ();
+	
+	gtk_tree_model_get_iter (model, &iter, path);
+
+	do {
+		gtk_tree_model_get_value (model, &iter,
+					  COLUMN_EXEC,
+					  &value);
+				  
+		exec = g_strdup (g_value_get_string (&value));
+		g_value_unset (&value);
+
+		gtk_tree_model_get_value (model, &iter,
+					  COLUMN_ICON_FILE,
+					  &value);
+				  
+		icon = g_strdup (g_value_get_string (&value));
+		g_value_unset (&value);
+
+        	if (exec != NULL && icon != NULL) {
+			const char *text;
+			gboolean fuzzy = FALSE;
+			
+			text = gtk_entry_get_text (GTK_ENTRY (entry));
+
+			if (fuzzy_command_match (sure_string (text),
+						 exec, &fuzzy)) {
+				g_free (found_icon);
+				found_icon = g_strdup (icon);
+				if ( ! fuzzy) {
+					/* if not fuzzy then we have a precise
+					 * match and we can quit, else keep
+					 * searching for a better match */
+					g_free (exec);
+					g_free (icon);
+					break;
+				}
+			}
+		}
+		g_free (exec);
+		g_free (icon);
+	
+        } while (gtk_tree_model_iter_next (model, &iter));
+
+	gtk_tree_path_free (path);
+
+	pixbuf = NULL;
+	if (found_icon != NULL) {
+		icon = gnome_desktop_item_find_icon (found_icon,
+						     48 /* desired size */,
+						     0 /* flags */);
+		if (icon != NULL) {
+			pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
+			g_free (icon);
+			if (pixbuf != NULL)
+				gtk_image_set_from_pixbuf (GTK_IMAGE (pixmap),
+							   pixbuf);
+		}
+		g_free (found_icon);
+	}
+
+	if (pixbuf == NULL)
+		unset_pixmap (pixmap);
+	
+	find_icon_timeout_id = 0;
+	return FALSE;
 }
 
 static gboolean
@@ -798,6 +1053,7 @@ fill_list (GtkWidget *list)
 				    G_TYPE_STRING,
 				    G_TYPE_STRING,
 				    G_TYPE_STRING,
+				    G_TYPE_STRING,
 				    G_TYPE_STRING);
 
 	all_dir = fr_get_dir ("all-applications:/");
@@ -847,6 +1103,7 @@ fill_list (GtkWidget *list)
 				    COLUMN_FULLNAME, fr->fullname,
 				    COLUMN_COMMENT, fr->comment,
 				    COLUMN_NAME, fr->name,
+				    COLUMN_EXEC, fr->exec,
 				    -1);
 
 		add_icon_iters = g_slist_prepend (add_icon_iters, iter);
@@ -962,7 +1219,6 @@ static void
 selection_changed (GtkTreeSelection *selection,
 		   GtkWidget        *dialog)
 {
-        GtkWidget *label;
         GtkWidget *gpixmap;
         GtkWidget *desc_label;
         gchar *name;
@@ -979,7 +1235,6 @@ selection_changed (GtkTreeSelection *selection,
 	name = g_strdup (g_value_get_string (&value));
 	g_value_unset (&value);
 
-        label = g_object_get_data (G_OBJECT (dialog), "label");
         gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
         desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
 
@@ -992,11 +1247,7 @@ selection_changed (GtkTreeSelection *selection,
 		if (qitem != NULL) {
                         GdkPixbuf *pixbuf;
 			char *icon;
-
-			if (label != NULL)
-				gtk_label_set_text (GTK_LABEL (label),
-						    qitem->name);
-
+			
 			if (desc_label != NULL)
 				gtk_label_set_text (GTK_LABEL (desc_label),
 						    sure_string (qitem->comment));
@@ -1041,29 +1292,21 @@ create_program_list_contents (void)
         GtkWidget *vbox;
         GtkWidget *w;
         GtkWidget *label;
-        GtkWidget *pixmap;
         GtkWidget *list;
-        GtkWidget *hbox;
 	GtkTreeSelection *selection;
         
-        vbox = gtk_vbox_new (FALSE, 1);
+        vbox = gtk_vbox_new (FALSE, 0);
         
-        label = gtk_label_new_with_mnemonic (_("Known A_pplications:"));
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-
         list = gtk_tree_view_new ();
 
         g_object_set_data (G_OBJECT (run_dialog), "program_list", list);
+
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), list);
 
 	add_atk_name_desc (list, _("List of known applications"),
 			   _("Choose an application to run from the list"));
-	set_relation (list, GTK_LABEL (label), 0);
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
-
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
         g_signal_connect (selection, "changed",
@@ -1078,36 +1321,25 @@ create_program_list_contents (void)
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w),
                                         GTK_POLICY_AUTOMATIC,
                                         GTK_POLICY_AUTOMATIC);
+
         gtk_container_add (GTK_CONTAINER (w), list);
-        
         gtk_box_pack_start (GTK_BOX (vbox), w,
-                            TRUE, TRUE, GNOME_PAD_SMALL);
+                            TRUE, TRUE, 0);
 
-
-        w = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-        gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, GNOME_PAD_SMALL);
-        hbox = gtk_hbox_new (FALSE, 3);
-        gtk_container_add (GTK_CONTAINER (w), hbox);
-        
-        pixmap = gtk_image_new ();
-        gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, GNOME_PAD_SMALL);
-        g_object_set_data (G_OBJECT (run_dialog), "pixmap", pixmap);
-        
         label = gtk_label_new ("");
-        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-        gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 5);
         g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
 
-        unset_selected (run_dialog);
-   
         g_object_ref (G_OBJECT (vbox));
         
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"program_list_box",
 				vbox,
 				(GtkDestroyNotify) g_object_unref);
+
+        unset_selected (run_dialog);
 
         return vbox;
 }
@@ -1117,68 +1349,42 @@ static void
 update_contents (GtkWidget *dialog)
 {
         GtkWidget *program_list_box = NULL;
-        GtkWidget *program_list_box_toggle;
-        gboolean show_program_list_box;
-        
-	show_program_list_box = gconf_client_get_bool (
-				  panel_gconf_get_client (),
-				  panel_gconf_general_key (
-					panel_gconf_get_profile (), "show_program_list_box"),
-				  NULL);
+	GtkWidget *disclosure_button;
+        gboolean show_program_list;
+	const char *key;
 
-        program_list_box_toggle = g_object_get_data (G_OBJECT (dialog),
-					         "toggle_label");
-
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "show_program_list"),
+	show_program_list = panel_gconf_get_bool (key, SHOW_LIST_DEFAULT);
         
-        if (show_program_list_box) {
+	disclosure_button = g_object_get_data (G_OBJECT (dialog), "disclosure");
+
+        if (show_program_list) {
                 program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
-		if (program_list_box == NULL) {
-			program_list_box = create_program_list_contents ();
 
-			/* start loading the list of applications */
-			if (add_items_idle_id == 0) {
-				GtkWidget *list =
-					g_object_get_data (G_OBJECT (dialog),
-							   "program_list");
-				add_items_idle_id =
-					g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
-					 		 list, NULL);
-			}
-		}
-                
-                if (program_list_box != NULL &&
-		    program_list_box->parent == NULL) {
+                if (program_list_box && program_list_box->parent == NULL) {
+			GtkWidget *list;
+			
+			gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
+
                         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                                             program_list_box,
-                                            FALSE, FALSE, 0);
+                                            TRUE, TRUE, GNOME_PAD_SMALL);
                 
                         gtk_widget_show_all (GTK_WIDGET (GTK_DIALOG (dialog)->vbox));
 
-                }
-
-                gtk_label_set_text_with_mnemonic (GTK_LABEL (program_list_box_toggle),
-                                    		  _("_Known Applications <<"));
-
-                gtk_tooltips_set_tip (panel_tooltips, program_list_box_toggle->parent,
-                                      _("Hide the list of known applications"),
-                                      NULL);                
-
+			list = g_object_get_data (G_OBJECT (dialog), "program_list");
+			gtk_widget_grab_focus (list);
+		}
         } else {    
 		GtkWidget *entry;           
 
                 program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
                 
-                if (program_list_box != NULL &&
-		    program_list_box->parent != NULL) {
+                if (program_list_box && program_list_box->parent != NULL) {
                         gtk_container_remove (GTK_CONTAINER (program_list_box->parent), program_list_box);
+			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 		}
-
-                gtk_label_set_text_with_mnemonic (GTK_LABEL (program_list_box_toggle),
-                                    		  _("_Known Applications >>"));
-
-                gtk_tooltips_set_tip (panel_tooltips, program_list_box_toggle->parent,
-                                      _("Display a list of known applications from the applications menu"),
-                                      NULL);
 
 		entry = g_object_get_data (G_OBJECT (dialog), "entry");
                 gtk_widget_grab_focus (entry);
@@ -1228,13 +1434,19 @@ run_dialog_destroyed (GtkWidget *widget)
 	if (add_items_idle_id)
 		g_source_remove (add_items_idle_id);
 	add_items_idle_id = 0;
+
+	if (find_icon_timeout_id)
+		g_source_remove (find_icon_timeout_id);
+	find_icon_timeout_id = 0;
 }
 
 void
 show_run_dialog (void)
 {
-        gboolean  show_program_list_box;          
-	char     *run_icon;
+        gboolean  enable_program_list;
+	GtkWidget *w;
+	const char *key;
+	char      *run_icon;
 
 	if (no_run_box)
 		return;
@@ -1246,22 +1458,21 @@ show_run_dialog (void)
 
 	register_run_stock_item ();
 
-	show_program_list_box = gconf_client_get_bool (
-				panel_gconf_get_client (),
-				panel_gconf_general_key (
-					panel_gconf_get_profile (), "show_program_list_box"),
-				NULL);
-        
 	run_dialog = gtk_dialog_new_with_buttons (_("Run Program"),
 						  NULL /* parent */,
 						  0 /* flags */,
 						  GTK_STOCK_HELP,
 						  GTK_RESPONSE_HELP,
-						  GTK_STOCK_CLOSE,
-						  GTK_RESPONSE_CLOSE,
-						  PANEL_STOCK_RUN,
-						  PANEL_RESPONSE_RUN,
+						  GTK_STOCK_CANCEL,
+						  GTK_RESPONSE_CANCEL,
 						  NULL);
+
+	gtk_window_set_resizable (GTK_WINDOW (run_dialog), FALSE);
+
+	w = gtk_dialog_add_button (GTK_DIALOG (run_dialog),
+				   PANEL_STOCK_RUN,PANEL_RESPONSE_RUN);
+	gtk_widget_set_sensitive (w, FALSE);
+	g_object_set_data (G_OBJECT (run_dialog), "run_button", w);
 
 	run_icon = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-run.png", TRUE, NULL);
@@ -1282,9 +1493,24 @@ show_run_dialog (void)
         g_signal_connect (G_OBJECT (run_dialog), "response", 
 			  G_CALLBACK (run_dialog_response), NULL);
 
+
         create_simple_contents ();
-        update_contents (run_dialog);
-        
+	
+	key = panel_gconf_general_key
+		(panel_gconf_get_profile (), "enable_program_list"),
+	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
+
+	if (enable_program_list) {
+		create_program_list_contents ();
+	        update_contents (run_dialog);        
+		
+		/* start loading the list of applications */
+		w = g_object_get_data (G_OBJECT (run_dialog), "program_list");
+		add_items_idle_id =
+			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
+			 		 w, NULL);
+	}
+
 	gtk_widget_show_all (run_dialog);
 }
 

@@ -87,6 +87,7 @@ panel_sources =			\
 	drawer-widget.c		\
 	sliding-widget.c	\
 	floating-widget.c	\
+	disclosure-widget.c	\
 	rgb-stuff.c		\
 	panel.c			\
 	applet.c		\
@@ -128,6 +129,7 @@ panel_headers =			\
 	drawer-widget.h		\
 	sliding-widget.h	\
 	floating-widget.h	\
+	disclosure-widget.h	\
 	rgb-stuff.h		\
 	panel.h         	\
 	applet.h         	\

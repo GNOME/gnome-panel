@@ -21,13 +21,24 @@ FIXME: We need to change some of the ints into user visible strings
 <!-- ********************************* -->
 
       <schema>
-        <key>/schemas/apps/panel/default_profiles/small/general/advanced_run_dialog</key>
+        <key>/schemas/apps/panel/default_profiles/small/general/show_program_list</key>
         <owner>panel</owner>
         <type>bool</type>
         <default>false</default>
         <locale name="C">
-          <short></short>
-          <long></long>
+          <short>Show the program listing in the Run box</short>
+          <long>Show the program listing by default when opening the Run box</long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/small/general/enable_program_list</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Enable the program listing in the run box</short>
+          <long>Enable the program listing in the run box</long>
         </locale>
       </schema>
 

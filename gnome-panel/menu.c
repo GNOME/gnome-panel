@@ -305,7 +305,9 @@ about_gnome_cb(GtkObject *object, char *program_path)
 {
 	if (gnome_execute_async (g_get_home_dir (), 1, &program_path)<0)
 		panel_error_dialog ("cannot_exec_about_gnome",
-				    _("Can't execute 'About GNOME'"));
+				    _("<b>Can't execute 'About GNOME'</b>\n\n"
+				      "Details: %s probably does not exist"),
+				    program_path);
 }
 
 static void
@@ -885,11 +887,13 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	result = gnome_vfs_unlink (sim->item_loc);
 
 	if (result != GNOME_VFS_OK) {
+		char *esc = g_markup_escape_text (sim->item_loc, -1);
 		panel_error_dialog("cant_remove_menu_item",
 				   _("<b>Could not remove the menu item %s</b>\n\n"
 				     "Details: %s\n"), 
-				    sim->item_loc, 
+				    esc,
 				    gnome_vfs_result_to_string (result));
+		g_free (esc);
 		return;
 	}
 
@@ -968,7 +972,8 @@ add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 			show_run_dialog_with_text (exec);
 		} else {
 			panel_error_dialog ("no_exec_or_url_field",
-					    _("No 'Exec' or 'URL' field in entry"));
+					    _("<b>Can't add to run box</b>\n\n"
+					      "Details: No 'Exec' or 'URL' field in entry"));
 		}
 		gnome_desktop_item_unref (item);
 	} else {
@@ -3311,7 +3316,8 @@ panel_lock (GtkWidget *widget, gpointer data)
 	char *argv[3] = {"xscreensaver-command", "-lock", NULL};
 	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
 		panel_error_dialog ("cannot_exec_xscreensaver",
-				    _("Cannot execute xscreensaver"));
+				    _("<b>Cannot execute xscreensaver</b>\n\n"
+				      "Details: xscreensaver-command not found"));
 }
 
 static GtkWidget *

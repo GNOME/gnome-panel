@@ -42,6 +42,7 @@ struct _FileRec {
 	char *fullname;
 	char *name_collate_key;
 	char *icon;
+	char *exec;
 	char *tryexec_path;
 	DirRec *parent;
 	time_t mtime;
