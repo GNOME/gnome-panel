@@ -208,7 +208,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 destroy_widget_list(gpointer data, gpointer user_data)
 {
-	gtk_widget_destroy(GTK_WIDGET(data));
+	gtk_widget_unref(GTK_WIDGET(data));
 }
 
 /* This is called when the session manager requests a shutdown.  It
@@ -272,12 +272,13 @@ panel_session_save (GnomeClient *client,
 
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
+/* clean programming goeas aside, this was causing too many segfaults,
+   exit will do the same thing anyhow*/
+#if 0
 		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
 		    i++,info++)
 			if(info->menu)
 				gtk_widget_unref(info->menu);
-
-		g_array_free(applets,TRUE);
 
 		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 
@@ -286,6 +287,7 @@ panel_session_save (GnomeClient *client,
 		small_icons = NULL;
 
 		gtk_widget_unref(root_menu);
+#endif
 
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
@@ -294,6 +296,10 @@ panel_session_save (GnomeClient *client,
 		puts("killing launcher");
 		kill(launcher_pid,SIGTERM);
 #endif
+		/*
+		g_array_free(applets,TRUE);
+		*/
+
 		gtk_exit (0);
 	}
 
@@ -342,9 +348,8 @@ panel_clean_applet(gint applet_id)
 		panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 					    PANEL_APPLET_PARENT_KEY);
 
-		g_return_if_fail(panel != NULL);
-
-		panel_widget_remove(panel,info->widget);
+		if(panel)
+			panel_widget_remove(panel,info->widget);
 	}
 	info->widget = NULL;
 	info->applet_widget = NULL;
@@ -434,8 +439,13 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
 	int wx, wy;
 	AppletInfo *info = get_applet_info(PTOI(data));
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 	 PANEL_APPLET_PARENT_KEY);
+	PanelWidget *panel;
+
+	g_return_if_fail(info != NULL);
+	g_return_if_fail(info->widget != NULL);
+
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
 
 	g_return_if_fail(panel != NULL);
 
@@ -537,7 +547,7 @@ applet_show_menu(gint applet_id)
 		arrow = gdk_cursor_new(GDK_ARROW);
 
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       info, 0/*3*/, time(NULL));
+		       ITOP(applet_id), 0/*3*/, time(NULL));
 	gtk_grab_add(info->menu);
 	gdk_pointer_grab(info->menu->window,
 			 TRUE,

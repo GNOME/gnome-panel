@@ -130,7 +130,8 @@ void load_applet(char *id, char *params, int pos, int panel, char *cfgpath);
 void orientation_change(gint applet_id, PanelWidget *panel);
 
 #define get_applet_info(applet_id) \
-	(&g_array_index(applets,AppletInfo,applet_id))
+	((applet_id>=0 && applet_id<applet_count) ? \
+	 (&g_array_index(applets,AppletInfo,applet_id)):NULL)
 
 /*a few macros to reduce compiler warnings*/
 #if (SIZEOF_INT == SIZEOF_VOID_P)
