@@ -1415,7 +1415,7 @@ load_system_wide (void)
 
 
 void
-load_up_globals (void)
+session_load_global_config (void)
 {
 	global_config.animation_speed = 
 		panel_gconf_global_config_get_int ("panel-animation-speed");
@@ -1495,20 +1495,7 @@ load_up_globals (void)
 	global_config.merge_menus = TRUE;
 	global_config.menu_check = TRUE;
 	global_config.menu_flags = get_default_menu_flags();
-/*
-	global_config.merge_menus =
-		conditional_get_bool ("merge_menus", TRUE, NULL);
 
-	global_config.menu_check =
-		conditional_get_bool ("menu_check", TRUE, NULL);
-
-	
-	global_config.menu_flags = conditional_get_int
-		("menu_flags", get_default_menu_flags (), NULL);
-	if (global_config.menu_flags < 0) {
-		global_config.menu_flags = get_default_menu_flags ();
-	}
-*/
 	gnome_config_sync ();
 
 	apply_global_config ();

@@ -41,7 +41,8 @@ void panel_config_sync(void);
 void panel_config_sync_schedule (void);
 
 void load_system_wide (void);
-void load_up_globals (void);
+void session_load_global_config (void);
+
 /* only to be used on beginning, we don't really want to write globals much */
 void write_global_config (void);
 

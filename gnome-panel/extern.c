@@ -1532,7 +1532,7 @@ static void
 s_panel_notice_config_changes(PortableServer_Servant servant,
 			      CORBA_Environment *ev)
 {
-	load_up_globals();
+	session_load_global_config ();
 }
 
 /** Panel2 additions **/

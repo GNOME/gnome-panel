@@ -447,8 +447,9 @@ main(int argc, char **argv)
 			    NULL);
 
 	bonobo_activate ();
-
-	tell_user_Im_on_crack ();
+	
+	if (g_getenv ("I_LOVE_PANEL_CRACK") == NULL)
+		tell_user_Im_on_crack ();
 
 	/*
 	 * Let applets spew.
@@ -503,7 +504,8 @@ main(int argc, char **argv)
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */
-	load_up_globals ();
+	session_load_global_config ();
+
 	/* this is so the capplet gets the right defaults */
 	if ( ! commie_mode)
 		write_global_config ();
