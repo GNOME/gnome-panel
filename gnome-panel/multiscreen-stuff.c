@@ -88,9 +88,6 @@ multiscreen_init (void)
 			goto no_xinerama;
 		}
 
-		if (screen_num <= GdmXineramaScreen)
-			GdmXineramaScreen = 0;
-
 		rectangles = g_new0 (GdkRectangle, screen_num);
 		screens = screen_num;
 
