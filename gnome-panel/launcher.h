@@ -67,7 +67,8 @@ void            launcher_save_to_gconf          (Launcher   *launcher,
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
 						 gint         position,
-						 const char  *gconf_key);
+						 const char  *gconf_key,
+						 gboolean     use_default);
 
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,

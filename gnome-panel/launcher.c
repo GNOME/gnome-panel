@@ -610,7 +610,7 @@ launcher_save_to_gconf (Launcher  *launcher,
 
 	location = gnome_desktop_item_get_location (launcher->ditem);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "base-location");
+	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "launcher-location");
 	gconf_client_set_string (client, temp_key, location, NULL);
 	g_free (temp_key);
 }
@@ -618,26 +618,26 @@ launcher_save_to_gconf (Launcher  *launcher,
 void
 launcher_load_from_gconf (PanelWidget *panel_widget,
 			  gint         position,
-			  const char  *gconf_key)
+			  const char  *gconf_key,
+			  gboolean     use_default)
 {
         GConfClient *client;
-        char        *profile;
         char        *temp_key;
-        char        *base_location;
+        char        *launcher_location;
 
         g_return_if_fail (panel_widget);
         g_return_if_fail (gconf_key);
 
         client  = panel_gconf_get_client ();
-        profile = session_get_current_profile ();
-
-        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "base-location");
-        base_location = gconf_client_get_string (client, temp_key, NULL);
+	/* FIXME : We need to do checking of screen dimensions for default */
+        temp_key = use_default ? panel_gconf_objects_default_profile_get_full_key ("medium", gconf_key, "launcher-location") :
+		panel_gconf_objects_profile_get_full_key (session_get_current_profile (), gconf_key, "launcher-location");
+        launcher_location = gconf_client_get_string (client, temp_key, NULL);
         g_free (temp_key);
 
-	load_launcher_applet (base_location, panel_widget, position, TRUE, gconf_key);
+	load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
 
-        g_free (base_location);
+        g_free (launcher_location);
 }
 
 Launcher *
@@ -901,11 +901,11 @@ launcher_get_unique_uri (void)
 }
 
 char *
-launcher_file_name (const char *base)
+launcher_file_name (const char *location)
 {
 	char *tmp, *retval;
 
-	g_return_val_if_fail (base != NULL, NULL);
+	g_return_val_if_fail (location!= NULL, NULL);
 
 	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
 	/* Make sure the launcher directory exists */
@@ -913,7 +913,7 @@ launcher_file_name (const char *base)
 		mkdir (tmp, 0700);
 	}
 
-	retval = g_build_filename (tmp, base, NULL);
+	retval = g_build_filename (tmp, location, NULL);
 
 	g_free (tmp);
 	return retval;

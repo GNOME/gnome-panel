@@ -322,7 +322,7 @@ reparent_fixed(GtkWidget *frame)
 }
 
 gboolean
-load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
+load_status_applet(PanelWidget *panel, int pos, gboolean exactpos, gboolean use_default)
 {
 	GtkWidget  *ebox;
 

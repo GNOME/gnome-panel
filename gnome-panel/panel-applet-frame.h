@@ -97,7 +97,8 @@ void       panel_applet_frame_save_to_gconf   (PanelAppletFrame *frame,
 
 void       panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 					       gint         position,
-					       const char  *gconf_key);
+					       const char  *gconf_key,
+					       gboolean     use_default);
 
 G_END_DECLS
 

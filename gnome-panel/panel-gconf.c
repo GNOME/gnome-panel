@@ -235,99 +235,18 @@ panel_gconf_dir_exists (const gchar *key) {
 				 	NULL);
 }
 
-void
-panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *panel_id, const gchar *key, gint value) {
-	gchar *panel_profile_key;
+char *
+panel_gconf_objects_get_full_key (const gchar *profile,
+				  const gchar *object_id,
+				  const gchar *key,
+				  gboolean     use_default)
+{
+	char *retval = NULL;
 
-	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+   	retval = use_default ? panel_gconf_objects_default_profile_get_full_key (profile, object_id, key) :
+		panel_gconf_objects_profile_get_full_key (profile, object_id, key);
 
-#ifdef PANEL_GCONF_DEBUG
-	printf ("Saving to %s\n", panel_profile_key);
-#endif
-	panel_gconf_set_int (panel_profile_key, value);	
-	return;
-}
-
-void
-panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean value) {
-	gchar *panel_profile_key;
-
-	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-
-#ifdef PANEL_GCONF_DEBUG
-	printf ("Saving to %s\n", panel_profile_key);
-#endif
-
-	panel_gconf_set_bool (panel_profile_key, value);	
-
-}
-
-void
-panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_id, const gchar *key, const gchar *value) {
-	gchar *panel_profile_key;
-
-	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-
-#ifdef PANEL_GCONF_DEBUG
-	printf ("Saving to %s\n", panel_profile_key);
-#endif
-
-	panel_gconf_set_string (panel_profile_key, value);	
-	return;
-}
-
-gchar *
-panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val) {
-	gchar *panel_profile_key;
-	gchar *return_val;
-
-	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
-
-	return_val = panel_gconf_get_string (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
-}
-
-gint
-panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gint default_val) {
-	gchar *panel_profile_key;
-	gint return_val;
-
-	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else  {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
-	
-	return_val = panel_gconf_get_int (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
-}
-
-gboolean
-panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val) {
-	gchar *panel_profile_key;
-	gboolean return_val;
-
-	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
-
-	return_val = panel_gconf_get_bool (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
+	return retval;
 }
 
 /* FIXME: cut and paste code from gconf - hopefully this will be public API for future releases */
@@ -355,7 +274,7 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
     		}
     	g_slist_free (subdirs);
   	}
-
+ 
   	entries = gconf_client_all_entries (client, dir, NULL);
 
   	if (entries != NULL) {

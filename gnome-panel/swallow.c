@@ -469,27 +469,30 @@ swallow_save_to_gconf (Swallow    *swallow,
 	client  = panel_gconf_get_client ();
 	profile = session_get_current_profile ();
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "exec-path");
+	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "exec-path");
 	gconf_client_set_string (client, temp_key, swallow->path, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "parameters");
+	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "parameters");
 	gconf_client_set_string (client, temp_key, swallow->title, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "width");
+	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "width");
 	gconf_client_set_int (client, temp_key, swallow->width, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "height");
+	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "height");
 	gconf_client_set_int (client, temp_key, swallow->height, NULL);
 	g_free (temp_key);
+	
+	g_free (profile);
 }
 
 void
 swallow_load_from_gconf (PanelWidget *panel_widget,
 			 gint         position,
-			 const char  *gconf_key)
+			 const char  *gconf_key,
+			 gboolean     use_default)
 {
 	GConfClient *client;
 	char        *profile;
@@ -503,26 +506,32 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (gconf_key);
 
 	client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
+	if (use_default)
+		profile = g_strdup ("medium");
+	else
+		profile = session_get_current_profile ();
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "exec-path");
+	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "exec-path", use_default);
 	path = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "parameters");
+	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "parameters", use_default);
 	params = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "width");
+	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "width", use_default);
 	width = gconf_client_get_int (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "height");
+	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "height", use_default);
 	height = gconf_client_get_int (client, temp_key, NULL);
 	g_free (temp_key);
+
+	g_free (profile);
 
 	load_swallow_applet (path, params, width, height, panel_widget, position, TRUE, gconf_key);
 
 	g_free (path);
 	g_free (params);
+	g_free (profile);
 }

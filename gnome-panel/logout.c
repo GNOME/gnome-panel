@@ -108,7 +108,8 @@ create_logout_widget (void)
 void
 load_logout_applet (PanelWidget *panel,
 		    gint         pos,
-		    gboolean     exactpos)
+		    gboolean     exactpos,
+		    gboolean     use_default)
 {
 	GtkWidget  *logout;
 	AppletInfo *info;
@@ -173,7 +174,8 @@ create_lock_widget(void)
 void
 load_lock_applet (PanelWidget *panel,
 		  gint         pos,
-		  gboolean     exactpos)
+		  gboolean     exactpos,
+		  gboolean     use_default)
 {
 	GtkWidget  *lock;
 	AppletInfo *info;

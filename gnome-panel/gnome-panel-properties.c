@@ -41,6 +41,8 @@
 
 #include <gconf/gconf-client.h>
 
+#define GNOME_PANEL_PROPERTIES_DEBUG 1
+
 /* Just so we can link with panel-util.c for the convert keys stuff*/
 GSList *applets;
 

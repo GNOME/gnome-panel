@@ -53,6 +53,8 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
+#undef PANEL_SESSION_DEBUG
+
 /*list of all panel widgets created*/
 GSList *panel_list = NULL;
 
@@ -1260,17 +1262,17 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		load_drawer_applet(NULL, NULL, NULL, panel, pos, TRUE, NULL);
 
 	} else if (strcmp (applet_type, "LOGOUT:NEW") == 0) {
-		load_logout_applet (panel, pos, TRUE);
+		load_logout_applet (panel, pos, TRUE, FALSE);
 
 	} else if (sscanf (applet_type, "LOGOUT:%d", &applet_num) == 1) {
-		load_logout_applet (panel, pos, TRUE);
+		load_logout_applet (panel, pos, TRUE, FALSE);
 		remove_applet = TRUE;
 
 	} else if (strcmp (applet_type, "LOCK:NEW") == 0) {
-		load_lock_applet (panel, pos, TRUE);
+		load_lock_applet (panel, pos, TRUE, FALSE);
 
 	} else if (sscanf (applet_type, "LOCK:%d", &applet_num) == 1) {
-		load_lock_applet (panel, pos, TRUE);
+		load_lock_applet (panel, pos, TRUE, FALSE);
 		remove_applet = TRUE;
 
 	} else if (strcmp (applet_type, "SWALLOW:ASK") == 0) {
@@ -1280,7 +1282,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		ask_about_launcher(NULL, panel, pos, TRUE);
 
 	} else if(strcmp(applet_type,"STATUS:TRY")==0) {
-		load_status_applet(panel, pos, TRUE);
+		load_status_applet(panel, pos, TRUE, FALSE);
 
 	} 
 
@@ -1867,7 +1869,7 @@ panel_session_init_global_config (void)
 		value = gconf_entry_get_value (entry);
 
 		key = g_path_get_basename (gconf_entry_get_key (entry));
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Checking global config for %s\n", key);
 #endif
 		/* FIXME: We need to do something more user friendly here */
@@ -2174,6 +2176,61 @@ panel_session_apply_global_config (void)
 	panel_global_keys_setup();
 }
 
+
+static gchar *
+panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val) {
+	gchar *panel_profile_key;
+	gchar *return_val;
+
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+		}
+                else {
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+		}
+
+	return_val = panel_gconf_get_string (panel_profile_key, default_val);
+	g_free (panel_profile_key);
+	return return_val;
+}
+
+static gint
+panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gint default_val) {
+	gchar *panel_profile_key;
+	gint return_val;
+
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+		}
+                else  {
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+		}
+	
+	return_val = panel_gconf_get_int (panel_profile_key, default_val);
+	g_free (panel_profile_key);
+	return return_val;
+}
+
+static gboolean
+panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val) {
+	gchar *panel_profile_key;
+	gboolean return_val;
+
+	/* FIXME: Make this check screen sizes and stuff */
+                if (use_default) {
+                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
+		}
+                else {
+                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+		}
+
+	return_val = panel_gconf_get_bool (panel_profile_key, default_val);
+	g_free (panel_profile_key);
+	return return_val;
+}
+
 void
 panel_session_init_panels(void)
 {
@@ -2189,7 +2246,7 @@ panel_session_init_panels(void)
 	
 	panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
 
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Current profile is %s\n", session_get_current_profile ());
 	printf ("We are checking for dir %s\n", panel_profile_key);
 #endif
@@ -2232,7 +2289,7 @@ panel_session_init_panels(void)
 
 		panel_id = temp->data;
 
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Loading panel id %s\n", panel_id);
 #endif
 		back_pixmap = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (), 
@@ -2522,6 +2579,47 @@ panel_session_init_panels(void)
 	g_slist_free (panel_ids);
 }
 
+static void
+panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *panel_id, const gchar *key, gint value) {
+	gchar *panel_profile_key;
+
+	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+
+#ifdef PANEL_SESSION_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
+	panel_gconf_set_int (panel_profile_key, value);	
+	return;
+}
+
+static void
+panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean value) {
+	gchar *panel_profile_key;
+
+	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+
+#ifdef PANEL_SESSION_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
+
+	panel_gconf_set_bool (panel_profile_key, value);	
+
+}
+
+static void
+panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_id, const gchar *key, const gchar *value) {
+	gchar *panel_profile_key;
+
+	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+
+#ifdef PANEL_SESSION_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
+
+	panel_gconf_set_string (panel_profile_key, value);	
+	return;
+}
+
 void
 panel_session_save_panel (PanelData *pd)
 {
@@ -2537,7 +2635,7 @@ panel_session_save_panel (PanelData *pd)
 	buf = g_string_new (NULL);
 
 	panel_profile = session_get_current_profile ();
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Saving to %s profile\n", panel_profile);
 #endif
 	panel_id_key = panel_gconf_general_profile_get_full_key (panel_profile, "panel-id-list");
@@ -2549,7 +2647,7 @@ panel_session_save_panel (PanelData *pd)
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
 
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Saving unique panel id %s\n", panel->unique_id);
 #endif
 	/* Get the current list from gconf */	
@@ -2562,7 +2660,7 @@ panel_session_save_panel (PanelData *pd)
 	/* We need to go through the panel-id-list and add stuff to the panel */
 	
 	for (temp = panel_id_list; temp; temp = temp->next) {
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Found ID: %s\n", (gchar *)temp->data);
 #endif
 		if (strcmp (panel->unique_id, (gchar *)temp->data) == 0)
@@ -2571,7 +2669,7 @@ panel_session_save_panel (PanelData *pd)
 	
 	/* We need to add this key */
 	if (exists == FALSE) {
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Adding a new panel to id-list: %s\n", panel->unique_id);
 #endif
 		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel->unique_id));	
@@ -2586,10 +2684,6 @@ panel_session_save_panel (PanelData *pd)
 	g_free (panel_id_key);
 	g_slist_foreach (panel_id_list, (GFunc)g_free, NULL);
 	g_slist_free (panel_id_list);
-
-#ifdef SESSION_DEBUG
-	printf ("Saving to panel profile : %s\n", panel_profile);
-#endif
 
 	panel_gconf_panel_profile_set_string (panel_profile,
 					      panel->unique_id,
@@ -2676,7 +2770,7 @@ panel_session_save_panel (PanelData *pd)
 	default:
 		break;
 	}
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("Done saving\n");
 #endif
 	g_free (panel_profile);
@@ -2689,13 +2783,13 @@ panel_session_remove_panel_from_config (PanelWidget *panel) {
         gchar *panel_profile_key, *panel_profile_directory;
 	GSList *panel_ids, *temp, *new_panel_ids = NULL;
 
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("We are removing the configuration for panel id : %s\n", panel->unique_id);
 #endif
         panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
 
         if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	  printf ("We have no configuration to remove!\n");
 #endif
                 /* We haven't saved any profile, so don't remove anything */
@@ -2719,7 +2813,7 @@ panel_session_remove_panel_from_config (PanelWidget *panel) {
                         panel_profile_directory = g_strdup_printf ("/apps/panel/profiles/%s/panels/%s",
                                                                    session_get_current_profile (),
                                                                    PANEL_WIDGET (panel)->unique_id);
-#ifdef SESSION_DEBUG
+#ifdef PANEL_SESSION_DEBUG
 	printf ("We are removing the configuration for gconf key : %s\n", panel_profile_directory);
 #endif
                         panel_gconf_directory_recursive_clean (panel_gconf_get_client (),

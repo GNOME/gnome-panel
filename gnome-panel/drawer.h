@@ -29,7 +29,8 @@ void    drawer_save_to_gconf   (Drawer     *drawer,
 
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
-				const char  *gconf_key);
+				const char  *gconf_key,
+				gboolean     use_default);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrient orient);
 

@@ -12,8 +12,8 @@
 
 G_BEGIN_DECLS
 
-void load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos);
-void load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos);
+void load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos, gboolean use_default);
+void load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos, gboolean use_default);
 
 G_END_DECLS
 

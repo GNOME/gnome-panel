@@ -38,7 +38,7 @@ void status_spot_remove(StatusSpot *ss, gboolean destroy_socket);
 void status_spot_remove_all(void);
 
 /*returns TRUE if it could create an applet, FALSE if one already exists*/
-gboolean load_status_applet(PanelWidget *panel, int pos, gboolean exactpos);
+gboolean load_status_applet(PanelWidget *panel, int pos, gboolean exactpos, gboolean use_default);
 void status_applet_update(StatusApplet *s);
 void status_applet_put_offscreen(StatusApplet *s);
 
