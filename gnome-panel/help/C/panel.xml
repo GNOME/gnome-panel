@@ -2045,12 +2045,13 @@
      <indexterm id="idx-a63">
       <primary>Panel</primary> <secondary>properties</secondary>
       </indexterm>
-
-      In addition to global Panel's properties, described in <xref
+      In addition to global Panel properties, described in <xref
       linkend="globalpanelprefs">, some properties can be configured
-      individually for each panel.  This includes panel type (Edge,
+      individually for each <interface>Panel</interface>.  This
+      includes <interface>Panel</interface> type (Edge,
       Aligned, Sliding, Floating), size, location, background color,
-      and hiding preferences. To change these properties for a panel,
+      and hiding preferences. To change these properties for a
+      <interface>Panel</interface>,
       click on it with the right mouse button and select
       <menuchoice><guimenu>Panel</guimenu>
       <guisubmenu>Properties</guisubmenu></menuchoice>. You may also
@@ -2058,19 +2059,22 @@
       <menuchoice><guimenu>Panel</guimenu>
       <guisubmenu>Properties</guisubmenu></menuchoice>.
     </para>
-    <para> From the <guisubmenu>Properties</guisubmenu>, you can
-      choose <guimenuitem>All properties</guimenuitem>, which will
-      launch <interface>Panel properties</interface> dialog.  If you
-      are already familiar with this dialog, you can also quickly
-      change some of the properties &mdash; say, panel size or type
-      &mdash; by selecting the appropriate item  in the
+    <para>
+      From the <guisubmenu>Properties</guisubmenu> submenu, you can
+      choose <guimenuitem>All properties...</guimenuitem>, which will
+      launch the <interface>Panel properties</interface> dialog.  If you
+      are already familiar with this dialog, you can more quickly
+      change some of the properties &mdash; say,
+      <interface>Panel</interface> size or type
+      &mdash; by selecting the appropriate item in the
       <guisubmenu>Properties</guisubmenu> menu.
     </para>
     <para>
      The <interface>Panel properties</interface> dialog contains two
-     tabs to help you set the active Panel properties: <guilabel>Edge
+     tabs to help you set the active <interface>Panel</interface>
+     properties: <guilabel>Edge
      Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip -
-     depending on your panel type) and
+     depending on your <interface>Panel</interface> type) and
      <guilabel>Background</guilabel>. Both of these tabs are explained
      below.
     </para>
@@ -2090,7 +2094,7 @@
 	<listitem>
 	  <para>
 	    <guilabel>Panel Position</guilabel> &mdash; This changes
-	    the position of the Panel on the screen. For
+	    the position of the <interface>Panel</interface> on the screen. For
 	    <interface>Edge Panel</interface>, you must specify an
 	    edge (<guilabel>Top</guilabel>,
 	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
@@ -2101,55 +2105,64 @@
 	    from one of the corners (in pixels). Finally, for
 	    <interface>Floating Panel</interface> you must specify
 	    orientation (horizontal or vertical) and position of
-	    panel's left top corner (relative to the left top corner
-	    of the screen and measured in pixels).
+	    <interface>Panel</interface>'s left top corner (relative
+	    to the left top corner of the screen and measured in pixels).
 	  </para>
 	  <para>
-	    The Panel will change position once you have pressed
-	    <guibutton>Apply</guibutton> or <guibutton>OK</guibutton>
-	    buttons.
+	    The <interface>Panel</interface> will change position once
+	    you have pressed the <guibutton>Apply</guibutton> or
+	    <guibutton>OK</guibutton> button.
 	  </para>
 	  <tip>
-	    <title>TIP</title>
+	    <title>Manually Moving a Panel</title>
 	    <para>
-	      You can also change Panel position by dragging it with
-	      the middle mouse button to the new location.
-	      </para>
+	      You can also change <interface>Panel</interface>
+	      position by dragging it with the middle mouse button to
+	      the new location.
+            </para>
 	  </tip>
 	</listitem>
 
 	<listitem>
-	  <para><guilabel>Panel size</guilabel> &mdash; here you can
-	  choose panel width. The default size is 48 pixels, which is
+	 <para>
+          <guilabel>Panel size</guilabel> &mdash; Here you can
+	  choose the <interface>Panel</interface> width. The default
+	  size is 48 pixels, which is
 	  also the default size of icons used by GNOME. Users with low
-	  screen resolution might want to decrease the panel size to
+	  screen resolution might want to decrease the
+	  <interface>Panel</interface> size to
 	  free some screen space; conversely, users with high
-	  resolution displays may try using larger panel sizes.
-	    </para>
-	    <para>
-             Changing panel size automatically resizes all the icons
-             on this panel, which can lead to some quality loss. Also,
-             the panel will ask all the applets to resize
-             themselves. Most of the applets will comply; however, if
-             some applets do not obey this request, then the panel
-             will resize itself so that it can fit all the applets.
+	  resolution displays may try using larger
+	  <interface>Panel</interface> sizes.
+        </para>
+        <para>
+          Changing <interface>Panel</interface> size automatically
+          resizes all the icons on this <interface>Panel</interface>,
+          which can lead to some quality loss. Also,
+          the <interface>Panel</interface> will ask all the applets to resize
+          themselves. Most of the applets will comply; however, if
+          some applets do not obey this request, then the
+          <interface>Panel</interface> will resize itself so that it
+          can fit all the applets.
 	  </para>
 	</listitem>
 
      <listitem>
       <para>
-      <indexterm id="idx-a64"> <primary>Panel</primary>
-       <secondary>Auto-hide</secondary> </indexterm>
-
-	    <guilabel>Hiding</guilabel> &mdash; In this section, you
-	    can choose whether you want to enable Panel Auto-hide
-	    &mdash; that is, have the Panel automatically hide when
-	    the mouse is not over the Panel. The autohide parameters
-	    can be configured in <link linkend="animtab">Global
-	    Preferences dialog</link>. If you  choose to Auto-hide you
-	    might want to disable the hide buttons here as well. You
-	    may also disable the hide button arrows graphics on the
-	    Panel.
+       <indexterm id="idx-a64"> <primary>Panel</primary>
+        <secondary>Auto-hide</secondary>
+       </indexterm>
+       <guilabel>Hiding</guilabel> &mdash; In this section, you
+       can choose whether you want to <guilabel>Enable
+       Auto-hide</guilabel> &mdash; that is, have the
+       <interface>Panel</interface> automatically hide when
+       the mouse is not over the <interface>Panel</interface>. The
+       autohide parameters
+       can be configured in the <link linkend="animtab">Global
+       Preferences dialog</link>. If you choose to auto-hide, you
+       might want to disable the hide buttons here as well. You
+       may also disable the hide button arrows graphics on the
+       hide buttons.
       </para>
      </listitem>
     </itemizedlist>
@@ -2173,17 +2186,19 @@
 
 
       <para>
-	These options allow you to change the background of the Panel
+	These options allow you to change the background of the
+       <interface>Panel</interface>
        itself. You may choose, if you wish, to have the
        <guilabel>Standard</guilabel>, <guilabel>Pixmap</guilabel>, or
        <guilabel>Color</guilabel> background. The standard look for
-       the Panel is determined by the GTK theme you are running at the
+       the <interface>Panel</interface> is determined by the GTK theme
+       you are running at the
        time (you can configure the GTK theme using the
        <application>GNOME Control Center</application>).  The
        <guilabel>Pixmap</guilabel> option allows you to choose an
-       image to tile or scale to the Panel. The
+       image to tile or scale to the <interface>Panel</interface>. The
        <guilabel>Color</guilabel> option allows you to specify a
-       particular color for the Panel.
+       particular color for the <interface>Panel</interface>.
       </para>
 
    <itemizedlist mark="bullet">
@@ -2199,7 +2214,8 @@
 
      <listitem>
       <para>
-       <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
+       <guilabel>Image</guilabel> &mdash; If you wish to have a
+       <guilabel>Pixmap</guilabel>
        for the background of your <interface>Panel</interface>, this
        section of the dialog allows you to choose which image to use.
        If you press the <guibutton>Browse</guibutton> button, you can
@@ -2208,25 +2224,28 @@
        the preview of this background.
       </para>
      </listitem>
-</itemizedlist>
+   </itemizedlist>
 
       
       <tip>
 	<title>Drag and Drop With Images</title>
 	<para>
-	  An easier way to change the  background of your panel is to
-	  drag and  drop an image  file from  the GNOME  File Manager
-	  onto the Panel.  This will  automatically  change the
-	  background of  the panel to that image.
+	  An easier way to change the  background of your
+	  <interface>Panel</interface> is to
+	  drag and  drop an image  file from the <application>GNOME
+	  File Manager</application> onto the
+	  <interface>Panel</interface>.  This will automatically
+	  change the background of the <interface>Panel</interface> to
+	  that image.
 	</para>
       </tip>
     
-<itemizedlist mark="bullet">
+    <itemizedlist mark="bullet">
      <listitem>
       <para>
        <guilabel>Don't scale image to fit</guilabel> &mdash; If this
        button is checked, the background image will be tiled to cover
-       the panel, rather than scaled.
+       the <interface>Panel</interface>, rather than scaled.
       </para>
      </listitem>
      <listitem>
@@ -2234,21 +2253,24 @@
        <guilabel>Scale image (keep proportions)</guilabel> &mdash; If
        this button is checked, the background image will be scaled as
        much as possible preserving image's proportions, and then the
-       scaled image will be used to tile the panel.
+       scaled image will be used to tile the
+       <interface>Panel</interface>.
       </para>
      </listitem>
      <listitem>
       <para>
        <guilabel>Stretch image (change proportions)</guilabel> &mdash;
        If this button is checked, the background image will be
-       stretched in both dimensions to the size of the panel.
+       stretched in both dimensions to the size of the
+       <interface>Panel</interface>.
       </para>
      </listitem>
      <listitem>
       <para>
        <guilabel>Rotate image for vertical panel</guilabel> &mdash; If
          this button is checked, the image will be rotated when you
-         change panel orientation (horizontal/vertical).
+         change <interface>Panel</interface> orientation
+         (horizontal/vertical).
       </para>
      </listitem>
     </itemizedlist>
@@ -2262,54 +2284,69 @@
     <title>Current bugs and limitations</title>
     <para>
       Most of the things here are not really bugs; rather, they
-      describe situations when the Panel's behavior is not what you
-      would expect.   </para>
+      describe situations when the <interface>Panel</interface>'s
+      behavior is not what you would expect.
+   </para>
 
-    <para> You can not place an ordinary file or directory on the
-      Panel. If you try to drag and drop a file from the File Manager
-      window to the panel, it won't work. The only type of file that
-      can be placed on the Panel are <filename>.desktop</filename>
+    <para> 
+      You cannot place an ordinary file or directory on the
+      <interface>Panel</interface>. If you try to drag and drop a file
+      from the File Manager window to the
+      <interface>Panel</interface>, it won't work. The only type of
+      file that can be placed on the <interface>Panel</interface> are
+      <filename>.desktop</filename>
       files, which describe launchers (and
-      <filename>.kdelnk</filename> files, which describe lunchers in
+      <filename>.kdelnk</filename> files, which describe launchers in
       the format used by K Desktop Environment); any directory dropped on the
-      panel will be interpreted as a menu &mdash; that is, all the
+      <interface>Panel</interface> will be interpreted as a menu
+      &mdash; that is, all the
       files other than <filename>.desktop</filename> files will be
       ignored.
     </para>
 
-    <para> Editing menus other than the <guimenu>Main Menu</guimenu>
+    <para>
+      Editing menus other than the <guimenu>Main Menu</guimenu>
       is rather confusing. <application>Menu Editor</application> at
-      the moment can not be used for this, and
+      the moment cannot be used for this, and the
       <guimenuitem>Properties</guimenuitem> item of the right-click
       menu is not too helpful either - for example, it doesn't allow
-      one to change menu's icon (see <xref linkend="menusconf"> for
+      one to change the menu's icon (see <xref linkend="menusconf"> for
       instructions for doing this). This will be improved in the next
       release.
     </para>
 
-    <para> The <guimenu>Global Menu</guimenu> (which you get by
-      pressing the <keycap>Menu</keycap> key on the keyboard or by
-      right-clicking on the panel itself), and the <guimenu>Main
+    <para>
+      The <guimenu>Global Menu</guimenu> (which you get by
+      pressing the
+      <keycombo><keycap>Alt</keycap><keycap>F1</keycap></keycombo> key
+      on the keyboard or by
+      right-clicking on the <interface>Panel</interface>), and the
+      <guimenu>Main
       Menu</guimenu> (which you get by clicking on the foot icon)
       are configured separately. The reason is that you
       can have several <guimenu>Main Menu</guimenu> buttons on
-      different panels.
+      different <interface>Panel</interface>s.
     </para>
 
     <para>
      The <guibutton>Screen Lock</guibutton> button does not lock the
-     screen if "No Screensaver" is set in the Control Center.
+     screen if <guilabel>No Screensaver</guilabel> is set in the
+     <application>GNOME Control Center</application>.
     </para>
 
-    <para>  The only way of changing Panel type (Edge, Aligned, etc.)
-      is by choosing <menuchoice> <guisubmenu>Properties</guisubmenu>
+    <para>
+      The only way of changing a <interface>Panel</interface>'s type
+      (Edge, Aligned, etc.)
+      is by choosing <menuchoice><guisubmenu>Panel</guisubmenu> <guisubmenu>Properties</guisubmenu>
       <guisubmenu>Type</guisubmenu>  </menuchoice> from the
-      <guimenu>Panel</guimenu> menu: you can not change Panel type in
+      <guimenu>Main Menu</guimenu> or <guimenu>Global Menu</guimenu>:
+      you can not change <interface>Panel</interface> type in the 
       <interface>Panel Properties</interface> dialog. Conversely,
-      <menuchoice> <guisubmenu>Properties</guisubmenu>
-      <guisubmenu>Background type</guisubmenu>  </menuchoice>   allows
+      <menuchoice> <guisubmenu>Panel</guisubmenu><guisubmenu>Properties</guisubmenu>
+      <guisubmenu>Background type</guisubmenu></menuchoice> allows
       you to change the background type (Pixmap/Color/Standard), but
-      not to choose the actual color or image to use.  </para>
+      not to choose the actual color or image to use.
+    </para>
 
   </sect1>
 
@@ -2319,9 +2356,11 @@
     <title>Authors</title>
      <para>
       <application>GNOME Panel</application> was written by many GNOME
-      developers; you can find a partial list in the "About" box. By
+      developers; you can find a partial list in the
+      <interface>About</interface> dialog. By
       the way: if you wonder what is the name of the animal shown in
-      the "About" box &mdash; it is called "Gegl" and it has its own
+      the <interface>About</interface> dialog, it is called
+      "Gegl" and it has its own
       <ulink type="http" url="http://www.gegl.org">Web page</ulink>.
     </para>
     <para>
@@ -2378,7 +2417,6 @@
    </address>
   </para>
  </sect1>
-
 
  </article>
 
