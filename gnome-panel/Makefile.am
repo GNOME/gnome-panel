@@ -43,3 +43,5 @@ panelrc: panelrc.in Makefile
 	  > panelrc.tmp && mv -f panelrc.tmp panelrc
 
 MOSTLYCLEANFILES = panelrc
+
+EXTRA_DIST = panelrc.in
