@@ -97,13 +97,6 @@ menu_age_timeout(gpointer data)
 	return TRUE;
 }
 
-static int
-try_config_sync(gpointer data)
-{
-	panel_config_sync();
-	return TRUE;
-}
-
 /* Note: similar function is in gnome-desktop-item !!! */
 
 static void
@@ -283,7 +276,7 @@ main(int argc, char **argv)
 
 	kill_free_drawers ();
 
-	load_tornoff ();
+	panel_menu_session_load_tornoffs ();
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
@@ -293,9 +286,7 @@ main(int argc, char **argv)
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change ();
 
-	/*attempt to sync the config every 10 seconds, only if a change was
-	  indicated though*/
-	config_sync_timeout = gtk_timeout_add (10*1000, try_config_sync, NULL);
+	panel_sesssion_setup_config_sync ();
 
 	/* add some timeouts */
 	gtk_timeout_add (10*1000, menu_age_timeout, NULL);

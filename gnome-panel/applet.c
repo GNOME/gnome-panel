@@ -871,3 +871,36 @@ panel_applet_register (GtkWidget      *applet,
 
 	return info;
 }
+
+int
+panel_applet_get_position (AppletInfo *applet)
+{
+	AppletData *applet_data;
+
+	applet_data = gtk_object_get_data (GTK_OBJECT (applet->widget), PANEL_APPLET_DATA);
+
+	return applet_data->pos;
+}
+
+gchar *
+panel_applet_get_panel_id (AppletInfo *applet)
+{
+	PanelWidget *panel;
+
+	panel = PANEL_WIDGET (applet->widget->parent);
+
+	return panel->unique_id;
+}
+
+/*
+ * WTF ?
+ */
+gboolean
+panel_applet_get_right_stick (AppletInfo *applet)
+{
+	PanelWidget *panel;
+
+	panel = PANEL_WIDGET (applet->widget->parent);
+
+	return panel_widget_is_applet_stuck (panel, applet->widget);
+}

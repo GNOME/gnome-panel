@@ -59,6 +59,8 @@ void push_correct_global_prefix (void);
 
 void session_add_dead_launcher (const gchar *location);
 
+void panel_sesssion_setup_config_sync (void);
+
 G_END_DECLS
 
 #endif

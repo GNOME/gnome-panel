@@ -134,20 +134,29 @@ panel_applet_frame_load (const gchar *iid,
 void
 panel_applet_frame_save_position (PanelAppletFrame *frame)
 {
-	gchar *session_key;
-	gchar *temp_key;
-	gint   position = 0, panel_id = 0;
+	GConfClient *client;
+	AppletInfo  *info;
+	char        *profile;
+	char        *temp_key;
 
-	session_key = panel_gconf_get_session_key ();
-	if (!session_key)
+	profile = session_get_current_profile ();
+	if (!profile)
 		return;
 
-	temp_key = g_strdup_printf ("%s/applets/%s/position", session_key, frame->priv->unique_key);
-	gconf_client_set_int (panel_gconf_get_client (), temp_key, position, NULL);
+	client = panel_gconf_get_client ();
+
+	info    = frame->priv->applet_info;
+
+	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/position", profile, frame->priv->unique_key);
+	gconf_client_set_int (client, temp_key, panel_applet_get_position (info), NULL);
 	g_free (temp_key);
 
-	temp_key = g_strdup_printf ("%s/applets/%s/panel-id", session_key, frame->priv->unique_key);
-	gconf_client_set_int (panel_gconf_get_client (), temp_key, panel_id, NULL);
+	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/panel-id", profile, frame->priv->unique_key);
+	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (info), NULL);
+	g_free (temp_key);
+
+	temp_key = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/right-stick", profile, frame->priv->unique_key);
+	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (info), NULL);
 	g_free (temp_key);
 }
 

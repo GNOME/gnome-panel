@@ -428,11 +428,11 @@ Drawer *
 load_drawer_applet (gchar *mypanel_id, const char *pixmap, const char *tooltip,
 		    PanelWidget *panel, int pos, gboolean exactpos)
 {
-	Drawer          *drawer;
+	Drawer      *drawer;
 	PanelOrient  orient = get_applet_orient (panel);
-	AppletInfo      *info;
+	AppletInfo  *info;
 
-	if (mypanel_id < 0) {
+	if (!mypanel_id) {
 		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
 		if (drawer != NULL)
 			panel_setup (drawer->drawer);

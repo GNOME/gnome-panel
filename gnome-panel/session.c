@@ -54,35 +54,21 @@
 
 #define SESSION_DEBUG  12
 
-int config_sync_timeout = 0;
-int applets_to_sync = FALSE;
-int panels_to_sync = FALSE;
-int need_complete_save = FALSE;
+extern GSList          *panels;
+extern GSList          *applets;
+extern int              applet_count;
+extern GtkTooltips     *panel_tooltips;
+extern GnomeClient     *client;
+extern GSList          *panel_list;
+extern char            *kde_menudir;
+static int              config_sync_timeout;
 
-extern GSList *panels;
-extern GSList *applets;
-extern int applet_count;
-
-extern GtkTooltips *panel_tooltips;
-
-extern GnomeClient *client;
-
-gboolean commie_mode = FALSE;
-gboolean no_run_box = FALSE;
-
-GlobalConfig global_config;
-
-/*list of all panel widgets created*/
-extern GSList *panel_list;
-
-extern char *kde_menudir;
-
-int ss_cur_applet = 0;
-gboolean ss_done_save = FALSE;
-gushort ss_cookie = 0;
-GtkWidget *ss_timeout_dlg = NULL;
-static gboolean ss_interactive = FALSE;
-static int ss_timeout = 500;
+gboolean                applets_to_sync = FALSE;
+gboolean                panels_to_sync = FALSE;
+gboolean                need_complete_save = FALSE;
+gboolean                commie_mode = FALSE;
+gboolean                no_run_box = FALSE;
+GlobalConfig            global_config;
 
 static gchar *panel_profile_name = NULL;
 
@@ -198,104 +184,28 @@ apply_global_config (void)
 	panel_global_keys_setup();
 }
 
-#ifdef FIXME /* Keep this code until a new one is done for applets */
-static gboolean
-session_save_timeout (gpointer data)
+static void
+panel_session_save_applets (GSList *applets_list)
 {
-	int cookie = GPOINTER_TO_INT (data);
-	if (cookie != ss_cookie)
-		return FALSE;
+	GSList *l;
 
-#ifdef SESSION_DEBUG	
-	printf("SAVE TIMEOUT (%u)\n",ss_cookie);
-#endif
-	if ( ! ss_interactive) {
-		ss_cookie ++;
-		return FALSE;
-	}
-
-	ss_timeout_dlg =
-		gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-				       GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
-				       _("An applet is not "
-					 "responding to a "
-					 "save request.\n"
-					 "Remove the applet "
-					 "or continue waiting?"));
-	g_signal_connect (G_OBJECT(ss_timeout_dlg),"destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &ss_timeout_dlg);
-	gtk_dialog_add_button (GTK_DIALOG (ss_timeout_dlg),
-			       _("Remove applet"),
-			       1); /* FIXME: GNOME_STOCK_PIXMAP_TRASH */
-	gtk_dialog_add_button (GTK_DIALOG (ss_timeout_dlg),
-			       _("Continue waiting"),
-			       2); /* FIXME: GNOME_STOCK_PIXMAP_TIMER */
-
-	if (1 == gtk_dialog_run (GTK_DIALOG (ss_timeout_dlg))) {
-		ss_cookie++;
-		g_warning(_("Timed out on sending session save to an applet"));
-		save_next_applet();
-		gtk_widget_destroy (ss_timeout_dlg);
-		return FALSE;
-	}
-	gtk_widget_destroy (ss_timeout_dlg);
-	return TRUE;
-}
-#endif
-
-/*returns TRUE if the save was completed, FALSE if we need to wait
-  for the applet to respond*/
-static gboolean
-save_applet_configuration(AppletInfo *info)
-{
-	GString       	*buf;
-	int            	panel_num;
-	gchar		*panel_id;
-	PanelWidget   	*panel;
-	AppletData    	*ad;
+	for (l = applets_list; l; l = l->next) {
+		AppletInfo *info = l->data;
 	
-	g_return_val_if_fail(info!=NULL,TRUE);
+		g_return_if_fail (info);
 
-	buf = g_string_new(NULL);
-
-	gnome_config_push_prefix("");
-	g_string_sprintf(buf, "%sApplet_Config/Applet_%d", PANEL_CONFIG_PATH,
-			 info->applet_id+1);
-	gnome_config_clean_section(buf->str);
-	gnome_config_pop_prefix();
-
-	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH,
-			 info->applet_id+1);
-	gnome_config_push_prefix(buf->str);
-
-	if (info->type == APPLET_EMPTY) {
-		gnome_config_set_string ("id", EMPTY_ID);
-		gnome_config_pop_prefix ();
-		g_string_free (buf,TRUE);
-		return TRUE;
-	}
-
-	panel = PANEL_WIDGET(info->widget->parent);
-	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
-
-	panel_num = g_slist_index (panels, panel);
-	if (panel_num == -1) {
-		gnome_config_set_string("id", EMPTY_ID);
-		gnome_config_pop_prefix();
-		g_string_free(buf,TRUE);
-		return TRUE;
-	}
-	panel_id = g_strdup (panel->unique_id);
-
-	switch(info->type) {
-	case APPLET_BONOBO:
-		/*
-		 * No session saving for applets.
-		 */
-		break;
-	case APPLET_DRAWER: 
-		{
+		switch (info->type) {
+		case APPLET_BONOBO:
+			panel_applet_frame_save_position (
+					PANEL_APPLET_FRAME (info->data));
+			break;
+#ifdef FIXME
+		case APPLET_EMPTY:
+			/*
+			 * just save id
+			 */
+			break;
+		case APPLET_DRAWER: {
 			int i;
 			Drawer *drawer = info->data;
 
@@ -311,10 +221,9 @@ save_applet_configuration(AppletInfo *info)
 						drawer->pixmap);
 			gnome_config_set_string("tooltip",
 						drawer->tooltip);
+			}
 			break;
-		}
-	case APPLET_SWALLOW:
-		{
+		case APPLET_SWALLOW: {
 			Swallow *swallow = info->data;
 			gnome_config_set_string("id", SWALLOW_ID);
 			gnome_config_set_string("parameters",
@@ -323,10 +232,9 @@ save_applet_configuration(AppletInfo *info)
 						swallow->path);
 			gnome_config_set_int("width",swallow->width);
 			gnome_config_set_int("height",swallow->height);
+			}
 			break;
-		}
-	case APPLET_MENU:
-		{
+		case APPLET_MENU: {
 			Menu *menu = info->data;
 			gnome_config_set_string("id", MENU_ID);
 			gnome_config_set_string("parameters",
@@ -339,10 +247,9 @@ save_applet_configuration(AppletInfo *info)
 					      menu->custom_icon);
 			gnome_config_set_string("custom_icon_file",
 						menu->custom_icon_file);
+			}
 			break;
-		}
-	case APPLET_LAUNCHER:
-		{
+		case APPLET_LAUNCHER: {
 			Launcher *launcher = info->data;
 			const char *location;
 
@@ -354,43 +261,35 @@ save_applet_configuration(AppletInfo *info)
 			launcher_save (launcher);
 			location = gnome_desktop_item_get_location (launcher->ditem);
 			gnome_config_set_string ("base_location", location);
+			}
+			break;
+		case APPLET_LOGOUT:
+			gnome_config_set_string("id", LOGOUT_ID);
+			break;
+		case APPLET_LOCK:
+			gnome_config_set_string("id", LOCK_ID);
+			break;
+		case APPLET_STATUS:
+			gnome_config_set_string("id", STATUS_ID);
+			break;
+		case APPLET_RUN:
+			gnome_config_set_string("id", RUN_ID);
+			break;
+		default:
+			g_warning ("Unknown applet type encountered: %d; ignoring.",
+				   info->type);
+#endif /* FIXME */
+		default:
 			break;
 		}
-	case APPLET_LOGOUT:
-		gnome_config_set_string("id", LOGOUT_ID);
-		break;
-	case APPLET_LOCK:
-		gnome_config_set_string("id", LOCK_ID);
-		break;
-	case APPLET_STATUS:
-		gnome_config_set_string("id", STATUS_ID);
-		break;
-	case APPLET_RUN:
-		gnome_config_set_string("id", RUN_ID);
-		break;
-	default:
-		g_warning ("Unknown applet type encountered: %d; ignoring.",
-			   info->type);
-		break;
 	}
-	gnome_config_set_int("position", ad->pos);
-	gnome_config_set_int("panel", panel_num);
-	gnome_config_set_string("unique_panel_id", panel_id);
-	gnome_config_set_bool("right_stick",
-			      panel_widget_is_applet_stuck(panel,
-							   info->widget));
-	g_string_free(buf,TRUE);
-	gnome_config_pop_prefix();
-	
-	return TRUE;
 }
 
 static void
-save_panel_configuration(gpointer data, gpointer user_data)
+panel_session_save_panel (PanelData *pd)
 {
 	BasePWidget *basep = NULL; 
 	PanelWidget *panel = NULL;
-	PanelData *pd = data;
 	GString	*buf;
 	GSList *panel_id_list;
 	GSList *temp;
@@ -399,8 +298,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gchar *panel_id_key;
 	gchar *panel_id;
 	
-	/* FIXME: Do we need user_data anymore?? */
-
 	buf = g_string_new (NULL);
 
 	panel_profile = session_get_current_profile ();
@@ -547,32 +444,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	g_string_free (buf, TRUE);
 }
 
-void
-save_next_applet(void)
-{
-	GSList *cur;
-
-	ss_cur_applet++;
-	
-	if(g_slist_length(applets)<=ss_cur_applet) {
-		ss_done_save = TRUE;
-		return;
-	}
-	
-	cur = g_slist_nth(applets,ss_cur_applet);
-	
-	if(!cur) {
-		ss_done_save = TRUE;
-		return;
-	}
-	
-	if(save_applet_configuration(cur->data))
-		save_next_applet();
-
-	gnome_config_sync();
-	gnome_config_drop_all();
-}
-
 /*
  * We queue the location of .desktop files belonging
  * to dead launchers here, to be removed when saving
@@ -611,58 +482,30 @@ session_unlink_dead_launchers (void)
 }
 
 static void
-do_session_save(GnomeClient *client,
-		gboolean complete_sync,
-		gboolean sync_applets,
-		gboolean sync_panels)
+panel_session_do_save (GnomeClient *client,
+		       gboolean     complete_save,
+		       gboolean     save_applets,
+		       gboolean     save_panels)
 {
-	int num;
+	GSList *l;
 
-	/* If in commie mode, then no saving is needed, the user
-	 * could have changed anything anyway */
 	if (commie_mode)
 		return;
 
-#ifdef SESSION_DEBUG	
-	printf("Saving to [%s]\n",PANEL_CONFIG_PATH);
+	if (complete_save)
+		save_panels = save_applets = TRUE;
 
-	printf("Saving session: 1"); fflush(stdout);
+	if (save_panels)
+		for (l = panel_list; l; l = l->next)
+			panel_session_save_panel ((PanelData *) l->data);
 
-	printf(" 2"); fflush(stdout);
-#endif
+	if (complete_save)
+		panel_menu_session_save_tornoffs ();
 
-	gnome_config_push_prefix (PANEL_CONFIG_PATH "panel/Config/");
-
-	if(complete_sync || sync_applets)
-		gnome_config_set_int ("applet_count", applet_count);
-#ifdef SESSION_DEBUG
-	printf(" 3"); fflush(stdout);
-#endif
-
-	if(complete_sync || sync_panels) {
-		num = 1;
-		g_slist_foreach(panel_list, save_panel_configuration, &num);
-		gnome_config_set_int("panel_count",num-1);
-	}
-
-#ifdef SESSION_DEBUG
-	printf(" 4\n"); fflush(stdout);
-#endif
-	gnome_config_pop_prefix ();
-
-	if(complete_sync)
-		save_tornoff();
-
-	gnome_config_sync();
-	
-	if(complete_sync || sync_applets) {
-		ss_cur_applet = -1;
-		ss_done_save = FALSE;
-
+	if (save_applets) {
 		session_unlink_dead_launchers ();
 
-		/* start saving applets */
-		save_next_applet ();
+		panel_session_save_applets (applets);
 	}
 }
 
@@ -670,7 +513,7 @@ static guint sync_handler = 0;
 static gboolean sync_handler_needed = FALSE;
 
 void
-panel_config_sync(void)
+panel_config_sync (void)
 {
 	int ncs = need_complete_save;
 	int ats = applets_to_sync;
@@ -689,7 +532,7 @@ panel_config_sync(void)
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			do_session_save (client, ncs, ats, pts); 
+			panel_session_do_save (client, ncs, ats, pts); 
 	}
 }
 
@@ -718,6 +561,19 @@ panel_config_sync_schedule (void)
 	}
 }
 
+static gboolean
+panel_session_do_sync (gpointer data)
+{
+	panel_config_sync ();
+
+	return TRUE;
+}
+
+void
+panel_sesssion_setup_config_sync (void)
+{
+	config_sync_timeout = gtk_timeout_add (10*1000, panel_session_do_sync, NULL);
+}
 
 /* This is called when the session manager requests a shutdown.  It
    can also be run directly when we don't detect a session manager.
@@ -725,25 +581,17 @@ panel_config_sync_schedule (void)
    other arguments for now.  Yes, this is lame.  */
 /* update: some SM stuff implemented but we still ignore most of the
    arguments now*/
-int
-panel_session_save (GnomeClient *client,
-		    int phase,
-		    GnomeSaveStyle save_style,
-		    int is_shutdown,
-		    GnomeInteractStyle interact_style,
-		    int is_fast,
-		    gpointer client_data)
+gboolean
+panel_session_save (GnomeClient        *client,
+		    int                 phase,
+		    GnomeSaveStyle      save_style,
+		    int                 is_shutdown,
+		    GnomeInteractStyle  interact_style,
+		    int                 is_fast,
+		    gpointer            client_data)
 {
-	if (is_shutdown) {
-		ss_timeout = 1500;
-		ss_interactive = TRUE;
-	}
-	do_session_save(client,TRUE,FALSE,FALSE);
-	if (is_shutdown) {
-		while(!ss_done_save)
-			gtk_main_iteration_do(TRUE);
-	}
-	/* Always successful.  */
+	panel_session_do_save (client, TRUE, FALSE, FALSE);
+
 	return TRUE;
 }
 

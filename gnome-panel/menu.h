@@ -82,8 +82,8 @@ void		panel_lock		(GtkWidget *widget,
 /*to be called on startup to load in some of the directories*/
 void		init_menus		(void);
 
-void		save_tornoff		(void);
-void		load_tornoff		(void);
+void		panel_menu_session_save_tornoffs (void);
+void		panel_menu_session_load_tornoffs (void);
 
 GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,

@@ -4700,7 +4700,7 @@ load_menu_image_deferred (GtkWidget *image_menu_item,
 }
 
 void
-save_tornoff (void)
+panel_menu_session_save_tornoffs (void)
 {
 	GSList *li;
 	int i;
@@ -4949,7 +4949,7 @@ load_tearoff_menu(void)
 }
 
 void
-load_tornoff(void)
+panel_menu_session_load_tornoffs (void)
 {
 	char *s;
 	int i, length;

@@ -1,3 +1,33 @@
+2001-12-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.[ch]:
+	(panel_applet_get_position), (panel_applet_get_panel_id),
+	(panel_applet_get_right_stick): impl.
+
+	* drawer.c: (load_drawer_applet): panel_od fixage.
+
+	* main.c: (main): move sync timeout setup to session.c,
+
+	* menu.[ch]:
+	(panel_menu_session_save_tornoffs): rename from save_tornoff
+	(panel_menu_session_load_tornoffs): rename from load_tornoff
+
+	* panel-applet-frame.c: (panel_applet_frame_save_position): save
+	everything in the right place.
+
+	* session.[ch]:
+	(session_save_timeout): kill.
+	(panel_session_save_applets): impl. only bonobo applets saving for the
+	moment.
+	(panel_session_save_panel): rename from save_panel_configuration.
+	(save_next_applet): kill.
+	(panel_session_do_save): drastically clean up.
+	(panel_config_sync): upd.
+	(panel_session_do_sync), (panel_sesssion_setup_config_sync): moved from
+	main.c.
+	(panel_session_save): remove timeout stuff. Nothing asynchronous is
+	happening at the moment.
+
 2001-12-21  Glynn Foster  <glynn.foster@sun.com>
 
 	* main.c, menu.c, panel-gconf.c, session.c: 

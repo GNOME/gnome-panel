@@ -90,6 +90,10 @@ void        panel_applet_callback_set_sensitive (AppletInfo *info,
 						 const char *callback_name,
 						 gint        sensitive);
 
+int         panel_applet_get_position    (AppletInfo *applet);
+gchar      *panel_applet_get_panel_id    (AppletInfo *applet);
+gboolean    panel_applet_get_right_stick (AppletInfo *applet);
+
 G_END_DECLS
 
 #endif
