@@ -1,3 +1,12 @@
+Mon Jun 04 23:55:44 2001  George Lebl <jirka@5z.com>
+
+	* gnome-panel-screenshot.c: Add dnd (that is drag) to the screenshot
+	  applet, lots of cool and evil foo to create a temporary file
+	  asynchroniously and then maybe use it when saving etc... still some
+	  bits a bit rough but generally works well.  To make this seem
+	  very snappy it starts saving the file immediately which is useless if
+	  the user wants to print the darn thing or cancel.
+
 Mon Jun 04 20:25:54 2001  George Lebl <jirka@5z.com>
 
 	* gnome-panel-screenshot.c: select the filename and setup activate
