@@ -3,15 +3,9 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "March 2002">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "July 2002">
   <!ENTITY applet "Workspace Switcher">
-  <!-- Information about the entities.
-       The legal.xml file contains legal information, there is no need to edit the file. 
-       Use the appletversion entity to specify the version of the applet.
-       Use the manrevision entity to specify the revision number of this manual.
-       Use the date entity to specify the release date of this manual.
-       Use the applet entity to specify the name of the applet. -->
 
 ]>
 <!-- 
@@ -93,6 +87,15 @@
 		  </revdescription> 
 		</revision> 
 		<revision> 
+		  <revnumber>Workspace Switcher Applet Manual V&manrevision;</revnumber> 
+		  <date>March 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
 		  <revnumber>Desk Guide Applet Manual</revnumber> 
 		  <date>2000</date> 
 		  <revdescription> 
@@ -124,7 +127,7 @@
 		<title>&applet; Applet</title> 
 		<screenshot> 
 		  <mediaobject> 
-			 <imageobject><imagedata fileref="figures/workspacelist_applet.png"
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"
 				format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
@@ -143,15 +146,16 @@
 	on the desktop, as shown in <xref linkend="workspacelist-fig"/>. The applet displays the application windows and dialogs 
 	that are open in a workspace. The applet highlights the background of the current workspace and the window that has focus. 
 	You can change the default behavior of the applet to display only the names of the workspaces in the applet. See 
-	<xref linkend="workspacelist-prefs"/> for more information.</para>
+	<xref linkend="workspacelist-prefs"/> for more information about how to configure the applet.</para>
+	
 	<para><xref linkend="workspacelist-fig"/> shows the <application>&applet;</application> applet when the 
 	GNOME session contains four workspaces. The applet displays the workspaces in order from left to right 
 	across the rows of the applet. 
-	In <xref linkend="workspacelist-fig"/> the applet is set up to display the workspaces in two rows. 
+	In <xref linkend="workspacelist-fig"/> the applet is set up to display the workspaces in one row. 
 	See <xref linkend="workspacelist-prefs"/> for information about how to change the number of applet rows. </para>
-	<para>To add <application>&applet;</application> to a panel, right-click on the panel to open the <guimenu>Panel</guimenu> menu, then choose 
+	<para>To add <application>&applet;</application> to a panel, right-click on the panel to open the panel popup menu, then choose 
 	<menuchoice>
-	<guimenu>Add to panel</guimenu> 
+	<guimenu>Add to Panel</guimenu> 
 	<guisubmenu>Utility</guisubmenu>
 	<guimenuitem>Workspace Switcher</guimenuitem>
 	</menuchoice>.
@@ -169,27 +173,25 @@
 	</sect2>
 	<sect2 id="workspacelist-move-window">
 	<title>To Move a Window From One Workspace to Another</title>
-	<para>To use the <application>&applet;</application> applet to move a window from one workspace to another, 
-	drag the window from the current workspace to the new workspace. <application>&applet;</application>
-	switches you to the new workspace and gives focus to the window. </para>
+	<para>To use <application>&applet;</application> to move a window from one workspace to another, 
+	drag the window from the current workspace to the new workspace. </para>
 	</sect2>
   </sect1>
 <!-- ============= Customization ============================= -->
   <sect1 id="workspacelist-prefs"> 
 	 <title>Settings</title> 
 	 <para>To configure the <application>&applet;</application> applet, right-click 
-	 on the applet, then choose <guimenuitem>Proferences</guimenuitem> 
+	 on the applet, then choose <guimenuitem>Preferences</guimenuitem> 
 	 from the applet popup menu. The <guilabel>Workspace Switcher Preferences</guilabel> dialog is displayed.</para>
 	 <variablelist>
-	 <varlistentry><term><guilabel>Show workspace names in switcher</guilabel> </term>
+	 <varlistentry><term><guilabel>Show workspace names in the switcher</guilabel> </term>
 	 	<listitem>
 	 	<para>Select this option to display the names of the workspaces in the applet instead of a visual representation
 		of the workspaces.</para>
 	 	<para>Default: unselected.</para>
 	 	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>Workspace Switcher content</term>
+	 </varlistentry>
+	 <varlistentry><term>Workspace Switcher content</term>
 	 	<listitem>
 	 	<para>Select one of the following options to determine which workspaces the <application>&applet;</application> displays:</para>
 	 		<itemizedlist>
@@ -202,10 +204,10 @@
 			the number of rows to use to display the workspaces in the applet. </para>
 	 		</listitem>
 	 		</itemizedlist>
-	 	<para>Default: <guilabel>Show all workspaces</guilabel>, 2 rows.</para>
+	 	<para>Default: <guilabel>Show all workspaces</guilabel>, 1 row.</para>
 		</listitem>
 	 </varlistentry>
-         <varlistentry><term><guilabel>Workspaces</guilabel> </term>
+	 <varlistentry><term><guilabel>Workspaces</guilabel> </term>
 	 	<listitem>	 
 	 	<para>Use the list box to edit the names of the workspaces on your desktop. To edit a workspace name, 
 		select the name, then type the new name. </para>

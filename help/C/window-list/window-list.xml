@@ -3,15 +3,9 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "March 2002">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "July 2002">
   <!ENTITY applet "Window List">
-  <!-- Information about the entities.
-       The legal.xml file contains legal information, there is no need to edit the file. 
-       Use the appletversion entity to specify the version of the applet.
-       Use the manrevision entity to specify the revision number of this manual.
-       Use the date entity to specify the release date of this manual.
-       Use the applet entity to specify the name of the applet. -->
 
 ]>
 <!-- 
@@ -91,6 +85,15 @@
 				<email>gdocteam@sun.com</email></para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet Manual V2.0</revnumber> 
+		  <date>March 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
 		</revision> 
 		<revision> 
 		  <revnumber>Tasklist Applet Manual</revnumber> 
@@ -144,51 +147,52 @@
 	<colspec colname="col2"/>
 	<colspec colname="col3"/>
 	<thead>
-	<row>
+	<row valign="top">
 	<entry colname="col1"><para>State</para></entry>
 	<entry colname="col2"><para>Indicates...</para></entry>
 	<entry colname="col3"><para>Example in <xref linkend="windowlist-applet-fig"/></para></entry>
 	</row>
 	</thead>
 	<tbody>
-	<row>
+	<row valign="top">
 	<entry colname="col1"><para>Button is pressed in.</para></entry>
 	<entry colname="col2"><para>The window has focus.</para></entry>
-	<entry colname="col3"><para><application>Terminal</application></para></entry>
+	<entry colname="col3"><para><guibutton>gedit</guibutton></para></entry>
 	</row>
-	<row>
+	<row valign="top">
 	<entry colname="col1"><para>Square brackets around window title, button contents faded.</para></entry>
 	<entry colname="col2"><para>The window is minimized.</para></entry>
-	<entry colname="col3"><para><application>Netscape</application></para></entry>
+	<entry colname="col3"><para><guibutton>Dictionary</guibutton></para></entry>
 	</row> 
-	<row>
+	<row valign="top">
 	<entry colname="col1"><para>Button is not pressed in, no square brackets around title.</para></entry>
 	<entry colname="col2"><para>The window is displayed on the desktop and is not minimized.</para></entry>
-	<entry colname="col3"><para><application>GNOME Calculator</application></para></entry>
+	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
 	</row>
-	<row>
-	<entry colname="col1"><para>Dotted triangular shape in upper right corner of button.</para></entry>
+	<row valign="top">
+	<entry colname="col1"><para>Dotted triangular shape in upper right corner of button and a number in parentheses.</para></entry>
 	<entry colname="col2"><para>The button represents a group of buttons. </para></entry>
-	<entry colname="col3"><para>Untitled application</para></entry>
+	<entry colname="col3"><para><guibutton>Gnome-terminal</guibutton></para></entry>
 	</row>
 	</tbody>
 	</tgroup>
 	</informaltable>
 	 <para>To add <application>&applet;</application> to a panel, right-click on the panel to open the 
-		<guimenu>Panel</guimenu> menu, then choose 
+	 panel popup menu, then choose 
 		<menuchoice> 
-		  <guimenu>Add to panel</guimenu> 
+		  <guimenu>Add to Panel</guimenu> 
 		  <guisubmenu>Utility</guisubmenu> 
 		  <guimenuitem>Window List</guimenuitem> 
 		</menuchoice>. 
 	The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
+	
 	<sect2 id="window-groups">
 	<title>Grouping Buttons</title>
 	<para>If the space on a panel is limited, <application>&applet;</application> can group the 
 	buttons that represent windows of the same class under one <application>&applet;</application> 
 	button. To open a list of the buttons in a button group, click on the 
 	<application>&applet;</application> button that represents the button group. The 
-	<guibutton>untitled application</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
+	<guibutton>Gnome-terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
 	is an example of a button that represents a group of buttons.
 	The following figure shows an example of the <application>&applet;</application> applet with a button group open.</para> 
 	<!-- ==== Figure ============================================= -->
@@ -196,7 +200,7 @@
 		<title>&applet; Applet with a Button Group Open</title> 
 		<screenshot> 
 		  <mediaobject> 
-			 <imageobject><imagedata fileref="figures/window_list_group.png" format="PNG"/> 
+			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
 				<phrase>Screenshot of the Window List applet with a button group open.</phrase> 
@@ -218,7 +222,7 @@
 	does not have focus, the applet gives focus to the window. </para>
 	</listitem>
 	<listitem>
-	<para>To minimize a window</para>
+	<para>To minimize to a window</para>
 	<para>If you click on the <application>&applet;</application> button that represents the window that has focus, the applet 
 	minimizes the window. </para>
 	</listitem>
@@ -288,6 +292,25 @@
 		</listitem>
 		</itemizedlist>
 	 <para>Default: <guilabel>Group windows when space is limited</guilabel>.</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Tasklist size</guilabel> </term>
+	 <listitem>
+	 <para>The size of the <application>&applet;</application> applet varies depending on the size of the panel in 
+	 which the applet resides. Use the following spin boxes to set limitations on the size of the applet:</para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Minimum size</guilabel></para>
+	 	<para>Specify the minimum size of the applet. If the panel is smaller than the minimum size specified, the panel
+	 	adjusts in size to fit the applet.</para>
+		<para>Default: 50 pixels.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Maximum size</guilabel></para>
+	 	<para>Specify the maximum size of the applet.</para>
+		<para>Default: 4096 pixels.</para>
+		</listitem>
+		</itemizedlist>
 	 </listitem>
 	 </varlistentry>
 	 </variablelist>
