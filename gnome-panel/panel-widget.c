@@ -1435,7 +1435,7 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 	panel_try_to_set_back_color(panel, color);
 	gtk_widget_queue_draw (GTK_WIDGET (panel));
 
-	g_signal_emit(GTK_OBJECT(panel),
+	g_signal_emit(G_OBJECT(panel),
 		      panel_widget_signals[BACK_CHANGE_SIGNAL],
 		      0,
 		      panel->back_type,

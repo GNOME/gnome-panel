@@ -97,6 +97,10 @@ void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 						 gint         position,
 						 const char  *gconf_key);
 
+void       panel_applet_frame_set_clean_remove	(PanelAppletFrame *frame,
+						 gboolean          clean_remove);
+gboolean   panel_applet_frame_get_clean_remove	(PanelAppletFrame *frame);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_FRAME_H__ */

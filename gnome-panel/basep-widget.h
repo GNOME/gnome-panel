@@ -121,13 +121,13 @@ struct _BasePWidgetClass
 
 /* we mostly want the class for this */
 struct _BasePPos {
-	GtkObject object;
+	GObject object;
 	
 	BasePWidget *basep;
 };
 
 struct _BasePPosClass {
-	GtkObjectClass parent_class;
+	GObjectClass parent_class;
 
 	/* virtual functions */
 	void (*set_hidebuttons) (BasePWidget *basep);

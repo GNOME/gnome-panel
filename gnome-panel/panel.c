@@ -576,16 +576,17 @@ panel_remove_applets (PanelWidget *panel)
 		info = g_object_get_data (G_OBJECT (ad->applet),
 					  "applet_info");
 
-		panel_applet_save_position (info, info->gconf_key);
+		if (info->type == APPLET_BONOBO) {
+			PanelAppletFrame *frame = info->data;
 
-		if (info->type == APPLET_SWALLOW) {
+			panel_applet_frame_set_clean_remove
+				(PANEL_APPLET_FRAME (frame), TRUE);
+		} else if (info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 
 			swallow->clean_remove = TRUE;
 		}
 	}
-
-	gnome_config_sync ();
 }
 
 static void
@@ -633,6 +634,8 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		g_source_remove (pd->deactivate_idle);
 	pd->deactivate_idle = 0;
 
+	g_object_set_data (G_OBJECT (widget), "PanelData", NULL);
+
 	panel_list = g_slist_remove (panel_list, pd);
 	g_free (pd);
 }
@@ -640,7 +643,15 @@ panel_destroy (GtkWidget *widget, gpointer data)
 static void
 panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 {
-	applets_to_sync = TRUE;
+	AppletInfo *info;
+
+	info = g_object_get_data (G_OBJECT (widget), "applet_info");
+
+	g_return_if_fail (info);
+
+	/* FIXME: just queue a save, to make things a bit easier on
+	 * the resources */
+	panel_applet_save_position (info, info->gconf_key);
 }
 
 static void

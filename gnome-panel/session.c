@@ -264,7 +264,12 @@ panel_session_die (GnomeClient *client,
 
 		panel_applet_save_position (info, info->gconf_key);
 
-		if (info->type == APPLET_SWALLOW) {
+		if (info->type == APPLET_BONOBO) {
+			PanelAppletFrame *frame = info->data;
+
+			panel_applet_frame_set_clean_remove
+				(PANEL_APPLET_FRAME (frame), TRUE);
+		} else if (info->type == APPLET_SWALLOW) {
 			Swallow   *swallow = info->data;
 			GtkSocket *socket;
 

@@ -1,3 +1,21 @@
+Wed Feb 27 23:58:15 2002  George Lebl <jirka@5z.com>
+
+	* applet.c, panel-applet-frame.[ch], session.c, panel.c: save
+	  applet position on move, don't save it when we're removing the
+	  applets.  Implement back the clean_remove setting for
+	  bonobo_applets in preparation for the 'dead applet' dialog
+
+	* basep-widget.[ch], menu.c, panel.c:  Try to figure out memory
+	  issues with removing panels/applets.  The menu applet now removes
+	  without a warning, but removing a panel will still corrupt memory
+	  somewhere.  While I was at it I converted the Pos objects to
+	  GObject rather then GtkObject, which gets rid of some sinking
+	  issues.
+
+	* menu-properties.c: remove a dead argument to a function
+
+	* panel-widget.c: minor cleanup
+
 Wed Feb 27 19:45:40 2002  George Lebl <jirka@5z.com>
 
 	* panel-applet-frame.c: fix initial setting of medium size 

@@ -750,8 +750,8 @@ basep_pos_get_type (void)
 		    (GInstanceInitFunc)     basep_pos_instance_init 
 		};
 		object_type = g_type_register_static
-		    (GTK_TYPE_OBJECT, "BasePPos", &object_info, 0);
-		basep_pos_parent_class = g_type_class_ref (GTK_TYPE_OBJECT);
+		    (G_TYPE_OBJECT, "BasePPos", &object_info, 0);
+		basep_pos_parent_class = g_type_class_ref (G_TYPE_OBJECT);
 	}
 	return object_type;
 }
@@ -1252,14 +1252,16 @@ basep_widget_destroy (GtkObject *o)
 		g_source_remove (basep->leave_notify_timer_tag);
 	basep->leave_notify_timer_tag = 0;
 
-	if (BORDER_IS_WIDGET (basep))
-		basep_border_queue_recalc (basep->screen);
-	if (basep->pos != NULL) 
-		g_object_unref (basep->pos);
+	if (basep->pos != NULL) {
+		if (BORDER_IS_WIDGET (basep))
+			basep_border_queue_recalc (basep->screen);
+		g_object_unref (G_OBJECT (basep->pos));
+	}
 	basep->pos = NULL;
 
 	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy (o);
+
 }	
 
 static void
@@ -1726,7 +1728,6 @@ basep_widget_construct (gchar *panel_id,
 	basep->state = state;
 
 	g_object_ref (basep->pos);
-	gtk_object_sink (GTK_OBJECT (basep->pos));
 	basep->pos->basep = basep;
 
 	if (state == BASEP_AUTO_HIDDEN &&
@@ -1919,7 +1920,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 	old_state = basep->state;
 	basep->state = state;
 
-	g_signal_emit (GTK_OBJECT(basep),
+	g_signal_emit (G_OBJECT (basep),
 		       basep_widget_signals[STATE_CHANGE_SIGNAL],
 		       0, old_state);
 	panels_to_sync = TRUE;

@@ -47,6 +47,8 @@ struct _PanelAppletFramePrivate {
 
 	gchar                          *iid;
 	gboolean			moving_focus_out;
+
+	gboolean			clean_remove;
 };
 
 static GObjectClass *parent_class;
@@ -284,6 +286,19 @@ panel_applet_frame_set_info (PanelAppletFrame *frame,
 	frame->priv->applet_info = info;
 }
 
+void
+panel_applet_frame_set_clean_remove (PanelAppletFrame *frame,
+				     gboolean          clean_remove)
+{
+	frame->priv->clean_remove = clean_remove;
+}
+
+gboolean
+panel_applet_frame_get_clean_remove (PanelAppletFrame *frame)
+{
+	return frame->priv->clean_remove;
+}
+
 static void
 panel_applet_frame_finalize (GObject *object)
 {
@@ -388,6 +403,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->property_bag = CORBA_OBJECT_NIL;
 	frame->priv->applet_info  = NULL;
 	frame->priv->moving_focus_out = FALSE;
+	frame->priv->clean_remove = FALSE;
 }
 
 GType

@@ -2645,7 +2645,7 @@ destroy_menu (GtkWidget *widget, gpointer data)
 	menu->prop_dialog = NULL;
 
 	if (prop_dialog != NULL)
-		g_object_unref (G_OBJECT (prop_dialog));
+		gtk_widget_destroy (prop_dialog);
 
 	menu->button = NULL;
 
@@ -4196,16 +4196,16 @@ add_menu_widget (Menu *menu,
 			gtk_tooltips_set_tip (panel_tooltips, menu->button,
 					      _("Main Menu"), NULL);
 		}
-
 	}
+
+	/* sink the menu, none of this floating */
+	g_object_ref (G_OBJECT (menu->menu));
+	gtk_object_sink (GTK_OBJECT (menu->menu));
+
 	g_signal_connect (G_OBJECT (menu->menu), "deactivate",
 			    G_CALLBACK (menu_deactivate), menu);
 
 	g_object_set_data (G_OBJECT (menu->menu), "menu_panel", panel);
-	panel_signal_connect_object_while_alive(
-	      G_OBJECT (panel),
-	      "destroy", G_CALLBACK(g_object_unref),
-	      G_OBJECT (menu->menu));
 }
 
 static void 

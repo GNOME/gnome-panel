@@ -344,7 +344,7 @@ textbox_changed (GtkWidget *widget, gpointer data)
 }
 
 static void
-add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
+add_menu_type_options(Menu *menu, GtkTable *table, int row,
 		      char *title, GtkWidget **widget, GtkWidget **widget_sub,
 		      gboolean on, gboolean sub)
 {
@@ -492,42 +492,42 @@ create_properties_dialog (Menu *menu)
 	gtk_container_add(GTK_CONTAINER(f), table);
 
 	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),0,
+			      GTK_TABLE(table),0,
 			      _("Programs: "),
 			      &menu->dialog_info->system,
 			      &menu->dialog_info->system_sub,
 			      menu->main_menu_flags & MAIN_MENU_SYSTEM,
 			      menu->main_menu_flags & MAIN_MENU_SYSTEM_SUB);
 	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),2,
+			      GTK_TABLE(table),2,
 			      _("Applets: "),
 			      &menu->dialog_info->applets,
 			      &menu->dialog_info->applets_sub,
 			      menu->main_menu_flags & MAIN_MENU_APPLETS,
 			      menu->main_menu_flags & MAIN_MENU_APPLETS_SUB);
 	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),3,
+			      GTK_TABLE(table),3,
 			      _("Distribution menu (if found): "),
 			      &menu->dialog_info->distribution,
 			      &menu->dialog_info->distribution_sub,
 			      menu->main_menu_flags & MAIN_MENU_DISTRIBUTION,
 			      menu->main_menu_flags & MAIN_MENU_DISTRIBUTION_SUB);
  	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),4,
+			      GTK_TABLE(table),4,
  			      _("KDE menu (if found): "),
 			      &menu->dialog_info->kde,
 			      &menu->dialog_info->kde_sub,
  			      menu->main_menu_flags & MAIN_MENU_KDE,
  			      menu->main_menu_flags & MAIN_MENU_KDE_SUB);
 	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),6,
+			      GTK_TABLE(table),6,
 			      _("Panel menu: "),
 			      &menu->dialog_info->panel,
 			      &menu->dialog_info->panel_sub,
 			      menu->main_menu_flags & MAIN_MENU_PANEL,
 			      menu->main_menu_flags & MAIN_MENU_PANEL_SUB);
 	add_menu_type_options(menu,
-			      GTK_OBJECT(dialog), GTK_TABLE(table),7,
+			      GTK_TABLE(table),7,
 			      _("Desktop menu: "),
 			      &menu->dialog_info->desktop,
 			      &menu->dialog_info->desktop_sub,
