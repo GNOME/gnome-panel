@@ -245,7 +245,7 @@ panel_gconf_copy_dir (GConfClient  *client,
 					       gconf_entry_get_schema_name (entry),
 					       NULL);
 
-		if (!gconf_entry_get_is_default (entry))
+		if (!gconf_entry_get_is_default (entry) && entry->value)
 			gconf_client_set (client, key, entry->value, NULL);
 
 		gconf_entry_free (entry);
