@@ -880,6 +880,11 @@ panel_applet_load_from_unique_id (AppletType   type,
 	panel_widget = panel_widget_get_by_id (panel_id);
 	g_free (panel_id);
 
+	if (!panel_widget) {
+		g_warning ("panel_applet_load: can't find the panel for this object\n");
+		return;
+	}
+
 	/*
 	 * A hack from the old panel to make sure the applet is on the right
 	 */

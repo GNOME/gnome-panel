@@ -712,8 +712,8 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	char        *pixmap;
 	char        *tooltip;
 
-	g_return_if_fail (panel_widget);
-	g_return_if_fail (gconf_key);
+	g_return_if_fail (panel_widget != NULL);
+	g_return_if_fail (gconf_key != NULL);
 
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();

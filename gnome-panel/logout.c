@@ -117,6 +117,9 @@ load_logout_applet (PanelWidget *panel,
 	GtkWidget  *logout;
 	AppletInfo *info;
 
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (gconf_key != NULL);
+
 	logout = create_logout_widget ();
 	if (!logout)
 		return;
@@ -181,6 +184,9 @@ load_lock_applet (PanelWidget *panel,
 {
 	GtkWidget  *lock;
 	AppletInfo *info;
+
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (gconf_key != NULL);
 
 	lock = create_lock_widget ();
 

@@ -1,5 +1,18 @@
 2002-03-27  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (panel_applet_load_from_unique_id):
+	if we can't find the panel for the object, warn and stop loading.
+
+	* drawer.c: (drawer_load_from_gconf):
+	* launcher.c: (launcher_load_from_gconf):
+	* logout.c: (load_logout_applet), (load_lock_applet):
+	* menu.c: (menu_load_from_gconf):
+	* status.c: (load_status_applet):
+	* swallow.c: (swallow_load_from_gconf):
+	fix up pre-conditions.
+
+2002-03-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: (drag_data_get_cb): set up the launcher uri correctly.
 
 Mon Mar 25 20:27:00 2002  George Lebl <jirka@5z.com>
