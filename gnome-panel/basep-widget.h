@@ -84,10 +84,10 @@ void		basep_widget_do_showing		(BasePWidget *basep,
 						 int step);
 void		basep_widget_get_position	(BasePWidget *basep,
 						 PanelOrientType hide_orient,
-						 int *x,
-						 int *y,
-						 int w,
-						 int h);
+						 gint16 *x,
+						 gint16 *y,
+						 gint16 w,
+						 gint16 h);
 
 #define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
 

@@ -101,7 +101,7 @@ basep_enter_notify(GtkWidget *basep,
 
 void
 basep_widget_get_position(BasePWidget *basep, PanelOrientType hide_orient,
-			  int *x, int *y, int w, int h)
+			  gint16 *x, gint16 *y, gint16 w, gint16 h)
 {
 	GtkWidget *widget = GTK_WIDGET(basep);
 

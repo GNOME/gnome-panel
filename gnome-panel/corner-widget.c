@@ -178,12 +178,11 @@ corner_widget_size_request(GtkWidget *widget,
 
 static void
 corner_widget_get_hidepos(CornerWidget *corner, PanelOrientType *hide_orient,
-			  int *w, int *h)
+			  gint16 *w, gint16 *h)
 {
 	BasePWidget *basep = BASEP_WIDGET(corner);
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
-	*w = GTK_WIDGET(corner)->allocation.width;
-	*h = GTK_WIDGET(corner)->allocation.height;
+
 	*hide_orient = -1;
 	if(corner->state == CORNER_SHOWN)
 		return;
@@ -296,17 +295,13 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(corner->state != CORNER_SHOWN) {
 		PanelOrientType hide_orient;
-		int x,y,w,h;
-		widget->allocation = *allocation;
 		corner_widget_get_hidepos(corner, &hide_orient,
-					  &w, &h);
+					  &allocation->width,
+					  &allocation->height);
 		basep_widget_get_position(basep, hide_orient,
-					  &x, &y, w, h);
-		challoc.x = x;
-		challoc.y = y;
-
-		allocation->width = w;
-		allocation->height = h;
+					  &challoc.x, &challoc.y,
+					  allocation->width,
+					  allocation->height);
 	}
 
 	widget->allocation = *allocation;
