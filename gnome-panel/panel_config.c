@@ -211,16 +211,19 @@ pixmap_page (PanelWidget *panel)
 {
 	GtkWidget *box, *f, *t;
 
-	box = gtk_frame_new (_("Image file"));
-
+	f = gtk_frame_new (_("Image file"));
+	gtk_container_border_width (GTK_CONTAINER (f), 2);
+	
+	box = gtk_vbox_new (0, 0);
+	gtk_container_add (GTK_CONTAINER (f), box);
 	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC (value_changed), NULL);
-	gtk_container_add (GTK_CONTAINER (box), file_entry);
+	gtk_box_pack_start (GTK_CONTAINER (box), file_entry, 0, 0, 2);
 	
 	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ? panel->back_pixmap : "");
-	return box;
+	return f;
 }
 	     
 void 
