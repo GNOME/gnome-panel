@@ -107,6 +107,9 @@ char *		panel_quote_string	(const char *str);
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
 
+gboolean	panel_is_program_in_path (const char *program);
+
+
 /* GnomeVFS reading utils */
 
 typedef struct _ReadBuf ReadBuf;

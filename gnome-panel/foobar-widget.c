@@ -385,7 +385,6 @@ static void
 append_desktop_menu (GtkWidget *menu_bar)
 {
 	GtkWidget *menu, *item;
-	char *char_tmp;
 	int i;
 	static char *arrange[] = { 
 		N_("By Name"), "--arrange-desktop-icons=name",
@@ -426,16 +425,13 @@ append_desktop_menu (GtkWidget *menu_bar)
 	item = add_menu_separator (menu);
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
 	
-	char_tmp = g_find_program_in_path  ("xscreensaver");
-	if (char_tmp) {	
+	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					       "gnome-lockscreen.png");
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_signal_connect (GTK_OBJECT (item), "activate",
 				    GTK_SIGNAL_FUNC (panel_lock), 0);
 		setup_internal_applet_drag(item, "LOCK:NEW");
-
-		g_free (char_tmp);
 	}
 
 	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");

@@ -1,3 +1,22 @@
+Mon Nov 26 00:57:16 2001  George Lebl <jirka@5z.com>
+
+	* applet.c, menu-properties.[ch], menu.[ch], panel.c, session.c:
+	  get rid of the "." main menu parameter hack.  I feel sort of
+	  sentimental removing this since this dates back from the days
+	  when federico maintained the panel.  I don't know why it lived
+	  on so long anyway :)
+
+	* menu.c: remove the properties menu stuff, just about everyone
+	  agreed it was quite a horrible UI
+
+	* foobar-widget.c, menu.c, panel-util.[ch]: add
+	  panel_is_program_in_path which is like g_find_program_in_path
+	  but returns just a boolean
+
+	* menu.h, session.c: remove some compatibility hacks dating to
+	  some ancient 1.0 versions or whatnot.  We'll break config compat
+	  anyway.
+
 Sun Nov 25 20:07:06 2001  George Lebl <jirka@5z.com>
 
 	* launcher.c, menu.c, menu-fentry.[ch], main.c: remove the

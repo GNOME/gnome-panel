@@ -62,24 +62,17 @@ struct _MenuDialogInfo {
 };
 
 char *
-get_real_menu_path (const char *arguments)
+get_real_menu_path (const char *arguments, gboolean main_menu)
 {
-	char *this_menu;
+	if (main_menu)
+		return g_strdup ("programs:");
 	
-	/*if null, let's put the main menu up*/
-	if (string_empty (arguments))
-		arguments = ".";
-
-	if (strcmp (arguments, ".") == 0)
-		this_menu = g_strdup ("programs:");
 	else if (*arguments == '~')
 		/* FIXME: this needs to be a URI */
-		this_menu = g_build_filename (g_get_home_dir(),
+		return g_build_filename (g_get_home_dir(),
 					      &arguments[1], NULL);
 	else
-		this_menu = g_strdup (arguments);
-
-	return this_menu;
+		return g_strdup (arguments);
 }
 
 char *
@@ -180,28 +173,30 @@ properties_apply_callback (Menu *menu)
 	}
 
 	need_edit_menus = FALSE;
+
+	/* default to non-main-menu */
+	menu->main_menu = FALSE;
+
 	if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active ||
 	    GTK_TOGGLE_BUTTON (menu->dialog_info->global_main)->active) {
-		g_free (menu->path);
-		menu->path = g_strdup (".");
+		menu->main_menu = TRUE;
 
 		if (got_gmenu ()) {
 			need_edit_menus = TRUE;
 		}
 	} else {
-		g_free (menu->path);
 		s = gnome_file_entry_get_full_path (GNOME_FILE_ENTRY (menu->dialog_info->pathentry),
 						    TRUE);
 		if(s == NULL) {
 			g_warning (_("Can't open directory, using main menu!"));
-			menu->path = g_strdup (".");
+			menu->main_menu = TRUE;
 		} else if (*s == '\0') {
-			menu->path = g_strdup (".");
+			menu->main_menu = TRUE;
 		} else {
+			g_free (menu->path);
 			menu->path = g_strdup (s);
 		}
 	}
-
 
 	/* Setup the edit_menus callback */
 	if (panel_applet_get_callback (menu->info->user_menu, "edit_menus"))
@@ -277,12 +272,11 @@ properties_apply_callback (Menu *menu)
 
 	/* Apply menu changes */
 	if (need_reload) {
-		char *this_menu = get_real_menu_path (menu->path);
+		char *this_menu = get_real_menu_path (menu->path, menu->main_menu);
 		GSList *list = g_slist_append (NULL, this_menu);
-		gboolean main_menu = strcmp (menu->path, ".") == 0;
 		
 		add_menu_widget (menu, PANEL_WIDGET (menu->button->parent),
-				 list, main_menu, TRUE);
+				 list, TRUE);
 		
 		g_free (this_menu);
 
@@ -291,7 +285,8 @@ properties_apply_callback (Menu *menu)
 
 	/* Apply icon changes */
 	if (change_icon) {
-		char *this_menu = get_real_menu_path(menu->path);
+		char *this_menu = get_real_menu_path (menu->path,
+						      menu->main_menu);
 		char *pixmap_name;
 
 		if (menu->custom_icon &&
@@ -299,7 +294,7 @@ properties_apply_callback (Menu *menu)
 		    g_file_test (menu->custom_icon_file, G_FILE_TEST_EXISTS))
 			pixmap_name = g_strdup (menu->custom_icon_file);
 		else
-			pixmap_name = get_pixmap(this_menu, (strcmp (menu->path, ".") == 0));
+			pixmap_name = get_pixmap (this_menu, menu->main_menu);
 		button_widget_set_pixmap(BUTTON_WIDGET(menu->button),
 					 pixmap_name, -1);
 	}
@@ -491,9 +486,8 @@ create_properties_dialog (Menu *menu)
 	w = gtk_radio_button_new_with_label (NULL, _("Global main menu"));
 	global_main = w;
 	menu->dialog_info->global_main = w;
-	if((menu->path == NULL ||
-	    strcmp(menu->path, ".") == 0) &&
-	   menu->global_main)
+	if (menu->main_menu &&
+	    menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_global_main), 
@@ -505,9 +499,8 @@ create_properties_dialog (Menu *menu)
 		  _("Main menu"));
 	main_menu = w;
 	menu->dialog_info->main_menu = w;
-	if((menu->path == NULL ||
-	    strcmp(menu->path, ".") == 0) &&
-	   ! menu->global_main)
+	if (menu->main_menu &&
+	    ! menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_main_menu), 
@@ -517,7 +510,7 @@ create_properties_dialog (Menu *menu)
 	w2 = gtk_radio_button_new_with_label (
 		  gtk_radio_button_group (GTK_RADIO_BUTTON (global_main)),
 		  _("Normal menu"));
-	if(menu->path && strcmp(menu->path, ".") != 0)
+	if ( ! menu->main_menu)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_normal_menu), 
@@ -525,9 +518,8 @@ create_properties_dialog (Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box), w2, TRUE, TRUE, 0);
 
 	f = gtk_frame_new(_("Main menu"));
-	if((menu->path &&
-	    strcmp(menu->path, ".") != 0) ||
-	   menu->global_main)
+	if ( ! menu->main_menu ||
+	     menu->global_main)
 		gtk_widget_set_sensitive(f, FALSE);
 	menu->dialog_info->main_frame = f;
 	gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 0);
@@ -587,11 +579,10 @@ create_properties_dialog (Menu *menu)
 			      menu->main_menu_flags & MAIN_MENU_DESKTOP_SUB);
 
 	f = gtk_frame_new(_("Normal menu"));
-	if(menu->path == NULL ||
-	   strcmp(menu->path, ".") == 0)
-		gtk_widget_set_sensitive(f, FALSE);
+	if ( ! menu->main_menu)
+		gtk_widget_set_sensitive (f, FALSE);
 	menu->dialog_info->normal_frame = f;
-	gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
 	
 	box = gtk_hbox_new(FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER(box), GNOME_PAD_SMALL);
@@ -606,7 +597,7 @@ create_properties_dialog (Menu *menu)
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
 	menu->dialog_info->pathentry = w;
 	if (menu->path) {
-		char *s = get_real_menu_path(menu->path);
+		char *s = get_real_menu_path (menu->path, menu->main_menu);
 		gtk_entry_set_text(GTK_ENTRY(t), s);
 		g_free(s);
 	}

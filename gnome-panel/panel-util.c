@@ -1219,3 +1219,14 @@ readbuf_close (ReadBuf *rb)
 	g_free (rb);
 }
 
+gboolean
+panel_is_program_in_path (const char *program)
+{
+	char *tmp = g_find_program_in_path (program);
+	if (tmp != NULL) {
+		g_free (tmp);
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}

@@ -6,13 +6,6 @@
 
 G_BEGIN_DECLS
 
-/*compatibility only*/
-typedef enum {
-	X_MAIN_MENU_BOTH,
-	X_MAIN_MENU_USER,
-	X_MAIN_MENU_SYSTEM
-} X_MainMenuType;
-
 enum {
 	MAIN_MENU_USER = 1<<0,
 	MAIN_MENU_USER_SUB = 1<<1,
@@ -42,16 +35,23 @@ struct _Menu {
 	GtkWidget		*menu;
 	gboolean		 custom_icon;
 	char			*custom_icon_file;
+
+	gboolean		 main_menu;
+	/* If this is the main menu then path is irrelevant */
 	char			*path;
-	int			 main_menu_flags;
+
 	gboolean		 global_main;
+	/* if global_main is on then main_menu_flags are irrelevant */
+	int			 main_menu_flags;
+
 	int			 age;
 	GtkWidget		*prop_dialog;
 	MenuDialogInfo		*dialog_info;
 	AppletInfo		*info;
 };
 
-void		load_menu_applet	(const char *params,
+void		load_menu_applet	(const char *path,
+					 gboolean main_menu,
 					 int main_menu_flags,
 					 gboolean global_main,
 					 gboolean custom_icon,
@@ -62,7 +62,6 @@ void		load_menu_applet	(const char *params,
 void		add_menu_widget		(Menu *menu,
 					 PanelWidget *panel,
 					 GSList *menudirl,
-					 gboolean main_menu,
 					 gboolean fake_subs);
 
 void		set_menu_applet_orient	(Menu *menu,

@@ -164,8 +164,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		} else if (strcmp (menu->name, "help") == 0) {
 			Menu *menu2 = menu->info->data;
 			char *page;
-			page = (menu2->path && strcmp (menu2->path,"."))
-				? "menus" : "mainmenu";
+			page = menu2->main_menu ? "mainmenu" : "menus";
 			panel_show_help (page, NULL);
 		}
 		break;

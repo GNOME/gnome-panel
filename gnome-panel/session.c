@@ -473,7 +473,6 @@ save_applet_configuration(AppletInfo *info)
 					     menu->main_menu_flags);
 			gnome_config_set_bool("global_main",
 					      menu->global_main);
-			gnome_config_set_bool("old_style_main", FALSE);
 			gnome_config_set_bool("custom_icon",
 					      menu->custom_icon);
 			gnome_config_set_string("custom_icon_file",
@@ -999,11 +998,10 @@ push_correct_global_prefix (void)
 }
 
 static void
-init_user_applets(void)
+init_user_applets (void)
 {
 	GString *buf;
 	int count, num;	
-	DistributionType distribution = get_distribution_type ();
 	char *prefix;
 	const char *sep;
 
@@ -1149,95 +1147,31 @@ init_user_applets(void)
 			g_free (params);
 
 		} else if (strcmp (applet_name, MENU_ID) == 0) {
-			char *params = conditional_get_string ("parameters",
-							       ".", NULL);
-			int type = conditional_get_int ("main_menu_type", -1,
-							NULL);
-			/* this defaults to false, because we want old menus to
-			 * work in the old style */
-			gboolean global_main_was_default;
+			char *path = conditional_get_string ("path",
+							     "programs:/", NULL);
+			gboolean main_menu =
+				conditional_get_bool ("main_menu", TRUE, NULL);
 			gboolean global_main =
-				conditional_get_bool ("global_main", FALSE,
-						      &global_main_was_default);
-			int flags;
-			gboolean old_style = 
-				conditional_get_bool ("old_style_main", TRUE,
-						      NULL);
+				conditional_get_bool ("global_main", TRUE, NULL);
 			gboolean custom_icon = 
 				conditional_get_bool ("custom_icon", FALSE,
 						      NULL);
 			char *custom_icon_file =
 				conditional_get_string ("custom_icon_file",
 							NULL, NULL);
-
-			flags = conditional_get_int ("main_menu_flags",
-						     get_default_menu_flags (),
-						     NULL);
+			int flags = conditional_get_int ("main_menu_flags",
+							 get_default_menu_flags (),
+							 NULL);
 			if (flags < 0)
 				flags = get_default_menu_flags ();
 			
-			/* Hack to try to do the right conversion while trying
-			 * to turn on the feature on as many setups as
-			 * possible */
-			if (global_main_was_default &&
-			    flags == global_config.menu_flags) {
-				global_main = TRUE;
-			}
-
-			if(type >= 0) {
-				flags = 0;
-				if (type == X_MAIN_MENU_BOTH) {
-					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
-				} else if(type == X_MAIN_MENU_SYSTEM) {
-					flags |= MAIN_MENU_SYSTEM|
-						MAIN_MENU_USER_SUB;
-				} else {
-					flags |= MAIN_MENU_SYSTEM_SUB|
-						MAIN_MENU_USER;
-				}
-				/*guess distribution menus*/
-				if (distribution != DISTRIBUTION_UNKNOWN)
-					flags |= MAIN_MENU_DISTRIBUTION_SUB;
-				/*guess KDE menus */
-				if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
-					flags |= MAIN_MENU_KDE_SUB;
-			}
-			if(old_style) {
-				/*this is needed to make panel properly
-				  read older style configs */
-				if(flags&MAIN_MENU_SYSTEM &&
-				   flags&MAIN_MENU_SYSTEM_SUB)
-					flags &=~ MAIN_MENU_SYSTEM;
-				if(flags&MAIN_MENU_USER &&
-				   flags&MAIN_MENU_USER_SUB)
-					flags &=~ MAIN_MENU_USER;
-				if(flags&MAIN_MENU_DISTRIBUTION &&
-				   flags&MAIN_MENU_DISTRIBUTION_SUB)
-					flags &=~ MAIN_MENU_DISTRIBUTION;
-				/*keep this for compatibility with older
-				  config files */
-				if(flags&MAIN_MENU_OBSOLETE_DEBIAN &&
-				   flags&MAIN_MENU_OBSOLETE_DEBIAN_SUB)
-					flags &=~ MAIN_MENU_DISTRIBUTION;
-				if(flags&MAIN_MENU_KDE &&
-				   flags&MAIN_MENU_KDE_SUB)
-					flags &=~ MAIN_MENU_KDE;
-				flags |= MAIN_MENU_APPLETS_SUB |
-					MAIN_MENU_PANEL_SUB |
-					MAIN_MENU_DESKTOP;
-			}
-
-			if (old_style)
-				load_menu_applet(params, flags, FALSE,
-						 custom_icon, custom_icon_file,
-						 panel, pos, TRUE);
-			else
-				load_menu_applet(params, flags, global_main,
-						 custom_icon, custom_icon_file,
-						 panel, pos, TRUE);
+			load_menu_applet (path, main_menu,
+					  flags, global_main,
+					  custom_icon, custom_icon_file,
+					  panel, pos, TRUE);
 
 			g_free (custom_icon_file);
-			g_free (params);
+			g_free (path);
 
 		} else if (strcmp (applet_name, DRAWER_ID) == 0) {
 			int mypanel = conditional_get_int ("parameters", -1,
@@ -1312,10 +1246,12 @@ init_user_panels(void)
 		gtk_widget_show(panel);
 
 		/* load up the foot menu */
-		load_menu_applet(NULL, get_default_menu_flags (),
-				 TRUE, FALSE, NULL,
-				 PANEL_WIDGET(BASEP_WIDGET(panel)->panel),
-				 0, TRUE);
+		load_menu_applet ("programs:/",
+				  TRUE /* main_menu */,
+				  get_default_menu_flags (),
+				  TRUE, FALSE, NULL,
+				  PANEL_WIDGET(BASEP_WIDGET(panel)->panel),
+				  0, TRUE);
 
 		g_free (prefix);
 		g_string_free (buf, TRUE);

@@ -950,7 +950,9 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 	/* Guess KDE menus */
 	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
 		flags |= MAIN_MENU_KDE_SUB;
-	load_menu_applet (dir, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
+	/* FIXME: checkout gnome-vfs stuff for drop, this should be
+	 * a uri */
+	load_menu_applet (dir, FALSE /* main_menu */, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
 }
 
 static void
