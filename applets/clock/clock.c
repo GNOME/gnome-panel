@@ -209,11 +209,6 @@ clock_timeout_callback (gpointer data)
 
 	update_clock (cd);
 
-#ifdef HAVE_LIBECAL
-        if (cd->tasks_filter && cd->task_list)
-                gtk_tree_model_filter_refilter (cd->tasks_filter);
-#endif
-
 	if (!cd->showseconds && cd->format != CLOCK_FORMAT_UNIX) {
 		if (cd->format != CLOCK_FORMAT_INTERNET) {
 			int sec = cd->current_time % 60;
@@ -1397,8 +1392,14 @@ update_popup (ClockData *cd)
                 gtk_window_present (GTK_WINDOW (cd->calendar_popup));
         }
 
-        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle))
+        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle)) {
+#ifdef HAVE_LIBECAL
+                if (cd->tasks_filter && cd->task_list)
+                        gtk_tree_model_filter_refilter (cd->tasks_filter);
+#endif
+
                 present_calendar_popup (cd, cd->calendar_popup, cd->toggle);
+        }
 }
 
 static void

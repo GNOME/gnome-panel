@@ -1,5 +1,11 @@
 2004-07-17  William Jon McCann  <mccann@jhu.edu>
 
+	* clock.c (update_popup): Refilter tasks when popup is updated.
+	(clock_timeout_callback): Remove tasks filtering from timeout.
+	Based on patch from Carlos Garnacho Parro.  Fixes #142541.
+
+2004-07-17  William Jon McCann  <mccann@jhu.edu>
+
 	* clock.c (update_popup): Present the calendar window after
 	it is created.  This causes gtk_window_present to be called
 	twice, which ensures the window gets focus.  Fixes #120855.
