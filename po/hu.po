@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2002-10-18 15:44+0200\n"
+"POT-Creation-Date: 2002-11-04 11:01+1300\n"
 "PO-Revision-Date: 2002-10-18 16:02+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -110,7 +110,7 @@ msgid "_Animation filename:"
 msgstr "Az _animáció fájlneve:"
 
 #: applets/fish/fish.c:766 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1429 gnome-panel/panel-util.c:281
+#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:281
 msgid "Browse"
 msgstr "Keresés"
 
@@ -281,7 +281,7 @@ msgid "Window List"
 msgstr "Ablaklista"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:544 applets/gen_util/pager.c:859
+#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Munkaterület-váltó"
@@ -338,7 +338,7 @@ msgstr "%Y %B %d, %A"
 # gnome-terminal/gnome-terminal.c:2027
 #: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
 #: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:186 applets/gen_util/pager.c:498
+#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
 #: applets/gen_util/tasklist.c:119 applets/gen_util/tasklist.c:721
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -382,7 +382,7 @@ msgstr "_UTC használata"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
-#: applets/gen_util/pager.c:531 applets/gen_util/tasklist.c:753
+#: applets/gen_util/pager.c:532 applets/gen_util/tasklist.c:753
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -400,58 +400,62 @@ msgid "The Clock displays the current time and date"
 msgstr "Az óra a pontos időt és a dátumot mutatja"
 
 #: applets/gen_util/clock.schemas.in.h:1
+msgid "24"
+msgstr ""
+
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Internet időt jelenít meg, mely a világ minden pontján ugyanaz"
 
-#: applets/gen_util/clock.schemas.in.h:2
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display date in applet, in addition to time"
 msgstr "Az idő mellett a dátumot is megjeleníti"
 
-#: applets/gen_util/clock.schemas.in.h:3
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
 msgstr "Másodperceket jelenít meg az időben"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Az UTC (Universal Coordinated Time) időt jeleníti meg"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Az időt 1970 január 1 óta eltelt másodpercekben jeleníti meg"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Óraformátum"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Az óra formátumát határozza meg, lehet 12 vagy 24"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "A dátum a felbukkanó segédszövegben jelenik meg"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in applet"
 msgstr "Dátum megjelenítése az appletben"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
 msgstr "Dátum megjelenítése a segédszövegben"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Show time with seconds"
 msgstr "Másodpercek megjelenítése"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Internet idő használata"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UNIX time"
 msgstr "UNIX idő használata"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "UTC használata"
 
@@ -786,22 +790,22 @@ msgstr "Levélellenőrzés"
 msgid "New Mail"
 msgstr "Új levél"
 
-#: applets/gen_util/pager.c:156 applets/gen_util/pager.c:780
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Sor"
 
-#: applets/gen_util/pager.c:156 applets/gen_util/pager.c:780
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
 msgid "Columns"
 msgstr "Oszlop"
 
-#: applets/gen_util/pager.c:375
+#: applets/gen_util/pager.c:376
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
 "A num_rows érték betöltése közben hiba történt a munkaterület-váltóban: %s\n"
 
-#: applets/gen_util/pager.c:386
+#: applets/gen_util/pager.c:387
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -810,7 +814,7 @@ msgstr ""
 "A display_workspace_names érték betöltése közben hiba történt a munkaterület-"
 "váltóban: %s\n"
 
-#: applets/gen_util/pager.c:401
+#: applets/gen_util/pager.c:402
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -819,11 +823,11 @@ msgstr ""
 "A display_all_workspaces érték betöltése közben hiba történt a munkaterület-"
 "váltóban: %s\n"
 
-#: applets/gen_util/pager.c:545
+#: applets/gen_util/pager.c:546
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:546
+#: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1391,7 +1395,7 @@ msgstr "Nem találtam panelt\n"
 
 # gnome-terminal/gnome-terminal.c:2027
 #: gnome-panel/gnome-panel-preferences.c:192
-#: gnome-panel/gnome-panel-screenshot.c:848
+#: gnome-panel/gnome-panel-screenshot.c:857
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1450,7 +1454,7 @@ msgstr "Lassú"
 msgid "_Animation"
 msgstr "_Animáció"
 
-#: gnome-panel/gnome-panel-screenshot.c:133
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1458,7 +1462,7 @@ msgstr ""
 "Nem lehet png struktúrát inicializálni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:141
+#: gnome-panel/gnome-panel-screenshot.c:142
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1466,7 +1470,7 @@ msgstr ""
 "Nem lehet png info-t létrehozni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:148
+#: gnome-panel/gnome-panel-screenshot.c:149
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1474,7 +1478,7 @@ msgstr ""
 "Nem lehet png info-t beállítani.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépeden"
 
-#: gnome-panel/gnome-panel-screenshot.c:163
+#: gnome-panel/gnome-panel-screenshot.c:167
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1482,13 +1486,13 @@ msgstr ""
 "Nincs elég memória a képernyőkép elkészítéséhez.\n"
 "Szabadíts fel egy kis memóriát és próbáld újra."
 
-#: gnome-panel/gnome-panel-screenshot.c:211
+#: gnome-panel/gnome-panel-screenshot.c:219
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "A %s fájl már létezik. Felülírjam?"
 
-#: gnome-panel/gnome-panel-screenshot.c:228
-#: gnome-panel/gnome-panel-screenshot.c:733
+#: gnome-panel/gnome-panel-screenshot.c:236
+#: gnome-panel/gnome-panel-screenshot.c:742
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1499,52 +1503,52 @@ msgstr ""
 "\"%s\"\n"
 "Kérlek ellenőrizd a jogosultságaidat a szülőkönyvtárban"
 
-#: gnome-panel/gnome-panel-screenshot.c:500
+#: gnome-panel/gnome-panel-screenshot.c:508
 msgid "Print Screenshot"
 msgstr "Képernyőkép nyomtatása"
 
-#: gnome-panel/gnome-panel-screenshot.c:548
+#: gnome-panel/gnome-panel-screenshot.c:556
 msgid "Screenshot Print Preview"
 msgstr "A képernyőkép nyomtatásának előnézete"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:575
+#: gnome-panel/gnome-panel-screenshot.c:583
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cKepernyokep-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:582
+#: gnome-panel/gnome-panel-screenshot.c:590
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cKepernyokep.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:599
+#: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cKepernyokep-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:606
+#: gnome-panel/gnome-panel-screenshot.c:614
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cKepernyokep-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:754
+#: gnome-panel/gnome-panel-screenshot.c:763
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nincs elég hely, a következő fájl kiírásához: %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1183
+#: gnome-panel/gnome-panel-screenshot.c:1198
 msgid "Grab a window instead of the entire screen"
 msgstr "Ablak fotózása a teljes képernyő helyett"
 
-#: gnome-panel/gnome-panel-screenshot.c:1184
+#: gnome-panel/gnome-panel-screenshot.c:1199
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "A megadott késleltetéssel készít képet [másodpercben]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1236
+#: gnome-panel/gnome-panel-screenshot.c:1251
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1552,7 +1556,7 @@ msgstr ""
 "A képernyőkép készítő program glade fájlja hiányzik.\n"
 "Kérlek ellenőrizd a gnome-panel telepítését"
 
-#: gnome-panel/gnome-panel-screenshot.c:1260
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nem lehet képernyőképet készíteni a jelenlegi munkaasztalról."
 
@@ -1587,6 +1591,16 @@ msgstr "Képernyőkép _nyomtatása..."
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
 msgstr "Képernyőkép _mentése fájlba:"
+
+#: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
+msgid ""
+"The user's directory in which screenshots should be saved so as to appear on "
+"the web."
+msgstr ""
+
+#: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
+msgid "Web directory."
+msgstr ""
 
 #: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:264
 #, c-format
@@ -1963,7 +1977,7 @@ msgid "GNOME Aligned Panel"
 msgstr "GNOME illesztett panel"
 
 #: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
-#: gnome-panel/panel-config.c:1658
+#: gnome-panel/panel-config.c:1663
 msgid "Edge Panel"
 msgstr "Élpanel"
 
@@ -1972,7 +1986,7 @@ msgid "GNOME Edge Panel"
 msgstr "GNOME élpanel"
 
 #: gnome-panel/menu.c:2750 gnome-panel/menu.c:2754
-#: gnome-panel/panel-config.c:1680
+#: gnome-panel/panel-config.c:1685
 msgid "Sliding Panel"
 msgstr "Csúszópanel"
 
@@ -1981,7 +1995,7 @@ msgid "GNOME Sliding Panel"
 msgstr "GNOME csúszópanel"
 
 #: gnome-panel/menu.c:2773 gnome-panel/menu.c:2778
-#: gnome-panel/panel-config.c:1691
+#: gnome-panel/panel-config.c:1696
 msgid "Floating Panel"
 msgstr "Úszó panel"
 
@@ -2278,70 +2292,70 @@ msgstr "XL (80 képpont)"
 msgid "XX Large (128 pixels)"
 msgstr "XXL (128 képpont)"
 
-#: gnome-panel/panel-config.c:1366
+#: gnome-panel/panel-config.c:1367
 msgid "Background _type:"
 msgstr "Háttér _típusa"
 
-#: gnome-panel/panel-config.c:1375
+#: gnome-panel/panel-config.c:1376
 msgid "Default"
 msgstr "Alapbeállítás"
 
-#: gnome-panel/panel-config.c:1377
+#: gnome-panel/panel-config.c:1378
 msgid "Color"
 msgstr "Szín"
 
 #. image frame
-#: gnome-panel/panel-config.c:1379 gnome-panel/panel-config.c:1420
+#: gnome-panel/panel-config.c:1380 gnome-panel/panel-config.c:1425
 msgid "Image"
 msgstr "Kép"
 
-#: gnome-panel/panel-config.c:1394
+#: gnome-panel/panel-config.c:1395
 msgid "Background co_lor:"
 msgstr "Háttér szí_ne:"
 
-#: gnome-panel/panel-config.c:1443
+#: gnome-panel/panel-config.c:1448
 msgid "_Do not scale image to fit"
 msgstr "_Ne méretezze át a képet"
 
-#: gnome-panel/panel-config.c:1448
+#: gnome-panel/panel-config.c:1453
 msgid "Sc_ale image"
 msgstr "Kép _átméretezése"
 
-#: gnome-panel/panel-config.c:1452
+#: gnome-panel/panel-config.c:1457
 msgid "St_retch image"
 msgstr "Kép _nyújtása"
 
-#: gnome-panel/panel-config.c:1466
+#: gnome-panel/panel-config.c:1471
 msgid "Rotate image for _vertical panels"
 msgstr "_Függőleges panelen a kép forgatása"
 
-#: gnome-panel/panel-config.c:1527
+#: gnome-panel/panel-config.c:1532
 msgid "Edge panel"
 msgstr "Élpanel"
 
-#: gnome-panel/panel-config.c:1534
+#: gnome-panel/panel-config.c:1539
 msgid "Corner panel"
 msgstr "Sarokpanel"
 
 # xxx
-#: gnome-panel/panel-config.c:1540
+#: gnome-panel/panel-config.c:1545
 msgid "Sliding panel"
 msgstr "Csúszópanel"
 
 # xxx
-#: gnome-panel/panel-config.c:1546
+#: gnome-panel/panel-config.c:1551
 msgid "Floating panel"
 msgstr "Úszópanel"
 
-#: gnome-panel/panel-config.c:1624
+#: gnome-panel/panel-config.c:1629
 msgid "Panel Properties"
 msgstr "Panel beállításai"
 
-#: gnome-panel/panel-config.c:1669
+#: gnome-panel/panel-config.c:1674
 msgid "Corner Panel"
 msgstr "Sarokpanel"
 
-#: gnome-panel/panel-config.c:1710
+#: gnome-panel/panel-config.c:1715
 msgid "Background"
 msgstr "Háttér"
 
@@ -2424,16 +2438,23 @@ msgstr "A súgófájl nem található"
 msgid "No document to show"
 msgstr "Nincs megjelenítendő dokumentum"
 
-#: gnome-panel/panel-util.c:622 gnome-panel/panel-util.c:638
+#: gnome-panel/panel-util.c:626 gnome-panel/panel-util.c:642
 msgid "Disabled"
 msgstr "Tiltva"
+
+#: gnome-panel/panel-util.c:1472
+msgid ""
+"<b>Cannot execute xscreensaver</b>\n"
+"\n"
+"Details: xscreensaver-command not found"
+msgstr ""
 
 #: gnome-panel/panel.c:876
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
-#: gnome-panel/panel.c:2221
+#: gnome-panel/panel.c:2232
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
