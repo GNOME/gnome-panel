@@ -241,6 +241,10 @@ xstuff_nautilus_desktop_present (void)
 					ATOM ("NAUTILUS_DESKTOP_WINDOW_ID"),
 					XA_WINDOW,
 					&size, 32);
+
+        /* Get random property off the window to see if the window
+         * still exists.
+         */
 	if (data != NULL &&
 	    *data != 0) {
 		guint32 *desktop;
@@ -446,6 +450,11 @@ xstuff_is_compliant_wm (void)
 	gpointer data;
 	int size;
 
+        /* FIXME this is totally broken; should be using
+         * gdk_net_wm_supports() on particular hints when we rely
+         * on those particular hints
+         */
+        
 	data = get_typed_property_data (GDK_DISPLAY (),
 					GDK_ROOT_WINDOW (),
 					ATOM ("_NET_SUPPORTED"),
@@ -598,31 +607,34 @@ xstuff_unsetup_desktop_area (void)
 	gdk_error_trap_pop ();
 }
 
+/* This is such a broken stupid function. */   
 void
 xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 {
-	Window win = GDK_WINDOW_XWINDOW (window);
-	XSizeHints size_hints;
+       Window win = GDK_WINDOW_XWINDOW (window);
+       XSizeHints size_hints;
+
+       /* Do not add USPosition / USSize here, fix the damn WM */
+       size_hints.flags = PPosition | PSize | PMaxSize | PMinSize;
+       size_hints.x = 0; /* window managers aren't supposed to and 
+       size_hints.y = 0;  * don't use these fields
+                          */
+       size_hints.width = w;
+       size_hints.height = h;
+       size_hints.min_width = w;
+       size_hints.min_height = h;
+       size_hints.max_width = w;
+       size_hints.max_height = h;
   
-	size_hints.flags = USPosition | PPosition | USSize | PSize | PMaxSize | PMinSize;
-	size_hints.x = x;
-	size_hints.y = y;
-	size_hints.width = w;
-	size_hints.height = h;
-	size_hints.min_width = w;
-	size_hints.min_height = h;
-	size_hints.max_width = w;
-	size_hints.max_height = h;
-  
-	gdk_error_trap_push ();
+       gdk_error_trap_push ();
 
-	XSetWMNormalHints (GDK_DISPLAY (), win, &size_hints);
+       XSetWMNormalHints (GDK_DISPLAY (), win, &size_hints);
 
-	gdk_window_move_resize (window, x, y, w, h);
+       gdk_window_move_resize (window, x, y, w, h);
 
-	gdk_error_trap_pop ();
+       gdk_flush ();
+       gdk_error_trap_pop ();
 }
-
 
 void
 xstuff_set_wmspec_dock_hints (GdkWindow *window,
@@ -644,24 +656,6 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window,
                          (guchar *)atoms, 
 			 autohide ? 2 : 1);
 }
-
-void
-xstuff_set_wmspec_state_hints (GdkWindow *window)
-{
-        Atom atoms[3] = { None, None, None};
-	int i = 0;
-        
-	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_SKIP_TASKBAR");
-	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_SKIP_PAGER");
-	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_STICKY");
-
-	XChangeProperty (GDK_WINDOW_XDISPLAY (window),
-			 GDK_WINDOW_XWINDOW (window),
-			 ATOMGDK (window, "_NET_WM_STATE"),
-			 XA_ATOM, 32, PropModeReplace,
-			 (guchar*) atoms, i);
-}
-
 
 void
 xstuff_set_wmspec_strut (GdkWindow *window,
@@ -695,27 +689,7 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 void
 xstuff_window_raise_on_current_wspace (GtkWidget *window)
 {
-	gulong xid;
-	WnckWindow *wnck_window;
-
-	gtk_widget_show_now (window);
-
-	xid = GDK_WINDOW_XWINDOW (window->window);
-
-	wnck_window = wnck_window_get (xid);
-	if (wnck_window != NULL) {
-		WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
-		WnckWorkspace *wspace = wnck_screen_get_active_workspace (screen);
-
-		if (wspace != NULL)
-			wnck_window_move_to_workspace (wnck_window, wspace);
-	}
-	
-	gdk_window_raise (window->window);
-
-	if (wnck_window != NULL) {
-		wnck_window_activate (wnck_window);
-	}
+        gtk_window_present (GTK_WINDOW (window));
 }
 
 

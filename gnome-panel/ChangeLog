@@ -1,3 +1,16 @@
+2001-12-18  Havoc Pennington  <hp@pobox.com>
+
+	* basep-widget.c (basep_widget_realize): remove
+	xstuff_set_wmspec_state_hints
+
+	* xstuff.c (xstuff_window_raise_on_current_wspace): this was all a
+	bunch of bullshit, it should just be gtk_window_present()
+	(xstuff_set_wmspec_state_hints): I don't think we should do this, 
+	because the semantic type is adequate. should only set this kind
+	of thing if we are trying to override semantic type
+	(xstuff_set_pos_size): delete this broken atrocity. well, I wish.
+	make it suck mildly less.
+
 2001-12-18  Glynn Foster  <glynn.foster@sun.com>
 
 	* panel-gconf.c, panel-per-panel-config.schemas,
