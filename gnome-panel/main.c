@@ -31,7 +31,7 @@
 #include "status.h"
 #include "xstuff.h"
 
-#include "panel-unique-factory.h"
+/*#include "panel-unique-factory.h"*/
 #include "panel-shell.h"
 
 extern int config_sync_timeout;
