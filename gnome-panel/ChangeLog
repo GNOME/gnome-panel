@@ -1,5 +1,22 @@
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu.c:
+	(icon_to_load_copy), (icon_to_load_free),
+	(panel_load_menu_image_deferred_with_size): don't
+	bother strdup-ing the stock ids.
+
+2002-09-12  Soeren Sandmann  <sandmann@daimi.au.dk>
+
+	* menu.c:
+	(do_icons_to_add), (load_icons_handler):
+	Delay actually setting the icon on the GtkImage
+	until we have loaded all the icons. This fixes
+	a nasty performance issue where the menu's
+	allocation was being continually recalculated as
+	each icon was set.
+
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
 	* drawer-widget.c: (drawer_pos_get_pos):
 	* panel.c: (state_hide_foreach): use the
 	absolute value for the width and height when
