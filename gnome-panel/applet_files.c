@@ -8,9 +8,10 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <dirent.h>
-#include <dlfcn.h>
 #include <string.h>
 #include <unistd.h>
+#include "gnome.h"
+#include "libgnome/gnome-dl.h"
 #include "applet_files.h"
 
 
@@ -21,7 +22,7 @@ GHashTable *applet_files_ht;
 
 
 static AppletFile *
-applet_file_new(void *dl_handle, char *filename, AppletCmdFunc cmd_func)
+applet_file_new(GnomeLibHandle *dl_handle, char *filename, AppletCmdFunc cmd_func)
 {
 	AppletFile *af;
 
@@ -42,33 +43,25 @@ applet_file_destroy(gpointer key, gpointer value, gpointer user_data)
 
 	af = value;
 
-	dlclose(af->dl_handle);
+	gnome_dl_unload(af->dl_handle);
 	g_free(af->filename);
 	g_free(af);
 }
 
 
-static void *
-get_dl_func(void *handle, char *name)
+static GnomeFuncHandle *
+get_dl_func(GnomeLibHandle *handle, char *name)
 {
-	void *func;
+	GnomeFuncHandle *func;
 	const char *error;
-	char *funcname;
 
-#       ifdef __FreeBSD__
-        funcname = g_copy_strings("_", name, NULL);
-#       else
-        funcname = g_strdup(name);
-#       endif
+	func = gnome_dl_findsym(name, handle);
 
-	func = dlsym(handle, (const char *)funcname);
-	if ((error = dlerror()) != NULL) {
+	if ((error = gnome_dl_error()) != NULL) {
 		fprintf(stderr, "get_dl_func: %s (func is %s)\n", error,
-			funcname);
+			name);
 		g_assert(error == NULL);
 	}
-
-	g_free(funcname);
 
 	return func;
 }
@@ -77,21 +70,21 @@ get_dl_func(void *handle, char *name)
 static void
 init_applet_file(char *filename)
 {
-	void          *handle;
-	const char    *error;
-	char          *id;
-	AppletCmdFunc  cmd_func;
-	AppletCommand  cmd;
-	AppletFile    *af;
+	GnomeLibHandle *handle;
+	const char     *error;
+	char           *id;
+	AppletCmdFunc   cmd_func;
+	AppletCommand   cmd;
+	AppletFile     *af;
 
-	handle = dlopen(filename, RTLD_LAZY);
+	handle = gnome_dl_load(filename, GNOME_DL_BIND_LAZY);
 	if (!handle) {
-		error = dlerror();
+		error = gnome_dl_error();
 		fprintf(stderr, "init_applet_file: %s\n", error);
 		return;
 	}
 
-	cmd_func = get_dl_func(handle, APPLET_CMD_FUNC_NAME);
+	cmd_func = (AppletCmdFunc)get_dl_func(handle, APPLET_CMD_FUNC_NAME);
 
 	cmd.cmd = APPLET_CMD_QUERY;
 	id = (*cmd_func) (&cmd);
