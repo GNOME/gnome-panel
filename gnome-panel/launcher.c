@@ -514,7 +514,7 @@ setup_button (Launcher *launcher)
 	/* Setup icon */
 	icon = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_ICON);
-	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), icon);
+	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), sure_string (icon));
 
 	/* Setup help */
 	docpath = gnome_desktop_item_get_string (launcher->ditem,
