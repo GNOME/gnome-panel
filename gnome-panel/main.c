@@ -34,10 +34,20 @@ load_default_applets(void)
 	/* XXX: the IDs for these applets are hardcoded here. */
 
 	/* Here we use NULL to request querying of default applet parameters */
-	
+
+#if 0
 	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION, PANEL_UNKNOWN_APPLET_POSITION);
+#endif
+	/* FIXME: we are not using the code above because automatic
+	 * positioning of applets is not working right now.  So we use
+	 * explicit coordinates :-(
+	 */
+
+	load_applet("Menu", NULL, 0, 0);
+	load_applet("Mail check", NULL, 200, 0);
+	load_applet("Clock", NULL, 500, 0);
 }
 
 
