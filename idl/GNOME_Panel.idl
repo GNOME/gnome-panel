@@ -11,13 +11,13 @@ module GNOME {
 	/*
 	 * The panel's orientation.
 	 */
-	enum PanelOrient {
-		ORIENT_UP,
-		ORIENT_DOWN,
-		ORIENT_LEFT,
-		ORIENT_RIGHT
-	};
+	typedef unsigned short PanelOrient;
 
+	const PanelOrient PANEL_ORIENT_UP    = 0;
+	const PanelOrient PANEL_ORIENT_DOWN  = 2;
+	const PanelOrient PANEL_ORIENT_LEFT  = 3;
+	const PanelOrient PANEL_ORIENT_RIGHT = 4;
+	
 	/*
 	 * The panel's width or height, depending
 	 * on its orientation.
@@ -33,30 +33,12 @@ module GNOME {
 	const PanelSize PANEL_XX_LARGE = 128;
 
 	/*
-	 * Panel background description.
-	 * May be expressed as an RGB number or
-	 * a pixmap file path.
+	 * GNOME::PanelBackground Format:
+	 *    o "none:" - no background.
+	 *    o "colour:#xxxxxx' - rgb colour value.
+	 *    o "pixmap:/path/to/pixmap" - pixmap path.
 	 */
-	struct PanelBackgroundColour {
-		unsigned short red;
-		unsigned short blue;
-		unsigned short green;
-	};
-
-	typedef string PanelBackgroundPixmap;
-
-	enum PanelBackgroundType {
-		NONE,
-		COLOUR,
-		PIXMAP
-	};
-
-	union PanelBackground switch (PanelBackgroundType) {
-	case COLOUR: 
-		PanelBackgroundColour colour;
-	case PIXMAP: 
-		PanelBackgroundPixmap pixmap;
-	};
+	typedef string PanelBackground;
 
 
 	interface PanelShell : Bonobo::Unknown {
@@ -75,34 +57,9 @@ module GNOME {
 	interface PanelAppletShell : Bonobo::Unknown {
 
 		/*
-		 * GNOME::PanelAppletShell::changeOrientation
-		 * @orient: new Applet orientation.
-		 *
-		 * Instruct the Applet that the orientation of the
-		 * Panel it is contained in has changed.
+		 * Okay, so nothing in this interface as yet.
 		 */
-		void changeOrientation (in PanelOrient orient);
-
-		/*
-		 * GNOME::PanelAppletShell::changeSize
-		 * @size: new Applet size.
-		 *
-		 * Instruct the Applet that the size of the
-		 * Panel it is contained in has changed.
-		 *
-		 * Note that the 'size' refers to the Panel's
-		 * width or height depending on its orientation.
-		 */
-		void changeSize (in PanelSize size);
-
-		/*
-		 * GNOME::PanelAppletShell::changeBackground
-		 * @backgorund: new Panel background.
-		 *
-		 * Instruct the Applet that the background of the
-		 * Panel it is contained in has changed.
-		 */
-		void changeBackground (in PanelBackground background);
+		void dummy ();
 	};
 
 };
