@@ -48,6 +48,7 @@
 #include "panel-toplevel.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
+#include "panel-lockdown.h"
 
 enum {
 	TARGET_URL,
@@ -233,12 +234,23 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 }
 
 static void
+panel_recreate_context_menu (PanelData *pd)
+{
+	if (pd->menu)
+		g_object_unref (pd->menu);
+	pd->menu = NULL;
+}
+
+static void
 panel_destroy (PanelToplevel *toplevel,
 	       PanelData     *pd)
 {
 	PanelWidget *panel_widget;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
+
+	panel_lockdown_notify_remove (G_CALLBACK (panel_recreate_context_menu),
+				      pd);
 
 	if (pd->menu)
 		g_object_unref (pd->menu);
@@ -271,13 +283,13 @@ panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 static GtkWidget *
 panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
-	if (pd->menu != NULL)
-		return pd->menu;
-	
-	pd->menu = g_object_ref (create_panel_context_menu (panel));
-	gtk_object_sink (GTK_OBJECT (pd->menu));
-	g_signal_connect (G_OBJECT (pd->menu), "deactivate",
-			  G_CALLBACK (menu_deactivate), pd);
+	if (!pd->menu) {
+		pd->menu = g_object_ref (create_panel_context_menu (panel));
+		gtk_object_sink (GTK_OBJECT (pd->menu));
+		g_signal_connect (pd->menu, "deactivate",
+				  G_CALLBACK (menu_deactivate), pd);
+	}
+
 	return pd->menu;
 }
 
@@ -858,8 +870,7 @@ panel_check_drop_forbidden (PanelWidget    *panel,
 	if (!panel)
 		return FALSE;
 
-	if (panel_toplevel_get_locked_down (panel->toplevel) ||
-	    panel_profile_get_locked_down ())
+	if (panel_lockdown_get_locked_down ())
 		return FALSE;
 
 	if (info == TARGET_APPLET_INTERNAL) {
@@ -961,8 +972,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 {
 	gboolean success = FALSE;
 
-	if (panel_toplevel_get_locked_down (panel->toplevel) ||
-	    panel_profile_get_locked_down ()) {
+	if (panel_lockdown_get_locked_down ()) {
 		gtk_drag_finish (context, FALSE, FALSE, time_);
 		return;
 	}
@@ -1103,6 +1113,9 @@ panel_setup (PanelToplevel *toplevel)
 	panel_list = g_slist_append (panel_list, pd);
 	
 	g_object_set_data (G_OBJECT (toplevel), "PanelData", pd);
+
+	panel_lockdown_notify_add (G_CALLBACK (panel_recreate_context_menu),
+				   pd);
 
 	panel_widget_setup (panel_widget);
 

@@ -228,6 +228,50 @@ Panel Global Config Schema File -  work in progress
         </locale>
       </schema>
 
+      <schema>
+        <key>/schemas/apps/panel/global/disable_lock_screen</key>
+        <applyto>/apps/panel/global/disable_lock_screen</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Disable Lock Screen</short>
+          <long>If true, the panel will not allow a user to lock
+		their screen, by removing access to the lock screen
+		menu entries.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/global/disable_log_out</key>
+        <applyto>/apps/panel/global/disable_log_out</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Disable Logging Out</short>
+          <long>If true, the panel will not allow a user to log out,
+		by removing access to the log out menu entries.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/global/disable_force_quit</key>
+        <applyto>/apps/panel/global/disable_force_quit</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Disable Force Quit</short>
+          <long>If true, the panel will not allow a user to force
+		an application to quit by removing access to the
+		force quit button.
+          </long>
+        </locale>
+      </schema>
+
   </schemalist>
   
 </gconfschemafile>

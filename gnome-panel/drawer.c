@@ -29,6 +29,7 @@
 #include "xstuff.h"
 #include "panel-globals.h"
 #include "panel-stock-icons.h"
+#include "panel-lockdown.h"
 
 static void
 drawer_click (GtkWidget *w, Drawer *drawer)
@@ -590,14 +591,17 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
 
-	if ( ! panel_profile_get_locked_down ())
-		panel_applet_add_callback (drawer->info,
-					   "properties",
-					   GTK_STOCK_PROPERTIES,
-					   _("_Properties"));
+	panel_applet_add_callback (drawer->info,
+				   "properties",
+				   GTK_STOCK_PROPERTIES,
+				   _("_Properties"),
+				   panel_lockdown_get_locked_down);
 
-	panel_applet_add_callback (
-		drawer->info, "help", GTK_STOCK_HELP, _("_Help"));
+	panel_applet_add_callback (drawer->info,
+				   "help",
+				   GTK_STOCK_HELP,
+				   _("_Help"),
+				   NULL);
 
 	panel_drawer_connect_to_gconf (drawer);
 }

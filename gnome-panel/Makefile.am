@@ -121,6 +121,7 @@ panel_sources =			\
 	panel-bindings.c	\
 	panel-profile.c         \
 	panel-force-quit.c	\
+	panel-lockdown.c	\
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -168,6 +169,7 @@ panel_headers =			\
 	panel-profile.h         \
 	panel-enums.h		\
 	panel-force-quit.h	\
+	panel-lockdown.h	\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 

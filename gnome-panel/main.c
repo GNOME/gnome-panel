@@ -31,6 +31,7 @@
 #include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
+#include "panel-lockdown.h"
 
 #include "nothing.cP"
 
@@ -85,10 +86,10 @@ main (int argc, char **argv)
 			      NULL);
 
 	panel_global_config_load ();
+	panel_lockdown_init ();
 	panel_profile_load (profile_arg);
 
 	panel_session_init (argv [0]);
-
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
@@ -96,6 +97,8 @@ main (int argc, char **argv)
 			 NULL);
 
 	gtk_main ();
+
+	panel_lockdown_finalize ();
 
 	return 0;
 }

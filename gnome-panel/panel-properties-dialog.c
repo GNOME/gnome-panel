@@ -297,25 +297,25 @@ panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
 {
 	const char *icon = NULL;
         char       *freeme = NULL;
-                                                                                                                                                              
+
         icon = gnome_icon_entry_get_filename (entry);
-                                                                                                                                                              
+
         /* Strip dir from the icon path if in the icon
          * theme directory.  See bug #119209
          */
         if (icon && g_path_is_absolute (icon)) {
                 char *dir;
-                                                                                                                                                              
+
                 dir = g_path_get_dirname (icon);
-                                                                                                                                                              
+
                 if (dir && dialog->icon_theme_dir && strcmp (dir, dialog->icon_theme_dir) == 0)
                         icon = freeme = g_path_get_basename (icon);
-                                                                                                                                                              
+
                 g_free (dir);
         }
-                                                                                                                                                              
+
         panel_profile_set_attached_custom_icon (dialog->toplevel, icon);
-                                                                                                                                                              
+
         g_free (freeme);
 }
 

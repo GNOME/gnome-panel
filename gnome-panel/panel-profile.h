@@ -113,8 +113,6 @@ gboolean    panel_profile_get_toplevel_enable_arrows  (PanelToplevel *toplevel);
 gboolean    panel_profile_is_writable_toplevel_enable_arrows (PanelToplevel *toplevel);
 
 /* We don't set this in the panel, so there is no set accessor */
-gboolean    panel_profile_get_toplevel_locked_down    (PanelToplevel *toplevel);
-
 void        panel_profile_set_background_type         (PanelToplevel       *toplevel,
 						       PanelBackgroundType  background_type);
 PanelBackgroundType
@@ -184,12 +182,6 @@ gboolean    panel_profile_map_object_type_string      (const char            *st
 
 /* all keys relevant to moving are writable */
 gboolean    panel_profile_can_be_moved_freely         (PanelToplevel *toplevel);
-
-/* Lockdown stuff */
-gboolean    panel_profile_get_inhibit_command_line    (void);
-gboolean    panel_profile_get_inhibit_force_quit      (void);
-gboolean    panel_profile_get_locked_down             (void);
-GSList     *panel_profile_get_disabled_applets        (void);
 
 G_END_DECLS
 

@@ -38,6 +38,7 @@
 #include "menu-util.h"
 #include "menu.h"
 #include "quick-desktop-reader.h"
+#include "panel-lockdown.h"
 
 #define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
 
@@ -68,6 +69,7 @@ struct _PanelMenuButtonPrivate {
 };
 
 static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
+static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
 
 static GObjectClass *parent_class;
 
@@ -95,6 +97,9 @@ static void
 panel_menu_button_finalize (GObject *object)
 {
 	PanelMenuButton *button = PANEL_MENU_BUTTON (object);
+
+	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_button_recreate_menu),
+				      button);
 
 	panel_menu_button_disconnect_from_gconf (button);
 
@@ -301,6 +306,14 @@ panel_menu_button_menu_detacher	(GtkWidget *widget,
 
 	/* This is a workaround pending fixing bug #113112 */
 	g_object_set_data (G_OBJECT (button), "gtk-attached-menu", NULL);
+	button->priv->menu = NULL;
+}
+
+static void
+panel_menu_button_recreate_menu (PanelMenuButton *button)
+{
+	if (button->priv->menu)
+		gtk_menu_detach (button->priv->menu);
 	button->priv->menu = NULL;
 }
 
@@ -605,12 +618,15 @@ panel_menu_button_load (const char  *menu_path,
 
 	button->priv->applet_id = g_strdup (info->id);
 
-	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"), NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
 	panel_menu_button_connect_to_gconf (button);
+
+	panel_lockdown_notify_add (G_CALLBACK (panel_menu_button_recreate_menu),
+				   button);
 }
 
 static char *

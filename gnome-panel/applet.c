@@ -31,8 +31,12 @@
 #include "panel-menu-button.h"
 #include "panel-globals.h"
 #include "panel-properties-dialog.h"
+#include "panel-lockdown.h"
 
 #define SMALL_ICON_SIZE 20
+
+static GtkWidget *panel_applet_create_menu (AppletInfo  *info,
+					    PanelWidget *panel_widget);
 
 static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
@@ -80,10 +84,6 @@ panel_applet_toggle_locked (AppletInfo *info)
 	panel_widget = PANEL_WIDGET (info->widget->parent);
 	
 	locked = panel_widget_toggle_applet_locked (panel_widget, info->widget);
-
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
-	    panel_profile_get_locked_down ())
-		return TRUE;
 
 	panel_applet_save_position (info, info->id, TRUE);
 	panel_applet_set_dnd_enabled (info, !locked);
@@ -142,6 +142,26 @@ panel_applet_clean (AppletInfo *info)
 		info->widget = NULL;
 		gtk_widget_destroy (widget);
 	}
+}
+
+static void
+panel_applet_recreate_menu (AppletInfo	*info)
+{
+	GList *l;
+
+	if (!info->menu)
+		return;
+
+	for (l = info->user_menu; l; l = l->next) {
+		AppletUserMenu *menu = l->data;
+
+		menu->menuitem =NULL;
+		menu->submenu =NULL;
+	}
+
+	gtk_widget_unref (info->menu);
+	info->menu = panel_applet_create_menu (info,
+					       PANEL_WIDGET (info->widget->parent));
 }
 
 static void
@@ -243,80 +263,31 @@ panel_applet_get_callback (GList      *user_menu,
 }
 
 void
-panel_applet_add_callback (AppletInfo *info,
-			   const char *callback_name,
-			   const char *stock_item,
-			   const char *menuitem_text)
+panel_applet_add_callback (AppletInfo          *info,
+			   const char          *callback_name,
+			   const char          *stock_item,
+			   const char          *menuitem_text,
+			   CallbackEnabledFunc  is_enabled_func)
 {
 	AppletUserMenu *menu;
 
 	g_return_if_fail (info != NULL);
+	g_return_if_fail (panel_applet_get_callback (info->user_menu,
+						     callback_name) == NULL);
 
-	menu = panel_applet_get_callback (info->user_menu, callback_name);
-	if (menu == NULL) {
-		menu = g_new0 (AppletUserMenu, 1);
-		menu->name = g_strdup (callback_name);
-		menu->stock_item = g_strdup (stock_item);
-		menu->text = g_strdup (menuitem_text);
-		menu->sensitive = TRUE;
-		menu->info = info;
-		menu->menuitem = NULL;
-		menu->submenu = NULL;
-		info->user_menu = g_list_append (info->user_menu, menu);
-	} else {
-		g_free (menu->stock_item);
-		menu->stock_item = NULL;
-		g_free (menu->text);
-		menu->text = NULL;
-		menu->text = g_strdup (menuitem_text);
-		menu->stock_item = g_strdup (stock_item);
-	}
+	menu                  = g_new0 (AppletUserMenu, 1);
+	menu->name            = g_strdup (callback_name);
+	menu->stock_item      = g_strdup (stock_item);
+	menu->text            = g_strdup (menuitem_text);
+	menu->is_enabled_func = is_enabled_func;
+	menu->sensitive       = TRUE;
+	menu->info            = info;
+	menu->menuitem        = NULL;
+	menu->submenu         = NULL;
 
-	/*make sure the menu is rebuilt*/
-	if(info->menu) {
-		GList *list;
-		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
-			AppletUserMenu *menu = list->data;
-			menu->menuitem=NULL;
-			menu->submenu=NULL;
-		}
-		gtk_widget_unref(info->menu);
-		info->menu = NULL;
-	}
-}
+	info->user_menu = g_list_append (info->user_menu, menu);
 
-void
-panel_applet_remove_callback (AppletInfo *info,
-			      const char *callback_name)
-{
-	AppletUserMenu *menu;
-
-	g_return_if_fail (info != NULL);
-	
-	menu = panel_applet_get_callback (info->user_menu, callback_name);
-	if (menu != NULL) {
-		info->user_menu = g_list_remove (info->user_menu, menu);
-		g_free(menu->name);
-		menu->name = NULL;
-		g_free(menu->stock_item);
-		menu->stock_item = NULL;
-		g_free(menu->text);
-		menu->text = NULL;
-		g_free(menu);
-	} else
-		return; /*it just isn't there*/
-
-	/*make sure the menu is rebuilt*/
-	if (info->menu != NULL) {
-		GList *list;
-		for (list = info->user_menu; list != NULL; list = list->next) {
-			AppletUserMenu *menu = list->data;
-			menu->menuitem = NULL;
-			menu->submenu = NULL;
-		}
-		gtk_widget_unref (info->menu);
-		info->menu = NULL;
-	}
+	panel_applet_recreate_menu (info);
 }
 
 static void
@@ -449,7 +420,10 @@ panel_applet_create_menu (AppletInfo  *info,
 			  G_CALLBACK (applet_menu_deactivate), info);
 
 	for (l = info->user_menu; l; l = l->next) {
-		AppletUserMenu *user_menu = (AppletUserMenu *)l->data;
+		AppletUserMenu *user_menu = l->data;
+
+		if (user_menu->is_enabled_func && !user_menu->is_enabled_func ())
+			continue;
 
 		add_to_submenus (info, "", user_menu->name, user_menu, 
 				 menu, info->user_menu);
@@ -457,8 +431,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		added_anything = TRUE;
 	}
 
-	if ( ! panel_profile_get_locked_down () &&
-	     ! panel_toplevel_get_locked_down (panel_widget->toplevel)) {
+	if (!panel_lockdown_get_locked_down ()) {
 		GtkWidget *image;
 		gboolean   locked;
 		gboolean   lockable;
@@ -654,8 +627,11 @@ panel_applet_destroy (GtkWidget  *widget,
 		}
 	}
 
+	panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menu),
+				      info);
+
 	if (info->menu)
-		gtk_widget_unref (info->menu);
+		g_object_unref (info->menu);
 	info->menu = NULL;
 
 	if (info->data_destroy)
@@ -1082,6 +1058,9 @@ panel_applet_register (GtkWidget       *applet,
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
+	panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menu),
+				   info);
+
 	if (type == PANEL_OBJECT_DRAWER) {
 		Drawer *drawer = data;
 		PanelWidget *assoc_panel;
@@ -1164,58 +1143,59 @@ panel_applet_get_position (AppletInfo *applet)
 	return applet_data->pos;
 }
 
-/* True if all the keys relevant to moving are writable
-   (position, toplevel_id, panel_right_stick) */
 gboolean
 panel_applet_can_freely_move (AppletInfo *applet)
 {
-	GConfClient *client;
-	const char *profile;
-	PanelGConfKeyType key_type;
-	const char *key;
-	PanelWidget *panel_widget;
+	PanelWidget       *panel_widget;
+	GConfClient       *client;
+	PanelGConfKeyType  key_type;
+	const char        *profile;
+	const char        *key;
+
+	if (panel_lockdown_get_locked_down ())
+		return FALSE;
 
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
-	    panel_profile_get_locked_down ())
-		return FALSE;
-
-	client = panel_gconf_get_client ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
-	key_type = applet->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	
+	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
        
 	key = panel_gconf_full_key (key_type, profile, applet->id, "position");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
+
 	key = panel_gconf_full_key (key_type, profile, applet->id, "toplevel_id");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
+
 	key = panel_gconf_full_key (key_type, profile, applet->id, "panel_right_stick");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
+
 	return TRUE;
 }
 
-/* True if the locked flag is writable */
 gboolean
 panel_applet_lockable (AppletInfo *applet)
 {
-	GConfClient *client;
-	const char *profile;
-	PanelGConfKeyType key_type;
-	const char *key;
-	PanelWidget *panel_widget;
+	GConfClient        *client;
+	PanelWidget        *panel_widget;
+	PanelGConfKeyType   key_type;
+	const char         *profile;
+	const char         *key;
 
+	if (panel_lockdown_get_locked_down ())
+		return FALSE;
+	
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
-	    panel_profile_get_locked_down ())
-		return FALSE;
-
-	client = panel_gconf_get_client ();
+	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
-	key_type = applet->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+	
+	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
+
 	key = panel_gconf_full_key (key_type, profile, applet->id, "locked");
 
 	return gconf_client_key_is_writable (client, key, NULL);

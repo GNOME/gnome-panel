@@ -26,6 +26,7 @@ static GdkPixbuf * get_missing (int preffered_size);
 
 enum {
 	PROP_0,
+	PROP_ACTIVATABLE,
 	PROP_HAS_ARROW,
 	PROP_DND_HIGHLIGHT,
 	PROP_ORIENTATION,
@@ -277,10 +278,6 @@ button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
 
-	if (button->pressed_timeout)
-		g_source_remove (button->pressed_timeout);
-	button->pressed_timeout = 0;
-
 	button_widget_unset_pixbufs (button);
 
 	g_free (button->filename);
@@ -305,6 +302,9 @@ button_widget_get_property (GObject    *object,
 	button = BUTTON_WIDGET (object);
 
 	switch (prop_id) {
+	case PROP_ACTIVATABLE:
+		g_value_set_boolean (value, button->activatable);
+		break;
 	case PROP_HAS_ARROW:
 		g_value_set_boolean (value, button->arrow);
 		break;
@@ -339,6 +339,9 @@ button_widget_set_property (GObject      *object,
 	button = BUTTON_WIDGET (object);
 
 	switch (prop_id) {
+	case PROP_ACTIVATABLE:
+		button_widget_set_activatable (button, g_value_get_boolean (value));
+		break;
 	case PROP_HAS_ARROW:
 		button_widget_set_has_arrow (button, g_value_get_boolean (value));
 		break;
@@ -508,14 +511,20 @@ button_widget_expose (GtkWidget         *widget,
 	}
 
 	/* offset for pressed buttons */
-	off = (button->in_button && button->button_down) ?
+	off = (button_widget->activatable && button->in_button && button->button_down) ?
 		BUTTON_WIDGET_DISPLACEMENT * widget->allocation.height / 48.0 : 0;
-	
-	if (panel_global_config_get_highlight_when_over () && 
+
+	if (!button_widget->activatable) {
+		pb = gdk_pixbuf_copy (button_widget->scaled);
+		gdk_pixbuf_saturate_and_pixelate (button_widget->scaled,
+						  pb,
+						  0.8,
+						  TRUE);
+	} else if (panel_global_config_get_highlight_when_over () && 
 	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
-		pb = button_widget->scaled_hc;
+		pb = g_object_ref (button_widget->scaled_hc);
 	else
-		pb = button_widget->scaled;
+		pb = g_object_ref (button_widget->scaled);
 
 	if (!pb)
 		return FALSE;
@@ -540,6 +549,8 @@ button_widget_expose (GtkWidget         *widget,
 				 image_bound.width, image_bound.height,
 				 GDK_RGB_DITHER_NORMAL,
 				 0, 0);
+
+	g_object_unref (pb);
 	
 	if (button_widget->arrow) {
 		int i;
@@ -627,18 +638,16 @@ button_widget_size_allocate (GtkWidget     *widget,
 	}
 }
 
-static gboolean
-pressed_timeout_func(gpointer data)
+static void
+button_widget_activate (GtkButton *button)
 {
-	ButtonWidget *button;
+	ButtonWidget *button_widget = BUTTON_WIDGET (button);
 
-	g_return_val_if_fail (BUTTON_IS_WIDGET (data), FALSE);
+	if (!button_widget->activatable)
+		return;
 
-	button = BUTTON_WIDGET (data);
-
-	button->pressed_timeout = 0;
-
-	return FALSE;
+	if (GTK_BUTTON_CLASS (parent_class)->activate)
+		GTK_BUTTON_CLASS (parent_class)->activate (button);
 }
 
 static gboolean
@@ -651,7 +660,7 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 
 	button = BUTTON_WIDGET (widget);
 
-	if (button->pressed_timeout)
+	if (!button->activatable)
 		return TRUE;
 
 	return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
@@ -690,30 +699,6 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 }
 
 static void
-button_widget_button_pressed (GtkButton *button)
-{
-	ButtonWidget *button_widget;
-
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	GTK_BUTTON_CLASS (parent_class)->pressed (button);
-
-	button_widget = BUTTON_WIDGET (button);
-	button_widget->pressed_timeout =
-		g_timeout_add (400, pressed_timeout_func, button_widget);
-        gtk_widget_queue_draw (GTK_WIDGET (button));
-}
-
-static void
-button_widget_button_released (GtkButton *button)
-{
-	g_return_if_fail (BUTTON_IS_WIDGET (button));
-
-	GTK_BUTTON_CLASS (parent_class)->released (button);
-        gtk_widget_queue_draw (GTK_WIDGET (button));
-}
-
-static void
 button_widget_instance_init (ButtonWidget *button)
 {
 	button->pixbuf    = NULL;
@@ -726,8 +711,7 @@ button_widget_instance_init (ButtonWidget *button)
 	button->ignore_leave  = FALSE;
 	button->dnd_highlight = FALSE;
 
-	button->pressed_timeout = 0;
-	button->size            = 0;
+	button->size = 0;
 
 	panel_signal_connect_object_while_alive (
 			panel_icon_theme, "changed",
@@ -759,8 +743,16 @@ button_widget_class_init (ButtonWidgetClass *klass)
 	widget_class->leave_notify_event = button_widget_leave_notify;
 	widget_class->expose_event       = button_widget_expose;
 
-	button_class->pressed  = button_widget_button_pressed;
-	button_class->released = button_widget_button_released;
+	button_class->activate = button_widget_activate;
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_ACTIVATABLE,
+			g_param_spec_boolean ("activatable",
+					      _("Activatable"),
+					      _("Whether the button is activatable"),
+					      TRUE,
+					      G_PARAM_READWRITE | G_PARAM_CONSTRUCT));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -866,6 +858,32 @@ button_widget_new_from_stock (const char       *stock_id,
 			NULL);
 	
 	return retval;
+}
+
+void
+button_widget_set_activatable (ButtonWidget *button,
+			       gboolean      activatable)
+{
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	activatable = activatable != FALSE;
+
+	if (button->activatable != activatable) {
+		button->activatable = activatable;
+
+		if (GTK_WIDGET_DRAWABLE (button))
+			gtk_widget_queue_draw (GTK_WIDGET (button));
+
+		g_object_notify (G_OBJECT (button), "activatable");
+	}
+}
+
+gboolean
+button_widget_get_activatable (ButtonWidget *button)
+{
+	g_return_val_if_fail (BUTTON_IS_WIDGET (button), FALSE);
+
+	return button->activatable;
 }
 
 void

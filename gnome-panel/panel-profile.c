@@ -38,6 +38,7 @@
 #include "panel-util.h"
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
+#include "panel-lockdown.h"
 
 typedef struct {
 	GdkScreen       *screen;
@@ -637,18 +638,6 @@ TOPLEVEL_GET_SET_FUNCS ("background/fit",     background, bool, fit,            
 TOPLEVEL_GET_SET_FUNCS ("background/stretch", background, bool, stretch,        gboolean)
 TOPLEVEL_GET_SET_FUNCS ("background/rotate",  background, bool, rotate,         gboolean)
 
-gboolean
-panel_profile_get_toplevel_locked_down (PanelToplevel *toplevel)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-	key = panel_profile_get_toplevel_key (toplevel, "locked_down");
-
-	return gconf_client_get_bool (client, key, NULL);
-}
-
 static const char *
 panel_profile_get_attached_object_key (PanelToplevel *toplevel,
 				       const char    *key)
@@ -1165,7 +1154,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 	else UPDATE_INT ("unhide_delay", unhide_delay)
 	else UPDATE_INT ("auto_hide_size", auto_hide_size)
 	else UPDATE_STRING ("animation_speed", animation_speed)
-	else UPDATE_BOOL ("locked_down", locked_down)
 }
 
 static void
@@ -1631,7 +1619,6 @@ panel_profile_load_toplevel (GConfClient       *client,
 	GET_INT ("unhide_delay", unhide_delay);
 	GET_INT ("auto_hide_size", auto_hide_size);
 	GET_STRING ("animation_speed", animation_speed);
-	GET_BOOL ("locked_down", locked_down);
 
 #define GET_POSITION(a, c, fn)                                                      \
 	{                                                                           \
@@ -2508,79 +2495,23 @@ panel_profile_is_writable_show_program_list (void)
 }
 
 gboolean
-panel_profile_get_inhibit_command_line (void)
-{
-	GConfClient *client = panel_gconf_get_client ();
-
-	return gconf_client_get_bool (client, "/desktop/gnome/lockdown/inhibit_command_line", NULL);
-}
-
-gboolean
-panel_profile_get_inhibit_force_quit (void)
-{
-	GConfClient *client = panel_gconf_get_client ();
-
-	return gconf_client_get_bool (client, "/desktop/gnome/lockdown/inhibit_force_quit", NULL);
-}
-
-gboolean
-panel_profile_get_locked_down (void)
-{
-	/* since we don't support online updating of the locked_down
-	   key, we just cache it.  This avoids any weirdness caused
-	   by changing the key while the panel is running */
-	static gboolean cached = FALSE;
-	static gboolean value;
-	GConfClient *client;
-	const char  *key;
-
-	if (cached)
-		return value;
-
-	cached = TRUE;
-
-	client = panel_gconf_get_client ();
-	key = panel_gconf_global_key ("locked_down");
-	value = gconf_client_get_bool (client, key, NULL);
-
-	return value;
-}
-
-GSList *
-panel_profile_get_disabled_applets (void)
-{
-	GConfClient *client;
-	const char  *key;
-
-	client = panel_gconf_get_client ();
-	key = panel_gconf_global_key ("disabled_applets");
-	return gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
-}
-
-/* True if all the move keys are writable.  This is kind of
-   a blanket statement.  For example we may only lock one of them
-   down and that would prevent the user from moving the panel at
-   all, but really, making this truly fine grained is probably too
-   much crack */
-gboolean
 panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 {
 	const char *key;
 	GConfClient *client;
 
-	if (panel_toplevel_get_locked_down (toplevel) ||
-	    panel_profile_get_locked_down () ||
-	    ! panel_profile_is_writable_toplevel_orientation (toplevel))
+	if (panel_lockdown_get_locked_down () ||
+	    !panel_profile_is_writable_toplevel_orientation (toplevel))
 		return FALSE;
 
 	client = panel_gconf_get_client ();
 
 	key = panel_profile_get_toplevel_key (toplevel, "screen");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
 	key = panel_profile_get_toplevel_key (toplevel, "monitor");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
 	/* For expanded panels we don't really have to check 
@@ -2589,17 +2520,17 @@ panel_profile_can_be_moved_freely (PanelToplevel *toplevel)
 		return TRUE;
 
 	key = panel_profile_get_toplevel_key (toplevel, "x");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 	key = panel_profile_get_toplevel_key (toplevel, "x_centered");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
 	key = panel_profile_get_toplevel_key (toplevel, "y");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 	key = panel_profile_get_toplevel_key (toplevel, "y_centered");
-	if ( ! gconf_client_key_is_writable (client, key, NULL))
+	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
 	return TRUE;

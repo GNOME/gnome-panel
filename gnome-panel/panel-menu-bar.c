@@ -38,6 +38,7 @@
 #include "menu-util.h"
 #include "panel-globals.h"
 #include "panel-profile.h"
+#include "panel-lockdown.h"
 
 #define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
 
@@ -49,9 +50,11 @@ struct _PanelMenuBarPrivate {
 
 	GtkWidget             *applications_menu;
 	GtkWidget             *actions_menu;
+	GtkWidget             *actions_item;
 };
 
 static GObjectClass *parent_class;
+static void panel_menu_bar_append_actions_menu (PanelMenuBar *menubar);
 
 static void
 panel_menu_bar_show_applications_menu (PanelMenuBar *menubar,
@@ -97,25 +100,37 @@ panel_menu_bar_append_action_item (PanelMenuBar *menubar,
 }
 
 static void
+panel_menu_bar_recreate_actions_menu (PanelMenuBar *menubar)
+{
+	if (menubar->priv->actions_menu) {
+		gtk_widget_destroy (menubar->priv->actions_menu);
+		menubar->priv->actions_menu = NULL;
+
+		panel_menu_bar_append_actions_menu (menubar);
+	}
+}
+
+static void
 panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 {
-	GtkWidget  *item;
-	char       *logout_string;
-	char       *logout_tooltip;
-	const char *user_name;
+	GtkWidget *item;
+	gboolean   enable_log_out;
+	gboolean   enable_lock_screen;
 
-	menubar->priv->actions_menu = panel_create_menu ();
+	if (!menubar->priv->actions_menu) {
+		menubar->priv->actions_menu = panel_create_menu ();
 
-	/* intercept all right button clicks makes sure they don't
-	   go to the object itself */
-	g_signal_connect (G_OBJECT (menubar->priv->actions_menu), "button_press_event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+		/* intercept all right button clicks makes sure they don't
+	   	go to the object itself */
+		g_signal_connect (G_OBJECT (menubar->priv->actions_menu), "button_press_event",
+			  	G_CALLBACK (menu_dummy_button_press_event), NULL);
 
-	g_signal_connect (menubar->priv->actions_menu, "destroy",
-			  G_CALLBACK (gtk_widget_destroyed),
-			  &menubar->priv->actions_menu);
+		g_signal_connect (menubar->priv->actions_menu, "destroy",
+			  	G_CALLBACK (gtk_widget_destroyed),
+			  	&menubar->priv->actions_menu);
+	}
 
-	if ( ! panel_profile_get_inhibit_command_line ()) {
+	if (!panel_lockdown_get_disable_command_line ()) {
 		panel_menu_bar_append_action_item (
 						   menubar,
 						   menubar->priv->actions_menu,
@@ -127,6 +142,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 
 		item = gtk_separator_menu_item_new ();
 		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+		gtk_widget_show (item);
 	}
 
 	if (panel_is_program_in_path  ("gnome-search-tool"))
@@ -144,6 +160,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
 		item = gtk_separator_menu_item_new ();
 		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+		gtk_widget_show (item);
 
 		panel_menu_bar_append_action_item (
 			menubar,
@@ -155,10 +172,19 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			G_CALLBACK (panel_action_screenshot));
 	}
 
-	item = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+	enable_log_out = !panel_lockdown_get_disable_log_out ();
+	enable_lock_screen =
+		(!panel_lockdown_get_disable_lock_screen () &&
+		 panel_is_program_in_path  ("xscreensaver"));
+		
 
-	if (panel_is_program_in_path  ("xscreensaver"))
+	if (enable_log_out || enable_lock_screen) {
+		item = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
+		gtk_widget_show (item);
+	}
+
+	if (enable_lock_screen)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
@@ -168,26 +194,37 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			"ACTION:lock:NEW",
 			G_CALLBACK (panel_action_lock_screen));
 
-	user_name = g_get_real_name ();
-	if (!user_name || !user_name [0])
-		user_name = g_get_user_name ();
-	logout_string  = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
-	logout_tooltip = g_strdup_printf (_("Quit from %s's desktop"),
-					  user_name);
-	panel_menu_bar_append_action_item (
-			menubar,
-			menubar->priv->actions_menu,
-			logout_string,
-			PANEL_STOCK_LOGOUT,
-			logout_tooltip,
-			"ACTION:logout:NEW",
-			G_CALLBACK (panel_action_logout));
-	g_free (logout_string);
-	g_free (logout_tooltip);
+	if (enable_log_out) {
+		const char *user_name;
+		char       *logout_string;
+		char       *logout_tooltip;
 
-	item = gtk_menu_item_new_with_label (_("Actions"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menubar->priv->actions_menu);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
+		user_name = g_get_real_name ();
+		if (!user_name || !user_name [0])
+			user_name = g_get_user_name ();
+
+		logout_string  = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
+		logout_tooltip = g_strdup_printf (_("Quit from %s's desktop"),
+					  user_name);
+
+		panel_menu_bar_append_action_item (menubar,
+						   menubar->priv->actions_menu,
+						   logout_string,
+						   PANEL_STOCK_LOGOUT,
+						   logout_tooltip,
+						   "ACTION:logout:NEW",
+						   G_CALLBACK (panel_action_logout));
+		
+		g_free (logout_string);
+		g_free (logout_tooltip);
+	}
+
+	if (!menubar->priv->actions_item) {
+		menubar->priv->actions_item = gtk_menu_item_new_with_label (_("Actions"));
+		gtk_menu_shell_append (GTK_MENU_SHELL (menubar), menubar->priv->actions_item);
+	}
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->actions_item),
+				   menubar->priv->actions_menu);
 }
 
 static void
@@ -227,8 +264,12 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 				  G_CALLBACK (panel_menu_bar_show_applications_menu), menubar);
 	g_signal_connect_swapped (menubar->priv->applications_menu, "hide",
 				  G_CALLBACK (gtk_menu_shell_deselect), menubar);
-	
+	menubar->priv->actions_menu = NULL;
+	menubar->priv->actions_item = NULL;
 	panel_menu_bar_append_actions_menu (menubar);
+
+	panel_lockdown_notify_add (G_CALLBACK (panel_menu_bar_recreate_actions_menu),
+				   menubar);
 }
 
 static void
@@ -241,10 +282,12 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 
 	menubar->priv->panel = (PanelWidget *) widget->parent;
 
-	g_object_set_data (G_OBJECT (menubar->priv->applications_menu),
-			   "menu_panel", menubar->priv->panel);
-	g_object_set_data (G_OBJECT (menubar->priv->actions_menu),
-			   "menu_panel", menubar->priv->panel);
+	panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->applications_menu),
+				       "menu_panel",
+				       menubar->priv->panel);
+	panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->actions_menu),
+				       "menu_panel",
+				       menubar->priv->panel);
 }
 
 static void
@@ -315,8 +358,11 @@ panel_menu_bar_load (PanelWidget *panel,
 		return;
 	}
 
-	panel_applet_add_callback (
-		menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
+	panel_applet_add_callback (menubar->priv->info,
+				   "help",
+				   GTK_STOCK_HELP,
+				   _("_Help"),
+				   NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
 }

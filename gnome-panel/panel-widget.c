@@ -22,6 +22,7 @@
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
 #include "panel-profile.h"
+#include "panel-lockdown.h"
 
 #define MOVE_INCREMENT 2
 
@@ -2078,7 +2079,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 			    panel_screen_from_panel_widget (panel) ==
 			    panel_screen_from_panel_widget (new_panel) &&
 			    !g_slist_find (forb, new_panel) &&
-			    ! panel_toplevel_get_locked_down (new_panel->toplevel)) {
+			    !panel_lockdown_get_locked_down ()) {
 				pos = panel_widget_get_moveby (new_panel, 0, ad->drag_off);
 
 				if (pos < 0) pos = 0;
@@ -2204,7 +2205,7 @@ panel_widget_applet_button_press_event (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	if (panel_profile_get_locked_down () || event->button != 2)
+	if (panel_lockdown_get_locked_down () || event->button != 2)
 		return FALSE;
 
 	/* time on sent events seems to be bogus */
@@ -2764,7 +2765,7 @@ panel_widget_tab_move (PanelWidget *panel,
 	
 	if (new_panel &&
 	    (new_panel != panel) &&
-	    ! panel_toplevel_get_locked_down (new_panel->toplevel))
+	    !panel_lockdown_get_locked_down ())
 		panel_widget_reparent (panel, new_panel, ad->applet, 0);
 }
 

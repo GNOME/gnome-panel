@@ -43,6 +43,7 @@
 #include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
+#include "panel-lockdown.h"
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -81,21 +82,48 @@ panel_action_lock_screen (GtkWidget *widget)
 	panel_lock_screen (gtk_widget_get_screen (widget));
 }
 
+static gboolean
+screensaver_properties_enabled (void)
+{
+	if (panel_lockdown_get_locked_down () ||
+	    panel_lockdown_get_disable_lock_screen ())
+		return FALSE;
+
+	return TRUE;
+}
+
 static void
 panel_action_lock_setup_menu (PanelActionButton *button)
 {
-	panel_applet_add_callback (button->priv->info, "activate", NULL, _("_Activate Screensaver"));
-	panel_applet_add_callback (button->priv->info, "lock",     NULL, _("_Lock Screen"));
+	panel_applet_add_callback (button->priv->info,
+				   "activate",
+				   NULL,
+				   _("_Activate Screensaver"),
+				   panel_lockdown_get_disable_lock_screen);
 
-	/* in commie mode don't allow killing the screensaver */
-	if ( ! panel_profile_get_locked_down ())
-		panel_applet_add_callback (button->priv->info, "exit",     NULL, _("_Kill Screensaver Daemon"));
+	panel_applet_add_callback (button->priv->info,
+				   "lock",
+				   NULL,
+				   _("_Lock Screen"),
+				   panel_lockdown_get_disable_lock_screen);
 
-	panel_applet_add_callback (button->priv->info, "restart",  NULL, _("Restart _Screensaver Daemon"));
+	panel_applet_add_callback (button->priv->info,
+				   "exit",
+				   NULL,
+				   _("_Kill Screensaver Daemon"),
+				   screensaver_properties_enabled);
 
-	/* in commie mode don't allow changing the screensaver properties */
-	if ( ! panel_profile_get_locked_down ())
-		panel_applet_add_callback (button->priv->info, "prefs", NULL, _("_Properties"));
+	panel_applet_add_callback (button->priv->info,
+				   "restart",
+				   NULL,
+				   _("Restart _Screensaver Daemon"),
+				   screensaver_properties_enabled);
+
+	panel_applet_add_callback (button->priv->info,
+				   "prefs",
+				   NULL,
+				   _("_Properties"),
+				   screensaver_properties_enabled);
 }
 
 static void
@@ -144,9 +172,6 @@ panel_action_logout (GtkWidget *widget)
 void
 panel_action_run_program (GtkWidget *widget)
 {
-	if (panel_profile_get_inhibit_command_line ())
-		return;
-
 	panel_run_dialog_present (gtk_widget_get_screen (widget));
 }
 
@@ -203,14 +228,7 @@ panel_action_screenshot (GtkWidget *widget)
 static void
 panel_action_force_quit (GtkWidget *widget)
 {
-	GdkScreen *screen;
-
-	if (panel_profile_get_inhibit_force_quit ())
-		return;
-
-	screen = gtk_widget_get_screen (widget);
-
-	panel_force_quit (screen);
+	panel_force_quit (gtk_widget_get_screen (widget));
 }
 
 typedef struct {
@@ -222,6 +240,7 @@ typedef struct {
 	void                  (*setup_menu)  (PanelActionButton *button);
 	void                  (*invoke_menu) (PanelActionButton *button,
 					      const char        *callback_name);
+	gboolean              (*is_disabled) (void);
 } PanelAction;
 
 /* Keep order in sync with PanelActionButtonType
@@ -233,34 +252,46 @@ static PanelAction actions [] = {
 		N_("Lock screen"), "gospanel-21",
 		panel_action_lock_screen,
 		panel_action_lock_setup_menu,
-		panel_action_lock_invoke_menu
+		panel_action_lock_invoke_menu,
+		panel_lockdown_get_disable_lock_screen
 	},
 	{
 		PANEL_ACTION_LOGOUT, PANEL_STOCK_LOGOUT,
 		N_("Log out of GNOME"), "gospanel-20",
-		panel_action_logout, NULL, NULL
+		panel_action_logout, NULL, NULL,
+		panel_lockdown_get_disable_log_out
 	},
 	{
 		PANEL_ACTION_RUN, PANEL_STOCK_RUN,
 		N_("Run Application"), "gospanel-555",
-		panel_action_run_program, NULL, NULL
+		panel_action_run_program, NULL, NULL,
+		panel_lockdown_get_disable_command_line
 	},
 	{
 		PANEL_ACTION_SEARCH, PANEL_STOCK_SEARCHTOOL,
 		N_("Search for Files"), "gospanel-554",
-		panel_action_search, NULL, NULL
+		panel_action_search, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_SCREENSHOT, PANEL_STOCK_SCREENSHOT,
 		N_("Screenshot"), "gospanel-553",
-		panel_action_screenshot, NULL, NULL
+		panel_action_screenshot, NULL, NULL, NULL
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,
 		N_("Force Quit"), "gospanel-563",
-		panel_action_force_quit, NULL, NULL
+		panel_action_force_quit, NULL, NULL,
+		panel_lockdown_get_disable_force_quit
 	}
 };
+
+static void
+panel_action_button_update_sensitivity (PanelActionButton *button)
+{
+	if (actions [button->priv->type].is_disabled)
+		button_widget_set_activatable (BUTTON_WIDGET (button),
+					       !actions [button->priv->type].is_disabled ());
+}
 
 static void
 panel_action_button_finalize (GObject *object)
@@ -269,6 +300,9 @@ panel_action_button_finalize (GObject *object)
 
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
+
+	panel_lockdown_notify_remove (G_CALLBACK (panel_action_button_update_sensitivity),
+				      button);
 
 	gconf_client_notify_remove (panel_gconf_get_client (),
 				    button->priv->gconf_notify);
@@ -473,6 +507,8 @@ panel_action_button_set_type (PanelActionButton     *button,
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
 			      _(actions [type].tooltip), NULL);
 	panel_a11y_set_atk_name_desc (GTK_WIDGET (button), _(actions [type].tooltip), NULL);
+
+	panel_action_button_update_sensitivity (button);
 }
 
 static void
@@ -512,6 +548,9 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 		gconf_client_notify_add (panel_gconf_get_client (), key, 
 					 (GConfClientNotifyFunc) panel_action_button_type_changed,
 					 button, NULL, NULL);
+
+	panel_lockdown_notify_add (G_CALLBACK (panel_action_button_update_sensitivity),
+				   button);
 }
 
 static void
@@ -553,8 +592,11 @@ panel_action_button_load (PanelActionButtonType  type,
 		return;
 	}
 
-	panel_applet_add_callback (
-		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
+	panel_applet_add_callback (button->priv->info,
+				   "help",
+				   GTK_STOCK_HELP,
+				   _("_Help"),
+				   NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);

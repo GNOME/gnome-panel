@@ -53,6 +53,7 @@
 #include "panel-multiscreen.h"
 #include "menu.h"
 #include "menu-fentry.h"
+#include "panel-lockdown.h"
 
 #define ICON_SIZE 48.0
 
@@ -1469,7 +1470,7 @@ panel_run_dialog_present (GdkScreen *screen)
 	GladeXML *gui;
 	char     *glade_file;
 
-	if (panel_profile_get_inhibit_command_line ())
+	if (panel_lockdown_get_disable_command_line ())
 		return;
 
 	if (static_dialog) {

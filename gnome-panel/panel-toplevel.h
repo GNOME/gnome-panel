@@ -161,10 +161,6 @@ void                 panel_toplevel_set_enable_arrows   (PanelToplevel       *to
 gboolean             panel_toplevel_get_enable_arrows   (PanelToplevel       *toplevel);
 void                 panel_toplevel_update_edges        (PanelToplevel       *toplevel);
 
-gboolean             panel_toplevel_get_locked_down     (PanelToplevel       *toplevel);
-void                 panel_toplevel_set_locked_down     (PanelToplevel       *toplevel,
-							 gboolean             locked);
-
 gboolean             panel_toplevel_is_last_unattached  (PanelToplevel       *toplevel);
 GSList              *panel_toplevel_list_toplevels      (void);
 

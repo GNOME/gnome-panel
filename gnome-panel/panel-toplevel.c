@@ -45,6 +45,8 @@
 #include "panel-bindings.h"
 #include "panel-struts.h"
 #include "xstuff.h"
+#include "panel-config-global.h"
+#include "panel-lockdown.h"
 
 #define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
 
@@ -174,11 +176,6 @@ struct _PanelToplevelPrivate {
 	/* flag to see if we have already done geometry updating,
 	   if not then we're still loading and can ignore many things */
 	guint                   updated_geometry_initial : 1;
-
-	/* if the panel is in fact locked_down and can't be
-	 * touched by the user */
-	guint                   locked_down : 1;
-
 };
 
 enum {
@@ -423,6 +420,9 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursor     *cursor;
 
 	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+		return;
+
+	if (panel_lockdown_get_locked_down ())
 		return;
 
 	/* If any of the position/orientation are not writable,
@@ -4611,20 +4611,4 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 		return TRUE;
 
 	return FALSE;
-}
-
-gboolean
-panel_toplevel_get_locked_down (PanelToplevel *toplevel)
-{
-	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
-
-	return toplevel->priv->locked_down;
-}
-
-void
-panel_toplevel_set_locked_down (PanelToplevel *toplevel, gboolean locked_down)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-
-	toplevel->priv->locked_down = locked_down ? 1 : 0;
 }

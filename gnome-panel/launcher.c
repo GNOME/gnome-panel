@@ -39,6 +39,7 @@
 #include "panel-a11y.h"
 #include "panel-globals.h"
 #include "panel-multiscreen.h"
+#include "panel-lockdown.h"
 
 #include "quick-desktop-reader.h"
 
@@ -692,9 +693,6 @@ void
 launcher_properties (Launcher  *launcher,
 		     GdkScreen *screen)
 {
-	if (panel_profile_get_inhibit_command_line ())
-		return;
-
 	if (launcher->prop_dialog != NULL) {
 		gtk_window_set_screen (
 			GTK_WINDOW (launcher->prop_dialog), screen);
@@ -704,6 +702,16 @@ launcher_properties (Launcher  *launcher,
 
 	launcher->prop_dialog = create_properties_dialog (launcher, screen);
 	gtk_widget_show_all (launcher->prop_dialog);
+}
+
+static gboolean
+lancher_properties_enabled (void)
+{
+	if (panel_lockdown_get_locked_down () ||
+	    panel_lockdown_get_disable_command_line ())
+		return FALSE;
+
+	return TRUE;
 }
 
 static Launcher *
@@ -728,15 +736,11 @@ load_launcher_applet (const char       *location,
 	if (!launcher->info)
 		return NULL;
 
-	if ( ! panel_profile_get_locked_down () &&
-	     ! panel_toplevel_get_locked_down (panel->toplevel) &&
-	     /* if the command line is inhibited, don't allow editting launchers,
-		since that would allow running arbitrary commands */
-	     ! panel_profile_get_inhibit_command_line ())
-		panel_applet_add_callback (launcher->info,
-					   "properties",
-					   GTK_STOCK_PROPERTIES,
-					   _("_Properties"));
+	panel_applet_add_callback (launcher->info,
+				   "properties",
+				   GTK_STOCK_PROPERTIES,
+				   _("_Properties"),
+				   lancher_properties_enabled);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (launcher->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (launcher->button), TRUE);

@@ -38,6 +38,7 @@
 #include "applet.h"
 #include "panel-marshal.h"
 #include "panel-background.h"
+#include "panel-lockdown.h"
 
 #define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
 
@@ -100,9 +101,6 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
 
-	locked_down = panel_profile_get_locked_down () ||
-		panel_toplevel_get_locked_down (panel_widget->toplevel);
-
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
@@ -131,6 +129,8 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 				      NULL);
 
 	/* Second visibility */
+	locked_down = panel_lockdown_get_locked_down ();
+
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/LockAppletToPanel",
 				      "hidden",
@@ -301,6 +301,9 @@ panel_applet_frame_load (const gchar *iid,
 	panel_applet_frame_set_info (frame, info);
 	panel_applet_frame_sync_menu_state (frame);
 	panel_applet_frame_init_properties (frame);
+
+	panel_lockdown_notify_add (G_CALLBACK (panel_applet_frame_sync_menu_state),
+				   frame);
 }
 
 void
@@ -450,6 +453,9 @@ static void
 panel_applet_frame_finalize (GObject *object)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
+
+	panel_lockdown_notify_remove (G_CALLBACK (panel_applet_frame_sync_menu_state),
+				      frame);
 
 	if (frame->priv->property_bag)
 		bonobo_object_release_unref (
@@ -845,7 +851,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	char      *applet_name = NULL;
 	char      *applet_txt;
 	char      *dialog_txt;
-	gboolean   locked;
+	gboolean   locked_down;
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
@@ -854,15 +860,14 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	if (frame->priv->iid)
 		applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
-	locked = panel_profile_get_locked_down () ||
-		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
+	locked_down = panel_lockdown_get_locked_down ();
 
 	applet_txt = g_strdup_printf (
 			_("The \"%s\" applet appears to have died "
 			  "unexpectedly.\n\n"
 			  "Do you want to reload this applet?"),
 			applet_name ? applet_name : "");
-	if (!locked) {
+	if (!locked_down) {
 		dialog_txt = g_strconcat(applet_txt,
 				_("\n\n"
 				  "(If you choose not to reload it at this time"
@@ -936,10 +941,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	GtkWidget *dialog;
 	int        response;
 	char      *problem_txt;
-	gboolean   locked;
+	gboolean   locked_down;
 
-	locked = panel_profile_get_locked_down () ||
-		panel_toplevel_get_locked_down (frame->priv->panel->toplevel);
+	locked_down = panel_lockdown_get_locked_down ();
 
 	problem_txt = g_strdup_printf (_("The panel encountered a problem "
 					 "while loading \"%s\"."), iid);
@@ -950,12 +954,12 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
-					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
+					locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
 					"%s\n%s%s",
 					problem_txt,
 					detail_txt,
-					locked ? "" :
+					locked_down ? "" :
 					_("\n\n"
 					  "Do you want to delete the applet "
 					  "from your configuration?"));
@@ -964,11 +968,11 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	} else {
 		dialog = gtk_message_dialog_new (
 					NULL, 0,
-					locked ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
+					locked_down ? GTK_MESSAGE_INFO : GTK_MESSAGE_QUESTION,
 					GTK_BUTTONS_NONE,
 					"%s%s",
 					problem_txt,
-					locked ? "" :
+					locked_down ? "" :
 					_("\n\n"
 					  "Do you want to delete the applet "
 					  "from your configuration?"));
@@ -976,7 +980,7 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	register_stock_item ();
 
-	if (locked) {
+	if (locked_down) {
 		gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 					GTK_STOCK_OK, LOADING_FAILED_RESPONSE_DONT_DELETE,
 					NULL);
@@ -996,14 +1000,10 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	gtk_widget_destroy (dialog);
 
-	if (response == LOADING_FAILED_RESPONSE_DELETE) {
-		/* if we can't write to applets list we can't really delete
-		   it, so we'll just ignore this.  There's nothing we can
-		   do about it. */
-		if ( ! locked &&
-		    panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
-			panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
-	}
+	if (response == LOADING_FAILED_RESPONSE_DELETE &&
+	    !locked_down &&
+	    panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
 }
 
 static void
@@ -1161,8 +1161,7 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	if (bg_str == NULL)
 		bg_str = g_strdup ("");
 
-	locked_down = panel_profile_get_locked_down () ||
-		panel_toplevel_get_locked_down (panel->toplevel);
+	locked_down = panel_lockdown_get_locked_down ();
 
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
@@ -1203,18 +1202,11 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	ORBitConnectionStatus  cnx_status;
 	GtkWidget             *widget;
 	char                  *moniker;
-	GSList                *disabled_applets;
 
 	frame->priv->panel = panel;
 
-	disabled_applets = panel_profile_get_disabled_applets ();
-
-	if (g_slist_find_custom (disabled_applets, iid, (GCompareFunc)strcmp) != NULL) {
-		panel_g_slist_deep_free (disabled_applets);
+	if (panel_lockdown_is_applet_disabled (iid))
 		return NULL;
-	}
-
-	panel_g_slist_deep_free (disabled_applets);
 
 	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
 

@@ -29,9 +29,9 @@ struct _ButtonWidget {
 
 	PanelOrientation  orientation;
 
-	guint             pressed_timeout;
 	int               size;
 
+	guint             activatable   : 1;
 	guint             ignore_leave  : 1;
 	guint             arrow         : 1;
 	guint             dnd_highlight : 1;
@@ -48,6 +48,9 @@ GtkWidget *      button_widget_new               (const char       *pixmap,
 GtkWidget *      button_widget_new_from_stock    (const char       *stock_id,
 						  gboolean          arrow,
 						  PanelOrientation  orientation);
+void             button_widget_set_activatable   (ButtonWidget     *button,
+						  gboolean          activatable);
+gboolean         button_widget_get_activatable   (ButtonWidget     *button);
 void             button_widget_set_icon_name     (ButtonWidget     *button,
 						  const char       *icon_name);
 const char *     button_widget_get_icon_name     (ButtonWidget     *button);

@@ -151,11 +151,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 	else if (strcmp (key, "highlight_launchers_on_mouseover") == 0)
 		global_config.highlight_when_over =
 			gconf_value_get_bool (value);
-
-#if 0
-	else
-		g_warning ("%s not handled", key);
-#endif
 }
 
 static void

@@ -29,16 +29,20 @@ typedef struct {
 	char            *id;
 } AppletInfo;
 
+typedef gboolean (* CallbackEnabledFunc) (void);
+
 typedef struct {
-	gchar        *name;
-	gchar        *stock_item;
-	gchar        *text;
+	char                *name;
+	char                *stock_item;
+	char                *text;
 
-	gint          sensitive;
-	AppletInfo   *info;
+	CallbackEnabledFunc  is_enabled_func;
 
-	GtkWidget    *menuitem;
-	GtkWidget    *submenu;
+	int                  sensitive;
+	AppletInfo          *info;
+
+	GtkWidget           *menuitem;
+	GtkWidget           *submenu;
 } AppletUserMenu;
 
 AppletInfo *panel_applet_register    (GtkWidget       *applet,
@@ -70,13 +74,11 @@ void panel_applet_load_queued_applets  (void);
 gboolean panel_applet_on_load_queue    (const char *id);
 
 
-void            panel_applet_add_callback    (AppletInfo  *info,
-					      const gchar *callback_name,
-					      const gchar *stock_item,
-					      const gchar *menuitem_text);
-
-void            panel_applet_remove_callback (AppletInfo *info,
-					      const char *callback_name);
+void            panel_applet_add_callback    (AppletInfo          *info,
+					      const gchar         *callback_name,
+					      const gchar         *stock_item,
+					      const gchar         *menuitem_text,
+					      CallbackEnabledFunc  is_enabled_func);
 
 AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
