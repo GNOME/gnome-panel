@@ -3,6 +3,8 @@
 
 BEGIN_GNOME_DECLS
 
+#define DRAWER_PANEL "drawer_panel"
+
 typedef enum {
 	DRAWER_UP,
 	DRAWER_LEFT,

@@ -113,6 +113,9 @@ struct _PanelWidgetClass
 			       PanelState state);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
+	void (* applet_added) (PanelWidget *panel,
+			       GtkWidget *applet);
+	void (* applet_removed) (PanelWidget *panel);
 };
 
 guint		panel_widget_get_type		(void);

@@ -21,8 +21,6 @@
 #include "drawer.h"
 
 
-#define DRAWER_PANEL "drawer_panel"
-
 extern GlobalConfig global_config;
 
 void
@@ -137,6 +135,7 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 	else
 		gtk_widget_hide(drawer_panel);
 
+	gtk_object_set_data(GTK_OBJECT(drawer_panel),DRAWER_PANEL,drawer);
 
 	g_free (pixmap_name);
 	return drawer;

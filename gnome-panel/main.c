@@ -37,6 +37,8 @@ GlobalConfig global_config = {
 		TRUE /*show small icons*/
 	};
 
+/*needed for drawers*/
+static void panel_setup(PanelWidget *panel);
 
 void
 load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
@@ -111,13 +113,14 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		if(!params) {
 			drawer = create_empty_drawer_applet(orient);
+			panel_setup(PANEL_WIDGET(drawer->drawer));
 			panels = g_list_append(panels,drawer->drawer);
 		} else {
 			int i;
 
 			sscanf(params,"%d",&i);
-			drawer = create_drawer_applet(g_list_nth(panels,i)->data,
-						     orient);
+			drawer=create_drawer_applet(g_list_nth(panels,i)->data,
+						    orient);
 		}
 
 		g_return_if_fail(drawer != NULL);
@@ -341,12 +344,12 @@ panel_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
-static void
+static gint
 applet_move_foreach(gpointer data, gpointer user_data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
 
-	if(!info) return;
+	if(!info) return FALSE;
 
 	if(info->type == APPLET_DRAWER) {
 		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
@@ -357,12 +360,45 @@ applet_move_foreach(gpointer data, gpointer user_data)
 					     NULL);
 		}
 	}
+	return TRUE;
 }
 
-static void
+static gint
 panel_applet_move(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	applet_move_foreach(applet,NULL);
+	return TRUE;
+}
+
+static gint
+panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
+{
+	Drawer *drawer = gtk_object_get_data(GTK_OBJECT(widget),DRAWER_PANEL);
+	PanelWidget *panel = PANEL_WIDGET(widget);
+
+	if(drawer)
+		if(panel->state == PANEL_SHOWN)
+			reposition_drawer(drawer);
+	return TRUE;
+}
+
+static gint
+panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(applet));
+	PanelWidget *panel = PANEL_WIDGET(widget);
+
+	if(!info) return FALSE;
+
+	orientation_change(info,panel);
+
+	return TRUE;
+}
+
+static gint
+panel_applet_removed(GtkWidget *widget, gpointer data)
+{
+	return TRUE;
 }
 
 static void
@@ -443,6 +479,50 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		gtk_widget_unref(panel_menu);
 }
 
+static void
+panel_setup(PanelWidget *panel)
+{
+	GtkWidget *panel_menu;
+
+	panel_menu = create_panel_root_menu(panel);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "orient_change",
+			   GTK_SIGNAL_FUNC(panel_orient_change),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "state_change",
+			   GTK_SIGNAL_FUNC(panel_state_change),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_move",
+			   GTK_SIGNAL_FUNC(panel_applet_move),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "size_allocate",
+			   GTK_SIGNAL_FUNC(panel_size_allocate),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_added",
+			   GTK_SIGNAL_FUNC(panel_applet_added),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "applet_removed",
+			   GTK_SIGNAL_FUNC(panel_applet_removed),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "button_press_event",
+			   GTK_SIGNAL_FUNC(panel_button_press),
+			   panel_menu);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(panel_destroy),
+			   panel_menu);
+
+	gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
+				 GTK_SIGNAL_FUNC(panel_realize),
+				 NULL);
+}
+
 
 static void
 init_user_panels(void)
@@ -452,7 +532,6 @@ init_user_panels(void)
 	int   size,x,y;
 	PanelConfig config;
 	GtkWidget *panel;
-	GtkWidget *panel_menu;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
 
@@ -503,31 +582,7 @@ init_user_panels(void)
 					 y,
 					 drop_pos);
 
-		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "orient_change",
-				   GTK_SIGNAL_FUNC(panel_orient_change),
-				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "state_change",
-				   GTK_SIGNAL_FUNC(panel_state_change),
-				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "applet_move",
-				   GTK_SIGNAL_FUNC(panel_applet_move),
-				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "button_press_event",
-				   GTK_SIGNAL_FUNC(panel_button_press),
-				   panel_menu);
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "destroy",
-				   GTK_SIGNAL_FUNC(panel_destroy),
-				   panel_menu);
-
-		gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
-					 GTK_SIGNAL_FUNC(panel_realize),
-					 NULL);
+		panel_setup(PANEL_WIDGET(panel));
 
 		gtk_widget_show(panel);
 

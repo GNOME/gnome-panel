@@ -64,6 +64,8 @@ enum {
 	ORIENT_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
+	APPLET_ADDED_SIGNAL,
+	APPLET_REMOVED_SIGNAL,
 	LAST_SIGNAL
 };
 
@@ -150,6 +152,25 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
+	panel_widget_signals[APPLET_ADDED_SIGNAL] =
+		gtk_signal_new("applet_added",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 applet_added),
+			       gtk_panel_widget_marshal_signal_applet,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_POINTER);
+	panel_widget_signals[APPLET_REMOVED_SIGNAL] =
+		gtk_signal_new("applet_removed",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 applet_removed),
+			       gtk_panel_widget_marshal_signal_applet,
+			       GTK_TYPE_NONE,
+			       0);
 
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
@@ -157,6 +178,8 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->orient_change = NULL;
 	class->state_change = NULL;
 	class->applet_move = NULL;
+	class->applet_added = NULL;
+	class->applet_removed = NULL;
 }
 
 static void
@@ -1501,10 +1524,6 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 					/*force orient change on the applet,
 					  maybe there should be a applet
 					  based orient signal*/
-					gtk_signal_emit(GTK_OBJECT(new_panel),
-							panel_widget_signals[ORIENT_CHANGE_SIGNAL],
-							new_panel->orient,
-							new_panel->snapped);
 			    	   	return FALSE;
 			    	}
 			}
@@ -1784,6 +1803,10 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 
 	bind_top_applet_events(applet);
 
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_ADDED_SIGNAL],
+			applet);
+
 	return pos;
 }
 
@@ -1814,6 +1837,10 @@ panel_widget_reparent (PanelWidget *old_panel,
 	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_PARENT_KEY,
 			    new_panel);
+
+	gtk_signal_emit(GTK_OBJECT(new_panel),
+			panel_widget_signals[APPLET_ADDED_SIGNAL],
+			applet);
 
 	return pos;
 }
@@ -1890,6 +1917,9 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	  panel will again be set to the largest thickness*/
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
 
 	return i;
 }
