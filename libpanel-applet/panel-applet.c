@@ -29,7 +29,9 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gdk/gdkx.h>
 #include <bonobo/bonobo-ui-util.h>
+#include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-types.h>
 #include <bonobo/bonobo-property-bag.h>
 #include <bonobo/bonobo-item-handler.h>
@@ -826,7 +828,8 @@ panel_applet_control_bound (BonoboControl *control,
 	gboolean ret;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
-	g_return_if_fail (applet->priv->iid != NULL && applet->priv->closure != NULL);
+	g_return_if_fail (applet->priv->iid != NULL &&
+			  applet->priv->closure != NULL);
 
 	if (applet->priv->bound)
 		return;
@@ -1091,7 +1094,7 @@ panel_applet_new (void)
 }
 
 typedef struct {
-	GType      applet_type;
+	GType     applet_type;
 	GClosure *closure;
 } PanelAppletCallBackData;
 
@@ -1116,6 +1119,113 @@ panel_applet_callback_data_free (PanelAppletCallBackData *data)
 	g_free (data);
 }
 
+/*
+ *   Time we're prepared to wait without a ControlFrame
+ * before terminating the Control. This can happen if the
+ * panel activates us but crashes before the set_frame.
+ *
+ * NB. if we don't get a frame in 30 seconds, something
+ * is badly wrong, or Gnome performance needs improving
+ * markedly !
+ */
+#define PANEL_APPLET_NEVER_GOT_FRAME_TIMEOUT 30 * 1000 /* ms */
+
+/* Track the living controls */
+static GSList *active_controls = NULL;
+
+static gboolean
+panel_applet_idle_quit (gpointer data)
+{
+	if (!active_controls)
+		bonobo_main_quit ();
+
+	return FALSE;
+}
+
+static void
+panel_applet_cnx_broken_callback (BonoboControl *control)
+{
+	active_controls = g_slist_remove (active_controls, control);
+	if (!active_controls) {
+		/* FIXME: leak deliberately */
+		g_object_new (BONOBO_TYPE_PROPERTY_BAG, NULL);
+		g_idle_add (panel_applet_idle_quit, NULL);
+	}
+}
+
+static gboolean
+panel_applet_never_got_frame_timeout (gpointer user_data)
+{
+	g_warning ("Never got frame, panel died - abnormal exit condition");
+
+	panel_applet_cnx_broken_callback (user_data);
+	
+	return FALSE;
+}
+
+static void
+panel_applet_set_frame_callback (BonoboControl *control,
+				 gpointer       user_data)
+{
+	Bonobo_ControlFrame remote_frame;
+
+	remote_frame = bonobo_control_get_control_frame (control, NULL);
+
+	if (remote_frame != CORBA_OBJECT_NIL) {
+		ORBitConnectionStatus status;
+
+		g_source_remove (GPOINTER_TO_UINT (user_data));
+
+		status = ORBit_small_get_connection_status (remote_frame);
+
+		/* Only track out of proc controls */
+		if (status != ORBIT_CONNECTION_IN_PROC) {
+			active_controls = g_slist_prepend (active_controls,
+							   control);
+
+			g_signal_connect_closure (
+				ORBit_small_get_connection (remote_frame),
+				"broken",
+				g_cclosure_new_object_swap (
+					G_CALLBACK (panel_applet_cnx_broken_callback),
+					G_OBJECT (control)),
+				FALSE);
+			g_signal_connect (
+				control, "destroy",
+				G_CALLBACK (panel_applet_cnx_broken_callback),
+				NULL);
+		}
+	}
+}
+
+/**
+ * panel_applet_instrument_for_failure:
+ * @control: the control.
+ * 
+ *   Don't read this method - just believe in it; it'll
+ * move inside libbonoboui in due course.
+ **/
+static void
+panel_applet_instrument_for_failure (BonoboControl *control)
+{
+	guint no_frame_timeout_id;
+
+	no_frame_timeout_id = g_timeout_add (
+		PANEL_APPLET_NEVER_GOT_FRAME_TIMEOUT,
+		panel_applet_never_got_frame_timeout,
+		control);
+	g_signal_connect_closure (
+		control, "destroy",
+		g_cclosure_new_swap (
+			G_CALLBACK (g_source_remove_by_user_data),
+			control, NULL),
+		0);
+	g_signal_connect (
+		control, "set_frame",
+		G_CALLBACK (panel_applet_set_frame_callback),
+		GUINT_TO_POINTER (no_frame_timeout_id));
+}
+
 static BonoboObject *
 panel_applet_factory_callback (BonoboGenericFactory    *factory,
 			       const char              *iid,
@@ -1127,9 +1237,11 @@ panel_applet_factory_callback (BonoboGenericFactory    *factory,
 
 	panel_applet_setup (applet);
 
-	applet->priv->iid       = g_strdup (iid);
-	applet->priv->closure   = g_closure_ref (data->closure);
+	applet->priv->iid     = g_strdup (iid);
+	applet->priv->closure = g_closure_ref (data->closure);
 
+	panel_applet_instrument_for_failure (applet->priv->control);
+	
 	return BONOBO_OBJECT (applet->priv->control);
 }
 
@@ -1148,8 +1260,9 @@ panel_applet_factory_main_closure (const gchar *iid,
 				   GType        applet_type,
 				   GClosure    *closure)
 {
-	PanelAppletCallBackData *data;
 	int                      retval;
+	char                    *display_iid;
+	PanelAppletCallBackData *data;
 
 	g_return_val_if_fail (iid != NULL, 1);
 	g_return_val_if_fail (closure != NULL, 1);
@@ -1162,8 +1275,15 @@ panel_applet_factory_main_closure (const gchar *iid,
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
 
 	data = panel_applet_callback_data_new (applet_type, closure);
+
+	display_iid = bonobo_activation_make_registration_id (
+		iid, DisplayString (gdk_display));
 	retval = bonobo_generic_factory_main (
-			iid, (BonoboFactoryCallback) panel_applet_factory_callback, data);
+		display_iid,
+		(BonoboFactoryCallback) panel_applet_factory_callback,
+		data);
+	g_free (display_iid);
+
 	panel_applet_callback_data_free (data);
 
 	return retval;
