@@ -823,7 +823,9 @@ load_icons_handler_again:
 	}
 
 	icon = icons_to_load->data;
-	icons_to_load = g_list_remove (icons_to_load, icon);
+	icons_to_load->data = NULL;
+	/* pop */
+	icons_to_load = g_list_delete_link (icons_to_load, icons_to_load);
 
 	/* if not visible anymore, just ignore */
 	if ( ! GTK_WIDGET_VISIBLE (icon->pixmap)) {
@@ -4009,6 +4011,18 @@ load_menu_applet (const char  *params,
 	}
 }
 
+static GList *
+find_in_load_list (GtkWidget *image)
+{
+	GList *li;
+	for (li = icons_to_load; li != NULL; li = li->next) {
+		IconToLoad *icon = li->data;
+		if (icon->pixmap == image)
+			return li;
+	}
+	return NULL;
+}
+
 static void
 image_menu_shown (GtkWidget *image, gpointer data)
 {
@@ -4018,8 +4032,9 @@ image_menu_shown (GtkWidget *image, gpointer data)
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
 		return;
 
-	icons_to_load = g_list_append (icons_to_load,
-				       icon_to_load_copy (icon));
+	if (find_in_load_list (image) == NULL)
+		icons_to_load = g_list_append (icons_to_load,
+					       icon_to_load_copy (icon));
 	if (load_icons_id == 0)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);
 }
