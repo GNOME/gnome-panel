@@ -1417,7 +1417,10 @@ panel_profile_prepare_object (PanelObjectType  object_type,
 
 	id = panel_profile_find_new_id (key_type, NULL);
 
-	dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/objects/%s", current_profile, id);
+	dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/%s/%s",
+			       current_profile,
+			       (key_type == PANEL_GCONF_APPLETS) ? "applets" : "objects",
+			       id);
 	panel_gconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/objects");
 
 	key = panel_gconf_full_key (key_type, current_profile, id, "object_type");
@@ -1486,7 +1489,7 @@ panel_profile_load_object (GConfClient       *client,
 	key = panel_gconf_full_key (type, current_profile, id, "panel_right_stick");
 	right_stick = gconf_client_get_bool (client, key, NULL);
 
-	panel_applet_queue_applet_to_load (id, object_type, toplevel,  position, right_stick);
+	panel_applet_queue_applet_to_load (id, object_type, toplevel, position, right_stick);
 }
 
 static void
@@ -1684,6 +1687,7 @@ panel_profile_object_id_list_notify (GConfClient *client,
 	PanelGConfKeyType  type = GPOINTER_TO_INT (data);
 	GConfValue        *value;
 	GSList            *existing_applets;
+	GSList            *sublist = NULL, *l;
 	GSList            *object_ids;
 
 	if (!(value = gconf_entry_get_value (entry)))
@@ -1699,19 +1703,31 @@ panel_profile_object_id_list_notify (GConfClient *client,
 
 	existing_applets = panel_applet_list_applets ();
 
+	for (l = existing_applets; l; l = l->next) {
+		AppletInfo *info = l->data;
+
+		if ((type == PANEL_GCONF_APPLETS && info->type == PANEL_OBJECT_BONOBO) ||
+		    (type == PANEL_GCONF_OBJECTS && info->type != PANEL_OBJECT_BONOBO))
+			sublist = g_slist_prepend (sublist, info);
+	}
+
 	panel_profile_load_added_ids (client,
 				      type,
-				      existing_applets,
+				      sublist,
 				      object_ids,
 				      (PanelProfileGetIdFunc) panel_applet_get_id,
 				      (PanelProfileLoadFunc) panel_profile_load_object);
 
 	panel_profile_delete_removed_ids (client,
 					  type,
-					  existing_applets,
+					  sublist,
 					  object_ids,
 					  (PanelProfileGetIdFunc) panel_applet_get_id,
 					  (PanelProfileDestroyFunc) panel_profile_destroy_object);
+
+	g_slist_free (sublist);
+
+	panel_applet_load_queued_applets ();
 }
 
 static void

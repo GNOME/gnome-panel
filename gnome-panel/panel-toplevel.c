@@ -437,7 +437,7 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 
 	gtk_grab_add (widget);
 
-	if (!toplevel->priv->grab_is_keyboard)
+	if (toplevel->priv->grab_is_keyboard)
 		panel_toplevel_warp_pointer (toplevel);
 
 	cursor_type = panel_toplevel_grab_op_cursor (

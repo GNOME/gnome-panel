@@ -321,7 +321,7 @@ panel_menu_bar_create (PanelToplevel *toplevel,
 {
 	char *id;
 
-	id = panel_profile_prepare_object (PANEL_GCONF_OBJECTS, toplevel, position);
+	id = panel_profile_prepare_object (PANEL_OBJECT_MENU_BAR, toplevel, position);
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);

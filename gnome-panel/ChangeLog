@@ -1,3 +1,27 @@
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix bugs with yesterdays commit - it wasn't as broken as I
+	thought it was.
+
+	* panel-profile.c:
+	(panel_profile_prepare_object): get the directory for applets
+	correct.
+	(panel_profile_object_id_list_notify): split the objects list
+	into a sublist of either applets or objects when searching for
+	removed ids. Also load queued objects.
+
+	* panel-toplevel.c: (panel_toplevel_begin_grab_op): don't warp
+	the pointer if its a pointer based drag.
+
+	* drawer.c: (panel_drawer_create):
+	* launcher.c: (panel_launcher_create):
+	* panel-action-button.c: (panel_action_button_create):
+	* panel-applet-frame.c: (panel_applet_frame_create):
+	* panel-menu-bar.c: (panel_menu_bar_create):
+	* panel-menu-button.c: (panel_menu_button_create): the first
+	arg for panel_profile_prepare_object() is PanelObjectType not
+	PanelGConfKeyType.
+
 2003-03-02  Mark McLoughlin  <mark@skynet.ie>
 
 	Pretty broken patch - just a safety sync. Makes the panel object
