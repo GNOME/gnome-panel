@@ -23,12 +23,15 @@
 
 #include <config.h>
 
+#include "string.h"
+
 #include "panel-compatibility.h"
 
 #include "panel-profile.h"
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
+#include "panel-util.h"
 
 typedef enum {
 	PANEL_ORIENT_UP    = GNOME_Vertigo_PANEL_ORIENT_UP,
@@ -1020,4 +1023,45 @@ panel_compatibility_maybe_copy_old_config (GConfClient *client)
 
 	if (engine)
 		gconf_engine_unref (engine);
+}
+
+void
+panel_compatibility_migrate_applications_scheme (GConfClient *client,
+						 const char  *key)
+{
+	char *location;
+
+	location = gconf_client_get_string (client, key, NULL);
+
+	if (!location)
+		return;
+
+	if (!strncmp (location, "applications:", strlen ("applications:")) ||
+	    !strncmp (location, "applications-all-users:", strlen ("applications-all-users:")) ||
+	    !strncmp (location, "all-applications:", strlen ("all-applications:")) ||
+	    !strncmp (location, "preferences:", strlen ("preferences:")) ||
+	    !strncmp (location, "preferences-all-users:", strlen ("preferences-all-users:")) ||
+	    !strncmp (location, "all-preferences:", strlen ("all-preferences:")) ||
+	    !strncmp (location, "system-settings:", strlen ("system-settings:")) ||
+	    !strncmp (location, "server-settings:", strlen ("server-settings:"))) {
+		char *buffer;
+		char *basename;
+		char *new_location;
+
+		basename = g_path_get_basename (location);
+
+		buffer = g_strconcat ("applications/", basename, NULL);
+		g_free (basename);
+
+		new_location = panel_lookup_in_data_dirs (buffer);
+		g_free (buffer);
+
+		if (new_location != NULL) {
+			gconf_client_set_string (client, key,
+						 new_location, NULL);
+			g_free (new_location);
+		}
+	}
+
+	g_free (location);
 }

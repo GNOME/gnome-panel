@@ -1,3 +1,12 @@
+2005-01-28  Vincent Untz  <vincent@vuntz.net>
+
+	* launcher.c: (launcher_load_from_gconf): try to migrate the launcher
+	from the applications: scheme when we load it
+	* panel-compatibility.[ch]:
+	(panel_compatibility_migrate_applications_scheme): actual migration
+	work is done here
+	Fix bug #165293
+
 2005-01-26  Vincent Untz  <vincent@vuntz.net>
 
 	* eggaccelerators.[ch]: updated from libegg

@@ -32,6 +32,8 @@ G_BEGIN_DECLS
 
 void panel_compatibility_migrate_panel_id_list (GConfClient *client);
 void panel_compatibility_maybe_copy_old_config (GConfClient *client);
+void panel_compatibility_migrate_applications_scheme (GConfClient *client,
+						      const char  *key);
 
 G_END_DECLS
 
