@@ -4259,7 +4259,6 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 				   int            auto_hide_size)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (auto_hide_size > 0);
 
 	if (toplevel->priv->auto_hide_size == auto_hide_size)
 		return;
