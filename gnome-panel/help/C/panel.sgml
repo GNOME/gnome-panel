@@ -59,7 +59,7 @@
     flexibility allows you to easily create a comfortable and
     efficient personalized desktop environment.
    </para>
-   <para> This manual describes version 1.1.90 of the GNOME
+   <para> This manual describes version 1.2 of the GNOME
     <interface>Panel</interface>.
    </para>
   </sect1>
@@ -1459,167 +1459,161 @@
 
 <!-- ########### Creating, Moving, and Removing Panels  ########### -->
   <sect1 id="panelmove">
-   <title>Creating, Moving, and Removing Panels</title>
+    <title>Creating, Moving, and Removing Panels</title>
+    <sect2 id="paneladd">
+     <title>Creating new panels</title>
+     <para>
+       To add a new <interface>Panel</interface> to your desktop,
+       select
+       <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Create
+       panel</guisubmenu></menuchoice> from the <guimenu>Main
+       Menu</guimenu>. Choose from the following
+       <interface>Panel</interface> types:
+     </para>
+     <itemizedlist mark="bullet">
+      <listitem>
+        <para>
+          <guilabel>Menu Panel</guilabel> &mdash; The <interface>Menu
+          Panel</interface> is a special <interface>Panel</interface>
+          which is always placed at the top of your screen and
+          contains several pull-down menus.  These are
+          <guimenu>Programs</guimenu>, <guimenu>Favorites</guimenu>,
+          <guimenu>Settings</guimenu>, <guimenu>Desktop</guimenu>, and
+          a special menu which provides quick access to GNOME-related
+          Internet resources (look for the bullet hole icon).  This
+          <interface>Panel</interface> can also hold the other objects
+          which other <interface>Panel</interface>s can hold, but it
+          does not have the configuration properties which other
+          <interface>Panel</interface>s have. Note that the
+          <interface>Menu Panel</interface> is more restrictive than
+          other <interface>Panel</interface>s, and some normal
+          <interface>Panel</interface> operations, such as moving the
+          <interface>Panel</interface>, cannot be performed on it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Edge Panel</guilabel> &mdash; An <interface>Edge
+           Panel</interface> is exactly like the main
+           <interface>Panel</interface> that starts up with GNOME; it
+           stretches along the whole length of one of screen edges. By
+           selecting this type of <interface>Panel</interface>, you
+           may add a new <interface>Panel</interface> to another edge
+           of your screen to give yourself more functionality.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Aligned Panel</guilabel> &mdash;  An
+          <interface>Aligned Panel</interface> is also positioned
+          along one of the screen edges. But unlike an <interface>Edge
+          Panel</interface>, an <interface>Aligned Panel</interface>
+          will not stretch across the entire edge of the screen it is
+          on; It will only stretch as much as necessary to  display
+          the icons and applets it contains. It can be positioned
+          either at one of the corners (in this case, it will stretch
+          towards the opposite corner) or at the center of the edge
+          (in this case, it will stretch in both directions,
+          automatically recentering when you add new objects).
+        </para>
+        <para>
+          If an <interface>Aligned Panel</interface> is aligned with
+          one of the corners, the hide buttons will work slightly
+          differently than for an <interface>Edge Panel</interface>.
+          The hide button closest to the edge of your screen will hide
+          the <interface>Panel</interface> as usual but the other hide
+          button will send the whole <interface>Panel</interface> to
+          the opposite corner. When the latter move is made it will
+          not hide the <interface>Panel</interface> since it is
+          changing the side of the screen it resides on.  If you want
+          to hide it you will have to press the hide button once again.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Sliding Panel</guilabel> &mdash; A
+          <interface>Sliding Panel</interface> is very similar to an
+          <interface>Aligned Panel</interface>, but can be placed
+          anywhere along the screen edge, not necessarily in one of
+          the corners or in the center. As you add objects, it will
+          only grow in one direction &mdash; it won't automatically
+          recenter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <guilabel>Floating Panel</guilabel> &mdash; A
+          <interface>Floating Panel</interface> can be placed anywhere
+          on your screen, not necessarily along one of the edges.
+       </para>
+      </listitem>
+     </itemizedlist>
 
-      <sect2 id="paneladd">  <title>Creating new panels</title>
-	  <para>
-	<indexterm id="idx-a8">
-	  <primary>Panel</primary> <secondary>adding new</secondary>
-	</indexterm>
-	To add a new <interface>Panel</interface> to your desktop,
-	select the <guimenuitem>Create panel</guimenuitem> command
-	from <guisubmenu>Panel</guisubmenu> menu. You have a choice of
-	five possible panel types:
-      </para>
-      <itemizedlist mark="bullet">
-	<listitem>
-	  <para>
-	    <indexterm id="idx-a9">
-	      <primary>Panel</primary> <secondary>Edge</secondary>
-	    </indexterm>
-	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel is
-	    exactly like the main Panel that starts up with GNOME; it
-	    stretches along the whole length of one of screen
-	    edges. By selecting this type of panel you may add a new
-	    Panel to another edge of your screen to give yourself more
-	    functionality.
-	  </para>
-	</listitem>
-	<listitem>
-	  <para>
-	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
-	     is also positioned along one of the screen edges. But
-	     unlike the Edge Panel, the Aligned Panel will not stretch
-	     across the entire edge of the screen it is on: it will
-	     only stretch as much as necessary to  display the icons
-	     and applets it contains. It can be positioned either at
-	     one of the corners (in this case, it will stretch towards
-	     the opposite corner) or at the center of the edge (in
-	     this case, it will stretch in both directions,
-	     automatically recentering when you add new objects).
-            </para>
-	  <para> If the Aligned panel is aligned with one of the
-	    corners, the hide buttons will work slightly differently
-	    than for the Edge Panel.  The hide button closest to the
-	    edge of your screen will hide the Panel as usual but the
-	    other hide button will send the whole panel to the
-	    opposite edge. When the latter move is made it will not
-	    hide the Panel since it is changing the side of the screen
-	    it resides on.  If you want to hide it you will have to
-	    press the hide button once again.
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-	        <guilabel>Sliding Panel</guilabel> &mdash; This type
- 	        of panel is very similar to the Aligned Panel, but can
- 	        be placed anywhere along the screen edge, not
- 	        necessarily in one of the corners or in the center. As
- 	        you add objects, it will only grow in one directions
- 	        &mdash; it won't automatically recenter.
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		<guilabel>Floating Panel</guilabel> &mdash;   This
-		type of panel can be placed anywhere on your screen,
-		not necessarily along one of the edges.
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		<guilabel>Menu Panel</guilabel> &mdash; The
-		<interface>Menu Panel</interface> is a special panel
-		which is always placed at the top of your screen and
-		contains several pull-down menus.  These are
-		<guimenu>Programs</guimenu>,
-		<guimenu>Favorites</guimenu>,
-		<guimenu>Settings</guimenu>,
-		<guimenu>Desktop</guimenu>, a clock/calendar, and a
-		special launcher which provides quick access to
-		GNOME-related Internet resources (look for the bullet
-		hole icon).  This panel can also hold the other
-		objects which other panels can hold, but it does not
-		have the configuration properties which other panels
-		have. Note that the <interface>Menu Panel</interface> is
-		more restrictive than other panels, and some normal
-		panel operations, such as moving the panel, cannot be
-		performed on it.
-	      </para>
-	    </listitem>
-	  </itemizedlist>
-
-	<tip>
-	  <title> Changing panel type</title>
-	  <para>
-	      <indexterm id="idx-a11">
-	      <primary>Panel</primary> <secondary>changing type
-	      of</secondary>
-	    </indexterm>
-	  You can also change type of existing panel &mdash; for
-	  example, convert edge panel to a floating panel, see <xref
-	  linkend="panelproperties">.
-	  </para>
-	</tip>
-      </sect2>
-
-
-      <sect2 id="panelmoving">
-	<title> Moving panels </title> <para>
-	<indexterm id="idx-a7">
-	  <primary>Panel</primary> <secondary>moving</secondary>
-	</indexterm>
-	  Any <interface>Panel</interface> you have on your desktop
-	  can be moved by using the  middle mouse button, or by
-	  simultaneously pressing the left and right mouse buttons, to
-	  drag the panel to the desired edge of your screen. If you do
-	  not have a middle mouse button and did not configure your
-	  mouse to emulate a middle button you may also move a
-	  <interface>Panel</interface> by changing its location in the
-	  <interface>Panel properties</interface> dialog.  You can
-	  read more about this in <xref linkend="panelproperties"> of
-	  this documentation.
-	</para>
-      </sect2>
-    <sect2 id="panelremoving">
-      <title> Removing panels </title>
+     <tip>
+      <title>Changing Panel Type</title>
       <para>
-	To remove an existing panel, right-click on it and choose
-	<guimenuitem>Remove this panel</guimenuitem> command from the
-	<guisubmenu>Panel</guisubmenu> menu. You will be prompted for
-	a confirmation.
+       You can also change type of existing panel &mdash; for example,
+       convert edge panel to a floating panel, see <xref
+       linkend="panelproperties">.
       </para>
-      <note>  <title>NOTE</title>
-	<para>
-	  At all times, you must have at least one panel; GNOME will
-	  not allow you to remove your only panel.
-	</para>
-      </note>
+     </tip>
+
     </sect2>
 
-    </sect1>
+    <sect2 id="panelmoving">
+     <title>Moving Panels</title>
+     <para>
+      Any <interface>Panel</interface> you have on your desktop(except
+      a <interface>Menu Panel</interface>) can be
+      moved by pressing the middle mouse button, or by simultaneously
+      pressing the left and right mouse buttons, while dragging the
+      <interface>Panel</interface> to
+      the desired position on your screen. If you do not have a middle
+      mouse button and did not configure your mouse to emulate a
+      middle button you may also move a <interface>Panel</interface>
+      by changing its location in the <interface>Panel
+      properties</interface> dialog.  You can read more about this in
+      <xref linkend="panelproperties"> of this documentation.
+     </para>
+    </sect2>
+    <sect2 id="panelremoving">
+     <title>Removing Panels</title>
+     <para>
+      To remove an existing <interface>Panel</interface>, right-click
+      on it and choose
+      <menuchoice><guisubmenu>Panel</guisubmenu><guisubmenu>Remove
+      this panel</guisubmenu></menuchoice>. If the
+      <interface>Panel</interface> is not empty, you will be prompted
+      to confirm.
+     </para>
+     <note>
+      <title>Removing Your Only Panel</title>
+      <para>
+        You must have at least one <interface>Panel</interface>
+        running at all times.  GNOME will not allow you to remove your
+        only <interface>Panel</interface>.
+      </para>
+     </note>
+    </sect2>
+   </sect1>
 
 
 <!-- ############### Global Panel Preferences  ################## -->
   <sect1 id="globalpanelprefs">
    <title>Global Panel Preferences</title>
     <para>
-      <indexterm id="idx-a61">  <primary>Panel</primary>
-	<secondary>Global Panel Preferences</secondary>
-      </indexterm>
-     To start configuring the GNOME panel, select <guimenuitem>Global
-     Preferences</guimenuitem> from the <guisubmenu>Panel</guisubmenu>
-     submenu of the <guimenu>Main Menu</guimenu> (you can access the
-     main menu by either pressing the foot icon or by right-clicking
-     on the panel).
+     To start configure the behavior of all of your
+     <interface>Panel</interface>s, select
+     <menuchoice><guisubmenu>Panel</guisubmenu> <guisubmenu>Global
+     Preferences</guisubmenu></menuchoice> from  the <link
+     linkend="mainmenu"><guimenu>Main Menu</guimenu></link>.
     </para>
     <para>
-     This will bring the <interface>Global Panel
-     Preferences</interface> dialog up (this dialog is one of the
-     components of the <application>GNOME Control
-     Center</application>).  With this dialog you can set properties
-     that will affect all Panels you use now and any panels you add in
-     the future.
+     This will open the <interface>Global Panel
+     Preferences</interface> dialog. (This dialog is a
+     component of the <application>GNOME Control
+     Center</application>).  With this dialog you can control many
+     properties shared by all of your <interface>Panel</interface>s.
      <figure>
       <title>The Global Panel Configuration Dialog</title>
      <screenshot>
@@ -1631,8 +1625,8 @@
      </figure>
     </para>
     <para>
-     The Global Panel Configuration Dialog contains five tabs which
-     help you configure the global properties of the GNOME Panel:
+     The <interface>Global Panel Configuration</interface> dialog
+     contains the following five tabs:
      <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
      <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
      <guilabel>Miscellaneous</guilabel>. Each of these tabs is
@@ -1643,10 +1637,9 @@
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Enable animations</guilabel> &mdash; This allows the
-       animations configurable on this tab to be visible.  The
-       animations must be enabled to use the other features of this
-       tab. The default position is on.
+       <guilabel>Enable animations</guilabel> &mdash; This allows
+       <interface>Panel</interface>s and drawers to animate as the
+       hide and unhide.
       </para>
      </listitem>
      <listitem>
@@ -1659,60 +1652,75 @@
      </listitem>
       <listitem>
       <para>
-       <guilabel>Auto hide animation speed</guilabel> &mdash; If you
-       have the panel hiding automatically this will control how fast
-       it occurs. The slowest setting is 1, the fastest, 100.
+       <guilabel>[Animation speed] Auto hide</guilabel> &mdash; This
+       controls the speed of animation for any
+       <interface>Panel</interface> which is set to hide automatically
+       when the mouse leaves the <interface>Panel</interface>. The
+       slowest setting is 1, and the fastest is 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Explicit hide animation speed</guilabel> &mdash; This
-       controls the hide speed when you press the Panel's
+       <guilabel>[Animation speed] Explicit hide</guilabel> &mdash; This
+       controls the hide speed when you press a <interface>Panel</interface>'s
        <guibutton>Hide Button</guibutton>. The slowest setting is 1,
-       the fastest, 100.
+       and the fastest is 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Drawer sliding animation speed</guilabel> &mdash;
-       this will control how fast the drawer menu will raise when you
-       press a Drawer button on the Panel. The slowest setting is 1,
-       the fastest, 100.
+       <guilabel>[Animation speed] Drawer sliding</guilabel> &mdash;
+       This controls how fast a drawer menu will raise when you
+       press a drawer button on a <interface>Panel</interface>. The
+       slowest setting is 1, and the fastest is 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto hide delay (ms)</guilabel> &mdash; If you have
-       the Panel set to minimize automatically this will allow you to
-       control how much time passes before it minimizes.  The Panel
+       <guilabel>[Auto hide] Delay (ms)</guilabel> &mdash; If you have
+       a <interface>Panel</interface> set to minimize automatically
+       after the mouse leaves the <interface>Panel</interface>
+       this will allow you to control how much time passes before it
+       minimizes.  The <interface>Panel</interface>
        will start the time count once the mouse is no longer over
        it. It will appear again when the mouse is passed over the
-       portion of the Panel that remains visible. This time is
-       measured in milliseconds.
+       portion of the <interface>Panel</interface> that remains
+       visible. This time is measured in milliseconds.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash;
-       If you have the Panel hiding automatically this determines the
-       number of pixels that will show while the Panel is
-       minimized. To maximize the Panel the pointer must enter the
-       Panel area.
+       <guilabel>[Auto hide] Size (pixels)</guilabel> &mdash;
+       This determines the number of pixels that show when a
+       <interface>Panel</interface> is minimized, for any
+       <interface>Panel</interface> which is set to hide automatically.
+       To maximize the <interface>Panel</interface>, the pointer must
+       enter the <interface>Panel</interface> area.
       </para>
      </listitem>
     </itemizedlist>
    </sect2>
    <sect2 id="launchtab">
-    <title>Buttons Tab</title> <para> In this section, you can set
-      appearance of buttons of various types (launcher buttons, menu
-      buttons, drawer buttons, and special (Logout and Lock Screen)
-      buttons).
-      </para>
+    <title>Buttons Tab</title>
+    <para>
+      In this section, you can set the
+      appearance of the various types of buttons: launcher buttons, menu
+      buttons, drawer buttons, and special buttons(such as the <link
+      linkend="logoutbutton">Logout Button</link> and the <link
+      linkend="lockbutton">Lock Button</link>).
+    </para>
     <itemizedlist mark="bullet">
      <listitem>
       <para>
+       <guilabel>Button Type</guilabel> &mdash; Select the type of
+       button you wish to configure.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
        <guilabel>Tiles enabled</guilabel> &mdash; This checkbox will
-       enable background tiles for buttons of given type on the Panel.
+       enable background tiles for buttons of the given type on the
+       <interface>Panel</interface>.
       </para>
      </listitem>
      <listitem>
@@ -1752,27 +1760,31 @@
       </para>
      </listitem>
     </itemizedlist>
-      <para> This tab also contains 3 options which affect all types
-      of buttons simultaneously:
+      <para>
+       This tab also contains 3 options which affect all types
+       of buttons simultaneously:
      </para>
       <itemizedlist>
-	<listitem>  <para> <guilabel>Make buttons flush with panel
-	  edge</guilabel> &mdash; allows you to align the button with
-	  the edge of the panel.  If this option is not set then the
-	  border width setting is obeyed.  By default this option is
-	  off.
+	<listitem>
+         <para>
+          <guilabel>Make buttons flush with panel edge</guilabel>
+	  &mdash; This allows you to align the button with
+	  the edge of the <interface>Panel</interface>.  If this
+	  option is not set then the border width setting is obeyed.
+	  By default this option is off.
 	  </para>
 	</listitem>
 	<listitem>
-	  <para><guilabel>Show button tiles only when cursor is over
-	  the button</guilabel> &mdash; if this option is enabled, the
+	 <para>
+          <guilabel>Show button tiles only when cursor is over
+	  the button</guilabel> &mdash; If this option is enabled, the
 	  tiles will only appear when mouse cursor is over the button.
-	  </para>
+	 </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel> Prelight buttons on mouseover</guilabel>
-	    &mdash; Choosing this option will make the panel butons
+	    <guilabel>Prelight buttons on mouseover</guilabel>
+	    &mdash; Choosing this option will make the buttons
 	    brighten up when the mouse cursor is over them.
 	  </para>
 	</listitem>
@@ -1781,41 +1793,47 @@
     <sect2 id="appletstab">
       <title>Panel objects Tab</title>
       <para>
-	This tab shows some options related to placement and moving
-	objects on the panel.  
+	This tab shows some options related to the placement and moving
+	of objects on the <interface>Panel</interface>.  
       </para>
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <guilabel> Default movement mode </guilabel> &mdash; here
-	    you can choose the default mode for moving the objects on
-	    the panel. Possible variants are
+	    <guilabel>Default movement mode</guilabel> &mdash; Here
+	    you can choose the default mode for moving objects on
+	    the <interface>Panel</interface>. Possible variants are
 	    </para>
 	    <itemizedlist>
-	      <listitem><para> <emphasis>Switched</emphasis> &mdash;
-		when the object you are moving hits another object,
-		they switch places
-		  </para>
+	      <listitem>
+               <para> 
+                <emphasis>Switched</emphasis> &mdash;
+                When the object you are moving hits another object,
+                they switch places.
+	       </para>
 	      </listitem>
 
-	      <listitem><para>  <emphasis>Free</emphasis> &mdash; when
-		  the object you are moving hits another object, it
-		  "jumps" over it, so no other object is disturbed
-		  &mdash; this is a convenient option if you like the
-		  current arrangement of objects on your panel and
-		  want to lock it
+	      <listitem>
+               <para>
+                <emphasis>Free</emphasis> &mdash; When
+		the object you are moving hits another object, it
+                "jumps" over it, so no other object is disturbed.
+                This is a convenient option if you like the
+                current arrangement of objects on your
+		<interface>Panel</interface> and want to leave the
+		other objects in place.
 		</para>
 	      </listitem>
 
 	      <listitem>
 		<para>
-		  <emphasis>Push</emphasis> &mdash; the object you are
+		  <emphasis>Push</emphasis> &mdash; The object you are
 		  moving pushes all other objects in front of it, like
 		  a snow plow.
 		</para>
 	      </listitem>
 	    </itemizedlist>
-	  <para>You can override the default movement mode by dragging
+	  <para>
+            You can override the default movement mode by dragging
 	    an  object while holding <keycap>Ctrl</keycap> (for
 	    switched movement), <keycap>Alt</keycap> (for free
 	    movement), or <keycap>Shift</keycap> (for push movement)
@@ -1826,36 +1844,36 @@
 	  <para>
 	    <guilabel>Padding</guilabel> &mdash;  This changes
 	    the amount of space (padding) between objects on the
-	    panel. It is measured in pixels.
+	    <interface>Panel</interface>. It is measured in pixels.
 	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
 
    <sect2 id="menutab">
-    <title>Menu Tab</title> 
-
-      <para> In this tab, you can set the options determining the
-	appearance of <interface>Panel</interface> menus.
+    <title>Menu Tab</title>
+      <para>
+       In this tab, you can set the options determining the
+       appearance of <interface>Panel</interface> menus.
       </para>
       
      <itemizedlist>
       <listitem>
       <para>
        <guilabel>Use large icons</guilabel> &mdash; This will use
-       large icons (rather than the default size) in menus. Only
+       large icons (rather than the default size) in menus. This is only
        practical for those with high resolution screens (1280x1024 and
-       higher)
+       higher).
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Show ... buttons</guilabel> &mdash; This will add
+       <guilabel>Show [...] buttons</guilabel> &mdash; This will add
        small buttons labelled by three dots (...) to all the items of
        the <guimenu>Main Menu</guimenu>. Clicking on such a button
        with the left mouse button will bring the
        <guimenu>pop-up</guimenu> menu for this item, i.e. the same
-       menu which you get by clicking on the menu item wiht the right
+       menu which you get by clicking on the menu item with the right
        mouse button.   
       </para>
      </listitem>
@@ -1863,9 +1881,9 @@
       <para>
        <guilabel>Show popup menus outside of panels</guilabel> &mdash;
        When this button is on, it allows pop-up menus to appear away
-       from the Panel. When toggled off, the pop-ups will appear over
-       the Panel. This can be useful on smaller screens or cluttered
-       desktops.
+       from the <interface>Panel</interface>. When toggled off, the
+       pop-ups will appear over the <interface>Panel</interface>. This
+       can be useful on smaller screens or cluttered desktops.
       </para>
      </listitem>
      <listitem>
@@ -1876,11 +1894,13 @@
        result in you missing new items added to your menu.
 	</para>
 	</listitem>
-	<listitem> <para> 
+	<listitem>
+         <para>
           <guilabel>Global menu</guilabel> &mdash; This
-	  allows you to configure the  <link linkend="globalmenu">
+	  allows you to configure the <link linkend="globalmenu">
           <guimenu>Global Menu</guimenu></link>
-	  which you get by right-clicking on the panel, or by using
+	  which you get by right-clicking on a
+	  <interface>Panel</interface>, or by using
 	  the keyboard shortcut. For each of the possible submenus
 	  (<guisubmenu>Programs</guisubmenu>,
 	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
@@ -1893,22 +1913,21 @@
       </itemizedlist>
     </sect2>
 
-
    <sect2 id="misctab">
     <title>Miscellaneous Tab</title>    
-      <para>The Miscellaneous group
-      contains options for various customizable behavior that didn't
-      fit anywhere else.
+      <para>
+       The <guilabel>Miscellaneous</guilabel> tab contains options for various
+       customizable behavior that didn't fit anywhere else.
       </para>
 
      <itemizedlist mark="bullet">
      <listitem>
       <para>
        <guilabel>Tooltips enabled</guilabel> &mdash; This option
-            defines whether GNOME should show a tooltip when the
-            pointer pauses on a panel item.
+       defines whether GNOME should show a tooltip when the
+       pointer pauses on a <interface>Panel</interface> item.
       </para>
-	</listitem>
+     </listitem>
      <listitem>
       <para>
        <guilabel>Close drawer if a launcher inside it is
@@ -1919,12 +1938,12 @@
        automatically when you select any item within one.
       </para>
      </listitem>
-
      <listitem>
       <para>
        <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
        are using a window manager that is not GNOME compliant it will
-       not understand its relationship with the Panel. This can cause
+       not understand its relationship with the
+       <interface>Panel</interface>. This can cause
        your <interface>Panel</interface> to be covered by
        applications. If you enable this feature you can have the
        <interface>Panel</interface> automatically raise when your
@@ -1934,22 +1953,23 @@
      <listitem>
       <para>
        <guilabel>Keep panel below windows</guilabel> &mdash; If you
-       are using a GNOME compliant window manager the window manager
-       will understand its relationship with the Panel. If you choose
+       are using a GNOME compliant window manager, the window manager
+       will understand its relationship with the
+       <interface>Panel</interface>. If you choose
        this feature the window manager and GNOME will allow
-       applications to appear over the Panel. This can be useful on
+       applications to appear over the
+       <interface>Panel</interface>. This can be useful on
        smaller screens.
       </para>
      </listitem>
-
-	  <listitem>
-	    <para>
-	      <guilabel>Confirm removal of panels with a
-	      dialog</guilabel> &mdash; If this option is enabled,
-	      GNOME will ask for confirmation before removing a panel.
-	      </para>
-	  </listitem>
-
+     <listitem>
+      <para>
+       <guilabel>Confirm removal of panels with a
+       dialog</guilabel> &mdash; If this option is enabled,
+       GNOME will ask for confirmation before removing a
+       <interface>Panel</interface>.
+      </para>
+     </listitem>
     </itemizedlist>
     <para>
      This tab also allows you to configure some global key
@@ -1974,38 +1994,41 @@
      press the desired key. 
     </para>
       <note>
-	<title>NOTE</title>
+	<title>Using the Menu and Window keys</title>
 	<para>
-	  If you have problems with using <keycap>Menu</keycap> or
-	  <keycap>Windows</keycap> keys, the most probable explanation
+	  You should be able to use the special <keycap>Menu</keycap>
+	  and <keycap>Windows</keycap> keys for keybindings. If you
+	  have problems with using these keys, the most probable reason
 	  is that your X server was incorrectly configured: the
-	  keyboard type chosen during installation  does not match
+	  keyboard type chosen during installation does not match
 	  your actual keyboard. If you are using
 	  <application>XFree86</application> server, you can fix it by
 	  manually editing the configuration file. This file, named
 	  <filename>XF86Config</filename>, is usually located in
-	  <filename>/etc</filename> or <filename>/etc/X11</filename>
+	  the <filename class="directory">/etc</filename> or <filename
+	  class="directory">/etc/X11</filename>
 	  directory. Open this file with any text editor (not a
-	  word-processor!), find there the line containing words
-	  <literal>XkbModel</literal> and change it to read
+	  word-processor!) and find the line containing the word
+	  <literal>XkbModel</literal>. Change it to read
 	  <programlisting>
               XkbModel "pc104"
 	  </programlisting>
-	  You need to be root (system administrator) to do this. Now,
+	  You must be root (system administrator) to do this. Now,
 	  logout of GNOME and restart the X server by simultaneously
 	  pressing <keycombo> <keycap>Ctrl</keycap>
 	  <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>.
 	</para>
       </note>
       <warning>
-	<title>WARNING</title>
+	<title>Use Caution When Editing XF86Config</title>
 	<para>
-	Making a mistake while editing <filename>XF86Config</filename>
-	file can make you keyboard or screen unusable in X
-	Windows. Therefore, please be careful, make a backup copy of
-	this file and make sure you know how to restore it from backup
-	without using X Windows, i.e., from a terminal. If you don't,
-	then do not edit it at all.  </para>
+	Making a mistake while editing the <filename>XF86Config</filename>
+	file can make your keyboard or screen unusable in X
+	Windows. Before editing this file, you should make a backup copy of
+	it and make sure you know how to restore it from the backup file
+	without using X Windows or GNOME, i.e., from a terminal. If
+	you don't know how to do this, then do not edit this file.
+       </para>
       </warning>
    </sect2>
    </sect1>
