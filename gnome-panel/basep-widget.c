@@ -1635,6 +1635,8 @@ basep_widget_explicit_show (BasePWidget *basep)
 void
 basep_widget_autoshow (BasePWidget *basep)
 {
+	static const char *supinfo[] = {"panel", "expand", NULL};
+
 	g_return_if_fail (IS_BASEP_WIDGET(basep));
 
 	if (basep->state == BASEP_MOVING) {
@@ -1652,6 +1654,8 @@ basep_widget_autoshow (BasePWidget *basep)
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
 		PanelOrientType hide_orient;
 		int w, h, size;
+
+		gnome_triggers_vdo("", NULL, supinfo);
 
 		hide_orient = klass->get_hide_orient (basep);
 		basep_widget_get_size (basep, &w, &h);

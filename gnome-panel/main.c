@@ -178,6 +178,20 @@ setup_visuals (void)
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 }
 
+static void
+kill_free_drawers (void)
+{
+	GSList *li;
+	for (li = panel_list; li != NULL; li = li->next) {
+		PanelData *pd = li->data;
+		if (IS_DRAWER_WIDGET (pd->panel) &&
+		    PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->master_widget == NULL) {
+			status_unparent (pd->panel);
+			gtk_widget_destroy (pd->panel);
+		}
+	}
+}
+
 int
 main(int argc, char **argv)
 {
@@ -280,6 +294,8 @@ main(int argc, char **argv)
 	
 	init_user_panels();
 	init_user_applets();
+
+	kill_free_drawers ();
 
 	load_tornoff();
 

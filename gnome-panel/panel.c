@@ -1740,3 +1740,26 @@ panel_set_id (GtkWidget *widget, int id)
 	else if (IS_FOOBAR_WIDGET (widget))
 		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = id;
 }
+
+void
+status_unparent (GtkWidget *widget)
+{
+	GList *li;
+	PanelWidget *panel = NULL;
+	if (IS_BASEP_WIDGET (widget))
+		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
+	else if (IS_FOOBAR_WIDGET (widget))
+		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+	for(li=panel->applet_list;li;li=li->next) {
+		AppletData *ad = li->data;
+		AppletInfo *info = gtk_object_get_data(GTK_OBJECT(ad->applet),
+						       "applet_info");
+		if(info->type == APPLET_STATUS) {
+			status_applet_put_offscreen(info->data);
+		} else if(info->type == APPLET_DRAWER) {
+			Drawer *dr = info->data;
+			status_unparent(dr->drawer);
+		}
+	}
+}
+
