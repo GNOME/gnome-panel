@@ -195,7 +195,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GnomeDesktopEntry *dentry;
 	GtkWidget         *pixmap;
 
-	if (page == -1)
+	if (page != -1)
 		return;
 	
 	prop = data;
