@@ -270,8 +270,11 @@ panel_applet_set_size_hints (PanelApplet      *applet,
 			     int               base_size)
 {
 	CORBA_sequence_CORBA_long *seq;
+	CORBA_Environment          env;
 	CORBA_any                  any;
 	int                        i;
+
+	CORBA_exception_init (&env);
 
 	seq = CORBA_sequence_CORBA_long__alloc ();
 	seq->_length = seq->_maximum = n_elements;
@@ -288,9 +291,11 @@ panel_applet_set_size_hints (PanelApplet      *applet,
 	Bonobo_PropertyBag_setValue (BONOBO_OBJREF (applet->priv->prop_sack),
 				     PROPERTY_SIZE_HINTS,
 				     &any,
-				     NULL);
+				     &env);
 
 	CORBA_free (seq);
+
+	CORBA_exception_free (&env);
 }
 
 guint
