@@ -54,7 +54,7 @@ swallow_launch (Swallow *swallow)
 {
 	if ( ! string_empty (swallow->path)) {
 		char *p = strrchr (swallow->path, '.');
-		GnomeDesktopEntry *item;
+		GnomeDestkopItem *item;
 
 		/*only if such a file exists and ends in a .desktop, should
 		  we try to launch it as such*/
@@ -62,12 +62,12 @@ swallow_launch (Swallow *swallow)
 		   (strcmp (p, ".desktop") == 0 ||
 		    strcmp (p, ".kdelnk") == 0) &&
 		   panel_file_exists (swallow->path) &&
-		   (item = gnome_desktop_entry_load (swallow->path)) != NULL) {
+		   (item = gnome_desktop_item_load (swallow->path)) != NULL) {
 			char *curdir = g_get_current_dir ();
 			chdir (g_get_home_dir ());
 
-			gnome_desktop_entry_launch (item);
-			gnome_desktop_entry_free (item);
+			gnome_desktop_item_launch (item);
+			gnome_desktop_item_free (item);
 
 			chdir (curdir);
 			g_free (curdir);
