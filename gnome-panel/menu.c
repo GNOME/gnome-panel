@@ -2539,11 +2539,13 @@ create_panel_menu (char *menudir, int main_menu,
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 	gtk_widget_show(menu->button);
 
-	/*{
+	/*if we are allowed to be pigs and load all the menus to increase
+	  speed, load them*/
+	if(global_config.hungry_menus) {
 		GSList *list = g_slist_append(NULL,menudir);
 		add_menu_widget(menu,list,main_menu,TRUE);
 		g_slist_free(list);
-	}*/
+	}
 
 	g_free (pixmap_name);
 

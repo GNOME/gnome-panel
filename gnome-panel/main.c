@@ -27,6 +27,7 @@ extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
 
+extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
@@ -89,7 +90,9 @@ menu_age_timeout(gpointer data)
 			info->menu = NULL;
 			info->menu_age = 0;
 		}
-		if(info->type == APPLET_MENU) {
+		/*if we are allowed to, don't destroy applet menus*/
+		if(!global_config.hungry_menus &&
+		   info->type == APPLET_MENU) {
 			Menu *menu = info->data;
 			if(menu->menu && menu->age++>=6 &&
 			   !GTK_WIDGET_VISIBLE(menu->menu)) {
@@ -99,6 +102,11 @@ menu_age_timeout(gpointer data)
 			}
 		}
 	}
+	
+	/*skip panel menus if we are memory hungry*/
+	if(global_config.hungry_menus)
+		return TRUE;
+	
 	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 		PanelData *pd = li->data;
 		if(pd->menu && pd->menu_age++>=6 &&

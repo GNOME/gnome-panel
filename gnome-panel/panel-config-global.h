@@ -14,6 +14,7 @@ struct _GlobalConfig {
 	int tooltips_enabled;
 	int show_small_icons;
 	int show_dot_buttons;
+	int hungry_menus;
 	int off_panel_popups;
 	int prompt_for_logout;
 	PanelMovementType movement_type;
