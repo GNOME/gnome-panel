@@ -44,7 +44,7 @@ struct _FoobarWidget
 	GHashTable *tasks;
 	GtkWidget *task_item;
 	GtkWidget *task_menu;
-	GtkWidget *task_pixmap;
+	GtkWidget *task_image;
 	GtkWidget *task_bin;
 	GwmhTask *icon_task; /* the task whoose icon is shown,
 			      * hopefully should be always OK,

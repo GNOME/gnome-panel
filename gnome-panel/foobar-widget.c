@@ -14,6 +14,10 @@
 #include <unistd.h>
 
 #include "foobar-widget.h"
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-util.h>
+#include <libgnome/gnome-program.h>
+#include <libgnome/gnome-preferences.h>
 
 #include "menu.h"
 #include "menu-util.h"
@@ -68,8 +72,8 @@ foobar_widget_get_type (void)
 			sizeof (FoobarWidgetClass),
 			(GtkClassInitFunc) foobar_widget_class_init,
 			(GtkObjectInitFunc) foobar_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL
+			NULL,
+			NULL
 		};
 
 		foobar_widget_type = gtk_type_unique (gtk_window_get_type (),
@@ -102,17 +106,33 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 	GtkWidget *item;
 	GtkWidget *label;
 
-	item = gtk_pixmap_menu_item_new ();
+	item = gtk_image_menu_item_new ();
 
 	if (try_file && gnome_preferences_get_menus_have_icons ()) {
-		GtkWidget *pixmap;
-		pixmap = gnome_stock_pixmap_widget_at_size (
-			NULL, try_file, SMALL_ICON_SIZE, SMALL_ICON_SIZE);
+		GtkWidget *image;
+		GdkPixbuf *pixbuf;
 
-		if(pixmap) {
-			gtk_widget_show (pixmap);
-			gtk_pixmap_menu_item_set_pixmap
-				(GTK_PIXMAP_MENU_ITEM (item), pixmap);
+		pixbuf = gdk_pixbuf_new_from_file (try_file, NULL);
+		if (pixbuf) {
+			GdkPixbuf *scaled;
+
+			scaled = gdk_pixbuf_scale_simple (pixbuf,
+							  SMALL_ICON_SIZE,
+							  SMALL_ICON_SIZE,
+							  GDK_INTERP_BILINEAR);
+
+			gdk_pixbuf_unref (pixbuf);
+
+			pixbuf = scaled;
+		}
+
+		if (pixbuf) {
+			image = gtk_image_new_from_pixbuf (pixbuf);
+
+			gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
+						       image);
+
+			gdk_pixbuf_unref (pixbuf);
 		}
 	}
 
@@ -126,7 +146,7 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 }
 
 static void
-add_tearoff (GtkMenu *menu)
+add_tearoff (GtkMenuShell *menu)
 {
 	GtkWidget *item;
 
@@ -135,7 +155,7 @@ add_tearoff (GtkMenu *menu)
 	
 	item = gtk_tearoff_menu_item_new ();
 	gtk_widget_show (item);
-	gtk_menu_prepend (menu, item);
+	gtk_menu_shell_prepend (menu, item);
 }
 
 static gboolean
@@ -233,18 +253,18 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	menu = hack_scroll_menu_new ();
 	
 	for (i=0; url[i][1]; i++)
-		gtk_menu_append (GTK_MENU (menu),
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu),
 				 url_menu_item (_(url[i][0]), url[i][1],
 						url[i][2]));
 		
 	add_menu_separator (menu);
 
 	item = pixmap_menu_item_new (_("About GNOME"), GNOME_STOCK_MENU_ABOUT);
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (about_cb), NULL);
 
-	add_tearoff (GTK_MENU (menu));
+	add_tearoff (GTK_MENU_SHELL (menu));
 
 	item = pixmap_menu_item_new ("", "gnome-spider.png");
 
@@ -260,7 +280,7 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 	GtkWidget *item;
 
 	item = gtk_menu_item_new_with_label (label);
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (gmc_client), flag);
 
@@ -338,11 +358,11 @@ append_desktop_menu (GtkWidget *menu_bar)
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
-	add_tearoff (GTK_MENU (menu));
+	add_tearoff (GTK_MENU_SHELL (menu));
 
 	menu = hack_scroll_menu_new ();
 
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	item = add_menu_separator (menu);
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
@@ -361,7 +381,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	if (char_tmp) {	
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					       "gnome-lockscreen.png");
-		gtk_menu_append (GTK_MENU (menu), item);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		gtk_signal_connect (GTK_OBJECT (item), "activate",
 				    GTK_SIGNAL_FUNC (panel_lock), 0);
 		setup_internal_applet_drag(item, "LOCK:NEW");
@@ -370,12 +390,12 @@ append_desktop_menu (GtkWidget *menu_bar)
 	}
 
 	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
 
-	add_tearoff (GTK_MENU (menu));
+	add_tearoff (GTK_MENU_SHELL (menu));
 
 	item = gtk_menu_item_new_with_label (_(" Desktop "));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -398,7 +418,8 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	char *real_path;
 
 	real_path = system 
-		? gnome_unconditional_datadir_file (path)
+		? gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
+					     path, FALSE, NULL)
 		: gnome_util_home_file (path);
 
 	if (real_path == NULL) {
@@ -441,7 +462,7 @@ static void
 append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 {
 	GtkWidget *item = gtk_menu_item_new_with_label (label);
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (gnomecal_client), (gpointer)flag);
 }
@@ -530,7 +551,7 @@ append_format_item (GtkWidget *menu, const char *format)
 	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
 	item = gtk_menu_item_new_with_label (hour);
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (set_fooclock_format),
 			    (gpointer)format);
@@ -571,7 +592,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	
 #if 0 /* put back when evolution can do this */
 	item = gtk_menu_item_new_with_label (_("Add appointement..."));
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	add_menu_separator (menu);
 #endif
@@ -581,7 +602,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 		item = gtk_menu_item_new_with_label (_("Set Time"));
 		gtk_signal_connect (GTK_OBJECT (item), "activate",
 						GTK_SIGNAL_FUNC (set_time_cb), time_admin_path);
-		gtk_menu_append (GTK_MENU (menu), item);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		add_menu_separator (menu);
 	}
 
@@ -594,13 +615,13 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	for (i=0; formats[i]; i++)
 		append_format_item (menu2, formats[i]);
 
-	add_tearoff (GTK_MENU (menu2));
+	add_tearoff (GTK_MENU_SHELL (menu2));
 
 	item = gtk_menu_item_new_with_label (_("Format"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
-	add_tearoff (GTK_MENU (menu));
+	add_tearoff (GTK_MENU_SHELL (menu));
 
 	item = gtk_menu_item_new ();
 
@@ -726,7 +747,7 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 	GtkWidget *item, *label;
 	char *title = NULL;
 	int slen;
-	GtkWidget *pixmap  = NULL;
+	GtkWidget *image = NULL;
 
 	static GwmhDesk *desk = NULL;
 
@@ -753,12 +774,12 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 		g_free (tmp);
 	}
 	
-	item = gtk_pixmap_menu_item_new ();
-	pixmap = get_task_icon (task, GTK_WIDGET (foo));
-	if (pixmap != NULL) {
-		gtk_widget_show (pixmap);
-		gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (item),
-						 pixmap);
+	item = gtk_image_menu_item_new ();
+	image = get_task_icon (task, GTK_WIDGET (foo));
+	if (image != NULL) {
+		gtk_widget_show (GTK_WIDGET (image));
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item),
+					       GTK_WIDGET (image));
 	}
 
 	label = gtk_label_new (title);
@@ -778,9 +799,9 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 	if (task->desktop == desk->current_desktop &&
 	    task->harea   == desk->current_harea   &&
 	    task->varea   == desk->current_varea)
-		gtk_menu_prepend (GTK_MENU (foo->task_menu), item);
+		gtk_menu_shell_prepend (GTK_MENU_SHELL (foo->task_menu), item);
 	else
-		gtk_menu_append (GTK_MENU (foo->task_menu), item);
+		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
 }
 
 static void
@@ -824,44 +845,37 @@ destroy_task_menu (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-get_default_pixmap (void)
+get_default_image (void)
 {
-	GtkWidget *widget;
+	GtkWidget *image;
+	static GdkPixbuf *pixbuf = NULL;
 	static GdkPixmap *pixmap = NULL;
 	static GdkBitmap *mask   = NULL;
 	static gboolean looked   = FALSE;
 
-	if ( ! looked) {
+	if (! looked) {
 		GdkPixbuf *pb = NULL, *scaled = NULL;
-		pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png");
+		pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png", NULL);
 		
 		if (pb != NULL) {
 			scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
 							  GDK_INTERP_BILINEAR);
 			gdk_pixbuf_unref (pb);
-		}
 
-		if (scaled != NULL) {
-			gdk_pixbuf_render_pixmap_and_mask (scaled,
-							   &pixmap, &mask, 128);
-			gdk_pixbuf_unref (scaled);
-			
-			if (pixmap != NULL)
-				gdk_pixmap_ref (pixmap);
-
-			if (mask != NULL)
-				gdk_bitmap_ref (mask);
+			pixbuf = scaled;
 		}
 
 		looked = TRUE;
 	}
-	if (pixmap != NULL)
-		widget = gtk_pixmap_new (pixmap, mask);
-	else
-		widget = gtk_label_new ("*");
-	gtk_widget_show (widget);
 
-	return widget;
+	if (pixbuf != NULL) {
+	    image = gtk_image_new_from_pixbuf (pixbuf);
+	    gtk_widget_show (image);
+
+	    return image;
+	}
+
+	return NULL;
 }
 
 static void
@@ -872,22 +886,22 @@ set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 
 	foo->icon_task = NULL;
 
-	if (foo->task_pixmap != NULL)
-		gtk_widget_destroy (foo->task_pixmap);
-	foo->task_pixmap = NULL;
+	if (foo->task_image != NULL)
+		gtk_widget_destroy (GTK_WIDGET (foo->task_image));
+	foo->task_image = NULL;
 
 	if (task != NULL) {
-		foo->task_pixmap = get_task_icon (task, GTK_WIDGET (foo));
+		foo->task_image = get_task_icon (task, GTK_WIDGET (foo));
 		foo->icon_task = task;
 	}
 
-	if (foo->task_pixmap == NULL) {
-		foo->task_pixmap = get_default_pixmap ();
+	if (foo->task_image == NULL) {
+		foo->task_image = get_default_image ();
 	}
 
-	if (foo->task_pixmap != NULL) {
+	if (foo->task_image != NULL) {
 		gtk_container_add (GTK_CONTAINER (foo->task_bin),
-				   foo->task_pixmap);
+				   GTK_WIDGET (foo->task_image));
 	}
 }
 
@@ -1004,7 +1018,7 @@ foobar_widget_init (FoobarWidget *foo)
 
 	foo->task_item = NULL;
 	foo->task_menu = NULL;
-	foo->task_pixmap = NULL;
+	foo->task_image = NULL;
 	foo->task_bin = NULL;
 	foo->icon_task = NULL;
 

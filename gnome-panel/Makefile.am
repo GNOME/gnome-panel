@@ -6,6 +6,8 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
 
+NULL =
+
 SUBDIRS =
 
 EXTRA_SUBDIRS = config help
@@ -50,14 +52,12 @@ CLEANFILES += $(CORBA_SRCLIST)
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) $(top_srcdir)/idl/gnome-panel.idl
 
-$(srcdir)/stamp-panel-marshal.h: panel-marshal.list
+panel-marshal.h: panel-marshal.list
 	cd $(srcdir) \
 	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --header >> xgen-gmh \
-	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h) \
-	&& rm -f xgen-gmh xgen-gmh~ \
-	&& echo timestamp > $(@F)
+	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h)
 
-$(srcdir)/panel-marshal.h $(srcdir)/panel-marshal.c: stamp-panel-marshal.h
+panel-marshal.c: panel-marshal.h panel-marshal.list
 	cd $(srcdir) \
 	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc panel-marshal.c \
@@ -123,10 +123,26 @@ panel_temp_SOURCES=\
 	panel-widget.c  	\
 	panel-widget.h		\
 	basep-widget.c  	\
-	basep-widget.h
+	basep-widget.h		\
+	button-widget.c  	\
+	button-widget.h		\
+	multiscreen-stuff.c	\
+	multiscreen-stuff.h	\
+	xstuff.c		\
+	xstuff.h		\
+	session.c		\
+	session.h		\
+	conditional.c		\
+	conditional.h		\
+	foobar-widget.h		\
+	foobar-widget.c		\
+	tasklist_icon.c		\
+	tasklist_icon.h		\
+	$(NULL)
 
 panel_temp_LDADD=\
-	$(PANEL_LIBS)
+	$(PANEL_LIBS)		\
+	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
 
 panel_SOURCES=\
 	$(GWMH_SRCLIST)		\
@@ -210,8 +226,6 @@ panel_SOURCES=\
 	scroll-menu.c		\
 	icon-entry-hack.c	\
 	icon-entry-hack.h	\
-	multiscreen-stuff.c	\
-	multiscreen-stuff.h	\
 	conditional.c		\
 	conditional.h
 
