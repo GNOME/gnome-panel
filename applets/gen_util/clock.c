@@ -64,14 +64,14 @@ clock_timeout_callback(gpointer data)
 }
 
 static gint
-applet_session_save(GtkWidget * w,
-		    const char *cfgpath,
+applet_save_session(GtkWidget * w,
+		    const char *privcfgpath,
 		    const char *globcfgpath,
 		    gpointer data)
 {
 	ClockData *cd = data;
-	gnome_config_push_prefix(cfgpath);
-	gnome_config_set_int("hourformat", cd->hourformat);
+	gnome_config_push_prefix(privcfgpath);
+	gnome_config_set_int("clock/hourformat", cd->hourformat);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -232,14 +232,9 @@ make_clock_applet(const gchar * param)
 
 	cd = create_clock_widget(applet);
 
-	if (APPLET_WIDGET(applet)->cfgpath &&
-	    *(APPLET_WIDGET(applet)->cfgpath)) {
-		gnome_config_push_prefix(APPLET_WIDGET(applet)->cfgpath);
-		cd->hourformat = gnome_config_get_int("hourformat=0");
-		gnome_config_pop_prefix();
-	} else {
-		cd->hourformat = 0;
-	}
+	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
+	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
+	gnome_config_pop_prefix();
 
 
 	/*we have to bind change_orient before we do applet_widget_add 
@@ -253,8 +248,8 @@ make_clock_applet(const gchar * param)
 	applet_widget_add(APPLET_WIDGET(applet), cd->clockw);
 	gtk_widget_show(applet);
 
-	gtk_signal_connect(GTK_OBJECT(applet), "session_save",
-			   GTK_SIGNAL_FUNC(applet_session_save),
+	gtk_signal_connect(GTK_OBJECT(applet), "save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),
 			   cd);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),

@@ -228,17 +228,17 @@ applet_back_change(GtkWidget *w,
 }
 
 static gint
-applet_session_save(GtkWidget *w,
-		    const char *cfgpath,
+applet_save_session(GtkWidget *w,
+		    const char *privcfgpath,
 		    const char *globcfgpath,
 		    gpointer data)
 {
 	Printer *pr = data;
 
-	gnome_config_push_prefix (cfgpath);
-	gnome_config_set_string ("print_command",
+	gnome_config_push_prefix (privcfgpath);
+	gnome_config_set_string ("print/print_command",
 				 pr->print_command ? pr->print_command : "");
-	gnome_config_set_string ("title",
+	gnome_config_set_string ("print/title",
 				 pr->print_title ? pr->print_title : "");
 	gnome_config_pop_prefix ();
 	gnome_config_sync ();
@@ -365,25 +365,19 @@ make_printer_applet(const gchar *param)
 	pr = g_new(Printer,1);
 	pr->printer_prop = NULL;
 
-	if(APPLET_WIDGET(applet)->cfgpath &&
-	   *(APPLET_WIDGET(applet)->cfgpath)) {
-		gnome_config_push_prefix (APPLET_WIDGET(applet)->cfgpath);
-		pr->print_command =
-			gnome_config_get_string ("print_command=lpr");
-		pr->print_title   = gnome_config_get_string ("title=Print");
-		gnome_config_pop_prefix ();
-	} else {
-		pr->print_title   = g_strdup ("Print");
-		pr->print_command = g_strdup ("lpr");
-	}
+	gnome_config_push_prefix (APPLET_WIDGET(applet)->privcfgpath);
+	pr->print_command =
+		gnome_config_get_string ("print/print_command=lpr");
+	pr->print_title   = gnome_config_get_string ("print/title=Print");
+	gnome_config_pop_prefix ();
 	
 	pr->printer = printer_widget (pr);
 	gtk_widget_show (pr->printer);
 	gtk_signal_connect(GTK_OBJECT(applet),"back_change",
 			   GTK_SIGNAL_FUNC(applet_back_change),
 			   pr);
-	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
-			   GTK_SIGNAL_FUNC(applet_session_save),
+	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),
 			   pr);
 	applet_widget_add (APPLET_WIDGET (applet), pr->printer);
 	gtk_widget_show (applet);

@@ -34,15 +34,13 @@ static GtkWidget * fortune_dialog = NULL;
 static GtkWidget * fortune_label;
 
 static void
-load_properties(char *cfgpath)
+load_properties(char *privcfgpath)
 {
-  char *query;
-
   if (properties.name) g_free(properties.name);
 
-  query = g_copy_strings(cfgpath,"name",NULL);
-  properties.name = gnome_config_get_string(query);
-  g_free(query);
+  gnome_config_push_prefix(privcfgpath);
+  properties.name = gnome_config_get_string("fish/name");
+  gnome_config_pop_prefix();
 
   if (properties.name == NULL) properties.name = g_strdup(defaults.name);
 }
@@ -262,15 +260,13 @@ about_cb (AppletWidget *widget, gpointer data)
 }
 
 static gint
-applet_session_save(GtkWidget *w,
-		    const char *cfgpath,
+applet_save_session(GtkWidget *w,
+		    const char *privcfgpath,
 		    const char *globcfgpath)
 {
-	char *query;
-
-	query = g_copy_strings(cfgpath,"name",NULL);
-	gnome_config_set_string(query,properties.name);
-	g_free(query);
+	gnome_config_push_prefix(privcfgpath);
+	gnome_config_set_string("fish/name",properties.name);
+	gnome_config_pop_prefix();
 
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -300,12 +296,12 @@ main(int argc, char *argv[])
 	fish = create_fish_widget(applet);
 	gtk_widget_show(fish);
 
-	load_properties(APPLET_WIDGET(applet)->cfgpath);
+	load_properties(APPLET_WIDGET(applet)->privcfgpath);
 
 	applet_widget_add(APPLET_WIDGET(applet), fish);
 	gtk_widget_show(applet);
-	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
-			   GTK_SIGNAL_FUNC(applet_session_save),
+	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),
 			   NULL);
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),

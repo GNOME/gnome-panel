@@ -501,17 +501,17 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 
 
 static gint
-applet_session_save(GtkWidget *w,
-		    const char *cfgpath,
+applet_save_session(GtkWidget *w,
+		    const char *privcfgpath,
 		    const char *globcfgpath,
 		    gpointer data)
 {
-	char *query;
 	MailCheck *mc = data;
 
-	query = g_copy_strings(cfgpath,"animation_file",NULL);
-	gnome_config_set_string(query,mc->animation_file?mc->animation_file:"");
-	g_free(query);
+	gnome_config_push_prefix(privcfgpath);
+	gnome_config_set_string("mail/animation_file",
+				mc->animation_file?mc->animation_file:"");
+	gnome_config_pop_prefix();
 
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -538,6 +538,8 @@ make_mailcheck_applet(const gchar *param)
 {
 	GtkWidget *mailcheck;
 	MailCheck *mc;
+	char *emailfile;
+	char *query;
 
 	mc = g_new(MailCheck,1);
 	mc->animation_tag = -1;
@@ -563,24 +565,21 @@ make_mailcheck_applet(const gchar *param)
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 
-	if(APPLET_WIDGET(applet)->cfgpath &&
-           *(APPLET_WIDGET(applet)->cfgpath)) {
-		char *emailfile = gnome_unconditional_pixmap_file("mailcheck/email.xpm");
-		char *query = g_copy_strings(APPLET_WIDGET(applet)->cfgpath,
-					     "animation_file=",emailfile,NULL);
-		mc->animation_file = gnome_config_get_string(query);
-		g_free(query);
-		if(emailfile) g_free(emailfile);
-	} else 
-		mc->animation_file = NULL;
+	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.xpm");
+
+	query = g_copy_strings(APPLET_WIDGET(applet)->privcfgpath,
+			       "mail/animation_file=",emailfile,NULL);
+	mc->animation_file = gnome_config_get_string(query);
+	g_free(query);
+	if(emailfile) g_free(emailfile);
 
 	mc->mailcheck_text_only = _("Text only");
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
 	applet_widget_add (APPLET_WIDGET (applet), mailcheck);
 	gtk_widget_show (applet);
-	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
-			   GTK_SIGNAL_FUNC(applet_session_save),
+	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),
 			   mc);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
