@@ -313,7 +313,7 @@ floating_pos_get_hide_size (BasePWidget *basep,
 			*h = get_requisition_height (basep->hidebutton_s);
 			break;
 		case ORIENT_LEFT:
-			*w = get_requisition_height (basep->hidebutton_e);
+			*w = get_requisition_width (basep->hidebutton_e);
 			break;
 		}
 	}
