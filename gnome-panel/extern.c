@@ -904,6 +904,7 @@ s_panelspot_get_rgb_background(PortableServer_Servant servant,
 		memcpy(image->data._buffer,rgb,sizeof(guchar)*h*rowstride);
 		image->rowstride = rowstride;
 		image->color_only = FALSE;
+		g_free(rgb);
 	} else { /* we must have gotten a color */
 		image->data._buffer = CORBA_sequence_CORBA_octet_allocbuf(3);
 		image->data._length = image->data._maximum = 3;
