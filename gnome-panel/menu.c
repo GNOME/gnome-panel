@@ -1858,8 +1858,8 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 }
  
 static void
-setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
-		      MenuFinfo *mf)
+setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
+		      const char *title, MenuFinfo *mf)
 {
 	GtkWidget *label, *hbox=NULL, *align;
 	IconSize size = global_config.use_large_icons 
@@ -2385,24 +2385,24 @@ move_window_handler (gpointer data)
 static void
 move_window_destroyed (GtkWidget *win)
 {
-	gpointer data = gtk_object_get_data (GTK_OBJECT (win), "move_window_hadnler");
+	gpointer data = gtk_object_get_data (GTK_OBJECT (win), "move_window_handler");
 	int handler = GPOINTER_TO_INT (data);
 
 	if (handler != 0)
 		gtk_timeout_remove (handler);
-	gtk_object_remove_data (GTK_OBJECT (win), "move_window_hadnler");
+	gtk_object_remove_data (GTK_OBJECT (win), "move_window_handler");
 }
 
 static void
 doblah (GtkWidget *window)
 {
-	gpointer data = gtk_object_get_data (GTK_OBJECT (window), "move_window_hadnler");
+	gpointer data = gtk_object_get_data (GTK_OBJECT (window), "move_window_handler");
 	int handler = GPOINTER_TO_INT (data);
 
 	if (handler == 0) {
 		handler = gtk_timeout_add (30, move_window_handler, window);
 		data = GINT_TO_POINTER (handler);
-		gtk_object_set_data (GTK_OBJECT (window), "move_window_hadnler", data);
+		gtk_object_set_data (GTK_OBJECT (window), "move_window_handler", data);
 		gtk_signal_connect (GTK_OBJECT (window), "destroy",
 				    GTK_SIGNAL_FUNC (move_window_destroyed),
 				    NULL);
