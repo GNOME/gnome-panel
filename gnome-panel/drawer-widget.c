@@ -276,25 +276,26 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
-		int x = allocation->x;
-		int y = allocation->y;
 		if(drawer->state != DRAWER_SHOWN ||
 		   drawer->temp_hidden) {
-			x = -allocation->width -1;
-			y = -allocation->height -1;
+			allocation->x = -allocation->width -1;
+			allocation->y = -allocation->height -1;
 		}
 		gdk_window_move_resize (widget->window,
-					x,y,
+					allocation->x,
+					allocation->y,
 					allocation->width,
 					allocation->height);
-		gdk_window_set_hints (widget->window,x,y,
+		gdk_window_set_hints (widget->window,
+				      allocation->x,
+				      allocation->y,
 				      0,0,0,0, GDK_HINT_POS);
-		if(basep->ebox->window) {
+		/*if(basep->ebox->window) {
 			gdk_window_move_resize (basep->ebox->window,
 						0,0,
 						allocation->width, 
 						allocation->height);
-		}
+		}*/
 	}
 
 	challoc.x = challoc.y = 0;
@@ -348,18 +349,21 @@ drawer_widget_set_hidebuttons(BasePWidget *basep)
 void
 drawer_widget_open_drawer(DrawerWidget *drawer)
 {
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 	gint16 x=0,y=0;
 	int width, height;
 
 	if((drawer->state == DRAWER_SHOWN) ||
 	   (drawer->state == DRAWER_MOVING))
 		return;
-	
+
 	if(!GTK_WIDGET(drawer)->window) {
 		gtk_widget_queue_resize(GTK_WIDGET(drawer));
 		drawer->state = DRAWER_SHOWN;
 		return;
 	}
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	width   = GTK_WIDGET(drawer)->allocation.width;
 	height  = GTK_WIDGET(drawer)->allocation.height;
@@ -405,6 +409,7 @@ drawer_widget_open_drawer(DrawerWidget *drawer)
 void
 drawer_widget_close_drawer(DrawerWidget *drawer)
 {
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 	gint16 x=0,y=0;
 	int width, height;
 
@@ -417,6 +422,8 @@ drawer_widget_close_drawer(DrawerWidget *drawer)
 		drawer->state = DRAWER_HIDDEN;
 		return;
 	}
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	gtk_signal_emit(GTK_OBJECT(drawer),
 			drawer_widget_signals[STATE_CHANGE_SIGNAL],

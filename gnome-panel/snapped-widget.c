@@ -307,6 +307,9 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			       allocation->height);
 
 	challoc.x = challoc.y = 0;
+	challoc.width = allocation->width;
+	challoc.height = allocation->height;
+
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		int w = allocation->width;
@@ -322,12 +325,16 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
 			challoc.x = x;
 			challoc.y = y;
-		} else if(basep->ebox->window) {
+		} /*else if(basep->ebox->window) {
 			gdk_window_move_resize (basep->ebox->window,
 						0,0,
 						allocation->width, 
 						allocation->height);
-		}
+		}*/
+		
+		allocation->width = w;
+		allocation->height = h;
+
 		gdk_window_move_resize (widget->window,
 					allocation->x, 
 					allocation->y,
@@ -335,8 +342,6 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	} else
 		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
 
-	challoc.width = allocation->width;
-	challoc.height = allocation->height;
 	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
 
@@ -418,10 +423,13 @@ snapped_widget_pop_up(SnappedWidget *snapped)
 static int
 snapped_widget_pop_down(gpointer data)
 {
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 	SnappedWidget *snapped = data;
 
 	if(snapped->autohide_inhibit)
 		return TRUE;
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	if(snapped->state != SNAPPED_SHOWN ||
 	   panel_widget_is_cursor(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel),0)) {
@@ -518,6 +526,12 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 						pw_explicit_step);
 	}
 
+	if(snapped->mode == SNAPPED_AUTO_HIDE) {
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
+	} else {
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_DOCK);
+	}
+
 	snapped->state = SNAPPED_SHOWN;
 
 	gtk_signal_emit(GTK_OBJECT(snapped),
@@ -539,6 +553,8 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 		gtk_timeout_remove (snapped->leave_notify_timer_tag);
 		snapped->leave_notify_timer_tag = 0;
 	}
+
+	gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
 
 	if(fromright)
 	   	gtk_signal_emit(GTK_OBJECT(snapped),

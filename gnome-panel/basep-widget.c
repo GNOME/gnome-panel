@@ -371,7 +371,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		
 		/*a hack to remove all the expose events that we generated
 		  above*/
-		{
+		/*{
 			GdkEvent *event;
 			GSList *list = NULL;
 			while((event=gdk_event_get())) {
@@ -383,7 +383,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			}
 			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
 			g_slist_free(list);
-		}
+		}*/
 		
 
 		if (0 && gnome_win_hints_wm_exists()) {
@@ -539,7 +539,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		}
 		/*a hack to remove all the expose events that we generated
 		  above*/
-		{
+		/*{
 			GdkEvent *event;
 			GSList *list = NULL;
 			while((event=gdk_event_get())) {
@@ -552,6 +552,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
 			g_slist_free(list);
 		}
+		*/
 		if (0 && gnome_win_hints_wm_exists()) {
 			gdk_window_resize(wid->window,dw,dh);
 			gdk_window_set_hints (wid->window,

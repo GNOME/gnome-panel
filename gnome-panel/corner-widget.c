@@ -288,6 +288,8 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 
 	challoc.x = challoc.y = 0;
+	challoc.width = allocation->width;
+	challoc.height = allocation->height;
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		int w = allocation->width;
@@ -303,12 +305,16 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
 			challoc.x = x;
 			challoc.y = y;
-		} else if(basep->ebox->window) {
+		}/* else if(basep->ebox->window) {
 			gdk_window_move_resize (basep->ebox->window,
 						0,0,
 						allocation->width, 
 						allocation->height);
-		}
+		}*/
+
+		allocation->width = w;
+		allocation->height = h;
+
 		gdk_window_move_resize (widget->window,
 					allocation->x, 
 					allocation->y,
@@ -316,8 +322,6 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	} else
 		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
 
-	challoc.width = allocation->width;
-	challoc.height = allocation->height;
 	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
 
@@ -332,9 +336,13 @@ corner_widget_set_initial_pos(CornerWidget *corner)
 static void
 corner_widget_pop_show(CornerWidget *corner, int fromright)
 {
+	static const char *supinfo[] = {"panel", "collapse", NULL};
+
 	if ((corner->state == CORNER_MOVING) ||
 	    (corner->state == CORNER_SHOWN))
 		return;
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	corner->state = CORNER_MOVING;
 
@@ -361,6 +369,10 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 						BASEP_WIDGET(corner)->hidebutton_n->allocation.height,
 						pw_explicit_step);
 	}
+
+	gnome_win_hints_set_layer(GTK_WIDGET(corner),
+				  WIN_LAYER_DOCK);
+
 	corner->state = CORNER_SHOWN;
 
 	gtk_signal_emit(GTK_OBJECT(corner),
@@ -371,11 +383,16 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 static void
 corner_widget_pop_hide(CornerWidget *corner, int fromright)
 {
+	static const char *supinfo[] = {"panel", "collapse", NULL};
 	int width, height;
 
 	if((corner->state != CORNER_SHOWN))
 		return;
+
+	gnome_triggers_vdo("", NULL, supinfo);
 	
+	gnome_win_hints_set_layer(GTK_WIDGET(corner),
+				  WIN_LAYER_ABOVE_DOCK);
 
 	gtk_signal_emit(GTK_OBJECT(corner),
 			corner_widget_signals[STATE_CHANGE_SIGNAL],
