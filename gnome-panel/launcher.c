@@ -133,8 +133,12 @@ create_launcher (GtkWidget *window, char *parameters)
 	}
 	gtk_container_add (GTK_CONTAINER(launcher->button), pixmap);
 	gtk_widget_show (pixmap);
-	gtk_widget_set_usize (launcher->button, pixmap->requisition.width,
-			      pixmap->requisition.height);
+	/*gtk_widget_set_usize (launcher->button, pixmap->requisition.width,
+			      pixmap->requisition.height);*/
+	/*FIXME: we'll do this better alter, but this makes it look fine with
+	  normal icons*/
+	gtk_widget_set_usize (launcher->button, 48, 48);
+	
 	gtk_widget_show (launcher->button);
 
 	launcher->signal_click_tag = gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",

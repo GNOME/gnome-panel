@@ -257,11 +257,13 @@ create_menu_at (char *menudir, int create_app_menu)
 		gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
 				    (GtkSignalFunc) free_app_def, item_info);
 
-		activate_func = create_app_menu ?
-			GTK_SIGNAL_FUNC(add_app_to_panel) :
-			GTK_SIGNAL_FUNC(activate_app_def);
-		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-				    activate_func, item_info);
+		if(item_info && item_info->exec) {
+			activate_func = create_app_menu ?
+				GTK_SIGNAL_FUNC(add_app_to_panel) :
+				GTK_SIGNAL_FUNC(activate_app_def);
+			gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+					    activate_func, item_info);
+		}
 
 		g_free (filename);
 	}
