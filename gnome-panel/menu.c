@@ -34,6 +34,37 @@ int show_small_icons = TRUE;
 
 extern GlobalConfig global_config;
 
+
+/*the most important dialog in the whole application*/
+void
+about_cb (GtkWidget *widget, gpointer data)
+{
+	GtkWidget *about;
+	gchar *authors[] = {
+	  "George Lebl (jirka@5z.com)",
+	  "Miguel de Icaza (miguel@kernel.org)",
+	  "Federico Mena (quartic@gimp.org)",
+	  "Tom Tromey (tromey@cygnus.com)",
+	  "Ian Main (slow@intergate.bc.ca)",
+	  "and finally, The Knights Who Say ... NI!",
+	  NULL
+	  };
+
+	about = gnome_about_new ( "The GNOME Panel", VERSION,
+			"(C) 1998 the Free Software Foundation",
+			authors,
+			"This program is responsible for launching "
+			"other applications, embedding small applets "
+			"within itself, world peace, and random X crashes.",
+			NULL);
+	gtk_widget_show (about);
+
+	return;
+}
+
+
+
+
 void
 activate_app_def (GtkWidget *widget, void *data)
 {
@@ -426,6 +457,12 @@ create_panel_submenu (GtkWidget *app_menu)
         gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) panel_configure, 0);
 
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("About..."));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    (GtkSignalFunc) about_cb, 0);
+
 	return menu;
 }
 
@@ -466,6 +503,7 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 	setup_menuitem (menuitem, 0, _("Log out"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_logout, 0);
+
 }
 
 static Menu *
