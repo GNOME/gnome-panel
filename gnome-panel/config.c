@@ -45,10 +45,10 @@ set_mode (GtkWidget *widget, gpointer data)
 static void
 config_apply (GtkWidget *widget, gpointer data)
 {
-	the_panel->mode = config_panel.mode;
-	the_panel->pos = config_panel.pos;
+	/*the_panel->mode = config_panel.mode;
+	the_panel->pos = config_panel.pos;*/
 	
-	/* insert call here to redraw panel with new attributes. */
+	panel_reconfigure(&config_panel);
 }
 
 /* FIXME: I think these should probly go in a notebook.. I have to
