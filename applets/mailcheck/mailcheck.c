@@ -248,7 +248,7 @@ mail_check_timeout (gpointer data)
 				text = _("You have mail.");
 		} else
 			text = _("No mail.");
-		gtk_label_set (GTK_LABEL (mc->label), text);
+		gtk_label_set_text (GTK_LABEL (mc->label), text);
 		break;
 	}
 	}

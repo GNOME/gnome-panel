@@ -1,3 +1,17 @@
+1999-01-18  Jeff Garzik  <jgarzik@pobox.com>
+
+	* batmon/batmon.c, battery/battery.c, fish/fish.c, gen_util/clock.c,
+	  gen_util/mailcheck.c, gen_util/printer.c, gkb/gkb.c,
+	  gnome-pager/gnomepager_applet.c, mini-commander/src/command_line.c,
+	  mini-commander/src/message.c,
+	  mini-commander/src/mini-commander_applet.c,
+	  mini-commander/src/preferences.c, multiload/load-graph.c,
+	  multiload/property-entries.c:
+	Gtk+ s/old-name/new-name/ substitutions, from gtkcompat.h
+
+	* gnome-pager/gnomepager_applet.c:
+	64-bitness casts.  Added a FIXME for a value apparently never used.
+
 1999-01-18  Nat Friedman  <nat@nat.org>
 
 	* asclock/dialogs.c (properties_dialog): Fixed a typo.  Use

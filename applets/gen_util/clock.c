@@ -119,7 +119,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	        if (strftime(date, 20, _("%a %b %d"), tm) == 20)
 		    date[19] = '\0';
 	    }
-	    gtk_label_set(GTK_LABEL(cc->date), date);
+	    gtk_label_set_text(GTK_LABEL(cc->date), date);
 	    if (!GTK_WIDGET_VISIBLE(cc->date))
 	         gtk_widget_show (cc->date);
 	  } else {
@@ -143,7 +143,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	    if (strftime(hour, 20, _("%H:%M"), tm) == 20)
 			hour[19] = '\0';
 	}
-	gtk_label_set(GTK_LABEL(cc->time), hour);
+	gtk_label_set_text(GTK_LABEL(cc->time), hour);
 }
 
 static void

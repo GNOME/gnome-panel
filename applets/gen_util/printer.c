@@ -286,7 +286,7 @@ apply_properties (GtkWidget *widget, gint button_num, gpointer data)
 	Printer *pr = data;
 	apply_one (pr->prop_name, &pr->print_title);
 	apply_one (pr->prop_command, &pr->print_command);
-	gtk_label_set (GTK_LABEL (pr->label), pr->print_title);
+	gtk_label_set_text (GTK_LABEL (pr->label), pr->print_title);
 	position_label (pr->label, pr->ev);
 }
 

@@ -133,7 +133,7 @@ apply_properties(Fish *fish)
 		g_free(tmp);
 
 		tmp = splice_name(label_format, fish->prop.name);
-		gtk_label_set(GTK_LABEL(fish->fortune_label), tmp);
+		gtk_label_set_text(GTK_LABEL(fish->fortune_label), tmp);
 		g_free(tmp);
 	}
 	
