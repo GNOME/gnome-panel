@@ -655,6 +655,9 @@ split_menu_uri (const char  *menu_uri,
 {
 	char *p;
 
+	if (!menu_uri)
+		return NULL;
+
 	p = strchr (menu_uri, ':');
 
 	if (!p || p == menu_uri)
