@@ -154,7 +154,7 @@ create_text_entry(GtkWidget *table, int row, char *label, char *text, GtkWidget 
 			 0, 0);
 
 	gtk_signal_connect (GTK_OBJECT (entry), "changed",
-			    notify_entry_change, w);
+			    GTK_SIGNAL_FUNC(notify_entry_change), w);
 	return entry;
 }
 
