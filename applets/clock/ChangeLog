@@ -1,3 +1,9 @@
+2003-04-16  Mark McLoughlin  <mark@skynet.ie>
+
+	* clock.c: (properties_response_cb):
+	Remove calls to gnome_program_init. Because we're using the
+	global help files location I don't think its needed.
+
 2003-04-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* clock.c: expand to occupy the full panel width and

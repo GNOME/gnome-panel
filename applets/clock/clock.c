@@ -1191,20 +1191,10 @@ properties_response_cb (GtkWidget *widget,
 {
 	
 	if (id == GTK_RESPONSE_HELP) {
-		static GnomeProgram *applet_program = NULL;
 		GError *error = NULL;
 
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "clock" };
-			applet_program = gnome_program_init ("clock", VERSION,
-							      LIBGNOME_MODULE, argc, argv,
-							      GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-		}
-
 		egg_help_display_desktop_on_screen (
-				applet_program, "clock",
-				"clock", "clock-settings",
+				NULL, "clock", "clock", "clock-settings",
 				gtk_widget_get_screen (cd->applet),
 				&error);
 
@@ -1227,12 +1217,9 @@ properties_response_cb (GtkWidget *widget,
 			gtk_widget_show (dialog);
 			g_error_free (error);
 		}
-
 	} else {
 		gtk_widget_destroy (widget);
 	}
-	
-	return;
 }
 
 static void 
