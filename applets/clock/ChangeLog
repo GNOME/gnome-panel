@@ -1,3 +1,13 @@
+2004-06-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix for bug #138881 - clock takes up too much width when
+	you resize the panel such that the clock displays on
+	two rows.
+
+	* clock.c:
+	(applet_change_orient), (applet_change_pixel_size): unfix
+	the cached size when the orientation or size changes.
+
 2004-05-27  Carlos Garnacho Parro  <carlosg@gnome.org>
 
 	* clock.c: (handle_task_completed),
