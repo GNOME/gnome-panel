@@ -128,7 +128,9 @@ panel_SOURCES=\
 	rgb-stuff.h		\
 	rgb-stuff.c		\
 	global-keys.c		\
-	global-keys.h
+	global-keys.h		\
+	gnome-run.c		\
+	gnome-run.h
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
 	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@

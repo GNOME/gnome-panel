@@ -6,6 +6,7 @@
 #include "global-keys.h"
 #include "applet.h"
 #include "panel-include.h"
+#include "gnome-run.h"
 
 extern GSList *panel_list;
 
@@ -51,11 +52,8 @@ panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 			switch(ks) {
 			case XK_R:
 			case XK_r: 
-			{
-				char * const mystr[] = {"gnome-run"};
-				gnome_execute_async (NULL, 1, mystr);
-			}
-			break;
+				show_run_dialog ();
+				break;
 			default:
 				num_subkeys--;
 				break;

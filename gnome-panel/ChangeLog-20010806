@@ -1,3 +1,14 @@
+1999-12-11  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* global-keys.c (panel_global_keys_filter): call the internal
+	gnome-run instead of the external one
+
+	* gnome-run.[ch] (stolen from gnome-run): pop up a "run program"
+	dialog
+
+	* menu-fentry.c (fr_check_and_reread): plug mem leak found
+	by memprof
+
 1999-12-10  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* panel.c (panel_destroy): reset current_panel if we destroy

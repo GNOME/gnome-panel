@@ -335,8 +335,10 @@ fr_check_and_reread(FileRec *fr)
 				ddr = (DirRec *)ffr;
 				p = g_concat_dir_and_file(ffr->name,
 							  ".directory");
-				if (ddr->dentrylast_stat >= curtime-1)
+				if (ddr->dentrylast_stat >= curtime-1) {
+					g_free (p);
 					break;
+				}
 				if(stat(p,&s)==-1) {
 					if(dr->dentrymtime) {
 						g_free(ffr->icon);
