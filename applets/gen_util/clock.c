@@ -151,16 +151,16 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	    /* This format string is used, to display the actual time in
 	       12 hour format.  */
 	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-	        if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
+	        if (strftime(hour, 20, _("%l:%M\n%p"), tm) == 20)
 		        hour[19] = '\0';
 	    } else {
-	        if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
+	        if (strftime(hour, 20, _("%l:%M %p"), tm) == 20)
 	                hour[19] = '\0';
 	    } 
 	} else if (cd->hourformat == 1) {
 	    /* This format string is used, to display the actual time in
                24 hour format.  */
-	    if (strftime(hour, 20, _("%H:%M"), tm) == 20)
+	    if (strftime(hour, 20, _("%k:%M"), tm) == 20)
 			hour[19] = '\0';
 	}
 	gtk_label_set_text(GTK_LABEL(cc->time), hour);
