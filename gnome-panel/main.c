@@ -849,9 +849,20 @@ static void
 panel_move(PanelWidget *panel, double x, double y)
 {
 	PanelSnapped newloc;
+	gint minx, miny, maxx, maxy;
 
 	if(panel->snapped == PANEL_DRAWER || panel->snapped == PANEL_FREE)
 		return;
+
+	gdk_window_get_geometry (GTK_WIDGET(panel)->window, &minx, &miny, &maxx, &maxy, NULL);
+	gdk_window_get_origin (GTK_WIDGET(panel)->window, &minx, &miny);
+	maxx += minx;
+	maxy += miny;
+	if (x >= minx &&
+	    x <= maxx &&
+	    y >= miny &&
+	    y <= maxy)
+ 	        return;
 
 	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
 		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
