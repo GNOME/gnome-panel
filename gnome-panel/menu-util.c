@@ -14,7 +14,7 @@
 #include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 #include "distribution.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "menu.h"
 
 #undef MENU_UTIL_DEBUG

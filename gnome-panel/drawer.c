@@ -23,7 +23,7 @@
 #include "applet.h"
 #include "button-widget.h"
 #include "drawer-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "panel-util.h"
 #include "session.h"
 #include "xstuff.h"

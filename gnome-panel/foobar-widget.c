@@ -30,7 +30,7 @@
 #include "panel-widget.h"
 #include "xstuff.h"
 #include "basep-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "panel-util.h"
 #include "drawer-widget.h"
 #include "gnome-run.h"

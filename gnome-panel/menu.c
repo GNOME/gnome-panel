@@ -54,7 +54,7 @@
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "session.h"
 #include "sliding-widget.h"
 #include "status.h"

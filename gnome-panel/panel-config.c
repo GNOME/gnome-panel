@@ -19,7 +19,7 @@
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
 
-#include "panel_config.h"
+#include "panel-config.h"
 
 #include "aligned-widget.h"
 #include "basep-widget.h"

@@ -2,7 +2,7 @@
 #define DRAWER_H
 
 #include "panel.h"
-#include "panel_config.h"
+#include "panel-config.h"
 
 G_BEGIN_DECLS
 

@@ -8,7 +8,7 @@
 #include "config.h"
 
 #include "sliding-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "foobar-widget.h"
 #include "panel-marshal.h"
 #include "panel-util.h"

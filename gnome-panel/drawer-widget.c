@@ -10,7 +10,7 @@
 #include "drawer-widget.h"
 #include "border-widget.h"
 #include "floating-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 
 #include "multiscreen-stuff.h"
 

@@ -11,7 +11,7 @@
 #include "floating-widget.h"
 #include "border-widget.h"
 #include "panel-marshal.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "foobar-widget.h"
 #include "panel-util.h"
 #include "panel-gconf.h"

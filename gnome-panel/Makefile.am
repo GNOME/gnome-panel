@@ -75,7 +75,7 @@ panel_sources =			\
 	panel-util.c		\
 	panel-gconf.c		\
 	global-keys.c		\
-	panel_config.c  	\
+	panel-config.c  	\
 	status.c  		\
 	distribution.c		\
 	gnome-run.c  		\
@@ -115,8 +115,8 @@ panel_headers =			\
 	drawer.h  		\
 	panel-util.h		\
 	global-keys.h		\
-	panel_config.h		\
-	panel_config_global.h  	\
+	panel-config.h		\
+	panel-config-global.h  	\
 	panel-gconf.h		\
 	status.h  		\
 	distribution.h		\
@@ -227,7 +227,7 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 		$(panel_enum_headers) >  $@
 
 schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = panelglobalconfig.schemas panel-per-panel-config.schemas
+schema_DATA = panel-global-config.schemas panel-per-panel-config.schemas
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel.server.in

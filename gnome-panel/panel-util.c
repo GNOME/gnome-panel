@@ -27,7 +27,7 @@
 #include "panel-util.h"
 
 #include "applet.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 
 extern GlobalConfig global_config;
 

@@ -27,7 +27,7 @@
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "session.h"
 #include "status.h"
 #include "xstuff.h"

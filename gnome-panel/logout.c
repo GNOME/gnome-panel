@@ -12,7 +12,7 @@
 #include "applet.h"
 #include "drawer-widget.h"
 #include "menu.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "panel.h"
 #include "session.h"
 

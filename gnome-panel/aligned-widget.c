@@ -8,7 +8,7 @@
 #include "config.h"
 #include "panel-marshal.h"
 #include "aligned-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"

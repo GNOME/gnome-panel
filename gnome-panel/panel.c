@@ -36,7 +36,7 @@
 #include "menu-util.h"
 #include "menu.h"
 #include "panel-util.h"
-#include "panel_config.h"
+#include "panel-config.h"
 #include "session.h"
 #include "status.h"
 #include "swallow.h"

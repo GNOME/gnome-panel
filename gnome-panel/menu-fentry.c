@@ -31,7 +31,7 @@
 #include "quick-desktop-reader.h"
 
 #include "panel-util.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "session.h"
 
 #undef MENU_FENTRY_DEBUG

@@ -9,7 +9,7 @@
 
 #include "border-widget.h"
 #include "panel-marshal.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
 

@@ -7,7 +7,7 @@
 
 #include "config.h"
 #include "edge-widget.h"
-#include "panel_config_global.h"
+#include "panel-config-global.h"
 #include "foobar-widget.h"
 #include "multiscreen-stuff.h"
 
