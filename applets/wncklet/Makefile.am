@@ -46,6 +46,8 @@ wnck_applet_SOURCES = \
 	showdesktop.h \
 	$(EGGFILES)
 
+$(wnck_applet_OBJECTS): $(BUILT_SOURCES)
+
 wnck_applet_LDADD = \
 	../../libpanel-applet/libpanel-applet-2.la \
 	$(WNCKLET_LIBS)
@@ -69,7 +71,7 @@ $(server_in_files): $(server_in_files).in
 
 @INTLTOOL_SERVER_RULE@
 
-CLEANFILES = $(server_in_files) $(server_DATA) $(noinst_DATA)
+CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES)
 
 pixmapdir = $(datadir)/pixmaps
 pixmap_DATA = gnome-show-desktop.png
