@@ -1,3 +1,17 @@
+2003-11-07  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-properties-dialog.c: (panel_properties_dialog_new) :
+	Block autohiding when the properites dialog is open.
+	(panel_properties_dialog_destroy) : Unblock the autohiding when
+	destroying the dialog.
+
+	* panel.c: (panel_delete) : Block autohiding
+	(panel_deletion_destroy_dialog): Unblock autohiding
+
+	* panel-toplevel.c:(panel_toplevel_auto_unhide_timeout_handler):
+	Don't unhide if we are not in the vicinity of the panel.
+	Fix bug #122589
+
 2003-10-31  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler):

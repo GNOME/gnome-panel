@@ -3163,6 +3163,11 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	if (toplevel->priv->animating)
 		return TRUE;
 
+	if (!panel_toplevel_contains_pointer (toplevel)) {
+		toplevel->priv->unhide_timeout = 0;
+		return FALSE;
+	}
+
 	panel_toplevel_unhide (toplevel);
 
 	return FALSE;

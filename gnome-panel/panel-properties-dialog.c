@@ -645,6 +645,7 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 static void
 panel_properties_dialog_destroy (PanelPropertiesDialog *dialog)
 {
+	panel_toplevel_unblock_auto_hide (PANEL_TOPLEVEL (dialog->toplevel));
 	g_object_set_qdata (G_OBJECT (dialog->toplevel),
 			    panel_properties_dialog_quark,
 			    NULL);
@@ -975,6 +976,8 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 
 	panel_properties_dialog_update_for_attached (dialog,
 						     panel_toplevel_get_is_attached (dialog->toplevel));
+
+	panel_toplevel_block_auto_hide (dialog->toplevel);
 
 	gtk_widget_show (dialog->properties_dialog);
 
