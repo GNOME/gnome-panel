@@ -7,6 +7,7 @@
 #include <config.h>
 #include <limits.h>
 #include <math.h>
+#include <stdio.h>
 
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>

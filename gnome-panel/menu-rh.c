@@ -20,6 +20,7 @@
 #include <libgnome/libgnome.h>
 
 #include "menu-rh.h"
+#include "panel-util.h"
 
 /*#define PANEL_DEBUG 1*/
 

@@ -1,10 +1,12 @@
 #include <config.h>
+#include <string.h>
 
 #include <libbonobo.h>
 #include <bonobo-activation/bonobo-activation.h>
 
 #include "applet-object.h"
 #include "applet-widget.h"
+#include "applet-private.h"
 
 struct _AppletObjectPrivate {
 	AppletWidget                   *widget;
@@ -36,7 +38,7 @@ applet_object_abort_load (AppletObject *applet)
 {
 	CORBA_Environment env;
 
-        g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+        g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
 	CORBA_exception_init (&env);
 
@@ -58,7 +60,7 @@ applet_object_remove (AppletObject *applet)
 {
         CORBA_Environment env;
 
-        g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+        g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
         CORBA_exception_init (&env);
 
@@ -88,7 +90,7 @@ applet_object_sync_config (AppletObject *applet)
 {
         CORBA_Environment env;
 
-        g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+        g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
         CORBA_exception_init (&env);
 
@@ -139,7 +141,7 @@ applet_object_register_callback (AppletObject *applet,
 {
 	AppletObjectCallbackInfo *info;
 
-        g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+        g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 	g_return_if_fail (name && menutext && func);
 
 	if (!stock_item)
@@ -191,7 +193,7 @@ applet_object_unregister_callback (AppletObject *applet,
 {
         AppletObjectCallbackInfo *info;
 
-        g_return_if_fail (applet && IS_APPLET_OBJECT (applet) && name);
+        g_return_if_fail (applet && APPLET_IS_OBJECT (applet) && name);
 
 	info = applet_object_lookup_callback (applet, name);
 	if (!info)
@@ -228,7 +230,7 @@ applet_object_callback_set_sensitive (AppletObject *applet,
 {
 	CORBA_Environment env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet) && name);
+	g_return_if_fail (applet && APPLET_IS_OBJECT (applet) && name);
 
 	CORBA_exception_init (&env);
 
@@ -253,7 +255,7 @@ applet_object_set_tooltip (AppletObject *applet,
 {
         CORBA_Environment env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+	g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 	
 	if (!text)
 		text = "";
@@ -282,7 +284,7 @@ applet_object_get_free_space (AppletObject *applet)
         CORBA_Environment env;
         gint              retval;
 
-	g_return_val_if_fail (applet && IS_APPLET_OBJECT (applet), 0);
+	g_return_val_if_fail (applet && APPLET_IS_OBJECT (applet), 0);
 
         CORBA_exception_init (&env);
 
@@ -310,7 +312,7 @@ applet_object_send_position (AppletObject *applet,
 {
         CORBA_Environment env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+	g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
         CORBA_exception_init (&env);
 
@@ -336,7 +338,7 @@ applet_object_send_draw (AppletObject *applet,
 {
         CORBA_Environment env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+	g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
         CORBA_exception_init (&env);
 
@@ -360,7 +362,7 @@ applet_object_get_rgb_background (AppletObject  *applet)
 	GNOME_Panel_RgbImage *image;
 	CORBA_Environment     env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+	g_return_val_if_fail (applet && APPLET_IS_OBJECT (applet), NULL);
 
 	CORBA_exception_init (&env);
 
@@ -383,7 +385,7 @@ applet_object_register (AppletObject *applet)
 {
 	CORBA_Environment env;
 
-	g_return_if_fail (applet && IS_APPLET_OBJECT (applet));
+	g_return_if_fail (applet && APPLET_IS_OBJECT (applet));
 
 	CORBA_exception_init (&env);
 
@@ -406,8 +408,35 @@ applet_object_panel (void)
                                                     0, NULL, &env);
 
 	CORBA_exception_free (&env);
+
+	return panel_client;
 }
 
+/*
+ * FIXME: is this needed?
+ *
+ * applet_object_panel_quit:
+ * @applet: an #AppletObject.
+ *
+ * Description: Trigger 'Log out' on the panel.  This shouldn't be
+ * used in normal applets, as it is not normal for applets to trigger
+ * a logout.
+ */
+void
+applet_object_panel_quit (AppletObject *applet)
+{
+	CORBA_Environment env;
+
+	CORBA_exception_init (&env);
+
+        GNOME_Panel_quit (applet_object_panel (), &env);
+        if (BONOBO_EX (&env)) {
+                CORBA_exception_free (&env);
+                return;
+        }
+
+        CORBA_exception_free (&env);
+}
 
 static CORBA_string
 impl_GNOME_Applet2__get_iid (PortableServer_Servant  servant,
@@ -456,7 +485,6 @@ impl_GNOME_Applet2_do_callback (PortableServer_Servant  servant,
 {
 	AppletObject             *applet;
 	AppletObjectCallbackInfo *info;
-        GSList                   *l;
 
 	applet = APPLET_OBJECT (bonobo_object (servant));
 

@@ -491,9 +491,7 @@ setup_button (Launcher *launcher)
 
 		g_free (real_docpath);
 
-		title = g_strdup_printf (_("Help on %s"),
-					 name,
-					 _("Application"));
+		title = g_strdup_printf (_("Help on %s Application"), name);
 
 		applet_add_callback (launcher->info, "help_on_app",
 				     GTK_STOCK_HELP,
@@ -567,7 +565,6 @@ static GtkWidget *
 create_properties_dialog (Launcher *launcher)
 {
 	GtkWidget *dialog;
-	GList *types;
 
 	/* watch the enum at the top of the file */
 	dialog = gnome_dialog_new (_("Launcher properties"),
@@ -649,7 +646,6 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 			   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Launcher *launcher;
-	char *docpath;
 
 	launcher = create_launcher (params, ditem);
 
@@ -715,7 +711,6 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 {
 	GtkWidget *dialog;
 	GnomeDItemEdit *dee;
-	GList *types;
 	GnomeDesktopItem *ditem;
 
 	dialog = gnome_dialog_new (_("Create launcher applet"),

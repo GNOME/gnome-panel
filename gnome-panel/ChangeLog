@@ -1,3 +1,76 @@
+2001-10-24  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add WARN_CFLAGS to INCLUDES. Clean up
+	  panel-marshal rules. Build libpanel-applet-2. Install
+	  applet headers in gnome-2.0/panel/applet.
+
+	* libpanelapplet-2.0.pc.in: update.
+
+	* applet-object.c: s/IS_APPLET_OBJECT/APPLET_IS_OBJECT/.
+	(applet_object_panel): return panel_client.
+	(applet_object_panel_quit): impl.
+	(impl_GNOME_Applet2_do_callback): kill unused variable.
+
+	* applet-widget.c: 
+	(marshal_signal_save), (marshal_signal_back):
+	s/G_CLOSURE_SWAP_DATA/G_CCLOSURE_SWAP_DATA/
+	(applet_widget_destroy): use gtk_main_quit ().
+	(gnome_panel_client): kill.
+	(applet_widget_get_rgb_background): rename from
+	applet_widget_get_rgb_bg.
+	(applet_widget_gtk_main, applet_widget_gtk_main_quit,
+	 applet_widget_panel_quit): kill.
+
+	* applet-object.h: kill applet_object_register and
+	applet_object_get_rgb_background. Add applet_object_panel_quit.
+
+	* applet-widget.h: kill HAVE_* defines.
+
+	* applet-private.h: new header for libpanel-applet private
+	functions.
+
+	* doc/libpanel-applet-changes.txt: document applet API changes.
+
+	* basep-widget.c: 
+	(basep_widget_do_hiding), (basep_widget_do_showing): use g_usleep,
+	not usleep.
+	(basep_widget_explicit_hide), (basep_widget_explicit_show),
+	(basep_widget_autoshow), (basep_widget_autohide): kill unused
+	supinfo variables.
+
+	* conditional.c: #ifdef FIXME updates.
+
+	* extern.c: ditto and 
+	(extern_ref, extern_unref, extern_clean): make static
+	(s_panel_add_launcher_from_info): kill unused exec_argv.
+
+	* foobar-widget.c: #ifdef FIXME updates and
+	(get_default_image): kill unused variables.
+
+	* launcher.c: (create_properties_dialog), (load_launcher_applet_full),
+	(ask_about_launcher): kill unused variables.
+
+	* main.c: (panel_get_shell): make static.
+
+	* menu-properties.c: #ifdef FIXME updates
+
+	* menu.c: (add_new_app_to_menu), (edit_dentry): kill unused
+	variables.
+
+	* nothing.cP: #ifdef FIXME updates
+
+	* panel-util.c: ditto.
+
+	* panel-marshal-main.c: include panel-marshal.h.
+
+	* panel_config.c: (update_config_back): make text const.
+
+	* session.c: (apply_global_config), (load_up_globals),
+	(write_global_config), (convert_write_config),
+	(convert_read_old_config): kill unused variables.
+
+	* button-widget.c: (button_widget_draw): ditto.
+
 2001-10-24  Glynn Foster  <glynn.foster@sun.com>
 
 	* button-widget.c, button-widget.h, drawer.c,

@@ -102,7 +102,6 @@ send_tooltips_state(gboolean enabled)
 void
 apply_global_config (void)
 {
-	int i;
 	static int dot_buttons_old = 0; /*doesn't matter first time this is
 					  done there are no menu applets*/
 	static int menu_titles_old = 0; /*doesn't matter first time this is
@@ -1640,22 +1639,7 @@ load_system_wide (void)
 void
 load_up_globals (void)
 {
-	/* NOTE: !!!!!!!
-	 * Keep in sync with loadup_vals in gnome-panel-properties.c,
-	 * the function is the same there, but missing the apply_global_config
-	 * and the default menu flags are hardcoded in loadup_vals
-	 * FIXME: make this code common!!!!!
-	 */
-	char *tile_def[] = {
-		"normal",
-		"purple",
-		"green",
-		"blue"
-	};
-	int i;
 	gboolean def;
-	GString *keybuf;
-	GString *tilebuf;
 
 	/*set up global options*/
 	push_correct_global_prefix ();
@@ -1785,9 +1769,6 @@ load_up_globals (void)
 void
 write_global_config (void)
 {
-	int i;
-	GString *buf;
-
 	gnome_config_push_prefix ("/panel/Config/");
 
 	gnome_config_set_int ("hiding_step_size",
@@ -1853,8 +1834,8 @@ write_global_config (void)
 static void
 convert_write_config(void)
 {
-	int i;
 	int is_def;
+
 	gnome_config_push_prefix("/panel/Config/");
 	
 	/* is there any new config written here */
@@ -1899,14 +1880,8 @@ convert_write_config(void)
 static gboolean
 convert_read_old_config(void)
 {
-	char *tile_def[] = {
-		"normal",
-		"purple",
-		"green",
-		"blue"
-	};
 	GString *buf;
-	int i,is_def;
+	int is_def;
 	int applet_count; /*store this so that we can clean*/
 	int panel_count; /*store this so that we can clean*/
 

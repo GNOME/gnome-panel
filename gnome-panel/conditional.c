@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include <gdk/gdk.h>
 #include <libgnome/libgnome.h>
 
 #include "conditional.h"
@@ -560,7 +561,7 @@ conditional_true (const char *key)
 	gboolean isdef;
 	char *cond;
 	cond = gnome_config_get_string_with_default (key, &isdef);
-	if (string_empty (cond) || isdef) {
+	if (!cond || cond[0] == '\0' || isdef) {
 		g_free (cond);
 		return TRUE;
 	} else {

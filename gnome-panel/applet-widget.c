@@ -3,14 +3,17 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 
+#include <glib-object.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
+#include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
 #include <bonobo-activation/bonobo-activation.h>
 #include <libbonobo.h>
 
 #include "applet-widget.h"
 #include "applet-object.h"
+#include "applet-private.h"
 
 struct _AppletWidgetPrivate
 {
@@ -49,11 +52,11 @@ typedef int (*SaveSignal)      (GtkObject *object,
 				char      *globcfgpath,
 				gpointer   data);
 
-typedef void (*BackSignal)     (GtkObject            *object,
-				GNOME_Panel_BackType  type,
-				char                 *pixmap,
-				GdkColor             *color,
-				gpointer              data);
+typedef void (*BackSignal)     (GtkObject     *object,
+				PanelBackType  type,
+				char          *pixmap,
+				GdkColor      *color,
+				gpointer       data);
 
 typedef void (*PositionSignal) (GtkObject *object,
 				int        x,
@@ -118,7 +121,7 @@ marshal_signal_save (GClosure *closure,
   g_return_if_fail (return_value != NULL);
   g_return_if_fail (n_param_values == 3);
 
-  if (G_CLOSURE_SWAP_DATA (closure))
+  if (G_CCLOSURE_SWAP_DATA (closure))
     {
       data1 = closure->data;
       data2 = g_value_peek_pointer (param_values + 0);
@@ -158,7 +161,7 @@ marshal_signal_back  (GClosure *closure,
   
   g_return_if_fail (n_param_values == 4);
   
-  if (G_CLOSURE_SWAP_DATA (closure))
+  if (G_CCLOSURE_SWAP_DATA (closure))
     {
       data1 = closure->data;
       data2 = g_value_peek_pointer (param_values + 0);
@@ -382,22 +385,11 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
 	applet_count--;
 
-	if(die_on_last && applet_count == 0)
-		applet_widget_gtk_main_quit();
+	if (die_on_last && !applet_count)
+		gtk_main_quit();
 
-	g_free(applet->priv);
+	g_free (applet->priv);
 	applet->priv = NULL;
-}
-
-static GNOME_Panel
-gnome_panel_client (CORBA_Environment *ev)
-{
-	static GNOME_Panel panel_client = CORBA_OBJECT_NIL;
-
-	if (panel_client == CORBA_OBJECT_NIL)
-		panel_client = bonobo_activation_activate_from_id (
-						    "OAFIID:GNOME_Panel",
-						    0, NULL, ev);
 }
 
 /**
@@ -701,10 +693,9 @@ applet_widget_set_tooltip (AppletWidget *applet,
  * Returns:  PanelOrientType enum of the orientation
  **/
 PanelOrientType
-applet_widget_get_panel_orient(AppletWidget *applet)
+applet_widget_get_panel_orient (AppletWidget *applet)
 {
-	g_return_val_if_fail(applet != NULL,ORIENT_UP);
-	g_return_val_if_fail(IS_APPLET_WIDGET(applet), ORIENT_UP);
+	g_return_val_if_fail (applet && IS_APPLET_WIDGET (applet), ORIENT_UP);
 
 	return applet->orient;
 }
@@ -729,7 +720,7 @@ applet_widget_get_panel_pixel_size(AppletWidget *applet)
 }
 
 /**
- * applet_widget_get_rgb_bg:
+ * applet_widget_get_rgb_background:
  * @applet: the #AppletWidget to work with
  * @rgb: pointer to a pointer to which the rgb buffer will be returned
  * @w: pointer to an integer in which the width will be stored
@@ -741,11 +732,11 @@ applet_widget_get_panel_pixel_size(AppletWidget *applet)
  * method.  The rgb should be freed after use with g_free.
  **/
 void
-applet_widget_get_rgb_bg (AppletWidget  *applet,
-			  guchar       **rgb,
-			  int           *w,
-			  int           *h,
-			  int           *rowstride)
+applet_widget_get_rgb_background (AppletWidget  *applet,
+				  guchar       **rgb,
+				  int           *w,
+				  int           *h,
+				  int           *rowstride)
 {
 	GNOME_Panel_RgbImage *image;
 
@@ -841,53 +832,6 @@ applet_widget_init (const char         *app_id,
 }
 
 /**
- * applet_widget_gtk_main:
- *
- * Description: Run the main loop, just like #gtk_main
- **/
-void
-applet_widget_gtk_main(void)
-{
-	gtk_main();
-}
-
-/**
- * applet_widget_gtk_main_quit:
- *
- * Description: Quit the main loop, just like #gtk_main_quit
- **/
-void
-applet_widget_gtk_main_quit (void)
-{
-	gtk_main_quit();
-}
-
-/**
- * FIXME: is this needed?
- *
- * applet_widget_panel_quit:
- *
- * Description: Trigger 'Log out' on the panel.  This shouldn't be
- * used in normal applets, as it is not normal for applets to trigger
- * a logout.
- **/
-void
-applet_widget_panel_quit (void)
-{
-	CORBA_Environment env;
-
-	CORBA_exception_init (&env);
-
-	GNOME_Panel_quit (gnome_panel_client (&env), &env);
-	if (BONOBO_EX (&env)) {
-		CORBA_exception_free (&env);
-		return;
-	}
-
-	CORBA_exception_free (&env);
-}
-
-/**
  * applet_widget_queue_resize:
  * @applet: #AppletWidget to work on
  *
@@ -912,28 +856,22 @@ applet_widget_queue_resize (AppletWidget *applet)
 		gtk_widget_queue_resize (GTK_WIDGET (applet));
 }
 
-/*
- * FIXME: new
- */
 void
-applet_widget_change_orient (AppletWidget *widget,
-			     const GNOME_Panel_OrientType orient)
+applet_widget_change_orient (AppletWidget          *widget,
+			     const PanelOrientType  orient)
 {
 	widget->orient = orient;
 
         if (widget->priv->frozen_level > 0) {
                 widget->priv->frozen_got_orient = TRUE;
-                widget->priv->frozen_orient     = (GNOME_Panel_OrientType)orient;
+                widget->priv->frozen_orient     = (PanelOrientType)orient;
         } else {
                 gtk_signal_emit (GTK_OBJECT(widget),
                                  applet_widget_signals [CHANGE_ORIENT_SIGNAL],
-                                 (GNOME_Panel_OrientType)orient);
+                                 (PanelOrientType)orient);
         }
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_change_size (AppletWidget      *widget,
 			   const CORBA_short  size)
@@ -950,9 +888,6 @@ applet_widget_change_size (AppletWidget      *widget,
 	}
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_change_position (AppletWidget *widget,
 			       const gint    x,
@@ -970,14 +905,11 @@ applet_widget_change_position (AppletWidget *widget,
 	}
 }
 
-/*
- * FIXME: new
- */
 void
-applet_widget_background_change (AppletWidget         *widget,
-				 GNOME_Panel_BackType  type,
-				 gchar                *pixmap,
-				 GdkColor              color)
+applet_widget_background_change (AppletWidget  *widget,
+				 PanelBackType  type,
+				 gchar         *pixmap,
+				 GdkColor       color)
 {
 	if (widget->priv->frozen_level > 0) {
 		widget->priv->frozen_got_back   = TRUE;
@@ -996,9 +928,6 @@ applet_widget_background_change (AppletWidget         *widget,
 	}
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_tooltips_enable (AppletWidget *widget)
 {
@@ -1009,9 +938,6 @@ applet_widget_tooltips_enable (AppletWidget *widget)
                          TRUE);
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_tooltips_disable (AppletWidget *widget)
 {
@@ -1022,9 +948,6 @@ applet_widget_tooltips_disable (AppletWidget *widget)
                          FALSE);
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_draw (AppletWidget *widget)
 {
@@ -1032,9 +955,6 @@ applet_widget_draw (AppletWidget *widget)
 			 applet_widget_signals [DO_DRAW_SIGNAL]);
 }
 
-/*
- * FIXME: new
- */
 gboolean
 applet_widget_save_session (AppletWidget *widget,
 			    const gchar  *config_path,
@@ -1059,18 +979,12 @@ applet_widget_save_session (AppletWidget *widget,
 	return !done;
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_freeze_changes (AppletWidget *widget)
 {
 	widget->priv->frozen_level++;
 }
 
-/*
- * FIXME: new
- */
 void
 applet_widget_thaw_changes (AppletWidget *widget)
 {

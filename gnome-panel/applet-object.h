@@ -34,11 +34,9 @@ typedef void (*AppletObjectCallbackFunc) (GtkWidget *widget, gpointer data);
 
 GType applet_object_get_type               (void) G_GNUC_CONST;
 
-AppletObject *applet_object_new             (GtkWidget    *widget,
+AppletObject *applet_object_new            (GtkWidget    *widget,
 					    const gchar  *iid,
 					    guint32      *winid);
-
-void  applet_object_register               (AppletObject *applet);
 
 void  applet_object_abort_load             (AppletObject *applet);
 void  applet_object_remove                 (AppletObject *applet);
@@ -64,8 +62,7 @@ void  applet_object_send_position          (AppletObject *applet,
 					    gboolean      enable);
 void  applet_object_send_draw              (AppletObject *applet,
 					    gboolean      enable);
-GNOME_Panel_RgbImage *
-      applet_object_get_rgb_background     (AppletObject  *applet);
+void  applet_object_panel_quit             (AppletObject *applet);
 
 G_END_DECLS
 

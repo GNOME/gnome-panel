@@ -711,7 +711,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(wid->window, x,y,w,h);
 			gdk_flush();
-			usleep(1000);
+			g_usleep (1000);
 		}
 
 		xstuff_set_pos_size (wid->window,
@@ -831,7 +831,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			else
 				gtk_widget_draw(basep->table, NULL);
 			gdk_flush();
-			usleep(1000);
+			g_usleep (1000);
 		}
 
 		xstuff_set_pos_size (wid->window,
@@ -1580,8 +1580,6 @@ basep_widget_set_hidebuttons (BasePWidget *basep)
 void
 basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 {
-	static const char *supinfo[] = {"panel", "collapse", NULL};
-
 	g_assert ( (state == BASEP_HIDDEN_RIGHT) ||
 		   (state == BASEP_HIDDEN_LEFT) );
 
@@ -1633,8 +1631,6 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 void
 basep_widget_explicit_show (BasePWidget *basep)
 {
-	static const char *supinfo[] = {"panel", "expand", NULL};
-
 	if ( (basep->state != BASEP_HIDDEN_LEFT &&
 	      basep->state != BASEP_HIDDEN_RIGHT))
 		return;
@@ -1680,7 +1676,6 @@ gboolean
 basep_widget_autoshow (gpointer data)
 {
 	BasePWidget *basep = data;
-	static const char *supinfo[] = {"panel", "expand", NULL};
 
 	g_return_val_if_fail (IS_BASEP_WIDGET(basep), FALSE);
 
@@ -1774,7 +1769,6 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 gboolean
 basep_widget_autohide (gpointer data)
 {
-	static const char *supinfo[] = {"panel", "collapse", NULL};
 	BasePWidget *basep = data;
 
 	g_return_val_if_fail (IS_BASEP_WIDGET(basep), TRUE);

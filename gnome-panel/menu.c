@@ -34,6 +34,7 @@
 #include "distribution.h"
 #include "drawer-widget.h"
 #include "edge-widget.h"
+#include "extern.h"
 #include "floating-widget.h"
 #include "foobar-widget.h"
 #include "gnome-run.h"
@@ -912,7 +913,6 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 {
 	GtkWidget *dialog;
 	GtkWidget *dee;
-	GList *types;
 
 	dialog = gnome_dialog_new (_("Create menu item"),
 				   GNOME_STOCK_BUTTON_OK,
@@ -1426,7 +1426,6 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 	GtkWidget *dialog;
 	GtkWidget *dedit;
 	GnomeDesktopItem *ditem;
-	GList *types = NULL;
 	
 	g_return_if_fail (sim != NULL);
 	g_return_if_fail (sim->item_loc != NULL);
@@ -6243,14 +6242,14 @@ load_tearoff_menu(void)
 	/* This is so that we get size of the menu right */
 	show_tearoff_menu (menu, title, FALSE, x, y, wmclass);
 
+#if FIXME
 	{
 		GtkWidget *window = GTK_MENU(menu)->tearoff_window;
-#if FIXME
 		gnome_win_hints_set_workspace(window,workspace);
 		gnome_win_hints_set_hints(window,hints);
 		gnome_win_hints_set_state(window,state);
-#endif
 	}
+#endif
 
 	tm = g_new0(TearoffMenu,1);
 	tm->menu = menu;

@@ -119,6 +119,7 @@ typedef struct {
 
 static GSList *outside_externs = NULL;
 
+#ifdef FIXME
 static void
 push_outside_extern (const char                    *iid,
 		     const GNOME_PanelAppletBooter  booter,
@@ -136,6 +137,7 @@ push_outside_extern (const char                    *iid,
 
 	outside_externs = g_slist_prepend (outside_externs, oe);
 }
+#endif /* FIXME */
 
 static GNOME_PanelAppletBooter
 pop_outside_extern (const char *iid)
@@ -449,14 +451,14 @@ extern_activate (Extern ext)
 	CORBA_exception_free (&env);
 }
 
-Extern
+static Extern
 extern_ref (Extern ext)
 {
 	ext->refcount++;
 	return ext;
 }
 
-void
+static void
 extern_unref (Extern ext)
 {
 	ext->refcount--;
@@ -699,6 +701,7 @@ typedef struct {
 	int   panel;
 } ReloadCallbackData;
 
+#ifdef FIXME
 static void
 destroy_reload_callback_data (gpointer data)
 {
@@ -712,7 +715,9 @@ destroy_reload_callback_data (gpointer data)
 
 	g_free (d);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 reload_applet_callback (GtkWidget *w,
 			int        button,
@@ -740,6 +745,7 @@ reload_applet_callback (GtkWidget *w,
 	extern_load_applet (d->iid, d->cfgpath, panel,
 			    d->pos, TRUE, FALSE);
 }
+#endif /* FIXME */
 
 void
 extern_before_remove (Extern ext)
@@ -817,7 +823,7 @@ extern_before_remove (Extern ext)
 #endif
 }
 
-void
+static void
 extern_clean (Extern ext)
 {
 	CORBA_Environment        env;
@@ -1605,7 +1611,6 @@ s_panel_add_launcher_from_info (PortableServer_Servant _servant,
 				CORBA_Environment * ev)
 {
 	PanelWidget *panel_widget;
-	char *exec_argv[2] = { NULL, NULL };
 
 	if (panel_in_startup)
 		return;

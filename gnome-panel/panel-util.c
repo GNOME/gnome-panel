@@ -39,10 +39,10 @@ panel_show_help (const char *doc_name, const char *linkid)
 	/* FIXME: handle error */
 }
 
+#ifdef FIXME
 static char *
 panel_gnome_help_path (const char *docpath)
 {
-#ifdef FIXME
 	char *fullpath, *app, *p, *path, *uri;
 
 	app = g_strdup (docpath);
@@ -70,11 +70,10 @@ panel_gnome_help_path (const char *docpath)
 	g_free (fullpath);
 
 	return uri;
-#else
-	return NULL;
-#endif
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static char *
 panel_kde_help_path (const char *docpath)
 {
@@ -100,6 +99,7 @@ panel_kde_help_path (const char *docpath)
 
 	return NULL;
 }
+#endif /* FIXME */
 
 char *
 panel_gnome_kde_help_path (const char *docpath)
@@ -768,10 +768,10 @@ convert_keysym_state_to_string(guint keysym,
 
 static GSList *layered_dialogs = NULL;
 
+#if FIXME
 static void
 panel_dialog_realized (GtkWidget *dialog)
 {
-#if FIXME
 	if ( ! global_config.keep_bottom &&
 	     ! global_config.normal_layer)
 		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
@@ -779,14 +779,16 @@ panel_dialog_realized (GtkWidget *dialog)
 	else
 		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
 					   WIN_LAYER_NORMAL);
-#endif
 }
+#endif /* FIXME */
 
+#if FIXME
 static void
 remove_from_layered (GtkWidget *w)
 {
 	layered_dialogs = g_slist_remove (layered_dialogs, w);
 }
+#endif /* FIXME */
 
 void
 panel_set_dialog_layer (GtkWidget *dialog)

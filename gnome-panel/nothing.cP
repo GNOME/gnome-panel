@@ -4,11 +4,14 @@ static int goat_frame=0;
 static GdkPixmap *goat_pix[2] = {NULL,NULL};
 static GdkPixmap *goat_pix_rev[2] = {NULL,NULL};
 static GtkWidget *goat_darea = NULL;
-static char *goat_filename = NULL;
 static int goat_width = 0,goat_height = 0;
 static int goat_timeout = 0;
 static int goat_x = -1, goat_y = -1;
 static int goat_accx = -1, goat_accy = -1;
+
+#ifdef FIXME
+static char *goat_filename = NULL;
+#endif /* FIXME */
 
 static void
 destroy_egg(GtkWidget *widget, gpointer data)

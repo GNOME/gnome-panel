@@ -1,7 +1,9 @@
 #include "config.h"
 
 #include <libgnome/libgnome.h>
+#include <gconf/gconf-client.h>
 
+#include "main.h"
 #include "tearoffitem.h"
 
 static void tearoff_item_class_init	(TearoffItemClass	*klass);

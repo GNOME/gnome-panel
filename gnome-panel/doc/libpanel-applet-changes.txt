@@ -1,0 +1,74 @@
+                  ---------------------------
+                  libpanel-applet API Changes
+                  ---------------------------
+                       Mark McLoughlin
+                        mark@skynet.ie
+                       Wed Oct 24th, 2001
+
+Note: None of this is set in stone - I'm just keeping track.
+
+------
+Culled
+------
+
+	o applet_widget_corba_activate
+	o applet_widget_corba_deactivate
+	o APPLET_ACTIVATE
+	o APPLET_DEACTIVATE
+	o AppletFactoryActivator
+	o AppletFactoryQuerier
+	o applet_factory_new
+
+	o HAVE_SAVE_SESSION_SIGNAL
+	o HAVE_APPLET_BIND_EVENTS
+	o HAVE_PANEL_PIXEL_SIZE
+	o HAVE_PANEL_DRAW_SIGNAL
+	o HAVE_APPLET_QUEUE_RESIZE
+	o HAVE_APPLET_SIZE_ULTRA_TINY_AND_RIDICULOUS
+	    => all should be assumed true for GNOME-2.0
+
+	o applet_widget_gtk_main
+	o applet_widget_gtk_main_quit
+	    => just use the gtk equivalents.
+
+	o applet_widget_register_stock_callback
+	    => merged into applet_widget_register_callback
+
+	o applet_widget_register_callback_dir
+	o applet_widget_register_stock_callback_dir
+	o applet_widget_unregister_callback_dir
+	    => may need to be put back. Would prefer if these could also be
+	       merged into applet_widget_register_callback.
+
+-------
+Renamed
+-------
+
+	o applet_widget_set_tooltip -> applet_object_set_tooltip
+	o applet_widget_set_widget_tooltip -> applet_widget_set_tooltip
+	o AppletCallbackFunc -> AppletObjectCallbackFunc
+	o applet_widget_get_rgb_bg -> applet_widget_get_rgb_background
+	o applet_widget_abort_load -> applet_object_abort_load
+	o applet_widget_remove -> applet_object_remove
+	o applet_widget_sync_config -> applet_object_sync_config
+	o applet_widget_register_callback -> applet_object_register_callback
+	o applet_widget_unregister_callback -> applet_object_unregister_callback
+	o applet_widget_callback_set_sensitive -> applet_object_callback_set_sensitive
+	o applet_widget_get_free_space -> applet_object_get_free_space
+	o applet_widget_send_position -> applet_object_send_position
+	o applet_widget_send_draw -> applet_object_send_draw
+	o applet_widget_panel_quit -> applet_object_panel_quit
+
+-------
+Changed
+-------
+
+	o applet_widget_register_callback
+	    => as a result of being merged with register_stock_callback, this
+	       now has an extra parameter 'stock_item'. This may be NULL.
+
+--------
+Thoughts
+--------
+
+	o applet_widget_init could be replaced by a GNOMEModule.

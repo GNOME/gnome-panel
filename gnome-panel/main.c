@@ -19,6 +19,8 @@
 #include <bonobo-activation/bonobo-activation.h>
 #include <gconf/gconf-client.h>
 
+#include "main.h"
+
 #include "conditional.h"
 #include "drawer-widget.h"
 #include "extern.h"
@@ -474,7 +476,7 @@ tell_user_Im_on_crack (void)
 	gtk_widget_destroy (dialog);
 }
 
-PanelShell *
+static PanelShell *
 panel_get_shell (void)
 {
 	static PanelShell *shell = NULL;

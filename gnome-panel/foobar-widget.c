@@ -15,11 +15,12 @@
 #include <string.h>
 #include <time.h>
 
-#include "foobar-widget.h"
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
-#include <libgnome/gnome-program.h>
+#include <libgnome/libgnome.h>
+#include <gconf/gconf-client.h>
 
+#include "foobar-widget.h"
+
+#include "main.h"
 #include "menu.h"
 #include "menu-util.h"
 #include "session.h"
@@ -147,6 +148,7 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 	return item;
 }
 
+#if 0
 static void
 add_tearoff (GtkMenuShell *menu)
 {
@@ -161,6 +163,7 @@ add_tearoff (GtkMenuShell *menu)
 	gtk_widget_show (item);
 	gtk_menu_shell_prepend (menu, item);
 }
+#endif
 
 static gboolean
 foobar_leave_notify (GtkWidget *widget,
@@ -214,6 +217,7 @@ about_cb (GtkWidget *w, gpointer data)
 }
 #endif
 
+#ifdef FIXME
 static void
 gmc_client (GtkWidget *w, gpointer data)
 {
@@ -224,7 +228,9 @@ gmc_client (GtkWidget *w, gpointer data)
 				   _("Cannot execute the gmc-client program,\n"
 				     "perhaps gmc is not installed"));
 }
+#endif /* FIXME */
 
+#if 0
 static void
 gnomecal_client (GtkWidget *w, gpointer data)
 {
@@ -236,6 +242,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 				     "perhaps it's not installed.\n"
 				     "It is in the gnome-pim package."));
 }
+#endif
 
 #if 0
 static GtkWidget *
@@ -308,6 +315,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 }
 #endif
 
+#ifdef FIXME
 static GtkWidget *
 append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 {
@@ -320,7 +328,9 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 
 	return item;
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static gboolean
 display_gmc_menu (void)
 {
@@ -348,7 +358,9 @@ display_gmc_menu (void)
 
 	return TRUE;
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 desktop_selected (GtkWidget *widget, gpointer data)
 {
@@ -365,7 +377,9 @@ desktop_selected (GtkWidget *widget, gpointer data)
 			gtk_widget_hide (item);
 	}
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 append_desktop_menu (GtkWidget *menu_bar)
 {
@@ -443,6 +457,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 				 FALSE,
 				 FALSE);
 }
+#endif /* FIXME */
 
 static GtkWidget *
 append_folder_menu (GtkWidget *menu_bar, const char *label,
@@ -494,6 +509,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	return menu;
 }
 
+#if 0
 static void
 append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 {
@@ -502,6 +518,7 @@ append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (gnomecal_client), (gpointer)flag);
 }
+#endif
 
 static void
 update_clock (FoobarWidget *foo)
@@ -543,6 +560,7 @@ update_clock (FoobarWidget *foo)
 	gtk_label_set_text (GTK_LABEL (foo->clock_label), hour);
 }
 
+#if 0
 static int
 timeout_cb (gpointer data)
 {
@@ -557,7 +575,9 @@ timeout_cb (gpointer data)
 
 	return TRUE;
 }
+#endif
 
+#if 0
 static void
 set_fooclock_format (GtkWidget *w, char *format)
 {
@@ -568,7 +588,9 @@ set_fooclock_format (GtkWidget *w, char *format)
 						_(format));
 	}
 }
+#endif
 
+#if 0
 static void
 append_format_item (GtkWidget *menu, const char *format)
 {
@@ -592,7 +614,9 @@ append_format_item (GtkWidget *menu, const char *format)
 			    GTK_SIGNAL_FUNC (set_fooclock_format),
 			    (gpointer)format);
 }
+#endif
 
+#if 0
 static void
 set_time_cb (GtkWidget *menu_item, char *path)
 {
@@ -603,7 +627,9 @@ set_time_cb (GtkWidget *menu_item, char *path)
 				    _("Could not call time-admin\n"
 				      "Perhaps time-admin is not installed"));
 }
+#endif
 
+#if 0
 static GtkWidget *
 append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
@@ -673,6 +699,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	return item;
 }
+#endif /* 0 */
 
 void
 foobar_widget_global_set_clock_format (const char *format)
@@ -765,6 +792,7 @@ programs_menu_to_display(GtkWidget *menu)
 	}
 }
 
+#ifdef FIXME
 static void
 set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 {
@@ -772,24 +800,25 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
 	/*g_message ("setting...");*/
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 focus_task (GtkWidget *w, GwmhTask *task)
 {
-#ifdef FIXME
 	gwmh_desk_set_current_area (task->desktop, task->harea, task->varea);
 	if (GWMH_TASK_ICONIFIED (task)) 
 		gwmh_task_deiconify (task);
 	gwmh_task_show  (task);
 	gwmh_task_raise (task);
 	gwmh_task_focus (task);
-#endif
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 add_task (GwmhTask *task, FoobarWidget *foo)
 {
-#ifdef FIXME
 	GtkWidget *item, *label;
 	char *title = NULL;
 	int slen;
@@ -848,13 +877,13 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 		gtk_menu_shell_prepend (GTK_MENU_SHELL (foo->task_menu), item);
 	else
 		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
-#endif
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 create_task_menu (GtkWidget *w, gpointer data)
 {
-#ifdef FIXME
 	FoobarWidget *foo = FOOBAR_WIDGET (data);
 	GList *tasks = gwmh_task_list_get ();
 	GList *list;
@@ -879,9 +908,10 @@ create_task_menu (GtkWidget *w, gpointer data)
 	/* Owen: don't read the next line */
 	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
 	our_gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
-#endif
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 destroy_task_menu (GtkWidget *w, gpointer data)
 {
@@ -892,14 +922,14 @@ destroy_task_menu (GtkWidget *w, gpointer data)
 	foo->tasks = NULL;
 	set_the_task_submenu (foo, w);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static GtkWidget *
 get_default_image (void)
 {
 	GtkWidget *image;
 	static GdkPixbuf *pixbuf = NULL;
-	static GdkPixmap *pixmap = NULL;
-	static GdkBitmap *mask   = NULL;
 	static gboolean looked   = FALSE;
 
 	if (! looked) {
@@ -926,7 +956,9 @@ get_default_image (void)
 
 	return NULL;
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 {
@@ -953,7 +985,9 @@ set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 				   GTK_WIDGET (foo->task_image));
 	}
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static gboolean
 task_notify (gpointer data,
 	     GwmhTask *task,
@@ -1008,6 +1042,7 @@ task_notify (gpointer data,
 	}
 	return TRUE;
 }
+#endif /* FIXME */
 
 static void
 append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)

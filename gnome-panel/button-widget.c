@@ -547,7 +547,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	GtkWidget *widget, *pwidget;
 	PanelWidget *panel;
 	GdkPixbuf *pb = NULL;
-	int size, off, border;
+	int size, off;
 
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(IS_BUTTON_WIDGET(button));

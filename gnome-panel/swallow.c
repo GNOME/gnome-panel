@@ -26,6 +26,7 @@
 #include "applet.h"
 #include "extern.h"
 #include "panel.h"
+#include "panel-util.h"
 #include "panel-widget.h"
 #include "xstuff.h"
 
@@ -59,7 +60,7 @@ socket_realized (GtkWidget *w, gpointer data)
 static void
 swallow_launch (Swallow *swallow)
 {
-	if ( ! string_empty (swallow->path)) {
+	if (swallow->path && swallow->path [0] != '\0') {
 		char *p = strrchr (swallow->path, '.');
 		GnomeDesktopItem *item;
 

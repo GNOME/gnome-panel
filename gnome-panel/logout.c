@@ -3,6 +3,7 @@
 /* uncorbized by George Lebl */
 
 #include <config.h>
+#include <string.h>
 
 #include <libgnome/libgnome.h>
 
@@ -14,6 +15,7 @@
 #include "panel_config_global.h"
 #include "panel.h"
 #include "extern.h"
+#include "session.h"
 
 extern GSList *applets_last;
 

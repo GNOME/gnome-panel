@@ -121,6 +121,7 @@ get_pixmap(const char *menudir, gboolean main_menu)
 	return pixmap_name;
 }
 
+#ifdef FIXME
 /* Cache this, we don't want to check in the path all the time */
 static gboolean
 got_gmenu (void)
@@ -144,11 +145,12 @@ got_gmenu (void)
 
 	return got_it;
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 properties_apply_callback (Menu *menu)
 {
-#ifdef FIXME
 	char *s;
 	gboolean bool;
 	gboolean change_icon = FALSE;
@@ -305,9 +307,10 @@ properties_apply_callback (Menu *menu)
 		button_widget_set_pixmap(BUTTON_WIDGET(menu->button),
 					 pixmap_name, -1);
 	}
-#endif
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
@@ -318,7 +321,9 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	g_free (menu->dialog_info);
 	menu->dialog_info = NULL;
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 toggle_prop(GtkWidget *widget, gpointer data)
 {
@@ -327,7 +332,9 @@ toggle_prop(GtkWidget *widget, gpointer data)
 	if(GTK_TOGGLE_BUTTON(widget)->active)
 		properties_apply_callback (menu);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 toggle_global_main(GtkWidget *widget, gpointer data)
 {
@@ -340,7 +347,9 @@ toggle_global_main(GtkWidget *widget, gpointer data)
 		properties_apply_callback (menu);
 	}
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 toggle_main_menu(GtkWidget *widget, gpointer data)
 {
@@ -353,7 +362,9 @@ toggle_main_menu(GtkWidget *widget, gpointer data)
 		properties_apply_callback (menu);
 	}
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 toggle_custom_icon(GtkWidget *widget, gpointer data)
 {
@@ -367,7 +378,9 @@ toggle_custom_icon(GtkWidget *widget, gpointer data)
 
 	properties_apply_callback (menu);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 toggle_normal_menu(GtkWidget *widget, gpointer data)
 {
@@ -380,7 +393,9 @@ toggle_normal_menu(GtkWidget *widget, gpointer data)
 		properties_apply_callback (menu);
 	}
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 textbox_changed (GtkWidget *widget, gpointer data)
 {
@@ -388,7 +403,9 @@ textbox_changed (GtkWidget *widget, gpointer data)
 
 	properties_apply_callback (menu);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 		      char *title, GtkWidget **widget, GtkWidget **widget_sub,
@@ -431,7 +448,9 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    menu);
 }
+#endif /* FIXME */
 
+#ifdef FIXME
 static void
 dialog_clicked (GtkWidget *widget, int button, gpointer data)
 {
@@ -446,6 +465,7 @@ dialog_clicked (GtkWidget *widget, int button, gpointer data)
 			panel_show_help ("menus", NULL);
 	}
 }
+#endif /* FIXME */
 
 static GtkWidget *
 create_properties_dialog(Menu *menu)

@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: libpanel_applet
-Description: libpanel_applet
-Requires: gdk-2.0 gtk+-2.0 libgnomeui-2.0 ORBit-2.0 bonobo-activation-2.0
+Name: libpanel-applet-2
+Description: libpanel-applet-2
+Requires: gdk-2.0 gtk+-2.0 libgnomeui-2.0 libbonobo-2.0
 Version: @VERSION@
-Libs: -L${libdir} -lpanel_applet-2.0
-Cflags: -I${includedir}/gnome-2.0
+Libs: -L${libdir} -lpanel-applet-2
+Cflags: -I${includedir}/gnome-2.0/panel

@@ -13,24 +13,30 @@ server_DATA = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
-INCLUDES = \
-	-I.			\
-	-I$(srcdir)		\
-	-I$(top_srcdir)/gnome-desktop	\
-	-I$(top_srcdir)/intl	\
-	-I$(top_builddir)/intl	\
-	-I$(top_builddir)/panel	\
-	-DPANEL_DEBUG		\
-	-DGNOME_CORE_INTERNAL	\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-DGNOME_DATADIR=\""$(datadir)"\" \
-	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \
+INCLUDES =							\
+	-I.							\
+	-I$(srcdir)						\
+	-I$(top_srcdir)/gnome-desktop				\
+	-I$(top_srcdir)/intl					\
+	-I$(top_builddir)/intl					\
+	-I$(top_builddir)/panel					\
+	-DPANEL_DEBUG						\
+	-DGNOME_CORE_INTERNAL					\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
+	-DGNOME_DATADIR=\""$(datadir)"\"			\
+	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
-	-I$(includedir)		\
-	$(PANEL_CFLAGS) 
+	-I$(includedir)						\
+	$(PANEL_CFLAGS)						\
+	$(WARN_CFLAGS)
 
 bin_PROGRAMS = \
 	panel-2
+
+lib_LTLIBRARIES =                  \
+	libpanel-applet-2.la
+
+#	libpanel-status-2.la
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
@@ -43,45 +49,32 @@ CORBA_SRCLIST = \
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-panel-marshal.h: panel-marshal.list
-	cd $(srcdir) \
-	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --header >> xgen-gmh \
-	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h)
+libpanel_applet_2_la_SOURCES =     \
+	applet-widget.c            \
+	applet-object.c            \
+	$(CORBA_SRCLIST)
 
-panel-marshal.c: panel-marshal.h panel-marshal.list
-	cd $(srcdir) \
-	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --body >> xgen-gmc \
-	&& cp xgen-gmc panel-marshal.c \
-	&& rm -f xgen-gmc xgen-gmc~
+libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
 
-#libpanel_appletincludedir = $(includedir)
-#libpanel_statusincludedir = $(includedir)
+libpanel_appletincludedir = $(includedir)/gnome-2.0/panel/applet
  
-#lib_LTLIBRARIES =                  \
-#	libpanel_applet.la
+libpanel_appletinclude_HEADERS =   \
+	applet-widget.h            \
+	applet-object.h            \
+	GNOME_Panel.h
 
-#	libpanel_status.la
-
-#libpanel_applet_la_SOURCES =       \
-#	applet-widget.c            \
-#	$(CORBA_SRCLIST)
-
-#libpanel_appletinclude_HEADERS =   \
-#	applet-widget.h            \
-#	GNOME_Panel.h
-
-#libpanel_applet_la_LDFLAGS = -version-info 1:0:1 -rpath $(libdir)
-#libpanel_applet_la_LIBADD  = $(PANEL_LIBS) -lm
-
-# libpanel_status_la_SOURCES = \
-# 	status-docklet.c \
+# libpanel_status_2_la_SOURCES = \
+# 	status-docklet.c         \
 # 	$(CORBA_SRCLIST)
+#
+# libpanel_status_2_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+# libpanel_status_2_la_LIBADD  = $(PANEL_LIBS) -lm
 # 
+# libpanel_statusincludedir = $(includedir)
+#
 # libpanel_statusinclude_HEADERS = \
 # 	status-docklet.h
-# 
-# libpanel_status_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-# libpanel_status_la_LIBADD = $(PANEL_LIBS) -lm
 
 GWMH_SRCLIST = \
 	gwmh.c		\
@@ -235,6 +228,18 @@ panel_enum_headers =      \
 	basep-widget.h    \
 	aligned-widget.h  \
 	sliding-widget.h
+
+$(srcdir)/panel-marshal.h: panel-marshal.list
+	cd $(srcdir) \
+	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --header >> xgen-gmh \
+	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h) \
+	&& rm -f xgen-gmh xgen-gmh~
+
+$(srcdir)/panel-marshal.c: panel-marshal.list
+	cd $(srcdir) \
+	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --body >> xgen-gmc \
+	&& (cp xgen-gmc panel-marshal.c || cp xgen-gmc panel-marshal.c) \
+	&& rm -f xgen-gmc xgen-gmc~
 
 $(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_enum_headers)
 	cd $(srcdir) \
