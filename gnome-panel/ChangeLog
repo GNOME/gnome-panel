@@ -102,6 +102,7 @@
 	size
 
 2002-09-19  Arvind Samptur <arvind.samptur@wipro.com
+
 	* gnome-panel-screenshot.c: waitpid could fail
 	due to a interuptted system call, loop till you
 	succeed. Fixes #92651
@@ -194,6 +195,7 @@
 	Fixes bug #92942
 
 2002-08-28  Arvind Samptur <arvind.samptur@wipro.com>
+
 	* menu.c (drag_data_get_menu_cb): disable the tooltips
 	when the drag is on.
 	(drag_end_menu_cb): enable the tooltips once the drop is
@@ -217,47 +219,6 @@
 
 	* drawer.c: (load_drawer_applet): set the focus on
 	the PanelWidget.
-
-2002-09-12  Mark McLoughlin  <mark@skynet.ie>
-
-	Fixes #90317 by explicitly destroying panels on receipt
-	of a Die from the session manager rather than just
-	exiting the mainloop. Apparently embedded out of process
-	embedded windows don't cope with this too well - thanks
-	to Owen for pointing this fact out.
-
-	* applet.c:
-	(panel_applet_clean): do anything required to effect
-	permanent removal of the applet here.
-	(applet_idle_remove): kill set_clean_remove stuff.
-	(panel_applet_destroy): only clear up our data and refs
-	here rather than permanently removing the applet.
-
-	* basep-widget.c: remove some bogus whitepsace.
-
-	* menu.c: (remove_panel_accept): if the panel is a drawer,
-	then also remove the associated applet. Permanently remove
-	the panel here.
-
-	* panel-applet-frame.[ch]:
-	(panel_applet_set_clean_remove),
-	(panel_applet_get_clean_remove), (popup_handle_remove),
-	(panel_applet_frame_instance_init): kill unused 'clean_remove'
-	stuff. No idea how/why that got there.
-
-	* panel-widget.c:
-	(panel_widget_finalize): don't remove the panel from the
-	global list again.
-	(panel_widget_destroy): don't permanently remove the panel
-	from here.
-	* panel.c:
-
-	(panel_remove_applets): kill 'clean_remove' stuff.
-	(panel_destroy): don't remove the applet associated with
-	the drawer here.
-
-	* session.c: (panel_session_die): iterate over a copy of
-	the global list of panels and destroy them.
 
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
@@ -1298,11 +1259,11 @@ Mon Jul  1 16:44:35 2002  Jonathan Blandford  <jrb@gnome.org>
 	* gnome-panel-preferences.c: Mark a string for translation.
 	
 2002-06-08  Arvind Samptur   <arvind.samptur@wipro.com>
+
 	* panel-config.h : change the data types of 
 	x and y co-ordinates in _PerPanelConfig structure to 
 	match with that of _FloatingPos structure. Fixes #83375.
         
-         
 2002-06-09  Mark McLoughlin  <mark@skynet.ie>
 
 	* quick-desktop-reader.c: (quick_desktop_item_load_uri): don't
@@ -1691,6 +1652,7 @@ Tue May 14 11:37:24 2002  George Lebl <jirka@5z.com>
 	(panel_info_dialog_with_parent): Fix up build warnings.
 
 2002-05-12  Arvind Samptur  <arvind.samptur@wipro.com>
+
 	* Reviewed by Glynn Foster
 	
 	* menu.c :

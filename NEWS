@@ -1,4 +1,123 @@
 =============
+Version 2.1.0
+=============
+
+Panel
+
+	* Multiscreen support (Mark)
+	* Draw a zoom animation when a launcher is clicked (Jacob)
+	* Add a new PanelActionButton widget (Mark)
+	* Offer option to remove crashed applet from configuration (Mark)
+	* Focus applets as they are added to the panel (Mark)
+	* Don't change the cursor when the panel is realised (Anders)
+	* UTF8 conversion fixes in the run dialog (George)
+	* Add mnemonic to "Help on X" menu item (Pasupathi Duraisamy)
+	* Make ButtonWidget use GObject properties (Mark)
+	* Allow ButtonWidget to use stock icons (Mark)
+	* Sed job for change in GnomeIconLoader's name (Alex)
+
+Screenshot Utility
+
+	* Add shaped window support (Anders, Mark)
+	* Kill the seperator from the dialog (Mark)
+	* Avoid taking the sreenshot multiple times (Owen Taylor)
+	* Handle NULL return from gdk_window_foreign_new (George)
+
+Applets
+
+	* Multiscreen support for all applets (Mark)
+	* New "Show Desktop" toggle applet (Havoc)
+	* Fix up references to old applet names in schemas (Mark)
+
+Clock Applet
+
+	* Move Copy time/date menu items (Mark)
+	* Fix clashing mnemonics in prefs dialog (Dennis Smit)
+	* Don't show seconds by default (Dennis Smit)
+	* Put the date before the time (Mark)
+
+Window List Applet
+
+	* Ensure frames in the preferences dialog are aligned (Mark)
+
+Misc
+
+	* Build fixes (Jacob)
+
+Translations
+
+	* Germán Poo-Caamaño, Hasbullah Bin Pit, Matthias Warkus,
+	  Ole Laursen and Pauli Virtanen.
+
+=============
+Version 2.0.9
+=============
+
+	* Revert George's changes as requested by the release team -
+	  Unapproved commits during the code freeze (Mark)
+
+=============
+Version 2.0.8
+=============
+
+Panel
+
+	* Convert filenames to and from utf8 in run dialog (George)
+	* OnlyShow preferences dialog in GNOME (Jonathan)
+	* Allow accelerators code from libegg to be auto updated (Mark)
+
+Screenshot Utility
+
+	* Check for NULL return from gdk_window_foreign_new (George)
+	* Avoid taking screenshot twice using selections (Owen)
+
+Translations
+
+	* Jordi Mallach, Pauli Virtanen and Peteris Krisjanis.
+
+=============
+Version 2.0.7
+=============
+
+Panel
+	* Register all icons and icon sizes with GtkIconFactory (Mark)
+	* Get ordering of applets on reload correct on packed panels (Mark)
+	* Fix to allow Mod2-Mod5 accels with panel keybindings (Havoc)
+	* Update help docs links (Satyajit Kanungo)
+	* Fix a typo (Kjartan Maraas)
+	* Re-enable menu-editing (Alex Graveley)
+	* Atk utility functions cleanup (Mark)
+	* Hoard launchers when loading from gconf (George)
+
+Misc
+
+	* Applet docs updates (GNOME Documentation Team)
+
+Translations
+
+	* Andras Timar, Changwoo Ryu, Christian Neumair, Christian Rose, 
+	  Dmitry G. Mastrukov, Duarte Loreto, Gustavo Noronha Silva,
+	  Hasbullah Bin Pit, Kjartan Maraas, Marius Andreiana, Ole Laursen,
+	  Peteris Krisjanis, Stanislav Visnovsky, Tõivo Leedjärv, Vincent
+	  van Adrighem, Yanko Kaneti and Zbigniew Chyla.
+
+=============
+Version 2.0.6
+=============
+
+Panel
+
+	* Fix major bug with reloading drawers on startup (Mark)
+	* Give focus newly created panels (Padraig)
+	* Correctly handle expandable applets on expandable panels (Mark)
+	* Rip out Exec parameters (e.g. %U) before putting in run dialog (Mark)
+	* Handle "delete_event" in the screenshot dialog (Jonathon, Mark)
+
+Translations
+
+	* Christian Meyer, Duarte Loreto and Pauli Virtanen.
+
+=============
 Version 2.0.5
 =============
 
