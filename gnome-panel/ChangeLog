@@ -1,3 +1,11 @@
+2002-07-25 Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* panel-widget.c (panel_widget_reset_focus): This function is called
+	when object is deleted from panel. Reimplement function to ensure 
+	that focus goes to PanelWidget if no objects remaining on panel and 
+	goes to next or previous object if there are remaining objects.
+	(bug #88938)
+
 2002-07-24 Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* drawer.c (key_press_drawer): Allow any arrow key to move focus to

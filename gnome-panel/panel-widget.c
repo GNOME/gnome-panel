@@ -587,19 +587,33 @@ panel_widget_reset_focus (GtkContainer *container,
 	PanelWidget *panel = PANEL_WIDGET (container);
 
 	if (container->focus_child == widget) {
-		GtkWidget *panelw = panel->panel_parent;
-		gboolean return_val;
+		GList *l;
 
-		g_signal_emit_by_name (panelw, "focus",
-				       GTK_DIR_TAB_FORWARD,
-				       &return_val);
-		/*
-		 * The last object on the panel has been deleted so
-		 * put focus back on the panel.
-		 */
-		if (!gtk_window_get_focus (GTK_WINDOW (panelw))) {
-			panel_widget_focus (panel);	
-		}
+		l = gtk_container_get_children (container);
+		if (l && l->next) { /* More than one element on the list */
+			/* There are still object on the panel */
+			for (; l; l = l->next) {
+				GtkWidget *child_widget;
+
+				child_widget = l->data;
+				if (child_widget == widget)
+					break;
+			}
+			if (l) {
+				GtkWidget *next_widget;
+
+				if (l->next)
+					next_widget = l->next->data;
+				else
+					next_widget = l->prev->data;
+
+				gtk_widget_child_focus (next_widget,
+						        GTK_DIR_TAB_FORWARD);
+			}
+		} else
+			panel_widget_focus (panel);
+
+		g_list_free (l);
 	}
 }
 
