@@ -45,6 +45,54 @@ applet_start_new_applet(const gchar *goad_id, const char **params, int nparams)
   return make_new_applet(goad_id);
 }
 
+#if 1
+
+static CORBA_Object
+activator (PortableServer_POA poa,
+	   const char *goad_id,
+	   const char **params,
+	   gpointer *impl_ptr,
+	   CORBA_Environment *ev)
+{
+	GtkWidget *widget;
+
+	widget = make_new_applet (goad_id);
+	if (widget == NULL) {
+		g_warning (_("Don't know how to activate `%s'\n"), goad_id);
+		return CORBA_OBJECT_NIL;
+	}
+
+	return applet_widget_corba_activate (widget, poa, goad_id,
+					     params, impl_ptr, ev);
+}
+
+static void
+deactivator (PortableServer_POA poa,
+	     const char *goad_id,
+	     gpointer impl_ptr,
+	     CORBA_Environment *ev)
+{
+	applet_widget_corba_deactivate (poa, goad_id, impl_ptr, ev);
+}
+
+static const char *repo_id[]={ "IDL:GNOME/Applet:1.0", NULL };
+static GnomePluginObject applets_list[] = { 
+	{ repo_id, "gen_util_mailcheck", NULL, "Mailcheck applet",
+	  &activator, &deactivator },
+	{ repo_id, "gen_util_printer", NULL, "Printer applet",
+	  &activator, &deactivator },
+	{ repo_id, "gen_util_clock", NULL, "Clock applet",
+	  &activator, &deactivator },
+	{ NULL }
+};
+
+GnomePlugin GNOME_Plugin_info = { 
+	applets_list,
+	NULL
+};
+
+#else
+
 int
 main(int argc, char **argv)
 {
@@ -76,3 +124,5 @@ main(int argc, char **argv)
 
 	return 0;
 }
+
+#endif

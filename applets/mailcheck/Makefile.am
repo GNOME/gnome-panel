@@ -5,9 +5,9 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
-bin_PROGRAMS = gen_util_applet
+lib_LTLIBRARIES = libgen_util_applet.la
 
-gen_util_applet_SOURCES = \
+libgen_util_applet_la_SOURCES = \
 	main.c		\
 	mailcheck.c	\
 	mailcheck.h	\
@@ -17,10 +17,6 @@ gen_util_applet_SOURCES = \
 	printer.h	\
 	clock.c		\
 	clock.h
-
-
-gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
-		$(GNOME_LIBDIR) $(GNOMEGNORBA_LIBS) $(INTLLIBS) 
 
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png
