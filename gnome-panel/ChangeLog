@@ -1,3 +1,26 @@
+2003-06-11  Mark McLoughlin  <mark@skynet.ie>
+
+	Makes the minimum panel size relative to the font size.
+	See bug #94026 and probably a few others.
+
+	Also, with autohide panels, hide into the corner nearest
+	the location where the mouse pointer left the panel.
+
+	* panel-toplevel.c:
+	(panel_toplevel_construct_description): fix warning.
+	(panel_toplevel_update_auto_hide_position): calculate the
+	autohide position taking into account the last leave
+	notify co-ordinates.
+	(calculate_minimum_height), (panel_toplevel_update_size):
+	Calculate the minimum panel size based on the font size.
+	(panel_toplevel_enter_notify_event),
+	(panel_toplevel_leave_notify_event),
+	(panel_toplevel_instance_init): store the leave notify
+	co-ordinates.
+	
+	* panel-enums.h: move the orientation mask definitions to
+	beside the orientation enum for clarity.
+
 2003-06-10  Mark McLoughlin  <mark@skynet.ie>
 
 	Re-order message construction throughout the panel so

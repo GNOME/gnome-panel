@@ -100,6 +100,12 @@ struct _PanelToplevelPrivate {
 	int                     drag_offset_x;
 	int                     drag_offset_y;
 
+	/* Co-ordinates of leave notify; used to figure out
+	 * auto hide position.
+	 */
+	int                     leave_notify_x;
+	int                     leave_notify_y;
+
 	/* Saved state before for cancelled grab op */
 	int                     orig_monitor;
 	int                     orig_x;
@@ -162,6 +168,9 @@ struct _PanelToplevelPrivate {
 	/* More saved grab op state */
 	guint                   orig_x_centered : 1;
 	guint                   orig_y_centered : 1;
+
+	/* Is leave_notify_x/y set ? */
+	guint                   leave_notify_set : 1;
 };
 
 enum {
@@ -1379,6 +1388,7 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 		orientation = 3;
 		break;
 	default:
+		orientation = 0;
 		g_assert_not_reached ();
 		break;
 	}
@@ -1560,6 +1570,10 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	int        monitor_width, monitor_height;
 	int        monitor_x, monitor_y;
 	int        auto_hide_size;
+	gboolean   hide_left = FALSE;
+	gboolean   hide_right = FALSE;
+	gboolean   hide_top = FALSE;
+	gboolean   hide_bottom = FALSE;
 
 	g_assert (x != NULL && y != NULL);
 
@@ -1593,37 +1607,60 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		if (monitor_x + *x + width >= screen_width)
-			*x = monitor_width - auto_hide_size;
-		else if (monitor_x + *x <= 0)
-			*x = - (width  - auto_hide_size);
 		*y = - (height - auto_hide_size);
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		if (monitor_x + *x <= 0)
-			*x = - (width  - auto_hide_size);
-		else if (monitor_x + *x + width >= screen_width)
-			*x = monitor_width - auto_hide_size;
 		*y = monitor_height - auto_hide_size;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		*x = - (width - auto_hide_size);
-		if (monitor_y + *y + height >= screen_height)
-			*y = monitor_height - auto_hide_size;
-		else if (monitor_y + *y <= 0)
-			*y = - (height - auto_hide_size);
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		*x = monitor_width - auto_hide_size;
-		if (monitor_y + *y <= 0)
-			*y = - (height - auto_hide_size);
-		else if (monitor_y + *y + height >= screen_height)
-			*y = monitor_height - auto_hide_size;
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		if (width >= screen_width && toplevel->priv->leave_notify_set) {
+			if (toplevel->priv->leave_notify_x <= width / 2)
+				hide_left = TRUE;
+			else
+				hide_right = TRUE;
+		} else {
+			if (monitor_x + *x <= 0)
+				hide_left = TRUE;
+			else if (monitor_x + *x + width >= screen_width)
+				hide_right = TRUE;
+		}
+	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
+		if (height >= screen_height && toplevel->priv->leave_notify_set) {
+			if (toplevel->priv->leave_notify_y <= height / 2)
+				hide_top = TRUE;
+			else
+				hide_bottom = TRUE;
+		} else {
+			if (monitor_y + *y <= 0)
+				hide_top = TRUE;
+			else if (monitor_y + *y + height >= screen_height)
+				hide_bottom = TRUE;
+		}
+	}
+	
+	g_assert (!hide_left || !hide_right);
+	g_assert (!hide_top  || !hide_bottom);
+
+	if (hide_left)
+		*x = - (width  - auto_hide_size);
+	else if (hide_right)
+		*x = monitor_width - auto_hide_size;
+
+	if (hide_top)
+		*y = - (height - auto_hide_size);
+	else if (hide_bottom)
+		*y = monitor_height - auto_hide_size;
 }
 
 /* FIXME: this is wrong for Xinerama. In the Xinerama case
@@ -1945,6 +1982,40 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	panel_toplevel_update_description (toplevel);
 }
 
+static int
+calculate_minimum_height (GtkWidget        *widget,
+			  PanelOrientation  orientation)
+{
+	PangoContext     *context;
+	PangoFontMetrics *metrics;
+	int               focus_width = 0;
+	int               focus_pad = 0;
+	int               ascent;
+	int               descent;
+	int               thickness;
+  
+	context = gtk_widget_get_pango_context (widget);
+	metrics = pango_context_get_metrics (context,
+					     widget->style->font_desc,
+					     pango_context_get_language (context));
+  
+	ascent  = pango_font_metrics_get_ascent  (metrics);
+	descent = pango_font_metrics_get_descent (metrics);
+  
+	pango_font_metrics_unref (metrics);
+
+	gtk_widget_style_get (widget,
+			      "focus-line-width", &focus_width,
+			      "focus-padding", &focus_pad,
+			      NULL);
+
+	thickness = orientation & PANEL_HORIZONTAL_MASK ?
+		widget->style->ythickness :
+		widget->style->xthickness;
+
+	return PANGO_PIXELS (ascent + descent) + 2 * (focus_width + focus_pad + thickness);
+}
+
 static void
 panel_toplevel_update_size (PanelToplevel  *toplevel,
 			    GtkRequisition *requisition)
@@ -1952,6 +2023,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	GtkWidget *widget;
 	int        monitor_width, monitor_height;
 	int        width, height;
+	int        minimum_height;
 
 	if (toplevel->priv->animating)
 		return;
@@ -1964,8 +2036,11 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	width  = requisition->width;
 	height = requisition->height;
 
+	minimum_height = calculate_minimum_height (GTK_WIDGET (toplevel),
+						   toplevel->priv->orientation);
+
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		height = MAX (requisition->height, toplevel->priv->size);
+		height = MAX (MAX (requisition->height, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
@@ -1974,7 +2049,7 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 		else
 			width  = MAX (MINIMUM_WIDTH, width);
 	} else {
-		width = MAX (requisition->width, toplevel->priv->size);
+		width = MAX (MAX (requisition->width, toplevel->priv->size), minimum_height);
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
@@ -3057,8 +3132,12 @@ panel_toplevel_enter_notify_event (GtkWidget        *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
+	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR) {
+		toplevel->priv->leave_notify_x   = 0;
+		toplevel->priv->leave_notify_y   = 0;
+		toplevel->priv->leave_notify_set = FALSE;
 		panel_toplevel_queue_auto_unhide (toplevel);
+	}
 
 	if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event)
 		return GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget, event);
@@ -3076,8 +3155,12 @@ panel_toplevel_leave_notify_event (GtkWidget        *widget,
 
 	toplevel = PANEL_TOPLEVEL (widget);
 
-	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR)
+	if (toplevel->priv->auto_hide && event->detail != GDK_NOTIFY_INFERIOR) {
+		toplevel->priv->leave_notify_x   = event->x;
+		toplevel->priv->leave_notify_y   = event->y;
+		toplevel->priv->leave_notify_set = TRUE;
 		panel_toplevel_queue_auto_hide (toplevel);
+	}
 
 	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
 		return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
@@ -3709,6 +3792,10 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 
 	toplevel->priv->drag_offset_x = 0;
 	toplevel->priv->drag_offset_y = 0;
+
+	toplevel->priv->leave_notify_x   = 0;
+	toplevel->priv->leave_notify_y   = 0;
+	toplevel->priv->leave_notify_set = FALSE;
 
 	toplevel->priv->animation_end_x              = 0;
 	toplevel->priv->animation_end_y              = 0;
