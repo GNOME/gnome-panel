@@ -34,15 +34,17 @@ static void
 launch (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
-	
-	g_return_if_fail(item->exec!=NULL);
+
+	if(!item->exec) {
+	  gnome_dialog_run(GNOME_DIALOG(gnome_message_box_new(_("This launch icon does not specify a program to run"), GNOME_MESSAGE_BOX_ERROR, _("Close"), NULL)));
+	  return;
+	}
 
 	/*UGLY HACK!*/
-	if (item->exec_length == 2 &&
-	    strcmp(item->exec[0],"gnome-moz-remote")==0 &&
-	    *(item->exec[1])!='-') {
-		gnome_url_show(item->exec[1]);
-	} else
+	if (item->exec_length > 0
+	    && strstr(item->exec[0], "://"))
+		gnome_url_show(item->exec[0]);
+	else
 		gnome_desktop_entry_launch (item);
 }
 

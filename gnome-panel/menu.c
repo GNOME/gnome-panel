@@ -2898,11 +2898,14 @@ get_pixmap(char *menudir, int main_menu)
 		item_info = gnome_desktop_entry_load (dentry_name);
 		g_free (dentry_name);
 
-		if(item_info) {
-			pixmap_name = g_strdup(item_info->icon);
-			gnome_desktop_entry_free(item_info);
-		} else
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
+		if(item_info && item_info->icon)
+		  pixmap_name = g_strdup(item_info->icon);
+		else
+		  pixmap_name =
+		    gnome_unconditional_pixmap_file ("gnome-folder.png");
+
+		if(item_info)
+		  gnome_desktop_entry_free(item_info);
 	}
 	return pixmap_name;
 }
