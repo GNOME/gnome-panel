@@ -3,13 +3,6 @@
 
 #include <Bonobo_Unknown.idl>
 
-/*
- * FIXME:
- *   none of the StatusSpot related interfaces
- *   are implemented at the moment. Figure out
- *   what needs to be done.
- */
-
 module GNOME {
  module Vertigo {
 
@@ -49,9 +42,6 @@ module GNOME {
 	 */
 	typedef string PanelBackground;
 
-
-	interface StatusSpot;
-
 	interface PanelShell : Bonobo::Unknown {
 
 		/*
@@ -62,17 +52,11 @@ module GNOME {
 		 * dialog box.
 		 */
 		void displayRunDialog (in string initialString);
-
-		StatusSpot add_status (out unsigned long winid);
 	};
 
 	interface PanelAppletShell : Bonobo::Unknown {
 		oneway void popup_menu (in long button, in long time);
 	};
-
-	interface StatusSpot {
-                oneway void remove ();
-        };
  };
 };
 
