@@ -10,14 +10,13 @@ INCLUDES =							\
 	$(APPLET_CFLAGS)					\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"
 
-appletdir = $(pkglibdir)
-applet_LTLIBRARIES = libnotification-area-applet.la
+libexec_PROGRAMS = notification-area-applet
 
 EGGFILES=			\
 	eggtraymanager.h	\
 	eggtraymanager.c
 
-libnotification_area_applet_la_SOURCES =		\
+notification_area_applet_SOURCES =		\
 	fixedtip.h				\
 	fixedtip.c				\
 	main.c					\
@@ -28,18 +27,16 @@ libnotification_area_applet_la_SOURCES =		\
 
 main.c: egg-marshal.c
 
-libnotification_area_applet_la_LIBADD =			\
+notification_area_applet_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
 	$(PANEL_LIBS)
-
-libnotification_area_applet_la_LDFLAGS = -avoid-version -module
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_NotificationAreaApplet.server.in
 server_DATA     = GNOME_NotificationAreaApplet.server
 
 GNOME_NotificationAreaApplet.server.in: $(srcdir)/GNOME_NotificationAreaApplet.server.in.in
-	sed -e "s|\@APPLET_LIBDIR\@|$(appletdir)|" $< > $@
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
 
 @INTLTOOL_SERVER_RULE@
 

@@ -383,10 +383,10 @@ applet_factory (PanelApplet *applet,
   return TRUE;
 }
 
-#if 0
+#if 1
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_NotificationAreaApplet_Factory",
 			     PANEL_TYPE_APPLET,
-                             "SystemTray",
+                             "NotificationArea",
                              "0",
                              applet_factory,
                              NULL)
