@@ -8,6 +8,7 @@
 BEGIN_GNOME_DECLS	
 
 void panel_corba_gtk_main (char *service_name);
+void panel_corba_gtk_main_quit(void);
 
 void panel_corba_clean_up(void);
 

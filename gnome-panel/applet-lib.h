@@ -43,6 +43,7 @@ void gnome_panel_applet_unregister_callback_dir(int applet_id, char *name);
 
 
 void applet_corba_gtk_main (char *str);
+void applet_corba_gtk_main_quit (void);
 
 void gnome_panel_applet_cleanup (int applet_id);
 

@@ -609,3 +609,12 @@ applet_corba_gtk_main (char *str)
 	orb_ptr->run ();
 #endif	
 }
+
+void
+applet_corba_gtk_main_quit (void)
+{
+	boa_ptr->deactivate_impl (CORBA::ImplementationDef::_nil());
+#ifdef HAVE_MICO_ORB_RUN       
+	orb_ptr->shutdown ();
+#endif	
+}

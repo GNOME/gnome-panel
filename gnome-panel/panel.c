@@ -316,12 +316,12 @@ panel_session_save (GnomeClient *client,
 	return TRUE;
 }
 
-static  int
+/*static  int
 do_exit(gpointer data)
 {
 	gtk_exit(0);
 	return FALSE;
-}
+}*/
 
 int
 panel_session_die (GnomeClient *client,
@@ -338,7 +338,8 @@ panel_session_die (GnomeClient *client,
 	/*FIXME: MICO BUG!!!!! the mico main will go on forever!!!!
 	  this is a problem, so we'll do gtk_exit in an idle handler*/
 	/*gtk_main_quit ();*/
-	gtk_idle_add(do_exit,NULL);
+	/*gtk_idle_add(do_exit,NULL);*/
+	panel_corba_gtk_main_quit();
 	return TRUE;
 }
 
@@ -1244,7 +1245,7 @@ applet_destroy(GtkWidget *w, gpointer data)
 
 int
 register_toy(GtkWidget *applet,
-	     GtkWidget * assoc,
+	     GtkWidget *assoc,
 	     gpointer data,
 	     char *id_str,
 	     char *path,
@@ -1256,6 +1257,7 @@ register_toy(GtkWidget *applet,
 {
 	GtkWidget     *eventbox;
 	AppletInfo    info;
+	int           bind_lower;
 	
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(id_str != NULL, FALSE);
@@ -1264,9 +1266,9 @@ register_toy(GtkWidget *applet,
 	   events over it */
 	eventbox = gtk_event_box_new();
 	gtk_widget_set_events(eventbox, (gtk_widget_get_events(eventbox) |
-			      APPLET_EVENT_MASK) &
-		~( GDK_POINTER_MOTION_MASK |
-		   GDK_POINTER_MOTION_HINT_MASK));
+					 APPLET_EVENT_MASK) &
+			      ~( GDK_POINTER_MOTION_MASK |
+				 GDK_POINTER_MOTION_HINT_MASK));
 	gtk_container_add(GTK_CONTAINER(eventbox), applet);
 
 	info.applet_id = applet_count;
@@ -1306,10 +1308,14 @@ register_toy(GtkWidget *applet,
 		
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	if(panel_widget_add(panel, eventbox, pos)==-1) {
+	/*for a menu we don't bind other events except for the
+	  eventbox, the menu itself takes care of passing the relevant
+	  ones thrugh*/
+	bind_lower = (type == APPLET_MENU?FALSE:TRUE);
+	if(panel_widget_add_full(panel, eventbox, pos, bind_lower)==-1) {
 		GList *list;
 		for(list = panels; list != NULL; list = g_list_next(list))
-			if(panel_widget_add(panel, eventbox, pos)!=-1)
+			if(panel_widget_add_full(panel, eventbox, pos, bind_lower)!=-1)
 				break;
 		if(!list) {
 			gtk_widget_unref(eventbox);
@@ -1337,8 +1343,7 @@ register_toy(GtkWidget *applet,
 			   			   	applet_destroy),
 			   			   ITOP(applet_count));
 
-	gtk_widget_show(applet);
-	gtk_widget_show(eventbox);
+	gtk_widget_show_all(eventbox);
 
 	applets = g_array_append_val(applets,AppletInfo,info);
 	applet_count++;

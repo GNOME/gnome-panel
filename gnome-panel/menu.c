@@ -1027,32 +1027,47 @@ add_menu_widget (Menu *menu, char *menudir, int main_menu)
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 }
 
+static GtkWidget *
+listening_parent(GtkWidget *widget)
+{
+	if (GTK_WIDGET_NO_WINDOW(widget))
+		return listening_parent(widget->parent);
+
+	return widget;
+}
+
 static int
-menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+menu_button_press(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	Menu *menu = data;
-	if(event->button==1) {
-		GtkWidget *wpanel = get_panel_parent(menu->button->parent);
-		int main_menu = (strcmp (menu->path, ".") == 0);
+	if(event->type == GDK_BUTTON_PRESS) {
+		GdkEventButton *bevent = (GdkEventButton *)event; 
+		if(bevent->button==1) {
+			GtkWidget *wpanel =
+				get_panel_parent(menu->button->parent);
+			int main_menu = (strcmp (menu->path, ".") == 0);
 
-		check_and_reread(menu->menu,menu,main_menu);
+			check_and_reread(menu->menu,menu,main_menu);
 
-		/*so that the panel doesn't pop down until we're done with
-		  the menu */
-		if(IS_SNAPPED_WIDGET(wpanel)) {
-			SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
-			snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
+			/*so that the panel doesn't pop down until we're
+			  done with the menu */
+			if(IS_SNAPPED_WIDGET(wpanel)) {
+				SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
+				snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
+			}
+
+			/*this HAS to be set everytime we popup the menu*/
+			current_panel =
+				gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+						    PANEL_APPLET_PARENT_KEY);
+
+			gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
+				       data, bevent->button, bevent->time);
+			return TRUE;
 		}
-
-		/*this HAS to be set everytime we popup the menu*/
-		current_panel =
-			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
-					    PANEL_APPLET_PARENT_KEY);
-
-		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
-			       data, event->button, event->time);
-		return TRUE;
-	}
+		return gtk_widget_event(listening_parent(widget->parent), event);
+	} else if(event->type == GDK_BUTTON_RELEASE)
+		return gtk_widget_event(listening_parent(widget->parent), event);
 	return FALSE;
 }
 
@@ -1109,7 +1124,12 @@ create_panel_menu (char *menudir, int main_menu,
 	menu->orient = orient;
 
 	/* main button */
-	menu->button = gtk_event_box_new ();
+	menu->button = gtk_button_new ();
+	gtk_signal_connect (GTK_OBJECT (menu->button), "event",
+			    GTK_SIGNAL_FUNC (menu_button_press), menu);
+	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
+			    GTK_SIGNAL_FUNC (destroy_menu), menu);
+
 
 	/*make the pixmap*/
 	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
@@ -1118,19 +1138,15 @@ create_panel_menu (char *menudir, int main_menu,
 	gtk_widget_show(pixmap);
 	/*FIXME:this is not right, but it's how we can get the buttons to
 	  be 48x48 (given the icons are 48x48)*/
-	gtk_widget_set_usize (menu->button, pixmap->requisition.width,
-			      pixmap->requisition.height);
+	/*gtk_widget_set_usize (menu->button, pixmap->requisition.width,
+			      pixmap->requisition.height);*/
+	gtk_widget_set_usize (menu->button, 48,48);
 
 	/* put pixmap in button */
 	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (menu->button);
 
 	add_menu_widget(menu,menudir,main_menu);
-
-	gtk_signal_connect (GTK_OBJECT (menu->button), "button_press_event",
-			    GTK_SIGNAL_FUNC (menu_button_press), menu);
-	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
-			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 
 	g_free (pixmap_name);
 
@@ -1229,7 +1245,7 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	g_free(menu_base);
 	g_free(this_menu);
 
-	pixmap=GTK_BIN(menu->button)->child;
+	pixmap=GTK_BUTTON(menu->button)->child;
 	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
 	/*this is done by remove right?*/
 	/*gtk_widget_unref(pixmap);*/

@@ -240,7 +240,8 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 	applet_count--;
 
 	if(die_on_last && applet_count == 0)
-		gtk_exit(0);
+		applet_corba_gtk_main_quit();
+		/*gtk_exit(0);*/
 
 	return FALSE;
 }

@@ -1839,7 +1839,7 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 
 
 static void
-bind_top_applet_events(GtkWidget *widget)
+bind_top_applet_events(GtkWidget *widget, int bind_lower)
 {
 	gtk_signal_connect_after(GTK_OBJECT(widget),
 			   	 "size_allocate",
@@ -1864,7 +1864,7 @@ bind_top_applet_events(GtkWidget *widget)
 	 * GtkEventBox) for processing by us.
 	 */
 
-	if (GTK_IS_CONTAINER(widget))
+	if (bind_lower && GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, 0);
 }
@@ -1974,7 +1974,7 @@ panel_widget_add_forbidden(PanelWidget *panel)
 }
 
 int
-panel_widget_add (PanelWidget *panel, GtkWidget *applet, int pos)
+panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_lower_events)
 {
 	AppletData *ad;
 
@@ -2012,7 +2012,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, int pos)
 					  (GCompareFunc)applet_data_compare);
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_DATA,ad);
 
-	bind_top_applet_events(applet);
+	bind_top_applet_events(applet,bind_lower_events);
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_ADDED_SIGNAL],

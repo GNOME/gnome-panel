@@ -1,3 +1,14 @@
+Mon Jul 13 00:18:20 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: make it possible to have _add which
+	  only binds the eents of the widget which is added and
+	  not it's children
+
+	* menu.c: make menus buttons, and add code for sending
+	  the right events to the toplevel eventbox
+
+	* panel.c: don't bind events recursively for menus
+
 Sun Jul 12 18:52:55 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: much smarter menu rereading, will only reread the

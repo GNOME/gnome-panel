@@ -170,6 +170,16 @@ panel_corba_gtk_main (char *service_name)
 }
 
 void
+panel_corba_gtk_main_quit(void)
+{
+	boa_ptr->deactivate_impl (CORBA::ImplementationDef::_nil());
+#ifdef HAVE_MICO_ORB_RUN	
+	orb_ptr->shutdown ();
+#endif
+}
+
+
+void
 panel_corba_clean_up(void)
 {
 	char hostname [4096];
