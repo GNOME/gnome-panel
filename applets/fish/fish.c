@@ -690,7 +690,7 @@ display_fortune_dialog (FishApplet *fish)
 		fish->fortune_dialog = 
 			gtk_dialog_new_with_buttons (
 				"", NULL, 0,
-				_("Speak again"), FISH_RESPONSE_SPEAK,
+				_("_Speak again"), FISH_RESPONSE_SPEAK,
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 				NULL);
 
