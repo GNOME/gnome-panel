@@ -2247,12 +2247,12 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			dentry->location = g_strconcat(dir,"/",s, NULL);
 			if(fp) fprintf(fp,"%s\n",s);
 			/* free up the location */
-			g_free(dentry->location);
 			g_free(s);
 		}
 		gnome_desktop_entry_save(dentry);
 		if(dentry->exec) g_strfreev(dentry->exec);
 		/* free up the dentry at the top of this block */
+		g_free(dentry->location);
 		g_free(dentry);
 	}
 	if(fp) fclose(fp);
@@ -2314,8 +2314,8 @@ create_rh_menu(void)
 			dentry->name = _("Red Hat menus");
 			dentry->type = "Directory";
 			dentry->icon = "/usr/share/icons/mini/mini-redhat.xpm";
-			dentry->location = g_strconcat(dentry->location,rhdir,
-						       ".directory",NULL);
+			dentry->location = g_strconcat(rhdir,".directory",
+						       NULL);
 			gnome_desktop_entry_save(dentry);
 			/* free up the dentry + the location */
 			g_free(dentry->location);
