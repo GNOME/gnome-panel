@@ -63,16 +63,14 @@ EGG_RECENT_FILES_C =		\
 	egg-recent-item.c	\
 	egg-recent-view.c	\
 	egg-recent-view-gtk.c	\
-	egg-recent-util.c	\
-	egg-recent-vfs-utils.c	
+	egg-recent-util.c
 
 EGG_RECENT_FILES_H =		\
 	egg-recent-model.h	\
 	egg-recent-item.h	\
 	egg-recent-view.h	\
 	egg-recent-view-gtk.h	\
-	egg-recent-util.h	\
-	egg-recent-vfs-utils.h
+	egg-recent-util.h
 
 EGG_SCREEN_EXEC_FILES =         \
 	egg-screen-exec.h       \

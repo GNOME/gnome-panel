@@ -1,5 +1,20 @@
 2003-01-06  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am: remove egg-recent-vfs-utils.[ch].
+
+	* egg-recent-item.c:
+	* egg-recent-model.c:
+	* egg-recent-util.[ch]:
+	* egg-recent-view-gtk.[ch]: sync with libegg.
+
+	* egg-recent-vfs-utils.[ch]: remove
+
+	* panel-recent.c: (panel_recent_append_documents_menu):
+	Use the new RecentView icon size API to make sure we use
+	the same icon size as the panel menu.
+
+2003-01-06  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix #95995 by making only the applications/actions menu use
 	"panel-menu" icon size and the rest use the "gtk-menu" size.
 	I swear, this icon size crap will be death of me yet ...
