@@ -323,6 +323,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 {
 #define FRAMES (MINIATURIZE_ANIMATION_FRAMES_Z)
 	float cx[FRAMES], cy[FRAMES], cw[FRAMES], ch[FRAMES];
+	int cxi[FRAMES], cyi[FRAMES], cwi[FRAMES], chi[FRAMES];
 	float xstep, ystep, wstep, hstep;
 	int i, j;
 	GC frame_gc;
@@ -370,12 +371,15 @@ draw_zoom_animation (GdkScreen *gscreen,
 		cy[j] = (float)y;
 		cw[j] = (float)w;
 		ch[j] = (float)h;
+		cxi[j] = (int)cx[j];
+		cyi[j] = (int)cy[j];
+		cwi[j] = (int)cw[j];
+		chi[j] = (int)ch[j];
 	}
 	XGrabServer(dpy);
 	for (i=0; i<steps; i++) {
 		for (j=0; j<FRAMES; j++) {
-			XDrawRectangle(dpy, root_win, frame_gc, 
-				       (int)cx[j], (int)cy[j], (int)cw[j], (int)ch[j]);
+			XDrawRectangle(dpy, root_win, frame_gc, cxi[j], cyi[j], cwi[j], chi[j]);
 		}
 		XFlush(dpy);
 #if (MINIATURIZE_ANIMATION_DELAY_Z > 0)
@@ -385,24 +389,35 @@ draw_zoom_animation (GdkScreen *gscreen,
 #endif
 		for (j=0; j<FRAMES; j++) {
 			XDrawRectangle(dpy, root_win, frame_gc, 
-				       (int)cx[j], (int)cy[j], (int)cw[j], (int)ch[j]);
+				       cxi[j], cyi[j], cwi[j], chi[j]);
 			if (j<FRAMES-1) {
 				cx[j]=cx[j+1];
 				cy[j]=cy[j+1];
 				cw[j]=cw[j+1];
 				ch[j]=ch[j+1];
+				
+				cxi[j]=cxi[j+1];
+				cyi[j]=cyi[j+1];
+				cwi[j]=cwi[j+1];
+				chi[j]=chi[j+1];
+				
 			} else {
 				cx[j]+=xstep;
 				cy[j]+=ystep;
 				cw[j]+=wstep;
 				ch[j]+=hstep;
+
+				cxi[j] = (int)cx[j];
+				cyi[j] = (int)cy[j];
+				cwi[j] = (int)cw[j];
+				chi[j] = (int)ch[j];
 			}
 		}
 	}
 
 	for (j=0; j<FRAMES; j++) {
 		XDrawRectangle(dpy, root_win, frame_gc, 
-			       (int)cx[j], (int)cy[j], (int)cw[j], (int)ch[j]);
+				       cxi[j], cyi[j], cwi[j], chi[j]);
 	}
 	XFlush(dpy);
 #if (MINIATURIZE_ANIMATION_DELAY_Z > 0)
@@ -412,7 +427,7 @@ draw_zoom_animation (GdkScreen *gscreen,
 #endif
 	for (j=0; j<FRAMES; j++) {
 		XDrawRectangle(dpy, root_win, frame_gc, 
-			       (int)cx[j], (int)cy[j], (int)cw[j], (int)ch[j]);
+				       cxi[j], cyi[j], cwi[j], chi[j]);
 	}
     
 	XUngrabServer(dpy);

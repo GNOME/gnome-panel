@@ -1,3 +1,12 @@
+2004-11-26  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Matthias Clasen <mclasen@redhat.com> in
+	bug #156162
+
+	* xstuff.c: (draw_zoom_animation): round the integer
+	co-ords only once since we seem to sometimes get
+	different results.
+
 2004-11-25  Marco Pesenti Gritti  <marco@gnome.org>
 
 	* panel-recent.c:
