@@ -364,6 +364,7 @@ save_applet_configuration(AppletInfo *info)
 						menu->path);
 			gnome_config_set_int("main_menu_flags",
 					     menu->main_menu_flags);
+			gnome_config_set_bool("old_style_main",FALSE);
 			break;
 		}
 	case APPLET_LAUNCHER:
@@ -830,10 +831,22 @@ init_user_applets(void)
 			g_free(params);
 		} else if(strcmp(applet_name,MENU_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
+			char *s;
 			int type =
 				gnome_config_get_int("main_menu_type=-1");
-			int flags =
-				gnome_config_get_int("main_menu_flags=5");
+			int flags;
+			gboolean old_style = 
+				gnome_config_get_bool("old_style_main=true");
+
+			s = g_strdup_printf("main_menu_flags=%d",
+					    (int)(MAIN_MENU_SYSTEM_SUB |
+						  MAIN_MENU_USER_SUB |
+						  MAIN_MENU_APPLETS_SUB |
+						  MAIN_MENU_PANEL_SUB |
+						  MAIN_MENU_DESKTOP_SUB));
+			flags = gnome_config_get_int(s);
+			g_free(s);
+
 			if(type>=0) {
 				flags = 0;
 				if(type == X_MAIN_MENU_BOTH) {
@@ -855,6 +868,29 @@ init_user_applets(void)
 				if (g_file_exists(DEBIAN_MENUDIR))
 					flags |= MAIN_MENU_DEBIAN_SUB;
 			}
+			if(old_style) {
+				/*this is needed to make panel properly
+				  read older style configs */
+				if(flags&MAIN_MENU_SYSTEM &&
+				   flags&MAIN_MENU_SYSTEM_SUB)
+					flags &=~ MAIN_MENU_SYSTEM;
+				if(flags&MAIN_MENU_USER &&
+				   flags&MAIN_MENU_USER_SUB)
+					flags &=~ MAIN_MENU_USER;
+				if(flags&MAIN_MENU_REDHAT &&
+				   flags&MAIN_MENU_REDHAT_SUB)
+					flags &=~ MAIN_MENU_USER;
+				if(flags&MAIN_MENU_DEBIAN &&
+				   flags&MAIN_MENU_DEBIAN_SUB)
+					flags &=~ MAIN_MENU_DEBIAN;
+				if(flags&MAIN_MENU_KDE &&
+				   flags&MAIN_MENU_KDE_SUB)
+					flags &=~ MAIN_MENU_KDE;
+				flags |= MAIN_MENU_APPLETS_SUB |
+					MAIN_MENU_PANEL_SUB |
+					MAIN_MENU_DESKTOP_SUB;
+			}
+
 			load_menu_applet(params,flags,panel,pos);
 			g_free(params);
 		} else if(strcmp(applet_name,DRAWER_ID) == 0) {
