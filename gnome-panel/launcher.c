@@ -410,7 +410,7 @@ destroy_plug(GtkWidget *widget, gpointer data)
 {
 	Launcher *launcher = data;
 
-	g_return_if_fail(launcher != NULL);
+	g_return_val_if_fail(launcher != NULL, FALSE);
 
 	launcher_count--;
 	launchers = g_list_remove(launchers,launcher);

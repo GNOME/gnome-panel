@@ -589,7 +589,8 @@ create_menu_applet(char *arguments, MenuOrient orient)
 	menu->path=g_strdup(arguments);
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
-
+	
+	g_free (this_menu);
 	return menu;
 }
 

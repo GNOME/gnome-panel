@@ -841,16 +841,17 @@ register_toy(GtkWidget *applet,
 	GList         *list;
 	int            i;
 	
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(id_str != NULL);
+	g_return_val_if_fail(applet != NULL, FALSE);
+	g_return_val_if_fail(id_str != NULL, FALSE);
 
 	list = g_list_nth(panels,panel);
 
-	g_return_if_fail(list != NULL);
+	g_return_val_if_fail(list != NULL, FALSE);
 
 	panelw = PANEL_WIDGET(list->data);
 
-	g_return_if_fail(panelw != NULL);
+	g_return_val_if_fail(panelw != NULL, FALSE);
+	
 	/* We wrap the applet in a GtkEventBox so that we can capture events over it */
 
 	eventbox = gtk_event_box_new();
