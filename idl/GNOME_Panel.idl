@@ -58,14 +58,6 @@ module Vertigo {
 	interface PanelAppletShell : Bonobo::Unknown {
 
 		/*
-		 * GNOME::PanelAppletShell::saveYourself
-		 * @global_key: path to save global applet preferences
-		 * @private_key: path to save per-applet data settings
-		 */
-		void saveYourself (in string global_key,
-				   in string private_key);
-	  
-		/*
 		 * GNOME::PanelAppletShell::getExpandFlags
 		 * @expand_major: Whether to expand the applet in the major direction
 		 * @expand_minor: Whether to expand the applet in the minor direction

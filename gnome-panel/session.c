@@ -275,7 +275,9 @@ save_applet_configuration(AppletInfo *info)
 
 	switch(info->type) {
 	case APPLET_BONOBO:
-		panel_applet_frame_save_session (PANEL_APPLET_FRAME (info->data));
+		/*
+		 * No session saving for applets.
+		 */
 		break;
 	case APPLET_DRAWER: 
 		{

@@ -1,10 +1,25 @@
 /*
- * panel-applet.c:
+ * panel-applet.c: panel applet writing library.
+ *
+ * Copyright (C) 2001 Sun Microsystems, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  *
  * Authors:
- *    Mark McLoughlin <mark@skynet.ie>
- *
- * Copyright 2001 Sun Microsystems, Inc.
+ *     Mark McLoughlin <mark@skynet.ie>
  */
 
 #include <unistd.h>
@@ -92,25 +107,6 @@ panel_applet_set_expand_flags (PanelApplet *applet,
 {
 	applet->priv->expand_major = expand_major;
 	applet->priv->expand_minor = expand_minor;
-}
-
-void
-panel_applet_save_yourself (PanelApplet *applet,
-			    const gchar *global_key,
-			    const gchar *private_key)
-{
-	if (applet->priv->global_key)
-		g_free (applet->priv->global_key);
-
-	if (applet->priv->private_key)
-		g_free (applet->priv->private_key);
-
-	applet->priv->global_key  = g_strdup (global_key);
-	applet->priv->private_key = g_strdup (private_key);
-
-	g_signal_emit (G_OBJECT (applet),
-		       panel_applet_signals [SAVE_YOURSELF],
-		       0);
 }
 
 /**
@@ -515,17 +511,6 @@ panel_applet_class_init (PanelAppletClass *klass,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
 			      G_TYPE_POINTER,
 			      G_TYPE_STRING);
-
-	panel_applet_signals [SAVE_YOURSELF] =
-                g_signal_new ("save_yourself",
-                              G_TYPE_FROM_CLASS (klass),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelAppletClass, save_yourself),
-                              NULL,
-			      NULL,
-                              panel_applet_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-			      0);
 }
 
 static void

@@ -1,10 +1,25 @@
 /*
- * panel-applet-frame.c:
+ * panel-applet-frame.h:
+ *
+ * Copyright (C) 2001 Sun Microsystems, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  *
  * Authors:
- *    Mark McLoughlin <mark@skynet.ie>
- *
- * Copyright 2001 Sun Microsystems, Inc.
+ *	Mark McLoughlin <mark@skynet.ie>
  */
 
 #include <libbonoboui.h>
@@ -118,37 +133,6 @@ panel_applet_frame_save_position (PanelAppletFrame *frame)
 	temp_key = g_strdup_printf ("%s/applets/%s/panel-id", session_key, frame->priv->unique_key);
 	gconf_client_set_int (panel_gconf_get_client (), temp_key, panel_id, NULL);
 	g_free (temp_key);
-}
-
-void
-panel_applet_frame_save_session (PanelAppletFrame *frame)
-{
-	CORBA_Environment  env;
-	gchar             *session_key;
-	gchar             *global_key;
-	gchar             *private_key;
-
-	CORBA_exception_init (&env);
-
-	session_key = panel_gconf_get_session_key ();
-	if (!session_key)
-		return;
-
-	global_key  = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->iid);
-	private_key = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->unique_key);
-
-	GNOME_Vertigo_PanelAppletShell_saveYourself (frame->priv->applet_shell,
-						     global_key,
-						     private_key,
-						     &env); 
-	if (BONOBO_EX (&env))
-		g_warning (G_STRLOC " : exception return from saveYourself '%s'",
-			   BONOBO_EX_REPOID (&env));
-
-	g_free (global_key);
-	g_free (private_key);
-
-	CORBA_exception_free (&env);
 }
 
 void

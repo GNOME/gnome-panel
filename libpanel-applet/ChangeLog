@@ -1,5 +1,15 @@
 2001-12-14  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-shell.c:
+	(impl_PanelAppletShell_saveYourself): kill.
+	(panel_applet_shell_class_init): upd.
+
+	* panel-applet.[ch], panel-applet-private.h: 
+	(panel_applet_save_yourself): kill.
+	(panel_applet_class_init): kill "save_yuorself" signal.
+
+2001-12-14  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet-shell.[ch], panel-applet.[ch],
 	  test-bonobo-applet.c: move to our reserved GNOME_Vertigo
 	  namespace.

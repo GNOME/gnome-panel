@@ -1,10 +1,25 @@
 /*
- * panel-applet-shell.c:
+ * panel-applet-shell.c: the panel's interface to the applet.
+ *
+ * Copyright (C) 2001 Sun Microsystems, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Library General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU Library General Public
+ * License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
  *
  * Authors:
- *   Mark McLoughlin <mark@skynet.ie>
- *
- * Copyright 2001 Sun Microsystems, Inc.
+ *     Mark McLoughlin <mark@skynet.ie>
  */
 
 #include <config.h>
@@ -18,19 +33,6 @@ struct _PanelAppletShellPrivate {
 };
 
 static GObjectClass *parent_class = NULL;
-
-static void
-impl_PanelAppletShell_saveYourself (PortableServer_Servant  servant,
-				    const CORBA_char       *global_key,
-				    const CORBA_char       *private_key,
-				    CORBA_Environment      *ev)
-{
-	PanelAppletShell *shell;
-
-	shell = PANEL_APPLET_SHELL (bonobo_object (servant));
-
-	panel_applet_save_yourself (shell->priv->applet, global_key, private_key);
-}
 
 static void
 impl_PanelAppletShell_getExpandFlags (PortableServer_Servant  servant,
@@ -50,7 +52,6 @@ impl_PanelAppletShell_getExpandFlags (PortableServer_Servant  servant,
 	*expand_minor = minor;
 }
 
-
 static void
 panel_applet_shell_finalize (GObject *object)
 {
@@ -69,7 +70,6 @@ panel_applet_shell_class_init (PanelAppletShellClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	klass->epv.saveYourself = impl_PanelAppletShell_saveYourself;
 	klass->epv.getExpandFlags = impl_PanelAppletShell_getExpandFlags;
 
 	object_class->finalize = panel_applet_shell_finalize;
