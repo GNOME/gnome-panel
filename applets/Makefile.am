@@ -1,6 +1,12 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon cpuload cpumemusage	\
-	 fish bussign netload dialer webcontrol diskusage icewm-pager	\
-	 drivemount clockmail fifteen battery gkb
+	 fish bussign netload dialer webcontrol icewm-pager	\
+	 drivemount clockmail fifteen battery
+
+if HAVE_LIBGTOP
+libgtop_SUBDIRS = diskusage multiload
+else
+libgtop_SUBDIRS =
+endif
 
 if APPLET_CDPLAYER
 cdplayer = cdplayer
@@ -19,8 +25,8 @@ if FALSE
 winlist = winlist
 endif
 
-SUBDIRS = $(always_built_SUBDIRS) \
+SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist)
 
-sometimes_built_SUBDIRS = cdplayer mixer modemlights winlist
-DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
+#sometimes_built_SUBDIRS = cdplayer mixer modemlights winlist
+#DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
