@@ -1,3 +1,13 @@
+2002-12-16  Arvind Samptur <arvind.samptur@wipro.com>
+	* disclosure-widget.c (class_init): attach a 
+	destroy handler. 
+	(cddb_disclosure_destroy): remove the timer on
+	a destroy. Fixes #100992.
+	(get_x_y),(expand_collapse_timeout): remove the unused 
+	variables. Get rid of warnings.
+	(do_animation): replace gtk_timeout_remove() with
+	g_source_remove().
+	
 2002-12-16  Mark McLoughlin  <mark@skynet.ie>
 
 	Fixes a crash when moving between panels #98265.
