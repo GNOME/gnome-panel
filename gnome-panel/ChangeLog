@@ -1,5 +1,12 @@
 2002-07-30  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu.c:
+	(menuitem_button_press_event): rename from show_item_menu_mi_cb.
+	(setup_full_menuitem): only connect to "button_press_event"
+	not "event".
+
+2002-07-30  Mark McLoughlin  <mark@skynet.ie>
+
 	Don't allow moving objects to explicitly hidden panels. It
 	makes little sense and is less confusing. Fixes #89317.
 

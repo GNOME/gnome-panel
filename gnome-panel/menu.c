@@ -1510,17 +1510,16 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 }
 
 static gboolean
-show_item_menu_mi_cb (GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
+menuitem_button_press_event (GtkWidget      *menuitem,
+			     GdkEventButton *event,
+			     ShowItemMenu   *sim)
 {
-	GdkEventButton *bevent = (GdkEventButton *)event;
-
 	/* no item menu in commie mode */
 	if (commie_mode)
 		return FALSE;
 	
-	if (event->type == GDK_BUTTON_PRESS &&
-	    bevent->button == 3)
-		show_item_menu (w, bevent, sim);
+	if (event->button == 3)
+		show_item_menu (menuitem, event, sim);
 	
 	return FALSE;
 }
@@ -1669,8 +1668,8 @@ setup_full_menuitem (GtkWidget  *menuitem,
 		sim->mf = mf;
 		sim->menuitem = menuitem;
                 g_object_set_data (G_OBJECT (menuitem), "sim", sim);
-		g_signal_connect (G_OBJECT (menuitem), "event",
-				  G_CALLBACK (show_item_menu_mi_cb),
+		g_signal_connect (menuitem, "button_press_event",
+				  G_CALLBACK (menuitem_button_press_event),
 				  sim);
 		g_signal_connect (G_OBJECT (menuitem), "destroy",
 				  G_CALLBACK (destroy_item_menu),
