@@ -99,6 +99,7 @@ panel_sources =			\
 	panel-action-button.c	\
 	panel-menu-bar.c        \
 	panel-menu-button.c     \
+	panel-menu-items.c      \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
 	panel-action-protocol.c	\
@@ -143,6 +144,7 @@ panel_headers =			\
 	panel-action-button.h	\
 	panel-menu-bar.h        \
 	panel-menu-button.h     \
+	panel-menu-items.h      \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
 	panel-action-protocol.h	\

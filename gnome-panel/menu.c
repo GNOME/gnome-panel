@@ -41,6 +41,7 @@
 #include "panel-recent.h"
 #include "panel-profile.h"
 #include "panel-menu-button.h"
+#include "panel-menu-items.h"
 #include "panel-globals.h"
 #include "panel-run-dialog.h"
 #include "panel-lockdown.h"
@@ -106,39 +107,10 @@ static void
 activate_app_def (GtkWidget     *menuitem,
 		  MenuTreeEntry *entry)
 {
-	GnomeDesktopItem *item;
-	GError           *error;
 	const char       *path;
 
 	path = menu_tree_entry_get_desktop_file_path (entry);
-
-	error = NULL;
-	item = gnome_desktop_item_new_from_file (path, 0, &error);
-	if (item) {
-		g_assert (error == NULL);
-
-		panel_ditem_launch (
-			item, NULL, 0, menuitem_to_screen (menuitem), &error);
-		if (error) {
-			panel_error_dialog (menuitem_to_screen (menuitem),
-					    "cannot_launch_entry", TRUE,
-					    _("Cannot launch entry"),
-					    "%s",
-					    error->message);
-
-			g_error_free (error);
-		}
-		gnome_desktop_item_unref (item);
-	} else {
-		g_assert (error != NULL);
-
-		panel_error_dialog (menuitem_to_screen (menuitem),
-				    "cannot_load_entry", TRUE,
-				    _("Cannot load entry"),
-				    "%s",
-				    error->message);
-		g_error_free (error);
-	}
+	panel_menu_item_activate_desktop_file (menuitem, path);
 }
 
 PanelWidget *
@@ -187,6 +159,10 @@ setup_menu_panel (GtkWidget *menu)
 
 	panel = menu_get_panel (menu);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
+
+	if (panel)
+		gtk_menu_set_screen (GTK_MENU (menu),
+				     gtk_widget_get_screen (GTK_WIDGET (panel)));
 }
 
 GdkScreen *
@@ -310,8 +286,12 @@ create_empty_menu (void)
 
 	retval = panel_create_menu ();
 
-	g_signal_connect (
-		retval, "show", G_CALLBACK (setup_menu_panel), NULL);
+	g_signal_connect (retval, "show", G_CALLBACK (setup_menu_panel), NULL);
+
+	/* intercept all right button clicks makes sure they don't
+	   go to the object itself */
+	g_signal_connect (retval, "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
 
 	return retval;
 }
@@ -707,7 +687,6 @@ add_menu_to_panel (GtkWidget     *menuitem,
 	int                insertion_pos;
 	char              *menu_path;
 	char              *menu_filename;
-	GtkWidget         *parent;
 
 	menu_filename = g_object_get_data (G_OBJECT (menuitem->parent),
 					   "panel-menu-tree-filename");
@@ -1483,96 +1462,63 @@ setup_menu_item_with_icon (GtkWidget   *item,
 
 	setup_menuitem (item, icon_size, NULL, title, invisible_mnemonic);
 }
-  
-GtkWidget *
-menu_create_action_item (PanelActionButtonType action_type)
+
+static void
+main_menu_append (GtkWidget   *main_menu,
+		  PanelWidget *panel)
 {
 	GtkWidget *item;
+	gboolean   add_separator;
+	GList     *children;
 
-	if (panel_action_get_is_disabled (action_type))
-		return NULL;
+	if (!g_object_get_data (G_OBJECT (main_menu),
+				"panel-menu-needs-appending"))
+		return;
 
-	item = gtk_image_menu_item_new ();
-        setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (action_type),
-				   NULL,
-				   panel_action_get_text (action_type),
-				   TRUE);
+	g_object_set_data (G_OBJECT (main_menu),
+			   "panel-menu-needs-appending", NULL);
 
-	gtk_tooltips_set_tip (panel_tooltips,
-			      item,
-			      panel_action_get_tooltip (action_type),
-			      NULL);
+	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
 
-	g_signal_connect (item, "activate",
-			  panel_action_get_invoke (action_type), NULL);
-	g_signal_connect (G_OBJECT (item), "button_press_event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_internal_applet_drag (item, action_type);
+	if (children != NULL) {
+		while (children->next != NULL)
+			children = children->next;
+		add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
+	}
 
-	return item;
+	if (add_separator)
+		add_menu_separator (main_menu);
+
+	item = panel_place_menu_item_new (TRUE);
+	panel_place_menu_item_set_panel (item, panel);
+	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
+	gtk_widget_show (item);
+
+	item = panel_desktop_menu_item_new (TRUE, FALSE);
+	panel_desktop_menu_item_set_panel (item, panel);
+	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
+	gtk_widget_show (item);
+
+	item = panel_menu_items_create_action_item (PANEL_ACTION_RUN);
+	if (item != NULL) {
+		add_menu_separator (main_menu);
+		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), item);
+	}
+
+	panel_menu_items_append_lock_logout (main_menu);
 }
 
 GtkWidget *
 create_main_menu (PanelWidget *panel)
 {
 	GtkWidget *main_menu;
-	GtkWidget *applications_menu;
-	GtkWidget *menuitem;
 
-	main_menu = create_empty_menu ();
+	main_menu = create_applications_menu ("applications.menu", NULL);
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
+	/* FIXME need to update the panel on parent_set */
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menu_item_with_icon (menuitem,
-				   panel_menu_icon_get_size (),
-				   "gnome-applications",
-				   NULL,
-				   _("Applications"),
-				   TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-
-	applications_menu = create_applications_menu ("applications.menu",
-						      NULL);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applications_menu);
-
-	add_menu_separator (main_menu);
-
-	menuitem = menu_create_action_item (PANEL_ACTION_RUN);
-	if (menuitem != NULL)
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-
-	if (panel_is_program_in_path  ("gnome-search-tool")) {
-		menuitem = menu_create_action_item (PANEL_ACTION_SEARCH);
-		if (menuitem != NULL)
-			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
-					       menuitem);
-	}
-
-	panel_recent_append_documents_menu (main_menu);
-
-	add_menu_separator (main_menu);
-
-	if (panel_is_program_in_path ("gnome-screenshot")) {
-		menuitem = menu_create_action_item (PANEL_ACTION_SCREENSHOT);
-		if (menuitem != NULL)
-			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
-					       menuitem);
-
-		add_menu_separator (main_menu);
-	}
-
-	if (panel_is_program_in_path  ("xscreensaver")) {
-		menuitem = menu_create_action_item (PANEL_ACTION_LOCK);
-		if (menuitem != NULL)
-			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
-					       menuitem);
-	}
-
-	menuitem = menu_create_action_item (PANEL_ACTION_LOGOUT);
-	if (menuitem != NULL)
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
+	g_signal_connect (main_menu, "show",
+			  G_CALLBACK (main_menu_append), panel);
 
 	return main_menu;
 }

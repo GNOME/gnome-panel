@@ -41,8 +41,6 @@ void            setup_menu_item_with_icon (GtkWidget        *item,
 					   const char       *title,
 					   gboolean          invisible_mnemonic);
 
-GtkWidget      *menu_create_action_item   (PanelActionButtonType action_type);
-
 GtkWidget      *create_empty_menu         (void);
 GtkWidget      *create_applications_menu  (const char  *menu_file,
 					   const char  *menu_path);

@@ -1,3 +1,43 @@
+2005-02-19  Vincent Untz  <vincent@vuntz.net>
+
+	Synchronize the main menu layout with the menu bar layout
+	Fix bug #163501
+
+	* Makefile.am: add panel-menu-items.[ch]
+	* menu.[ch]: (activate_app_def): simple wrapper for
+	panel_menu_item_activate_desktop_file()
+	(setup_menu_panel): make the menu appear on the right screen when it's
+	shown
+	(create_empty_menu): intercept all right button clicks
+	(menu_create_action_item): moved to panel-menu-items.c
+	(main_menu_append): new, append items to the main menu
+	(create_main_menu): simplify a lot :-)
+	* panel-menu-bar.c: big cleanup
+	(activate_uri): moved to panel-menu-items.c
+	(activate_app_def): ditto
+	(panel_menu_bar_append_from_desktop): ditto
+	(panel_menu_bar_show_menu): killed since it's done in menu.c
+	(panel_menu_bar_connect_menu_signals): killed, now useless
+	(panel_menu_bar_append_place_item): moved to panel-menu-items.c
+	(panel_menu_bar_recreate_places_menu): ditto
+	(panel_menu_bar_append_applications_menu): updated
+	(panel_menu_bar_desktop_is_home_dir_changed): moved to
+	panel-menu-items.c
+	(panel_menu_bar_gtk_bookmarks_changed): ditto
+	(panel_menu_bar_volume_changed): ditto
+	(panel_menu_bar_append_gtk_bookmarks): ditto
+	(panel_menu_bar_append_volumes): ditto
+	(panel_menu_bar_create_places_menu): ditto
+	(panel_menu_bar_append_desktop_menu): ditto
+	(panel_menu_bar_create_desktop_menu): ditto
+	(panel_menu_bar_instance_init): remove all the places/desktop
+	initialization code and create Places/Desktop menu item objects
+	(panel_menu_bar_parent_set): updated
+	(panel_menu_bar_finalize): remove all the places/desktop finalization
+	code
+	* panel-menu-items.[ch]: new files that contain objects for Places
+	and Desktop menu items
+
 2005-02-17  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-util.[ch]: (panel_ditem_launch): the GnomeDesktopItem is now
