@@ -1,5 +1,18 @@
 2003-08-06  Mark McLoughlin  <mark@skynet.ie>
 
+	Patch from Glynn Foster.
+
+	* applet.[ch]:
+	(panel_applet_lock): make the remove item insensitive if
+	locked.
+	(panel_applet_create_menu),
+	(panel_applet_register): keep track of the remove item.
+	
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state):
+	make the remove item insensitive if locked.
+
+2003-08-06  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am: add panel-struts.[ch].
 	
 	* panel-struts.[ch]: re-implement some degree of "collision
