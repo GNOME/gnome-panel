@@ -2367,8 +2367,8 @@ create_panel_context_menu (PanelWidget *panel)
 			GTK_ICON_SIZE_MENU,
 			gtk_image_new_from_stock (
 				GTK_STOCK_HELP, GTK_ICON_SIZE_MENU),
-			_("_Help"),
-			FALSE);
+				_("_Help"),
+				FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (show_panel_help), NULL);
@@ -2378,8 +2378,8 @@ create_panel_context_menu (PanelWidget *panel)
 			GTK_ICON_SIZE_MENU,
 			gtk_image_new_from_stock (
 				GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
-			_("_About Panels"),
-			FALSE);
+				_("A_bout Panels"),
+				FALSE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	g_signal_connect (menuitem, "activate", G_CALLBACK (show_about_dialog), NULL);
 	
@@ -2392,8 +2392,8 @@ create_panel_context_menu (PanelWidget *panel)
 				GTK_ICON_SIZE_MENU,
 				gtk_image_new_from_stock (
 					GNOME_STOCK_ABOUT, GTK_ICON_SIZE_MENU),
-				_("About _GNOME"),
-				FALSE);
+					_("About _GNOME"),
+					FALSE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 		g_signal_connect_data (menuitem, "activate",
 				       G_CALLBACK (about_gnome_cb),
