@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-19 04:24+0100\n"
+"POT-Creation-Date: 2004-12-21 13:49+0100\n"
 "PO-Revision-Date: 2004-12-19 12:57+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -48,8 +48,8 @@ msgstr "O _aplikaci"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:326 gnome-panel/panel-menu-bar.c:302
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
+#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:313
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "Nápo_věda"
@@ -241,7 +241,7 @@ msgstr "Používat _UTC"
 #: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539
-#: gnome-panel/panel-context-menu.c:127
+#: gnome-panel/panel-context-menu.c:128
 msgid "translator-credits"
 msgstr ""
 "David Šauer <davids@penguin.cz>\n"
@@ -979,29 +979,29 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME Panel Shell"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:101
-#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:130
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:99
+#: gnome-panel/applet.c:480 gnome-panel/panel-applet-frame.c:130
 msgid "_Lock"
 msgstr "Za_mknout"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:468
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:488
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:452
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:472
 msgid "_Remove From Panel"
 msgstr "_Odstranit z panelu"
 
-#: gnome-panel/applet.c:101 gnome-panel/applet.c:460
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:480
 #: gnome-panel/panel-applet-frame.c:130
 msgid "Un_lock"
 msgstr "Ode_mknout"
 
-#: gnome-panel/applet.c:373
+#: gnome-panel/applet.c:389
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1127
+#: gnome-panel/applet.c:1145
 msgid "Can't find an empty spot"
 msgstr "Nemohu najít volné místo"
 
@@ -1023,8 +1023,13 @@ msgstr "soubor nenalezen"
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:282
+#: gnome-panel/drawer.c:599
+#, fuzzy
+msgid "_Add to drawer..."
+msgstr "_Přidat na panel..."
+
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:828
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:283
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1064,26 +1069,30 @@ msgstr "Nemohu otevřít soubor desktop %s pro spouštěč na panelu %s%s\n"
 msgid "Launcher Properties"
 msgstr "Vlastnosti spouštěče"
 
-#: gnome-panel/launcher.c:893
+#: gnome-panel/launcher.c:822
+msgid "_Launch"
+msgstr ""
+
+#: gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nemohu načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:948 gnome-panel/launcher.c:966
+#: gnome-panel/launcher.c:954 gnome-panel/launcher.c:972
 #: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
 #: gnome-panel/menu-ditem.c:535
 msgid "Cannot create launcher"
 msgstr "Nemohu vytvořit spouštěč"
 
-#: gnome-panel/launcher.c:949 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:955 gnome-panel/menu-ditem.c:463
 msgid "You have to specify a name."
 msgstr "Musíte zadat název."
 
-#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:973 gnome-panel/menu-ditem.c:480
 msgid "You have to specify a valid URL or command."
 msgstr "Musíte zadat platné URL nebo příkaz."
 
-#: gnome-panel/launcher.c:1010 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1016 gnome-panel/menu-ditem.c:543
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1153,7 +1162,7 @@ msgid "Restart _Screensaver Daemon"
 msgstr "_Restartovat démona šetřiče obrazovky"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:57
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:58
 #: gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
@@ -1274,48 +1283,48 @@ msgstr "Zvolte _položku, kterou přidat do %s:"
 msgid "Select an _item to add to the panel:"
 msgstr "Zvolte _položku, kterou přidat na panel:"
 
-#: gnome-panel/panel-applet-frame.c:766
+#: gnome-panel/panel-applet-frame.c:785
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Výjimka z popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:885
+#: gnome-panel/panel-applet-frame.c:904
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:887
+#: gnome-panel/panel-applet-frame.c:906
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:894
+#: gnome-panel/panel-applet-frame.c:913
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Pokud obnovíte objekt panelu, bude automaticky přidán zpět na panel."
 
-#: gnome-panel/panel-applet-frame.c:900
+#: gnome-panel/panel-applet-frame.c:919
 msgid "_Don't Reload"
 msgstr "_Neobnovovat"
 
-#: gnome-panel/panel-applet-frame.c:901
+#: gnome-panel/panel-applet-frame.c:920
 msgid "_Reload"
 msgstr "_Obnovit"
 
-#: gnome-panel/panel-applet-frame.c:927
+#: gnome-panel/panel-applet-frame.c:946
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: gnome-panel/panel-applet-frame.c:975
+#: gnome-panel/panel-applet-frame.c:994
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "V panelu došlo k problému při načítání \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:992
+#: gnome-panel/panel-applet-frame.c:1011
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstranit tento aplet ze svého nastavení?"
 
-#: gnome-panel/panel-applet-frame.c:1089
+#: gnome-panel/panel-applet-frame.c:1108
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Z ovládacího prvku nelze získat rozhraní AppletShell\n"
 
@@ -1334,24 +1343,24 @@ msgstr "Chyba při načítání adresáře gconf '%s': %s"
 msgid "Error getting value for '%s': %s"
 msgstr "Chyba při získávání hodnoty pro '%s': %s"
 
-#: gnome-panel/panel-context-menu.c:58
+#: gnome-panel/panel-context-menu.c:59
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: gnome-panel/panel-context-menu.c:59
+#: gnome-panel/panel-context-menu.c:60
 msgid "About GNOME"
 msgstr "O GNOME"
 
-#: gnome-panel/panel-context-menu.c:117
+#: gnome-panel/panel-context-menu.c:118
 msgid "And many, many others..."
 msgstr "A mnoho, mnoho dalších..."
 
-#: gnome-panel/panel-context-menu.c:142
+#: gnome-panel/panel-context-menu.c:143
 msgid "The GNOME Panel"
 msgstr "Panel GNOME"
 
-#: gnome-panel/panel-context-menu.c:145
+#: gnome-panel/panel-context-menu.c:146
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1359,31 +1368,31 @@ msgstr ""
 "Tento program je odpovědný za spouštění jiných aplikací, použití malých "
 "appletů."
 
-#: gnome-panel/panel-context-menu.c:185
+#: gnome-panel/panel-context-menu.c:186
 msgid "You cannot remove your last panel."
 msgstr "Nemůžete odstranit svůj poslední panel."
 
-#: gnome-panel/panel-context-menu.c:234
+#: gnome-panel/panel-context-menu.c:235
 msgid "_Delete This Panel..."
 msgstr "_Odstranit tento panel..."
 
-#: gnome-panel/panel-context-menu.c:237 gnome-panel/panel-context-menu.c:267
+#: gnome-panel/panel-context-menu.c:238 gnome-panel/panel-context-menu.c:268
 msgid "_Delete This Panel"
 msgstr "_Odstranit tento panel"
 
-#: gnome-panel/panel-context-menu.c:251
+#: gnome-panel/panel-context-menu.c:252
 msgid "_Add to Panel..."
 msgstr "_Přidat na panel..."
 
-#: gnome-panel/panel-context-menu.c:297
+#: gnome-panel/panel-context-menu.c:298
 msgid "_New Panel"
 msgstr "_Nový panel"
 
-#: gnome-panel/panel-context-menu.c:337
+#: gnome-panel/panel-context-menu.c:357
 msgid "A_bout Panels"
 msgstr "_O panelech"
 
-#: gnome-panel/panel-context-menu.c:353
+#: gnome-panel/panel-context-menu.c:373
 msgid "About _GNOME"
 msgstr "O _GNOME"
 
@@ -1812,18 +1821,18 @@ msgid "Use custom path for menu contents"
 msgstr "Používat vlastní cestu pro obsah menu"
 
 #: gnome-panel/panel-profile.c:743 gnome-panel/panel-profile.c:770
-#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1608
+#: gnome-panel/panel-profile.c:806 gnome-panel/panel-profile.c:1611
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Chyba při čtení řetězcové hodnoty GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1506
-#: gnome-panel/panel-profile.c:1577 gnome-panel/panel-profile.c:1640
+#: gnome-panel/panel-profile.c:785 gnome-panel/panel-profile.c:1509
+#: gnome-panel/panel-profile.c:1580 gnome-panel/panel-profile.c:1643
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Chyba při čtení celočíselné hodnoty GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:1516
+#: gnome-panel/panel-profile.c:1519
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1832,7 +1841,7 @@ msgstr ""
 "Panel '%s' je nastaven pro zobrazování na obrazovce %d, která momentálně "
 "není k dispozici. Nenačítám tento panel."
 
-#: gnome-panel/panel-profile.c:1592
+#: gnome-panel/panel-profile.c:1595
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Chyba při čtení pravdivostní hodnoty GConf '%s': %s"
@@ -2101,73 +2110,73 @@ msgstr "_Vynutit ukončení"
 msgid "C_lear"
 msgstr "_Vymazat"
 
-#: gnome-panel/panel-toplevel.c:1108
+#: gnome-panel/panel-toplevel.c:1110
 msgid "Hide Panel"
 msgstr "Skrýt panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Top Expanded Edge Panel"
 msgstr "Rozpínací hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Top Centered Panel"
 msgstr "Panel nahoře uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Top Floating Panel"
 msgstr "Plovoucí panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Top Edge Panel"
 msgstr "Hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rozpínací hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Bottom Centered Panel"
 msgstr "Panel dole uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Bottom Floating Panel"
 msgstr "Plovoucí panel dole"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Bottom Edge Panel"
 msgstr "Hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Left Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Left Centered Panel"
 msgstr "Panel vlevo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Left Floating Panel"
 msgstr "Plovoucí panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Left Edge Panel"
 msgstr "Hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1493
 msgid "Right Centered Panel"
 msgstr "Panel vpravo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Right Floating Panel"
 msgstr "Plovoucí panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1493
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Right Edge Panel"
 msgstr "Hranový panel vpravo"
 
@@ -2511,16 +2520,16 @@ msgstr "Nemohu zobrazit dokument nápovědy"
 msgid "Details: %s"
 msgstr "Detaily: %s"
 
-#: gnome-panel/panel.c:460
+#: gnome-panel/panel.c:473
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
-#: gnome-panel/panel.c:1224
+#: gnome-panel/panel.c:1237
 msgid "Delete this drawer?"
 msgstr "Odstranit tuto zásuvku?"
 
-#: gnome-panel/panel.c:1225
+#: gnome-panel/panel.c:1238
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost."
@@ -2528,15 +2537,15 @@ msgstr ""
 "Když je odstraněna zásuvka, je zásuvka a její\n"
 "nastavení ztraceno."
 
-#: gnome-panel/panel.c:1227
+#: gnome-panel/panel.c:1240
 msgid "Delete Drawer"
 msgstr "Odstranit zásuvku"
 
-#: gnome-panel/panel.c:1229
+#: gnome-panel/panel.c:1242
 msgid "Delete this panel?"
 msgstr "Odstranit tento panel?"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1243
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost."
@@ -2544,7 +2553,7 @@ msgstr ""
 "Když je panel odstraněn, je panel a jeho\n"
 "nastavení ztraceno."
 
-#: gnome-panel/panel.c:1232
+#: gnome-panel/panel.c:1245
 msgid "Delete Panel"
 msgstr "Odstranit panel"
 
