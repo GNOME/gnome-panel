@@ -76,10 +76,13 @@ gboolean panel_profile_is_toplevel_list_writeable (void);
 void        panel_profile_set_toplevel_name           (PanelToplevel *toplevel,
 						       const char    *name);
 char       *panel_profile_get_toplevel_name           (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_name   (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_orientation    (PanelToplevel *toplevel,
 						       PanelOrientation orientation);
 PanelOrientation
             panel_profile_get_toplevel_orientation    (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_orientation (PanelToplevel *toplevel);
 
 void        panel_profile_set_toplevel_size           (PanelToplevel *toplevel,
 						       int            size);
@@ -110,20 +113,28 @@ void        panel_profile_set_background_type         (PanelToplevel       *topl
 						       PanelBackgroundType  background_type);
 PanelBackgroundType
 	    panel_profile_get_background_type         (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_type (PanelToplevel       *toplevel);
+
 void        panel_profile_set_background_color        (PanelToplevel       *toplevel,
 						       PanelColor          *color);
 void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
 						       PanelColor          *color);
+gboolean    panel_profile_is_writable_background_color (PanelToplevel       *toplevel);
+
 void        panel_profile_set_background_pango_color  (PanelToplevel       *toplevel,
 						       PangoColor          *pango_color);
 void        panel_profile_get_background_pango_color  (PanelToplevel       *toplevel,
 						       PangoColor          *pango_color);
+
 void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
 						       guint16              opacity);
 guint16     panel_profile_get_background_opacity      (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_opacity (PanelToplevel       *toplevel);
+
 void        panel_profile_set_background_image        (PanelToplevel       *toplevel,
 						       const char          *image);
 char       *panel_profile_get_background_image        (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_image (PanelToplevel       *toplevel);
 
 void        panel_profile_set_background_fit          (PanelToplevel       *toplevel,
 						       gboolean             fit);

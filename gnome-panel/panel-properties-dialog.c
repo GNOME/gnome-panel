@@ -41,8 +41,12 @@ typedef struct {
 	GtkWidget     *properties_dialog;
 
 	GtkWidget     *name_entry;
+	GtkWidget     *name_label;
 	GtkWidget     *orientation_menu;
+	GtkWidget     *orientation_label;
 	GtkWidget     *size_spin;
+	GtkWidget     *size_label;
+	GtkWidget     *size_label_pixels;
 	GtkWidget     *expand_toggle;
 	GtkWidget     *autohide_toggle;
 	GtkWidget     *hidebuttons_toggle;
@@ -53,8 +57,11 @@ typedef struct {
 	GtkWidget     *color_widgets;
 	GtkWidget     *image_widgets;
 	GtkWidget     *color_picker;
+	GtkWidget     *color_label;
 	GtkWidget     *image_entry;
 	GtkWidget     *opacity_scale;
+	GtkWidget     *opacity_label;
+	GtkWidget     *opacity_legend;
 
 	guint          toplevel_notify;
 	guint          background_notify;
@@ -110,6 +117,9 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 	char *name;
 
 	dialog->name_entry = glade_xml_get_widget (gui, "name_entry");
+	g_assert (dialog->name_entry != NULL);
+	dialog->name_label = glade_xml_get_widget (gui, "name_label");
+	g_assert (dialog->name_label != NULL);
 
 	name = get_name (dialog->toplevel);
 	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
@@ -117,6 +127,11 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 
 	g_signal_connect_swapped (dialog->name_entry, "changed",
 				  G_CALLBACK (panel_properties_dialog_name_changed), dialog);
+
+	if ( ! panel_profile_is_writable_toplevel_name (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->name_entry, FALSE);
+		gtk_widget_set_sensitive (dialog->name_label, FALSE);
+	}
 }
 
 /* Sucky: menu order is Top, Bottom, Left, Right */
@@ -184,6 +199,9 @@ panel_properties_dialog_setup_orientation_menu (PanelPropertiesDialog *dialog,
 	PanelOrientation orientation;
 
 	dialog->orientation_menu = glade_xml_get_widget (gui, "orientation_menu");
+	g_assert (dialog->orientation_menu != NULL);
+	dialog->orientation_label = glade_xml_get_widget (gui, "orientation_label");
+	g_assert (dialog->orientation_label != NULL);
 
 	orientation = panel_profile_get_toplevel_orientation (dialog->toplevel);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->orientation_menu),
@@ -192,6 +210,11 @@ panel_properties_dialog_setup_orientation_menu (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->orientation_menu, "changed",
 				  G_CALLBACK (panel_properties_dialog_orientation_changed),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_toplevel_orientation (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->orientation_menu, FALSE);
+		gtk_widget_set_sensitive (dialog->orientation_label, FALSE);
+	}
 }
 
 static void
@@ -207,6 +230,11 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					 GladeXML              *gui)
 {
 	dialog->size_spin = glade_xml_get_widget (gui, "size_spin");
+	g_assert (dialog->size_spin != NULL);
+	dialog->size_label = glade_xml_get_widget (gui, "size_label");
+	g_assert (dialog->size_label != NULL);
+	dialog->size_label_pixels = glade_xml_get_widget (gui, "size_label_pixels");
+	g_assert (dialog->size_label_pixels != NULL);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->size_spin),
 				   panel_profile_get_toplevel_size (dialog->toplevel));
@@ -215,8 +243,11 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 				  G_CALLBACK (panel_properties_dialog_size_changed),
 				  dialog);
 
-	if ( ! panel_profile_is_writable_toplevel_size (dialog->toplevel))
+	if ( ! panel_profile_is_writable_toplevel_size (dialog->toplevel)) {
 		gtk_widget_set_sensitive (dialog->size_spin, FALSE);
+		gtk_widget_set_sensitive (dialog->size_label, FALSE);
+		gtk_widget_set_sensitive (dialog->size_label_pixels, FALSE);
+	}
 }
 
 #define SETUP_TOGGLE_BUTTON(wid, n, p)                                                            \
@@ -267,6 +298,9 @@ panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
 	PanelColor color;
 
 	dialog->color_picker = glade_xml_get_widget (gui, "color_picker");
+	g_assert (dialog->color_picker != NULL);
+	dialog->color_label = glade_xml_get_widget (gui, "color_label");
+	g_assert (dialog->color_label != NULL);
 
 	panel_profile_get_background_color (dialog->toplevel, &color);
 
@@ -279,6 +313,11 @@ panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->color_picker, "color_set",
 				  G_CALLBACK (panel_properties_dialog_color_changed),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_background_color (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->color_picker, FALSE);
+		gtk_widget_set_sensitive (dialog->color_label, FALSE);
+	}
 }
 
 static void
@@ -313,6 +352,10 @@ panel_properties_dialog_setup_image_entry (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->image_entry, "changed",
 				  G_CALLBACK (panel_properties_dialog_image_changed),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_background_image (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->image_entry, FALSE);
+	}
 }
 
 static void
@@ -336,6 +379,11 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 	gdouble percentage;
 
 	dialog->opacity_scale = glade_xml_get_widget (gui, "opacity_scale");
+	g_assert (dialog->opacity_scale != NULL);
+	dialog->opacity_label = glade_xml_get_widget (gui, "opacity_label");
+	g_assert (dialog->opacity_label != NULL);
+	dialog->opacity_legend = glade_xml_get_widget (gui, "opacity_legend");
+	g_assert (dialog->opacity_legend != NULL);
 
 	opacity = panel_profile_get_background_opacity (dialog->toplevel);
 
@@ -346,6 +394,12 @@ panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->opacity_scale, "value_changed",
 				  G_CALLBACK (panel_properties_dialog_opacity_changed),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_background_opacity (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->opacity_scale, FALSE);
+		gtk_widget_set_sensitive (dialog->opacity_label, FALSE);
+		gtk_widget_set_sensitive (dialog->opacity_legend, FALSE);
+	}
 }
 
 static void
@@ -423,6 +477,12 @@ panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->image_radio, "toggled",
 				  G_CALLBACK (panel_properties_dialog_background_toggled),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_background_type (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->default_radio, FALSE);
+		gtk_widget_set_sensitive (dialog->color_radio, FALSE);
+		gtk_widget_set_sensitive (dialog->image_radio, FALSE);
+	}
 }
 
 static void

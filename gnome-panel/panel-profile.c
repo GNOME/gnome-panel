@@ -338,6 +338,17 @@ panel_profile_get_toplevel_key (PanelToplevel *toplevel,
 	return panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, current_profile, id, key);
 }
 
+#define TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)                            \
+	gboolean                                                      \
+	panel_profile_is_writable_##p##_##s (PanelToplevel *toplevel) \
+	{                                                             \
+		GConfClient *client;                                  \
+		const char  *key;                                     \
+		client = panel_gconf_get_client ();                   \
+		key = panel_profile_get_toplevel_key (toplevel, k);   \
+		return gconf_client_key_is_writable (client, key, NULL); \
+	}
+
 void
 panel_profile_set_background_type (PanelToplevel       *toplevel,
 				   PanelBackgroundType  background_type)
@@ -375,6 +386,8 @@ panel_profile_get_background_type (PanelToplevel *toplevel)
 	return background_type;
 }
 
+TOPLEVEL_IS_WRITABLE_FUNC ("background/type", background, type)
+
 void
 panel_profile_set_background_color (PanelToplevel *toplevel,
 				    PanelColor    *color)
@@ -404,6 +417,8 @@ panel_profile_get_background_color (PanelToplevel *toplevel,
 	color->gdk.blue  = pango_color.blue;
 	color->alpha     = opacity;
 }
+
+TOPLEVEL_IS_WRITABLE_FUNC ("background/color", background, color)
 
 void
 panel_profile_set_background_pango_color (PanelToplevel *toplevel,
@@ -475,6 +490,8 @@ panel_profile_get_background_opacity (PanelToplevel *toplevel)
 	return opacity;
 }
 
+TOPLEVEL_IS_WRITABLE_FUNC ("background/opacity", background, opacity)
+
 void
 panel_profile_set_background_image (PanelToplevel *toplevel,
 				    const char    *image)
@@ -507,6 +524,8 @@ panel_profile_get_background_image (PanelToplevel *toplevel)
 	return retval;
 }
 
+TOPLEVEL_IS_WRITABLE_FUNC ("background/image", background, image)
+
 void
 panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 				 const char    *name)
@@ -538,6 +557,8 @@ panel_profile_get_toplevel_name (PanelToplevel *toplevel)
 
 	return retval;
 }
+
+TOPLEVEL_IS_WRITABLE_FUNC ("name", toplevel, name)
 
 void
 panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
@@ -576,6 +597,8 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 	return orientation;
 }
 
+TOPLEVEL_IS_WRITABLE_FUNC ("orientation", toplevel, orientation)
+
 #define TOPLEVEL_GET_SET_FUNCS(k, p, t, s, a)                         \
 	void                                                          \
 	panel_profile_set_##p##_##s (PanelToplevel *toplevel, a s)    \
@@ -597,15 +620,7 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		retval = gconf_client_get_##t (client, key, NULL);    \
 		return retval;                                        \
 	}                                                             \
-	gboolean                                                      \
-	panel_profile_is_writable_##p##_##s (PanelToplevel *toplevel) \
-	{                                                             \
-		GConfClient *client;                                  \
-		const char  *key;                                     \
-		client = panel_gconf_get_client ();                   \
-		key = panel_profile_get_toplevel_key (toplevel, k);   \
-		return gconf_client_key_is_writable (client, key, NULL); \
-	}
+        TOPLEVEL_IS_WRITABLE_FUNC(k, p, s)
 
 TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,  size,           int)
 TOPLEVEL_GET_SET_FUNCS ("expand",             toplevel,   bool, expand,         gboolean)
