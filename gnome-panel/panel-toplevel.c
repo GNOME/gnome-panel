@@ -32,6 +32,9 @@
  *    position temporarily like with rotate so we don't get movement.
  *  o When toggling buttons on a centered panel it loses the centered
  *    property
+ *  o Instead of the position_centered flag, should we allow the
+ *    co-ordinates to be relative to the left, center or right ? Similar
+ *    to the way aligned panels used to work.
  *
  * Drawers:
  *  o When attached we should only have a single hide button with the

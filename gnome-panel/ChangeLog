@@ -1,5 +1,33 @@
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-compatibility.[ch]:
+	(panel_compatibility_map_orient_string),
+	(panel_compatibility_map_orientation_string),
+	(panel_compatibility_map_edge_string),
+	(panel_compatibility_map_panel_type_string),
+	(panel_compatibility_map_panel_size_string),
+	(panel_compatibility_migrate_background_settings),
+	(panel_compatibility_migrate_edge_panel_settings),
+	(panel_compatibility_migrate_drawer_panel_settings),
+	(panel_compatibility_migrate_corner_panel_settings),
+	(panel_compatibility_migrate_sliding_panel_settings),
+	(panel_compatibility_migrate_floating_panel_settings),
+	(panel_compatibility_migrate_menu_panel_settings),
+	(panel_compatibility_migrate_panel_types),
+	(panel_compatibility_migrate_panel_settings),
+	(panel_compatibility_load_panel_id_list): begin implementing
+	backwards compat with the old settings format.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_orientation): impl.
+	(panel_profile_set_toplevel_orientation): upd.
+	(panel_profile_load): load the old panel_id_list if toplevel_id_list
+	isn't set.
+
+	* panel-toplevel.c: add a TODO item.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
 	Only register the toplevel keybindings once, remove the toplevel
 	pointer resizing feature, fix applets getting added to the panel
 	in the wrong place and make toplevel bindings work when focus

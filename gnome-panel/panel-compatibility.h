@@ -26,15 +26,12 @@
 #define __PANEL_COMPATIBILITY_H__
 
 #include <glib/gmacros.h>
-#include <gtk/gtk.h>
+#include <gconf/gconf-client.h>
 
 G_BEGIN_DECLS
 
-GtkWidget *panel_compatibility_load_menu_panel (const char *panel_id,
-						int         screen,
-						int         monitor);
-
-void       panel_compatibility_load_applets    (void);
+void panel_compatibility_load_panel_id_list (GConfClient *client);
+void panel_compatibility_load_applets       (void);
 
 G_END_DECLS
 

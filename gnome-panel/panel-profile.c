@@ -30,10 +30,11 @@
 #include <libgnome/gnome-i18n.h>
 #include <pango/pango-attributes.h>
 
-#include "panel-gconf.h"
-#include "panel-widget.h"
-#include "panel.h"
 #include "applet.h"
+#include "panel-compatibility.h"
+#include "panel-gconf.h"
+#include "panel.h"
+#include "panel-widget.h"
 
 /* TODO:
  *   Detect unwritable keys
@@ -144,6 +145,12 @@ panel_profile_map_orientation_string (const char       *str,
 	*orientation = mapped;
 
 	return TRUE;
+}
+
+const char *
+panel_profile_map_orientation (PanelOrientation orientation)
+{
+	return gconf_enum_to_string (panel_orientation_map, orientation);
 }
 
 gboolean
@@ -557,7 +564,7 @@ panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
 	key = panel_profile_get_toplevel_key (toplevel, "orientation");
 	gconf_client_set_string (client,
 				 key,
-				 gconf_enum_to_string (panel_orientation_map, orientation),
+				 panel_profile_map_orientation (orientation),
 				 NULL);
 }
 
@@ -2040,6 +2047,8 @@ panel_profile_load (char *profile_name)
 
 	key = panel_gconf_sprintf ("%s/general", dir);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+
+	panel_compatibility_load_panel_id_list (client);
 
 	panel_profile_load_list (client,
 				 dir,

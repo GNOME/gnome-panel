@@ -121,6 +121,7 @@ guint       panel_profile_toplevel_notify_add         (PanelToplevel         *to
 						       GConfClientNotifyFunc  func,
 						       gpointer               data);
 
+const char *panel_profile_map_orientation             (PanelOrientation       orientation);
 gboolean    panel_profile_map_orientation_string      (const char            *str,
 						       PanelOrientation      *orientation);
 gboolean    panel_profile_map_speed_string            (const char            *str,
