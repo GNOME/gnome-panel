@@ -1599,11 +1599,14 @@ set_tooltip (FishApplet *fish)
 	const char  *desc_format = _("%s the Fish, the fortune teller");
 	char        *desc;
 
-	tooltips = gtk_tooltips_new ();
-	g_object_ref (tooltips);
-	gtk_object_sink (GTK_OBJECT (tooltips));
+	tooltips = g_object_get_data (G_OBJECT (fish), "tooltips");
+	if (!tooltips) {
+		tooltips = gtk_tooltips_new ();
+		g_object_ref (tooltips);
+		gtk_object_sink (GTK_OBJECT (tooltips));
 
-	g_object_set_data (G_OBJECT (fish), "tooltips", tooltips);
+		g_object_set_data (G_OBJECT (fish), "tooltips", tooltips);
+	}
 
 	desc = g_strdup_printf (desc_format, fish->name);
 	gtk_tooltips_set_tip (tooltips, GTK_WIDGET (fish), desc, NULL);
