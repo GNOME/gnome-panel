@@ -125,7 +125,7 @@ about_cb (BonoboUIComponent *uic,
 
   tray->about_dialog = gtk_about_dialog_new ();
   g_object_set (tray->about_dialog,
-                "name", _("Panel Notification Area"),
+                "name", _("Notification Area"),
                 "version", VERSION,
                 "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
                 "authors", (const char **) authors,
