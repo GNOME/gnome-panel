@@ -1,3 +1,20 @@
+Fri Jul 03 02:33:48 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch],snapped-widget.[ch],drawer-widget.[ch]: the former
+	  panel-widget has been split up into three different widgets, also
+	  this changed the way the panel works inside a lot. Also here are
+	  a lot of cleanups (more still to come)
+
+	* panel.[ch],main.[ch],drawer.[ch],menu.[ch],panel-util.[ch]: changes
+	  to accomodate the widget split, it's a bit more hackish then I'd like
+	  right now, but it will get gradually cleaned up
+
+	* panel.c,main.c,applet-widget.[ch]: changed the config file structure,
+	  now it is split up into directories and panel and applets have separate
+	  files. this will enable more speedups on saving in the future, plus it
+	  gives more room for applets to do  their session saving, they now can
+	  have sections in their files
+
 1998-06-30  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* Makefile.am (appletsConf.sh): Don't sed in INTLLIBS.

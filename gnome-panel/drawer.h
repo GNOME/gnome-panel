@@ -5,7 +5,7 @@
 
 BEGIN_GNOME_DECLS
 
-#define DRAWER_PANEL "drawer_panel"
+#define DRAWER_PANEL_KEY "drawer_panel"
 
 typedef struct {
 	char *pixmap;

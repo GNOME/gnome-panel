@@ -1,3 +1,8 @@
+/* Gnome panel: panel widget
+ * (C) 1997 the Free Software Foundation
+ *
+ * Authors:  George Lebl
+ */
 #ifndef __PANEL_WIDGET_H__
 #define __PANEL_WIDGET_H__
 
@@ -10,13 +15,14 @@ BEGIN_GNOME_DECLS
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
-#define PANEL_CELL_SIZE 10
+#define PANEL_CELL_SIZE 1
 #define PANEL_MINIMUM_WIDTH 48
 
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"
+#define PANEL_PARENT "panel_parent"
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
@@ -28,29 +34,6 @@ typedef enum {
 	PANEL_HORIZONTAL,
 	PANEL_VERTICAL
 } PanelOrientation;
-typedef enum {
-	PANEL_FREE,
-	PANEL_DRAWER,
-	PANEL_TOP,
-	PANEL_BOTTOM,
-	PANEL_LEFT,
-	PANEL_RIGHT
-} PanelSnapped;
-typedef enum {
-	PANEL_EXPLICIT_HIDE,
-	PANEL_AUTO_HIDE
-} PanelMode;
-typedef enum {
-	PANEL_SHOWN,
-	PANEL_MOVING,
-	PANEL_HIDDEN,
-	PANEL_HIDDEN_RIGHT,
-	PANEL_HIDDEN_LEFT
-} PanelState;
-typedef enum {
-	DROP_ZONE_LEFT,
-	DROP_ZONE_RIGHT
-} DrawerDropZonePos;
 typedef enum {
 	PANEL_SWITCH_MOVE,
 	PANEL_FREE_MOVE
@@ -64,75 +47,63 @@ typedef enum {
 struct _AppletData
 {
 	GtkWidget *applet;
-	gint pos;
-	gint cells;
+	int pos;
+	int cells;
 
-	gint prevx;
-	gint prevy;
-	gint prevwidth;
-	gint prevheight;
-};
-
-struct _DNDRecord
-{
-	AppletData		*ad;
-	GtkWidget		*parent;
+	int prevx;
+	int prevy;
+	int prevwidth;
+	int prevheight;
 };
 
 struct _PanelWidget
 {
-	GtkWindow		window;
+	GtkEventBox		ebox;
 
 	GtkWidget		*frame;
 	GtkWidget		*fixed;
-	GtkWidget		*table;
-	GtkWidget		*hidebutton_n;
-	GtkWidget		*hidebutton_e;
-	GtkWidget		*hidebutton_w;
-	GtkWidget		*hidebutton_s;
 
 	GList			*applet_list;
 
-	gint			size;
+	int			size;
 	PanelOrientation	orient;
-	PanelSnapped		snapped;
-	PanelMode		mode;
-	PanelState		state;
-	gboolean		fit_pixmap_bg;
+	int			fit_pixmap_bg;
 
-	gint			leave_notify_timer_tag;
+	int			packed;
 
 	AppletData		*currently_dragged_applet;
 
-	DrawerDropZonePos	drawer_drop_zone_pos;
-	gint			x;
-	gint			y;
-
-	gint			thick;
-
-	gint			drawers_open; /* a count which can be used
-						 to block the autohide, until
-						 it is 0 .. it's set by the
-						 app not the widget*/
-	GtkWidget		*master_widget; /*the drawer button that is
-						  holding this panel*/
+	int			thick;
 
 	PanelBackType		back_type;
 	char                    *back_pixmap;
 	GdkColor		back_color;
-
-	gint			autohide_inhibit;
+	
+	int			postpone_adjust;
+	int			adjust_applet_idle;
+	
+	int			drawers_open; /* a count which can be used
+						 to block the autohide, until
+						 it is 0 .. it's set by the
+						 app not the widget*/
+	GtkWidget		*master_widget;
+	
+	GtkWidget		*drop_widget; /*this is the widget that the
+						panel checks for the cursor
+						on drops usually the panel
+					        widget itself*/
+	
+	/*this is used in mass send_moves, if these match we don't need to send
+	  applet_move signal*/
+	int			last_x,last_y,last_w,last_h;
 };
 
 struct _PanelWidgetClass
 {
-	GtkWindowClass parent_class;
+	GtkEventBoxClass parent_class;
 
 	void (* orient_change) (PanelWidget *panel,
-				PanelOrientation orient,
-				PanelSnapped snapped);
-	void (* state_change) (PanelWidget *panel,
-			       PanelState state);
+				PanelOrientation orient);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
@@ -140,47 +111,42 @@ struct _PanelWidgetClass
 	void (* applet_removed) (PanelWidget *panel);
 	void (* back_change) (PanelWidget *panel,
 			      PanelBackType type,
-			      gchar *pixmap,
+			      char *pixmap,
 			      GdkColor *color);
 };
 
 guint		panel_widget_get_type		(void);
-GtkWidget*	panel_widget_new		(gint size,
+GtkWidget *	panel_widget_new		(int packed,
 						 PanelOrientation orient,
-						 PanelSnapped snapped,
-						 PanelMode mode,
-						 PanelState state,
-						 gint pos_x,
-						 gint pos_y,
-						 DrawerDropZonePos drop_zone_pos,
 						 PanelBackType back_type,
 						 char *back_pixmap,
-						 gboolean fit_pixmap_bg,
+						 int fit_pixmap_bg,
 						 GdkColor *back_color);
 
 /*add an applet to the panel, preferably at position pos*/
-gint		panel_widget_add		(PanelWidget *panel,
+int		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
-						 gint pos);
+						 int pos);
+
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);
 
 /*move applet to newpos*/
-gint		panel_widget_move		(PanelWidget *panel,
+int		panel_widget_move		(PanelWidget *panel,
 						 GtkWidget *applet,
-						 gint pos);
+						 int pos);
 
 /*remove an applet from the panel*/
-gint		panel_widget_remove		(PanelWidget *panel,
+int		panel_widget_remove		(PanelWidget *panel,
 						 GtkWidget *applet);
 
 /*move applet to a different panel*/
-gint		panel_widget_reparent		(PanelWidget *old_panel,
+int		panel_widget_reparent		(PanelWidget *old_panel,
 						 PanelWidget *new_panel,
 						 GtkWidget *applet,
-						 gint pos);
+						 int pos);
 /*return position of an applet*/
-gint		panel_widget_get_pos		(PanelWidget *panel,
+int		panel_widget_get_pos		(PanelWidget *panel,
 						 GtkWidget *applet);
 /*return a list of all applets*/
 GList*		panel_widget_get_applets	(PanelWidget *panel);
@@ -188,17 +154,6 @@ GList*		panel_widget_get_applets	(PanelWidget *panel);
 void		panel_widget_foreach		(PanelWidget *panel,
 						 GFunc func,
 						 gpointer user_data);
-
-/*restore the current state, used after it was gtk_widget_hiden
-  emits "restore_state" signal so you can propagate the restore
-  state to drawers and such*/
-void		panel_widget_restore_state	(PanelWidget *panel);
-
-
-
-/*open and close drawers*/
-void		panel_widget_open_drawer	(PanelWidget *panel);
-void		panel_widget_close_drawer	(PanelWidget *panel);
 
 /*drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
@@ -209,61 +164,58 @@ void		panel_widget_applet_drag_end	(PanelWidget *panel);
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       GtkWidget *applet);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
-gint		panel_widget_applet_move_to_cursor(PanelWidget *panel);
+int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 void		panel_widget_applet_move_use_idle(PanelWidget *panel);
 
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
-						 PanelSnapped snapped,
-						 PanelMode mode,
-						 PanelState state,
-						 DrawerDropZonePos
-						 	drop_zone_pos,
 						 PanelBackType back_type,
 						 char *pixmap_name,
-						 gboolean fit_pixmap_bg,
+						 int fit_pixmap_bg,
 						 GdkColor *back_color);
 
 /* changing parameters (orient only) */
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
-/*changing parameters (dropzonepos only)*/
-void		panel_widget_change_drop_zone_pos(PanelWidget *panel,
-						  DrawerDropZonePos
-						 	drop_zone_pos);
 
 /*change global params*/
-void		panel_widget_change_global	(gint explicit_step,
-						 gint auto_step,
-						 gint drawer_step,
-						 gint minimized_size,
-						 gint minimize_delay,
+void		panel_widget_change_global	(int explicit_step,
+						 int auto_step,
+						 int drawer_step,
+						 int minimized_size,
+						 int minimize_delay,
 						 PanelMovementType move_type,
-						 gint disable_animations);
-
-/*popup the widget if it's popped down (autohide)*/
-void		panel_widget_pop_up		(PanelWidget *panel);
-
-/*queue a pop_down in autohide mode*/
-void		panel_widget_queue_pop_down	(PanelWidget *panel);
-
-void		panel_widget_enable_buttons	(PanelWidget *panel);
-void		panel_widget_disable_buttons	(PanelWidget *panel);
-
-void		panel_widget_set_drawer_pos	(PanelWidget *panel,
-						 gint x,
-						 gint y);
+						 int disable_animations);
 
 /*get the number of applets*/
-gint		panel_widget_get_applet_count	(PanelWidget *panel);
+int		panel_widget_get_applet_count	(PanelWidget *panel);
 
 /*tells us if an applet is "stuck" on the right side*/
-gint		panel_widget_is_applet_stuck	(PanelWidget *panel,
+int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 						 GtkWidget *applet);
+
+/*needed for other panel types*/
+void		panel_widget_pack_applets	(PanelWidget *panel);
+void		panel_widget_applet_put		(PanelWidget *panel,
+						 AppletData *ad,
+						 int force);
+void		panel_widget_put_all		(PanelWidget *panel,
+						 int force);
+AppletData	*get_applet_data_pos		(PanelWidget *panel,
+						 int pos);
+int		panel_widget_is_cursor		(PanelWidget *panel,
+						 int overlap);
+void		panel_widget_set_size		(PanelWidget *panel);
+
+/*slightly hackish, the widget that owns the widget will call this
+  function when it's window changes position or size ...*/
+void		panel_widget_send_move		(PanelWidget *panel);
+
 extern GList *panels;
 
-extern gint panel_applet_in_drag;
+extern int panel_applet_in_drag;
+
 
 END_GNOME_DECLS
 

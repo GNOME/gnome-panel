@@ -198,3 +198,98 @@ create_file_entry(GtkWidget *table,
 	return t;
 }
 
+
+GList *
+my_g_list_swap_next(GList *list, GList *dl)
+{
+	GList *t;
+
+	if(!dl->next)
+		return list;
+	if(dl->prev)
+		dl->prev->next = dl->next;
+	t = dl->prev;
+	dl->prev = dl->next;
+	dl->next->prev = t;
+	if(dl->next->next)
+		dl->next->next->prev = dl;
+	t = dl->next->next;
+	dl->next->next = dl;
+	dl->next = t;
+
+	if(list == dl)
+		return dl->prev;
+	return list;
+}
+
+GList *
+my_g_list_swap_prev(GList *list, GList *dl)
+{
+	GList *t;
+
+	if(!dl->prev)
+		return list;
+	if(dl->next)
+		dl->next->prev = dl->prev;
+	t = dl->next;
+	dl->next = dl->prev;
+	dl->prev->next = t;
+	if(dl->prev->prev)
+		dl->prev->prev->next = dl;
+	t = dl->prev->prev;
+	dl->prev->prev = dl;
+	dl->prev = t;
+
+	if(list == dl->next)
+		return dl;
+	return list;
+}
+
+/*maybe this should be a glib function?
+ it resorts a single item in the list*/
+GList *
+my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
+{
+	GList *dl;
+
+	if(!list)
+		return NULL;
+
+	dl = g_list_find(list,data);
+
+	g_return_val_if_fail(dl!=NULL,list);
+
+	while(dl->next &&
+	      (*func)(dl->data,dl->next->data)>0)
+		list=my_g_list_swap_next(list,dl);
+	while(dl->prev &&
+	      (*func)(dl->data,dl->prev->data)<0)
+		list=my_g_list_swap_prev(list,dl);
+	return list;
+}
+
+/*this is used to do an immediate move instead of set_uposition, which
+queues one*/
+void
+move_resize_window(GtkWidget *widget, int x, int y, int w, int h)
+{
+	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
+	gdk_window_set_hints(widget->window, x, y, w, h, w, h,
+			     GDK_HINT_POS|GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
+	gdk_window_move_resize(widget->window, x, y, w, h);
+	/* FIXME: this should draw only the newly exposed area! */
+	gtk_widget_draw(widget, NULL);
+}
+
+/*this is used to do an immediate resize instead of set_usize, which
+queues one*/
+void
+resize_window(GtkWidget *widget, int w, int h)
+{
+	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
+	gdk_window_set_hints(widget->window, 0, 0, w, h, w, h,
+			     GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
+	gdk_window_resize(widget->window, w, h);
+	/* FIXME: this should draw only the newly exposed area! */
+	gtk_widget_draw(widget, NULL);
+}

@@ -83,6 +83,10 @@ panel_SOURCES = 		\
 	panel_config_global.h  	\
 	panel-widget.c  	\
 	panel-widget.h		\
+	snapped-widget.c  	\
+	snapped-widget.h	\
+	drawer-widget.c  	\
+	drawer-widget.h		\
 	panel-util.c		\
 	panel-util.h		\
 	mulapp.c		\

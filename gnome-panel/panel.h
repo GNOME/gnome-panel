@@ -90,7 +90,7 @@ int panel_session_save (GnomeClient *client,
 int panel_session_die (GnomeClient *client,
 			gpointer client_data);
 
-GtkWidget * create_panel_root_menu(PanelWidget *panel);
+GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 int register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,

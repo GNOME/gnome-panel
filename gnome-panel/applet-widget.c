@@ -67,13 +67,14 @@ applet_widget_get_type ()
 
 enum {
 	CHANGE_ORIENT_SIGNAL,
+	SAVE_SESSION_SIGNAL,
 	SESSION_SAVE_SIGNAL,
 	BACK_CHANGE_SIGNAL,
 	TOOLTIP_STATE_SIGNAL,
 	LAST_SIGNAL
 };
 
-static int applet_widget_signals[LAST_SIGNAL] = {0,0};
+static int applet_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
 
 static void
 applet_widget_marshal_signal_orient (GtkObject * object,
@@ -160,6 +161,18 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
+	applet_widget_signals[SAVE_SESSION_SIGNAL] =
+		gtk_signal_new("save_session",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
+			       			 save_session),
+			       applet_widget_marshal_signal_save,
+			       GTK_TYPE_BOOL,
+			       2,
+			       GTK_TYPE_STRING,
+			       GTK_TYPE_STRING);
+	/*this one should be phased out*/
 	applet_widget_signals[SESSION_SAVE_SIGNAL] =
 		gtk_signal_new("session_save",
 			       GTK_RUN_LAST,
@@ -198,6 +211,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 				     LAST_SIGNAL);
 
 	class->change_orient = NULL;
+	class->save_session = NULL;
 	class->session_save = NULL;
 }
 
@@ -211,12 +225,14 @@ static int
 applet_widget_destroy(GtkWidget *w, gpointer data)
 {
 	AppletWidget *applet = APPLET_WIDGET(w);
-	if(!applet->cfgpath)
+	if(!applet->privcfgpath)
 		return FALSE;
-	g_free(applet->cfgpath);
+	g_free(applet->privcfgpath);
 	g_free(applet->globcfgpath);
-	applet->cfgpath = NULL;
+	g_free(applet->cfgpath);
+	applet->privcfgpath = NULL;
 	applet->globcfgpath = NULL;
+	applet->cfgpath = NULL;
 	gnome_panel_applet_cleanup(applet->applet_id);
 	if(GTK_BIN(w)->child == NULL)
 		gnome_panel_applet_abort_id(applet->applet_id);
@@ -300,7 +316,7 @@ applet_widget_new_with_param(const char *param)
 {
 	AppletWidget *applet;
 	char *result;
-	char *cfgpath;
+	char *privcfgpath;
 	char *globcfgpath;
 	guint32 winid;
 	int applet_id;
@@ -311,7 +327,7 @@ applet_widget_new_with_param(const char *param)
 	result = gnome_panel_applet_request_id(myinvoc, param,
 					       do_multi?FALSE:TRUE,
 					       &applet_id,
-					       &cfgpath, &globcfgpath,
+					       &privcfgpath, &globcfgpath,
 					       &winid);
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
@@ -322,8 +338,9 @@ applet_widget_new_with_param(const char *param)
 	GTK_PLUG(applet)->same_app = FALSE;
 
 	applet->applet_id = applet_id;
-	applet->cfgpath = cfgpath;
+	applet->privcfgpath = privcfgpath;
 	applet->globcfgpath = globcfgpath;
+	applet->cfgpath = g_copy_strings(privcfgpath,"dummy_section/",NULL);
 
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
@@ -467,8 +484,18 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 	applet = applet_widget_get_by_id(applet_id);
 	if(applet) {
 		gtk_signal_emit(GTK_OBJECT(applet),
-				applet_widget_signals[SESSION_SAVE_SIGNAL],
+				applet_widget_signals[SAVE_SESSION_SIGNAL],
 				cfg,globcfg,&return_val);
+
+		/*this should be ripped out when session_save is abandoned
+		  for save_session*/
+		{
+			char *oldcfg = g_copy_strings(cfg,"dummy_section/",NULL);
+			gtk_signal_emit(GTK_OBJECT(applet),
+					applet_widget_signals[SESSION_SAVE_SIGNAL],
+					oldcfg,globcfg,&return_val);
+			g_free(oldcfg);
+		}
 	}
 	g_free(cfg);
 	g_free(globcfg);

@@ -3,7 +3,10 @@
 #include <config.h>
 #include <gnome.h>
 #include "panel.h"
+#include "main.h"
 #include "panel-widget.h"
+#include "snapped-widget.h"
+#include "drawer-widget.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
 
@@ -16,11 +19,14 @@ extern GlobalConfig global_config;
    button is pressed. */
 typedef struct _PerPanelConfig PerPanelConfig;
 struct _PerPanelConfig {
-	PanelWidget		*panel;
+	GtkWidget		*panel;
 
-	PanelOrientation	orient;
-	PanelSnapped		snapped;
-	PanelMode		mode;
+	/*drawer types*/
+	/*nothing!*/
+	
+	/*snapped types*/
+	SnappedPos		pos;
+	SnappedMode		mode;
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;
@@ -30,6 +36,7 @@ struct _PerPanelConfig {
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
 	int			pix_ch_signal;
+
 	/*snapped buttons*/
 	GtkWidget		*r_button;
 	GtkWidget		*l_button;
@@ -44,7 +51,7 @@ struct _PerPanelConfig {
 static GList *ppconfigs=NULL;
 
 static PerPanelConfig *
-get_config_struct(PanelWidget *panel)
+get_config_struct(GtkWidget *panel)
 {
 	GList *list;
 	for(list=ppconfigs;list!=NULL;list=g_list_next(list)) {
@@ -56,56 +63,62 @@ get_config_struct(PanelWidget *panel)
 }
 
 void
-update_config_orient(PanelWidget *panel)
+update_config_orient(GtkWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct(panel);
 	if(!ppc)
 		return;
-	switch(panel->snapped) {
-	case PANEL_TOP:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
-					    TRUE);
-		break;
-	case PANEL_BOTTOM:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
-					    TRUE);
-		break;
-	case PANEL_LEFT:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
-					    TRUE);
-		break;
-	case PANEL_RIGHT:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
-					    TRUE);
-		break;
-	default:break;
+	if(IS_SNAPPED_WIDGET(panel)) {
+		switch(SNAPPED_WIDGET(panel)->pos) {
+		case SNAPPED_TOP:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+						    TRUE);
+			break;
+		case SNAPPED_BOTTOM:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+						    TRUE);
+			break;
+		case SNAPPED_LEFT:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+						    TRUE);
+			break;
+		case SNAPPED_RIGHT:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+						    TRUE);
+			break;
+		}
 	}
 }
 
 void
-update_config_back(PanelWidget *panel)
+update_config_back(GtkWidget *panel)
 {
 	GtkWidget *t;
 	PerPanelConfig *ppc = get_config_struct(panel);
+	/*if the panel has more panel_widgets they will all
+	  have the same background so we don't care which one
+	  we get*/
+	PanelWidget *pw = get_def_panel_widget(panel);
+
 	if(!ppc)
 		return;
-	switch(panel->back_type) {
+	switch(pw->back_type) {
 	case PANEL_BACK_NONE:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->non),
 					    TRUE);
 		break;
 	case PANEL_BACK_COLOR:
 		gnome_color_selector_set_color_int(ppc->backsel,
-			panel->back_color.red,
-			panel->back_color.green,
-			panel->back_color.blue,
+			pw->back_color.red,
+			pw->back_color.green,
+			pw->back_color.blue,
 			65355);
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->col),
 					    TRUE);
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_file_entry_gtk_entry(GNOME_FILE_ENTRY(ppc->pix_entry));
-		gtk_entry_set_text(GTK_ENTRY(t),panel->back_pixmap);
+		gtk_entry_set_text(GTK_ENTRY(t),pw->back_pixmap);
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->pix),
 					    TRUE);
 		break;
@@ -131,24 +144,24 @@ config_destroy(GtkWidget *widget, gpointer data)
 }
 
 static int
-set_snapped (GtkWidget *widget, gpointer data)
+snapped_set_pos (GtkWidget *widget, gpointer data)
 {
-	PanelSnapped snapped = (PanelSnapped) data;
+	SnappedPos pos = (SnappedPos) data;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	if(!(GTK_TOGGLE_BUTTON(widget)->active))
 		return FALSE;
 	
-	ppc->snapped = snapped;
+	ppc->pos = pos;
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 	return FALSE;
 }
 
 static int
-set_mode (GtkWidget *widget, gpointer data)
+snapped_set_mode (GtkWidget *widget, gpointer data)
 {
-	PanelMode mode = (PanelMode) data;
+	SnappedMode mode = (SnappedMode) data;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	if(!(GTK_TOGGLE_BUTTON(widget)->active))
@@ -165,23 +178,30 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	PerPanelConfig *ppc = data;
 	
-	panel_widget_change_params(ppc->panel,
-				   ppc->orient,
-				   ppc->snapped,
-				   ppc->mode,
-				   ppc->panel->state,
-				   ppc->panel->drawer_drop_zone_pos,
-				   ppc->back_type,
-				   ppc->back_pixmap,
-				   ppc->fit_pixmap_bg,
-				   &ppc->back_color);
-	gtk_widget_queue_draw (GTK_WIDGET (ppc->panel));
-	
-	panel_sync_config();
+	if(IS_SNAPPED_WIDGET(ppc->panel))
+		snapped_widget_change_params(SNAPPED_WIDGET(ppc->panel),
+					     ppc->pos,
+					     ppc->mode,
+					     SNAPPED_WIDGET(ppc->panel)->state,
+					     ppc->back_type,
+					     ppc->back_pixmap,
+					     ppc->fit_pixmap_bg,
+					     &ppc->back_color);
+	else if(IS_DRAWER_WIDGET(ppc->panel)) {
+		PanelWidget *pw =
+			PANEL_WIDGET(DRAWER_WIDGET(ppc->panel)->panel);
+		panel_widget_change_params(pw,
+					   pw->orient,
+					   ppc->back_type,
+					   ppc->back_pixmap,
+					   ppc->fit_pixmap_bg,
+					   &ppc->back_color);
+	}
+	gtk_widget_queue_draw (ppc->panel);
 }
 
 GtkWidget *
-position_notebook_page(PerPanelConfig *ppc)
+snapped_notebook_page(PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
 	GtkWidget *button;
@@ -209,8 +229,8 @@ position_notebook_page(PerPanelConfig *ppc)
 	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("Top"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->t_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->t_button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_snapped), 
-			    (gpointer)PANEL_TOP);
+			    GTK_SIGNAL_FUNC (snapped_set_pos), 
+			    (gpointer)SNAPPED_TOP);
         gtk_table_attach(GTK_TABLE(table), ppc->t_button, 1, 2, 0, 1,
 			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 	
@@ -220,8 +240,8 @@ position_notebook_page(PerPanelConfig *ppc)
 			  _("Bottom"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->b_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->b_button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_snapped), 
-			    (gpointer)PANEL_BOTTOM);
+			    GTK_SIGNAL_FUNC (snapped_set_pos), 
+			    (gpointer)SNAPPED_BOTTOM);
         gtk_table_attach(GTK_TABLE(table), ppc->b_button, 1, 2, 2, 3,
 			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 	
@@ -231,8 +251,8 @@ position_notebook_page(PerPanelConfig *ppc)
 			  _("Left"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->l_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->l_button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_snapped), 
-			    (gpointer)PANEL_LEFT);
+			    GTK_SIGNAL_FUNC (snapped_set_pos), 
+			    (gpointer)SNAPPED_LEFT);
         gtk_table_attach(GTK_TABLE(table), ppc->l_button, 0, 1, 1, 2,
 			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 
@@ -242,29 +262,28 @@ position_notebook_page(PerPanelConfig *ppc)
 			  _("Right"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->r_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->r_button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_snapped), 
-			    (gpointer)PANEL_RIGHT);
+			    GTK_SIGNAL_FUNC (snapped_set_pos), 
+			    (gpointer)SNAPPED_RIGHT);
         gtk_table_attach(GTK_TABLE(table), ppc->r_button, 2, 3, 1, 2,
 			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 
-	switch(ppc->snapped) {
-	case PANEL_TOP:
+	switch(ppc->pos) {
+	case SNAPPED_TOP:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
 					    TRUE);
 		break;
-	case PANEL_BOTTOM:
+	case SNAPPED_BOTTOM:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
 					    TRUE);
 		break;
-	case PANEL_LEFT:
+	case SNAPPED_LEFT:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
 					    TRUE);
 		break;
-	case PANEL_RIGHT:
+	case SNAPPED_RIGHT:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
 					    TRUE);
 		break;
-	default:break;
 	}
 
 	/* Auto-hide/stayput frame */
@@ -281,11 +300,11 @@ position_notebook_page(PerPanelConfig *ppc)
 	/* Stay Put */
 	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->mode == PANEL_EXPLICIT_HIDE)
+	if (ppc->mode == SNAPPED_EXPLICIT_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_mode), 
-			    (gpointer)PANEL_EXPLICIT_HIDE);
+			    GTK_SIGNAL_FUNC (snapped_set_mode), 
+			    (gpointer)SNAPPED_EXPLICIT_HIDE);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	
 	/* Auto-hide */
@@ -293,11 +312,11 @@ position_notebook_page(PerPanelConfig *ppc)
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Auto Hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->mode == PANEL_AUTO_HIDE)
+	if (ppc->mode == SNAPPED_AUTO_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_mode), 
-			    (gpointer)PANEL_AUTO_HIDE);
+			    GTK_SIGNAL_FUNC (snapped_set_mode), 
+			    (gpointer)SNAPPED_AUTO_HIDE);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 
 	return (hbox);
@@ -509,7 +528,7 @@ background_page (PerPanelConfig *ppc)
 }
 	     
 void 
-panel_config(PanelWidget *panel)
+panel_config(GtkWidget *panel)
 {
 	GtkWidget *page;
 	PerPanelConfig *ppc;
@@ -527,14 +546,22 @@ panel_config(PanelWidget *panel)
 	ppc->register_changes = FALSE; /*don't notify property box of changes
 					 until everything is all set up*/
 
-	/* so far, these are the only ones that can be set */
-	ppc->orient = panel->orient;
-	ppc->snapped = panel->snapped;
-	ppc->mode = panel->mode;
-	ppc->fit_pixmap_bg = panel->fit_pixmap_bg;
-	ppc->back_pixmap = g_strdup(panel->back_pixmap);
-	ppc->back_color = panel->back_color;
-	ppc->back_type = panel->back_type;
+	if(IS_SNAPPED_WIDGET(panel)) {
+		SnappedWidget *snapped = SNAPPED_WIDGET(panel);
+		PanelWidget *pw = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
+		ppc->pos = snapped->pos;
+		ppc->mode = snapped->mode;
+		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
+		ppc->back_pixmap = g_strdup(pw->back_pixmap);
+		ppc->back_color = pw->back_color;
+		ppc->back_type = pw->back_type;
+	} else if(IS_DRAWER_WIDGET(panel)) {
+		PanelWidget *pw = PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
+		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
+		ppc->back_pixmap = g_strdup(pw->back_pixmap);
+		ppc->back_color = pw->back_color;
+		ppc->back_type = pw->back_type;
+	}
 	
 	ppc->panel = panel;
 	
@@ -547,12 +574,11 @@ panel_config(PanelWidget *panel)
 	gtk_container_border_width (GTK_CONTAINER(ppc->config_window),
 				    CONFIG_PADDING_SIZE);
 	
-	if(panel->snapped!=PANEL_DRAWER &&
-	   panel->snapped!=PANEL_FREE) {
-		/* Position notebook page */
-		page = position_notebook_page (ppc);
+	if(IS_SNAPPED_WIDGET(panel)) {
+		/* Snapped notebook page */
+		page = snapped_notebook_page (ppc);
 		gnome_property_box_append_page (GNOME_PROPERTY_BOX (ppc->config_window),
-						page, gtk_label_new (_("Orientation")));
+						page, gtk_label_new (_("Snapped Panel")));
 	}
 						
 

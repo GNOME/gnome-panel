@@ -12,6 +12,8 @@
 #include <gnome.h>
 
 #include "panel-widget.h"
+#include "snapped-widget.h"
+#include "drawer-widget.h"
 #include "gdkextra.h"
 #include "panel.h"
 #include "main.h"
@@ -48,12 +50,13 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-extern int main_menu_count;
-
 extern int panel_widget_inhibit_allocates;
 
 /*list of started applets*/
 extern GList * children;
+
+/*list of all panel widgets created*/
+extern GList *panel_list;
 
 
 /*send the tooltips state to all external applets*/
@@ -133,52 +136,58 @@ save_applet_configuration(AppletInfo *info, int *num)
 	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
 	if(info->type==APPLET_EXTERN) {
+		char *globalcfg;
 		/*sync before the applet does it's stuff*/
 		gnome_config_sync();
 		/*I think this should be done at sync and also that there
 		  should be some flocking ... but this works for now*/
 		gnome_config_drop_all();
+		
+		globalcfg = g_copy_strings(panel_cfg_path,"Applet_All/",NULL);
 
 		/*have the applet do it's own session saving*/
 		if(send_applet_session_save(info->id_str,info->applet_id,path,
-					    panel_cfg_path)) {
+					    globalcfg)) {
 			
 			gnome_config_push_prefix(path);
 
-			gnome_config_set_string("id", EXTERN_ID);
-			gnome_config_set_int("position", pos);
-			gnome_config_set_int("panel", panel);
-			gnome_config_set_string("parameters", info->path);
-			gnome_config_set_string("parameters2", info->params);
-			gnome_config_set_bool("right_stick",
+			gnome_config_set_string("config/id", EXTERN_ID);
+			gnome_config_set_int("config/position", pos);
+			gnome_config_set_int("config/panel", panel);
+			gnome_config_set_string("config/execpath", info->path);
+			gnome_config_set_string("config/parameters", info->params);
+			gnome_config_set_bool("config/right_stick",
 					      panel_widget_is_applet_stuck(p,info->widget));
 
 			gnome_config_pop_prefix();
 		} else
 			(*num)--;
+		g_free(globalcfg);
 	} else {
 		gnome_config_push_prefix(path);
 
-		gnome_config_set_string("id", info->id_str);
-		gnome_config_set_int("position", pos);
-		gnome_config_set_int("panel", panel);
-		gnome_config_set_bool("right_stick",
-				      panel_widget_is_applet_stuck(p,info->widget));
+		gnome_config_set_string("config/id", info->id_str);
+		gnome_config_set_int("config/position", pos);
+		gnome_config_set_int("config/panel", panel);
+		gnome_config_set_bool("config/right_stick",
+			      panel_widget_is_applet_stuck(p, info->widget));
 
 		if(strcmp(info->id_str,DRAWER_ID) == 0) {
 			int i;
 			Drawer *drawer = info->data;
 
-			i = find_panel(PANEL_WIDGET(info->assoc));
+			i = find_panel(PANEL_WIDGET(
+					    DRAWER_WIDGET(info->assoc)->panel));
 			if(i>=0)
-				gnome_config_set_int("parameters",i);
+				gnome_config_set_int("config/parameters",i);
 			else
 				g_warning("Drawer not associated with applet!");
-			gnome_config_set_string("pixmap", drawer->pixmap);
-			gnome_config_set_string("tooltip", drawer->tooltip);
+			gnome_config_set_string("config/pixmap", drawer->pixmap);
+			gnome_config_set_string("config/tooltip", drawer->tooltip);
 		} else {
 			if(info->params)
-				gnome_config_set_string("parameters", info->params);
+				gnome_config_set_string("config/parameters",
+							info->params);
 		}
 
 		gnome_config_pop_prefix();
@@ -190,20 +199,31 @@ save_panel_configuration(gpointer data, gpointer user_data)
 {
 	char           path[256];
 	char           buf[32];
-	int            x,y;
 	int           *num = user_data;
-	PanelWidget   *panel = data;
+	PanelData     *pd = data;
+	PanelWidget   *panel = get_def_panel_widget(pd->panel);
 
-	g_snprintf(path,256, "%sPanel_%d/", panel_cfg_path, (*num)++);
+	g_snprintf(path,256, "%spanel/Panel_%d/", panel_cfg_path, (*num)++);
+	gnome_config_clean_section(path);
 
 	gnome_config_push_prefix (path);
+
+	gnome_config_set_int("type",pd->type);
 	
-	gnome_config_set_int("orient",panel->orient);
-	gnome_config_set_int("snapped", panel->snapped);
-	gnome_config_set_int("mode", panel->mode);
+	if(pd->type == SNAPPED_PANEL) {
+		SnappedWidget *snapped = SNAPPED_WIDGET(pd->panel);
+		gnome_config_set_int("pos", snapped->pos);
+		gnome_config_set_int("mode", snapped->mode);
+		gnome_config_set_int("state", snapped->state);
+	} else if(pd->type == DRAWER_PANEL) {
+		DrawerWidget *drawer = DRAWER_WIDGET(pd->panel);
+		gnome_config_set_int("orient",panel->orient);
+		gnome_config_set_int("state", drawer->state);
+		gnome_config_set_int("drop_zone_pos",
+				     drawer->drop_zone_pos);
+
+	}
 	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
-	gnome_config_set_int("state", panel->state);
-	gnome_config_set_int("size", panel->size);
 
 	gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
 
@@ -215,20 +235,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	gnome_config_set_int("back_type", panel->back_type);
 
-	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
-	
-	gnome_config_set_int("position_x",x);
-	gnome_config_set_int("position_y",y);
-	gnome_config_set_int("drawer_drop_zone_pos",
-			     panel->drawer_drop_zone_pos);
-	
 	gnome_config_pop_prefix ();
-}
-
-static void
-destroy_widget_list(gpointer data, gpointer user_data)
-{
-	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 /* This is called when the session manager requests a shutdown.  It
@@ -256,7 +263,7 @@ panel_session_save (GnomeClient *client,
 		char *new_args[3];
 
 		g_free(panel_cfg_path);
-		panel_cfg_path = g_copy_strings("/panel-Session-",session_id,
+		panel_cfg_path = g_copy_strings("/panel.d/Session-",session_id,
 						"/",NULL);
 
 		new_args[0] = (char *) client_data;
@@ -281,14 +288,14 @@ panel_session_save (GnomeClient *client,
 					  &num);
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
-	buf = g_copy_strings(panel_cfg_path,"Config/",NULL);
+	buf = g_copy_strings(panel_cfg_path,"panel/Config/",NULL);
 	gnome_config_push_prefix (buf);
 	g_free(buf);
 
 	gnome_config_set_int ("applet_count", num-1);
 	num = 1;
 	/*DEBUG*/printf(" 3"); fflush(stdout);
-	g_list_foreach(panels, save_panel_configuration,&num);
+	g_list_foreach(panel_list, save_panel_configuration,&num);
 	/*DEBUG*/printf(" 4"); fflush(stdout);
 	gnome_config_set_int("panel_count",num-1);
 
@@ -340,7 +347,8 @@ panel_session_die (GnomeClient *client,
 	puts("1");
 	
 	/*don't catch these either*/
-	for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
+	for(i=0,info=(AppletInfo *)applets->data;
+	    i<applet_count;
 	    i++,info++) {
 		if(info->widget)
 		  gtk_signal_disconnect(GTK_OBJECT(info->widget),
@@ -349,7 +357,11 @@ panel_session_die (GnomeClient *client,
 	
 	puts("2");
 	
-	g_list_foreach(panels,destroy_widget_list,NULL);
+	while(panel_list) {
+		PanelData *pd = panel_list->data;
+		panel_list = g_list_remove_link(panel_list,panel_list);
+		gtk_widget_destroy(pd->panel);
+	}
 	
 	puts("3");
 	
@@ -464,7 +476,6 @@ panel_clean_applet(int applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	AppletType type;
-	PanelWidget *panel;
 
 	g_return_if_fail(info != NULL);
 
@@ -476,6 +487,7 @@ panel_clean_applet(int applet_id)
 	info->type = APPLET_EMPTY;
 
 	if(info->widget) {
+		PanelWidget *panel;
 		GtkWidget *w = info->widget;
 
 		info->widget = NULL;
@@ -491,13 +503,9 @@ panel_clean_applet(int applet_id)
 	}
 	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER && info->assoc) {
-		panels = g_list_remove(panels,info->assoc);
 		gtk_widget_destroy(info->assoc);
 		info->assoc=NULL;
 	}
-	if(type == APPLET_MENU && (!info->params ||
-				   strcmp(info->params,".")==0))
-		main_menu_count--;
 	info->assoc=NULL;
 	if(info->menu)
 		gtk_widget_unref(info->menu);
@@ -562,9 +570,10 @@ static void
 applet_menu_deactivate(GtkWidget *w, gpointer data)
 {
 	GtkWidget *applet = data;
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(applet),
-						 PANEL_APPLET_PARENT_KEY);
-	panel->autohide_inhibit = FALSE;
+	GtkWidget *panel = get_panel_parent(applet);
+	
+	if(IS_SNAPPED_WIDGET(panel))
+		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
 static AppletUserMenu *
@@ -653,19 +662,6 @@ applet_remove_callback(int applet_id, char *callback_name)
 	}
 }
 
-
-static AppletUserMenu *
-find_sub_menu(GList *user_menu, char *name)
-{
-	GList *list;
-	for(list=user_menu;list!=NULL;list=g_list_next(list)) {
-		AppletUserMenu *menu = list->data;
-		if(strcmp(menu->name,name)==0)
-			return menu;
-	}
-	return NULL;
-}
-
 static void
 add_to_submenus(int applet_id,
 		char *path,
@@ -716,7 +712,7 @@ add_to_submenus(int applet_id,
 	p++;
 	
 	t = g_copy_strings(path,n,"/",NULL);
-	s_menu = find_sub_menu(user_menu,t);
+	s_menu = applet_get_callback(user_menu,t);
 	/*the user did not give us this sub menu, whoops, will create an empty one then*/
 	if(!s_menu) {
 		AppletInfo *info = get_applet_info(applet_id);
@@ -788,6 +784,7 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 	int wx, wy;
 	AppletInfo *info = get_applet_info(PTOI(data));
 	PanelWidget *panel;
+	GtkWidget *w; /*the panel window widget*/
 
 	g_return_if_fail(info != NULL);
 	g_return_if_fail(info->widget != NULL);
@@ -796,34 +793,38 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 				    PANEL_APPLET_PARENT_KEY);
 
 	g_return_if_fail(panel != NULL);
+	
+	w = gtk_object_get_data(GTK_OBJECT(panel), PANEL_PARENT);
 
 	gdk_window_get_origin (info->widget->window, &wx, &wy);
 
-	switch(panel->snapped) {
-		case PANEL_DRAWER:
-		case PANEL_FREE:
-			if(panel->orient==PANEL_VERTICAL) {
-				*x = wx + info->widget->allocation.width;
-				*y = wy;
-				break;
-			}
-			/*fall through for horizontal*/
-		case PANEL_BOTTOM:
+	if(IS_DRAWER_WIDGET(w)) {
+		if(panel->orient==PANEL_VERTICAL) {
+			*x = wx + info->widget->allocation.width;
+			*y = wy;
+		} else {
+			*x = wx;
+			*y = wy - GTK_WIDGET (menu)->allocation.height;
+		}
+	} else if(IS_SNAPPED_WIDGET(w)) {
+		switch(SNAPPED_WIDGET(w)->pos) {
+		case SNAPPED_BOTTOM:
 			*x = wx;
 			*y = wy - GTK_WIDGET (menu)->allocation.height;
 			break;
-		case PANEL_TOP:
+		case SNAPPED_TOP:
 			*x = wx;
 			*y = wy + info->widget->allocation.height;
 			break;
-		case PANEL_LEFT:
+		case SNAPPED_LEFT:
 			*x = wx + info->widget->allocation.width;
 			*y = wy;
 			break;
-		case PANEL_RIGHT:
+		case SNAPPED_RIGHT:
 			*x = wx - GTK_WIDGET (menu)->allocation.width;
 			*y = wy;
 			break;
+		}
 	}
 
 	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
@@ -840,28 +841,26 @@ static void
 show_applet_menu(int applet_id, GdkEventButton *event)
 {
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *panel;
+	GtkWidget *panel;
 
 	g_return_if_fail(info!=NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = get_panel_parent(info->widget);
 
 	if (!info->menu)
 		create_applet_menu(info);
 
 	if((info->type == APPLET_DRAWER &&
-	    panel_widget_get_applet_count(PANEL_WIDGET(info->assoc))>0) ||
-	   (info->type == APPLET_MENU &&
-	    main_menu_count <= 1 &&
-	    (!info->params ||
-	     strcmp(info->params,".")==0)))
+	    panel_widget_get_applet_count(
+	      PANEL_WIDGET(DRAWER_WIDGET(info->assoc)->panel)) > 0))
 	   	gtk_widget_set_sensitive(info->remove_item,FALSE);
 	else
 	   	gtk_widget_set_sensitive(info->remove_item,TRUE);
 
-	panel->autohide_inhibit = TRUE;
-	panel_widget_queue_pop_down(panel);
+	if(IS_SNAPPED_WIDGET(panel)) {
+		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
+		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+	}
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       ITOP(applet_id), 0/*3*/, event->time);
 }
@@ -872,15 +871,7 @@ static int
 applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	if(event->button==3) {
-		AppletInfo *info = get_applet_info(PTOI(data));
-		PanelWidget *panel;
-
-		g_return_val_if_fail(info != NULL,-1);
-
-		panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					    PANEL_APPLET_PARENT_KEY);
-
-		if(!panel->currently_dragged_applet)
+		if(!panel_applet_in_drag)
 			show_applet_menu(PTOI(data), event);
 		return TRUE;
 	}
@@ -890,7 +881,7 @@ applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 static void
 panel_properties_callback(GtkWidget *widget, gpointer data)
 {
-	panel_config(PANEL_WIDGET(data));
+	panel_config(data);
 }
 
 static void
@@ -910,21 +901,22 @@ applet_show_menu(int applet_id)
 {
 	static GdkCursor *arrow = NULL;
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *panel;
+	GtkWidget *panel;
 
 	g_return_if_fail(info != NULL);
-
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
 
 	if (!info->menu)
 		create_applet_menu(info);
 
 	if(!arrow)
 		arrow = gdk_cursor_new(GDK_ARROW);
-	
-	panel->autohide_inhibit = TRUE;
-	panel_widget_queue_pop_down(panel);
+
+	panel = get_panel_parent(info->widget);
+	if(IS_SNAPPED_WIDGET(panel)) {
+		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
+		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+	}
+
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       ITOP(applet_id), 0/*3*/, time(NULL));
 	gtk_grab_add(info->menu);
@@ -1177,7 +1169,7 @@ applet_remove_from_panel(int applet_id)
 static int
 panel_add_main_menu(GtkWidget *w, gpointer data)
 {
-	PanelWidget *panel = data;
+	PanelWidget *panel = get_def_panel_widget(data);
 	int panel_num = find_panel(panel);
 
 	load_applet(MENU_ID,NULL,NULL,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
@@ -1188,7 +1180,7 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 
 
 GtkWidget *
-create_panel_root_menu(PanelWidget *panel)
+create_panel_root_menu(GtkWidget *panel)
 {
 	GtkWidget *menuitem;
 	GtkWidget *panel_menu;
@@ -1246,30 +1238,6 @@ applet_set_tooltip(int applet_id, const char *tooltip)
 
 	gtk_tooltips_set_tip (panel_tooltips,info->widget,tooltip,NULL);
 }
-
-#if 0
-static int
-panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
-{
-	/*FIXME use applet_id, pointers DO change*/
-	AppletInfo *info = data;
-	PanelWidget *panel;
-
-	g_return_if_fail(info != NULL);
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
-	g_return_if_fail(panel!=NULL);
-
-	gtk_widget_dnd_data_set (widget, event, &info->widget,
-				 sizeof(GtkWidget *));
-	/*gtk_widget_ref(info->widget);
-	panel_widget_remove(panel,info->widget);*/
-
-	return TRUE;
-}
-
-static char *applet_drag_types[]={"internal/applet-widget-pointer"};
-#endif
 
 static int
 applet_destroy(GtkWidget *w, gpointer data)
@@ -1349,12 +1317,12 @@ register_toy(GtkWidget *applet,
 
 
 	if(type == APPLET_DRAWER) {
+		PanelWidget *assoc_panel = PANEL_WIDGET(DRAWER_WIDGET(assoc)->panel);
+
 		gtk_object_set_data(GTK_OBJECT(eventbox),
-				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc);
-		PANEL_WIDGET(assoc)->master_widget = eventbox;
-	} else
-		gtk_object_set_data(GTK_OBJECT(eventbox),
-				    PANEL_APPLET_ASSOC_PANEL_KEY,NULL);
+				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc_panel);
+		assoc_panel->master_widget = eventbox;
+	}
 	gtk_object_set_data(GTK_OBJECT(eventbox),
 			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		

@@ -44,8 +44,11 @@ struct _AppletWidget
 	int			applet_id;
 
 	/* use these as prefixes when loading saving data */
-	char			*cfgpath;
-	char			*globcfgpath;
+	char			*cfgpath; /*source compatibility SHOULD BE REMOVED
+					    when session_save signal is removed*/
+	char			*globcfgpath; /*a file which applets can use for
+						global settings*/
+	char			*privcfgpath; /*applets own cfg path*/
 };
 
 struct _AppletWidgetClass
@@ -74,9 +77,15 @@ struct _AppletWidgetClass
 	  gnome_config_drop_all() after your done otherwise the changes
 	  might not be written to file, also make sure you return
 	  FALSE from this signal or your position wil not get saved!*/
+	int (* save_session) (AppletWidget *applet,
+			      char *cfgpath,
+			      char *globcfgpath);
+
+	/*old version of the signal ... about to be phased out,
+	  DO NOT USE THIS SIGNAL IN NEW APPLETS*/
 	int (* session_save) (AppletWidget *applet,
-			       char *cfgpath,
-			       char *globcfgpath);
+			      char *cfgpath,
+			      char *globcfgpath);
 };
 
 guint		applet_widget_get_type		(void);

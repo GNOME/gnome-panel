@@ -14,6 +14,9 @@
 #include <string.h>
 #include <gnome.h>
 #include "panel-widget.h"
+#include "snapped-widget.h"
+#include "drawer-widget.h"
+#include "panel-util.h"
 #include "panel.h"
 #include "main.h"
 #include "panel_config_global.h"
@@ -40,7 +43,6 @@ struct _FileInfo {
 	char *name;
 	time_t ctime;
 };
-
 
 /*the most important dialog in the whole application*/
 void
@@ -531,11 +533,10 @@ static void
 menu_deactivate(GtkWidget *w, gpointer data)
 {
 	Menu *menu = data;
-	PanelWidget *panel =
-		gtk_object_get_data(GTK_OBJECT(menu->button->parent),
-				    PANEL_APPLET_PARENT_KEY);
+	GtkWidget *panel = get_panel_parent(menu->button->parent);
 	/* allow the panel to hide again */
-	panel->autohide_inhibit = FALSE;
+	if(IS_SNAPPED_WIDGET(panel))
+		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
 static char *
@@ -816,9 +817,7 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	Menu *menu = data;
 	if(event->button==1) {
-		PanelWidget *panel =
-			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
-					    PANEL_APPLET_PARENT_KEY);
+		GtkWidget *panel = get_panel_parent(menu->button->parent);
 		GList *finfo = gtk_object_get_data(GTK_OBJECT(menu->menu),
 						   "finfo");
 		
@@ -857,8 +856,10 @@ menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 
 		/*so that the panel doesn't pop down until we're done with
 		  the menu */
-		panel->autohide_inhibit = TRUE;
-		panel_widget_queue_pop_down(panel);
+		if(IS_SNAPPED_WIDGET(panel)) {
+			SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
+			snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+		}
 
 		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
 			       data, event->button, event->time);
