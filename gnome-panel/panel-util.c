@@ -190,10 +190,11 @@ create_icon_entry(GtkWidget *table,
 	gtk_widget_show(wlabel);
 
 	entry = gnome_icon_entry_new(history_id,_("Browse"));
-	hack_icon_entry (GNOME_ICON_ENTRY (entry));
 	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry), subdir);
 	if (text)
 		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry),text);
+
+	hack_icon_entry (GNOME_ICON_ENTRY (entry));
 
 	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry));
 	gtk_table_attach(GTK_TABLE(table), entry,
