@@ -1735,11 +1735,15 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	if(ad)
 		pos = ad->pos;
 
+	if(pos<pw_applet_padding)
+		pos = pw_applet_padding;
+
 	if(pw_movement_type == PANEL_SWITCH_MOVE ||
 	   panel->packed) {
 		if(get_applet_list_pos(panel,pos)) 
-			pos++; /*this is a slight hack so that this applet is
-				 inserted AFTER an applet with this pos number*/
+			/*this is a slight hack so that this applet is
+			  inserted AFTER an applet with this pos number*/
+			pos++;
 	} else
 		pos = panel_widget_find_empty_pos(panel,pos);
 
@@ -1832,10 +1836,14 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
 	panel->no_window_applet_list =
 		g_list_remove(panel->no_window_applet_list,ad);
+	
+	if(pos<pw_applet_padding)
+		pos = pw_applet_padding;
 
 	if(get_applet_list_pos(panel,pos)) 
-		pos++; /*this is a slight hack so that this applet is
-			 inserted AFTER an applet with this pos number*/
+		/*this is a slight hack so that this applet is
+		  inserted AFTER an applet with this pos number*/
+		pos++;
 	if(pos==-1) return -1;
 
 	ad->pos = pos;
