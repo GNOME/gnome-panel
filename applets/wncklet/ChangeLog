@@ -1,3 +1,11 @@
+2002-05-21  Thomas Vander Stichele <thomas@apestaart.org>
+
+        * tasklist.c: 
+          - fixed minimum_size and maximum_size for vertical panels
+          - added code to do the logical thing when a panel's orientation 
+            gets changed
+          - use _size everywhere
+
 2002-05-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: generate .schemas from .schemas.in.
@@ -12,18 +20,18 @@
 	* pager.c (update_workspaces_model): remove call to
 	wnck_workspace_get which appears to have gone away.
 
-2002-05-13  Deepa Natarajan <deepa.natarajan@wipro.com>
-
-	* GNOME_ClockApplet.xml, GNOME_MailCheckApplet.xml
-	GNOME_PagerApplet.xml, GNOME_TasklistApplet.xml:
-	added mnemonics for the popup menu.
-
 2002-05-14  Anders Carlsson  <andersca@gnu.org>
 
 	* pager.c: (fill_pager_applet):
 	* tasklist.c: (fill_tasklist_applet):
 	Use wnck_screen_get_default () instead of wnck_screen_get (0).
 	
+2002-05-13  Deepa Natarajan <deepa.natarajan@wipro.com>
+
+	* GNOME_ClockApplet.xml, GNOME_MailCheckApplet.xml
+	GNOME_PagerApplet.xml, GNOME_TasklistApplet.xml:
+	added mnemonics for the popup menu.
+
 2002-05-13  Dennis Cranston <dennis_cranston@yahoo.com>
 	* mailcheck.c, clock.c:  "About..." dialog fixes -- change
 	the names to match that in the "Add to panel" menu.  Also,
@@ -32,19 +40,19 @@
 	* pager.c:  "About..." dialog fixes -- correct
 	grammar errors in the description field.(bug #80071)
 
+2002-05-11  Thomas Vander Stichele <thomas@apestaart.org>
+
+        * tasklist.c: implemented minimum_size and 
+	  maximum_size preferences
+          using GConf keys and updates to libwnck
+        * tasklist.glade: added configuration spinbuttons
+          for min/max size
+        * tasklist.schema: added GConf keys
+
 2002-05-06  Martin Hostettler <textshell@neutronstar.dyndns.org>
 
 	* pager.glade, pager.schema, pager.glade: Made rows in config
 	dialog change to cols in vertical orientation
-
-2002-05-11  Thomas Vander Stichele <thomas@apestaart.org>
-
-        * tasklist.c: implemented minimum_width and 
-	  maximum_width preferences
-          using GConf keys and updates to libwnck
-        * tasklist.glade: added configuration spinbuttons
-          for min/max width
-        * tasklist.schema: added GConf keys
 
 2002-04-25  Arvind Samptur <arvind.samptur@wipro.com>
 	* tasklist.c: (display_about_dialog) typo error in the 

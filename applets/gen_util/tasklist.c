@@ -95,6 +95,8 @@ applet_change_orient (PanelApplet       *applet,
 		      TasklistData      *tasklist)
 {
 	GtkOrientation new_orient;
+    	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
+	gint minimum_size = 0;
   
 	switch (orient)	{
 	case PANEL_APPLET_ORIENT_LEFT:
@@ -112,6 +114,21 @@ applet_change_orient (PanelApplet       *applet,
 		return;
   
 	tasklist->orientation = new_orient;
+	/* we need to unset minimum size on the wnck tasklist */
+	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
+	{
+	    	/* unset the minimum height and reset minimum width */
+	        minimum_size = wnck_tasklist_get_minimum_height (wncktl); 
+	        wnck_tasklist_set_minimum_height (wncktl, -1);
+	        wnck_tasklist_set_minimum_width (wncktl, minimum_size);
+	}
+	else
+	{
+	    	/* unset the minimum width and reset minimum height */
+	        minimum_size = wnck_tasklist_get_minimum_width (wncktl); 
+	        wnck_tasklist_set_minimum_width (wncktl, -1);
+	        wnck_tasklist_set_minimum_height (wncktl, minimum_size);
+	}
 
 	tasklist_update (tasklist);
 }
@@ -340,7 +357,10 @@ minimum_size_changed (GConfClient *client, guint cnxn_id,
 	value = gconf_value_get_int (entry->value);
 	
 	gtk_spin_button_set_value (button, value);
-	wnck_tasklist_set_minimum_width (wncktl, value);
+	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
+		wnck_tasklist_set_minimum_width (wncktl, value);
+	else
+		wnck_tasklist_set_minimum_height (wncktl, value);
 }
 
 /* GConf callback for changes in maximum_size */
@@ -417,14 +437,19 @@ applet_size_request (GtkWidget      *widget,
 	const int *size_hints;
 	GtkRequisition child_req;
 	int i;
-	int maximum_width;
+	int maximum_size;
 	int *new_size_hints;
 	int new_len = 0;
     	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
-	gint minimum_width = wnck_tasklist_get_minimum_width (wncktl);
+	gint minimum_size = 0;
 	
-	gtk_widget_get_child_requisition (tasklist->applet,
-					  &child_req);
+	
+	if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
+		minimum_size = wnck_tasklist_get_minimum_width (wncktl);
+	else
+		minimum_size = wnck_tasklist_get_minimum_height (wncktl);
+	
+	gtk_widget_get_child_requisition (tasklist->applet, &child_req);
 	
 	size_hints = wnck_tasklist_get_size_hint_list (wncktl, &len);
 	new_size_hints = g_new0 (int, len);
@@ -433,14 +458,14 @@ applet_size_request (GtkWidget      *widget,
 	 * where min(i) > max (i+1)
 	 * convert it to clipped values
 	 */
-	maximum_width = tasklist->maximum_size - minimum_width;
-	g_assert (maximum_width >= 0);
+	maximum_size = tasklist->maximum_size - minimum_size;
+	g_assert (maximum_size >= 0);
 
 	for (i = 0; i < len; i += 2) {
-		if (size_hints[i + 1] <= maximum_width) {
+		if (size_hints[i + 1] <= maximum_size) {
 		        /* this one should be stored */
-			if (size_hints[i] > maximum_width)
-			    	new_size_hints[new_len] = maximum_width;
+			if (size_hints[i] > maximum_size)
+			    	new_size_hints[new_len] = maximum_size;
 			else
 				new_size_hints[new_len] = size_hints[i];
 			new_size_hints[new_len + 1] = size_hints[i + 1];
@@ -520,9 +545,12 @@ fill_tasklist_applet(PanelApplet *applet)
 	error = NULL;
 	sizepref = panel_applet_gconf_get_int (applet, "minimum_size", 
 					       &error);
-        if (error == NULL) 
-		wnck_tasklist_set_minimum_width (WNCK_TASKLIST (tasklist->tasklist), 
-						 sizepref);	  
+        if (error == NULL) {
+		if (tasklist->orientation == GTK_ORIENTATION_HORIZONTAL)
+			wnck_tasklist_set_minimum_width (WNCK_TASKLIST (tasklist->tasklist), sizepref);	  
+		else
+			wnck_tasklist_set_minimum_height (WNCK_TASKLIST (tasklist->tasklist), sizepref);	  
+	}
 	else
 		g_error_free (error);
 
@@ -684,10 +712,10 @@ spin_minimum_size_changed (GtkSpinButton *button, TasklistData *tasklist)
 	GtkSpinButton *max_b = GTK_SPIN_BUTTON (tasklist->maximum_size_spin);
 	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
 	gint prop_value = gtk_spin_button_get_value (button);
-	gint max_width = gtk_spin_button_get_value (max_b);
+	gint max_size = gtk_spin_button_get_value (max_b);
 	
 	/* check if we exceed max width */
-	if (prop_value > max_width)
+	if (prop_value > max_size)
 	        panel_applet_gconf_set_int (applet, "maximum_size", 
 			                    prop_value, NULL);
 	panel_applet_gconf_set_int (applet, "minimum_size", prop_value, NULL);
@@ -703,10 +731,10 @@ spin_maximum_size_changed (GtkSpinButton *button, TasklistData *tasklist)
 	GtkSpinButton *min_b = GTK_SPIN_BUTTON (tasklist->minimum_size_spin);
 	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
 	gint prop_value = gtk_spin_button_get_value (button);
-	gint min_width = gtk_spin_button_get_value (min_b);
+	gint min_size = gtk_spin_button_get_value (min_b);
 
 	/* check if we drop below min width */
-	if (prop_value < min_width)
+	if (prop_value < min_size)
 		panel_applet_gconf_set_int (applet, "minimum_size", 
 					    prop_value, NULL);
 	panel_applet_gconf_set_int (applet, "maximum_size", prop_value, NULL);
