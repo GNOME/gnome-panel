@@ -559,15 +559,18 @@ panel_applet_expose (GtkWidget      *widget,
         if (GTK_WIDGET_HAS_FOCUS (widget)) {
 		gint focus_width, focus_pad;
 		gint x, y, width, height;
+		gint border_width;
 
 		gtk_widget_style_get (widget,
 				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
-		x = widget->allocation.x;
-		y = widget->allocation.y;
-		width = widget->allocation.width - (focus_width + focus_pad);
-		height = widget->allocation.height - (focus_width + focus_pad);
+		border_width = GTK_CONTAINER (widget)->border_width;
+
+		x = widget->allocation.x + focus_pad;
+		y = widget->allocation.y + focus_pad;
+		width = widget->allocation.width - 2 * border_width - 0.5 * focus_pad;
+		height = widget->allocation.height - 2 * border_width - 0.5 * focus_pad;
 		gtk_paint_focus (widget->style, widget->window,
                                  GTK_WIDGET_STATE (widget),
                                  &event->area, widget, "panel_applet",
