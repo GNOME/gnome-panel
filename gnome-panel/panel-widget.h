@@ -16,8 +16,6 @@ extern "C" {
 #define PANEL_CELL_SIZE 10
 #define PANEL_MINIMUM_WIDTH 48
 
-#define PANEL_MAX 1000 /*10,000 long screen, FIXME! make dynamic*/
-
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_DATA "panel_applet_data"
@@ -60,12 +58,6 @@ typedef enum {
 	PANEL_FREE_MOVE
 } PanelMovementType;
 
-struct _AppletRecord
-{
-	GtkWidget		*applet;
-	gint			cells;
-};
-
 struct _AppletData
 {
 	GtkWidget *applet;
@@ -80,7 +72,7 @@ struct _AppletData
 
 struct _DNDRecord
 {
-	AppletRecord		*applet;
+	AppletData		*ad;
 	GtkWidget		*parent;
 };
 
@@ -96,8 +88,6 @@ struct _PanelWidget
 	GtkWidget		*hidebutton_w;
 	GtkWidget		*hidebutton_s;
 
-	AppletRecord		applets[PANEL_MAX];
-	gint	 		applet_count;
 	GList			*applet_list;
 
 	gint			size;
