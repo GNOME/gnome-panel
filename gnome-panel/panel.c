@@ -1228,11 +1228,15 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		load_status_applet(panel, pos, TRUE);
 
 	} else if(strcmp(applet_type,"RUN:NEW")==0) {
+#ifdef FIXME
 		load_run_applet(panel, pos, TRUE);
+#endif
 
 	} else if (sscanf (applet_type, "RUN:%d", &applet_num) == 1) {
+#ifdef FIXME
 		load_run_applet(panel, pos, TRUE);
 		remove_applet = TRUE;
+#endif
 	}
 
 	if (remove_applet &&

@@ -268,7 +268,9 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			return GDK_FILTER_CONTINUE;
 		}
 
+#ifdef FIXME
 		show_run_dialog ();
+#endif
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == screenshot_keycode &&
 		   (state & USED_MODS) == screenshot_state) {

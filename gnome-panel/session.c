@@ -1118,7 +1118,9 @@ init_user_applets(void)
 			load_status_applet (panel, pos, TRUE);
 			
 		} else if (strcmp (applet_name, RUN_ID) == 0) {
+#ifdef FIXME
 			load_run_applet (panel, pos, TRUE);
+#endif
 
 		} else if (strcmp (applet_name, SWALLOW_ID) == 0) {
 			char *path = conditional_get_string ("execpath",

@@ -2264,7 +2264,9 @@ add_lock_to_panel (GtkWidget *widget, gpointer data)
 static void
 add_run_to_panel (GtkWidget *widget, gpointer data)
 {
+#ifdef FIXME
 	load_run_applet (get_panel_from_menu_data(widget, TRUE), 0, FALSE);
+#endif
 }
 
 static void
@@ -5323,7 +5325,9 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 static void
 run_cb (GtkWidget *w, gpointer data)
 {
+#ifdef FIXME
 	show_run_dialog ();
+#endif
 }
 
 static GtkWidget *
