@@ -1,3 +1,11 @@
+Wed Jul 07 02:06:10 1999  George Lebl  <jirka@5z.com>
+
+	* applet-widget.[ch]: fix reentrancy problem with get_orient and
+	  get_size, by just caching the value on the applet side
+
+	* Makefile.am: raise version of the libpanel_applet to 1.0.0 to
+	  avoid binary incompatibility (it has been 0.0.0 forever)
+
 Fri Jul 02 06:47:47 1999  George Lebl  <jirka@5z.com>
 
 	* applet.c: fix problems with applet submenus

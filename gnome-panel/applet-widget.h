@@ -52,6 +52,9 @@ struct _AppletWidget
 	
 	char			*privcfgpath;
 	char			*globcfgpath;
+	
+	PanelOrientType		orient;			
+	PanelSizeType		size;			
 
         gpointer                corbadat; /* CORBA stuff */
 };

@@ -109,6 +109,10 @@ static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
  *****************************************************************************/
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);
+static void change_orient		(AppletWidget *applet,
+					 GNOME_Panel_OrientType orient);
+static void change_size			(AppletWidget *applet,
+		      			 GNOME_Panel_SizeType size);
 
 
 typedef int (*SaveSignal) (GtkObject * object,
@@ -237,7 +241,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 
 	applet_widget_signals[CHANGE_ORIENT_SIGNAL] =
 		gtk_signal_new("change_orient",
-			       GTK_RUN_LAST,
+			       GTK_RUN_FIRST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 change_orient),
@@ -247,7 +251,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_TYPE_ENUM);
 	applet_widget_signals[CHANGE_SIZE_SIGNAL] =
 		gtk_signal_new("change_size",
-			       GTK_RUN_LAST,
+			       GTK_RUN_FIRST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 change_size),
@@ -303,8 +307,8 @@ applet_widget_class_init (AppletWidgetClass *class)
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
 
-	class->change_orient = NULL;
-	class->change_size = NULL;
+	class->change_orient = change_orient;
+	class->change_size = change_size;
 	class->save_session = NULL;
 	class->back_change = NULL;
 	class->tooltip_state = NULL;
@@ -381,6 +385,24 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
 	if(die_on_last && applet_count == 0)
 		applet_widget_gtk_main_quit();
+}
+
+static void
+change_orient(AppletWidget *applet, GNOME_Panel_OrientType orient)
+{
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
+	applet->orient = orient;
+}
+
+static void
+change_size(AppletWidget *applet, GNOME_Panel_SizeType size)
+{
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
+	applet->size = size;
 }
 
 void
@@ -856,30 +878,20 @@ applet_widget_set_tooltip(AppletWidget *applet, char *text)
 GNOME_Panel_OrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
-	CORBA_Environment ev;
-	GNOME_Panel_OrientType r;
 	g_return_val_if_fail(applet != NULL,ORIENT_UP);
 	g_return_val_if_fail(IS_APPLET_WIDGET(applet), ORIENT_UP);
-	
-	CORBA_exception_init(&ev);
-	r = GNOME_PanelSpot__get_parent_orient(CD(applet)->pspot, &ev);
-	CORBA_exception_free(&ev);
-	return r;
+
+	return applet->orient;
 }
 
 /* Get the size the applet should use */
 GNOME_Panel_SizeType
 applet_widget_get_panel_size(AppletWidget *applet)
 {
-	CORBA_Environment ev;
-	GNOME_Panel_SizeType r;
 	g_return_val_if_fail(applet != NULL,SIZE_STANDARD);
 	g_return_val_if_fail(IS_APPLET_WIDGET(applet), SIZE_STANDARD);
-	
-	CORBA_exception_init(&ev);
-	r = GNOME_PanelSpot__get_parent_size(CD(applet)->pspot, &ev);
-	CORBA_exception_free(&ev);
-	return r;
+
+	return applet->size;
 }
 
 /* Get the free space for the applet if it's on an edge panel or 0
