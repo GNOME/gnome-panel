@@ -328,8 +328,19 @@ mailcheck_load_animation (MailCheck *mc, char *fname)
 	pbwidth = gdk_pixbuf_get_width(pb);
 	pbheight = gdk_pixbuf_get_height(pb);
 
-	height = mc->size;
-	width = pbwidth*((double)height/pbheight);
+	if(pbheight != mc->size) {
+		GdkPixbuf *pbt;
+		height = mc->size;
+		width = pbwidth*((double)height/pbheight);
+
+		pbt = gdk_pixbuf_scale_simple(pb, width, height,
+					      GDK_INTERP_NEAREST);
+		gdk_pixbuf_unref(pb);
+		pb = pbt;
+	} else {
+		width = pbwidth;
+		height = pbheight;
+	}
 
 	/* yeah, they have to be square, in case you were wondering :-) */
 	mc->frames = width / height;
@@ -338,7 +349,6 @@ mailcheck_load_animation (MailCheck *mc, char *fname)
 	else if (mc->frames == 3)
 		mc->report_mail_mode = REPORT_MAIL_USE_BITMAP;
 	mc->nframe = 0;
-
 
 	gdk_pixbuf_render_pixmap_and_mask(pb,
 					  &mc->email_pixmap,
