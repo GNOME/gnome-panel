@@ -681,16 +681,15 @@ msgstr "Pasta remota para obtenção do correio"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
-msgstr ""
+msgstr "Remove servidor para conectar para baixar o correio"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
 msgstr "Executar esse comando antes de verificar o correio"
 
 #: applets/gen_util/mailcheck.schemas.in.h:18
-#, fuzzy
 msgid "The mail server"
-msgstr "Servidor de correio:"
+msgstr "O Servidor de Correio"
 
 #: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
@@ -702,7 +701,7 @@ msgstr "A senha do usuário para o servidor remoto"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr "É assim que nós verficamos o correio, verficamos o correio, verficamos o correio..."
+msgstr "É assim que verificamos o correio, verificamos o correio, verificamos o correio..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
@@ -727,14 +726,12 @@ msgid "We run this command when the user clicks on the applet"
 msgstr "Executamos esse comando quando o usuário clica no mini aplicativo"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when the applet is clicked"
-msgstr "Comando a executar quando o mini aplicativo é clicado"
+msgstr "Se o estado do correio deve ser reiniciado quando o mini aplicativo for clicado"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
-#, fuzzy
 msgid "You've got mail!"
-msgstr "Há mensagens."
+msgstr "Há mensagens!"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -807,9 +804,8 @@ msgid "Show workspace _names in the switcher"
 msgstr "Mostrar os _nomes das áreas de trabalho no alternador"
 
 #: applets/gen_util/pager.glade.h:6
-#, fuzzy
 msgid "Workspace Names"
-msgstr "Áreas de Trabalho"
+msgstr "Nomes das Áreas de Trabalho"
 
 # SUN CHANGED MESSAGE
 #: applets/gen_util/pager.glade.h:8
@@ -846,6 +842,8 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the pager shows the "
 "workspaces in."
 msgstr ""
+"Quando mostrando todas as áreas de trabalho, isso determina em quantas\n"
+"linhas (no layout horizontal) ou colunas (no layout vertical) o paginador mostra as áreas de trabalho."
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
@@ -980,7 +978,6 @@ msgid "_Never group windows"
 msgstr "_Nunca agrupar janelas"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
@@ -992,13 +989,13 @@ msgstr ""
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr ""
+msgstr "Se isso for verdadeiro, a lista de tarefas irá mostrar janelas de todas as áreas de trabalho, se não ela irá mostrar as janelas da área de trabalho atual apenas."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
-msgstr ""
+msgstr "Se verdadeiro, então quando uma janela for desminimizada será trazida para a área de trabalho atual. Se não a área de trabalho será trocada para a da janela."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
@@ -1021,14 +1018,14 @@ msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
-msgstr ""
+msgstr "A lista de tarefas precisa de uma largura mínima para ter utilidade. Esse valor é a largura mínima que o mini aplicativo pede. Isso é útil para painéis deslizantes e de canto, que iriam pedir uma largura muito pequena caso contrário."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
-msgstr ""
+msgstr "Esse é o valor da largura máxima que o mini aplicativo irá pedir. Isso é útil para limitar o tamanho usado em painéis grandes onde o mini aplicativo iria preencher todo o espaço disponível, como em painéis de canto."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1207,11 +1204,11 @@ msgstr "Localizar arquivos, pastas e documentos no computador"
 
 #: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3617
 msgid "Take a Screen Shot..."
-msgstr "Capturar a tela..."
+msgstr "Capturar Imagem da Tela..."
 
 #: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3620
 msgid "Take a screen shot of your desktop"
-msgstr "Capturar tela do seu desktop"
+msgstr "Capturar imagem da tela do seu desktop"
 
 #: gnome-panel/foobar-widget.c:206
 msgid "Lock Display"
@@ -2212,7 +2209,7 @@ msgstr "Tela atual:"
 
 #: gnome-panel/panel-config.c:708
 msgid "Indicates the panel position and orientation on screen"
-msgstr ""
+msgstr "Indica a posição e orientação do painel na tela"
 
 #: gnome-panel/panel-config.c:726
 msgid "Panel Position"
@@ -2350,15 +2347,15 @@ msgstr "Fundo"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
 msgid "Display \"Run\" dialog"
-msgstr ""
+msgstr "Mostrar o diálogo \"Executar\""
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr "FIXME - isso é resolvido com as novas coisas de menu?"
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr "FIXME - é necessário definir limites"
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
@@ -2369,21 +2366,20 @@ msgid "Take a screen shot"
 msgstr "Capturar tela"
 
 #: gnome-panel/panel-global-config.schemas.in.h:6
-#, fuzzy
 msgid "Take a screen shot of a window"
-msgstr "Salvar tela capturada para área de _trabalho"
+msgstr "Capturar imagem de uma janela"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
 msgid "Enable the program listing in the run box"
-msgstr ""
+msgstr "Habilitar a listagem de programas na caixa executar"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
-msgstr ""
+msgstr "Mostra a listagem de programas por padrão quando abrir a caixa Executar"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
-msgstr ""
+msgstr "Mostra a listagem de programas na caixa Executar"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
