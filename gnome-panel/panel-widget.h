@@ -80,6 +80,8 @@ struct _PanelWidget
 	char                    *back_pixmap;
 	GdkColor		back_color;
 	gboolean		inhibit_draw;
+
+	gboolean		no_padding_on_ends;
 	
 	GtkWidget		*master_widget;
 	
@@ -130,6 +132,7 @@ GtkWidget *	panel_widget_new		(gboolean packed,
 						 gboolean fit_pixmap_bg,
 						 gboolean strech_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
+						 gboolean no_padding_on_ends,
 						 GdkColor *back_color);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
@@ -182,6 +185,7 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 gboolean fit_pixmap_bg,
 						 gboolean strech_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
+						 gboolean no_padding_on_ends,
 						 GdkColor *back_color);
 
 /* changing parameters (orient only) */

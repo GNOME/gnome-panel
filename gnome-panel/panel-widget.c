@@ -490,10 +490,12 @@ allocate_dirty_child(gpointer data)
 	if(panel->orient == PANEL_HORIZONTAL) {
 		ad->cells = chreq.width + pw_applet_padding;
 		challoc.x = ad->pos;
-		challoc.y = (GTK_WIDGET(panel)->allocation.height - chreq.height) / 2;
+		challoc.y = (GTK_WIDGET(panel)->allocation.height -
+			     chreq.height) / 2;
 	} else {
 		ad->cells = chreq.height + pw_applet_padding;
-		challoc.x = (GTK_WIDGET(panel)->allocation.width - chreq.width) / 2;
+		challoc.x = (GTK_WIDGET(panel)->allocation.width -
+			     chreq.width) / 2;
 		challoc.y = ad->pos;
 	}
 	challoc.width = chreq.width;
@@ -630,16 +632,18 @@ panel_widget_switch_move(PanelWidget *panel, AppletData *ad, int moveby)
 
 	if(finalpos >= panel->size)
 		finalpos = panel->size-1;
-	else if(finalpos < pw_applet_padding)
+	if(finalpos < 0)
+		finalpos = 0;
+	if(!panel->no_padding_on_ends && finalpos < pw_applet_padding)
 		finalpos = pw_applet_padding;
 
-	while((ad->pos+ad->cells-1)<finalpos) {
-		pos = panel_widget_get_right_switch_pos(panel,list);
+	while((ad->pos + ad->cells - 1) < finalpos) {
+		pos = panel_widget_get_right_switch_pos(panel, list);
 		if(pos > finalpos || pos+ad->cells-1 >= panel->size)
 			return;
 		panel_widget_switch_applet_right(panel,list);
 	}
-	while(ad->pos>finalpos) {
+	while(ad->pos > finalpos) {
 		if((panel_widget_get_left_switch_pos(panel,list)+ad->cells-1) < 
 		   finalpos)
 			return;
@@ -694,7 +698,7 @@ push_applet_left(PanelWidget *panel, GList *list)
 	if (list) {
 		ad = list->data;
 
-		if(ad->pos <= pw_applet_padding)
+		if(ad->pos <= (panel->no_padding_on_ends?0:pw_applet_padding))
 			return FALSE;
 
 		if(list->prev)
@@ -737,15 +741,17 @@ panel_widget_push_move(PanelWidget *panel, AppletData *ad, int moveby)
 
 	if(finalpos >= panel->size)
 		finalpos = panel->size-1;
-	else if(finalpos < pw_applet_padding)
+	if(finalpos < 0)
+		finalpos = 0;
+	if(!panel->no_padding_on_ends && finalpos < pw_applet_padding)
 		finalpos = pw_applet_padding;
 
-	while((ad->pos+ad->cells-1)<finalpos) {
-		if(!push_applet_right(panel,list))
+	while((ad->pos + ad->cells - 1) < finalpos) {
+		if(!push_applet_right(panel, list))
 			return;
 	}
-	while(ad->pos>finalpos) {
-		if(!push_applet_left(panel,list))
+	while(ad->pos > finalpos) {
+		if(!push_applet_left(panel, list))
 			return;
 	}
 }
@@ -836,6 +842,12 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 			requisition->width = panel->size;
 		} else {
 			requisition->height = panel->size;
+		}
+	} else if(/*panel->packed &&*/ panel->no_padding_on_ends) {
+		if(panel->orient == PANEL_HORIZONTAL) {
+			requisition->width -= pw_applet_padding*2;
+		} else {
+			requisition->height -= pw_applet_padding*2;
 		}
 	}
 	requisition->width = CLAMP (requisition->width, 12, gdk_screen_width ());
@@ -1184,6 +1196,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	int old_size;
 	int old_thick;
 	GtkAllocation old_alloc;
+	int side_padding;
 
 	g_return_if_fail(widget!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(widget));
@@ -1228,8 +1241,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	if(old_size<panel->size)
 		panel_widget_right_stick(panel,old_size);
 
+	if(panel->no_padding_on_ends)
+		side_padding = 0;
+	else
+		side_padding = pw_applet_padding;
+
 	if(panel->packed) {
-		i = pw_applet_padding;
+		i = side_padding;
 		for(list = panel->applet_list;
 		    list!=NULL;
 		    list = g_list_next(list)) {
@@ -1276,8 +1294,8 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			}
 			i = ad->pos;
 		}
-		if(i<pw_applet_padding) {
-			i = pw_applet_padding;
+		if(i<side_padding) {
+			i = side_padding;
 			for(list = panel->applet_list;
 			    list!=NULL;
 			    list = g_list_next(list)) {
@@ -1720,7 +1738,7 @@ panel_widget_init (PanelWidget *panel)
 }
 
 GtkWidget *
-panel_widget_new (int packed,
+panel_widget_new (gboolean packed,
 		  PanelOrientation orient,
 		  int sz,
 		  PanelBackType back_type,
@@ -1728,6 +1746,7 @@ panel_widget_new (int packed,
 		  gboolean fit_pixmap_bg,
 		  gboolean strech_pixmap_bg,
 		  gboolean rotate_pixmap_bg,
+		  gboolean no_padding_on_ends,
 		  GdkColor *back_color)
 {
 	PanelWidget *panel;
@@ -1746,6 +1765,7 @@ panel_widget_new (int packed,
 	panel->strech_pixmap_bg = strech_pixmap_bg;
 	panel->rotate_pixmap_bg = rotate_pixmap_bg;
 	panel->back_pixmap = g_strdup (back_pixmap ? back_pixmap : "");
+	panel->no_padding_on_ends = no_padding_on_ends;
 	
 	if(back_color)
 		panel->back_color = *back_color;
@@ -1899,17 +1919,22 @@ panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
 	GList *li;
 	AppletData *ad;
 
-	g_return_val_if_fail(panel!=NULL,0);
-	g_return_val_if_fail(IS_PANEL_WIDGET(panel),0);
-	g_return_val_if_fail(applet!=NULL,0);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet),0);
+	g_return_val_if_fail(panel!=NULL, 0);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel), 0);
+	g_return_val_if_fail(applet!=NULL, 0);
+	g_return_val_if_fail(GTK_IS_WIDGET(applet), 0);
 	
 	/*this function doesn't make sense on packed panels*/
 	if(panel->packed)
 		return 0;
 	
-	right = pw_applet_padding;
-	left = panel->size-pw_applet_padding;
+	if(panel->no_padding_on_ends) {
+		right = 0;
+		left = panel->size;
+	} else {
+		right = pw_applet_padding;
+		left = panel->size - pw_applet_padding;
+	}
 	
 	for(li = panel->applet_list; li; li = g_list_next(li)) {
 		ad = li->data;
@@ -1922,14 +1947,14 @@ panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
 	
 	if(li->prev) {
 		AppletData *pad = li->prev->data;
-		left = pad->pos+pad->cells+pw_applet_padding;
+		left = pad->pos+pad->cells + pw_applet_padding;
 	}
 	if(li->next) {
 		AppletData *nad = li->next->data;
-		right = nad->pos-pw_applet_padding;
+		right = nad->pos - pw_applet_padding;
 	}
 	
-	return right-left;
+	return right - left;
 }
 
 /*calculates the value to move the applet by*/
@@ -1988,6 +2013,7 @@ panel_widget_get_free_spot(PanelWidget *panel, AppletData *ad)
 	int start;
 	int right=-1,left=-1;
 	GList *list;
+	int side_padding;
 
 	g_return_val_if_fail(panel!=NULL,-1);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),-1);
@@ -2012,9 +2038,14 @@ panel_widget_get_free_spot(PanelWidget *panel, AppletData *ad)
 
 	list = panel->applet_list;
 
+	if(panel->no_padding_on_ends)
+		side_padding = 0;
+	else
+		side_padding = pw_applet_padding;
+
 	start = place-(ad->cells/2);
-	if(start<pw_applet_padding)
-		start = pw_applet_padding;
+	if(start < side_padding)
+		start = side_padding;
 	for(e=0,i=start;i<panel->size;i++) {
 		GtkWidget *applet;
 		list = walk_up_to(i,list);
@@ -2394,7 +2425,9 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 		}
 	}
 
-	for(i=pos;i>=pw_applet_padding;i--) {
+	for(i = pos;
+	    i >= (panel->no_padding_on_ends?0:pw_applet_padding);
+	    i--) {
 		list = walk_up_to(i,list);
 		if(!is_in_applet(i,list->data)) {
 			left = i;
@@ -2440,7 +2473,9 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, gboolean 
 	if(ad)
 		pos = ad->pos;
 
-	if(pos<pw_applet_padding)
+	if(pos < 0)
+		pos = 0;
+	if(!panel->no_padding_on_ends && pos < pw_applet_padding)
 		pos = pw_applet_padding;
 	
 	if(!insert_at_pos) {
@@ -2562,7 +2597,9 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	panel->no_window_applet_list =
 		g_list_remove(panel->no_window_applet_list,ad);
 	
-	if(pos<pw_applet_padding)
+	if(pos < 0)
+		pos = 0;
+	if(!panel->no_padding_on_ends && pos < pw_applet_padding)
 		pos = pw_applet_padding;
 
 	if(get_applet_list_pos(panel,pos)) 
@@ -2618,6 +2655,7 @@ panel_widget_change_params(PanelWidget *panel,
 			   gboolean fit_pixmap_bg,
 			   gboolean strech_pixmap_bg,
 			   gboolean rotate_pixmap_bg,
+			   gboolean no_padding_on_ends,
 			   GdkColor *back_color)
 {
 	PanelOrientation oldorient;
@@ -2695,6 +2733,9 @@ panel_widget_change_params(PanelWidget *panel,
 				panel->back_pixmap,
 				&panel->back_color);
 	}
+
+	panel->no_padding_on_ends = no_padding_on_ends;
+
 	/* inhibit draws until we resize */
 	panel->inhibit_draw = TRUE;
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
@@ -2712,6 +2753,7 @@ panel_widget_change_orient(PanelWidget *panel,
 				   panel->fit_pixmap_bg,
 				   panel->strech_pixmap_bg,
 				   panel->rotate_pixmap_bg,
+				   panel->no_padding_on_ends,
 				   &panel->back_color);
 }
 

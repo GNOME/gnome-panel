@@ -1,3 +1,19 @@
+Wed Feb 09 18:09:20 2000  George Lebl <jirka@5z.com>
+
+	* button-widget.c: the event window is now made on the basep of
+	  the panel and spans the entire width of the panel.  This means that
+	  clicks along the edge will work just fine on the icons even if
+	  there is a frame or the panel is enlarged by some other applet.
+	  if the applet is on the absolute beginning or the end of the panel
+	  then the thing also expands to the edge of the inner frame.
+
+	* button-widget.[ch],launcher.c: do the dnd highlighting in the
+	  button widget xlib draw function because the gtk_drag_highlight
+	  won't handle our pixmap cache right.
+
+	* panel-widget.[ch],basep-widget.c: when the applet has no
+	  hidebuttons then don't pad applets on the ends
+
 Wed Feb 09 02:06:20 2000  George Lebl <jirka@5z.com>
 
 	* gnome-panel-properties.c: the autoraise is no longer a non-gnome-wm

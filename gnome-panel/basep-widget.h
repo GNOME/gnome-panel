@@ -65,11 +65,11 @@ struct _BasePWidget
 	BasePMode               mode;
 	BasePState              state;
 
-	int			hidebuttons_enabled;
-	int			hidebutton_pixmaps_enabled;
+	gboolean		hidebuttons_enabled;
+	gboolean		hidebutton_pixmaps_enabled;
 
 	int                     leave_notify_timer_tag;
-	int                     autohide_inhibit;
+	gboolean                autohide_inhibit;
 	int                     drawers_open;
 
 	gboolean                request_cube;
@@ -159,14 +159,14 @@ struct _BasePPosClass {
 GtkType         basep_pos_get_type              (void);
 GtkType		basep_widget_get_type		(void);
 GtkWidget*	basep_widget_construct		(BasePWidget *basep,
-						 int packed,
-						 int reverse_arrows,
+						 gboolean packed,
+						 gboolean reverse_arrows,
 						 PanelOrientation orient,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 int hidebuttons_enabled,
-						 int hidebutton_pixmaps_enabled,
+						 gboolean hidebuttons_enabled,
+						 gboolean hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 gboolean fit_pixmap_bg,
@@ -180,8 +180,8 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 int hidebuttons_enabled,
-						 int hidebutton_pixmaps_enabled,
+						 gboolean hidebuttons_enabled,
+						 gboolean hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 gboolean fit_pixmap_bg,

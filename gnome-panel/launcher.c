@@ -173,34 +173,13 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context)
 	return TRUE;
 }
 
-static void
-do_highlight (GtkWidget *widget, gboolean highlight)
-{
-	gboolean have_drag;
-	have_drag = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (widget),
-							 "have-drag"));
-	if(highlight) {
-		if(!have_drag) {
-			gtk_object_set_data (GTK_OBJECT (widget), "have-drag",
-					     GINT_TO_POINTER (TRUE));
-			gtk_drag_highlight (widget);
-		}
-	} else {
-		if(have_drag) {
-			gtk_object_remove_data (GTK_OBJECT (widget),
-						"have-drag");
-			gtk_drag_unhighlight (widget);
-		}
-	}
-}
-
 static void  
 drag_leave_cb(GtkWidget	       *widget,
 	      GdkDragContext   *context,
 	      guint             time,
 	      Launcher *launcher)
 {
-	do_highlight(widget, FALSE);
+	button_widget_set_dnd_highlight(BUTTON_WIDGET(widget), FALSE);
 }
 
 
@@ -217,7 +196,7 @@ drag_motion_cb(GtkWidget *widget,
 	if(!is_this_drop_ok(widget, context))
 		return FALSE;
 
-	do_highlight (widget, TRUE);
+	button_widget_set_dnd_highlight(BUTTON_WIDGET(widget), TRUE);
 
 	return TRUE;
 }

@@ -45,6 +45,7 @@ struct _ButtonWidget
 	
 	guint			tile:2; /*the tile number, only used if tiles are on*/
 	guint			arrow:1; /*0 no arrow, 1 simple arrow, more to do*/
+	guint			dnd_highlight:1;
 	
 	PanelOrientType		orient;
 
@@ -87,6 +88,9 @@ void		button_widget_set_params	(ButtonWidget *button,
 						 guint tile,
 						 guint arrow,
 						 PanelOrientType orient);
+
+void		button_widget_set_dnd_highlight	(ButtonWidget *button,
+						 gboolean highlight);
 
 void		button_widget_clicked		(ButtonWidget *button);
 void		button_widget_down		(ButtonWidget *button);

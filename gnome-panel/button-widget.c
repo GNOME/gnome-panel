@@ -7,6 +7,7 @@
 #include <libart_lgpl/art_rgb_pixbuf_affine.h>
 #include "button-widget.h"
 #include "panel-widget.h"
+#include "basep-widget.h"
 #include "panel-types.h"
 #include "panel_config_global.h"
 #include "rgb-stuff.h"
@@ -166,24 +167,102 @@ setup_no_alpha(ButtonWidget *button)
 }
 
 static void
+translate_to(GtkWidget *from, GtkWidget *to, int *x, int *y)
+{
+	while (from != to) {
+		if(!GTK_WIDGET_NO_WINDOW(from)) {
+			*x += from->allocation.x;
+			*y += from->allocation.y;
+		}
+		from = from->parent;
+	}
+}
+
+static GtkWidget *
+get_frame(BasePWidget *basep)
+{
+	if (GTK_WIDGET_VISIBLE (basep->frame)) {
+		return basep->frame;
+	} else {
+		return basep->innerebox;
+	}
+}
+
+static void
+calculate_overlay_geometry(PanelWidget *panel, GtkWidget *basep,
+			   GtkWidget *applet,
+			   int *x, int *y, int *w, int *h)
+{
+	*x = applet->allocation.x;
+	*y = applet->allocation.y;
+	*w = applet->allocation.width;
+	*h = applet->allocation.height;
+
+	translate_to(GTK_WIDGET(panel), basep, x, y);
+
+	if(panel->orient == PANEL_HORIZONTAL) {
+		*y = 0;
+		/* we use the requisition, since allocation might have not
+		   yet happened if we are inside the allocation, anyway
+		   they are the same for basep */
+		*h = basep->requisition.height;
+
+		/* if on the edge (only if padding is 0)
+		   then make the thing flush with the innerebox or frame
+		   of the basep */
+		if(applet->allocation.x == 0) {
+			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			*w += (*x - frame->allocation.x);
+			*x = frame->allocation.x;
+		} else if(applet->allocation.x + *w == panel->size) {
+			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			*w = frame->allocation.width - *x;
+		}
+	} else {
+		*x = 0;
+		*w = basep->requisition.width;
+
+		/* if on the edge (only if padding is 0)
+		   then make the thing flush with the innerbox of frame
+		   of the basep */
+		if(applet->allocation.y == 0) {
+			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			*h += (*y - frame->allocation.y);
+			*y = frame->allocation.y;
+		} else if(applet->allocation.y + *h == panel->size) {
+			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			*h = frame->allocation.height - *y;
+		}
+	}
+}
+
+static void
 button_widget_realize(GtkWidget *widget)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
 	ButtonWidget *button_widget;
+	PanelWidget *panel;
+	GtkWidget *basep;
+	int x,y,w,h;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+	panel = PANEL_WIDGET(widget->parent);
+	basep = panel->panel_parent;
+
+	calculate_overlay_geometry(panel, basep, widget, &x, &y, &w, &h);
 
 	button_widget = BUTTON_WIDGET (widget);
 
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
 	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = widget->allocation.x;
-	attributes.y = widget->allocation.y;
-	attributes.width = widget->allocation.width;
-	attributes.height = widget->allocation.height;
+	attributes.x = x;
+	attributes.y = y;
+	attributes.width = w;
+	attributes.height = h;
 	attributes.wclass = GDK_INPUT_ONLY;
 	attributes.event_mask = (GDK_BUTTON_PRESS_MASK |
 				 GDK_BUTTON_RELEASE_MASK |
@@ -197,8 +276,9 @@ button_widget_realize(GtkWidget *widget)
 	widget->window = gtk_widget_get_parent_window(widget);
 	gdk_window_ref(widget->window);
       
-	button_widget->event_window = gdk_window_new (gtk_widget_get_parent_window (widget),
-						      &attributes, attributes_mask);
+	button_widget->event_window = gdk_window_new (basep->window,
+						      &attributes,
+						      attributes_mask);
 	gdk_window_set_user_data (button_widget->event_window, widget);
 
 	widget->style = gtk_style_attach (widget->style, widget->window);
@@ -377,11 +457,29 @@ draw_arrow(GdkPoint *points, PanelOrientType orient, int size)
 	}
 }
 
+void
+button_widget_set_dnd_highlight(ButtonWidget *button, gboolean highlight)
+{
+	g_return_if_fail (button != NULL);
+	g_return_if_fail (IS_BUTTON_WIDGET (button));
+
+	if(button->dnd_highlight != highlight) {
+		button->dnd_highlight = highlight;
+		if(button->cache)
+			gdk_pixmap_unref(button->cache);
+		button->cache = NULL;
+
+		panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
+				       button);
+	}
+}
+
 static void
 button_widget_real_draw(GtkWidget *widget, GdkRectangle *area)
 {
 	if(widget->parent && IS_PANEL_WIDGET(widget->parent))
 		panel_widget_draw_icon(PANEL_WIDGET(widget->parent), BUTTON_WIDGET(widget));
+
 }
 
 void
@@ -469,7 +567,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	}
 }
 
-/* draw the xlib part (arrow/text) */
+/* draw the xlib part (arrow/text/dndhighlight) */
 void
 button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 {
@@ -546,6 +644,14 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 		gdk_gc_set_foreground(gc,&pwidget->style->black);
 		gdk_draw_polygon(pixmap,gc,FALSE,points,3);
 	}
+
+	if (button->dnd_highlight) {
+		gdk_gc_set_foreground(gc, &widget->style->black);
+		gdk_draw_rectangle(pixmap, gc, FALSE,
+				   0, 0,
+				   widget->allocation.width - 1,
+				   widget->allocation.height - 1);
+	}
 	
 	gdk_gc_destroy(gc);
 }
@@ -556,6 +662,7 @@ button_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 	PanelWidget *panel = PANEL_WIDGET(widget->parent);
 	requisition->width = requisition->height = panel->sz;
 }
+
 static void
 button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -567,10 +674,19 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	button_widget = BUTTON_WIDGET (widget);
 
 	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget))
+	if (GTK_WIDGET_REALIZED (widget)) {
+		PanelWidget *panel;
+		GtkWidget *basep;
+		int x,y,w,h;
+
+		panel = PANEL_WIDGET(widget->parent);
+		basep = panel->panel_parent;
+
+		calculate_overlay_geometry(panel, basep, widget,
+					   &x, &y, &w, &h);
 		gdk_window_move_resize (button_widget->event_window,
-					allocation->x, allocation->y,
-					allocation->width, allocation->height);
+					x, y, w, h);
+	}
 }
 
 
@@ -592,6 +708,7 @@ button_widget_init (ButtonWidget *button)
 	button->pressed = FALSE;
 	button->in_button = FALSE;
 	button->ignore_leave = FALSE;
+	button->dnd_highlight = FALSE;
 	
 	button->pressed_timeout = 0;
 	
