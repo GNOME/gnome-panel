@@ -965,10 +965,10 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 							 TRUE,
 						         _("Cannot create launcher"),
 						         _("You have to specify a name."));
-			g_signal_connect_swapped (G_OBJECT (err_dialog),
+			g_signal_connect_swapped (G_OBJECT (dialog),
 						  "destroy",
-						   G_CALLBACK (panel_pop_window_busy),
-						   G_OBJECT (dialog));
+						   G_CALLBACK (gtk_widget_destroy),
+						   G_OBJECT (err_dialog));
 			return;
 		}
 		
@@ -983,10 +983,10 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 							 TRUE,
 							 _("Cannot create launcher"),
 							 _("You have to specify a valid URL or command."));
-			g_signal_connect_swapped (G_OBJECT (err_dialog),
+			g_signal_connect_swapped (G_OBJECT (dialog),
 						  "destroy",
-						  G_CALLBACK (panel_pop_window_busy),
-						  G_OBJECT (dialog));
+						  G_CALLBACK (gtk_widget_destroy),
+						  G_OBJECT (err_dialog));
 			return;
 		}
 

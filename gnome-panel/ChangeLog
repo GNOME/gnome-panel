@@ -1,5 +1,12 @@
 2005-01-10  Vincent Untz  <vincent@vuntz.net>
 
+	* launcher.c: (really_add_launcher): don't try to remove the busy
+	cursor when an error dialog is closed, destroy the error dialog when
+	the launcher editor dialog is closed
+	Fix bug #163197
+
+2005-01-10  Vincent Untz  <vincent@vuntz.net>
+
 	* drawer.c: (set_tooltip_and_name): don't set toplevel name to Drawer
 	if the tooltip is not set
 	* panel-toplevel.c: (panel_toplevel_construct_description):
