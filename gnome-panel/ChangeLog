@@ -1,3 +1,9 @@
+Tue Jan 22 16:11:47 2002  George Lebl <jirka@5z.com>
+
+	* quick-desktop-reader.c: when testing for tryexec, just do an
+	  access (foo, X_OK) if it's an absolute filename.  Also put
+	  the debug conditional around ALL the g_prints
+
 2002-01-22  Anders Carlsson  <andersca@gnu.org>
 
 	* button-widget.c: Lower the button displacement.

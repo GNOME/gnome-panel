@@ -135,7 +135,9 @@ is_i18n_key (const char *key, gsize keylen, const char *buf, char **lang)
 	if (*p == ' ')
 		p++;
 	if (*p != '=') {
+#ifdef QUICK_DESKTOP_READER_DEBUG
 		g_print ("Parser error on line (%s)\n", buf);
+#endif
 		g_free (*lang);
 		*lang = NULL;
 		return NULL;
@@ -292,6 +294,26 @@ get_encoding (int encoding, const char *lang)
 	}
 }
 
+static gboolean
+exec_exists (const char *exec)
+{
+	if (g_path_is_absolute (exec)) {
+		if (access (exec, X_OK) == 0)
+			return TRUE;
+		else
+			return FALSE;
+	} else {
+                char *tryme;
+
+		tryme = g_find_program_in_path (exec);
+		if (tryme != NULL) {
+			g_free (tryme);
+			return TRUE;
+		}
+		return FALSE;
+	}
+}
+
 QuickDesktopItem *
 quick_desktop_item_load_uri (const char *uri,
 			     const char *expected_type,
@@ -363,8 +385,10 @@ quick_desktop_item_load_uri (const char *uri,
 		} else if ((val = IS_KEY ("Type", buf)) != NULL) {
 			if (expected_type != NULL &&
 			    strcmp (val, expected_type) != 0) {
+#ifdef QUICK_DESKTOP_READER_DEBUG
 				g_print ("bad type '%s' != '%s': %s\n", val,
 					 expected_type, uri);
+#endif
 				quick_desktop_item_destroy (retval);
 				retval = NULL;
 				break;
@@ -381,23 +405,23 @@ quick_desktop_item_load_uri (const char *uri,
 				encoding = ENCODING_LEGACY_MIXED;
 			} else {
 				/* According to spec we need to quit */
+#ifdef QUICK_DESKTOP_READER_DEBUG
 				g_print ("bad encoding '%s': %s\n", val, uri);
+#endif
 				quick_desktop_item_destroy (retval);
 				retval = NULL;
 				break;
 			}
 		} else if ((val = IS_KEY ("TryExec", buf)) != NULL) {
-			if (run_tryexec) {
-				char *prog = g_find_program_in_path (val);
-				if (prog == NULL) {
-					g_print ("Try exec failed '%s': %s\n",
-						 val, uri);
-					quick_desktop_item_destroy (retval);
-					retval = NULL;
-					break;
-				} else {
-					g_free (prog);
-				}
+			if (run_tryexec &&
+			    ! exec_exists (val)) {
+#ifdef QUICK_DESKTOP_READER_DEBUG
+				g_print ("Try exec failed '%s': %s\n",
+					 val, uri);
+#endif
+				quick_desktop_item_destroy (retval);
+				retval = NULL;
+				break;
 			}
 			g_free (retval->tryexec);
 			retval->tryexec = g_strdup (val);
