@@ -73,11 +73,6 @@ static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 static void panel_widget_realize        (GtkWidget        *widget);
 
-static gboolean panel_widget_focus_in_event (GtkWidget        *widget,
-					     GdkEventFocus    *event);
-static gboolean panel_widget_focus_out_event(GtkWidget        *widget,
-					     GdkEventFocus    *event);
-
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
 static void panel_widget_switch_move_applet (PanelWidget      *panel,
@@ -87,6 +82,7 @@ static void panel_widget_free_move_applet   (PanelWidget      *panel,
 static void panel_widget_tab_move           (PanelWidget      *panel,
                                              gboolean          next);
 static void panel_widget_end_move           (PanelWidget      *panel);
+static gboolean panel_widget_popup_panel_menu   (PanelWidget      *panel);
 static gboolean panel_widget_real_focus     (GtkWidget        *widget,
                                              GtkDirectionType  direction);
 
@@ -178,6 +174,7 @@ enum {
 	FREE_MOVE_SIGNAL,
 	TAB_MOVE_SIGNAL,
 	END_MOVE_SIGNAL,
+	POPUP_PANEL_MENU_SIGNAL,
 	LAST_SIGNAL
 };
 
@@ -341,6 +338,9 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GObjectClass *gobject_class = (GObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
+	GtkBindingSet *binding_set;
+
+	binding_set = gtk_binding_set_by_class (class);
 
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
                 g_signal_new ("orient_change",
@@ -487,6 +487,17 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
+	panel_widget_signals[POPUP_PANEL_MENU_SIGNAL] =
+		g_signal_new ("popup_panel_menu",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (PanelWidgetClass, popup_panel_menu),
+                              NULL,
+                              NULL,
+                              panel_marshal_BOOLEAN__VOID,
+                              G_TYPE_BOOLEAN,
+                              0);
+
 	class->orient_change = NULL;
 	class->size_change = NULL;
 	class->applet_move = NULL;
@@ -499,6 +510,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->free_move = panel_widget_free_move_applet;
 	class->tab_move = panel_widget_tab_move;
 	class->end_move = panel_widget_end_move;
+	class->popup_panel_menu = panel_widget_popup_panel_menu;
 
 	object_class->destroy = panel_widget_destroy;
 	gobject_class->finalize = panel_widget_finalize;
@@ -508,12 +520,13 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->realize = panel_widget_realize;
 	widget_class->expose_event = panel_widget_expose;
 	widget_class->style_set = panel_widget_style_set;
-	widget_class->focus_in_event = panel_widget_focus_in_event;
-	widget_class->focus_out_event = panel_widget_focus_out_event;
 	widget_class->focus = panel_widget_real_focus;
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
+
+	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
+				      "popup_panel_menu", 0);
 }
 
 static void
@@ -599,6 +612,10 @@ panel_widget_reset_focus (GtkContainer *container,
 		g_signal_emit_by_name (panelw, "focus",
 				       GTK_DIR_TAB_FORWARD,
 				       &return_val);
+		/*
+		 * The last object on the panel has been deleted so
+		 * put focus back on the panel.
+		 */
 		if (!gtk_window_get_focus (GTK_WINDOW (panelw))) {
 			panel_widget_focus (panel);	
 		}
@@ -1755,10 +1772,6 @@ panel_widget_finalize (GObject *obj)
 
 	g_free (panel->unique_id);
 	panel->unique_id = NULL;
-
-	if (panel->key_event)
-		gdk_event_free ((GdkEvent *)panel->key_event);
-	panel->key_event = NULL;
 
 	if (G_OBJECT_CLASS (panel_widget_parent_class)->finalize)
 		G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
@@ -3008,58 +3021,20 @@ panel_widget_end_move (PanelWidget *panel)
 }
 
 static gboolean
-panel_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
-{
-	/*
-	 * FIXME: we need to figure out something sensible
-	 *        to do to indicate focus
-	 */
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_in_event (widget, event);
-
-	return FALSE;
-}
-
-static gboolean
-panel_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
-{
-	PanelWidget *panel_widget = PANEL_WIDGET (widget);
-
-	if (GTK_WINDOW (panel_widget->panel_parent)->has_focus)
-		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
-
-	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_out_event (widget, event);
-
-	return FALSE;
-}
-
-static gboolean
 panel_widget_real_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
-	PanelWidget *panel = PANEL_WIDGET (widget);
-
-	if (panel->key_event) {
-		if (panel->key_event->state & GDK_CONTROL_MASK) {
-			/*
-	 		 * Ctrl+Tab was pressed when focus was in applet in
-			 * another process
-			 */
-			panel_widget_focus (PANEL_WIDGET (widget));
-			return TRUE;
-		}
-	}
-
-	if (GTK_WIDGET_HAS_FOCUS (widget)) {
+	if (GTK_WIDGET_HAS_FOCUS (widget) && GTK_FIXED (widget)->children) {
 		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
 	}
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
 }
 
-void panel_widget_focus (PanelWidget *panel)
+void 
+panel_widget_focus (PanelWidget *panel)
 {
 	/*
-	 * Set the focus back on the panel; we unset the focus child so that
+         * Set the focus back on the panel; we unset the focus child so that
 	 * the next time focus is inside the panel we do not remember the
 	 * previously focused child. We also need to set GTK_CAN_FOCUS flag
 	 * on the panel as it is unset when this function is called.
@@ -3067,9 +3042,10 @@ void panel_widget_focus (PanelWidget *panel)
 	if (!DRAWER_IS_WIDGET (panel->panel_parent)) {
 		gtk_container_set_focus_child (GTK_CONTAINER (panel), NULL);
 		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
-      		gtk_widget_grab_focus (GTK_WIDGET (panel));
+		gtk_widget_grab_focus (GTK_WIDGET (panel));
 	}
 }
+
 
 PanelOrient
 panel_widget_get_applet_orient (PanelWidget *panel)
@@ -3083,13 +3059,11 @@ panel_widget_get_applet_orient (PanelWidget *panel)
 	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
 }
 
-void 
-panel_widget_save_key_event (PanelWidget *panel,
-			     GdkEventKey *key_event)
+static gboolean 
+panel_widget_popup_panel_menu (PanelWidget *panel)
 {
-	if (panel->key_event) {
-		gdk_event_free ((GdkEvent *)panel->key_event);
-	}
-	panel->key_event = (GdkEventKey *) gdk_event_copy ((GdkEvent *)key_event);
-}
+	gboolean ret_val;
 
+	g_signal_emit_by_name (panel, "popup_menu", &ret_val);
+	return ret_val;
+}

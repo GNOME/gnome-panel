@@ -15,6 +15,8 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
+#include <gdk/gdkkeysyms.h>
+
 #include <libgnome/libgnome.h>
 #include <libbonobo.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
@@ -783,9 +785,6 @@ panel_end_move (GtkWidget *widget, GdkEventButton *bevent)
 			g_source_remove (panel_dragged_timeout);
 		panel_dragged_timeout = 0;
 		panel_been_moved = FALSE;
-		if (pointer_in_widget (basep->panel, bevent) &&
-		    ! gtk_widget_is_focus (basep->panel))
-			panel_widget_focus (PANEL_WIDGET (basep->panel));
 
 		/* FIXME: why is this neccessary!!!!???? */
 		gtk_container_foreach (GTK_CONTAINER (basep->panel),
@@ -804,6 +803,9 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 	PanelWidget *panel = NULL;
 	BasePWidget *basep = NULL;
 	GdkEventButton *bevent;
+	GdkEventKey *kevent;
+	GdkEventFocus *fevent;
+	GtkStateType state;
 	int x, y;
 
 	if (BASEP_IS_WIDGET (widget)) {
@@ -859,6 +861,23 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 			}
 		}
 		break;
+	case GDK_KEY_PRESS:
+		kevent = (GdkEventKey *)event;
+		if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget)) {
+			/*
+		  	 * If the focus widget is a GtkSocket, i.e. the
+			 * focus is in an applet in another process, then key 
+			 * bindings do not work. We get around this by
+			 * activating the key binding we require here.
+			 */ 
+			if (kevent->keyval == GDK_F10 && kevent->state == GDK_CONTROL_MASK)
+				return gtk_bindings_activate (GTK_OBJECT (panel), kevent->keyval, kevent->state);
+		}
+		break;
+	case GDK_FOCUS_CHANGE:
+		fevent = (GdkEventFocus *)event;
+		state = (fevent->in) ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
+		gtk_widget_set_state (GTK_WIDGET (panel), state);
 
 	default:
 		break;

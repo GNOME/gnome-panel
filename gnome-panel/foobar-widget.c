@@ -54,10 +54,6 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
-static gboolean foobar_key_press	(GtkWidget *widget,
-					 GdkEventKey *event);
-static void foobar_widget_move_focus_out   (FoobarWidget *foo);
-static void foobar_widget_move_focus_out   (FoobarWidget *foo);
 static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
@@ -103,7 +99,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-	GtkBindingSet *binding_set;
 
 	object_class->destroy = foobar_widget_destroy;
 
@@ -111,9 +106,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	widget_class->size_allocate = foobar_widget_size_allocate;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
-	widget_class->key_press_event = foobar_key_press;
-
-	klass->move_focus_out = foobar_widget_move_focus_out;
 
 	gtk_rc_parse_string ("style \"panel-foobar-menubar-style\"\n"
 			     "{\n"
@@ -121,44 +113,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 			     "GtkMenuBar::internal-padding = 0\n"
 			     "}\n"
 			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
-
-	foobar_widget_signals[MOVE_FOCUS_OUT_SIGNAL] =
-		g_signal_new	("move_focus_out",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (FoobarWidgetClass, move_focus_out),
-				NULL, NULL,
-                                panel_marshal_VOID__VOID,
-				G_TYPE_NONE,
-				0);
-
-	binding_set = gtk_binding_set_by_class (object_class);
-	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_Tab, GDK_CONTROL_MASK,
-                                      "move_focus_out", 0);
-	gtk_binding_entry_add_signal (binding_set,
-                                      GDK_KP_Tab, GDK_CONTROL_MASK,
-                                      "move_focus_out", 0);
-
-
-}
-
-static gboolean
-foobar_key_press (GtkWidget *widget, GdkEventKey *event)
-{
- 	FoobarWidget *foobar;
-	PanelWidget *panel;
-
-	g_return_val_if_fail (FOOBAR_IS_WIDGET (widget), FALSE);
-
-	foobar = FOOBAR_WIDGET (widget);
-
-	g_return_val_if_fail (PANEL_IS_WIDGET (foobar->panel), FALSE);
-
-	panel = PANEL_WIDGET (foobar->panel);
-
-	panel_widget_save_key_event (panel, event);
-	return GTK_WIDGET_CLASS (foobar_widget_parent_class)->key_press_event (widget, event);
 }
 
 static gboolean
@@ -1035,10 +989,4 @@ foobar_widget_redo_window(FoobarWidget *foo)
 	gtk_drag_dest_set (widget, 0, NULL, 0, 0);
 
 	gtk_widget_map(widget);
-}
-
-static void
-foobar_widget_move_focus_out (FoobarWidget *foobar)
-{
- 	panel_widget_focus (PANEL_WIDGET (foobar->panel));
 }

@@ -1,3 +1,44 @@
+2002-05-23  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* gnome-panelrc:
+	rc file which ensures that SELECTED state for PanelWidget and its 
+	children is not visible, by default
+
+	* Makefile.am:
+	Update so that gnome-panelrc file is installed in $(datadir)
+
+	* basep-widget.[ch]: foobar-widget.[ch]
+	Remove move-focus-out signal as moving focus from applet to PanelWidget
+	is not supported
+	Remove basep_key_press, default signal handler for key_press_event
+
+	* button-widget.c:
+	(button_widget_expose) Highlight widget when it has focus
+	Draw focus indication using style's focus-line-width" and 
+	"focus-padding"
+
+	* panel-marshal.list:
+	Add BOOLEAN:VOID for new signal popup_panel_menu
+
+	* panel-widget.c:
+	Add new signal popup_panel_menu which pops up context menu for
+	PanelWidget; use Ctrl+F10 to activate the signal. This works when
+	PanelWidget or applet has focus.
+	Remove function panel_widget_save_key_event()
+	Remove function panel_widget_focus_in_event() and 
+	panel_widget_focus_out_event()
+	(panel_widget_finalize): Remove reference to panel->key_event
+	(panel_widget_real_focus): Remove reference to panel->key_event
+	which supported giving focus to PanelWidget when focus was inside 
+	an applet in another process. Remove CAN_FOCUS flag if PanelWidget
+	has children.
+	
+	panel.c:
+	(panel_end_move) Do not give focus to PanelWidget on mouse click
+	(panel_widget_event): For key press, check whether focus widget is a 
+	GtkSocket; if so, activate binding for Ctrl+F10, popup panel menu.
+	Set state to GTK_STATE_SELECTED for focus in.
+
 2002-05-24  Mark McLoughlin  <mark@skynet.ie>
 
 	* basep-widget.c: (basep_widget_class_init),

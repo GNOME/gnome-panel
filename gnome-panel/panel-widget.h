@@ -107,7 +107,6 @@ struct _PanelWidget
 						   was set, this is used
 						   for tiling onto the
 						   background */
-	GdkEventKey		*key_event;
 };
 
 struct _PanelWidgetClass
@@ -139,6 +138,7 @@ struct _PanelWidgetClass
 	void (* tab_move) (PanelWidget	*panel,
                            gboolean	 next);
 	void (* end_move) (PanelWidget	*panel);
+	gboolean (* popup_panel_menu) (PanelWidget	*panel);
 
 };
 
@@ -230,10 +230,6 @@ gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
-
-void            panel_widget_save_key_event	(PanelWidget	*panel,
-                                                 GdkEventKey	*key_event);
-
 
 extern gboolean panel_applet_in_drag;
 

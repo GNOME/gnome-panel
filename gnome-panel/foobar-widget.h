@@ -52,8 +52,6 @@ struct _FoobarWidget
 struct _FoobarWidgetClass
 {
 	GtkWindowClass panel_class;
-
-	void (*move_focus_out)  (FoobarWidget *foo);
 };
 
 GType		foobar_widget_get_type		(void) G_GNUC_CONST;

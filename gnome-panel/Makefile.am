@@ -13,6 +13,7 @@ INCLUDES =							\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
+	-DPANELRC=\""$(rcdir)/$(rc_DATA)"\"			\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
 	$(ALLOW_CRACKPOT_MENU_CODE)				\
@@ -214,7 +215,8 @@ EXTRA_DIST =					\
 	nothing.h				\
 	$(schemas_in_files)			\
 	$(ui_DATA)				\
-	panel-marshal.list
+	panel-marshal.list			\
+	gnome-panelrc
 
 sysdir = $(datadir)/control-center-2.0/capplets
 sys_in_files = gnome-panel-preferences.desktop.in
@@ -269,6 +271,9 @@ ui_DATA = GNOME_Panel_Popup.xml
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
+
+rcdir = $(datadir)
+rc_DATA = gnome-panelrc
 
 @INTLTOOL_SERVER_RULE@
 

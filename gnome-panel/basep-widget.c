@@ -50,7 +50,6 @@ static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_instance_init (BasePPos *pos);
 
 /* Forward declare some static functions for use in the class init */
-static void basep_widget_move_focus_out (BasePWidget *basep);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
@@ -60,7 +59,6 @@ static void basep_widget_realize (GtkWidget *w);
 static void basep_widget_map (GtkWidget *w);
 static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
 static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
-static gboolean basep_key_press (GtkWidget *widget, GdkEventKey *event);
 static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 static void basep_widget_destroy (GtkObject *o);
 static int  basep_widget_focus_in_event (GtkWidget     *widget,
@@ -129,11 +127,9 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GObjectClass   *object_class = (GObjectClass *) klass;
 	GtkObjectClass *gtk_object_class = (GtkObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
-	GtkBindingSet  *binding_set;
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
-	klass->move_focus_out = basep_widget_move_focus_out;
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
@@ -144,7 +140,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->map = basep_widget_map;
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
-	widget_class->key_press_event = basep_key_press;
 	widget_class->focus_in_event = basep_widget_focus_in_event;
 	widget_class->style_set = basep_style_set;
 
@@ -198,17 +193,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			      1,
 			      PANEL_TYPE_OBJECT_TYPE); */
 
-	basep_widget_signals[MOVE_FOCUS_OUT_SIGNAL] = 
-		g_signal_new	("move_focus_out",
-				G_TYPE_FROM_CLASS (object_class),
-				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (BasePWidgetClass, move_focus_out),
-				NULL,
-				NULL,
-				panel_marshal_VOID__VOID,
-				G_TYPE_NONE,
-				0);
-
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
 		g_signal_new	("mode_change",
 			       	G_TYPE_FROM_CLASS (object_class),
@@ -244,14 +228,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_TYPE_NONE,
 				1,
 				G_TYPE_INT);
-
-	binding_set = gtk_binding_set_by_class (gtk_object_class);
-	gtk_binding_entry_add_signal (binding_set,
-				      GDK_Tab, GDK_CONTROL_MASK,
-				      "move_focus_out", 0);
-	gtk_binding_entry_add_signal (binding_set,
-				      GDK_KP_Tab, GDK_CONTROL_MASK,
-				      "move_focus_out", 0);
 }
 
 static void
@@ -559,26 +535,6 @@ basep_widget_size_allocate (GtkWidget *widget,
 }
 
 static void
-basep_widget_move_focus_out (BasePWidget *basep)
-{
-	if (DRAWER_IS_WIDGET (basep)) {
-		Drawer *drawer = g_object_get_data (G_OBJECT (basep),
-               		                             DRAWER_PANEL_KEY);
-		PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
-		GtkWidget *parent = panel->panel_parent;
-
-		drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
-		drawer->moving_focus = TRUE;
-		gtk_window_present (GTK_WINDOW (parent));
-		gtk_widget_grab_focus (drawer->button);
-	} else {
-		PanelWidget *panel = PANEL_WIDGET (basep->panel);
-
-		panel_widget_focus (panel);
-	}
-}
-
-static void
 basep_widget_mode_change (BasePWidget *basep, BasePMode old_mode)
 {
 	if (BORDER_IS_WIDGET (basep))
@@ -823,24 +779,6 @@ static void
 basep_pos_instance_init (BasePPos *pos)
 {
 	return;
-}
-
-static gboolean 
-basep_key_press (GtkWidget *widget, GdkEventKey *event)
-{
-	BasePWidget *basep;
-	PanelWidget *panel;
-
-	g_return_val_if_fail (BASEP_IS_WIDGET (widget), FALSE);
-
-	basep = BASEP_WIDGET (widget);
-
-	g_return_val_if_fail (PANEL_IS_WIDGET (basep->panel), FALSE);
-
-	panel = PANEL_WIDGET (basep->panel);
-	
-	panel_widget_save_key_event (panel, event);
-	return GTK_WIDGET_CLASS (basep_widget_parent_class)->key_press_event (widget, event);
 }
 
 static int

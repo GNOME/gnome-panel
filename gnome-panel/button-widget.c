@@ -442,11 +442,11 @@ button_widget_expose (GtkWidget         *widget,
 	off = (button->in_button && button->button_down) ?
 		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0;
 	
-	if (!global_config.highlight_when_over || !button->in_button) {
-		pb = button_widget->scaled;
-	} else {
+	if (global_config.highlight_when_over && 
+	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
 		pb = button_widget->scaled_hc;
-	}
+	else
+		pb = button_widget->scaled;
 	
 	w = gdk_pixbuf_get_width (pb);
 	h = gdk_pixbuf_get_height (pb);
@@ -493,13 +493,21 @@ button_widget_expose (GtkWidget         *widget,
 	}
 
 	if (GTK_WIDGET_HAS_FOCUS (widget)) {
+		gint focus_width, focus_pad;
+		gint x, y, width, height;
+
+		gtk_widget_style_get (widget,
+				      "focus-line-width", &focus_width,
+				      "focus-padding", &focus_pad,
+				      NULL);
+		x = widget->allocation.x + focus_pad;
+		y = widget->allocation.y + focus_pad;
+		width = widget->allocation.width -  (focus_width + 2 * focus_pad); focus_pad;
+		height = widget->allocation.height -  (focus_width + 2 * focus_pad); focus_pad;
 		gtk_paint_focus (widget->style, widget->window,
 				 GTK_WIDGET_STATE (widget),
 				 &event->area, widget, "button",
-				 widget->allocation.x + 1,
-				 widget->allocation.y + 1,
-				 widget->allocation.width - 3,
-				 widget->allocation.height - 3);
+				 x, y, width, height);
 	}
 	
 	return FALSE;
