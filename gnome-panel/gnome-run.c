@@ -859,7 +859,9 @@ fill_list (GtkWidget *list)
 
 	if (add_icon_idle_id == 0)
 		add_icon_idle_id =
-			g_idle_add ((GSourceFunc) add_icon_idle, store);
+			g_idle_add_full (G_PRIORITY_LOW,
+					 (GSourceFunc)add_icon_idle,
+					 store, NULL);
 }
 
 #define DEFAULT_ICON "document-icons/i-executable.png"
@@ -1096,7 +1098,9 @@ create_simple_contents (void)
 
 
 	if (add_items_idle_id == 0)
-		add_items_idle_id = g_idle_add (add_items_idle, list);
+		add_items_idle_id =
+			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
+					 list, NULL);
 
         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
                             vbox,
