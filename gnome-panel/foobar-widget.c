@@ -34,8 +34,6 @@
 #include "panel-util.h"
 #include "drawer-widget.h"
 #include "gnome-run.h"
-#include "gwmh.h"
-#include "tasklist_icon.h"
 #include "multiscreen-stuff.h"
 
 #define ICON_SIZE 20

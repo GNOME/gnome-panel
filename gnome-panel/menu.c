@@ -59,7 +59,6 @@
 #include "sliding-widget.h"
 #include "status.h"
 #include "swallow.h"
-#include "tasklist_icon.h"
 #include "tearoffitem.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"

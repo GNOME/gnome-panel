@@ -13,7 +13,6 @@
 #include <X11/Xatom.h>
 
 #include "xstuff.h"
-#include "gwmh.h"
 #include "multiscreen-stuff.h"
 #include "basep-widget.h"
 #include "foobar-widget.h"

@@ -496,10 +496,6 @@ main(int argc, char **argv)
 	xstuff_init ();
 	multiscreen_init ();
 
-#if FIXME
-	gnome_win_hints_init ();
-#endif
-
 	load_system_wide ();
 
 	/* set the globals, it is important this is before
@@ -510,10 +506,6 @@ main(int argc, char **argv)
 	if ( ! commie_mode)
 		session_write_global_config ();
 
-#ifdef FIXME
-	gwmh_init ();
-#endif
-	
 	init_menus ();
 
 	session_load ();	

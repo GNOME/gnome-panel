@@ -9,7 +9,6 @@
 #define FOOBAR_WIDGET_H
 
 #include "panel-types.h"
-#include "gwmh.h"
 
 G_BEGIN_DECLS
 

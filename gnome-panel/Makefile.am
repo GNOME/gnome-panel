@@ -39,24 +39,8 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-gwmh_dir = $(top_srcdir)/applets/desk-guide
-
-GWMH_SRCLIST =		\
-	gwmh.c		\
-	gwmh.h		\
-	gstc.c		\
-	gstc.h		\
-	$(NULL)
-
-$(GWMH_SRCLIST):
-	for file in $(GWMH_SRCLIST); do \
-		echo $$file ; \
-		ln -sf $(gwmh_dir)/$$file . ; \
-	done
-
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
-	$(GWMH_SRCLIST)		\
 	panel-typebuiltins.c	\
 	panel-typebuiltins.h	\
 	panel-marshal.c		\
@@ -76,7 +60,6 @@ panel_sources =			\
 	session.c		\
 	conditional.c		\
 	foobar-widget.c		\
-	tasklist_icon.c		\
 	border-widget.c		\
 	edge-widget.c		\
 	aligned-widget.c	\
@@ -119,7 +102,6 @@ panel_headers =			\
 	session.h		\
 	conditional.h		\
 	foobar-widget.h		\
-	tasklist_icon.h		\
 	border-widget.h		\
 	edge-widget.h		\
 	aligned-widget.h	\
@@ -155,7 +137,6 @@ panel_headers =			\
 
 gnome_panel_2_SOURCES =		\
 	$(CORBA_SRCLIST)	\
-	gwmh.h			\
 	$(panel_sources)	\
 	$(panel_headers)	\
 	$(NULL)
