@@ -1,3 +1,9 @@
+Wed Sep 29 22:02:17 1999  George Lebl  <jirka@5z.com>
+
+	* applet-widget.c: explicitly set panel_client to CORBA_OBJECT_NIL,
+	  as it seem that the code sort of assumed that it's initialized
+	  to NULL (and it probably was as that worked all this time)
+
 1999-09-29  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c (create_panel_root_menu): use gnome-favorites.png

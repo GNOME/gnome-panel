@@ -23,7 +23,7 @@ struct _CallbackInfo {
   gpointer data;
 };
 
-GNOME_Panel panel_client;
+GNOME_Panel panel_client = CORBA_OBJECT_NIL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
