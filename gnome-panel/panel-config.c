@@ -106,7 +106,7 @@ update_config_back(PanelWidget *pw)
 					    TRUE);
 		break;
 	case PANEL_BACK_PIXMAP:
-		t=gnome_file_entry_gtk_entry(GNOME_FILE_ENTRY(ppc->pix_entry));
+		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 		gtk_entry_set_text(GTK_ENTRY(t),pw->back_pixmap);
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->pix),
 					    TRUE);
@@ -120,7 +120,7 @@ config_destroy(GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = data;
 	GtkWidget *t;
 	
-	t=gnome_file_entry_gtk_entry(GNOME_FILE_ENTRY(ppc->pix_entry));
+	t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 	gtk_signal_disconnect(GTK_OBJECT(t),
 			      ppc->pix_ch_signal);
 	
@@ -602,7 +602,7 @@ value_changed (GtkWidget *w, gpointer data)
 	PerPanelConfig *ppc = data;
 
 	g_free(ppc->back_pixmap);
-	ppc->back_pixmap = g_strdup(gtk_entry_get_text(GTK_ENTRY(w)));
+	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 	return FALSE;
@@ -723,10 +723,9 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
-	ppc->pix_entry = gnome_file_entry_new ("pixmap", _("Browse"));
+	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"),TRUE);
 
-
-	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (ppc->pix_entry));
+	t = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (ppc->pix_entry));
 	ppc->pix_ch_signal = 
 		gtk_signal_connect (GTK_OBJECT (t), "changed",
 				    GTK_SIGNAL_FUNC (value_changed), ppc);

@@ -889,9 +889,8 @@ check_finfo_list(GList *finfo)
 
 	for(;finfo!=NULL;finfo=g_list_next(finfo)) {
 		fi = finfo->data;
-		if (stat (fi->name, &s) == -1)
-			continue;
-		if(fi->mtime != s.st_mtime)
+		if (stat (fi->name, &s) == -1 ||
+		    fi->mtime != s.st_mtime)
 			return FALSE;
 	}
 	return TRUE;
@@ -1532,15 +1531,13 @@ create_user_menu(GtkWidget *menu, int fake_submenus, int force)
 	char *menu_base = gnome_util_home_file ("apps");
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
 	
-	g_free (menu_base);
 	if (!g_file_exists (menudir))
 		mkdir (menu_base, 0755);
-	if (g_file_exists (menudir)) {
-		menu = create_menu_at (menu,menudir, FALSE,
-				       _("User Menus"),
-				       gnome_folder,fake_submenus,
-				       force);
-	}
+	g_free (menu_base);
+	menu = create_menu_at (menu,menudir, FALSE,
+			       _("User Menus"),
+			       gnome_folder,fake_submenus,
+			       force);
 	g_free (menudir); 
 	return menu;
 }

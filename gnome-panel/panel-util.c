@@ -164,6 +164,44 @@ create_text_entry(GtkWidget *table,
 }
 
 GtkWidget *
+create_pixmap_entry(GtkWidget *table,
+		    char *history_id,
+		    int row,
+		    char *label,
+		    char *text,
+		    GtkWidget *w,
+		    int pw, int ph /*preview size*/)
+{
+	GtkWidget *wlabel;
+	GtkWidget *entry;
+	GtkWidget *t;
+
+	wlabel = gtk_label_new(label);
+	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
+	gtk_table_attach(GTK_TABLE(table), wlabel,
+			 0, 1, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+	gtk_widget_show(wlabel);
+
+	entry = gnome_pixmap_entry_new(history_id,_("Browse"),TRUE);
+	gnome_pixmap_entry_set_preview_size(GNOME_PIXMAP_ENTRY(entry),pw,ph);
+	t = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (entry));
+	if (text)
+		gtk_entry_set_text(GTK_ENTRY(t), text);
+	gtk_table_attach(GTK_TABLE(table), entry,
+			 1, 2, row, row + 1,
+			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
+			 GTK_FILL | GTK_SHRINK,
+			 0, 0);
+
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC(notify_entry_change), w);
+	return entry;
+}
+
+GtkWidget *
 create_file_entry(GtkWidget *table,
 		  char *history_id,
 		  int row,
@@ -196,7 +234,7 @@ create_file_entry(GtkWidget *table,
 
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC(notify_entry_change), w);
-	return t;
+	return entry;
 }
 
 

@@ -1,3 +1,9 @@
+Fri Nov 20 02:14:56 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: fixed the apps directory creation, now rereads when a
+	  file/dir goes missing, and create_directory doesn't need to
+	  check the file again, just uses the force parameter
+
 Thu Nov 19 22:28:30 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: fixed some bugs with user menus and non-both configuration

@@ -47,7 +47,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		g_free(drawer->pixmap);
 	if(drawer->tooltip)
 		g_free(drawer->tooltip);
-	s = gtk_entry_get_text(GTK_ENTRY(pixentry));
+	s = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(pixentry));
 	if(!s || !*s) {
 		drawer->pixmap =
 			gnome_unconditional_pixmap_file ("panel-drawer.png");
@@ -63,6 +63,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 							    drawer->pixmap);
 		}
 	}
+	g_free(s);
 	s = gtk_entry_get_text(GTK_ENTRY(tipentry));
 	if(!s || !*s)
 		drawer->tooltip = NULL;
@@ -78,10 +79,12 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
 	GtkWidget *pixentry = gtk_object_get_data(GTK_OBJECT(widget),"pixmap");
+	GtkWidget *gtkpixentry =
+		gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(pixentry));
 	GtkWidget *tipentry = gtk_object_get_data(GTK_OBJECT(widget),"tooltip");
 	gtk_object_set_data(GTK_OBJECT(drawer->button),
 			    DRAWER_PROPERTIES,NULL);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(pixentry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(gtkpixentry),widget);
 	gtk_signal_disconnect_by_data(GTK_OBJECT(tipentry),widget);
 	return FALSE;
 }
@@ -117,8 +120,8 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 			      drawer->tooltip, dialog);
 	gtk_object_set_data(GTK_OBJECT(dialog),"tooltip",w);
 	
-	w = create_file_entry(table, "icon", 1, _("Icon"), drawer->pixmap,
-			      dialog);
+	w = create_pixmap_entry(table, "icon", 1, _("Icon"), drawer->pixmap,
+				dialog,64,64);
 	gtk_object_set_data(GTK_OBJECT(dialog),"pixmap",w);
 
 	f = gtk_frame_new(_("Applet appearance"));
