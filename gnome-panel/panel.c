@@ -965,46 +965,86 @@ get_applet_types(void)
 }
 
 static void
+get_max_applet_width(GtkWidget *applet, gpointer data)
+{
+	if(applet->allocation.width>*((int *)data))
+		*((int *)data)=applet->allocation.width;
+}
+
+static void
+get_max_applet_height(GtkWidget *applet, gpointer data)
+{
+	if(applet->allocation.height>*((int *)data))
+		*((int *)data)=applet->allocation.height;
+}
+
+static void
 set_panel_position(void)
 {
+	int width=DEFAULT_HEIGHT,height=DEFAULT_HEIGHT;
+	GtkAllocation newalloc;
+
+	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+		      get_max_applet_width,
+		      &width);
+	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+		      get_max_applet_height,
+		      &height);
+	printf("max width: %d, max height: %d\n",width,height);
+	
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 			gtk_widget_set_usize(the_panel->window,
 					     gdk_screen_width(),
-					     DEFAULT_HEIGHT);
+					     height);
 			gtk_widget_set_uposition(the_panel->window, 0, 0);
-			the_panel->window->allocation.x=0;
-			the_panel->window->allocation.y=0;
+			newalloc.x=0;
+			newalloc.y=0;
+			newalloc.width=gdk_screen_width();
+			newalloc.height=height;
 			break;
 		case PANEL_POS_BOTTOM:
 			gtk_widget_set_usize(the_panel->window,
 					     gdk_screen_width(),
-					     DEFAULT_HEIGHT);
+					     height);
 			gtk_widget_set_uposition(the_panel->window, 0,
 						 gdk_screen_height() -
-						 DEFAULT_HEIGHT);
-			the_panel->window->allocation.x=0;
-			the_panel->window->allocation.y=gdk_screen_height() -
-						 	DEFAULT_HEIGHT;
+						 height);
+			newalloc.x=0;
+			newalloc.y=gdk_screen_height() - height;
+			newalloc.width=gdk_screen_width();
+			newalloc.height=height;
 			break;
 		case PANEL_POS_LEFT:
-			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
+			gtk_widget_set_usize(the_panel->window, width,
 					     gdk_screen_height());
 			gtk_widget_set_uposition(the_panel->window, 0, 0);
-			the_panel->window->allocation.x=0;
-			the_panel->window->allocation.y=0;
+			newalloc.x=0;
+			newalloc.y=0;
+			newalloc.width=width;
+			newalloc.height=gdk_screen_height();
 			break;
 		case PANEL_POS_RIGHT:
-			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
+			gtk_widget_set_usize(the_panel->window, width,
 					     gdk_screen_height());
 			gtk_widget_set_uposition(the_panel->window,
 						 gdk_screen_width() -
-						 DEFAULT_HEIGHT, 0);
-			the_panel->window->allocation.x=gdk_screen_width() -
-						 	DEFAULT_HEIGHT;
-			the_panel->window->allocation.y=0;
+						 width, 0);
+			newalloc.x=gdk_screen_width() - width;
+			newalloc.y=0;
+			newalloc.width=width;
+			newalloc.height=gdk_screen_height();
 			break;
 	}
+	gtk_widget_size_allocate(the_panel->window,&newalloc);
+	printf("window: %d,%d %dx%d\n",the_panel->window->allocation.x,
+		the_panel->window->allocation.y,
+		the_panel->window->allocation.width,
+		the_panel->window->allocation.height);
+	printf("fixed: %d,%d %dx%d\n",the_panel->fixed->allocation.x,
+		the_panel->fixed->allocation.y,
+		the_panel->fixed->allocation.width,
+		the_panel->fixed->allocation.height);
 }
 
 
@@ -1421,11 +1461,12 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 static void
 swap_applet_coords(GtkWidget *applet, gpointer data)
 {
-	gint x,y;
+	gint x,y,width,height;
 
-	get_applet_geometry(applet, &x, &y, NULL, NULL);
+	get_applet_geometry(applet, &x, &y, &width, &height);
 
 	/*swap the coordinates around*/
+	fix_coordinates_to_limits(&y,&x,width,height);
 	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, y, x);
 	fix_an_applet(applet,y,x);
 }
@@ -1448,27 +1489,27 @@ panel_reconfigure(Panel *newconfig)
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
 				the_panel->pos=newconfig->pos;
+				set_panel_position();
 				if(newconfig->pos!=PANEL_POS_BOTTOM)
 					panel_change_orient();
-				set_panel_position();
 				break;
 			case PANEL_POS_BOTTOM:
 				the_panel->pos=newconfig->pos;
+				set_panel_position();
 				if(newconfig->pos!=PANEL_POS_TOP)
 					panel_change_orient();
-				set_panel_position();
 				break;
 			case PANEL_POS_LEFT:
 				the_panel->pos=newconfig->pos;
+				set_panel_position();
 				if(newconfig->pos!=PANEL_POS_RIGHT)
 					panel_change_orient();
-				set_panel_position();
 				break;
 			case PANEL_POS_RIGHT:
 				the_panel->pos=newconfig->pos;
+				set_panel_position();
 				if(newconfig->pos!=PANEL_POS_LEFT)
 					panel_change_orient();
-				set_panel_position();
 				break;
 		}
 	}
