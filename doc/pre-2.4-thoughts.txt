@@ -105,43 +105,6 @@ window keybindings to similar functions on the panel.
 	To test this out with the "new-toplevel" branch you need the
 attached patch for metacity.
 
-Configuration
-=============
-
-	Much of the old panel properties dialog no longer makes much
-sense. For example, being able to change the size or position of the
-panel from the dialog doesn't make much sense since you can do it with
-both the mouse and the keyboard. Much of the rest of the options would
-actualy make more sense in the context menu. For example:
-
-   +  Add to Panel
-   -  Create New Panel
-  ------------
-      Move
-      Resize
-      Rotate
-      Expand
-      Delete...
-  ------------
-      Change Background
-  [ ] Autohide
-  [ ] Show Hide Buttons
-  ------------
-   o  Help
-   *  About Panels
-  ------------
-   *  About GNOME
-
-
-	So the layout is terrible, but it includes all everything that
-needs to be available. Note that we still have a dialog for changing
-the panel background.
-
-	This brings us to the more general question of what exactly
-this context menu if for. You would expect it to be a set of
-operations on that panel - so how do "New Panel", "Help", "About
-Panels" and "About GNOME" fit into that?
-
 GConf Usage
 ===========
 
