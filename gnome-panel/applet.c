@@ -467,10 +467,11 @@ applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
 					show_applet_menu(info, event);
 			} else
 				show_applet_menu(info, event);
-			return TRUE;
 		}
 	}
-	return FALSE;
+	/* don't let any button click events to the panel or moving the applets
+	 * would move the panel */
+	return TRUE;
 }
 
 static void
