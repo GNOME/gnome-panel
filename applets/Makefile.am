@@ -1,7 +1,7 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish netload dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
-	 slashapp gnome-pager
+	 gnome-pager
 
 if HAVE_LIBESD
 esdmanager = esd-manager
@@ -17,6 +17,7 @@ endif
 
 if HAVE_LIBGHTTP
 bussign = bussign
+slashapp = slashapp
 endif
 
 if APPLET_CDPLAYER
@@ -42,4 +43,4 @@ endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
-         $(bussign) $(fvwm_pager) $(esdmanager)
+         $(bussign) $(slashapp) $(fvwm_pager) $(esdmanager)
