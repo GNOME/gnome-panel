@@ -155,6 +155,26 @@ insert_rh_into_tree(GSList *list,RHMenuItem *rh,GSList *group)
 	return g_slist_insert_sorted(list,ri,(GCompareFunc)sort_rh);
 }
 
+static void
+kill_amp (char *str)
+{
+	int len;
+	
+	if (str == NULL)
+		return;
+
+	len = strlen (str);
+
+	if (len > 0 &&
+	    str[len-1] == '&') {
+		str[len-1] = '\0';
+
+		if (len > 1 &&
+		    str[len-2] == ' ')
+			str[len-2] = '\0';
+	}
+}
+
 static GSList *
 add_redhat_entry(GSList *list, char *file)
 {
@@ -221,6 +241,7 @@ add_redhat_entry(GSList *list, char *file)
 		} else if(strcmp(w,"exec")==0) {
 			g_free(rh->u.item.exec);
 			rh->u.item.exec = read_word(&p);
+			kill_amp (rh->u.item.exec);
 		} else if(strcmp(w,"group")==0) {
 			char *sc;
 			char *s = read_word(&p);

@@ -7,8 +7,9 @@
 
 #include <gdk/gdktypes.h>
 
-void panel_global_keys_setup(void);
-GdkFilterReturn panel_global_keys_filter(GdkXEvent *gdk_xevent,
-					 GdkEvent *event);
+void		panel_global_keys_setup		(void);
+GdkFilterReturn	panel_global_keys_filter	(GdkXEvent *gdk_xevent,
+						 GdkEvent *event,
+						 gpointer data);
 
 #endif

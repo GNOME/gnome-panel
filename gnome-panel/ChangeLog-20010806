@@ -1,3 +1,11 @@
+Sat Dec 30 05:27:19 2000  George Lebl <jirka@5z.com>
+
+	* xstuff.[ch], global-keys.c, swallow.c:  Use gwmh for everything
+	  here, this greatly reduces the X traffic as the way things were
+	  done before was actually quite wasteful.
+
+	* menu-rh.c:  remove ampersand from the commands.
+
 Fri Dec 29 17:45:12 2000  George Lebl <jirka@5z.com>
 
 	* menu-fentry.h, menu.[ch], foobar-widget.c:  Add a menu for adding

@@ -41,12 +41,9 @@ socket_realized (GtkWidget *w, gpointer data)
 	
 	gdk_error_trap_push ();
 
-	if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
-			  &swallow->wid, TRUE)) {
-		check_swallows = g_list_prepend (check_swallows, swallow);
-		xstuff_reset_need_substructure ();
-	} else
-		gtk_socket_steal (GTK_SOCKET(swallow->socket), swallow->wid);
+	check_swallows = g_list_prepend (check_swallows, swallow);
+
+	xstuff_go_through_client_list ();
 
 	gdk_flush();
 	gdk_error_trap_pop ();
@@ -120,13 +117,8 @@ before_remove (Swallow *swallow)
 		/* launch the command if some exists */
 		swallow_launch (swallow);
 
-		if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
-				  &swallow->wid, TRUE)) {
-			check_swallows = g_list_prepend (check_swallows, swallow);
-			xstuff_reset_need_substructure ();
-		} else {
-			gtk_socket_steal (GTK_SOCKET(swallow->socket), swallow->wid);
-		}
+		check_swallows = g_list_prepend (check_swallows, swallow);
+		xstuff_go_through_client_list ();
 		
 		return FALSE;
 	}

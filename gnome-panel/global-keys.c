@@ -63,7 +63,9 @@ panel_global_keys_setup(void)
 }
 
 GdkFilterReturn
-panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
+panel_global_keys_filter (GdkXEvent *gdk_xevent,
+			  GdkEvent *event,
+			  gpointer data)
 {
 	if(((XEvent *)gdk_xevent)->type != KeyRelease)
 		return GDK_FILTER_CONTINUE;
