@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-16 23:04+0900\n"
+"POT-Creation-Date: 2004-02-04 16:26+0000\n"
 "PO-Revision-Date: 2004-01-16 18:48+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -51,9 +51,9 @@ msgstr "情報(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:608
+#: gnome-panel/drawer.c:605 gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
@@ -69,7 +69,7 @@ msgid "Accessories"
 msgstr "アクセサリ"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2506
+#: applets/clock/clock.c:2568
 msgid "Clock"
 msgstr "時計"
 
@@ -109,20 +109,20 @@ msgstr "年"
 msgid "The currently monitored year"
 msgstr "現在、表示している年です"
 
-#: applets/clock/clock.c:263
+#: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
-#: applets/clock/clock.c:263 applets/clock/clock.c:610
+#: applets/clock/clock.c:271 applets/clock/clock.c:622
 msgid "%l:%M %p"
 msgstr "%p%l:%M"
 
-#: applets/clock/clock.c:265 applets/clock/clock.c:1517
+#: applets/clock/clock.c:273 applets/clock/clock.c:1561
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:265 applets/clock/clock.c:612
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:273 applets/clock/clock.c:624
+#: applets/clock/clock.c:1563
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -131,7 +131,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:276
+#: applets/clock/clock.c:284
 msgid "%a %b %e"
 msgstr "%b%e日 (%a)"
 
@@ -139,7 +139,7 @@ msgstr "%b%e日 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:283
+#: applets/clock/clock.c:291
 #, c-format
 msgid ""
 "%1$s\n"
@@ -152,54 +152,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:290
+#: applets/clock/clock.c:298
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:407
+#: applets/clock/clock.c:415
 msgid "%A %B %d"
 msgstr "%B%e日 %A"
 
-#: applets/clock/clock.c:825
+#: applets/clock/clock.c:839
 msgid "Tasks"
 msgstr "タスク"
 
-#: applets/clock/clock.c:961
+#: applets/clock/clock.c:976
 msgid "All Day"
 msgstr "全日"
 
-#: applets/clock/clock.c:991
+#: applets/clock/clock.c:1008
 msgid "Appointments"
 msgstr "予定"
 
-#: applets/clock/clock.c:1217
+#: applets/clock/clock.c:1243
 msgid "Calendar"
 msgstr "カレンダ"
 
-#: applets/clock/clock.c:1430
+#: applets/clock/clock.c:1474
 msgid "Computer Clock"
 msgstr "コンピュータ時計"
 
-#: applets/clock/clock.c:1512
+#: applets/clock/clock.c:1556
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: applets/clock/clock.c:1514
+#: applets/clock/clock.c:1558
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: applets/clock/clock.c:1554
+#: applets/clock/clock.c:1598
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%e (%a)"
 
-#: applets/clock/clock.c:1596
+#: applets/clock/clock.c:1640
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "時刻設定ツールの起動に失敗: %s"
 
-#: applets/clock/clock.c:1637
+#: applets/clock/clock.c:1679
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -207,7 +207,7 @@ msgstr ""
 "日付と時刻を設定するプログラムの特定に失敗しました。おそらく何もインストール"
 "されていないかも？"
 
-#: applets/clock/clock.c:2095 applets/clock/clock.c:2452
+#: applets/clock/clock.c:2157 applets/clock/clock.c:2514
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -217,52 +217,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "ヘルプを表示する際にエラーが発生しました:%s"
 
-#: applets/clock/clock.c:2144
+#: applets/clock/clock.c:2206
 msgid "Clock Preferences"
 msgstr "時計の設定"
 
-#: applets/clock/clock.c:2180
+#: applets/clock/clock.c:2242
 msgid "Clock _type:"
 msgstr "時計の種類(_T):"
 
-#: applets/clock/clock.c:2191
+#: applets/clock/clock.c:2253
 msgid "12 hour"
 msgstr "12時間制"
 
-#: applets/clock/clock.c:2199
+#: applets/clock/clock.c:2261
 msgid "24 hour"
 msgstr "24時間制"
 
-#: applets/clock/clock.c:2207
+#: applets/clock/clock.c:2269
 msgid "UNIX time"
 msgstr "UNIX 時間"
 
-#: applets/clock/clock.c:2215
+#: applets/clock/clock.c:2277
 msgid "Internet time"
 msgstr "インターネット時間"
 
-#: applets/clock/clock.c:2223
+#: applets/clock/clock.c:2285
 msgid "Custom format"
 msgstr "書式のカスタマイズ"
 
-#: applets/clock/clock.c:2239
+#: applets/clock/clock.c:2301
 msgid "Custom _format:"
 msgstr "書式のカスタマイズ(_F):"
 
-#: applets/clock/clock.c:2256
+#: applets/clock/clock.c:2318
 msgid "Show _seconds"
 msgstr "秒を表示する(_S)"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2327
 msgid "Show _date"
 msgstr "日付を表示する(_D)"
 
-#: applets/clock/clock.c:2274
+#: applets/clock/clock.c:2336
 msgid "Use _UTC"
 msgstr "UTC を使用する(_U)"
 
 #. Translator credits
-#: applets/clock/clock.c:2487 applets/notification_area/main.c:116
+#: applets/clock/clock.c:2549 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:283
@@ -278,7 +278,7 @@ msgstr ""
 "Yuusuke Tahara (tahara@gnome.gr.jp)\n"
 "KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>"
 
-#: applets/clock/clock.c:2508
+#: applets/clock/clock.c:2570
 msgid "The Clock displays the current time and date"
 msgstr "現在の時刻と日付を表示する時計"
 
@@ -385,273 +385,6 @@ msgstr "UTC 時間を使用する"
 msgid "Use internet time"
 msgstr "インターネット時間を使用する"
 
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:186
-msgid "Text"
-msgstr "テキスト"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:187
-msgid "Text to render"
-msgstr "レンダリングするテキスト"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:194
-msgid "Markup"
-msgstr "マークアップ"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:195
-msgid "Marked up text to render"
-msgstr "レンダリングするマークアップ・テキスト"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:202
-msgid "Attributes"
-msgstr "属性"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:203
-msgid "A list of style attributes to apply to the text of the renderer"
-msgstr "レンダリングするテキストに適用するスタイルの属性のリスト"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:210
-msgid "Ellipsize"
-msgstr "Ellipsize"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:211
-msgid "Whether to crop the text and display \"...\" when space is limited"
-msgstr ""
-"テキストの表示範囲を越えた際にテキストを切り詰めて \"...\" を表示するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:218
-msgid "Background color name"
-msgstr "背景色の名前"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:219
-msgid "Background color as a string"
-msgstr "背景色を示す文字列"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:226
-#: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "背景色"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:227
-msgid "Background color as a GdkColor"
-msgstr "背景色の GdkColor 値"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:234
-msgid "Foreground color name"
-msgstr "前景色の名前"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:235
-msgid "Foreground color as a string"
-msgstr "前景色を示す文字列"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:242
-msgid "Foreground color"
-msgstr "前景色"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:243
-msgid "Foreground color as a GdkColor"
-msgstr "前景色の GdkColor 値"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:251
-msgid "Editable"
-msgstr "編集可否"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:252
-msgid "Whether the text can be modified by the user"
-msgstr "ユーザがテキストを編集できるかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:259
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:267
-msgid "Font"
-msgstr "フォント"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:260
-msgid "Font description as a string"
-msgstr "フォント記述子を示す文字列"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:268
-msgid "Font description as a PangoFontDescription struct"
-msgstr "フォント記述子を示す PangoFontDescription 構造体"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:276
-msgid "Font family"
-msgstr "フォント・ファミリ"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:277
-msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
-msgstr "フォント・ファミリの名前 (例: Sans, Helvetica, Times, Monosace)"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:284
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:285
-msgid "Font style"
-msgstr "フォントのスタイル"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:293
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:294
-msgid "Font variant"
-msgstr "フォントの縦横比"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:302
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:303
-msgid "Font weight"
-msgstr "フォントの太さ"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:312
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:313
-msgid "Font stretch"
-msgstr "フォントの幅"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:321
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:322
-msgid "Font size"
-msgstr "フォントの大きさ"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:331
-msgid "Font points"
-msgstr "フォントの大きさ (ポイント)"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:332
-msgid "Font size in points"
-msgstr "フォントの大きさ (ポイント単位)"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:341
-msgid "Font scale"
-msgstr "フォントの倍率"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:342
-msgid "Font scaling factor"
-msgstr "フォントの倍率"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:351
-msgid "Rise"
-msgstr "Rise"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:352
-msgid ""
-"Offset of text above the baseline (below the baseline if rise is negative)"
-msgstr ""
-"基点 (ベースライン) より上側にあるテキストのオフセット (Rise が負の場合は基点"
-"より下側)"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:362
-msgid "Strikethrough"
-msgstr "取消し線"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:363
-msgid "Whether to strike through the text"
-msgstr "テキストに取消し線が付与するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:370
-msgid "Underline"
-msgstr "下線"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:371
-msgid "Style of underline for this text"
-msgstr "このテキストの下線のスタイル"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:381
-msgid "Background set"
-msgstr "背景の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:382
-msgid "Whether this tag affects the background color"
-msgstr "このタグが背景に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:385
-msgid "Foreground set"
-msgstr "前景の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:386
-msgid "Whether this tag affects the foreground color"
-msgstr "このタグが前景に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:389
-msgid "Editability set"
-msgstr "編集可否の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:390
-msgid "Whether this tag affects text editability"
-msgstr "このタグがテキストの編集可否に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:393
-msgid "Font family set"
-msgstr "フォント・ファミリの設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:394
-msgid "Whether this tag affects the font family"
-msgstr "このタグがフォント・ファミリに影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:397
-msgid "Font style set"
-msgstr "フォント・スタイルの設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:398
-msgid "Whether this tag affects the font style"
-msgstr "このタグがフォント・スタイルに影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:401
-msgid "Font variant set"
-msgstr "フォントの縦横比の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:402
-msgid "Whether this tag affects the font variant"
-msgstr "このタグがフォントの縦横比に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:405
-msgid "Font weight set"
-msgstr "フォントの太さの設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:406
-msgid "Whether this tag affects the font weight"
-msgstr "このタグがフォントの太さに影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:409
-msgid "Font stretch set"
-msgstr "フォントの幅の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:410
-msgid "Whether this tag affects the font stretch"
-msgstr "このタグがフォントの幅に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:413
-msgid "Font size set"
-msgstr "フォントの大きさの設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:414
-msgid "Whether this tag affects the font size"
-msgstr "このタグがフォントの大きさに影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:417
-msgid "Font scale set"
-msgstr "フォントの倍率の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:418
-msgid "Whether this tag scales the font size by a factor"
-msgstr "このタグがフォントの倍率に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:421
-msgid "Rise set"
-msgstr "Rise の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:422
-msgid "Whether this tag affects the rise"
-msgstr "このタグが Rise に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:425
-msgid "Strikethrough set"
-msgstr "取消し線の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:426
-msgid "Whether this tag affects strikethrough"
-msgstr "このタグが取消し線に影響するかどうか"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:429
-msgid "Underline set"
-msgstr "下線の設定"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:430
-msgid "Whether this tag affects underlining"
-msgstr "このタグが下線に影響するかどうか"
-
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
 msgstr "お遊び"
@@ -661,7 +394,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "泳ぐ魚か、何か生き物を表示します"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:493
+#: applets/fish/fish.c:496
 msgid "Fish"
 msgstr "おさかな君"
 
@@ -673,7 +406,7 @@ msgstr "おかしな魚はここからやって来る"
 msgid "Wanda Factory"
 msgstr "Wanda ファクトリ"
 
-#: applets/fish/fish.c:194
+#: applets/fish/fish.c:197
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -687,12 +420,12 @@ msgstr ""
 "アプレットを \"実用的なもの\"、または何か便利なものにすることを\n"
 "期待しながら %s を利用しようすることがないよう、強く勧告するものであります。"
 
-#: applets/fish/fish.c:455 applets/fish/fish.c:525 applets/fish/fish.c:613
+#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
 #, no-c-format
 msgid "%s the Fish"
 msgstr "おさかな君 %s"
 
-#: applets/fish/fish.c:456
+#: applets/fish/fish.c:459
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -704,29 +437,29 @@ msgstr ""
 "に、実行すると貴重なパネルのスペースとメモリを無駄遣いします。もしこのアプ"
 "レットを使っている人を見かけたら、直ぐにカウンセリングを勧めて下さいネ。"
 
-#: applets/fish/fish.c:477
+#: applets/fish/fish.c:480
 msgid "(with minor help from George)"
 msgstr "(あと George にちょっと手伝ってもらった)"
 
-#: applets/fish/fish.c:526
+#: applets/fish/fish.c:529
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "現代の神のお告げ GNOME おさかな君 %s"
 
-#: applets/fish/fish.c:573
+#: applets/fish/fish.c:576
 msgid "Unable to get the name of the command to execute"
 msgstr "実行するコマンド名を取得できません"
 
-#: applets/fish/fish.c:590
+#: applets/fish/fish.c:593
 msgid "Unable to locate the command to execute"
 msgstr "実行するコマンドの格納場所に移動できません"
 
-#: applets/fish/fish.c:618
+#: applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "GNOME おさかな君 %s が言うには:"
 
-#: applets/fish/fish.c:744
+#: applets/fish/fish.c:747
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -737,7 +470,7 @@ msgstr ""
 "\n"
 "詳細: %s"
 
-#: applets/fish/fish.c:765
+#: applets/fish/fish.c:768
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -749,7 +482,7 @@ msgstr ""
 "\n"
 "おさかな君の設定ダイアログを参照して下さい。"
 
-#: applets/fish/fish.c:1369
+#: applets/fish/fish.c:1372
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -757,7 +490,7 @@ msgstr ""
 "水を換えてくれぃ！\n"
 "(今日の日付をみてネ)"
 
-#: applets/fish/fish.c:1429
+#: applets/fish/fish.c:1432
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "占い師 GNOME おさかな君 %s"
@@ -902,14 +635,14 @@ msgstr "通知スペース・ファクトリ"
 msgid "Utility"
 msgstr "ユーティリティ"
 
-#: applets/notification_area/main.c:129
+#: applets/notification_area/main.c:129 applets/notification_area/main.c:339
 msgid "Panel Notification Area"
 msgstr "パネル通知エリア"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:121 gnome-panel/menu.c:131
-#: gnome-panel/menu.c:141 gnome-panel/menu.c:151 gnome-panel/menu.c:161
-#: gnome-panel/panel-menu-bar.c:192
+#: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
+#: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
+#: gnome-panel/panel-menu-bar.c:223
 msgid "Actions"
 msgstr "アクション"
 
@@ -1042,7 +775,7 @@ msgstr "現在のワークスペースにあるウィンドウを表示する(_O
 msgid "Show windows from a_ll workspaces"
 msgstr "全てのワークスペースにあるウィンドウを表示する(_L)"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3611
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3618
 msgid "Size"
 msgstr "大きさ"
 
@@ -1256,81 +989,90 @@ msgid "GNOME Panel Shell"
 msgstr "GNOME パネル・シェル"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:497 gnome-panel/panel-applet-frame.c:111
+#: gnome-panel/applet.c:470 gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "ロック(_L)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:478
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:483
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:456
 msgid "_Remove From Panel"
 msgstr "パネルから削除(_R)"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:497
-#: gnome-panel/panel-applet-frame.c:111
+#: gnome-panel/applet.c:103 gnome-panel/applet.c:470
+#: gnome-panel/panel-applet-frame.c:109
 msgid "Un_lock"
 msgstr "ロック解除(_L)"
 
-#: gnome-panel/applet.c:406
+#: gnome-panel/applet.c:377
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1115
+#: gnome-panel/applet.c:1094
 msgid "Can't find an empty spot"
 msgstr "空いているスペースを見つけられません"
 
-#: gnome-panel/button-widget.c:198
+#: gnome-panel/button-widget.c:199
 #, c-format
 msgid "Failed to load image %s"
 msgstr "画像 %s の読み込みに失敗しました"
 
-#: gnome-panel/button-widget.c:400
+#: gnome-panel/button-widget.c:403
 msgid "none"
 msgstr "なし"
 
-#: gnome-panel/button-widget.c:405
+#: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "ファイルがありません"
 
-#: gnome-panel/button-widget.c:769
+#: gnome-panel/button-widget.c:754
+#, fuzzy
+msgid "Activatable"
+msgstr "編集可否"
+
+#: gnome-panel/button-widget.c:755
+msgid "Whether the button is activatable"
+msgstr ""
+
+#: gnome-panel/button-widget.c:763
 msgid "Has Arrow"
 msgstr "矢印つき"
 
-#: gnome-panel/button-widget.c:770
+#: gnome-panel/button-widget.c:764
 msgid "Whether or not to draw an arrow indicator"
 msgstr "矢印を描画するかどうかを指定します"
 
-#: gnome-panel/button-widget.c:778
+#: gnome-panel/button-widget.c:772
 msgid "Drag and drop Highlight"
 msgstr "ドラッグ & ドロップの強調表示"
 
-#: gnome-panel/button-widget.c:779
+#: gnome-panel/button-widget.c:773
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "アイコンをドラッグ & ドロップする際に強調表示するかどうかを指定します"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3600
+#: gnome-panel/button-widget.c:781 gnome-panel/panel-toplevel.c:3607
 msgid "Orientation"
 msgstr "向き"
 
-#: gnome-panel/button-widget.c:788
+#: gnome-panel/button-widget.c:782
 msgid "The ButtonWidget orientation"
 msgstr "ButtonWiget の向きです"
 
-#: gnome-panel/button-widget.c:797
+#: gnome-panel/button-widget.c:791
 msgid "Icon Name"
 msgstr "アイコン名"
 
-#: gnome-panel/button-widget.c:798
+#: gnome-panel/button-widget.c:792
 msgid "The desired icon for the ButtonWidget"
 msgstr "ButtonWidget のアイコンです"
 
-#: gnome-panel/button-widget.c:806
+#: gnome-panel/button-widget.c:800
 msgid "Stock Icon ID"
 msgstr "ストック・アイコン ID"
 
-#: gnome-panel/button-widget.c:807
+#: gnome-panel/button-widget.c:801
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "ButtonWidget のストック・アイコンです"
 
@@ -1358,12 +1100,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE メニュー"
 
-#: gnome-panel/drawer.c:339 gnome-panel/menu.c:3199
+#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
 msgid "Drawer"
 msgstr "引き出し"
 
-#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:739 gnome-panel/menu.c:1514
-#: gnome-panel/menu.c:3036 gnome-panel/panel-action-button.c:98
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:125
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
@@ -1515,15 +1257,15 @@ msgstr "Screenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "ファイル %s の保存に必要な空き容量がありません。"
 
-#: gnome-panel/gnome-panel-screenshot.c:1098
+#: gnome-panel/gnome-panel-screenshot.c:1142
 msgid "Grab a window instead of the entire screen"
 msgstr "画面全体ではなくウインドウの画像を取得する"
 
-#: gnome-panel/gnome-panel-screenshot.c:1099
+#: gnome-panel/gnome-panel-screenshot.c:1143
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "指定した時間 (秒単位) が経過したらスクリーンショットを撮る"
 
-#: gnome-panel/gnome-panel-screenshot.c:1151
+#: gnome-panel/gnome-panel-screenshot.c:1198
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1531,7 +1273,7 @@ msgstr ""
 "スクリーンショット・プログラムの Glade ファイルが見つかりません。\n"
 "gnome-panel が正しくインスールされているか確認して下さい。"
 
-#: gnome-panel/gnome-panel-screenshot.c:1167
+#: gnome-panel/gnome-panel-screenshot.c:1214
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "このデスクトップのスクリーンショットが撮れません。"
 
@@ -1570,62 +1312,62 @@ msgstr ""
 msgid "Web directory"
 msgstr "Web ディレクトリ"
 
-#: gnome-panel/launcher.c:101
+#: gnome-panel/launcher.c:102
 msgid "Cannot save launcher to disk"
 msgstr "ランチャを保存できません"
 
-#: gnome-panel/launcher.c:129 gnome-panel/launcher.c:172
-#: gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
+#: gnome-panel/launcher.c:217
 msgid "Cannot launch icon"
 msgstr "アイコンを起動できません"
 
-#: gnome-panel/launcher.c:130
+#: gnome-panel/launcher.c:131
 msgid "This launch icon does not specify a url to show."
 msgstr "このランチャ・アイコンには表示する URL が指定されていません。"
 
-#: gnome-panel/launcher.c:138
+#: gnome-panel/launcher.c:139
 #, c-format
 msgid "Cannot show %s"
 msgstr "%s を表示できません"
 
-#: gnome-panel/launcher.c:408
+#: gnome-panel/launcher.c:409
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "パネル・ランチャのデスクトップ・ファイルに URI がありません\n"
 
-#: gnome-panel/launcher.c:422
+#: gnome-panel/launcher.c:423
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "デスクトップ・ファイル %s (パネル・ランチャ %s%s) が開けません\n"
 
-#: gnome-panel/launcher.c:629 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "ランチャのプロパティ"
 
-#: gnome-panel/launcher.c:813
+#: gnome-panel/launcher.c:817
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "キー %s がセットされていないので、ランチャを起動できません\n"
 
-#: gnome-panel/launcher.c:867 gnome-panel/launcher.c:884
+#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "ランチャを生成できません"
 
-#: gnome-panel/launcher.c:868 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "ランチャの名前を指定して下さい。"
 
-#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "正しい URL またはコマンドを指定して下さい。"
 
-#: gnome-panel/launcher.c:928 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "ランチャの作成"
 
-#: gnome-panel/main.c:48
+#: gnome-panel/main.c:49
 msgid "Specify a profile name to load"
 msgstr "読み込むプロファイル名を指定して下さい"
 
@@ -1650,11 +1392,11 @@ msgstr ""
 "この場所に書きこみできないため、新しいランチャをこの場所に作成できませんでし"
 "た。"
 
-#: gnome-panel/menu.c:110
+#: gnome-panel/menu.c:111
 msgid "Log Out"
 msgstr "ログアウト"
 
-#: gnome-panel/menu.c:113
+#: gnome-panel/menu.c:114
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1662,45 +1404,45 @@ msgstr ""
 "別のユーザでログイン、またはコンピュータをシャットダウンするために、このセッ"
 "ションからログアウトします"
 
-#: gnome-panel/menu.c:120
+#: gnome-panel/menu.c:121
 msgid "Lock"
 msgstr "画面のロック"
 
-#: gnome-panel/menu.c:123
+#: gnome-panel/menu.c:124
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "画面をロックして一時的にコンピュータを離れることができます"
 
-#: gnome-panel/menu.c:130 gnome-panel/panel-action-button.c:260
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
 msgid "Force Quit"
 msgstr "アプリの強制終了"
 
-#: gnome-panel/menu.c:133
+#: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
 msgstr "おかしな動作をするアプリを強制的に終了します"
 
-#: gnome-panel/menu.c:140 gnome-panel/panel-action-button.c:255
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
 msgid "Screenshot"
 msgstr "スクリーンショット"
 
-#: gnome-panel/menu.c:143 gnome-panel/menu.c:3416
-#: gnome-panel/panel-menu-bar.c:157
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3419
+#: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "お使いのデスクトップのスクリーンショットを撮ります"
 
-#: gnome-panel/menu.c:150
+#: gnome-panel/menu.c:151
 msgid "Search"
 msgstr "ファイルの検索"
 
-#: gnome-panel/menu.c:153 gnome-panel/menu.c:3397
-#: gnome-panel/panel-menu-bar.c:142
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3400
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "お使いのシステムにあるファイル、フォルダ、ドキュメントを検索します"
 
-#: gnome-panel/menu.c:160
+#: gnome-panel/menu.c:161
 msgid "Run"
 msgstr "プログラムの実行"
 
-#: gnome-panel/menu.c:163
+#: gnome-panel/menu.c:164
 msgid "Run a command"
 msgstr "コマンドを実行します"
 
@@ -1720,8 +1462,8 @@ msgstr ""
 "このプログラムは他のアプリケーションを実行したり、小さなアプレットを埋め込ん"
 "だりすることができます。"
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:169
-#: gnome-panel/panel-action-button.c:193 gnome-panel/panel-util.c:717
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:194
+#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' を実行できません"
@@ -1766,107 +1508,107 @@ msgstr "起動するボックスを追加できません"
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "エントリの中に 'Exec' または 'URL' がありません"
 
-#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3180
+#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3169
 msgid "Main Menu"
 msgstr "メイン・メニュー"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1465
 msgid "Add this launcher to panel"
 msgstr "パネルへ追加"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1474
 msgid "Remove this item"
 msgstr "この項目の削除"
 
-#: gnome-panel/menu.c:1488
+#: gnome-panel/menu.c:1491
 msgid "Put into run dialog"
 msgstr "起動ダイアログにセット"
 
-#: gnome-panel/menu.c:1536
+#: gnome-panel/menu.c:1539
 msgid "Entire menu"
 msgstr "メニュー全体"
 
-#: gnome-panel/menu.c:1545
+#: gnome-panel/menu.c:1547
 msgid "Add this as drawer to panel"
 msgstr "引き出しとしてパネルへ追加"
 
-#: gnome-panel/menu.c:1556
+#: gnome-panel/menu.c:1558
 msgid "Add this as menu to panel"
 msgstr "メニューとしてパネルへ追加"
 
-#: gnome-panel/menu.c:1569
+#: gnome-panel/menu.c:1570
 msgid "Add new item to this menu"
 msgstr "新しい項目の追加"
 
-#: gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:1597
 msgid "Properties"
 msgstr "プロパティ"
 
-#: gnome-panel/menu.c:2571 gnome-panel/menu.c:2626
+#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
-#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3357
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3361
+#: gnome-panel/panel-menu-bar.c:241
 msgid "Applications"
 msgstr "アプリケーション"
 
-#: gnome-panel/menu.c:2915
+#: gnome-panel/menu.c:2916
 msgid "You cannot remove your last panel."
 msgstr "最後のパネルは削除できません。"
 
-#: gnome-panel/menu.c:2978
+#: gnome-panel/menu.c:2976
 msgid "_Delete This Panel..."
 msgstr "このパネルの削除(_D)..."
 
-#: gnome-panel/menu.c:2981 gnome-panel/menu.c:3021
+#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3014
 msgid "_Delete This Panel"
 msgstr "このパネルの削除(_D)"
 
-#: gnome-panel/menu.c:2996
+#: gnome-panel/menu.c:2993
 msgid "_Add to Panel"
 msgstr "パネルへ追加(_A)"
 
-#: gnome-panel/menu.c:3051
+#: gnome-panel/menu.c:3043
 msgid "_New Panel"
 msgstr "新規パネル(_N)"
 
-#: gnome-panel/menu.c:3098
+#: gnome-panel/menu.c:3090
 msgid "_About Panels"
 msgstr "パネルについて(_A)..."
 
-#: gnome-panel/menu.c:3112
+#: gnome-panel/menu.c:3104
 msgid "About _GNOME"
 msgstr "GNOME について(_G)"
 
-#: gnome-panel/menu.c:3160
+#: gnome-panel/menu.c:3149
 msgid "Launcher..."
 msgstr "ランチャ..."
 
-#: gnome-panel/menu.c:3170
+#: gnome-panel/menu.c:3159
 msgid "Launcher from menu"
 msgstr "メニューのランチャ"
 
-#: gnome-panel/menu.c:3190
+#: gnome-panel/menu.c:3179
 msgid "Menu Bar"
 msgstr "メニュー・バー"
 
-#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:169
+#: gnome-panel/menu.c:3208 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "画面のロック"
 
-#: gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:3214
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "画面をロックして一時的にコンピュータを離れることができます"
 
-#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
+#: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
 #, c-format
 msgid "Log Out %s"
 msgstr "%s のログアウト"
 
-#: gnome-panel/menu.c:3252
+#: gnome-panel/menu.c:3246
 #, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
@@ -1875,81 +1617,81 @@ msgstr ""
 "%s のセッションからログアウトして、別のユーザでログインするか、コンピュータを"
 "シャットダウンできます"
 
-#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
+#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "アプリケーションの実行..."
 
-#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:128
+#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "コマンドを入力すると、アプリケーションを起動します"
 
-#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:140
+#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "ファイルの検索..."
 
-#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:155
+#: gnome-panel/menu.c:3416 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "スクリーンショット..."
 
-#: gnome-panel/menu.c:3431
+#: gnome-panel/menu.c:3434
 msgid "Desktop"
 msgstr "デスクトップ"
 
-#: gnome-panel/panel-action-button.c:87
+#: gnome-panel/panel-action-button.c:101
 msgid "_Activate Screensaver"
 msgstr "スクリーンセーバを有効にする(_A)"
 
-#: gnome-panel/panel-action-button.c:88
+#: gnome-panel/panel-action-button.c:107
 msgid "_Lock Screen"
 msgstr "画面のロック(_L)"
 
-#: gnome-panel/panel-action-button.c:92
+#: gnome-panel/panel-action-button.c:113
 msgid "_Kill Screensaver Daemon"
 msgstr "スクリーンセーバの強制終了(_K)"
 
-#: gnome-panel/panel-action-button.c:94
+#: gnome-panel/panel-action-button.c:119
 msgid "Restart _Screensaver Daemon"
 msgstr "スクリーンセーバの再起動(_S)"
 
-#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-action-button.c:252
 msgid "Lock screen"
 msgstr "画面をロックします"
 
-#: gnome-panel/panel-action-button.c:240
+#: gnome-panel/panel-action-button.c:260
 msgid "Log out of GNOME"
 msgstr "GNOME デスクトップからログアウトします"
 
-#: gnome-panel/panel-action-button.c:245
+#: gnome-panel/panel-action-button.c:266
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "アプリケーションの実行"
 
-#: gnome-panel/panel-action-button.c:250
+#: gnome-panel/panel-action-button.c:272
 msgid "Search for Files"
 msgstr "ファイルの検索"
 
-#: gnome-panel/panel-action-button.c:405
+#: gnome-panel/panel-action-button.c:439
 msgid "Action Type"
 msgstr "アクションの種類"
 
-#: gnome-panel/panel-action-button.c:406
+#: gnome-panel/panel-action-button.c:440
 msgid "The type of action this button implements"
 msgstr "このボタンのアクションの種類の実装"
 
-#: gnome-panel/panel-action-button.c:415 gnome-panel/panel-menu-button.c:461
+#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
 msgid "Drag and drop enabled"
 msgstr "ドラッグ & ドロップを有効にする"
 
-#: gnome-panel/panel-action-button.c:416 gnome-panel/panel-menu-button.c:462
+#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "ウィジェットでドラッグ & ドロップを有効にするかどうか設定します"
 
-#: gnome-panel/panel-applet-frame.c:739
+#: gnome-panel/panel-applet-frame.c:745
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s' から例外です\n"
 
-#: gnome-panel/panel-applet-frame.c:861
+#: gnome-panel/panel-applet-frame.c:866
 #, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
@@ -1960,7 +1702,7 @@ msgstr ""
 "\n"
 "アプレットを再読み込みしますか？"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:872
 msgid ""
 "\n"
 "\n"
@@ -1972,21 +1714,21 @@ msgstr ""
 "(いま再読み込みしないと選択した場合でも、パネルを右クリックして \"パネルに追"
 "加\" サブメニューを選べばいつでも追加できます)"
 
-#: gnome-panel/panel-applet-frame.c:907
+#: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
 msgstr "削除しない(_O)"
 
-#: gnome-panel/panel-applet-frame.c:944
+#: gnome-panel/panel-applet-frame.c:948
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "\"%s\" を読み込む際にパネルで問題が発生しました。"
 
-#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
 msgid "Details: %s"
 msgstr "詳細: %s"
 
-#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
+#: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
 msgid ""
 "\n"
 "\n"
@@ -2143,35 +1885,49 @@ msgid "Confirm panel removal"
 msgstr "パネル削除時に確認する"
 
 #: gnome-panel/panel-global.schemas.in.h:7
+#, fuzzy
+msgid "Disable Force Quit"
+msgstr "アプリの強制終了"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+#, fuzzy
+msgid "Disable Lock Screen"
+msgstr "画面のロック"
+
+#: gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
 msgstr "\"実行ダイアログ\" の表示する際のキー"
 
-#: gnome-panel/panel-global.schemas.in.h:8
+#: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "アニメーションを有効にする"
 
-#: gnome-panel/panel-global.schemas.in.h:9
+#: gnome-panel/panel-global.schemas.in.h:12
 msgid "Enable keybindings"
 msgstr "キー操作を有効にする"
 
-#: gnome-panel/panel-global.schemas.in.h:10
+#: gnome-panel/panel-global.schemas.in.h:13
 msgid "Enable tooltips"
 msgstr "ツールチップを有効にする"
 
-#: gnome-panel/panel-global.schemas.in.h:11
+#: gnome-panel/panel-global.schemas.in.h:14
 msgid "FIXME - is this resolved with the new menu stuff"
 msgstr "FIXME - これは新しいメニュー機能で解決できる？"
 
-#: gnome-panel/panel-global.schemas.in.h:12
+#: gnome-panel/panel-global.schemas.in.h:15
 msgid "FIXME - need to define limits"
 msgstr "FIXME - 上限を定義する必要あり"
 
-#: gnome-panel/panel-global.schemas.in.h:13
+#: gnome-panel/panel-global.schemas.in.h:16
 msgid "Highlight launchers on mouseover"
 msgstr "マウスが上にのったランチャを強調表示する"
 
-#: gnome-panel/panel-global.schemas.in.h:14
+#: gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -2179,7 +1935,7 @@ msgstr ""
 "TRUE にすると、ユーザがパネルを削除しようとした際に確認ダイアログが表示されま"
 "す。"
 
-#: gnome-panel/panel-global.schemas.in.h:15
+#: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -2187,18 +1943,36 @@ msgstr ""
 "TRUE にすると、ユーザがランチャの引き出しをクリックした際に引き出しを自動的に"
 "閉じます。"
 
-#: gnome-panel/panel-global.schemas.in.h:16
+#: gnome-panel/panel-global.schemas.in.h:19
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "TRUE にすると、ユーザがランチャの上にマウス・カーソルを移動した際にランチャを"
 "強調表示します。"
 
-#: gnome-panel/panel-global.schemas.in.h:17
+#: gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, panel-specific keybindings are enabled."
 msgstr "TRUE にすると、パネル固有のキー操作が有効になります。"
 
-#: gnome-panel/panel-global.schemas.in.h:18
+#: gnome-panel/panel-global.schemas.in.h:21
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:22
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:23
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+
+#: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -2208,68 +1982,68 @@ msgstr ""
 "は個別にロックする必要があります。パネルはこの設定を有効にするために、再起動"
 "しなければなりません。"
 
-#: gnome-panel/panel-global.schemas.in.h:19
+#: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
 msgstr "TRUE にすると、パネルにあるオブジェクトのツールチップが表示されます。"
 
-#: gnome-panel/panel-global.schemas.in.h:20
+#: gnome-panel/panel-global.schemas.in.h:26
 msgid "Popup panel menu keybinding"
 msgstr "パネル・メニューをポップアップさせるキー"
 
-#: gnome-panel/panel-global.schemas.in.h:21
+#: gnome-panel/panel-global.schemas.in.h:27
 msgid "Take screenshot"
 msgstr "スクリーンショットを撮るキー"
 
-#: gnome-panel/panel-global.schemas.in.h:22
+#: gnome-panel/panel-global.schemas.in.h:28
 msgid "Take window screenshot"
 msgstr "ウィンドウのスクリーンショットの作成"
 
-#: gnome-panel/panel-menu-bar.c:171
+#: gnome-panel/panel-menu-bar.c:193
 msgid "Protect your computer from unauthorized use"
 msgstr "不正な使用からコンピュータを守ります"
 
-#: gnome-panel/panel-menu-bar.c:179
+#: gnome-panel/panel-menu-bar.c:207
 #, c-format
 msgid "Quit from %s's desktop"
 msgstr "%s の GNOME デスクトップを終了します"
 
-#: gnome-panel/panel-menu-button.c:416
+#: gnome-panel/panel-menu-button.c:429
 msgid "Menu Path"
 msgstr "メニュー・パス"
 
-#: gnome-panel/panel-menu-button.c:417
+#: gnome-panel/panel-menu-button.c:430
 msgid "The path from which to construct the menu"
 msgstr "メニューを構成するパス"
 
-#: gnome-panel/panel-menu-button.c:425
+#: gnome-panel/panel-menu-button.c:438
 msgid "Custom Icon"
 msgstr "カスタム・アイコン"
 
-#: gnome-panel/panel-menu-button.c:426
+#: gnome-panel/panel-menu-button.c:439
 msgid "The custom icon for the menu"
 msgstr "メニューのカスタム・アイコンです"
 
-#: gnome-panel/panel-menu-button.c:434
+#: gnome-panel/panel-menu-button.c:447
 msgid "Tooltip"
 msgstr "ツールチップ"
 
-#: gnome-panel/panel-menu-button.c:435
+#: gnome-panel/panel-menu-button.c:448
 msgid "Tooltip displayed for the menu"
 msgstr "メニューにツールチップを表示する"
 
-#: gnome-panel/panel-menu-button.c:443
+#: gnome-panel/panel-menu-button.c:456
 msgid "Use Menu Path"
 msgstr "メニュー・パスを使用する"
 
-#: gnome-panel/panel-menu-button.c:444
+#: gnome-panel/panel-menu-button.c:457
 msgid "Use the path specified by the menu-path property"
 msgstr "プロパティ menu-path が指定するパスを使用します"
 
-#: gnome-panel/panel-menu-button.c:452
+#: gnome-panel/panel-menu-button.c:465
 msgid "Use Custom Icon"
 msgstr "カスタム・アイコンを使用する"
 
-#: gnome-panel/panel-menu-button.c:453
+#: gnome-panel/panel-menu-button.c:466
 msgid "Use the icon specified by the custom-icon property"
 msgstr "プロパティ custom-icon が指定するアイコンを使用します"
 
@@ -2452,19 +2226,19 @@ msgstr "オブジェクトのボタンにカスタム・アイコンを使用す
 msgid "Use custom path for menu contents"
 msgstr "メニューの内容にカスタム・パスを使用する"
 
-#: gnome-panel/panel-profile.c:776 gnome-panel/panel-profile.c:807
-#: gnome-panel/panel-profile.c:843 gnome-panel/panel-profile.c:1615
+#: gnome-panel/panel-profile.c:765 gnome-panel/panel-profile.c:796
+#: gnome-panel/panel-profile.c:832 gnome-panel/panel-profile.c:1603
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf の string 値 '%s' の読み込みでエラー: %s"
 
-#: gnome-panel/panel-profile.c:822 gnome-panel/panel-profile.c:1510
-#: gnome-panel/panel-profile.c:1584 gnome-panel/panel-profile.c:1648
+#: gnome-panel/panel-profile.c:811 gnome-panel/panel-profile.c:1498
+#: gnome-panel/panel-profile.c:1572 gnome-panel/panel-profile.c:1635
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf の int 値 '%s' の読み込みでエラー: %s"
 
-#: gnome-panel/panel-profile.c:1520
+#: gnome-panel/panel-profile.c:1508
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2473,12 +2247,12 @@ msgstr ""
 "パネル '%s' は、現在無効なスクリーン %d で表示するようになっています。このパ"
 "ネルを読み込みません。"
 
-#: gnome-panel/panel-profile.c:1599
+#: gnome-panel/panel-profile.c:1587
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf の bool 値 '%s' の読み込みでエラー: %s"
 
-#: gnome-panel/panel-profile.c:2144
+#: gnome-panel/panel-profile.c:2131
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "GConf の list 値 '%s' の読み込みでエラー: %s"
@@ -2626,31 +2400,31 @@ msgstr "%s のオープンする際に不明なエラーが発生しました"
 msgid "Recent Documents"
 msgstr "最近開いたドキュメント"
 
-#: gnome-panel/panel-run-dialog.c:284
+#: gnome-panel/panel-run-dialog.c:285
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "コマンド '%s' を起動できません"
 
-#: gnome-panel/panel-run-dialog.c:310
+#: gnome-panel/panel-run-dialog.c:311
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "場所 '%s' を表示できません"
 
-#: gnome-panel/panel-run-dialog.c:362
+#: gnome-panel/panel-run-dialog.c:363
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "UTF-8 から '%s' へ変換できません"
 
-#: gnome-panel/panel-run-dialog.c:1039
+#: gnome-panel/panel-run-dialog.c:1041
 msgid "Choose a file to append to the command..."
 msgstr "コマンドの後ろに続けるファイルを選んで下さい..."
 
-#: gnome-panel/panel-run-dialog.c:1227
+#: gnome-panel/panel-run-dialog.c:1229
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "実行するコマンド: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1233 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "説明を見たいアプリケーションを選んで下さい。"
 
@@ -2701,7 +2475,7 @@ msgstr "既存のアプリケーション一覧(_A)"
 msgid "The icon of the command to be run."
 msgstr "実行するコマンドのアイコンです。"
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:144
+#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:145
 msgid "_Run"
 msgstr "実行(_R)"
 
@@ -2725,213 +2499,222 @@ msgstr ""
 "エラーコード: %d\n"
 "パネルを今すぐ終了します。"
 
-#: gnome-panel/panel-stock-icons.c:115
+#: gnome-panel/panel-stock-icons.c:116
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "パネルのストック・アイコン '%s' が読み込めません\n"
 
-#: gnome-panel/panel-stock-icons.c:145
+#: gnome-panel/panel-stock-icons.c:146
 msgid "_Force quit"
 msgstr "強制的に終了(_F)"
 
+#: gnome-panel/panel-toplevel.c:1106
+#, fuzzy
+msgid "Hide Panel"
+msgstr "隠すまでの遅延時間"
+
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Top Expanded Edge Panel"
 msgstr "上側展開エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Top Centered Panel"
 msgstr "上側中央パネル"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1459
 msgid "Top Floating Panel"
 msgstr "上側フロート・パネル"
 
-#: gnome-panel/panel-toplevel.c:1457
+#: gnome-panel/panel-toplevel.c:1460
 msgid "Top Edge Panel"
 msgstr "上側エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Bottom Expanded Edge Panel"
 msgstr "下側展開エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Bottom Centered Panel"
 msgstr "下側中央パネル"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1466
 msgid "Bottom Floating Panel"
 msgstr "下側フロート・パネル"
 
-#: gnome-panel/panel-toplevel.c:1464
+#: gnome-panel/panel-toplevel.c:1467
 msgid "Bottom Edge Panel"
 msgstr "下側エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Left Expanded Edge Panel"
 msgstr "左側展開エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Left Centered Panel"
 msgstr "左側中央パネル"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Left Floating Panel"
 msgstr "左側フロート・パネル"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Left Edge Panel"
 msgstr "左側エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Right Expanded Edge Panel"
 msgstr "右側展開エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Right Centered Panel"
 msgstr "右側中央パネル"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Right Floating Panel"
 msgstr "右側フロート・パネル"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Right Edge Panel"
 msgstr "右側エッジ・パネル"
 
-#: gnome-panel/panel-toplevel.c:3580
+#: gnome-panel/panel-toplevel.c:3587
 msgid "Name"
 msgstr "名前"
 
-#: gnome-panel/panel-toplevel.c:3581
+#: gnome-panel/panel-toplevel.c:3588
 msgid "The name of this panel"
 msgstr "このパネルの名前"
 
-#: gnome-panel/panel-toplevel.c:3590
+#: gnome-panel/panel-toplevel.c:3597
 msgid "Expand"
 msgstr "広げる"
 
-#: gnome-panel/panel-toplevel.c:3591
+#: gnome-panel/panel-toplevel.c:3598
 msgid "Expand to take up the full monitor width/height"
 msgstr "モニタの幅/高さに合わせて広げる"
 
-#: gnome-panel/panel-toplevel.c:3601
+#: gnome-panel/panel-toplevel.c:3608
 msgid "The orientation of the panel"
 msgstr "このパネルの向き"
 
-#: gnome-panel/panel-toplevel.c:3612
+#: gnome-panel/panel-toplevel.c:3619
 msgid "The height (or width when vertical) of the panel"
 msgstr "パネルの高さ (縦向きの場合は幅)"
 
-#: gnome-panel/panel-toplevel.c:3624
+#: gnome-panel/panel-toplevel.c:3631
 msgid "X position"
 msgstr "X 座標"
 
-#: gnome-panel/panel-toplevel.c:3625
+#: gnome-panel/panel-toplevel.c:3632
 msgid "The X position of the panel"
 msgstr "パネルを配置する X座標"
 
-#: gnome-panel/panel-toplevel.c:3636
+#: gnome-panel/panel-toplevel.c:3643
 msgid "X centered"
 msgstr "中心の X 座標"
 
-#: gnome-panel/panel-toplevel.c:3637
+#: gnome-panel/panel-toplevel.c:3644
 msgid "The x co-ordinate is relative to center screen"
 msgstr "スクリーンの中心に対する X 座標"
 
-#: gnome-panel/panel-toplevel.c:3646
+#: gnome-panel/panel-toplevel.c:3653
 msgid "Y position"
 msgstr "Y 座標"
 
-#: gnome-panel/panel-toplevel.c:3647
+#: gnome-panel/panel-toplevel.c:3654
 msgid "The Y position of the panel"
 msgstr "パネルを配置する Y 座標"
 
-#: gnome-panel/panel-toplevel.c:3658
+#: gnome-panel/panel-toplevel.c:3665
 msgid "Y centered"
 msgstr "中心の Y 座標"
 
-#: gnome-panel/panel-toplevel.c:3659
+#: gnome-panel/panel-toplevel.c:3666
 msgid "The y co-ordinate is relative to center screen"
 msgstr "スクリーンの中心に対する Y 座標"
 
-#: gnome-panel/panel-toplevel.c:3668
+#: gnome-panel/panel-toplevel.c:3675
 msgid "Xinerama monitor"
 msgstr "Xinerama モニタ"
 
-#: gnome-panel/panel-toplevel.c:3669
+#: gnome-panel/panel-toplevel.c:3676
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "パネルを表示する (Xinerama 対応の) モニタ"
 
-#: gnome-panel/panel-toplevel.c:3680
+#: gnome-panel/panel-toplevel.c:3687
 msgid "Auto hide"
 msgstr "自動的に隠す"
 
-#: gnome-panel/panel-toplevel.c:3681
+#: gnome-panel/panel-toplevel.c:3688
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "マウスがパネルから離れたら自動的にパネルを隠す"
 
-#: gnome-panel/panel-toplevel.c:3690
+#: gnome-panel/panel-toplevel.c:3697
 msgid "Hide delay"
 msgstr "隠すまでの遅延時間"
 
-#: gnome-panel/panel-toplevel.c:3691
+#: gnome-panel/panel-toplevel.c:3698
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "自動的に隠すまでの遅れ時間 (ミリ秒)"
 
-#: gnome-panel/panel-toplevel.c:3702
+#: gnome-panel/panel-toplevel.c:3709
 msgid "Un-hide delay"
 msgstr "表示するまでの遅延時間"
 
-#: gnome-panel/panel-toplevel.c:3703
+#: gnome-panel/panel-toplevel.c:3710
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "自動的に戻るまでの遅れ時間 (ミリ秒) です"
 
-#: gnome-panel/panel-toplevel.c:3714
+#: gnome-panel/panel-toplevel.c:3721
 msgid "Auto-hide size"
 msgstr "自動的に隠すサイズ"
 
-#: gnome-panel/panel-toplevel.c:3715
+#: gnome-panel/panel-toplevel.c:3722
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "パネルが自動的に隠れた際に表示する部分のピクセル値です"
 
-#: gnome-panel/panel-toplevel.c:3726
+#: gnome-panel/panel-toplevel.c:3733
 msgid "Animate"
 msgstr "アニメーション"
 
-#: gnome-panel/panel-toplevel.c:3727
+#: gnome-panel/panel-toplevel.c:3734
 msgid "Enable hiding/showing animations"
 msgstr "パネルの隠す/戻すにアニメーション効果を有効にします"
 
-#: gnome-panel/panel-toplevel.c:3736
+#: gnome-panel/panel-toplevel.c:3743
 msgid "Animation Speed"
 msgstr "アニメーションの速度"
 
-#: gnome-panel/panel-toplevel.c:3737
+#: gnome-panel/panel-toplevel.c:3744
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "パネルを隠す/戻す際のアニメーションの速度です"
 
-#: gnome-panel/panel-toplevel.c:3747
+#: gnome-panel/panel-toplevel.c:3754
 msgid "Buttons Enabled"
 msgstr "隠すボタンを有効にする"
 
-#: gnome-panel/panel-toplevel.c:3748
+#: gnome-panel/panel-toplevel.c:3755
 msgid "Enable hide/show buttons"
 msgstr "隠すボタンを使う"
 
-#: gnome-panel/panel-toplevel.c:3757
+#: gnome-panel/panel-toplevel.c:3764
 msgid "Arrows Enabled"
 msgstr "矢印をつける"
 
-#: gnome-panel/panel-toplevel.c:3758
+#: gnome-panel/panel-toplevel.c:3765
 msgid "Enable arrows on hide/show buttons"
 msgstr "隠すボタンに矢印をつける"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "自動的にパネルを端に隠す"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "背景色"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
@@ -3028,20 +2811,6 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
-"If true, the panel will be locked in place, properties won't be changable. "
-"The user won't be able to add, remove or even move applets. Also properties "
-"of all objects on this panel will be locked down as well. Properties of "
-"external applets may however have to be locked down separately. The panel "
-"must be restarted for this to take effect."
-msgstr ""
-"true にすると、パネルはロックされ、プロパティは変更できなくなります。アプレッ"
-"トを追加したり、削除したり、移動することすらできなくなります。また、パネル上"
-"のすべてのオブジェクトのプロパティも同様にロックされます。ただし、外部のアプ"
-"レットは個別にロックする必要があるかも知れません。この設定を有効にするため"
-"に、パネルは再起動する必要があります。"
-
-#: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
@@ -3052,7 +2821,7 @@ msgstr ""
 "False にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせ"
 "た大きさになります。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:23
+#: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
 "If true, the x key is ignored and the panel is placed at the center of the x-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -3064,7 +2833,7 @@ msgstr ""
 "は両端から延びていきます)。TRUE でない場合、パネルの位置は X 座標に従って配置"
 "されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:24
+#: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
 "If true, the y key is ignored and the panel is placed at the center of the y-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -3076,7 +2845,7 @@ msgstr ""
 "は両端から延びていきます)。TRUE でない場合、パネルの位置は Y 座標に従って配置"
 "されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:25
+#: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -3084,39 +2853,35 @@ msgstr ""
 "Xinerama 機能では、別々のモニタにパネルを配置することができます。このキーはパ"
 "ネルが表示されている現在のモニタを示します。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:26
-msgid "Lock down the panel"
-msgstr "パネルをロックする"
-
-#: gnome-panel/panel-toplevel.schemas.in.h:27
+#: gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
 msgstr "パネルを識別するための名前"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:28
+#: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
 msgstr "パネルが自動的に隠れるまでの遅延時間"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:29
+#: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
 msgstr "パネルが自動的に戻るまでの遅延時間"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:30
+#: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
 msgstr "パネルの向き"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:31
+#: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid "Panel size"
 msgstr "パネルのサイズ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:32
+#: gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
 msgstr "パネルが縦向きの時は画像も回転する"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:33
+#: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "パネルの背景色を #RGB フォーマットで指定します。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:34
+#: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -3125,7 +2890,7 @@ msgstr ""
 "背景の画像に使用するファイルを指定します。その画像がαチャンネルをもっている場"
 "合、デスクトップの背景画像に合成されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:35
+#: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -3135,7 +2900,7 @@ msgstr ""
 "での遅延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にの"
 "み有効になります。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:36
+#: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -3145,7 +2910,7 @@ msgstr ""
 "延時間をミリ秒で指定します。このキーは auto_hide キーが TRUE の場合にのみ有効"
 "になります。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:37
+#: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -3153,7 +2918,7 @@ msgstr ""
 "パネルが自動的にスクリーンの端に隠れた際に表示する部分のピクセル値を指定しま"
 "す。このキーは auto_hide キーが TRUE の場合にのみ有効になります。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:38
+#: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
@@ -3162,11 +2927,11 @@ msgstr ""
 "背景の透明度のフォーマットを指定します。色が完全に不透明 (65535 より小さい"
 "値) の場合、その色は背景の画像と合成されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:39
+#: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "画像をパネルのサイズに合わせる"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:40
+#: gnome-panel/panel-toplevel.schemas.in.h:38
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -3177,7 +2942,7 @@ msgstr ""
 "イコンに基づいた最小サイズをリアルタイムに決定します。最大サイズはスクリーン"
 "の高さの 1/4 固定になっています。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:41
+#: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -3187,7 +2952,7 @@ msgstr ""
 "ります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示す"
 "スクリーンの端に配置されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:42
+#: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -3197,7 +2962,7 @@ msgstr ""
 "ります。このキーはパネルを広げたモードでは無視され、パネルはその向きにが示す"
 "スクリーンの端に配置されます。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:43
+#: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -3216,7 +2981,7 @@ msgstr ""
 "\"top\" パネルでは、メニューはパネルの下側に向かってポップアップします。逆に "
 "\"bottom\" パネルのメニューはパネルの上側に向かってポップアップします。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:44
+#: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -3225,7 +2990,7 @@ msgstr ""
 "パネルをアニメーションさせる際の速度です。このキーは enable_animations が "
 "TRUE の場合にのみ機能します。指定可能な値: \"slow\", \"medium\", \"fast\""
 
-#: gnome-panel/panel-toplevel.schemas.in.h:45
+#: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -3235,11 +3000,11 @@ msgstr ""
 "ルの間でナビゲートする際に便利なパネル・ウィンドウのタイトルとして保持するこ"
 "とにあります。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:46
+#: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
 msgstr "パネルを隠した際に表示するピクセル数"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:47
+#: gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -3250,7 +3015,7 @@ msgstr ""
 "ウィジットの背景を使用する), \"color\" (背景に指定した色を使用する), \"image"
 "\" (背景に指定した画像を使用する)"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:48
+#: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -3258,19 +3023,19 @@ msgstr ""
 "マルチ・スクリーン設定で、別々のスクリーンにパネルを配置することが可能です。"
 "このキーはパネルが表示されている現在のスクリーンを示します。"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:49
+#: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
 msgstr "パネルの X 軸方向の座標"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:50
+#: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "X screen where the panel is displayed"
 msgstr "パネルを表示する X スクリーン"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:51
+#: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "パネルを表示する Xinerama のモニタ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:52
+#: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
 msgstr "パネルの Y 軸方向の座標"
 
@@ -3278,12 +3043,12 @@ msgstr "パネルの Y 軸方向の座標"
 msgid "Cannot display help document"
 msgstr "ヘルプを表示できません"
 
-#: gnome-panel/panel.c:433
+#: gnome-panel/panel.c:445
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
-#: gnome-panel/panel.c:1228
+#: gnome-panel/panel.c:1241
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3291,7 +3056,7 @@ msgstr ""
 "パネルを削除すると、パネルとそのアプレットの\n"
 "設定は失われてしまいます。このパネルを削除しますか？"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1250
 msgid "Delete Panel"
 msgstr "パネルの削除"
 
@@ -3408,3 +3173,210 @@ msgstr "とても大きい"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "とても小さい"
+
+#~ msgid "Text"
+#~ msgstr "テキスト"
+
+#~ msgid "Text to render"
+#~ msgstr "レンダリングするテキスト"
+
+#~ msgid "Markup"
+#~ msgstr "マークアップ"
+
+#~ msgid "Marked up text to render"
+#~ msgstr "レンダリングするマークアップ・テキスト"
+
+#~ msgid "Attributes"
+#~ msgstr "属性"
+
+#~ msgid "A list of style attributes to apply to the text of the renderer"
+#~ msgstr "レンダリングするテキストに適用するスタイルの属性のリスト"
+
+#~ msgid "Ellipsize"
+#~ msgstr "Ellipsize"
+
+#~ msgid "Whether to crop the text and display \"...\" when space is limited"
+#~ msgstr ""
+#~ "テキストの表示範囲を越えた際にテキストを切り詰めて \"...\" を表示するかど"
+#~ "うか"
+
+#~ msgid "Background color name"
+#~ msgstr "背景色の名前"
+
+#~ msgid "Background color as a string"
+#~ msgstr "背景色を示す文字列"
+
+#~ msgid "Background color as a GdkColor"
+#~ msgstr "背景色の GdkColor 値"
+
+#~ msgid "Foreground color name"
+#~ msgstr "前景色の名前"
+
+#~ msgid "Foreground color as a string"
+#~ msgstr "前景色を示す文字列"
+
+#~ msgid "Foreground color"
+#~ msgstr "前景色"
+
+#~ msgid "Foreground color as a GdkColor"
+#~ msgstr "前景色の GdkColor 値"
+
+#~ msgid "Whether the text can be modified by the user"
+#~ msgstr "ユーザがテキストを編集できるかどうか"
+
+#~ msgid "Font"
+#~ msgstr "フォント"
+
+#~ msgid "Font description as a string"
+#~ msgstr "フォント記述子を示す文字列"
+
+#~ msgid "Font description as a PangoFontDescription struct"
+#~ msgstr "フォント記述子を示す PangoFontDescription 構造体"
+
+#~ msgid "Font family"
+#~ msgstr "フォント・ファミリ"
+
+#~ msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
+#~ msgstr "フォント・ファミリの名前 (例: Sans, Helvetica, Times, Monosace)"
+
+#~ msgid "Font style"
+#~ msgstr "フォントのスタイル"
+
+#~ msgid "Font variant"
+#~ msgstr "フォントの縦横比"
+
+#~ msgid "Font weight"
+#~ msgstr "フォントの太さ"
+
+#~ msgid "Font stretch"
+#~ msgstr "フォントの幅"
+
+#~ msgid "Font size"
+#~ msgstr "フォントの大きさ"
+
+#~ msgid "Font points"
+#~ msgstr "フォントの大きさ (ポイント)"
+
+#~ msgid "Font size in points"
+#~ msgstr "フォントの大きさ (ポイント単位)"
+
+#~ msgid "Font scale"
+#~ msgstr "フォントの倍率"
+
+#~ msgid "Font scaling factor"
+#~ msgstr "フォントの倍率"
+
+#~ msgid "Rise"
+#~ msgstr "Rise"
+
+#~ msgid ""
+#~ "Offset of text above the baseline (below the baseline if rise is negative)"
+#~ msgstr ""
+#~ "基点 (ベースライン) より上側にあるテキストのオフセット (Rise が負の場合は"
+#~ "基点より下側)"
+
+#~ msgid "Strikethrough"
+#~ msgstr "取消し線"
+
+#~ msgid "Whether to strike through the text"
+#~ msgstr "テキストに取消し線が付与するかどうか"
+
+#~ msgid "Underline"
+#~ msgstr "下線"
+
+#~ msgid "Style of underline for this text"
+#~ msgstr "このテキストの下線のスタイル"
+
+#~ msgid "Background set"
+#~ msgstr "背景の設定"
+
+#~ msgid "Whether this tag affects the background color"
+#~ msgstr "このタグが背景に影響するかどうか"
+
+#~ msgid "Foreground set"
+#~ msgstr "前景の設定"
+
+#~ msgid "Whether this tag affects the foreground color"
+#~ msgstr "このタグが前景に影響するかどうか"
+
+#~ msgid "Editability set"
+#~ msgstr "編集可否の設定"
+
+#~ msgid "Whether this tag affects text editability"
+#~ msgstr "このタグがテキストの編集可否に影響するかどうか"
+
+#~ msgid "Font family set"
+#~ msgstr "フォント・ファミリの設定"
+
+#~ msgid "Whether this tag affects the font family"
+#~ msgstr "このタグがフォント・ファミリに影響するかどうか"
+
+#~ msgid "Font style set"
+#~ msgstr "フォント・スタイルの設定"
+
+#~ msgid "Whether this tag affects the font style"
+#~ msgstr "このタグがフォント・スタイルに影響するかどうか"
+
+#~ msgid "Font variant set"
+#~ msgstr "フォントの縦横比の設定"
+
+#~ msgid "Whether this tag affects the font variant"
+#~ msgstr "このタグがフォントの縦横比に影響するかどうか"
+
+#~ msgid "Font weight set"
+#~ msgstr "フォントの太さの設定"
+
+#~ msgid "Whether this tag affects the font weight"
+#~ msgstr "このタグがフォントの太さに影響するかどうか"
+
+#~ msgid "Font stretch set"
+#~ msgstr "フォントの幅の設定"
+
+#~ msgid "Whether this tag affects the font stretch"
+#~ msgstr "このタグがフォントの幅に影響するかどうか"
+
+#~ msgid "Font size set"
+#~ msgstr "フォントの大きさの設定"
+
+#~ msgid "Whether this tag affects the font size"
+#~ msgstr "このタグがフォントの大きさに影響するかどうか"
+
+#~ msgid "Font scale set"
+#~ msgstr "フォントの倍率の設定"
+
+#~ msgid "Whether this tag scales the font size by a factor"
+#~ msgstr "このタグがフォントの倍率に影響するかどうか"
+
+#~ msgid "Rise set"
+#~ msgstr "Rise の設定"
+
+#~ msgid "Whether this tag affects the rise"
+#~ msgstr "このタグが Rise に影響するかどうか"
+
+#~ msgid "Strikethrough set"
+#~ msgstr "取消し線の設定"
+
+#~ msgid "Whether this tag affects strikethrough"
+#~ msgstr "このタグが取消し線に影響するかどうか"
+
+#~ msgid "Underline set"
+#~ msgstr "下線の設定"
+
+#~ msgid "Whether this tag affects underlining"
+#~ msgstr "このタグが下線に影響するかどうか"
+
+#~ msgid ""
+#~ "If true, the panel will be locked in place, properties won't be "
+#~ "changable. The user won't be able to add, remove or even move applets. "
+#~ "Also properties of all objects on this panel will be locked down as well. "
+#~ "Properties of external applets may however have to be locked down "
+#~ "separately. The panel must be restarted for this to take effect."
+#~ msgstr ""
+#~ "true にすると、パネルはロックされ、プロパティは変更できなくなります。アプ"
+#~ "レットを追加したり、削除したり、移動することすらできなくなります。また、パ"
+#~ "ネル上のすべてのオブジェクトのプロパティも同様にロックされます。ただし、外"
+#~ "部のアプレットは個別にロックする必要があるかも知れません。この設定を有効に"
+#~ "するために、パネルは再起動する必要があります。"
+
+#~ msgid "Lock down the panel"
+#~ msgstr "パネルをロックする"

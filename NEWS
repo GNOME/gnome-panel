@@ -1,3 +1,62 @@
+=============
+Version 2.5.4
+=============
+
+  Panel
+
+	* Add more lockdown support (Matt Keenan, Mark)
+	* Fix major X leak with translucent panels (Kristian Rietveld)
+	* Use a new "applications" icon for the applications menu (Glynn, Jakub Steiner)
+	* Set accessible names for drawers and hide buttons (Padraig)
+	* Fix issue with "Log Out blah" menu item and username's with underscore (Jordy Potman)
+	* Remove bogus panel_signal_connect_object_while_alive() (Mark)
+	* Fix issue where "Delete this Panel" wasn't visible (Jason Leach)
+	* Only allow resizing the run dialog if the proram list is visible (Leena Gunda)
+	* Fix some runtime warnings (Mark)
+	* Fix some portability issues (The Written Word)
+
+  libpanel-applet
+
+	* Install enums header and fix signal definitions (Bryan Forbes, Mark)
+	* Build panel-test-applets with -export-dynamic (Vincent Berger)
+
+  Clock Applet
+
+	* Fix bug where selected calendars were out of sync (Jon McCann)
+	* Use UTC time for events if preference set (Jon)
+	* Correctly detect all day events (Jon)
+	* Re-position the calendar popup as the clock is moved around (Jon)
+	* Don't show "Adjust Date & Time" if no config tool available (Fernando Herrera)
+	* Fix issue with ellipsizing the task description (Mark)
+
+  Misc
+
+	* Sync with newer version of the recent files implementation (Mark)
+	* Use a themed window icon in the screenshooter (Fernando Herrera)
+	* Fix issue with unsetting the preferred command for Wanda (Maneesh Pusalkar)
+	* Set the accessible name on the notification area (Padraig)
+	* Fix underquoted definition of AM_PATH_ESD (Alexander Winston)
+	* Fix invalid UTF8 in spanish help docs (John Fleck)
+	* Bump required GTK+ to 2.3.2 (Jason Leach)
+
+  Translators
+
+	* Alastair McKinstry (ga)
+	* Changwoo Ryu (ko)
+	* Christian Neumair (de)
+	* Christian Rose (sv)
+	* Elian Myftiu (sq)
+	* Francisco Javier F. Serrador (es)
+	* Gnome PL Team (pl)
+	* Kjartan Maraas (no)
+	* Kostas Papadimas (el)
+	* Miloslav Trmac (cs)
+	* Mətin Əmirov (az)
+	* Ole Laursen (da)
+	* Reinout van Schouwen (nl)
+	* Takeshi AIHANA (ja)
+	* Данило Шеган (sr)
+
 ===============
 Version 2.5.3.1
 ===============
