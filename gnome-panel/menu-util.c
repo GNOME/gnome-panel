@@ -37,7 +37,7 @@ add_menu_separator (GtkWidget *menu)
 }
 
 static void
-panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y, gpointer data)
+panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 {
 	gint screen_width;
 	gint screen_height;
@@ -81,6 +81,42 @@ panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	*y += screen_basey;
 }
 
+static void
+standard_position_within (GtkMenu  *menu,
+			  gint     *x,
+			  gint     *y,
+			  gboolean *push_in,
+			  GtkWidget *widget)
+{
+	gint wx, wy;
+
+	g_return_if_fail (widget != NULL);
+
+	gdk_window_get_origin (widget->window, &wx, &wy);
+	if(GTK_WIDGET_NO_WINDOW(widget)) {
+		wx += widget->allocation.x;
+		wy += widget->allocation.y;
+	}
+
+	/*
+	 * Make sure that the popup position is in the widget
+	 * as the menu may be popped up by a keystroke
+	 */
+	if (*x < wx)
+		*x = wx;
+	else if (*x > wx + widget->allocation.width)
+		*x = wx + widget->allocation.width;
+
+	if (*y < wy)
+		*y = wy;
+	else if (*y > wy + widget->allocation.height)
+		*y = wy + widget->allocation.height;
+
+	*push_in = TRUE;
+	
+	panel_standard_menu_pos (menu, x, y);
+}
+
 void
 panel_menu_position (GtkMenu  *menu,
 		     gint     *x,
@@ -89,28 +125,8 @@ panel_menu_position (GtkMenu  *menu,
 		     gpointer  data)
 {
 	GtkWidget *w = data;
-	gint wx, wy;
 
-	g_return_if_fail (w != NULL);
-
-	gdk_window_get_origin (w->window, &wx, &wy);
-	/*
-	 * Make sure that the popup position is in the panel
-	 * as the menu may be popped up by a keystroke
-	 */
-	if (*x < wx)
-		*x = wx;
-	else if (*x > wx + w->allocation.width)
-		*x = wx + w->allocation.width;
-
-	if (*y < wy)
-		*y = wy;
-	else if (*y > wy + w->allocation.height)
-		*y = wy + w->allocation.height;
-
-	*push_in = TRUE;
-	
-	panel_standard_menu_pos (menu, x, y, data);
+	standard_position_within (menu, x, y, push_in, w);
 }
 
 void
@@ -121,7 +137,6 @@ applet_menu_position (GtkMenu  *menu,
 		      gpointer  data)
 {
 	AppletInfo *info = data;
-	int wx, wy;
 	PanelWidget *panel;
 	GtkWidget *w; /*the panel window widget*/
 
@@ -133,39 +148,7 @@ applet_menu_position (GtkMenu  *menu,
 	
 	w = panel->panel_parent;
 
-	gdk_window_get_origin (info->widget->window, &wx, &wy);
-	if(GTK_WIDGET_NO_WINDOW(info->widget)) {
-		wx += info->widget->allocation.x;
-		wy += info->widget->allocation.y;
-	}
-
-#ifdef MENU_UTIL_DEBUG
-	g_print ("applet_menu_position: origin x = %d, y = %d\n", wx, wy);
-#endif
-
-	if (BASEP_IS_WIDGET (w)) {
-		*x = *y = 0;
-		basep_widget_get_menu_pos(BASEP_WIDGET(w),
-					  GTK_WIDGET(menu),
-					  x,y,wx,wy,
-					  info->widget->allocation.width,
-					  info->widget->allocation.height);
-       	} else if (FOOBAR_IS_WIDGET (w)) {
-		GtkRequisition req;
-		FoobarWidget *foo = FOOBAR_WIDGET (w);
-		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-		*x = MIN (*x,
-			  multiscreen_width (foo->screen) +
-			  multiscreen_x (foo->screen) -  req.width);
-		*y = w->allocation.height + multiscreen_y (foo->screen);
-	}
-
-	*push_in = TRUE;
-
-#ifdef MENU_UTIL_DEBUG
-	g_print ("applet_menu_position: x = %d, y = %d, push_in = %s\n",
-		 *x, *y, *push_in ? "(true)" : "(false)");
-#endif
+	standard_position_within (menu, x, y, push_in, w);
 }
 
 int
