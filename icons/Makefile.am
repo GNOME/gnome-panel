@@ -8,6 +8,7 @@ gegl_DATA = 				\
 
 icondir   = $(datadir)/icons/hicolor/48x48/apps
 icon_DATA =				\
+	launcher-program.png		\
 	panel-force-quit.png		\
 	gnome-gegl.png			\
 	gnome-run.png			\
