@@ -687,7 +687,7 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 	if(drawer)
 		if(panel->state == PANEL_SHOWN)
 			reposition_drawer(drawer);
-	return TRUE;
+	return FALSE;
 }
 
 struct _added_info {
@@ -928,11 +928,10 @@ applet_move_foreach(gpointer data, gpointer user_data)
 	}
 }
 
-static gint
+static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
 	applet_move_foreach(widget,NULL);
-	return TRUE;
 }
 
 

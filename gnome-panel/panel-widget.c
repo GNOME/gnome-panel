@@ -1007,13 +1007,13 @@ panel_widget_get_thick(PanelWidget *panel)
 
 static gint
 panel_widget_applet_size_allocate (GtkWidget *widget,
-				   GdkEvent *event,
+				   GtkAllocation *allocation,
 				   gpointer data)
 {
 	PanelWidget *panel;
 	AppletData *ad;
 	gint thick;
-
+	
 	if(panel_widget_inhibit_allocates)
 		return FALSE;
 
@@ -1023,10 +1023,10 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 	if(ad->pos == -1)
 		return FALSE;
 
-	if(ad->prevwidth!=widget->allocation.width ||
-	   ad->prevheight!=widget->allocation.height||
-	   ad->prevx!=widget->allocation.x ||
-	   ad->prevy!=widget->allocation.y) {
+	if(ad->prevwidth!=allocation->width ||
+	   ad->prevheight!=allocation->height||
+	   ad->prevx!=allocation->x ||
+	   ad->prevy!=allocation->y) {
 		thick = panel_widget_get_thick(panel);
 		if(panel->thick != thick) {
 			panel->thick = thick;
@@ -1038,10 +1038,10 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				widget);
 
-		ad->prevwidth = widget->allocation.width;
-		ad->prevheight = widget->allocation.height;
-		ad->prevx = widget->allocation.x;
-		ad->prevy = widget->allocation.y;
+		ad->prevwidth = allocation->width;
+		ad->prevheight = allocation->height;
+		ad->prevx = allocation->x;
+		ad->prevy = allocation->y;
 	}
 
 	return FALSE;
