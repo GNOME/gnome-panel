@@ -131,8 +131,6 @@ struct _PanelWidgetClass
 	void (* tab_move) (PanelWidget	*panel,
                            gboolean	 next);
 	void (* end_move) (PanelWidget	*panel);
-	gboolean (* popup_panel_menu) (PanelWidget	*panel);
-
 };
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;

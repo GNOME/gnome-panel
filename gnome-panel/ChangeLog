@@ -1,3 +1,35 @@
+2002-09-03 Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep-widget.[ch]:
+	Add action signal "popup-panel-menu"; bind it to Ctrl+F10; add
+	basep_widget_popup_panel_menu() to pop up the panel's menu.
+
+	* foobar-widget.[ch]:
+	Add action signal "popup-panel-menu"; bind it to Ctrl+F10; add
+	foobar_widget_popup_panel_menu() to pop up the panel's menu.
+
+	* panel-widget.[ch]:
+	Remove action signal "popup-panel-menu".
+
+	These changes fix bug #92134, cause Ctrl+F10 to display panel's menu
+	when focus is on a show/hide button.
+
+2002-09-03 Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep-widget.[ch]:
+	Add action signal "popup-panel-menu"; bind it to Ctrl+F10; add
+	basep_widget_popup_panel_menu() to pop up the panel's menu.
+
+	* foobar-widget.[ch]:
+	Add action signal "popup-panel-menu"; bind it to Ctrl+F10; add
+	foobar_widget_popup_panel_menu() to pop up the panel's menu.
+
+	* panel-widget.[ch]:
+	Remove action signal "popup-panel-menu".
+
+	These changes fix bug #92134, cause Ctrl+F10 to display panel's menu
+	when focus is on a show/hide button.
+
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c:

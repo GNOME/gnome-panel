@@ -115,6 +115,7 @@ struct _BasePWidgetClass
 	void (* screen_change) (BasePWidget *basep,
 				int old_screen);
 
+	gboolean (* popup_panel_menu) (BasePWidget *basep);
 };
 
 /* we mostly want the class for this */

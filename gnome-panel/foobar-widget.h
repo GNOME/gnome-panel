@@ -52,6 +52,8 @@ struct _FoobarWidget
 struct _FoobarWidgetClass
 {
 	GtkWindowClass panel_class;
+
+	gboolean (* popup_panel_menu) (FoobarWidget	*foobar);
 };
 
 GType		foobar_widget_get_type		(void) G_GNUC_CONST;

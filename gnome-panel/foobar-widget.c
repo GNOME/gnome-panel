@@ -55,12 +55,19 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
+static gboolean foobar_widget_popup_panel_menu (FoobarWidget *foobar);
+
 static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
 
 static GtkWindowClass *foobar_widget_parent_class = NULL;
+
+enum {
+	POPUP_PANEL_MENU_SIGNAL,
+	WIDGET_LAST_SIGNAL
+};
 
 GType
 foobar_widget_get_type (void)
@@ -88,11 +95,18 @@ foobar_widget_get_type (void)
 	return object_type;
 }
 
+static guint foobar_widget_signals [WIDGET_LAST_SIGNAL] = { 0 };
+
 static void
 foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+	GtkBindingSet  *binding_set;
+
+	binding_set = gtk_binding_set_by_class (klass);
+
+	klass->popup_panel_menu = foobar_widget_popup_panel_menu;
 
 	object_class->destroy = foobar_widget_destroy;
 
@@ -107,6 +121,20 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 			     "GtkMenuBar::internal-padding = 0\n"
 			     "}\n"
 			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
+
+	foobar_widget_signals [POPUP_PANEL_MENU_SIGNAL] =
+		g_signal_new ("popup_panel_menu",
+			     G_TYPE_FROM_CLASS (object_class),
+			     G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			     G_STRUCT_OFFSET (FoobarWidgetClass, popup_panel_menu),
+			     NULL,
+			     NULL,
+			     panel_marshal_BOOLEAN__VOID,
+			     G_TYPE_BOOLEAN,
+			     0);
+
+	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
+				     "popup_panel_menu", 0);
 }
 
 static gboolean
@@ -990,3 +1018,14 @@ foobar_widget_redo_window(FoobarWidget *foo)
 
 	gtk_widget_map(widget);
 }
+
+static gboolean
+foobar_widget_popup_panel_menu (FoobarWidget *foobar)
+{
+ 	gboolean retval;
+
+	g_signal_emit_by_name (foobar->panel, "popup_menu", &retval);
+
+	return retval;
+}
+
