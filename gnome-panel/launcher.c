@@ -531,7 +531,7 @@ window_response (GtkWidget *w, int response, gpointer data)
 	Launcher *launcher = data;
 
 	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("launchers", NULL);
+		panel_show_help ("wgospanel.xml", "gospanel-52");
 	} else if (response == REVERT_BUTTON) { /* revert */
 		if (launcher->ditem != NULL)
 			gnome_desktop_item_unref (launcher->ditem);
@@ -744,7 +744,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 
 		panel_config_sync_schedule ();
 	} else if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("launchers", "LAUNCHERS");
+		panel_show_help ("wgospanel.xml", "gospanel-52");
 		/* just return as we don't want to close */
 		return;
 	}
