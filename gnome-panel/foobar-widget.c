@@ -133,7 +133,9 @@ gmc_client (GtkWidget *w, gpointer data)
 {
 	char *v[3] = { "gmc-client" };
 	v[1] = data;
-	gnome_execute_async (NULL, 2, v);
+	if(gnome_execute_async (NULL, 2, v) < 0)
+		gnome_error_dialog(_("Cannot execute the gmc-client program,\n"
+				     "perhaps gmc is not installed"));
 }
 
 static void
@@ -141,7 +143,10 @@ gnomecal_client (GtkWidget *w, gpointer data)
 {
 	char *v[4] = { "gnomecal", "--view" };
 	v[2] = data;
-	gnome_execute_async (NULL, 3, v);
+	if(gnome_execute_async (NULL, 3, v) < 0)
+		gnome_error_dialog(_("Cannot execute the gnome calendar,\n"
+				     "perhaps it's not installed.\n"
+				     "It is in the gnome-pimp package."));
 }
 
 static GtkWidget *
@@ -151,23 +156,23 @@ append_gnome_menu (GtkWidget *menu_bar)
 	GtkWidget *menu;
 	int i;
 	char *url[][3] = {
-		{ N_("News"),
+		{ N_("News (www)"),
 		  "http://gnotices.gnome.org/gnome-news/",
 		  "gnome-news.png" },
-		{ N_("FAQ"),
+		{ N_("FAQ (www)"),
 		  "http://www.gnome.org/gnomefaq/html/",
 		  GNOME_STOCK_PIXMAP_HELP },
-		{ N_("Mailing Lists"),
+		{ N_("Mailing Lists (www)"),
 		  "http://www.gnome.org/mailing-lists/archives/",
 		  GNOME_STOCK_PIXMAP_MAIL },
 		{ NULL, "" },
-		{ N_("Software"),
+		{ N_("Software (www)"),
 		  "http://www.gnome.org/applist/list-martin.phtml",
 		  GNOME_STOCK_PIXMAP_SAVE },
-		{ N_("Development"),
+		{ N_("Development (www)"),
 		  "http://developer.gnome.org/",
 		  "gnome-devel.png" },
-		{ N_("Bug Tracking System"),
+		{ N_("Bug Tracking System (www)"),
 		  "http://bugs.gnome.org/",
 		  "bug-buddy.png" },
 		{ NULL }
