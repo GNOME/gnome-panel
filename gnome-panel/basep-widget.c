@@ -63,6 +63,8 @@ static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
 static gboolean basep_key_press (GtkWidget *widget, GdkEventKey *event);
 static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 static void basep_widget_destroy (GtkObject *o);
+static int  basep_widget_focus_in_event (GtkWidget     *widget,
+					 GdkEventFocus *event);
 
 static void basep_widget_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
 static void basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
@@ -124,10 +126,10 @@ static guint basep_widget_signals[WIDGET_LAST_SIGNAL] = { 0 };
 static void
 basep_widget_class_init (BasePWidgetClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
-	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-	GtkBindingSet *binding_set;
+	GObjectClass   *object_class = (GObjectClass *) klass;
+	GtkObjectClass *gtk_object_class = (GtkObjectClass *) klass;
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
+	GtkBindingSet  *binding_set;
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
@@ -143,6 +145,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
 	widget_class->key_press_event = basep_key_press;
+	widget_class->focus_in_event = basep_widget_focus_in_event;
 	widget_class->style_set = basep_style_set;
 
 	gtk_object_class->destroy = basep_widget_destroy;
@@ -809,8 +812,6 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 static void
 basep_pos_class_init (BasePPosClass *klass)
 {
-	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
-
 	basep_pos_parent_class = g_type_class_ref (gtk_object_get_type ());
 
 	klass->get_hide_size = basep_pos_get_hide_size;
@@ -841,7 +842,19 @@ basep_key_press (GtkWidget *widget, GdkEventKey *event)
 	panel_widget_save_key_event (panel, event);
 	return GTK_WIDGET_CLASS (basep_widget_parent_class)->key_press_event (widget, event);
 }
- 
+
+static int
+basep_widget_focus_in_event (GtkWidget     *widget,
+			     GdkEventFocus *event)
+{
+	BasePWidget *basep = BASEP_WIDGET (widget);
+
+	if (basep->state == BASEP_AUTO_HIDDEN)
+		basep_widget_autoshow (basep);
+
+	return GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_in_event (widget, event);
+}
+
 static gboolean
 basep_leave_notify (GtkWidget *widget,
 		    GdkEventCrossing *event)
