@@ -481,6 +481,7 @@ panel_applet_popup_menu (PanelApplet *applet)
 	return _panel_applet_popup_menu (applet, 3, GDK_CURRENT_TIME);
 }
 
+#ifdef FIXME
 static void
 panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -544,7 +545,7 @@ panel_applet_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
 	if (bin->child)
 		gtk_widget_size_allocate (bin->child, &child_allocation);
 }
-
+#endif /* FIXME */
 
 static gboolean
 panel_applet_expose (GtkWidget      *widget,
@@ -558,17 +559,15 @@ panel_applet_expose (GtkWidget      *widget,
         if (GTK_WIDGET_HAS_FOCUS (widget)) {
 		gint focus_width, focus_pad;
 		gint x, y, width, height;
-		gint border_width;
 
 		gtk_widget_style_get (widget,
 				      "focus-line-width", &focus_width,
 				      "focus-padding", &focus_pad,
 				      NULL);
-		border_width = GTK_CONTAINER (widget)->border_width;
-		x = widget->allocation.x + focus_pad;
-		y = widget->allocation.y + focus_pad;
-		width = widget->allocation.width - 2 * border_width - 2 * focus_pad;
-		height = widget->allocation.height - 2 * border_width - 2 * focus_pad;
+		x = widget->allocation.x;
+		y = widget->allocation.y;
+		width = widget->allocation.width - (focus_width + focus_pad);
+		height = widget->allocation.height - (focus_width + focus_pad);
 		gtk_paint_focus (widget->style, widget->window,
                                  GTK_WIDGET_STATE (widget),
                                  &event->area, widget, "panel_applet",
@@ -1145,8 +1144,10 @@ panel_applet_class_init (PanelAppletClass *klass,
 	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
+#ifdef FIXME
 	widget_class->size_request = panel_applet_size_request;
 	widget_class->size_allocate = panel_applet_size_allocate;
+#endif /* FIXME */
 	widget_class->expose_event = panel_applet_expose;
 	widget_class->focus = panel_applet_focus;
 

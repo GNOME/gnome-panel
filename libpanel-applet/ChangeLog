@@ -1,3 +1,11 @@
+2002-06-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c: (panel_applet_expose),
+	(panel_applet_class_init): disable padding of applets
+	for now. Causes quite a few problems (83254, 83607,
+	83606) which outweighs the benefit of a clear focus
+	indication.
+
 2002-05-29  Padraig O'Briain <padraig.obriain@sun.com>
 
 	* panel_applet.c 
