@@ -1,5 +1,12 @@
 2002-08-11  Mark McLoughlin  <mark@skynet.ie>
 
+	* gnome-run.c: (remove_parameters): impl stripping
+	desktop item Exec parameters.
+	(sync_list_to_entry): Use it when setting the entry
+	from the treeview. Fixes #90200.
+
+2002-08-11  Mark McLoughlin  <mark@skynet.ie>
+
 	* edge-widget.c: (edge_widget_new): hey ! edge widgets
 	shouldn't have packed PanelWidgets should they? Well,
 	they have since Aug99 ... very, very confused.
