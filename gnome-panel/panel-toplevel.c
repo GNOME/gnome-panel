@@ -221,7 +221,13 @@ enum {
 
 static GObjectClass *parent_class;
 static guint         toplevel_signals [LAST_SIGNAL] = { 0 };
+static GSList       *toplevel_list = NULL;
 
+GSList *
+panel_toplevel_list_toplevels (void)
+{
+	return toplevel_list;
+}
 
 static GdkScreen *
 panel_toplevel_get_screen_geometry (PanelToplevel *toplevel,
@@ -3148,7 +3154,9 @@ panel_toplevel_get_property (GObject    *object,
 static void
 panel_toplevel_finalize (GObject *object)
 {
-        PanelToplevel *toplevel = (PanelToplevel *) object;
+	PanelToplevel *toplevel = (PanelToplevel *) object;
+
+	toplevel_list = g_slist_remove (toplevel_list, toplevel);
 
 	if (toplevel->priv->attached) {
 		panel_toplevel_disconnect_attached (toplevel);
@@ -3657,6 +3665,8 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	panel_toplevel_update_description (toplevel);
 	
 	panel_bindings_register_toplevel (toplevel);
+
+	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
 }
 
 GType

@@ -300,8 +300,12 @@ panel_gconf_clean_dir (GConfClient *client,
 
 	for (l = entries; l; l = l->next) {
 		GConfEntry *entry = l->data;
+		const char *key;
 
-		gconf_client_unset (client, gconf_entry_get_key (entry), NULL);
+		key = gconf_entry_get_key (entry);
+
+		gconf_engine_associate_schema (client->engine, key, NULL, NULL);
+		gconf_client_unset (client, key, NULL);
 		gconf_entry_free (entry);
 	}
     		

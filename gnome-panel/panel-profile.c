@@ -701,6 +701,10 @@ panel_profile_load_toplevel (GConfClient *client,
 
 	toplevel_dir = g_strdup_printf ("%s/toplevels/%s", profile_dir, toplevel_id);
 
+	if (!gconf_client_dir_exists (client, toplevel_dir, NULL))
+		panel_gconf_associate_schemas_in_dir (
+			client, toplevel_dir, SCHEMAS_DIR "/toplevels");
+
 	if (!(screen = get_toplevel_screen (client, toplevel_dir))) {
 		g_free (toplevel_dir);
 		return;
@@ -818,6 +822,150 @@ panel_profile_load_toplevel (GConfClient *client,
 }
 
 static void
+panel_profile_delete_toplevel_dir (GConfClient *client,
+				   const char  *toplevel_id)
+{
+	const char *key;
+
+	key = panel_gconf_sprintf (CONFIG_DIR "/%s/toplevels/%s",
+				   current_profile,
+				   toplevel_id);
+	panel_gconf_clean_dir (client, key);
+}
+
+static gboolean
+panel_profile_id_exists (GSList     *toplevel_list,
+			 const char *toplevel_id)
+{
+	GSList *l;
+
+	if (!toplevel_list || !toplevel_id)
+		return FALSE;
+
+	for (l = toplevel_list; l; l = l->next) {
+		PanelToplevel *toplevel = l->data;
+		const char    *id;
+
+		id = panel_profile_get_toplevel_id (toplevel);
+		g_assert (id != NULL);
+
+		if (!strcmp (toplevel_id, id))
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+panel_profile_create_added_toplevels (GConfClient *client,
+				      GSList      *toplevel_ids)
+{
+	GSList *existing_toplevels;
+	GSList *ids_to_create = NULL;
+	GSList *l;
+	char   *profile_dir = NULL;
+
+	existing_toplevels = panel_toplevel_list_toplevels ();
+
+	for (l = toplevel_ids; l; l = l->next) {
+		const char *toplevel_id = gconf_value_get_string (l->data);
+
+		if (!panel_profile_id_exists (existing_toplevels, toplevel_id))
+			ids_to_create = g_slist_prepend (ids_to_create,
+							 g_strdup (toplevel_id));
+	}
+
+	for (l = ids_to_create; l; l = l->next) {
+		char *toplevel_id = l->data;
+
+		if (!profile_dir)
+			profile_dir = gconf_concat_dir_and_key (CONFIG_DIR, current_profile);
+
+		/* takes ownership of toplevel_id */
+		panel_profile_load_toplevel (client, profile_dir, toplevel_id);
+	}
+	g_slist_free (ids_to_create);
+
+	g_free (profile_dir);
+}
+
+static gboolean
+panel_profile_toplevel_exists (GSList        *toplevel_ids_list,
+			       PanelToplevel *toplevel)
+{
+	GSList     *l;
+	const char *toplevel_id;
+
+	if (!toplevel_ids_list || !toplevel)
+		return FALSE;
+
+	toplevel_id = panel_profile_get_toplevel_id (toplevel);
+
+	for (l = toplevel_ids_list; l; l = l->next) {
+		const char *id = gconf_value_get_string (l->data);
+
+		if (!strcmp (toplevel_id, id))
+			return TRUE;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+panel_profile_delete_removed_toplevels (GConfClient *client,
+					GSList      *toplevel_ids)
+{
+	GSList *toplevels_to_delete = NULL;
+	GSList *existing_toplevels;
+	GSList *l;
+
+	existing_toplevels = panel_toplevel_list_toplevels ();
+
+	for (l = existing_toplevels; l; l = l->next) {
+		PanelToplevel *toplevel = l->data;
+
+		if (!panel_profile_toplevel_exists (toplevel_ids, toplevel))
+			toplevels_to_delete =
+				g_slist_prepend (toplevels_to_delete, toplevel);
+	}
+
+	for (l = toplevels_to_delete; l; l = l->next) {
+		PanelToplevel *toplevel = l->data;
+		const char    *toplevel_id;
+
+		toplevel_id = panel_profile_get_toplevel_id (toplevel);
+
+		panel_profile_delete_toplevel_dir (client, toplevel_id);
+
+		gtk_widget_destroy (GTK_WIDGET (toplevel));
+	}
+	g_slist_free (toplevels_to_delete);
+}
+
+static void
+panel_profile_toplevel_id_list_notify (GConfClient *client,
+				       guint        cnxn_id,
+				       GConfEntry  *entry)
+{
+	GConfValue *value;
+	GSList     *toplevel_ids;
+
+	if (!(value = gconf_entry_get_value (entry)))
+		return;
+
+	if (value->type != GCONF_VALUE_LIST ||
+	    gconf_value_get_list_type (value) != GCONF_VALUE_STRING) {
+		gconf_value_free (value);
+		return;
+	}
+
+	toplevel_ids = gconf_value_get_list (value);
+
+	panel_profile_create_added_toplevels (client, toplevel_ids);
+	panel_profile_delete_removed_toplevels (client, toplevel_ids);
+}
+
+static void
 panel_profile_load_toplevel_list (GConfClient *client,
 				  const char  *profile_dir)
 {
@@ -827,6 +975,11 @@ panel_profile_load_toplevel_list (GConfClient *client,
 	
 	key = panel_gconf_sprintf ("%s/general/toplevel_id_list", profile_dir);
 
+	gconf_client_notify_add (
+		client, key, 
+		(GConfClientNotifyFunc) panel_profile_toplevel_id_list_notify,
+		NULL, NULL, NULL);
+
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 	for (l = list; l; l = l->next) {
 		char *toplevel_id = l->data;
@@ -835,6 +988,86 @@ panel_profile_load_toplevel_list (GConfClient *client,
 		panel_profile_load_toplevel (client, profile_dir, toplevel_id);
 	}
 	g_slist_free (list);
+
+}
+
+static char *
+panel_profile_find_new_id (GSList     *existing_ids,
+			   const char *prefix)
+{
+	GSList *l;
+	char   *retval = NULL;
+	int     i;
+
+	for (i = 0; !retval; i++) {
+		retval = g_strdup_printf ("%s_%d", prefix, i);
+
+		for (l = existing_ids; l; l = l->next)
+			if (!strcmp (l->data, retval)) {
+				g_free (retval);
+				retval = NULL;
+				break;
+			}
+	}
+
+	return retval;
+}
+
+void
+panel_profile_create_toplevel (void)
+{
+	GConfClient *client;
+	GSList      *list, *l;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_gconf_sprintf (CONFIG_DIR "/%s/general/toplevel_id_list",
+				   current_profile);
+	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	list = g_slist_append (list, panel_profile_find_new_id (list, "panel"));
+
+	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
+
+	for (l = list; l; l = l->next)
+		g_free (l->data);
+	g_slist_free (list);
+
+	g_object_unref (client);
+}
+
+void
+panel_profile_delete_toplevel (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	GSList      *list, *l;
+	const char  *key;
+	const char  *id;
+
+	client = gconf_client_get_default ();
+
+	key = panel_gconf_sprintf (CONFIG_DIR "/%s/general/toplevel_id_list",
+				   current_profile);
+	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	id = panel_profile_get_toplevel_id (toplevel);
+
+	for (l = list; l; l = l->next)
+		if (!strcmp (id, l->data))
+			break;
+	if (l) {
+		g_free (l->data);
+		list = g_slist_delete_link (list, l);
+	}
+
+	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
+
+	for (l = list; l; l = l->next)
+		g_free (l->data);
+	g_slist_free (list);
+
+	g_object_unref (client);
 }
 
 static void
@@ -905,6 +1138,7 @@ panel_profile_load (char *profile_name)
 {
 	GConfClient *client;
 	char        *dir;
+	const char  *key;
 
 	if (current_profile) {
 		g_warning ("Changing profiles not yet implemented\n");
@@ -918,6 +1152,9 @@ panel_profile_load (char *profile_name)
 	dir = gconf_concat_dir_and_key (CONFIG_DIR, current_profile);
 	if (!gconf_client_dir_exists (client, dir, NULL))
 		panel_configuration_copy_defaults (client, dir);
+
+	key = panel_gconf_sprintf ("%s/general", dir);
+	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 
 	panel_profile_load_toplevel_list (client, dir);
 

@@ -35,25 +35,16 @@ G_BEGIN_DECLS
 void        panel_profile_load     (char *profile_name);
 const char *panel_profile_get_name (void);
 
+
 gboolean    panel_profile_get_show_program_list   (void);
 void        panel_profile_set_show_program_list   (gboolean show_program_list);
 gboolean    panel_profile_get_enable_program_list (void);
 
-void        panel_profile_create_toplevel (const char  *id);
-#if 0
-void        panel_profile_create_applet   (const char  *id,
-					   const char  *iid,
-					   PanelWidget *panel_widget,
-					   int          pos);
-void        panel_profile_create_object   (const char  *id,
-					   AppletType   type,
-					   PanelWidget *panel_widget,
-					   int          pos);
-#endif
+
+void        panel_profile_create_toplevel (void);
+void        panel_profile_delete_toplevel (PanelToplevel *toplevel);
 
 gboolean panel_profile_is_toplevel_list_writeable (void);
-gboolean panel_profile_is_applet_list_writeable   (void);
-gboolean panel_profile_is_object_list_writeable   (void);
 
 void panel_profile_set_toplevel_name              (PanelToplevel *toplevel,
 						   const char    *name);

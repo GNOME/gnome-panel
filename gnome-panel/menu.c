@@ -2693,170 +2693,10 @@ create_applets_menu (GtkWidget             *menu,
 	return menu;
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-static void
-find_empty_pos_array (GdkScreen *screen,
-		      int        monitor,
-		      int        posscore[3][3])
-{
-	GSList *li;
-	int i,j;
-	PanelData *pd;
-	BasePNAWidget *basep;
-	
-	int tx, ty;
-	int w, h;
-	gfloat sw, sw2, sh, sh2;
-
-	sw2 = 2 * (sw = panel_multiscreen_width (screen, monitor) / 3);
-	sh2 = 2 * (sh = panel_multiscreen_height (screen, monitor) / 3);
-	
-	for (li = panel_list; li != NULL; li = li->next) {
-		pd = li->data;
-
-		if (DRAWER_IS_NA_WIDGET(pd->panel))
-			continue;
-
-		basep = BASEP_NA_WIDGET (pd->panel);
-		
-		if (basep->screen  != screen &&
-		    basep->monitor != monitor)
-			continue;
-
-		basep_na_widget_get_pos (basep, &tx, &ty);
-		tx -= panel_multiscreen_x (screen, monitor);
-		ty -= panel_multiscreen_y (screen, monitor);
-		basep_na_widget_get_size (basep, &w, &h);
-
-		if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
-			j = MIN (ty / sh, 2);
-			ty = tx + w;
-			if (tx < sw) posscore[0][j]+=10;
-			if (tx < sw2 && ty > sw) posscore[1][j]+=10;
-			if (ty > sw2) posscore[2][j]+=10;
-		} else {
-			i = MIN (tx / sw, 2);
-			tx = ty + h;
-			if (ty < sh) posscore[i][0]+=10;
-			if (ty < sh2 && tx > sh) posscore[i][1]+=10;
-			if (tx > sh2) posscore[i][2]+=10;
-		}
-	}
-}
-
-static void
-find_empty_pos (GdkScreen *screen,
-		int        monitor,
-		gint16    *x,
-		gint16    *y)
-{
-	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
-	int i, j, lowi= 0, lowj = 2;
-
-	find_empty_pos_array (screen, monitor, posscore);
-
-	for (j = 2; j >= 0; j--) {
-		for (i = 0; i < 3; i++) {
-			if (posscore[i][j] < posscore[lowi][lowj]) {
-				lowi = i;
-				lowj = j;
-			}
-		}
-	}
-
-	*x = ((float)lowi * panel_multiscreen_width (screen, monitor)) / 2.0;
-	*y = ((float)lowj * panel_multiscreen_height (screen, monitor)) / 2.0;
-
-	*x += panel_multiscreen_x (screen, monitor);
-	*y += panel_multiscreen_y (screen, monitor);
-}
-
-static BorderEdge
-find_empty_edge (GdkScreen *screen,
-		 int        monitor)
-{
-	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
-	int escore [4] = { 0, 0, 0, 0};
-	BorderEdge edge = BORDER_BOTTOM;
-	int low=4096, i;
-
-	find_empty_pos_array (screen, monitor, posscore);
-
-	escore[BORDER_TOP] = posscore[0][0] + posscore[1][0] + posscore[2][0];
-	escore[BORDER_RIGHT] = posscore[2][0] + posscore[2][1] + posscore[2][2];
-	escore[BORDER_BOTTOM] = posscore[0][2] + posscore[1][2] + posscore[2][2];
-	escore[BORDER_LEFT] = posscore[0][0] + posscore[0][1] + posscore[0][2];
-	
-	for (i = 0; i < 4; i++) {
-		if (escore[i] < low) {
-			edge = i;
-			low = escore[i];
-		}
-	}
-	return edge;
-}
-
-static BorderEdge
-find_empty_border_and_anchor (GdkScreen     *screen,
-			      int            monitor,
-			      SlidingAnchor *anchor)
-{
-	BorderEdge edge;
-	int        posscore[3][3] = { {0, 4096, 0}, {4096, 4096, 4096}, {0, 4096, 0}};
-
-	edge = find_empty_edge (screen, monitor);
-
-	find_empty_pos_array (screen, monitor, posscore);
-
-	switch (edge) {
-	case BORDER_TOP:
-		*anchor = (posscore [0][0] < posscore [2][0]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
-		break;
-	case BORDER_BOTTOM:
-		*anchor = (posscore [0][2] < posscore [2][2]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
-		break;
-	case BORDER_LEFT:
-		*anchor = (posscore [0][2] < posscore [0][0]) ? SLIDING_ANCHOR_RIGHT : SLIDING_ANCHOR_LEFT;
-		break;
-	case BORDER_RIGHT:
-		*anchor = (posscore [2][0] < posscore [2][2]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	return edge;
-}
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
-
 static void
 create_new_panel (GtkWidget *menuitem)
 {
-	GtkWidget *toplevel;
-	GdkScreen *screen;
-	int        monitor;
-
-	screen  = gtk_widget_get_screen (menuitem);
-	monitor = panel_multiscreen_locate_widget_monitor (
-			GTK_WIDGET (menu_get_panel (menuitem)));
-
-	/* FIXME_FOR_NEW_TOPLEVEL:
-	 *   figure out the initial panel position
-	find_empty_pos (screen, monitor, &x, &y);
-	*/
-
-	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
-				 "screen", screen,
-				 "monitor", monitor,
-				  NULL);
-
-	panel_setup (PANEL_TOPLEVEL (toplevel));
-
-	/* FIXME_FOR_NEW_TOPLEVEL:
-	 * panel_save_to_gconf (panel_setup (panel)); */
-
-	gtk_widget_show (toplevel);
+	panel_profile_create_toplevel ();
 }
 
 static void
@@ -3038,6 +2878,10 @@ remove_panel_accept (GtkWidget     *w,
 
 		panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
+		/* FIXME_FOR_NEW_TOPLEVEL:
+		 *  this shouldn't be done here. It should be done in a
+		 *  "destroy" signal handler for the toplevel.
+		 */
 		/* Destroy the drawers button before destroying the drawer */
 		if (panel_toplevel_get_is_attached (toplevel) &&
 		    panel_widget && panel_widget->master_widget) {
@@ -3052,14 +2896,7 @@ remove_panel_accept (GtkWidget     *w,
 			g_assert (panel_widget->master_widget == NULL);
 		}
 
-		panel_push_window_busy (w);
-
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-		panel_remove_from_gconf (panel_widget);
-#endif
-
-		gtk_widget_destroy (GTK_WIDGET (toplevel));
-		panel_pop_window_busy (w);
+		panel_profile_delete_toplevel (toplevel);
 	}
 
 	gtk_widget_destroy (w);

@@ -1,3 +1,30 @@
+2003-02-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (create_new_panel), (remove_panel_accept):
+	use panel_profile_(create|delete)_toplevel().
+
+	* panel-gconf.c: (panel_gconf_clean_dir): also unassociate
+	schemas as you go.
+
+	* panel-profile.[ch]:
+	(panel_profile_load_toplevel): if the toplevel doesn't exist,
+	setup the directory.
+	(panel_profile_delete_toplevel_dir), (panel_profile_id_exists),
+	(panel_profile_create_added_toplevels),
+	(panel_profile_toplevel_exists),
+	(panel_profile_delete_removed_toplevels),
+	(panel_profile_toplevel_id_list_notify),
+	(panel_profile_load_toplevel_list): Impl creating and deleting
+	toplevels as the toplevel_id_list is modified.
+	(panel_profile_find_new_id),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel):
+	create and delete toplevels by modifying the toplevel_id_list.
+	(panel_profile_load): add the "general" dir for notifications.
+
+	* panel-toplevel.[ch]: (panel_toplevel_list_toplevels),
+	(panel_toplevel_finalize), (panel_toplevel_instance_init):
+	Impl. keeping a track of a list of all toplevels.
+
 2003-02-14  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: make the binary gnome-new-panel for the

@@ -156,6 +156,8 @@ void                 panel_toplevel_unset_binding       (PanelToplevel       *to
 							 guint                keyval,
 							 GdkModifierType      modifiers);
 
+GSList              *panel_toplevel_list_toplevels      (void);
+
 G_END_DECLS
 
 #endif /* __PANEL_TOPLEVEL_H__ */
