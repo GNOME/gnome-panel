@@ -1460,6 +1460,8 @@ panel_resize_pixmap(PanelWidget *panel)
 						   panel->backpix,
 						   panel->scale_w,
 						   panel->scale_h);
+	
+	kill_cache_on_all_buttons(panel, FALSE);
 
 	panel_widget_draw_all(panel,NULL);
 }
