@@ -160,13 +160,6 @@ update_fortune_dialog()
   gnome_less_show_command(GNOME_LESS(fortune_less), g_file_exists("/usr/games/fortune")?"/usr/games/fortune":"fortune");
 }
 
-static gint
-destroy_applet(GtkWidget *widget, gpointer data)
-{
-	gtk_exit(0);
-	return FALSE;
-}
-
 static gint 
 fish_clicked_cb(GtkWidget * widget, GdkEventButton * e, 
 		gpointer data)
@@ -291,11 +284,10 @@ main(int argc, char *argv[])
 {
 	GtkWidget *fish;
 
-	panel_corba_register_arguments();
+	applet_widget_init_defaults("fish_applet", NULL, argc, argv, 0, NULL,
+				    argv[0]);
 
-	gnome_init("fish_applet", NULL, argc, argv, 0, NULL);
-
-	applet = applet_widget_new(argv[0]);
+	applet = applet_widget_new();
 	if (!applet)
 		g_error("Can't create applet!\n");
 
@@ -307,9 +299,6 @@ main(int argc, char *argv[])
 
 	applet_widget_add(APPLET_WIDGET(applet), fish);
 	gtk_widget_show(applet);
-	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
-			   GTK_SIGNAL_FUNC(destroy_applet),
-			   NULL);
 	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
 			   GTK_SIGNAL_FUNC(applet_session_save),
 			   NULL);
