@@ -41,6 +41,8 @@ static void foobar_widget_realize	(GtkWidget		*w);
 static void foobar_widget_destroy	(GtkObject		*o);
 static void foobar_widget_size_allocate	(GtkWidget		*w,
 					 GtkAllocation		*alloc);
+static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
+static void setup_task_menu (FoobarWidget *foo);
 
 static GtkWidget *das_global_foobar = NULL;
 static GtkWidget *clock_ebox = NULL;
@@ -541,6 +543,8 @@ foobar_widget_realize (GtkWidget *w)
 
 	foobar_widget_update_winhints (FOOBAR_WIDGET (w));
 	xstuff_set_no_group (w->window);
+
+	setup_task_menu (FOOBAR_WIDGET (w));
 }
 
 static void
@@ -642,46 +646,62 @@ destroy_task_menu (GtkWidget *w, gpointer data)
 	set_the_task_submenu (foo, w);
 }
 
+static GtkWidget *
+get_default_pixmap (void)
+{
+	GtkWidget *widget;
+	static GdkPixmap *pixmap = NULL;
+	static GdkBitmap *mask   = NULL;
+	static gboolean looked   = FALSE;
+
+	if ( ! looked) {
+		GdkPixbuf *pb = NULL, *scaled = NULL;
+		pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png");
+		
+		if (pb != NULL) {
+			scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
+							  GDK_INTERP_BILINEAR);
+			gdk_pixbuf_unref (pb);
+		}
+
+		if (scaled != NULL) {
+			gdk_pixbuf_render_pixmap_and_mask (scaled,
+							   &pixmap, &mask, 128);
+			gdk_pixbuf_unref (scaled);
+			
+			if (pixmap != NULL)
+				gdk_pixmap_ref (pixmap);
+
+			if (mask != NULL)
+				gdk_bitmap_ref (mask);
+		}
+
+		looked = TRUE;
+	}
+	if (pixmap != NULL)
+		widget = gtk_pixmap_new (pixmap, mask);
+	else
+		widget = gtk_label_new ("*");
+	gtk_widget_show (widget);
+
+	return widget;
+}
+
 static void
 set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 {
-	static GdkPixmap *pixmap = NULL;
-	static GdkBitmap *mask   = NULL;
-	if (foo->task_pixmap)
+	if (foo->task_pixmap != NULL)
 		gtk_widget_destroy (foo->task_pixmap);
 	foo->task_pixmap = NULL;
 
-	if (task)
+	if (task != NULL)
 		foo->task_pixmap = get_task_icon (task, GTK_WIDGET (foo));
 
-	if (!foo->task_pixmap) {
-		if (!pixmap) {
-			GdkPixbuf *pb = NULL, *scaled = NULL;
-			pb = gdk_pixbuf_new_from_file (GNOME_ICONDIR"/gnome-tasklist.png");
-			
-			if (pb) {
-				scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
-								  GDK_INTERP_BILINEAR);
-				gdk_pixbuf_unref (pb);
-			}
-
-			if (scaled) {
-				gdk_pixbuf_render_pixmap_and_mask (scaled,
-								   &pixmap, &mask, 128);
-				gdk_pixbuf_unref (scaled);
-				
-				if (pixmap)
-					gdk_pixmap_ref (pixmap);
-
-				if (mask)
-					gdk_bitmap_ref (mask);
-			}
-		}
-		foo->task_pixmap = gtk_pixmap_new (pixmap, mask);
-		gtk_widget_show (foo->task_pixmap);
+	if (foo->task_pixmap == NULL) {
+		foo->task_pixmap = get_default_pixmap ();
 	}
 
-	if (foo->task_pixmap) {
+	if (foo->task_pixmap != NULL) {
 		gtk_container_add (GTK_CONTAINER (foo->task_bin),
 				   foo->task_pixmap);
 	}
@@ -698,8 +718,7 @@ task_notify (gpointer data, GwmhTask *task,
 	switch (ntype) {
 	case GWMH_NOTIFY_INFO_CHANGED:
 		if (imask & GWMH_TASK_INFO_FOCUSED &&
-		    GWMH_TASK_FOCUSED (task) &&
-		    !GWMH_TASK_SKIP_WINLIST (task)) {
+		    GWMH_TASK_FOCUSED (task)) {
 			set_das_pixmap (foo, task);
 		}
 		if (imask & GWMH_TASK_INFO_WM_HINTS &&
@@ -729,12 +748,22 @@ task_notify (gpointer data, GwmhTask *task,
 static void
 append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
 {
-	foo->task_item = gtk_pixmap_menu_item_new ();
-	gtk_container_add (GTK_CONTAINER (foo->task_item),
-			   gtk_label_new (" "));
-	foo->task_bin = gtk_hbox_new (FALSE, 0);
-	gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (foo->task_item),
-					 foo->task_bin);
+	foo->task_item = gtk_menu_item_new ();
+
+	foo->task_bin = gtk_alignment_new (0.3, 0.5, 0.0, 0.0);
+	gtk_widget_set_usize (foo->task_bin, 25, 20);
+	gtk_widget_show (foo->task_bin);
+	gtk_container_add (GTK_CONTAINER (foo->task_item), foo->task_bin);
+
+	gtk_menu_bar_append (menu_bar, foo->task_item);
+}
+
+static void
+setup_task_menu (FoobarWidget *foo)
+{
+	GList *tasks;
+	g_assert (foo->task_item != NULL);
+
 	gtk_signal_connect (GTK_OBJECT (foo->task_item), "select",
 			    GTK_SIGNAL_FUNC (create_task_menu), foo);
 	gtk_signal_connect (GTK_OBJECT (foo->task_item), "deselect",
@@ -742,9 +771,21 @@ append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
 
 	set_the_task_submenu (foo, foo->task_item);
 
-	foo->notify = gwmh_task_notifier_add (task_notify, foo);
+	/* setup the pixmap to the focused task */
+	tasks = gwmh_task_list_get ();
+	while (tasks != NULL) {
+		if (GWMH_TASK_FOCUSED (tasks->data)) {
+			set_das_pixmap  (foo, tasks->data);
+			break;
+		}
+		tasks = tasks->next;
+	}
 
-	gtk_menu_bar_append (menu_bar, foo->task_item);
+	/* if no focused task found, then just set it to default */
+	if (tasks == NULL)
+		set_das_pixmap  (foo, NULL);
+
+	foo->notify = gwmh_task_notifier_add (task_notify, foo);
 }
 
 static void
@@ -892,9 +933,12 @@ foobar_widget_destroy (GtkObject *o)
 
 	g_slist_foreach (panel_list, queue_panel_resize, NULL);
 
-	if (foo->tasks)
+	if (foo->tasks != NULL)
 		g_hash_table_destroy (foo->tasks);
-	gwmh_task_notifier_remove (foo->notify);
+	foo->tasks = NULL;
+	if (foo->notify > 0)
+		gwmh_task_notifier_remove (foo->notify);
+	foo->notify = 0;
 
 	if (GTK_OBJECT_CLASS (parent_class)->destroy)
 		GTK_OBJECT_CLASS (parent_class)->destroy (o);

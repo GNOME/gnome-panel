@@ -82,13 +82,8 @@ bad_applet_LDADD = \
 GWMH_SRCLIST = \
 	gwmh.c		\
 	gwmh.h		\
-	gwmdesktop.c	\
-	gwmdesktop.h	\
 	gstc.c		\
-	gstc.h		\
-	gwmthumbnail.h
-
-# thumbnail we have to fork for now
+	gstc.h
 
 $(GWMH_SRCLIST):
 	for file in $(GWMH_SRCLIST); do \
@@ -100,7 +95,6 @@ BUILT_SOURCES = $(CORBA_SRCLIST) $(GWMH_SRCLIST)
 
 panel_SOURCES=\
 	$(GWMH_SRCLIST)		\
-	gwmthumbnail.c		\
 	panel-include.h		\
 	panel-types.h		\
 	main.c			\

@@ -1,3 +1,25 @@
+Wed Nov 15 00:13:38 2000  George Lebl <jirka@5z.com>
+
+	* Makefile.am, gwmthumbnail.c:  We don't actually need gwmdesktop
+	  and gwmthumbnail, they are not used anywhere int he panel, thus
+	  they are now gone, this removes some weirdness
+
+	* extern.c: Whoever heard of the "mail menu" it's "main menu" :)
+	  /me beats self
+
+	* foobar-widget.c:  cleanup, set the icon even for skiplist windows
+	  so that the icon is better up to date to the actual focused window,
+	  only set up the tasklist stuff after foobar was realized, also
+	  don't use the pixmap menu item here, but just a normal item with an
+	  alignment in it.  Only check for the default icon once and avoid
+	  warnings if it doesn't exist.  On setup of the tasklist menu, set
+	  the current focused icon
+
+	* taslkist_icon.c: cleanup, and use the existing
+	  get_typed_property_data routine from xstuff.  Also fix leaks
+	  in the mini icon handling, and fix a possible crash.  Also
+	  push error traps for both functions
+
 2000-11-14  Darin Adler  <darin@eazel.com>
 
 	* gwmthumbnail.c: (gwm_thumb_nail_new): Changed the code to match

@@ -406,7 +406,7 @@ extern_before_remove (Extern *ext)
 			       "Reload this applet?\n"
 			       "(If you choose not to reload it at "
 			       "this time you can always add it from "
-			       "the \"Applets\" submenu in the mail "
+			       "the \"Applets\" submenu in the main "
 			       "menu)"), id);
 
 	dlg = gnome_message_box_new (s, GNOME_MESSAGE_BOX_QUESTION,
