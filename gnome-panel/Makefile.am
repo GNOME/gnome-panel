@@ -174,7 +174,9 @@ panel_SOURCES=\
 	icon-entry-hack.c	\
 	icon-entry-hack.h	\
 	multiscreen-stuff.c	\
-	multiscreen-stuff.h
+	multiscreen-stuff.h	\
+	conditional.c		\
+	conditional.h
 
 panel_LDADD = \
 	libpanel_applet.la	\
@@ -192,6 +194,7 @@ gnome_panel_properties_capplet_SOURCES = \
 	gnome-panel-properties.c	\
 	panel-util.c			\
 	icon-entry-hack.c		\
+	conditional.c			\
 	$(CORBA_SRCLIST)
 
 gnome_panel_properties_capplet_LDADD = \

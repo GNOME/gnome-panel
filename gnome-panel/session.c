@@ -21,6 +21,7 @@
 #include "global-keys.h"
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
+#include "conditional.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -348,6 +349,8 @@ send_applet_session_save (AppletInfo *info,
 
 	CORBA_exception_free(&ev);
 }
+
+
 
 
 /*returns TRUE if the save was completed, FALSE if we need to wait
@@ -959,78 +962,6 @@ load_default_applets1(PanelWidget *panel)
 			   G_MAXINT/2 + 8000/*flush right*/, TRUE);
 }
 
-static gboolean
-linux_battery_exists (void)
-{
-	FILE *fp;
-	char buf[200] = "";
-	int foo;
-
-	if ( ! panel_file_exists("/proc/apm"))
-		return FALSE;
-
-	fp = fopen ("/proc/apm", "r");
-	if (fp == NULL)
-		return FALSE;
-
-	if (fgets (buf, sizeof (buf), fp) == NULL) {
-		fclose (fp);
-		return FALSE;
-	}
-	fclose (fp);
-
-	foo = -1;
-	sscanf (buf,
-		"%*s %*d.%*d %*x %*x %*x %*x %d%% %*d %*s\n",
-		&foo);
-
-	if (foo >= 0)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-static gboolean
-battery_exists (void)
-{
-#ifndef __linux__
-	return FALSE;
-#else
-	/* This is MUUUUCHO ugly, but apparently RH 7.0 with segv the program
- 	 * reading /proc/apm on some laptops, and we don't want to crash, thus
- 	 * we do the check in a forked process */
-	int status;
-	pid_t pid;
-
-	pid = fork ();
-	if (pid == 0) {
-                struct sigaction sa = {{NULL}};
-
-		sa.sa_handler = SIG_DFL;
-
-                sigaction(SIGSEGV, &sa, NULL);
-                sigaction(SIGFPE, &sa, NULL);
-                sigaction(SIGBUS, &sa, NULL);
-
-		if (linux_battery_exists ())
-			_exit (0);
-		else
-			_exit (1);
-	}
-
-	status = 0;
-	waitpid (pid, &status, 0);
-
-	if ( ! WIFSIGNALED (status) &&
-	    WIFEXITED (status) &&
-	    WEXITSTATUS (status) == 0) {
-		return TRUE;
-	} else {
-		return FALSE;
-	}
-#endif
-}
-
 
 static void
 load_default_applets2(PanelWidget *panel)
@@ -1083,52 +1014,57 @@ init_user_applets(void)
 {
 	GString *buf;
 	int count, num;	
-	DistributionType distribution = get_distribution_type();
+	DistributionType distribution = get_distribution_type ();
 
-	count = gnome_config_get_int(PANEL_CONFIG_PATH
-				     "panel/Config/applet_count=0");
-	buf = g_string_new(NULL);
-	for(num=1;num<=count;num++) {
+	count = conditional_get_int (PANEL_CONFIG_PATH
+				     "panel/Config/applet_count", 0, NULL);
+	buf = g_string_new (NULL);
+	for (num = 1; num <= count; num++) {
 		char *applet_name;
 		int   pos = 0, panel_num, panel_id;
 		PanelWidget *panel;
 
-		g_string_sprintf(buf, "%sApplet_Config/Applet_%d/",
-				 PANEL_CONFIG_PATH, num);
-		gnome_config_push_prefix(buf->str);
-		applet_name = gnome_config_get_string("id=Unknown");
-		
-		if(strcmp(applet_name,EMPTY_ID)==0) {
-			g_free(applet_name);
-			gnome_config_pop_prefix();
-			continue;
-		} else if(strcmp(applet_name,"Unknown")==0) {
-			g_warning("Unknown applet type!");
-			g_free(applet_name);
-			gnome_config_pop_prefix();
+		g_string_sprintf (buf, "%sApplet_Config/Applet_%d/",
+				  PANEL_CONFIG_PATH, num);
+		gnome_config_push_prefix (buf->str);
+
+		if ( ! conditional_true ("Conditional")) {
+			gnome_config_pop_prefix ();
 			continue;
 		}
 
-		g_string_sprintf(buf,"position=%d", 0);
-		pos = gnome_config_get_int(buf->str);
-		panel_id = gnome_config_get_int("unique_panel_id=-1");
+		applet_name = conditional_get_string ("id", "Unknown", NULL);
+		
+		if (strcmp (applet_name, EMPTY_ID) == 0) {
+			g_free (applet_name);
+			gnome_config_pop_prefix ();
+			continue;
+		} else if (strcmp (applet_name, "Unknown") == 0) {
+			g_warning ("Unknown applet type!");
+			g_free (applet_name);
+			gnome_config_pop_prefix ();
+			continue;
+		}
+
+		pos = conditional_get_int ("position", 0, NULL);
+		panel_id = conditional_get_int ("unique_panel_id", -1, NULL);
 		if (panel_id < 0) {
 			GSList *list;
 
-			panel_num = gnome_config_get_int ("panel=0");
+			panel_num = conditional_get_int ("panel", 0, NULL);
 
 			list = g_slist_nth (panels, panel_num);
 			if (list == NULL) {
-				g_warning("Can't find panel, "
-					  "putting applet on the first one");
+				g_warning ("Can't find panel, "
+					   "putting applet on the first one");
 				panel = panels->data;
 			} else
 				panel = list->data;
 		} else {
 			panel = panel_widget_get_by_id (panel_id);
 			if (panel == NULL) {
-				g_warning("Can't find panel, "
-					  "putting applet on the first one");
+				g_warning ("Can't find panel, "
+					   "putting applet on the first one");
 				panel = panels->data;
 			}
 		}
@@ -1138,10 +1074,12 @@ init_user_applets(void)
 		
 		/*if we are to right stick this, make the number large, 
 		 G_MAXINT/2 should allways be large enough */
-		pos += gnome_config_get_bool("right_stick=false")?G_MAXINT/2:0;
+		pos += (conditional_get_bool ("right_stick", FALSE, NULL)
+			? G_MAXINT/2 : 0);
 		
-		if(strcmp(applet_name, EXTERN_ID) == 0) {
-			char *goad_id = gnome_config_get_string("goad_id");
+		if (strcmp (applet_name, EXTERN_ID) == 0) {
+			char *goad_id = conditional_get_string ("goad_id",
+								NULL, NULL);
 			if ( ! string_empty (goad_id) &&
 			    /* if we try an evil hack such as loading tasklist
 			     * and deskguide instead of the desguide don't
@@ -1155,15 +1093,18 @@ init_user_applets(void)
 						    panel, pos, TRUE, TRUE);
 			}
 			g_free (goad_id);
-		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 
+
+		} else if (strcmp (applet_name, LAUNCHER_ID) == 0) { 
 			gboolean hoard = FALSE;
 			Launcher *launcher;
 			char *file;
 
-			file = gnome_config_get_string("base_location=");
+			file = conditional_get_string ("base_location", NULL,
+						       NULL);
 			if (string_empty (file)) {
 				g_free (file);
-				file = gnome_config_get_string("parameters=");
+				file = conditional_get_string ("parameters",
+							       NULL, NULL);
 				hoard = TRUE;
 			} else {
 				char *tmp = launcher_file_name (file);
@@ -1177,46 +1118,56 @@ init_user_applets(void)
 			/* If this was an old style launcher, hoard it now */
 			if (hoard && launcher != NULL)
 				launcher_hoard (launcher);
-		} else if(strcmp(applet_name, LOGOUT_ID) == 0) { 
-			load_logout_applet(panel, pos, TRUE);
-		} else if(strcmp(applet_name, LOCK_ID) == 0) {
-			load_lock_applet(panel, pos, TRUE);
-		} else if(strcmp(applet_name, STATUS_ID) == 0) {
-			load_status_applet(panel, pos, TRUE);
-		} else if(strcmp(applet_name, RUN_ID) == 0) {
-			load_run_applet(panel, pos, TRUE);
-		} else if(strcmp(applet_name, SWALLOW_ID) == 0) {
-			char *path = gnome_config_get_string("execpath=");
-			char *params = gnome_config_get_string("parameters=");
-			int width = gnome_config_get_int("width=0");
-			int height = gnome_config_get_int("height=0");
-			load_swallow_applet(path, params, width, height,
-					    panel, pos, TRUE);
-			g_free(path);
-			g_free(params);
-		} else if(strcmp(applet_name, MENU_ID) == 0) {
-			char *params = gnome_config_get_string("parameters=.");
-			char *s;
-			int type =
-				gnome_config_get_int("main_menu_type=-1");
+
+		} else if (strcmp (applet_name, LOGOUT_ID) == 0) { 
+			load_logout_applet (panel, pos, TRUE);
+
+		} else if (strcmp (applet_name, LOCK_ID) == 0) {
+			load_lock_applet (panel, pos, TRUE);
+
+		} else if (strcmp (applet_name, STATUS_ID) == 0) {
+			load_status_applet (panel, pos, TRUE);
+			
+		} else if (strcmp (applet_name, RUN_ID) == 0) {
+			load_run_applet (panel, pos, TRUE);
+
+		} else if (strcmp (applet_name, SWALLOW_ID) == 0) {
+			char *path = conditional_get_string ("execpath",
+							     NULL, NULL);
+			char *params = conditional_get_string ("parameters",
+							       NULL, NULL);
+			int width = conditional_get_int ("width", 0, NULL);
+			int height = conditional_get_int ("height", 0, NULL);
+			load_swallow_applet (path, params, width, height,
+					     panel, pos, TRUE);
+			g_free (path);
+			g_free (params);
+
+		} else if (strcmp (applet_name, MENU_ID) == 0) {
+			char *params = conditional_get_string ("parameters",
+							       ".", NULL);
+			int type = conditional_get_int ("main_menu_type", -1,
+							NULL);
 			/* this defaults to false, because we want old menus to
 			 * work in the old style */
 			gboolean global_main_was_default;
 			gboolean global_main =
-				gnome_config_get_bool_with_default("global_main=false",
-								   &global_main_was_default);
+				conditional_get_bool ("global_main", FALSE,
+						      &global_main_was_default);
 			int flags;
 			gboolean old_style = 
-				gnome_config_get_bool("old_style_main=true");
+				conditional_get_bool ("old_style_main", TRUE,
+						      NULL);
 			gboolean custom_icon = 
-				gnome_config_get_bool ("custom_icon=false");
+				conditional_get_bool ("custom_icon", FALSE,
+						      NULL);
 			char *custom_icon_file =
-				gnome_config_get_string ("custom_icon_file=");
+				conditional_get_string ("custom_icon_file",
+							NULL, NULL);
 
-			s = g_strdup_printf("main_menu_flags=%d",
-					    get_default_menu_flags ());
-			flags = gnome_config_get_int(s);
-			g_free(s);
+			flags = conditional_get_int ("main_menu_flags",
+						     get_default_menu_flags (),
+						     NULL);
 			
 			/* Hack to try to do the right conversion while trying
 			 * to turn on the feature on as many setups as possible */
@@ -1279,11 +1230,16 @@ init_user_applets(void)
 
 			g_free (custom_icon_file);
 			g_free (params);
-		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
-			int mypanel = gnome_config_get_int("parameters=-1");
-			int mypanel_id = gnome_config_get_int("unique_drawer_panel_id=-1");
-			char *pixmap = gnome_config_get_string("pixmap=");
-			char *tooltip = gnome_config_get_string("tooltip=");
+
+		} else if (strcmp (applet_name, DRAWER_ID) == 0) {
+			int mypanel = conditional_get_int ("parameters", -1,
+							   NULL);
+			int mypanel_id = conditional_get_int
+				("unique_drawer_panel_id", -1, NULL);
+			char *pixmap = conditional_get_string ("pixmap",
+							       NULL, NULL);
+			char *tooltip = conditional_get_string ("tooltip",
+								NULL, NULL);
 			if (mypanel_id < 0 && mypanel >= 0) {
 				PanelWidget *pw = g_slist_nth_data (panels, mypanel);
 				if (pw != NULL)
@@ -1291,12 +1247,13 @@ init_user_applets(void)
 			}
 			load_drawer_applet (mypanel_id, pixmap, tooltip,
 					    panel, pos, TRUE);
-			g_free(pixmap);
-			g_free(tooltip);
-		} else
-			g_warning("Unknown applet type!");
-		gnome_config_pop_prefix();
-		g_free(applet_name);
+			g_free (pixmap);
+			g_free (tooltip);
+		} else {
+			g_warning ("Unknown applet type!");
+		}
+		gnome_config_pop_prefix ();
+		g_free (applet_name);
 	}
 	g_string_free(buf, TRUE);
 }
@@ -1309,8 +1266,8 @@ init_user_panels(void)
 	char *s;
 	GtkWidget *panel=NULL;
 
-	count = gnome_config_get_int(PANEL_CONFIG_PATH
-				     "panel/Config/panel_count=0");
+	count = conditional_get_int (PANEL_CONFIG_PATH
+				     "panel/Config/panel_count", 0, NULL);
 
 	/*load a default snapped panel on the bottom of the screen,
 	  it is required to have at least one panel for this all
@@ -1387,8 +1344,9 @@ init_user_panels(void)
 					   NULL);*/
 		panel = foobar_widget_new (0 /*screen*/);
 
-		/* Don't translate the first part of this string */
-		s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+		s = conditional_get_string ("/panel/Config/clock_format",
+					    _("%I:%M:%S %p"),
+					    NULL);
 		if (s != NULL)
 			foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 		g_free (s);
@@ -1409,7 +1367,7 @@ init_user_panels(void)
 
 	buf = g_string_new(NULL);
 
-	for(num = 1; num <= count; num++) {
+	for (num = 1; num <= count; num++) {
 		PanelType type;
 		PanelBackType back_type;
 		int sz;
@@ -1432,26 +1390,33 @@ init_user_panels(void)
 				 PANEL_CONFIG_PATH, num);
 		gnome_config_push_prefix (buf->str);
 
-		unique_id = gnome_config_get_int ("unique_id=-1");
+		if ( ! conditional_true ("Conditional")) {
+			gnome_config_pop_prefix ();
+			continue;
+		}
+
+		unique_id = conditional_get_int ("unique_id", -1, NULL);
 		
-		back_pixmap = gnome_config_get_string ("backpixmap=");
+		back_pixmap = conditional_get_string ("backpixmap", NULL, NULL);
 		if (string_empty (back_pixmap)) {
-			g_free(back_pixmap);
+			g_free (back_pixmap);
 			back_pixmap = NULL;
 		}
 
-		color = gnome_config_get_string("backcolor=#ffffff");
+		color = conditional_get_string ("backcolor", "#ffffff", NULL);
 		if ( ! string_empty (color))
-			gdk_color_parse(color, &back_color);
+			gdk_color_parse (color, &back_color);
 
-		g_string_sprintf(buf,"back_type=%d",PANEL_BACK_NONE);
-		back_type=gnome_config_get_int(buf->str);
-		fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
-		strech_pixmap_bg = gnome_config_get_bool ("strech_pixmap_bg=FALSE");
-		rotate_pixmap_bg = gnome_config_get_bool ("rotate_pixmap_bg=FALSE");
+		back_type=conditional_get_int ("back_type",
+					       PANEL_BACK_NONE, NULL);
+		fit_pixmap_bg = conditional_get_bool ("fit_pixmap_bg",
+						      TRUE, NULL);
+		strech_pixmap_bg = conditional_get_bool ("strech_pixmap_bg",
+							 FALSE, NULL);
+		rotate_pixmap_bg = conditional_get_bool ("rotate_pixmap_bg",
+							 FALSE, NULL);
 
-		g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
-		sz=gnome_config_get_int(buf->str);
+		sz=conditional_get_int ("sz", SIZE_STANDARD, NULL);
 		if(sz < 0)
 			sz = 0;
 
@@ -1469,18 +1434,17 @@ init_user_panels(void)
 		
 		/*now for type specific config*/
 
-		g_string_sprintf(buf,"type=%d", EDGE_PANEL);
-		type = gnome_config_get_int(buf->str);
+		type = conditional_get_int ("type", EDGE_PANEL, NULL);
 
 		hidebuttons_enabled =
-			gnome_config_get_bool("hidebuttons_enabled=TRUE");
+			conditional_get_bool ("hidebuttons_enabled", TRUE, NULL);
 		hidebutton_pixmaps_enabled =
-			gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
+			conditional_get_bool ("hidebutton_pixmaps_enabled", TRUE, NULL);
 
-		state = gnome_config_get_int("state=0");
-		mode = gnome_config_get_int("mode=0");
-		level = gnome_config_get_int("level=0");
-		screen = gnome_config_get_int("screen=0");
+		state = conditional_get_int ("state", 0, NULL);
+		mode = conditional_get_int ("mode", 0, NULL);
+		level = conditional_get_int ("level", 0, NULL);
+		screen = conditional_get_int ("screen", 0, NULL);
 		if (screen < 0)
 			screen = 0;
 #if 0 /* i guess we can't easily do this for now */
@@ -1489,11 +1453,11 @@ init_user_panels(void)
 		switch (type) {
 			
 		case EDGE_PANEL:
-			g_string_sprintf (buf, "edge=%d", BORDER_BOTTOM);
-			edge = gnome_config_get_int (buf->str);
+			edge = conditional_get_int ("edge", BORDER_BOTTOM,
+						    NULL);
 
-			avoid_on_maximize = gnome_config_get_bool
-				("avoid_on_maximize=TRUE");
+			avoid_on_maximize = conditional_get_bool
+				("avoid_on_maximize", TRUE, NULL);
 
 			panel = edge_widget_new (screen,
 						 edge, 
@@ -1510,14 +1474,14 @@ init_user_panels(void)
 			break;
 		case ALIGNED_PANEL: {
 			AlignedAlignment align;
-			g_string_sprintf (buf, "edge=%d", BORDER_BOTTOM);
-			edge = gnome_config_get_int (buf->str);
+			edge = conditional_get_int ("edge", BORDER_BOTTOM,
+						    NULL);
 			
-			g_string_sprintf (buf, "align=%d", ALIGNED_LEFT);
-			align = gnome_config_get_int (buf->str);
+			align = conditional_get_int ("align", ALIGNED_LEFT,
+						     NULL);
 
-			avoid_on_maximize = gnome_config_get_bool
-				("avoid_on_maximize=TRUE");
+			avoid_on_maximize = conditional_get_bool
+				("avoid_on_maximize", TRUE, NULL);
 
 			panel = aligned_widget_new (screen,
 						    align,
@@ -1540,16 +1504,17 @@ init_user_panels(void)
 		case SLIDING_PANEL: {
 			gint16 offset;
 			SlidingAnchor anchor;
-			g_string_sprintf (buf, "edge=%d", BORDER_BOTTOM);
-			edge = gnome_config_get_int (buf->str);
+			edge = conditional_get_int ("edge", BORDER_BOTTOM,
+						    NULL);
 			
-			g_string_sprintf (buf, "anchor=%d", SLIDING_ANCHOR_LEFT);
-			anchor = gnome_config_get_int (buf->str);
+			anchor = conditional_get_int ("anchor",
+						      SLIDING_ANCHOR_LEFT,
+						      NULL);
 
-			offset = gnome_config_get_int ("offset=0");
+			offset = conditional_get_int ("offset", 0, NULL);
 
-			avoid_on_maximize = gnome_config_get_bool
-				("avoid_on_maximize=TRUE");
+			avoid_on_maximize = conditional_get_bool
+				("avoid_on_maximize", TRUE, NULL);
 
 			panel = sliding_widget_new (screen,
 						    anchor,
@@ -1574,13 +1539,13 @@ init_user_panels(void)
 			PanelOrientType orient;
 			/*BasePState temp_state;*/
 
-			g_string_sprintf (buf, "orient=%d", ORIENT_UP);
-			orient = gnome_config_get_int (buf->str);
+			orient = conditional_get_int ("orient", ORIENT_UP,
+						      NULL);
 
 			/* FIXME: there are some issues with auto hiding drawers */
 
-			avoid_on_maximize = gnome_config_get_bool
-				("avoid_on_maximize=FALSE");
+			avoid_on_maximize = conditional_get_bool
+				("avoid_on_maximize", FALSE, NULL);
 
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
@@ -1598,7 +1563,7 @@ init_user_panels(void)
 						   &back_color);
 #if 0
 			g_string_sprintf (buf, "temp_state=%d", BASEP_SHOWN);
-			temp_state = gnome_config_get_int (buf->str);
+			temp_state = conditional_get_int (buf->str);
 			DRAWER_POS (BASEP_WIDGET (panel)->pos)->temp_state = temp_state;
 #endif
 			break;
@@ -1607,14 +1572,15 @@ init_user_panels(void)
 			PanelOrientation orient;
 			int x, y;
 			
-			g_string_sprintf (buf, "orient=%d", PANEL_HORIZONTAL);
-			orient = gnome_config_get_int (buf->str);
+			orient = conditional_get_int ("orient",
+						      PANEL_HORIZONTAL,
+						      NULL);
 
-			x = gnome_config_get_int ("x=0");
-			y = gnome_config_get_int ("y=0");
+			x = conditional_get_int ("x", 0, NULL);
+			y = conditional_get_int ("y", 0, NULL);
 
-			avoid_on_maximize = gnome_config_get_bool
-				("avoid_on_maximize=FALSE");
+			avoid_on_maximize = conditional_get_bool
+				("avoid_on_maximize", FALSE, NULL);
 
 			panel = floating_widget_new (screen,
 						     x,
@@ -1638,8 +1604,9 @@ init_user_panels(void)
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new (screen);
 
-			/* Don't translate the first part of this string */
-			s = gnome_config_get_string (_("/panel/Config/clock_format=%l:%M:%S %p"));
+			s = conditional_get_string
+				("/panel/Config/clock_format",
+				 _("%l:%M:%S %p"), NULL);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);
@@ -1670,7 +1637,12 @@ init_user_panels(void)
 void
 load_up_globals (void)
 {
-	GString *buf;
+	/* NOTE: !!!!!!!
+	 * Keep in sync with loadup_vals in gnome-panel-properties.c,
+	 * the function is the same there, but missing the apply_global_config
+	 * and the default menu flags are hardcoded in loadup_vals
+	 * FIXME: make this code common!!!!!
+	 */
 	char *tile_def[] = {
 		"normal",
 		"purple",
@@ -1679,143 +1651,163 @@ load_up_globals (void)
 	};
 	int i;
 	gboolean def;
-	
-	buf = g_string_new(NULL);
+	GString *keybuf;
+	GString *tilebuf;
 
 	/*set up global options*/
 	gnome_config_push_prefix("/panel/Config/");
 
 	global_config.tooltips_enabled =
-		gnome_config_get_bool("tooltips_enabled=TRUE");
+		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
 
 	global_config.show_dot_buttons =
-		gnome_config_get_bool("show_dot_buttons=FALSE");
+		conditional_get_bool ("show_dot_buttons", FALSE, NULL);
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("memory_hungry_menus=FALSE");
+		conditional_get_bool ("memory_hungry_menus", FALSE, NULL);
 
 	global_config.use_large_icons =
-		gnome_config_get_bool(gdk_screen_height () > 768 
-				      ? "use_large_icons=TRUE"
-				      : "use_large_icons=FALSE");
+		conditional_get_bool ("use_large_icons",
+				      (gdk_screen_height () > 768 ?
+				       TRUE : FALSE),
+				      NULL);
 
 	global_config.merge_menus =
-		gnome_config_get_bool("merge_menus=TRUE");
+		conditional_get_bool ("merge_menus", TRUE, NULL);
 
 	global_config.menu_check =
-		gnome_config_get_bool("menu_check=TRUE");
+		conditional_get_bool ("menu_check", TRUE, NULL);
 
 	global_config.off_panel_popups =
-		gnome_config_get_bool("off_panel_popups=TRUE");
+		conditional_get_bool ("off_panel_popups", TRUE, NULL);
 		
 	global_config.disable_animations =
-		gnome_config_get_bool("disable_animations=FALSE");
+		conditional_get_bool ("disable_animations", FALSE, NULL);
 		
-	g_string_sprintf(buf,"auto_hide_step_size=%d",
-			 DEFAULT_AUTO_HIDE_STEP_SIZE);
-	global_config.auto_hide_step_size=gnome_config_get_int(buf->str);
-		
-	g_string_sprintf(buf,"explicit_hide_step_size=%d",
-			 DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
-	global_config.explicit_hide_step_size=gnome_config_get_int(buf->str);
-		
-	g_string_sprintf(buf,"drawer_step_size=%d",
-			 DEFAULT_DRAWER_STEP_SIZE);
-	global_config.drawer_step_size=gnome_config_get_int(buf->str);
-		
-	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay=gnome_config_get_int(buf->str);
+	global_config.auto_hide_step_size =
+		conditional_get_int ("auto_hide_step_size",
+				     DEFAULT_AUTO_HIDE_STEP_SIZE, NULL);
 
-	g_string_sprintf(buf,"maximize_delay=%d", DEFAULT_MAXIMIZE_DELAY);
-	global_config.maximize_delay=gnome_config_get_int(buf->str);
+	global_config.explicit_hide_step_size =
+		conditional_get_int ("explicit_hide_step_size", 
+				     DEFAULT_EXPLICIT_HIDE_STEP_SIZE, NULL);
 		
-	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
-	global_config.minimized_size=gnome_config_get_int(buf->str);
+	global_config.drawer_step_size =
+		conditional_get_int ("drawer_step_size",
+				     DEFAULT_DRAWER_STEP_SIZE, NULL);
 		
-	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
-	global_config.movement_type=gnome_config_get_int(buf->str);
+	global_config.minimize_delay =
+		conditional_get_int ("minimize_delay",
+				     DEFAULT_MINIMIZE_DELAY, NULL);
 
-	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
+	global_config.maximize_delay =
+		conditional_get_int ("maximize_delay",
+				     DEFAULT_MAXIMIZE_DELAY, NULL);
+		
+	global_config.minimized_size =
+		conditional_get_int("minimized_size",
+				    DEFAULT_MINIMIZED_SIZE, NULL);
+		
+	global_config.movement_type =
+		conditional_get_int("movement_type", 
+				    PANEL_SWITCH_MOVE, NULL);
+
+	global_config.keys_enabled = conditional_get_bool ("keys_enabled",
+							   TRUE, NULL);
 
 	g_free(global_config.menu_key);
-	global_config.menu_key = gnome_config_get_string("menu_key=Mod1-F1");
+	global_config.menu_key = conditional_get_string ("menu_key",
+							 "Mod1-F1", NULL);
 	convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);
 
 	g_free(global_config.run_key);
-	global_config.run_key = gnome_config_get_string("run_key=Mod1-F2");
+	global_config.run_key = conditional_get_string ("run_key", "Mod1-F2",
+							NULL);
 	convert_string_to_keysym_state(global_config.run_key,
 				       &global_config.run_keysym,
 				       &global_config.run_state);
 
 	global_config.applet_padding =
-		gnome_config_get_int ("applet_padding=3");
+		conditional_get_int ("applet_padding", 3, NULL);
 
 	global_config.applet_border_padding =
-		gnome_config_get_int ("applet_border_padding=0");
+		conditional_get_int ("applet_border_padding", 0, NULL);
 
-	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
+	global_config.autoraise = conditional_get_bool ("autoraise", TRUE, NULL);
 
 	global_config.keep_bottom =
-		gnome_config_get_bool_with_default ("keep_bottom=FALSE", &def);
+		conditional_get_bool ("keep_bottom", FALSE, &def);
 	/* if keep bottom was the default, then we want to do a nicer
 	 * saner default which is normal layer.  If it was not the
 	 * default then we don't want to change the layerness as it was
 	 * selected by the user and thus we default to FALSE */
 	if (def)
 		global_config.normal_layer =
-			gnome_config_get_bool ("normal_layer=TRUE");
+			conditional_get_bool ("normal_layer", TRUE, NULL);
 	else
 		global_config.normal_layer =
-			gnome_config_get_bool ("normal_layer=FALSE");
+			conditional_get_bool ("normal_layer", FALSE, NULL);
 
 	global_config.drawer_auto_close =
-		gnome_config_get_bool ("drawer_auto_close=FALSE");
+		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
 	global_config.simple_movement =
-		gnome_config_get_bool ("simple_movement=FALSE");
+		conditional_get_bool ("simple_movement", FALSE, NULL);
 	global_config.hide_panel_frame =
-		gnome_config_get_bool ("hide_panel_frame=FALSE");
+		conditional_get_bool ("hide_panel_frame", FALSE, NULL);
 	global_config.tile_when_over =
-		gnome_config_get_bool ("tile_when_over=FALSE");
+		conditional_get_bool ("tile_when_over", FALSE, NULL);
 	global_config.saturate_when_over =
-		gnome_config_get_bool ("saturate_when_over=TRUE");
+		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
-		gnome_config_get_bool ("confirm_panel_remove=TRUE");
+		conditional_get_bool ("confirm_panel_remove", TRUE, NULL);
 	global_config.fast_button_scaling =
-		gnome_config_get_bool ("fast_button_scaling=FALSE");
+		conditional_get_bool ("fast_button_scaling", FALSE, NULL);
 	global_config.avoid_collisions =
-		gnome_config_get_bool ("avoid_collisions=TRUE");
+		conditional_get_bool ("avoid_collisions", TRUE, NULL);
 	
-	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
-	global_config.menu_flags = gnome_config_get_int (buf->str);
+	global_config.menu_flags = conditional_get_int
+		("menu_flags", get_default_menu_flags (), NULL);
 
+	keybuf = g_string_new(NULL);
+	tilebuf = g_string_new(NULL);
 	for (i = 0; i < LAST_TILE; i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
-		global_config.tiles_enabled[i] =
-			gnome_config_get_bool(buf->str);
+		GString *keybuf = g_string_new(NULL);
+		GString *tilebuf = g_string_new(NULL);
 
-		g_free(global_config.tile_up[i]);
-		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
-			   i, tile_def[i]);
-		global_config.tile_up[i] = gnome_config_get_string(buf->str);
+		g_string_sprintf (keybuf, "new_tiles_enabled_%d",i);
+		global_config.tiles_enabled[i] =
+			conditional_get_bool (keybuf->str, FALSE, NULL);
+
+		g_free (global_config.tile_up[i]);
+		g_string_sprintf (keybuf, "tile_up_%d", i);
+		g_string_sprintf (tilebuf, "tiles/tile-%s-up.png", tile_def[i]);
+		global_config.tile_up[i] = conditional_get_string (keybuf->str,
+								   tilebuf->str,
+								   NULL);
 
 		g_free(global_config.tile_down[i]);
-		g_string_sprintf(buf,"tile_down_%d=tiles/tile-%s-down.png",
-			   i,tile_def[i]);
-		global_config.tile_down[i] = gnome_config_get_string(buf->str);
+		g_string_sprintf (keybuf, "tile_down_%d", i);
+		g_string_sprintf (tilebuf, "tiles/tile-%s-down.png",
+				  tile_def[i]);
+		global_config.tile_down[i] =
+			conditional_get_string (keybuf->str, tilebuf->str,
+						NULL);
 
-		g_string_sprintf(buf,"tile_border_%d=2",i);
-		global_config.tile_border[i] = gnome_config_get_int(buf->str);
-		g_string_sprintf(buf,"tile_depth_%d=2",i);
-		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
+		g_string_sprintf (keybuf, "tile_border_%d", i);
+		global_config.tile_border[i] =
+			conditional_get_int (keybuf->str, 2, NULL);
+		g_string_sprintf (keybuf, "tile_depth_%d", i);
+		global_config.tile_depth[i] =
+			conditional_get_int (keybuf->str, 2, NULL);
 	}
+	g_string_free (tilebuf, TRUE);
+	g_string_free (keybuf, TRUE);
 
 	gnome_config_sync ();
 
 	gnome_config_pop_prefix ();
-
-	g_string_free (buf, TRUE);
 
 	apply_global_config ();
 }

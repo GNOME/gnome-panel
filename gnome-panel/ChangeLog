@@ -1,3 +1,13 @@
+Fri May 25 00:52:35 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, conditional.[ch], gnome-panel-properties.c, session.c,
+	  menu.c:  Support a "Conditional" key on panel, tearoff menu and
+	  applet definitions and implement an conditional key getting if the
+	  normal key doesn't work.  The conditions are a fairly full featured
+	  C like conditions with currently not too many possible values.
+	  This is the first step in making the default config be not
+	  hardcoded.
+
 Tue May 22 20:08:06 2001  George Lebl <jirka@5z.com>
 
 	* main.c: fish get scared if you click at them and I hate studying

@@ -36,6 +36,7 @@
 #include "panel-util.h"
 #include "session.h"
 #include "icon-entry-hack.h"
+#include "conditional.h"
 
 /* for MAIN_MENU_* */
 #include "menu.h"
@@ -1228,7 +1229,12 @@ help (GtkWidget *capplet)
 static void
 loadup_vals (void)
 {
-	GString *buf;
+	/* NOTE: !!!!!!!
+	 * Keep in sync with load_up_globals in session.c
+	 * the function is the same there, but has an added call to
+	 * apply_global_config and the default menu flags are hardcoded here
+	 * FIXME: make this code common!!!!!
+	 */
 	char *tile_def[] = {
 		"normal",
 		"purple",
@@ -1237,144 +1243,166 @@ loadup_vals (void)
 	};
 	int i;
 	gboolean def;
-
-	/* look at tile_def, this asserts 4 */
-	g_assert (LAST_TILE == 4);
-	
-	buf = g_string_new(NULL);
+	GString *keybuf;
+	GString *tilebuf;
 
 	/*set up global options*/
-	
 	gnome_config_push_prefix("/panel/Config/");
 
 	global_config.tooltips_enabled =
-		gnome_config_get_bool("tooltips_enabled=TRUE");
+		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
 
 	global_config.show_dot_buttons =
-		gnome_config_get_bool("show_dot_buttons=FALSE");
+		conditional_get_bool ("show_dot_buttons", FALSE, NULL);
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("memory_hungry_menus=FALSE");
+		conditional_get_bool ("memory_hungry_menus", FALSE, NULL);
 
 	global_config.use_large_icons =
-		gnome_config_get_bool("use_large_icons=TRUE");
+		conditional_get_bool ("use_large_icons",
+				      gdk_screen_height () > 768 ?
+				      TRUE : FALSE,
+				      NULL);
 
 	global_config.merge_menus =
-		gnome_config_get_bool("merge_menus=TRUE");
+		conditional_get_bool ("merge_menus", TRUE, NULL);
 
 	global_config.menu_check =
-		gnome_config_get_bool("menu_check=TRUE");
+		conditional_get_bool ("menu_check", TRUE, NULL);
 
 	global_config.off_panel_popups =
-		gnome_config_get_bool("off_panel_popups=TRUE");
+		conditional_get_bool ("off_panel_popups", TRUE, NULL);
 		
 	global_config.disable_animations =
-		gnome_config_get_bool("disable_animations=FALSE");
+		conditional_get_bool ("disable_animations", FALSE, NULL);
 		
-	g_string_sprintf (buf, "auto_hide_step_size=%d",
-			  DEFAULT_AUTO_HIDE_STEP_SIZE);
-	global_config.auto_hide_step_size=gnome_config_get_int (buf->str);
-		
-	g_string_sprintf (buf, "explicit_hide_step_size=%d",
-			  DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
-	global_config.explicit_hide_step_size=gnome_config_get_int (buf->str);
-		
-	g_string_sprintf (buf, "drawer_step_size=%d",
-			  DEFAULT_DRAWER_STEP_SIZE);
-	global_config.drawer_step_size=gnome_config_get_int(buf->str);
-		
-	g_string_sprintf (buf, "minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay = gnome_config_get_int (buf->str);
+	global_config.auto_hide_step_size =
+		conditional_get_int ("auto_hide_step_size",
+				     DEFAULT_AUTO_HIDE_STEP_SIZE, NULL);
 
-	g_string_sprintf (buf, "maximize_delay=%d", DEFAULT_MAXIMIZE_DELAY);
-	global_config.maximize_delay = gnome_config_get_int (buf->str);
+	global_config.explicit_hide_step_size =
+		conditional_get_int ("explicit_hide_step_size", 
+				     DEFAULT_EXPLICIT_HIDE_STEP_SIZE, NULL);
 		
-	g_string_sprintf (buf, "minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
-	global_config.minimized_size=gnome_config_get_int (buf->str);
+	global_config.drawer_step_size =
+		conditional_get_int ("drawer_step_size",
+				     DEFAULT_DRAWER_STEP_SIZE, NULL);
 		
-	g_string_sprintf (buf, "movement_type=%d", PANEL_SWITCH_MOVE);
-	global_config.movement_type=gnome_config_get_int (buf->str);
+	global_config.minimize_delay =
+		conditional_get_int ("minimize_delay",
+				     DEFAULT_MINIMIZE_DELAY, NULL);
 
-	g_string_sprintf (buf, "menu_flags=%d", 
-			  (int)(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB|
-				MAIN_MENU_APPLETS_SUB | MAIN_MENU_DISTRIBUTION_SUB|
-				MAIN_MENU_KDE_SUB | MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
-	global_config.menu_flags = gnome_config_get_int(buf->str);
+	global_config.maximize_delay =
+		conditional_get_int ("maximize_delay",
+				     DEFAULT_MAXIMIZE_DELAY, NULL);
+		
+	global_config.minimized_size =
+		conditional_get_int("minimized_size",
+				    DEFAULT_MINIMIZED_SIZE, NULL);
+		
+	global_config.movement_type =
+		conditional_get_int("movement_type", 
+				    PANEL_SWITCH_MOVE, NULL);
 
-	global_config.keys_enabled =
-		gnome_config_get_bool ("keys_enabled=TRUE");
+	global_config.keys_enabled = conditional_get_bool ("keys_enabled",
+							   TRUE, NULL);
 
-	global_config.menu_key = gnome_config_get_string ("menu_key=Mod1-F1");
-	/*convert_string_to_keysym_state(global_config.menu_key,
+	g_free(global_config.menu_key);
+	global_config.menu_key = conditional_get_string ("menu_key",
+							 "Mod1-F1", NULL);
+	convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
-				       &global_config.menu_state);*/
+				       &global_config.menu_state);
 
-	global_config.run_key = gnome_config_get_string ("run_key=Mod1-F2");
-	/*convert_string_to_keysym_state(global_config.run_key,
+	g_free(global_config.run_key);
+	global_config.run_key = conditional_get_string ("run_key", "Mod1-F2",
+							NULL);
+	convert_string_to_keysym_state(global_config.run_key,
 				       &global_config.run_keysym,
-				       &global_config.run_state);*/
+				       &global_config.run_state);
 
 	global_config.applet_padding =
-		gnome_config_get_int ("applet_padding=3");
+		conditional_get_int ("applet_padding", 3, NULL);
 
 	global_config.applet_border_padding =
-		gnome_config_get_int("applet_border_padding=0");
+		conditional_get_int ("applet_border_padding", 0, NULL);
 
-	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
+	global_config.autoraise = conditional_get_bool ("autoraise", TRUE, NULL);
 
 	global_config.keep_bottom =
-		gnome_config_get_bool_with_default ("keep_bottom=FALSE", &def);
+		conditional_get_bool ("keep_bottom", FALSE, &def);
 	/* if keep bottom was the default, then we want to do a nicer
 	 * saner default which is normal layer.  If it was not the
 	 * default then we don't want to change the layerness as it was
 	 * selected by the user and thus we default to FALSE */
 	if (def)
 		global_config.normal_layer =
-			gnome_config_get_bool ("normal_layer=TRUE");
+			conditional_get_bool ("normal_layer", TRUE, NULL);
 	else
 		global_config.normal_layer =
-			gnome_config_get_bool ("normal_layer=FALSE");
+			conditional_get_bool ("normal_layer", FALSE, NULL);
 
 	global_config.drawer_auto_close =
-		gnome_config_get_bool ("drawer_auto_close=FALSE");
+		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
 	global_config.simple_movement =
-		gnome_config_get_bool ("simple_movement=FALSE");
+		conditional_get_bool ("simple_movement", FALSE, NULL);
 	global_config.hide_panel_frame =
-		gnome_config_get_bool ("hide_panel_frame=FALSE");
+		conditional_get_bool ("hide_panel_frame", FALSE, NULL);
 	global_config.tile_when_over =
-		gnome_config_get_bool ("tile_when_over=FALSE");
+		conditional_get_bool ("tile_when_over", FALSE, NULL);
 	global_config.saturate_when_over =
-		gnome_config_get_bool ("saturate_when_over=TRUE");
+		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
-		gnome_config_get_bool ("confirm_panel_remove=TRUE");
-	global_config.avoid_collisions =
-		gnome_config_get_bool ("avoid_collisions=TRUE");
+		conditional_get_bool ("confirm_panel_remove", TRUE, NULL);
 	global_config.fast_button_scaling =
-		gnome_config_get_bool ("fast_button_scaling=FALSE");
+		conditional_get_bool ("fast_button_scaling", FALSE, NULL);
+	global_config.avoid_collisions =
+		conditional_get_bool ("avoid_collisions", TRUE, NULL);
+	
+	global_config.menu_flags = conditional_get_int
+		("menu_flags", (MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
+				MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
+				MAIN_MENU_DESKTOP),
+		 NULL);
 
+	keybuf = g_string_new(NULL);
+	tilebuf = g_string_new(NULL);
 	for (i = 0; i < LAST_TILE; i++) {
-		g_string_sprintf (buf, "new_tiles_enabled_%d=FALSE", i);
-		global_config.tiles_enabled[i] =
-			gnome_config_get_bool (buf->str);
+		GString *keybuf = g_string_new(NULL);
+		GString *tilebuf = g_string_new(NULL);
 
-		g_free(global_config.tile_up[i]);
-		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
-			   i, tile_def[i]);
-		global_config.tile_up[i] = gnome_config_get_string(buf->str);
+		g_string_sprintf (keybuf, "new_tiles_enabled_%d",i);
+		global_config.tiles_enabled[i] =
+			conditional_get_bool (keybuf->str, FALSE, NULL);
+
+		g_free (global_config.tile_up[i]);
+		g_string_sprintf (keybuf, "tile_up_%d", i);
+		g_string_sprintf (tilebuf, "tiles/tile-%s-up.png", tile_def[i]);
+		global_config.tile_up[i] = conditional_get_string (keybuf->str,
+								   tilebuf->str,
+								   NULL);
 
 		g_free(global_config.tile_down[i]);
-		g_string_sprintf(buf,"tile_down_%d=tiles/tile-%s-down.png",
-			   i,tile_def[i]);
-		global_config.tile_down[i] = gnome_config_get_string(buf->str);
+		g_string_sprintf (keybuf, "tile_down_%d", i);
+		g_string_sprintf (tilebuf, "tiles/tile-%s-down.png",
+				  tile_def[i]);
+		global_config.tile_down[i] =
+			conditional_get_string (keybuf->str, tilebuf->str,
+						NULL);
 
-		g_string_sprintf(buf,"tile_border_%d=2",i);
-		global_config.tile_border[i] = gnome_config_get_int(buf->str);
-		g_string_sprintf(buf,"tile_depth_%d=2",i);
-		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
+		g_string_sprintf (keybuf, "tile_border_%d", i);
+		global_config.tile_border[i] =
+			conditional_get_int (keybuf->str, 2, NULL);
+		g_string_sprintf (keybuf, "tile_depth_%d", i);
+		global_config.tile_depth[i] =
+			conditional_get_int (keybuf->str, 2, NULL);
 	}
-	g_string_free(buf,TRUE);
-		
-	gnome_config_pop_prefix();
+	g_string_free (tilebuf, TRUE);
+	g_string_free (keybuf, TRUE);
+
+	gnome_config_sync ();
+
+	gnome_config_pop_prefix ();
 }
 
 static void

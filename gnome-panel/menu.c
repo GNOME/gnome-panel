@@ -31,6 +31,7 @@
 #include "scroll-menu.h"
 #include "icon-entry-hack.h"
 #include "multiscreen-stuff.h"
+#include "conditional.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -3340,7 +3341,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
-			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+			s = conditional_get_string
+				("/panel/Config/clock_format",
+				 _("%I:%M:%S %p"), NULL);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);
@@ -5793,8 +5796,11 @@ load_tearoff_menu(void)
 	gulong wmclass_num;
 	PanelWidget *menu_panel_widget = NULL;
 
-	title = gnome_config_get_string("title=");
-	wmclass = gnome_config_get_string("wmclass=");
+	if ( ! conditional_true ("Conditional"))
+		return;
+
+	title = conditional_get_string ("title", NULL, NULL);
+	wmclass = conditional_get_string ("wmclass", NULL, NULL);
 
 	if(string_empty (title) ||
 	   string_empty (wmclass)) {
@@ -5803,15 +5809,15 @@ load_tearoff_menu(void)
 		return;
 	}
 
-	x = gnome_config_get_int ("x=0");
-	y = gnome_config_get_int ("y=0");
-	workspace = gnome_config_get_int ("workspace=0");
-	hints = gnome_config_get_int ("hints=0");
-	state = gnome_config_get_int ("state=0");
+	x = conditional_get_int ("x", 0, NULL);
+	y = conditional_get_int ("y", 0, NULL);
+	workspace = conditional_get_int ("workspace", 0, NULL);
+	hints = conditional_get_int ("hints", 0, NULL);
+	state = conditional_get_int ("state", 0, NULL);
 
-	i = gnome_config_get_int("menu_panel_id=-1");
+	i = conditional_get_int("menu_panel_id", -1, NULL);
 	if (i < 0) {
-		i = gnome_config_get_int("menu_panel=0");
+		i = conditional_get_int("menu_panel", 0, NULL);
 		if (i < 0)
 			i = 0;
 		menu_panel_widget = g_slist_nth_data(panels, i);
@@ -5823,9 +5829,9 @@ load_tearoff_menu(void)
 	if ( ! IS_PANEL_WIDGET(menu_panel_widget))
 		g_warning("panels list is on crack");
 
-	mfl_count = gnome_config_get_int("mfl_count=0");
+	mfl_count = conditional_get_int("mfl_count", 0, NULL);
 
-	special = gnome_config_get_string("special=");
+	special = conditional_get_string("special", NULL, NULL);
 	if (string_empty (special)) {
 		g_free (special);
 		special = NULL;
@@ -5852,20 +5858,20 @@ load_tearoff_menu(void)
 			char *dir_name;
 			char *pixmap_name;
 
-			g_snprintf (propname, sizeof (propname), "name_%d=", i);
-			name = gnome_config_get_string(propname);
+			g_snprintf (propname, sizeof (propname), "name_%d", i);
+			name = conditional_get_string(propname, NULL, NULL);
 			g_snprintf (propname, sizeof (propname),
-				    "applets_%d=", i);
-			applets = gnome_config_get_bool(propname);
+				    "applets_%d", i);
+			applets = conditional_get_bool(propname, FALSE, NULL);
 			g_snprintf (propname, sizeof (propname),
-				    "launcher_add_%d=", i);
-			launcher_add = gnome_config_get_bool(propname);
+				    "launcher_add_%d", i);
+			launcher_add = conditional_get_bool(propname, FALSE, NULL);
 			g_snprintf (propname, sizeof (propname),
-				    "dir_name_%d=", i);
-			dir_name = gnome_config_get_string(propname);
+				    "dir_name_%d", i);
+			dir_name = conditional_get_string(propname, NULL, NULL);
 			g_snprintf (propname, sizeof (propname),
-				    "pixmap_name_%d=", i);
-			pixmap_name = gnome_config_get_string(propname);
+				    "pixmap_name_%d", i);
+			pixmap_name = conditional_get_string(propname, NULL, NULL);
 
 			if(!menu) {
 				menu = menu_new ();
@@ -5932,7 +5938,7 @@ load_tornoff(void)
 	int i, length;
 
 	gnome_config_push_prefix(PANEL_CONFIG_PATH "panel/Config/");
-	length = gnome_config_get_int("tearoffs_count=0");
+	length = conditional_get_int("tearoffs_count", 0, NULL);
 	gnome_config_pop_prefix();
 
 	for (i = 0; i < length; i++) {
