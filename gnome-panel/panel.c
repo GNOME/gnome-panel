@@ -2475,6 +2475,8 @@ panel_save_to_gconf (PanelData *pd)
 	const gchar *profile;
 	char        *key;
 	char	    *color;
+
+	g_return_if_fail (pd != NULL);
 	
 	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
@@ -2603,7 +2605,7 @@ panel_save_to_gconf (PanelData *pd)
 		break;
 	case FOOBAR_PANEL:
 		panel_set_string (profile, panel->unique_id,
-				  "clock-format",FOOBAR_WIDGET (pd->panel)->clock_format);
+				  "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
 
 		panel_set_int (profile, panel->unique_id, 
 			       "screen_id", FOOBAR_WIDGET (pd->panel)->screen);

@@ -549,6 +549,20 @@ foobar_widget_global_set_clock_format (const char *format)
 	}
 }
 
+/*
+ * FIXME: we should be only saving Foobar specific prefs
+ */
+static void
+foobar_save_to_gconf (FoobarWidget *foo)
+{
+	PanelData *pd;
+
+	pd = g_object_get_data (G_OBJECT (foo), "PanelData");
+
+	if (pd)
+		panel_save_to_gconf (pd);
+}
+
 void
 foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 {
@@ -608,6 +622,8 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 	}
 
 	update_clock (foo);
+
+	foobar_save_to_gconf (foo);
 }
 
 void
