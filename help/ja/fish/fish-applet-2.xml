@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "3.4.7.4ac19">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "2003年1月">
+  <!ENTITY applet "おさかな君">
+]>
+
+<!--
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+-->
+
+<article id="index" lang="ja">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+    <title>&applet;アプレットマニュアル V&manrevision;</title>
+    <copyright>
+      <year>2003</year>
+      <holder>サン マイクロシステムズ</holder>
+    </copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>Telsa Gwynne</holder>
+    </copyright>
+    <copyright>
+      <year>2003</year>
+      <holder>鎌ヶ迫正俊 (日本語訳)</holder>
+    </copyright>
+
+    <publisher>
+      <publishername>
+	GNOMEドキュメンテーションプロジェクト
+      </publishername>
+    </publisher>
+
+    &legal;
+
+    <authorgroup>
+      <author>
+	<firstname>Sun</firstname>
+	<surname>GNOMEドキュメンテーションチーム</surname>
+	<affiliation>
+	  <orgname>サン マイクロシステムズ</orgname>
+	  <address><email>gdocteam@sun.com</email></address>
+	</affiliation>
+      </author>
+      <author>
+	<firstname>Telsa</firstname>
+	<surname>Gwynne</surname>
+	<affiliation>
+	  <orgname>GNOMEドキュメンテーションプロジェクト</orgname>
+	  <address><email>hobbit@aloss.ukuu.org.uk</email></address>
+	</affiliation>
+      </author>
+      <othercredit role="translator">
+	<firstname>Masatoshi</firstname>
+	<surname>KAMAGASAKO</surname>
+	<affiliation>
+	  <orgname>日本GNOMEユーザ会 翻訳チーム</orgname>
+	  <address><email>emerald@gnome.gr.jp</email></address>
+	</affiliation>
+	<contrib>日本語訳</contrib>
+      </othercredit>
+    </authorgroup>
+
+    <revhistory>
+      <revision>
+	<revnumber>&applet;アプレットマニュアル V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>おさかな君アプレットマニュアル V2.1</revnumber>
+	<date>2002年8月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>おさかな君アプレットマニュアル V2.0</revnumber>
+	<date>2002年5月</date>
+	<revdescription>
+	  <para role="author">Sun GNOMEドキュメンテーションチーム
+	    <email>gdocteam@sun.com</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>おさかな君アプレットマニュアル</revnumber>
+	<date>2000年</date>
+	<revdescription>
+	  <para role="author">Telsa Gwynne
+	    <email>hobbit@aloss.ukuu.org.uk</email></para>
+	  <para role="publisher">GNOMEドキュメンテーションプロジェクト</para>
+	</revdescription>
+      </revision>
+    </revhistory>
+    <releaseinfo>
+      このマニュアルは&applet;アプレット第&appletversion;版について
+      記述しています。
+    </releaseinfo>
+    <legalnotice>
+      <title>フィードバック</title>
+      <para>
+	この&applet;アプレットやマニュアルについてのバグレポートや提
+	案は、<ulink url="ghelp:gnome-feedback" type="help">GNOMEフィー
+	ドバックページ</ulink>を参照してください。
+      </para>
+      <para>
+        このマニュアルの日本語訳についての指摘や提案は
+        <email>emerald@gnome.gr.jp</email>
+        までお願いします。
+      </para>
+    </legalnotice>
+  </articleinfo>
+
+  <indexterm>
+    <primary>おさかな君</primary>
+  </indexterm>
+
+  <!-- ============= Document Body ============================= -->
+  <!-- ============= Introduction ============================== -->
+  <sect1 id="fish-introduction">
+
+    <title>はじめに</title>
+
+    <!-- ==== Figure ============================================= -->
+    <figure id="fish-fig">
+      <title>&applet;アプレット</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/fish_applet.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>&applet;アプレットを表示</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <!-- ==== End of Figure ======================================= -->
+
+    <para>
+      <application>&applet;</application>アプレットは、パネルに
+      アニメーション画像を表示します。
+    </para>
+    <para>
+      <application>&applet;</application>アプレットをパネルに追加するには
+      パネルを右クリックし、
+      <menuchoice>
+	<guimenu>パネルに追加</guimenu>
+	<guisubmenu>お遊び</guisubmenu>
+	<guimenuitem>おさかな君</guimenuitem>
+      </menuchoice>
+      と選択します。
+    </para>
+  </sect1>
+
+  <sect1 id="fish-usage">
+    <title>使い方</title>
+    <para>
+      アプレットをクリックすると、<guilabel>おさかな君Wanda</guilabel>
+      ダイアログが表示されます。このダイアログは普通、fortuneクッキー
+      を表示します。アプレットをクリックした時に起動されるコマンドを
+      設定することもできます。<xref linkend="fish-settings"/>を参照
+      してください。
+    </para>
+  </sect1>
+
+  <!-- ============= Preferences  ================================ -->
+  <sect1 id="fish-settings">
+    <title>設定</title>
+    <para>
+      <application>&applet;</application>を設定するには、
+      <application>&applet;</application>アプレットを右クリックし、
+      <guimenu>設定</guimenu>を選択します。
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term><guilabel>GNOMEおさかな君の名前</guilabel></term>
+	<listitem>
+	  <para>
+	    おさかな君の名前を設定します。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>アニメーションファイルの名前</guilabel></term>
+	<listitem>
+	  <para>
+	    アプレットに表示される画像を選択します。アプレットとともに
+	    提供している画像ファイル、もしくは個人的な画像ファイルを
+	    選択することができます。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>
+	  <guilabel>
+	    おさかな君がクリックされた時に実行するコマンド
+	  </guilabel>
+	</term>
+	<listitem>
+	  <para>
+	    デフォルトでは、<application>&applet;</application>アプレッ
+	    トをクリックされた時にfortuneコマンドが実行されます。
+	    代りに実行させるコマンドを、テキストボックスに入力して
+	    設定することができます。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>アニメーションのフレーム</guilabel></term>
+	<listitem>
+	  <para>
+	    アニメーションのフレーム数をスピンボックスで設定します。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>フレーム間のポーズ秒</guilabel></term>
+	<listitem>
+	  <para>
+	    アニメーションの各フレームが停止する秒数をスピンボックスで
+	    設定します。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>パネルが縦向きの時は回転する</guilabel></term>
+	<listitem>
+	  <para>
+	    縦向きのパネルにアプレットを追加した時、アプレットの画像を
+	    回転させるためのオプションです。
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </sect1>
+</article>
