@@ -998,6 +998,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
+	gnome_window_icon_set_from_file (GTK_WINDOW (tasklist->properties_dialog), 
+					 GNOME_ICONDIR "/gnome-windows.png");
+	gtk_window_set_resizable (GTK_WINDOW (tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),
 			       gtk_widget_get_screen (tasklist->applet));
 	gtk_window_present (GTK_WINDOW (tasklist->properties_dialog));
