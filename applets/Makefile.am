@@ -1,9 +1,9 @@
-always_built_SUBDIRS = applet-dirs gen_util batmon cpuload cpumemusage	\
-	 fish bussign netload dialer webcontrol icewm-pager	\
+always_built_SUBDIRS = applet-dirs gen_util batmon \
+	 fish bussign netload dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery
 
 if HAVE_LIBGTOP
-libgtop_SUBDIRS = diskusage multiload
+libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload
 else
 libgtop_SUBDIRS =
 endif
