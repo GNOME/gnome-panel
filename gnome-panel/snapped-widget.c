@@ -430,8 +430,6 @@ snapped_widget_pop_down(gpointer data)
 	if(snapped->autohide_inhibit)
 		return TRUE;
 
-	gnome_triggers_vdo("", NULL, supinfo);
-
 	if(snapped->state != SNAPPED_SHOWN ||
 	   panel_widget_is_cursor(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel),0)) {
 		snapped->leave_notify_timer_tag = 0;
@@ -443,6 +441,8 @@ snapped_widget_pop_down(gpointer data)
 	if(panel_applet_in_drag ||
 	   snapped->drawers_open>0)
 		return TRUE;
+
+	gnome_triggers_vdo("", NULL, supinfo);
 
 	gtk_signal_emit(GTK_OBJECT(snapped),
 			snapped_widget_signals[STATE_CHANGE_SIGNAL],
