@@ -192,7 +192,7 @@ get_password_callback (gchar *string, gpointer data)
 }
 
 static gchar *
-get_remote_password ()
+get_remote_password (void)
 {
 	gchar *pass;
 	GtkWidget *dialog;
@@ -228,7 +228,9 @@ check_mail_file_status (MailCheck *mc)
 			mc->real_password = g_strdup (mc->remote_password);
 		}
 		else if(mc->real_password == NULL) {
-			gtk_timeout_remove(mc->mail_timeout);
+			if(mc->mail_timeout != 0)
+				gtk_timeout_remove(mc->mail_timeout);
+			mc->mail_timeout = 0;
 			mc->real_password = get_remote_password();
 			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
 							   mail_check_timeout,
@@ -386,7 +388,9 @@ mail_check_timeout (gpointer data)
 		 * returns, just in case the execution takes too long.
 		 */
 		
-		gtk_timeout_remove (mc->mail_timeout);
+		if(mc->mail_timeout != 0)
+			gtk_timeout_remove (mc->mail_timeout);
+		mc->mail_timeout = 0;
 		if (system(mc->pre_check_cmd) == 127)
 			g_warning("Couldn't execute command");
 		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
@@ -408,21 +412,21 @@ mail_check_timeout (gpointer data)
 	case REPORT_MAIL_USE_ANIMATION:
 		if (mc->anymail){
 			if (mc->unreadmail){
-				if (mc->animation_tag == -1){
+				if (mc->animation_tag == 0){
 					mc->animation_tag = gtk_timeout_add (150, next_frame, mc);
 					mc->nframe = 1;
 				}
 			} else {
-				if (mc->animation_tag != -1){
+				if (mc->animation_tag != 0){
 					gtk_timeout_remove (mc->animation_tag);
-					mc->animation_tag = -1;
+					mc->animation_tag = 0;
 				}
 				mc->nframe = 1;
 			}
 		} else {
-			if (mc->animation_tag != -1){
+			if (mc->animation_tag != 0){
 				gtk_timeout_remove (mc->animation_tag);
-				mc->animation_tag = -1;
+				mc->animation_tag = 0;
 			}
 			mc->nframe = 0;
 		}
@@ -512,7 +516,14 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	if(mc->email_mask)
 		gdk_bitmap_unref(mc->email_mask);
 
-	gtk_timeout_remove (mc->mail_timeout);
+	if (mc->mail_timeout != 0)
+		gtk_timeout_remove (mc->mail_timeout);
+
+	if (mc->animation_tag != 0)
+		gtk_timeout_remove (mc->animation_tag);
+
+	/* just for sanity */
+	memset(mc, 0, sizeof(MailCheck));
 
 	g_free(mc);
 }
@@ -730,7 +741,8 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 		mc->update_freq = 60*1000;
 	}
 
-	gtk_timeout_remove (mc->mail_timeout);
+	if(mc->mail_timeout != 0)
+		gtk_timeout_remove (mc->mail_timeout);
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
 	
 	if (mc->clicked_cmd) {
@@ -1159,6 +1171,15 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 	gtk_widget_show (mc->property_window);
 }
 
+static void
+check_callback (AppletWidget *applet, gpointer data)
+{
+	MailCheck *mc = data;
+
+	mail_check_timeout(mc);
+}
+
+
 static gint
 applet_save_session(GtkWidget *w,
 		    const char *privcfgpath,
@@ -1276,11 +1297,12 @@ make_mailcheck_applet(const gchar *goad_id)
 	}
 
 	mc = g_new0(MailCheck, 1);
-	mc->animation_tag = -1;
 	mc->animation_file = NULL;
 	mc->property_window = NULL;
 	mc->anim_changed = FALSE;
 	mc->anymail = mc->unreadmail = mc->newmail = FALSE;
+	mc->mail_timeout = 0;
+	mc->animation_tag = 0;
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
@@ -1356,6 +1378,12 @@ make_mailcheck_applet(const gchar *goad_id)
 					      GNOME_STOCK_MENU_PROP,
 					      _("Properties..."),
 					      mailcheck_properties,
+					      mc);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "check_mail",
+					      GNOME_STOCK_MENU_MAIL,
+					      _("Check for mail"),
+					      check_callback,
 					      mc);
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "help",

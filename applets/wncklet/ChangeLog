@@ -1,3 +1,12 @@
+Fri Jun 09 23:22:29 2000  George Lebl <jirka@5z.com>
+
+	* gen_util/mailcheck.c: null everything on destroy, use 0 for invalid
+	  handler tags, always zero out tags right after removing the
+	  timeout, remove the animation timeout on destroy which fixes all
+	  those fucked up crashes on remove of mailcheck or later since it
+	  can happen a couple of mintues after.  Now if only bug.gnome.org
+	  worked and I could kill them all ...
+
 2000-05-17  Jacob Berkman  <jacob@helixcode.com>
 
 	* gen_util/mailcheck.c (create_mail_widgets): s/free/g_free/
