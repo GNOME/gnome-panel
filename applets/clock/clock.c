@@ -178,7 +178,7 @@ computer_clock_update_func (ClockData * cd,
 	if (cd->unixtime) {
 		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_PANEL_MEDIUM) {
+		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
 			g_snprintf (hour, sizeof(hour), "%lu\n%05lu",
 				    (unsigned long)(current_time / 100000L),
 				    (unsigned long)(current_time % 100000L));
@@ -195,7 +195,7 @@ computer_clock_update_func (ClockData * cd,
 		   12 hour format.  */
 		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_PANEL_MEDIUM) {
+		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
 			if (strftime (hour, sizeof (hour), _("%I:%M\n%p"), tm) <= 0)
 				strcpy (hour, "???");
 		} else {
@@ -214,7 +214,7 @@ computer_clock_update_func (ClockData * cd,
 	if (cd->showdate && !cd->unixtime && !cd->internettime) {
 		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-		    cd->size >= GNOME_PANEL_MEDIUM) {
+		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
 			/* This format string is used, to display the actual day,
 			   when showing a vertical panel.  For an explanation of
 			   this format string type 'man strftime'.  */
@@ -226,7 +226,7 @@ computer_clock_update_func (ClockData * cd,
 			if (strftime (date, sizeof (date), _("%a %b %d"), tm) <= 0)
 				strcpy (date, "???");
 		}
-		if (cd->size < GNOME_PANEL_MEDIUM)
+		if (cd->size < GNOME_Vertigo_PANEL_MEDIUM)
 			g_string_append_c (gs,' ');
 		else
 			g_string_append_c (gs,'\n');
@@ -245,7 +245,7 @@ computer_clock_update_func (ClockData * cd,
 	/*if we are vertical, just make it char per line */
 	if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 	     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
-	    cd->size < GNOME_PANEL_MEDIUM) {
+	    cd->size < GNOME_Vertigo_PANEL_MEDIUM) {
 		char *p;
 		GString *gst = g_string_new ("");
 		
@@ -331,7 +331,7 @@ create_clock_widget (ClockData *cd)
 	cd->props = NULL;
 
 	cd->orient = PANEL_APPLET_ORIENT_UP;
-	cd->size = GNOME_PANEL_MEDIUM;
+	cd->size = GNOME_Vertigo_PANEL_MEDIUM;
 
 	gtk_signal_connect (GTK_OBJECT(clock), "destroy",
 			    (GtkSignalFunc) destroy_clock,
@@ -386,7 +386,7 @@ applet_change_pixel_size (PanelApplet *applet,
 	/* Adjust the padding on the text for small sizes of the panel (so the widget doesn't become bigger than the panel */
 	cc = g_object_get_data (G_OBJECT (cd->clockw), "cc");
 	gtk_container_set_border_width (GTK_CONTAINER (cc->align),
-					((size < GNOME_PANEL_SMALL)? 0 : 3 ) );
+					((size < GNOME_Vertigo_PANEL_SMALL)? 0 : 3 ) );
 	
 	time (&current_time);
 	cd->size = size;

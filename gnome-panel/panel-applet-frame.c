@@ -17,13 +17,13 @@
 #undef PANEL_APPLET_FRAME_DEBUG
 
 struct _PanelAppletFramePrivate {
-	GNOME_PanelAppletShell  applet_shell;
-	Bonobo_PropertyBag      property_bag;
+	GNOME_Vertigo_PanelAppletShell  applet_shell;
+	Bonobo_PropertyBag              property_bag;
 
-	AppletInfo             *applet_info;
+	AppletInfo                     *applet_info;
 
-	gchar                  *iid;
-	gchar                  *unique_key;
+	gchar                          *iid;
+	gchar                          *unique_key;
 };
 
 static GObjectClass *parent_class;
@@ -137,10 +137,10 @@ panel_applet_frame_save_session (PanelAppletFrame *frame)
 	global_key  = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->iid);
 	private_key = g_strdup_printf ("%s/applets/%s", session_key, frame->priv->unique_key);
 
-	GNOME_PanelAppletShell_saveYourself (frame->priv->applet_shell,
-					     global_key,
-					     private_key,
-					     &env); 
+	GNOME_Vertigo_PanelAppletShell_saveYourself (frame->priv->applet_shell,
+						     global_key,
+						     private_key,
+						     &env); 
 	if (BONOBO_EX (&env))
 		g_warning (G_STRLOC " : exception return from saveYourself '%s'",
 			   BONOBO_EX_REPOID (&env));
@@ -161,9 +161,9 @@ panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
 
 	CORBA_exception_init (&env);
 
-	GNOME_PanelAppletShell_getExpandFlags (frame->priv->applet_shell,
-					       &major, &minor,
-					       &env);
+	GNOME_Vertigo_PanelAppletShell_getExpandFlags (frame->priv->applet_shell,
+						       &major, &minor,
+						       &env);
 	
 	if (BONOBO_EX (&env))
 		g_warning (G_STRLOC " : exception return from getExpandFlags '%s'",
@@ -311,11 +311,11 @@ panel_applet_frame_get_type (void)
 	return type;
 }
 
-static GNOME_PanelAppletShell
+static GNOME_Vertigo_PanelAppletShell
 panel_applet_frame_get_applet_shell (Bonobo_Control control)
 {
-	CORBA_Environment      env;
-	GNOME_PanelAppletShell retval;
+	CORBA_Environment              env;
+	GNOME_Vertigo_PanelAppletShell retval;
 
 	CORBA_exception_init (&env);
 

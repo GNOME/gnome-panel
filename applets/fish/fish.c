@@ -988,7 +988,7 @@ fish_applet_new ()
 
 	fish = g_new0 (Fish, 1);
 
-	fish->size   = GNOME_PANEL_MEDIUM;
+	fish->size   = GNOME_Vertigo_PANEL_MEDIUM;
 	fish->orient = PANEL_APPLET_ORIENT_UP;
 
 	gtk_widget_push_visual (gdk_rgb_get_visual ());

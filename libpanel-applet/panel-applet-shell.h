@@ -30,9 +30,9 @@ typedef struct {
 } PanelAppletShell;
 
 typedef struct {
-	BonoboObjectClass               base_class;
+	BonoboObjectClass                       base_class;
 
-	POA_GNOME_PanelAppletShell__epv epv;
+	POA_GNOME_Vertigo_PanelAppletShell__epv epv;
 } PanelAppletShellClass;
 
 

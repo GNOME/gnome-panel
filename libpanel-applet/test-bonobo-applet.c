@@ -74,25 +74,25 @@ test_applet_handle_size_change (PanelApplet *applet,
 				GtkLabel    *label)
 {
 	switch (size) {
-	case GNOME_PANEL_XX_SMALL:
+	case GNOME_Vertigo_PANEL_XX_SMALL:
 		gtk_label_set_markup (label, "<span size=\"xx-small\">Hello</span>");
 		break;
-	case GNOME_PANEL_X_SMALL:
+	case GNOME_Vertigo_PANEL_X_SMALL:
 		gtk_label_set_markup (label, "<span size=\"x-small\">Hello</span>");
 		break;
-	case GNOME_PANEL_SMALL:
+	case GNOME_Vertigo_PANEL_SMALL:
 		gtk_label_set_markup (label, "<span size=\"small\">Hello</span>");
 		break;
-	case GNOME_PANEL_MEDIUM:
+	case GNOME_Vertigo_PANEL_MEDIUM:
 		gtk_label_set_markup (label, "<span size=\"medium\">Hello</span>");
 		break;
-	case GNOME_PANEL_LARGE:
+	case GNOME_Vertigo_PANEL_LARGE:
 		gtk_label_set_markup (label, "<span size=\"large\">Hello</span>");
 		break;
-	case GNOME_PANEL_X_LARGE:
+	case GNOME_Vertigo_PANEL_X_LARGE:
 		gtk_label_set_markup (label, "<span size=\"x-large\">Hello</span>");
 		break;
-	case GNOME_PANEL_XX_LARGE:
+	case GNOME_Vertigo_PANEL_XX_LARGE:
 		gtk_label_set_markup (label, "<span size=\"xx-large\">Hello</span>");
 		break;
 	default:
@@ -145,7 +145,7 @@ test_applet_new (void)
 	gtk_widget_show_all (applet);
 
 	test_applet_handle_size_change (PANEL_APPLET (applet),
-					GNOME_PANEL_MEDIUM,
+					GNOME_Vertigo_PANEL_MEDIUM,
 					GTK_LABEL (label));
 
 	panel_applet_setup_menu (PANEL_APPLET (applet),

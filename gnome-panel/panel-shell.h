@@ -14,15 +14,15 @@
 typedef struct _PanelShellPrivate PanelShellPrivate;
 
 typedef struct {
-	BonoboObject base;
+	BonoboObject       base;
 
 	PanelShellPrivate *priv;
 } PanelShell;
 
 typedef struct {
-	BonoboObjectClass parent_class;
+	BonoboObjectClass                 parent_class;
 
-	POA_GNOME_PanelShell__epv epv;
+	POA_GNOME_Vertigo_PanelShell__epv epv;
 } PanelShellClass;
 
 GType     panel_shell_get_type (void) G_GNUC_CONST;

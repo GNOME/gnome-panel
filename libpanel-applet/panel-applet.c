@@ -535,7 +535,7 @@ panel_applet_instance_init (PanelApplet      *applet,
 	applet->priv = g_new0 (PanelAppletPrivate, 1);
 
 	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
-	applet->priv->size   = GNOME_PANEL_MEDIUM;
+	applet->priv->size   = GNOME_Vertigo_PANEL_MEDIUM;
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
