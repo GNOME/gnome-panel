@@ -3,7 +3,7 @@
 #define PANEL_TYPES_H
 
 #include <gtk/gtktypeutils.h>
-#include "gnome-panel.h"
+#include "GNOME_Panel.h"
 
 typedef GNOME_Panel_OrientType PanelOrientType;
 #define ORIENT_UP GNOME_Panel_ORIENT_UP

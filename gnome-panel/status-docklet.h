@@ -11,7 +11,7 @@
 #include <gtk/gtk.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include <gnome-panel.h>
+#include <GNOME_Panel.h>
 
 G_BEGIN_DECLS
 

@@ -9,7 +9,7 @@
 #include <applet-widget.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "gnome-panel.h"
+#include "GNOME_Panel.h"
 
 struct _AppletWidgetPrivate
 {

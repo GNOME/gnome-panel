@@ -7,6 +7,12 @@ SUBDIRS =
 
 EXTRA_SUBDIRS = config help
 
+serverdir = $(libdir)/bonobo/servers
+server_in_files = GNOME_Panel.server.in
+server_DATA = $(server_in_files:.server.in=.server)
+
+@INTLTOOL_SERVER_RULE@
+
 INCLUDES = \
 	-I.			\
 	-I$(srcdir)		\
@@ -34,13 +40,13 @@ gwmh_dir = $(top_srcdir)/applets/desk-guide
 # lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
 
 CORBA_SRCLIST = \
-	gnome-panel-stubs.c	\
-	gnome-panel-skels.c	\
-	gnome-panel-common.c	\
-	gnome-panel.h
+	GNOME_Panel-stubs.c	\
+	GNOME_Panel-skels.c	\
+	GNOME_Panel-common.c	\
+	GNOME_Panel.h
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) $(top_srcdir)/idl/gnome-panel.idl
+$(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
+	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
 panel-marshal.h: panel-marshal.list
 	cd $(srcdir) \
@@ -56,7 +62,7 @@ panel-marshal.c: panel-marshal.h panel-marshal.list
 # We need explicit dependencies here for people building out
 # of the tarballs.
 
-extern.c: gnome-panel.h
+extern.c: GNOME_Panel.h
 
 # libpanel_applet_la_SOURCES = \
 # 	applet-widget.c \
@@ -64,7 +70,7 @@ extern.c: gnome-panel.h
 # 
 # libpanel_appletinclude_HEADERS = \
 # 	applet-widget.h		\
-# 	gnome-panel.h
+# 	GNOME_Panel.h
 # 
 # libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
 # libpanel_applet_la_LIBADD = $(PANEL_LIBS) -lm
@@ -140,6 +146,7 @@ panel_sources = \
 	menu-properties.c	\
 	launcher.c		\
 	extern.c  		\
+	panel-shell.c		\
 	$(NULL)
 
 panel_headers = \
@@ -201,7 +208,7 @@ panel_2_LDFLAGS=-export-dynamic
 
 EXTRA_DIST = \
 	APPLET_WRITING			\
-	panel.server.in			\
+	GNOME_Panel.server.in		\
 	panel.hints			\
 	gnome-panel-properties.desktop	\
 	nothing.cP			\
@@ -209,17 +216,6 @@ EXTRA_DIST = \
 	gnome-panel-screenshot.glade	\
 	gnome-panel-screenshot.glade.h	\
 	libpanelapplet-2.0.pc.in
-
-SERVER_FILES = 						\
-	panel.server
-
-serverdir = $(datadir)/bonobo-activation
-server_DATA = $(SERVER_FILES)
-
-panel.server : $(srcdir)/panel.server.in $(top_builddir)/config.status
-	sed -e "s|\@bindir\@|$(bindir)|" \
-	$(srcdir)/panel.server.in > panel.server 
-
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =gnome-panel-screenshot.glade

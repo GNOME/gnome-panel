@@ -31,6 +31,9 @@
 #include "status.h"
 #include "xstuff.h"
 
+#include "panel-unique-factory.h"
+#include "panel-shell.h"
+
 extern int config_sync_timeout;
 
 extern GSList *panels;
@@ -471,11 +474,26 @@ tell_user_Im_on_crack (void)
 	gtk_widget_destroy (dialog);
 }
 
+PanelShell *
+panel_get_shell (void)
+{
+	static PanelShell *shell = NULL;
+
+	if (!shell) {
+		shell = g_object_new (PANEL_SHELL_TYPE, NULL);
+		bonobo_object_set_immortal (BONOBO_OBJECT (shell), TRUE);
+	}	
+
+	return shell;
+}
+
 int
 main(int argc, char **argv)
 {
-	gboolean duplicate;
 	gchar *real_global_path;
+	PanelShell *shell;
+	Bonobo_RegistrationResult reg_res;
+	char *message = NULL;
 	
 	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
@@ -484,56 +502,47 @@ main(int argc, char **argv)
 			    LIBGNOMEUI_MODULE,
 			    argc, argv, NULL);
 
+	bonobo_activate ();
+
 	tell_user_Im_on_crack ();
 
-	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
+	shell = panel_get_shell ();
 
-	setup_visuals ();
-
-	switch (extern_init ()) {
-	case EXTERN_SUCCESS: 
-		duplicate = FALSE;
+	reg_res = bonobo_activation_active_server_register (
+		"OAFIID:GNOME_PanelShell",
+		BONOBO_OBJREF (shell));
+	
+	switch (reg_res) {
+	case Bonobo_ACTIVATION_REG_SUCCESS:
+		/* whee! success! */
 		break;
-	case EXTERN_ALREADY_ACTIVE: {
-		GtkWidget* box;
-
-		box = gtk_message_dialog_new (
-				NULL, 0,
-				GTK_MESSAGE_QUESTION,
-				GTK_BUTTONS_YES_NO,
-				(_("I've detected a panel already running.\n"
-				"Start another panel as well?\n" 
-				"(The new panel will not be restarted.)")));
-
-		if (gtk_dialog_run (GTK_DIALOG (box)) != GTK_RESPONSE_YES) {
-			gtk_widget_destroy (box);
-			return -1;
-		}
-
-		gtk_widget_destroy (box);
-		duplicate = TRUE;
-
+	case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
+		message = _("I've detected a panel already running,\n"
+			    "and will now exit.");
+		break;
+	default:
+		message = _("There was a problem registering the panel "
+			    "with the bonobo-activation server.\n"
+			    "The panel will now exit.");
 		break;
 	}
-	case EXTERN_FAILURE: {
+
+
+	if (message) {
 		GtkWidget *box;
 
-		box = panel_error_dialog (
-				"no_panel_register",
-				_("There was a problem registering the panel "
-				"with the GOAD server.\n"
-				"The panel will now exit."));
-
+		box = gtk_message_dialog_new (NULL,
+					      GTK_DIALOG_MODAL,
+					      GTK_MESSAGE_ERROR,
+					      GTK_BUTTONS_OK,
+					      message);
 		gtk_dialog_run (GTK_DIALOG (box));
 		gtk_widget_destroy (box);
 
 		return -1;
-		break;
 	}
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+
+	setup_visuals ();
 
 	setup_merge_directory();
 
@@ -541,9 +550,7 @@ main(int argc, char **argv)
 
 	client = gnome_master_client ();
 
-	gnome_client_set_restart_style (client, duplicate 
-					? GNOME_RESTART_NEVER 
-					: GNOME_RESTART_IMMEDIATELY);
+	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
 
 	gnome_client_set_priority (client, 40);
 

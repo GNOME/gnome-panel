@@ -10,7 +10,7 @@
 #include <gtk/gtk.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include <gnome-panel.h>
+#include <GNOME_Panel.h>
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 #define HAVE_APPLET_BIND_EVENTS 1

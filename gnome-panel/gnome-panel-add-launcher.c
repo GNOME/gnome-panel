@@ -24,7 +24,7 @@
 #include <bonobo-activation/bonobo-activation.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include <gdk/gdkx.h>
-#include "gnome-panel.h"
+#include "GNOME_Panel.h"
 
 static int panel = 0;
 static int pos = 0;

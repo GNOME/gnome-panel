@@ -4,7 +4,7 @@
 #include <glib.h>
 #include "panel.h"
 #include "panel-widget.h"
-#include "gnome-panel.h"
+#include "GNOME_Panel.h"
 
 #include <bonobo-activation/bonobo-activation.h>
 

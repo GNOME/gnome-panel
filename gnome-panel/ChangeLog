@@ -1,3 +1,16 @@
+2001-10-19  jacob berkman  <jacob@ximian.com>
+
+	* GNOME_Panel.server.in: real .server file
+
+	* panel-shell.[ch]: global corba object - will be used by applets
+	to find the panel.  this might not get used - making GNOME_Panel a
+	BonoboObject could do the trick as well, but i didn't want to
+	touch that yet.
+
+	* main.c (main): create a shell object and register with
+	bonobo-activation. if there is already a panel or we couldn't
+	register, abort.
+
 2001-10-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* extern.c, extern.h: 

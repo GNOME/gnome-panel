@@ -8,7 +8,7 @@
 #include <status-docklet.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "gnome-panel.h"
+#include "GNOME_Panel.h"
 
 #define pg_return_if_fail(x) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return; }
 #define pg_return_val_if_fail(x,y) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return y;}
