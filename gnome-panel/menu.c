@@ -555,8 +555,8 @@ create_menu_applet(char *arguments, MenuOrient orient)
 	Menu *menu;
 	int main_menu;
 
-	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *this_menu;
+	char *menu_base = gnome_unconditional_datadir_file ("apps");
 
 	/*if null, let's put the main menu up*/
 	if (arguments == NULL)
@@ -590,6 +590,7 @@ create_menu_applet(char *arguments, MenuOrient orient)
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 	
+	g_free(menu_base);
 	g_free (this_menu);
 	return menu;
 }
