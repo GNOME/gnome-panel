@@ -19,6 +19,8 @@
 
 #include "xstuff.h"
 
+#include <libgnomeui/gnome-uidefs.h>
+
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;

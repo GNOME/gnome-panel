@@ -13,6 +13,7 @@
 #include <sys/wait.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
+#include <libgnomeui/gnome-ui-init.h>
 #include <bonobo-activation/bonobo-activation.h>
 #include <bonobo/bonobo-ui-main.h>
 

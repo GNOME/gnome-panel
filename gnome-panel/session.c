@@ -15,7 +15,6 @@
 #include <sys/wait.h>
 #include <gnome-desktop/gnome-desktop-item.h>
 #include <libgnome/gnome-i18n.h>
-#include <libgnomecompat.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"

@@ -2,6 +2,7 @@
 #define SESSION_H
 
 #include <glib.h>
+#include <libgnomeui/gnome-client.h>
 #include "panel-widget.h"
 
 G_BEGIN_DECLS

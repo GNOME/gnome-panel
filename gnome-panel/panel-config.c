@@ -21,6 +21,8 @@
 #include "multiscreen-stuff.h"
 #include "nothing.cP"
 
+#include <libgnomeui/gnome-uidefs.h>
+
 static void config_apply (PerPanelConfig *ppc);
 
 static GList *ppconfigs = NULL;

@@ -21,6 +21,7 @@
 #include <limits.h>
 #include <errno.h>
 #include <math.h>
+#include <gdk/gdkkeysyms.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-config.h>
 
