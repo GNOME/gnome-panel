@@ -295,6 +295,15 @@ Check if the @applet is locked down. A locked down applet should not allow any c
 @Returns: %TRUE if the @applet is locked down, %FALSE otherwise.
 
 
+<!-- ##### FUNCTION panel_applet_request_focus ##### -->
+<para>
+Set keyboard focus to @applet.
+</para>
+
+@applet: The #PanelApplet.
+@timestamp: timestamp of the event triggering the window focus
+
+
 <!-- ##### FUNCTION panel_applet_get_control ##### -->
 <para>
 Retrieves the #BonoboControl associated with @applet.
