@@ -745,6 +745,9 @@ simple_contents_shown (GtkWidget *vbox,
                 g_object_unref (G_OBJECT (gc));
                 gc = NULL;
                 
+		/* FIXME: this is not actually the list of all directories,
+		 * as it only includes the cache, this just seems like all,
+		 * this is wrong! */
                 entries = fr_get_all_dirs ();
                 files = NULL;
                 tmp = entries;
@@ -850,8 +853,14 @@ unset_pixmap (GtkWidget *gpixmap)
         file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 					  DEFAULT_ICON, TRUE, NULL);
 
+	if (file == NULL)
+		file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP, 
+						  DEFAULT_ICON, TRUE, NULL);
         if (file == NULL)
                 file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						  FALLBACK_DEFAULT_ICON, TRUE, NULL);
+        if (file == NULL)
+                file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP, 
 						  FALLBACK_DEFAULT_ICON, TRUE, NULL);
         
 	gtk_image_set_from_file (GTK_IMAGE (gpixmap), file);

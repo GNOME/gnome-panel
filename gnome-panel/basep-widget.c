@@ -2417,7 +2417,7 @@ queue_recalc_handler (gpointer data)
 		basep_border_recalc (screen);
 	}
 
-	g_list_free (recalc_list);
+	g_list_free (list);
 
 	return FALSE;
 }
