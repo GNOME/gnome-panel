@@ -18,6 +18,9 @@ struct _PerPanelConfig {
 	int			hidebutton_pixmaps;
 	BasePMode               mode;
 
+	/*floating widget*/
+	PanelOrientation        orient;
+	int                     x, y;
 	/*border widget*/
 	BorderEdge              edge;
 
@@ -39,6 +42,11 @@ struct _PerPanelConfig {
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
 
+	/*floating buttons*/
+	GtkWidget               *h_orient;
+	GtkWidget               *v_orient;
+	GtkWidget               *x_spin;
+	GtkWidget               *y_spin;
 	/*sliding buttons*/
 	GtkWidget               *l_anchor;
 	GtkWidget               *r_anchor;
@@ -72,5 +80,7 @@ void update_config_edge (BasePWidget *w);
 void update_config_anchor (BasePWidget *w);
 void update_config_offset (BasePWidget *w);
 void update_config_align (BasePWidget *w);
+void update_config_floating_pos (BasePWidget *w);
+void update_config_floating_orient (BasePWidget *w);
 void kill_config_dialog(GtkWidget *panel);
 #endif /* PANEL_CONFIG_H */

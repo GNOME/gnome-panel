@@ -252,7 +252,20 @@ panel_orient_change(GtkWidget *widget,
 	gtk_container_foreach(GTK_CONTAINER(widget),
 			      orient_change_foreach,
 			      widget);
+
+	if (IS_FLOATING_WIDGET (widget))
+		update_config_floating_orient (BASEP_WIDGET (widget));
+
 	panels_to_sync = TRUE;
+}
+
+static void
+floating_pos_change (FloatingPos *pos,
+		     gint x, gint y,
+		     gpointer data)
+{
+	update_config_floating_pos (BASEP_WIDGET (data));
+
 }
 
 static void
@@ -947,6 +960,11 @@ basep_pos_connect_signals (BasePWidget *basep)
 				    "align_change",
 				    GTK_SIGNAL_FUNC (aligned_align_change),
 				    basep);
+	else if (IS_FLOATING_WIDGET (basep))
+		gtk_signal_connect (GTK_OBJECT (basep->pos),
+				    "floating_coords_change",
+				    GTK_SIGNAL_FUNC (floating_pos_change),
+				    basep);				    
 	else if (IS_SLIDING_WIDGET (basep)) {
 		gtk_signal_connect (GTK_OBJECT (basep->pos),
 				    "anchor_change",

@@ -69,6 +69,7 @@ void init_menus(void);
 #define MENU_TYPE_EDGE "Edge panel"
 #define MENU_TYPE_ALIGNED "Aligned panel"
 #define MENU_TYPE_SLIDING "Sliding panel"
+#define MENU_TYPE_FLOATING "Floating panel"
 
 #define MENU_MODES "modes_menu"
 #define MENU_MODE_EXPLICIT_HIDE "Explicit hide"
@@ -96,6 +97,10 @@ enum {
 #define MENU_BACK_NONE "Standard"
 #define MENU_BACK_PIXMAP "Pixmap"
 #define MENU_BACK_COLOR "Color"
+
+#define MENU_ORIENTS "orients_menu"
+#define MENU_ORIENT_HORIZONTAL "Horizontal"
+#define MENU_ORIENT_VERTICAL "Vertical"
 
 END_GNOME_DECLS
 

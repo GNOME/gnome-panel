@@ -2335,6 +2335,7 @@ create_panel_root_menu(GtkWidget *panel, int tearoff)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit),
 			    NULL);
+	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
 
 	return panel_menu;
 }
@@ -2533,6 +2534,37 @@ change_size (GtkWidget *widget, gpointer data)
 }
 
 static void
+change_orient (GtkWidget *widget, gpointer data)
+{
+
+	BasePWidget *basep;
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	
+	g_return_if_fail(cur_panel != NULL);
+	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+
+	if (!GTK_CHECK_MENU_ITEM (widget)->active)
+		return;
+
+	g_assert (cur_panel->panel_parent);
+	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+
+	basep = BASEP_WIDGET(cur_panel->panel_parent);
+	
+	basep_widget_change_params (basep,
+				    GPOINTER_TO_INT (data),
+				    cur_panel->sz,
+				    basep->mode,
+				    basep->state,
+				    basep->hidebuttons_enabled,
+				    basep->hidebutton_pixmaps_enabled,
+				    cur_panel->back_type,
+				    cur_panel->back_pixmap,
+				    cur_panel->fit_pixmap_bg,
+				    &cur_panel->back_color);
+}
+
+static void
 change_background (GtkWidget *widget, gpointer data)
 {
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
@@ -2604,6 +2636,7 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 	GtkWidget *pw;
 	GtkWidget *types = gtk_object_get_data(GTK_OBJECT(menu),MENU_TYPES);
 	GtkWidget *modes = gtk_object_get_data(GTK_OBJECT(menu),MENU_MODES);
+	GtkWidget *orient = gtk_object_get_data (GTK_OBJECT (menu), MENU_ORIENTS);
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu);
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
@@ -2620,6 +2653,11 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 		gtk_widget_show(modes);
 		gtk_widget_show(types);
 	}
+
+	if (IS_FLOATING_WIDGET (pw))
+		gtk_widget_show (orient);
+	else
+		gtk_widget_hide (orient);
 }
 
 static void
@@ -2737,6 +2775,22 @@ update_hiding_menu (GtkWidget *menu, gpointer data)
 					TRUE);
 }
 
+static void
+update_orient_menu (GtkWidget *menu, gpointer data)
+{
+	char *s = NULL;
+	GtkWidget *menuitem = NULL;
+	PanelWidget *cur_panel = get_panel_from_menu_data (menu);
+	BasePWidget *basep = BASEP_WIDGET (cur_panel->panel_parent);
+	s = (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL)
+		? MENU_ORIENT_HORIZONTAL
+		: MENU_ORIENT_VERTICAL;
+
+	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
+					TRUE);
+}
+
 typedef struct {
 	char *s;
 	int i;
@@ -2809,6 +2863,10 @@ make_properties_submenu (GtkWidget *menu)
 				       { N_(MENU_HIDEBUTTONS_NONE), HIDEBUTTONS_NONE },
 				       { NULL, -1 } };
 
+	StringEnumPair orients[] = { { N_(MENU_ORIENT_HORIZONTAL), PANEL_HORIZONTAL },
+				     { N_(MENU_ORIENT_VERTICAL), PANEL_VERTICAL },
+				     { NULL, -1 } };
+
 	StringEnumPair sizes[] = { { N_(MENU_SIZE_TINY), SIZE_TINY },
 				   { N_(MENU_SIZE_STANDARD), SIZE_STANDARD },
 				   { N_(MENU_SIZE_LARGE), SIZE_LARGE },
@@ -2831,6 +2889,9 @@ make_properties_submenu (GtkWidget *menu)
 
 	add_radio_menu (menu, _("Size"), sizes, MENU_SIZES,
 			change_size, update_size_menu);
+
+	add_radio_menu (menu, _("Orientation"), orients, MENU_ORIENTS,
+			change_orient, update_orient_menu);
 
 	add_radio_menu (menu, _("Background type"), backgrounds, MENU_BACKS,
 			change_background, update_back_menu);
@@ -2917,7 +2978,10 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	setup_internal_applet_drag(menuitem, "LOCK:NEW");
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Swallowed app"));
+	setup_menuitem (menuitem, 
+			gnome_stock_pixmap_widget (menu,
+						   GNOME_STOCK_PIXMAP_ADD),
+			_("Swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_swallowing_cb),NULL);
@@ -3138,6 +3202,7 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC(panel_lock), 0);
+		setup_internal_applet_drag(menuitem, "LOCK:NEW");
 	}
 	g_free (char_tmp);
 
@@ -3148,7 +3213,7 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit), 0);
-
+	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
 }
 
 static GtkWidget *
