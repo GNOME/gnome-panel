@@ -285,6 +285,24 @@ panel_menu_bar_get_type (void)
 	return type;
 }
 
+static gboolean
+panel_menu_bar_on_expose (GtkWidget *widget,
+                          GdkEventExpose *event,
+                          gpointer data)
+{
+	PanelMenuBar *menubar = data;
+
+	if (GTK_WIDGET_HAS_FOCUS (menubar))
+		gtk_paint_focus (widget->style,
+				 widget->window, 
+				 GTK_WIDGET_STATE (menubar),
+				 NULL,
+				 widget,
+				 "menubar-applet",
+				 0, 0, -1, -1);
+	return FALSE;
+}
+
 static void
 panel_menu_bar_load (PanelWidget *panel,
 		     gboolean     locked,
@@ -312,8 +330,14 @@ panel_menu_bar_load (PanelWidget *panel,
 				   GTK_STOCK_HELP,
 				   _("_Help"),
 				   NULL);
-
+        g_signal_connect_after (G_OBJECT (menubar), "focus-in-event",
+                                G_CALLBACK (gtk_widget_queue_draw), menubar);
+        g_signal_connect_after (G_OBJECT (menubar), "focus-out-event",
+                                G_CALLBACK (gtk_widget_queue_draw), menubar);
+        g_signal_connect_after (G_OBJECT (menubar), "expose-event",
+                                G_CALLBACK (panel_menu_bar_on_expose), menubar);
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
+        GTK_WIDGET_SET_FLAGS (menubar, GTK_CAN_FOCUS);
 }
 
 void
