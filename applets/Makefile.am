@@ -1,9 +1,9 @@
 SUBDIRS =		\
 	gen_util	\
-	fish		\
-	desk-guide
+	fish
 
 EXTRA_SUBDIRS =		\
 	applet-dirs	\
 	desk-guide	\
-	tasklist
+	tasklist	\
+	desk-guide
