@@ -302,6 +302,8 @@ printer_properties (AppletWidget *applet, gpointer data)
 	}
 
 	pr->printer_prop = gnome_property_box_new ();
+	gtk_window_set_wmclass (GTK_WINDOW (pr->printer_prop),
+				"printer", "Printer");
 	gtk_window_set_title (GTK_WINDOW (pr->printer_prop),
 			      _("Printer properties"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (pr->printer_prop),
@@ -355,6 +357,8 @@ printer_about (AppletWidget *applet, gpointer data)
 				     authors,
 				     _("The printer applet lets you easily drag files to be printed via a print command"),
 				     NULL);
+	gtk_window_set_wmclass (GTK_WINDOW (pr->about),
+				"printer", "Printer");
 	gnome_window_icon_set_from_file (GTK_WINDOW (pr->about),
 					 GNOME_ICONDIR"/mc/i-printer.png");
 	gtk_signal_connect (GTK_OBJECT(pr->about), "destroy",

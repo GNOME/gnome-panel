@@ -588,6 +588,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	cd->props = gnome_property_box_new();
 	gtk_window_set_title (GTK_WINDOW (cd->props),
 			      _("Clock properties"));
+	gtk_window_set_wmclass (GTK_WINDOW (cd->props), "clock", "Clock");
 	gnome_window_icon_set_from_file (GTK_WINDOW (cd->props),
 					 GNOME_ICONDIR"/gnome-clock.png");
 
@@ -804,6 +805,7 @@ clock_about (AppletWidget *applet, gpointer data)
 				 authors,
 				 _("The clock applet gives your panel a lightweight and simple display of the date and time"),
 				 GNOME_ICONDIR"/gnome-clock.png");
+	gtk_window_set_wmclass (GTK_WINDOW (about), "clock", "Clock");
 	gnome_window_icon_set_from_file (GTK_WINDOW (about),
 					 GNOME_ICONDIR"/gnome-clock.png");
 	gtk_signal_connect (GTK_OBJECT(about), "destroy",

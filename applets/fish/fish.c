@@ -468,7 +468,7 @@ properties_dialog (AppletWidget *aw, gpointer data)
 	}
 
 	fish->pb = gnome_property_box_new();
-
+	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
 	gtk_window_set_title(GTK_WINDOW(fish->pb), _("GNOME Fish Properties"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
 					 GNOME_ICONDIR"/gnome-fish.png");
@@ -584,6 +584,7 @@ update_fortune_dialog(Fish *fish)
 				       TRUE);
 		gnome_dialog_close_hides(GNOME_DIALOG(fish->fortune_dialog),
 					 TRUE);
+		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
 		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
 						 GNOME_ICONDIR"/gnome-fish.png");
 
@@ -757,6 +758,7 @@ about_cb (AppletWidget *widget, gpointer data)
 				   "should be promptly sent for a psychiatric "
 				   "evaluation."),
 				 GNOME_ICONDIR"/gnome-fish.png");
+	gtk_window_set_wmclass (GTK_WINDOW (fish->aboutbox), "fish", "Fish");
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->aboutbox),
 					 GNOME_ICONDIR"/gnome-fish.png");
 	gtk_signal_connect (GTK_OBJECT (fish->aboutbox), "destroy",
