@@ -106,7 +106,7 @@
          <guilabel>Menus</guilabel> are lists of items, each of which
          either starts an application, executes a command, or is a
          sub-menu.  In the example Panel, the left-most
-         icon after the arrow is a stylized footprint icon(the GNOME
+         icon after the arrow is a stylized footprint icon (the GNOME
          logo). This is the <guimenu>Main Menu</guimenu>, one of the
          most important objects in the Panel.  This menu provides
          access to almost all the applications, commands, and
@@ -275,9 +275,9 @@
       <primary>Panel</primary> <secondary>Hiding</secondary>
      </indexterm>
      The left and right arrow icons seen at either end of the example
-     panel are used to hide the panel. These arrows are shown in the
-     following figure.
-     <figure>
+     panel are used to hide the panel. These arrows are shown in <xref
+     linkend="fig2">.
+     <figure id="fig2">
       <title>The Hide Button</title>
       <screenshot>
        <screeninfo>The Hide Button</screeninfo>
@@ -289,7 +289,9 @@
     </para>
     <para>
      Pressing one of these arrows will hide the GNOME Panel by sliding
-     it in the direction of the arrow pressed.  Pressing it a second
+     it in the direction of the arrow pressed, so that the only
+     part of the panel which remain visible is the
+     <guibutton>Hide</guibutton> button itself.   Pressing it a second
      time will expand the Panel.
     </para>
     <para>
@@ -357,12 +359,17 @@
     <para>
      You can disable the Logout Dialog so that pressing the logout
      button will end your GNOME session without asking any
-     questions. To do so, start GNOME control center (<menuchoice>
-     <guisubmenu>Startup programs</guisubmenu> </menuchoice>) and
-     uncheck the button <guilabel>Prompt on logout</guilabel>. You may
+     questions. To do so, start <application>GNOME control
+     center</application>, by selecting   <menuchoice>
+	  <guimenu>Main Menu</guimenu>
+	  <guisubmenu>Settings</guisubmenu>
+     <guisubmenu>Startup programs</guisubmenu> </menuchoice> and
+     uncheck the button <guilabel>Prompt on logout</guilabel>. 
+	<!-- Commented out - as suggested by Drake
+      You may
      also control whether changes to your session are automatically
      saved using the <guilabel>Automatically save changes to
-     session</guilabel> button.
+     session</guilabel> button. -->
     </para>
    </sect2>
    <sect2 id="lockscreen">
@@ -438,17 +445,30 @@
 	well as quite a few non-Gnome ones, such as
 	<application>Netscape</application> browser and
 	<application>emacs</application> text editor.
-	<guimenu>Programs</guimenu> menu also contains commands
-	<guimenuitem>File manager</guimenuitem>, which launches the
-	GNOME file manager, <guimenuitem>Run program</guimenuitem>,
-	which gives you the command line prompt where you can enter
-	any command, and <guimenuitem>Help</guimenuitem>, which
+        In addition, <guimenu>Programs</guimenu> menu also contains
+	the following  commands:</para>
+	<itemizedlist>
+	  <listitem><para>
+	    <guimenuitem>File manager</guimenuitem> &mdash;  launches the
+	    GNOME file manager, 
+	    </para>
+	</listitem>
+	<listitem><para>
+	    <guimenuitem>Run program</guimenuitem> &mdash;
+	    gives you the command line prompt where you can enter
+	    any command,
+	  </para>
+	</listitem>
+	<listitem><para>
+	    <guimenuitem>Help</guimenuitem> &mdash;
 	launches the GNOME help browser. GNOME help browser gives you
 	an easy access to all the documentation installed on your
 	system &mdash; not only GNOME documentation (Users guide,
 	application manuals, &hellip;), but also all other types of
 	documentation (man pages, info pages).
-      </para>
+	  </para>
+	</listitem>
+      </itemizedlist>
 
 
       <para> In addition to the <guimenu>Programs</guimenu>,  the main
@@ -618,7 +638,7 @@
         If you prefer, you can use keyboard instead of the mouse
 	to navigate the main menu. To activate the main menu, press
 	<keycap>Menu</keycap> key on your keyboard (if you are using
-	standard PC keyboard, this key usually is located to the left
+	a standard PC keyboard, this key usually is located to the left
 	of the space bar and labelled with a picture of a menu); you
 	can change the default key in the <link
 	linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
@@ -646,11 +666,12 @@
       them - no default submenus, Run program, etc. as the
       <guimenu>Main Menu</guimenu> has.  For example, you can add any
       submenu of your <guimenu>Favorites</guimenu> menu or the
-      <guimenu>Program</guimenu> menu as a separate menu to the panel;
+      <guimenu>Programs</guimenu> menu as a separate menu to the panel;
       to do so, bring up this submenu from the Main Menu, right click
-      on the submenu title, and select <guimenuitem>add this menu to
-      panel</guimenuitem>.  To create a new Menu, use the
-      <application>Menu editor</application>.
+      on the submenu title, and select <guimenuitem>Add this as menu to
+      panel</guimenuitem>. <!-- FIXME - this is not right
+      To create a new Menu, use the
+      <application>Menu editor</application>. -->
   </para>
   <figure>
    <title>An Example Menu</title>
@@ -665,7 +686,25 @@
    The example above shows a menu titled <guimenu>My
    Favorites</guimenu> which includes three application launchers and
    one submenu titled <guisubmenu>Games</guisubmenu>.
-  </para>
+    </para>
+
+    <sect2 id="tearoff">
+      <title>Tearing off the menus</title>
+      <para>
+	All menus in GNOME have the tear-off feature: if you select
+	the "perforation" - thin dashed line at the top of the menu,
+	right above the menu title - the menu will be turned into a
+	separate window on your desktop, which will stay there even
+	after you move the mouse cursor elsewhere. It is very
+	convenient if you will be using the same command from some
+	deeply nested submenu frequenlty. To remove a "torn-off" menu
+	from your desktop, click on the <guibutton>Close</guibutton>
+	button in the window title (its appearance and location
+	depends on the window manager you are using, but usually it is
+	the rightmost button, labelled by an "x").
+      </para>
+    </sect2>
+
    <sect2 id="menusconf">
     <title> Configuring the menus</title>
      <para> 
@@ -1130,14 +1169,15 @@
 	To move any object on the panel to a different location, just
       drag it with the middle mouse button to the desired place, or
       right-click on it and choose <guimenuitem>Move
-      applet</guimenuitem>. If in the course of this movement it hits
-      other objects, the behavior depends on the global preferences
-      you set (see <xref linkend="appletstab">): the object you are
-      moving can switch places with other objects, "push" all objects
-      it meets, or "jump" over all other objects without disturbing
-      them. You can also overrun the default behavior by holding
-      <keycap>Shift</keycap> button (for "push" mode),
-      <keycap>Ctrl</keycap> (for "switched" mode), or
+      applet</guimenuitem>. You can move it to a dfferent location on
+      the same Panel, or to a different Panel. If in the course of
+      this movement it hits other objects, the behavior depends on the
+      global preferences you set (see <xref linkend="appletstab">):
+      the object you are moving can switch places with other objects,
+      "push" all objects it meets, or "jump" over all other objects
+      without disturbing them. You can also overrun the default
+      behavior by holding <keycap>Shift</keycap> button (for "push"
+      mode), <keycap>Ctrl</keycap> (for "switched" mode), or
       <keycap>Alt</keycap> (for "free" mode, i.e. jumping other other
       objects without disturbing them) button while dragging.
 	</para>
@@ -1724,16 +1764,17 @@
        result in you missing new items added to your menu.
 	</para>
 	</listitem>
-	<listitem> 
-	  <para> <guilabel>Panel Menu</guilabel> &mdash; This allows
-	  you to configure the main menu which you get by
+	<listitem> <para> <guilabel>Panel Menu</guilabel> &mdash; This
+	  allows you to configure the  <guimenu>Main
+	  Menu</guimenu> which you get by
 	  right-clicking on the panel, or by using the keyboard
 	  shortcut. For each of the possible submenus
 	  (<guisubmenu>Programs</guisubmenu>,
 	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
-	  whether it should be included as a part of the Main Menu, as
-	  a submenu, or not included at all. A description of  these
-	  submenus is given in <xref linkend="submenus">.  
+	  whether it should be included as a part of the <guimenu>Main
+	  Menu</guimenu>, as a submenu, or not included at all. A
+	  description of these submenus is given in <xref
+	  linkend="submenus">.
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -1799,14 +1840,52 @@
       This tab also allows you to configure some global key
       bindings. At the moment, you can define key bindings for Main
       Menu and for Run Command dialog. For example, if you are using
-      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
-      (this key is usually  located to the left of the space bar and
+      a standard PC keyboard, you can bind the <keycap>Menu</keycap> key
+      (this key is usually located to the left of the space bar and
       labelled with a picture of a menu) to the Main Menu, so that
-      pressing this key will bring up the Main Menu. To change the key
-      bound to Main Menu or to the Run Dialog, you can either select a
-      key from the drop-down list, or click on the
+      pressing this key will bring up the Main Menu; similarly, the
+      common key binding for the Run command dialog is the so-called
+      <keycap>Windows</keycap> key (called so because on most PC
+      keyboards this key is indeed labelled with a flying window).  To
+      change the key bound to Main Menu or to the Run Dialog, you can
+      either select a key from the drop-down list, or click on the
       <guibutton>Grab</guibutton> button and then press the desired
       key. </para>
+      <note>
+	<title>NOTE</title>
+	<para>
+	  If you have problems with using <keycap>Menu</keycap> or
+	  <keycap>Windows</keycap> keys, the most probable explanation
+	  is that your X server was incorrectly configured: the
+	  keyboard type chosen during installation  does not match your actual
+	  keyboard. If you are using
+	  <application>XFree86</application> server, you can fix it by
+	  manually editing the configuration file. This file, named
+	  <filename>XF86Config</filename>, is usually located in
+	  <filename>/etc</filename> or <filename>/etc/X11</filename>
+	  directory. Open this file with any text editor (not a
+	  word-processor!), find there the line containing words
+              <literal>XkbModel</literal> and change it to read
+	  <programlisting>
+              XkbModel "pc104" 
+	  </programlisting>
+	  You need to be root (system administrator) to do this. Now,
+	  logout of GNOME and restart the X server by simultaneously pressing
+	  <keycombo> <keycap>Ctrl</keycap>
+	    <keycap>Alt</keycap> <keycap>Backspace</keycap>
+	  </keycombo>. 
+	</para>
+      </note>
+      <warning>
+	<title>WARNING</title>
+	<para>
+	Making a mistake while editing
+	<filename>XF86Config</filename> file can make you keyboard or
+	screen unusable in X Windows. Therefore, please be careful,
+	make a backup copy of this file and make sure you know how to
+	restore it from backup without using X Windows, i.e., from a
+	terminal. If you don't, then do not edit it at all.  </para>
+      </warning>
    </sect2>
    </sect1>
 
@@ -2039,11 +2118,11 @@
       would expect.  
     </para>  
 
-    <para>  First of all: you can't place an
-      ordinary file or directory on the panel. If you try to drag and
+    <para> You can not place an
+      ordinary file or directory on the Panel. If you try to drag and
       drop a file from the File Manager window to the panel, it won't
-      work, and similarly for panels. The only type of file that can
-      be placed on the panel are <filename>.desktop</filename> files,
+      work. The only type of file that can
+      be placed on the Panel are <filename>.desktop</filename> files,
       which describe launchers; any directory dropped on the panel
       will be interpreted as a menu &mdash; that is, all the files
       other than <filename>.desktop</filename> files will be ignored.
