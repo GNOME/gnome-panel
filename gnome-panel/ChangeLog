@@ -1,3 +1,10 @@
+2001-12-16  Gediminas Paulauskas <menesis@delfi.lt>
+
+	* gnome-run.c, launcher.c, menu-properties.c, menu.c, panel-config.c,
+	swallow.c: use GTK_RESPONSE_* instead of custom *_BUTTON
+	enumerations -- this makes Help buttons left-aligned. Reorder buttons
+	to comply with HIG, set default response to leftmost button.
+
 Fri Dec 14 16:50:07 2001  George Lebl <jirka@5z.com>
 
 	* drawer.c: reenable property apply code

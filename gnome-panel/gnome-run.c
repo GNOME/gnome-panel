@@ -184,8 +184,6 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 }
 
 enum {
-	HELP_BUTTON = 0,
-	CLOSE_BUTTON,
 	RUN_BUTTON
 };
 
@@ -205,11 +203,11 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
         
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
-	if (response == HELP_BUTTON) {
+	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("specialobjects", "RUNBUTTON");
 		/* just return as we don't want to close */
 		return;
-	} else if (response == CLOSE_BUTTON) {
+	} else if (response == GTK_RESPONSE_CLOSE) {
 		goto return_and_close;
 	}
         
@@ -1138,9 +1136,9 @@ show_run_dialog (void)
 						  NULL /* parent */,
 						  0 /* flags */,
 						  GTK_STOCK_HELP,
-						  HELP_BUTTON,
+						  GTK_RESPONSE_HELP,
 						  GTK_STOCK_CLOSE,
-						  CLOSE_BUTTON,
+						  GTK_RESPONSE_CLOSE,
 						  /* FIXME: how the hell do we get a different label but
 						   * the execute stock icon */
 						  GTK_STOCK_EXECUTE,

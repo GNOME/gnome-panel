@@ -33,10 +33,7 @@
 #define DRAG_HANDLE_SIZE 10
 
 enum {
-	OK_BUTTON,
-	HELP_BUTTON,
-	RELOAD_BUTTON,
-	CANCEL_BUTTON
+	RELOAD_BUTTON
 };
 
 GList *check_swallows = NULL;
@@ -111,7 +108,7 @@ before_remove (Swallow *swallow)
 
 	gtk_dialog_add_button (GTK_DIALOG (dlg),
 			       GTK_STOCK_CANCEL,
-			       CANCEL_BUTTON);
+			       GTK_RESPONSE_CANCEL);
 	gtk_dialog_add_button (GTK_DIALOG (dlg),
 			       _("Reload"),
 			       RELOAD_BUTTON);
@@ -210,10 +207,10 @@ really_add_swallow (GtkWidget *d, int response, gpointer data)
 		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "exactpos"));
 
 	switch (response) {
-	case CANCEL_BUTTON:
+	case GTK_RESPONSE_CANCEL:
 		gtk_widget_destroy (d);
 		return;
-	case HELP_BUTTON:
+	case GTK_RESPONSE_HELP:
 		panel_show_help ("specialobjects", "SWALLOWEDAPPS");
 		return;
 	default:
@@ -256,12 +253,12 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	d = gtk_dialog_new_with_buttons (_("Create swallow applet"),
 					 NULL /* parent */,
 					 0 /* flags */,
-					 GTK_STOCK_CANCEL,
-					 CANCEL_BUTTON,
-					 GTK_STOCK_OK,
-					 OK_BUTTON,
 					 GTK_STOCK_HELP,
-					 HELP_BUTTON,
+					 GTK_RESPONSE_HELP,
+					 GTK_STOCK_CANCEL,
+					 GTK_RESPONSE_CANCEL,
+					 GTK_STOCK_OK,
+					 GTK_RESPONSE_OK,
 					 NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (d),
 				"create_swallow", "Panel");
@@ -325,7 +322,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_object_set_data(GTK_OBJECT(d),"height_s",height_s);
 
 
-	gtk_dialog_set_default_response (GTK_DIALOG (d), OK_BUTTON);
+	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_OK);
 
 	gtk_widget_grab_focus(title_e);
 

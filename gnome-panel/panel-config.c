@@ -33,11 +33,6 @@
 #include "multiscreen-stuff.h"
 #include "xstuff.h"
 
-enum {
-	HELP_BUTTON,
-	CLOSE_BUTTON
-};
-
 /*
  * FIXME
  */
@@ -1583,7 +1578,7 @@ window_response (GtkWidget *w, int response, gpointer data)
 	const char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
 	const char *help_linkid = gtk_object_get_data (GTK_OBJECT (w), "help_linkid");
 
-	if (response == HELP_BUTTON) {
+	if (response == GTK_RESPONSE_HELP) {
 		int tab;
 
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
@@ -1644,10 +1639,10 @@ panel_config (GtkWidget *panel)
 	/* main window */
 	ppc->config_window = gtk_dialog_new_with_buttons (_("Panel properties"),
 							  NULL, 0,
-							  GTK_STOCK_CLOSE,
-							  CLOSE_BUTTON,
 							  GTK_STOCK_HELP,
-							  HELP_BUTTON,
+							  GTK_RESPONSE_HELP,
+							  GTK_STOCK_CLOSE,
+							  GTK_RESPONSE_CLOSE,
 							  NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (ppc->config_window),
 				"panel_properties", "Panel");

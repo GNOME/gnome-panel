@@ -51,11 +51,7 @@ extern GlobalConfig global_config;
 extern gboolean commie_mode;
 
 enum {
-	HELP_BUTTON,
-	OK_BUTTON,
-	CANCEL_BUTTON,
-	REVERT_BUTTON,
-	CLOSE_BUTTON
+	REVERT_BUTTON
 };
 
 static void
@@ -522,7 +518,7 @@ window_response (GtkWidget *w, int response, gpointer data)
 {
 	Launcher *launcher = data;
 
-	if (response == HELP_BUTTON) {
+	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("launchers", NULL);
 	} else if (response == REVERT_BUTTON) { /* revert */
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
@@ -549,12 +545,12 @@ create_properties_dialog (Launcher *launcher)
 	dialog = gtk_dialog_new_with_buttons (_("Launcher properties"),
 					      NULL /* parent */,
 					      0 /* flags */,
-					      GTK_STOCK_CLOSE,
-					      CLOSE_BUTTON,
+					      GTK_STOCK_HELP,
+					      GTK_RESPONSE_HELP,
 					      GTK_STOCK_REVERT_TO_SAVED,
 					      REVERT_BUTTON,
-					      GTK_STOCK_HELP,
-					      HELP_BUTTON,
+					      GTK_STOCK_CLOSE,
+					      GTK_RESPONSE_CLOSE,
 					      NULL);
 
 	launcher->dedit = gnome_ditem_edit_new ();
@@ -580,6 +576,7 @@ create_properties_dialog (Launcher *launcher)
 			    G_CALLBACK (properties_close_callback),
 			    launcher);
 
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 			    G_CALLBACK (window_response),
@@ -648,7 +645,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(dialog),"panel");
 	GnomeDesktopItem *ditem;
 	
-	if (response == OK_BUTTON) {
+	if (response == GTK_RESPONSE_OK) {
 		Launcher *launcher;
 
 		ditem = gnome_ditem_edit_get_ditem (dedit);
@@ -659,7 +656,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 			launcher_hoard (launcher);
 
 		panel_config_sync_schedule ();
-	} else if (response == HELP_BUTTON) {
+	} else if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("launchers", "LAUNCHERS");
 		/* just return as we don't want to close */
 		return;
@@ -678,12 +675,12 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	dialog = gtk_dialog_new_with_buttons (_("Create launcher applet"),
 					      NULL /* parent */,
 					      0 /* flags */,
-					      GTK_STOCK_CANCEL,
-					      CANCEL_BUTTON,
-					      GTK_STOCK_OK,
-					      OK_BUTTON,
 					      GTK_STOCK_HELP,
-					      HELP_BUTTON,
+					      GTK_RESPONSE_HELP,
+					      GTK_STOCK_CANCEL,
+					      GTK_RESPONSE_CANCEL,
+					      GTK_STOCK_OK,
+					      GTK_RESPONSE_OK,
 					      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
@@ -712,7 +709,7 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 			    G_CALLBACK (really_add_launcher),
 			    dee);
 
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), OK_BUTTON);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
 	gtk_widget_show_all (dialog);
 

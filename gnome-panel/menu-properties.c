@@ -29,12 +29,6 @@
 
 #include "menu-properties.h"
 
-
-enum {
-	CLOSE_BUTTON,
-	HELP_BUTTON
-};
-
 #undef MENU_PROPERTIES_DEBUG
 
 struct _MenuDialogInfo {
@@ -395,9 +389,9 @@ dialog_response (GtkWidget *dialog, int response, gpointer data)
 {
 	Menu *menu = data;
 
-	if (response == CLOSE_BUTTON) {
+	if (response == GTK_RESPONSE_CLOSE) {
 		gtk_widget_destroy (dialog);
-	} else if (response == HELP_BUTTON) {
+	} else if (response == GTK_RESPONSE_HELP) {
 		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
 			panel_show_help ("mainmenu", "MAINMENUCONFIG");
 		else
@@ -420,10 +414,10 @@ create_properties_dialog (Menu *menu)
 	dialog = gtk_dialog_new_with_buttons (_("Menu properties"),
 					      NULL /* parent */,
 					      0 /* flags */,
-					      GTK_STOCK_CLOSE,
-					      CLOSE_BUTTON,
 					      GTK_STOCK_HELP,
-					      HELP_BUTTON,
+					      GTK_RESPONSE_HELP,
+					      GTK_STOCK_CLOSE,
+					      GTK_RESPONSE_CLOSE,
 					      NULL);
 
 	menu->prop_dialog = dialog;

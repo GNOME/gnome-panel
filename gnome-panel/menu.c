@@ -92,9 +92,7 @@ extern char *kde_icondir;
 extern GtkTooltips *panel_tooltips;
 
 enum {
-	HELP_BUTTON = 0,
-	REVERT_BUTTON,
-	CLOSE_BUTTON
+	REVERT_BUTTON
 };
 
 typedef struct _TearoffMenu TearoffMenu;
@@ -710,10 +708,10 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 	dialog = gtk_dialog_new_with_buttons (_("Create menu item"),
 					      NULL /* parent */,
 					      0 /* flags */,
-					      GTK_STOCK_OK,
-					      GTK_RESPONSE_OK,
 					      GTK_STOCK_CANCEL,
 					      GTK_RESPONSE_CANCEL,
+					      GTK_STOCK_OK,
+					      GTK_RESPONSE_OK,
 					      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
@@ -1070,7 +1068,7 @@ ditem_properties_clicked (GtkWidget *w, int response, gpointer data)
 	GnomeDItemEdit *dee = gtk_object_get_user_data (GTK_OBJECT (w));
 	GnomeDesktopItem *ditem = data;
 
-	if (response == HELP_BUTTON) {
+	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("launchers", NULL);
 	} else if (response == REVERT_BUTTON) {
 		if (ditem != NULL)
@@ -1212,12 +1210,14 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_HELP,
-					      HELP_BUTTON,
+					      GTK_RESPONSE_HELP,
 					      GTK_STOCK_REVERT_TO_SAVED,
 					      REVERT_BUTTON,
 					      GTK_STOCK_CLOSE,
-					      CLOSE_BUTTON,
+					      GTK_RESPONSE_CLOSE,
 					      NULL);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
 	dedit = gnome_ditem_edit_new ();
 
@@ -1287,11 +1287,11 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 					      NULL /* parent */,
 					      0 /* flags */,
 					      GTK_STOCK_HELP,
-					      HELP_BUTTON,
+					      GTK_RESPONSE_HELP,
 					      GTK_STOCK_REVERT_TO_SAVED,
 					      REVERT_BUTTON,
 					      GTK_STOCK_CLOSE,
-					      CLOSE_BUTTON,
+					      GTK_RESPONSE_CLOSE,
 					      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
