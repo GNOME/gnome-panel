@@ -2862,7 +2862,7 @@ submenu_to_display (GtkWidget *menuw, gpointer data)
 		create_add_favourites_menu (menuw, TRUE /* fake_submenus */);
 	} else {
 
-		menu_add_tearoff (menuw, GTK_SIGNAL_FUNC (tearoff_new_menu), menuw);
+		menu_add_tearoff (GTK_MENU (menuw), GTK_SIGNAL_FUNC (tearoff_new_menu), menuw);
 
 		if (favourites_hack) {
 			start_favourites_menu (menuw, TRUE /* fake_submenus */);
@@ -2904,7 +2904,7 @@ start_favourites_menu (GtkWidget *menu,
 	if (menu == NULL) {
 		menu = menu_new ();
 
-		menu_add_tearoff (menu, GTK_SIGNAL_FUNC (tearoff_new_menu), menu);
+		menu_add_tearoff (GTK_MENU (menu), GTK_SIGNAL_FUNC (tearoff_new_menu), menu);
 	}
 
 	/* Add the favourites stuff here */
@@ -3166,7 +3166,7 @@ create_menu_at_fr (GtkWidget *menu,
 	if(!menu) {
 		menu = menu_new ();
 
-		if (!menu_add_tearoff (menu, GTK_SIGNAL_FUNC (tearoff_new_menu), menu))
+		if (!menu_add_tearoff (GTK_MENU (menu), GTK_SIGNAL_FUNC (tearoff_new_menu), menu))
 			first_item++;
 
 		gtk_signal_connect (GTK_OBJECT(menu), "destroy",
@@ -3627,7 +3627,7 @@ create_add_panel_submenu (gboolean tearoff)
 	menu = menu_new ();
 	
 	if (tearoff)
-		menu_add_tearoff (menu, 
+		menu_add_tearoff (GTK_MENU (menu), 
 				  GTK_SIGNAL_FUNC (add_panel_tearoff_new_menu),
 				  NULL);
 
@@ -5105,7 +5105,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 					   submenu);
 
-		menu_add_tearoff (menu,
+		menu_add_tearoff (GTK_MENU (menu),
 				  GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
 				  NULL);
 
@@ -5289,7 +5289,7 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 		menu = menu_new();
 	}
 
-	menu_add_tearoff (menu,
+	menu_add_tearoff (GTK_MENU (menu),
 			  GTK_SIGNAL_FUNC (panel_menu_tearoff_new_menu),
 			  NULL);
 
@@ -5341,7 +5341,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 		menu = menu_new ();
 	}
 
-	menu_add_tearoff (menu,
+	menu_add_tearoff (GTK_MENU (menu),
 			  GTK_SIGNAL_FUNC (desktop_menu_tearoff_new_menu),
 			  NULL);
 
@@ -5486,7 +5486,7 @@ create_root_menu (GtkWidget *root_menu,
 	if(!root_menu)
 		root_menu = menu_new ();
 
-	menu_add_tearoff (menu,
+	menu_add_tearoff ( GTK_MENU (menu),
 			  GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
 			  GINT_TO_POINTER(flags));
 
