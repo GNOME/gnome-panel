@@ -122,6 +122,8 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 	
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	else if (IS_CORNER_WIDGET(panel))
+	        CORNER_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
 static AppletUserMenu *
@@ -342,6 +344,9 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+	} else if (IS_CORNER_WIDGET(panel)) {
+	        CORNER_WIDGET(panel)->autohide_inhibit = TRUE;
+		corner_widget_queue_pop_down(CORNER_WIDGET(panel));
 	}
 	info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL,

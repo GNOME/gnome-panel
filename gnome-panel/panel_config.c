@@ -140,6 +140,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 		corner_widget_change_params(CORNER_WIDGET(ppc->panel),
 					    ppc->corner_pos,
 					    ppc->corner_orient,
+					    ppc->corner_mode,
 					    CORNER_WIDGET(ppc->panel)->state,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
@@ -428,6 +429,18 @@ corner_set_orient (GtkWidget *widget, gpointer data)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
 
+static void
+corner_set_auto_hide (GtkWidget *widget, gpointer data)
+{
+        PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	if (GTK_TOGGLE_BUTTON(widget)->active)
+	        ppc->corner_mode = CORNER_AUTO_HIDE;
+	else
+	        ppc->corner_mode = CORNER_EXPLICIT_HIDE;
+	
+	if (ppc->register_changes)
+	        gnome_property_box_changed(GNOME_PROPERTY_BOX(ppc->config_window));
+}
 
 static GtkWidget *
 corner_notebook_page(PerPanelConfig *ppc)
@@ -553,7 +566,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons frame */
-	frame = gtk_frame_new (_("Hidebutton options"));
+	frame = gtk_frame_new (_("Minimize options"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
 
@@ -562,6 +575,15 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
+	/* Auto-hide */
+	button = gtk_check_button_new_with_label(_("Auto hide"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (ppc->corner_mode == CORNER_AUTO_HIDE)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_auto_hide), 
+			    NULL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
@@ -835,6 +857,7 @@ panel_config(GtkWidget *panel)
 		CornerWidget *corner = CORNER_WIDGET(panel);
 		ppc->corner_pos = corner->pos;
 		ppc->corner_orient = pw->orient;
+		ppc->corner_mode = corner->mode;
 	}
 
 	ppc->panel = panel;

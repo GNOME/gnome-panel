@@ -470,6 +470,8 @@ drawer_handle_click(GtkWidget *widget, gpointer data)
 	drawer_widget_close_drawer(data);
 	if(IS_SNAPPED_WIDGET(panelw))
 		SNAPPED_WIDGET(panelw)->drawers_open--;
+	else if(IS_CORNER_WIDGET(panelw))
+	        CORNER_WIDGET(panelw)->drawers_open--;
 }
 
 static void

@@ -1831,6 +1831,8 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	/* allow the panel to hide again */
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	else if (IS_CORNER_WIDGET(panel))
+	        CORNER_WIDGET(panel)->autohide_inhibit = FALSE;
 	BUTTON_WIDGET(menu->button)->in_button = FALSE;
 	BUTTON_WIDGET(menu->button)->ignore_leave = FALSE;
 	button_widget_up(BUTTON_WIDGET(menu->button));
@@ -1981,6 +1983,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 		find_empty_cpos_cori(&cpos,&cori);
 		panel = corner_widget_new(cpos,
 					  cori,
+					  CORNER_EXPLICIT_HIDE,
 					  CORNER_SHOWN,
 					  TRUE,
 					  TRUE,
@@ -2232,7 +2235,9 @@ convert_to_panel(GtkWidget *w, gpointer data)
 
 		cor = (cw->pos%2)?1-current_panel->orient:current_panel->orient;
 		panel = snapped_widget_new((cw->pos+cor)%4,
-					   SNAPPED_EXPLICIT_HIDE,
+					   cw->mode==CORNER_EXPLICIT_HIDE?
+					     SNAPPED_EXPLICIT_HIDE:
+					     SNAPPED_AUTO_HIDE,
 					   SNAPPED_SHOWN,
 					   BASEP_WIDGET(cw)->hidebuttons_enabled,
 					   BASEP_WIDGET(cw)->hidebutton_pixmaps_enabled,
@@ -2254,6 +2259,9 @@ convert_to_panel(GtkWidget *w, gpointer data)
 					  (sw->pos==SNAPPED_TOP ||
 					   sw->pos==SNAPPED_BOTTOM)?
 					  PANEL_HORIZONTAL:PANEL_VERTICAL,
+					  sw->mode==SNAPPED_EXPLICIT_HIDE?
+					    CORNER_EXPLICIT_HIDE:
+					    CORNER_AUTO_HIDE,
 					  CORNER_SHOWN,
 					  BASEP_WIDGET(sw)->hidebuttons_enabled,
 					  BASEP_WIDGET(sw)->hidebutton_pixmaps_enabled,
@@ -2275,6 +2283,7 @@ convert_to_panel(GtkWidget *w, gpointer data)
 		printf("%lX, %d\n",(long)ad->applet,i);
 #endif
 	}
+	gdk_flush();
 	gtk_widget_destroy(pw);
 }
 
@@ -3002,6 +3011,9 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	if(IS_SNAPPED_WIDGET(wpanel)) {
 		SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
+	} else if (IS_CORNER_WIDGET(wpanel)) {
+	        CORNER_WIDGET(wpanel)->autohide_inhibit = TRUE;
+	        corner_widget_queue_pop_down(CORNER_WIDGET(wpanel));
 	}
 
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;

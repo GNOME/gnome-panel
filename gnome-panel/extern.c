@@ -638,8 +638,11 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
+	} else if (IS_CORNER_WIDGET(panel)) {
+	        CORNER_WIDGET(panel)->autohide_inhibit = TRUE;
+	        corner_widget_queue_pop_down(CORNER_WIDGET(panel));
 	}
-
+	
 	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
 		       global_config.off_panel_popups?applet_menu_position:NULL,

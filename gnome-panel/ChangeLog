@@ -1,3 +1,13 @@
+Sun Mar 14 23:03:01 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c,session.c,panel_config.c,corner-widget.[ch],drawer.c,panel.c,
+	  extern.c,launcher.c,logout.c,snapped-widget.[ch]: applied patch from 
+	  Jacob Berkman <jberkman@andrew.cmu.edu> to add autohiding of corner
+	  panels and cleaned it up a bit
+
+	* {snapped,corner}-widget.c: fixed a crash when converting
+	  edge/corner when one is autohidden
+
 Sat Mar 13 01:16:01 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: optimize applet moving, now moving an applet

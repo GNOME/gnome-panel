@@ -678,6 +678,7 @@ void
 snapped_widget_queue_pop_down(SnappedWidget *snapped)
 {
 	if ((snapped->mode == SNAPPED_EXPLICIT_HIDE) ||
+	    (snapped->state == SNAPPED_HIDDEN) ||
 	    (snapped->state == SNAPPED_HIDDEN_LEFT) ||
 	    (snapped->state == SNAPPED_HIDDEN_RIGHT))
 		return;
@@ -740,6 +741,15 @@ snapped_widget_set_hidebuttons(BasePWidget *basep)
 	}
 }
 
+static void
+snapped_widget_destroy(SnappedWidget *snapped)
+{
+	/* check if there's a timeout set, and delete it if 
+	 * there was */
+	if (snapped->leave_notify_timer_tag != 0)
+		gtk_timeout_remove (snapped->leave_notify_timer_tag);
+}
+
 
 static void
 snapped_widget_init (SnappedWidget *snapped)
@@ -749,6 +759,9 @@ snapped_widget_init (SnappedWidget *snapped)
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(snapped), "leave_notify_event",
 			   GTK_SIGNAL_FUNC(snapped_leave_notify),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(snapped), "destroy",
+			   GTK_SIGNAL_FUNC(snapped_widget_destroy),
 			   NULL);
 	snapped->pos = SNAPPED_BOTTOM;
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;
@@ -861,14 +874,14 @@ snapped_widget_change_params(SnappedWidget *snapped,
 		if (gnome_win_hints_wm_exists()) {
 			GtkWidget *wid = GTK_WIDGET(snapped);
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
-				gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+				gnome_win_hints_set_hints(wid,
 							  GNOME_PANEL_HINTS);
 				gnome_win_hints_set_layer(wid,
 							  global_config.keep_bottom?
 							  WIN_LAYER_ONTOP:
 							  WIN_LAYER_ABOVE_DOCK);
 			} else {
-				gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+				gnome_win_hints_set_hints(wid,
 							  GNOME_PANEL_HINTS |
 							  WIN_HINTS_DO_NOT_COVER);
 				gnome_win_hints_set_layer(wid,

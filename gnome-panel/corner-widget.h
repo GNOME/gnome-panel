@@ -25,17 +25,31 @@ typedef enum {
 	CORNER_NW
 } CornerPos;
 typedef enum {
+	CORNER_EXPLICIT_HIDE,
+	CORNER_AUTO_HIDE
+} CornerMode;
+typedef enum {
 	CORNER_SHOWN,
 	CORNER_MOVING,
-	CORNER_HIDDEN
+	CORNER_HIDDEN,
+	CORNER_AUTO_HIDDEN
 } CornerState;
 
 struct _CornerWidget
 {
 	BasePWidget		basep;
 	
-	CornerPos		pos;
+        CornerPos		pos;
+        CornerMode              mode;
 	CornerState		state;
+
+	int			leave_notify_timer_tag;
+
+	int			autohide_inhibit;
+	int			drawers_open; /* a count which can be used
+						 to block the autohide, until
+						 it is 0 .. it's set by the
+						 app not the widget*/
 };
 
 struct _CornerWidgetClass
@@ -51,6 +65,7 @@ struct _CornerWidgetClass
 guint		corner_widget_get_type		(void);
 GtkWidget*	corner_widget_new		(CornerPos pos,
 						 PanelOrientation orient,
+						 CornerMode mode,
 						 CornerState state,
 						 int hidebuttons_enabled,
 						 int hidebutton_pixmaps_enabled,
@@ -63,6 +78,7 @@ GtkWidget*	corner_widget_new		(CornerPos pos,
 void		corner_widget_change_params	(CornerWidget *corner,
 						 PanelOrientation orient,
 						 CornerPos pos,
+						 CornerMode mode,
 						 CornerState state,
 						 int hidebuttons_enabled,
 						 int hidebutton_pixmaps_enabled,
@@ -75,6 +91,11 @@ void		corner_widget_change_params	(CornerWidget *corner,
 void		corner_widget_change_pos_orient	(CornerWidget *corner,
 						 CornerPos pos,
 						 PanelOrientation orient);
+/*popup the widget if it's popped down (autohide)*/
+void		corner_widget_pop_up		(CornerWidget *corner);
+
+/*queue a pop_down in autohide mode*/
+void		corner_widget_queue_pop_down	(CornerWidget *corner);
 
 END_GNOME_DECLS
 

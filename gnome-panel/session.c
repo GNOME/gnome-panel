@@ -369,6 +369,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		CornerWidget *corner = CORNER_WIDGET(pd->panel);
 		gnome_config_set_int("pos", corner->pos);
 		gnome_config_set_int("orient",panel->orient);
+		gnome_config_set_int("mode", corner->mode);
 		gnome_config_set_int("state", corner->state);
 		break;
 		}
@@ -998,6 +999,7 @@ init_user_panels(void)
 				CornerPos pos;
 				PanelOrientation orient;
 				CornerState state;
+				CornerMode mode;
 				
 				g_string_sprintf(buf,"pos=%d", CORNER_NE);
 				pos=gnome_config_get_int(buf->str);
@@ -1009,8 +1011,13 @@ init_user_panels(void)
 				g_string_sprintf(buf,"state=%d", CORNER_SHOWN);
 				state=gnome_config_get_int(buf->str);
 
+				g_string_sprintf(buf,"mode=%d",
+						 CORNER_EXPLICIT_HIDE);
+				mode=gnome_config_get_int(buf->str);
+
 				panel = corner_widget_new(pos,
 							  orient,
+							  mode,
 							  state,
 							  hidebuttons_enabled,
 							  hidebutton_pixmaps_enabled,

@@ -27,6 +27,8 @@ logout(GtkWidget *widget)
 			drawer_widget_close_drawer(DRAWER_WIDGET(parent));
 			if(IS_SNAPPED_WIDGET(grandparentw))
 				SNAPPED_WIDGET(grandparentw)->drawers_open--;
+			else if(IS_CORNER_WIDGET(grandparentw))
+		                CORNER_WIDGET(grandparentw)->drawers_open--;
 		}
 	}
 

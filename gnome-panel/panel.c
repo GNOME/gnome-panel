@@ -496,13 +496,19 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	  is done in register_toy and that doesn't add the info to the
 	  array until after the add, so we can be sure this was
 	  generated on a reparent*/
-	if(IS_SNAPPED_WIDGET(panelw) &&
+	if((IS_SNAPPED_WIDGET(panelw) ||
+	    IS_CORNER_WIDGET(panelw)) &&
 	   info && info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
+	        Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
 		if(dw->state == DRAWER_SHOWN) {
-			SNAPPED_WIDGET(panelw)->drawers_open++;
-			snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
+		        if (IS_SNAPPED_WIDGET(panelw)) {
+			        SNAPPED_WIDGET(panelw)->drawers_open++;
+				snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
+			} else {
+			        CORNER_WIDGET(panelw)->drawers_open++;
+				corner_widget_pop_up(CORNER_WIDGET(panelw));
+			}
 		}
 	}
 
@@ -511,6 +517,10 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
 		/*try to pop down though if the mouse is out*/
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panelw));
+	} else if(IS_CORNER_WIDGET(panelw)) {
+	        corner_widget_pop_up(CORNER_WIDGET(panelw));
+		/*try to pop down though if the mouse is out*/
+		corner_widget_queue_pop_down(CORNER_WIDGET(panelw));
 	}
 
 	gtk_idle_add(panel_applet_added_idle,info);
@@ -549,6 +559,14 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 				      &drawers_open);
 		SNAPPED_WIDGET(parentw)->drawers_open = drawers_open;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
+	} else if(IS_CORNER_WIDGET(parentw)) {
+		int drawers_open = 0;
+
+		gtk_container_foreach(GTK_CONTAINER(widget),
+				      count_open_drawers,
+				      &drawers_open);
+		CORNER_WIDGET(parentw)->drawers_open = drawers_open;
+		corner_widget_queue_pop_down(CORNER_WIDGET(parentw));
 	}
 
 	/*we will need to save this applet's config now*/
@@ -562,6 +580,8 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 	pd->menu_age = 0;
 	if(IS_SNAPPED_WIDGET(pd->panel))
 		SNAPPED_WIDGET(pd->panel)->autohide_inhibit = FALSE;
+	else if (IS_CORNER_WIDGET(pd->panel))
+	        CORNER_WIDGET(pd->panel)->autohide_inhibit = FALSE;
 }
 
 static void
@@ -768,8 +788,13 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 					snapped->autohide_inhibit = TRUE;
 					snapped_widget_queue_pop_down(snapped);
 				} else if(IS_CORNER_WIDGET(widget)) {
+				        CornerWidget *corner =
+				                CORNER_WIDGET(widget);
 					gtk_widget_set_sensitive(rem,
 								 base_panels > 1);
+					corner->autohide_inhibit = TRUE;
+					corner_widget_queue_pop_down(corner);
+					
 				} else
 					gtk_widget_set_sensitive(rem, TRUE);
 				pd->menu_age = 0;
@@ -799,6 +824,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 				gdk_cursor_destroy (cursor);
 				if(IS_SNAPPED_WIDGET(widget))
 					SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
+				else if (IS_CORNER_WIDGET(widget))
+				        CORNER_WIDGET(widget)->autohide_inhibit = TRUE;
 				panel_dragged = TRUE;
 				return TRUE;
 			}
@@ -823,9 +850,12 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 					   bevent->x_root, bevent->y_root);
 				SNAPPED_WIDGET(widget)->autohide_inhibit = FALSE;
 				snapped_widget_queue_pop_down(SNAPPED_WIDGET(widget));
-			} else
+			} else if (IS_CORNER_WIDGET(widget)) {
 				corner_panel_move(CORNER_WIDGET(widget),
 					   bevent->x_root, bevent->y_root);
+				CORNER_WIDGET(widget)->autohide_inhibit = FALSE;
+				corner_widget_queue_pop_down(CORNER_WIDGET(widget));
+			}
 			gdk_pointer_ungrab(bevent->time);
 			gtk_grab_remove(widget);
 			panel_dragged = FALSE;

@@ -20,6 +20,7 @@ struct _PerPanelConfig {
 	/*corner types*/
 	CornerPos		corner_pos;
 	PanelOrientation	corner_orient;
+        CornerMode              corner_mode;
 
 	/*panel types*/
 	int			fit_pixmap_bg;

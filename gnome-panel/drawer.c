@@ -185,10 +185,14 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 		drawer_widget_close_drawer(DRAWER_WIDGET(drawer->drawer));
 		if(IS_SNAPPED_WIDGET(panelw))
 			SNAPPED_WIDGET(panelw)->drawers_open--;
+		else if(IS_CORNER_WIDGET(panelw))
+		        CORNER_WIDGET(panelw)->drawers_open--;
 	} else {
 		drawer_widget_open_drawer(DRAWER_WIDGET(drawer->drawer));
 		if(IS_SNAPPED_WIDGET(panelw))
 			SNAPPED_WIDGET(panelw)->drawers_open++;
+		else if(IS_CORNER_WIDGET(panelw))
+		        CORNER_WIDGET(panelw)->drawers_open++;
 	}
 }
 
