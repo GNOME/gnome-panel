@@ -464,8 +464,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 			   G_CALLBACK (drag_leave_cb), launcher);
 	g_signal_connect (launcher->button, "clicked",
 			  G_CALLBACK (launch_cb), launcher);
-	g_signal_connect (launcher->button, "destroy",
-			  G_CALLBACK (destroy_launcher), launcher);
 
 	launcher->destroy_handler =
 			g_signal_connect (launcher->button, "destroy",
