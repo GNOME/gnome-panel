@@ -37,6 +37,7 @@ libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	mico-parse.cc \
 	panel-util.c  \
+	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SOURCES)
 
@@ -84,6 +85,7 @@ panel_SOURCES = 		\
 	panel-widget.c  	\
 	panel-widget.h		\
 	panel-util.c		\
+	panel-util.h		\
 	mulapp.c		\
 	mulapp.h		\
 	launcher.c		\
