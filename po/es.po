@@ -1,4 +1,5 @@
-# Copyright (C) 1998 Free Software Foundation, Inc.
+# translation of gnome-panel.gnome-2-0.po to Spanish
+# Copyright (C) 1998,2002 Free Software Foundation, Inc.
 # Miguel de Icaza,computo,622-4680 <miguel@metropolis.nuclecu.unam.mx> 1998
 # Pablo Saratxaga <srtxg@chanae.alphanet.ch> 1999-2000
 # Javier Gómez <jgomsi@apolo.umh.es> 2000
@@ -7,18 +8,19 @@
 # Manuel de Vega Barreiro <barreiro@arrakis.es> 2000
 # Juan Manuel García Molina <juanma_gm@wanadoo.es> 2001-2002.
 # Germán Poo Caamaño <gpoo@ubiobio.cl>, 2002 (Revisor)
+# Juan Manuel García Molina <juanma_gm@wanadoo.es>, 2002
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GNOME 2.0\n"
-"POT-Creation-Date: 2002-09-06 11:48+1200\n"
-"PO-Revision-Date: 2002-06-12 01:40+0200\n"
+"Project-Id-Version: gnome-panel.gnome-2-0\n"
+"POT-Creation-Date: 2002-08-27 15:42+1200\n"
+"PO-Revision-Date: 2002-08-28 00:23+0200\n"
 "Last-Translator: Juan Manuel García Molina <juanma_gm@wanadoo.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 0.9.5\n"
+"X-Generator: KBabel 1.0beta2\n"
 
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
@@ -138,20 +140,20 @@ msgstr "_Rotar en los paneles verticales"
 
 #: applets/fish/fish.c:863
 msgid "Unable to get the name of the command to execute"
-msgstr ""
+msgstr "No se puede obtener el nombre del comando a ejecutar"
 
 #: applets/fish/fish.c:879
 msgid "Unable to locate the command to execute"
-msgstr ""
+msgstr "No se puede localizar el comando a ejecutar"
 
 #: applets/fish/fish.c:1004
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details : %s"
 msgstr ""
-"<b>Fallo al ejecutar comando:</b> '%s'\n"
+"No se puede ejecutar «%s»\n"
 "\n"
 "Detalles: %s"
 
@@ -195,8 +197,7 @@ msgstr ""
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
-"Un pez sin nombre es un pez triste. Déle vida a su pez poniéndole un nombre."
+msgstr "Un pez sin nombre es un pez triste. Déle vida a su pez poniéndole un nombre."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -398,9 +399,8 @@ msgid "Display seconds in time"
 msgstr "segundos"
 
 #: applets/gen_util/clock.schemas.in.h:4
-#, fuzzy
 msgid "Display time in Universal Coordinated Time zone"
-msgstr "Muestra la hora en la zona GMT"
+msgstr "Muestra la hora en la zona UMT"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
@@ -439,14 +439,13 @@ msgid "Use UNIX time"
 msgstr "Usar hora UNIX"
 
 #: applets/gen_util/clock.schemas.in.h:14
-#, fuzzy
 msgid "Use UTC"
-msgstr "Usar _UTC"
+msgstr "Usar UTC"
 
 #: applets/gen_util/mailcheck.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s : %s"
-msgstr "Ha ocurrido un error al mostrar la ayuda: %s"
+msgstr "Hubo un error al ejecutar %s: %s"
 
 #: applets/gen_util/mailcheck.c:252
 msgid ""
@@ -462,7 +461,7 @@ msgstr "Introduzca su _contraseña en el servidor de correo:"
 
 #: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
 msgid "Password Entry box"
-msgstr ""
+msgstr "Caja de entrada de contraseña"
 
 #: applets/gen_util/mailcheck.c:308
 msgid ""
@@ -531,7 +530,7 @@ msgstr "_Servidor de correo:"
 
 #: applets/gen_util/mailcheck.c:1297
 msgid "Mail Server Entry box"
-msgstr ""
+msgstr "Caja de entrada del servidor de correo"
 
 #: applets/gen_util/mailcheck.c:1311
 msgid "_Username:"
@@ -539,7 +538,7 @@ msgstr "_Usuario:"
 
 #: applets/gen_util/mailcheck.c:1319
 msgid "Username Entry box"
-msgstr ""
+msgstr "Caja de entrada del nombre de usuario"
 
 #: applets/gen_util/mailcheck.c:1328
 msgid "_Password:"
@@ -551,16 +550,15 @@ msgstr "_Carpeta:"
 
 #: applets/gen_util/mailcheck.c:1357
 msgid "Folder Entry box"
-msgstr ""
+msgstr "Caja de entrada de la carpeta"
 
 #: applets/gen_util/mailcheck.c:1369
 msgid "C_ommand to run before checking for mail:"
 msgstr "C_omando a ejecutar antes de comprobar el correo:"
 
 #: applets/gen_util/mailcheck.c:1377
-#, fuzzy
 msgid "Command Entry box"
-msgstr "Comando a ejecutar"
+msgstr "Caja de entrada del comando"
 
 #: applets/gen_util/mailcheck.c:1402
 msgid "Execute"
@@ -571,9 +569,8 @@ msgid "Before each _update:"
 msgstr "Antes de cada act_ualización:"
 
 #: applets/gen_util/mailcheck.c:1428
-#, fuzzy
 msgid "Command to execute before each update"
-msgstr "Comando a ejecutar cuando se comprueba el correo"
+msgstr "Comando a ejecutar antes de cada actualización"
 
 #: applets/gen_util/mailcheck.c:1438
 msgid "When new mail _arrives:"
@@ -588,9 +585,8 @@ msgid "When clicke_d:"
 msgstr "Al hacer _clic:"
 
 #: applets/gen_util/mailcheck.c:1474
-#, fuzzy
 msgid "Command to execute when clicked"
-msgstr "Comando a _ejecutar cuando se pulsa sobre el pez:"
+msgstr "Coimando a ejecutar al hacer clic"
 
 #: applets/gen_util/mailcheck.c:1484
 msgid "Set the number of unread mails to _zero"
@@ -606,16 +602,15 @@ msgstr "minutos"
 
 #: applets/gen_util/mailcheck.c:1507
 msgid "Choose time interval in minutes to check mail"
-msgstr ""
+msgstr "Seleccione el intervalo de tiempo en minutos para comprobar el correo"
 
 #: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
 msgid "seconds"
 msgstr "segundos"
 
 #: applets/gen_util/mailcheck.c:1521
-#, fuzzy
 msgid "Choose time interval in seconds to check mail"
-msgstr "Frecuencia (en milisegundos) de comprobación de correo"
+msgstr "Seleccione el intervalo de tiempo en segundos para comprobar el correo"
 
 #: applets/gen_util/mailcheck.c:1533
 msgid "Play a _sound when new mail arrives"
@@ -735,13 +730,11 @@ msgstr "La contraseña del usuario para el servidor remoto"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
-"Así se comprueba el correo, se comprueba el correo, es comprueba el correo..."
+msgstr "Así se comprueba el correo, se comprueba el correo, es comprueba el correo..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
-"Así se procesa el correo, se procesa el correo, se procesa el correo..."
+msgstr "Así se procesa el correo, se procesa el correo, se procesa el correo..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
@@ -945,8 +938,7 @@ msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:725
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
+msgid "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "La lista de ventanas muestra una lista de todas las ventanas visibles y le "
 "permite navegar entre ellas."
@@ -992,9 +984,8 @@ msgid "Window List content"
 msgstr "Contenido de la lista de ventanas"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "Window List size"
-msgstr "Lista de ventanas"
+msgstr "Tamaño de la lista de ventanas"
 
 #: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
@@ -1079,14 +1070,12 @@ msgid "GNOME Panel Shell"
 msgstr "Shell del panel de GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:525
-#, fuzzy
 msgid "_Move"
-msgstr "Mover"
+msgstr "_Mover"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#, fuzzy
 msgid "_Remove From Panel"
-msgstr "Quitar del panel"
+msgstr "_Quitar del panel"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1098,12 +1087,12 @@ msgstr "¿?"
 #: gnome-panel/applet.c:832
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
+msgstr "No se ha fijado object_type para el objeto del panel con id %s\n"
 
 #: gnome-panel/applet.c:854
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
+msgstr "No se ha fijado panel_id para el objeto del panel con id %s\n"
 
 #: gnome-panel/applet.c:1161
 msgid "Can't find an empty spot"
@@ -1153,21 +1142,20 @@ msgstr "Muestra este panel"
 
 #: gnome-panel/button-widget.c:341
 msgid "none"
-msgstr ""
+msgstr "ninguno"
 
 #: gnome-panel/button-widget.c:346
-#, fuzzy
 msgid "file not found"
-msgstr "No se ha encontrado el cocumento de ayuda"
+msgstr "archivo no encontrado"
 
 #: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Fallo al abrir archivo:</b> '%s'\n"
+"Fallo al cargar la imagen %s\n"
 "\n"
 "Detalles: %s"
 
@@ -1184,18 +1172,16 @@ msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
-#, fuzzy
 msgid "Debian Menu"
-msgstr "Menús Debian"
+msgstr "Menú Debian"
 
 #: gnome-panel/distribution.c:32
 msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
-#, fuzzy
 msgid "SuSE Menu"
-msgstr "Menús SuSE"
+msgstr "Menú SuSE"
 
 # gnome-terminal/gnome-terminal.c:801
 #: gnome-panel/distribution.c:37
@@ -1203,9 +1189,8 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
-msgstr "Menús de CDE"
+msgstr "Menú de CDE"
 
 #: gnome-panel/drawer.c:127
 msgid "Size and Position"
@@ -1243,9 +1228,8 @@ msgstr "Cajón"
 
 #: gnome-panel/drawer.c:668 gnome-panel/launcher.c:734
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1403 gnome-panel/menu.c:3324
-#, fuzzy
 msgid "_Properties"
-msgstr "Propiedades"
+msgstr "_Propiedades"
 
 #: gnome-panel/foobar-widget.c:141 gnome-panel/menu.c:3504
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1272,12 +1256,10 @@ msgid "Find files, folders, and documents on your computer"
 msgstr "Busca archivos, carpetas y documentos en su computador"
 
 #: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3658
-#, fuzzy
 msgid "Screenshot..."
-msgstr "Captura de pantalla"
+msgstr "Captura de pantalla..."
 
 #: gnome-panel/foobar-widget.c:194 gnome-panel/menu.c:3661
-#, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Captura la pantalla de su escritorio"
 
@@ -1349,8 +1331,7 @@ msgid "The argument is a url to add, not a .desktop file"
 msgstr "El argumento es una url a añadir, no un archivo del escritorio"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
-msgid ""
-"You must supply a single argument with the .desktop file or url to use\n"
+msgid "You must supply a single argument with the .desktop file or url to use\n"
 msgstr ""
 "Debe proporcionar un sólo argunmento con el archivo .desktop o la url a "
 "utilizar\n"
@@ -1370,18 +1351,17 @@ msgstr ""
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
-#, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr ""
-"El administrador de sistemas ha desactivado la modificación de\n"
-"la configuración del panel"
+"El administrador de sistemas ha desactivado la\n"
+"modificación de la configuración del panel"
 
 #: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
 msgid "Error loading glade file %s"
-msgstr ""
+msgstr "Error al cargar el archivo de glade %s"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
@@ -1389,17 +1369,15 @@ msgstr "Panel"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr ""
+msgstr "Seleccione las preferencias para todos sus paneles"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
 msgstr "Velocidad de la _animación:"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
-#, fuzzy
 msgid "Close _drawer when launcher is clicked"
-msgstr "_Cerrar el cajón si un lanzador dentro de él es ejecutado"
+msgstr "_Cerrar el cajón al hacer clic sobre un lanzador"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
 msgid "Fast"
@@ -1419,9 +1397,8 @@ msgid "Slow"
 msgstr "Bajo"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
 msgid "_Animation"
-msgstr "Animación"
+msgstr "_Animación"
 
 #: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
@@ -1532,7 +1509,7 @@ msgstr "No se puede tomar una captura de pantalla del escritorio actual."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
@@ -1548,8 +1525,7 @@ msgstr "Guardar captura de pantalla en _escritorio"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
-"Guardar captura de pantalla como página _web (guarda en ~/public__html)"
+msgstr "Guardar captura de pantalla como página _web (guarda en ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Screenshot"
@@ -1683,12 +1659,12 @@ msgstr ""
 
 #: gnome-panel/launcher.c:333
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr ""
+msgstr "No se proporcionó la URI para el archivo del lanzador del escritorio\n"
 
 #: gnome-panel/launcher.c:353
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "No se puede abrir el archivo del escritorio %s para el lanzador%s%s del panel\n"
 
 #: gnome-panel/launcher.c:464
 #, c-format
@@ -1703,7 +1679,7 @@ msgstr "Propiedades del lanzador"
 #: gnome-panel/launcher.c:690
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
+msgstr "La clave %s no está fijada, no se puede cargar el lanzador\n"
 
 #: gnome-panel/launcher.c:784 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
@@ -1757,24 +1733,20 @@ msgstr "Bloquear la pantalla"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-#, fuzzy
 msgid "_Activate Screensaver"
-msgstr "Activar el protector de pantalla"
+msgstr "_Activar el protector de pantalla"
 
 #: gnome-panel/logout.c:214
-#, fuzzy
 msgid "_Lock Screen"
-msgstr "Bloquear la pantalla"
+msgstr "B_loquear la pantalla"
 
 #: gnome-panel/logout.c:215
-#, fuzzy
 msgid "_Kill Screensaver Daemon"
-msgstr "Matar el servidor de protección de pantalla"
+msgstr ":Matar el demonio del protector de pantalla"
 
 #: gnome-panel/logout.c:216
-#, fuzzy
 msgid "Restart _Screensaver Daemon"
-msgstr "Reiniciar el servidor de protección de pantalla"
+msgstr "Reiniciar el demonio del _protector de pantalla"
 
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
@@ -2016,72 +1988,60 @@ msgid "You can only have one menu panel at a time."
 msgstr "Solo puede tener un menú de panel simultáneamente"
 
 #: gnome-panel/menu.c:2728
-#, fuzzy
 msgid "C_orner Panel"
-msgstr "Panel de esquina"
+msgstr "Panel de es_quina"
 
 #: gnome-panel/menu.c:2730
-#, fuzzy
 msgid "Create corner panel"
-msgstr "Panel esquinado"
+msgstr "Crea un panel de esquina"
 
 #: gnome-panel/menu.c:2738
-#, fuzzy
 msgid "_Edge Panel"
-msgstr "Panel de lado"
+msgstr "Panel de _lado"
 
 #: gnome-panel/menu.c:2740
-#, fuzzy
 msgid "Create edge panel"
-msgstr "Crear un panel"
+msgstr "Crea un panel de lado"
 
 #: gnome-panel/menu.c:2747
-#, fuzzy
 msgid "_Floating Panel"
-msgstr "Panel flotante"
+msgstr "Panel _flotante"
 
 #: gnome-panel/menu.c:2749
-#, fuzzy
 msgid "Create floating panel"
-msgstr "Panel flotante"
+msgstr "Crea un panel flotante"
 
 #: gnome-panel/menu.c:2756
-#, fuzzy
 msgid "_Sliding Panel"
-msgstr "Panel deslizante"
+msgstr "Panel de_slizante"
 
 #: gnome-panel/menu.c:2758
-#, fuzzy
 msgid "Create sliding panel"
-msgstr "Crear un panel"
+msgstr "Crear un panel deslizante"
 
 #: gnome-panel/menu.c:2777
-#, fuzzy
 msgid "_Menu Panel"
-msgstr "Panel de menú"
+msgstr "Panel de _menú"
 
 #: gnome-panel/menu.c:2779
-#, fuzzy
 msgid "Create menu panel"
-msgstr "Crear un panel"
+msgstr "Crea un panel de menú"
 
 #: gnome-panel/menu.c:2866 gnome-panel/menu.c:2872 gnome-panel/menu.c:3490
-#, fuzzy
 msgid "KDE Menu"
-msgstr "Menús KDE"
+msgstr "Menú KDE"
 
 #: gnome-panel/menu.c:2935
 msgid "You cannot remove your last panel."
 msgstr "No puede quitar el último panel."
 
 #: gnome-panel/menu.c:2948
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
-"Cuando se quita un panel, el panel y la configuración\n"
-"de sus apliques se pierden. ¿Quitar este panel?"
+"Cuando se quita un panel, el panel y su\n"
+"configuración se pierde. ¿Quitar este panel?"
 
 #: gnome-panel/menu.c:3193
 msgid "Launcher..."
@@ -2097,7 +2057,6 @@ msgid "GNOME Menu"
 msgstr "Menú de GNOME"
 
 #: gnome-panel/menu.c:3224
-#, fuzzy
 msgid "Log Out Button"
 msgstr "Botón de salida de sesión"
 
@@ -2106,24 +2065,20 @@ msgid "Lock button"
 msgstr "Botón de bloquear pantalla"
 
 #: gnome-panel/menu.c:3276
-#, fuzzy
 msgid "_Delete This Panel..."
-msgstr "Borrar este panel..."
+msgstr "_Borrar este panel..."
 
 #: gnome-panel/menu.c:3279 gnome-panel/menu.c:3310
-#, fuzzy
 msgid "_Delete This Panel"
-msgstr "Borrar este panel"
+msgstr "_Borrar este panel"
 
 #: gnome-panel/menu.c:3297
-#, fuzzy
 msgid "_Add to Panel"
-msgstr "Añadir al panel"
+msgstr "_Añadir al panel"
 
 #: gnome-panel/menu.c:3337
-#, fuzzy
 msgid "_New Panel"
-msgstr "Panel de lado"
+msgstr "Panel _nuevo"
 
 #: gnome-panel/menu.c:3362
 msgid ""
@@ -2136,19 +2091,16 @@ msgstr ""
 "Detalles: comando xscreensaver no encontrado"
 
 #: gnome-panel/menu.c:3382
-#, fuzzy
 msgid "_About Panels"
-msgstr "Acerca del panel..."
+msgstr "_Acerca de los paneles..."
 
 #: gnome-panel/menu.c:3395
-#, fuzzy
 msgid "About _GNOME"
-msgstr "Acerca de GNOME..."
+msgstr "Acerca de _GNOME"
 
 #: gnome-panel/menu.c:3424
-#, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Bloquear la pantalla para que pueda dejar temporalmente su computador"
+msgstr "Bloquea la pantalla para que pueda dejar temporalmente su computador"
 
 #: gnome-panel/menu.c:3435
 msgid ""
@@ -2181,7 +2133,7 @@ msgstr "Imposible abrir el menú, usando el menú principal."
 #: gnome-panel/menu.c:4290
 #, c-format
 msgid "No path set at %s for panel menu object\n"
-msgstr ""
+msgstr "No hay ruta fijada en %s para el objeto del panel de menú\n"
 
 #: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
@@ -2193,7 +2145,7 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepción de popup_menu '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:714
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
@@ -2227,21 +2179,18 @@ msgstr ""
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:541
-#, fuzzy
 msgid "_Autohide"
-msgstr "Activar el botón de ocultación automática"
+msgstr "Ocultar _automáticamente"
 
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:552
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "Ver botones ocultos"
+msgstr "Mostrar _botones de ocultación"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:564
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "Mostrar flechas en los botones ocultos"
+msgstr "Fle_chas en los botones de ocultación"
 
 #: gnome-panel/panel-config.c:603
 msgid "Miscellaneous"
@@ -2256,36 +2205,32 @@ msgid "Indicates the panel position and orientation on screen"
 msgstr "Indica la posición del panel y la orientación de la pantalla"
 
 #: gnome-panel/panel-config.c:725
-#, fuzzy
 msgid "_Position:"
-msgstr "Posición del panel"
+msgstr "_Posición:"
 
 #: gnome-panel/panel-config.c:952
-#, fuzzy
 msgid "Orient hori_zontally"
-msgstr "Orientar el panel horizontalmente"
+msgstr "Orientar hori_zontalmente"
 
 #: gnome-panel/panel-config.c:964
-#, fuzzy
 msgid "Orient _vertically"
-msgstr "Orientar el panel verticalmente"
+msgstr "Orientar _verticalmente"
 
 #: gnome-panel/panel-config.c:978
 msgid "H_orizontal offset:"
-msgstr ""
+msgstr "Desplazamiento h_orizontal:"
 
 #: gnome-panel/panel-config.c:998
 msgid "Ver_tical offset:"
-msgstr ""
+msgstr "Desplazamiento ver_tical:"
 
 #: gnome-panel/panel-config.c:1063
 msgid "Screen edge _offset:"
-msgstr ""
+msgstr "_Desplazamiento del borde de la pantalla:"
 
 #: gnome-panel/panel-config.c:1122
-#, fuzzy
 msgid "_Size:"
-msgstr "Tamaño:"
+msgstr "_Tamaño:"
 
 #: gnome-panel/panel-config.c:1130
 msgid "XX Small (12 pixels)"
@@ -2316,13 +2261,12 @@ msgid "XX Large (128 pixels)"
 msgstr "Extra grande (128 pixels)"
 
 #: gnome-panel/panel-config.c:1326
-#, fuzzy
 msgid "Background _type:"
-msgstr "Tipo de fondo: "
+msgstr "Tipo de _fondo:"
 
 #: gnome-panel/panel-config.c:1334
 msgid "Default"
-msgstr ""
+msgstr "Predeterminado"
 
 #: gnome-panel/panel-config.c:1338
 msgid "Color"
@@ -2334,27 +2278,24 @@ msgid "Image"
 msgstr "Imagen"
 
 #: gnome-panel/panel-config.c:1357
-#, fuzzy
 msgid "Background co_lor:"
-msgstr "Fondo"
+msgstr "Co_lor de fondo:"
 
 #: gnome-panel/panel-config.c:1416
-#, fuzzy
 msgid "_Do not scale image to fit"
-msgstr "No redimensionar imagen para que quepa en el panel"
+msgstr "No re_dimensionar imagen para que quepa"
 
 #: gnome-panel/panel-config.c:1421
 msgid "Sc_ale image"
-msgstr ""
+msgstr "Redimension_ar imagen"
 
 #: gnome-panel/panel-config.c:1425
 msgid "St_retch image"
-msgstr ""
+msgstr "_Reducir imagen"
 
 #: gnome-panel/panel-config.c:1439
-#, fuzzy
 msgid "Rotate image for _vertical panels"
-msgstr "Rotar imagen para paneles verticales"
+msgstr "Rotar imagen para paneles _verticales"
 
 #: gnome-panel/panel-config.c:1518
 msgid "Edge panel"
@@ -2373,7 +2314,6 @@ msgid "Floating panel"
 msgstr "Panel flotante"
 
 #: gnome-panel/panel-config.c:1610
-#, fuzzy
 msgid "Panel Properties"
 msgstr "Propiedades del panel"
 
@@ -2415,8 +2355,7 @@ msgstr "Activar el listado de programas en la caja de ejecución"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
-msgstr ""
-"Mostrar el listado de programas predeterminado al abrir el diálogo «Lanzar»"
+msgstr "Mostrar el listado de programas predeterminado al abrir el diálogo «Lanzar»"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
@@ -2466,8 +2405,7 @@ msgstr "Abrir URL: %s"
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
-msgstr ""
-"No se encontraron paneles en su configuración. Ahora se creará un panel."
+msgstr "No se encontraron paneles en su configuración. Ahora se creará un panel."
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2707,3 +2645,4 @@ msgstr "Muy pequeño"
 
 #~ msgid "Stretch image (change proportions)"
 #~ msgstr "Redimensionar imagen"
+
