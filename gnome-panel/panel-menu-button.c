@@ -568,6 +568,7 @@ panel_menu_button_load (const char  *menu_path,
 			       "custom-icon", custom_icon,
 			       "use-menu-path", use_menu_path,
 			       "use-custom-icon", use_custom_icon,
+			       "has-arrow", TRUE,
 			       NULL);
 
 	button->priv->info = panel_applet_register (
