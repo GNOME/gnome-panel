@@ -227,6 +227,9 @@ drawer_pos_hidebutton_click (BasePWidget *basep)
 	GtkWidget *parent = panel->panel_parent;
 
 	drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
+	drawer->moving_focus = TRUE;
+	gtk_window_present (GTK_WINDOW (parent));
+	gtk_widget_grab_focus (drawer->button);
 }
 
 static void
