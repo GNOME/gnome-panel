@@ -51,7 +51,6 @@ static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
-static GtkWidget *clock_ebox = NULL;
 
 static GtkWindowClass *parent_class = NULL;
 
@@ -462,7 +461,8 @@ update_clock (FoobarWidget *foo)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-		gtk_tooltips_set_tip (panel_tooltips, clock_ebox, hour, NULL);
+		gtk_tooltips_set_tip (panel_tooltips, foo->clock_ebox,
+				      hour, NULL);
 
 		day = das_tm->tm_mday;
 	}
@@ -599,7 +599,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	foo->clock_label = gtk_label_new ("");
 	foo->clock_timeout = gtk_timeout_add (1000, timeout_cb, foo);
 
-	clock_ebox = item;
+	foo->clock_ebox = item;
 	gtk_container_add (GTK_CONTAINER (item), foo->clock_label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
