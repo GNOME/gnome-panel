@@ -352,8 +352,18 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			}
 		}
 
-		if (!label)
-			label = gnome_vfs_uri_extract_short_name (bookmark->uri);
+		if (!label) {
+			char *buffer;
+
+			if (gnome_vfs_uri_is_local (bookmark->uri)) {
+				buffer = gnome_vfs_uri_get_path (bookmark->uri);
+				label = g_filename_display_basename (buffer);
+			} else {
+				buffer = gnome_vfs_uri_extract_short_name (bookmark->uri);
+				label = g_filename_display_name (buffer);
+				g_free (buffer);
+			}
+		}
 
 		panel_menu_items_append_place_item ("gnome-fs-directory",
 						    label,
