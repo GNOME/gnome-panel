@@ -20,7 +20,7 @@ INCLUDES = -I. -I$(srcdir) 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
-bin_PROGRAMS = panel fish_applet #launcher_applet
+bin_PROGRAMS = panel #launcher_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -91,15 +91,6 @@ panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 #launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
 #			$(GNOMEUI_LIBS) $(INTLLIBS)
-
-fish_applet_SOURCES = \
-	fish.c
-## Must define linker for fish_applet -- it needs a C++ linker, but
-## automake doesn't discover that automatically.
-fish_applet_LINK = $(CXXLINK)
-
-fish_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
-		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
