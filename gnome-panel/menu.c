@@ -907,6 +907,11 @@ load_icons_handler_again:
 	return TRUE;
 }
 
+#ifdef FIXME
+/* FIXME:
+ *    Disabled for 2.0.0 because menu editing just
+ * doesn't work. Re-enable in future.
+ */
 static void
 add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 {
@@ -992,6 +997,7 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		gnome_desktop_item_unref (ditem);
 	}
 }
+#endif /* FIXME */
 
 static void
 add_to_run_dialog (GtkWidget *widget, const char *item_loc)
@@ -1252,6 +1258,11 @@ restore_grabs(GtkWidget *w, gpointer data)
 	gtk_grab_add (GTK_WIDGET (menu));
 }
 
+#ifdef FIXME
+/* FIXME:
+ *    Disabled for 2.0.0 because menu editing just
+ * doesn't work. Re-enable in future.
+ */
 static void
 edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 {
@@ -1271,6 +1282,7 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 	panel_edit_direntry (sim->mf->menudir,
 			     sim->mf->dir_name);
 }
+#endif /* FIXME */
 
 static void
 show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
@@ -1310,6 +1322,12 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					    G_CALLBACK(add_app_to_panel),
 					    (gpointer)sim->item_loc);
 
+#ifdef FIXME
+			/* FIXME:
+			 *    Disabled for 2.0.0 because menu editing just
+			 * doesn't work. Re-enable in future.
+			 */
+			
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, NULL,
 					_("Remove this item"));
@@ -1325,6 +1343,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						   "activate",
 						   G_CALLBACK (gtk_menu_shell_deactivate),
 						   G_OBJECT (item->parent));
+#endif /* FIXME */
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, NULL,
@@ -1361,6 +1380,11 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 		   G_OBJECT(item->parent));
 			}
 
+#ifdef FIXME
+			/* FIXME:
+			 *    Disabled for 2.0.0 because menu editing just
+			 * doesn't work. Re-enable in future.
+			 */
 			menuitem = gtk_image_menu_item_new ();
 			/*when activated we must pop down the first menu*/
 			g_signal_connect_swapped (G_OBJECT (menuitem),
@@ -1374,6 +1398,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   sim);
 			setup_menuitem (menuitem, NULL, _("Properties..."));
 			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
+#endif /* FIXME */
 
 			gnome_desktop_item_unref (ii);
 		}
@@ -1416,6 +1441,11 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   G_CALLBACK(add_menu_to_panel),
 					   sim->mf->menudir);
 
+#ifdef FIXME
+			/* FIXME:
+			 *    Disabled for 2.0.0 because menu editing just
+			 * doesn't work. Re-enable in future.
+			 */
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, NULL,
 					_("Add new item to this menu"));
@@ -1445,6 +1475,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					    sim);
 			setup_menuitem (menuitem, NULL, _("Properties..."));
 			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+#endif /* FIXME */
 		}
 	}
 

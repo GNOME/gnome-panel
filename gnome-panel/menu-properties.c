@@ -63,7 +63,6 @@ properties_apply_callback (Menu *menu)
 	char *old_path;
 	gboolean old_global_main;
 	int old_main_menu_flags;
-	gboolean need_edit_menus, got_edit_menus;
 
 	/* Store some old config */
 	old_path = g_strdup (menu->path);
@@ -90,17 +89,14 @@ properties_apply_callback (Menu *menu)
 		g_free (s);
 	}
 
-	need_edit_menus = FALSE;
-
 	/* default to non-main-menu */
 	menu->main_menu = FALSE;
 
 	if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active ||
-	    GTK_TOGGLE_BUTTON (menu->dialog_info->global_main)->active) {
+	    GTK_TOGGLE_BUTTON (menu->dialog_info->global_main)->active)
 		menu->main_menu = TRUE;
 
-		need_edit_menus = TRUE;
-	} else {
+	else {
 		s = gnome_file_entry_get_full_path (GNOME_FILE_ENTRY (menu->dialog_info->pathentry),
 						    TRUE);
 		if(s == NULL) {
@@ -113,23 +109,6 @@ properties_apply_callback (Menu *menu)
 			menu->path = g_strdup (s);
 		}
 	}
-
-	/* Setup the edit_menus callback */
-	if (panel_applet_get_callback (menu->info->user_menu, "edit_menus"))
-		got_edit_menus = TRUE;
-	else
-		got_edit_menus = FALSE;
-
-	if (need_edit_menus && ! got_edit_menus)
-		panel_applet_add_callback (menu->info,
-					   "edit_menus",
-					   NULL,
-					   _("Edit menus..."));
-
-	else if (!need_edit_menus && got_edit_menus)
-		panel_applet_remove_callback (menu->info, "edit_menus");
-
-
 
 	if (GTK_TOGGLE_BUTTON(menu->dialog_info->global_main)->active)
 		 menu->global_main = TRUE;

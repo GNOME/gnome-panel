@@ -220,14 +220,8 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
-		else if(strcmp(menu->name,"edit_menus")==0) {
-			char *tmp[3] = { NULL, NULL, NULL };
-			if((tmp[0] = g_find_program_in_path ("nautilus")) != NULL)  {
-				tmp[1] = "applications:/";
-				gnome_execute_async (g_get_home_dir (), 2, tmp);
-				g_free (tmp[0]);
-			}
-		} else if (strcmp (menu->name, "help") == 0) {
+
+		else if (strcmp (menu->name, "help") == 0) {
 			panel_show_help ("wgospanel.xml", "gospanel-37");
 		}
 		break;
