@@ -769,7 +769,8 @@ init_user_panels(void)
 				   DEFAULT_DRAWER_STEP_SIZE,
 				   DEFAULT_MINIMIZED_SIZE,
 				   DEFAULT_MINIMIZE_DELAY,
-				   PANEL_SWITCH_MOVE);
+				   PANEL_SWITCH_MOVE,
+				   FALSE);
 
 	for(num=1;num<=count;num++) {
 		g_snprintf(buf,256,"%sPanel_%d/", old_panel_cfg_path, num);
@@ -959,6 +960,9 @@ main(int argc, char **argv)
 		
 	global_config.prompt_for_logout =
 		gnome_config_get_bool("prompt_for_logout=TRUE");
+
+	global_config.disable_animations =
+		gnome_config_get_bool("disable_animations=FALSE");
 		
 	g_snprintf(buf,256,"auto_hide_step_size=%d",
 		   DEFAULT_AUTO_HIDE_STEP_SIZE);

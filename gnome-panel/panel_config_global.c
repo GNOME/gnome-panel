@@ -20,6 +20,8 @@ extern GlobalConfig global_config;
 
 extern GList *panels;
 
+static GtkWidget *aniframe[3];
+
 
 static GtkWidget *config_window;
 
@@ -37,7 +39,8 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 		*(int *)data=TRUE;
 	else
 		*(int *)data=FALSE;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+	if(config_window)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 
@@ -55,7 +58,8 @@ gint_scale_update (GtkAdjustment *adjustment, gpointer data)
 	gint *val = data;
 	double scale_val = adjustment->value;
 	*val = (gint) scale_val;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+	if(config_window)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 GtkWidget *
@@ -94,15 +98,38 @@ make_gint_scale_frame(gchar *title, gint *data, double min, double max)
 	return frame;
 }
 
+static gint
+set_anim_button_value(GtkWidget *w, gpointer data)
+{
+	gint i;
+	gint active = GTK_TOGGLE_BUTTON(w)->active;
+
+	for(i=0;i<3;i++)
+		gtk_widget_set_sensitive(aniframe[i],!active);
+	temp_config.disable_animations = active;
+
+	if(config_window)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+}
+
 GtkWidget *
 animation_notebook_page(void)
 {
 	GtkWidget *frame;
 	GtkWidget *vbox;
+	GtkWidget *button;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+
+	/* Animation disable */
+	button = gtk_check_button_new_with_label (_("Disable animations"));
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_anim_button_value),NULL); 
+	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
 
 	/* AutoHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Animation Speed"),
@@ -111,6 +138,8 @@ animation_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
+	aniframe[0] = frame;
+
 	/* ExplicitHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Explicit-Hide Animation Speed"),
 				      &(temp_config.explicit_hide_step_size),
@@ -118,12 +147,16 @@ animation_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* ExplicitHide Animation step_size scale frame */
+	aniframe[1] = frame;
+
+	/* DrawerHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Drawer Animation Speed"),
 				      &(temp_config.drawer_step_size),
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
+
+	aniframe[2] = frame;
 
 	/* Minimize Delay scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
@@ -139,6 +172,10 @@ animation_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
+	/*we have to do this after everything we need aniframe varaibles set*/
+	if (temp_config.disable_animations)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+
 	return (vbox);
 }
 
@@ -149,7 +186,8 @@ set_movement (GtkWidget *widget, gpointer data)
 
 	temp_config.movement_type = move_type;
 	
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+	if(config_window)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
 
 
@@ -251,7 +289,7 @@ misc_notebook_page(void)
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	/* Small Icons */
+	/* Prompt before log out */
 	button = gtk_check_button_new_with_label (_("Prompt before logout"));
 	if (temp_config.prompt_for_logout)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -268,12 +306,8 @@ misc_notebook_page(void)
 void 
 panel_config_global(void)
 {
-	GtkWidget *box1;
-	GtkWidget *box2;
-	GtkWidget *label;
-	GtkWidget *notebook;
-	GtkWidget *button;
 	GtkWidget *page;
+	GtkWidget *box;
 	
 	/* return if the window is already up. */
 	if (config_window)
@@ -282,27 +316,29 @@ panel_config_global(void)
 	memcpy(&temp_config,&global_config,sizeof(GlobalConfig));
 
 	/* main window */
-	config_window = gnome_property_box_new ();
-	gtk_signal_connect(GTK_OBJECT(config_window), "destroy",
+	box = gnome_property_box_new ();
+	gtk_signal_connect(GTK_OBJECT(box), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
-	gtk_signal_connect (GTK_OBJECT (config_window), "delete_event",
+	gtk_signal_connect (GTK_OBJECT (box), "delete_event",
 			    GTK_SIGNAL_FUNC (config_destroy), NULL);
-	gtk_window_set_title (GTK_WINDOW(config_window),
+	gtk_window_set_title (GTK_WINDOW(box),
 			      _("Global Panel Configuration"));
-	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
+	gtk_container_border_width (GTK_CONTAINER(box), CONFIG_PADDING_SIZE);
 	
 	/* Animation notebook page */
 	page = animation_notebook_page ();
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (box),
 					page, gtk_label_new (_("Animation settings")));
 
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (box),
 					page, gtk_label_new (_("Miscellaneous")));
 
-	gtk_signal_connect (GTK_OBJECT (config_window), "apply",
+	gtk_signal_connect (GTK_OBJECT (box), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), NULL);
+
+	config_window = box;
 
 	/* show main window */
 	gtk_widget_show_all (config_window);

@@ -16,13 +16,14 @@ static int  panel_try_to_set_pixmap     (PanelWidget *panel, char *pixmap);
 
 static GdkCursor *fleur_cursor;
 
+/*global settings*/
 static gint pw_explicit_step = 50;
 static gint pw_drawer_step = 20;
 static gint pw_auto_step = 10;
 static gint pw_minimized_size = 6;
 static gint pw_minimize_delay = 300;
-
-static PanelMovementType movement_type = PANEL_SWITCH_MOVE;
+static gint pw_disable_animations = FALSE;
+static PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 
 /* FIXME: real DND is disabled, needs fixing(??), or might be left for dead
    really ... if an applet wants to do dnd it will do it on it's own and
@@ -1036,7 +1037,7 @@ move_horiz_d(PanelWidget *panel, gint src_x, gint dest_x, gint step, gint hide)
 	orig_x = x;
 	orig_w = w;
 
-	if (step != 0) {
+	if (!pw_disable_animations && step != 0) {
 		if (src_x < dest_x) {
 			for( x = src_x; x < dest_x;
 			     x+= move_step(src_x,dest_x,x,step)) {
@@ -1089,7 +1090,7 @@ move_vert_d(PanelWidget *panel, gint src_y, gint dest_y, gint step, gint hide)
 	orig_y = y;
 	orig_h = h;
 
-	if (step != 0) {
+	if (!pw_disable_animations && step != 0) {
 		if (src_y < dest_y) {
 			for( y = src_y; y < dest_y;
 			     y+= move_step(src_y,dest_y,y,step)) {
@@ -1134,7 +1135,7 @@ move_horiz(PanelWidget *panel, gint src_x, gint dest_x, gint step)
 
 	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
 
-	if (step != 0) {
+	if (!pw_disable_animations && step != 0) {
 		if (src_x < dest_x) {
 			for( x = src_x; x < dest_x;
 			     x+= move_step(src_x,dest_x,x,step))
@@ -1157,7 +1158,7 @@ move_vert(PanelWidget *panel, gint src_y, gint dest_y, gint step)
 
 	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
 
-	if (step != 0) {
+	if (!pw_disable_animations && step != 0) {
 		if (src_y < dest_y) {
                         for (y = src_y; y < dest_y;
 			     y+= move_step(src_y,dest_y,y,step))
@@ -2353,7 +2354,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			/*return TRUE;*/
 		}
 
-		if(movement_type == PANEL_SWITCH_MOVE ||
+		if(pw_movement_type == PANEL_SWITCH_MOVE ||
 		   panel->snapped == PANEL_DRAWER) {
 			moveby = panel_widget_get_moveby(panel,pos);
 			if(moveby != 0)
@@ -2724,7 +2725,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
 
-	if(movement_type == PANEL_SWITCH_MOVE ||
+	if(pw_movement_type == PANEL_SWITCH_MOVE ||
 	   panel->snapped == PANEL_DRAWER)
 		pos = panel_widget_make_empty_pos(panel,pos);
 	else
@@ -2785,7 +2786,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 	g_return_val_if_fail(ad!=NULL,-1);
 
-	if(movement_type == PANEL_SWITCH_MOVE ||
+	if(pw_movement_type == PANEL_SWITCH_MOVE ||
 	   new_panel->snapped == PANEL_DRAWER)
 		pos = panel_widget_make_empty_pos(new_panel,pos);
 	else
@@ -3101,7 +3102,8 @@ panel_widget_change_global(gint explicit_step,
 			   gint drawer_step,
 			   gint minimized_size,
 			   gint minimize_delay,
-			   PanelMovementType move_type)
+			   PanelMovementType move_type,
+			   gint disable_animations)
 {
 	if(explicit_step>0)
 		pw_explicit_step=explicit_step;
@@ -3113,7 +3115,8 @@ panel_widget_change_global(gint explicit_step,
 		pw_minimized_size=minimized_size;
 	if(minimize_delay>=0)
 		pw_minimize_delay=minimize_delay;
-	movement_type = move_type;
+	pw_movement_type = move_type;
+	pw_disable_animations = disable_animations;
 }
 
 void

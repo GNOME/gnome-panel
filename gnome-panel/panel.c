@@ -55,7 +55,8 @@ apply_global_config(void)
 				   global_config.drawer_step_size,
 				   global_config.minimized_size,
 				   global_config.minimize_delay,
-				   global_config.movement_type);
+				   global_config.movement_type,
+				   global_config.disable_animations);
 	if(global_config.tooltips_enabled)
 		gtk_tooltips_enable(panel_tooltips);
 	else
@@ -278,6 +279,8 @@ panel_session_save (GnomeClient *client,
 			      global_config.show_small_icons);
 	gnome_config_set_bool("prompt_for_logout",
 			      global_config.prompt_for_logout);
+	gnome_config_set_bool("disable_animations",
+			      global_config.disable_animations);
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
@@ -347,7 +350,7 @@ panel_really_logout(GtkWidget *w, gint button, gpointer data)
 static void
 ask_next_time(GtkWidget *w,gpointer data)
 {
-	global_config.prompt_for_logout = GTK_TOGGLE_BUTTON(w)->active == TRUE;
+	global_config.prompt_for_logout = GTK_TOGGLE_BUTTON(w)->active!=FALSE;
 }
 
 void

@@ -224,7 +224,8 @@ void		panel_widget_change_global	(gint explicit_step,
 						 gint drawer_step,
 						 gint minimized_size,
 						 gint minimize_delay,
-						 PanelMovementType move_type);
+						 PanelMovementType move_type,
+						 gint disable_animations);
 
 /*popup the widget if it's popped down (autohide)*/
 void		panel_widget_pop_up		(PanelWidget *panel);
