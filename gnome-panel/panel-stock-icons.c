@@ -81,6 +81,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_SLIDING_PANEL,       "gnome-panel-type-sliding" },
 	{ PANEL_STOCK_MENU_PANEL,          "gnome-panel-type-menu" },
 	{ PANEL_STOCK_LAUNCHER,            "launcher-program" },
+	{ PANEL_STOCK_ACTION,		   NULL },
 	{ PANEL_STOCK_DRAWER,              "panel-drawer" },
 	{ PANEL_STOCK_APPLETS,             "gnome-applets" },
 	{ PANEL_STOCK_DESKTOP,             "gnome-ccdesktop" },

@@ -118,6 +118,70 @@ typedef struct {
 	GtkIconSize  icon_size;
 } IconToAdd;
 
+typedef struct {
+	const char            *name;
+	const char            *category;
+	const char            *untranslated_category;
+	const char            *description;
+	const char            *icon;
+	const char            *stock_icon;
+	PanelActionButtonType  action_type;
+	const char            *drag_data;
+	gboolean               static_data;
+} AppletMenuInfo;
+
+static AppletMenuInfo action_buttons_info [] = {
+        { N_("Log Out"),
+	  N_("Actions"),
+	  "Actions",
+	  N_("Log out of this session to log in as a different user or to shut down the computer"),
+	  NULL,
+	  PANEL_STOCK_LOGOUT,
+	  PANEL_ACTION_LOGOUT,
+	  "ACTION:logout:NEW",
+	  TRUE },
+	  
+	{ N_("Lock"),
+	  N_("Actions"),
+	  "Actions",
+	  N_("Lock the screen so you can temporarily leave your computer"),
+	  NULL,
+	  PANEL_STOCK_LOCKSCREEN,
+	  PANEL_ACTION_LOCK,
+	  "ACTION:lock:NEW",
+	  TRUE },
+	  
+	{ N_("Screenshot"),
+	  N_("Actions"),
+	  "Actions",
+	  N_("Take a screenshot of your desktop"),
+	  NULL,
+	  PANEL_STOCK_SCREENSHOT,
+	  PANEL_ACTION_SCREENSHOT,
+	  "ACTION:screenshot:NEW",
+	  TRUE },
+	 
+	{ N_("Search"),
+	  N_("Actions"),
+	  "Actions",
+	  N_("Find files, folders, and documents on your computer"),
+	  NULL,
+	  PANEL_STOCK_SEARCHTOOL,
+	  PANEL_ACTION_SEARCH,
+	  "ACTION:search:NEW",
+	  TRUE },
+	  
+	{ N_("Run"),
+	  N_("Actions"),
+	  "Actions",
+	  N_("Run a command"),
+	  NULL,
+	  PANEL_STOCK_RUN,
+	  PANEL_ACTION_RUN,
+	  "ACTION:run:NEW",
+	  TRUE }
+};
+
 static guint load_icons_id = 0;
 static GHashTable *loaded_icons = NULL;
 static GList *icons_to_load = NULL;
@@ -134,6 +198,8 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 
 static GtkWidget * create_desktop_menu (GtkWidget *m,
 					gboolean fake_sub);
+
+static void add_bonobo_applet (GtkWidget  *widget, const char *iid);
 
 static void add_kde_submenu (GtkWidget *root_menu,
 			     gboolean fake_submenus,
@@ -2433,6 +2499,7 @@ applet_menu_get_category_icon (const char *untranslated_category)
 		g_hash_table_insert (hash, "Multimedia", PANEL_STOCK_MULTIMEDIA);
 		g_hash_table_insert (hash, "Internet",   PANEL_STOCK_INTERNET);
 		g_hash_table_insert (hash, "Utility",    PANEL_STOCK_UTILITY);
+		g_hash_table_insert (hash, "Actions",	 PANEL_STOCK_ACTION);
 	}
 
 	return g_hash_table_lookup (hash, untranslated_category);
@@ -2440,27 +2507,59 @@ applet_menu_get_category_icon (const char *untranslated_category)
 
 static GtkWidget *
 applet_menu_append (GtkWidget  *menu,
-		    const char *name,
-		    const char *description,
-		    const char *stock_icon,
-		    const char *icon)
+		    AppletMenuInfo *applet)
 {
 	GtkWidget *menuitem;
 
 	menuitem = gtk_image_menu_item_new ();
 
-	if (icon || stock_icon)
+	if (applet->icon || applet->stock_icon)
 		panel_load_menu_image_deferred (
-			menuitem, GTK_ICON_SIZE_MENU, stock_icon, icon, NULL, FALSE);
-
-	setup_full_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, name, NULL, NULL);
+			menuitem, GTK_ICON_SIZE_MENU, applet->stock_icon, applet->icon, NULL, FALSE);
+	
+	setup_full_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, applet->name, NULL, NULL);
 
 	gtk_widget_show_all (menuitem);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	if (description)
-		gtk_tooltips_set_tip (panel_tooltips, menuitem, description, NULL);
+	if (applet->description)
+		gtk_tooltips_set_tip (panel_tooltips, menuitem, applet->description, NULL);
+	
+	if (applet->action_type != PANEL_ACTION_NONE) {
+		setup_internal_applet_drag (menuitem, applet->drag_data);
+
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (add_action_button_to_panel),
+				  GINT_TO_POINTER (applet->action_type));
+	} else {
+		setup_applet_drag (menuitem, applet->drag_data);
+		
+		g_signal_connect_data (menuitem, "activate", G_CALLBACK (add_bonobo_applet),
+				       g_strdup (applet->drag_data), (GClosureNotify) g_free, 0);
+	}
+
+	return menuitem;
+}
+
+static GtkWidget *
+applet_menu_append_category (GtkWidget *menu,
+                             const char *category,
+			     const char *stock_icon)
+{
+	GtkWidget *menuitem;
+
+	menuitem = gtk_image_menu_item_new ();
+
+	if (stock_icon)
+		panel_load_menu_image_deferred (
+			menuitem, GTK_ICON_SIZE_MENU, stock_icon, NULL, NULL, FALSE);
+
+	setup_full_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, category, NULL, NULL);
+
+	gtk_widget_show_all (menuitem);
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	return menuitem;
 }
@@ -2620,6 +2719,37 @@ instrument_add_submenu_for_reload (GtkMenuItem *item,
 	return reload_data->applet_list;
 }
 
+static int
+applet_info_sort_func (AppletMenuInfo *a,
+                       AppletMenuInfo *b)
+{
+	int c;
+
+	if ((c = strcmp (a->category, b->category)))
+		return c;
+
+	return strcmp (a->name, b->name);
+}
+
+static GSList *
+append_internal_applets (GSList *list)
+{
+	static gboolean translated = FALSE;
+	int             i;
+
+	for (i = 0; i < G_N_ELEMENTS (action_buttons_info); i++) {
+		if (!translated) {
+			action_buttons_info [i].name = _(action_buttons_info [i].name);
+			action_buttons_info [i].category = _(action_buttons_info [i].category);
+			action_buttons_info [i].description = _(action_buttons_info [i].description);
+                }
+
+                list = g_slist_append (list, &action_buttons_info [i]);
+        }
+
+        return list;
+}	
+
 static GtkWidget *
 create_applets_menu (GtkWidget             *menu,
 		     Bonobo_ServerInfoList *applet_list)
@@ -2629,11 +2759,14 @@ create_applets_menu (GtkWidget             *menu,
 	int                i;
 	const GList       *langs_glist;
 	GSList            *langs_gslist;
+	GSList            *applets = NULL;
+	GSList		  *item = NULL;
 
 	if (!applet_list)
 		return NULL;
 
-	if (!menu) menu = menu_new ();
+	if (!menu)
+		menu = menu_new ();
 
 	g_signal_connect (G_OBJECT (menu), "destroy", G_CALLBACK (menu_destroy), NULL);
 
@@ -2648,57 +2781,78 @@ create_applets_menu (GtkWidget             *menu,
 
 	for (i = 0; i < applet_list->_length; i++) {
 		Bonobo_ServerInfo *info;
-		GtkWidget         *menuitem;
+		AppletMenuInfo    *applet;
 		const char        *name;
 		const char        *description;
 		const char        *icon;
 		const char        *category;
 		const char        *untranslated_category;
-		const char        *iid;
 
 		info = &applet_list->_buffer [i];
 
-		iid = info->iid;
-
-		name     = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
-		category = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
+		name        = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
+		category    = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
 	        description = bonobo_server_info_prop_lookup (info, "description", langs_gslist);
+		icon        = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
 
-		icon = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
 		untranslated_category =
 			bonobo_server_info_prop_lookup (info, "panel:category", NULL);
 
 		if (!name)
 			continue;
 
-		if (string_empty (category)) {
-			applet_menu_append (menu, name, description, NULL, icon);
+		applet = g_new0 (AppletMenuInfo, 1);
+		applet->name = name;
+		applet->category = category;
+		applet->untranslated_category = untranslated_category;
+		applet->description = description;
+		applet->icon = icon;
+		applet->drag_data = info->iid;;
+
+		applets = g_slist_append (applets, applet);
+	}
+	
+	/* add internal action buttons */
+	applets = append_internal_applets (applets);	
+	
+	/* sort by category, then name */
+	applets = g_slist_sort (applets, (GCompareFunc) applet_info_sort_func);
+
+	item = applets;
+	while (item != NULL) {
+		GtkWidget         *menuitem;		
+		AppletMenuInfo        *applet;
+		
+		applet = (AppletMenuInfo *) item->data;
+		item = item->next;
+		
+		if (string_empty (applet->category)) {
+			applet_menu_append (menu, applet);
 			continue;
 		}
 
-		if (!prev_category || strcmp (prev_category, untranslated_category)) {
+		if (!prev_category || strcmp (prev_category, applet->untranslated_category)) {
 			const char *cat_icon;
 
-			prev_category = untranslated_category;
+			prev_category = applet->untranslated_category;
 			prev_menu = menu_new ();
 
-			cat_icon = applet_menu_get_category_icon (untranslated_category);
+			cat_icon = applet_menu_get_category_icon (applet->untranslated_category);
 
-			menuitem = applet_menu_append (menu, category, NULL, cat_icon, NULL);
+			menuitem = applet_menu_append_category (menu, applet->category, cat_icon);
 
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), prev_menu);
 		}
 
-		menuitem = applet_menu_append (prev_menu, name, description, NULL, icon);
-
-		setup_applet_drag (menuitem, iid);
-
-		g_signal_connect_data (menuitem, "activate", G_CALLBACK (add_bonobo_applet),
-				       g_strdup (iid), (GClosureNotify) g_free, 0);
+		applet_menu_append (prev_menu, applet);
+		
+		if (!applet->static_data)
+			g_free (applet);
 	}
-
+	
 	g_slist_free (langs_gslist);
-
+	g_slist_free (applets);
+	
 	return menu;
 }
 
@@ -3124,62 +3278,6 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 
 	return menu;
 }
-
-static GtkWidget *
-create_button_menu (void)
-{
-	GtkWidget *menuitem;
-	GtkWidget *retval;
-	
-	retval = menu_new ();
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LOGOUT, _("Log Out"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_LOGOUT));
-	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
-	
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_LOCKSCREEN, _("Lock"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_LOCK));
-	setup_internal_applet_drag (menuitem, "ACTION:lock:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_SCREENSHOT, _("Screenshot"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_SCREENSHOT));
-	setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_SEARCHTOOL, _("Search"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_SEARCH));
-	setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_RUN, _("Run"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (add_action_button_to_panel),
-			  GINT_TO_POINTER (PANEL_ACTION_RUN));
-	setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
-
-	return retval;
-}	
 		
 static void
 remove_panel (GtkWidget *menuitem,
@@ -3432,16 +3530,6 @@ make_add_submenu (GtkWidget             *menu,
 	g_signal_connect (G_OBJECT (m),"show",
 			  G_CALLBACK (submenu_to_display), NULL);
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Button"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	
-	m = create_button_menu ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
-	g_signal_connect (G_OBJECT (m), "show",
-			  G_CALLBACK (submenu_to_display), NULL);
-	
   	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
 		menuitem, GTK_ICON_SIZE_MENU, PANEL_STOCK_GNOME_LOGO, _("Main Menu"));

@@ -55,6 +55,7 @@ G_BEGIN_DECLS
 #define PANEL_STOCK_SLIDING_PANEL       "panel-sliding-type"
 #define PANEL_STOCK_MENU_PANEL          "panel-menu-type"
 #define PANEL_STOCK_LAUNCHER            "panel-launcher"
+#define PANEL_STOCK_ACTION		"panel-action"
 #define PANEL_STOCK_DRAWER              "panel-drawer"
 #define PANEL_STOCK_APPLETS             "panel-applet"
 #define PANEL_STOCK_DESKTOP             "panel-desktop"

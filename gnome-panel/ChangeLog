@@ -1,3 +1,17 @@
+2003-02-17  Frank Worsley  <fworsley@shaw.ca>
+
+	Unify how applets and internal buttons are added to the applets
+	menu. Also added a new 'Actions' category.
+
+	* menu.c: (applet_menu_get_category_icon), (applet_menu_append),
+	(applet_menu_append_category), (applet_info_sort_func),
+	(append_internal_applets), (create_applets_menu),
+	(create_add_launcher_menu), (make_add_submenu): see above.
+	
+	* panel-stock-icons.c:
+	* panel-stock-icons.h: added PANEL_STOCK_ACTION which is null for 
+	now until someone makes a nice icon for it
+
 2003-02-17  Arvind Samptur <arvind.samptur@wipro.com>
 	* panel.c: (panel_delete_query): Centered the delete query dialog.
 
