@@ -1,5 +1,3 @@
-SUBDIRS = eel
-
 libexec_PROGRAMS = wnck-applet
 
 INCLUDES = \
@@ -34,7 +32,7 @@ wnck_applet_SOURCES = \
 $(wnck_applet_OBJECTS): $(BUILT_SOURCES)
 
 wnck_applet_LDADD = \
-	../../libpanel-applet/libpanel-applet-2.la eel/libeelcnp.la \
+	../../libpanel-applet/libpanel-applet-2.la \
 	$(WNCKLET_LIBS)
 
 BUILT_SOURCES = inlinepixbufs.h

@@ -1,3 +1,20 @@
+2004-10-27  Matt T. Proud  <khanreaper@nerp.net>
+
+	* window-menu.c (window_menu_get_window_name): This has become the 
+	universal function to get formatted window names.
+	(window_menu_window_name_changed): This serves as the callback 
+	function that updates the applet's list when a window's name
+	changes.
+	(window_menu_item_new): Now uses Gtk+'s ellipsizing label.
+	(window_menu_add_window): Removed original code that names windows;
+	it now uses window_menu_get_window_name.
+	(window_menu_connect_to_window): Now registers "name_changed" callback.
+	(window_menu_destroy_menu) and (window_menu_popup_menu): Added a new
+	hash table.
+
+	* eel/*:
+	* Makefile.am: kill eel stuff. Yay!
+	
 2004-10-27  Vincent Untz  <vincent@vuntz.net>
 
 	* showdesktop.c: (display_about_dialog): properly set icon, and port to

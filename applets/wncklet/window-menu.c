@@ -39,7 +39,6 @@
 #include <libwnck/libwnck.h>
 
 #include "inlinepixbufs.h"
-#include "eel/eel-ellipsizing-label.h"
 #include "wncklet.h"
 
 typedef struct {
@@ -57,6 +56,11 @@ typedef struct {
 
 	int           size;
 } WindowMenu;
+
+typedef struct {
+	GtkWidget *item;
+	GtkWidget *label;
+} window_hash_item;
 
 static void window_menu_connect_to_window (WindowMenu *window_menu,
 					   WnckWindow *window);
@@ -306,12 +310,57 @@ window_menu_set_active_window (WindowMenu *window_menu,
 	window_menu->icon_window = window;
 }
 
+/* The results of this function will need to be freed. */
+static char *
+window_menu_get_window_name (WnckWindow *window)
+{
+	const char *const_name;
+	char *return_value;
+	char *name;
+
+	const_name = wnck_window_get_name (window);
+	if (!const_name)
+		name = g_strdup (_("Unknown Window"));
+	else
+		name = g_strdup (const_name);
+
+	if (wnck_window_is_shaded (window)) {
+		return_value = g_strdup_printf ("=%s=", name);
+		g_free (name);
+	} else if (wnck_window_is_minimized (window)) {
+		return_value = g_strdup_printf ("[%s]", name);
+		g_free (name);
+	} else
+		return_value = name;
+
+	return return_value;
+}
+
 static void
 window_menu_window_icon_changed (WnckWindow *window,
 				 WindowMenu *window_menu)
 {
 	if (window_menu->icon_window == window)
 		window_menu_set_active_window (window_menu, window);
+}
+
+static void
+window_menu_window_name_changed (WnckWindow *window,
+				 WindowMenu *window_menu)
+{
+	window_hash_item *item;
+	char *window_name;
+
+	item = NULL;
+	window_name = NULL;
+
+	item = g_hash_table_lookup (window_menu->window_hash, window);
+	if (item != NULL) {
+		window_name = window_menu_get_window_name (window);
+		gtk_label_set_text (GTK_LABEL (item->label), window_name);
+		if (window_name != NULL)
+			g_free (window_name);
+	}
 }
 
 static void
@@ -379,15 +428,29 @@ get_width (GtkWidget *widget, const char *text)
 static GtkWidget*
 window_menu_item_new (WindowMenu  *window_menu,
 		      const gchar *label,
-		      gboolean make_bold)
+		      WnckWindow  *window)
 {
 	GtkWidget *item;
 	GtkWidget *ellipsizing_label;
+	window_hash_item *hash_item;
+	gboolean make_bold;
 
 	item = gtk_image_menu_item_new ();
 	
-	ellipsizing_label = eel_ellipsizing_label_new (label);
+	ellipsizing_label = gtk_label_new (label);
 	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
+	gtk_label_set_ellipsize (GTK_LABEL (ellipsizing_label),
+				 PANGO_ELLIPSIZE_END);
+
+	if (window == NULL)
+		make_bold = FALSE;
+	else {
+		make_bold = wnck_window_demands_attention (window);
+		hash_item = g_new0 (window_hash_item, 1);
+		hash_item->item = item;
+		hash_item->label = ellipsizing_label;
+		g_hash_table_insert (window_menu->window_hash, window, hash_item);
+	}
 	if (make_bold)
 		window_menu_make_label_bold (GTK_LABEL (ellipsizing_label));
 
@@ -407,32 +470,19 @@ window_menu_add_window (WindowMenu *window_menu,
 	WnckWorkspace *workspace; 
 	GtkWidget     *item;
 	GtkWidget     *image;
-	const char    *name;
-	char          *label;
-	char          *freeme = NULL;
+	char          *name;
 
 	if (wnck_window_is_skip_tasklist (window))
 		return;
 
-	name = wnck_window_get_name (window);
-	if (!name)
-		name = _("Unknown Window");
-
-	if (wnck_window_is_shaded (window)) {
-		label = g_strdup_printf ("=%s=", name);
-		freeme = label;
-	} else if (wnck_window_is_minimized (window)) {
-		label = g_strdup_printf ("[%s]", name);
-		freeme = label;
-	} else {
-		label = (char *) name;
-	}
+	name = window_menu_get_window_name (window);
 
 	item = window_menu_item_new (window_menu,
-				     label,
-				     wnck_window_demands_attention (window));
-	if (freeme)
-		g_free (freeme);
+				     name,
+				     window);
+
+	if (name != NULL)
+		g_free (name);
 
 	image = gtk_image_new ();
 
@@ -450,7 +500,7 @@ window_menu_add_window (WindowMenu *window_menu,
 	else
 		gtk_menu_shell_append (GTK_MENU_SHELL (window_menu->menu), item);
 
-	g_hash_table_insert (window_menu->window_hash, window, item);
+
 	g_signal_connect_swapped (item, "activate",
 				  G_CALLBACK (window_menu_activate_window),
 				  window);
@@ -479,7 +529,7 @@ window_menu_window_closed (WnckScreen *screen,
 			   WnckWindow *window,
 			   WindowMenu *window_menu)
 {
-	GtkWidget *item;
+	window_hash_item *item;
 
 	if (window == window_menu->icon_window)
 		window_menu_set_active_window (window_menu, NULL);
@@ -491,7 +541,7 @@ window_menu_window_closed (WnckScreen *screen,
 	if (!item)
 		return;
 
-	gtk_widget_hide (item);
+	gtk_widget_hide (item->item);
 	gtk_menu_reposition (GTK_MENU (window_menu->menu));
 }
 
@@ -501,6 +551,10 @@ window_menu_connect_to_window (WindowMenu *window_menu,
 {
 	wncklet_connect_while_alive (window, "icon_changed",
 				     G_CALLBACK (window_menu_window_icon_changed),
+				     window_menu,
+				     window_menu->applet);
+	wncklet_connect_while_alive (window, "name_changed",
+				     G_CALLBACK (window_menu_window_name_changed),
 				     window_menu,
 				     window_menu->applet);
 }
@@ -608,7 +662,10 @@ window_menu_popup_menu (WindowMenu *window_menu,
 
 	if (window_menu->window_hash)
 		g_hash_table_destroy (window_menu->window_hash);
-	window_menu->window_hash = g_hash_table_new (g_direct_hash, g_direct_equal);
+	window_menu->window_hash = g_hash_table_new_full (g_direct_hash,
+							  g_direct_equal,
+							  NULL,
+							  g_free);
 
 	for (l = windows; l; l = l->next)
 		window_menu_add_window (window_menu, l->data);
@@ -623,7 +680,7 @@ window_menu_popup_menu (WindowMenu *window_menu,
 		window_menu->no_windows_item =
 			window_menu_item_new (window_menu,
 					      _("No Windows Open"),
-					      FALSE);
+					      NULL);
 
 		gtk_widget_set_sensitive (window_menu->no_windows_item, FALSE);
 		gtk_widget_show (window_menu->no_windows_item);	
