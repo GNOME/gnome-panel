@@ -9,7 +9,7 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <libgnomeui.h>
+#include <libgnome/gnome-i18n.h>
 #include <gdk/gdkx.h>
 
 #include "panel-include.h"
@@ -123,15 +123,17 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		else if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("launchers.html");
 		else if (strcmp (menu->name, "help_on_app") == 0) {
+#ifdef FIXME
 			Launcher * launcher = menu->info->data;
-			if (launcher->dentry != NULL) {
+			if (launcher->ditem != NULL) {
 				char *path = panel_gnome_kde_help_path
-					(launcher->dentry->docpath);
+					(launcher->ditem->docpath);
 				if (path != NULL) {
 					gnome_url_show (path);
 					g_free (path);
 				}
 			}
+#endif
 		}
 		break;
 	case APPLET_DRAWER: 
@@ -357,8 +359,8 @@ setup_an_item(AppletUserMenu *menu,
 			    &menu->menuitem);
 	if(menu->stock_item && *(menu->stock_item))
 		setup_menuitem (menu->menuitem,
-				gnome_stock_pixmap_widget(submenu,
-							  menu->stock_item),
+				gtk_image_new_from_stock (menu->stock_item,
+							  GTK_ICON_SIZE_MENU),
 				menu->text);
 	else
 		setup_menuitem (menu->menuitem,
@@ -366,7 +368,7 @@ setup_an_item(AppletUserMenu *menu,
 				menu->text);
 
 	if(submenu)
-		gtk_menu_append (GTK_MENU (submenu), menu->menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
 
 	/*if an item not a submenu*/
 	if(!is_submenu) {
@@ -470,19 +472,20 @@ create_applet_menu (AppletInfo *info, gboolean is_basep)
 	if ( ! commie_mode) {
 		menuitem = gtk_menu_item_new();
 		setup_menuitem(menuitem,
-			       gnome_stock_new_with_icon (GNOME_STOCK_PIXMAP_REMOVE),
+			       gtk_image_new_from_stock (GTK_STOCK_REMOVE,
+							 GTK_ICON_SIZE_MENU),
 			       _("Remove from panel"));
 		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 				   (GtkSignalFunc) remove_applet_callback,
 				   info);
-		gtk_menu_append(GTK_MENU(info->menu), menuitem);
+		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
 
 		menuitem = gtk_menu_item_new();
 		setup_menuitem(menuitem,NULL,_("Move"));
 		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 				   (GtkSignalFunc) move_applet_callback,
 				   info);
-		gtk_menu_append(GTK_MENU(info->menu), menuitem);
+		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
 	}
 
 	panel_menu = hack_scroll_menu_new();
@@ -495,18 +498,16 @@ create_applet_menu (AppletInfo *info, gboolean is_basep)
 		setup_menuitem (menuitem, NULL, _("Panel"));
 	} else {
 		setup_menuitem (menuitem, 
-				gnome_stock_pixmap_widget_at_size (NULL, pixmap,
-								   SMALL_ICON_SIZE,
-								   SMALL_ICON_SIZE),
+				gtk_image_new_from_file (pixmap),
 				_("Panel"));
 		g_free (pixmap);
 	}
-	gtk_menu_append (GTK_MENU (info->menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), panel_menu);
 
 	if(user_menu) {
 		menuitem = gtk_menu_item_new();
-		gtk_menu_append(GTK_MENU(info->menu), menuitem);
+		gtk_menu_shell_append(GTK_MENU_SHELL(info->menu), menuitem);
 		gtk_widget_set_sensitive (menuitem, FALSE);
 		gtk_widget_show(menuitem);
 	}
@@ -562,15 +563,15 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 	set_data (info->menu, info->widget->parent);
 
-	gtk_menu_popup (GTK_MENU (info->menu),
-			NULL,
-			NULL,
-			global_config.off_panel_popups ?
-			  applet_menu_position :
-			  NULL,
-			info,
-			event->button,
-			event->time);
+	gtk_menu_shell_popup (GTK_MENU_SHELL (info->menu),
+			      NULL,
+			      NULL,
+			      global_config.off_panel_popups ?
+			      applet_menu_position :
+			      NULL,
+			      info,
+			      event->button,
+			      event->time);
 }
 
 
@@ -635,17 +636,17 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 		}
 	} else if (info->type == APPLET_LAUNCHER) {
 		Launcher *launcher = info->data;
+		gchar *location;
 
 		/* we CAN'T unlink the file here as we may just
 		 * be killing stuff before exit, basically we
 		 * just want to schedule removals until session
 		 * saving */
 
-		if (launcher->dentry->location != NULL) {
-			char *file = g_strdup (launcher->dentry->location);
+		location = gnome_desktop_item_get_location (launcher->ditem);
+		if (location != NULL)
 			launchers_to_kill = 
-				g_list_prepend (launchers_to_kill, file);
-		}
+				g_list_prepend (launchers_to_kill, location);
 	}
 
 
