@@ -36,27 +36,34 @@ typedef enum {
 	APPLET_DRAWER
 } AppletType;
 
-typedef struct {
-	GtkWidget    *applet;
-	AppletType    type;
-} PanelApplet;
+typedef struct _PanelApplet PanelApplet;
+typedef struct _PanelDrawer PanelDrawer;
+typedef struct _Panel Panel;
 
-typedef struct {
+
+struct _PanelApplet {
+	GtkWidget    *applet;
+	PanelDrawer  *drawer;
+	AppletType    type;
+};
+
+struct _PanelDrawer {
 	GtkWidget    *window;
 	GtkWidget    *table;
 	GtkWidget    *panel_eb;
 	GtkWidget    *panel;
 	PanelApplet **applets;        
 	gint          applet_count;
+	gint          applet_base;
 	PanelState    state;
 	gint          step_size;
 	gint          button_press_id;
 	gint          leave_notify_timer_tag;
 	GtkWidget    *applet_being_dragged;
 	gint          applet_id_being_dragged;
-} PanelDrawer;
+};
 
-typedef struct {
+struct _Panel {
 	GtkWidget    *window;
 	GtkWidget    *table;
 	GtkWidget    *hidebutton_l_h;
@@ -82,7 +89,7 @@ typedef struct {
 	gint          minimized_size;
 	GtkWidget    *applet_being_dragged;
 	gint          applet_id_being_dragged;
-} Panel;
+};
 
 
 
