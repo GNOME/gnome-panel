@@ -180,6 +180,11 @@ main(int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
+	/*
+	 * Let applets spew.
+	 */
+	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
+
 	gnome_program_init ("panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
@@ -195,11 +200,6 @@ main(int argc, char **argv)
 	} else {
 		session_set_current_profile (profile_name);
 	}
-
-	/*
-	 * Let applets spew.
-	 */
-	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
 
 	if (!panel_shell_register ())
 		return -1;

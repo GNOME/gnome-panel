@@ -35,14 +35,19 @@ panel_shell_register (void)
 {
         if (!panel_shell) {
 		Bonobo_RegistrationResult  reg_res;
-		gchar                     *message = NULL;
+		char                      *message = NULL;
+		char                      *iid;
 
 		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
 		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
 
+		iid = bonobo_activation_make_registration_id (
+				"OAFIID:GNOME_PanelShell", g_getenv ("DISPLAY"));
+
 		reg_res = bonobo_activation_active_server_register (
-						"OAFIID:GNOME_PanelShell",
-						BONOBO_OBJREF (panel_shell));
+				iid, BONOBO_OBJREF (panel_shell));
+
+		g_free (iid);
 
 		switch (reg_res) {
 		case Bonobo_ACTIVATION_REG_SUCCESS:

@@ -1,5 +1,13 @@
 2002-02-07  Mark McLoughlin  <mark@skynet.ie>
 
+	* main.c: (main): move BONOBO_ACTIVATION_DEBUG_OUTPUT up.
+
+	* panel-shell.c: (panel_shell_register): enable per-display
+	registration, however this doesn't work yet 'cause its not enabled in
+	bonobo-activation.
+
+2002-02-07  Mark McLoughlin  <mark@skynet.ie>
+
 	* distribution.c: (get_distribution_info): fix core. Sorry people.
 
 2002-02-07  Mark McLoughlin  <mark@skynet.ie>
