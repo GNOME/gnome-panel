@@ -1,3 +1,15 @@
+Fri Sep 17 18:43:44 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* panel-util.c: 
+	* drawer.c: 
+	* launcher.c: 
+	* panel.c: 
+	* swallow.c: 
+	* menu-properties.c: 
+	* menu-rh.c: 
+	* menu.c:  Add #include <sys/types.h> before <sys/stat.h>
+	to remove warnings.  OS/2 patch.
+
 1999-09-12  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c (make_panel_submenu): move About item out of here,
