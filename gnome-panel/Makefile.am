@@ -26,6 +26,10 @@ INCLUDES =							\
 	-DGNOME_DATADIR=\""$(datadir)"\"			\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
+	-DPREFIX=\""$(prefix)"\"				\
+	-DSYSCONFDIR=\""$(sysconfdir)"\"			\
+	-DDATADIR=\""$(datadir)"\"				\
+	-DLIBDIR=\""$(libdir)"\"				\
 	$(PANEL_CFLAGS)						\
 	$(WARN_CFLAGS)						\
 	$(NULL)

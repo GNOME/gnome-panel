@@ -182,8 +182,14 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 	g_list_free (envar);
 }
 
+enum {
+	HELP_BUTTON = 0,
+	CLOSE_BUTTON,
+	RUN_BUTTON
+};
+
 static void 
-string_callback (GtkWidget *w, int button_num, gpointer data)
+run_dialog_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkEntry *entry;
         GtkWidget *clist;
@@ -200,17 +206,17 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
         
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
-	if (button_num == 2/*help*/) {
+	if (response == HELP_BUTTON) {
 		panel_show_help ("specialobjects", "RUNBUTTON");
 		/* just return as we don't want to close */
 		return;
-	} else if (button_num == 1/*cancel*/) {
+	} else if (response == CLOSE_BUTTON) {
 		goto return_and_close;
 	}
         
         clist = gtk_object_get_data (GTK_OBJECT (run_dialog), "dentry_list");
-        terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data(GTK_OBJECT(w),
-                                                          "terminal"));
+        terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT(w),
+							   "terminal"));
         favorites = gtk_object_get_data (GTK_OBJECT (run_dialog), "favorites");
 
         add_to_favourites = GTK_TOGGLE_BUTTON (favorites)->active;
@@ -270,16 +276,18 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         goto return_and_close;
                 }
                 if (strcmp (s, "you shall bring us a shrubbery") == 0) {
-                        gnome_ok_dialog ("NI! NI! NI! NI! NI! NI!");
+                        panel_info_dialog ("ni_ni_ni_ni",
+					   "NI! NI! NI! NI! NI! NI!");
                         goto return_and_close;
                 }
                 if (strcmp (s, "supreme executive power") == 0) {
-                        gnome_ok_dialog ("Listen -- strange women lying in\n"
-                                         "ponds distributing swords is no\n"
-                                         "basis for a system of government.\n"
-                                         "Supreme executive power derives from\n"
-                                         "a mandate from the masses, not from\n"
-                                         "some farcical aquatic ceremony!");
+                        panel_info_dialog ("evil",
+					   "Listen -- strange women lying in\n"
+					   "ponds distributing swords is no\n"
+					   "basis for a system of government.\n"
+					   "Supreme executive power derives from\n"
+					   "a mandate from the masses, not from\n"
+					   "some farcical aquatic ceremony!");
                         goto return_and_close;
                 }
                 if (strcmp (s, "free the fish") == 0) {
@@ -359,7 +367,7 @@ return_and_close:
 	g_strfreev (argv);
 	g_strfreev (temp_argv);
 	g_strfreev (envv);
-	gnome_dialog_close (GNOME_DIALOG (w));
+	gtk_widget_destroy (w);
 }
 
 static void
@@ -583,6 +591,12 @@ advanced_contents_shown (GtkWidget *vbox,
         /* does nothing at the moment */
 }
 
+static void
+activate_run (GtkWidget *entry, GtkWidget *dialog)
+{
+	gtk_dialog_response (GTK_DIALOG (dialog), RUN_BUTTON);
+}
+
 static GtkWidget*
 create_advanced_contents (void)
 {
@@ -615,8 +629,9 @@ create_advanced_contents (void)
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         gtk_object_set_data (GTK_OBJECT (run_dialog), "entry", entry);
 
-        gnome_dialog_editable_enters (GNOME_DIALOG (run_dialog),
-                                      GTK_EDITABLE (entry));
+	gtk_signal_connect (GTK_OBJECT (entry), "activate",
+			    GTK_SIGNAL_FUNC (activate_run),
+			    run_dialog);
         gtk_signal_connect (GTK_OBJECT (entry),
                             "changed",
                             GTK_SIGNAL_FUNC (entry_changed),
@@ -954,7 +969,7 @@ select_row_handler (GtkCList *clist,
 				gtk_label_set_text (GTK_LABEL (desc_label),
 						    sure_string (qitem->comment));
 
-			icon = quick_desktop_item_find_icon (qitem);
+			icon = quick_desktop_item_find_icon (qitem->icon);
 			if (icon != NULL) {
 				pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
 			} else {
@@ -1054,7 +1069,7 @@ create_simple_contents (void)
         unset_selected (run_dialog);
         
         w = create_toggle_advanced_button ("");
-        gtk_box_pack_end (GTK_BOX (GNOME_DIALOG (run_dialog)->vbox), w,
+        gtk_box_pack_end (GTK_BOX (GTK_DIALOG (run_dialog)->vbox), w,
                           FALSE, FALSE, GNOME_PAD_SMALL);
         
         gtk_object_ref (GTK_OBJECT (vbox));
@@ -1069,7 +1084,7 @@ create_simple_contents (void)
                             GTK_SIGNAL_FUNC (simple_contents_shown),
                             run_dialog);
 
-        gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (run_dialog)->vbox),
+        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
                             vbox,
                             TRUE, TRUE, 0);
         
@@ -1095,7 +1110,7 @@ update_contents (GtkWidget *dialog)
                 advanced = gtk_object_get_data (GTK_OBJECT (dialog), "advanced");
                 
                 if (advanced && advanced->parent == NULL) {
-                        gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox),
+                        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                                             advanced,
                                             FALSE, FALSE, 0);
                 
@@ -1143,7 +1158,18 @@ show_run_dialog (void)
 
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
-	run_dialog = gnome_dialog_new(_("Run Program"), NULL);
+	run_dialog = gtk_dialog_new_with_buttons (_("Run Program"),
+						  NULL /* parent */,
+						  0 /* flags */,
+						  GTK_STOCK_HELP,
+						  HELP_BUTTON,
+						  GTK_STOCK_CLOSE,
+						  CLOSE_BUTTON,
+						  /* FIXME: how the hell do we get a different label but
+						   * the execute stock icon */
+						  GTK_STOCK_EXECUTE,
+						  RUN_BUTTON,
+						  NULL);
 
         /* This is lame in advanced mode, but if you change it on mode
          * toggle it creates weird effects, so always use this policy
@@ -1156,7 +1182,7 @@ show_run_dialog (void)
                 gtk_window_set_default_size (GTK_WINDOW (run_dialog),
                                              -1, 400);
         
-#if FIXME
+#ifdef FIXME
 	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
 					 GNOME_ICONDIR"/gnome-run.png");
 #endif
@@ -1166,20 +1192,11 @@ show_run_dialog (void)
 	gtk_window_position(GTK_WINDOW(run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
-	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
-				    GNOME_STOCK_BUTTON_HELP);
+	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), 
+					 RUN_BUTTON);
 
-	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
-				    GNOME_STOCK_BUTTON_CANCEL);
-
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (run_dialog),
-						_("Run"),
-						GTK_STOCK_EXECUTE);
-
-	gnome_dialog_set_default (GNOME_DIALOG (run_dialog), 2);
-
-        gtk_signal_connect (GTK_OBJECT (run_dialog), "clicked", 
-                            GTK_SIGNAL_FUNC (string_callback), NULL);
+        gtk_signal_connect (GTK_OBJECT (run_dialog), "response", 
+                            GTK_SIGNAL_FUNC (run_dialog_response), NULL);
 
         create_simple_contents ();
         create_advanced_contents ();

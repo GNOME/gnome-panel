@@ -864,6 +864,44 @@ panel_error_dialog (const char *class,
 	gtk_widget_show_all (w);
 	panel_set_dialog_layer (w);
 
+	gtk_signal_connect_object (GTK_OBJECT (w), "response",
+				   GTK_SIGNAL_FUNC (gtk_widget_destroy),
+				   GTK_OBJECT (w));
+
+	return w;
+}
+
+GtkWidget *
+panel_info_dialog (const char *class,
+		   const char *format,
+		   ...)
+{
+	GtkWidget *w;
+	char *s;
+	va_list ap;
+
+	if (format == NULL) {
+		g_warning ("NULL info dialog");
+		s = g_strdup ("(null)");
+	} else {
+		va_start (ap, format);
+		s = g_strdup_vprintf (format, ap);
+		va_end (ap);
+	}
+
+	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
+				    GTK_BUTTONS_OK, s);
+	gtk_window_set_wmclass (GTK_WINDOW (w),
+				class, "Panel");
+	g_free (s);
+
+	gtk_widget_show_all (w);
+	panel_set_dialog_layer (w);
+
+	gtk_signal_connect_object (GTK_OBJECT (w), "response",
+				   GTK_SIGNAL_FUNC (gtk_widget_destroy),
+				   GTK_OBJECT (w));
+
 	return w;
 }
 
@@ -987,4 +1025,45 @@ panel_quote_string (const char *str)
 	g_string_append_c (gs, '\'');
 
 	return g_string_free (gs, FALSE);
+}
+
+void
+panel_push_window_busy (GtkWidget *window)
+{
+	int busy = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (window),
+							 "Panel:WindowBusy"));
+
+	busy ++;
+
+	if (busy == 1) {
+		gtk_widget_set_sensitive (window, FALSE);
+		if (window->window != NULL) {
+			GdkCursor *cursor = gdk_cursor_new (GDK_WATCH);
+			gdk_window_set_cursor (window->window, cursor);
+			gdk_cursor_destroy (cursor);
+			gdk_flush ();
+		}
+	}
+
+	gtk_object_set_data (GTK_OBJECT (window), "Panel:WindowBusy",
+			     GINT_TO_POINTER (busy));
+}
+
+void
+panel_pop_window_busy (GtkWidget *window)
+{
+	int busy = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (window),
+							 "Panel:WindowBusy"));
+	busy --;
+
+	if (busy <= 0) {
+		gtk_widget_set_sensitive (window, TRUE);
+		if (window->window != NULL)
+			gdk_window_set_cursor (window->window, NULL);
+		gtk_object_remove_data (GTK_OBJECT (window),
+					"Panel:WindowBusy");
+	} else {
+		gtk_object_set_data (GTK_OBJECT (window), "Panel:WindowBusy",
+				     GINT_TO_POINTER (busy));
+	}
 }

@@ -75,8 +75,6 @@ char * fr_get_mergedir (const char *dir);
 void fr_force_reread(void);
 GSList* fr_get_all_dirs (void);
 
-void init_fr_chunks (void);
-
 void free_mfile (MFile *mfile);
 void free_mfile_list (GSList *list);
 

@@ -1,3 +1,22 @@
+Sun Nov 18 00:52:58 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, main.c:  set the standard gnome program properties
+
+	* gnome-run.c, menu.c, panel-util.[ch]:  A little bit of
+	  s/GnomeDialog/GtkDialog/
+
+	* panel-util.[ch]: error box is now actually closable,
+	  added an info box, and function to make dialog 'busy'
+
+	* main.c, menu-fentry.[ch]: whack the mem chunks stuff
+
+	* menu-fentry.c, menu.c, quick-desktop-item.[ch]: Lookup icons
+	  before loading them, not during the creation of the menus
+
+	* menu.c: convert one more ditem usage to qitem
+
+	* menu-properties.c: get rid of gnome_icon_entry_gtk_entry usage
+
 Fri Nov 16 22:13:22 2001  George Lebl <jirka@5z.com>
 
 	* quick-desktop-reader.[ch], Makefile.am, gnome-run.c, menu-fentry.c:

@@ -255,7 +255,7 @@ is_i18n_key (const char *key, gsize keylen, const char *buf, char **lang)
 	if (*p == ' ')
 		p++;
 	if (*p != '=') {
-		g_print ("no equals (%s)\n", buf);
+		g_print ("Parser error on line (%s)\n", buf);
 		g_free (*lang);
 		*lang = NULL;
 		return NULL;
@@ -577,22 +577,20 @@ quick_desktop_item_load_uri (const char *uri,
 }
 
 char *
-quick_desktop_item_find_icon (const QuickDesktopItem *item)
+quick_desktop_item_find_icon (const char *icon)
 {
-        g_return_val_if_fail (item != NULL, NULL);
-
-	if (item->icon == NULL) {
+	if (icon == NULL) {
 		return NULL;
-	} else if (g_path_is_absolute (item->icon)) {
-		if (g_file_test (item->icon, G_FILE_TEST_EXISTS)) {
-			return g_strdup (item->icon);
+	} else if (g_path_is_absolute (icon)) {
+		if (g_file_test (icon, G_FILE_TEST_EXISTS)) {
+			return g_strdup (icon);
 		} else {
 			return NULL;
 		}
 	} else {
 		char *full = gnome_program_locate_file (NULL,
 							GNOME_FILE_DOMAIN_PIXMAP,
-							item->icon,
+							icon,
 							TRUE /* only_if_exists */,
 							NULL /* ret_locations */);
 

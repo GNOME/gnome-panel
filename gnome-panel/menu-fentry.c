@@ -35,21 +35,11 @@
 
 static GSList *dir_list = NULL;
 
-static GMemChunk *file_chunk = NULL;
-static GMemChunk *dir_chunk = NULL;
-
 extern char *merge_main_dir;
 extern int merge_main_dir_len;
 extern char *merge_merge_dir;
 
 extern GlobalConfig global_config;
-
-void
-init_fr_chunks (void)
-{
-	file_chunk = g_mem_chunk_create (FileRec, 64, G_ALLOC_AND_FREE);
-	dir_chunk  = g_mem_chunk_create (DirRec,  16, G_ALLOC_AND_FREE);
-}
 
 static GSList *
 prepend_mfile (GSList *list, const char *name, gboolean merged,
@@ -339,10 +329,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 	}
 
 	if (free_fr) {
-		if (fr->type == FILE_REC_DIR)
-			g_chunk_free (fr, dir_chunk);
-		else
-			g_chunk_free (fr, file_chunk);
+		g_free (fr);
 	} else  {
 		int type = fr->type;
 		if (fr->type == FILE_REC_DIR)
@@ -369,7 +356,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	g_return_if_fail (fr != NULL);
 	g_return_if_fail (fr->name != NULL);
 
-	ffr = g_chunk_new0 (FileRec, file_chunk);
+	ffr = g_new0 (FileRec, 1);
 	ffr->type = FILE_REC_EXTRA;
 	ffr->name = g_build_filename (fr->name, ".order", NULL);
 	ffr->parent = dr;
@@ -444,7 +431,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				}
 			}
 			if (qitem != NULL) {
-				ffr = g_chunk_new0 (FileRec, file_chunk);
+				ffr = g_new0 (FileRec, 1);
 				if (qitem->type != NULL &&
 				    g_ascii_strcasecmp (qitem->type, "separator") == 0)
 					ffr->type = FILE_REC_SEP;
@@ -455,7 +442,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->mtime = s.st_mtime;
 				ffr->last_stat = curtime;
 				ffr->parent = dr;
-				ffr->icon = quick_desktop_item_find_icon (qitem);
+				ffr->icon = g_strdup (qitem->icon);
 				ffr->fullname = g_strdup (qitem->name);
 				ffr->comment = g_strdup (qitem->comment);
 				ffr->tryexec_path = tryexec_path;
@@ -490,7 +477,7 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 
 	/*this will zero all fields*/
 	if (dr == NULL) {
-		dr = g_chunk_new0 (DirRec, dir_chunk);
+		dr = g_new0 (DirRec, 1);
 		dr->force_reread = FALSE;
 		/* this must be set otherwise we may messup on
 		   fr_free */
@@ -541,7 +528,7 @@ fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
 						      TRUE /* run_tryexec */);
 		if (qitem != NULL) {
 			g_free (fr->icon);
-			fr->icon = quick_desktop_item_find_icon (qitem);
+			fr->icon = g_strdup (qitem->icon);
 			g_free (fr->fullname);
 			fr->fullname = g_strdup (qitem->name);
 			g_free (fr->comment);
@@ -700,25 +687,25 @@ fr_check_and_reread (FileRec *fr)
 					g_free(p);
 					break;
 				}
-				if(ddr->ditemmtime != s.st_mtime) {
+				if (ddr->ditemmtime != s.st_mtime) {
 					QuickDesktopItem *qitem;
 					qitem = quick_desktop_item_load_file (p /* file */,
 									      NULL /* expected_type */,
 									      TRUE /* run_tryexec */);
-					if(qitem) {
-						g_free(ffr->icon);
-						ffr->icon = quick_desktop_item_find_icon (qitem);
-						g_free(ffr->fullname);
+					if (qitem != NULL) {
+						g_free (ffr->icon);
+						ffr->icon = g_strdup (qitem->icon);
+						g_free (ffr->fullname);
 						ffr->fullname = g_strdup (qitem->name);
-						g_free(ffr->comment);
+						g_free (ffr->comment);
 						ffr->comment = g_strdup (qitem->comment);
 						quick_desktop_item_destroy (qitem);
 					} else {
-						g_free(ffr->icon);
+						g_free (ffr->icon);
 						ffr->icon = NULL;
-						g_free(ffr->fullname);
+						g_free (ffr->fullname);
 						ffr->fullname = NULL;
-						g_free(ffr->comment);
+						g_free (ffr->comment);
 						ffr->comment = NULL;
 					}
 					ddr->ditemmtime = s.st_mtime;
@@ -741,7 +728,7 @@ fr_check_and_reread (FileRec *fr)
 									      TRUE /* run_tryexec */);
 					if (qitem != NULL) {
 						g_free (ffr->icon);
-						ffr->icon = quick_desktop_item_find_icon (qitem);
+						ffr->icon = g_strdup (qitem->icon);
 
 						g_free (ffr->fullname);
 						ffr->fullname = g_strdup (qitem->name);

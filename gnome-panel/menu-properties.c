@@ -674,8 +674,7 @@ create_properties_dialog(Menu *menu)
 		gtk_widget_set_sensitive (w, FALSE);
 	}
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
-	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (w));
-	gtk_signal_connect (GTK_OBJECT (t), "changed",
+	gtk_signal_connect (GTK_OBJECT (w), "changed",
 			    GTK_SIGNAL_FUNC (textbox_changed),
 			    menu);
 

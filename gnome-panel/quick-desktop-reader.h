@@ -55,9 +55,11 @@ QuickDesktopItem * quick_desktop_item_load_file (const char  *file,
 QuickDesktopItem * quick_desktop_item_load_uri  (const char  *uri,
 						 const char  *expected_type,
 						 gboolean     run_tryexec);
-char *             quick_desktop_item_find_icon (const QuickDesktopItem *item);
 
 void		   quick_desktop_item_destroy   (QuickDesktopItem *item);
+
+char *             quick_desktop_item_find_icon (const char  *icon);
+
 
 G_END_DECLS
 

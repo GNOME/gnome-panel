@@ -492,7 +492,8 @@ main(int argc, char **argv)
 	gnome_program_init ("panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
-			    GNOME_PARAM_NONE);
+			    GNOME_PROGRAM_STANDARD_PROPERTIES,
+			    NULL);
 
 	bonobo_activate ();
 
@@ -611,8 +612,6 @@ main(int argc, char **argv)
 #ifdef FIXME
 	gwmh_init ();
 #endif
-
-	init_fr_chunks ();
 	
 	init_menus ();
 
