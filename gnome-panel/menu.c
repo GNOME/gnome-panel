@@ -3056,7 +3056,7 @@ static void
 show_panel_help (GtkWidget *w, gpointer data)
 {
 	panel_show_help (
-		gtk_widget_get_screen (w), "user-guide.xml", NULL);
+		gtk_widget_get_screen (w), "user-guide.xml", "gospanel-5");
 }
 
 GtkWidget *
