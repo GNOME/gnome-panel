@@ -9,8 +9,8 @@
 #include <config.h>
 #include <stdio.h>
 #include <sys/stat.h>
-#include <unistd.h>
 #include <dirent.h>
+#include <unistd.h>
 #include <string.h>
 #include <gnome.h>
 #include "panel-widget.h"
