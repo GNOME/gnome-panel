@@ -26,6 +26,7 @@
 #define __PANEL_PROFILE_H__
 
 #include <glib/gmacros.h>
+#include <gdk/gdk.h>
 #include <gconf/gconf-client.h>
 
 #include "panel-toplevel.h"
@@ -55,7 +56,7 @@ void           panel_profile_add_to_list            (PanelGConfKeyType  type,
 void           panel_profile_remove_from_list       (PanelGConfKeyType  type,
 						     const char        *id);
 gboolean       panel_profile_list_is_writable       (PanelGConfKeyType  type);
-void           panel_profile_create_toplevel        (void);
+void           panel_profile_create_toplevel        (GdkScreen         *screen);
 PanelToplevel *panel_profile_load_toplevel          (GConfClient       *client,
 						     const char        *profile_dir,
 						     PanelGConfKeyType  type,

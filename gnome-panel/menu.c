@@ -2821,7 +2821,7 @@ create_applets_menu (GtkWidget             *menu,
 static void
 create_new_panel (GtkWidget *menuitem)
 {
-	panel_profile_create_toplevel ();
+	panel_profile_create_toplevel (gtk_widget_get_screen (menuitem));
 }
 
 void

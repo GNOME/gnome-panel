@@ -1330,9 +1330,28 @@ panel_profile_list_is_writable (PanelGConfKeyType type)
 }
 
 void
-panel_profile_create_toplevel (void)
+panel_profile_create_toplevel (GdkScreen *screen)
 {
-	panel_profile_add_to_list (PANEL_GCONF_TOPLEVELS, NULL);
+	GConfClient *client;
+	const char  *key;
+	char        *id;
+	char        *dir;
+       
+	g_return_if_fail (screen != NULL);
+
+	client = panel_gconf_get_client ();
+
+	id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
+
+	dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s", current_profile, id);
+	panel_gconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/toplevels");
+	g_free (dir);
+
+	key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, current_profile, id, "screen");
+	gconf_client_set_int (client, key, gdk_screen_get_number (screen), NULL);
+	
+	/* takes ownership of id */
+	panel_profile_add_to_list (PANEL_GCONF_TOPLEVELS, id);
 }
 
 static void

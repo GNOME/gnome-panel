@@ -1,3 +1,12 @@
+2003-07-31  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-profile.[ch]: (panel_profile_create_toplevel):
+	Add a GdkScreen * argument and create the toplevel on
+	that screen.
+	
+	* menu.c: (create_new_panel): create the toplevel on
+	the correct screen.
+
 Wed Jul 30 16:58:56 2003  George Lebl <jirka@5z.com>
 
 	* launcher.c: fix #117130.  When icon is empty pass ""
@@ -50,6 +59,7 @@ Tue Jul 29 18:27:48 2003  George Lebl <jirka@5z.com>
 	* panel-toplevel.schemas.in: s/indentify/identify/
 	Fixes #117993
 
+>>>>>>> 1.2170
 ==================== 2.3.4.1 ====================
 
 2003-07-24  Mark McLoughlin  <mark@skynet.ie>
