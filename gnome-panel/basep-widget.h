@@ -180,6 +180,7 @@ GtkType		basep_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,
+						 int screen,
 						 PanelOrientation orient,
 						 int sz,
 						 BasePMode mode,
@@ -197,6 +198,7 @@ GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 
 /* changing parameters */
 void		basep_widget_change_params	(BasePWidget *basep,
+						 int screen,
 						 PanelOrientation orient,
 						 int sz,
 						 BasePMode mode,

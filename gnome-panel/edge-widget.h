@@ -45,7 +45,8 @@ struct _EdgePosClass {
 };
 
 GtkType edge_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *edge_widget_new (BorderEdge edge,
+GtkWidget *edge_widget_new (int screen,
+			    BorderEdge edge,
 			    BasePMode mode,
 			    BasePState state,
 			    BasePLevel level,
@@ -59,20 +60,6 @@ GtkWidget *edge_widget_new (BorderEdge edge,
 			    gboolean strech_pixmap_bg,
 			    gboolean rotate_pixmap_bg,
 			    GdkColor *back_color);
-
-void edge_widget_change_params (EdgeWidget *edgew,
-				BorderEdge edge,
-				BasePMode mode,
-				BasePState state,
-				int sz,
-				int hidebuttons_enabled,
-				int hidebutton_pixmaps_enabled,
-				PanelBackType back_type,
-				char *pixmap_name,
-				gboolean fit_pixmap_bg,
-				gboolean strech_pixmap_bg,
-				gboolean rotate_pixmap_bg,
-				GdkColor *back_color);
 
 END_GNOME_DECLS
 

@@ -411,7 +411,9 @@ floating_pos_pre_convert_hook (BasePWidget *basep)
 
 void 
 floating_widget_change_params (FloatingWidget *floating,
-			       gint16 x, gint16 y,
+			       int screen,
+			       gint16 x,
+			       gint16 y,
 			       PanelOrientation orient,
 			       BasePMode mode,
 			       BasePState state,
@@ -445,12 +447,19 @@ floating_widget_change_params (FloatingWidget *floating,
 	}
 
 	basep_widget_change_params (basep,
-				    orient, sz, mode, state,
-				    level, avoid_on_maximize,
+				    screen,
+				    orient,
+				    sz,
+				    mode,
+				    state,
+				    level,
+				    avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
-				    back_type, back_pixmap,
-				    fit_pixmap_bg, strech_pixmap_bg,
+				    back_type,
+				    back_pixmap,
+				    fit_pixmap_bg,
+				    strech_pixmap_bg,
 				    rotate_pixmap_bg,
 				    back_color);
 				    
@@ -458,14 +467,16 @@ floating_widget_change_params (FloatingWidget *floating,
 
 void
 floating_widget_change_orient (FloatingWidget *floating,
-			     PanelOrientation orient)
+			       PanelOrientation orient)
 {
 	FloatingPos *pos = FLOATING_POS (floating->pos);
 	if (PANEL_WIDGET (BASEP_WIDGET (floating)->panel)->orient != orient) {
 		BasePWidget *basep = BASEP_WIDGET (floating);
 		PanelWidget *panel = PANEL_WIDGET (basep->panel);
 		floating_widget_change_params (floating, 
-					       pos->x, pos->y,
+					       basep->screen,
+					       pos->x,
+					       pos->y,
 					       orient,
 					       basep->mode,
 					       basep->state,
@@ -492,7 +503,9 @@ floating_widget_change_coords (FloatingWidget *floating,
 		BasePWidget *basep = BASEP_WIDGET (floating);
 		PanelWidget *panel = PANEL_WIDGET (basep->panel);
 		floating_widget_change_params (floating, 
-					       x, y,
+					       basep->screen,
+					       x,
+					       y,
 					       panel->orient,
 					       basep->mode,
 					       basep->state,
@@ -511,7 +524,9 @@ floating_widget_change_coords (FloatingWidget *floating,
 }
 
 GtkWidget *
-floating_widget_new (gint16 x, gint16 y,
+floating_widget_new (int screen,
+		     gint16 x,
+		     gint16 y,
 		     PanelOrientation orient,
 		     BasePMode mode,
 		     BasePState state,
@@ -539,8 +554,11 @@ floating_widget_new (gint16 x, gint16 y,
 
 	basep_widget_construct (BASEP_WIDGET (floating),
 				TRUE, FALSE,
+				screen,
 				orient,
-				sz, mode, state,
+				sz,
+				mode,
+				state,
 				level,
 				avoid_on_maximize,
 				hidebuttons_enabled,

@@ -6,10 +6,13 @@
  *
  */
 
+#include "config.h"
 #include "drawer-widget.h"
 #include "border-widget.h"
 #include "floating-widget.h"
 #include "panel_config_global.h"
+
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -411,12 +414,19 @@ drawer_widget_change_params (DrawerWidget *drawer,
 	}
 
 	basep_widget_change_params (BASEP_WIDGET (drawer),
-				    porient, sz, mode, state,
-				    level, avoid_on_maximize,
+				    0 /*FIXME */,
+				    porient,
+				    sz,
+				    mode,
+				    state,
+				    level,
+				    avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
-				    back_type, back_pixmap,
-				    fit_pixmap_bg, strech_pixmap_bg,
+				    back_type,
+				    back_pixmap,
+				    fit_pixmap_bg,
+				    strech_pixmap_bg,
 				    rotate_pixmap_bg,
 				    back_color);
 				    
@@ -430,7 +440,8 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 	if (pos->orient != orient) {
 		BasePWidget *basep = BASEP_WIDGET (drawer);
 		PanelWidget *panel = PANEL_WIDGET (basep->panel);
-		drawer_widget_change_params (drawer, orient,
+		drawer_widget_change_params (drawer,
+					     orient,
 					     basep->mode,
 					     basep->state,
 					     basep->level,
@@ -484,6 +495,7 @@ drawer_widget_new (PanelOrientType orient,
 
 	basep_widget_construct (BASEP_WIDGET (drawer),
 				TRUE, TRUE,
+				0 /*FIXME */,
 				porient,
 				sz, mode, state,
 				level,

@@ -21,6 +21,8 @@ struct _PerPanelConfig {
 	gpointer		update_data;
 
 	/*basep types*/
+	/*FIXME: implement the screen widgetry */
+	int			screen;
 	gboolean		hidebuttons;
 	gboolean		hidebutton_pixmaps;
 	BasePMode               mode;

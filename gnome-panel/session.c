@@ -556,7 +556,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	gnome_config_set_int("type",pd->type);
 
-	if (basep) {
+	if (basep != NULL) {
 		gnome_config_set_bool("hidebuttons_enabled",
 				      basep->hidebuttons_enabled);
 		gnome_config_set_bool("hidebutton_pixmaps_enabled",
@@ -568,6 +568,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int ("level", basep->level);
 		gnome_config_set_bool ("avoid_on_maximize",
 				       basep->avoid_on_maximize);
+		gnome_config_set_int ("screen",
+				      basep->screen);
 	}
 
 	gnome_config_set_int("unique_id", panel->unique_id);
@@ -614,6 +616,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		break;
 	case FOOBAR_PANEL:
 		gnome_config_set_string ("/panel/Config/clock_format", FOOBAR_WIDGET (pd->panel)->clock_format);
+		gnome_config_set_int ("screen", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
@@ -1328,7 +1331,8 @@ init_user_panels(void)
 			hidebutton_pixmaps = TRUE;
 		}
 
-		panel = edge_widget_new (BORDER_BOTTOM,
+		panel = edge_widget_new (0 /* screen */,
+					 BORDER_BOTTOM,
 					 BASEP_EXPLICIT_HIDE /* mode */,
 					 BASEP_SHOWN /* state */,
 					 BASEP_LEVEL_DEFAULT /* level */,
@@ -1378,7 +1382,7 @@ init_user_panels(void)
 					   FALSE,
 					   TRUE,
 					   NULL);*/
-		panel = foobar_widget_new();
+		panel = foobar_widget_new (0 /*screen*/);
 
 		/* Don't translate the first part of this string */
 		s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
@@ -1419,6 +1423,7 @@ init_user_panels(void)
 		int hidebuttons_enabled;
 		int hidebutton_pixmaps_enabled;
 		int unique_id;
+		int screen;
 		
 		g_string_sprintf(buf,"%spanel/Panel_%d/",
 				 PANEL_CONFIG_PATH, num);
@@ -1472,6 +1477,7 @@ init_user_panels(void)
 		state = gnome_config_get_int("state=0");
 		mode = gnome_config_get_int("mode=0");
 		level = gnome_config_get_int("level=0");
+		screen = gnome_config_get_int("screen=0");
 #if 0 /* i guess we can't easily do this for now */
 		pos = basep_widget_load_pos_settings();
 #endif
@@ -1484,7 +1490,8 @@ init_user_panels(void)
 			avoid_on_maximize = gnome_config_get_bool
 				("avoid_on_maximize=TRUE");
 
-			panel = edge_widget_new (edge, 
+			panel = edge_widget_new (screen,
+						 edge, 
 						 mode, state,
 						 level, avoid_on_maximize,
 						 sz,
@@ -1507,13 +1514,18 @@ init_user_panels(void)
 			avoid_on_maximize = gnome_config_get_bool
 				("avoid_on_maximize=TRUE");
 
-			panel = aligned_widget_new (align, edge,
-						    mode, state,
-						    level, avoid_on_maximize,
+			panel = aligned_widget_new (screen,
+						    align,
+						    edge,
+						    mode,
+						    state,
+						    level,
+						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
-						    back_type, back_pixmap,
+						    back_type,
+						    back_pixmap,
 						    fit_pixmap_bg,
 						    strech_pixmap_bg,
 						    rotate_pixmap_bg,
@@ -1534,13 +1546,19 @@ init_user_panels(void)
 			avoid_on_maximize = gnome_config_get_bool
 				("avoid_on_maximize=TRUE");
 
-			panel = sliding_widget_new (anchor, offset, edge,
-						    mode, state,
-						    level, avoid_on_maximize,
+			panel = sliding_widget_new (screen,
+						    anchor,
+						    offset,
+						    edge,
+						    mode,
+						    state,
+						    level,
+						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
-						    back_type, back_pixmap,
+						    back_type,
+						    back_pixmap,
 						    fit_pixmap_bg,
 						    strech_pixmap_bg,
 						    rotate_pixmap_bg,
@@ -1562,11 +1580,13 @@ init_user_panels(void)
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
 						   state,
-						   level, avoid_on_maximize,
+						   level,
+						   avoid_on_maximize,
 						   sz,
 						   hidebuttons_enabled,
 						   hidebutton_pixmaps_enabled,
-						   back_type, back_pixmap,
+						   back_type,
+						   back_pixmap,
 						   fit_pixmap_bg,
 						   strech_pixmap_bg,
 						   rotate_pixmap_bg,
@@ -1591,13 +1611,19 @@ init_user_panels(void)
 			avoid_on_maximize = gnome_config_get_bool
 				("avoid_on_maximize=FALSE");
 
-			panel = floating_widget_new (x, y, orient,
-						     mode, state,
-						     level, avoid_on_maximize,
+			panel = floating_widget_new (screen,
+						     x,
+						     y,
+						     orient,
+						     mode,
+						     state,
+						     level,
+						     avoid_on_maximize,
 						     sz,
 						     hidebuttons_enabled,
 						     hidebutton_pixmaps_enabled,
-						     back_type, back_pixmap,
+						     back_type,
+						     back_pixmap,
 						     fit_pixmap_bg,
 						     strech_pixmap_bg,
 						     rotate_pixmap_bg,
@@ -1605,7 +1631,7 @@ init_user_panels(void)
 			break;
 		}
 		case FOOBAR_PANEL:
-			panel = foobar_widget_new ();
+			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
 			s = gnome_config_get_string (_("/panel/Config/clock_format=%l:%M:%S %p"));
@@ -1622,17 +1648,17 @@ init_user_panels(void)
 
 		gnome_config_pop_prefix ();
 		
-		g_free(color);
-		g_free(back_pixmap);
+		g_free (color);
+		g_free (back_pixmap);
 
-		if (panel) {
+		if (panel != NULL) {
 			if (unique_id > 0)
 				panel_set_id (panel, unique_id);
-			panel_setup(panel);
-			gtk_widget_show(panel);
+			panel_setup (panel);
+			gtk_widget_show (panel);
 		}
 	}
-	g_string_free(buf,TRUE);
+	g_string_free (buf, TRUE);
 }
 
 

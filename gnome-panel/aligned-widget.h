@@ -52,7 +52,8 @@ struct _AlignedPosClass {
 };
 
 GtkType aligned_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *aligned_widget_new (AlignedAlignment aligned,
+GtkWidget *aligned_widget_new (int screen,
+			       AlignedAlignment aligned,
 			       BorderEdge edge,
 			       BasePMode mode,
 			       BasePState state,
@@ -69,6 +70,7 @@ GtkWidget *aligned_widget_new (AlignedAlignment aligned,
 			       GdkColor *back_color);
 
 void aligned_widget_change_params (AlignedWidget *alignedw,
+				   int screen,
 				   AlignedAlignment align,
 				   BorderEdge edge,
 				   int sz,

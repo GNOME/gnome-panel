@@ -284,6 +284,7 @@ aligned_pos_show_hide_right (BasePWidget *basep)
 
 void
 aligned_widget_change_params (AlignedWidget *aligned,
+			      int screen,
 			      AlignedAlignment align,
 			      BorderEdge edge,
 			      int sz,
@@ -310,12 +311,19 @@ aligned_widget_change_params (AlignedWidget *aligned,
 	}
 
 	border_widget_change_params (BORDER_WIDGET (aligned),
-				     edge, sz, mode, state,
-				     level, avoid_on_maximize,
+				     screen,
+				     edge,
+				     sz,
+				     mode,
+				     state,
+				     level,
+				     avoid_on_maximize,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
-				     back_type, pixmap_name,
-				     fit_pixmap_bg, strech_pixmap_bg,
+				     back_type,
+				     pixmap_name,
+				     fit_pixmap_bg,
+				     strech_pixmap_bg,
 				     rotate_pixmap_bg,
 				     back_color);
 }
@@ -332,7 +340,9 @@ aligned_widget_change_align (AlignedWidget *aligned,
 	if (pos->align == align)
 		return;
 
-	aligned_widget_change_params (aligned, align,
+	aligned_widget_change_params (aligned,
+				      basep->screen,
+				      align,
 				      BORDER_POS (pos)->edge,
 				      panel->sz, basep->mode,
 				      basep->state,
@@ -356,8 +366,12 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 	BasePWidget *basep = BASEP_WIDGET (aligned);
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 
-	aligned_widget_change_params (aligned, align, edge,
-				      panel->sz, basep->mode,
+	aligned_widget_change_params (aligned,
+				      basep->screen,
+				      align,
+				      edge,
+				      panel->sz,
+				      basep->mode,
 				      basep->state,
 				      basep->level,
 				      basep->avoid_on_maximize,
@@ -372,7 +386,8 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 }
 				 
 GtkWidget *
-aligned_widget_new (AlignedAlignment align,
+aligned_widget_new (int screen,
+		    AlignedAlignment align,
 		    BorderEdge edge,
 		    BasePMode mode,
 		    BasePState state,
@@ -395,15 +410,21 @@ aligned_widget_new (AlignedAlignment align,
 	BASEP_WIDGET (aligned)->pos = BASEP_POS (pos);
 
 	border_widget_construct (BORDER_WIDGET (aligned),
+				 screen,
 				 edge, 
-				 TRUE, FALSE,
-				 sz, mode, state,
+				 TRUE,
+				 FALSE,
+				 sz,
+				 mode,
+				 state,
 				 level,
 				 avoid_on_maximize,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
-				 back_type, back_pixmap,
-				 fit_pixmap_bg, strech_pixmap_bg,
+				 back_type,
+				 back_pixmap,
+				 fit_pixmap_bg,
+				 strech_pixmap_bg,
 				 rotate_pixmap_bg,
 				 back_color);
 

@@ -3251,7 +3251,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 	switch (type) {
 	case ALIGNED_PANEL: 
 		find_empty_pos (&x, &y);
-		panel = aligned_widget_new (ALIGNED_LEFT,
+		panel = aligned_widget_new (0/*FIXME:*/,
+					    ALIGNED_LEFT,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
@@ -3269,7 +3270,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
 	case EDGE_PANEL: 
-		panel = edge_widget_new(find_empty_edge (),
+		panel = edge_widget_new(0/*FIXME:*/,
+					find_empty_edge (),
 					BASEP_EXPLICIT_HIDE,
 					BASEP_SHOWN,
 					BASEP_LEVEL_DEFAULT,
@@ -3286,7 +3288,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case SLIDING_PANEL:
 		find_empty_pos (&x, &y);
-		panel = sliding_widget_new (SLIDING_ANCHOR_LEFT, 0,
+		panel = sliding_widget_new (0/*FIXME:*/,
+					    SLIDING_ANCHOR_LEFT, 0,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
@@ -3303,7 +3306,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (&x, &y);
-		panel = floating_widget_new (x, y,
+		panel = floating_widget_new (0/*FIXME:*/,
+					     x, y,
 					     PANEL_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
 					     BASEP_SHOWN,
@@ -3322,7 +3326,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		GtkWidget *dialog;
 		char *s;
 		if (!foobar_widget_exists (0 /* FIXME */)) {
-			panel = foobar_widget_new ();
+			panel = foobar_widget_new (0 /* FIXME */);
 
 			/* Don't translate the first part of this string */
 			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
@@ -3938,6 +3942,7 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
 	basep_widget_change_params (basep,
+				    basep->screen,
 				    cur_panel->orient,
 				    cur_panel->sz,
 				    GPOINTER_TO_INT (data),
@@ -3974,6 +3979,7 @@ change_level (GtkWidget *widget, gpointer data)
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
 	basep_widget_change_params (basep,
+				    basep->screen,
 				    cur_panel->orient,
 				    cur_panel->sz,
 				    basep->mode,
@@ -4010,6 +4016,7 @@ change_avoid_on_maximize (GtkWidget *widget, gpointer data)
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
 	basep_widget_change_params (basep,
+				    basep->screen,
 				    cur_panel->orient,
 				    cur_panel->sz,
 				    basep->mode,
@@ -4067,6 +4074,7 @@ change_orient (GtkWidget *widget, gpointer data)
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
 	basep_widget_change_params (basep,
+				    basep->screen,
 				    GPOINTER_TO_INT (data),
 				    cur_panel->sz,
 				    basep->mode,
@@ -4140,6 +4148,7 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 	}
 
 	basep_widget_change_params (basep,
+				    basep->screen,
 				    cur_panel->orient,
 				    cur_panel->sz,
 				    basep->mode,

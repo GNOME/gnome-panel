@@ -45,7 +45,9 @@ struct _FloatingPosClass {
 };
 
 GtkType floating_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *floating_widget_new (gint16 x, gint16 y,
+GtkWidget *floating_widget_new (int screen,
+				gint16 x,
+				gint16 y,
 				PanelOrientation orient,
 				BasePMode mode,
 				BasePState state,
@@ -62,7 +64,9 @@ GtkWidget *floating_widget_new (gint16 x, gint16 y,
 				GdkColor *back_color);
 
 void floating_widget_change_params (FloatingWidget *floating,
-				    gint16 x, gint16 y,
+				    int screen,
+				    gint16 x,
+				    gint16 y,
 				    PanelOrientation orient,
 				    BasePMode mode,
 				    BasePState state,

@@ -63,7 +63,7 @@ struct _FoobarWidgetClass
 };
 
 GtkType		foobar_widget_get_type		(void) G_GNUC_CONST;
-GtkWidget *	foobar_widget_new		(void);
+GtkWidget *	foobar_widget_new		(int screen);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);
 void		foobar_widget_redo_window	(FoobarWidget *foo);

@@ -55,7 +55,8 @@ struct _SlidingPosClass {
 };
 
 GtkType sliding_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *sliding_widget_new (SlidingAnchor anchor,
+GtkWidget *sliding_widget_new (int screen,
+			       SlidingAnchor anchor,
 			       gint16 offset,
 			       BorderEdge edge,
 			       BasePMode mode,
@@ -73,6 +74,7 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 			       GdkColor *back_color);
 
 void sliding_widget_change_params (SlidingWidget *slidingw,
+				   int screen,
 				   SlidingAnchor anchor,
 				   gint16 offset,
 				   BorderEdge edge,

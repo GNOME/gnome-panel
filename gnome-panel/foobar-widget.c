@@ -50,7 +50,7 @@ static gboolean foobar_enter_notify	(GtkWidget *widget,
 static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
-static GtkWidget *das_global_foobar = NULL;
+static GtkWidget **foobars = NULL;
 static GtkWidget *clock_ebox = NULL;
 
 static GtkWindowClass *parent_class = NULL;
@@ -496,11 +496,18 @@ timeout_cb (gpointer data)
 static void
 set_fooclock_format (GtkWidget *w, char *format)
 {
-	if ( ! IS_FOOBAR_WIDGET (das_global_foobar))
+	int i;
+
+	if (foobars == NULL)
 		return;
 
-	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar),
-					_(format));
+	for (i = 0; i < multiscreen_screens (); i++) {
+		if (foobars[i] == NULL)
+			continue;
+
+		foobar_widget_set_clock_format (FOOBAR_WIDGET (foobars[i]),
+						_(format));
+	}
 }
 
 static void
@@ -610,12 +617,18 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 void
 foobar_widget_global_set_clock_format (const char *format)
 {
-	if (das_global_foobar == NULL ||
-	    ! IS_FOOBAR_WIDGET (das_global_foobar))
+	int i;
+
+	if (foobars == NULL)
 		return;
 
-	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar),
-					format);
+	for (i = 0; i < multiscreen_screens (); i++) {
+		if (foobars[i] == NULL)
+			continue;
+
+		foobar_widget_set_clock_format (FOOBAR_WIDGET (foobars[i]),
+						format);
+	}
 }
 
 void
@@ -1122,8 +1135,9 @@ foobar_widget_destroy (GtkObject *o)
 	FoobarWidget *foo = FOOBAR_WIDGET (o);
 
 	/* Just sanity */
-	if ((gpointer)das_global_foobar == (gpointer)foo)
-		das_global_foobar = NULL;
+	if (foobars != NULL &&
+	    (gpointer)foobars[foo->screen] == (gpointer)foo)
+		foobars[foo->screen] = NULL;
 
 	if (foo->clock_timeout != 0)
 		gtk_timeout_remove (foo->clock_timeout);
@@ -1160,48 +1174,71 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 }
 
 GtkWidget *
-foobar_widget_new (void)
+foobar_widget_new (int screen)
 {
-	g_return_val_if_fail (das_global_foobar == NULL, NULL);
+	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), NULL);
+	g_return_val_if_fail (foobars == NULL || foobars[screen] == NULL, NULL);
 
-	das_global_foobar = gtk_type_new (TYPE_FOOBAR_WIDGET);
+	if (foobars == NULL)
+		foobars = g_new0 (GtkWidget *, multiscreen_screens ());
 
-	return das_global_foobar;
+	foobars[screen] = gtk_type_new (TYPE_FOOBAR_WIDGET);
+
+	FOOBAR_WIDGET (foobars[screen])->screen = screen;
+
+	return foobars[screen];
 }
 
 gboolean
 foobar_widget_exists (int screen)
 {
-	return (das_global_foobar != NULL);
+	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), FALSE);
+
+	if (foobars == NULL)
+		return FALSE;
+	if (foobars[screen] == NULL)
+		return TRUE;
+	else
+		return FALSE;
 }
 
 void
 foobar_widget_force_menu_remake (void)
 {
 	FoobarWidget *foo;
-	if (das_global_foobar == NULL)
+	int i;
+	if (foobars == NULL)
 		return;
 
-	foo = FOOBAR_WIDGET(das_global_foobar);
+	for (i = 0; i < multiscreen_screens (); i++) {
+		if (foobars[i] == NULL)
+			continue;
 
-	if (foo->programs != NULL)
-		gtk_object_set_data (GTK_OBJECT(foo->programs),
-				     "need_reread", GINT_TO_POINTER(1));
-	if (foo->settings != NULL)
-		gtk_object_set_data (GTK_OBJECT(foo->settings),
-				     "need_reread", GINT_TO_POINTER(1));
-	if (foo->favorites != NULL)
-		gtk_object_set_data (GTK_OBJECT(foo->favorites),
-				     "need_reread", GINT_TO_POINTER(1));
+		foo = FOOBAR_WIDGET(foobars[i]);
+
+		if (foo->programs != NULL)
+			gtk_object_set_data (GTK_OBJECT(foo->programs),
+					     "need_reread", GINT_TO_POINTER(1));
+		if (foo->settings != NULL)
+			gtk_object_set_data (GTK_OBJECT(foo->settings),
+					     "need_reread", GINT_TO_POINTER(1));
+		if (foo->favorites != NULL)
+			gtk_object_set_data (GTK_OBJECT(foo->favorites),
+					     "need_reread", GINT_TO_POINTER(1));
+	}
 }
 
 gint
 foobar_widget_get_height (int screen)
 {
-	if (das_global_foobar != NULL &&
-	    GTK_WIDGET_REALIZED (das_global_foobar) &&
-	    FOOBAR_WIDGET (das_global_foobar)->screen == screen) 
-		return das_global_foobar->allocation.height;
+	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), 0);
+
+	if (foobars == NULL)
+		return 0;
+
+	if (foobars[screen] != NULL &&
+	    GTK_WIDGET_REALIZED (foobars[screen])) 
+		return foobars[screen]->allocation.height;
 	else
 		return 0; 
 }

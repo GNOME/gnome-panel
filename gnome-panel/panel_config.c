@@ -481,6 +481,7 @@ config_apply (PerPanelConfig *ppc)
 
 	if(IS_EDGE_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
+					    ppc->screen,
 					    ppc->edge,
 					    ppc->sz,
 					    ppc->mode,
@@ -497,6 +498,7 @@ config_apply (PerPanelConfig *ppc)
 					    &ppc->back_color);
 	else if(IS_SLIDING_WIDGET(ppc->panel))
 		sliding_widget_change_params(SLIDING_WIDGET(ppc->panel),
+					     ppc->screen,
 					     ppc->align,
 					     ppc->offset,
 					     ppc->edge,
@@ -515,6 +517,7 @@ config_apply (PerPanelConfig *ppc)
 					     &ppc->back_color);
 	else if (IS_ALIGNED_WIDGET (ppc->panel))
 		aligned_widget_change_params (ALIGNED_WIDGET (ppc->panel),
+					      ppc->screen,
 					      ppc->align,
 					      ppc->edge,
 					      ppc->sz,
@@ -532,7 +535,9 @@ config_apply (PerPanelConfig *ppc)
 					      &ppc->back_color);
 	else if (IS_FLOATING_WIDGET (ppc->panel))
 		floating_widget_change_params (FLOATING_WIDGET (ppc->panel), 
-					       ppc->x, ppc->y,
+					       ppc->screen,
+					       ppc->x,
+					       ppc->y,
 					       ppc->orient,
 					       ppc->mode,
 					       BASEP_WIDGET (ppc->panel)->state,
@@ -1741,6 +1746,7 @@ panel_config(GtkWidget *panel)
 	ppc->ppc_origin_change = FALSE; /* default state */
 
 	ppc->sz = pw->sz;
+	ppc->screen = basep->screen;
 	ppc->level = basep->level;
 	ppc->avoid_on_maximize = basep->avoid_on_maximize;
 	ppc->hidebuttons = basep->hidebuttons_enabled;

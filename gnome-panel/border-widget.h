@@ -53,6 +53,7 @@ struct _BorderPosClass {
 	
 GtkType border_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *border_widget_construct (BorderWidget *border,
+				    int screen,
 				    BorderEdge edge,
 				    gboolean packed,
 				    gboolean reverse_arrows,
@@ -71,6 +72,7 @@ GtkWidget *border_widget_construct (BorderWidget *border,
 				    GdkColor *back_color);
 
 void border_widget_change_params (BorderWidget *border,
+				  int screen,
 				  BorderEdge edge,
 				  int sz,
 				  BasePMode mode,

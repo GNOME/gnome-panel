@@ -25,7 +25,7 @@
 
 void		multiscreen_init		(void);
 
-int		multiscreen_screens		(void);
+int		multiscreen_screens		(void) G_GNUC_CONST;
 
 /* information about a screen */
 int		multiscreen_x			(int screen);

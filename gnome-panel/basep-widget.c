@@ -1276,6 +1276,7 @@ GtkWidget*
 basep_widget_construct (BasePWidget *basep,
 			gboolean packed,
 			gboolean reverse_arrows,
+			int screen,
 			PanelOrientation orient,
 			int sz,
 			BasePMode mode,
@@ -1369,6 +1370,8 @@ basep_widget_construct (BasePWidget *basep,
 			    GTK_SIGNAL_FUNC (basep_widget_south_clicked),
 			    basep);
 
+	basep->screen = screen;
+
 	basep->level = level;
 	basep->avoid_on_maximize = avoid_on_maximize;
 
@@ -1398,6 +1401,7 @@ basep_widget_construct (BasePWidget *basep,
 
 void
 basep_widget_change_params (BasePWidget *basep,
+			    int screen,
 			    PanelOrientation orient,
 			    int sz,
 			    BasePMode mode,
@@ -1470,9 +1474,10 @@ basep_widget_change_params (BasePWidget *basep,
 		basep_widget_update_winhints (basep);
 	}
 
+	basep_widget_set_hidebuttons (basep);
+	basep_widget_show_hidebutton_pixmaps (basep);
 
-	basep_widget_set_hidebuttons(basep);
-	basep_widget_show_hidebutton_pixmaps(basep);
+	basep_widget_screen_change (basep, screen);
 
 	gtk_widget_queue_resize (GTK_WIDGET (basep));
 }

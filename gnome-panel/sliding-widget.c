@@ -280,7 +280,8 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 }
 
 GtkWidget *
-sliding_widget_new (SlidingAnchor anchor,
+sliding_widget_new (int screen,
+		    SlidingAnchor anchor,
 		    gint16 offset,
 		    BorderEdge edge,
 		    BasePMode mode,
@@ -306,13 +307,19 @@ sliding_widget_new (SlidingAnchor anchor,
 	BASEP_WIDGET (sliding)->pos = BASEP_POS (pos);
 
 	border_widget_construct (BORDER_WIDGET (sliding),
-				 edge, TRUE, FALSE,
-				 sz, mode, state,
+				 screen,
+				 edge,
+				 TRUE,
+				 FALSE,
+				 sz,
+				 mode,
+				 state,
 				 level,
 				 avoid_on_maximize,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
-				 back_type, back_pixmap,
+				 back_type,
+				 back_pixmap,
 				 fit_pixmap_bg, strech_pixmap_bg,
 				 rotate_pixmap_bg,
 				 back_color);
@@ -322,6 +329,7 @@ sliding_widget_new (SlidingAnchor anchor,
 
 void 
 sliding_widget_change_params (SlidingWidget *sliding,
+			      int screen,
 			      SlidingAnchor anchor,
 			      gint16 offset,
 			      BorderEdge edge,
@@ -357,12 +365,19 @@ sliding_widget_change_params (SlidingWidget *sliding,
 	}
 
 	border_widget_change_params (BORDER_WIDGET (sliding),
-				     edge, sz, mode, state,
-				     level, avoid_on_maximize,
+				     screen,
+				     edge,
+				     sz,
+				     mode,
+				     state,
+				     level,
+				     avoid_on_maximize,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
-				     back_type, pixmap_name,
-				     fit_pixmap_bg, strech_pixmap_bg,
+				     back_type,
+				     pixmap_name,
+				     fit_pixmap_bg,
+				     strech_pixmap_bg,
 				     rotate_pixmap_bg,
 				     back_color);
 }
@@ -377,9 +392,13 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
 	if (offset == pos->offset)
 		return;
 
-	sliding_widget_change_params (sliding, pos->anchor, offset,
+	sliding_widget_change_params (sliding,
+				      basep->screen,
+				      pos->anchor,
+				      offset,
 				      BORDER_POS (pos)->edge,
-				      panel->sz, basep->mode,
+				      panel->sz,
+				      basep->mode,
 				      basep->state,
 				      basep->level,
 				      basep->avoid_on_maximize,
@@ -403,9 +422,13 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 	if (anchor == pos->anchor)
 		return;
 
-	sliding_widget_change_params (sliding, anchor, pos->offset,
+	sliding_widget_change_params (sliding,
+				      basep->screen,
+				      anchor,
+				      pos->offset,
 				      BORDER_POS (pos)->edge,
-				      panel->sz, basep->mode,
+				      panel->sz,
+				      basep->mode,
 				      basep->state,
 				      basep->level,
 				      basep->avoid_on_maximize,
@@ -428,8 +451,13 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 	BasePWidget *basep = BASEP_WIDGET (sliding);
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 
-	sliding_widget_change_params (sliding, anchor, offset, edge,
-				      panel->sz, basep->mode,
+	sliding_widget_change_params (sliding,
+				      basep->screen,
+				      anchor,
+				      offset,
+				      edge,
+				      panel->sz,
+				      basep->mode,
 				      basep->state,
 				      basep->level,
 				      basep->avoid_on_maximize,

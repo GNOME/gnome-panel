@@ -68,7 +68,7 @@ multiscreen_init (void)
 int
 multiscreen_screens (void)
 {
-	g_return_val_if_fail (initialized, 0);
+	g_return_val_if_fail (initialized, 1);
 
 	return screens;
 }

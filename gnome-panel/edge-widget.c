@@ -198,7 +198,8 @@ edge_pos_pre_convert_hook (BasePWidget *basep)
 }
 
 GtkWidget *
-edge_widget_new (BorderEdge edge,
+edge_widget_new (int screen,
+		 BorderEdge edge,
 		 BasePMode mode,
 		 BasePState state,
 		 BasePLevel level,
@@ -219,6 +220,7 @@ edge_widget_new (BorderEdge edge,
 	basep->pos = gtk_type_new (TYPE_EDGE_POS);
 
 	border_widget_construct (BORDER_WIDGET (basep), 
+				 screen,
 				 edge, 
 				 TRUE, FALSE,
 				 sz, mode, state,
