@@ -562,11 +562,11 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 	set_data (info->menu, info->widget->parent);
 
+/* FIXME - off panel popups, should be automatic with new gtk-menu? */
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,
-			global_config.off_panel_popups ?
-				applet_menu_position : NULL,
+			applet_menu_position,
 			info,
 			event->button,
 			event->time);

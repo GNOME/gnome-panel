@@ -38,6 +38,7 @@
 #include "menu-util.h"
 #include "menu.h"
 #include "panel-util.h"
+#include "panel-gconf.h"
 #include "panel_config_global.h"
 #include "session.h"
 #include "sliding-widget.h"
@@ -102,18 +103,14 @@ send_tooltips_state(gboolean enabled)
 void
 apply_global_config (void)
 {
-	static int dot_buttons_old = 0; /*doesn't matter first time this is
-					  done there are no menu applets*/
-	static int menu_titles_old = 0; /*doesn't matter first time this is
-					  done there are no menu applets*/
-	static int keep_bottom_old = -1;
-	static int normal_layer_old = -1;
+	static int layer_old = -1;
 	static int menu_flags_old = -1;
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
 	static int old_menu_check = -1;
 	static int old_avoid_collisions = -1;
 	GSList *li;
+
 /* FIXME
 	panel_widget_change_global (global_config.hiding_step_size,
 				    global_config.minimized_size,
@@ -132,12 +129,10 @@ apply_global_config (void)
 	    old_menu_check != global_config.menu_check) {
 		fr_force_reread();
 	}
-	/*if we changed dot_buttons/small_icons mark all menus as dirty
+	/*if we changed small_icons mark all menus as dirty
 	  for rereading, hopefullly the user doesn't do this too often
 	  so that he doesn't have to reread his menus all the time:)*/
-	if(menu_titles_old != global_config.show_menu_titles ||
-	   dot_buttons_old != global_config.show_dot_buttons ||
-	   old_use_large_icons != global_config.use_large_icons ||
+	if( old_use_large_icons != global_config.use_large_icons ||
 	   old_merge_menus != global_config.merge_menus ||
 	   old_menu_check != global_config.menu_check) {
 		GSList *li;
@@ -167,8 +162,6 @@ apply_global_config (void)
 		}
 		foobar_widget_force_menu_remake();
 	}
-	menu_titles_old = global_config.show_menu_titles;
-	dot_buttons_old = global_config.show_dot_buttons;
 	old_use_large_icons = global_config.use_large_icons;
 	old_merge_menus = global_config.merge_menus;
 	old_menu_check = global_config.menu_check;
@@ -192,11 +185,8 @@ apply_global_config (void)
 		}
 	}
 
-	if (keep_bottom_old == -1 ||
-	    keep_bottom_old != global_config.keep_bottom ||
-	    normal_layer_old == -1 ||
-	    normal_layer_old != global_config.normal_layer) {
-		for (li = panel_list; li != NULL; li = li->next) {
+	if (layer_old != global_config.layer) {
+		 for (li = panel_list; li != NULL; li = li->next) {
 			PanelData *pd = li->data;
 			if ( ! GTK_WIDGET_REALIZED (pd->panel))
 				continue;
@@ -207,8 +197,7 @@ apply_global_config (void)
 		}
 		panel_reset_dialog_layers ();
 	}
-	keep_bottom_old = global_config.keep_bottom;
-	normal_layer_old = global_config.normal_layer;
+	layer_old = global_config.layer;
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
@@ -1634,132 +1623,109 @@ load_system_wide (void)
 void
 load_up_globals (void)
 {
-	gboolean def;
+	global_config.hide_speed = 
+		panel_gconf_global_config_get_int ("panel-hide-speed");
 
-	/*set up global options*/
-	push_correct_global_prefix ();
+	global_config.minimized_size = 
+		panel_gconf_global_config_get_int ("panel-minimized-size");
+
+	global_config.hide_delay = 
+		panel_gconf_global_config_get_int ("panel-hide-delay");
+
+	global_config.show_delay =
+		panel_gconf_global_config_get_int ("panel-show-delay");
 
 	global_config.tooltips_enabled =
-		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
+		panel_gconf_global_config_get_bool ("tooltips-enabled");
 
-	global_config.tooltips_enabled =
-		conditional_get_bool ("tooltips_enabled", TRUE, NULL);
+	global_config.keep_menus_in_memory =
+		panel_gconf_global_config_get_bool ("keep-menus-in-memory");
 
-	global_config.show_dot_buttons =
-		conditional_get_bool ("show_dot_buttons", FALSE, NULL);
+	global_config.disable_animations =
+		panel_gconf_global_config_get_bool ("disable-animations");
 
-	global_config.show_menu_titles =
-		conditional_get_bool ("show_menu_titles", FALSE, NULL);
+	global_config.autoraise = 
+		panel_gconf_global_config_get_bool ("autoraise-panel");
 
-	global_config.hungry_menus =
-		conditional_get_bool ("memory_hungry_menus", FALSE, NULL);
+	global_config.layer = 
+		panel_gconf_global_config_get_int ("panel-window-layer");
+	
+	global_config.drawer_auto_close =
+		panel_gconf_global_config_get_bool ("drawer-auto-close");
 
+	global_config.highlight_when_over =
+		panel_gconf_global_config_get_bool ("highlight-launchers-on-mouseover");
+	
+	global_config.confirm_panel_remove =
+		panel_gconf_global_config_get_bool ("confirm-panel-remove");
+
+	global_config.keys_enabled = 
+		panel_gconf_global_config_get_bool ("enable-key-bindings");
+
+	
+	global_config.menu_key = 
+		panel_gconf_global_config_get_string ("menu-key");
+	
+	convert_string_to_keysym_state(global_config.menu_key,
+				       &global_config.menu_keysym,
+				       &global_config.menu_state);
+	
+	global_config.run_key = 
+		panel_gconf_global_config_get_string ("run-key");
+
+	convert_string_to_keysym_state(global_config.run_key,
+				       &global_config.run_keysym,
+				       &global_config.run_state);
+
+	global_config.screenshot_key =
+		panel_gconf_global_config_get_string ("screenshot-key");
+
+	convert_string_to_keysym_state (global_config.screenshot_key,
+					&global_config.screenshot_keysym,
+					&global_config.screenshot_state);
+
+	global_config.window_screenshot_key = 
+		panel_gconf_global_config_get_string ("window-screenshot-key");
+
+	convert_string_to_keysym_state (global_config.window_screenshot_key,
+					&global_config.window_screenshot_keysym,
+					&global_config.window_screenshot_state);
+	
 	global_config.use_large_icons =
-		conditional_get_bool ("use_large_icons", FALSE, NULL);
+		panel_gconf_global_config_get_bool ("use_large_icons");
 
+	global_config.avoid_collisions =
+		panel_gconf_global_config_get_bool ("avoid-panel-overlap");
+
+	/* FIXME STUFF THAT IS BORKED */
+	global_config.merge_menus = TRUE;
+	global_config.menu_check = TRUE;
+	global_config.menu_flags = get_default_menu_flags();
+/*
 	global_config.merge_menus =
 		conditional_get_bool ("merge_menus", TRUE, NULL);
 
 	global_config.menu_check =
 		conditional_get_bool ("menu_check", TRUE, NULL);
 
-	global_config.off_panel_popups =
-		conditional_get_bool ("off_panel_popups", TRUE, NULL);
-		
-	global_config.disable_animations =
-		conditional_get_bool ("disable_animations", FALSE, NULL);
-		
-	global_config.hide_speed =
-		conditional_get_int ("hide_speed", 
-				     DEFAULT_HIDE_SPEED, NULL);
-	
-	global_config.hide_delay =
-		conditional_get_int ("hide_delay",
-				     DEFAULT_HIDE_DELAY, NULL);
-
-	global_config.show_delay =
-		conditional_get_int ("show_delay",
-				     DEFAULT_SHOW_DELAY, NULL);
-		
-	global_config.minimized_size =
-		conditional_get_int("minimized_size",
-				    DEFAULT_MINIMIZED_SIZE, NULL);
-		
-	global_config.keys_enabled = conditional_get_bool ("keys_enabled",
-							   TRUE, NULL);
-
-	g_free(global_config.menu_key);
-	global_config.menu_key = conditional_get_string ("menu_key",
-							 "Mod1-F1", NULL);
-	convert_string_to_keysym_state(global_config.menu_key,
-				       &global_config.menu_keysym,
-				       &global_config.menu_state);
-
-	g_free(global_config.run_key);
-	global_config.run_key = conditional_get_string ("run_key", "Mod1-F2",
-							NULL);
-	convert_string_to_keysym_state(global_config.run_key,
-				       &global_config.run_keysym,
-				       &global_config.run_state);
-
-	g_free(global_config.screenshot_key);
-	global_config.screenshot_key =
-		conditional_get_string ("screenshot_key", "Print",
-					NULL);
-	convert_string_to_keysym_state (global_config.screenshot_key,
-					&global_config.screenshot_keysym,
-					&global_config.screenshot_state);
-
-	g_free(global_config.window_screenshot_key);
-	global_config.window_screenshot_key =
-		conditional_get_string ("window_screenshot_key",
-					"Shift-Print", NULL);
-	convert_string_to_keysym_state (global_config.window_screenshot_key,
-					&global_config.window_screenshot_keysym,
-					&global_config.window_screenshot_state);
-
-	global_config.autoraise = conditional_get_bool ("autoraise", TRUE, NULL);
-
-	global_config.keep_bottom =
-		conditional_get_bool ("keep_bottom", FALSE, &def);
-	/* if keep bottom was the default, then we want to do a nicer
-	 * saner default which is normal layer.  If it was not the
-	 * default then we don't want to change the layerness as it was
-	 * selected by the user and thus we default to FALSE */
-	if (def)
-		global_config.normal_layer =
-			conditional_get_bool ("normal_layer", TRUE, NULL);
-	else
-		global_config.normal_layer =
-			conditional_get_bool ("normal_layer", FALSE, NULL);
-
-	global_config.drawer_auto_close =
-		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.saturate_when_over =
-		conditional_get_bool ("saturate_when_over", TRUE, NULL);
-	global_config.confirm_panel_remove =
-		conditional_get_bool ("confirm_panel_remove", TRUE, NULL);
-	global_config.avoid_collisions =
-		conditional_get_bool ("avoid_collisions", TRUE, NULL);
 	
 	global_config.menu_flags = conditional_get_int
 		("menu_flags", get_default_menu_flags (), NULL);
 	if (global_config.menu_flags < 0) {
 		global_config.menu_flags = get_default_menu_flags ();
 	}
-
+*/
 	gnome_config_sync ();
 
-	gnome_config_pop_prefix ();
-
 	apply_global_config ();
+	
 }
 
 void
 write_global_config (void)
 {
 	gnome_config_push_prefix ("/panel/Config/");
-
+/* FIXME
 	gnome_config_set_int ("hide_speed",
 			      global_config.hide_speed);
 	gnome_config_set_int ("minimized_size",
@@ -1770,12 +1736,6 @@ write_global_config (void)
 			      global_config.show_delay);
 	gnome_config_set_bool ("tooltips_enabled",
 			       global_config.tooltips_enabled);
-	gnome_config_set_bool ("show_dot_buttons",
-			       global_config.show_dot_buttons);
-	gnome_config_set_bool ("show_menu_titles",
-			       global_config.show_menu_titles);
-	gnome_config_set_bool ("memory_hungry_menus",
-			       global_config.hungry_menus);
 	gnome_config_set_bool ("use_large_icons",
 			       global_config.use_large_icons);
 	gnome_config_set_bool ("merge_menus",
@@ -1809,132 +1769,8 @@ write_global_config (void)
 	gnome_config_set_bool ("avoid_collisions",
 			       global_config.avoid_collisions);
 			     
-	
+*/	
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	
-}
-
-/* used for conversion to new config */
-static void
-convert_write_config(void)
-{
-	int is_def;
-
-	gnome_config_push_prefix("/panel/Config/");
-	
-	/* is there any new config written here */
-	gnome_config_get_int_with_default("hiding_step_size", &is_def);
-	if(!is_def) {
-		/* we don't want to overwrite a good config */
-		gnome_config_pop_prefix();
-		return;
-	}
-
-	gnome_config_set_int("hide_speed",
-			     global_config.hide_speed);
-	gnome_config_set_int("minimized_size",
-			     global_config.minimized_size);
-	gnome_config_set_int("hide_delay",
-			     global_config.hide_delay);
-	gnome_config_set_bool("tooltips_enabled",
-			      global_config.tooltips_enabled);
-	gnome_config_set_bool("show_dot_buttons",
-			      global_config.show_dot_buttons);
-	gnome_config_set_bool("memory_hungry_menus",
-			      global_config.hungry_menus);
-	gnome_config_set_bool("off_panel_popups",
-			      global_config.off_panel_popups);
-	gnome_config_set_bool("disable_animations",
-			      global_config.disable_animations);
-	gnome_config_set_bool("autoraise",
-			      global_config.autoraise);
-	gnome_config_set_bool("keep_bottom",
-			      global_config.keep_bottom);
-	gnome_config_set_bool("drawer_auto_close",
-			      global_config.drawer_auto_close);
-	gnome_config_pop_prefix();
-	gnome_config_sync();
-}
-
-static gboolean
-convert_read_old_config(void)
-{
-	GString *buf;
-	int is_def;
-	int applet_count; /*store this so that we can clean*/
-	int panel_count; /*store this so that we can clean*/
-
-	gnome_config_push_prefix(PANEL_CONFIG_PATH "panel/Config/");
-
-	gnome_config_get_bool_with_default("tooltips_enabled=TRUE",&is_def);
-	if(is_def) {
-		gnome_config_pop_prefix();
-		return FALSE;
-	}
-	
-	buf = g_string_new(NULL);
-
-	global_config.tooltips_enabled =
-		gnome_config_get_bool("tooltips_enabled=TRUE");
-
-	global_config.show_dot_buttons =
-		gnome_config_get_bool("show_dot_buttons=FALSE");
-
-	/*
-	global_config.hungry_menus =
-		gnome_config_get_bool("hungry_menus=TRUE");
-		*/
-	/* we default to FALSE now and want everything to go to false */
-	global_config.hungry_menus = FALSE;
-
-	global_config.off_panel_popups =
-		gnome_config_get_bool("off_panel_popups=TRUE");
-
-	global_config.disable_animations =
-		gnome_config_get_bool("disable_animations=FALSE");
-
-	g_string_sprintf(buf,"hide_speed=%d",
-			 DEFAULT_HIDE_SPEED);
-	global_config.hide_speed=gnome_config_get_int(buf->str);
-
-	g_string_sprintf(buf,"hide_delay=%d", DEFAULT_HIDE_DELAY);
-	global_config.hide_delay=gnome_config_get_int(buf->str);
-
-	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
-	global_config.minimized_size=gnome_config_get_int(buf->str);
-
-	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
-
-	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
-
-	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
-
-	/* preserve applet count */
-	applet_count = gnome_config_get_int("applet_count=0");
-	panel_count = gnome_config_get_int("panel_count=0");
-
-	gnome_config_pop_prefix();
-
-	gnome_config_push_prefix("");
-
-	gnome_config_clean_section(PANEL_CONFIG_PATH "panel/Config");
-
-	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/applet_count",
-			     applet_count);
-	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/panel_count",
-			     panel_count);
-
-	gnome_config_pop_prefix();
-
-	gnome_config_sync();
-	g_string_free(buf,TRUE);
-	return TRUE;
-}
-
-void
-convert_old_config(void)
-{
-	if(convert_read_old_config())
-		convert_write_config();
 }

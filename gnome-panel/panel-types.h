@@ -26,7 +26,11 @@ typedef GNOME_Panel_BackType PanelBackType;
 #define PANEL_BACK_COLOR GNOME_Panel_BACK_COLOR
 #define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
 
-
+typedef enum {
+	LAYER_NORMAL=0,
+	LAYER_BELOW,
+	LAYER_ABOVE
+} PanelLayer;
 
 typedef enum {
 	LAUNCHER_POBJECT=0,

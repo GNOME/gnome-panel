@@ -93,7 +93,13 @@ panel_menu_position (GtkMenu  *menu,
 
 	g_return_if_fail (w != NULL);
 
+/* FIXME - new gtk menus ?? 
 	if ( ! global_config.off_panel_popups) {
+		panel_standard_menu_pos (menu, x, y, data);
+		return;
+	}  */
+	
+	if (TRUE) {
 		panel_standard_menu_pos (menu, x, y, data);
 		return;
 	}

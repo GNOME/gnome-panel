@@ -76,7 +76,7 @@ menu_age_timeout(gpointer data)
 			info->menu_age = 0;
 		}
 		/*if we are allowed to, don't destroy applet menus*/
-		if(!global_config.hungry_menus &&
+		if(!global_config.keep_menus_in_memory &&
 		   info->type == APPLET_MENU) {
 			Menu *menu = info->data;
 			if(menu->menu && menu->age++>=6 &&
@@ -89,7 +89,7 @@ menu_age_timeout(gpointer data)
 	}
 	
 	/*skip panel menus if we are memory hungry*/
-	if(global_config.hungry_menus)
+	if(global_config.keep_menus_in_memory)
 		return TRUE;
 	
 	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
@@ -600,10 +600,6 @@ main(int argc, char **argv)
 #endif
 
 	load_system_wide ();
-
-	/* read, convert and remove old config */
-	if ( ! commie_mode)
-		convert_old_config ();
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */

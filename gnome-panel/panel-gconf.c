@@ -33,3 +33,9 @@ gboolean panel_gconf_global_config_get_bool (const gchar *key) {
 				      panel_gconf_global_config_get_full_key (key),
 				      NULL);
 }
+
+gchar * panel_gconf_global_config_get_string (const gchar *key) {
+	return gconf_client_get_string (panel_gconf_get_client (),
+					panel_gconf_global_config_get_full_key (key),
+					NULL);
+}

@@ -567,7 +567,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	
 	pwidget = widget->parent;
 
-	if(!global_config.saturate_when_over || !button->in_button) {
+	if(!global_config.highlight_when_over || !button->in_button) {
 		pb = button->pixbuf;
 	} else {
 #ifdef BUTTON_WIDGET_DEBUG
@@ -608,7 +608,8 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 {
 	GtkWidget *widget, *pwidget;
 	GdkGC *gc;
-	int size, off;
+	int size;
+	int off; 
 
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(IS_BUTTON_WIDGET(button));
@@ -617,10 +618,9 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 	widget = GTK_WIDGET(button);
 	size = button->size;
 
-	/*offset for pressed buttons
+	/* offset for pressed buttons */
 	off = (button->in_button && button->pressed) ?
-		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0; */
-	 
+		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0; 
 	gc = gdk_gc_new(pixmap);
 	
 	pwidget = widget->parent;
@@ -806,7 +806,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	    (event->detail != GDK_NOTIFY_INFERIOR) &&
 	    (!button->ignore_leave)) {
 		button->in_button = FALSE;
-		if (global_config.saturate_when_over) {
+		if (global_config.highlight_when_over) {
 			if (button->cache)
 				gdk_pixmap_unref (button->cache);
 			button->cache = NULL;

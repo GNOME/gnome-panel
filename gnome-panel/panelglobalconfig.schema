@@ -125,6 +125,54 @@ Panel Global Config Schema File -  work in progress
           <long></long>
         </locale>
       </schema>
+      
+	<schema>
+        <key>/schemas/apps/panel/menu-key</key>
+        <applyto>/apps/panel/menu-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+	
+	<schema>
+        <key>/schemas/apps/panel/menu-key</key>
+        <applyto>/apps/panel/menu-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+	
+      <schema>
+        <key>/schemas/apps/panel/run-key</key>
+        <applyto>/apps/panel/run-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F2</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/window-screenshot-key</key>
+        <applyto>/apps/panel/window-screenshot-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F2</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
 
       <schema>
         <key>/schemas/apps/panel/autoraise-panel</key>
@@ -142,8 +190,8 @@ Panel Global Config Schema File -  work in progress
         <key>/schemas/apps/panel/panel-window-layer</key>
         <applyto>/apps/panel/panel-window-layer</applyto>
         <owner>panel</owner>
-        <type>string</type>
-        <default>NORMAL</default>
+        <type>int</type>
+        <default>0</default>
         <locale name="C">
           <short>Values are - NORMAL, BELOW, ABOVE</short>
           <long></long>

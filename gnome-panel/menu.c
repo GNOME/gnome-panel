@@ -644,7 +644,7 @@ pixmap_unmap(GtkWidget *w, FakeIcon *fake)
 {
 	GtkWidget *parent = fake->fake->parent;
 
-	if(global_config.hungry_menus)
+	if(global_config.keep_menus_in_memory)
 		return;
 
 	/* don't kill the fake now, we'll kill it with the fake pixmap */
@@ -1989,8 +1989,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 
-	if (menus_have_icons () ||
-	    global_config.show_dot_buttons) {
+	if (menus_have_icons ()) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
@@ -2012,8 +2011,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 	}
 
-	if (menus_have_icons () ||
-	    global_config.show_dot_buttons)
+	if (menus_have_icons ())
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
@@ -2027,18 +2025,6 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		gtk_signal_connect(GTK_OBJECT(menuitem), "destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
-		if(global_config.show_dot_buttons) {
-			GtkWidget *w = gtk_button_new_with_label(_("..."));
-			gtk_signal_connect(GTK_OBJECT(w), "event",
-					   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-					   sim);
-			gtk_widget_show(w);
-			gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
-
-			/*this is not really a problem for large fonts but it
-			  makes the button smaller*/
-			gtk_widget_set_usize (w, 0, 16);
-		}
 	}
 
 	gtk_widget_show (menuitem);
@@ -2063,8 +2049,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 	
-	if (menus_have_icons () ||
-	    global_config.show_dot_buttons) {
+	if (menus_have_icons ())  {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
@@ -2089,8 +2074,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else if(pixmap)
 		gtk_widget_unref(pixmap);
 
-	if (menus_have_icons () ||
-	    global_config.show_dot_buttons)
+	if (menus_have_icons ())
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 
 	if (item_loc != NULL) {
@@ -2107,17 +2091,6 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 		gtk_signal_connect(GTK_OBJECT(menuitem), "destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   sim);
-		if(global_config.show_dot_buttons) {
-			GtkWidget *w = gtk_button_new_with_label(_("..."));
-			gtk_signal_connect(GTK_OBJECT(w),"event",
-					   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-					   sim);
-			gtk_widget_show(w);
-			gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
-			/*this is not really a problem for large fonts but it
-			  makes the button smaller*/
-			gtk_widget_set_usize (w, 0, 16);
-		}
 
 		/*applets have their own drag'n'drop*/
 		if ( ! applet && ! commie_mode) {
@@ -3256,11 +3229,11 @@ create_menu_at_fr (GtkWidget *menu,
 
 		mf->menudir = g_strdup (fr->name);
 	}
-
+/* FIXME - disable menu titles for now - do we need these? 
 	if (title && global_config.show_menu_titles) {
 		char *menu_name;
 
-		/*if we actually added anything*/
+		//if we actually added anything
 		if (first_item < g_list_length(GTK_MENU_SHELL(menu)->children)) {
 			menuitem = gtk_menu_item_new();
 			gtk_widget_lock_accelerators (menuitem);
@@ -3302,7 +3275,7 @@ create_menu_at_fr (GtkWidget *menu,
 		if ( ! commie_mode)
 			setup_directory_drag (menuitem, mf->menudir);
 	}
-
+*/
 	/*add separator*/
 	if (add_separator) {
 		menuitem = gtk_menu_item_new();
@@ -5919,7 +5892,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	/*if we are allowed to be pigs and load all the menus to increase
 	  speed, load them*/
-	if(global_config.hungry_menus) {
+	if(global_config.keep_menus_in_memory) {
 		GSList *list = g_slist_append(NULL, (gpointer)menudir);
 		add_menu_widget(menu, panel, list, main_menu, TRUE);
 		g_slist_free(list);
