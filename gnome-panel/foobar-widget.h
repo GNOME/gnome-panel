@@ -70,6 +70,8 @@ gint		foobar_widget_get_height	(void);
 
 void		foobar_widget_force_menu_remake	(void);
 
+void		foobar_widget_global_set_clock_format (const char *format);
+
 END_GNOME_DECLS
 
 #endif

@@ -394,10 +394,11 @@ timeout_cb (gpointer data)
 static void
 set_fooclock_format (GtkWidget *w, char *format)
 {
-	if (!IS_FOOBAR_WIDGET (das_global_foobar))
+	if ( ! IS_FOOBAR_WIDGET (das_global_foobar))
 		return;
 
-	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar), _(format));
+	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar),
+					_(format));
 }
 
 static void
@@ -481,6 +482,17 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 
 	return item;
+}
+
+void
+foobar_widget_global_set_clock_format (const char *format)
+{
+	if (das_global_foobar == NULL ||
+	    ! IS_FOOBAR_WIDGET (das_global_foobar))
+		return;
+
+	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar),
+					format);
 }
 
 void

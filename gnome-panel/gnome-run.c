@@ -26,6 +26,7 @@
 #include <errno.h>
 
 #include "panel-include.h"
+#include "foobar-widget.h"
 
 #include "gnome-run.h"
 
@@ -60,6 +61,27 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	if (string_empty (s))
 		goto return_and_close;
 
+	/* evil eggies, do not translate! */
+	if (strcmp (s, "time shall be unixey") == 0) {
+		foobar_widget_global_set_clock_format ("%s");
+		goto return_and_close;
+	}
+	if (strcmp (s, "you shall bring us a shrubbery") == 0) {
+		GtkWidget *dlg;
+		gnome_ok_dialog ("NI! NI! NI! NI! NI! NI!");
+		goto return_and_close;
+	}
+	if (strcmp (s, "supreme executive power") == 0) {
+		GtkWidget *dlg;
+		dlg = gnome_ok_dialog ("Listen -- strange women lying in\n"
+				       "ponds distributing swords is no\n"
+				       "basis for a system of government.\n"
+				       "Supreme executive power derives from\n"
+				       "a mandate from the masses, not from\n"
+				       "some farcical aquatic ceremony!");
+		goto return_and_close;
+	}
+
 	/* Somewhat of a hack I suppose */
 	if (strncmp (s, "http://", strlen ("http://")) == 0 ||
 	    strncmp (s, "https://", strlen ("https://")) == 0 ||
@@ -71,9 +93,9 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 
 	/* we use a popt function as it does exactly what we want to do and
 	   gnome already uses popt */
-	if(poptParseArgvString(s, &temp_argc, &temp_argv) != 0) {
-		panel_error_dialog(_("Failed to execute command:\n"
-				     "%s"), s);
+	if (poptParseArgvString (s, &temp_argc, &temp_argv) != 0) {
+		panel_error_dialog (_("Failed to execute command:\n"
+				      "%s"), s);
 		goto return_and_close;
 	}
 
