@@ -906,28 +906,29 @@ panel_addto_name_change (PanelAddtoDialog *dialog,
 			 const char       *name)
 {
 	char *title;
-	char *markup_title;
+	char *label;
 
-	if (!string_empty (name)) {
-		title = g_strdup_printf (_("Add to %s"), name);
+	label = NULL;
+
+	if (!string_empty (name))
+		label = g_strdup_printf (_("Select an _item to add to \"%s\":"),
+					 name);
+
+	if (panel_toplevel_get_is_attached (dialog->panel_widget->toplevel)) {
+		title = g_strdup_printf (_("Add to Drawer"));
+		if (label == NULL)
+			label = g_strdup (_("Select an _item to add to the drawer:"));
 	} else {
-		title = g_strdup_printf (_("Add to the panel"));
+		title = g_strdup_printf (_("Add to Panel"));
+		if (label == NULL)
+			label = g_strdup (_("Select an _item to add to the panel:"));
 	}
+
 	gtk_window_set_title (GTK_WINDOW (dialog->addto_dialog), title);
 	g_free (title);
 
-	if (!string_empty (name)) {
-		title = g_strdup_printf (_("Select an _item to add to %s:"),
-					 name);
-	} else {
-		title = g_strdup (_("Select an _item to add to the panel:"));
-	}
-	markup_title = g_strdup_printf ("<span weight=\"bold\">%s</span>",
-					title);
-	g_free (title);
-	gtk_label_set_markup_with_mnemonic (GTK_LABEL (dialog->label),
-					    markup_title);
-	g_free (markup_title);
+	gtk_label_set_text_with_mnemonic (GTK_LABEL (dialog->label), label);
+	g_free (label);
 }
 
 static void
@@ -1078,12 +1079,12 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	dialog->addto_dialog = gtk_dialog_new ();
 	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 			       GTK_STOCK_HELP, GTK_RESPONSE_HELP);
-	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
-			       GTK_STOCK_CANCEL,
-			       GTK_RESPONSE_CANCEL);
 	dialog->back_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_GO_BACK,
 						     PANEL_ADDTO_RESPONSE_BACK);
+	gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
+			       GTK_STOCK_CANCEL,
+			       GTK_RESPONSE_CANCEL);
 	dialog->add_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_ADD,
 						     PANEL_ADDTO_RESPONSE_ADD);
@@ -1093,15 +1094,15 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog->addto_dialog),
 					 PANEL_ADDTO_RESPONSE_ADD);
 
-	gtk_container_set_border_width (GTK_CONTAINER (dialog->addto_dialog), 5);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog->addto_dialog)->vbox), 2);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->addto_dialog), 6);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog->addto_dialog)->vbox), 12);
 	g_signal_connect (G_OBJECT (dialog->addto_dialog), "response",
 			  G_CALLBACK (panel_addto_dialog_response), dialog);
 	g_signal_connect (dialog->addto_dialog, "destroy",
 			  G_CALLBACK (panel_addto_dialog_destroy), dialog);
 
 	vbox = gtk_vbox_new (FALSE, 12);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->addto_dialog)->vbox),
 			   vbox);
 

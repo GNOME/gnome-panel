@@ -1,5 +1,15 @@
 2005-01-09  Vincent Untz  <vincent@vuntz.net>
 
+	HIG work on the "Add to Panel" dialog. Fix bug #163317
+	Original patch from Luca Ferretti <elle.uca@libero.it>
+
+	* panel-addto.c: (panel_addto_name_change): Use "Add to Panel" (or
+	Drawer) title, don't use bold for the list header label
+	(panel_addto_dialog_new): invert CANCEL and RESPONSE_BACK buttons
+	order, fix spacing/border sizes.
+
+2005-01-09  Vincent Untz  <vincent@vuntz.net>
+
 	Don't draw handles for drawers. Fix bug #142656.
 
 	* panel-toplevel.c: (panel_toplevel_update_size): we don't need
