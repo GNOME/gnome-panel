@@ -204,7 +204,7 @@ notify_change (GtkWidget *widget, void *data)
 }
 
 static GtkWidget *
-create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
+create_properties_dialog(Launcher *launcher)
 {
 	GtkWidget  *dialog;
 
@@ -247,7 +247,7 @@ launcher_properties(Launcher *launcher)
 		return;
 	}
 
-	dialog = create_properties_dialog(NULL,launcher);
+	dialog = create_properties_dialog(launcher);
 	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,dialog);
 	gtk_widget_show_all (dialog);
