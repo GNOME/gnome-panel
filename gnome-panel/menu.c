@@ -2598,16 +2598,34 @@ static GtkWidget *
 create_add_panel_submenu (void)
 {
 	GtkWidget *menu, *menuitem;
+	int        screen = 0;
 
 	menu = menu_new ();
-	
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
-				   _("Menu panel"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(create_new_panel),
-			   GINT_TO_POINTER(FOOBAR_PANEL));
+
+#ifdef FIXME
+	/* We need to be able to discover what screen we are on
+	 * The method below doesn't work because we aren't yet
+	 * attached to the panel.
+	 */
+	{
+		PanelWidget *panel;
+
+		panel = get_panel_from_menu_data (item, TRUE);
+		if (panel)
+			screen = multiscreen_screen_from_panel (panel->panel_parent);
+	}
+#endif
+
+	if (!foobar_widget_exists (screen)) {
+		menuitem = gtk_image_menu_item_new ();
+		setup_menuitem_try_pixmap (
+			menuitem, "gnome-panel-type-menu.png", _("Menu panel"));
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (create_new_panel),
+				  GINT_TO_POINTER (FOOBAR_PANEL));
+	}
  	
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
