@@ -210,17 +210,19 @@ properties_apply_callback (Menu *menu)
 
 
 	/* Setup the edit_menus callback */
-	if (applet_get_callback (menu->info->user_menu, "edit_menus") != NULL)
+	if (panel_applet_get_callback (menu->info->user_menu, "edit_menus"))
 		got_edit_menus = TRUE;
 	else
 		got_edit_menus = FALSE;
 
 	if (need_edit_menus && ! got_edit_menus)
-		applet_add_callback (menu->info, "edit_menus",
-				     NULL,
-				     _("Edit menus..."));
-	else if ( ! need_edit_menus && got_edit_menus)
-		applet_remove_callback (menu->info, "edit_menus");
+		panel_applet_add_callback (menu->info,
+					   "edit_menus",
+					   NULL,
+					   _("Edit menus..."));
+
+	else if (!need_edit_menus && got_edit_menus)
+		panel_applet_remove_callback (menu->info, "edit_menus");
 
 
 

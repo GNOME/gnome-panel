@@ -123,7 +123,7 @@ load_logout_applet (PanelWidget *panel,
 	if (!info)
 		return;
 
-	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }
 
 static GtkWidget *
@@ -200,13 +200,13 @@ load_lock_applet (PanelWidget *panel,
 	  <jwz> and "xscreensaver-demo"
 	*/
 
-	applet_add_callback (info, "activate", NULL, _("Blank Screen Now"));
-	applet_add_callback (info, "lock", NULL, _("Lock Screen Now"));
-	applet_add_callback (info, "exit", NULL, _("Kill Daemon"));
-	applet_add_callback (info, "restart", NULL, _("Restart Daemon"));
+	panel_applet_add_callback (info, "activate", NULL, _("Blank Screen Now"));
+	panel_applet_add_callback (info, "lock", NULL, _("Lock Screen Now"));
+	panel_applet_add_callback (info, "exit", NULL, _("Kill Daemon"));
+	panel_applet_add_callback (info, "restart", NULL, _("Restart Daemon"));
 
 	if (!commie_mode)
-		applet_add_callback (info, "prefs", NULL, _("Preferences"));
+		panel_applet_add_callback (info, "prefs", NULL, _("Preferences"));
 
-	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }

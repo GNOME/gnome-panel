@@ -325,7 +325,7 @@ send_applet_session_save (AppletInfo *info,
 		}
 	} else if(ev._major) {
 		gtk_timeout_remove(timeout);
-		panel_clean_applet(info);
+		panel_applet_clean(info);
 		CORBA_exception_free(&ev);
 		save_next_applet();
 		return;

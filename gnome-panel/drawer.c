@@ -494,12 +494,12 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 	drawer_setup (drawer);
 
 	if (!commie_mode)
-		applet_add_callback (info,
-				     "properties",
-				     GTK_STOCK_PROPERTIES,
-				     _("Properties..."));
+		panel_applet_add_callback (info,
+					   "properties",
+					   GTK_STOCK_PROPERTIES,
+					   _("Properties..."));
 
-	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 
 	return drawer;
 }

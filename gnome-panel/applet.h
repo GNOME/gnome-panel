@@ -7,16 +7,16 @@
 
 G_BEGIN_DECLS
 
-#define EMPTY_ID "Empty" /*this applet should not be loaded*/
-#define MENU_ID "Menu"
-#define DRAWER_ID "Drawer"
-#define LOGOUT_ID "Logout"
-#define SWALLOW_ID "Swallow"
-#define EXTERN_ID "Extern"
+#define EMPTY_ID    "Empty"
+#define MENU_ID     "Menu"
+#define DRAWER_ID   "Drawer"
+#define LOGOUT_ID   "Logout"
+#define SWALLOW_ID  "Swallow"
+#define EXTERN_ID   "Extern"
 #define LAUNCHER_ID "Launcher"
-#define LOCK_ID "Lock"
-#define STATUS_ID "Status"
-#define RUN_ID "Run"
+#define LOCK_ID     "Lock"
+#define STATUS_ID   "Status"
+#define RUN_ID      "Run"
 
 typedef enum {
 	APPLET_EXTERN,
@@ -38,57 +38,61 @@ typedef enum {
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
+typedef struct {
+	AppletType      type;
+	int             applet_id;
+	GtkWidget      *widget;
+
+	GtkWidget      *menu;
+	int             menu_age;
+	GList          *user_menu;
+
+	gpointer        data;
+	GDestroyNotify  data_destroy;
+} AppletInfo;
+
+typedef struct {
+	gchar        *name;
+	gchar        *stock_item;
+	gchar        *text;
+
+	gint          sensitive;
+	AppletInfo   *info;
+
+	GtkWidget    *menuitem;
+	GtkWidget    *submenu;
+} AppletUserMenu;
+
+AppletInfo *panel_applet_register    (GtkWidget      *applet,
+				      gpointer        data,
+				      GDestroyNotify  data_destroy,
+				      PanelWidget    *panel,
+				      gint            pos,
+				      gboolean        exactpos,
+				      AppletType      type);
+
+void        panel_applet_clean       (AppletInfo *info);
+
+void        panel_applet_create_menu (AppletInfo *info,
+				      gboolean    is_basep);
 
 
-typedef struct _AppletUserMenu AppletUserMenu;
-typedef struct _AppletInfo AppletInfo;
+void            panel_applet_add_callback    (AppletInfo  *info,
+					      const gchar *callback_name,
+					      const gchar *stock_item,
+					      const gchar *menuitem_text);
 
-struct _AppletUserMenu {
-	char *name;
-	char *stock_item;
-	char *text;
-	int sensitive;
-	AppletInfo *info;
-	GtkWidget *menuitem;
-	GtkWidget *submenu;
-};
+void            panel_applet_remove_callback (AppletInfo *info,
+					      const char *callback_name);
 
-struct _AppletInfo {
-	AppletType type;
-	int applet_id;
-	GtkWidget *widget; /*an event box*/
-	GtkWidget *menu; /*the applet menu*/
-	int menu_age;
-	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
-	gpointer data; /*the per applet structure, if it exists*/
-	GDestroyNotify data_destroy;
-};
+AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
+					      const gchar *name);
 
-AppletInfo *panel_applet_register (GtkWidget      *applet,
-				   gpointer        data,
-				   GDestroyNotify  data_destroy,
-				   PanelWidget    *panel,
-				   gint            pos,
-				   gboolean        exactpos,
-				   AppletType      type);
 
-void panel_clean_applet(AppletInfo *info);
+void        panel_applet_callback_set_sensitive (AppletInfo *info,
+						 const char *callback_name,
+						 gint        sensitive);
 
-/*applet menu stuff*/
-void create_applet_menu(AppletInfo *info, gboolean is_basep);
-void applet_add_callback(AppletInfo *info,
-			 const char *callback_name,
-			 const char *stock_item,
-			 const char *menuitem_text);
-void applet_remove_callback(AppletInfo *info,
-			    const char *callback_name);
-AppletUserMenu * applet_get_callback (GList *user_menu, const char *name);
-void applet_callback_set_sensitive(AppletInfo *info,
-				   const char *callback_name,
-				   int sensitive);
-
-/* during session save, we call this to unlink the .desktop files of
- * removed launchers */
 void remove_unused_launchers (void);
 
 G_END_DECLS

@@ -1318,5 +1318,5 @@ load_run_applet (PanelWidget *panel,
 	if (!info)
 		return;
 
-	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }

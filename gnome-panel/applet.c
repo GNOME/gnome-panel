@@ -58,7 +58,7 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 
 /*destroy widgets and call the above cleanup function*/
 void
-panel_clean_applet (AppletInfo *info)
+panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
 
@@ -88,7 +88,7 @@ kill_applet_in_idle(gpointer data)
 		swallow->clean_remove = TRUE;
 	}
 
-	panel_clean_applet (info);
+	panel_applet_clean (info);
 
 	return FALSE;
 }
@@ -227,8 +227,8 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 }
 
 AppletUserMenu *
-applet_get_callback (GList      *user_menu,
-		     const char *name)
+panel_applet_get_callback (GList      *user_menu,
+			   const char *name)
 {
 	GList *l;
 
@@ -243,16 +243,16 @@ applet_get_callback (GList      *user_menu,
 }
 
 void
-applet_add_callback(AppletInfo *info,
-		    const char *callback_name,
-		    const char *stock_item,
-		    const char *menuitem_text)
+panel_applet_add_callback (AppletInfo *info,
+			   const char *callback_name,
+			   const char *stock_item,
+			   const char *menuitem_text)
 {
 	AppletUserMenu *menu;
 
 	g_return_if_fail (info != NULL);
 	
-	menu = applet_get_callback (info->user_menu, callback_name);
+	menu = panel_applet_get_callback (info->user_menu, callback_name);
 	if (menu == NULL) {
 		menu = g_new0 (AppletUserMenu, 1);
 		menu->name = g_strdup (callback_name);
@@ -287,13 +287,14 @@ applet_add_callback(AppletInfo *info,
 }
 
 void
-applet_remove_callback(AppletInfo *info, const char *callback_name)
+panel_applet_remove_callback (AppletInfo *info,
+			      const char *callback_name)
 {
 	AppletUserMenu *menu;
 
 	g_return_if_fail (info != NULL);
 	
-	menu = applet_get_callback (info->user_menu, callback_name);
+	menu = panel_applet_get_callback (info->user_menu, callback_name);
 	if (menu != NULL) {
 		info->user_menu = g_list_remove (info->user_menu, menu);
 		g_free(menu->name);
@@ -321,13 +322,15 @@ applet_remove_callback(AppletInfo *info, const char *callback_name)
 }
 
 void
-applet_callback_set_sensitive(AppletInfo *info, const char *callback_name, int sensitive)
+panel_applet_callback_set_sensitive (AppletInfo  *info,
+				     const gchar *callback_name,
+				     gint         sensitive)
 {
 	AppletUserMenu *menu;
 
 	g_return_if_fail(info != NULL);
 	
-	menu = applet_get_callback(info->user_menu, callback_name);
+	menu = panel_applet_get_callback(info->user_menu, callback_name);
 	if (menu != NULL)
 		menu->sensitive = sensitive;
 	else
@@ -425,7 +428,7 @@ add_to_submenus (AppletInfo *info,
 	p++;
 	
 	t = g_strconcat (path, n, "/", NULL);
-	s_menu = applet_get_callback (user_menu, t);
+	s_menu = panel_applet_get_callback (user_menu, t);
 	/*the user did not give us this sub menu, whoops, will create an empty
 	  one then*/
 	if (s_menu == NULL) {
@@ -492,8 +495,8 @@ applet_setup_panel_menu (gboolean is_basep)
 }
 
 void
-create_applet_menu (AppletInfo *info,
-		    gboolean    is_basep)
+panel_applet_create_menu (AppletInfo *info,
+			  gboolean    is_basep)
 {
 	GtkWidget *menuitem;
 	GList     *l;
@@ -596,7 +599,7 @@ applet_show_menu (AppletInfo     *info,
 	panel = get_panel_parent (info->widget);
 
 	if (!info->menu)
-		create_applet_menu (info, BASEP_IS_WIDGET (panel));
+		panel_applet_create_menu (info, BASEP_IS_WIDGET (panel));
 
 	g_assert (info->menu);
 
@@ -817,7 +820,7 @@ panel_applet_register (GtkWidget      *applet,
 			/*can't put it anywhere, clean up*/
 			gtk_widget_destroy(applet);
 			info->widget = NULL;
-			panel_clean_applet(info);
+			panel_applet_clean(info);
 			g_warning(_("Can't find an empty spot"));
 			g_free (info);
 			return NULL;

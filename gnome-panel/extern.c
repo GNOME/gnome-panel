@@ -487,7 +487,7 @@ extern_remove_applet (Extern ext)
 
 	extern_ref (ext);
 
-	panel_clean_applet (ext->info);
+	panel_applet_clean (ext->info);
 	ext->info = NULL;
 
 	extern_unref (ext);
@@ -954,7 +954,7 @@ send_position_change (Extern ext)
 
 		GNOME_Applet2_change_position (ext->applet, x, y, &env);
 		if (BONOBO_EX (&env))
-			panel_clean_applet (ext->info);
+			panel_applet_clean (ext->info);
 
 		CORBA_exception_free (&env);
 	}
@@ -1072,18 +1072,9 @@ reserve_applet_spot (Extern       ext,
 		     AppletType   type)
 {
 	GtkWidget  *socket;
-	gint        events;
 	gint        size;
 
 	ext->ebox = gtk_event_box_new ();
-
-	/*
-	 * FIXME: duplicated in panel_applet_register ?
-	 */
-	events  = gtk_widget_get_events (ext->ebox) | APPLET_EVENT_MASK;
-	events &= ~(GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
-
-	gtk_widget_set_events (ext->ebox, events);
 
 	size = CLAMP (panel->sz, 0, 14);
 
@@ -1988,7 +1979,7 @@ s_panelspot_register_us (PortableServer_Servant  servant,
 		 */
 		ext->clean_remove = TRUE;
 
-		panel_clean_applet (ext->info);
+		panel_applet_clean (ext->info);
 	}
 
 	extern_unref (ext);
@@ -2003,7 +1994,7 @@ s_panelspot_unregister_us(PortableServer_Servant servant,
 
 	extern_save_last_position (ext, TRUE /* sync */);
 
-	panel_clean_applet(ext->info);
+	panel_applet_clean(ext->info);
 }
 
 static void
@@ -2022,7 +2013,7 @@ s_panelspot_abort_load(PortableServer_Servant servant,
 		return;
 
 	ext->clean_remove = TRUE;
-	panel_clean_applet (ext->info);
+	panel_applet_clean (ext->info);
 }
 
 static void
@@ -2041,7 +2032,7 @@ s_panelspot_show_menu(PortableServer_Servant servant,
 	panel = get_panel_parent (ext->info->widget);
 
 	if (!ext->info->menu)
-		create_applet_menu(ext->info, BASEP_IS_WIDGET (panel));
+		panel_applet_create_menu (ext->info, BASEP_IS_WIDGET (panel));
 
 	if (BASEP_IS_WIDGET (panel)) {
 		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
@@ -2118,8 +2109,8 @@ s_panelspot_add_callback(PortableServer_Servant servant,
 	     strcmp (callback_name, "properties") == 0))
 		return;
 
-	applet_add_callback(ext->info, callback_name, stock_item,
-			    menuitem_text);
+	panel_applet_add_callback (ext->info, callback_name, 
+				   stock_item, menuitem_text);
 }
 
 static void
@@ -2129,9 +2120,9 @@ s_panelspot_remove_callback(PortableServer_Servant servant,
 {
 	Extern ext = (Extern)servant;
 
-	g_assert(ext != NULL);
-	g_assert(ext->info != NULL);
-	applet_remove_callback(ext->info, callback_name);
+	g_assert(ext && ext->info);
+
+	panel_applet_remove_callback (ext->info, callback_name);
 }
 
 static void
@@ -2142,9 +2133,9 @@ s_panelspot_callback_set_sensitive(PortableServer_Servant servant,
 {
 	Extern ext = (Extern)servant;
 
-	g_assert(ext != NULL);
-	g_assert(ext->info != NULL);
-	applet_callback_set_sensitive(ext->info, callback_name, sensitive);
+	g_assert (ext && ext->info);
+
+	panel_applet_callback_set_sensitive (ext->info, callback_name, sensitive);
 }
 
 static void
@@ -2389,7 +2380,7 @@ send_draw (Extern ext)
 	if (ext->applet != NULL) {
 		GNOME_Applet2_draw (ext->applet, &env);
 		if (BONOBO_EX (&env))
-			panel_clean_applet (ext->info);
+			panel_applet_clean (ext->info);
 	}
 
 	CORBA_exception_free (&env);

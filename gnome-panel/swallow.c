@@ -428,7 +428,7 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 
 	swallow->clean_remove = FALSE;
 
-	applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 
 	swallow_launch (swallow);
 }

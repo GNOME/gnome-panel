@@ -5951,20 +5951,22 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 		menu->info = info;
 
 		if (!commie_mode) {
-			applet_add_callback (info, 
-					     "properties",
-					     GTK_STOCK_PROPERTIES,
-					     _("Properties..."));
+			panel_applet_add_callback (info, 
+						   "properties",
+						   GTK_STOCK_PROPERTIES,
+						   _("Properties..."));
 
 			if(params && strcmp(params, ".")==0 &&
 			   (tmp = gnome_is_program_in_path("gmenu")))  {
 				g_free(tmp);
-				applet_add_callback (info, "edit_menus",
-						     NULL, _("Edit menus..."));
+				panel_applet_add_callback (info,
+							   "edit_menus",
+							    NULL,
+							    _("Edit menus..."));
 			}
 		}
 
-		applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+		panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 	}
 }
 

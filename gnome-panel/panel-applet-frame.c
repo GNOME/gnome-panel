@@ -12,9 +12,6 @@ panel_bonobo_applet_widget (const gchar *iid)
 
 	event_box = gtk_event_box_new ();
 
-	gtk_widget_set_events (event_box, 
-			       GDK_BUTTON_PRESS_MASK|GDK_BUTTON_RELEASE_MASK);
-
 	control = bonobo_widget_new_control (iid, NULL);
 
 	gtk_container_add (GTK_CONTAINER (event_box), control);

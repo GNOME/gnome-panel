@@ -374,7 +374,7 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	if (!info)
 		return TRUE;
 
-	applet_add_callback (the_status->info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (the_status->info, "help", GTK_STOCK_HELP, _("Help"));
 
 	return TRUE;
 }

@@ -481,7 +481,9 @@ setup_button (Launcher *launcher)
 	/* Setup help */
 	docpath = gnome_desktop_item_get_string (launcher->ditem,
 						 "DocPath");
-	applet_remove_callback (launcher->info, "help_on_app");
+
+	panel_applet_remove_callback (launcher->info, "help_on_app");
+
 	real_docpath = panel_gnome_kde_help_path (docpath);
 	if (real_docpath != NULL) {
 		char *title;
@@ -490,9 +492,10 @@ setup_button (Launcher *launcher)
 
 		title = g_strdup_printf (_("Help on %s Application"), name);
 
-		applet_add_callback (launcher->info, "help_on_app",
-				     GTK_STOCK_HELP,
-				     title);
+		panel_applet_add_callback (launcher->info,
+					   "help_on_app",
+					    GTK_STOCK_HELP,
+					    title);
 		g_free (title);
 	}
 }
@@ -662,12 +665,12 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 	}
 
 	if (!commie_mode)
-		applet_add_callback (launcher->info,
-				     "properties",
-				     GTK_STOCK_PROPERTIES,
-				     _("Properties..."));
+		panel_applet_add_callback (launcher->info,
+					   "properties",
+					   GTK_STOCK_PROPERTIES,
+					   _("Properties..."));
 
-	applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
 
 	/* setup button according to ditem */
 	setup_button (launcher);
