@@ -1,6 +1,7 @@
 SUBDIRS =			\
 	po 			\
 	idl 			\
+	icons			\
 	gnome-panel		\
 	libpanel-applet		\
 	applets			\
