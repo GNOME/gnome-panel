@@ -1,3 +1,11 @@
+2002-02-06  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel-applet.c:
+	Add panel_applet_focus() which causes a widget within an applet to 
+	receive focus, if such exists, when focus is moved to applet. The
+	GTK_CAN_FOCUS flag is set for an applet only if no widget in the
+	applet can receive focus.
+
 2002-02-04  jacob berkman  <jacob@ximian.com>
 
 	* Makefile.am: our object files require the built sources

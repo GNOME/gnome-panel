@@ -73,6 +73,9 @@ enum {
 
 static guint panel_applet_signals [LAST_SIGNAL];
 
+static gboolean panel_applet_focus (GtkWidget        *widget,
+				    GtkDirectionType  dir);
+
 #define PROPERTY_ORIENT     "panel-applet-orient"
 #define PROPERTY_SIZE       "panel-applet-size"
 #define PROPERTY_BACKGROUND "panel-applet-background"
@@ -433,6 +436,7 @@ panel_applet_popup_menu (GtkWidget *widget)
 				      panel_applet_menu_position, widget,
 				      3,
 				      GDK_CURRENT_TIME);
+	return TRUE;
 	
 }
 
@@ -803,7 +807,7 @@ panel_applet_item_handler_get_object (BonoboItemHandler *handler,
 
 	return bonobo_object_dup_ref (BONOBO_OBJREF (applet->priv->control), ev);
 }
-			   
+
 static void
 panel_applet_class_init (PanelAppletClass *klass,
 			 gpointer          dummy)
@@ -815,6 +819,7 @@ panel_applet_class_init (PanelAppletClass *klass,
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->expose_event = panel_applet_expose;
+	widget_class->focus = panel_applet_focus;
 
 	gobject_class->finalize = panel_applet_finalize;
 
@@ -873,8 +878,6 @@ panel_applet_instance_init (PanelApplet      *applet,
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-
-	GTK_WIDGET_SET_FLAGS (GTK_WIDGET (applet), GTK_CAN_FOCUS);
 }
 
 GType
@@ -1067,4 +1070,24 @@ panel_applet_shlib_factory (const char                 *iid,
 		 g_cclosure_new (G_CALLBACK (callback),
 				 user_data, NULL),
 		 ev);
+}
+
+static gboolean 
+panel_applet_focus (GtkWidget        *widget,
+		    GtkDirectionType  dir)
+{
+	gboolean ret;
+
+	ret = GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
+	if (!ret) {
+ 		if (!GTK_CONTAINER (widget)->focus_child)  {
+		/*
+		 * Applet does not have a widget which can focus so set
+		 * the focus on the applet.
+		 */ 
+			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_grab_focus (widget);
+		}
+	}
+	return TRUE;
 }
