@@ -856,6 +856,8 @@ find_non_drawer_parent_panel (BasePWidget *basep)
 	g_assert (DRAWER_IS_WIDGET (basep));
 
 	drawer = drawer_widget_get_drawer (DRAWER_WIDGET (basep));
+	if (!drawer)
+		return NULL;
 
 	panel_parent = PANEL_WIDGET (drawer->button->parent)->panel_parent;
 
