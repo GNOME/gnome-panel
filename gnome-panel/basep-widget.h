@@ -39,7 +39,6 @@ typedef enum {
 
 typedef enum {
         BASEP_SHOWN,
-	BASEP_MOVING,
 	BASEP_AUTO_HIDDEN,
 	BASEP_HIDDEN_LEFT,
 	BASEP_HIDDEN_RIGHT
@@ -69,6 +68,7 @@ struct _BasePWidget
 
 	BasePMode               mode;
 	BasePState              state;
+	gboolean		moving;
 
 	gboolean		hidebuttons_enabled;
 	gboolean		hidebutton_pixmaps_enabled;
@@ -109,13 +109,13 @@ struct _BasePWidgetClass
 	void (* focus_return)  (BasePWidget *basep);
 
 	void (* mode_change)  (BasePWidget *basep,
-			       BasePMode mode);
+			       BasePMode old_mode);
 
 	void (* state_change) (BasePWidget *basep,
-			       BasePState state);
+			       BasePState old_state);
 
 	void (* screen_change) (BasePWidget *basep,
-				int screen);
+				int old_screen);
 
 };
 

@@ -383,9 +383,9 @@ basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
 static void
 basep_widget_set_focus (GtkWindow *window, GtkWidget *widget)
 {
-	BasePWidget *basep = BASEP_WIDGET(window);
+	BasePWidget *basep = BASEP_WIDGET (window);
 
-	if (!widget) {
+	if (widget == NULL) {
 		gtk_widget_set_state (basep->panel, GTK_STATE_PRELIGHT);
 		gtk_widget_queue_draw (basep->panel);
 	} else {
@@ -400,7 +400,7 @@ basep_widget_set_focus (GtkWindow *window, GtkWidget *widget)
 static void 
 basep_widget_move_focus (GtkWindow *window, GtkDirectionType dir)
 {
-	if (!window->focus_widget) 
+	if (window->focus_widget == NULL) 
 		gtk_widget_child_focus (BASEP_WIDGET (window)->panel, dir);
 	else
 		basep_widget_parent_class->move_focus (window, dir);
@@ -465,7 +465,7 @@ basep_widget_size_allocate (GtkWidget *widget,
 	  are sometimes a cube for the flicker prevention*/
 
 #ifdef BASEP_WIDGET_DEBUG
-	if (basep->state == BASEP_MOVING)
+	if (basep->moving)
 		g_warning ("size_allocate whilst moving");
 #endif
 
@@ -626,7 +626,7 @@ basep_widget_focus_return (BasePWidget *basep)
 }
 
 static void
-basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
+basep_widget_mode_change (BasePWidget *basep, BasePMode old_mode)
 {
 	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
@@ -645,40 +645,97 @@ set_tip (GtkWidget *widget, gboolean showing)
 }
 
 static void
-basep_widget_state_change (BasePWidget *basep, BasePState state)
+basep_widget_state_change (BasePWidget *basep, BasePState old_state)
 {
 	if (BORDER_IS_WIDGET (basep))
 		basep_border_queue_recalc (basep->screen);
+
 	/*
 	 * If the state is changed to SHOWN or HIDDEN_LEFT or HIDDEN_RIGHT
-	 * we update the tooltips on the buttons
+	 * we update the tooltips on the buttons, and sensitivity.  Offscreen
+	 * stuff is insensitive.
 	 */
-	if (state == BASEP_SHOWN) {
+	if (basep->state == BASEP_SHOWN) {
+		gtk_widget_set_sensitive (basep->panel, TRUE);
+		gtk_widget_set_sensitive (basep->hidebutton_w, TRUE);
+		gtk_widget_set_sensitive (basep->hidebutton_n, TRUE);
+		gtk_widget_set_sensitive (basep->hidebutton_s, TRUE);
+		gtk_widget_set_sensitive (basep->hidebutton_e, TRUE);
+
 		set_tip (basep->hidebutton_w, TRUE);
 		set_tip (basep->hidebutton_n, TRUE);
 		set_tip (basep->hidebutton_s, TRUE);
 		set_tip (basep->hidebutton_e, TRUE);
-	} else if (state == BASEP_HIDDEN_LEFT) {
-		set_tip (basep->hidebutton_e, FALSE);
-		set_tip (basep->hidebutton_s, FALSE);
-	} else if (state == BASEP_HIDDEN_RIGHT) {
-		set_tip (basep->hidebutton_n, FALSE);
-		set_tip (basep->hidebutton_w, FALSE);
+	} else if (basep->state == BASEP_HIDDEN_LEFT) {
+		GtkWidget *hb;
+		gboolean set_focus = FALSE;
+
+		if (PANEL_WIDGET (basep->panel)->orient ==
+		    GTK_ORIENTATION_VERTICAL) {
+			hb = basep->hidebutton_s;
+			if (GTK_WINDOW (basep)->focus_widget ==
+			    basep->hidebutton_n)
+				set_focus = TRUE;
+		} else {
+			hb = basep->hidebutton_e;
+			if (GTK_WINDOW (basep)->focus_widget ==
+			    basep->hidebutton_w)
+				set_focus = TRUE;
+		}
+
+
+		gtk_widget_set_sensitive (basep->panel, FALSE);
+
+		gtk_widget_set_sensitive (basep->hidebutton_w, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_n, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_s, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_e, FALSE);
+
+		set_tip (hb, FALSE);
+		gtk_widget_set_sensitive (hb, TRUE);
+		if (set_focus)
+			gtk_window_set_focus (GTK_WINDOW (basep), hb);
+	} else if (basep->state == BASEP_HIDDEN_RIGHT) {
+		GtkWidget *hb;
+		gboolean set_focus = FALSE;
+
+		if (PANEL_WIDGET (basep->panel)->orient ==
+		    GTK_ORIENTATION_VERTICAL) {
+			hb = basep->hidebutton_n;
+			if (GTK_WINDOW (basep)->focus_widget ==
+			    basep->hidebutton_s)
+				set_focus = TRUE;
+		} else {
+			hb = basep->hidebutton_w;
+			if (GTK_WINDOW (basep)->focus_widget ==
+			    basep->hidebutton_e)
+				set_focus = TRUE;
+		}
+
+		gtk_widget_set_sensitive (basep->panel, FALSE);
+
+		gtk_widget_set_sensitive (basep->hidebutton_w, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_n, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_s, FALSE);
+		gtk_widget_set_sensitive (basep->hidebutton_e, FALSE);
+
+		set_tip (hb, FALSE);
+		gtk_widget_set_sensitive (hb, TRUE);
+		if (set_focus)
+			gtk_window_set_focus (GTK_WINDOW (basep), hb);
 	}
 }
 
 static void
-basep_widget_real_screen_change (BasePWidget *basep, int screen)
+basep_widget_real_screen_change (BasePWidget *basep, int old_screen)
 {
-	if (basep->screen != screen) {
-		basep_border_queue_recalc (basep->screen);
-		basep->screen = screen;
-		/* this will queue border recalc in the new screen */
-		gtk_widget_queue_resize (GTK_WIDGET (basep));
-		panels_to_sync = TRUE;
+	basep_border_queue_recalc (old_screen);
 
-		update_config_screen (basep);
-	}
+	/* this will queue border recalc in the new screen */
+	gtk_widget_queue_resize (GTK_WIDGET (basep));
+	panels_to_sync = TRUE;
+
+	update_config_screen (basep);
 }
 
 /* pos core */
@@ -795,7 +852,7 @@ basep_leave_notify (GtkWidget *widget,
 	BasePWidget *basep = BASEP_WIDGET (widget);
 
 #ifdef BASEP_WIDGET_DEBUG
-	if (basep->state == BASEP_MOVING)
+	if (basep->moving)
 		g_warning ("moving in leave_notify");
 
 	if (basep->leave_notify_timer_tag != 0)
@@ -826,7 +883,7 @@ basep_enter_notify (GtkWidget *widget,
 		g_print ("detail: %d\n", event->detail);
 #endif
 		if (basep->leave_notify_timer_tag != 0) {
-			gtk_timeout_remove (basep->leave_notify_timer_tag);
+			g_source_remove (basep->leave_notify_timer_tag);
 			basep->leave_notify_timer_tag = 0;
 		}
 
@@ -942,12 +999,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 #ifdef BASEP_WIDGET_DEBUG
 	g_warning ("do_hiding with step %d", step);
 #endif
-	if (basep->state != BASEP_MOVING) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("do_hiding whilst not moving");
-#endif
-		return;
-	}
 
 	wid = GTK_WIDGET(basep);
 	
@@ -1068,13 +1119,6 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("do_showing with step %d", step);
 #endif
-
-	if (basep->state != BASEP_MOVING) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("do_showing whilst not moving");
-#endif
-		return;
-	}
 
 	wid = GTK_WIDGET(basep);
 	
@@ -1226,7 +1270,7 @@ basep_widget_destroy (GtkObject *o)
         /* check if there's a timeout set, and delete it if 
 	 * there was */
 	if (basep->leave_notify_timer_tag != 0)
-		gtk_timeout_remove (basep->leave_notify_timer_tag);
+		g_source_remove (basep->leave_notify_timer_tag);
 	basep->leave_notify_timer_tag = 0;
 
 	if (BORDER_IS_WIDGET (basep))
@@ -1720,21 +1764,23 @@ basep_widget_change_params (BasePWidget *basep,
 		state = BASEP_SHOWN;
 
 	if (mode != basep->mode) {
+		BasePMode old_mode = basep->mode;
 		basep->mode = mode;
 		if (mode == BASEP_AUTO_HIDE)
 			basep_widget_queue_autohide (basep);
 		g_signal_emit (G_OBJECT(basep),
 			       basep_widget_signals[MODE_CHANGE_SIGNAL],
-			       0, mode);
+			       0, old_mode);
 	}
 	
 	if (state != basep->state) {
+		BasePState old_state = basep->state;
 		basep->state = state;
 		if (state != BASEP_AUTO_HIDDEN)
 			basep_widget_autoshow (basep);
 		g_signal_emit (G_OBJECT(basep),
 			       basep_widget_signals[STATE_CHANGE_SIGNAL],
-			       0, state);
+			       0, old_state);
 		panels_to_sync = TRUE;
 	}
 
@@ -1838,37 +1884,44 @@ basep_widget_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
+/* FIXME: perhaps we could get rid of the MOVING state, it's kind of
+ * useless, isn't it? */
 void
 basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 {
+	BasePState old_state;
+
 	g_assert ( (state == BASEP_HIDDEN_RIGHT) ||
 		   (state == BASEP_HIDDEN_LEFT) );
 
 	if((basep->state != BASEP_SHOWN))
 		return;
 
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("explicit_hide whilst moving");
 #endif
 		return;
 	}
 
+	basep->moving = TRUE;
+
+	old_state = basep->state;
+	basep->state = state;
+
 	g_signal_emit (GTK_OBJECT(basep),
 		       basep_widget_signals[STATE_CHANGE_SIGNAL],
-		       0, state);
+		       0, old_state);
 	panels_to_sync = TRUE;
 
 	/* if the app did any updating of the interface, flush that for us*/
 	gdk_flush();
-	
+
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
 		PanelOrient hide_orient;
 		int w, h, size;
 
-		basep->state = state;
-		
 		hide_orient = klass->get_hide_orient (basep);
 		basep_widget_get_size (basep, &w, &h);
 		klass->get_hide_size (basep,
@@ -1879,7 +1932,6 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 		
-		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
 					size, 
@@ -1902,23 +1954,28 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 			gtk_widget_grab_focus (basep->hidebutton_s);
 	}
 
-	basep->state = state;
+	basep->moving = FALSE;
+
 	basep_widget_update_winhints (basep);
 }
 
 void
 basep_widget_explicit_show (BasePWidget *basep)
 {
+	BasePState old_state;
+
 	if ( (basep->state != BASEP_HIDDEN_LEFT &&
 	      basep->state != BASEP_HIDDEN_RIGHT))
 		return;
  
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("explicit_show whilst moving");
 #endif
 		return;
 	}
+
+	basep->moving = TRUE;
 
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1935,31 +1992,33 @@ basep_widget_explicit_show (BasePWidget *basep)
 			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 
-		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
 					 size, 
 					 global_config.animation_speed);
 					 
 	}
-	
+
+	basep->moving = FALSE;
+	old_state = basep->state;
 	basep->state = BASEP_SHOWN;
 	basep_widget_update_winhints (basep);
 
 	g_signal_emit (G_OBJECT(basep),
 		       basep_widget_signals[STATE_CHANGE_SIGNAL],
-		       0, BASEP_SHOWN);
+		       0, old_state);
 	panels_to_sync = TRUE;
 }
 
 gboolean
 basep_widget_autoshow (gpointer data)
 {
+	BasePState old_state;
 	BasePWidget *basep = data;
 
 	g_return_val_if_fail (BASEP_IS_WIDGET(basep), FALSE);
 
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("autoshow whilst moving");
 #endif
@@ -1969,6 +2028,8 @@ basep_widget_autoshow (gpointer data)
 	if ( (basep->mode != BASEP_AUTO_HIDE) ||
 	     (basep->state != BASEP_AUTO_HIDDEN))
 		return TRUE;
+
+	basep->moving = TRUE;
 
 	if (GTK_WIDGET_REALIZED(basep)) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1985,20 +2046,22 @@ basep_widget_autoshow (gpointer data)
 			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 
-		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
 					 global_config.animation_speed);
 	}
+	
+	basep->moving = FALSE;
 
+	old_state = basep->state;
 	basep->state = BASEP_SHOWN;
 	basep_widget_update_winhints (basep);
 
 	g_signal_emit (G_OBJECT(basep),
 		       basep_widget_signals[STATE_CHANGE_SIGNAL],
-		       0, BASEP_SHOWN);
+		       0, old_state);
 
 	basep->enter_notify_timer_tag = 0;
 	return FALSE;
@@ -2012,7 +2075,7 @@ basep_widget_queue_autoshow (BasePWidget *basep)
         /* check if there's already a timeout set, and delete it if 
          * there was */
 
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_print ("basep_widget_queue_autoshow: return 2");
 #endif
@@ -2020,12 +2083,12 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 	}
 
         if (basep->leave_notify_timer_tag != 0) {
-                gtk_timeout_remove (basep->leave_notify_timer_tag);
+                g_source_remove (basep->leave_notify_timer_tag);
                 basep->leave_notify_timer_tag = 0;
 	}
 
         if (basep->enter_notify_timer_tag != 0) {
-                gtk_timeout_remove (basep->enter_notify_timer_tag);
+                g_source_remove (basep->enter_notify_timer_tag);
 #ifdef BASEP_WIDGET_DEBUG
 		g_print ("basep_widget_queue_autoshow: <timeout removed>\n");
 #endif
@@ -2041,18 +2104,21 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 
 
 	if (global_config.hide_delay == 0) {
-		basep_widget_autoshow (basep);
+		/* set up our idle for popup. */
+		basep->enter_notify_timer_tag =
+			g_idle_add (basep_widget_autoshow, basep);
 	} else {
 		/* set up our delay for popup. */
 		basep->enter_notify_timer_tag =
-			gtk_timeout_add (global_config.show_delay,
-					 basep_widget_autoshow, basep);
+			g_timeout_add (global_config.show_delay,
+				       basep_widget_autoshow, basep);
 	} 
 }
 
 gboolean
 basep_widget_autohide (gpointer data)
 {
+	BasePState old_state;
 	BasePWidget *basep = data;
 
 	g_return_val_if_fail (BASEP_IS_WIDGET(basep), TRUE);
@@ -2060,7 +2126,7 @@ basep_widget_autohide (gpointer data)
 	if (basep->autohide_inhibit)
 		return TRUE;
 	
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("autohide whilst moving");
 #endif
@@ -2086,9 +2152,13 @@ basep_widget_autohide (gpointer data)
 		}
 	}
 
+	basep->moving = TRUE;
+	old_state = basep->state;
+	basep->state = BASEP_AUTO_HIDDEN;
+
 	g_signal_emit(G_OBJECT(basep),
 		      basep_widget_signals[STATE_CHANGE_SIGNAL],
-		      0, BASEP_AUTO_HIDDEN);
+		      0, old_state);
 
 	/* if the app did any updating of the interface, flush that for us*/
 	gdk_flush();
@@ -2098,8 +2168,6 @@ basep_widget_autohide (gpointer data)
 		PanelOrient hide_orient;
 		int w, h, size;
 
-		basep->state = BASEP_AUTO_HIDDEN;
-		
 		hide_orient = klass->get_hide_orient (basep);
 		basep_widget_get_size (basep, &w, &h);
 		klass->get_hide_size (basep, 
@@ -2109,7 +2177,6 @@ basep_widget_autohide (gpointer data)
 			 hide_orient == PANEL_ORIENT_DOWN) 
 			? h : w;
 
-		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep,
 					hide_orient,
@@ -2117,8 +2184,8 @@ basep_widget_autohide (gpointer data)
 					global_config.animation_speed);
 	}
 
+	basep->moving = FALSE;
 
-	basep->state = BASEP_AUTO_HIDDEN;
 	basep_widget_update_winhints (basep);
 
 	basep->leave_notify_timer_tag = 0;
@@ -2130,7 +2197,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
 {
         /* check if there's already a timeout set, and delete it if 
          * there was */
-	if (basep->state == BASEP_MOVING) {
+	if (basep->moving) {
 #ifdef BASEP_WIDGET_DEBUG
 		g_print ("basep_widget_queue_autohide: return 2");
 #endif
@@ -2138,12 +2205,12 @@ basep_widget_queue_autohide(BasePWidget *basep)
 	}
 
         if (basep->enter_notify_timer_tag != 0) {
-                gtk_timeout_remove (basep->enter_notify_timer_tag);
+                g_source_remove (basep->enter_notify_timer_tag);
                 basep->enter_notify_timer_tag = 0;
 	}
 
         if (basep->leave_notify_timer_tag != 0) {
-                gtk_timeout_remove (basep->leave_notify_timer_tag);
+                g_source_remove (basep->leave_notify_timer_tag);
 #ifdef BASEP_WIDGET_DEBUG
 		g_print ("basep_widget_queue_autohide: <timeout removed>\n");
 #endif
@@ -2157,10 +2224,15 @@ basep_widget_queue_autohide(BasePWidget *basep)
                 return;
 	}
                 
-       /* set up our delay for popup. */
-        basep->leave_notify_timer_tag =
-                gtk_timeout_add (global_config.hide_delay,
-                                 basep_widget_autohide, basep);
+	/* set up our delay for popup. */
+	if (global_config.hide_delay == 0) {
+		basep->leave_notify_timer_tag =
+			g_idle_add (basep_widget_autohide, basep);
+	} else {
+		basep->leave_notify_timer_tag =
+			g_timeout_add (global_config.hide_delay,
+				       basep_widget_autohide, basep);
+	}
 }
 
 void
@@ -2300,15 +2372,20 @@ basep_widget_pre_convert_hook (BasePWidget *basep)
 void
 basep_widget_screen_change (BasePWidget *basep, int screen)
 {
+	int old_screen;
+
 	g_return_if_fail (BASEP_IS_WIDGET (basep));
 	g_return_if_fail (screen >= 0);
 
 	if (basep->screen == screen)
 		return;
 
+	old_screen = basep->screen;
+	basep->screen = screen;
+
 	g_signal_emit (G_OBJECT (basep),
 		       basep_widget_signals[SCREEN_CHANGE_SIGNAL],
-		       0, screen);
+		       0, old_screen);
 }
 
 /*****

@@ -466,11 +466,11 @@ queue_resize_foreach(GtkWidget *w, gpointer data)
 
 static void
 basep_state_change(BasePWidget *basep,
-		   BasePState state,
+		   BasePState old_state,
 		   gpointer data)
 {
 	gtk_container_foreach (GTK_CONTAINER (basep->panel),
-			       (state == BASEP_SHOWN)
+			       (basep->state == BASEP_SHOWN)
 			       ? state_restore_foreach
 			       : state_hide_foreach,
 			       (gpointer)basep);

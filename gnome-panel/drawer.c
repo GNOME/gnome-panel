@@ -224,9 +224,6 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 #endif
 		drawer_widget_open_drawer (drawerw, panelw);
 		break;
-	case BASEP_MOVING:
-		g_assert_not_reached ();
-		break;
 	}
 }
 
@@ -253,7 +250,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	if (!xstuff_is_compliant_wm() || global_config.autoraise)
 		gdk_window_raise(drawer->drawer->window);
 
-	if (basep->state == BASEP_MOVING)
+	if (basep->moving)
 		return FALSE;
 	
 	if ((basep->state != BASEP_AUTO_HIDDEN) ||

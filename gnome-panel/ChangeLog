@@ -1,3 +1,13 @@
+Tue Jan 29 01:50:01 2002  George Lebl <jirka@5z.com>
+
+	* basep-widget.[ch], panel.c, floating-widget.c, drawer.c: the change
+	  signal arguments now give the old value and by the time they
+	  are emitted, the new value was already set.  Get rid of the
+	  BASEP_MOVING state since it wasn't really treated as one and
+	  add a ->moving flag.  When we hide the panel, make sure the
+	  widgets that aren't visible are at least insensitive.  Also
+	  autohide/autoshow now use idle when at 0 value.
+
 2002-01-28  Seth Nickell  <snickell@stanford.edu>
 
 	* menu.c: (create_root_menu):

@@ -254,7 +254,6 @@ floating_pos_set_pos (BasePWidget *basep,
 	if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		switch (basep->state) {
 		case BASEP_SHOWN:
-		case BASEP_MOVING:
 			break;
 		case BASEP_AUTO_HIDDEN:
 		case BASEP_HIDDEN_LEFT:
@@ -271,7 +270,6 @@ floating_pos_set_pos (BasePWidget *basep,
 	if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_VERTICAL) {
 		switch (basep->state) {
 		case BASEP_SHOWN:
-		case BASEP_MOVING:
 			break;
 		case BASEP_AUTO_HIDDEN:
 		case BASEP_HIDDEN_LEFT:
