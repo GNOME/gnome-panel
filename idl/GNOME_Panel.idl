@@ -8,6 +8,7 @@ module GNOME {
 
 	interface PanelSpot;
 	interface Applet;
+	interface StatusSpot;
 
 	interface Panel {
 		enum OrientType {
@@ -58,6 +59,8 @@ module GNOME {
 		oneway void quit ();
 
 		readonly attribute boolean in_drag;
+		
+		StatusSpot add_status (out unsigned long winid);
 	};
 
 	interface PanelSpot { /* panel half of applets */
@@ -129,5 +132,9 @@ module GNOME {
 		oneway void set_tooltips_state (in boolean enabled);
 		oneway void change_position (in short x, in short y);
 		readonly attribute string goad_id;
+	};
+	
+	interface StatusSpot {
+		oneway void remove ();
 	};
 };
