@@ -187,6 +187,11 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 static void
 sync_animation_page_with_config(GlobalConfig *conf)
 {
+	gtk_widget_set_sensitive(simple_movement_cb,
+				 !conf->disable_animations);
+	gtk_widget_set_sensitive(anim_frame,
+				 !conf->disable_animations);
+
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(enable_animations_cb),
 				    /*notice the not*/
 				    !conf->disable_animations);
