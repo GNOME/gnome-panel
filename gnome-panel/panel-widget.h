@@ -15,7 +15,9 @@ extern "C" {
 
 #define PANEL_CELL_SIZE 10
 
-#define PANEL_MAX 800 /*8000 long screen, FIXME! make dynamic*/
+#define PANEL_MAX 1000 /*10,000 long screen, FIXME! make dynamic*/
+
+#define PANEL_DRAWER_DROP_TARGET_SIZE 3
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
@@ -45,6 +47,10 @@ typedef enum {
 	PANEL_HIDDEN_RIGHT,
 	PANEL_HIDDEN_LEFT
 } PanelState;
+typedef enum {
+	DRAWER_LEFT,
+	DRAWER_RIGHT
+} DrawerDropZonePos;
 
 struct _AppletRecord
 {
@@ -86,6 +92,9 @@ struct _PanelWidget
 
 	GtkWidget		*currently_dragged_applet;
 	gint			currently_dragged_applet_pos;
+
+	GtkWidget		*drawer_drop_zone;
+	DrawerDropZonePos	drawer_drop_zone_pos;
 
 	gint			thick;
 };
