@@ -505,21 +505,27 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 }
 
 static gboolean
-drop_urilist (PanelWidget *panel, int pos, char *urilist)
+drop_urilist (PanelWidget *panel,
+	      int          pos,
+	      char        *urilist)
 {
-	gboolean success = TRUE;
-	GList *li, *files;
+	char     **uris;
+	gboolean   success;
+	int        i;
 
-	files = gnome_vfs_uri_list_parse (urilist);
+	uris = g_uri_list_extract_uris (urilist);
 
-	for (li = files; li; li = li->next) {
-		GnomeVFSURI *vfs_uri = li->data;
-		gchar *uri = gnome_vfs_uri_to_string (vfs_uri, GNOME_VFS_URI_HIDE_NONE);
-		const char *mimetype;
-		char *basename;
-		char *dirname;
-		char *filename;
+	success = TRUE;
+	for (i = 0; uris[i]; i++) {
+		GnomeVFSURI      *vfs_uri;
 		GnomeVFSFileInfo *info;
+		const char       *mimetype;
+		const char       *uri;
+		char             *basename;
+		char             *dirname;
+		char             *filename;
+
+		uri = uris[i];
 
 		if (strncmp (uri, "http:", strlen ("http:")) == 0 ||
 		    strncmp (uri, "https:", strlen ("https:")) == 0 ||
@@ -533,6 +539,11 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 			 * on copy do all the other stuff.  Or something. */
 			if ( ! drop_url (panel, pos, uri))
 				success = FALSE;
+			continue;
+		}
+
+		if (!(vfs_uri = gnome_vfs_uri_new (uri))) {
+			success = FALSE;
 			continue;
 		}
 
@@ -590,14 +601,18 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 			if ( ! drop_nautilus_uri (panel, pos, uri, icon))
 				success = FALSE;
 		}
+
 		if (info != NULL)
 			gnome_vfs_file_info_unref (info);
+
+
 		g_free (basename);
 		g_free (dirname);
-		g_free (uri);
+
+		gnome_vfs_uri_unref (vfs_uri);
 	}
 
-	gnome_vfs_uri_list_free (files);
+	g_strfreev (uris);
 
 	return success;
 }
