@@ -54,5 +54,5 @@ SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 
 DIST_SUBDIRS = $(always_built_SUBDIRS) esd-manager cpumemusage \
 	diskusage multiload netload slashapp cdplayer \
-	 mixer modemlights winlist fvwm-pager
+	 mixer modemlights winlist fvwm-pager icewm-pager
 
