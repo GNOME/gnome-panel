@@ -574,7 +574,8 @@ panel_load_icon (GtkIconTheme  *icon_theme,
 							    &error);
 
 		if (error) {
-			*error_msg = g_strdup (error->message);
+			if (error_msg)
+				*error_msg = g_strdup (error->message);
 			g_error_free (error);
 		}
 	}
