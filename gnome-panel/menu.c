@@ -2255,10 +2255,11 @@ create_menuitem (GtkWidget *menu,
 
 	if (fr->type == FILE_REC_DIR) {
 		if (!gnome_folder)
-			gnome_folder = gnome_program_locate_file (NULL, 
-								  GNOME_FILE_DOMAIN_PIXMAP, 
-								  "gnome-folder.png", 
-								  TRUE, NULL);
+			gnome_folder = gnome_icon_theme_lookup_icon (
+						panel_icon_theme,
+                                               "gnome-fs-directory",
+                                               48, NULL, NULL);
+
 		if (!icon)
 			icon = gnome_folder;
 		else
