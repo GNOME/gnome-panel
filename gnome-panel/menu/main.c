@@ -92,7 +92,7 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	(*small_icons) = g_list_prepend (*small_icons,align);
+	*small_icons = g_list_prepend (*small_icons, align);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
@@ -176,7 +176,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 	struct stat s;
 	char *filename;
 	DIR *dir;
-	int  items = 0;
+	int items = 0;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
@@ -189,6 +189,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 		GtkSignalFunc  activate_func;
 		char          *thisfile, *pixmap_name;
 		char          *p;
+		char          *menuitem_name;
 
 		thisfile = dent->d_name;
 		/* Skip over . and .. */
@@ -205,50 +206,60 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 		sub = 0;
 		item_info = 0;
 		if (S_ISDIR (s.st_mode)) {
+			char *dentry_name;
+
 			sub = create_menu_at (window, filename,
 					      create_app_menu, small_icons);
 			if (!sub) {
 				g_free (filename);
 				continue;
 			}
+
+			dentry_name = g_concat_dir_and_file (filename, ".directory");
+			item_info = gnome_desktop_entry_load (dentry_name);
+			g_free (dentry_name);
+
+			if (item_info)
+				menuitem_name = item_info->name;
+			else
+				menuitem_name = thisfile;
+
 			/* just for now */
 			pixmap_name = NULL;
 
 			if (create_app_menu) {
 				GtkWidget *pixmap = NULL;
 				char *text;
+				char *dirname;
 
-				/* FIXME: this shouldn't use thisfile, rather it should read a
-				 * desktop-entry called .directory and use the name field from
-				 * that.
-				 */
-
-				text = g_copy_strings ("Menu: ", thisfile, NULL);
+				/* create separator */
 
 				menuitem = gtk_menu_item_new ();
 				gtk_menu_prepend (GTK_MENU (sub), menuitem);
 				gtk_widget_show (menuitem);
-				
+
+				/* create menu item */
+
 				menuitem = gtk_menu_item_new ();
 				if (gnome_folder) {
 					pixmap = gnome_create_pixmap_widget (window, menuitem, gnome_folder);
 					gtk_widget_show (pixmap);
 				}
-				setup_menuitem (menuitem, pixmap, text,
-					small_icons);
+
+				text = g_copy_strings ("Menu: ", menuitem_name, NULL);
+				setup_menuitem (menuitem, pixmap, text, small_icons);
 				g_free (text);
-				text = g_strdup (filename);
+				
+				dirname = g_strdup (filename);
 				gtk_menu_prepend (GTK_MENU (sub), menuitem);
 				gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 						    (GtkSignalFunc) add_dir_to_panel,
-						    text);
+						    dirname);
 				gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
 						    (GtkSignalFunc) free_string,
-						    text);
+						    dirname);
 			}
 		} else {
-			/* FIXME: this should use the name field from the desktop-entry */
-
 			if (strstr (filename, ".desktop") == 0) {
 				g_free (filename);
 				continue;
@@ -258,10 +269,12 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 				g_free (filename);
 				continue;
 			}
+			menuitem_name = item_info->name;
 			pixmap_name = item_info->small_icon;
-
 		}
+		
 		items++;
+		
 		menuitem = gtk_menu_item_new ();
 		if (sub)
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
@@ -274,12 +287,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 				gtk_widget_show (pixmap);
 		}
 
-		p = strstr(thisfile, ".desktop");
-		if (p)
-			*p = '\0';  /* Remove the .desktop part */
-		
-		setup_menuitem (menuitem, pixmap, thisfile, small_icons);
-
+ 		setup_menuitem (menuitem, pixmap, menuitem_name, small_icons);
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 
 		gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
@@ -294,8 +302,9 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 
 	if (items == 0) {
 		gtk_widget_destroy (menu);
-		return 0;
+		menu = NULL;
 	}
+	
 	return menu;
 }
 
