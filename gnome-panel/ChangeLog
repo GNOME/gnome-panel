@@ -1,3 +1,13 @@
+2003-12-11  Vincent Untz  <vincent@vuntz.net>
+
+	Based on a patch from Jan Arne Petersen  <jpetersen@uni-bonn.de>
+	Fix bug #128636
+
+	* panel-run-dialog.c: (panel_run_dialog_destroy),
+	(file_button_browse_response), (file_button_clicked): replace
+	GtkFileSelection with GtkFileChooser
+	(file_button_browse_ok), (file_button_browse_cancel): kill
+
 2003-12-11  Mark McLoughlin  <mark@skynet.ie>
 
 	* launcher.c:

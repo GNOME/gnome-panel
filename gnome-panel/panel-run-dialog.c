@@ -74,8 +74,6 @@ typedef struct {
 	
 	GtkListStore     *program_list_store;
 
-	GtkFileSelection *file_sel;
-	
 	GList            *executables;
 	GCompletion      *completion;
 	
@@ -107,10 +105,6 @@ static void
 panel_run_dialog_destroy (PanelRunDialog *dialog)
 {
 	GList *l;
-
-	if (dialog->file_sel != NULL)
-		gtk_widget_destroy (GTK_WIDGET (dialog->file_sel));
-	dialog->file_sel = NULL;
 
 	g_object_unref (dialog->program_list_box);
 	
@@ -1019,53 +1013,46 @@ panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 }
 
 static void
-file_button_browse_ok (GtkWidget      *button,
-		       PanelRunDialog *dialog)
+file_button_browse_response (GtkWidget      *chooser,
+			     gint            response,
+			     PanelRunDialog *dialog)
 {
-	const char *file;
+	char *file;
 	
-	file = gtk_file_selection_get_filename (dialog->file_sel);
-	panel_run_dialog_append_file (dialog, file);
-	
-	gtk_widget_destroy (GTK_WIDGET (dialog->file_sel));
-	dialog->file_sel = NULL;
+	if (response == GTK_RESPONSE_OK) {
+		file = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
+		panel_run_dialog_append_file (dialog, file);
+		g_free (file);
+	}
 
-	gtk_widget_grab_focus (dialog->gtk_entry);
-}
-
-static void
-file_button_browse_cancel (GtkWidget      *button,
-			   PanelRunDialog *dialog)
-{
-	gtk_widget_destroy (GTK_WIDGET (dialog->file_sel));
-	dialog->file_sel = NULL;
-
-	gtk_widget_grab_focus (dialog->gtk_entry);
+	gtk_widget_destroy (chooser);
+ 
+ 	gtk_widget_grab_focus (dialog->gtk_entry);
 }
 
 static void
 file_button_clicked (GtkButton      *button,
 		     PanelRunDialog *dialog)
 {
-	char *home;
+	GtkWidget *chooser;
 
-	dialog->file_sel = GTK_FILE_SELECTION (gtk_file_selection_new (
-						       _("Choose a file to append to the command...")));
+	chooser = gtk_file_chooser_dialog_new (_("Choose a file to append to the command..."),
+					       GTK_WINDOW (dialog->run_dialog),
+					       GTK_FILE_CHOOSER_ACTION_OPEN,
+					       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+					       GTK_STOCK_OK, GTK_RESPONSE_OK,
+					       NULL);
 	
-	home = g_strconcat (g_get_home_dir (), "/", NULL);
-	gtk_file_selection_set_filename (dialog->file_sel, home);
-	g_free (home);
+	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (chooser),
+					     g_get_home_dir ());
 	
-	gtk_window_set_transient_for (GTK_WINDOW (dialog->file_sel),
-				      GTK_WINDOW (dialog->run_dialog));
-				      
-	g_signal_connect (dialog->file_sel->ok_button, "clicked",
-			  G_CALLBACK (file_button_browse_ok), dialog);
-			  
-	g_signal_connect (dialog->file_sel->cancel_button, "clicked",
-		 	  G_CALLBACK (file_button_browse_cancel), dialog);
+	gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
+	gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
 
-	gtk_window_present (GTK_WINDOW (dialog->file_sel));
+	g_signal_connect (chooser, "response",
+			  G_CALLBACK (file_button_browse_response), dialog);
+
+	gtk_window_present (GTK_WINDOW (chooser));
 }
 
 static void
