@@ -2801,7 +2801,7 @@ remove_panel (GtkWidget *widget)
 static void
 remove_panel_accept (GtkWidget *w, int response, GtkWidget *panelw)
 {
-	if (response == GTK_RESPONSE_YES) {
+	if (response == GTK_RESPONSE_OK) {
 		panel_push_window_busy (w);
 		remove_panel (panelw);
 		panel_pop_window_busy (w);
@@ -2835,7 +2835,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	dialog = gtk_message_dialog_new (NULL /* parent */,
 					 0 /* flags */,
 					 GTK_MESSAGE_QUESTION,
-					 GTK_BUTTONS_YES_NO,
+					 GTK_BUTTONS_OK_CANCEL,
 					 _("When a panel is removed, the panel "
 					   "and its\napplet settings are lost. "
 					   "Remove this panel?"));
