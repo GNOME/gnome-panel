@@ -205,6 +205,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	for(li = list; li!= NULL; li = g_slist_next(li)) {
 		char *filename = g_concat_dir_and_file(dirname, li->data);
 		struct stat s;
+		g_free(li->data);
 		if (stat (filename, &s) == 0) {
 			if (S_ISDIR (s.st_mode)) {
 				add_drawers_from_dir(filename,NULL,INT_MAX/2,
@@ -220,7 +221,6 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 			}
 		}
 		g_free(filename);
-		g_free(li->data);
 	}
 	g_slist_free(list);
 }
@@ -344,13 +344,6 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 }
 
 static void
-destroy_dedit(GtkObject *dedit,gpointer data)
-{
-	char *s = gtk_object_get_data(dedit,"location");
-	g_free(s);
-}
-
-static void
 edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 {
 	GtkWidget *dialog;
@@ -367,7 +360,9 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	dentry = gnome_desktop_entry_load_unconditional(dirfile);
 	if (dentry) {
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
-		gtk_object_set_data(o,"location",g_strdup(dentry->location));
+		gtk_object_set_data_full(o,"location",
+					 g_strdup(dentry->location),
+					 (GtkDestroyNotify)g_free);
 		gnome_desktop_entry_destroy(dentry);
 		g_free(dirfile);
 	} else {
@@ -377,7 +372,8 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 		dentry->type = g_strdup("Directory");
 		/*we don't have to free dirfile here it will be freed as if
 		  we had strduped it here*/
-		gtk_object_set_data(o,"location",dirfile);
+		gtk_object_set_data_full(o,"location",dirfile,
+					 (GtkDestroyNotify)g_free);
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
 		gnome_desktop_entry_destroy(dentry);
 	}
@@ -391,7 +387,6 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_signal_connect_object(o, "changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
 				  GTK_OBJECT(dialog));
-	gtk_signal_connect(o, "destroy", GTK_SIGNAL_FUNC(destroy_dedit),NULL);
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(dentry_apply_callback),
@@ -852,7 +847,7 @@ add_logout_to_panel (GtkWidget *widget, void *data)
 	return TRUE;
 }
 
-static int
+static void
 add_applet (GtkWidget *w, char *item_loc)
 {
 	GnomeDesktopEntry *ii = gnome_desktop_entry_load(item_loc);
@@ -861,13 +856,11 @@ add_applet (GtkWidget *w, char *item_loc)
 	
 	if(!goad_id) {
 		g_warning(_("Can't get goad_id from desktop entry!"));
-		return TRUE;
+		return;
 	}
 	load_extern_applet(goad_id,NULL,current_panel,0);
 
 	g_free(goad_id);
-
-	return TRUE;
 }
 
 static int
@@ -1143,7 +1136,6 @@ create_menu_at (GtkWidget *menu,
 	FileInfo *fi;
 	GSList *finfo = NULL;
 	GSList *flist = NULL;
-	GSList *li = NULL;
 	GSList *mfl = NULL;
 	int add_separator = FALSE;
 	int first_item = 0;
@@ -1203,11 +1195,14 @@ create_menu_at (GtkWidget *menu,
 
 	flist = get_files_from_menudir(menudir);
 	
-	for(li = flist; li != NULL; li = g_slist_next(li)) {
-		char *thisfile = li->data;
+	while(flist) {
+		char *thisfile = flist->data;
 		GtkWidget *sub, *pixmap;
-		char *pixmap_name;
+		char *pix_name;
 		char *menuitem_name;
+		GSList *tmp = flist;
+		flist = g_slist_next(flist);
+		g_slist_free_1(tmp);
 		
 		filename = g_concat_dir_and_file(menudir,thisfile);
 		
@@ -1233,18 +1228,18 @@ create_menu_at (GtkWidget *menu,
 			g_free (dentry_name);
 
 			menuitem_name = item_info?item_info->name:thisfile;
-			pixmap_name = item_info?item_info->icon:NULL;
+			pix_name = item_info?item_info->icon:NULL;
 
 			if(fake_submenus)
 				sub = create_fake_menu_at (filename,
 							   applets,
 							   menuitem_name,
-							   pixmap_name);
+							   pix_name);
 			else
 				sub = create_menu_at (NULL, filename, 
 						      applets,
 						      menuitem_name,
-						      pixmap_name,
+						      pix_name,
 						      fake_submenus,
 						      FALSE);
 
@@ -1269,7 +1264,7 @@ create_menu_at (GtkWidget *menu,
 				continue;
 			}
 			menuitem_name = item_info->name;
-			pixmap_name = item_info->icon;
+			pix_name = item_info->icon;
 			
 			/*add file to the checked files list*/
 			fi = make_finfo_s(filename,&s);
@@ -1287,8 +1282,8 @@ create_menu_at (GtkWidget *menu,
 		}
 
 		pixmap = NULL;
-		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
+		if (pix_name && g_file_exists (pix_name)) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pix_name,
 								    SMALL_ICON_SIZE,
 								    SMALL_ICON_SIZE);
 			if (pixmap)
