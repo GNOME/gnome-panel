@@ -912,12 +912,12 @@ load_up_globals(void)
 	
 	for(i=0;i<LAST_TILE;i++) {
 		g_free(global_config.tile_up[i]);
-		g_snprintf(buf,256,"tiles/tile_up_%d=tile-%s-up.png",
+		g_snprintf(buf,256,"tile_up_%d=tiles/tile-%s-up.png",
 			   i, tile_def[i]);
 		global_config.tile_up[i] = gnome_config_get_string(buf);
 
 		g_free(global_config.tile_down[i]);
-		g_snprintf(buf,256,"tiles/tile_down_%d=tile-%s-down.png",
+		g_snprintf(buf,256,"tile_down_%d=tiles/tile-%s-down.png",
 			   i,tile_def[i]);
 		global_config.tile_down[i] = gnome_config_get_string(buf);
 
