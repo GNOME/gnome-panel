@@ -418,9 +418,6 @@ display_preferences_dialog (BonoboUIComponent *uic,
 				  (GCallback) gtk_widget_hide, 
 				  fish->preferences_dialog);
 
-	g_signal_connect (fish->preferences_dialog, "response",
-			  G_CALLBACK (handle_response), fish);
-
 	gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
 	gtk_window_set_resizable (GTK_WINDOW (fish->preferences_dialog), FALSE);
