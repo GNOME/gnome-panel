@@ -19,14 +19,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-07 12:51+0200\n"
-"PO-Revision-Date: 2003-07-07 19:55+0200\n"
-"Last-Translator: Francisco Javier F. Serrador <serrador@arrakis.es>\n"
+"POT-Creation-Date: 2003-07-08 20:49+0200\n"
+"PO-Revision-Date: 2003-07-08 19:20-0300\n"
+"Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0.1\n"
+"X-Generator: KBabel 1.0\n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -286,7 +286,7 @@ msgstr "_Acerca de..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3087
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3122
 #: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
@@ -693,7 +693,7 @@ msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
-"Si esto es cierto (true), la lista de ventanas mostrará ventanas para todos "
+"Si esto es «true» (verdadero), la lista de ventanas mostrará ventanas para todos "
 "los espacios de trabajo, en otro caso mostrará ventanas sólo para el espacio "
 "de trabajo actual."
 
@@ -702,7 +702,7 @@ msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
-"Si es cierto (true), al restaurar una ventana, la trae al espacio de trabajo "
+"Si es «true» (verdadero), al restaurar una ventana, la trae al espacio de trabajo "
 "actual. En otro caso, cambia al espacio de trabajo de la ventana."
 
 #: applets/wncklet/window-list.schemas.in.h:4
@@ -729,8 +729,8 @@ msgid ""
 msgstr ""
 "Este valor es el ancho máximo que solicitará la lista de ventanas. La "
 "configuración del ancho máximo es útil para limitar el tamaño de la lista de "
-"ventanas en paneles grandes como los paneles lateral, en los que la lista "
-"de ventanas podría llenar toda la área disponible."
+"ventanas en paneles grandes como los paneles lateral, en los que la lista de "
+"ventanas podría llenar toda la área disponible."
 
 #: applets/wncklet/window-list.schemas.in.h:9
 msgid ""
@@ -836,7 +836,7 @@ msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"Si esto es cierto (true), el paginador mostrará todos los espacios de "
+"Si esto es «true» (verdadero), el paginador mostrará todos los espacios de "
 "trabajo. De otro modo sólo mostrará el espacio de trabajo actual."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:2
@@ -845,7 +845,7 @@ msgid ""
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"Si esto es cierto (true), los espacios de trabajo del paginador mostrarán "
+"Si esto es «true» (verdadero), los espacios de trabajo del paginador mostrarán "
 "los nombres de los espacios de trabajo. En otro caso, mostrarán los "
 "contenidos del espacio de trabajo."
 
@@ -1013,12 +1013,12 @@ msgstr "Activar el botón de ocultación"
 msgid "Enable hidebutton arrow"
 msgstr "Activar flecha del botón de ocultación"
 
-#: gnome-panel/drawer.c:177 gnome-panel/menu.c:3191
+#: gnome-panel/drawer.c:177
 msgid "Drawer"
 msgstr "Cajón"
 
 #: gnome-panel/drawer.c:658 gnome-panel/launcher.c:749 gnome-panel/menu.c:1556
-#: gnome-panel/menu.c:3037 gnome-panel/panel-action-button.c:91
+#: gnome-panel/menu.c:3072 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Propiedades"
 
@@ -1230,8 +1230,8 @@ msgstr ""
 "pantalla para que de esta forma que aparezcan en la web."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
-msgid "Web directory."
-msgstr "Directorio web."
+msgid "Web directory"
+msgstr "Directorio web"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1292,7 +1292,9 @@ msgstr ""
 #: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "No se puede abrir el archivo de escritorio %s para el lanzador del panel%s%s\n"
+msgstr ""
+"No se puede abrir el archivo de escritorio %s para el lanzador del panel%s%"
+"s\n"
 
 #: gnome-panel/launcher.c:531
 #, c-format
@@ -1322,8 +1324,7 @@ msgstr "No se puede mostrar el documento de ayuda"
 msgid "Specify a profile name to load"
 msgstr "Especifique un nombre de perfil para cargarlo"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3226
-#: gnome-panel/panel-menu-bar.c:161
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3261
 msgid "Log Out"
 msgstr "Terminar la sesión"
 
@@ -1351,7 +1352,7 @@ msgstr "Forzar el cierre"
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3462
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Captura la pantalla de su escritorio"
@@ -1360,7 +1361,7 @@ msgstr "Captura la pantalla de su escritorio"
 msgid "Search"
 msgstr "Buscar"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3408
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3443
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Busca archivos, carpetas y documentos en su computadora"
@@ -1386,8 +1387,8 @@ msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
-"Este programa es responsable de lanzar otras aplicaciones y incluir "
-"pequeños apliques dentro de sí mismo."
+"Este programa es responsable de lanzar otras aplicaciones y incluir pequeños "
+"apliques dentro de sí mismo."
 
 #: gnome-panel/menu.c:333
 msgid "Can't execute 'About GNOME'"
@@ -1468,74 +1469,78 @@ msgstr "Añade un elemento nuevo a este menú"
 msgid "Properties"
 msgstr "Propiedades"
 
-#: gnome-panel/menu.c:2564 gnome-panel/menu.c:2619
+#: gnome-panel/menu.c:2599 gnome-panel/menu.c:2654
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la consulta ha devuelto la excepción %s\n"
 
-#: gnome-panel/menu.c:2814 gnome-panel/menu.c:2819 gnome-panel/menu.c:3364
+#: gnome-panel/menu.c:2849 gnome-panel/menu.c:2854 gnome-panel/menu.c:3399
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Aplicaciones"
 
-#: gnome-panel/menu.c:2862 gnome-panel/menu.c:2868 gnome-panel/menu.c:3289
+#: gnome-panel/menu.c:2897 gnome-panel/menu.c:2903 gnome-panel/menu.c:3324
 msgid "KDE Menu"
 msgstr "Menú KDE"
 
-#: gnome-panel/menu.c:2920
+#: gnome-panel/menu.c:2955
 msgid "You cannot remove your last panel."
 msgstr "No puede quitar el último panel."
 
-#: gnome-panel/menu.c:2981
+#: gnome-panel/menu.c:3016
 msgid "_Delete This Panel..."
 msgstr "_Borrar este panel..."
 
-#: gnome-panel/menu.c:2984 gnome-panel/menu.c:3023
+#: gnome-panel/menu.c:3019 gnome-panel/menu.c:3058
 msgid "_Delete This Panel"
 msgstr "_Borrar este panel"
 
-#: gnome-panel/menu.c:2999
+#: gnome-panel/menu.c:3034
 msgid "_Add to Panel"
 msgstr "_Añadir al panel"
 
-#: gnome-panel/menu.c:3050
+#: gnome-panel/menu.c:3085
 msgid "_New Panel"
 msgstr "Panel _nuevo"
 
-#: gnome-panel/menu.c:3097
+#: gnome-panel/menu.c:3132
 msgid "_About Panels"
 msgstr "_Acerca de los paneles"
 
-#: gnome-panel/menu.c:3110
+#: gnome-panel/menu.c:3145
 msgid "About _GNOME"
 msgstr "Acerca de _GNOME"
 
-#: gnome-panel/menu.c:3153
-msgid "Launcher..."
-msgstr "Lanzador..."
+#: gnome-panel/menu.c:3188
+msgid "_Launcher..."
+msgstr "_Lanzador..."
 
-#: gnome-panel/menu.c:3162
-msgid "Launcher from menu"
-msgstr "Lanzador desde menú"
+#: gnome-panel/menu.c:3197
+msgid "Launcher _from menu"
+msgstr "Lanzador _desde menú"
 
-#: gnome-panel/menu.c:3172
-msgid "Main Menu"
-msgstr "Menú principal"
+#: gnome-panel/menu.c:3207
+msgid "Main _Menu"
+msgstr "_Menú principal"
 
-#: gnome-panel/menu.c:3182
-msgid "Menu Bar"
-msgstr "Barra de menú"
+#: gnome-panel/menu.c:3217
+msgid "Menu _Bar"
+msgstr "_Barra de menú"
 
-#: gnome-panel/menu.c:3214 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3226
+msgid "_Drawer"
+msgstr "Ca_jón"
+
+#: gnome-panel/menu.c:3249
 msgid "Lock Screen"
 msgstr "Bloquear la pantalla"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3255
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Bloquear la pantalla para que pueda dejar temporalmente su computadora"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3267
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1543,23 +1548,23 @@ msgstr ""
 "Salir de esta sesión para ingresar como un usuario diferente o apagar su "
 "computadora"
 
-#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:110
+#: gnome-panel/menu.c:3424
 msgid "Run Application..."
-msgstr "Ejecutar aplicación..."
+msgstr "Ejecutar un programa..."
 
-#: gnome-panel/menu.c:3396 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3431 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Ejecute una aplicación introduciendo un comando"
 
-#: gnome-panel/menu.c:3405 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3440
 msgid "Search for Files..."
 msgstr "Buscar archivos..."
 
-#: gnome-panel/menu.c:3424 gnome-panel/panel-menu-bar.c:138
+#: gnome-panel/menu.c:3459
 msgid "Take Screenshot..."
 msgstr "Capturar la pantalla..."
 
-#: gnome-panel/menu.c:3442
+#: gnome-panel/menu.c:3477
 msgid "Desktop"
 msgstr "Escritorio"
 
@@ -1595,7 +1600,7 @@ msgstr ""
 msgid "_Activate Screensaver"
 msgstr "_Activar el protector de pantalla"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:86 gnome-panel/panel-menu-bar.c:152
 msgid "_Lock Screen"
 msgstr "B_loquear la pantalla"
 
@@ -1626,7 +1631,7 @@ msgstr "Terminar la sesión de GNOME"
 #: gnome-panel/panel-action-button.c:217
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Run Application"
-msgstr "Ejecutar aplicación"
+msgstr "Ejecutar un programa"
 
 #: gnome-panel/panel-action-button.c:222
 msgid "Search for Files"
@@ -1695,7 +1700,7 @@ msgstr "No se puede obtener el interfaz AppletShell del control\n"
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr "Error al observar la tecla gconf  «%s»: %s"
+msgstr "Error al observar la clave gconf  «%s»: %s"
 
 #: gnome-panel/panel-bindings.c:185
 #, c-format
@@ -1727,8 +1732,8 @@ msgstr "Borrar panel"
 #: gnome-panel/panel-force-quit.c:73
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
-"Pulse en una ventana para forzar la terminación de una aplicación. Para cancelar "
-"presione <ESC>."
+"Pulse en una ventana para forzar la terminación de una aplicación. Para "
+"cancelar presione <ESC>."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
@@ -1747,104 +1752,180 @@ msgid "Which edges to draw"
 msgstr "Qué bordes dibujar"
 
 #: gnome-panel/panel-general.schemas.in.h:1
-msgid "A list of panel IDs"
-msgstr "Una lista de IDs de panel"
+msgid ""
+"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
+"setttings for each of these panels are stored in /apps/panel/general/"
+"$(profile)/toplevels/$(id)."
+msgstr ""
+"Una lista de IDs de paneles. Cada ID identifica un panel individual de nivel "
+"superior. Los valores para cada uno de estos paneles son almacenados en "
+"/apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels is stored in /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
-msgstr ""
-"Una lista de IDs de paneles. Cada ID identifica un panel de nivel superior. "
-"Los valores para cada uno de estos paneles son almacenados en /apps/panel/"
-"general/$(profile)/toplevels/$(id)."
-
-#: gnome-panel/panel-general.schemas.in.h:3
-msgid "A list of panel applet IDs"
-msgstr "Una lista de IDs de apliques de panel"
-
-#: gnome-panel/panel-general.schemas.in.h:4
-msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets is stored in /apps/panel/general/"
+"The settings for each of these applets are stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
 "Una lista de IDs de apliques de panel. Cada ID identifica un aplique de "
 "panel individual. Los valores para cada uno de estos apliques son "
 "almacenados en /apps/panel/general/$(profiles)/applets/$(id)."
 
-#: gnome-panel/panel-general.schemas.in.h:5
-msgid "A list of panel object IDs"
-msgstr "Lista de IDs de objetos de panel"
-
-#: gnome-panel/panel-general.schemas.in.h:6
+#: gnome-panel/panel-general.schemas.in.h:3
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 "Una lista de IDs de objetos de panel. Cada ID identifica un objeto de panel "
 "individual (por ejemplo, un lanzador, un botón de acción o una barra/botón "
-"de menú). Las configuraciones para cada uno de estos objetos son almacenadas "
-"en /apps/panel/general/$(profiles)/objects/$(id)."
+"de menú). Los valores para cada uno de estos objetos son almacenados en "
+"/apps/panel/general/$(profiles)/objects/$(id)."
+
+#: gnome-panel/panel-general.schemas.in.h:4
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Activa el listado de programas en el diálogo «Ejecutar un programa»"
+
+#: gnome-panel/panel-general.schemas.in.h:5
+msgid "Expand program list in \"Run Application\" dialog"
+msgstr "Expande el listado de programas en el diálogo «Ejecutar un programa»"
+
+#: gnome-panel/panel-general.schemas.in.h:6
+msgid ""
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is expanded when the dialog is opened. This key is only relevant if "
+"the enable_program_list key is true."
+msgstr ""
+"Si es «true» (verdadero) se expandirá el listado  «Aplicaciones conocidas» en "
+"el diálogo «Ejecutar programa» cuando este sea abierto. Esta clave sólo es "
+"relevante si el valor de la clave «enable_program_list» es «true» (verdadero)."
 
 #: gnome-panel/panel-general.schemas.in.h:7
-msgid "Enable the program list in the \"Run Application\" dialog."
-msgstr "Activa el listado de programas en el diálogo «Ejecutar aplicación»"
-
-#: gnome-panel/panel-general.schemas.in.h:8
-msgid "Expand the program list in the \"Run Application\" dialog"
-msgstr "Expande el listado de programas en el diálogo «Ejecutar aplicación»"
-
-#: gnome-panel/panel-general.schemas.in.h:9
 msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" dialog is "
-"made available. Whether or not the listing is expanded when the dialog is "
-"shown is controlled by the show_program_list setting."
+"If true, the \"Known Applications\" listing in the \"Run Application\" "
+"dialog is made available. Whether or not the listing is expanded when the "
+"dialog is shown is controlled by the show_program_list key."
 msgstr ""
 "Si es «true» (verdadero) se colocará disponible el listado  «Aplicaciones "
-"conocidas» en el diálogo  «Ejecutar programa». El parámetro "
-"show_program_list controla la expansión del listado cuando el diálogo es "
-"mostrado."
+"conocidas» en el diálogo  «Ejecutar programa». Si el listado se encuentra "
+"expandido o no cuando se muestra el diálogo es definido por la clave "
+"«show_program_list»."
+
+#: gnome-panel/panel-general.schemas.in.h:8
+msgid "Panel ID list"
+msgstr "Lista de IDs del panel"
+
+#: gnome-panel/panel-general.schemas.in.h:9
+msgid "Panel applet ID list"
+msgstr "Lista de IDs de apliques de panel"
 
 #: gnome-panel/panel-general.schemas.in.h:10
-msgid ""
-"If true the \"Known Applications\" listing in the \"Run Program\" is "
-"expanded when the dialog is opened. This setting is only relevant if "
-"enable_program_list is true."
-msgstr ""
-"Si es verdadero se expandirá el listado  «Aplicaciones conocidas» en el "
-"diálogo  «Ejecutar programa» cuando este sea abierto. Este parámetro sólo es "
-"relevante si enable_program_list es verdadero."
+msgid "Panel object ID list"
+msgstr "Lista de IDs de objetos de panel"
 
 #: gnome-panel/panel-global.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr "Mostrar el diálogo «Ejecutar»"
+#: gnome-panel/panel-toplevel.schemas.in.h:1
+msgid "Animation speed"
+msgstr "Velocidad de la animación"
 
 #: gnome-panel/panel-global.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr "ARREGLAR - ¿está resuelto con las cosas nuevas del menú?"
+msgid "Autoclose drawer"
+msgstr "Cerrar el cajón automáticamente"
 
 #: gnome-panel/panel-global.schemas.in.h:3
+msgid "Confirm panel removal"
+msgstr "Confirmar la eliminación de un panel"
+
+#: gnome-panel/panel-global.schemas.in.h:4
+msgid "Display \"Run Application\" dialog keybinding"
+msgstr "Mostrar la combinación de teclas del diálogo «Ejecutar un programa»"
+
+#: gnome-panel/panel-global.schemas.in.h:5
+#: gnome-panel/panel-toplevel.schemas.in.h:9
+msgid "Enable animations"
+msgstr "Habilitar las animaciones"
+
+#: gnome-panel/panel-global.schemas.in.h:6
+msgid "Enable keybindings"
+msgstr "Habilitar las combinaciones de teclas"
+
+#: gnome-panel/panel-global.schemas.in.h:7
+msgid "Enable tooltips"
+msgstr "Habilitar los consejos"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+msgid "FIXME - is this resolved with the new menu stuff"
+msgstr "ARREGLAR - ¿está resuelto con las cosas nuevas del menú?"
+
+#: gnome-panel/panel-global.schemas.in.h:9
 msgid "FIXME - need to define limits"
 msgstr "ARREGLAR - se necesitan definir los límites"
 
-#: gnome-panel/panel-global.schemas.in.h:4
-msgid "Popup the panel menu"
-msgstr "Mostrar el menú del panel"
+#: gnome-panel/panel-global.schemas.in.h:10
+msgid "Highlight launchers on mouseover"
+msgstr "Resaltar los lanzadores cuando el ratón pase por encima"
 
-#: gnome-panel/panel-global.schemas.in.h:5
-msgid "Take a screen shot"
+#: gnome-panel/panel-global.schemas.in.h:11
+msgid ""
+"If true, a dialog is shown asking for confirmation if the user wants to "
+"remove a panel."
+msgstr ""
+"Si es «true» (verdadero) se muestra un diálogo solicitando una confirmación si el usuario "
+"quiere eliminar un panel."
+
+#: gnome-panel/panel-global.schemas.in.h:12
+msgid ""
+"If true, a drawer will automatically be closed when the user clicks a "
+"launcher in it."
+msgstr ""
+"Si es «true» (verdadero) el cajín se cerrará automáticamente cuando el usuario haga clic "
+"sobre un lanzador de este."
+
+#: gnome-panel/panel-global.schemas.in.h:13
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgstr ""
+"Si es «true» (verdadero) se resaltará un lanzador cuando el usuario mueva el puntero "
+"sobre este."
+
+#: gnome-panel/panel-global.schemas.in.h:14
+msgid "If true, panel-specific keybindings are enabled."
+msgstr "Si es «true» (verdadero) las combinaciones especificas del panel están habilitadas"
+
+#: gnome-panel/panel-global.schemas.in.h:15
+msgid "If true, tooltips are shown for objects in panels."
+msgstr "Si es «true» (verdadero) los consejos son mostrados para los objetos de los paneles."
+
+#: gnome-panel/panel-global.schemas.in.h:16
+msgid "Popup panel menu keybinding"
+msgstr "Resaltar las combinaciones de teclas del menú"
+
+#: gnome-panel/panel-global.schemas.in.h:17
+msgid "Take screenshot"
 msgstr "Capturar la pantalla"
 
-#: gnome-panel/panel-global.schemas.in.h:6
-msgid "Take a screen shot of a window"
-msgstr "Capturar una ventana"
+#: gnome-panel/panel-global.schemas.in.h:18
+msgid "Take window screenshot"
+msgstr "Captura una imagen de la pantalla"
+
+#: gnome-panel/panel-menu-bar.c:110
+msgid "_Run Application..."
+msgstr "Ejecuta_r aplicación..."
+
+#: gnome-panel/panel-menu-bar.c:123
+msgid "_Search for Files..."
+msgstr "Bu_scar archivos..."
+
+#: gnome-panel/panel-menu-bar.c:138
+msgid "_Take Screenshot..."
+msgstr "Cap_turar la pantalla..."
 
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Protect your computer from unauthorized use"
 msgstr "Proteja su computadora del uso no autorizado"
+
+#: gnome-panel/panel-menu-bar.c:161
+msgid "_Log Out"
+msgstr "Terminar _la sesión"
 
 #: gnome-panel/panel-menu-bar.c:163
 msgid "Quit from the GNOME desktop"
@@ -1883,36 +1964,47 @@ msgid "Use the icon specified by the custom-icon property"
 msgstr "Usar el icono especificado por la propiedad de icono personalizado"
 
 #: gnome-panel/panel-object.schemas.in.h:1
-msgid ""
-"If true the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
-msgstr ""
-"Si es verdadero la posición del objeto es interpretada como relativa al "
-"borde derecho (o a la parte inferior si está en vertical) del panel."
+msgid "Action button type"
+msgstr "Tipo de acción del botón"
 
 #: gnome-panel/panel-object.schemas.in.h:2
-msgid ""
-"If true, the custom_icon setting is used as a custom icon for the button. If "
-"false, the custom_icon setting is ignored. This setting is only relevant if "
-"the object_type is \"menu-object\" or \"drawer-object\"."
-msgstr ""
-"Si es verdadero, el valor de custom_icon es usado como un icono "
-"personalizado para el botón. Si es falso, el valor de custom_icon es "
-"ignorado. Este valor sólo es relevante si el tipo de objeto es «menu-"
-"object»  o «drawer-object»."
+msgid "Applet Bonobo IID"
+msgstr "IID del aplique Bonobo"
 
 #: gnome-panel/panel-object.schemas.in.h:3
-msgid ""
-"If true, the menu_path setting is used as the path from which the menu "
-"contents should be constructed. If false, the menu_path setting is ignored. "
-"This setting is only relevant if the object_type is \"menu-object\"."
-msgstr ""
-"Si es verdadero, el valor de ruta del menú, menu_path, es usado como la ruta "
-"desde la cual se construyen los contenidos del menú. Si es falso, el valor "
-"menu_path es ignorado. Este valor sólo es relevante si el tipo de objeto es  "
-"«menu-object»."
+msgid "Icon used for object's button"
+msgstr "Icono utilizado para el botón del objeto"
 
 #: gnome-panel/panel-object.schemas.in.h:4
+msgid ""
+"If true, the custom_icon key is used as a custom icon for the button. If "
+"false, the custom_icon key is ignored. This key is only relevant if the "
+"object_type key is \"menu-object\" or \"drawer-object\"."
+msgstr ""
+"Si es «true» (verdadero),la clave «custom_icon» es usada como un icono "
+"personalizado para el botón. Si es «false» (falso), la clave «custom_icon» es "
+"ignorada. Esta clave sólo es relevante si la clave «object_type» contiene "
+"«menu-object» o «drawer-object»."
+
+#: gnome-panel/panel-object.schemas.in.h:5
+msgid ""
+"If true, the menu_path key is used as the path from which the menu contents "
+"should be constructed. If false, the menu_path key is ignored. This key is "
+"only relevant if the object_type key is \"menu-object\"."
+msgstr ""
+"Si es «true» (verdadero), la clave «menu_path» es utilizada como la ruta desde la cual "
+"el contenido del menú debería ser construido. Si es «false» (falso) la clave «menu_path» "
+"es ignorada. Esta clave sólo es relevante si la clave «object_type» contiene «menu-object»."
+
+#: gnome-panel/panel-object.schemas.in.h:6
+msgid ""
+"If true, the position of the object is interpreted relative to the right (or "
+"bottom if vertical) edge of the panel."
+msgstr ""
+"Si es «true» (verdadero) la posición del objeto es interpretada como relativa a la "
+"derecha (o a la parte inferior si está en vertical) del panel."
+
+#: gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
@@ -1920,156 +2012,145 @@ msgstr ""
 "Si es «true» (verdadero) el usuario no podrá mover el aplique sin antes "
 "desbloquear el objeto usando la opción del menú «Desbloquear»."
 
-#: gnome-panel/panel-object.schemas.in.h:5
-msgid "Interpret the position relative to the bottom/right edge"
-msgstr "Interpreta la posición como relativa al borde inferior derecho. "
-
-#: gnome-panel/panel-object.schemas.in.h:6
-msgid "Lock the object to the panel"
-msgstr "Bloquear el objeto en el panel"
-
-#: gnome-panel/panel-object.schemas.in.h:7
-msgid "The Bonobo IID of the applet"
-msgstr "El Bonobo IID del aplique"
-
 #: gnome-panel/panel-object.schemas.in.h:8
-msgid ""
-"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This setting is only relevant if the object_type is \"bonobo-applet\"."
-msgstr ""
-"El ID de la implementación del aplique Bonobo - ej. «OAFIID:"
-"GNOME_ClockApplet». Este valor sólo es relevante si el tipo de objeto es  "
-"«bonobo-applet»."
+msgid "Interpret position relative to bottom/right edge"
+msgstr "Interpreta la posición como relativa al borde inferior derecho"
 
 #: gnome-panel/panel-object.schemas.in.h:9
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
-"relevant if the object_type is \"action-applet\"."
-msgstr ""
-"El tipo de acción que representa este botón. Los valores posibles son "
-"«lock», «logout», «run», «search» y «screenshot». Este parámetro sólo es "
-"relevante si «object_type» tiene el valor «action-applet»."
+msgid "Launcher location"
+msgstr "Posición del lanzador"
 
 #: gnome-panel/panel-object.schemas.in.h:10
-msgid "The icon used for the object's button"
-msgstr "El icono utilizado para el botón del objeto"
+msgid "Lock the object to the pane"
+msgstr "Bloquear el objeto en el panel"
 
 #: gnome-panel/panel-object.schemas.in.h:11
-msgid ""
-"The identifier of the panel attached to this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
-msgstr ""
-"El identificador del panel conectado a este cajón. Este parámetro sólo "
-"es relevante si el «object_type» tiene el valor «drawer-object»."
+msgid "Menu content path"
+msgstr "Ruta hacia el contenido del menú"
 
 #: gnome-panel/panel-object.schemas.in.h:12
-msgid "The identifier of the panel toplevel which contains this object."
-msgstr "El identificador del panel de nivel superior el cual contiene este objeto."
-
-#: gnome-panel/panel-object.schemas.in.h:13
-msgid ""
-"The location of the .desktop file describing the launcher. This setting is "
-"only relevant if the object_type is \"launcher-object\"."
-msgstr ""
-"La ubicación del archivo de escritorio describiendo el lanzador. Este valor "
-"es relevante si el «object_type» tiene el valor «launcher-object»."
-
-#: gnome-panel/panel-object.schemas.in.h:14
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This setting is only relevant if the object_type is \"drawer-object\" or "
-"\"menu-object\" and use_custom_icon is true."
-msgstr ""
-"La ubicación del archivo imagen usado como el icono para el botón del "
-"objeto. Este valor es relevante si el tipo de objeto es «drawer-object» o "
-"«menu-object» y el valor de use_custom_icon es verdadero."
-
-#: gnome-panel/panel-object.schemas.in.h:15
-msgid "The location of the launcher"
-msgstr "Ubicación del lanzador"
-
-#: gnome-panel/panel-object.schemas.in.h:16
-msgid "The object's position on the panel"
+msgid "Object's position on panel"
 msgstr "La posición del objeto en el panel"
 
+#: gnome-panel/panel-object.schemas.in.h:13
+msgid "Panel attached to drawer"
+msgstr "Panel conectado al cajón"
+
+#: gnome-panel/panel-object.schemas.in.h:14
+msgid "Panel object type"
+msgstr "Tipo de objeto del panel"
+
+#: gnome-panel/panel-object.schemas.in.h:15
+msgid ""
+"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
+"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgstr ""
+"El ID de la implementación del aplique Bonobo - ej. «OAFIID:GNOME_ClockApplet». "
+"Esta clave sólo es relevante si el valor de la clave «object_type» es «bonobo-applet»."
+
+#: gnome-panel/panel-object.schemas.in.h:16
+msgid ""
+"The action type this button represents. Possible values are \"lock\", "
+"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
+"relevant if the object_type key is \"action-applet\"."
+msgstr ""
+"El tipo de acción que representa este botón. Los valores posibles son "
+"«lock», «logout», «run», «search» y «screenshot». Esta clave sólo es "
+"relevante si el valor de la clave «object_type» es «action-applet»."
+
 #: gnome-panel/panel-object.schemas.in.h:17
-msgid "The panel attached to this drawer"
-msgstr "El panel conectado a este cajón"
+msgid ""
+"The identifier of the panel attached to this drawer. This key is only "
+"relevant if the object_type key is \"drawer-object\"."
+msgstr ""
+"El identificador del panel conectado a este cajón. Esta clave sólo es "
+"relevante si el valor de la clave «object_type» es «drawer-object»."
 
 #: gnome-panel/panel-object.schemas.in.h:18
-msgid "The panel toplevel which contains this object"
-msgstr "El nivel superior del panel el cual contiene este objeto"
+msgid "The identifier of the toplevel panel which contains this object."
+msgstr "El identificador del panel de nivel superior el cual contiene este objeto."
 
 #: gnome-panel/panel-object.schemas.in.h:19
-msgid "The path for the menu contents"
-msgstr "La ruta para los contenidos del menú"
+msgid ""
+"The location of the .desktop file describing the launcher. This key is only "
+"relevant if the object_type key is \"launcher-object\"."
+msgstr ""
+"La ubicación del archivo .desktop describiendo el lanzador. Esta clave sólo "
+"es relevante si el valor de la clave «object_type» es «launcher-object»."
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
-"The path from which the menu contents is contructed. The setting is only "
-"relevant if use_menu_path is true and the object_type is \"menu-object\"."
+"The location of the image file used as the icon for the object's button. "
+"This key is only relevant if the object_type key is \"drawer-object\" or "
+"\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
-"La ruta desde la cual se construyen los contenidos del menú. El parámetro "
-"sólo es relevante si el valor de use_menu_path es verdadero y el tipo de "
-"objeto es «menu-object»."
+"La ubicación del archivo imagen usado como el icono para el botón del "
+"objeto. Esta clave sólo es relevante si el valor de la clave «object_type» "
+"es «menu-object» o «drawer-object» y el valor de la clave «use_custom_icon» "
+"es «true» (verdadero)."
 
 #: gnome-panel/panel-object.schemas.in.h:21
+msgid ""
+"The path from which the menu contents is contructed. This key is only "
+"relevant if the use_menu_path key is true and the object_type key is \"menu-"
+"object\"."
+msgstr ""
+"La ruta desde la cual se construyen los contenidos del menú. Esta clave sólo "
+"es relevante si el valor de la clave «use_menu_path» es «true» (verdadero) y el "
+"valor de la clave «object_type» es «menu-object»."
+
+#: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
-"La posición de este objeto en el panel. La posición es especificada por el "
-"número de píxeles desde el borde izquierdo (o desde el borde superior, si es "
-"vertical) del panel."
-
-#: gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The text to display in a tooltip for this drawer. This setting is only "
-"relevant if the object_type is \"drawer-object\"."
-msgstr ""
-"El texto a desplegar en una sugerencia de la herramienta (tooltip) para el "
-"cajón. Este valor sólo es relevante si «object_type» tiene el valor "
-"«drawer-object»."
+"La posición de este objeto del panel. La posición es especificada por la "
+"cantidad de píxeles desde la izquierda (o desde arriba, si es vertical) "
+"del borde del panel."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-msgid "The tooltip displayed for this drawer"
-msgstr "La sugerencia de la herramienta para este cajón"
+msgid ""
+"The text to display in a tooltip for this drawer. This key is only relevant "
+"if the object_type key is \"drawer-object\"."
+msgstr ""
+"El texto a desplegar en una sugerencia de la herramienta (tooltip) para este "
+"cajón. Esta clave sólo es relevante si el valor de «object_type» es «drawer-"
+"object»."
 
 #: gnome-panel/panel-object.schemas.in.h:24
-msgid "The type of action button"
-msgstr "El tipo de acción que implementa este botón"
-
-#: gnome-panel/panel-object.schemas.in.h:25
-msgid "The type of panel object"
-msgstr "El tipo de objeto de panel"
-
-#: gnome-panel/panel-object.schemas.in.h:26
 msgid ""
-"The type of this panel object. There are several possible values - \"drawer-"
-"object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
-"applet\" and \"menu-bar\"."
+"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
+"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
+"\"menu-bar\"."
 msgstr ""
-"El tipo de objeto de panel. Hay muchos valores posibles - «drawer-object», "
+"El tipo de objeto de panel. Los valores posibles son - «drawer-object», "
 "«menu-object», «launcher-object», «bonobo-applet», «action-applet» y «menu-"
 "bar»."
 
+#: gnome-panel/panel-object.schemas.in.h:25
+msgid "Tooltip displayed for drawer"
+msgstr "Sugerencia mostrada para el cajón"
+
+#: gnome-panel/panel-object.schemas.in.h:26
+msgid "Toplevel panel containing object"
+msgstr "Nivel superior del panel el cual contiene este objeto"
+
 #: gnome-panel/panel-object.schemas.in.h:27
-msgid "Use a custom icon for the object's button"
-msgstr "Utilice un icono personalizado para el botón del objeto"
+msgid "Use custom icon for object's button"
+msgstr "Utilizar un icono personalizado para el botón del objeto"
 
 #: gnome-panel/panel-object.schemas.in.h:28
-msgid "Use a custom path for the menu contents"
-msgstr "Utilice una ruta personalizada para los contenidos del menú"
+msgid "Use custom path for menu contents"
+msgstr "Utilizar una ruta personalizada para los contenidos del menú"
 
 #: gnome-panel/panel-profile.c:649 gnome-panel/panel-profile.c:677
-#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1390
+#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1396
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Error al leer el valor de la cadena GConf  «%s»: %s"
 
 #: gnome-panel/panel-profile.c:692 gnome-panel/panel-profile.c:1291
-#: gnome-panel/panel-profile.c:1359 gnome-panel/panel-profile.c:1422
+#: gnome-panel/panel-profile.c:1365 gnome-panel/panel-profile.c:1428
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Error al leer el valor entero GConf «%s»: %s"
@@ -2083,12 +2164,12 @@ msgstr ""
 "El panel «%s» está configurado para mostrarse en la pantalla %d la cual no "
 "está disponible actualmente. Este panel no se cargará. "
 
-#: gnome-panel/panel-profile.c:1374
+#: gnome-panel/panel-profile.c:1380
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Error al leer el valor booleano GConf  «%s»: %s"
 
-#: gnome-panel/panel-profile.c:1889
+#: gnome-panel/panel-profile.c:1905
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "Error al leer el valor de lista GConf  «%s»: %s"
@@ -2221,8 +2302,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Ocurrió un error desconocido al intentar abrir %s"
 
 #: gnome-panel/panel-recent.c:165
-msgid "Open Recent"
-msgstr "Abrir reciente"
+msgid "_Open Recent"
+msgstr "Abrir _reciente"
 
 #: gnome-panel/panel-run-dialog.c:277
 msgid "Error launching command"
@@ -2262,16 +2343,16 @@ msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
-"Pulse en este botón para buscar un archivo cuyo nombre agregar a la "
-"cadena de comando."
+"Pulse en este botón para buscar un archivo cuyo nombre agregar a la cadena "
+"de comando."
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
-"Pulse en este botón para ejecutar la aplicación seleccionada o el "
-"comando en el campo de entrada de comando."
+"Pulse en este botón para ejecutar la aplicación seleccionada o el comando en "
+"el campo de entrada de comando."
 
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Command entry"
@@ -2546,94 +2627,73 @@ msgstr "Flechas activadas"
 msgid "Enable arrows on hide/show buttons"
 msgstr "Activas las flechas en los botones de ocultación"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:1
-msgid "A name with which to identify this panel."
-msgstr "Un nombre con el cual identificar este panel."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:2
-msgid "Automatically hide the panel into the corner."
-msgstr "Ocultar automáticamente el panel en la esquina."
+msgid "Automatically hide panel into corner"
+msgstr "Ocultar automáticamente el panel en la esquina"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Center the panel on the x-axis."
-msgstr "Centrar el panel en el eje de las x."
+msgid "Background color"
+msgstr "Color de fondo."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
-msgid "Center the panel on the y-axis."
-msgstr "Centrar el panel en el eje de las y."
+msgid "Background color opacity"
+msgstr "Opacidad del color de fondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-msgid "Delay before automatically hiding the panel."
-msgstr "Retardo antes de ocultar automáticamente el panel."
+msgid "Background image"
+msgstr "Imagen de fondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
-msgid "Delay before automatically un-hiding the panel."
-msgstr "Retardo antes de mostrar automáticamente el panel."
+msgid "Background type"
+msgstr "Tipo de fondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
-msgid "Enable animations."
-msgstr "Activar las animaciones."
+msgid "Center panel on x-axis"
+msgstr "Centrar el panel en el eje x"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:8
-msgid "Enable arrows on the hide buttons."
-msgstr "Activar flechas en los botones de ocultación."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:9
-msgid "Enable hide buttons."
-msgstr "Activar los botones de ocultar."
+msgid "Center panel on y-axis"
+msgstr "Centrar el panel en el eje y"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
-msgid "Expand to occupy entire screen width."
-msgstr "Expandir para cubrir el ancho completo de la pantalla."
+msgid "Enable arrows on hide buttons"
+msgstr "Activar flechas en los botones de ocultación"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
-msgid "Fit the image to the panel."
-msgstr "Ajustar imagen al panel."
+msgid "Enable hide buttons"
+msgstr "Activar los botones de ocultar"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
-msgid ""
-"If true the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
-msgstr ""
-"Si es verdadero la imagen será escalada a las dimensiones del panel. No se "
-"mantendrá el radio del aspecto de la imagen."
+msgid "Expand to occupy entire screen width"
+msgstr "Expandir para cubrir el ancho completo de la pantalla"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
-msgid ""
-"If true the x setting is ignored and the panel is placed at the center of "
-"the x-axis of the screen. If the panel is resized it will remain in that "
-"position - i.e. the panel will grow on both sides. If false the x setting "
-"determines the location of the panel."
-msgstr ""
-"Si es verdadero la configuración de x es ignorada y el panel es colocado en "
-"el centro del eje de las x de la pantalla. Si el panel es redimensionado, se "
-"mantendrá en esa posición, por ejemplo el panel crecerá en ambos lados. Si "
-"es falso la configuración de la x determina la ubicación del panel."
+msgid "Fit image to panel"
+msgstr "Ajustar la imagen al panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
-"If true, arrows will be placed on the hide buttons. This preference only has "
-"meaning if enable_buttons is true."
+"If true, arrows will be placed on the hide buttons. This key is only "
+"relevant if the enable_buttons key is true."
 msgstr ""
-"Si es verdadero, se colocarán flechas en los botones ocultos. Esta "
-"preferencia sólo tiene significado si el valor de «enable_buttons» es "
-"verdadero."
+"Si es «true» (verdadero), se colocarán flechas en los botones ocultos. Esta "
+"clave sólo es relevante si el valor de la clave «enable_buttons» es «true» (verdadero)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
-"Si es verdadero, se colocarán botones en cada lado del panel los cuales se "
+"Si es «true» (verdadero), se colocarán botones en cada lado del panel los cuales se "
 "pueden utilizar para mover los bordes de la pantalla, dejando únicamente un "
 "botón mostrándose. "
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantaneously."
+"happening instantly."
 msgstr ""
-"Si es verdadero, mostrar u ocultar el panel será animado, en vez de ocurrir "
+"Si es «true» (verdadero), mostrar u ocultar el panel será animado, en vez de ocurrir "
 "instantáneamente. "
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
@@ -2641,7 +2701,7 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
-"Si es verdadero, la imagen de fondo se rotará cuando el panel se coloque en "
+"Si es «true» (verdadero), la imagen de fondo se rotará cuando el panel se coloque en "
 "orientación vertical."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
@@ -2649,10 +2709,18 @@ msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
-"Si es verdadero, la imagen será ampliada (manteniendo el aspecto de radio de "
+"Si es «true» (verdadero), la imagen será ampliada (manteniendo el aspecto de radio de "
 "la misma) a la altura del panel (si es horizontal). "
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
+msgid ""
+"If true, the image will be scaled to the panel dimensions. The aspect ratio "
+"of the image will not be maintained."
+msgstr ""
+"Si es «true» (verdadero) la imagen será escalada a las dimensiones del panel. No se "
+"mantendrá el radio del aspecto de la imagen."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -2665,17 +2733,42 @@ msgstr ""
 "panel sólo será lo suficientemente lardo para acomodar los apliques, "
 "lanzadores y botones en el panel."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:20
+#: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
-"If true, when the pointer leaves the panel area, it is automatically hidden "
-"into a corner of the screen. Moving the pointer to that corner will cause "
+"If true, the pointer is automatically hidden into a corner of the screen "
+"when it leaves the panel area. Moving the pointer to that corner will cause "
 "the panel to re-appear."
 msgstr ""
-"Si es verdadero, cuando el puntero deje el área del panel, se ocultará "
+"Si es «true» (verdadero), cuando el puntero deje el área del panel, se ocultará "
 "automáticamente en una esquina de la pantalla. Al mover el puntero a esa "
-"esquina causará que el panel vuelva a aparecer. "
+"esquina causará que el panel vuelva a aparecer."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:21
+#: gnome-panel/panel-toplevel.schemas.in.h:22
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key determines the "
+"location of the panel."
+msgstr ""
+"Si es «true» (verdadero) la clave x es ignorada y el panel es "
+"colocado en el centro del eje de las x de la pantalla. Si el panel es "
+"redimensionado, se mantendrá en esa posición, por ejemplo el panel "
+"crecerá en ambos lados. Si es «false» (falso) la configuración de la "
+"x determina la ubicación del panel."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the x key is ignored and the panel is placed at the center of the x-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the x key specifies the "
+"location of the panel."
+msgstr ""
+"Si es «true» (verdadero) la clave x es ignorada y el panel es colocado "
+"en el centro del eje de las x de la pantalla. Si el panel es redimensionado, "
+"se mantendrá en esa posición, por ejemplo el panel crecerá en ambos lados. "
+"Si es «false» (falso) la configuración de la x determina la ubicación del panel."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -2684,19 +2777,35 @@ msgstr ""
 "individual. Esta clave identifica el monitor actual en el que el panel es "
 "mostrado."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid "Number of visible pixels with a hidden panel."
-msgstr "Número de píxeles visibles en un panel oculto."
+#: gnome-panel/panel-toplevel.schemas.in.h:25
+msgid "Name to identify panel"
+msgstr "Nombre para identificar al panel"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:23
-msgid "Rotate the image on vertical panels."
-msgstr "Rotar la imagen en los paneles verticales."
+#: gnome-panel/panel-toplevel.schemas.in.h:26
+msgid "Panel autohide delay"
+msgstr "Retardo de la ocultación automática del panel"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:24
+#: gnome-panel/panel-toplevel.schemas.in.h:27
+msgid "Panel autounhide delay"
+msgstr "Retardo de la aparición automática del panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:28
+msgid "Panel orientatio"
+msgstr "Orientación del panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:29
+msgid "Panel size"
+msgstr "Tamaño del panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:30
+msgid "Rotate image on vertical panels"
+msgstr "Rotar la imagen en los paneles verticales"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Especifica el color de fondo para el panel en formato #RGB."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:25
+#: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -2705,38 +2814,37 @@ msgstr ""
 "Especifica el archivo a ser usado para la imagen de fondo. Si la imagen "
 "contiene un canal alfa se combinará con la imagen de fondo del escritorio. "
 
-#: gnome-panel/panel-toplevel.schemas.in.h:26
+#: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This preference is "
-"only relevant if auto_hide is true."
+"panel area before the panel is automatically re-shown. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
-"Especifica el número de milisegundos de retardo después de que el puntero entra "
-"en el área del panel antes de que el panel se vuelva a mostrar automáticamente. "
-"Esta preferencia sólo es relevante si el valor de auto_hide "
-"es verdadero. "
+"Especifica la cantidad de milisegundos de retardo después de que el puntero "
+"entra en el área del panel antes de que el panel se vuelva a mostrar "
+"automáticamente. Esta clave sólo es relevante si el valor de la clave "
+"«auto_hide» es «true» (verdadero)."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:27
+#: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This preference is only "
-"relevant if auto_hide is true."
+"panel area before the panel is automatically hidden. This key is only "
+"relevant if the auto_hide key is true."
 msgstr ""
-"Especifica el número de milisegundos a esperar después de que el puntero "
-"abandona el área del panel antes de que éste se oculte automáticamente. "
-"Esta preferencia sólo es relevante si el valor de auto_hide es verdadero."
+"Especifica la cantidad de milisegundos de retardo después de que el puntero "
+"abandona el área del panel antes de que éste se oculte automáticamente. Esta "
+"clave sólo es relevante si el valor de la clave «auto_hide» es «true» (verdadero)."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:28
+#: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This preference only has relevance when auto_hide is "
-"true."
+"hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
-"Especifica el número de píxeles visibles cuando se oculta automáticamente el "
-"panel en una esquina. Esta preferencia solamente tiene importancia cuando el "
-"valor de auto_hide es verdadero."
+"Especifica la cantidad de píxeles visibles cuando el panel se oculta automáticamente "
+"en una esquina. Esta clave sólo es relevante cuando el valor de la clave «auto_hide» es "
+"«true» (verdadero)."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:29
+#: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
@@ -2746,43 +2854,11 @@ msgstr ""
 "completamente opaco (un valor inferior a 65535), el color será mezclado con "
 "la imagen del fondo del escritorio."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:30
-msgid "Stretch the image to the panel."
-msgstr "Estirar la imagen al panel"
-
-#: gnome-panel/panel-toplevel.schemas.in.h:31
-msgid "The X co-ordinate of the panel."
-msgstr "La coordenada X del panel"
-
-#: gnome-panel/panel-toplevel.schemas.in.h:32
-msgid "The X screen the panel is on."
-msgstr "La pantalla X en la que está el panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:33
-msgid "The Xinerama monitor the panel is on."
-msgstr "El monitor Xinerama en el que está el panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:34
-msgid "The Y co-ordinate of the panel."
-msgstr "La coordenada Y del panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:35
-msgid "The background color opacity."
-msgstr "La opacidad del color de fondo."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:36
-msgid "The background color."
-msgstr "El color de fondo."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:37
-msgid "The background image."
-msgstr "La imagen de fondo."
+msgid "Stretch image to panel"
+msgstr "Ajustar la imagen al panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
-msgid "The background type."
-msgstr "El tipo de fondo."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -2794,70 +2870,57 @@ msgstr ""
 "fuente tipográfica y otros indicadores. El tamaño máximo es fijado a un "
 "cuarto de la altura de la pantalla (o ancho). "
 
+#: gnome-panel/panel-toplevel.schemas.in.h:39
+msgid ""
+"The location of the panel along the x-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
+msgstr ""
+"La ubicación del panel a lo largo del eje x. Esta clave sólo es relevante en el "
+"modo expandido. En el modo expandido esta clave es ignorada y el panel es colocado "
+"en el borde de la pantalla indicado por la clave «orientation»."
+
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
-"The location of the panel along the x-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
+"The location of the panel along the y-axis. This key is only relevant in un-"
+"expanded mode. In expanded mode this key is ignored and the panel is placed "
+"at the screen edge specified by the orientation key."
 msgstr ""
-"La ubicación del panel a lo largo del eje de las x. Este valor sólo tiene "
-"significado en un modo reducido. En modo ampliado el valor es ignorado y el "
-"panel se coloca en el borde de la pantalla indicado por la orientación. "
+"La ubicación del panel a lo largo del eje de las y. Esta clave sólo relevante "
+"en un modo expandido. En un modo expandido esta clave es ignorada y el panel "
+"es colocado en el borde de la pantalla indicado por la clave «orientation»."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
-"The location of the panel along the y-axis. This value only has meaning in "
-"un-expanded mode. In expanded mode the value is ignored and the panel is "
-"placed at the screen edge indicated by the orientation."
+"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
+"\", \"right\". In expanded mode the key specifies which screen edge the "
+"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
+"\" is less important - both indicate that this is a horizontal panel - but "
+"still give a useful hint as to how some panel objects should behave. For "
+"example, on a \"top\" panel a menu button will pop up its menu below the "
+"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
+"panel."
 msgstr ""
-"La ubicación del panel a lo largo del eje de las y. Este valor sólo tiene "
-"significado en un modo reducido. En un modo ampliado este valor se ignora "
-"y el panel se coloca en el borde de la pantalla indicado por la "
-"orientación."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:42
-msgid "The orientation of the panel."
-msgstr "La orientación del panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"The orientation of the panel. There are four possible values; \"top\", "
-"\"bottom\", \"left\", \"right\". In expanded mode the value specifies which "
-"screen edge the panel is on. In un-expanded mode the difference between \"top"
-"\" and \"bottom\" is less important - both indicate that this is a "
-"horizontal panel - but still give a useful hint as to how some panel objects "
-"should behave. For example, on a \"top\" panel a menu button will pop up its "
-"menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
-"up above the panel."
-msgstr ""
-"La orientación del panel. Hay cuatro valores posibles: «top», «bottom», "
-"«left», «right». En el modo ampliado el valor especifica en cuál borde de "
-"pantalla está el panel. En el modo reducido, la diferencia entre «top» y "
+"La orientación del panel. Los valores posibles son «top», «bottom», "
+"«left», «right». En el modo ampliado la clave especifica en que borde de la "
+"pantalla está el panel. En el modo expandido, la diferencia entre «top» y "
 "«bottom» es menos importante - ambos indican que es un panel horizontal pero "
 "todavía da una pista útil sobre cómo se deberían comportar algunos paneles. "
 "Por ejemplo, en un panel «top» (superior) un botón de menú mostrará su menú "
 "debajo del panel, mientras que un panel «bottom» (inferior) el menú se "
 "mostrará arriba del panel."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:44
-msgid "The size of the panel."
-msgstr "El tamaño del panel."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:45
-msgid "The speed of animations."
-msgstr "La velocidad de las animaciones."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:46
+#: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
-"The speed which animations should occur. There are three possible values; "
-"\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
-"enable_animations is true."
+"The speed in which panel animations should occur. Possible values are \"slow"
+"\", \"medium\" and \"fast\". This key is only relevant if the "
+"enable_animations key is true."
 msgstr ""
-"La velocidad a la que deberían ocurrir las animaciones. Hay tres valores "
-"posibles; «slow», «medium» y «fast». Esta preferencia únicamente tiene "
-"importancia si enable_animations es verdadero. "
+"La velocidad a la que deberían ocurrir las animaciones. Los valores posibles son "
+"«slow», «medium» y «fast». Esta clave sólo es relevante si el valor de la clave"
+"«enable_animations» es «true» (verdadero)."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:47
+#: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "This is a human readable name which you can use to indentify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2868,28 +2931,46 @@ msgstr ""
 "del la ventana del panel, lo cual puede resultar útil cuando se navega entre "
 "ellos."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:48
-msgid ""
-"Which type of background should be used for this panel. There are three "
-"possible values; \"gtk\", the default GTK+ widget background will be used, "
-"\"color\", the color preference will be used as the background color or "
-"\"image\", the image specified in the image preference will be used as the "
-"background."
-msgstr ""
-"El tipo de fondo que debería ser utilizado para este panel. Existen tres "
-"valores posibles; «gtk», se usará el fondo preestablecido GTK+ widget, "
-"«color», se usará el color establecido en las preferencias como color de fondo o "
-"«imagen», se usará la imagen especificada en las preferencias de imagen como "
-"fondo. "
+#: gnome-panel/panel-toplevel.schemas.in.h:44
+msgid "Visible pixels when hidden"
+msgstr "Píxeles visibles cuando esta oculto"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:49
+#: gnome-panel/panel-toplevel.schemas.in.h:45
+msgid ""
+"Which type of background should be used for this panel. Possible values are "
+"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
+"color key will be used as background color or \"image\" - the image "
+"specified by the image key will be used as background."
+msgstr ""
+"Que tipo de fondo debería ser usado para este panel. Los valores posibles son "
+"«gtk» se usará el fondo predeterminado del widget GTK, «color» se usará la clave "
+"«color» como color de fondo o «image» se usará la imagen especificada por la clave "
+"«image» como fondo."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
 "Con una configuración de pantallas múltiples, puede tener paneles en cada "
-"pantalla individual. Esta clave identifica la pantalla actual en la que se muestra "
-"el panel."
+"pantalla individual. Esta clave identifica la pantalla actual en la que se "
+"muestra el panel."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:47
+msgid "X co-ordinate of panel"
+msgstr "Coordenada X del panel"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:48
+msgid "X screen panel is on"
+msgstr "El panel de la pantalla X está activado"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:49
+msgid "Xinerama monitor panel is on"
+msgstr "El panel del monitor de Xinerama está activado"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:50
+msgid "Y co-ordinate of panel"
+msgstr "Coordenada Y del panel"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2922,42 +3003,42 @@ msgstr "Aplique de prueba de bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fábrica de apliques de prueba de bonobo"
 
-#: libpanel-applet/panel-applet.c:828
+#: libpanel-applet/panel-applet.c:830
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Se recibió un tipo de fondo «%s» incompleto"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:844
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Se recibió un tipo de fondo «%s»  incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:851
+#: libpanel-applet/panel-applet.c:853
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Ha ocurrido un error al obtener la imagen %s"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:860
 msgid "Unknown background type received"
 msgstr "Se recibió un tipo de fondo desconocido"
 
-#: libpanel-applet/panel-applet.c:1037
+#: libpanel-applet/panel-applet.c:1039
 msgid "The Applet's containing Panel's orientation"
 msgstr "El aplique que contiene la orientación del panel"
 
-#: libpanel-applet/panel-applet.c:1045
+#: libpanel-applet/panel-applet.c:1047
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "El aplique que contiene el tamaño del panel en píxeles"
 
-#: libpanel-applet/panel-applet.c:1053
+#: libpanel-applet/panel-applet.c:1055
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "El aplique que contiene el color o imagen de fondo del panel"
 
-#: libpanel-applet/panel-applet.c:1061
+#: libpanel-applet/panel-applet.c:1063
 msgid "The Applet's flags"
 msgstr "Los flags del aplique"
 
-#: libpanel-applet/panel-applet.c:1069
+#: libpanel-applet/panel-applet.c:1071
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rangos que aconsejan los tamaños aceptables para el aplique"
 
@@ -3020,6 +3101,51 @@ msgstr "Enorme"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Diminuto"
+
+#~ msgid "A list of panel IDs"
+#~ msgstr "Una lista de IDs de panel"
+
+#~ msgid "Take a screen shot"
+#~ msgstr "Capturar la pantalla"
+
+#~ msgid "Take a screen shot of a window"
+#~ msgstr "Capturar una ventana"
+
+#~ msgid "The Bonobo IID of the applet"
+#~ msgstr "El Bonobo IID del aplique"
+
+#~ msgid "The location of the launcher"
+#~ msgstr "Ubicación del lanzador"
+
+#~ msgid "The path for the menu contents"
+#~ msgstr "La ruta para los contenidos del menú"
+
+#~ msgid "The type of action button"
+#~ msgstr "El tipo de acción que implementa este botón"
+
+#~ msgid "The type of panel object"
+#~ msgstr "El tipo de objeto de panel"
+
+#~ msgid "Delay before automatically hiding the panel."
+#~ msgstr "Retardo antes de ocultar automáticamente el panel."
+
+#~ msgid "Delay before automatically un-hiding the panel."
+#~ msgstr "Retardo antes de mostrar automáticamente el panel."
+
+#~ msgid "The background image."
+#~ msgstr "La imagen de fondo."
+
+#~ msgid "The background type."
+#~ msgstr "El tipo de fondo."
+
+#~ msgid "The orientation of the panel."
+#~ msgstr "La orientación del panel."
+
+#~ msgid "The size of the panel."
+#~ msgstr "El tamaño del panel."
+
+#~ msgid "The speed of animations."
+#~ msgstr "La velocidad de las animaciones."
 
 #~ msgid "and finally, The Knights Who Say... NI!"
 #~ msgstr "y finalmente, los caballeros que dicen ... ¡NI!"
@@ -3157,10 +3283,6 @@ msgstr "Diminuto"
 
 #~ msgid "Run Program..."
 #~ msgstr "Ejecutar un programa..."
-
-#, fuzzy
-#~ msgid "Take a screenshot"
-#~ msgstr "Capturar la pantalla"
 
 #~ msgid "Transparent"
 #~ msgstr "Transparente"
@@ -3585,9 +3707,6 @@ msgstr "Diminuto"
 
 #~ msgid "Edge panel"
 #~ msgstr "Panel lateral"
-
-#~ msgid "Corner panel"
-#~ msgstr "Panel de esquina"
 
 #~ msgid "Sliding panel"
 #~ msgstr "Panel deslizante"
