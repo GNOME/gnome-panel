@@ -53,7 +53,7 @@ load_default_applets(void)
 	   PANEL_TABLE_SIZE-1 to load from right */
 	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION);
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION);
-	load_applet("Mail check", NULL, PANEL_TABLE_SIZE-1);
+	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION);
 }
 
 static void

@@ -9,7 +9,7 @@
 #include <string.h>
 #include "gnome.h"
 
-#include "panel-widget.h"
+/*#include "panel-widget.h"*/
 
 #include "applet_files.h"
 #include "gdkextra.h"

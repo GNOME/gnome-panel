@@ -2,8 +2,7 @@
 #define __PANEL_WIDGET_H__
 
 
-#include <gdk/gdk.h>
-#include <gtk/gtkeventbox.h>
+#include <gtk/gtk.h>
 
 
 #ifdef __cplusplus
@@ -25,6 +24,7 @@ typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
 typedef struct _AppletRecord		AppletRecord;
+typedef struct _WorkspaceDesc		WorkspaceDesc;
 typedef enum {
 	PANEL_HORIZONTAL,
 	PANEL_VERTICAL
@@ -51,11 +51,19 @@ struct _AppletRecord
 	GtkWidget		*drawer;
 };
 
+struct _WorkspaceDesc
+{
+	GList			*panels;
+	GList			*deskareas;
+	GtkWidget		*current_dragged_applet;
+	GtkWidget		*current_dragged_parent;
+};
+
 struct _PanelWidget
 {
-	GtkFixed		fixed;
+	GtkWindow		window;
 
-	GtkWidget		*window;
+	GtkWidget		*fixed;
 	GtkWidget		*table;
 	GtkWidget		*hidebutton_n;
 	GtkWidget		*hidebutton_e;
@@ -74,7 +82,7 @@ struct _PanelWidget
 
 struct _PanelWidgetClass
 {
-	GtkFixedClass parent_class;
+	GtkWindowClass parent_class;
 };
 
 guint		panel_widget_get_type		(void);

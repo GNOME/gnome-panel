@@ -20,7 +20,7 @@ panel_widget_get_type ()
 			(GtkArgGetFunc) NULL,
 		};
 
-		panel_widget_type = gtk_type_unique (gtk_fixed_get_type (), &panel_widget_info);
+		panel_widget_type = gtk_type_unique (gtk_window_get_type (), &panel_widget_info);
 	}
 
 	return panel_widget_type;
@@ -53,29 +53,18 @@ panel_widget_applet_realized (GtkWidget *widget,gpointer data)
 static void
 panel_widget_set_hidebuttons(PanelWidget *panel)
 {
-	switch(snapped) {
-		case PANEL_TOP:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
-					         0,
-					         0);
-			break;
-		case PANEL_BOTTOM:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
-					         0,
-					         gdk_screen_height() -
-					         PANEL_CELL_SIZE);
-			break;
-		case PANEL_LEFT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
-					         0,
-					         0);
-			break;
-		case PANEL_RIGHT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
-					         gdk_screen_width() -
-					         PANEL_CELL_SIZE,
-					         0);
-			break;
+	if(panel->snapped == PANEL_FREE)
+		return;
+	if(panel->orient == PANEL_HORIZONTAL) {
+		gtk_widget_hide(panel->hidebutton_n);
+		gtk_widget_show(panel->hidebutton_e);
+		gtk_widget_show(panel->hidebutton_w);
+		gtk_widget_hide(panel->hidebutton_s);
+	} else {
+		gtk_widget_show(panel->hidebutton_n);
+		gtk_widget_hide(panel->hidebutton_e);
+		gtk_widget_hide(panel->hidebutton_w);
+		gtk_widget_show(panel->hidebutton_s);
 	}
 }
 
@@ -88,12 +77,13 @@ panel_widget_new (gint length,
 {
 	PanelWidget *panel;
 	gint i;
+	gchar *pixmap_name;
+	GtkWidget *pixmap;
 
 	g_return_val_if_fail(size>=0,NULL);
 
 	panel = gtk_type_new(panel_widget_get_type());
-	panel->window = gtk_window_new(WINDOW_POPUP);
-	gtk_widget_show(panel->window);
+	GTK_WINDOW(panel)->type = WINDOW_POPUP;
 
 	switch(snapped) {
 		case PANEL_FREE:
@@ -122,67 +112,105 @@ panel_widget_new (gint length,
 
 	switch(snapped) {
 		case PANEL_TOP:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
 					         0,
 					         0);
 			break;
 		case PANEL_BOTTOM:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
 					         0,
 					         gdk_screen_height() -
 					         PANEL_CELL_SIZE);
 			break;
 		case PANEL_LEFT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
 					         0,
 					         0);
 			break;
 		case PANEL_RIGHT:
-			gtk_widget_set_uposition(GTK_WIDGET(panel->window),
+			gtk_widget_set_uposition(GTK_WIDGET(panel),
 					         gdk_screen_width() -
 					         PANEL_CELL_SIZE,
 					         0);
 			break;
 	}
 
-	
 	panel->table = gtk_table_new(3,3,FALSE);
-	gtk_container_add(GTK_CONTAINER(panel->window),panel->table);
+	gtk_container_add(GTK_CONTAINER(panel),panel->table);
 	gtk_widget_show(panel->table);
 
+	panel->fixed = gtk_fixed_new();
+	gtk_table_attach(GTK_TABLE(panel->table),panel->fixed,1,2,1,2,
+			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
+			 0,0);
+	gtk_widget_show(panel->fixed);
 
+	/*EAST*/
+	panel->hidebutton_e=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-left.xpm");
+	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
+					    panel->hidebutton_e,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(panel->hidebutton_e),pixmap);
+	gtk_widget_show(pixmap);
+	gtk_signal_connect(GTK_OBJECT(panel->hidebutton_e), "clicked",
+			   GTK_SIGNAL_FUNC(panel_widget_hide_east),NULL);
+	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_e,
+			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
+	/*NORTH*/
+	panel->hidebutton_n=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-up.xpm");
+	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
+					    panel->hidebutton_n,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(panel->hidebutton_n),pixmap);
+	gtk_widget_show(pixmap);
+	gtk_signal_connect(GTK_OBJECT(panel->hidebutton_n), "clicked",
+			   GTK_SIGNAL_FUNC(panel_widget_hide_north),NULL);
+	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_n,
+			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
+	/*WEST*/
+	panel->hidebutton_w=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-right.xpm");
+	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
+					    panel->hidebutton_w,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(panel->hidebutton_w),pixmap);
+	gtk_widget_show(pixmap);
+	gtk_signal_connect(GTK_OBJECT(panel->hidebutton_w), "clicked",
+			   GTK_SIGNAL_FUNC(panel_widget_hide_west),NULL);
+	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_w,
+			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
+	/*SOUTH*/
+	panel->hidebutton_s=gtk_button_new();
+	pixmap_name=gnome_unconditional_pixmap_file("panel-arrow-down.xpm");
+	pixmap = gnome_create_pixmap_widget(GTK_WIDGET(panel),
+					    panel->hidebutton_s,
+					    pixmap_name);
+	g_free(pixmap_name);
+	gtk_container_add(GTK_CONTAINER(panel->hidebutton_s),pixmap);
+	gtk_widget_show(pixmap);
+	gtk_signal_connect(GTK_OBJECT(panel->hidebutton_s), "clicked",
+			   GTK_SIGNAL_FUNC(panel_widget_hide_south),NULL);
+	gtk_table_attach(GTK_TABLE(panel->table),panel->hidebutton_s,
+			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 
-
-
-	panel_widget->orient = orient;
-	panel_widget->snapped = snapped;
-	panel_widget->mode = mode;
-	panel_widget->state = PANEL_SHOWN; /*state;*/
+	panel->orient = orient;
+	panel->snapped = snapped;
+	panel->mode = mode;
+	panel->state = PANEL_SHOWN; /*state;*/
 				/*FIXME make it appear at the right
 				state as well*/
 
+	panel_widget_set_hidebuttons(panel)
 
-	panel->size = size;
-	panel->orientation = orient;
-
-	panel->applets = g_new(AppletRecord *,size);
-	for(i=0;i<size;i++) {
-
-		panel->applets[i] = g_new(AppletRecord,1);
-		panel->applets[i]->eventbox = gtk_event_box_new();
-		panel->applets[i]->container = gtk_frame_new(NULL);
+	for(i=0;i<PANEL_MAX;i++) {
 		panel->applets[i]->applet = NULL;
-		panel_widget_place_widget(panel,panel->applets[i]->eventbox,i);
-
-		gtk_signal_connect_after(GTK_OBJECT(panel->applets[i]->eventbox),
-					 "realize",
-					 (GtkSignalFunc)
-					 panel_widget_placeholder_realized,
-					 panel);
-		gtk_container_add(GTK_CONTAINER(panel->applets[i]->eventbox),
-				  panel->applets[i]->container);
-		gtk_widget_show(panel->applets[i]->container);
-		gtk_widget_show(panel->applets[i]->eventbox);
+		panel->applets[i]->drawer = NULL;
 	}
 
 	return GTK_WIDGET(panel);
