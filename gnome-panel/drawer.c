@@ -78,14 +78,14 @@ static int
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
-	GtkWidget *pixentry = gtk_object_get_data(GTK_OBJECT(widget),"pixmap");
+	/*GtkWidget *pixentry = gtk_object_get_data(GTK_OBJECT(widget),"pixmap");
 	GtkWidget *gtkpixentry =
 		gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(pixentry));
-	GtkWidget *tipentry = gtk_object_get_data(GTK_OBJECT(widget),"tooltip");
+	GtkWidget *tipentry = gtk_object_get_data(GTK_OBJECT(widget),"tooltip");*/
 	gtk_object_set_data(GTK_OBJECT(drawer->button),
 			    DRAWER_PROPERTIES,NULL);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(gtkpixentry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(tipentry),widget);
+	/*gtk_signal_disconnect_by_data(GTK_OBJECT(gtkpixentry),widget);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(tipentry),widget);*/
 	return FALSE;
 }
 

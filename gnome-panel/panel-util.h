@@ -27,6 +27,12 @@ GtkWidget * create_pixmap_entry(GtkWidget *table,
 				char *text,
 				GtkWidget *w,
 				int pw, int ph /*preview size*/);
+GtkWidget * create_icon_entry(GtkWidget *table,
+			      char *history_id,
+			      int row,
+			      char *label,
+			      char *text,
+			      GtkWidget *w);
 
 GList * my_g_list_swap_next(GList *list, GList *dl);
 GList * my_g_list_swap_prev(GList *list, GList *dl);

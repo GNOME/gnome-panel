@@ -118,11 +118,6 @@ static int
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = data;
-	GtkWidget *t;
-	
-	t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
-	gtk_signal_disconnect(GTK_OBJECT(t),
-			      ppc->pix_ch_signal);
 	
 	ppconfigs = g_list_remove(ppconfigs,ppc);
 	
@@ -726,9 +721,9 @@ background_page (PerPanelConfig *ppc)
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"),TRUE);
 
 	t = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (ppc->pix_entry));
-	ppc->pix_ch_signal = 
-		gtk_signal_connect (GTK_OBJECT (t), "changed",
-				    GTK_SIGNAL_FUNC (value_changed), ppc);
+	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
+					GTK_SIGNAL_FUNC (value_changed), ppc,
+					GTK_OBJECT (ppc->pix_entry));
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 
 			    CONFIG_PADDING_SIZE);
 	

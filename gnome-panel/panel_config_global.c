@@ -36,13 +36,6 @@ static GtkWidget *config_window;
 static int
 config_destroy(GtkWidget *widget, gpointer data)
 {
-	int i;
-	for(i=0;i<LAST_TILE;i++) {
-		GtkWidget *e = gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(entry_up[i]));
-		gtk_signal_disconnect_by_data(GTK_OBJECT(e),widget);
-		e = gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(entry_down[i]));
-		gtk_signal_disconnect_by_data(GTK_OBJECT(e),widget);
-	}
 	config_window = NULL;
 	return FALSE;
 }
@@ -72,9 +65,9 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 
 	for(i=0;i<LAST_TILE;i++) {
 		global_config.tile_up[i] =
-			gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(entry_up[i]));
+			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_up[i]));
 		global_config.tile_down[i] =
-			gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(entry_down[i]));
+			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_down[i]));
 	}
 
 	apply_global_config();
@@ -357,16 +350,14 @@ icon_notebook_page(int i, GtkWidget *config_box)
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* image file entry widgets */
-	entry_up[i] = create_pixmap_entry(table,"tile_file",1,
-					  _("Tile filename (up)"),
-					  global_config.tile_up[i],
-					  config_box,
-					  64,64);
-	entry_down[i] = create_pixmap_entry(table,"tile_file",2,
-					    _("Tile filename (down)"),
-					    global_config.tile_down[i],
-					    config_box,
-					    64,64);
+	entry_up[i] = create_icon_entry(table,"tile_file",1,
+					_("Tile filename (up)"),
+					global_config.tile_up[i],
+					config_box);
+	entry_down[i] = create_icon_entry(table,"tile_file",2,
+					  _("Tile filename (down)"),
+					  global_config.tile_down[i],
+					  config_box);
 
 
 	

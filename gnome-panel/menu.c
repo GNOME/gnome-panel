@@ -2039,20 +2039,11 @@ static int
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
-	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget),"path");
 	gtk_object_set_data(GTK_OBJECT(menu->button),
 			    MENU_PROPERTIES,NULL);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(pathentry),widget);
 	return FALSE;
 }
 
-static void
-notify_entry_change (GtkWidget *widget, void *data)
-{
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-
-	gnome_property_box_changed (box);
-}
 static void
 toggle_prop(GtkWidget *widget, void *data)
 {
@@ -2195,9 +2186,9 @@ create_properties_dialog(Menu *menu)
 	if (menu->path)
 		gtk_entry_set_text(GTK_ENTRY(t), menu->path);
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
-	gtk_signal_connect (GTK_OBJECT (t), "changed",
-			    GTK_SIGNAL_FUNC(notify_entry_change),
-			    dialog);
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+					       GTK_SIGNAL_FUNC(gnome_property_box_changed),
+					       GTK_OBJECT(dialog));
 	
 	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
 				  vbox, gtk_label_new (_("Menu")));

@@ -33,7 +33,6 @@ struct _PerPanelConfig {
 	int			register_changes; /*used for startup*/
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
-	int			pix_ch_signal;
 
 	/*snapped buttons*/
 	GtkWidget		*r_button; /*se*/
