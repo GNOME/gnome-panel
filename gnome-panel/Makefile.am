@@ -91,8 +91,6 @@ panel_SOURCES = 		\
 	logout.h		\
 	$(CORBA_SOURCES)
 
-EXTRA_DIST = gnome-panel.idl
-
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 #launcher_applet_SOURCES = \
@@ -122,4 +120,4 @@ panelrc: panelrc.in Makefile
 
 MOSTLYCLEANFILES = panelrc
 
-EXTRA_DIST = panelrc.in panel.in
+EXTRA_DIST = panelrc.in panel.in gnome-panel.idl
