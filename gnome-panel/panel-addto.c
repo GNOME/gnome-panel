@@ -953,14 +953,12 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 	if (data->type == PANEL_ADDTO_LAUNCHER_MENU) {
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
 				      GTK_STOCK_GO_FORWARD);
-		gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),
-					  TRUE);
 	} else {
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
 				      GTK_STOCK_ADD);
-		gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),
-					  TRUE);
 	}
+	gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),
+				  TRUE);
 
 	/* only allow dragging applets if we can add applets */
 	if (panel_profile_id_lists_are_writable ()) {
