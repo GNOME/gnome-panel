@@ -413,10 +413,26 @@ panel_make_menu_icon (const char *icon,
 	}
 
 	if (loaded &&
-	    (gdk_pixbuf_get_width (pb) != size ||
+	    (gdk_pixbuf_get_width (pb) != size &&
 	     gdk_pixbuf_get_height (pb) != size)) {
 		GdkPixbuf *pb2;
-		pb2 = gdk_pixbuf_scale_simple (pb, size, size,
+		int        dest_width;
+		int        dest_height;
+		int        width;
+		int        height;
+
+		width  = gdk_pixbuf_get_width (pb);
+		height = gdk_pixbuf_get_height (pb);
+
+		if (height > width) {
+			dest_width  = (size * width) / height;
+			dest_height = size;
+		} else {
+			dest_width  = size;
+			dest_height = (size * height) / width;
+		}
+
+		pb2 = gdk_pixbuf_scale_simple (pb, dest_width, dest_height,
 					       GDK_INTERP_BILINEAR);
 		g_object_unref (G_OBJECT (pb));
 		pb = pb2;

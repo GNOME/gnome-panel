@@ -1,5 +1,12 @@
 2005-01-23  Vincent Untz  <vincent@vuntz.net>
 
+	* menu.c: (panel_make_menu_icon): only scale the icon if the height
+	*and* (and not *or*) the width don't have the expected size and keep
+	the aspect ratio when we scale the icon.
+	Fix bug #164874.
+
+2005-01-23  Vincent Untz  <vincent@vuntz.net>
+
 	* GNOME_Panel_Popup.xml: move "Lock To Panel" at the bottom
 	* applet.c: (panel_applet_create_menu): ditto
 	Fix bug #164903
