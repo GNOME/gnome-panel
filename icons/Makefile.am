@@ -9,7 +9,6 @@ icon_DATA =				\
 	gnome-gegl2-2.png		\
 	gnome-gegl2.png			\
 	gnome-gegl.png			\
-	gnome-lockscreen.png		\
 	gnome-panel.png			\
 	gnome-panel-type-corner.png	\
 	gnome-panel-type-edge.png	\
