@@ -13,7 +13,9 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <libgnomeui.h>
+#include <gnome-desktop/gnome-ditem.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnomecompat.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"
@@ -276,33 +278,35 @@ session_save_timeout (gpointer data)
 	}
 
 	ss_timeout_dlg =
-		gnome_message_box_new(_("An applet is not "
-					"responding to a "
-					"save request.\n"
-					"Remove the applet "
-					"or continue waiting?"),
-				      GNOME_MESSAGE_BOX_WARNING,
-				      NULL);
+		gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+				       GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+				       _("An applet is not "
+					 "responding to a "
+					 "save request.\n"
+					 "Remove the applet "
+					 "or continue waiting?"));
 	gtk_signal_connect(GTK_OBJECT(ss_timeout_dlg),"destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			   &ss_timeout_dlg);
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
-						_("Remove applet"),
-						GNOME_STOCK_PIXMAP_TRASH);
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
-						_("Continue waiting"),
-						GNOME_STOCK_PIXMAP_TIMER);
+	gtk_dialog_add_button (GTK_DIALOG (ss_timeout_dlg),
+			       _("Remove applet"),
+			       1); /* FIXME: GNOME_STOCK_PIXMAP_TRASH */
+	gtk_dialog_add_button (GTK_DIALOG (ss_timeout_dlg),
+			       _("Continue waiting"),
+			       2); /* FIXME: GNOME_STOCK_PIXMAP_TIMER */
 
 	gtk_signal_connect_after(GTK_OBJECT(ss_timeout_dlg), "realize",
 				 GTK_SIGNAL_FUNC(timeout_dlg_realized),
 				 NULL);
 	
-	if (0 == gnome_dialog_run_and_close (GNOME_DIALOG (ss_timeout_dlg))) {
+	if (1 == gtk_dialog_run (GTK_DIALOG (ss_timeout_dlg))) {
 		ss_cookie++;
 		g_warning(_("Timed out on sending session save to an applet"));
 		save_next_applet();
+		gtk_widget_destroy (ss_timeout_dlg);
 		return FALSE;
 	}
+	gtk_widget_destroy (ss_timeout_dlg);
 	return TRUE;
 }
 
@@ -334,8 +338,8 @@ send_applet_session_save (AppletInfo *info,
 		CORBA_SystemException *exc =
 			CORBA_exception_value(&ev);
 		if(exc &&
-		   (exc->minor == ex_CORBA_BAD_OPERATION ||
-		    exc->minor == ex_CORBA_NO_IMPLEMENT)) {
+		   (!strcmp (ev._id, ex_CORBA_BAD_OPERATION) ||
+		    !strcmp (ev._id, ex_CORBA_NO_IMPLEMENT))) {
 			gboolean ret;
 			gtk_timeout_remove(timeout);
 			CORBA_exception_free(&ev);
@@ -427,9 +431,11 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_pop_prefix();
 			gnome_config_sync();*/
 			/* but gnome-config.[ch] is broken ! */
+#ifdef FIXME
 			s = gnome_config_get_real_path (buf->str);
 			unlink(s);
 			g_free(s);
+#endif
 
 			gnome_config_sync();
 
@@ -498,6 +504,7 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_LAUNCHER:
 		{
 			Launcher *launcher = info->data;
+			gchar *location;
 
 			gnome_config_set_string ("id", LAUNCHER_ID);
 
@@ -505,8 +512,9 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_clean_key ("parameters");
 
 			launcher_save (launcher);
-			gnome_config_set_string ("base_location",
-						 g_basename (launcher->dentry->location));
+			location = gnome_desktop_item_get_location (launcher->ditem);
+			gnome_config_set_string ("base_location", location);
+			g_free (location);
 			break;
 		}
 	case APPLET_LOGOUT:
