@@ -1,3 +1,11 @@
+2003-03-06  Arvind Samptur <arvind.samptur@wipro.com>
+	* panel-properties-dialog.c : 
+	(panel_properties_dialog_update_background_opacity) : When 
+	recalculating the percentage, cast it to double. Else you always
+	land up with one value less because of integer division and 
+	that spins off the continuous scale setting. Fixes #107608
+	Thanks to Satyajit for fighting this one.
+
 2003-03-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.c: (nibble_on_file): destroy the dialog

@@ -579,7 +579,7 @@ panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog
 	if (!value || value->type != GCONF_VALUE_INT)
 		return;
 
-	percentage = (gconf_value_get_int (value) * 100) / 65535;
+	percentage = ((gdouble) (gconf_value_get_int (value) * 100)) / 65535;
 
 	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
 		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
