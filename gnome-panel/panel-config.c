@@ -58,12 +58,13 @@ position_notebook_page(void)
 	GtkWidget *box;
 	
 	/* Position frame */
-	frame = gtk_frame_new (NULL);
+	frame = gtk_frame_new ("Position");
 	gtk_container_border_width(GTK_CONTAINER (frame), 5);
 	gtk_widget_show (frame);
 	
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, 5);
+	gtk_container_border_width(GTK_CONTAINER (box), 5);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	gtk_widget_show (box);
 	
@@ -75,7 +76,7 @@ position_notebook_page(void)
 	if (config_panel.pos == PANEL_POS_TOP) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 5);
 	gtk_widget_show (button);
 	
 	/* Bottom Position */
@@ -88,7 +89,7 @@ position_notebook_page(void)
 	if (config_panel.pos == PANEL_POS_BOTTOM) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 5);
 	gtk_widget_show (button);
 	
 	/* Left Position */
@@ -101,7 +102,7 @@ position_notebook_page(void)
 	if (config_panel.pos == PANEL_POS_LEFT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 5);
 	gtk_widget_show (button);
 
 	/* Right Position */
@@ -114,11 +115,27 @@ position_notebook_page(void)
 	if (config_panel.pos == PANEL_POS_RIGHT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 5);
 	gtk_widget_show (button);
 	
 	return (frame);
 }
+
+static void
+step_size_scale_update (GtkAdjustment *adjustment, gpointer data)
+{
+	double scale_val = adjustment->value;
+	config_panel.step_size = (gint) scale_val;
+}
+
+static void
+delay_scale_update (GtkAdjustment *adjustment, gpointer data)
+{
+	double scale_val = adjustment->value;
+	config_panel.minimize_delay = (gint) scale_val;
+}
+
+
 
 GtkWidget *
 animation_notebook_page(void)
@@ -126,14 +143,24 @@ animation_notebook_page(void)
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
+	GtkWidget *vbox;
+	GtkWidget *scale;
+	GtkObject *step_size_scale_data;
+	GtkObject *delay_scale_data;
 	
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, 5);
+	gtk_widget_show (vbox);
+
 	/* Auto-hide/stayput frame */
-	frame = gtk_frame_new (NULL);
+	frame = gtk_frame_new ("Minimize Options");
 	gtk_container_border_width(GTK_CONTAINER (frame), 5);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 5);
 	gtk_widget_show (frame);
 
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, 5);
+	gtk_container_border_width(GTK_CONTAINER (box), 5);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	gtk_widget_show (box);
 	
@@ -161,7 +188,57 @@ animation_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
 	gtk_widget_show (button);
 
-	return (frame);
+	/* Animation step_size scale frame */
+	frame = gtk_frame_new ("Animation Speed");
+	gtk_container_border_width(GTK_CONTAINER (frame), 5);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 5);
+	gtk_widget_show (frame);
+
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, 5);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	gtk_container_border_width(GTK_CONTAINER (box), 5);
+	gtk_widget_show (box);
+
+	/* Animation step_size scale */
+	step_size_scale_data = gtk_adjustment_new ((double) config_panel.step_size, 
+						   3.0, 100.0, 1.0, 1.0, 0.0);
+	scale = gtk_hscale_new (GTK_ADJUSTMENT (step_size_scale_data));
+	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+	gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
+	gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+	gtk_box_pack_start (GTK_BOX (box), scale, TRUE, TRUE, 5);
+	gtk_signal_connect(GTK_OBJECT (step_size_scale_data), 
+			   "value_changed",
+			   GTK_SIGNAL_FUNC (step_size_scale_update), NULL);
+	gtk_widget_show (scale);
+
+	/* Animation step_size scale frame */
+	frame = gtk_frame_new ("Minimize Delay (ms)");
+	gtk_container_border_width(GTK_CONTAINER (frame), 5);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 5);
+	gtk_widget_show (frame);
+
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, 5);
+	gtk_container_border_width(GTK_CONTAINER (box), 5);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	gtk_widget_show (box);
+
+	/* minimize_delay scale */
+	delay_scale_data = gtk_adjustment_new ((double) config_panel.minimize_delay, 
+					       30.0, 1000.0, 1.0, 1.0, 0.0);
+	scale = gtk_hscale_new (GTK_ADJUSTMENT (delay_scale_data));
+	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+	gtk_scale_set_draw_value (GTK_SCALE (scale), TRUE);
+	gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+	gtk_box_pack_start (GTK_BOX (box), scale, TRUE, TRUE, 5);
+	gtk_signal_connect(GTK_OBJECT (delay_scale_data), 
+			   "value_changed",
+			   GTK_SIGNAL_FUNC (delay_scale_update), NULL);
+	gtk_widget_show (scale);
+	
+	return (vbox);
 }
 
 
@@ -247,7 +324,9 @@ panel_config(void)
 	GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
 	gtk_widget_grab_default (button);
 	gtk_widget_show (button);
+
 	
+	gtk_widget_set_usize (config_window, 300, -1);
 	/* show main window */
 	gtk_widget_show (config_window);
 }

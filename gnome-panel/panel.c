@@ -387,7 +387,7 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	}
 	
 	/* set up our delay for popup. */
-	the_panel->leave_notify_timer_tag = gtk_timeout_add (500, pop_down, NULL);
+	the_panel->leave_notify_timer_tag = gtk_timeout_add (the_panel->minimize_delay, pop_down, NULL);
 	
 	return FALSE;
 }
@@ -1635,45 +1635,45 @@ panel_reconfigure(Panel *newconfig)
 {
 	int oldpos;
 
-	if(the_panel->mode==PANEL_GETS_HIDDEN) {
+	if(the_panel->mode == PANEL_GETS_HIDDEN) {
 		the_panel->step_size=0;
 		pop_up();
 	}
 	/*the set panel position will make it shown, this may change!
 	  it would require more work to keep the state to be persistent
 	  accross sessions or even reconfigurations*/
-	the_panel->state=PANEL_SHOWN;
-	the_panel->mode=newconfig->mode;
+	the_panel->state = PANEL_SHOWN;
+	the_panel->mode = newconfig->mode;
 	oldpos=the_panel->pos;
-	the_panel->pos=newconfig->pos;
+	the_panel->pos = newconfig->pos;
 	set_panel_position();
 	set_show_hide_buttons_visibility();
 	if(newconfig->pos != oldpos) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
-				if(newconfig->pos!=PANEL_POS_BOTTOM)
+				if(newconfig->pos != PANEL_POS_BOTTOM)
 					panel_change_orient();
 				break;
 			case PANEL_POS_BOTTOM:
-				if(newconfig->pos!=PANEL_POS_TOP)
+				if(newconfig->pos != PANEL_POS_TOP)
 					panel_change_orient();
 				break;
 			case PANEL_POS_LEFT:
-				if(newconfig->pos!=PANEL_POS_RIGHT)
+				if(newconfig->pos != PANEL_POS_RIGHT)
 					panel_change_orient();
 				break;
 			case PANEL_POS_RIGHT:
-				if(newconfig->pos!=PANEL_POS_LEFT)
+				if(newconfig->pos != PANEL_POS_LEFT)
 					panel_change_orient();
 				break;
 		}
 	} else {
 		panel_fix_all_applets();
 	}
-	the_panel->step_size=newconfig->step_size;
-	the_panel->delay=newconfig->delay;
-	the_panel->minimize_delay=newconfig->minimize_delay;
-	the_panel->minimized_size=newconfig->minimized_size;
+	the_panel->step_size = newconfig->step_size;
+	the_panel->delay = newconfig->delay;
+	the_panel->minimize_delay = newconfig->minimize_delay;
+	the_panel->minimized_size = newconfig->minimized_size;
 }
 
 static void
