@@ -209,7 +209,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               panel_marshal_VOID__ENUM_POINTER_POINTER,
                               G_TYPE_NONE,
                               3,
-			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
+			      PANEL_TYPE_G_NOME__PANEL__BACK_TYPE,
 			      G_TYPE_POINTER,
 			      G_TYPE_POINTER);
 

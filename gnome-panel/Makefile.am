@@ -7,12 +7,6 @@ NULL =
 
 EXTRA_SUBDIRS = config help
 
-serverdir = $(libdir)/bonobo/servers
-server_in_files = GNOME_Panel.server.in GNOME_Panel_TestApplet.server.in
-server_DATA = $(server_in_files:.server.in=.server)
-
-@INTLTOOL_SERVER_RULE@
-
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
@@ -34,63 +28,7 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
-bin_PROGRAMS =			\
-	panel-2			\
-	test-bonobo-applet	\
-	$(NULL)
-
-lib_LTLIBRARIES =		\
-	libpanel-applet-2.la	\
-	$(NULL)
-
-test_bonobo_applet_SOURCES =	\
-	test-bonobo-applet.c	\
-	$(CORBA_SRCLIST)	\
-	$(NULL)
-
-test_bonobo_applet_LDADD =	\
-	$(PANEL_LIBS)		\
-	libpanel-applet-2.la	\
-	$(NULL)
-
-libpanel_applet_2_la_SOURCES =	\
-	panel-applet.h          \
-	panel-applet.c          \
-	panel-applet-shell.c    \
-	panel-applet-shell.h    \
-	panel-applet-private.h  \
-	panel-marshal-main.c    \
-	panel-typebuiltins.c    \
-	panel-typebuiltins.h    \
-	$(CORBA_SRCLIST)        \
-	$(NULL)
-
-libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0
-libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
-
-libpanel_appletincludedir = $(includedir)/panel-2.0
-
-libpanel_appletinclude_HEADERS = \
-	panel-applet.h		\
-	GNOME_Panel.h
-
-# test_applet_SOURCES =		\
-# 	test-applet.c		\
-# 	$(NULL)
-# 
-# test_applet_LDADD =					\
-# 	$(PANEL_LIBS)					\
-# 	$(top_builddir)/panel/libpanel-applet-2.la	\
-# 	$(NULL)
-#
-# libpanel_applet_2_la_SOURCES = 	\
-# 	applet-widget.c		\
-# 	applet-object.c		\
-# 	applet-init.c		\
-# 	applet-private.h	\
-# 	$(CORBA_SRCLIST)	\
-# 	$(NULL)
-
+bin_PROGRAMS = panel-2
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -234,7 +172,6 @@ panel_2_LDFLAGS=-export-dynamic
 EXTRA_DIST =					\
 	APPLET_WRITING				\
 	GNOME_Panel.server.in			\
-	GNOME_Panel_TestApplet.server.in	\
 	panel.hints				\
 	gnome-panel-properties.desktop		\
 	nothing.cP				\
@@ -242,8 +179,7 @@ EXTRA_DIST =					\
 	gnome-panel-screenshot.glade		\
 	gnome-panel-screenshot.glade.h		\
 	$(schema_DATA)				\
-	panel-marshal.list			\
-	libpanelapplet-2.0.pc.in
+	panel-marshal.list
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA =gnome-panel-screenshot.glade
@@ -265,7 +201,6 @@ panel_enum_headers =      \
 	basep-widget.h    \
 	aligned-widget.h  \
 	sliding-widget.h  \
-	panel-applet.h    \
 	GNOME_Panel.h
 
 $(srcdir)/panel-marshal.h: panel-marshal.list
@@ -313,9 +248,6 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 		$(panel_enum_headers) > xgen-gth \
 	&& cp xgen-gth $(@F) \
 	&& rm -f xgen-gth
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libpanelapplet-2.0.pc
 
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = panelglobalconfig.schema

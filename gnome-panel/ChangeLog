@@ -1,5 +1,15 @@
 2001-11-27  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am: remove building of libpanel-applet-2.0.
+
+	* GNOME_Panel_TestApplet.server.in, libpanelapplet-2.0.pc.in:
+	  panel-applet-private.h, panel-applet-shell.c,
+	  panel-applet-shell.h, panel-applet.c,
+	  panel-applet.h, test-bonobo-applet.c: move to
+	../libpanel-applet, preservin history.
+
+2001-11-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: include quick-desktop-reader.h.
 	(create_launcher): remove duplicate, redundant call to
 	gnome_program_locate_file.

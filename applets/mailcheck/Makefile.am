@@ -3,8 +3,8 @@
 INCLUDES = -I. -I$(srcdir) 				\
 	-I$(top_srcdir)/intl 				\
 	-I$(top_builddir)/intl				\
-	-I$(srcdir)/../../panel				\
-	-I$(top_builddir)/panel				\
+	-I$(srcdir)/../../libpanel-applet		\
+	-I$(top_builddir)/libpanel-applet		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	-I$(includedir)                                 \
 	$(GNOME_INCLUDEDIR)				\
@@ -26,8 +26,8 @@ libgen_util_applet_2_la_SOURCES = \
 #	remote-helper.c	\
 #	remote-helper.h \
 
-libgen_util_applet_2_la_LIBADD =	\
-	../../panel/libpanel-applet-2.la	\
+libgen_util_applet_2_la_LIBADD =			\
+	../../libpanel-applet/libpanel-applet-2.la	\
 	$(PANEL_LIBS)
 
 appletdir = $(libdir)

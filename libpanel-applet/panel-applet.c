@@ -17,8 +17,8 @@
 #include "panel-applet.h"
 #include "panel-applet-private.h"
 #include "panel-applet-shell.h"
-#include "panel-marshal.h"
-#include "panel-typebuiltins.h"
+#include "panel-applet-marshal.h"
+#include "panel-applet-enums.h"
 
 struct _PanelAppletPrivate {
 	PanelAppletShell  *shell;
@@ -385,7 +385,7 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, change_orient),
                               NULL,
 			      NULL,
-                              panel_marshal_VOID__INT,
+                              panel_applet_marshal_VOID__INT,
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_INT);
@@ -397,7 +397,7 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, change_size),
                               NULL,
 			      NULL,
-                              panel_marshal_VOID__INT,
+                              panel_applet_marshal_VOID__INT,
                               G_TYPE_NONE,
 			      1,
 			      G_TYPE_INT);
@@ -409,7 +409,7 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, change_background),
                               NULL,
 			      NULL,
-                              panel_marshal_VOID__ENUM_POINTER_STRING,
+                              panel_applet_marshal_VOID__ENUM_POINTER_STRING,
                               G_TYPE_NONE,
 			      3,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,

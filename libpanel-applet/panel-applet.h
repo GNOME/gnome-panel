@@ -16,7 +16,7 @@
 #include <bonobo/bonobo-ui-component.h>
 #include <bonobo/bonobo-generic-factory.h>
 
-#include "GNOME_Panel.h"
+#include <GNOME_Panel.h>
 
 G_BEGIN_DECLS
 

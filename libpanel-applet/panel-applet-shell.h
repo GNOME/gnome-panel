@@ -12,8 +12,8 @@
 
 #include <bonobo/bonobo-object.h>
 
-#include "panel-applet.h"
-#include "GNOME_Panel.h"
+#include <panel-applet.h>
+#include <GNOME_Panel.h>
 
 #define PANEL_APPLET_SHELL_TYPE        (panel_applet_shell_get_type ())
 #define PANEL_APPLET_SHELL(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_APPLET_SHELL_TYPE, PanelAppletShell))

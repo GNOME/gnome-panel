@@ -2,8 +2,8 @@ INCLUDES =						\
 	-I$(srcdir)					\
 	-I$(top_srcdir)/intl				\
 	-I$(top_builddir)/intl				\
-	-I$(srcdir)/../../panel				\
-	-I$(top_builddir)/panel				\
+	-I$(srcdir)/../../libpanel-applet		\
+	-I$(top_builddir)/libpanel-applet		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
 	$(GNOME_INCLUDEDIR)				\
 	$(WARN_CFLAGS)					\
@@ -17,8 +17,8 @@ bin_PROGRAMS = fish-applet-2
 
 fish_applet_2_SOURCES = fish.c
 
-fish_applet_2_LDADD =				\
-	../../panel/libpanel-applet-2.la	\
+fish_applet_2_LDADD =					\
+	../../libpanel-applet/libpanel-applet-2.la	\
 	$(PANEL_LIBS)
 
 FISH_BITMAPS =		\
