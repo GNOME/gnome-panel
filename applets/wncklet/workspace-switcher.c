@@ -601,7 +601,7 @@ setup_dialog (GladeXML  *xml,
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
 
 	
-	g_signal_connect_swapped (WID ("done_button"), "pressed",
+	g_signal_connect_swapped (WID ("done_button"), "clicked",
 				  (GCallback) gtk_widget_hide, pager->properties_dialog);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin),

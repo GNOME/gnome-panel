@@ -506,7 +506,7 @@ setup_dialog (GladeXML     *xml,
 	g_signal_connect (G_OBJECT (tasklist->show_all_radio), "toggled",
 			  (GCallback) display_all_workspaces_toggled, tasklist);
 
-	g_signal_connect_swapped (WID ("done_button"), "pressed",
+	g_signal_connect_swapped (WID ("done_button"), "clicked",
 				  (GCallback) gtk_widget_hide, tasklist->properties_dialog);
 
 }
