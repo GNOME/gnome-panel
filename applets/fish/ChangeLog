@@ -1,3 +1,11 @@
+2003-12-03  Vincent Untz  <vincent@vuntz.net>
+
+	Don't use deprecated functions.
+
+	* fish.c: (display_about_dialog): s/gdk_pixbuf_unref/g_object_unref
+	(init_fools_day): s/g_strcasecmp/g_ascii_strcasecmp
+	(fish_applet_expose_event): s/gdk_draw_pixmap/gdk_draw_drawable
+
 ==================== 2.5.1 ====================
 
 2003-11-11  Mark McLoughlin  <mark@skynet.ie>

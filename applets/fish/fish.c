@@ -505,7 +505,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	g_free (authors [0]);
 
 	if (pixbuf)
-		gdk_pixbuf_unref (pixbuf);
+		g_object_unref (pixbuf);
 
 	gtk_window_set_wmclass (
 		GTK_WINDOW (fish->about_dialog), "fish", "Fish");
@@ -939,7 +939,7 @@ init_fools_day (void)
 	fools_hour_end   = 12; /* Apparently jokes should stop at midday */
 	
 	for (i = 0; spanish_timezones [i]; i++)
-		if (!g_strcasecmp (spanish_timezones [i], location)) {
+		if (!g_ascii_strcasecmp (spanish_timezones [i], location)) {
 			/* Hah!, We are in Spain or Mexico
 			 * Spanish fool's day is 28th December
 			 */
@@ -1304,12 +1304,12 @@ fish_applet_expose_event (GtkWidget      *widget,
 	else
 		src_x += ((width * fish->current_frame) / fish->n_frames);
 
-	gdk_draw_pixmap (widget->window,
-			 widget->style->fg_gc [GTK_WIDGET_STATE (widget)],
-			 fish->pixmap,
-			 src_x, src_y,
-			 event->area.x, event->area.y,
-			 event->area.width, event->area.height);
+	gdk_draw_drawable (widget->window,
+			   widget->style->fg_gc [GTK_WIDGET_STATE (widget)],
+			   fish->pixmap,
+			   src_x, src_y,
+			   event->area.x, event->area.y,
+			   event->area.width, event->area.height);
 
         return FALSE;
 }
