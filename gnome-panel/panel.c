@@ -273,6 +273,8 @@ panel_session_save (GnomeClient *client,
 			     global_config.drawer_step_size);
 	gnome_config_set_int("minimized_size", global_config.minimized_size);
 	gnome_config_set_int("minimize_delay", global_config.minimize_delay);
+	gnome_config_set_int("movement_type",
+			     (gint)global_config.movement_type);
 	gnome_config_set_bool("tooltips_enabled",
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_small_icons",

@@ -2222,6 +2222,13 @@ panel_widget_get_free_spot(PanelWidget *panel, AppletData *ad)
 	if(ad->pos>=panel->size)
 		return -1;
 
+	if(!panel->applet_list) {
+		if(place+ad->cells>panel->size)
+			return panel->size-ad->cells;
+		else
+			return place;
+	}
+
 	list = panel->applet_list;
 
 	start = place-(ad->cells/2);
@@ -2678,6 +2685,9 @@ panel_widget_find_empty_pos(PanelWidget *panel, gint pos)
 
 	if(pos>=panel->size)
 		pos = panel->size-1;
+
+	if(!panel->applet_list)
+		return pos;
 
 	list = panel->applet_list;
 
