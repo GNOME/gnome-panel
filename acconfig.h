@@ -5,6 +5,8 @@
 #undef HAVE_GETTEXT
 #undef HAVE_LC_MESSAGES
 
+#undef HAVE_LIBECAL
+
 /* Location of KDE menus */
 #undef KDE_MENUDIR
 #undef KDE_ICONDIR
