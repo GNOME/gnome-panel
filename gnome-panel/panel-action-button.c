@@ -219,22 +219,22 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_RUN, PANEL_STOCK_RUN,
-		N_("Run Application"), NULL,
+		N_("Run Application"), "gospanel-555",
 		panel_action_run_program, NULL, NULL
 	},
 	{
 		PANEL_ACTION_SEARCH, PANEL_STOCK_SEARCHTOOL,
-		N_("Search for Files"), NULL,
+		N_("Search for Files"), "gospanel-554",
 		panel_action_search, NULL, NULL
 	},
 	{
 		PANEL_ACTION_SCREENSHOT, PANEL_STOCK_SCREENSHOT,
-		N_("Screenshot"), NULL,
+		N_("Screenshot"), "gospanel-553",
 		panel_action_screenshot, NULL, NULL
 	},
 	{
 		PANEL_ACTION_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,
-		N_("Force Quit"), NULL,
+		N_("Force Quit"), "gospanel-563",
 		panel_action_force_quit, NULL, NULL
 	}
 };
