@@ -120,9 +120,9 @@ struct _AppletWidgetClass
 	  gnome_config_drop_all() after your done otherwise the changes
 	  might not be written to file, also make sure you return
 	  FALSE from this signal or your position wil not get saved!*/
-	int (* save_session) (AppletWidget *applet,
-			      char *cfgpath,
-			      char *globcfgpath);
+	gboolean (* save_session) (AppletWidget *applet,
+				   char *cfgpath,
+				   char *globcfgpath);
 	/*when the position changes and we selected to get this signal,
 	  it is sent so that you can move some external window along with
 	  the applet, it is not normally sent, so you need to enable it
