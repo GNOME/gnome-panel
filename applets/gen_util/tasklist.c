@@ -81,6 +81,27 @@ applet_change_orient (PanelApplet       *applet,
 	tasklist_update (tasklist);
 }
 
+static void
+applet_change_background (PanelApplet               *applet,
+			  PanelAppletBackgroundType  type,
+			  GdkColor                  *color,
+			  const gchar               *pixmap,
+			  TasklistData              *tasklist)
+{
+	if (type == PANEL_NO_BACKGROUND) {
+		GtkRcStyle *rc_style = gtk_rc_style_new ();
+
+		gtk_widget_modify_style (tasklist->applet, rc_style);
+	}
+	else if (type == PANEL_COLOR_BACKGROUND) {
+		gtk_widget_modify_bg (tasklist->applet,
+				      GTK_STATE_NORMAL,
+				      color);
+	} else { /* pixmap */
+		/* FIXME: Handle this when the panel support works again */
+	}
+}
+
 
 static void
 applet_change_pixel_size (PanelApplet  *applet,
@@ -158,6 +179,10 @@ make_tasklist_applet(void)
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_size",
 			  G_CALLBACK (applet_change_pixel_size),
+			  tasklist);
+	g_signal_connect (G_OBJECT (tasklist->applet),
+			  "change_background",
+			  G_CALLBACK (applet_change_background),
 			  tasklist);
 	
 	panel_applet_setup_menu (PANEL_APPLET (tasklist->applet), tasklist_menu_xml, tasklist_menu_verbs, tasklist);

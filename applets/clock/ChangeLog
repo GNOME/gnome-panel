@@ -1,5 +1,13 @@
 2001-12-14  Alex Larsson  <alexl@redhat.com>
 
+	* gen_util/tasklist.c (applet_change_background):
+	Handle background changes. This doesn't change the color of the
+	buttons right now, since we would need the whole style for that.
+	But it does handle the part of the tasklist that is empty when
+	all the buttons fit on the tasklist.
+
+2001-12-14  Alex Larsson  <alexl@redhat.com>
+
 	* gen_util/clock.c:
 	Handle background color changes.
 
