@@ -35,11 +35,12 @@ typedef struct {
 	int               monitor;
 	
         PanelOrientation  orientation;
+	GdkRectangle      geometry;
         int               strut_size;
         int               strut_start;
         int               strut_end;
 
-	GdkRectangle      geometry;
+	GdkRectangle      allocated_geometry;
         int               allocated_strut_size;
         int               allocated_strut_start;
         int               allocated_strut_end;
@@ -91,11 +92,13 @@ panel_struts_intersect (GSList       *struts,
 		PanelStrut *strut = l->data;
 		int         x1, y1, x2, y2;
 
-		x1 = MAX (strut->geometry.x, geometry->x);
-		y1 = MAX (strut->geometry.y, geometry->y);
+		x1 = MAX (strut->allocated_geometry.x, geometry->x);
+		y1 = MAX (strut->allocated_geometry.y, geometry->y);
 
-		x2 = MIN (strut->geometry.x + strut->geometry.width,  geometry->x + geometry->width);
-		y2 = MIN (strut->geometry.y + strut->geometry.height, geometry->y + geometry->height);
+		x2 = MIN (strut->allocated_geometry.x + strut->allocated_geometry.width,
+			  geometry->x + geometry->width);
+		y2 = MIN (strut->allocated_geometry.y + strut->allocated_geometry.height,
+			  geometry->y + geometry->height);
 
 		if (x2 - x1 > 0 && y2 - y1 > 0 && ++i > skip)
 			break;
@@ -113,10 +116,10 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 {
 	int overlap_x1, overlap_y1, overlap_x2, overlap_y2;
 
-	overlap_x1 = overlap->geometry.x;
-	overlap_y1 = overlap->geometry.y;
-	overlap_x2 = overlap->geometry.x + overlap->geometry.width;
-	overlap_y2 = overlap->geometry.y + overlap->geometry.height;
+	overlap_x1 = overlap->allocated_geometry.x;
+	overlap_y1 = overlap->allocated_geometry.y;
+	overlap_x2 = overlap->allocated_geometry.x + overlap->allocated_geometry.width;
+	overlap_y2 = overlap->allocated_geometry.y + overlap->allocated_geometry.height;
 
 	if (strut->orientation == overlap->orientation) {
 		int old_x, old_y;
@@ -185,7 +188,7 @@ panel_struts_allocate_struts (PanelToplevel *toplevel)
 	for (l = panel_struts_list; l; l = l->next) {
 		PanelStrut   *strut = l->data;
 		PanelStrut   *overlap;
-		GdkRectangle  geometry = { 0, };
+		GdkRectangle  geometry;
 		int           monitor_x, monitor_y;
 		int           monitor_width, monitor_height;
 		gboolean      moved_down;
@@ -195,36 +198,11 @@ panel_struts_allocate_struts (PanelToplevel *toplevel)
 						   &monitor_x, &monitor_y,
 						   &monitor_width, &monitor_height);
 
-		switch (strut->orientation) {
-		case PANEL_ORIENTATION_TOP:
-			geometry.x      = strut->strut_start;
-			geometry.y      = monitor_y;
-			geometry.width  = strut->strut_end - strut->strut_start;
-			geometry.height = strut->strut_size;
-			break;
-		case PANEL_ORIENTATION_BOTTOM:
-			geometry.x      = strut->strut_start;
-			geometry.y      = monitor_y + monitor_height - strut->strut_size;
-			geometry.width  = strut->strut_end - strut->strut_start;
-			geometry.height = strut->strut_size;
-			break;
-		case PANEL_ORIENTATION_LEFT:
-			geometry.x      = monitor_x;
-			geometry.y      = strut->strut_start;
-			geometry.width  = strut->strut_size;
-			geometry.height = strut->strut_end - strut->strut_start;
-			break;
-		case PANEL_ORIENTATION_RIGHT:
-			geometry.x      = monitor_x + monitor_width - strut->strut_size;
-			geometry.y      = strut->strut_start;
-			geometry.width  = strut->strut_size;
-			geometry.height = strut->strut_end - strut->strut_start;
-			break;
-		}
-
 		strut->allocated_strut_size  = strut->strut_size;
 		strut->allocated_strut_start = strut->strut_start;
 		strut->allocated_strut_end   = strut->strut_end;
+
+		geometry = strut->geometry;
 
 		moved_down = FALSE;
 		skip = 0;
@@ -233,20 +211,20 @@ panel_struts_allocate_struts (PanelToplevel *toplevel)
 				strut, overlap, &geometry, &moved_down, skip);
 
 		if (strut->orientation & PANEL_VERTICAL_MASK) {
-			if (strut->geometry.y < monitor_y) {
-				strut->geometry.height = strut->geometry.y + strut->geometry.height - monitor_y;
-				strut->geometry.y      = monitor_y;
+			if (geometry.y < monitor_y) {
+				geometry.height = geometry.y + geometry.height - monitor_y;
+				geometry.y      = monitor_y;
 			}
 				
-			if (strut->geometry.y + strut->geometry.height > monitor_y + monitor_height)
-				strut->geometry.height = monitor_y + monitor_height - strut->geometry.y;
+			if (geometry.y + geometry.height > monitor_y + monitor_height)
+				geometry.height = monitor_y + monitor_height - geometry.y;
 		}
 
-		if (strut->geometry.x      != geometry.x     ||
-		    strut->geometry.y      != geometry.y     ||
-		    strut->geometry.width  != geometry.width ||
-		    strut->geometry.height != geometry.height) {
-			strut->geometry = geometry;
+		if (strut->allocated_geometry.x      != geometry.x     ||
+		    strut->allocated_geometry.y      != geometry.y     ||
+		    strut->allocated_geometry.width  != geometry.width ||
+		    strut->allocated_geometry.height != geometry.height) {
+			strut->allocated_geometry = geometry;
 
 			if (strut->toplevel == toplevel)
 				toplevel_changed = TRUE;
@@ -390,6 +368,7 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 {
 	PanelStrut *strut;
 	gboolean    new_strut = FALSE;
+	int         monitor_x, monitor_y, monitor_width, monitor_height;
 
 	if (!(strut = panel_struts_find_strut (toplevel))) {
 		strut = g_new0 (PanelStrut, 1);
@@ -412,6 +391,37 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	strut->strut_start = strut_start;
 	strut->strut_end   = strut_end;
 	
+	panel_struts_get_monitor_geometry (screen, monitor,
+					   &monitor_x, &monitor_y,
+					   &monitor_width, &monitor_height);
+
+	switch (strut->orientation) {
+	case PANEL_ORIENTATION_TOP:
+		strut->geometry.x      = strut->strut_start;
+		strut->geometry.y      = monitor_y;
+		strut->geometry.width  = strut->strut_end - strut->strut_start;
+		strut->geometry.height = strut->strut_size;
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		strut->geometry.x      = strut->strut_start;
+		strut->geometry.y      = monitor_y + monitor_height - strut->strut_size;
+		strut->geometry.width  = strut->strut_end - strut->strut_start;
+		strut->geometry.height = strut->strut_size;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		strut->geometry.x      = monitor_x;
+		strut->geometry.y      = strut->strut_start;
+		strut->geometry.width  = strut->strut_size;
+		strut->geometry.height = strut->strut_end - strut->strut_start;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		strut->geometry.x      = monitor_x + monitor_width - strut->strut_size;
+		strut->geometry.y      = strut->strut_start;
+		strut->geometry.width  = strut->strut_size;
+		strut->geometry.height = strut->strut_end - strut->strut_start;
+		break;
+	}
+
 	if (new_strut)
 		panel_struts_list = g_slist_append (panel_struts_list, strut);
 
@@ -435,39 +445,30 @@ panel_struts_unregister_strut (PanelToplevel *toplevel)
 	panel_struts_allocate_struts (toplevel);
 }
 
-void
-panel_struts_update_toplevel (PanelToplevel    *toplevel,
-			      PanelOrientation  orientation,
-			      GdkRectangle     *geometry)
+gboolean
+panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
+				       int           *x,
+				       int           *y,
+				       int           *width,
+				       int           *height)
 {
 	PanelStrut *strut;
+
+	g_return_val_if_fail (x != NULL, FALSE);
+	g_return_val_if_fail (y != NULL, FALSE);
+	g_return_val_if_fail (width != NULL, FALSE);
+	g_return_val_if_fail (height != NULL, FALSE);
 	
 	if (!(strut = panel_struts_find_strut (toplevel)))
-		return;
+		return FALSE;
 
-	switch (strut->orientation) {
-	case PANEL_ORIENTATION_TOP:
-		geometry->x = strut->geometry.x;
-		geometry->y = strut->geometry.y;
-		geometry->width = strut->geometry.width;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
-		geometry->x = strut->geometry.x;
-		geometry->y = strut->geometry.y + strut->geometry.height - geometry->height;
-		geometry->width = strut->geometry.width;
-		break;
-	case PANEL_ORIENTATION_LEFT:
-		geometry->x = strut->geometry.x;
-		geometry->y = strut->geometry.y;
-		geometry->height = strut->geometry.height;
-		break;
-	case PANEL_ORIENTATION_RIGHT:
-		geometry->x = strut->geometry.x + strut->geometry.width - geometry->width;
-		geometry->y = strut->geometry.y;
-		geometry->height = strut->geometry.height;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
+	*x += strut->allocated_geometry.x - strut->geometry.x;
+	*y += strut->allocated_geometry.y - strut->geometry.y;
+
+	if (*width != -1)
+		*width  += strut->allocated_geometry.width  - strut->geometry.width;
+	if (*height != -1)
+		*height += strut->allocated_geometry.height - strut->geometry.height;
+
+	return TRUE;
 }

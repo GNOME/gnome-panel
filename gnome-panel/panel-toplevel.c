@@ -1240,7 +1240,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
 
-	if ( ! toplevel->priv->updated_geometry_initial)
+	if (!toplevel->priv->updated_geometry_initial)
 		return FALSE;
 
 	if (toplevel->priv->attached) {
@@ -1266,7 +1266,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	y      = toplevel->priv->geometry.y;
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
-	
+
 	orientation = toplevel->priv->orientation;
 
 	strut = strut_start = strut_end = 0;
@@ -1307,7 +1307,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	if (toplevel->priv->auto_hide && strut > 0)
 		strut = toplevel->priv->auto_hide_size;
 
-	if (strut > 0) {
+	if (strut > 0)
 		geometry_changed = panel_struts_register_strut (toplevel,
 								screen,
 								toplevel->priv->monitor,
@@ -1315,7 +1315,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 								strut,
 								strut_start,
 								strut_end);
-	} else
+	else
 		panel_struts_unregister_strut (toplevel);
 
 	panel_struts_set_window_hint (toplevel);
@@ -1980,10 +1980,11 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		toplevel->priv->geometry.height = h;
 
 	panel_toplevel_update_struts (toplevel);
-	if (toplevel->priv->state == PANEL_STATE_NORMAL && !toplevel->priv->animating)
-		panel_struts_update_toplevel (toplevel,
-					      toplevel->priv->orientation,
-					      &toplevel->priv->geometry);
+	panel_struts_update_toplevel_geometry (toplevel,
+					       &toplevel->priv->geometry.x,
+					       &toplevel->priv->geometry.y,
+					       &toplevel->priv->geometry.width,
+					       &toplevel->priv->geometry.height);
 
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
@@ -2915,6 +2916,12 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 						       &toplevel->priv->animation_end_y,
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
+
+	panel_struts_update_toplevel_geometry (toplevel,
+					       &toplevel->priv->animation_end_x,
+					       &toplevel->priv->animation_end_y,
+					       &toplevel->priv->animation_end_width,
+					       &toplevel->priv->animation_end_height);
 
 	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, &cur_x, &cur_y);
 

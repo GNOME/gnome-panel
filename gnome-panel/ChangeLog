@@ -1,3 +1,20 @@
+2003-08-08  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-struts.[ch]:
+	(panel_struts_intersect),
+	(panel_struts_allocation_overlapped),
+	(panel_struts_allocate_struts),
+	(panel_struts_register_strut): keep track of the original
+	geometry so that we can apply deltas to the toplevel
+	position rather than changing the position explicitly.
+	(panel_struts_update_toplevel_geometry): apply the deltas
+	here.
+	
+	* panel-toplevel.c:
+	(panel_toplevel_update_position): updating the geometry
+	accoring to the struts makes sense in all cases now.
+	(panel_toplevel_start_animation): ditto here.
+
 Thu Aug 07 14:34:37 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: Fixing bug #115494.  Apparently if some applet

@@ -28,20 +28,23 @@
 
 G_BEGIN_DECLS
 
-gboolean panel_struts_register_strut   (PanelToplevel    *toplevel,
-					GdkScreen        *screen,
-					int               monitor,
-					PanelOrientation  orientation,
-					int               strut_size,
-					int               strut_start,
-					int               strut_end);
-void     panel_struts_unregister_strut (PanelToplevel    *toplevel);
+gboolean panel_struts_register_strut           (PanelToplevel    *toplevel,
+						GdkScreen        *screen,
+						int               monitor,
+						PanelOrientation  orientation,
+						int               strut_size,
+						int               strut_start,
+						int               strut_end);
 
-void     panel_struts_set_window_hint  (PanelToplevel    *toplevel);
+void     panel_struts_unregister_strut         (PanelToplevel    *toplevel);
 
-void     panel_struts_update_toplevel  (PanelToplevel    *toplevel,
-					PanelOrientation  orientation,
-					GdkRectangle     *geometry);
+void     panel_struts_set_window_hint          (PanelToplevel    *toplevel);
+
+gboolean panel_struts_update_toplevel_geometry (PanelToplevel    *toplevel,
+						int              *x,
+						int              *y,
+						int              *w,
+						int              *h);
 
 G_END_DECLS
 
