@@ -155,19 +155,25 @@ load_image_file (Fish *fish)
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 
 	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_IMAGE, NULL);
-	if (g_path_is_absolute (tmp))
+	if (g_path_is_absolute (tmp)) {
 		image = tmp;
-	else {
+	} else {
 		image = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 						   tmp, FALSE, NULL);
+		if (image == NULL)
+			image = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP,
+							   tmp, FALSE, NULL);
 		g_free (tmp);
 	}
 
-	pixbuf = gdk_pixbuf_new_from_file (image, &error);
-	if (error) {
-		g_warning (G_STRLOC ": cannot open %s: %s", image, error->message);
+	if (image != NULL)
+		pixbuf = gdk_pixbuf_new_from_file (image, &error);
+	if (image == NULL || error != NULL) {
+		if (error != NULL) {
+			g_warning (G_STRLOC ": cannot open %s: %s", image, error->message);
 
-		g_error_free (error);
+			g_error_free (error);
+		}
 		g_free (image);
 		
 		if (fish_applet_rotate (fish)) {
@@ -379,31 +385,39 @@ fish_timeout(gpointer data)
 }
 
 static void
-apply_properties(Fish *fish) 
+apply_dialog_properties (Fish *fish) 
 {
 	/* xgettext:no-c-format */
 	const char *title_format = _("%s the Fish");
 	const char *label_format = _("%s the GNOME Fish Says:");
+	char *name, *tmp, *fmt;
+
+	if (fish->fortune_dialog == NULL)
+		return;
+
+	name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet),
+					      FISH_PREFS_NAME,
+					      NULL);
+
+	tmp = splice_name (title_format, name);
+	gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), tmp);
+	g_free (tmp);
+
+	fmt = g_strdup_printf ("<big><big>%s</big></big>", label_format);
+	tmp = splice_name (fmt, name);
+	g_free (fmt);
+	gtk_label_set_markup (GTK_LABEL (fish->fortune_label), tmp);
+	g_free (tmp);
+
+	g_free (name);
+}
+
+static void
+apply_properties (Fish *fish) 
+{
 	gdouble     speed;
 
-	if (fish->fortune_dialog) { 
-		gchar *name;     
-		gchar *tmp;
-
-		name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet),
-						      FISH_PREFS_NAME,
-						      NULL);
-
-		tmp = splice_name (title_format, name);
-		gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), tmp);
-		g_free (tmp);
-
-		tmp = splice_name (label_format, name);
-		gtk_label_set_text (GTK_LABEL (fish->fortune_label), tmp);
-		g_free (tmp);
-
-		g_free (name);
-	}
+	apply_dialog_properties (fish);
 	
 	load_image_file (fish);
 
@@ -471,16 +485,26 @@ fish_properties_apply_callback (GnomePropertyBox *pb,
 		    !strncmp (text, "who ", 4) ||
 		    !strcmp  (text, "who")     ||
 		    !strcmp  (text, "uptime")  ||
-		    !strncmp (text, "tail ", 5))
-			gnome_warning_dialog
-				(_("Warning:  The command appears to be "
-				   "something actually useful.\n"
-				   "Since this is a useless applet, you "
-				   "may not want to do this.\n"
-				   "We strongly advise you against "
-				   "usage of wanda for anything\n"
-				   "which would make the applet "
-				   "\"practical\" or useful."));
+		    !strncmp (text, "tail ", 5)) {
+			GtkWidget *w;
+			w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_WARNING,
+						    GTK_BUTTONS_OK,
+						    _("Warning:  The command appears to be "
+						      "something actually useful.\n"
+						      "Since this is a useless applet, you "
+						      "may not want to do this.\n"
+						      "We strongly advise you against "
+						      "usage of wanda for anything\n"
+						      "which would make the applet "
+						      "\"practical\" or useful."));
+			gtk_window_set_wmclass (GTK_WINDOW (w), "fish_useful_warning", "Fish");
+
+			gtk_widget_show_all (w);
+
+			g_signal_connect_swapped (G_OBJECT (w), "response",
+						  G_CALLBACK (gtk_widget_destroy),
+						  G_OBJECT (w));
+		}
 	}
 
 	panel_applet_gconf_set_int (PANEL_APPLET (fish->applet),
@@ -504,12 +528,13 @@ fish_properties_apply_callback (GnomePropertyBox *pb,
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-#ifdef FIXME /* figure out new help stuff */
+	GError *error = NULL;
 
-	GnomeHelpMenuEntry help_entry = { "fish_applet",
-					  "index.html#FISH-PREFS" };
-	gnome_help_display (NULL, &help_entry);
-#endif
+	gnome_help_display_desktop (NULL, "fish_applet", "fish_applet", "FISH-PREFS", &error);
+	if (error != NULL) {
+		g_warning ("help error: %s\n", error->message);
+		g_error_free (error);
+	}
 }
 
 static void 
@@ -530,9 +555,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gdouble        speed;
 	gboolean       rotate;
 
-	if (fish->pb) {
-		gtk_widget_show (fish->pb);
-		gdk_window_raise (fish->pb->window);
+	if (fish->pb != NULL) {
+		gtk_window_present (GTK_WINDOW (fish->pb));
 		return;
 	}
 
@@ -693,6 +717,18 @@ fish_locate_fortune_command (Fish *fish)
 }
 
 static void
+insert_text (Fish *fish, const char *text)
+{
+	GtkTextIter iter;
+
+	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &iter, -1);
+
+	gtk_text_buffer_insert_with_tags_by_name (fish->fortune_buffer, &iter,
+						  text, -1,
+						  "monospace", NULL);
+}
+
+static void
 text_clear (Fish *fish)
 {
 	GtkTextIter begin, end;
@@ -701,15 +737,23 @@ text_clear (Fish *fish)
 	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &end, -1);
 
 	gtk_text_buffer_delete (fish->fortune_buffer, &begin, &end);
+
+	/* insert an empty line */
+	insert_text (fish, "\n");
 }
 
-static void
-insert_text (Fish *fish, const char *text)
+static gboolean
+response (GtkWidget *w, int response, gpointer data)
 {
-	GtkTextIter iter;
+	gtk_widget_hide (w);
+	return TRUE;
+}
 
-	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &iter, -1);
-	gtk_text_buffer_insert (fish->fortune_buffer, &iter, text, -1);
+static gboolean
+delete_event (GtkWidget *w, gpointer data)
+{
+	gtk_widget_hide (w);
+	return TRUE;
 }
 
 static void 
@@ -723,25 +767,43 @@ update_fortune_dialog (Fish *fish)
 		GtkWidget *sw;
       
 		fish->fortune_dialog = 
-			gnome_dialog_new("", GNOME_STOCK_BUTTON_CLOSE, NULL);
-		gnome_dialog_set_close(GNOME_DIALOG(fish->fortune_dialog),
-				       TRUE);
-		gnome_dialog_close_hides(GNOME_DIALOG(fish->fortune_dialog),
-					 TRUE);
+			gtk_dialog_new_with_buttons ("",
+						     NULL /* parent */,
+						     0 /* flags */,
+						     GTK_STOCK_CLOSE,
+						     GTK_RESPONSE_CLOSE,
+						     NULL);
+		g_signal_connect (G_OBJECT (fish->fortune_dialog), "delete_event",
+				  G_CALLBACK (delete_event), NULL);
+		g_signal_connect (G_OBJECT (fish->fortune_dialog), "response",
+				  G_CALLBACK (response), NULL);
 		gtk_window_set_wmclass (GTK_WINDOW (fish->fortune_dialog), "fish", "Fish");
 		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
 						 GNOME_ICONDIR"/gnome-fish.png");
 
+		gtk_window_set_default_size (GTK_WINDOW (fish->fortune_dialog),
+					     MIN (600, gdk_screen_width () * 0.9),
+					     MIN (350, gdk_screen_height () * 0.9));
+
 		view = gtk_text_view_new ();
+		gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
+		gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
+		gtk_text_view_set_left_margin (GTK_TEXT_VIEW (view), 10);
+		gtk_text_view_set_right_margin (GTK_TEXT_VIEW (view), 10);
 		fish->fortune_buffer =
 			gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
+
+		gtk_text_buffer_create_tag (fish->fortune_buffer, "monospace",
+					    "family", "monospace",
+					    NULL);
+
 
 		sw = gtk_scrolled_window_new (NULL, NULL);
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
 						GTK_POLICY_AUTOMATIC,
 						GTK_POLICY_AUTOMATIC);
-
-		gtk_widget_set_usize (sw, 400, 200);
+		gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (sw),
+						     GTK_SHADOW_IN);
 
 		gtk_container_add (GTK_CONTAINER (sw), view);
 
@@ -755,10 +817,12 @@ update_fortune_dialog (Fish *fish)
 				    sw,
 				    TRUE, TRUE, GNOME_PAD);
 
-		apply_properties (fish);
-	}
+		apply_dialog_properties (fish);
 
-	gtk_widget_show_all (fish->fortune_dialog);
+		gtk_widget_show_all (fish->fortune_dialog);
+	} else {
+		gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
+	}
 
 	text_clear (fish);
 
@@ -795,8 +859,18 @@ fish_clicked_cb (GtkWidget * widget, GdkEventButton * e, Fish *fish)
 
 	/* on 1st of april the fish is dead damnit */
 	if (fish->april_fools) {
-		gnome_ok_dialog(_("The water needs changing!\n"
-				  "(Look at today's date)"));
+		GtkWidget *w;
+		w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
+					    GTK_BUTTONS_OK,
+					    _("The water needs changing!\n"
+					      "(Look at today's date)"));
+		gtk_window_set_wmclass (GTK_WINDOW (w), "fish", "Fish");
+
+		gtk_widget_show_all (w);
+
+		g_signal_connect_swapped (G_OBJECT (w), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  G_OBJECT (w));
 		return TRUE;
 	}
 
@@ -880,12 +954,13 @@ display_help_dialog (BonoboUIComponent *uic,
 		     Fish              *fish,
 		     const gchar       *verbname)
 {
-#ifdef FIXME /* figure out new help stuff */
+	GError *error = NULL;
 
-	GnomeHelpMenuEntry help_ref = { "fish_applet", "index.html"};
-
-	gnome_help_display (NULL, &help_ref);
-#endif
+	gnome_help_display_desktop (NULL, "fish_applet", "fish_applet", NULL, &error);
+	if (error != NULL) {
+		g_warning ("help error: %s\n", error->message);
+		g_error_free (error);
+	}
 }
 
 /*
@@ -903,9 +978,8 @@ display_about_dialog (BonoboUIComponent *uic,
 	gchar       *file;
 	gchar       *name;
 
-	if (fish->aboutbox) {
-		gtk_widget_show (fish->aboutbox);
-		gdk_window_raise (fish->aboutbox->window);
+	if (fish->aboutbox != NULL) {
+		gtk_window_present (GTK_WINDOW (fish->aboutbox));
 		return;
 	}
 
@@ -994,6 +1068,10 @@ applet_change_orient (PanelApplet       *applet,
 		return;
 
 	fish->orient = orient;
+
+	/* not yet all loaded up */
+	if (fish->frame == NULL)
+		return;
 	
 	load_image_file (fish);
 	
@@ -1003,14 +1081,18 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void
-applet_change_pixel_size (PanelApplet *applet,
-			  gint         size,
-			  Fish        *fish)
+applet_change_size (PanelApplet *applet,
+		    gint         size,
+		    Fish        *fish)
 {
 	if (fish->size == size)
 		return;
 
 	fish->size = size;
+
+	/* not yet all loaded up */
+	if (fish->frame == NULL)
+		return;
 	
 	load_image_file (fish);
 
@@ -1037,6 +1119,21 @@ fish_applet_fill (PanelApplet *applet)
 	fish->applet = GTK_WIDGET (applet);
 	fish->size   = panel_applet_get_size (applet);
 	fish->orient = panel_applet_get_orient (applet);
+
+	g_signal_connect (G_OBJECT (fish->applet),
+			 "destroy",
+			  G_CALLBACK (applet_destroy),
+			  fish);
+
+	g_signal_connect (G_OBJECT (fish->applet),
+			  "change_orient",
+			  G_CALLBACK (applet_change_orient),
+			  fish);
+
+	g_signal_connect (G_OBJECT (fish->applet),
+			  "change_size",
+			  G_CALLBACK (applet_change_size),
+			  fish);
 
 	panel_applet_add_preferences (applet, "/schemas/apps/fish-applet/prefs", NULL);
 
@@ -1065,21 +1162,6 @@ fish_applet_fill (PanelApplet *applet)
 	gtk_widget_show_all (GTK_WIDGET (fish->frame));
 
 	gtk_widget_show (GTK_WIDGET (fish->applet));
-
-	g_signal_connect (G_OBJECT (fish->applet),
-			 "destroy",
-			  G_CALLBACK (applet_destroy),
-			  fish);
-
-	g_signal_connect (G_OBJECT (fish->applet),
-			  "change_orient",
-			  G_CALLBACK (applet_change_orient),
-			  fish);
-
-	g_signal_connect (G_OBJECT (fish->applet),
-			  "change_size",
-			  G_CALLBACK (applet_change_pixel_size),
-			  fish);
 
 	panel_applet_setup_menu_from_file (PANEL_APPLET (fish->applet),
 				 NULL,

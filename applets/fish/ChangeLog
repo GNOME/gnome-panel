@@ -1,3 +1,15 @@
+Wed Feb 27 20:41:24 2002  George Lebl <jirka@5z.com>
+
+	* fish.c: fix possible crash if image not present, also look in our
+	  own prefix for fish pix.  Bind the change size and orient signals
+	  right after getting the initial values so that we get change
+	  notification if it happens right after the initial setting.
+	  Also add running of help.  Display fortune text in monospace
+	  font and use the default size thing for the fortune window,
+	  and make sure it's never larger then the screen.  Port some
+	  things to the gtk-dialog stuff.  Add margins around the
+	  text and the title label is in larger font.
+
 Tue Feb 26 18:50:12 2002  George Lebl <jirka@5z.com>
 
 	* fish.c: port the fortune dialog to GtkTextView
