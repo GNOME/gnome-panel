@@ -18,7 +18,10 @@
 #include <libgnome/libgnome.h>
 #include <libbonobo.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-mime.h>
+#include <libgnomevfs/gnome-vfs-mime-handlers.h>
+#include <libgnomevfs/gnome-vfs-file-info.h>
 
 #include "panel.h"
 
@@ -889,57 +892,77 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 	load_menu_applet (dir, FALSE /* main_menu */, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
 }
 
+static gboolean
+uri_exists (const char *uri)
+{
+	gboolean ret;
+	GnomeVFSURI *vfs_uri = gnome_vfs_uri_new (uri);
+	ret = gnome_vfs_uri_exists (vfs_uri);
+	gnome_vfs_uri_unref (vfs_uri);
+	return ret;
+}
+
+static void
+drop_nautilus_uri (PanelWidget *panel,
+		   int pos,
+		   const char *uri,
+		   const char *icon)
+{
+	char *quoted = g_shell_quote (uri);
+	char *exec = g_strdup_printf ("nautilus %s",
+				      quoted);
+	char *base;
+	g_free (quoted);
+
+	base = g_path_get_basename (uri);
+
+	load_launcher_applet_from_info (base,
+					uri,
+					exec,
+					icon,
+					panel,
+					pos,
+					TRUE);
+	g_free (exec);
+	g_free (base);
+}
+
 static void
 drop_directory (PanelWidget *panel, int pos, const char *dir)
 {
 	char *tmp;
 
-	tmp = g_build_filename (dir, ".directory", NULL);
-	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
+	/* not filename, but path, these are uris, not local
+	 * files */
+	tmp = g_build_path ("/", dir, ".directory", NULL);
+	if (uri_exists (tmp)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
 	}
 	g_free (tmp);
 
-	tmp = g_build_filename (dir, ".order", NULL);
-	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
+	tmp = g_build_path ("/", dir, ".order", NULL);
+	if (uri_exists (tmp)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
 	}
 	g_free (tmp);
 
-	tmp = g_find_program_in_path  ("nautilus");
-	if (tmp != NULL) {
+	if (panel_is_program_in_path ("nautilus")) {
 		/* nautilus */
-		char *exec = g_strdup_printf ("nautilus %s",
-					      panel_quote_string (dir));
-		char *base;
-		g_free (tmp);
-
-		base = g_path_get_basename (dir);
-
-		load_launcher_applet_from_info (base,
-						dir,
-						exec,
-						"gnome-folder.png",
-						panel,
-						pos,
-						TRUE);
-		g_free (exec);
-		g_free (base);
+		drop_nautilus_uri (panel, pos, dir, "gnome-folder.png");
 	} else {
-		tmp = g_find_program_in_path  ("gmc-client");
-		if (tmp != NULL) {
+		if (panel_is_program_in_path  ("gmc-client")) {
 			/* gmc */
 			char *name;
+			char *quoted = g_shell_quote (dir);
 			char *exec = g_strdup_printf ("gmc-client "
 						      "--create-window=%s",
-						      panel_quote_string (dir));
+						      quoted);
 
-			g_free (tmp);
-
+			g_free (quoted);
 
 			name = g_path_get_basename (dir);
 			load_launcher_applet_from_info (name,
@@ -962,7 +985,6 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	      gboolean background_drops)
 {
 	GList *li, *files;
-	struct stat s;
 
 	files = gnome_vfs_uri_list_parse (urilist);
 
@@ -970,7 +992,10 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 		GnomeVFSURI *vfs_uri = li->data;
 		gchar *uri = gnome_vfs_uri_to_string (vfs_uri, GNOME_VFS_URI_HIDE_NONE);
 		const char *mimetype;
+		char *basename;
+		char *dirname;
 		char *filename;
+		GnomeVFSFileInfo *info;
 
 		if (strncmp (uri, "http:", strlen ("http:")) == 0 ||
 		    strncmp (uri, "https:", strlen ("https:")) == 0 ||
@@ -979,40 +1004,79 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 		    strncmp (uri, "ghelp:", strlen ("ghelp:")) == 0 ||
 		    strncmp (uri, "man:", strlen ("man:")) == 0 ||
 		    strncmp (uri, "info:", strlen ("info:")) == 0) {
+			/* FIXME: probably do this only on link,
+			 * in fact, on link always set up a link,
+			 * on copy do all the other stuff.  Or something. */
 			drop_url (panel, pos, uri);
 			continue;
 		}
 
-		/* FIXME: We should probably use a gnome-vfs function here instead. */
-		filename = extract_filename (uri);
-		if(filename == NULL)
-			continue;
+		mimetype = gnome_vfs_mime_type_from_name (uri);
+		basename = gnome_vfs_uri_extract_short_path_name (vfs_uri);
+		dirname = gnome_vfs_uri_extract_dirname (vfs_uri);
+		info = gnome_vfs_file_info_new ();
 
-		if(stat(filename, &s) != 0) {
-			g_free(filename);
-			continue;
+		if (gnome_vfs_get_file_info_uri (vfs_uri, info,
+						 GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
+			gnome_vfs_file_info_unref (info);
+			info = NULL;
 		}
-		
-		mimetype = gnome_vfs_mime_type_from_name(filename);
 
 		if (background_drops &&
 		    mimetype != NULL &&
-		    strncmp(mimetype, "image", sizeof("image")-1) == 0) {
+		    strncmp(mimetype, "image", sizeof("image")-1) == 0 &&
+		    /* FIXME: We should probably use a gnome-vfs function here instead. */
+		    /* FIXME: probably port the whole panel background stuff to gnome-vfs */
+		    (filename = extract_filename (uri)) != NULL) {
 			panel_widget_set_back_pixmap (panel, filename);
+			g_free (filename);
+		} else if (basename != NULL &&
+			   strcmp (basename, ".directory") == 0 &&
+			   dirname != NULL) {
+			/* This is definately a menu */
+			char *menu_uri = g_strconcat (vfs_uri->method_string, ":",
+						      dirname, NULL);
+			drop_menu (panel, pos, menu_uri);
+			g_free (menu_uri);
 		} else if (mimetype != NULL &&
 			   (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
 			    strcmp(mimetype, "application/x-kde-app-info") == 0)) {
 			Launcher *launcher;
 			
-			launcher = load_launcher_applet (filename, panel, pos, TRUE);
+			launcher = load_launcher_applet (uri, panel, pos, TRUE);
 			
 			if (launcher != NULL)
 				launcher_hoard (launcher);
-		} else if (S_ISDIR(s.st_mode)) {
-			drop_directory (panel, pos, filename);
-		} else if (S_IEXEC & s.st_mode) /*executable?*/
+		} else if (info != NULL &&
+			   info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+			drop_directory (panel, pos, uri);
+		} else if (info != NULL &&
+			   info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
+			   info->permissions &
+			     (GNOME_VFS_PERM_USER_EXEC |
+			      GNOME_VFS_PERM_GROUP_EXEC |
+			      GNOME_VFS_PERM_OTHER_EXEC) &&
+			   (filename = extract_filename (uri)) != NULL) {
+			/* executable and local, so add a launcher with
+			 * it */
 			ask_about_launcher (filename, panel, pos, TRUE);
-		g_free (filename);
+			g_free (filename);
+		} else {
+			/* FIXME: add a launcher that will launch the app
+			 * associated with this file */
+			/* FIXME: For now just add a launcher that launches
+			 * nautilus on this uri */
+			const char *icon = NULL;
+			if (mimetype != NULL)
+		        	icon = gnome_vfs_mime_get_icon (mimetype);
+			if (icon == NULL)
+				icon = "gnome-unknown.png";
+			drop_nautilus_uri (panel, pos, uri, icon);
+		}
+		if (info != NULL)
+			gnome_vfs_file_info_unref (info);
+		g_free (basename);
+		g_free (dirname);
 		g_free (uri);
 	}
 

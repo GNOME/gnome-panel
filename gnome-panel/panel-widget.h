@@ -211,7 +211,7 @@ void		panel_widget_change_orient	(PanelWidget *panel,
 						 GtkOrientation orient);
 
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
-						 char *file);
+						 const char *file);
 void		panel_widget_set_back_color	(PanelWidget *panel,
 						 GdkColor *color);
 

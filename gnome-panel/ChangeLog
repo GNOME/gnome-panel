@@ -1,3 +1,13 @@
+Mon Dec 24 01:55:19 2001  George Lebl <jirka@5z.com>
+
+	* panel.c, panel-util.[ch]: deal with dropped uris a tad better and
+	  actually use gnome-vfs more.  Still kind of stupid and needs more
+	  work, but better then before.  We should now again handle drops
+	  from the menus since those were not from a 'file:' uri's.  Also
+	  drop the shell quoting routine since we already have that in glib.
+
+	* panel-widget.c: a bit of constization
+
 Sat Dec 22 23:12:54 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am, foobar-widget.c, gnome-panel-screenshot.c, panel.c,

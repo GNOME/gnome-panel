@@ -46,7 +46,7 @@ extern gboolean commie_mode;
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_instance_init	(PanelWidget      *panel_widget);
 static int  panel_try_to_set_pixmap     (PanelWidget      *panel,
-					 char             *pixmap);
+					 const char       *pixmap);
 static void panel_resize_pixmap         (PanelWidget      *panel);
 static void panel_try_to_set_back_color (PanelWidget      *panel,
 					 GdkColor         *color);
@@ -1477,7 +1477,7 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 }
 
 void
-panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
+panel_widget_set_back_pixmap (PanelWidget *panel, const char *file)
 {
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
@@ -1651,7 +1651,7 @@ panel_resize_pixmap(PanelWidget *panel)
 }
 
 static int
-panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
+panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
 {
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),FALSE);
