@@ -725,53 +725,43 @@ add_columns (GtkTreeView *treeview)
 }
 
 static gboolean
-add_icon_idle (gpointer data)
+add_icon_idle (GtkListStore *list)
 {
 	GtkTreeIter *iter;
-	GValue value = {0, };
-	char *file;
-	GdkPixbuf *pixbuf;
-	gboolean long_operation;
+	gboolean     long_operation = FALSE;
+	GdkPixbuf   *pixbuf;
+	char        *file;
 
-add_icon_again:
+	do {
+		if (!add_icon_iters) {
+			add_icon_idle_id = 0;
+			return FALSE;
+		}
 
-	if (add_icon_iters == NULL) {
-		add_icon_idle_id = 0;
-		return FALSE;
-	}
+		iter = add_icon_iters->data;
+		add_icon_iters = g_slist_remove (add_icon_iters, iter);
 
-	iter = add_icon_iters->data;
-	add_icon_iters = g_slist_remove (add_icon_iters, iter);
+		gtk_tree_model_get (GTK_TREE_MODEL (list), iter,
+				    COLUMN_ICON_FILE, &file, -1);
 
-	gtk_tree_model_get_value (GTK_TREE_MODEL (data), iter,
-				  COLUMN_ICON_FILE, &value);
-	file = g_strdup (g_value_get_string (&value));
-	g_value_unset (&value);
+		pixbuf = panel_make_menu_icon (file, NULL /* fallback */,
+					       ICON_SIZE, &long_operation);
+		if (pixbuf) {
+			gtk_list_store_set (list, iter, COLUMN_ICON, pixbuf, -1);
+			g_object_unref (pixbuf);
+		}
 
-	pixbuf = panel_make_menu_icon (file,
-				       NULL /* fallback */,
-				       ICON_SIZE,
-				       &long_operation);
-	if (pixbuf != NULL) {
-		gtk_list_store_set (GTK_LIST_STORE (data), iter,
-				    COLUMN_ICON, pixbuf,
-				    -1);
-		g_object_unref (G_OBJECT (pixbuf));
-	}
-
-	g_free (file);
-	g_free (iter);
+		g_free (iter);
 
 	/* don't go back into the main loop if this wasn't very hard to do */
-	if ( ! long_operation)
-		goto add_icon_again;
+	} while (!long_operation);
 
-	if (add_icon_iters != NULL) {
-		return TRUE;
-	} else {
+	if (!add_icon_iters) {
 		add_icon_idle_id = 0;
 		return FALSE;
 	}
+
+	return TRUE;
 }
 
 /* Called when simple contents are switched to or first shown */
@@ -857,7 +847,8 @@ fill_list (GtkWidget *list)
 	add_icon_iters = g_slist_reverse (add_icon_iters);
 
 	if (add_icon_idle_id == 0)
-		add_icon_idle_id = g_idle_add (add_icon_idle, store);
+		add_icon_idle_id =
+			g_idle_add ((GSourceFunc) add_icon_idle, store);
 }
 
 #define DEFAULT_ICON "document-icons/i-executable.png"
@@ -1194,13 +1185,16 @@ static void
 run_dialog_destroyed (GtkWidget *widget)
 {
 	run_dialog = NULL;
+
 	g_slist_foreach (add_icon_iters, (GFunc)g_free, NULL);
 	g_slist_free (add_icon_iters);
 	add_icon_iters = NULL;
-	if (add_icon_idle_id != 0)
+
+	if (add_icon_idle_id)
 		g_source_remove (add_icon_idle_id);
 	add_icon_idle_id = 0;
-	if (add_items_idle_id != 0)
+
+	if (add_items_idle_id)
 		g_source_remove (add_items_idle_id);
 	add_items_idle_id = 0;
 }

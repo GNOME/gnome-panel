@@ -89,13 +89,6 @@ fi
 
 AC_SUBST(X_LIBS)
 
-dnl libglade conversion script
-
-AC_PATH_PROG(LIBGLADE_CONVERT, libglade-convert)
-if test -z $LIBGLADE_CONVERT; then
-	AC_MSG_ERROR([libglade-convert (from libglade 2.0) is needed to build gnome-panel.])
-fi
-
 dnl IDL directories
 
 ORBIT_IDL="`$PKG_CONFIG --variable=orbit_idl ORBit-2.0`"

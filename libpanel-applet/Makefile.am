@@ -76,7 +76,6 @@ EXTRA_DIST =					\
 	GNOME_Panel_TestApplet.server.in	\
 	panel-applet-marshal.list		\
 	libpanelapplet-2.0.pc.in		\
-	panel-test-applets.glade		\
 	panel-test-applets.glade2
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
@@ -116,11 +115,6 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 
 gladedir   = $(datadir)/gnome-panel/glade
 glade_DATA = panel-test-applets.glade2
-glade_src  = panel-test-applets.glade
-
-panel-test-applets.glade2: panel-test-applets.glade $(LIBGLADE_CONVERT)
-	$(LIBGLADE_CONVERT) $(srcdir)/panel-test-applets.glade > panel-test-applets.glade.tmp \
-	&& mv panel-test-applets.glade.tmp panel-test-applets.glade2
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc

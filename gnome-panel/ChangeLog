@@ -1,5 +1,18 @@
 2002-03-21  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am: kill glade conversion, we're going with
+	the Glade2 versions now.
+
+	* gnome-panel-properties.glade2:
+	* gnome-panel-screenshot.glade2: add .glade2 files.
+
+	* gnome-run.c: (add_icon_idle), (fill_list),
+	(run_dialog_destroyed):
+	* panel-gconf.c: (panel_gconf_associate_schemas_in_dir):
+	some minor cleanups
+
+2002-03-21  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-widget.c:
 	(panel_widget_add): rename from panel_widget_add_full and
 	kill bind_lower arg.

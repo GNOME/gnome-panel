@@ -195,34 +195,21 @@ gnome_panel_screenshot_LDADD = 	\
 	$(PNG_LIBS)
 
 gladedir = $(datadir)/gnome/panel
-glade_DATA = \
+glade_DATA =					\
 	gnome-panel-properties.glade2		\
 	gnome-panel-screenshot.glade2
-
-glade_src = \
-	gnome-panel-properties.glade		\
-	gnome-panel-screenshot.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
 	panel.hints				\
-	gnome-panel-properties.desktop.in		\
+	gnome-panel-properties.desktop.in	\
 	gnome-panel-properties			\
-	$(glade_src)				\
 	$(glade_DATA)				\
 	nothing.cP				\
 	nothing.h				\
 	$(schema_DATA)				\
 	$(ui_DATA)				\
 	panel-marshal.list
-
-gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
-	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-properties.glade > gnome-panel-properties.glade.tmp \
-	&& mv gnome-panel-properties.glade.tmp gnome-panel-properties.glade2
-
-gnome-panel-screenshot.glade2: gnome-panel-screenshot.glade $(LIBGLADE_CONVERT)
-	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-screenshot.glade > gnome-panel-screenshot.glade.tmp \
-	&& mv gnome-panel-screenshot.glade.tmp gnome-panel-screenshot.glade2
 
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
