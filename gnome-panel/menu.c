@@ -1614,7 +1614,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
   /* FIXME: workaround for a possible gtk+ bug
    *    See bugs #92085(gtk+) and #91184(panel) for details.
    */
-  if (global_config.tooltips_enabled)
+  if (global_config.enable_tooltips)
     gtk_tooltips_enable (panel_tooltips);
 
   while (parent)

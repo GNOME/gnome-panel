@@ -38,8 +38,8 @@ panel_global_config_set_entry (GConfEntry *entry)
 	if (!value || !key)
 		return;
 
-	if (strcmp (key, "tooltips_enabled") == 0)
-		global_config.tooltips_enabled =
+	if (strcmp (key, "enable_tooltips") == 0)
+		global_config.enable_tooltips =
 				gconf_value_get_bool (value);
 
 	else if (strcmp (key, "keep_menus_in_memory") == 0)
