@@ -11,7 +11,6 @@
 #include "corner-widget.h"
 #include "panel-util.h"
 #include "panel_config_global.h"
-#include "gdkextra.h"
 
 extern int panel_applet_in_drag;
 

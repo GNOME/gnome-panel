@@ -87,9 +87,7 @@ base_panel_SOURCES=\
 	button-widget.c  	\
 	button-widget.h		\
 	panel-util.c		\
-	panel-util.h		\
-	gdkextra.c		\
-	gdkextra.h
+	panel-util.h
 
 panel_SOURCES = 		\
 	$(base_panel_SOURCES)	\

@@ -11,7 +11,6 @@
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"
-#include "gdkextra.h"
 
 GSList *panels=NULL; /*other panels we might want to move the applet to*/
 

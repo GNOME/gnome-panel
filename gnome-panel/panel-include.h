@@ -28,6 +28,5 @@
 #include "extern.h"
 
 #include "panel-util.h"
-#include "gdkextra.h"
 
 #endif

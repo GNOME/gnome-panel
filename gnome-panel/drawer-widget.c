@@ -11,7 +11,6 @@
 #include "drawer-widget.h"
 #include "panel-util.h"
 #include "panel_config_global.h"
-#include "gdkextra.h"
 #include "panel-include.h" 
 
 /*there  can universally be only one applet being dragged since we assume
