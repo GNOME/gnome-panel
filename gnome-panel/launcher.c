@@ -97,7 +97,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 	g_return_if_fail(launcher->dentry!=NULL);
 	g_return_if_fail(launcher->dentry->location!=NULL);
        
-	uri_list = g_strconcat ("file:", launcher->dentry->location, NULL);
+	uri_list = g_strconcat ("file:", launcher->dentry->location, "\r\n", NULL);
 
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, uri_list,
@@ -173,7 +173,10 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	gtk_widget_show (launcher->button);
 
 	/*A hack since this function only pretends to work on window
-	  widgets (which we actually kind of are)*/
+	  widgets (which we actually kind of are) this will select
+	  some (already selected) events on the panel instead of
+	  the launcher window (where they are also selected) but
+	  we don't mind*/
 	GTK_WIDGET_UNSET_FLAGS(launcher->button,GTK_NO_WINDOW);
 	gtk_drag_source_set(launcher->button,
 			    GDK_BUTTON1_MASK,
