@@ -31,7 +31,7 @@ bin_PROGRAMS = \
 	gnome-panel-add-launcher	\
 	gnome-panel-screenshot
 
-noinst_PROGRAMS = bad-applet
+noinst_PROGRAMS = panel-temp bad-applet
 
 libpanel_appletincludedir = $(includedir)
 libpanel_statusincludedir = $(includedir)
@@ -49,6 +49,19 @@ CLEANFILES += $(CORBA_SRCLIST)
 
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) $(top_srcdir)/idl/gnome-panel.idl
+
+$(srcdir)/stamp-panel-marshal.h: panel-marshal.list
+	cd $(srcdir) \
+	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --header >> xgen-gmh \
+	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h) \
+	&& rm -f xgen-gmh xgen-gmh~ \
+	&& echo timestamp > $(@F)
+
+$(srcdir)/panel-marshal.h $(srcdir)/panel-marshal.c: stamp-panel-marshal.h
+	cd $(srcdir) \
+	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --body >> xgen-gmc \
+	&& cp xgen-gmc panel-marshal.c \
+	&& rm -f xgen-gmc xgen-gmc~
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
@@ -95,14 +108,38 @@ $(GWMH_SRCLIST):
 		ln -sf $(gwmh_dir)/$$file . ; \
 	done
 
-BUILT_SOURCES = $(CORBA_SRCLIST) $(GWMH_SRCLIST)
+BUILT_SOURCES = \
+	$(CORBA_SRCLIST)	\
+	$(GWMH_SRCLIST)		\
+	panel-marshal.c		\
+	panel-marshal.h
+
+panel_temp_SOURCES=\
+	panel-include.h		\
+	panel-types.h		\
+	panel-marshal-main.c	\
+	main.c			\
+	main.h			\
+	panel-widget.c  	\
+	panel-widget.h		\
+	basep-widget.c  	\
+	basep-widget.h
+
+panel_temp_LDADD=\
+	$(PANEL_LIBS)
 
 panel_SOURCES=\
 	$(GWMH_SRCLIST)		\
 	panel-include.h		\
 	panel-types.h		\
+	panel-marshal-main.c	\
 	main.c			\
 	main.h			\
+	panel-widget.c  	\
+	panel-widget.h		\
+	basep-widget.c  	\
+	basep-widget.h		\
+	things-will-not-compile-below-this-line		\
 	applet.c		\
 	applet.h         	\
 	panel.c			\
@@ -136,10 +173,6 @@ panel_SOURCES=\
 	swallow.h  		\
 	drawer.c  		\
 	drawer.h  		\
-	panel-widget.c  	\
-	panel-widget.h		\
-	basep-widget.c  	\
-	basep-widget.h		\
 	border-widget.c		\
 	border-widget.h		\
 	edge-widget.c		\
