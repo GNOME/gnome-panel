@@ -153,6 +153,11 @@ static void
 s_panelspot_remove_callback(POA_GNOME_PanelSpot *servant,
 			    CORBA_char *callback_name,
 			    CORBA_Environment *ev);
+static void
+s_panelspot_callback_set_sensitive(POA_GNOME_PanelSpot *servant,
+				   CORBA_char *callback_name,
+				   CORBA_boolean sensitive,
+				   CORBA_Environment *ev);
 
 static void
 s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
@@ -206,6 +211,7 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_drag_stop,
   (gpointer)&s_panelspot_add_callback,
   (gpointer)&s_panelspot_remove_callback,
+  (gpointer)&s_panelspot_callback_set_sensitive,
   (gpointer)&s_panelspot_sync_config,
   (gpointer)&s_panelspot_done_session_save
 };
@@ -845,6 +851,19 @@ s_panelspot_remove_callback(POA_GNOME_PanelSpot *servant,
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);
 	applet_remove_callback(ext->info, callback_name);
+}
+
+static void
+s_panelspot_callback_set_sensitive(POA_GNOME_PanelSpot *servant,
+				   CORBA_char *callback_name,
+				   CORBA_boolean sensitive,
+				   CORBA_Environment *ev)
+{
+	Extern *ext = (Extern *)servant;
+
+	g_return_if_fail(ext != NULL);
+	g_return_if_fail(ext->info != NULL);
+	applet_callback_set_sensitive(ext->info, callback_name, sensitive);
 }
 
 static void

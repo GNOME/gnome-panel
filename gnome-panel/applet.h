@@ -35,6 +35,7 @@ struct _AppletUserMenu {
 	char *name;
 	char *stock_item;
 	char *text;
+	int sensitive;
 	AppletInfo *info;
 	GtkWidget *menuitem;
 	GtkWidget *submenu;
@@ -66,6 +67,9 @@ void applet_add_callback(AppletInfo *info,
 			 char *menuitem_text);
 void applet_remove_callback(AppletInfo *info,
 			    char *callback_name);
+void applet_callback_set_sensitive(AppletInfo *info,
+				   char *callback_name,
+				   int sensitive);
 void show_applet_menu(AppletInfo *info, GdkEventButton *event);
 
 END_GNOME_DECLS

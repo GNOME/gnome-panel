@@ -176,6 +176,11 @@ void		applet_widget_register_stock_callback_dir (AppletWidget *applet,
 void		applet_widget_unregister_callback_dir (AppletWidget *applet,
 						       char *name);
 
+/*enable/disable a menu entry*/
+void		applet_widget_callback_set_sensitive	(AppletWidget *applet,
+							 char *name,
+							 int sensitive);
+
 /*get thenumber of applets*/
 int		applet_widget_get_applet_count	(void);
 

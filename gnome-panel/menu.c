@@ -3799,8 +3799,6 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	Menu *menu = data;
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(menu->button),
-					       "applet_info");
 	int main_menu = (strcmp (menu->path, ".") == 0);
 
 	/*this HAS to be set everytime we popup the menu*/
@@ -3838,7 +3836,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	menu->age = 0;
 	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, 
 		       applet_menu_position,
-		       info, bevent->button, bevent->time);
+		       menu->info, bevent->button, bevent->time);
 	gdk_event_free((GdkEvent *)bevent);
 }
 
@@ -3973,9 +3971,17 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	if (page != -1)
 		return;
 	
+	applet_remove_callback(menu->info,"edit_menus");
 	if(GTK_TOGGLE_BUTTON(main_menu)->active) {
+		char *tmp;
 		g_free(menu->path);
 		menu->path = g_strdup(".");
+		if((tmp = gnome_is_program_in_path("gmenu")))  {
+			g_free(tmp);
+			applet_add_callback(menu->info,"edit_menus",
+					    NULL,
+					    _("Edit menus..."));
+		}
 	} else {
 		g_free(menu->path);
 		s = gnome_file_entry_get_full_path(GNOME_FILE_ENTRY(pathentry),
@@ -4294,12 +4300,22 @@ load_menu_applet(char *params, int main_menu_flags,
 	menu = create_menu_applet(params, ORIENT_UP,main_menu_flags);
 
 	if(menu) {
+		char *tmp;
 		register_toy(menu->button,menu,
 			     panel,pos,APPLET_MENU);
 
-		applet_add_callback(applets_last->data,"properties",
+		menu->info = applets_last->data;
+
+		applet_add_callback(menu->info,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
+		if(strcmp(params,".")==0 &&
+		   (tmp = gnome_is_program_in_path("gmenu")))  {
+			g_free(tmp);
+			applet_add_callback(menu->info,"edit_menus",
+					    NULL,
+					    _("Edit menus..."));
+		}
 	}
 }
 

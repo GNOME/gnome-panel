@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include <panel-widget.h>
+#include "applet.h"
 
 BEGIN_GNOME_DECLS
 
@@ -32,6 +33,7 @@ struct _Menu {
 	char *path;
 	int main_menu_flags;
 	int age;
+	AppletInfo *info;
 };
 
 void load_menu_applet(char *params, int main_menu_flags,

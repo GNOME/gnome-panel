@@ -654,6 +654,27 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 	g_free(n);
 }
 
+void
+applet_widget_callback_set_sensitive(AppletWidget *applet,
+				     char *name,
+				     int sensitive)
+{
+	CORBA_Environment ev;
+
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
+
+	/*skip over leading '/'s*/
+	name = make_sane_name(name);
+
+	g_return_if_fail(name!=NULL);
+
+	CORBA_exception_init(&ev);
+	GNOME_PanelSpot_callback_set_sensitive(CD(applet)->pspot, name,
+					       sensitive, &ev);
+	CORBA_exception_free(&ev);
+}
+
 static CustomAppletServant *
 gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 {

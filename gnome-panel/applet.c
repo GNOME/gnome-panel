@@ -110,6 +110,13 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
+		else if(strcmp(menu->name,"edit_menus")==0) {
+			char *tmp;
+			if((tmp = gnome_is_program_in_path("gmenu")))  {
+				gnome_execute_async(NULL, 1, &tmp);
+				g_free(tmp);
+			}
+		}
 		break;
 	default: break;
 	}
@@ -148,10 +155,11 @@ applet_add_callback(AppletInfo *info,
 	g_return_if_fail(info != NULL);
 	
 	if((menu=applet_get_callback(info->user_menu,callback_name))==NULL) {
-		menu = g_new(AppletUserMenu,1);
+		menu = g_new0(AppletUserMenu,1);
 		menu->name = g_strdup(callback_name);
 		menu->stock_item = g_strdup(stock_item);
 		menu->text = g_strdup(menuitem_text);
+		menu->sensitive = TRUE;
 		menu->info = info;
 		menu->menuitem = NULL;
 		menu->submenu = NULL;
@@ -195,7 +203,34 @@ applet_remove_callback(AppletInfo *info, char *callback_name)
 		if(menu->text)
 			g_free(menu->text);
 		g_free(menu);
+	} else
+		return; /*it just isn't there*/
+
+	/*make sure the menu is rebuilt*/
+	if(info->menu) {
+		GList *list;
+		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
+			AppletUserMenu *menu = list->data;
+			menu->menuitem=NULL;
+			menu->submenu=NULL;
+		}
+		gtk_widget_destroy(info->menu);
+		info->menu=NULL;
+		info->menu_age = 0;
 	}
+}
+
+void
+applet_callback_set_sensitive(AppletInfo *info, char *callback_name, int sensitive)
+{
+	AppletUserMenu *menu;
+
+	g_return_if_fail(info != NULL);
+	
+	if((menu=applet_get_callback(info->user_menu,callback_name))!=NULL)
+		menu->sensitive = sensitive;
+	else
+		return; /*it just isn't there*/
 
 	/*make sure the menu is rebuilt*/
 	if(info->menu) {
@@ -244,6 +279,8 @@ setup_an_item(AppletUserMenu *menu,
 	if(menu->submenu)
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
 					  menu->submenu);
+	
+	gtk_widget_set_sensitive(menu->menuitem,menu->sensitive);
 }
 
 static void
@@ -281,10 +318,11 @@ add_to_submenus(AppletInfo *info,
 	/*the user did not give us this sub menu, whoops, will create an empty
 	  one then*/
 	if(!s_menu) {
-		s_menu = g_new(AppletUserMenu,1);
+		s_menu = g_new0(AppletUserMenu,1);
 		s_menu->name = g_strdup(t);
-		s_menu->text = g_strdup(_("???"));
 		s_menu->stock_item = NULL;
+		s_menu->text = g_strdup(_("???"));
+		s_menu->sensitive = TRUE;
 		s_menu->info = info;
 		s_menu->menuitem = NULL;
 		s_menu->submenu = NULL;
@@ -466,7 +504,7 @@ register_toy(GtkWidget *applet,
 				      ~( GDK_POINTER_MOTION_MASK |
 					 GDK_POINTER_MOTION_HINT_MASK));
 
-	info = g_new(AppletInfo,1);
+	info = g_new0(AppletInfo,1);
 	info->applet_id = applet_count;
 	info->type = type;
 	info->widget = applet;
