@@ -94,6 +94,9 @@ gint panel_session_save (GnomeClient *client,
 			 gint fast,
 			 gpointer client_data);
 
+gint panel_session_die (GnomeClient *client,
+			gpointer client_data);
+
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
 
 gint register_toy(GtkWidget *applet,
