@@ -9,27 +9,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-16 04:22+0100\n"
-"PO-Revision-Date: 2003-12-16 04:25+0100\n"
+"POT-Creation-Date: 2004-01-10 01:48+0100\n"
+"PO-Revision-Date: 2004-01-10 01:54+0100\n"
 "Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:228
+#: applets/clock/clock.c:232
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:228
+#: applets/clock/clock.c:232
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:230 applets/clock/clock.c:792
+#: applets/clock/clock.c:234 applets/clock/clock.c:830
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:230 applets/clock/clock.c:794
+#: applets/clock/clock.c:234 applets/clock/clock.c:832
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -38,7 +38,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:241
+#: applets/clock/clock.c:245
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -46,7 +46,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:248
+#: applets/clock/clock.c:252
 #, c-format
 msgid ""
 "%1$s\n"
@@ -59,42 +59,42 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:255
+#: applets/clock/clock.c:259
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:358
+#: applets/clock/clock.c:374
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:487
+#: applets/clock/clock.c:508
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: applets/clock/clock.c:701
+#: applets/clock/clock.c:736
 msgid "Computer Clock"
 msgstr "Računarski časovnik"
 
-#: applets/clock/clock.c:787
+#: applets/clock/clock.c:825
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:789
+#: applets/clock/clock.c:827
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:828
+#: applets/clock/clock.c:868
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y."
 
-#: applets/clock/clock.c:868
+#: applets/clock/clock.c:910
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ne može da pokrene alat za podešavanje: %s"
 
-#: applets/clock/clock.c:909
+#: applets/clock/clock.c:951
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -102,7 +102,7 @@ msgstr ""
 "Ne može da pronađe program za podešavanje datuma i vremena. Možda nijedan "
 "nije instaliran?"
 
-#: applets/clock/clock.c:1335 applets/clock/clock.c:1600
+#: applets/clock/clock.c:1418 applets/clock/clock.c:1775
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -112,44 +112,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Došlo je do greške pri prikazivanju pomoći: %s"
 
-#: applets/clock/clock.c:1380
+#: applets/clock/clock.c:1467
 msgid "Clock Preferences"
 msgstr "Postavke časovnika"
 
-#: applets/clock/clock.c:1416
+#: applets/clock/clock.c:1503
 msgid "Clock _type:"
 msgstr "_Vrsta časovnika:"
 
-#: applets/clock/clock.c:1427
+#: applets/clock/clock.c:1514
 msgid "12 hour"
 msgstr "12-točasovni"
 
-#: applets/clock/clock.c:1435
+#: applets/clock/clock.c:1522
 msgid "24 hour"
 msgstr "24-očasovni"
 
-#: applets/clock/clock.c:1443
+#: applets/clock/clock.c:1530
 msgid "UNIX time"
 msgstr "UNIX vreme"
 
-#: applets/clock/clock.c:1451
+#: applets/clock/clock.c:1538
 msgid "Internet time"
 msgstr "Internet vreme"
 
-#: applets/clock/clock.c:1465
+#: applets/clock/clock.c:1546
+msgid "Custom format"
+msgstr "Oblik po izboru"
+
+#: applets/clock/clock.c:1562
+msgid "Custom _format:"
+msgstr "Oblik po _izboru:"
+
+#: applets/clock/clock.c:1579
 msgid "Show _seconds"
 msgstr "Prikaži _sekunde"
 
-#: applets/clock/clock.c:1474
+#: applets/clock/clock.c:1588
 msgid "Show _date"
 msgstr "Prikaži _datum"
 
-#: applets/clock/clock.c:1483
+#: applets/clock/clock.c:1597
 msgid "Use _UTC"
 msgstr "Koristi _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1635 applets/notification_area/main.c:116
+#: applets/clock/clock.c:1810 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:502
 #: gnome-panel/menu.c:283
@@ -159,12 +167,12 @@ msgstr ""
 "\n"
 "Prevod.org — prevod na srpski jezik"
 
-#: applets/clock/clock.c:1654
+#: applets/clock/clock.c:1829
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Časovnik"
 
-#: applets/clock/clock.c:1656
+#: applets/clock/clock.c:1831
 msgid "The Clock displays the current time and date"
 msgstr "Časovnik prikazuje trenutno vreme i datum"
 
@@ -177,40 +185,44 @@ msgid "24-hour"
 msgstr "24-očasovni"
 
 #: applets/clock/clock.schemas.in.h:3
+msgid "Custom format of the clock"
+msgstr "Proizvoljan oblik časovnika"
+
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Vrsta časovnika"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Ukoliko je postavljeno, prikaži datum u časovniku, pored vremena"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Ukoliko je postavljeno, prikaži sekunde u vremenu."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Ukoliko je postavljeno, prikaži univerzalno vreme (UT)."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Ukoliko je postavljeno, prikaži obaveštenja kada se mišem pređe preko "
 "časovnika."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Prikaži datum u časovniku"
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Prikaži datum u obaveštenju"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Prikaži vreme sa sekundama"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -218,40 +230,43 @@ msgstr ""
 "Upotreba ovog ključa je prevaziđena u Gnomu 2.6 u korist ključa „format“. "
 "Shema je zadržana zarad saglasnosti sa starijim izdanjima."
 
+#: applets/clock/clock.schemas.in.h:13
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr "Ovaj ključ navodi oblik časovnika koji koristi programče kada je oblik postavljen na „custom“. Možete koristiti oznake koje razume strftime() radi dobijanja željenog oblika."
+
 # bug: ".beats" or "beats"?
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\" and \"unix\". If set to \"internet"
-"\", the clock will display internet time. The internet time system divides "
-"the day into 1000 \".beats\". There are no time zones in this system, so "
-"time is the same all over the world. If set to \"unix\", the clock will "
-"display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr ""
-"Ovaj ključ navodi oblik časa koji koristi programče sa satom. Dozvoljene "
-"vrednosti su „12-hour“, „24-hour“, „internet“ i „unix“. Ukoliko je "
-"postavljeno na „internet“, sat će prikazivati Internet vreme. Sistem Internet "
-"vremena deli dan na 1.000 „otkucaja“. U ovom sistemu nema vremenskih zona, "
-"pa je vreme isto u celom svetu. Ukoliko je postavljeno na „unix“, sat će "
-"prikazivati proteklo vreme u sekundama od Epohe, tj. 1. januara 1970."
+"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
+"to \"internet\", the clock will display internet time. The internet time "
+"system divides the day into 1000 \".beats\". There are no time zones in this "
+"system, so time is the same all over the world. If set to \"unix\", the "
+"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
+"\"custom\", the clock will display time according to the format specified in "
+"the custom_format key."
+msgstr "Ovaj ključ navodi oblik časa koji koristi programče sa satom. Dozvoljene vrednosti su „12-hour“, „24-hour“, „internet“, „unix“ i „custom“. Ukoliko je postavljeno na „internet“, sat će prikazivati Internet vreme. Sistem Internet vremena deli dan na 1.000 „otkucaja“. U ovom sistemu nema vremenskih zona, pa je vreme isto u celom svetu. Ukoliko je postavljeno na „unix“, sat će prikazivati proteklo vreme u sekundama od Epohe, tj. 1. januara 1970. Ako je postavljeno na „custom“, sat će prikazivati vreme u skladu sa oblikom navedenim u ključu custom_format."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Ovaj ključ navodi program koji se koristi za podešavanje vremena."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
 msgstr "Alat za podešavanje vremena"
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use UNIX time"
 msgstr "Koristi UNIX vreme"
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UTC"
 msgstr "Koristi UTC"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use internet time"
 msgstr "Koristi Internet vreme"
 
@@ -301,7 +316,7 @@ msgstr "_O programu..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:312
+#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
 #: gnome-panel/panel-menu-button.c:608
 msgid "_Help"
 msgstr "_Pomoć"
@@ -571,7 +586,7 @@ msgstr "Obaveštajna zona panela"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:111 gnome-panel/menu.c:121 gnome-panel/menu.c:131
 #: gnome-panel/menu.c:141 gnome-panel/menu.c:151 gnome-panel/menu.c:161
-#: gnome-panel/panel-menu-bar.c:181
+#: gnome-panel/panel-menu-bar.c:192
 msgid "Actions"
 msgstr "Akcije"
 
@@ -1269,7 +1284,21 @@ msgstr "Postavke pokretača"
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Ključ „%s“ nije postavljen, ne može pokrenuti lanser\n"
 
-#: gnome-panel/launcher.c:897 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:867 gnome-panel/launcher.c:884
+#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:536
+msgid "Cannot create launcher"
+msgstr "Ne može da napravi pokretač"
+
+#: gnome-panel/launcher.c:868 gnome-panel/menu-ditem.c:464
+msgid "You have to specify a name."
+msgstr "Morate navesti ime."
+
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:481
+msgid "You have to specify a valid URL or command."
+msgstr "Morate navesti ispravnu adresu (URL) ili naredbu."
+
+#: gnome-panel/launcher.c:928 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Napravi pokretač"
 
@@ -1277,8 +1306,7 @@ msgstr "Napravi pokretač"
 msgid "Specify a profile name to load"
 msgstr "Navedite ime profila koji učitavate"
 
-#: gnome-panel/menu.c:110 gnome-panel/menu.c:3234
-#: gnome-panel/panel-menu-bar.c:175
+#: gnome-panel/menu.c:110
 msgid "Log Out"
 msgstr "Odjava"
 
@@ -1310,8 +1338,8 @@ msgstr "Primoraj nedolični program na zatvaranje"
 msgid "Screenshot"
 msgstr "Snimak ekrana"
 
-#: gnome-panel/menu.c:143 gnome-panel/menu.c:3402
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/menu.c:143 gnome-panel/menu.c:3416
+#: gnome-panel/panel-menu-bar.c:157
 msgid "Take a screenshot of your desktop"
 msgstr "Sačuvaj snimak ekrana vašeg desktopa"
 
@@ -1319,8 +1347,8 @@ msgstr "Sačuvaj snimak ekrana vašeg desktopa"
 msgid "Search"
 msgstr "Traži"
 
-#: gnome-panel/menu.c:153 gnome-panel/menu.c:3383
-#: gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:153 gnome-panel/menu.c:3397
+#: gnome-panel/panel-menu-bar.c:142
 msgid "Find files, folders, and documents on your computer"
 msgstr "Pronađite datoteke, direktorijume i dokumente na vašem računaru"
 
@@ -1440,8 +1468,8 @@ msgstr "Postavke"
 msgid "query returned exception %s\n"
 msgstr "ispitaj vraćenu grešku „%s“\n"
 
-#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3343
-#: gnome-panel/panel-menu-bar.c:197
+#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3357
+#: gnome-panel/panel-menu-bar.c:208
 msgid "Applications"
 msgstr "Programi"
 
@@ -1485,58 +1513,51 @@ msgstr "Pokretač iz menija"
 msgid "Menu Bar"
 msgstr "Linija menija"
 
-#: gnome-panel/menu.c:3222 gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:169
 msgid "Lock Screen"
 msgstr "Zaključajte ekran"
 
-#: gnome-panel/menu.c:3228
+#: gnome-panel/menu.c:3231
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zaključaj ekran kako bi mogli da se privremeno udaljite od računara"
 
-#: gnome-panel/menu.c:3240
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr ""
-"Okončajte ovu sesiju kako biste se ulogovali kao neki drugi korisnik, ili da "
-"isključite vaš računar."
+# bug: NOOO STRING COMPOSITION, PLEAAASEE!
+#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
+#, c-format
+msgid "Log Out %s"
+msgstr "%s: odjava"
 
-#: gnome-panel/menu.c:3364 gnome-panel/panel-menu-bar.c:123
+# bug: no string composition
+#: gnome-panel/menu.c:3252
+#, c-format
+msgid ""
+"Log out %s of this session to log in as a different user or to to shut down "
+"your computer"
+msgstr "%s: Odjavite se iz ove sesije kako biste se prijavili kao neki drugi korisnik, ili da isključite vaš računar."
+
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
 msgid "Run Application..."
 msgstr "Pokreni program..."
 
-#: gnome-panel/menu.c:3371 gnome-panel/panel-menu-bar.c:125
+#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:128
 msgid "Run an Application by entering a command"
 msgstr "Pokrenite program unosom naredbe"
 
-#: gnome-panel/menu.c:3380 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:140
 msgid "Search for Files..."
 msgstr "Tražite datoteke..."
 
-#: gnome-panel/menu.c:3399 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:155
 msgid "Take Screenshot..."
 msgstr "Snimak ekrana..."
 
-#: gnome-panel/menu.c:3417
+#: gnome-panel/menu.c:3431
 msgid "Desktop"
 msgstr "Radna površina"
 
 #: gnome-panel/menu-ditem.c:127
 msgid "Cannot save changes to launcher"
 msgstr "Ne može da sačuva izmene pokretača"
-
-#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
-#: gnome-panel/menu-ditem.c:536
-msgid "Cannot create launcher"
-msgstr "Ne može da napravi pokretač"
-
-#: gnome-panel/menu-ditem.c:464
-msgid "You have to specify a name."
-msgstr "Morate navesti ime."
-
-#: gnome-panel/menu-ditem.c:481
-msgid "You have to specify a valid URL or command."
-msgstr "Morate navesti ispravnu adresu (URL) ili naredbu."
 
 #. class
 #: gnome-panel/menu-ditem.c:511
@@ -1900,13 +1921,15 @@ msgstr "Snimak ekrana"
 msgid "Take window screenshot"
 msgstr "Snimak prozora"
 
-#: gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-menu-bar.c:171
 msgid "Protect your computer from unauthorized use"
 msgstr "Zaštitite vaš računar od neovlašćene upotrebe"
 
-#: gnome-panel/panel-menu-bar.c:177
-msgid "Quit from the GNOME desktop"
-msgstr "Napustite Gnomovu radnu površinu"
+# bug: no string composition
+#: gnome-panel/panel-menu-bar.c:179
+#, c-format
+msgid "Quit from %s's desktop"
+msgstr "%s: napustite okruženje"
 
 #: gnome-panel/panel-menu-button.c:416
 msgid "Menu Path"
