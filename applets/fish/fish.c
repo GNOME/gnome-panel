@@ -15,6 +15,7 @@
 #include <libart_lgpl/art_pixbuf.h>
 #include <libart_lgpl/art_rgb_pixbuf_affine.h>
 #include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_rgb.h>
 
 typedef struct _FishProp FishProp;
 struct _FishProp {
@@ -22,7 +23,7 @@ struct _FishProp {
 	char *image;
 	int frames;
 	float speed;
-	int rotate;
+	gboolean rotate;
 };
 
 static FishProp defaults = {
@@ -43,7 +44,7 @@ struct _Fish {
 	int w,h;
 	int curpix;
 	int timeout_id;
-	int april_timeout_id;
+	gboolean april_fools;
 	GtkWidget * fortune_dialog;
 	GtkWidget * fortune_label;
 	GtkWidget * fortune_less; 
@@ -54,31 +55,6 @@ struct _Fish {
 };
 
 #define IS_ROT(f) ((f)->prop.rotate && ((f)->orient == ORIENT_LEFT || (f)->orient == ORIENT_RIGHT))
-
-static gboolean
-april_timer(gpointer data)
-{
-	time_t ourtime;
-	struct tm *tm;
-	Fish *fish = data;
-
-	time(&ourtime);
-	tm = localtime(&ourtime);
-	/* if still on april fools day, then just try again later */
-	if(tm->tm_mon == 4 && tm->tm_mday == 1)
-		return TRUE;
-
-	/* or reload the fish to put it right side up */
-	load_image_file(fish);
-
-	setup_size(fish);
-
-	fish_timeout(fish);
-
-	fish->april_timeout_id = 0;
-
-	return FALSE;
-}
 
 GtkWidget *bah_window = NULL;
 
@@ -126,26 +102,14 @@ load_image_file(Fish *fish)
 			art_affine_multiply(affine,affine,tmpaffine);
 		}
 
-		{
-			time_t ourtime;
-			struct tm *tm;
-			time(&ourtime);
-			tm = localtime(&ourtime);
-			/* if on april fools day, mess with the users */
-			if(tm->tm_mon == 4 && tm->tm_mday == 1) {
-				double tmpaffine[6];
+		if(fish->april_fools) {
+			double tmpaffine[6];
 
-				art_affine_rotate(tmpaffine,180);
-				art_affine_multiply(affine,affine,tmpaffine);
-				art_affine_translate(tmpaffine,w,h);
-				art_affine_multiply(affine,affine,tmpaffine);
-
-				if(!fish->april_timeout_id)
-					fish->april_timeout_id =
-						gtk_timeout_new(10000,
-								april_timer,
-								fish);
-			}
+			/* rotate the fish */
+			art_affine_rotate(tmpaffine,180);
+			art_affine_multiply(affine,affine,tmpaffine);
+			art_affine_translate(tmpaffine,w,h);
+			art_affine_multiply(affine,affine,tmpaffine);
 		}
 		
 		rgb = g_new0(guchar,w*h*3);
@@ -162,6 +126,15 @@ load_image_file(Fish *fish)
  		fish->pix = gdk_pixmap_new(bah_window->window,
  					   fish->w,fish->h,-1);
 		gc = gdk_gc_new(fish->pix);
+
+		if(fish->april_fools) {
+			/* rgb has is packed, thus rowstride is w*3 so
+			 * we can do the following.  It makes the whole
+			 * image have an ugly industrial waste like tint
+			 * to make it obvious that the fish is dead */
+			art_rgb_run_alpha(rgb, 255, 128, 0, 70, w*h);
+		}
+
 
 		gdk_draw_rgb_image(fish->pix,gc,
 				   0,0, w, h,
@@ -271,9 +244,34 @@ static int
 fish_timeout(gpointer data)
 {
 	Fish *fish = data;
-	fish->curpix++;
-	if(fish->curpix>=fish->prop.frames) fish->curpix=0;
-	fish_draw(fish->darea,fish);
+	time_t ourtime;
+	struct tm *tm;
+
+	time(&ourtime);
+	tm = localtime(&ourtime);
+
+	if(fish->april_fools) {
+		if(tm->tm_mon != 3 || tm->tm_mday != 1) {
+			fish->april_fools = FALSE;
+			load_image_file(fish);
+			setup_size(fish);
+			fish_timeout(fish);
+		}
+	} else {
+		if(tm->tm_mon == 3 && tm->tm_mday == 1) {
+			fish->april_fools = TRUE;
+			load_image_file(fish);
+			setup_size(fish);
+			fish_timeout(fish);
+		}
+	}
+
+	/* on april fools, the fish id dead! */
+	if(!fish->april_fools) {
+		fish->curpix++;
+		if(fish->curpix>=fish->prop.frames) fish->curpix=0;
+		fish_draw(fish->darea,fish);
+	}
 
 	return TRUE;
 }
@@ -508,12 +506,19 @@ update_fortune_dialog(Fish *fish)
 				       _("You do not have fortune installed."));
 }
 
-static int 
+static gboolean 
 fish_clicked_cb(GtkWidget * widget, GdkEventButton * e, Fish *fish)
 {
 	if (e->button != 1) {
 		/* Ignore buttons 2 and 3 */
 		return FALSE; 
+	}
+
+	/* on 1st of april the fish is dead damnit */
+	if(fish->april_fools) {
+		gnome_ok_dialog(_("The water is polluted!\n"
+				  "(Look at todays date)"));
+		return TRUE;
 	}
 
 	update_fortune_dialog(fish);
@@ -651,8 +656,6 @@ applet_destroy(GtkWidget *applet,Fish *fish)
 		gdk_pixmap_unref(fish->pix);
 	if(fish->timeout_id)
 		gtk_timeout_remove(fish->timeout_id);
-	if(fish->april_timeout_id)
-		gtk_timeout_remove(fish->april_timeout_id);
 	if(fish->fortune_dialog)
 		gtk_widget_destroy(fish->fortune_dialog);
 	if(fish->aboutbox)
