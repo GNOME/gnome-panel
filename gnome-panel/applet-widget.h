@@ -130,6 +130,9 @@ applet_widget_init(app_id,app_parser,argc,argv,flags,arg_index, \
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);
 
+/* convenience function for multi applets */
+gchar *		make_param_string		(gint argc, char *argv[]);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

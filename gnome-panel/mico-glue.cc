@@ -180,7 +180,12 @@ send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	return applet->session_save(cookie, applet_id,cfgpath,globcfgpath);
+	try {
+		return applet->session_save(cookie, applet_id,cfgpath,globcfgpath);
+	} catch(...) {
+		g_warning(_("Error on sending 'session save' to applet!"));
+		return TRUE;
+	}
 }
 
 void
@@ -191,7 +196,11 @@ send_applet_change_orient (const char *ior, int applet_id, int orient)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->change_orient(cookie,applet_id,orient);
+	try {
+		applet->change_orient(cookie,applet_id,orient);
+	} catch(...) {
+		g_warning(_("Error on sending 'orient change' to applet!"));
+	}
 }
 
 void
@@ -203,7 +212,11 @@ send_applet_do_callback (const char *ior, int applet_id,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->do_callback(cookie,applet_id, callback_name);
+	try {
+		applet->do_callback(cookie,applet_id, callback_name);
+	} catch(...) {
+		g_warning(_("Error on sending 'do callback' to applet!"));
+	}
 }
 
 void
@@ -214,5 +227,9 @@ send_applet_start_new_applet (const char *ior, const char *param)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->start_new_applet(cookie,param);
+	try {
+		applet->start_new_applet(cookie,param);
+	} catch(...) {
+		g_warning(_("Error on sending 'start new applet' to applet!"));
+	}
 }

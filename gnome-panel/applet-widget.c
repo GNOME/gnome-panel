@@ -355,3 +355,25 @@ _gnome_applet_start_new_applet(const char *param)
 	else if(start_new_func)
 		(*start_new_func)(param,start_new_func_data);
 }
+
+/* convenience function for multi applets */
+gchar *
+make_param_string(gint argc, char *argv[])
+{
+	gchar *s;
+	gint i;
+	gint len=0;
+
+	for(i=1;i<argc;i++)
+		len = strlen(argv[i])+1;
+
+	s = g_malloc(len);
+	s[0]= '\0';
+
+	for(i=1;i<argc;i++) {
+		strcat(s,argv[i]);
+		if((i+1)<argc)
+			strcat(s," ");
+	}
+	return s;
+}

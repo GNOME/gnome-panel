@@ -144,6 +144,7 @@ really_exec_prog(gint applet_id, gchar *path, gchar *param)
 	/*check if this is an applet which is a multi applet and
 	  has something already loaded*/
 	if(mulapp_is_in_list(path)) {
+		printf("multi applet running, contacting [%s]\n",path);
 		mulapp_load_or_add_to_queue(path,param);
 		return TRUE;
 	}  else {
@@ -456,7 +457,7 @@ load_default_applets(void)
 {
 	queue_load_applet(MENU_ID, NULL, ".",
 			  PANEL_UNKNOWN_APPLET_POSITION, 0,NULL);
-	queue_load_applet(EXTERN_ID, "clock_applet", "",
+	queue_load_applet(EXTERN_ID, "gen_util_applet", "--clock",
 			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 }
 
