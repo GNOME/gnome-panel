@@ -474,8 +474,6 @@ main(int argc, char **argv)
 
 	gnome_init("panel", NULL, argc, argv, 0, NULL);
 
-	create_applet_menu();
-
 	/*set up global options*/
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("/panel/Config/tooltips_enabled=TRUE");

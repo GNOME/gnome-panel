@@ -17,15 +17,6 @@
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
 
-static GtkWidget *applet_menu;
-static GtkWidget *applet_menu_remove_item;
-static GtkWidget *applet_menu_prop_separator;
-static GtkWidget *applet_menu_prop_item;
-
-/*FIXME: get rid of this, menu will be part of panel not an applet*/
-static menu_count=0; /*how many "menu" applets we have ....*/
-			/*FIXME: this should only count "main" menus!*/
-
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -109,6 +100,10 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	int            pos;
 	int            panel;
 	GList         *list;
+
+	/*obviously no need for saving*/
+	if(info->type==APPLET_EXTERN_PENDING && info->type==APPLET_EMPTY)
+		return;
 
 	pos = -1;
 	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
@@ -302,16 +297,13 @@ panel_session_save (GnomeClient *client,
 				printf("SHUTTING DOWN EXTERN (%d)\n",i);
 				send_applet_shutdown_applet(info->id,i);
 				puts("DONE");
-			} else if(info->type != APPLET_EXTERN_PENDING) {
-				puts("SHUTTING DOWN INTERNAL");
-				//gtk_widget_unref(info->widget);
-				puts("DONE");
 			}
+			if(info->menu)
+				gtk_widget_unref(info->menu);
 		}
 
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
-		gtk_widget_unref(applet_menu);
 		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 
 		small_icons = NULL;
@@ -372,7 +364,7 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 	AppletInfo     *info;
 	PanelWidget    *panel;
 
-	info = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
+	info = data;
 
 	if(!(panel = find_applet_panel(info->widget)))
 		return;
@@ -389,98 +381,101 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	gint pos;
 	PanelWidget *panel;
 
-	info = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
+	info = data;
 
-	/*FIXME: this will have to go menu can be accessed from right click*/
-	if(strcmp(info->id,"Menu")==0) {
-		if(menu_count<=1)
-			return;
-		/*FIXME: do something to make the user aware that this was
-		  wrong ... a message box maybe ... or a beep*/
-		menu_count--;
-	}
-	applets=g_list_remove(applets,info);
+	if(info->type == APPLET_EXTERN)
+		send_applet_shutdown_applet(info->id,info->applet_id);
+	info->type = APPLET_EMPTY;
 
 	if(!(panel = find_applet_panel(info->widget)))
 		return;
 
 	panel_widget_remove(panel,info->widget);
 	gtk_widget_unref(info->widget);
+	/* this should be handeled by the applet itself (hopefully)
 	if(info->assoc)
 		gtk_widget_unref(info->assoc);
+	*/
+	if(info->menu)
+		gtk_widget_unref(info->menu);
 
 	g_free(info->id);
+	info->id=NULL;
 	if(info->params) g_free(info->params);
-	g_free(info);
+	info->params=NULL;
 }
 
-/*replace with corba applet callbacks*/
 static void
-applet_properties_callback(GtkWidget *widget, gpointer data)
+applet_callback_callback(GtkWidget *widget, gpointer data)
 {
+	AppletUserMenu *menu = data;
+
+	if(menu->info->type == APPLET_EXTERN) {
+		send_applet_do_callback(menu->info->id,
+					menu->info->applet_id,
+					menu->name);
+	} else if(menu->info->type != APPLET_EXTERN_PENDING &&
+	   menu->info->type != APPLET_EMPTY) {
+		/*handle internal applet callbacks here*/
+		;
+	}
 }
 
-void
-create_applet_menu(void)
+/*the menu is not used for corba applets right now, but it might be used
+  if invoked from some other place*/
+static GtkWidget *
+create_applet_menu(AppletInfo *info, GList *user_menu)
 {
 	GtkWidget *menuitem;
+	GtkWidget *applet_menu;
 
 	applet_menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
-			   NULL);
+			   info);
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
-	applet_menu_remove_item = menuitem;
-
 	
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
-			   NULL);
+			   info);
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 	
+	if(user_menu) {
+		menuitem = gtk_menu_item_new();
+		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_widget_show(menuitem);
+	}
 
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-	applet_menu_prop_separator = menuitem;
-	
-	menuitem = gtk_menu_item_new_with_label(_("Applet properties..."));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) applet_properties_callback,
-			   NULL);
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-	applet_menu_prop_item = menuitem;
+	for(;user_menu!=NULL;user_menu = g_list_next(user_menu)) {
+		AppletUserMenu *menu=user_menu->data;
+		menuitem = gtk_menu_item_new_with_label(menu->text);
+		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+				   (GtkSignalFunc) applet_callback_callback,
+				   menu);
+		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_widget_show(menuitem);
+	}
+
+	return applet_menu;
 }
-
 
 static void
 show_applet_menu(AppletInfo *info)
 {
-	if (info->flags & APPLET_HAS_PROPERTIES) {
-		gtk_widget_show(applet_menu_prop_separator);
-		gtk_widget_show(applet_menu_prop_item);
-	} else {
-		gtk_widget_hide(applet_menu_prop_separator);
-		gtk_widget_hide(applet_menu_prop_item);
-	}
+	if (!info->menu)
+		info->menu = create_applet_menu(info,info->user_menu);
 
-	/*FIMXE: this should go*/
-	if(strcmp(info->id,"Menu")!=0 || menu_count>1)
-		gtk_widget_show(applet_menu_remove_item);
-	else
-		gtk_widget_hide(applet_menu_remove_item);
-	gtk_object_set_user_data(GTK_OBJECT(applet_menu), info);
-
-	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
+	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
 	/*FIXME: make it pop-up on some title bar of the applet menu or
 	  somehow avoid pressing remove applet being under the cursor!*/
 }
+
+
 
 static gint
 applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
@@ -510,16 +505,24 @@ panel_log_out_callback(GtkWidget *widget, gpointer data)
 	panel_quit();
 }
 
+void
+applet_show_menu(int id)
+{
+	AppletInfo *info = g_list_nth(applets,id)->data;
+	show_applet_menu(info);
+}
+
+
 int
 applet_get_panel(int id)
 {
-	return 0;
+	return 0; /*FIXME*/
 }
 
 int
 applet_get_pos(int id)
 {
-	return 0;
+	return 0; /*FIXME*/
 }
 
 void
@@ -544,7 +547,20 @@ applet_drag_stop(int id)
 void
 applet_add_callback(short id, char *callback_name, char *menuitem_text)
 {
-	g_warning("Unimplemented\n");
+	AppletUserMenu *menu = g_new(AppletUserMenu,1);
+	AppletInfo *info = g_list_nth(applets,id)->data;
+
+	menu->name = g_strdup(callback_name);
+	menu->text = g_strdup(menuitem_text);
+	menu->info = info;
+
+	/*make sure the menu is rebuilt*/
+	if(info->menu) {
+		gtk_widget_unref(info->menu);
+		info->menu=NULL;
+	}
+
+	info->user_menu = g_list_append(info->user_menu,menu);
 }
 
 int
@@ -706,6 +722,8 @@ register_toy(GtkWidget *applet,
 	GtkWidget     *eventbox;
 	AppletInfo    *info;
 	PanelWidget   *panelw;
+	GList         *list;
+	int            i;
 	
 	g_assert(applet != NULL);
 	g_assert(id != NULL);
@@ -722,13 +740,17 @@ register_toy(GtkWidget *applet,
 
 	info = g_new(AppletInfo,1);
 
+	for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++)
+		;
+	info->applet_id = i;
 	info->type = type;
 	info->widget = eventbox;
 	info->assoc = assoc;
+	info->menu = NULL;
 	info->data = data;
 	info->id = g_strdup(id);
 	info->params = g_strdup(params);
-	info->flags = flags;
+	info->user_menu = NULL;
 
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
 
@@ -747,9 +769,6 @@ register_toy(GtkWidget *applet,
 			   info);
 
 	orientation_change(info,panelw);
-
-	if(strcmp(id,"Menu")==0)
-		menu_count++;
 
 	printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));
 }

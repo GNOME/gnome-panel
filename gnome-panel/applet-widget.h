@@ -21,6 +21,9 @@ struct _AppletWidget
 	GtkWindow		window;
 
 	GtkWidget		*eb;
+
+	GtkWidget		*applet_menu;
+	GList			*menu_items;
 };
 
 struct _AppletWidgetClass

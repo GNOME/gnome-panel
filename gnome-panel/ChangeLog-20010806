@@ -1,3 +1,15 @@
+Thu Mar 12 02:01:30 1998  George Lebl  <jirka@5z.com>
+
+	* applet-lib.cc, panel.c: implemented the callbacks, right now
+	  menu is built on the applet side and code is there to do a
+	  unified applet menu stuff on the panel side, but I'd have to
+	  find a sane way of sending the button press event so that the
+	  menu would work, probably some hacking on teh grabs could make
+	  it work (release grab on the applet side, add grab on the panel
+	  side...)
+
+	* panel.c: a bunch of fixes
+
 Wed Mar 11 22:42:39 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: fixed a cpl of warnings

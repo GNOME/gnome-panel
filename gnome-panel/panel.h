@@ -10,6 +10,7 @@ BEGIN_GNOME_DECLS
   filemanager*/
 /*#define LAUNCHER_ID "Launcher"*/
 #define DRAWER_ID "Drawer"
+#define LOGOUT_ID "Logout"
 #define EXTERN_ID "Extern"
 
 #define DEFAULT_AUTO_HIDE_STEP_SIZE 10
@@ -44,7 +45,8 @@ typedef enum {
 	APPLET_EXTERN_PENDING,
 	APPLET_DRAWER,
 	APPLET_MENU,
-	APPLET_LOGOUT
+	APPLET_LOGOUT,
+	APPLET_EMPTY
 } AppletType;
 
 typedef enum {
@@ -54,15 +56,27 @@ typedef enum {
 	ORIENT_RIGHT
 } PanelOrientType;
 
+typedef struct _AppletUserMenu AppletUserMenu;
 typedef struct _AppletInfo AppletInfo;
+
+struct _AppletUserMenu {
+	gchar *name;
+	gchar *text;
+	AppletInfo *info;
+};
+
 struct _AppletInfo {
 	AppletType type;
+	int applet_id;
 	GtkWidget *widget;
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
+	GtkWidget *menu; /*the applet menu*/
 	gpointer data;
-	AppletFlags flags; /*flags: probably obscolete*/
-	gchar *id;
-	gchar *params;
+	gchar *id; /*used for IOR or string Id, and also for passing around
+		     the config path*/
+	gchar *params; /*used for parameters to internal applets and for path
+			 for external applets*/
+	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
 };
 
 
@@ -75,8 +89,6 @@ gint panel_session_save (GnomeClient *client,
 			 gpointer client_data);
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
-
-void create_applet_menu(void);
 
 void register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,

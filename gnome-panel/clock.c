@@ -200,6 +200,12 @@ shutdown_applet(int id)
 	//gtk_timeout_add(100,applet_die,NULL);
 }
 
+void
+test_callback(int id, gpointer data)
+{
+	puts("TEST");
+}
+
 
 int
 main(int argc, char **argv)
@@ -233,11 +239,14 @@ main(int argc, char **argv)
 
 	/*use cfg path for loading up data!*/
 
-	/*puts("CONFIG PATH");
-	puts(cfgpath);
-	puts("-----------");*/
-
 	g_free(cfgpath);
+
+	gnome_panel_applet_register_callback (aw,
+					      applet_id,
+					      "test",
+					      "TEST CALLBACK",
+					      test_callback,
+					      NULL);
 
 	clock = create_clock_widget (GTK_WIDGET(aw));
 	gtk_widget_show(clock);

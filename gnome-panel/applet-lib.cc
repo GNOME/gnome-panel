@@ -15,12 +15,19 @@ GNOME::Panel_var panel_client;
   drag at a time :) Blah blah */
 static int currently_dragged_id = -1;
 
-static GtkWidget *applet_menu;
-static GtkWidget *applet_menu_prop_separator;
-static GtkWidget *applet_menu_prop_item;
+typedef struct _CallbackInfo CallbackInfo;
+struct _CallbackInfo {
+	gint applet_id;
+	gchar *menutext;
+	AppletCallbackFunc func;
+	gpointer data;
+};
+
+GHashTable *applet_callbacks=NULL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
+#define APPLET_MENU_KEY "applet_menu_key"
 
 CORBA::ORB_ptr orb_ptr;
 static CORBA::BOA_ptr boa_ptr;
@@ -49,7 +56,23 @@ public:
         void do_callback (CORBA::Short id,
 			  const char *callback_name)
         {
-		/*FIXME: run the proper function that the applet registered*/
+		GList *list;
+
+		if(!applet_callbacks)
+			return;
+
+		list = (GList *)g_hash_table_lookup(applet_callbacks,
+						    (char *)callback_name);
+
+		if(list) {
+			for(;list!=NULL;list = g_list_next(list)) {
+				CallbackInfo *info = (CallbackInfo *)list->data;
+				if(info->applet_id == id) {
+					(*(info->func))(id,info->data);
+					return;
+				}
+			}
+		}
 	}
 };
 
@@ -84,14 +107,46 @@ gnome_panel_applet_init_corba (void)
 	return 1;
 }
 
+/*adds a callback to the callback hash*/
+/*the interfacte to thsi should probably be in appletwidget*/
 void
-gnome_panel_applet_register_callback(int id,
+gnome_panel_applet_register_callback(AppletWidget *aw,
+				     int id,
 				     char *name,
 				     char *menutext,
-				     GFunc func,
+				     AppletCallbackFunc func,
 				     gpointer data)
 {
-	/*FIXME: do callbacks*/
+	CallbackInfo *info = g_new(CallbackInfo,1);
+	GList *list;
+
+	if(!applet_callbacks)
+		 applet_callbacks = g_hash_table_new (g_str_hash, g_str_equal);
+
+	info->applet_id = id;
+	info->menutext = g_strdup(menutext);
+	info->func = func;
+	info->data = data;
+
+	aw->menu_items = g_list_append(aw->menu_items,info);
+	
+	list = (GList *)g_hash_table_lookup(applet_callbacks,name);
+
+	if(list) {
+		g_hash_table_remove(applet_callbacks,name);
+		list = g_list_prepend(list,info);
+	}
+	g_hash_table_insert(applet_callbacks,name,info);
+
+	/*make sure the menu is rebuilt*/
+	if(aw->applet_menu) {
+		gtk_widget_unref(aw->applet_menu);
+		aw->applet_menu = NULL;
+	}
+
+	/*register the callback with the panel since it might want to use
+	  it*/
+	panel_client->applet_add_callback(id,name,menutext);
 }
 
 static void
@@ -124,19 +179,19 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 
 
 static void
-applet_properties_callback(GtkWidget *widget, gpointer data)
+applet_callback_callback(GtkWidget *widget, gpointer data)
 {
-	GtkWidget *applet_menu = GTK_WIDGET(data);
-	int ourid = (int)gtk_object_get_data(GTK_OBJECT(applet_menu),
-					     APPLET_ID_KEY);
+	CallbackInfo *info = (CallbackInfo *)data;
 
-	puts("Properties ... we don't need no stinkin' properties ...!");
+	(*(info->func))(info->applet_id,info->data);
 }
 
-static void
-create_applet_menu(void)
+GtkWidget *
+create_applet_menu(AppletWidget *aw)
 {
 	GtkWidget *menuitem;
+	GtkWidget *applet_menu;
+	GList *list;
 
 	applet_menu = gtk_menu_new();
 
@@ -155,39 +210,41 @@ create_applet_menu(void)
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 	
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-	applet_menu_prop_separator = menuitem;
 
-	menuitem = gtk_menu_item_new_with_label(_("Applet properties..."));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) applet_properties_callback,
-			   applet_menu);
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
-	applet_menu_prop_item = menuitem;
+	if(aw->menu_items) {
+		menuitem = gtk_menu_item_new();
+		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_widget_show(menuitem);
+	}
+	for(list = aw->menu_items;list!=NULL;list=g_list_next(list)) {
+		CallbackInfo *info = (CallbackInfo *)list->data;
+		menuitem = gtk_menu_item_new_with_label(info->menutext);
+		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+				   (GtkSignalFunc) applet_callback_callback,
+				   info);
+		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_widget_show(menuitem);
+	}
+
+	return applet_menu;
 }
 
 
 static void
 show_applet_menu(GtkWidget *widget, int id)
 {
-	/*FIXME: only if applet has properties*/
-	if (1) {
-		gtk_widget_show(applet_menu_prop_separator);
-		gtk_widget_show(applet_menu_prop_item);
-	} else {
-		gtk_widget_hide(applet_menu_prop_separator);
-		gtk_widget_hide(applet_menu_prop_item);
-	}
 
-	gtk_object_set_data(GTK_OBJECT(applet_menu), APPLET_ID_KEY,
+	AppletWidget *aw = APPLET_WIDGET(widget);
+
+	if (!aw->applet_menu)
+		aw->applet_menu = create_applet_menu(aw);
+
+	gtk_object_set_data(GTK_OBJECT(aw->applet_menu), APPLET_ID_KEY,
 			    (gpointer)id);
-	gtk_object_set_data(GTK_OBJECT(applet_menu), APPLET_WIDGET_KEY,
+	gtk_object_set_data(GTK_OBJECT(aw->applet_menu), APPLET_WIDGET_KEY,
 			    (gpointer)widget);
 
-	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
+	gtk_menu_popup(GTK_MENU(aw->applet_menu), NULL, NULL, NULL, NULL, 0/*3*/, time(NULL));
 	/*FIXME: make it pop-up on some title bar of the applet menu or
 	  somehow avoid pressing remove applet being under the cursor!*/
 }
@@ -216,8 +273,6 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					APPLET_WIDGET(widget));
 				return TRUE;
 			} else if(bevent->button == 3) {
-				if(!applet_menu)
-					create_applet_menu();
 				show_applet_menu(widget,ourid);
 				return TRUE;
 			}
