@@ -518,7 +518,7 @@ append_format_item (GtkWidget *menu, const char *format)
 	char hour[256];
 	GtkWidget *item;
 	struct tm *das_tm;
-	time_t das_time = 0;
+	time_t das_time = 43200;
 
 	das_tm = localtime (&das_time);
 	if (strftime (hour, sizeof(hour), _(format), das_tm) == 0) {
