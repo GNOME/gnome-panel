@@ -200,8 +200,13 @@ pop_down(gpointer data)
 static void
 set_show_hide_buttons_visibility(void)
 {
-	if(the_panel->mode!=PANEL_STAYS_PUT)
+	if(the_panel->mode!=PANEL_STAYS_PUT) {
+		gtk_widget_hide(the_panel->hidebutton_h);
+		gtk_widget_hide(the_panel->showbutton_h);
+		gtk_widget_hide(the_panel->hidebutton_v);
+		gtk_widget_hide(the_panel->showbutton_v);
 		return;
+	}
 	if(the_panel->state==PANEL_SHOWN) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
