@@ -69,7 +69,7 @@ typedef struct {
 	GtkWidget        *pixmap;
 	GtkWidget        *run_button;
 	GtkWidget        *file_button;
-	GtkWidget        *list_checkbox;
+	GtkWidget        *list_expander;
 	GtkWidget        *terminal_checkbox;
 	GtkWidget        *program_label;
 	GtkWidget        *program_list;
@@ -946,35 +946,18 @@ panel_run_dialog_update_content (PanelRunDialog *dialog,
 				 gboolean        show_list)
 {
 	if (!panel_profile_get_enable_program_list ()) {
-		if (dialog->program_list_box->parent)
-			gtk_container_remove (GTK_CONTAINER (dialog->program_list_box->parent),
-					      dialog->program_list_box);
-
-		if (dialog->list_checkbox->parent)
-			gtk_container_remove (GTK_CONTAINER (dialog->list_checkbox->parent),
-					      dialog->list_checkbox);
+		if (dialog->list_expander->parent)
+			gtk_container_remove (GTK_CONTAINER (dialog->list_expander->parent),
+					      dialog->list_expander);
 		
-		return;
 	}
-
+	
 	if (show_list) {
-		if (!dialog->program_list_box->parent) {
-			gtk_box_pack_start (GTK_BOX (dialog->main_box),
-					    dialog->program_list_box,
-					    TRUE, TRUE, 5);
-                
-			gtk_widget_show_all (dialog->main_box);
-		}
-
 		gtk_window_resize (GTK_WINDOW (dialog->run_dialog), 100, 300);
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), TRUE);
 		gtk_widget_grab_focus (dialog->program_list);
 		
         } else if (!show_list) {
-		if (dialog->program_list_box->parent)
-			gtk_container_remove (GTK_CONTAINER (dialog->program_list_box->parent),
-					      dialog->program_list_box);
-		
 		gtk_window_set_resizable (GTK_WINDOW (dialog->run_dialog), FALSE);
                 gtk_widget_grab_focus (dialog->gtk_entry);
         }
@@ -990,30 +973,31 @@ panel_run_dialog_content_notify (GConfClient    *client,
 }
 
 static void
-list_checkbox_toggled (GtkToggleButton *button,
+list_expander_toggled (GtkExpander    *expander,
+		       GParamSpec     *pspec,
 		       PanelRunDialog *dialog)
 {
-	panel_profile_set_show_program_list (gtk_toggle_button_get_active (button));
+	panel_profile_set_show_program_list (gtk_expander_get_expanded (expander));
 }
 
 static void
-panel_run_dialog_setup_list_checkbox (PanelRunDialog *dialog,
+panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 				      GladeXML       *gui)
 {
 	GConfClient *client;
 	const char *key;
 	
-	dialog->list_checkbox = glade_xml_get_widget (gui, "list_checkbox");
+	dialog->list_expander = glade_xml_get_widget (gui, "list_expander");
 
 	if (panel_profile_get_enable_program_list ()) {
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->list_checkbox),
-					      panel_profile_get_show_program_list ());
+		gtk_expander_set_expanded (GTK_EXPANDER (dialog->list_expander),
+					   panel_profile_get_show_program_list ());
 
 		if ( ! panel_profile_is_writable_show_program_list ())
-			gtk_widget_set_sensitive (dialog->list_checkbox, FALSE);
+			gtk_widget_set_sensitive (dialog->list_expander, FALSE);
 		
-	        g_signal_connect (dialog->list_checkbox, "toggled",
-				  G_CALLBACK (list_checkbox_toggled),
+	        g_signal_connect (dialog->list_expander, "notify::expanded",
+				  G_CALLBACK (list_expander_toggled),
 				  dialog);
 	
 		client = panel_gconf_get_client ();
@@ -1459,7 +1443,7 @@ panel_run_dialog_new (GdkScreen *screen,
 	panel_run_dialog_setup_entry         (dialog, gui);
 	panel_run_dialog_setup_file_button   (dialog, gui);
 	panel_run_dialog_setup_program_list  (dialog, gui);
-	panel_run_dialog_setup_list_checkbox (dialog, gui);
+	panel_run_dialog_setup_list_expander (dialog, gui);
 
 	panel_run_dialog_update_content (dialog, panel_profile_get_show_program_list ());
 
