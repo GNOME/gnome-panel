@@ -168,6 +168,9 @@ panel_corba_gtk_main (char *service_name)
 	
 	orb_ptr->dispatcher (new GtkDispatcher ());
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
+#ifdef HAVE_MICO_ORB_RUN	
+	orb_ptr->run ();
+#endif
 }
 
 void

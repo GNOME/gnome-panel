@@ -22,11 +22,9 @@ gen_util_applet_SOURCES = \
 	clock.c		\
 	clock.h
 
-MICO_VERS = 2.0.5
-MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
 gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
-		     $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
+		     $(GNOME_LIBDIR) $(MICO_LIBS)      \
 		     $(GNOMEUI_LIBS) $(INTLLIBS) 
 
 gen_util_applet_LINK = $(CXXLINK)

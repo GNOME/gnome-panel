@@ -28,9 +28,6 @@ CORBA_SOURCES = \
 	gnome-panel.cc \
 	gnome-panel.h
 
-MICO_VERS = 2.0.5
-MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
-
 libpanel_appletincludedir = $(includedir)
 
 lib_LTLIBRARIES = libpanel_applet.la
@@ -96,14 +93,14 @@ panel_SOURCES = 		\
 	logout.h		\
 	$(CORBA_SOURCES)
 
-panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
 #launcher_applet_SOURCES = \
 #	launcher-lib.cc   \
 #	launcher-lib.h    \
 #	launcher.c
 
-#launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
+#launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
 #			$(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
