@@ -1,20 +1,23 @@
+# translation of gnome-panel.po to zh_CN
 # Dillion Chen <dillon.chen@turbolinux.com.cn>
 #   Updated and QA by Wang Jian <lark@linux.net.cn>
 #   Updated and QA by Jiang Xiong <jxiong@gwu.edu>, 2001
 #   Updated and QA by Zipeco <zipeco@btamail.net.cn>, 2002
 #   Updated and QA by WangLi <charlesw1234@163.com>, 2002
 #   Updated by He Qiangqiang <carton@linux.net.cn>, 2002
+# Xiong Jiang <jxiong@offtopic.org>, 2003
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "POT-Creation-Date: 2003-01-10 11:26+1300\n"
-"PO-Revision-Date: 2002-09-13 12:39+0800\n"
+"PO-Revision-Date: 2003-01-29 22:32+0800\n"
 "Last-Translator: Wang Li <charles@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
@@ -28,7 +31,7 @@ msgid "There was an error displaying help: %s"
 msgstr "显示求助时发生错误：%s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -36,8 +39,8 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "警告：这个命令看起来有些真正的用途。\n"
-"由于这是个没用的小程序，您可能并不想这么做。\n"
-"我们强烈建议您不要利用小鱼来干什么“实际”\n"
+"由于这是个没有用处的小程序，您可能并不想这么做。\n"
+"我们强烈建议您不要利用%s来做什么“实际”\n"
 "或有用的事情。"
 
 # applets/fish/fish.c:136 applets/fish/fish.c:427
@@ -48,15 +51,16 @@ msgstr "小鱼 %s"
 
 # applets/fish/fish.c:443
 #: applets/fish/fish.c:379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. If "
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"这个程序其实什么用处都没有；它占硬盘空间、编译时间，运行时还得占去您宝贵的面"
-"板空间跟内存。任何在使用这个小程序的人可能应该马上送去检查一下精神状况喔。"
+"%s 其实什么用处都没有。它只会占硬盘空间、编译时间，运行时还得占去您宝贵的面板"
+"和内存空间。如果发现任何人在使用这个小程序，他可能应该马上送去检查一下精神状"
+"况喔。"
 
 # applets/fish/fish.c:436
 #: applets/fish/fish.c:400
@@ -91,18 +95,18 @@ msgstr "无法找到要执行的命令"
 
 # applets/fish/fish.c:137
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "%s GNOME 小鱼"
+msgstr "%s GNOME 小鱼说："
 
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"无法执行“%s”\n"
+"无法执行‘%s’\n"
 "\n"
 "细节：%s"
 
@@ -152,7 +156,6 @@ msgstr "动画的帧数(_S)："
 
 # applets/fish/fish.c:223
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME Fish Preferences"
 msgstr "GNOME 小鱼首选项"
 
@@ -303,6 +306,8 @@ msgid ""
 "%s\n"
 "%s"
 msgstr ""
+"%s\n"
+"%s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -311,7 +316,7 @@ msgstr ""
 #: applets/gen_util/clock.c:200
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s，%s"
 
 # applets/gen_util/clock.c:131
 #. Show date in tooltip
@@ -359,9 +364,8 @@ msgstr "_24 小时"
 
 # applets/gen_util/clock.c:479
 #: applets/gen_util/clock.c:1007
-#, fuzzy
 msgid "UNI_X time"
-msgstr "_UNIX 时间"
+msgstr "UNI_X 时间"
 
 #: applets/gen_util/clock.c:1011
 msgid "_Internet time"
@@ -412,13 +416,12 @@ msgid "Display Internet time, which is same all over the world"
 msgstr "显示全世界都相同的互联网时间"
 
 #: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
 msgid "Display date in the Clock, in addition to time"
-msgstr "除了在插件中显示时间外，还要显示日期"
+msgstr "在时钟上除了显示时间外，还要显示日期"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
-msgstr "显示时间时显示秒"
+msgstr "显示时间时显示秒数"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
@@ -438,14 +441,12 @@ msgstr "设置小时格式，可能是 12 或 24"
 
 # applets/slashapp/properties.c:214
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in Clock"
-msgstr "在插件上显示日期"
+msgstr "在时钟上显示日期"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "在鼠标在插件上停留时显示的提示中显示日期"
+msgstr "当鼠标在时钟上停留时在工具提示中显示日期"
 
 # applets/desk-guide/deskguide_applet.c:86
 #: applets/gen_util/clock.schemas.in.h:11
@@ -488,7 +489,7 @@ msgstr "新邮件到达时提醒您"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
-msgstr "GenUtil 插件车间"
+msgstr "GenUtil 小程序车间"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
@@ -505,7 +506,7 @@ msgstr "互联网"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "factory for creating some general applets"
-msgstr "创建某些通用插件的车间"
+msgstr "创建某些通用小程序的车间"
 
 # applets/gen_util/mailcheck.c:600
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
@@ -513,7 +514,7 @@ msgid "_Check for mail"
 msgstr "检查邮件(_C)"
 
 #: applets/gen_util/mailcheck.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s: %s"
 msgstr "执行 %s 时发生错误：%s"
 
@@ -738,9 +739,8 @@ msgid "Command to execute when checking mail"
 msgstr "检查邮件时执行的命令"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "点击时执行的命令"
+msgstr "点击收件箱监视器时执行的命令"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -791,9 +791,8 @@ msgid "Remote folder for mail retrieval"
 msgstr "邮件检索的远程文件夹"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
-#, fuzzy
 msgid "Remote server to connect to for our mail"
-msgstr "您的邮件要连接的远程服务器"
+msgstr "检查您的邮件需要连接的远程服务器"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
@@ -820,25 +819,22 @@ msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "这是我们如何处理邮件、处理邮件、处理邮件..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
-#, fuzzy
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
-msgstr "这是常规使用邮件检查插件时显示的动画"
+msgstr "这是收件箱监视器常规使用中显示的动画"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
 msgstr "远程服务器上的用户名"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "当用户点击插件时运行该命令"
+msgstr "当用户点击收件箱监视器时运行该命令"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "点击插件是否重置邮件状态"
+msgstr "点击收件箱监视器时是否重置邮件状态"
 
 # applets/gen_util/mailcheck.c:269
 #: applets/gen_util/mailcheck.schemas.in.h:27
@@ -857,15 +853,15 @@ msgstr "新建邮件"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr ""
+msgstr "通知图标显示的区域"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 msgid "Notification Area"
-msgstr ""
+msgstr "通知区域"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr ""
+msgstr "通知区域车间"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
@@ -874,23 +870,21 @@ msgstr "工具"
 
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
-msgstr ""
+msgstr "面板通知区域"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 msgid "Button to hide application windows and show the desktop"
-msgstr ""
+msgstr "隐藏窗口并显示桌面的按钮"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
-#, fuzzy
 msgid "Factory for the window navigation related applets"
-msgstr "创建某些通用插件的车间"
+msgstr "创建有关窗口导航的小程序的车间"
 
 # panel/panel_config_global.c:446
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 #: applets/wncklet/showdesktop.c:452
-#, fuzzy
 msgid "Show Desktop Button"
-msgstr "显示隐藏按钮(_B)"
+msgstr "显示桌面按钮"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows"
@@ -909,14 +903,12 @@ msgstr "窗口列表"
 # panel/menu.c:3523 panel/menu.c:3543
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 #: applets/wncklet/window-menu.c:127
-#, fuzzy
 msgid "Window Menu"
-msgstr "主菜单"
+msgstr "窗口菜单"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#, fuzzy
 msgid "Window Navigation Applet Factory"
-msgstr "GenUtil 插件车间"
+msgstr "窗口导航小程序车间"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/workspace-switcher.c:547
@@ -927,28 +919,24 @@ msgstr "工作区切换器"
 
 #: applets/wncklet/showdesktop.c:217
 msgid "Click here to restore hidden windows."
-msgstr ""
+msgstr "单击此处恢复隐藏的窗口。"
 
 #: applets/wncklet/showdesktop.c:220
 msgid "Click here to hide all windows and show the desktop."
-msgstr ""
+msgstr "单击此处隐藏所有的窗口并显示桌面。"
 
 #: applets/wncklet/showdesktop.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load %s: %s\n"
-msgstr ""
-"载入图像文件 %s 失败\n"
-"\n"
-"细节：%s"
+msgstr "载入 %s 失败：%s\n"
 
 #: applets/wncklet/showdesktop.c:291
-#, fuzzy
 msgid "File not found"
-msgstr "找不到文件"
+msgstr "未找到文件"
 
 #: applets/wncklet/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
+msgstr "这个按钮让您隐藏所有的窗口并显示桌面"
 
 #: applets/wncklet/window-list.c:810 applets/wncklet/window-menu.c:131
 msgid ""
@@ -1018,19 +1006,18 @@ msgid "_Never group windows"
 msgstr "从不对窗口编组(_N)"
 
 #: applets/wncklet/window-list.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"决定何时在任务列表中将同一个应用程序的窗口编组。合法的值有从不、自动、总是。"
+"决定何时在窗口列表中将同一个应用程序的窗口编组。合法的值有 \"never\"、\"auto"
+"\" 和 \"always\"。"
 
 #: applets/wncklet/window-list.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr "若为真则任务列表将显示所有工作区的窗口，否则只显示当前工作区中的窗口。"
+msgstr "若为真则窗口列表将显示所有工作区的窗口，否则只显示当前工作区中的窗口。"
 
 #: applets/wncklet/window-list.schemas.in.h:3
 msgid ""
@@ -1041,14 +1028,12 @@ msgstr ""
 "区。"
 
 #: applets/wncklet/window-list.schemas.in.h:4
-#, fuzzy
 msgid "Maximum size that Window List requests"
-msgstr "任务列表插件将请求的最大尺寸"
+msgstr "窗口列表请求使用的最大尺寸"
 
 #: applets/wncklet/window-list.schemas.in.h:5
-#, fuzzy
 msgid "Minimum size that Window List requests"
-msgstr "任务列表插件将请求的最小尺寸"
+msgstr "窗口列表请求使用的最小尺寸"
 
 #: applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
@@ -1059,39 +1044,35 @@ msgid "Show windows from all workspaces"
 msgstr "显示所有工作区中的窗口"
 
 #: applets/wncklet/window-list.schemas.in.h:8
-#, fuzzy
 msgid ""
 "This value is the maximum width that Window List requests. The maximum width "
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"这是插件将请求的最大宽度。这将用于限制插件在诸如边缘面板之类的大面板中的宽"
-"度，否则插件将充满整个可用的空间。"
+"这是窗口列表将请求使用的最大宽度。这将用于限制窗口列表在诸如边缘面板之类的大"
+"面板中的宽度，否则窗口列表将充满整个可用的空间。"
 
 #: applets/wncklet/window-list.schemas.in.h:9
-#, fuzzy
 msgid ""
 "To be usable, Window List requires a minimum width. Window List requests "
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"任务列表需要一个最小宽度以使其能够发挥作用。这个值是插件将请求的最小宽度。在"
-"滑动和边缘对齐时这将发挥作用，否则可能导致一个非常小的默认宽度。"
+"窗口列表需要一个最小宽度才能够发挥作用。这个值是窗口将请求使用的最小宽度。在"
+"滑动和边缘面板中这将发挥作用，它通常请求一个很小的默认宽度。"
 
 # gnome-terminal/gnome-terminal.c:2447
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
-msgstr "何时对对窗口编组"
+msgstr "何时对窗口编组"
 
 #: applets/wncklet/window-menu.c:341
-#, fuzzy
 msgid "Unknown Window"
-msgstr "未知"
+msgstr "未知窗口"
 
 #: applets/wncklet/window-menu.c:555
-#, fuzzy
 msgid "No Windows Open"
-msgstr "没有打开窗口"
+msgstr "没有打开的窗口"
 
 # applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
 # panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
@@ -1109,20 +1090,20 @@ msgid "Columns"
 msgstr "列"
 
 #: applets/wncklet/workspace-switcher.c:378
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 num_rows 值时出错：%s\n"
+msgstr "载入工作区切换器的 num_rows 数值时出错：%s\n"
 
 #: applets/wncklet/workspace-switcher.c:389
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_workspace_names 值时出错：%s\n"
+msgstr "载入工作区切换器的 display_workspace_names 数值时出错：%s\n"
 
 #: applets/wncklet/workspace-switcher.c:404
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "载入工作区切换器的 display_all_workspaces 值时出错：%s\n"
+msgstr "载入工作区切换器的 display_all_workspaces 数值时出错：%s\n"
 
 #: applets/wncklet/workspace-switcher.c:549
 msgid ""
@@ -1160,45 +1141,39 @@ msgid "Workspaces"
 msgstr "工作区"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
-#, fuzzy
 msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
-msgstr "为真则 pager 显示所有工作区，否则只显示当前工作区。"
+msgstr "为真则工作区切换器将显示所有工作区，否则只显示当前工作区。"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the workspaces in the Workspace Switcher will display the "
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
-msgstr "为真则显示 pager 中工作区的名称，否则显示工作区的内容。"
+msgstr "为真则在工作区切换器中显示工作区的名称，否则显示工作区的内容。"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
-#, fuzzy
 msgid "Number of rows in the Workspace Switcher."
-msgstr "pager 的行数"
+msgstr "工作区切换器的行数"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"当显示所有工作区时这决定了 pager 将使用多少行(水平布局)或列(垂直布局)来显示工"
-"作区。"
+"当显示所有工作区时这决定了工作区切换器将使用多少行(水平布局)或列(垂直布局)来"
+"显示工作区。"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
-#, fuzzy
 msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "是否在 pager 中显示所有工作区。"
+msgstr "是否在工作区切换器中显示所有工作区。"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
-#, fuzzy
 msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "是否在 pager 中显示工作区的名称。"
+msgstr "是否在工作区切换器中显示工作区的名称。"
 
 # panel/applet.c:297
 #: gnome-panel/applet.c:426
@@ -1300,59 +1275,54 @@ msgstr "找不到文件"
 # applets/mini-commander/src/preferences.c:487
 # applets/tasklist/tasklist_properties.c:220
 #: gnome-panel/button-widget.c:868
-#, fuzzy
 msgid "Size"
-msgstr "尺寸："
+msgstr "尺寸"
 
 #: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
-msgstr ""
+msgstr "期望的按钮部件的尺寸"
 
 #: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
-msgstr ""
+msgstr "绘制箭头"
 
 #: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
-msgstr ""
+msgstr "是否绘制箭头符号"
 
 # panel/panel_config.c:538
 #: gnome-panel/button-widget.c:886
-#, fuzzy
 msgid "Orientation"
-msgstr "方向："
+msgstr "方向"
 
 #: gnome-panel/button-widget.c:887
-#, fuzzy
 msgid "The ButtonWidget orientation"
-msgstr "含有小程序的面板的方向"
+msgstr "按钮部件的方向"
 
 # gsm/session-properties.c:264
 #: gnome-panel/button-widget.c:896
-#, fuzzy
 msgid "Icon Name"
-msgstr "会话名称"
+msgstr "图标名称"
 
 #: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
-msgstr ""
+msgstr "所期望的按钮部件图标"
 
 #: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
-msgstr ""
+msgstr "库存图标的 ID"
 
 #: gnome-panel/button-widget.c:906
-#, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
-msgstr "面板按钮使用定制的图标"
+msgstr "按钮部件期望使用的库存图标"
 
 #: gnome-panel/disclosure-widget.c:259
 msgid "Expander Size"
-msgstr "扩展器尺寸"
+msgstr "扩展器大小"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Size of the expander arrow"
-msgstr "扩展器箭头的尺寸"
+msgstr "扩展器箭头的大小"
 
 # panel/menu.c:2138 panel/menu.c:2142 panel/menu.c:2233 panel/menu.c:3075
 #: gnome-panel/distribution.c:27
@@ -1403,7 +1373,7 @@ msgstr "图标"
 # panel/drawer.c:120
 #: gnome-panel/drawer.c:146
 msgid "Applet appearance"
-msgstr "插件外观"
+msgstr "小程序外观"
 
 # panel/drawer.c:127
 #: gnome-panel/drawer.c:151
@@ -1444,7 +1414,7 @@ msgstr "如果您知道输入正确的命令，运行应用程序"
 
 #: gnome-panel/foobar-widget.c:185 gnome-panel/menu.c:3806
 msgid "Search for Files..."
-msgstr "搜索文件..."
+msgstr "查找文件..."
 
 #: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3809
 msgid "Find files, folders, and documents on your computer"
@@ -1584,9 +1554,8 @@ msgstr "点击启动器后关闭抽屉(_D)"
 
 # panel/panel_config_global.c:199
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "启用面板动画(_E)"
+msgstr "抽屉和面板动画(_A)"
 
 # help-browser/history.c:257
 #: gnome-panel/gnome-panel-preferences.glade.h:4
@@ -1717,19 +1686,16 @@ msgstr "无法抓取当前桌面的抓图。"
 
 # gsm/logout.c:240
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "选项"
+msgstr "<b>选项</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "预览"
+msgstr "<b>预览</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "屏幕抓图"
+msgstr "保存屏幕抓图"
 
 # gsm/logout.c:221
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
@@ -1752,16 +1718,16 @@ msgstr "将抓图保存到文件(_S)："
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
+msgstr "保存屏幕截图的用户目录，以便显示在网页上。"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory."
-msgstr ""
+msgstr "网页目录。"
 
 # gmenu/main.c:239 gmenu/main.c:285 gmenu/tree.c:389
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
-msgstr "GNOME 面板 Shell"
+msgstr "GNOME 面板命令外壳"
 
 #: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
 #, c-format
@@ -1900,9 +1866,9 @@ msgstr "无法打开面板启动器的 desktop 文件 %s%s%s\n"
 
 # gsm/logout.c:240
 #: gnome-panel/launcher.c:525
-#, fuzzy, c-format
+#, c-format
 msgid "Help on %s _Application"
-msgstr "%s 应用程序的帮助"
+msgstr "%s 应用程序的帮助(_A)"
 
 # panel/launcher.c:276
 #: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
@@ -1948,13 +1914,11 @@ msgid "Specify a profile name to load"
 msgstr "指定要装入的配置集"
 
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
-msgstr "还有很多很多..."
+msgstr "很多、很多其他的..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-#, fuzzy
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "最后，武士说...不！"
 
@@ -2214,9 +2178,8 @@ msgstr "KDE 菜单"
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
 #: gnome-panel/menu.c:3205
-#, fuzzy
 msgid "Lock"
-msgstr "时钟"
+msgstr "锁定"
 
 #: gnome-panel/menu.c:3214 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
@@ -2224,12 +2187,11 @@ msgstr "屏幕抓图"
 
 #: gnome-panel/menu.c:3223
 msgid "Search"
-msgstr ""
+msgstr "查找"
 
 #: gnome-panel/menu.c:3232
-#, fuzzy
 msgid "Run"
-msgstr "运行(_R)"
+msgstr "运行"
 
 #: gnome-panel/menu.c:3304
 msgid "You cannot remove your last panel."
@@ -2245,9 +2207,8 @@ msgstr ""
 
 # panel/menu.c:2276
 #: gnome-panel/menu.c:3325
-#, fuzzy
 msgid "Delete Panel"
-msgstr "删除该面板(_D)"
+msgstr "删除面板"
 
 # panel/menu.c:2276
 #: gnome-panel/menu.c:3391
@@ -2301,9 +2262,8 @@ msgstr "从菜单启动"
 
 # panel/panel_config.c:306
 #: gnome-panel/menu.c:3573
-#, fuzzy
 msgid "Button"
-msgstr "底部"
+msgstr "按钮"
 
 # panel/menu.c:3523 panel/menu.c:3543
 #: gnome-panel/menu.c:3583 gnome-panel/menu.c:3913 gnome-panel/menu.c:3941
@@ -2427,19 +2387,17 @@ msgid "Log out of GNOME"
 msgstr "注销 GNOME"
 
 #: gnome-panel/panel-action-button.c:208
-#, fuzzy
 msgid "Search for Files"
-msgstr "搜索文件..."
+msgstr "查找文件"
 
 # gsm/logout.c:240
 #: gnome-panel/panel-action-button.c:364
-#, fuzzy
 msgid "Action Type"
-msgstr "动作"
+msgstr "动作类型"
 
 #: gnome-panel/panel-action-button.c:365
 msgid "The type of action this button implements"
-msgstr ""
+msgstr "这个按钮实现的操作类型"
 
 #: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
@@ -2469,9 +2427,8 @@ msgstr ""
 
 # gmenu/main.c:106
 #: gnome-panel/panel-applet-frame.c:746
-#, fuzzy
 msgid "D_on't Delete"
-msgstr "删除"
+msgstr "不删除(_O)"
 
 #: gnome-panel/panel-applet-frame.c:780
 #, c-format
@@ -2481,6 +2438,10 @@ msgid ""
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
+"当面板载入“%s”时遇到问题\n"
+"细节：%s\n"
+"\n"
+"是否从您的配置中删除该小程序？"
 
 #: gnome-panel/panel-applet-frame.c:878
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2519,18 +2480,16 @@ msgstr "在隐藏按钮上显示箭头(_W)"
 # help-browser/toc2-man.c:27 panel/panel_config_global.c:503
 # panel/panel_config_global.c:623
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "杂项"
+msgstr "杂项："
 
 #: gnome-panel/panel-config.c:642
 msgid "Current screen:"
 msgstr "当前屏幕："
 
 #: gnome-panel/panel-config.c:658
-#, fuzzy
 msgid "Current monitor:"
-msgstr "当前屏幕："
+msgstr "当前显示器："
 
 #: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
@@ -2548,37 +2507,32 @@ msgstr "方向："
 
 # applets/desk-guide/deskguide_applet.c:103
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "水平偏移量(_O)："
+msgstr "水平(_Z)"
 
 # applets/tasklist/tasklist_properties.c:186 panel/panel_config.c:560
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "垂直"
+msgstr "垂直(_V)"
 
 # panel/panel_config.c:283 panel/panel_config.c:462
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "位置(_P)："
+msgstr "位置："
 
 # applets/desk-guide/deskguide_applet.c:103
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "水平偏移量(_O)："
+msgstr "水平(_O)："
 
 # applets/tasklist/tasklist_properties.c:186 panel/panel_config.c:560
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "垂直"
+msgstr "垂直(_T)："
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "到边缘的距离(_D)："
 
 # applets/mini-commander/src/preferences.c:487
 # applets/tasklist/tasklist_properties.c:220
@@ -2618,9 +2572,8 @@ msgid "XX Large"
 msgstr "极大"
 
 #: gnome-panel/panel-config.c:1420
-#, fuzzy
 msgid "_Type:"
-msgstr "类型"
+msgstr "类型(_T)："
 
 # gnome-terminal/gnome-terminal.c:563 gnome-terminal/gnome-terminal.c:1105
 # gnome-terminal/gnome-terminal.c:1115 gnome-terminal/gnome-terminal.c:2226
@@ -2645,38 +2598,32 @@ msgstr "透明"
 
 # panel/panel_config.c:719
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "颜色"
+msgstr "颜色(_C)："
 
 # gnome-terminal/gnome-terminal.c:1191
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "图像"
+msgstr "图像："
 
 # gmenu/desktop.c:80
 #: gnome-panel/panel-config.c:1512
-#, fuzzy
 msgid "T_ile"
-msgstr "文件夹"
+msgstr "平铺(_I)"
 
 # gmenu/edit.c:318
 #: gnome-panel/panel-config.c:1517
-#, fuzzy
 msgid "_Scale"
-msgstr "保存"
+msgstr "放缩(_S)"
 
 #: gnome-panel/panel-config.c:1521
-#, fuzzy
 msgid "St_retch"
-msgstr "拉伸图像(_R)"
+msgstr "拉伸(_R)"
 
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "旋转垂直面板上的图像(_V)"
+msgstr "面板垂直放置时旋转图像(_V)"
 
 # panel/menu.c:2046 panel/panel_config.c:890
 #: gnome-panel/panel-config.c:1596
@@ -2756,23 +2703,22 @@ msgstr "在运行对话框中显示程序列表"
 # applets/gen_util/printer.c:381 applets/jbc/jbc-applet.c:129
 # applets/netload/netload.c:321
 #: gnome-panel/panel-recent.c:56
-#, fuzzy
 msgid "Couldn't find a suitable application"
-msgstr "无法加进小程序"
+msgstr "无法找到合适的应用程序"
 
 #: gnome-panel/panel-recent.c:79
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr ""
+msgstr "这个文件类型默认的应用程序无法处理远程文件"
 
 #: gnome-panel/panel-recent.c:136
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
-msgstr ""
+msgstr "尝试打开 %s 时发生未知的错误"
 
 #: gnome-panel/panel-recent.c:154
 msgid "Open Recent"
-msgstr ""
+msgstr "打开最近的"
 
 # panel/main.c:133
 #: gnome-panel/panel-shell.c:43
@@ -2798,7 +2744,7 @@ msgstr ""
 #: gnome-panel/panel-stock-icons.c:113
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
-msgstr ""
+msgstr "无法载入面板库存图标‘%s’\n"
 
 #: gnome-panel/panel-stock-icons.c:142
 msgid "_Run"
