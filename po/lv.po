@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-09-06 11:48+1200\n"
+"POT-Creation-Date: 2002-09-26 11:40+1200\n"
 "PO-Revision-Date: 2002-08-27 00:59GMT+0020\n"
 "Last-Translator: Pēteris Krišjānis <peteris.krisjanis@os.lv>\n"
 "Language-Team: Latvian <ll10nt@os.lv>\n"
@@ -26,9 +26,9 @@ msgstr "_Par..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
-#: gnome-panel/launcher.c:736 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:3349 gnome-panel/menu.c:4052
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:672
+#: gnome-panel/launcher.c:756 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3447 gnome-panel/menu.c:4150
 msgid "_Help"
 msgstr "_Palīdzība"
 
@@ -109,8 +109,8 @@ msgstr "GNOME zivtiņas _vārds:"
 msgid "_Animation filename:"
 msgstr "_Animācijas fails:"
 
-#: applets/fish/fish.c:741 applets/gen_util/mailcheck.c:1276
-#: gnome-panel/panel-config.c:1402 gnome-panel/panel-util.c:241
+#: applets/fish/fish.c:741 applets/gen_util/mailcheck.c:1291
+#: gnome-panel/panel-config.c:1386 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Lūkoties"
 
@@ -186,34 +186,64 @@ msgstr ""
 "nosūtīt psiholoģiskai izmeklēšanai."
 
 #: applets/fish/fish.schemas.in.h:1
+msgid "1.0"
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:2
+#: gnome-panel/panel-global-config.schemas.in.h:4
+msgid "3"
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:3
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "Zivs bez vārda ir diezgan stulba zivs. Ved to dzīvē, dodot tai vārdu."
 
-#: applets/fish/fish.schemas.in.h:2
+#: applets/fish/fish.schemas.in.h:4
 msgid "Command to execute when the fish is clicked"
 msgstr "Komanda, kuru palaist, kad tiek klikšķināts uz zivtiņas"
 
-#: applets/fish/fish.schemas.in.h:3
+#: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
 msgstr "Pauze uz kadru"
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
 msgstr "Rotēt vertikālajos paneļos"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
 msgstr "Zivtiņas animācijas bitkarte"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
 msgstr "Zivtiņas vārds"
 
-#: applets/fish/fish.schemas.in.h:7
+#: applets/fish/fish.schemas.in.h:9
 msgid "The number of frames in the fish's animation"
 msgstr "Kadru skaits zivtiņas animācijā"
+
+#: applets/fish/fish.schemas.in.h:10
+msgid "Wanda"
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:11
+msgid "fish/fishanim.png"
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "fortune"
+msgstr ""
+
+#: applets/fish/fish.schemas.in.h:13 applets/gen_util/clock.schemas.in.h:18
+#: applets/gen_util/mailcheck.schemas.in.h:32
+#: applets/gen_util/pager.schemas.in.h:9
+#: applets/gen_util/tasklist.schemas.in.h:15
+#: gnome-panel/panel-global-config.schemas.in.h:15
+#: gnome-panel/panel-per-panel-config.schemas.in.h:35
+msgid "true"
+msgstr ""
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -232,7 +262,7 @@ msgid "Alert you when new mail arrives"
 msgstr "Brīdināt, kad ierodas jaunais pasts"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1156
+#: applets/gen_util/clock.c:1173
 msgid "Clock"
 msgstr "Pulkstenis"
 
@@ -245,7 +275,7 @@ msgid "Get the current time and date"
 msgstr "Dabūt pašreizējo laiku un datumu"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:246 applets/gen_util/mailcheck.c:1721
+#: applets/gen_util/mailcheck.c:263 applets/gen_util/mailcheck.c:1736
 msgid "Inbox Monitor"
 msgstr "Ienākošā Pasta Novērotājs"
 
@@ -266,7 +296,7 @@ msgid "Utility"
 msgstr "Utilīta"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:723
+#: applets/gen_util/tasklist.c:725
 msgid "Window List"
 msgstr "Logu Saraksts"
 
@@ -284,164 +314,184 @@ msgstr "ražotne dažu vispārīgu sīkprogrammu izveidošanai"
 msgid "_Check for mail"
 msgstr "_Parbāudīt pastu"
 
-#: applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
+#: applets/gen_util/clock.c:169 applets/gen_util/clock.c:479
+#: gnome-panel/panel-per-panel-config.schemas.in.h:5
+#, no-c-format
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
+#: applets/gen_util/clock.c:171 applets/gen_util/clock.c:481
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+#, no-c-format
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
+#: applets/gen_util/clock.c:174 applets/gen_util/clock.c:484
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
+#: applets/gen_util/clock.c:176 applets/gen_util/clock.c:486
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
+#: applets/gen_util/clock.c:187 applets/gen_util/clock.c:190
 msgid "%a %b %d"
 msgstr "%a %b %d"
 
 #. Show date in tooltip
-#: applets/gen_util/clock.c:273
+#: applets/gen_util/clock.c:290
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/gen_util/clock.c:378
+#: applets/gen_util/clock.c:394
 msgid "Computer Clock"
 msgstr "Datora Pulkstenis"
 
-#: applets/gen_util/clock.c:503
+#: applets/gen_util/clock.c:520
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1578 applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/clock.c:889 applets/gen_util/clock.c:1121
+#: applets/gen_util/mailcheck.c:1593 applets/gen_util/mailcheck.c:1798
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
-#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:681
+#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:683
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Bija kļūda, parādot palīdzību: %s"
 
-#: applets/gen_util/clock.c:916
+#: applets/gen_util/clock.c:933
 msgid "Clock Preferences"
 msgstr "Pulksteņa Preferences"
 
-#: applets/gen_util/clock.c:943
+#: applets/gen_util/clock.c:960
 msgid "Clock type"
 msgstr "Pulksteņa tips"
 
-#: applets/gen_util/clock.c:953
+#: applets/gen_util/clock.c:970
 msgid "_12 hour"
 msgstr "_12 stundas"
 
-#: applets/gen_util/clock.c:959
+#: applets/gen_util/clock.c:976
 msgid "_24 hour"
 msgstr "_24 stundas"
 
-#: applets/gen_util/clock.c:964
+#: applets/gen_util/clock.c:981
 msgid "_UNIX time"
 msgstr "_UNIX laiks"
 
-#: applets/gen_util/clock.c:968
+#: applets/gen_util/clock.c:985
 msgid "_Internet time"
 msgstr "_Internet laiks"
 
-#: applets/gen_util/clock.c:1005
+#: applets/gen_util/clock.c:1022
 msgid "Show _seconds"
 msgstr "Parādīt _sekundes"
 
-#: applets/gen_util/clock.c:1015
+#: applets/gen_util/clock.c:1032
 msgid "Show _date"
 msgstr "Parādīt _datumu"
 
-#: applets/gen_util/clock.c:1025
+#: applets/gen_util/clock.c:1042
 msgid "Use _UTC"
 msgstr "Lietot _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1708
-#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:711
-#: gnome-panel/menu.c:242
+#: applets/gen_util/clock.c:1155 applets/gen_util/mailcheck.c:1723
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:713
+#: gnome-panel/menu.c:249
 msgid "translator_credits"
 msgstr ""
 "Pēteris Krišjānis <peteris.krisjanis@os.lv> Artis Trops <hornet@navigators."
 "lv>"
 
-#: applets/gen_util/clock.c:1157
+#: applets/gen_util/clock.c:1174
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(c) 1998-2002 Brīvās Programmatūras Fonds"
 
-#: applets/gen_util/clock.c:1158
+#: applets/gen_util/clock.c:1175
 msgid "The Clock displays the current time and date"
 msgstr "Pulkstenis rāda pašreizējo laiku un datumu"
 
 #: applets/gen_util/clock.schemas.in.h:1
+msgid "12"
+msgstr ""
+
+#: applets/gen_util/clock.schemas.in.h:2
+msgid "24"
+msgstr ""
+
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display Internet time, which is same all over the world"
 msgstr "Parādīt Internet laiku, kas ir tāds pats visā pasaulē"
 
-#: applets/gen_util/clock.schemas.in.h:2
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display date in applet, in addition to time"
 msgstr "Parādīt datumu sīkprogrammā papildus klāt pie laika"
 
-#: applets/gen_util/clock.schemas.in.h:3
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display seconds in time"
 msgstr "Parādīt sekundes laikā"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in Universal Coordinated Time zone"
 msgstr ""
 "Parādīt laiku pēc Universālajā Koordinētajā Laika (agrāk Grinvičas laika) "
 "zonas"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Parādīt laiku sekundēs kopš Laikmeta, t.i. 1970-01-01"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Hour format"
 msgstr "Stundu formāts"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Iestāda stundu formātu, var būt 12 vai 24"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Parādīt datumu knifā, kad pele ir pāri sīkprogrammai"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in applet"
 msgstr "Parādīt datumu sīkprogrammā"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Parādīt datumu kinfā"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Parādīt laiku ar sekundēm"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use Internet time"
 msgstr "Lietot Internet laiku"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UNIX time"
 msgstr "Lietot UNIX laiku"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:16
 msgid "Use UTC"
 msgstr "Lietot UTC"
 
-#: applets/gen_util/mailcheck.c:176
+#: applets/gen_util/clock.schemas.in.h:17
+#: applets/gen_util/mailcheck.schemas.in.h:30
+#: applets/gen_util/pager.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:14
+#: gnome-panel/panel-per-panel-config.schemas.in.h:27
+msgid "false"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:193
 #, c-format
 msgid "There was an error executing %s : %s"
 msgstr "Bija kļūda, palaižot %s : %s"
 
-#: applets/gen_util/mailcheck.c:252
+#: applets/gen_util/mailcheck.c:269
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -449,15 +499,15 @@ msgstr ""
 "Jūs neievadījāt paroli preferencēs pie Ienākošā Pasta Novērotāja,\n"
 "tāpēc tā jums būs jāievada katru reizi, kad tas tiks palaists."
 
-#: applets/gen_util/mailcheck.c:260
+#: applets/gen_util/mailcheck.c:277
 msgid "Please enter your mailserver's _password:"
 msgstr "Lūdzu ievadiet savu pasta servera _paroli:"
 
-#: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
+#: applets/gen_util/mailcheck.c:282 applets/gen_util/mailcheck.c:1351
 msgid "Password Entry box"
 msgstr "Paroles Ievades kastīte"
 
-#: applets/gen_util/mailcheck.c:308
+#: applets/gen_util/mailcheck.c:325
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -467,272 +517,281 @@ msgstr ""
 "atjaunošanās pagaidām tika deaktivizēta.\n"
 "Varbūt jūs lietojāt nepareizu serveri, lietotājvārdu vai paroli?"
 
-#: applets/gen_util/mailcheck.c:513
+#: applets/gen_util/mailcheck.c:530
 msgid "You have new mail."
 msgstr "Jums ir jauns epasts."
 
-#: applets/gen_util/mailcheck.c:515
+#: applets/gen_util/mailcheck.c:532
 msgid "You have mail."
 msgstr "Jums ir e-pasts."
 
-#: applets/gen_util/mailcheck.c:519
+#: applets/gen_util/mailcheck.c:536
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d vēstules"
 
-#: applets/gen_util/mailcheck.c:521
+#: applets/gen_util/mailcheck.c:538
 #, c-format
 msgid "%d messages"
 msgstr "%d vēstules"
 
-#: applets/gen_util/mailcheck.c:525
+#: applets/gen_util/mailcheck.c:542
 msgid "No mail."
 msgstr "Nav e-pasta."
 
-#: applets/gen_util/mailcheck.c:1046 applets/gen_util/mailcheck.c:1048
-#: applets/gen_util/mailcheck.c:1906 applets/gen_util/mailcheck.c:1908
+#: applets/gen_util/mailcheck.c:1062 applets/gen_util/mailcheck.c:1063
+#: applets/gen_util/mailcheck.c:1921 applets/gen_util/mailcheck.c:1922
 msgid "Status not updated"
 msgstr "Statuss nav atjaunots"
 
-#: applets/gen_util/mailcheck.c:1220
+#: applets/gen_util/mailcheck.c:1235
 msgid "Mailbox _resides on:"
 msgstr "Pastakastīte atro_das:"
 
-#: applets/gen_util/mailcheck.c:1228
+#: applets/gen_util/mailcheck.c:1243
 msgid "Local mailspool"
 msgstr "Lokālā epasta spole"
 
-#: applets/gen_util/mailcheck.c:1236
+#: applets/gen_util/mailcheck.c:1251
 msgid "Local maildir"
 msgstr "Lokālā epasta direktorija"
 
-#: applets/gen_util/mailcheck.c:1244
+#: applets/gen_util/mailcheck.c:1259
 msgid "Remote POP3-server"
 msgstr "Attālināts POP3 serveris"
 
-#: applets/gen_util/mailcheck.c:1252
+#: applets/gen_util/mailcheck.c:1267
 msgid "Remote IMAP-server"
 msgstr "Attālināts IMAP serveris"
 
-#: applets/gen_util/mailcheck.c:1272
+#: applets/gen_util/mailcheck.c:1287
 msgid "Mail _spool file:"
 msgstr "Pasta _spoles fails:"
 
-#: applets/gen_util/mailcheck.c:1291
+#: applets/gen_util/mailcheck.c:1306
 msgid "Mail s_erver:"
 msgstr "Pasta _serveris:"
 
-#: applets/gen_util/mailcheck.c:1297
+#: applets/gen_util/mailcheck.c:1312
 msgid "Mail Server Entry box"
 msgstr "Pasta Servera Ievades kastīte"
 
-#: applets/gen_util/mailcheck.c:1311
+#: applets/gen_util/mailcheck.c:1326
 msgid "_Username:"
 msgstr "_Lietotājvārds:"
 
-#: applets/gen_util/mailcheck.c:1319
+#: applets/gen_util/mailcheck.c:1334
 msgid "Username Entry box"
 msgstr "Lietotājvārda Ievades kastīte"
 
-#: applets/gen_util/mailcheck.c:1328
+#: applets/gen_util/mailcheck.c:1343
 msgid "_Password:"
 msgstr "_Parole:"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1364
 msgid "_Folder:"
 msgstr "_Drirektorija:"
 
-#: applets/gen_util/mailcheck.c:1357
+#: applets/gen_util/mailcheck.c:1372
 msgid "Folder Entry box"
 msgstr "Mapes Ievades kastīte"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1384
 msgid "C_ommand to run before checking for mail:"
 msgstr "K_omanda, kuru palaist pirms pasta pārbaudes:"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1392
 msgid "Command Entry box"
 msgstr "Komandas Ievades kastīte"
 
-#: applets/gen_util/mailcheck.c:1402
+#: applets/gen_util/mailcheck.c:1417
 msgid "Execute"
 msgstr "Palaist"
 
-#: applets/gen_util/mailcheck.c:1413
+#: applets/gen_util/mailcheck.c:1428
 msgid "Before each _update:"
 msgstr "Pir_ms katras atjaunošanas:"
 
-#: applets/gen_util/mailcheck.c:1428
+#: applets/gen_util/mailcheck.c:1443
 msgid "Command to execute before each update"
 msgstr "Koamanda, kuru palaist pirms katras atjaunināšanas"
 
-#: applets/gen_util/mailcheck.c:1438
+#: applets/gen_util/mailcheck.c:1453
 msgid "When new mail _arrives:"
 msgstr "Kad jauna _vēstule pienāk:"
 
-#: applets/gen_util/mailcheck.c:1451 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to execute when new mail arrives"
 msgstr "Komanda, kuru palaist, kad tiek saņemts jauns pasts"
 
-#: applets/gen_util/mailcheck.c:1461
+#: applets/gen_util/mailcheck.c:1476
 msgid "When clicke_d:"
 msgstr "Kad uzk_likšķināts:"
 
-#: applets/gen_util/mailcheck.c:1474
+#: applets/gen_util/mailcheck.c:1489
 msgid "Command to execute when clicked"
 msgstr "Komanda, kuru palaist, kad klikšķināts"
 
-#: applets/gen_util/mailcheck.c:1484
+#: applets/gen_util/mailcheck.c:1499
 msgid "Set the number of unread mails to _zero"
 msgstr "Iestatīt neizlasīto vēstuļu skaitli uz _nulli"
 
-#: applets/gen_util/mailcheck.c:1495
+#: applets/gen_util/mailcheck.c:1510
 msgid "Check for mail _every"
 msgstr "Parbaudīt pastu _katras"
 
-#: applets/gen_util/mailcheck.c:1507 applets/gen_util/mailcheck.c:1511
+#: applets/gen_util/mailcheck.c:1522 applets/gen_util/mailcheck.c:1526
 msgid "minutes"
 msgstr "minūtes"
 
-#: applets/gen_util/mailcheck.c:1507
+#: applets/gen_util/mailcheck.c:1522
 msgid "Choose time interval in minutes to check mail"
 msgstr "Izvēlieties laika intervālu minūtēs lai pārbaudītu pastu"
 
-#: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
+#: applets/gen_util/mailcheck.c:1536 applets/gen_util/mailcheck.c:1540
 msgid "seconds"
 msgstr "sekundes"
 
-#: applets/gen_util/mailcheck.c:1521
+#: applets/gen_util/mailcheck.c:1536
 msgid "Choose time interval in seconds to check mail"
 msgstr "Izvēlies laika intervālu sekundēs, kurā pārbaudītu pastu"
 
-#: applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1548
 msgid "Play a _sound when new mail arrives"
 msgstr "Spēlē s_kaņu, kad ienāk jauns pasts"
 
-#: applets/gen_util/mailcheck.c:1544
+#: applets/gen_util/mailcheck.c:1559
 msgid "Select a_nimation"
 msgstr "Izvēlies a_nimāciju"
 
-#: applets/gen_util/mailcheck.c:1619
+#: applets/gen_util/mailcheck.c:1634
 msgid "Inbox Monitor Preferences"
 msgstr "Pasta Novērotāja Preferences"
 
-#: applets/gen_util/mailcheck.c:1638
+#: applets/gen_util/mailcheck.c:1653
 msgid "_Mail check"
 msgstr "_Pasta pārbaude"
 
-#: applets/gen_util/mailcheck.c:1642
+#: applets/gen_util/mailcheck.c:1657
 msgid "Mail_box"
 msgstr "_Pastkastīte"
 
-#: applets/gen_util/mailcheck.c:1722
+#: applets/gen_util/mailcheck.c:1737
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 Brīvās Programmatūras Fonds"
 
-#: applets/gen_util/mailcheck.c:1723
+#: applets/gen_util/mailcheck.c:1738
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Pasta Novērotājs jūs informē, kad jauns pasts ienāk jūsu pastkastē"
 
-#: applets/gen_util/mailcheck.c:1882
+#: applets/gen_util/mailcheck.c:1897
 msgid "Text only"
 msgstr "Tikai teksts"
 
-#: applets/gen_util/mailcheck.c:1909
+#: applets/gen_util/mailcheck.c:1923
 msgid "Mail check"
 msgstr "Pasta pārbaude"
 
-#: applets/gen_util/mailcheck.c:1910
+#: applets/gen_util/mailcheck.c:1924
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Epasta pārbaude jūs informē, kad jauna ziņa ir jūsu pastkastē"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
+#: gnome-panel/panel-per-panel-config.schemas.in.h:7
+msgid "0"
+msgstr ""
+
+#: applets/gen_util/mailcheck.schemas.in.h:2
+msgid "120000"
+msgstr ""
+
+#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when checking mail"
 msgstr "Komanda, kuru palaist, kad pārbauda pastu"
 
-#: applets/gen_util/mailcheck.schemas.in.h:3
+#: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Command to execute when the applet is clicked"
 msgstr "Komanda, kuru palaist, kad tiek klikšķināts uz sīkprogrammas"
 
-#: applets/gen_util/mailcheck.schemas.in.h:4
+#: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Command to run before checking mail"
 msgstr "Komanda, kuru palaist pirms pasta pārbaudes"
 
-#: applets/gen_util/mailcheck.schemas.in.h:5
+#: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "Do we run the exec-command"
 msgstr "Vai mēs palaižam izpildāmo komandu"
 
-#: applets/gen_util/mailcheck.schemas.in.h:6
+#: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "Do we run the newmail-command"
 msgstr "Vai mēs palaižam jauna pasta komandu"
 
-#: applets/gen_util/mailcheck.schemas.in.h:7
+#: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "How often (in milliseconds) we check the mail"
 msgstr "Cik bieži (milisekundēs) mēs pārbaudām pastu"
 
-#: applets/gen_util/mailcheck.schemas.in.h:8
+#: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If mail should be checked automatically"
 msgstr "Vai pasta pārbaudēm jānotiek automātiski"
 
-#: applets/gen_util/mailcheck.schemas.in.h:9
+#: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr ""
 "Ja šis ir iestādīts, pasts tiks pārbaudīts katras milisekundes, cik norādīts"
 
-#: applets/gen_util/mailcheck.schemas.in.h:10
+#: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "If this is set, we should run the exec-command"
 msgstr "Ja šis ir iestādīts, mums būs jāpalaiž izpildkomanda"
 
-#: applets/gen_util/mailcheck.schemas.in.h:11
+#: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "If this is set, we should run the newmail-command"
 msgstr "Ja šis ir iestādīts, mums būs jāpalaiž jauna pasta komanda"
 
-#: applets/gen_util/mailcheck.schemas.in.h:12
+#: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Interval for checking mail"
 msgstr "Pasta pārbaudes intervāls"
 
-#: applets/gen_util/mailcheck.schemas.in.h:13
+#: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Path to the animation file"
 msgstr "Ceļš uz animācijas failu"
 
-#: applets/gen_util/mailcheck.schemas.in.h:14
+#: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Play a sound when mail is recieved"
 msgstr "Spēlēt skaņu, kad ienāk jauns pasts"
 
-#: applets/gen_util/mailcheck.schemas.in.h:15
+#: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Remote folder for mail retrieval"
 msgstr "Attālinātā direktorija pasta saņemšanai"
 
-#: applets/gen_util/mailcheck.schemas.in.h:16
+#: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "Remove server to connect to for our mail"
 msgstr "Attālinātais serveris, kuram pieslēgties pie mūsu pasta"
 
-#: applets/gen_util/mailcheck.schemas.in.h:17
+#: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "Run this command before we check the mail"
 msgstr "Palaist šo komandu pirms mēs izdarām pasta pārbaudi"
 
-#: applets/gen_util/mailcheck.schemas.in.h:18
+#: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The mail server"
 msgstr "Pasta serveris"
 
-#: applets/gen_util/mailcheck.schemas.in.h:19
+#: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "The user's password"
 msgstr "Lietotāja parole"
 
-#: applets/gen_util/mailcheck.schemas.in.h:20
+#: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "The user's password for the remote server"
 msgstr "Lietotāja parole attālinātajam serverim"
 
-#: applets/gen_util/mailcheck.schemas.in.h:21
+#: applets/gen_util/mailcheck.schemas.in.h:23
 msgid "This is how we check the mail, check the mail, check the mail..."
 msgstr "Šis ir kā mēs pārbaudām pastu, pārbaudām pastu, pārbaudām pastu..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:22
+#: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr ""
 "Šis ir kā mēs apstrādājam pastu, apstrādājam pastu, apstrādājam pastu..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:23
+#: applets/gen_util/mailcheck.schemas.in.h:25
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
@@ -740,21 +799,26 @@ msgstr ""
 "Šī ir animācija, kas tiks parādīta pasta pārbaudes sīkprogrammas parastās "
 "lietošanas laikā"
 
-#: applets/gen_util/mailcheck.schemas.in.h:24
+#: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Username on the remote server"
 msgstr "Lietotājvārds attālinātajā serverī"
 
-#: applets/gen_util/mailcheck.schemas.in.h:25
+#: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "We run this command when the user clicks on the applet"
 msgstr "Mēs palaižam šo komandu, kad lietotājs uzklikšķina uz sīkprogrammas"
 
-#: applets/gen_util/mailcheck.schemas.in.h:26
+#: applets/gen_util/mailcheck.schemas.in.h:28
 msgid "Whether to reset mail status when the applet is clicked"
 msgstr "Vai pārstatīt pasta statusu, kad sīkprogrammai tiek uzklikšķināts"
 
-#: applets/gen_util/mailcheck.schemas.in.h:27
+#: applets/gen_util/mailcheck.schemas.in.h:29
 msgid "You've got mail!"
 msgstr "Jums pienācis pasts!"
+
+#: applets/gen_util/mailcheck.schemas.in.h:31
+#, fuzzy
+msgid "mail"
+msgstr "Mazs"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -838,6 +902,10 @@ msgid "Workspaces"
 msgstr "Darba vietas"
 
 #: applets/gen_util/pager.schemas.in.h:1
+msgid "1"
+msgstr ""
+
+#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
@@ -845,7 +913,7 @@ msgstr ""
 "Ja šis ir patiess, peidžeris parādīs visas darba vietas, citādi tas rādīs "
 "tikai pašreizējo darba vietu."
 
-#: applets/gen_util/pager.schemas.in.h:2
+#: applets/gen_util/pager.schemas.in.h:3
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
@@ -853,11 +921,11 @@ msgstr ""
 "Ja šis ir patiess, darba vietas peidžerī parādīs darba vietu nosaukumus, "
 "citādi tās parādīs darba vietas saturu."
 
-#: applets/gen_util/pager.schemas.in.h:3
+#: applets/gen_util/pager.schemas.in.h:4
 msgid "Number of rows in the pager"
 msgstr "Rindu skaits peidžerī"
 
-#: applets/gen_util/pager.schemas.in.h:4
+#: applets/gen_util/pager.schemas.in.h:5
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the pager shows the "
@@ -867,11 +935,11 @@ msgstr ""
 "izkārtojumam) vai kolonās (vertikālajam izkārtojumam) peidžeris parāda darba "
 "vietas."
 
-#: applets/gen_util/pager.schemas.in.h:5
+#: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the all workspaces in the pager."
 msgstr "Vai parādīt visas darba vietas peidžerī."
 
-#: applets/gen_util/pager.schemas.in.h:6
+#: applets/gen_util/pager.schemas.in.h:7
 msgid "Whether to display the names of the workspaces in the pager."
 msgstr "Vai parādīt darba vietu nosaukumus peidžerī."
 
@@ -927,11 +995,11 @@ msgstr "Palīdzība"
 msgid "About..."
 msgstr "Par..."
 
-#: applets/gen_util/tasklist.c:724
+#: applets/gen_util/tasklist.c:726
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:725
+#: applets/gen_util/tasklist.c:727
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "Logu Saraksts parāda visu redzamos logus un ļauj jums tos pārlūkot."
@@ -993,6 +1061,14 @@ msgid "_Never group windows"
 msgstr "_Nekad negrupēt logus"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
+msgid "4096"
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:2
+msgid "50"
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
@@ -1000,7 +1076,7 @@ msgstr ""
 "Lemj, kad grupēt logus no tās pašas aplikācijas uzdevumsarakstā. Pieļaujamās "
 "vērtības ir nekad, auto un vienmēr."
 
-#: applets/gen_util/tasklist.schemas.in.h:2
+#: applets/gen_util/tasklist.schemas.in.h:4
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
@@ -1008,7 +1084,7 @@ msgstr ""
 "Ja šis ir patiess, uzdevumsaraksts parādīs visus logus no visām darba "
 "vietām, citādi tas parādīs logus tikai no pašreizējās darbvirsmas."
 
-#: applets/gen_util/tasklist.schemas.in.h:3
+#: applets/gen_util/tasklist.schemas.in.h:5
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
@@ -1016,23 +1092,23 @@ msgstr ""
 "Ja patiess, tad, kad atminimizē logu, pārvietot to uz pašreizējo darba "
 "vietu. Citādi pāriet uz loga darba vietu."
 
-#: applets/gen_util/tasklist.schemas.in.h:4
+#: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Maximum size the tasklist applet will request"
 msgstr "Maksimālais izmērs, ko uzdevumsaraksta sīkprogramma pieprasīs"
 
-#: applets/gen_util/tasklist.schemas.in.h:5
+#: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Minimum size the tasklist applet will request"
 msgstr "Minimālais izmērs, ko uzdevumsaraksta sīkprogramma pieprasīs"
 
-#: applets/gen_util/tasklist.schemas.in.h:6
+#: applets/gen_util/tasklist.schemas.in.h:8
 msgid "Move windows to the current workspace when unminimized"
 msgstr "Pārvietot logus uz pašreizējo darba vietu, kad atminimizē"
 
-#: applets/gen_util/tasklist.schemas.in.h:7
+#: applets/gen_util/tasklist.schemas.in.h:9
 msgid "Show windows from all workspaces"
 msgstr "Parādīt logus no visām darba vietām"
 
-#: applets/gen_util/tasklist.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:10
 msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
@@ -1042,7 +1118,7 @@ msgstr ""
 "vērtība ir minimālais platums, ko sīkprogramma pieprasīs. Tas ir noderīgi "
 "slīdošajiem un malas paneļiem, kas citādi prasītu ļoti mazu noklusēto platumu"
 
-#: applets/gen_util/tasklist.schemas.in.h:9
+#: applets/gen_util/tasklist.schemas.in.h:11
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
@@ -1052,80 +1128,84 @@ msgstr ""
 "noderīgi, lai limitētu lietojamo izmēru lielos paneļos, kur citādā gadījumā "
 "šī sīkprogramma varētu aizpildīt visu iespējamo vietu, kā malas panelī."
 
-#: applets/gen_util/tasklist.schemas.in.h:10
+#: applets/gen_util/tasklist.schemas.in.h:12
 msgid "When to group windows"
 msgstr "Kad grupēt logus"
+
+#: applets/gen_util/tasklist.schemas.in.h:13
+msgid "auto"
+msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "GNOME Paneļa Čaula"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:525
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:517
 msgid "_Move"
 msgstr "_Pārvietot"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
 msgid "_Remove From Panel"
 msgstr "_Izņemt No Paneļa"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:449 gnome-panel/foobar-widget.c:366
+#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:394
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:832
+#: gnome-panel/applet.c:815
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Nav object_type uzstādīts paneļa objektam ar ID %s\n"
 
-#: gnome-panel/applet.c:854
+#: gnome-panel/applet.c:837
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Nav panel_id uzstādīts paneļa objektam ar ID %s\n"
 
-#: gnome-panel/applet.c:1161
+#: gnome-panel/applet.c:1142
 msgid "Can't find an empty spot"
 msgstr "Nevar atrast tukšu vietu"
 
-#: gnome-panel/basep-widget.c:154
+#: gnome-panel/basep-widget.c:160
 msgid "Mode"
 msgstr "Režīms"
 
-#: gnome-panel/basep-widget.c:155
+#: gnome-panel/basep-widget.c:161
 msgid "Mode of this panel"
 msgstr "Šī paneļa režīms"
 
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:168
 msgid "State"
 msgstr "Stāvoklis"
 
-#: gnome-panel/basep-widget.c:163
+#: gnome-panel/basep-widget.c:169
 msgid "Current state of this panel"
 msgstr "Pašreizējais šī paneļa stāvoklis"
 
-#: gnome-panel/basep-widget.c:171
+#: gnome-panel/basep-widget.c:177
 msgid "Hidebuttons enabled"
 msgstr "Slēptpogas aktivizētas"
 
-#: gnome-panel/basep-widget.c:172
+#: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr "Vai slēptpogas (pogas, kas slēpj vai parāda paneli) aktivizētas?"
 
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebutton pixmaps enabled"
 msgstr "Slēptpogu bitkartes aktivizētas"
 
-#: gnome-panel/basep-widget.c:180
+#: gnome-panel/basep-widget.c:186
 msgid "Hidebuttons have pixmaps"
 msgstr "Slēptpogām ir bitkartes"
 
-#: gnome-panel/basep-widget.c:549
+#: gnome-panel/basep-widget.c:569
 msgid "Hide this panel"
 msgstr "Paslēpt šo paneli"
 
-#: gnome-panel/basep-widget.c:552
+#: gnome-panel/basep-widget.c:572
 msgid "Show this panel"
 msgstr "Parādīt šo paneli"
 
@@ -1210,82 +1290,82 @@ msgstr "Aktivizēt slēpjpogas"
 msgid "Enable hidebutton arrow"
 msgstr "Aktivizēt slēpjpogu būltas"
 
-#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3216
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3314
 msgid "Drawer"
 msgstr "Atvilktne"
 
-#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:734
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1403 gnome-panel/menu.c:3324
+#: gnome-panel/drawer.c:669 gnome-panel/launcher.c:754
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1447 gnome-panel/menu.c:3422
 msgid "_Properties"
 msgstr "_Rekvizīti"
 
-#: gnome-panel/foobar-widget.c:141 gnome-panel/menu.c:3504
+#: gnome-panel/foobar-widget.c:169 gnome-panel/menu.c:3602
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "Nevaru palaist gnome-panel-screenshot"
 
-#: gnome-panel/foobar-widget.c:152 gnome-panel/menu.c:3514
+#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3612
 msgid "Cannot execute gnome-search-tool"
 msgstr "Nevaru palaist gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:162 gnome-panel/menu.c:3633
+#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3731
 msgid "Run Program..."
 msgstr "Palaist Programmu..."
 
-#: gnome-panel/foobar-widget.c:166
+#: gnome-panel/foobar-widget.c:194
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Palaižiet aplikācijas, ja zināt pareizu komandu, kuru ierakstīt"
 
-#: gnome-panel/foobar-widget.c:175 gnome-panel/menu.c:3645
+#: gnome-panel/foobar-widget.c:203 gnome-panel/menu.c:3743
 msgid "Search for Files..."
 msgstr "Meklēt Failus..."
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3648
+#: gnome-panel/foobar-widget.c:208 gnome-panel/menu.c:3746
 msgid "Find files, folders, and documents on your computer"
 msgstr "Meklēt failus, direktorijas un dokumentus jūsu datorā"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3658
+#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3756
 msgid "Screenshot..."
 msgstr "Ekrānattēls..."
 
-#: gnome-panel/foobar-widget.c:194 gnome-panel/menu.c:3661
+#: gnome-panel/foobar-widget.c:222 gnome-panel/menu.c:3759
 msgid "Take a screenshot of your desktop"
 msgstr "Uzņem ekrāna darbvirsmas attēlu"
 
-#: gnome-panel/foobar-widget.c:205 gnome-panel/menu.c:3418
+#: gnome-panel/foobar-widget.c:233 gnome-panel/menu.c:3516
 msgid "Lock Screen"
 msgstr "Noslēgt Ekrānu"
 
-#: gnome-panel/foobar-widget.c:209
+#: gnome-panel/foobar-widget.c:237
 msgid "Protect your computer from unauthorized use"
 msgstr "Aizsargājiet savu datoru no nesankcionētas lietošanas"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3429
+#: gnome-panel/foobar-widget.c:246 gnome-panel/menu.c:3527
 msgid "Log Out"
 msgstr "Iziet"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:250
 msgid "Quit from the GNOME desktop"
 msgstr "Iziet no GNOME darbvirsmas"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:231
+#: gnome-panel/foobar-widget.c:259
 msgid "Actions"
 msgstr "Darbības"
 
-#: gnome-panel/foobar-widget.c:448
+#: gnome-panel/foobar-widget.c:476
 msgid "No windows open"
 msgstr "Nav atvērtu logu"
 
-#: gnome-panel/foobar-widget.c:686 gnome-panel/menu.c:2682
+#: gnome-panel/foobar-widget.c:714 gnome-panel/menu.c:2744
 msgid "Menu Panel"
 msgstr "Izvēlņu Panelis"
 
-#: gnome-panel/foobar-widget.c:686
+#: gnome-panel/foobar-widget.c:714
 msgid "GNOME Menu Panel"
 msgstr "GNOME Izvēlnes Panelis"
 
-#: gnome-panel/foobar-widget.c:706 gnome-panel/menu.c:2818
-#: gnome-panel/menu.c:2823 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2880
+#: gnome-panel/menu.c:2885 gnome-panel/menu.c:3699
 msgid "Applications"
 msgstr "Aplikācijas"
 
@@ -1328,7 +1408,7 @@ msgid "No panel found\n"
 msgstr "Panelis nav atrasts\n"
 
 #: gnome-panel/gnome-panel-preferences.c:192
-#: gnome-panel/gnome-panel-screenshot.c:842
+#: gnome-panel/gnome-panel-screenshot.c:841
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1387,7 +1467,7 @@ msgstr "Parādīt"
 msgid "_Animation"
 msgstr "_Animācija"
 
-#: gnome-panel/gnome-panel-screenshot.c:127
+#: gnome-panel/gnome-panel-screenshot.c:128
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1395,7 +1475,7 @@ msgstr ""
 "Nevarēja inicializēt png struktūru.\n"
 "Iespējams, ka jūsu sistēmā ir slikta libpng versija"
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1403,7 +1483,7 @@ msgstr ""
 "Nevarēja izveidot png informāciju.\n"
 "Iespējams, ka jūsu sistēmā ir slikta libpng versija"
 
-#: gnome-panel/gnome-panel-screenshot.c:142
+#: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1411,7 +1491,7 @@ msgstr ""
 "Nevarēja iestatīt png informāciju.\n"
 "Iespējams, ka jūsu sistēmā ir slikta libpng versija"
 
-#: gnome-panel/gnome-panel-screenshot.c:156
+#: gnome-panel/gnome-panel-screenshot.c:157
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1419,13 +1499,13 @@ msgstr ""
 "Nepietiekams atmiņas daudzums, lai saglabātu ekrānattēlu.\n"
 "Lūdzu atbrīvojiet resursus un mēģiniet vēlreiz."
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:205
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Fails %s jau eksistē. Pārrakstīt?"
 
-#: gnome-panel/gnome-panel-screenshot.c:221
-#: gnome-panel/gnome-panel-screenshot.c:727
+#: gnome-panel/gnome-panel-screenshot.c:222
+#: gnome-panel/gnome-panel-screenshot.c:726
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1436,52 +1516,52 @@ msgstr ""
 "\"%s\"\n"
 "Lūdzu pārbaudiet jūsu peeju uz esošo pamatdirektoriju"
 
-#: gnome-panel/gnome-panel-screenshot.c:495
+#: gnome-panel/gnome-panel-screenshot.c:494
 msgid "Print Screenshot"
 msgstr "Drukāt Ekrānattēlu"
 
-#: gnome-panel/gnome-panel-screenshot.c:543
+#: gnome-panel/gnome-panel-screenshot.c:542
 msgid "Screenshot Print Preview"
 msgstr "Ekrānattēla Drukas Priekšapskate"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:570
+#: gnome-panel/gnome-panel-screenshot.c:569
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cEkranattels-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:577
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cEkranattels.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:594
+#: gnome-panel/gnome-panel-screenshot.c:593
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cEkranattels-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:601
+#: gnome-panel/gnome-panel-screenshot.c:600
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cEkranattels-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:748
+#: gnome-panel/gnome-panel-screenshot.c:747
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nav pietiekami daudz vietas, lai ierakstītu failu %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1079
+#: gnome-panel/gnome-panel-screenshot.c:1078
 msgid "Grab a window instead of the entire screen"
 msgstr "Uzņemt logu nevis visu ekrānu"
 
-#: gnome-panel/gnome-panel-screenshot.c:1080
+#: gnome-panel/gnome-panel-screenshot.c:1079
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Uzņemt ekrānattēlu pēc noteiktas aiztures [sekundēs]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1122
+#: gnome-panel/gnome-panel-screenshot.c:1121
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1489,7 +1569,7 @@ msgstr ""
 "Ekrānattēla uzņemšanas programmai trūkst glade fails.\n"
 "Lūdzu pārbaudi savu gnome-panel instalāciju"
 
-#: gnome-panel/gnome-panel-screenshot.c:1145
+#: gnome-panel/gnome-panel-screenshot.c:1144
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nevarēju uzņemt pašreizējās darbvirsmas ekrānattēlu."
 
@@ -1573,40 +1653,40 @@ msgstr ""
 msgid "Choose a file"
 msgstr "Izvēlieties failu"
 
-#: gnome-panel/gnome-run.c:777 gnome-panel/gnome-run.c:778
+#: gnome-panel/gnome-run.c:775 gnome-panel/gnome-run.c:776
 msgid "Known Applications"
 msgstr "Zināmās Aplikācijas"
 
-#: gnome-panel/gnome-run.c:906
+#: gnome-panel/gnome-run.c:904
 msgid "Command to run"
 msgstr "Komanda, kuru palaist"
 
-#: gnome-panel/gnome-run.c:941
+#: gnome-panel/gnome-run.c:939
 msgid "Run in _terminal"
 msgstr "Palaist _terminālī"
 
-#: gnome-panel/gnome-run.c:946
+#: gnome-panel/gnome-run.c:944
 msgid "_Append File..."
 msgstr "_Pievienot Failu..."
 
-#: gnome-panel/gnome-run.c:1329
+#: gnome-panel/gnome-run.c:1327
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Palaidīs komandu: '%s'"
 
-#: gnome-panel/gnome-run.c:1338
+#: gnome-panel/gnome-run.c:1336
 msgid "No application selected"
 msgstr "Neviena aplikācija nav izvēlēta"
 
-#: gnome-panel/gnome-run.c:1458
+#: gnome-panel/gnome-run.c:1456
 msgid "List of known applications"
 msgstr "Zināmo aplikāciju saraksts"
 
-#: gnome-panel/gnome-run.c:1459
+#: gnome-panel/gnome-run.c:1457
 msgid "Choose an application to run from the list"
 msgstr "Izvēlies no saraksta palaižamo aplikāciju"
 
-#: gnome-panel/gnome-run.c:1583
+#: gnome-panel/gnome-run.c:1581
 msgid "Run Program"
 msgstr "Palaist Programmu"
 
@@ -1643,36 +1723,36 @@ msgstr ""
 "Nevar palaist ikonu\n"
 "%s!"
 
-#: gnome-panel/launcher.c:333
+#: gnome-panel/launcher.c:349
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Nav dots URI paneļa palaidēja darbavirsmas failam\n"
 
-#: gnome-panel/launcher.c:353
+#: gnome-panel/launcher.c:369
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nevaru atvērt darbavirsmas failu %s paneļa palaidējam%s%s\n"
 
-#: gnome-panel/launcher.c:464
+#: gnome-panel/launcher.c:484
 #, c-format
 msgid "Help on %s Application"
 msgstr "Palīdzēt par %s Aplikāciju"
 
-#: gnome-panel/launcher.c:583 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:603 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Palaidēja Rekvizīti"
 
-#: gnome-panel/launcher.c:690
+#: gnome-panel/launcher.c:710
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Atslēga %s nav uzstādīta, nevaru ielādēt palaidēju\n"
 
-#: gnome-panel/launcher.c:784 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:804 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Izveidot Palaidēju"
 
 #. class
-#: gnome-panel/launcher.c:1004
+#: gnome-panel/launcher.c:1024
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1683,7 +1763,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1090 gnome-panel/menu.c:1063
+#: gnome-panel/launcher.c:1110 gnome-panel/menu.c:1107
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1749,8 +1829,8 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3701
-#: gnome-panel/menu.c:3929
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3799
+#: gnome-panel/menu.c:4027
 msgid "Menu"
 msgstr "Izvēlne"
 
@@ -1782,16 +1862,16 @@ msgstr ""
 "Jūs nevarat izveidot jaunu palaidēju šajā atrašanās vietā, jo tajā nevar "
 "ierakstīt."
 
-#: gnome-panel/menu.c:230
+#: gnome-panel/menu.c:237
 msgid "Many many others ..."
 msgstr "Daudzi, daudzi citi ..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:232
+#: gnome-panel/menu.c:239
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "un visubeidzot, Knaiti (Bruņinieki), Kuri Saka... NI!"
 
-#: gnome-panel/menu.c:265
+#: gnome-panel/menu.c:272
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1799,7 +1879,7 @@ msgstr ""
 "Šī programma ir atbildīga par lietojumprogrammu palaišanu, sīkprogrammu "
 "iekļaušanu sevī, pasaules mieru, un X gadījuma avārijām un uzkārieniem."
 
-#: gnome-panel/menu.c:271
+#: gnome-panel/menu.c:278
 msgid ""
 "\n"
 "\n"
@@ -1811,19 +1891,19 @@ msgstr ""
 "Strādājam \"Lockdown\" režīmā. Tas nozīmē, ka jūsu sistēmas administrātors "
 "ir aizliedzis jebkādu izmaiņu izdarīšanu paneļa konfigurācijā."
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:284
 msgid "The GNOME Panel"
 msgstr "GNOME Panelis"
 
-#: gnome-panel/menu.c:278
+#: gnome-panel/menu.c:285
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(c) 1997-2002 Brīvās Programmatūras Fonds"
 
-#: gnome-panel/menu.c:297
+#: gnome-panel/menu.c:304
 msgid "End world hunger"
 msgstr "Izbeidz pasaules badu"
 
-#: gnome-panel/menu.c:312
+#: gnome-panel/menu.c:319
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1834,7 +1914,7 @@ msgstr ""
 "\n"
 "Detaļas: iespējams, ka %s neeksistē"
 
-#: gnome-panel/menu.c:334
+#: gnome-panel/menu.c:341
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1845,7 +1925,7 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: gnome-panel/menu.c:343 gnome-panel/menu.c:1041 gnome-panel/menu.c:1073
+#: gnome-panel/menu.c:350 gnome-panel/menu.c:1085 gnome-panel/menu.c:1117
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1856,7 +1936,7 @@ msgstr ""
 "\n"
 "Detaļas: %s"
 
-#: gnome-panel/menu.c:947
+#: gnome-panel/menu.c:991
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1867,17 +1947,17 @@ msgstr ""
 "\n"
 "Detaļas: %s\n"
 
-#: gnome-panel/menu.c:957
+#: gnome-panel/menu.c:1001
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Nevarēju dabūt failu no ceļa: %s"
 
-#: gnome-panel/menu.c:964
+#: gnome-panel/menu.c:1008
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Nevarēju dabūt direktorijas nosaukumu ceļā: %s"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1077
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1887,140 +1967,140 @@ msgstr ""
 "\n"
 "Detaļas: Nav 'Exec' vai 'URL' lauka ieraksta"
 
-#: gnome-panel/menu.c:1335
+#: gnome-panel/menu.c:1379
 msgid "Add this launcher to panel"
 msgstr "Pievienot šo palaidēju panelī"
 
-#: gnome-panel/menu.c:1343
+#: gnome-panel/menu.c:1387
 msgid "Remove this item"
 msgstr "Izņemt šo priekšmetu"
 
-#: gnome-panel/menu.c:1359
+#: gnome-panel/menu.c:1403
 msgid "Put into run dialog"
 msgstr "Ievietot palaišanas dialogā"
 
-#: gnome-panel/menu.c:1377
+#: gnome-panel/menu.c:1421
 #, c-format
 msgid "Help on %s"
 msgstr "Palīdzēt par %s"
 
-#: gnome-panel/menu.c:1378
+#: gnome-panel/menu.c:1422
 msgid "Application"
 msgstr "Programma"
 
-#: gnome-panel/menu.c:1422
+#: gnome-panel/menu.c:1466
 msgid "Entire menu"
 msgstr "Kopējā izvēlne"
 
-#: gnome-panel/menu.c:1431
+#: gnome-panel/menu.c:1475
 msgid "Add this as drawer to panel"
 msgstr "Pievienot šo kā atvilkni panelī"
 
-#: gnome-panel/menu.c:1439
+#: gnome-panel/menu.c:1483
 msgid "Add this as menu to panel"
 msgstr "Pievienot šo kā izvēlni panelī"
 
-#: gnome-panel/menu.c:1447
+#: gnome-panel/menu.c:1491
 msgid "Add new item to this menu"
 msgstr "Pievienot jaunu priekšmetu šai izvēlnei"
 
-#: gnome-panel/menu.c:1472
+#: gnome-panel/menu.c:1516
 msgid "Properties"
 msgstr "Rekvizīti"
 
-#: gnome-panel/menu.c:2351 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2413 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "pieprasījums atgrieza izņēmumu %s\n"
 
-#: gnome-panel/menu.c:2595 gnome-panel/menu.c:2600
+#: gnome-panel/menu.c:2657 gnome-panel/menu.c:2662
 msgid "Aligned Panel"
 msgstr "Izlīdzinātais Panelis"
 
-#: gnome-panel/menu.c:2601
+#: gnome-panel/menu.c:2663
 msgid "GNOME Aligned Panel"
 msgstr "GNOME Izlīdzinātais Panelis"
 
-#: gnome-panel/menu.c:2617 gnome-panel/menu.c:2621
-#: gnome-panel/panel-config.c:1642
+#: gnome-panel/menu.c:2679 gnome-panel/menu.c:2683
+#: gnome-panel/panel-config.c:1608
 msgid "Edge Panel"
 msgstr "Malas Panelis"
 
-#: gnome-panel/menu.c:2622
+#: gnome-panel/menu.c:2684
 msgid "GNOME Edge Panel"
 msgstr "GNOME Malas Panelis"
 
-#: gnome-panel/menu.c:2642 gnome-panel/menu.c:2646
-#: gnome-panel/panel-config.c:1664
+#: gnome-panel/menu.c:2704 gnome-panel/menu.c:2708
+#: gnome-panel/panel-config.c:1630
 msgid "Sliding Panel"
 msgstr "Slīdošais Panelis"
 
-#: gnome-panel/menu.c:2647
+#: gnome-panel/menu.c:2709
 msgid "GNOME Sliding Panel"
 msgstr "GNOME Slīdošais Panelis"
 
-#: gnome-panel/menu.c:2664 gnome-panel/menu.c:2669
-#: gnome-panel/panel-config.c:1675
+#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2731
+#: gnome-panel/panel-config.c:1641
 msgid "Floating Panel"
 msgstr "Plūstošais Panelis"
 
-#: gnome-panel/menu.c:2670
+#: gnome-panel/menu.c:2732
 msgid "GNOME Floating Panel"
 msgstr "GNOME Plūstošais Panelis"
 
-#: gnome-panel/menu.c:2689
+#: gnome-panel/menu.c:2751
 msgid "You can only have one menu panel at a time."
 msgstr "Vienlaicīgi jums var būt tikai viens izvēlnes panelis."
 
-#: gnome-panel/menu.c:2728
+#: gnome-panel/menu.c:2790
 msgid "C_orner Panel"
 msgstr "S_tūra Panelis"
 
-#: gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2792
 msgid "Create corner panel"
 msgstr "Izviedot stūra paneli"
 
-#: gnome-panel/menu.c:2738
+#: gnome-panel/menu.c:2800
 msgid "_Edge Panel"
 msgstr "_Malas Panelis"
 
-#: gnome-panel/menu.c:2740
+#: gnome-panel/menu.c:2802
 msgid "Create edge panel"
 msgstr "Izveidot stūra paneli"
 
-#: gnome-panel/menu.c:2747
+#: gnome-panel/menu.c:2809
 msgid "_Floating Panel"
 msgstr "_Plūstošais Panelis"
 
-#: gnome-panel/menu.c:2749
+#: gnome-panel/menu.c:2811
 msgid "Create floating panel"
 msgstr "Izveidot plūstošo paneli"
 
-#: gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2818
 msgid "_Sliding Panel"
 msgstr "_Slīdošais Panelis"
 
-#: gnome-panel/menu.c:2758
+#: gnome-panel/menu.c:2820
 msgid "Create sliding panel"
 msgstr "Izveidot slīdošo paneli"
 
-#: gnome-panel/menu.c:2777
+#: gnome-panel/menu.c:2839
 msgid "_Menu Panel"
 msgstr "_Izvēlņu Panelis"
 
-#: gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2841
 msgid "Create menu panel"
 msgstr "Izveidot izvēlnes paneli"
 
-#: gnome-panel/menu.c:2866 gnome-panel/menu.c:2872 gnome-panel/menu.c:3490
+#: gnome-panel/menu.c:2928 gnome-panel/menu.c:2934 gnome-panel/menu.c:3588
 msgid "KDE Menu"
 msgstr "KDE Izvēlne"
 
-#: gnome-panel/menu.c:2935
+#: gnome-panel/menu.c:3033
 msgid "You cannot remove your last panel."
 msgstr "Jūs nevarat izņemt pēdējo paneli."
 
-#: gnome-panel/menu.c:2948
+#: gnome-panel/menu.c:3046
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2028,44 +2108,44 @@ msgstr ""
 "Kad mēs dzēšam paneli, paneļa un ar to saistīto\n"
 "sīkprogrammu uzstādijumi zūd. Dzēst šo paneli?"
 
-#: gnome-panel/menu.c:3193
+#: gnome-panel/menu.c:3291
 msgid "Launcher..."
 msgstr "Palaidējs..."
 
-#: gnome-panel/menu.c:3200
+#: gnome-panel/menu.c:3298
 msgid "Launcher from menu"
 msgstr "Palaist no izvēlnes"
 
-#: gnome-panel/menu.c:3208 gnome-panel/menu.c:3753 gnome-panel/menu.c:3781
-#: gnome-panel/menu.c:3974
+#: gnome-panel/menu.c:3306 gnome-panel/menu.c:3851 gnome-panel/menu.c:3879
+#: gnome-panel/menu.c:4072
 msgid "GNOME Menu"
 msgstr "GNOME Izvēlne"
 
-#: gnome-panel/menu.c:3224
+#: gnome-panel/menu.c:3322
 msgid "Log Out Button"
 msgstr "Iziešanas Poga"
 
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3330
 msgid "Lock button"
 msgstr "Noslēgšanas poga"
 
-#: gnome-panel/menu.c:3276
+#: gnome-panel/menu.c:3374
 msgid "_Delete This Panel..."
 msgstr "_Dzēst Šo Paneli..."
 
-#: gnome-panel/menu.c:3279 gnome-panel/menu.c:3310
+#: gnome-panel/menu.c:3377 gnome-panel/menu.c:3408
 msgid "_Delete This Panel"
 msgstr "_Dzēst Šo Paneli"
 
-#: gnome-panel/menu.c:3297
+#: gnome-panel/menu.c:3395
 msgid "_Add to Panel"
 msgstr "_Pievienot Panelim"
 
-#: gnome-panel/menu.c:3337
+#: gnome-panel/menu.c:3435
 msgid "_New Panel"
 msgstr "_Jauns Panelis"
 
-#: gnome-panel/menu.c:3362
+#: gnome-panel/menu.c:3460
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2075,19 +2155,19 @@ msgstr ""
 "\n"
 "Detaļas: xscreensaver-command nav atrasta"
 
-#: gnome-panel/menu.c:3382
+#: gnome-panel/menu.c:3480
 msgid "_About Panels"
 msgstr "_Par Paneļiem"
 
-#: gnome-panel/menu.c:3395
+#: gnome-panel/menu.c:3493
 msgid "About _GNOME"
 msgstr "Par _GNOME"
 
-#: gnome-panel/menu.c:3424
+#: gnome-panel/menu.c:3522
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Noslēgt ekrānu tā, lai jūs varētu uz brīdi atstāt savu datoru"
 
-#: gnome-panel/menu.c:3435
+#: gnome-panel/menu.c:3533
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2095,41 +2175,41 @@ msgstr ""
 "Izejiet no šīs sesijas lai ieietu atkal iekšā kā cits lietotājs vai arī "
 "izslēdziet savu datoru"
 
-#: gnome-panel/menu.c:3617
+#: gnome-panel/menu.c:3715
 msgid "Applets"
 msgstr "Sīkprogrammas"
 
-#: gnome-panel/menu.c:3639
+#: gnome-panel/menu.c:3737
 msgid "Run a command"
 msgstr "Palaist komandu"
 
-#: gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3771
 msgid "Desktop"
 msgstr "Pamatvirsma"
 
-#: gnome-panel/menu.c:3703
+#: gnome-panel/menu.c:3801
 msgid "Menu:"
 msgstr "Izvēlne:"
 
-#: gnome-panel/menu.c:3775
+#: gnome-panel/menu.c:3873
 msgid "Can't create menu, using main menu!"
 msgstr "Nevar izveidot izvēlni, izmantojot galveno izvēlni!"
 
-#: gnome-panel/menu.c:4290
+#: gnome-panel/menu.c:4388
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Nav ceļš uzstādīts %s paneļa izvēlnes objektam\n"
 
-#: gnome-panel/panel-applet-frame.c:180
+#: gnome-panel/panel-applet-frame.c:181
 msgid "Cannot register control widget\n"
 msgstr "Nevaru reģistrēt kontroles logdaļu\n"
 
-#: gnome-panel/panel-applet-frame.c:611
+#: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Izņēmums no izlecēj_izvēlnes '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:714
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2147,11 +2227,11 @@ msgstr ""
 "izdarot labo klikšķi uz paneļa un izvēloties \"Pievienot panelim\" "
 "apakšizvēlni)"
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:805
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nevarēju saņemt AppletShell saskarni no kontroles\n"
 
-#: gnome-panel/panel-applet-frame.c:937
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2163,189 +2243,322 @@ msgstr ""
 "Detaļas: %s"
 
 #. Auto-hide
-#: gnome-panel/panel-config.c:541
+#: gnome-panel/panel-config.c:532
 msgid "_Autohide"
 msgstr "_Autoslēpšana"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:552
+#: gnome-panel/panel-config.c:543
 msgid "Show hide _buttons"
 msgstr "Parādīt slēpšanas _pogas"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:564
+#: gnome-panel/panel-config.c:555
 msgid "Arro_ws on hide buttons"
 msgstr "Parādīt _būltas uz slēpšanas pogām"
 
-#: gnome-panel/panel-config.c:603
+#: gnome-panel/panel-config.c:594
 msgid "Miscellaneous"
 msgstr "Dažādi"
 
-#: gnome-panel/panel-config.c:613
+#: gnome-panel/panel-config.c:604
 msgid "Current screen:"
 msgstr "Pašreizējais ekrāns:"
 
-#: gnome-panel/panel-config.c:707
+#: gnome-panel/panel-config.c:698
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Norādā paneļa pozīciju un orientāciju ekrānā"
 
-#: gnome-panel/panel-config.c:725
+#: gnome-panel/panel-config.c:716
 msgid "_Position:"
 msgstr "_Pozīcija:"
 
-#: gnome-panel/panel-config.c:952
+#: gnome-panel/panel-config.c:943
 msgid "Orient hori_zontally"
 msgstr "Novietot hori_zontāli"
 
-#: gnome-panel/panel-config.c:964
+#: gnome-panel/panel-config.c:955
 msgid "Orient _vertically"
 msgstr "Novietot _vertikāli"
 
-#: gnome-panel/panel-config.c:978
+#: gnome-panel/panel-config.c:969
 msgid "H_orizontal offset:"
 msgstr "H_orizontālais ofsets:"
 
-#: gnome-panel/panel-config.c:998
+#: gnome-panel/panel-config.c:989
 msgid "Ver_tical offset:"
 msgstr "Ver_tikālais ofsets:"
 
-#: gnome-panel/panel-config.c:1063
+#: gnome-panel/panel-config.c:1054
 msgid "Screen edge _offset:"
 msgstr "Ekrāna stūra _ofsets:"
 
-#: gnome-panel/panel-config.c:1122
+#: gnome-panel/panel-config.c:1113
 msgid "_Size:"
 msgstr "_Izmērs:"
 
-#: gnome-panel/panel-config.c:1130
+#: gnome-panel/panel-config.c:1121
 msgid "XX Small (12 pixels)"
 msgstr "XX Mazs (12 pikseļi)"
 
-#: gnome-panel/panel-config.c:1138
+#: gnome-panel/panel-config.c:1129
 msgid "X Small (24 pixels)"
 msgstr "X Mazs (24 pikseļi)"
 
-#: gnome-panel/panel-config.c:1146
+#: gnome-panel/panel-config.c:1137
 msgid "Small (36 pixels)"
 msgstr "Mazs (36 pikseļi)"
 
-#: gnome-panel/panel-config.c:1154
+#: gnome-panel/panel-config.c:1145
 msgid "Medium (48 pixels)"
 msgstr "Vidējs (48 pikseļi)"
 
-#: gnome-panel/panel-config.c:1162
+#: gnome-panel/panel-config.c:1153
 msgid "Large (64 pixels)"
 msgstr "Liels (64 pikseļi)"
 
-#: gnome-panel/panel-config.c:1170
+#: gnome-panel/panel-config.c:1161
 msgid "X Large (80 pixels)"
 msgstr "X Liels (80 pikseļi)"
 
-#: gnome-panel/panel-config.c:1178
+#: gnome-panel/panel-config.c:1169
 msgid "XX Large (128 pixels)"
 msgstr "XX Liels (128 pikseļi)"
 
-#: gnome-panel/panel-config.c:1326
+#: gnome-panel/panel-config.c:1323
 msgid "Background _type:"
 msgstr "Fona _tips: "
 
-#: gnome-panel/panel-config.c:1334
+#: gnome-panel/panel-config.c:1332
 msgid "Default"
 msgstr "Noklusētais"
 
-#: gnome-panel/panel-config.c:1338
+#: gnome-panel/panel-config.c:1334
 msgid "Color"
 msgstr "Krāsa"
 
 #. image frame
-#: gnome-panel/panel-config.c:1342 gnome-panel/panel-config.c:1390
+#: gnome-panel/panel-config.c:1336 gnome-panel/panel-config.c:1377
 msgid "Image"
 msgstr "Attēls"
 
-#: gnome-panel/panel-config.c:1357
+#: gnome-panel/panel-config.c:1351
 msgid "Background co_lor:"
 msgstr "Fona _krāsa:"
 
-#: gnome-panel/panel-config.c:1416
+#: gnome-panel/panel-config.c:1400
 msgid "_Do not scale image to fit"
 msgstr "_Neformēt attēlu, lai sakristu"
 
-#: gnome-panel/panel-config.c:1421
+#: gnome-panel/panel-config.c:1405
 msgid "Sc_ale image"
 msgstr "Formēt _attēlu"
 
-#: gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1409
 msgid "St_retch image"
 msgstr "Izstiept _attēlu"
 
-#: gnome-panel/panel-config.c:1439
+#: gnome-panel/panel-config.c:1423
 msgid "Rotate image for _vertical panels"
 msgstr "Attēlu rotēt _vertikālajos paneļos"
 
-#: gnome-panel/panel-config.c:1518
+#: gnome-panel/panel-config.c:1484
 msgid "Edge panel"
 msgstr "Malas panelis"
 
-#: gnome-panel/panel-config.c:1525
+#: gnome-panel/panel-config.c:1491
 msgid "Corner panel"
 msgstr "Stūra panelis"
 
-#: gnome-panel/panel-config.c:1531
+#: gnome-panel/panel-config.c:1497
 msgid "Sliding panel"
 msgstr "Slīdošais panelis"
 
-#: gnome-panel/panel-config.c:1537
+#: gnome-panel/panel-config.c:1503
 msgid "Floating panel"
 msgstr "Plūstošais panelis"
 
-#: gnome-panel/panel-config.c:1610
+#: gnome-panel/panel-config.c:1576
 msgid "Panel Properties"
 msgstr "Paneļa Rekvizīti"
 
-#: gnome-panel/panel-config.c:1653
+#: gnome-panel/panel-config.c:1619
 msgid "Corner Panel"
 msgstr "Stūra Panelis"
 
-#: gnome-panel/panel-config.c:1694
+#: gnome-panel/panel-config.c:1660
 msgid "Background"
 msgstr "Fons"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
+msgid "&lt;Alt&gt;F1"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:2
+msgid "&lt;Alt&gt;F2"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:3
+msgid "&lt;Alt&gt;Print"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:5
+msgid "300"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:6
+msgid "500"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:7
 msgid "Display \"Run\" dialog"
 msgstr "Parādīt \"Palaist\" dialogu"
 
-#: gnome-panel/panel-global-config.schemas.in.h:2
+#: gnome-panel/panel-global-config.schemas.in.h:8
 msgid "FIXME - is this resolved with the new menu stuff?"
 msgstr "FIXME - vai šis tiek atrisināts ar jauno izvēlnes saturu?"
 
-#: gnome-panel/panel-global-config.schemas.in.h:3
+#: gnome-panel/panel-global-config.schemas.in.h:9
 msgid "FIXME - need to define limits"
 msgstr "FIXME - vajadzīgs, lai definētu limitus"
 
-#: gnome-panel/panel-global-config.schemas.in.h:4
+#: gnome-panel/panel-global-config.schemas.in.h:10
 msgid "Popup the panel menu"
 msgstr "Izlecināt paneļa izvēlni"
 
-#: gnome-panel/panel-global-config.schemas.in.h:5
+#: gnome-panel/panel-global-config.schemas.in.h:11
+#, fuzzy
+msgid "Print"
+msgstr "Printeris"
+
+#: gnome-panel/panel-global-config.schemas.in.h:12
 msgid "Take a screen shot"
 msgstr "Uzņemt ekrānattēlu"
 
-#: gnome-panel/panel-global-config.schemas.in.h:6
+#: gnome-panel/panel-global-config.schemas.in.h:13
 msgid "Take a screen shot of a window"
 msgstr "Uzņemt loga ekrānattēlu"
 
+#: gnome-panel/panel-global-config.schemas.in.h:14
+msgid "panel-speed-medium"
+msgstr ""
+
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
+msgid "#000000"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:6
+msgid "-1"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:8
+msgid "00000001"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:9
+msgid "00000002"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:10
+msgid "20"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:11
+msgid "25"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:12
 msgid "Enable the program listing in the run box"
 msgstr "Aktivizēt programmu sarakstu palaišanas logā"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:2
+#: gnome-panel/panel-per-panel-config.schemas.in.h:13
+msgid "OAFIID:GNOME_ClockApplet"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:14
+msgid "OAFIID:GNOME_MixerApplet"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:15
+msgid "OAFIID:GNOME_PagerApplet"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:16
+msgid "OAFIID:GNOME_TasklistApplet"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:17
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
 "Parādīt programmu sarakstu pēc noklusējuma, kad atver Palaišanas kastīti"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+#: gnome-panel/panel-per-panel-config.schemas.in.h:18
 msgid "Show the program listing in the Run box"
 msgstr "Parādīt programmu sarakstu Palaišanas logā"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:19
+msgid "[00000001,00000002,00000003,00000004]"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:20
+msgid "[00000001,00000002]"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:21
+msgid "[00000001]"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:22
+msgid "[]"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:23
+msgid "applications:///System/gnome-terminal.desktop"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:24
+msgid "applications:///nautilus.desktop"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:25
+#, fuzzy
+msgid "bonobo-applet"
+msgstr "Testēt Bonabo Sīkprogrammu"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:26
+#, fuzzy
+msgid "edge-panel"
+msgstr "Malas panelis"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:28
+msgid "launcher-object"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:29
+#, fuzzy
+msgid "menu-panel"
+msgstr "Izvēlņu Panelis"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:30
+#, fuzzy
+msgid "no-background"
+msgstr "Fons"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:31
+msgid "panel-edge-bottom"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:32
+msgid "panel-size-medium"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:33
+msgid "panel-size-small"
+msgstr ""
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:34
+msgid "panel-size-x-small"
+msgstr ""
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2367,6 +2580,10 @@ msgstr ""
 "Kļūdas kods ir: %d\n"
 "Panelis tūlīt pārstās darboties."
 
+#: gnome-panel/panel-stock-icons.c:130
+msgid "_Run"
+msgstr ""
+
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
 #: gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
@@ -2382,12 +2599,12 @@ msgstr "Nav dokumenta, ko parādīt"
 msgid "Disabled"
 msgstr "Izslēgts"
 
-#: gnome-panel/panel.c:884
+#: gnome-panel/panel.c:867
 #, c-format
 msgid "Open URL: %s"
 msgstr "Atvērt URL: %s"
 
-#: gnome-panel/panel.c:2197
+#: gnome-panel/panel.c:2180
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2407,42 +2624,42 @@ msgstr "Testēt Bonabo Sīkprogrammu"
 msgid "Test Bonobo Applet Factory"
 msgstr "Testēt Bonabo Sīkprogrammas Ražotni"
 
-#: libpanel-applet/panel-applet.c:813
+#: libpanel-applet/panel-applet.c:822
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Saņemts nepilnīgs '%s' fona tips"
 
-#: libpanel-applet/panel-applet.c:827
+#: libpanel-applet/panel-applet.c:836
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Saņemts nepilnīgs '%s' fona tips: %s"
 
-#: libpanel-applet/panel-applet.c:836
+#: libpanel-applet/panel-applet.c:845
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Neizdevās dabūt bitkarti %s"
 
-#: libpanel-applet/panel-applet.c:843
+#: libpanel-applet/panel-applet.c:852
 msgid "Unknown background type received"
 msgstr "Saņemts nezināms fona tips"
 
-#: libpanel-applet/panel-applet.c:1018
+#: libpanel-applet/panel-applet.c:1029
 msgid "The Applet's containing Panel's orientation"
 msgstr "Sīkprogramma, saturoša Paneļa orientāciju"
 
-#: libpanel-applet/panel-applet.c:1026
+#: libpanel-applet/panel-applet.c:1037
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Sīkprogramma, saturoša Paneļa izmēru pikseļos"
 
-#: libpanel-applet/panel-applet.c:1034
+#: libpanel-applet/panel-applet.c:1045
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Sīkprogramma, saturoša Paneļa fona krāsu vai bitkarti"
 
-#: libpanel-applet/panel-applet.c:1042
+#: libpanel-applet/panel-applet.c:1053
 msgid "The Applet's flags"
 msgstr "Sīkprogrammas karodziņi"
 
-#: libpanel-applet/panel-applet.c:1050
+#: libpanel-applet/panel-applet.c:1061
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Nosaka to knifu, kādi izmēri ir pieņemami sīkprogrammai"
 
