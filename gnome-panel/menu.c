@@ -2356,7 +2356,7 @@ add_bonobo_applet (GtkWidget  *widget,
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 
-	panel_applet_frame_load (iid, panel, insertion_pos, NULL);
+	panel_applet_frame_load (iid, panel, insertion_pos, FALSE, NULL);
 }
 
 static const gchar applet_requirements [] = 

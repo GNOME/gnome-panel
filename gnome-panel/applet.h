@@ -92,7 +92,6 @@ void        panel_applet_save_position           (AppletInfo *applet_info,
 
 int         panel_applet_get_position    (AppletInfo *applet);
 gchar      *panel_applet_get_panel_id    (AppletInfo *applet);
-gboolean    panel_applet_get_right_stick (AppletInfo *applet);
 
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,

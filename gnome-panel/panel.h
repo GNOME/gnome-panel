@@ -48,6 +48,8 @@ void panel_register_window_icon (void);
 
 int        panel_monitor_from_toplevel (GtkWidget *panel);
 
+gboolean panel_is_applet_right_stick (GtkWidget *applet);
+
 G_END_DECLS
 
 #endif

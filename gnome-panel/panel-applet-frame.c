@@ -103,7 +103,9 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
 	applet_iid = gconf_client_get_string (client, temp_key, NULL);
 
-	panel_applet_frame_load (applet_iid, panel_widget, position, gconf_key);
+	fprintf (stderr, "Loading %s %d\n", applet_iid, position);
+
+	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, gconf_key);
 
 	g_free (applet_iid);
 }
@@ -148,7 +150,8 @@ static BonoboUIVerb popup_verbs [] = {
 void
 panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
-			 gint         pos,
+			 int          position,
+			 gboolean     exactpos,
 			 const char  *gconf_key)
 {
 	GtkWidget  *frame = NULL;
@@ -172,8 +175,8 @@ panel_applet_frame_load (const gchar *iid,
 
 	/* Pass frame as 2nd argument, since it is used in
 	 * panel_remove_applets()  */
-	info = panel_applet_register (frame, frame, NULL, panel, pos,
-				      FALSE, APPLET_BONOBO, real_key);
+	info = panel_applet_register (frame, frame, NULL, panel, position,
+				      exactpos, APPLET_BONOBO, real_key);
 
 	if (!info)
 		g_warning (_("Cannot register control widget\n"));
@@ -641,7 +644,7 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 
 		panel_applet_clean (info, FALSE);
 
-		panel_applet_frame_load (iid, panel, position, gconf_key);
+		panel_applet_frame_load (iid, panel, position, TRUE, gconf_key);
 
 		g_free (iid);
 		g_free (gconf_key);

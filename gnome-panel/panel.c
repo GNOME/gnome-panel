@@ -1481,7 +1481,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 			return;
 		}
 		panel_applet_frame_load ((char *)selection_data->data,
-					 panel, pos, NULL);
+					 panel, pos, TRUE, NULL);
 		break;
 	case TARGET_APPLET_INTERNAL:
 		drop_internal_applet (panel, pos, (char *)selection_data->data,
@@ -2413,4 +2413,24 @@ panel_monitor_from_toplevel (GtkWidget *panel)
 	        retval = FOOBAR_WIDGET (panel)->screen;
 
 	return retval;
+}
+
+gboolean
+panel_is_applet_right_stick (GtkWidget *applet)
+{
+        PanelWidget *panel;
+
+        g_return_val_if_fail (GTK_IS_WIDGET (applet), FALSE);
+        g_return_val_if_fail (PANEL_IS_WIDGET (applet->parent), FALSE);
+
+        panel = PANEL_WIDGET (applet->parent);
+
+        /* These types of panels are *always* packed */
+        if (ALIGNED_IS_WIDGET (panel->panel_parent) ||
+            BORDER_IS_WIDGET (panel->panel_parent)  ||
+            SLIDING_IS_WIDGET (panel->panel_parent) ||
+            FLOATING_IS_WIDGET (panel->panel_parent))
+                return FALSE;
+
+        return panel_widget_is_applet_stuck (panel, applet);
 }

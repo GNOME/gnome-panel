@@ -948,7 +948,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
 
-	right_stick = panel_applet_get_right_stick (applet_info);
+	right_stick = panel_is_applet_right_stick (applet_info->widget);
 	temp_key = panel_applet_get_full_gconf_key (
 			applet_info->type, profile, gconf_key, "panel_right_stick");
 	gconf_client_set_bool (client, temp_key, right_stick, NULL);
@@ -1191,17 +1191,4 @@ panel_applet_get_panel_id (AppletInfo *applet)
 	panel = PANEL_WIDGET (applet->widget->parent);
 
 	return panel->unique_id;
-}
-
-gboolean
-panel_applet_get_right_stick (AppletInfo *applet)
-{
-	PanelWidget *panel;
-
-	g_return_val_if_fail (applet != NULL, FALSE);
-	g_return_val_if_fail (G_IS_OBJECT (applet->widget), FALSE);
-
-	panel = PANEL_WIDGET (applet->widget->parent);
-
-	return panel_widget_is_applet_stuck (panel, applet->widget);
 }

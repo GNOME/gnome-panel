@@ -69,7 +69,8 @@ void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					
 void       panel_applet_frame_load      (const gchar *iid,
 					 PanelWidget *panel,
-					 gint         pos,
+					 int          position,
+					 gboolean     exactpos,
 					 const char  *gconf_key);
 
 void       panel_applet_frame_load_applets  (void);
@@ -91,7 +92,7 @@ void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
 						 const char       *gconf_key);
 
 void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
-						 gint         position,
+						 int          position,
 						 const char  *gconf_key);
 
 void       panel_applet_frame_set_clean_remove	(PanelAppletFrame *frame,
