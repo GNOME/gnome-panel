@@ -1,3 +1,10 @@
+Sun Apr 26 01:06:07 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* panel.c (panel_session_save): Set discard command for session
+	manager.
+	* main.c (main): Set restart and clone commands for session
+	manager.  Pass argv[0] as client data to panel_session_save.
+
 Sun Apr 26 12:44:38 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: small fix on panel_widget_move

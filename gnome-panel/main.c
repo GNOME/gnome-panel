@@ -862,6 +862,7 @@ main(int argc, char **argv)
 {
 	char buf[256];
 	struct sigaction sa;
+	char *new_args[3];
 	
 	panel_cfg_path = g_strdup("/panel/");
 	old_panel_cfg_path = g_strdup("/panel/");
@@ -877,7 +878,7 @@ main(int argc, char **argv)
 	client = gnome_client_new_default ();
 
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
+			    GTK_SIGNAL_FUNC (panel_session_save), argv[0]);
 	gtk_signal_connect (GTK_OBJECT (client), "connect",
 			    GTK_SIGNAL_FUNC (panel_connect_client), NULL);
 
@@ -889,6 +890,10 @@ main(int argc, char **argv)
 
 	if (just_exit)
 		return 0;
+
+	/* Tell session manager how to run us.  */
+	gnome_client_set_clone_command (client, 1, argv);
+	gnome_client_set_restart_command (client, 1, argv);
 
 	/* Setup the cookie */
 	cookie = create_cookie ();
