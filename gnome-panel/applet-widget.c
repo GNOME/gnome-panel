@@ -477,13 +477,11 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
 /**
  * applet_widget_abort_load:
- * @applet: #AppletWidget to work on
+ * @applet: #AppletWidget to work on.
  *
  * Description: abort the applet loading, once applet has been created, this is
  * a way to tell the panel to forget about us if we decide we want to quit
- * before we add the actual applet to the applet-widget
- *
- * Returns:
+ * before we add the actual applet to the applet-widget.
  **/
 void
 applet_widget_abort_load(AppletWidget *applet)
@@ -496,11 +494,9 @@ applet_widget_abort_load(AppletWidget *applet)
 
 /**
  * applet_widget_remove:
- * @applet: #AppletWidget to work on
+ * @applet: #AppletWidget to work on.
  *
- * Description: remove the plug from the panel, this will destroy the applet
- *
- * Returns:
+ * Description: remove the plug from the panel, this will destroy the applet.
  **/
 void
 applet_widget_remove(AppletWidget *applet)
@@ -521,14 +517,12 @@ applet_widget_remove(AppletWidget *applet)
 
 /**
  * applet_widget_sync_config:
- * @applet: #AppletWidget to work on
+ * @applet: #AppletWidget to work on.
  *
  * Description: tell the panel to save our session here (just saves no
  * shutdown), this should be done when you change some of your config and want
  * the panel to save it's config, you should NOT call this in the session_save
  * handler as it will result in a locked panel
- *
- * Returns:
  **/
 void
 applet_widget_sync_config(AppletWidget *applet)
@@ -609,6 +603,16 @@ gnome_panel_applet_register_callback(GtkWidget *applet,
 	CORBA_exception_free(&ev);
 }
 
+/**
+ * applet_widget_register_callback:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ * @menutext: text for the menu item.
+ * @func: #AppletCallbacFunc to call when the menu item is activated.
+ * @data: data passed to @func.
+ *
+ * Description: Adds a menu item to the applet's context menu.
+ **/
 void
 applet_widget_register_callback(AppletWidget *applet,
 				const char *name,
@@ -626,6 +630,18 @@ applet_widget_register_callback(AppletWidget *applet,
 					      "",menutext,func,data);
 }
 
+/**
+ * applet_widget_register_stock_callback:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ * @stock_type: GNOME_STOCK string to use for the pixmap
+ * @menutext: text for the menu item.
+ * @func: #AppletCallbacFunc to call when the menu item is activated.
+ * @data: data passed to @func.
+ *
+ * Description: dds a menu item to the applet's context menu with a stock 
+ * GNOME pixmap.
+ **/
 void
 applet_widget_register_stock_callback(AppletWidget *applet,
 				      const char *name,
@@ -645,6 +661,14 @@ applet_widget_register_stock_callback(AppletWidget *applet,
 					      stock_type,menutext,func,data);
 }
 
+
+/**
+ * applet_widget_unregister_callback:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ *
+ * Description: Remove a menu item from the applet's context menu.
+ **/
 void
 applet_widget_unregister_callback(AppletWidget *applet,
 				  const char *name)
@@ -702,6 +726,14 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
 }
 
 
+/**
+ * applet_widget_register_callback_dir:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ * @menutext: text for the menu item.
+ *
+ * Description: Adds a submenu to the applet's context menu.
+ **/
 void
 applet_widget_register_callback_dir(AppletWidget *applet,
 				    const char *name,
@@ -715,6 +747,18 @@ applet_widget_register_callback_dir(AppletWidget *applet,
 	gnome_panel_applet_register_callback_dir (GTK_WIDGET(applet),name,
 						  "",menutext);
 }
+
+
+/**
+ * applet_widget_register_stock_callback_dir:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ * @stock_type: GNOME_STOCK string to use for the pixmap
+ * @menutext: text for the menu item.
+ *
+ * Description: Adds a submenu to the applet's context menu with a stock 
+ * GNOME pixmap.
+ **/
 void
 applet_widget_register_stock_callback_dir(AppletWidget *applet,
 					  const char *name,
@@ -731,6 +775,13 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 						  stock_type,menutext);
 }
 
+/**
+ * applet_widget_unregister_callback_dir:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ *
+ * Description: Removes a submenu from the applet's context menu.
+ **/
 void
 applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 {
@@ -755,6 +806,15 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 	g_free(n);
 }
 
+/**
+ * applet_widget_callback_set_sensitive:
+ * @applet: #AppletWidget to work on.
+ * @name: path to the menu item.
+ * @sensitive: whether menu item should be sensitive.
+ *
+ * Description: Sets the sensitivity of a menu item in the applet's 
+ * context menu.
+ **/
 void
 applet_widget_callback_set_sensitive(AppletWidget *applet,
 				     const char *name,
@@ -911,9 +971,10 @@ applet_widget_new(const char *goad_id)
 
 /**
  * applet_widget_construct:
+ * @applet: #AppletWidget to work on
+ * @goad_id: goad_id of the applet to construct
  *
  * Description: For bindings and subclassing only
- *
  **/
 void
 applet_widget_construct(AppletWidget* applet, const char *goad_id)
@@ -1086,8 +1147,6 @@ destroy_the_applet(GtkWidget *w, AppletWidget *applet)
  * special applets and you should use #applet_widget_bind_events on some
  * internal widget if @bind_events was %FALSE.  Normally you'll just want to
  * use #applet_widget_add.
- *
- * Returns:
  **/
 void
 applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
@@ -1133,8 +1192,6 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
  * this function rather then #gtk_container_add.  If you have already created
  * an applet widget with #applet_widget_new, but need to cancel the loading
  * of the applet, use #applet_widget_abort_load.
- *
- * Returns:
  **/
 void
 applet_widget_add(AppletWidget *applet, GtkWidget *widget)
@@ -1150,8 +1207,6 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
  * Description:  Binds the 2nd and 3rd button clicks over this widget. 
  * Normally this is done during #applet_widget_add, but if you need to
  * bind events over a widget which you added later, use this function.
- *
- * Returns:
  **/
 void
 applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
@@ -1176,8 +1231,6 @@ applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
  *
  * Description:  Set a tooltip on the @widget that will follow the tooltip
  * setting from the panel configuration.
- *
- * Returns:
  **/
 void
 applet_widget_set_widget_tooltip(AppletWidget *applet,
@@ -1202,8 +1255,6 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
  *
  * Description:  Set a tooltip on the entire applet that will follow the
  * tooltip setting from the panel configuration.
- *
- * Returns:
  **/
 void
 applet_widget_set_tooltip(AppletWidget *applet, const char *text)
@@ -1289,8 +1340,6 @@ applet_widget_get_free_space(AppletWidget *applet)
  * for @enable and bind the change_position signal on the applet.  This signal
  * can be quite CPU/bandwidth consuming so only applets which need it should
  * use it.  By default change_position is not sent.
- *
- * Returns:
  **/
 void
 applet_widget_send_position(AppletWidget *applet, gboolean enable)
@@ -1313,8 +1362,6 @@ applet_widget_send_position(AppletWidget *applet, gboolean enable)
  * with %TRUE for @enable, and then bind the do_draw signal.  Inside that
  * signal you can get an RGB buffer to draw on with #applet_widget_get_rgb_bg.
  * The do_draw signal will only be sent when the RGB truly changed.
- *
- * Returns:
  **/
 void
 applet_widget_send_draw(AppletWidget *applet, gboolean enable)
@@ -1336,11 +1383,9 @@ applet_widget_send_draw(AppletWidget *applet, gboolean enable)
  * @h: pointer to an integer in which the height will be stored
  * @rowstride: pointer to an integer in which the rowstride will be stored
  *
- * Description:  Gets an rgb buffer that you can draw your applet on.  Usefull
+ * Description:  Gets an rgb buffer that you can draw your applet on.  Useful
  * in conjunction with the do_draw signal and the #applet_widget_send_draw
  * method.  The rgb should be freed after use with g_free.
- *
- * Returns:
  **/
 void
 applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
@@ -1459,8 +1504,6 @@ applet_widget_init(const char *app_id,
  * applet_widget_gtk_main:
  *
  * Description: Run the main loop, just like #gtk_main
- *
- * Returns:
  **/
 void
 applet_widget_gtk_main(void)
@@ -1472,8 +1515,6 @@ applet_widget_gtk_main(void)
  * applet_widget_gtk_main_quit:
  *
  * Description: Quit the main loop, just like #gtk_main_quit
- *
- * Returns:
  **/
 void
 applet_widget_gtk_main_quit (void)
@@ -1487,8 +1528,6 @@ applet_widget_gtk_main_quit (void)
  * Description: Trigger 'Log out' on the panel.  This shouldn't be
  * used in normal applets, as it is not normal for applets to trigger
  * a logout.
- *
- * Returns:
  **/
 void
 applet_widget_panel_quit (void)
@@ -1508,8 +1547,6 @@ applet_widget_panel_quit (void)
  * on the internal panel eventbox, for external applets this just calls this on
  * the #AppletWidget itself, but in both cases it forces a resize of the socket
  * on the panel
- *
- * Returns:
  **/
 void
 applet_widget_queue_resize(AppletWidget *applet)
@@ -1820,10 +1857,17 @@ orb_remove_connection(GIOPConnection *cnx)
 /* Used by shlib applets */
 /**
  * applet_widget_corba_activate:
+ * @applet: widget to embed.
+ * @poa: the POA to use.
+ * @goad_id: the GOAD ID string for the applet.
+ * @params: params passed when the applet is activated.
+ * @impl_ptr:
+ * @ev: CORBA environment to use for errors.
  *
- * Description:
+ * Description: Duplicates the applet's CORBA object.  This should
+ * be called when a shared library applet is activated.
  *
- * Returns:
+ * Returns: the duplication CORBA object to use.
  **/
 CORBA_Object
 applet_widget_corba_activate(GtkWidget *applet,
@@ -1838,10 +1882,12 @@ applet_widget_corba_activate(GtkWidget *applet,
 
 /**
  * applet_widget_corba_deactivate:
- *
+ * @poa: the POA to use.
+ * @goad_id: the GOAD ID of the applet.
+ * @impl_ptr:
+ * @ev: CORBA environment to use for errors.
+ * 
  * Description:
- *
- * Returns:
  **/
 void
 applet_widget_corba_deactivate(PortableServer_POA poa,
@@ -1908,10 +1954,12 @@ static POA_GNOME_GenericFactory__vepv applet_factory_vepv = {
 
 /**
  * applet_factory_new:
+ * @goad_id: GOAD ID of the factory to be registered.
+ * @qfunc: #AppletFactoryQuerier to determine whether an applet with
+ * a specified GOAD ID can be created.
+ * @afunc: #AppletFactoryActivator to activate a specified GOAD ID.
  *
- * Description:
- *
- * Returns:
+ * Description: create a new applet factory.
  **/
 void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 			AppletFactoryActivator afunc)

@@ -153,6 +153,14 @@ status_docklet_build_plug(StatusDocklet *docklet, GtkWidget *plug)
 	docklet->plug = plug;
 }
 
+/**
+ * status_docklet_new:
+ *
+ * Description: creates a new status docklet with the default numbers of
+ * retries.
+ *
+ * Returns: new status docklet.
+ **/
 GtkObject*
 status_docklet_new(void)
 {
@@ -256,6 +264,15 @@ try_getting_plug(StatusDocklet *docklet)
 	return TRUE;
 }
 
+/**
+ * status_docklet_new_full:
+ * @maximum_retries:
+ * @handle_restarts:
+ *
+ * Description:
+ *
+ * Returns: a new docklet applet
+ **/
 GtkObject*
 status_docklet_new_full(int maximum_retries, gboolean handle_restarts)
 {
@@ -285,10 +302,14 @@ try_timeout(gpointer data)
 	return FALSE;
 }
 
-
-/*search for the panel and add the plug if it finds it, this routine is also called
-  internally from the timeout. If the user calls it more times he will just force 
-  a lookup of the panel and a waste of one try*/
+/**
+ * status_docklet_run:
+ * @docklet: #StatusDocklet to run
+ *
+ * Description: search for the panel and add the plug if it finds it.  This
+ * function is also called internally from the timeout.  If called externally
+ * more times, a panel lookup will be forced and one try will be wasted.
+ **/
 void
 status_docklet_run(StatusDocklet *docklet)
 {

@@ -1,0 +1,77 @@
+<!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+<!entity panel-Initialization SYSTEM "sgml/Initialization.sgml">
+<!entity panel-Properties     SYSTEM "sgml/Properties.sgml">
+<!entity panel-Menus          SYSTEM "sgml/Menus.sgml">
+<!entity panel-Miscellaneous  SYSTEM "sgml/Miscellaneous.sgml">
+<!entity panel-status-docklet SYSTEM "sgml/status-docklet.sgml">
+]>
+
+<book>
+  <bookinfo>
+    <title>The GNOME Panel Libraries</title>
+
+    <authorgroup>
+      <author>
+        <firstname>Jacob</firstname>
+	<surname>Berkman</surname>
+	<affiliation>
+	  <address>
+	    <email>jacob@helixcode.com</email>
+	  </address>
+	</affiliation>
+      </author>
+      <author>
+        <firstname>George</firstname>
+	<surname>Lebl</surname>
+	<affiliation>
+	  <address>
+	    <email>jirka@5z.com</email>
+	  </address>
+	</affiliation>
+      </author>
+    </authorgroup>
+
+    <copyright>
+      <year>2000</year>
+      <holder>The Free Software Foundation</holder>
+    </copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>Helix Code, Inc.</holder>
+    </copyright>
+<!--
+    <copyright>
+      <year>2000</year>
+      <holder>Eazel, Inc.</holder>
+    </copyright>
+-->
+  </bookinfo>
+
+  <reference>
+    <title>GNOME Panel Applet Library</title>
+    <partintro>
+      <para>
+        This describes the API for the GNOME Panel Applet library as of the
+	1.2.0 release.
+      </para>
+    </partintro>
+    &panel-Initialization;
+    &panel-Properties;
+    &panel-Menus;
+    &panel-Miscellaneous;
+  </reference>
+
+  <reference>
+    <title>Docklet API Reference</title>
+
+    <partintro>
+      <para>
+        This describes the API for the GNOME status docklet library, as
+	of the 1.2.0 release of gnome-core.
+      </para>
+    </partintro>
+
+    &panel-status-docklet;
+  </reference>
+</book>
+
