@@ -1238,9 +1238,9 @@ panel_delete_without_query (PanelToplevel *toplevel)
 } 
 
 static void
-remove_panel_accept (GtkWidget     *dialog,
-		     int            response,
-		     PanelToplevel *toplevel)
+panel_deletion_response (GtkWidget     *dialog,
+			 int            response,
+			 PanelToplevel *toplevel)
 {
 	if (response == GTK_RESPONSE_OK) {
 		panel_push_window_busy (dialog);
@@ -1248,25 +1248,24 @@ remove_panel_accept (GtkWidget     *dialog,
 		panel_pop_window_busy (dialog);
 	}
 
-	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", NULL);
-
 	gtk_widget_destroy (dialog);
 }
 
 static void
-panel_delete_query (PanelToplevel *toplevel)
+panel_deletion_destroy_dialog (GtkWidget *widget,
+			       PanelToplevel *toplevel)
 {
+	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", NULL);
+}
+
+GtkWidget *
+panel_deletion_dialog (PanelToplevel *toplevel)
+{
+
 	GtkWidget *dialog;
 
-	dialog = g_object_get_data (G_OBJECT (toplevel), "panel-delete-dialog");
-
-	if (dialog) {
-		gtk_window_present (GTK_WINDOW (dialog));
-		return;
-	}
-
 	dialog = gtk_message_dialog_new (
-			GTK_WINDOW (toplevel), 
+			GTK_WINDOW (toplevel),
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION,
 			GTK_BUTTONS_NONE,
@@ -1283,20 +1282,44 @@ panel_delete_query (PanelToplevel *toplevel)
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
+
 	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (toplevel)));
+				gtk_window_get_screen (GTK_WINDOW (toplevel)));
 
 	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
 
+	 g_signal_connect (dialog, "destroy",
+                           G_CALLBACK (panel_deletion_destroy_dialog),
+                           toplevel);
+
 	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", dialog);
 
+	return dialog;
+}
+
+static void
+panel_query_deletion (PanelToplevel *toplevel)
+{
+	GtkWidget *dialog;
+
+	dialog = g_object_get_data (G_OBJECT (toplevel), "panel-delete-dialog");
+
+	if (dialog) {
+		gtk_window_present (GTK_WINDOW (dialog));
+		return;
+	}
+
+	dialog = panel_deletion_dialog (toplevel);
+
 	g_signal_connect (dialog, "response",
-			  G_CALLBACK (remove_panel_accept),
+			  G_CALLBACK (panel_deletion_response),
 			  toplevel);
+
 	panel_signal_connect_object_while_alive (
 			G_OBJECT (toplevel), "destroy",
 			G_CALLBACK (gtk_widget_destroy),
 			G_OBJECT (dialog));
+
 	gtk_widget_show_all (dialog);
 }
 
@@ -1313,5 +1336,5 @@ panel_delete (PanelToplevel *toplevel)
 		return;
 	}
 
-	panel_delete_query (toplevel);
+	panel_query_deletion (toplevel);
 }

@@ -149,7 +149,11 @@ static void
 applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
-	panel_profile_delete_object (info);
+
+	if (info->type == PANEL_OBJECT_DRAWER)
+		drawer_query_deletion (info->data);
+	else
+		panel_profile_delete_object (info);
 }
 
 static inline GdkScreen *
