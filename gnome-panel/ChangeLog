@@ -1,3 +1,9 @@
+2004-03-01  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.c: (panel_toplevel_begin_grab_op): don't allow
+	moving the panel when its hidden. Fixes uber weirdness when you
+	do move hidden panel - bug #135876.
+
 2004-02-28  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-toplevel.c: (panel_toplevel_update_struts): remove some

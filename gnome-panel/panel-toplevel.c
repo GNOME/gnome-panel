@@ -420,7 +420,8 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursorType  cursor_type;
 	GdkCursor     *cursor;
 
-	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+	if (toplevel->priv->state != PANEL_STATE_NORMAL ||
+	    toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
 		return;
 
 	if (panel_lockdown_get_locked_down ())
