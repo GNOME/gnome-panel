@@ -397,19 +397,33 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 	return TRUE;
 }
 
+struct _added_info {
+	AppletInfo *info;
+	PanelWidget *panel;
+};
+
+static gint
+panel_applet_added_idle(gpointer data)
+{
+	struct _added_info *ai = data;
+
+	orientation_change(ai->info,ai->panel);
+	g_free(ai);
+
+	return FALSE;
+}
+
 static gint
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(applet));
 	PanelWidget *panel = PANEL_WIDGET(widget);
+	struct _added_info *ai = g_new(struct _added_info,1);
 
-	if(!info) return FALSE;
+	g_return_val_if_fail(info != NULL, FALSE);
+	g_return_val_if_fail(ai != NULL, FALSE);
 
-	puts("BEFORE ORIENT CHANGE");
-
-	orientation_change(info,panel);
-
-	puts("AFTER ORIENT CHANGE");
+	gtk_idle_add(panel_applet_added_idle,ai);
 
 	return TRUE;
 }
