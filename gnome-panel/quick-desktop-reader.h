@@ -29,7 +29,7 @@
 #define QUICK_DESKTOP_READER_H
 
 #include <glib.h>
-#include <gobject/gtype.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 
