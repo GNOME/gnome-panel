@@ -110,5 +110,7 @@ void  panel_background_change_region     (PanelBackground     *background,
 char *panel_background_make_string       (PanelBackground     *background,
 					  int                  x,
 					  int                  y);
+PanelBackgroundType
+      panel_background_effective_type    (PanelBackground     *background);
 
 #endif /* __PANEL_BACKGROUND_H__ */

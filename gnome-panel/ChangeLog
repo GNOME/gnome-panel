@@ -1,5 +1,22 @@
 2003-02-27  Mark McLoughlin  <mark@skynet.ie>
 
+	Don't draw a bevel around the panel when we've got a color
+	or image background.
+
+	* new-toplevel-todo: upd.
+
+	* panel-background.[ch]: (panel_background_prepare): split out
+	figuring out what type of background we're rendering to
+	(panel_background_effective_type): here.
+
+	* panel-profile.c: (panel_profile_background_change_notify):
+	update the toplevel edges.
+
+	* panel-toplevel.c: (panel_toplevel_update_edges): don't draw
+	any edges if we've got a color or image background.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
 	* new-toplevel-todo: add todo list of what needs to be done
 	before merging back to HEAD.
 

@@ -1263,16 +1263,17 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	panel_xutils_set_strut (widget->window, left, right, bottom, top);
 }
 
-static void
+void
 panel_toplevel_update_edges (PanelToplevel *toplevel)
 {
-	GtkWidget      *widget;
-	PanelFrameEdge  edges;
-	PanelFrameEdge  inner_edges;
-	PanelFrameEdge  outer_edges;
-	int             monitor_width, monitor_height;
-	int             width, height;
-	gboolean        inner_frame = FALSE;
+	GtkWidget       *widget;
+	PanelFrameEdge   edges;
+	PanelFrameEdge   inner_edges;
+	PanelFrameEdge   outer_edges;
+	PanelBackground *background;
+	int              monitor_width, monitor_height;
+	int              width, height;
+	gboolean         inner_frame = FALSE;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -1284,28 +1285,33 @@ panel_toplevel_update_edges (PanelToplevel *toplevel)
 
 	edges = PANEL_EDGE_NONE;
 
-	if (toplevel->priv->geometry.y != 0)
-		edges |= PANEL_EDGE_TOP;
+	background = &toplevel->priv->panel_widget->background;
 
-	if (toplevel->priv->geometry.x != 0)
-		edges |= PANEL_EDGE_LEFT;
+	/* We don't want any bevels with a color/image background */
+	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
+		if (toplevel->priv->geometry.y != 0)
+			edges |= PANEL_EDGE_TOP;
 
-	if (toplevel->priv->geometry.y != (monitor_height - height))
-		edges |= PANEL_EDGE_BOTTOM;
+		if (toplevel->priv->geometry.x != 0)
+			edges |= PANEL_EDGE_LEFT;
 
-	if (toplevel->priv->geometry.x != (monitor_width - width))
-		edges |= PANEL_EDGE_RIGHT;
+		if (toplevel->priv->geometry.y != (monitor_height - height))
+			edges |= PANEL_EDGE_BOTTOM;
 
-	if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_left) ||
-	    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_right)) {
-		inner_frame = TRUE;
-		edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
-	}
+		if (toplevel->priv->geometry.x != (monitor_width - width))
+			edges |= PANEL_EDGE_RIGHT;
 
-	if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_top) ||
-	    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_bottom)) {
-		inner_frame = TRUE;
-		edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
+		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_left) ||
+		    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_right)) {
+			inner_frame = TRUE;
+			edges |= PANEL_EDGE_LEFT | PANEL_EDGE_RIGHT;
+		}
+
+		if (GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_top) ||
+		    GTK_WIDGET_VISIBLE (toplevel->priv->hide_button_bottom)) {
+			inner_frame = TRUE;
+			edges |= PANEL_EDGE_TOP | PANEL_EDGE_BOTTOM;
+		}
 	}
 
 	if (!inner_frame) {

@@ -1026,8 +1026,10 @@ panel_profile_background_change_notify (GConfClient   *client,
 
 			if (panel_profile_map_background_type_string (
 						gconf_value_get_string (value),
-						&background_type))
+						&background_type)) {
 				panel_background_set_type (background, background_type);
+				panel_toplevel_update_edges (toplevel);
+			}
 		}
 	} else if (!strcmp (key, "color")) {
 		if (value->type == GCONF_VALUE_STRING) {

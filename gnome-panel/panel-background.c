@@ -89,9 +89,7 @@ panel_background_prepare (PanelBackground *background)
 
 	free_prepared_resources (background);
 
-	effective_type = background->type;
-	if (background->type == PANEL_BACK_IMAGE && !background->composited_image)
-		effective_type = PANEL_BACK_NONE;
+	effective_type = panel_background_effective_type (background);
 
 	switch (effective_type) {
 	case PANEL_BACK_NONE:
@@ -841,4 +839,20 @@ panel_background_make_string (PanelBackground *background,
 
         return retval;
 
+}
+
+/* What are we actually rendering - e.g. if we're supposed to
+ * be rendering an image, but haven't got a valid image, then
+ * we're rendering the default gtk background.
+ */
+PanelBackgroundType
+panel_background_effective_type (PanelBackground *background)
+{
+	PanelBackgroundType retval;
+
+	retval = background->type;
+	if (background->type == PANEL_BACK_IMAGE && !background->composited_image)
+		retval = PANEL_BACK_NONE;
+
+	return retval;
 }
