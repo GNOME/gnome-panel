@@ -55,7 +55,7 @@ typedef struct {
 
 static void clock_properties (AppletWidget *applet, gpointer data);
 static void clock_about      (AppletWidget *applet, gpointer data);
-static void help_cb	     (GtkWidget *w, gpointer data);
+static void help_cb	     (AppletWidget *w, gpointer data);
 static void phelp_cb	     (GtkWidget *w, gint tab, gpointer data);
 
 static void
@@ -141,7 +141,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			g_snprintf(hour,20,"%lu",(unsigned long)current_time);
 		} 
 		g_string_append(gs,hour);
-	} else if (cd->hourformat == 0) {
+	} else if (cd->hourformat == 12) {
 		/* This format string is used, to display the actual time in
 		   12 hour format.  */
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
@@ -153,7 +153,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 				hour[19] = '\0';
 		} 
 		g_string_append(gs,hour);
-	} else if (cd->hourformat == 1) {
+	} else if (cd->hourformat == 24) {
 		/* This format string is used, to display the actual time in
 		   24 hour format.  */
 		if (strftime(hour, 20, _("%H:%M"), tm) == 20)
@@ -338,7 +338,36 @@ make_clock_applet(const gchar * goad_id)
 	cd = g_new(ClockData, 1);
 
 	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
-	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
+
+	/* A kluge to allow translation of default hour format to 12 or
+	 * 24 hour format */
+	{
+		/* Do NOT translate the clock/hourformat part.  What you
+		 * should change is the 12.  If your country code should use
+		 * 12 hour format by default, leave it at 12, otherwise use 24
+		 * for 24 hour format.  Those are the only two supported */
+		char *transl = _("clock/hourformat=12");
+		/* sanity */
+		if (strncmp (transl, "clock/hourformat=",
+			     strlen ("clock/hourformat=") != 0)) {
+			g_warning("Whoever translated the clock applet should "
+				  "be shot, as he translated "
+				  "\"clock/hourformat\" despite being asked "
+				  "not to.");
+			transl = "clock/hourformat=12";
+		}
+		cd->hourformat = gnome_config_get_int(transl);
+
+		/* support the old syntax */
+		if (cd->hourformat == 0)
+			cd->hourformat = 12;
+		else if (cd->hourformat == 1)
+			cd->hourformat = 24;
+
+		/* make sure it's a sane value, we use 24 otherwise */
+		if (cd->hourformat != 12 && cd->hourformat != 24)
+			cd->hourformat = 24;
+	}
 	/* if on a small screen don't show data by default */
 	if(gdk_screen_width()<=800)
 		cd->showdate = gnome_config_get_int("clock/showdate=0");
@@ -451,7 +480,7 @@ set_hour_format_cb(GtkWidget * w, gpointer data)
 	g_return_if_fail(w != NULL);
 	if(GTK_TOGGLE_BUTTON(w)->active) {
 		ClockData *cd = gtk_object_get_user_data(GTK_OBJECT(w));
-		cd->prop_hourformat = (long)data;
+		cd->prop_hourformat = GPOINTER_TO_INT(data);
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 	}
 }
@@ -556,12 +585,12 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_widget_show(twentyfourhour);
 
 	switch (cd->hourformat) {
-	case 0:
+	case 12:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(twelvehour),
 					    TRUE);
 		break;
 
-	case 1:
+	case 24:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(twentyfourhour),
 					    TRUE);
 		break;
@@ -572,11 +601,11 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(twelvehour),
 			   "toggled",
 			   (GtkSignalFunc) set_hour_format_cb,
-			   (gpointer) 0);
+			   (gpointer) 12);
 	gtk_signal_connect(GTK_OBJECT(twentyfourhour),
 			   "toggled",
 			   (GtkSignalFunc) set_hour_format_cb,
-			   (gpointer) 1);
+			   (gpointer) 24);
 	
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD_SMALL);
 	gtk_box_pack_start_defaults(GTK_BOX(hbox), vbox);
@@ -666,7 +695,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 }
 
 static void
-help_cb (GtkWidget *w, gpointer data)
+help_cb (AppletWidget *w, gpointer data)
 {
 	GnomeHelpMenuEntry help_entry = { "clock_applet" };
 
@@ -677,7 +706,7 @@ help_cb (GtkWidget *w, gpointer data)
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-	help_cb (w, data);
+	help_cb (NULL, data);
 }
 
 static void

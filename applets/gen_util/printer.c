@@ -276,7 +276,7 @@ build_label_and_entry (Printer *pr, GtkTable *table, int row, char *label,
 }
 
 static void
-help_cb (GtkWidget *w, gpointer data)
+help_cb (AppletWidget *w, gpointer data)
 {
 	GnomeHelpMenuEntry help_entry = { "printer_applet" };/*emb*/
 	help_entry.path = data;
@@ -286,7 +286,7 @@ help_cb (GtkWidget *w, gpointer data)
 static void
 phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
-	help_cb (w, data);
+	help_cb (NULL, data);
 }
 
 static void
