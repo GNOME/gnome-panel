@@ -1324,7 +1324,7 @@ show_item_menu (GtkWidget      *item,
 
 		if (sim->type == 1) {
 			char *tmp;
-			gboolean objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
+			gboolean id_lists_writable = panel_profile_id_lists_are_writable ();
 
 			ii = gnome_desktop_item_new_from_uri (sim->item_loc, 0, NULL);
 
@@ -1342,7 +1342,7 @@ show_item_menu (GtkWidget      *item,
 			g_signal_connect (menuitem, "activate",
 					  G_CALLBACK (add_app_to_panel),
 					  sim);
-			gtk_widget_set_sensitive (menuitem, objects_writable);
+			gtk_widget_set_sensitive (menuitem, id_lists_writable);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1382,8 +1382,7 @@ show_item_menu (GtkWidget      *item,
 		
 		if (sim->mf != NULL) {
 			GtkWidget *submenu;
-			gboolean objects_writable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
-			gboolean toplevels_writable = panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS);
+			gboolean id_lists_writable = panel_profile_id_lists_are_writable ();
 
 			if (sim->type == 0) {
 				submenu = sim->menu;
@@ -1408,9 +1407,7 @@ show_item_menu (GtkWidget      *item,
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					  G_CALLBACK(add_menudrawer_to_panel),
 						  sim->mf);
-			gtk_widget_set_sensitive (menuitem,
-						  objects_writable &&
-						  toplevels_writable);
+			gtk_widget_set_sensitive (menuitem, id_lists_writable);
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1419,9 +1416,7 @@ show_item_menu (GtkWidget      *item,
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					  G_CALLBACK(add_menu_to_panel),
 					  sim->mf);
-			gtk_widget_set_sensitive (menuitem,
-						  objects_writable &&
-						  toplevels_writable);
+			gtk_widget_set_sensitive (menuitem, id_lists_writable);
 
 			if (!panel_lockdown_get_disable_command_line ()) {
 				menuitem = gtk_image_menu_item_new ();
@@ -2244,7 +2239,7 @@ setup_remove_this_panel (GtkWidget *menu,
 	sensitive =
 		panel_toplevel_is_last_unattached (panel_widget->toplevel) ||
 		!panel_lockdown_get_locked_down () ||
-		!panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS);
+		!panel_profile_id_lists_are_writable ();
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
 
@@ -2293,8 +2288,7 @@ make_panel_submenu (PanelWidget *panel_widget,
         g_signal_connect (G_OBJECT (menuitem), "activate",
 	      	       	  G_CALLBACK (panel_addto_present), panel_widget);
 
-	if (!panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
-	    !panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
+	if (!panel_profile_id_lists_are_writable ())
 		gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -2338,7 +2332,7 @@ make_panel_submenu (PanelWidget *panel_widget,
 			  G_CALLBACK (create_new_panel), 
 			  NULL);
 	gtk_widget_set_sensitive (menuitem, 
-				  panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS));
+				  panel_profile_id_lists_are_writable ());
 
 	add_menu_separator (menu);
 }

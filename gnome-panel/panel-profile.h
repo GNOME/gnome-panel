@@ -55,7 +55,7 @@ void           panel_profile_add_to_list            (PanelGConfKeyType  type,
 						     const char        *id);
 void           panel_profile_remove_from_list       (PanelGConfKeyType  type,
 						     const char        *id);
-gboolean       panel_profile_list_is_writable       (PanelGConfKeyType  type);
+gboolean       panel_profile_id_lists_are_writable  (void);
 void           panel_profile_create_toplevel        (GdkScreen         *screen);
 PanelToplevel *panel_profile_load_toplevel          (GConfClient       *client,
 						     const char        *profile_dir,
@@ -71,9 +71,6 @@ char          *panel_profile_prepare_object_with_id (PanelObjectType    object_t
 						     int                position,
 						     gboolean           right_stick);
 void           panel_profile_delete_object          (AppletInfo        *applet_info);
-
-
-gboolean panel_profile_is_toplevel_list_writeable (void);
 
 
 void        panel_profile_set_toplevel_name           (PanelToplevel *toplevel,

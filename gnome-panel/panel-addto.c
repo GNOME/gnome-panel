@@ -436,11 +436,8 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 	GtkTreeIter iter;
 	GSList *item = NULL;
 
-	if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS)) {
+	if (panel_profile_id_lists_are_writable ()) {
 		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
-	}
-
-	if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS)) {
 		dialog->applet_list = panel_addto_append_internal_applets (dialog->applet_list);
 	}
 
@@ -871,7 +868,7 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 	}
 
 	/* only allow dragging applets if we can add applets */
-	if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS)) {
+	if (panel_profile_id_lists_are_writable ()) {
 		switch (data->type) {
 		case PANEL_ADDTO_LAUNCHER:
 			panel_addto_setup_launcher_drag (GTK_TREE_VIEW (dialog->tree_view),
