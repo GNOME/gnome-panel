@@ -121,8 +121,16 @@ create_launcher (char *parameters)
 	return launcher;
 }
 
+static void
+notify_entry_change (GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+
+	gnome_property_box_changed (box);
+}
+
 static GtkWidget *
-create_text_entry(GtkWidget *table, int row, char *label, char *text)
+create_text_entry(GtkWidget *table, int row, char *label, char *text, GtkWidget *w)
 {
 	GtkWidget *wlabel;
 	GtkWidget *entry;
@@ -144,8 +152,9 @@ create_text_entry(GtkWidget *table, int row, char *label, char *text)
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 0, 0);
-	gtk_widget_show(entry);
 
+	gtk_signal_connect (GTK_OBJECT (entry), "changed",
+			    notify_entry_change, w);
 	return entry;
 }
 
@@ -180,12 +189,15 @@ check_dentry_save(GnomeDesktopEntry *dentry)
 #define free_and_nullify(x) { g_free(x); x = NULL; }
 
 static void
-properties_apply_callback(GtkWidget *widget, gpointer data)
+properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
 	Properties        *prop;
 	GnomeDesktopEntry *dentry;
 	GtkWidget         *pixmap;
 
+	if (page == -1)
+		return;
+	
 	prop = data;
 	dentry = prop->dentry;
 
@@ -228,7 +240,7 @@ properties_apply_callback(GtkWidget *widget, gpointer data)
 			pixmap = gtk_label_new (_("App"));
 	}
 	gtk_container_add (GTK_CONTAINER(prop->launcher->button), pixmap);
-	gtk_widget_show(pixmap);
+
 	/*FIXME: a bad hack to keep it all 48x48*/
 	gtk_widget_set_usize (prop->launcher->button, 48, 48);
 
@@ -253,10 +265,7 @@ properties_apply_callback(GtkWidget *widget, gpointer data)
 static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
-	Properties *prop = data;
-
-	gtk_widget_destroy(prop->dialog);
-	g_free(prop);
+	g_free (data);
 }
 
 static GtkWidget *
@@ -273,7 +282,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 
 	prop->launcher = launcher;
 
-	prop->dialog = dialog = gtk_dialog_new();
+	prop->dialog = dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
@@ -282,45 +291,35 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	gtk_container_border_width(GTK_CONTAINER(table), 4);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), table, FALSE, FALSE, 0);
-	gtk_widget_show(table);
 
-	prop->name_entry          = create_text_entry(table, 0, _("Name"), dentry->name);
-	prop->comment_entry       = create_text_entry(table, 1, _("Comment"), dentry->comment);
-	prop->execute_entry       = create_text_entry(table, 2, _("Execute"), dentry->exec);
-	prop->icon_entry          = create_text_entry(table, 3, _("Icon"), dentry->icon);
-	prop->documentation_entry = create_text_entry(table, 4, _("Documentation"), dentry->docpath);
+	prop->name_entry          = create_text_entry(table, 0, _("Name"), dentry->name, dialog);
+	prop->comment_entry       = create_text_entry(table, 1, _("Comment"), dentry->comment, dialog);
+	prop->execute_entry       = create_text_entry(table, 2, _("Execute"), dentry->exec, dialog);
+	prop->icon_entry          = create_text_entry(table, 3, _("Icon"), dentry->icon, dialog);
+	prop->documentation_entry = create_text_entry(table, 4, _("Documentation"), dentry->docpath, dialog);
 
 	prop->terminal_toggle = toggle =
 		gtk_check_button_new_with_label(_("Run inside terminal"));
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
 				    dentry->terminal ? TRUE : FALSE);
+	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+			    GTK_SIGNAL_FUNC (notify_entry_change), dialog);
+				    
 	gtk_table_attach(GTK_TABLE(table), toggle,
 			 0, 2, 5, 6,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 0, 0);
-	gtk_widget_show(toggle);
 
-	button = gtk_button_new_with_label(_("Close"));
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) properties_close_callback,
-			   prop);
-	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
-
-	gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 4);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (prop->dialog),
+					table, gtk_label_new ("Item properties"));
 	
-	button = gtk_button_new_with_label(_("Apply"));
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) properties_apply_callback,
-			   prop);
-	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
-
 	gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
 			   (GtkSignalFunc) properties_close_callback,
 			   prop);
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
+			   GTK_SIGNAL_FUNC(properties_apply_callback), prop);
 
 	return dialog;
 }
@@ -346,5 +345,5 @@ launcher_properties(Launcher *launcher)
 	}
 
 	dialog = create_properties_dialog(dentry,launcher);
-	gtk_widget_show(dialog);
+	gtk_widget_show_all (dialog);
 }
