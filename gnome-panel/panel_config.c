@@ -766,6 +766,9 @@ panel_config(GtkWidget *panel)
 	
 	/* main window */
 	ppc->config_window = gnome_property_box_new ();
+	gtk_window_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);
+	gtk_window_set_policy(GTK_WINDOW(ppc->config_window), FALSE, FALSE, TRUE);
+
 	gtk_signal_connect(GTK_OBJECT(ppc->config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), ppc);
 	gtk_window_set_title (GTK_WINDOW(ppc->config_window),

@@ -868,7 +868,7 @@ state_restore_foreach(gpointer data, gpointer user_data)
 {
 	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
-
+	
 	if(info->type == APPLET_DRAWER) {
 		DrawerWidget *drawer = DRAWER_WIDGET(info->assoc);
 		if(drawer->state == DRAWER_SHOWN) {

@@ -340,7 +340,8 @@ panel_session_die (GnomeClient *client,
 	for(i=0,info=(AppletInfo *)applets->data;
 	    i<applet_count;
 	    i++,info++) {
-		if(info->type == APPLET_EXTERN)
+		if(info->type == APPLET_EXTERN ||
+		   info->type == APPLET_SWALLOW)
 			gtk_container_remove(GTK_CONTAINER(info->widget),
 					     info->applet_widget);
 	}
@@ -422,6 +423,9 @@ panel_quit(void)
 				     GNOME_STOCK_BUTTON_YES,
 				     GNOME_STOCK_BUTTON_NO,
 				     NULL);
+	gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);
+	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
+
 	gtk_signal_connect (GTK_OBJECT (box), "clicked",
 		            GTK_SIGNAL_FUNC (panel_really_logout), &box);
 
@@ -1319,6 +1323,11 @@ register_toy(GtkWidget *applet,
 		
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
+
+	/*add to the array of applets*/
+	applets = g_array_append_val(applets,AppletInfo,info);
+	applet_count++;
+
 	/*for a menu we don't bind other events except for the
 	  eventbox, the menu itself takes care of passing the relevant
 	  ones thrugh*/
@@ -1329,14 +1338,12 @@ register_toy(GtkWidget *applet,
 			if(panel_widget_add_full(panel, eventbox, pos, bind_lower)!=-1)
 				break;
 		if(!list) {
+			/*can't put it anywhere, clean up*/
+			AppletInfo *inf = get_applet_info(applet_count-1);
 			gtk_widget_unref(eventbox);
-			if(info.cfg)
-				g_free(info.cfg);
-			if(info.path)
-				g_free(info.path);
-			if(info.params)
-				g_free(info.params);
-			g_free(info.id_str);
+			inf->widget = NULL;
+			inf->applet_widget = NULL;
+			panel_clean_applet(applet_count-1);
 			g_warning("Can't find an empty spot");
 			return FALSE;
 		}
@@ -1346,18 +1353,15 @@ register_toy(GtkWidget *applet,
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",
 			   GTK_SIGNAL_FUNC(applet_button_press),
-			   ITOP(applet_count));
+			   ITOP(applet_count-1));
 
 	info.destroy_callback = gtk_signal_connect(GTK_OBJECT(eventbox),
 			   			   "destroy",
 			   			   GTK_SIGNAL_FUNC(
 			   			   	applet_destroy),
-			   			   ITOP(applet_count));
+			   			   ITOP(applet_count-1));
 
 	gtk_widget_show_all(eventbox);
-
-	applets = g_array_append_val(applets,AppletInfo,info);
-	applet_count++;
 
 	/*gtk_signal_connect (GTK_OBJECT (eventbox), 
 			    "drag_request_event",

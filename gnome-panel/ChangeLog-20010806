@@ -1,3 +1,13 @@
+Wed Jul 15 03:51:52 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: fixed a segfault, there needs to be an entry in
+	  the applets array before the applet is added to a panel
+
+	* panel.c,swallow.c,panel_config.c,panel_config_global.c:
+	  made all dialogs pop up at center of screen ... is this
+	  the right berhaviour? it is much less annoting in almost
+	  any fvwm placement mode
+
 Tue Jul 14 03:03:30 1998  George Lebl  <jirka@5z.com>
 
 	* swallow.[ch],main.c,panel.c: extend swallows to make them far

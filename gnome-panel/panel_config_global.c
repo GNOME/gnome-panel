@@ -324,6 +324,8 @@ panel_config_global(void)
 
 	/* main window */
 	box = gnome_property_box_new ();
+	gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);
+	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 	gtk_signal_connect(GTK_OBJECT(box), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_signal_connect (GTK_OBJECT (box), "delete_event",
