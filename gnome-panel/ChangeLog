@@ -1,4 +1,14 @@
+1998-03-04  Raja R Harinath  <harinath@cs.umn.edu>
+
+	Move gnome-panel.idl and applet-{lib,widget}.* to libapplet.
+	* clock/Makefile.am (clock_applet_LDADD): Link in `libapplet.a'.
+	* cdplayer/Makefile.am (cdplayer_applet_LDADD): Likewise.
+
+	* Makefile.am (SUBDIRS): Add `libapplet'.
+
 1998-03-03  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* cdplayer/cdplayer.c (main): Get it to compile.
 
 	* panel.c (add_main_menu): Use /* */ comment.
 

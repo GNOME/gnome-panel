@@ -5,28 +5,13 @@ test:
 #SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 #	@PROGRAMS_PANEL_CDPLAYER@
 
-SUBDIRS  = clock @PROGRAMS_PANEL_CDPLAYER@
-
-CXX = mico-c++
-CXXCOMPILE = $(CXX) -g $(INCLUDES)
+SUBDIRS  = libapplet clock @PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(X_CFLAGS)
 
 bin_PROGRAMS = panel
-
-CORBA_SOURCES = 		\
-	gnome-panel.cc		\
-	gnome-panel.h
-
-BUILT_SOURCES = $(CORBA_SOURCES)
-
-gnome-panel.cc: gnome-panel.idl
-## `idl' version 2.0.3 lamely fails to strip the path part of the file
-## name when computing the name of the output file, so we prod it a
-## little.
-	idl --name gnome-panel $(srcdir)/gnome-panel.idl
 
 panel_SOURCES = 		\
 	drawer.c  		\
@@ -45,13 +30,15 @@ panel_SOURCES = 		\
 	panel_config_global.c  	\
 	panel_config_global.h  	\
 	panel-widget.c  	\
-	panel-widget.h		\
-	$(CORBA_SOURCES)
+	panel-widget.h
+#	$(CORBA_SOURCES)
 
 MICO_VERS = 2.0.3
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
-panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = libapplet/libapplet.a \
+              $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
+              $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
