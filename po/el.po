@@ -1,8 +1,10 @@
 # gnome-panel Greek PO file.
-# Copyright (C) 1999-2002 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001, 2002 Free Software Foundation, Inc.
 # Spiros Papadimitriou <spapadim+@cs.cmu.edu>, 1999.
-# Simos Xenitellis <simos@hellug.gr>, 1999-2002.
+# Simos Xenitellis <simos@hellug.gr>, 1999, 2000, 2001, 2002.
 # Sarantis Paskalis <paskalis@di.uoa.gr>, 2000.         
+# Kostas Papadimas <pkst@gmx.net>, 2002.
+#
 # Comment: Most of the work done by Spiros (around 600 messages).
 # Comment: Simos/Sarantis did 12%.
 # Comment: Simos/Sarantis did review.
@@ -18,13 +20,14 @@
 # simos: 897 messages, 28Nov2001, (feeling good to translate HEAD)
 # Rename of module to gnome-panel.
 # simos: 272 messages, 20Apr2002, 118 messages remaining.
+# kostas: 513 messages, 19Oct2002, completed translation.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 1.5.17\n"
-"POT-Creation-Date: 2002-10-14 14:20+1300\n"
-"PO-Revision-Date: 2002-04-21 22:04+0100\n"
-"Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
+"Project-Id-Version: gnome-panel 2.0.10\n"
+"POT-Creation-Date: 2002-10-19 14:49+0100\n"
+"PO-Revision-Date: 2002-10-19 12:08+0200\n"
+"Last-Translator: Kostas Papadimas <pkst@gmx.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,9 +38,8 @@ msgstr ""
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
 #: applets/gen_util/GNOME_PagerApplet.xml.h:1
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-#, fuzzy
 msgid "_About..."
-msgstr "Περί..."
+msgstr "_Περί..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
@@ -46,18 +48,16 @@ msgstr "Περί..."
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:672
 #: gnome-panel/launcher.c:756 gnome-panel/logout.c:134
 #: gnome-panel/logout.c:221 gnome-panel/menu.c:3447 gnome-panel/menu.c:4150
-#, fuzzy
 msgid "_Help"
-msgstr "Βοήθεια"
+msgstr "_Βοήθεια"
 
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences..."
-msgstr "Προτιμήσεις..."
+msgstr "_Προτιμήσεις..."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -65,7 +65,7 @@ msgstr "Διασκέδαση"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
-msgstr ""
+msgstr "Εμφανίζει ένα ψάρι που κολυμπάει ή κάποιο άλλο κινούμενο πλάσμα"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:1236
@@ -74,25 +74,25 @@ msgstr "Ψάρι"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "From Whence That Stupid Fish Came"
-msgstr ""
+msgstr "Από που Κρατά η Σκούφια Αυτού του Ηλιθίου Ψαριού"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
 msgid "Wanda Factory"
-msgstr ""
+msgstr "Εργοστάσιο Wanda"
 
 #: applets/fish/fish.c:67
-#, fuzzy, c-format
+#, c-format
 msgid "%s the GNOME Fish"
-msgstr "%s το Ψάρι του GNOME λέει:"
+msgstr "%s το Ψάρι του GNOMΕ"
 
 #: applets/fish/fish.c:68
-#, fuzzy, c-format
+#, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "%s το Ψάρι του GNOME λέει:"
+msgstr "%s το Ψάρι του GNOME, ένα σύγχρονο μαντείο"
 
 #: applets/fish/fish.c:107
 msgid "GNOME Fish, the fortune teller"
-msgstr ""
+msgstr "Το ψάρι του GNOME, το μέντιουμ της τύχης"
 
 #: applets/fish/fish.c:485 applets/fish/fish.c:1203
 #, no-c-format
@@ -100,9 +100,9 @@ msgid "%s the Fish"
 msgstr "%s το Ψάρι"
 
 #: applets/fish/fish.c:486
-#, fuzzy, c-format
+#, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "%s το Ψάρι του GNOME λέει:"
+msgstr "<big><big>%s το Ψάρι του GNOME λέει::</big></big>"
 
 #: applets/fish/fish.c:581
 msgid ""
@@ -112,25 +112,22 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Προειδοποίηση: Η εντολή φαίνεται να είναι κάτι πραγματικά χρήσιμο.\n"
-"Ωστόσο, μιας και αυτό είναι ένα άχρηστο εφαρμογίδιο, ίσως να μην\n"
+"Ωστόσο, μιας και αυτό είναι ένα άχρηστο εφαρμογίδιο, ίσως να μη\n"
 "θέλετε να το κάνετε. Σας συνιστούμε σθεναρά ενάντια στη χρήση της \n"
 "γουάντα για οτιδήποτε θα μπορούσε να κάνει το εφαρμογίδιο \"πρακτικό\"\n"
 "ή χρήσιμο."
 
 #: applets/fish/fish.c:712
-#, fuzzy
 msgid "GNOME Fish Preferences"
-msgstr "Ιδιότητες του Ψαριού του GNOME"
+msgstr "Προτιμήσεις του Ψαριού του GNOME"
 
 #: applets/fish/fish.c:722
-#, fuzzy
 msgid "_Name of GNOME fish:"
-msgstr "Γουάντα το Ψάρι του GNOME"
+msgstr "_Όνομα του Ψαριού του GNOME"
 
 #: applets/fish/fish.c:739
-#, fuzzy
 msgid "_Animation filename:"
-msgstr "Το όνομα του Αρχείου Κινουμένων Σχεδίων:"
+msgstr "'Ονομα αρχείου Κινουμένων Σχεδίων:"
 
 #: applets/fish/fish.c:741 applets/gen_util/mailcheck.c:1291
 #: gnome-panel/panel-config.c:1386 gnome-panel/panel-util.c:241
@@ -138,35 +135,31 @@ msgid "Browse"
 msgstr "Εξερεύνηση"
 
 #: applets/fish/fish.c:757
-#, fuzzy
 msgid "Command to _execute when fish is clicked:"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς _εκτέλεση όταν το ψάρι πατηθεί:"
 
 #: applets/fish/fish.c:774
-#, fuzzy
 msgid "Frame_s in animation:"
 msgstr "Αριθμός καρέ στα Κινούμενα Σχέδια:"
 
 #: applets/fish/fish.c:792
-#, fuzzy
 msgid "Pause _per frame (s):"
-msgstr "Παύση ανά καρέ (s):"
+msgstr "Παύση _ανά καρέ (s):"
 
 #: applets/fish/fish.c:807
-#, fuzzy
 msgid "_Rotate on vertical panels"
-msgstr "Περιστροφή στα κατακόρυφα ταμπλώ"
+msgstr "_Περιστροφή στα κατακόρυφα ταμπλώ"
 
 #: applets/fish/fish.c:863
 msgid "Unable to get the name of the command to execute"
-msgstr ""
+msgstr "Αδυναμία λήψης ονόματος εντολής για εκτέλεση"
 
 #: applets/fish/fish.c:879
 msgid "Unable to locate the command to execute"
-msgstr ""
+msgstr "Αδυναμία εντοπισμού εντολής για εκτέλεση"
 
 #: applets/fish/fish.c:1004
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
@@ -174,7 +167,7 @@ msgid ""
 msgstr ""
 "Αδύνατη εκτέλεση εντολής:\n"
 "%s\n"
-"%s"
+"Λεπτομέρειες:%s"
 
 #: applets/fish/fish.c:1024
 msgid ""
@@ -198,7 +191,7 @@ msgstr ""
 
 #: applets/fish/fish.c:1218
 msgid "(with minor help from George)"
-msgstr "(με λίγη βοήθεια από τον George)"
+msgstr "(με λίγη βοήθεια από το George)"
 
 #: applets/fish/fish.c:1239
 msgid ""
@@ -218,52 +211,48 @@ msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
+"Ένα ψάρι χωρίς όνομα είναι ένα χαζό ψάρι. Δώστε ζωή στο ψάρι σας βαφτίζοντας "
+"το."
 
 #: applets/fish/fish.schemas.in.h:2
-#, fuzzy
 msgid "Command to execute when the fish is clicked"
 msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
 
 #: applets/fish/fish.schemas.in.h:3
-#, fuzzy
 msgid "Pause per frame"
-msgstr "Παύση ανά καρέ (s):"
+msgstr "Παύση ανά καρέ:"
 
 #: applets/fish/fish.schemas.in.h:4
-#, fuzzy
 msgid "Rotate on vertical panels"
 msgstr "Περιστροφή στα κατακόρυφα ταμπλώ"
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
-msgstr ""
+msgstr "Η κινούμενη εικόνα pixmap του ψαριού"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
-msgstr ""
+msgstr "Το όνομα του ψαριού"
 
 #: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
-msgstr ""
+msgstr "Ο αριθμός των καρέ στην κίνηση του ψαριού"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Copy _date"
-msgstr "Αντιγραφή ημερομηνίας"
+msgstr "Αντιγραφή _ημερομηνίας"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:2
-#, fuzzy
 msgid "Copy _time"
-msgstr "Αντιγραφή ώρας"
+msgstr "Αντιγραφή _ώρας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 msgid "Accessories"
 msgstr "Βοηθήματα"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#, fuzzy
 msgid "Alert you when new mail arrives"
-msgstr "Αναπαραγωγή ενός ήχου όταν καταφθάνει νέα αλληλογραφία"
+msgstr "Ειδοποίηση όταν καταφθάνει νέα αλληλογραφία"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1173
@@ -272,16 +261,16 @@ msgstr "Ρολόι"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "GenUtil Applet Factory"
-msgstr ""
+msgstr "GenUtil Applet Factory"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
-msgstr ""
+msgstr "Λήψη της τρέχουσας ημερομηνίας και ώρας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:263 applets/gen_util/mailcheck.c:1736
 msgid "Inbox Monitor"
-msgstr ""
+msgstr "Παρακολούθηση αλληλογραφίας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
 msgid "Internet"
@@ -289,11 +278,11 @@ msgstr "Δίκτυο"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "Switch between open windows"
-msgstr ""
+msgstr "Εναλλαγή μεταξύ ανοικτών παραθύρων"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 msgid "Switch between workspaces"
-msgstr ""
+msgstr "Εναλλαγή μεταξύ χώρων εργασίας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Utility"
@@ -301,24 +290,22 @@ msgstr "Εργαλείο"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
 #: applets/gen_util/tasklist.c:725
-#, fuzzy
 msgid "Window List"
-msgstr "_Παράθυρο"
+msgstr "Λίστα παραθύρων"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
 #: applets/gen_util/pager.c:503 applets/gen_util/pager.c:814
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
-msgstr ""
+msgstr "Εναλλάκτης χώρων εργασίας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
 msgid "factory for creating some general applets"
-msgstr ""
+msgstr "εργοστάσιο για τη δημιουργία μερικών γενικών εφαρμογιδίων"
 
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-#, fuzzy
 msgid "_Check for mail"
-msgstr "Έλεγχος αλληλογραφίας"
+msgstr "_Έλεγχος για αλληλογραφία"
 
 #: applets/gen_util/clock.c:169 applets/gen_util/clock.c:479
 msgid "%I:%M:%S %p"
@@ -357,12 +344,9 @@ msgstr "%A, %B %d %Y"
 #: applets/gen_util/mailcheck.c:1593 applets/gen_util/mailcheck.c:1798
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:683
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error displaying help: %s"
-msgstr ""
-"Προέκυψε σφάλμα κατά την είσοδο στο σύστημα:\n"
-"\n"
-"%s"
+msgstr "Προέκυψε σφάλμα κατά την προβολή βοήθειας: %s"
 
 #: applets/gen_util/clock.c:933
 msgid "Clock Preferences"
@@ -389,19 +373,16 @@ msgid "_Internet time"
 msgstr "Ώρα _Διαδικτύου"
 
 #: applets/gen_util/clock.c:1022
-#, fuzzy
 msgid "Show _seconds"
-msgstr "δευτερόλεπτα"
+msgstr "Προβολή _δευτερολέπτων"
 
 #: applets/gen_util/clock.c:1032
-#, fuzzy
 msgid "Show _date"
-msgstr "Αντιγραφή ημερομηνίας"
+msgstr "Προβολή _ ημερομηνίας"
 
 #: applets/gen_util/clock.c:1042
-#, fuzzy
 msgid "Use _UTC"
-msgstr "Χρήση GMT"
+msgstr "Χρήση _UTC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1155 applets/gen_util/mailcheck.c:1723
@@ -416,98 +397,97 @@ msgstr "(C) 1997-2002 το Free Software Foundation"
 
 #: applets/gen_util/clock.c:1175
 msgid "The Clock displays the current time and date"
-msgstr ""
+msgstr "Το Ρολόϊ προβάλλει την τρέχουσα ημερομηνία και ώρα"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "Display Internet time, which is same all over the world"
-msgstr ""
+msgstr "Προβολή ώρας διαδικτύου, η οποία είναι ίδια σε όλο τον κόσμο"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
-msgstr ""
+msgstr "Εμφανίζει εκτός από την ώρα και  την ημερομηνία στο εφαρμογίδιο"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display time in Universal Coordinated Time zone"
-msgstr ""
+msgid "Display seconds in time"
+msgstr "Εμφάνιση δευτερολέπτων στην ώρα"
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr ""
+msgid "Display time in Universal Coordinated Time zone"
+msgstr "Προβάλλει την ώρα σε ζώνη UTC"
 
 #: applets/gen_util/clock.schemas.in.h:5
-#, fuzzy
-msgid "Hour format"
-msgstr "clock/hourformat=12"
+msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
+msgstr "Εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01"
 
 #: applets/gen_util/clock.schemas.in.h:6
-msgid ""
-"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
-"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
-"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
-"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
-"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
-"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
-"seconds in time"
-msgstr ""
+msgid "Hour format"
+msgstr "Τύπος ώρας"
 
 #: applets/gen_util/clock.schemas.in.h:7
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr ""
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Ορίζει το τύπο της ώρας, που μπορεί να είναι είτε 12 ή 24"
 
 #: applets/gen_util/clock.schemas.in.h:8
+msgid "Show date in a tooltip when a mouse is over applet"
+msgstr ""
+"Προβάλλει την ώρα σαν συμβουλή όταν περνάει το ποντίκι πάνω από το "
+"εφαρμογίδιο"
+
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in applet"
 msgstr "Εμφάνιση ημερομηνίας στο εφαρμογίδιο"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Εμφάνιση ημερομηνίας στο βοήθημα"
 
-#: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
-msgid "Use Internet time"
-msgstr "Ώρα _Διαδικτύου"
-
 #: applets/gen_util/clock.schemas.in.h:11
-#, fuzzy
-msgid "Use UNIX time"
-msgstr "Χρόνος _Unix"
+msgid "Show time with seconds"
+msgstr "Εμφάνιση  ώρας με δευτερόλεπτα"
 
 #: applets/gen_util/clock.schemas.in.h:12
-#, fuzzy
+msgid "Use Internet time"
+msgstr "Χρήση ώρας Διαδικτύου"
+
+#: applets/gen_util/clock.schemas.in.h:13
+msgid "Use UNIX time"
+msgstr "Χρήση ώρας Unix"
+
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UTC"
-msgstr "Χρήση GMT"
+msgstr "Χρήση UTC"
 
 #: applets/gen_util/mailcheck.c:193
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s : %s"
-msgstr ""
-"Προέκυψε σφάλμα κατά την είσοδο στο σύστημα:\n"
-"\n"
-"%s"
+msgstr "Προέκυψε σφάλμα κατά την εκτέλεση %s : %s"
 
 #: applets/gen_util/mailcheck.c:269
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
+"Δεν έχε ορίσει έναν κωδικό στις προτιμήσεις για την Παρακολούθηση "
+"Αλληλογραφίας,\n"
+"και έτσι θα πρέπει να τον εισάγετε κάθε φορά που ξεκινάει."
 
 #: applets/gen_util/mailcheck.c:277
 msgid "Please enter your mailserver's _password:"
-msgstr ""
+msgstr "Εισάγετε τον κωδικό του διακομιστή_αληλογραφίας σας"
 
 #: applets/gen_util/mailcheck.c:282 applets/gen_util/mailcheck.c:1351
 msgid "Password Entry box"
-msgstr ""
+msgstr "Κουτ'ι καταχώρησης κωδικού"
 
 #: applets/gen_util/mailcheck.c:325
-#, fuzzy
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"Σφάλμα απομακρυσμένου πελάτη.  Απενεργοποίηση του απομακρυσμένου σύγχρονου "
-"ελέγχου. Μήπως χρησιμοποιήσατε λάθος εξυπηρέτη/όνομα χρήστη/κωδικό χρήστη;"
+"Η παρακολούθηση εισερχόμενης αλληλογραφίας απέτυχε να ελέγξει την "
+"αλληλογραφία σας και έτσι απενεργοποιήθηκε η αυτόματη ενημέρωση προς το "
+"παρόν. Μήπως χρησιμοποιήσατε λάθος εξυπηρετητή/όνομα χρήστη/κωδικό χρήστη;"
 
 #: applets/gen_util/mailcheck.c:530
 msgid "You have new mail."
@@ -533,14 +513,12 @@ msgstr "Δεν υπάρχει αλληλογραφία."
 
 #: applets/gen_util/mailcheck.c:1062 applets/gen_util/mailcheck.c:1063
 #: applets/gen_util/mailcheck.c:1921 applets/gen_util/mailcheck.c:1922
-#, fuzzy
 msgid "Status not updated"
-msgstr "Έναρξη με εμφάνιση μηνύματος της ημέρας"
+msgstr "Δεν έγινε ενημέρωση κατάστασης"
 
 #: applets/gen_util/mailcheck.c:1235
-#, fuzzy
 msgid "Mailbox _resides on:"
-msgstr "Το γραμματοκιβώτιο βρίσκεται στο:"
+msgstr "Το γραμματοκιβώτιο _βρίσκεται στο:"
 
 #: applets/gen_util/mailcheck.c:1243
 msgid "Local mailspool"
@@ -559,103 +537,88 @@ msgid "Remote IMAP-server"
 msgstr "Απομακρυσμένος εξυπηρέτης IMAP"
 
 #: applets/gen_util/mailcheck.c:1287
-#, fuzzy
 msgid "Mail _spool file:"
 msgstr "Αρχείο αποθήκευσης αλληλογραφίας (mailspool):"
 
 #: applets/gen_util/mailcheck.c:1306
-#, fuzzy
 msgid "Mail s_erver:"
-msgstr "Εξυπηρέτης αλληλογραφίας:"
+msgstr "Εξυ_πηρετητής  αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.c:1312
 msgid "Mail Server Entry box"
-msgstr ""
+msgstr "Κουτί καταχώρησης Διακομιστή Αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.c:1326
-#, fuzzy
 msgid "_Username:"
-msgstr "Όνομα χρήστη:"
+msgstr "_Όνομα χρήστη:"
 
 #: applets/gen_util/mailcheck.c:1334
 msgid "Username Entry box"
-msgstr ""
+msgstr "Κουτί καταχώρισης ονόματος χρήστη"
 
 #: applets/gen_util/mailcheck.c:1343
-#, fuzzy
 msgid "_Password:"
-msgstr "Κωδικός:"
+msgstr "_Κωδικός:"
 
 #: applets/gen_util/mailcheck.c:1364
-#, fuzzy
 msgid "_Folder:"
-msgstr "Φάκελος:"
+msgstr "_Φάκελος:"
 
 #: applets/gen_util/mailcheck.c:1372
 msgid "Folder Entry box"
-msgstr ""
+msgstr "Κουτί καταχώρισης Φακέλου"
 
 #: applets/gen_util/mailcheck.c:1384
-#, fuzzy
 msgid "C_ommand to run before checking for mail:"
-msgstr "Εντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
+msgstr "Ε_ντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.c:1392
-#, fuzzy
 msgid "Command Entry box"
-msgstr "Εντολή (προαιρετική)"
+msgstr "Κουτί καταχώρησης εντολής"
 
 #: applets/gen_util/mailcheck.c:1417
 msgid "Execute"
 msgstr "Εκτέλεση"
 
 #: applets/gen_util/mailcheck.c:1428
-#, fuzzy
 msgid "Before each _update:"
-msgstr "Πριν από κάθε ενημέρωση:"
+msgstr "Πριν από κάθε_ενημέρωση:"
 
 #: applets/gen_util/mailcheck.c:1443
-#, fuzzy
 msgid "Command to execute before each update"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς εκτέλεση πριν από κάθε ενημέρωση:"
 
 #: applets/gen_util/mailcheck.c:1453
-#, fuzzy
 msgid "When new mail _arrives:"
-msgstr "Όταν καταφθάνει νέα αλληλογραφία:"
+msgstr "Όταν καταφθάνει_ νέα αλληλογραφία:"
 
 #: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:2
-#, fuzzy
 msgid "Command to execute when new mail arrives"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς εκτέλεση όταν καταφθάνει νέα αλληλογραφία:"
 
 #: applets/gen_util/mailcheck.c:1476
-#, fuzzy
 msgid "When clicke_d:"
 msgstr "Στα κλικ:"
 
 #: applets/gen_util/mailcheck.c:1489
-#, fuzzy
 msgid "Command to execute when clicked"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς εκτέλεσησ τα κλικ:"
 
 #: applets/gen_util/mailcheck.c:1499
 msgid "Set the number of unread mails to _zero"
-msgstr ""
+msgstr "Ορισμός αριθμού μή αναγνωσμένων μηνυμάτων σε_μηδέν"
 
 #: applets/gen_util/mailcheck.c:1510
-#, fuzzy
 msgid "Check for mail _every"
-msgstr "Έλεγχος αλληλογραφίας κάθε"
+msgstr "Έλεγχος αλληλογραφίας_κάθε"
 
 #: applets/gen_util/mailcheck.c:1522 applets/gen_util/mailcheck.c:1526
-#, fuzzy
 msgid "minutes"
 msgstr "λεπτά"
 
 #: applets/gen_util/mailcheck.c:1522
 msgid "Choose time interval in minutes to check mail"
-msgstr ""
+msgstr "Επιλέξτε το χρονικό διάστημα σε λεπτά για τον έλεγχο αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.c:1536 applets/gen_util/mailcheck.c:1540
 msgid "seconds"
@@ -664,49 +627,43 @@ msgstr "δευτερόλεπτα"
 #: applets/gen_util/mailcheck.c:1536
 msgid "Choose time interval in seconds to check mail"
 msgstr ""
+"Επιλέξτε το χρονικό διάστημα σε δευτερόλεπτα για τον έλεγχο αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.c:1548
-#, fuzzy
 msgid "Play a _sound when new mail arrives"
-msgstr "Αναπαραγωγή ενός ήχου όταν καταφθάνει νέα αλληλογραφία"
+msgstr "Αναπαραγωγή_ενός ήχου όταν καταφθάνει νέα αλληλογραφία"
 
 #: applets/gen_util/mailcheck.c:1559
-#, fuzzy
 msgid "Select a_nimation"
-msgstr "Ενεργοποίηση κινούμενων σχεδίων"
+msgstr "Ενεργοποίηση κινούμενων_σχεδίων"
 
 #: applets/gen_util/mailcheck.c:1634
-#, fuzzy
 msgid "Inbox Monitor Preferences"
-msgstr "Ιδιότητες καταχώρησης επιφάνειας εργασίας"
+msgstr "Ιδιότητες παρακολούθησης αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.c:1653
-#, fuzzy
 msgid "_Mail check"
-msgstr "Έλεγχος αλληλογραφίας"
+msgstr "_Έλεγχος αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.c:1657
-#, fuzzy
 msgid "Mail_box"
-msgstr "Γραμματοκιβώτιο"
+msgstr "Γραμμα_τοκιβώτιο"
 
 #: applets/gen_util/mailcheck.c:1737
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 το Free Software Foundation"
 
 #: applets/gen_util/mailcheck.c:1738
-#, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
-"Ο έλεγχος αλληλογραφίας σάς ειδοποιεί όταν καταφθάνει νέα αλληλογραφία στο "
-"γραμματοκιβώτιό σας"
+"Η παρακολούθηση αλληλογραφίας σας ειδοποιεί όταν καταφθάνει νέα αλληλογραφία "
+"στο γραμματοκιβώτιό σας"
 
 #: applets/gen_util/mailcheck.c:1897
 msgid "Text only"
 msgstr "Μόνο κείμενο"
 
 #: applets/gen_util/mailcheck.c:1923
-#, fuzzy
 msgid "Mail check"
 msgstr "Έλεγχος αλληλογραφίας"
 
@@ -717,118 +674,116 @@ msgstr ""
 "γραμματοκιβώτιό σας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
-#, fuzzy
 msgid "Command to execute when checking mail"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς εκτέλεση όκατα τον έλεγχο της αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when the applet is clicked"
-msgstr "Εντολή προς εκτέλεση όταν το ψάρι πατηθεί:"
+msgstr "Εντολή προς εκτέλεση όταν πατηθεί το εφαρμογίδιο:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
-#, fuzzy
 msgid "Command to run before checking mail"
 msgstr "Εντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
-msgstr ""
+msgstr "Αν θα εκτελείται η εντολή exec"
 
 #: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Do we run the newmail-command"
-msgstr ""
+msgstr "Αν θα εκτελείται η εντολή νέου μηνύματος"
 
 #: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
 msgstr ""
+"Συχνότητα (σε εκατοστά του δευτερολέπτου) του έλεγχου της αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
-msgstr ""
+msgstr "Αν θα πρέπει να γίνεται αυτόματος έλεγχος αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr ""
+"Αν αυτό ορισθεί η αλληλογραφία θα ελέγχεται κατα τακατά διαστήματα κάθε "
+"εκατοστά του δευτ."
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
-msgstr ""
+msgstr "Αν αυτό ορισθεί θα εκτελείται η εντολή exec"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr ""
+msgstr "Αν αυτό ορισθεί θα εκτελείται η εντολή  νέας αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
-#, fuzzy
 msgid "Interval for checking mail"
-msgstr "Εντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
+msgstr "Χρονικό διάστημα για τον έλεγχο αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
-msgstr ""
+msgstr "Διαδρομή για το αρχείο κινούμενης εικόνας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:14
-#, fuzzy
 msgid "Play a sound when mail is recieved"
 msgstr "Αναπαραγωγή ενός ήχου όταν καταφθάνει νέα αλληλογραφία"
 
 #: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
-msgstr ""
+msgstr "Απομακρυσμένος φάκελος για αλληλογραφία"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
-msgstr ""
+msgstr "Απομακρυσμένος διακομιστής για σύνδεση για την αλληλογραφία σας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
-#, fuzzy
 msgid "Run this command before we check the mail"
 msgstr "Εντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:18
-#, fuzzy
 msgid "The mail server"
 msgstr "Εξυπηρέτης αλληλογραφίας:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
-msgstr ""
+msgstr "Ο κωδικός του χρήστη"
 
 #: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
-msgstr ""
+msgstr "Ο κωδικός του χρήστη για τον απομακρυσμένο εξυπηρετητή"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
+msgstr " ελέγχουμε για αλληλογραφία..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
+msgstr "Με αυτόν τον τρόπο προωθούμε την αλληλογραφία..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
 msgstr ""
+"Αυτή είναι η κινούμενη εικόνα που θα προβάλλετε κατα τη διάρκεια της "
+"κανονικής εκτέλεσης του εφαρμογιδίου ελέγχου αλληλογραφίας"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
-msgstr ""
+msgstr "Όνομα χρήστη στον απομακρυσμένο εξυπηρετητή"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on the applet"
-msgstr ""
+msgstr "Εκτέλεση αυτής της εντολής όταν ο χρήστης κάνει κλίκ στο εφαρμογίδιο"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when the applet is clicked"
 msgstr ""
+"Αν θα επανακαθοριστεί η κατάσταση αλληλογραφίας όταν πατιέται το εφαρμογίδιο"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
-#, fuzzy
 msgid "You've got mail!"
-msgstr "Έχετε αλληλογραφία."
+msgstr "Έχετε μήνυμα!"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -840,19 +795,19 @@ msgstr "Νέα αλληλογραφία"
 
 #: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 #: applets/gen_util/pager.glade.h:2
-#, fuzzy
 msgid "Rows"
-msgstr "Εξερεύνηση"
+msgstr "Γραμμές"
 
 #: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
-#, fuzzy
 msgid "Columns"
-msgstr "Μετρητής"
+msgstr "Στήλες"
 
 #: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
+"Σφάλμα φόρτωσης τιμής αριθμού γραμμών για το εφαρμογίδιο εναλλαγής χώρων "
+"εργασίας : %s\n"
 
 #: applets/gen_util/pager.c:355
 #, c-format
@@ -860,6 +815,8 @@ msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
 msgstr ""
+"Σφάλμα φόρτωσης τιμής προβολής_όλων_των ονομάτων_χώρων_εργασίας για το "
+"εφαρμογίδιο εναλλαγής χώρων εργασίας : %s\n"
 
 #: applets/gen_util/pager.c:370
 #, c-format
@@ -867,43 +824,44 @@ msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
 "s\n"
 msgstr ""
+"Σφάλμα φόρτωσης τιμής προβολής_όλων_των_χώρων_εργασίας για το εφαρμογίδιο "
+"εναλλαγής χώρων εργασίας : %s\n"
 
 #: applets/gen_util/pager.c:504
-#, fuzzy
 msgid "(c) 2001 Red Hat, Inc."
-msgstr "Πνευματικά δικαιώματα (c) 1998 Red Hat Software, Inc."
+msgstr "(c) 2001 Red Hat, Inc."
 
 #: applets/gen_util/pager.c:505
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
+"Ο Εναλλάκτης Χώρων Εργασίας σας δείχνει μια μικρογραφία των χώρων σας και "
+"σας επιτρέπει να διαχειριστείτε τα παράθυρα σας."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
-msgstr ""
+msgstr "Αριθμός χώρων_εργασίας"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
-msgstr ""
+msgstr "Προβολή_όλων των χώρων εργασίας"
 
 #: applets/gen_util/pager.glade.h:4
 msgid "Show only the _current workspace"
-msgstr ""
+msgstr "Προβολή μόνο_του τρέχοντος χώρου εργασίας"
 
 #: applets/gen_util/pager.glade.h:5
 msgid "Show workspace _names in the switcher"
-msgstr ""
+msgstr "Προβολή ονομάτων_χώρων εργασίας στον εναλλάκτη"
 
 #: applets/gen_util/pager.glade.h:6
-#, fuzzy
 msgid "Workspace Names"
-msgstr "Χώροι εργασίας"
+msgstr "Ονόματα χώρων εργασίας"
 
 #: applets/gen_util/pager.glade.h:8
-#, fuzzy
 msgid "Workspace Switcher Preferences"
-msgstr "Ιδιότητες εκτυπωτή"
+msgstr "Προτιμήσεις αλλαγής χώρων εργασίας"
 
 #: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
@@ -914,16 +872,20 @@ msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
 msgstr ""
+"Αν αυτό είναι true, o pager θα εμφανίζει όλους του χώρους εργασίας, αλλιώς "
+"θα εμφανίζει μόνο τον τρέχοντα χώρο."
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
 msgstr ""
+"Αν αυτό είναι true, οι χώροι εργασίας στον pager θα εμφανίζουν τα όνοματα "
+"τους, αλλιώς θα εμφανίζουν τα περιέχομενα του χώρου."
 
 #: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
-msgstr ""
+msgstr "Αριθμός γραμμών στον pager"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
@@ -931,14 +893,17 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the pager shows the "
 "workspaces in."
 msgstr ""
+"Κατά την προβολή όλων των χώρων εργασίας αυτό καθορίζει σε πόσες γραμμές "
+"(για οριζόντια διάταξη)  ή στήλες (για κάθετη διάταξη) θα εμφανίζει ο pager "
+"τους χώρους."
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
-msgstr ""
+msgstr "Αν θα εμφανίζονται όλοι οι χώροι εργασίας στον pager"
 
 #: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
-msgstr ""
+msgstr "Αν θα εμφανίζονται τα ονόματα των  χώρων εργασίας στον pager."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -953,7 +918,6 @@ msgid "Printer name:"
 msgstr "Όνομα εκτυπωτή:"
 
 #: applets/gen_util/printer.c:319
-#, fuzzy
 msgid "Print command:"
 msgstr "Εντολή εκτύπωσης:"
 
@@ -962,7 +926,6 @@ msgid "Printer"
 msgstr "Εκτυπωτής"
 
 #: applets/gen_util/printer.c:353
-#, fuzzy
 msgid "Printer Applet"
 msgstr "Εφαρμογίδιο Εκτυπωτή"
 
@@ -1002,105 +965,106 @@ msgstr "(c) 2001 Red Hat, Inc"
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
+"Η Λίστα Παραθύρων εμφανίζει μια λίστα από τα ορατά παράθυρα και σας "
+"επιτρέπει να τα ξεφυλλίσετε."
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
-msgstr ""
+msgstr "Ομαδοποίηση παραθύρων όταν_ο χώρος είναι περιορισμένος"
 
 #: applets/gen_util/tasklist.glade.h:2
 msgid "M_inimum size:"
-msgstr ""
+msgstr "Ε_λάχιστο μέγεθος:"
 
 #: applets/gen_util/tasklist.glade.h:3
 msgid "Ma_ximum size:"
-msgstr ""
+msgstr "Μέ_γιστο μέγεθος:"
 
 #: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
-msgstr ""
+msgstr "Επαναφορά στον τρέχοντα_χώρο εργασίας"
 
 #: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
-msgstr ""
+msgstr "Επαναφορά στο αρχι_κό χώρο εργασίας"
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
-msgstr ""
+msgstr "Προβολή παραθύρων από_τον τρέχοντα χώρο εργασίας"
 
 #: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
-msgstr ""
+msgstr "Προβολή παραθύρων από ό_λους τους χώρους εργασίας"
 
 #: applets/gen_util/tasklist.glade.h:8
 msgid "When restoring minimized windows"
-msgstr ""
+msgstr "Κατα την επαναφορά ελαχιστοποιημένων παραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:9
-#, fuzzy
 msgid "Window List Preferences"
-msgstr "_Παράθυρο"
+msgstr "Προτιμήσεις λίστας παραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:10
-#, fuzzy
 msgid "Window List content"
-msgstr "_Παράθυρο"
+msgstr "Περιεχόμενα λίστας οαραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "Window List size"
-msgstr "_Παράθυρο"
+msgstr "Μέγεθος λίστας παραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:12
-#, fuzzy
 msgid "Window grouping"
-msgstr "Διαχειριστής Παραθύρων"
+msgstr "Ομαδοποίηση Παραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:13
-#, fuzzy
 msgid "_Always group windows"
-msgstr "Κάτω από τα άλλα παράθυρα"
+msgstr "_Να γίνεται πάντα ομαδοποίηση παραθύρων"
 
 #: applets/gen_util/tasklist.glade.h:14
-#, fuzzy
 msgid "_Never group windows"
-msgstr "Πάνω από τα άλλα παράθυρα"
+msgstr "_Να μη γίνεται ποτέ ομαδοποίηση παραθύρων"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
 msgstr ""
+"Αποφασίζει αν θα ομαδοποιούνται παράθυρα από την ίδια εφαρμογή. Έγκυρες "
+"τιμές είναι ποτέ, αυτόματη και πάντα."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
+"Αν αυτό true, η λίστα εργασιών θα προβάλλει τα παράθυρα από όλους τους "
+"χώρους εργασίας, αλλιώς θα εμφανίζει μόνο τα παράθυρα του τρέχοντος χώρου "
+"εργασίας."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
+"Αν  true, κατά την επαναφορά παραθύρου, θα το εμφανίζει στον τρέχοντα χώρο "
+"εργασίας. Αλλιώς, αλλαγή στον χώρο εργασίας του παραθύρου."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
-msgstr ""
+msgstr "Μέγιστο μέγεθος που θα απιτεί το εφαρμογίδιο"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size the tasklist applet will request"
-msgstr ""
+msgstr "Ελάχιστο μέγεθος που θα απαιτεί το εφαρμογίδιο λίστας εργασιών"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
-#, fuzzy
 msgid "Move windows to the current workspace when unminimized"
 msgstr ""
-"Μετακίνηση ελαχιστοποιημένων εφαρμογών στην τρέχουσα περιοχή εργασίας κατά "
-"τη επαναφορά τους"
+"Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά τη επαναφορά τους"
 
 #: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
-msgstr ""
+msgstr "Προβάλλει τα παράθυρα από όλους τους χώρους εργασίας"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
@@ -1108,6 +1072,10 @@ msgid ""
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
 msgstr ""
+"Το εφαρμογίδιο της λίστας εργασιών χρειάζεται ένα ελάχιστο πλάτος για να "
+"είναι χρήσιμο. Αυτή η τιμή είναι το ελάχιστο πλάτος που το εφαρμογίδιο "
+"απαιτεί. Αυτο χρησιμεύει για τα συρόμενα και ακραία ταμπλώ που αλλιώς θα "
+"ζητούσαν εξ'ορισμού ενα πολύ μικρό πλάτος."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
@@ -1115,129 +1083,121 @@ msgid ""
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
 msgstr ""
+"Αυτή η τιμή είναι το μέγιστο πλάτος που θα ζητηθεί από το εφαρμογίδιο. Αυτό "
+"χρησιμεύει στον περιορισμό του μεγέθους των μεγάλων ταμπλώ έτσι ώστε να μην "
+"καταλαμβάνουν ολόκληρο το χώρο, όπως στα ακραία ταμπλώ."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
-#, fuzzy
 msgid "When to group windows"
-msgstr "Πάνω από τα άλλα παράθυρα"
+msgstr "Πότε θα ομαδοποιούνται τα παράθυρα"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
 msgid "GNOME Panel Shell"
-msgstr "Κύριος Κόμβος GNOME"
+msgstr "Κέλυφος ταμπλώ GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:517
-#, fuzzy
 msgid "_Move"
-msgstr "Μετακίνηση"
+msgstr "_Μετακίνηση"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
-#, fuzzy
 msgid "_Remove From Panel"
-msgstr "Αφαίρεση από το ταμπλώ"
+msgstr "_Αφαίρεση από το ταμπλώ"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:394
+#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:397
 msgid "???"
 msgstr ";;;"
 
 #: gnome-panel/applet.c:815
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
+msgstr "Δεν ορίσθηκε τύπος_αντικειμένου για το αντικείμενο ταμπλώ με  ID %s\n"
 
 #: gnome-panel/applet.c:837
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
+msgstr "Δεν ορίσθηκε panel_id για το αντικείμενο ταμπλώ με  ID %s\n"
 
-#: gnome-panel/applet.c:1142
+#: gnome-panel/applet.c:1137
 msgid "Can't find an empty spot"
 msgstr "Δεν βρέθηκε ελεύθερη τοποθεσία"
 
 #: gnome-panel/basep-widget.c:160
-#, fuzzy
 msgid "Mode"
-msgstr "Μετακίνηση"
+msgstr "Λειτουργία"
 
 #: gnome-panel/basep-widget.c:161
-#, fuzzy
 msgid "Mode of this panel"
-msgstr "Απόκρυψη παρόντος ταμπλώ"
+msgstr "Λειτουργία του παρόντος ταμπλώ"
 
 #: gnome-panel/basep-widget.c:168
 msgid "State"
 msgstr "Κατάσταση"
 
 #: gnome-panel/basep-widget.c:169
-#, fuzzy
 msgid "Current state of this panel"
-msgstr "Αποθήκευση αρπαγής οθόνης στην _επιφάνεια εργασίας"
+msgstr "Τρέχουσα κατάσταση του παρόντος ταμπλώ"
 
 #: gnome-panel/basep-widget.c:177
-#, fuzzy
 msgid "Hidebuttons enabled"
-msgstr "hidebuttons_enabled"
+msgstr "Ηidebuttons enabled"
 
 #: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr ""
+"Είναι τα κουμπιά απόκρυψης (κουμπιά που κρύβουν ή προβάλλουν το ταμπλώ) "
+"ενεργοποιημένα;"
 
 #: gnome-panel/basep-widget.c:185
-#, fuzzy
 msgid "Hidebutton pixmaps enabled"
-msgstr "hidebutton_pixmaps_enabled"
+msgstr "Hidebutton pixmaps enabled"
 
 #: gnome-panel/basep-widget.c:186
-#, fuzzy
 msgid "Hidebuttons have pixmaps"
-msgstr "hidebutton_pixmaps_enabled"
+msgstr "Hidebuttons have pixmaps"
 
 #: gnome-panel/basep-widget.c:569
 msgid "Hide this panel"
 msgstr "Απόκρυψη παρόντος ταμπλώ"
 
 #: gnome-panel/basep-widget.c:572
-#, fuzzy
 msgid "Show this panel"
-msgstr "Αφαίρεση παρόντος ταμπλώ"
+msgstr "Προβολή του παρόντος ταμπλώ"
 
 #: gnome-panel/button-widget.c:341
-#, fuzzy
 msgid "none"
-msgstr "Κανένα"
+msgstr "κανένα"
 
 #: gnome-panel/button-widget.c:346
 msgid "file not found"
-msgstr ""
+msgstr "το αρχείο δε βρέθηκε"
 
 #: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη εκτέλεση εντολής:\n"
-"%s\n"
-"%s"
+"Αδύνατη η φόρτωση εικόνας%s\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
-msgstr ""
+msgstr "Μέγεθος Expander "
 
 #: gnome-panel/disclosure-widget.c:261
 msgid "Size of the expander arrow"
-msgstr ""
+msgstr "Μέγεθος του βέλους expander"
 
 #: gnome-panel/distribution.c:27
 msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
-#, fuzzy
 msgid "Debian Menu"
 msgstr "Μενού Debian"
 
@@ -1246,7 +1206,6 @@ msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
-#, fuzzy
 msgid "SuSE Menu"
 msgstr "Μενού SuSE"
 
@@ -1255,7 +1214,6 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
 msgstr "Μενού KDE"
 
@@ -1295,82 +1253,75 @@ msgstr "Συρτάρι"
 
 #: gnome-panel/drawer.c:669 gnome-panel/launcher.c:754
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1447 gnome-panel/menu.c:3422
-#, fuzzy
 msgid "_Properties"
-msgstr "Ιδιότητες"
+msgstr "_Ιδιότητες"
 
-#: gnome-panel/foobar-widget.c:169 gnome-panel/menu.c:3602
-#, fuzzy
+#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3602
 msgid "Cannot execute gnome-panel-screenshot"
-msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
+msgstr "Αδύνατη η εκτέλεση του προγράμματος αρπαγής οθόνης"
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3612
-#, fuzzy
+#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3612
 msgid "Cannot execute gnome-search-tool"
-msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
+msgstr "Αδύνατη η εκτέλεση του προγράμματος αναζήτησης"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3731
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3731
 msgid "Run Program..."
 msgstr "Εκτέλεση Προγράμματος..."
 
-#: gnome-panel/foobar-widget.c:194
+#: gnome-panel/foobar-widget.c:197
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Εκτελεί προγράμματα, αν γνωρίζετε το ακριβές όνομα εντολής"
 
-#: gnome-panel/foobar-widget.c:203 gnome-panel/menu.c:3743
+#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3743
 msgid "Search for Files..."
 msgstr "Αναζήτηση Αρχείων..."
 
-#: gnome-panel/foobar-widget.c:208 gnome-panel/menu.c:3746
+#: gnome-panel/foobar-widget.c:211 gnome-panel/menu.c:3746
 msgid "Find files, folders, and documents on your computer"
-msgstr ""
+msgstr "Εύρεση αρχείων, φακέλων και εγγράφων στον υπολογιστή σας"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3756
-#, fuzzy
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3756
 msgid "Screenshot..."
-msgstr "Αρπαγή οθόνης"
+msgstr "Αρπαγή οθόνης..."
 
-#: gnome-panel/foobar-widget.c:222 gnome-panel/menu.c:3759
-#, fuzzy
+#: gnome-panel/foobar-widget.c:225 gnome-panel/menu.c:3759
 msgid "Take a screenshot of your desktop"
-msgstr "Αποθήκευση αρπαγής οθόνης στην _επιφάνεια εργασίας"
+msgstr "Αρπαγή οθόνης της επιφάνειας εργασίας σας"
 
-#: gnome-panel/foobar-widget.c:233 gnome-panel/menu.c:3516
+#: gnome-panel/foobar-widget.c:236 gnome-panel/menu.c:3516
 msgid "Lock Screen"
 msgstr "Κλείδωμα Οθόνης"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:240
 msgid "Protect your computer from unauthorized use"
-msgstr ""
+msgstr "Προστασία του υπολογιστή από μη εξουσιοδοτημένη χρήση"
 
-#: gnome-panel/foobar-widget.c:246 gnome-panel/menu.c:3527
+#: gnome-panel/foobar-widget.c:249 gnome-panel/menu.c:3527
 msgid "Log Out"
-msgstr "Τερματισμός"
+msgstr "Αποσύνδεση Χρήστη"
 
-#: gnome-panel/foobar-widget.c:250
+#: gnome-panel/foobar-widget.c:253
 msgid "Quit from the GNOME desktop"
 msgstr "Έξοδος από το περιβάλλον εργασίας GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:259
+#: gnome-panel/foobar-widget.c:262
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: gnome-panel/foobar-widget.c:476
+#: gnome-panel/foobar-widget.c:479
 msgid "No windows open"
 msgstr "Δεν υπάρχουν ανοιχτά παράθυρα"
 
-#: gnome-panel/foobar-widget.c:714 gnome-panel/menu.c:2744
-#, fuzzy
+#: gnome-panel/foobar-widget.c:717 gnome-panel/menu.c:2744
 msgid "Menu Panel"
-msgstr "Μενού ταμπλώ"
+msgstr "Μενού Ταμπλώ"
 
-#: gnome-panel/foobar-widget.c:714
-#, fuzzy
+#: gnome-panel/foobar-widget.c:717
 msgid "GNOME Menu Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2880
+#: gnome-panel/foobar-widget.c:737 gnome-panel/menu.c:2880
 #: gnome-panel/menu.c:2885 gnome-panel/menu.c:3699
 msgid "Applications"
 msgstr "Εφαρμογές"
@@ -1384,9 +1335,8 @@ msgid "Can't execute the screenshot program"
 msgstr "Αδύνατη η εκτέλεση του προγράμματος αρπαγής οθόνης"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
-#, fuzzy
 msgid "Create new file in the given directory"
-msgstr "Αδύνατη η δημιουργία του καταλόγου μενού χρήστη"
+msgstr "Δημιουργία ενός νέου αρχείο στον καθορισμένο κατάλογο"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
@@ -1418,28 +1368,26 @@ msgstr "Δε βρέθηκε ταμπλώ\n"
 
 #: gnome-panel/gnome-panel-preferences.c:192
 #: gnome-panel/gnome-panel-screenshot.c:841
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
-"Προέκυψε σφάλμα κατά την είσοδο στο σύστημα:\n"
-"\n"
+"Προέκυψε σφάλμα κατά την προβολή βοήθειας: \n"
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
-#, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr ""
-"Ο διαχειριστής συστήματος έχει απαγορέψει την τροποποίηση των ρυθμίσεων "
-"ταμπλώ"
+"Ο διαχειριστής συστήματος έχει απαγορεύσει\n"
+"την τροποποίηση των ρυθμίσεων ταμπλώ"
 
 #: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
 msgid "Error loading glade file %s"
-msgstr ""
+msgstr "Σφάλμα φόρτωσης αρχείου glade %s"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
@@ -1447,43 +1395,36 @@ msgstr "Ταμπλώ"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr ""
+msgstr "Επιλογή προτιμήσεων για όλα τα ταμπλώ"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
-msgstr "Ταχύτητα Κίνησης Ταμπλώ"
+msgstr "Ταχύτητα_κινούμενων εικόνων"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
-#, fuzzy
 msgid "Close _drawer when launcher is clicked"
-msgstr "Κλείσιμο συρταριού όταν πατηθεί εκκινητής μέσα του"
+msgstr "Κλείσιμο_ συρταριού όταν πατηθεί εκκινητής μέσα του"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Fast"
-msgstr "Τελευταίο"
+msgstr "Γρήγορη"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "Medium"
-msgstr "Μενού"
+msgstr "Μέτρια"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
-#, fuzzy
 msgid "Panel Preferences"
-msgstr "Προτιμήσεις Ρολογιού"
+msgstr "Προτιμήσεις Ταμπλώ"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:6
-#, fuzzy
 msgid "Slow"
-msgstr "Κάτω"
+msgstr "Αργή"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
 msgid "_Animation"
-msgstr "Κινούμενα σχέδια"
+msgstr "_Κινούμενα σχέδια"
 
 #: gnome-panel/gnome-panel-screenshot.c:128
 msgid ""
@@ -1578,15 +1519,15 @@ msgstr "Αρπαγή παραθύρου αντί ολόκληρης της οθ�
 #: gnome-panel/gnome-panel-screenshot.c:1079
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
+"Λήψη αρπαγής οθόνης μετά από προκαθορισμένη καθυστέρηση (σε δευτερόλεπτα)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1121
-#, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
 "Λείπει το αρχείο glade για το πρόγραμμα αρπαγής οθόνης.\n"
-"Παρακαλώ ελέγξτε την εγκατάσταση του gnome-core"
+"Παρακαλώ ελέγξτε την εγκατάσταση του gnome-panel"
 
 #: gnome-panel/gnome-panel-screenshot.c:1144
 msgid "Unable to take a screenshot of the current desktop."
@@ -1594,14 +1535,13 @@ msgstr "Αδύνατη η αρπαγή οθόνης της τρέχουσας ε
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
 msgstr "Επιλογές"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "Preview"
 msgstr "Προεπισκόπηση"
 
@@ -1627,88 +1567,87 @@ msgid "_Save screenshot to file:"
 msgstr "_Αποθήκευση αρπαγής οθόνης σε αρχείο:"
 
 #: gnome-panel/gnome-run.c:228 gnome-panel/gnome-run.c:245
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αποτυχία φόρτωσης του προγράμματος!\n"
-"%s"
+"<b>Αποτυχία φόρτωσης του προγράμματος</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
-#: gnome-panel/gnome-run.c:347 gnome-panel/gnome-run.c:421
-#, fuzzy, c-format
+#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:431
+#, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη εκτέλεση εντολής:\n"
-"%s\n"
-"%s"
+"<b>Αδύνατη εκτέλεση εντολής:</b> '%s'\n"
+"\n"
+"Λεπτομέρειες: %s"
 
-#: gnome-panel/gnome-run.c:444
+#: gnome-panel/gnome-run.c:454
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
 "\n"
 "Details: no application available to open file"
 msgstr ""
+"<b>Αποτυχία ανοίγματος αρχείου:</b> '%s'\n"
+"\n"
+"Λεπτομέρειες: δε βρέθηκε διαθέσιμη εφαρμογή για το άνοιγμα του αρχείου"
 
-#: gnome-panel/gnome-run.c:458
-#, fuzzy, c-format
+#: gnome-panel/gnome-run.c:468
+#, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη εκτέλεση εντολής:\n"
-"%s\n"
-"%s"
+"<b>Αδυναμία ανοίγματος αρχείου:</b> '%s'\n"
+"\n"
+"Λεπτομέρειες: %s"
 
-#: gnome-panel/gnome-run.c:536
-#, fuzzy
+#: gnome-panel/gnome-run.c:557
 msgid "Choose a file"
-msgstr "Επιλογή εικονιδίου"
+msgstr "Επιλογή αρχείου"
 
-#: gnome-panel/gnome-run.c:775 gnome-panel/gnome-run.c:776
-#, fuzzy
+#: gnome-panel/gnome-run.c:796 gnome-panel/gnome-run.c:797
 msgid "Known Applications"
-msgstr "Εφαρμο_γές:"
+msgstr "Γνωστές εφαρμογές:"
 
-#: gnome-panel/gnome-run.c:904
-#, fuzzy
+#: gnome-panel/gnome-run.c:927
 msgid "Command to run"
-msgstr "Εντολή (προαιρετική)"
+msgstr "Εντολή προς εκτέλεση"
 
-#: gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:962
 msgid "Run in _terminal"
 msgstr "Εκτέλεση σε τερματι_κό"
 
-#: gnome-panel/gnome-run.c:944
+#: gnome-panel/gnome-run.c:967
 msgid "_Append File..."
-msgstr ""
+msgstr "_Προσθήκη Αρχείου"
 
-#: gnome-panel/gnome-run.c:1327
-#, fuzzy, c-format
+#: gnome-panel/gnome-run.c:1350
+#, c-format
 msgid "Will run command: '%s'"
-msgstr "Θα εκτελεστεί το '%s'"
+msgstr "Θα εκτελεστεί η εντολή:'%s'"
 
-#: gnome-panel/gnome-run.c:1336
-#, fuzzy
+#: gnome-panel/gnome-run.c:1359
 msgid "No application selected"
 msgstr "Δεν επιλέχθηκε πρόγραμμα"
 
-#: gnome-panel/gnome-run.c:1456
-#, fuzzy
+#: gnome-panel/gnome-run.c:1479
 msgid "List of known applications"
-msgstr "Λίστα Εφαρμογών"
+msgstr "Λίστα γνωστών εφαρμογών"
 
-#: gnome-panel/gnome-run.c:1457
+#: gnome-panel/gnome-run.c:1480
 msgid "Choose an application to run from the list"
-msgstr ""
+msgstr "Επιλογή μιας εφαρμογής από τη λίστα για εκτέλεση"
 
-#: gnome-panel/gnome-run.c:1581
+#: gnome-panel/gnome-run.c:1604
 msgid "Run Program"
 msgstr "Εκτέλεση προγράμματος"
 
@@ -1726,14 +1665,15 @@ msgstr ""
 "%s"
 
 #: gnome-panel/launcher.c:110
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη η εκκίνηση του εικονιδίου\n"
-"%s"
+"<b>Αδύνατη η εκκίνηση του εικονιδίου</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/launcher.c:152
 #, c-format
@@ -1747,11 +1687,14 @@ msgstr ""
 #: gnome-panel/launcher.c:349
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
+"Δεν έχει ορισθεί  URI για το αρχείο επιφάνειας εργασίας του εκκινητή ταμπλώ\n"
 
 #: gnome-panel/launcher.c:369
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
+"Αδυναμία ανοίγματος αρχείου επιφάνειας εργασίας %s για τον εκκινητή μενού %s%"
+"s\n"
 
 #: gnome-panel/launcher.c:484
 #, c-format
@@ -1760,19 +1703,17 @@ msgstr "Βοήθεια στην Εφαρμογή %s"
 
 #: gnome-panel/launcher.c:603 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
-#, fuzzy
 msgid "Launcher Properties"
 msgstr "Ιδιότητες εκκινητή"
 
 #: gnome-panel/launcher.c:710
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
+msgstr "Το πλήκτρο  %s δεν έχει ορισθεί, αδυναμία φόρτωσης εκκινητήr\n"
 
 #: gnome-panel/launcher.c:804 gnome-panel/menu-ditem.c:514
-#, fuzzy
 msgid "Create Launcher"
-msgstr "Δημιουργία εφαρμογιδίου εκκινητή"
+msgstr "Δημιουργία εκκινητή"
 
 #. class
 #: gnome-panel/launcher.c:1024
@@ -1782,6 +1723,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Αδυναμία αποθήκευσης εκκινητή στον δίσκο, παρουσιάστηκε το παρακάτω σφάλμα:\n"
+"\n"
+"%s"
 
 #: gnome-panel/launcher.c:1110 gnome-panel/menu.c:1107
 #: gnome-panel/panel-util.c:49
@@ -1791,6 +1735,9 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"<b>Δεν είναι δυνατή η προβολή του αρχείου βοήθειας</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/logout.c:84
 msgid "Log out"
@@ -1816,39 +1763,35 @@ msgstr "Κλείδωμα οθόνης"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-#, fuzzy
 msgid "_Activate Screensaver"
-msgstr "Ενεργοποίηση Προφύλαξης Οθόνης"
+msgstr "_Ενεργοποίηση Προφύλαξης Οθόνης"
 
 #: gnome-panel/logout.c:214
-#, fuzzy
 msgid "_Lock Screen"
-msgstr "Κλείδωμα Οθόνης"
+msgstr "_Κλείδωμα Οθόνης"
 
 #: gnome-panel/logout.c:215
-#, fuzzy
 msgid "_Kill Screensaver Daemon"
-msgstr "Τερματισμός Υπηρεσίας Προφύλαξης Οθόνης"
+msgstr "_Τερματισμός Υπηρεσίας Προφύλαξης Οθόνης"
 
 #: gnome-panel/logout.c:216
-#, fuzzy
 msgid "Restart _Screensaver Daemon"
-msgstr "Επανεκκίνηση Υπηρεσίας Προφύλαξης Οθόνης"
+msgstr "Επανεκκίνηση_ Υπηρεσίας Προφύλαξης Οθόνης"
 
 #: gnome-panel/main.c:149
-#, fuzzy
 msgid "Specify a profile name to load"
-msgstr "Καθορίζει ένα όνομα συνεδρίας προς φόρτωση"
+msgstr "Καθορίστε ένα όνομα συνεδρίας προς φόρτωση"
 
 #: gnome-panel/menu-ditem.c:119
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη η εκκίνηση του εικονιδίου\n"
-"%s"
+"<b>Αδυναμία αποθήκευσης αλλαγών στο εκκινητή</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3799
 #: gnome-panel/menu.c:4027
@@ -1857,28 +1800,31 @@ msgstr "Μενού"
 
 #: gnome-panel/menu-ditem.c:439
 msgid "You have to specify a name for the launcher."
-msgstr ""
+msgstr "Θα πρέπει να καθορίσετε ένα όνομα για τον εκκινητή."
 
 #: gnome-panel/menu-ditem.c:455
 msgid "You have to specify a valid URL or command."
-msgstr ""
+msgstr "Θα πρέπει να καθορίσετε ένα έγκυρο URL ή εντολή"
 
 #. class
 #: gnome-panel/menu-ditem.c:484
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Αδύνατη η εκκίνηση του εικονιδίου\n"
-"%s"
+"<b>Αδυναμία αποθήκευσης αντικείμενου μενού στο δίσκο</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/menu-ditem.c:507
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
+"Δεν μπορείτε να δημιουργήσετε ένα νέο εκκινητή σε αυτή την τοποθεσία επειδή "
+"η τοποθεσία δεν είναι εγγράψιμη."
 
 #: gnome-panel/menu.c:237
 msgid "Many many others ..."
@@ -1898,13 +1844,14 @@ msgstr ""
 "ενσωμάτωση εφαρμογιδίων, την παγκόσμια ειρήνη, και τυχαία κρεμάσματα των X."
 
 #: gnome-panel/menu.c:278
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Running in \"Lockdown\" mode.  This means your system administrator has "
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
+"\n"
+"\n"
 "Εκτέλεση σε κατάσταση \"Κλειδώματος\". Αυτό σημαίνει ότι ο διαχειριστής "
 "συστήματος έχει απαγορέψει της αλλαγές στις ρυθμίσεις του ταμπλώ."
 
@@ -1913,9 +1860,8 @@ msgid "The GNOME Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
 #: gnome-panel/menu.c:285
-#, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 το Free Software Foundation"
+msgstr "(C) 1997-2002 the Free Software Foundation"
 
 #: gnome-panel/menu.c:304
 msgid "End world hunger"
@@ -1928,6 +1874,9 @@ msgid ""
 "\n"
 "Details: %s probably does not exist"
 msgstr ""
+"<b>Αδυναμία εκτέλεσης του 'Περί GNOME'</b>\n"
+"\n"
+"Λεπτομέρειες: %s πιθανόν δεν υπάρχει"
 
 #: gnome-panel/menu.c:341
 #, c-format
@@ -1936,22 +1885,31 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"<b>Αδυναμία εκκίνησης καταχώρησης</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/menu.c:350 gnome-panel/menu.c:1085 gnome-panel/menu.c:1117
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
 "\n"
 "Details: %s"
-msgstr "Αδύνατη η ανάγνωση καταχώρησης"
+msgstr ""
+"<b>Αδύνατη η φόρτωση καταχώρησης</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #: gnome-panel/menu.c:991
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
 "\n"
 "Details: %s\n"
-msgstr "Αδύνατη η αφαίρεση στοιχείου μενού %s: %s\n"
+msgstr ""
+"<b>Αδύνατη η αφαίρεση στοιχείου μενού%s</b>\n"
+"\n"
+"Λεπτομέρειες: %s\n"
 
 #: gnome-panel/menu.c:1001
 #, c-format
@@ -1964,12 +1922,14 @@ msgid "Could not get directory name from path: %s"
 msgstr "Αδύνατη η εύρεση ονόματος καταλόγου από τη διαδρομή: %s"
 
 #: gnome-panel/menu.c:1077
-#, fuzzy
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
 "Details: No 'Exec' or 'URL' field in entry"
-msgstr "Δεν υπάρχει πεδίο 'Exec' ή 'URL' στην εγγραφή"
+msgstr ""
+"<b>Δεν είνια δυνατή η προσθήκη στο κουτί εκτέλεσης</b>\n"
+"\n"
+"Λεπτομέρειες: Δεν υπάρχε πεδίο 'Exec' η 'URL' στην καταχώρηση"
 
 #: gnome-panel/menu.c:1379
 msgid "Add this launcher to panel"
@@ -2018,104 +1978,85 @@ msgid "query returned exception %s\n"
 msgstr "η επερώτηση επέστρεψε την εξαίρεση %s\n"
 
 #: gnome-panel/menu.c:2657 gnome-panel/menu.c:2662
-#, fuzzy
 msgid "Aligned Panel"
 msgstr "Ισοζυγισμένο ταμπλώ"
 
 #: gnome-panel/menu.c:2663
-#, fuzzy
 msgid "GNOME Aligned Panel"
-msgstr "Ισοζυγισμένο ταμπλώ"
+msgstr "Ισοζυγισμένο ταμπλώ GNOME "
 
 #: gnome-panel/menu.c:2679 gnome-panel/menu.c:2683
 #: gnome-panel/panel-config.c:1608
-#, fuzzy
 msgid "Edge Panel"
 msgstr "Ακραίο ταμπλώ"
 
 #: gnome-panel/menu.c:2684
-#, fuzzy
 msgid "GNOME Edge Panel"
-msgstr "Το Ταμπλώ του GNOME"
+msgstr "Ακραίο ταμπλώ GNOME"
 
 #: gnome-panel/menu.c:2704 gnome-panel/menu.c:2708
 #: gnome-panel/panel-config.c:1630
-#, fuzzy
 msgid "Sliding Panel"
 msgstr "Συρρόμενο ταμπλώ"
 
 #: gnome-panel/menu.c:2709
-#, fuzzy
 msgid "GNOME Sliding Panel"
-msgstr "Συρρόμενο ταμπλώ"
+msgstr "Συρόμενο ταμπλώ GNOME "
 
 #: gnome-panel/menu.c:2726 gnome-panel/menu.c:2731
 #: gnome-panel/panel-config.c:1641
-#, fuzzy
 msgid "Floating Panel"
 msgstr "Πλωτό ταμπλώ"
 
 #: gnome-panel/menu.c:2732
-#, fuzzy
 msgid "GNOME Floating Panel"
-msgstr "Πλωτό ταμπλώ"
+msgstr "Πλωτό ταμπλώ GNOME"
 
 #: gnome-panel/menu.c:2751
 msgid "You can only have one menu panel at a time."
 msgstr "Μπορείτε να έχετε μόνο ένα μενού ταμπλώ κάθε φορά."
 
 #: gnome-panel/menu.c:2790
-#, fuzzy
 msgid "C_orner Panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Γω_νιακό ταμπλώ"
 
 #: gnome-panel/menu.c:2792
-#, fuzzy
 msgid "Create corner panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Δημιουργία γωνιακού ταμπλώ"
 
 #: gnome-panel/menu.c:2800
-#, fuzzy
 msgid "_Edge Panel"
-msgstr "Ακραίο ταμπλώ"
+msgstr "_Ακραίο ταμπλώ"
 
 #: gnome-panel/menu.c:2802
-#, fuzzy
 msgid "Create edge panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Δημιουργία ακραίου ταμπλώ"
 
 #: gnome-panel/menu.c:2809
-#, fuzzy
 msgid "_Floating Panel"
-msgstr "Πλωτό ταμπλώ"
+msgstr "_Πλωτό ταμπλώ"
 
 #: gnome-panel/menu.c:2811
-#, fuzzy
 msgid "Create floating panel"
-msgstr "Πλωτό ταμπλώ"
+msgstr "Δημιουργία πλωτού ταμπλώ"
 
 #: gnome-panel/menu.c:2818
-#, fuzzy
 msgid "_Sliding Panel"
-msgstr "Συρρόμενο ταμπλώ"
+msgstr "_Συρόμενο ταμπλώ"
 
 #: gnome-panel/menu.c:2820
-#, fuzzy
 msgid "Create sliding panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Δημιουργία συρόμενου ταμπλώ"
 
 #: gnome-panel/menu.c:2839
-#, fuzzy
 msgid "_Menu Panel"
-msgstr "Μενού ταμπλώ"
+msgstr "_Μενού ταμπλώ"
 
 #: gnome-panel/menu.c:2841
-#, fuzzy
 msgid "Create menu panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Δημιουργία ταμπλώ μενού"
 
 #: gnome-panel/menu.c:2928 gnome-panel/menu.c:2934 gnome-panel/menu.c:3588
-#, fuzzy
 msgid "KDE Menu"
 msgstr "Μενού KDE"
 
@@ -2124,13 +2065,12 @@ msgid "You cannot remove your last panel."
 msgstr "Δεν μπορείτε να αφαιρέσετε το τελευταίο σας ταμπλώ."
 
 #: gnome-panel/menu.c:3046
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
 "Όταν ένα ταμπλώ αφαιρείται, οι ρυθμίσεις του\n"
-"και των εφαμογιδίων του χάνονται. Αφαίρεση του ταμπλώ αυτού;"
+"και το ταμπλώ χάνονται. Αφαίρεση του ταμπλώ αυτού;"
 
 #: gnome-panel/menu.c:3291
 msgid "Launcher..."
@@ -2142,12 +2082,10 @@ msgstr "Εκκινητής από μενού"
 
 #: gnome-panel/menu.c:3306 gnome-panel/menu.c:3851 gnome-panel/menu.c:3879
 #: gnome-panel/menu.c:4072
-#, fuzzy
 msgid "GNOME Menu"
-msgstr "Βοήθεια GNOME"
+msgstr "Μενού GNOME"
 
 #: gnome-panel/menu.c:3322
-#, fuzzy
 msgid "Log Out Button"
 msgstr "Kουμπί τερματισμού"
 
@@ -2156,24 +2094,20 @@ msgid "Lock button"
 msgstr "Κουμπί κλειδώματος"
 
 #: gnome-panel/menu.c:3374
-#, fuzzy
 msgid "_Delete This Panel..."
-msgstr "Αφαίρεση παρόντος ταμπλώ..."
+msgstr "_Αφαίρεση παρόντος ταμπλώ..."
 
 #: gnome-panel/menu.c:3377 gnome-panel/menu.c:3408
-#, fuzzy
 msgid "_Delete This Panel"
-msgstr "Αφαίρεση παρόντος ταμπλώ"
+msgstr "_Αφαίρεση παρόντος ταμπλώ"
 
 #: gnome-panel/menu.c:3395
-#, fuzzy
 msgid "_Add to Panel"
-msgstr "Προσθήκη στο ταμπλώ"
+msgstr "_Προσθήκη στο ταμπλώ"
 
 #: gnome-panel/menu.c:3435
-#, fuzzy
 msgid "_New Panel"
-msgstr "Το Ταμπλώ"
+msgstr "_Νέο Ταμπλώ"
 
 #: gnome-panel/menu.c:3460
 msgid ""
@@ -2181,19 +2115,19 @@ msgid ""
 "\n"
 "Details: xscreensaver-command not found"
 msgstr ""
+"<b>Αδυναμία εκτέλεσης xscreensaver</b>\n"
+"\n"
+"Λεπτομέρειες: η εντολή xscreensaver δε βρέθηκε"
 
 #: gnome-panel/menu.c:3480
-#, fuzzy
 msgid "_About Panels"
-msgstr "Περί ταμπλώ..."
+msgstr "_Περί ταμπλώ..."
 
 #: gnome-panel/menu.c:3493
-#, fuzzy
 msgid "About _GNOME"
-msgstr "Περί GNOME"
+msgstr "Περί_GNOME"
 
 #: gnome-panel/menu.c:3522
-#, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Κλείδωμα της οθόνης ούτως ώστε να μπορέσετε να φύγετε προσωρινά από τον "
@@ -2212,9 +2146,8 @@ msgid "Applets"
 msgstr "Εφαρμογίδια"
 
 #: gnome-panel/menu.c:3737
-#, fuzzy
 msgid "Run a command"
-msgstr "Εντολή εκτύπωσης:"
+msgstr "Εκτέλεση εντολής"
 
 #: gnome-panel/menu.c:3771
 msgid "Desktop"
@@ -2231,19 +2164,19 @@ msgstr "Αδύνατη η δημιουργία μενού, χρήση του κ�
 #: gnome-panel/menu.c:4388
 #, c-format
 msgid "No path set at %s for panel menu object\n"
-msgstr ""
+msgstr "Δεν έχει ορισθεί διαδρομή σε  %s για το αντικείμενο μενού ταμπλώ\n"
 
 #: gnome-panel/panel-applet-frame.c:181
 msgid "Cannot register control widget\n"
-msgstr ""
+msgstr "Αδυναμία καταχώρησης γραφικού συστατικού ελέγχου\n"
 
 #: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr ""
+msgstr "Εξαίρεση από το αναδυόμενο_μενού '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:710
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
@@ -2262,33 +2195,33 @@ msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:805
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr ""
+msgstr "Αδυναμία λήψης γραφικού περιβάλλοντος AppletShell από έλεγχο\n"
 
 #: gnome-panel/panel-applet-frame.c:932
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
 "\n"
 "Details: %s"
-msgstr "Αδύνατη η ανάγνωση καταχώρησης"
+msgstr ""
+"<b>Υπήρξε πρόβλημα κατα τη φόρτωση εφαρμογιδίου '%s'</b>\n"
+"\n"
+"Λεπτομέρειες: %s"
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:532
-#, fuzzy
 msgid "_Autohide"
 msgstr "Αυτόματη απόκρυψη"
 
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:543
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "Εμφάνιση κουμπιών απόκρυψης"
+msgstr "Εμφάνιση κουμπιών_ απόκρυψης"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:555
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "Εμφάνιση βέλων στο κουμπί απόκρυψης"
+msgstr "Εμφάνιση βε_λών στο κουμπί απόκρυψης"
 
 #: gnome-panel/panel-config.c:594
 msgid "Miscellaneous"
@@ -2300,46 +2233,39 @@ msgstr "Τρέχουσα οθόνη:"
 
 #: gnome-panel/panel-config.c:698
 msgid "Indicates the panel position and orientation on screen"
-msgstr ""
+msgstr "Δείχνει τη θέση του ταμπλώ και τον προσανατολισμό του στην οθόνη"
 
 #: gnome-panel/panel-config.c:716
-#, fuzzy
 msgid "_Position:"
-msgstr "Θέση ταμπλώ"
+msgstr "_Θέση:"
 
 #: gnome-panel/panel-config.c:943
-#, fuzzy
 msgid "Orient hori_zontally"
-msgstr "Οριζόντιος προσανατολισμός ταμπλώ"
+msgstr "Οριζό_ντιος προσανατολισμός"
 
 #: gnome-panel/panel-config.c:955
-#, fuzzy
 msgid "Orient _vertically"
-msgstr "Κάθετος προσανατολισμός ταμπλώ"
+msgstr "Κάθετος προσανατολισμός"
 
 #: gnome-panel/panel-config.c:969
-#, fuzzy
 msgid "H_orizontal offset:"
-msgstr "Οριζόντια Διάταξη"
+msgstr "Οριζό_ντια Διάταξη"
 
 #: gnome-panel/panel-config.c:989
-#, fuzzy
 msgid "Ver_tical offset:"
-msgstr "Κάθετη Διάταξη"
+msgstr "Κά_θετη Διάταξη"
 
 #: gnome-panel/panel-config.c:1054
 msgid "Screen edge _offset:"
-msgstr ""
+msgstr "Διάταξη άκρης οθόνης"
 
 #: gnome-panel/panel-config.c:1113
-#, fuzzy
 msgid "_Size:"
-msgstr "Μέγεθος"
+msgstr "_Μέγεθος"
 
 #: gnome-panel/panel-config.c:1121
-#, fuzzy
 msgid "XX Small (12 pixels)"
-msgstr "Χ Μικρό (24 εικονοστοιχεία)"
+msgstr "ΧΧ Μικρό (12 εικονοστοιχεία)"
 
 #: gnome-panel/panel-config.c:1129
 msgid "X Small (24 pixels)"
@@ -2366,9 +2292,8 @@ msgid "XX Large (128 pixels)"
 msgstr "ΧΧ Μεγάλο (128 εικονοστοιχεία)"
 
 #: gnome-panel/panel-config.c:1323
-#, fuzzy
 msgid "Background _type:"
-msgstr "Είδος παρασκηνίου"
+msgstr "Είδος_ παρασκηνίου"
 
 #: gnome-panel/panel-config.c:1332
 msgid "Default"
@@ -2384,36 +2309,32 @@ msgid "Image"
 msgstr "Εικόνα"
 
 #: gnome-panel/panel-config.c:1351
-#, fuzzy
 msgid "Background co_lor:"
-msgstr "Χρώμα παρασκηνίου:"
+msgstr "Χρώμα_παρασκηνίου:"
 
 #: gnome-panel/panel-config.c:1400
-#, fuzzy
 msgid "_Do not scale image to fit"
-msgstr "Όχι κλιμάκωση εικόνας για ταίριασμα"
+msgstr "_Όχι κλιμάκωση εικόνας για ταίριασμα"
 
 #: gnome-panel/panel-config.c:1405
 msgid "Sc_ale image"
-msgstr ""
+msgstr "Κλι_μάκωση εικόνας"
 
 #: gnome-panel/panel-config.c:1409
 msgid "St_retch image"
-msgstr ""
+msgstr "Τέ_ντωμα εικόνας"
 
 #: gnome-panel/panel-config.c:1423
-#, fuzzy
 msgid "Rotate image for _vertical panels"
-msgstr "Περιστροφή εικόνας για κάθετα ταμπλώ"
+msgstr "Περιστροφή εικόνας για_κάθετα ταμπλώ"
 
 #: gnome-panel/panel-config.c:1484
 msgid "Edge panel"
 msgstr "Ακραίο ταμπλώ"
 
 #: gnome-panel/panel-config.c:1491
-#, fuzzy
 msgid "Corner panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Γωνιακό ταμπλώ"
 
 #: gnome-panel/panel-config.c:1497
 msgid "Sliding panel"
@@ -2424,58 +2345,53 @@ msgid "Floating panel"
 msgstr "Πλωτό ταμπλώ"
 
 #: gnome-panel/panel-config.c:1576
-#, fuzzy
 msgid "Panel Properties"
 msgstr "Ιδιότητες ταμπλώ"
 
 #: gnome-panel/panel-config.c:1619
-#, fuzzy
 msgid "Corner Panel"
-msgstr "Δημιουργία ταμπλώ"
+msgstr "Γωνιακό ταμπλώ"
 
 #: gnome-panel/panel-config.c:1660
 msgid "Background"
 msgstr "Παρασκήνιο"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
-#, fuzzy
 msgid "Display \"Run\" dialog"
-msgstr "Εμφάνιση παρόντος την επόμενη φορά"
+msgstr "Εμφάνιση διαλόγου εκτέλεσης"
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr "FIXME -  έχει αυτό επιλυθεί με το νέο μενού?"
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr "FIXME - ανάγκη να καθοριστούν όρια"
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
-#, fuzzy
 msgid "Popup the panel menu"
-msgstr "Στο κυρίως μενού"
+msgstr "Ανάδυση του μενού ταμπλώ"
 
 #: gnome-panel/panel-global-config.schemas.in.h:5
-#, fuzzy
 msgid "Take a screen shot"
-msgstr "Λήψη πλήκτρου αρπαγής οθόνης"
+msgstr "Λήψη  αρπαγής οθόνης"
 
 #: gnome-panel/panel-global-config.schemas.in.h:6
-#, fuzzy
 msgid "Take a screen shot of a window"
-msgstr "Αποθήκευση αρπαγής οθόνης στην _επιφάνεια εργασίας"
+msgstr "Αρπαγής οθόνης του παραθύρου"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
 msgid "Enable the program listing in the run box"
-msgstr ""
+msgstr "Ενεργοποίηση της λίστας προγραμμάτων στο κουτί εκτέλεσης"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
+"Προβολή εξ'ορισμού της λίστας προγραμμάτων όταν ανοίγεται το κουτί εκτέλεσης"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
-msgstr ""
+msgstr "Προβολή της λίστας προγραμμάτων στο κουτί εκτέλεσης"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2487,14 +2403,16 @@ msgstr ""
 "(Το νέο ταμπλώ δε θα επανεκκινηθεί αυτόματα.)"
 
 #: gnome-panel/panel-shell.c:47
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "There was a problem registering the panel with the bonobo-activation "
 "server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"Υπήρξε ένα πρόβλημα στη καταχώρηση του ταμπλώ με τον εξυπηρετητή GOAD.\n"
+"Υπήρξε ένα πρόβλημα στη καταχώρηση του ταμπλώ με τον εξυπηρετητή bonobo-"
+"activation.\n"
+"Ο κωδικός σφάλματος είναι:%d\n"
 "Το ταμπλώ θα τερματιστεί τώρα."
 
 #: gnome-panel/panel-stock-icons.c:130
@@ -2506,11 +2424,11 @@ msgstr "_Εκτέλεση"
 #: gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
 #: gnome-panel/panel-util.c:132
 msgid "Help document not found"
-msgstr ""
+msgstr "Το αρχείο βοήθειας δε βρέθηκε"
 
 #: gnome-panel/panel-util.c:145
 msgid "No document to show"
-msgstr ""
+msgstr "Δεν υπάρχει έγγραφο για προβολή"
 
 #: gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
 msgid "Disabled"
@@ -2526,2969 +2444,113 @@ msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr ""
+"Δεν βρέθηκαν ταμπλώ στη ρύθμιση ασς. Θα δημιουργηθεί ένα ταμπλώ μενού για "
+"εσάς."
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr ""
+msgstr "Ένα απλό εφαρμογίδιο για τη δοκιμή του ταμπλώ του GNOME-2.0"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-#, fuzzy
 msgid "Test Bonobo Applet"
-msgstr "Εφαρμογίδιο"
+msgstr "Δοκιμή εφαρμογιδίου  Bonobo"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
-msgstr ""
+msgstr "Δοκιμή εργοστασίου εφαρμογιδίων Bonobo "
 
 #: libpanel-applet/panel-applet.c:822
 #, c-format
 msgid "Incomplete '%s' background type received"
-msgstr ""
+msgstr "Λήφθηκε ανεπαρκής  '%s' τύπος παρασκηνίου"
 
 #: libpanel-applet/panel-applet.c:836
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
-msgstr ""
+msgstr "Λήφθηκε ανεπαρκής  '%s' τύπος παρασκηνίου: %s"
 
 #: libpanel-applet/panel-applet.c:845
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to get pixmap %s"
-msgstr ""
-"Αποτυχία εκτέλεσης εντολής:\n"
-"%s"
+msgstr "Αποτυχία λήψης pixmap %s"
 
 #: libpanel-applet/panel-applet.c:852
 msgid "Unknown background type received"
-msgstr ""
+msgstr "Λήφθηκε άγνωστος τύπος παρασκηνίου"
 
 #: libpanel-applet/panel-applet.c:1029
 msgid "The Applet's containing Panel's orientation"
-msgstr ""
+msgstr "Του εφαρμογιδίου που περιέχει τον προσανατολισμό του Ταμπλώ"
 
 #: libpanel-applet/panel-applet.c:1037
 msgid "The Applet's containing Panel's size in pixels"
-msgstr ""
+msgstr "Του εφαρμογιδίου που περιέχει το μέγεθος του Ταμπλώ  σε εικονοστοιχεία"
 
 #: libpanel-applet/panel-applet.c:1045
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
+"Του εφαρμογιδίου που περιέχει το χρώμα παρασκηνίου του Ταμπλώ ή το pixmap"
 
 #: libpanel-applet/panel-applet.c:1053
 msgid "The Applet's flags"
-msgstr ""
+msgstr "Οι σημαίες του εφαρμογιδίου"
 
 #: libpanel-applet/panel-applet.c:1061
 msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr ""
+msgstr "Καθορίζει τα μεγέθη που είναι αποδεκτά από το εφαρμογίδιο"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
-#, fuzzy
 msgid "Applet:"
-msgstr "Εφαρμογίδιο"
+msgstr "Εφαρμογίδιο:"
 
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Bottom"
-msgstr "Kουμπιά"
+msgstr "Κάτω"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
 msgid "Large"
-msgstr "Εικόνα"
+msgstr "Μεγάλη"
 
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Αριστερά"
 
 #: libpanel-applet/panel-test-applets.glade.h:6
-#, fuzzy
 msgid "Orientation:"
-msgstr "Προσανατολισμός"
+msgstr "Προσανατολισμός:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
-msgstr ""
+msgstr "Κατάλογος προτιμήσεων:"
 
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Δεξιά"
 
 #: libpanel-applet/panel-test-applets.glade.h:9
-#, fuzzy
 msgid "Size:"
-msgstr "Μέγεθος"
+msgstr "Μέγεθος:"
 
 #: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
-msgstr ""
+msgstr "Μικρό"
 
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
-msgstr ""
+msgstr "Πάνω"
 
 #: libpanel-applet/panel-test-applets.glade.h:12
 msgid "X Large"
-msgstr ""
+msgstr "Μεγάλο"
 
 #: libpanel-applet/panel-test-applets.glade.h:13
 msgid "X Small"
-msgstr ""
+msgstr "Μικρό"
 
 #: libpanel-applet/panel-test-applets.glade.h:14
 msgid "XX Large"
-msgstr ""
+msgstr "Πολύ μεγάλο"
 
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Wanda"
-#~ msgstr "Κανονικό"
-
-#, fuzzy
-#~ msgid "fortune"
-#~ msgstr "Τύχη"
-
-#, fuzzy
-#~ msgid "Display seconds in time"
-#~ msgstr "Εμφάνιση παρόντος την επόμενη φορά"
-
-#, fuzzy
-#~ msgid "Show time with seconds"
-#~ msgstr "δευτερόλεπτα"
-
-#, fuzzy
-#~ msgid "false"
-#~ msgstr "Κλείσιμο"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Δεν υπάρχει αλληλογραφία."
-
-#, fuzzy
-#~ msgid "auto"
-#~ msgstr "Διάταξη"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Εκτυπωτής"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "Εφαρμογίδιο Ρολογιού"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "Εφαρμογίδιο Εκτυπωτή"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_TasklistApplet"
-#~ msgstr "Εφαρμογίδιο"
-
-#, fuzzy
-#~ msgid "applications:///nautilus.desktop"
-#~ msgstr "Εμφάνιση κανονικών εφαρμογών σε όλες τις επιφάνειες εργασίας"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Εφαρμογίδιο"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Ακραίο ταμπλώ"
-
-#, fuzzy
-#~ msgid "launcher-object"
-#~ msgstr "Εκκινητής"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Μενού ταμπλώ"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Παρασκήνιο"
-
-#, fuzzy
-#~ msgid "Use GMT"
-#~ msgstr "Χρήση GMT"
-
-#, fuzzy
-#~ msgid "Command to execute"
-#~ msgstr "Εντολή (προαιρετική)"
-
-#, fuzzy
-#~ msgid "Tasklist size"
-#~ msgstr "Λίστα Διεργασιών"
-
-#, fuzzy
-#~ msgid "Take a Screen Shot..."
-#~ msgstr "Λήψη πλήκτρου αρπαγής οθόνης"
-
-#~ msgid "Lock Display"
-#~ msgstr "Κλείδωμα Οθόνης"
-
-#, fuzzy
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Καθολικές ρυθμίσεις ταμπλώ"
-
-#~ msgid "General"
-#~ msgstr "Γενικά"
-
-#, fuzzy
-#~ msgid "_Enable panel animation"
-#~ msgstr "Ενεργοποίηση κινούμενων σχεδίων"
-
-#, fuzzy
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Αδύνατη η εκτέλεση καθολικών ιδιοτήτων ταμπλώ"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Καθολικές Προτιμήσεις..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Εγχειρίδιο Ταμπλώ..."
-
-#~ msgid "About GNOME..."
-#~ msgstr "Περί GNOME..."
-
-#~ msgid "Main Menu"
-#~ msgstr "Κυρίως Mενού"
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "Αδύνατο το άνοιγμα καταλόγου, χρήση του κυρίως μενού!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Επεξεργασία μενού..."
-
-#~ msgid "Off"
-#~ msgstr "Ανενεργό"
-
-#~ msgid "In a submenu"
-#~ msgstr "Σε ένα υπομενού"
-
-#~ msgid "On the main menu"
-#~ msgstr "Στο κυρίως μενού"
-
-#~ msgid "Menu properties"
-#~ msgstr "Ιδιότητες μενού"
-
-#~ msgid "Menu type"
-#~ msgstr "Είδος μενού"
-
-#~ msgid "Global main menu"
-#~ msgstr "Καθολικό κύριο μενού"
-
-#~ msgid "Main menu"
-#~ msgstr "Κυρίως μενού"
-
-#~ msgid "Normal menu"
-#~ msgstr "Κανονικό μενού"
-
-#~ msgid "Programs: "
-#~ msgstr "Προγράμματα:"
-
-#~ msgid "Applets: "
-#~ msgstr "Εφαρμογίδια: "
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Μενού Διανομής (εάν βρεθούν): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "Μενού KDE (εάν βρεθούν): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Μενού ταμπλώ"
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Μενού επιφάνειας εργασίας:"
-
-#~ msgid "Menu path"
-#~ msgstr "Διαδρομή μενού"
-
-#~ msgid "Use custom icon for panel button"
-#~ msgstr "Χρήση παραμετροποιημένου εικονιδίου για το κουμπί του ταμπλώ"
-
-#~ msgid "Hiding"
-#~ msgstr "Απόκρυψη"
-
-#~ msgid "Enable Auto-hide"
-#~ msgstr "Ενεργοποίηση Αυτόματης-απόκρυψης"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Θέση πάνω αριστερά γωνίας: Χ"
-
-#~ msgid "Y"
-#~ msgstr "Ψ"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Σχετική θέση από την άκρη της οθόνης:"
-
-#~ msgid "Panel size:"
-#~ msgstr "Μέγεθος ταμπλώ:"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Σημ: Το ταμπλώ θα προσαρμόσει το μέγεθος του\n"
-#~ "στο μεγαλύτερο εφαρμογιδίο του ταμπλώ. Ωστόσο,\n"
-#~ "δεν υπακούν όλα τα εφαρμογίδια σε αυτά τα μεγέθη."
-
-#~ msgid "Background Type: "
-#~ msgstr "Είδος Παρασκηνίου:"
-
-#~ msgid "Standard"
-#~ msgstr "Κανονικό"
-
-#~ msgid "Pixmap"
-#~ msgstr "Εικόνα"
-
-#~ msgid "Color to use:"
-#~ msgstr "Χρώμα προς χρήση:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Κλιμάκωση εικόνας (τήρηση αναλογιών)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Τέντωμα εικόνας (αλλαγή αναλογιών)"
-
-#~ msgid "mode"
-#~ msgstr "κατάσταση"
-
-#~ msgid "state"
-#~ msgstr "στάδιο"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr ""
-#~ "Έχετε ήδη μια προσκόλληση κατάστασης στο ταμπλώ. Μπορείτε να έχετε μόνο "
-#~ "μια"
-
-#~ msgid "Status dock"
-#~ msgstr "Προσκόλληση κατάστασης"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "Το Ψάρι του GNOME"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Εφαρμογίδιο ελέγχου αλληλογραφίας"
-
-#, fuzzy
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr ""
-#~ "Αποτυχία εκτέλεσης εντολής:\n"
-#~ "%s"
-
-#~ msgid "_Browse..."
-#~ msgstr "Εξε_ρεύνηση..."
-
-#, fuzzy
-#~ msgid "_Known Applications <<"
-#~ msgstr "Εφαρμογές"
-
-#, fuzzy
-#~ msgid "Hide the list of known applications"
-#~ msgstr "Λίστα Εφαρμογών"
-
-#, fuzzy
-#~ msgid "_Known Applications >>"
-#~ msgstr "Εφαρμογές"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Αδύνατη η εκτέλεση του 'Περί GNOME'"
-
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
-
-#~ msgid "Password:"
-#~ msgstr "Κωδικός:"
-
-#~ msgid "CDE Applications"
-#~ msgstr "Εφαρμογές CDE"
-
-#, fuzzy
-#~ msgid "Screenshot Capture"
-#~ msgstr "Αρπαγή οθόνης"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "Για προχωρη_μένους <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Απόκρυψη προχωρημένων ρυθμίσεων κάτω από αυτό το κουμπί."
-
-#~ msgid "_Advanced >>"
-#~ msgstr "Για προχωρη_μένους >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr ""
-#~ "Δυνατότητα πληκτρολόγησης σε γραμμή εντολών αντί της επιλογής εφαρμογής "
-#~ "από τη λίστα"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Ιδιότητες καταχώρησης επιφάνειας εργασίας"
-
-#~ msgid "Create menu item"
-#~ msgstr "Δημιουργία νέου στοιχείου μενού"
-
-#, fuzzy
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "Ισοζυγισμένο ταμπλώ"
-
-#, fuzzy
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "Ακραίο ταμπλώ"
-
-#, fuzzy
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Συρρόμενο ταμπλώ"
-
-#, fuzzy
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Πλωτό ταμπλώ"
-
-#, fuzzy
-#~ msgid "Global Panel Properties"
-#~ msgstr "Καθολικές ρυθμίσεις ταμπλώ"
-
-#, fuzzy
-#~ msgid "Panel Settings"
-#~ msgstr "Ρυθμίσεις Κίνησης Ταμπλώ"
-
-#, fuzzy
-#~ msgid "_Raise panels when the mouse moves over them"
-#~ msgstr "Ανασήκωση ταμπλώ όταν ο δείκτης βρίσκεται από επάνω"
-
-#, fuzzy
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Αδύνατη η εκκίνηση του gmenu!"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Επανάγνωση όλων των μενού"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Το όνομα του GNOME ψαριού σας:"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
-
-#~ msgid "Time Format"
-#~ msgstr "Μορφή ώρας"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Αφαίρεση από το ταμπλώ"
-
-#, fuzzy
-#~ msgid "Automatically re-check menus for newly installed software"
-#~ msgstr ""
-#~ "Αυτόματος επανέλεγχος των μενού\n"
-#~ "για φρεσκοεγκατεστημένο λογισμικό"
-
-#, fuzzy
-#~ msgid "GNOME Menu:"
-#~ msgstr "Βοήθεια GNOME"
-
-#~ msgid "Grab key..."
-#~ msgstr "Άδραγμα πλήκτρου..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Διατήρηση των ταμπλώ πάνω από τα άλλα παράθυρα"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Διατήρηση των ταμπλώ κάτω από τα άλλα παράθυρα"
-
-#, fuzzy
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Διατήρηση των ταμπλώ στο ίδιο επίπεδο με τα άλλα παράθυρα"
-
-#, fuzzy
-#~ msgid "Run Program dialog:"
-#~ msgstr "Εκτέλεση προγράμματος"
-
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "ΧΧ Μικροσκοπικό (12 εικονοστοιχεία)"
-
-#, fuzzy
-#~ msgid "Clock Properties"
-#~ msgstr "Ιδιότητες ρολογιού"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Αδύνατη η εκτέλεση του ημερολογίου του gnome,\n"
-#~ "ενδέχεται να μην είναι εγκατεστημένο.\n"
-#~ "Βρίσκεται στο πακέτο gnome-pim."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "δεν δημιουργήθηκε μενού"
-
-#~ msgid "Today"
-#~ msgstr "Σήμερα"
-
-#~ msgid "This Week"
-#~ msgstr "Αυτή την Εβδομάδα"
-
-#~ msgid "This Month"
-#~ msgstr "Αυτό το Μήνα"
-
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Αδύνατη η κλήση του time-admin\n"
-#~ "Ίσως να μην έχει εγκατασταθεί"
-
-#, fuzzy
-#~ msgid "Add Appointment..."
-#~ msgstr "Προσθήκη ραντεβού..."
-
-#, fuzzy
-#~ msgid "Set Time..."
-#~ msgstr "Καθορισμός Ώρας"
-
-#~ msgid "Format"
-#~ msgstr "Μορφή"
-
-#~ msgid "Press a key..."
-#~ msgstr "Πατήστε ένα κουμπί..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "Σβήσιμο Οθόνης Τώρα"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "Κλείδωμα Οθόνης Τώρα"
-
-#, fuzzy
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I:%M:%S %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Ενσωματωμένη εφαρμογή..."
-
-#~ msgid ""
-#~ "A swallowed application appears to have died unexpectedly.\n"
-#~ "Attempt to reload it?"
-#~ msgstr ""
-#~ "Μια βυθισμένη εφαρμογή φαίνεται να έχει πεθάνει ξαφνικά.\n"
-#~ "Θέλετε να γίνει προσπάθεια επαναφόρτωσής της;"
-
-#~ msgid "Reload"
-#~ msgstr "Επαναφόρτωση"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Δημιουργία ενσωματωμένου εφαρμογιδίου"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "Τίτλος εφαρμογής προς ενσωμάτωση"
-
-#~ msgid "Width"
-#~ msgstr "Πλάτος"
-
-#~ msgid "Height"
-#~ msgstr "Ύψος"
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%A, %B %d"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 το Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "Το εφαρμογίδιο ρολογιού παρέχει στο ταμπλό έναν απλό τρόπο απεικόνισης "
-#~ "της ημ/νίας και ώρας"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "Δεν βρέθηκε το αρχείο εικόνας %s"
-
-#~ msgid "Run..."
-#~ msgstr "Εκτέλεση..."
-
-#~ msgid "Programs"
-#~ msgstr "Προγράμματα"
-
-#, fuzzy
-#~ msgid "Panel Global Properties"
-#~ msgstr "Ιδιότητες ταμπλώ"
-
-#, fuzzy
-#~ msgid "Key bindings"
-#~ msgstr "Ζεύξεις Πλήκτρων"
-
-#, fuzzy
-#~ msgid "Popup menu key:"
-#~ msgstr "Πλήκτρο αναπήδησης μενού"
-
-#, fuzzy
-#~ msgid "Run dialog key:"
-#~ msgstr "Εκτέλεση διαλόγου πλήκτρων"
-
-#, fuzzy
-#~ msgid "_Enable key bindings"
-#~ msgstr "Ενεργοποίηση ζεύξεων πλήκτρων ταμπλώ"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "Προσθήκη του εφαρμογιδίου ως εκκινητή στο ταμπλώ"
-
-#~ msgid "Programs menu"
-#~ msgstr "Μενού προγραμμάτων"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "Ιδιότητες ελέγχου αλληλογραφίας"
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "Εφαρμογίδιο ελέγχου αλληλογραφίας"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "Απόκρυψη προχωρημένων επιλογών"
-
-#~ msgid "Advanced..."
-#~ msgstr "Για προχωρημένους..."
-
-#, fuzzy
-#~ msgid "_Run ..."
-#~ msgstr "Εκτέλεση..."
-
-#, fuzzy
-#~ msgid "No name"
-#~ msgstr "Κανένα"
-
-#, fuzzy
-#~ msgid "URL:"
-#~ msgstr "URL"
-
-#, fuzzy
-#~ msgid "Command:"
-#~ msgstr "Εντολή"
-
-#, fuzzy
-#~ msgid "Name:"
-#~ msgstr "Βάση Ονόματος"
-
-#, fuzzy
-#~ msgid "Comment:"
-#~ msgstr "Εντολή"
-
-#, fuzzy
-#~ msgid "Type:"
-#~ msgstr "Είδος"
-
-#, fuzzy
-#~ msgid "Icon:"
-#~ msgstr "Εικονίδιο"
-
-#, fuzzy
-#~ msgid "Browse icons"
-#~ msgstr "Εικονίδιο συρταριών"
-
-#, fuzzy
-#~ msgid "Run in Terminal"
-#~ msgstr "Εκτέλεση σε τερματικό"
-
-#, fuzzy
-#~ msgid "Documentation:"
-#~ msgstr "Εμφάνιση Ευρετηρίου Τεκμηρίωσης"
-
-#, fuzzy
-#~ msgid "Name"
-#~ msgstr "Βάση Ονόματος"
-
-#, fuzzy
-#~ msgid "Comment"
-#~ msgstr "Εντολή"
-
-#~ msgid "Remove"
-#~ msgstr "Αφαίρεση"
-
-#, fuzzy
-#~ msgid "Basic"
-#~ msgstr "Πίσω"
-
-#~ msgid "GNOME Terminal"
-#~ msgstr "Τερματικό GNOME"
-
-#~ msgid "The GNOME terminal emulation program."
-#~ msgstr "Το πρόγραμμα προσομοίωσης τερματικού του GNOME"
-
-#~ msgid ""
-#~ "You have switched the class of this window. Do you\n"
-#~ " want to reconfigure this window to match the default\n"
-#~ "configuration of the new class?"
-#~ msgstr ""
-#~ "Αλλάξατε την τάξη του παρόντος παραθύρου. Θέλετε οι\n"
-#~ "επαναδιαμορφώσετε το παράθυρο ώστε\n"
-#~ "να συμφωνούν με τη διαμόρφωση της νέας τάξης;"
-
-#~ msgid "Linux console"
-#~ msgstr "Κονσόλα Linux"
-
-#~ msgid "Color Xterm"
-#~ msgstr "Έγχρωμο Xterm"
-
-#~ msgid "rxvt"
-#~ msgstr "rxvt"
-
-#~ msgid "Custom"
-#~ msgstr "Παραμετροποιημένο"
-
-#~ msgid "White on black"
-#~ msgstr "Άσπρο σε μάυρο"
-
-#~ msgid "Black on white"
-#~ msgstr "Μαύρο σε άσπρο"
-
-#~ msgid "Green on black"
-#~ msgstr "Πράσινο σε μάυρο"
-
-#~ msgid "Black on light yellow"
-#~ msgstr "Μαύρο σε ανοιχτό κίτρινο"
-
-#~ msgid "Custom colors"
-#~ msgstr "Παραμετροποιημένα χρώματα"
-
-#~ msgid "Hidden"
-#~ msgstr "Κρυμμένο"
-
-#~ msgid "Color selector"
-#~ msgstr "Επιλογέας χρώματος"
-
-#~ msgid "Terminal"
-#~ msgstr "Τερματικό"
-
-#~ msgid "Terminal class name"
-#~ msgstr "Όνομα τάξης τερματικού"
-
-#~ msgid "TCLASS"
-#~ msgstr "TCLASS"
-
-#~ msgid "Specifies font name"
-#~ msgstr "Καθορίζει όνομα γραμματοσειράς"
-
-#~ msgid "FONT"
-#~ msgstr "FONT"
-
-#~ msgid "Do not start up shells as login shells"
-#~ msgstr "Εκκίνηση κελύφων όχι ως αρχικών (login)"
-
-#~ msgid "Start up shells as login shells"
-#~ msgstr "Εκκίνηση κελύφων ως αρχικών (login)"
-
-#~ msgid "Specifies the geometry for the main window"
-#~ msgstr "Καθορίζει τη γεωμετρία του κυρίως παραθύρου"
-
-#~ msgid "GEOMETRY"
-#~ msgstr "GEOMETRY"
-
-#~ msgid "Execute this program instead of a shell"
-#~ msgstr "Εκτέλεση αυτού του προγράμματος αντί κελύφους"
-
-#~ msgid "COMMAND"
-#~ msgstr "COMMAND"
-
-#~ msgid "Execute this program the same way as xterm does"
-#~ msgstr "Εκτέλεση του προγράμματος με τον ίδιο τρόπο όπως το xterm"
-
-#~ msgid "Foreground color"
-#~ msgstr "Χρώμα προσκηνίου"
-
-#~ msgid "COLOR"
-#~ msgstr "COLOR"
-
-#~ msgid "Background color"
-#~ msgstr "Χρώμα παρασκηνίου"
-
-#~ msgid "Solid background"
-#~ msgstr "Συμπαγές παρασκήνιο"
-
-#~ msgid "SOLID"
-#~ msgstr "ΣΥΜΠΑΓΈΣ"
-
-#~ msgid "Background pixmap"
-#~ msgstr "Εικόνα παρασκηνίου"
-
-#~ msgid "PIXMAP"
-#~ msgstr "ΕΙΚΌΝΑPIXMAP"
-
-#~ msgid "Background pixmap scrolls"
-#~ msgstr "Κύλιση εικόνας παρασκηνίου"
-
-#~ msgid "BGSCROLL"
-#~ msgstr "ΚΎΛΙΣΗΠΑΡΑΣΚ"
-
-#~ msgid "Background pixmap does not scroll"
-#~ msgstr "Η εικόνα παρασκηνίου δεν ανακυλάει"
-
-#~ msgid "BGNOSCROLL"
-#~ msgstr "ΠΑΡΑΣΚΔΕΝΚΥΛΑΕΙ"
-
-#~ msgid "Shade background"
-#~ msgstr "Σκίαση παρασκηνίου"
-
-#~ msgid "SHADED"
-#~ msgstr "ΣΚΙΑΣΜΈΝΟ"
-
-#~ msgid "Do not shade background"
-#~ msgstr "Χωρίς κύλιση παρασκηνίου"
-
-#~ msgid "NOSHADED"
-#~ msgstr "ΧΩΡΊΣΣΚΊΑΣΗ"
-
-#~ msgid "Transparent background"
-#~ msgstr "Διαφανές παρασκήνιο"
-
-#~ msgid "TRANSPARENT"
-#~ msgstr "ΔΙΑΦΑΝΈΣ"
-
-#~ msgid "Update utmp entry"
-#~ msgstr "Ενημέρωση της καταχώρησης utmp"
-
-#~ msgid "UTMP"
-#~ msgstr "UTMP"
-
-#~ msgid "Do not update utmp entry"
-#~ msgstr "Μη ενημέρωση της καταχώρησης του utmp"
-
-#~ msgid "NOUTMP"
-#~ msgstr "NOUTMP"
-
-#~ msgid "Update wtmp entry"
-#~ msgstr "Ενημέρωση της καταχώρησης του wtmp"
-
-#~ msgid "WTMP"
-#~ msgstr "WTMP"
-
-#~ msgid "Do not update wtmp entry"
-#~ msgstr "Μη ενημέρωση της καταχώρησης του utmp"
-
-#~ msgid "NOWTMP"
-#~ msgstr "NOWTMP"
-
-#~ msgid "Update lastlog entry"
-#~ msgstr "Ενημέρωση της καταχώρησης lastlog"
-
-#~ msgid "LASTLOG"
-#~ msgstr "LASTLOG"
-
-#~ msgid "Do not update lastlog entry"
-#~ msgstr "Να μη γίνει ενημέρωση της καταχώρησης lastlog"
-
-#~ msgid "NOLASTLOG"
-#~ msgstr "NOLASTLOG"
-
-#~ msgid "Set the window title"
-#~ msgstr "Καθορισμός τίτλου παραθύρου"
-
-#~ msgid "TITLE"
-#~ msgstr "ΤΊΤΛΟΣ"
-
-#~ msgid "Set the window icon"
-#~ msgstr "Καθορισμός του εικονιδίου του παραθύρου"
-
-#~ msgid "ICON"
-#~ msgstr "ΕΙΚΟΝΊΔΙΟ"
-
-#~ msgid "Set the TERM variable"
-#~ msgstr "Ορισμός μεταβλητής TERM"
-
-#~ msgid "TERMNAME"
-#~ msgstr "ΌΝΟΜΑΤΕΡΜΑΤΙΚΟΎ"
-
-#~ msgid "Try to start a TerminalFactory"
-#~ msgstr "Προσπάθεια έναρξης ενός ΕργοστασίουΤερματικών"
-
-#~ msgid "Try to create the terminal with the TerminalFactory"
-#~ msgstr "Προσπάθεια δημιουργίας τερματικού με ΕργοστάσιοΤερματικών"
-
-#~ msgid "Cannot gnome_program_init ()"
-#~ msgstr "Σφάλμα στην gnome_program_init ()"
-
-#~ msgid "Enter UNIX commands"
-#~ msgstr "Προσομοίωση τερματικού GNOME"
-
-#~ msgid "Background should be shaded"
-#~ msgstr "Το παρασκήνιο θα έπρεπε να σκιάζεται"
-
-#~ msgid "Blinking cursor"
-#~ msgstr "Αναβοσβήνων δρομέας"
-
-#~ msgid "Color palette:"
-#~ msgstr "Παλέττα χρωμάτων:"
-
-#~ msgid "Color scheme:"
-#~ msgstr "Συνδυασμός χρωμάτων:"
-
-#~ msgid "Colors"
-#~ msgstr "Χρώματα"
-
-#~ msgid "Delete generates DEL/^H"
-#~ msgstr "Το Delete παράγει DEL/^H"
-
-#~ msgid "Enable bold text"
-#~ msgstr "Ενεργοποίηση σκιασμένου κειμένου"
-
-#~ msgid "Font:"
-#~ msgstr "Γραμματοσειρά:"
-
-#~ msgid "Fore/Background Color:"
-#~ msgstr "Χρώμα Προσκηνίου/Παρασκηνίου:"
-
-#~ msgid "Foreground color:"
-#~ msgstr "Χρώμα προσκηνίου:"
-
-#~ msgid "Hide menu bar"
-#~ msgstr "Απόκρυψη γραμμής μενού"
-
-#~ msgid "Pick a color"
-#~ msgstr "Επιλέξτε χρώμα"
-
-#~ msgid "Pixmap file:"
-#~ msgstr "Αρχείο εικόνας:"
-
-#~ msgid "Scroll on keystroke"
-#~ msgstr "Κύλιση όταν πατηθεί πλήκτρο"
-
-#~ msgid "Scroll on output"
-#~ msgstr "Κύλιση όταν υπάρχει νέα έξοδος"
-
-#~ msgid "Scrollback lines:"
-#~ msgstr "Αριθμός γραμμών κύλισης ιστορικού:"
-
-#~ msgid "Scrollbar position:"
-#~ msgstr "Θέση μπάρας κύλισης:"
-
-#~ msgid "Scrolling"
-#~ msgstr "Κύλιση"
-
-#~ msgid "Select-by-word characters:"
-#~ msgstr "Χαρακτήρες επιλογής ανά λέξη:"
-
-#~ msgid "Silence terminal bell"
-#~ msgstr "Αποσιώπηση κουδουνιού τερματικού"
-
-#~ msgid "Swap Delete/Backspace"
-#~ msgstr "Εναλλαγή Delete/Backspace"
-
-#~ msgid "Terminal Class:"
-#~ msgstr "Τάξη Τερματικού:"
-
-#~ msgid "Transparent"
-#~ msgstr "Διαφανές"
-
-#~ msgid "Use --login by default"
-#~ msgstr "Χρήση --login εξ ορισμού"
-
-#, fuzzy
-#~ msgid "C_olor selector"
-#~ msgstr "Επιλογέας χρώματος"
-
-#, fuzzy
-#~ msgid "Copy _link location"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "Edit"
-#~ msgstr "Επεξεργασία"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Αρχείο"
-
-#, fuzzy
-#~ msgid "GNOME terminal users guide"
-#~ msgstr "Τερματικό GNOME"
-
-#, fuzzy
-#~ msgid "Reset and _clear"
-#~ msgstr "Επαναρχικοποίηση και _Καθαρισμός"
-
-#~ msgid "Settings"
-#~ msgstr "Ρυθμίσεις"
-
-#~ msgid "_Close terminal"
-#~ msgstr "_Κλείσιμο τερματικού"
-
-#~ msgid "_Hide menubar"
-#~ msgstr "_Απόκρυψη γραμμής μενού"
-
-#~ msgid "_New terminal"
-#~ msgstr "_Νέο τερματικό"
-
-#~ msgid "_Open in browser"
-#~ msgstr "_Aνοιγμα στον εξερευνητή"
-
-#, fuzzy
-#~ msgid "_Paste"
-#~ msgstr "Τελευταίο"
-
-#, fuzzy
-#~ msgid "_Preferences"
-#~ msgstr "Προτιμήσεις"
-
-#, fuzzy
-#~ msgid "_Reset terminal"
-#~ msgstr "_Επαναρχικοποίηση τερματικού"
-
-#~ msgid "_Secure keyboard"
-#~ msgstr "_Ασφαλές πληκτρολόγιο"
-
-#, fuzzy
-#~ msgid "Foundry:"
-#~ msgstr "Φάκελος:"
-
-#, fuzzy
-#~ msgid "Weight:"
-#~ msgstr "Ύψος"
-
-#, fuzzy
-#~ msgid "Set Width:"
-#~ msgstr "Πλάτος"
-
-#, fuzzy
-#~ msgid "Add Style:"
-#~ msgstr "Στυλ: "
-
-#, fuzzy
-#~ msgid "Pixel Size:"
-#~ msgstr "Μέγεθος ταμπλώ:"
-
-#, fuzzy
-#~ msgid "Point Size:"
-#~ msgstr "Μέγεθος ταμπλώ:"
-
-#, fuzzy
-#~ msgid "Spacing:"
-#~ msgstr "Αποθηκεύεται"
-
-#, fuzzy
-#~ msgid "Font Property"
-#~ msgstr "Ιδιότητες Συνεδρίας"
-
-#, fuzzy
-#~ msgid "Font"
-#~ msgstr "Γραμματοσειρά:"
-
-#, fuzzy
-#~ msgid "Font Style:"
-#~ msgstr "Στυλ: "
-
-#, fuzzy
-#~ msgid "Reset Filter"
-#~ msgstr "Επαναρχικοποίηση και _Καθαρισμός"
-
-#, fuzzy
-#~ msgid "Points"
-#~ msgstr "λεπτά"
-
-#, fuzzy
-#~ msgid "Preview:"
-#~ msgstr "Προεπισκόπηση"
-
-#, fuzzy
-#~ msgid "Filter"
-#~ msgstr "Αρχείο"
-
-#, fuzzy
-#~ msgid "Font Types:"
-#~ msgstr "Γραμματοσειρά:"
-
-#, fuzzy
-#~ msgid "Bitmap"
-#~ msgstr "Εικόνα"
-
-#, fuzzy
-#~ msgid "(unknown)"
-#~ msgstr "Άγνωστο"
-
-#, fuzzy
-#~ msgid "roman"
-#~ msgstr "manx"
-
-#, fuzzy
-#~ msgid "proportional"
-#~ msgstr "Οριζόντιο"
-
-#, fuzzy
-#~ msgid "Font Selection"
-#~ msgstr "Αντιγραφή ώρας στο επιλεγμένο"
-
-#, fuzzy
-#~ msgid "Select a font"
-#~ msgstr "Επιλογή κινούμενων σχεδίων"
-
-#~ msgid "GNOME News Site"
-#~ msgstr "Κόμβος Νέων του GNOME"
-
-#~ msgid "http://www.gnome.org/"
-#~ msgstr "http://www.gnome.org/"
-
-#~ msgid "GNOME Main Site"
-#~ msgstr "Κύριος Κόμβος GNOME"
-
-#~ msgid "GNOME Developers' Site"
-#~ msgstr "Κόμβος Προγραμματιστών GNOME"
-
-#~ msgid "GNOME was brought to you by"
-#~ msgstr "Το GNOME είναι προσφορά των"
-
-#~ msgid "Timur I. Bakeyev"
-#~ msgstr "Τιμούρ Ι. Μπακέγιεφ"
-
-#~ msgid "Szabolcs 'Shooby' Ban"
-#~ msgstr "Szabolcs 'Shooby' Ban"
-
-#~ msgid "Jerome Bolliet"
-#~ msgstr "Τζέρομ Μπολιέτ"
-
-#~ msgid "Frederic Devernay"
-#~ msgstr "Φρέντερικ Ντεβερνέ"
-
-#~ msgid "Gergo Erdi"
-#~ msgstr "Gergo Erdi"
-
-#~ msgid "Raul Perusquia Flores"
-#~ msgstr "Ραούλ Περούσκια Φλόρες"
-
-#~ msgid "The Mysterious GEGL"
-#~ msgstr "O Μυστηριώδης GEGL"
-
-#~ msgid "Bjoern Giesler"
-#~ msgstr "Μπιόρν Γκίσλερ"
-
-#~ msgid "Dov Grobgeld"
-#~ msgstr "Ντοβ Γκρόμπγκελντ"
-
-#~ msgid "Helmut Koeberle"
-#~ msgstr "Χέλμουτ Κέμπερλε"
-
-#~ msgid "Matthew Marjanovic"
-#~ msgstr "Μάθιου Μαρτζάνοβιτς"
-
-#~ msgid "Alexandre Muniz"
-#~ msgstr "Alexandre Muniz"
-
-#~ msgid "Sung-Hyun Nam"
-#~ msgstr "Sung-Hyun Nam"
-
-#~ msgid "Martin Norbaeck"
-#~ msgstr "Martin Norbaeck"
-
-#~ msgid "Tomas Oegren"
-#~ msgstr "Tomas Ogren"
-
-#~ msgid "Carlos Perello Marin"
-#~ msgstr "Carlos Perello Marin"
-
-#~ msgid "Kazuhiro Sasayama"
-#~ msgstr "Kazuhiro Sasayama"
-
-#~ msgid "Inigo Serna"
-#~ msgstr "Inigo Serna"
-
-#~ msgid "Miroslav Silovic"
-#~ msgstr "Μίροσλαβ Σίλοβιτς"
-
-#~ msgid "The Squeaky Rubber Gnome"
-#~ msgstr "Το Τσιριχτό και Ελαστικό Gnome"
-
-#~ msgid "Istvan Szekeres"
-#~ msgstr "Ίστβαν Τσεκέρες"
-
-#~ msgid "Manish Vachharajani"
-#~ msgstr "Μάνις Βακαρατζάνι"
-
-#~ msgid "Neil Vachharajani"
-#~ msgstr "Νιλ Βακαρατζάνι"
-
-#~ msgid "... and many more"
-#~ msgstr "... και πολλών άλλων"
-
-#~ msgid "GNOME Login"
-#~ msgstr "Είσοδος στο GNOME"
-
-#~ msgid "Login"
-#~ msgstr "Login"
-
-#~ msgid "Start with default programs"
-#~ msgstr "Εκκίνηση με εξ ορισμού προγράμματα"
-
-#~ msgid "Reset all user settings"
-#~ msgstr "Αρχικοποίηση όλων των ρυθμίσεων χρήστη"
-
-#~ msgid "Really reset all GNOME user settings for %s?"
-#~ msgstr "Πραγματικά να αρχικοποιηθούν όλες οι ρυθμίσεις χρήστη GNOME για %s;"
-
-#~ msgid ""
-#~ "The directory /tmp/orbit-%s is not owned\n"
-#~ "by the current user, %s.\n"
-#~ "Please correct the ownership of this directory."
-#~ msgstr ""
-#~ "Ο κατάλογος /tmp/orbit-%s δεν ανήκει στον\n"
-#~ "τρέχοντα χρήστη, %s.\n"
-#~ "Παρακαλώ διορθώστε την κυριότητα του καταλόγου αυτού."
-
-#~ msgid "Try again"
-#~ msgstr "Δοκιμάστε ξανά"
-
-#~ msgid "Continue"
-#~ msgstr "Συνέχιση"
-
-#~ msgid ""
-#~ "Could not look up internet address for %s.\n"
-#~ "This will prevent GNOME from operating correctly.\n"
-#~ "It may be possible to correct the problem by adding\n"
-#~ "%s to the file /etc/hosts."
-#~ msgstr ""
-#~ "Αδύνατη η αναζήτηση της διεύθυνσης Ίντερνετ %s.\n"
-#~ "Αυτό θα αποτρέψει το GNOME να λειτουργήσει σωστά.\n"
-#~ "Το πρόβλημα είναι πιθανό να διορθωθεί με προσθήκη του\n"
-#~ "%s στο αρχείο /etc/hosts."
-
-#~ msgid ""
-#~ "Your version of libICE has a bug which causes gnome-session\n"
-#~ "to not function correctly.\n"
-#~ "\n"
-#~ "If you are on Solaris, you should either upgrade to Solaris patch\n"
-#~ "#108376-16 or use the libICE.so.6 from the original Solaris 7.\n"
-#~ "Copy the file into /usr/openwin/lib.  (Thanks go to Andy Reitz\n"
-#~ "for information on this bug).\n"
-#~ "\n"
-#~ "Your GNOME session will terminate after closing this dialog."
-#~ msgstr ""
-#~ "Η έκδοση του libICE που χρησιμοποιείτε έχει ένα σφάλμα που κάνει το gnome-"
-#~ "session να μη λειτουργεί σωστά.\n"
-#~ "\n"
-#~ "Αν χρησιμοποιείτε Solaris, πρέπει είτε να αναβαθμίσετε στην διόρθωση\n"
-#~ "#108376-16 ή να χρησιμοποιήσετε το libICE.so.6 από το γνήσιο Solaris 7.\n"
-#~ "Αντιγράψτε το αρχείο στο /usr/openwin/lib.  (Ευχαριστίες στον Άντι\n"
-#~ "Ρέιτζ για την πληροφορία σε αυτό το σφάλμα).\n"
-#~ "\n"
-#~ "Η συνεδρία σας του GNOME θα τερματιστεί μετά το κλείσιμο του διαλόγου "
-#~ "αυτού."
-
-#~ msgid "Order: "
-#~ msgstr "Διάταξη: "
-
-#~ msgid "Style: "
-#~ msgstr "Στυλ: "
-
-#~ msgid "Order"
-#~ msgstr "Διάταξη"
-
-#~ msgid "Style"
-#~ msgstr "Στυλ"
-
-#~ msgid "Program"
-#~ msgstr "Πρόγραμμα"
-
-#~ msgid "Inactive"
-#~ msgstr "Ανενεργό"
-
-#~ msgid "Waiting to start or already finished."
-#~ msgstr "Αναμονή εκκίνησης ή ήδη τερματισμένο."
-
-#~ msgid "Starting"
-#~ msgstr "Εκκινείται"
-
-#~ msgid "Started but has not yet reported state."
-#~ msgstr "Εκκινήθηκε αλλά δεν έχει αναφέρει ακόμα κατάσταση."
-
-#~ msgid "Running"
-#~ msgstr "Εκτελείται"
-
-#~ msgid "A normal member of the session."
-#~ msgstr "Κανονικό μέλος της συνεδρίας."
-
-#~ msgid "Saving"
-#~ msgstr "Αποθηκεύεται"
-
-#~ msgid "Saving session details."
-#~ msgstr "Αποθήκευση λεπτομεριών συνεδρίας."
-
-#~ msgid "Unknown"
-#~ msgstr "Άγνωστο"
-
-#~ msgid "State not reported within timeout."
-#~ msgstr "Η κατάσταση δεν αναφέρθηκε μέσα στο προκαθορισμένο χρόνο."
-
-#~ msgid "Normal"
-#~ msgstr "Κανονικό"
-
-#~ msgid "Unaffected by logouts but can die."
-#~ msgstr "Μη επηρεαζόμενο από λήξεις συνεδρίας αλλά μπορεί να σκοτωθεί."
-
-#~ msgid "Respawn"
-#~ msgstr "Αναγεννώμενο"
-
-#~ msgid "Never allowed to die."
-#~ msgstr "Δεν επιτρέπεται να σκοτωθεί."
-
-#~ msgid "Trash"
-#~ msgstr "Σκουπίδια"
-
-#~ msgid "Discarded on logout and can die."
-#~ msgstr "Απορρίφθηκε στη λήξη συνεδρίας και μπορεί να σκοτωθεί."
-
-#~ msgid "Always started on every login."
-#~ msgstr "Εκκίνηση πάντα σε κάθε συνεδρία."
-
-#~ msgid "Remove Program"
-#~ msgstr "Αφαίρεση Προγράμματος"
-
-#~ msgid "Really log out?"
-#~ msgstr "Θέλετε πραγματικά να τερματίσετε τη συνεδρία;"
-
-#~ msgid "Save current setup"
-#~ msgstr "Αποθήκευση τρεχόντων ρυθμίσεων"
-
-#~ msgid "Action"
-#~ msgstr "Κίνηση"
-
-#~ msgid "Logout"
-#~ msgstr "Τερματισμός"
-
-#~ msgid "Shut Down"
-#~ msgstr "Κλείσιμο Συστήματος"
-
-#~ msgid "Reboot"
-#~ msgstr "Επανεκκίνηση υπολογιστή"
-
-#~ msgid "Specify a session name to load"
-#~ msgstr "Καθορίζει ένα όνομα συνεδρίας προς φόρτωση"
-
-#~ msgid "Only read saved sessions from the default.session file"
-#~ msgstr "Ανάγνωση αποθηκευμένων συνεδριών μόνο από το αρχείο default.session"
-
-#~ msgid "Millisecond period spent waiting for clients to register (0=forever)"
-#~ msgstr "Χιλιοστά δευτερολέπτων αναμονής για δήλωση πελατών (0=για πάντα)"
-
-#~ msgid "Millisecond period spent waiting for clients to respond (0=forever)"
-#~ msgstr ""
-#~ "Χιλιοστά δευτερολέπτων αναμονής για απόκριση από πελάτες (0=για πάντα)"
-
-#~ msgid "Millisecond period spent waiting for clients to die (0=forever)"
-#~ msgstr "Χιλιοστά δευτερολέπτων αναμονής τερματισμού πελατών (0=για πάντα)"
-
-#~ msgid "Wait abandoned due to conflict."
-#~ msgstr "Τερματισμός αναμονής λόγω σύγκρουσης."
-
-#~ msgid "No response to the %s command."
-#~ msgstr "Καμία απόκριση στην εντολή %s."
-
-#~ msgid "The program may be slow, stopped or broken."
-#~ msgstr "Το πρόγραμμα μπορεί να είναι αργό, σταματημένο ή ελλατωματικό."
-
-#~ msgid "You may wait for it to respond or remove it."
-#~ msgstr "Μπορείτε να περιμένετε μέχρι να αποκριθεί ή να το αφαιρέσετε."
-
-#~ msgid "Respawn abandoned due to failures."
-#~ msgstr "Εγκατάλειψη επανεκκίνησης λόγω προβλημάτων."
-
-#~ msgid "A session shutdown is in progress."
-#~ msgstr "Τερματισμός συνεδρίας σε εξέλιξη."
-
-#~ msgid "Kill session"
-#~ msgstr "Τερματισμός συνεδρίας"
-
-#~ msgid "Use dialog boxes"
-#~ msgstr "Χρήση κουτιών διαλόγων"
-
-#~ msgid "Could not connect to the session manager"
-#~ msgstr "Αδύνατη η σύνδεση με το διαχειριστή συνεδρίας"
-
-#~ msgid "Could not connect to gnome-session"
-#~ msgstr "Αδύνατη η σύνδεση με το gnome-session"
-
-#~ msgid "Your session has been saved"
-#~ msgstr "Η συνεδρία σας αποθηκεύτηκε"
-
-#~ msgid "Save Current Session"
-#~ msgstr "Αποθήκευση Τρεχούσης Συνεδρίας"
-
-#~ msgid "Try"
-#~ msgstr "Δοκιμή"
-
-#~ msgid "Revert"
-#~ msgstr "Επαναφορά"
-
-#~ msgid "OK"
-#~ msgstr "Εντάξει"
-
-#~ msgid "Cancel"
-#~ msgstr "Άκυρο"
-
-#~ msgid "Session Properties"
-#~ msgstr "Ιδιότητες Συνεδρίας"
-
-#~ msgid "Session"
-#~ msgstr "Συνεδρία"
-
-#~ msgid "Session Chooser"
-#~ msgstr "Επιλογέας συνεδρίας"
-
-#~ msgid "Start Session"
-#~ msgstr "Έναρξη συνεδρίας"
-
-#~ msgid "Cancel Login"
-#~ msgstr "Ακύρωση έναρξης"
-
-#~ msgid "Initialize session settings"
-#~ msgstr "Αρχικοποίηση ρυθμίσεων συνεδρίας"
-
-#, fuzzy
-#~ msgid "Session Properties & Startup Programs"
-#~ msgstr "Εκκίνηση Μη-διαλογικών Προγραμμάτων"
-
-#~ msgid "Current session managed programs"
-#~ msgstr "Επιτρέπει τη ρύθμιση των ιδιοτήτων του Διαχειριστή Συνεδρίας"
-
-#~ msgid "Audio Settings"
-#~ msgstr "Ρυθμίσεις Ήχου"
-
-#~ msgid "Sawfish Window Manager"
-#~ msgstr "Διαχειριστής Παραθύρων Πριονόψαρο (sawfish)"
-
-#~ msgid "Enlightenment Window Manager"
-#~ msgstr "Διαχειριστής Παραθύρων Enlightenment"
-
-#~ msgid "Background Settings"
-#~ msgstr "Ρυθμίσεις Παρασκηνίου"
-
-#~ msgid "Keyboard Bell"
-#~ msgstr "Κουδούνι Πληκτρολογίου"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Ρυθμίσεις Ποντικιού"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Ρυθμίσεις Πληκτρολογίου"
-
-#~ msgid "Session Manager Proxy"
-#~ msgstr "Διαμεσολαβητής Διαχειριστή Συνεδρίας"
-
-#~ msgid "Nautilus"
-#~ msgstr "Ναυτίλος"
-
-#~ msgid "Starting GNOME: %s"
-#~ msgstr "Εκκίνηση του GNOME: %s"
-
-#~ msgid "Starting GNOME: done"
-#~ msgstr "Εκκίνηση του GNOME: έγινε"
-
-#~ msgid "GNOME"
-#~ msgstr "GNOME"
-
-#~ msgid "Starting GNOME"
-#~ msgstr "Εκκίνηση GNOME"
-
-#~ msgid "Applications menu"
-#~ msgstr "Μενού Εφαρμογών"
-
-#~ msgid "Programming"
-#~ msgstr "Ανάπτυξη εφαρμογών"
-
-#~ msgid "Tools for software development"
-#~ msgstr "Εργαλεία ανάπτυξης εφαρμογών"
-
-#~ msgid "Emacs Text Editor"
-#~ msgstr "Emacs"
-
-#~ msgid "Create and edit images or photographs"
-#~ msgstr "Πρόγραμμα Επεξεργασίας Εικόνων GNU"
-
-#~ msgid "GIMP Image Editor"
-#~ msgstr "Το GIMP"
-
-#~ msgid "Games"
-#~ msgstr "Παιχνίδια"
-
-#~ msgid "Games menu"
-#~ msgstr "Μενού παιχνιδιών"
-
-#~ msgid "Graphics"
-#~ msgstr "Γραφικά"
-
-#~ msgid "Graphics menu"
-#~ msgstr "Μενού προγραμμάτων σχετικών με γραφικά"
-
-#~ msgid "Programs for Internet and networks"
-#~ msgstr "Προγράμματα Ιντερνέτ και δικτύων"
-
-#~ msgid "Multimedia menu"
-#~ msgstr "Προγράμματα Πολυμέσων"
-
-#~ msgid "Sound & Video"
-#~ msgstr "Πολυμέσα"
-
-#~ msgid "Browse the world wide web"
-#~ msgstr "Φυλλομετρητής Netscape"
-
-#~ msgid "Netscape Web Browser"
-#~ msgstr "Netscape"
-
-#, fuzzy
-#~ msgid "Office"
-#~ msgstr "Ανενεργό"
-
-#, fuzzy
-#~ msgid "Office Applications"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "Desktop Settings"
-#~ msgstr "Ρυθμίσεις επιφάνειας εργασίας"
-
-#~ msgid "System Tools"
-#~ msgstr "Σύστημα"
-
-#~ msgid "System menu"
-#~ msgstr "Μενού συστήματος"
-
-#~ msgid "XEmacs Text Editor"
-#~ msgstr "XEmacs"
-
-#~ msgid "xemacs text editor"
-#~ msgstr "Επεξεργαστής κειμένου XEmacs"
-
-#~ msgid "rxvt terminal"
-#~ msgstr "Προσομοίωση τερματικού rxvt"
-
-#~ msgid "Enter UNIX commands with the standard X Terminal"
-#~ msgstr "Τυπική προσομοίωση τερματικού XTerm"
-
-#~ msgid "X Terminal"
-#~ msgstr "Τυπικό XTerm"
-
-#~ msgid "Looking up internet address for %s"
-#~ msgstr "Αναζήτηση της διεύθυνσης Ίντερνετ του %s"
-
-#~ msgid "Hide"
-#~ msgstr "Απόκρυψη"
-
-#~ msgid "Can't get goad_id for applet, ignoring it"
-#~ msgstr "Δε βρέθηκε το goad_id του εφαρμογιδίου, το αγνοώ"
-
-#, fuzzy
-#~ msgid ""
-#~ "Cannot load help on %s.\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Αδύνατη η εμφάνιση του %s\n"
-#~ "%s"
-
-#~ msgid "Execute a command line"
-#~ msgstr "Εκτέλεση μιας γραμμής εντολών"
-
-#~ msgid "The session name cannot be empty"
-#~ msgstr "Το όνομα συνεδρίας δε μπορεί να είναι κενό"
-
-#~ msgid "The session name already exists"
-#~ msgstr "Το όνομα συνεδρίας υπάρχει ήδη"
-
-#~ msgid "Add a new session"
-#~ msgstr "Προσθήκη νέας συνεδρίας"
-
-#~ msgid "Edit session name"
-#~ msgstr "Αλλαγή ονόματος συνεδρίας"
-
-#~ msgid "Show splash screen on login"
-#~ msgstr "Εμφάνιση στατικής εικόνας κατά τη διάρκεια της σύνδεσης"
-
-#~ msgid "Prompt on logout"
-#~ msgstr "Επιβεβαίωση αποσύνδεσης"
-
-#~ msgid "Automatically save changes to session"
-#~ msgstr "Αυτόματη αποθήκευση αλλαγών της συνεδρίας"
-
-#~ msgid "Choose Current Session"
-#~ msgstr "Επιλογή Τρέχουσας Συνεδρίας"
-
-#~ msgid "Session Name"
-#~ msgstr "Όνομα Συνεδρίας"
-
-#~ msgid "Add..."
-#~ msgstr "Προσθήκη..."
-
-#~ msgid "Edit..."
-#~ msgstr "Επεξεργασία..."
-
-#~ msgid "Delete"
-#~ msgstr "Διαγραφή"
-
-#~ msgid "Session Options"
-#~ msgstr "Επιλογές Συνεδρίας"
-
-#~ msgid "Priority"
-#~ msgstr "Προτεραιότητα"
-
-#~ msgid "Command"
-#~ msgstr "Εντολή"
-
-#~ msgid "Browse Currently Running Programs..."
-#~ msgstr "Περιήγηση στα Τρέχοντα Εκτελούμενα Προγράμματα..."
-
-#~ msgid "Startup Programs"
-#~ msgstr "Εκκίνηση Προγραμμάτων"
-
-#~ msgid "-adobe-helvetica-bold-r-normal-*-*-240-*-*-p-*-*-*"
-#~ msgstr "-greek-helvetica-bold-r-normal-*-*-240-*-*-p-*-*-*"
-
-#~ msgid "-adobe-helvetica-medium-r-normal-*-8-*-*-*-p-*-*-*"
-#~ msgstr "-greek-helvetica-medium-r-normal-*-10-*-*-*-p-*-*-*"
-
-#~ msgid "Startup Command"
-#~ msgstr "Εντολή Εκκίνησης"
-
-#~ msgid ""
-#~ "Programs with smaller values are started before programs with higher "
-#~ "values. The default value should be OK"
-#~ msgstr ""
-#~ "Προγράμματα με μικρότερες τιμές εκκινούνται πριν από αυτά με μεγαλύτερες. "
-#~ "Η εξ' ορισμού τιμή θα πρέπει να είναι Εντάξει"
-
-#~ msgid "The startup command cannot be empty"
-#~ msgstr "Η εντολή εκκίνησης δε μπορεί να είναι κενή"
-
-#~ msgid "Add Startup Program"
-#~ msgstr "Προσθήκη Προγραμμάτων Εκκίνησης"
-
-#~ msgid "Edit Startup Program"
-#~ msgstr "Επεξεργασία Προγραμμάτων Εκκίνησης"
-
-#, fuzzy
-#~ msgid "(c) 2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 το Free Software Foundation"
-
-#~ msgid "level"
-#~ msgstr "επίπεδο"
-
-#~ msgid ""
-#~ "Cannot execute the gmc-client program,\n"
-#~ "perhaps gmc is not installed"
-#~ msgstr ""
-#~ "Αδύνατη η εκτέλεση του προγράμματος gmc-client,\n"
-#~ "ενδέχεται το gmc να μην είναι εγκατεστημένο"
-
-#~ msgid "News (www)"
-#~ msgstr "Νέα (www)"
-
-#~ msgid "http://gnotices.gnome.org/gnome-news/"
-#~ msgstr "http://gnotices.gnome.org/gnome-news/"
-
-#~ msgid "FAQ (www)"
-#~ msgstr "FAQ (www)"
-
-#~ msgid "http://www.gnome.org/gnomefaq/html/"
-#~ msgstr "http://www.gnome.org/gnomefaq/html/"
-
-#~ msgid "Mailing Lists (www)"
-#~ msgstr "Όμιλοι Συνδρομητών (www)"
-
-#~ msgid "http://mail.gnome.org/mailman/listinfo/"
-#~ msgstr "http://mail.gnome.org/mailman/listinfo/"
-
-#~ msgid "Software (www)"
-#~ msgstr "Λογισμικό (www)"
-
-#~ msgid "http://www.gnome.org/applist/list-martin.phtml"
-#~ msgstr "http://www.gnome.org/applist/list-martin.phtml"
-
-#~ msgid "Development (www)"
-#~ msgstr "Ανάπτυξη (www)"
-
-#~ msgid "http://developer.gnome.org/"
-#~ msgstr "http://developer.gnome.org/"
-
-#~ msgid "Bug Tracking System (www)"
-#~ msgstr "Σύστημα Εντοπισμού Σφάλματων (www)"
-
-#~ msgid "http://bugs.gnome.org/"
-#~ msgstr "http://bugs.gnome.org/"
-
-#~ msgid "By Name"
-#~ msgstr "Βάση Ονόματος"
-
-#~ msgid "By Type"
-#~ msgstr "Βάση Είδους"
-
-#~ msgid "By Size"
-#~ msgstr "Βάση Μεγέθους"
-
-#~ msgid "By Time Last Accessed"
-#~ msgstr "Βάση Ώρας Τελευταίας Πρόσβασης"
-
-#~ msgid "By Time Last Modified"
-#~ msgstr "Βάση Ώρας Τελευταίας Τροποποίησης"
-
-#~ msgid "By Time Last Changed"
-#~ msgstr "Βάση Ώρας Τελευταίας Αλλαγής"
-
-#~ msgid "Arrange Icons"
-#~ msgstr "Τακτοποίηση Εικονιδίων"
-
-#~ msgid "Rescan Desktop Directory"
-#~ msgstr "Επανάγνωση Καταλόγου Επιφάνειας Εργασίας"
-
-#~ msgid "Rescan Desktop Devices"
-#~ msgstr "Επανάγνωση Συσκευών Επιφάνειας Εργασίας"
-
-#~ msgid " Desktop "
-#~ msgstr " Eπιφάνεια εργασίας "
-
-#~ msgid "can't fine real path"
-#~ msgstr "αδύνατη η εύρεση του αληθινού μονοπατιού"
-
-#~ msgid "Favorites"
-#~ msgstr "Αγαπημένα"
-
-#~ msgid "Available Programs"
-#~ msgstr "Διαθέσιμα Προγράμματα"
-
-#~ msgid "Description"
-#~ msgstr "Περιγραφή"
-
-#~ msgid "Add this program to Favorites"
-#~ msgstr "Προσθήκη του προγράμματος στα Αγαπημένα"
-
-#~ msgid "Cannot create an item with an empty command"
-#~ msgstr "Αδύνατη η δημιουργία αντικειμένου με κενή εντολή"
-
-#~ msgid "Could not get file from path: %s"
-#~ msgstr "Αδύνατη η εύρεση αρχείου από τη διαδρομή: %s"
-
-#~ msgid "Could not open .order file: %s"
-#~ msgstr "Αδύνατο το άνοιγμα αρχείου .order: %s"
-
-#~ msgid "Could not open file '%s' for writing"
-#~ msgstr "Αδύνατο το άνοιγμα αρχείου '%s' για εγγραφή"
-
-#~ msgid ""
-#~ "Could not open .order file: %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Αδύνατο το άνοιγμα αρχείου .order: %s\n"
-#~ "%s"
-
-#~ msgid "Could not remove old order file %s: %s\n"
-#~ msgstr "Αδύνατη η διαγραφή παλαιότερου αρχείου κατάταξης %s: %s\n"
-
-#~ msgid ""
-#~ "Could not rename tmp file: %s to %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Αδύνατη η μετονομασία προσωρινού αρχείου: %s σε %s\n"
-#~ "%s"
-
-#~ msgid "Add this to Favorites menu"
-#~ msgstr "Προσθήκη του παρόντος στο μενού των Αγαπημένων"
-
-#~ msgid "Add from menu"
-#~ msgstr "Προσθήκη από μενού"
-
-#~ msgid " (empty)"
-#~ msgstr " (κενό)"
-
-#~ msgid "Favorites menu"
-#~ msgstr "Μενού αγαπημένων"
-
-#~ msgid "Run button"
-#~ msgstr "Kουμπί εκτέλεσης"
-
-#~ msgid "Favorites: "
-#~ msgstr "Αγαπημένα: "
-
-#~ msgid "Avoid this panel when maximizing windows"
-#~ msgstr "Αγνόηση αυτού του ταμπλώ κατά τη μεγιστοποίηση παραθύρων"
-
-#~ msgid "Panel window level:"
-#~ msgstr "Επίπεδο παραθύρου ταμπλώ:"
-
-#~ msgid "Default (from global preferences)"
-#~ msgstr "Εξ' ορισμού (από τις καθολικές ρυθμίσεις)"
-
-#~ msgid ""
-#~ "An applet is not responding to a save request.\n"
-#~ "Remove the applet or continue waiting?"
-#~ msgstr ""
-#~ "Κάποιο εφαρμογίδιο δεν αποκρίνεται στην αίτηση αποθήκευσης κατάστασης.\n"
-#~ "Να αφαιρεθεί το εφαρμογίδιο ή να συνεχιστεί η αναμονή;"
-
-#~ msgid "Remove applet"
-#~ msgstr "Αφαίρεση εφαρμογιδίου"
-
-#~ msgid "Continue waiting"
-#~ msgstr "Συνέχιση αναμονής"
-
-#~ msgid "Timed out on sending session save to an applet"
-#~ msgstr "Λήξη χρόνου κατά την αποστολή αποθήκευσης κατάστασης σε εφαρμογίδιο"
-
-#~ msgid "Show tasklist arrow"
-#~ msgstr "Εμφάνιση βέλους λίστας εργασιών"
-
-#~ msgid "Switch horizontal/vertical position of tasklist arrow"
-#~ msgstr ""
-#~ "Εναλλαγή μεταξύ οριζόντιας/κάθετης θέσης του βέλους λίστας διεργασιών"
-
-#~ msgid "Only show current desktop in pager"
-#~ msgstr "Εμφάνιση μόνο τρέχουσας επιφάνειας εργασίας στον εναλλάκτη"
-
-#~ msgid "Raise area grid over tasks"
-#~ msgstr "Ανασήκωση πλέγματος περιοχής πάνω από τις εργασίες"
-
-#~ msgid "Thumb Nails"
-#~ msgstr "Εικόνες Επισκόπισης"
-
-#~ msgid "Fill window thumbnails with screen contents"
-#~ msgstr "Γέμισμα των εικόνων επισκόπισης με τα περιεχόμενα της οθόνης"
-
-#~ msgid "Incremental update delay [ms]"
-#~ msgstr "Αυξητική καθυστέρηση ενημέρωσης [ms]"
-
-#~ msgid "Tooltips"
-#~ msgstr "Βοηθήματα"
-
-#~ msgid "Show Desk-Guide tooltips"
-#~ msgstr "Εμφάνιση βοηθημάτων Οδηγού-Γραφείου"
-
-#~ msgid "Desk-Guide tooltip delay [ms]"
-#~ msgstr "Καθυστέρηση υπόδειξης Οδηγού-Γραφείου [ms]"
-
-#~ msgid "Show desktop name tooltips"
-#~ msgstr "Εμφάνιση υποδείξεων ονόματος επιφάνειας εργασίας"
-
-#~ msgid "Desktop name tooltip delay [ms]"
-#~ msgstr "Καθυστέρηση υπόδειξης ονόματος επιφάνειας εργασίας [ms]"
-
-#~ msgid "Tasks"
-#~ msgstr "Εργασίες"
-
-#~ msgid "Visibility"
-#~ msgstr "Ορατότητα"
-
-#~ msgid "Show hidden tasks (HIDDEN)"
-#~ msgstr "Εμφάνιση κρυμμένων εργασιών (ΚΡΥΜΜΕΝΩΝ)"
-
-#~ msgid "Show shaded tasks (SHADED)"
-#~ msgstr "Εμφάνιση σκιασμένων εγασιών (ΣΚΙΑΣΜΕΝΩΝ)"
-
-#~ msgid "Show tasks which hide from window list (SKIP-WINLIST)"
-#~ msgstr ""
-#~ "Εμφάνιση εργασιών που δε φαίνονται στη λίστα παραθύρων (ΠΑΡΑΚΑΜΨΗ-"
-#~ "ΛΙΣΤΑΠΑΡΑΘΥΡΩΝ)"
-
-#~ msgid "Show tasks which hide from taskbar (SKIP-TASKBAR)"
-#~ msgstr ""
-#~ "Εμφάνιση εργασιών που δε φαίνονται στη μπάρα εργασιών (ΠΑΡΑΚΑΜΨΗ-"
-#~ "ΜΠΑΡΑΕΡΓΑΣΙΩΝ)"
-
-#~ msgid "Geometry"
-#~ msgstr "Γεωμετρία"
-
-#~ msgid "Desktop Height [pixels]"
-#~ msgstr "Ύψος επιφάνειας εργασίας [εικονοστοιχεία]"
-
-#~ msgid "Override desktop height with panel size"
-#~ msgstr "Παράκαμψη ύψους επιφάνειας εργασίας με το μέγεθος του ταμπλώ"
-
-#~ msgid "Divide height by number of vertical areas"
-#~ msgstr "Διαίρεση ύψους με αριθμό από κάθετες περιοχές"
-
-#~ msgid "Rows of Desktops"
-#~ msgstr "Γραμμές από Επιφάνειες Εργασίας"
-
-#~ msgid "Divide height by number of rows"
-#~ msgstr "Διαίρεση ύψους με αριθμό από γραμμές"
-
-#~ msgid "Desktop Width [pixels]"
-#~ msgstr "Πλάτος Επιφάνειας Εργασίας [εικονοστοιχεία]"
-
-#~ msgid "Override desktop width with panel size"
-#~ msgstr "Παράκαμψη πλάτους επιφάνειας εργασίας με το μέγεθος του ταμπλώ"
-
-#~ msgid "Divide width by number of horizontal areas"
-#~ msgstr "Διαίρεση πλάτους με το αριθμό των οριζόντιων περιοχών"
-
-#~ msgid "Columns of Desktops"
-#~ msgstr "Στήλες από Επιφάνειες Εργασίας"
-
-#~ msgid "Divide width by number of columns"
-#~ msgstr "Διαίρεση πλάτους με αριθμό από στήλες"
-
-#~ msgid "Window Manager Workarounds"
-#~ msgstr "Πλάγιες Λύσεις Διαχειριστή Παραθύρων"
-
-#~ msgid ""
-#~ "Window manager moves decoration window instead\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-#~ msgstr ""
-#~ "Ο Διαχειριστής Παραθύρων μετακινεί το παράθυρο διακόσμησης\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-
-#~ msgid ""
-#~ "Window manager changes active area on all desktops\n"
-#~ "(FVWM, Sawfish)"
-#~ msgstr ""
-#~ "Ο Διαχειριστής Παραθύρων αλλάζει την ενεργή περιοχή σε όλες\n"
-#~ "τις επιφάνειες εργασίας (FVWM, Sawfish)"
-
-#~ msgid ""
-#~ "Window manager expects pager to modify area+desktop properties directly\n"
-#~ "(Enlightenment, FVWM)"
-#~ msgstr ""
-#~ "Ο διαχειριστής παραθύρου αναμένει το ταμπλώ να τροποποιεί τις ιδιότητες\n"
-#~ "περιοχής+επιφάνειας εργασίας άμεσα (Enlightenment, FVWM)"
-
-#~ msgid "Behaviour"
-#~ msgstr "Συμπεριφορά"
-
-#~ msgid "Popdown task view automatically"
-#~ msgstr "Αυτόματη απόκρυψη όψης διεργασιών"
-
-#~ msgid ""
-#~ "You are not running a GNOME Compliant\n"
-#~ "Window Manager. GNOME support by the \n"
-#~ "window manager is strongly recommended\n"
-#~ "for proper Desk Guide operation."
-#~ msgstr ""
-#~ "Δεν τρέχετε κάποιο Διαχειριστή Παραθύρων Συμβατό με GNOME\n"
-#~ "Συνίσταται η υποστήριξη GNOME από το Διαχειριστή Παραθύρων\n"
-#~ "για την ορθή λειτουργία του Οδηγού Γραφείου."
-
-#~ msgid "Desk Guide Alert"
-#~ msgstr "Επαγρύπνηση Οδηγού Γραφείου"
-
-#~ msgid "Desk Guide Task View"
-#~ msgstr "Όψη Εργασιών Οδηγού Γραφείου"
-
-#~ msgid "Global"
-#~ msgstr "Καθολικό"
-
-#~ msgid "Desk Guide Settings"
-#~ msgstr "Ρυθμίσεις Οδηγού Γραφείου"
-
-#~ msgid "Copyright (C) 1999 Anders Carlsson"
-#~ msgstr "Πνευματικά δικαιώματα (C) 1999 Άντερς Κάρλσον"
-
-#~ msgid ""
-#~ "A tasklist for the GNOME desktop environment.\n"
-#~ "Icons by Tuomas Kuosmanen (tigert@gimp.org)."
-#~ msgstr ""
-#~ "Λίστα διεργασιών για το περιβάλλον γραφείου του GNOME.\n"
-#~ "Εικονίδια από τον Τουόμας Κουοσμάνεν (tigert@gimp.org)."
-
-#~ msgid "Tasklist: Unable to create applet widget"
-#~ msgstr "Λίστα διεργασιών: Αδύνατη η δημιουργία μαραφετιού εφαρμογιδίου"
-
-#~ msgid "Don't know how to activate `%s'\n"
-#~ msgstr "Αδυναμία ενεργοποίησης `%s'\n"
-
-#~ msgid ""
-#~ "Warning! Unsaved changes will be lost!\n"
-#~ "Proceed?"
-#~ msgstr ""
-#~ "Προειδοποίηση: Αλλαγές που δεν έχουν αποθηκευθεί, θα χαθούν!\n"
-#~ "Θέλετε να συνεχίσετε;"
-
-#~ msgid "Restore"
-#~ msgstr "Επαναφορά"
-
-#~ msgid "Iconify"
-#~ msgstr "Εικονιδοποίηση"
-
-#~ msgid "Unshade"
-#~ msgstr "Αποσκίαση"
-
-#~ msgid "Shade"
-#~ msgstr "Σκίαση"
-
-#~ msgid "Unstick"
-#~ msgstr "Αποκόλληση"
-
-#~ msgid "Stick"
-#~ msgstr "Επικόλληση"
-
-#~ msgid "To desktop"
-#~ msgstr "Στην επιφάνεια εργασίας"
-
-#~ msgid "Close window"
-#~ msgstr "Κλείσιμο παραθύρου"
-
-#~ msgid "Kill app"
-#~ msgstr "Βίαιο κλείσιμο εφαρμογής"
-
-#~ msgid "Restore All"
-#~ msgstr "Επαναφορά Όλων"
-
-#~ msgid "Iconify All"
-#~ msgstr "Εικονιδοποίηση Όλων"
-
-#~ msgid "Unshade All"
-#~ msgstr "Αποσκίαση Όλων"
-
-#~ msgid "Shade All"
-#~ msgstr "Σκίαση Όλων"
-
-#~ msgid "Unstick All"
-#~ msgstr "Αποκόλληση Όλων"
-
-#~ msgid "Stick All"
-#~ msgstr "Κόλληση Όλων"
-
-#~ msgid "Close All"
-#~ msgstr "Κλείσιμο Όλων"
-
-#~ msgid "Kill All"
-#~ msgstr "Βίαιο κλείσιμο Όλων"
-
-#~ msgid "Follow panel size"
-#~ msgstr "Ακολούθησε το μέγεθος ταμπλώ"
-
-#~ msgid "Tasklist width:"
-#~ msgstr "Πλάτος λίστας εργασιών:"
-
-#~ msgid "Rows of tasks:"
-#~ msgstr "Στήλες εργασιών:"
-
-#~ msgid "Default task size:"
-#~ msgstr "Εξ ορισμού μέγεθος εργασίας:"
-
-#~ msgid "Tasklist width is fixed"
-#~ msgstr "Προκαθορισμένο πλάτος λίστας εργασιών"
-
-#~ msgid "Tasklist width is dynamic"
-#~ msgstr "Δυναμικό πλάτος λίστας εργασιών"
-
-#~ msgid "Only use empty space"
-#~ msgstr "Χρήση μόνο άδειου χώρου"
-
-#~ msgid "Vertical"
-#~ msgstr "Κατακόρυφο"
-
-#~ msgid "Tasklist height:"
-#~ msgstr "Ύψος λίστας εργασιών:"
-
-#~ msgid "Tasklist height is fixed"
-#~ msgstr "Προκαθορισμένο ύψος λίστας εργασιών"
-
-#~ msgid "Tasklist height is dynamic"
-#~ msgstr "Δυναμικό ύψος λίστας εργασιών"
-
-#~ msgid "Tasklist width is that of longest title"
-#~ msgstr "Το πλάτος λίστας εργασιών είναι αυτό του μακρύτερου τίτλου"
-
-#~ msgid "Which tasks to show"
-#~ msgstr "Ποιές εργασίες να εμφανίζονται"
-
-#~ msgid "Show normal applications"
-#~ msgstr "Εμφάνιση κανονικών εφαρμογών"
-
-#~ msgid "Show iconified (minimized) applications"
-#~ msgstr "Εμφάνιση ελαχιστοποιημένων εφαρμογών"
-
-#~ msgid "Show iconified (minimized) applications on all desktops"
-#~ msgstr ""
-#~ "Εμφάνιση ελαχιστοποιημένων εφαρμογών σε όλες τις επιφάνειες εργασίας"
-
-#~ msgid "Show mini icons"
-#~ msgstr "Εμφάνιση μικρών εικονιδίων"
-
-#~ msgid "Confirm before killing windows"
-#~ msgstr "Επιβεβαίωση πριν το βίαιο κλείσιμο των παραθύρων"
-
-#~ msgid "Display tooltips with full task names"
-#~ msgstr "Εμφάνιση βοηθημάτων με πλήρη ονόματα εργασιών"
-
-#~ msgid "Enable task grouping"
-#~ msgstr "Ενεργοποίηση της ομαδοποίησης διεργασιών"
-
-#~ msgid "Number of tasks before grouping occurs"
-#~ msgstr "Αριθμός διεργασιών πριν την έναρξη ομαδοποίησης"
-
-#~ msgid "Sink tasklist into panel"
-#~ msgstr "Βύθιση λίστας εργασιών στο ταμπλώ"
-
-#~ msgid "Tasklist properties"
-#~ msgstr "Ιδιότητες λίστας εργασιών"
-
-#~ msgid "Save"
-#~ msgstr "Αποθήκευση"
-
-#~ msgid "Favorites (user menus)"
-#~ msgstr "Μενού αγαπημένων (χρήστη)"
-
-#~ msgid "Programs (system menus)"
-#~ msgstr "Μενού προγραμμάτων (συστήματος)"
-
-#~ msgid "Applets (system menus)"
-#~ msgstr "Εφαρμογίδια (μενού συστήματος)"
-
-#~ msgid "Programs to be merged in (system menus)"
-#~ msgstr "Προγράμματα για συνένωση (μενού συστήματος)"
-
-#~ msgid "_New Submenu..."
-#~ msgstr "_Νέο Υπομενού"
-
-#~ msgid "Create a new submenu"
-#~ msgstr "Δημιουργία νέου υπομενού"
-
-#~ msgid "New _Item..."
-#~ msgstr "Νέο _Στοιχείο..."
-
-#~ msgid "Create a new menu item"
-#~ msgstr "Δημιουργία νέου στοιχείου μενού"
-
-#~ msgid "_Delete..."
-#~ msgstr "_Διαγραφή..."
-
-#~ msgid "_Sort Submenu"
-#~ msgstr "_Ταξινόμηση Υπομενού"
-
-#~ msgid "Sort Submenu _Recursive"
-#~ msgstr "_Αναδρομική Ταξινόμηση Υπομενού"
-
-#~ msgid "_Sort"
-#~ msgstr "_Ταξινόμηση"
-
-#~ msgid "New Submenu"
-#~ msgstr "Νέο Υπομενού"
-
-#~ msgid "New Item"
-#~ msgstr "Νέο Στοιχείο"
-
-#~ msgid "Create a new item"
-#~ msgstr "Δημιουργία νέου στοιχείου"
-
-#~ msgid "Delete selected menu item"
-#~ msgstr "Διαγραφή του επιλεγμένου στοιχείου μενού"
-
-#~ msgid "Move up"
-#~ msgstr "Μετακίνηση επάνω"
-
-#~ msgid "Move selected menu up"
-#~ msgstr "Μετακίνηση επιλεγμένου μενού πρoς τα επάνω"
-
-#~ msgid "Move down"
-#~ msgstr "Μετακίνηση κάτω"
-
-#~ msgid "Move selected menu down"
-#~ msgstr "Μετακίνιση επιλεγμένου μενού πρός τα κάτω"
-
-#~ msgid "Sort Submenu"
-#~ msgstr "Ταξινόμηση υπομενού"
-
-#~ msgid "Sort selected submenu"
-#~ msgstr "Ταξινόμηση επιλεγμένου υπομενού"
-
-#~ msgid "Sort _Recursive"
-#~ msgstr "_Αναδρομική ταξινόμιση"
-
-#~ msgid "GNOME menu editor"
-#~ msgstr "Συντάκτης μενού του GNOME"
-
-#~ msgid ""
-#~ "Released under the terms of the GNU Public License.\n"
-#~ "GNOME menu editor."
-#~ msgstr ""
-#~ "Κυκλοφορεί σύμφωνα με τις συνθήκες της Άδειας Χρήσης GNU (GNU Public "
-#~ "License).\n"
-#~ "Συντάκτης μενού του GNOME."
-
-#~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "Αδυναμία ανάκτησης καταλόγου εγκατάστασης του GNOME\n"
-
-#~ msgid "Unable to create file: %s\n"
-#~ msgstr "Αδύνατη η δημιουργία αρχείου: %s\n"
-
-#~ msgid "unable to remove .order file: %s\n"
-#~ msgstr "αδύνατη η αφαίρεση αρχείου .order: %s\n"
-
-#~ msgid "The menu item must have a name"
-#~ msgstr "Το στοιχείο μενού πρέπει να έχει όνομα"
-
-#~ msgid "The menu entry must have a filename"
-#~ msgstr "Η καταχώρηση του μενού πρέπει να έχει όνομα αρχείου"
-
-#~ msgid "Save changes?"
-#~ msgstr "Αποθήκευση αλλαγών;"
-
-#~ msgid "This change conflicts with an existing menu item"
-#~ msgstr "Η παρούσα τροποποίηση συγκρούεται με υπάρχον στοιχείο μενού"
-
-#~ msgid "Overwrite existing menu entry?"
-#~ msgstr "Eγγραφή καταχώρησης μενού πάνω από την υπάρχουσα;"
-
-#~ msgid ""
-#~ "This change conflicts with an existing menu item.\n"
-#~ "No two menu items in a submenu can have the same name."
-#~ msgstr ""
-#~ "Αυτή η τροποποίηση συγκρούεται με υπάρχον στοιχείο μενού.\n"
-#~ "Δύο στοιχεία στο ίδιο υπομενού δεν επιτρέπεται να έχουν το ίδιο όνομα."
-
-#~ msgid "One moment, reading menus..."
-#~ msgstr "Παρακαλώ περιμένετε, ανάγνωση μενού..."
-
-#~ msgid "Top of user menus"
-#~ msgstr "Κορυφή μενού χρήστη"
-
-#~ msgid "Top of system menus"
-#~ msgstr "Κορυφή μενού συστήματος"
-
-#~ msgid "Top of system merge menus"
-#~ msgstr "Κορυφή μενού συνένωσης συστήματος"
-
-#~ msgid "Top of applet menus"
-#~ msgstr "Κορυφή μενού εφαρμογιδίου"
-
-#~ msgid "You can not delete a top level submenu."
-#~ msgstr "Δεν μπορείτε να διαγράψετε ένα υπομενού στο ανώτερο επίπεδο"
-
-#~ msgid "Delete this menu item?"
-#~ msgstr "Διαγραφή του παρόντος στοιχείου μενού;"
-
-#~ msgid "Delete empty submenu?"
-#~ msgstr "Διαγραφή άδειου υπομενού;"
-
-#~ msgid "Are you sure you want to delete this submenu and all its contents?"
-#~ msgstr ""
-#~ "Είστε βέβαιοι ότι θέλετε να διαγράψετε το παρόν υπομενού και όλα τα "
-#~ "περιεχόμενά του;"
-
-#~ msgid ""
-#~ "You can't add an entry to that submenu.\n"
-#~ "You do not have the proper permissions."
-#~ msgstr ""
-#~ "Δεν μπορείτε να κάνετε νέα καταχώρηση σε αυτό το υπομενού.\n"
-#~ "Δεν έχετε τα απαραίτητα δικαιώματα."
-
-#~ msgid "New Folder"
-#~ msgstr "Νέος Φάκελος"
-
-#~ msgid "Failed to create directory"
-#~ msgstr "Αποτυχία δημιουργίας καταλόγου"
-
-#~ msgid "untitled.desktop"
-#~ msgstr "άτιτλη.επιφάνεια_εργασίας"
-
-#~ msgid "untitled"
-#~ msgstr "ανώνυμο"
-
-#~ msgid "creating user directory: %s\n"
-#~ msgstr "δημιουργία καταλόγου χρήστη: %s\n"
-
-#~ msgid "unable to create user directory: %s\n"
-#~ msgstr "αδύνατη η δημιουργία καταλόγου χρήστη: %s\n"
-
-#~ msgid ""
-#~ "Error during execution of chosen editor.\n"
-#~ "\n"
-#~ "The editor you have chosen is probably either not available,\n"
-#~ "or is not on your current path."
-#~ msgstr ""
-#~ "Σφάλμα στην εκτέλεση του επιλεγμένου επεξεργαστή κειμένου.\n"
-#~ "\n"
-#~ "Ο επεξεργαστής κειμένου που επιλέξατε πιθανότατα δεν είναι διαθέσιμος,\n"
-#~ "ή δεν είναι στο τρέχον μονοπάτι εργασίας."
-
-#~ msgid ""
-#~ "Alternate editor types are not supported by gnome-edit yet.\n"
-#~ "Please choose a standard executable editor in the gnome-edit capplet\n"
-#~ "in the gnome control center."
-#~ msgstr ""
-#~ "Ενναλακτικά είδη επεξεργαστών κειμένου δεν υποστηρίζονται από το gnome-"
-#~ "edit ακόμα.\n"
-#~ "Παρακαλώ επιλέξτε ένα τυπικό εκτελέσιμο επεξεργαστή κειμένου στο "
-#~ "εφαρμογίδιο\n"
-#~ "gnome-edit στο κέντρο ελέγχου gnome."
-
-#~ msgid "Start in hint browsing mode"
-#~ msgstr "Έναρξη με εμφάνιση υποδείξεων"
-
-#~ msgid "Start in fortune mode"
-#~ msgstr "Έναρξη με εμφάνιση γνωμικών"
-
-#~ msgid "Start in session login mode (used from gsm)"
-#~ msgstr "Έναρξη σε κατάσταση εισαγωγής σε συνεδρία (χρήση από gsm)"
-
-#~ msgid ""
-#~ "Click on the GNOME foot icon to open the\n"
-#~ "Main Menu.  This menu contains all\n"
-#~ "GNOME applications, tools, and commands."
-#~ msgstr ""
-#~ "Πατήστε στο εικονίδιο ποδιού του GNOME για\n"
-#~ "να ανοίξετε το Κυρίως Μενού. Αυτό το μενού\n"
-#~ "περιέχει όλες τις εφαρμογές GNOME, εργαλεία\n"
-#~ "και εντολές."
-
-#~ msgid "You do not have fortune installed."
-#~ msgstr "Δεν έχετε εγκαταστήσει την εφαρμογή \"fortune\"."
-
-#~ msgid "fixed"
-#~ msgstr "grfixed"
-
-#~ msgid "Message of The Day"
-#~ msgstr "Μήνυμα της Ημέρας"
-
-#~ msgid "GNOME Hints"
-#~ msgstr "Υποδείξεις του GNOME"
-
-#~ msgid "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-#~ msgstr "-greek-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-
-#~ msgid ""
-#~ "You've chosen to disable the startup hint.\n"
-#~ "To re-enable it, choose \"Startup Hint\"\n"
-#~ "in the GNOME Control Center"
-#~ msgstr ""
-#~ "Έχετε επιλέξει απενεργοποίηση των υποδείξεων κατά την εκκίνηση.\n"
-#~ "Για να τις επανανενεργοποιήσετε, επιλέξτε \"Υποδείξεις Εκκίνησης\"\n"
-#~ "στον Πίνακα Ελέγχου GNOME"
-
-#~ msgid "No message of the day found!"
-#~ msgstr "Δε βρέθηκε μήνυμα της ημέρας!"
-
-#~ msgid "Gnome hint"
-#~ msgstr "Υπόδειξη Gnome"
-
-#~ msgid "Enable login hints"
-#~ msgstr "Ενεργοποίηση υποδείξεων εισόδου στο σύστημα"
-
-#~ msgid "Display normal hints"
-#~ msgstr "Εμφάνιση κανονικών υποδείξεων"
-
-#~ msgid "Display fortunes instead of hints"
-#~ msgstr "Εμφάνιση γνωμικών αντί υποδείξεων"
-
-#~ msgid "Display message of the day instead of hints"
-#~ msgstr "Εμφάνιση μηνύματος της ημέρας αντί υποδείξεων"
-
-#~ msgid "Message of the day file to use: "
-#~ msgstr "Αρχείο μηνύματος της ημέρας προς χρήση: "
-
-#~ msgid "Bookmark"
-#~ msgstr "Σελιδοδείκτης"
-
-#~ msgid "Page Title"
-#~ msgstr "Τίτλος Σελίδας"
-
-#~ msgid "Gnome Help Bookmarks"
-#~ msgstr "Σελιδοδείκτες Βοήθειας GNOME"
-
-#~ msgid "X position of window"
-#~ msgstr "Χ-συντεταγμένη παραθύρου"
-
-#~ msgid "X"
-#~ msgstr "Χ"
-
-#~ msgid "Y position of window"
-#~ msgstr "Ψ-συντεταγμένη παραθύρου"
-
-#~ msgid "Width of window"
-#~ msgstr "Πλάτος παραθύρου"
-
-#~ msgid "WIDTH"
-#~ msgstr "ΠΛΑΤΟΣ"
-
-#~ msgid "Height of window"
-#~ msgstr "Ύψος παραθύρου"
-
-#~ msgid "HEIGHT"
-#~ msgstr "ΥΨΟΣ"
-
-#~ msgid "Debug level"
-#~ msgstr "Επίπεδο αποσφαλμάτωσης"
-
-#~ msgid "Gnome Help Browser"
-#~ msgstr "Εξερεύνηση Βοήθειας του GNOME"
-
-#~ msgid ""
-#~ "GNOME Help Browser allows easy access to various forms of documentation "
-#~ "on your system"
-#~ msgstr ""
-#~ "Το Σύστημα Βοηθείας του GNOME επιτρέπει εύκολη πρόσβαση σε πλήθος μορφών "
-#~ "τεκμηρίωσης στο σύστημά σας"
-
-#~ msgid "History size"
-#~ msgstr "Μέγεθος ιστορικού"
-
-#~ msgid "History file"
-#~ msgstr "Αρχείο ιστορικού"
-
-#~ msgid "Cache size"
-#~ msgstr "Μέγεθος ενταμίευσης"
-
-#~ msgid "Cache file"
-#~ msgstr "Αρχείο ενταμίευσης"
-
-#~ msgid "Bookmark file"
-#~ msgstr "Αρχείο σελιδοδεικτών"
-
-#~ msgid "Man Path"
-#~ msgstr "Διαδρομή man"
-
-#~ msgid "Info Path"
-#~ msgstr "Διαδρομή info"
-
-#~ msgid "GNOME Help Path"
-#~ msgstr "Διαδρομή Βοήθειας GNOME"
-
-#~ msgid "Gnome Help Configure"
-#~ msgstr "Παράμετροι Βοήθειας GNOME"
-
-#~ msgid "History and cache"
-#~ msgstr "Ιστορικό και ενταμίευση"
-
-#~ msgid "Paths"
-#~ msgstr "Διαδρομές"
-
-#~ msgid "<body><h2>Error: file not found</h2></body>"
-#~ msgstr "<body><h2>Σφάλμα: το αρχείο δε βρέθηκε</h2></body>"
-
-#~ msgid "%b %d, %Y %H:%M"
-#~ msgstr "%b %d, %Y %H:%M"
-
-#~ msgid "Gnome Help History"
-#~ msgstr "Ιστορικό βοήθειας GNOME"
-
-#~ msgid "<BODY BGCOLOR=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<BODY BGCOLOR=\"#FFFFFF\"><h1>Πίνακας Περιεχομένων</h1>\n"
-
-#~ msgid "<h2>Man Pages</h2>\n"
-#~ msgstr "<h2>Σελίδες Man</h2>\n"
-
-#~ msgid "<body bgcolor=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<body bgcolor=\"#FFFFFF\"><h1>Πίνακας Περιεχομένων</h1>\n"
-
-#~ msgid "<h2>Info Pages</h2>\n"
-#~ msgstr "<h2>Σελίδες Info</h2>\n"
-
-#~ msgid "<h2>GNOME Help</h2>\n"
-#~ msgstr "<h2>Βοήθεια GNOME</h2>\n"
-
-#~ msgid ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Results of the substring search for the string "
-#~ msgstr ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Αποτελέσματα αναζήτησης υπακολουθίας για το αλφαριθμητικό "
-
-#~ msgid ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Manual Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Σελίδες εγχειριδίων (man)</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Info Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Σελίδες GNU Info</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Help Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Σελίδες βοήθειας GNOME</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid "<br><B>No matches found</B>\n"
-#~ msgstr "<br><B>Δε βρέθηκαν ταιριάσματα</B>\n"
-
-#~ msgid "User Commands"
-#~ msgstr "Εντολές Χρήστη"
-
-#~ msgid "System Calls"
-#~ msgstr "Κλήσεις Συστήματος"
-
-#~ msgid "Library Functions"
-#~ msgstr "Συναρτήσεις Βιβλιοθήκων"
-
-#~ msgid "Special Files"
-#~ msgstr "Ειδικά Αρχεία"
-
-#~ msgid "File Formats"
-#~ msgstr "Τύποι Αρχείων"
-
-#~ msgid "Administration"
-#~ msgstr "Διαχείριση"
-
-#~ msgid "man9"
-#~ msgstr "man9"
-
-#~ msgid "mann"
-#~ msgstr "mann"
-
-#~ msgid "Man Pages"
-#~ msgstr "Σελίδες man"
-
-#~ msgid "Info Pages"
-#~ msgstr "Σελίδες info"
-
-#~ msgid "<BODY>Could not load default TOC page</BODY>"
-#~ msgstr ""
-#~ "<BODY>Αδύνατη η ανάγνωση εξ ορισμού σελίδας πίνακα περιεχομένων</BODY>"
-
-#~ msgid "<BODY>Unknown TOC argument</BODY>"
-#~ msgstr "<BODY>Άγνωστη παράμετρος για τον πίνακα περιεχομένων</BODY>"
-
-#~ msgid "_New Window"
-#~ msgstr "_Νέο Παράθυρο"
-
-#~ msgid "Open new browser window"
-#~ msgstr "Άνοιγμα νέου παραθύρου εξερεύνησης"
-
-#~ msgid "_Add Bookmark"
-#~ msgstr "_Πρόσθεση σελιδοδείκτη"
-
-#~ msgid "Add bookmark"
-#~ msgstr "Πρόσθεση σελιδοδείκτη"
-
-#~ msgid "_Back"
-#~ msgstr "_Πίσω"
-
-#~ msgid "_Forward"
-#~ msgstr "_Εμπρός"
-
-#~ msgid "_Reload"
-#~ msgstr "_Επαναφόρτωση"
-
-#~ msgid "_Index"
-#~ msgstr "_Ευρετήριο"
-
-#~ msgid "_History"
-#~ msgstr "_Ιστορικό"
-
-#~ msgid "Show History Window"
-#~ msgstr "Εμφάνιση Παραθύρου Ιστορικού"
-
-#~ msgid "_Bookmarks"
-#~ msgstr "_Σελιδοδείκτες"
-
-#~ msgid "Show Bookmarks Window"
-#~ msgstr "Εμφάνιση Παραθύρου Σελιδοδεικτών"
-
-#~ msgid "_View"
-#~ msgstr "_Προβολή"
-
-#~ msgid "Go to the previous location in the history list"
-#~ msgstr "Πήγαινε στην προηγούμενη τοποθεσία στη λίστα ιστορικού"
-
-#~ msgid "Forward"
-#~ msgstr "Εμπρός"
-
-#~ msgid "Go to the next location in the history list"
-#~ msgstr "Πήγαινε στην επόμενη τοποθεσία στη λίστα ιστορικού"
-
-#~ msgid "Index"
-#~ msgstr "Ευρετήριο"
-
-#~ msgid "History"
-#~ msgstr "Ιστορικό"
-
-#~ msgid "BMarks"
-#~ msgstr "Σ/δείκτες"
-
-#~ msgid "Help on Help"
-#~ msgstr "Βοήθεια στη Βοήθεια"
-
-#~ msgid "Location: "
-#~ msgstr "Τοποθεσία: "
-
-#~ msgid ""
-#~ "Error loading document:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "You probably don't\n"
-#~ "have this documentation\n"
-#~ "installed on your system."
-#~ msgstr ""
-#~ "Σφάλμα κατά την ανάγνωση του εγγράφου:\n"
-#~ "\n"
-#~ "%s\n"
-#~ "\n"
-#~ "Πιθανότατα δεν έχετε \n"
-#~ "εγκατεστημένη αυτή την\n"
-#~ "τεκμηρίωση στο σύστημά σας."
-
-#~ msgid "Deskguide (the desktop pager)"
-#~ msgstr "Οδηγός Γραφείου (ο σελιδοποιητής γραφείου)"
-
-#~ msgid "The Battery"
-#~ msgstr "Η Μπαταρία"
-
-#~ msgid "Couldn't register applet."
-#~ msgstr "Αδύνατη η δήλωση του εφαρμογίδιου."
-
-#~ msgid "Whoops! for some reason we can't add to the panel"
-#~ msgstr "Όπα! Για κάποιον λόγο δεν μπορούμε να προσθέσουμε στο ταμπλώ"
-
-#~ msgid "No socket was created"
-#~ msgstr "Δεν δημιουργήθηκε socket"
-
-#~ msgid "Distribution: "
-#~ msgstr "Διανομή: "
-
-#~ msgid "KDE: "
-#~ msgstr "KDE: "
-
-#~ msgid "Panel: "
-#~ msgstr "Ταμπλώ: "
-
-#~ msgid "Desktop: "
-#~ msgstr "Eπιφάνεια εργασίας: "
-
-#~ msgid "Hide delay (ms)"
-#~ msgstr "Απόκρυψη καθυστέρησης (ms)"
-
-#~ msgid "Show delay (ms)"
-#~ msgstr "Εμφάνιση καθυστέρησης (ms)"
-
-#~ msgid "Size (pixels)"
-#~ msgstr "Μέγεθος (εικονοστοιχεία)"
-
-#~ msgid "Prelight buttons on mouseover"
-#~ msgstr "Φωτεινά κουμπιά όταν το ποντίκι είναι από επάνω"
-
-#~ msgid "In the menu"
-#~ msgstr "Στο μενού"
-
-#~ msgid "Menus"
-#~ msgstr "Μενού"
-
-#~ msgid "Use large icons"
-#~ msgstr "Χρήση μεγάλων εικονιδίων"
-
-#~ msgid "Show [...] buttons"
-#~ msgstr "Εμφάνιση [...] κουμπιών"
-
-#~ msgid "Show popup menus outside of panels"
-#~ msgstr "Εμφάνιση αναρτώμενων μενού έξω από τα ταμπλώ"
-
-#~ msgid "Keep menus in memory"
-#~ msgstr "Διατήρηση μενού στη μνήμη"
-
-#~ msgid "Merge in system menus"
-#~ msgstr "Συνένωση μενού συστήματος"
-
-#~ msgid "Show menu titles"
-#~ msgstr "Εμφάνιση τίτλων μενού"
-
-#~ msgid "Global menu"
-#~ msgstr "Καθολικό μενού"
-
-#~ msgid "Tooltips enabled"
-#~ msgstr "Ενεργοποίηση βοηθημάτων"
-
-#~ msgid "Confirm the removal of panels with a dialog"
-#~ msgstr "Επιβεβαίωση της αφαίρεσης των ταμπλώ με διάλογο"
-
-#~ msgid "Try to avoid overlapping panels"
-#~ msgstr "Προσπάθεια για αποτροπή επικάλυψης των ταμπλώ"
-
-#~ msgid "Panel treatment (GNOME compliant window managers only)"
-#~ msgstr ""
-#~ "Μεταχείριση ταμπλώ (μόνο για συμβατούς με GNOME διαχειριστές παραθύρων)"
-
-#~ msgid "Take window screenshot key"
-#~ msgstr "Λήψη πλήκτρου αρπαγής παραθύρου"
-
-#~ msgid "Pick a Font"
-#~ msgstr "Επιλέξτε Γραμματοσειρά"
-
-#~ msgid "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-#~ msgstr "ΆΑάαΒβΓγΔδΈΕέεΖζΉΗήηΘθΊΙίϊΐιΚκΛλΜμΝνΞξΌΟόοΠπΡρΣσΤτΦφΧχΨψΏΩώω"
-
-#~ msgid "Can't get goad_id from desktop entry!"
-#~ msgstr "Δε βρέθηκε το goad_id από το στοιχείο επιφάνειας εργασίας!"
-
-#~ msgid "Red Hat Linux"
-#~ msgstr "Red Hat Linux"
-
-#~ msgid "Red Hat menus"
-#~ msgstr "Μενού Red Hat"
-
-#~ msgid "Zvt terminal widget:     Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-#~ msgstr ""
-#~ "Μαραφέτι τερματικού Zvt:     Michael Zucchi (zucchi@zedzone.mmc.com.au)"
-
-#~ msgid "GNOME terminal:     Miguel de Icaza (miguel@kernel.org)"
-#~ msgstr "Τερματικό  GNOME:     Miguel de Icaza (miguel@kernel.org)"
-
-#~ msgid "    Erik Troan (ewt@redhat.com)"
-#~ msgstr "    Erik Troan (ewt@redhat.com)"
-
-#~ msgid "Creates a new terminal window"
-#~ msgstr "Δημιουργία νέου παραθύρου τερματικού"
-
-#~ msgid "_Show menubar"
-#~ msgstr "_Εμφάνιση γραμμής μενού"
-
-#~ msgid "Toggles whether or not the menubar is displayed."
-#~ msgstr "Εμφάνιση/απόκρυψη γραμμής μενού."
-
-#~ msgid "Toggles whether or not the keyboard is grabbed by the terminal."
-#~ msgstr ""
-#~ "Ενεργοποίηση/απενεργοποίηση δέσμευσης πληκτρολογίου από το τερματικό."
-
-#~ msgid "C_olor selector..."
-#~ msgstr "Επι_λογή χρώματος..."
-
-#~ msgid "The error was: %s"
-#~ msgstr "Το σφάλμα ήταν: %s"
-
-#~ msgid ""
-#~ "If you are using Linux 2.2.x with glibc 2.1.x, this\n"
-#~ "is probably due to incorrectly setup Unix98 ptys.\n"
-#~ "\n"
-#~ "Please read linux/Documentation/Changes for how to\n"
-#~ "set them up correctly."
-#~ msgstr ""
-#~ "Εάν χρησιμοποιείτε Linux 2.2.x και glibc 2.1.x, αυτό\n"
-#~ "οφείλεται πιθανώς σε εσφαλμένη ρύθμιση των Unix98 ptys.\n"
-#~ "\n"
-#~ "Παρακαλώ διαβάστε το linux/Documentation/Changes για το\n"
-#~ "σωστό τρόπο εγκατάστασης."
-
-#~ msgid "Halt"
-#~ msgstr "Κλείσιμο υπολογιστή"
-
-#~ msgid "Only display warnings."
-#~ msgstr "Μόνο εμφάνιση προειδοποιήσεων."
-
-#~ msgid ""
-#~ "No help is available/installed for these settings. Please make sure you\n"
-#~ "have the GNOME User's Guide installed on your system."
-#~ msgstr ""
-#~ "Δεν υπάρχει βοήθεια διαθέσιμη/εγκατεστημένη για αυτές τις ρυθμίσεις. "
-#~ "Παρακαλώ\n"
-#~ "επιβεβαιώστε ότι έχετε εγκατεστημένο τον Οδηγό Χρήστη GNOME στο σύστημά "
-#~ "σας."
-
-#~ msgid "Cannot activate a panel object"
-#~ msgstr "Αδύνατη η ενεργοποίηση αντικειμένου ταμπλώ"
-
-#~ msgid "Cannot start CORBA"
-#~ msgstr "Αδύνατη η εκκίνηση της CORBA"
-
-#~ msgid "CORBA Exception"
-#~ msgstr "Εξαίρεση CORBA"
-
-#~ msgid "Cannot create object"
-#~ msgstr "Αδύνατη η δημιουργία αντικειμένου"
-
-#~ msgid "Object created is not AppletWidget"
-#~ msgstr "Το δημιουργημένο αντικείμενο δεν είναι AppletWidget"
-
-#~ msgid "-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"
-#~ msgstr "-greek-helvetica-medium-r-normal-*-8-*-*-*-p-*-*-*"
-
-#~ msgid "Constant speed animations"
-#~ msgstr "Κινούμενα σχέδια με σταθερή ταχύτητα"
-
-#~ msgid "Explicit hide"
-#~ msgstr "Ρητή απόκρυψη"
-
-#~ msgid "Drawer sliding"
-#~ msgstr "Ολίσθηση συρταριών"
-
-#~ msgid "Launcher icon"
-#~ msgstr "Εικονίδιο εκκινητή"
-
-#~ msgid "Menu icon"
-#~ msgstr "Εικονίδιο μενού"
-
-#~ msgid "Special icon"
-#~ msgstr "Ειδικό εικονίδιο"
-
-#~ msgid "Tiles enabled"
-#~ msgstr "Ενεργοποίηση τίτλων"
-
-#~ msgid "Normal tile"
-#~ msgstr "Κανονικό πλακάκι"
-
-#~ msgid "Clicked tile"
-#~ msgstr "Πεπιεσμένο πλακάκι"
-
-#~ msgid "Border width (tile only)"
-#~ msgstr "Πλάτος πλαισίου (μόνο τίτλος)"
-
-#~ msgid "Depth (displacement when pressed)"
-#~ msgstr "Βάθος (μετατόπιση όταν πατηθεί)"
-
-#~ msgid "Special"
-#~ msgstr "Ειδικό"
-
-#~ msgid "Button type: "
-#~ msgstr "Είδος κουμπιού: "
-
-#~ msgid "Make buttons flush with panel edge"
-#~ msgstr "Αναπήδηση των κουμπιών με την άκρη του ταμπλώ"
-
-#~ msgid "Show button tiles only when cursor is over the button"
-#~ msgstr ""
-#~ "Εμφάνιση τίτλων κουμπιών μόνο όταν ο δείκτης είναι πάνω από το κουμπί"
-
-#~ msgid "Fast but low quality scaling of button icons"
-#~ msgstr ""
-#~ "Γρήγορη αλλά χαμηλής ποιότητας κλιμάκωση των εικονιδίων των κουμπιών"
-
-#~ msgid "Default movement mode"
-#~ msgstr "Εξ ορισμού κατάσταση μετακίνησης"
-
-#~ msgid "Switched movement (or use Ctrl)"
-#~ msgstr "Διακεκκομένη μετακίνηση (ή χρήση Ctrl)"
-
-#~ msgid "Free movement (doesn't disturb other applets) (or use Alt)"
-#~ msgstr ""
-#~ "Ελεύθερη μετακίνηση (δεν διαταράσσει άλλα εφαρμογίδια) (ή χρήση Alt)"
-
-#~ msgid "Push movement (or use Shift)"
-#~ msgstr "Μετακίνηση με εκτόπιση (ή χρήση Shift)"
-
-#~ msgid "Padding between applets"
-#~ msgstr "Επικάλυψη μεταξύ εφαρμογιδίων"
-
-#~ msgid "Padding between applets and panel border"
-#~ msgstr "Επικάλυψη μεταξύ εφαρμογιδίων και του περιθωρίου του ταμπλώ"
-
-#~ msgid "Panel Objects"
-#~ msgstr "Αντικείμενα ταμπλώ"
-
-#~ msgid "App"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Adding tearoff when tearoffs are disabled"
-#~ msgstr "Νέο αποσπώμενο ενώ τα αποσπώμενα μενού είναι απενεργοποιημένα"
-
-#~ msgid "No system menus found!"
-#~ msgstr "Δε βρέθηκαν μενού συστήματος!"
-
-#~ msgid "With pixmap arrow"
-#~ msgstr "Με εικόνα βέλους"
-
-#~ msgid "Without pixmap"
-#~ msgstr "Χωρίς εικόνα"
-
-#~ msgid "Standard (48 pixels)"
-#~ msgstr "Κανονικό (48 εικονοστοιχεία)"
-
-#~ msgid "Huge (80 pixels)"
-#~ msgstr "Τεράστιο (80 εικονοστοιχεία)"
-
-#~ msgid "Ridiculous (128 pixels)"
-#~ msgstr "Γελοίο (128 εικονοστοιχεία)"
-
-#~ msgid "Above"
-#~ msgstr "Επάνω"
-
-#~ msgid "Avoid on maximize"
-#~ msgstr "Αποφυγή στη μεγιστοποίηση"
-
-#~ msgid "Don't avoid on maximize"
-#~ msgstr "Χωρίς αποφυγή στη μεγιστοποίηση"
-
-#~ msgid "Hiding policy"
-#~ msgstr "Πολιτική απόκρυψης"
-
-#~ msgid "Maximize mode"
-#~ msgstr "Κατάσταση μεγιστοποίησης"
-
-#~ msgid "All properties..."
-#~ msgstr "Όλες οι ιδιότητες..."
-
-#~ msgid "Copy date to selection"
-#~ msgstr "Αντιγραφή ημερομηνίας στο επιλεγμένο"
-
-#~ msgid "Copy timestamp to selection"
-#~ msgstr "Αντιγραφή πλήρους ώρας στο επιλεγμένο"
-
-#~ msgid "/panel/Config/clock_format=%I:%M:%S %p"
-#~ msgstr "/panel/Config/clock_format=%I:%M:%S %p"
-
-#~ msgid "/panel/Config/clock_format=%l:%M:%S %p"
-#~ msgstr "/panel/Config/clock_format=%l:%M:%S %p"
-
-#~ msgid "Help system"
-#~ msgstr "Σύστημα Βοήθειας"
-
-#~ msgid "Integrated help system (Info, man, HTML)"
-#~ msgstr "Ολοκληρωμένο σύστημα βοήθειας (Info, man, HTML)"
-
-#~ msgid "GNOME Tasklist"
-#~ msgstr "Λίστα Διεργασιών GNOME"
-
-#~ msgid "Desk Guide"
-#~ msgstr "Οδηγός Γραφείου"
-
-#~ msgid "GNOME Desktop Guide (Pager)"
-#~ msgstr "Οδηγός Γραφείου GNOME (Ταμπλώ)"
-
-#~ msgid "Startup Hint"
-#~ msgstr "Υπόδειξη εκκίνησης"
-
-#~ msgid "Browse the startup hints"
-#~ msgstr "Φυλλομέτρηση των βοηθημάτων εκκίνησης"
-
-#~ msgid "Options for the startup hint dialog"
-#~ msgstr "Υπόδειξη κατά την εκκίνηση"
-
-#~ msgid "Menu editor"
-#~ msgstr "Επεξεργαστής μενού"
-
-#~ msgid "the GNOME menu editor"
-#~ msgstr "Επεξεργαστής μενού του GNOME"
+msgstr "Πολύ μικρό"
