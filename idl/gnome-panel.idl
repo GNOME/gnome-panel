@@ -41,9 +41,6 @@ module GNOME {
 			case BACK_PIXMAP: string pmap;
 		};
 
-		/* XXX do activation stuff here - the applet side of it
-		   will be via a GNOME::GenericFactory (ask elliot) */
-		
 		/*this inits a panelspot, it's called by the applet */
 		PanelSpot add_applet(in Applet panel_applet,
 				     in string goad_id,
@@ -73,6 +70,37 @@ module GNOME {
 		   global config has changed on disk and that it should
 		   reread it */
 		oneway void notice_config_changes ();
+	};
+
+	/* Adding some interfaces for 1.4 */
+	interface Panel2 : Panel {
+		/* Some config stuff */
+		oneway void suggest_sync ();
+
+		/* Adding launchers */
+		/* 'panel' and 'pos' should be 0 if you don't care */
+		oneway void add_launcher (in string launcher_desktop,
+					  in short panel,
+					  in short pos);
+		oneway void ask_about_launcher (in string exec_string,
+						in short panel,
+						in short pos);
+		oneway void add_launcher_from_info (in string name,
+						    in string comment,
+						    in string exec,
+						    in string icon,
+						    in short panel,
+						    in short pos);
+		oneway void add_launcher_from_info_url (in string name,
+							in string comment,
+							in string url,
+							in string icon,
+							in short panel,
+							in short pos);
+
+		/* Some other panel functionality */
+		oneway void run_box (in string initial_string);
+		oneway void main_menu ();
 	};
 
 	interface PanelSpot { /* panel half of applets */
