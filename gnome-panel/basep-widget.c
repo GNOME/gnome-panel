@@ -2431,16 +2431,12 @@ queue_recalc_handler (gpointer data)
 void
 basep_border_queue_recalc (int screen)
 {
-#ifdef BASEP_WIDGET_DEBUG
-	printf ("basep_border_queue_recalc\n");
-#endif
-	if (g_list_find (recalc_list,
-			 GINT_TO_POINTER (screen)) == NULL)
+	if (!g_list_find (recalc_list, GINT_TO_POINTER (screen)))
 		recalc_list = g_list_prepend (recalc_list,
 					      GINT_TO_POINTER (screen));
-	if (queue_recalc_id == 0) {
-		queue_recalc_id = gtk_idle_add (queue_recalc_handler, NULL);
-	}
+
+	if (!queue_recalc_id)
+		queue_recalc_id = g_idle_add (queue_recalc_handler, NULL);
 }
 
 void

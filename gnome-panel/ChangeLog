@@ -1,5 +1,11 @@
 2001-11-28  Mark McLoughlin  <mark@skynet.ie>
 
+	* basep-widget.c: (basep_border_queue_recalc): use
+          g_idle_add instead of gtk_idle_add and save a few
+          stackframes.
+
+2001-11-28  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am: don't build extern.[ch].
 
 	* applet.c:
