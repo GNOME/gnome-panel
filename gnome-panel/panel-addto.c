@@ -675,7 +675,7 @@ static void
 panel_addto_dialog_destroy (GtkWidget *widget_dialog,
 			    PanelAddtoDialog *dialog)
 {
-	panel_toplevel_unblock_auto_hide (PANEL_TOPLEVEL (dialog->panel_widget->toplevel));
+	panel_toplevel_pop_autohide_disabler (PANEL_TOPLEVEL (dialog->panel_widget->toplevel));
 	g_object_set_qdata (G_OBJECT (dialog->panel_widget->toplevel),
 			    panel_addto_dialog_quark,
 			    NULL);
@@ -1003,7 +1003,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_label_set_mnemonic_widget (GTK_LABEL (dialog->label),
 				       dialog->tree_view);
 
-	panel_toplevel_block_auto_hide (dialog->panel_widget->toplevel);
+	panel_toplevel_push_autohide_disabler (dialog->panel_widget->toplevel);
 	panel_addto_name_change (dialog,
 				 panel_toplevel_get_name (dialog->panel_widget->toplevel));
 

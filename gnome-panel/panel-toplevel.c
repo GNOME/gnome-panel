@@ -140,9 +140,6 @@ struct _PanelToplevelPrivate {
 	gulong                  attach_widget_signals [N_ATTACH_WIDGET_SIGNALS];
 	gint			n_autohide_disablers;
 
-	/* Auto-hide blocking */
-	guint                   block_auto_hide;
-
 	guint                   auto_hide : 1;
 	guint                   animate : 1;
 	guint                   buttons_enabled : 1;
@@ -1020,22 +1017,23 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 			(x > SNAP_TOLERANCE) && (x < (screen_width - toplevel->priv->geometry.width - SNAP_TOLERANCE));
 }
 
-static void 
+void 
 panel_toplevel_push_autohide_disabler (PanelToplevel *toplevel)
 {
 	g_return_if_fail (toplevel != NULL);
 
-	toplevel->priv->n_autohide_disablers++;
+	if (!toplevel->priv->n_autohide_disablers++)
+		panel_toplevel_queue_auto_hide (toplevel);
 }
 
-static void
+void
 panel_toplevel_pop_autohide_disabler (PanelToplevel *toplevel)
 {
 	g_return_if_fail (toplevel != NULL);
-
 	g_return_if_fail (toplevel->priv->n_autohide_disablers > 0);
 
-	toplevel->priv->n_autohide_disablers--;		
+	if (!--toplevel->priv->n_autohide_disablers)
+		panel_toplevel_queue_auto_hide (toplevel);
 }
 
 static gboolean
@@ -3148,8 +3146,8 @@ panel_toplevel_auto_hide_timeout_handler (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), FALSE);
 
-	if (toplevel->priv->block_auto_hide)
-		return TRUE;
+	if (panel_toplevel_get_autohide_disabled (toplevel))
+		return FALSE;
 
 	/* keep coming back until the animation has finished.
 	 * FIXME: we should really remove the timeout/idle
@@ -3219,25 +3217,6 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 }
 
 void
-panel_toplevel_block_auto_hide (PanelToplevel *toplevel)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-
-	toplevel->priv->block_auto_hide++;
-}
-
-void
-panel_toplevel_unblock_auto_hide (PanelToplevel *toplevel)
-{
-	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
-	g_return_if_fail (toplevel->priv->block_auto_hide > 0);
-
-	toplevel->priv->block_auto_hide--;
-
-	panel_toplevel_queue_auto_hide (toplevel);
-}
-
-void
 panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
@@ -3254,18 +3233,6 @@ panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 	if (toplevel->priv->hide_timeout ||
 	    toplevel->priv->state != PANEL_STATE_NORMAL)
 		return;
-
-	if (toplevel->priv->block_auto_hide) {
-		/* Since this will continue to be called until
-		 * its unblocked again, we choose a sensible
-	         * timeout.
-		 */
-		toplevel->priv->hide_timeout = 
-			g_timeout_add (DEFAULT_HIDE_DELAY,
-				       (GSourceFunc) panel_toplevel_auto_hide_timeout_handler,
-				       toplevel);
-		return;
-	}
 
 	if (toplevel->priv->hide_delay > 0)
 		toplevel->priv->hide_timeout = 
@@ -4053,7 +4020,6 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++)
 		toplevel->priv->attach_widget_signals [i] = 0;
 
-	toplevel->priv->block_auto_hide   = 0;
 	toplevel->priv->auto_hide         = FALSE;
 	toplevel->priv->buttons_enabled   = TRUE;
 	toplevel->priv->arrows_enabled    = TRUE;

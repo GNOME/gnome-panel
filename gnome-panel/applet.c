@@ -241,7 +241,7 @@ applet_menu_deactivate (GtkWidget *w, AppletInfo *info)
 
 	panel_widget = PANEL_WIDGET (info->widget->parent);
 
-	panel_toplevel_unblock_auto_hide (panel_widget->toplevel);
+	panel_toplevel_pop_autohide_disabler (panel_widget->toplevel);
 }
 
 AppletUserMenu *
@@ -529,7 +529,7 @@ applet_show_menu (AppletInfo     *info,
 	if (info->menu == NULL)
 		return;
 
-	panel_toplevel_block_auto_hide (panel_widget->toplevel);
+	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
 				       "menu_panel",

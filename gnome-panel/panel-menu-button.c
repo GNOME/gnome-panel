@@ -257,7 +257,7 @@ panel_menu_button_drag_data_get (GtkWidget        *widget,
 static void
 panel_menu_button_menu_deactivated (PanelMenuButton *button)
 {
-	panel_toplevel_unblock_auto_hide (button->priv->toplevel);
+	panel_toplevel_pop_autohide_disabler (button->priv->toplevel);
 
 	GTK_BUTTON (button)->in_button = FALSE;
 	BUTTON_WIDGET (button)->ignore_leave = FALSE;
@@ -346,7 +346,7 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 					  button);
 	}
 
-	panel_toplevel_block_auto_hide (button->priv->toplevel);
+	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
 
 	BUTTON_WIDGET (button)->ignore_leave = TRUE;
 

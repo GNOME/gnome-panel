@@ -1,5 +1,33 @@
 2004-09-14  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for bug #144281 - auto-hide panel sometimes not hiding
+	when a drawer closes. Based on a patch from Arvind.
+
+	* panel-toplevel.c:
+	(panel_toplevel_push_autohide_disabler): queue an unhide if this
+	is the first one pushed.
+	(panel_toplevel_pop_autohide_disabler): queue a hide if this is
+	the last one popped.
+	
+2004-09-14  Mark McLoughlin  <mark@skynet.ie>
+
+	Consolidate some code - we don't need two ways to temporarily
+	disable auto-hiding.
+	
+	* panel-toplevel.[ch]:
+	(panel_toplevel_unblock_auto_hide),
+	(panel_toplevel_unblock_auto_hide): remove this and use the disabler
+	stack for everything.
+	(panel_toplevel_auto_hide_timeout_handler):
+	(panel_toplevel_queue_auto_hide),
+	(panel_toplevel_instance_init): update to use the disabler stack.
+	
+	* applet.c, panel-action-protocol.c, panel-addto.c,
+	  panel-menu-button.c, panel-properties-dialog.c, panel-widget.c,
+	  panel.c: update to use the disabler stack.
+
+2004-09-14  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix for bug #136074 - weird autohiding behaviour when
 	you change the orientation of an unexpanded panel.
 

@@ -230,7 +230,7 @@ menu_deactivate(GtkWidget *w, PanelData *pd)
 	if (pd->deactivate_idle == 0)
 		pd->deactivate_idle = g_idle_add (deactivate_idle, pd);
 
-	panel_toplevel_unblock_auto_hide (PANEL_TOPLEVEL (pd->panel));
+	panel_toplevel_pop_autohide_disabler (PANEL_TOPLEVEL (pd->panel));
 }
 
 static void
@@ -339,7 +339,7 @@ panel_popup_menu (PanelToplevel *toplevel,
 	
 	menu = make_popup_panel_menu (panel_widget);
 
-	panel_toplevel_block_auto_hide (toplevel);
+	panel_toplevel_push_autohide_disabler (toplevel);
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
@@ -1227,7 +1227,7 @@ static void
 panel_deletion_destroy_dialog (GtkWidget *widget,
 			       PanelToplevel *toplevel)
 {
-	panel_toplevel_unblock_auto_hide (toplevel);
+	panel_toplevel_pop_autohide_disabler (toplevel);
 	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", NULL);
 }
 
@@ -1309,7 +1309,7 @@ panel_delete (PanelToplevel *toplevel)
 		return;
 	}
 
-	panel_toplevel_block_auto_hide (toplevel);
+	panel_toplevel_push_autohide_disabler (toplevel);
 
 	panel_query_deletion (toplevel);
 }
