@@ -107,9 +107,9 @@ snapped_widget_realize(GtkWidget *w)
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
 		if(snapped->mode == SNAPPED_AUTO_HIDE) {
-			gnome_win_hints_set_layer(w, WIN_LAYER_ABOVE_DOCK);
+			gnome_win_hints_set_layer(w, WIN_LAYER_ONTOP);
 		} else {
-			gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+			gnome_win_hints_set_layer(w, WIN_LAYER_BELOW);
 		}
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
@@ -526,9 +526,9 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 	}
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE) {
-		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ONTOP);
 	} else {
-		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_DOCK);
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_BELOW);
 	}
 
 	snapped->state = SNAPPED_SHOWN;
@@ -553,7 +553,7 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 		snapped->leave_notify_timer_tag = 0;
 	}
 
-	gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
+	gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ONTOP);
 
 	if(fromright)
 	   	gtk_signal_emit(GTK_OBJECT(snapped),
@@ -835,10 +835,10 @@ snapped_widget_change_params(SnappedWidget *snapped,
 			GtkWidget *wid = GTK_WIDGET(snapped);
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
 				gnome_win_hints_set_layer(wid,
-							  WIN_LAYER_ABOVE_DOCK);
+							  WIN_LAYER_ONTOP);
 			} else {
 				gnome_win_hints_set_layer(wid,
-							  WIN_LAYER_DOCK);
+							  WIN_LAYER_BELOW);
 			}
 		}
 	}
