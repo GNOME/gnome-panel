@@ -20,6 +20,15 @@
 GSList *applets;
 
 static int dialogs = 0;
+static gboolean create_new = FALSE;
+
+struct poptOption options [] = {
+	{ "create-new", '\0', POPT_ARG_NONE,
+	  &create_new, 0, N_("Create new file in the given directory"), NULL },
+        POPT_AUTOHELP
+	{ NULL, 0, 0, NULL, 0}
+};
+
 
 static void
 dialog_destroyed (GtkWidget *dialog, gpointer data)
@@ -41,7 +50,9 @@ main(int argc, char * argv[])
 
 	program = gnome_program_init ("gnome-desktop-item-edit", VERSION,
 				      LIBGNOMEUI_MODULE,
-				      argc, argv, NULL);
+				      argc, argv,
+				      GNOME_PARAM_POPT_TABLE, options,
+				      NULL);
 	g_object_get (G_OBJECT (program),
 		      GNOME_PARAM_POPT_CONTEXT, &ctx,
 		      NULL);
@@ -82,16 +93,33 @@ main(int argc, char * argv[])
 			if (gnome_vfs_get_file_info
 			    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
 				g_free (uri);
-				continue;
+				/* FIXME: we now assume these are uris, this is all
+				 * somewhat broken */
+				/* ok, this doesn't exist, really */
+				if (is_ext (desktops[i], ".directory")) {
+					char *dirname = g_path_get_dirname (desktops[i]);
+					char *basename = g_path_get_basename (dirname);
+					dlg = panel_edit_direntry (dirname, basename);
+					g_free (basename);
+					g_free (dirname);
+				} else {
+					char *dirname = g_path_get_dirname (desktops[i]);
+					dlg = panel_edit_dentry (desktops[i], dirname);
+					g_free (dirname);
+				}
 			}
 		}
-		g_print ("BLAM!\n");
-		
-		if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
-			char *basename = g_path_get_basename (desktops[i]);
-			dlg = panel_edit_direntry (uri, basename);
-			g_free (basename);
-		} else {
+
+		if (dlg == NULL &&
+		    info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+			if (create_new) {
+				dlg = panel_new_launcher (uri);
+			} else {
+				char *basename = g_path_get_basename (desktops[i]);
+				dlg = panel_edit_direntry (uri, basename);
+				g_free (basename);
+			}
+		} else if (dlg == NULL) {
 			char *dirname = g_path_get_dirname (uri);
 			dlg = panel_edit_dentry (uri, dirname);
 			g_free (dirname);

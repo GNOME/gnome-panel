@@ -1349,7 +1349,29 @@ internal_panel_is_uri_writable (const char *uri, gboolean recurse)
 gboolean
 panel_is_uri_writable (const char *uri)
 {
+	g_return_val_if_fail (uri != NULL, FALSE);
+
 	internal_panel_is_uri_writable (uri, TRUE /* recurse */);
+}
+
+gboolean
+panel_uri_exists (const char *uri)
+{
+	GnomeVFSURI *suri;
+	gboolean ret;
+
+	g_return_val_if_fail (uri != NULL, FALSE);
+
+	suri = gnome_vfs_uri_new (uri);
+
+	/* eek */
+	g_return_val_if_fail (suri != NULL, FALSE);
+
+	ret = gnome_vfs_uri_exists (suri);
+
+	gnome_vfs_uri_unref (suri);
+
+	return ret;
 }
 
 #if 0

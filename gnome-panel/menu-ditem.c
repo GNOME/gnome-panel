@@ -141,6 +141,9 @@ is_item_writable (const char *loc, const char *dir)
 		else
 			return FALSE;
 	}
+
+	/* huh? */
+	return FALSE;
 }
 
 static void
@@ -247,10 +250,6 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 	ditem = gnome_desktop_item_new_from_uri (dirfile,
 						 0 /* flags */,
 						 NULL /* error */);
-	if (ditem == NULL) {
-		g_free (dirfile);
-		return NULL;
-	}
 
 	/* watch the enum at the top of the file */
 	dialog = gtk_dialog_new_with_buttons (_("Desktop entry properties"),
@@ -350,3 +349,136 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 
 	return dialog;
 }
+
+/* replaces '/' with returns _'s, originally from gmenu */
+static void
+validate_for_filename (char *file)
+{
+	char *ptr;
+
+	g_return_if_fail (file != NULL);
+	
+	ptr = file;
+	while (*ptr != '\0') {
+		if (*ptr == '/')
+			*ptr = '_';
+		ptr++;
+	}
+}
+
+static void
+really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
+{
+	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
+	char *dir = g_object_get_data (G_OBJECT (d), "dir");
+	GnomeDesktopItem *ditem;
+	GError *error = NULL;
+	int i;
+	char *name, *loc;
+
+	if (response != GTK_RESPONSE_OK) {
+		gtk_widget_destroy (d);
+		return;
+	}
+
+	g_return_if_fail (dir != NULL);
+
+	panel_push_window_busy (d);
+
+	ditem = gnome_ditem_edit_get_ditem (dedit);
+
+	if ((gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_APPLICATION &&
+	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
+	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
+	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
+		gnome_desktop_item_unref (ditem);
+		panel_error_dialog ("cannot_create_launcher",
+				    _("Cannot create the launcher.\n\n"
+				      "No command or url specified."));
+		return;
+	}
+
+	/* assume we are making a new file */
+	name = g_strdup (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_NAME));
+
+	validate_for_filename (name);
+
+	loc = g_strdup_printf ("%s/%s.desktop", dir, name);
+
+	i = 2;
+	while (panel_uri_exists (loc)) {
+		g_free (loc);
+		/* FIXME: test for schema:basename.desktop as well
+		 * here!!!! */
+		loc = g_strdup_printf ("%s/%s%d.desktop",
+				       dir, name,
+				       i ++);
+	}
+	gnome_desktop_item_set_location_file (ditem, loc);
+	g_free (name);
+
+	error = NULL;
+	gnome_desktop_item_save (ditem,
+				 NULL /* under */,
+				 TRUE /* force */,
+				 &error);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_save_menu_item" /* class */,
+				    _("Cannot save menu item to disk, "
+				      "the following error occured:\n\n"
+				      "%s"),
+				    error->message);
+		g_clear_error (&error);
+	}
+
+	gnome_desktop_item_unref (ditem);
+
+	panel_pop_window_busy (d);
+
+	gtk_widget_destroy (d);
+	g_free (loc);
+}
+
+GtkWidget *
+panel_new_launcher (const char *item_loc)
+{
+	GtkWidget *dialog;
+	GtkWidget *dee;
+
+	dialog = gtk_dialog_new_with_buttons (_("Create menu item"),
+					      NULL /* parent */,
+					      0 /* flags */,
+					      GTK_STOCK_CANCEL,
+					      GTK_RESPONSE_CANCEL,
+					      GTK_STOCK_OK,
+					      GTK_RESPONSE_OK,
+					      NULL);
+
+	gtk_window_set_wmclass (GTK_WINDOW (dialog),
+			       "create_menu_item", "Panel");
+	
+	dee = gnome_ditem_edit_new ();
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), dee,
+			    TRUE, TRUE, GNOME_PAD_SMALL);
+
+	gnome_ditem_edit_set_entry_type (GNOME_DITEM_EDIT (dee), 
+					 "Application");
+
+	g_object_set_data_full (G_OBJECT (dialog), "dir",
+				g_strdup (item_loc),
+				(GDestroyNotify)g_free);
+	
+	g_signal_connect (G_OBJECT (dialog), "response",
+			  G_CALLBACK (really_add_new_menu_item),
+			  dee);
+
+	gtk_dialog_set_default_response (GTK_DIALOG(dialog),
+					 GTK_RESPONSE_OK);
+
+	gtk_widget_show_all (dialog);
+
+	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dee));
+
+	return dialog;
+}
+
