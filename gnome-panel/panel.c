@@ -623,7 +623,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 }
 
 static void
-panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
+panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 {
 	applets_to_sync = TRUE;
 }
@@ -631,7 +631,8 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 static void
 panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget), "applet_info");
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget),
+					       "applet_info");
 
 	g_return_if_fail(info!=NULL);
 
@@ -647,7 +648,7 @@ panel_menu_get(PanelWidget *panel, PanelData *pd)
 	
 	pd->menu = create_panel_root_menu(panel, TRUE);
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
-			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
+			   GTK_SIGNAL_FUNC(menu_deactivate), pd);
 	return pd->menu;
 }
 

@@ -27,6 +27,7 @@ struct _Extern {
 				    don't send any orient change */
 	
 	int send_draw_timeout;
+	int send_draw_idle;
 	gboolean send_draw_queued;
 
 	AppletInfo *info;

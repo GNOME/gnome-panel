@@ -297,6 +297,10 @@ extern_clean(Extern *ext)
 		gtk_timeout_remove(ext->send_draw_timeout);
 		ext->send_draw_timeout = 0;
 	}
+	if(ext->send_draw_idle) {
+		gtk_idle_remove(ext->send_draw_idle);
+		ext->send_draw_idle = 0;
+	}
 
 	g_free(ext);
 
@@ -472,6 +476,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
 	ext->orient = -1;
 
 	ext->send_draw_timeout = 0;
+	ext->send_draw_idle = 0;
 	ext->send_draw_queued = FALSE;
 
 
@@ -1301,11 +1306,11 @@ send_draw(Extern *ext)
 	CORBA_exception_free(&ev);
 }
 
-static int
+static gboolean
 send_draw_timeout(gpointer data)
 {
 	Extern *ext = data;
-	if(ext->send_draw_queued == TRUE) {
+	if(ext->send_draw && ext->send_draw_queued) {
 		ext->send_draw_queued = FALSE;
 		send_draw(ext);
 		return TRUE;
@@ -1314,16 +1319,28 @@ send_draw_timeout(gpointer data)
 	return FALSE;
 }
 
+static gboolean
+send_draw_idle(Extern *ext)
+{
+	ext->send_draw_idle = 0;
+	if(!ext->send_draw)
+		return FALSE;
+	if(!ext->send_draw_timeout) {
+		ext->send_draw_queued = FALSE;
+		send_draw(ext);
+		ext->send_draw_timeout =
+			gtk_timeout_add(1000, send_draw_timeout, ext);
+	} else 
+		ext->send_draw_queued = TRUE;
+	return FALSE;
+}
+
 void
 extern_send_draw(Extern *ext)
 {
 	if(!ext || !ext->applet || !ext->send_draw)
 		return;
-	if(!ext->send_draw_timeout) {
-		ext->send_draw_queued = FALSE;
-		send_draw(ext);
-		ext->send_draw_timeout =
-			gtk_timeout_add(1000,send_draw_timeout,ext);
-	} else 
-		ext->send_draw_queued = TRUE;
+	if(!ext->send_draw_idle)
+		ext->send_draw_idle =
+			gtk_idle_add(send_draw_idle, ext);
 }

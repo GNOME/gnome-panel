@@ -1,3 +1,11 @@
+Wed Mar 22 17:08:35 2000  George Lebl <jirka@5z.com>
+
+	* panel-widget.c,extern.[ch],panel.c: the do_draw applet signal is
+	  now sent only when it is very likely that the rgb has changed,
+	  this makes it much nicer on system resources then before.  Also
+	  optimized the sending of the stuff over corba so that it doesn't
+	  get sent too many times right after each other.
+
 2000-03-21  Daniel Mueth <d-mueth@uchicago.edu>
 
 	* panel/help/C/figures/*.png: Replaced screenshots with new ones

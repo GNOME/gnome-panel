@@ -19,7 +19,7 @@
 #include <libart_lgpl/art_affine.h>
 #include "rgb-stuff.h"
 
-GSList *panels=NULL; /*other panels we might want to move the applet to*/
+GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
 /*define for some debug output*/
 /*#define PANEL_DEBUG 1*/
@@ -269,6 +269,9 @@ applet_move(PanelWidget *panel, GtkWidget *applet)
 			button->cache = NULL;
 		}
 	}
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_DRAW_SIGNAL],
+			applet);
 }
 
 static void
@@ -904,6 +907,19 @@ make_background(PanelWidget *panel, guchar *rgb_buf,
 }
 
 static void
+send_draw_to_all_applets(PanelWidget *panel)
+{
+	GList *li;
+	for(li = panel->applet_list; li != NULL;
+	    li = g_list_next(li)) {
+		AppletData *ad = li->data;
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[APPLET_DRAW_SIGNAL],
+				ad->applet);
+	}
+}
+
+static void
 kill_cache_on_all_buttons(PanelWidget *panel, int even_no_alpha)
 {
 	GList *li;
@@ -940,11 +956,13 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
 			kill_cache_on_all_buttons(panel, FALSE);
+			send_draw_to_all_applets(panel);
 		} else if(!bg_pixmap && panel->backpix) {
 			if(panel->backpix)
 				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = NULL;
 			kill_cache_on_all_buttons(panel, FALSE);
+			send_draw_to_all_applets(panel);
 		}
 		*pb = panel->backpix;
 	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
@@ -1037,7 +1055,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	}
 
 
-	gdk_draw_rectangle(pixmap,gc, TRUE, 0,0,-1,-1);
+	gdk_draw_rectangle(pixmap,gc, TRUE, 0, 0, -1, -1);
 
 	/* get pixel size of an icon */
 	size = panel->sz;
@@ -1045,9 +1063,6 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_DRAW_SIGNAL],
-				ad->applet);
 		if(IS_BUTTON_WIDGET(ad->applet) &&
 		   ad->applet->allocation.x>=0 &&
 		   (!area || gtk_widget_intersect(ad->applet, area, NULL))) {
@@ -1068,7 +1083,7 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 							size,size, pb, scale_w, scale_h,
 							rotate);
 				button_widget_draw(button, rgb_buf, size*3);
-				gdk_draw_rgb_image(button->cache,gc,
+				gdk_draw_rgb_image(button->cache, gc,
 						   0,0, size, size,
 						   GDK_RGB_DITHER_NORMAL,
 						   rgb_buf, size*3);
@@ -1114,7 +1129,7 @@ panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 	area.width = widget->allocation.width;
 	area.height = widget->allocation.height;
 
-	panel_widget_draw_all(panel,&area);
+	panel_widget_draw_all(panel, &area);
 }
 
 static void
@@ -1140,7 +1155,7 @@ panel_widget_draw(GtkWidget *widget, GdkRectangle *area)
 	   panel->inhibit_draw)
 		return;
 
-	panel_widget_draw_all(panel,area);
+	panel_widget_draw_all(panel, area);
 
 	for(li = panel->applet_list;
 	    li != NULL;
@@ -1172,7 +1187,7 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	puts("PANEL_WIDGET_EXPOSE");
 #endif
 
-	panel_widget_draw_all(panel,&event->area);
+	panel_widget_draw_all(panel, &event->area);
 
 	for(li = panel->applet_list;
 	    li != NULL;
@@ -1228,8 +1243,10 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	    widget->allocation.height != allocation->height) &&
 	   panel->back_type != PANEL_BACK_COLOR &&
 	   (panel->back_type != PANEL_BACK_NONE ||
-	    GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)]))
+	    GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)])) {
 		kill_cache_on_all_buttons(panel, FALSE);
+		send_draw_to_all_applets(panel);
+	}
 	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
@@ -1440,6 +1457,7 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 	g_return_if_fail(color!=NULL);
 	
 	kill_cache_on_all_buttons(panel, FALSE);
+	send_draw_to_all_applets(panel);
 
 	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
 
@@ -1584,6 +1602,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
 
 	kill_cache_on_all_buttons(panel, FALSE);
+	send_draw_to_all_applets(panel);
 
 	if(panel->backpix)
 		gdk_pixbuf_unref(panel->backpix);
@@ -1656,6 +1675,7 @@ panel_widget_style_set(PanelWidget *panel)
 			gdk_pixbuf_unref(panel->backpix);
 		panel->backpix = NULL;
 		kill_cache_on_all_buttons(panel, TRUE);
+		send_draw_to_all_applets(panel);
 	}
 }
 
@@ -2723,6 +2743,7 @@ panel_widget_change_params(PanelWidget *panel,
 #endif
 
 	kill_cache_on_all_buttons(panel, TRUE);
+	send_draw_to_all_applets(panel);
 
 	if(oldorient != panel->orient) {
 	   	gtk_signal_emit(GTK_OBJECT(panel),
