@@ -477,8 +477,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		"Sun GNOME Documentation Team <gdocteam@sun.com>",
           	NULL
 	};
-	/* Translator credits */
-	const char *translator_credits = _("translator-credits");
 
 	char        *authors [3];
 	char        *descr;
@@ -504,8 +502,8 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "comments", descr,
 		      "authors", (const char **) authors,
 		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "gnome-fish",
+		      "translator-credits", _("translator-credits"),
+		      "logo-icon-name", "gnome-fish",
 		      NULL);
 
 	g_free (descr);
