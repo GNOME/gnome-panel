@@ -1,3 +1,15 @@
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-config.[ch]:
+	(update_config_back): just set the history on the
+	option menu, don't activate the menu item. Also,
+	just use the PanelBackType enum for the history ids.
+	(background_type_changed): rename from set_back() and
+	kill the crack.
+	(background_page): fix broken use of menuitem's 'activate'
+	signal instead of the option menu's 'changed' signal.
+	Fixes #91378.
+
 2002-08-21  Havoc Pennington  <hp@pobox.com>
 
 	* gnome-run.c (show_run_dialog): remove GTK_WIN_POS_MOUSE, it's a
