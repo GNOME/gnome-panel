@@ -884,6 +884,44 @@ spin_maximum_size_changed (GtkSpinButton *button, TasklistData *tasklist)
 	panel_applet_gconf_set_int (applet, "maximum_size", prop_value, NULL);
 }
 
+static void
+setup_sensitivity (TasklistData *tasklist,
+		   GConfClient *client,
+		   GladeXML *xml,
+		   const char *wid1,
+		   const char *wid2,
+		   const char *wid3,
+		   const char *key)
+{
+	PanelApplet *applet = PANEL_APPLET (tasklist->applet);
+	char *fullkey;
+	GtkWidget *w;
+
+	fullkey = panel_applet_gconf_get_full_key (applet, key);
+
+	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
+		g_free (fullkey);
+		return;
+	}
+	g_free (fullkey);
+
+	w = glade_xml_get_widget (xml, wid1);
+	g_assert (w != NULL);
+	gtk_widget_set_sensitive (w, FALSE);
+
+	if (wid2 != NULL) {
+		w = glade_xml_get_widget (xml, wid2);
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+	if (wid3 != NULL) {
+		w = glade_xml_get_widget (xml, wid3);
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+
+}
+
 #define WID(s) glade_xml_get_widget (xml, s)
 
 static void
@@ -899,14 +937,45 @@ setup_dialog (GladeXML     *xml,
 
 	tasklist->show_current_radio = WID ("show_current_radio");
 	tasklist->show_all_radio = WID ("show_all_radio");
+
+	setup_sensitivity (tasklist, client, xml,
+			   "show_current_radio",
+			   "show_all_radio",
+			   NULL,
+			   "display_all_workspaces" /* key */);
+
 	tasklist->never_group_radio = WID ("never_group_radio");
 	tasklist->auto_group_radio = WID ("auto_group_radio");
 	tasklist->always_group_radio = WID ("always_group_radio");
+
+	setup_sensitivity (tasklist, client, xml,
+			   "never_group_radio",
+			   "auto_group_radio",
+			   "always_group_radio",
+			   "group_windows" /* key */);
+
 	tasklist->move_minimized_radio = WID ("move_minimized_radio");
 	tasklist->change_workspace_radio = WID ("change_workspace_radio");
 
+	setup_sensitivity (tasklist, client, xml,
+			   "move_minimized_radio",
+			   "change_workspace_radio",
+			   NULL,
+			   "move_unminimized_windows" /* key */);
+
 	tasklist->minimum_size_spin = WID ("minimum_size");
+	setup_sensitivity (tasklist, client, xml,
+			   "minimum_size",
+			   "minimum_size_label",
+			   "minimum_size_post_label",
+			   "minimum_size" /* key */);
+
 	tasklist->maximum_size_spin = WID ("maximum_size");
+	setup_sensitivity (tasklist, client, xml,
+			   "maximum_size",
+			   "maximum_size_label",
+			   "maximum_size_post_label",
+			   "maximum_size" /* key */);
 
 	/* Window grouping: */
 	button = get_grouping_button (tasklist, tasklist->grouping);

@@ -39,6 +39,8 @@
 #define MAX_REASONABLE_ROWS 16
 #define DEFAULT_ROWS 1
 
+#define NEVER_SENSITIVE "never_sensitive"
+
 typedef struct {
 	GtkWidget *applet;
 
@@ -286,7 +288,8 @@ all_workspaces_changed (GConfClient *client,
 				gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
 			}
 		}
-		gtk_widget_set_sensitive (pager->num_rows_spin, value);
+		if ( ! g_object_get_data (G_OBJECT (pager->num_rows_spin), NEVER_SENSITIVE))
+			gtk_widget_set_sensitive (pager->num_rows_spin, value);
 	}
 }
 
@@ -672,6 +675,50 @@ close_dialog (GtkWidget *button,
 }
 
 static void
+setup_sensitivity (PagerData *pager,
+		   GladeXML *xml,
+		   const char *wid1,
+		   const char *wid2,
+		   const char *wid3,
+		   const char *key)
+{
+	PanelApplet *applet = PANEL_APPLET (pager->applet);
+	GConfClient *client = gconf_client_get_default ();
+	char *fullkey;
+	GtkWidget *w;
+
+	fullkey = panel_applet_gconf_get_full_key (applet, key);
+
+	if (gconf_client_key_is_writable (client, fullkey, NULL)) {
+		g_free (fullkey);
+		return;
+	}
+	g_free (fullkey);
+
+	w = glade_xml_get_widget (xml, wid1);
+	g_assert (w != NULL);
+	g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
+			   GINT_TO_POINTER (1));
+	gtk_widget_set_sensitive (w, FALSE);
+
+	if (wid2 != NULL) {
+		w = glade_xml_get_widget (xml, wid2);
+		g_assert (w != NULL);
+		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (1));
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+	if (wid3 != NULL) {
+		w = glade_xml_get_widget (xml, wid3);
+		g_assert (w != NULL);
+		g_object_set_data (G_OBJECT (w), NEVER_SENSITIVE,
+				   GINT_TO_POINTER (1));
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+
+}
+
+static void
 setup_dialog (GladeXML  *xml,
 	      PagerData *pager)
 {
@@ -681,10 +728,28 @@ setup_dialog (GladeXML  *xml,
 	int nr_ws, i;
 	
 	pager->display_workspaces_toggle = WID ("workspace_name_toggle");
+	setup_sensitivity (pager, xml,
+			   "workspace_name_toggle",
+			   NULL,
+			   NULL,
+			   "display_workspace_names" /* key */);
+
 	pager->all_workspaces_radio = WID ("all_workspaces_radio");
 	pager->current_only_radio = WID ("current_only_radio");
+	setup_sensitivity (pager, xml,
+			   "all_workspaces_radio",
+			   "current_only_radio",
+			   "label_row_col",
+			   "display_all_workspaces" /* key */);
+
 	pager->num_rows_spin = WID ("num_rows_spin");
 	pager->label_row_col = WID("label_row_col");
+	setup_sensitivity (pager, xml,
+			   "num_rows_spin",
+			   NULL,
+			   NULL,
+			   "num_rows" /* key */);
+
 	pager->num_workspaces_spin = WID ("num_workspaces_spin");
 	pager->workspaces_tree = WID ("workspaces_tree_view");
 
@@ -707,7 +772,8 @@ setup_dialog (GladeXML  *xml,
 
 	if (pager->display_all) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->all_workspaces_radio), TRUE);
-		gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
+		if ( ! g_object_get_data (G_OBJECT (pager->num_rows_spin), NEVER_SENSITIVE))
+			gtk_widget_set_sensitive (pager->num_rows_spin, TRUE);
 	} else {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pager->current_only_radio), TRUE);
 		gtk_widget_set_sensitive (pager->num_rows_spin, FALSE);
