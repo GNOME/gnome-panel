@@ -1819,11 +1819,6 @@ panel_widget_change_params(PanelWidget *panel,
 	   			panel_widget_signals[STATE_CHANGE_SIGNAL],
 	   			panel->state);
 
-	/*FIXME: notify each applet that we're changing orientation!*/
-	/*NOTE: this will probably be handeled by the app itself since
-	  there should be no applet<->panel configuration in the widget!
-	  we should issue a change orient signal*/
-
 	panel->step_size = step_size;
 	panel->minimize_delay = minimize_delay;
 	panel->minimized_size = minimized_size;
