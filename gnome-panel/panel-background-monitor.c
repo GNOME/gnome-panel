@@ -325,13 +325,16 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 
 	colormap = gdk_drawable_get_colormap (monitor->gdkwindow);
 
+	gdk_error_trap_push ();
+
 	g_assert (monitor->gdkpixbuf == NULL);
 	monitor->gdkpixbuf = gdk_pixbuf_get_from_drawable (
 					NULL, monitor->gdkpixmap, colormap,
 					0, 0, 0, 0, 
 					monitor->width, monitor->height);
 
-	if (monitor->width < rwidth || monitor->height < rheight) {
+	if (!gdk_error_trap_pop () &&
+	    (monitor->width < rwidth || monitor->height < rheight)) {
 		GdkPixbuf *tiled;
 
 		tiled = panel_background_monitor_tile_background (
