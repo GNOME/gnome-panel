@@ -363,7 +363,8 @@ panel_show_hide_left(GtkWidget *widget, gpointer data)
 static gint
 panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-	gdk_window_raise(widget->window);
+	gdk_window_raise(the_panel->window->window);
+
 	if ((the_panel->mode == PANEL_STAYS_PUT) ||
 	    (event->detail == GDK_NOTIFY_INFERIOR))
 		return FALSE;
@@ -394,6 +395,15 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 	/* set up our delay for popup. */
 	the_panel->leave_notify_timer_tag = gtk_timeout_add (the_panel->minimize_delay, pop_down, NULL);
+	
+	return FALSE;
+}
+
+static gint
+visibility_notify(GtkWidget *widget, GdkEventVisibility *event, gpointer data)
+{
+	if(event->state==GDK_VISIBILITY_FULLY_OBSCURED)
+		gdk_window_raise(the_panel->window->window);
 	
 	return FALSE;
 }
@@ -1368,9 +1378,20 @@ panel_init(void)
 	the_panel->leave_notify_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "leave_notify_event",
 							(GtkSignalFunc) panel_leave_notify,
 							the_panel);
-	gtk_signal_connect_after(GTK_OBJECT(the_panel->window), "realize",
+	the_panel->visibility_notify_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "visibility_notify_event",
+							(GtkSignalFunc) visibility_notify,
+							NULL);
+
+	/*gtk_signal_connect_after(GTK_OBJECT(the_panel->window), "realize",
 				 (GtkSignalFunc) realize_change_cursor,
-				 NULL);
+				 NULL);*/
+
+	change_window_cursor(the_panel->window->window, GDK_ARROW);
+	
+	gdk_window_set_events(the_panel->window->window,
+			      GDK_VISIBILITY_NOTIFY_MASK |
+			      GDK_ENTER_NOTIFY_MASK |
+			      GDK_LEAVE_NOTIFY_MASK);
 
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
