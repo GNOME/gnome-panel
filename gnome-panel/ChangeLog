@@ -1,5 +1,10 @@
 2004-02-16  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel.c: (panel_key_press_event): correctly fix bug #134134
+	so as to trigger *only* with Ctrl-F10.
+
+2004-02-16  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix a couple of occurrences where menu items were disabled when
 	they should have been enabled. Based on a patch from Srinivasa
 	Ragavan in bug #132971.
