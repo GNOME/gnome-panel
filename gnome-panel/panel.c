@@ -390,18 +390,19 @@ set_panel_position(void)
 	int width=DEFAULT_HEIGHT,height=DEFAULT_HEIGHT;
 	int i;
 
-	for(i=0;i<PANEL_TABLE_SIZE;i++)
-		if(!the_panel->panel->applets[i]->type==APPLET_PLACEHOLDER &&
-		   !the_panel->panel->applets[i]->type==APPLET_EMPTY) {
-			if(the_panel->panel->applets[i]->applet->allocation.width >
-			   width)
+	for(i=0;i<PANEL_TABLE_SIZE;i++) {
+		if(the_panel->panel->applets[i]->type!=APPLET_PLACEHOLDER &&
+		   the_panel->panel->applets[i]->type!=APPLET_EMPTY) {
+			if(the_panel->panel->applets[i]->applet->
+			   allocation.width > width)
 				width = the_panel->panel->applets[i]->
 					applet->allocation.width;
-			if(the_panel->panel->applets[i]->applet->allocation.height >
-			   height)
+			if(the_panel->panel->applets[i]->applet->
+			   allocation.height > height)
 				height = the_panel->panel->applets[i]->
 					 applet->allocation.height;
 		}
+	}
 
 	switch (the_panel->panel->pos) {
 		case PANEL_POS_TOP:
@@ -449,7 +450,11 @@ change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 static void
 applet_resize(GtkWidget *widget, gpointer data)
 {
-	set_panel_position();
+	if(the_panel->panel->window->allocation.width <
+		widget->allocation.width ||
+		the_panel->panel->window->allocation.height <
+		widget->allocation.height)
+		set_panel_position();
 }
 
 static void
@@ -720,7 +725,7 @@ panel_quit(void)
 static void
 put_applet_in_slot(Panel *panel, PanelApplet *applet, int pos)
 {
-	if(panel->orient == PANEL_ORIENT_HORIZ) {
+	if(panel->orient == PANEL_ORIENT_HORIZ)
 		gtk_table_attach(GTK_TABLE(panel->panel),applet->applet,
 				 pos,pos+1,0,1,
 				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
@@ -728,7 +733,7 @@ put_applet_in_slot(Panel *panel, PanelApplet *applet, int pos)
 				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
 				  GTK_EXPAND|GTK_FILL:0),
 				 0,0);
-	} else {
+	else
 		gtk_table_attach(GTK_TABLE(panel->panel),applet->applet,
 				 0,1,pos,pos+1,
 				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
@@ -736,7 +741,6 @@ put_applet_in_slot(Panel *panel, PanelApplet *applet, int pos)
 				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
 				  GTK_EXPAND|GTK_FILL:0),
 				 0,0);
-	}
 }
 
 
@@ -1434,10 +1438,10 @@ panel_init(void)
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	
 	/*the panel table*/
-	if(the_panel->panel->pos == PANEL_ORIENT_HORIZ)
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ)
 		the_panel->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
 							FALSE);
-	else 
+	else
 		the_panel->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
 							FALSE);
 
@@ -1708,19 +1712,15 @@ panel_change_orient(void)
 		gtk_container_remove(GTK_CONTAINER(the_panel->panel->panel),
 				     the_panel->panel->applets[i]->applet);
 	gtk_widget_destroy(the_panel->panel->panel);
-	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ) {
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ)
 		the_panel->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
 							FALSE);
-		gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
-				  the_panel->panel->panel);
-		gtk_widget_show(the_panel->panel->panel);
-	} else {
+	else
 		the_panel->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
 							FALSE);
-		gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
-				  the_panel->panel->panel);
-		gtk_widget_show(the_panel->panel->panel);
-	}
+	gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
+			  the_panel->panel->panel);
+	gtk_widget_show(the_panel->panel->panel);
 	for(i=0;i<PANEL_TABLE_SIZE;i++)
 		put_applet_in_slot(the_panel->panel,
 				   the_panel->panel->applets[i],
@@ -1747,7 +1747,7 @@ panel_reconfigure(PanelMain *newconfig)
 	the_panel->mode = newconfig->mode;
 	oldpos=the_panel->panel->pos;
 	the_panel->panel->pos = newconfig->panel->pos;
-	switch (oldpos) {
+	switch (newconfig->panel->pos) {
 		case PANEL_POS_TOP:
 		case PANEL_POS_BOTTOM:
 			the_panel->panel->orient = PANEL_ORIENT_HORIZ;
