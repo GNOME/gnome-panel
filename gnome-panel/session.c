@@ -1744,8 +1744,6 @@ load_up_globals (void)
 
 	global_config.drawer_auto_close =
 		conditional_get_bool ("drawer_auto_close", FALSE, NULL);
-	global_config.tile_when_over =
-		conditional_get_bool ("tile_when_over", FALSE, NULL);
 	global_config.saturate_when_over =
 		conditional_get_bool ("saturate_when_over", TRUE, NULL);
 	global_config.confirm_panel_remove =
@@ -1807,8 +1805,6 @@ write_global_config (void)
 			       global_config.normal_layer);
 	gnome_config_set_bool ("drawer_auto_close",
 			       global_config.drawer_auto_close);
-	gnome_config_set_bool ("tile_when_over",
-			       global_config.tile_when_over);
 	gnome_config_set_bool ("saturate_when_over",
 			       global_config.saturate_when_over);
 	gnome_config_set_bool ("confirm_panel_remove",
@@ -1870,9 +1866,6 @@ convert_write_config(void)
 			      global_config.keep_bottom);
 	gnome_config_set_bool("drawer_auto_close",
 			      global_config.drawer_auto_close);
-	gnome_config_set_bool("tile_when_over",
-			      global_config.tile_when_over);
-	
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 }
