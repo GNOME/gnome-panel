@@ -1356,6 +1356,9 @@ background_type_changed (GtkOptionMenu  *option_menu,
 
 	back_type = gtk_option_menu_get_history (option_menu);
 
+	if (ppc->back_type == back_type)
+		return;
+
 	if (back_type == 3) { /* Transparent */
 		back_type = PANEL_BACK_COLOR;
 		ppc->back_color.alpha = 0x0000;
@@ -1366,9 +1369,6 @@ background_type_changed (GtkOptionMenu  *option_menu,
 					    ppc->back_color.gdk.blue,
 					    ppc->back_color.alpha);
 	}
-
-	if (ppc->back_type == back_type)
-		return;
 
 	ppc->back_type = back_type;
 
