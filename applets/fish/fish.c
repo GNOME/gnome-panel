@@ -299,6 +299,8 @@ properties_dialog(AppletWidget *aw, gpointer data)
 static void 
 update_fortune_dialog(Fish *fish)
 {
+        gboolean fortune_exists;
+
 	if ( fish->fortune_dialog == NULL ) {
 		fish->fortune_dialog = 
 			gnome_dialog_new("", GNOME_STOCK_BUTTON_CLOSE, NULL);
@@ -337,10 +339,18 @@ update_fortune_dialog(Fish *fish)
 		apply_properties(fish);
 	}
 	if (!GTK_WIDGET_VISIBLE(fish->fortune_dialog))
-		gtk_widget_show(fish->fortune_dialog);  
-	gnome_less_show_command(GNOME_LESS(fish->fortune_less),
-				g_file_exists("/usr/games/fortune")?
-				"/usr/games/fortune":"fortune");
+		gtk_widget_show(fish->fortune_dialog);
+
+	fortune_exists = g_file_exists("/usr/games/fortune") || 
+	                 (gnome_is_program_in_path("fortune") != NULL);
+
+	if (fortune_exists)
+                gnome_less_show_command(GNOME_LESS(fish->fortune_less),
+					g_file_exists("/usr/games/fortune")?
+					"/usr/games/fortune":"fortune");
+	else
+                gnome_less_show_string(GNOME_LESS(fish->fortune_less),
+				       "You do not have fortune installed.");
 }
 
 static int 
