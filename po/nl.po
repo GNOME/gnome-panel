@@ -13,14 +13,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.x\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-04 04:10+0200\n"
+"POT-Creation-Date: 2003-08-07 15:40+0100\n"
 "PO-Revision-Date: 2003-08-04 11:39+0100\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -713,7 +713,7 @@ msgstr "Vensters van _huidige werkblad tonen"
 msgid "Show windows from a_ll workspaces"
 msgstr "Vensters van a_lle werkbladen tonen"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3494
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3481
 msgid "Size"
 msgstr "Afmetingen"
 
@@ -918,29 +918,29 @@ msgstr ""
 "weergeeft. Deze sleutel is slechts relevant als de sleutel "
 "display_all_workspaces waar is."
 
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:100 gnome-panel/applet.c:490
 #: gnome-panel/panel-applet-frame.c:104
 msgid "Un_lock"
 msgstr "_Losmaken"
 
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:100 gnome-panel/applet.c:490
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:104
 msgid "_Lock"
 msgstr "Vast_zetten"
 
-#: gnome-panel/applet.c:400
+#: gnome-panel/applet.c:402
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:474 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:476 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "Ve_rwijderen van paneel"
 
-#: gnome-panel/applet.c:490 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:498 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "Ver_plaatsen"
 
-#: gnome-panel/applet.c:1090
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "Kan geen lege plaats vinden"
 
@@ -973,7 +973,7 @@ msgstr "Oplichten bij slepen"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Of het pictogram al of niet oplicht tijdens het slepen en neerzetten"
 
-#: gnome-panel/button-widget.c:854 gnome-panel/panel-toplevel.c:3483
+#: gnome-panel/button-widget.c:854 gnome-panel/panel-toplevel.c:3470
 msgid "Orientation"
 msgstr "Oriëntatie"
 
@@ -1029,7 +1029,7 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-menu"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:815 gnome-panel/menu.c:1509
+#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:751 gnome-panel/menu.c:1509
 #: gnome-panel/menu.c:3003 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Eigenschappen"
@@ -1269,36 +1269,36 @@ msgstr "Dit start-pictogram geeft geen te tonen URL."
 msgid "Cannot show %s"
 msgstr "Kan %s niet tonen"
 
-#: gnome-panel/launcher.c:418
+#: gnome-panel/launcher.c:412
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Geen URI aangegeven voor bureaublad-bestand van paneel-starter\n"
 
-#: gnome-panel/launcher.c:432
+#: gnome-panel/launcher.c:426
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Niet in staat om bureaublad-bestand %s voor paneelstarter %s%s te openen\n"
 
-#: gnome-panel/launcher.c:534
+#: gnome-panel/launcher.c:528
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Hulp over %s-toep_assing"
 
-#: gnome-panel/launcher.c:702 gnome-panel/menu-ditem.c:175
+#: gnome-panel/launcher.c:652 gnome-panel/menu-ditem.c:175
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Starter-eigenschappen"
 
-#: gnome-panel/launcher.c:889
+#: gnome-panel/launcher.c:825
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Sleutel %s is niet ingesteld, kan starter niet laden\n"
 
-#: gnome-panel/launcher.c:958 gnome-panel/menu-ditem.c:532
+#: gnome-panel/launcher.c:894 gnome-panel/menu-ditem.c:532
 msgid "Create Launcher"
 msgstr "Starter aanmaken"
 
-#: gnome-panel/launcher.c:1165 gnome-panel/menu.c:1185
+#: gnome-panel/launcher.c:1101 gnome-panel/menu.c:1185
 #: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "Niet in staat het hulpdocument weer te geven"
@@ -2447,199 +2447,199 @@ msgid "_Force quit"
 msgstr "Afsluiten _forceren"
 
 # juiste vertaling?!
-#: gnome-panel/panel-toplevel.c:1417
+#: gnome-panel/panel-toplevel.c:1397
 msgid "Top Expanded Edge Panel"
 msgstr "Uitgeschoven bovenrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1418
+#: gnome-panel/panel-toplevel.c:1398
 msgid "Top Centered Panel"
 msgstr "Gecentreerd bovenpaneel"
 
-#: gnome-panel/panel-toplevel.c:1419
+#: gnome-panel/panel-toplevel.c:1399
 msgid "Top Floating Panel"
 msgstr "Bovenaan zwevend paneel"
 
-#: gnome-panel/panel-toplevel.c:1420
+#: gnome-panel/panel-toplevel.c:1400
 msgid "Top Edge Panel"
 msgstr "Bovenrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1424
+#: gnome-panel/panel-toplevel.c:1404
 msgid "Bottom Expanded Edge Panel"
 msgstr "Uitgeschoven onderrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1425
+#: gnome-panel/panel-toplevel.c:1405
 msgid "Bottom Centered Panel"
 msgstr "Onderaan gecentreerd paneel"
 
-#: gnome-panel/panel-toplevel.c:1426
+#: gnome-panel/panel-toplevel.c:1406
 msgid "Bottom Floating Panel"
 msgstr "Onderaan zwevend paneel"
 
-#: gnome-panel/panel-toplevel.c:1427
+#: gnome-panel/panel-toplevel.c:1407
 msgid "Bottom Edge Panel"
 msgstr "Onderrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1431
+#: gnome-panel/panel-toplevel.c:1411
 msgid "Left Expanded Edge Panel"
 msgstr "Uitgeschoven linkerrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1432
+#: gnome-panel/panel-toplevel.c:1412
 msgid "Left Centered Panel"
 msgstr "Links gecentreerd paneel"
 
-#: gnome-panel/panel-toplevel.c:1433
+#: gnome-panel/panel-toplevel.c:1413
 msgid "Left Floating Panel"
 msgstr "Links zwevend paneel"
 
-#: gnome-panel/panel-toplevel.c:1434
+#: gnome-panel/panel-toplevel.c:1414
 msgid "Left Edge Panel"
 msgstr "Linkerrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1438
+#: gnome-panel/panel-toplevel.c:1418
 msgid "Right Expanded Edge Panel"
 msgstr "Uitgeschoven rechterrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:1439
+#: gnome-panel/panel-toplevel.c:1419
 msgid "Right Centered Panel"
 msgstr "Rechts gecentreerd paneel"
 
-#: gnome-panel/panel-toplevel.c:1440
+#: gnome-panel/panel-toplevel.c:1420
 msgid "Right Floating Panel"
 msgstr "Rechts zwevend paneel"
 
-#: gnome-panel/panel-toplevel.c:1441
+#: gnome-panel/panel-toplevel.c:1421
 msgid "Right Edge Panel"
 msgstr "Rechterrandpaneel"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3450
 msgid "Name"
 msgstr "Naam"
 
-#: gnome-panel/panel-toplevel.c:3464
+#: gnome-panel/panel-toplevel.c:3451
 msgid "The name of this panel"
 msgstr "De naam van dit paneel"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3460
 msgid "Expand"
 msgstr "Uitschuiven"
 
-#: gnome-panel/panel-toplevel.c:3474
+#: gnome-panel/panel-toplevel.c:3461
 msgid "Expand to take up the full monitor width/height"
 msgstr "Uitschuiven zodat de hele monitorbreedte/-hoogte gebruikt wordt"
 
-#: gnome-panel/panel-toplevel.c:3484
+#: gnome-panel/panel-toplevel.c:3471
 msgid "The orientation of the panel"
 msgstr "De oriëntatie van dit paneel"
 
-#: gnome-panel/panel-toplevel.c:3495
+#: gnome-panel/panel-toplevel.c:3482
 msgid "The height (or width when vertical) of the panel"
 msgstr "De hoogte (of breedte als verticaal) van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3507
+#: gnome-panel/panel-toplevel.c:3494
 msgid "X position"
 msgstr "X-positie"
 
-#: gnome-panel/panel-toplevel.c:3508
+#: gnome-panel/panel-toplevel.c:3495
 msgid "The X position of the panel"
 msgstr "De X-positie van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3519
+#: gnome-panel/panel-toplevel.c:3506
 msgid "X centered"
 msgstr "X-gecentreerd"
 
-#: gnome-panel/panel-toplevel.c:3520
+#: gnome-panel/panel-toplevel.c:3507
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Het x-coördinaat is relatief aan het schermmidden"
 
-#: gnome-panel/panel-toplevel.c:3529
+#: gnome-panel/panel-toplevel.c:3516
 msgid "Y position"
 msgstr "Y-positie"
 
-#: gnome-panel/panel-toplevel.c:3530
+#: gnome-panel/panel-toplevel.c:3517
 msgid "The Y position of the panel"
 msgstr "De Y-positie van het paneel"
 
-#: gnome-panel/panel-toplevel.c:3541
+#: gnome-panel/panel-toplevel.c:3528
 msgid "Y centered"
 msgstr "Y-gecentreerd"
 
-#: gnome-panel/panel-toplevel.c:3542
+#: gnome-panel/panel-toplevel.c:3529
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Het y-coördinaat is relatief aan het schermmidden"
 
-#: gnome-panel/panel-toplevel.c:3551
+#: gnome-panel/panel-toplevel.c:3538
 msgid "Xinerama monitor"
 msgstr "Xinerama-monitor"
 
-#: gnome-panel/panel-toplevel.c:3552
+#: gnome-panel/panel-toplevel.c:3539
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "De monitor (in Xinerama-termen) waarop het paneel zich bevindt"
 
-#: gnome-panel/panel-toplevel.c:3563
+#: gnome-panel/panel-toplevel.c:3550
 msgid "Auto hide"
 msgstr "Automatisch verbergen"
 
-#: gnome-panel/panel-toplevel.c:3564
+#: gnome-panel/panel-toplevel.c:3551
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Het paneel automatisch verbergen wanneer de muis het paneel verlaat"
 
-#: gnome-panel/panel-toplevel.c:3573
+#: gnome-panel/panel-toplevel.c:3560
 msgid "Hide delay"
 msgstr "Verbergvertraging"
 
-#: gnome-panel/panel-toplevel.c:3574
+#: gnome-panel/panel-toplevel.c:3561
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Het aantal milliseconden vertraging voor automatisch verbergen"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3572
 msgid "Un-hide delay"
 msgstr "Vertraging tot weer zichtbaar maken"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3573
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 "Het aantal te wachten milliseconden voor automatisch weer zichtbaar maken"
 
 # Waar staat dit voor?
-#: gnome-panel/panel-toplevel.c:3597
+#: gnome-panel/panel-toplevel.c:3584
 msgid "Auto-hide size"
 msgstr "Automatisch verbergen-grootte"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3585
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 "Het aantal zichtbare pixels wanneer het paneel automatisch verborgen is"
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Animate"
 msgstr "Animeren"
 
-#: gnome-panel/panel-toplevel.c:3610
+#: gnome-panel/panel-toplevel.c:3597
 msgid "Enable hiding/showing animations"
 msgstr "Verbergen/tonen van animaties inschakelen"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3606
 msgid "Animation Speed"
 msgstr "Animatiesnelheid"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3607
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "De snelheid waarmee paneel verborgen/getoond wordt"
 
-#: gnome-panel/panel-toplevel.c:3630
+#: gnome-panel/panel-toplevel.c:3617
 msgid "Buttons Enabled"
 msgstr "Knoppen ingeschakeld"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3618
 msgid "Enable hide/show buttons"
 msgstr "Verbergen/tonen-knoppen inschakelen"
 
-#: gnome-panel/panel-toplevel.c:3640
+#: gnome-panel/panel-toplevel.c:3627
 msgid "Arrows Enabled"
 msgstr "Pijltjes ingeschakeld"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3628
 msgid "Enable arrows on hide/show buttons"
 msgstr "Pijltjes op verbergen/tonen-knoppen inschakelen"
 

@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-08-06 23:11+0800\n"
+"POT-Creation-Date: 2003-08-07 15:40+0100\n"
 "PO-Revision-Date: 2003-08-04 18:11+0800\n"
 "Last-Translator: Funda Wang <fundawang@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -746,7 +746,7 @@ msgstr "显示所有工作区中的窗口(_L)"
 
 # applets/mini-commander/src/preferences.c:487
 # applets/tasklist/tasklist_properties.c:220
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3494
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3481
 msgid "Size"
 msgstr "尺寸"
 
@@ -945,35 +945,35 @@ msgstr ""
 
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:100 gnome-panel/applet.c:490
 #: gnome-panel/panel-applet-frame.c:104
 msgid "Un_lock"
 msgstr "取消锁定(_L)"
 
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:100 gnome-panel/applet.c:490
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:104
 msgid "_Lock"
 msgstr "锁定(_L)"
 
 # panel/applet.c:297
-#: gnome-panel/applet.c:400
+#: gnome-panel/applet.c:402
 msgid "???"
 msgstr "???"
 
 # panel/applet.c:337
-#: gnome-panel/applet.c:474 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:476 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "从面板上删除(_R)"
 
 # gmenu/main.c:110 gmenu/main.c:140
-#: gnome-panel/applet.c:490 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:498 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "移动(_M)"
 
 # panel/menu.c:2069
-#: gnome-panel/applet.c:1090
+#: gnome-panel/applet.c:1099
 msgid "Can't find an empty spot"
 msgstr "无法找到空位"
 
@@ -1008,7 +1008,7 @@ msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "是否在拖放图标时突出显示"
 
 # panel/panel_config.c:538
-#: gnome-panel/button-widget.c:854 gnome-panel/panel-toplevel.c:3483
+#: gnome-panel/button-widget.c:854 gnome-panel/panel-toplevel.c:3470
 msgid "Orientation"
 msgstr "方向"
 
@@ -1758,8 +1758,8 @@ msgstr ""
 "\n"
 "重新装入该小程序吗？\n"
 "\n"
-"(若您此时不重新装入，您还是可以在面板上点击鼠标右键而后点击“添加到面板”子菜"
-"单来添加)"
+"(若您此时不重新装入，您还是可以在面板上点击鼠标右键而后点击“添加到面板”子菜单"
+"来添加)"
 
 # gmenu/main.c:106
 #: gnome-panel/panel-applet-frame.c:829
@@ -1892,8 +1892,8 @@ msgid ""
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"如果为 true，则在打开“运行程序”对话框时其中的“已知的应用程序”列表处于展开"
-"状态。这一设置只在 enable_program_list 为 true 时才生效。"
+"如果为 true，则在打开“运行程序”对话框时其中的“已知的应用程序”列表处于展开状"
+"态。这一设置只在 enable_program_list 为 true 时才生效。"
 
 #: gnome-panel/panel-general.schemas.in.h:7
 msgid ""
@@ -1901,8 +1901,8 @@ msgid ""
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
 msgstr ""
-"如果为 true，则“运行程序”对话框中的“已知的应用程序”列表就处于可用状态。当"
-"对话框打开时列表是否展开是由设置 show_program_list 来控制的。"
+"如果为 true，则“运行程序”对话框中的“已知的应用程序”列表就处于可用状态。当对话"
+"框打开时列表是否展开是由设置 show_program_list 来控制的。"
 
 #: gnome-panel/panel-general.schemas.in.h:8
 msgid "Panel ID list"
@@ -2086,8 +2086,7 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
-"如果为 true，则用户在使用“取消锁定”菜单项取消对象的锁定之前，无法移动小程"
-"序。"
+"如果为 true，则用户在使用“取消锁定”菜单项取消对象的锁定之前，无法移动小程序。"
 
 #: gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
@@ -2125,8 +2124,8 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
-"小程序的 Bonobo 实现 ID - 例如 “OAFIID:GNOME_ClockApplet”。该设置只在对象类"
-"型为“bonobo 小程序”的时候才有效。"
+"小程序的 Bonobo 实现 ID - 例如 “OAFIID:GNOME_ClockApplet”。该设置只在对象类型"
+"为“bonobo 小程序”的时候才有效。"
 
 #: gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2134,15 +2133,14 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
-"该按钮代表的动作类型。可供选择的值有“锁定”、“注销”、“运行”、“搜"
-"索”和“抓图”。该设置只在对象类型为“动作小程序”的时候才有效。"
+"该按钮代表的动作类型。可供选择的值有“锁定”、“注销”、“运行”、“搜索”和“抓图”。"
+"该设置只在对象类型为“动作小程序”的时候才有效。"
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
-msgstr ""
-"附着于该抽屉的面板的标识。该设置只在对象类型为“抽屉对象”的时候才有效。"
+msgstr "附着于该抽屉的面板的标识。该设置只在对象类型为“抽屉对象”的时候才有效。"
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -2153,8 +2151,7 @@ msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"描述启动器的 .desktop 文件的位置。该设置只在对象类型为“启动器对象”时才有"
-"效。"
+"描述启动器的 .desktop 文件的位置。该设置只在对象类型为“启动器对象”时才有效。"
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2539,214 +2536,214 @@ msgstr "无法载入面板库存图标‘%s’\n"
 msgid "_Force quit"
 msgstr "强制退出(_F)"
 
-#: gnome-panel/panel-toplevel.c:1417
+#: gnome-panel/panel-toplevel.c:1397
 msgid "Top Expanded Edge Panel"
 msgstr "上方扩展边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1418
+#: gnome-panel/panel-toplevel.c:1398
 msgid "Top Centered Panel"
 msgstr "上方居中面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/panel-toplevel.c:1419
+#: gnome-panel/panel-toplevel.c:1399
 msgid "Top Floating Panel"
 msgstr "上方浮动面板"
 
 # panel/menu.c:543
-#: gnome-panel/panel-toplevel.c:1420
+#: gnome-panel/panel-toplevel.c:1400
 msgid "Top Edge Panel"
 msgstr "上方边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1424
+#: gnome-panel/panel-toplevel.c:1404
 msgid "Bottom Expanded Edge Panel"
 msgstr "下方扩展边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1425
+#: gnome-panel/panel-toplevel.c:1405
 msgid "Bottom Centered Panel"
 msgstr "下放居中面板"
 
-#: gnome-panel/panel-toplevel.c:1426
+#: gnome-panel/panel-toplevel.c:1406
 msgid "Bottom Floating Panel"
 msgstr "下方浮动面板"
 
-#: gnome-panel/panel-toplevel.c:1427
+#: gnome-panel/panel-toplevel.c:1407
 msgid "Bottom Edge Panel"
 msgstr "下方边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1431
+#: gnome-panel/panel-toplevel.c:1411
 msgid "Left Expanded Edge Panel"
 msgstr "左方扩展边缘面板"
 
 # panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:1432
+#: gnome-panel/panel-toplevel.c:1412
 msgid "Left Centered Panel"
 msgstr "左方居中面板"
 
-#: gnome-panel/panel-toplevel.c:1433
+#: gnome-panel/panel-toplevel.c:1413
 msgid "Left Floating Panel"
 msgstr "左方浮动面板"
 
 # panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:1434
+#: gnome-panel/panel-toplevel.c:1414
 msgid "Left Edge Panel"
 msgstr "左方边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1438
+#: gnome-panel/panel-toplevel.c:1418
 msgid "Right Expanded Edge Panel"
 msgstr "右方扩展边缘面板"
 
-#: gnome-panel/panel-toplevel.c:1439
+#: gnome-panel/panel-toplevel.c:1419
 msgid "Right Centered Panel"
 msgstr "右方居中面板"
 
-#: gnome-panel/panel-toplevel.c:1440
+#: gnome-panel/panel-toplevel.c:1420
 msgid "Right Floating Panel"
 msgstr "右方浮动面板"
 
-#: gnome-panel/panel-toplevel.c:1441
+#: gnome-panel/panel-toplevel.c:1421
 msgid "Right Edge Panel"
 msgstr "右方边缘面板"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3450
 msgid "Name"
 msgstr "名字"
 
 # panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:3464
+#: gnome-panel/panel-toplevel.c:3451
 msgid "The name of this panel"
 msgstr "该面板的名字"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3460
 msgid "Expand"
 msgstr "扩展"
 
-#: gnome-panel/panel-toplevel.c:3474
+#: gnome-panel/panel-toplevel.c:3461
 msgid "Expand to take up the full monitor width/height"
 msgstr "扩展以占据整个监视器的宽度/高度"
 
 # panel/menu.c:2276
-#: gnome-panel/panel-toplevel.c:3484
+#: gnome-panel/panel-toplevel.c:3471
 msgid "The orientation of the panel"
 msgstr "面板的走向"
 
-#: gnome-panel/panel-toplevel.c:3495
+#: gnome-panel/panel-toplevel.c:3482
 msgid "The height (or width when vertical) of the panel"
 msgstr "面板的高度(或垂直面板的宽度)"
 
 # panel/panel_config.c:283 panel/panel_config.c:462
-#: gnome-panel/panel-toplevel.c:3507
+#: gnome-panel/panel-toplevel.c:3494
 msgid "X position"
 msgstr "水平位置"
 
 # help-browser/gnome-help-browser.c:121
-#: gnome-panel/panel-toplevel.c:3508
+#: gnome-panel/panel-toplevel.c:3495
 msgid "The X position of the panel"
 msgstr "面板的水平位置"
 
-#: gnome-panel/panel-toplevel.c:3519
+#: gnome-panel/panel-toplevel.c:3506
 msgid "X centered"
 msgstr "水平中心"
 
-#: gnome-panel/panel-toplevel.c:3520
+#: gnome-panel/panel-toplevel.c:3507
 msgid "The x co-ordinate is relative to center screen"
 msgstr "水平坐标相对于屏幕中心"
 
 # panel/panel_config.c:283 panel/panel_config.c:462
-#: gnome-panel/panel-toplevel.c:3529
+#: gnome-panel/panel-toplevel.c:3516
 msgid "Y position"
 msgstr "垂直位置"
 
 # help-browser/gnome-help-browser.c:122
-#: gnome-panel/panel-toplevel.c:3530
+#: gnome-panel/panel-toplevel.c:3517
 msgid "The Y position of the panel"
 msgstr "窗口的垂直位置"
 
-#: gnome-panel/panel-toplevel.c:3541
+#: gnome-panel/panel-toplevel.c:3528
 msgid "Y centered"
 msgstr "垂直中心"
 
-#: gnome-panel/panel-toplevel.c:3542
+#: gnome-panel/panel-toplevel.c:3529
 msgid "The y co-ordinate is relative to center screen"
 msgstr "垂直坐标相对于屏幕中心"
 
-#: gnome-panel/panel-toplevel.c:3551
+#: gnome-panel/panel-toplevel.c:3538
 msgid "Xinerama monitor"
 msgstr "Xinerama 监视器"
 
-#: gnome-panel/panel-toplevel.c:3552
+#: gnome-panel/panel-toplevel.c:3539
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "面板所在的监视器 (按 Xinerama 的术语)"
 
 # panel/panel_config.c:366 panel/panel_config.c:580
-#: gnome-panel/panel-toplevel.c:3563
+#: gnome-panel/panel-toplevel.c:3550
 msgid "Auto hide"
 msgstr "自动隐藏"
 
-#: gnome-panel/panel-toplevel.c:3564
+#: gnome-panel/panel-toplevel.c:3551
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "当鼠标离开面板时自动隐藏面板"
 
-#: gnome-panel/panel-toplevel.c:3573
+#: gnome-panel/panel-toplevel.c:3560
 msgid "Hide delay"
 msgstr "隐藏延迟"
 
-#: gnome-panel/panel-toplevel.c:3574
+#: gnome-panel/panel-toplevel.c:3561
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "在自动隐藏前延迟的毫秒数"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3572
 msgid "Un-hide delay"
 msgstr "取消隐藏延迟"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3573
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "在自动取消隐藏前延迟的毫秒数"
 
 # panel/panel_config.c:366 panel/panel_config.c:580
-#: gnome-panel/panel-toplevel.c:3597
+#: gnome-panel/panel-toplevel.c:3584
 msgid "Auto-hide size"
 msgstr "自动隐藏尺寸"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3585
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "当面板自动隐藏时显示的像素数"
 
 # panel/panel_config_global.c:603
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Animate"
 msgstr "动画"
 
-#: gnome-panel/panel-toplevel.c:3610
+#: gnome-panel/panel-toplevel.c:3597
 msgid "Enable hiding/showing animations"
 msgstr "启动隐藏/显示动画"
 
 # panel/panel_config_global.c:238
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3606
 msgid "Animation Speed"
 msgstr "动画速度"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3607
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "面板隐藏/显示动画的速度"
 
 # panel/panel_config.c:376 panel/panel_config.c:590
-#: gnome-panel/panel-toplevel.c:3630
+#: gnome-panel/panel-toplevel.c:3617
 msgid "Buttons Enabled"
 msgstr "按钮已启用"
 
 # panel/drawer.c:132
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3618
 msgid "Enable hide/show buttons"
 msgstr "启用隐藏/显示按钮"
 
 # panel/panel_config_global.c:418
-#: gnome-panel/panel-toplevel.c:3640
+#: gnome-panel/panel-toplevel.c:3627
 msgid "Arrows Enabled"
 msgstr "箭头已启用"
 
 # applets/gnome-pager/gnomepager_applet.c:324
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3628
 msgid "Enable arrows on hide/show buttons"
 msgstr "启用隐藏/显示按钮上的箭头"
 
@@ -3002,11 +2999,10 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
-"面板的方向。可供选择的值有：“顶”、“底”、“左”、“右”。在扩展模式下该值"
-"指定了面板所在的屏幕边缘。在非扩展模式下“顶”和“底”的区别就不重要了 - 都表"
-"示这是水平面板 - 但仍然给出有用的提示以便某些面板对象确定其行为。例如，"
-"在“顶”面板中菜单按钮将在面板下方弹出它的菜单，而“底”面板的菜单将在面板上"
-"方弹出菜单。"
+"面板的方向。可供选择的值有：“顶”、“底”、“左”、“右”。在扩展模式下该值指定了面"
+"板所在的屏幕边缘。在非扩展模式下“顶”和“底”的区别就不重要了 - 都表示这是水平面"
+"板 - 但仍然给出有用的提示以便某些面板对象确定其行为。例如，在“顶”面板中菜单按"
+"钮将在面板下方弹出它的菜单，而“底”面板的菜单将在面板上方弹出菜单。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -3014,8 +3010,8 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
-"面板动画的速度。可供选择的值有：“慢”、“中”、“快”。该首选项只在启用动画"
-"为 true 时才有效。"
+"面板动画的速度。可供选择的值有：“慢”、“中”、“快”。该首选项只在启用动画为 "
+"true 时才有效。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
@@ -3037,8 +3033,8 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
-"此面板的背景类型。可供选择的值有：“gtk”使用默认的 GTK+ 构件背景，“颜色”将"
-"颜色首选项作为背景颜色，“图像”将图像首选项指定的图像作为背景。"
+"此面板的背景类型。可供选择的值有：“gtk”使用默认的 GTK+ 构件背景，“颜色”将颜色"
+"首选项作为背景颜色，“图像”将图像首选项指定的图像作为背景。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
