@@ -962,6 +962,68 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 }
 
 static void
+drop_directory (PanelWidget *panel, int pos, const char *dir)
+{
+	char *tmp;
+
+	tmp = g_concat_dir_and_file (dir, ".directory");
+	if (panel_file_exists (tmp)) {
+		g_free (tmp);
+		drop_menu (panel, pos, dir);
+		return;
+	}
+	g_free (tmp);
+
+	tmp = g_concat_dir_and_file (dir, ".order");
+	if (panel_file_exists (tmp)) {
+		g_free (tmp);
+		drop_menu (panel, pos, dir);
+		return;
+	}
+	g_free (tmp);
+
+	tmp = panel_is_program_in_path ("nautilus");
+	if (tmp != NULL) {
+		/* nautilus */
+		char *exec[] = { "nautilus", (char *)dir, NULL };
+
+		g_free (tmp);
+
+		load_launcher_applet_from_info (g_basename (dir),
+						dir,
+						exec,
+						2,
+						"gnome-folder.png",
+						panel,
+						pos,
+						TRUE);
+	} else {
+		tmp = panel_is_program_in_path ("gmc-client");
+		if (tmp != NULL) {
+			/* gmc */
+			char *exec[] = {
+				"gmc-client",
+				"--create-directory",
+				(char *)dir,
+				NULL };
+
+			g_free (tmp);
+
+			load_launcher_applet_from_info (g_basename (dir),
+							dir,
+							exec,
+							3,
+							"gnome-folder.png",
+							panel,
+							pos,
+							TRUE);
+		} else {
+			drop_menu (panel, pos, dir);
+		}
+	}
+}
+
+static void
 drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	      gboolean background_drops)
 {
@@ -1013,7 +1075,7 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			if (launcher != NULL)
 				launcher_hoard (launcher);
 		} else if (S_ISDIR(s.st_mode)) {
-			drop_menu(panel, pos, filename);
+			drop_directory (panel, pos, filename);
 		} else if (S_IEXEC & s.st_mode) /*executable?*/
 			ask_about_launcher (filename, panel, pos, TRUE);
 		g_free (filename);
@@ -1392,7 +1454,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 			drop_bgimage (panel, (char *)selection_data->data);
 		break;
 	case TARGET_DIRECTORY:
-		drop_menu (panel, pos, (char *)selection_data->data);
+		drop_directory (panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_APPLET:
 		if ( ! selection_data->data) {
