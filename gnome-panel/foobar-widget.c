@@ -143,26 +143,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 
 }
 
-static GtkWidget *
-pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_image)
-{
-	GtkWidget *item;
-	GtkWidget *label;
-
-	item = gtk_image_menu_item_new ();
-
-	panel_load_menu_image_deferred (item, try_file, NULL /* fallback */,
-					force_image);
-
-	if (text) {
-		label = gtk_label_new (text);
-		gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-		gtk_container_add (GTK_CONTAINER (item), label);
-	}
-
-	return item;
-}
-
 static gboolean
 foobar_key_press (GtkWidget *widget, GdkEventKey *event)
 {
@@ -256,13 +236,15 @@ append_actions_menu (GtkWidget *menu_bar)
 				  G_CALLBACK (foobar_search), 0);
 	}
 
-	item = pixmap_menu_item_new (_("Take a Screen Shot"), "gnome-mdi.png", FALSE);
-	gtk_tooltips_set_tip (panel_tooltips, item,
-			      _("Take a screen shot of your desktop"),
-			      NULL);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-        g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (foobar_screenshot), 0);	 
+	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
+		item = pixmap_menu_item_new (_("Take a Screen Shot..."), "gnome-mdi.png", FALSE);
+		gtk_tooltips_set_tip (panel_tooltips, item,
+			      	      _("Take a screen shot of your desktop"),
+			              NULL);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+        	g_signal_connect (G_OBJECT (item), "activate",
+			  	  G_CALLBACK (foobar_screenshot), 0);	 
+	}
 
 	item = gtk_separator_menu_item_new ();
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);

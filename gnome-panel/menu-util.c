@@ -7,7 +7,10 @@
  */
 
 #include <config.h>
+
 #include <libgnome/gnome-desktop-item.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-exec.h>
 
 #include "menu-util.h"
 #include "quick-desktop-reader.h"
@@ -246,6 +249,46 @@ got_distro_menus (void)
 		return TRUE;
 	else
 		return FALSE;
+}
+
+GtkWidget *
+pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_image)
+{
+        GtkWidget *item;
+        GtkWidget *label;
+
+        item = gtk_image_menu_item_new ();
+
+        panel_load_menu_image_deferred (item, try_file, NULL /* fallback */,
+                                        force_image);
+
+        if (text) {
+                label = gtk_label_new (text);
+                gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+                gtk_container_add (GTK_CONTAINER (item), label);
+        }
+
+        return item;
+}
+
+void
+menu_util_screenshot (GtkWidget *widget, gpointer data)
+{
+        char *argv[2] = {"gnome-panel-screenshot", NULL};
+
+        if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+                panel_error_dialog ("cannot_exec_gnome-panel-screenshot",
+                                    N_("Cannot execute gnome-panel-screenshot"));
+}
+
+void
+menu_util_search (GtkWidget *widget, gpointer   data)
+{
+        char *argv[2] = {"gnome-search-tool", NULL};
+
+        if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+                panel_error_dialog ("cannot_exec_gnome-search-tool",
+                                    N_("Cannot execute gnome-search-tool"));
 }
 
 char *
