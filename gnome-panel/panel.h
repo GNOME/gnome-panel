@@ -31,7 +31,7 @@ void panel_freeze_changes(PanelWidget *panel);
 
 void panel_thaw_changes(PanelWidget *panel);
 
-GtkWidget * make_popup_panel_menu (void);
+GtkWidget * make_popup_panel_menu (PanelWidget *panel);
 
 
 #define get_panel_parent(appletw) \

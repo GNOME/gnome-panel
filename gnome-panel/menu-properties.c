@@ -177,10 +177,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else if (GTK_TOGGLE_BUTTON(desktop)->active)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
-	if(menu->menu)
-		gtk_widget_destroy(menu->menu);	
-	menu->menu = NULL;
-
 	{
 		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
@@ -192,7 +188,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 					  pixmap_name, -1);
 		g_free(pixmap_name);
 		
-		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);
+		add_menu_widget(menu, NULL, list, strcmp(menu->path,".")==0, TRUE);
 		
 		g_free(menu_base);
 		g_free(this_menu);

@@ -44,15 +44,15 @@ struct _Menu {
 
 void load_menu_applet(char *params, int main_menu_flags,
 		      PanelWidget *panel, int pos, gboolean exactpos);
-void add_menu_widget (Menu *menu, GSList *menudirl, gboolean main_menu,
-		      gboolean fake_subs);
+void add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
+		      gboolean main_menu, gboolean fake_subs);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
 void make_panel_submenu (GtkWidget *menu, gboolean fake_submenus);
 
-GtkWidget * create_panel_root_menu(GtkWidget *panel, gboolean tearoff);
+GtkWidget * create_panel_root_menu(PanelWidget *panel, gboolean tearoff);
 
 void menu_properties(Menu *menu);
 

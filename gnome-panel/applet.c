@@ -426,6 +426,9 @@ create_applet_menu(AppletInfo *info)
 	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
 			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
 			   info);
+
+	gtk_object_set_data (GTK_OBJECT(info->menu), "menu_panel", 
+			     info->widget->parent);
 }
 
 void
@@ -436,7 +439,6 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	g_return_if_fail(info!=NULL);
 
 	panel = get_panel_parent(info->widget);
-	current_panel = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
 
 	if (!info->menu)
 		create_applet_menu(info);

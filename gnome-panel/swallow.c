@@ -21,8 +21,6 @@
 /* from gtkhandlebox.c */
 #define DRAG_HANDLE_SIZE 10
 
-extern PanelWidget *current_panel;
-
 GList *check_swallows = NULL;
 
 static int

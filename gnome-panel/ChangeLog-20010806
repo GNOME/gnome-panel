@@ -1,3 +1,11 @@
+Tue Feb 01 20:34:04 2000  George Lebl <jirka@5z.com>
+
+	* menu.[ch],panel.[ch],swallow.c,menu-properties.c,global-keys.c,
+	  applet.c:  Get rid of the current_panel global.  Use the
+	  "menu_panel" data on the menus everywhere and where appropriate
+	  pass PanelWidgets.  Also fix instances of BasePWidget being set
+	  for "menu_panel" instead of PanelWidget.
+
 Tue Feb 01 01:10:20 2000  George Lebl <jirka@5z.com>
 
 	* menu.[ch],extern.c,session.c: lots of cleanup, make the menu string

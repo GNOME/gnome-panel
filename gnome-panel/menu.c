@@ -58,11 +58,6 @@ extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
 
-/*???? this might be ugly, but I guess we can safely assume that we can only
-  have one menu open and that nothing weird will happen to the panel that
-  opened that menu whilethe user is looking over the choices*/
-PanelWidget *current_panel = NULL;
-
 typedef struct _TearoffMenu TearoffMenu;
 struct _TearoffMenu {
 	GtkWidget *menu;
@@ -362,10 +357,38 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	g_free(order_in_name);
 }
 
+static PanelWidget *
+get_panel_from_menu_data(GtkWidget *menu)
+{
+	g_return_val_if_fail (menu != NULL, NULL);
+	g_return_val_if_fail (GTK_IS_MENU(menu) || GTK_IS_MENU_ITEM(menu),
+			      NULL);
+
+	if(GTK_IS_MENU_ITEM(menu))
+		menu = menu->parent;
+
+	while(menu) {
+		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
+							 "menu_panel");
+		if(panel) {
+			if(IS_PANEL_WIDGET(panel))
+				return panel;
+			else
+				g_warning("Menu is on crack");
+		}
+		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
+	}
+	g_warning("Something went quite terribly wrong and we can't "
+		  "find where this menu belongs");
+	return panels->data;
+}
+
+
 static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
-	load_launcher_applet(item_loc, current_panel, 0, FALSE);
+	PanelWidget *panel = get_panel_from_menu_data (widget);
+	load_launcher_applet(item_loc, panel, 0, FALSE);
 }
 
 
@@ -454,16 +477,17 @@ static void
 add_menudrawer_to_panel(GtkWidget *w, gpointer data)
 {
 	MenuFinfo *mf = data;
+	PanelWidget *panel = get_panel_from_menu_data (w);
 	g_return_if_fail(mf);
 	
-	add_drawers_from_dir(mf->menudir,mf->dir_name,0,
-			     current_panel);
+	add_drawers_from_dir(mf->menudir, mf->dir_name, 0, panel);
 }
 
 static void
 add_menu_to_panel (GtkWidget *widget, gpointer data)
 {
 	MenuFinfo *mf = data;
+	PanelWidget *panel;
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 		MAIN_MENU_DESKTOP_SUB;
@@ -480,32 +504,12 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 	if (g_file_exists(DEBIAN_MENUDIR))
 		flags |= MAIN_MENU_DEBIAN_SUB;
 
-	if(mf)
-		load_menu_applet(mf->menudir, flags, current_panel, 0, FALSE);
-	else
-		load_menu_applet(NULL, flags, current_panel, 0, FALSE);
-}
+	panel = get_panel_from_menu_data (widget);
 
-static PanelWidget *
-get_panel_from_menu_data(GtkWidget *menu)
-{
-	while(menu) {
-		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
-							 "menu_panel");
-		if(panel) {
-			if(IS_PANEL_WIDGET(panel))
-				return panel;
-			else
-				g_warning("Menu is on crack");
-		}
-		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
-	}
-	if(!current_panel) {
-		g_warning("Something went quite terribly wrong and we can't "
-			  "find where this menu belongs");
-		return panels->data;
-	} else
-		return current_panel;
+	if(mf)
+		load_menu_applet(mf->menudir, flags, panel, 0, FALSE);
+	else
+		load_menu_applet(NULL, flags, panel, 0, FALSE);
 }
 
 static void
@@ -719,10 +723,11 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 {
 	GtkWidget *menuitem;
 
-	current_panel = get_panel_from_menu_data(sim->menuitem->parent);
-	
 	if(!sim->menu) {
 		sim->menu = gtk_menu_new ();
+
+		gtk_object_set_data (GTK_OBJECT(sim->menu), "menu_panel",
+				     get_panel_from_menu_data (sim->menuitem));
 		
 		gtk_signal_connect(GTK_OBJECT(sim->menu),"deactivate",
 				   GTK_SIGNAL_FUNC(restore_grabs),
@@ -1233,24 +1238,24 @@ static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_drawer_applet(-1, NULL, NULL,
-			   get_panel_from_menu_data(widget->parent), 0, FALSE);
+			   get_panel_from_menu_data(widget), 0, FALSE);
 }
 
 static void
 add_logout_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_logout_applet(get_panel_from_menu_data(widget->parent), 0, FALSE);
+	load_logout_applet(get_panel_from_menu_data(widget), 0, FALSE);
 }
 
 static void
 add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
-	load_lock_applet(get_panel_from_menu_data(widget->parent), 0, FALSE);
+	load_lock_applet(get_panel_from_menu_data(widget), 0, FALSE);
 }
 static void
 try_add_status_to_panel (GtkWidget *widget, gpointer data)
 {
-	if(!load_status_applet(get_panel_from_menu_data(widget->parent),
+	if(!load_status_applet(get_panel_from_menu_data(widget),
 			       0, FALSE)) {
 		GtkWidget *mbox;
 		mbox = gnome_message_box_new(_("You already have a status "
@@ -1285,7 +1290,7 @@ add_applet (GtkWidget *w, char *item_loc)
 		return;
 	}
 	load_extern_applet(goad_id, NULL,
-			   get_panel_from_menu_data(w->parent),
+			   get_panel_from_menu_data(w),
 			   0, FALSE, FALSE);
 
 	g_free(goad_id);
@@ -1365,7 +1370,7 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	if(need_reread) {
 		/*that will be destroyed in add_menu_widget*/
 		if(main_menu)
-			add_menu_widget(menu,NULL,main_menu,TRUE);
+			add_menu_widget(menu,NULL,NULL,main_menu,TRUE);
 		else {
 			GSList *dirlist = NULL;
 			for(list = mfl; list != NULL;
@@ -1374,7 +1379,7 @@ check_and_reread_applet(Menu *menu,int main_menu)
 				dirlist = g_slist_append(dirlist,
 							 g_strdup(mf->menudir));
 			}
-			add_menu_widget(menu,dirlist, main_menu,TRUE);
+			add_menu_widget(menu,NULL,dirlist, main_menu,TRUE);
 
 			g_slist_foreach(dirlist,(GFunc)g_free,NULL);
 			g_slist_free(dirlist);
@@ -1565,13 +1570,23 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	GString *title;
 	TearoffMenu *tm;
 	char *wmclass;
+	PanelWidget *menu_panel;
 	
 	if(!mfl)
 		return;
 
 	menu = gtk_menu_new();
 	gtk_signal_connect(GTK_OBJECT(menu), "show",
-			   setup_menu_panel, NULL);
+			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
+
+	menu_panel = get_panel_from_menu_data(menuw);
+
+	/*set the panel to use as the data*/
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
+		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+		      GTK_OBJECT(menu));
 	
 	title = g_string_new("");
 
@@ -2191,6 +2206,16 @@ add_panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
 	GtkWidget *menu = create_add_panel_submenu(FALSE);
+	PanelWidget *menu_panel;
+
+	menu_panel = get_panel_from_menu_data(w);
+
+	/*set the panel to use as the data*/
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
+		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+		      GTK_OBJECT(menu));
+
 	show_tearoff_menu(menu, _("Create panel"),TRUE,0,0,wmclass);
 
 	tm = g_new0(TearoffMenu,1);
@@ -2396,12 +2421,14 @@ static void
 remove_panel (GtkWidget *w, gpointer data)
 {
 	BasePWidget *basep;
-	g_return_if_fail (IS_BASEP_WIDGET (data) ||
-			  IS_PANEL_WIDGET (current_panel));
+	PanelWidget *panel;
+	g_return_if_fail (IS_BASEP_WIDGET (data));
+
+	panel = get_panel_from_menu_data(w);
 	
 	basep = data 
 		? BASEP_WIDGET (data)
-		: BASEP_WIDGET (current_panel->panel_parent);
+		: BASEP_WIDGET (panel->panel_parent);
 	
 	if (base_panels == 1 && !IS_DRAWER_WIDGET (basep)) {
 		gnome_error_dialog (_("You cannot remove your last panel."));
@@ -2412,17 +2439,25 @@ remove_panel (GtkWidget *w, gpointer data)
 	gtk_widget_destroy (GTK_WIDGET (basep));
 }
 
+static GtkWidget *
+create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff);
+
 static void
-panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
+panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
+	GtkWidget *menu;
+	PanelWidget *menu_panel;
 
-	GtkWidget *menu = create_panel_root_menu(panel, FALSE);
+	menu = create_root_menu (TRUE, global_config.menu_flags, FALSE);
 
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
+	menu_panel = get_panel_from_menu_data(w);
+	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", menu_panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
+
 	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,wmclass);
 
 	tm = g_new0(TearoffMenu,1);
@@ -2437,27 +2472,25 @@ panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
 	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
-static GtkWidget *
-create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff);
-
 GtkWidget *
-create_panel_root_menu(GtkWidget *panel, gboolean tearoff)
+create_panel_root_menu(PanelWidget *panel, gboolean tearoff)
 {
 	GtkWidget *menu;
 
 	menu = create_root_menu (TRUE, global_config.menu_flags, tearoff);
 
-	/*set the panel to use as the data, or we will use current_panel*/
-	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",
-			    panel);
-	
+	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
+		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+		      GTK_OBJECT(menu));
+
 	return menu;
 }
 
 static void
 current_panel_config(GtkWidget *w, gpointer data)
 {
-	PanelWidget *panel = get_panel_from_menu_data(w->parent);
+	PanelWidget *panel = get_panel_from_menu_data(w);
 	GtkWidget *parent = panel->panel_parent;
 	panel_config(parent);
 }
@@ -2465,13 +2498,13 @@ current_panel_config(GtkWidget *w, gpointer data)
 static void
 ask_about_launcher_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_launcher(NULL, get_panel_from_menu_data(w->parent), 0, FALSE);
+	ask_about_launcher(NULL, get_panel_from_menu_data(w), 0, FALSE);
 }
 
 static void
 ask_about_swallowing_cb(GtkWidget *w, gpointer data)
 {
-	ask_about_swallowing(get_panel_from_menu_data(w->parent), 0, FALSE);
+	ask_about_swallowing(get_panel_from_menu_data(w), 0, FALSE);
 }
 
 static void
@@ -2493,7 +2526,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	int w, h;
 	BasePWidget *basep;
 	BasePPos *old_pos;
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
@@ -2630,7 +2663,7 @@ static void
 change_hiding_mode (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep;
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
@@ -2661,7 +2694,7 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 static void
 change_size (GtkWidget *widget, gpointer data)
 {
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 	g_return_if_fail(cur_panel != NULL);
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -2682,7 +2715,7 @@ change_orient (GtkWidget *widget, gpointer data)
 {
 
 	BasePWidget *basep;
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 	
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
@@ -2713,7 +2746,7 @@ change_orient (GtkWidget *widget, gpointer data)
 static void
 change_background (GtkWidget *widget, gpointer data)
 {
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 	g_return_if_fail(cur_panel != NULL);
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
@@ -2735,7 +2768,7 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 {
 	BasePWidget *basep;
 	gboolean hidebutton_pixmaps_enabled, hidebuttons_enabled;
-	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);
+	PanelWidget *cur_panel = get_panel_from_menu_data(widget);
 
 	g_return_if_fail(cur_panel != NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
@@ -2891,7 +2924,7 @@ update_back_menu (GtkWidget *menu, gpointer data)
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 					TRUE);
 	menuitem = gtk_object_get_data (GTK_OBJECT (menu), MENU_BACK_PIXMAP);
-	gtk_widget_set_sensitive (menuitem, current_panel->back_pixmap != NULL);
+	gtk_widget_set_sensitive (menuitem, cur_panel->back_pixmap != NULL);
 }
 
 static void
@@ -3175,6 +3208,7 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	GtkWidget *menu;
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
+	PanelWidget *menu_panel;
 
 	menu = gtk_menu_new();
 	gtk_signal_connect(GTK_OBJECT(menu), "show",
@@ -3182,9 +3216,9 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	make_add_submenu(menu, TRUE);
 	
 	/*set the panel to use as the data*/
-	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", current_panel);
-
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
+	menu_panel = get_panel_from_menu_data(w);
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
 	show_tearoff_menu(menu, _("Add to panel"),TRUE,0,0, wmclass);
@@ -3327,13 +3361,14 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
 	GtkWidget *menu = create_panel_submenu (NULL, TRUE, FALSE);
+	PanelWidget *menu_panel = get_panel_from_menu_data(w);
 
 	/*set the panel to use as the data*/
-	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", current_panel);
-
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(current_panel),
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
 		      GTK_OBJECT(menu));
+
 	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,wmclass);
 
 	tm = g_new0(TearoffMenu,1);
@@ -3353,8 +3388,16 @@ desktop_menu_tearoff_new_menu (GtkWidget *w, gpointer data)
 {
 	TearoffMenu *tm;
 	char *wmclass = get_unique_tearoff_wmclass();
-
+	PanelWidget *menu_panel;
 	GtkWidget *menu = create_desktop_menu (NULL, TRUE, FALSE);
+
+	/*set the panel to use as the data*/
+	menu_panel = get_panel_from_menu_data(w);
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(menu_panel),
+		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+		      GTK_OBJECT(menu));
+
 	show_tearoff_menu (menu, _("Desktop"),TRUE,0,0, wmclass);
 
 	tm = g_new0(TearoffMenu,1);
@@ -3516,7 +3559,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 		gtk_menu_prepend (GTK_MENU (root_menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
-				    current_panel);
+				    NULL);
 	}
 	
 	if (flags & MAIN_MENU_SYSTEM)
@@ -3692,12 +3735,24 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 }
 	
 void
-add_menu_widget (Menu *menu, GSList *menudirl,
+add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		 gboolean main_menu, gboolean fake_subs)
 {
 	GSList *li;
-	if(menu->menu)
+
+	/* one of these has to be there in order to get the panel of the
+	   applet */
+	g_return_if_fail (menu->menu || panel);
+
+	if(menu->menu) {
+		panel = get_panel_from_menu_data(menu->menu);
 		gtk_widget_destroy(menu->menu);
+	}
+
+	if(!panel) {
+		g_warning ("Menu is seriously weird");
+		return;
+	}
 
 	if (main_menu)
 		menu->menu = create_root_menu(fake_subs, 
@@ -3718,6 +3773,12 @@ add_menu_widget (Menu *menu, GSList *menudirl,
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
+
+	gtk_object_set_data(GTK_OBJECT(menu->menu),"menu_panel", panel);
+	gtk_signal_connect_object_while_alive(
+	      GTK_OBJECT(panel),
+	      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+	      GTK_OBJECT(menu->menu));
 }
 
 static void
@@ -3728,15 +3789,13 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	GtkWidget *wpanel = get_panel_parent(menu->button);
 	int main_menu = (strcmp (menu->path, ".") == 0);
 
-	/*this HAS to be set everytime we popup the menu*/
-	current_panel = PANEL_WIDGET(menu->button->parent);
-
 	if(!menu->menu) {
 		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
 		GSList *list = g_slist_append(NULL,this_menu);
 		
-		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);
+		add_menu_widget(menu, PANEL_WIDGET(menu->button->parent),
+				list, strcmp(menu->path,".")==0, TRUE);
 		
 		g_free(menu_base);
 		g_free(this_menu);
@@ -3768,7 +3827,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 }
 
 static Menu *
-create_panel_menu (char *menudir, gboolean main_menu,
+create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 		   PanelOrientType orient, int main_menu_flags)
 {
 	Menu *menu;
@@ -3794,7 +3853,7 @@ create_panel_menu (char *menudir, gboolean main_menu,
 	  speed, load them*/
 	if(global_config.hungry_menus) {
 		GSList *list = g_slist_append(NULL,menudir);
-		add_menu_widget(menu,list,main_menu,TRUE);
+		add_menu_widget(menu,panel,list,main_menu,TRUE);
 		g_slist_free(list);
 	}
 
@@ -3804,7 +3863,7 @@ create_panel_menu (char *menudir, gboolean main_menu,
 }
 
 static Menu *
-create_menu_applet(char *arguments, PanelOrientType orient,
+create_menu_applet(PanelWidget *panel, char *arguments, PanelOrientType orient,
 		   int main_menu_flags)
 {
 	Menu *menu;
@@ -3831,7 +3890,7 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 		     !*arguments ||
 		     (strcmp (arguments, ".") == 0));
 
-	menu = create_panel_menu (this_menu, main_menu,
+	menu = create_panel_menu (panel, this_menu, main_menu,
 				  orient, main_menu_flags);
 	if (arguments && *arguments)
 		menu->path = g_strdup(arguments);
@@ -3860,7 +3919,7 @@ load_menu_applet(char *params, int main_menu_flags,
 {
 	Menu *menu;
 
-	menu = create_menu_applet(params, ORIENT_UP, main_menu_flags);
+	menu = create_menu_applet(panel, params, ORIENT_UP, main_menu_flags);
 
 	if(menu) {
 		char *tmp;
@@ -3969,31 +4028,19 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 	if(strcmp(special,"ADD_PANEL")==0) {
 		menu = create_add_panel_submenu(FALSE);
 	} else if(strcmp(special,"PANEL")==0) {
-		menu = create_panel_root_menu(
-			      menu_panel_widget->panel_parent, FALSE);
-		gtk_signal_connect_object_while_alive(
-		      GTK_OBJECT(menu_panel_widget),
-		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
-		      GTK_OBJECT(menu));
+		menu = create_root_menu (TRUE, global_config.menu_flags,
+					 FALSE);
 	} else if(strcmp(special,"DESKTOP")==0) {
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
 	} else if(strcmp(special,"ADD_TO_PANEL")==0) {
 		menu = gtk_menu_new();
 		gtk_signal_connect(GTK_OBJECT(menu), "show",
-				   setup_menu_panel, NULL);
+				   GTK_SIGNAL_FUNC(setup_menu_panel),
+				   NULL);
 		make_add_submenu(menu, TRUE);
-
-		gtk_signal_connect_object_while_alive(
-		      GTK_OBJECT(menu_panel_widget),
-		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
-		      GTK_OBJECT(menu));
 	} else if(strcmp(special,"PANEL_SUBMENU")==0) {
 		menu = create_panel_submenu (NULL, TRUE, FALSE);
 
-		gtk_signal_connect_object_while_alive(
-		      GTK_OBJECT(menu_panel_widget),
-		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
-		      GTK_OBJECT(menu));
 	}
 
 	return menu;
@@ -4090,6 +4137,10 @@ load_tearoff_menu(void)
 	/*set the panel to use as the data, or we will use current_panel*/
 	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",
 			    menu_panel_widget);
+	gtk_signal_connect_object_while_alive(
+	      GTK_OBJECT(menu_panel_widget),
+	      "destroy", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+	      GTK_OBJECT(menu));
 	
 	/* This is so that we get size of the menu right */
 	show_tearoff_menu(menu,title,FALSE,x,y,wmclass);

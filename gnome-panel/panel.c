@@ -43,11 +43,6 @@ extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
 
-/*???? this might be ugly, but I guess we can safely assume that we can only
-  have one menu open and that nothing weird will happen to the panel that
-  opened that menu whilethe user is looking over the choices*/
-extern PanelWidget *current_panel;
-
 extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
@@ -603,15 +598,11 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
-	if (current_panel == panel)
-		current_panel = NULL;
-
 	if(pd->menu)
 		gtk_widget_destroy(pd->menu);
 	
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
-	
 }
 
 static void
@@ -632,34 +623,33 @@ panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *
-panel_menu_get(PanelData *pd)
+panel_menu_get(PanelWidget *panel, PanelData *pd)
 {
 	if(pd->menu)
 		return pd->menu;
 	
-	pd->menu = create_panel_root_menu(pd->panel,TRUE);
+	pd->menu = create_panel_root_menu(panel, TRUE);
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
 	return pd->menu;
 }
 
 GtkWidget *
-make_popup_panel_menu (void)
+make_popup_panel_menu (PanelWidget *panel)
 {
 	BasePWidget *basep;
 	PanelData *pd;
 	GtkWidget *menu;
 
-	if (!current_panel) {
+	if (!panel) {
 	        basep = BASEP_WIDGET (((PanelData *)panel_list->data)->panel);			
-		current_panel = PANEL_WIDGET (basep->panel);
+		panel = PANEL_WIDGET (basep->panel);
 	} else
-		basep = BASEP_WIDGET (current_panel->panel_parent);
+		basep = BASEP_WIDGET (panel->panel_parent);
 	
 	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
-	menu = panel_menu_get (pd);
-	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel",
-			     basep->panel);
+	menu = panel_menu_get (panel, pd);
+	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
 	pd->menu_age = 0;
 	return menu;
 }
@@ -676,9 +666,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
 				GtkWidget *menu;
-				current_panel =
-					PANEL_WIDGET(basep->panel);
-				menu = make_popup_panel_menu ();
+				menu = make_popup_panel_menu (PANEL_WIDGET(basep->panel));
 				BASEP_WIDGET(basep)->autohide_inhibit 
 					= TRUE;
 				basep_widget_autohide (

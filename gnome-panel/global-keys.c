@@ -11,7 +11,7 @@
 
 extern GlobalConfig global_config;
 extern GSList *panel_list;
-extern PanelWidget *current_panel;
+extern GSList *panels;
 
 static int
 watch_xerrors(Display *disp, XErrorEvent *errev)
@@ -79,9 +79,10 @@ panel_global_keys_filter(GdkXEvent *gdk_xevent, GdkEvent *event)
 		if(kev->keycode == global_config.menu_keycode) {
 			winkey_depth--;
 			if(!num_subkeys) {
+				PanelWidget *panel = panels->data;
 				GtkWidget *menu = 
-					make_popup_panel_menu ();
-				GtkWidget *basep = current_panel->panel_parent;
+					make_popup_panel_menu (panel);
+				GtkWidget *basep = panel->panel_parent;
 				if (IS_BASEP_WIDGET(basep)) {
 					BASEP_WIDGET(basep)->autohide_inhibit 
 						= TRUE;
