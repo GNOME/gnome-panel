@@ -299,6 +299,7 @@ used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
 @data: The factory user data pointer.
 @Returns: 0 on success, 1 on failure.
 
+
 <!-- ##### FUNCTION panel_applet_factory_main_closure ##### -->
 <para>
 A generic 'main' routine for applets. This should not normally be
@@ -309,6 +310,7 @@ used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
 @applet_type: The #GType to instantiate.
 @closure: The factory callback closure.
 @Returns: 0 on success, 1 on failure.
+
 
 <!-- ##### MACRO PANEL_APPLET_BONOBO_FACTORY ##### -->
 <para>
@@ -340,6 +342,7 @@ callback.
 @Returns: A #Bonobo_Unknown to return from the shlib factory
 callback.
 
+
 <!-- ##### FUNCTION panel_applet_shlib_factory_closure ##### -->
 <para>
 A generic shared library factory routine for applets. This should not
@@ -356,6 +359,7 @@ callback.
 @Returns: A #Bonobo_Unknown to return from the shlib factory
 callback.
 
+
 <!-- ##### MACRO PANEL_APPLET_BONOBO_SHLIB_FACTORY ##### -->
 <para>
 Defines a Bonobo Activation shared library plugin and associated
@@ -367,6 +371,7 @@ factory callback.
 @descr: A description of the applet.
 @callback: The factory callback.
 @data: The factory user data pointer.
+
 
 <!-- ##### SIGNAL PanelApplet::change-background ##### -->
 <para>
