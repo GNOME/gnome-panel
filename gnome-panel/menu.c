@@ -359,6 +359,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	for(li = list; li!= NULL; li = g_slist_next(li)) {
 		char *filename = g_concat_dir_and_file(dirname, li->data);
 		struct stat s;
+		GnomeDesktopEntry *dentry;
 		g_free(li->data);
 		if (stat (filename, &s) == 0) {
 			if (S_ISDIR (s.st_mode)) {
@@ -368,12 +369,16 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 				char *p = strrchr(filename,'.');
 				if (p &&
 				    (strcmp(p,".desktop")==0 || 
-				     strcmp(p,".kdelnk")==0))
+				     strcmp(p,".kdelnk")==0)) {
 					/*we load the applet at the right
 					  side, that is end of the drawer*/
-					load_launcher_applet(filename,
-							     newpanel,
-							     INT_MAX/2);
+					dentry = gnome_desktop_entry_load (filename);
+					if (dentry)
+						load_launcher_applet_full (filename,
+									   dentry,
+									   newpanel,
+									   INT_MAX/2);
+				}
 			}
 		}
 		g_free(filename);

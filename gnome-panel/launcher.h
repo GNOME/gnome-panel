@@ -21,6 +21,8 @@ typedef struct {
 	GnomeDesktopEntry *dentry;
 } Launcher;
 
+void load_launcher_applet_full(char *params, GnomeDesktopEntry *dentry,
+			       PanelWidget *panel, int pos);
 void load_launcher_applet(char *params, PanelWidget *panel, int pos);
 void load_launcher_applet_from_info(char *name, char *comment,
 				    char **exec, int execn, char *icon,

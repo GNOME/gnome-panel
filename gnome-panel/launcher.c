@@ -368,9 +368,9 @@ launcher_properties(Launcher *launcher)
 	gtk_widget_show_all (dialog);
 }
 
-static void
-_load_launcher_applet(char *params, GnomeDesktopEntry *dentry,
-		      PanelWidget *panel, int pos)
+void
+load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
+			   PanelWidget *panel, int pos)
 {
 	Launcher *launcher;
 
@@ -405,7 +405,7 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 			g_free(dentry->name);
 			dentry->name=g_strdup("???");
 		}
-		_load_launcher_applet(NULL, dentry, panel, pos);
+		load_launcher_applet_full (NULL, dentry, panel, pos);
 	}
 	gtk_widget_destroy(d);
 }
@@ -465,11 +465,11 @@ load_launcher_applet_from_info(char *name, char *comment,
 	else
 		dentry->icon = g_strdup(icon);
 
-	_load_launcher_applet(NULL,dentry,panel, pos);
+	load_launcher_applet_full (NULL,dentry,panel, pos);
 }
 
 void
 load_launcher_applet(char *params, PanelWidget *panel, int pos)
 {
-	_load_launcher_applet(params,NULL,panel, pos);
+	load_launcher_applet_full (params,NULL,panel, pos);
 }

@@ -1,3 +1,13 @@
+1999-09-18  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* launcher.[ch] (load_launcher_applet_full): make non-static
+	so we can pass a dentry to this
+
+	* menu.c (add_drawers_from_dir): try loading the dentry;
+	if it fails don't add a launcher
+
+	* applet.c (create_applet_menu): add the warning back
+
 Fri Sep 17 22:35:33 1999  George Lebl  <jirka@5z.com>
 
 	* basep-widget.c: don't null the tag for the autohide timeout if we

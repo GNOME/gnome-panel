@@ -391,12 +391,17 @@ create_applet_menu(AppletInfo *info)
 	menuitem = gtk_menu_item_new ();
 
 	pixmap = gnome_pixmap_file ("gnome-panel.png");
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget_at_size (NULL, pixmap,
-							   SMALL_ICON_SIZE,
-							   SMALL_ICON_SIZE),
-			_("Panel"));
-	g_free (pixmap);
+	if (!pixmap) {
+		g_warning (_("Cannot find pixmap file %s"), "gnome-panel.png");
+		setup_menuitem (menuitem, NULL, _("Panel"));
+	} else {
+		setup_menuitem (menuitem, 
+				gnome_stock_pixmap_widget_at_size (NULL, pixmap,
+								   SMALL_ICON_SIZE,
+								   SMALL_ICON_SIZE),
+				_("Panel"));
+		g_free (pixmap);
+	}
 	gtk_menu_append (GTK_MENU (info->menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 
