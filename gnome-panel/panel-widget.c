@@ -1742,45 +1742,36 @@ panel_try_to_set_pixmap (PanelWidget *panel, const char *pixmap)
 }
 
 static void
-panel_widget_realize(GtkWidget *w)
+panel_widget_realize (GtkWidget *widget)
 {
 	PanelWidget *panel;
 
-	g_return_if_fail(PANEL_IS_WIDGET(w));
+	g_return_if_fail (PANEL_IS_WIDGET (widget));
 
-	panel = PANEL_WIDGET(w);
+	panel = PANEL_WIDGET (widget);
 
 	if (GTK_WIDGET_CLASS (panel_widget_parent_class)->realize)
-		(* GTK_WIDGET_CLASS (panel_widget_parent_class)->realize) (w);
+		GTK_WIDGET_CLASS (panel_widget_parent_class)->realize (widget);
 	
-	if(panel->back_type == PANEL_BACK_PIXMAP) {
+	if (panel->back_type == PANEL_BACK_PIXMAP) {
 		if (!panel_try_to_set_pixmap (panel, panel->back_pixmap))
 			panel->back_type = PANEL_BACK_NONE;
-	} else if(panel->back_type == PANEL_BACK_COLOR) {
-		panel_try_to_set_back_color(panel, &panel->back_color);
-	}
 
-#ifdef PANEL_WIDGET_DEBUG
-	puts("PANEL_WIDGET_REALIZE");
-#endif
+	} else if (panel->back_type == PANEL_BACK_COLOR)
+		panel_try_to_set_back_color (panel, &panel->back_color);
 }
 
 static void
 panel_widget_finalize (GObject *obj)
 {
 	PanelWidget *panel;
-	GtkWidget *w = GTK_WIDGET (obj);
 
-	g_return_if_fail(PANEL_IS_WIDGET(w));
+	g_return_if_fail (PANEL_IS_WIDGET (obj));
 
-	panel = PANEL_WIDGET(w);
+	panel = PANEL_WIDGET (obj);
 
 	g_free (panel->back_pixmap);
 	panel->back_pixmap = NULL;
-
-	/*remove from panels list*/
-	panels = g_slist_remove(panels,w);
-	panel_remove_from_gconf (panel);
 
 	g_free (panel->unique_id);
 	panel->unique_id = NULL;
@@ -1793,22 +1784,19 @@ static void
 panel_widget_destroy (GtkObject *obj)
 {
 	PanelWidget *panel;
-	GtkWidget *w = GTK_WIDGET (obj);
 
-	g_return_if_fail(PANEL_IS_WIDGET(w));
+	g_return_if_fail (PANEL_IS_WIDGET (obj));
 
-	panel = PANEL_WIDGET(w);
+	panel = PANEL_WIDGET (obj);
 
-	if(panel->backpix)
-		g_object_unref (G_OBJECT (panel->backpix));
+	if (panel->backpix)
+		g_object_unref (panel->backpix);
 	panel->backpix = NULL;
 
 	g_free (panel->back_pixmap);
 	panel->back_pixmap = NULL;
 
-	/*remove from panels list*/
-	panels = g_slist_remove(panels,w);
-	panel_remove_from_gconf (panel);
+	panels = g_slist_remove (panels, panel);
 
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);

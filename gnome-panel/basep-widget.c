@@ -691,7 +691,7 @@ basep_widget_get_pos_class (BasePWidget *basep) {
 	return klass;
 }
 
-GType									\
+GType
 basep_pos_get_type (void)					
 {
 	static GType object_type = 0;

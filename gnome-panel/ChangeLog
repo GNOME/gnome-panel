@@ -1,3 +1,44 @@
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #90317 by explicitly destroying panels on receipt
+	of a Die from the session manager rather than just
+	exiting the mainloop. Apparently embedded out of process
+	embedded windows don't cope with this too well - thanks
+	to Owen for pointing this fact out.
+
+	* applet.c:
+	(panel_applet_clean): do anything required to effect
+	permanent removal of the applet here.
+	(applet_idle_remove): kill set_clean_remove stuff.
+	(panel_applet_destroy): only clear up our data and refs
+	here rather than permanently removing the applet.
+
+	* basep-widget.c: remove some bogus whitepsace.
+
+	* menu.c: (remove_panel_accept): if the panel is a drawer,
+	then also remove the associated applet. Permanently remove
+	the panel here.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_set_clean_remove),
+	(panel_applet_get_clean_remove), (popup_handle_remove),
+	(panel_applet_frame_instance_init): kill unused 'clean_remove'
+	stuff. No idea how/why that got there.
+
+	* panel-widget.c:
+	(panel_widget_finalize): don't remove the panel from the
+	global list again.
+	(panel_widget_destroy): don't permanently remove the panel
+	from here.
+	* panel.c:
+
+	(panel_remove_applets): kill 'clean_remove' stuff.
+	(panel_destroy): don't remove the applet associated with
+	the drawer here.
+
+	* session.c: (panel_session_die): iterate over a copy of
+	the global list of panels and destroy them.
+
 2002-09-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-screenshot.c: (take_window_shot), (main):

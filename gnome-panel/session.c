@@ -6,6 +6,15 @@
  *           Miguel de Icaza
  */
 
+/* FIXME:
+ *
+ *  A lot of this is redundant. As far as I can
+ *  make out the only code here that still makes
+ *  sense is the setting of the restart command,
+ *  the unlinking of dead launchers and destroying
+ *  all panels on destroy.
+ */
+
 #include <config.h>
 
 #include <libgnome/libgnome.h>
@@ -25,11 +34,8 @@
 
 extern GSList          *panels;
 extern GSList          *applets;
-extern int              applet_count;
-extern GtkTooltips     *panel_tooltips;
 extern GnomeClient     *client;
 extern GSList          *panel_list;
-extern char            *kde_menudir;
 static int              config_sync_timeout;
 
 gboolean                applets_to_sync = FALSE;
@@ -225,6 +231,7 @@ int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
+	GSList *panels_to_destroy;
 	GSList *l;
 
 	g_source_remove (config_sync_timeout);
@@ -234,17 +241,24 @@ panel_session_die (GnomeClient *client,
 		AppletInfo *info = l->data;
 
 		panel_applet_save_position (info, info->gconf_key, TRUE);
-
-		if (info->type == APPLET_BONOBO)
-			panel_applet_frame_set_clean_remove (
-					PANEL_APPLET_FRAME (info->data), TRUE);
 	}
+
+	panels_to_destroy = g_slist_copy (panel_list);
+
+	for (l = panels_to_destroy; l; l = l->next) {
+		PanelData *pd = l->data;
+
+		if (pd->panel)
+			gtk_widget_destroy (pd->panel);
+	}
+
+	g_slist_free (panels_to_destroy);
 
 	gnome_config_sync ();
 
 	panel_shell_unregister ();
 	
-	gtk_main_quit();
+	gtk_main_quit ();
 
 	return TRUE;
 }
