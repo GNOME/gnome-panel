@@ -40,7 +40,8 @@ typedef enum {
 } PanelOrientation;
 typedef enum {
 	PANEL_SWITCH_MOVE=0,
-	PANEL_FREE_MOVE
+	PANEL_FREE_MOVE,
+	PANEL_PUSH_MOVE
 } PanelMovementType;
 typedef enum {
 	PANEL_BACK_NONE=0,

@@ -470,7 +470,7 @@ misc_notebook_page(void)
 	gtk_table_attach_defaults(GTK_TABLE(table),button, 1,2,1,2);
 
 	/* Movement frame */
-	frame = gtk_frame_new (_("Movement"));
+	frame = gtk_frame_new (_("Default movement mode"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
@@ -478,9 +478,9 @@ misc_notebook_page(void)
 	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
-
+	
 	/* Switched */
-	button = gtk_radio_button_new_with_label (NULL, _("Switched movement"));
+	button = gtk_radio_button_new_with_label (NULL, _("Switched movement (or use Ctrl)"));
 	if (temp_config.movement_type == PANEL_SWITCH_MOVE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
@@ -491,12 +491,23 @@ misc_notebook_page(void)
 	/* Free */
 	button = gtk_radio_button_new_with_label (
 		gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-		_("Free movement (doesn't disturb other applets)"));
+		_("Free movement (doesn't disturb other applets) (or use Alt)"));
 	if (temp_config.movement_type == PANEL_FREE_MOVE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_movement), 
 			    (gpointer)PANEL_FREE_MOVE);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+
+	/* Push */
+	button = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
+		_("Push movement (or use Shift)"));
+	if (temp_config.movement_type == PANEL_PUSH_MOVE)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_movement), 
+			    (gpointer)PANEL_PUSH_MOVE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
 	
 	/* Miscellaneous frame */
