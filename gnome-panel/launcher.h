@@ -66,6 +66,8 @@ void		launcher_save			(Launcher *launcher);
 /* always make a new unique filename, useful for converting OLD configs */
 void		launcher_hoard			(Launcher *launcher);
 
+Launcher *	find_launcher			(const char *path);
+
 /* make file name from base */
 char *		launcher_file_name		(const char *base);
 

@@ -169,9 +169,8 @@ free_launcher(gpointer data)
 	g_free(launcher);
 }
 
-
 static gboolean
-is_this_drop_ok(GtkWidget *widget, GdkDragContext *context)
+is_this_drop_ok (GtkWidget *widget, GdkDragContext *context)
 {
 	static GdkAtom text_uri_list = 0;
 	GList *li;
@@ -185,15 +184,15 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context)
 	if(!(context->actions & GDK_ACTION_COPY))
 		return FALSE;
 
-	if(!text_uri_list)
+	if (text_uri_list == 0)
 		text_uri_list = gdk_atom_intern ("text/uri-list", FALSE);
 
-	for(li = context->targets; li; li = li->next) {
-		if(GPOINTER_TO_INT(li->data) == text_uri_list)
+	for (li = context->targets; li; li = li->next) {
+		if (GPOINTER_TO_INT (li->data) == text_uri_list)
 			break;
 	}
 	/* if we haven't found it */
-	if(!li)
+	if (li == NULL)
 		return FALSE;
 
 	return TRUE;
@@ -217,7 +216,7 @@ drag_motion_cb(GtkWidget *widget,
 	       guint time,
 	       Launcher *launcher)
 {
-	if(!is_this_drop_ok(widget, context))
+	if ( ! is_this_drop_ok (widget, context))
 		return FALSE;
 
 	gdk_drag_status (context, GDK_ACTION_COPY, time);
@@ -228,49 +227,62 @@ drag_motion_cb(GtkWidget *widget,
 }
 
 static gboolean
-drag_drop_cb(GtkWidget	       *widget,
-	     GdkDragContext    *context,
-	     gint               x,
-	     gint               y,
-	     guint              time,
-	     Launcher *launcher)
+drag_drop_cb (GtkWidget	        *widget,
+	      GdkDragContext    *context,
+	      gint               x,
+	      gint               y,
+	      guint              time,
+	      Launcher          *launcher)
 {
 	static GdkAtom text_uri_list = 0;
 
-	if(!is_this_drop_ok(widget, context))
+	if ( ! is_this_drop_ok (widget, context))
 		return FALSE;
 
-	if(!text_uri_list)
+	if (text_uri_list == 0)
 		text_uri_list = gdk_atom_intern ("text/uri-list", FALSE);
 
-	gtk_drag_get_data(widget, context,
-			  gdk_atom_intern ("text/uri-list", FALSE),
-			  time);
+	gtk_drag_get_data (widget, context, text_uri_list, time);
 
 	return TRUE;
 }
 
+enum {
+	TARGET_ICON_INTERNAL,
+	TARGET_URI_LIST
+};
+
 
 static void  
-drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
-		  GtkSelectionData   *selection_data, guint info,
-		  guint time, Launcher *launcher)
+drag_data_get_cb (GtkWidget          *widget,
+		  GdkDragContext     *context,
+		  GtkSelectionData   *selection_data,
+		  guint               info,
+		  guint               time,
+		  Launcher           *launcher)
 {
 	gchar *uri_list;
 	
-	g_return_if_fail(launcher!=NULL);
-	g_return_if_fail(launcher->dentry!=NULL);
+	g_return_if_fail (launcher != NULL);
+	g_return_if_fail (launcher->dentry != NULL);
 
 	if (launcher->dentry->location == NULL)
 		launcher_save (launcher);
 
-	uri_list = g_strconcat ("file:", launcher->dentry->location,
-				"\r\n", NULL);
+	if (info == TARGET_URI_LIST) {
+		uri_list = g_strconcat ("file:", launcher->dentry->location,
+					"\r\n", NULL);
 
-	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)uri_list,
-				strlen(uri_list));
-	g_free(uri_list);
+		gtk_selection_data_set (selection_data,
+					selection_data->target, 8, (guchar *)uri_list,
+					strlen (uri_list));
+		g_free(uri_list);
+	} else if (info == TARGET_ICON_INTERNAL) {
+		gtk_selection_data_set (selection_data,
+					selection_data->target, 8,
+					launcher->dentry->location,
+					strlen (launcher->dentry->location));
+	}
 }
 
 
@@ -281,7 +293,8 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 	char *icon;
 	Launcher *launcher;
         static GtkTargetEntry dnd_targets[] = {
-		{ "text/uri-list", 0, 0 }
+		{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
+		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};
 
 	if (default_app_pixmap == NULL)
@@ -291,7 +304,7 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 		if (parameters == NULL) {
 			return NULL;
 		} else if (*parameters == '/') {
-			dentry = gnome_desktop_entry_load_unconditional(parameters);
+			dentry = gnome_desktop_entry_load_unconditional (parameters);
 		} else {
 			char *apps_par, *entry, *extension;
 
@@ -348,16 +361,16 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 	  some (already selected) events on the panel instead of
 	  the launcher window (where they are also selected) but
 	  we don't mind*/
-	GTK_WIDGET_UNSET_FLAGS(launcher->button,GTK_NO_WINDOW);
+	GTK_WIDGET_UNSET_FLAGS (launcher->button, GTK_NO_WINDOW);
 	gtk_drag_source_set(launcher->button,
 			    GDK_BUTTON1_MASK,
-			    dnd_targets, 1,
-			    GDK_ACTION_COPY);
-	GTK_WIDGET_SET_FLAGS(launcher->button,GTK_NO_WINDOW);
+			    dnd_targets, 2,
+			    GDK_ACTION_COPY | GDK_ACTION_MOVE);
+	GTK_WIDGET_SET_FLAGS (launcher->button, GTK_NO_WINDOW);
 	
 	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   GTK_DEST_DEFAULT_ALL,
-			   dnd_targets, 1,
+			   dnd_targets, 2,
 			   GDK_ACTION_COPY);*/
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
@@ -890,4 +903,26 @@ launcher_hoard (Launcher *launcher)
 	}
 
 	launcher_save (launcher);
+}
+
+Launcher *
+find_launcher (const char *path)
+{
+	GSList *li;
+
+	g_return_val_if_fail (path != NULL, NULL);
+
+	for (li = applets; li != NULL; li = li->next) {
+		AppletInfo *info = li->data;
+		if (info->type == APPLET_LAUNCHER) {
+			Launcher *launcher = info->data;
+
+			if (launcher->dentry != NULL &&
+			    launcher->dentry->location != NULL &&
+			    strcmp (launcher->dentry->location, path) == 0)
+				return launcher;
+		}
+	}
+
+	return NULL;
 }
