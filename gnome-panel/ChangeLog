@@ -1,5 +1,16 @@
 2002-12-16  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixes a crash when moving between panels #98265.
+
+	* applet.c: (panel_applet_get_panel_id): return NULL
+	if we're in the middle of being re-parented.
+	(panel_applet_save_position): don't save our position
+	if we get a NULL panel_id.
+
+	* applet.h: don't export panel_applet_get_panel_id().
+
+2002-12-16  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (do_icons_to_add), (load_icons_handler),
 	add a ref/unref pair for the GtkImage to make
 	the crash in #99378 impossible.
