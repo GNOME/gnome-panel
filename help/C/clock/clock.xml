@@ -97,6 +97,14 @@
           </revdescription>
 
 	</revision>
+      <revision>
+	<revnumber>2.0</revnumber>
+	<date>February 2002</date>
+	<revdescription>
+	  <para role="author">John Fleck</para>
+	  <para role="publisher">GNOME Documentation Project</para>
+	</revdescription>
+      </revision>
 
 
   </revhistory>
@@ -125,20 +133,27 @@
    <menuchoice>
     <guimenu>Panel</guimenu>
     <guisubmenu>Add to panel</guisubmenu>
-    <guisubmenu>Applet</guisubmenu>
-    <guisubmenu>Clocks</guisubmenu>
+    <guisubmenu>Utility</guisubmenu>
     <guimenuitem>Clock</guimenuitem>
-   </menuchoice>.
+   </menuchoice>
   </para>
 
-  <figure id="clockapplet-fig">
-   <title>Clock Applet</title>
-   <screenshot>
-    <screeninfo>Clock Applet</screeninfo>
-    <graphic format="PNG" fileref="figures/clock_applet.png" 
-    srccredit="muet" />
-   </screenshot>
-  </figure>
+    <figure  id="clockapplet-fig">
+      <title>Clock Applet</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/clock_applet.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="figures/clock_applet.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Clock applet</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
 
   <!-- ============= Usage  ================================ -->
   <sect2 id="clock-usage">
@@ -160,6 +175,18 @@
        <guilabel>Properties</guilabel></link> dialog.
       </para>
      </listitem>
+
+	  <listitem>
+	    <para><guimenuitem>Copy time</guimenuitem> &mdash; Copy the current
+	    time to the GNOME clipboard. It may then be pasted into another
+	    application.</para>
+	  </listitem>
+
+	  <listitem>
+	    <para><guimenuitem>Copy date</guimenuitem> &mdash; Copy the current
+	    date to the GNOME clipboard. It may then be pasted into another
+	    application.</para>
+	  </listitem>
 
      <listitem>
       <para>
@@ -186,7 +213,7 @@
   <sect2 id="clock-prefs">
     <title>Customization</title>
     <para>
-      You can customize <application>Clock</application>
+      Customize <application>Clock</application>
       applet by right-clicking on it and choosing
       <guimenuitem>Properties&hellip;</guimenuitem>. This will open the
       <interface>Properties</interface> dialog(shown in <xref
@@ -194,14 +221,23 @@
       change various settings.
     </para>
 
-    <figure id="clock-settings-fig">
-     <title>Properties dialog</title>
-     <screenshot>
-      <screeninfo>Properties dialog</screeninfo>
-      <graphic format="PNG" fileref="figures/clock_settings.png"
-      srccredit="muet" />
-     </screenshot>
-    </figure>
+      <figure id="clock-settings-fig">
+	<title>Properties dialog</title>
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="figures/clock_settings.png" format="PNG"/>
+	    </imageobject>
+	    <imageobject>
+	      <imagedata fileref="figures/clock_settings.eps" format="EPS"/>
+	    </imageobject>
+	    <textobject>
+	      <phrase>Properties dialog</phrase>
+	    </textobject>
+	  </mediaobject>
+	</screenshot>
+      </figure>
+
 
     <para>
      The properties are:
@@ -209,7 +245,8 @@
 
       <listitem>
        <para>
-        Time Format &mdash; Select either <guilabel>12 hour</guilabel>
+	      <guilabel>Time Format</guilabel> &mdash; Select either
+        <guilabel>12 hour</guilabel>
         format for <quote>AM/PM</quote> formatted time, or
         <guilabel>24 hour</guilabel> for a 24 hour clock.
        </para>
@@ -217,14 +254,15 @@
 
       <listitem>
        <para>
-        Show date in applet &mdash; Select this to show the date
-        inside the applet.
+	      <guilabel>Show date in applet</guilabel> &mdash; Select this to
+	      show the date inside the applet.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        Show date in tooltip &mdash; Select this to show the date in
+	      <guilabel>Show date in tooltip</guilabel> &mdash; Select this to
+        show the date in 
         the tooltip that pops up when the mouse is briefly left over
         the applet.
        </para>
@@ -239,7 +277,8 @@
 
       <listitem>
        <para>
-        Unix time &mdash; Select this to show the time, in seconds,
+	      <guilabel>Unix time</guilabel> &mdash; Select this to show the
+        time, in seconds, 
         that has elapsed since Jan 1, 1970.
        </para>
       </listitem>
@@ -248,7 +287,7 @@
     </para>
 
     <para> 
-      After you have made all the changes you want, click on
+      After you have made your changes, click on
       <guibutton>OK</guibutton> to apply the changes and close the
       <interface>Properties</interface> dialog. To cancel the changes
       and return to previous values, click the
@@ -279,12 +318,6 @@
   <!-- This section should describe known bugs and limitations of
        the program if there are any - please be frank and list all
        problems you know of -->
-  <sect2 id="bugs">
-   <title>Known Bugs and Limitations</title>
-   <para>
-    This applet has no known bugs.
-   </para>
-  </sect2>
 
 
   <!-- ============= Authors ================================ -->
@@ -310,7 +343,8 @@
 
    <para>
     This manual was written by Dan Mueth
-    (<email>d-mueth@uchicago.edu</email>). Please send all comments and
+    (<email>d-mueth@uchicago.edu</email>) and updated by John Fleck
+    <email>jfleck@inkstain.net</email>. Please send all comments and
     suggestions regarding this manual to the <ulink type="http"
     url="http://developer.gnome.org/projects/gdp/">GNOME Documentation Project</ulink> 
     by sending an email to <email>docs@gnome.org</email>. You can also
