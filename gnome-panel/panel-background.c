@@ -567,14 +567,15 @@ panel_background_set (PanelBackground     *background,
 		background->stretch_image = stretch_image;
 		background->rotate_image  = rotate_image;
 
-		if (load_file)
-			load_background_file (background, image);
-		else
+		background_changed = TRUE;
+
+		if (load_file) {
+			if (!load_background_file (background, image))
+				break;
+		} else
 			free_transformed_resources (background);
 
 		background->type = type;
-
-		background_changed = TRUE;
 	}
 		break;
 	default:

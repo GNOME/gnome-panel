@@ -1416,6 +1416,12 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
+static void
+emit_background_changed (PanelWidget *panel_widget)
+{
+	g_signal_emit (panel_widget, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
+}
+
 void
 panel_widget_set_back_pixmap (PanelWidget *panel,
 			      const char  *image_path)
@@ -1423,8 +1429,8 @@ panel_widget_set_back_pixmap (PanelWidget *panel,
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 	g_return_if_fail (image_path != NULL);
 
-	panel_background_set_image (
-		&panel->background, image_path, FALSE, FALSE, FALSE);
+	if (panel_background_set_image (&panel->background, image_path, FALSE, FALSE, FALSE))
+		emit_background_changed (panel);
 
 	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
@@ -1436,7 +1442,8 @@ panel_widget_set_back_color (PanelWidget *panel,
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 	g_return_if_fail (color != NULL);
 
-	panel_background_set_color (&panel->background, color);
+	if (panel_background_set_color (&panel->background, color))
+		emit_background_changed (panel);
 
 	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
@@ -1656,9 +1663,10 @@ panel_widget_new (const char          *panel_id,
 	else
 		panel->unique_id = g_strdup (panel_id);
 
-	panel_background_set (
+	if (panel_background_set (
 		&panel->background, back_type, back_color, back_pixmap,
-		fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg);
+		fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg))
+		emit_background_changed (panel);
 
 	panel->orient = orient;
 	panel->sz = sz;
@@ -2516,13 +2524,8 @@ panel_widget_change_params(PanelWidget         *panel,
 	change_back = panel_background_set (
 			&panel->background, back_type, back_color, pixmap,
 			fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg);
-	if (change_back) {
-		panel_background_realized (
-			&panel->background, GTK_WIDGET (panel)->window);
-		
-		g_signal_emit (
-			panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
-	}
+	if (change_back)
+		emit_background_changed (panel);
 
 	/* inhibit draws until we resize */
 	panel->inhibit_draw = TRUE;

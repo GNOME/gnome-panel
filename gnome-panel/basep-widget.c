@@ -849,7 +849,7 @@ basep_widget_focus_in_event (GtkWidget     *widget,
 static BasePWidget *
 find_non_drawer_parent_panel (BasePWidget *basep)
 {
-	BasePWidget *retval;
+	BasePWidget *retval = NULL;
 	Drawer      *drawer;
 	GtkWidget   *panel_parent;
 
@@ -1771,6 +1771,8 @@ basep_widget_construct (const char *panel_id,
 
 	/* setup the hide buttons stuff according to state */
 	setup_hidebuttons (basep);
+
+	basep_update_frame (basep);
 	       
 	if (klass->get_pos)
 		klass->get_pos (basep, &x, &y, 

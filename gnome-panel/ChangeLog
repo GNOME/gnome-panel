@@ -1,3 +1,19 @@
+2003-03-06  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix crash when the background image isn't found. #106607.
+
+	* basep-widget.c:
+	(find_non_drawer_parent_panel): fix warning.
+	(basep_widget_construct): update the frame.
+
+	* panel-background.c: (panel_background_set): if you failed
+	to load the image set the background type to NONE.
+
+	* panel-widget.c: (emit_background_changed),
+	(panel_widget_set_back_pixmap), (panel_widget_set_back_color),
+	(panel_widget_new), (panel_widget_change_params): emit the
+	background changed signal everywhere we change it.
+
 2003-03-04 Hidetoshi Tajima  <hidetoshi.tajima@sun.com>
 
 	* gnome-panel-screenshot.c (on_ok_button_clicked): Fix #107578 by
