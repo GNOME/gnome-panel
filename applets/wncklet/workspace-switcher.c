@@ -47,14 +47,15 @@ typedef struct {
 	GtkWidget *display_workspaces_toggle;
 	GtkWidget *all_workspaces_radio;
 	GtkWidget *current_only_radio;
-	GtkWidget *num_rows_spin;
+	GtkWidget *num_rows_spin;	       /* for vertical layout this is cols */
+	GtkWidget *label_row_col;
 	GtkWidget *num_workspaces_spin;
 	GtkWidget *workspaces_tree;
 
 	GtkListStore *workspaces_store;
 	
 	GtkOrientation orientation;
-	int n_rows;
+	int n_rows;				/* for vertical layout this is cols */
 	WnckPagerDisplayMode display_mode;
 	gboolean display_all;
 	int size;
@@ -123,6 +124,8 @@ applet_change_orient (PanelApplet       *applet,
   
 	pager->orientation = new_orient;
 	pager_update (pager);
+	if (pager->label_row_col) 
+		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("Rows") : _("Columns"));	
 }
 
 
@@ -608,6 +611,7 @@ setup_dialog (GladeXML  *xml,
 	pager->all_workspaces_radio = WID ("all_workspaces_radio");
 	pager->current_only_radio = WID ("current_only_radio");
 	pager->num_rows_spin = WID ("num_rows_spin");
+	pager->label_row_col = WID("label_row_col");
 	pager->num_workspaces_spin = WID ("num_workspaces_spin");
 	pager->workspaces_tree = WID ("workspaces_tree_view");
 
@@ -641,6 +645,7 @@ setup_dialog (GladeXML  *xml,
 			  (GCallback) num_rows_value_changed, pager);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_rows_spin), pager->n_rows);
+	gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("Rows") : _("Columns"));
 
 	g_signal_connect (pager->properties_dialog, "delete_event",
 			  G_CALLBACK (delete_event),
