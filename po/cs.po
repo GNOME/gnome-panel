@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-12-14 03:52+0100\n"
-"PO-Revision-Date: 2003-12-14 16:39+0100\n"
+"POT-Creation-Date: 2003-12-18 15:01+0100\n"
+"PO-Revision-Date: 2003-12-18 17:11+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,11 +50,11 @@ msgstr "%a, %e. %b"
 #: applets/clock/clock.c:248
 #, c-format
 msgid ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -62,8 +62,8 @@ msgstr ""
 #.
 #: applets/clock/clock.c:255
 #, c-format
-msgid "%s, %s"
-msgstr "%s, %s"
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:358
@@ -226,7 +226,13 @@ msgid ""
 "the day into 1000 \".beats\". There are no time zones in this system, so "
 "time is the same all over the world. If set to \"unix\", the clock will "
 "display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou \"12-hour\", \"24-hour\", \"internet\" a \"unix\". Je-li klíč nastaven na \"internet\", budou hodiny zobrazovat internetový čas. Systém internetového času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné časové zóny, takže čas je všude na světě stejný. Je-li klíč nastaven na \"unix\", budou hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970."
+msgstr ""
+"Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou "
+"\"12-hour\", \"24-hour\", \"internet\" a \"unix\". Je-li klíč nastaven na "
+"\"internet\", budou hodiny zobrazovat internetový čas. Systém internetového "
+"času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné časové zóny, "
+"takže čas je všude na světě stejný. Je-li klíč nastaven na \"unix\", budou "
+"hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid "This key specifies the program to run in order to configure the time."
@@ -1294,6 +1300,10 @@ msgstr "Zamknout obrazovku, abyste mohli dočasně opustit svůj počítač"
 #: gnome-panel/menu.c:130 gnome-panel/panel-action-button.c:260
 msgid "Force Quit"
 msgstr "Vynutit ukončení"
+
+#: gnome-panel/menu.c:133
+msgid "Force a misbehaving application to quit"
+msgstr "Vynutit ukončení špatně se chovající aplikace"
 
 #: gnome-panel/menu.c:140 gnome-panel/panel-action-button.c:255
 msgid "Screenshot"
