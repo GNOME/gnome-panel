@@ -11,15 +11,15 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.3.4\n"
-"POT-Creation-Date: 2003-07-24 12:00+0100\n"
-"PO-Revision-Date: 2003-07-23 21:06+0200\n"
+"Project-Id-Version: gnome-panel 2.3.4.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-07-25 14:18+0200\n"
+"PO-Revision-Date: 2003-07-25 14:18+0200\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -328,12 +328,12 @@ msgstr ""
 "Wir bitten Sie nachdrücklich, %s nicht für etwas zu verwenden,\n"
 "das dieses Applet irgendwie »praktisch« oder »nützlich« machen könnte."
 
-#: applets/fish/fish.c:445 applets/fish/fish.c:603
+#: applets/fish/fish.c:442 applets/fish/fish.c:600
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s, der Fisch"
 
-#: applets/fish/fish.c:446
+#: applets/fish/fish.c:443
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -347,39 +347,39 @@ msgstr ""
 "Hauptspeicher. Sollte jemand beim Verwenden dieses Applets erwischt werden, "
 "hat sich er unverzüglich einer psychiatrischen Untersuchung zu unterziehen."
 
-#: applets/fish/fish.c:467
+#: applets/fish/fish.c:464
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
 
-#: applets/fish/fish.c:483
+#: applets/fish/fish.c:480
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Fisch"
 
-#: applets/fish/fish.c:515
+#: applets/fish/fish.c:512
 #, c-format
 msgid "%s the GNOME Fish"
 msgstr "%s, der GNOME Fisch"
 
-#: applets/fish/fish.c:516
+#: applets/fish/fish.c:513
 #, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
 msgstr "%s, der GNOME Fisch - ein zeitgenössisches Orakel"
 
-#: applets/fish/fish.c:563
+#: applets/fish/fish.c:560
 msgid "Unable to get the name of the command to execute"
 msgstr "Der Name des auszuführenden Befehls konnte nicht ermittelt werden"
 
-#: applets/fish/fish.c:580
+#: applets/fish/fish.c:577
 msgid "Unable to locate the command to execute"
 msgstr "Der auszuführende Befehl konnte nicht gefunden werden"
 
-#: applets/fish/fish.c:608
+#: applets/fish/fish.c:605
 #, no-c-format
 msgid "%s the GNOME Fish Says:"
 msgstr "%s, der GNOME Fisch sagt:"
 
-#: applets/fish/fish.c:733
+#: applets/fish/fish.c:730
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -390,7 +390,7 @@ msgstr ""
 "\n"
 "Details: %s"
 
-#: applets/fish/fish.c:754
+#: applets/fish/fish.c:751
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -402,7 +402,7 @@ msgstr ""
 "\n"
 "Bitte orientieren Sie sich am Einstellungsdialog des Fisches."
 
-#: applets/fish/fish.c:1356
+#: applets/fish/fish.c:1353
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -410,7 +410,7 @@ msgstr ""
 "Das Wasser muss gewechselt werden!\n"
 "(Man beachte das heutige Datum)"
 
-#: applets/fish/fish.c:1424
+#: applets/fish/fish.c:1421
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME-Fisch, der Wahrsager"
 
@@ -990,11 +990,11 @@ msgstr "Soll ein Pfeil-Anzeiger dargestellt werden?"
 
 #: gnome-panel/button-widget.c:836
 msgid "DnD Highlight"
-msgstr ""
+msgstr "DnD-Hervorheben"
 
 #: gnome-panel/button-widget.c:837
 msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
+msgstr "Soll das Symbol beim Ziehen und Ablegen hervorgehoben werden?"
 
 #: gnome-panel/button-widget.c:845 gnome-panel/panel-toplevel.c:3477
 msgid "Orientation"
@@ -1526,24 +1526,20 @@ msgid "About _GNOME"
 msgstr "Info zu _GNOME"
 
 #: gnome-panel/menu.c:3115
-#, fuzzy
 msgid "Launcher..."
-msgstr "_Starter..."
+msgstr "Starter..."
 
 #: gnome-panel/menu.c:3124
-#, fuzzy
 msgid "Launcher from menu"
-msgstr "S_tarter aus Menü"
+msgstr "Starter aus Menü"
 
 #: gnome-panel/menu.c:3134
-#, fuzzy
 msgid "Main Menu"
-msgstr "Haupt_menü"
+msgstr "Hauptmenü"
 
 #: gnome-panel/menu.c:3144
-#, fuzzy
 msgid "Menu Bar"
-msgstr "Menü_leiste"
+msgstr "Menüleiste"
 
 #: gnome-panel/menu.c:3153
 msgid "Drawer"
@@ -2342,9 +2338,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Beim Versuch, %s zu öffnen, ist ein unbekannter Fehler aufgetreten"
 
 #: gnome-panel/panel-recent.c:172
-#, fuzzy
 msgid "Open Recent"
-msgstr "_Zuletzt geöffnete Dateien"
+msgstr "Zuletzt geöffnet"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2985,7 +2980,7 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
-"This is a human readable name which you can use to indentify a panel. Its "
+"This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
