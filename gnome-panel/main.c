@@ -176,11 +176,6 @@ main(int argc, char **argv)
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
 
-	/*
-	 * Let applets spew.
-	 */
-	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
-
 	gnome_program_init ("gnome-panel", VERSION,
 			    LIBGNOMEUI_MODULE,
 			    argc, argv,
