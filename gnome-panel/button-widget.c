@@ -263,49 +263,6 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 
 	buttons = g_list_remove(buttons,button);
 }
-/*
-static GdkPixBuf *
-loadup_file(char *file, int size)
-{
-	GdkPixBuf *pb = NULL;
-	int w,h;
-	
-	if(!file) {
-		return NULL;
-	}
-
-	if(*file!='/') {
-		char *f;
-		f = gnome_pixmap_file (file);
-		if(f) {
-			pb = gdk_pixbuf_load_image(f);
-			g_free(f);
-		}
-	} else
-		pb = gdk_pixbuf_load_image (file);
-	if(!pb) {
-		return NULL;
-	}
-
-	w = pb->art_pixbuf->width;
-	h = pb->art_pixbuf->height;
-	if(w>h) {
-		h = h*((double)size/w);
-		w = size;
-	} else {
-		w = w*((double)size/h);
-		h = size;
-	}
-	w = w>0?w:1;
-	h = h>0?h:1;
-	pb2 = gdk_pixbuf_scale(pb, w, h);
-	gdk_imlib_render (im, w, h);
-
-	*pixmap = gdk_imlib_copy_image (im);
-	*mask = gdk_imlib_copy_mask (im);
-
-	gdk_imlib_destroy_image (im);
-}*/
 
 static GdkPixBuf *
 loadup_file(char *file)
