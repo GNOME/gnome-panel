@@ -52,7 +52,7 @@
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
-#define SESSION_DEBUG 1
+#undef SESSION_DEBUG
 
 extern GSList          *panels;
 extern GSList          *applets;
@@ -1186,6 +1186,9 @@ session_remove_panel_from_config (PanelWidget *panel) {
         panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
 
         if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
+#ifdef SESSION_DEBUG
+	  printf ("We have no configuration to remove!\n");
+#endif
                 /* We haven't saved any profile, so don't remove anything */
                 g_free (panel_profile_key);
                 return;

@@ -7,8 +7,6 @@
 
 #include "panel-gconf.h"
 
-#define PUSH_USE_ENGINE(client) do { if ((client)->engine) gconf_engine_push_owner_usage ((client)->engine, client); } while (0)
-#define POP_USE_ENGINE(client) do { if ((client)->engine) gconf_engine_pop_owner_usage ((client)->engine, client); } while (0)
 
 #undef PANEL_GCONF_DEBUG
 
@@ -310,15 +308,19 @@ panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gcha
 	return return_val;
 }
 
+/* FIXME: cut and paste code from gconf - hopefully this will be public API for future releases */
+
 void
 panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
 	GSList *subdirs;
 	GSList *entries;
 	GSList *tmp;
 
-	PUSH_USE_ENGINE (client);
-	subdirs = gconf_engine_all_dirs (client->engine, dir, NULL);
-	POP_USE_ENGINE (client);
+	subdirs = gconf_client_all_dirs (client, dir, NULL);
+
+#ifdef PANEL_GCONF_DEBUG
+	printf ("Recursive Clean for %s\n", dir);
+#endif 
 
 	if (subdirs != NULL) {
     		tmp = subdirs;
@@ -332,9 +334,7 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
     	g_slist_free (subdirs);
   	}
 
-  	PUSH_USE_ENGINE (client);
-  	entries = gconf_engine_all_entries (client->engine, dir, NULL);
-  	POP_USE_ENGINE (client);
+  	entries = gconf_client_all_entries (client, dir, NULL);
 
   	if (entries != NULL) {
     		tmp = entries;
@@ -342,16 +342,15 @@ panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
     		while (tmp != NULL) {
  			GConfEntry *entry = tmp->data;
 
-      			PUSH_USE_ENGINE (client);
-      			gconf_engine_unset (client->engine, gconf_entry_get_key (entry), NULL);
-      			POP_USE_ENGINE (client);
+#ifdef PANEL_GCONF_DEBUG
+	printf ("Unsetting %s\n", gconf_entry_get_key (entry));
+#endif 
+      			gconf_client_unset (client, gconf_entry_get_key (entry), NULL);
       			gconf_entry_free (entry);
       			tmp = g_slist_next (tmp);
     		}
     		
 		g_slist_free (entries);
   	}
-	PUSH_USE_ENGINE (client);
-	gconf_engine_unset (client->engine, dir, NULL);
-	POP_USE_ENGINE (client);
+	gconf_client_unset (client, dir, NULL);
 }

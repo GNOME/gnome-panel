@@ -1,5 +1,12 @@
 2002-01-02  Glynn Foster  <glynn.foster@sun.com>
 
+	* panel-gconf.c, session.c: I am an ass. Use gconf_client instead
+	of gconf_engine. Don't know what I was thinking about. Anyway, it 
+	works okay now, although doesn't unlink the directory, although
+	there's probably a way of doing that.
+
+2002-01-02  Glynn Foster  <glynn.foster@sun.com>
+
 	* panel-gconf.c, panel-widget.c, session.c, session.h: 
 	Implemented new session_remove_panel_config () function to clean
 	up the gconf database after we start removing panels. Doesn't work
