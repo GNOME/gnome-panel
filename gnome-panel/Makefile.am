@@ -93,6 +93,7 @@ panel_sources =			\
 panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
+	panel-main.h		\
 	basep-widget.h		\
 	button-widget.h		\
 	multiscreen-stuff.h	\

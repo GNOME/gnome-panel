@@ -18,6 +18,8 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
+#include "panel-main.h"
+
 #include "conditional.h"
 #include "drawer-widget.h"
 #include "menu-fentry.h"
@@ -26,12 +28,10 @@
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
+#include "panel-shell.h"
 #include "session.h"
 #include "status.h"
 #include "xstuff.h"
-
-/*#include "panel-unique-factory.h"*/
-#include "panel-shell.h"
 
 extern int config_sync_timeout;
 
@@ -53,7 +53,13 @@ char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
 
-gchar *panel_profile_name = NULL;
+static gchar *panel_profile_name = NULL;
+
+gchar *
+panel_main_get_current_profile (void)
+{
+	return panel_profile_name;
+}
 
 static gboolean
 menu_age_timeout(gpointer data)

@@ -79,8 +79,9 @@ background.
 
 </para>
 
-@widget: 
 @Returns: 
+<!-- # Unused Parameters # -->
+@widget: 
 
 
 <!-- ##### FUNCTION panel_applet_get_size ##### -->
@@ -169,4 +170,46 @@ Defines a 'main' routine for the applet factory.
 @callback: The factory callback.
 @data: he factory user data pointer.
 
+
+<!-- ##### SIGNAL PanelApplet::change-background ##### -->
+<para>
+Emitted when the background of the panel changes. Use @type to
+determine which, if any, of @color and @pimxap is valid.
+</para>
+
+@panelapplet: The object which received the signal.
+@arg1: 
+@arg2: 
+@arg3: 
+<!-- # Unused Parameters # -->
+@type: The #PanelAppletBackgroundType.
+@color: The #GdkColor if @type is #PANEL_COLOR_BACKGROUND.
+@pixmap: The pixmap file name if @type is #PANEL_PIXMAP_BACKGROUND
+
+<!-- ##### SIGNAL PanelApplet::change-orient ##### -->
+<para>
+Emitted when the orientation of the panel changes.
+</para>
+
+@panelapplet: The object which received the signal.
+@arg1: 
+<!-- # Unused Parameters # -->
+@orient: The new #PanelAppletOrient of the applet.
+
+<!-- ##### SIGNAL PanelApplet::change-size ##### -->
+<para>
+Emitted when the size of the panel changes.
+</para>
+
+<para>
+Note: this is different for size negotiation which is handled by
+size_request() and size_allocate() as usual. This signal should
+be used to determine what font size or widget layout to use 
+depending on the size of the panel.
+</para>
+
+@panelapplet: The object which received the signal.
+@arg1: 
+<!-- # Unused Parameters # -->
+@size: The size, in pixels, of the panel.
 

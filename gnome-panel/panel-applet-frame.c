@@ -27,6 +27,7 @@
 
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
+#include "panel-main.h"
 #include "applet.h"
 
 #undef PANEL_APPLET_FRAME_DEBUG
@@ -266,6 +267,8 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->applet_shell = CORBA_OBJECT_NIL;
 	frame->priv->property_bag = CORBA_OBJECT_NIL;
 	frame->priv->applet_info  = NULL;
+
+	frame->priv->unique_key = gconf_unique_key ();
 }
 
 GType
@@ -325,16 +328,23 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
 	Bonobo_Control      control;
 	BonoboUIComponent  *ui_component;
 	GtkWidget          *widget;
+	gchar              *moniker;
 
-        widget = bonobo_widget_new_control (iid, NULL);
+	moniker = g_strdup_printf ("%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs", 
+				   iid,
+				   panel_main_get_current_profile (),
+				   frame->priv->unique_key);
+
+        widget = bonobo_widget_new_control (moniker, NULL);
+
+	g_free (moniker);
+
 	if (!widget) {
 		g_warning (G_STRLOC ": failed to load %s", iid);
 		return;
 	}
 
 	frame->priv->iid = g_strdup (iid);
-
-	frame->priv->unique_key = gconf_unique_key ();
 
         control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 

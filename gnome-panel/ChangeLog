@@ -1,3 +1,19 @@
+2001-12-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add panel-main.h.
+
+	* panel-main.h: new file.
+
+	* main.c: (panel_main_get_current_profile): impl.
+	  make panel_profile_name static.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct): append
+	the prefs_key item to the iid to make the moniker.
+
+	* menu.c: (create_new_panel): use panel_main_get_current_profile.
+
+	* session.c: (session_init_panels): ditto.
+
 2001-12-19  Glynn Foster  <glynn.foster@sun.com>
 
 	* aligned-widget.c, aligned-widget.h, applet-object.c, applet-widget.c,

@@ -53,6 +53,7 @@
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
+#include "panel-main.h"
 #include "panel.h"
 #include "panel-config-global.h"
 #include "session.h"
@@ -89,8 +90,6 @@ extern int base_panels;
 extern char *kde_menudir;
 extern char *kde_icondir;
 
-
-extern gchar *panel_profile_name;
 
 extern GtkTooltips *panel_tooltips;
 
@@ -3052,7 +3051,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
-			s = panel_gconf_panel_profile_get_conditional_string (panel_profile_name,
+			s = panel_gconf_panel_profile_get_conditional_string (panel_main_get_current_profile (),
 										       (gchar *) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id,
 										       "clock-format",
 										       TRUE);
