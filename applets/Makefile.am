@@ -1,5 +1,5 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon \
-	 fish bussign netload dialer webcontrol icewm-pager \
+	 fish netload dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery
 
 if HAVE_LIBGTOP
