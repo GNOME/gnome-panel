@@ -1,3 +1,9 @@
+2002-07-29  Mark McLoughlin  <mark@skynet.ie>
+
+	* tasklist.c: (minimum_size_changed), (maximum_size_changed):
+	Handle case where spin buttons have already been destroyed.
+	Fixes #89027. Patch from Padraig O'Briain.
+
 2002-07-11  Deepa Chacko Pillai <deepa.chacko@wipro.com>
 
 	* remote-helper.c: Added check for waitpid ()

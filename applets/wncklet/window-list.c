@@ -387,7 +387,12 @@ minimum_size_changed (GConfClient *client, guint cnxn_id,
 {
     	WnckTasklist *wncktl = WNCK_TASKLIST (tasklist->tasklist);
 	gint value;
-	GtkSpinButton *button = GTK_SPIN_BUTTON (tasklist->minimum_size_spin);
+	GtkSpinButton *button;
+
+	if (!tasklist->minimum_size_spin)
+		return;
+
+	button = GTK_SPIN_BUTTON (tasklist->minimum_size_spin);
 
 	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
 		return;
@@ -407,8 +412,12 @@ maximum_size_changed (GConfClient  *client, guint cnxn_id,
                       GConfEntry   *entry, TasklistData *tasklist)
 {
 	gint value;
-	GtkSpinButton *button = GTK_SPIN_BUTTON (tasklist->maximum_size_spin);
+	GtkSpinButton *button;
 
+	if (!tasklist->maximum_size_spin)
+		return;
+
+	button = GTK_SPIN_BUTTON (tasklist->maximum_size_spin);
 	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
 		return;
 	
