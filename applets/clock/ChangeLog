@@ -1,4 +1,10 @@
+Sun Jan 24 03:39:02 1999  Timur Bakeyev <mc@bat.ru>
+
+	* mixer/mixer.c: Add conditional #include for {linux,machine,sys}/
+	soundcard.h.
+
 1999-01-22  The Rasterman <raster@redhat.com>
+
 	* Makefile.am: removed icewm-pager from build, removed esdmanager from
 	  build as it hasnt been finished, removed fvwm pager from build as it 
 	  should become gnome compiant with patches sometime...
@@ -580,13 +586,13 @@ Wed Jun 24 11:04:28 EDT 1998 Gregory McLean <gregm@comstar.net>
 	  I liked it so added it :)
 
 	* mixer/ Applied patch from Matthew Wilkins to the mixer app
-here's what it does:
--changes the 'mute' label to a pixmap
--makes the applet turn sideways when the panel is vertical
--colour-fading background for the slider a la WinAmp volume control
--gets out of mute mode when an external program turns up the volume
--moves the mute button underneath the slider.
--the slider widget becomes the vslider and hslider widgets.
+	here's what it does:
+	-changes the 'mute' label to a pixmap
+	-makes the applet turn sideways when the panel is vertical
+	-colour-fading background for the slider a la WinAmp volume control
+	-gets out of mute mode when an external program turns up the volume
+	-moves the mute button underneath the slider.
+	-the slider widget becomes the vslider and hslider widgets.
 
 Wed Jun 10 11:41:11 1998  Owen Taylor  <otaylor@gtk.org>
 
