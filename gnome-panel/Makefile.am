@@ -175,7 +175,8 @@ gnome_panel_SOURCES =			\
 gnome_panel_LDADD =		\
 	$(X_LIBS)		\
 	$(PANEL_LIBS)		\
-	$(XINERAMA_LIBS)
+	$(XINERAMA_LIBS)	\
+	-lpopt
 
 gnome_panel_LDFLAGS = -export-dynamic
 
@@ -186,7 +187,7 @@ gnome_panel_preferences_SOURCES =	\
 
 gnome_panel_preferences_LDADD =		\
 	$(X_LIBS)			\
-	$(PANELCONFIG_LIBS)           
+	$(PANELCONFIG_LIBS)
 
 gnome_panel_preferences_LDFLAGS =	\
 	-export-dynamic
@@ -205,7 +206,8 @@ gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_LDADD = 	\
 	$(X_LIBS)			\
-	$(PANEL_LIBS)
+	$(PANEL_LIBS)			\
+	-lpopt
 
 gnome_panel_screenshot_SOURCES = \
 	gnome-panel-screenshot.c
