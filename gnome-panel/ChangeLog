@@ -1,3 +1,16 @@
+2003-07-15  Mark McLoughlin  <mark@skynet.ie>
+
+	Make the items in the Main Menu have invisible mnemonics too.
+	Fixes bug #117457.
+
+	* menu.[ch]:
+	(setup_full_menuitem): add an extra "invisible_mnemonic"
+	arg and if true make the first character of the menu item
+	a hidden accelerator.
+	(create_root_menu): use it here for the Main Menu.
+
+	* applet.c: upd.
+
 Mon Jul 14 10:22:39 2003  George Lebl <jirka@5z.com>
 
 	* panel-properties-dialog.(c|glade): Add warning label if some of the

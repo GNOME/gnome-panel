@@ -21,7 +21,8 @@ enum {
 void		setup_menuitem		(GtkWidget        *menuitem,
 					 GtkIconSize       icon_size,
 					 GtkWidget        *pixmap,
-					 const char       *title);
+					 const char       *title,
+					 gboolean          invisible_mnemonic);
 
 GtkWidget      *create_menu_at          (GtkWidget     *menu,
 					 const char    *menudir,

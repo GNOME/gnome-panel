@@ -330,7 +330,7 @@ setup_an_item (AppletUserMenu *menu,
 	if (menu->stock_item && menu->stock_item [0])
 		image = gtk_image_new_from_stock (menu->stock_item, GTK_ICON_SIZE_MENU);
 
-	setup_menuitem (menu->menuitem, GTK_ICON_SIZE_MENU, image, menu->text);
+	setup_menuitem (menu->menuitem, GTK_ICON_SIZE_MENU, image, menu->text, FALSE);
 
 	if(submenu)
 		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
@@ -472,7 +472,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image , _("_Remove From Panel"));
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image , _("_Remove From Panel"), FALSE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -480,7 +480,7 @@ panel_applet_create_menu (AppletInfo  *info,
 
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, locked ? _("Un_lock") : _("_Lock"));
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, locked ? _("Un_lock") : _("_Lock"), FALSE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_applet_lock), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
@@ -488,7 +488,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, _("_Move"));
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, image, _("_Move"), FALSE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
