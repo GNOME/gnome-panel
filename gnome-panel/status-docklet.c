@@ -276,8 +276,8 @@ try_getting_plug(StatusDocklet *docklet)
  * @maximum_retries:  Maximum number of times to try to contact panel
  * @handle_restarts:  If you handle panel restarts
  *
- * Description:  Creates a neew status docklet object with the sepcified
- * parameters.  See the description of #status_docklet_new for desctiption.
+ * Description:  Creates a neew status docklet object with the specified
+ * parameters.  See the description of #status_docklet_new for details.
  *
  * Returns:  a new docklet object
  **/
