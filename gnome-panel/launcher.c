@@ -840,9 +840,10 @@ load_launcher_applet (const char *params, PanelWidget *panel, int pos,
 }
 
 static char *
-launcher_get_unique_file (void)
+launcher_get_unique_uri (void)
 {
 	int rnd, word;
+	char *uri;
 #define NUM_OF_WORDS 12
 	char *words[] = {
 		"foo",
@@ -869,8 +870,11 @@ launcher_get_unique_file (void)
 		full = launcher_file_name (fname);
 		g_free (fname);
 
-		if ( ! g_file_test (full, G_FILE_TEST_EXISTS))
-			return full;
+		if ( ! g_file_test (full, G_FILE_TEST_EXISTS)) {
+			uri = gnome_vfs_get_uri_from_local_path (full);
+			g_free (full);
+			return uri;
+		}
 	}
 
 	g_assert_not_reached ();
@@ -908,7 +912,7 @@ launcher_save (Launcher *launcher)
 
 	if (gnome_desktop_item_get_location (launcher->ditem) == NULL)
 		gnome_desktop_item_set_location (launcher->ditem,
-						 launcher_get_unique_file ());
+						 launcher_get_unique_uri ());
 
 	gnome_desktop_item_save (launcher->ditem,
 				 NULL /* under */,
