@@ -48,6 +48,11 @@ extern GtkTooltips *panel_tooltips;
   opened that menu whilethe user is looking over the choices*/
 extern PanelWidget *current_panel;
 
+extern char *kde_menudir;
+extern char *kde_icondir;
+extern char *kde_mini_icondir;
+
+
 /*the types of stuff we accept*/
 
 enum {
@@ -843,7 +848,7 @@ drop_menu(PanelWidget *panel, int pos, char *dir)
 	if(g_file_exists("/etc/X11/wmconfig"))
 		flags |= MAIN_MENU_REDHAT_SUB;
 	/* Guess KDE menus */
-	if(g_file_exists(KDE_MENUDIR))
+	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
 	load_menu_applet(dir, flags, panel, pos, TRUE);
 }

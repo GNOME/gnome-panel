@@ -41,6 +41,10 @@ char *old_panel_cfg_path=NULL;
 /*list of all panel widgets created*/
 extern GSList *panel_list;
 
+extern char *kde_menudir;
+extern char *kde_icondir;
+extern char *kde_mini_icondir;
+
 int ss_cur_applet = 0;
 int ss_done_save = FALSE;
 gushort ss_cookie = 0;
@@ -897,7 +901,7 @@ init_user_applets(void)
 				if(g_file_exists("/etc/X11/wmconfig"))
 					flags |= MAIN_MENU_REDHAT_SUB;
 				/*guess KDE menus */
-				if(g_file_exists(KDE_MENUDIR))
+				if(g_file_exists(kde_menudir))
 					flags |= MAIN_MENU_KDE_SUB;
 				/*guess debian menus*/
 				if (g_file_exists(DEBIAN_MENUDIR))

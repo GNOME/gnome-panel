@@ -48,6 +48,10 @@ extern int panels_to_sync;
 extern int applets_to_sync;
 extern int need_complete_save;
 
+extern char *kde_menudir;
+extern char *kde_icondir;
+extern char *kde_mini_icondir;
+
 /*???? this might be ugly, but I guess we can safely assume that we can only
   have one menu open and that nothing weird will happen to the panel that
   opened that menu whilethe user is looking over the choices*/
@@ -456,7 +460,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 		flags |= MAIN_MENU_REDHAT_SUB;
 
 	/*guess KDE menus*/
-	if(g_file_exists(KDE_MENUDIR))
+	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	/*guess debian menus*/
@@ -2262,16 +2266,18 @@ static GtkWidget *
 create_kde_menu(GtkWidget *menu, int fake_submenus,
 		int force, int fake)
 {
-	char *pixmap_name = g_concat_dir_and_file (KDE_MINI_ICONDIR, "exec.xpm");
+	char *pixmap_name;
+
+	pixmap_name = g_concat_dir_and_file (kde_mini_icondir, "exec.xpm");
 	if(!fake || menu) {
 		menu = create_menu_at (menu, 
-				       KDE_MENUDIR, FALSE,
+				       kde_menudir, FALSE,
 				       _("KDE menus"), 
 				       pixmap_name,
 				       fake_submenus,
 				       force);
 	} else {
-		menu = create_fake_menu_at (KDE_MENUDIR, FALSE,
+		menu = create_fake_menu_at (kde_menudir, FALSE,
 					    _("KDE menus"),
 					    pixmap_name);
 	}
@@ -3481,7 +3487,8 @@ create_root_menu(int fake_submenus, int flags, int tearoff)
 		GtkWidget *pixmap = NULL;
 		char *pixmap_path;
 		menu = create_kde_menu(NULL, fake_submenus, TRUE, TRUE);
-		pixmap_path = g_concat_dir_and_file (KDE_MINI_ICONDIR, "exec.xpm");
+		pixmap_path = g_concat_dir_and_file (kde_mini_icondir,
+						     "exec.xpm");
 		if (g_file_exists(pixmap_path)) {
 			pixmap = gnome_stock_pixmap_widget_at_size (
 				NULL, pixmap_path, SMALL_ICON_SIZE,

@@ -13,6 +13,10 @@
 
 /*#define PANEL_DEBUG 1*/
 
+extern char *kde_menudir;
+extern char *kde_icondir;
+extern char *kde_mini_icondir;
+
 void
 add_menu_separator (GtkWidget *menu)
 {
@@ -85,7 +89,7 @@ get_default_menu_flags ()
 		flags |= MAIN_MENU_REDHAT_SUB;
 
 	/*guess KDE menus*/
-	if(g_file_exists(KDE_MENUDIR))
+	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	/*guess debian menus*/

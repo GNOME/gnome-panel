@@ -42,6 +42,10 @@ GnomeClient *client = NULL;
 /*a list of started extern applet child processes*/
 extern GList * children;
 
+char *kde_menudir = NULL;
+char *kde_icondir = NULL;
+char *kde_mini_icondir = NULL;
+
 static int
 menu_age_timeout(gpointer data)
 {
@@ -91,7 +95,51 @@ try_config_sync(gpointer data)
 	return TRUE;
 }
 
+static void
+find_kde_directory(void)
+{
+	int i;
+	char *kdedir = getenv("KDEDIR");
+	char *try_prefixes[] = {
+		"/usr",
+		"/opt/kde",
+		"/usr/local",
+		"/kde",
+		NULL
+	};
+	if(kdedir) {
+		kde_menudir = g_concat_dir_and_file(kdedir,"share/applnk");
+		kde_icondir = g_concat_dir_and_file(kdedir,"share/icons");
+		kde_mini_icondir = g_concat_dir_and_file(kdedir,"share/icons/mini");
+		return;
+	}
 
+	/* if what configure gave us works use that */
+	if(g_file_test(KDE_MENUDIR,G_FILE_TEST_ISDIR)) {
+		kde_menudir = g_strdup(KDE_MENUDIR);
+		kde_icondir = g_strdup(KDE_ICONDIR);
+		kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
+		return;
+	}
+
+	for(i=0;try_prefixes[i];i++) {
+		char *try;
+		try = g_concat_dir_and_file(try_prefixes[i],"share/applnk");
+		if(g_file_test(try,G_FILE_TEST_ISDIR)) {
+			kde_menudir = try;
+			kde_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons");
+			kde_mini_icondir = g_concat_dir_and_file(try_prefixes[i],"share/icons/mini");
+			return;
+		}
+		g_free(try);
+	}
+
+	/* absolute fallback, these don't exist, but we're out of options
+	   here */
+	kde_menudir = g_strdup(KDE_MENUDIR);
+	kde_icondir = g_strdup(KDE_ICONDIR);
+	kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
+}
 
 int
 main(int argc, char **argv)
@@ -134,6 +182,8 @@ main(int argc, char **argv)
 		break;
 	}
 	}
+
+	find_kde_directory();
 
 	client = gnome_master_client ();
 

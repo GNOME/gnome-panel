@@ -1,3 +1,10 @@
+Sun Jan 23 15:37:01 2000  George Lebl <jirka@5z.com>
+
+	* main.c,menu.c,menu-util.c,session.c,panel.c: use KDEDIR to try
+	  to find kde, only then use what was passed on the configure command
+	  line and try several other standard prefixes to try to find it,
+	  if not always just fallback to the configure option.
+
 Fri Jan 21 22:38:07 2000  George Lebl <jirka@5z.com>
 
 	* panel-widget.c: always look for an empty spot first unless
