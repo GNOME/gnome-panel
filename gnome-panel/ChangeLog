@@ -1,5 +1,15 @@
 2004-12-15  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-addto.c: (panel_addto_append_internal_applets): data is static
+	(panel_addto_query_applets): free the data we get from bonobo
+	(panel_addto_make_application_list): data is not static
+	(panel_addto_dialog_free_item_info): new
+	(panel_addto_dialog_free_application_list): free items
+	(panel_addto_dialog_free): ditto
+	Should fix bug #151197
+
+2004-12-15  Vincent Untz  <vincent@vuntz.net>
+
 	* menu.[ch]: (create_menuitem): add FIXME so we don't forget to add
 	the right icon for drag and drop when the GTK+ API will be available
 	(menu_create_action_item): new function

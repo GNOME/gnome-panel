@@ -80,14 +80,14 @@ typedef enum {
 
 typedef struct {
 	PanelAddtoItemType     type;
-	const char            *name;
-	const char            *description;
-	const char            *icon;
+	char                  *name;
+	char                  *description;
+	char                  *icon;
 	const char            *stock_icon;
 	PanelActionButtonType  action_type;
-	const char            *launcher_path;
-	const char            *menu_path;
-	const char            *iid;
+	char                  *launcher_path;
+	char                  *menu_path;
+	char                  *iid;
 	gboolean               static_data;
 } PanelAddtoItemInfo;
 
@@ -222,7 +222,7 @@ panel_addto_append_internal_applets (GSList *list)
 		info->icon        = (char *) panel_action_get_icon_name (i);
 		info->stock_icon  = (char *) panel_action_get_stock_icon (i);
 		info->iid         = (char *) panel_action_get_drag_id (i);
-		info->static_data = FALSE;
+		info->static_data = TRUE;
 
                 list = g_slist_append (list, info);
 	}
@@ -380,6 +380,7 @@ panel_addto_query_applets (GSList *list)
 			   BONOBO_EX_REPOID (&env));
 
 		CORBA_exception_free (&env);
+		CORBA_free (applet_list);
 
 		return NULL;
 	}
@@ -417,16 +418,17 @@ panel_addto_query_applets (GSList *list)
 
 		applet = g_new0 (PanelAddtoItemInfo, 1);
 		applet->type = PANEL_ADDTO_APPLET;
-		applet->name = name;
-		applet->description = description;
-		applet->icon = icon;
-		applet->iid = info->iid;
+		applet->name = g_strdup (name);
+		applet->description = g_strdup (description);
+		applet->icon = g_strdup (icon);
+		applet->iid = g_strdup (info->iid);
 		applet->static_data = FALSE;
 
 		list = g_slist_append (list, applet);
 	}
 
 	g_slist_free (langs_gslist);
+	CORBA_free (applet_list);
 
 	return list;
 }
@@ -545,6 +547,7 @@ panel_addto_make_application_list (GSList            **parent_list,
 		data->item_info.description = g_strdup (menu_tree_directory_get_comment (subdir));
 		data->item_info.icon        = g_strdup (menu_tree_directory_get_icon (subdir));
 		data->item_info.menu_path   = menu_tree_directory_make_path (subdir, NULL);
+		data->item_info.static_data = FALSE;
 
 		/* We should set the iid here to something and do
 		 * iid = g_strdup_printf ("MENU:%s", tfr->name)
@@ -574,6 +577,7 @@ panel_addto_make_application_list (GSList            **parent_list,
 		data->item_info.description   = g_strdup (menu_tree_entry_get_comment (entry));
 		data->item_info.icon          = g_strdup (menu_tree_entry_get_icon (entry));
 		data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
+		data->item_info.static_data = FALSE;
 
 		*parent_list = g_slist_append (*parent_list, data);
 
@@ -784,6 +788,37 @@ panel_addto_present_applets (PanelAddtoDialog *dialog)
 }
 
 static void
+panel_addto_dialog_free_item_info (PanelAddtoItemInfo *item_info)
+{
+	if (item_info == NULL || item_info->static_data)
+		return;
+
+	if (item_info->name != NULL)
+		g_free (item_info->name);
+	item_info->name = NULL;
+
+	if (item_info->description != NULL)
+		g_free (item_info->description);
+	item_info->description = NULL;
+
+	if (item_info->icon != NULL)
+		g_free (item_info->icon);
+	item_info->icon = NULL;
+
+	if (item_info->iid != NULL)
+		g_free (item_info->iid);
+	item_info->iid = NULL;
+
+	if (item_info->launcher_path != NULL)
+		g_free (item_info->launcher_path);
+	item_info->launcher_path = NULL;
+
+	if (item_info->menu_path != NULL)
+		g_free (item_info->menu_path);
+	item_info->menu_path = NULL;
+}
+
+static void
 panel_addto_dialog_free_application_list (GSList *application_list)
 {
 	PanelAddtoAppList *data;
@@ -797,6 +832,7 @@ panel_addto_dialog_free_application_list (GSList *application_list)
 		if (data->children) {
 			panel_addto_dialog_free_application_list (data->children);
 		}
+		panel_addto_dialog_free_item_info (&data->item_info);
 		g_free (data);
 	}
 	g_slist_free (application_list);
@@ -823,6 +859,7 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 
 		applet = (PanelAddtoItemInfo *) item->data;
 		if (!applet->static_data) {
+			panel_addto_dialog_free_item_info (applet);
 			g_free (applet);
 		}
 	}
