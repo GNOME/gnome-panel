@@ -530,6 +530,7 @@ static gboolean inv_fire_pressed = FALSE;
 static gboolean inv_left_released = FALSE;
 static gboolean inv_right_released = FALSE;
 static gboolean inv_fire_released = FALSE;
+static gboolean inv_paused = FALSE;
 static GSList *inv_shots = NULL;
 static guint inv_draw_idle = 0;
 
@@ -545,9 +546,13 @@ inv_show_status (void)
 				     "Press 'q' to quit   "
 				     "<big><b>GAME OVER</b> at level %d!</big>",
 				     inv_level+1, inv_level+1);
+	} else if (inv_paused) {
+		s = g_strdup ("<big><b>Paused</b></big>    "
+			      "Press 'p' to unpause");
 	} else {
 		s = g_strdup_printf ("<big>Level: <b>%d</b>  Lives: <b>%d</b></big>    "
-				     "Left/Right to move, Space to fire, 'q' to quit",
+				     "Left/Right to move, Space to fire, "
+				     "'p' to pause, 'q' to quit",
 				     inv_level+1, inv_lives);
 	}
 	gtk_label_set_markup (GTK_LABEL (geginv_label), s);
@@ -835,6 +840,9 @@ geginv_timeout (gpointer data)
 	int shots;
 	int max_shots;
 
+	if (inv_paused)
+		return TRUE;
+
 	if (geginv != data ||
 	    inv_num <= 0 ||
 	    inv_y > 700)
@@ -962,6 +970,9 @@ geginv_move_timeout (gpointer data)
 {
 	GSList *li;
 	static int shot_inhibit = 0;
+
+	if (inv_paused)
+		return TRUE;
 
 	if (geginv != data ||
 	    inv_num <= 0 ||
@@ -1110,6 +1121,11 @@ inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	case GDK_q:
 	case GDK_Q:
 		gtk_widget_destroy (widget);
+		return TRUE;
+	case GDK_p:
+	case GDK_P:
+		inv_paused = ! inv_paused;
+		inv_show_status ();
 		return TRUE;
 	default:
 		break;
@@ -1305,6 +1321,7 @@ start_geginv (void)
 	inv_left_released = FALSE;
 	inv_right_released = FALSE;
 	inv_fire_released = FALSE;
+	inv_paused = FALSE;
 
 	gtk_widget_add_events (geginv, GDK_KEY_RELEASE_MASK);
 

@@ -320,6 +320,9 @@ update_clock (FoobarWidget *foo)
 	struct tm *das_tm;
 	time_t das_time;
 	char hour[256];
+	PangoLayout *layout;
+	char *str_utf8;
+	int width;
 
 	if (foo->clock_label == NULL)
 		return;
@@ -330,7 +333,7 @@ update_clock (FoobarWidget *foo)
 	if (das_tm->tm_mday != day) {
 		if(strftime(hour, sizeof(hour), _("%A %B %d"), das_tm) == 0) {
 			/* according to docs, if the string does not fit, the
-			 * contents of tmp2 are undefined, thus just use
+			 * contents of hour are undefined, thus just use
 			 * ??? */
 			strcpy(hour, "???");
 		}
@@ -350,7 +353,19 @@ update_clock (FoobarWidget *foo)
 	}
 	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-	gtk_label_set_text (GTK_LABEL (foo->clock_label), hour);
+	str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+
+	if (str_utf8 != NULL) {
+		layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
+		pango_layout_get_pixel_size (layout, &width, NULL);
+		width += 8; /* Padding */
+		g_object_unref (G_OBJECT(layout));
+
+		if (width > foo->clock_label->requisition.width)
+			gtk_widget_set_size_request (foo->clock_label, width, -1);
+
+		gtk_label_set_text (GTK_LABEL (foo->clock_label), str_utf8);
+	}
 }
 
 static int
@@ -402,12 +417,11 @@ append_format_items (GtkWidget *menu)
 	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
 	g_free (key);
 	
-	for (i = 0; formats[i]; i++)
-	{
+	for (i = 0; formats[i]; i++) {
 		das_tm = localtime (&das_time);
 		if (strftime (hour, sizeof(hour), _(formats[i]), das_tm) == 0) {
  			/* according to docs, if the string does not fit, the
- 		 	 * contents of tmp2 are undefined, thus just use
+ 		 	 * contents of hour are undefined, thus just use
  		 	 * ??? */
 			strcpy(hour, "???");
 		}
@@ -528,9 +542,16 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 
 		das_time = 0;
 		das_tm = localtime (&das_time);
-		strftime(hour, sizeof(hour), _(clock_format), das_tm);
+		if (strftime (hour, sizeof(hour), _(clock_format), das_tm) == 0) {
+			/* according to docs, if the string does not fit, the
+			 * contents of hour are undefined, thus just use
+			 * ??? */
+			strcpy(hour, "???");
+		}
+		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
+
 		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
-		if(str_utf8) {
+		if (str_utf8 != NULL) {
 			layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
 			pango_layout_get_pixel_size (layout, &width, NULL);
 			width += 8; /* Padding */
