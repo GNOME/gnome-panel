@@ -282,7 +282,7 @@ get_encoding (int encoding, const char *lang)
 {
 	const char *enc = NULL;
 	if (lang != NULL)
-		strchr (lang, '.');
+		enc = strchr (lang, '.');
 	if (enc != NULL) {
 		enc++;
 		if (strcmp (enc, "UTF-8") == 0)
@@ -290,8 +290,6 @@ get_encoding (int encoding, const char *lang)
 		return enc;
 	} else if (encoding == ENCODING_LEGACY_MIXED) {
 		enc = get_encoding_from_locale (lang);
-		if (enc == NULL)
-			g_get_charset (&enc);
 		return enc;
 	} else {
 		/* no decoding */
@@ -472,6 +470,16 @@ quick_desktop_item_load_uri (const char *uri,
 			char *utf8_string = g_convert (retval->name, -1,
 						       "UTF-8", enc,
 						       NULL, NULL, NULL);
+			/* Fallback, if we can't convert from the
+			 * encoding we have gotten, just try on a hunch
+			 * the current locale.  It's better then passing a
+			 * non-utf-8 string */
+			if (utf8_string == NULL) {
+				g_get_charset (&enc);
+				utf8_string = g_convert (retval->name, -1,
+							 "UTF-8", enc,
+							 NULL, NULL, NULL);
+			}
 			if (utf8_string != NULL) {
 				g_free (retval->name);
 				retval->name = utf8_string;
@@ -487,6 +495,16 @@ quick_desktop_item_load_uri (const char *uri,
 			char *utf8_string = g_convert (retval->comment, -1,
 						       "UTF-8", enc,
 						       NULL, NULL, NULL);
+			/* Fallback, if we can't convert from the
+			 * encoding we have gotten, just try on a hunch
+			 * the current locale.  It's better then passing a
+			 * non-utf-8 string */
+			if (utf8_string == NULL) {
+				g_get_charset (&enc);
+				utf8_string = g_convert (retval->comment, -1,
+							 "UTF-8", enc,
+							 NULL, NULL, NULL);
+			}
 			if (utf8_string != NULL) {
 				g_free (retval->comment);
 				retval->comment = utf8_string;
