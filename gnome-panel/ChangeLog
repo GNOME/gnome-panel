@@ -1,5 +1,11 @@
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-xutils.c: (panel_xutils_set_strut): Use an array of
+	longs not guint32s for a property change with format 32. Doh.
+	Might well fix #113475.
+
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-screenshot.c: (main): save in ~/Desktop,
 	not ~/.gnome-desktop.
 

@@ -92,7 +92,7 @@ panel_xutils_set_strut (GdkWindow *gdk_window,
 {
 	Display *display;
 	Window   window;
-	guint32  struts [4];
+	gulong   struts [4];
 
 	g_return_if_fail (GDK_IS_WINDOW (gdk_window));
 
