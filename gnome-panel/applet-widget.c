@@ -354,6 +354,8 @@ wapplet_widget_init (AppletWidget *applet)
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
 	
 	applet->corbadat = NULL;
+	applet->orient = ORIENT_UP;
+	applet->size = PIXEL_SIZE_STANDARD;
 }
 
 static void
@@ -763,6 +765,12 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 	else
 		applet->globcfgpath = NULL;
 	CORBA_free(globcfg);
+
+	/* initialize orient and size correctly */
+	applet->orient =
+		GNOME_PanelSpot__get_parent_orient(applet_servant->pspot,&ev);
+	applet->size =
+		GNOME_PanelSpot__get_parent_size(applet_servant->pspot,&ev);
 
 	CORBA_exception_free(&ev);
 
