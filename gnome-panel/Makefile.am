@@ -2,7 +2,7 @@ SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 	@PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
-	-I$(includedir)
+	-I$(includedir) $(X_CFLAGS)
 
 bin_PROGRAMS = panel
 
