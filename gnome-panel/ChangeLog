@@ -1,3 +1,11 @@
+2002-08-14  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (panel_applet_save_position): don't
+	save the position backwards if it isn't a packed
+	panel. The saved position only has the effect of
+	ordering the applets on packed panels, not actually
+	specifying the position. Fixes #90598.
+
 2002-08-13  Mark McLoughlin  <mark@skynet.ie>
 
 	Register all panel icons with GtkIconFacory and
