@@ -1478,6 +1478,8 @@ init_user_panels(void)
 		mode = gnome_config_get_int("mode=0");
 		level = gnome_config_get_int("level=0");
 		screen = gnome_config_get_int("screen=0");
+		if (screen < 0)
+			screen = 0;
 #if 0 /* i guess we can't easily do this for now */
 		pos = basep_widget_load_pos_settings();
 #endif

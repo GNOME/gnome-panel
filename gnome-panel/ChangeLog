@@ -1,3 +1,19 @@
+Sat May 19 02:17:18 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: create panels on the proper screen
+
+	* session.c: sanitize screen
+
+	* multiscreen-stuff.c: When we get an out of range screen number,
+	  give offscreen values.  Also use an env var to setup the fake
+	  xinerama setup for eaze of debugging.
+
+	* foobar-widget.c: redo the multiscreenazition to be more tolerant
+	  of errors, and work with things on non existent screens.
+
+	* panel_config.[ch]: Add the widgetry for screen number and add the
+	  avoid maximize to all proper panels
+
 Fri May 18 02:44:47 2001  George Lebl <jirka@5z.com>
 
 	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],

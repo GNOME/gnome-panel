@@ -315,6 +315,8 @@ basep_widget_real_screen_change (BasePWidget *basep, int screen)
 		basep->screen = screen;
 		gtk_widget_queue_resize (GTK_WIDGET (basep));
 		panels_to_sync = TRUE;
+
+		update_config_screen (basep);
 	}
 }
 

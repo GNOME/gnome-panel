@@ -19,6 +19,7 @@
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
 #include "rgb-stuff.h"
+#include "multiscreen-stuff.h"
 #include "nothing.cP"
 
 static void config_apply (PerPanelConfig *ppc);
@@ -200,6 +201,19 @@ update_config_avoid_on_maximize (BasePWidget *panel)
 		 GTK_TOGGLE_BUTTON (toggle)->active)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 					      FALSE);
+}
+
+void
+update_config_screen (BasePWidget *w)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+
+	if (ppc == NULL ||
+	    ppc->ppc_origin_change)
+		return;
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->screen_spin),
+				   w->screen);
 }
 
 void
@@ -675,12 +689,26 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	return frame;
 }
 
+static void
+screen_set (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	ppc->screen = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+	panel_config_register_changes (ppc);	
+}
+
 static GtkWidget *
-make_misc_widget (PerPanelConfig *ppc)
+make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 {
 	GtkWidget *frame;
-	GtkWidget *box;
-	GtkWidget *button;
+	GtkWidget *box, *hbox;
+	GtkWidget *button, *label;
+	GtkObject *range;
+
+	if ( ! avoiding &&
+	    multiscreen_screens () <= 1)
+		return NULL;
 
 	frame = gtk_frame_new (_("Miscellaneous"));
 	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
@@ -700,6 +728,26 @@ make_misc_widget (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (basep_set_avoid), 
 			    NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
+
+	if (multiscreen_screens () > 1) {
+		hbox = gtk_hbox_new (FALSE, 0);
+		gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+
+		label = gtk_label_new (_("Current screen:"));
+		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+		range = gtk_adjustment_new (ppc->screen,
+					    0, multiscreen_screens () - 1,
+					    1, 1, 1);
+		ppc->screen_spin = button =
+			gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
+		gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
+		gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
+		gtk_signal_connect (GTK_OBJECT (button), "changed",
+				    GTK_SIGNAL_FUNC (screen_set), NULL);
+		gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	}
 
 	return frame;
 }
@@ -886,8 +934,9 @@ edge_notebook_page (PerPanelConfig *ppc)
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	w = make_misc_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	w = make_misc_widget (ppc, TRUE);
+	if (w != NULL)
+		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
 	return vbox;
 }
@@ -922,6 +971,10 @@ aligned_notebook_page (PerPanelConfig *ppc)
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+
+	w = make_misc_widget (ppc, TRUE);
+	if (w != NULL)
+		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
 	return vbox;
 }
@@ -956,7 +1009,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	GtkWidget *vbox;
 	GtkWidget *vvbox;
 	GtkWidget *box;
-	GtkWidget *button;
+	GtkWidget *button, *label;
 	GtkWidget *orientbox;
 	GtkObject *range;
 	GtkWidget *f, *w;
@@ -1011,8 +1064,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	hbox = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (orientbox), hbox, FALSE, FALSE, 0);
 	
-	button = gtk_label_new (_("Top left corner's position: X"));
-	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	label = gtk_label_new (_("Top left corner's position: X"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
 	range = gtk_adjustment_new (ppc->x, 0, xlimit, 1, 10, 10);
 	ppc->x_spin = button =
@@ -1025,8 +1078,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 			    &ppc->x);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-	button = gtk_label_new (_("Y"));
-	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+	label = gtk_label_new (_("Y"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	
 	range = gtk_adjustment_new (ppc->y, 0, ylimit, 1, 10, 10);
 	ppc->y_spin = button =
@@ -1044,6 +1097,10 @@ floating_notebook_page (PerPanelConfig *ppc)
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+
+	w = make_misc_widget (ppc, FALSE);
+	if (w != NULL)
+		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
 	return vbox;
 }
@@ -1119,6 +1176,10 @@ sliding_notebook_page (PerPanelConfig *ppc)
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	
+	w = make_misc_widget (ppc, TRUE);
+	if (w != NULL)
+		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
 	return vbox;
 }
@@ -1628,24 +1689,25 @@ background_page (PerPanelConfig *ppc)
 }
 
 static void
-setup_pertype_defs(BasePWidget *basep, PerPanelConfig *ppc)
+setup_pertype_defs (BasePWidget *basep, PerPanelConfig *ppc)
 {
 	if (IS_BORDER_WIDGET (basep))
 		ppc->edge = BORDER_POS (basep->pos)->edge;
 	
-	if(IS_ALIGNED_WIDGET(basep))
+	if (IS_ALIGNED_WIDGET(basep)) {
 		ppc->align = ALIGNED_POS (basep->pos)->align;
-	else if (IS_FLOATING_WIDGET (basep)) {
+	} else if (IS_FLOATING_WIDGET (basep)) {
 		FloatingPos *pos = FLOATING_POS (basep->pos);
 		ppc->x = pos->x;
 		ppc->y = pos->y;
 		ppc->orient = PANEL_WIDGET(basep->panel)->orient;
-	} else if(IS_SLIDING_WIDGET(basep)) {
+	} else if (IS_SLIDING_WIDGET(basep)) {
 		SlidingPos *pos = SLIDING_POS (basep->pos);
 		ppc->offset = pos->offset;
 		ppc->align = pos->anchor;
-	} else
+	} else {
 		ppc->align = 0;
+	}
 }
 
 void
@@ -1668,7 +1730,7 @@ update_config_type (BasePWidget *w)
 		for(j = 0; j < POSITION_ALIGNS; j++)
 			ppc->toggle[i][j] = NULL;
 
-	setup_pertype_defs(BASEP_WIDGET(w), ppc);
+	setup_pertype_defs (BASEP_WIDGET(w), ppc);
 
 	if(IS_EDGE_WIDGET(w)) {
 		/* edge notebook page */
@@ -1695,7 +1757,7 @@ update_config_type (BasePWidget *w)
 		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
 			      _("Floating panel"));
  	}
-	gtk_widget_show_all(ppc->type_tab);
+	gtk_widget_show_all (ppc->type_tab);
 	ppc->register_changes = TRUE;
 }
 
@@ -1720,13 +1782,13 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 }
 	     
 void 
-panel_config(GtkWidget *panel)
+panel_config (GtkWidget *panel)
 {
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
-	BasePWidget *basep = BASEP_WIDGET(panel);
-	PanelWidget *pw = PANEL_WIDGET(basep->panel);
+	BasePWidget *basep = BASEP_WIDGET (panel);
+	PanelWidget *pw = PANEL_WIDGET (basep->panel);
 	char *help_path = "";
 	ppc = get_config_struct(panel);
 	

@@ -3246,12 +3246,10 @@ create_new_panel (GtkWidget *w, gpointer data)
 	else
 		screen = 0;
 
-	/* FIXME: add things on the right screen */
-
 	switch (type) {
 	case ALIGNED_PANEL: 
 		find_empty_pos (&x, &y);
-		panel = aligned_widget_new (0/*FIXME:*/,
+		panel = aligned_widget_new (screen,
 					    ALIGNED_LEFT,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -3270,25 +3268,25 @@ create_new_panel (GtkWidget *w, gpointer data)
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
 	case EDGE_PANEL: 
-		panel = edge_widget_new(0/*FIXME:*/,
-					find_empty_edge (),
-					BASEP_EXPLICIT_HIDE,
-					BASEP_SHOWN,
-					BASEP_LEVEL_DEFAULT,
-					TRUE,
-					SIZE_STANDARD,
-					TRUE,
-					TRUE,
-					PANEL_BACK_NONE,
-					NULL,
-					TRUE, FALSE, TRUE,
-					&bcolor);
+		panel = edge_widget_new (screen,
+					 find_empty_edge (),
+					 BASEP_EXPLICIT_HIDE,
+					 BASEP_SHOWN,
+					 BASEP_LEVEL_DEFAULT,
+					 TRUE,
+					 SIZE_STANDARD,
+					 TRUE,
+					 TRUE,
+					 PANEL_BACK_NONE,
+					 NULL,
+					 TRUE, FALSE, TRUE,
+					 &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
 		break;
 	case SLIDING_PANEL:
 		find_empty_pos (&x, &y);
-		panel = sliding_widget_new (0/*FIXME:*/,
+		panel = sliding_widget_new (screen,
 					    SLIDING_ANCHOR_LEFT, 0,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -3306,7 +3304,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (&x, &y);
-		panel = floating_widget_new (0/*FIXME:*/,
+		panel = floating_widget_new (screen,
 					     x, y,
 					     PANEL_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
@@ -3325,8 +3323,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
 		char *s;
-		if (!foobar_widget_exists (0 /* FIXME */)) {
-			panel = foobar_widget_new (0 /* FIXME */);
+		if (!foobar_widget_exists (screen)) {
+			panel = foobar_widget_new (screen);
 
 			/* Don't translate the first part of this string */
 			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));

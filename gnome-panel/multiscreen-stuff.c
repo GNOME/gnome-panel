@@ -40,27 +40,27 @@ multiscreen_init (void)
 	if (initialized)
 		return;
 
-	/* fake xinerama setup for debugging */
-	/*
-	screens = 2;
-	rectangles = g_new0 (GdkRectangle, 2);
-	rectangles[1].x = 0;
-	rectangles[1].y = 0;
-	rectangles[1].width = gdk_screen_width () / 2;
-	rectangles[1].height = gdk_screen_height () / 2;
-	rectangles[0].x = gdk_screen_width () / 2;
-	rectangles[0].y = gdk_screen_height () / 2;
-	rectangles[0].width = gdk_screen_width () / 2;
-	rectangles[0].height = gdk_screen_height () / 2;
-	*/
-
-	/* no xinerama */
-	screens = 1;
-	rectangles = g_new0 (GdkRectangle, 1);
-	rectangles[0].x = 0;
-	rectangles[0].y = 0;
-	rectangles[0].width = gdk_screen_width ();
-	rectangles[0].height = gdk_screen_height ();
+	if (g_getenv ("FAKE_XINERAMA_PANEL") != NULL) {
+		/* fake xinerama setup for debugging */
+		screens = 2;
+		rectangles = g_new0 (GdkRectangle, 2);
+		rectangles[1].x = 0;
+		rectangles[1].y = 0;
+		rectangles[1].width = gdk_screen_width () / 2;
+		rectangles[1].height = gdk_screen_height () / 2;
+		rectangles[0].x = gdk_screen_width () / 2;
+		rectangles[0].y = gdk_screen_height () / 2;
+		rectangles[0].width = gdk_screen_width () / 2;
+		rectangles[0].height = gdk_screen_height () / 2;
+	} else {
+		/* no xinerama */
+		screens = 1;
+		rectangles = g_new0 (GdkRectangle, 1);
+		rectangles[0].x = 0;
+		rectangles[0].y = 0;
+		rectangles[0].width = gdk_screen_width ();
+		rectangles[0].height = gdk_screen_height ();
+	}
 
 	initialized = TRUE;
 }
@@ -77,36 +77,48 @@ int
 multiscreen_x (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 && screen <= screens, 0);
+	g_return_val_if_fail (screen >= 0, 0);
 
-	return rectangles[screen].x;
+	if (screen < screens)
+		return rectangles[screen].x;
+	else
+		return gdk_screen_width () + 10;
 }
 
 int
 multiscreen_y (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 && screen <= screens, 0);
+	g_return_val_if_fail (screen >= 0, 0);
 
-	return rectangles[screen].y;
+	if (screen < screens)
+		return rectangles[screen].y;
+	else
+		return gdk_screen_height () + 10;
 }
 
 int
 multiscreen_width (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 && screen <= screens, 0);
+	g_return_val_if_fail (screen >= 0, 0);
 
-	return rectangles[screen].width;
+	if (screen < screens)
+		return rectangles[screen].width;
+	else
+		return gdk_screen_width ();
 }
 
 int
 multiscreen_height (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0 && screen <= screens, 0);
+	g_return_val_if_fail (screen >= 0, 0);
 
-	return rectangles[screen].height;
+	if (screen < screens)
+		return rectangles[screen].height;
+	else
+		return gdk_screen_height ();
 }
 
 int

@@ -50,7 +50,7 @@ static gboolean foobar_enter_notify	(GtkWidget *widget,
 static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
-static GtkWidget **foobars = NULL;
+static GList *foobars = NULL;
 static GtkWidget *clock_ebox = NULL;
 
 static GtkWindowClass *parent_class = NULL;
@@ -496,16 +496,10 @@ timeout_cb (gpointer data)
 static void
 set_fooclock_format (GtkWidget *w, char *format)
 {
-	int i;
+	GList *li;
 
-	if (foobars == NULL)
-		return;
-
-	for (i = 0; i < multiscreen_screens (); i++) {
-		if (foobars[i] == NULL)
-			continue;
-
-		foobar_widget_set_clock_format (FOOBAR_WIDGET (foobars[i]),
+	for (li = foobars; li != NULL; li = li->next) {
+		foobar_widget_set_clock_format (FOOBAR_WIDGET (li->data),
 						_(format));
 	}
 }
@@ -617,16 +611,10 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 void
 foobar_widget_global_set_clock_format (const char *format)
 {
-	int i;
+	GList *li;
 
-	if (foobars == NULL)
-		return;
-
-	for (i = 0; i < multiscreen_screens (); i++) {
-		if (foobars[i] == NULL)
-			continue;
-
-		foobar_widget_set_clock_format (FOOBAR_WIDGET (foobars[i]),
+	for (li = foobars; li != NULL; li = li->next) {
+		foobar_widget_set_clock_format (FOOBAR_WIDGET (li->data),
 						format);
 	}
 }
@@ -1134,10 +1122,7 @@ foobar_widget_destroy (GtkObject *o)
 {
 	FoobarWidget *foo = FOOBAR_WIDGET (o);
 
-	/* Just sanity */
-	if (foobars != NULL &&
-	    (gpointer)foobars[foo->screen] == (gpointer)foo)
-		foobars[foo->screen] = NULL;
+	foobars = g_list_remove (foobars, foo);
 
 	if (foo->clock_timeout != 0)
 		gtk_timeout_remove (foo->clock_timeout);
@@ -1176,45 +1161,49 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 GtkWidget *
 foobar_widget_new (int screen)
 {
-	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), NULL);
-	g_return_val_if_fail (foobars == NULL || foobars[screen] == NULL, NULL);
+	FoobarWidget *foo;
 
-	if (foobars == NULL)
-		foobars = g_new0 (GtkWidget *, multiscreen_screens ());
+	g_return_val_if_fail (screen >= 0, NULL);
 
-	foobars[screen] = gtk_type_new (TYPE_FOOBAR_WIDGET);
+	if (foobar_widget_exists (screen))
+		return NULL;
 
-	FOOBAR_WIDGET (foobars[screen])->screen = screen;
+	foo = gtk_type_new (TYPE_FOOBAR_WIDGET);
 
-	return foobars[screen];
+	foo->screen = screen;
+	gtk_widget_set_uposition (GTK_WIDGET (foo),
+				  multiscreen_x (foo->screen),
+				  multiscreen_y (foo->screen));
+	gtk_widget_set_usize (GTK_WIDGET (foo),
+			      multiscreen_width (foo->screen), -2);
+
+	foobars = g_list_prepend (foobars, foo);
+
+	return GTK_WIDGET (foo);
 }
 
 gboolean
 foobar_widget_exists (int screen)
 {
-	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), FALSE);
+	GList *li;
 
-	if (foobars == NULL)
-		return FALSE;
-	if (foobars[screen] == NULL)
-		return TRUE;
-	else
-		return FALSE;
+	for (li = foobars; li != NULL; li = li->next) {
+		FoobarWidget *foo = li->data;
+
+		if (foo->screen == screen)
+			return TRUE;
+	}
+	return FALSE;
 }
 
 void
 foobar_widget_force_menu_remake (void)
 {
 	FoobarWidget *foo;
-	int i;
-	if (foobars == NULL)
-		return;
+	GList *li;
 
-	for (i = 0; i < multiscreen_screens (); i++) {
-		if (foobars[i] == NULL)
-			continue;
-
-		foo = FOOBAR_WIDGET(foobars[i]);
+	for (li = foobars; li != NULL; li = li->next) {
+		foo = FOOBAR_WIDGET(li->data);
 
 		if (foo->programs != NULL)
 			gtk_object_set_data (GTK_OBJECT(foo->programs),
@@ -1231,16 +1220,17 @@ foobar_widget_force_menu_remake (void)
 gint
 foobar_widget_get_height (int screen)
 {
-	g_return_val_if_fail (screen >= 0 && screen <= multiscreen_screens (), 0);
+	GList *li;
 
-	if (foobars == NULL)
-		return 0;
+	g_return_val_if_fail (screen >= 0, 0);
 
-	if (foobars[screen] != NULL &&
-	    GTK_WIDGET_REALIZED (foobars[screen])) 
-		return foobars[screen]->allocation.height;
-	else
-		return 0; 
+	for (li = foobars; li != NULL; li = li->next) {
+		FoobarWidget *foo = FOOBAR_WIDGET(li->data);
+
+		if (foo->screen == screen)
+			return GTK_WIDGET (foo)->allocation.height;
+	}
+	return 0; 
 }
 
 static void
