@@ -153,6 +153,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->corner_pos,
 					    ppc->corner_orient,
 					    CORNER_WIDGET(ppc->panel)->state,
+					    ppc->corner_hidebuttons,
+					    ppc->corner_hidebutton_pixmaps,
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
@@ -213,6 +215,16 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 	return FALSE;
 }
 
+static void
+set_toggle_not (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	int *the_toggle = data;
+
+	*the_toggle = !(GTK_TOGGLE_BUTTON(widget)->active);
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
 
 static void
 snapped_set_pos (GtkWidget *widget, gpointer data)
@@ -224,46 +236,6 @@ snapped_set_pos (GtkWidget *widget, gpointer data)
 		return;
 	
 	ppc->snapped_pos = pos;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-static void
-snapped_set_hidebuttons (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	ppc->snapped_hidebuttons = !(GTK_TOGGLE_BUTTON(widget)->active);
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-static void
-snapped_set_hidebutton_pixmaps (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	ppc->snapped_hidebutton_pixmaps = !(GTK_TOGGLE_BUTTON(widget)->active);
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-void
-drawer_set_hidebutton (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	ppc->drawer_hidebutton = !(GTK_TOGGLE_BUTTON(widget)->active);
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-void
-drawer_set_hidebutton_pixmap (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	ppc->drawer_hidebutton_pixmap = !(GTK_TOGGLE_BUTTON(widget)->active);
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
@@ -405,23 +377,25 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* Auto-hide */
+	/* Hidebuttons disable */
 	button = gtk_check_button_new_with_label (_("Disable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (!ppc->snapped_hidebuttons)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_hidebuttons), NULL);
+			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    &ppc->snapped_hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* Auto-hide */
+	/* Arrow disable */
 	button = gtk_check_button_new_with_label (_("Disable hidebutton arrows"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (!ppc->snapped_hidebutton_pixmaps)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_hidebutton_pixmaps), NULL);
+			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    &ppc->snapped_hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -455,6 +429,7 @@ corner_set_orient (GtkWidget *widget, gpointer data)
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
+
 
 static GtkWidget *
 corner_notebook_page(PerPanelConfig *ppc)
@@ -575,6 +550,40 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_orient), 
 			    (gpointer)PANEL_VERTICAL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Hidebuttons frame */
+	frame = gtk_frame_new (_("Hidebutton Options"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	
+
+	/* Hidebuttons disable */
+	button = gtk_check_button_new_with_label (_("Disable hidebuttons"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->corner_hidebuttons)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    &ppc->corner_hidebuttons);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Arrow disable */
+	button = gtk_check_button_new_with_label (_("Disable hidebutton arrows"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->corner_hidebutton_pixmaps)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    &ppc->corner_hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 

@@ -40,7 +40,7 @@ char *just_exit = NULL;
 char *cookie = NULL;
 
 static struct poptOption options[] = {
-  {"discard-session", '\0', POPT_ARG_STRING, &just_exit, N_("Discard session"),
+  {"discard-session", '\0', POPT_ARG_STRING, &just_exit,0, N_("Discard session"),
    N_("ID")},
   {NULL, '\0', 0, NULL, 0}
 };

@@ -558,12 +558,25 @@ corner_enter_notify(CornerWidget *corner,
 static void
 corner_widget_set_hidebuttons(CornerWidget *corner)
 {
-	if(PANEL_WIDGET(corner->panel)->orient == PANEL_HORIZONTAL) {
+	/*hidebuttons are disabled*/
+	if(!corner->hidebuttons_enabled) {
+		gtk_widget_hide(corner->hidebutton_n);
+		gtk_widget_hide(corner->hidebutton_e);
+		gtk_widget_hide(corner->hidebutton_w);
+		gtk_widget_hide(corner->hidebutton_s);
+		/*in case the panel was hidden, show it, since otherwise
+		  we wouldn't see it anymore*/
+		if(is_right(corner))
+			corner_widget_pop_show(corner,FALSE);
+		else
+			corner_widget_pop_show(corner,TRUE);
+	/* horizontal and enabled */
+	} else if(PANEL_WIDGET(corner->panel)->orient == PANEL_HORIZONTAL) {
 		gtk_widget_hide(corner->hidebutton_n);
 		gtk_widget_show(corner->hidebutton_e);
 		gtk_widget_show(corner->hidebutton_w);
 		gtk_widget_hide(corner->hidebutton_s);
-	} else {
+	} else { /*vertical*/
 		gtk_widget_show(corner->hidebutton_n);
 		gtk_widget_hide(corner->hidebutton_e);
 		gtk_widget_hide(corner->hidebutton_w);
@@ -594,6 +607,7 @@ make_hidebutton(CornerWidget *corner,
 	gtk_widget_show(pixmap);
 
 	gtk_container_add(GTK_CONTAINER(w),pixmap);
+	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
 	gtk_signal_connect(GTK_OBJECT(w), "clicked",
 			   GTK_SIGNAL_FUNC(hidefunc),
 			   corner);
@@ -662,7 +676,36 @@ corner_widget_init (CornerWidget *corner)
 			   NULL);
 	corner->pos = CORNER_NE;
 	corner->state = CORNER_SHOWN;
+
+	corner->hidebuttons_enabled = TRUE;
+	corner->hidebutton_pixmaps_enabled = TRUE;
 }
+
+static void
+show_hidebutton_pixmap(GtkWidget *hidebutton, int show)
+{
+	GtkWidget *pixmap;
+
+	pixmap = gtk_object_get_user_data(GTK_OBJECT(hidebutton));
+
+	if (!pixmap) return;
+
+	if (show)
+		gtk_widget_show(pixmap);
+	else
+		gtk_widget_hide(pixmap);
+}
+
+static void
+corner_widget_show_hidebutton_pixmaps(CornerWidget *corner)
+{
+	int show = corner->hidebutton_pixmaps_enabled;
+	show_hidebutton_pixmap(corner->hidebutton_n, show);
+	show_hidebutton_pixmap(corner->hidebutton_e, show);
+	show_hidebutton_pixmap(corner->hidebutton_w, show);
+	show_hidebutton_pixmap(corner->hidebutton_s, show);
+}
+
 
 
 
@@ -670,6 +713,8 @@ GtkWidget*
 corner_widget_new (CornerPos pos,
 		   PanelOrientation orient,
 		   CornerState state,
+		   int hidebuttons_enabled,
+		   int hidebutton_pixmaps_enabled,
 		   PanelBackType back_type,
 		   char *back_pixmap,
 		   int fit_pixmap_bg,
@@ -702,12 +747,15 @@ corner_widget_new (CornerPos pos,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
 
+	corner->hidebuttons_enabled = hidebuttons_enabled;
+	corner->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
+
 	corner->pos = pos;
 	if(state != CORNER_MOVING)
 		corner->state = state;
 
 	corner_widget_set_hidebuttons(corner);
-
+/* */	corner_widget_show_hidebutton_pixmaps(corner);
 	corner_widget_set_initial_pos(corner);
 
 	return GTK_WIDGET(corner);
@@ -718,6 +766,8 @@ corner_widget_change_params(CornerWidget *corner,
 			    CornerPos pos,
 			    PanelOrientation orient,
 			    CornerState state,
+			    int hidebuttons_enabled,
+			    int hidebutton_pixmaps_enabled,
 			    PanelBackType back_type,
 			    char *pixmap_name,
 			    int fit_pixmap_bg,
@@ -733,6 +783,8 @@ corner_widget_change_params(CornerWidget *corner,
 	corner->pos = pos;
 	oldstate = corner->state;
 	corner->state = state;
+	corner->hidebuttons_enabled = hidebuttons_enabled;
+	corner->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
 	/*avoid flicker during size_request*/
 	if(PANEL_WIDGET(corner->panel)->orient != orient)
@@ -746,6 +798,7 @@ corner_widget_change_params(CornerWidget *corner,
 				   back_color);
 
 	corner_widget_set_hidebuttons(corner);
+/* */	corner_widget_show_hidebutton_pixmaps(corner);
 
 	if(oldpos != corner->pos)
 	   	gtk_signal_emit(GTK_OBJECT(corner),
@@ -770,6 +823,8 @@ corner_widget_change_pos_orient(CornerWidget *corner,
 				    pos,
 				    orient,
 				    corner->state,
+				    corner->hidebuttons_enabled,
+				    corner->hidebutton_pixmaps_enabled,
 				    panel->back_type,
 				    panel->back_pixmap,
 				    panel->fit_pixmap_bg,

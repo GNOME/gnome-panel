@@ -1447,6 +1447,8 @@ create_new_panel(GtkWidget *w,gpointer data)
 		panel = corner_widget_new(CORNER_NE,
 					  PANEL_HORIZONTAL,
 					  CORNER_SHOWN,
+					  TRUE,
+					  TRUE,
 					  PANEL_BACK_NONE,
 					  NULL,
 					  TRUE,

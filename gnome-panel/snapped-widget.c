@@ -670,6 +670,15 @@ snapped_widget_set_hidebuttons(SnappedWidget *snapped)
 		gtk_widget_hide(snapped->hidebutton_e);
 		gtk_widget_hide(snapped->hidebutton_w);
 		gtk_widget_hide(snapped->hidebutton_s);
+		/*in case the panel was hidden, show it, since otherwise
+		  we wouldn't see it anymore*/
+		if(snapped->state == SNAPPED_HIDDEN_RIGHT) {
+			snapped_widget_pop_show(snapped,FALSE);
+			snapped_widget_queue_pop_down(snapped);
+		} else if(snapped->state == SNAPPED_HIDDEN_LEFT) {
+			snapped_widget_pop_show(snapped,TRUE);
+			snapped_widget_queue_pop_down(snapped);
+		}
 	/* horizontal and enabled */
 	} else if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
 		gtk_widget_hide(snapped->hidebutton_n);

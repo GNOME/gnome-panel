@@ -313,6 +313,10 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("pos", corner->pos);
 		gnome_config_set_int("orient",panel->orient);
 		gnome_config_set_int("state", corner->state);
+		gnome_config_set_bool("hidebuttons_enabled",
+				      corner->hidebuttons_enabled);
+		gnome_config_set_bool("hidebutton_pixmaps_enabled",
+				      corner->hidebutton_pixmaps_enabled);
 		break;
 		}
 	case DRAWER_PANEL:
@@ -839,6 +843,8 @@ init_user_panels(void)
 				CornerPos pos;
 				PanelOrientation orient;
 				CornerState state;
+				int hidebuttons_enabled;
+				int hidebutton_pixmaps_enabled;
 				
 				g_snprintf(buf,256,"pos=%d", CORNER_NE);
 				pos=gnome_config_get_int(buf);
@@ -849,10 +855,17 @@ init_user_panels(void)
 
 				g_snprintf(buf,256,"state=%d", CORNER_SHOWN);
 				state=gnome_config_get_int(buf);
+
+				hidebuttons_enabled =
+					gnome_config_get_bool("hidebuttons_enabled=TRUE");
+				hidebutton_pixmaps_enabled =
+					gnome_config_get_bool("hidebutton_pixmaps_enabled=TRUE");
 				
 				panel = corner_widget_new(pos,
 							  orient,
 							  state,
+							  hidebuttons_enabled,
+							  hidebutton_pixmaps_enabled,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,

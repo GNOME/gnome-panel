@@ -44,6 +44,9 @@ struct _CornerWidget
 
 	CornerPos		pos;
 	CornerState		state;
+
+	int			hidebuttons_enabled;
+	int			hidebutton_pixmaps_enabled;
 };
 
 struct _CornerWidgetClass
@@ -60,6 +63,8 @@ guint		corner_widget_get_type		(void);
 GtkWidget*	corner_widget_new		(CornerPos pos,
 						 PanelOrientation orient,
 						 CornerState state,
+						 int hidebuttons_enabled,
+						 int hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -70,6 +75,8 @@ void		corner_widget_change_params	(CornerWidget *corner,
 						 PanelOrientation orient,
 						 CornerPos pos,
 						 CornerState state,
+						 int hidebuttons_enabled,
+						 int hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,

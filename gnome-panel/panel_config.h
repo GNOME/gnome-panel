@@ -22,6 +22,8 @@ struct _PerPanelConfig {
 	/*corner types*/
 	CornerPos		corner_pos;
 	PanelOrientation	corner_orient;
+	int			corner_hidebuttons;
+	int			corner_hidebutton_pixmaps;
 
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
@@ -48,6 +50,4 @@ void panel_config(GtkWidget *panel);
 void update_config_orient(GtkWidget *panel);
 void update_config_back(PanelWidget *panel);
 void kill_config_dialog(GtkWidget *panel);
-void drawer_set_hidebutton (GtkWidget *widget, gpointer data);
-void drawer_set_hidebutton_pixmap (GtkWidget *widget, gpointer data);
 #endif /* PANEL_CONFIG_H */
