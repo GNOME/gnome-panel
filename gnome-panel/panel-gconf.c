@@ -54,3 +54,43 @@ gchar * panel_gconf_global_config_get_string (const gchar *key) {
 	g_free (full_key);
 	return value;
 }
+
+void panel_gconf_global_config_set_int (const gchar *key, gint value) {
+	gchar *full_key;
+
+	full_key = panel_gconf_global_config_get_full_key (key);
+	gconf_client_set_int (panel_gconf_get_client (),
+			      full_key,
+			      value,
+			      NULL);
+			      
+
+	g_free (full_key);
+	return;
+}
+
+void panel_gconf_global_config_set_bool (const gchar *key, gboolean value) {
+	gchar *full_key;
+
+	full_key = panel_gconf_global_config_get_full_key (key);
+	gconf_client_set_bool (panel_gconf_get_client (),
+			       full_key,
+			       value,
+			       NULL);
+
+	g_free (full_key);
+	return;
+}
+
+void panel_gconf_global_config_set_string (const gchar *key, const gchar *value) {
+	gchar *full_key;
+
+	full_key = panel_gconf_global_config_get_full_key (key);
+	gconf_client_set_string (panel_gconf_get_client (),
+				 full_key,
+				 value,
+				 NULL);
+
+	g_free (full_key);
+	return;
+}
