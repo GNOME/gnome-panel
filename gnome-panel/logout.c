@@ -197,24 +197,24 @@ load_lock_applet (PanelWidget *panel,
 		return;
 
         /*
-	  <jwz> Blank Screen Now
-	  <jwz> Lock Screen Now
-	  <jwz> Kill Daemon
-	  <jwz> Restart Daemon
-	  <jwz> Preferences
+	  <jwz> Activate Screensaver
+	  <jwz> Lock Screen 
+	  <jwz> Kill Screensaver Daemon
+	  <jwz> Restart Screensaver Daemon
+	  <jwz> Properties
 	  <jwz> (or "configuration" instead?  whatever word you use)
 	  <jwz> those should do xscreensaver-command -activate, -lock, -exit...
 	  <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 	  <jwz> and "xscreensaver-demo"
 	*/
 
-	panel_applet_add_callback (info, "activate", NULL, _("Blank Screen Now"));
-	panel_applet_add_callback (info, "lock", NULL, _("Lock Screen Now"));
-	panel_applet_add_callback (info, "exit", NULL, _("Kill Daemon"));
-	panel_applet_add_callback (info, "restart", NULL, _("Restart Daemon"));
+	panel_applet_add_callback (info, "activate", NULL, _("Activate Screensaver"));
+	panel_applet_add_callback (info, "lock", NULL, _("Lock Screen"));
+	panel_applet_add_callback (info, "exit", NULL, _("Kill Screensaver Daemon"));
+	panel_applet_add_callback (info, "restart", NULL, _("Restart Screensaver Daemon"));
 
 	if (!commie_mode)
-		panel_applet_add_callback (info, "prefs", NULL, _("Preferences"));
+		panel_applet_add_callback (info, "prefs", NULL, _("Properties"));
 
 	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 }

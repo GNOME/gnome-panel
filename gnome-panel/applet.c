@@ -259,11 +259,11 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		break;
 	case APPLET_LOCK: {
                 /*
-		  <jwz> Blank Screen Now
-		  <jwz> Lock Screen Now
-		  <jwz> Kill Daemon
-		  <jwz> Restart Daemon
-		  <jwz> Preferences
+		  <jwz> Activate Screensaver
+		  <jwz> Lock Screen
+		  <jwz> Kill Screensaver Daemon
+		  <jwz> Restart Screensaver Daemon
+		  <jwz> Properties
 		  <jwz> (or "configuration" instead?  whatever word you use)
 		  <jwz> those should do xscreensaver-command -activate, -lock, -exit...
 		  <jwz> and "xscreensaver-command -exit ; xscreensaver &"
