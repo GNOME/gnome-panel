@@ -7,6 +7,7 @@
  *          Federico Mena
  * CORBAized by George Lebl
  * de-CORBAized by George Lebl
+ *
  */
 
 #include <config.h>
@@ -22,6 +23,7 @@
 #include <libgnomeui/libgnomeui.h>
 #include <libgnomeui/gnome-ditem-edit.h>
 #include <libgnomevfs/gnome-vfs.h>
+#include <gdk/gdkx.h>
 
 #include "launcher.h"
 
@@ -119,6 +121,9 @@ launch_cb (GtkWidget *widget,
 
 	item = launcher->ditem;
 
+	if (global_config.enable_animations)
+		xstuff_zoom_animate (widget, NULL);
+	
 	if (gnome_desktop_item_get_entry_type (item) == GNOME_DESKTOP_ITEM_TYPE_LINK)
 		launch_url (launcher);
 

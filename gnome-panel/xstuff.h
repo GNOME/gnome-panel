@@ -2,6 +2,7 @@
 #define __XSTUFF_H__
 
 #include <gdk/gdk.h>
+#include <gtk/gtkwidget.h>
 
 void xstuff_init			(void);
 void xstuff_delete_property		(GdkWindow *window,
@@ -25,5 +26,7 @@ void xstuff_set_wmspec_strut		(GdkWindow *window,
 
 void xstuff_show_desktop                (void);
 
+void xstuff_zoom_animate                (GtkWidget    *widget,
+					 GdkRectangle *opt_src_rect);
 
 #endif /* __XSTUFF_H__ */
