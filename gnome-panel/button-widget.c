@@ -223,25 +223,25 @@ button_widget_unrealize (GtkWidget *widget)
 static void
 button_widget_map (GtkWidget *widget)
 {
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (IS_BUTTON_WIDGET (widget));
+	g_return_if_fail (widget != NULL);
+	g_return_if_fail (IS_BUTTON_WIDGET (widget));
 
-  if (GTK_WIDGET_REALIZED (widget) && !GTK_WIDGET_MAPPED (widget))
-      gdk_window_show (BUTTON_WIDGET (widget)->event_window);
+	if (GTK_WIDGET_REALIZED (widget) && !GTK_WIDGET_MAPPED (widget))
+		gdk_window_show (BUTTON_WIDGET (widget)->event_window);
 
-  GTK_WIDGET_CLASS (parent_class)->map (widget);
+	GTK_WIDGET_CLASS (parent_class)->map (widget);
 }
 
 static void
 button_widget_unmap (GtkWidget *widget)
 {
-  g_return_if_fail (widget != NULL);
-  g_return_if_fail (IS_BUTTON_WIDGET (widget));
+	g_return_if_fail (widget != NULL);
+	g_return_if_fail (IS_BUTTON_WIDGET (widget));
 
-  if (GTK_WIDGET_MAPPED (widget))
-      gdk_window_hide (BUTTON_WIDGET (widget)->event_window);
+	if (GTK_WIDGET_MAPPED (widget))
+		gdk_window_hide (BUTTON_WIDGET (widget)->event_window);
 
-  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+	GTK_WIDGET_CLASS (parent_class)->unmap (widget);
 }
 
 static void
@@ -294,7 +294,7 @@ do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
 		    int saturation, int darken)
 {
 	gint i, j;
-	gint width, height, has_alpha, rowstride;
+	gint width, height, has_alpha, srcrowstride, destrowstride;
 	guchar *target_pixels;
 	guchar *original_pixels;
 	guchar *pixsrc;
@@ -307,13 +307,14 @@ do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
 	has_alpha = gdk_pixbuf_get_has_alpha (src);
 	width = gdk_pixbuf_get_width (src);
 	height = gdk_pixbuf_get_height (src);
-	rowstride = gdk_pixbuf_get_rowstride (src);
+	srcrowstride = gdk_pixbuf_get_rowstride (src);
+	destrowstride = gdk_pixbuf_get_rowstride (dest);
 	target_pixels = gdk_pixbuf_get_pixels (dest);
 	original_pixels = gdk_pixbuf_get_pixels (src);
 
 	for (i = 0; i < height; i++) {
-		pixdest = target_pixels + i*rowstride;
-		pixsrc = original_pixels + i*rowstride;
+		pixdest = target_pixels + i*destrowstride;
+		pixsrc = original_pixels + i*srcrowstride;
 		for (j = 0; j < width; j++) {
 			r = *(pixsrc++);
 			g = *(pixsrc++);
