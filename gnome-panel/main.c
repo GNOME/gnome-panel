@@ -505,13 +505,11 @@ applet_move_foreach(gpointer data, gpointer user_data)
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
-		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
-			Drawer *drawer = info->data;
-			reposition_drawer(drawer);
-			panel_widget_foreach(PANEL_WIDGET(info->assoc),
-					     state_restore_foreach,
-					     NULL);
-		}
+		Drawer *drawer = info->data;
+		reposition_drawer(drawer);
+		panel_widget_foreach(PANEL_WIDGET(info->assoc),
+				     state_restore_foreach,
+				     NULL);
 	}
 	return TRUE;
 }
