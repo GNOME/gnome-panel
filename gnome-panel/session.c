@@ -883,6 +883,25 @@ load_default_applets1(PanelWidget *panel)
 	char *p;
 	int sz;
 
+	/* if we find a mozilla .desktop use that in place of
+	 * the "Netscape" one (which would launch mozilla by
+	 * default anyway though :) */
+	if (panel_file_exists ("/etc/X11/applnk/Internet/mozilla.desktop")) {
+		def_launchers[3] = "/etc/X11/applnk/Internet/mozilla.desktop";
+	} else {
+		p = gnome_datadir_file ("gnome/apps/Internet/mozilla.desktop");
+		if (p != NULL) {
+			def_launchers[3] = "gnome/apps/Internet/mozilla.desktop";
+			g_free (p);
+		} else {
+			p = gnome_datadir_file ("gnome/apps/Internet/Mozilla.desktop");
+			if (p != NULL) {
+				def_launchers[3] = "gnome/apps/Internet/Mozilla.desktop";
+				g_free (p);
+			}
+		}
+	}
+
 	if(gdk_screen_width() <= 320)
 		sz = SIZE_ULTRA_TINY;
 	else if(gdk_screen_width() < 800)
@@ -899,7 +918,12 @@ load_default_applets1(PanelWidget *panel)
 	/*load up some buttons, but only if screen larger then 639*/
 	if(gdk_screen_width() >= 640) {
 		for(i=0;def_launchers[i]!=NULL;i++) {
-			p = gnome_datadir_file (def_launchers[i]);
+
+			if (def_launchers[i][0] == '/') {
+				p = g_strdup (def_launchers[i]);
+			} else {
+				p = gnome_datadir_file (def_launchers[i]);
+			}
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
 				Launcher *launcher;

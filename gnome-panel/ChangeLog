@@ -1,3 +1,11 @@
+Tue Apr 24 13:55:29 2001  George Lebl <jirka@5z.com>
+
+	* session.c: If we can find an installed mozilla desktop file,
+	  then use it for the default config.  Only if we fail use the
+	  Netscape.desktop, which will by default launch mozilla anyway,
+	  but has a tendency to confuse RMS.  Which reminds me the
+	  Netscape.desktop.
+
 Tue Apr 24 13:41:08 2001  George Lebl <jirka@5z.com>
 
 	* session.c:  Most people hate the lock/logout buttons for their
