@@ -68,10 +68,13 @@ static int connect_socket(const char *h, int def)
   struct sockaddr_in peer;
   int fd, p;
   char *hn;
+  extern int h_errno;
+
+  h_errno = 0;
   
   hn = get_server_hostname(h);
   if (!hn)
-   return -1;
+   return NO_SERVER_INFO;
   
   p = get_server_port(h); 
   if (p == 0) p = def;
@@ -79,12 +82,16 @@ static int connect_socket(const char *h, int def)
   he = gethostbyname(hn);
   g_free(hn);
   
-  if (!he) 
-   return -1;
+  if (!he) {
+   if (h_errno == HOST_NOT_FOUND)
+     return INVALID_SERVER;
+   else
+     return NETWORK_ERROR;
+  }
 
   fd = socket(PF_INET, SOCK_STREAM, 0);
   if (fd < 0) 
-   return -1;
+   return NETWORK_ERROR;
 
   peer.sin_family = AF_INET;
   peer.sin_port = htons(p);
@@ -93,7 +100,7 @@ static int connect_socket(const char *h, int def)
   if (connect(fd, (struct sockaddr*) &peer, sizeof(peer)) < 0) 
    {
     close(fd);
-    return -1;
+    return NETWORK_ERROR;
    }
    
   return fd; 
@@ -174,7 +181,7 @@ int pop3_check(const char *h, const char* n, const char* e)
   if (s > 0) {
     if (!is_pop3_answer_ok(read_line(s))) {
       close(s);
-      return -1;
+      return NO_SERVER_INFO;
     }
 
     c = g_strdup_printf("USER %s", n);
@@ -182,7 +189,7 @@ int pop3_check(const char *h, const char* n, const char* e)
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
       g_free(c);
-      return -1;
+      return INVALID_USER;
     }
     g_free(c);
 
@@ -191,7 +198,7 @@ int pop3_check(const char *h, const char* n, const char* e)
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
       g_free(c);
-      return -1;
+      return INVALID_PASS;
     }
     g_free(c);
 
@@ -212,9 +219,10 @@ int pop3_check(const char *h, const char* n, const char* e)
       read_line(s);
 
     close(s);
+    return r;
   }     
    
-  return r;
+  return s;
 }
 
 static int is_imap_answer_untagged(const char *tag)
@@ -262,7 +270,7 @@ imap_check(const char *h, const char* n, const char* e, const char* f)
 	int total = 0, unseen = 0;
 	int count = 0;
 	
-	if (!h || !n || !e) return -1;
+	if (!h || !n || !e) return NO_SERVER_INFO;
 	
 	if (f == NULL ||
 	    f[0] == '\0')
@@ -271,7 +279,7 @@ imap_check(const char *h, const char* n, const char* e, const char* f)
 	s = connect_socket(h, 143);
 	
 	if (s < 0)
-		return r;
+		return s;
 	
 	x = read_line(s);
 	/* The greeting us untagged */
@@ -286,9 +294,11 @@ imap_check(const char *h, const char* n, const char* e, const char* f)
 	if (!write_line(s, c))
 		goto return_from_imap_check;
 	
-	if (!is_imap_answer_ok(wait_for_imap_answer(s, "A1")))
-		goto return_from_imap_check;
-	
+	if (!is_imap_answer_ok(wait_for_imap_answer(s, "A1"))) {
+		g_free (c);
+		close (s);
+		return INVALID_PASS;
+	}
 	
 	c = g_strdup_printf("A2 STATUS \"%s\" (MESSAGES UNSEEN)",f);
 	if (!write_line(s, c))

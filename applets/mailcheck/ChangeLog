@@ -1,3 +1,10 @@
+2003-03-06  Balamurali Viswanathan  <balamurali.viswanathan@wipro.com>
+
+	* mailcheck.c: Added a new error handler.
+	* popcheck.[ch] (connect_socket): Retrun proper failure status
+	* remote-helper.[ch]: Call the error handler on error conditions
+	* solves bug #104891
+
 2003-03-06  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
 
 	* mailcheck.c Create the pixmap for the corresponding screen the

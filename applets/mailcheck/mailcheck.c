@@ -162,6 +162,7 @@ static void set_atk_name_description (GtkWidget *widget, const gchar *name,
 					const gchar *description);
 static void set_atk_relation (GtkWidget *label, GtkWidget *entry, AtkRelationType);
 static void got_remote_answer (int mails, gpointer data);
+static void error_handler (int mails, gpointer data);
 static void null_remote_handle (gpointer data);
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
@@ -269,6 +270,7 @@ check_remote_mailbox (MailCheck *mc)
 
 	if (mc->mailbox_type == MAILBOX_POP3)
 		mc->remote_handle = helper_pop3_check (got_remote_answer,
+						       error_handler,
 						       mc,
 						       null_remote_handle,
 						       mc->pre_remote_command,
@@ -277,6 +279,7 @@ check_remote_mailbox (MailCheck *mc)
 						       mc->real_password);
 	else if (mc->mailbox_type == MAILBOX_IMAP)
 		helper_imap_check (got_remote_answer,
+			           error_handler,
 				   mc,
 				   null_remote_handle,
 				   mc->pre_remote_command,
@@ -366,44 +369,66 @@ got_remote_answer (int mails, gpointer data)
 
 	mc->remote_handle = NULL;
 	
-	if (mails == -1) {
-		GtkWidget *dialog;
+	old_unreadmail = mc->unreadmail;
+	mc->unreadmail = (signed int) (((unsigned int) mails) >> 16);
+	if(mc->unreadmail > old_unreadmail) /* lt */
+		mc->newmail = 1;
+	else
+		mc->newmail = 0;
+	mc->totalmail = (signed int) (((unsigned int) mails) & 0x0000FFFFL);
+	mc->anymail = mc->totalmail ? 1 : 0;
 
-		/* Disable automatic updating */
-		mc->auto_update = FALSE;
+	after_mail_check (mc);
+}
 
-		if(mc->mail_timeout != 0) {
-			gtk_timeout_remove(mc->mail_timeout);
-			mc->mail_timeout = 0;
-		}
+static void
+error_handler (int error, gpointer data)
+{
+	MailCheck *mc = data;
+	GtkWidget *dialog;
+	gchar *details;
 
-		/* Notify about an error and keep the current mail status */
-		dialog = gtk_message_dialog_new (NULL,
-						 0,/* Flags */
-						 GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_CLOSE,
-						 _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
+	/* Disable automatic updating */
+	mc->auto_update = FALSE;
 
-		gtk_window_set_screen (GTK_WINDOW (dialog),
-				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
+	if(mc->mail_timeout != 0) {
+		gtk_timeout_remove(mc->mail_timeout);
+		mc->mail_timeout = 0;
+	}
 
-		g_signal_connect_swapped (G_OBJECT (dialog), "response",
-					  G_CALLBACK (gtk_widget_destroy),
-					  dialog);
-		gtk_widget_show_all (dialog);
+	switch (error) {
+	case NETWORK_ERROR:
+		details = _("The Network May be down");
+		break;
+	case INVALID_USER:
+		details = _("The User id or Password is not  correct");
+		break;
+	case INVALID_PASS:
+		details = _("The User id or Password is not  correct");
+		break;	
+	case INVALID_SERVER:
+		details = _("The Server name may be wrong");
+		break;
+	case NO_SERVER_INFO:
+	default:
+		details = _("Maybe you used a wrong server, username or password?");
+		break;
+	}
+	
+	/* Notify about an error and keep the current mail status */
+	dialog = gtk_message_dialog_new (NULL,
+					 0,/* Flags */
+					 GTK_MESSAGE_ERROR,
+					 GTK_BUTTONS_CLOSE,
+					 _("The Inbox Monitor failed to check your mails from %s and thus automatic updating has been deactivated for now.\n%s"), mc->remote_server, details);
 
-	} else {
-		old_unreadmail = mc->unreadmail;
-		mc->unreadmail = (signed int) (((unsigned int) mails) >> 16);
-		if(mc->unreadmail > old_unreadmail) /* lt */
-			mc->newmail = 1;
-		else
-			mc->newmail = 0;
-		mc->totalmail = (signed int) (((unsigned int) mails) & 0x0000FFFFL);
-		mc->anymail = mc->totalmail ? 1 : 0;
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+			       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 
-		after_mail_check (mc);
-	} 
+	g_signal_connect_swapped (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  dialog);
+	gtk_widget_show_all (dialog);
 }
 
 static void
