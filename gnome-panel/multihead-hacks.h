@@ -16,6 +16,7 @@ G_BEGIN_DECLS
 typedef struct _GdkDisplay GdkDisplay;
 
 #define gtk_window_get_screen(a)	NULL
+#define gtk_widget_get_screen(a)	NULL
 #define gdk_drawable_get_screen(a)	NULL
 #define gdk_screen_get_default()	NULL
 #define gdk_display_get_default()	NULL
