@@ -92,6 +92,12 @@ void       panel_action_run_program (GtkWidget *widget);
 void       panel_action_search      (GtkWidget *widget);
 void       panel_action_screenshot  (GtkWidget *widget);
 
+gboolean             panel_action_get_is_disabled (PanelActionButtonType type);
+G_CONST_RETURN char *panel_action_get_stock_icon  (PanelActionButtonType type);
+G_CONST_RETURN char *panel_action_get_text        (PanelActionButtonType type);
+G_CONST_RETURN char *panel_action_get_tooltip     (PanelActionButtonType type);
+G_CONST_RETURN char *panel_action_get_drag_id     (PanelActionButtonType type);
+
 G_END_DECLS
 
 #endif /* __PANEL_ACTION_BUTTON_H__ */

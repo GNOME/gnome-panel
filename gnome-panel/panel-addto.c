@@ -90,79 +90,14 @@ typedef struct {
 	const char            *menu_path;
 	const char            *iid;
 	gboolean               static_data;
-} PannelAddtoItemInfo;
+} PanelAddtoItemInfo;
 
 typedef struct {
-	GSList *children;
-	PannelAddtoItemInfo item_info;
+	GSList             *children;
+	PanelAddtoItemInfo  item_info;
 } PanelAddtoAppList;
 
-static PannelAddtoItemInfo action_buttons_info [] = {
-        { PANEL_ADDTO_ACTION,
-	  N_("Log Out"),
-	  N_("Log out of this session to log in as a different user or to shut down the computer"),
-	  NULL,
-	  PANEL_STOCK_LOGOUT,
-	  PANEL_ACTION_LOGOUT,
-	  NULL,
-	  NULL,
-	  "ACTION:logout:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_ACTION,
-	  N_("Lock"),
-	  N_("Lock the screen so you can temporarily leave your computer"),
-	  NULL,
-	  PANEL_STOCK_LOCKSCREEN,
-	  PANEL_ACTION_LOCK,
-	  NULL,
-	  NULL,
-	  "ACTION:lock:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_ACTION,
-	  N_("Force Quit"),
-	  N_("Force a misbehaving application to quit"),
-	  NULL,
-	  PANEL_STOCK_FORCE_QUIT,
-	  PANEL_ACTION_FORCE_QUIT,
-	  NULL,
-	  NULL,
-	  "ACTION:force-quit:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_ACTION,
-	  N_("Screenshot"),
-	  N_("Take a screenshot of your desktop"),
-	  NULL,
-	  PANEL_STOCK_SCREENSHOT,
-	  PANEL_ACTION_SCREENSHOT,
-	  NULL,
-	  NULL,
-	  "ACTION:screenshot:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_ACTION,
-	  N_("Search"),
-	  N_("Find files, folders, and documents on your computer"),
-	  NULL,
-	  PANEL_STOCK_SEARCHTOOL,
-	  PANEL_ACTION_SEARCH,
-	  NULL,
-	  NULL,
-	  "ACTION:search:NEW",
-	  TRUE },
-
-	{ PANEL_ADDTO_ACTION,
-	  N_("Run"),
-	  N_("Run a command"),
-	  NULL,
-	  PANEL_STOCK_RUN,
-	  PANEL_ACTION_RUN,
-	  NULL,
-	  NULL,
-	  "ACTION:run:NEW",
-	  TRUE },
+static PanelAddtoItemInfo internal_addto_items [] = {
 
 	{ PANEL_ADDTO_LAUNCHER_NEW,
 	  N_("Custom Application Launcher"),
@@ -247,8 +182,8 @@ static void panel_addto_present_applications (PanelAddtoDialog *dialog);
 static void panel_addto_present_applets      (PanelAddtoDialog *dialog);
 
 static int
-panel_addto_applet_info_sort_func (PannelAddtoItemInfo *a,
-				   PannelAddtoItemInfo *b)
+panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
+				   PanelAddtoItemInfo *b)
 {
 	return g_utf8_collate (a->name, b->name);
 }
@@ -259,32 +194,31 @@ panel_addto_append_internal_applets (GSList *list)
 	static gboolean translated = FALSE;
 	int             i;
 
-	for (i = 0; i < G_N_ELEMENTS (action_buttons_info); i++) {
-		if (!translated) {
-			action_buttons_info [i].name = _(action_buttons_info [i].name);
-			action_buttons_info [i].description = _(action_buttons_info [i].description);
-                }
+	for (i = 0; i < G_N_ELEMENTS (internal_addto_items); i++) {
+		internal_addto_items [i].name        = _(internal_addto_items [i].name);
+		internal_addto_items [i].description = _(internal_addto_items [i].description);
 
-		if (panel_lockdown_get_disable_command_line () &&
-		    action_buttons_info [i].action_type == PANEL_ACTION_RUN)
-			continue;
-
-		if (panel_lockdown_get_disable_force_quit () &&
-		    action_buttons_info [i].action_type == PANEL_ACTION_FORCE_QUIT)
-			continue;
-
-		if (panel_lockdown_get_disable_lock_screen () &&
-		    action_buttons_info [i].action_type == PANEL_ACTION_LOCK)
-			continue;
-
-		if (panel_lockdown_get_disable_log_out () &&
-		    action_buttons_info [i].action_type == PANEL_ACTION_LOGOUT)
-			continue;
-
-                list = g_slist_append (list, &action_buttons_info [i]);
+                list = g_slist_append (list, &internal_addto_items [i]);
         }
 
 	translated = TRUE;
+
+	for (i = PANEL_ACTION_LOCK; i < PANEL_ACTION_LAST; i++) {
+		PanelAddtoItemInfo *info;
+
+		if (panel_action_get_is_disabled (i))
+			continue;
+
+		info              = g_new0 (PanelAddtoItemInfo, 1);
+		info->type        = PANEL_ADDTO_ACTION;
+		info->name        = (char *) panel_action_get_text (i);
+		info->description = (char *) panel_action_get_tooltip (i);
+		info->stock_icon  = (char *) panel_action_get_stock_icon (i);
+		info->iid         = (char *) panel_action_get_drag_id (i);
+		info->static_data = FALSE;
+
+                list = g_slist_append (list, info);
+	}
 
         return list;
 }
@@ -436,7 +370,7 @@ panel_addto_query_applets (GSList *list)
 	for (i = 0; i < applet_list->_length; i++) {
 		Bonobo_ServerInfo *info;
 		const char *name, *description, *icon;
-		PannelAddtoItemInfo *applet;
+		PanelAddtoItemInfo *applet;
 
 		info = &applet_list->_buffer[i];
 
@@ -454,7 +388,7 @@ panel_addto_query_applets (GSList *list)
 			continue;
 		}
 
-		applet = g_new0 (PannelAddtoItemInfo, 1);
+		applet = g_new0 (PanelAddtoItemInfo, 1);
 		applet->type = PANEL_ADDTO_APPLET;
 		applet->name = name;
 		applet->description = description;
@@ -495,11 +429,11 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 				    G_TYPE_STRING);
 
 	for (item = dialog->applet_list; item != NULL; item = item->next) {
-		PannelAddtoItemInfo *applet;
+		PanelAddtoItemInfo *applet;
 		char *text;
 		GdkPixbuf *pixbuf;
 
-		applet = (PannelAddtoItemInfo *) item->data;
+		applet = (PanelAddtoItemInfo *) item->data;
 
 		if (applet->icon != NULL) {
 			pixbuf = panel_addto_make_pixbuf (applet->icon,
@@ -635,8 +569,8 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 }
 
 static gboolean
-panel_addto_add_item (PanelAddtoDialog    *dialog,
-	 	      PannelAddtoItemInfo *item_info)
+panel_addto_add_item (PanelAddtoDialog   *dialog,
+	 	      PanelAddtoItemInfo *item_info)
 {
 	gboolean destroy;
 	
@@ -708,7 +642,7 @@ panel_addto_dialog_response (GtkWidget *widget_dialog,
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->tree_view));
 		if (gtk_tree_selection_get_selected (selection,
 						     &model, &iter)) {
-			PannelAddtoItemInfo *data;
+			PanelAddtoItemInfo *data;
 
 			gtk_tree_model_get (model, &iter,
 					    COLUMN_DATA, &data, -1);
@@ -806,9 +740,9 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	dialog->addto_dialog = NULL;
 
 	for (item = dialog->applet_list; item != NULL; item = item->next) {
-		PannelAddtoItemInfo *applet;
+		PanelAddtoItemInfo *applet;
 
-		applet = (PannelAddtoItemInfo *) item->data;
+		applet = (PanelAddtoItemInfo *) item->data;
 		if (!applet->static_data) {
 			g_free (applet);
 		}
@@ -877,10 +811,10 @@ static void
 panel_addto_selection_changed (GtkTreeSelection *selection,
 			       PanelAddtoDialog *dialog)
 {
-	GtkTreeModel        *model;
-	GtkTreeIter          iter;
-	PannelAddtoItemInfo *data;
-	char                *iid;
+	GtkTreeModel       *model;
+	GtkTreeIter         iter;
+	PanelAddtoItemInfo *data;
+	char               *iid;
 
 	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
 		return;

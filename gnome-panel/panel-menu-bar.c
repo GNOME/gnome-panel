@@ -73,30 +73,30 @@ panel_menu_bar_show_applications_menu (PanelMenuBar *menubar,
 }
 
 static void
-panel_menu_bar_append_action_item (PanelMenuBar *menubar,
-				   GtkWidget    *menu,
-				   const char   *title,
-				   const char   *stock_id,
-				   const char   *tooltip,
-				   const char   *drag_id,
-				   GCallback     callback)
+panel_menu_bar_append_action_item (PanelMenuBar          *menubar,
+				   PanelActionButtonType  action_type,
+				   GCallback              callback)
 {
 	GtkWidget *item;
 
 	item = gtk_image_menu_item_new ();
 	setup_stock_menu_item (item,
 			       panel_menu_icon_get_size (),
-			       stock_id,
-			       title,
+			       panel_action_get_stock_icon (action_type),
+			       panel_action_get_text (action_type),
 			       TRUE);
 
-	gtk_tooltips_set_tip (panel_tooltips, item, tooltip, NULL);
+	gtk_tooltips_set_tip (panel_tooltips,
+			      item,
+			      panel_action_get_tooltip (action_type),
+			      NULL);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
 	g_signal_connect (item, "activate", callback, NULL);
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_internal_applet_drag (item, drag_id);
+	setup_internal_applet_drag (item,
+				    panel_action_get_drag_id (action_type));
 }
 
 static void
@@ -131,13 +131,8 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	}
 
 	if (!panel_lockdown_get_disable_command_line ()) {
-		panel_menu_bar_append_action_item (
-						   menubar,
-						   menubar->priv->actions_menu,
-						   _("Run Application..."),
-						   PANEL_STOCK_RUN,
-						   _("Run an Application by entering a command"),
-						   "ACTION:run:NEW",
+		panel_menu_bar_append_action_item (menubar,
+						   PANEL_ACTION_RUN,
 						   G_CALLBACK (panel_action_run_program));
 
 		item = gtk_separator_menu_item_new ();
@@ -146,14 +141,9 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	}
 
 	if (panel_is_program_in_path  ("gnome-search-tool"))
-		panel_menu_bar_append_action_item (
-			menubar,
-			menubar->priv->actions_menu,
-			_("Search for Files..."),
-			PANEL_STOCK_SEARCHTOOL,
-			_("Find files, folders, and documents on your computer"),
-			"ACTION:search:NEW",
-			G_CALLBACK (panel_action_search));
+		panel_menu_bar_append_action_item (menubar,
+						   PANEL_ACTION_SEARCH,
+						   G_CALLBACK (panel_action_search));
 
 	panel_recent_append_documents_menu (menubar->priv->actions_menu);
 
@@ -162,14 +152,9 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
 		gtk_widget_show (item);
 
-		panel_menu_bar_append_action_item (
-			menubar,
-			menubar->priv->actions_menu,
-			_("Take Screenshot..."),
-			PANEL_STOCK_SCREENSHOT,
-			_("Take a screenshot of your desktop"),
-			"ACTION:screenshot:NEW",
-			G_CALLBACK (panel_action_screenshot));
+		panel_menu_bar_append_action_item (menubar,
+						   PANEL_ACTION_SCREENSHOT,
+						   G_CALLBACK (panel_action_screenshot));
 	}
 
 	enable_log_out = !panel_lockdown_get_disable_log_out ();
@@ -185,22 +170,13 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	}
 
 	if (enable_lock_screen)
-		panel_menu_bar_append_action_item (
-			menubar,
-			menubar->priv->actions_menu,
-			_("Lock Screen"), 
-			PANEL_STOCK_LOCKSCREEN, 
-			_("Protect your computer from unauthorized use"),
-			"ACTION:lock:NEW",
-			G_CALLBACK (panel_action_lock_screen));
+		panel_menu_bar_append_action_item (menubar,
+						   PANEL_ACTION_LOCK,
+						   G_CALLBACK (panel_action_lock_screen));
 
 	if (enable_log_out) {
 		panel_menu_bar_append_action_item (menubar,
-						   menubar->priv->actions_menu,
-						   _("Log Out"),
-						   PANEL_STOCK_LOGOUT,
-						   _("Log out of GNOME"),
-						   "ACTION:logout:NEW",
+						   PANEL_ACTION_LOGOUT,
 						   G_CALLBACK (panel_action_logout));
 	}
 

@@ -2416,14 +2416,16 @@ append_lock_screen (GtkWidget *menu)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menuitem, panel_menu_icon_get_size (),
-			       PANEL_STOCK_LOCKSCREEN, _("Lock Screen"), TRUE);
+			       panel_action_get_stock_icon (PANEL_ACTION_LOCK),
+			       panel_action_get_text (PANEL_ACTION_LOCK),
+			       TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_lock_screen), NULL);
-	setup_internal_applet_drag (menuitem, "ACTION:lock:NEW");
+	setup_internal_applet_drag (menuitem,
+				    panel_action_get_drag_id (PANEL_ACTION_LOCK));
 	gtk_tooltips_set_tip (panel_tooltips, menuitem,
-			      _("Lock the screen so that you can "
-				"temporarily leave your computer"),
+			      panel_action_get_tooltip (PANEL_ACTION_LOCK),
 			      NULL);
 }
 
@@ -2438,14 +2440,19 @@ append_log_out (GtkWidget *menu)
 	menuitem = gtk_image_menu_item_new ();
 
 	setup_stock_menu_item (menuitem, panel_menu_icon_get_size (),
-			       PANEL_STOCK_LOGOUT, _("Log Out"), TRUE);
+			       panel_action_get_stock_icon (PANEL_ACTION_LOGOUT),
+			       panel_action_get_text (PANEL_ACTION_LOGOUT),
+			       TRUE);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_logout), 0);
-	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
+	setup_internal_applet_drag (menuitem,
+				    panel_action_get_drag_id (PANEL_ACTION_LOGOUT));
 
-	gtk_tooltips_set_tip (panel_tooltips, menuitem, _("Log out of this session to log in as a different user or to shut down the computer"), NULL);
+	gtk_tooltips_set_tip (panel_tooltips, menuitem,
+			      panel_action_get_tooltip (PANEL_ACTION_LOGOUT),
+			      NULL);
 }
 
 static GtkWidget *
@@ -2571,14 +2578,18 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_RUN, _("Run Application..."), TRUE);
+			panel_action_get_stock_icon (PANEL_ACTION_RUN),
+			panel_action_get_text (PANEL_ACTION_RUN),
+			TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_run_program),
 				  NULL);
-		setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
+		setup_internal_applet_drag (menuitem,
+					    panel_action_get_drag_id (PANEL_ACTION_RUN));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      _("Run an Application by entering a command"), NULL);
+				      panel_action_get_tooltip (PANEL_ACTION_RUN),
+				      NULL);
 	}
 
 	if (extra_items &&
@@ -2586,15 +2597,17 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_SEARCHTOOL, _("Search for Files..."), TRUE);
+			panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
+			panel_action_get_text (PANEL_ACTION_SEARCH),
+			TRUE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      _("Find files, folders, and documents "
-					"on your computer"),
+				      panel_action_get_tooltip (PANEL_ACTION_SEARCH),
 				      NULL);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_search), NULL);
-		setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
+		setup_internal_applet_drag (menuitem,
+					    panel_action_get_drag_id (PANEL_ACTION_SEARCH));
 
 		panel_recent_append_documents_menu (root_menu);
 		add_menu_separator (root_menu);
@@ -2605,14 +2618,17 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_SCREENSHOT, _("Take Screenshot..."), TRUE);
+			panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
+			panel_action_get_text (PANEL_ACTION_SCREENSHOT),
+			TRUE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      _("Take a screenshot of your desktop"),
+				      panel_action_get_tooltip (PANEL_ACTION_SCREENSHOT),
 				      NULL);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_screenshot), NULL);
-		setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
+		setup_internal_applet_drag (menuitem,
+					    panel_action_get_drag_id (PANEL_ACTION_SCREENSHOT));
 	}
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)

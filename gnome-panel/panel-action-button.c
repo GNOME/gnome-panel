@@ -240,8 +240,10 @@ panel_action_force_quit (GtkWidget *widget)
 typedef struct {
 	PanelActionButtonType   type;
 	char                   *stock_icon;
+	char                   *text;
 	char                   *tooltip;
 	char                   *help_index;
+	char                   *drag_id;
 	void                  (*invoke)      (GtkWidget         *widget);
 	void                  (*setup_menu)  (PanelActionButton *button);
 	void                  (*invoke_menu) (PanelActionButton *button,
@@ -252,44 +254,115 @@ typedef struct {
 /* Keep order in sync with PanelActionButtonType
  */
 static PanelAction actions [] = {
-	{ PANEL_ACTION_NONE, NULL, NULL },
 	{
-		PANEL_ACTION_LOCK, PANEL_STOCK_LOCKSCREEN,
-		N_("Lock screen"), "gospanel-21",
+		PANEL_ACTION_NONE,
+		NULL, NULL, NULL, NULL,
+		NULL, NULL, NULL, NULL
+	},
+	{
+		PANEL_ACTION_LOCK,
+		PANEL_STOCK_LOCKSCREEN,
+		N_("Lock screen"),
+		N_("Protect your computer from unauthorized use"),
+		"gospanel-21",
+		"ACTION:lock:NEW",
 		panel_action_lock_screen,
 		panel_action_lock_setup_menu,
 		panel_action_lock_invoke_menu,
 		panel_lockdown_get_disable_lock_screen
 	},
 	{
-		PANEL_ACTION_LOGOUT, PANEL_STOCK_LOGOUT,
-		N_("Log out of GNOME"), "gospanel-20",
+		PANEL_ACTION_LOGOUT,
+		PANEL_STOCK_LOGOUT,
+		N_("Log Out"),
+		N_("Log out of this session to log in as a different user or to shut down the computer"),
+		"gospanel-20",
+		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,
 		panel_lockdown_get_disable_log_out
 	},
 	{
-		PANEL_ACTION_RUN, PANEL_STOCK_RUN,
-		N_("Run Application"), "gospanel-555",
+		PANEL_ACTION_RUN,
+		PANEL_STOCK_RUN,
+		N_("Run Application..."),
+		N_("Run an Application by entering a command"),
+		"gospanel-555",
+		"ACTION:run:NEW",
 		panel_action_run_program, NULL, NULL,
 		panel_lockdown_get_disable_command_line
 	},
 	{
-		PANEL_ACTION_SEARCH, PANEL_STOCK_SEARCHTOOL,
-		N_("Search for Files"), "gospanel-554",
+		PANEL_ACTION_SEARCH,
+		PANEL_STOCK_SEARCHTOOL,
+		N_("Search for Files..."),
+		N_("Find files, folders, and documents on your computer"),
+		"gospanel-554",
+		"ACTION:search:NEW",
 		panel_action_search, NULL, NULL, NULL
 	},
 	{
-		PANEL_ACTION_SCREENSHOT, PANEL_STOCK_SCREENSHOT,
-		N_("Screenshot"), "gospanel-553",
+		PANEL_ACTION_SCREENSHOT,
+		PANEL_STOCK_SCREENSHOT,
+		N_("Take Screenshot..."),
+		N_("Take a screenshot of your desktop"),
+		"gospanel-553",
+		"ACTION:screenshot:NEW",
 		panel_action_screenshot, NULL, NULL, NULL
 	},
 	{
-		PANEL_ACTION_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,
-		N_("Force Quit"), "gospanel-563",
+		PANEL_ACTION_FORCE_QUIT,
+		PANEL_STOCK_FORCE_QUIT,
+		N_("Force Quit"),
+		N_("Force a misbehaving application to quit"),
+		"gospanel-563",
+		"ACTION:force-quit:NEW",
 		panel_action_force_quit, NULL, NULL,
 		panel_lockdown_get_disable_force_quit
 	}
 };
+
+gboolean
+panel_action_get_is_disabled (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, FALSE);
+
+	if (actions [type].is_disabled)
+		return actions [type].is_disabled ();
+
+	return FALSE;
+}
+
+G_CONST_RETURN char*
+panel_action_get_stock_icon (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	return actions[type].stock_icon;
+}
+
+G_CONST_RETURN char*
+panel_action_get_text (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	return _(actions[type].text);
+}
+
+G_CONST_RETURN char*
+panel_action_get_tooltip (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	return _(actions[type].tooltip);
+}
+
+G_CONST_RETURN char*
+panel_action_get_drag_id (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	return actions[type].drag_id;
+}
 
 static void
 panel_action_button_update_sensitivity (PanelActionButton *button)

@@ -1,3 +1,28 @@
+2004-08-11  Mark McLoughlin  <mark@skynet.ie>
+
+	Partly based on a patch from Vinay M R <vinay.mandyakoppal@wipro.com>
+	in bug #143554. Original bug was that some strings were out of sync,
+	but hopefully this re-work simplifies the code and prevents stuff
+	getting out of sync in future.
+
+	* panel-action-button.[ch]:
+	(panel_action_get_is_disabled),	(panel_action_get_stock_icon),
+	(panel_action_get_text), (panel_action_get_tooltip),
+	(panel_action_get_drag_id): add the tooltip and drag id to
+	the actions table. Add various accessor functions to the table.
+	
+	* menu.c: (append_lock_screen), (append_log_out),
+	(create_root_menu): get the text, tooltip, drag id and stock
+	icon from the actions table.
+	
+	* panel-addto.c:
+	(panel_addto_append_internal_applets): construct the list of
+	action buttons by iterating over the actions table.
+
+	* panel-menu-bar.c:
+	(panel_menu_bar_append_action_item): obtain various bits
+	for the menu item from the actions table.
+
 2004-08-11  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* drawer.c: (drag_drop_cb): Fix NULL vs 0 confusion.
