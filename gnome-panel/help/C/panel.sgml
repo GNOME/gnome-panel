@@ -1,4 +1,4 @@
-<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
 ]>
 
 
@@ -745,23 +745,25 @@
  <sect1 id="launchers">
   <title>Launchers</title>
   <para>
-   Launchers are essentially buttons which reside in your panel and
+   Launchers are buttons which reside in your <interface>Panel</interface> and
    start an application or execute a command when clicked.  A launcher
    can use any icon and has a customized tooltip to display a message
-   when the cursor is passed over the Launcher.
+   when the cursor is passed over the launcher.
   </para>
-  <para>  You can change a launcher properties, such as the icon it
-      uses and its name, by right-clicking on a launcher and selecting
-      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This
-      brings up the <interface>Launcher properties dialog</interface>
-      shown in <xref linkend="launcherpropsfig">. The same dialog is
-      used when you create a new launcher (see <xref
-      linkend="add">). Also, internally GNOME makes no distinction
-      between menu items and launchers: these are just different
-      presentations of the same thing. You can place any menu item on
-      the panel, and it will show as a launcher. Therefore, all the
-      information below applies equally to launchers and menu items.
-      </para>
+  <para>
+   You can change a launcher's properties, such as the icon it uses and
+   its name, by right-clicking on the launcher and selecting
+   <guimenuitem>Properties...</guimenuitem> from the pop-up menu. This
+   brings up the <interface>Launcher properties</interface> dialog,
+   shown in <xref linkend="launcherpropsfig">. A similar dialog is used
+   when you create a new launcher (see <xref linkend="add">). Note that
+   internally GNOME makes no distinction between menu items and
+   launchers: these are just different representations of the same
+   thing. You can place any menu item on a
+   <interface>Panel</interface>, and it will appear
+   as a launcher. Therefore, all the information below applies equally
+   to launchers and menu items.
+  </para>
   <figure id="launcherpropsfig">
    <title>Create Launcher/Launcher Properties Dialog</title>
    <screenshot>
@@ -771,10 +773,11 @@
      </graphic>
    </screenshot>
   </figure>
-    <para> This dialog has two tabs: <guilabel>Basic</guilabel> and
-    <guilabel>Advanced</guilabel>. In the <guilabel>Basic</guilabel>
-    tab, you can set:
-    </para>
+  <para>
+   The <interface>Laucher Properties</interface> dialog has two tabs:
+   <guilabel>Basic</guilabel> and <guilabel>Advanced</guilabel>. In
+   the <guilabel>Basic</guilabel> tab, you can set:
+  </para>
     <itemizedlist>
       <listitem>
 	<para>
@@ -803,26 +806,32 @@
 	<para>
 	  <guilabel>Type</guilabel> &mdash; should be
 	  <guilabel>Application</guilabel>; do not change it unless
-	  you want to create something other than application launcher.
+	  you want to create something other than an application launcher.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Icon</guilabel> &mdash; this is the icon which
+	  will be used to represent the launcher in the
+	  <interface>Panel</interface>. If no icon is specified, a
+	  default icon will be used. To change the icon, just click on
+	  it to launch the icon browser.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Run in Terminal</guilabel> &mdash; this specifies
+	  whether the application should be run inside a terminal.  If
+	  the application doesn't create any windows on its own, check
+	  this button. If you are unsure, leave it unchecked.
 	</para>
       </listitem>
     </itemizedlist>
-    <para>
-      The <guilabel>Basic</guilabel> tab also shows the icon to be
-      used for the launcher; if no icon is specified, a default icon
-      will be used. To change the icon, just click on it to launch the
-      icon browser.  </para>
-    <para>
-      Finally, if the application can only run inside a terminal
-      &mdash; that is, if it doesn't create any windows on its own
-      &mdash; you should also check <guibutton>Run in
-      terminal</guibutton> button. If unsure, leave it unchecked.
-    </para>
     
     <para>
-      <guilabel>Advanced</guilabel> tab is shown below. It is intended
-      for advanced users; most of the time, you do not need to change
-      any of the settings here.
+      The <guilabel>Advanced</guilabel> properties tab is shown
+      below. It is intended for advanced users; most of the time, you
+      will not need to change any of these settings.
     </para>
   <figure id="launcheradvpropsfig">
    <title>Launcher Advanced Properties Dialog</title>
@@ -833,19 +842,22 @@
      </graphic>
    </screenshot>
   </figure>
-    <para> In this tab, you can set:
+    <para>
+     In the <guilabel>Advanced</guilabel> tab, you can set:
     </para>
     <itemizedlist>
       <listitem>
 	<para>
 	  <guilabel>Try this before using</guilabel> &mdash; you can
-	  enter here a command, and GNOME will check if this command
-	  can be executed. If not, the launcher (or menu item) will
-	  not be shown even if you added it to the panel or menu. It
-	  is mostly used by people preparing GNOME distributions: for
-	  example, default GNOME <guimenu>Main Menu</guimenu> contains
-	  an item for <application>TkRat</application> e-mail program,
-	  but you will not see it unless you have
+	  enter a command here, and GNOME will check if this command
+	  can be executed. If the command cannot be successfully
+	  executed, the launcher (or menu item) will
+	  not be shown even if you added it to a
+	  <interface>Panel</interface> or menu. It
+	  is mostly used by people preparing GNOME distributions. For
+	  example, the default GNOME <guimenu>Main Menu</guimenu> contains
+	  an item for the <application>TkRat</application> e-mail program,
+	  but you will only see this item if you have
 	  <application>TkRat</application> installed on your system.
 	</para>
       </listitem>
@@ -857,33 +869,36 @@
       </listitem>
        <listitem>
 	<para>
-	  <guilabel>Name/comment translations</guilabel> &mdash; here
-	  you can set translation of the <guilabel>Name</guilabel> and
+	  <guilabel>Name/Comment translations</guilabel> &mdash; here
+	  you can set translations of the <guilabel>Name</guilabel> and
 	  <guilabel>Comment</guilabel> to other languages. For
 	  example, for <application>GNOME Terminal</application>, the
 	  translations to Spanish (es) are name:  <userinput>Terminal
 	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
 	  de terminal GNOME</userinput>. This means that if a user
-	  sets his language to Spanish during login (it can be done by
-	  selecting appropriate language from
-	  <guimenu>Languages</guimenu> menu of GNOME login manager
-	  (GDM)), he will see <guimenuitem>Terminal UNIX de
-	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
-	  terminal GNOME</userinput> in the tooltips. Of course, the
+	  sets his language to Spanish during login (this can be done by
+	  selecting the desired language from
+	  <guimenu>Languages</guimenu> menu of the <application>GNOME
+	  Display Manager</application> when logging in) he will see
+	  <guimenuitem>Terminal UNIX de 
+	  GNOME</guimenuitem> in the menu and <guilabel>Emulador de
+	  terminal GNOME</guilabel> as the tooltip. The
 	  actual command that runs the terminal is unchanged.
 	</para>
 	<para>
 	  To add a new translation, enter the language 2-letter code
 	  and translations of <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel>  fields in the empty fields
-	  under the list of current translations, and  press
+	  <guilabel>Comment</guilabel> fields in the empty fields
+	  under the list of current translations, and press the
 	  <guibutton>Add/Set</guibutton> button.  To change one of
-	  existing translations, select it in the list, edit the
-	  fields you want, and press <guibutton>Add/Set</guibutton>
-	  button. To remove one of existing translations, select it
-	  and press <guibutton>Remove</guibutton> button.
+	  existing translations, select the row from the list, edit the
+	  fields you want to change, and press the
+	  <guibutton>Add/Set</guibutton> button. To remove one of
+	  existing translations, select it in the list and press
+	  the <guibutton>Remove</guibutton> button. 
 	</para>
-	<para>  You can find the list of all languages supported by
+	<para>
+          You can find the list of all languages supported by
 	  GNOME along with their 2-letter codes  in  <ulink
 	  type="http"
 	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
@@ -893,11 +908,11 @@
     </itemizedlist>
 
     <para>
-      All the changes you made in <interface>Launcher
+      All of the changes you make in the <interface>Launcher
       Properties</interface> dialog will take effect when you press
       <guibutton>Apply</guibutton> or
       <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
-      closes this dialog; pressing <guibutton>Apply</guibutton> will
+      closes the dialog; pressing <guibutton>Apply</guibutton> will
       allow you to continue editing.
     </para>
  </sect1>
