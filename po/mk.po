@@ -1,20 +1,27 @@
+# translation of gnome-panel.HEAD.mk.po to
+# translation of gnome-panel.HEAD.mk.po to Macedonian
+# translation of gnome-panel.HEAD.mk.po to
 # translation of gnome-panel.HEAD.po to Macedonian
 # translation of gnome-panel.HEAD.mk.po to
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 2002,2003 Free Software Foundation, Inc.
 # Дамјан Георгиевски, 2002
-# Ivan Stojmirov <stojmir@linux.net.mk>, 2002.
+# Ivan Stojmirov <stojmir@linux.net.mk>, 2002,2003.
+# Arangel Angov <ufo@linux.net.mk>, 2003
+# Jovan Kostovski <chombium@freemail.com.mk>, 2003
+# Dushan Vasilevski-DUVIX <dule_boki@mt.net.mk>, 2003
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel.HEAD\n"
-"POT-Creation-Date: 2003-06-12 17:49+0100\n"
-"PO-Revision-Date: 2002-12-15 22:32+0100\n"
-"Last-Translator: Ivan Stojmirov <stojmir@linux.net.mk>\n"
-"Language-Team: Macedonian <mk@li.org>\n"
+"Project-Id-Version: gnome-panel.HEAD.mk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-06-13 20:29+0200\n"
+"PO-Revision-Date: 2003-06-15 15:39+0000\n"
+"Last-Translator: Dushan Vasilevski-DUVIX <dule_boki@mt.net.mk>\n"
+"Language-Team: Macedonian <lug@lists.linux.net.mk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0beta2\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #: applets/clock/clock.c:206
 msgid "%l:%M:%S %p"
@@ -46,6 +53,8 @@ msgid ""
 "%s\n"
 "%s"
 msgstr ""
+"%s\n"
+"%s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -54,7 +63,7 @@ msgstr ""
 #: applets/clock/clock.c:228
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s, %s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:331
@@ -62,9 +71,8 @@ msgid "%A %B %d"
 msgstr "%A %B %d"
 
 #: applets/clock/clock.c:449
-#, fuzzy
 msgid "Calendar"
-msgstr "Стандарден"
+msgstr "Календар"
 
 #: applets/clock/clock.c:612
 msgid "Computer Clock"
@@ -83,18 +91,17 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
 #: applets/clock/clock.c:780
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr ""
-"Не успеа да се стартува оваа програма: \n"
-"\n"
-"Детали: %s"
+msgstr "Неуспешно лансирање на алатката за конфигурирање на времето : %s"
 
 #: applets/clock/clock.c:817
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
+"Не успеав да ја лоцирам програмата за конфигурирање на датум и време. Најверојатно "
+"нема инсталирано?"
 
 #: applets/clock/clock.c:1233 applets/clock/clock.c:1496
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
@@ -111,29 +118,24 @@ msgid "Clock Preferences"
 msgstr "Параметри за часовникот"
 
 #: applets/clock/clock.c:1313
-#, fuzzy
 msgid "Clock _type:"
-msgstr "Тип на часовникот"
+msgstr "Тип на _часовникот:"
 
 #: applets/clock/clock.c:1324
-#, fuzzy
 msgid "12 hour"
-msgstr "_12 часа"
+msgstr "12 часа"
 
 #: applets/clock/clock.c:1332
-#, fuzzy
 msgid "24 hour"
-msgstr "_24 часа"
+msgstr "24 часа"
 
 #: applets/clock/clock.c:1340
-#, fuzzy
 msgid "UNIX time"
-msgstr "UNI_X време"
+msgstr "UNIX време"
 
 #: applets/clock/clock.c:1347
-#, fuzzy
 msgid "Internet time"
-msgstr "_Интернет време"
+msgstr "Интернет време"
 
 #: applets/clock/clock.c:1360
 msgid "Show _seconds"
@@ -196,7 +198,7 @@ msgstr "Формат на часот"
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "Program to run in order to configure the time."
-msgstr ""
+msgstr "Да извршам програма за конфигурирање на времето"
 
 #: applets/clock/clock.schemas.in.h:9
 msgid "Sets the hour format, may be either 12 or 24"
@@ -220,11 +222,11 @@ msgstr "Покажи секунди"
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
-msgstr ""
+msgstr "Алатка за конфигурирање на време"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use Internet time"
-msgstr "Интернет време"
+msgstr "Користи Интернет време"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid "Use UNIX time"
@@ -239,22 +241,20 @@ msgid "Accessories"
 msgstr "Алатки"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-#, fuzzy
 msgid "Clock Applet Factory"
-msgstr "GenUtil Applet Factory"
+msgstr "Часовник аплет фабрика"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-#, fuzzy
 msgid "Factory for creating clock applets."
-msgstr "фабрика за креирање на некои општи аплети"
+msgstr "Фабрика за создавање на часовници аплети"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
-msgstr "Земи ги моменталниот датум и време"
+msgstr "Земи ги тековните датум и време"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr ""
+msgstr "По_деси датум & време..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _date"
@@ -397,7 +397,7 @@ msgstr "GNOME Риба, претскажувач на судбина"
 #: applets/wncklet/workspace-switcher.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
-msgstr ""
+msgstr "...."
 
 #: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:3
@@ -406,41 +406,34 @@ msgid "*"
 msgstr "*"
 
 #: applets/fish/fish.glade.h:3
-#, fuzzy
 msgid "<b>Animation</b>"
-msgstr "<b>Опции</b>"
+msgstr "<b>Анимација</b>"
 
 #: applets/fish/fish.glade.h:4
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "Општо"
+msgstr "<b>Општо</b>"
 
 #: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Прелистај"
 
 #: applets/fish/fish.glade.h:6
-#, fuzzy
 msgid "Co_mmand to run when clicked:"
 msgstr "Команда која ќе се стартува кога ќе кликнете:"
 
 #: applets/fish/fish.glade.h:7
-#, fuzzy
 msgid "Fish Preferences"
 msgstr "Параметри за GNOME Рибата"
 
 #: applets/fish/fish.glade.h:8
-#, fuzzy
 msgid "_File:"
-msgstr "Ра_спореди"
+msgstr "_Датотека:"
 
 #: applets/fish/fish.glade.h:9
-#, fuzzy
 msgid "_Name of fish:"
 msgstr "_Име за GNOME рибата:"
 
 #: applets/fish/fish.glade.h:10
-#, fuzzy
 msgid "_Pause per frame:"
 msgstr "Пауза по фрејм(ови):"
 
@@ -449,14 +442,12 @@ msgid "_Rotate on vertical panels"
 msgstr "_Ротирај на вертикални панели"
 
 #: applets/fish/fish.glade.h:12
-#, fuzzy
 msgid "_Total frames in animation:"
-msgstr "Фрејмови во анимација:"
+msgstr "_Фрејмови во анимација:"
 
 #: applets/fish/fish.glade.h:13
-#, fuzzy
 msgid "frames"
-msgstr "Име на Икона"
+msgstr "фрејмови"
 
 #: applets/fish/fish.glade.h:14
 msgid "seconds"
@@ -466,8 +457,7 @@ msgstr "секунди"
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
-"Риба без име е поприлично досадна риба. Расположи си ја рибата давајќи и име."
+msgstr "Риба без име е поприлично досадна риба. Расположи си ја рибата давајќи и име."
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -538,20 +528,16 @@ msgid "Actions"
 msgstr "Дејствија"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
-#, fuzzy
 msgid "Factory for the window navigation related applets"
-msgstr "фабрика за креирање на некои општи аплети"
+msgstr "Фабрика за креирање на некои општи аплети"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
-#, fuzzy
 msgid "Hide application windows and show the desktop"
-msgstr ""
-"Копче кое ги сокрива апликативните прозорци и ја покажува работната површина"
+msgstr "Копче кое ги сокрива апликативните прозорци и ја покажува работната површина"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-#, fuzzy
 msgid "Show Desktop"
-msgstr "Покажувај Копче за Криење"
+msgstr "Покажи копче за криење"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between open windows"
@@ -568,14 +554,12 @@ msgstr "Листа на прозори"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/window-menu.c:128
-#, fuzzy
 msgid "Window Menu"
-msgstr "Главно мени"
+msgstr "Мени на прозор"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#, fuzzy
 msgid "Window Navigation Applet Factory"
-msgstr "GenUtil Applet Factory"
+msgstr "Аплет за навигација низ прозорци"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:499
@@ -617,41 +601,38 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
+"Вашиот менаџер на прозорци не поддржува пиказ на копчиња од работната површина или "
+"пак не користите менаџер на прозорци"
 
 #: applets/wncklet/window-list.c:797 applets/wncklet/window-menu.c:132
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
+msgid "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "Листата на прозори покажува листа на сите видливи прозори и ви овозможува да "
 "ги прелистувате истите."
 
 #: applets/wncklet/window-list.glade.h:2
-#, fuzzy
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "При зголемување на минимизираните прозори"
+msgstr "<b>Враќање на минимизираните прозорци</b>"
 
 #: applets/wncklet/window-list.glade.h:3
-#, fuzzy
 msgid "<b>Window Grouping</b>"
-msgstr "Групирање на прозори"
+msgstr "<b>Групирање на прозорци</b>"
 
 #: applets/wncklet/window-list.glade.h:4
-#, fuzzy
 msgid "<b>Window List Content</b>"
-msgstr "Содржина на листата на прозори"
+msgstr "<b>Листа на содржина на прозорците</b>"
 
 #: applets/wncklet/window-list.glade.h:5
-#, fuzzy
 msgid "<b>Window List Size</b>"
-msgstr "Листа на прозори"
+msgstr "<b>Големина на листата со прозорци</b>"
 
 #: applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
-msgstr ""
+msgstr "Однесување"
 
 #: applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
-msgstr "Групирај прозори кога просторот е ограничен"
+msgstr "Групирај прозори кога _просторот е ограничен"
 
 #: applets/wncklet/window-list.glade.h:8
 msgid "M_inimum size:"
@@ -670,9 +651,8 @@ msgid "Restore to na_tive workspace"
 msgstr "Врати на нативниот работен простор"
 
 #: applets/wncklet/window-list.glade.h:12
-#, fuzzy
 msgid "Sh_ow windows from current workspace"
-msgstr "Покажи прозори од активниот работен простор"
+msgstr "По_кажи прозори од активниот работен простор"
 
 #: applets/wncklet/window-list.glade.h:13
 msgid "Show windows from a_ll workspaces"
@@ -685,7 +665,7 @@ msgstr "Големина"
 
 #: applets/wncklet/window-list.glade.h:15
 msgid "Window List Preferences"
-msgstr "Подесувања за листата на прозори"
+msgstr "Референци за листата на прозори"
 
 #: applets/wncklet/window-list.glade.h:16
 msgid "_Always group windows"
@@ -698,7 +678,7 @@ msgstr "_Никогаш не групирај прозори"
 #: applets/wncklet/window-list.glade.h:18
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
-msgstr ""
+msgstr "пиксели"
 
 #: applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -768,25 +748,22 @@ msgstr "Кога да групира прозори"
 
 #: applets/wncklet/window-menu.c:342
 msgid "Unknown Window"
-msgstr ""
+msgstr "Непознато"
 
 #: applets/wncklet/window-menu.c:538
-#, fuzzy
 msgid "No Windows Open"
 msgstr "Нема отворени прозори"
 
 #: applets/wncklet/workspace-switcher.c:145
 #: applets/wncklet/workspace-switcher.c:721
 #: applets/wncklet/workspace-switcher.glade.h:11
-#, fuzzy
 msgid "rows"
-msgstr "Прелистај"
+msgstr "редици"
 
 #: applets/wncklet/workspace-switcher.c:145
 #: applets/wncklet/workspace-switcher.c:721
-#, fuzzy
 msgid "columns"
-msgstr "Колони"
+msgstr "колони"
 
 #: applets/wncklet/workspace-switcher.c:351
 #, c-format
@@ -797,8 +774,7 @@ msgstr ""
 
 #: applets/wncklet/workspace-switcher.c:362
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Грешка при вчитувањето на вредноста display_workspace_names за Скокачот "
 "Помеѓу Работни Простори: %s \n"
@@ -819,33 +795,28 @@ msgstr ""
 "вашите простори за работа за полесно да може да се движите низ нив."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
-#, fuzzy
 msgid "<b>Switcher</b>"
-msgstr "<b>Преглед</b>"
+msgstr "<b>Префрли</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:3
-#, fuzzy
 msgid "<b>Workspaces</b>"
-msgstr "Работни простори"
+msgstr "<b>Работни простори</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:4
 msgid "Number of _workspaces:"
 msgstr "Број на _работни простори:"
 
 #: applets/wncklet/workspace-switcher.glade.h:5
-#, fuzzy
 msgid "Show _all workspaces in:"
 msgstr "Покажи ги _сите работни простори"
 
 #: applets/wncklet/workspace-switcher.glade.h:6
-#, fuzzy
 msgid "Show _only the current workspace"
-msgstr "Покажи го само активниот работен простор"
+msgstr "Покажи го само тековниот работен простор"
 
 #: applets/wncklet/workspace-switcher.glade.h:7
-#, fuzzy
 msgid "Show workspace _names in switcher"
-msgstr "Покажи ги имињата на работните простори во скокачот"
+msgstr "Покажи ги имињата на работните простори во префрлачот"
 
 #: applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Names"
@@ -853,10 +824,9 @@ msgstr "Имиња на работни простори"
 
 #: applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace Switcher Preferences"
-msgstr "Подесувања на скокачот на простори за работа"
+msgstr "Референци на скокачот на простори за работа"
 
 #: applets/wncklet/workspace-switcher.glade.h:10
-#, fuzzy
 msgid "Workspace na_mes:"
 msgstr "Имиња на работни простори"
 
@@ -897,23 +867,20 @@ msgstr ""
 "Простори."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
+msgid "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr ""
 "Дали да ги прикажува имињата на просторите во Скокачот Помеѓу Работни "
 "Простори."
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:485
 #: gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "Un_lock"
-msgstr "Часовник"
+msgstr "Отк_лучи"
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:485
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "_Lock"
-msgstr "Заклучи"
+msgstr "_Заклучи"
 
 #: gnome-panel/applet.c:412
 msgid "???"
@@ -1075,8 +1042,7 @@ msgstr ""
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
-msgstr ""
-"Систем администраторот оневозможил модификација на конфигурацијата на панелот"
+msgstr "Систем администраторот оневозможил модификација на конфигурацијата на панелот"
 
 #: gnome-panel/gnome-panel-preferences.c:337
 #, c-format
@@ -1089,7 +1055,7 @@ msgstr "Панел"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr "Избери подесувања за сите ваши панели"
+msgstr "Избери референци за сите ваши панели"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
 msgid "Animation _speed:"
@@ -1244,8 +1210,7 @@ msgstr "Зачувај ја сликата од екранот на _дескт�
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
-"Зачувај ја сликата од екранот на _веб страна (зачувај во ~/public__html)"
+msgstr "Зачувај ја сликата од екранот на _веб страна (зачувај во ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
@@ -1296,11 +1261,8 @@ msgstr ""
 "%s"
 
 #: gnome-panel/launcher.c:172
-#, fuzzy
 msgid "Cannot launch icon"
-msgstr ""
-"Неможам да ја пуштам иконата\n"
-"%s"
+msgstr "Неможам да ја пуштам иконата backspace"
 
 #: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
 #: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
@@ -1309,7 +1271,7 @@ msgstr ""
 #: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
 #: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
 msgid "Details"
-msgstr ""
+msgstr "Детали"
 
 #: gnome-panel/launcher.c:224
 #, c-format
@@ -1327,8 +1289,7 @@ msgstr "Нема адреса дадена за десктоп датотека�
 #: gnome-panel/launcher.c:429
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
-"Неможам да ја отворам десктоп датотеката %s на Пуштачот на програми %s%s\n"
+msgstr "Неможам да ја отворам десктоп датотеката %s на Пуштачот на програми %s%s\n"
 
 #: gnome-panel/launcher.c:531
 #, c-format
@@ -1338,13 +1299,12 @@ msgstr "Помош за %s _Апликацијата"
 #: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:187
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
-msgstr "Подесувања на Пуштачот на програми"
+msgstr "Референци на стартувачот на програми"
 
 #: gnome-panel/launcher.c:811
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
-"Ставката %s не е наместена, неможам да го вчитам Пуштачот на програми\n"
+msgstr "Ставката %s не е наместена, неможам да го вчитам Пуштачот на програми\n"
 
 #: gnome-panel/launcher.c:871 gnome-panel/menu-ditem.c:538
 msgid "Create Launcher"
@@ -1352,12 +1312,8 @@ msgstr "Направи нов пуштач на програми"
 
 #: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
 #: gnome-panel/panel-util.c:75
-#, fuzzy
 msgid "Cannot display help document"
-msgstr ""
-"<b>Неможе да се прикаже документот за помош</b>\n"
-"\n"
-"Детали: %s"
+msgstr "Неможе да се прикаже документот за помош"
 
 #: gnome-panel/main.c:104
 msgid "Specify a profile name to load"
@@ -1369,26 +1325,24 @@ msgid "Log Out"
 msgstr "Одјави се"
 
 #: gnome-panel/menu.c:114
-#, fuzzy
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr ""
-"Одјави се од оваа сесија за да се најавиш како друг корисник или за да го "
-"исклучиш компјутерот"
+"Одјави се од оваа сесија за да се најавиш како друг корисник или за да го исклучиш "
+"компјутерот"
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
 msgstr "Заклучи"
 
 #: gnome-panel/menu.c:124
-#, fuzzy
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Заклучи го екранот за да можеш привремено да го напуштиш компјутерот"
 
 #: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
 msgid "Force Quit"
-msgstr ""
+msgstr "Присили излез"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
 msgid "Screenshot"
@@ -1459,25 +1413,19 @@ msgstr "Неможе да се стартува 'За GNOME'"
 
 #: gnome-panel/menu.c:375
 msgid "probably does not exist"
-msgstr ""
+msgstr "најверојатно не постои"
 
 #: gnome-panel/menu.c:403
-#, fuzzy
 msgid "Can't launch entry"
-msgstr "Направи нов пуштач на програми"
+msgstr "Неможе да се стартува програмата"
 
 #: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
-#, fuzzy
 msgid "Can't load entry"
-msgstr "Команда за извршување"
+msgstr "Неможе да се вчита командата"
 
 #: gnome-panel/menu.c:1125
-#, fuzzy
 msgid "Could not remove the menu item"
-msgstr ""
-"<b> Неможам да го тргнам %s од менито</b>\n"
-"\n"
-"Детали: %s\n"
+msgstr "Неможам да го тргнам елементот од менито"
 
 #: gnome-panel/menu.c:1142
 #, c-format
@@ -1491,15 +1439,11 @@ msgstr "Неможам да добијам името на директориу�
 
 #: gnome-panel/menu.c:1218
 msgid "Can't add to run box"
-msgstr ""
+msgstr "Неможе да се додаде во полето за стартување"
 
 #: gnome-panel/menu.c:1219
-#, fuzzy
 msgid "Details: No 'Exec' or 'URL' field in entry"
-msgstr ""
-"<b> Неможам да го додадам во дијалогот за стартување програми</b>\n"
-"\n"
-"Детали: Нема ни команда ни адреса во ставкава"
+msgstr "Детали: Нема ни команда ни адреса во ставкава"
 
 #: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
@@ -1598,9 +1542,8 @@ msgid "Main Menu"
 msgstr "Главно мени"
 
 #: gnome-panel/menu.c:3177
-#, fuzzy
 msgid "Menu Bar"
-msgstr "Патека до мени"
+msgstr "Мени"
 
 #: gnome-panel/menu.c:3207 gnome-panel/panel-menu-bar.c:152
 msgid "Lock Screen"
@@ -1619,14 +1562,12 @@ msgstr ""
 "исклучиш компјутерот"
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:110
-#, fuzzy
 msgid "Run Application..."
-msgstr "Апликација"
+msgstr "Стартувај апликација..."
 
 #: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:112
-#, fuzzy
 msgid "Run an Application by entering a command"
-msgstr "Стартувај апликации, доколку ја знаеш точната команда за весување"
+msgstr "Стартувај апликација со внесување на команда"
 
 #: gnome-panel/menu.c:3398 gnome-panel/panel-menu-bar.c:123
 msgid "Search for Files..."
@@ -1641,12 +1582,8 @@ msgid "Desktop"
 msgstr "Десктоп"
 
 #: gnome-panel/menu-ditem.c:122
-#, fuzzy
 msgid "Cannot save changes to launcher"
-msgstr ""
-"<b> Неможам да ги снимам измените на пуштачот на програми</b>\n"
-"\n"
-"Детали: %s"
+msgstr "Неможе да се зачуваат промените на стартувач"
 
 #: gnome-panel/menu-ditem.c:297
 msgid "Menu"
@@ -1661,12 +1598,8 @@ msgid "You have to specify a valid URL or command."
 msgstr "Мора да дадеш валидна интернет адреса или команда."
 
 #: gnome-panel/menu-ditem.c:500
-#, fuzzy
 msgid "Cannot save menu item to disk"
-msgstr ""
-"<b> Неможам да го снимам менито на диск</b>\n"
-"\n"
-"Детали: %s"
+msgstr "Неможам да го снимам елементот од менито на диск"
 
 #: gnome-panel/menu-ditem.c:531
 msgid ""
@@ -1710,9 +1643,8 @@ msgstr "Одјави се од GNOME"
 
 #: gnome-panel/panel-action-button.c:217
 #: gnome-panel/panel-run-dialog.glade.h:10
-#, fuzzy
 msgid "Run Application"
-msgstr "Апликација"
+msgstr "Стартувај апликација"
 
 #: gnome-panel/panel-action-button.c:222
 msgid "Search for Files"
@@ -1728,12 +1660,11 @@ msgstr "Тип на дејствие што ова копче го имплем�
 
 #: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Влечи и пушти вклучено"
 
 #: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Дали да црта покажувачка стрелка или не"
+msgstr "Дали е овозможено влечи и пушти на формата"
 
 #: gnome-panel/panel-applet-frame.c:661
 #, c-format
@@ -1781,17 +1712,17 @@ msgstr "Неможам да го добијам интерфејсот од Aple
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr ""
+msgstr "Грешка при набљудување на клуч од gconf%s: %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "Грешка при вчитувањето на glide датотеката %s"
+msgstr "Грешка при вчитувањето на gconf директориум %s: %s"
 
 #: gnome-panel/panel-bindings.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Error getting value for '%s': %s"
-msgstr "Грешка при вчитувањето на glide датотеката %s"
+msgstr "Грешка при вчитување вредност за %s: %s"
 
 #: gnome-panel/panel.c:455
 #, c-format
@@ -1804,34 +1735,35 @@ msgid ""
 " settings are lost. Delete this panel?"
 msgstr ""
 "Кога се отстранува панел, панелот и неговите \n"
-"аплети и подесувања се губат. Да го избришам овој панел?"
+"аплети и поставките се губат. Да го избришам овој панел?"
 
 #: gnome-panel/panel.c:1181
 msgid "Delete Panel"
 msgstr "Избриши Панел"
 
 #: gnome-panel/panel-force-quit.c:73
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "Притисни на прозорот за да предизвикаш затворање на апликацијата. За да откажеш<ESC>."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"Присили излез од апликацијата?\n"
+"(Сите отворени документи ќе бидат изгубени.)"
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
-msgstr ""
+msgstr "Рабови"
 
 #: gnome-panel/panel-frame.c:262
 msgid "Which edges to draw"
-msgstr ""
+msgstr "Кои рабови да се исцртаат"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid "A list of panel IDs"
-msgstr ""
+msgstr "Листа од ID-а на панели"
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1839,11 +1771,12 @@ msgid ""
 "settings for each of these panels is stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
 msgstr ""
+"Листа со ID-а на панели. Секоj ID идентификува toplevel панел. Поставките на секој "
+"од панелите се чуваат во /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid "A list of panel applet IDs"
-msgstr "Нема наместено panel_id за објектот со идетификација %s\n"
+msgstr "Листа со ID-a на панел аплети"
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid ""
@@ -1851,11 +1784,12 @@ msgid ""
 "The settings for each of these applets is stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
+"Листа со ID-а на панел аплети. Секоj ID идентификува посебенl панел аплет. "
+"Поставките на секој од аплетите се чуваат во /apps/panel/general/$(profile)/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
-#, fuzzy
 msgid "A list of panel object IDs"
-msgstr "Нема наместено panel_id за објектот со идетификација %s\n"
+msgstr "Листа со ID-a на панел објекти"
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
@@ -1863,16 +1797,17 @@ msgid ""
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
+"Листа со ID-а на панел објекти. Секоj ID идентификува посебенl панел објект(на пр. "
+"стартувач, копче за акција, мени копче). Поставките на секој од објекти се чуваат "
+"во /apps/panel/general/$(profile)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:7
-#, fuzzy
 msgid "Enable the program list in the \"Run Application\" dialog."
-msgstr "Овоможи ја листата на програми во делот „Стартувај програма“"
+msgstr "Вклучи ја листата на програми во дијалогот „Стартувај програма“"
 
 #: gnome-panel/panel-general.schemas.in.h:8
-#, fuzzy
 msgid "Expand the program list in the \"Run Application\" dialog"
-msgstr "Овоможи ја листата на програми во делот „Стартувај програма“"
+msgstr "Отвори ја листата на програми во дијалогот „Стартувај програма“"
 
 #: gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -1880,6 +1815,9 @@ msgid ""
 "made available. Whether or not the listing is expanded when the dialog is "
 "shown is controlled by the show_program_list setting."
 msgstr ""
+"Ако е точно,листата познати програми во дијалогот Стартувај програма е достапна. "
+"Дали листата ќе биде отворена или не зависи од тоа дали приказот на дијалогот е "
+"контролоран од show_program_list_settings."
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid ""
@@ -1887,6 +1825,11 @@ msgid ""
 "expanded when the dialog is opened. This setting is only relevant if "
 "enable_program_list is true."
 msgstr ""
+"Ако е точно,листата познати програми во дијалогот Стартувај програма е отворена при "
+"отворање на дијалогот. Ова по"
+"Дали листата ќе биде отворена или не зависи од тоа дали приказот на дијалогот е "
+"контролоран од show_program_list_settings."
+"Апликации во Изврши Програм дијалог програма."
 
 #: gnome-panel/panel-global.schemas.in.h:1
 msgid "Display \"Run\" dialog"
@@ -1921,45 +1864,44 @@ msgid "Quit from the GNOME desktop"
 msgstr "Напушти го GNOME десктопот"
 
 #: gnome-panel/panel-menu-button.c:427
-#, fuzzy
 msgid "Menu Path"
 msgstr "Патека до мени"
 
 #: gnome-panel/panel-menu-button.c:428
 msgid "The path from which to construct the menu"
-msgstr ""
+msgstr "Патека од која се читаат информации за конструира менито"
 
 #: gnome-panel/panel-menu-button.c:436
 msgid "Custom Icon"
-msgstr ""
+msgstr "Сопствена икона"
 
 #: gnome-panel/panel-menu-button.c:437
-#, fuzzy
 msgid "The custom icon for the menu"
-msgstr "Саканата икона за ButtonWidget"
+msgstr "Сопствена икона за мени"
 
 #: gnome-panel/panel-menu-button.c:445
-#, fuzzy
 msgid "Use Menu Path"
-msgstr "Патека до мени"
+msgstr "Користи патека до мени"
 
 #: gnome-panel/panel-menu-button.c:446
 msgid "Use the path specified by the menu-path property"
-msgstr ""
+msgstr "Користи ја патеката дефинирана од menu-path својството"
 
 #: gnome-panel/panel-menu-button.c:454
 msgid "Use Custom Icon"
-msgstr ""
+msgstr "Користи сопствена икона"
 
 #: gnome-panel/panel-menu-button.c:455
 msgid "Use the icon specified by the custom-icon property"
-msgstr ""
+msgstr "Користи икона дефинирана од custom-icon својството"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid ""
 "If true the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
+"Ако е точно позицијата на објектот се разгледува релативно од десниот (или долниот ако "
+"е вертикален) раб на панелот."
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid ""
@@ -1967,6 +1909,9 @@ msgid ""
 "false, the custom_icon setting is ignored. This setting is only relevant if "
 "the object_type is \"menu-object\" or \"drawer-object\"."
 msgstr ""
+"Ако е точно, custom_icon поставката се користи како своја икона за копче, ако е неточно, "
+"custom_icon се игнорира. Оваа поставка се зема во предвид само ако object_type е "
+"menu-object  или drawer-object"
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid ""
@@ -1974,32 +1919,37 @@ msgid ""
 "contents should be constructed. If false, the menu_path setting is ignored. "
 "This setting is only relevant if the object_type is \"menu-object\"."
 msgstr ""
+"Ако е точно, menu_path поставката се користи како патека од која се конструира менито. "
+"Ако е неточно menu_path поставката се игнорира. Оваа поставка се зема во предвид само "
+"ако object_type е menu-object."
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Ако е точно, корисникот можеби нема да може да го помрдне аплетот без "
+"претходно да го отклучи објектот користејќи \"Отклучи\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
-msgstr ""
+msgstr "Интерпретирај ја позицијата релативно во однос на десниот-долен раб"
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "Сегашна состојба на овој панел"
+msgstr "Заклучи го објектот на панелот"
 
 #: gnome-panel/panel-object.schemas.in.h:7
-#, fuzzy
 msgid "The Bonobo IID of the applet"
-msgstr "Тест Bonobo Аплет"
+msgstr "Bonobo IID Аплет"
 
 #: gnome-panel/panel-object.schemas.in.h:8
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This setting is only relevant if the object_type is \"bonobo-applet\"."
 msgstr ""
+"Bonobo-то имплементираната индетификација на аплетот - пример \"OAFIID:GNOME_ClockApplet"
+"\". Овие подесувања ќе одговараат само ако типот на објектот е \"bonobo-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:9
 msgid ""
@@ -2007,26 +1957,33 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
 "relevant if the object_type is \"action-applet\"."
 msgstr ""
+"Типот на акција што ја извршува ова копче. Возможни вредности се \"lock\", "
+"\"logout\", \"run\", \"search\" и \"screenshot\". Овие подесувања ќе одговараат само  "
+"типот на објектот е \"action-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "The icon used for the object's button"
-msgstr ""
+msgstr "Иконата користена за објектот на копчети"
 
 #: gnome-panel/panel-object.schemas.in.h:11
 msgid ""
 "The identifier of the panel attached to this drawer. This setting is only "
 "relevant if the object_type is \"drawer-object\"."
 msgstr ""
+"Индентификаторот на панелот прикачен на овој цртач. Овие подесувања ќе "
+"одговараат само ако типот на објектот е \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:12
 msgid "The identifier of the panel toplevel which contains this object."
-msgstr ""
+msgstr "Идентификаторот на варвот од панелот кој содржи објект."
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid ""
 "The location of the .desktop file describing the launcher. This setting is "
 "only relevant if the object_type is \"launcher-object\"."
 msgstr ""
+"Локацијата на фајлот на вклучувачот на рботната површина. Овие подесувања ќе "
+"одговараат само ако типот на објектот е ж\"вклучувачки објект\""
 
 #: gnome-panel/panel-object.schemas.in.h:14
 msgid ""
@@ -2034,58 +1991,63 @@ msgid ""
 "This setting is only relevant if the object_type is \"drawer-object\" or "
 "\"menu-object\" and use_custom_icon is true."
 msgstr ""
+"Локацијата на сликата е користена како икона на копчето. "
+"Овие подесувања ќе одговараат само ако типот на објектот е \"цртачки-објект\" или "
+"\"мени-објект\" и доколку користената_вобичаена _икона е вистинита."
 
 #: gnome-panel/panel-object.schemas.in.h:15
-#, fuzzy
 msgid "The location of the launcher"
-msgstr "Позиција на која треба да се додаде стартувачот"
+msgstr "Позицијата на вклучувачот"
 
 #: gnome-panel/panel-object.schemas.in.h:16
 msgid "The object's position on the panel"
-msgstr ""
+msgstr "Позицијата на објектот на панелот"
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid "The panel attached to this drawer"
-msgstr ""
+msgstr "Панелот прокачен на овој цртач"
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The panel toplevel which contains this object"
-msgstr ""
+msgstr "Панел што го содржи објектот"
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid "The path for the menu contents"
-msgstr ""
+msgstr "Патеката за содржините на менијата"
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
 "The path from which the menu contents is contructed. The setting is only "
 "relevant if use_menu_path is true and the object_type is \"menu-object\"."
 msgstr ""
+"Патека од каде елементите на менито се создаваат. Оваа поставка се зема во предвид само "
+"ако use_menu_path е точно и object_type е мени-објект"
 
 #: gnome-panel/panel-object.schemas.in.h:21
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
+"Позиција на панел објектот. Позицијата е одредена од бројот на пиксели од лево "
+"(или од горе ако е вертикален) од работ на панелот."
 
 #: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The text to display in a tooltip for this drawer. This setting is only "
 "relevant if the object_type is \"drawer-object\"."
-msgstr ""
+msgstr "Текст за приказ во помо. Оваа поставка се зема во предвид само ако оbject_type е drawer-object"
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid "The tooltip displayed for this drawer"
-msgstr ""
+msgstr "Помош прикажана за цртачот"
 
 #: gnome-panel/panel-object.schemas.in.h:24
-#, fuzzy
 msgid "The type of action button"
 msgstr "Тип на дејствие што ова копче го имплементира"
 
 #: gnome-panel/panel-object.schemas.in.h:25
 msgid "The type of panel object"
-msgstr ""
+msgstr "Тип на панел објект"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid ""
@@ -2093,26 +2055,29 @@ msgid ""
 "object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
 "applet\" and \"menu-bar\"."
 msgstr ""
+"Типот на овој објект-панелот. Има неколку можни вредности - \"цртачки-"
+"објект\", \"мени-објект\", \"вклучувачки-објект\", \"бонобо-аплет\", \"акција-"
+"аплет\" и \"мени-бар\"."
 
 #: gnome-panel/panel-object.schemas.in.h:27
 msgid "Use a custom icon for the object's button"
-msgstr ""
+msgstr "Користи вобичаена икона за ова копче"
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use a custom path for the menu contents"
-msgstr ""
+msgstr "Користи сопствена патека за содржината на менијата"
 
 #: gnome-panel/panel-profile.c:622 gnome-panel/panel-profile.c:650
 #: gnome-panel/panel-profile.c:686 gnome-panel/panel-profile.c:1348
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
-msgstr ""
+msgstr "Грешка при читање на GConf текстуална вредност %s: %s"
 
 #: gnome-panel/panel-profile.c:665 gnome-panel/panel-profile.c:1249
 #: gnome-panel/panel-profile.c:1317 gnome-panel/panel-profile.c:1380
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
-msgstr ""
+msgstr "Грешка при читање на GConf целобројна вредност %s: %s"
 
 #: gnome-panel/panel-profile.c:1259
 #, c-format
@@ -2120,43 +2085,42 @@ msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
+"Панелот %s e поставен да се прикаже на екранот %d кој моментално не е достапен. Не го "
+"вчитувај овој панел."
 
 #: gnome-panel/panel-profile.c:1332
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
-msgstr ""
+msgstr "Грешка при читање на GConf boolean вредност %s: %s"
 
 #: gnome-panel/panel-profile.c:1843
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
-msgstr ""
+msgstr "Грешка при читање на GConf list вредност %s: %s"
 
 #: gnome-panel/panel-properties-dialog.glade.h:2
 msgid "      "
-msgstr ""
+msgstr "      "
 
 #: gnome-panel/panel-properties-dialog.glade.h:4
-#, fuzzy
 msgid "<b>_Name:</b>"
-msgstr "_Корисничко име:"
+msgstr "<b>_Име:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:5
-#, fuzzy
 msgid "<b>_Orientation:</b>"
-msgstr "Ориентација:"
+msgstr "<b>_Ориентација:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:6
-#, fuzzy
 msgid "<b>_Size:</b>"
-msgstr "<b>Преглед</b>"
+msgstr "<b>_Големина</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:7
 msgid "<small>Opaque</small>"
-msgstr ""
+msgstr "<small> Матно</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:8
 msgid "<small>Transparent</small>"
-msgstr ""
+msgstr "<small>Транспаренто</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Arro_ws on hide buttons"
@@ -2167,9 +2131,8 @@ msgid "Background"
 msgstr "Позадина"
 
 #: gnome-panel/panel-properties-dialog.glade.h:11
-#, fuzzy
 msgid "Background _image:"
-msgstr " Вид на позадината:"
+msgstr "Вид на _позадината:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
 #: libpanel-applet/panel-test-applets.glade.h:2
@@ -2177,14 +2140,12 @@ msgid "Bottom"
 msgstr "Долен дел"
 
 #: gnome-panel/panel-properties-dialog.glade.h:13
-#, fuzzy
 msgid "Co_lor:"
-msgstr "Боја"
+msgstr "Бо_ја:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:14
-#, fuzzy
 msgid "E_xpand"
-msgstr "Големина"
+msgstr "З_големи"
 
 #: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "General"
@@ -2192,7 +2153,7 @@ msgstr "Општо"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Image Background Details"
-msgstr ""
+msgstr "Детали на позадинска слика"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 #: libpanel-applet/panel-test-applets.glade.h:4
@@ -2201,11 +2162,11 @@ msgstr "Лево"
 
 #: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Panel Properties"
-msgstr "Параметри на панелот"
+msgstr "Својства на панелот"
 
 #: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Pick a color"
-msgstr ""
+msgstr "Одбери боја"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
 #: libpanel-applet/panel-test-applets.glade.h:8
@@ -2217,22 +2178,20 @@ msgid "Rotate image when panel is _vertical"
 msgstr "Ротирај ја сликата кога панелот е вертикален"
 
 #: gnome-panel/panel-properties-dialog.glade.h:22
-#, fuzzy
 msgid "S_tyle:"
-msgstr "_Тип:"
+msgstr "С_тил:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "Show hide _buttons"
-msgstr "Покажувај ги копчињата за криење"
+msgstr "Покажувај ги _копчињата за криење"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#, fuzzy
 msgid "Solid c_olor"
-msgstr "_Боја:"
+msgstr "Полна _боја"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
-msgstr "_Развлечи слика"
+msgstr "Ра_звлечи"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:11
@@ -2241,30 +2200,28 @@ msgstr "Горе"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Autohide"
-msgstr "Автоматско криење"
+msgstr "_Автоматско криење"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "_None (use system theme)"
-msgstr ""
+msgstr "_Ништо (користи системска тема)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "_Скалирај"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Tile"
-msgstr "Ра_спореди"
+msgstr "_Ситно"
 
 #: gnome-panel/panel-recent.c:57
 msgid "Couldn't find a suitable application"
-msgstr "Неможеше да се најде апликација која ќе одговара"
+msgstr "Неможam да најдam апликација која ќе одговара"
 
 #: gnome-panel/panel-recent.c:83
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr ""
-"Преддефинираната апликација за овој тип на датотека не може да работи со "
+"Стандардната апликација за овој тип на датотека не може да работи со "
 "надворешни датотеки"
 
 #: gnome-panel/panel-recent.c:147
@@ -2277,24 +2234,16 @@ msgid "Open Recent"
 msgstr "Отвори Скорешни"
 
 #: gnome-panel/panel-run-dialog.c:277
-#, fuzzy
 msgid "Error launching command"
-msgstr ""
-"<b> Неможам да ја пуштам иконава </b> \n"
-"\n"
-"Детали: %s"
+msgstr "Грешка при лансирањето на командата"
 
 #: gnome-panel/panel-run-dialog.c:311
-#, fuzzy
 msgid "Error displaying location"
-msgstr ""
-"<b>Неможе да се прикаже документот за помош</b>\n"
-"\n"
-"Детали: %s"
+msgstr "Грешка при прикажување на локацијата"
 
 #: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Избери датотека за припојување со командата..."
 
 #: gnome-panel/panel-run-dialog.c:1224
 #, c-format
@@ -2303,44 +2252,47 @@ msgstr "Ќе ја стартува командата: '%s'"
 
 #: gnome-panel/panel-run-dialog.c:1230 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Избери апликација за да го видиш нејзиниот опис."
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "A description of the currently selected application or information on the "
 "command that will be run."
 msgstr ""
+"Опис на избраната апликација или информација за командата што треба да се "
+"изврши."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-#, fuzzy
 msgid "Application description"
-msgstr "Апликации"
+msgstr "Опис на апликацјата"
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"Кликни на копчето за да прелистуваш датотека чие име е припоено за "
+"командниот стринг."
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"Кликни на копчето да ја извршиш избраната апликација или командата во "
+"полето на команден за извршување."
 
 #: gnome-panel/panel-run-dialog.glade.h:6
-#, fuzzy
 msgid "Command entry"
 msgstr "Команда за извршување"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Command icon"
-msgstr "Команда за извршување"
+msgstr "Командна икона"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Enter a command string here to run it."
-msgstr ""
+msgstr "Внеси команден стринг овде за да го извршиш."
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "List of known applications"
@@ -2352,31 +2304,27 @@ msgstr "Стартувај во _терминал"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Run with _file..."
-msgstr ""
+msgstr "Изврши со _датотека..."
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "Select an application from the list to run it"
 msgstr "Избери апликација за стартување од листата"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Избери ја оваa кутија за да ја извршиш командата во терминален прозорец."
 
 #: gnome-panel/panel-run-dialog.glade.h:16
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "Листа на познати апликации"
+msgstr "Прикажи листа на познати апликации"
 
 #: gnome-panel/panel-run-dialog.glade.h:17
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "Неможам да ја најдам командата која треба да се изврши"
+msgstr "Иконата која укажува на командата за извршување."
 
 #: gnome-panel/panel-run-dialog.glade.h:18
-#, fuzzy
 msgid "When this is selected the list of known applications is displayed."
-msgstr "Скриј ја листата на познати апликации"
+msgstr "Прикажи ги познатите апликации ако ова е обележано."
 
 #: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:147
 msgid "_Run"
@@ -2409,283 +2357,251 @@ msgstr "Неможеше да се вчита '%s' иконата за пане�
 
 #: gnome-panel/panel-stock-icons.c:148
 msgid "_Force quit"
-msgstr ""
+msgstr "_Присили излез"
 
 #: gnome-panel/panel-toplevel.c:1349
-#, fuzzy
 msgid "Top Expanded Edge Panel"
-msgstr "Големина"
+msgstr "Издолжениот панел на работ од врвот "
 
 #: gnome-panel/panel-toplevel.c:1350
-#, fuzzy
 msgid "Top Centered Panel"
-msgstr "Ќош Панел"
+msgstr "Панел на центарот на врвот"
 
 #: gnome-panel/panel-toplevel.c:1351
-#, fuzzy
 msgid "Top Floating Panel"
-msgstr "Лебдечки анел"
+msgstr "Лебдечкиот панел на врвот"
 
 #: gnome-panel/panel-toplevel.c:1352
-#, fuzzy
 msgid "Top Edge Panel"
-msgstr "Раб Панел"
+msgstr "Панел на работ на врвот"
 
 #: gnome-panel/panel-toplevel.c:1356
-#, fuzzy
 msgid "Bottom Expanded Edge Panel"
-msgstr "Големина"
+msgstr "Издолжениот панел на работ на дното"
 
 #: gnome-panel/panel-toplevel.c:1357
-#, fuzzy
 msgid "Bottom Centered Panel"
-msgstr "Ќош Панел"
+msgstr "Панел на центарот на дното"
 
 #: gnome-panel/panel-toplevel.c:1358
-#, fuzzy
 msgid "Bottom Floating Panel"
-msgstr "Лебдечки анел"
+msgstr "Лебдечки панел на дното"
 
 #: gnome-panel/panel-toplevel.c:1359
-#, fuzzy
 msgid "Bottom Edge Panel"
-msgstr "Раб Панел"
+msgstr "Панел на работ на дното"
 
 #: gnome-panel/panel-toplevel.c:1363
-#, fuzzy
 msgid "Left Expanded Edge Panel"
-msgstr "Големина"
+msgstr "Проширенот панел на левиот раб"
 
 #: gnome-panel/panel-toplevel.c:1364
-#, fuzzy
 msgid "Left Centered Panel"
-msgstr "Ќош Панел"
+msgstr "Лево центриран панел"
 
 #: gnome-panel/panel-toplevel.c:1365
-#, fuzzy
 msgid "Left Floating Panel"
-msgstr "Лебдечки анел"
+msgstr "Лев лебдечки панел"
 
 #: gnome-panel/panel-toplevel.c:1366
-#, fuzzy
 msgid "Left Edge Panel"
-msgstr "Раб Панел"
+msgstr "Панелот на левиот раб"
 
 #: gnome-panel/panel-toplevel.c:1370
-#, fuzzy
 msgid "Right Expanded Edge Panel"
-msgstr "Големина"
+msgstr "Десен проширен панел на работ"
 
 #: gnome-panel/panel-toplevel.c:1371
-#, fuzzy
 msgid "Right Centered Panel"
-msgstr "Збиен Панел"
+msgstr "Лево центриран панел"
 
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy
 msgid "Right Floating Panel"
-msgstr "Лебдечки анел"
+msgstr "Десно лебдечки панел"
 
 #: gnome-panel/panel-toplevel.c:1373
-#, fuzzy
 msgid "Right Edge Panel"
-msgstr "Раб Панел"
+msgstr "Левиот панел"
 
 #: gnome-panel/panel-toplevel.c:3417
-#, fuzzy
 msgid "Name"
-msgstr "Име на Икона"
+msgstr "Име"
 
 #: gnome-panel/panel-toplevel.c:3418
-#, fuzzy
 msgid "The name of this panel"
-msgstr "Режим за овој панел"
+msgstr "Името на овој панел"
 
 #: gnome-panel/panel-toplevel.c:3427
-#, fuzzy
 msgid "Expand"
-msgstr "Големина"
+msgstr "Прошири"
 
 #: gnome-panel/panel-toplevel.c:3428
 msgid "Expand to take up the full monitor width/height"
-msgstr ""
+msgstr "Прошири за до го исполни екранот"
 
 #: gnome-panel/panel-toplevel.c:3438
-#, fuzzy
 msgid "The orientation of the panel"
 msgstr "Сегашна состојба на овој панел"
 
 #: gnome-panel/panel-toplevel.c:3449
-#, fuzzy
 msgid "The height (or width when vertical) of the panel"
-msgstr "Сегашна состојба на овој панел"
+msgstr "Висината (или должината кога е вертикално) на овој панел"
 
 #: gnome-panel/panel-toplevel.c:3461
-#, fuzzy
 msgid "X position"
-msgstr "Позиција:"
+msgstr "Х позиција"
 
 #: gnome-panel/panel-toplevel.c:3462
 msgid "The X position of the panel"
-msgstr ""
+msgstr "X позиција на панелот"
 
 #: gnome-panel/panel-toplevel.c:3473
 msgid "X centered"
-msgstr ""
+msgstr "X центрирано"
 
 #: gnome-panel/panel-toplevel.c:3474
 msgid "The x co-ordinate is relative to center screen"
-msgstr ""
+msgstr "Х кординатата е во однос со центарот на екранот"
 
 #: gnome-panel/panel-toplevel.c:3483
-#, fuzzy
 msgid "Y position"
-msgstr "Позиција:"
+msgstr "Y-позиција"
 
 #: gnome-panel/panel-toplevel.c:3484
 msgid "The Y position of the panel"
-msgstr ""
+msgstr "Y позиција на панелот"
 
 #: gnome-panel/panel-toplevel.c:3495
 msgid "Y centered"
-msgstr ""
+msgstr "Y центрирано"
 
 #: gnome-panel/panel-toplevel.c:3496
 msgid "The y co-ordinate is relative to center screen"
-msgstr ""
+msgstr "у кординатата е во однос на центарот на екранот"
 
 #: gnome-panel/panel-toplevel.c:3505
 msgid "Xinerama monitor"
-msgstr ""
+msgstr "Ксинерама монитор"
 
 #: gnome-panel/panel-toplevel.c:3506
 msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
+msgstr "Ксинерама"
 
 #: gnome-panel/panel-toplevel.c:3517
-#, fuzzy
 msgid "Auto hide"
 msgstr "Автоматско криење"
 
 #: gnome-panel/panel-toplevel.c:3518
 msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
+msgstr "Автоматски криј го панелот кога покажувачот на глувчето го напушта"
 
 #: gnome-panel/panel-toplevel.c:3527
 msgid "Hide delay"
-msgstr ""
+msgstr "Задоцнето криење"
 
 #: gnome-panel/panel-toplevel.c:3528
 msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
+msgstr "Време на застој на криењето изразено во милисекунди"
 
 #: gnome-panel/panel-toplevel.c:3539
 msgid "Un-hide delay"
-msgstr ""
+msgstr "Прикажи доцнење"
 
 #: gnome-panel/panel-toplevel.c:3540
 msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
+msgstr "Време на застој на откривањето изразено во милисекунди"
 
 #: gnome-panel/panel-toplevel.c:3551
-#, fuzzy
 msgid "Auto-hide size"
-msgstr "Автоматско криење"
+msgstr "Автоматска големина на криењето"
 
 #: gnome-panel/panel-toplevel.c:3552
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
+msgid "The number of pixels visible when the panel has been automatically hidden"
+msgstr "Број на видливи пиксели кога панелот е автоматски скриен"
 
 #: gnome-panel/panel-toplevel.c:3563
-#, fuzzy
 msgid "Animate"
-msgstr "Анимација"
+msgstr "Анимирај"
 
 #: gnome-panel/panel-toplevel.c:3564
 msgid "Enable hiding/showing animations"
-msgstr ""
+msgstr "Вклучи криење/откривање анимации"
 
 #: gnome-panel/panel-toplevel.c:3573
-#, fuzzy
 msgid "Animation Speed"
-msgstr "_Брзина на анимацијата:"
+msgstr "Брзина на анимацијата"
 
 #: gnome-panel/panel-toplevel.c:3574
 msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
+msgstr "Прзината со која се анимира криењето/откривањето на панелот"
 
 #: gnome-panel/panel-toplevel.c:3584
-#, fuzzy
 msgid "Buttons Enabled"
-msgstr "Копчиња за криење овозможени"
+msgstr "Копчиња се вклучени"
 
 #: gnome-panel/panel-toplevel.c:3585
-#, fuzzy
 msgid "Enable hide/show buttons"
-msgstr "Овозможи ги копчињата за криење"
+msgstr "Вклучи ги сокривачките/откривачките копчиња"
 
 #: gnome-panel/panel-toplevel.c:3594
 msgid "Arrows Enabled"
-msgstr ""
+msgstr "Стрелките се вклучени"
 
 #: gnome-panel/panel-toplevel.c:3595
-#, fuzzy
 msgid "Enable arrows on hide/show buttons"
-msgstr "Пок_ажувај стрелки на копчињата за криење"
+msgstr "Вклучи ги стрелки на сокривачките/откривачките копчињата"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:1
 msgid "A name with which to identify this panel."
-msgstr ""
+msgstr "Име по кое ќе се распознава овој панел."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide the panel into the corner."
-msgstr ""
+msgstr "Автоматски криј го панелот во ќошето."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
 msgid "Center the panel on the x-axis."
-msgstr ""
+msgstr "Центрирај го панелот на х-оската."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Center the panel on the y-axis."
-msgstr ""
+msgstr "Центрирај го панелот на y-оската."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
 msgid "Delay before automatically hiding the panel."
-msgstr ""
+msgstr "Застој пред автоматкото криење на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
 msgid "Delay before automatically un-hiding the panel."
-msgstr ""
+msgstr "Застој пред автоматкото одкриење на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
-#, fuzzy
 msgid "Enable animations."
-msgstr "Одбери а_нимација"
+msgstr "Вклучи а_нимација."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:8
-#, fuzzy
 msgid "Enable arrows on the hide buttons."
-msgstr "Пок_ажувај стрелки на копчињата за криење"
+msgstr "Вклучи ги стрелките на криечките копчињата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:9
-#, fuzzy
 msgid "Enable hide buttons."
-msgstr "Овозможи ги копчињата за криење"
+msgstr "Вклучи ги криечките копчињата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Expand to occupy entire screen width."
-msgstr ""
+msgstr "Прошири низ целиот екран."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Fit the image to the panel."
-msgstr ""
+msgstr "Принуди ја сликата да одговара на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid ""
 "If true the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
+"Доколку е вистинито сликата ќе биде прилагодена со големината напанелот. "
+"Односот на сликата нема да биде одржан."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 msgid ""
@@ -2694,36 +2610,51 @@ msgid ""
 "position - i.e. the panel will grow on both sides. If false the x setting "
 "determines the location of the panel."
 msgstr ""
+"Доколку е вистинито тогаш x подесувањата ќе бидат одбегнати и панелот ќе биде сместен на"
+"центарот на x-оската на екранот. Доколку големината на панелот е променета тој ќе "
+"остане на таа позиција - појаснето. панелот ќе се рашири од двете страни. Ако е невистинито тогаш "
+"х подесувањата ќе ја одредат локацијата на панелотl."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
 "If true, arrows will be placed on the hide buttons. This preference only has "
 "meaning if enable_buttons is true."
 msgstr ""
+"Доколку е вистинито,стрелките ќе се сместат на сокривачките копчиња. Овие параметри "
+"ќе бидат важечки само ако вклучените копчиња се вистинити."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Ако е вистинито тогаш копчињата ќе бидат сместени на секоја страна од панлеот "
+"кој би можел да биде користен за поместување на панелот во работ на екранот притоа "
+"оставајќи видливо копче."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantaneously."
 msgstr ""
+"Ако е вистинито тогаш криењето и откривањето на овој панел ќе биде анимиано "
+"наместо прикажано моментално."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
+"Ако е точно, позадинската слика ќе биде ротирана ако ориентацијата на панелот е "
+"вертикална."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
+"Ако е вистинито, сликата ќе биде прилагодена (одржувајќи го односот на сликата) "
+"на на висината на панелот (ако е хоризонтално)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
@@ -2732,6 +2663,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
+"Ако е вистинито тогаш панелот да ја завземе цела ширина на еранот (висина ако е "
+"вертикален панел). Во овој мод панелот може само да биде сместен на работ од екранот. "
+"Доколку е невистинито тогаш панелотќе биде доволно голем да ги смести аплетите, "
+"вклучувачите и копчињата на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2739,25 +2674,29 @@ msgid ""
 "into a corner of the screen. Moving the pointer to that corner will cause "
 "the panel to re-appear."
 msgstr ""
+"Доколку е вистинито тогаш кога покажувачот го напушти панелот ќе биде автоматски "
+"скриен во ќошот на екранот. Поместувајќи го покажувачот во тој ќош ќе предизвика "
+"панелот повторно да се покаже."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
+"Во Xinerama подесувањето, можно е да ги имате панелите посебно на секој монитор. "
+"Ова копче ги индентификува тековниот монитор на кој еприкажан панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid "Number of visible pixels with a hidden panel."
-msgstr ""
+msgstr "Број на видливи пиксели со сокриен панел."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
-#, fuzzy
 msgid "Rotate the image on vertical panels."
-msgstr "_Ротирај на вертикални панели"
+msgstr "Ротирај ја сликата на вертикалниот панел."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid "Specifies the background color for the panel in #RGB format."
-msgstr ""
+msgstr "Ја специфира бојата на позадината од #RGB палетата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:25
 msgid ""
@@ -2765,6 +2704,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
+"Ја специфира датотеката која ќе биде користена како поздинска слика. Ако сликата "
+"содржи алфа канал ќе биде склопена на сликата на работната површина."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid ""
@@ -2772,6 +2713,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This preference is "
 "only relevant if auto_hide is true."
 msgstr ""
+"Го специфира бројот на милисекунди за кои ќе се одложува после влегувањето на "
+"покажувачот во панелот пред панелот да е автоматски пре-прокажан. Овие параметри "
+"ќе одговараат само ако автоматското_криење е вистинито."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid ""
@@ -2779,6 +2723,9 @@ msgid ""
 "panel area before the panel is automatically hidden. This preference is only "
 "relevant if auto_hide is true."
 msgstr ""
+"Го специфира бројот на милисекунди за кои ќе се одложува после излегувањето на "
+"покажувачот во панелот пред панелот да е автоматски скриен. Овие параметри "
+"ќе одговараат само ако автоматското_криење е вистинито."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid ""
@@ -2786,6 +2733,8 @@ msgid ""
 "hidden into a corner. This preference only has relevance when auto_hide is "
 "true."
 msgstr ""
+"Го специфира бројот на видливи пиксели панелот е автоматски скриен во ќошот. "
+"Овие параметри ќе одговараат само ако автоматското_криење е вистинито."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid ""
@@ -2793,48 +2742,44 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
+"Ја пецифира густината на бојата на позадинската боја. Ако бојата не целосно матна "
+"(вредност помала од 65535), бојата ќе биде склопена на сликата на работната површина"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
-#, fuzzy
 msgid "Stretch the image to the panel."
-msgstr "Сегашна состојба на овој панел"
+msgstr "Рашири ја сликата низ панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
-#, fuzzy
 msgid "The X co-ordinate of the panel."
-msgstr "Режим за овој панел"
+msgstr "Х-кординатата на панелот"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid "The X screen the panel is on."
-msgstr ""
+msgstr "X екран панел е вклучен."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid "The Xinerama monitor the panel is on."
-msgstr ""
+msgstr "Xinerama мониторот панел е вклучен."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:34
-#, fuzzy
 msgid "The Y co-ordinate of the panel."
-msgstr "Режим за овој панел"
+msgstr "Y-кординатата на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-#, fuzzy
 msgid "The background color opacity."
-msgstr "Боја на позадина"
+msgstr "Густината на боја на позадина."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:36
-#, fuzzy
 msgid "The background color."
 msgstr "Боја на позадина"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "The background image."
-msgstr ""
+msgstr "Позадинска слика"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
-#, fuzzy
 msgid "The background type."
-msgstr " Вид на позадината:"
+msgstr "Вид на позадината."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -2843,6 +2788,9 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
+"Висината (ширината за вертикален панел) на панелот. Панелот ќе одреди за време на "
+"работа минималната големина базирана на предната големина и други индикатори. "
+"Максималната големина е заклучена на една четвртина од висината на екранот (или ширина)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2850,6 +2798,9 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Локацијата на панелите покрај х-оката. Оваа вредност има значење само во во не "
+"проширениот мод. Во проширениот мод вредноста е игнорирана и панеот е сместен "
+"во работ на екранот индицирано по орентацијата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2857,9 +2808,11 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Локацијата на панелите покрај -оката. Оваа вредност има значење само во во не "
+"проширениот мод. Во проширениот мод вредноста е игнорирана и панеот е сместен "
+"во работ на екранот индицирано по орентацијата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
-#, fuzzy
 msgid "The orientation of the panel."
 msgstr "Сегашна состојба на овој панел"
 
@@ -2874,15 +2827,20 @@ msgid ""
 "menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
 "up above the panel."
 msgstr ""
+"Положба на панелот. Има четери можни вредности; \"врв\", "
+"\"дно\", \"лево\", \"десно\". Во проширениот мод вредноста специфира кој екрански "
+"раб на панелот е вклучен. Во не-проширениот мод разликите меѓу \"врв"
+"\" и \"дно\" е помалу важна - и двете  индицираат дека ова е хоризонтален панел "
+" - но сеуште даваат корисна помош за однесувањето на панелите. "
+"На пример, на \"врв\" мени ќе излезе."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
-#, fuzzy
 msgid "The size of the panel."
-msgstr "Сегашна состојба на овој панел"
+msgstr "Големината на панелот."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:45
 msgid "The speed of animations."
-msgstr ""
+msgstr "Брзина на анимацијата."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
@@ -2890,6 +2848,8 @@ msgid ""
 "\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
 "enable_animations is true."
 msgstr ""
+"Бризината со кој анимациите би требало да се изведуваат. Има три можни вредности; "
+"\"споро\"; \"средно\" и \"брзо\". Овие параметри ќе одговараат само ако enable_animation е вистинито."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
@@ -2897,6 +2857,8 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
+"Ова е читливо име од кое може да се препознае панел. Неговата главна намена е да "
+"служи како прозорец наслов на панел кој е корисен кога се преминува од еден во друг."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
@@ -2905,12 +2867,18 @@ msgid ""
 "the color preference will be used as the background color or \"image\", the "
 "image specified in the image preference will be used as the background."
 msgstr ""
+"Кој на позадина би требало да биде користен за овој панел. Има 3 можни "
+"вредности; \"gtk\", стандарната GTK+ елемент позадиан ќе се користи, \"боја\", "
+"параметрите на бојата ќе се користат како позадинска боја или \"слика\", специфираната "
+"сликата во параметрите на сликата ќе се користи како позадина."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"Со повеќе екранско подесување можно е да има панели на секој екран. "
+"Ова копче ги индетификува тековнио екран на кој панелот е прикажан."
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2928,12 +2896,8 @@ msgid "Cannot execute xscreensaver"
 msgstr "Неможе да се стартува xscreensaver"
 
 #: gnome-panel/panel-util.c:934
-#, fuzzy
 msgid "Details: xscreensaver-command not found"
-msgstr ""
-"<b> Неможам да го пуштам xscreensaver</b>\n"
-"\n"
-"Детали: xscreensaver команда не е најдена"
+msgstr "Детали: xscreensaver команда не е најдена"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2987,23 +2951,20 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Опсегот што кажува кои големини се прифатливи за аплетот"
 
 #: libpanel-applet/panel-test-applets.c:33
-#, fuzzy
 msgid "Specify an applet IID to load"
 msgstr "Специфирај име на профилот што треба да се вчита"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
-msgstr ""
+msgid "Specify a gconf location in which the applet preferences should be stored"
+msgstr "Ја специфира gconf локацијата во која параметрите на аплетот би требало да бидат сместени"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
+msgstr "Ја специфира почетната големина на аплетот (хх-мало, средно, големи итн.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
-msgstr ""
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgstr "Ја специфира почетната орентација на аплетот (брв, дно, лево или десно)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -3889,3 +3850,4 @@ msgstr "Ептен мало"
 
 #~ msgid "Display a list of known applications from the applications menu"
 #~ msgstr "Прикажи листа на познати апликации од менито со апликации"
+
