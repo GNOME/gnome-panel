@@ -2410,11 +2410,10 @@ static gchar *applet_sort_criteria [] = {
 	};
 
 static GtkWidget *
-create_applets_menu (void)
+create_applets_menu (GtkWidget *menu)
 {
 	CORBA_Environment      env;
 	Bonobo_ServerInfoList *list;
-	GtkWidget             *menu;
 	GtkWidget             *prev_menu = NULL;
 	const gchar           *prev_category = NULL;
 	gint                   i;
@@ -2432,7 +2431,7 @@ create_applets_menu (void)
 		return NULL;
 	}
 
-	menu = menu_new ();
+	if (!menu) menu = menu_new ();
 
 	g_signal_connect (G_OBJECT (menu), "destroy", G_CALLBACK (menu_destroy), NULL);
 
@@ -3178,15 +3177,15 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	/* Add Menu */
 
-	m = create_applets_menu ();
-	if (m) {
+	m = create_applets_menu (menu);
+	/*if (m) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
 					   _("Applet"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
-	}
+		}*/
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3677,7 +3676,7 @@ create_root_menu (GtkWidget *root_menu,
 
 	/* in commie mode the applets menu doesn't make sense */
 	if (!commie_mode && (flags & MAIN_MENU_APPLETS_SUB)) {
-		menu = create_applets_menu ();
+		menu = create_applets_menu (NULL);
 		if (menu) {
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",

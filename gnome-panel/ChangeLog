@@ -1,5 +1,17 @@
 2002-01-19  Seth Nickell  <snickell@stanford.edu>
 
+	* menu.c: (create_applets_menu), (make_add_submenu),
+	(create_root_menu):
+
+	Start collapsing Applet submenu into the "add" submenu. The distinction
+	between applets and other "things you can put on the panel" isn't very
+	clear and is primarily a technical distinction (particular for objects
+	such as the status dock. This looks bigger, but its the amount of data
+	many users effectively have to sift through to find what they're looking
+	for. Now we can confront the problem of better categorization head on.
+
+2002-01-19  Seth Nickell  <snickell@stanford.edu>
+
 	* gnome-panel-properties.glade:
 
 	Reword "on mouseover" to "when the mouse moves over them". Yeah,
