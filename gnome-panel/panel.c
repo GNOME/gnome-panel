@@ -1209,6 +1209,7 @@ static void
 panel_deletion_destroy_dialog (GtkWidget *widget,
 			       PanelToplevel *toplevel)
 {
+	panel_toplevel_unblock_auto_hide (toplevel);
 	g_object_set_data (G_OBJECT (toplevel), "panel-delete-dialog", NULL);
 }
 
@@ -1289,6 +1290,8 @@ panel_delete (PanelToplevel *toplevel)
 		panel_delete_without_query (toplevel);
 		return;
 	}
+
+	panel_toplevel_block_auto_hide (toplevel);
 
 	panel_query_deletion (toplevel);
 }
