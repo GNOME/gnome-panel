@@ -1,5 +1,15 @@
 Things to do on the panel, in no particular order:
 
+1.2/1.4 items
+
+* RootApplication dentry type support.  These would be items to run other apps
+  as root.  This would require pam support of course.  So for things like
+  GnoRPM you could have the normal Application dentry and a RootApplication
+  dentry which would launch it in a mode where it would ask for password and
+  run as root.  This would only be activated if "root application support"
+  was toggled on somewhere (global prefs I guess).  This is high priority
+  [Taken: George]
+
 * make vertical explicit hide with a thin long button along the edge of the
   panel rather then on the sides. (the motion would be like it is in
   autohide.) Though I guess the current should be default as it's less
@@ -8,7 +18,15 @@ Things to do on the panel, in no particular order:
 * add a way to set up a custom icon for a menu button instead of using the
   one specified in the menu itself
 
-* do properties dialog for the floating panel (Taken: Jacob)
+* export more functionality through the CORBA interface, eventually I think
+  we should have a per panel interface so that the panels could be
+  manipulated through corba directly, we especially need to export a way to
+  launch external applets and to add the internal ones, we can also have
+  things to move panels, and to change their background
+
+Vertigo items
+
+* Bonobo the whole bit
 
 * tabbed panels
 
@@ -16,21 +34,5 @@ Things to do on the panel, in no particular order:
   of a launcher, like it is in say os/2 or cde (it would not be the default
   mode, but an option)
 
-* export more functionality through the CORBA interface, eventually I think
-  we should have a per panel interface so that the panels could be
-  manipulated through corba directly, we especially need to export a way to
-  launch external applets and to add the internal ones, we can also have
-  things to move panels, and to change their background
-
 * strech hint for applets so that the panel can optionally strech applets if
   it has the space and shrink em down again once it needs the space again
-
-* make it possible to set a larger size for the icons in the toplevel main
-  menu
-
-Stuff for post-GNOME 2.0:
-
-* CORBA sevice for menus, support for remote menus and put menu UI into
-  gnome-libs
-
-* rewrite the whole bit
