@@ -49,9 +49,9 @@ struct _AppletWidgetClass
 	  if you trap it make sure you do gnome_config_sync() and
 	  gnome_config_drop_all() after your done otherwise the changes
 	  might not be written to file*/
-	void (* session_save) (AppletWidget *applet,
-			       char *cfgpath,
-			       char *globcfgpath);
+	gint (* session_save) (AppletWidget *applet,
+			       gchar *cfgpath,
+			       gchar *globcfgpath);
 };
 
 guint		applet_widget_get_type		(void);
@@ -76,8 +76,8 @@ void		applet_widget_remove_from_panel (AppletWidget *applet);
    callback, help, etc... etc...
   */
 void		applet_widget_register_callback	(AppletWidget *applet,
-						 char *name,
-						 char *menutext,
+						 gchar *name,
+						 gchar *menutext,
 						 AppletCallbackFunc func,
 						 gpointer data);
 

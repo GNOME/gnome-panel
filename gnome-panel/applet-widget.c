@@ -17,6 +17,8 @@ typedef void (*AppletWidgetSaveSignal) (GtkObject * object,
 
 static GList *applet_widgets=NULL;
 
+static GtkPlugClass *parent_class;
+
 guint
 applet_widget_get_type ()
 {
@@ -83,6 +85,8 @@ applet_widget_class_init (AppletWidgetClass *class)
 
 	object_class = (GtkObjectClass*) class;
 
+	parent_class = gtk_type_class (gtk_plug_get_type ());
+
 	applet_widget_signals[CHANGE_ORIENT_SIGNAL] =
 		gtk_signal_new("change_orient",
 			       GTK_RUN_LAST,
@@ -100,7 +104,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
 			       			 session_save),
 			       gtk_applet_widget_marshal_signal_save,
-			       GTK_TYPE_NONE,
+			       GTK_TYPE_BOOL,
 			       2,
 			       GTK_TYPE_STRING,
 			       GTK_TYPE_STRING);
@@ -119,7 +123,7 @@ applet_widget_init (AppletWidget *applet_widget)
 }
 
 static gint
-applet_widget_destroy(GtkWidget *w,gpointer data)
+applet_widget_destroy(GtkWidget *w, gpointer data)
 {
 	AppletWidget *applet = APPLET_WIDGET(w);
 	if(!applet->cfgpath)
@@ -129,9 +133,8 @@ applet_widget_destroy(GtkWidget *w,gpointer data)
 	applet->cfgpath = NULL;
 	applet->globcfgpath = NULL;
 	gnome_panel_applet_cleanup(applet->applet_id);
-	if(GTK_BIN(w)->child == NULL) {
+	if(GTK_BIN(w)->child == NULL)
 		gnome_panel_applet_abort_id(applet->applet_id);
-	}
 	return FALSE;
 }
 
@@ -258,16 +261,20 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 
 	char *cfg = g_strdup(cfgpath);
 	char *globcfg = g_strdup(globcfgpath);
+	gint return_val = FALSE;
 
 	applet = applet_widget_get_by_id(applet_id);
 	if(applet) {
 		gtk_signal_emit(GTK_OBJECT(applet),
 				applet_widget_signals[
 					SESSION_SAVE_SIGNAL],
-				cfg,globcfg);
+				cfg,globcfg,&return_val);
 	}
 	g_free(cfg);
 	g_free(globcfg);
-	/*FIXME: need to implement a return type from widget!*/
-	return TRUE;
+
+	/*return_val of true would mean that the applet handeled the
+	  session saving itself, therefore we pass the reverse to the
+	  corba function*/
+	return !return_val;
 }
