@@ -1,3 +1,15 @@
+2003-05-13  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.c: (panel_toplevel_update_attached_position),
+	(panel_toplevel_update_normal_position),
+	(panel_toplevel_update_auto_hide_position),
+	(panel_toplevel_update_hidden_position), (get_delta),
+	(panel_toplevel_update_animating_position),
+	(panel_toplevel_update_position), (panel_toplevel_update_size),
+	(panel_toplevel_animation_timeout),
+	(panel_toplevel_start_animation), (panel_toplevel_instance_init):
+	Add support for animated resizing and use it for drawers.
+
 2003-05-12  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix loads of drawer bugs. Redo launcher hoarding. Don't

@@ -110,6 +110,8 @@ struct _PanelToplevelPrivate {
 	/* relative to the monitor origin */
 	int                     animation_end_x;
 	int                     animation_end_y;
+	int                     animation_end_width;
+	int                     animation_end_height;
 	GTimeVal                animation_start_time;
 	long                    animation_end_time;
 	guint                   animation_timeout;
@@ -1392,7 +1394,9 @@ static void
 panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 					 gboolean       hidden,
 					 int           *x,
-					 int           *y)
+					 int           *y,
+					 int           *w,
+					 int           *h)
 {
 	PanelOrientation  attach_orientation;
 	GdkRectangle      toplevel_box;
@@ -1427,30 +1431,38 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 					toplevel->priv->attach_toplevel);
 
 	if (attach_orientation & PANEL_HORIZONTAL_MASK)
-		*x = (attach_box.x + attach_box.width / 2)  - toplevel_box.width  / 2;
+		*x = attach_box.x + attach_box.width / 2  - toplevel_box.width  / 2;
 	else
-		*y = (attach_box.y + attach_box.height / 2) - toplevel_box.height / 2;
+		*y = attach_box.y + attach_box.height / 2 - toplevel_box.height / 2;
 
 	switch (attach_orientation) {
 	case PANEL_ORIENTATION_TOP:
-		*y = parent_box.y + parent_box.height;
-		if (hidden)
-			*y -= toplevel_box.height;
+		*y = parent_box.y;
+		if (!hidden)
+			*y += parent_box.height;
+		else
+			*h = parent_box.height;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		*y = parent_box.y;
 		if (!hidden)
 			*y -= toplevel_box.height;
+		else
+			*h = parent_box.height;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		*x = parent_box.x + parent_box.width;
-		if (hidden)
-			*x -= toplevel_box.width;
+		*x = parent_box.x;
+		if (!hidden)
+			*x += parent_box.width;
+		else
+			*w = parent_box.width;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		*x = parent_box.x;
 		if (!hidden)
 			*x -= toplevel_box.width;
+		else
+			*w = parent_box.width;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1466,7 +1478,9 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 				       int           *x,
-				       int           *y)
+				       int           *y,
+				       int           *w,
+				       int           *h)
 {
 	GtkWidget *widget;
 	int        monitor_width, monitor_height;
@@ -1475,7 +1489,7 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	g_assert (x != NULL && y != NULL);
 
 	if (toplevel->priv->attached) {
-		panel_toplevel_update_attached_position (toplevel, FALSE, x, y);
+		panel_toplevel_update_attached_position (toplevel, FALSE, x, y, w, h);
 		return;
 	}
 
@@ -1504,7 +1518,9 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 					  int           *x,
-					  int           *y)
+					  int           *y,
+					  int           *w,
+					  int           *h)
 {
 	GdkScreen *screen;
 	int        width, height;
@@ -1516,7 +1532,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	g_assert (x != NULL && y != NULL);
 
 	if (toplevel->priv->floating) {
-		panel_toplevel_update_normal_position (toplevel, x, y);
+		panel_toplevel_update_normal_position (toplevel, x, y, w, h);
 		return;
 	}
 
@@ -1586,7 +1602,9 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 static void
 panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 				       int           *x,
-				       int           *y)
+				       int           *y,
+				       int           *w,
+				       int           *h)
 {
 	int width, height;
 	int auto_hide_size;
@@ -1600,7 +1618,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 		  toplevel->priv->state == PANEL_STATE_HIDDEN_RIGHT);
 
 	if (toplevel->priv->attached) {
-		panel_toplevel_update_attached_position (toplevel, TRUE, x, y);
+		panel_toplevel_update_attached_position (toplevel, TRUE, x, y, w, h);
 		return;
 	}
 
@@ -1647,7 +1665,7 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 #include <math.h>
 
 static int
-move_step (int  src,
+get_delta (int  src,
 	   int  dest,
 	   long start_time,
 	   long end_time,
@@ -1658,25 +1676,28 @@ move_step (int  src,
 	n = cur_time - start_time;
 	d = end_time - start_time;
 
-	if (abs (src - dest) <= 1 || n >= d)
-		return dest;
+	if (abs (dest - src) <= 1 || n >= d)
+		return dest - src;
 
 	percentage = sin (M_PI * (n / d) - M_PI / 2) / 2 + 0.5;
 	percentage = sin (M_PI * percentage - M_PI / 2) / 2 + 0.5;
 
 	percentage = CLAMP (percentage, 0.0, 1.0);
 
-	return src + ((dest - src) * percentage);
+	return ((dest - src) * percentage);
 }
 
 static void
 panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 					  int           *x,
-					  int           *y)
+					  int           *y,
+					  int           *w,
+					  int           *h)
 {
 	GdkScreen *screen;
-	GTimeVal  time_val;
-	long      current_time;
+	GTimeVal   time_val;
+	long       current_time;
+	int        deltax, deltay, deltaw = -1, deltah = -1;
 
 	g_assert (x != NULL && y != NULL);
 
@@ -1685,25 +1706,51 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 	current_time =  (time_val.tv_sec - toplevel->priv->animation_start_time.tv_sec)
 					* 1000000 + time_val.tv_usec;
 
-
 	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, x, y);
 
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
+	if (toplevel->priv->animation_end_width != -1)
+		deltaw = get_delta (toplevel->priv->geometry.width,
+				    toplevel->priv->animation_end_width,
+				    toplevel->priv->animation_start_time.tv_usec,
+				    toplevel->priv->animation_end_time,
+				    current_time);
+
+	if (toplevel->priv->animation_end_height != -1)
+		deltah = get_delta (toplevel->priv->geometry.height,
+				    toplevel->priv->animation_end_height,
+				    toplevel->priv->animation_start_time.tv_usec,
+				    toplevel->priv->animation_end_time,
+				    current_time);
+
 	*x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
 	*y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
 
-	*x = move_step (*x,
-			toplevel->priv->animation_end_x,
-			toplevel->priv->animation_start_time.tv_usec,
-			toplevel->priv->animation_end_time,
-			current_time);
+	deltax = get_delta (*x,
+			    toplevel->priv->animation_end_x,
+			    toplevel->priv->animation_start_time.tv_usec,
+			    toplevel->priv->animation_end_time,
+			    current_time);
 
-	*y = move_step (*y,
-			toplevel->priv->animation_end_y,
-			toplevel->priv->animation_start_time.tv_usec,
-			toplevel->priv->animation_end_time,
-			current_time);
+	deltay = get_delta (*y,
+			    toplevel->priv->animation_end_y,
+			    toplevel->priv->animation_start_time.tv_usec,
+			    toplevel->priv->animation_end_time,
+			    current_time);
+
+	if (deltaw != -1 && abs (deltaw) > abs (deltax))
+		deltax = deltaw;
+	if (deltah != -1 && abs (deltah) > abs (deltay))
+		deltay = deltah;
+
+	*x += deltax;
+	*y += deltay;
+
+	if (deltaw != -1)
+		*w = toplevel->priv->geometry.width  + deltaw;
+	if (deltah != -1)
+		*h = toplevel->priv->geometry.height + deltah;
 
 	if (*x == toplevel->priv->animation_end_x &&
 	    *y == toplevel->priv->animation_end_y) {
@@ -1711,6 +1758,7 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
+
 	}
 }
 
@@ -1792,6 +1840,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	GtkWidget *widget;
 	GdkScreen *screen;
 	int        x, y;
+	int        w, h;
 	int        screen_width, screen_height;
 	int        monitor_width, monitor_height;
 
@@ -1834,23 +1883,30 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 			y = (monitor_height - toplevel->priv->geometry.height) / 2;
 	}
 
+	w = h = -1;
+
 	if (toplevel->priv->animating)
-		panel_toplevel_update_animating_position (toplevel, &x, &y);
+		panel_toplevel_update_animating_position (toplevel, &x, &y, &w, &h);
 
 	else if (toplevel->priv->state == PANEL_STATE_NORMAL)
-		panel_toplevel_update_normal_position (toplevel, &x, &y);
+		panel_toplevel_update_normal_position (toplevel, &x, &y, &w, &h);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
-		panel_toplevel_update_auto_hide_position (toplevel, &x, &y);
+		panel_toplevel_update_auto_hide_position (toplevel, &x, &y, &w, &h);
 
 	else 
-		panel_toplevel_update_hidden_position (toplevel, &x, &y);
+		panel_toplevel_update_hidden_position (toplevel, &x, &y, &w, &h);
 
 	x += panel_multiscreen_x (screen, toplevel->priv->monitor);
 	y += panel_multiscreen_y (screen, toplevel->priv->monitor);
 
 	toplevel->priv->geometry.x = x;
 	toplevel->priv->geometry.y = y;
+
+	if (w != -1)
+		toplevel->priv->geometry.width = w;
+	if (h != -1)
+		toplevel->priv->geometry.height = h;
 
 	panel_toplevel_update_struts (toplevel);
 	panel_toplevel_update_edges (toplevel);
@@ -1864,6 +1920,9 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 	GtkWidget *widget;
 	int        monitor_width, monitor_height;
 	int        width, height;
+
+	if (toplevel->priv->animating)
+		return;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -2608,12 +2667,14 @@ panel_toplevel_animation_timeout (PanelToplevel *toplevel)
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	if (!toplevel->priv->animating) {
-		toplevel->priv->animation_end_x = 0xdead;
-		toplevel->priv->animation_end_y = 0xdead;
+		toplevel->priv->animation_end_x              = 0xdead;
+		toplevel->priv->animation_end_y              = 0xdead;
+		toplevel->priv->animation_end_width          = 0xdead;
+		toplevel->priv->animation_end_height         = 0xdead;
 		toplevel->priv->animation_start_time.tv_sec  = 0xdead;
 		toplevel->priv->animation_start_time.tv_usec = 0xdead;
-		toplevel->priv->animation_end_time = 0xdead;
-		toplevel->priv->animation_timeout = 0;
+		toplevel->priv->animation_end_time           = 0xdead;
+		toplevel->priv->animation_timeout            = 0;
 	}
 
 	return toplevel->priv->animating;
@@ -2664,15 +2725,17 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 	int        monitor_width, monitor_height;
-	int        deltax, deltay;
+	int        deltax, deltay, deltaw = 0, deltah = 0;
 	int        cur_x = -1, cur_y = -1;
 	long       t;
 
 	screen = panel_toplevel_get_monitor_geometry (
 				toplevel, &monitor_width, &monitor_height);
 
-	toplevel->priv->animation_end_x = toplevel->priv->x;
-	toplevel->priv->animation_end_y = toplevel->priv->y;
+	toplevel->priv->animation_end_x      = toplevel->priv->x;
+	toplevel->priv->animation_end_y      = toplevel->priv->y;
+	toplevel->priv->animation_end_width  = -1;
+	toplevel->priv->animation_end_height = -1;
 
 	if (!toplevel->priv->expand) {
 		GtkWidget *widget;
@@ -2690,16 +2753,22 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	if (toplevel->priv->state == PANEL_STATE_NORMAL)
 		panel_toplevel_update_normal_position (toplevel,
 						       &toplevel->priv->animation_end_x,
-						       &toplevel->priv->animation_end_y);
+						       &toplevel->priv->animation_end_y,
+						       &toplevel->priv->animation_end_width,
+						       &toplevel->priv->animation_end_height);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
 		panel_toplevel_update_auto_hide_position (toplevel,
 							  &toplevel->priv->animation_end_x,
-							  &toplevel->priv->animation_end_y);
+							  &toplevel->priv->animation_end_y,
+							  &toplevel->priv->animation_end_width,
+							  &toplevel->priv->animation_end_height);
 	else
 		panel_toplevel_update_hidden_position (toplevel,
 						       &toplevel->priv->animation_end_x,
-						       &toplevel->priv->animation_end_y);
+						       &toplevel->priv->animation_end_y,
+						       &toplevel->priv->animation_end_width,
+						       &toplevel->priv->animation_end_height);
 
 	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, &cur_x, &cur_y);
 
@@ -2709,9 +2778,19 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	deltax = toplevel->priv->animation_end_x - cur_x;
 	deltay = toplevel->priv->animation_end_y - cur_y;
 
+	if (toplevel->priv->animation_end_width)
+		deltaw = toplevel->priv->animation_end_width -
+			GTK_WIDGET (toplevel)->requisition.width;
+	
+	if (toplevel->priv->animation_end_height)
+		deltah = toplevel->priv->animation_end_height -
+			GTK_WIDGET (toplevel)->requisition.height;
+
 	if (!deltax && !deltay) {
-		toplevel->priv->animation_end_x = -1;
-		toplevel->priv->animation_end_y = -1;
+		toplevel->priv->animation_end_x      = -1;
+		toplevel->priv->animation_end_y      = -1;
+		toplevel->priv->animation_end_width  = -1;
+		toplevel->priv->animation_end_height = -1;
 		return;
 	}
 
@@ -2719,6 +2798,9 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 
 	t = MAX (panel_toplevel_get_animation_time (toplevel, deltax),
 		 panel_toplevel_get_animation_time (toplevel, deltay));
+
+	t = MAX (t, panel_toplevel_get_animation_time (toplevel, deltaw));
+	t = MAX (t, panel_toplevel_get_animation_time (toplevel, deltah));
 
 	toplevel->priv->animation_end_time = t;
 
@@ -3598,6 +3680,8 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 
 	toplevel->priv->animation_end_x              = 0;
 	toplevel->priv->animation_end_y              = 0;
+	toplevel->priv->animation_end_width          = 0;
+	toplevel->priv->animation_end_height         = 0;
 	toplevel->priv->animation_start_time.tv_sec  = 0;
 	toplevel->priv->animation_start_time.tv_usec = 0;
 	toplevel->priv->animation_end_time           = 0;
