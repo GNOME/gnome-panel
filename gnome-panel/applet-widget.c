@@ -194,8 +194,6 @@ applet_widget_new_with_param(const gchar *param)
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
 
-	g_free(myinvoc);
-
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
 
 	GTK_PLUG(applet)->socket_window = gdk_window_foreign_new (winid);

@@ -134,26 +134,7 @@ void applet_add_callback(gint applet_id,
 void applet_set_tooltip(gint applet_id, const char *tooltip);
 void applet_remove_from_panel(gint applet_id);
 
-/*multi applet que functions*/
-
-gint mulapp_is_in_queue(const gchar *path);
-
-/*if the parent is already in queue, load the applet or add the param,
-  into a queue*/
-void mulapp_load_or_add_to_queue(const gchar *path,const gchar *param);
-
-void mulapp_add_to_queue(const gchar *path);
-
-/*exec queue done function from main.c*/
-void exec_queue_done(gint applet_id);
-
-
 extern char *cookie;
-
-/*this is in main.c*/
-void load_applet(char *id, char *path, char *params,
-		 int pos, int panel, char *cfgpath);
-void orientation_change(gint applet_id, PanelWidget *panel);
 
 #define get_applet_info(applet_id) \
 	((applet_id>=0 && applet_id<applet_count) ? \

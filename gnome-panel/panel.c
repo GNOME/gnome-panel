@@ -16,6 +16,7 @@
 #include "panel.h"
 #include "menu.h"
 #include "launcher.h"
+#include "mulapp.h"
 #include "mico-glue.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
@@ -26,7 +27,6 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-/*extern GList *panels;*/
 extern GArray *applets;
 extern gint applet_count;
 
@@ -44,133 +44,6 @@ extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
 extern gint main_menu_count;
-
-/*multiple applet load queue*/
-typedef struct _MultiLoadQueue MultiLoadQueue;
-struct _MultiLoadQueue {
-	gchar *path;
-	gchar *ior;
-	GList *params;
-};
-static GList *multiple_applet_load_queue=NULL;
-
-static gint
-is_applet_running(const gchar *path)
-{
-	gint i;
-	AppletInfo *info;
-
-	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
-		if((info->type == APPLET_EXTERN ||
-		    info->type == APPLET_EXTERN_PENDING ||
-		    info->type == APPLET_EXTERN_RESERVED) &&
-		   strcmp(info->path,path)==0) {
-		   	return TRUE;
-		}
-	}
-	return FALSE;
-}
-
-static void
-mulapp_remove_emptyfrom_queue(void)
-{
-	GList *list;
-	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
-		MultiLoadQueue *mq = list->data;
-		if(!is_applet_running(mq->path)) {
-			multiple_applet_load_queue =
-				g_list_remove_link(multiple_applet_load_queue,
-						   list);
-			if(mq->params) g_warning("Whoops! there were applets "
-						 "to be started while the "
-						 "main one disappeared, this "
-						 "should never happen and "
-						 "most likely indicates a bug");
-
-			g_free(mq->path);
-			if(mq->ior) g_free(mq->ior);
-			g_free(mq);
-			/*since we should restart the loop now*/
-			mulapp_remove_emptyfrom_queue();
-			return;
-		}
-	}
-}
-
-gint
-mulapp_is_in_queue(const gchar *path)
-{
-	GList *list;
-	mulapp_remove_emptyfrom_queue();
-	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
-		MultiLoadQueue *mq = list->data;
-		if(strcmp(mq->path,path)==0)
-			return TRUE;
-	}
-	return FALSE;
-}
-
-/*if the parent is already in queue, load the applet or add the param,
-  into a queue*/
-void
-mulapp_load_or_add_to_queue(const gchar *path,const gchar *param)
-{
-	GList *list;
-	mulapp_remove_emptyfrom_queue();
-
-	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
-		MultiLoadQueue *mq = list->data;
-		if(strcmp(mq->path,path)==0) {
-			if(mq->ior)
-				send_applet_start_new_applet(mq->ior,param);
-			else
-				mq->params = g_list_prepend(mq->params,
-							    g_strdup(param));
-			return;
-		}
-	}
-}
-
-void
-mulapp_add_to_queue(const gchar *path)
-{
-	MultiLoadQueue *mq;
-
-	mq = g_new(MultiLoadQueue,1);
-	mq->path = g_strdup(path);
-	mq->ior = NULL;
-	mq->params = NULL;
-	multiple_applet_load_queue = g_list_prepend(multiple_applet_load_queue,
-				                    mq);
-}
-
-static void
-mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior)
-{
-	GList *list;
-	mulapp_remove_emptyfrom_queue();
-	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
-		MultiLoadQueue *mq = list->data;
-		if(strcmp(mq->path,path)==0) {
-			GList *li;
-			if(mq->ior && strcmp(mq->ior,ior)!=0)
-				g_warning("What? there already was an applet "
-					  "before with different IOR?");
-			else
-				mq->ior = g_strdup(ior);
-			if(!mq->params)
-				return;
-			for(li=mq->params;li!=NULL;li=g_list_next(li)) {
-				gchar *param = li->data;
-				send_applet_start_new_applet(mq->ior,param);
-				g_free(param);
-			}
-			g_list_free(mq->params);
-			mq->params = NULL;
-			return;
-		}
-	}
-}
 
 void
 apply_global_config(void)
@@ -608,7 +481,7 @@ panel_clean_applet(gint applet_id)
 		info->user_menu = g_list_remove_link(info->user_menu,
 						     info->user_menu);
 	}
-	mulapp_remove_emptyfrom_queue();
+	mulapp_remove_empty_from_list();
 }
 
 static void
@@ -952,8 +825,8 @@ applet_request_id (const char *path, const char *param,
 			*globcfgpath = g_strdup(old_panel_cfg_path);
 			info->type = APPLET_EXTERN_RESERVED;
 			*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
-			if(!dorestart && !mulapp_is_in_queue(path))
-				mulapp_add_to_queue(path);
+			if(!dorestart && !mulapp_is_in_list(path))
+				mulapp_add_to_list(path);
 
 			return i;
 		}
@@ -970,8 +843,8 @@ applet_request_id (const char *path, const char *param,
 	*globcfgpath = g_strdup(old_panel_cfg_path);
 
 	info = get_applet_info(applet_count-1);
-	if(!dorestart && !mulapp_is_in_queue(path))
-		mulapp_add_to_queue(path);
+	if(!dorestart && !mulapp_is_in_list(path))
+		mulapp_add_to_list(path);
 
 	return i;
 }

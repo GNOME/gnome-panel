@@ -58,6 +58,7 @@ panel_SOURCES = 		\
 	gdkextra.c		\
 	gdkextra.h		\
 	main.c			\
+	main.h			\
 	menu.c  		\
 	cookie.c		\
 	menu.h  		\
@@ -76,6 +77,8 @@ panel_SOURCES = 		\
 	panel-widget.c  	\
 	panel-widget.h		\
 	panel-util.c		\
+	mulapp.c		\
+	mulapp.h		\
 	launcher.c		\
 	launcher.h		\
 	logout.c		\

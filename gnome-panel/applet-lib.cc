@@ -299,8 +299,8 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 /*id will return a unique id for this applet for the applet to identify
   itself as*/
 char *
-gnome_panel_applet_request_id (char *path,
-			       char *param,
+gnome_panel_applet_request_id (const char *path,
+			       const char *param,
 			       int dorestart,
 			       int *applet_id,
 			       char **cfgpath,

@@ -18,6 +18,7 @@
 #include "drawer.h"
 #include "swallow.h"
 #include "logout.h"
+#include "mulapp.h"
 #include "mico-glue.h"
 #include "mico-parse.h"
 #include "panel-util.h"
@@ -25,7 +26,8 @@
 
 #include "cookie.h"
 
-/*GList *panels = NULL;*/
+#include "main.h"
+
 GArray *applets;
 gint applet_count;
 
@@ -141,12 +143,12 @@ really_exec_prog(gint applet_id, gchar *path, gchar *param)
 {
 	/*check if this is an applet which is a multi applet and
 	  has something already loaded*/
-	if(mulapp_is_in_queue(path)) {
-		puts("multi applet, just contacting existing applet");
+	if(mulapp_is_in_list(path)) {
 		mulapp_load_or_add_to_queue(path,param);
 		return TRUE;
 	}  else {
 		AppletChild *child;
+
 
 		child = g_new(AppletChild,1);
 
@@ -205,6 +207,8 @@ exec_queue_start_next(void)
 	} while(ret);
 }
 
+/* this applet has finished loading, if it was the one we were waiting
+   on, start the next applet */
 void
 exec_queue_done(gint applet_id)
 {
@@ -300,7 +304,6 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 			fullpath = get_full_path(path);
 		else
 			fullpath = g_strdup(path);
-	
 
 		if(reserve_applet_spot (id_str, fullpath,params,
 					panel, pos, cfgpath,
