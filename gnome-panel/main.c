@@ -486,8 +486,8 @@ main(int argc, char **argv)
 	Bonobo_RegistrationResult reg_res;
 	char *message = NULL;
 	
-	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
-	textdomain (PACKAGE);
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	textdomain (GETTEXT_PACKAGE);
 
 	gnome_program_init ("panel", VERSION,
 			    LIBGNOMEUI_MODULE,

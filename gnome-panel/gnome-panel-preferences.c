@@ -1249,8 +1249,8 @@ setup_the_ui(GtkWidget *capplet)
 int
 main (int argc, char **argv)
 {
-	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
-	textdomain(PACKAGE);
+	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	textdomain(GETTEXT_PACKAGE);
 
 	changing = TRUE;
 

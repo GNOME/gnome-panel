@@ -213,6 +213,7 @@ panel_headers = \
 	extern.h  		\
 	panel-applet-frame.h	\
 	quick-desktop-reader.h	\
+	panel-shell.h		\
 	$(NULL)
 
 panel_2_SOURCES = \
@@ -239,6 +240,7 @@ EXTRA_DIST = \
 	gnome-panel-screenshot.glade	\
 	gnome-panel-screenshot.glade.h	\
 	$(schema_DATA)			\
+	panel-marhsal.list		\
 	libpanelapplet-2.0.pc.in
 
 gladedir = $(datadir)/gnome/panel

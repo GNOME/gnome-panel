@@ -46,8 +46,8 @@ main (int argc, char **argv)
 	const char *arg;
 	GNOME_Panel2 panel_client = CORBA_OBJECT_NIL;
 
-	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
-	textdomain (PACKAGE);
+	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+	textdomain (GETTEXT_PACKAGE);
 
 	CORBA_exception_init(&ev);
 
