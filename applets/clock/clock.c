@@ -166,7 +166,8 @@ computer_clock_update_func (ClockData * cd,
 	struct tm *tm;
 	GString *gs = g_string_new("");
 	char date[256], hour[256], tooltip[256];
-
+	char *utf8;
+	
 	cc = g_object_get_data (G_OBJECT (cd->clockw), "cc");
 
 	if (cd->gmt_time)
@@ -256,8 +257,12 @@ computer_clock_update_func (ClockData * cd,
 		g_string_free (gs, TRUE);
 		gs = gst;
 	}
-	gtk_label_set_text (GTK_LABEL (cc->time), gs->str);
+
+	utf8 = g_locale_to_utf8 (gs->str, -1, NULL, NULL, NULL);
+
+	gtk_label_set_text (GTK_LABEL (cc->time), utf8);
 	g_string_free (gs, TRUE);
+	g_free (utf8);
 }
 
 static void
