@@ -1,14 +1,16 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 module GNOME {
-	interface control_panel {
-		/* requests an ID on the panel */
-		short cpo_request_id(in string cookie);
-		void cpo_register(in string ior,
-				     in short cpo_id);
-		void quit (in string cookie);
+	interface caplet {
+                void try();
+                void revert();
+                void ok ();
+                void cancel ();
+                void help ();
 	};
-        /* functions for the control-panel to call on the objects */
-	interface control_panel_object {
+	interface control_center {
+		/* requests an ID on the panel */
+                void state_change (in short id);
+		void quit (in short id);
 	};
 };
 
