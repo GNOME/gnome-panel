@@ -531,7 +531,17 @@ panel_session_save (gpointer client_data,
 
 	num = 0;
 	gnome_config_clean_section("/panel/Applets");
-	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed), save_applet_configuration, &num);
+	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+			      save_applet_configuration, &num);
+
+	gnome_config_set_int("/panel/Config/position",the_panel->pos);
+	gnome_config_set_int("/panel/Config/mode",the_panel->mode);
+	gnome_config_set_int("/panel/Config/step_size",the_panel->step_size);
+	gnome_config_set_int("/panel/Config/delay",the_panel->delay);
+	gnome_config_set_int("/panel/Config/minimize_delay",
+			     the_panel->minimize_delay);
+	gnome_config_set_int("/panel/Config/minimized_size",
+			     the_panel->minimized_size);
 	gnome_config_sync();
 
 	gdk_cursor_destroy(fleur_cursor);
@@ -748,11 +758,24 @@ panel_is_spot_clean(GtkWidget *widget, gint x, gint y, gint width,
 static void
 fix_coordinates_to_limits(int *x,int *y, int width, int height)
 {
-	if ((*x + width) > the_panel->fixed->allocation.width)
-		*x = the_panel->fixed->allocation.width - width;
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			if ((*x+width) > the_panel->fixed->allocation.width)
+				*x=the_panel->fixed->allocation.width-width;
 
-	if ((*y + height) > the_panel->fixed->allocation.height)
-		*y = the_panel->fixed->allocation.height - height;
+			if ((*y+height) > the_panel->window->allocation.height)
+				*y=the_panel->window->allocation.height-height;
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			if ((*x+width) > the_panel->window->allocation.width)
+				*x=the_panel->window->allocation.width-width;
+
+			if ((*y+height) > the_panel->fixed->allocation.height)
+				*y=the_panel->fixed->allocation.height-height;
+			break;
+	}
 
 	if (*x < 0)
 		*x = 0;
@@ -990,8 +1013,7 @@ set_panel_position(void)
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
 		      get_max_applet_height,
 		      &height);
-	printf("max width: %d, max height: %d\n",width,height);
-	
+
 	switch (the_panel->pos) {
 		case PANEL_POS_TOP:
 			gtk_widget_set_usize(the_panel->window,
@@ -1037,14 +1059,6 @@ set_panel_position(void)
 			break;
 	}
 	gtk_widget_size_allocate(the_panel->window,&newalloc);
-	printf("window: %d,%d %dx%d\n",the_panel->window->allocation.x,
-		the_panel->window->allocation.y,
-		the_panel->window->allocation.width,
-		the_panel->window->allocation.height);
-	printf("fixed: %d,%d %dx%d\n",the_panel->fixed->allocation.x,
-		the_panel->fixed->allocation.y,
-		the_panel->fixed->allocation.width,
-		the_panel->fixed->allocation.height);
 }
 
 
@@ -1056,23 +1070,28 @@ panel_init(void)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
+	char buf[256];
 
 	the_panel = g_new(Panel, 1);
 
 	the_panel->window = gtk_window_new(GTK_WINDOW_POPUP);
 
 
-	/*FIXME: read this from config file*/
-	/*the_panel->pos   = PANEL_POS_RIGHT;*/
-	the_panel->pos   = PANEL_POS_BOTTOM;
 	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	/* the_panel->mode  = PANEL_STAYS_PUT; */
-	the_panel->step_size            = DEFAULT_STEP_SIZE;
-	the_panel->delay                = DEFAULT_DELAY;
-	the_panel->minimize_delay       = DEFAULT_MINIMIZE_DELAY;
-	the_panel->minimized_size       = DEFAULT_MINIMIZED_SIZE;
 	the_panel->applet_being_dragged = NULL;
+
+	sprintf(buf,"/panel/Config/position=%d",PANEL_POS_BOTTOM);
+	the_panel->pos=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/mode=%d",PANEL_GETS_HIDDEN);
+	the_panel->mode=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/step_size=%d",DEFAULT_STEP_SIZE);
+	the_panel->step_size=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/delay=%d",DEFAULT_DELAY);
+	the_panel->delay=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/minimize_delay=%d",DEFAULT_MINIMIZE_DELAY);
+	the_panel->minimize_delay=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/minimized_size=%d",DEFAULT_MINIMIZED_SIZE);
+	the_panel->minimized_size=gnome_config_get_int(buf);
 
 
 	the_panel->table = gtk_table_new(3,3,FALSE);
@@ -1478,47 +1497,66 @@ panel_change_orient(void)
 		      swap_applet_coords,NULL);
 }
 
+static void
+fix_an_applet_foreach(GtkWidget *applet, gpointer data)
+{
+	gint x,y,width,height;
+
+	get_applet_geometry(applet, &x, &y, &width, &height);
+
+	/*swap the coordinates around*/
+	fix_coordinates_to_limits(&x,&y,width,height);
+	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, x, y);
+	fix_an_applet(applet,x,y);
+}
+
+static void
+panel_fix_all_applets(void)
+{
+	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+		      fix_an_applet_foreach,NULL);
+}
+
 void
 panel_reconfigure(Panel *newconfig)
 {
+	int oldpos;
+
 	if(the_panel->mode==PANEL_GETS_HIDDEN) {
 		the_panel->step_size=0;
 		pop_up();
-	}
-	if(newconfig->pos != the_panel->pos) {
-		switch (the_panel->pos) {
-			case PANEL_POS_TOP:
-				the_panel->pos=newconfig->pos;
-				set_panel_position();
-				if(newconfig->pos!=PANEL_POS_BOTTOM)
-					panel_change_orient();
-				break;
-			case PANEL_POS_BOTTOM:
-				the_panel->pos=newconfig->pos;
-				set_panel_position();
-				if(newconfig->pos!=PANEL_POS_TOP)
-					panel_change_orient();
-				break;
-			case PANEL_POS_LEFT:
-				the_panel->pos=newconfig->pos;
-				set_panel_position();
-				if(newconfig->pos!=PANEL_POS_RIGHT)
-					panel_change_orient();
-				break;
-			case PANEL_POS_RIGHT:
-				the_panel->pos=newconfig->pos;
-				set_panel_position();
-				if(newconfig->pos!=PANEL_POS_LEFT)
-					panel_change_orient();
-				break;
-		}
 	}
 	/*the set panel position will make it shown, this may change!
 	  it would require more work to keep the state to be persistent
 	  accross sessions or even reconfigurations*/
 	the_panel->state=PANEL_SHOWN;
 	the_panel->mode=newconfig->mode;
+	oldpos=the_panel->pos;
+	the_panel->pos=newconfig->pos;
+	set_panel_position();
 	set_show_hide_buttons_visibility();
+	if(newconfig->pos != oldpos) {
+		switch (the_panel->pos) {
+			case PANEL_POS_TOP:
+				if(newconfig->pos!=PANEL_POS_BOTTOM)
+					panel_change_orient();
+				break;
+			case PANEL_POS_BOTTOM:
+				if(newconfig->pos!=PANEL_POS_TOP)
+					panel_change_orient();
+				break;
+			case PANEL_POS_LEFT:
+				if(newconfig->pos!=PANEL_POS_RIGHT)
+					panel_change_orient();
+				break;
+			case PANEL_POS_RIGHT:
+				if(newconfig->pos!=PANEL_POS_LEFT)
+					panel_change_orient();
+				break;
+		}
+	} else {
+		panel_fix_all_applets();
+	}
 	the_panel->step_size=newconfig->step_size;
 	the_panel->delay=newconfig->delay;
 	the_panel->minimize_delay=newconfig->minimize_delay;
