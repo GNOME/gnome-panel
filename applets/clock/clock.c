@@ -754,6 +754,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 						 NULL);
 
 	gtk_dialog_set_has_separator (GTK_DIALOG (cd->props), FALSE);
+	gtk_dialog_set_default_response (GTK_DIALOG (cd->props), GTK_RESPONSE_CLOSE);
 		
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 	                                  "gnome-clock.png", TRUE, NULL);
