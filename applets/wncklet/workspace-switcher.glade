@@ -3,7 +3,7 @@
 
 <glade-interface>
   <widget class="GtkDialog" id="pager_properties_dialog">
-    <property name="title" translatable="yes">Workspace List Properties</property>
+    <property name="title" translatable="yes">Workspace Switcher Properties</property>
     <property name="type">GTK_WINDOW_TOPLEVEL</property>
     <property name="modal">no</property>
     <property name="allow_shrink">no</property>
@@ -56,13 +56,13 @@
         <child>
           <widget class="GtkHBox" id="hbox1">
             <property name="border_width">8</property>
-            <property name="homogeneous">yes</property>
+            <property name="homogeneous">no</property>
             <property name="spacing">8</property>
             <property name="visible">yes</property>
 
             <child>
               <widget class="GtkFrame" id="frame2">
-                <property name="label" translatable="yes">Workspace List</property>
+                <property name="label" translatable="yes">Workspace Switcher</property>
                 <property name="label_xalign">0</property>
                 <property name="shadow">GTK_SHADOW_ETCHED_IN</property>
                 <property name="visible">yes</property>
@@ -172,7 +172,7 @@
                     <child>
                       <widget class="GtkCheckButton" id="workspace_name_toggle">
                         <property name="can_focus">yes</property>
-                        <property name="label" translatable="yes">Show workspace _names in workspace list</property>
+                        <property name="label" translatable="yes">Show workspace _names in the switcher</property>
                         <property name="active">no</property>
                         <property name="draw_indicator">yes</property>
                         <property name="visible">yes</property>
@@ -193,7 +193,7 @@
                     <child>
                       <widget class="GtkRadioButton" id="current_only_radio">
                         <property name="can_focus">yes</property>
-                        <property name="label" translatable="yes">Show only _current workspace in workspace list</property>
+                        <property name="label" translatable="yes">Show only the _current workspace</property>
                         <property name="active">no</property>
                         <property name="draw_indicator">yes</property>
                         <property name="visible">yes</property>
