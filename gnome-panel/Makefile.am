@@ -266,7 +266,7 @@ entries_in_files = panel-default-setup.entries.in
 entries_DATA     = $(entries_in_files:.entries.in=.entries)
 
 %.entries: %.entries.in
-	sed "s,@DATADIR@,$(datadir),g" $< > $@
+	sed -e "s|\@DATADIR\@|$(datadir)|" $< > $@
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
