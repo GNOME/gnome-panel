@@ -56,8 +56,6 @@ typedef struct {
 	GHashTable   *window_hash;
 
 	int           size;
-
-	GnomeIconTheme *icon_theme;
 } WindowMenu;
 
 static void window_menu_connect_to_window (WindowMenu *window_menu,
@@ -127,10 +125,7 @@ window_menu_about (BonoboUIComponent *uic,
                 "Sun GNOME Documentation Team <gdocteam@sun.com>",
                 NULL 
         };
-	const char *translator_credits = _("translator_credits");
-
-	GdkPixbuf        *pixbuf = NULL;
-	char             *file;
+	const char *translator_credits = _("translator-credits");
 
 	if (window_menu->about_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
@@ -139,30 +134,26 @@ window_menu_about (BonoboUIComponent *uic,
 		return;
 	}
 
-	file = gnome_icon_theme_lookup_icon (window_menu->icon_theme,
-					     "panel-window-menu",
-					     48, NULL, NULL);
-	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-	g_free (file);
-
-	window_menu->about_dialog = gnome_about_new (_("Window Selector"), VERSION,
-				 "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
-				 "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
-				 "Copyright \xc2\xa9 2000 Helix Code, Inc.",
-				 _("The Window Selector shows a list of all windows and lets you browse them."),
-				 authors,
-				 documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 pixbuf);
+	window_menu->about_dialog = gtk_about_dialog_new ();
+	g_object_set (window_menu->about_dialog,
+		      "name",  _("Workspace Selector"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
+				   "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
+				   "Copyright \xc2\xa9 2000 Helix Code, Inc.",
+		      "comments", _("The Window Selector shows a list of all windows and lets you browse them."),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "panel-window-menu",
+		      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (window_menu->about_dialog), "window-menu", "WindowMenu");
 	gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
 			       gtk_widget_get_screen (window_menu->applet));
 
-	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (window_menu->about_dialog), pixbuf);
-		g_object_unref (pixbuf);
-	}
+	gtk_window_set_icon_name (GTK_WINDOW (window_menu->about_dialog),
+				  "panel-window-menu"); 
 
 	g_signal_connect (window_menu->about_dialog, "destroy",
 			  (GCallback) gtk_widget_destroyed, &window_menu->about_dialog);
@@ -188,10 +179,6 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->icon_pixbuf)
 		g_object_unref (window_menu->icon_pixbuf);
 	window_menu->icon_pixbuf = NULL;
-
-	if (window_menu->icon_theme)
-		g_object_unref (window_menu->icon_theme);
-        window_menu->icon_theme = NULL;
 
 	if (window_menu->about_dialog) {
 		gtk_widget_destroy (window_menu->about_dialog);
@@ -769,8 +756,6 @@ window_menu_applet_fill (PanelApplet *applet)
 	set_tooltip (window_menu->applet, _("Window Selector"));
  
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
-
-        window_menu->icon_theme = gnome_icon_theme_new ();
 
 	g_signal_connect (window_menu->applet, "destroy",
 			  G_CALLBACK (window_menu_destroy), window_menu);

@@ -490,9 +490,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      PagerData         *pager,
 		      const gchar       *verbname)
 {
-	GdkPixbuf *pixbuf = NULL;
-	gchar *file;
-	
 	static const gchar *authors[] =
 	{
 		"Alexander Larsson <alla@lysator.liu.se>",
@@ -503,7 +500,7 @@ display_about_dialog (BonoboUIComponent *uic,
                 "Sun GNOME Documentation Team <gdocteam@sun.com>",
                 NULL
 	};
-	const char *translator_credits = _("translator_credits");
+	const char *translator_credits = _("translator-credits");
 
 	if (pager->about) {
 		gtk_window_set_screen (GTK_WINDOW (pager->about),
@@ -512,27 +509,23 @@ display_about_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-workspace.png", TRUE, NULL);
-	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-	g_free(file);
+	pager->about = gtk_about_dialog_new ();
+	g_object_set (pager->about,
+		      "name",  _("Workspace Switcher"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
+		      "comments", _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "gnome-workspace",
+		      NULL);
 
-	pager->about = gnome_about_new (_("Workspace Switcher"), VERSION,
-				 "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-				 _("The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."),
-				 authors,
-				 documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 pixbuf);
-	
 	gtk_window_set_wmclass (GTK_WINDOW (pager->about), "pager", "Pager");
 	gtk_window_set_screen (GTK_WINDOW (pager->about),
 			       gtk_widget_get_screen (pager->applet));
 
-	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (pager->about), pixbuf);
-		g_object_unref (pixbuf);
-	}
-	
+	gtk_window_set_icon_name (GTK_WINDOW (pager->about), "gnome-workspace"); 
 	g_signal_connect (G_OBJECT(pager->about), "destroy",
 			  (GCallback)gtk_widget_destroyed, &pager->about);
 	
@@ -904,8 +897,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
-	gnome_window_icon_set_from_file (GTK_WINDOW (pager->properties_dialog),
-	                                 GNOME_ICONDIR "/gnome-workspace.png");
+	gtk_window_set_icon_name (GTK_WINDOW (pager->properties_dialog),
+	                          "gnome-workspace");
 	gtk_window_set_screen (GTK_WINDOW (pager->properties_dialog),
 			       gtk_widget_get_screen (pager->applet));
 	gtk_window_present (GTK_WINDOW (pager->properties_dialog));

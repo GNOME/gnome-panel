@@ -789,9 +789,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      TasklistData      *tasklist,
 		      const gchar       *verbname)
 {
-	GdkPixbuf *pixbuf = NULL;
-	gchar *file;
-	
 	static const gchar *authors[] =
 	{
 		"Alexander Larsson <alla@lysator.liu.se>",
@@ -801,38 +798,33 @@ display_about_dialog (BonoboUIComponent *uic,
 		"Sun GNOME Documentation Team <gdocteam@sun.com>",
 		NULL
 	};
-	const char *translator_credits = _("translator_credits");
+	const char *translator_credits = _("translator-credits");
 
 	if (tasklist->about) {
 		gtk_window_set_screen (GTK_WINDOW (tasklist->about),
 				       gtk_widget_get_screen (tasklist->applet));
-		gtk_widget_show (tasklist->about);
 		gtk_window_present (GTK_WINDOW (tasklist->about));
 		return;
 	}
 
-	file = gnome_icon_theme_lookup_icon (tasklist->icon_theme,
-					     "panel-window-list",
-					     48, NULL, NULL);
-	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-	g_free(file);
+	tasklist->about = gtk_about_dialog_new ();
+	g_object_set (tasklist->about,
+		      "name",  _("Workspace List"),
+		      "version", VERSION,
+		      "copyright", "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
+		      "comments", _("The Window List shows a list of all windows and lets you browse them."),
+		      "authors", authors,
+		      "documenters", documenters,
+		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+		      "logo_icon_name", "panel-window-list",
+		      NULL);
 
-	tasklist->about = gnome_about_new (_("Window List"), VERSION,
-				 "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
-				 _("The Window List shows a list of all windows and lets you browse them."),
-				 authors,
-				 documenters,
-				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-				 pixbuf);
-	
 	gtk_window_set_wmclass (GTK_WINDOW (tasklist->about), "tasklist", "Tasklist");
 	gtk_window_set_screen (GTK_WINDOW (tasklist->about),
 			       gtk_widget_get_screen (tasklist->applet));
 
-	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (tasklist->about), pixbuf);
-		g_object_unref (pixbuf);
-	}
+	gtk_window_set_icon_name (GTK_WINDOW (tasklist->about),
+				  "panel-window-list"); 
 	
 	g_signal_connect (G_OBJECT(tasklist->about), "destroy",
 			  (GCallback)gtk_widget_destroyed, &tasklist->about);
@@ -1063,8 +1055,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   TasklistData      *tasklist,
 			   const gchar       *verbname)
 {
-	gchar *window_icon;
-
 	if (tasklist->properties_dialog == NULL) {
 		GladeXML  *xml;
 
@@ -1079,13 +1069,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
-	window_icon = gnome_icon_theme_lookup_icon (tasklist->icon_theme,
-						    "panel-window-list",
-						    48, NULL, NULL);
-	if (window_icon) {
-		gnome_window_icon_set_from_file (GTK_WINDOW (tasklist->properties_dialog), window_icon);
-		g_free (window_icon);
-	}
+	gtk_window_set_icon_name (GTK_WINDOW (tasklist->properties_dialog),
+				  "panel-window-list"); 
 
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),

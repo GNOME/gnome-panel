@@ -453,7 +453,7 @@ display_about_dialog (BonoboUIComponent *uic,
         };
 
         /* Translator credits */
-        const char *translator_credits = _("translator_credits");
+        const char *translator_credits = _("translator-credits");
 
         if (sdd->about_dialog) {
                 gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
@@ -462,13 +462,17 @@ display_about_dialog (BonoboUIComponent *uic,
                 return;
         }
 
-        sdd->about_dialog = gnome_about_new (_("Show Desktop Button"), VERSION,
-                                 "Copyright \xc2\xa9 2002 Red Hat, Inc.",
-                                 _("This button lets you hide all windows and show the desktop"),
-                                 authors,
-                                 documenters,
-                                 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-                                 sdd->icon);
+        sdd->about_dialog = gtk_about_dialog_new ();
+        g_object_set (sdd->about_dialog,
+                      "name",  _("Show Desktop Button"),
+                      "version", VERSION,
+                      "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
+                      "comments", _("This button lets you hide all windows and show the desktop."),
+                      "authors", authors,
+                      "documenters", documenters,
+                      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+                      "logo", sdd->icon,
+                      NULL);
 
         gtk_window_set_wmclass (GTK_WINDOW (sdd->about_dialog), "show-desktop", "show-desktop");
         gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
