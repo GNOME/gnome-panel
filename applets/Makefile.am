@@ -10,7 +10,7 @@ esdmanager =
 endif
 
 if HAVE_LIBGTOP
-libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload netload
+libgtop_SUBDIRS = cpumemusage diskusage multiload netload
 else
 libgtop_SUBDIRS =
 endif
