@@ -512,6 +512,14 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
+launcher_changed (GtkObject *dedit, gpointer data)
+{
+	Launcher *launcher = data;
+
+	properties_apply (launcher);
+}
+
+static void
 window_response (GtkWidget *w, int response, gpointer data)
 {
 	Launcher *launcher = data;
@@ -519,19 +527,31 @@ window_response (GtkWidget *w, int response, gpointer data)
 	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("launchers", NULL);
 	} else if (response == REVERT_BUTTON) { /* revert */
+		if (launcher->ditem != NULL)
+			gnome_desktop_item_unref (launcher->ditem);
+		launcher->ditem = gnome_desktop_item_copy (launcher->revert_ditem);
+
+		/* We want to ignore the "changed" signal first */ 
+		g_signal_handlers_disconnect_by_func (
+				   G_OBJECT (GNOME_DITEM_EDIT(launcher->dedit)),
+				   G_CALLBACK(launcher_changed),
+				   launcher);
+
 		gnome_ditem_edit_set_ditem (GNOME_DITEM_EDIT (launcher->dedit),
 					    launcher->revert_ditem);
+
+		/* connect the launcher_changed () callback for the "changed"
+		 * signal again
+		 */
+		g_signal_connect (G_OBJECT (launcher->dedit), "changed",
+				    G_CALLBACK (launcher_changed),
+				    launcher);
+
+		properties_apply (launcher);
+
 	} else {
 		gtk_widget_destroy (w);
 	}
-}
-
-static void
-launcher_changed (GtkObject *dedit, gpointer data)
-{
-	Launcher *launcher = data;
-
-	properties_apply (launcher);
 }
 
 static GtkWidget *
