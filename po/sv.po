@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-20 15:09+0200\n"
-"PO-Revision-Date: 2002-07-20 15:10+0200\n"
+"POT-Creation-Date: 2002-07-23 13:27+0200\n"
+"PO-Revision-Date: 2002-07-23 13:28+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,9 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -928,9 +930,7 @@ msgstr "Kan inte skapa panelprogram!\n"
 msgid "Properties..."
 msgstr "Egenskaper..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Hjälp"
 
@@ -1078,12 +1078,12 @@ msgstr "GNOME-panelskalet"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Flytta"
+msgid "_Move"
+msgstr "_Flytta"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Ta bort från panelen"
+msgid "_Remove From Panel"
+msgstr "_Ta bort från panelen"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1198,44 +1198,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-meny"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "Storlek och position"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "Verktygstips/Namn"
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "Ikon"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "Utseende på panelprogram"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "Lådhandtag"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "Visa döljknapp"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "Visa pil på döljknappen"
 
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Egenskaper"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Egenskaper"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1269,8 +1269,7 @@ msgstr "Skärmdump..."
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
@@ -1751,16 +1750,20 @@ msgstr "Lås skärmen"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Aktivera skärmsläckare"
+msgid "_Activate Screensaver"
+msgstr "_Aktivera skärmsläckare"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "_Lås skärmen"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Döda skärmsläckardemon"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Döda skärmsläckardemon"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Starta om skärmsläckardemon"
+msgid "Restart _Screensaver Daemon"
+msgstr "Starta om _skärmsläckardemon"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1952,6 +1955,10 @@ msgstr "Lägg till detta som en meny på panelen"
 msgid "Add new item to this menu"
 msgstr "Lägg till ett nytt menyval"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Egenskaper"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2101,10 +2108,6 @@ msgstr "_Ta bort denna panel"
 msgid "_Add to Panel"
 msgstr "_Lägg till i panelen"
 
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Egenskaper"
-
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "_Ny panel"
@@ -2181,7 +2184,7 @@ msgstr "Kan inte registrera styrwidget\n"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Undantag från popup_menu \"%s\"\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2198,11 +2201,11 @@ msgstr ""
 "(Om du väljer att inte starta om det nu kan du alltid lägga till det genom "
 "att högerklicka på panelen och klicka på undermenyn \"Lägg till i panelen\")"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan inte få AppletShell-gränssnitt från kontroll\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
