@@ -52,6 +52,8 @@
 #include "panel-applet-marshal.h"
 #include "panel-applet-enums.h"
 
+#define PANEL_APPLET_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET, PanelAppletPrivate))
+
 struct _PanelAppletPrivate {
 	PanelAppletShell           *shell;
 	BonoboControl              *control;
@@ -384,9 +386,6 @@ panel_applet_finalize (GObject *object)
 	if (applet->priv->closure)
 		g_closure_unref (applet->priv->closure);
 	applet->priv->closure = NULL;
-
-	g_free (applet->priv);
-	applet->priv = NULL;
 
 	parent_class->finalize (object);
 }
@@ -1274,8 +1273,7 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 }
 
 static void
-panel_applet_class_init (PanelAppletClass *klass,
-			 gpointer          dummy)
+panel_applet_class_init (PanelAppletClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkObjectClass *object_class = (GtkObjectClass *) klass;
@@ -1294,6 +1292,8 @@ panel_applet_class_init (PanelAppletClass *klass,
 	widget_class->realize = panel_applet_realize;
 
 	gobject_class->finalize = panel_applet_finalize;
+
+	g_type_class_add_private (klass, sizeof (PanelAppletPrivate));
 
 	panel_applet_signals [CHANGE_ORIENT] =
                 g_signal_new ("change_orient",
@@ -1356,13 +1356,12 @@ static void
 panel_applet_instance_init (PanelApplet      *applet,
 			    PanelAppletClass *klass)
 {
-	applet->priv = g_new0 (PanelAppletPrivate, 1);
+	applet->priv = PANEL_APPLET_GET_PRIVATE (applet);
 
-	applet->priv->bound        = FALSE;
-
-	applet->priv->flags        = PANEL_APPLET_FLAGS_NONE;
-	applet->priv->orient       = PANEL_APPLET_ORIENT_UP;
-	applet->priv->size         = GNOME_Vertigo_PANEL_MEDIUM;
+	applet->priv->bound  = FALSE;
+	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;
+	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
+	applet->priv->size   = GNOME_Vertigo_PANEL_MEDIUM;
 
 	applet->priv->moving_focus_out = FALSE;
 
