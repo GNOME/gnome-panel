@@ -452,35 +452,35 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 		case PANEL_FREE:
 			if(panel->orient==PANEL_VERTICAL) {
 				gtk_widget_get_pointer(GTK_WIDGET(panel),
-						       NULL, &wy);
+						       NULL, y);
 				*x = wx + GTK_WIDGET(panel)->allocation.width;
-				*y = wy;
+				*y += wy;
 				break;
 			}
 			/*fall through for horizontal*/
 		case PANEL_BOTTOM:
 			gtk_widget_get_pointer(GTK_WIDGET(panel),
-					       &wx, NULL);
-			*x = wx;
+					       x, NULL);
+			*x += wx;
 			*y = wy - GTK_WIDGET (menu)->allocation.height;
 			break;
 		case PANEL_TOP:
 			gtk_widget_get_pointer(GTK_WIDGET(panel),
-					       &wx, NULL);
-			*x = wx;
+					       x, NULL);
+			*x += wx;
 			*y = wy + GTK_WIDGET(panel)->allocation.height;
 			break;
 		case PANEL_LEFT:
 			gtk_widget_get_pointer(GTK_WIDGET(panel),
-					       NULL, &wy);
+					       NULL, y);
 			*x = wx + GTK_WIDGET(panel)->allocation.width;
-			*y = wy;
+			*y += wy;
 			break;
 		case PANEL_RIGHT:
 			gtk_widget_get_pointer(GTK_WIDGET(panel),
-					       NULL, &wy);
+					       NULL, y);
 			*x = wx - GTK_WIDGET (menu)->allocation.width;
-			*y = wy;
+			*y += wy;
 			break;
 	}
 
