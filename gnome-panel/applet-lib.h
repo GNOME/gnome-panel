@@ -13,6 +13,7 @@ char *gnome_panel_applet_abort_id (int id);
 char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);
 char *gnome_panel_quit (void);
 int gnome_panel_applet_init_corba (void);
+int gnome_panel_applet_reinit_corba (void);
 void gnome_panel_applet_register_callback (int id,
 					   char *name,
 					   char *menutext,

@@ -1,3 +1,13 @@
+Wed Mar 18 23:10:27 1998  George Lebl  <jirka@5z.com>
+
+	* launcher.c: redid the way applets are initially read in
+
+	* panel.c: try contacting the launcher with a timeout and
+	  then tell it to reread launchers
+
+	* launcher.c: does not contact the panel, but waits until the
+	  teh panel contacts it
+
 Wed Mar 18 18:13:35 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl, mico-glue.cc: added unimplemented

@@ -141,17 +141,13 @@ save_applet_configuration(gpointer data, gpointer user_data)
 
 		/*sync before the applet does it's stuff*/
 		gnome_config_sync();
-		/*FIXME:????????????: next time we do sync it's gonna
-		  ignore whatever was written to our sections by other
-		  programs ... whoops ... needs to be fixed in
-		  gnome-config! it has to do with no locking on 
-		  config files and mtime resolution of 1 second*/
+		/*I think this should be done at sync and also that there
+		  should be some flocking ... but this works for now*/
+		gnome_config_drop_all();
 
 		/*have the applet do it's own session saving*/
 		send_applet_session_save(info->id,(*num)-2,path,
 					 panel_cfg_path);
-		/*FIXME: related to above FIXME, this makes it slightly work*/
-		sleep(1);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
 		gnome_config_set_string(fullpath, info->id);
@@ -310,6 +306,9 @@ panel_session_save (GnomeClient *client,
 			info = list->data;
 			if(info->type == APPLET_EXTERN) {
 				/*printf("SHUTTING DOWN EXTERN (%d)\n",i);*/
+				gtk_container_remove(
+					GTK_CONTAINER(info->widget),
+					info->applet_widget);
 				send_applet_shutdown_applet(info->id,i);
 				/*puts("DONE");*/
 			}

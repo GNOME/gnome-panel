@@ -415,6 +415,7 @@ session_save(int id, const char *cfgpath, const char *globcfgpath)
 	g_free(query);
 
 	gnome_config_sync();
+	gnome_config_drop_all();
 }
 
 void
@@ -509,6 +510,9 @@ restart_all_launchers(void)
 	char *query;
 	int i,count;
 
+	if (!gnome_panel_applet_reinit_corba ())
+		g_error ("Could not comunicate with the panel\n");
+
 	launcher_count=0;
 	while(launchers) {
 		Launcher *launcher=launchers->data;
@@ -533,19 +537,10 @@ restart_all_launchers(void)
 int
 main(int argc, char **argv)
 {
-	char *globcfg;
-	char *query;
 	char *mypath;
-	int   i,count;
 
 	panel_corba_register_arguments ();
 	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
-
-	if (!gnome_panel_applet_init_corba ()){
-		g_error ("Could not comunicate with the panel\n");
-		/*fprintf (stderr, "Could not comunicate with the panel\n");*/
-		/*exit (1);*/
-	}
 
 	/*we pass '#' plus a comment (our path) to the panel to start,
 	  that will tell the panel to doing nothing (next session),
@@ -559,16 +554,6 @@ main(int argc, char **argv)
 		myinvoc = g_copy_strings("#",mypath,"/",argv[0],NULL);
 		free(mypath);
 	}
-
-	gnome_panel_applet_request_glob_cfg(&globcfg);
-
-	query = g_copy_strings(globcfg,CONFIG_TAG,"/count=0",NULL);
-	count = gnome_config_get_int(query);
-	g_free(query);
-	g_free(globcfg);
-
-	for(i=0;i<count;i++)
-		start_new_launcher(NULL);
 
 	launcher_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
 

@@ -501,6 +501,13 @@ init_user_panels(void)
 		panels = g_list_append(panels,panel);
 	}
 }
+
+gint
+call_launcher_timeout(gpointer data)
+{
+	puts("Waiting for launcher ...");
+	return !(panel_corba_restart_launchers());
+}
 	
 
 int
@@ -549,7 +556,8 @@ main(int argc, char **argv)
 
 	apply_global_config();
 
-	printf ("starting corba looop\n");
+	gtk_timeout_add(300,call_launcher_timeout,NULL);
+
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");
 

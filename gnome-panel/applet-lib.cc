@@ -82,7 +82,6 @@ public:
 int
 gnome_panel_applet_init_corba (void)
 {
-	char *binder_address;
 	char *name;
 	char *iior;
 	char hostname [1024];
@@ -103,6 +102,33 @@ gnome_panel_applet_init_corba (void)
 	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
 	orb_ptr->dispatcher (new GtkDispatcher ());
+
+	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
+	
+	panel_client = GNOME::Panel::_narrow (obj);
+	return 1;
+}
+
+/*reread the panel's address*/
+int
+gnome_panel_applet_reinit_corba (void)
+{
+	char *name;
+	char *iior;
+	char hostname [1024];
+	
+	gethostname (hostname, sizeof (hostname));
+	if (hostname [0] == 0)
+		strcpy (hostname, "unknown-host");
+
+	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
+			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+
+	iior = gnome_config_get_string (name);
+	g_free (name);
+	
+	if (!iior)
+		return 0;
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
 	
@@ -360,7 +386,7 @@ move_grab_add (GtkWidget *applet)
  	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
 			 TRUE,
-			 APPLET_EVENT_MASK,
+			 (enum GdkEventMask)APPLET_EVENT_MASK,
 			 NULL,
 			 fleur_cursor,
 			 GDK_CURRENT_TIME);

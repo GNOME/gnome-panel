@@ -136,19 +136,51 @@ panel_corba_call_launcher(const char *path)
 	iior = gnome_config_get_string (name);
 	g_free (name);
 	
-	puts("LAUNCHER_CALL");
 	if (!iior)
-		return 0;
-
-	puts("LAUNCHER_iior");
-	puts(iior);
+		return FALSE;
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
 
-	launcher_client->start_new_launcher(path);
+	try {
+		launcher_client->start_new_launcher(path);
+	} catch( ... ) {
+		return FALSE;
+	}
 	
-	return 1;
+	return TRUE;
+}
+
+int
+panel_corba_restart_launchers(void)
+{
+	char *name;
+	char *iior;
+	char hostname [1024];
+	
+	gethostname (hostname, sizeof (hostname));
+	if (hostname [0] == 0)
+		strcpy (hostname, "unknown-host");
+
+	name = g_copy_strings ("/CORBA-servers/Launcher-", hostname, 
+			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+
+	iior = gnome_config_get_string (name);
+	g_free (name);
+	
+	if (!iior)
+		return FALSE;
+
+	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
+	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
+
+	try {
+		launcher_client->restart_all_launchers();
+	} catch( ... ) {
+		return FALSE;
+	}
+	
+	return TRUE;
 }
 
 void

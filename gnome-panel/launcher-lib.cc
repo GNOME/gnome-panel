@@ -46,7 +46,9 @@ launcher_corba_gtk_main (char *str)
 	gnome_config_sync ();
 	g_free (name);
 	
-	//orb_ptr->dispatcher (new GtkDispatcher ());
+	panel_initialize_corba (&orb_ptr, &boa_ptr);
+
+	orb_ptr->dispatcher (new GtkDispatcher ());
 
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
 }
