@@ -584,19 +584,6 @@ panel_run_dialog_find_command_icon_idle (PanelRunDialog *dialog)
 				    COLUMN_PATH,      &path,
 				    -1);
 
-		if (!exec) {
-			GnomeDesktopItem *item;
-
-			if ((item = gnome_desktop_item_new_from_file (path, 0, NULL))) {
-				exec = g_strdup (gnome_desktop_item_get_string (item, GNOME_DESKTOP_ITEM_EXEC));
-				gnome_desktop_item_unref (item);
-			}
-
-			gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-					    COLUMN_EXEC, exec ? exec : "",
-					    -1);
-		}
-
         	if (exec && icon) {
 			gboolean fuzzy = FALSE;
 
@@ -793,6 +780,7 @@ panel_run_dialog_add_items_idle (PanelRunDialog *dialog)
 				    COLUMN_ICON_FILE, menu_tree_entry_get_icon (entry),
 				    COLUMN_NAME,      menu_tree_entry_get_name (entry),
 				    COLUMN_COMMENT,   menu_tree_entry_get_comment (entry),
+				    COLUMN_EXEC,      menu_tree_entry_get_exec (entry),
 				    COLUMN_PATH,      menu_tree_entry_get_desktop_file_path (entry),
 				    -1);
 

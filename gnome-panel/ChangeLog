@@ -1,3 +1,11 @@
+2005-01-11  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-run-dialog.c:
+	(panel_run_dialog_find_command_icon_idle): don't open the
+	.desktop file to get the exec while matching.
+	(panel_run_dialog_add_items_idle): pull the exec for matching
+	with menu_tree_entry_get_exec().
+
 2005-01-11  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-toplevel.c: (panel_toplevel_attach_to_widget): Get
