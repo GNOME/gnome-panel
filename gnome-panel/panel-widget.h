@@ -42,6 +42,7 @@ struct _AppletData
 {
 	GtkWidget *	applet;
 	int		pos;
+	int             constrained;
 	int		cells;
 	int             min_cells;
 
