@@ -614,7 +614,7 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 }
 
 static void
-phelp ()
+phelp (void)
 {
 	GError *error = NULL;
 
@@ -951,11 +951,11 @@ update_fortune_dialog (Fish *fish)
 
 		fish->fortune_label = gtk_label_new ("");
 
-		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (fish->fortune_dialog)->vbox), 
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    fish->fortune_label,
 				    FALSE, FALSE, GNOME_PAD);
 
-		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (fish->fortune_dialog)->vbox), 
+		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->fortune_dialog)->vbox), 
 				    sw,
 				    TRUE, TRUE, GNOME_PAD);
 
@@ -1069,11 +1069,18 @@ create_fish_widget(Fish *fish)
 		GTK_WIDGET (fish->darea)->requisition.height =
 							fish->h / frames;
 		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
+		gtk_widget_set_usize (fish->darea,
+				      fish->w,
+				      fish->h / frames);
 	} else {
 		GTK_WIDGET (fish->darea)->requisition.width =
 							fish->h / frames;
 		GTK_WIDGET (fish->darea)->requisition.width = fish->w;
+
 		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
+		gtk_widget_set_usize (fish->darea,
+				      fish->w / frames,
+				      fish->h);
 	}
 
 	gtk_widget_set_events(fish->darea, gtk_widget_get_events(fish->darea) |
