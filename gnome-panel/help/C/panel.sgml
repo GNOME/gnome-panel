@@ -13,25 +13,26 @@
 
     <legalnotice>
       <para>
-       Permission is granted to copy, distribute and/or modify this document
-       under the terms of the GNU Free Documentation License, Version 1.1
-       or any later version published by the Free Software Foundation;
-       with the Invariant Sections being LIST THEIR TITLES, with the
-       Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST.
-       A copy of the license is included in the section entitled "GNU
-       Free Documentation License".
+       Permission is granted to copy, distribute and/or modify this
+       document under the terms of the GNU Free Documentation License,
+       Version 1.1 or any later version published by the Free Software
+       Foundation; with no Invariant Sections, with no  Front-Cover
+       Texts, and with no Back-Cover Texts.  A copy of the license is
+       available from the GNU Foundation and can be viewed <ulink
+       url="http://www.gnu.org/copyleft/fdl.html"
+       type="http">online</ulink>.
       </para>
 
-      <para> UNIX is a trademark of X/Open Group.</para>
-      <para> Linux is a trademark of Linus Torvalds.</para>
-      <para> X Window System is a trademark of X Consortium, Inc.</para>
-      <para> Windows is a trademark of Microsoft Corp.</para>
+      <para> UNIX is a trademark of X/Open Group.</para> <para> Linux
+      is a trademark of Linus Torvalds.</para> <para> X Window System
+      is a trademark of X Consortium, Inc.</para> <para> Windows is a
+      trademark of Microsoft Corp.</para>
     </legalnotice>
 
     <releaseinfo>
      This is version 1.0 of The GNOME Panel.
     </releaseinfo>
-  </artheader> 
+  </artheader>
   <sect1>
    <title>Introduction</title>
    <para>
@@ -62,9 +63,8 @@
   </sect1>
 
 
-<!-- ########### Panel Basics  ############## --> 
-  <sect1 id="panelbasics">  
-   <title>Panel Basics</title>
+<!-- ########### Panel Basics  ############## -->  <sect1
+  id="panelbasics">   <title>Panel Basics</title>
    <para>
     Using the GNOME <interface>Panel</interface> is very simple and
     will come easily to anyone who has used a graphical desktop
@@ -76,10 +76,9 @@
    <sect2 id="intropanel">
     <title>Introduction to Panel Objects</title>
     <para>
-     A <interface>Panel</interface> can hold several types of
-     objects.  The example <interface>Panel</interface> 
-     in  <xref linkend="examplepanelfig"> shows each type of Panel
-     object. 
+     A <interface>Panel</interface> can hold several types of objects.
+     The example <interface>Panel</interface>  in  <xref
+     linkend="examplepanelfig"> shows each type of Panel object.
     </para>
     <figure id="examplepanelfig">
      <title>An Example Panel</title>
@@ -93,11 +92,9 @@
 
     <para>
      This example <interface>Panel</interface> contains the following
-     objects: 
-     <itemizedlist>   
-      <listitem> 
+     objects:  <itemizedlist>    <listitem>
        <formalpara>
-        <title>Menus</title> 
+        <title>Menus</title>
         <para>
          Menus are lists of items, each of which either starts an
          application, executes a command, or is a sub-menu.  In the
@@ -137,39 +134,37 @@
         run inside a small part of the
         <interface>Panel</interface>. The fourth through eighth icons
         in the example <interface>Panel</interface> are applets. The
-	first applet shown is
-        the <application>GNOME Weather</application> applet, which
-        periodically downloads the current weather conditions off the
-        Web and displays the information. The second applet shown is
-        the <application>Drive Mount</application> applet, which shows
-        whether a disk (in this case, the floppy drive) is mounted and
-        allows you to mount and unmount the drive with a single click
-        of the mouse.  The third applet shown is the
-        <application>Quick Launch</application> applet, which acts as
-        a container for launchers, but saves more space than placing
-        your launchers directly on the
-        <interface>Panel</interface>. In the example shown the
-        <application>Quick Launch</application> applet contains six
-        application launchers.  Next is the  <application>GNOME Desk
-        Guide</application>, which allows you to control multiple
-        virtual desktops, each of which can have multiple screens.
-        You can move between desktops and screens by clicking with
-        your left mouse button.  The final  applet shown is the
-        <application>Tasklist</application>, which allows you to
-        control your application windows in various ways, including
-        changing the focus,  iconifying windows, closing windows, and
-        killing applications.  The <application>Tasklist</application>
-        shown is for a screen with only two windows, both of which are
-        <application>Electric Eyes</application>.  For more
-        information on applets, see <xref linkend="applets">.
+        first applet shown is the <application>GNOME
+        Weather</application> applet, which periodically downloads the
+        current weather conditions off the Web and displays the
+        information. The second applet shown is the <application>Drive
+        Mount</application> applet, which shows whether a disk (in
+        this case, the floppy drive) is mounted and allows you to
+        mount and unmount the drive with a single click of the mouse.
+        The third applet shown is the <application>Quick
+        Launch</application> applet, which acts as a container for
+        launchers, but saves more space than placing your launchers
+        directly on the <interface>Panel</interface>. In the example
+        shown the <application>Quick Launch</application> applet
+        contains six application launchers.  Next is the
+        <application>GNOME Desk Guide</application>, which allows you
+        to control multiple virtual desktops, each of which can have
+        multiple screens.  You can move between desktops and screens
+        by clicking with your left mouse button.  The final  applet
+        shown is the <application>Tasklist</application>, which allows
+        you to control your application windows in various ways,
+        including changing the focus,  iconifying windows, closing
+        windows, and killing applications.  The
+        <application>Tasklist</application> shown is for a screen with
+        only two windows, both of which are <application>Electric
+        Eyes</application>.  For more information on applets, see
+        <xref linkend="applets">.
         </para>
        </formalpara>
       </listitem>
       <listitem>
        <formalpara>
-        <title>Drawers</title> 
-        <para>  
-        Drawers are essentially
+        <title>Drawers</title>  <para>   Drawers are essentially
         extensions of a <interface>Panel</interface> which can be
         opened or closed.  They can hold anything the
         <interface>Panel</interface> can.  The brown icon of a drawer
@@ -225,8 +220,8 @@
      the <guimenu>right-click</guimenu> menu will often contain
      <guimenuitem>About...</guimenuitem> for viewing information about
      the applet such as the author's name and the applet version,
-     <guimenuitem>Help</guimenuitem> for viewing the applet's documentation, 
-     and <guimenuitem>Properties...</guimenuitem> for
+     <guimenuitem>Help</guimenuitem> for viewing the applet's
+     documentation,  and <guimenuitem>Properties...</guimenuitem> for
      configuring preferences and settings for the applet.  Applets
      often have other applet-specific controls in their
      <guimenu>right-click</guimenu> menus.
@@ -246,10 +241,10 @@
     </para>
     <para>
      You can also right-click on the <interface>Panel</interface>
-     itself. This will bring up the <link linkend="mainmenu"><guimenu>Main
-     Menu</guimenu></link>. In particular, this
-     menu also contains the <guisubmenu>Panel</guisubmenu> submenu
-     described above. 
+     itself. This will bring up the <link
+     linkend="mainmenu"><guimenu>Main Menu</guimenu></link>. In
+     particular, this menu also contains the
+     <guisubmenu>Panel</guisubmenu> submenu described above.
     </para>
    </sect2>
 
@@ -284,13 +279,12 @@
      time will expand the <interface>Panel</interface>.
     </para>
     <para>
-     <interface>Panels</interface> can be configured to
-     automatically hide when you are  not using it and reappear when
-     you move the mouse to the part of the screen where the
-     <interface>Panel</interface>
-     resides. This can be useful if you are unable to run your system
-     in a high resolution.  To learn how to have a
-     <interface>Panel</interface> auto-hide, see <xref
+     <interface>Panels</interface> can be configured to automatically
+     hide when you are  not using it and reappear when you move the
+     mouse to the part of the screen where the
+     <interface>Panel</interface> resides. This can be useful if you
+     are unable to run your system in a high resolution.  To learn how
+     to have a <interface>Panel</interface> auto-hide, see <xref
      linkend="panelproperties">.
     </para>
    </sect2>
@@ -298,10 +292,11 @@
    <sect2 id="loggingout">
     <title>Logging Out</title>
     <para>
-     To log out of GNOME, right click on the <interface>Panel</interface> and
-     select <guimenuitem>Log out</guimenuitem>. This will bring up the
+     To log out of GNOME, right click on the
+     <interface>Panel</interface> and select <guimenuitem>Log
+     out</guimenuitem>. This will bring up the
      <interface>Logout</interface> dialog, shown in <xref
-     linkend="logoutdialog-fig">. 
+     linkend="logoutdialog-fig">.
     </para>
     <figure id="logoutdialog-fig">
      <title>The Logout Dialog</title>
@@ -315,8 +310,9 @@
     <para>
      If you would like to save your current setup, select the
      <guilabel>Save current setup</guilabel> checkbox. This will save
-     any GNOME applications you have open and configuration changes you
-     may have made in the <application>Control Center</application>.
+     any GNOME applications you have open and configuration changes
+     you may have made in the <application>Control
+     Center</application>.
     </para>
     <para>
      The default way to log out is by using the
@@ -327,12 +323,10 @@
      <guilabel>Reboot</guilabel> option, which will reboot the
      computer.
     </para>
-    <note>   
-     <title>Note for advanced users</title>  
-     <para>   
-      The <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
-      will only be shown if you have permission to execute the
-      command <command>/usr/bin/shutdown</command>.
+    <note>    <title>Note for advanced users</title>   <para>    The
+     <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
+     will only be shown if you have permission to execute the command
+     <command>/usr/bin/shutdown</command>.
      </para>
     </note>
     <para>
@@ -373,7 +367,11 @@
      allows you to do this by locking the screen, requiring a password
      to unlock it. To lock your GNOME session, right click on either
      end of a <interface>Panel</interface> and select
-     <guimenuitem>Lock screen</guimenuitem>.
+     <guimenuitem>Lock screen</guimenuitem>.  Alternately, if you have
+     the <guibutton>Lock Button</guibutton>(see <xref
+     linkend="lockbutton">) on a <interface>Panel</interface>, you may
+     just press this button to lock the screen.  To unlock the screen,
+     just type your login password.
     </para>
     <note>
      <title>Screensavers and The Lock Button</title>
@@ -386,7 +384,7 @@
       screensaver enabled in the <application>Control
       Center</application>.
      </para>
-    </note>  
+    </note>
    </sect2>
   </sect1>
 
@@ -394,28 +392,28 @@
 
    <!-- ########### Main Menu ############## -->
 
-   <sect1 id="mainmenu">
-    <title>The Main Menu</title>
-    <para>
+  <sect1 id="mainmenu">
+   <title>The Main Menu</title>
+   <para>
      <indexterm id="idx-a3">  <primary>Main Menu</primary>
      </indexterm>
-     The footprint icon seen towards the left end of the example
-     <interface>Panel</interface> (see <xref
-     linkend="examplepanelfig">) and in <xref
-     linkend="main-menu-button-fig"> is the   <guibutton>Main
-     Menu</guibutton> (yes, you guessed  right, it is the footprint of
-     the gnome). This menu provides access to almost all
-     GNOME features  &mdash; all the applications,
-     configuration tools, command line prompt,
-     <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
-     Screen</guimenuitem> commands, and much more.  To access any of
-     these items, click on the <guibutton>Main Menu</guibutton>
-     button. You should release the mouse after pressing the
-     <guibutton>Main Menu</guibutton> button so that you can take
-     advantage of other mouse-activated features in the <guimenu>Main
-     Menu</guimenu> such as right-click pop-up menus and drag-and-drop
-     from the menu to the desktop or <interface>Panel</interface>.
-    </para>
+    The footprint icon seen towards the left end of the example
+    <interface>Panel</interface> (see <xref
+    linkend="examplepanelfig">) and in <xref
+    linkend="main-menu-button-fig"> is the   <guibutton>Main
+    Menu</guibutton> (yes, you guessed  right, it is the footprint of
+    the gnome). This menu provides access to almost all GNOME
+    features  &mdash; all the applications, configuration tools,
+    command line prompt, <guimenuitem>Logout</guimenuitem> and
+    <guimenuitem>Lock Screen</guimenuitem> commands, and much more.
+    To access any of these items, click on the <guibutton>Main
+    Menu</guibutton> button. You should release the mouse after
+    pressing the <guibutton>Main Menu</guibutton> button so that you
+    can take advantage of other mouse-activated features in the
+    <guimenu>Main Menu</guimenu> such as right-click pop-up menus and
+    drag-and-drop from the menu to the desktop or
+    <interface>Panel</interface>.
+   </para>
     <figure id="main-menu-button-fig">
      <title>The Main Menu Button</title>
      <screenshot>
@@ -425,11 +423,11 @@
        </graphic>
      </screenshot>
     </figure>
-    <para>  
-     You can also access the <guimenu>Main Menu</guimenu> by
+    <para>   You can also access the <guimenu>Main Menu</guimenu> by
      clicking on the <interface>Panel</interface> with the right mouse
      button. If you wish,  you can also have several <guibutton>Main
-     Menu</guibutton> buttons on different <interface>Panels</interface>.
+     Menu</guibutton> buttons on different
+     <interface>Panels</interface>.
     </para>
 
 
@@ -437,11 +435,12 @@
      <title> Components of the Main Menu</title>
      <para>
       The primary component of the <guimenu>Main Menu</guimenu> is the
-      <guisubmenu>Programs</guisubmenu> submenu, which contains a list of
-      preconfigured submenus and menu items. Here you will find all the GNOME
-      applications, from the <application>Gnumeric</application>
-      spreadsheet to the <application>Free Cell</application> game, as
-      well as quite a few non-GNOME ones, such as the
+      <guisubmenu>Programs</guisubmenu> submenu, which contains a list
+      of preconfigured submenus and menu items. Here you will find all
+      the GNOME applications, from the
+      <application>Gnumeric</application> spreadsheet to the
+      <application>Free Cell</application> game, as well as quite a
+      few non-GNOME ones, such as the
       <application>Netscape</application> web browser and the
       <application>emacs</application> text editor.  In addition, the
       <guisubmenu>Programs</guisubmenu> submenu also contains the
@@ -474,8 +473,8 @@
      </itemizedlist>
 
      <para>    In addition to the <guisubmenu>Programs</guisubmenu>
-      submenu,  the <guimenu>Main Menu</guimenu> also contains a number
-      of other submenus and useful commands. Depending on your
+      submenu,  the <guimenu>Main Menu</guimenu> also contains a
+      number of other submenus and useful commands. Depending on your
       configuration, you may not see all of these. Also, some of them
       may be shown as submenus, and others included as part of the
       <guimenu>Main Menu</guimenu>, separated by horizontal lines from
@@ -501,9 +500,9 @@
 
       <listitem>
        <para>
-        <guisubmenu>Applets</guisubmenu>. This submenu contains all the
-        applets installed on your system. Selecting an applet will add
-        it to your <interface>Panel</interface>.
+        <guisubmenu>Applets</guisubmenu>. This submenu contains all
+        the applets installed on your system. Selecting an applet will
+        add it to your <interface>Panel</interface>.
        </para>
       </listitem>
 
@@ -520,8 +519,8 @@
         <guisubmenu>AnotherLevel menus</guisubmenu> and
         <guisubmenu>Debian menus</guisubmenu>. These submenus show the
         default application menus for Red Hat Linux and Debian
-        GNU/Linux, respectively. These will only appear for users
-        of the particular distributions.
+        GNU/Linux, respectively. These will only appear for users of
+        the particular distributions.
        </para>
       </listitem>
 
@@ -529,24 +528,26 @@
        <para>
         <guimenuitem>Panel</guimenuitem>. This submenu can be used to
         change <interface>Panel</interface> properties (both for <link
-        linkend="panelproperties">this
-        <interface>Panel</interface></link> and <link
+        linkend="panelproperties">
+        <interface>individual Panels</interface></link> and <link
         linkend="globalpanelprefs">global</link>, i.e. for all
         <interface>Panels</interface>), <link linkend="add">add an
         object</link> to the <interface>Panel</interface>, <link
         linkend="panelremoving">remove the whole
-        <interface>Panel</interface></link> or <link
+        <interface>Panel</interface></link>, <link
         linkend="paneladd">create a new
-        <interface>Panel</interface></link>.
+        <interface>Panel</interface></link>, or view the
+        <citetitle>Panel Manual</citetitle>.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        <guimenuitem>Desktop</guimenuitem>&mdash; This includes
+        <guimenuitem>Desktop</guimenuitem>&mdash; This submenu contains
         <guimenuitem>Log out</guimenuitem>, which ends your GNOME
-        session (see <xref linkend="loggingout">) and
-        <guimenuitem>Lock screen</guimenuitem>.
+        session (see <xref linkend="loggingout">), and
+        <guimenuitem>Lock screen</guimenuitem>(see <xref
+        linkend="lockscreen">). 
        </para>
       </listitem>
 
@@ -580,105 +581,108 @@
     </sect2>
 
     <sect2 id="mainmenuconfig">
-      <title>Configuring the Main Menu</title>
-      <para>
-      To change configuration of the <guimenu>Main Menu</guimenu>
-      which you access from  the foot icon, right-click on this icon
-      and select <guimenuitem>Properties</guimenuitem>  from the
-      <guimenu>pop-up</guimenu> menu. This will show <interface>Menu
-      Properties dialog</interface>. In this dialog, for each of the
-      submenus  of the <guimenu>Main Menu</guimenu> listed above
+     <title>Configuring the Main Menu</title>
+     <para>
+      To change the configuration of the <guimenu>Main Menu</guimenu>,
+      right-click on the <guibutton>Main Menu</guibutton> button
+      (shown in <xref linkend="main-menu-button-fig">) and select
+      <guimenuitem>Properties &hellip;</guimenuitem>  from the pop-up
+      menu. This will show the <interface>Menu Properties</interface>
+      dialog. In this dialog, for each of the submenus of the
+      <guimenu>Main Menu</guimenu> listed above
       (<guisubmenu>Programs</guisubmenu>,
       <guisubmenu>Favorites</guisubmenu>, &hellip;) you can choose
       whether you want it  to be shown as part of the <guimenu>Main
-      Menu</guimenu>,  as a submenu, or not shown at all.
-      </para>
-      <warning>   <title>WARNING</title>
-	<para>
-	  The <guimenu>Main Menu</guimenu> which you get by
-	  right-clicking on the <interface>Panel</interface>  is
-	  configured independently from the <guimenu>Main
-	  Menu</guimenu> you get by  clicking on the foot
-	  icon. Configuration of  the <guimenu>Main Menu</guimenu>
-	  which you get by right-clicking on the
-	  <interface>Panel</interface> (which is the  same as the one
-	  you get by using keyboard shortcut) is done using
-	  <guilabel>Menu</guilabel> tab in  <link
-	  linkend="globalpanelprefs"><interface> Global Panel
-	  Preferences </interface></link> dialog.
-	</para>
-      </warning>
-
-   <figure>
-   <title>Menu Properties Dialog</title>
-   <screenshot>
-    <screeninfo>Menu Properties Dialog</screeninfo>
-     <graphic fileref="./figures/menu_properties" format="png"
-     srccredit="muet">
-     </graphic>
-    </screenshot>
-   </figure>
-
+      Menu</guimenu>, as a submenu, or not at all.
+     </para>
+     <warning>    <title>WARNING</title>
       <para>
-	You can also edit the contents of the
-	<guisubmenu>Favorites</guisubmenu> menu (or, if you are the
-	system administrator, also of the
-	<guisubmenu>Programs</guisubmenu> menu) using the
-	<application>GNOME Menu Editor</application>. To start it,
-	right-click on the main menu button and select
-	<guimenuitem>Edit Menus</guimenuitem>. Alternatively, you can
-	start <application>GNOME Menu Editor</application> by
-	selecting  <menuchoice> <guisubmenu>Programs</guisubmenu>
-	<guisubmenu>Settings</guisubmenu> <guimenuitem>Menu
-	Editor</guimenuitem> </menuchoice> from the <guimenu>Main
-	Menu</guimenu> itself.
+       The <guimenu>Main Menu</guimenu> which you get by
+       right-clicking on the <interface>Panel</interface>  is
+       configured independently from the <guimenu>Main Menu</guimenu>
+       you get by  clicking on the foot icon. Configuration of  the
+       <guimenu>Main Menu</guimenu> which you get by right-clicking on
+       the <interface>Panel</interface> (which is the  same as the one
+       you get by using keyboard shortcut) is done using the
+       <guilabel>Menu</guilabel> tab in the <link
+       linkend="globalpanelprefs"><interface>Global Panel
+       Preferences</interface></link> dialog.
       </para>
+     </warning>
+
+     <figure>
+      <title>Menu Properties Dialog</title>
+      <screenshot>
+       <screeninfo>Menu Properties Dialog</screeninfo>
+       <graphic fileref="./figures/menu_properties" format="png"
+       srccredit="muet">
+       </graphic>
+      </screenshot>
+     </figure>
+
+     <para>
+      You can also edit the contents of the
+      <guisubmenu>Favorites</guisubmenu> submenu (or, if you are the
+      system administrator, also of the
+      <guisubmenu>Programs</guisubmenu> submenu) using the
+      <application>GNOME Menu Editor</application>. To start it,
+      right-click on the <guibutton>Main Menu</guibutton> button and
+      select <guimenuitem>Edit Menus
+      &hellip;</guimenuitem>. Alternatively, you can start
+      <application>GNOME Menu Editor</application> by selecting
+      <menuchoice> <guisubmenu>Programs</guisubmenu>
+      <guisubmenu>Settings</guisubmenu> <guimenuitem>Menu
+      editor</guimenuitem> </menuchoice> from the <guimenu>Main
+      Menu</guimenu> itself.
+     </para>
     </sect2>
 
-  <sect2 id="kbdnav">
-   <title>Keyboard navigation in the Main Menu</title>
+    <sect2 id="kbdnav">
+     <title>Keyboard Navigation in the Main Menu</title>
      
-      <para>  If you prefer, you can use keyboard instead of the mouse
-        to navigate the <guimenu>Main Menu</guimenu>. To activate the
-        <guimenu>Main Menu</guimenu>, press  <keycap>Menu</keycap> key
-        on your keyboard (if you are using a standard PC keyboard,
-        this key usually is located to the left of the space bar and
-        labelled with a picture of a menu); you can change the default
-        key in the <link
-        linkend="misctab"><guilabel>Miscellaneous</guilabel></link>
-        tab of <interface><link linkend="globalpanelprefs">Global
-        Panel Preferences</link> dialog</interface>. After this, you
-        can use <keycap>Up</keycap> and <keycap>Down</keycap> arrows
-        to move inside the menu, <keycap>Right</keycap> arrow to go to
-        a submenu, and <keycap>Enter</keycap> to select an item. To
-        hide the menu again, just press <keycap>Esc</keycap>.
-   </para>
-  </sect2>
- </sect1>
+     <para>   
+      If you prefer, you can use the keyboard instead of the
+      mouse to navigate the <guimenu>Main Menu</guimenu>. To activate
+      the <guimenu>Main Menu</guimenu>, press the
+      <keycap>Menu</keycap> key on your keyboard (if you are using a
+      standard PC keyboard, this key usually is located to the left of
+      the space bar and labelled with a picture of a menu); you can
+      change the default key for activating the <guimenu>Main
+      Menu</guimenu> in the <link
+      linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
+      of the <interface><link linkend="globalpanelprefs">Global Panel
+      Preferences</link> dialog</interface>. Use the
+      <keycap>Up</keycap> and <keycap>Down</keycap> arrow keys  to
+      move inside the menu, <keycap>Right</keycap> arrow to go to a
+      submenu, and <keycap>Enter</keycap> to select an item. To exit
+      the menu, just press the <keycap>Esc</keycap> key.
+     </para>
+    </sect2>
+   </sect1>
 
 
-
-
-<!-- ########### Menus  ############## -->
+ <!-- ########### Menus  ############## -->
  <sect1 id="menus">
   <title>Menus</title>
   <para>
-      In addition to the <guimenu>Main Menu</guimenu>, discussed in
-      <xref linkend="mainmenu">, you can also add to the
-      <interface>Panel</interface>  "normal menus". Unlike the
-      <guimenu>Main Menu</guimenu>, normal Menus only contain whatever
-      launchers and submenus you choose put in them - no default
-      submenus, <guimenuitem>Run program</guimenuitem>, etc. as the
-      <guimenu>Main Menu</guimenu> has.  For example, you can add any
-      submenu of your <guimenu>Favorites</guimenu> menu or the
-      <guimenu>Programs</guimenu> menu as a separate menu to the
-      panel; to do so, bring up this submenu from the <guimenu>Main
-      Menu</guimenu>,  right click on the submenu title, and select
-      <guimenuitem>Add this as menu to panel</guimenuitem>. <!-- FIXME
-      - this is not right To create a new Menu, use the
-      <application>Menu editor</application>. -->
+   In addition to the <guimenu>Main Menu</guimenu>, discussed in <xref
+   linkend="mainmenu">, you can also add "normal menus" to a
+   <interface>Panel</interface>. An example menu, in this case a
+   <guimenu>Favorites</guimenu> menu containing three application
+   launchers and one submenu titled <guisubmenu>Games</guisubmenu>, is
+   shown in <xref linkend = "example-menu-fig">. Unlike the
+   <guimenu>Main Menu</guimenu>, normal menus only contain whatever
+   launchers and submenus you place in them - no default submenus,
+   <guimenuitem>Run program</guimenuitem>, etc. as the <guimenu>Main
+   Menu</guimenu> has.  You can also add any submenu of your
+   <guimenu>Favorites</guimenu> menu or the
+   <guimenu>Programs</guimenu> menu as a separate menu to a
+   <interface>Panel</interface>; to do so, bring up this submenu from
+   the <guimenu>Main Menu</guimenu>,  right click on the submenu
+   title, and select <guimenuitem>Add this as menu to
+   panel</guimenuitem>.
   </para>
-  <figure>
+  <figure id="example-menu-fig">
    <title>An Example Menu</title>
    <screenshot>
     <screeninfo>An Example Menu</screeninfo>
@@ -687,66 +691,68 @@
      </graphic>
    </screenshot>
   </figure>
-  <para>
-   The example above shows a menu titled <guimenu>My
-   Favorites</guimenu> which includes three application launchers and
-   one submenu titled <guisubmenu>Games</guisubmenu>.
-    </para>
 
-    <sect2 id="tearoff">
-      <title>Tearing off the menus</title>
-      <para>
-	All menus in GNOME have the tear-off feature: if you select
-	the "perforation" - thin dashed line at the top of the menu,
-	right above the menu title - the menu will be turned into a
-	separate window on your desktop, which will stay there even
-	after you move the mouse cursor elsewhere. It is very
-	convenient if you will be using the same command from some
-	deeply nested submenu frequenlty. To remove a "torn-off" menu
-	from your desktop, click on the <guibutton>Close</guibutton>
-	button in the window title (its appearance and location
-	depends on the window manager you are using, but usually it is
-	the rightmost button, labelled by an "x").
-      </para>
-    </sect2>
+   <sect2 id="addingmenus">
+    <title>Adding A Menu to a Panel</title>  <para>     To learn how
+    to add a menu to a <interface>Panel</interface>, see <xref
+    linkend="add">.
+    </para>
+   </sect2>
+
+  <sect2 id="tearoff">
+   <title>Tearing Off A Menu</title>
+   <para>
+    All menus in GNOME have the tear-off feature: if you left-click on
+    the "perforation" (thin dashed line at the top of the menu, right
+    above the menu title) the menu will be turned into a separate
+    window on your desktop, which will stay there even after you move
+    the mouse cursor elsewhere. This is very convenient if you will be
+    using the same command from some deeply nested submenu
+    frequently. To remove a "torn-off" menu from your desktop, click
+    on the <guibutton>Close</guibutton> button in the window title
+    (its appearance and location depends on the window manager you are
+    using, but usually it is the rightmost button, labelled by an "x").
+   </para>
+  </sect2>
 
    <sect2 id="menusconf">
-    <title> Configuring the menus</title>  <para>   To learn how you
-    can add new menus to the <interface>Panel</interface>, see <xref
-    linkend="add">.
-     </para>
-     <para> You can easily change the Menu title and the icon used by
-      the Menu. To do so, click on the Menu button, right-click on the
-      menu title (at the very top of the list, above all other items),
-      and select <guimenuitem>Properties</guimenuitem> from the
-      <guimenu>pop-up</guimenu> menu. This will bring up the
-      <interface>Menu Properties</interface> dialog, quite similar to
-      the <link linkend="launchers">Launcher Properties dialog</link>.
-      </para>
-      <para>  To add a new item to the Menu, click on the Menu button,
-      right-click on the Menu title, and select <guimenuitem>Add new
-      item to this menu</guimenuitem>. This will bring  up
-      <interface>Create new launcher</interface>  dialog, in which you
-      can enter item name, command, and other information (see <xref
-      linkend="launchers"> for more information).    To remove an item
-      from the Menu, right-click on it and choose <guimenuitem>Remove
-      this item</guimenuitem>.
-      </para>
-      <para>
-	Finally, a frequently asked question is "How I can change the
-	font and the background used by the menus?" The answer is, it
-	is determined by the current GTK Theme, which can be changed
-	using <application>GNOME Control Center</application>, by
-	selecting <menuchoice> <guimenu>Main Menu</guimenu>
-	<guisubmenu>Settings</guisubmenu>
-	<guisubmenu>Desktop</guisubmenu>  <guimenuitem>Theme
-	Selector</guimenuitem> </menuchoice>.
-	</para>
-  </sect2>
- </sect1>
+    <title> Configuring a Menu</title>
+    <para>
+     You can easily change a menu name and icon (for user menus
+     only, not for sub-menus taken from the <guimenu>Main
+     Menu</guimenu>). To do so, click on the menu, right-click
+     on the menu name (at the very top of the list, above all other
+     items), and select <guimenuitem>Properties&hellip;</guimenuitem>
+     from the pop-up menu. This will bring up the 
+     <interface>Desktop Entry Properties</interface> dialog, quite similar to
+     the <link linkend="launchers"><interface>Launcher
+     Properties</interface> dialog</link>. 
+    </para>
+    <para>  
+     To add a new item to the menu, click on the menu button,
+     right-click on the Menu name, and select <guimenuitem>Add new
+     item to this menu</guimenuitem>. This will bring  up
+     <interface>Create Menu Item</interface> dialog, in which you
+     can enter the menu item name, comment, command, and type (see <xref
+     linkend="launchers"> for more information).  To remove an item
+     from the menu, right-click on the item and choose <guimenuitem>Remove
+     this item</guimenuitem>.
+    </para>
+    <para>
+     Finally, a frequently asked question is "How I can change the
+     font and the background used by the menus?" The answer is that it
+     is determined by the current GTK Theme, which can be changed
+     using the <application>GNOME Control Center</application> by
+     selecting <menuchoice> <guimenu>Main Menu</guimenu>
+     <guisubmenu>Settings</guisubmenu>
+     <guisubmenu>Desktop</guisubmenu>  <guimenuitem>Theme
+     Selector</guimenuitem> </menuchoice>.
+    </para>
+   </sect2>
+  </sect1>
 
 
-<!-- ###########  Launchers  ############## -->
+ <!-- ###########  Launchers  ############## -->
  <sect1 id="launchers">
   <title>Launchers</title>
   <para>
@@ -1037,22 +1043,9 @@
     <interface>Panel</interface> button which  begins a screensaver
     which locks the screen. In order to remove the screensaver and
     access the GNOME session again, you must supply your password.
-    This is typically used when you must leave your computer for a
-    while and do not want to log out or allow other people to use your
-    computer. To lock your screen, simply click on the <guibutton>Lock
-    Button</guibutton>.
+    For more information on locking the screen, see <xref
+    linkend="lockscreen">.
    </para>
-   <note>
-    <title>Screensavers and The Lock Button</title>
-    <para>
-     The <guibutton>Lock Button</guibutton> uses a feature of the
-     <application>xscreensaver</application> program. This is the same
-     program that the Control Center uses to set your screensaver. In
-     order for the <guibutton>Lock Button</guibutton> to work
-     properly, you must have a screensaver enabled in the Control
-     Center.
-    </para>
-   </note>
   </sect2>
   <sect2 id="logoutbutton">
    <title>The Logout Button</title>
@@ -2221,475 +2214,6 @@
       Status Table</ulink>.
       </para>
     </sect1>
-
-<!-- ###############  FDL  ################## -->
-  <appendix id="fdl">
-    <title>GNU Free Documentation License</title>
-    <para>
-      Version 1.1, March 2000
-    </para>
-
-    <para>
-      Copyright &copy; 2000 <address>Free Software Foundation, Inc. 59 Temple Place, Suite 330, 
-      Boston, MA  02111-1307  USA</address> Everyone is permitted to copy and distribute verbatim copies
-      of this license document, but changing it is not allowed.
-    </para>
-
-    <variablelist>
-      <varlistentry>
-	<term>0. PREAMBLE</term>
-	<listitem>
-      <para>
-	  The purpose of this License is to make a manual, textbook, or other written document "free" 
-	  in the sense of freedom: to assure everyone the effective freedom to copy and redistribute it,
-	  with or without modifying it, either commercially or noncommercially. Secondarily, this 
-	  License preserves for the author and publisher a way to get credit for their work, while not being
-	  considered responsible for modifications made by others. 
-	</para>
-
-	<para>
-	  This License is a kind of "copyleft", which means that derivative works of the document must 
-	  themselves be free in the same sense. It complements the GNU General Public License, which is a 
-	  copyleft license designed for free software. 
-	</para>
-
-	<para>
-	  We have designed this License in order to use it for manuals for free software, because free 
-	  software needs free documentation: a free program should come with manuals providing the
-	  same freedoms that the software does. But this License is not limited to software manuals; it can 
-	  be used for any textual work, regardless of subject matter or whether it is published as a
-	  printed book. We recommend this License principally for works whose purpose is instruction or reference. 
-	</para>
-	</listitem>
-      </varlistentry>
-      <varlistentry>
-	<term>1. APPLICABILITY AND DEFINITIONS</term>
-	<listitem>
-	  <para>
-	    This License applies to any manual or other work that contains a notice placed by the copyright holder 
-	    saying it can be distributed under the terms of this License. The "Document", below,
-	    refers to any such manual or work. Any member of the public is a licensee, and is addressed as "you". 
-	  </para>
-
-	  <para>
-	    A "Modified Version" of the Document means any work containing the Document or a portion of it, either 
-	    copied verbatim, or with modifications and/or translated into another language. 
-	  </para>
-	 
-	  <para>
-	    A "Secondary Section" is a named appendix or a front-matter section of the Document that deals 
-	    exclusively with the relationship of the publishers or authors of the Document to the
-	    Document's overall subject (or to related matters) and contains nothing that could fall directly within 
-	    that overall subject. (For example, if the Document is in part a textbook of mathematics,
-	    a Secondary Section may not explain any mathematics.) The relationship could be a matter of historical 
-	    connection with the subject or with related matters, or of legal, commercial,
-	    philosophical, ethical or political position regarding them. 
-	  </para>
-
-	  <para>
-	    The "Invariant Sections" are certain Secondary Sections whose titles are designated, as being those of 
-	    Invariant Sections, in the notice that says that the Document is released under this
-	    License. 
-	  </para>
-
-	  <para>
-	    The "Cover Texts" are certain short passages of text that are listed, as Front-Cover Texts or Back-Cover 
-	    Texts, in the notice that says that the Document is released under this License. 
-	  </para>
-
-	  <para>
-	    A "Transparent" copy of the Document means a machine-readable copy, represented in a format whose 
-	    specification is available to the general public, whose contents can be viewed and
-	    edited directly and straightforwardly with generic text editors or (for images composed of pixels) 
-	    generic paint programs or (for drawings) some widely available drawing editor, and that is
-	    suitable for input to text formatters or for automatic translation to a variety of formats suitable for 
-	    input to text formatters. A copy made in an otherwise Transparent file format whose
-	    markup has been designed to thwart or discourage subsequent modification by readers is not Transparent. 
-	    A copy that is not "Transparent" is called "Opaque". 
-	  </para>
-
-	  <para>
-	    Examples of suitable formats for Transparent copies include plain ASCII without markup, Texinfo input 
-	    format, LaTeX input format, SGML or XML using a publicly available DTD, and
-	    standard-conforming simple HTML designed for human modification. Opaque formats include PostScript, PDF, 
-	    proprietary formats that can be read and edited only by proprietary word
-	    processors, SGML or XML for which the DTD and/or processing tools are not generally available, and the 
-	    machine-generated HTML produced by some word processors for output
-	    purposes only. 
-	  </para>
-
-	  <para>
-	    The "Title Page" means, for a printed book, the title page itself, plus such following pages as are 
-	    needed to hold, legibly, the material this License requires to appear in the title page. For
-	    works in formats which do not have any title page as such, "Title Page" means the text near the most 
-	    prominent appearance of the work's title, preceding the beginning of the body of the
-	    text. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>2. VERBATIM COPYING</term>
-	<listitem>
-	  <para>
-	    You may copy and distribute the Document in any medium, either commercially or noncommercially, provided 
-	    that this License, the copyright notices, and the license notice saying this
-	    License applies to the Document are reproduced in all copies, and that you add no other conditions 
-	    whatsoever to those of this License. You may not use technical measures to obstruct or
-	    control the reading or further copying of the copies you make or distribute. However, you may accept 
-	    compensation in exchange for copies. If you distribute a large enough number of
-	    copies you must also follow the conditions in section 3. 
-	  </para>
-
-	  <para>
-	    You may also lend copies, under the same conditions stated above, and you may publicly display copies. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>3. COPYING IN QUANTITY</term>
-	<listitem>
-	  <para>
-	    If you publish printed copies of the Document numbering more than 100, and the Document's license notice 
-	    requires Cover Texts, you must enclose the copies in covers that carry, clearly
-	    and legibly, all these Cover Texts: Front-Cover Texts on the front cover, and Back-Cover Texts on the 
-	    back cover. Both covers must also clearly and legibly identify you as the publisher
-	    of these copies. The front cover must present the full title with all words of the title equally 
-	    prominent and visible. You may add other material on the covers in addition. Copying with
-	    changes limited to the covers, as long as they preserve the title of the Document and satisfy these 
-	    conditions, can be treated as verbatim copying in other respects. 
-	  </para>
-
-	  <para>
-	    If the required texts for either cover are too voluminous to fit legibly, you should put the first ones 
-	    listed (as many as fit reasonably) on the actual cover, and continue the rest onto adjacent
-	    pages. 
-	  </para>
-
-	  <para>
-	    If you publish or distribute Opaque copies of the Document numbering more than 100, you must either 
-	    include a machine-readable Transparent copy along with each Opaque copy, or state
-	    in or with each Opaque copy a publicly-accessible computer-network location containing a complete 
-	    Transparent copy of the Document, free of added material, which the general
-	    network-using public has access to download anonymously at no charge using public-standard network 
-	    protocols. If you use the latter option, you must take reasonably prudent steps,
-	    when you begin distribution of Opaque copies in quantity, to ensure that this Transparent copy will 
-	    remain thus accessible at the stated location until at least one year after the last time you
-	    distribute an Opaque copy (directly or through your agents or retailers) of that edition to the public. 
-	  </para>
-
-	  <para>
-	    It is requested, but not required, that you contact the authors of the Document well before 
-	    redistributing any large number of copies, to give them a chance to provide you with an updated
-	    version of the Document. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>4. MODIFICATIONS</term>
-	<listitem>
-	  <para>
-	    You may copy and distribute a Modified Version of the Document under the conditions of sections 2 and 3 
-	    above, provided that you release the Modified Version under precisely this
-	    License, with the Modified Version filling the role of the Document, thus licensing distribution and 
-	    modification of the Modified Version to whoever possesses a copy of it. In addition, you
-	    must do these things in the Modified Version: 
-	  </para>
-
-	  <itemizedlist mark="opencircle">
-	    <listitem>
-	      <formalpara>
-		<title>A</title>
-		<para>
-		  Use in the Title Page (and on the covers, if any) a title distinct from that of the Document, 
-		  and from those of previous versions (which should, if there were any, be listed in the 
-		  History section of the Document). You may use the same title as a previous version if the original 
-		  publisher of that version gives permission. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>B</title>
-		<para>
-		  List on the Title Page, as authors, one or more persons or entities responsible for authorship of 
-		  the modifications in the Modified Version, together with at least five of the principal
-		  authors of the Document (all of its principal authors, if it has less than five). 
-		</para>
-	      </formalpara>
-	    </listitem>
-	    
-	    <listitem>
-	      <formalpara>
-		<title>C</title>
-		<para>
-		  State on the Title page the name of the publisher of the Modified Version, as the publisher.
-		</para>
-	      </formalpara>
-	    </listitem>
-	    
-	    <listitem>
-	      <formalpara>
-		<title>D</title>
-		<para>
-		  Preserve all the copyright notices of the Document.
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>E</title>
-		<para>
-		  Add an appropriate copyright notice for your modifications adjacent to the other copyright notices.
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>F</title>
-		<para>
-		  Include, immediately after the copyright notices, a license notice giving the public permission to 
-		  use the Modified Version under the terms of this License, in the form shown in the Addendum below. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>G</title>
-		<para>
-		  Preserve in that license notice the full lists of Invariant Sections and required Cover Texts 
-		  given in the Document's license notice. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>H</title>
-		<para>
-		  Include an unaltered copy of this License.
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>I</title>
-		<para>
-		  Preserve the section entitled "History", and its title, and add to it an item stating at least the 
-		  title, year, new authors, and publisher of the Modified Version as given on the Title Page.  If 
-		  there is no section entitled "History" in the Document, create one stating the title, year, 
-		  authors, and publisher of the Document as given on its Title Page, then add an item describing 
-		  the Modified Version as stated in the previous sentence. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>J</title>
-		<para>
-		  Preserve the network location, if any, given in the Document for public access to a Transparent 
-		  copy of the Document, and likewise the network locations given in the Document for previous 
-		  versions it was based on. These may be placed in the "History" section. You may omit a network 
-		  location for a work that was published at least four years before the Document itself, or if the 
-		  original publisher of the version it refers to gives permission. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>K</title>
-		<para>
-		  In any section entitled "Acknowledgements" or "Dedications", preserve the section's title, and 
-		  preserve in the section all the substance and tone of each of the contributor acknowledgements 
-		  and/or dedications given therein.
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>L</title>
-		<para>
-		  Preserve all the Invariant Sections of the Document, unaltered in their text and in their titles. 
-		  Section numbers or the equivalent are not considered part of the section titles. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>M</title>
-		<para>
-		  Delete any section entitled "Endorsements". Such a section may not be included in the Modified 
-		  Version. 
-		</para>
-	      </formalpara>
-	    </listitem>
-
-	    <listitem>
-	      <formalpara>
-		<title>N</title>
-		<para>
-		  Do not retitle any existing section as "Endorsements" or to conflict in title with any Invariant 
-		  Section. 
-		</para>
-	      </formalpara>
-	    </listitem>
-	  </itemizedlist>
-
-	  <para>
-	    If the Modified Version includes new front-matter sections or appendices that qualify as Secondary 
-	    Sections and contain no material copied from the Document, you may at your option
-	    designate some or all of these sections as invariant. To do this, add their titles to the list of 
-	    Invariant Sections in the Modified Version's license notice. These titles must be distinct from any
-	    other section titles. 
-	  </para>
-
-	  <para>
-	    You may add a section entitled "Endorsements", provided it contains nothing but endorsements of your 
-	    Modified Version by various parties--for example, statements of peer review or that
-	    the text has been approved by an organization as the authoritative definition of a standard. 
-	  </para>
-
-	  <para>
-	    You may add a passage of up to five words as a Front-Cover Text, and a passage of up to 25 words as a 
-	    Back-Cover Text, to the end of the list of Cover Texts in the Modified Version.
-	    Only one passage of Front-Cover Text and one of Back-Cover Text may be added by (or through arrangements 
-	    made by) any one entity. If the Document already includes a cover text for
-	    the same cover, previously added by you or by arrangement made by the same entity you are acting on 
-	    behalf of, you may not add another; but you may replace the old one, on explicit
-	    permission from the previous publisher that added the old one. 
-	  </para>
-
-	  <para>
-	    The author(s) and publisher(s) of the Document do not by this License give permission to use their names 
-	    for publicity for or to assert or imply endorsement of any Modified Version. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>5. COMBINING DOCUMENTS</term>
-	<listitem>
-	  <para>
-	    You may combine the Document with other documents released under this License, under the terms defined 
-	    in section 4 above for modified versions, provided that you include in the
-	    combination all of the Invariant Sections of all of the original documents, unmodified, and list them all 
-	    as Invariant Sections of your combined work in its license notice. 
-	  </para>
-
-	  <para>
-	    The combined work need only contain one copy of this License, and multiple identical Invariant Sections 
-	    may be replaced with a single copy. If there are multiple Invariant Sections with the
-	    same name but different contents, make the title of each such section unique by adding at the end of it, 
-	    in parentheses, the name of the original author or publisher of that section if known, or
-	    else a unique number. Make the same adjustment to the section titles in the list of Invariant Sections 
-	    in the license notice of the combined work. 
-	  </para>
-	  
-	  <para>
-	    In the combination, you must combine any sections entitled "History" in the various original documents, 
-	    forming one section entitled "History"; likewise combine any sections entitled
-	    "Acknowledgements", and any sections entitled "Dedications". You must delete all sections entitled 
-	    "Endorsements." 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>6. COLLECTIONS OF DOCUMENTS</term>
-	<listitem>
-	  <para>
-	    You may make a collection consisting of the Document and other documents released under this License, and 
-	    replace the individual copies of this License in the various documents with a
-	    single copy that is included in the collection, provided that you follow the rules of this License for 
-	    verbatim copying of each of the documents in all other respects. 
-	  </para>
-
-	  <para>
-	    You may extract a single document from such a collection, and distribute it individually under this 
-	    License, provided you insert a copy of this License into the extracted document, and follow
-	    this License in all other respects regarding verbatim copying of that document. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>7. AGGREGATION WITH INDEPENDENT WORKS</term>
-	<listitem>
-	  <para>
-	    A compilation of the Document or its derivatives with other separate and independent documents or works, 
-	    in or on a volume of a storage or distribution medium, does not as a whole count
-	    as a Modified Version of the Document, provided no compilation copyright is claimed for the compilation. 
-	    Such a compilation is called an "aggregate", and this License does not apply to the
-	    other self-contained works thus compiled with the Document, on account of their being thus compiled, if 
-	    they are not themselves derivative works of the Document. If the Cover Text
-	    requirement of section 3 is applicable to these copies of the Document, then if the Document is less than 
-	    one quarter of the entire aggregate, the Document's Cover Texts may be placed on
-	    covers that surround only the Document within the aggregate. Otherwise they must appear on covers around 
-	    the whole aggregate. 
-	  </para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term>8. TRANSLATION</term>
-	<listitem>
-	  <para>
-	    Translation is considered a kind of modification, so you may distribute translations of the Document 
-	    under the terms of section 4. Replacing Invariant Sections with translations requires
-	    special permission from their copyright holders, but you may include translations of some or all 
-	    Invariant Sections in addition to the original versions of these Invariant Sections. You may
-	    include a translation of this License provided that you also include the original English version of 
-	    this License. In case of a disagreement between the translation and the original English
-	    version of this License, the original English version will prevail. 
-	  </para>
-	</listitem>
-      </varlistentry>
-      
-      <varlistentry>
-	<term>9. TERMINATION</term>
-	<listitem>
-	  <para>
-	    You may not copy, modify, sublicense, or distribute the Document except as expressly provided for under 
-	    this License. Any other attempt to copy, modify, sublicense or distribute the
-	    Document is void, and will automatically terminate your rights under this License. However, parties who 
-	    have received copies, or rights, from you under this License will not have their
-	    licenses terminated so long as such parties remain in full compliance. 
-	  </para>
-	</listitem>
-      </varlistentry>
-      
-      <varlistentry>
-	<term>10. FUTURE REVISIONS OF THIS LICENSE</term>
-	<listitem>
-	  <para>
-	    The Free Software Foundation may publish new, revised versions of the GNU Free Documentation License from 
-	    time to time. Such new versions will be similar in spirit to the present
-	    version, but may differ in detail to address new problems or concerns. See http://www.gnu.org/copyleft/. 
-	  </para>
-
-	  <para>
-	    Each version of the License is given a distinguishing version number. If the Document specifies that a 
-	    particular numbered version of this License "or any later version" applies to it, you
-	    have the option of following the terms and conditions either of that specified version or of any later 
-	    version that has been published (not as a draft) by the Free Software Foundation. If the
-	    Document does not specify a version number of this License, you may choose any version ever published 
-	    (not as a draft) by the Free Software Foundation. 
-	  </para>
-	</listitem>
-      </varlistentry>
-    </variablelist>
-  </appendix>  
 
  </article>
 
