@@ -5,8 +5,8 @@
  *           George Lebl
  *
  */
-#include <stdio.h>
 #include "config.h"
+#include <stdio.h>
 #include "drawer-widget.h"
 #include "border-widget.h"
 #include "floating-widget.h"

@@ -7,9 +7,9 @@
  *          George Lebl
  */
 
-#include <gtk/gtk.h>
-
 #include <config.h>
+
+#include <gtk/gtk.h>
 
 #include <string.h>
 
