@@ -16,6 +16,9 @@
 
 #include "panel-include.h"
 
+/* from gtkhandlebox.c */
+#define DRAG_HANDLE_SIZE 10
+
 extern PanelWidget *current_panel;
 
 static int
@@ -24,6 +27,7 @@ ignore_x_error(Display* d, XErrorEvent* e)
 	fprintf(stderr, "ignore_x_error called\n");
 	return 0;
 }
+
 
 static int
 get_window_id(Window win, char *title, guint32 *wid)
@@ -116,6 +120,44 @@ socket_destroyed(GtkWidget *w, gpointer data)
 	g_free(swallow);
 
 	return FALSE;
+}
+
+static int
+swallow_detached (GtkWidget *handle_box, gpointer data)
+{
+  Swallow *swallow  = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
+
+  if(GPOINTER_TO_INT(gtk_object_get_user_data
+		     (GTK_OBJECT(handle_box)))==SWALLOW_VERTICAL) {
+    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
+    gtk_widget_set_usize( swallow->handle_box, swallow->width, DRAG_HANDLE_SIZE);
+  } else {
+    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT; 
+    gtk_widget_set_usize( handle_box, DRAG_HANDLE_SIZE,
+			  swallow->height );
+  } 
+  gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
+  return FALSE;
+}
+
+static int
+swallow_attached (GtkWidget *handle_box, gpointer data)
+{
+  Swallow *swallow = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
+  
+  if(GPOINTER_TO_INT(gtk_object_get_user_data
+		     (GTK_OBJECT(handle_box)))== SWALLOW_VERTICAL) {
+    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
+    gtk_widget_set_usize( handle_box, swallow->width,
+			  swallow->height + DRAG_HANDLE_SIZE);
+  } else {
+    GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT;
+    gtk_widget_set_usize( handle_box,
+			  swallow->width + DRAG_HANDLE_SIZE,
+			  swallow->height);
+  } 
+  gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
+  return FALSE;
 }
 
 
@@ -234,76 +276,52 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	Swallow *swallow;
 	GtkWidget *w;
 	GtkWidget *table;
+	GtkWidget *handle_box;
 
 	swallow = g_new(Swallow,1);
 
 	swallow->ebox = gtk_event_box_new();
 	gtk_widget_show(swallow->ebox);
 
-	table = gtk_table_new(2,2,FALSE);
-	gtk_container_add(GTK_CONTAINER(swallow->ebox),table);
-	gtk_widget_show(table);
-
-	swallow->handle_n = gtk_vbox_new(FALSE,0);
-	gtk_table_attach(GTK_TABLE(table),swallow->handle_n,
-			 1,2,0,1,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 0,0);
-
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,48,0);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,48,0);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,48,0);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_n),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
-
-	swallow->handle_w = gtk_hbox_new(FALSE,0);
-	gtk_table_attach(GTK_TABLE(table),swallow->handle_w,
-			 0,1,1,2,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 0,0);
-
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,0,48);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,0,48);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
-	w = gtk_frame_new(NULL);
-	gtk_widget_set_usize(w,0,48);
-	gtk_frame_set_shadow_type(GTK_FRAME(w),GTK_SHADOW_OUT);
-	gtk_box_pack_start(GTK_BOX(swallow->handle_w),w,TRUE,TRUE,0);
-	gtk_widget_show(w);
 	
 	swallow->socket=gtk_socket_new();
 	if(width != 0 || height != 0)
-		gtk_widget_set_usize(swallow->socket,width,height);
+	  gtk_widget_set_usize(swallow->socket, width, height);
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
 			         GTK_SIGNAL_FUNC(socket_realized), NULL);
 	gtk_signal_connect(GTK_OBJECT(swallow->socket),"destroy",
 			   GTK_SIGNAL_FUNC(socket_destroyed), swallow);
 
-	gtk_table_attach(GTK_TABLE(table),swallow->socket,
-			 1,2,1,2,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
-			 0,0);
+
+	swallow->handle_box = gtk_handle_box_new();
 	
+	/* WHAT??? why the f*** can't I put swallow as an argument to
+           the signal funcs??? Using *-set-data for now. I need a brain.*/
+	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_attached",
+			    GTK_SIGNAL_FUNC(swallow_attached), NULL);
+	gtk_signal_connect (GTK_OBJECT(swallow->handle_box), "child_detached",
+			    GTK_SIGNAL_FUNC(swallow_detached), NULL);
+	gtk_object_set_data (GTK_OBJECT (swallow->handle_box), "swallow_obj",
+			     swallow);
+	
+	gtk_container_add ( GTK_CONTAINER(swallow->ebox),
+			    swallow->handle_box );
+
+	w = gtk_frame_new(NULL);
+
+	gtk_frame_set_shadow_type( GTK_FRAME(w), GTK_SHADOW_IN);
+	gtk_container_add ( GTK_CONTAINER(swallow->handle_box), w );
+	
+	gtk_widget_show ( swallow->handle_box );
+	/* FIXME: I want to add the title of the swallowed window.
+	   E.g. a Pager is "sticky", but having a pager in a handlebox
+	   is not -> clicking will change the desktop, but leave the
+	   pager behind :-( Below is one of the non working versions...
+	*/
+	/*gdk_window_set_title(GTK_HANDLE_BOX(swallow->handle_box)->float_window,
+	  g_strdup(title));*/
+	gtk_container_add ( GTK_CONTAINER(w),
+			    swallow->socket );
 	gtk_widget_show(swallow->socket);
 
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
@@ -323,13 +341,30 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 void
 set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 {
-	if(orient==SWALLOW_VERTICAL) {
-		gtk_widget_show(swallow->handle_n);
-		gtk_widget_hide(swallow->handle_w);
-	} else {
-		gtk_widget_hide(swallow->handle_n);
-		gtk_widget_show(swallow->handle_w);
-	}
+  if (GTK_HANDLE_BOX(swallow->handle_box)->child_detached) {
+    if(orient==SWALLOW_VERTICAL) {
+      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
+      gtk_widget_set_usize( swallow->handle_box, swallow->width,
+			    DRAG_HANDLE_SIZE);
+    } else {
+      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
+      gtk_widget_set_usize( swallow->handle_box, DRAG_HANDLE_SIZE,
+			    swallow->height );
+    }
+  } else {
+    if(orient==SWALLOW_VERTICAL) {
+      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
+      gtk_widget_set_usize( swallow->handle_box, swallow->width,
+			    swallow->height + DRAG_HANDLE_SIZE);
+    } else {
+      GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
+      gtk_widget_set_usize( swallow->handle_box,
+			    swallow->width + DRAG_HANDLE_SIZE,
+			    swallow->height );
+    }
+  }
+  gtk_object_set_user_data(GTK_OBJECT(swallow->handle_box),
+			   GINT_TO_POINTER(orient));
 }
 
 void

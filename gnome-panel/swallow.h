@@ -12,10 +12,11 @@ typedef enum {
 
 typedef struct {
 	GtkWidget *ebox;
-	GtkWidget *handle_n;
-	GtkWidget *handle_w;
+/* 	GtkWidget *handle_n; */
+/* 	GtkWidget *handle_w; */
 	GtkWidget *socket;
-	char *title;
+        GtkWidget *handle_box;
+        char *title;
 	char *path;
 	int width;
 	int height;
