@@ -2104,7 +2104,7 @@ fill_clock_applet (PanelApplet *applet)
 	gtk_container_set_border_width (GTK_CONTAINER (cd->toggle), 0);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->toggle);
 
-	gtk_window_set_default_icon_name ("gnome-clock");
+	gtk_window_set_default_icon_name ("clock");
 	gtk_widget_show (cd->applet);
 
 	/* FIXME: Update this comment. */
@@ -2563,7 +2563,7 @@ display_about_dialog (BonoboUIComponent *uic,
 		      "authors", authors,
 		      "documenters", documenters,
 		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "gnome-clock",
+		      "logo_icon_name", "clock",
 		      NULL);
 	
 	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
