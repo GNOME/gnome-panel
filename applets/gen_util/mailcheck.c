@@ -1448,17 +1448,6 @@ static const BonoboUIVerb mailcheck_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static const char mailcheck_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Properties Item\" verb=\"Properties\" _label=\"Properties ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-properties\"/>\n"
-	"   <menuitem name=\"Help Item\" verb=\"Help\" _label=\"Help\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-help\"/>\n"
-	"   <menuitem name=\"About Item\" verb=\"About\" _label=\"About ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
-	"   <menuitem name=\"Check Item\" verb=\"Check\" _label=\"Check for mail\"/>\n"
-	"</popup>\n";
-	
 gboolean
 fill_mailcheck_applet(PanelApplet *applet)
 {
@@ -1512,8 +1501,12 @@ fill_mailcheck_applet(PanelApplet *applet)
 			 G_CALLBACK(exec_clicked_cmd), mc);
 
 
-	panel_applet_setup_menu (applet, mailcheck_menu_xml, 
-			         mailcheck_menu_verbs, mc);
+	panel_applet_setup_menu_from_file (applet,
+					   NULL,
+					   "GNOME_MailCheckApplet.xml",
+					   NULL, 
+			        	   mailcheck_menu_verbs,
+					   mc);
 	
 	gtk_widget_show (GTK_WIDGET (applet));
 

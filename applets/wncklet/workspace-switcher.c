@@ -142,17 +142,6 @@ static const BonoboUIVerb pager_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static const char pager_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Pager Properties Item\" verb=\"PagerProperties\" _label=\"Properties ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-properties\"/>\n"
-	"   <menuitem name=\"Pager Help Item\" verb=\"PagerHelp\" _label=\"Help\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-help\"/>\n"
-	"   <menuitem name=\"Pager About Item\" verb=\"PagerAbout\" _label=\"About ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
-	"</popup>\n";
-
-
 static void
 num_rows_changed (GConfClient *client,
 		  guint        cnxn_id,
@@ -358,7 +347,12 @@ fill_pager_applet(PanelApplet *applet)
 			  G_CALLBACK (applet_change_pixel_size),
 			  pager);
 	
-	panel_applet_setup_menu (PANEL_APPLET (pager->applet), pager_menu_xml, pager_menu_verbs, pager);
+	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
+					   NULL,
+					   "GNOME_PagerApplet.xml",
+					   NULL,
+					   pager_menu_verbs,
+					   pager);
 
 	return TRUE;
 }

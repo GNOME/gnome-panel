@@ -507,20 +507,6 @@ static const BonoboUIVerb clock_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static const char clock_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Clock Properties Item\" verb=\"ClockProperties\" _label=\"Properties ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-properties\"/>\n"
-	"   <menuitem name=\"Clock Copy Time Item\" verb=\"ClockCopyTime\" _label=\"Copy time\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-copy\"/>\n"
-	"   <menuitem name=\"Clock Copy Date Item\" verb=\"ClockCopyDate\" _label=\"Copy date\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-copy\"/>\n"
-	"   <menuitem name=\"Clock Help Item\" verb=\"ClockHelp\" _label=\"Help\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-help\"/>\n"
-	"   <menuitem name=\"Clock About Item\" verb=\"ClockAbout\" _label=\"About ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
-	"</popup>\n";
-
 gboolean
 fill_clock_applet(PanelApplet *applet)
 {

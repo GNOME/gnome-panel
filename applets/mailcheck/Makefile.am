@@ -51,6 +51,12 @@ mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas
 
+uidir 		= $(datadir)/gnome-2.0/ui
+ui_DATA		= \
+	GNOME_ClockApplet.xml		\
+	GNOME_MailCheckApplet.xml	\
+	GNOME_PagerApplet.xml
+	
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
@@ -69,4 +75,5 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(PRINTER_BITMAPS)				\
 	$(MAILCHECK_BITMAPS)				\
 	$(schema_DATA)					\
-	$(glade_DATA)
+	$(glade_DATA)					\
+	$(ui_DATA)
