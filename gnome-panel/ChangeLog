@@ -1,3 +1,8 @@
+2003-03-04 Hidetoshi Tajima  <hidetoshi.tajima@sun.com>
+
+	* gnome-panel-screenshot.c (on_ok_button_clicked): Fix #107578 by
+	  converting from utf8 when getting text from the text entry.
+
 2003-03-04  Arvind Samptur <arvind.samptur@wipro.com>
 	* basep-widget.c : (find_non_drawer_parent_panel):
 	Since we don't have autohiding on menu panel, return NULL
