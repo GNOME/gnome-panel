@@ -52,6 +52,7 @@ struct _AppletData
 	GtkWidget *applet;
 	int pos;
 	int cells;
+	int dirty;
 };
 
 struct _PanelWidget

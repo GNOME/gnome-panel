@@ -455,6 +455,54 @@ panel_widget_is_applet_stuck(PanelWidget *panel, GtkWidget *applet)
 	return FALSE;
 }
 
+static int
+allocate_dirty_child(gpointer data)
+{
+	AppletData *ad = data;
+	PanelWidget *panel;
+	GtkAllocation challoc;
+	GtkRequisition chreq;
+	
+	g_return_val_if_fail(ad != NULL,FALSE);
+	g_return_val_if_fail(ad->applet != NULL,FALSE);
+	g_return_val_if_fail(ad->applet->parent != NULL,FALSE);
+	g_return_val_if_fail(IS_PANEL_WIDGET(ad->applet->parent),FALSE);
+
+	panel = PANEL_WIDGET(ad->applet->parent);
+	
+	if(!ad->dirty)
+		return FALSE;
+	
+	gtk_widget_get_child_requisition(ad->applet,&chreq);
+
+	if(panel->orient == PANEL_HORIZONTAL) {
+		ad->cells = chreq.width + pw_applet_padding;
+		challoc.x = ad->pos;
+		challoc.y = (GTK_WIDGET(panel)->allocation.height - chreq.height) / 2;
+	} else {
+		ad->cells = chreq.height + pw_applet_padding;
+		challoc.x = (GTK_WIDGET(panel)->allocation.width - chreq.width) / 2;
+		challoc.y = ad->pos;
+	}
+	challoc.width = chreq.width;
+	challoc.height = chreq.height;
+	gtk_widget_size_allocate(ad->applet,&challoc);
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_MOVE_SIGNAL],
+			ad->applet);
+
+	return FALSE;
+}
+
+static void
+panel_widget_queue_applet_for_resize(AppletData *ad)
+{
+	ad->dirty = TRUE;
+	g_idle_add(allocate_dirty_child,ad);
+}
+
+
 static void
 panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
 {
@@ -473,20 +521,15 @@ panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
 		nad = nlist->data;
 	if(!nlist || nad->pos > ad->pos+ad->cells) {
 		ad->pos++;
-		gtk_widget_queue_resize(GTK_WIDGET(panel));
+		panel_widget_queue_applet_for_resize(ad);
 		return;
 	}
 	nad->pos = ad->pos;
 	ad->pos = nad->pos+nad->cells;
 	panel->applet_list = my_g_list_swap_prev(panel->applet_list,nlist);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			ad->applet);
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			nad->applet);
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
+	panel_widget_queue_applet_for_resize(ad);
+	panel_widget_queue_applet_for_resize(nad);
 }
 
 static void
@@ -507,20 +550,15 @@ panel_widget_switch_applet_left(PanelWidget *panel, GList *list)
 		pad = nlist->data;
 	if(!nlist || pad->pos+pad->cells < ad->pos) {
 		ad->pos--;
-		gtk_widget_queue_resize(GTK_WIDGET(panel));
+		panel_widget_queue_applet_for_resize(ad);
 		return;
 	}
 	ad->pos = pad->pos;
 	pad->pos = ad->pos+ad->cells;
 	panel->applet_list = my_g_list_swap_next(panel->applet_list,nlist);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			ad->applet);
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			pad->applet);
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
+	panel_widget_queue_applet_for_resize(ad);
+	panel_widget_queue_applet_for_resize(pad);
 }
 
 static int
@@ -926,6 +964,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			}
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
+			ad->dirty = FALSE;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 			i += ad->cells;
 		}
@@ -981,6 +1020,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			}
 			challoc.width = chreq.width;
 			challoc.height = chreq.height;
+			ad->dirty = FALSE;
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
@@ -1676,10 +1716,7 @@ panel_widget_nice_move(PanelWidget *panel, AppletData *ad, int pos)
 		my_g_list_resort_item(panel->applet_list,ad,
 				      (GCompareFunc)applet_data_compare);
 
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[APPLET_MOVE_SIGNAL],
-			ad->applet);
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
+	panel_widget_queue_applet_for_resize(ad);
 }
 
 static int moving_timeout = -1;
@@ -2034,6 +2071,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 		ad->applet = applet;
 		ad->cells = 1;
 		ad->pos = pos;
+		ad->dirty = FALSE;
 		gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_DATA,ad);
 		
 		/*this is a completely new applet, which was not yet bound*/
@@ -2087,6 +2125,9 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 	g_return_val_if_fail(ad!=NULL,-1);
+	
+	/*we'll resize both panels anyway*/
+	ad->dirty = FALSE;
 	
 	ad->pos = pos;
 
