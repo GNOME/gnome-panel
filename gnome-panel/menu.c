@@ -67,11 +67,7 @@
 
 #undef MENU_DEBUG
 
-typedef enum {
-	SMALL_ICON_SIZE  = 20,
-	MEDIUM_ICON_SIZE = 32,
-	BIG_ICON_SIZE    = 48
-} IconSize;
+#define ICON_SIZE 20
 
 static char *gnome_folder = NULL;
 
@@ -126,18 +122,17 @@ struct _ShowItemMenu {
 
 typedef struct {
 	GtkWidget *image_menu_item;
-	gint size;
 	char *image;
 	char *fallback_image;
 } IconToLoad;
 
 static guint load_icons_id = 0;
+static GHashTable *loaded_icons = NULL;
 static GList *icons_to_load = NULL;
 
 static void load_menu_image_deferred (GtkWidget *image_menu_item,
 				      const char *image_filename,
-				      const char *fallback_image_filename,
-				      int size);
+				      const char *fallback_image_filename);
 
 static GtkWidget * create_menu_at_fr (GtkWidget *menu,
 				      FileRec *fr,
@@ -173,8 +168,7 @@ static GtkWidget * create_add_favourites_menu (GtkWidget *menu,
 
 static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
-				       const char *title,
-				       IconSize icon_size);
+				       const char *title);
 
 
 
@@ -551,9 +545,15 @@ icon_to_load_copy (IconToLoad *icon)
 	        new_icon->image_menu_item = gtk_widget_ref (icon->image_menu_item);
 	        new_icon->image = g_strdup (icon->image);
 		new_icon->fallback_image = g_strdup (icon->fallback_image);
-		new_icon->size = icon->size;
 	}
 	return new_icon;
+}
+
+static void
+remove_pixmap_from_loaded (GtkWidget *pixmap, gpointer data)
+{
+	if (loaded_icons != NULL) 
+		g_hash_table_remove (loaded_icons, data);
 }
 
 static gboolean
@@ -561,9 +561,12 @@ load_icons_handler (gpointer data)
 {
 	GtkWidget *parent;
 	GtkWidget *pixmap = NULL;
-	GdkPixbuf *pb, *pb2;
+	GdkPixbuf *pb;
 	IconToLoad *icon;
 	char *file;
+	gboolean loaded;
+
+load_icons_handler_again:
 
 	if (icons_to_load == NULL) {
 		load_icons_id = 0;
@@ -578,7 +581,9 @@ load_icons_handler (gpointer data)
 	/* if not visible anymore, just ignore */
 	if ( ! GTK_WIDGET_VISIBLE (parent)) {
 		icon_to_load_free (icon);
-		return TRUE;
+		/* we didn't do anything long/hard, so just do this again,
+		 * this is fun, don't go back to main loop */
+		goto load_icons_handler_again;
 	}
 
 	file = quick_desktop_item_find_icon (icon->image);
@@ -587,27 +592,71 @@ load_icons_handler (gpointer data)
 
 	if (file == NULL) {
 		icon_to_load_free (icon);
+		/* we didn't do anything long/hard, so just do this again,
+		 * this is fun, don't go back to main loop */
+		goto load_icons_handler_again;
+	}
+
+	pb = NULL;
+
+	loaded = FALSE;
+	pixmap = NULL;
+
+	if (loaded_icons != NULL &&
+	    (pixmap = g_hash_table_lookup (loaded_icons, file)) != NULL) {
+		pb = gtk_image_get_pixbuf (GTK_IMAGE (pixmap));
+		if (pb != NULL)
+			gdk_pixbuf_ref (pb);
+	}
+
+	if (pb == NULL) {
+		pb = gdk_pixbuf_new_from_file (file, NULL);
+		loaded = TRUE;
+	}
+	if (pb == NULL) {
+		g_free (file);
+		icon_to_load_free (icon);
+		/* this may have been a long operation so jump back to
+		 * the main loop for a while */
 		return TRUE;
 	}
 
-	pb = gdk_pixbuf_new_from_file (file, NULL);
-	if (pb == NULL) {
-		icon_to_load_free (icon);
-		return TRUE;
+	if (gdk_pixbuf_get_width (pb) != ICON_SIZE ||
+	    gdk_pixbuf_get_height (pb) != ICON_SIZE) {
+		GdkPixbuf *pb2;
+		pb2 = gdk_pixbuf_scale_simple (pb, ICON_SIZE, ICON_SIZE,
+					       GDK_INTERP_BILINEAR);
+		gdk_pixbuf_unref (pb);
+		pb = pb2;
+	}
+
+	pixmap = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (parent));
+	gtk_image_set_from_pixbuf (GTK_IMAGE (pixmap), pb);
+	gdk_pixbuf_unref (pb);
+
+	if (loaded) {
+		if (loaded_icons == NULL)
+			loaded_icons = g_hash_table_new_full
+				(g_str_hash, g_str_equal,
+				 (GDestroyNotify) g_free,
+				 (GDestroyNotify) gtk_widget_unref);
+		g_hash_table_replace (loaded_icons,
+				      g_strdup (file),
+				      gtk_widget_ref (pixmap));
+		g_signal_connect_data (G_OBJECT (pixmap), "destroy",
+				       G_CALLBACK (remove_pixmap_from_loaded),
+				       g_strdup (file),
+				       (GClosureNotify) g_free,
+				       0 /* connect_flags */);
+	} else {
+		g_free (file);
+		/* we didn't load from disk, so just do this again,
+		 * this is fun, don't go back to main loop */
+		goto load_icons_handler_again;
 	}
 
 	g_free (file);
-	
-	pb2 = gdk_pixbuf_scale_simple (pb, icon->size, icon->size, GDK_INTERP_BILINEAR);
 
-	gdk_pixbuf_unref (pb);
-
-	pixmap = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (parent));
-
-	gtk_image_set_from_pixbuf (GTK_IMAGE (pixmap), pb2);
-
-	gdk_pixbuf_unref (pb2);
-	
 	/* if still more we'll come back */
 	return TRUE;
 }
@@ -1769,8 +1818,6 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		      const char *title, MenuFinfo *mf)
 {
 	GtkWidget *label, *hbox=NULL, *align;
-	IconSize size = global_config.use_large_icons 
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 	label = gtk_label_new (title);
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
@@ -1789,10 +1836,10 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 
 		if (pixmap) {
 			gtk_container_add (GTK_CONTAINER (align), pixmap);
-			gtk_widget_set_usize (align, size + 2, size - 4);
+			gtk_widget_set_usize (align, ICON_SIZE + 2, ICON_SIZE - 4);
 			gtk_widget_show (pixmap);
 		} else
-			gtk_widget_set_usize (align, size + 2, size - 4);
+			gtk_widget_set_usize (align, ICON_SIZE + 2, ICON_SIZE - 4);
 
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 	}
@@ -1819,11 +1866,9 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 #endif /* FIXME */
 
 static void
-setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
-			       const char *title, const char *item_loc,
-			       gboolean applet, 
-			       IconSize icon_size,
-			       MenuFinfo *mf)
+setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
+		     const char *title, const char *item_loc,
+		     gboolean applet, MenuFinfo *mf)
 			       
 {
         static GtkTargetEntry menu_item_targets[] = {
@@ -1878,28 +1923,10 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_widget_show (menuitem);
 }
 
-static void
-setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
-		     const char *title, const char *item_loc,
-		     gboolean applet)
-{
-	setup_full_menuitem_with_size (menuitem, pixmap, title, 
-				       item_loc, applet, SMALL_ICON_SIZE,
-				       NULL);
-}
-
 void
 setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, const char *title)
 {
-	setup_full_menuitem (menuitem, pixmap, title, NULL, FALSE);
-}
-
-static void
-setup_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
-			  const char *title, int icon_size)
-{
-	setup_full_menuitem_with_size (menuitem, pixmap, title, NULL,
-				       FALSE, icon_size, NULL);
+	setup_full_menuitem (menuitem, pixmap, title, NULL, FALSE, NULL);
 }
 
 #ifdef FIXME
@@ -2576,14 +2603,13 @@ start_favourites_menu (GtkWidget *menu,
 	setup_menuitem_try_pixmap (menuitem,
 				   "launcher-program.png",
 				   /* Add to favourites */
-				   _("Add from menu"),
-				   SMALL_ICON_SIZE);
+				   _("Add from menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	m = create_add_favourites_menu (NULL,
 					TRUE /*fake_submenus*/);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
-	g_signal_connect (G_OBJECT (m),"show",
-			    G_CALLBACK (submenu_to_display), NULL);
+	g_signal_connect (G_OBJECT (m), "show",
+			  G_CALLBACK (submenu_to_display), NULL);
 
 	/* Eeeek, a hack, if this is set then the reloading
 	 * function will use start_favourites_menu */
@@ -2642,8 +2668,6 @@ create_menuitem (GtkWidget *menu,
 		 MenuFinfo *mf)
 {
 	GtkWidget *menuitem, *sub;
-	IconSize size = global_config.use_large_icons
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 	char *itemname;
 	const char *icon, *fallback;
 	
@@ -2712,21 +2736,21 @@ create_menuitem (GtkWidget *menu,
 	}
 
 	if (menus_have_icons () && icon != NULL) {
-		load_menu_image_deferred (menuitem, icon, fallback, size);
+		load_menu_image_deferred (menuitem, icon, fallback);
 	}
 
 	if (sub)
-	        setup_full_menuitem_with_size (menuitem, NULL, itemname,
-					       NULL, FALSE, size, mf);
+	        setup_full_menuitem (menuitem, NULL, itemname,
+				     NULL, FALSE, mf);
 
 	else if (strstr (fr->name,"/applets/") && fr->goad_id) {
 		setup_applet_drag (menuitem, fr->goad_id);
-		setup_full_menuitem_with_size (menuitem, NULL, itemname,
-					       fr->name, TRUE, size, mf);
+		setup_full_menuitem (menuitem, NULL, itemname,
+				     fr->name, TRUE, mf);
 
 	} else
-	        setup_full_menuitem_with_size (menuitem, NULL, itemname,
-					       fr->name, FALSE, size, mf);
+	        setup_full_menuitem (menuitem, NULL, itemname,
+				     fr->name, FALSE, mf);
 
 
 	if(*add_separator) {
@@ -2807,12 +2831,6 @@ create_menu_at_fr (GtkWidget *menu,
 	GtkWidget *menuitem;
 	MenuFinfo *mf = NULL;
 	DirRec *dr = (DirRec *)fr;
-
-#ifdef FIXME
-	GtkWidget *pixmap;
-	IconSize size = global_config.use_large_icons
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
-#endif /* FIXME */
 
 	g_return_val_if_fail(!(fr&&fr->type!=FILE_REC_DIR),menu);
 	
@@ -2985,17 +3003,14 @@ applet_menu_append (GtkWidget   *menu,
 		    const gchar *icon)
 {
 	GtkWidget *menuitem;
-	IconSize   icon_size;
 
 	menuitem = gtk_image_menu_item_new ();
 
-	icon_size = global_config.use_large_icons ? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
-
 	if (icon && menus_have_icons ()) {
-		load_menu_image_deferred (menuitem, icon, NULL, icon_size);
+		load_menu_image_deferred (menuitem, icon, NULL);
 	}
 
-	setup_full_menuitem_with_size (menuitem, NULL, name, NULL, FALSE, icon_size, NULL);
+	setup_full_menuitem (menuitem, NULL, name, NULL, FALSE, NULL);
 
 	gtk_widget_show_all (menuitem);
 
@@ -3415,20 +3430,18 @@ create_add_panel_submenu (gboolean tearoff)
 
 static void
 setup_menuitem_try_pixmap (GtkWidget *menuitem, const char *try_file,
-			   const char *title, IconSize icon_size)
+			   const char *title)
 {
 	if ( ! menus_have_icons ()) {
-		setup_menuitem_with_size (menuitem,
-					  NULL /*pixmap */,
-					  title,
-					  icon_size);
+		setup_menuitem (menuitem,
+				NULL /* pixmap */,
+				title);
 		return;
 	}
 
-	load_menu_image_deferred (menuitem, try_file, NULL, icon_size);
+	load_menu_image_deferred (menuitem, try_file, NULL);
 
-	setup_menuitem_with_size (menuitem, NULL,
-				  title, icon_size);
+	setup_menuitem (menuitem, NULL /* pixmap */, title);
 }
 	  
 
@@ -3938,7 +3951,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	if (m) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
-					   _("Applet"), SMALL_ICON_SIZE);
+					   _("Applet"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
@@ -3951,7 +3964,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "gnome-gmenu.png",
-				   _("Menu"), SMALL_ICON_SIZE);
+				   _("Menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	submenu = menu_new ();
@@ -3960,7 +3973,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	submenuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (submenuitem,
 				   "gnome-logo-icon-transparent.png",
-				   _("Main menu"), SMALL_ICON_SIZE);
+				   _("Main menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	g_signal_connect (G_OBJECT(submenuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
@@ -3970,7 +3983,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	submenuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (submenuitem, 
 				   "gnome-logo-icon-transparent.png",
-				   _("Programs menu"), SMALL_ICON_SIZE);
+				   _("Programs menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	g_signal_connect (G_OBJECT(submenuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
@@ -3979,7 +3992,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	submenuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (submenuitem, "gnome-favorites.png",
-				   _("Favorites menu"), SMALL_ICON_SIZE);
+				   _("Favorites menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	g_signal_connect (G_OBJECT(submenuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
@@ -3989,7 +4002,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "launcher-program.png",
-				   _("Launcher..."), SMALL_ICON_SIZE);
+				   _("Launcher..."));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(ask_about_launcher_cb),NULL);
@@ -3997,7 +4010,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "launcher-program.png",
-				   _("Launcher from menu"), SMALL_ICON_SIZE);
+				   _("Launcher from menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	m = create_add_launcher_menu (NULL, fake_submenus);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), m);
@@ -4007,7 +4020,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "panel-drawer.png",
-				   _("Drawer"), SMALL_ICON_SIZE);
+				   _("Drawer"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_drawer_to_panel,
@@ -4017,7 +4030,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   "gnome-term-night.png",
-				   _("Log out button"), SMALL_ICON_SIZE);
+				   _("Log out button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_logout_to_panel),
@@ -4027,7 +4040,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 				   "gnome-lockscreen.png",
-				   _("Lock button"), SMALL_ICON_SIZE);
+				   _("Lock button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_lock_to_panel),
@@ -4037,7 +4050,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   "gnome-run.png",
-				   _("Run button"), SMALL_ICON_SIZE);
+				   _("Run button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_run_to_panel),
@@ -4054,7 +4067,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	setup_internal_applet_drag(menuitem, "SWALLOW:ASK");
 
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem(menuitem, 0, _("Status dock"));
+	setup_menuitem(menuitem, NULL, _("Status dock"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(try_add_status_to_panel),NULL);
@@ -4230,7 +4243,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
 					   "gnome-gmenu.png",
-					   _("Edit menus..."), SMALL_ICON_SIZE);
+					   _("Edit menus..."));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK(panel_launch_gmenu), 
@@ -4396,7 +4409,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
 					   "gnome-lockscreen.png",
-					   _("Lock screen"), SMALL_ICON_SIZE);
+					   _("Lock screen"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK(panel_lock), 0);
@@ -4409,7 +4422,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   "gnome-term-night.png",
-				   _("Log out"), SMALL_ICON_SIZE);
+				   _("Log out"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			    G_CALLBACK(panel_quit), 0);
@@ -4431,8 +4444,6 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	const DistributionInfo *distribution_info = get_distribution_info ();
-	IconSize size = global_config.use_large_icons 
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
 	if (distribution_info == NULL)
 		return;
@@ -4443,7 +4454,7 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   distribution_info->menu_icon,
-				   _(distribution_info->menu_name), size);
+				   _(distribution_info->menu_name));
 	gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   menu);
@@ -4464,8 +4475,6 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	char *pixmap_path;
-	IconSize size = global_config.use_large_icons 
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
 	menu = create_kde_menu (NULL, fake_submenus, TRUE, TRUE,
 				TRUE, launcher_add, favourites_add);
@@ -4474,12 +4483,11 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	menuitem = gtk_image_menu_item_new ();
 
 	if (g_file_test (pixmap_path, G_FILE_TEST_EXISTS)) {
-		load_menu_image_deferred (menuitem, pixmap_path, NULL, size);
+		load_menu_image_deferred (menuitem, pixmap_path, NULL);
 	}
 	g_free (pixmap_path);
 
-	setup_menuitem_with_size (menuitem, NULL, _("KDE menus"),
-				  size);
+	setup_menuitem (menuitem, NULL, _("KDE menus"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	g_signal_connect (G_OBJECT(menu),"show",
@@ -4511,9 +4519,6 @@ create_root_menu (GtkWidget *root_menu,
 					 MAIN_MENU_PANEL));
 	gboolean has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
 				       MAIN_MENU_PANEL_SUB));
-
-	IconSize size = global_config.use_large_icons 
-		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
 	const DistributionInfo *distribution_info = get_distribution_info ();
 
@@ -4578,7 +4583,7 @@ create_root_menu (GtkWidget *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
 					   "gnome-logo-icon-transparent.png",
-					   _("Programs"), size);
+					   _("Programs"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		if(menu) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
@@ -4598,7 +4603,7 @@ create_root_menu (GtkWidget *root_menu,
 				 FALSE /* favourites_add */);
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-favorites.png",
-					   _("Favorites"), size);
+					   _("Favorites"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		g_signal_connect (G_OBJECT(menu),"show",
@@ -4611,7 +4616,7 @@ create_root_menu (GtkWidget *root_menu,
 		if (menu) {
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
-			                           _("Applets"), size);
+			                           _("Applets"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 			g_signal_connect (G_OBJECT (menu),"show",
@@ -4633,7 +4638,7 @@ create_root_menu (GtkWidget *root_menu,
 	if ( ! no_run_box) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
-					   _("Run..."), size);
+					   _("Run..."));
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK (run_cb), NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
@@ -4649,7 +4654,7 @@ create_root_menu (GtkWidget *root_menu,
 		menu = create_panel_submenu (NULL, fake_submenus, TRUE, is_basep);
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-panel.png", 
-					   _("Panel"), SMALL_ICON_SIZE);
+					   _("Panel"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	}
@@ -4657,7 +4662,7 @@ create_root_menu (GtkWidget *root_menu,
 		menu = create_desktop_menu (NULL, fake_submenus, TRUE);
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-ccdesktop.png",
-					   _("Desktop"), SMALL_ICON_SIZE);
+					   _("Desktop"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	}
@@ -5012,8 +5017,6 @@ image_menu_shown (GtkWidget *w, gpointer data)
 	image = gtk_image_menu_item_get_image (GTK_IMAGE_MENU_ITEM (w));
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
 		return;
-	/*if (GTK_IS_IMAGE (image))
-		return;*/
 
 	icons_to_load = g_list_prepend (icons_to_load,
 					icon_to_load_copy (icon));
@@ -5025,8 +5028,7 @@ image_menu_shown (GtkWidget *w, gpointer data)
 static void
 load_menu_image_deferred (GtkWidget *image_menu_item,
 			  const char *image_filename,
-			  const char *fallback_image_filename,
-			  int size)
+			  const char *fallback_image_filename)
 {
   IconToLoad *icon;
   GtkWidget *w;
@@ -5036,10 +5038,10 @@ load_menu_image_deferred (GtkWidget *image_menu_item,
   icon->image_menu_item = gtk_widget_ref (image_menu_item);
   icon->image = g_strdup (image_filename);
   icon->fallback_image = g_strdup (fallback_image_filename);
-  icon->size = size;
 
   w = gtk_image_new ();
-  gtk_widget_set_usize (w, size, size);
+  w->requisition.width = ICON_SIZE;
+  w->requisition.height = ICON_SIZE;
   gtk_widget_show (w);
  
   gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item), w);

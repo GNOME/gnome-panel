@@ -1,3 +1,11 @@
+Sat Dec 01 22:44:28 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: get rid of the large icon stuff, if we already have 
+	  a GtkImage for the file we're looking for loaded, just use that,
+	  makes the KDE screensaver menu icons load faster then a speeding
+	  bullet (among others:).  Also fix the horizontal jump by directly
+	  setting the empty image requisition.
+
 Sat Dec 01 21:21:17 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: removed a bit of the jumpiness effect due to menu icons,
