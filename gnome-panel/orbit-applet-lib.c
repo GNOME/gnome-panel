@@ -58,7 +58,7 @@ void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * cookie, COR
 
 void server_back_change(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev);
 
-void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short enabled, CORBA_Environment *ev);
+void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * cookie, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev);
 
 static POA_GNOME_Applet__epv applet_epv = {
   NULL, /* _private */
@@ -122,11 +122,11 @@ void server_back_change(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_s
   _gnome_applet_back_change(applet_id, back_type, pixmap, &color);
 }
 
-void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short enabled, CORBA_Environment *ev)
+void server_tooltips_state(POA_GNOME_Applet *servant, CORBA_char * ccookie, CORBA_short applet_id, CORBA_short enabled, CORBA_Environment *ev)
 {
   CHECK_COOKIE();
 
-  _gnome_applet_tooltips_state(enabled);
+  _gnome_applet_tooltips_state(applet_id, enabled);
 }
 
 int gnome_panel_applet_reinit_corba(void)

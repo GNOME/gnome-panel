@@ -15,9 +15,6 @@
 GArray *applets;
 int applet_count;
 
-/*a list of started extern applet child processes*/
-GList * children = NULL;
-
 /*execution queue stuff, execute only one applet in a row, thereby getting
   rid of some problems with applet*/
 int current_exec = -1;
@@ -52,15 +49,12 @@ really_exec_prog(int applet_id, char *path, char *param)
 		mulapp_load_or_add_to_queue(path,param);
 		return TRUE;
 	}  else {
-		AppletChild *child;
+		int pid;
 
-
-		child = g_new(AppletChild,1);
-
-		child->pid = fork();
-		if(child->pid < 0)
+		pid = fork();
+		if(pid < 0)
 			g_error("Can't fork!");
-		if(child->pid == 0) {
+		if(pid == 0) {
 			if(strlen(param)>0)
 				execl(path,path,param,NULL);
 			else
@@ -68,12 +62,8 @@ really_exec_prog(int applet_id, char *path, char *param)
 			g_error("Can't execl!");
 		}
 
-		printf("started applet, pid: %d\n",child->pid);
+		printf("started applet, pid: %d\n",pid);
 		
-		child->applet_id = applet_id;
-			
-		children = g_list_prepend(children,child);
-
 		current_exec = applet_id;
 
 		/*wait 100 seconds before timing out*/

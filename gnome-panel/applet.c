@@ -47,66 +47,16 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 	panel_widget_applet_move_use_idle(panel);
 }
 
+/*destroy widgets and call the above cleanup function*/
 void
 panel_clean_applet(int applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
-	AppletType type;
-
+	
 	g_return_if_fail(info != NULL);
 
-	/*fixes reentrancy problem with this routine*/
-	if(info->type == APPLET_EMPTY)
-		return;
-
-	type = info->type;
-	info->type = APPLET_EMPTY;
-
-	if(info->widget) {
-		PanelWidget *panel;
-		GtkWidget *w = info->widget;
-
-		info->widget = NULL;
-
-		panel = gtk_object_get_data(GTK_OBJECT(w),
-					    PANEL_APPLET_PARENT_KEY);
-
-		if(panel) {
-			/*gtk_container_remove(GTK_CONTAINER(panel),w);
-			gtk_widget_unref(w);*/
-			gtk_widget_destroy(w);
-		}
-	}
-	if(type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		g_assert(drawer);
-		if(drawer->drawer) {
-			GtkWidget *dw = drawer->drawer;
-			drawer->drawer = NULL;
-			PANEL_WIDGET(DRAWER_WIDGET(dw)->panel)->master_widget = NULL;
-			gtk_widget_destroy(dw);
-		}
-	}
-	if(info->menu) {
-		gtk_widget_unref(info->menu);
-		info->menu=NULL;
-	}
-
-	info->data=NULL;
-
-	/*free the user menu*/
-	while(info->user_menu) {
-		AppletUserMenu *umenu = info->user_menu->data;
-		if(umenu->name)
-			g_free(umenu->name);
-		if(umenu->stock_item)
-			g_free(umenu->stock_item);
-		if(umenu->text)
-			g_free(umenu->text);
-		g_free(umenu);
-		info->user_menu = my_g_list_pop_first(info->user_menu);
-	}
-	mulapp_remove_empty_from_list();
+	if(info->widget)
+		gtk_widget_destroy(info->widget);
 }
 
 static void
@@ -406,12 +356,44 @@ applet_destroy(GtkWidget *w, gpointer data)
 {
 	int applet_id = GPOINTER_TO_INT(data);
 	AppletInfo *info = get_applet_info(applet_id);
-
-	g_return_val_if_fail(info!=NULL,FALSE);
+	AppletType type;
+	
+	g_return_if_fail(info != NULL);
 
 	info->widget = NULL;
 
-	panel_clean_applet(applet_id);
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		g_assert(drawer);
+		if(drawer->drawer) {
+			GtkWidget *dw = drawer->drawer;
+			drawer->drawer = NULL;
+			PANEL_WIDGET(DRAWER_WIDGET(dw)->panel)->master_widget = NULL;
+			gtk_widget_destroy(dw);
+		}
+	}
+	if(info->menu) {
+		gtk_widget_unref(info->menu);
+		info->menu=NULL;
+	}
+
+	info->type = APPLET_EMPTY;
+
+	info->data=NULL;
+
+	/*free the user menu*/
+	while(info->user_menu) {
+		AppletUserMenu *umenu = info->user_menu->data;
+		if(umenu->name)
+			g_free(umenu->name);
+		if(umenu->stock_item)
+			g_free(umenu->stock_item);
+		if(umenu->text)
+			g_free(umenu->text);
+		g_free(umenu);
+		info->user_menu = my_g_list_pop_first(info->user_menu);
+	}
+	mulapp_remove_empty_from_list();
 
 	return FALSE;
 }

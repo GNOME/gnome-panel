@@ -13,6 +13,7 @@ struct _Extern {
 	char *path;
 	char *params;
 	char *cfg;
+	GtkWidget *ebox;
 };
 void extern_clean(Extern *ext);
 

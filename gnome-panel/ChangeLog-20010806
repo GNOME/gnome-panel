@@ -1,3 +1,14 @@
+Tue Sep 08 00:13:23 1998  George Lebl  <jirka@5z.com>
+
+	* main.c,session.c,exec-queue.[ch],extern.c: got rid of the
+	  children list and we are no longer trapping sigchld, trapping
+	  destroy on the socket is much saner and nicer
+
+	* gnome-panel.idl,orbit-applet-lib.c,applet-lib.h,orbit-glue.[ch],
+	  session.c: tooltip state is now sent to each applet even in case
+	  of multi applets ... doesn't change a thing in the actual applet
+	  API anyhow
+
 Mon Sep 07 00:29:12 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c: removed some dead code

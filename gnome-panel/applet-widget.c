@@ -583,16 +583,18 @@ _gnome_applet_back_change(int applet_id,
 }
 
 void
-_gnome_applet_tooltips_state(int enabled)
+_gnome_applet_tooltips_state(int applet_id, int enabled)
 {
-	GList *list;
+	AppletWidget *applet;
+
 	if(enabled)
 		gtk_tooltips_enable(applet_tooltips);
 	else
 		gtk_tooltips_disable(applet_tooltips);
 
-	for(list=applet_widgets;list!=NULL;list=g_list_next(list)) {
-		gtk_signal_emit(GTK_OBJECT(list->data),
+	applet = applet_widget_get_by_id(applet_id);
+	if(applet) {
+		gtk_signal_emit(GTK_OBJECT(applet),
 				applet_widget_signals[TOOLTIP_STATE_SIGNAL],
 				enabled);
 	}

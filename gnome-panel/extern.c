@@ -29,9 +29,6 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-/*list of child applet processes*/
-extern GList *children;
-
 void
 extern_clean(Extern *ext)
 {
@@ -197,7 +194,6 @@ applet_request_id (const char *path, const char *param,
 		   char **globcfgpath, guint32 * winid)
 {
 	AppletInfo *info;
-	AppletChild *child;
 	int i;
 	Extern *ext;
 
@@ -226,6 +222,8 @@ applet_request_id (const char *path, const char *param,
 		}
 	}
 	
+	/*this is an applet that was started from outside, otherwise we would
+	  have already reserved a spot for it*/
 	ext = g_new(Extern,1);
 	ext->ior = NULL;
 	ext->path = g_strdup(path);
@@ -245,13 +243,6 @@ applet_request_id (const char *path, const char *param,
 	info = get_applet_info(applet_count-1);
 	if(!dorestart && !mulapp_is_in_list(path))
 		mulapp_add_to_list(path);
-
-	/*add to list of children, we haven't started this one so make
-	  pid -1*/
-	child = g_new(AppletChild,1);
-	child->pid = -1;
-	child->applet_id = i;
-	children = g_list_prepend(children,child);
 
 	return i;
 }
@@ -283,7 +274,7 @@ applet_register (const char * ior, int applet_id)
 
 	orientation_change(applet_id,panel);
 	back_change(applet_id,panel);
-	send_applet_tooltips_state(ext->ior,
+	send_applet_tooltips_state(ext->ior,applet_id,
 				   global_config.tooltips_enabled);
 
 	mulapp_add_ior_and_free_queue(ext->path, ext->ior);
@@ -293,8 +284,7 @@ static int
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
 	Extern *ext = data;
-	puts("extern socket_destroy");
-	gtk_widget_destroy(w->parent);
+	gtk_widget_destroy(ext->ebox);
 	extern_clean(ext);
 	return FALSE;
 }
@@ -306,11 +296,10 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		     AppletType type)
 {
 	GtkWidget *socket;
-	GtkWidget *ebox;
 
-	ebox = gtk_event_box_new();
-	gtk_widget_set_events(ebox, (gtk_widget_get_events(ebox) |
-				     APPLET_EVENT_MASK) &
+	ext->ebox = gtk_event_box_new();
+	gtk_widget_set_events(ext->ebox, (gtk_widget_get_events(ext->ebox) |
+					  APPLET_EVENT_MASK) &
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
 
@@ -318,17 +307,17 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	g_return_val_if_fail(socket!=NULL,0);
 
-	gtk_container_add(GTK_CONTAINER(ebox),socket);
+	gtk_container_add(GTK_CONTAINER(ext->ebox),socket);
 
-	gtk_signal_connect_after(GTK_OBJECT(socket),"destroy",
-				 GTK_SIGNAL_FUNC(extern_socket_destroy),
-				 ext);
+	gtk_signal_connect(GTK_OBJECT(socket),"destroy",
+			   GTK_SIGNAL_FUNC(extern_socket_destroy),
+			   ext);
 
-	gtk_widget_show_all (ebox);
+	gtk_widget_show_all (ext->ebox);
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/
-	if(!register_toy(ebox,ext,panel,pos,type)) {
+	if(!register_toy(ext->ebox,ext,panel,pos,type)) {
 		g_warning("Couldn't add applet");
 		return 0;
 	}

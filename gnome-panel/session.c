@@ -46,25 +46,25 @@ char *old_panel_cfg_path=NULL;
 /*list of all panel widgets created*/
 extern GList *panel_list;
 
-/*a list of started extern applet child processes*/
-extern GList * children;
-
 /*send the tooltips state to all external applets*/
 static void
 send_tooltips_state(int enabled)
 {
-	GList *list;
-	
-	for(list = children;list!=NULL;list = g_list_next(list)) {
-		AppletChild *child = list->data;
-		AppletInfo *info = get_applet_info(child->applet_id);
-		Extern *ext = info->data;
-		g_assert(ext);
-		/*if it's not set yet, don't send it, it will be sent when
-		  the ior is discovered anyhow, so this would be redundant
-		  anyway*/
-		if(ext->ior)
-			send_applet_tooltips_state(ext->ior,enabled);
+	AppletInfo *info;
+	int i;
+
+	for(i=0,info=(AppletInfo *)applets->data;
+	    i<applet_count;
+	    i++,info++) {
+		if(info->type == APPLET_EXTERN) {
+			Extern *ext = info->data;
+			g_assert(ext);
+			/*if it's not set yet, don't send it, it will be sent
+			  when the ior is discovered anyhow, so this would be
+			  redundant anyway*/
+			if(ext->ior)
+				send_applet_tooltips_state(ext->ior,i,enabled);
+		}
 	}
 }
 

@@ -54,9 +54,6 @@ extern GlobalConfig global_config;
   opened that menu whilethe user is looking over the choices*/
 extern PanelWidget *current_panel;
 
-/*a list of started extern applet child processes*/
-extern GList * children;
-
 /*the types of stuff we accept*/
 static char *panel_drop_types[] = {"url:ALL", "application/x-color"};
 

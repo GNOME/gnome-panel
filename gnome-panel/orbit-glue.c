@@ -476,11 +476,11 @@ void send_applet_change_back (const char *ior, int applet_id,
   CORBA_Object_release(appl, &ev);
 }
 
-void send_applet_tooltips_state (const char *ior, int enabled)
+void send_applet_tooltips_state (const char *ior, int applet_id, int enabled)
 {
   GNOME_Applet appl = CORBA_ORB_string_to_object(orb, (CORBA_char *)ior, &ev);
 
-  GNOME_Applet_tooltips_state(appl, cookie, enabled, &ev);
+  GNOME_Applet_tooltips_state(appl, cookie, applet_id, enabled, &ev);
 
   CORBA_Object_release(appl, &ev);
 }

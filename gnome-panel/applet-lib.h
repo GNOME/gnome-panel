@@ -62,7 +62,7 @@ int _gnome_applet_session_save(int applet_id, const char *cfgpath,
 void _gnome_applet_start_new_applet(const char *params);
 void _gnome_applet_back_change(int applet_id, int back_type,
 			       const char *pixmap, GdkColor *color);
-void _gnome_applet_tooltips_state(int enabled);
+void _gnome_applet_tooltips_state(int applet_id, int enabled);
 
 
 /*this is currently not used, it's an empty function for now, but it

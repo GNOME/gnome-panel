@@ -23,7 +23,7 @@ void send_applet_start_new_applet (const char *ior, const char *param);
 void send_applet_change_back (const char *ior, int applet_id,
 			      PanelBackType back_type, const char *pixmap,
 			      const GdkColor* color);
-void send_applet_tooltips_state (const char *ior, int enabled);
+void send_applet_tooltips_state (const char *ior, int applet_id, int enabled);
 
 /*this is currently not used, it's an empty function for now, but it
   should register the orbit arguments*/

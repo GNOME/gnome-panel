@@ -77,7 +77,7 @@ discard_session (char *id)
 
 	/*FIXME: hmm this won't work ... there needs to be a clean_dir*/
 	sess = g_copy_strings ("/panel.d/Session-", id, NULL);
-	gnome_config_clean_file (sess);
+	/*gnome_config_clean_file (sess);*/
 	g_free (sess);
 
 	gnome_config_sync ();
@@ -100,51 +100,6 @@ parse_an_arg (int key, char *arg, struct argp_state *state)
 	return ARGP_ERR_UNKNOWN;
 }
 
-static void
-sigchld_handler(int type)
-{
-	GList *list;
-	pid_t pid = waitpid(0,NULL,WNOHANG);
-	
-	if(pid <= 0)
-		return;
-
-	for(list=children;list!=NULL;list=g_list_next(list)) {
-		AppletChild *child=list->data;
-		AppletInfo *info;
-		if(child->pid != pid)
-			continue;
-		info = get_applet_info(child->applet_id);
-		if(info) {
-			Extern *ext = info->data;
-			if(ext && ext->ior) {
-				int i;
-				AppletInfo *in;
-				for(i=0,in=(AppletInfo *)applets->data;
-				    i<applet_count;
-				    i++,in++) {
-					Extern *e;
-					if(in->type != APPLET_EXTERN &&
-					   in->type != APPLET_EXTERN_PENDING &&
-					   in->type != APPLET_EXTERN_RESERVED)
-						continue;
-					e = in->data;
-
-					if(e && e->ior &&
-					   strcmp(ext->ior,e->ior)==0)
-						panel_clean_applet(in->applet_id);
-				}
-			}
-		}
-		exec_queue_done(child->applet_id);
-
-		g_free(child);
-		children=g_list_remove_link(children,list);
-		g_list_free_1(list);
-		return;
-	}
-}
-
 static int
 try_config_sync(gpointer data)
 {
@@ -164,11 +119,6 @@ main(int argc, char **argv)
 
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
-
-	sigemptyset (&sa.sa_mask);
-	sa.sa_handler = sigchld_handler;
-	sa.sa_flags   = 0;
-	sigaction (SIGCHLD, &sa, NULL);
 
 	panel_corba_register_arguments ();
 
