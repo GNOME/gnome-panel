@@ -4,11 +4,14 @@ module GNOME {
                 void try(in long id);
                 boolean revert(in long id);
                 boolean ok (in long id);
+                void cancel (in long id);
                 void help (in long id);
+                void new_multi_capplet (in long id, in long newid, in unsigned long newxid, in long newcapid);
 	};
 	interface control_center {
                 void register_capplet (in long id, in capplet cap);
                 void state_saved (in long id);
                 void state_changed (in long id, in boolean undoable);
+                void register_multi_capplet (in string name, out unsigned long xid, out long id);
 	};
 };
