@@ -466,7 +466,7 @@ get_ical_is_all_day (icalcomponent *ical,
     return FALSE;
 
   if ((end_time = get_ical_end_time (ical)))
-    return (start_time - end_time) == 86400;
+    return (end_time - start_time) == 86400;
 
   prop = icalcomponent_get_first_property (ical, ICAL_DURATION_PROPERTY);
   if (!prop)
