@@ -379,11 +379,14 @@ applet_widget_new_with_param(const char *param,
 	char *globcfgpath;
 	guint32 winid;
 	int applet_id;
+	char *btmp;
 
 	if(!param)
 		param="";
 
-	result = gnome_panel_applet_request_id(myinvoc, param,
+	btmp = alloca(strlen(goad_id) + sizeof("--activate-goad-server="));
+	sprintf(btmp, "--activate-goad-server=%s", goad_id);
+	result = gnome_panel_applet_request_id(program_invocation_name, btmp,
 					       do_multi?FALSE:TRUE,
 					       &applet_id,
 					       &privcfgpath, &globcfgpath,

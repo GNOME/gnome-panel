@@ -37,12 +37,12 @@ static const struct poptOption options[] = {
 static void
 make_new_applet(const gchar *param)
 {
-	if(strstr(param,"--mailcheck"))
-		make_mailcheck_applet(param);
-	else if(strstr(param,"--printer"))
-		make_printer_applet(param);
-	else if(strstr(param,"--clock"))
-		make_clock_applet(param);
+	if(strstr(param,"gen_util_mailcheck"))
+		make_mailcheck_applet("");
+	else if(strstr(param,"gen_util_printer"))
+		make_printer_applet("");
+	else if(strstr(param,"gen_util_clock"))
+		make_clock_applet("");
 }
 
 /*when we get a command to start a new widget*/
@@ -74,16 +74,13 @@ main(int argc, char **argv)
 			   options, 0, NULL, TRUE, TRUE,
 			   applet_start_new_applet, NULL);
 
-	argstr = g_strjoinv(" ", argv+1);
-
-	if(start_mailcheck)
-	  make_mailcheck_applet(argstr);
-	if(start_printer)
-	  make_printer_applet(argstr);
-	if(start_clock || (!start_mailcheck && !start_printer))
-	  make_clock_applet(argstr);
-
-	g_free(argstr);
+	if(!goad_server_activation_id()
+	   || !strcmp(goad_server_activation_id(), "gen_util_clock"))
+	  make_clock_applet("");
+	if(!strcmp(goad_server_activation_id(), "gen_util_mailcheck"))
+	  make_mailcheck_applet("");
+	if(!strcmp(goad_server_activation_id(), "gen_util_printer"))
+	  make_printer_applet("");
 
 	applet_widget_gtk_main();
 

@@ -5,7 +5,7 @@
 module GNOME {
 	interface Panel {
 		/* requests an ID on the panel */
-		short applet_request_id(in string path,
+		short applet_request_id(in string goad_id,
 					in string param,
 					in short dorestart,
 					out string cfgpath,

@@ -50,7 +50,7 @@ really_exec_prog(int applet_id, char *path, char *param)
 		return TRUE;
 	}  else {
 		char *s;
-		
+
 		if(strlen(param)>0)
 			s = g_copy_strings("(true; ",path," ",param," &)",
 					   NULL);

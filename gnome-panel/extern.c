@@ -339,6 +339,7 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 {
 	char *fullpath;
 	char *param;
+	char *goad_id = NULL, *ctmp1, *ctmp2;
 	Extern *ext;
 
 	/*start nothing, applet is taking care of everything*/
@@ -350,6 +351,16 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 		param = "";
 	else
 		param = params;
+
+	ctmp1 = strstr(params, "--activate-goad-server=");
+	if(ctmp1) {
+	  ctmp2 = strchr(ctmp1, ' ');
+	  if(ctmp2) {
+	    goad_id = g_strndup(ctmp1 + strlen("--activate-goad-server="),
+				ctmp2 - ctmp1 + strlen("--activate-goad-server="));
+	    g_message("Got goad_id = %s for applet", goad_id);
+	  }
+	}
 
 	if(!cfgpath || !*cfgpath)
 		cfgpath = g_copy_strings(old_panel_cfg_path,
@@ -381,8 +392,11 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 
 	/*'#' marks an applet that will take care of starting
 	  itself but wants us to reserve a spot for it*/
-	if(path[0]!='#')
-		exec_prog(applet_count-1,fullpath,param);
+	if(path[0]!='#') {
+	  if(goad_id)
+	    goad_server_activate_with_id(NULL, goad_id, 0);
+	  else
+	    exec_prog(applet_count-1,fullpath,param);
+	}
+	g_free(goad_id);
 }
-
-

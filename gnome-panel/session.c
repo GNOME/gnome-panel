@@ -51,8 +51,8 @@ send_tooltips_state(int enabled)
 			/*if it's not set yet, don't send it, it will be sent
 			  when the ior is discovered anyhow, so this would be
 			  redundant anyway*/
-			if(ext->ior)
-				send_applet_tooltips_state(ext->ior,i,enabled);
+			if(ext->obj)
+			  send_applet_tooltips_state(ext->obj,i,enabled);
 		}
 	}
 }
@@ -191,7 +191,7 @@ save_applet_configuration(int num)
 			g_snprintf(path,256, "%sApplet_%d_Extern/",
 				   panel_cfg_path, num+1);
 			/*have the applet do it's own session saving*/
-			if(send_applet_session_save(ext->ior,info->applet_id,
+			if(send_applet_session_save(ext->obj,info->applet_id,
 						    path, globalcfg)) {
 
 				gnome_config_set_string("id", EXTERN_ID);
@@ -616,7 +616,7 @@ static void
 load_default_applets(void)
 {
 	load_menu_applet(NULL,0, panels->data, 0);
-	load_extern_applet("gen_util_applet","--clock",NULL,
+	load_extern_applet("gen_util_applet","--activate-goad-server=clock",NULL,
 			   panels->data,INT_MAX/2/*right flush*/);
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/

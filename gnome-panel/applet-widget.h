@@ -9,6 +9,7 @@
 
 #include <gtk/gtk.h>
 #include <gnome.h>
+#include <libgnorba/gnorba.h>
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 

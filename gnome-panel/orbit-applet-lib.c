@@ -301,7 +301,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			/*check to see if there is an applet being dragged*/
 			if(in_drag) {
 				GNOME_Panel_applet_drag_stop(panel_client,
-							     cookie,ourid, &ev);
+							     ourid, &ev);
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 				gtk_grab_remove(widget);
@@ -350,7 +350,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			break;
 		case GDK_MOTION_NOTIFY:
 			puts("MOTION");
-			if(GNOME_Panel_applet_in_drag(panel_client, cookie, &ev))
+			if(GNOME_Panel_applet_in_drag(panel_client, &ev))
 				return TRUE;
 			break;
 		default:
