@@ -141,12 +141,14 @@ drawer_pos_get_applet_orient (BasePWidget *basep)
 	y = GTK_WIDGET(basep)->allocation.y;
 
 	if(porient == PANEL_VERTICAL) {
-		if(x > (gdk_screen_width()/2))
+		if (x > (multiscreen_width (basep->screen)/2 +
+			 multiscreen_x (basep->screen)))
 			return ORIENT_LEFT;
 		else
 			return ORIENT_RIGHT;
 	} else {
-		if(y > (gdk_screen_height()/2))
+		if (y > (multiscreen_height (basep->screen)/2 +
+			 multiscreen_y (basep->screen)))
 			return ORIENT_UP;
 		else
 			return ORIENT_DOWN;

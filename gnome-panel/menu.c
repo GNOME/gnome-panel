@@ -30,6 +30,7 @@
 #include "title-item.h"
 #include "scroll-menu.h"
 #include "icon-entry-hack.h"
+#include "multiscreen-stuff.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -2286,10 +2287,26 @@ our_gtk_menu_position (GtkMenu *menu)
     {
       gint screen_width;
       gint screen_height;
+      int screen_basex, screen_basey;
+      int screen;
+
+      screen = multiscreen_screen_from_pos (x, y);
       
-      screen_width = gdk_screen_width ();
-      screen_height = gdk_screen_height ();
-	  
+      if (screen < 0) {
+	      screen_width = gdk_screen_width ();
+	      screen_height = gdk_screen_height ();
+	      screen_basex = 0;
+	      screen_basey = 0;
+      } else {
+	      screen_width = multiscreen_width (screen);
+	      screen_height = multiscreen_height (screen);
+	      screen_basex = multiscreen_x (screen);
+	      screen_basey = multiscreen_y (screen);
+      }
+
+      x -= screen_basex;
+      y -= screen_basey;
+
       x -= 2;
       y -= 2;
       
@@ -2301,6 +2318,9 @@ our_gtk_menu_position (GtkMenu *menu)
 	y -= ((y + requisition.height) - screen_height);
       if (y < 0)
 	y = 0;
+
+      x += screen_basex;
+      y += screen_basey;
     }
   
   gtk_widget_set_uposition (GTK_MENU_SHELL (menu)->active ?
@@ -3214,8 +3234,19 @@ create_new_panel (GtkWidget *w, gpointer data)
 	GdkColor bcolor = {0, 0, 0, 1};
 	gint16 x, y;
 	GtkWidget *panel = NULL;
+	PanelWidget *menu_panel;
+	int screen;
 
 	g_return_if_fail (type != DRAWER_PANEL);
+
+	menu_panel = get_panel_from_menu_data (w);
+	if (menu_panel != NULL)
+		screen = multiscreen_screen_from_panel
+			(menu_panel->panel_parent);
+	else
+		screen = 0;
+
+	/* FIXME: add things on the right screen */
 
 	switch (type) {
 	case ALIGNED_PANEL: 
@@ -5037,6 +5068,9 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC(panel_lock), 0);
 		setup_internal_applet_drag(menuitem, "LOCK:NEW");
+		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				      _("Lock the screen so that you can "
+					"temporairly leave your computer"), NULL);
 	}
 	g_free (char_tmp);
 
@@ -5049,6 +5083,11 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit), 0);
 	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
+	gtk_tooltips_set_tip (panel_tooltips, menuitem,
+			      _("Log out of this session to log in as "
+				"a different user or to shut down your "
+				"computer"),
+			      NULL);
 
 	return menu;
 }
@@ -5253,6 +5292,8 @@ create_root_menu (GtkWidget *root_menu,
 			    GTK_SIGNAL_FUNC (run_cb), NULL);
 	gtk_menu_append (GTK_MENU (root_menu), menuitem);
 	setup_internal_applet_drag(menuitem, "RUN:NEW");
+	gtk_tooltips_set_tip (panel_tooltips, menuitem,
+			      _("Execute a command line"), NULL);
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
 		add_menu_separator (root_menu);

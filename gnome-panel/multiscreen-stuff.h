@@ -34,5 +34,6 @@ int		multiscreen_width		(int screen);
 int		multiscreen_height		(int screen);
 int		multiscreen_screen_from_pos	(int x,
 						 int y);
+int		multiscreen_screen_from_panel	(GtkWidget *widget);
 
 #endif /* MULTISCREEN_STUFF_H */

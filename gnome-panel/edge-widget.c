@@ -19,7 +19,8 @@ static void edge_pos_init (EdgePos *pos);
 
 static void edge_pos_set_pos (BasePWidget *basep,
 			      int x, int y,
-			      int w, int h);
+			      int w, int h,
+			      gboolean force);
 static void edge_pos_get_pos (BasePWidget *basep,
 			      int *x, int *y,
 			      int w, int h);
@@ -74,30 +75,32 @@ edge_pos_init (EdgePos *pos) { }
 static void
 edge_pos_set_pos (BasePWidget *basep,
 		  int x, int y,
-		  int w, int h)
+		  int w, int h,
+		  gboolean force)
 {
 	BorderEdge newloc;
-	int minx, miny, maxx, maxy;
 	int innerx, innery;
 	int screen_width, screen_height;
+	
+	if ( ! force) {
+		int minx, miny, maxx, maxy;
 
-	gdk_window_get_geometry (GTK_WIDGET (basep)->window,
-				 &minx, &miny, &maxx, &maxy, NULL);
-	gdk_window_get_origin (GTK_WIDGET (basep)->window,
-			       &minx, &miny);
+		gdk_window_get_geometry (GTK_WIDGET (basep)->window,
+					 &minx, &miny, &maxx, &maxy, NULL);
+		gdk_window_get_origin (GTK_WIDGET (basep)->window,
+				       &minx, &miny);
 
-	newloc = BORDER_POS(basep->pos)->edge;
+		newloc = BORDER_POS(basep->pos)->edge;
 
-	maxx += minx;
-	maxy += miny;
+		maxx += minx;
+		maxy += miny;
 
-	if (x >= minx && 
-	    x <= maxx &&
-	    y >= miny &&
-	    y <= maxy)
-		return;
-
-	/* FIXME: screenchanging stuff */
+		if (x >= minx && 
+		    x <= maxx &&
+		    y >= miny &&
+		    y <= maxy)
+			return;
+	}
 	
 	innerx = x - multiscreen_x (basep->screen);
 	innery = y - multiscreen_y (basep->screen);

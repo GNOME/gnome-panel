@@ -9,6 +9,7 @@
 
 #include "border-widget.h"
 #include "panel_config_global.h"
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;

@@ -795,8 +795,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 				}
 
 				gtk_menu_popup (GTK_MENU (menu), NULL, NULL, 
-						global_config.off_panel_popups
-						? panel_menu_position : NULL,
+						panel_menu_position,
 						widget, bevent->button,
 						bevent->time);
 				return TRUE;

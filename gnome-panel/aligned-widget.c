@@ -19,7 +19,8 @@ static void aligned_pos_init (AlignedPos *pos);
 
 static void aligned_pos_set_pos (BasePWidget *basep,
 				 int x, int y,
-				 int w, int h);
+				 int w, int h,
+				 gboolean force);
 static void aligned_pos_get_pos (BasePWidget *basep,
 				 int *x, int *y,
 				 int w, int h);
@@ -94,27 +95,28 @@ aligned_pos_init (AlignedPos *pos) { }
 static void
 aligned_pos_set_pos (BasePWidget *basep,
 		     int x, int y,
-		     int w, int h)
+		     int w, int h,
+		     gboolean force)
 {
-	int minx, miny, maxx, maxy;
 	int innerx, innery;
 	int screen_width, screen_height;
 
 	BorderEdge newpos = BORDER_POS(basep->pos)->edge;
 	AlignedAlignment newalign = ALIGNED_POS(basep->pos)->align;
 
-	gdk_window_get_geometry (GTK_WIDGET(basep)->window,
-				 &minx, &miny, &maxx, &maxy, NULL);
-	gdk_window_get_origin (GTK_WIDGET(basep)->window, &minx, &miny);
-	maxx += minx;
-	maxy += miny;
-	if (x >= minx &&
-	    x <= maxx &&
-	    y >= miny &&
-	    y <= maxy)
- 	        return;
-
-	/* FIXME: screenchanging stuff */
+	if ( ! force) {
+		int minx, miny, maxx, maxy;
+		gdk_window_get_geometry (GTK_WIDGET(basep)->window,
+					 &minx, &miny, &maxx, &maxy, NULL);
+		gdk_window_get_origin (GTK_WIDGET(basep)->window, &minx, &miny);
+		maxx += minx;
+		maxy += miny;
+		if (x >= minx &&
+		    x <= maxx &&
+		    y >= miny &&
+		    y <= maxy)
+			return;
+	}
 	
 	innerx = x - multiscreen_x (basep->screen);
 	innery = y - multiscreen_y (basep->screen);

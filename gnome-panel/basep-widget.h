@@ -137,7 +137,8 @@ struct _BasePPosClass {
 
 	void (*set_pos)                   (BasePWidget *basep,
 					   int x, int y,
-					   int w, int h);
+					   int w, int h,
+					   gboolean force);
 
 	void (*get_pos)                   (BasePWidget *basep,
 					   int *x, int *y,
@@ -291,6 +292,8 @@ void            basep_widget_pre_convert_hook (BasePWidget *basep);
 void            basep_widget_set_state         (BasePWidget *basep,
 						BasePState state,
 						gboolean emit);
+void		basep_widget_screen_change	(BasePWidget *basep,
+						 int screen);
 
 void            basep_update_frame             (BasePWidget *basep);
 

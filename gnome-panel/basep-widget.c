@@ -309,9 +309,13 @@ basep_widget_state_change (BasePWidget *basep, BasePState state)
 }
 
 static void
-basep_widget_screen_change (BasePWidget *basep, int screen)
+basep_widget_real_screen_change (BasePWidget *basep, int screen)
 {
-	/* FIXME: do multiscreen kind of stuff here */
+	if (basep->screen != screen) {
+		basep->screen = screen;
+		gtk_widget_queue_resize (GTK_WIDGET (basep));
+		panels_to_sync = TRUE;
+	}
 }
 
 static void
@@ -357,7 +361,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 state_change),
+						 screen_change),
 			       gtk_marshal_NONE__INT,
 			       GTK_TYPE_NONE,
 			       1,
@@ -369,7 +373,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
-	klass->screen_change = basep_widget_screen_change;
+	klass->screen_change = basep_widget_real_screen_change;
 
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
@@ -1888,13 +1892,17 @@ basep_widget_get_menu_pos (BasePWidget *basep,
 			     x, y, wx, wy, 
 			     ww, wh);
 
-	if (*x + mreq.width > multiscreen_width (basep->screen))
-		*x = multiscreen_width (basep->screen) - mreq.width;
+	if (*x + mreq.width >
+	    multiscreen_x (basep->screen) + multiscreen_width (basep->screen))
+		*x = multiscreen_x (basep->screen) + 
+			multiscreen_width (basep->screen) - mreq.width;
 	if (*x < multiscreen_x (basep->screen))
 		*x = multiscreen_x (basep->screen);
 
-	if (*y + mreq.height > multiscreen_height (basep->screen))
-		*y = multiscreen_height (basep->screen) - mreq.height;
+	if (*y + mreq.height >
+	    multiscreen_y (basep->screen) + multiscreen_height (basep->screen))
+		*y = multiscreen_y (basep->screen) + 
+			multiscreen_height (basep->screen) - mreq.height;
 	if (*y < multiscreen_y (basep->screen))
 		*y = multiscreen_y (basep->screen);
 }
@@ -2018,13 +2026,23 @@ basep_widget_set_pos (BasePWidget *basep,
 		      int x, int y)
 {
 	int w, h;
+	int newscreen;
+	gboolean force = FALSE;
 	BasePPosClass *klass = 
 		basep_widget_get_pos_class (basep);
 
 	g_return_if_fail (klass && klass->set_pos);
 
+	/* first take care of switching screens */
+	newscreen = multiscreen_screen_from_pos (x, y);
+	if (newscreen >= 0 &&
+	    newscreen != basep->screen) {
+		force = TRUE;
+		basep_widget_screen_change (basep, newscreen);
+	}
+
 	basep_widget_get_size (basep, &w, &h);
-	klass->set_pos(basep, x, y, w, h);
+	klass->set_pos (basep, x, y, w, h, force);
 }
 
 void
@@ -2052,9 +2070,25 @@ basep_widget_set_state (BasePWidget *basep, BasePState state,
 	panels_to_sync = TRUE;
 }
 
+void
+basep_widget_screen_change (BasePWidget *basep, int screen)
+{
+	g_return_if_fail (basep != NULL);
+	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_return_if_fail (screen >= 0);
+
+	if (basep->screen == screen)
+		return;
+
+	gtk_signal_emit (GTK_OBJECT (basep),
+			 basep_widget_signals[SCREEN_CHANGE_SIGNAL],
+			 screen);
+}
+
 /*****
  * Collision avoidance stuff
  *****/
+/* FIXME: needs to be per screen! */
 typedef struct {
 	int left;
 	int center;

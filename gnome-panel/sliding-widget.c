@@ -21,7 +21,8 @@ static void sliding_pos_init (SlidingPos *pos);
 
 static void sliding_pos_set_pos (BasePWidget *basep,
 				 int x, int y,
-				 int w, int h);
+				 int w, int h,
+				 gboolean force);
 static void sliding_pos_get_pos (BasePWidget *basep,
 				 int *x, int *y,
 				 int w, int h);
@@ -102,7 +103,8 @@ sliding_pos_init (SlidingPos *pos) { }
 static void
 sliding_pos_set_pos (BasePWidget *basep,
 		     int x, int y,
-		     int w, int h)
+		     int w, int h,
+		     gboolean force)
 {
 	int minx, miny, maxx, maxy, offset_x, offset_y;
 	SlidingPos *pos = SLIDING_POS(basep->pos);
@@ -119,7 +121,8 @@ sliding_pos_set_pos (BasePWidget *basep,
 	maxx += minx;
 	maxy += miny;
 
-	/* FIXME: screenchanging stuff */
+	/* FIXME: how does screenchanging interact with depending on
+	 * the above positions of the actual X windows stuff */
 	
 	innerx = x - multiscreen_x (basep->screen);
 	innery = y - multiscreen_y (basep->screen);

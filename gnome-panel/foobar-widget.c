@@ -695,7 +695,6 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 	char *title = NULL;
 	int slen;
 	GtkWidget *pixmap  = NULL;
-	char *name;
 
 	static GwmhDesk *desk = NULL;
 

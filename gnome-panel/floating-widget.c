@@ -13,6 +13,7 @@
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "panel-util.h"
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -35,7 +36,8 @@ static void floating_pos_get_pos(BasePWidget *basep,
 
 static void floating_pos_set_pos (BasePWidget *basep,
 				  int x, int y,
-				  int w, int h);
+				  int w, int h,
+				  gboolean force);
 
 static void floating_pos_get_hide_size (BasePWidget *basep,
 					PanelOrientType hide_orient,
@@ -147,12 +149,14 @@ floating_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 	if (panel->orient == PANEL_HORIZONTAL)
-		return (FLOATING_POS (basep->pos)->y < 
-			gdk_screen_height () / 2)
+		return (FLOATING_POS (basep->pos)->y -
+			multiscreen_y (basep->screen) < 
+			multiscreen_height (basep->screen) / 2)
 			? ORIENT_DOWN : ORIENT_UP;
 	else
-		return (FLOATING_POS (basep->pos)->x < 
-			gdk_screen_width () /2)
+		return (FLOATING_POS (basep->pos)->x -
+		       	multiscreen_x (basep->screen) < 
+			multiscreen_width (basep->screen) /2)
 			? ORIENT_RIGHT : ORIENT_LEFT;
 }
 
@@ -171,12 +175,16 @@ floating_pos_get_hide_orient (BasePWidget *basep)
 			? ORIENT_RIGHT : ORIENT_DOWN;
 	case BASEP_AUTO_HIDDEN:
 		if (panel->orient == PANEL_HORIZONTAL) {
-			return ((pos->x > (gdk_screen_width () - pos->x -
-					   basep->shown_alloc.width))
+			return ((pos->x >
+				 (multiscreen_width (basep->screen) +
+				  multiscreen_x (basep->screen) - pos->x -
+				  basep->shown_alloc.width))
 				? ORIENT_RIGHT : ORIENT_LEFT);
 		} else {
-			return ((pos->y > (gdk_screen_height () - pos->y -
-					   basep->shown_alloc.height))
+			return ((pos->y >
+				 (multiscreen_height (basep->screen) +
+				  multiscreen_y (basep->screen) - pos->y -
+				  basep->shown_alloc.height))
 				? ORIENT_DOWN : ORIENT_UP);
 		}
 	default:
@@ -216,10 +224,26 @@ floating_pos_get_menu_pos (BasePWidget *basep,
 	}
 }
 
+static int
+xclamp (int screen, int x, int w)
+{
+	return CLAMP (x, 0,
+		      multiscreen_width (screen) - w);
+}
+
+static int
+yclamp (int screen, int y, int h)
+{
+	return CLAMP (y, 0, 
+		      multiscreen_height (screen) - h -
+		      foobar_widget_get_height (screen));
+}
+
 static void
 floating_pos_set_pos (BasePWidget *basep,
 		      int x, int y,
-		      int w, int h)
+		      int w, int h,
+		      gboolean force)
 {
 	FloatingPos *pos = FLOATING_POS(basep->pos);
 	gint16 newx, newy;
@@ -227,8 +251,8 @@ floating_pos_set_pos (BasePWidget *basep,
 	x -= basep->offset_x;
 	y -= basep->offset_y;
 
-	newx = pos->x;
-	newy = pos->y;
+	x -= multiscreen_x (basep->screen);
+	y -= multiscreen_y (basep->screen);
 
 	if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
 		switch (basep->state) {
@@ -245,7 +269,7 @@ floating_pos_set_pos (BasePWidget *basep,
 		}
 	}
 
-	newx = CLAMP (x, 0, gdk_screen_width () - w);
+	newx = xclamp (basep->screen, x, w);
 
 	if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
 		switch (basep->state) {
@@ -261,7 +285,7 @@ floating_pos_set_pos (BasePWidget *basep,
 			break;
 		}
 	}
-	newy = CLAMP (y, 0, gdk_screen_height () - h);
+	newy = yclamp (basep->screen, y, h);
 
 	if (newy != pos->y || newx != pos->x) {
 		pos->x = newx;
@@ -278,10 +302,10 @@ floating_pos_get_pos(BasePWidget *basep,
 		     int *x, int *y,
 		     int w, int h)
 {
-	*x = CLAMP (FLOATING_POS (basep->pos)->x, 0, gdk_screen_width () - w);
-	*y = CLAMP (FLOATING_POS (basep->pos)->y,
-		    foobar_widget_get_height (basep->screen),
-		    gdk_screen_height () - h);
+	*x = xclamp (basep->screen, FLOATING_POS (basep->pos)->x, w);
+	*y = yclamp (basep->screen, FLOATING_POS (basep->pos)->y, h);
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 }
 
 static void
@@ -403,15 +427,14 @@ floating_widget_change_params (FloatingWidget *floating,
 			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color)
 {
-	FloatingPos *pos = FLOATING_POS (BASEP_WIDGET (floating)->pos);
+	BasePWidget *basep = BASEP_WIDGET (floating);
+	FloatingPos *pos = FLOATING_POS (basep->pos);
 
-	if (PANEL_WIDGET (BASEP_WIDGET (floating)->panel)->orient != orient)
+	if (PANEL_WIDGET (basep->panel)->orient != orient)
 		BASEP_WIDGET (floating)->request_cube = TRUE;
 
-	x = CLAMP (x, 0, gdk_screen_width () - 
-		   BASEP_WIDGET (floating)->shown_alloc.width);
-	y = CLAMP (y, 0, gdk_screen_height () - 
-		   BASEP_WIDGET (floating)->shown_alloc.height);
+	x = xclamp (basep->screen, x, basep->shown_alloc.width);
+	y = yclamp (basep->screen, y, basep->shown_alloc.height);
 
 	if (y != pos->y || x != pos->x) {
 		pos->x = x;
@@ -421,7 +444,7 @@ floating_widget_change_params (FloatingWidget *floating,
 				 x, y);
 	}
 
-	basep_widget_change_params (BASEP_WIDGET (floating),
+	basep_widget_change_params (basep,
 				    orient, sz, mode, state,
 				    level, avoid_on_maximize,
 				    hidebuttons_enabled,

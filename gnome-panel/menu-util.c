@@ -10,12 +10,15 @@
 #include <gnome.h>
 
 #include "panel-include.h"
+#include "multiscreen-stuff.h"
 
 /*#define PANEL_DEBUG 1*/
 
 extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
+
+extern GlobalConfig global_config;
 
 GtkWidget *
 add_menu_separator (GtkWidget *menu)
@@ -30,28 +33,81 @@ add_menu_separator (GtkWidget *menu)
 	return menuitem;
 }
 
+static void
+panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y, gpointer data)
+{
+	gint screen_width;
+	gint screen_height;
+	int screen_basex, screen_basey;
+	int screen;
+	GtkRequisition requisition;
+
+	gtk_widget_get_child_requisition (GTK_WIDGET (menu),
+					  &requisition);
+
+	screen = multiscreen_screen_from_pos (*x, *y);
+
+	if (screen < 0) {
+		screen_width = gdk_screen_width ();
+		screen_height = gdk_screen_height ();
+		screen_basex = 0;
+		screen_basey = 0;
+	} else {
+		screen_width = multiscreen_width (screen);
+		screen_height = multiscreen_height (screen);
+		screen_basex = multiscreen_x (screen);
+		screen_basey = multiscreen_y (screen);
+	}
+
+	*x -= screen_basex;
+	*y -= screen_basey;
+
+	*x -= 2;
+	*y -= 2;
+
+	if ((*x + requisition.width) > screen_width)
+		*x -= ((*x + requisition.width) - screen_width);
+	if (*x < 0)
+		*x = 0;
+	if ((*y + requisition.height) > screen_height)
+		*y -= ((*y + requisition.height) - screen_height);
+	if (*y < 0)
+		*y = 0;
+
+	*x += screen_basex;
+	*y += screen_basey;
+}
+
 void
 panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
 	GtkWidget *w = data;
 	gint wx, wy;
 
-	g_return_if_fail(w != NULL);
+	g_return_if_fail (w != NULL);
+
+	if ( ! global_config.off_panel_popups) {
+		panel_standard_menu_pos (menu, x, y, data);
+		return;
+	}
 
 	gdk_window_get_origin (w->window, &wx, &wy);
 
 	gtk_widget_get_pointer(w, x, y);
-	if (IS_BASEP_WIDGET (w))
+	if (IS_BASEP_WIDGET (w)) {
 		basep_widget_get_menu_pos(BASEP_WIDGET(w), 
 					  GTK_WIDGET(menu),
 					  x,y,wx,wy,
 					  w->allocation.width,
 					  w->allocation.height);
-	else if (IS_FOOBAR_WIDGET (w)) {
+	} else if (IS_FOOBAR_WIDGET (w)) {
 		GtkRequisition req;
+		FoobarWidget *foo = FOOBAR_WIDGET (w);
 		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-		*x = MIN (*x, gdk_screen_width () -  req.width);
-		*y = w->allocation.height;
+		*x = MIN (*x,
+			  multiscreen_width (foo->screen) +
+			  multiscreen_x (foo->screen) -  req.width);
+		*y = w->allocation.height + multiscreen_y (foo->screen);
 	}
 }
 
@@ -85,10 +141,12 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 					  info->widget->allocation.height);
        	} else if (IS_FOOBAR_WIDGET (w)) {
 		GtkRequisition req;
-		gtk_widget_get_pointer (w, x, y);
+		FoobarWidget *foo = FOOBAR_WIDGET (w);
 		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-		*x = MIN (*x, gdk_screen_width () - req.width);
-		*y = w->allocation.height;
+		*x = MIN (*x,
+			  multiscreen_width (foo->screen) +
+			  multiscreen_x (foo->screen) -  req.width);
+		*y = w->allocation.height + multiscreen_y (foo->screen);
 	}
 }
 
