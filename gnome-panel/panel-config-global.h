@@ -15,28 +15,27 @@ typedef struct {
 
 /*
  * Corresponding keys in the global config schema:
+ *   (+) indicates its in the capplet
  *
- * tooltips-enabled
- * keep-menus-in-memory
- * enable-animations
+ * tooltips_enabled
+ * keep_menus_in_memory
+ * enable_animations (+)
  *
- * panel-minimized-size
- * panel-show-delay
- * panel-animation-speed
- * panel-hide-delay
+ * panel_minimized_size
+ * panel_show_delay
+ * panel_animation_speed (+)
+ * panel_hide_delay
  *
- * enable-key-bindings
- * menu-key
- * menu-key
- * run-key
- * window-screenshot-key
+ * enable_key_bindings
+ * menu_key
+ * menu_key
+ * run_key
+ * window_screenshot_key
  *
- * auto-raise-panel
- * panel-window-layer
- *
- * drawer-autoclose
- * confirm-panel-remove
- * highlight-launchers-on-mouseover
+ * auto_raise_panel (+)
+ * drawer_autoclose (+)
+ * confirm_panel_remove
+ * highlight_launchers_on_mouseover
  */
 
 typedef struct _GlobalConfig GlobalConfig;
@@ -57,8 +56,6 @@ struct _GlobalConfig {
 	GlobalConfigKey    window_screenshot_key;
 
 	gboolean           autoraise;
-	PanelLayer         layer;
-
 	gboolean           drawer_auto_close;
 	gboolean           confirm_panel_remove;
 	gboolean           highlight_when_over;

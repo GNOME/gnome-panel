@@ -1117,8 +1117,6 @@ create_simple_contents (void)
 				vbox,
 				(GtkDestroyNotify) g_object_unref);
 
-
-
 	if (add_items_idle_id == 0)
 		add_items_idle_id =
 			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
@@ -1142,7 +1140,6 @@ update_contents (GtkWidget *dialog)
         GtkWidget *advanced = NULL;
         GtkWidget *advanced_toggle;
         gboolean use_advanced;
-        GtkWidget *clist;
         
 	use_advanced = gconf_client_get_bool (
 				panel_gconf_get_client (),
@@ -1153,7 +1150,6 @@ update_contents (GtkWidget *dialog)
         advanced_toggle = g_object_get_data (G_OBJECT (dialog),
 					     "advanced_toggle_label");
 
-        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
         
         if (use_advanced) {
                 advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
@@ -1181,6 +1177,8 @@ update_contents (GtkWidget *dialog)
                                       NULL);                
 
         } else {                
+		GtkWidget *tree_view;
+
                 advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
                 
                 if (advanced && advanced->parent != NULL)
@@ -1192,7 +1190,8 @@ update_contents (GtkWidget *dialog)
                                       _("Allow typing in a command line instead of choosing an application from the list"),
                                       NULL);
 
-                gtk_widget_grab_focus (clist);
+		tree_view = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+                gtk_widget_grab_focus (tree_view);
         }
 }
 

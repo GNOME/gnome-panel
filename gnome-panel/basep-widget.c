@@ -961,22 +961,19 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
 	switch (animation_step) {
-		case PANEL_SPEED_SLOW:
-				step = PANEL_SLOW_STEP_SIZE;
-				break;
-		case PANEL_SPEED_MEDIUM:
-				step = PANEL_MEDIUM_STEP_SIZE;
-				break;
-		case PANEL_SPEED_FAST:
-				step = PANEL_FAST_STEP_SIZE;
-				break;
-		default:
-				step = PANEL_MEDIUM_STEP_SIZE; 
+	case PANEL_SPEED_SLOW:
+		step = PANEL_SLOW_STEP_SIZE;
+		break;
+	case PANEL_SPEED_MEDIUM:
+		step = PANEL_MEDIUM_STEP_SIZE;
+		break;
+	case PANEL_SPEED_FAST:
+		step = PANEL_FAST_STEP_SIZE;
+		break;
+	default:
+		step = PANEL_MEDIUM_STEP_SIZE; 
+		break;
 	}
-
-#ifdef BASEP_WIDGET_DEBUG
-	g_warning ("do_hiding with step %d", step);
-#endif
 
 	wid = GTK_WIDGET(basep);
 	
@@ -1021,16 +1018,13 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 
-	if(global_config.enable_animations && step != 0) {
+	if (global_config.enable_animations && step != 0) {
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
 		long end_time;
 		long cur_time;
 
-#ifdef BASEP_WIDGET_DEBUG
-	printf ("We are sliding the panel since animations are turned ON\n");
-#endif
 		g_get_current_time(&tval);
 		
 		start_secs = tval.tv_sec;
@@ -1135,7 +1129,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 	
-	if(global_config.enable_animations && step != 0) {
+	if (global_config.enable_animations && step != 0) {
 		int i;
 		GTimeVal tval;
 		long start_secs;

@@ -87,53 +87,47 @@ launch_url (Launcher *launcher)
 
 
 static void
-launch (Launcher *launcher)
+launch_cb (GtkWidget *widget,
+	   Launcher  *launcher)
 {
 	GnomeDesktopItem *item;
-	GnomeDesktopItemType type;
 
-	g_return_if_fail(launcher != NULL);
-	g_return_if_fail(launcher->ditem != NULL);
+	g_return_if_fail (launcher != NULL);
+	g_return_if_fail (launcher->ditem != NULL);
 
 	item = launcher->ditem;
-	type = gnome_desktop_item_get_entry_type (item);
 
-	if (type == GNOME_DESKTOP_ITEM_TYPE_LINK) {
+	if (gnome_desktop_item_get_entry_type (item) == GNOME_DESKTOP_ITEM_TYPE_LINK)
 		launch_url (launcher);
-	} else {
+
+	else {
 		GError *error = NULL;
-		gnome_desktop_item_launch (item,
-					   NULL /* file_list */,
-					   0 /* flags */,
-					   &error);
-		if (error != NULL) {
+
+		gnome_desktop_item_launch (item, NULL, 0, &error);
+		if (error) {
 			panel_error_dialog ("cannot_launch_icon",
 					    _("<b>Cannot launch icon</b>\n\n"
-					      "Details: %s"),
-					    error->message);
+					      "Details: %s"), error->message);
 			g_clear_error (&error);
 		}
 	}
 	
-	if(global_config.drawer_auto_close) {
-		GtkWidget *parent =
-			PANEL_WIDGET(launcher->button->parent)->panel_parent;
-		g_return_if_fail(parent!=NULL);
-		if(DRAWER_IS_WIDGET(parent)) {
-			BasePWidget *basep = BASEP_WIDGET(parent);
-			GtkWidget *grandparent = PANEL_WIDGET(basep->panel)->master_widget->parent;
-			GtkWidget *grandparentw =
-				PANEL_WIDGET(grandparent)->panel_parent;
-			drawer_widget_close_drawer (DRAWER_WIDGET (parent),
-						    grandparentw);
+	if (global_config.drawer_auto_close) {
+		GtkWidget *parent;
+
+		parent = PANEL_WIDGET (launcher->button->parent)->panel_parent;
+		if (DRAWER_IS_WIDGET (parent)) {
+			GtkWidget *grandparent;
+
+			grandparent = PANEL_WIDGET (
+						PANEL_WIDGET (
+							BASEP_WIDGET (parent)->panel
+							     )->master_widget->parent
+						     )->panel_parent;
+			drawer_widget_close_drawer (
+					DRAWER_WIDGET (parent), grandparent);
 		}
 	}
-}
-
-static void
-launch_cb (GtkWidget *widget, gpointer data)
-{
-	launch (data);
 }
 
 static void
@@ -386,30 +380,20 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   0, NULL, 0, 0);
 
-	g_signal_connect (G_OBJECT(launcher->button), "drag_data_get",
-			   G_CALLBACK(drag_data_get_cb),
-			   launcher);
-	g_signal_connect (G_OBJECT(launcher->button), "drag_data_received",
-			   G_CALLBACK(drag_data_received_cb),
-			   launcher);
-	g_signal_connect (G_OBJECT(launcher->button), "drag_motion",
-			   G_CALLBACK(drag_motion_cb),
-			   launcher);
-	g_signal_connect (G_OBJECT(launcher->button), "drag_drop",
-			   G_CALLBACK(drag_drop_cb),
-			   launcher);
-	g_signal_connect (G_OBJECT(launcher->button), "drag_leave",
-			   G_CALLBACK(drag_leave_cb),
-			   launcher);
-
-
-	g_signal_connect (G_OBJECT(launcher->button), "clicked",
-			    (GtkSignalFunc) launch_cb,
-			    launcher);
-	
-	g_signal_connect (G_OBJECT(launcher->button), "destroy",
-			    G_CALLBACK(destroy_launcher),
-			    launcher);
+	g_signal_connect (launcher->button, "drag_data_get",
+			   G_CALLBACK (drag_data_get_cb), launcher);
+	g_signal_connect (launcher->button, "drag_data_received",
+			   G_CALLBACK (drag_data_received_cb), launcher);
+	g_signal_connect (launcher->button, "drag_motion",
+			   G_CALLBACK (drag_motion_cb), launcher);
+	g_signal_connect (launcher->button, "drag_drop",
+			   G_CALLBACK (drag_drop_cb), launcher);
+	g_signal_connect (launcher->button, "drag_leave",
+			   G_CALLBACK (drag_leave_cb), launcher);
+	g_signal_connect (launcher->button, "clicked",
+			  G_CALLBACK (launch_cb), launcher);
+	g_signal_connect (launcher->button, "destroy",
+			  G_CALLBACK (destroy_launcher), launcher);
 
 	launcher->ditem = ditem;
 

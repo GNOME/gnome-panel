@@ -55,12 +55,6 @@ static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
-static GConfEnumStringPair global_properties_layer_type_enum_map [] = {
-	{ LAYER_BELOW, "panel-below-layer" },
-	{ LAYER_NORMAL, "panel-normal-layer" },
-	{ LAYER_ABOVE, "panel-above-layer" },
-};
-
 /*
  * GEGL Wants Winners,
  * GEGL Wants Solutions,
@@ -139,12 +133,6 @@ option_menu_changed (GtkWidget *widget,
 				         gconf_enum_to_string (global_properties_speed_type_enum_map,
 			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
 				 	 NULL);	
-
-	else if (!strcmp (key, "panel_window_layer"))
-		gconf_client_set_string (gconf_client, full_key,
-				         gconf_enum_to_string (global_properties_layer_type_enum_map,
-			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
-				 	 NULL);	
 }
 
 static void
@@ -182,7 +170,6 @@ load_option_menus (void)
 {
 	char *optionmenus[] = {
 		"panel_animation_speed",
-		"panel_window_layer",
 		NULL
 	};
 	int i;
@@ -192,16 +179,11 @@ load_option_menus (void)
 		const char *key;
 		int         retval = 0;
 
-        	option = glade_xml_get_widget (glade_gui ,optionmenus [i]);
+        	option = glade_xml_get_widget (glade_gui, optionmenus [i]);
         	key = panel_gconf_global_key (optionmenus [i]);
 		
 		if (!strcmp (optionmenus[i], "panel_animation_speed"))
 			gconf_string_to_enum (global_properties_speed_type_enum_map,
-			      		      gconf_client_get_string (gconf_client, key, NULL),
-			                      &retval);
-
-		else if (!strcmp (optionmenus[i], "panel_window_layer"))
-			gconf_string_to_enum (global_properties_layer_type_enum_map,
 			      		      gconf_client_get_string (gconf_client, key, NULL),
 			                      &retval);
 

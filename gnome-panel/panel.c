@@ -159,12 +159,6 @@ static GConfEnumStringPair panel_speed_type_enum_map [] = {
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
-static GConfEnumStringPair panel_layer_type_enum_map [] = {
-	{ LAYER_NORMAL, "panel-normal-layer" },
-	{ LAYER_BELOW, "panel-below-layer" },
-	{ LAYER_ABOVE, "panel-above-layer" },
-};
-
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
@@ -586,18 +580,16 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		
 	kill_config_dialog(widget);
 
-	if (DRAWER_IS_WIDGET(widget)) {
-		GtkWidget *master_widget = panel->master_widget;
+	if (DRAWER_IS_WIDGET (widget)) {
+		if (panel->master_widget) {
+			AppletInfo *info;
 
-		if (master_widget != NULL) {
-			AppletInfo *info =
-				g_object_get_data (G_OBJECT (master_widget),
-						   "applet_info");
-			Drawer *drawer = info->data;
-			drawer->drawer = NULL;
+			info = g_object_get_data (
+					G_OBJECT (panel->master_widget), "applet_info");
+			((Drawer *) info->data)->drawer = NULL;
 			panel_applet_clean (info);
-			g_object_set_data (G_OBJECT (master_widget),
-					   "applet_info", NULL);
+
+			g_assert (panel->master_widget == NULL);
 		}
 	} else if ((BASEP_IS_WIDGET(widget)
 		    && !DRAWER_IS_WIDGET(widget))
@@ -1940,12 +1932,6 @@ panel_save_global_config (void)
 	full_key = panel_gconf_global_key ("auto_raise_panel");
 	gconf_change_set_set_bool (change_set, full_key, global_config.autoraise);
 
-	full_key = panel_gconf_global_key ("panel_window_layer");
-	gconf_change_set_set_string (
-			change_set, full_key,
-			gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
-
-
 	full_key = panel_gconf_global_key ("drawer_autoclose");
 	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
 
@@ -1963,7 +1949,6 @@ panel_save_global_config (void)
 void
 panel_apply_global_config (void)
 {
-	static int layer_old = -1;
 	static int menu_flags_old = -1;
 	static int old_menu_check = -1;
 	GSList *li;
@@ -2025,19 +2010,6 @@ panel_apply_global_config (void)
 		}
 	}
 
-	if (layer_old != global_config.layer) {
-		 for (li = panel_list; li != NULL; li = li->next) {
-			PanelData *pd = li->data;
-			if ( ! GTK_WIDGET_REALIZED (pd->panel))
-				continue;
-			if (BASEP_IS_WIDGET (pd->panel))
-				basep_widget_update_winhints (BASEP_WIDGET (pd->panel));
-			else if (FOOBAR_IS_WIDGET (pd->panel))
-				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
-		}
-	}
-	layer_old = global_config.layer;
-	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
 		if (BASEP_IS_WIDGET (pd->panel)) {

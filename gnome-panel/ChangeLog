@@ -1,3 +1,27 @@
+2002-04-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (panel_applet_register): make master_widget
+	a weak pointer.
+
+	* basep-widget.c: (basep_widget_do_hiding),
+	(basep_widget_do_showing): cleanups.
+
+	* button-widget.c: (calculate_overlay_geometry): remove hidden crack.
+	Fixes #75904 and doesn't seem to break anything.
+
+	* gnome-panel-properties.glade2:
+	* gnome-panel-properties.c: (option_menu_changed),
+	(load_option_menus): remove panel window layer option. It doesn't work.
+
+	* launcher.c: (create_launcher): kill redundant casts.
+
+	* gnome-run.c: (create_simple_contents), (update_contents): cleanups.
+
+	* panel-global-config.schemas, panel-types.h,
+	  panel-config-global.[ch]: (panel_global_config_set_entry):
+	  panel.c: (panel_save_global_config), (panel_apply_global_config): more
+	window layer culling.
+
 2002-04-10  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-config.c: (make_misc_widget): don't make misc frame

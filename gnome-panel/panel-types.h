@@ -28,12 +28,6 @@ typedef enum {
 	PANEL_BACK_PIXMAP
 } PanelBackType;
 
-typedef enum {
-	LAYER_BELOW,
-	LAYER_NORMAL,
-	LAYER_ABOVE
-} PanelLayer;
-
 /* XXX: if you add any here you need to make the tile type larger
  * for button-widget, as it's 2 bits only for now */
 

@@ -115,8 +115,13 @@ get_frame(BasePWidget *basep)
 }
 
 static void
-calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
-			    GtkWidget *applet, int *x, int *y, int *w, int *h)
+calculate_overlay_geometry (PanelWidget *panel,
+			    GtkWidget   *parent,
+			    GtkWidget   *applet,
+			    int         *x,
+			    int         *y,
+			    int         *w,
+			    int         *h)
 {
 	*x = applet->allocation.x;
 	*y = applet->allocation.y;
@@ -124,19 +129,6 @@ calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
 	*h = applet->allocation.height;
 
 	translate_to (GTK_WIDGET(panel), parent, x, y);
-
-	/* when not shown, things are somewhat weird, and we try to put the
-	 * window completely off as it can't be clickable anyway */
-	/* XXX: These window thingies should really be unmapped in hidden
-	 * case, or something like that, this is ugly, but who gives a fuck,
-	 * this is all going to be rewritten soon (famous last words?) */
-	if(BASEP_IS_WIDGET(parent) &&
-	   BASEP_WIDGET(parent)->state != BASEP_SHOWN &&
-	   BASEP_WIDGET(parent)->state != BASEP_AUTO_HIDDEN) {
-		*x = parent->requisition.width + 1;
-		*y = parent->requisition.height + 1;
-		return;
-	}
 
 	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 		if (applet->allocation.x > panel->size) {

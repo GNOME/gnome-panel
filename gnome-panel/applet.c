@@ -679,12 +679,12 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 
 	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		g_assert(drawer);
-		if(drawer->drawer) {
-			GtkWidget *dw = drawer->drawer;
+
+		if (drawer->drawer) {
+			PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel)->master_widget = NULL;
+
+			gtk_widget_destroy (drawer->drawer);
 			drawer->drawer = NULL;
-			PANEL_WIDGET(BASEP_WIDGET(dw)->panel)->master_widget = NULL;
-			gtk_widget_destroy(dw);
 		}
 	} else if (info->type == APPLET_LAUNCHER) {
 		Launcher    *launcher = info->data;
@@ -1108,6 +1108,8 @@ panel_applet_register (GtkWidget      *applet,
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
 		assoc_panel->master_widget = applet;
+		g_object_add_weak_pointer (
+			G_OBJECT (applet), (gpointer *) &assoc_panel->master_widget);
 	}
 
 	g_object_set_data (G_OBJECT (applet),

@@ -16,12 +16,6 @@ static GConfEnumStringPair panel_speed_map [] = {
         { PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
-static GConfEnumStringPair panel_layer_map [] = {
-        { LAYER_BELOW, "panel-below-layer" },
-        { LAYER_NORMAL, "panel-normal-layer" },
-        { LAYER_ABOVE, "panel-above-layer" },
-};
-
 /*
  * Map between a gconf entry and a member of the
  * GlobalConfig structure.
@@ -116,12 +110,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 	} else if (!strcmp (key, "auto_raise_panel"))
 		global_config.autoraise =
 			gconf_value_get_bool (value);
-
-	else if (!strcmp (key, "panel_window_layer"))
-		gconf_string_to_enum (
-			panel_layer_map,
-  			gconf_value_get_string (value),
-			(gint *) &global_config.layer);
 
 	else if (!strcmp (key, "drawer_autoclose"))
 		global_config.drawer_auto_close =

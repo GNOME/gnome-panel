@@ -4,9 +4,7 @@ libpanel-applet todo list
 	Things that need to be finished before this library can be considered
 anyway complete.
 
-	* Save applets size position etc, and reload when panel starts up.
-
-	* pixmap backgrounds don't work.
+	* pixmap backgrounds don't work - or do they ?
 
 	* Size negotiation. Basically make sure this works. It should be no
 	  different than the usual GtkWidget size request/allocation. The
@@ -16,12 +14,6 @@ anyway complete.
 	  but this ends up with some freaky stuff going on when you're moving
 	  applets. Maybe we should consider having a re-sizable flag which would
 	  make the applets have grabs for re-sizing.
-
-	* Middle mouse button dragging doesn't seem to work for some reason. The
-	  button presses are being forwarded in BonoboPlug so its is some other
-	  issue.
-
-	* The whole thing leaks like a three week old baby.
 
 	* The popup menu doesn't appear outside of the panel. Use
 	  bonobo_control_do_popup_full.

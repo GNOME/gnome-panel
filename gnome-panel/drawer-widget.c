@@ -200,8 +200,8 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
 	BasePWidget *basep = BASEP_WIDGET (drawer);
 
-	if(GTK_WIDGET(parentp)->window)
-		gdk_window_raise(GTK_WIDGET(parentp)->window);
+	if (GTK_WIDGET (parentp)->window)
+		gdk_window_raise (GTK_WIDGET (parentp)->window);
 
 	switch (DRAWER_POS (basep->pos)->orient) {
 	case PANEL_ORIENT_UP:
