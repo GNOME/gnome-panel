@@ -418,7 +418,7 @@ static void
 applet_change_background (PanelApplet               *applet,
 			  PanelAppletBackgroundType  type,
 			  GdkColor                  *color,
-			  const gchar               *pixmap,
+			  GdkPixmap                 *pixmap,
 			  ClockData                 *cd)
 {
 	if (type == PANEL_NO_BACKGROUND) {
