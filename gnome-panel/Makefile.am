@@ -197,6 +197,7 @@ EXTRA_DIST =					\
 	nothing.cP				\
 	nothing.h				\
 	$(schema_DATA)				\
+	$(ui_DATA)				\
 	panel-marshal.list
 
 gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
