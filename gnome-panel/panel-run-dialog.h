@@ -31,9 +31,6 @@ G_BEGIN_DECLS
 
 void panel_run_dialog_present           (GdkScreen  *screen,
 					 guint32    activate_time);
-void panel_run_dialog_present_with_text (GdkScreen  *screen,
-					 const char *text,
-					 guint32    activate_time);
 
 G_END_DECLS
 

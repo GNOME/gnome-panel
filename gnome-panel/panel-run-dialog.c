@@ -1588,14 +1588,3 @@ panel_run_dialog_present (GdkScreen *screen,
 
 	g_object_unref (gui);
 }
-
-void
-panel_run_dialog_present_with_text (GdkScreen  *screen,
-				    const char *text,
-				    guint32    activate_time)
-{
-	panel_run_dialog_present (screen, activate_time);
-	
-	if (static_dialog)
-		gtk_entry_set_text (GTK_ENTRY (static_dialog->gtk_entry), text);
-}
