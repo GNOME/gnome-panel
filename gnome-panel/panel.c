@@ -2626,3 +2626,16 @@ panel_remove_from_gconf (PanelWidget *panel)
 	if (new_panels)
 		panel_g_slist_deep_free (new_panels);
 }
+
+void
+panel_register_window_icon (void)
+{
+	char *panel_icon;
+
+	panel_icon = panel_pixmap_discovery ("gnome-panel.png", FALSE);
+
+	if (panel_icon) {
+		gnome_window_icon_set_default_from_file (panel_icon);
+		g_free (panel_icon);
+	}
+}

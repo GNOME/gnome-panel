@@ -49,6 +49,8 @@ void panel_load_panels_from_gconf (void);
 void panel_remove_from_gconf (PanelWidget *panel);
 void panel_save_to_gconf     (PanelData *pd);
 
+void panel_register_window_icon (void);
+
 G_END_DECLS
 
 #endif

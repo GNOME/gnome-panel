@@ -225,8 +225,11 @@ panel_session_set_restart_command (GnomeClient *client,
 	argv [3] = NULL;
 
 	gnome_client_set_restart_command (client, argc, argv);
-	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
 	gnome_client_set_priority (client, 40);
+
+	if (!getenv ("GNOME_PANEL_DEBUG"))
+		gnome_client_set_restart_style (
+			client, GNOME_RESTART_IMMEDIATELY);
 }
 
 gboolean

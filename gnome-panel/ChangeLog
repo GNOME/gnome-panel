@@ -1,3 +1,16 @@
+2002-03-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* basep-widget.c: (basep_widget_construct):
+	* foobar-widget.c: (foobar_widget_new): don't setup the default
+	window icon here.
+
+	* panel.[ch]: (panel_register_window_icon): impl a method to do it here.
+
+	* main.c: (main): and use it here.
+
+	* session.c: (panel_session_set_restart_command): only register to be
+	re-spawned if GNOME_PANEL_DEBUG env variable is not set.
+
 2002-03-18  Benedikt Roth  <Benedikt.Roth@gmx.net>
 
 	* menu.c: (applet_menu_append), (create_applets_menu):

@@ -204,6 +204,8 @@ main(int argc, char **argv)
 	g_signal_connect (client, "die",
 			  G_CALLBACK (panel_session_die), NULL);
 
+	panel_register_window_icon ();
+
 	panel_tooltips = gtk_tooltips_new ();
 
 	xstuff_init ();
