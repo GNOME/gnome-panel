@@ -21,6 +21,7 @@ struct _ButtonWidget
 	GtkWidget		pixmap;
 	
 	GdkPixbuf		*pixbuf;
+	GdkPixbuf		*pixbuf_lc;
 
 	GdkPixmap		*cache;
 	gboolean		no_alpha; /*we don't have any alpha to speak of,

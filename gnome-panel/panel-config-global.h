@@ -30,6 +30,7 @@ struct _GlobalConfig {
 	int tile_depth[LAST_TILE];
 	int hide_panel_frame;
 	int tile_when_over;
+	int saturate_when_over;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

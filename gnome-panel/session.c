@@ -1178,8 +1178,9 @@ load_up_globals(void)
 	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
+	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
 	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
+		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =
 			gnome_config_get_bool(buf->str);
 
@@ -1260,6 +1261,8 @@ convert_write_config(void)
 			      global_config.hide_panel_frame);
 	gnome_config_set_bool("tile_when_over",
 			      global_config.tile_when_over);
+	gnome_config_set_bool("saturate_when_over",
+			      global_config.saturate_when_over);
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d",i);

@@ -43,7 +43,9 @@ static GList *buttons=NULL;
 /*the tiles go here*/
 struct {
 	GdkPixbuf *tiles_up[LAST_TILE];
+	GdkPixbuf *tiles_up_lc[LAST_TILE];
 	GdkPixbuf *tiles_down[LAST_TILE];
+	GdkPixbuf *tiles_down_lc[LAST_TILE];
 } tiles = {{NULL}}; /*ansi C trick to make it all 0*/
 
 static int tile_border[LAST_TILE]={0,0,0,0};
@@ -250,6 +252,9 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 	if(button->pixbuf)
 		gdk_pixbuf_unref(button->pixbuf);
 	button->pixbuf = NULL;
+	if(button->pixbuf_lc)
+		gdk_pixbuf_unref(button->pixbuf_lc);
+	button->pixbuf_lc = NULL;
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
 	button->cache = NULL;
@@ -279,6 +284,53 @@ loadup_file(char *file)
 		pb = gdk_pixbuf_new_from_file (file);
 	return pb;
 }
+
+/*#define INTENSITY(r, g, b) ((r) * 0.30 + (g) * 0.59 + (b) * 0.11)*/
+#define INTENSITY(r, g, b) (((r)*77 + (g)*150 + (b)*28)>>8)
+
+/* saturation is 0-255, darken is 0-255 */
+static void
+do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
+		    int saturation, int darken)
+{
+	gint i, j;
+	gint width, height, has_alpha, rowstride;
+	guchar *target_pixels;
+	guchar *original_pixels;
+	guchar *pixsrc;
+	guchar *pixdest;
+	guchar intensity;
+	guchar alpha;
+	guchar negalpha;
+	guchar r,g,b;
+
+	has_alpha = gdk_pixbuf_get_has_alpha (src);
+	width = gdk_pixbuf_get_width (src);
+	height = gdk_pixbuf_get_height (src);
+	rowstride = gdk_pixbuf_get_rowstride (src);
+	target_pixels = gdk_pixbuf_get_pixels (dest);
+	original_pixels = gdk_pixbuf_get_pixels (src);
+
+	for (i = 0; i < height; i++) {
+		pixdest = target_pixels + i*rowstride;
+		pixsrc = original_pixels + i*rowstride;
+		for (j = 0; j < width; j++) {
+			r = *(pixsrc++);
+			g = *(pixsrc++);
+			b = *(pixsrc++);
+			intensity = INTENSITY(r,g,b);
+			negalpha = ((255 - saturation)*darken)>>8;
+			alpha = (saturation*darken)>>8;
+			*(pixdest++) = (negalpha * intensity + alpha * r) >> 8;
+			*(pixdest++) = (negalpha * intensity + alpha * g) >> 8;
+			*(pixdest++) = (negalpha * intensity + alpha * b) >> 8;
+			if (has_alpha)
+				*(pixdest++) = *(pixsrc++);
+		}
+	}
+}
+#undef INTENSITY
+
 
 
 #define SCALE(x) (((x)*size)/48.0)
@@ -347,38 +399,56 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	
 	if(tiles_enabled[button->tile]) {
 		if(button->pressed && button->in_button) {
-			if(tiles.tiles_down[button->tile]) {
+			GdkPixbuf *pb;
+			if(global_config.saturate_when_over && !button->in_button) {
+				pb = tiles.tiles_down_lc[button->tile];
+			} else {
+				pb = tiles.tiles_down[button->tile];
+			}
+			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  tiles.tiles_down[button->tile]->art_pixbuf->width,
-						  tiles.tiles_down[button->tile]->art_pixbuf->height,
+						  pb->art_pixbuf->width,
+						  pb->art_pixbuf->height,
 						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       tiles.tiles_down[button->tile]->art_pixbuf,
+						       pb->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
 			}
 		} else if (!global_config.tile_when_over || button->in_button) {
-			if(tiles.tiles_up[button->tile]) {
+			GdkPixbuf *pb;
+			if(global_config.saturate_when_over && !button->in_button) {
+				pb = tiles.tiles_up_lc[button->tile];
+			} else {
+				pb = tiles.tiles_up[button->tile];
+			}
+			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  tiles.tiles_up[button->tile]->art_pixbuf->width,
-						  tiles.tiles_up[button->tile]->art_pixbuf->height,
+						  pb->art_pixbuf->width,
+						  pb->art_pixbuf->height,
 						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       tiles.tiles_up[button->tile]->art_pixbuf,
+						       pb->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
 			}
 		}
 	}
 
 	if (pixmaps_enabled[button->tile]) {
-		if(button->pixbuf) {
+		GdkPixbuf *pb;
+		if(global_config.saturate_when_over && !button->in_button) {
+			pb = button->pixbuf_lc;
+		} else {
+			pb = button->pixbuf;
+		}
+		if(pb) {
 			double affine[6];
 			double transl[6];
 			int w,h;
 			make_scale_affine(affine,
-					  button->pixbuf->art_pixbuf->width,
-					  button->pixbuf->art_pixbuf->height,
+					  pb->art_pixbuf->width,
+					  pb->art_pixbuf->height,
 					  size, &w, &h);
 			art_affine_translate(transl,
 					     -border+off + (size-w)/2,
@@ -389,7 +459,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 					      0, 0,
 					      size-2*border, size-2*border,
 					      rowstride,
-					      button->pixbuf->art_pixbuf,
+					      pb->art_pixbuf,
 					      affine, ART_FILTER_NEAREST, NULL);
 		}
 	}
@@ -509,6 +579,7 @@ button_widget_init (ButtonWidget *button)
 	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
 	button->pixbuf = NULL;
+	button->pixbuf_lc = NULL;
 	
 	button->tile = 0;
 	button->arrow = 0;
@@ -594,7 +665,8 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	    (event->detail != GDK_NOTIFY_INFERIOR)) {
 		ButtonWidget *button = BUTTON_WIDGET (widget);
 		button->in_button = TRUE;
-		if(global_config.tile_when_over) {
+		if(global_config.tile_when_over ||
+		   global_config.saturate_when_over) {
 			if(button->cache)
 				gdk_pixmap_unref(button->cache);
 			button->cache = NULL;
@@ -624,7 +696,8 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	    (event->detail != GDK_NOTIFY_INFERIOR) &&
 	    (!button->ignore_leave)) {
 		button->in_button = FALSE;
-		if(global_config.tile_when_over) {
+		if(global_config.tile_when_over ||
+		   global_config.saturate_when_over) {
 			if(button->cache)
 				gdk_pixmap_unref(button->cache);
 			button->cache = NULL;
@@ -684,6 +757,24 @@ button_widget_up(ButtonWidget *button)
 				button_widget_signals[UNPRESSED_SIGNAL]);
 }
 
+static GdkPixbuf *
+make_lc_pixbuf(GdkPixbuf *pb)
+{
+	GdkPixbuf *new;
+	if(!pb)
+		return NULL;
+
+	new = gdk_pixbuf_new(gdk_pixbuf_get_format(pb),
+			     gdk_pixbuf_get_has_alpha(pb),
+			     gdk_pixbuf_get_bits_per_sample(pb),
+			     gdk_pixbuf_get_width(pb),
+			     gdk_pixbuf_get_height(pb));
+	do_saturate_darken (new, pb, (int)(0.9*255), (int)(0.9*255));
+
+	return new;
+}
+
+
 
 GtkWidget*
 button_widget_new(char *filename,
@@ -698,6 +789,7 @@ button_widget_new(char *filename,
 	button = BUTTON_WIDGET (gtk_type_new (button_widget_get_type ()));
 	
 	button->pixbuf = loadup_file(filename);
+	button->pixbuf_lc = make_lc_pixbuf(button->pixbuf);
 	button->filename = g_strdup(filename);
 	button->size = size;
 	button->tile = tile;
@@ -717,6 +809,7 @@ button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
 	
 	button->pixbuf = loadup_file(pixmap);
+	button->pixbuf_lc = make_lc_pixbuf(button->pixbuf);
 	g_free(button->filename);
 	button->filename = g_strdup(pixmap);
 	button->size = size;
@@ -774,11 +867,17 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 
 	if(tiles.tiles_up[tile])
 		gdk_pixbuf_unref(tiles.tiles_up[tile]);
+	if(tiles.tiles_up_lc[tile])
+		gdk_pixbuf_unref(tiles.tiles_up_lc[tile]);
 	tiles.tiles_up[tile] = loadup_file(tile_up);
+	tiles.tiles_up_lc[tile] = make_lc_pixbuf(tiles.tiles_up[tile]);
 
 	if(tiles.tiles_down[tile])
 		gdk_pixbuf_unref(tiles.tiles_down[tile]);
+	if(tiles.tiles_down_lc[tile])
+		gdk_pixbuf_unref(tiles.tiles_down_lc[tile]);
 	tiles.tiles_down[tile] = loadup_file(tile_down);
+	tiles.tiles_down_lc[tile] = make_lc_pixbuf(tiles.tiles_down[tile]);
 
 	tile_border[tile] = border;
 	tile_depth[tile] = depth;
