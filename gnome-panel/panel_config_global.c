@@ -591,7 +591,7 @@ panel_config_global(void)
 	for(i = 0; i<LAST_TILE; i++) {
 		page = icon_notebook_page (i,box);
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-					  page, gtk_label_new (icon_titles[i]));
+					  page, gtk_label_new (_(icon_titles[i])));
 		
 	}
 		
