@@ -5,6 +5,7 @@
 
 #include <config.h>
 #include <string.h>
+#include <time.h>
 #include <gnome.h>
 #include <applet-widget.h>
 
@@ -42,6 +43,7 @@ struct _Fish {
 	int w,h;
 	int curpix;
 	int timeout_id;
+	int april_timeout_id;
 	GtkWidget * fortune_dialog;
 	GtkWidget * fortune_label;
 	GtkWidget * fortune_less; 
@@ -52,6 +54,31 @@ struct _Fish {
 };
 
 #define IS_ROT(f) ((f)->prop.rotate && ((f)->orient == ORIENT_LEFT || (f)->orient == ORIENT_RIGHT))
+
+static gboolean
+april_timer(gpointer data)
+{
+	time_t ourtime;
+	struct tm *tm;
+	Fish *fish = data;
+
+	time(&ourtime);
+	tm = localtime(&ourtime);
+	/* if still on april fools day, then just try again later */
+	if(tm->tm_mon == 4 && tm->tm_mday == 1)
+		return TRUE;
+
+	/* or reload the fish to put it right side up */
+	load_image_file(fish);
+
+	setup_size(fish);
+
+	fish_timeout(fish);
+
+	fish->april_timeout_id = 0;
+
+	return FALSE;
+}
 
 GtkWidget *bah_window = NULL;
 
@@ -97,6 +124,28 @@ load_image_file(Fish *fish)
 			art_affine_multiply(affine,affine,tmpaffine);
 			art_affine_translate(tmpaffine,0,h);
 			art_affine_multiply(affine,affine,tmpaffine);
+		}
+
+		{
+			time_t ourtime;
+			struct tm *tm;
+			time(&ourtime);
+			tm = localtime(&ourtime);
+			/* if on april fools day, mess with the users */
+			if(tm->tm_mon == 4 && tm->tm_mday == 1) {
+				double tmpaffine[6];
+
+				art_affine_rotate(tmpaffine,180);
+				art_affine_multiply(affine,affine,tmpaffine);
+				art_affine_translate(tmpaffine,w,h);
+				art_affine_multiply(affine,affine,tmpaffine);
+
+				if(!fish->april_timeout_id)
+					fish->april_timeout_id =
+						gtk_timeout_new(10000,
+								april_timer,
+								fish);
+			}
 		}
 		
 		rgb = g_new0(guchar,w*h*3);
@@ -602,6 +651,8 @@ applet_destroy(GtkWidget *applet,Fish *fish)
 		gdk_pixmap_unref(fish->pix);
 	if(fish->timeout_id)
 		gtk_timeout_remove(fish->timeout_id);
+	if(fish->april_timeout_id)
+		gtk_timeout_remove(fish->april_timeout_id);
 	if(fish->fortune_dialog)
 		gtk_widget_destroy(fish->fortune_dialog);
 	if(fish->aboutbox)
