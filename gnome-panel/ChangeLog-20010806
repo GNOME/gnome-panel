@@ -1,3 +1,15 @@
+1999-08-26  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* applet.c (submenu_destroy_cb): cleanup when the menu is
+	destroyed (esdpecially by the age cleanup thing)
+	(setup_an_item): connect the destroy signal of the menu 
+	here to the above function
+	(create_applet_menu): remove some #if 0 code from the branch
+	(add_to_submenus): if we don't have a submenu, create one
+	(setup_an_item): notify ourselves when the menuitem gets
+	destroyed
+	(menuitem_destroy_cb): cleanup when the menuitem is destroyed
+
 1999-08-25  Kjartan Maraas  <kmaraas@online.no>
 
 	* panel_config.c,main.c,hintsdata.c : Typo fix and improved
