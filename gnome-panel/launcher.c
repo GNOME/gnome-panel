@@ -358,7 +358,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	/* Icon/Text will be setup later */
 	launcher->button = button_widget_new (NULL /* icon */,
 					      -1,
-					      LAUNCHER_POBJECT,
 					      FALSE,
 					      PANEL_ORIENT_UP,
 					      NULL /* text */);

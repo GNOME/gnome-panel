@@ -33,14 +33,6 @@ typedef enum {
 	LAYER_ABOVE
 } PanelLayer;
 
-typedef enum {
-	LAUNCHER_POBJECT=0,
-	DRAWER_POBJECT,
-	MENU_POBJECT,
-	MISC_POBJECT,
-	LAST_POBJECT
-} PObjectType; 
-
 /* XXX: if you add any here you need to make the tile type larger
  * for button-widget, as it's 2 bits only for now */
 

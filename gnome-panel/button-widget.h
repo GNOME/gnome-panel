@@ -29,8 +29,6 @@ struct _ButtonWidget
 	char			*filename;
 	int			size;
 	
-	guint			pobject:2; /* Not quite sure if we need this right now */
-	
 	char			*text;
 	
 	guint			ignore_leave:1; /*ignore the leave notify,
@@ -56,7 +54,6 @@ GType		button_widget_get_type		(void) G_GNUC_CONST;
 
 GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,
-						 int pobject,
 						 gboolean arrow,
 						 PanelOrient orient,
 						 const char *text);
@@ -69,7 +66,6 @@ void		button_widget_set_text		(ButtonWidget *button,
 						 const char *text);
 
 void		button_widget_set_params	(ButtonWidget *button,
-						 int pobject,
 						 gboolean arrow,
 						 PanelOrient orient);
 

@@ -75,7 +75,6 @@ create_logout_widget (void)
 						 "gnome-term-night.png", TRUE, NULL);
 
 	button = button_widget_new (pixmap_name, -1,
-				    MISC_POBJECT,
 				    FALSE,
 				    PANEL_ORIENT_UP,
 				    _("Log out"));
@@ -141,7 +140,6 @@ create_lock_widget(void)
 						 TRUE, NULL);
 
 	button = button_widget_new (pixmap_name, -1,
-				    MISC_POBJECT,
 				    FALSE,
 				    PANEL_ORIENT_UP,
 				    _("Lock screen"));

@@ -1,3 +1,15 @@
+Tue Jan 15 15:05:46 2002  George Lebl <jirka@5z.com>
+
+	* button-widget.[ch], panel-types.h, drawer.c, menu.c, launcher.c,
+	  logout.c:  Remove the button widget type enum, it's not needed
+	  without tiles
+
+	* button-widget.c: draw the focus frame thingie over the icon
+	  if we are focused.  You can now tab between launchers and
+	  see where you are :)
+
+	* panel-util.c: some warning fixes
+
 2002-01-15  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* menu-util.c (panel_menu_position):

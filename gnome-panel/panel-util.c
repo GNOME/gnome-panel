@@ -570,17 +570,15 @@ convert_string_to_keysym_state(const char *string,
 			       guint *keysym,
 			       GdkModifierType *state)
 {
-	char *s, *p;
-
 	g_return_val_if_fail (keysym != NULL, FALSE);
 	g_return_val_if_fail (state != NULL, FALSE);
 	
 	*state = 0;
 	*keysym = 0;
 
-	if(string_empty (string) ||
-	   strcmp (string, "Disabled") == 0 ||
-	   strcmp (string, _("Disabled")) == 0)
+	if (string_empty (string) ||
+	    strcmp (string, "Disabled") == 0 ||
+	    strcmp (string, _("Disabled")) == 0)
 		return FALSE;
 
 	gtk_accelerator_parse (string, keysym, state);
@@ -595,12 +593,8 @@ char *
 convert_keysym_state_to_string(guint keysym,
 			       GdkModifierType state)
 {
-	GString *gs;
-	char *sep = "";
-	char *key;
-
-	if(keysym == 0)
-		return g_strdup(_("Disabled"));
+	if (keysym == 0)
+		return g_strdup (_("Disabled"));
 
 	return gtk_accelerator_name (keysym, state);
 }

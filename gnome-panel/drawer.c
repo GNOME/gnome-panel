@@ -331,7 +331,6 @@ create_drawer_applet(GtkWidget * drawer_panel,
 		drawer->pixmap = g_strdup (pixmap);
 	}
 	drawer->button = button_widget_new (drawer->pixmap, -1,
-					    DRAWER_POBJECT,
 					    TRUE, orient,
 					    _("Drawer"));
 
@@ -388,10 +387,10 @@ create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 void
 set_drawer_applet_orient(Drawer *drawer, PanelOrient orient)
 {
-	g_return_if_fail(drawer!=NULL);
+	g_return_if_fail (drawer != NULL);
 
-	button_widget_set_params(BUTTON_WIDGET(drawer->button),
-				 DRAWER_POBJECT,TRUE,orient);
+	button_widget_set_params (BUTTON_WIDGET (drawer->button),
+				  TRUE, orient);
 	
 	/*ignore orient events until we are realized, this will only
 	  be the initial one and we have already set the orientation*/

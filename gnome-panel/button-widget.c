@@ -467,9 +467,19 @@ button_widget_expose (GtkWidget         *widget,
 
 	if (button_widget->dnd_highlight) {
 		gdk_draw_rectangle(widget->window, widget->style->black_gc, FALSE,
-				   widget->allocation.x, widget->allocation.x,
+				   widget->allocation.x, widget->allocation.y,
 				   widget->allocation.width - 1,
 				   widget->allocation.height - 1);
+	}
+
+	if (GTK_WIDGET_HAS_FOCUS (widget)) {
+		gtk_paint_focus (widget->style, widget->window,
+				 GTK_WIDGET_STATE (widget),
+				 &event->area, widget, "button",
+				 widget->allocation.x + 1,
+				 widget->allocation.y + 1,
+				 widget->allocation.width - 3,
+				 widget->allocation.height - 3);
 	}
 	
 	return FALSE;
@@ -558,7 +568,6 @@ button_widget_instance_init (ButtonWidget *button)
 {
 	button->pixbuf = NULL;
 	
-	button->pobject = 0;
 	button->arrow = 0;
 	button->orient = PANEL_ORIENT_UP;
 	
@@ -655,8 +664,6 @@ button_widget_button_pressed (GtkButton *button)
 static void
 button_widget_button_released (GtkButton *button)
 {
-	ButtonWidget *button_widget;
-
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
 	button_widget_parent_class->released (button);
@@ -666,15 +673,11 @@ button_widget_button_released (GtkButton *button)
 GtkWidget*
 button_widget_new(const char *filename,
 		  int size,
-		  int pobject,
 		  gboolean arrow,
 		  PanelOrient orient,
 		  const char *text)
 {
 	ButtonWidget *button;
-
-	g_return_val_if_fail(pobject >= 0, NULL);
-	g_return_val_if_fail(pobject < LAST_POBJECT, NULL);
 
 	button = BUTTON_WIDGET (g_object_new (button_widget_get_type (), NULL));
 	
@@ -683,7 +686,6 @@ button_widget_new(const char *filename,
 	button->scaled_hc = NULL;
 	button->filename = g_strdup (filename);
 	button->size = size;
-	button->pobject = pobject;
 	button->arrow = arrow ? 1 : 0;
 	button->orient = orient;
 	button->text = text ? g_strdup (text) : NULL;
@@ -733,16 +735,12 @@ button_widget_set_text(ButtonWidget *button, const char *text)
 
 void
 button_widget_set_params(ButtonWidget *button,
-			 int pobject,
 			 gboolean arrow,
 			 PanelOrient orient)
 {
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
-	g_return_if_fail(pobject >= 0);
-	g_return_if_fail(pobject < LAST_POBJECT);
 
-	button->pobject = pobject;
-	button->arrow = arrow?1:0;
+	button->arrow = arrow ? 1 : 0;
 	button->orient = orient;
 
 	gtk_widget_queue_draw (GTK_WIDGET (button));
