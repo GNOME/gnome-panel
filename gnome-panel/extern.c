@@ -363,10 +363,59 @@ ebox_size_allocate(GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
 static void
 socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
 {
-  if (applet->requisition.width > 0 && applet->requisition.height > 0 &&
-      (applet->allocation.width > applet->requisition.width ||
-       applet->allocation.height > applet->requisition.height))
-    gtk_widget_queue_resize(applet->parent);
+	GtkWidget *plug_widget;
+	GtkSocket *socket = GTK_SOCKET(applet);
+
+	/* perhaps an already unnecessary hack to avoid some missed
+	   reallocations */
+	if (applet->requisition.width > 0 && applet->requisition.height > 0 &&
+	    (applet->allocation.width > applet->requisition.width ||
+	     applet->allocation.height > applet->requisition.height))
+		gtk_widget_queue_resize(applet->parent);
+
+	if (!socket->same_app ||
+	    !socket->plug_window)
+		return;
+    
+	gdk_window_get_user_data (socket->plug_window,
+				  (gpointer *)&plug_widget);
+	if (plug_widget) {
+		GtkAllocation child_allocation;
+		child_allocation.x = child_allocation.y = 0;
+		child_allocation.width = alloc->width;
+		child_allocation.height = alloc->height;
+		gtk_widget_size_allocate (plug_widget, &child_allocation);
+	}
+	gdk_window_move_resize (socket->plug_window,
+				0, 0, alloc->width, alloc->height);
+	if (socket->need_map) {
+		gdk_window_show (socket->plug_window);
+		socket->need_map = FALSE;
+	}
+	gdk_flush ();
+}
+
+static void
+socket_size_request(GtkSocket *socket, GtkRequisition *req)
+{
+	GtkWidget *plug_widget;
+
+	if (!socket->same_app ||
+	    !socket->plug_window)
+		return;
+
+	gdk_window_get_user_data (socket->plug_window,
+				  (gpointer *)&plug_widget);
+	if (plug_widget) {
+		GtkRequisition child_requisition;
+		gtk_widget_size_request (plug_widget, &child_requisition);
+
+		socket->request_width = child_requisition.width;
+		socket->request_height = child_requisition.height;
+	}
+
+	req->width = MAX (socket->request_width, 1);
+	req->height = MAX (socket->request_height, 1);
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
@@ -388,6 +437,9 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	socket = gtk_socket_new();
 
+	gtk_signal_connect_after(GTK_OBJECT(socket),"size_request",
+				 GTK_SIGNAL_FUNC(socket_size_request),
+				 NULL);
 	gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(socket_size_allocate),
 				 NULL);

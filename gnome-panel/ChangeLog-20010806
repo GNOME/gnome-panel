@@ -1,3 +1,10 @@
+Sat Dec 04 12:28:26 1999  George Lebl <jirka@5z.com>
+
+	* extern.c: put in the size_allocate/size_request hacks to make
+	  socket work fine with the swallowed portion being in the same
+	  process, this doesn't seem be making it into gtk+, when it does,
+	  these hacks can be removed.
+
 Fri Dec 03 21:59:59 1999  George Lebl <jirka@5z.com>
 
 	* applet-widget.[ch]: remove small from the deprecated stuff as
