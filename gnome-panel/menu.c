@@ -408,7 +408,7 @@ load_icons_handler(gpointer data)
 		pb2 = gdk_pixbuf_new(ART_PIX_RGB, pb->art_pixbuf->has_alpha,
 				     8, fake->size, fake->size);
 
-		scale_down(parent, fake->fake->state,
+		scale_down(parent, parent->state,
 			   pb2->art_pixbuf, pb->art_pixbuf);
 		gdk_pixbuf_unref(pb);
 
