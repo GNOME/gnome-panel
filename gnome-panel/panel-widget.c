@@ -2701,3 +2701,26 @@ panel_widget_get_applet_orient (PanelWidget *panel)
 
 	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
 }
+
+void
+panel_widget_remove_drawers (PanelWidget *panel_widget)
+{
+	GList *l;
+
+	for (l = panel_widget->applet_list; l ; l = l->next) {
+
+		AppletData* applet_data = l->data;
+		AppletInfo* info = g_object_get_data (
+						G_OBJECT (applet_data->applet), "applet_info");
+
+		if (info && info->type == APPLET_DRAWER) {
+			Drawer *drawer = (Drawer *) info->data;
+			BasePWidget* drawer_widget = (BASEP_WIDGET (drawer->drawer));
+
+			panel_widget_remove_drawers (PANEL_WIDGET(drawer_widget->panel));
+
+			panel_remove_from_gconf(PANEL_WIDGET(drawer_widget->panel));
+		}
+	}
+
+}

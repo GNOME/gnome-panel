@@ -213,6 +213,8 @@ void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
 
+void         panel_widget_remove_drawers (PanelWidget *panel_widget);
+
 extern gboolean panel_applet_in_drag;
 
 G_END_DECLS

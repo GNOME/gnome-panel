@@ -3268,64 +3268,10 @@ create_button_menu (void)
 }	
 		
 static void
-remove_panel_accept (GtkWidget *w,
-		     int        response,
-		     GtkWidget *panel)
-{
-	PanelWidget *panel_widget = NULL;
-
-	if (response == GTK_RESPONSE_OK) {
-
-		/* Destroy the drawers button before destroying the drawer */
-		if (DRAWER_IS_WIDGET (panel)) {
-
-			if (BASEP_IS_WIDGET (panel))
-				panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-			else if (FOOBAR_IS_WIDGET (panel))
-				panel_widget = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel);
-
-			if (panel_widget && panel_widget->master_widget) {
-				AppletInfo *info;
-
-				info = g_object_get_data (
-						G_OBJECT (panel_widget->master_widget),
-						"applet_info");
-				((Drawer *) info->data)->drawer = NULL;
-				panel_applet_clean (info, TRUE);
-
-				g_assert (panel_widget->master_widget == NULL);
-			}
-		}
-
-		panel_push_window_busy (w);
-
-		if (BASEP_IS_WIDGET (panel))
-			panel_remove_from_gconf (
-				PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
-
-		else if (FOOBAR_IS_WIDGET (panel))
-			panel_remove_from_gconf (
-				PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel));
-
-		gtk_widget_destroy (panel);
-		panel_pop_window_busy (w);
-	}
-	else {
-		panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-		panel_widget->delete_dialog = NULL;
-	}
-
-	gtk_widget_destroy (w);
-}
-
-static void
-remove_panel_query (GtkWidget *menuitem,
-		    gpointer   data)
+remove_panel (GtkWidget *menuitem,
+	      gpointer data)
 {
 	PanelWidget *panel_widget;
-	GtkWidget   *dialog;
 	GtkWidget   *panel;
 
 	panel_widget = menu_get_panel (menuitem);
@@ -3333,9 +3279,9 @@ remove_panel_query (GtkWidget *menuitem,
 
 	if (!DRAWER_IS_WIDGET (panel) && base_panels == 1) {
 		panel_error_dialog (
-			menuitem_to_screen (menuitem),
-			"cannot_remove_last_panel",
-			_("You cannot remove your last panel."));
+				    menuitem_to_screen (menuitem),
+				    "cannot_remove_last_panel",
+				    _("You cannot remove your last panel."));
 		return;
 	}
 
@@ -3344,42 +3290,8 @@ remove_panel_query (GtkWidget *menuitem,
 		return;
 	}
 
-	if (panel_widget->delete_dialog) {
-		gtk_window_present (GTK_WINDOW (panel_widget->delete_dialog));
-		return;
-	}
+	panel_delete_query (panel_widget);
 
-	dialog = gtk_message_dialog_new (
-			GTK_WINDOW (panel_widget->panel_parent), 
-			0 /* flags */,
-			GTK_MESSAGE_QUESTION,
-			GTK_BUTTONS_NONE,
-			_("When a panel is deleted, the panel "
-			"and its\n settings are lost. "
-			"Delete this panel?"));
-	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
-				NULL);
-
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-	gtk_window_set_title (GTK_WINDOW (dialog), _("Delete Panel"));
-
-	gtk_window_set_wmclass (GTK_WINDOW (dialog),
-				"panel_remove_query", "Panel");
-	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (panel)));
-
-	panel_widget->delete_dialog = dialog;
-
-	g_signal_connect (dialog, "response",
-			  G_CALLBACK (remove_panel_accept),
-			  panel);
-	panel_signal_connect_object_while_alive (
-			G_OBJECT (panel), "destroy",
-			G_CALLBACK (gtk_widget_destroy),
-			G_OBJECT (dialog));
-	gtk_widget_show_all (dialog);
 }
 
 GtkWidget *
@@ -3475,7 +3387,7 @@ make_panel_submenu (GtkWidget *menu,
 			_("_Delete This Panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK (remove_panel_query),
+			    G_CALLBACK (remove_panel),
 			    NULL);
 	g_signal_connect (G_OBJECT (menu), "show",
 			    G_CALLBACK(setup_remove_this_panel),

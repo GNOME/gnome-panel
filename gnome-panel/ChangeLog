@@ -1,3 +1,12 @@
+2003-02-14  Arvind Samptur <arvind.samptur@wipro.com>
+	* applet.c: (applet_idle_remove) Deleting the drawer panel
+	using the drawer button queries the user.
+
+	* panel.[ch]: (panel_delete_query) (remove_panel_accept):
+	When deleting the panel, clean up drawers if they exist.
+	*panel-widget.[ch]: (panel_widget_remove_drawers): Cleanup the gconf of
+	the drawers recursively, if they each drawer holds another drawer.
+
 2003-02-12  Rajkumar Sivasamy  <rajkumar.siva@wipro.com>
 
 	* panel-action-button.c: Listen to "style-set" signal for 
