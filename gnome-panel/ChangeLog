@@ -1,4 +1,9 @@
 2003-03-01  Arvind Samptur <arvind.samptur@wipro.com>
+	* menu.c (panel_delete_query) : Make the delete dialog
+	modal. Avoids deleting of all the panels by accident.
+	Fixes #107099
+
+2003-03-01  Arvind Samptur <arvind.samptur@wipro.com>
 
 	Do not popup a 'Delete Panel" query if there are
 	no objects in the panel.

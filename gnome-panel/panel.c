@@ -2886,7 +2886,7 @@ panel_delete_query (PanelWidget *panel_widget)
 
 	dialog = gtk_message_dialog_new (
 			GTK_WINDOW (panel_widget->panel_parent), 
-			0 /* flags */,
+			GTK_DIALOG_MODAL /* flags */,
 			GTK_MESSAGE_QUESTION,
 			GTK_BUTTONS_NONE,
 			_("When a panel is deleted, the panel "
