@@ -4309,7 +4309,7 @@ load_menu_applet(char *params, int main_menu_flags,
 		applet_add_callback(menu->info,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
-		if(strcmp(params,".")==0 &&
+		if(params && strcmp(params,".")==0 &&
 		   (tmp = gnome_is_program_in_path("gmenu")))  {
 			g_free(tmp);
 			applet_add_callback(menu->info,"edit_menus",
