@@ -40,7 +40,6 @@ extern GtkTooltips *panel_tooltips;
 static void
 properties_apply_callback(gpointer data)
 {
-#ifdef FIXME
 	Drawer       *drawer = data;
 
 	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
@@ -48,39 +47,39 @@ properties_apply_callback(gpointer data)
 	GtkWidget    *tipentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
 						     "tooltip");
 	char         *s;
+	const char   *cs;
 
 	g_free (drawer->pixmap);
 	drawer->pixmap = NULL;
 	g_free (drawer->tooltip);
 	drawer->tooltip = NULL;
-	s = hack_icon_entry_get_icon (GNOME_ICON_ENTRY (pixentry));
+	s = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY (pixentry));
 	if (string_empty (s)) {
 		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 							    "panel-drawer.png", TRUE, NULL);
-		button_widget_set_pixmap (BUTTON_WIDGET(drawer->button),
+		button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
 					  drawer->pixmap,-1);
 	} else {
-		if(button_widget_set_pixmap(BUTTON_WIDGET(drawer->button), s, -1))
-			drawer->pixmap = g_strdup(s);
+		if(button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), s, -1))
+			drawer->pixmap = g_strdup (s);
 		else {
 			drawer->pixmap = gnome_program_locate_file (NULL, 
 								    GNOME_FILE_DOMAIN_PIXMAP, 
 								    "panel-drawer.png",
 								     TRUE, NULL);
-			button_widget_set_pixmap(BUTTON_WIDGET(drawer->button),
-						 drawer->pixmap, -1);
+			button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
+						  drawer->pixmap, -1);
 		}
 	}
 	g_free(s);
-	s = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
-	if (string_empty (s))
+	cs = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
+	if (string_empty (cs))
 		drawer->tooltip = NULL;
 	else
-		drawer->tooltip = g_strdup(s);
+		drawer->tooltip = g_strdup (cs);
 
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
 			      drawer->tooltip, NULL);
-#endif
 }
 
 static void
