@@ -117,16 +117,16 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 	/*FIXME: drawers should have their own pixmaps I guess*/
 	switch(orient) {
 		case DRAWER_DOWN:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
 			break;
 		case DRAWER_UP:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
 			break;
 		case DRAWER_RIGHT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
 			break;
 		case DRAWER_LEFT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
+			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
 			break;
 	}
 		
@@ -227,7 +227,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 	switch (drawer->orient) {
 		case DRAWER_DOWN:
 			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-down.xpm");
+				"gnome-menu-down.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_VERTICAL);
 			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
@@ -237,7 +237,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 			break;
 		case DRAWER_UP:
 			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-up.xpm");
+				"gnome-menu-up.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_VERTICAL);
 			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
@@ -246,7 +246,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 			break;
 		case DRAWER_RIGHT:
 			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-right.xpm");
+				"gnome-menu-right.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_HORIZONTAL);
 			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
@@ -255,7 +255,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 			break;
 		case DRAWER_LEFT:
 			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-left.xpm");
+				"gnome-menu-left.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
 						   PANEL_HORIZONTAL);
 			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
