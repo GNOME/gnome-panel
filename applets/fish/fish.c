@@ -425,6 +425,9 @@ apply_cb(GnomePropertyBox * pb, int page, Fish *fish)
 		/* We need more useful commands to warn on here */
 		if (strncmp (s, "ps ", 3) == 0 ||
 		    strcmp (s, "ps") == 0 ||
+		    strncmp (s, "who ", 4) == 0 ||
+		    strcmp (s, "who") == 0 ||
+		    strcmp (s, "uptime") == 0 ||
 		    strncmp (s, "tail ", 5) == 0)
 			gnome_warning_dialog
 				(_("Warning:  The command appears to be "
