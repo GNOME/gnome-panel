@@ -1469,140 +1469,143 @@
   <!-- ########### Creating, Moving, and Removing Panels  ##############
   -->
   <sect1 id="panelmove">
-    <title>Creating, Moving, and Removing Panels</title>
+    <title>Erzeugen, Verschieben und Entfernen von Panels</title>
 
-    <sect2 id="paneladd">  <title>Creating new panels</title>
+    <sect2 id="paneladd">
+      <title>Neue Panels erzeugen</title>
       <para>
 	<indexterm id="idx-a8">
-	  <primary>Panel</primary> <secondary>adding new</secondary>
+	  <primary>Panel</primary>
+	  <secondary>neues erzeugen</secondary>
 	</indexterm>
-	To add a new <interface>Panel</interface> to your desktop,
-	select the <guimenuitem>Create panel</guimenuitem> command
-	from <guisubmenu>Panel</guisubmenu> menu. You have a choice of
-	five possible panel types:
+	Um ein neues <interface>Panel</interface> auf dem Desktop zu
+	erzeugen, wählen Sie <guimenuitem>Panel erzeugen</guimenuitem> im
+	<guisubmenu>Panel</guisubmenu>-Menü. Sie haben die Wahl zwischen
+	fünf verschiedenen Paneltypen:
       </para>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
 	    <indexterm id="idx-a9">
-	      <primary>Panel</primary> <secondary>Edge</secondary>
+	      <primary>Panel</primary>
+	      <secondary>Kante</secondary>
 	    </indexterm>
-	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel is
-	    exactly like the main Panel that starts up with GNOME; it
-	    stretches along the whole length of one of screen
-	    edges. By selecting this type of panel you may add a new
-	    Panel to another edge of your screen to give yourself more
-	    functionality.
+	    <guilabel>Kantenpanel</guilabel> &mdash; Ein Kantenpanel verhält
+	    sich genauso wie das Panel, das standardmäßig mit GNOME gestartet
+	    wird; es erstregt sich auf der gesamten Breite entlang einer
+	    Bildschirmkante. Wenn Sie diesen Paneltyp wählen, können Sie ein
+	    zweites Panel an einem anderen Bildschirmkante erzeugen, das Ihnen
+	    noch mehr Funktionalität bietet.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
-	     is also positioned along one of the screen edges. But
-	     unlike the Edge Panel, the Aligned Panel will not stretch
-	     across the entire edge of the screen it is on: it will
-	     only stretch as much as necessary to  display the icons
-	     and applets it contains. It can be positioned either at
-	     one of the corners (in this case, it will stretch towards
-	     the opposite corner) or at the center of the edge (in
-	     this case, it will stretch in both directions,
-	     automatically recentering when you add new objects).
-            </para>
-	  <para> If the Aligned panel is aligned with one of the
-	    corners, the hide buttons will work slightly differently
-	    than for the Edge Panel.  The hide button closest to the
-	    edge of your screen will hide the Panel as usual but the
-	    other hide button will send the whole panel to the
-	    opposite edge. When the latter move is made it will not
-	    hide the Panel since it is changing the side of the screen
-	    it resides on.  If you want to hide it you will have to
-	    press the hide button once again.
-	      </para>
+	    <guilabel>Ausgerichtetes Panel</guilabel> &mdash;  Ein
+	    ausgerichtetes Panel positioniert sich ebenfalls entlang einer
+	    Bildschirmkante, erstrecht sich jedoch nicht über die gesamte
+	    Breite sonder nimmt nur soviel Platz in Anspruch, wie es braucht,
+	    um die Icons und Applets darzustellen, die es enthält. Es kann
+	    entweder in einer Ecke positioniert werden (in diesem Fall
+	    erstreckt es sich in Richtung der gegenüberliegenden Ecke) oder
+	    aber in der Mitte einer Bildschirmkante (in diesem Fall breitet
+	    es sich in beide Richtung aus und zentriert sich automatisch neu,
+	    wenn Sie Objekte hinzufügen).
+	  </para>
+	  <para>
+	    Wenn ein ausgerichtetes Panel in einer der Ecken positioniert
+	    wird, funktionieren die Versteckknöpfe etwas anders als bei einem
+	    Kantenpanel. Der sich am nächsten zum Bildschirmrand befindliche
+	    Versteckknopf versteckt das Panel in der gewohnten Art und Weise,
+	    der andere jedoch schickt das Panel in die gegenüberliegende Ecke.
+	    Im letzteren Fall wird das Panel nicht versteckt, da seine Position
+	    auf dem Bildschirm verändert wird. Wenn Sie es also verstecken
+	    wollen, müssen Sie den Versteckknopf nocheinmal klicken.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	        <guilabel>Sliding Panel</guilabel> &mdash; This type
- 	        of panel is very similar to the Aligned Panel, but can
- 	        be placed anywhere along the screen edge, not
- 	        necessarily in one of the corners or in the center. As
- 	        you add objects, it will only grow in one directions
- 	        &mdash; it won't automatically recenter.
-	      </para>
+	    <guilabel>Gleitendes Panel</guilabel> &mdash; Dieser Paneltyp
+	    verhält sich ähnlich wie das ausgerichtete Panel, kann aber
+	    beliebige Positionen entlang der Bildschirmkanten annehmen, also
+	    nicht notwendigerweise in einer Ecke oder der Mitte einer Kante.
+	    Wenn Sie Objekte hinzufügen, vergrößert sich dieses Panel nur in
+	    eine Richtung und es rezentriert sich nicht selbst.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-		<guilabel>Floating Panel</guilabel> &mdash;   This
-		type of panel can be placed anywhere on your screen,
-		not necessarily along one of the edges.
-	      </para>
+	    <guilabel>Freischwebendes Panel</guilabel> &mdash;   Dieser Typ
+	    von Panel can an beliebiger Stelle auf dem Bildschirm platziert
+	    werden, also nicht notwendigerweise am Rand.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-		<guilabel>Menu Panel</guilabel> &mdash; The
-		<interface>Menu Panel</interface> is a special panel
-		which is always placed at the top of your screen and
-		contains several pull-down menus.  These are
-		<guimenu>Programs</guimenu>,
-		<guimenu>Favoriten</guimenu>,
-		<guimenu>Settings</guimenu>,
-		<guimenu>Desktop</guimenu>, a clock/calendar, and a
-		special launcher which provides quick access to
-		GNOME-related Internet resources (look for the bullet
-		hole icon).  This panel can also hold the other
-		objects which other panels can hold, but it does not
-		have the configuration properties which other panels
-		have. Note that the <interface>Menu Panel</interface> is
-		more restrictive than other panels, and some normal
-		panel operations, such as moving the panel, cannot be
-		performed on it.
-	      </para>
+	    <guilabel>Menü-Panel</guilabel> &mdash; Das
+	    <interface>Menü-Panel</interface> ist ein spezieller Paneltyp,
+	    der sich immer ganz oben auf dem Bildschirm befindet und eine
+	    Reihe ausklappbarer Menüs enthält. Diese sind
+	    <guimenu>Programe</guimenu>, <guimenu>Favoriten</guimenu>,
+	    <guimenu>Einstellungen</guimenu>, <guimenu>Desktop</guimenu>,
+	    eine Uhr/Kalender und ein spezieller Starter (mit dem
+	    Einschußloch-Icon), der einen schnellen Zugriff auf verschiedene
+	    GNOME-Ressourcen im Internet bietet. Dieses Panel kann ebenfalls
+	    die anderen Objekte enthalten, die normale Panels enthalten
+	    können, es hat aber nicht die Konfigurationsmöglichkeiten, die
+	    ein normales Panel hat. Beachten Sie bitte, daß ein
+	    <interface>Menu Panel</interface> restriktiver ist als andere
+	    Panels und daß einige Operationen, wie etwa das Verschieben des
+	    Panels, auf ihm nicht möglich sind.
+	  </para>
 	</listitem>
       </itemizedlist>
 
       <tip>
-	<title> Changing panel type</title>
+	<title>Den Paneltyp ändern</title>
 	<para>
-	      <indexterm id="idx-a11">
-	    <primary>Panel</primary> <secondary>changing type
-	      of</secondary>
+	  <indexterm id="idx-a11">
+	    <primary>Panel</primary>
+	    <secondary>Typ ändern</secondary>
 	  </indexterm>
-	  You can also change type of existing panel &mdash; for
-	  example, convert edge panel to a floating panel, see <xref
-	    linkend="panelproperties">.
-	  </para>
+	  Sie können auch den Typ eines existierenden Panels ändern &mdash;
+	  zum Beispiel können Sie ein Kantenpanel in ein freischwebendes Panel
+	  verwandeln &mdash; sehen Sie hierzu bitte unter
+	  <xref linkend="panelproperties"> nach.
+	</para>
       </tip>
     </sect2>
 
 
     <sect2 id="panelmoving">
-      <title> Moving panels </title> <para>
+      <title>Panels verschieben</title>
+      <para>
 	<indexterm id="idx-a7">
-	  <primary>Panel</primary> <secondary>moving</secondary>
+	  <primary>Panel</primary>
+	  <secondary>verschieben</secondary>
 	</indexterm>
-	  Any <interface>Panel</interface> you have on your desktop
-	  can be moved by using the  middle mouse button, or by
-	  simultaneously pressing the left and right mouse buttons, to
-	  drag the panel to the desired edge of your screen. If you do
-	  not have a middle mouse button and did not configure your
-	  mouse to emulate a middle button you may also move a
-	  <interface>Panel</interface> by changing its location in the
-	  <interface>Panel properties</interface> dialog.  You can
-	  read more about this in <xref linkend="panelproperties"> of
-	  this documentation.
-	</para>
+	Jedes <interface>Panel</interface>, das Sie auf Ihrem Desktop haben,
+	kann mit der Maus verschoben werden. Klicken Sie dazu entweder die
+	mittlere Maustaste oder die linke und rechte gleichzeitung und ziehen
+	das Pannel an die gewünschte Stelle auf dem Bildschirm. Wenn Ihre Maus
+	keine mittlere Taste hat und Sie sie nicht konfiguriert haben, diese
+	zu simulieren, können Sie das Panel auch verschieben, indem Sie seine
+	Position im <interface>Panel-Position</interface>-Dialog ändern.
+	Weitere Informationen dazu finden Sie unter
+	<xref linkend="panelproperties"> in diesem Handbuch.
+      </para>
     </sect2>
     <sect2 id="panelremoving">
-      <title> Removing panels </title>
+      <title>Panels entfernen</title>
       <para>
-	To remove an existing panel, right-click on it and choose
-	<guimenuitem>Remove this panel</guimenuitem> command from the
-	<guisubmenu>Panel</guisubmenu> menu. You will be prompted for
-	a confirmation.
+	Um ein bestehendes Panel zu entfernen, rechtsklicken Sie auf es und
+	wählen Sie <guimenuitem>Dieses Panel entfernen</guimenuitem> im
+	<guisubmenu>Panel</guisubmenu>-Menü. Sie werden zur Sicherheit noch
+	einmal um Bestätigung gebeten.
       </para>
-      <note>  <title>NOTE</title>
+      <note>  <title>HINWEIS</title>
 	<para>
-	  At all times, you must have at least one panel; GNOME will
-	  not allow you to remove your only panel.
+	  Sie müssen zu jeder Zeit mindestens ein Panel behalten; GNOME wird
+	  Ihnen nicht erlauben, Ihr letztes Panel zu entfernen.
 	</para>
       </note>
     </sect2>
