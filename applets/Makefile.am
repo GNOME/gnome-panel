@@ -1,5 +1,4 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
-	 fish gticker netload dialer webcontrol icewm-pager \
 	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
 	 gnome-pager
@@ -45,4 +44,4 @@ endif
 
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
-         $(bussign) $(slashapp) $(fvwm_pager) $(esdmanager)
+         $(bussign) $(slashapp) $(fvwm_pager) $(esdmanager) $(gticker)
