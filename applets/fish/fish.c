@@ -44,7 +44,7 @@ typedef struct {
 
 	GtkWidget         *fortune_dialog;
 	GtkWidget         *fortune_label;
-	GtkWidget         *fortune_less; 
+	GtkTextBuffer	  *fortune_buffer;
 
 	GtkWidget         *aboutbox;
 	GtkWidget         *pb;
@@ -669,7 +669,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	g_free (command);
 }
 
-#ifdef FIXME /* used in update_fortune_dialog */
 static gchar *
 fish_locate_fortune_command (Fish *fish)
 {
@@ -692,15 +691,37 @@ fish_locate_fortune_command (Fish *fish)
 
 	return command;
 }
-#endif
+
+static void
+text_clear (Fish *fish)
+{
+	GtkTextIter begin, end;
+
+	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &begin, 0);
+	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &end, -1);
+
+	gtk_text_buffer_delete (fish->fortune_buffer, &begin, &end);
+}
+
+static void
+insert_text (Fish *fish, const char *text)
+{
+	GtkTextIter iter;
+
+	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &iter, -1);
+	gtk_text_buffer_insert (fish->fortune_buffer, &iter, text, -1);
+}
 
 static void 
 update_fortune_dialog (Fish *fish)
 {
-#ifdef FIXME /* need to replace GnomeLess */
 	char *fortune_command;
+	FILE *fp;
 
 	if ( fish->fortune_dialog == NULL ) {
+		GtkWidget *view;
+		GtkWidget *sw;
+      
 		fish->fortune_dialog = 
 			gnome_dialog_new("", GNOME_STOCK_BUTTON_CLOSE, NULL);
 		gnome_dialog_set_close(GNOME_DIALOG(fish->fortune_dialog),
@@ -711,51 +732,57 @@ update_fortune_dialog (Fish *fish)
 		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
 						 GNOME_ICONDIR"/gnome-fish.png");
 
-		fish->fortune_less = gnome_less_new();
-		fish->fortune_label = gtk_label_new("");
+		view = gtk_text_view_new ();
+		fish->fortune_buffer =
+			gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 
-		gnome_less_set_fixed_font(GNOME_LESS(fish->fortune_less),TRUE);
-		
-		{
-			int i;
-			char buf[82];
-			GtkWidget *text = GTK_WIDGET(GNOME_LESS(fish->fortune_less)->text);
-			GdkFont *font = GNOME_LESS(fish->fortune_less)->font;
-			for(i=0;i<81;i++) buf[i]='X';
-			buf[i]='\0';
-			gtk_widget_set_usize(text,
-					     gdk_string_width(font,buf)+30,
-					     gdk_string_height(font,buf)*24+30);
-		}
+		sw = gtk_scrolled_window_new (NULL, NULL);
+		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
+						GTK_POLICY_AUTOMATIC,
+						GTK_POLICY_AUTOMATIC);
+
+		gtk_widget_set_usize (sw, 400, 200);
+
+		gtk_container_add (GTK_CONTAINER (sw), view);
+
+		fish->fortune_label = gtk_label_new ("");
 
 		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (fish->fortune_dialog)->vbox), 
 				    fish->fortune_label,
 				    FALSE, FALSE, GNOME_PAD);
 
 		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (fish->fortune_dialog)->vbox), 
-				    fish->fortune_less,
+				    sw,
 				    TRUE, TRUE, GNOME_PAD);
 
-		gtk_widget_show (fish->fortune_less);
-		gtk_widget_show (fish->fortune_label);
 		apply_properties (fish);
 	}
 
-	gtk_widget_show (fish->fortune_dialog);
+	gtk_widget_show_all (fish->fortune_dialog);
+
+	text_clear (fish);
+
+	fp = NULL;
 
 	fortune_command = fish_locate_fortune_command (fish);
-	if (fortune_command) {
-                gnome_less_show_command (GNOME_LESS(fish->fortune_less),
-					 fortune_command);
-	} else {
-                gnome_less_show_string (GNOME_LESS(fish->fortune_less),
-					_("You do not have fortune installed "
-					  "or you have not specified a program "
-					  "to run.\n\nPlease refer to fish "
-					  "properties dialog."));
+	if (fortune_command != NULL) {
+		fp = popen (fortune_command, "r");
 	}
 	g_free (fortune_command);
-#endif
+
+	if (fp != NULL) {
+		char buf[2048];
+		while (fgets (buf, 2048, fp) != NULL) {
+			insert_text (fish, buf);
+		}
+		pclose (fp);
+	} else {
+		insert_text (fish, 
+			     _("You do not have fortune installed "
+			       "or you have not specified a program "
+			       "to run.\n\nPlease refer to fish "
+			       "properties dialog."));
+	}
 }
 
 static gboolean 
