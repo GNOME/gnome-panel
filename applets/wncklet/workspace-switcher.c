@@ -667,6 +667,27 @@ delete_event (GtkWidget *widget, gpointer data)
 #define WID(s) glade_xml_get_widget (xml, s)
 
 static void
+close_dialog (GtkWidget *button,
+              gpointer data)
+{
+	PagerData *pager = data;
+	GtkTreeViewColumn *col;
+
+	/* This is a hack. The "editable" signal for GtkCellRenderer is emitted
+	only on button press or focus cycle. Hence when the user changes the
+	name and closes the preferences dialog without a button-press he would
+	lose the name changes. So, we call the gtk_cell_editable_editing_done
+	to stop the editing. Thanks to Paolo for a better crack than the one I had.
+	*/
+
+	col = gtk_tree_view_get_column(GTK_TREE_VIEW (pager->workspaces_tree),0);
+	if (col->editable_widget != NULL && GTK_IS_CELL_EDITABLE (col->editable_widget))
+	    gtk_cell_editable_editing_done(col->editable_widget);
+
+	gtk_widget_hide (pager->properties_dialog);
+}
+
+static void
 setup_dialog (GladeXML  *xml,
 	      PagerData *pager)
 {
@@ -722,8 +743,8 @@ setup_dialog (GladeXML  *xml,
 			  G_CALLBACK (response_cb),
 			  pager);
 	
-	g_signal_connect_swapped (WID ("done_button"), "clicked",
-				  (GCallback) gtk_widget_hide, pager->properties_dialog);
+	g_signal_connect (WID ("done_button"), "clicked",
+			  (GCallback) close_dialog, pager);
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (pager->num_workspaces_spin),
 				   wnck_screen_get_workspace_count (pager->screen));
