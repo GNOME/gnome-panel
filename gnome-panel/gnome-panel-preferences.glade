@@ -99,74 +99,84 @@
       </child>
 
       <child>
-	<widget class="GtkHBox" id="panel_animation_hbox">
-	  <property name="border_width">4</property>
+	<widget class="GtkAlignment" id="alignment1">
 	  <property name="visible">True</property>
-	  <property name="homogeneous">False</property>
-	  <property name="spacing">8</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xscale">0</property>
+	  <property name="yscale">0</property>
 
 	  <child>
-	    <widget class="GtkLabel" id="panel_animation_label">
+	    <widget class="GtkHBox" id="panel_animation_hbox">
+	      <property name="border_width">4</property>
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">_Animation speed:</property>
-	      <property name="use_underline">True</property>
-	      <property name="use_markup">False</property>
-	      <property name="justify">GTK_JUSTIFY_LEFT</property>
-	      <property name="wrap">False</property>
-	      <property name="selectable">False</property>
-	      <property name="xalign">0.5</property>
-	      <property name="yalign">0.5</property>
-	      <property name="xpad">0</property>
-	      <property name="ypad">0</property>
-	      <property name="mnemonic_widget">panel_animation_speed</property>
-	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">False</property>
-	    </packing>
-	  </child>
+	      <property name="homogeneous">False</property>
+	      <property name="spacing">8</property>
 
-	  <child>
-	    <widget class="GtkOptionMenu" id="panel_animation_speed">
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="history">0</property>
+	      <child>
+		<widget class="GtkLabel" id="panel_animation_label">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">_Animation speed:</property>
+		  <property name="use_underline">True</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0.5</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		  <property name="mnemonic_widget">panel_animation_speed</property>
+		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">False</property>
+		  <property name="fill">False</property>
+		</packing>
+	      </child>
 
-	      <child internal-child="menu">
-		<widget class="GtkMenu" id="menu1">
+	      <child>
+		<widget class="GtkOptionMenu" id="panel_animation_speed">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="history">0</property>
 
-		  <child>
-		    <widget class="GtkMenuItem" id="slow1">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Slow</property>
-		      <property name="use_underline">True</property>
-		    </widget>
-		  </child>
+		  <child internal-child="menu">
+		    <widget class="GtkMenu" id="menu1">
 
-		  <child>
-		    <widget class="GtkMenuItem" id="medium1">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Medium</property>
-		      <property name="use_underline">True</property>
-		    </widget>
-		  </child>
+		      <child>
+			<widget class="GtkMenuItem" id="slow1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Slow</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
 
-		  <child>
-		    <widget class="GtkMenuItem" id="fast1">
-		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Fast</property>
-		      <property name="use_underline">True</property>
+		      <child>
+			<widget class="GtkMenuItem" id="medium1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Medium</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
+
+		      <child>
+			<widget class="GtkMenuItem" id="fast1">
+			  <property name="visible">True</property>
+			  <property name="label" translatable="yes">Fast</property>
+			  <property name="use_underline">True</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
+		<packing>
+		  <property name="padding">0</property>
+		  <property name="expand">False</property>
+		  <property name="fill">False</property>
+		</packing>
 	      </child>
 	    </widget>
-	    <packing>
-	      <property name="padding">0</property>
-	      <property name="expand">False</property>
-	      <property name="fill">False</property>
-	    </packing>
 	  </child>
 	</widget>
 	<packing>
