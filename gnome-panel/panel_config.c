@@ -109,7 +109,7 @@ update_config_back(PanelWidget *pw)
 	}
 }
 
-static int 
+static void
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -118,8 +118,6 @@ config_destroy(GtkWidget *widget, gpointer data)
 	
 	g_free(ppc->back_pixmap);
 	g_free(ppc);
-
-	return FALSE;
 }
 
 static void

@@ -16,17 +16,22 @@
 #include "panel-include.h"
 
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *panels;
+
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
+
+/*list of all panel widgets created*/
+extern GSList *panel_list;
 
 GtkTooltips *panel_tooltips = NULL;
 
@@ -47,14 +52,11 @@ discard_session (char *id)
 {
 	char *sess;
 
-	/*FIXME: hmm this won't work ... there needs to be a clean_dir*/
-	sess = g_copy_strings ("/panel.d/Session-", id, NULL);
-	/*gnome_config_clean_file (sess);*/
+	sess = g_copy_strings (gnome_user_dir,"/panel.d/Session-", id, NULL);
+	remove_directory(sess,FALSE);
 	g_free (sess);
 
 	gnome_config_sync ();
-
-	return;
 }
 
 static void
@@ -76,19 +78,46 @@ static struct poptOption options[] = {
 };
 
 static int
+menu_age_timeout(gpointer data)
+{
+	GSList *li;
+	for(li=applets;li!=NULL;li=g_slist_next(li)) {
+		AppletInfo *info = li->data;
+		if(info->menu && info->menu_age++>=6 &&
+		   !GTK_WIDGET_VISIBLE(info->menu)) {
+			gtk_widget_destroy(info->menu);
+			info->menu = NULL;
+			info->menu_age = 0;
+		}
+		if(info->type == APPLET_MENU) {
+			Menu *menu = info->data;
+			if(menu->menu && menu->age++>=6 &&
+			   !GTK_WIDGET_VISIBLE(menu->menu)) {
+				gtk_widget_destroy(menu->menu);
+				menu->menu = NULL;
+				menu->age = 0;
+			}
+		}
+	}
+	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+		PanelData *pd = li->data;
+		if(pd->menu && pd->menu_age++>=6 &&
+		   !GTK_WIDGET_VISIBLE(pd->menu)) {
+			gtk_widget_destroy(pd->menu);
+			pd->menu = NULL;
+			pd->menu_age = 0;
+		}
+	}
+
+	return TRUE;
+}
+
+static int
 try_config_sync(gpointer data)
 {
 	panel_config_sync();
 	return TRUE;
 }
-
-static int
-start_extern_timeout(gpointer data)
-{
-	extern_start_next();
-	return FALSE;
-}
-
 
 int
 main(int argc, char **argv)
@@ -128,15 +157,7 @@ main(int argc, char **argv)
 	if (GNOME_CLIENT_CONNECTED (client)) {
 		char *session_id;
 
-		if (gnome_cloned_client ())
-		  {
-		    /* This client has been resumed or is a clone of
-                       another panel (i.e. gnome_cloned_client !=
-                       NULL).  */
-		    session_id= gnome_client_get_id (gnome_cloned_client ());
-		  }
-		else
-		  session_id= NULL;
+		session_id= gnome_client_get_previous_id (client);
 
 		if(session_id) {
 			g_free(old_panel_cfg_path);
@@ -151,8 +172,6 @@ main(int argc, char **argv)
 	gnome_client_set_clone_command (client, 1, argv);
 	gnome_client_set_restart_command (client, 1, argv);
 
-	applet_count = 0;
-
 	panel_tooltips = gtk_tooltips_new();
 
 	/*set the globals*/
@@ -163,7 +182,7 @@ main(int argc, char **argv)
 	init_user_applets();
 
 	/*add forbidden lists to ALL panels*/
-	g_list_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
+	g_slist_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change();
@@ -171,10 +190,8 @@ main(int argc, char **argv)
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
 	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);
-	
-	/*actually start executing the external applets*/
-	/*extern_start_next();*/
-	gtk_timeout_add(500,start_extern_timeout,NULL);
+
+	gtk_timeout_add(10*1000,menu_age_timeout,NULL);
 	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();

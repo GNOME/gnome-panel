@@ -14,7 +14,7 @@ typedef struct {
 	GtkWidget *drawer;
 } Drawer;
 
-void load_drawer_applet(char *params, char *pixmap, char *tooltip,
+void load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 			PanelWidget *panel, int pos);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);

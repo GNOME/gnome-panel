@@ -103,7 +103,7 @@ socket_realized(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-static int
+static void
 socket_destroyed(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = data;
@@ -118,8 +118,6 @@ socket_destroyed(GtkWidget *w, gpointer data)
 	g_free(swallow->title);
 	g_free(swallow->path);
 	g_free(swallow);
-
-	return FALSE;
 }
 
 static int

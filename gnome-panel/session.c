@@ -15,13 +15,14 @@
 #include "panel-include.h"
 
 int config_sync_timeout = 0;
-GList *applets_to_sync = NULL;
+GSList *applets_to_sync = NULL;
 int panels_to_sync = FALSE;
 int globals_to_sync = FALSE;
 int need_complete_save = FALSE;
 
-extern GList *applets;
-extern GList *applets_list;
+extern GSList *panels;
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 extern GtkTooltips *panel_tooltips;
@@ -34,15 +35,15 @@ char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
 
 /*list of all panel widgets created*/
-extern GList *panel_list;
+extern GSList *panel_list;
 
 /*send the tooltips state to all external applets*/
 static void
 send_tooltips_state(int enabled)
 {
-	GList *li;
+	GSList *li;
 
-	for(li = applets; li!=NULL; li = g_list_next(li)) {
+	for(li = applets; li!=NULL; li = g_slist_next(li)) {
 		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
@@ -66,6 +67,9 @@ void
 apply_global_config(void)
 {
 	int i;
+	static int dot_buttons_old = 0; /*doesn't matter first time this is
+					  done there are no menu applets*/
+	static int small_icons_old = 0; /*same here*/
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.drawer_step_size,
@@ -78,8 +82,39 @@ apply_global_config(void)
 		gtk_tooltips_enable(panel_tooltips);
 	else
 		gtk_tooltips_disable(panel_tooltips);
-	set_show_small_icons();
-	set_show_dot_buttons();
+	/*if we changed dot_buttons/small_icons mark all menus as dirty
+	  for rereading, hopefullly the user doesn't do this too often
+	  so that he doesn't have to reread his menus all the time:)*/
+	if(dot_buttons_old != global_config.show_dot_buttons ||
+	   small_icons_old != global_config.show_small_icons) {
+		GSList *li;
+		for(li=applets;li!=NULL;li=g_slist_next(li)) {
+			AppletInfo *info = li->data;
+			if(info->menu) {
+				gtk_widget_destroy(info->menu);
+				info->menu = NULL;
+				info->menu_age = 0;
+			}
+			if(info->type == APPLET_MENU) {
+				Menu *menu = info->data;
+				if(menu->menu) {
+					gtk_widget_destroy(menu->menu);
+					menu->menu = NULL;
+					menu->age = 0;
+				}
+			}
+		}
+		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+			PanelData *pd = li->data;
+			if(pd->menu) {
+				gtk_widget_destroy(pd->menu);
+				pd->menu = NULL;
+				pd->menu_age = 0;
+			}
+		}
+	}
+	dot_buttons_old = global_config.show_dot_buttons;
+	small_icons_old = global_config.show_small_icons;
 	send_tooltips_state(global_config.tooltips_enabled);
 
 	for(i=0;i<LAST_TILE;i++) {
@@ -186,7 +221,7 @@ save_applet_configuration(AppletInfo *info)
 	panel = PANEL_WIDGET(info->widget->parent);
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
 
-	if((panel_num = g_list_index(panels,panel)) == -1) {
+	if((panel_num = g_slist_index(panels,panel)) == -1) {
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		return;
@@ -238,8 +273,8 @@ save_applet_configuration(AppletInfo *info)
 
 			gnome_config_set_string("id", DRAWER_ID);
 
-			i = g_list_index(panels,
-					 DRAWER_WIDGET(drawer->drawer)->panel);
+			i = g_slist_index(panels,
+					  DRAWER_WIDGET(drawer->drawer)->panel);
 			if(i>=0)
 				gnome_config_set_int("parameters",i);
 			else
@@ -268,8 +303,8 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_set_string("id", MENU_ID);
 			gnome_config_set_string("parameters",
 						menu->path);
-			gnome_config_set_int("main_menu_type",
-					     menu->main_menu_type);
+			gnome_config_set_int("main_menu_flags",
+					     menu->main_menu_flags);
 			break;
 		}
 	case APPLET_LAUNCHER:
@@ -376,7 +411,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
-		GList *sync_applets,
+		GSList *sync_applets,
 		int sync_panels,
 		int sync_globals)
 {
@@ -412,12 +447,12 @@ do_session_save(GnomeClient *client,
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	if(complete_sync) {
-		GList *li;
-		for(li=applets;li!=NULL;li=g_list_next(li))
+		GSList *li;
+		for(li=applets;li!=NULL;li=g_slist_next(li))
 			save_applet_configuration(li->data);
 	} else {
-		GList *li;
-		for(li = sync_applets; li!=NULL; li=g_list_next(li))
+		GSList *li;
+		for(li = sync_applets; li!=NULL; li=g_slist_next(li))
 			save_applet_configuration(li->data);
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
@@ -431,7 +466,7 @@ do_session_save(GnomeClient *client,
 	/*DEBUG*/printf(" 3"); fflush(stdout);
 	if(complete_sync || sync_panels) {
 		num = 1;
-		g_list_foreach(panel_list, save_panel_configuration,&num);
+		g_slist_foreach(panel_list, save_panel_configuration,&num);
 		gnome_config_set_int("panel_count",num-1);
 	}
 	/*DEBUG*/printf(" 4"); fflush(stdout);
@@ -490,11 +525,14 @@ panel_config_sync(void)
 	   applets_to_sync ||
 	   panels_to_sync ||
 	   globals_to_sync) {
-		do_session_save(client,need_complete_save,
-				applets_to_sync,panels_to_sync,globals_to_sync);
-		need_complete_save = FALSE;
-		g_list_free(applets_to_sync);
+		GSList *_applets_to_sync = applets_to_sync;
+
 		applets_to_sync = NULL;
+		do_session_save(client,need_complete_save,
+				_applets_to_sync,panels_to_sync,globals_to_sync);
+		need_complete_save = FALSE;
+
+		g_slist_free(_applets_to_sync);
 		panels_to_sync = FALSE;
 		globals_to_sync = FALSE;
 	}
@@ -525,14 +563,14 @@ int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
-	GList *li;
+	GSList *li;
 
 	gtk_timeout_remove(config_sync_timeout);
   
 	/*don't catch these any more*/
 	signal(SIGCHLD, SIG_DFL);
 	
-	for(li=applets; li!=NULL; li=g_list_next(li)) {
+	for(li=applets; li!=NULL; li=g_slist_next(li)) {
 		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			gtk_widget_destroy(info->widget);
@@ -575,13 +613,12 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 	return TRUE;
 }
 
-static int
+static void
 panel_really_logout_destroy(GtkWidget *w, gpointer data)
 {
 	GtkWidget **box=data;
 	if(box)
 		*box = NULL;
-	return FALSE;
 }
 
 
@@ -615,6 +652,7 @@ panel_quit(void)
 				     GNOME_STOCK_BUTTON_YES,
 				     GNOME_STOCK_BUTTON_NO,
 				     NULL);
+	gnome_dialog_set_default(GNOME_DIALOG(box), 0);
 	/*gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 
@@ -644,7 +682,12 @@ load_default_applets(void)
 		"apps/Applications/Netscape.desktop",
 		NULL };
 	int i;
-	load_menu_applet(NULL,0, panels->data, 0);
+	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+	/*guess redhat menus*/
+	if(g_file_exists("/etc/X11/wmconfig"))
+		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+	load_menu_applet(NULL,flags, panels->data, 0);
 
 	for(i=0;def_launchers[i]!=NULL;i++) {
 		char *p = gnome_datadir_file (def_launchers[i]);
@@ -695,7 +738,7 @@ init_user_applets(void)
 		pos = gnome_config_get_int(buf);
 		panel_num = gnome_config_get_int("panel=0");
 		{
-			GList *list = g_list_nth(panels,panel_num);
+			GSList *list = g_slist_nth(panels,panel_num);
 			if(!list) {
 				g_warning("Can't find panel, "
 					  "putting applet on the first one");
@@ -734,16 +777,32 @@ init_user_applets(void)
 			g_free(params);
 		} else if(strcmp(applet_name,MENU_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
-			int main_menu_type =
-				gnome_config_get_int("main_menu_type=0");
-			load_menu_applet(params,main_menu_type,panel,pos);
+			int type =
+				gnome_config_get_int("main_menu_type=-1");
+			int flags =
+				gnome_config_get_int("main_menu_flags=5");
+			if(type>=0) {
+				flags = 0;
+				if(type == X_MAIN_MENU_BOTH) {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+				} else if(type == X_MAIN_MENU_SYSTEM) {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER|
+						MAIN_MENU_USER_SUB;
+				} else {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB|
+						MAIN_MENU_USER;
+				}
+				/*guess redhat menus*/
+				if(g_file_exists("/etc/X11/wmconfig"))
+					flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+			}
+			load_menu_applet(params,flags,panel,pos);
 			g_free(params);
 		} else if(strcmp(applet_name,DRAWER_ID) == 0) {
-			char *params = gnome_config_get_string("parameters=");
+			int mypanel = gnome_config_get_int("parameters=-1");
 			char *pixmap = gnome_config_get_string("pixmap=");
 			char *tooltip = gnome_config_get_string("tooltip=");
-			load_drawer_applet(params,pixmap,tooltip,panel,pos);
-			g_free(params);
+			load_drawer_applet(mypanel,pixmap,tooltip,panel,pos);
 			g_free(pixmap);
 			g_free(tooltip);
 		} else

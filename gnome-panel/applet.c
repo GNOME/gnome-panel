@@ -20,13 +20,15 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-GList *applets = NULL;
-GList *applets_last = NULL;
+extern GSList *panels;
+
+GSList *applets = NULL;
+GSList *applets_last = NULL;
 int applet_count = 0;
 
 /*config sync stuff*/
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -113,10 +115,10 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-applet_menu_deactivate(GtkWidget *w, gpointer data)
+applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 {
-	GtkWidget *applet = data;
-	GtkWidget *panel = get_panel_parent(applet);
+	GtkWidget *panel = get_panel_parent(info->widget);
+	info->menu_age = 0;
 	
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
@@ -170,8 +172,9 @@ applet_add_callback(AppletInfo *info,
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_unref(info->menu);
+		gtk_widget_destroy(info->menu);
 		info->menu=NULL;
+		info->menu_age = 0;
 	}
 }
 
@@ -201,8 +204,9 @@ applet_remove_callback(AppletInfo *info, char *callback_name)
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_unref(info->menu);
+		gtk_widget_destroy(info->menu);
 		info->menu=NULL;
+		info->menu_age = 0;
 	}
 }
 
@@ -320,7 +324,7 @@ create_applet_menu(AppletInfo *info)
 	  when the menu is deactivated*/
 	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
 			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
-			   info->widget);
+			   info);
 }
 
 void
@@ -339,6 +343,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
+	info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       info, event->button, event->time);
 }
@@ -364,12 +369,12 @@ applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
 	return TRUE;
 }
 
-static int
+static void
 applet_destroy(GtkWidget *w, AppletInfo *info)
 {
 	AppletType type;
 	
-	g_return_val_if_fail(info != NULL,FALSE);
+	g_return_if_fail(info != NULL);
 
 	info->widget = NULL;
 
@@ -384,8 +389,9 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		}
 	}
 	if(info->menu) {
-		gtk_widget_unref(info->menu);
-		info->menu=NULL;
+		gtk_widget_destroy(info->menu);
+		info->menu = NULL;
+		info->menu_age = 0;
 	}
 
 	info->type = APPLET_EMPTY;
@@ -404,8 +410,6 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		g_free(umenu);
 		info->user_menu = my_g_list_pop_first(info->user_menu);
 	}
-
-	return FALSE;
 }
 
 int
@@ -431,6 +435,7 @@ register_toy(GtkWidget *applet,
 	info->type = type;
 	info->widget = applet;
 	info->menu = NULL;
+	info->menu_age = 0;
 	info->data = data;
 	info->user_menu = NULL;
 
@@ -454,33 +459,26 @@ register_toy(GtkWidget *applet,
 	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		
-	/*add to the array of applets*/
-	/*if(applets_last != applets) {
-		applets_last = g_list_append(applets_last,info);
+	if(!applets) {
+		applets_last = applets = g_slist_append(NULL,info);
 	} else {
-		applets_last = applets = g_list_append(applets,info);
-	}
-	if(applets_last->next)
+		applets_last = g_slist_append(applets_last,info);
 		applets_last = applets_last->next;
-		*/
-	/*cheap fix for broken logic above I guess, I just want to make
-	 sure this was the problem*/
-	applets = g_list_append(applets,info);
-	applets_last = g_list_last(applets);
+	}
 	applet_count++;
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,info);
+	if(g_slist_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,info);
 
 	if(panel_widget_add_full(panel, applet, pos, TRUE)==-1) {
-		GList *list;
-		for(list = panels; list != NULL; list = g_list_next(list))
+		GSList *list;
+		for(list = panels; list != NULL; list = g_slist_next(list))
 			if(panel_widget_add_full(panel, applet, pos, TRUE)!=-1)
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/
-			gtk_widget_unref(applet);
+			gtk_widget_destroy(applet);
 			info->widget = NULL;
 			panel_clean_applet(info);
 			g_warning("Can't find an empty spot");
@@ -495,8 +493,7 @@ register_toy(GtkWidget *applet,
 				   GTK_SIGNAL_FUNC(applet_button_press),
 				   info);
 
-	gtk_signal_connect(GTK_OBJECT(applet),
-			   "destroy",
+	gtk_signal_connect(GTK_OBJECT(applet), "destroy",
 			   GTK_SIGNAL_FUNC(applet_destroy),
 			   info);
 

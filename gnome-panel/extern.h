@@ -26,10 +26,6 @@ void extern_clean(Extern *ext);
 
 void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos);
 
-/*start the next applet in queue*/
-void extern_start_next(void);
-
-
 void panel_corba_clean_up(void);
 void panel_corba_gtk_init(CORBA_ORB panel_orb);
 

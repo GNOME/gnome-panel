@@ -20,12 +20,14 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *panels;
+
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -38,12 +40,6 @@ extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
 static GList *extern_applets = NULL;
-static char *goad_id_starting = NULL; /*the goad id of the applet that is
-					 being started right now, before it
-					 does applet_register*/
-static GList *start_queue = NULL; /*the queue of the applets to be
-				    started*/
-static int start_timeout = -1; /*id of the timeout for starting new applet*/
 
 /********************* CORBA Stuff *******************/
 
@@ -187,52 +183,14 @@ static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panels
 
 /********************* NON-CORBA Stuff *******************/
 
-static int
-start_timeout_handler(gpointer data)
-{
-	start_timeout = -1;
-	extern_start_next();
-	return FALSE;
-}
-
-
-/*queue up a new goad id to start or start it if nothing else is
-  starting*/
 static void
 extern_start_new_goad_id(Extern *e)
 {
         CORBA_Environment ev;
-	/*FIXME: fix synchronious starting*/
-	/*if(!goad_id_starting) {*/
-		CORBA_exception_init(&ev);
-		CORBA_Object_release(goad_server_activate_with_id(NULL, e->goad_id, GOAD_ACTIVATE_NEW_ONLY|GOAD_ACTIVATE_ASYNC, NULL),&ev);
-		CORBA_exception_free(&ev);
-		/*goad_id_starting = g_strdup(e->goad_id);
-	} else {
-		if(start_timeout>-1)
-			gtk_timeout_remove(start_timeout);
-		start_timeout = -1;
-		start_queue = g_list_append(start_queue,e);
-		start_timeout = gtk_timeout_add(100*1000,
-						start_timeout_handler,NULL);
-	}*/
+	CORBA_exception_init(&ev);
+	CORBA_Object_release(goad_server_activate_with_id(NULL, e->goad_id, GOAD_ACTIVATE_NEW_ONLY|GOAD_ACTIVATE_ASYNC, NULL),&ev);
+	CORBA_exception_free(&ev);
 }
-
-void
-extern_start_next(void)
-{
-	Extern *e;
-	if(goad_id_starting)
-		g_free(goad_id_starting);
-	goad_id_starting = NULL;
-	if(!start_queue)
-		return;
-	e = start_queue->data;
-	start_queue = g_list_remove(start_queue,e);
-	
-	extern_start_new_goad_id(e);
-}
-
 
 void
 extern_clean(Extern *ext)
@@ -257,13 +215,12 @@ extern_clean(Extern *ext)
 
 
 
-static int
+static void
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
 	Extern *ext = data;
 	gtk_widget_destroy(ext->ebox);
 	extern_clean(ext);
-	return FALSE;
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
@@ -374,14 +331,14 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 			CORBA_unsigned_long* wid,
 			CORBA_Environment *ev)
 {
-	GList *li;
+	GSList *li;
 	int i;
 	Extern *ext;
 	char *p;
 	POA_GNOME_PanelSpot *panelspot_servant;
 	GNOME_PanelSpot acc;
 	
-	for(li=applets;li!=NULL;li=g_list_next(li)) {
+	for(li=applets;li!=NULL;li=g_slist_next(li)) {
 		AppletInfo *info = li->data;
 		if(info && info->type == APPLET_EXTERN_PENDING) {
 			Extern *ext = info->data;
@@ -442,7 +399,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 
 	/*select the nth panel*/
 	if(panel)
-		li = g_list_nth(panels,panel);
+		li = g_slist_nth(panels,panel);
 	else
 		li = NULL;
 	if(!li)
@@ -505,7 +462,7 @@ s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
 			     CORBA_Environment *ev)
 {
 	int panel;
-	GList *list;
+	GSList *list;
 	gpointer p;
 	Extern *ext = (Extern *)servant;
 
@@ -514,7 +471,7 @@ s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
 
 	p = PANEL_WIDGET(ext->info->widget->parent);
 
-	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
+	for(panel=0,list=panels;list!=NULL;list=g_slist_next(list),panel++)
 		if(list->data == p)
 			return panel;
 	return -1;
@@ -568,10 +525,6 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 	printf("register ext: %lX\n",(long)ext);
 	printf("register ext->info: %lX\n",(long)(ext->info));
 
-	/*if we should start the next applet*/
-	if(goad_id_starting && strcmp(ext->goad_id,goad_id_starting)==0)
-		extern_start_next();
-
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 	g_return_if_fail(panel!=NULL);
 
@@ -605,9 +558,6 @@ s_panelspot_abort_load(POA_GNOME_PanelSpot *servant,
 
 	g_return_if_fail(ext->info != NULL);
 	
-	if(goad_id_starting && strcmp(ext->goad_id,goad_id_starting)==0)
-		extern_start_next();
-
 	/*only reserved spots can be canceled, if an applet
 	  wants to chance a pending applet it needs to first
 	  user reserve spot to obtain id and make it EXTERN_RESERVED*/
@@ -639,6 +589,7 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
 
+	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
 		       applet_menu_position,
 		       ext->info, 3, GDK_CURRENT_TIME);
@@ -718,8 +669,8 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);
-	if(g_list_find(applets_to_sync, ext->info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,ext->info);
+	if(g_slist_find(applets_to_sync, ext->info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,ext->info);
 	panel_config_sync();
 }
 

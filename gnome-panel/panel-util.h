@@ -7,7 +7,7 @@ BEGIN_GNOME_DECLS
 
 char *get_full_path(char *argv0);
 void move_window(GtkWidget *widget, int x, int y);
-int string_is_in_list(GList *list,char *text);
+int string_is_in_list(GSList *list,char *text);
 GtkWidget * create_text_entry(GtkWidget *table,
 			      char *history_id,
 			      int row,
@@ -42,6 +42,7 @@ GList * my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func);
 
 /*pop and free the first list link*/
 GList * my_g_list_pop_first(GList *list);
+GSList * my_g_slist_pop_first(GSList *list);
 
 
 /*this is used to do an immediate move instead of set_uposition, which
@@ -51,6 +52,11 @@ void move_resize_window(GtkWidget *widget, int x, int y, int w, int h);
 /*this is used to do an immediate resize instead of set_usize, which
 queues one*/
 void resize_window(GtkWidget *widget, int w, int h);
+
+void set_frame_colors(PanelWidget *panel, GtkWidget *frame,
+		      GtkWidget *but1, GtkWidget *but2, GtkWidget *but3, GtkWidget *but4);
+
+void remove_directory(char *dirname, int just_clean);
 
 
 END_GNOME_DECLS

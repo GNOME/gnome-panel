@@ -90,54 +90,6 @@ marshal_signal_int (GtkObject * object,
 }
 
 static void
-set_frame_colors(CornerWidget *corner)
-{
-	if(PANEL_WIDGET(corner->panel)->back_type == PANEL_BACK_COLOR) {
-		GdkColor n;
-		GtkStyle *ns;
-
-		ns = gtk_style_copy(corner->panel->style);
-		gtk_style_ref(ns);
-
-		ns->bg[GTK_STATE_NORMAL] =
-			PANEL_WIDGET(corner->panel)->back_color;
-		ns->base[GTK_STATE_NORMAL] =
-			PANEL_WIDGET(corner->panel)->back_color;
-
-		n = PANEL_WIDGET(corner->panel)->back_color;
-		n.red/=3;
-		n.green/=3;
-		n.blue/=3;
-		ns->dark[GTK_STATE_NORMAL] = n;
-
-		n = PANEL_WIDGET(corner->panel)->back_color;
-		n.red/=2;
-		n.green/=2;
-		n.blue/=2;
-		ns->mid[GTK_STATE_NORMAL] = n;
-
-		n = PANEL_WIDGET(corner->panel)->back_color;
-		n.red=MIN(65535,n.red*2);
-		n.green=MIN(65535,n.green*2);
-		n.blue=MIN(65535,n.blue*2);
-		ns->light[GTK_STATE_NORMAL] = n;
-
-		gtk_widget_set_style(corner->frame, ns);
-
-		gtk_style_unref(ns);
-	} else {
-		GtkStyle *ns;
-
-		ns = gtk_rc_get_style(corner->frame);
-		if(!ns) ns = gtk_style_new();
-
-		gtk_style_ref(ns);
-		gtk_widget_set_style(corner->frame, ns);
-		gtk_style_unref(ns);
-	}
-}
-
-static void
 corner_widget_realize(GtkWidget *w)
 {
 	CornerWidget *corner = CORNER_WIDGET(w);
@@ -157,7 +109,12 @@ corner_widget_realize(GtkWidget *w)
 		gdk_window_set_decorations(w->window, 0);
 	}
 	
-	set_frame_colors(corner);
+	set_frame_colors(PANEL_WIDGET(corner->panel),
+			 corner->frame,
+			 corner->hidebutton_n,
+			 corner->hidebutton_e,
+			 corner->hidebutton_w,
+			 corner->hidebutton_s);
 }
 
 static void
@@ -762,7 +719,12 @@ c_back_change(PanelWidget *panel,
 	    GdkColor *color,
 	    CornerWidget *corner)
 {
-	set_frame_colors(corner);
+	set_frame_colors(PANEL_WIDGET(corner->panel),
+			 corner->frame,
+			 corner->hidebutton_n,
+			 corner->hidebutton_e,
+			 corner->hidebutton_w,
+			 corner->hidebutton_s);
 }
 
 GtkWidget*

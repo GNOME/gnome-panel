@@ -23,7 +23,7 @@
 			   GDK_POINTER_MOTION_HINT_MASK)
 
 /*list of all panel widgets created*/
-GList *panel_list = NULL;
+GSList *panel_list = NULL;
 
 static int panel_dragged = FALSE;
 static int panel_dragged_timeout = -1;
@@ -33,7 +33,7 @@ static int panel_been_moved = FALSE;
 int base_panels = 0;
 
 extern int config_sync_timeout;
-extern GList *applets_to_sync;
+extern GSList *applets_to_sync;
 extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
@@ -480,7 +480,13 @@ static int
 panel_applet_added_idle(gpointer data)
 {
 	AppletInfo *info = data;
-	PanelWidget *panel = PANEL_WIDGET(info->widget->parent);
+	PanelWidget *panel;
+	
+	g_return_val_if_fail(info,FALSE);
+	g_return_val_if_fail(info->widget,TRUE);
+	g_return_val_if_fail(info->widget->parent,TRUE);
+
+	panel = PANEL_WIDGET(info->widget->parent);
 
 	orientation_change(info,panel);
 	back_change(info,panel);
@@ -520,8 +526,8 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	gtk_idle_add(panel_applet_added_idle,info);
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,info);
+	if(g_slist_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,info);
 }
 
 static void
@@ -556,15 +562,16 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,info);
+	if(g_slist_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,info);
 }
 
 static void
-menu_deactivate(GtkWidget *w, GtkWidget *panel)
+menu_deactivate(GtkWidget *w, PanelData *pd)
 {
-	if(IS_SNAPPED_WIDGET(panel))
-		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	pd->menu_age = 0;
+	if(IS_SNAPPED_WIDGET(pd->panel))
+		SNAPPED_WIDGET(pd->panel)->autohide_inhibit = FALSE;
 }
 
 static void
@@ -679,11 +686,10 @@ panel_move_timeout(gpointer data)
 	return FALSE;
 }
 
-static int
+static void
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
-	GtkWidget *panel_menu = data;
 
 	kill_config_dialog(widget);
 
@@ -702,13 +708,11 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
-	if(panel_menu)
-		gtk_widget_unref(panel_menu);
+	if(pd->menu)
+		gtk_widget_destroy(pd->menu);
 	
-	panel_list = g_list_remove(panel_list,pd);
+	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
-	
-	return FALSE;
 }
 
 static void
@@ -717,12 +721,24 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget),
 					       "applet_info");
 	
-	if(g_list_find(applets_to_sync, info)==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,info);
+	if(g_slist_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_slist_prepend(applets_to_sync,info);
+}
+
+static GtkWidget *
+panel_menu_get(PanelData *pd)
+{
+	if(pd->menu)
+		return pd->menu;
+
+	pd->menu = create_panel_root_menu(pd->panel);
+	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
+			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
+	return pd->menu;
 }
 
 static int
-panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 {
 	GdkEventButton *bevent;
 	switch (event->type) {
@@ -731,8 +747,9 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		switch(bevent->button) {
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
+				GtkWidget *panel_menu = panel_menu_get(pd);
 				GtkWidget *rem = 
-					gtk_object_get_data(GTK_OBJECT(widget),
+					gtk_object_get_data(GTK_OBJECT(panel_menu),
 							    "remove_item");
 				if(IS_SNAPPED_WIDGET(widget)) {
 					SnappedWidget *snapped =
@@ -765,7 +782,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				} else
 					gtk_widget_set_sensitive(rem,
 								 TRUE);
-				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
+				pd->menu_age = 0;
+				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
 					       panel_menu_position,
 					       widget, bevent->button,
 					       bevent->time);
@@ -821,7 +839,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(panel_dragged_timeout==-1) {
 				panel_been_moved = FALSE;
 				move_panel_to_cursor(widget);
-				panel_dragged_timeout = gtk_timeout_add (100,panel_move_timeout,widget);
+				panel_dragged_timeout = gtk_timeout_add (30,panel_move_timeout,widget);
 			} else
 				panel_been_moved = TRUE;
 		}
@@ -909,10 +927,14 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		  else if(mimetype
 			  && !strcmp(mimetype, "application/x-gnome-app-info"))
 		    load_launcher_applet(ltmp->data, panel, pos);
-		  else if(S_ISDIR(s.st_mode))
-		    load_menu_applet(ltmp->data, MAIN_MENU_BOTH,
-				     panel, pos);
-		  else if(S_IEXEC & s.st_mode) /*executable?*/
+		  else if(S_ISDIR(s.st_mode)) {
+			  int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+			  /*guess redhat menus*/
+			  if(g_file_exists("/etc/X11/wmconfig"))
+				  flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		    load_menu_applet(ltmp->data, flags, panel, pos);
+		  } else if(S_IEXEC & s.st_mode) /*executable?*/
 		    ask_about_launcher(ltmp->data,panel,pos);
 		}
 		
@@ -935,7 +957,12 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 	}
 	case TARGET_DIRECTORY: {
 		int pos = panel_widget_get_cursorloc(panel);
-		load_menu_applet ((char *)selection_data->data, 0,
+		int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+		/*guess redhat menus*/
+		if(g_file_exists("/etc/X11/wmconfig"))
+			flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		load_menu_applet ((char *)selection_data->data,flags,
 				  panel, pos);
 		break;
 	}
@@ -981,13 +1008,15 @@ panel_widget_setup(PanelWidget *panel)
 			   GDK_ACTION_COPY);
 }
 
+
 void
 panel_setup(GtkWidget *panelw)
 {
-	GtkWidget *panel_menu;
 	PanelData *pd;
 	
 	pd = g_new(PanelData,1);
+	pd->menu = NULL;
+	pd->menu_age = 0;
 	pd->panel = panelw;
 	if(IS_DRAWER_WIDGET(panelw))
 		pd->type = DRAWER_PANEL;
@@ -999,11 +1028,9 @@ panel_setup(GtkWidget *panelw)
 		g_warning("unknown panel type");
 	}
 	
-	panel_list = g_list_append(panel_list,pd);
+	panel_list = g_slist_append(panel_list,pd);
 	
 	gtk_object_set_user_data(GTK_OBJECT(panelw),pd);
-
-	panel_menu = create_panel_root_menu(panelw);
 
 	if(IS_DRAWER_WIDGET(panelw)) {
 		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(panelw)->panel);
@@ -1052,12 +1079,10 @@ panel_setup(GtkWidget *panelw)
 		SnappedWidget *snapped = SNAPPED_WIDGET(panelw);
 		snapped_widget_disable_buttons(snapped);
 		panel_widget_setup(panel);
-		gtk_signal_connect(GTK_OBJECT(panelw),
-				   "pos_change",
+		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
 				   GTK_SIGNAL_FUNC(snapped_pos_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panelw),
-				   "state_change",
+		gtk_signal_connect(GTK_OBJECT(panelw), "state_change",
 				   GTK_SIGNAL_FUNC(snapped_state_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(snapped->hidebutton_e), "event",
@@ -1081,16 +1106,13 @@ panel_setup(GtkWidget *panelw)
 		CornerWidget *corner = CORNER_WIDGET(panelw);
 		corner_widget_disable_buttons(corner);
 		panel_widget_setup(panel);
-		gtk_signal_connect(GTK_OBJECT(panel),
-				   "orient_change",
+		gtk_signal_connect(GTK_OBJECT(panel), "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panelw),
-				   "pos_change",
+		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
 				   GTK_SIGNAL_FUNC(corner_pos_change),
 				   NULL);
-		gtk_signal_connect(GTK_OBJECT(panelw),
-				   "state_change",
+		gtk_signal_connect(GTK_OBJECT(panelw), "state_change",
 				   GTK_SIGNAL_FUNC(corner_state_change),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(corner->hidebutton_e), "event",
@@ -1110,29 +1132,18 @@ panel_setup(GtkWidget *panelw)
 		base_panels++;
 	} else
 		g_warning("unknown panel type");
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "event",
-			   GTK_SIGNAL_FUNC(panel_event),
-			   panel_menu);
+	gtk_signal_connect(GTK_OBJECT(panelw), "event",
+			   GTK_SIGNAL_FUNC(panel_event),pd);
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |
 			      PANEL_EVENT_MASK);
 
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "size_allocate",
-			   GTK_SIGNAL_FUNC(panel_size_allocate),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(panel_destroy),
-			   panel_menu);
+	gtk_signal_connect(GTK_OBJECT(panelw), "size_allocate",
+			   GTK_SIGNAL_FUNC(panel_size_allocate), NULL);
+	gtk_signal_connect(GTK_OBJECT(panelw), "destroy",
+			   GTK_SIGNAL_FUNC(panel_destroy),NULL);
 
-
-	gtk_signal_connect(GTK_OBJECT(panel_menu),
-			   "deactivate",
-			   GTK_SIGNAL_FUNC(menu_deactivate),
-			   panelw);
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panelw)))
 		panel_realize(GTK_WIDGET(panelw),NULL);
@@ -1146,8 +1157,8 @@ panel_setup(GtkWidget *panelw)
 void
 send_state_change(void)
 {
-	GList *list;
-	for(list = panel_list; list != NULL; list = g_list_next(list)) {
+	GSList *list;
+	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
 		PanelData *pd = list->data;
 		if(IS_SNAPPED_WIDGET(pd->panel))
 			snapped_state_change(pd->panel,
@@ -1164,13 +1175,13 @@ send_state_change(void)
 void
 destroy_all_panels(void)
 {
-	GList *list = panel_list;
+	GSList *list = panel_list;
 	while (list) {
 		PanelData *pd = list->data;
-		GList *tmp = list->next;
+		GSList *tmp = list->next;
 		gtk_widget_destroy (pd->panel);
 		list = tmp;
 	}
-	g_list_free (panel_list);
+	g_slist_free (panel_list);
 	panel_list = NULL;
 }

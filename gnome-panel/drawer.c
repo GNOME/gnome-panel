@@ -22,14 +22,14 @@
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3
 
-extern GList *applets;
-extern GList *applets_last;
+extern GSList *applets;
+extern GSList *applets_last;
 extern int applet_count;
 extern GlobalConfig global_config;
 
 extern GtkTooltips *panel_tooltips;
 
-extern GList *panel_list;
+extern GSList *panel_list;
 
 static void
 properties_apply_callback(GtkWidget *widget, int page, gpointer data)
@@ -75,13 +75,12 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			      drawer->tooltip,NULL);
 }
 
-static int
+static void
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
 	gtk_object_set_data(GTK_OBJECT(drawer->button),
 			    DRAWER_PROPERTIES,NULL);
-	return FALSE;
 }
 
 static void
@@ -201,7 +200,7 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	}
 }
 
-static int
+static void
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
@@ -210,7 +209,6 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
 	g_free(drawer);
-	return FALSE;
 }
 
 static int
@@ -341,22 +339,22 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 }
 
 void
-load_drawer_applet(char *params, char *pixmap, char *tooltip,
+load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		   PanelWidget *panel, int pos)
 {
 	Drawer *drawer;
 	PanelOrientType orient = get_applet_orient(panel);
 
-	if(!params) {
+	if(mypanel < 0) {
 		drawer = create_empty_drawer_applet(tooltip,pixmap,orient);
 		if(drawer) panel_setup(drawer->drawer);
 	} else {
-		int i;
 		PanelData *dr_pd;
+		GSList *li;
 
-		sscanf(params,"%d",&i);
-		dr_pd = g_list_nth(panel_list,i)->data;
-		
+		li = g_slist_nth(panel_list,mypanel);
+		g_return_if_fail(li != NULL);
+		dr_pd = li->data;
 
 		drawer=create_drawer_applet(dr_pd->panel, tooltip,pixmap,
 					    orient);
