@@ -480,7 +480,7 @@ num_workspaces_value_changed (GtkSpinButton *button,
 	
 	client = gconf_client_get_default ();
 
-	gconf_client_set_int (client, "/desktop/gnome/applications/window_manager/nr_of_workspaces",
+	gconf_client_set_int (client, "/desktop/gnome/applications/window_manager/number_of_workspaces",
 			      gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)), NULL);
 }
 
