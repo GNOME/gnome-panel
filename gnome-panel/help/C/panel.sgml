@@ -523,13 +523,25 @@
  <sect1 id="launchers">
   <title>Launchers</title>
   <para>
-   (Add info about launchers)
+   Launchers are essentially buttons which reside in your panel and
+   start an application or execute a command when clicked.  A launcher
+   can use any icon and has a customized tooltip to display a message
+   when the cursor is passed over the Launcher.
   </para>
-  <figure>
+  <figure id="launcherpropsfig">
    <title>Create Launcher/Launcher Properties Dialog</title>
    <screenshot>
     <screeninfo>Create Launcher/Launcher Properties Dialog</screeninfo>
-     <graphic fileref="./figures/create_launcher" format="png"
+     <graphic fileref="./figures/launcher_properties" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+  <figure id="launcheradvpropsfig">
+   <title>Launcher Advanced Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Launcher Advanced Properties Dialog</screeninfo>
+     <graphic fileref="./figures/launcher_advprops" format="png"
      srccredit="muet">
      </graphic>
    </screenshot>
@@ -557,21 +569,24 @@
   </figure>
   <para>
    Some example Applets are shown above.  At the very left is  the
-   Sound Monitor, which displays the current volume of sound being
-   played and allows us to control various sound features.  Second is
-   the Mixer, which allows us to turn on/off sound and control its
-   volume by clicking on applet.  This is followed by the Battery
-   Power Applet, useful for monitoring the battery on a laptop. The
-   fourth applet is the GTCD CD player applet, which has all its
-   controls available in the applet and displays the track and
-   time. The next applet is the Drive Mount applet, used to mount and
-   unmount drives with a single click of the mouse. The last applet
-   shown is an analog clock, displaying the current time.
+   <application>Sound Monitor Applet</application>, which displays
+   the current volume of sound being played and allows us to control
+   various sound features.  Second is the <application>Mixer
+   Applet</application>, which allows us to turn on/off sound and
+   control its volume by clicking on applet.  This is followed by the
+   <application>Battery Power Applet</application>, useful for
+   monitoring the battery on a laptop. The fourth applet is the
+   <application>GTCD Applet</application>, a CD player which has all
+   its controls available in the applet and displays the track and
+   time. The next applet is the <application>Drive Mount
+   Applet</application>, used to mount and unmount drives with a
+   single click of the mouse. The last applet shown is an analog
+   clock, displaying the current time.
   </para>
   <para>
-   GNOME has many useful applets.  Just right click on your Panel and add
-   some applets to your panel to find out what is available and which
-   ones are best for you. 
+   GNOME has many useful applets.  Just right click on your Panel and
+   add some applets to your panel to find out what is available and
+   which ones are best for you.
   </para>
  </sect1>
 
@@ -600,11 +615,11 @@
   </figure>
   <para>
    Once you have placed a Drawer on the Panel, you may click on it to
-   "open" the Drawer, revealing its contents.   You may then add
-   items to the Drawer in the same way you would add items to the
-   panel, right clicking on the end of the drawer with the arrow.
-   You can close the Drawer by clicking on its icon again or by
-   clicking on the arrow at its end.
+   "open" the Drawer, revealing its contents.   You may then add items
+   to the Drawer in the same way you would add items to the panel,
+   right clicking on the end of the drawer with the arrow.  You can
+   close the Drawer by clicking on its icon again or by clicking on
+   the arrow at its end.
   </para>
   <para>
    You can configure a Drawer's properties by right clicking on the
@@ -615,8 +630,7 @@
    <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
    displayed whenever the mouse is moved over the Drawer to remind you
    what is inside.  One may also select whether the <guibutton>hide
-   button</guibutton> and arrow are displayed at the end of the
-   drawer.
+   button</guibutton> and arrow are displayed at the end of the drawer.
   </para>
   <figure>
    <title>Drawer Properties Dialog</title>
@@ -626,13 +640,12 @@
      srccredit="dcm">
     </graphic>
    </screenshot>
-  </figure> 
+  </figure>
   <para>
-   You may also control the background of the Drawer. Just
-   right click on the Drawer and select the "Background" tab to bring
-   up the standard Panel Background Dialog (see <xref
-   linkend="panelbacktab">).
-  </para> 
+   You may also control the background of the Drawer. Just right click
+   on the Drawer and select the "Background" tab to bring up the
+   standard Panel Background Dialog (see <xref
+   linkend="panelbacktab">).  </para>
  </sect1>
 
 
@@ -641,9 +654,9 @@
  <sect1 id="specialobjects">
   <title>Special Panel Objects</title>
   <para>
-   There are several special panel objects which are not
-   considered menus, applets, or launchers.  These special objects
-   are described below.
+   There are several special panel objects which are not considered
+   menus, applets, or launchers.  These special objects are described
+   below.
   </para>
   <sect2 id="lockbutton">
    <title>The Lock Button</title>
@@ -655,31 +668,31 @@
      srccredit="muet">
      </graphic>
     </screenshot>
-   </figure> 
+   </figure>
    <para>
     The <guibutton>Lock Button</guibutton> is a panel button which
     begins a screensaver which locks the screen. In order to remove
     the screensaver and access the GNOME session again, you must
-    supply your password.  This is typically used when you must
-    leave your computer for a while and do not want to log out or
-    allow other people to use your computer. To lock your screen,
-    simply click on the <guibutton>Lock Button</guibutton>.
+    supply your password.  This is typically used when you must leave
+    your computer for a while and do not want to log out or allow
+    other people to use your computer. To lock your screen, simply
+    click on the <guibutton>Lock Button</guibutton>.
    </para>
    <note>
     <title>Screensavers and The Lock Button</title>
     <para>
      The <guibutton>Lock Button</guibutton> uses a feature of the
-     <application>xscreensaver</application> program. This is the
-     same program that the Control Center uses to set your
-     screensaver. In order for the <guibutton>Lock Button</guibutton>
-     to work properly, you must have a screensaver enabled in the
-     Control Center.
+     <application>xscreensaver</application> program. This is the same
+     program that the Control Center uses to set your screensaver. In
+     order for the <guibutton>Lock Button</guibutton> to work
+     properly, you must have a screensaver enabled in the Control
+     Center.
     </para>
    </note>
   </sect2>
   <sect2 id="logoutbutton">
    <title>The Logout Button</title>
-   <figure>
+   <figure id="logoutbuttonfig">
     <title>The Logout Button</title>
     <screenshot>
      <screeninfo>The Logout Button</screeninfo>
@@ -689,10 +702,9 @@
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Logout</guibutton> button is used to exit the
-    GNOME desktop environment.  It initiates the logout sequence,
-    bringing up the Logout Dialog, as described in <xref
-    linkend="loggingout">.
+    The <guibutton>Logout</guibutton> button is used to exit the GNOME
+    desktop environment.  It initiates the logout sequence, bringing
+    up the Logout Dialog, as described in <xref linkend="loggingout">.
    </para>
   </sect2>
   <sect2 id="swallowedapps">
@@ -703,9 +715,9 @@
     which you pull into the panel, even though they are not GNOME
     applets are called "swallowed applications".  Applications do not
     have to be GNOME-compliant to be swallowed.  In general, the only
-    constraints for swallowing an application are that the
-    application must be small enough to fit in your panel and you must know
-    the title of the window you would like to swallow. 
+    constraints for swallowing an application are that the application
+    must be small enough to fit in your panel and you must know the
+    title of the window you would like to swallow.
    </para>
    <figure id="swallappfig">
      <title>Create Swallowed Application Dialog</title>
@@ -718,13 +730,13 @@
     </figure>
    <para>
     The "Title of application to swallow" is the window title,
-    typically displayed on the top left edge of the window.  The
-    width and height determine the size of the swallowed application
-    in the panel in pixels; they must be at least as large as the
-    application window, otherwise the application can't be swallowed.
-    The optional "Command" entry is used to execute a command before
+    typically displayed on the top left edge of the window.  The width
+    and height determine the size of the swallowed application in the
+    panel in pixels; they must be at least as large as the application
+    window, otherwise the application can't be swallowed.  The
+    optional "Command" entry is used to execute a command before
     swallowing the application.  This can be used to start an
-    application which you will then swallow. 
+    application which you will then swallow.
    </para>
          
   </sect2>
@@ -740,88 +752,94 @@
     Status Dock.  Future versions of GNOME applications will make use
     of this recently added Panel object.
    </para>
+   <figure id="statusdockfig">
+     <title>Example Status Dock With Docklet</title>
+     <screenshot>
+      <screeninfo>Example Status Dock With Docklet</screeninfo>
+      <graphic fileref="./figures/newtest/status_dock" format="png"
+      srccredit="lebl">
+      </graphic>
+     </screenshot>
+    </figure>
   </sect2>
  </sect1>
 
 
-<!-- ########### Adding, Moving, and Removing Panel Objects  ############## -->
+<!-- ########### Adding, Moving, and Removing Panel Objects
+############## -->
     <sect1 id="appletadd">
       <title>Adding, Moving, and Removing Panel Objects</title>
       <sect2 id="moving">
 	<title>Moving objects</title>
 	<para>
-<!--    
+<!--
      <indexterm id="idx-a14">
-      <primary>Panel</primary>
-      <secondary>launchers</secondary>
+      <primary>Panel</primary> <secondary>launchers</secondary>
      </indexterm>
      <indexterm id="idx-a15">
-      <primary>Panel</primary>
-      <secondary>adding applets to</secondary><see>"Applets"</see>
-     </indexterm> -->
-	  To move any object on the panel to a different location,
-	  just drag it with the middle mouse button to the desired
-	  place, or right-click on it and choose <guimenuitem>Move
-	  applet</guimenuitem>. If in the course of this movement it
-	  hits other objects, the behaviour depends on the global
-	  preferences you set (see <xref linkend="globalpanelprefs">):
-	  the object you are moving can switch places with other
-	  objects, "push" all objects it meets, or "jump" over all
-	  other objects without disturbing them. You can also overrun
-	  the default behaviour by holding <keycap>Shift</keycap>
-	  button (which causes "pushing") or <keycap>Ctrl</keycap>
-	  (causes "switching places") button while dragging.
+      <primary>Panel</primary> <secondary>adding applets
+      to</secondary><see>"Applets"</see> </indexterm> --> To move any
+      object on the panel to a different location, just drag it with
+      the middle mouse button to the desired place, or right-click on
+      it and choose <guimenuitem>Move applet</guimenuitem>. If in the
+      course of this movement it hits other objects, the behaviour
+      depends on the global preferences you set (see <xref
+      linkend="globalpanelprefs">): the object you are moving can
+      switch places with other objects, "push" all objects it meets,
+      or "jump" over all other objects without disturbing them. You
+      can also overrun the default behaviour by holding
+      <keycap>Shift</keycap> button (which causes "pushing") or
+      <keycap>Ctrl</keycap> (causes "switching places") button while
+      dragging.
 	</para>
       </sect2>
 	<sect2 id="remove">
-	  <title> Removing objects from the panel</title>
-	  <para> 
-	    To remove an object from the panel, right-click on it and
+	  <title> Removing objects from the panel</title> <para>  To
+	  remove an object from the panel, right-click on it and
 	  choose <guimenuitem>Remove from panel</guimenuitem> form the
-	  pop-up menu. 
+	  pop-up menu.
 	    </para>
 	</sect2>
 
 
-    <sect2 id="add"> 
-      <title>Adding objects to the panel</title> 
+    <sect2 id="add">  <title>Adding objects to the panel</title>
 
-      <para> 
+      <para>
 	<indexterm id="idx-a13">
-	  <primary>Panel</primary>
-	  <secondary>adding applications to</secondary>
+	  <primary>Panel</primary> <secondary>adding applications
+	  to</secondary>
 	</indexterm>
 	By default, the GNOME panel contains very few basic objects,
 	such as the <guimenu>Main Menu</guimenu>. However, there is a
 	number of things you can add to it. For example, every menu
-	item in the <guimenu>Main Menu</guimenu> or its submenus can be
-	added to the panel as an application launcher. GNOME also
+	item in the <guimenu>Main Menu</guimenu> or its submenus can
+	be added to the panel as an application launcher. GNOME also
 	contains a number of applets that can be added to the panel,
 	ranging from <application>Printer Applet</application>, which
 	prints a file which you drag and drop onto this applet, to
 	<application>Wanda the Fish</application>. If these are not
-	enough, there is also a number of GNOME applets
-	available on the Internet. 
+	enough, there is also a number of GNOME applets available on
+	the Internet.
       </para>
-	<variablelist> 
+	<variablelist>
 	  <varlistentry>
-	    <term> <emphasis>Applets</emphasis></term> 
+	    <term> <emphasis>Applets</emphasis></term>
 	    <listitem>
 	      <para>
 		To add an applet, right-click on the panel and select
 		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		  <guisubmenu>Applet</guisubmenu></menuchoice> from the
+		<guisubmenu>Applet</guisubmenu></menuchoice> from the
 		<guimenu>Panel</guimenu> menu. This will show you the
 		menu of all the applets on your system, divided into
 		categories; choosing any applet from this menu will
-		add it to the panel. 
+		add it to the panel.
 	      </para>
 	    </listitem>
 	  </varlistentry>
 
 
 	  <varlistentry>
-	    <term> <emphasis>Application launchers</emphasis></term> 
+	    <term> <emphasis>Application launchers</emphasis></term>
 	    <listitem>
 	      <para>
 		To create a new application launcher, select
@@ -865,23 +883,22 @@
 	  </varlistentry>
 
 	  <varlistentry>
-	    <term> <emphasis>Menus</emphasis></term> 
+	    <term> <emphasis>Menus</emphasis></term>
 	    <listitem>
 	      <para>To add a menu, select <menuchoice><guisubmenu>Add
 		to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
-	      </menuchoice> 
-		from the <guimenu>Panel</guimenu> menu. This gives you
-		a choice of the <guimenu>Main menu</guimenu>,
-		<guimenu>Programs</guimenu> menu, and
+		</menuchoice>  from the <guimenu>Panel</guimenu>
+		menu. This gives you a choice of the <guimenu>Main
+		menu</guimenu>, <guimenu>Programs</guimenu> menu, and
 		<guimenu>Favorites</guimenu> menu.
 	      </para>
 	      <para>
-		You can also add the <guimenu>Main
-		menu</guimenu> or any its submenu  as a new menu to
-		the panel by right-clicking  on the menu title (the
-		top line of the menu, separated from menu items by a
-		thin line) and selecting <guimenuitem>Add this as a
-		menu to the panel</guimenuitem>.
+		You can also add the <guimenu>Main menu</guimenu> or
+		any its submenu  as a new menu to the panel by
+		right-clicking  on the menu title (the top line of the
+		menu, separated from menu items by a thin line) and
+		selecting <guimenuitem>Add this as a menu to the
+		panel</guimenuitem>.
 	      </para>
 	    <para> Advanced users can also create new menus
 	      manually. To do so, you need to know that internally,
@@ -892,9 +909,9 @@
 	      presented by directories. For example, the
 	      <guimenu>Favorites</guimenu> menu corresponds to the
 	      directory <filename>~/.gnome/apps</filename> (where
-	      <filename>~</filename> denotes your home directory),
-	      and the <guimenu>Programs</guimenu> menu corresponds to
-	      the directory
+	      <filename>~</filename> denotes your home directory), and
+	      the <guimenu>Programs</guimenu> menu corresponds to the
+	      directory
 	      <filename>/usr/share/gnome/apps</filename>. Thus, you
 	      can create a new directory, using the GNOME File
 	      Manager, drag and drop there any
@@ -908,15 +925,15 @@
 	    <para>
 	      After you have added a menu to the panel using any of
 	      the methods describee above, you can modify its
-	      properties (for example, add new items to this
-	      menu or change the icon used by the menu), as decribed
-	      in <xref linkend="menus">. 
+	      properties (for example, add new items to this menu or
+	      change the icon used by the menu), as decribed in <xref
+	      linkend="menus">.
 	    </para>
 
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term> <emphasis>Drawers</emphasis></term> 
+	    <term> <emphasis>Drawers</emphasis></term>
 	    <listitem>
 	      <para>
                  To add a new empty drawer, select
@@ -926,10 +943,10 @@
 		right-click on this drawer and select
 		<guimenuitem>Properties</guimenuitem> to change its
 		properties (for example, the icon it uses). You can
-		add new items to this drawer in the same way as
-		you add items to the panel: all the methods for adding
-		new objects to the panel described in this section will
-		also work for adding new items to the drawer. 
+		add new items to this drawer in the same way as you
+		add items to the panel: all the methods for adding new
+		objects to the panel described in this section will
+		also work for adding new items to the drawer.
 	    </para>
 	    <para>
 	      You can also add the <guimenu>Main menu</guimenu> or any
@@ -941,16 +958,16 @@
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term> <emphasis>Swallowed application</emphasis></term> 
+	    <term> <emphasis>Swallowed application</emphasis></term>
 	    <listitem>
 	      <para>To add a new swallowed application, select
 		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Swallowed app</guisubmenu> </menuchoice> from the
-		<guimenu>Panel</guimenu> menu. This will produce a
-		<interface>Create Swallowed Application</interface>
-		dialog, which is shown in <xref
-		linkend="swallappfig">. For details, see <xref
-		linkend="swallowedapps">. FIXME  
+		<guisubmenu>Swallowed app</guisubmenu> </menuchoice>
+		from the <guimenu>Panel</guimenu> menu. This will
+		produce a <interface>Create Swallowed
+		Application</interface> dialog, which is shown in
+		<xref linkend="swallappfig">. For details, see <xref
+		linkend="swallowedapps">. FIXME
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -962,16 +979,15 @@
 
 
 
-<!-- ########### Creating, Moving, and Removing Panels  ############## -->
+<!-- ########### Creating, Moving, and Removing Panels  ##############
+-->
   <sect1 id="panelmove">
    <title>Creating, Moving, and Removing Panels</title>
 
       <sect2 id="panelmoving">
-	<title> Moving panels </title>
-	<para>   
+	<title> Moving panels </title> <para>
 	<indexterm id="idx-a7">
-	  <primary>Panel</primary>
-	  <secondary>moving</secondary>
+	  <primary>Panel</primary> <secondary>moving</secondary>
 	</indexterm>
 	  Any Panel you have on your desktop can be moved by using the
 	  middle mouse button, or by simultaneously pressing the left
@@ -985,46 +1001,43 @@
 	</para>
       </sect2>
 
-      <sect2 id="paneladd"> 
-	<title>Creating new panels</title>
+      <sect2 id="paneladd">  <title>Creating new panels</title>
 	  <para>
 	<indexterm id="idx-a8">
-	  <primary>Panel</primary>
-	  <secondary>adding new</secondary>
+	  <primary>Panel</primary> <secondary>adding new</secondary>
 	</indexterm>
 	To add a new Panel to your desktop, selecting the
 	<guimenuitem>Create panel</guimenuitem> command from
 	<menuchoice> <guimenu>Main Menu</guimenu>
-	  <guisubmenu>Panel</guisubmenu></menuchoice> menu. You have
-	a choice of four possible panel types:
+	<guisubmenu>Panel</guisubmenu></menuchoice> menu. You have a
+	choice of four possible panel types:
       </para>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
 	    <indexterm id="idx-a9">
-	      <primary>Panel</primary>
-	      <secondary>Edge</secondary>
+	      <primary>Panel</primary> <secondary>Edge</secondary>
 	    </indexterm>
-	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel
-	    is exactly like the main Panel that starts up with
-	    GNOME; it stretches along the whole length of one of
-	    screen edges. By selecting this type of panel you may
-	    add a new Panel to another edge of your screen to give
-	    yourself more functionality.
+	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel is
+	    exactly like the main Panel that starts up with GNOME; it
+	    stretches along the whole length of one of screen
+	    edges. By selecting this type of panel you may add a new
+	    Panel to another edge of your screen to give yourself more
+	    functionality.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
 	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
 	     is also positioned along one of the screen edges. But
-	    unlike the Edge Panel, the Aligned Panel will not stretch
-	    across the entire edge of the screen it is on: it will
-	    only stretch as much as necessary to  display the
-	    icons and applets it contains. It can be positioned either
-	    at one of the corners (in this case, it will stretch
-	    towards the opposite corner) or at the center of the edge
-	    (in this case, it will stretch in both directions,
-	    automatically recentering when you add new objects).
+	     unlike the Edge Panel, the Aligned Panel will not stretch
+	     across the entire edge of the screen it is on: it will
+	     only stretch as much as necessary to  display the icons
+	     and applets it contains. It can be positioned either at
+	     one of the corners (in this case, it will stretch towards
+	     the opposite corner) or at the center of the edge (in
+	     this case, it will stretch in both directions,
+	     automatically recentering when you add new objects).
             </para>
 	  <para> If the Aligned panel is aligned with one of the
 	    corners, the hide buttons will work slightly differently
@@ -1044,30 +1057,27 @@
  	        be placed anywhere along the screen edge, not
  	        necessarily in one of the corners or in the center. As
  	        you add objects, it will only grow in one directions
- 	        &mdash; it won't automatically recenter. 
+ 	        &mdash; it won't automatically recenter.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
 		<guilabel> Floating  Panel</guilabel> &mdash;   This
 		type of panel can be placed anywhere on your screen,
-		not necessarily along one of the edges. 
+		not necessarily along one of the edges.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
-
-
-
 
 	<tip>
 	  <title> Changing panel type</title>
 	  <para>
 	      <indexterm id="idx-a11">
-	      <primary>Panel</primary>
-	      <secondary>changing type of</secondary>
+	      <primary>Panel</primary> <secondary>changing type
+	      of</secondary>
 	    </indexterm>
-	  You can also change type of existing panel &mdash; for example,
-	  convert edge panel to a floating panel, see <xref
+	  You can also change type of existing panel &mdash; for
+	  example, convert edge panel to a floating panel, see <xref
 	  linkend="panelproperties">.
 	  </para>
 	</tip>
@@ -1079,20 +1089,18 @@
   <sect1 id="globalpanelprefs">
    <title>Global Panel Preferences</title>
     <para>
-<!--    <indexterm id="idx-a61">
-     <primary>Panel</primary>
-     <secondary>Global Panel Preferences</secondary>
-    </indexterm> -->
-     To start configuring the GNOME panel right click on the panel and select
-     the <guimenuitem>Global Properties</guimenuitem> menu item.  You may also
-     press the <guibutton>Main Menu</guibutton> button and select the
-     <guimenu>Panel</guimenu> | <guimenuitem>Global Properties</guimenuitem>
-     menu item.
+<!--    <indexterm id="idx-a61"> <primary>Panel</primary>
+     <secondary>Global Panel Preferences</secondary> </indexterm> -->
+     To start configuring the GNOME panel right click on the panel and
+     select the <guimenuitem>Global Properties</guimenuitem> menu
+     item.  You may also press the <guibutton>Main Menu</guibutton>
+     button and select the <guimenu>Panel</guimenu> |
+     <guimenuitem>Global Properties</guimenuitem> menu item.
     </para>
     <para>
-     This will bring the Global Panel Configuration dialog up. With this dialog
-     you can set properties that will affect all Panels you use now and any
-     panels you add in the future.
+     This will bring the Global Panel Configuration dialog up. With
+     this dialog you can set properties that will affect all Panels
+     you use now and any panels you add in the future.
      <figure>
       <title>The Global Panel Configuration Dialog</title>
      <screenshot>
@@ -1104,54 +1112,58 @@
      </figure>
     </para>
     <para>
-     The Global Panel Configuration Dialog contains six tabs which help you
-     configure the global properties of the GNOME Panel: Animation, Launcher
-     Icon, Drawer Icon, Menu Icon, and Miscellaneous. Each of these tabs is
-     explained below.
+     The Global Panel Configuration Dialog contains six tabs which
+     help you configure the global properties of the GNOME Panel:
+     Animation, Launcher Icon, Drawer Icon, Menu Icon, and
+     Miscellaneous. Each of these tabs is explained below.
     </para>
     <sect2 id="animtab">
      <title>Animation  Tab</title>
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Enable animations</guilabel> - This allows the animations
-       configurable on this tab to be visible.  The animations must be enabled
-       to use the other features of this tab. The default position is on.
+       <guilabel>Enable animations</guilabel> - This allows the
+       animations configurable on this tab to be visible.  The
+       animations must be enabled to use the other features of this
+       tab. The default position is on.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto-Hide Animation Speed</guilabel> - If you have the panel
-       hiding automatically this will control how fast it occurs.
+       <guilabel>Auto-Hide Animation Speed</guilabel> - If you have
+       the panel hiding automatically this will control how fast it
+       occurs.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Explicit-Hide Animation Speed</guilabel> - This controls the
-       hide speed when you press the Panel's Hide Button.
+       <guilabel>Explicit-Hide Animation Speed</guilabel> - This
+       controls the hide speed when you press the Panel's Hide Button.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Drawer Animation Speed</guilabel> - If you use a Drawer panel
-       this will control how fast the drawer menu will raise.
+       <guilabel>Drawer Animation Speed</guilabel> - If you use a
+       Drawer panel this will control how fast the drawer menu will
+       raise.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto-Hide Minimize Delay(ms)</guilabel> - If you have the Panel
-       set to minimize automatically this will allow you to control how much
-       time passes before it minimizes.  The Panel will start the time count
-       once the mouse is no longer over it. It will appear again when the mouse
-       is passed over the portion of the Panel that remains visible. This time
-       is measured in milliseconds.
+       <guilabel>Auto-Hide Minimize Delay(ms)</guilabel> - If you have
+       the Panel set to minimize automatically this will allow you to
+       control how much time passes before it minimizes.  The Panel
+       will start the time count once the mouse is no longer over
+       it. It will appear again when the mouse is passed over the
+       portion of the Panel that remains visible. This time is
+       measured in milliseconds.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto-Hide Minimized Size(pixels)</guilabel> - If you have the
-       Panel hiding automatically this determines the number of pixels that will
-       show while the Panel is minimized.
+       <guilabel>Auto-Hide Minimized Size(pixels)</guilabel> - If you
+       have the Panel hiding automatically this determines the number
+       of pixels that will show while the Panel is minimized.
       </para>
      </listitem>
     </itemizedlist>
@@ -1161,40 +1173,42 @@
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
-       tiles for all icons on the Panel.
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable
+       background tiles for all icons on the Panel.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the up position (inactive,
-       not pressed) You may press the <guibutton>Browse</guibutton> button to
-       search for the file. Launcher tiles must be enabled to access this
-       option.
+       <guilabel>Tile filename (up)</guilabel> - This is the name and
+       path of the image file you wish to use for the tile in the up
+       position (inactive, not pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the
+       file. Launcher tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the down position (active,
-       pressed).  You may press the <guibutton>Browse</guibutton> button to
-       search for the file. Launcher tiles must be enabled to access this option.
+       <guilabel>Tile filename (down)</guilabel> - This is the name
+       and path of the image file you wish to use for the tile in the
+       down position (active, pressed).  You may press the
+       <guibutton>Browse</guibutton> button to search for the
+       file. Launcher tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Border width (tile only)</guilabel> - This determines the width
-       of the border around an icon. This is very useful if you have an icon
-       that would normally cover up a tile. You can set the border to a smaller
-       size and still be able to see your tile.
+       <guilabel>Border width (tile only)</guilabel> - This determines
+       the width of the border around an icon. This is very useful if
+       you have an icon that would normally cover up a tile. You can
+       set the border to a smaller size and still be able to see your
+       tile.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
-       the depth an icon will displace when pressed. Launcher tiles must be
-       enabled to access this option.
+       <guilabel>Depth (displacement when pressed)</guilabel> - This
+       determines the depth an icon will displace when
+       pressed. Launcher tiles must be enabled to access this option.
       </para>
      </listitem>
     </itemizedlist>
@@ -1204,38 +1218,40 @@
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
-       tiles for all drawers on the Panel.
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable
+       background tiles for all drawers on the Panel.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the up position(inactive,
-       not pressed) You may press the <guibutton>Browse</guibutton> button to
-       search for the file. Drawer tiles must be enabled to access this option.
+       <guilabel>Tile filename (up)</guilabel> - This is the name and
+       path of the image file you wish to use for the tile in the up
+       position(inactive, not pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the
+       file. Drawer tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the down position(active,
-       pressed) You may press the <guibutton>Browse</guibutton> button to search
-       for the file.  Drawer tiles must be enabled to access this option.
+       <guilabel>Tile filename (down)</guilabel> - This is the name
+       and path of the image file you wish to use for the tile in the
+       down position(active, pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the file.
+       Drawer tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Border width (tile only)</guilabel> - This determines the width
-       of the border around a tile. Drawer tiles must be enabled to access this
-       option.
+       <guilabel>Border width (tile only)</guilabel> - This determines
+       the width of the border around a tile. Drawer tiles must be
+       enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
-       the depth a tile will displace when pressed. Drawer tiles must be enabled
-       to access this option.
+       <guilabel>Depth (displacement when pressed)</guilabel> - This
+       determines the depth a tile will displace when pressed. Drawer
+       tiles must be enabled to access this option.
       </para>
      </listitem>
     </itemizedlist>
@@ -1245,38 +1261,41 @@
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
-      tiles for the <guibutton>Main Menu</guibutton> button on the Panel.
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable
+      background tiles for the <guibutton>Main Menu</guibutton> button
+      on the Panel.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the up position (inactive,
-       not pressed) You may press the <guibutton>Browse</guibutton> button to
-       search for the file.  Menu tiles must be enabled to access this option.
+       <guilabel>Tile filename (up)</guilabel> - This is the name and
+       path of the image file you wish to use for the tile in the up
+       position (inactive, not pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the file.
+       Menu tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the down position(active,
-       pressed) You may press the <guibutton>Browse</guibutton> button to search
-       for the file. Menu tiles must be enabled to access this option.
+       <guilabel>Tile filename (down)</guilabel> - This is the name
+       and path of the image file you wish to use for the tile in the
+       down position(active, pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the
+       file. Menu tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Border width (tile only)</guilabel> - This determines the width
-       of the border around a tile. Menu tiles must be enabled to access this
-       option.
+       <guilabel>Border width (tile only)</guilabel> - This determines
+       the width of the border around a tile. Menu tiles must be
+       enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
-       the depth a tile will displace when pressed.  Menu tiles must be enabled
-       to access this option.
+       <guilabel>Depth (displacement when pressed)</guilabel> - This
+       determines the depth a tile will displace when pressed.  Menu
+       tiles must be enabled to access this option.
       </para>
      </listitem>
     </itemizedlist>
@@ -1285,39 +1304,40 @@
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tiles enabled</guilabel> - This checkbox will enable background
-       tiles for all Logout buttons on the Panel.
+       <guilabel>Tiles enabled</guilabel> - This checkbox will enable
+       background tiles for all Logout buttons on the Panel.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (up)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the up position (inactive,
-       not pressed) You may press the <guibutton>Browse</guibutton> button to
-       search for the file. Logout button tiles must be enabled to access this
-       option.
+       <guilabel>Tile filename (up)</guilabel> - This is the name and
+       path of the image file you wish to use for the tile in the up
+       position (inactive, not pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the
+       file. Logout button tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Tile filename (down)</guilabel> - This is the name and path of
-       the image file you wish to use for the tile in the down position (active,
-       pressed) You may press the <guibutton>Browse</guibutton> button to search
-       for the file.  Logout button tiles must be enabled to access this option.
+       <guilabel>Tile filename (down)</guilabel> - This is the name
+       and path of the image file you wish to use for the tile in the
+       down position (active, pressed) You may press the
+       <guibutton>Browse</guibutton> button to search for the file.
+       Logout button tiles must be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Border width (tile only)</guilabel> - This determines the width
-       of the border around a tile. Logout button tiles must be enabled to
-       access this option.
+       <guilabel>Border width (tile only)</guilabel> - This determines
+       the width of the border around a tile. Logout button tiles must
+       be enabled to access this option.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> - This determines
-       the depth a tile will displace when pressed. Logout button tiles must be
-       enabled to access this option.
+       <guilabel>Depth (displacement when pressed)</guilabel> - This
+       determines the depth a tile will displace when pressed. Logout
+       button tiles must be enabled to access this option.
       </para>
      </listitem>
     </itemizedlist>
@@ -1327,21 +1347,21 @@
      <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tooltips enabled</guilabel> - This enables tooltips for items
-       on the panel.  Tooltips are pop-up help dialogs that appear when you
-       mouse is over an element on the panel.
+       <guilabel>Tooltips enabled</guilabel> - This enables tooltips
+       for items on the panel.  Tooltips are pop-up help dialogs that
+       appear when you mouse is over an element on the panel.
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Show Small Icons</guilabel> - This will show small icons in the
-       Main Menu.
+       <guilabel>Show Small Icons</guilabel> - This will show small
+       icons in the Main Menu.
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Show ... buttons</guilabel> - This will enable three small dots
-       to appear on Main Menu items that launch dialogs.
+       <guilabel>Show ... buttons</guilabel> - This will enable three
+       small dots to appear on Main Menu items that launch dialogs.
       </para>
      </listitem>
      <listitem>
@@ -1355,24 +1375,26 @@
      </listitem>
      <listitem>
       <para>
-       <guilabel>Keep menus in memory</guilabel> - This will keep your menus in
-       memory so that they do not rescan for added items. This can increase the
-       speed of GNOME, but may also result in you missing new items added to
-       your menu.
+       <guilabel>Keep menus in memory</guilabel> - This will keep your
+       menus in memory so that they do not rescan for added
+       items. This can increase the speed of GNOME, but may also
+       result in you missing new items added to your menu.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Switched movement</guilabel> - This allows launcher buttons on
-       the panel to switch places with other icons when being moved.
+       <guilabel>Switched movement</guilabel> - This allows launcher
+       buttons on the panel to switch places with other icons when
+       being moved.
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Free Movement (doesn't disturb other applets)</guilabel> - This
-       feature locks the arrangement of your icons on the Panel (except the on
-       you are moving). This is a good feature to use if you like the way your
-       icons are arranged.
+       <guilabel>Free Movement (doesn't disturb other
+       applets)</guilabel> - This feature locks the arrangement of
+       your icons on the Panel (except the on you are moving). This is
+       a good feature to use if you like the way your icons are
+       arranged.
       </para>
      </listitem>
      <listitem>
@@ -1404,11 +1426,11 @@
      <listitem>
       <para>
        <guilabel>Close drawer if a launcher inside it is
-       pressed</guilabel> - By default drawers will remain open when you
-       select an item within one. This can be annoying as the drawer
-       will remain open until you close it with a mouse click. With
-       this option selected drawers will close automatically when you
-       select any item within one.
+       pressed</guilabel> - By default drawers will remain open when
+       you select an item within one. This can be annoying as the
+       drawer will remain open until you close it with a mouse
+       click. With this option selected drawers will close
+       automatically when you select any item within one.
       </para>
      </listitem>
      <listitem>
@@ -1421,18 +1443,18 @@
    </sect1>
 
 
-<!-- ###############  Individual Panel Properties  ################## -->
+<!-- ###############  Individual Panel Properties  ##################
+-->
 
    <sect1 id="panelproperties">
     <title>Individual Panel Properties</title>
     <para>
-<!--     <indexterm id="idx-a62">
-      <primary>Panel</primary>
+<!--     <indexterm id="idx-a62"> <primary>Panel</primary>
       <secondary>Individual Panel Properties</secondary>
      </indexterm>
      <indexterm id="idx-a63">
       <primary>Panel</primary> <secondary>properties</secondary>
-      </indexterm> --> 
+      </indexterm> -->
 
       In addition to global Panel's properties, described in <xref
       linkend="globalpanelprefs">, some properties can be configured
@@ -1450,16 +1472,16 @@
       choose <guimenuitem>All properties</guimenuitem>, which will
       launch <interface>Panel properties</interface> dialog.  If you
       are already familiar with this dialog, you can also quickly
-      change some of the properties &mdash; say, panel size or type &mdash; by
-      selecting the appropriate item  in the
+      change some of the properties &mdash; say, panel size or type
+      &mdash; by selecting the appropriate item  in the
       <guisubmenu>Properties</guisubmenu> menu.
     </para>
     <para>
      The Panel properties dialog contains two tabs to help you set the
-     active Panel properties: <guilabel>Edge Panel</guilabel>
-     (or <guilabel>Aligned</guilabel>, &hellip - depending on your
-     panel type) and <guilabel>Background</guilabel>. Both of these
-     tabs are explained below. 
+     active Panel properties: <guilabel>Edge Panel</guilabel> (or
+     <guilabel>Aligned</guilabel>, &hellip - depending on your panel
+     type) and <guilabel>Background</guilabel>. Both of these tabs are
+     explained below.
     </para>
 
    <sect2 id="edgetab">
@@ -1485,7 +1507,7 @@
 	    the corners (in pixels). Finally, for Floating panel you
 	    must specify orientation (horizontal or vertical) and
 	    position of panel's left top corner (relative to the left
-	    top corner of the screen and measured in pixels). 
+	    top corner of the screen and measured in pixels).
 	  </para>
 	  <para>
 	    The Panel will change position once you have pressed
@@ -1496,7 +1518,7 @@
 	    <title>TIP</title>
 	    <para>
 	      You can also change Panel position by dragging it with
-	      the middle mouse button to the new location. 
+	      the middle mouse button to the new location.
 	      </para>
 	  </tip>
 	</listitem>
@@ -1504,14 +1526,14 @@
 	<listitem>
 	  <para><guilabel>Panel size</guilabel> &mdash; here you can
 	  choose panel width. The default size is 48 pixels, which is
-	  also the default size of icons used by GNOME. Users with
-	  low screen resolution might want to decrease the panel size
-	  to free some screen space; conversely, users with high
-	  resolution displays may try using larger panel sizes. 
+	  also the default size of icons used by GNOME. Users with low
+	  screen resolution might want to decrease the panel size to
+	  free some screen space; conversely, users with high
+	  resolution displays may try using larger panel sizes.
 	    </para>
 	    <para>
              Changing panel size automatically resizes all the icons
-             on this panel, which can lead to some quality loss. 
+             on this panel, which can lead to some quality loss.
 	  </para>
 	</listitem>
 
@@ -1525,21 +1547,19 @@
 	    &mdash; that is, have the panel automatically hide when
 	    the mouse is not over the Panel. The autohide parameters
 	    can be configured in <link linkend="animtab">Global
-	    Preferences dialog</link>. If you 
-	    choose to Auto Hide you might want to Disable the hide
-	    buttons here as well. You may also disable the hide button
-	    arrows graphics on the Panel.
+	    Preferences dialog</link>. If you  choose to Auto Hide you
+	    might want to Disable the hide buttons here as well. You
+	    may also disable the hide button arrows graphics on the
+	    Panel.
       </para>
      </listitem>
     </itemizedlist>
    </sect2>
 
    <sect2 id="panelbacktab">
-    <title>Background Tab</title>
- <!--      <indexterm id="idx-a65">
-       <primary>Panel</primary>
-       <secondary>Background</secondary>
-      </indexterm> -->
+    <title>Background Tab</title> <!--      <indexterm id="idx-a65">
+ <primary>Panel</primary> <secondary>Background</secondary>
+ </indexterm> -->
   
       <figure>
 	<title>Panel Background Properties Dialog</title>
@@ -1570,22 +1590,22 @@
 
      <listitem>
       <para>
-       <guilabel>Color to use:</guilabel> &mdash If you choose to
-       have your Panel one color, this button will launch a dialog
-       which allows you to specify which color to use.
+       <guilabel>Color to use:</guilabel> &mdash If you choose to have
+       your Panel one color, this button will launch a dialog which
+       allows you to specify which color to use.
       </para>
      </listitem>
 
 
      <listitem>
       <para>
-       <guilabel>Image</guilabel> &mdash; If you wish to have a
-       Pixmap for the background of your Panel, this section of the
-       dialog allows you to choose which image to use.  If you press
-       the <guibutton>Browse</guibutton> button, you can search for the
+       <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
+       for the background of your Panel, this section of the dialog
+       allows you to choose which image to use.  If you press the
+       <guibutton>Browse</guibutton> button, you can search for the
        file you want to use. The current filename is shown to the left
        of this button. The window above it  shows you the preview of
-       this background. 
+       this background.
       </para>
      </listitem>
 </itemizedlist>
@@ -1594,10 +1614,10 @@
       <note>
 	<title>Drag and Drop With Images</title>
 	<para>
-	  An easier way to change the  background of your panel is to drag
-	  and  drop an image  file from  the GNOME  File Manager  onto the
-	  Panel.  This will  automatically  change the  background of  the
-	  panel to that image.
+	  An easier way to change the  background of your panel is to
+	  drag and  drop an image  file from  the GNOME  File Manager
+	  onto the Panel.  This will  automatically  change the
+	  background of  the panel to that image.
 	</para>
       </note>
     
@@ -1627,30 +1647,26 @@
      <listitem>
       <para>
        <guilabel>Rotate image for vertical panel</guilabel> &mdash;
-       FIXME 
+       FIXME
       </para>
      </listitem>
     </itemizedlist>
    </sect2>
    </sect1>
 
-
-  <sect1 id="bugs"> 
-    <title>Current bugs and limitations</title>
+<!-- ############### Current Bugs and Limitations  ##################
+  --> <sect1 id="bugs">  <title>Current bugs and limitations</title>
     <para>
       Most of the things here are not really bugs; rather, they
       describe situations when the Panel's behaviour is not what you
-      would expect. 
-    </para> 
-    <para> 
-      First of all: you can't place an ordinary file or directory on
-      the panel. If you try to drag and drop a file from the File
-      Manager window to the panel, it won't work, and similarly for
-      panels. The only type of file that can be placed on the panel
-      are <filename>.desktop</filename> files, which describe
-      launchers; any directory dropped on the panel will be
-      inetrpreted as a menu &mdash; that is, all the files other than
-      <filename>.desktop</filename> files will be ignored. 
+      would expect.  </para>  <para>  First of all: you can't place an
+      ordinary file or directory on the panel. If you try to drag and
+      drop a file from the File Manager window to the panel, it won't
+      work, and similarly for panels. The only type of file that can
+      be placed on the panel are <filename>.desktop</filename> files,
+      which describe launchers; any directory dropped on the panel
+      will be inetrpreted as a menu &mdash; that is, all the files
+      other than <filename>.desktop</filename> files will be ignored.
       </para>
     <para> Editing menus other than the Main menu is rather
       confusing. <application>Menu Editor</application> at the moment
@@ -1667,11 +1683,17 @@
       preference changes you did to the <guimenu>main menu</guimenu>
       on the panel. The reason is that you can have several
       <guimenu>Main Menu</guimenu> buttons on different panels.
-      </para>
+    </para>
+
+    <para>
+     The <guibutton>Screen Lock</guibutton> button does not lock the
+     screen if "No Screensaver" is set in the Control Center.
+    </para>
 
   </sect1>
 
 
+<!-- ###############  Authors  ################## -->
   <sect1 id="authors">
     <title>Authors</title>
      <para>
