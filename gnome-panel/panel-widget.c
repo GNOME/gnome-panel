@@ -507,17 +507,32 @@ panel_widget_right_stick(PanelWidget *panel,gint old_size)
 	gint i,freepos;
 	GtkWidget *applet;
 
+	puts("RIGHT_STICK");
+
+	if(old_size>=panel->size)
+		puts("old_size>=panel->size");
+	if(panel->snapped == PANEL_DRAWER)
+		puts("panel->snapped == PANEL_DRAWER");
+	if(panel->applets[old_size-1].applet == NULL)
+		puts("panel->applets[old_size-1].applet == NULL");
+
 	if(old_size>=panel->size ||
 	   panel->snapped == PANEL_DRAWER ||
 	   panel->applets[old_size-1].applet == NULL)
 		return;
+
+	puts("RIGHT_STICK 1");
 
 	for(i=1;old_size-1-i>=0 && panel->applets[old_size-1-i].applet;i++)
 		;
 	if(old_size-1-i < 0)
 		return;
 
+	puts("RIGHT_STICK 2");
+
 	freepos = i;
+
+	printf("i=%d\n",i);
 
 	applet = NULL;
 
@@ -682,7 +697,7 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 	return TRUE;
 }
 
-static gint
+static void
 panel_widget_seize_space(PanelWidget *panel,
 			 gint width,
 			 AppletData *ad)
@@ -757,55 +772,41 @@ panel_widget_seize_space(PanelWidget *panel,
 
 	if(is_dragged)
 		panel->currently_dragged_applet_pos=ad->pos;
-
-	return ad->pos;
 }
 
 static void
-panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
+panel_widget_adjust_applet(PanelWidget *panel, AppletData *ad)
 {
 	gint width, height;
-	gint pos;
-	AppletData *ad;
-
-	gdk_window_get_size(applet->window,&width,&height);
-	pos = panel_widget_get_pos(panel,applet);
-
-	ad = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_DATA);
 
 	g_return_if_fail(ad!=NULL);
 
-	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
+	gdk_window_get_size(ad->applet->window,&width,&height);
+
+#ifdef CORRUPTION_CHECK
+	if(panel_widget_get_pos(panel,ad->applet)==-1)
+		return;
+#endif
 
 	/*don't adjust applets out of range, wait for
 	  then to be pushed into range*/
-	if(panel->snapped != PANEL_DRAWER && pos>=panel->size)
+	if(panel->snapped != PANEL_DRAWER && ad->pos>=panel->size)
 		return;
 
 	if(panel->orient==PANEL_HORIZONTAL) {
-		if(height > panel->thick) {
-			panel->thick = height;
-			panel_widget_set_size(panel,panel->size);
-		}
-
 		/*if smaller then it's allocation, we are OK*/
-		if(width<=(PANEL_CELL_SIZE*panel->applets[pos].cells))
+		if(width<=(PANEL_CELL_SIZE*ad->cells))
 			panel_widget_shrink_wrap(panel,width,ad);
 		else
-			pos = panel_widget_seize_space(panel,width,ad);
+			panel_widget_seize_space(panel,width,ad);
 	} else { /* panel->orient==PANEL_VERTICAL */
-		if(width > panel->thick) {
-			panel->thick = width;
-			panel_widget_set_size(panel,panel->size);
-		}
-
 		/*if smaller then it's allocation, we are OK*/
-		if(height<=(PANEL_CELL_SIZE*panel->applets[pos].cells))
+		if(height<=(PANEL_CELL_SIZE*ad->cells))
 			panel_widget_shrink_wrap(panel,height,ad);
 		else
-			pos = panel_widget_seize_space(panel,height,ad);
+			panel_widget_seize_space(panel,height,ad);
 	}
-	panel_widget_applet_put(panel,pos);
+	panel_widget_applet_put(panel,ad->pos);
 }
 
 
@@ -815,7 +816,7 @@ panel_widget_switch_applet_right(PanelWidget *panel, gint pos)
 	gint i;
 	gint rightn;
 	AppletRecord tmp;
-	AppletData *ad;
+	AppletData *ad1=NULL,*ad2=NULL;
 
 	tmp.applet = panel->applets[pos].applet;
 	tmp.cells = panel->applets[pos].cells;
@@ -836,22 +837,22 @@ panel_widget_switch_applet_right(PanelWidget *panel, gint pos)
 	}
 
 	if(panel->applets[rightn].applet) {
-		ad = gtk_object_get_data(
+		ad1 = gtk_object_get_data(
 			GTK_OBJECT(panel->applets[rightn].applet),
 			PANEL_APPLET_DATA);
-		ad->pos = rightn;
+		ad1->pos = rightn;
 	}
 	if(panel->applets[pos].applet) {
-		ad = gtk_object_get_data(
+		ad2 = gtk_object_get_data(
 			GTK_OBJECT(panel->applets[pos].applet),
 			PANEL_APPLET_DATA);
-		ad->pos = pos;
+		ad2->pos = pos;
 	}
 
-	if(panel->applets[rightn].applet)
-		panel_widget_adjust_applet(panel,panel->applets[rightn].applet);
-	if(panel->applets[pos].applet)
-		panel_widget_adjust_applet(panel,panel->applets[pos].applet);
+	if(ad1)
+		panel_widget_adjust_applet(panel,ad1);
+	if(ad2)
+		panel_widget_adjust_applet(panel,ad2);
 
 	return pos;
 }
@@ -966,7 +967,7 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 			panel->thick = thick;
 			panel_widget_set_size(panel, panel->size);
 		}
-		panel_widget_adjust_applet(panel,widget);
+		panel_widget_adjust_applet(panel,ad);
 
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
@@ -1595,7 +1596,8 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 			break;
 	}
 
-	/*panel_widget_right_stick(panel,old_size);*/
+	/*panel_widget_right_stick(panel,old_size);
+	*/
 
 	for(i=0;i<PANEL_MAX;i+=panel->applets[i].cells)
 		if(panel->applets[i].applet &&
