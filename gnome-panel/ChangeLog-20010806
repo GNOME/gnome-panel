@@ -1,3 +1,15 @@
+Mon Jan 17 00:40:25 2000  George Lebl <jirka@5z.com>
+
+	* xstuff.[ch]: implement our own routines for finding out if we
+	  are in a gnome compliant windowmanager, and if we are, notice
+	  changes.
+
+	* basep-widget.[ch]: implement a function that can change the
+	  window without killing the widget to update self to a new
+	  windowmanager.  This should get rid of all those bugs where
+	  panel was running in a non-compliant mode on a compliant
+	  wm etc ...
+
 Thu Jan 13 02:20:28 2000  George Lebl <jirka@5z.com>
 
 	* applet-widget.c: adapt to the new idl, which means HEAD applets
