@@ -27,9 +27,6 @@ public:
 		char *globcfg=NULL;
 		int id;
 
-		if(path == NULL)
-			puts("DAMN!!!!!!!");
-
 		id = ::applet_request_id (ior,path,&cfg,&globcfg);
 		if(cfg) {
 			cfgpath = CORBA::string_dup(cfg);

@@ -1,0 +1,8 @@
+#ifndef LAUNCHER_LIB_H
+#define LAUNCHER_LIB_H
+
+BEGIN_GNOME_DECLS
+
+END_GNOME_DECLS
+
+#endif

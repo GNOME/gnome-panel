@@ -27,5 +27,9 @@ module GNOME {
 				   in string globcfgpath);
 		void shutdown_applet (in short id);
 	};
+
+	interface Launcher {
+		void change_orient (in string path);
+	};
 };
 

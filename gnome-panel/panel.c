@@ -682,9 +682,6 @@ applet_request_id (const char * ior, const char *path, char **cfgpath,
 	AppletInfo *info;
 	int i;
 
-	if(path==NULL)
-		puts("DAMN!!!!!!");
-
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list),i++) {
 		info = list->data;
 		if(info && info->type == APPLET_EXTERN_PENDING &&
