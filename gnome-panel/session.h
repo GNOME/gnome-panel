@@ -53,13 +53,9 @@ void session_write_global_config (void);
 
 void apply_global_config(void);
 
-/* prefix thingie */
-char * get_correct_prefix (char const **sep);
-void push_correct_global_prefix (void);
-
 void session_add_dead_launcher (const gchar *location);
 
-void panel_sesssion_setup_config_sync (void);
+void panel_session_setup_config_sync (void);
 
 G_END_DECLS
 

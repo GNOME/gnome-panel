@@ -1,3 +1,13 @@
+2002-01-01  Glynn Foster  <glynn.foster@sun.com>
+	 
+	* config/Makefile.am, config/panel.config,
+	* config/panel.global: Removed, old crusty config stuff
+	that we don't need anymore. WARNING! keep the launcher
+	config still, I want to look at that.
+	
+	* main.c, menu.c, session.c, session.h: Removed some more crufty 
+	code that we don't need anymore. Mark tearoff loading FIXME'd.
+
 2001-12-31  Glynn Foster  <glynn.foster@sun.com>
 
 	* panel-gconf.c, panel-gconf.h, session.c: 

@@ -433,6 +433,7 @@ panel_session_save_panel (PanelData *pd)
 #ifdef SESSION_DEBUG
 	printf ("Done saving\n");
 #endif
+	g_free (panel_profile);
 	g_string_free (buf, TRUE);
 }
 
@@ -564,7 +565,7 @@ panel_session_do_sync (gpointer data)
 }
 
 void
-panel_sesssion_setup_config_sync (void)
+panel_session_setup_config_sync (void)
 {
 	config_sync_timeout = gtk_timeout_add (10*1000, panel_session_do_sync, NULL);
 }
@@ -659,66 +660,6 @@ panel_quit (void)
 {
 	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
 				   GNOME_INTERACT_ANY, 0, 1);
-}
-
-char *
-get_correct_prefix (char const **sep)
-{
-	int count;
-	char *path;
-
-	gnome_config_push_prefix ("");
-
-	/* if we're being commies, we just use the global path */
-	if (commie_mode) {
-		gnome_config_pop_prefix ();
-		*sep = "=";
-		return g_strdup_printf ("=" GLOBAL_CONFDIR PANEL_CONFIG_PATH);
-	}
-
-	count = conditional_get_int (PANEL_CONFIG_PATH
-				     "panel/Config/panel_count", 0, NULL);
-	if (count > 0) {
-		gnome_config_pop_prefix ();
-		*sep = "";
-		return g_strdup (PANEL_CONFIG_PATH);
-	}
-
-	path = "=" GLOBAL_CONFDIR PANEL_CONFIG_PATH "panel=/Config/panel_count";
-	count = conditional_get_int (path, 0, NULL);
-
-	if (count > 0) {
-		gnome_config_pop_prefix ();
-		*sep = "=";
-		return g_strdup_printf ("=" GLOBAL_CONFDIR PANEL_CONFIG_PATH);
-	}
-
-	gnome_config_pop_prefix ();
-
-	/* Eeeeek! return to standard home path and load some slightly sane
-	 * setup */
-	*sep = "";
-	return g_strdup (PANEL_CONFIG_PATH);
-}
-
-void
-push_correct_global_prefix (void)
-{
-	if ( ! commie_mode) {
-		gboolean foo, def;
-
-		gnome_config_push_prefix ("/panel/Config/");
-
-		foo = conditional_get_bool ("tooltips_enabled", TRUE, &def);
-		if ( ! def)
-			return;
-	}
-
-	/* ahhh, this doesn't exist, but tooltips_enabled should be
-	 * in every home, every kitchen and every panel configuration,
-	 * so we will load up from the global location */
-	gnome_config_pop_prefix ();
-	gnome_config_push_prefix ("=" GLOBAL_CONFDIR "/panel=/Config/");
 }
 
 #ifdef FIXME /* see session_load */

@@ -265,9 +265,9 @@ main(int argc, char **argv)
 	session_load ();	
 
 	kill_free_drawers ();
-
+#ifdef FIXME
 	panel_menu_session_load_tornoffs ();
-
+#endif
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
@@ -276,7 +276,7 @@ main(int argc, char **argv)
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change ();
 
-	panel_sesssion_setup_config_sync ();
+	panel_session_setup_config_sync ();
 
 	/* add some timeouts */
 	gtk_timeout_add (10*1000, menu_age_timeout, NULL);

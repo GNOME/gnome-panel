@@ -4981,13 +4981,15 @@ load_tearoff_menu(void)
 	tearoffs = g_slist_prepend(tearoffs,tm);
 }
 
+#ifdef FIXME 
+/* This needs to be gconf'ized */
+
 void
 panel_menu_session_load_tornoffs (void)
 {
 	char *s;
 	int i, length;
 
-	push_correct_global_prefix ();
 	length = conditional_get_int("tearoffs_count", 0, NULL);
 	gnome_config_pop_prefix();
 
@@ -4995,7 +4997,6 @@ panel_menu_session_load_tornoffs (void)
 		char *prefix;
 		const char *sep;
 
-		prefix = get_correct_prefix (&sep);
 		s = g_strdup_printf ("%spanel%s/TornoffMenu_%d/",
 				     prefix, sep, i);
 		g_free (prefix);
@@ -5007,6 +5008,7 @@ panel_menu_session_load_tornoffs (void)
 		gnome_config_pop_prefix ();
 	}
 }
+#endif
 
 #ifdef FIXME
 /* FIXME: maybe should be removed, but I want to investigate the
