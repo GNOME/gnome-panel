@@ -225,7 +225,7 @@ panel_session_save (GnomeClient *client,
 		panel_cfg_path = g_copy_strings("/panel-Session-",session_id,
 						"/",NULL);
 
-		new_args[0] = (char *) client;
+		new_args[0] = (char *) client_data;
 		new_args[1] = "--discard-session";
 		new_args[2] = session_id;
 		gnome_client_set_discard_command (client, 3, new_args);
