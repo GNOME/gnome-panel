@@ -4,7 +4,6 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(srcdir)/../../libpanel-applet		\
 	-I$(top_builddir)/libpanel-applet		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-I$(includedir)                                 \
 	$(GNOME_INCLUDEDIR)				\
 	$(WARN_CFLAGS)					\
 	$(WNCKLET_CFLAGS)
