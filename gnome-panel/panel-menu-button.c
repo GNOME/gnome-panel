@@ -714,6 +714,21 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 	    panel_menu_button_create_menu (button)) {
 		directory = g_object_get_data (G_OBJECT (button->priv->menu),
 					       "panel-menu-tree-directory");
+
+		if (!directory) {
+			MenuTree *tree;
+
+			if ((tree = g_object_get_data (G_OBJECT (button->priv->menu),
+						       "panel-menu-tree"))) {
+				directory = menu_tree_get_directory_from_path (tree,
+									       button->priv->menu_path);
+				g_object_set_data_full (G_OBJECT (button->priv->menu),
+							"panel-menu-tree-directory",
+							directory,
+							(GDestroyNotify) menu_tree_item_unref);
+			}
+		}
+
 		if (directory)
 			retval = g_strdup (menu_tree_directory_get_icon (directory));
 	}
