@@ -167,7 +167,7 @@ apply_cb(GnomePropertyBox * pb, int page, gpointer data)
 	apply_properties();
 }
 
-static void
+static gint
 close_cb(GnomePropertyBox * pb, gpointer data)
 {
 	GtkWidget *name = gtk_object_get_data(GTK_OBJECT(pb),
@@ -176,6 +176,8 @@ close_cb(GnomePropertyBox * pb, gpointer data)
 					       "image");
 	gtk_signal_disconnect_by_data(GTK_OBJECT(name),pb);
 	gtk_signal_disconnect_by_data(GTK_OBJECT(image),pb);
+
+  return FALSE;
 }
 
 static void 
