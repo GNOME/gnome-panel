@@ -26,6 +26,8 @@
 
 #include "panel-stock-icons.h"
 
+#include <string.h>
+
 #include <gtk/gtkstock.h>
 #include <gtk/gtkiconfactory.h>
 #include <libgnome/gnome-i18n.h>
@@ -112,6 +114,11 @@ panel_init_stock_icons (GtkIconFactory *factory)
 		filename = gnome_desktop_item_find_icon (
 				panel_icon_theme, stock_icons [i].icon, icon_height, 0);
 		if (!filename) {
+			/* if this is the KDE icon thing, just ignore it, KDE is just not
+			   installed */
+			if (strcmp (stock_icons [i].icon, "go") == 0)
+				continue;
+
 			g_warning (_("Unable to load panel stock icon '%s'\n"), stock_icons [i].icon);
 
 			/* FIXME: does this take into account the theme? */

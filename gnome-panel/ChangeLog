@@ -1,3 +1,11 @@
+Wed Jul 16 10:01:21 2003  George Lebl <jirka@5z.com>
+
+	* panel-stock-icons.c: if the stock icon is "go" and we don't find
+	  it, don't warn.  This is a KDE icon, so it is normal that it is
+	  not installed.  And if KDE is not installed we won't have the
+	  KDE menu anyway so it won't be used either.  Just ignore this
+	  just like we ignore PANEL_STOCK_ACTION now.
+
 2003-07-16  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-stock-icons.c:
