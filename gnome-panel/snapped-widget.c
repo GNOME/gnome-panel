@@ -166,40 +166,6 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 	widget_class->realize = snapped_widget_realize;
 }
 
-/*if this is true the size request will request a 48x48 cube, this is used
-  during orientation changes to make no flicker*/
-static int snapped_widget_request_cube = FALSE;
-static void
-snapped_widget_size_request(GtkWidget *widget,
-			    GtkRequisition *requisition)
-{
-	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
-	BasePWidget *basep = BASEP_WIDGET(widget);
-	GtkRequisition chreq;
-
-	if(snapped_widget_request_cube) {
-		requisition->width = PANEL_MINIMUM_WIDTH;
-		requisition->height = PANEL_MINIMUM_WIDTH;
-		snapped_widget_request_cube = FALSE;
-		return;
-	}
-
-	gtk_widget_size_request (basep->ebox, &chreq);
-	
-	switch(snapped->pos) {
-		case SNAPPED_BOTTOM:
-		case SNAPPED_TOP:
-			requisition->width = gdk_screen_width();
-			requisition->height = chreq.height;
-			break;
-		case SNAPPED_LEFT:
-		case SNAPPED_RIGHT:
-			requisition->height = gdk_screen_height();
-			requisition->width = chreq.width;
-			break;
-	}
-}
-
 static void
 snapped_widget_get_hidepos(SnappedWidget *snapped,
 			   PanelOrientType *hide_orient, gint16 *w, gint16 *h)
@@ -249,6 +215,49 @@ snapped_widget_get_hidepos(SnappedWidget *snapped,
 			*hide_orient = ORIENT_DOWN;
 		}
 	}
+}
+
+
+/*if this is true the size request will request a 48x48 cube, this is used
+  during orientation changes to make no flicker*/
+static int snapped_widget_request_cube = FALSE;
+static void
+snapped_widget_size_request(GtkWidget *widget,
+			    GtkRequisition *requisition)
+{
+	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
+	GtkRequisition chreq;
+
+	if(snapped_widget_request_cube) {
+		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->height = PANEL_MINIMUM_WIDTH;
+		snapped_widget_request_cube = FALSE;
+		return;
+	}
+
+	gtk_widget_size_request (basep->ebox, &chreq);
+	
+	switch(snapped->pos) {
+		case SNAPPED_BOTTOM:
+		case SNAPPED_TOP:
+			chreq.width = gdk_screen_width();
+			break;
+		case SNAPPED_LEFT:
+		case SNAPPED_RIGHT:
+			chreq.height = gdk_screen_height();
+			break;
+	}
+
+	if(snapped->state != SNAPPED_SHOWN) {
+		PanelOrientType hide_orient;
+		snapped_widget_get_hidepos(snapped, &hide_orient,
+					   &chreq.width,
+					   &chreq.height);
+	}
+	
+	requisition->width = chreq.width;
+	requisition->height = chreq.height;
 }
 
 static void

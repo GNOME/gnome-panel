@@ -152,7 +152,6 @@ drawer_widget_size_request(GtkWidget *widget,
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkRequisition chreq;
-	int w,h;
 	if(drawer_widget_request_cube) {
 		requisition->width = PANEL_MINIMUM_WIDTH;
 		requisition->height = PANEL_MINIMUM_WIDTH;
@@ -162,17 +161,23 @@ drawer_widget_size_request(GtkWidget *widget,
 
 	gtk_widget_size_request (basep->ebox, &chreq);
 
-	w = chreq.width;
-	h = chreq.height;
+	if(drawer->state != DRAWER_SHOWN ||
+	   drawer->temp_hidden) {
+		requisition->width = 1;
+		requisition->width = 1;
+		return;
+	}
 
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(w<PANEL_MINIMUM_WIDTH) w=PANEL_MINIMUM_WIDTH;
+		if(chreq.width<PANEL_MINIMUM_WIDTH)
+			chreq.width=PANEL_MINIMUM_WIDTH;
 	} else {
-		if(h<PANEL_MINIMUM_WIDTH) h=PANEL_MINIMUM_WIDTH;
+		if(chreq.height<PANEL_MINIMUM_WIDTH)
+			chreq.height=PANEL_MINIMUM_WIDTH;
 	}
-	requisition->width = w;
-	requisition->height = h;
+	requisition->width = chreq.width;
+	requisition->height = chreq.height;
 }
 
 
@@ -190,7 +195,6 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		int bx, by, bw, bh;
 		int px, py, pw, ph;
 		GtkWidget *ppanel; /*parent panel*/
-
 		
 		/*get the parent of the applet*/
 		/*note we know these are not NO_WINDOW widgets, so
@@ -248,23 +252,21 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 	GtkRequisition chreq;
-	int w,h;
 
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
 	gtk_widget_size_request (basep->ebox, &chreq);
 
-	w = chreq.width;
-	h = chreq.height;
-
 	/* do a minimal 48 size*/
 	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(w<PANEL_MINIMUM_WIDTH) w=PANEL_MINIMUM_WIDTH;
+		if(chreq.width<PANEL_MINIMUM_WIDTH)
+			chreq.width=PANEL_MINIMUM_WIDTH;
 	} else {
-		if(h<PANEL_MINIMUM_WIDTH) h=PANEL_MINIMUM_WIDTH;
+		if(chreq.height<PANEL_MINIMUM_WIDTH)
+			chreq.height=PANEL_MINIMUM_WIDTH;
 	}
-	allocation->width = w;
-	allocation->height = h;
+	allocation->width = chreq.width;
+	allocation->height = chreq.height;
 
 	drawer_widget_get_pos(drawer,
 			      &allocation->x,

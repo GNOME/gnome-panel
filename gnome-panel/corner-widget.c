@@ -154,29 +154,6 @@ corner_widget_class_init (CornerWidgetClass *class)
 	widget_class->realize = corner_widget_realize;
 }
 
-/*if this is true the size request will request a 48x48 cube, this is used
-  during orientation changes to make no flicker*/
-static int corner_widget_request_cube = FALSE;
-static void
-corner_widget_size_request(GtkWidget *widget,
-			    GtkRequisition *requisition)
-{
-	CornerWidget *corner = CORNER_WIDGET(widget);
-	BasePWidget *basep = BASEP_WIDGET(widget);
-	GtkRequisition chreq;
-	if(corner_widget_request_cube) {
-		requisition->width = PANEL_MINIMUM_WIDTH;
-		requisition->height = PANEL_MINIMUM_WIDTH;
-		corner_widget_request_cube = FALSE;
-		return;
-	}
-
-	gtk_widget_size_request (basep->ebox, &chreq);
-	
-	requisition->width = chreq.width;
-	requisition->height = chreq.height;
-}
-
 static void
 corner_widget_get_hidepos(CornerWidget *corner, PanelOrientType *hide_orient,
 			  gint16 *w, gint16 *h)
@@ -226,6 +203,40 @@ corner_widget_get_hidepos(CornerWidget *corner, PanelOrientType *hide_orient,
 		}
 		break;
 	}
+	/*just sanity checking*/
+	if(*w<1) *w=1;
+	if(*h<1) *h=1;
+}
+
+
+/*if this is true the size request will request a 48x48 cube, this is used
+  during orientation changes to make no flicker*/
+static int corner_widget_request_cube = FALSE;
+static void
+corner_widget_size_request(GtkWidget *widget,
+			    GtkRequisition *requisition)
+{
+	CornerWidget *corner = CORNER_WIDGET(widget);
+	BasePWidget *basep = BASEP_WIDGET(widget);
+	GtkRequisition chreq;
+	if(corner_widget_request_cube) {
+		requisition->width = PANEL_MINIMUM_WIDTH;
+		requisition->height = PANEL_MINIMUM_WIDTH;
+		corner_widget_request_cube = FALSE;
+		return;
+	}
+
+	gtk_widget_size_request (basep->ebox, &chreq);
+
+	if(corner->state != CORNER_SHOWN) {
+		PanelOrientType hide_orient;
+		corner_widget_get_hidepos(corner, &hide_orient,
+					  &chreq.width,
+					  &chreq.height);
+	}
+	
+	requisition->width = chreq.width;
+	requisition->height = chreq.height;
 }
 
 static void
