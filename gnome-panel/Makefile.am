@@ -6,7 +6,7 @@ INCLUDES =	 			\
 	-I$(includedir)			\
 	$(X_CFLAGS)
 
-bin_PROGRAMS = panel module_test
+bin_PROGRAMS = panel
 
 panel_SOURCES = \
 	gdkextra.c	\
@@ -19,9 +19,6 @@ panel_SOURCES = \
 	panel.c		\
 	panel.h
 
-module_test_SOURCES = \
-	module_test.c 
-
 MYLIBS = \
 	$(top_builddir)/libgnomeui/libgnomeui.la 	\
 	$(top_builddir)/libgnome/libgnome.la		\
@@ -29,8 +26,6 @@ MYLIBS = \
         $(X_LIBS)
 
 panel_LDADD = $(MYLIBS) 
-
-module_test_LDADD = $(MYLIBS)
 
 data_DATA = panelrc
 
