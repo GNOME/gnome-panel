@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.7\n"
-"POT-Creation-Date: 2002-09-26 11:40+1200\n"
+"POT-Creation-Date: 2002-10-14 14:20+1300\n"
 "PO-Revision-Date: 2002-09-09 21:02+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -190,15 +190,6 @@ msgstr ""
 "使っている人を 見かけたら、カウンセリングを勧めて下さい。"
 
 #: applets/fish/fish.schemas.in.h:1
-msgid "1.0"
-msgstr "1.0"
-
-#: applets/fish/fish.schemas.in.h:2
-#: gnome-panel/panel-global-config.schemas.in.h:4
-msgid "3"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:3
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
@@ -206,51 +197,29 @@ msgstr ""
 "名無しのさかな君は、とてもさえないさかなです。名前を付けて命を吹きこみましょ"
 "う"
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
 msgstr "さかな君がクリックされた時に実行するコマンド"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:3
 msgid "Pause per frame"
 msgstr "フレーム間のポーズ"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:4
 msgid "Rotate on vertical panels"
 msgstr "パネルが縦向きの時は回転する"
 
-#: applets/fish/fish.schemas.in.h:7
+#: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
 msgstr "さかな君のアニメーション画像"
 
-#: applets/fish/fish.schemas.in.h:8
+#: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
 msgstr "さかな君の名前"
 
-#: applets/fish/fish.schemas.in.h:9
+#: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
 msgstr "さかな君のアニメーションのフレーム数"
-
-#: applets/fish/fish.schemas.in.h:10
-msgid "Wanda"
-msgstr "GNOME さかな君 Wanda"
-
-#: applets/fish/fish.schemas.in.h:11
-msgid "fish/fishanim.png"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:12
-#, fuzzy
-msgid "fortune"
-msgstr "フォーチューン"
-
-#: applets/fish/fish.schemas.in.h:13 applets/gen_util/clock.schemas.in.h:18
-#: applets/gen_util/mailcheck.schemas.in.h:32
-#: applets/gen_util/pager.schemas.in.h:9
-#: applets/gen_util/tasklist.schemas.in.h:15
-#: gnome-panel/panel-global-config.schemas.in.h:15
-#: gnome-panel/panel-per-panel-config.schemas.in.h:35
-msgid "true"
-msgstr ""
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -322,14 +291,10 @@ msgid "_Check for mail"
 msgstr "メールのチェック(_C)"
 
 #: applets/gen_util/clock.c:169 applets/gen_util/clock.c:479
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, no-c-format
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
 #: applets/gen_util/clock.c:171 applets/gen_util/clock.c:481
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
@@ -429,76 +394,59 @@ msgid "The Clock displays the current time and date"
 msgstr "現在の時間と日付を表示する時計"
 
 #: applets/gen_util/clock.schemas.in.h:1
-msgid "12"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "24"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display Internet time, which is same all over the world"
 msgstr "インターネット時刻を表示します。全世界共通の時刻です"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
 msgstr "時刻に加えて、日付も表示する"
 
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display seconds in time"
-msgstr "時刻で秒を表示"
-
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "協定世界時で時刻を表示"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Epoch ― 1970/1/1 からの秒数で時刻を表示"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "「時」の形式"
 
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "「時」の形式を設定します。12 か 24 です"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "アプレットの上にマウスが来た時にツールチップで日付を表示"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "アプレットに日付を表示"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "ツールチップに日付を表示"
 
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Show time with seconds"
-msgstr "秒を表示"
-
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "インターネット時間を使用"
 
-#: applets/gen_util/clock.schemas.in.h:15
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "UNIX 時間を使用"
 
-#: applets/gen_util/clock.schemas.in.h:16
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "UTC を使用(U)"
-
-#: applets/gen_util/clock.schemas.in.h:17
-#: applets/gen_util/mailcheck.schemas.in.h:30
-#: applets/gen_util/pager.schemas.in.h:8
-#: applets/gen_util/tasklist.schemas.in.h:14
-#: gnome-panel/panel-per-panel-config.schemas.in.h:27
-msgid "false"
-msgstr ""
 
 #: applets/gen_util/mailcheck.c:193
 #, c-format
@@ -637,7 +585,7 @@ msgstr "更新の前に実行するコマンド"
 msgid "When new mail _arrives:"
 msgstr "新着メール時(_A):"
 
-#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:4
+#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "新着メールがあった時に実行するコマンド"
 
@@ -714,125 +662,111 @@ msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "メールチェックはメールボックスに新しいメールが届くと知らせてくれます"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
-#: gnome-panel/panel-per-panel-config.schemas.in.h:7
-msgid "0"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "120000"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when checking mail"
 msgstr "メールのチェックの時に実行するコマンド"
 
-#: applets/gen_util/mailcheck.schemas.in.h:5
+#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
 msgstr "アプレットがクリックされた時に実行するコマンド"
 
-#: applets/gen_util/mailcheck.schemas.in.h:6
+#: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
 msgstr "メールのチェックの前に実行するコマンド:"
 
-#: applets/gen_util/mailcheck.schemas.in.h:7
+#: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
 msgstr "exec-command を実行するかどうか"
 
-#: applets/gen_util/mailcheck.schemas.in.h:8
+#: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Do we run the newmail-command"
 msgstr "newmail-command を実行するかどうか"
 
-#: applets/gen_util/mailcheck.schemas.in.h:9
+#: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
 msgstr "メールのチェックの間隔 (ミリ秒単位)"
 
-#: applets/gen_util/mailcheck.schemas.in.h:10
+#: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
 msgstr "メールを自動的にチェックするかどうか"
 
-#: applets/gen_util/mailcheck.schemas.in.h:11
+#: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr "これをセットすると update-freq ミリ秒毎にメールをチェックします"
 
-#: applets/gen_util/mailcheck.schemas.in.h:12
+#: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
 msgstr "これをセットすると、exec-command を実行するでしょう"
 
-#: applets/gen_util/mailcheck.schemas.in.h:13
+#: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
 msgstr "これをチェックすると、newmail-command を実行するでしょう"
 
-#: applets/gen_util/mailcheck.schemas.in.h:14
+#: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
 msgstr "メールのチェックの間隔"
 
-#: applets/gen_util/mailcheck.schemas.in.h:15
+#: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
 msgstr "アニメーションファイルへのパス"
 
-#: applets/gen_util/mailcheck.schemas.in.h:16
+#: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Play a sound when mail is recieved"
 msgstr "新しいメールが届いた時に音を鳴らす"
 
-#: applets/gen_util/mailcheck.schemas.in.h:17
+#: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
 msgstr "メールを取得するリモートフォルダ"
 
-#: applets/gen_util/mailcheck.schemas.in.h:18
+#: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
 msgstr "メールをチェックするリモートサーバ"
 
-#: applets/gen_util/mailcheck.schemas.in.h:19
+#: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
 msgstr "メールのチェックの前にこのコマンドを実行します"
 
-#: applets/gen_util/mailcheck.schemas.in.h:20
+#: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "The mail server"
 msgstr "メールサーバー"
 
-#: applets/gen_util/mailcheck.schemas.in.h:21
+#: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
 msgstr "ユーザのパスワード"
 
-#: applets/gen_util/mailcheck.schemas.in.h:22
+#: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
 msgstr "リモートサーバでのユーザのパスワード"
 
-#: applets/gen_util/mailcheck.schemas.in.h:23
+#: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
 msgstr "どうやってメールをチェックするか、するか、するか..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:24
+#: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "メールをどう処理するか、するか、するか..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:25
+#: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
 msgstr ""
 "これはメールチェックアプレットの通常の使用中に表示するアニメーションです"
 
-#: applets/gen_util/mailcheck.schemas.in.h:26
+#: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
 msgstr "リモートサーバでのユーザ名"
 
-#: applets/gen_util/mailcheck.schemas.in.h:27
+#: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on the applet"
 msgstr "アプレットをクリックした時にこのコマンドを実行します"
 
-#: applets/gen_util/mailcheck.schemas.in.h:28
+#: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when the applet is clicked"
 msgstr "アプレットをクリックした時にメールの状態をリセットするかどうか"
 
-#: applets/gen_util/mailcheck.schemas.in.h:29
+#: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
 msgstr "メールが届いています!"
-
-#: applets/gen_util/mailcheck.schemas.in.h:31
-#, fuzzy
-msgid "mail"
-msgstr "小"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -916,10 +850,6 @@ msgid "Workspaces"
 msgstr "ワークスペース"
 
 #: applets/gen_util/pager.schemas.in.h:1
-msgid "1"
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
@@ -927,7 +857,7 @@ msgstr ""
 "これが真なら、すべてのワークスペースを表示します。真でなければ現在のワークス"
 "ペースだけを表示します"
 
-#: applets/gen_util/pager.schemas.in.h:3
+#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
@@ -935,11 +865,11 @@ msgstr ""
 "これが真なら、ページャ中のワークスペースでワークスペースの名前を表示します。"
 "真でないなら、ワークスペースの内容のみを表示します"
 
-#: applets/gen_util/pager.schemas.in.h:4
+#: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
 msgstr "ページャ中の行数"
 
-#: applets/gen_util/pager.schemas.in.h:5
+#: applets/gen_util/pager.schemas.in.h:4
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the pager shows the "
@@ -948,11 +878,11 @@ msgstr ""
 "すべてのワークスペースを表示する場合、ページャは(水平方向に)何行、(垂直方向"
 "に)何列、ワークスペースを表示するか"
 
-#: applets/gen_util/pager.schemas.in.h:6
+#: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
 msgstr "すべてのワークスペースをページャに表示するかどうか"
 
-#: applets/gen_util/pager.schemas.in.h:7
+#: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
 msgstr "ワークスペースの名前をページャに表示するかどうか"
 
@@ -1075,69 +1005,56 @@ msgid "_Never group windows"
 msgstr "ウインドウをグループ化しない(_N)"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-msgid "4096"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid "50"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:4
+#: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:5
+#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:6
+#: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:7
+#: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size the tasklist applet will request"
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
 msgstr "リストア時に、ウインドウを現在のワークスペースへ移動"
 
-#: applets/gen_util/tasklist.schemas.in.h:9
+#: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
 msgstr "すべてのワークスペースのウインドウを表示"
 
-#: applets/gen_util/tasklist.schemas.in.h:10
+#: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:11
+#: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
 msgstr ""
 
-#: applets/gen_util/tasklist.schemas.in.h:12
+#: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "ウインドウをグループ化する時"
-
-#: applets/gen_util/tasklist.schemas.in.h:13
-#, fuzzy
-msgid "auto"
-msgstr "レイアウト"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -2394,178 +2311,39 @@ msgid "Background"
 msgstr "背景"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "&lt;Alt&gt;F1"
-msgstr "&lt;Alt&gt;F1"
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "&lt;Alt&gt;F2"
-msgstr "&lt;Alt&gt;F2"
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-#, fuzzy
-msgid "&lt;Alt&gt;Print"
-msgstr "&lt;Alt&gt;F2"
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-msgid "300"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-msgid "500"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:7
 msgid "Display \"Run\" dialog"
 msgstr "「実行」ダイアログを表示"
 
-#: gnome-panel/panel-global-config.schemas.in.h:8
+#: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:9
+#: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
 msgstr ""
 
-#: gnome-panel/panel-global-config.schemas.in.h:10
+#: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
 msgstr "パネルメニューをポップアップ"
 
-#: gnome-panel/panel-global-config.schemas.in.h:11
-#, fuzzy
-msgid "Print"
-msgstr "プリンタ"
-
-#: gnome-panel/panel-global-config.schemas.in.h:12
+#: gnome-panel/panel-global-config.schemas.in.h:5
 msgid "Take a screen shot"
 msgstr "スクリーンショットを撮る"
 
-#: gnome-panel/panel-global-config.schemas.in.h:13
+#: gnome-panel/panel-global-config.schemas.in.h:6
 msgid "Take a screen shot of a window"
 msgstr "ウインドウのスクリーンショットを撮る"
 
-#: gnome-panel/panel-global-config.schemas.in.h:14
-msgid "panel-speed-medium"
-msgstr ""
-
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "#000000"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:6
-msgid "-1"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:8
-msgid "00000001"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:9
-msgid "00000002"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:10
-msgid "20"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:11
-msgid "25"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:12
 msgid "Enable the program listing in the run box"
 msgstr ""
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:13
-#, fuzzy
-msgid "OAFIID:GNOME_ClockApplet"
-msgstr "時計アプレット"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:14
-msgid "OAFIID:GNOME_MixerApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:15
-#, fuzzy
-msgid "OAFIID:GNOME_PagerApplet"
-msgstr "ページャ アプレット"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:16
-#, fuzzy
-msgid "OAFIID:GNOME_TasklistApplet"
-msgstr "タスクリスト アプレット"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:17
+#: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:18
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:19
-msgid "[00000001,00000002,00000003,00000004]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:20
-msgid "[00000001,00000002]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:21
-msgid "[00000001]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:22
-msgid "[]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:23
-msgid "applications:///System/gnome-terminal.desktop"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:24
-#, fuzzy
-msgid "applications:///nautilus.desktop"
-msgstr "全デスクトップ上の通常のアプリケーションを表示"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:25
-#, fuzzy
-msgid "bonobo-applet"
-msgstr "テスト Bonobo アプレット"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:26
-#, fuzzy
-msgid "edge-panel"
-msgstr "エッジ・パネル"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:28
-#, fuzzy
-msgid "launcher-object"
-msgstr "ランチャ"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:29
-#, fuzzy
-msgid "menu-panel"
-msgstr "メニューパネル"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:30
-#, fuzzy
-msgid "no-background"
-msgstr "背景"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:31
-msgid "panel-edge-bottom"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:32
-msgid "panel-size-medium"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:33
-msgid "panel-size-small"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:34
-msgid "panel-size-x-small"
 msgstr ""
 
 #: gnome-panel/panel-shell.c:43
@@ -2724,6 +2502,83 @@ msgstr "とても大きい"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "とても小さい"
+
+#~ msgid "1.0"
+#~ msgstr "1.0"
+
+#~ msgid "Wanda"
+#~ msgstr "GNOME さかな君 Wanda"
+
+#, fuzzy
+#~ msgid "fortune"
+#~ msgstr "フォーチューン"
+
+#~ msgid "Display seconds in time"
+#~ msgstr "時刻で秒を表示"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "「時」の形式を設定します。12 か 24 です"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "秒を表示"
+
+#, fuzzy
+#~ msgid "mail"
+#~ msgstr "小"
+
+#, fuzzy
+#~ msgid "auto"
+#~ msgstr "レイアウト"
+
+#~ msgid "&lt;Alt&gt;F1"
+#~ msgstr "&lt;Alt&gt;F1"
+
+#~ msgid "&lt;Alt&gt;F2"
+#~ msgstr "&lt;Alt&gt;F2"
+
+#, fuzzy
+#~ msgid "&lt;Alt&gt;Print"
+#~ msgstr "&lt;Alt&gt;F2"
+
+#, fuzzy
+#~ msgid "Print"
+#~ msgstr "プリンタ"
+
+#, fuzzy
+#~ msgid "OAFIID:GNOME_ClockApplet"
+#~ msgstr "時計アプレット"
+
+#, fuzzy
+#~ msgid "OAFIID:GNOME_PagerApplet"
+#~ msgstr "ページャ アプレット"
+
+#, fuzzy
+#~ msgid "OAFIID:GNOME_TasklistApplet"
+#~ msgstr "タスクリスト アプレット"
+
+#, fuzzy
+#~ msgid "applications:///nautilus.desktop"
+#~ msgstr "全デスクトップ上の通常のアプリケーションを表示"
+
+#, fuzzy
+#~ msgid "bonobo-applet"
+#~ msgstr "テスト Bonobo アプレット"
+
+#, fuzzy
+#~ msgid "edge-panel"
+#~ msgstr "エッジ・パネル"
+
+#, fuzzy
+#~ msgid "launcher-object"
+#~ msgstr "ランチャ"
+
+#, fuzzy
+#~ msgid "menu-panel"
+#~ msgstr "メニューパネル"
+
+#, fuzzy
+#~ msgid "no-background"
+#~ msgstr "背景"
 
 #~ msgid "Use GMT"
 #~ msgstr "GMT を使用"

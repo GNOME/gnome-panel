@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.5.0\n"
-"POT-Creation-Date: 2002-09-26 11:40+1200\n"
+"POT-Creation-Date: 2002-10-14 14:20+1300\n"
 "PO-Revision-Date: 2002-08-21 17:29-0300\n"
 "Last-Translator: Gustavo Noronha Silva <kov@debian.org>\n"
 "Language-Team: Debian-BR <debian-l10n-portuguese@lists.debian.org>, "
@@ -203,15 +203,6 @@ msgstr ""
 "encaminhado para uma avaliação psiquiátrica."
 
 #: applets/fish/fish.schemas.in.h:1
-msgid "1.0"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:2
-#: gnome-panel/panel-global-config.schemas.in.h:4
-msgid "3"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:3
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
@@ -219,50 +210,29 @@ msgstr ""
 "Um peixe sem nome é um peixe um tanto estúpido. Traga vida ao seu peixe "
 "dando a ele um nome."
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
 msgstr "Comando a executar quando o peixe é clicado:"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:3
 msgid "Pause per frame"
 msgstr "Pausa por quadro:"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:4
 msgid "Rotate on vertical panels"
 msgstr "Girar em painéis verticais"
 
-#: applets/fish/fish.schemas.in.h:7
+#: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
 msgstr "A imagem da animação do peixe"
 
-#: applets/fish/fish.schemas.in.h:8
+#: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
 msgstr "O nome do peixe"
 
-#: applets/fish/fish.schemas.in.h:9
+#: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
 msgstr "O número de quadros na animação do peixe"
-
-#: applets/fish/fish.schemas.in.h:10
-msgid "Wanda"
-msgstr "Wanda"
-
-#: applets/fish/fish.schemas.in.h:11
-msgid "fish/fishanim.png"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:12
-msgid "fortune"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:13 applets/gen_util/clock.schemas.in.h:18
-#: applets/gen_util/mailcheck.schemas.in.h:32
-#: applets/gen_util/pager.schemas.in.h:9
-#: applets/gen_util/tasklist.schemas.in.h:15
-#: gnome-panel/panel-global-config.schemas.in.h:15
-#: gnome-panel/panel-per-panel-config.schemas.in.h:35
-msgid "true"
-msgstr ""
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -335,14 +305,10 @@ msgid "_Check for mail"
 msgstr "_Verificar correio"
 
 #: applets/gen_util/clock.c:169 applets/gen_util/clock.c:479
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, no-c-format
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
 #: applets/gen_util/clock.c:171 applets/gen_util/clock.c:481
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
@@ -441,78 +407,61 @@ msgid "The Clock displays the current time and date"
 msgstr "O Relógio mostra a hora e a data atuais"
 
 #: applets/gen_util/clock.schemas.in.h:1
-msgid "12"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "24"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display Internet time, which is same all over the world"
 msgstr "Mostrar o tempo da Internet, que é o mesmo em todo o mundo"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
 msgstr "Mostrar a data no mini aplicativo, além da hora"
 
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display seconds in time"
-msgstr "Mostrar os segundos na hora"
-
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Mostrar a hora na zona de tempo Universal Coordenada"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Mostrar hora em segundos desde a Época, ou seja, 01/01/1970"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "Formato da Hora"
 
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Define o formato da hora, pode ser 12 ou 24"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr ""
 "Mostra a data em uma dica quando o mouse está em cima do mini aplicativo"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "Mostrar data no mini aplicativo"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "Mostrar data na dica"
 
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Show time with seconds"
-msgstr "Mostrar a hora com os segundos"
-
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "Usar a Hora da Internet"
 
-#: applets/gen_util/clock.schemas.in.h:15
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "Usar a Hora UNIX"
 
 # SUN CHANGED MESSAGE
-#: applets/gen_util/clock.schemas.in.h:16
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "Usar UTC"
-
-#: applets/gen_util/clock.schemas.in.h:17
-#: applets/gen_util/mailcheck.schemas.in.h:30
-#: applets/gen_util/pager.schemas.in.h:8
-#: applets/gen_util/tasklist.schemas.in.h:14
-#: gnome-panel/panel-per-panel-config.schemas.in.h:27
-msgid "false"
-msgstr ""
 
 #: applets/gen_util/mailcheck.c:193
 #, c-format
@@ -651,7 +600,7 @@ msgstr "Comando a executar antes de cada atualização"
 msgid "When new mail _arrives:"
 msgstr "Quando novas mensagens cheg_arem:"
 
-#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:4
+#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Comando a executar quando chegam mensagens"
 
@@ -732,103 +681,94 @@ msgstr ""
 "de correio"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
-#: gnome-panel/panel-per-panel-config.schemas.in.h:7
-msgid "0"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "120000"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when checking mail"
 msgstr "Comando a executar conferir o correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:5
+#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
 msgstr "Comando a executar quando o mini aplicativo é clicado"
 
-#: applets/gen_util/mailcheck.schemas.in.h:6
+#: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
 msgstr "Comando a executar antes de verificar correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:7
+#: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
 msgstr "Nós rodamos o comando-exec?"
 
-#: applets/gen_util/mailcheck.schemas.in.h:8
+#: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Do we run the newmail-command"
 msgstr "Nós rodamos o comando-novoemail?"
 
-#: applets/gen_util/mailcheck.schemas.in.h:9
+#: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
 msgstr "Com que freqüência (em milisegundos) deve-se verificar o correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:10
+#: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
 msgstr "Se o correio deve ser verificado automaticamente"
 
-#: applets/gen_util/mailcheck.schemas.in.h:11
+#: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr "Se isso estiver definido, o correio será verificado de tempo em tempo"
 
-#: applets/gen_util/mailcheck.schemas.in.h:12
+#: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
 msgstr "Se definido, nós devemos rodar o comando-exec"
 
-#: applets/gen_util/mailcheck.schemas.in.h:13
+#: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
 msgstr "Se definido, devemos rodar o comando-novoemail"
 
-#: applets/gen_util/mailcheck.schemas.in.h:14
+#: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
 msgstr "Intervalo para verificar correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:15
+#: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
 msgstr "Caminho para o arquivo de animação"
 
-#: applets/gen_util/mailcheck.schemas.in.h:16
+#: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Play a sound when mail is recieved"
 msgstr "Tocar um som quando chegarem mensagens"
 
-#: applets/gen_util/mailcheck.schemas.in.h:17
+#: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
 msgstr "Pasta remota para obtenção do correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:18
+#: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
 msgstr "Remove servidor para conectar para baixar o correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:19
+#: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
 msgstr "Executar esse comando antes de verificar o correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:20
+#: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "The mail server"
 msgstr "O Servidor de Correio"
 
-#: applets/gen_util/mailcheck.schemas.in.h:21
+#: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
 msgstr "A senha do usuário"
 
-#: applets/gen_util/mailcheck.schemas.in.h:22
+#: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
 msgstr "A senha do usuário para o servidor remoto"
 
-#: applets/gen_util/mailcheck.schemas.in.h:23
+#: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
 msgstr ""
 "É assim que verificamos o correio, verificamos o correio, verificamos o "
 "correio..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:24
+#: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr ""
 "É assim que processamos o correio, processamos o correio, processamos o "
 "correio..."
 
-#: applets/gen_util/mailcheck.schemas.in.h:25
+#: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
@@ -836,28 +776,23 @@ msgstr ""
 "Esta é a animação que será mostrada durante o uso normal do mini aplicativo "
 "mailcheck"
 
-#: applets/gen_util/mailcheck.schemas.in.h:26
+#: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
 msgstr "Nome do usuário no servidor remoto"
 
-#: applets/gen_util/mailcheck.schemas.in.h:27
+#: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on the applet"
 msgstr "Executamos esse comando quando o usuário clica no mini aplicativo"
 
-#: applets/gen_util/mailcheck.schemas.in.h:28
+#: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when the applet is clicked"
 msgstr ""
 "Se o estado do correio deve ser reiniciado quando o mini aplicativo for "
 "clicado"
 
-#: applets/gen_util/mailcheck.schemas.in.h:29
+#: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
 msgstr "Há mensagens!"
-
-#: applets/gen_util/mailcheck.schemas.in.h:31
-#, fuzzy
-msgid "mail"
-msgstr "Pequeno"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -943,10 +878,6 @@ msgid "Workspaces"
 msgstr "Áreas de Trabalho"
 
 #: applets/gen_util/pager.schemas.in.h:1
-msgid "1"
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
@@ -954,7 +885,7 @@ msgstr ""
 "Se isto for verdadeiro, o paginador mostrará todas as áreas de trabalho, "
 "senão mostrará apenas a área atual."
 
-#: applets/gen_util/pager.schemas.in.h:3
+#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
@@ -962,11 +893,11 @@ msgstr ""
 "Se isto for verdadeiro, as áreas de trabalho no paginador irão mostrar seus "
 "nome, se não elas mostrarão seu conteúdo."
 
-#: applets/gen_util/pager.schemas.in.h:4
+#: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
 msgstr "Número de linhas no paginador"
 
-#: applets/gen_util/pager.schemas.in.h:5
+#: applets/gen_util/pager.schemas.in.h:4
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the pager shows the "
@@ -976,11 +907,11 @@ msgstr ""
 "linhas (no layout horizontal) ou colunas (no layout vertical) o paginador "
 "mostra as áreas de trabalho."
 
-#: applets/gen_util/pager.schemas.in.h:6
+#: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
 msgstr "Se deve mostrar todas as áreas de trabalho no paginador."
 
-#: applets/gen_util/pager.schemas.in.h:7
+#: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
 msgstr "Se deve mostrar os nomes das áreas de trabalho no paginador."
 
@@ -1105,14 +1036,6 @@ msgid "_Never group windows"
 msgstr "_Nunca agrupar janelas"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-msgid "4096"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid "50"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
@@ -1120,7 +1043,7 @@ msgstr ""
 "Decide quando agrupar janelas de uma mesma aplicação na lista de tarefas. "
 "Valores válidos são nunca, auto e sempre."
 
-#: applets/gen_util/tasklist.schemas.in.h:4
+#: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
@@ -1129,7 +1052,7 @@ msgstr ""
 "áreas de trabalho, se não ela irá mostrar as janelas da área de trabalho "
 "atual apenas."
 
-#: applets/gen_util/tasklist.schemas.in.h:5
+#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
@@ -1138,23 +1061,23 @@ msgstr ""
 "área de trabalho atual. Se não a área de trabalho será trocada para a da "
 "janela."
 
-#: applets/gen_util/tasklist.schemas.in.h:6
+#: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
 msgstr "Tamanho máximo que o mini aplicativo irá requisitar"
 
-#: applets/gen_util/tasklist.schemas.in.h:7
+#: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size the tasklist applet will request"
 msgstr "Tamanho mínimo que o mini aplicativo tasklist irá requisitar"
 
-#: applets/gen_util/tasklist.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
 msgstr "Mover as janelas para a área de trabalho atual quando desminimizadas."
 
-#: applets/gen_util/tasklist.schemas.in.h:9
+#: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
 msgstr "Mostrar janelas de todas as áreas de trabalho"
 
-#: applets/gen_util/tasklist.schemas.in.h:10
+#: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
@@ -1165,7 +1088,7 @@ msgstr ""
 "painéis deslizantes e de canto, que iriam pedir uma largura muito pequena "
 "caso contrário."
 
-#: applets/gen_util/tasklist.schemas.in.h:11
+#: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
@@ -1175,13 +1098,9 @@ msgstr ""
 "útil para limitar o tamanho usado em painéis grandes onde o mini aplicativo "
 "iria preencher todo o espaço disponível, como em painéis de canto."
 
-#: applets/gen_util/tasklist.schemas.in.h:12
+#: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Quando agrupar janelas"
-
-#: applets/gen_util/tasklist.schemas.in.h:13
-msgid "auto"
-msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -2471,175 +2390,41 @@ msgid "Background"
 msgstr "Fundo"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "&lt;Alt&gt;F1"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "&lt;Alt&gt;F2"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-msgid "&lt;Alt&gt;Print"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-msgid "300"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-msgid "500"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:7
 msgid "Display \"Run\" dialog"
 msgstr "Mostrar o diálogo \"Executar\""
 
-#: gnome-panel/panel-global-config.schemas.in.h:8
+#: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
 msgstr "FIXME - isso é resolvido com as novas coisas de menu?"
 
-#: gnome-panel/panel-global-config.schemas.in.h:9
+#: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
 msgstr "FIXME - é necessário definir limites"
 
-#: gnome-panel/panel-global-config.schemas.in.h:10
+#: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
 msgstr "Abrir o menu do painel"
 
-#: gnome-panel/panel-global-config.schemas.in.h:11
-#, fuzzy
-msgid "Print"
-msgstr "Impressora"
-
-#: gnome-panel/panel-global-config.schemas.in.h:12
+#: gnome-panel/panel-global-config.schemas.in.h:5
 msgid "Take a screen shot"
 msgstr "Capturar tela"
 
-#: gnome-panel/panel-global-config.schemas.in.h:13
+#: gnome-panel/panel-global-config.schemas.in.h:6
 msgid "Take a screen shot of a window"
 msgstr "Capturar imagem de uma janela"
 
-#: gnome-panel/panel-global-config.schemas.in.h:14
-msgid "panel-speed-medium"
-msgstr ""
-
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "#000000"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:6
-msgid "-1"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:8
-msgid "00000001"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:9
-msgid "00000002"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:10
-msgid "20"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:11
-msgid "25"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:12
 msgid "Enable the program listing in the run box"
 msgstr "Habilitar a listagem de programas na caixa executar"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:13
-#, fuzzy
-msgid "OAFIID:GNOME_ClockApplet"
-msgstr "Mini aplicativo Relógio"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:14
-msgid "OAFIID:GNOME_MixerApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:15
-msgid "OAFIID:GNOME_PagerApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:16
-msgid "OAFIID:GNOME_TasklistApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:17
+#: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
 "Mostra a listagem de programas por padrão quando abrir a caixa Executar"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:18
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
 msgstr "Mostra a listagem de programas na caixa Executar"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:19
-msgid "[00000001,00000002,00000003,00000004]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:20
-msgid "[00000001,00000002]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:21
-msgid "[00000001]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:22
-msgid "[]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:23
-msgid "applications:///System/gnome-terminal.desktop"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:24
-msgid "applications:///nautilus.desktop"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:25
-#, fuzzy
-msgid "bonobo-applet"
-msgstr "Mini aplicativo Teste Bonobo"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:26
-#, fuzzy
-msgid "edge-panel"
-msgstr "Painel de borda"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:28
-msgid "launcher-object"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:29
-#, fuzzy
-msgid "menu-panel"
-msgstr "Painel de Menu"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:30
-#, fuzzy
-msgid "no-background"
-msgstr "Fundo"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:31
-msgid "panel-edge-bottom"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:32
-msgid "panel-size-medium"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:33
-msgid "panel-size-small"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:34
-msgid "panel-size-x-small"
-msgstr ""
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2800,6 +2585,46 @@ msgstr "XX Grande"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Pequeno"
+
+#~ msgid "Wanda"
+#~ msgstr "Wanda"
+
+#~ msgid "Display seconds in time"
+#~ msgstr "Mostrar os segundos na hora"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Define o formato da hora, pode ser 12 ou 24"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Mostrar a hora com os segundos"
+
+#, fuzzy
+#~ msgid "mail"
+#~ msgstr "Pequeno"
+
+#, fuzzy
+#~ msgid "Print"
+#~ msgstr "Impressora"
+
+#, fuzzy
+#~ msgid "OAFIID:GNOME_ClockApplet"
+#~ msgstr "Mini aplicativo Relógio"
+
+#, fuzzy
+#~ msgid "bonobo-applet"
+#~ msgstr "Mini aplicativo Teste Bonobo"
+
+#, fuzzy
+#~ msgid "edge-panel"
+#~ msgstr "Painel de borda"
+
+#, fuzzy
+#~ msgid "menu-panel"
+#~ msgstr "Painel de Menu"
+
+#, fuzzy
+#~ msgid "no-background"
+#~ msgstr "Fundo"
 
 #~ msgid "Use GMT"
 #~ msgstr "Usar GMT"

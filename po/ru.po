@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-09-26 11:40+1200\n"
+"POT-Creation-Date: 2002-10-14 14:20+1300\n"
 "PO-Revision-Date: 2002-08-26 08:45+0400\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -185,64 +185,34 @@ msgstr ""
 "нужно отправить на психиатрическое обследование"
 
 #: applets/fish/fish.schemas.in.h:1
-msgid "1.0"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:2
-#: gnome-panel/panel-global-config.schemas.in.h:4
-msgid "3"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:3
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr "Рыбка без имени - скучная рыбка. Вызовите рыбку к жизни, назвав её."
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
 msgstr "Команда, выполняемая при щелчке на рыбке"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:3
 msgid "Pause per frame"
 msgstr "Задержка кадра"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:4
 msgid "Rotate on vertical panels"
 msgstr "Поворачивать на вертикальных панелях"
 
-#: applets/fish/fish.schemas.in.h:7
+#: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
 msgstr "Анимированное изображение рыбки"
 
-#: applets/fish/fish.schemas.in.h:8
+#: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
 msgstr "Имя рыбки"
 
-#: applets/fish/fish.schemas.in.h:9
+#: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
 msgstr "Число кадров в изображении рыбки"
-
-#: applets/fish/fish.schemas.in.h:10
-msgid "Wanda"
-msgstr "Ванда"
-
-#: applets/fish/fish.schemas.in.h:11
-msgid "fish/fishanim.png"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:12
-msgid "fortune"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:13 applets/gen_util/clock.schemas.in.h:18
-#: applets/gen_util/mailcheck.schemas.in.h:32
-#: applets/gen_util/pager.schemas.in.h:9
-#: applets/gen_util/tasklist.schemas.in.h:15
-#: gnome-panel/panel-global-config.schemas.in.h:15
-#: gnome-panel/panel-per-panel-config.schemas.in.h:35
-msgid "true"
-msgstr ""
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -314,14 +284,10 @@ msgid "_Check for mail"
 msgstr "_Проверить почту"
 
 #: applets/gen_util/clock.c:169 applets/gen_util/clock.c:479
-#: gnome-panel/panel-per-panel-config.schemas.in.h:5
-#, no-c-format
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
 #: applets/gen_util/clock.c:171 applets/gen_util/clock.c:481
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-#, no-c-format
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
@@ -414,76 +380,59 @@ msgid "The Clock displays the current time and date"
 msgstr "Апплет \"Часы\" показывает текущие время и дату"
 
 #: applets/gen_util/clock.schemas.in.h:1
-msgid "12"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "24"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display Internet time, which is same all over the world"
 msgstr "Отображать время Internet, которое одинаково по всему миру"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
 msgstr "Отображать в апплете время и дату"
 
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display seconds in time"
-msgstr "Отображать секунды"
-
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Отображать универсальное (UTC) время"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Отображать время в секундах с начала Эпохи, 01-01-1970"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "Вид часов"
 
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Устанавливает вид часов, 12-ти или 24-часовые"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Показывать подсказку, когда указатель мыши находится над апплетом"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "Показывать дату в апплете"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "Показывать дату в подсказке"
 
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Show time with seconds"
-msgstr "Показывать секунды"
-
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "Показывать в стиле Internet"
 
-#: applets/gen_util/clock.schemas.in.h:15
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "Показывать в стиле Unix"
 
-#: applets/gen_util/clock.schemas.in.h:16
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "Использовать универсальное время (UTC)"
-
-#: applets/gen_util/clock.schemas.in.h:17
-#: applets/gen_util/mailcheck.schemas.in.h:30
-#: applets/gen_util/pager.schemas.in.h:8
-#: applets/gen_util/tasklist.schemas.in.h:14
-#: gnome-panel/panel-per-panel-config.schemas.in.h:27
-msgid "false"
-msgstr ""
 
 #: applets/gen_util/mailcheck.c:193
 #, c-format
@@ -619,7 +568,7 @@ msgstr "Команда, выполняемая перед каждым обно�
 msgid "When new mail _arrives:"
 msgstr "При при_бытии новой почты:"
 
-#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:4
+#: applets/gen_util/mailcheck.c:1466 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Команда, выполняемая при прибытии почты"
 
@@ -696,103 +645,94 @@ msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Проверка почты извещает о поступлении новой почты в почтовый ящик"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
-#: gnome-panel/panel-per-panel-config.schemas.in.h:7
-msgid "0"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "120000"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when checking mail"
 msgstr "Команда, выполняемая при проверке почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:5
+#: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
 msgstr "Команда, выполняемая при щелчке на апплете"
 
-#: applets/gen_util/mailcheck.schemas.in.h:6
+#: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
 msgstr "Команда, запускаемая перед проверкой почты:"
 
-#: applets/gen_util/mailcheck.schemas.in.h:7
+#: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
 msgstr "Запускать ли команду, выполняемую при щелчке"
 
-#: applets/gen_util/mailcheck.schemas.in.h:8
+#: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Do we run the newmail-command"
 msgstr "Запускать ли команду, выполняемую при прибытии новой почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:9
+#: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
 msgstr "Как часто (в миллисекундах) проверять почту"
 
-#: applets/gen_util/mailcheck.schemas.in.h:10
+#: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
 msgstr "Следует ли проверять почту автоматически"
 
-#: applets/gen_util/mailcheck.schemas.in.h:11
+#: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
 msgstr ""
 "Если установлено, почта будет проверяться через установленное число "
 "миллисекунд"
 
-#: applets/gen_util/mailcheck.schemas.in.h:12
+#: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
 msgstr "Если установлено, следует запускать команду, выполняемую при щелчке"
 
-#: applets/gen_util/mailcheck.schemas.in.h:13
+#: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
 msgstr ""
 "Если установлено, следует запускать программу, выполняемую при прибытии "
 "новой почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:14
+#: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
 msgstr "Команда для проверки почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:15
+#: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
 msgstr "Путь к файлу анимации"
 
-#: applets/gen_util/mailcheck.schemas.in.h:16
+#: applets/gen_util/mailcheck.schemas.in.h:14
 msgid "Play a sound when mail is recieved"
 msgstr "Воспроизводить звук при получении новой почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:17
+#: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
 msgstr "Удалённый каталог для почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:18
+#: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
 msgstr "Удалённый сервер для почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:19
+#: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
 msgstr "Команда, запускаемая перед проверкой почты"
 
-#: applets/gen_util/mailcheck.schemas.in.h:20
+#: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "The mail server"
 msgstr "Почтовый сервер:"
 
-#: applets/gen_util/mailcheck.schemas.in.h:21
+#: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
 msgstr "Пароль пользователя"
 
-#: applets/gen_util/mailcheck.schemas.in.h:22
+#: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
 msgstr "Пароль пользователя для удалённого сервера"
 
-#: applets/gen_util/mailcheck.schemas.in.h:23
+#: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
 msgstr "Как проверяется почта"
 
-#: applets/gen_util/mailcheck.schemas.in.h:24
+#: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "Как обрабатывается почта"
 
-#: applets/gen_util/mailcheck.schemas.in.h:25
+#: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
@@ -800,26 +740,21 @@ msgstr ""
 "Анимированное изображение, которое будет отображаться при использовании "
 "апплета"
 
-#: applets/gen_util/mailcheck.schemas.in.h:26
+#: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
 msgstr "Имя пользователя на удалённом сервере"
 
-#: applets/gen_util/mailcheck.schemas.in.h:27
+#: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on the applet"
 msgstr "Эта команда будет запущена, если пользователь щёлкнет на апплете"
 
-#: applets/gen_util/mailcheck.schemas.in.h:28
+#: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when the applet is clicked"
 msgstr "Сбрасывать ли статус, когда пользователь щёлкнет на апплете"
 
-#: applets/gen_util/mailcheck.schemas.in.h:29
+#: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
 msgstr "Пришла почта!"
-
-#: applets/gen_util/mailcheck.schemas.in.h:31
-#, fuzzy
-msgid "mail"
-msgstr "Маленький"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -904,10 +839,6 @@ msgid "Workspaces"
 msgstr "Рабочие места"
 
 #: applets/gen_util/pager.schemas.in.h:1
-msgid "1"
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
@@ -915,7 +846,7 @@ msgstr ""
 "Если установлено, пейджер будет показывать все рабочие места, а не только "
 "текущее"
 
-#: applets/gen_util/pager.schemas.in.h:3
+#: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
@@ -923,11 +854,11 @@ msgstr ""
 "Если установлено, пейджер отобразит названия для рабочих мест, а не их "
 "содержимое"
 
-#: applets/gen_util/pager.schemas.in.h:4
+#: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
 msgstr "Число рабочих мест в переключателе"
 
-#: applets/gen_util/pager.schemas.in.h:5
+#: applets/gen_util/pager.schemas.in.h:4
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the pager shows the "
@@ -937,11 +868,11 @@ msgstr ""
 "горизонтальном размещении) или столюцов (при вертикальном размещении) "
 "пейджер будет показывать рабочие места."
 
-#: applets/gen_util/pager.schemas.in.h:6
+#: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
 msgstr "Отображать ли все рабочие места в пейджере"
 
-#: applets/gen_util/pager.schemas.in.h:7
+#: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
 msgstr "Отображать ли названия рабочих мест в пейджере"
 
@@ -1064,14 +995,6 @@ msgid "_Never group windows"
 msgstr "Никогда _не группировать окна"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-msgid "4096"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid "50"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
@@ -1079,7 +1002,7 @@ msgstr ""
 "Определяет, когда группировать окна одного приложения в списке приложений. "
 "Допустимые значения никогда, автоматически и всегда"
 
-#: applets/gen_util/tasklist.schemas.in.h:4
+#: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
@@ -1087,7 +1010,7 @@ msgstr ""
 "Если установлено, список приложений будет показывать окна со всех рабочих "
 "мест, а не только с текущего."
 
-#: applets/gen_util/tasklist.schemas.in.h:5
+#: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
@@ -1095,23 +1018,23 @@ msgstr ""
 "Если установлено, восстановление окна будет происходить на текущее рабочее "
 "место, а не на исходное."
 
-#: applets/gen_util/tasklist.schemas.in.h:6
+#: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
 msgstr "Максимальный размер, который апплет запросит"
 
-#: applets/gen_util/tasklist.schemas.in.h:7
+#: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size the tasklist applet will request"
 msgstr "Минимальный размер, который апплет запросит"
 
-#: applets/gen_util/tasklist.schemas.in.h:8
+#: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
 msgstr "Перемещать окна на текущее рабочее место при восстановлении"
 
-#: applets/gen_util/tasklist.schemas.in.h:9
+#: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
 msgstr "Показывать окна всех рабочих мест"
 
-#: applets/gen_util/tasklist.schemas.in.h:10
+#: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
@@ -1121,7 +1044,7 @@ msgstr ""
 "минимальное, которое апплет запросит.Это полезно для скользящих и краевых "
 "панелей, которые иначе могут запросить очень малую исходную ширину."
 
-#: applets/gen_util/tasklist.schemas.in.h:11
+#: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
@@ -1131,13 +1054,9 @@ msgstr ""
 "ограничения размера, используемого в больших панелях, таких как краевые, где "
 "иначе апплет может заполнить всё доступное место."
 
-#: applets/gen_util/tasklist.schemas.in.h:12
+#: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
 msgstr "Группировать ли окна"
-
-#: applets/gen_util/tasklist.schemas.in.h:13
-msgid "auto"
-msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -2393,174 +2312,40 @@ msgid "Background"
 msgstr "Фон"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "&lt;Alt&gt;F1"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "&lt;Alt&gt;F2"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-msgid "&lt;Alt&gt;Print"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-msgid "300"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-msgid "500"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:7
 msgid "Display \"Run\" dialog"
 msgstr "Отображать диалог запуска программы"
 
-#: gnome-panel/panel-global-config.schemas.in.h:8
+#: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
 msgstr "FIXME - исправлено с новой функциональностью меню?"
 
-#: gnome-panel/panel-global-config.schemas.in.h:9
+#: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
 msgstr "FIXME - необходимо определить пределы"
 
-#: gnome-panel/panel-global-config.schemas.in.h:10
+#: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
 msgstr "Показывать всплывающее меню панели"
 
-#: gnome-panel/panel-global-config.schemas.in.h:11
-#, fuzzy
-msgid "Print"
-msgstr "Принтер"
-
-#: gnome-panel/panel-global-config.schemas.in.h:12
+#: gnome-panel/panel-global-config.schemas.in.h:5
 msgid "Take a screen shot"
 msgstr "Сделать снимок экрана"
 
-#: gnome-panel/panel-global-config.schemas.in.h:13
+#: gnome-panel/panel-global-config.schemas.in.h:6
 msgid "Take a screen shot of a window"
 msgstr "Сделать снимок окна"
 
-#: gnome-panel/panel-global-config.schemas.in.h:14
-msgid "panel-speed-medium"
-msgstr ""
-
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "#000000"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:6
-msgid "-1"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:8
-msgid "00000001"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:9
-msgid "00000002"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:10
-msgid "20"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:11
-msgid "25"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:12
 msgid "Enable the program listing in the run box"
 msgstr "Включить список программ в окне запуска"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:13
-#, fuzzy
-msgid "OAFIID:GNOME_ClockApplet"
-msgstr "Апплет \"Часы\""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:14
-msgid "OAFIID:GNOME_MixerApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:15
-msgid "OAFIID:GNOME_PagerApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:16
-msgid "OAFIID:GNOME_TasklistApplet"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:17
+#: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr "Показывать список программ при открытии диалога запуска по умолчанию"
 
-#: gnome-panel/panel-per-panel-config.schemas.in.h:18
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
 msgstr "Показывать список программ в диалоге запуска"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:19
-msgid "[00000001,00000002,00000003,00000004]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:20
-msgid "[00000001,00000002]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:21
-msgid "[00000001]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:22
-msgid "[]"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:23
-msgid "applications:///System/gnome-terminal.desktop"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:24
-msgid "applications:///nautilus.desktop"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:25
-#, fuzzy
-msgid "bonobo-applet"
-msgstr "Тестовый апплет Bonobo"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:26
-#, fuzzy
-msgid "edge-panel"
-msgstr "Краевая панель"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:28
-msgid "launcher-object"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:29
-#, fuzzy
-msgid "menu-panel"
-msgstr "Панель меню"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:30
-#, fuzzy
-msgid "no-background"
-msgstr "Фон"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:31
-msgid "panel-edge-bottom"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:32
-msgid "panel-size-medium"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:33
-msgid "panel-size-small"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:34
-msgid "panel-size-x-small"
-msgstr ""
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2719,6 +2504,46 @@ msgstr "Сверхбольшой"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Сверхмаленький"
+
+#~ msgid "Wanda"
+#~ msgstr "Ванда"
+
+#~ msgid "Display seconds in time"
+#~ msgstr "Отображать секунды"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Устанавливает вид часов, 12-ти или 24-часовые"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Показывать секунды"
+
+#, fuzzy
+#~ msgid "mail"
+#~ msgstr "Маленький"
+
+#, fuzzy
+#~ msgid "Print"
+#~ msgstr "Принтер"
+
+#, fuzzy
+#~ msgid "OAFIID:GNOME_ClockApplet"
+#~ msgstr "Апплет \"Часы\""
+
+#, fuzzy
+#~ msgid "bonobo-applet"
+#~ msgstr "Тестовый апплет Bonobo"
+
+#, fuzzy
+#~ msgid "edge-panel"
+#~ msgstr "Краевая панель"
+
+#, fuzzy
+#~ msgid "menu-panel"
+#~ msgstr "Панель меню"
+
+#, fuzzy
+#~ msgid "no-background"
+#~ msgstr "Фон"
 
 #~ msgid "Use GMT"
 #~ msgstr "Использовать UTC"
