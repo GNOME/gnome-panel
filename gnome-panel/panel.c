@@ -1708,7 +1708,7 @@ panel_change_orient(void)
 		gtk_container_remove(GTK_CONTAINER(the_panel->panel->panel),
 				     the_panel->panel->applets[i]->applet);
 	gtk_widget_destroy(the_panel->panel->panel);
-	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ)
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ) {
 		the_panel->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
 							FALSE);
 		gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
