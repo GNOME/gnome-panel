@@ -1278,7 +1278,6 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 				       panel->pixw,
 				       panel->pixh,
 				       gtk_widget_get_visual(w)->depth);
-
 	panel_widget_draw_all(panel);
 }
 

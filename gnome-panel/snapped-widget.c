@@ -21,6 +21,8 @@ static void snapped_widget_size_request	(GtkWidget          *widget,
 static void snapped_widget_size_allocate(GtkWidget          *widget,
 					 GtkAllocation      *allocation);
 
+static GtkWindowClass *parent_class = NULL;
+
 extern GdkCursor *fleur_cursor;
 
 /*global settings*/
@@ -88,12 +90,34 @@ marshal_signal_int (GtkObject * object,
 }
 
 static void
+snapped_widget_realize(GtkWidget *w)
+{
+  GTK_WIDGET_CLASS(parent_class)->realize(w);
+  
+  gnome_win_hints_init();
+  if (gnome_win_hints_wm_exists())
+    {
+      gnome_win_hints_set_hints(w, 
+				WIN_HINTS_SKIP_FOCUS |
+				WIN_HINTS_SKIP_WINLIST |
+				WIN_HINTS_SKIP_TASKBAR);
+      gnome_win_hints_set_state(w, 
+				WIN_STATE_STICKY |
+				WIN_STATE_FIXED_POSITION);
+      gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+      gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
+      gdk_window_set_decorations(w->window, 0);
+    }    
+}
+
+static void
 snapped_widget_class_init (SnappedWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 
-	snapped_widget_signals[POS_CHANGE_SIGNAL] =
+        parent_class = gtk_type_class (gtk_window_get_type ());
+        snapped_widget_signals[POS_CHANGE_SIGNAL] =
 		gtk_signal_new("pos_change",
 			       GTK_RUN_LAST,
 			       object_class->type,
@@ -122,6 +146,7 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 	
 	widget_class->size_request = snapped_widget_size_request;
 	widget_class->size_allocate = snapped_widget_size_allocate;
+	widget_class->realize = snapped_widget_realize;
 }
 
 /*if this is true the size request will request a 48x48 cube, this is used
@@ -585,8 +610,8 @@ snapped_enter_notify(SnappedWidget *snapped,
 		     GdkEventCrossing *event,
 		     gpointer data)
 {
-	/*FIXME: do we want this autoraise piece?*/
-	gdk_window_raise(GTK_WIDGET(snapped)->window);
+  if (!gnome_win_hints_wm_exists())
+    gdk_window_raise(GTK_WIDGET(snapped)->window);
 
 	if ((snapped->mode == SNAPPED_EXPLICIT_HIDE) ||
 	    (event->detail == GDK_NOTIFY_INFERIOR) ||
@@ -723,8 +748,12 @@ snapped_widget_destroy(GtkWidget *w, gpointer data)
 static void
 snapped_widget_init (SnappedWidget *snapped)
 {
-	/*if we set the icewm hints it will have to be changed to TOPLEVEL*/
-	GTK_WINDOW(snapped)->type = GTK_WINDOW_POPUP;
+  /*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
+  gnome_win_hints_init();
+  if (gnome_win_hints_wm_exists())
+    GTK_WINDOW(snapped)->type = GTK_WINDOW_TOPLEVEL;
+  else
+    GTK_WINDOW(snapped)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(snapped)->allow_shrink = TRUE;
 	GTK_WINDOW(snapped)->allow_grow = TRUE;
 	GTK_WINDOW(snapped)->auto_shrink = TRUE;

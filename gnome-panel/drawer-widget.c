@@ -23,6 +23,8 @@ static void drawer_widget_size_request	(GtkWidget          *widget,
 static void drawer_widget_size_allocate	(GtkWidget          *widget,
 					 GtkAllocation      *allocation);
 
+static GtkWindowClass *parent_class = NULL;
+
 extern GdkCursor *fleur_cursor;
 
 /*global settings*/
@@ -87,12 +89,34 @@ marshal_signal_state (GtkObject * object,
 }
 
 static void
+drawer_widget_realize(GtkWidget *w)
+{
+  GTK_WIDGET_CLASS(parent_class)->realize(w);
+  
+  gnome_win_hints_init();
+  if (gnome_win_hints_wm_exists())
+    {
+      gnome_win_hints_set_hints(w,
+				WIN_HINTS_SKIP_FOCUS |
+				WIN_HINTS_SKIP_WINLIST |
+				WIN_HINTS_SKIP_TASKBAR);
+      gnome_win_hints_set_state(w,
+				WIN_STATE_STICKY |
+				WIN_STATE_FIXED_POSITION);
+      gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+      gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
+      gdk_window_set_decorations(w->window, 0);
+    }
+}
+
+static void
 drawer_widget_class_init (DrawerWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 
-	drawer_widget_signals[STATE_CHANGE_SIGNAL] =
+        parent_class = gtk_type_class (gtk_window_get_type ());
+        drawer_widget_signals[STATE_CHANGE_SIGNAL] =
 		gtk_signal_new("state_change",
 			       GTK_RUN_LAST,
 			       object_class->type,
@@ -110,6 +134,7 @@ drawer_widget_class_init (DrawerWidgetClass *class)
 	
 	widget_class->size_request = drawer_widget_size_request;
 	widget_class->size_allocate = drawer_widget_size_allocate;
+	widget_class->realize = drawer_widget_realize;
 }
 
 /*if this is set, the size request and size alloc calls are ignored*/
@@ -486,10 +511,9 @@ drawer_widget_close_drawer(DrawerWidget *drawer)
 static int
 drawer_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-	/*FIXME: do we want this autoraise piece?*/
-	gdk_window_raise(widget->window);
-
-	return FALSE;
+  if (!gnome_win_hints_wm_exists())
+    gdk_window_raise(widget->window);
+  return FALSE;
 }
 
 
@@ -519,7 +543,11 @@ make_handle(char *pixmaphandle, int wi, int he)
 static void
 drawer_widget_init (DrawerWidget *drawer)
 {
-	GTK_WINDOW(drawer)->type = GTK_WINDOW_POPUP;
+  gnome_win_hints_init();
+  if (gnome_win_hints_wm_exists())
+    GTK_WINDOW(drawer)->type = GTK_WINDOW_TOPLEVEL;
+  else
+    GTK_WINDOW(drawer)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(drawer)->allow_shrink = TRUE;
 	GTK_WINDOW(drawer)->allow_grow = TRUE;
 	GTK_WINDOW(drawer)->auto_shrink = TRUE;

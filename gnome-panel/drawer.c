@@ -164,10 +164,11 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 static int
 enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-	Drawer *drawer = data;
-	/*FIXME: do we want this autoraise piece?*/
-	gdk_window_raise(drawer->drawer->window);
-	return TRUE;
+  Drawer *drawer = data;
+
+  if (!gnome_win_hints_wm_exists())
+    gdk_window_raise(drawer->drawer->window);
+  return TRUE;
 }
 
 static Drawer *
