@@ -560,7 +560,6 @@ fr_check_and_reread (FileRec *fr)
 			DirRec *ddr;
 			GnomeVFSResult result;
 			char *p;
-			struct stat s;
 
 			switch(ffr->type) {
 			case FILE_REC_DIR:
@@ -684,7 +683,7 @@ fr_check_and_reread (FileRec *fr)
 						reread = TRUE;
 						break;
 					}
-					ffr->mtime = s.st_mtime;
+					ffr->mtime = info->mtime;
 					any_change = TRUE;
 				}
 				if (ffr->tryexec_path != NULL &&
