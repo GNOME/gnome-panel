@@ -250,10 +250,16 @@ static void
 add_menu_to_panel (GtkWidget *widget, void *data)
 {
 	MenuFinfo *mf = data;
+	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+	/*guess redhat menus*/
+	if(g_file_exists("/etc/X11/wmconfig"))
+		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+
 	if(mf)
-		load_menu_applet(mf->menudir,0, current_panel, 0);
+		load_menu_applet(mf->menudir,flags, current_panel, 0);
 	else
-		load_menu_applet(NULL,0, current_panel, 0);
+		load_menu_applet(NULL,flags, current_panel, 0);
 }
 
 
@@ -836,7 +842,7 @@ add_menu_separator (GtkWidget *menu)
 	
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_show (menuitem);
-	gtk_container_add (GTK_CONTAINER (menu), menuitem);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
 }
 
 static int
@@ -1616,8 +1622,7 @@ create_panel_root_menu(GtkWidget *panel)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("System menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	menu = gtk_menu_new();
-	create_system_menu(menu,TRUE);
+	menu = create_system_menu(NULL,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
@@ -1626,12 +1631,22 @@ create_panel_root_menu(GtkWidget *panel)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("User menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	menu = gtk_menu_new();
-	create_user_menu(menu,TRUE,TRUE);
+	menu = create_user_menu(NULL,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
 			   NULL);
+
+	if(g_file_exists("/etc/X11/wmconfig")) {
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, 0, _("RedHat menus"));
+		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+		menu = create_rh_menu();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   NULL);
+	}
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
@@ -2218,13 +2233,6 @@ create_rh_menu(void)
 	char *dirs[3] = {"/etc/X11/wmconfig/",userrh,NULL};
 	g_return_val_if_fail(userrh!=NULL,NULL);
 	
-	/*this only works on RH systems and on those the path's are set*/
-	if(!g_file_test("/etc/X11/wmconfig/",G_FILE_TEST_ISDIR) &&
-	   !g_file_test(userrh,G_FILE_TEST_ISDIR)) {
-		g_free(userrh);
-		return NULL;
-	}
-
 	/*read redhat wmconfig files*/
 	for(i=0;dirs[i];i++) {
 		DIR *dir;
@@ -2244,54 +2252,69 @@ create_rh_menu(void)
 		closedir(dir);
 	}
 	g_free(userrh);
-	if(!rhlist)
-		return NULL;
 	w = make_rh_menu_from_list(rhlist);
-	g_list_foreach(rhlist,(GFunc)free_rh_item,NULL);
-	g_list_free(rhlist);
+	if(rhlist) {
+		g_list_foreach(rhlist,(GFunc)free_rh_item,NULL);
+		g_list_free(rhlist);
+	}
 	return w;
 }
 
 static GtkWidget *
-create_root_menu(int fake_submenus, MainMenuType type)
+create_root_menu(int fake_submenus, int flags)
 {
 	GtkWidget *root_menu;
-	GtkWidget *uroot_menu;
-	GtkWidget *rhmenu;
+	GtkWidget *menu;
 	GtkWidget *menuitem;
+	int need_separ = FALSE;
 	
-	root_menu = create_system_menu(NULL,fake_submenus);
-	uroot_menu = NULL;
+	root_menu = NULL;
 	
-	if(type == MAIN_MENU_BOTH)
+	if(flags&MAIN_MENU_SYSTEM && !(flags&MAIN_MENU_SYSTEM_SUB)) {
+		root_menu = create_system_menu(root_menu,fake_submenus);
+		need_separ = TRUE;
+	}
+	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
 		root_menu = create_user_menu(root_menu, fake_submenus, FALSE);
-	else
-		uroot_menu = create_user_menu(NULL, fake_submenus, TRUE);
+		need_separ = TRUE;
+	}
+	/*others here*/
 	
-	if(type == MAIN_MENU_USER) {
+	if(!root_menu)
+		root_menu = gtk_menu_new();
+
+	if(flags&MAIN_MENU_SYSTEM && flags&MAIN_MENU_SYSTEM_SUB) {
+		if(need_separ)
+			add_menu_separator(root_menu);
+		need_separ = FALSE;
+		menu = create_system_menu(NULL,fake_submenus);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("System menus"));
-		gtk_menu_append (GTK_MENU (uroot_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-					   root_menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
-		root_menu = uroot_menu;
-	} else if(type == MAIN_MENU_SYSTEM) {
-		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-					   uroot_menu);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-#if 0
-	rhmenu = create_rh_menu();
-	if(rhmenu) {
+	if(flags&MAIN_MENU_USER && flags&MAIN_MENU_USER_SUB) {
+		if(need_separ)
+			add_menu_separator(root_menu);
+		need_separ = FALSE;
+		menu = create_user_menu(NULL, fake_submenus, TRUE);
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, 0, _("User menus"));
+		gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   NULL);
+	}
+	if(flags&MAIN_MENU_REDHAT) {
 		GtkWidget *pixmap = NULL;
+		if(need_separ)
+			add_menu_separator(root_menu);
+		need_separ = FALSE;
+		menu = create_rh_menu();
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/mini/mini-redhat.xpm",
 								    SMALL_ICON_SIZE,
@@ -2302,12 +2325,11 @@ create_root_menu(int fake_submenus, MainMenuType type)
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, pixmap, _("RedHat menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),rhmenu);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-#endif
 
 	add_special_entries (root_menu, fake_submenus);
 	
@@ -2320,7 +2342,7 @@ add_menu_widget (Menu *menu, GList *menudirl, int main_menu, int fake_subs)
 	GList *li;
 
 	if (main_menu)
-		menu->menu = create_root_menu(fake_subs, menu->main_menu_type);
+		menu->menu = create_root_menu(fake_subs, menu->main_menu_flags);
 	else {
 		menu->menu = NULL;
 		for(li=menudirl;li!=NULL;li=g_list_next(li))
@@ -2387,7 +2409,7 @@ get_pixmap(char *menudir, int main_menu)
 
 static Menu *
 create_panel_menu (char *menudir, int main_menu,
-		   PanelOrientType orient, MainMenuType main_menu_type)
+		   PanelOrientType orient, int main_menu_flags)
 {
 	Menu *menu;
 	
@@ -2397,7 +2419,7 @@ create_panel_menu (char *menudir, int main_menu,
 
 	pixmap_name = get_pixmap(menudir,main_menu);
 
-	menu->main_menu_type = main_menu_type;
+	menu->main_menu_flags = main_menu_flags;
 
 
 
@@ -2424,7 +2446,7 @@ create_panel_menu (char *menudir, int main_menu,
 
 static Menu *
 create_menu_applet(char *arguments, PanelOrientType orient,
-		   MainMenuType main_menu_type)
+		   int main_menu_flags)
 {
 	Menu *menu;
 	int main_menu;
@@ -2449,7 +2471,7 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 
 	main_menu = (!arguments || !*arguments || (strcmp (arguments, ".") == 0));
 
-	menu = create_panel_menu (this_menu, main_menu, orient,main_menu_type);
+	menu = create_panel_menu (this_menu, main_menu, orient,main_menu_flags);
 	menu->path=g_strdup((arguments && *arguments)?arguments:".");
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
@@ -2499,8 +2521,12 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
 	Menu *menu = data;
 	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget), "main_menu");
-	GtkWidget *menu_both = gtk_object_get_data(GTK_OBJECT(widget), "menu_both");
-	GtkWidget *menu_system = gtk_object_get_data(GTK_OBJECT(widget), "menu_system");
+	GtkWidget *system_off = gtk_object_get_data(GTK_OBJECT(widget), "system_off");
+	GtkWidget *system_sub = gtk_object_get_data(GTK_OBJECT(widget), "system_sub");
+	GtkWidget *user_off = gtk_object_get_data(GTK_OBJECT(widget), "user_off");
+	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
+	GtkWidget *redhat_off = gtk_object_get_data(GTK_OBJECT(widget), "redhat_off");
+	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
 	char *s;
 
@@ -2522,13 +2548,29 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		else
 			menu->path = g_strdup(s);
 	}
-	if(GTK_TOGGLE_BUTTON(menu_both)->active)
-		menu->main_menu_type = MAIN_MENU_BOTH;
-	else if(GTK_TOGGLE_BUTTON(menu_system)->active)
-		menu->main_menu_type = MAIN_MENU_SYSTEM;
-	else /*it's menu user then*/
-		menu->main_menu_type = MAIN_MENU_USER;
-	
+	if(GTK_TOGGLE_BUTTON(system_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB);
+	else if(GTK_TOGGLE_BUTTON(system_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB;
+	else {
+		menu->main_menu_flags |= MAIN_MENU_SYSTEM;
+		menu->main_menu_flags &=~ MAIN_MENU_SYSTEM_SUB;
+	}
+	if(GTK_TOGGLE_BUTTON(user_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_USER|MAIN_MENU_USER_SUB);
+	else if(GTK_TOGGLE_BUTTON(user_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_USER|MAIN_MENU_USER_SUB;
+	else {
+		menu->main_menu_flags |= MAIN_MENU_USER;
+		menu->main_menu_flags &=~ MAIN_MENU_USER_SUB;
+	}
+	if(GTK_TOGGLE_BUTTON(redhat_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB);
+	else if(GTK_TOGGLE_BUTTON(redhat_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+	else
+		g_assert_not_reached();
+
 	gtk_widget_unref(menu->menu);	
 	menu->menu = NULL;
 
@@ -2598,12 +2640,68 @@ toggle_normal_menu(GtkWidget *widget, void *data)
 		gnome_property_box_changed (box);
 	}
 }
+
+static void
+add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
+		      char *title,char *ident, int on, int sub)
+{
+	char *p;
+	GtkWidget *w;
+	GtkWidget *rb;
+	GtkWidget *off;
+
+	/*sanity checks*/
+	if(!on)
+		sub = FALSE;
+	else if(!sub && strcmp(ident,"redhat")==0)
+		sub = TRUE;
+	
+	w = gtk_label_new(title);
+	gtk_table_attach_defaults(table,w,0,1,row,row+1);
+	
+	rb = w = gtk_radio_button_new_with_label (NULL, _("Off"));
+	gtk_table_attach_defaults(table,w,3,4,row,row+1);
+	p = g_strconcat(ident,"_off",NULL);
+	gtk_object_set_data(dialog,p,w);
+	g_free(p);
+	if(!on)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
+	
+	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
+					     _("In a submenu"));
+	gtk_table_attach_defaults(table,w,2,3,row,row+1);
+	p = g_strconcat(ident,"_sub",NULL);
+	gtk_object_set_data(dialog,p,w);
+	g_free(p);
+	if(sub)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
+	
+	if(strcmp(ident,"redhat")!=0) {
+		w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
+						     _("On the main menu"));
+		gtk_table_attach_defaults(table,w,1,2,row,row+1);
+		if(on && !sub)
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+		gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+				    GTK_SIGNAL_FUNC (toggle_prop), 
+				    dialog);
+	}
+}
+	
+
 static GtkWidget *
 create_properties_dialog(Menu *menu)
 {
 	GtkWidget *dialog;
 	GtkWidget *vbox;
 	GtkWidget *box;
+	GtkWidget *table;
 	GtkWidget *w,*w2;
 	GtkWidget *f;
 	GtkWidget *t;
@@ -2649,40 +2747,22 @@ create_properties_dialog(Menu *menu)
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_frame",f);
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
-	box = gtk_vbox_new(FALSE,5);
-	gtk_container_set_border_width(GTK_CONTAINER(box),5);
-	gtk_container_add(GTK_CONTAINER(f),box);
+	table = gtk_table_new(3,4,FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER(table),5);
+	gtk_container_add(GTK_CONTAINER(f),table);
 
-	w = gtk_radio_button_new_with_label (NULL, _("Both System and User menus on the "
-						     "same menu"));
-	gtk_object_set_data(GTK_OBJECT(dialog),"menu_both",w);
-	if(menu->main_menu_type == MAIN_MENU_BOTH)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
-	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
-
-	w2 = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
-			  _("System on the main menu, User menu as a submenu"));
-	gtk_object_set_data(GTK_OBJECT(dialog),"menu_system",w2);
-	if(menu->main_menu_type == MAIN_MENU_SYSTEM)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
-	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
-	
-	w2 = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
-			  _("User on the main menu, System menu as a submenu"));
-	if(menu->main_menu_type == MAIN_MENU_USER)
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
-	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
-			    GTK_SIGNAL_FUNC (toggle_prop), 
-			    dialog);
-	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),0,
+			      _("System menu: "),"system",
+			      menu->main_menu_flags&MAIN_MENU_SYSTEM,
+			      menu->main_menu_flags&MAIN_MENU_SYSTEM_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),1,
+			      _("User menu: "),"user",
+			      menu->main_menu_flags&MAIN_MENU_USER,
+			      menu->main_menu_flags&MAIN_MENU_USER_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
+			      _("RedHat menu (if found): "),"redhat",
+			      menu->main_menu_flags&MAIN_MENU_REDHAT,
+			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
 	
 	f = gtk_frame_new(_("Normal menu"));
 	if(!menu->path || strcmp(menu->path,".")==0)
@@ -2742,12 +2822,12 @@ menu_properties(Menu *menu)
 }
 
 void
-load_menu_applet(char *params, int main_menu_type,
+load_menu_applet(char *params, int main_menu_flags,
 		 PanelWidget *panel, int pos)
 {
 	Menu *menu;
 
-	menu = create_menu_applet(params, ORIENT_UP,main_menu_type);
+	menu = create_menu_applet(params, ORIENT_UP,main_menu_flags);
 
 	if(menu) {
 		register_toy(menu->button,menu,

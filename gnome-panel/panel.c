@@ -909,10 +909,14 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		  else if(mimetype
 			  && !strcmp(mimetype, "application/x-gnome-app-info"))
 		    load_launcher_applet(ltmp->data, panel, pos);
-		  else if(S_ISDIR(s.st_mode))
-		    load_menu_applet(ltmp->data, MAIN_MENU_BOTH,
-				     panel, pos);
-		  else if(S_IEXEC & s.st_mode) /*executable?*/
+		  else if(S_ISDIR(s.st_mode)) {
+			  int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+			  /*guess redhat menus*/
+			  if(g_file_exists("/etc/X11/wmconfig"))
+				  flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		    load_menu_applet(ltmp->data, flags, panel, pos);
+		  } else if(S_IEXEC & s.st_mode) /*executable?*/
 		    ask_about_launcher(ltmp->data,panel,pos);
 		}
 		
@@ -935,7 +939,12 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 	}
 	case TARGET_DIRECTORY: {
 		int pos = panel_widget_get_cursorloc(panel);
-		load_menu_applet ((char *)selection_data->data, 0,
+		int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+		/*guess redhat menus*/
+		if(g_file_exists("/etc/X11/wmconfig"))
+			flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		load_menu_applet ((char *)selection_data->data,flags,
 				  panel, pos);
 		break;
 	}

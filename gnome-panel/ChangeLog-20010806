@@ -1,3 +1,13 @@
+Sun Dec 20 22:13:36 1998  George Lebl  <jirka@5z.com>
+
+	* extern.[ch],main.c: took out synchronious applet startup code as
+	  it didn't work anyhow and was taking up space
+
+	* menu.c,session.c,panel.c: changed menu properties to allow other
+	  menu types then user/system (such as now redhat) ... plus I enabled
+	  redhat menus as they seem stable and well behaved (dnd doesn't work
+	  from them though)
+
 Sun Dec 20 14:14:37 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: replace connect_iterp with connect_full

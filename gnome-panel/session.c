@@ -268,8 +268,8 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_set_string("id", MENU_ID);
 			gnome_config_set_string("parameters",
 						menu->path);
-			gnome_config_set_int("main_menu_type",
-					     menu->main_menu_type);
+			gnome_config_set_int("main_menu_flags",
+					     menu->main_menu_flags);
 			break;
 		}
 	case APPLET_LAUNCHER:
@@ -644,7 +644,12 @@ load_default_applets(void)
 		"apps/Applications/Netscape.desktop",
 		NULL };
 	int i;
-	load_menu_applet(NULL,0, panels->data, 0);
+	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+	/*guess redhat menus*/
+	if(g_file_exists("/etc/X11/wmconfig"))
+		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+	load_menu_applet(NULL,flags, panels->data, 0);
 
 	for(i=0;def_launchers[i]!=NULL;i++) {
 		char *p = gnome_datadir_file (def_launchers[i]);
@@ -734,9 +739,26 @@ init_user_applets(void)
 			g_free(params);
 		} else if(strcmp(applet_name,MENU_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
-			int main_menu_type =
-				gnome_config_get_int("main_menu_type=0");
-			load_menu_applet(params,main_menu_type,panel,pos);
+			int type =
+				gnome_config_get_int("main_menu_type=-1");
+			int flags =
+				gnome_config_get_int("main_menu_flags=5");
+			if(type>=0) {
+				flags = 0;
+				if(type == X_MAIN_MENU_BOTH) {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+				} else if(type == X_MAIN_MENU_SYSTEM) {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER|
+						MAIN_MENU_USER_SUB;
+				} else {
+					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_SYSTEM_SUB|
+						MAIN_MENU_USER;
+				}
+				/*guess redhat menus*/
+				if(g_file_exists("/etc/X11/wmconfig"))
+					flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+			}
+			load_menu_applet(params,flags,panel,pos);
 			g_free(params);
 		} else if(strcmp(applet_name,DRAWER_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");

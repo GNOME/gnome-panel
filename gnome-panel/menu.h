@@ -5,20 +5,33 @@
 
 BEGIN_GNOME_DECLS
 
+/*compatibility only*/
 typedef enum {
-	MAIN_MENU_BOTH,
-	MAIN_MENU_USER,
-	MAIN_MENU_SYSTEM
-} MainMenuType;
+	X_MAIN_MENU_BOTH,
+	X_MAIN_MENU_USER,
+	X_MAIN_MENU_SYSTEM
+} X_MainMenuType;
+
+enum {
+	MAIN_MENU_USER = 1<<0,
+	MAIN_MENU_USER_SUB = 1<<1,
+	MAIN_MENU_SYSTEM = 1<<2,
+	MAIN_MENU_SYSTEM_SUB = 1<<3,
+	MAIN_MENU_REDHAT = 1<<4,
+	MAIN_MENU_REDHAT_SUB = 1<<5, /*RH menus are always in submenu for now*/
+	/*MAIN_MENU_KDE = 1<<6,
+	MAIN_MENU_KDE_SUB = 1<<7, KDE menus not done yet*/
+};
+
 typedef struct _Menu Menu;
 struct _Menu {
 	GtkWidget *button;
 	GtkWidget *menu;
 	char *path;
-	MainMenuType main_menu_type;
+	int main_menu_flags;
 };
 
-void load_menu_applet(char *params, int main_menu_type,
+void load_menu_applet(char *params, int main_menu_flags,
 		      PanelWidget *panel, int pos);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
