@@ -34,8 +34,8 @@ impl_PanelAppletShell_saveYourself (PortableServer_Servant  servant,
 
 static void
 impl_PanelAppletShell_getExpandFlags (PortableServer_Servant  servant,
-				      const CORBA_boolean    *expand_major,
-				      const CORBA_boolean    *expand_minor,
+				      CORBA_boolean          *expand_major,
+				      CORBA_boolean          *expand_minor,
 				      CORBA_Environment      *ev)
 {
 	PanelAppletShell *shell;

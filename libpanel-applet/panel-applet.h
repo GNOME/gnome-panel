@@ -120,6 +120,9 @@ int main (int argc, char *argv [])						\
 					  version, callback, data);		\
 }
 
+#define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, descr, callback, data)		\
+		BONOBO_ACTIVATION_SHLIB_FACTORY(iid, descr, callback, data)
+
 
 G_END_DECLS
 
