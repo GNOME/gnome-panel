@@ -1,3 +1,13 @@
+2002-12-18  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement support for tiled background images. #100952.
+
+	* panel-background-monitor.c:
+	(panel_background_monitor_tile_background): impl.
+	(panel_background_monitor_setup_pixbuf): if the
+	background pixmap is smaller than the actual
+	root window size, then tile it onto our pixbuf.
+
 2002-12-17  Mark McLoughlin  <mark@skynet.ie>
 
 	Make PanelBackgroundMonitor multiscreen aware.

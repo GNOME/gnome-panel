@@ -30,6 +30,7 @@
 #include <X11/Xlib.h>
 
 #include "panel-background-monitor.h"
+#include "panel-gdk-pixbuf-extensions.h"
 
 enum {
 	CHANGED,
@@ -250,6 +251,33 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 	g_free (prop_data);
 }
 
+static GdkPixbuf *
+panel_background_monitor_tile_background (PanelBackgroundMonitor *monitor,
+					  int                     width,
+					  int                     height)
+{
+	GdkPixbuf *retval;
+	ArtIRect   rect;
+	int        tilewidth, tileheight;
+
+	retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, width, height);
+
+	tilewidth  = gdk_pixbuf_get_width (monitor->gdkpixbuf);
+	tileheight = gdk_pixbuf_get_height (monitor->gdkpixbuf);
+
+	rect.x0 = 0;
+	rect.y0 = 0;
+	rect.x1 = width;
+	rect.y1 = height;
+
+	panel_gdk_pixbuf_draw_to_pixbuf_tiled (
+		monitor->gdkpixbuf, retval,
+		rect, tilewidth, tileheight,
+		0, 0, 255, GDK_INTERP_NEAREST);
+
+	return retval;
+}
+
 static void 
 panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 {
@@ -279,6 +307,19 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 					NULL, monitor->gdkpixmap, colormap,
 					0, 0, 0, 0, 
 					monitor->width, monitor->height);
+
+	if (monitor->width < rwidth || monitor->height < rheight) {
+		GdkPixbuf *tiled;
+
+		tiled = panel_background_monitor_tile_background (
+						monitor, rwidth, rheight);
+
+		g_object_unref (monitor->gdkpixbuf);
+		monitor->gdkpixbuf = tiled;
+
+		monitor->width  = rwidth;
+		monitor->height = rheight;
+	}
 }
 
 GdkPixbuf *
