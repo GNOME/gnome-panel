@@ -17,12 +17,14 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include <gnome.h>
+#include <libgnome/libgnome.h>
+#include <libgnomeui/libgnomeui.h>
 #include <panel-applet.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include "popcheck.h"
 #include "remote-helper.h"
+#include "gconf-extensions.h"
 #include "mailcheck.h"
 
 GtkWidget *applet = NULL;
@@ -65,6 +67,7 @@ struct _MailCheck {
 	char *pre_check_cmd;
 	gboolean pre_check_enabled;	
 
+	PanelApplet *applet;
 	/* This is the event box for catching events */
 	GtkWidget *ebox;
 
@@ -144,6 +147,9 @@ struct _MailCheck {
 static int mail_check_timeout (gpointer data);
 static void after_mail_check (MailCheck *mc);
 
+static void applet_load_prefs(MailCheck *mc);
+static void applet_save_prefs(MailCheck *mc);
+
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
 static void close_callback (GtkWidget *widget, void *data);
@@ -171,7 +177,8 @@ mail_animation_filename (MailCheck *mc)
 }
 
 static int
-calc_dir_contents (char *dir) {
+calc_dir_contents (char *dir)
+{
        DIR *dr;
        struct dirent *de;
        int size=0;
@@ -531,14 +538,16 @@ icon_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 }
 
 static gint
-exec_clicked_cmd (GtkWidget *widget, GdkEvent *evt, gpointer data)
+exec_clicked_cmd (GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-         MailCheck *mc = data;
-	 if (mc->clicked_enabled && 
-	     mc->clicked_cmd && 
-	     (strlen(mc->clicked_cmd) > 0) )
-	        gnome_execute_shell(NULL, mc->clicked_cmd);
-	 return TRUE;
+	MailCheck *mc = data;
+	gboolean retval = FALSE;
+
+	if (event->button < 3 && mc->clicked_enabled && mc->clicked_cmd && (strlen(mc->clicked_cmd) > 0)) {
+		gnome_execute_shell(NULL, mc->clicked_cmd);
+		retval = TRUE;
+	}
+	return(retval);
 }
 
 static void
@@ -617,11 +626,7 @@ create_mail_widgets (MailCheck *mc)
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
 
 	/* The drawing area */
-	/*gtk_widget_push_visual (gdk_imlib_get_visual ());
-	gtk_widget_push_colormap (gdk_imlib_get_colormap ());*/
 	mc->da = gtk_drawing_area_new ();
-	/*gtk_widget_pop_colormap ();
-	gtk_widget_pop_visual ();*/
 	gtk_widget_ref (mc->da);
 	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),
 			       mc->size, mc->size);
@@ -912,6 +917,7 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 		helper_whack_handle (mc->remote_handle);
 		mc->remote_handle = NULL;
 	}
+	applet_save_prefs(mc);
 }
 
 static void
@@ -1309,51 +1315,59 @@ check_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 	mail_check_timeout(mc);
 }
 
-#ifdef FIXME
-static gint
-applet_save_session(GtkWidget *w,
-		    const char *privcfgpath,
-		    const char *globcfgpath,
-		    gpointer data)
+static void
+applet_load_prefs(MailCheck *mc)
 {
-	MailCheck *mc = data;
+	gchar *prefs_path;
+	gchar *query;
 
-	gnome_config_push_prefix(privcfgpath);
-	gnome_config_set_string("mail/animation_file",
-                          mc->animation_file?mc->animation_file:"");
-	gnome_config_set_int("mail/update_frequency", mc->update_freq);
-	gnome_config_set_string("mail/exec_command",
-				mc->pre_check_cmd?mc->pre_check_cmd:"");
-	gnome_config_set_bool("mail/exec_enabled",mc->pre_check_enabled);
-	gnome_config_set_string("mail/newmail_command",
-				mc->newmail_cmd?mc->newmail_cmd:"");
-	gnome_config_set_bool("mail/newmail_enabled",mc->newmail_enabled);
-	gnome_config_set_string("mail/clicked_command",
-				mc->clicked_cmd?mc->clicked_cmd:"");
-	gnome_config_set_bool("mail/clicked_enabled",mc->clicked_enabled);
-	gnome_config_set_string("mail/mail_file",
-				mc->mail_file?mc->mail_file:"");
-        gnome_config_private_set_string("mail/remote_server", 
-				mc->remote_server?mc->remote_server:"");
-        gnome_config_private_set_string("mail/remote_username", 
-				mc->remote_username?mc->remote_username:"");
-        gnome_config_private_set_string("mail/remote_password", 
-				mc->remote_password?mc->remote_password:"");
-        gnome_config_set_string("mail/remote_folder",
-                                mc->remote_folder?mc->remote_folder:"");
-        gnome_config_private_set_string("mail/pre_remote_command", 
-				mc->pre_remote_command ? mc->pre_remote_command : "");
-        gnome_config_set_int("mail/mailbox_type", (int) mc->mailbox_type);
-	gnome_config_set_bool("mail/play_sound", mc->play_sound);
+	prefs_path = panel_applet_get_preferences_key(mc->applet);
 
-	gnome_config_pop_prefix();
-
-	gnome_config_sync();
-	gnome_config_drop_all();
-
-	return FALSE;
+	query = gnome_unconditional_pixmap_file("mailcheck/email.png");
+	mc->animation_file = gconf_extensions_get_string(prefs_path, "animation-file", query);
+	g_free(query);
+	mc->update_freq = gconf_extensions_get_integer(prefs_path, "update-frequency", 120000);
+	mc->pre_check_cmd = gconf_extensions_get_string(prefs_path, "exec-command", NULL);
+	mc->pre_check_enabled = gconf_extensions_get_boolean(prefs_path, "exec-enabled", FALSE);
+	mc->newmail_cmd = gconf_extensions_get_string(prefs_path, "newmail-command", NULL);
+	mc->newmail_enabled = gconf_extensions_get_boolean(prefs_path, "newmail-enabled", FALSE);
+	mc->clicked_cmd = gconf_extensions_get_string(prefs_path, "clicked-command", NULL);
+	mc->clicked_enabled = gconf_extensions_get_boolean(prefs_path, "clicked-enabled", FALSE);
+	mc->remote_server = gconf_extensions_get_string(prefs_path, "remote-server", "mail");
+	mc->pre_remote_command = gconf_extensions_get_string(prefs_path, "pre-remote-command", NULL);
+	mc->remote_username = gconf_extensions_get_string(prefs_path, "remote-username", (gchar *)g_getenv("USER"));
+	mc->remote_password = gconf_extensions_get_string(prefs_path, "remote-password", NULL);
+	mc->remote_folder = gconf_extensions_get_string(prefs_path, "remote-folder", NULL);
+	mc->mailbox_type = gconf_extensions_get_integer(prefs_path, "mailbox-type", 0);
+	mc->play_sound = gconf_extensions_get_boolean(prefs_path, "play-sound", FALSE);
+	g_free(prefs_path);
 }
-#endif
+
+static void
+applet_save_prefs(MailCheck *mc)
+{
+	gchar *prefs_path;
+
+	prefs_path = panel_applet_get_preferences_key(mc->applet);
+
+	gconf_extensions_set_string(prefs_path, "animation-file", mc->animation_file);
+	gconf_extensions_set_integer(prefs_path, "update-frequency", mc->update_freq);
+	gconf_extensions_set_string(prefs_path, "exec-command", mc->pre_check_cmd);
+	gconf_extensions_set_boolean(prefs_path, "exec-enabled", mc->pre_check_enabled);
+	gconf_extensions_set_string(prefs_path, "newmail-command", mc->newmail_cmd);
+	gconf_extensions_set_boolean(prefs_path, "newmail-enabled", mc->newmail_enabled);
+	gconf_extensions_set_string(prefs_path, "clicked-command", mc->clicked_cmd);
+	gconf_extensions_set_boolean(prefs_path, "clicked-enabled", mc->clicked_enabled);
+	gconf_extensions_set_string(prefs_path, "mail-file", mc->mail_file);
+	gconf_extensions_set_string(prefs_path, "remote-server", mc->remote_server);
+	gconf_extensions_set_string(prefs_path, "remote-username", mc->remote_username);
+	gconf_extensions_set_string(prefs_path, "remote-password", mc->remote_password);
+	gconf_extensions_set_string(prefs_path, "remote-folder", mc->remote_folder);
+	gconf_extensions_set_string(prefs_path, "pre-remote-command", mc->pre_remote_command);
+	gconf_extensions_set_integer(prefs_path, "mailbox-type", (int)mc->mailbox_type);
+	gconf_extensions_set_boolean(prefs_path, "play-sound", mc->play_sound);
+	gconf_extensions_suggest_sync();
+}
 
 static void
 mailcheck_about(BonoboUIComponent *uic, gpointer data, const gchar *verbname)
@@ -1407,7 +1421,7 @@ applet_change_pixel_size(PanelApplet * w, gint size, gpointer data)
 	fname = mail_animation_filename (mc);
 
 	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
-	gtk_widget_set_usize (GTK_WIDGET(mc->da), size, size);
+	gtk_widget_set_size_request (GTK_WIDGET(mc->da), size, size);
 	
 	if (!fname)
 		return;
@@ -1449,10 +1463,9 @@ fill_mailcheck_applet(PanelApplet *applet)
 {
 	GtkWidget *mailcheck;
 	MailCheck *mc;
-	char *emailfile;
-	char *query;
-	
+
 	mc = g_new0(MailCheck, 1);
+	mc ->applet = applet;
 	mc->animation_file = NULL;
 	mc->property_window = NULL;
 	mc->anim_changed = FALSE;
@@ -1462,10 +1475,6 @@ fill_mailcheck_applet(PanelApplet *applet)
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
-	
-	/* FIXME - move to gconf
-	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
-	*/
 	
 	mc->mail_file = NULL;
 
@@ -1482,56 +1491,23 @@ fill_mailcheck_applet(PanelApplet *applet)
 			mc->mail_file = g_strdup (mail_file);
 	}
 	
+	applet_load_prefs(mc);
 
-	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.png");
-	query = g_strconcat("mail/animation_file=",emailfile,NULL);
-	g_free(emailfile);
-	mc->animation_file = gnome_config_get_string(query);
-	g_free(query);
-
-	mc->update_freq = gnome_config_get_int("mail/update_frequency=120000");
-		
-	mc->pre_check_cmd = gnome_config_get_string("mail/exec_command");
-	mc->pre_check_enabled = gnome_config_get_bool("mail/exec_enabled=0");
-
-	mc->newmail_cmd = gnome_config_get_string("mail/newmail_command");
-	mc->newmail_enabled = gnome_config_get_bool("mail/newmail_enabled=0");
-
-        mc->clicked_cmd = gnome_config_get_string("mail/clicked_command");
-	mc->clicked_enabled = gnome_config_get_bool("mail/clicked_enabled=0");
-
-	mc->remote_server = gnome_config_private_get_string("mail/remote_server=mail");
-	mc->pre_remote_command = gnome_config_private_get_string("mail/pre_remote_command=");
-	
-	query = g_strconcat("mail/remote_username=", g_getenv("USER"), NULL);
-	mc->remote_username = gnome_config_private_get_string(query);
-	g_free(query);
-
-	mc->remote_password = gnome_config_private_get_string("mail/remote_password");
-        mc->remote_folder = gnome_config_get_string("mail/remote_folder");
-	mc->mailbox_type = gnome_config_get_int("mail/mailbox_type=0");
-
-	mc->play_sound = gnome_config_get_bool("mail/play_sound=false");
-	
-	/*
-	gnome_config_pop_prefix();
-	*/
-	
 	mc->mailcheck_text_only = _("Text only");
-	
+
 	mc->size = GNOME_Vertigo_PANEL_MEDIUM;
 
 	g_signal_connect(G_OBJECT(applet), "change_size",
-			   G_CALLBACK(applet_change_pixel_size),
-			   mc);
+			 G_CALLBACK(applet_change_pixel_size),
+			 mc);
 
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);
-	
+
 	gtk_container_add (GTK_CONTAINER (applet), mailcheck);
 
-        g_signal_connect(G_OBJECT(mc->ebox), "button_press_event",
-                           G_CALLBACK(exec_clicked_cmd), mc);
+	g_signal_connect(G_OBJECT(mc->ebox), "button_press_event",
+			 G_CALLBACK(exec_clicked_cmd), mc);
 
 
 	panel_applet_setup_menu (applet, mailcheck_menu_xml, 
@@ -1545,7 +1521,5 @@ fill_mailcheck_applet(PanelApplet *applet)
 	 */
 	mail_check_timeout (mc);
 
-	return TRUE;
+	return(TRUE);
 }
-
-

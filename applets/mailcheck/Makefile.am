@@ -1,35 +1,34 @@
 #SUBDIRS = help
 
-INCLUDES = -I. -I$(srcdir) 				\
-	-I$(srcdir)/../../libpanel-applet		\
-	-I$(top_builddir)/libpanel-applet		\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	$(GNOME_INCLUDEDIR)				\
-	$(WARN_CFLAGS)					\
-	$(WNCKLET_CFLAGS)
-
+INCLUDES = -I. -I$(srcdir) \
+-I$(srcdir)/../../libpanel-applet \
+-I$(top_builddir)/libpanel-applet \
+-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
+-I$(includedir) \
+$(GNOME_INCLUDEDIR) \
+$(WARN_CFLAGS) \
+$(WNCKLET_CFLAGS)
 
 libgen_util_applet_2_la_SOURCES = \
-	main.c		\
-	clock.c		\
-	clock.h		\
-	pager.c		\
-	pager.h		\
-	tasklist.c	\
-	tasklist.h	\
-	mailcheck.c	\
-	mailcheck.h	\
-	popcheck.c	\
-	popcheck.h	\
-	remote-helper.c	\
-	remote-helper.h 
-#	printer.c	\
-#	printer.h	\
+main.c \
+clock.c \
+clock.h	\
+pager.c	\
+pager.h	\
+tasklist.c \
+tasklist.h \
+mailcheck.c \
+mailcheck.h \
+popcheck.c \
+popcheck.h \
+remote-helper.c \
+remote-helper.h \
+gconf-extensions.c \
+gconf-extensions.h
 
-
-libgen_util_applet_2_la_LIBADD =			\
-	../../libpanel-applet/libpanel-applet-2.la	\
-	$(WNCKLET_LIBS)
+libgen_util_applet_2_la_LIBADD = \
+../../libpanel-applet/libpanel-applet-2.la	\
+$(WNCKLET_LIBS)
 
 appletdir = $(libdir)
 applet_LTLIBRARIES = libgen_util_applet-2.la
