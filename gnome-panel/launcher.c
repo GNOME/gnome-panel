@@ -65,12 +65,12 @@ launch (Launcher *launcher, int argc, char *argv[])
 		return;
 	}
 	
-	if(item->type && strcmp(item->type,"URL")==0) {
+	if (item->type && strcmp (item->type, "URL") == 0) {
 		char *s;
-		s = g_strjoinv(" ",item->exec);
-		gnome_url_show(s);
-		g_free(s);
-	} else if(item->type && strcmp(item->type,"PanelApplet")==0) {
+		s = g_strjoinv (" ",item->exec);
+		gnome_url_show (s);
+		g_free (s);
+	} else if (item->type && strcmp (item->type, "PanelApplet") == 0) {
 		char *goad_id;
 
 		goad_id = get_applet_goad_id_from_dentry (item);
@@ -83,9 +83,10 @@ launch (Launcher *launcher, int argc, char *argv[])
 			g_warning (_("Can't get goad_id from desktop entry!"));
 		}
 
-		g_free(goad_id);
-	} else
+		g_free (goad_id);
+	} else {
 		gnome_desktop_entry_launch_with_args (item,argc,argv);
+	}
 	
 	if(global_config.drawer_auto_close) {
 		GtkWidget *parent =

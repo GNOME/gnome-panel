@@ -573,6 +573,25 @@ panel_move_timeout(gpointer data)
 }
 
 static void
+clean_kill_applets (PanelWidget *panel)
+{
+	GList *li;
+	for(li = panel->applet_list; li != NULL; li = li->next) {
+		AppletData *ad = li->data;
+		AppletInfo *info =
+			gtk_object_get_data (GTK_OBJECT (ad->applet),
+					     "applet_info");
+		if (info->type == APPLET_EXTERN) {
+			Extern *ext = info->data;
+			ext->clean_remove = TRUE;
+		} else if (info->type == APPLET_SWALLOW) {
+			Swallow *swallow = info->data;
+			swallow->clean_remove = TRUE;
+		}
+	}
+}
+
+static void
 panel_destroy (GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
@@ -582,6 +601,8 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
 	else if (IS_FOOBAR_WIDGET (widget))
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+
+	clean_kill_applets (panel);
 		
 	kill_config_dialog(widget);
 
@@ -877,9 +898,9 @@ extract_filename (const gchar* uri)
 static void
 drop_url(PanelWidget *panel, int pos, char *url)
 {
-	char *p = g_strdup_printf(_("Open URL: %s"),url);
-	load_launcher_applet_from_info_url(url, p, url, "netscape.png",
-					   panel, pos, TRUE);
+	char *p = g_strdup_printf (_("Open URL: %s"), url);
+	load_launcher_applet_from_info_url (url, p, url, "gnome-globe.png",
+					    panel, pos, TRUE);
 	g_free(p);
 }
 
@@ -908,14 +929,20 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	files = gnome_uri_list_extract_uris(urilist);
 
 	for(li = files; li; li = li->next) {
+		char *uri;
 		const char *mimetype;
 		char *filename;
 
-		if(strncmp(li->data, "http:", strlen("http:")) == 0 ||
-		   strncmp(li->data, "https:", strlen("https:")) == 0 ||
-		   strncmp(li->data, "ftp:", strlen("ftp:")) == 0 ||
-		   strncmp(li->data, "gopher:", strlen("gopher:")) == 0) {
-			drop_url(panel,pos,li->data);
+		uri = li->data;
+
+		if (strncmp (uri, "http:", strlen ("http:")) == 0 ||
+		    strncmp (uri, "https:", strlen ("https:")) == 0 ||
+		    strncmp (uri, "ftp:", strlen ("ftp:")) == 0 ||
+		    strncmp (uri, "gopher:", strlen ("gopher:")) == 0 ||
+		    strncmp (uri, "ghelp:", strlen ("ghelp:")) == 0 ||
+		    strncmp (uri, "man:", strlen ("man:")) == 0 ||
+		    strncmp (uri, "info:", strlen ("info:")) == 0) {
+			drop_url (panel, pos, uri);
 			continue;
 		}
 

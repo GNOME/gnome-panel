@@ -1,3 +1,12 @@
+Sat Dec 02 23:16:29 2000  George Lebl <jirka@5z.com>
+
+	* launcher.c, panel.c: a bit of cleanup. use gnome-globe.png for
+	  links and not netscape.png, accept info:, man: and ghelp: as
+	  url's as well.
+
+	* panel.c: when a panel is removed the applets are removed cleanly,
+	  so that we don't get the "reload this applet" dialog in that case.
+
 Sat Dec 02 21:49:34 2000  George Lebl <jirka@5z.com>
 
 	* session.c:  apparently reading /proc/apm can crash on some
