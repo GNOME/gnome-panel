@@ -658,14 +658,15 @@ handle_task_completed_toggled (ClockData             *cd,
                                const char            *path_str,
                                GtkCellRendererToggle *cell)
 {
-        GtkTreePath *path;
+        GtkTreePath *child_path, *path;
         GtkTreeIter  iter;
         char        *uid;
         gboolean     task_completed;
         guint        percent_complete;
         
-        path = gtk_tree_path_new_from_string (path_str);
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, path);
+        path       = gtk_tree_path_new_from_string (path_str);
+        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
+        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
         gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
                             TASK_COLUMN_UID,                  &uid,
                             TASK_COLUMN_COMPLETED,            &task_completed,
@@ -682,6 +683,7 @@ handle_task_completed_toggled (ClockData             *cd,
 
         g_free (uid);
         gtk_tree_path_free (path);
+        gtk_tree_path_free (child_path);
 }
 
 static void
@@ -690,14 +692,15 @@ handle_task_percent_complete_edited (ClockData           *cd,
                                      const char          *text,
                                      GtkCellRendererText *cell)
 {
-        GtkTreePath *path;
+        GtkTreePath *child_path, *path;
         GtkTreeIter  iter;
         char        *uid;
-        int        percent_complete;
+        int          percent_complete;
         char        *error = NULL;
 
-        path = gtk_tree_path_new_from_string (path_str);
-        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, path);
+        path       = gtk_tree_path_new_from_string (path_str);
+        child_path = gtk_tree_model_filter_convert_path_to_child_path (cd->tasks_filter, path);
+        gtk_tree_model_get_iter (GTK_TREE_MODEL (cd->tasks_model), &iter, child_path);
         gtk_tree_model_get (GTK_TREE_MODEL (cd->tasks_model), &iter,
                             TASK_COLUMN_UID, &uid,
                             -1);
@@ -717,6 +720,7 @@ handle_task_percent_complete_edited (ClockData           *cd,
 
         g_free (uid);
         gtk_tree_path_free (path);
+        gtk_tree_path_free (child_path);
 }
 
 static gboolean
