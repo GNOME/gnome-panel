@@ -146,22 +146,11 @@ panel_temp_LDADD=\
 
 panel_SOURCES=\
 	$(GWMH_SRCLIST)		\
-	panel-include.h		\
-	panel-types.h		\
-	panel-marshal-main.c	\
-	main.c			\
-	main.h			\
-	panel-widget.c  	\
-	panel-widget.h		\
-	basep-widget.c  	\
-	basep-widget.h		\
 	things-will-not-compile-below-this-line		\
 	applet.c		\
 	applet.h         	\
 	panel.c			\
 	panel.h         	\
-	session.c		\
-	session.h		\
 	panel_config.c  	\
 	panel_config.h		\
 	panel_config_global.h  	\
@@ -201,8 +190,6 @@ panel_SOURCES=\
 	floating-widget.h	\
 	drawer-widget.c		\
 	drawer-widget.h		\
-	button-widget.c  	\
-	button-widget.h		\
 	panel-util.c		\
 	panel-util.h		\
 	tearoffitem.c		\
@@ -213,21 +200,13 @@ panel_SOURCES=\
 	global-keys.h		\
 	gnome-run.c		\
 	gnome-run.h		\
-	xstuff.c		\
-	xstuff.h		\
-	foobar-widget.h		\
-	foobar-widget.c		\
-	tasklist_icon.c		\
-	tasklist_icon.h		\
 	title-item.h		\
 	title-item.c		\
 	title-item-private.h	\
 	scroll-menu.h		\
 	scroll-menu.c		\
 	icon-entry-hack.c	\
-	icon-entry-hack.h	\
-	conditional.c		\
-	conditional.h
+	icon-entry-hack.h
 
 panel_LDADD = \
 	libpanel_applet.la	\
