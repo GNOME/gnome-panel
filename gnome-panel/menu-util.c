@@ -28,7 +28,7 @@ add_menu_separator (GtkWidget *menu)
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_set_sensitive (menuitem, FALSE);
 	gtk_widget_show (menuitem);
-	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	return menuitem;
 }
