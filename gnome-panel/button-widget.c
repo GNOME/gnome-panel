@@ -291,9 +291,8 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 {
 	GtkWidget *widget = GTK_WIDGET(button);
 	GtkWidget *pwidget;
-	GdkPixmap *tile;
-	GdkBitmap *tile_mask;
-	GdkPoint points[3];
+	GdkPixmap *tile = NULL;
+	GdkBitmap *tile_mask = NULL;
 	GdkGC *gc;
 	/*offset for pressed buttons*/
 	int off = button->in_button&&button->pressed?tile_depth[button->tile]:0;
@@ -308,15 +307,6 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	
 	gc = gdk_gc_new(pixmap);
 
-	if(button->arrow) {
-		int i;
-		draw_arrow(points,button->orient);
-		for(i=0;i<3;i++) {
-			points[i].x+=widget->allocation.x+off;
-			points[i].y+=widget->allocation.y+off;
-		}
-	}
-	
 	if(tiles_enabled[button->tile]) {
 		if(button->pressed && button->in_button) {
 			tile = tiles_down[button->tile];
@@ -364,6 +354,13 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	}
 	
 	if(button->arrow) {
+		int i;
+		GdkPoint points[3];
+		draw_arrow(points,button->orient);
+		for(i=0;i<3;i++) {
+			points[i].x+=widget->allocation.x+off;
+			points[i].y+=widget->allocation.y+off;
+		}
 		gdk_gc_set_foreground(gc,&pwidget->style->white);
 		gdk_draw_polygon(pixmap,gc,TRUE,points,3);
 		gdk_gc_set_foreground(gc,&pwidget->style->black);

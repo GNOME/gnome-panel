@@ -1061,8 +1061,7 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 		if(!was_visible) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
 						   menuw);
-		/*now is when the fun begins, we kill the menu and do select
-		  again ... nowdays, we'll be ok though*/
+		/*now we have to select again as this is already messed up*/
 		} else {
 			gtk_signal_emit_stop_by_name(GTK_OBJECT(menuitem),
 						     "select");
@@ -1119,6 +1118,127 @@ create_fake_menu_at (char *menudir,
 	return menu;
 }
 
+static GSList *
+create_menuitem(GtkWidget *menu,
+		char *menudir,
+		char *thisfile,
+		int applets,
+		int fake_submenus,
+		int *items,
+		int *add_separator,
+		int *first_item,
+		GSList *finfo)
+{
+	GnomeDesktopEntry *item_info=NULL;
+	FileInfo *fi;
+	GtkWidget *menuitem, *sub, *pixmap;
+	char *pix_name;
+	char *menuitem_name;
+	char *filename;
+	struct stat s;
+
+	g_strconcat3_a(filename,menudir,"/",thisfile);
+
+	if (stat (filename, &s) == -1) {
+		g_warning("Something is wrong, "
+			  "file %s can't be stated",
+			  filename);
+		return finfo;
+	}
+
+	sub = NULL;
+	item_info = NULL;
+	if (S_ISDIR (s.st_mode)) {
+		char *p;
+		g_strconcat3_a(p,filename,"/.directory",NULL);
+		item_info = gnome_desktop_entry_load (p);
+
+		/*add the .directory file to the checked files list*/
+		fi = make_finfo(p,TRUE);
+		finfo = g_slist_prepend(finfo,fi);
+
+		menuitem_name = item_info?item_info->name:thisfile;
+		pix_name = item_info?item_info->icon:NULL;
+
+		if(fake_submenus)
+			sub = create_fake_menu_at (filename,
+						   applets,
+						   menuitem_name,
+						   pix_name);
+		else
+			sub = create_menu_at (NULL, filename, 
+					      applets,
+					      menuitem_name,
+					      pix_name,
+					      fake_submenus,
+					      FALSE);
+
+		if (!sub) {
+			if(item_info)
+				gnome_desktop_entry_free(item_info);
+			return finfo;
+		}
+	} else {
+		char *p = strrchr(filename,'.');
+		if (!p || strcmp(p, ".desktop") != 0)
+			return finfo;
+		item_info = gnome_desktop_entry_load (filename);
+		if (!item_info)
+			return finfo;
+		menuitem_name = item_info->name;
+		pix_name = item_info->icon;
+
+		/*add file to the checked files list*/
+		fi = make_finfo_s(filename,&s);
+		finfo = g_slist_prepend(finfo,fi);
+	}
+
+	(*items)++;
+
+	menuitem = gtk_menu_item_new ();
+	if (sub) {
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   NULL);
+	}
+
+	pixmap = NULL;
+	if (pix_name && g_file_exists (pix_name)) {
+		pixmap = gnome_stock_pixmap_widget_at_size (NULL, pix_name,
+							    SMALL_ICON_SIZE,
+							    SMALL_ICON_SIZE);
+		if (pixmap)
+			gtk_widget_show (pixmap);
+	}
+
+	if(!sub && applets)
+		setup_applet_drag (menuitem, item_info);
+	/*setup the menuitem, pass item_loc if this is not
+	  a submenu or an applet, so that the item can be added,
+	  we can be sure that the finfo will live that long*/
+	setup_full_menuitem (menuitem, pixmap, menuitem_name,
+			     (applets||sub)?NULL:fi->name);
+
+	if(*add_separator) {
+		add_menu_separator(menu);
+		(*first_item)++;
+		*add_separator = FALSE;
+	}
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+
+	if(item_info && item_info->exec) {
+		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+				    applets?
+				    GTK_SIGNAL_FUNC(add_applet):
+				    GTK_SIGNAL_FUNC(activate_app_def),
+				    fi->name);
+	}
+	if(item_info)
+		gnome_desktop_entry_free(item_info);
+	return finfo;
+}
+
 static GtkWidget *
 create_menu_at (GtkWidget *menu,
 		char *menudir,
@@ -1128,9 +1248,7 @@ create_menu_at (GtkWidget *menu,
 		int fake_submenus,
 		int force)
 {	
-	GnomeDesktopEntry *item_info=NULL;
 	GnomeDesktopEntry *dir_info=NULL;
-	struct stat s;
 	char *filename;
 	int items = 0;
 	FileInfo *fi;
@@ -1140,24 +1258,21 @@ create_menu_at (GtkWidget *menu,
 	int add_separator = FALSE;
 	int first_item = 0;
 	GtkWidget *menuitem;
-	char *dentry_name;
 	
 	MenuFinfo *mf = NULL;
 	
 	if(!force && !g_file_exists(menudir))
 		return menu;
 	
-	dentry_name = g_concat_dir_and_file (menudir,
-					     ".directory");
-	dir_info = gnome_desktop_entry_load (dentry_name);
+	g_strconcat3_a(filename,menudir,"/.directory",NULL);
+	dir_info = gnome_desktop_entry_load (filename);
 
 	/*add the .directory file to the checked files list,
 	  but only if we can stat it (if we can't it probably
 	  doesn't exist)*/
-	fi = make_finfo(dentry_name,FALSE);
+	fi = make_finfo(filename,FALSE);
 	if(fi)
 		finfo = g_slist_prepend(finfo,fi);
-	g_free (dentry_name);
 
 	/*get this info ONLY if we haven't gotten it already*/
 	if(!dir_name)
@@ -1176,11 +1291,10 @@ create_menu_at (GtkWidget *menu,
 	/*add the order file to the checked files list,
 	  but only if we can stat it (if we can't it probably doesn't
 	  exist)*/
-	filename = g_concat_dir_and_file(menudir,".order");
+	g_strconcat3_a(filename,menudir,"/.order",NULL);
 	fi = make_finfo(filename,FALSE);
 	if(fi)
 		finfo = g_slist_prepend(finfo,fi);
-	g_free(filename);
 
 	if(!menu) {
 		menu = gtk_menu_new ();
@@ -1197,128 +1311,16 @@ create_menu_at (GtkWidget *menu,
 	
 	while(flist) {
 		char *thisfile = flist->data;
-		GtkWidget *sub, *pixmap;
-		char *pix_name;
-		char *menuitem_name;
 		GSList *tmp = flist;
 		flist = g_slist_next(flist);
 		g_slist_free_1(tmp);
-		
-		filename = g_concat_dir_and_file(menudir,thisfile);
-		
-		if (stat (filename, &s) == -1) {
-			g_warning("Something is wrong, "
-				  "file %s can't be stated",
-				  filename);
-			g_free (filename);
-			g_free(thisfile);
-			continue;
-		}
 
-		sub = NULL;
-		item_info = NULL;
-		if (S_ISDIR (s.st_mode)) {
-			dentry_name = g_concat_dir_and_file (filename,
-							     ".directory");
-			item_info = gnome_desktop_entry_load (dentry_name);
-
-			/*add the .directory file to the checked files list*/
-			fi = make_finfo(dentry_name,TRUE);
-			finfo = g_slist_prepend(finfo,fi);
-			g_free (dentry_name);
-
-			menuitem_name = item_info?item_info->name:thisfile;
-			pix_name = item_info?item_info->icon:NULL;
-
-			if(fake_submenus)
-				sub = create_fake_menu_at (filename,
-							   applets,
-							   menuitem_name,
-							   pix_name);
-			else
-				sub = create_menu_at (NULL, filename, 
-						      applets,
-						      menuitem_name,
-						      pix_name,
-						      fake_submenus,
-						      FALSE);
-
-			if (!sub) {
-				g_free(filename);
-				g_free(thisfile);
-				if(item_info)
-					gnome_desktop_entry_free(item_info);
-				continue;
-			}
-		} else {
-			char *p = strrchr(filename,'.');
-			if (!p || strcmp(p, ".desktop") != 0) {
-				g_free (filename);
-				g_free(thisfile);
-				continue;
-			}
-			item_info = gnome_desktop_entry_load (filename);
-			if (!item_info) {
-				g_free (filename);
-				g_free(thisfile);
-				continue;
-			}
-			menuitem_name = item_info->name;
-			pix_name = item_info->icon;
-			
-			/*add file to the checked files list*/
-			fi = make_finfo_s(filename,&s);
-			finfo = g_slist_prepend(finfo,fi);
-		}
-		
-		items++;
-		
-		menuitem = gtk_menu_item_new ();
-		if (sub) {
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), sub);
-			gtk_signal_connect(GTK_OBJECT(menuitem),"select",
-					   GTK_SIGNAL_FUNC(submenu_to_display),
-					   NULL);
-		}
-
-		pixmap = NULL;
-		if (pix_name && g_file_exists (pix_name)) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pix_name,
-								    SMALL_ICON_SIZE,
-								    SMALL_ICON_SIZE);
-			if (pixmap)
-				gtk_widget_show (pixmap);
-		}
-		
-		if(!sub && applets)
-			setup_applet_drag (menuitem, item_info);
-		/*setup the menuitem, pass item_loc if this is not
-		  a submenu or an applet, so that the item can be added,
-		  we can be sure that the finfo will live that long*/
- 		setup_full_menuitem (menuitem, pixmap, menuitem_name,
-				     (applets||sub)?NULL:fi->name);
-
-		if(add_separator) {
-			add_menu_separator(menu);
-			first_item++;
-			add_separator = FALSE;
-		}
-		gtk_menu_append (GTK_MENU (menu), menuitem);
-
-		if(item_info && item_info->exec) {
-			gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-					    applets?
-					     GTK_SIGNAL_FUNC(add_applet):
-					     GTK_SIGNAL_FUNC(activate_app_def),
-					    fi->name);
-		}
-		if(item_info)
-			gnome_desktop_entry_free(item_info);
-
-		g_free(filename);
+		finfo = create_menuitem(menu,menudir,thisfile,
+					applets,fake_submenus,&items,
+					&add_separator,&first_item,
+					finfo);
 		g_free(thisfile);
 	}
-	g_slist_free(flist);
 	
 	mf = g_new(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
@@ -2188,49 +2190,47 @@ make_rh_submenu(char *dir, GSList *rhlist)
 {
 	GSList *li;
 	FILE *fp;
-	char *order_file = g_concat_dir_and_file(dir,".order");
+	char *order_file;
+	g_strconcat3_a(order_file,dir,"/",".order");
 	fp = fopen(order_file,"w");
 	for(li = rhlist;li!=NULL;li = g_slist_next(li)) {
 		RHMenuItem *ri = li->data;
-		GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
-
-		dentry->name = g_strdup(ri->name);
+		GnomeDesktopEntry *dentry = g_new0_a(GnomeDesktopEntry,1);
+		dentry->name = ri->name;
 		if(ri->type == RH_MENU_GROUP) {
-			char *s = g_strdup(ri->name);
 			char *p;
-			dentry->type = g_strdup("Directory");
+			char *s;
+			g_strdup_a(s,ri->name);
+			dentry->type = "Directory";
 			while((p=strchr(s,' '))) *p='_';
-			p = g_concat_dir_and_file(dir,s);
+
+			g_strconcat3_a(p,dir,"/",s);
 			if(fp) fprintf(fp,"%s\n",g_basename(p));
 			mkdir(p,0755);
-			dentry->location = g_concat_dir_and_file(p,".directory");
-			g_free(s);
+			g_strconcat3_a(dentry->location,p,"/",".directory");
 			
 			make_rh_submenu(p,ri->u.items);
-
-			g_free(p);
 		} else {
-			char *s = g_strconcat(ri->name,".desktop",NULL);
 			char *p;
+			char *s;
+			g_strconcat3_a(s,ri->name,".desktop",NULL);
 			while((p=strchr(s,' '))) *p='_';
 
-			dentry->type = g_strdup("Application");
-			dentry->comment = g_strdup(ri->u.item.description);
-			dentry->icon = g_strdup(ri->u.item.icon?
-						ri->u.item.icon:
-						ri->u.item.mini_icon);
+			dentry->type = "Application";
+			dentry->comment = ri->u.item.description;
+			dentry->icon = ri->u.item.icon?
+				ri->u.item.icon:
+				ri->u.item.mini_icon;
 			gnome_config_make_vector(ri->u.item.exec,
 						 &dentry->exec_length,
 						 &dentry->exec);
-			dentry->location = g_concat_dir_and_file(dir,s);
+			g_strconcat3_a(dentry->location,dir,"/",s);
 			if(fp) fprintf(fp,"%s\n",s);
-			g_free(s);
 		}
 		gnome_desktop_entry_save(dentry);
-		gnome_desktop_entry_free(dentry);
+		if(dentry->exec) g_strfreev(dentry->exec);
 	}
 	if(fp) fclose(fp);
-	g_free(order_file);
 }
 
 
@@ -2272,9 +2272,8 @@ create_rh_menu(void)
 			if(strcmp(dent->d_name,".")==0 ||
 			   strcmp(dent->d_name,"..")==0)
 				continue;
-			p = g_concat_dir_and_file(dirs[i],dent->d_name);
+			g_strconcat3_a(p,dirs[i],dent->d_name,NULL);
 			rhlist = add_redhat_entry(rhlist,p);
-			g_free(p);
 		}
 		closedir(dir);
 	}
@@ -2282,13 +2281,13 @@ create_rh_menu(void)
 	mkdir(rhdir,0755);
 	if(rhlist) {
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
-			GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
-			dentry->name = g_strdup(_("Red Hat menus"));
-			dentry->type = g_strdup("Directory");
-			dentry->icon = g_strdup("/usr/share/icons/mini/mini-redhat.xpm");
-			dentry->location = g_concat_dir_and_file(rhdir,".directory");
+			GnomeDesktopEntry *dentry = g_new0_a(GnomeDesktopEntry,1);
+			dentry->name = _("Red Hat menus");
+			dentry->type = "Directory";
+			dentry->icon = "/usr/share/icons/mini/mini-redhat.xpm";
+			g_strconcat3_a(dentry->location,rhdir,
+				       ".directory",NULL);
 			gnome_desktop_entry_save(dentry);
-			gnome_desktop_entry_free(dentry);
 		}
 		make_rh_submenu(rhdir,rhlist);
 
@@ -2452,6 +2451,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	menu->age = 0;
 	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, applet_menu_position,
 		       info, bevent->button, bevent->time);
+	gdk_event_free((GdkEvent *)bevent);
 }
 
 static char *
@@ -2708,9 +2708,8 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	
 	rb = w = gtk_radio_button_new_with_label (NULL, _("Off"));
 	gtk_table_attach_defaults(table,w,3,4,row,row+1);
-	p = g_strconcat(ident,"_off",NULL);
+	g_strconcat3_a(p,ident,"_off",NULL);
 	gtk_object_set_data(dialog,p,w);
-	g_free(p);
 	if(!on)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
@@ -2720,9 +2719,8 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("In a submenu"));
 	gtk_table_attach_defaults(table,w,2,3,row,row+1);
-	p = g_strconcat(ident,"_sub",NULL);
+	g_strconcat3_a(p,ident,"_sub",NULL);
 	gtk_object_set_data(dialog,p,w);
-	g_free(p);
 	if(sub)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
