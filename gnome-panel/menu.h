@@ -33,6 +33,11 @@ GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
 void menu_properties(Menu *menu);
 
+/*menu related utility functions .. also used elswhere*/
+void applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
+void panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
+
+
 
 END_GNOME_DECLS
 

@@ -39,10 +39,6 @@ void move_resize_window(GtkWidget *widget, int x, int y, int w, int h);
 queues one*/
 void resize_window(GtkWidget *widget, int w, int h);
 
-void applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
-void panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data);
-
-
 
 END_GNOME_DECLS
 
