@@ -725,7 +725,7 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 				g_object_set_data_full (G_OBJECT (button->priv->menu),
 							"panel-menu-tree-directory",
 							directory,
-							(GDestroyNotify) menu_tree_item_unref);
+							(GDestroyNotify) menu_tree_directory_unref);
 			}
 		}
 
