@@ -96,16 +96,35 @@ socket_realized(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+/*FIXME: I dunno how I should handle the destruction of the applet itself,
+  the problem is that the socket doesn't get destroyed nor does it get a
+  delete_event when it's child dies ...*/
 static int
-socket_destroyed(GtkWidget *w, gpointer data)
+socket_delete_event(GtkWidget *w, gpointer data)
+{
+	Swallow *swallow = data;
+	gtk_widget_destroy(swallow->ebox);
+	return TRUE;
+}
+
+static int
+do_the_destroy(gpointer data)
 {
 	Swallow *swallow = data;
 	
+	gtk_widget_destroy(swallow->ebox);
+
 	g_free(swallow->title);
 	g_free(swallow->path);
 	g_free(swallow);
-
 	return FALSE;
+}
+
+static int
+socket_destroyed(GtkWidget *w, gpointer data)
+{
+	gtk_idle_add(do_the_destroy,data);
+	return TRUE;
 }
 
 
@@ -223,14 +242,19 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 {
 	Swallow *swallow;
 	GtkWidget *w;
+	GtkWidget *table;
 
 	swallow = g_new(Swallow,1);
 
-	swallow->table = gtk_table_new(2,2,FALSE);
-	gtk_widget_show(swallow->table);
+	swallow->ebox = gtk_event_box_new();
+	gtk_widget_show(swallow->ebox);
+
+	table = gtk_table_new(2,2,FALSE);
+	gtk_container_add(GTK_CONTAINER(swallow->ebox),table);
+	gtk_widget_show(table);
 
 	swallow->handle_n = gtk_vbox_new(FALSE,0);
-	gtk_table_attach(GTK_TABLE(swallow->table),swallow->handle_n,
+	gtk_table_attach(GTK_TABLE(table),swallow->handle_n,
 			 1,2,0,1,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
@@ -253,7 +277,7 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	gtk_widget_show(w);
 
 	swallow->handle_w = gtk_hbox_new(FALSE,0);
-	gtk_table_attach(GTK_TABLE(swallow->table),swallow->handle_w,
+	gtk_table_attach(GTK_TABLE(table),swallow->handle_w,
 			 0,1,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
@@ -282,8 +306,10 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 			         GTK_SIGNAL_FUNC(socket_realized), NULL);
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"destroy",
 			         GTK_SIGNAL_FUNC(socket_destroyed), swallow);
+	/*gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"delete_event",
+			         GTK_SIGNAL_FUNC(socket_delete_event), swallow);*/
 
-	gtk_table_attach(GTK_TABLE(swallow->table),swallow->socket,
+	gtk_table_attach(GTK_TABLE(table),swallow->socket,
 			 1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
@@ -327,11 +353,21 @@ load_swallow_applet(char *path, char *params, int width, int height,
 	if(!swallow)
 		return;
 
-	register_toy(swallow->table,swallow, panel, pos, APPLET_SWALLOW);
+	register_toy(swallow->ebox,swallow, panel, pos, APPLET_SWALLOW);
 
 	if(path && *path) {
-		char *s = g_copy_strings("(true; ",path," &)",NULL);
-		system(s);
-		g_free(s);
+		char *p = strrchr(path,'.');
+		/*only if such a file exists and ends in a .desktop, should
+		  we try to launch it as such*/
+		if(p && strcmp(p,".desktop")==0 && g_file_exists(path)) {
+			GnomeDesktopEntry *item;
+			item = gnome_desktop_entry_load(path);
+			gnome_desktop_entry_launch(item);
+			gnome_desktop_entry_free(item);
+		} else {
+			char *s = g_copy_strings("(true; ",path," &)",NULL);
+			system(s);
+			g_free(s);
+		}
 	}
 }

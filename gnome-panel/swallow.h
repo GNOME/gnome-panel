@@ -11,7 +11,7 @@ typedef enum {
 } SwallowOrient;
 
 typedef struct {
-	GtkWidget *table;
+	GtkWidget *ebox;
 	GtkWidget *handle_n;
 	GtkWidget *handle_w;
 	GtkWidget *socket;
