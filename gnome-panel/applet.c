@@ -521,15 +521,28 @@ panel_applet_create_menu (AppletInfo *info)
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (applet_menu_deactivate), info);
 
+	if (info->user_menu) {
+		for (l = info->user_menu; l; l = l->next) {
+			AppletUserMenu *user_menu = (AppletUserMenu *)l->data;
+
+			add_to_submenus (info, "", user_menu->name, user_menu, 
+					 menu, info->user_menu);
+		}
+	}
+
 	if (!commie_mode) {
 		GtkWidget *image;
+
+		menuitem = gtk_separator_menu_item_new ();
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_widget_show (menuitem);
 
 		menuitem = gtk_image_menu_item_new ();
 
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
 						  GTK_ICON_SIZE_MENU);
 
-		setup_menuitem (menuitem, image , _("Remove from panel"));
+		setup_menuitem (menuitem, image , _("Remove From Panel"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
@@ -546,20 +559,6 @@ panel_applet_create_menu (AppletInfo *info)
 				  G_CALLBACK (move_applet_callback), info);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	}
-
-	if (!info->user_menu)
-		return menu;
-
-	menuitem = gtk_separator_menu_item_new ();
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_widget_show (menuitem);
-
-	for (l = info->user_menu; l; l = l->next) {
-		AppletUserMenu *user_menu = (AppletUserMenu *)l->data;
-
-		add_to_submenus (info, "", user_menu->name, user_menu, 
-				 menu, info->user_menu);
 	}
 
 	return menu;
