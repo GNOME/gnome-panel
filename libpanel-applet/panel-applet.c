@@ -1134,7 +1134,7 @@ panel_applet_control_bound (BonoboControl *control,
 			       G_TYPE_BOOLEAN, &ret,
 			       PANEL_TYPE_APPLET, applet,
 			       G_TYPE_STRING, applet->priv->iid,
-			       0);
+			       NULL);
 
 
 	if (!ret) { /* FIXME */
