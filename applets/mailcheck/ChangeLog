@@ -1,3 +1,25 @@
+2002-03-28  Benedikt Roth  <Benedikt.Roth@gmx.net>
+
+	* mailcheck.c: (get_remote_password), (got_remote_answer),
+	(check_mail_file_status), (after_mail_check), (mail_check_timeout),
+	(exec_clicked_cmd), (create_mail_widgets),
+	(make_check_widgets_sensitive), (reset_on_clicked_toggled),
+	(auto_update_toggled), (mailcheck_properties_page),
+	(applet_load_prefs):
+	Re-enabled error dialog, ported to gtkdialog and fixed wording (#59271).
+	Automatically focus the password entry.
+	(Would be nice if enter would be the same as clicking the OK button...)
+	Added ability to turn off automatic mail-checking
+	and used it when an error occures.
+	Removed double call to after_mail_checked()
+	which lead to newmail_cmd beeing executed too often (#52924).
+	Added preference option to reset the mail status and 
+	thus stop the animation when clicking on the applet (#28987).
+
+	* mailcheck.schemas:  Added new reset_on_clicked and auto_update keys
+	* help/C/mailcheck/mailcheck.xml: Added some short notes on new
+	preference options, probably the screenshot should be updated, too.
+
 2002-03-27  Mark McLoughlin  <mark@skynet.ie>
 
 	* pager.c: (display_properties_dialog):

@@ -23,6 +23,7 @@
 #include <panel-applet-gconf.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libgnomeui/gnome-window-icon.h>
+
 #include "popcheck.h"
 #include "remote-helper.h"
 #include "mailcheck.h"
@@ -41,24 +42,29 @@ struct _MailCheck {
 	char *mail_file;
 
 	/* Does the user have any mail at all? */
-	int anymail;
+	gboolean anymail;
 
-	/* New mail has arrived? */
-	int newmail;
+	/* whether new mail has arrived */
+	gboolean newmail;
 
-	/* Does the user have unread mail? */
+	/* number of unread/total mails */
 	int unreadmail;
 	int totalmail;
 
+	/* whether to automatically check for mails */
+	gboolean auto_update;
+
+	/* interval to check for mails in milliseconds */
 	guint update_freq;
 
+	/* whether to set mc->newmail and mc->unreadmail to 0 if the applet was clicked */
+	gboolean reset_on_clicked;
+
 	/* execute a command when the applet is clicked (launch email prog) */
-        char *clicked_cmd;
+	char *clicked_cmd;
 	gboolean clicked_enabled;
 
-	/* execute a command when new mail arrives (play a sound etc.)
-	   FIXME: actually executes the command when mc->newmail 
-	   goes from 0 -> 1 (so not every time you get new mail) */
+	/* execute a command when new mail arrives (play a sound etc.) */
 	char *newmail_cmd;
 	gboolean newmail_enabled;
 
@@ -205,23 +211,28 @@ get_remote_password (void)
 	char      *pass = NULL;
 
 	dialog = gtk_dialog_new_with_buttons (
-			_("Mail check Applet"), NULL, 0,
+			_("Inbox Monitor"), NULL, 0,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
+	label = gtk_label_new (_("You didn't set a password in the preferences for the Inbox Monitor,\nso you have to enter it each time it starts up."));
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, FALSE, FALSE, GNOME_PAD_BIG);
+	gtk_widget_show (label);
+
 	hbox = gtk_hbox_new (FALSE, 1);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    hbox, FALSE, FALSE, GNOME_PAD_SMALL);
 
-	label = gtk_label_new_with_mnemonic (_("_Password:"));
+	label = gtk_label_new_with_mnemonic (_("Please enter your mailserver's _password:"));
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
 	entry = gtk_entry_new ();
 	gtk_entry_set_visibility (GTK_ENTRY (entry), FALSE);
 	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
 	gtk_widget_show_all (hbox);
+	gtk_widget_grab_focus (GTK_WIDGET (entry));
 
 	gtk_window_set_modal (GTK_WINDOW(dialog), TRUE);
 
@@ -244,19 +255,20 @@ got_remote_answer (int mails, gpointer data)
 	mc->remote_handle = NULL;
 	
 	if (mails == -1) {
-#if 0
-		/* don't notify about an error: think of people with
-		 * dial-up connections; keep the current mail status
-		 */
-		GtkWidget *box = NULL;
-		box = gnome_message_box_new (_("Remote-client-error occured. Remote-polling deactivated. Maybe you used a wrong server/username/password?"),
-					     GNOME_MESSAGE_BOX_ERROR, GNOME_STOCK_BUTTON_CLOSE, NULL);
-		gtk_window_set_modal (GTK_WINDOW(box),TRUE);
-		gtk_widget_show (box);
-		
-		mc->mailbox_type = MAILBOX_LOCAL;
-		mc->anymail = mc->newmail = 0;
-#endif
+		/* Notify about an error and keep the current mail status */
+		GtkWidget *dialog = gtk_message_dialog_new (NULL,
+							    GTK_DIALOG_MODAL,
+							    GTK_MESSAGE_ERROR,
+							    GTK_BUTTONS_CLOSE,
+							    _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+
+		if(mc->mail_timeout != 0) {
+			gtk_timeout_remove(mc->mail_timeout);
+			mc->mail_timeout = 0;
+		}
+		mc->auto_update = FALSE;
 	} else {
 		old_unreadmail = mc->unreadmail;
 		mc->unreadmail = (signed int) (((unsigned int) mails) >> 16);
@@ -303,9 +315,10 @@ check_mail_file_status (MailCheck *mc)
 			mc->real_password = g_strdup (mc->remote_password);
 		}
 		else if(mc->real_password == NULL) {
-			if(mc->mail_timeout != 0)
+			if(mc->mail_timeout != 0) {
 				gtk_timeout_remove(mc->mail_timeout);
-			mc->mail_timeout = 0;
+				mc->mail_timeout = 0;
+			}
 			mc->real_password = get_remote_password();
 			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
 							   mail_check_timeout,
@@ -340,6 +353,7 @@ check_mail_file_status (MailCheck *mc)
 		if (status < 0) {
 			oldsize = 0;
 			mc->anymail = mc->newmail = mc->unreadmail = 0;
+			after_mail_check (mc);
 			return;
 		}
 		
@@ -353,8 +367,10 @@ check_mail_file_status (MailCheck *mc)
 			mc->newmail = 0;
 		
 		oldsize = newsize;
+
+		after_mail_check (mc);
 	}
-	else { /* MAILBOX_LOCALDIR */
+	else if (mc->mailbox_type == MAILBOX_LOCALDIR) {
 		int newmail, oldmail;
 		char tmp[1024];
 		g_snprintf(tmp, sizeof (tmp), "%s/new", mc->mail_file);
@@ -366,7 +382,9 @@ check_mail_file_status (MailCheck *mc)
 		oldsize = newmail;
 		mc->anymail = newmail || oldmail;
 		mc->totalmail = newmail + oldmail;
-	}	    
+
+		after_mail_check (mc);
+	}
 }
 
 static gboolean
@@ -445,7 +463,7 @@ after_mail_check (MailCheck *mc)
 {
 	static const char *supinfo[] = {"mailcheck", "new-mail", NULL};
 	char *text;
-	
+
 	if (mc->anymail){
 		if(mc->mailbox_type == MAILBOX_LOCAL) {
 			if(mc->newmail)
@@ -463,11 +481,11 @@ after_mail_check (MailCheck *mc)
 	else
 		text = g_strdup_printf(_("No mail."));
 
-	if(mc->newmail) {
+	if (mc->newmail) {
 		if(mc->play_sound)
-			gnome_triggers_vdo("", "program", supinfo);
+			gnome_triggers_vdo("You've got new mail!", "program", supinfo);
 
-		if (mc->newmail_enabled && 
+		if (mc->newmail_enabled &&
 		    mc->newmail_cmd && 
 		    (strlen(mc->newmail_cmd) > 0))
 			gnome_execute_shell(NULL, mc->newmail_cmd);
@@ -535,19 +553,22 @@ mail_check_timeout (gpointer data)
 		 * returns, just in case the execution takes too long.
 		 */
 		
-		if(mc->mail_timeout != 0)
+		if(mc->mail_timeout != 0) {
 			gtk_timeout_remove (mc->mail_timeout);
-		mc->mail_timeout = 0;
+			mc->mail_timeout = 0;
+		}
 		if (system(mc->pre_check_cmd) == 127)
 			g_warning("Couldn't execute command");
 		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
 	}
 
 	check_mail_file_status (mc);
-
-	after_mail_check (mc);
-
-	return TRUE;
+	
+	if (mc->auto_update)      
+		return TRUE;
+	else
+		/* This handler should just run once */
+		return FALSE;
 }
 
 /*
@@ -573,10 +594,18 @@ exec_clicked_cmd (GtkWidget *widget, GdkEventButton *event, gpointer data)
 	MailCheck *mc = data;
 	gboolean retval = FALSE;
 
-	if (event->button < 3 && mc->clicked_enabled && mc->clicked_cmd && (strlen(mc->clicked_cmd) > 0)) {
-		gnome_execute_shell(NULL, mc->clicked_cmd);
+	if (event->button == 1) {
+		
+		if (mc->clicked_enabled && mc->clicked_cmd && (strlen(mc->clicked_cmd) > 0))
+			gnome_execute_shell(NULL, mc->clicked_cmd);
+		
+		if (mc->reset_on_clicked) {
+			mc->newmail = mc->unreadmail = 0;
+			after_mail_check (mc);
+		}
+
 		retval = TRUE;
-	}
+	}	
 	return(retval);
 }
 
@@ -656,7 +685,10 @@ create_mail_widgets (MailCheck *mc)
 
 	gtk_widget_show (mc->bin);
 	
-	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
+	if (mc->auto_update)
+		mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
+	else
+		mc->mail_timeout = 0;
 
 	/* The drawing area */
 	mc->da = gtk_drawing_area_new ();
@@ -817,6 +849,13 @@ mailcheck_get_animation_menu (MailCheck *mc)
 }
 
 static void
+make_check_widgets_sensitive(MailCheck *mc)
+{
+	gtk_widget_set_sensitive (GTK_WIDGET (mc->min_spin), mc->auto_update);
+	gtk_widget_set_sensitive (GTK_WIDGET (mc->sec_spin), mc->auto_update);
+}
+
+static void
 make_remote_widgets_sensitive(MailCheck *mc)
 {
 	gboolean b = mc->mailbox_type != MAILBOX_LOCAL &&
@@ -960,6 +999,7 @@ set_mailbox_selection (GtkWidget *widget, gpointer data)
 		helper_whack_handle (mc->remote_handle);
 		mc->remote_handle = NULL;
 	}
+	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
 }
 
 static void
@@ -1049,6 +1089,41 @@ clicked_changed (GtkEntry *entry, gpointer data)
 	panel_applet_gconf_set_string(mc->applet, "clicked_command", mc->clicked_cmd, NULL);
 	g_free (text);
 	
+}
+
+static void
+reset_on_clicked_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->reset_on_clicked = gtk_toggle_button_get_active (button);
+	panel_applet_gconf_set_bool(mc->applet, "reset_on_clicked", 
+				    mc->reset_on_clicked, NULL);
+				    
+}
+
+static void
+auto_update_toggled (GtkToggleButton *button, gpointer data)
+{
+	MailCheck *mc = data;
+	
+	mc->auto_update = gtk_toggle_button_get_active (button);
+
+	if(mc->mail_timeout != 0) {
+		gtk_timeout_remove(mc->mail_timeout);
+		mc->mail_timeout = 0;
+	}
+	if(mc->auto_update)
+		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
+
+	make_check_widgets_sensitive(mc);
+	panel_applet_gconf_set_bool(mc->applet, "auto_update", mc->auto_update, NULL);
+
+	/*
+	 * check the mail right now, so we don't have to wait
+	 * for the first timeout
+	 */
+	mail_check_timeout (mc);
 }
 
 static void
@@ -1328,20 +1403,26 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_table_attach_defaults (GTK_TABLE (table), mc->clicked_cmd_entry,
 				   1, 2, 2, 3);
 
+	l = gtk_check_button_new_with_label (_("Set the number of unread mails to zero"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->reset_on_clicked);
+	g_signal_connect(G_OBJECT(l), "toggled",
+			   G_CALLBACK(reset_on_clicked_toggled), mc);
+	gtk_widget_show(l);
+	gtk_table_attach (GTK_TABLE (table), l, 1, 2, 3, 4, GTK_FILL, 0, 0, 0);
+
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_widget_show (hbox); 
         
-        l = gtk_label_new (_("Check for mail every"));
-	gtk_widget_show(l);
+	l = gtk_check_button_new_with_label (_("Check for mail every"));
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->auto_update);
+	g_signal_connect(G_OBJECT(l), "toggled",
+			 G_CALLBACK(auto_update_toggled), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	gtk_widget_show(l);
 
 	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)/60), 0, 1440, 1, 5, 5);
 	mc->min_spin = gtk_spin_button_new( GTK_ADJUSTMENT (freq_a), 1, 0);
-	/*g_signal_connect(G_OBJECT(freq_a), "value_changed",
-			   G_CALLBACK(property_box_changed), mc);
-	g_signal_connect(G_OBJECT(mc->min_spin), "changed",
-			   G_CALLBACK(property_box_changed), mc);*/
 	g_signal_connect (G_OBJECT (mc->min_spin), "value_changed",
 			  G_CALLBACK (update_spin_changed), mc);			  
 	gtk_box_pack_start (GTK_BOX (hbox), mc->min_spin,  FALSE, FALSE, 0);
@@ -1352,11 +1433,7 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
 	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 0, 59, 1, 5, 5);
-	mc->sec_spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
-	/*g_signal_connect(G_OBJECT(freq_a), "value_changed",
-			   G_CALLBACK(property_box_changed), mc);
-	g_signal_connect(G_OBJECT(mc->sec_spin), "changed",
-			   G_CALLBACK(property_box_changed), mc);*/
+	mc->sec_spin = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
 	g_signal_connect (G_OBJECT (mc->sec_spin), "value_changed",
 			  G_CALLBACK (update_spin_changed), mc);
 	gtk_box_pack_start (GTK_BOX (hbox), mc->sec_spin,  FALSE, FALSE, 0);
@@ -1382,6 +1459,8 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_widget_show (l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (hbox), mailcheck_get_animation_menu (mc), FALSE, FALSE, 0);
+
+	make_check_widgets_sensitive(mc);
 
 	return vbox;
 }
@@ -1468,6 +1547,8 @@ applet_load_prefs(MailCheck *mc)
 		g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	}
+
+	mc->auto_update = panel_applet_gconf_get_bool(mc->applet, "auto_update", NULL);
 	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update_frequency", NULL);
 	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec_command", NULL);
 	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec_enabled", NULL);
@@ -1640,7 +1721,8 @@ fill_mailcheck_applet(PanelApplet *applet)
 			        	   mailcheck_menu_verbs,
 					   mc);
 	
-	gtk_widget_show (GTK_WIDGET (applet));
+	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
+	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	/*
 	 * check the mail right now, so we don't have to wait
