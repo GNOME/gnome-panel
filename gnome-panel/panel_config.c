@@ -328,6 +328,7 @@ update_config_back (PanelWidget *pw)
 	GtkWidget *t, *item = NULL;
 	int history = 0;
 	PerPanelConfig *ppc;
+	char *text;
 	
 	g_return_if_fail (pw);
 	g_return_if_fail (IS_PANEL_WIDGET(pw));
@@ -354,9 +355,14 @@ update_config_back (PanelWidget *pw)
 		history = 1;
 		break;
 	case PANEL_BACK_PIXMAP:
-		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
-		gtk_entry_set_text (GTK_ENTRY (t),
-				    sure_string (pw->back_pixmap));
+		t = gnome_pixmap_entry_gtk_entry
+			(GNOME_PIXMAP_ENTRY (ppc->pix_entry));
+		text = gtk_entry_get_text (GTK_ENTRY (t));
+		if (strcmp (sure_string (pw->back_pixmap),
+			    text) != 0) {
+			gtk_entry_set_text (GTK_ENTRY (t),
+					    sure_string (pw->back_pixmap));
+		}
 		item = ppc->pix;
 		history = 2;
 		break;

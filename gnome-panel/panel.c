@@ -770,7 +770,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 	case GDK_BUTTON_PRESS:
 		bevent = (GdkEventButton *) event;
 		switch(bevent->button) {
-		case 3: /* fall through */
+		case 3:
 			if(!panel_applet_in_drag) {
 				GtkWidget *menu;
 
@@ -839,7 +839,9 @@ panel_widget_event (GtkWidget *widget, GdkEvent *event, GtkWidget *panelw)
 	if (event->type == GDK_BUTTON_PRESS) {
 		GdkEventButton *bevent = (GdkEventButton *) event;
 
-		return panel_initiate_move (panelw, bevent->time);
+		if (bevent->button == 1 ||
+		    bevent->button == 2)
+			return panel_initiate_move (panelw, bevent->time);
 	}
 
 	return FALSE;

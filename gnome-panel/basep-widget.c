@@ -42,6 +42,7 @@ static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_init (BasePPos *pos);
 static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
 static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
+static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 
 static void basep_widget_destroy (GtkObject *o);
 
@@ -334,6 +335,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->realize = basep_widget_realize;
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
+	widget_class->style_set = basep_style_set;
 
 	object_class->destroy = basep_widget_destroy;
 }
@@ -450,7 +452,10 @@ basep_leave_notify (GtkWidget *widget,
 	
 	basep_widget_queue_autohide (basep);
 
-	return FALSE;
+	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->leave_notify_event)
+		return GTK_WIDGET_CLASS (basep_widget_parent_class)->leave_notify_event (widget, event);
+	else
+		return FALSE;
 }
 
 static gboolean
@@ -477,7 +482,10 @@ basep_enter_notify (GtkWidget *widget,
 	if (global_config.autoraise)
 		gdk_window_raise (GTK_WIDGET(basep)->window);
 
-	return FALSE;
+	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->enter_notify_event)
+		return GTK_WIDGET_CLASS (basep_widget_parent_class)->enter_notify_event (widget, event);
+	else
+		return FALSE;
 }
 
 void
@@ -1106,20 +1114,47 @@ basep_update_frame (BasePWidget *basep)
 }
 
 static void
-basep_back_change(PanelWidget *panel,
-		  PanelBackType type,
-		  char *pixmap,
-		  GdkColor *color,
-		  BasePWidget *basep)
+basep_back_change (PanelWidget *panel,
+		   PanelBackType type,
+		   char *pixmap,
+		   GdkColor *color,
+		   BasePWidget *basep)
 {
 	basep_update_frame (basep);
 
-	set_frame_colors(panel,
-			 basep->frame,
-			 basep->hidebutton_n,
-			 basep->hidebutton_e,
-			 basep->hidebutton_w,
-			 basep->hidebutton_s);
+	set_frame_colors (panel,
+			  basep->frame,
+			  basep->hidebutton_n,
+			  basep->hidebutton_e,
+			  basep->hidebutton_w,
+			  basep->hidebutton_s);
+}
+
+static void
+basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
+{
+	BasePWidget *basep;
+	PanelWidget *panel;
+
+	g_return_if_fail (widget != NULL);
+	g_return_if_fail (IS_BASEP_WIDGET (widget));
+
+	basep = BASEP_WIDGET (widget);
+
+	g_return_if_fail (basep->panel != NULL);
+	g_return_if_fail (IS_PANEL_WIDGET (basep->panel));
+
+	panel = PANEL_WIDGET (basep->panel);
+
+	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->style_set)
+		GTK_WIDGET_CLASS (basep_widget_parent_class)->style_set (widget, previous_style);
+
+	set_frame_colors (panel,
+			  basep->frame,
+			  basep->hidebutton_n,
+			  basep->hidebutton_e,
+			  basep->hidebutton_w,
+			  basep->hidebutton_s);
 }
 
 static void

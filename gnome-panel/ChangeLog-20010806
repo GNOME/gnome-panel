@@ -1,3 +1,14 @@
+Tue Jan 30 22:30:26 2001  George Lebl <jirka@5z.com>
+
+	* panel_config.c: prevent infinite loop with background pixmap
+	  setting, but this needs more work
+
+	* basep-widget.c: follow style_set signal and reset styles on the
+	  subwidgets to follow theme
+
+	* panel.c: make sure button #3 gets through on panels, so that menu
+	  gets displayed
+
 Thu Jan 25 04:10:03 2001  George Lebl <jirka@5z.com>
 
 	* panel.c: 1st button click on  the panel space also starts a panel
