@@ -4,6 +4,8 @@
 #include <gtk/gtk.h>
 #include <gnome.h>
 
+#define HAVE_SAVE_SESSION_SIGNAL 1
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
