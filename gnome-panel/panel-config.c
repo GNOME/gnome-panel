@@ -369,7 +369,7 @@ update_config_level (BasePWidget *panel)
 void
 update_config_back (PanelWidget *pw)
 {
-	GtkWidget *t, *item = NULL;
+	GtkWidget *item = NULL;
 	int history = 0;
 	PerPanelConfig *ppc;
 	char *text;
@@ -399,19 +399,20 @@ update_config_back (PanelWidget *pw)
 		item = ppc->col;
 		history = 1;
 		break;
-	case PANEL_BACK_PIXMAP:
-#ifdef FIXME
-		t = gnome_pixmap_entry_gtk_entry
-			(GNOME_PIXMAP_ENTRY (ppc->pix_entry));
+	case PANEL_BACK_PIXMAP: {
+		GtkWidget *t;
+
+		t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (ppc->pix_entry));
+
 		text = gtk_entry_get_text (GTK_ENTRY (t));
-		if (strcmp (sure_string (pw->back_pixmap),
-			    text) != 0) {
+
+		if (strcmp (sure_string (pw->back_pixmap), text))
 			gtk_entry_set_text (GTK_ENTRY (t),
 					    sure_string (pw->back_pixmap));
-		}
+
 		item = ppc->pix;
 		history = 2;
-#endif
+		}
 		break;
 	}
 
@@ -1464,14 +1465,13 @@ make_level_widget (PerPanelConfig *ppc)
 static void
 value_changed (GtkWidget *w, gpointer data)
 {
-#ifdef FIXME
 	PerPanelConfig *ppc = data;
 
 	g_free(ppc->back_pixmap);
-	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
+	ppc->back_pixmap = gnome_pixmap_entry_get_filename (
+				GNOME_PIXMAP_ENTRY (ppc->pix_entry));
 
 	panel_config_register_changes (ppc);
-#endif
 }
 
 static void
@@ -1651,12 +1651,11 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
-#ifdef FIXME
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"), TRUE);
-	if(gdk_screen_height()<600)
+	if (gdk_screen_height () < 600)
 		gnome_pixmap_entry_set_preview_size (GNOME_PIXMAP_ENTRY (ppc->pix_entry),
 						     0,50);
-	t = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (ppc->pix_entry));
+	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (ppc->pix_entry));
 	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
 					GTK_SIGNAL_FUNC (value_changed), ppc,
 					GTK_OBJECT (ppc->pix_entry));
@@ -1664,7 +1663,6 @@ background_page (PerPanelConfig *ppc)
 	
 	gtk_entry_set_text (GTK_ENTRY (t),
 			    sure_string (ppc->back_pixmap));
-#endif
 	
 	noscale = gtk_radio_button_new_with_label (
 		NULL, _("Don't scale image to fit"));
