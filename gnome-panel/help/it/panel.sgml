@@ -731,183 +731,182 @@
 
  <!-- ###########  Launchers  ############## -->
  <sect1 id="launchers">
-  <title>Launchers</title>
+  <title>Pulsanti di avvio</title>
   <para>
-   Launchers are essentially buttons which reside in your panel and
-   start an application or execute a command when clicked.  A launcher
-   can use any icon and has a customized tooltip to display a message
-   when the cursor is passed over the Launcher.
+   I pulsanti di avvio sono essenzialmente pulsanti che risiedono nel vostro
+   pannello e che avviano applicazioni o eseguono un comando quando vengono
+   premuti. Un pulsante di avvio può usare qualunque icona e ha un suggerimento
+   personalizzabile per mostrare un messaggio quando il cursore passa sopra di
+   questo.
   </para>
-  <para>  You can change a launcher properties, such as the icon it
-      uses and its name, by right-clicking on a launcher and selecting
-      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This
-      brings up the <interface>Launcher properties dialog</interface>
-      shown in <xref linkend="launcherpropsfig">. The same dialog is
-      used when you create a new launcher (see <xref
-      linkend="add">). Also, internally GNOME makes no distinction
-      between menu items and launchers: these are just different
-      presentations of the same thing. You can place any menu item on
-      the panel, and it will show as a launcher. Therefore, all the
-      information below applies equally to launchers and menu items.
-      </para>
+  <para>  
+   È possibile cambiare le proprietà di un pulsante di avvio, come l'icona che
+   utilizza o il suo nome, cliccandoci sopra con il tasto destro del mouse e
+   selezionando <guimenuitem>Proprietà</guimenuitem> dal menu
+   contestuale. Questa operazione mostrerà la finestra di dialogo
+   <interface>Proprietà pulsante di avvio</interface>, mostrato in <xref
+									 linkend="launcherpropsfig">. La stessa finestra di dialogo viene utilizzata
+    quando create un nuovo pulsante (vedi <xref linkend="add">). Inoltre GNOME,
+     internamente, non fa alcuna differenza tra voci del menu e pulsanti di avvio:
+     questi sono semplicemente una differente rappresentazione dello stesso
+     oggetto. Potete posizionare sul pannello qualsiasi voce del menu, e verrà
+     mostrata come pulsante di avvio. Quindi, tutte le informazioni qui sotto si
+     applicano equivalentemente sia ai pulsanti di avvio che alle voce del menu.
+  </para>
   <figure id="launcherpropsfig">
-   <title>Create Launcher/Launcher Properties Dialog</title>
+   <title>Dialogo Crea/Proprietà pulsante di avvio</title>
    <screenshot>
-    <screeninfo>Create Launcher/Launcher Properties Dialog</screeninfo>
-     <graphic fileref="./figures/launcher_properties_basic" format="png"
-     srccredit="muet">
-     </graphic>
+    <screeninfo>Dialogo Crea/Proprietà pulsante di avvio</screeninfo>
+    <graphic fileref="./figures/launcher_properties_basic" format="png"
+	     srccredit="cgabriel">
+    </graphic>
    </screenshot>
   </figure>
-    <para> This dialog has two tabs: <guilabel>Basic</guilabel> and
-    <guilabel>Advanced</guilabel>. In the <guilabel>Basic</guilabel>
-    tab, you can set:
-    </para>
-    <itemizedlist>
-      <listitem>
-	<para>
-	  <guilabel>Name</guilabel> &mdash; this is the application
-	  name, for example, <userinput>GNOME
-	  terminal</userinput>. This name will be used if you later
-	  put this launcher in a menu.
-	</para>
-      </listitem>
-      <listitem>
-	<para>
-	  <guilabel>Comment</guilabel> &mdash; this is a brief
-	  explanation of what this application does, for example,
-	  <userinput>Terminal emulation program</userinput>. This will
-	  be used for tooltips.
-	</para>
-      </listitem>
-      <listitem>
-	<para>
-	  <guilabel>Command</guilabel> &mdash; the actual command that
-	  runs the application, for example,
-	  <userinput>gnome-terminal</userinput>.
-	</para>
-      </listitem>
-      <listitem>
-	<para>
-	  <guilabel>Type</guilabel> &mdash; should be
-	  <guilabel>Application</guilabel>; do not change it unless
-	  you want to create something other than application launcher.
-	</para>
-      </listitem>
-    </itemizedlist>
+  <para> 
+   Questa finestra di dialogo ha due linguette: <guilabel>Base</guilabel> e
+   <guilabel>Avanzato</guilabel>. Nella sezione <guilabel>Base</guilabel> è
+   possibile impostare:
+  </para>
+  <itemizedlist>
+   <listitem>
     <para>
-      The <guilabel>Basic</guilabel> tab also shows the icon to be
-      used for the launcher; if no icon is specified, a default icon
-      will be used. To change the icon, just click on it to launch the
-      icon browser.  </para>
-    <para>
-      Finally, if the application can only run inside a terminal
-      &mdash; that is, if it doesn't create any windows on its own
-      &mdash; you should also check <guibutton>Run in
-      terminal</guibutton> button. If unsure, leave it unchecked.
+     <guilabel>Nome</guilabel> &mdash; questo è il nome dell'applicazione, ad
+     esempio <userinput>GNOME terminal</userinput>. Questo nome verrà utilizzato
+     se metterete questo pulsante in un menu.
     </para>
-    
+   </listitem>
+   <listitem>
     <para>
-      <guilabel>Advanced</guilabel> tab is shown below. It is intended
-      for advanced users; most of the time, you do not need to change
-      any of the settings here.
+     <guilabel>Commento</guilabel> &mdash; questa è una breve descrizione di
+     cosa fa l'applicazione, ad esempio <userinput>Emulatore di
+      terminale</userinput>. Questo commento viene utilizzato per i suggerimenti.
     </para>
+   </listitem>
+   <listitem>
+    <para>
+     <guilabel>Comando</guilabel> &mdash; il comando che esegue l'applicazione,
+     ad esempio <userinput>gnome-terminal</userinput>.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     <guilabel>Tipo</guilabel> &mdash; deve essere
+     <guilabel>Application</guilabel>; non cambiatelo a meno che non vogliate
+     creare qualcosa di diverso da un pulsante di avvio.
+    </para>
+   </listitem>
+  </itemizedlist>
+  <para>
+   La sezione <guilabel>Base</guilabel> mostra inoltre l'icona da utilizzare per
+   il pulsante. Se nessuna icona viene specificata, ne verrà mostrata una
+   predefinita. Per cambiarla, cliccate su questa e selezionatene una nuova
+   dalla lista.
+  </para>
+  <para>
+   Infine, se l'applicazione può essere eseguita soltanto all'interno di un
+   terminale &mdash; cioè se l'applicazione non crea nessuna finestra &mdash; è
+   necessario inoltre selezionare l'opzione <guibutton>Esegui in un
+    terminale</guibutton>. Se non siete sicuri, non selezionate questa opzione.
+  </para>
+  
+  <para>
+   La sezione <guilabel>Avanzato</guilabel> è mostrata qui sotto. È dedicata
+   agli utenti avanzati; nella maggior parte dei casi non è necessario cambiare
+   alcuna impostazione qui.
+  </para>
   <figure id="launcheradvpropsfig">
-   <title>Launcher Advanced Properties Dialog</title>
+   <title>Proprietà avanzata del pulsante di avvio</title>
    <screenshot>
-    <screeninfo>Launcher Advanced Properties Dialog</screeninfo>
-     <graphic fileref="./figures/launcher_properties_advanced" format="png"
-     srccredit="muet">
-     </graphic>
+    <screeninfo>Proprietà avanzata del pulsante di avvio</screeninfo>
+    <graphic fileref="./figures/launcher_properties_advanced" format="png"
+	     srccredit="muet">
+    </graphic>
    </screenshot>
   </figure>
-    <para> In this tab, you can set:
-    </para>
-    <itemizedlist>
-      <listitem>
-	<para>
-	  <guilabel>Try this before using</guilabel> &mdash; you can
-	  enter here a command, and GNOME will check if this command
-	  can be executed. If not, the launcher (or menu item) will
-	  not be shown even if you added it to the panel or menu. It
-	  is mostly used by people preparing GNOME distributions: for
-	  example, default GNOME <guimenu>Main Menu</guimenu> contains
-	  an item for <application>TkRat</application> e-mail program,
-	  but you will not see it unless you have
-	  <application>TkRat</application> installed on your system.
-	</para>
-      </listitem>
-      <listitem>
-	<para>
-	  <guilabel>Documentation</guilabel> &mdash; currently not
-	  used.
-	</para>
-      </listitem>
-       <listitem>
-	<para>
-	  <guilabel>Name/comment translations</guilabel> &mdash; here
-	  you can set translation of the <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel> to other languages. For
-	  example, for <application>GNOME Terminal</application>, the
-	  translations to Spanish (es) are name:  <userinput>Terminal
-	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
-	  de terminal GNOME</userinput>. This means that if a user
-	  sets his language to Spanish during login (it can be done by
-	  selecting appropriate language from
-	  <guimenu>Languages</guimenu> menu of GNOME login manager
-	  (GDM)), he will see <guimenuitem>Terminal UNIX de
-	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
-	  terminal GNOME</userinput> in the tooltips. Of course, the
-	  actual command that runs the terminal is unchanged.
-	</para>
-	<para>
-	  To add a new translation, enter the language 2-letter code
-	  and translations of <guilabel>Name</guilabel> and
-	  <guilabel>Comment</guilabel>  fields in the empty fields
-	  under the list of current translations, and  press
-	  <guibutton>Add/Set</guibutton> button.  To change one of
-	  existing translations, select it in the list, edit the
-	  fields you want, and press <guibutton>Add/Set</guibutton>
-	  button. To remove one of existing translations, select it
-	  and press <guibutton>Remove</guibutton> button.
-	</para>
-	<para>  You can find the list of all languages supported by
-	  GNOME along with their 2-letter codes  in  <ulink
-	  type="http"
-	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
-	  Frequently Asked Questions</ulink>.
-	</para>
-      </listitem>
-    </itemizedlist>
-
+  <para> 
+   In questa sezione è possibile impostare:
+  </para>
+  <itemizedlist>
+   <listitem>
     <para>
-      All the changes you made in <interface>Launcher
-      Properties</interface> dialog will take effect when you press
-      <guibutton>Apply</guibutton> or
-      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
-      closes this dialog; pressing <guibutton>Apply</guibutton> will
-      allow you to continue editing.
+     <guilabel>Prova questo prima di lanciare</guilabel> &mdash; è possibile
+     inserire qui un comando, e GNOME controllerà se questo comando può essere
+     eseguito. Se non è possibile, il pulsante (o la voce del menu) non verrà
+     visualizzata anche se aggiunta al pannello o ad un menu. Viene utilizzato
+     per lo più dalle persone che preparano le distribuzioni di GNOME; ad
+     esempio, il <guimenu>Menu Principale</guimenu> di GNOME predefinito
+     contiene un oggetto per il programma di posta elettronica
+     <application>TkRat</application>, ma non lo vedrete fino a che non avrete
+     <application>TkRat</application> iinstallato sul vostro sistema.
     </para>
+   </listitem>
+   <listitem>
+    <para>
+     <guilabel>Documentazione</guilabel> &mdash; correntemente non utilizzato.
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     <guilabel>Traduzioni nomi/commenti</guilabel> &mdash; qui è possibile
+     impostare le traduzioni del <guilabel>Nome</guilabel> e del
+     <guilabel>Commento</guilabel> in altre linghe. Ad esempio, per il
+     <application>Terminale Gnome</application>, le traduzioni in Spagnolo (es)
+     sono per il nome <userinput>Terminal UNIX de GNOME</userinput> e per il
+     commento: <userinput>Emulador de terminal GNOME</userinput>. Questo
+     significa che se un utente imposta la propria lingua come Spagnolo al
+     momento del login (può essere fatto selezionando la lingua appropriata dal
+     menu <guimenu>Languages</guimenu> del Gnome login managere (GDM)), vedrà
+     <guimenuitem>Terminal UNIX de GNOME</guimenuitem> nel menu e
+     <userinput>Emulador de terminal GNOME</userinput> nel suggerimento del
+     pulsante di avvio. Ovviamente, il comando che esegue il terminale rimane
+     invariato.
+    </para>
+    <para>
+     Per aggiungere una nuova traduzione, inserite il codice di 2 lettere della
+     lingua e le traduzioni dei campi <guilabel>Nome</guilabel> e
+     <guilabel>Commento</guilabel> nei campi vuoti sotto la lista delle
+     traduzioni già presenti, e premete il pulsante
+     <guibutton>Aggiungi/imposta</guibutton>. Per cambiare una traduzione
+     esistente selezionatela dalla lista, modificate i campi che desiderata
+     cambiare, e premete <guibutton>Aggiungi/imposta</guibutton>. Per rimuovere
+     una traduzione, selezionatela e premete il pulsante
+     <guibutton>Rimuovi</guibutton>.
+    </para>
+    <para>
+     È possibile trovare la lista di tutte le lingue supportate da GNOME assieme
+     al codice di 2 lettere nelle <ulink type="http"
+					 url="http://www.it.gnome.org/gnomefaq/1-0/i18n.html">FAQ di GNOME</ulink>.
+    </para>
+   </listitem>
+  </itemizedlist>
+  
+  <para>
+   Tutte le modifiche che avete effettuato nella finestra di dialogo
+   <interface>Proprietà pulsante di avvio</interface> avranno effetto quando
+   premerete il pulsante <guibutton>Chiudi</guibutton>. Premendo il tasto
+   <guibutton>Ripristina</guibutton> tutte le modifiche effettuate verranno
+   annullate.
+  </para>
  </sect1>
-
+ 
 
 <!-- ###########  Applets  ############## -->
  <sect1 id="applets">
-  <title>Applets</title>
+  <title>Applet</title>
   <para>
-   Applets are GNOME applications which reside in the
-   <interface>Panel</interface>.  An applet's appearance typically
-   reveals the state of the applet or other information. Applets often
-   have buttons, sliders, entries, or other methods to allow you to
-   control their behavior.
+   Le applet sono applicazioni GNOME che risiedono all'interno del
+   <interface>Pannello</interface>. L'aspetto di una applet tipicamente rivela
+   lo stato di questa o altre informazioni. Le applet spesso hanno pulsanti,
+   barre di scorrimento, inserimento testo o altri modi per controllare il loro
+   comportamento e per interagire con queste.
   </para>
   <figure>
-   <title>Example Applets</title>
+   <title>Applet di esempio</title>
    <screenshot>
-    <screeninfo>Example Applets</screeninfo>
-     <graphic fileref="./figures/panel_applets" format="png"
-     srccredit="muet">
-     </graphic>
+    <screeninfo>Applet di esempio</screeninfo>
+    <graphic fileref="./figures/panel_applets" format="png"
+	      srccredit="cgabriel">
+    </graphic>
    </screenshot>
   </figure>
   <para>
