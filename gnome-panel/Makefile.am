@@ -6,7 +6,7 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
 
-SUBDIRS = doc
+SUBDIRS = doc help
 
 INCLUDES = -I. -I$(srcdir) \
 	-I$(top_srcdir)/intl \
