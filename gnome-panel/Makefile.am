@@ -1,6 +1,10 @@
 ## Process this file with automake to produce Makefile.in.
 
 CXX = mico-c++
+## We set this to force the values in mico-c++ to be used.  Otherwise,
+## on Linux boxes, the compilation will fail with the default
+## CXXFLAGS.
+CXXFLAGS =
 
 test:
 	echo $(CXXCOMPILE)
