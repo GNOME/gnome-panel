@@ -30,15 +30,6 @@ struct _DrawerWidget
 {
 	BasePWidget		basep;
 
-	GtkWidget		*panel;
-	GtkWidget		*table;
-	GtkWidget		*handle_n;
-	GtkWidget		*handle_e;
-	GtkWidget		*handle_w;
-	GtkWidget		*handle_s;
-	
-	GtkWidget		*frame;
-
 	DrawerState		state;
 	PanelOrientType		orient;
 };

@@ -538,6 +538,14 @@ make_hidebutton(BasePWidget *basep,
 }
 
 static void
+basep_widget_destroy (BasePWidget *basep)
+{
+	if(basep->fake)
+		gdk_window_destroy(basep->fake);
+}
+
+
+static void
 basep_widget_init (BasePWidget *basep)
 {
 	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
@@ -571,6 +579,9 @@ basep_widget_init (BasePWidget *basep)
 			 0,0);
 
 
+	gtk_signal_connect(GTK_OBJECT(basep), "destroy",
+			   GTK_SIGNAL_FUNC(basep_widget_destroy),
+			   NULL);
 
 	gtk_signal_connect(GTK_OBJECT(basep), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(basep_enter_notify),
@@ -579,7 +590,6 @@ basep_widget_init (BasePWidget *basep)
 	basep->hidebuttons_enabled = TRUE;
 	basep->hidebutton_pixmaps_enabled = TRUE;
 }
-
 
 
 

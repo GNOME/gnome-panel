@@ -872,8 +872,8 @@ panel_config(GtkWidget *panel)
 					  page,
 					  gtk_label_new (_("Corner panel")));
 	} else if(IS_DRAWER_WIDGET(panel)) {
-		DrawerWidget *dw = DRAWER_WIDGET(panel);
-		GtkWidget *applet = PANEL_WIDGET(dw->panel)->master_widget;
+		BasePWidget *basep = BASEP_WIDGET(panel);
+		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, info->data);

@@ -306,6 +306,15 @@ static void
 drawer_widget_set_hidebuttons(BasePWidget *basep)
 {
 	DrawerWidget *drawer = DRAWER_WIDGET(basep);
+
+	/*hidebuttons are disabled*/
+	if(!basep->hidebuttons_enabled) {
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
+		return;
+	}
 	
 	switch(drawer->orient) {
 	case ORIENT_UP:
