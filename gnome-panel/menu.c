@@ -745,6 +745,8 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	g_return_if_fail(item_loc!=NULL);
 
 	dialog = gnome_property_box_new();
+	gtk_window_set_wmclass(GTK_WINDOW(dialog),
+			       "desktop_entry_properties","Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
@@ -777,6 +779,8 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	GnomeDesktopEntry *dentry;
 
 	dialog = gnome_property_box_new();
+	gtk_window_set_wmclass(GTK_WINDOW(dialog),
+			       "desktop_entry_properties","Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
@@ -3180,6 +3184,8 @@ create_properties_dialog(Menu *menu)
 	GtkWidget *t;
 
 	dialog = gnome_property_box_new();
+	gtk_window_set_wmclass(GTK_WINDOW(dialog),
+			       "menu_properties","Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);

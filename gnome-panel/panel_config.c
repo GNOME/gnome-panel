@@ -841,6 +841,8 @@ panel_config(GtkWidget *panel)
 	
 	/* main window */
 	ppc->config_window = gnome_property_box_new ();
+	gtk_window_set_wmclass(GTK_WINDOW(ppc->config_window),
+			       "panel_properties","Panel");
 	gtk_widget_set_events(ppc->config_window,
 			      gtk_widget_get_events(ppc->config_window) |
 			      GDK_BUTTON_PRESS_MASK);

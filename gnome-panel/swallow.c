@@ -211,6 +211,8 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
 			     NULL);
+	gtk_window_set_wmclass(GTK_WINDOW(d),
+			       "create_swallow","Panel");
 	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 

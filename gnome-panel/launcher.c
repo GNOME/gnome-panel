@@ -36,8 +36,15 @@ launch (GtkWidget *widget, void *data)
 	GnomeDesktopEntry *item = data;
 
 	if(!item->exec) {
-	  gnome_dialog_run(GNOME_DIALOG(gnome_message_box_new(_("This launch icon does not specify a program to run"), GNOME_MESSAGE_BOX_ERROR, _("Close"), NULL)));
-	  return;
+		GtkWidget *dlg;
+		dlg = gnome_message_box_new(_("This launch icon does not "
+					      "specify a program to run"),
+					    GNOME_MESSAGE_BOX_ERROR,
+					    _("Close"), NULL);
+		gtk_window_set_wmclass(GTK_WINDOW(dlg),
+				       "no_exec_dialog","Panel");
+		gtk_widget_show_all(dlg);
+		return;
 	}
 
 	/*UGLY HACK!*/
@@ -209,6 +216,8 @@ create_properties_dialog(Launcher *launcher)
 	GtkWidget  *dialog;
 
 	dialog = gnome_property_box_new();
+	gtk_window_set_wmclass(GTK_WINDOW(dialog),
+			       "launcher_properties","Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
@@ -298,6 +307,8 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
 			     NULL);
+	gtk_window_set_wmclass(GTK_WINDOW(d),
+			       "create_launcher","Panel");
 	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 	
