@@ -212,9 +212,25 @@ disable_animations_clicked (GtkWidget *widget, gpointer data)
 static void
 animation_speed_changed (GtkWidget *widget, gpointer data)
 {
-	gconf_client_set_string(gconf_client_get_default(),
-		"/apps/panel/animation-speed",
-		gtk_entry_get_text(GTK_ENTRY(widget)),NULL);	
+	gconf_client_set_int(gconf_client_get_default(),
+		"/apps/panel/global/panel-animation-speed",
+		gtk_option_menu_get_history(GTK_OPTION_MENU(widget)),NULL);	
+}
+
+static void
+hide_delay_changed (GtkWidget *widget, gpointer data)
+{
+	gconf_client_set_int(gconf_client_get_default(),
+		"/apps/panel/global/panel-hide-delay",
+		gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget)),NULL);
+}
+
+static void
+show_delay_changed (GtkWidget *widget, gpointer data)
+{
+	gconf_client_set_int(gconf_client_get_default(),
+		"/apps/panel/global/panel-show-delay",
+		gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget)),NULL);
 }
 
 static void
@@ -227,7 +243,7 @@ load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
 
 	while(checkboxes[i]!=NULL){
 		checkbox= glade_xml_get_widget(gui,checkboxes[i]);
-		key = g_strdup_printf("/apps/panel/%s",checkboxes[i]);
+		key = g_strdup_printf("/apps/panel/global/%s",checkboxes[i]);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(checkbox), 
 			gconf_client_get_bool(client,key,NULL));
 		g_signal_connect(G_OBJECT(checkbox),"clicked",
@@ -248,24 +264,42 @@ load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
 }
 
 static void
-load_strings_for_comboboxes(GladeXML *gui, GConfClient *client)
-{
-	GtkWidget *entry;
-
-	entry = glade_xml_get_widget(gui,"speed-entry");
-	gtk_entry_set_text(GTK_ENTRY(entry),
-		gconf_client_get_string(client,
-		"/apps/panel/animation-speed",NULL));
-	g_signal_connect(G_OBJECT(entry),"activate",
-                        G_CALLBACK(animation_speed_changed),NULL);
-}
-
-static void
 load_config_into_gui(GladeXML *gui, GConfClient *client)
 {
+	
+	GtkWidget *option, *hide_delay, *show_delay;
 
 	load_booleans_for_checkboxes(gui,client);
-	load_strings_for_comboboxes(gui,client);
+
+	/* animation speed selection */
+        option = glade_xml_get_widget(gui,"panel-animation-speed");
+        gtk_option_menu_set_history(GTK_OPTION_MENU(option),
+                gconf_client_get_int(client,
+                "/apps/panel/global/panel-animation-speed",NULL));
+        g_signal_connect(G_OBJECT(option),"changed",
+                        G_CALLBACK(animation_speed_changed),NULL);
+
+	/* hide delay */
+	hide_delay = glade_xml_get_widget(gui,"panel-hide-delay");
+	gtk_spin_button_configure(GTK_SPIN_BUTTON(hide_delay),
+		GTK_ADJUSTMENT(gtk_adjustment_new(30.0,30.0,
+		3000.0,10.0,10.0,0.0)),10.0,0);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(hide_delay),
+		(double)gconf_client_get_int(client,
+		"/apps/panel/global/panel-hide-delay",NULL));
+	g_signal_connect(G_OBJECT(hide_delay),"value-changed",
+		G_CALLBACK(hide_delay_changed),NULL);
+
+	/* show delay */	
+	show_delay = glade_xml_get_widget(gui,"panel-show-delay");
+	gtk_spin_button_configure(GTK_SPIN_BUTTON(show_delay),
+		GTK_ADJUSTMENT(gtk_adjustment_new(0.0,0.0,
+		3000.0,10.0,10.0,0.0)),10.0,0);
+	gtk_spin_button_set_value(GTK_SPIN_BUTTON(show_delay),
+		(double)gconf_client_get_int(client,
+		"/apps/panel/global/panel-show-delay",NULL));
+	g_signal_connect(G_OBJECT(show_delay),"value-changed",
+		G_CALLBACK(show_delay_changed),NULL);
 	
 }
 
@@ -334,9 +368,10 @@ main (int argc, char **argv)
 	gconf_client = gconf_client_get_default();
 
 	/* Ahhh, yes the infamous commie mode, don't allow running of this,
-	 * just display a label*/
+	 * just display a label */
 
-	if(gconf_client_get_bool(gconf_client,"/apps/panel/lock-down",NULL)) 
+	if(gconf_client_get_bool(gconf_client,
+		"/apps/panel/global/lock-down",NULL)) 
 	{
 		GtkWidget *label;
 
