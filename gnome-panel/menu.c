@@ -4216,9 +4216,16 @@ image_menu_shown (GtkWidget *image, gpointer data)
 	if (gtk_image_get_storage_type (GTK_IMAGE (image)) != GTK_IMAGE_EMPTY)
 		return;
 
-	if (find_in_load_list (image) == NULL)
+	if (find_in_load_list (image) == NULL) {
+		/* Update required icon height */
+		gint icon_height;
+
+		if (gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
+			icon->size = icon_height;
+
 		icons_to_load = g_list_append (icons_to_load,
 					       icon_to_load_copy (icon));
+	}
 	if (load_icons_id == 0)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);
 }
