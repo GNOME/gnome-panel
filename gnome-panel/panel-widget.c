@@ -2717,7 +2717,7 @@ static gboolean
 panel_widget_real_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
-	if (GTK_WIDGET_HAS_FOCUS (widget) && GTK_FIXED (widget)->children) {
+	if (GTK_WIDGET_CAN_FOCUS (widget) && GTK_FIXED (widget)->children) {
 		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
 	}
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
