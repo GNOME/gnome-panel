@@ -50,6 +50,9 @@ GtkWidget      *create_main_menu          (PanelWidget *panel);
 
 void		setup_internal_applet_drag (GtkWidget             *menuitem,
 					    PanelActionButtonType  type);
+void            setup_uri_drag             (GtkWidget  *menuitem,
+					    const char *uri,
+					    const char *icon);
 
 GtkWidget *	panel_create_menu              (void);
 

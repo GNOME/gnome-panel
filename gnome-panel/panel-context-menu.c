@@ -46,24 +46,6 @@
 #include "panel-addto.h"
 
 static void
-panel_context_menu_show_about_gnome (GtkWidget *menuitem,
-				     char      *program_path)
-{
-	GdkScreen *screen = menuitem_to_screen (menuitem);
-	GError    *error = NULL;
-
-	if (!gdk_spawn_command_line_on_screen (screen, program_path, &error)) {
-		panel_error_dialog (screen,
-				    "cannot_exec_about_gnome", TRUE,
-				    _("Cannot execute '%s'"),
-				    _("%s: %s"),
-				    _("About GNOME"),
-				    program_path, error->message);
-		g_error_free (error);
-	}
-}
-
-static void
 panel_context_menu_show_help (GtkWidget *w,
 			      gpointer data)
 {
@@ -312,7 +294,6 @@ panel_context_menu_create (PanelWidget *panel)
 {
 	GtkWidget *retval;
 	GtkWidget *menuitem;
-	char      *gnome_about;
 
 	if (panel->master_widget) {
 		gpointer    *pointer;
@@ -361,23 +342,6 @@ panel_context_menu_create (PanelWidget *panel)
 			  G_CALLBACK (panel_context_menu_show_about_dialog),
 			  NULL);
 	
-	gnome_about = g_find_program_in_path ("gnome-about");
-	if (gnome_about) {
-		add_menu_separator (retval);
-
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem (menuitem,
-				GTK_ICON_SIZE_MENU,
-				gtk_image_new_from_stock (GTK_STOCK_ABOUT,
-							  GTK_ICON_SIZE_MENU),
-				_("About _GNOME"),
-				FALSE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-		g_signal_connect_data (menuitem, "activate",
-				       G_CALLBACK (panel_context_menu_show_about_gnome),
-				       gnome_about, (GClosureNotify) g_free, 0);
-	}
-
 	g_object_set_data (G_OBJECT (retval), "menu_panel", panel);
 
 	return retval;

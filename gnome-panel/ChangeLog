@@ -1,3 +1,49 @@
+2005-01-09  Vincent Untz  <vincent@vuntz.net>
+
+	New menu layout. See bug #161613
+
+	* menu.[ch]: (setup_uri_drag): new
+	(create_fake_menu): add panel-menu-needs-appending data to the menu so
+	we can append items after desktop files
+	(handle_menu_tree_changed): ditto
+	(create_applications_menu): ditto
+	(panel-addto.c): (panel_addto_append_internal_applets): renamed to...
+	(panel_addto_prepend_internal_applets): new function
+	(panel_addto_query_applets): prepend instead of appending (small
+	optimization)
+	(panel_addto_make_applet_model): updated
+	(panel_addto_make_application_list): prepend instead of appending, and
+	reverse the list at the end
+	(panel_addto_make_application_model): append items from the settings
+	menu
+	(panel_addto_dialog_free): free settings item list
+	* panel-context-menu.c: (panel_context_menu_show_about_gnome): killed
+	(panel_context_menu_create): do not add "About GNOME" menu item here
+	since it's in the menu bar now
+	* panel-menu-bar.c: (activate_uri), (activate_app_def),
+	(panel_menu_bar_append_from_desktop),
+	(panel_menu_bar_append_place_item),
+	(panel_menu_bar_recreate_places_menu),
+	(panel_menu_bar_recreate_desktop_menu),
+	(panel_menu_bar_append_applications_menu),
+	(panel_menu_bar_create_applications_menu),
+	(panel_menu_bar_desktop_is_home_dir_changed),
+	(panel_menu_bar_gtk_bookmarks_changed),
+	(panel_menu_bar_volume_changed),
+	(panel_menu_bar_append_gtk_bookmarks),
+	(panel_menu_bar_append_volumes), (panel_menu_bar_create_places_menu),
+	(panel_menu_bar_append_desktop_menu),
+	(panel_menu_bar_create_desktop_menu): new
+	(panel_menu_bar_recreate_actions_menu),
+	(panel_menu_bar_create_actions_menu): killed
+	(panel_menu_bar_instance_init): connect to the desktop_is_home_dir
+	key, monitor the ~/.gtk-bookmarks file, monitor the (un)mounted
+	volumes, create the three menus here
+	(panel_menu_bar_parent_set): updated
+	(panel_menu_bar_finalize): new, clean up things we created in
+	instance_init
+	(panel_menu_bar_class_init): add the finalize handler
+
 2005-01-07  Dennis Cranston <dennis_cranston@yahoo.com>
 
 	* drawer.c: (load_drawer_applet): Use header capitalization,

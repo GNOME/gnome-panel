@@ -1090,6 +1090,35 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 }
 
 void
+setup_uri_drag (GtkWidget  *menuitem,
+		const char *uri,
+		const char *icon)
+{
+	static GtkTargetEntry menu_item_targets[] = {
+		{ "text/uri-list", 0, 0 }
+	};
+
+	if (panel_lockdown_get_locked_down ())
+		return;
+
+	gtk_drag_source_set (menuitem,
+			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
+			     menu_item_targets, 1,
+			     GDK_ACTION_COPY);
+
+	/* FIXME: waiting for bug #116577
+	gtk_drag_source_set_icon_name (GTK_WIDGET (button), icon); */
+	
+	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
+			       G_CALLBACK (drag_data_get_string_cb),
+			       g_strdup (uri),
+			       (GClosureNotify)g_free,
+			       0 /* connect_flags */);
+	g_signal_connect (G_OBJECT (menuitem), "drag_end",
+			  G_CALLBACK (drag_end_menu_cb), NULL);
+}
+
+void
 setup_internal_applet_drag (GtkWidget             *menuitem,
 			    PanelActionButtonType  type)
 {
@@ -1165,6 +1194,10 @@ create_fake_menu (MenuTreeDirectory *directory)
 	
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
+			   GUINT_TO_POINTER (TRUE));
+
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-appending",
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
@@ -1287,6 +1320,10 @@ handle_menu_tree_changed (MenuTree  *tree,
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
 			   GUINT_TO_POINTER (TRUE));
+
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-appending",
+			   GUINT_TO_POINTER (TRUE));
 }
 
 static void
@@ -1321,6 +1358,10 @@ create_applications_menu (const char *menu_file,
 	
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
+			   GUINT_TO_POINTER (TRUE));
+
+	g_object_set_data (G_OBJECT (menu),
+			   "panel-menu-needs-appending",
 			   GUINT_TO_POINTER (TRUE));
 
 	g_signal_connect (menu, "show",
