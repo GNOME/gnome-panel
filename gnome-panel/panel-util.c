@@ -624,3 +624,39 @@ panel_make_unique_uri (const char *dir,
 
 #undef NUM_OF_WORDS
 }
+
+static char *
+lookup_in_data_dir (const char *basename,
+                    const char *data_dir)
+{
+	char *path;
+
+	path = g_build_filename (data_dir, basename, NULL);
+	if (!g_file_test (path, G_FILE_TEST_EXISTS)) {
+		g_free (path);
+		return NULL;
+	}
+
+	return path;
+}
+
+char *
+panel_lookup_in_data_dirs (const char *basename)
+{
+	const char * const *system_data_dirs;
+	const char          *user_data_dir;
+	char                *retval;
+	int                  i;
+
+	user_data_dir    = g_get_user_data_dir ();
+	system_data_dirs = g_get_system_data_dirs ();
+
+	if ((retval = lookup_in_data_dir (basename, user_data_dir)))
+		return retval;
+
+	for (i = 0; system_data_dirs[i]; i++)
+		if ((retval = lookup_in_data_dir (basename, system_data_dirs[i])))
+			return retval;
+
+	return NULL;
+}

@@ -62,6 +62,7 @@ char *panel_make_full_path   (const char *dir,
 			      const char *filename);
 char *panel_make_unique_uri (const char *dir,
 			     const char *suffix);
+char *panel_lookup_in_data_dirs (const char *basename);
 
 G_END_DECLS
 
