@@ -331,8 +331,8 @@ create_clock_widget (ClockData *cd)
 
 	cd->props = NULL;
 
-	cd->orient = PANEL_APPLET_ORIENT_UP;
-	cd->size = GNOME_Vertigo_PANEL_MEDIUM;
+	cd->orient = panel_applet_get_orient (PANEL_APPLET (cd->applet));
+	cd->size = panel_applet_get_size (PANEL_APPLET (cd->applet));
 
 	gtk_signal_connect (GTK_OBJECT(clock), "destroy",
 			    (GtkSignalFunc) destroy_clock,
@@ -602,6 +602,7 @@ fill_clock_applet(PanelApplet *applet)
 			  G_CALLBACK (applet_change_pixel_size),
 			  cd);
 
+	/* FIXME: initial background, this needs some panel-applet voodoo */
 	g_signal_connect (G_OBJECT (cd->applet),
 			  "change_background",
 			  G_CALLBACK (applet_change_background),

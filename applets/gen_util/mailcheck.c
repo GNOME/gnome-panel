@@ -1493,7 +1493,7 @@ fill_mailcheck_applet(PanelApplet *applet)
 
 	mc->mailcheck_text_only = _("Text only");
 
-	mc->size = GNOME_Vertigo_PANEL_MEDIUM;
+	mc->size = panel_applet_get_size (applet);
 
 	g_signal_connect(G_OBJECT(applet), "change_size",
 			 G_CALLBACK(applet_change_pixel_size),

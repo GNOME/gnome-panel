@@ -306,8 +306,18 @@ fill_pager_applet(PanelApplet *applet)
 		pager->display_all = TRUE; /* Default value */
 	}
 	
-	pager->size = 48;
-	pager->orientation = GTK_ORIENTATION_HORIZONTAL;
+	pager->size = panel_applet_get_size (applet);
+	switch (panel_applet_get_orient (applet)) {
+	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
+		pager->orientation = GTK_ORIENTATION_VERTICAL;
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+	case PANEL_APPLET_ORIENT_DOWN:
+	default:
+		pager->orientation = GTK_ORIENTATION_HORIZONTAL;
+		break;
+	}
 
 	/* TODO: Needs to get the screen number from DISPLAY or the panel. */
 	pager->screen = wnck_screen_get (0);

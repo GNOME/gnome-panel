@@ -329,9 +329,18 @@ fill_tasklist_applet(PanelApplet *applet)
 		tasklist->move_unminimized_windows = TRUE; /* Default value */
 	}
 	
-	/* FIXME: Would like to get the real initial panel data here */
-	tasklist->size = 48;
-	tasklist->orientation = GTK_ORIENTATION_HORIZONTAL;
+	tasklist->size = panel_applet_get_size (applet);
+	switch (panel_applet_get_orient (applet)) {
+	case PANEL_APPLET_ORIENT_LEFT:
+	case PANEL_APPLET_ORIENT_RIGHT:
+		tasklist->orientation = GTK_ORIENTATION_VERTICAL;
+		break;
+	case PANEL_APPLET_ORIENT_UP:
+	case PANEL_APPLET_ORIENT_DOWN:
+	default:
+		tasklist->orientation = GTK_ORIENTATION_HORIZONTAL;
+		break;
+	}
 
 	/* FIXME: Needs to get the screen number from DISPLAY or the panel. */
 	tasklist->screen = wnck_screen_get (0);
@@ -363,6 +372,7 @@ fill_tasklist_applet(PanelApplet *applet)
 			  "change_size",
 			  G_CALLBACK (applet_change_pixel_size),
 			  tasklist);
+	/* FIXME: initial background, this needs some panel-applet voodoo */
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_background",
 			  G_CALLBACK (applet_change_background),
