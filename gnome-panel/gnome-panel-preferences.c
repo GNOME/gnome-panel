@@ -369,7 +369,7 @@ main (int argc, char **argv)
 		GTK_STOCK_OK, GTK_RESPONSE_OK);
 
 	g_signal_connect (G_OBJECT(main_window), "response",
-			  GTK_CALLBACK (main_dialog_response),
+			  G_CALLBACK (main_dialog_response),
 			  main_window);
 
 	g_signal_connect (G_OBJECT (main_window), "destroy",

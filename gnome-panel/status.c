@@ -268,7 +268,10 @@ void
 status_applet_create_offscreen(void)
 {
 	DPUTS("CREATE OFFSCREEN");
-	offscreen = gtk_invisible_new ();
+	offscreen = gtk_window_new (GTK_WINDOW_POPUP);
+	gtk_window_move (GTK_WINDOW (offscreen),
+			 gdk_screen_width () + 10,
+			 gdk_screen_height () + 10);
 	if (fixed == NULL) {
 		fixed = gtk_fixed_new ();
 		gtk_widget_show (fixed);
