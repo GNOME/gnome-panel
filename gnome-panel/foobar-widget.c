@@ -41,6 +41,10 @@ static void foobar_widget_realize	(GtkWidget		*w);
 static void foobar_widget_destroy	(GtkObject		*o);
 static void foobar_widget_size_allocate	(GtkWidget		*w,
 					 GtkAllocation		*alloc);
+static gboolean foobar_leave_notify	(GtkWidget *widget,
+					 GdkEventCrossing *event);
+static gboolean foobar_enter_notify	(GtkWidget *widget,
+					 GdkEventCrossing *event);
 static void append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
@@ -87,6 +91,8 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 
 	widget_class->realize = foobar_widget_realize;
 	widget_class->size_allocate = foobar_widget_size_allocate;
+	widget_class->enter_notify_event = foobar_enter_notify;
+	widget_class->leave_notify_event = foobar_leave_notify;
 }
 
 static GtkWidget *
@@ -129,6 +135,31 @@ add_tearoff (GtkMenu *menu)
 	item = gtk_tearoff_menu_item_new ();
 	gtk_widget_show (item);
 	gtk_menu_prepend (menu, item);
+}
+
+static gboolean
+foobar_leave_notify (GtkWidget *widget,
+		     GdkEventCrossing *event)
+{
+	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
+		GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget,
+								     event);
+
+	return FALSE;
+}
+
+static gboolean
+foobar_enter_notify (GtkWidget *widget,
+		     GdkEventCrossing *event)
+{
+	if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event)
+		GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget,
+								     event);
+
+	if (global_config.autoraise)
+		gdk_window_raise (widget->window);
+
+	return FALSE;
 }
 
 #if 0

@@ -40,6 +40,8 @@ static void basep_widget_init		(BasePWidget      *basep);
 
 static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_init (BasePPos *pos);
+static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
+static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
 
 static void basep_widget_destroy (GtkObject *o);
 
@@ -326,6 +328,8 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
+	widget_class->enter_notify_event = basep_enter_notify;
+	widget_class->leave_notify_event = basep_leave_notify;
 
 	object_class->destroy = basep_widget_destroy;
 }
@@ -424,11 +428,12 @@ basep_pos_init (BasePPos *pos)
 	return;
 }
 
-static int
-basep_leave_notify(BasePWidget *basep,
-		   GdkEventCrossing *event,
-		   gpointer data)
+static gboolean
+basep_leave_notify (GtkWidget *widget,
+		    GdkEventCrossing *event)
 {
+	BasePWidget *basep = BASEP_WIDGET (widget);
+
 #ifdef PANEL_DEBUG
 	if (basep->state == BASEP_MOVING)
 		g_warning ("moving in leave_notify");
@@ -444,11 +449,12 @@ basep_leave_notify(BasePWidget *basep,
 	return FALSE;
 }
 
-static int
-basep_enter_notify(BasePWidget *basep, 
-		   GdkEventCrossing *event,
-		   gpointer data)
+static gboolean
+basep_enter_notify (GtkWidget *widget,
+		    GdkEventCrossing *event)
 {
+	BasePWidget *basep = BASEP_WIDGET (widget);
+
 	if (basep->state == BASEP_AUTO_HIDDEN &&
 	    event->detail != GDK_NOTIFY_INFERIOR) {
 
@@ -465,7 +471,7 @@ basep_enter_notify(BasePWidget *basep,
 	}  
 
 	if (global_config.autoraise)
-		gdk_window_raise(GTK_WIDGET(basep)->window);
+		gdk_window_raise (GTK_WIDGET(basep)->window);
 
 	return FALSE;
 }
@@ -980,14 +986,6 @@ basep_widget_init (BasePWidget *basep)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
-
-	gtk_signal_connect(GTK_OBJECT(basep), "enter_notify_event",
-			   GTK_SIGNAL_FUNC(basep_enter_notify),
-			   NULL);
-
-	gtk_signal_connect(GTK_OBJECT(basep), "leave_notify_event",
-			   GTK_SIGNAL_FUNC(basep_leave_notify),
-			   NULL);
 
 #if 0
 /* these are all 0... */
