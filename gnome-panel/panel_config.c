@@ -295,10 +295,14 @@ panel_config(PanelWidget *panel)
 			      _("Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
-	/* Position notebook page */
-	page = position_notebook_page ();
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
-					page, gtk_label_new (_("Orientation")));
+	if(panel->snapped!=PANEL_DRAWER &&
+	   panel->snapped!=PANEL_FREE) {
+		/* Position notebook page */
+		page = position_notebook_page ();
+		gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+						page, gtk_label_new (_("Orientation")));
+	}
+						
 
 	/* Backing pixmap configuration */
 	page = pixmap_page (panel);
