@@ -279,7 +279,6 @@ drag_data_get_cb (GtkWidget          *widget,
 		  guint               time,
 		  Launcher           *launcher)
 {
-	char *uri_list;
 	const char *location;
 	
 	g_return_if_fail (launcher != NULL);
@@ -287,24 +286,32 @@ drag_data_get_cb (GtkWidget          *widget,
 
 	location = gnome_desktop_item_get_location (launcher->ditem);
 
-	if (location == NULL)
+	if (!location) {
 		launcher_save (launcher);
+		location = gnome_desktop_item_get_location (launcher->ditem);
+	}
 
 	if (info == TARGET_URI_LIST) {
-		uri_list = g_strconcat ("file:", location, "\r\n", NULL);
+		if (location [0] != '/')
+			gtk_selection_data_set (
+				selection_data, selection_data->target, 8,
+				(guchar *)location, strlen (location));
+		else {
+			char *uri;
 
-		gtk_selection_data_set (selection_data,
-					selection_data->target, 8, (guchar *)uri_list,
-					strlen (uri_list));
-		g_free(uri_list);
-	} else if (info == TARGET_ICON_INTERNAL) {
+			uri = g_strconcat ("file://", location, "\r\n", NULL);
+
+			gtk_selection_data_set (
+				selection_data, selection_data->target, 8,
+				(guchar *)uri, strlen (uri));
+
+			g_free (uri);
+		}
+	} else if (info == TARGET_ICON_INTERNAL)
 		gtk_selection_data_set (selection_data,
 					selection_data->target, 8,
 					location, strlen (location));
-	}
 }
-
-
 
 static Launcher *
 create_launcher (const char *parameters, GnomeDesktopItem *ditem)
@@ -327,7 +334,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 							 0 /* flags */,
 							 NULL /* error */);
 
-		
 		if (ditem == NULL) {
 			gchar *entry;
 
@@ -973,7 +979,7 @@ launcher_save (Launcher *launcher)
 	g_return_if_fail (launcher != NULL);
 	g_return_if_fail (launcher->ditem != NULL);
 
-	if (gnome_desktop_item_get_location (launcher->ditem) == NULL)
+	if (!gnome_desktop_item_get_location (launcher->ditem))
 		gnome_desktop_item_set_location (launcher->ditem,
 						 launcher_get_unique_uri ());
 
