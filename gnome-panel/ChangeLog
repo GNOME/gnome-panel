@@ -1,5 +1,16 @@
 2004-02-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Patch from Glynn in bug #130664 to change the
+	Applications menu item to not use the non-descriptive
+	GNOME foot. New icon designed by Jimmac.
+
+	* panel-stock-icons.[ch]: register new "applications"
+	stock icon.
+	
+	* menu.c: (create_root_menu): use it.
+
+2004-02-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* egg-recent-item.[ch],
 	  egg-recent-model.[ch],
 	  egg-recent-view.[ch]: sync with libegg. Hopefull fixes

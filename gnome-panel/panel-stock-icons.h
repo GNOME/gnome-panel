@@ -42,6 +42,7 @@ G_BEGIN_DECLS
 #define PANEL_STOCK_LOGOUT              "panel-logout"
 #define PANEL_STOCK_FORCE_QUIT          "panel-force-quit"
 #define PANEL_STOCK_GNOME_LOGO          "panel-gnome-logo"
+#define PANEL_STOCK_APPLICATIONS        "panel-applications"
 #define PANEL_STOCK_MAIN_MENU           "panel-main-menu"
 #define PANEL_STOCK_DEBIAN              "panel-debian"
 #define PANEL_STOCK_SUSE                "panel-suse"
