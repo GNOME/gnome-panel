@@ -28,6 +28,19 @@
 #include "session.h"
 #include "status.h"
 
+#define EXTERN_DEBUG
+
+#ifndef EXTERN_DEBUG
+
+static inline void dprintf (const char *format, ...) { };
+
+#else
+
+#include <stdio.h>
+#define dprintf(format...) fprintf(stderr, format)
+
+#endif /* EXTERN_DEBUG */
+
 struct Extern_struct {
 	POA_GNOME_PanelSpot  servant;
 
@@ -52,7 +65,7 @@ struct Extern_struct {
 	 */
 	gboolean             clean_remove; 
 
-	gchar               *goad_id;
+	gchar               *iid;
 	gchar               *config_string;
 	GtkWidget           *ebox;
 	gboolean             started;
@@ -100,48 +113,50 @@ extern gboolean panel_in_startup;
 /* Launching applets into other things then the panel */
 
 typedef struct {
-	char *goad_id;
-	GNOME_PanelAppletBooter booter;
+	char                    *iid;
+	GNOME_PanelAppletBooter  booter;
 } OutsideExtern;
 
 static GSList *outside_externs = NULL;
 
 static void
-push_outside_extern (const char *goad_id,
-		     const GNOME_PanelAppletBooter booter,
-		     CORBA_Environment *ev)
+push_outside_extern (const char                    *iid,
+		     const GNOME_PanelAppletBooter  booter,
+		     CORBA_Environment             *ev)
 {
 	OutsideExtern *oe;
 
-	g_return_if_fail (goad_id != NULL);
+	g_return_if_fail (iid);
 	g_return_if_fail (booter != CORBA_OBJECT_NIL);
 
 	oe = g_new0 (OutsideExtern, 1);
 
-	oe->goad_id = g_strdup (goad_id);
+	oe->iid = g_strdup (iid);
 	oe->booter = CORBA_Object_duplicate (booter, ev);
 
 	outside_externs = g_slist_prepend (outside_externs, oe);
 }
 
 static GNOME_PanelAppletBooter
-pop_outside_extern (const char *goad_id)
+pop_outside_extern (const char *iid)
 {
 	GSList *li;
 
-	g_return_val_if_fail (goad_id != NULL, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (iid, CORBA_OBJECT_NIL);
 
-	for (li = outside_externs; li != NULL; li = li->next) {
+	for (li = outside_externs; li; li = li->next) {
 		OutsideExtern *oe = li->data;
 
-		if (strcmp (oe->goad_id, goad_id) == 0) {
-			GNOME_PanelAppletBooter booter = oe->booter;
-			g_free (oe->goad_id);
-			oe->goad_id = NULL;
+		if (!strcmp (oe->iid, iid)) {
+			g_free (oe->iid);
+			oe->iid = NULL;
+
 			g_free (oe);
-			return booter;
+
+			return oe->booter;
 		}
 	}
+
 	return CORBA_OBJECT_NIL;
 }
 
@@ -411,21 +426,25 @@ static POA_GNOME_StatusSpot__vepv statusspot_vepv = { &statusspot_base_epv, &sta
 /********************* NON-CORBA Stuff *******************/
 
 static void
-extern_start_new_goad_id (Extern e)
+extern_activate (Extern ext)
 {
         CORBA_Environment env;
 	CORBA_Object      obj;
 
+	dprintf ("extern_activate: ");
+
 	CORBA_exception_init (&env);
 
-#ifdef FIXME
-	obj = goad_server_activate_with_id (
-				NULL, e->goad_id, 
-				GOAD_ACTIVATE_NEW_ONLY|GOAD_ACTIVATE_ASYNC,
-				NULL);
+	obj = bonobo_activation_activate_from_id (ext->iid, 0, NULL, &env);
+	if (BONOBO_EX (&env) || obj == CORBA_OBJECT_NIL) {
+		CORBA_exception_free (&env);
+		dprintf ("failed\n");
+		return;
+	}
 
-	CORBA_Object_release (obj ,&env);
-#endif
+	dprintf ("successful\n");
+					    
+	CORBA_Object_release (obj, &env);
 
 	CORBA_exception_free (&env);
 }
@@ -674,10 +693,10 @@ extern_handle_set_tooltips_state (Extern   ext,
 }
 
 typedef struct {
-	char *goad_id;
+	char *iid;
 	char *cfgpath;
-	int pos;
-	int panel;
+	int   pos;
+	int   panel;
 } ReloadCallbackData;
 
 static void
@@ -685,8 +704,9 @@ destroy_reload_callback_data (gpointer data)
 {
 	ReloadCallbackData *d = data;
 
-	g_free (d->goad_id);
-	d->goad_id = NULL;
+	g_free (d->iid);
+	d->iid = NULL;
+
 	g_free (d->cfgpath);
 	d->cfgpath = NULL;
 
@@ -694,24 +714,31 @@ destroy_reload_callback_data (gpointer data)
 }
 
 static void
-reload_applet_callback (GtkWidget *w, int button, gpointer data)
+reload_applet_callback (GtkWidget *w,
+			int        button,
+			gpointer   data)
 {
-	PanelWidget *panel;
 	ReloadCallbackData *d = data;
+	PanelWidget        *panel;
 
-	/* unless the button was YES, just do nothing */
-	if (button != 0) {
+	/* 
+	 * unless the button was YES, just do nothing
+	 */
+	if (button) {
 		return;
 	}
 
-	/*select the nth panel*/
-	g_assert (panels != NULL);
+	/*
+	 * select the nth panel
+	 */
+	g_assert (panels);
+
 	panel = g_slist_nth_data (panels, d->panel);
-	if (panel == NULL)
+	if (!panel)
 		panel = panels->data;
 
-	extern_load_applet (d->goad_id, d->cfgpath, panel,
-			    d->pos, TRUE /*exactpos*/, FALSE /*queue*/);
+	extern_load_applet (d->iid, d->cfgpath, panel,
+			    d->pos, TRUE, FALSE);
 }
 
 void
@@ -727,7 +754,7 @@ extern_before_remove (Extern ext)
 	    ext->didnt_want_save)
 		return;
 
-	id = ext->goad_id != NULL ? ext->goad_id : "";
+	id = ext->iid != NULL ? ext->iid : "";
 
 	/* a hack, but useful to users */
 	if (strcmp (id, "deskguide_applet") == 0) {
@@ -758,7 +785,7 @@ extern_before_remove (Extern ext)
 	g_free (s);
 
 	d = g_new0 (ReloadCallbackData, 1);
-	d->goad_id = g_strdup (ext->goad_id);
+	d->iid = g_strdup (ext->iid);
 	d->cfgpath = g_strdup (ext->config_string);
 
 	if (ext->info->widget != NULL) {
@@ -807,8 +834,8 @@ extern_clean (Extern ext)
 	 */
 	extern_before_remove (ext);
 
-	g_free (ext->goad_id);
-	ext->goad_id = NULL;
+	g_free (ext->iid);
+	ext->iid = NULL;
 
 	g_free (ext->config_string);
 	ext->config_string = NULL;
@@ -1095,23 +1122,26 @@ reserve_applet_spot (Extern ext, PanelWidget *panel, int pos,
 
 /* Note exactpos may NOT be changed */
 static PanelWidget *
-get_us_position (const int panel, const int pos, const char *goad_id, int *newpos,
-		 gboolean *exactpos)
+get_us_position (const int   panel,
+		 const int   pos,
+		 const char *iid,
+		 int        *newpos,
+		 gboolean   *exactpos)
 {
 	PanelWidget *pw = NULL;
 
 	*newpos = pos;
 
 	/* Sanity? can this ever happen? */
-	if (goad_id == NULL) {
-		g_warning ("get_us_position: goad_id == NULL, bad bad");
-		goad_id = "foo";
+	if (!iid) {
+		g_warning ("get_us_position: iid == NULL, bad bad");
+		iid = "foo";
 	}
 
 	if (panel < 0 || pos < 0) {
 		char *key = g_strdup_printf ("%sApplet_Position_Memory/%s/",
 					     PANEL_CONFIG_PATH,
-					     goad_id);
+					     iid);
 		gnome_config_push_prefix (key);
 		g_free (key);
 
@@ -1180,7 +1210,7 @@ extern_activate_panelspot (Extern ext)
 }
 
 void
-extern_load_applet (const char  *goad_id,
+extern_load_applet (const char  *iid,
 		    const char  *cfgpath,
 		    PanelWidget *panel,
 		    int          pos,
@@ -1189,6 +1219,8 @@ extern_load_applet (const char  *goad_id,
 {
 	Extern               ext;
 	char                *cfg;
+
+	dprintf ("extern_load_applet: %s\n", iid);
 
 	if (string_empty (cfgpath))
 		cfg = g_strconcat (PANEL_CONFIG_PATH,
@@ -1213,15 +1245,14 @@ extern_load_applet (const char  *goad_id,
 	ext->send_draw_queued  = FALSE;
 	ext->pspot             = CORBA_OBJECT_NIL;
 	ext->applet            = CORBA_OBJECT_NIL;
-	ext->goad_id           = g_strdup(goad_id);
+	ext->iid               = g_strdup (iid);
 	ext->config_string     = cfg;
 
 	if (panel) {
 		PanelWidget *pw;
 		gboolean     exactpos;
 
-		pw = get_us_position (-1, pos, goad_id,
-				      &pos, &exactpos);
+		pw = get_us_position (-1, pos, iid, &pos, &exactpos);
 
 		if (pw == panel)
 			ext->exactpos = exactpos;
@@ -1229,8 +1260,7 @@ extern_load_applet (const char  *goad_id,
 			pos = 0;
 	}
 	else
-		panel = get_us_position (-1, -1, goad_id, &pos,
-					 &ext->exactpos);
+		panel = get_us_position (-1, -1, iid, &pos, &ext->exactpos);
 			
 	if (!reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)) {
 		g_warning (_("Whoops! for some reason we "
@@ -1240,9 +1270,13 @@ extern_load_applet (const char  *goad_id,
 	}
 
 	if (!queue) {
-		extern_start_new_goad_id (ext);
+		extern_activate (ext);
 		ext->started = TRUE;
 	}
+#ifdef EXTERN_DEBUG
+	else
+		dprintf ("extern_load_applet: queueing %s\n", ext->iid);
+#endif
 }
 
 void
@@ -1258,7 +1292,7 @@ extern_load_queued (void)
 			Extern ext = info->data;
 
 			if (!ext->started) {
-				extern_start_new_goad_id (ext);
+				extern_activate (ext);
 				ext->started = TRUE;
 			}
 		}
@@ -1344,9 +1378,9 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 
 			g_assert (ext);
 			g_assert (ext->info == info);
-			g_assert (ext->goad_id != NULL);
+			g_assert (ext->iid);
 
-			if (!strcmp (ext->goad_id, goad_id)) {
+			if (!strcmp (ext->iid, goad_id)) {
 				GtkWidget *socket;
 
 				/*
@@ -1405,7 +1439,7 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 	ext->send_draw     = FALSE;
 	ext->orient        = -1;
 	ext->applet        = CORBA_Object_duplicate (panel_applet, ev);
-	ext->goad_id       = g_strdup (goad_id);
+	ext->iid           = g_strdup (goad_id);
 	ext->config_string = NULL;
 
 	extern_activate_panelspot (ext);
@@ -2176,7 +2210,7 @@ extern_save_applet (AppletInfo *info,
 
 		gnome_config_set_string ("id", EXTERN_ID);
 		gnome_config_set_string ("goad_id",
-					 ext->goad_id);
+					 ext->iid);
 		gnome_config_set_int ("position", ad->pos);
 		gnome_config_set_int ("panel", panel_num);
 		gnome_config_set_int ("unique_panel_id", panel->unique_id);
@@ -2413,7 +2447,7 @@ extern_save_last_position (Extern ext, gboolean sync)
 
 	ext->clean_remove = TRUE;
 
-	if (ext->goad_id == NULL)
+	if (!ext->iid)
 		return;
 
 	/* Here comes a hack.  We probably want the next applet to load at
@@ -2421,7 +2455,7 @@ extern_save_last_position (Extern ext, gboolean sync)
 	 * app that just adds applets on it's own by just running them. */
 	key = g_strdup_printf ("%sApplet_Position_Memory/%s/",
 			       PANEL_CONFIG_PATH,
-			       ext->goad_id);
+			       ext->iid);
 	gnome_config_push_prefix (key);
 	g_free (key);
 

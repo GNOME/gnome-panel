@@ -34,11 +34,6 @@ bin_PROGRAMS = \
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
 
-# libpanel_appletincludedir = $(includedir)
-# libpanel_statusincludedir = $(includedir)
-# 
-# lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
-
 CORBA_SRCLIST = \
 	GNOME_Panel-stubs.c	\
 	GNOME_Panel-skels.c	\
@@ -59,22 +54,25 @@ panel-marshal.c: panel-marshal.h panel-marshal.list
 	&& cp xgen-gmc panel-marshal.c \
 	&& rm -f xgen-gmc xgen-gmc~
 
-# We need explicit dependencies here for people building out
-# of the tarballs.
+#libpanel_appletincludedir = $(includedir)
+#libpanel_statusincludedir = $(includedir)
+ 
+#lib_LTLIBRARIES =                  \
+#	libpanel_applet.la
 
-extern.c: GNOME_Panel.h
+#	libpanel_status.la
 
-# libpanel_applet_la_SOURCES = \
-# 	applet-widget.c \
-# 	$(CORBA_SRCLIST)
-# 
-# libpanel_appletinclude_HEADERS = \
-# 	applet-widget.h		\
-# 	GNOME_Panel.h
-# 
-# libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
-# libpanel_applet_la_LIBADD = $(PANEL_LIBS) -lm
-# 
+#libpanel_applet_la_SOURCES =       \
+#	applet-widget.c            \
+#	$(CORBA_SRCLIST)
+
+#libpanel_appletinclude_HEADERS =   \
+#	applet-widget.h            \
+#	GNOME_Panel.h
+
+#libpanel_applet_la_LDFLAGS = -version-info 1:0:1 -rpath $(libdir)
+#libpanel_applet_la_LIBADD  = $(PANEL_LIBS) -lm
+
 # libpanel_status_la_SOURCES = \
 # 	status-docklet.c \
 # 	$(CORBA_SRCLIST)

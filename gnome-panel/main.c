@@ -500,7 +500,8 @@ main(int argc, char **argv)
 
 	gnome_program_init ("panel", VERSION,
 			    LIBGNOMEUI_MODULE,
-			    argc, argv, NULL);
+			    argc, argv,
+			    GNOME_PARAM_NONE);
 
 	bonobo_activate ();
 

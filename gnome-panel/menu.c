@@ -2273,6 +2273,19 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 	}
 }
 
+/*
+ * FIXME: only a temporary testing menuitem
+ */
+static void
+add_test_applet (GtkWidget *widget,
+		 gpointer   dummy)
+{
+	extern_load_applet ("OAFIID:GNOME_TestApplet",
+			    NULL,
+                            get_panel_from_menu_data (widget, TRUE),
+                            -1, FALSE, FALSE);
+}
+
 static void
 add_applet (GtkWidget *w, const char *item_loc)
 {
@@ -4991,6 +5004,16 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(try_add_status_to_panel),NULL);
 	setup_internal_applet_drag(menuitem, "STATUS:TRY");
+
+	/*
+	 * FIXME: only a temporary testing menuitem
+	 */
+	menuitem = gtk_menu_item_new ();
+	gtk_widget_lock_accelerators (menuitem);
+	setup_menuitem (menuitem, 0, _("Test Applet"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (add_test_applet), NULL);
 }
 
 static void

@@ -1,5 +1,29 @@
 2001-10-22  Mark McLoughlin  <mark@skynet.ie>
 
+	Beginning of a proper port from GOAD to bonobo-activation.
+
+	* applet-widget.c, applet-widget.h: start the port. Not
+	finished yet, though.
+	(custom_servant_destroy): renamed from applet_servant_destroy.
+	(gnome_panel_client): impl.
+	(custom_servant_activate): renamed from gnome_panel_applet_corba_init.
+	(applet_widget_init): use gnome_program_init.
+	Elsewhere do s/goad_id/iid/g and use bonobo-activation.
+
+	* extern.c, extern.h: s/goad_id/iid/g
+	(extern_activate): renamed from extern_start_new_goad_id.
+
+	* main.c: (main): use GNOME_PARAM_NONE.
+
+	* menu.c: (add_test_applet), (make_add_submenu): add temporary
+	menuitem to load a test applet.
+
+	* panel.c: (drag_data_recieved_cb):
+	* session.c: (init_user_applets): #ifdef FIXME all other
+	applet loading.
+
+2001-10-22  Mark McLoughlin  <mark@skynet.ie>
+
 	* extern.c: (extern_shutdown): release the panel object.
 
 	* menu.c: (make_panel_submenu): add the tearoff to the submenu,

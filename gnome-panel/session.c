@@ -898,6 +898,7 @@ panel_quit (void)
 				   GNOME_INTERACT_ANY, 0, 1);
 }
 
+#ifdef FIXME
 /* try evil hacks to rewrite panel config from old applets (gnomepager for
  * now.  This is very evil.  But that's the only way to do it, it seems */
 static gboolean
@@ -928,6 +929,7 @@ try_evil_config_hacks (const char *goad_id, PanelWidget *panel, int pos)
 	}
 	return ret;
 }
+#endif /* FIXME */
 
 char *
 get_correct_prefix (char const **sep)
@@ -1062,7 +1064,8 @@ init_user_applets(void)
 		 G_MAXINT/2 should allways be large enough */
 		pos += (conditional_get_bool ("right_stick", FALSE, NULL)
 			? G_MAXINT/2 : 0);
-		
+
+#ifdef FIXME 
 		if (strcmp (applet_name, EXTERN_ID) == 0) {
 			char *goad_id = conditional_get_string ("goad_id",
 								NULL, NULL);
@@ -1081,7 +1084,10 @@ init_user_applets(void)
 			}
 			g_free (goad_id);
 
-		} else if (strcmp (applet_name, LAUNCHER_ID) == 0) { 
+		} else 
+#endif /* FIXME */
+
+		if (strcmp (applet_name, LAUNCHER_ID) == 0) { 
 			gboolean hoard = FALSE;
 			Launcher *launcher;
 			char *file;

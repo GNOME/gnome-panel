@@ -45,7 +45,7 @@ gboolean     extern_handle_set_tooltips_state
 
 void	     extern_before_remove         (Extern ext);
 
-void         extern_load_applet           (const char  *goad_id,
+void         extern_load_applet           (const char  *iid,
 					   const char  *cfgpath,
 					   PanelWidget *panel,
 					   int          pos,

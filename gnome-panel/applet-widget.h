@@ -9,6 +9,7 @@
 
 #include <gtk/gtk.h>
 #include <bonobo-activation/bonobo-activation.h>
+#include <libbonobo.h>
 
 #include <GNOME_Panel.h>
 
@@ -120,18 +121,25 @@ struct _AppletWidgetClass
 	void (* do_draw) (AppletWidget *applet);
 };
 
-typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **params, int nparams);
-/* Returns TRUE if the factory can activate this applet */
-typedef gboolean (*AppletFactoryQuerier)(const char *goad_id);
+typedef GtkWidget *(*AppletFactoryActivator) (const char  *iid,
+					      const char **params,
+					      int          nparams);
 
-GType		applet_widget_get_type		(void) G_GNUC_CONST;
+/*
+ * Returns TRUE if the factory can activate this applet.
+ */
+typedef gboolean   (*AppletFactoryQuerier)   (const char *iid);
 
-void            applet_factory_new(const char *goad_id,
-				   AppletFactoryQuerier qfunc,
-				   AppletFactoryActivator afunc);
-GtkWidget*	applet_widget_new(const char *goad_id);
+GType		applet_widget_get_type	     (void) G_GNUC_CONST;
 
-void		applet_widget_construct(AppletWidget* applet, const char *goad_id);
+void            applet_factory_new           (const char             *iid,
+					      AppletFactoryQuerier    qfunc,
+					      AppletFactoryActivator  afunc);
+
+GtkWidget*	applet_widget_new            (const char *iid);
+
+void		applet_widget_construct      (AppletWidget *applet,
+					      const char   *iid);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
@@ -265,26 +273,37 @@ void		applet_widget_gtk_main_quit	(void);
 /*quit the panel (this will log out the gnome session)*/
 void		applet_widget_panel_quit	(void);
 
-/* Used by shlib applets */
-CORBA_Object applet_widget_corba_activate(GtkWidget *applet,
-					  PortableServer_POA poa,
-					  const char *goad_id,
-					  const char **params,
-					  gpointer *impl_ptr,
-					  CORBA_Environment *ev);
+/*
+ * Used by shlib applets.
+ */
+CORBA_Object applet_widget_corba_activate   (GtkWidget           *applet,
+					     PortableServer_POA   poa,
+					     const char          *iid,
+					     const char         **params,
+					     gpointer            *impl_ptr,
+					     CORBA_Environment   *ev);
 
-void applet_widget_corba_deactivate(PortableServer_POA poa,
-				    const char *goad_id,
-				    gpointer impl_ptr,
-				    CORBA_Environment *ev);
+void         applet_widget_corba_deactivate (PortableServer_POA   poa,
+					     const char          *iid,
+					     gpointer             impl_ptr,
+					     CORBA_Environment   *ev);
 
 
-#define APPLET_ACTIVATE(func, goad_id, apldat) { CORBA_Environment ev; CORBA_exception_init(&ev); \
-CORBA_Object_release(func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB(), \
-"RootPOA", &ev), goad_id, NULL, apldat, &ev), &ev); CORBA_exception_free(&ev); }
+#define APPLET_ACTIVATE(func, iid, apldat) G_STMT_START {         \
+	CORBA_Environment  env;                                   \
+	CORBA_Object       obj;                                   \
+	CORBA_exception_init (&env);                              \
+	obj = func (bonobo_poa (), iid, NULL, apldat, &env);      \
+	CORBA_Object_release (obj, &env);                         \
+	CORBA_exception_free (&env);                              \
+	} G_STMT_END
 
-#define APPLET_DEACTIVATE(func, goad_id, apldat) { CORBA_Environment ev; CORBA_exception_init(&ev); \
-func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB(), "RootPOA", &ev), goad_id, apldat, &ev); CORBA_exception_free(&ev); }
+#define APPLET_DEACTIVATE(func, iid, apldat) G_STMT_START {       \
+	CORBA_Environment env;                                    \
+	CORBA_exception_init (&env);                              \
+	func (bonobo_poa (), iid, apldat, &env);                  \
+	CORBA_exception_free (&env);                              \
+	} G_STMT_END
 
 G_END_DECLS
 
