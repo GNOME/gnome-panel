@@ -100,6 +100,7 @@ extra_files =
 # contains GtkObjects/GObjects and you want to document signals and properties.
 GTKDOC_CFLAGS =					\
 	$(CFLAGS)				\
+	$(CPPFLAGS)				\
 	$(PANEL_CFLAGS)				\
 	-I$(srcdir)/../../../libpanel-applet    \
 	-I$(top_builddir)/libpanel-applet
