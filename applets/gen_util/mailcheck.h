@@ -8,10 +8,11 @@
 #ifndef _MAILCHECK_H_
 #define _MAILCHECK_H_
 
-BEGIN_GNOME_DECLS
+#include <gnome.h>
 
-GtkWidget * make_mailcheck_applet(const gchar *goad_id);
+#include <panel-applet.h>
 
-END_GNOME_DECLS
+gboolean fill_mailcheck_applet(PanelApplet *applet);
+
 
 #endif

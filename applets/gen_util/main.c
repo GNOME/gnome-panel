@@ -25,7 +25,7 @@
 #include <libgnome/libgnome.h>
 #include <bonobo/bonobo-shlib-factory.h>
 
-//#include "mailcheck.h"
+#include "mailcheck.h"
 #include "clock.h"
 #include "pager.h"
 #include "tasklist.h"
@@ -48,6 +48,9 @@ genutil_factory (PanelApplet *applet,
 
 	if (!strcmp (iid, "OAFIID:GNOME_TasklistApplet"))
 		retval = fill_tasklist_applet(applet);
+		
+	if (!strcmp (iid, "OAFIID:GNOME_MailcheckApplet"))
+		retval = fill_mailcheck_applet(applet);
 
 	return retval;
 }

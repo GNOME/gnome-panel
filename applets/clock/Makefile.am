@@ -17,16 +17,16 @@ libgen_util_applet_2_la_SOURCES = \
 	pager.c		\
 	pager.h		\
 	tasklist.c	\
-	tasklist.h
-
-#	mailcheck.c	\
-#	mailcheck.h	\
-#	popcheck.c	\
-#	popcheck.h	\
+	tasklist.h	\
+	mailcheck.c	\
+	mailcheck.h	\
+	popcheck.c	\
+	popcheck.h	\
+	remote-helper.c	\
+	remote-helper.h 
 #	printer.c	\
 #	printer.h	\
-#	remote-helper.c	\
-#	remote-helper.h \
+
 
 libgen_util_applet_2_la_LIBADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
