@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-29 13:31+0100\n"
+"POT-Creation-Date: 2004-10-12 16:13+0100\n"
 "PO-Revision-Date: 2004-08-13 16:37+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -44,7 +44,7 @@ msgstr "정보(_A)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2364
 #: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:613
 msgid "_Help"
@@ -1007,7 +1007,7 @@ msgid "Drawer"
 msgstr "서랍"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
+#: gnome-panel/menu.c:2314 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "등록 정보(_P)"
 
@@ -1312,60 +1312,60 @@ msgstr "실행 아이콘을 패널에 더하기"
 msgid "Remove this item"
 msgstr "이 항목 지우기"
 
-#: gnome-panel/menu.c:1398
+#: gnome-panel/menu.c:1397
 msgid "Entire menu"
 msgstr "전체 메뉴에서"
 
-#: gnome-panel/menu.c:1406
+#: gnome-panel/menu.c:1405
 msgid "Add this as drawer to panel"
 msgstr "서랍으로 패널에 더하기"
 
-#: gnome-panel/menu.c:1417
+#: gnome-panel/menu.c:1414
 msgid "Add this as menu to panel"
 msgstr "메뉴로 패널에 더하기"
 
-#: gnome-panel/menu.c:1429
+#: gnome-panel/menu.c:1424
 msgid "Add new item to this menu"
 msgstr "새 항목을 이 메뉴에 더하기"
 
-#: gnome-panel/menu.c:1456
+#: gnome-panel/menu.c:1451
 msgid "Properties"
 msgstr "등록 정보"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/menu.c:2164 gnome-panel/menu.c:2168 gnome-panel/menu.c:2555
 #: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "프로그램"
 
-#: gnome-panel/menu.c:2213
+#: gnome-panel/menu.c:2208
 msgid "You cannot remove your last panel."
 msgstr "마지막 패널은 지울 수 없습니다."
 
-#: gnome-panel/menu.c:2273
+#: gnome-panel/menu.c:2268
 msgid "_Delete This Panel..."
 msgstr "이 패널 지우기(_D)..."
 
-#: gnome-panel/menu.c:2276 gnome-panel/menu.c:2305
+#: gnome-panel/menu.c:2271 gnome-panel/menu.c:2299
 msgid "_Delete This Panel"
 msgstr "이 패널 지우기(_D)"
 
-#: gnome-panel/menu.c:2289
+#: gnome-panel/menu.c:2284
 msgid "_Add to Panel..."
 msgstr "패널에 더하기(_A)..."
 
-#: gnome-panel/menu.c:2334
+#: gnome-panel/menu.c:2328
 msgid "_New Panel"
 msgstr "새 패널(_N)"
 
-#: gnome-panel/menu.c:2381
+#: gnome-panel/menu.c:2375
 msgid "A_bout Panels"
 msgstr "패널 정보(_B)"
 
-#: gnome-panel/menu.c:2395
+#: gnome-panel/menu.c:2389
 msgid "About _GNOME"
 msgstr "그놈 정보(_G)"
 
-#: gnome-panel/menu.c:2642
+#: gnome-panel/menu.c:2636
 msgid "Desktop"
 msgstr "바탕화면"
 
@@ -1477,21 +1477,21 @@ msgstr "(비었음)"
 msgid "query returned exception %s\n"
 msgstr "질의가 예외 %s을(를) 돌려줌\n"
 
-#: gnome-panel/panel-addto.c:790
+#: gnome-panel/panel-addto.c:787
 #, c-format
 msgid "Add to %s"
 msgstr "%s에 더하기"
 
-#: gnome-panel/panel-addto.c:792
+#: gnome-panel/panel-addto.c:789
 msgid "Add to the panel"
 msgstr "패널에 더하기"
 
-#: gnome-panel/panel-addto.c:798
+#: gnome-panel/panel-addto.c:795
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "%s에 더할 항목을 선택하십시오(_I):"
 
-#: gnome-panel/panel-addto.c:801
+#: gnome-panel/panel-addto.c:798
 msgid "Select an _item to add to the panel:"
 msgstr "패널에 더할 항목을 선택하십시오(_I):"
 
@@ -1973,18 +1973,18 @@ msgid "Use custom path for menu contents"
 msgstr "메뉴 내용에 사용자 지정 경로 사용"
 
 #: gnome-panel/panel-profile.c:768 gnome-panel/panel-profile.c:799
-#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1606
+#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1641
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "GConf 문자열 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
 
-#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1504
-#: gnome-panel/panel-profile.c:1575 gnome-panel/panel-profile.c:1638
+#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1539
+#: gnome-panel/panel-profile.c:1610 gnome-panel/panel-profile.c:1673
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "GConf 정수 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
 
-#: gnome-panel/panel-profile.c:1514
+#: gnome-panel/panel-profile.c:1549
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1993,7 +1993,7 @@ msgstr ""
 "'%s' 패널은 스크린 %d에 보여주도록 설정되어 있으나, 이 스크린은 현재 사용할 "
 "수 없습니다. 이 패널은 읽어들이지 않습니다."
 
-#: gnome-panel/panel-profile.c:1590
+#: gnome-panel/panel-profile.c:1625
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf 불리언 값 '%s'을(를) 읽는 데 오류가 발생했습니다: %s"
@@ -2677,7 +2677,7 @@ msgstr "도움말 문서를 보일 수 없습니다"
 msgid "Open URL: %s"
 msgstr "URL 열기: %s"
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2685,7 +2685,7 @@ msgstr ""
 "패널이 지우면, 패널과 그안의 애플릿 설정들이\n"
 "지워집니다. 이 패널을 지울까요?"
 
-#: gnome-panel/panel.c:1254
+#: gnome-panel/panel.c:1253
 msgid "Delete Panel"
 msgstr "패널 지우기"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.8.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-10 20:22+0200\n"
+"POT-Creation-Date: 2004-10-12 16:13+0100\n"
 "PO-Revision-Date: 2004-10-10 20:22+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -49,7 +49,7 @@ msgstr "À _propos"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2364
 #: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:613
 msgid "_Help"
@@ -255,56 +255,56 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date courante."
 
-#: applets/clock/clock.schemas.in.h:1
-msgid ""
-"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
-msgstr "24"
-
+#. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
-msgid ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
-msgstr "24-hour"
+msgid "24"
+msgstr ""
 
-#: applets/clock/clock.schemas.in.h:3
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+#, fuzzy
+msgid "24-hour"
+msgstr "24 heures"
+
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Format personnalisé de l'horloge"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Format de l'heure"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Si vrai, affiche la date dans l'Horloge, en plus de l'heure."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "Si vrai, affiche les secondes dans l'heure."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Si vrai, affiche l'heure en temps universel coordonné (UTC)."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Si vrai, affiche la date dans une bulle d'aide lorsque la souris est sur "
 "l'horloge."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Afficher la date dans l'horloge"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Afficher la date en bulle d'aide"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Afficher l'heure avec les secondes"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -313,7 +313,7 @@ msgstr ""
 "clé « format ». Le schéma est conservé par compatibilité avec les anciennes "
 "versions."
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:15
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -323,7 +323,7 @@ msgstr ""
 "format est défini à « custom ». Vous pouvez utiliser des spécificateur de "
 "conversion compris par strftime() pour obtenir un format spécifique."
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:16
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -344,23 +344,23 @@ msgstr ""
 "est défini à « custom », l'horloge affichera l'heure en fonction du format "
 "spécifié dans la clé custom_format."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Cette clé spécifie le programme à lancer pour configurer l'heure."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Outil de configuration de l'heure"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Utiliser l'heure Internet"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Utiliser l'heure UNIX"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Utiliser UTC"
 
@@ -1035,12 +1035,12 @@ msgid "CDE Menu"
 msgstr "Menu CDE"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:151
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "Tiroir"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
+#: gnome-panel/menu.c:2314 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Propriétés"
 
@@ -1341,7 +1341,7 @@ msgstr "Impossible d'obtenir le nom du fichier à partir du chemin : %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Impossible d'obtenir le nom du répertoire à partir du chemin : %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:129
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Menu principal"
 
@@ -1353,60 +1353,60 @@ msgstr "Ajouter ce lanceur au tableau de bord"
 msgid "Remove this item"
 msgstr "Enlever cet élement"
 
-#: gnome-panel/menu.c:1398
+#: gnome-panel/menu.c:1397
 msgid "Entire menu"
 msgstr "Tout le menu"
 
-#: gnome-panel/menu.c:1406
+#: gnome-panel/menu.c:1405
 msgid "Add this as drawer to panel"
 msgstr "Ajouter ceci comme tiroir au tableau de bord"
 
-#: gnome-panel/menu.c:1417
+#: gnome-panel/menu.c:1414
 msgid "Add this as menu to panel"
 msgstr "Ajouter ceci comme menu au tableau de bord"
 
-#: gnome-panel/menu.c:1429
+#: gnome-panel/menu.c:1424
 msgid "Add new item to this menu"
 msgstr "Ajouter un nouvel élement à ce menu"
 
-#: gnome-panel/menu.c:1456
+#: gnome-panel/menu.c:1451
 msgid "Properties"
 msgstr "Propriétés"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/menu.c:2164 gnome-panel/menu.c:2168 gnome-panel/menu.c:2555
 #: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "Applications"
 
-#: gnome-panel/menu.c:2213
+#: gnome-panel/menu.c:2208
 msgid "You cannot remove your last panel."
 msgstr "Vous ne pouvez pas supprimer votre dernier tableau de bord."
 
-#: gnome-panel/menu.c:2273
+#: gnome-panel/menu.c:2268
 msgid "_Delete This Panel..."
 msgstr "_Supprimer ce tableau de bord..."
 
-#: gnome-panel/menu.c:2276 gnome-panel/menu.c:2305
+#: gnome-panel/menu.c:2271 gnome-panel/menu.c:2299
 msgid "_Delete This Panel"
 msgstr "_Supprimer ce tableau de bord"
 
-#: gnome-panel/menu.c:2289
+#: gnome-panel/menu.c:2284
 msgid "_Add to Panel..."
 msgstr "A_jouter au tableau de bord..."
 
-#: gnome-panel/menu.c:2334
+#: gnome-panel/menu.c:2328
 msgid "_New Panel"
 msgstr "_Nouveau tableau de bord"
 
-#: gnome-panel/menu.c:2381
+#: gnome-panel/menu.c:2375
 msgid "A_bout Panels"
 msgstr "À _propos des tableaux de bord"
 
-#: gnome-panel/menu.c:2395
+#: gnome-panel/menu.c:2389
 msgid "About _GNOME"
 msgstr "À propos de _GNOME"
 
-#: gnome-panel/menu.c:2642
+#: gnome-panel/menu.c:2636
 msgid "Desktop"
 msgstr "Bureau"
 
@@ -1495,46 +1495,46 @@ msgstr "Lanceur d'application..."
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Lance un programme qui existe déjà dans le menu GNOME"
 
-#: gnome-panel/panel-addto.c:130
+#: gnome-panel/panel-addto.c:126
 msgid "The main GNOME menu"
 msgstr "Le menu principal GNOME"
 
-#: gnome-panel/panel-addto.c:140
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Barre de menus"
 
-#: gnome-panel/panel-addto.c:141
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr "Une barre de menus personnalisée"
 
-#: gnome-panel/panel-addto.c:152
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr "Un menu déroulant qui stocke d'autres objets"
 
-#: gnome-panel/panel-addto.c:242
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr "(vide)"
 
-#: gnome-panel/panel-addto.c:382 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:376 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la requête a retourné l'exception %s\n"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:787
 #, c-format
 msgid "Add to %s"
 msgstr "Ajouter à %s"
 
-#: gnome-panel/panel-addto.c:835
+#: gnome-panel/panel-addto.c:789
 msgid "Add to the panel"
 msgstr "Ajouter au tableau de bord"
 
-#: gnome-panel/panel-addto.c:841
+#: gnome-panel/panel-addto.c:795
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Chois_ir un objet à ajouter à %s :"
 
-#: gnome-panel/panel-addto.c:844
+#: gnome-panel/panel-addto.c:798
 msgid "Select an _item to add to the panel:"
 msgstr "Chois_ir un objet à ajouter au tableau de bord :"
 
@@ -2044,18 +2044,18 @@ msgid "Use custom path for menu contents"
 msgstr "Utiliser un chemin personnalisée pour le contenu du menu"
 
 #: gnome-panel/panel-profile.c:768 gnome-panel/panel-profile.c:799
-#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1606
+#: gnome-panel/panel-profile.c:835 gnome-panel/panel-profile.c:1641
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur chaîne GConf « %s » : %s"
 
-#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1504
-#: gnome-panel/panel-profile.c:1575 gnome-panel/panel-profile.c:1638
+#: gnome-panel/panel-profile.c:814 gnome-panel/panel-profile.c:1539
+#: gnome-panel/panel-profile.c:1610 gnome-panel/panel-profile.c:1673
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur entière GConf « %s » : %s"
 
-#: gnome-panel/panel-profile.c:1514
+#: gnome-panel/panel-profile.c:1549
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2064,7 +2064,7 @@ msgstr ""
 "Le tableau de bord « %s »est défini pour être affiché sur l'écran %d qui "
 "n'est actuellement pas disponible. Ne charge pas ce tableau de bord."
 
-#: gnome-panel/panel-profile.c:1590
+#: gnome-panel/panel-profile.c:1625
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Erreur lors de la lecture de la valeur booléenne GConf « %s » : %s"
@@ -2783,7 +2783,7 @@ msgstr "Impossible d'afficher le document d'aide"
 msgid "Open URL: %s"
 msgstr "Ouvrir l'URL : %s"
 
-#: gnome-panel/panel.c:1245
+#: gnome-panel/panel.c:1244
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2791,7 +2791,7 @@ msgstr ""
 "Lorsqu'un tableau de bord est supprimé, le tableau de bord\n"
 "et ses paramètres sont perdus. Voulez-vous supprimer ce tableau de bord ?"
 
-#: gnome-panel/panel.c:1254
+#: gnome-panel/panel.c:1253
 msgid "Delete Panel"
 msgstr "Supprimer ce tableau de bord"
 
@@ -2916,3 +2916,13 @@ msgstr "Très très grand"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Très très petit"
+
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
+#~ msgstr "24"
+
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"
+#~ msgstr "24-hour"
