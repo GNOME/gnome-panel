@@ -926,6 +926,19 @@ applet_widget_get_free_space(AppletWidget *applet)
 	return r;
 }
 
+/* sets if the change_position signal is sent*/
+void
+applet_widget_send_position(AppletWidget *applet, int enable)
+{
+	CORBA_Environment ev;
+	g_return_val_if_fail(applet != NULL,0);
+	g_return_val_if_fail(IS_APPLET_WIDGET(applet), 0);
+	
+	CORBA_exception_init(&ev);
+	GNOME_PanelSpot__set_send_position(CD(applet)->pspot, enable, &ev);
+	CORBA_exception_free(&ev);
+}
+
 int	
 applet_widget_init(const char *app_id,
 		   const char *app_version,
