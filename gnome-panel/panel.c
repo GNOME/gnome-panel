@@ -491,14 +491,23 @@ add_main_menu(GtkWidget *widget, gpointer data)
 int
 applet_button_press_event(int id, int button)
 {
-	/*send these to the parent of the applet*/
-	if(button == 2 || button == 3) {
+	if(button==3) {
+		AppletInfo *info = g_list_nth(applets,id)->data;
+		show_applet_menu(info);
+		return TRUE;
+	} else if(button == 2) {
+		AppletInfo *info = g_list_nth(applets,id)->data;
+		PanelWidget *panel = find_applet_panel(info->widget);
+
+		panel_widget_applet_drag_start(panel,info->widget);
+		return TRUE;
 	}
 	return FALSE;
 }
 
 
 struct  reparent_struct {
+	GtkWidget *panel;
 	GdkWindow *win;
 	GdkWindow *target;
 };
@@ -516,6 +525,7 @@ delayed_reparent_window_id (gpointer data)
 	}
 	g_free (rs);
 	printf ("delayed out\n");
+	gtk_widget_draw(rs->panel, NULL);
 	return 0;
 }
 
@@ -525,6 +535,7 @@ reparent_window_id (unsigned long id, int panel, int pos)
 	struct reparent_struct *rs = g_new (struct reparent_struct, 1);
 	GtkWidget *eb;
 	GdkWindow *win;
+	GList *list;
 	int w,h;
 	int i;
 	
@@ -541,12 +552,16 @@ reparent_window_id (unsigned long id, int panel, int pos)
 
 	rs->win = win;
 	rs->target = eb->window;
+	rs->panel = g_list_nth(panels,panel)->data;
 	
 	gtk_idle_add (delayed_reparent_window_id, (gpointer) rs);
 	
 	printf ("leaving reparent\n");
 
-	return /*FIXME: appletid*/0;
+	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
+		i++;
+
+	return i;
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/
