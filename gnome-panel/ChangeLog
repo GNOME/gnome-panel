@@ -1,5 +1,17 @@
 2003-11-06  Vincent Untz  <vincent@vuntz.net>
 
+	* applet.c: (applet_callback_callback)
+	* launcher.c: (setup_button), (launcher_show_help)
+	* launcher.h:
+	* menu.c: (show_help_on), (show_item_menu)
+	* panel-util.c: (panel_show_gnome_help), (panel_show_kde_help),
+	(panel_show_gnome_kde_help), (panel_help_error_quark), (panel_is_url)
+	* panel-util.h:
+	Remove old useless and dead code which was used for the "Show help on"
+	stuff. Fix bug #124818.
+
+2003-11-06  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-properties-dialog.glade: remove the bold label for the icon of
 	the drawer.
 

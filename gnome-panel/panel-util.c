@@ -43,8 +43,6 @@
 #include "panel-globals.h"
 #include "launcher.h"
 
-static gboolean panel_is_url (const char *url);
-
 int
 panel_ditem_launch (const GnomeDesktopItem       *item,
 		    GList                        *file_list,
@@ -77,133 +75,6 @@ panel_show_help (GdkScreen  *screen,
 
 		g_clear_error (&error);
 	}
-}
-
-static gboolean
-panel_show_gnome_help (GdkScreen   *screen,
-		       const char  *docpath,
-		       GError     **error)
-{
-	char *app, *p, *path;
-	gboolean retval;
-
-	app = g_strdup (docpath);
-
-	p = strchr (app, '/');
-
-	if (p == NULL) {
-		g_free (app);
-		g_set_error (error,
-			     PANEL_HELP_ERROR,
-			     PANEL_HELP_ERROR_NOT_FOUND,
-			     /* XXX: Not really a correct error,
-			      * but just somewhat correct */
-			     _("Help document not found"));
-		return FALSE;
-	}
-
-	path = p+1;
-	*p = '\0';
-
-	retval = TRUE;
-
-	if ( ! egg_help_display_desktop_on_screen (NULL, app, path, NULL, screen, error)) {
-		/* We wish to get the error from the first call, and not the second
-		   (since what would we do on both being set, which at best results
-		   in GError warnings) */
-		/* FIXME: perhaps merge error texts and create a new error */
-		retval = egg_help_display_with_doc_id_on_screen (
-				NULL, app, path, NULL, screen, NULL);
-		if (retval)
-			g_clear_error (error);
-	}
-
-	g_free (app);
-
-	return retval;
-}
-
-static gboolean
-panel_show_kde_help (GdkScreen   *screen,
-		     const char  *docpath,
-		     GError     **error)
-{
-	const GList *li;
-
-	if ( ! g_file_test (KDE_DOCDIR, G_FILE_TEST_EXISTS)) {
-		g_set_error (error,
-			     PANEL_HELP_ERROR,
-			     PANEL_HELP_ERROR_NOT_FOUND,
-			     _("Help document not found"));
-		return FALSE;
-	}
-
-	for (li = gnome_i18n_get_language_list ("LC_MESSAGES");
-	     li != NULL;
-	     li = li->next) {
-		char *fullpath = g_strdup_printf ("%s/HTML/%s/%s",
-						  KDE_DOCDIR,
-						  (char *)li->data,
-						  docpath);
-		if (g_file_test (fullpath, G_FILE_TEST_EXISTS)) {
-			gboolean retval;
-			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
-			g_free (fullpath);
-			retval = egg_help_display_uri_on_screen (uri, screen, error);
-			g_free (uri);
-			return retval;
-		}
-		g_free (fullpath);
-	}
-
-	g_set_error (error,
-		     PANEL_HELP_ERROR,
-		     PANEL_HELP_ERROR_NOT_FOUND,
-		     _("Help document not found"));
-
-	return FALSE;
-}
-
-gboolean
-panel_show_gnome_kde_help (GdkScreen   *screen,
-			   const char  *docpath,
-			   GError     **error)
-{
-	if (string_empty (docpath)) {
-		g_set_error (error,
-			     PANEL_HELP_ERROR,
-			     PANEL_HELP_ERROR_NO_DOCPATH,
-			     _("No document to show"));
-		return FALSE;
-	}
-
-	if (panel_is_url (docpath))
-		return egg_help_display_uri_on_screen (docpath, screen, error);
-
-	if ( ! panel_show_gnome_help (screen, docpath, error)) {
-		/* we don't want to pass error to panel_show_kde_help.
-		   If we fail we wish to display the error we got from
-		   panel_show_gnome_help.  Not to mention that if
-		   we pass the error here we get GError errors about
-		   resetting an error (and a memleak) */
-		/* FIXME: perhaps merge error texts and create a new error */
-		gboolean ret = panel_show_kde_help (screen, docpath, NULL);
-		if (ret)
-			g_clear_error (error);
-		return ret;
-	}
-
-	return TRUE;
-}
-
-GQuark
-panel_help_error_quark (void)
-{
-	static GQuark q = 0;
-	if (q == 0)
-		q = g_quark_from_static_string ("panel-help-error-quark");
-
-	return q;
 }
 
 static void
@@ -521,24 +392,6 @@ panel_find_applet_index (GtkWidget *widget)
 	}
 
 	return i;
-}
-
-/* is url showable by gnome_url_show */
-static gboolean
-panel_is_url (const char *url)
-{
-	if (strncmp (url, "http://", strlen ("http://")) == 0 ||
-	    strncmp (url, "https://", strlen ("https://")) == 0 ||
-	    strncmp (url, "gopher://", strlen ("gopher://")) == 0 ||
-	    strncmp (url, "ftp://", strlen ("ftp://")) == 0 ||
-	    strncmp (url, "file:", strlen ("file:")) == 0 ||
-	    strncmp (url, "ghelp:", strlen ("ghelp:")) == 0 ||
-	    strncmp (url, "help:", strlen ("help:")) == 0 ||
-	    strncmp (url, "man:", strlen ("man:")) == 0 ||
-	    strncmp (url, "info:", strlen ("info:")) == 0)
-		return TRUE;
-	else
-		return FALSE;
 }
 
 void

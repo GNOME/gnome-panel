@@ -483,7 +483,6 @@ setup_button (Launcher *launcher)
 {
 	const char *comment;
 	const char *name;
-	const char *docpath;
 	char *str;
 	const char *icon;
 	char *unescaped_str;
@@ -515,24 +514,6 @@ setup_button (Launcher *launcher)
 	icon = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_ICON);
 	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), sure_string (icon));
-
-	/* Setup help */
-	docpath = gnome_desktop_item_get_string (launcher->ditem,
-						 "X-GNOME-DocPath");
-
-	panel_applet_remove_callback (launcher->info, "help_on_app");
-
-	if (docpath && *docpath != '\0') {
-		char *title;
-
-		title = g_strdup_printf (_("Help on %s _Application"), name);
-
-		panel_applet_add_callback (launcher->info,
-					   "help_on_app",
-					   GTK_STOCK_HELP,
-					   title);
-		g_free (title);
-	}
 }
 
 
@@ -1106,30 +1087,6 @@ find_launcher (const char *path)
 	}
 
 	return NULL;
-}
-
-void
-launcher_show_help (Launcher  *launcher,
-		    GdkScreen *screen)
-{
-	GError     *error = NULL;
-	const char *docpath;
-
-	if (!launcher->ditem)
-		return;
-
-	docpath = gnome_desktop_item_get_string (
-				launcher->ditem, "X-GNOME-DocPath");
-	panel_show_gnome_kde_help (screen, docpath, &error);
-	if (error) {
-		panel_error_dialog (screen,
-				    "cannot_show_gnome_kde_help",
-				    _("Cannot display help document"),
-				    "%s",
-				    error->message);
-
-		g_error_free (error);
-	}
 }
 
 void

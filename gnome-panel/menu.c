@@ -1173,46 +1173,6 @@ add_to_run_dialog (GtkWidget    *widget,
 }
 
 static void
-show_help_on (GtkWidget    *widget,
-	      ShowItemMenu *sim)
-{
-	GError           *error = NULL;
-	GnomeDesktopItem *item;
-	GdkScreen        *screen;
-
-	screen = menuitem_to_screen (sim->menuitem);
-
-	item = gnome_desktop_item_new_from_uri (sim->item_loc,
-						GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						&error);
-	if (item != NULL) {
-		const char *docpath = gnome_desktop_item_get_string
-			(item, "X-GNOME-DocPath");
-		if ( ! panel_show_gnome_kde_help (screen, docpath, &error)) {
-			panel_error_dialog (screen,
-					    "cannot_show_gnome_kde_help",
-					    _("Cannot display help document"),
-					    "%s",
-					    error->message);
-
-			g_clear_error (&error);
-		}
-
-		gnome_desktop_item_unref (item);
-	} else {
-		g_assert (error != NULL);
-
-		panel_error_dialog (screen,
-				    "cannot_load_entry",
-				    _("Cannot load entry"),
-				    "%s",
-				    error->message);
-
-		g_clear_error (&error);
-	}
-}
-
-static void
 add_app_to_panel (GtkWidget    *item,
 		  ShowItemMenu *sim)
 {
@@ -1519,28 +1479,6 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 "activate",
 					 G_CALLBACK(gtk_menu_shell_deactivate),
 					 G_OBJECT(item->parent));
-			}
-
-			if (gnome_desktop_item_get_string (ii, "X-GNOME-DocPath") != NULL) {
-				char *title;
-				const char *name;
-
-				menuitem = gtk_image_menu_item_new ();
-				name = gnome_desktop_item_get_localestring (ii, GNOME_DESKTOP_ITEM_NAME);
-				title = g_strdup_printf (_("Help on %s"),
-							 (name != NULL) ? name : _("Application"));
-				setup_menuitem (menuitem, panel_menu_icon_get_size (),
-						NULL, title, FALSE);
-				g_free (title);
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
-						 menuitem);
-				g_signal_connect (menuitem, "activate",
-					          G_CALLBACK (show_help_on),
-					          sim);
-				g_signal_connect_swapped (G_OBJECT(menuitem),
-					 		  "activate",
-					 		   G_CALLBACK(gtk_menu_shell_deactivate),
-					 		   G_OBJECT(item->parent));
 			}
 
 			if ( ! panel_profile_get_inhibit_command_line ()) {

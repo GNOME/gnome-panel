@@ -69,18 +69,6 @@ GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 
 int		panel_find_applet_index	(GtkWidget *widget);
 
-typedef enum {
-	PANEL_HELP_ERROR_NO_DOCPATH /* No docpath sent */,
-	PANEL_HELP_ERROR_NOT_FOUND /* Document not found */
-} PanelHelpError;
-
-#define PANEL_HELP_ERROR panel_help_error_quark ()
-GQuark panel_help_error_quark (void);
-
-gboolean	panel_show_gnome_kde_help (GdkScreen   *screen,
-					   const char  *docpath,
-					   GError     **error);
-
 void		panel_push_window_busy	(GtkWidget *window);
 void		panel_pop_window_busy	(GtkWidget *window);
 

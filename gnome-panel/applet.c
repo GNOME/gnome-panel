@@ -181,9 +181,6 @@ applet_callback_callback (GtkWidget      *widget,
 		if (!strcmp (menu->name, "properties"))
 			launcher_properties (
 				menu->info->data, screen);
-
-		else if (!strcmp (menu->name, "help_on_app"))
-			launcher_show_help (menu->info->data, screen);
 		break;
 	case PANEL_OBJECT_DRAWER: 
 		if (strcmp (menu->name, "properties")==0) {

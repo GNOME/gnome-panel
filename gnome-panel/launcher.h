@@ -70,9 +70,6 @@ void		ask_about_launcher		(const char *file,
 
 Launcher *	find_launcher			(const char *path);
 
-void            launcher_show_help              (Launcher  *launcher,
-						 GdkScreen *screen);
-
 void            launcher_properties_destroy     (Launcher *launcher);
 
 void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
