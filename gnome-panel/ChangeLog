@@ -1,3 +1,12 @@
+2002-05-28  Mark McLoughlin  <mark@skynet.ie>
+
+	* gnome-panel-screenshot.c: (add_file_to_path): convert translated
+	filenames from utf8 to the locale encoding for filenames.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct): use
+	g_signal_connect_object instead of constructing the closure
+	ourselves.
+
 2002-05-25  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.[ch]: (panel_applet_menu_set_recurse): rename and

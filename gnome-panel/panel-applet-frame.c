@@ -931,13 +931,12 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	cnx_status = ORBit_small_get_connection_status (control);
 	if (cnx_status != ORBIT_CONNECTION_IN_PROC)
-		g_signal_connect_closure (
+		g_signal_connect_object (
 			ORBit_small_get_connection (control),
 			"broken",
-			g_cclosure_new_object_swap (
-				G_CALLBACK (panel_applet_frame_cnx_broken),
-				G_OBJECT (frame)),
-			FALSE);
+			G_CALLBACK (panel_applet_frame_cnx_broken),
+			frame,
+			G_CONNECT_SWAPPED);
 	
 	CORBA_exception_free (&ev);
 
