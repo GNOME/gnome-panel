@@ -511,6 +511,7 @@ drawer_widget_new (PanelOrientType orient,
 	BasePWidget *basep;
 	
 	drawer = gtk_type_new(drawer_widget_get_type());
+	drawer->orient = orient;
 
 	basep = BASEP_WIDGET(drawer);
 
