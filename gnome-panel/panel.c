@@ -519,9 +519,9 @@ is_applet_pos_ok(GtkWidget *applet, gpointer data)
 	get_applet_geometry(applet, &x, &y, &width, &height);
 
 	if((	newpos->x<(x+width) &&
-		(newpos->x+width)>x) &&
+		(newpos->x+newpos->width)>x) &&
 		(newpos->y<(y+height) &&
-		(newpos->y+height)>y))
+		(newpos->y+newpos->height)>y))
 		/*it's overlapping some other applet so scratch that*/
 		newpos->ok=FALSE;
 	else
@@ -650,7 +650,7 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 					y1 = 0;
 
 				if ((x1 != xpos) || (y1 != ypos))
-					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1, y1);
+					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1+i, y1);
 
 				return TRUE;
 			}
@@ -1003,15 +1003,20 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
 
 	fix_applet_position(eventbox, &xpos, &ypos);
+	printf("w=%d\n",(int)GTK_WIDGET(eventbox)->allocation.width);
 
-	while(!panel_is_spot_clean(NULL,xpos,ypos,
-		GTK_WIDGET(eventbox)->allocation.width,
-		GTK_WIDGET(eventbox)->allocation.height)) {
+	/* FIXME: somehow find the size or schedhule rellocation a bit
+	   later*/
+	while(!panel_is_spot_clean(NULL,xpos,ypos,50,50)) {
+		/*GTK_WIDGET(eventbox)->allocation.width,
+		GTK_WIDGET(eventbox)->allocation.height)) {*/
 		xpos++;
+		printf("%d\n",xpos);
 		/* FIXME: should be done for
 		   vertical bar as well */
 	}
 	gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox, xpos, ypos);
+
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
 }
