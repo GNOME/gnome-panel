@@ -1,0 +1,154 @@
+<gconfschemafile>
+    <schemalist>    
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/animation-file</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default>none</default>
+            <locale name="C">
+                <short>Path to the animation file</short>
+                <long>This is the animation that will be displayed during normal use of the mailcheck applet</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/update-frequency</key>
+            <owner>mailcheck-applet</owner>
+            <type>int</type>
+            <default>120000</default>
+            <locale name="C">
+                <short>Interval for checking mail</short>
+                <long>How often (in milliseconds) we check the mail</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/exec-command</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>Command to execute when checking mail</short>
+                <long>This is how we check the mail, check the mail, check the mail...</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/exec-enabled</key>
+            <owner>mailcheck-applet</owner>
+            <type>bool</type>
+            <default>false</default>
+            <locale name="C">
+                <short>Do we run the exec-command</short>
+                <long>If this is set, we should run the exec-command</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/newmail-command</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>Command to execute when new mail arrives</short>
+                <long>This is how we process the mail, process the mail, process the mail...</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/newmail-enabled</key>
+            <owner>mailcheck-applet</owner>
+            <type>bool</type>
+            <default>false</default>
+            <locale name="C">
+                <short>Do we run the newmail-command</short>
+                <long>If this is set, we should run the newmail-command</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/clicked-command</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>Command to execute when the applet is clicked</short>
+                <long>We run this command when the user clicks on the applet</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/clicked-enabled</key>
+            <owner>mailcheck-applet</owner>
+            <type>bool</type>
+            <default>false</default>
+            <locale name="C">
+                <short></short>
+                <long></long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/remote-server</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default>mail</default>
+            <locale name="C">
+                <short>The mail server</short>
+                <long>Remove server to connect to for our mail</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/pre-remote-command</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>Command to run before checking mail</short>
+                <long>Run this command before we check the mail</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/remote-username</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default>none</default>
+            <locale name="C">
+                <short>Username on the remote server</short>
+                <long>Username on the remote server</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/remote-password</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>The user's password</short>
+                <long>The user's password for the remote server</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/remote-folder</key>
+            <owner>mailcheck-applet</owner>
+            <type>string</type>
+            <default></default>
+            <locale name="C">
+                <short>Remote folder for mail retrieval</short>
+                <long>Remote folder for mail retrieval</long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/mailbox-type</key>
+            <owner>mailcheck-applet</owner>
+            <type>int</type>
+            <default>0</default>
+            <locale name="C">
+                <short></short>
+                <long></long>
+            </locale>
+        </schema>
+        <schema>
+            <key>/schemas/apps/mailcheck-applet/prefs/play-sound</key>
+            <owner>mailcheck-applet</owner>
+            <type>bool</type>
+            <default>false</default>
+            <locale name="C">
+                <short>You've got mail!</short>
+                <long>Play a sound when mail is recieved</long>
+            </locale>
+        </schema>
+  </schemalist>
+</gconfschemafile>

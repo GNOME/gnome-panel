@@ -42,11 +42,17 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in		\
              $(PRINTER_BITMAPS)					\
              $(MAILCHECK_BITMAPS)
 
+mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
+mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
+
+schemadir   = $(sysconfdir)/gconf/schemas
+schema_DATA = mailcheck.schemas
+
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
-mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
-mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)

@@ -1319,24 +1319,30 @@ applet_load_prefs(MailCheck *mc)
 	gchar *query;
 
 	query = gnome_unconditional_pixmap_file("mailcheck/email.png");
-	mc->animation_file = panel_applet_gconf_get_conditional_string(mc->applet, "animation-file", query, NULL);
+	mc->animation_file = panel_applet_gconf_get_string(mc->applet, "animation-file", NULL);
+	if(!mc->animation_file || strcmp(mc->animation_file, "none")) {
+		g_free(mc->animation_file);
+		mc->animation_file = g_strdup(query);
+	}
 	g_free(query);
-#if 0
-	mc->update_freq = panel_applet_gconf_get_conditional_int(mc->applet, "update-frequency", 120000, NULL);
+	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update-frequency", NULL);
 	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec-command", NULL);
 	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec-enabled", NULL);
 	mc->newmail_cmd = panel_applet_gconf_get_string(mc->applet, "newmail-command", NULL);
 	mc->newmail_enabled = panel_applet_gconf_get_bool(mc->applet, "newmail-enabled", NULL);
 	mc->clicked_cmd = panel_applet_gconf_get_string(mc->applet, "clicked-command", NULL);
 	mc->clicked_enabled = panel_applet_gconf_get_bool(mc->applet, "clicked-enabled", NULL);
-	mc->remote_server = panel_applet_gconf_get_conditional_string(mc->applet, "remote-server", "mail", NULL);
+	mc->remote_server = panel_applet_gconf_get_string(mc->applet, "remote-server", NULL);
 	mc->pre_remote_command = panel_applet_gconf_get_string(mc->applet, "pre-remote-command", NULL);
-	mc->remote_username = panel_applet_gconf_get_conditional_string(mc->applet, "remote-username", g_getenv("USER"), NULL);
+	mc->remote_username = panel_applet_gconf_get_string(mc->applet, "remote-username", NULL);
+	if(!mc->remote_username || strcmp(mc->remote_username, "none")) {
+		g_free(mc->remote_username);
+		mc->remote_username = g_strdup(g_getenv("USER"));
+	}
 	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote-password", NULL);
 	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote-folder", NULL);
 	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox-type", NULL);
 	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play-sound", NULL);
-#endif
 }
 
 static void
@@ -1481,7 +1487,8 @@ fill_mailcheck_applet(PanelApplet *applet)
 		} else
 			mc->mail_file = g_strdup (mail_file);
 	}
-	
+
+	panel_applet_add_preferences (applet, "/schemas/apps/mailcheck-applet/prefs", NULL);
 	applet_load_prefs(mc);
 
 	mc->mailcheck_text_only = _("Text only");
