@@ -30,7 +30,7 @@
 
 static char *gnome_folder = NULL;
 
-/*for Red Hat menus to trigger rereading on directory writes*/
+/*for AnotherLevel menus to trigger rereading on directory writes*/
 static time_t rhsysdir_mtime = 0;
 static time_t rhuserdir_mtime = 0;
 
@@ -2127,11 +2127,11 @@ create_panel_root_menu(GtkWidget *panel)
 	}
 
 	if(g_file_exists("/etc/X11/wmconfig")) {
-		menu = create_user_menu(_("Red Hat menus"),"apps-redhat",
+		menu = create_user_menu(_("AnotherLevel menus"),"apps-redhat",
 					NULL,TRUE,TRUE,TRUE);
 		if(menu) {
 			menuitem = gtk_menu_item_new ();
-			setup_menuitem (menuitem, 0, _("Red Hat menus"));
+			setup_menuitem (menuitem, 0, _("AnotherLevel menus"));
 			gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 						   menu);
@@ -2821,17 +2821,6 @@ create_rh_menu(int dofork)
 	g_free(userrh);
 	mkdir(rhdir,0755);
 	if(rhlist) {
-		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
-			GnomeDesktopEntry dentry = {0};
-			dentry.name = _("Red Hat menus");
-			dentry.type = "Directory";
-			dentry.icon = "/usr/share/icons/mini/mini-redhat.xpm";
-			dentry.location = g_strconcat(rhdir,"/.directory",
-						      NULL);
-			gnome_desktop_entry_save(&dentry);
-			/* free up the dentry + the location */
-			g_free(dentry.location);
-		}
 		make_rh_submenu(rhdir,rhlist);
 
 		g_slist_foreach(rhlist,(GFunc)free_rh_item,NULL);
@@ -2864,7 +2853,7 @@ create_root_menu(int fake_submenus, int flags)
 	}
 	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
 		rh_submenu_to_display(NULL,NULL);
-		root_menu = create_user_menu(_("Red Hat menus"), "apps-redhat",
+		root_menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
 					     root_menu, fake_submenus, FALSE,
 					     FALSE);
 		need_separ = TRUE;
@@ -2913,17 +2902,10 @@ create_root_menu(int fake_submenus, int flags)
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
-		menu = create_user_menu(_("Red Hat menus"), "apps-redhat", 
+		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat", 
 					NULL, fake_submenus, TRUE, TRUE);
-		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/mini/mini-redhat.xpm",
-								    SMALL_ICON_SIZE,
-								    SMALL_ICON_SIZE);
-			if (pixmap)
-				gtk_widget_show (pixmap);
-		}
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, pixmap, _("Red Hat menus"));
+		setup_menuitem (menuitem, pixmap, _("AnotherLevel menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -3389,7 +3371,7 @@ create_properties_dialog(Menu *menu)
 			      menu->main_menu_flags&MAIN_MENU_USER,
 			      menu->main_menu_flags&MAIN_MENU_USER_SUB);
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
-			      _("Red Hat menu (if found): "),"redhat",
+			      _("AnotherLevel menu (if found): "),"redhat",
 			      menu->main_menu_flags&MAIN_MENU_REDHAT,
 			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
