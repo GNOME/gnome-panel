@@ -804,7 +804,9 @@ display_about_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-windows.png", TRUE, NULL);
+	file = gnome_icon_theme_lookup_icon (tasklist->icon_theme,
+					     "panel-window-list",
+					     48, NULL, NULL);
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free(file);
 
@@ -1053,6 +1055,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   TasklistData      *tasklist,
 			   const gchar       *verbname)
 {
+	gchar *window_icon;
+
 	if (tasklist->properties_dialog == NULL) {
 		GladeXML  *xml;
 
@@ -1067,8 +1071,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_object_unref (G_OBJECT (xml));
 	}
 
-	gnome_window_icon_set_from_file (GTK_WINDOW (tasklist->properties_dialog), 
-					 GNOME_ICONDIR "/gnome-windows.png");
+	window_icon = gnome_icon_theme_lookup_icon (tasklist->icon_theme,
+						    "panel-window-list",
+						    48, NULL, NULL);
+	if (window_icon) {
+		gnome_window_icon_set_from_file (GTK_WINDOW (tasklist->properties_dialog), window_icon);
+		g_free (window_icon);
+	}
+
 	gtk_window_set_resizable (GTK_WINDOW (tasklist->properties_dialog), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (tasklist->properties_dialog),
 			       gtk_widget_get_screen (tasklist->applet));

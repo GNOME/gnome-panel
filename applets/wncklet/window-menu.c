@@ -33,7 +33,7 @@
 
 #include <panel-applet.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnomeui/gnome-about.h>
+#include <libgnomeui/libgnomeui.h>
 
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
@@ -55,6 +55,8 @@ typedef struct {
 	GHashTable   *window_hash;
 
 	int           size;
+
+	GnomeIconTheme *icon_theme;
 } WindowMenu;
 
 static void window_menu_connect_to_window (WindowMenu *window_menu,
@@ -120,9 +122,9 @@ window_menu_about (BonoboUIComponent *uic,
 		return;
 	}
 
-	file = gnome_program_locate_file (
-			NULL, GNOME_FILE_DOMAIN_PIXMAP,
-			"gnome-windows.png", TRUE, NULL);
+	file = gnome_icon_theme_lookup_icon (window_menu->icon_theme,
+					     "panel-window-menu",
+					     48, NULL, NULL);
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free (file);
 
@@ -168,6 +170,10 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->icon_pixbuf)
 		g_object_unref (window_menu->icon_pixbuf);
 	window_menu->icon_pixbuf = NULL;
+
+	if (window_menu->icon_theme)
+		g_object_unref (window_menu->icon_theme);
+        window_menu->icon_theme = NULL;
 
 	g_free (window_menu);
 }
@@ -649,6 +655,8 @@ window_menu_applet_fill (PanelApplet *applet)
 	atk_object_set_description (atk_obj, _("Tool to switch between windows"));
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
+
+        window_menu->icon_theme = gnome_icon_theme_new ();
 
 	g_signal_connect (window_menu->applet, "destroy",
 			  G_CALLBACK (window_menu_destroy), window_menu);
