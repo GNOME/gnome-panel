@@ -179,7 +179,8 @@ EXTRA_DIST =					\
 	panel.hints				\
 	gnome-panel-properties.desktop		\
 	gnome-panel-properties			\
-	gnome-panel-properties.glade2		\
+	$(glade_src)				\
+	$(glade_DATA)				\
 	gnome-panel-properties.glade.h		\
 	nothing.cP				\
 	title-item.gob				\
@@ -189,8 +190,8 @@ EXTRA_DIST =					\
 	panel-marshal.list
 
 gladedir = $(datadir)/gnome/panel
-glade_DATA =gnome-panel-properties.glade2
-glade_src = gnome-panel-properties.glade
+glade_DATA = gnome-panel-properties.glade2
+glade_src = gnome-panel-properties.glade2
 glade_msgs = gnome-panel-properties.glade.h
 
 gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
