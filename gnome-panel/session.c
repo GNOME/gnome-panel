@@ -529,27 +529,6 @@ save_next_applet(void)
 	gnome_config_drop_all();
 }
 
-static void
-save_tornoff(void)
-{
-	GSList *tornoff,*li;
-	GString *gs;
-	int i;
-
-	/* here we save the torn off menus */
-	tornoff = make_data_from_tearoffs();
-	gnome_config_set_int("tornoff_count",g_slist_length(tornoff));
-
-	gs = g_string_new(NULL);
-
-	for(i=0,li=tornoff;li;i++,li=li->next) {
-		g_string_sprintf(gs,"tornoff_menu_%d",i);
-		gnome_config_set_string(gs->str,li->data);
-		g_free(li->data);
-	}
-	g_slist_free(tornoff);
-	g_string_free(gs,TRUE);
-}
 
 
 
@@ -606,11 +585,11 @@ do_session_save(GnomeClient *client,
 #ifdef PANEL_DEBUG
 	printf(" 4\n"); fflush(stdout);
 #endif
+	gnome_config_pop_prefix ();
 
 	if(complete_sync)
 		save_tornoff();
 
-	gnome_config_pop_prefix ();
 	gnome_config_sync();
 	
 	if(complete_sync || sync_applets) {
@@ -1200,38 +1179,6 @@ init_user_panels(void)
 	g_string_free(buf,TRUE);
 }
 
-void
-init_user_tearoffs(void)
-{
-	GSList *tornoff = NULL;
-	GString *gs;
-	int i,length;
-
-	gs = g_string_new(NULL);
-	g_string_sprintf(gs,"%spanel/Config/", PANEL_CONFIG_PATH);
-	gnome_config_push_prefix(gs->str);
-
-	length = gnome_config_get_int("tornoff_count=0");
-	if(length==0) {
-		gnome_config_pop_prefix();
-		g_string_free(gs,TRUE);
-		return;
-	}
-
-	for(i=0;i<length;i++) {
-		char *s;
-		g_string_sprintf(gs,"tornoff_menu_%d=",i);
-		s = gnome_config_get_string(gs->str);
-		if(s)
-			tornoff = g_slist_prepend(tornoff,s);
-	}
-	g_string_free(gs,TRUE);
-
-	gnome_config_pop_prefix();
-
-	/* this call will free the strings and the list */
-	make_tearoffs_from_data(tornoff);
-}
 
 void
 load_up_globals(void)
