@@ -29,7 +29,7 @@ struct _Menu {
 	GtkWidget *menu;
 	char *path;
 	int main_menu_flags;
-	int dirty;
+	int age;
 };
 
 void load_menu_applet(char *params, int main_menu_flags,

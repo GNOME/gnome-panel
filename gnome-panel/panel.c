@@ -561,10 +561,11 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 }
 
 static void
-menu_deactivate(GtkWidget *w, GtkWidget *panel)
+menu_deactivate(GtkWidget *w, PanelData *pd)
 {
-	if(IS_SNAPPED_WIDGET(panel))
-		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	pd->menu_age = 0;
+	if(IS_SNAPPED_WIDGET(pd->panel))
+		SNAPPED_WIDGET(pd->panel)->autohide_inhibit = FALSE;
 }
 
 static void
@@ -683,8 +684,6 @@ static int
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
-	GtkWidget *panel_menu = gtk_object_get_data(GTK_OBJECT(widget),
-						    "panel_menu");
 
 	kill_config_dialog(widget);
 
@@ -703,8 +702,8 @@ panel_destroy(GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
-	if(panel_menu)
-		gtk_widget_unref(panel_menu);
+	if(pd->menu)
+		gtk_widget_destroy(pd->menu);
 	
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);
@@ -723,24 +722,19 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *
-panel_menu_get(GtkWidget *panelw)
+panel_menu_get(PanelData *pd)
 {
-	GtkWidget *panel_menu = gtk_object_get_data(GTK_OBJECT(panelw),
-						    "panel_menu");
-	if(panel_menu)
-		return panel_menu;
+	if(pd->menu)
+		return pd->menu;
 
-	panel_menu = create_panel_root_menu(panelw);
-	gtk_object_set_data(GTK_OBJECT(panelw),"panel_menu",panel_menu);
-	gtk_signal_connect(GTK_OBJECT(panel_menu),
-			   "deactivate",
-			   GTK_SIGNAL_FUNC(menu_deactivate),
-			   panelw);
-	return panel_menu;
+	pd->menu = create_panel_root_menu(pd->panel);
+	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
+			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
+	return pd->menu;
 }
 
 static int
-panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 {
 	GdkEventButton *bevent;
 	switch (event->type) {
@@ -749,7 +743,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		switch(bevent->button) {
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
-				GtkWidget *panel_menu = panel_menu_get(widget);
+				GtkWidget *panel_menu = panel_menu_get(pd);
 				GtkWidget *rem = 
 					gtk_object_get_data(GTK_OBJECT(panel_menu),
 							    "remove_item");
@@ -784,6 +778,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				} else
 					gtk_widget_set_sensitive(rem,
 								 TRUE);
+				pd->menu_age = 0;
 				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
 					       panel_menu_position,
 					       widget, bevent->button,
@@ -923,7 +918,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		    continue;
 
 		  mimetype = gnome_mime_type(ltmp->data);
-		  puts(mimetype);
 		  if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
 		    panel_widget_set_back_pixmap (panel, ltmp->data);
 		  else if(mimetype
@@ -1017,6 +1011,8 @@ panel_setup(GtkWidget *panelw)
 	PanelData *pd;
 	
 	pd = g_new(PanelData,1);
+	pd->menu = NULL;
+	pd->menu_age = 0;
 	pd->panel = panelw;
 	if(IS_DRAWER_WIDGET(panelw))
 		pd->type = DRAWER_PANEL;
@@ -1133,7 +1129,7 @@ panel_setup(GtkWidget *panelw)
 	} else
 		g_warning("unknown panel type");
 	gtk_signal_connect(GTK_OBJECT(panelw), "event",
-			   GTK_SIGNAL_FUNC(panel_event),NULL);
+			   GTK_SIGNAL_FUNC(panel_event),pd);
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |

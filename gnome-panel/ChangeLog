@@ -1,3 +1,11 @@
+Thu Dec 24 12:21:20 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: don't load menu on startup for menu applets
+
+	* menu.[ch],session,panel.[ch],main.c,applet.[ch]: implement menu
+	  aging, old menus are destroyed if not used for over a minute to
+	  save memory
+
 Thu Dec 24 04:05:25 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: save a couple of extra bytes by not allocating a

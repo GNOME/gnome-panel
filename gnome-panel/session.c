@@ -91,23 +91,25 @@ apply_global_config(void)
 		for(li=applets;li!=NULL;li=g_slist_next(li)) {
 			AppletInfo *info = li->data;
 			if(info->menu) {
-				gtk_widget_unref(info->menu);
+				gtk_widget_destroy(info->menu);
 				info->menu = NULL;
+				info->menu_age = 0;
 			}
 			if(info->type == APPLET_MENU) {
 				Menu *menu = info->data;
-				menu->dirty = TRUE;
+				if(menu->menu) {
+					gtk_widget_destroy(menu->menu);
+					menu->menu = NULL;
+					menu->age = 0;
+				}
 			}
 		}
 		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 			PanelData *pd = li->data;
-			GtkWidget *panel_menu =
-				gtk_object_get_data(GTK_OBJECT(pd->panel),
-						    "panel_menu");
-			if(panel_menu) {
-				gtk_widget_unref(panel_menu);
-				gtk_object_set_data(GTK_OBJECT(pd->panel),
-						    "panel_menu",NULL);
+			if(pd->menu) {
+				gtk_widget_destroy(pd->menu);
+				pd->menu = NULL;
+				pd->menu_age = 0;
 			}
 		}
 	}

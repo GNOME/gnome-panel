@@ -974,18 +974,13 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		/*if(!mfl)
 			g_warning("Weird menu doesn't have mf entry");*/
 
-		if(menu->dirty) {
-			need_reread = TRUE;
-			menu->dirty = FALSE;
-		} else {
-			/*check if we need to reread this*/
-			for(list = mfl; list != NULL; list = g_slist_next(list)) {
-				MenuFinfo *mf = list->data;
-				if(mf->fake_menu ||
-				   !check_finfo_list(mf->finfo)) {
-					need_reread = TRUE;
-					break;
-				}
+		/*check if we need to reread this*/
+		for(list = mfl; list != NULL; list = g_slist_next(list)) {
+			MenuFinfo *mf = list->data;
+			if(mf->fake_menu ||
+			   !check_finfo_list(mf->finfo)) {
+				need_reread = TRUE;
+				break;
 			}
 		}
 
@@ -1004,7 +999,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 				g_slist_free(dirlist);
 			}
 
-			gtk_widget_unref(menuw);
+			gtk_widget_destroy(menuw);
 		}
 	} else {
 		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
@@ -1392,7 +1387,7 @@ destroy_menu (GtkWidget *widget, gpointer data)
 						     MENU_PROPERTIES);
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
-	gtk_widget_unref(menu->menu);
+	gtk_widget_destroy(menu->menu);
 	g_free(menu->path);
 	g_free(menu);
 }
@@ -1408,6 +1403,7 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	BUTTON_WIDGET(menu->button)->in_button = FALSE;
 	BUTTON_WIDGET(menu->button)->ignore_leave = FALSE;
 	button_widget_up(BUTTON_WIDGET(menu->button));
+	menu->age = 0;
 }
 
 static char *
@@ -2356,6 +2352,7 @@ create_root_menu(int fake_submenus, int flags)
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
+		rh_submenu_to_display(NULL,NULL);
 		root_menu = create_user_menu(_("RedHat menus"), "apps-redhat",
 					     root_menu, fake_submenus, FALSE,
 					     FALSE);
@@ -2450,8 +2447,25 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(menu->button),
 					       "applet_info");
 	int main_menu = (strcmp (menu->path, ".") == 0);
-	
-	check_and_reread(menu->menu,menu,main_menu);
+
+	if(!menu->menu) {
+		char *menu_base = gnome_unconditional_datadir_file ("apps");
+		char *this_menu = get_real_menu_path(menu->path,menu_base);
+		GSList *list = g_slist_append(NULL,this_menu);
+		
+		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);
+		
+		g_free(menu_base);
+		g_free(this_menu);
+
+		g_slist_free(list);
+	} else {
+		if(menu->main_menu_flags&MAIN_MENU_REDHAT &&
+		   !(menu->main_menu_flags&MAIN_MENU_REDHAT_SUB))
+			rh_submenu_to_display(NULL,NULL);
+
+		check_and_reread(menu->menu,menu,main_menu);
+	}
 
 	/*so that the panel doesn't pop down until we're
 	  done with the menu */
@@ -2466,6 +2480,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 	gtk_grab_remove(menu->button);
 
+	menu->age = 0;
 	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, applet_menu_position,
 		       info, bevent->button, bevent->time);
 }
@@ -2503,7 +2518,9 @@ create_panel_menu (char *menudir, int main_menu,
 	char *pixmap_name;
 
 	menu = g_new(Menu,1);
-	menu->dirty = FALSE;
+	menu->age = 0;
+	menu->menu = NULL;
+	menu->path = NULL;
 
 	pixmap_name = get_pixmap(menudir,main_menu);
 
@@ -2521,11 +2538,11 @@ create_panel_menu (char *menudir, int main_menu,
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 	gtk_widget_show(menu->button);
 
-	{
+	/*{
 		GSList *list = g_slist_append(NULL,menudir);
 		add_menu_widget(menu,list,main_menu,TRUE);
 		g_slist_free(list);
-	}
+	}*/
 
 	g_free (pixmap_name);
 
@@ -2635,7 +2652,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->main_menu_flags &=~ MAIN_MENU_REDHAT_SUB;
 	}
 
-	gtk_widget_unref(menu->menu);	
+	gtk_widget_destroy(menu->menu);	
 	menu->menu = NULL;
 
 	{

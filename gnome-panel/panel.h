@@ -19,6 +19,8 @@ typedef struct _PanelData PanelData;
 struct _PanelData {
 	PanelType type;
 	GtkWidget *panel;
+	GtkWidget *menu;
+	int menu_age;
 };
 
 /*get the default panel widget if the panel has more then one or

@@ -43,6 +43,7 @@ struct _AppletInfo {
 	int applet_id;
 	GtkWidget *widget; /*an event box*/
 	GtkWidget *menu; /*the applet menu*/
+	int menu_age;
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
 	gpointer data; /*the per applet structure, if it exists*/
 };

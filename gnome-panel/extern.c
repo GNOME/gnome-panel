@@ -590,6 +590,7 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
 
+	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
 		       applet_menu_position,
 		       ext->info, 3, GDK_CURRENT_TIME);

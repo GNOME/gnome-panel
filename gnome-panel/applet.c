@@ -115,10 +115,10 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-applet_menu_deactivate(GtkWidget *w, gpointer data)
+applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 {
-	GtkWidget *applet = data;
-	GtkWidget *panel = get_panel_parent(applet);
+	GtkWidget *panel = get_panel_parent(info->widget);
+	info->menu_age = 0;
 	
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
@@ -172,8 +172,9 @@ applet_add_callback(AppletInfo *info,
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_unref(info->menu);
+		gtk_widget_destroy(info->menu);
 		info->menu=NULL;
+		info->menu_age = 0;
 	}
 }
 
@@ -203,8 +204,9 @@ applet_remove_callback(AppletInfo *info, char *callback_name)
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_unref(info->menu);
+		gtk_widget_destroy(info->menu);
 		info->menu=NULL;
+		info->menu_age = 0;
 	}
 }
 
@@ -322,7 +324,7 @@ create_applet_menu(AppletInfo *info)
 	  when the menu is deactivated*/
 	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
 			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
-			   info->widget);
+			   info);
 }
 
 void
@@ -341,6 +343,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
+	info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       info, event->button, event->time);
 }
@@ -386,8 +389,9 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		}
 	}
 	if(info->menu) {
-		gtk_widget_unref(info->menu);
-		info->menu=NULL;
+		gtk_widget_destroy(info->menu);
+		info->menu = NULL;
+		info->menu_age = 0;
 	}
 
 	info->type = APPLET_EMPTY;
@@ -433,6 +437,7 @@ register_toy(GtkWidget *applet,
 	info->type = type;
 	info->widget = applet;
 	info->menu = NULL;
+	info->menu_age = 0;
 	info->data = data;
 	info->user_menu = NULL;
 
@@ -475,7 +480,7 @@ register_toy(GtkWidget *applet,
 				break;
 		if(!list) {
 			/*can't put it anywhere, clean up*/
-			gtk_widget_unref(applet);
+			gtk_widget_destroy(applet);
 			info->widget = NULL;
 			panel_clean_applet(info);
 			g_warning("Can't find an empty spot");

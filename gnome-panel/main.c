@@ -23,8 +23,15 @@ extern int need_complete_save;
 
 extern GSList *panels;
 
+extern GSList *applets;
+extern GSList *applets_last;
+extern int applet_count;
+
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
+
+/*list of all panel widgets created*/
+extern GSList *panel_list;
 
 GtkTooltips *panel_tooltips = NULL;
 
@@ -45,14 +52,11 @@ discard_session (char *id)
 {
 	char *sess;
 
-	/*FIXME: hmm this won't work ... there needs to be a clean_dir*/
-	sess = g_copy_strings ("/panel.d/Session-", id, NULL);
-	/*gnome_config_clean_file (sess);*/
+	sess = g_copy_strings (gnome_user_dir,"/panel.d/Session-", id, NULL);
+	remove_directory(sess,FALSE);
 	g_free (sess);
 
 	gnome_config_sync ();
-
-	return;
 }
 
 static void
@@ -72,6 +76,41 @@ static struct poptOption options[] = {
    N_("ID")},
   {NULL, '\0', 0, NULL, 0}
 };
+
+static int
+menu_age_timeout(gpointer data)
+{
+	GSList *li;
+	for(li=applets;li!=NULL;li=g_slist_next(li)) {
+		AppletInfo *info = li->data;
+		if(info->menu && info->menu_age++>=6 &&
+		   !GTK_WIDGET_VISIBLE(info->menu)) {
+			gtk_widget_destroy(info->menu);
+			info->menu = NULL;
+			info->menu_age = 0;
+		}
+		if(info->type == APPLET_MENU) {
+			Menu *menu = info->data;
+			if(menu->menu && menu->age++>=6 &&
+			   !GTK_WIDGET_VISIBLE(menu->menu)) {
+				gtk_widget_destroy(menu->menu);
+				menu->menu = NULL;
+				menu->age = 0;
+			}
+		}
+	}
+	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+		PanelData *pd = li->data;
+		if(pd->menu && pd->menu_age++>=6 &&
+		   !GTK_WIDGET_VISIBLE(pd->menu)) {
+			gtk_widget_destroy(pd->menu);
+			pd->menu = NULL;
+			pd->menu_age = 0;
+		}
+	}
+
+	return TRUE;
+}
 
 static int
 try_config_sync(gpointer data)
@@ -151,6 +190,8 @@ main(int argc, char **argv)
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
 	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);
+
+	gtk_timeout_add(10*1000,menu_age_timeout,NULL);
 	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();
