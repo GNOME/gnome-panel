@@ -14,6 +14,8 @@
 
 GList *panels=NULL; /*other panels we might want to move the applet to*/
 
+#define DEBUG 1
+
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
 int panel_applet_in_drag = FALSE;
@@ -1348,9 +1350,14 @@ panel_widget_new (int packed,
 					 panel);
 	return GTK_WIDGET(panel);
 }
+
 static void
 _panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
+#ifdef DEBUG
+  g_message("Starting drag on a %s at %p\n",
+	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+#endif
 	panel->currently_dragged_applet =
 		gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 }
@@ -1366,6 +1373,9 @@ panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 void
 _panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 {
+#ifdef DEBUG
+  g_message("Ending drag\n");
+#endif
 	panel->currently_dragged_applet = NULL;
 }
 
@@ -1379,6 +1389,10 @@ panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 static void
 _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 {
+#ifdef DEBUG
+  g_message("Starting drag [grabbed] on a %s at %p\n",
+	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+#endif
 	_panel_widget_applet_drag_start_no_grab(panel,applet);
 
 	gtk_grab_add(applet);
@@ -1403,6 +1417,7 @@ _panel_widget_applet_drag_end(PanelWidget *panel)
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
 	gtk_grab_remove(panel->currently_dragged_applet->applet);
 	_panel_widget_applet_drag_end_no_grab(panel);
+	panel->currently_dragged_applet = NULL;
 }
 
 void
@@ -1553,9 +1568,14 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 	if (panel->currently_dragged_applet) {
 		int moveby;
 		int pos = panel->currently_dragged_applet->pos;
-		GtkWidget *applet = panel->currently_dragged_applet->applet;
-		GList *forb = gtk_object_get_data(GTK_OBJECT(applet),
-						PANEL_APPLET_FORBIDDEN_PANELS);
+		GtkWidget *applet;
+		GList *forb;
+
+		g_assert(panel->currently_dragged_applet);
+		applet = panel->currently_dragged_applet->applet;
+		g_assert(GTK_IS_WIDGET(applet));
+		forb = gtk_object_get_data(GTK_OBJECT(applet),
+					   PANEL_APPLET_FORBIDDEN_PANELS);
 
 		if(!panel_widget_is_cursor(panel,10)) {
 			GList *list;
