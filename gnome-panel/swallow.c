@@ -83,7 +83,7 @@ before_remove (Swallow *swallow)
 		return TRUE;
 
 	dlg = gnome_message_box_new (_("A swallowed application appears to "
-				       "have died unexpectadly.\n"
+				       "have died unexpectedly.\n"
 				       "Attempt to reload it?"),
 				     GNOME_MESSAGE_BOX_QUESTION,
 				     _("Reload"),
