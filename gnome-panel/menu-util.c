@@ -173,7 +173,7 @@ get_default_menu_flags (void)
 {
 	DistributionType distribution = get_distribution_type();
 
-	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_APPLETS_SUB |
+	int flags = MAIN_MENU_SYSTEM_SUB |
 		MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP;
 	
 	/*guess distribution menus*/

@@ -245,6 +245,9 @@ about_cb (GtkWidget *widget, gpointer data)
 {
 	static GtkWidget *about;
 	GtkWidget *hbox, *l;
+	GdkPixbuf *logo;
+	GString *comment;
+	char *logo_file;
 	/* FIXME: fill in all the wankers who did stuff */
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
@@ -270,12 +273,15 @@ about_cb (GtkWidget *widget, gpointer data)
 	  NULL
 	  };
 	char *documenters[] = {
-		/* FIXME: */
-		"Joe Documentor",
+		"Dave Mason (dcm@redhat.com)",
+		"Dan Mueth (d-mueth@uchicago.edu)",
+	        "Alexander Kirillov (kirillov@math.sunysb.edu)",
 		NULL
 	  };
+	/* Translator credits */
+	char *translator_credits = _("translator_credits");
 
-	if (about) {
+	if (about != NULL) {
 		gtk_window_present (GTK_WINDOW (about));
 		return;
 	}
@@ -289,16 +295,38 @@ about_cb (GtkWidget *widget, gpointer data)
 		}
 	}
 #endif
+
+	logo = NULL;
+	logo_file = panel_pixmap_discovery ("gnome-gegl2.png",
+					    FALSE /* fallback */);
+	if (logo_file != NULL) {
+		logo = gdk_pixbuf_new_from_file (logo_file, NULL /* error */);
+		g_free (logo_file);
+	}
+
+	comment = g_string_new (_("This program is responsible for launching "
+				  "other applications, embedding small applets "
+				  "within itself, world peace, and random X crashes."));
+
+	if (commie_mode) {
+		g_string_append (comment,
+				 _("\n\nRunning in \"Lockdown\" mode.  This "
+				   "means your system administrator has "
+				   "prohibited any changes to the panel's "
+				   "configuration to take place."));
+	}
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
 			_("(C) 1997-2002 the Free Software Foundation"),
-			_("This program is responsible for launching "
-			"other applications, embedding small applets "
-			"within itself, world peace, and random X crashes."),
+			comment->str,
 			(const char **)authors,
 			(const char **)documenters,
-			"foo" /* FIXME: ??? translator_credits */,
-			NULL /* FIXME: logo "gnome-gegl2.png" */);
+			strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+			logo);
+
+	g_object_unref (G_OBJECT (logo));
+	g_string_free (comment, TRUE);
+
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
 	g_signal_connect (G_OBJECT (about), "destroy",
 			    G_CALLBACK (gtk_widget_destroyed),
@@ -313,16 +341,6 @@ about_cb (GtkWidget *widget, gpointer data)
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
 			    hbox, TRUE, FALSE, 0);
 	gtk_widget_show_all (hbox);
-
-	if (commie_mode) {
-		l = gtk_label_new (_("Running in \"Lockdown\" mode.  This "
-				     "means your system administrator has "
-				     "prohibited any changes to the panel's "
-				     "configuration to take place."));
-		gtk_widget_show (l);
-		gtk_box_pack_start (GTK_BOX (GTK_DIALOG (about)->vbox),
-				    l, FALSE, FALSE, 0);
-	}
 
 	gtk_widget_show (about);
 }
@@ -1216,17 +1234,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 	const char *menudir = data;
 	gboolean main_menu;
 	PanelWidget *panel;
-	DistributionType distribution = get_distribution_type ();
-	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_APPLETS_SUB |
-		MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP_SUB;
-	
-	/*guess distribution menus*/
-	if (distribution != DISTRIBUTION_UNKNOWN)
-		flags |= MAIN_MENU_DISTRIBUTION_SUB;
-
-	/*guess KDE menus*/
-	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
-		flags |= MAIN_MENU_KDE_SUB;
+	int flags = get_default_menu_flags ();
 
 	panel = get_panel_from_menu_data (widget, TRUE);
 
@@ -1318,6 +1326,7 @@ ditem_properties_apply_timeout (gpointer data)
 	GtkWidget *dedit = data;
 	GnomeDesktopItem *ditem;
 	const char *loc;
+	GError *error = NULL;
 
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout", NULL);
 
@@ -1326,10 +1335,17 @@ ditem_properties_apply_timeout (gpointer data)
 	gnome_desktop_item_save (ditem,
 				 loc /* under */,
 				 TRUE /* force */,
-				 NULL /* error */);
-	/* FIXME: we don't want to really handle errors here though,
-	 * only on OK, but make sure that we know by the time we
-	 * hit OK that something went wrong here */
+				 &error);
+	/* save the error for later */
+	if (error != NULL) {
+		g_object_set_data_full (G_OBJECT (dedit), "SavingError",
+					g_strdup (error->message),
+					(GDestroyNotify) g_free);
+		g_clear_error (&error);
+	} else {
+		g_object_set_data (G_OBJECT (dedit), "SavingError", NULL);
+	}
+
 	gnome_desktop_item_unref (ditem);
 
 	return FALSE;
@@ -1366,6 +1382,7 @@ static void
 ditem_properties_close (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *dedit = data;
+	const char *saving_error;
 	gpointer timeout_data = g_object_get_data (G_OBJECT (dedit),
 						   "apply_timeout");
 	guint timeout = GPOINTER_TO_UINT (timeout_data);
@@ -1376,6 +1393,14 @@ ditem_properties_close (GtkWidget *widget, gpointer data)
 		gtk_timeout_remove (timeout);
 
 		ditem_properties_apply_timeout (dedit);
+	}
+
+	saving_error = g_object_get_data (G_OBJECT (dedit), "SavingError");
+
+	if (saving_error != NULL) {
+		panel_error_dialog ("cant_save_entry",
+				    _("<b>Cannot save changes to menu entry</b>\n\n"
+				      "Details: %s"), saving_error);
 	}
 }
 
@@ -2415,6 +2440,7 @@ create_menu_at_fr (GtkWidget *menu,
 	GtkWidget *menuitem;
 	MenuFinfo *mf = NULL;
 	DirRec *dr = (DirRec *)fr;
+	char *menubase;
 
 	g_return_val_if_fail(!(fr&&fr->type!=FILE_REC_DIR),menu);
 	
@@ -2424,12 +2450,14 @@ create_menu_at_fr (GtkWidget *menu,
 
 	/* unfilled out, but the pointer will be correct */
 	mf = g_new0 (MenuFinfo, 1);
+
+	menubase = g_path_get_basename (fr->name);
 	
 	/*get this info ONLY if we haven't gotten it already*/
 	if (dir_name == NULL)
 		dir_name = (fr != NULL && fr->fullname != NULL)
 			? fr->fullname
-			: _("Menu");
+			: menubase;
 	if (pixmap_name == NULL)
 		pixmap_name = (fr != NULL && fr->icon != NULL)
 			?  fr->icon
@@ -2495,6 +2523,8 @@ create_menu_at_fr (GtkWidget *menu,
 
 	g_object_set_data (G_OBJECT (menu), "mf", mfl);
 
+	g_free (menubase);
+
 	return menu;
 }
 
@@ -2545,28 +2575,28 @@ menu_deactivate (GtkWidget *w, gpointer data)
 	menu->age = 0;
 }
 
-/*
- * FIXME: figure out how to handle internationalised strings.
- * FIXME: lazily create a hashtable
- */
 static const gchar *
-applet_menu_get_category_icon (const gchar *category)
+applet_menu_get_category_icon (const gchar *untranslated_category)
 {
-	if (!strcmp (category, "Amusements")) {
-		return "gnome-amusements.png";
-	} else if (!strcmp (category, "Clocks")) {
-		return "gnome-clock.png";
-	} else if (!strcmp (category, "Monitors")) {
-		return "gnome-monitor.png";
-	} else if (!strcmp (category, "Multimedia")) {
-		return "gnome-multimedia.png";
-	} else if (!strcmp (category, "Network")) {
-		return "gnome-networktool.png";
-	} else if (!strcmp (category, "Utility")) {
-		return "gnome-util.png";
+	static GHashTable *hash = NULL;
+
+	if (hash == NULL) {
+		hash = g_hash_table_new (g_str_hash, g_str_equal);
+		g_hash_table_insert (hash,
+				     "Amusements", "gnome-amusements.png");
+		g_hash_table_insert (hash,
+				     "Clocks", "gnome-clock.png");
+		g_hash_table_insert (hash,
+				     "Monitors", "gnome-monitor.png");
+		g_hash_table_insert (hash,
+				     "Multimedia", "gnome-multimedia.png");
+		g_hash_table_insert (hash,
+				     "Network", "gnome-networktool.png");
+		g_hash_table_insert (hash,
+				     "Utility", "gnome-util.png");
 	}
 
-	return NULL;
+	return g_hash_table_lookup (hash, untranslated_category);
 }
 
 static GtkWidget *
@@ -2620,6 +2650,8 @@ create_applets_menu (GtkWidget *menu)
 	GtkWidget             *prev_menu = NULL;
 	const gchar           *prev_category = NULL;
 	gint                   i;
+	const GList           *langs_glist;
+	GSList                *langs_gslist;
 
 	CORBA_exception_init (&env);
 
@@ -2638,21 +2670,33 @@ create_applets_menu (GtkWidget *menu)
 
 	g_signal_connect (G_OBJECT (menu), "destroy", G_CALLBACK (menu_destroy), NULL);
 
+	/* Evil evil evil evil, we need to convert to
+	 * a GSList from a GList */
+	langs_glist = gnome_i18n_get_language_list ("LC_MESSAGES");
+	langs_gslist = NULL;
+	while (langs_glist != NULL) {
+		langs_gslist = g_slist_append (langs_gslist, langs_glist->data);
+		langs_glist = langs_glist->next;
+	}
+
 	for (i = 0; i < list->_length; i++) {
 		Bonobo_ServerInfo *info;
 		GtkWidget         *menuitem;
 		const gchar       *name;
 		const gchar       *icon;
 		const gchar       *category;
+		const gchar       *untranslated_category;
 		const gchar       *iid;
 
 		info = &list->_buffer [i];
 
 		iid = info->iid;
 
-		name     = bonobo_server_info_prop_lookup (info, "name", NULL);
-		icon     = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
-		category = bonobo_server_info_prop_lookup (info, "panel:category", NULL);
+		name     = bonobo_server_info_prop_lookup (info, "name", langs_gslist);
+		icon     = bonobo_server_info_prop_lookup (info, "panel:icon", langs_gslist);
+		category = bonobo_server_info_prop_lookup (info, "panel:category", langs_gslist);
+		untranslated_category =
+			bonobo_server_info_prop_lookup (info, "panel:category", NULL);
 
 		if (string_empty (name)) {
 			continue;
@@ -2673,7 +2717,7 @@ create_applets_menu (GtkWidget *menu)
 			g_signal_connect (G_OBJECT (prev_menu), "show",
 					  G_CALLBACK (our_gtk_menu_position), NULL);
 
-			cat_icon = applet_menu_get_category_icon (category);
+			cat_icon = applet_menu_get_category_icon (untranslated_category);
 
 			menuitem = applet_menu_append (menu, category, cat_icon);
 
@@ -2691,6 +2735,8 @@ create_applets_menu (GtkWidget *menu)
 				       (GClosureNotify)g_free,
 				       0 /* flags */);
 	}
+
+	g_slist_free (langs_gslist);
 
 	CORBA_free (list);
 
@@ -2886,7 +2932,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
-		gchar *s;
 		if (!foobar_widget_exists (screen)) {
 			const char *panel_id;
 			
@@ -2899,18 +2944,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 			gtk_widget_show (panel);
 			break;
 		}
-		s = _("You can only have one menu panel at a time.");
-		
-		dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-						 GTK_BUTTONS_OK,
-						 s);
-		/* FIXME: What the fuck are we doing here? 
-		 * gtk_window_set_wmclass (GTK_WINDOW (dialog),
-		 * 			"only_one_foobar", "Panel");
-		 * gtk_widget_show_all (dialog); 
-		 */
+		dialog = panel_error_dialog ("only_one_foobar",
+					     _("You can only have one menu panel at a time."));
 		gtk_dialog_run (GTK_DIALOG (dialog));
-	        gtk_widget_destroy (dialog); 
 		break;
 	}
 	default: break;
@@ -3941,6 +3977,30 @@ create_root_menu (GtkWidget *root_menu,
 	
 	return root_menu;
 }
+
+static char *
+get_menu_tooltip (GtkWidget *menu)
+{
+	GString *tooltip;
+	GSList *mfl;
+
+	if (menu == NULL)
+		return g_strdup (_("Menu"));
+
+	tooltip = g_string_new (_("Menu:"));
+
+	mfl = g_object_get_data (G_OBJECT (menu), "mf");
+	while (mfl != NULL) {
+		MenuFinfo *mf = mfl->data;
+
+		g_string_append_c (tooltip, ' ');
+		g_string_append (tooltip, mf->dir_name);
+
+		mfl = mfl->next;
+	}
+
+	return g_string_free (tooltip, FALSE);
+}
 	
 void
 add_menu_widget (Menu *menu,
@@ -3979,6 +4039,8 @@ add_menu_widget (Menu *menu,
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
 				      _("Main Menu"), NULL);
 	} else {
+		char *tooltip;
+
 		menu->menu = NULL;
 		for(li = menudirl; li != NULL; li = li->next)
 			menu->menu = create_menu_at (menu->menu, li->data,
@@ -3986,9 +4048,10 @@ add_menu_widget (Menu *menu,
 						     NULL, NULL,
 						     fake_subs, FALSE);
 
-		/* FIXME: A more descriptive name would be better */
+		tooltip = get_menu_tooltip (menu->menu);
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Menu"), NULL);
+				      tooltip, NULL);
+		g_free (tooltip);
 
 		if(menu->menu == NULL) {
 			int flags;
@@ -4159,14 +4222,6 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 			     GDK_ACTION_MOVE);
 	GTK_WIDGET_SET_FLAGS (menu->button, GTK_NO_WINDOW);
 
-	if (main_menu)
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Main Menu"), NULL);
-	else
-		/* FIXME: A more descriptive name would be better */
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Menu"), NULL);
-
 	g_signal_connect (G_OBJECT (menu->button), "drag_data_get",
 			    G_CALLBACK (drag_data_get_cb),
 			    NULL);
@@ -4187,6 +4242,16 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 		GSList *list = g_slist_append(NULL, (gpointer)menudir);
 		add_menu_widget (menu, panel, list, TRUE);
 		g_slist_free(list);
+	}
+
+	if (main_menu) {
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      _("Main Menu"), NULL);
+	} else {
+		char *tooltip = get_menu_tooltip (menu->menu);
+		gtk_tooltips_set_tip (panel_tooltips, menu->button,
+				      tooltip, NULL);
+		g_free (tooltip);
 	}
 
 	g_free (pixmap_name);

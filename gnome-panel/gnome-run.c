@@ -29,6 +29,7 @@
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-window-icon.h>
 
 #include "gnome-run.h"
 
@@ -306,6 +307,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                         goto return_and_close;
 		} else if (strcmp (s, "gegls from outer space") == 0) {
 			start_geginv ();
+                        goto return_and_close;
+		} else if (strcmp (s, "End world hunger") == 0) {
+			gnome_url_show ("http://www.wfp.org", NULL);
                         goto return_and_close;
 		}
 
@@ -1146,10 +1150,8 @@ show_run_dialog (void)
                 gtk_window_set_default_size (GTK_WINDOW (run_dialog),
                                              -1, 400);
         
-#ifdef FIXME
 	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
 					 GNOME_ICONDIR"/gnome-run.png");
-#endif
 	g_signal_connect(G_OBJECT(run_dialog), "destroy",
 			   G_CALLBACK(gtk_widget_destroyed),
 			   &run_dialog);

@@ -1,3 +1,26 @@
+Tue Feb 05 17:48:58 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: set window icon
+
+	* menu-util.c: remove the applets sub from the default menu flags
+
+	* menu.c: About box fixups, use a logo, add documentors, fix
+	  translation credits, and use the comment for the commie mode
+	  paragraph.  Use the standard defaults when adding a menu.
+	  When saving a ditem in the timeout, save the error and display
+	  it in an error dialog when we close the property window.
+	  Add more descriptive standard menu tooltips.  When there is
+	  no full menu name use the directory basename rather then "Menu".
+	  Translate the things from the bonobo server entry.  Use
+	  a lazy hash for category->icon lookups, and use untranslated
+	  category name to lookup icons.  Use standard panel error
+	  dialog api for 'only one foobar' dialog.
+
+	* panel-widget.c: unused var warning
+
+	* xstuff.c: fix possible race (I'm anal, perhaps it's not a race
+	  at all in fact, but it's not there anymore)
+	  
 2002-02-05  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel.c: (panel_session_init_panels): audit use of

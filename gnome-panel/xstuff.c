@@ -100,14 +100,9 @@ try_adding_status(guint32 winid)
 }
 
 static void
-try_checking_swallows (WnckWindow *window)
+try_checking_swallows (gulong xid, const char *name)
 {
-	gulong xid;
-	const char *name;
 	GList *li;
-
-	name = wnck_window_get_name (window);
-	xid = wnck_window_get_xid (window);
 
 	if (name == NULL)
 		return;
@@ -125,36 +120,53 @@ try_checking_swallows (WnckWindow *window)
 	}
 }
 
+typedef struct {
+	char *name;
+	gulong xid;
+} XWin;
+
 void
 xstuff_go_through_client_list (void)
 {
 	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
-	GList *windows, *li;
+	GList *windows, *li, *our_windows = NULL;
 
-	windows = g_list_copy (wnck_screen_get_windows (screen));
+	/* Avoid possible race by copying out information first */
+	windows = wnck_screen_get_windows (screen);
+	while (windows != NULL) {
+		WnckWindow *window = windows->data;
+		XWin *xw = g_new0 (XWin, 1);
+		xw->name = g_strdup (wnck_window_get_name (window));
+		xw->xid = wnck_window_get_xid (window);
+
+		our_windows = g_list_prepend (our_windows, xw);
+
+		windows = windows->next;
+	}
 
 	gdk_error_trap_push ();
 
-	/* FIXME: is this a possible race?  Can the WnckWindows disappear while
-	 * we're traversing them?  I think they can, fix this! */
-
 	/* just for status dock stuff for now */
-	for (li = windows; li != NULL; li = li->next) {
-		WnckWindow *window = li->data;
-		const char *name = wnck_window_get_name (window);
+	for (li = our_windows; li != NULL; li = li->next) {
+		XWin *xw = li->data;
 		/* skip own windows */
-		if (name != NULL &&
-		    strcmp (name, "panel") == 0)
+		if (xw->name != NULL &&
+		    strcmp (xw->name, "panel") == 0)
 			continue;
 		if (check_swallows != NULL)
-			try_checking_swallows (window);
-		try_adding_status (wnck_window_get_xid (window));
+			try_checking_swallows (xw->xid, xw->name);
+		try_adding_status (xw->xid);
+
+		li->data = NULL;
+		g_free (xw->name);
+		xw->name = NULL;
+		g_free (xw);
 	}
 
 	gdk_flush();
 	gdk_error_trap_pop ();
 
-	g_list_free (windows);
+	g_list_free (our_windows);
 }
 
 void

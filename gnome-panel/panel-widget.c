@@ -2874,8 +2874,6 @@ panel_widget_tab_move (PanelWidget *panel,
 	ad = panel->currently_dragged_applet;
 
 	if (!ad) {
-		GtkWidgetClass *class;
-
 		g_return_if_fail (GTK_WIDGET_HAS_FOCUS (panel));
 		
 		GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (panel), GTK_CAN_FOCUS);
