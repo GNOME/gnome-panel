@@ -184,7 +184,6 @@ static GtkWidget *
 create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 {
 	GtkWidget  *dialog;
-	GnomePropertyBoxItem *item;
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
@@ -194,18 +193,6 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	launcher->dedit =
 		gnome_dentry_edit_new(
 		      GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
-
-	/*FIXME:!!! ugly hack!!! there needs to be a clean way of adding
-	  GnomeDEntryEdit to GnomePropertyBox */
-	item = g_new (GnomePropertyBoxItem, 1);
-	item->dirty = FALSE;
-	GNOME_PROPERTY_BOX(dialog)->items =
-		g_list_append (GNOME_PROPERTY_BOX(dialog)->items, item);
-	item = g_new (GnomePropertyBoxItem, 1);
-	item->dirty = FALSE;
-	GNOME_PROPERTY_BOX(dialog)->items =
-		g_list_append (GNOME_PROPERTY_BOX(dialog)->items, item);
-	
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
 				     launcher->dentry);
