@@ -14,6 +14,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <gnome.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <applet-widget.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "print.xpm"
@@ -303,6 +304,8 @@ printer_properties (AppletWidget *applet, gpointer data)
 	pr->printer_prop = gnome_property_box_new ();
 	gtk_window_set_title (GTK_WINDOW (pr->printer_prop),
 			      _("Printer properties"));
+	gnome_window_icon_set_from_file (GTK_WINDOW (pr->printer_prop),
+					 GNOME_ICONDIR"/mc/i-printer.png");
 	
 	table = gtk_table_new (2, 2, FALSE);
 	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD);
@@ -352,6 +355,8 @@ printer_about (AppletWidget *applet, gpointer data)
 				     authors,
 				     _("The printer applet lets you easily drag files to be printed via a print command"),
 				     NULL);
+	gnome_window_icon_set_from_file (GTK_WINDOW (pr->about),
+					 GNOME_ICONDIR"/mc/i-printer.png");
 	gtk_signal_connect (GTK_OBJECT(pr->about), "destroy",
 			    GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			    &pr->about);

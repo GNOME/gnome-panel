@@ -18,6 +18,7 @@
 #include <time.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <applet-widget.h>
 
 #include "clock.h"
@@ -520,6 +521,8 @@ clock_properties(AppletWidget * applet, gpointer data)
 	cd->props = gnome_property_box_new();
 	gtk_window_set_title (GTK_WINDOW (cd->props),
 			      _("Clock properties"));
+	gnome_window_icon_set_from_file (GTK_WINDOW (cd->props),
+					 GNOME_ICONDIR"/gnome-clock.png");
 
 	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 
@@ -700,7 +703,9 @@ clock_about (AppletWidget *applet, gpointer data)
 				 _("(c) 1998 the Free Software Foundation"),
 				 authors,
 				 _("The clock applet gives your panel a lightweight and simple display of the date and time"),
-				 NULL);
+				 GNOME_ICONDIR"/gnome-clock.png");
+	gnome_window_icon_set_from_file (GTK_WINDOW (about),
+					 GNOME_ICONDIR"/gnome-clock.png");
 	gtk_signal_connect (GTK_OBJECT(about), "destroy",
 			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about);
 	gtk_widget_show (about);

@@ -18,6 +18,7 @@
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
+#include <libgnomeui/gnome-window-icon.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "popcheck.h"
@@ -1133,6 +1134,8 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 	mc->property_window = gnome_property_box_new ();
 	gtk_window_set_title (GTK_WINDOW (mc->property_window),
 			      _("Mail check properties"));
+	gnome_window_icon_set_from_file (GTK_WINDOW (mc->property_window),
+					 GNOME_ICONDIR"/gnome-mailcheck.png");
 
 	p = mailcheck_properties_page (mc);
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
@@ -1216,6 +1219,8 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 				      authors,
 				      _("Mail check notifies you when new mail is on your mailbox"),
 				      NULL);
+	gnome_window_icon_set_from_file (GTK_WINDOW (mc->about),
+					 GNOME_ICONDIR"/gnome-mailcheck.png");
 	gtk_signal_connect( GTK_OBJECT(mc->about), "destroy",
 			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &mc->about );
 	gtk_widget_show(mc->about);

@@ -9,6 +9,8 @@
 #include <gnome.h>
 #include <applet-widget.h>
 
+#include <libgnomeui/gnome-window-icon.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_alphagamma.h>
 #include <libart_lgpl/art_filterlevel.h>
@@ -422,6 +424,8 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	fish->pb = gnome_property_box_new();
 
 	gtk_window_set_title(GTK_WINDOW(fish->pb), _("GNOME Fish Properties"));
+	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
+					 GNOME_ICONDIR"/gnome-fish.png");
 
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox), GNOME_PAD);
@@ -520,6 +524,8 @@ update_fortune_dialog(Fish *fish)
 				       TRUE);
 		gnome_dialog_close_hides(GNOME_DIALOG(fish->fortune_dialog),
 					 TRUE);
+		gnome_window_icon_set_from_file (GTK_WINDOW (fish->fortune_dialog),
+						 GNOME_ICONDIR"/gnome-fish.png");
 
 		fish->fortune_less = gnome_less_new();
 		fish->fortune_label = gtk_label_new("");
@@ -685,7 +691,9 @@ about_cb (AppletWidget *widget, gpointer data)
 				   "If anyone is found using this applet, he "
 				   "should be promptly sent for a psychiatric "
 				   "evaluation."),
-				 NULL);
+				 GNOME_ICONDIR"/gnome-fish.png");
+	gnome_window_icon_set_from_file (GTK_WINDOW (fish->aboutbox),
+					 GNOME_ICONDIR"/gnome-fish.png");
 	gtk_signal_connect(GTK_OBJECT(fish->aboutbox),"destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed), &fish->aboutbox);
 	gtk_widget_show (fish->aboutbox);
