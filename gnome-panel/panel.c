@@ -501,14 +501,17 @@ drop_nautilus_uri (PanelWidget *panel,
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	/* Add -- to avoid the possibility of filenames which would
-	 * be interpreted as command line arguments
-	 */
 	quoted = g_shell_quote (uri);
-        split = g_strsplit (quoted, "%");
+
+	/* Escape any "%" as "%%" */
+	split = g_strsplit (quoted, "%", -1);
 	g_free (quoted);
 	quoted = g_strjoinv ("%%", split);
 	g_strfreev (split);
+
+	/* Add -- to avoid the possibility of filenames which would
+	 * be interpreted as command line arguments
+	 */
 	exec = g_strdup_printf ("nautilus -- %s", quoted);
 	g_free (quoted);
 
