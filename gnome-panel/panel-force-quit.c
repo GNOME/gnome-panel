@@ -51,6 +51,7 @@ display_popup_window (GdkScreen *screen)
 	int        screen_width, screen_height;
 
 	retval = gtk_window_new (GTK_WINDOW_POPUP);
+	atk_object_set_role (gtk_widget_get_accessible (retval), ATK_ROLE_ALERT);
 	gtk_window_set_screen (GTK_WINDOW (retval), screen);
 	gtk_window_stick (GTK_WINDOW (retval));
 	gtk_widget_add_events (retval, GDK_BUTTON_PRESS_MASK | GDK_KEY_PRESS_MASK);
