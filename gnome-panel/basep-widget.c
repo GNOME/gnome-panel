@@ -291,6 +291,8 @@ basep_widget_realize (GtkWidget *w)
 					 basep->strut_bottom);
 	}
 	
+	xstuff_set_wmspec_state_hints (w->window);
+	
 	klass = basep_widget_get_pos_class (basep);
 	g_return_if_fail (klass);
 	if (klass->realize != NULL)

@@ -1,3 +1,12 @@
+2001-12-10  Alexander Larsson  <alla@lysator.liu.se>
+
+	* basep-widget.c (basep_widget_realize):
+	Call xstuff_set_wmspec_state_hints ()
+
+	* xstuff.[ch] (xstuff_set_wmspec_state_hints):
+	New function to set the WMSPEC hints for the panel
+	SKIP_PAGER, SKIP_TASKLIST and STICKY.
+
 Sun Dec 09 22:35:26 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am, title-item*.(c|h|gob):  Title item no longer needed,

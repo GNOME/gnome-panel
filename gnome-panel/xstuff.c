@@ -646,6 +646,24 @@ xstuff_set_wmspec_dock_hints (GdkWindow *window,
 }
 
 void
+xstuff_set_wmspec_state_hints (GdkWindow *window)
+{
+        Atom atoms[3] = { None, None, None};
+	int i = 0;
+        
+	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_SKIP_TASKBAR");
+	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_SKIP_PAGER");
+	atoms[i++] = ATOMGDK (window, "_NET_WM_STATE_STICKY");
+
+	XChangeProperty (GDK_WINDOW_XDISPLAY (window),
+			 GDK_WINDOW_XWINDOW (window),
+			 ATOMGDK (window, "_NET_WM_STATE"),
+			 XA_ATOM, 32, PropModeReplace,
+			 (guchar*) atoms, i);
+}
+
+
+void
 xstuff_set_wmspec_strut (GdkWindow *window,
 			 int left,
 			 int right,
