@@ -19,7 +19,7 @@ void load_drawer_applet(char *params, char *pixmap, char *tooltip,
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
 
-void add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer);
+void add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer);
 
 END_GNOME_DECLS
 

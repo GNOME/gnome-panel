@@ -319,6 +319,10 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		DrawerWidget *drawer = DRAWER_WIDGET(pd->panel);
 		gnome_config_set_int("orient",drawer->orient);
 		gnome_config_set_int("state", drawer->state);
+		gnome_config_set_bool("hidebutton_enabled",
+				      drawer->hidebutton_enabled);
+		gnome_config_set_bool("hidebutton_pixmap_enabled",
+				      drawer->hidebutton_pixmap_enabled);
 		break;
 		}
 	default:
@@ -805,6 +809,8 @@ init_user_panels(void)
 			{
 				DrawerState state;
 				PanelOrientType orient;
+				int hidebutton_enabled;
+				int hidebutton_pixmap_enabled;
 
 				g_snprintf(buf,256,"state=%d", DRAWER_SHOWN);
 				state=gnome_config_get_int(buf);
@@ -812,12 +818,19 @@ init_user_panels(void)
 				g_snprintf(buf,256,"orient=%d", ORIENT_UP);
 				orient=gnome_config_get_int(buf);
 
+				hidebutton_enabled =
+					gnome_config_get_bool("hidebutton_enabled=TRUE");
+				hidebutton_pixmap_enabled =
+					gnome_config_get_bool("hidebutton_pixmap_enabled=TRUE");
+
 				panel = drawer_widget_new(orient,
 							  state,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,
-							  &back_color);
+							  &back_color,
+							  hidebutton_pixmap_enabled,
+							  hidebutton_enabled);
 				break;
 			}
 		case CORNER_PANEL:

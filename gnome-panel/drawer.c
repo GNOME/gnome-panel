@@ -84,14 +84,16 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 void
-add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
+add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 {
-	GtkWidget *table;
+        GtkWidget *dialog = ppc->config_window;
+        GtkWidget *table;
 	GtkWidget *f;
-	GtkWidget *box;
+	GtkWidget *box, *box_in;
 	GtkWidget *nbook;
 	GtkWidget *w;
-
+	GtkWidget *button;
+	
 	table = gtk_table_new(2, 2, FALSE);
 	gtk_container_border_width(GTK_CONTAINER(table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
@@ -112,6 +114,29 @@ add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
 	gtk_container_border_width(GTK_CONTAINER(box), 5);
 	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
 
+	f = gtk_frame_new(_("Drawer handle"));
+	box_in = gtk_vbox_new(FALSE,5);
+	button = gtk_check_button_new_with_label (_("Disable hidebutton"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->drawer_hidebutton)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (drawer_set_hidebutton), NULL);
+	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE,
+			    1);
+
+	button = gtk_check_button_new_with_label (_("Disable hidebutton arrow"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->drawer_hidebutton_pixmap)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (drawer_set_hidebutton_pixmap), NULL);
+	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE,
+			    1);
+	gtk_container_add(GTK_CONTAINER(f),box_in);
+	gtk_box_pack_start (GTK_BOX (box),f,FALSE,FALSE,0);
+
+	
 	nbook = GNOME_PROPERTY_BOX (dialog)->notebook;
 	gtk_notebook_append_page (GTK_NOTEBOOK(nbook),
 				  box, gtk_label_new (_("Drawer")));
@@ -232,7 +257,7 @@ create_empty_drawer_applet(char *tooltip, char *pixmap,
 	return create_drawer_applet(drawer_widget_new(orient,
 						      DRAWER_SHOWN,
 						      PANEL_BACK_NONE, NULL,
-						      TRUE, NULL),
+						      TRUE, NULL, TRUE, TRUE),
 				    tooltip,pixmap,orient);
 }
 

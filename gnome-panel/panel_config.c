@@ -13,46 +13,6 @@ extern int applet_count;
 
 extern GlobalConfig global_config;
 
-/* used to temporarily store config values until the 'Apply'
-   button is pressed. */
-typedef struct _PerPanelConfig PerPanelConfig;
-struct _PerPanelConfig {
-	GtkWidget		*panel;
-
-	/*drawer types*/
-	/*nothing!*/
-	
-	/*snapped types*/
-	SnappedPos		snapped_pos;
-	SnappedMode		snapped_mode;
-	int			snapped_hidebuttons;
-	int			snapped_hidebutton_pixmaps;
-	
-	/*corner types*/
-	CornerPos		corner_pos;
-	PanelOrientation	corner_orient;
-
-	int			fit_pixmap_bg;
-	PanelBackType		back_type;
-	char			*back_pixmap;
-	GdkColor		back_color;
-	
-	int			register_changes; /*used for startup*/
-	GtkWidget		*config_window;
-	GtkWidget		*pix_entry;
-	int			pix_ch_signal;
-
-	/*snapped buttons*/
-	GtkWidget		*r_button; /*se*/
-	GtkWidget		*l_button; /*nw*/
-	GtkWidget		*t_button; /*ne*/
-	GtkWidget		*b_button; /*sw*/
-	GtkWidget		*non;
-	GtkWidget		*pix;
-	GtkWidget		*col;
-	GtkWidget		*backsel;
-};
-
 static GList *ppconfigs=NULL;
 
 static PerPanelConfig *
@@ -198,14 +158,16 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->fit_pixmap_bg,
 					    &ppc->back_color);
 	else if(IS_DRAWER_WIDGET(ppc->panel)) {
-		PanelWidget *pw =
-			PANEL_WIDGET(DRAWER_WIDGET(ppc->panel)->panel);
-		panel_widget_change_params(pw,
-					   pw->orient,
+	        DrawerWidget *dw = DRAWER_WIDGET(ppc->panel);
+		drawer_widget_change_params(dw,
+					   dw->orient,
+					   dw->state, 
 					   ppc->back_type,
 					   ppc->back_pixmap,
 					   ppc->fit_pixmap_bg,
-					   &ppc->back_color);
+					   &ppc->back_color,
+					   ppc->drawer_hidebutton_pixmap,
+					   ppc->drawer_hidebutton);
 	}
 	gtk_widget_queue_draw (ppc->panel);
 }
@@ -282,6 +244,26 @@ snapped_set_hidebutton_pixmaps (GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
 	ppc->snapped_hidebutton_pixmaps = !(GTK_TOGGLE_BUTTON(widget)->active);
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+void
+drawer_set_hidebutton (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	ppc->drawer_hidebutton = !(GTK_TOGGLE_BUTTON(widget)->active);
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+void
+drawer_set_hidebutton_pixmap (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	ppc->drawer_hidebutton_pixmap = !(GTK_TOGGLE_BUTTON(widget)->active);
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
@@ -844,11 +826,14 @@ panel_config(GtkWidget *panel)
 		ppc->back_color = pw->back_color;
 		ppc->back_type = pw->back_type;
 	} else if(IS_DRAWER_WIDGET(panel)) {
-		PanelWidget *pw = PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
+                DrawerWidget *drawer = DRAWER_WIDGET(panel);
+	        PanelWidget *pw = PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
 		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
 		ppc->back_pixmap = g_strdup(pw->back_pixmap);
 		ppc->back_color = pw->back_color;
 		ppc->back_type = pw->back_type;
+		ppc->drawer_hidebutton = drawer->hidebutton_enabled;
+		ppc->drawer_hidebutton_pixmap = drawer->hidebutton_pixmap_enabled;
 	}
 	
 	ppc->panel = panel;
@@ -889,8 +874,7 @@ panel_config(GtkWidget *panel)
 			GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(applet),
 							    "applet_id"));
 		AppletInfo *info = get_applet_info(applet_id);
-		add_drawer_properties_page(ppc->config_window,
-					   info->data);
+		add_drawer_properties_page(ppc, info->data);
 	}
 						
 

@@ -39,6 +39,8 @@ struct _DrawerWidget
 
 	DrawerState		state;
 	PanelOrientType		orient;
+        int                     hidebutton_enabled;
+        int                     hidebutton_pixmap_enabled;
 };
 
 struct _DrawerWidgetClass
@@ -55,7 +57,9 @@ GtkWidget*	drawer_widget_new		(PanelOrientType orient,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
-						 GdkColor *back_color);
+						 GdkColor *back_color,
+						 int hidebutton_pixmap_enabled,
+						 int hidebutton_enabled);
 
 /*open and close drawers*/
 void		drawer_widget_open_drawer	(DrawerWidget *panel);
@@ -68,7 +72,9 @@ void		drawer_widget_change_params	(DrawerWidget *drawer,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,
-						 GdkColor *back_color);
+						 GdkColor *back_color,
+						 int hidebutton_pixmap_enabled,
+						 int hidebutton_enabled);
 
 /* changing parameters (orient only) */
 void		drawer_widget_change_orient	(DrawerWidget *drawer,

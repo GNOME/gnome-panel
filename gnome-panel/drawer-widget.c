@@ -11,10 +11,13 @@
 #include "drawer-widget.h"
 #include "panel-util.h"
 #include "gdkextra.h"
+#include "panel-include.h" 
 
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
 extern int panel_applet_in_drag;
+
+extern void drawer_click(GtkWidget *w, Drawer *drawer);
 
 static void drawer_widget_class_init	(DrawerWidgetClass *klass);
 static void drawer_widget_init		(DrawerWidget      *drawer);
@@ -191,18 +194,18 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 			switch(drawer->orient) {
 			case ORIENT_UP:
 				*x = bx+(bw-width)/2;
-				*y = py - height;
+				*y = py - height - 2;
 				break;
 			case ORIENT_DOWN:
 				*x = bx+(bw-width)/2;
-				*y = py + ph;
+				*y = py + ph + 2;
 				break;
 			case ORIENT_LEFT:
-				*x = px - width;
+				*x = px - width - 2;
 				*y = by+(bh-height)/2;
 				break;
 			case ORIENT_RIGHT:
-				*x = px + pw;
+				*x = px + pw + 2;
 				*y = by+(bh-height)/2;
 				break;
 			}
@@ -511,9 +514,9 @@ drawer_widget_close_drawer(DrawerWidget *drawer)
 static int
 drawer_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-  if (!gnome_win_hints_wm_exists())
-    gdk_window_raise(widget->window);
-  return FALSE;
+	if (!gnome_win_hints_wm_exists())
+		gdk_window_raise(widget->window);
+	return FALSE;
 }
 
 
@@ -521,37 +524,97 @@ static GtkWidget *
 make_handle(char *pixmaphandle, int wi, int he)
 {
 	GtkWidget *w;
+	GtkWidget *box;
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	GtkWidget *frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_OUT);
-	gtk_widget_show(frame);
 	pixmap_name=gnome_unconditional_pixmap_file(pixmaphandle);
 	pixmap = gnome_pixmap_new_from_file(pixmap_name);
 	gtk_widget_show(pixmap);
 	g_free(pixmap_name);
-	gtk_container_add(GTK_CONTAINER(frame),pixmap);
-	w = gtk_event_box_new();
-	gtk_widget_show(w);
-	gtk_container_add(GTK_CONTAINER(w),frame);
-	gtk_widget_set_usize(w,wi,he);
 
-	return w;
+	w = gtk_button_new();
+	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+	gtk_widget_show(w);
+
+	box = gtk_hbox_new(1,1);
+	gtk_widget_show(box);
+	
+	gtk_container_add(GTK_CONTAINER(w), pixmap);
+       	gtk_container_add(GTK_CONTAINER(box), w);
+	
+	gtk_widget_set_usize(box,wi,he);
+
+	gtk_object_set_data(GTK_OBJECT(box), "button", w);
+	gtk_object_set_data(GTK_OBJECT(box), "pixmap", pixmap);
+	return box;
 }
+
+
+static void
+show_handle_pixmap(GtkWidget *handle, int show_pixmap, int show_button)
+{
+	GtkWidget *pixmap, *button;
+
+	button = gtk_object_get_data(GTK_OBJECT(handle), "button");
+	pixmap = gtk_object_get_data(GTK_OBJECT(handle), "pixmap");
+
+	if (!button) return;	
+	if (show_button)
+	        gtk_widget_show(button);
+	else 
+	        gtk_widget_hide(button);
+
+	if (!pixmap) return;
+	if (show_pixmap)
+		gtk_widget_show(pixmap);
+	else
+		gtk_widget_hide(pixmap);
+}
+
+static void
+drawer_hidebutton_set(DrawerWidget *drawer)
+{
+  int pixmap_enabled = drawer->hidebutton_pixmap_enabled;
+  int button_enabled = drawer->hidebutton_enabled;
+  show_handle_pixmap(drawer->handle_n, pixmap_enabled,
+		     button_enabled);
+  show_handle_pixmap(drawer->handle_s, pixmap_enabled,
+		     button_enabled); 
+  show_handle_pixmap(drawer->handle_w, pixmap_enabled,
+		     button_enabled); 
+  show_handle_pixmap(drawer->handle_e, pixmap_enabled,
+		     button_enabled);
+}
+
+
+static void
+drawer_handle_click(GtkWidget *widget, gpointer data)
+{
+	Drawer *drawer = gtk_object_get_data(GTK_OBJECT(data),
+					     DRAWER_PANEL_KEY);
+	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
+	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
+	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
+						PANEL_PARENT);
+	drawer_widget_close_drawer(data);
+	if(IS_SNAPPED_WIDGET(panelw))
+		SNAPPED_WIDGET(panelw)->drawers_open--;
+}
+
 
 static void
 drawer_widget_init (DrawerWidget *drawer)
 {
-  gnome_win_hints_init();
-  if (gnome_win_hints_wm_exists())
-    GTK_WINDOW(drawer)->type = GTK_WINDOW_TOPLEVEL;
-  else
-    GTK_WINDOW(drawer)->type = GTK_WINDOW_POPUP;
+	gnome_win_hints_init();
+	if (gnome_win_hints_wm_exists())
+		GTK_WINDOW(drawer)->type = GTK_WINDOW_TOPLEVEL;
+	else
+		GTK_WINDOW(drawer)->type = GTK_WINDOW_POPUP;
 	GTK_WINDOW(drawer)->allow_shrink = TRUE;
 	GTK_WINDOW(drawer)->allow_grow = TRUE;
 	GTK_WINDOW(drawer)->auto_shrink = TRUE;
-
+	
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(drawer),
 			      gtk_widget_get_events(GTK_WIDGET(drawer)) |
@@ -563,37 +626,53 @@ drawer_widget_init (DrawerWidget *drawer)
 
 	/*we add all the handles to the table here*/
 	/*EAST*/
-	drawer->handle_e = make_handle("panel-knob.png",0,40);
+	drawer->handle_e = make_handle("panel-arrow-right.png",0,40);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_e,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
+	gtk_signal_connect(gtk_object_get_data(GTK_OBJECT(drawer->handle_e),
+					       "button"), "clicked",
+			   GTK_SIGNAL_FUNC(drawer_handle_click), drawer);
 	/*NORTH*/
-	drawer->handle_n = make_handle("panel-knob.png",40,0);
+	drawer->handle_n = make_handle("panel-arrow-down.png",40,0);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
+	gtk_signal_connect(gtk_object_get_data(GTK_OBJECT(drawer->handle_n),
+					       "button"), "clicked",
+			   GTK_SIGNAL_FUNC(drawer_handle_click), drawer);
 	/*WEST*/
-	drawer->handle_w = make_handle( "panel-knob.png",0,40);
+	drawer->handle_w = make_handle( "panel-arrow-left.png",0,40);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_w,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
+	gtk_signal_connect(gtk_object_get_data(GTK_OBJECT(drawer->handle_w),
+					       "button"), "clicked",
+			   GTK_SIGNAL_FUNC(drawer_handle_click), drawer);
 	/*SOUTH*/
-	drawer->handle_s = make_handle("panel-knob.png",40,0);
+	drawer->handle_s = make_handle("panel-arrow-up.png",40,0);
 	gtk_table_attach(GTK_TABLE(drawer->table),drawer->handle_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
+	gtk_signal_connect(gtk_object_get_data(GTK_OBJECT(drawer->handle_s),
+					       "button"), "clicked",
+			   GTK_SIGNAL_FUNC(drawer_handle_click), drawer);
 
 	gtk_signal_connect(GTK_OBJECT(drawer), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(drawer_enter_notify),
 			   NULL);
-
+	drawer->hidebutton_enabled = TRUE;
+	drawer->hidebutton_pixmap_enabled = TRUE;
 	drawer->state = DRAWER_SHOWN;
 }
 
 
+ 
 GtkWidget*
 drawer_widget_new (PanelOrientType orient,
 		   DrawerState state,
 		   PanelBackType back_type,
 		   char *back_pixmap,
 		   int fit_pixmap_bg,
-		   GdkColor *back_color)
+		   GdkColor *back_color,
+		   int hidebutton_pixmap_enabled,
+		   int hidebutton_enabled)
 {
 	DrawerWidget *drawer;
 	GtkWidget *frame;
@@ -633,7 +712,9 @@ drawer_widget_new (PanelOrientType orient,
 			 0,0);
 
 	drawer->state = state;
-
+        drawer->hidebutton_enabled = hidebutton_enabled;
+	drawer->hidebutton_pixmap_enabled = hidebutton_enabled;
+	drawer_hidebutton_set(drawer);
 	gtk_widget_set_uposition(GTK_WIDGET(drawer),-100,-100);
 	drawer_widget_set_drop_zone(drawer);
 
@@ -647,7 +728,9 @@ drawer_widget_change_params(DrawerWidget *drawer,
 			    PanelBackType back_type,
 			    char *pixmap,
 			    int fit_pixmap_bg,
-			    GdkColor *back_color)
+			    GdkColor *back_color,
+			    int hidebutton_pixmap_enabled,
+			    int hidebutton_enabled)
 {
 	DrawerState oldstate;
 	PanelOrientation porient;
@@ -686,6 +769,10 @@ drawer_widget_change_params(DrawerWidget *drawer,
 	   	gtk_signal_emit(GTK_OBJECT(drawer),
 	   			drawer_widget_signals[STATE_CHANGE_SIGNAL],
 	   			drawer->state);
+
+	drawer->hidebutton_enabled = hidebutton_enabled;
+	drawer->hidebutton_pixmap_enabled = hidebutton_pixmap_enabled;
+	drawer_hidebutton_set(drawer);
 }
 
 void
@@ -699,7 +786,9 @@ drawer_widget_change_orient(DrawerWidget *drawer,
 				    panel->back_type,
 				    panel->back_pixmap,
 				    panel->fit_pixmap_bg,
-				    &panel->back_color);
+				    &panel->back_color,
+				    drawer->hidebutton_pixmap_enabled,
+				    drawer->hidebutton_enabled); 
 }
 
 void

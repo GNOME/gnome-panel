@@ -721,7 +721,6 @@ static int
 panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	GdkEventButton *bevent;
-
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:
 		bevent = (GdkEventButton *) event;
@@ -836,7 +835,7 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 	switch (event->type) {
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
-		case GDK_BUTTON_RELEASE:
+	        case GDK_BUTTON_RELEASE:
 			bevent = (GdkEventButton *) event;
 			/*if the widget is a button we want to keep the
 			  button 1 events*/
@@ -853,18 +852,18 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 }
 
 
-static void
-bind_panel_events(GtkWidget *widget, gpointer data)
-{
-	if (!GTK_WIDGET_NO_WINDOW(widget))
-		gtk_signal_connect(GTK_OBJECT(widget), "event",
-				   (GtkSignalFunc) panel_sub_event_handler,
-				   NULL);
+/* static void
+bind_panel_events(GtkWidget *widget, gpointer data) 
+{ 
+	if (!GTK_WIDGET_NO_WINDOW(widget)) 
+		gtk_signal_connect(GTK_OBJECT(widget), "event", 
+				   (GtkSignalFunc) panel_sub_event_handler, 
+				   NULL); 
 	
-	if (GTK_IS_CONTAINER(widget))
-		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_panel_events, NULL);
-}
+	if (GTK_IS_CONTAINER(widget)) 
+		gtk_container_foreach (GTK_CONTAINER (widget), 
+				       bind_panel_events, NULL); 
+} */
 
 static void
 panel_widget_dnd_drop_internal (GtkWidget *widget,
@@ -1002,6 +1001,7 @@ panel_setup(GtkWidget *panelw)
 	if(IS_DRAWER_WIDGET(panelw)) {
 		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(panelw)->panel);
 		DrawerWidget *drawer = DRAWER_WIDGET(panelw);
+		GtkObject *button;
 		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
@@ -1014,15 +1014,31 @@ panel_setup(GtkWidget *panelw)
 		gtk_signal_connect(GTK_OBJECT(drawer->handle_e), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   panelw);
+		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_e),"button");
+		if (button) gtk_signal_connect(button, "event",
+					       (GtkSignalFunc) panel_sub_event_handler,
+					       panelw);
 		gtk_signal_connect(GTK_OBJECT(drawer->handle_w), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   panelw);
+		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_w),"button");
+		if (button) gtk_signal_connect(button, "event",
+					       (GtkSignalFunc) panel_sub_event_handler,
+					       panelw);
 		gtk_signal_connect(GTK_OBJECT(drawer->handle_n), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   panelw);
+		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_n),"button");
+		if (button) gtk_signal_connect(button, "event",
+					       (GtkSignalFunc) panel_sub_event_handler,
+					       panelw);
 		gtk_signal_connect(GTK_OBJECT(drawer->handle_s), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   panelw);
+		button = gtk_object_get_data(GTK_OBJECT(drawer->handle_s),"button");
+		if (button) gtk_signal_connect(button, "event",
+					       (GtkSignalFunc) panel_sub_event_handler,
+					       panelw);
 	} else if(IS_SNAPPED_WIDGET(panelw)) {
 		PanelWidget *panel =
 			PANEL_WIDGET(SNAPPED_WIDGET(panelw)->panel);
