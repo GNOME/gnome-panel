@@ -1,3 +1,17 @@
+Wed Apr 01 00:36:31 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: now defines panels GList so that we
+	  can do interpanel movement. interpanel movement is now
+	  implemented
+
+	* panel.c, main.c: removed all traces of dnd stuff (commented
+	  out) only internal moving in panel-widget now in place.
+
+	* main.c: sending orientation changes to extern applets
+	  implemented.
+
+	* panel-widget.c: fixed a warrning in set_position
+
 Mon Mar 30 23:19:35 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c, panel-widget.c: transfered drag to panel.c, now

@@ -12,7 +12,7 @@
  * "instances" of the panel, as there is only one panel running on the
  * screen.
  * */
-   
+
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
 	CORBA::Short applet_request_id (const char *path,

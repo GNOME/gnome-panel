@@ -140,6 +140,12 @@ gint		panel_widget_move		(PanelWidget *panel,
 /*remove an applet from the panel*/
 gint		panel_widget_remove		(PanelWidget *panel,
 						 GtkWidget *applet);
+
+/*move applet to a different panel*/
+gint		panel_widget_reparent		(PanelWidget *old_panel,
+						 PanelWidget *new_panel,
+						 GtkWidget *applet,
+						 gint pos);
 /*return position of an applet*/
 gint		panel_widget_get_pos		(PanelWidget *panel,
 						 GtkWidget *applet);
@@ -163,7 +169,7 @@ void		panel_widget_applet_drag_start	(PanelWidget *panel,
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       GtkWidget *applet);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
-int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
+gint		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 void		panel_widget_applet_move_use_idle(PanelWidget *panel);
 
 /*changing parameters*/
@@ -181,6 +187,8 @@ void		panel_widget_change_params	(PanelWidget *panel,
 /*changing parameters (orient only)*/
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
+
+extern GList *panels;
 
 #ifdef __cplusplus
 }

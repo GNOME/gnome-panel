@@ -17,7 +17,7 @@
 #include "mico-parse.h"
 #include "panel-util.h"
 
-GList *panels = NULL;
+/*GList *panels = NULL;*/
 GList *applets = NULL;
 
 extern GtkWidget * root_menu;
@@ -82,7 +82,6 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,NULL,APPLET_MENU);
-		printf("[load:menu:%ld]\n",(long)menu);
 	} else if(strcmp(id,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
@@ -131,15 +130,11 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 static void
 load_default_applets(void)
 {
-	/* XXX: the IDs for these applets are hardcoded here. */
-
 	load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
+	/* FIXME: this for some reason segfaulst rather frequently
 	load_applet(EXTERN_ID, "clock_applet", PANEL_UNKNOWN_APPLET_POSITION,0,
 		    NULL);
-/*
-	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
-	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
-*/
+	*/
 }
 
 static void
@@ -198,12 +193,30 @@ void
 orientation_change(AppletInfo *info, PanelWidget *panel)
 {
 	if(info->type == APPLET_EXTERN) {
-		/*FIXME: call corba*/
+		PanelOrientType orient;
+		switch(panel->snapped) {
+			case PANEL_FREE:
+			case PANEL_DRAWER:
+				orient = (panel->orient==PANEL_VERTICAL)?
+					 ORIENT_RIGHT:ORIENT_UP;
+				break;
+			case PANEL_TOP:
+				orient = ORIENT_DOWN;
+				break;
+			case PANEL_BOTTOM:
+				orient = ORIENT_UP;
+				break;
+			case PANEL_LEFT:
+				orient = ORIENT_RIGHT;
+				break;
+			case PANEL_RIGHT:
+				orient = ORIENT_LEFT;
+				break;
+		}
+		send_applet_change_orient(info->id,info->applet_id,orient);
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
 		MenuOrient orient=MENU_UP;
-
-		printf("[orient:menu:%ld]\n",(long)menu);
 
 		switch(panel->snapped) {
 			case PANEL_FREE:
@@ -421,6 +434,15 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 	return FALSE;
 }
 
+static gint
+panel_destroy(GtkWidget *widget, gpointer data)
+{
+	GtkWidget *panel_menu = data;
+
+	if(panel_menu)
+		gtk_widget_unref(panel_menu);
+}
+
 
 static void
 init_user_panels(void)
@@ -498,10 +520,10 @@ init_user_panels(void)
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(panel_button_press),
 				   panel_menu);
-		gtk_signal_connect_object(GTK_OBJECT(panel),
-					  "destroy",
-					  GTK_SIGNAL_FUNC(gtk_widget_unref),
-					  GTK_OBJECT(panel_menu));
+		gtk_signal_connect(GTK_OBJECT(panel),
+				   "destroy",
+				   GTK_SIGNAL_FUNC(panel_destroy),
+				   panel_menu);
 
 		gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
 					 GTK_SIGNAL_FUNC(panel_realize),

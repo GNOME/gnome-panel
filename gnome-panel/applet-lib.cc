@@ -307,7 +307,8 @@ gnome_panel_applet_request_id (char *path,
 			gnome_panel_applet_reinit_corba ();
 			continue;
 		}
-		break;
+		if(*id!=-1)
+			break;
 	}
 	/*if the request_id never completed*/
 	if(*id == -1)

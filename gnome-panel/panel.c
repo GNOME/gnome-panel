@@ -23,8 +23,8 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-/*FIXME: THESE CANNOT REALLY BE LINKED LISTS!! THEY SHOULD BE ARRAYS*/
-extern GList *panels;
+/*extern GList *panels;*/
+/*FIXME: THIS CANNOT REALLY BE A LINKED LIST!! THIS SHOULD BE AN ARRAY*/
 extern GList *applets;
 
 extern GtkTooltips *panel_tooltips;
@@ -147,7 +147,7 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		gnome_config_drop_all();
 
 		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id,(*num)-2,path,
+		send_applet_session_save(info->id,info->applet_id,path,
 					 panel_cfg_path);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
@@ -396,10 +396,10 @@ panel_clean_applet(AppletInfo *info)
 	panel_widget_remove(panel,info->widget);
 	gtk_widget_unref(info->widget);
 	info->widget = NULL;
-	/* this should be handeled by the applet itself (hopefully)
-	if(info->assoc)
+	if(info->type == APPLET_DRAWER && info->assoc) {
+		panels = g_list_remove(panels,info->assoc);
 		gtk_widget_unref(info->assoc);
-	*/
+	}
 	if(info->menu)
 		gtk_widget_unref(info->menu);
 	info->menu = NULL;
@@ -766,13 +766,17 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 	/*printf ("entering reserve spot\n");*/
 	
 	socket = gtk_socket_new();
-	gtk_widget_show (socket);
 
+	g_return_val_if_fail(socket!=NULL,0);
+
+	gtk_widget_show (socket);
+	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
 	register_toy(socket,NULL,NULL,g_strdup(id),g_strdup(path),
 		     pos,panel,cfgpath, type);
 
+	printf("winpointer(%lu)\n",(unsigned long)(socket->window));
 	printf("XWIN(%lu)\n",(unsigned long)GDK_WINDOW_XWINDOW(socket->window));
 
 	return GDK_WINDOW_XWINDOW(socket->window);
@@ -830,6 +834,7 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 	gtk_tooltips_set_tip (panel_tooltips,applet,tooltip,NULL);
 }
 
+#if 0
 static gint
 panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
@@ -845,6 +850,7 @@ panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 }
 
 static char *applet_drag_types[]={"internal/applet-widget-pointer"};
+#endif
 
 void
 register_toy(GtkWidget *applet,
@@ -913,13 +919,13 @@ register_toy(GtkWidget *applet,
 
 	applets = g_list_append(applets,info);
 
-	gtk_signal_connect (GTK_OBJECT (eventbox), 
+	/*gtk_signal_connect (GTK_OBJECT (eventbox), 
 			    "drag_request_event",
 			    GTK_SIGNAL_FUNC(panel_dnd_drag_request),
 			    info);
 
 	gtk_widget_dnd_drag_set (GTK_WIDGET(eventbox), TRUE,
-				 applet_drag_types, 1);
+				 applet_drag_types, 1);*/
 
 
 	gtk_signal_connect(GTK_OBJECT(eventbox),
