@@ -1198,7 +1198,13 @@ make_mailcheck_applet(const gchar *goad_id)
 	char *emailfile;
 	char *query;
 
-	mc = g_new0(MailCheck,1);
+	applet = applet_widget_new(goad_id);
+	if (!applet) {
+		g_warning(_("Can't create applet!\n"));
+		return NULL;
+	}
+
+	mc = g_new0(MailCheck, 1);
 	mc->animation_tag = -1;
 	mc->animation_file = NULL;
 	mc->property_window = NULL;
@@ -1207,10 +1213,6 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
-
-	applet = applet_widget_new(goad_id);
-	if (!applet)
-		g_error(_("Can't create applet!\n"));
 
 	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
 

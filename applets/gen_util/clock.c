@@ -328,8 +328,10 @@ make_clock_applet(const gchar * goad_id)
 	GtkWidget *applet;
 
 	applet = applet_widget_new(goad_id);
-	if (!applet)
-		g_error(_("Can't create applet!\n"));
+	if (!applet) {
+		g_warning(_("Can't create applet!\n"));
+		return NULL;
+	}
 
 	cd = g_new(ClockData, 1);
 
@@ -350,7 +352,7 @@ make_clock_applet(const gchar * goad_id)
 	cd->gmt_time = gnome_config_get_int("clock/gmt_time=0");
 	gnome_config_pop_prefix();
 
-	create_clock_widget(cd,applet);
+	create_clock_widget(cd, applet);
 
 	/*we have to bind change_orient before we do applet_widget_add 
 	  since we need to get an initial change_orient signal to set our

@@ -1,3 +1,8 @@
+Mon Mar 20 17:07:19 2000  George Lebl <jirka@5z.com>
+
+	* gen_util/{clock.c,mailcheck.c,printer.c}: don't use g_error, we're
+	  now all shlib, and g_error is very bad in that case.
+
 2000-03-15  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
 
 	* gen_util/mailcheck.c (check_mail_file_status): if remote server

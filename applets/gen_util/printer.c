@@ -423,10 +423,13 @@ make_printer_applet(const gchar *goad_id)
 {
 	Printer *pr;
 
-	pr = g_new0(Printer,1);
+	pr = g_new0(Printer, 1);
 	pr->applet = applet_widget_new(goad_id);
-	if (!pr->applet)
-		g_error(_("Can't create applet!\n"));
+	if (!pr->applet) {
+		g_warning(_("Can't create applet!\n"));
+		g_free(pr);
+		return NULL;
+	}
 
 	pr->printer_prop = NULL;
 
