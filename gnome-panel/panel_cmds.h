@@ -8,9 +8,11 @@ BEGIN_GNOME_DECLS
 #define PANEL_UNKNOWN_STEP_SIZE -1
 
 
+/*
 typedef enum {
 	APPLET_HAS_PROPERTIES = 1L << 0
 } AppletFlags;
+*/
 
 typedef enum {
 	PANEL_CMD_QUIT,

@@ -10,6 +10,7 @@
 #include "gnome.h"
 #include "panel-widget.h"
 #include "panel.h"
+#include "menu.h"
 
 GList *panels = NULL;
 GList *drawers = NULL;
@@ -27,6 +28,16 @@ load_applet(char *id, char *params, int pos, int panel)
 	  thing has to exec the applet or if it is a local applet then it
 	  just calls a function to create the appropriate widget and use
 	  register_toy*/
+	if(strcmp(id,MENU_ID) == 0) {
+		Menu *menu;
+
+		menu = create_menu_applet(GTK_WIDGET(panels->data),
+					  params,MENU_UP);
+
+		
+		register_toy(menu->button,menu->menu,MENU_ID,params,pos,
+			     panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
+	}
 }
 
 static void
@@ -41,9 +52,8 @@ load_default_applets(void)
 {
 	/* XXX: the IDs for these applets are hardcoded here. */
 
-	/* Here we use NULL to request querying of default applet parameters */
+	load_applet("Menu", ".", PANEL_UNKNOWN_APPLET_POSITION,0);
 /*
-	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 */

@@ -40,8 +40,8 @@ extern GtkTooltips *panel_tooltips;
 extern gint tooltips_enabled;	
 
 /*FIXME: integrate with menu.[ch]*/
-/*extern GtkMenu *root_menu;
-extern GList *small_icons;*/
+extern GtkWidget *root_menu;
+extern GList *small_icons;
 
 static void
 properties(PanelWidget *panel)
@@ -259,11 +259,11 @@ panel_session_save (gpointer client_data,
 	gtk_widget_unref(panel_tooltips);
 
 	/*FIXME: integrate with menu.[ch]*/
-	/*small_icons = NULL;*/ /*prevent searches through the g_list to speed
+	small_icons = NULL; /*prevent searches through the g_list to speed
 				up this thing*/
 
 	/*FIXME: integrate with menu.[ch]*/
-	/*gtk_widget_unref(root_menu);*/
+	gtk_widget_unref(root_menu);
 
 	/*FIXME: unref all menus here */
 	

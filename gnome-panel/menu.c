@@ -14,10 +14,9 @@
 #include <dirent.h>
 #include <string.h>
 #include "gnome.h"
-#include "panel_cmds.h"
 #include "panel-widget.h"
-#include "applet_cmds.h"
 #include "panel.h"
+#include "menu.h"
 
 #include "libgnomeui/gnome-session.h"
 
@@ -26,7 +25,7 @@
 
 static char *gnome_folder = NULL;
 
-Menu *root_menu = NULL;
+GtkWidget *root_menu = NULL;
 
 GList *small_icons = NULL;
 int show_small_icons = TRUE;
@@ -78,9 +77,9 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title)
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	*small_icons = g_list_prepend (*small_icons, align);
-	gtk_signal_object_connect(GTK_OBJECT(align),"destroy",
-				  GTK_SIGNAL_FUNC(kill_small_icon),NULL);
+	small_icons = g_list_prepend (small_icons, align);
+	gtk_signal_connect(GTK_OBJECT(align),"destroy",
+			   GTK_SIGNAL_FUNC(kill_small_icon),NULL);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
@@ -114,16 +113,7 @@ free_string (GtkWidget *widget, void *data)
 void
 add_to_panel (char *applet, char *arg)
 {
-	PanelCommand cmd;
-	
-	cmd.cmd = PANEL_CMD_CREATE_APPLET;
-	cmd.params.create_applet.id     = applet;
-	cmd.params.create_applet.params = arg;
-	cmd.params.create_applet.pos    = PANEL_UNKNOWN_APPLET_POSITION;
-	cmd.params.create_applet.panel  = 0; /*FIXME: maybe add to some
-						default*/
-
-	(*panel_cmd_func) (&cmd);
+	/*FIXME: launch an applet*/
 }
 
 void
@@ -137,28 +127,18 @@ add_app_to_panel (GtkWidget *widget, void *data)
 void
 add_dir_to_panel (GtkWidget *widget, void *data)
 {
-	add_to_panel (APPLET_ID, data);
+	add_to_panel (MENU_ID, data);
 }
 
 void
 add_drawer (GtkWidget *widget, void *data)
 {
-	PanelCommand cmd;
-	
-	cmd.cmd = PANEL_CMD_CREATE_DRAWER;
-	cmd.params.create_drawer.name       = "Drawer";
-	cmd.params.create_drawer.iconopen   = "???";
-	cmd.params.create_drawer.iconclosed = "???";
-	cmd.params.create_drawer.step_size  = PANEL_UNKNOWN_STEP_SIZE;
-	cmd.params.create_drawer.pos        = PANEL_UNKNOWN_APPLET_POSITION;
-	cmd.params.create_drawer.panel      = 0;
-
-	(*panel_cmd_func) (&cmd);
+	/*FIXME: add drawer*/
 }
 
 
-GtkWidget *
-create_menu_at (GtkWidget *window, char *menudir, int create_app_menu);
+static GtkWidget *
+create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -199,7 +179,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu);
 			char *dentry_name;
 
 			sub = create_menu_at (window, filename,
-					      create_app_menu, small_icons);
+					      create_app_menu);
 			if (!sub) {
 				g_free (filename);
 				continue;
@@ -237,7 +217,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu);
 				}
 
 				text = g_copy_strings ("Menu: ", menuitem_name, NULL);
-				setup_menuitem (menuitem, pixmap, text, small_icons);
+				setup_menuitem (menuitem, pixmap, text);
 				g_free (text);
 				
 				dirname = g_strdup (filename);
@@ -277,7 +257,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu);
 				gtk_widget_show (pixmap);
 		}
 
- 		setup_menuitem (menuitem, pixmap, menuitem_name, small_icons);
+ 		setup_menuitem (menuitem, pixmap, menuitem_name);
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 
 		gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
@@ -302,7 +282,7 @@ void
 menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
 	Menu * menup = data;
-	GtkWidget *widget = menu->button;
+	GtkWidget *widget = menup->button;
 	int wx, wy;
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
@@ -347,11 +327,7 @@ activate_menu (GtkWidget *widget, gpointer data)
 void
 panel_configure (GtkWidget *widget, void *data)
 {
-	PanelCommand cmd;
-
-	cmd.cmd = PANEL_CMD_PROPERTIES;
-
-	(*panel_cmd_func) (&cmd);
+	/*FIXME: configure the panel*/
 }
 
 /* FIXME: panel is dynamicly configured! so we shouldn't need this*/
@@ -451,8 +427,11 @@ create_applets_menu(void)
 	GtkWidget    *menu;
 	GList        *list;
 	GList        *applets_list;
-	PanelCommand  cmd;
 
+	return gtk_menu_new();
+/*FIXME: somehow fix this*/
+
+#if 0
 	/* Get list of applet types */
 
 	cmd.cmd = PANEL_CMD_GET_APPLET_TYPES;
@@ -477,6 +456,7 @@ create_applets_menu(void)
 
 	g_list_free(applets_list);
 	return menu;
+#endif
 }
 
 static GtkWidget *
@@ -495,7 +475,7 @@ create_panel_submenu (GtkWidget *app_menu)
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-		create_applets_menu(small_icons));
+		create_applets_menu());
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add Drawer"));
@@ -531,10 +511,7 @@ panel_lock (GtkWidget *widget, void *data)
 static void
 panel_logout (GtkWidget *widget, void *data)
 {
-	PanelCommand cmd;
-
-	cmd.cmd = PANEL_CMD_QUIT;
-	(*panel_cmd_func) (&cmd);
+	/*FIXME: do logout*/
 }
 
 static void
@@ -615,7 +592,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 
 	if (main_menu) {
 		if(!root_menu)
-			root_menu = create_menu_at (window, menudir, 0);
+			root_menu = create_menu_at(window,menudir,0);
 		menu->menu = root_menu;
 		app_menu = create_menu_at (window, menudir, 1);
 		add_special_entries (menu->menu, app_menu);
@@ -630,8 +607,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 }
 
 Menu *
-create_menu(GtkWidget *window, char *arguments, char *menudir,
-	    MenuOrient orient)
+create_menu_applet(GtkWidget *window, char *arguments, MenuOrient orient)
 {
 	Menu *menu;
 	int main_menu;
@@ -661,7 +637,7 @@ create_menu(GtkWidget *window, char *arguments, char *menudir,
 	
 	main_menu = (strcmp (arguments, ".") == 0);
 
-	menu = create_panel_menu (window, menudir, main_menu, orient);
+	menu = create_panel_menu (window, this_menu, main_menu, orient);
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 
@@ -683,7 +659,7 @@ set_show_small_icons(gpointer data, gpointer user_data)
 }
 
 static void
-set_orientation(Menu *menu)
+set_orientation(GtkWidget *window, Menu *menu)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
@@ -714,14 +690,14 @@ set_orientation(Menu *menu)
 		/*FIXME: these guys need arrows as well*/
 		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
 		
-	pixmap=GTK_BUTTON(applet)->child;
-	gtk_container_remove(GTK_CONTAINER(applet),pixmap);
+	pixmap=GTK_BUTTON(menu->button)->child;
+	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (GTK_WIDGET(panel),applet,pixmap_name);
+	pixmap = gnome_create_pixmap_widget (window,menu->button,pixmap_name);
 
-	gtk_container_add (GTK_CONTAINER(applet), pixmap);
+	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (pixmap);
 	
 	g_free(pixmap_name);

@@ -17,6 +17,10 @@ typedef struct {
 	MenuOrient orient;
 } Menu;
 
+Menu * create_menu_applet(GtkWidget *window ,char *arguments,
+			  MenuOrient orient);
+
+
 END_GNOME_DECLS
 
 #endif
