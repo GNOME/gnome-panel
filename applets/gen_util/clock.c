@@ -288,6 +288,7 @@ create_computer_clock_widget (GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_widget_show (vbox);
 
 	cc->time = gtk_label_new ("hmm?");
+	gtk_label_set_justify (GTK_LABEL (cc->time), GTK_JUSTIFY_CENTER);
 
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), cc->time);
 	gtk_widget_show (cc->time);
