@@ -164,6 +164,7 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	GError       *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
+	g_return_if_fail (applet->priv->prefs_key != NULL);
 
 	if (opt_error)
 		error = opt_error;
@@ -363,14 +364,9 @@ panel_applet_finalize (GObject *object)
 		bonobo_object_unref (
 			BONOBO_OBJECT (applet->priv->prop_sack));
 
-	if (applet->priv->prefs_key)
-		g_free (applet->priv->prefs_key);
-
-	if (applet->priv->background)
-		g_free (applet->priv->background);
-
-	if (applet->priv->iid)
-		g_free (applet->priv->iid);
+	g_free (applet->priv->prefs_key);
+	g_free (applet->priv->background);
+	g_free (applet->priv->iid);
 
 	g_free (applet->priv);
 	applet->priv = NULL;
@@ -582,8 +578,8 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 			   0, 0,
 			   width, height);
 
-	g_object_unref (G_OBJECT (gc));
-	g_object_unref (G_OBJECT (pixmap));
+	g_object_unref (gc);
+	g_object_unref (pixmap);
 
 	return retval;
 }
@@ -765,7 +761,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
 
-			g_object_unref (G_OBJECT (pixmap));
+			g_object_unref (pixmap);
 			break;
 		default:
 			g_assert_not_reached ();
@@ -1048,8 +1044,7 @@ panel_applet_setup (PanelApplet *applet)
 
 	priv->control = bonobo_control_new (GTK_WIDGET (applet));
 
-	g_signal_connect (G_OBJECT (priv->control),
-			  "set_frame",
+	g_signal_connect (priv->control, "set_frame",
 			  G_CALLBACK (panel_applet_control_bound),
 			  applet);
 
@@ -1070,7 +1065,7 @@ panel_applet_setup (PanelApplet *applet)
 	bonobo_object_add_interface (BONOBO_OBJECT (priv->control),
 				     BONOBO_OBJECT (priv->item_handler));
 
-	g_signal_connect (G_OBJECT (applet), "popup_menu",
+	g_signal_connect (applet, "popup_menu",
 			  G_CALLBACK (panel_applet_popup_menu), NULL);
 }
 

@@ -40,7 +40,7 @@
 #undef PANEL_APPLET_FRAME_DEBUG
 
 struct _PanelAppletFramePrivate {
-	GNOME_Vertigo_PanelAppletShell  applet_shell;
+	GNOME_Vertigo_PanelAppletShell  applet_shell; /* unused */
 	Bonobo_PropertyBag              property_bag;
 
 	AppletInfo                     *applet_info;
@@ -437,7 +437,8 @@ panel_applet_frame_get_type (void)
 	return type;
 }
 
-static GNOME_Vertigo_PanelAppletShell
+#if 0
+static void
 panel_applet_frame_get_applet_shell (Bonobo_Control control)
 {
 	CORBA_Environment              env;
@@ -458,6 +459,7 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 
 	return retval;
 }
+#endif
 
 static G_CONST_RETURN char *
 panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
@@ -574,8 +576,6 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 
 	control = bonobo_control_frame_get_control (control_frame);
-
-	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
