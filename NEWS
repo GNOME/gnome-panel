@@ -1,4 +1,50 @@
 =============
+Version 2.3.2
+=============
+
+  o Panel
+
+	* Re-write of the run dialog (Frank Worsley)
+	* Add "Force Quit" action button (Mark)
+	* Add support for re-sizing during panel animations (Mark)
+	* Fix many bugs with the new drawer implementation (Mark)
+	* Re-implement launcher hoarding (Mark)
+	* Don't save absolute paths in GConf (Mark)
+	* Load panel defaults using gconftool --load (Mark)
+	* Fix some of the more major issues with migrating to 2.3 (Mark)
+	* Fix problems with menu hierarchy as reported to a11y (Padraig)
+	* Convert filename to UTF8 before displaying (Toshi)
+	* Fix jitteriness in the run dialog (nix AT go-nix.ca)
+	* Make alert windows use OK, not CLOSE (Greg Merchan)
+	* Typo fixes (Miloslav Trmac, Duarte Loreto)
+
+  o Applets
+
+	* Much HIG compliance work (Dennis Cranston)
+	* Destroy about dialogs when applets are removed (Bala)
+
+  o libpanel-applet
+
+	* Completely document all libpanel-applet functions (Mark)
+	* Implement panel_applet_gconf_(set|get)_list (Mark)
+	* Remove C99ism from an enum declaration (Mark)
+	* Fix bug with recursing when associating schemas (Yatin Chawathe)
+
+  o Misc
+
+	* Fix sgmldocs.make (Art Haas)
+	* Cygwin fixes (Masahiro Sakai)
+	* Move relevant icons from gnome-desktop (Mark)
+	* Remove the .so suffixes from applet .server files (Mark)
+	* Fix distcheck (Mark)
+
+  o Translations
+
+	* Christophe Merlet (fr), Danilo ≈†egan (sr, sr@Latn), Hasbullah Bin Pit (ms)
+	  KAMAGASAKO Masatoshi (ja), Miloslav Trmac (cs), Runa Bhattacharjee (bn) and
+	  Yelitza Louze (es).
+
+=============
 Version 2.3.1
 =============
 
@@ -111,13 +157,52 @@ Bugfixes, tweaks etc.:
 Translations:
 
 	* az(Metin Amiroff), be(Dmitry G. Mastrukov), bg(Alexander Shopov),
-	  da(Ole Laursen), eo(Jo√´l Brich), es(Pablo Gonzalo del Campo),
-	  et(T√µivo Leedj√§rv), fa(Roozbeh Pournader), fr(Christophe Merlet),
+	  da(Ole Laursen), eo(Jo√É¬´l Brich), es(Pablo Gonzalo del Campo),
+	  et(T√É¬µivo Leedj√É¬§rv), fa(Roozbeh Pournader), fr(Christophe Merlet),
 	  ko(Kang Jeong-Hee), lt(Vaidotas Zemlys), ml(FSF-India), mn(Sukhochir),
 	  nl(Vincent van Adrighem), no(Kjartan Maraas), ro(Marius Andreiana),
 	  ru(Dmitry G. Mastrukov), sk(Stanislav Visnovsky), sq(Elian Myftiu),
 	  sv(Christian Rose), tr(Fatih Demir), zh_CN(Xiong Jiang) and
 	  zh_TW(Abel Cheung).
+
+=============
+Version 2.2.2
+=============
+
+Panel
+	* Fix crash when deleting the menu panel (Arvind)
+	* Fix a possible crash in background code (Mark)
+	* Make Ctrl-F10 popup the context menu even with out-of-proc
+	  applets (Padraig)
+	* Fix keynav behaviour of drawers (Padraig)
+	* Focus the run dialog entry after appending a file (Padraig)
+	* Center the "Create Launcher" dialog on the screen (Raj)
+	* Focus the run dialog entry when no applications are selected (Arvind)
+	* Convert screenshot filename to UTF-8 before displaing it (Toshi)
+
+libpanel-applet
+	* Fix bug with loading applet schemas (Yatin Chawathe)
+	* Stop applets from connecting to the session manager (Havoc, Mark)
+
+Applets
+	* Remove extraneous calls to gnome_program_init (Mark)
+	* Fix usage of static variables in the mailcheck applet (Jens Zechlin)
+
+Docs
+	* Removed info on defaults as they vary amongst distros (Irene)
+	* Add docs translations (Mike Lei)
+
+Misc
+
+	* Remove the .so suffixes from shlibs in .server files (Mark)
+	* Replace leading spaces with tabs in sgmldocs.make (Art Haas)
+
+Translations
+	* Belarusian team (be), Christian Neumair (de), Christophe Merlet (fr),
+	  Danilo √Ö¬†egan (sr), FSF-India (ml), Guntupalli Karunakar (hi),
+	  Joel Brich (eo), Jordi Mallach (ca), Mathieu van Woerkom (li),
+	  Ole Laursen (da), Pauli Virtanen (fi), Raphael Finkel (yi),
+	  Reinout van Schouwen (nl) and Runa Bhattacharjee (bn).
 
 =============
 Version 2.2.1
@@ -169,7 +254,7 @@ Miscellanous
 Translations
 
 	* Alessio Frusciante, Christian Neumair, Christian Rose, Christophe Merlet,
-	  Dmitry G. Mastrukov, Gediminas Paulauskas, Gil "Dolfin" Osher, Jo√´l Brich,
+	  Dmitry G. Mastrukov, Gediminas Paulauskas, Gil "Dolfin" Osher, Jo√É¬´l Brich,
 	  Kenneth Christiansen, Kjartan Maraas, Luca Ferretti, Metin Amiroff,
 	  Miloslav Trmac, Ole Laursen, Roozbeh Pournader, Vaidotas Zemlys,
 	  Vincent van Adrighem and Zbigniew Chyla.  
@@ -212,7 +297,7 @@ Translations
 
 	* Abel Cheung, Andras Timar, Artis Trops, Christian Neumair,
 	  Christian Rose, Daniel Yacob, Dmitry G. Mastrukov, German Poo-Caaman~o,
-	  Gil "Dolfin" Osher, Juan Manuel Garc?¬≠a Molina, Kjartan Maraas,
+	  Gil "Dolfin" Osher, Juan Manuel Garc?√Ç¬≠a Molina, Kjartan Maraas,
 	  Kostas Papadimas, Miloslav Trmac, Ole Laursen, Pablo Gonzalo del Campo,
 	  Pauli Virtanen and Reinout van Schouwen.
 
@@ -383,7 +468,7 @@ Miscellanous
 Translations
 
 	* Dmitry G. Mastrukov, Hasbullah Bin Pit, Kjartan Maraas,
-	  Kostas Papadimas, T√µivo Leedj√§rv, Vincent van Adrighem and
+	  Kostas Papadimas, T√É¬µivo Leedj√É¬§rv, Vincent van Adrighem and
 	  Yanko Kaneti.
 
 =============
@@ -496,7 +581,7 @@ Misc
 
 Translations
 
-	* Germ·n Poo-CaamaÒo, Hasbullah Bin Pit, Matthias Warkus,
+	* Germ√°n Poo-Caama√±o, Hasbullah Bin Pit, Matthias Warkus,
 	  Ole Laursen and Pauli Virtanen.
 
 =============
@@ -548,7 +633,7 @@ Translations
 	* Andras Timar, Changwoo Ryu, Christian Neumair, Christian Rose, 
 	  Dmitry G. Mastrukov, Duarte Loreto, Gustavo Noronha Silva,
 	  Hasbullah Bin Pit, Kjartan Maraas, Marius Andreiana, Ole Laursen,
-	  Peteris Krisjanis, Stanislav Visnovsky, Tıivo Leedj‰rv, Vincent
+	  Peteris Krisjanis, Stanislav Visnovsky, T√µivo Leedj√§rv, Vincent
 	  van Adrighem, Yanko Kaneti and Zbigniew Chyla.
 
 =============
@@ -594,7 +679,7 @@ Panel
 
 Translations
 
-	* Tıivo Leedj‰rv.
+	* T√µivo Leedj√§rv.
 
 =============
 Version 2.0.3
@@ -676,7 +761,7 @@ Fish Applet
 
 	* Use root window instead of offscreen popup when creating pixmaps (Mark)
 	* Sanity check some preferences (Mark)
-	* Convert fortune output from user locale to UTF-8 (Miguel RodrÌguez PÈrez)
+	* Convert fortune output from user locale to UTF-8 (Miguel Rodr√≠guez P√©rez)
 	* Warn the user if we can't locate or execute fortune (Mark)
 
 Workspace Switcher Applet
@@ -724,7 +809,7 @@ Translations
 	* Andrew V. Samoilov, Changwoo Ryu, Christian Rose, Christophe Fergeau,
           Daniel Yacob, Dmitry G. Mastrukov, Hasbullah Bin Pit, Jordi Mallach,
           Kjartan Maraas, Ole Laursen, Pablo Saratxaga, Peteris Krisjanis, Stanislav
-          Visnovsky, Tıivo Leedj‰rv, Vincent van Adrighem, Wang Jian and Zbigniew Chyla.
+          Visnovsky, T√µivo Leedj√§rv, Vincent van Adrighem, Wang Jian and Zbigniew Chyla.
 
 =============
 Version 2.0.1
@@ -758,10 +843,10 @@ Miscellanous
 
 Translations
 
-	* Carlos PerellÛ MarÌn, Christian Rose, Christophe Merlet,
-	  Germ·n Poo-CaamaÒo, Hasbullah Bin Pit, Jesus Bravo Alvarez,
-	  Jordi Mallach, Ole Laursen, Stanislav Visnovsky, Tıivo
-	  Leedj‰rv and Zbigniew Chyla. 
+	* Carlos Perell√≥ Mar√≠n, Christian Rose, Christophe Merlet,
+	  Germ√°n Poo-Caama√±o, Hasbullah Bin Pit, Jesus Bravo Alvarez,
+	  Jordi Mallach, Ole Laursen, Stanislav Visnovsky, T√µivo
+	  Leedj√§rv and Zbigniew Chyla. 
 
 ==============
 Version 1.5.24
@@ -783,10 +868,10 @@ Miscellanous
 
 Translations
 
-	* Abel Cheung, Carlos PerellÛ MarÌn, Christian Rose,
-	  Dmitry G. Mastrukov, George Lebl, Germ·n Poo-CaamaÒo,
+	* Abel Cheung, Carlos Perell√≥ Mar√≠n, Christian Rose,
+	  Dmitry G. Mastrukov, George Lebl, Germ√°n Poo-Caama√±o,
 	  Jordi Mallach, Kjartan Maraas, Ole Laursen, Pablo Saratxaga,
-	  Pauli Virtanen, Stanislav Visnovsky, Tıivo Leedj‰rv and
+	  Pauli Virtanen, Stanislav Visnovsky, T√µivo Leedj√§rv and
 	  Zbigniew Chyla.
 
 ==============
@@ -985,7 +1070,7 @@ Version 1.5.17
 Panel
 
 	* .desktop file for gnome-panel-screenshot (Arvind S N, Seth)
-	* Use localised name in ditem (Diego Gonz·lez)
+	* Use localised name in ditem (Diego Gonz√°lez)
 	* Add 'Search for File ...' to 'Actions' menu (Mark)
 	* Double click running in gnome-run (Mark)
 	* Fix crash when editing direntries (Mark)
@@ -1078,7 +1163,7 @@ Applets
 Translations
 
 	* Changwoo Ryu, Hasbullah Bin Pit, Johan Dahlin,
-	  Kjartan Maraas, Stanislav Visnovsky, Tıivo Leedj‰rv
+	  Kjartan Maraas, Stanislav Visnovsky, T√µivo Leedj√§rv
 	  and Zbigniew Chyla.
 
 ==============
@@ -1216,7 +1301,7 @@ Panel
 	* Applet frame moniker fix (George)
 	* Save applet position on move (George)
 	* Conert Pos object from GtkObject to GObject (George)
-	* Use correct timeout methods all over (Diego Gonz·lez)
+	* Use correct timeout methods all over (Diego Gonz√°lez)
 	* Fix some laucher properties problems (Mark)
 	* Fix memory leaks (George)
 	* Fix swapped params signal bug (George)
@@ -1242,7 +1327,7 @@ Translations
 
 	* Christian Meyer, Zbigniew Chyla, Hasbullah Bin Pit,
 	Stanislav Visnovsky, Fatih Demir, Ole Laursen, Pauli Virtanen,
-	Takayuki KUSANO, Christian Rose, Tıivo Leedj‰rv,
+	Takayuki KUSANO, Christian Rose, T√µivo Leedj√§rv,
 	Kjartan Maraas and Christopher R. Gabriel.
 	
 ==============
@@ -1321,7 +1406,7 @@ Applets
 
 Translations
 
-	* Takayuki KUSANO, Tıivo Leedj‰rv, Kjartan Maraas and Christophe Merlet.
+	* Takayuki KUSANO, T√µivo Leedj√§rv, Kjartan Maraas and Christophe Merlet.
 
 =============
 Version 1.5.9
