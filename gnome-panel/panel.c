@@ -291,20 +291,23 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_sync();
 
-	/*FIXME: tell applets to go kill themselves*/
+	if(is_shutdown) {
+		/*FIXME: tell applets to go kill themselves*/
 
-	g_list_foreach(drawers,destroy_widget_list,NULL);
-	g_list_foreach(panels,destroy_widget_list,NULL);
+		g_list_foreach(drawers,destroy_widget_list,NULL);
+		g_list_foreach(panels,destroy_widget_list,NULL);
 
-	gtk_widget_unref(applet_menu);
-	gtk_widget_unref(panel_tooltips);
+		gtk_widget_unref(applet_menu);
+		gtk_widget_unref(panel_tooltips);
 
-	small_icons = NULL; /*prevent searches through the g_list to speed
-				up this thing*/
+		small_icons = NULL;
+			/*prevent searches through the g_list to speed
+					up this thing*/
 
-	gtk_widget_unref(root_menu);
+		gtk_widget_unref(root_menu);
 
-	/*FIXME: unref all menus here */
+		/*FIXME: unref all menus here */
+	}
 	
 
 	/* Always successful.  */
