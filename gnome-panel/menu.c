@@ -1471,7 +1471,7 @@ create_applications_menu (const char *menu_file,
 
 	menu = create_empty_menu ();
 
-	tree = menu_tree_lookup (menu_file);
+	tree = menu_tree_lookup (menu_file, MENU_TREE_FLAGS_NONE);
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-filename",

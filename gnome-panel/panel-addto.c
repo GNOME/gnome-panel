@@ -718,7 +718,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 				    G_TYPE_POINTER,
 				    G_TYPE_STRING);
 
-	tree = menu_tree_lookup ("applications.menu");
+	tree = menu_tree_lookup ("applications.menu", MENU_TREE_FLAGS_NONE);
 
 	if ((root = menu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list,
@@ -730,7 +730,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 
 	menu_tree_unref (tree);
 
-	tree = menu_tree_lookup ("settings.menu");
+	tree = menu_tree_lookup ("settings.menu", MENU_TREE_FLAGS_NONE);
 
 	if ((root = menu_tree_get_root_directory (tree))) {
 		GtkTreeIter iter;

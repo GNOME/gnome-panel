@@ -750,7 +750,7 @@ get_all_applications (void)
 	MenuTreeDirectory *root;
 	GSList            *retval;
 
-	tree = menu_tree_lookup ("applications.menu");
+	tree = menu_tree_lookup ("applications.menu", MENU_TREE_FLAGS_NONE);
 
 	root = menu_tree_get_root_directory (tree);
 
