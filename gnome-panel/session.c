@@ -10,6 +10,7 @@
 #include <string.h>
 #include <signal.h>
 #include <limits.h>
+#include <unistd.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 
@@ -285,20 +286,38 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_EXTERN:
 		{
 			char *globalcfg;
+			char *s;
 			Extern *ext = info->data;
+
+			/*just in case the applet times out*/
+			gnome_config_set_string("id", EMPTY_ID);
+			gnome_config_pop_prefix();
 
 			globalcfg = g_concat_dir_and_file(PANEL_CONFIG_PATH,
 							  "Applet_All_Extern/");
+
+			/*this is the file path we must kill first */
+			g_string_sprintf(buf, "%sApplet_%d_Extern",
+					 PANEL_CONFIG_PATH, info->applet_id+1);
+			
+			/* this should really be: */
+			/*gnome_config_push_prefix("");
+			gnome_config_clean_file(buf->str);
+			gnome_config_pop_prefix();
+			gnome_config_sync();*/
+			/* but gnome-config.[ch] is broken ! */
+			s = gnome_config_get_real_path(buf->str);
+			if(unlink(s) != 0) {
+				g_warning("Can't remove file");
+			}
+			g_free(s);
+
+			gnome_config_sync();
 
 			/*this is the file path we pass to the applet for it's
 			  own config, this is a separate file, so that we */
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 PANEL_CONFIG_PATH, info->applet_id+1);
-			gnome_config_clean_file(buf->str);
-			/*just in case the applet times out*/
-			gnome_config_set_string("id", EMPTY_ID);
-			gnome_config_pop_prefix();
-			gnome_config_sync();
 			/*have the applet do it's own session saving*/
 			send_applet_session_save(info,ext->applet,
 						 buf->str, globalcfg);
@@ -662,11 +681,8 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit(void)
 {
-	if(GNOME_CLIENT_CONNECTED(client))
-		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-					   GNOME_INTERACT_ANY, 0, 1);
-	else
-		gtk_main_quit();
+	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+				   GNOME_INTERACT_ANY, 0, 1);
 }
 
 static void

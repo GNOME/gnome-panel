@@ -1,3 +1,12 @@
+Sun Oct 24 14:38:44 1999  George Lebl  <jirka@5z.com>
+
+	* session.c: remove the hack that quit when it wasn't connected
+	  to SM, it didn't work as it wouldn't save settings
+
+	* session.c: screw gnome-config.[ch] as that's beyond repair and
+	  won't clean files no matter what I do, so I just remove the
+	  file by hand
+
 Fri Oct 22 11:22:33 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: kill icon pixmap cache when we reparent
