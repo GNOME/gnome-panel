@@ -314,7 +314,7 @@ panel_config(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_window_set_title (GTK_WINDOW(config_window),
-			      _("Panel Configuration"));
+			      _("Panel properties"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
 	if(panel->snapped!=PANEL_DRAWER &&
