@@ -59,7 +59,7 @@
 GSList *panel_list = NULL;
 
 static gboolean panel_dragged = FALSE;
-static int panel_dragged_timeout = -1;
+static guint panel_dragged_timeout = 0;
 static gboolean panel_been_moved = FALSE;
 
 /*the number of base panels (corner/snapped) out there, never let it
@@ -559,7 +559,7 @@ panel_move_timeout(gpointer data)
 		move_panel_to_cursor(data);
 	
 	panel_been_moved = FALSE;
-	panel_dragged_timeout = -1;
+	panel_dragged_timeout = 0;
 
 	return FALSE;
 }
@@ -779,7 +779,8 @@ panel_popup_menu (GtkWidget *widget, gpointer data)
 	return panel_do_popup_menu (panel, basep, widget, 3, GDK_CURRENT_TIME);
 }
 
-static gboolean pointer_in_widget (GtkWidget *widget, GdkEventButton *event)
+static gboolean
+pointer_in_widget (GtkWidget *widget, GdkEventButton *event)
 {
 	int x, y;
 	int wx, wy;
@@ -795,6 +796,47 @@ static gboolean pointer_in_widget (GtkWidget *widget, GdkEventButton *event)
 		return FALSE;
 	else
 		return TRUE;
+}
+
+static void
+queue_resize_button_widgets (GtkWidget *w, gpointer data)
+{
+	if (BUTTON_IS_WIDGET (w)) {
+		gtk_widget_queue_resize (w);
+	}
+}
+
+static gboolean
+panel_end_move (GtkWidget *widget, GdkEventButton *bevent)
+{
+	if (panel_dragged &&
+	    BASEP_IS_WIDGET (widget)) {
+		BasePWidget *basep = BASEP_WIDGET (widget);
+		basep_widget_set_pos (basep,
+				      (gint16)bevent->x_root, 
+				      (gint16)bevent->y_root);
+		basep->autohide_inhibit = FALSE;
+		basep_widget_queue_autohide (basep);
+
+		gtk_grab_remove (widget);
+		gdk_pointer_ungrab (bevent->time);
+		panel_dragged = FALSE;
+		if (panel_dragged_timeout != 0)
+			g_source_remove (panel_dragged_timeout);
+		panel_dragged_timeout = 0;
+		panel_been_moved = FALSE;
+		if (pointer_in_widget (basep->panel, bevent) &&
+		    ! gtk_widget_is_focus (basep->panel))
+			panel_widget_focus (PANEL_WIDGET (basep->panel));
+
+		/* FIXME: why is this neccessary!!!!???? */
+		gtk_container_foreach (GTK_CONTAINER (basep->panel),
+				       queue_resize_button_widgets,
+				       NULL);
+
+		return TRUE;
+	}
+	return FALSE;
 }
 
 static gboolean
@@ -816,7 +858,10 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 	switch (event->type) {
 	case GDK_BUTTON_PRESS:
 		bevent = (GdkEventButton *) event;
-		switch(bevent->button) {
+		if (panel_dragged) {
+			return panel_end_move (widget, bevent);
+		}
+		switch (bevent->button) {
 		case 3:
 			/* Store the point where the popup menu was started to
 			 * insert applets at that point */
@@ -841,34 +886,19 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 
 	case GDK_BUTTON_RELEASE:
 		bevent = (GdkEventButton *) event;
-		if(panel_dragged) {
-			if (basep) {
-				basep_widget_set_pos(basep,
-						     (gint16)bevent->x_root, 
-						     (gint16)bevent->y_root);
-				basep->autohide_inhibit = FALSE;
-				basep_widget_queue_autohide(BASEP_WIDGET(widget));
-
-				gdk_pointer_ungrab(bevent->time);
-				gtk_grab_remove(widget);
-				panel_dragged = FALSE;
-				panel_dragged_timeout = -1;
-				panel_been_moved = FALSE;
-			}
-			if (pointer_in_widget (basep->panel, bevent) &&
-			    !gtk_widget_is_focus (basep->panel))
-				panel_widget_focus (panel);
-			return TRUE;
+		if (panel_dragged) {
+			return panel_end_move (widget, bevent);
 		}
 		break;
 	case GDK_MOTION_NOTIFY:
 		if (panel_dragged) {
-			if(panel_dragged_timeout==-1) {
+			if (panel_dragged_timeout == 0) {
 				panel_been_moved = FALSE;
-				move_panel_to_cursor(widget);
-				panel_dragged_timeout = gtk_timeout_add (30,panel_move_timeout,widget);
-			} else
+				move_panel_to_cursor (widget);
+				panel_dragged_timeout = g_timeout_add (30, panel_move_timeout, widget);
+			} else {
 				panel_been_moved = TRUE;
+			}
 		}
 		break;
 
@@ -882,12 +912,20 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 static gboolean
 panel_widget_event (GtkWidget *widget, GdkEvent *event, GtkWidget *panelw)
 {
+	if (commie_mode)
+		return FALSE;
+
 	if (event->type == GDK_BUTTON_PRESS) {
 		GdkEventButton *bevent = (GdkEventButton *) event;
 
 		if (bevent->button == 1 ||
-		    bevent->button == 2)
-			return panel_initiate_move (panelw, bevent->time);
+		    bevent->button == 2) {
+			if (panel_dragged) {
+				return panel_end_move (widget, bevent);
+			} else {
+				return panel_initiate_move (panelw, bevent->time);
+			}
+		}
 	}
 
 	return FALSE;
@@ -1756,8 +1794,9 @@ panel_setup(GtkWidget *panelw)
 			  G_CALLBACK (panel_event), NULL);
 	g_signal_connect (G_OBJECT (panel), "popup_menu",
                           G_CALLBACK (panel_popup_menu), panelw);
-	g_signal_connect (G_OBJECT (panel), "event",
-			  G_CALLBACK (panel_widget_event), panelw);
+	if ( ! FOOBAR_IS_WIDGET(panelw))
+		g_signal_connect (G_OBJECT (panel), "event",
+				  G_CALLBACK (panel_widget_event), panelw);
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |

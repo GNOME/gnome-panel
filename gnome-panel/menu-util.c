@@ -151,6 +151,61 @@ applet_menu_position (GtkMenu  *menu,
 	standard_position_within (menu, x, y, push_in, w);
 }
 
+void
+applet_menu_position_outside (GtkMenu  *menu,
+			      gint     *x,
+			      gint     *y,
+			      gboolean *push_in,
+			      gpointer  data)
+{
+	AppletInfo *info = data;
+	int wx, wy;
+	PanelWidget *panel;
+	GtkWidget *w; /*the panel window widget*/
+
+	g_return_if_fail(info != NULL);
+	g_return_if_fail(info->widget != NULL);
+
+	panel = PANEL_WIDGET(info->widget->parent);
+	g_return_if_fail(panel != NULL);
+	
+	w = panel->panel_parent;
+
+	gdk_window_get_origin (info->widget->window, &wx, &wy);
+	if(GTK_WIDGET_NO_WINDOW(info->widget)) {
+		wx += info->widget->allocation.x;
+		wy += info->widget->allocation.y;
+	}
+
+#ifdef MENU_UTIL_DEBUG
+	g_print ("applet_menu_position_outside: origin x = %d, y = %d\n", wx, wy);
+#endif
+
+	if (BASEP_IS_WIDGET (w)) {
+		*x = *y = 0;
+		basep_widget_get_menu_pos(BASEP_WIDGET(w),
+					  GTK_WIDGET(menu),
+					  x,y,wx,wy,
+					  info->widget->allocation.width,
+					  info->widget->allocation.height);
+       	} else if (FOOBAR_IS_WIDGET (w)) {
+		GtkRequisition req;
+		FoobarWidget *foo = FOOBAR_WIDGET (w);
+		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
+		*x = MIN (*x,
+			  multiscreen_width (foo->screen) +
+			  multiscreen_x (foo->screen) -  req.width);
+		*y = w->allocation.height + multiscreen_y (foo->screen);
+	}
+
+	*push_in = TRUE;
+ 
+#ifdef MENU_UTIL_DEBUG
+	g_print ("applet_menu_position_outside: x = %d, y = %d, push_in = %s\n",
+		 *x, *y, *push_in ? "(true)" : "(false)");
+#endif
+}
+
 int
 get_default_menu_flags (void)
 {

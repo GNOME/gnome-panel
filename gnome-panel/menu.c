@@ -4256,7 +4256,7 @@ menu_button_menu_popup (Menu* menu, guint button, guint32 activate_time)
 	gtk_menu_popup (GTK_MENU (menu->menu),
 			NULL,
 			NULL, 
-			applet_menu_position,
+			applet_menu_position_outside,
 			menu->info,
 			button,
 			activate_time);

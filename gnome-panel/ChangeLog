@@ -1,3 +1,13 @@
+Tue Feb 26 17:34:45 2002  George Lebl <jirka@5z.com>
+
+	* panel.c: fix #70518 among others, by queing a resize on all button
+	  widgets.  Dunno what's up with that really, but this will force it
+	  to work.  Also fixed up the panel move stuff to be a bit saner as
+	  well, and fix a possible crash.
+
+	* menu-util.[ch], menu.c: hmm, the menu menu is still off the button
+	  and not at cursor location ... damnit
+
 Tue Feb 26 16:17:09 2002  George Lebl <jirka@5z.com>
 
 	* menu-util.c: the applet menu should also be at the cursor location
