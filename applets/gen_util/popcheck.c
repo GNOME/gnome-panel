@@ -274,59 +274,14 @@ int imap_check(char *h, char* n, char* e)
          g_free(c);
          if (is_imap_answer_ok(wait_for_imap_answer(s, "A1"))) 
          {
-          if (write_line(s, "A2 SELECT INBOX"))
+          if (write_line(s, "A2 STATUS INBOX (MESSAGES UNSEEN)"))
            {
-            int total = 0, recent = 0, unseen = 0;
+            int total = 0, unseen = 0;
             
-            while(1)
-             {
               x = read_line(s);
-              if (!is_imap_answer_untagged(x))
-               break;
-              
-              if (strncmp(x, "* OK [UNSEEN", strlen("* OK [UNSEEN")) == 0)
-               {
-                char *o = strchr(x, ']');
-                *o = 0;
-                while (*(--o) != ' ');
-                unseen = atoi(o);
-               }
-              else if (strstr(x, "RECENT"))
-               {
-                char *c2, *c3;
-                c2 = strchr(x, ' ');
-                if (c2)
-                 {
-                  c2++;
-                  c3 = strchr(c2, ' ');
-                  if (c3)
-                   {
-                    *c3 = 0;
-                    recent = atoi(c2);
-                   }
-                 }     
-               }
-              else if (strstr(x, "EXISTS"))
-               {
-                char *c2, *c3;
-                c2 = strchr(x, ' ');
-                if (c2)
-                 {
-                  c2++;
-                  c3 = strchr(c2, ' ');
-                  if (c3)
-                   {
-                    *c3 = 0;
-                    total = atoi(c2);
-                   }
-                 }     
-               }  
-             }
-            
-            if (!is_imap_answer_ok(x)) 
-             r = -1;
-            else 
-             r = (((unsigned int) (unseen > recent ? unseen : recent)) << 16) | ((unsigned int) total & 0x0000FFFFL);
+            sscanf(x, "%*s %*s %*s %*s %d %*s %d", &total, &unseen);
+             r = (((unsigned int) unseen ) << 16) | /* lt unseen only */
+	       ((unsigned int) total & 0x0000FFFFL);
 
             if (write_line(s, "A3 LOGOUT"))
              read_line(s);

@@ -46,6 +46,7 @@ struct _MailCheck {
 
 	/* Does the user have unread mail? */
 	int unreadmail;
+	int totalmail;
 
 	guint update_freq;
 
@@ -165,7 +166,7 @@ mail_animation_filename (MailCheck *mc)
 
 static int
 calc_dir_contents (char *dir) {
-       DIR* dr;
+       DIR *dr;
        struct dirent *de;
        int size=0;
 
@@ -268,11 +269,12 @@ check_mail_file_status (MailCheck *mc)
 		else {
 			old_unreadmail = mc->unreadmail;
 			mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
-			if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
+			if(mc->unreadmail > old_unreadmail) /* lt */
 				mc->newmail = 1;
 			else
 				mc->newmail = 0;
-			mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
+			mc->totalmail = (signed int) (((unsigned int) v) & 0x0000FFFFL);
+			mc->anymail = mc->totalmail ? 1 : 0;
 		} 
 	}
 	else if (mc->mailbox_type == MAILBOX_LOCAL) {
@@ -305,6 +307,7 @@ check_mail_file_status (MailCheck *mc)
 		mc->unreadmail = newmail;
 		oldsize = newmail;
 		mc->anymail = newmail || oldmail;
+		mc->totalmail = newmail + oldmail;
 	}	    
 }
 
@@ -408,7 +411,7 @@ mail_check_timeout (gpointer data)
 			gnome_execute_shell(NULL, mc->newmail_cmd);
 	}
 
-	switch (mc->report_mail_mode){
+	switch (mc->report_mail_mode) {
 	case REPORT_MAIL_USE_ANIMATION:
 		if (mc->anymail){
 			if (mc->unreadmail){
@@ -448,13 +451,23 @@ mail_check_timeout (gpointer data)
 		char *text;
 
 		if (mc->anymail){
-			if (mc->newmail)
-				text = _("You have new mail.");
-			else
-				text = _("You have mail.");
-		} else
-			text = _("No mail.");
+			if(mc->mailbox_type == MAILBOX_LOCAL) {
+				if(mc->newmail)
+					text = g_strdup(_("You have new mail."));
+				else
+					text = g_strdup(_("You have mail."));
+			}
+			else {
+				if(mc->unreadmail)
+					text = g_strdup_printf(_("%d/%d messages"), mc->unreadmail, mc->totalmail);
+				else
+					text = g_strdup_printf(_("%d messages"), mc->totalmail);
+			} 
+		}
+		else
+			text = g_strdup_printf(_("No mail."));
 		gtk_label_set_text (GTK_LABEL (mc->label), text);
+		g_free(text);
 		break;
 	}
 	}

@@ -1,3 +1,12 @@
+2000-09-23  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gen_util/mailcheck.c (mail_check_timeout): improve text-only mail
+	notification to show unread messages with all types except local
+	mailspools.
+	(check_mail_file_status): compute total mail count wiht all modes
+	except local mailspools.
+	* gen_util/popcheck.c (imap_check): improve IMAP checking.
+
 Sun Sep 03 06:19:27 2000  George Lebl <jirka@5z.com>
 
 	* gen_util/clock.c, gen_util/printer.c:  Fix warnings, mark the
