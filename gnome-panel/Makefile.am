@@ -36,21 +36,11 @@ INCLUDES =							\
 
 bin_PROGRAMS =			\
 	panel-2			\
-	test-applet		\
 	test-bonobo-applet	\
 	$(NULL)
 
 lib_LTLIBRARIES =		\
 	libpanel-applet-2.la	\
-	$(NULL)
-
-test_applet_SOURCES =		\
-	test-applet.c		\
-	$(NULL)
-
-test_applet_LDADD =					\
-	$(PANEL_LIBS)					\
-	$(top_builddir)/panel/libpanel-applet-2.la	\
 	$(NULL)
 
 test_bonobo_applet_SOURCES =	\
@@ -67,15 +57,41 @@ test_bonobo_applet_SOURCES =	\
 
 test_bonobo_applet_LDADD =	\
 	$(PANEL_LIBS)		\
+	libpanel-applet-2.la	\
 	$(NULL)
 
-libpanel_applet_2_la_SOURCES = 	\
-	applet-widget.c		\
-	applet-object.c		\
-	applet-init.c		\
-	applet-private.h	\
-	$(CORBA_SRCLIST)	\
+libpanel_applet_2_la_SOURCES =	\
+	panel-applet.h          \
+	panel-applet-shell.c    \
+	panel-applet-shell.h    \
+	panel-marshal-main.c    \
+	panel-typebuiltins.c    \
+	panel-typebuiltins.h    \
+	$(CORBA_SRCLIST)        \
 	$(NULL)
+
+libpanelappletincludedir = $(includedir)/panel-2.0
+
+libpanelappletinclude_HEADERS = \
+	panel-applet.h		\
+	GNOME_Panel.h
+
+# test_applet_SOURCES =		\
+# 	test-applet.c		\
+# 	$(NULL)
+# 
+# test_applet_LDADD =					\
+# 	$(PANEL_LIBS)					\
+# 	$(top_builddir)/panel/libpanel-applet-2.la	\
+# 	$(NULL)
+#
+# libpanel_applet_2_la_SOURCES = 	\
+# 	applet-widget.c		\
+# 	applet-object.c		\
+# 	applet-init.c		\
+# 	applet-private.h	\
+# 	$(CORBA_SRCLIST)	\
+# 	$(NULL)
 
 libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0
 libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
