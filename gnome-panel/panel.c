@@ -327,6 +327,8 @@ panel_quit(void)
   if (! gnome_session_connected_p ())
     {
       panel_session_save (NULL, GNOME_SAVE_BOTH, 1, GNOME_INTERACT_NONE, 0);
+      gtk_widget_unref(applet_menu);
+      gtk_widget_unref(panel_tooltips);
       gtk_main_quit ();
       /* We don't want to return, because we've probably been called from an
        * applet which has since been dlclose()'d, and we'd end up with a SEGV
@@ -338,6 +340,8 @@ panel_quit(void)
       /* We request a completely interactive, full, slow shutdown.  */
       gnome_session_request_save (GNOME_SAVE_BOTH, 1, GNOME_INTERACT_ANY,
 				  0, 1);
+      gtk_widget_unref(applet_menu);
+      gtk_widget_unref(panel_tooltips);
     }
 }
 
@@ -444,7 +448,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 		return;
 
 	panel_widget_remove(panel,applet);
-	gtk_widget_destroy(applet);
+	gtk_widget_unref(applet);
 }
 
 

@@ -28,7 +28,7 @@ GList *panels = NULL;
 GList *drawers = NULL;
 GList *applets = NULL;
 
-GtkTooltips *panel_tooltips;
+GtkTooltips *panel_tooltips = NULL;
 
 gint tooltips_enabled = TRUE;
 
@@ -232,19 +232,22 @@ init_user_panels(void)
 					 config.minimize_delay);
 
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
-		/*FIXME: small memory leak since there is no way to
-		  remember to kill the menu*/
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(panel_button_press),
 				   panel_menu);
+		gtk_signal_connect_object(GTK_OBJECT(panel),
+					  "destroy",
+					  GTK_SIGNAL_FUNC(gtk_widget_unref),
+					  GTK_OBJECT(panel_menu));
+
 		gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
 					 GTK_SIGNAL_FUNC(panel_realize),
 					 NULL);
 
-		panels = g_list_append(panels,panel);
-
 		gtk_widget_show(panel);
+
+		panels = g_list_append(panels,panel);
 	}
 }
 	
