@@ -1,3 +1,17 @@
+2002-02-17  Gediminas Paulauskas <menesis@delfi.lt>
+
+	Fix #70512
+
+	* gnome-run.c: add mnemonics to all labels, rename buttons.
+	(browse): rename dialog.
+	(run_dialog_response): if window was just closed, don't run command.
+	(sort_by_name): Sort according to locale.
+	(add_columns): Remove column header
+	(create_simple_contents): Add label above list (so that	you can focus
+	list with mnemonic). Make description label selectable, show Advanced
+	options below "Advanced >>" button.
+	
+
 2002-02-16  Seth Nickell  <snickell@stanford.edu>
 
 	* menu.c: (compare_filerecs):

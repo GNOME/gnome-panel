@@ -215,7 +215,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 		panel_show_help ("specialobjects", "RUNBUTTON");
 		/* just return as we don't want to close */
 		return;
-	} else if (response == GTK_RESPONSE_CLOSE) {
+	} else if (response != PANEL_RESPONSE_RUN) {
 		goto return_and_close;
 	}
         
@@ -418,7 +418,7 @@ browse (GtkWidget *w, GtkWidget *entry)
 {
 	GtkFileSelection *fsel;
 
-	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Browse...")));
+	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Choose a program to run")));
 	gtk_window_set_transient_for (GTK_WINDOW (fsel),
 				      GTK_WINDOW (run_dialog));
 	g_object_set_data (G_OBJECT (fsel), "entry", entry);
@@ -665,7 +665,7 @@ create_advanced_contents (void)
                             G_CALLBACK (entry_changed),
                             run_dialog);
         
-        w = gtk_button_new_with_label(_("Browse..."));
+        w = gtk_button_new_with_mnemonic (_("_Browse..."));
         g_signal_connect(G_OBJECT(w), "clicked",
                            G_CALLBACK (browse), entry);
         gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE,
@@ -674,7 +674,7 @@ create_advanced_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), hbox,
                             FALSE, FALSE, GNOME_PAD_SMALL);
 
-        w = gtk_check_button_new_with_label(_("Run in terminal"));
+        w = gtk_check_button_new_with_mnemonic(_("Run in _terminal"));
         g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
         gtk_box_pack_start (GTK_BOX (vbox), w,
                             FALSE, FALSE, GNOME_PAD_SMALL);
@@ -701,10 +701,7 @@ static int
 sort_by_name (FileRec *fra,
               FileRec *frb)
 {
-	/* FIXME: there is no utf8 strcoll afaik, so
-	 * we just strcmp for now, this is evil, but
-	 * it works mostly somewhat */
-        return strcmp (fra->fullname, frb->fullname);
+        return g_utf8_collate (fra->fullname, frb->fullname);
 }
 
 static void
@@ -715,7 +712,6 @@ add_columns (GtkTreeView *treeview)
 
 	renderer = gtk_cell_renderer_pixbuf_new ();
 	column = gtk_tree_view_column_new ();
-        gtk_tree_view_column_set_title (column, _("Applications"));
                 
         gtk_tree_view_column_pack_start (column, renderer, FALSE);
         gtk_tree_view_column_set_attributes (column, renderer,
@@ -993,8 +989,15 @@ create_simple_contents (void)
         
         vbox = gtk_vbox_new (FALSE, 1);
         
+        label = gtk_label_new_with_mnemonic (_("A_pplications:"));
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+
         list = gtk_tree_view_new ();
         g_object_set_data (G_OBJECT (run_dialog), "dentry_list", list);
+
+	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), list);
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 
@@ -1029,20 +1032,11 @@ create_simple_contents (void)
         label = gtk_label_new ("");
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+        gtk_label_set_selectable (GTK_LABEL (label), TRUE);
         gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);        
-
-#if 0
-        label = gtk_label_new ("");
-        g_object_set_data (G_OBJECT (run_dialog), "label", label);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-#endif
+        g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
 
         unset_selected (run_dialog);
-        
-        w = create_toggle_advanced_button ("");
-        gtk_box_pack_end (GTK_BOX (GTK_DIALOG (run_dialog)->vbox), w,
-                          FALSE, FALSE, GNOME_PAD_SMALL);
         
         g_object_ref (G_OBJECT (vbox));
         
@@ -1056,6 +1050,10 @@ create_simple_contents (void)
         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
                             vbox,
                             TRUE, TRUE, 0);
+        
+        w = create_toggle_advanced_button ("");
+        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
+			    w, FALSE, FALSE, GNOME_PAD_SMALL);
         
         return vbox;
 }
@@ -1084,7 +1082,7 @@ update_contents (GtkWidget *dialog)
 			advanced_entry =
 				g_object_get_data (G_OBJECT (dialog), "advanced-entry");
 
-                        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                        gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                                             advanced,
                                             FALSE, FALSE, 0);
                 
@@ -1093,8 +1091,8 @@ update_contents (GtkWidget *dialog)
                         gtk_widget_grab_focus (advanced_entry);
                 }
 
-                gtk_label_set_text (GTK_LABEL (advanced_toggle),
-                                    _("Hide advanced options"));
+                gtk_label_set_text_with_mnemonic (GTK_LABEL (advanced_toggle),
+                                    		  _("_Advanced <<"));
 
                 gtk_tooltips_set_tip (panel_tooltips, advanced_toggle->parent,
                                       _("Hide the advanced controls below this button."),
@@ -1105,8 +1103,8 @@ update_contents (GtkWidget *dialog)
                 
                 if (advanced && advanced->parent != NULL)
                         gtk_container_remove (GTK_CONTAINER (advanced->parent), advanced);                
-                gtk_label_set_text (GTK_LABEL (advanced_toggle),
-                                    _("Advanced..."));
+                gtk_label_set_text_with_mnemonic (GTK_LABEL (advanced_toggle),
+                                    		  _("_Advanced >>"));
 
                 gtk_tooltips_set_tip (panel_tooltips, advanced_toggle->parent,
                                       _("Allow typing in a command line instead of choosing an application from the list"),
@@ -1126,7 +1124,7 @@ register_run_stock_item (void)
 		GtkIconSet          *execute_icons;
 
 		static GtkStockItem  run_item [] = {
-			{ PANEL_STOCK_RUN, N_("_Run ..."), 0, 0, GETTEXT_PACKAGE },
+			{ PANEL_STOCK_RUN, N_("_Run"), 0, 0, GETTEXT_PACKAGE },
 		};
 
 		execute_icons = gtk_icon_factory_lookup_default (GTK_STOCK_EXECUTE);
