@@ -3825,11 +3825,9 @@ add_menu_widget (Menu *menu,
 	      G_OBJECT (menu->menu));
 }
 
-static void
-menu_button_pressed (GtkWidget *widget, gpointer data)
+static void 
+menu_button_menu_popup (Menu* menu, guint button, guint32 activate_time)
 {
-	Menu *menu = data;
-	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
 	int flags;
 	const DistributionInfo *distribution_info = get_distribution_info ();
@@ -3867,7 +3865,6 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	}
 
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
-	gtk_grab_remove(menu->button);
 
 	menu->age = 0;
 
@@ -3876,10 +3873,28 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 			NULL, 
 			applet_menu_position,
 			menu->info,
-			bevent->button,
-			bevent->time);
+			button,
+			activate_time);
+}
 
+static void
+menu_button_pressed (GtkWidget *widget, gpointer data)
+{
+	Menu *menu = data;
+	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
+
+	gtk_grab_remove(menu->button);
+	menu_button_menu_popup (menu, bevent->button, bevent->time);
 	gdk_event_free((GdkEvent *)bevent);
+}
+
+static void
+menu_button_notify (GtkWidget *widget, GParamSpec *pspec,gpointer data)
+{
+	Menu *menu = data;
+
+	if (!strcmp (pspec->name, "has-focus")) 
+		menu_button_menu_popup (menu, 1, GDK_CURRENT_TIME);
 }
 
 static void  
@@ -3967,6 +3982,10 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	g_signal_connect_after (G_OBJECT (menu->button), "pressed",
 				G_CALLBACK (menu_button_pressed), menu);
+	g_signal_connect (G_OBJECT (menu->button), "notify",
+			    G_CALLBACK (menu_button_notify), menu);
+	g_signal_connect (G_OBJECT (menu->button), "clicked",
+			    G_CALLBACK (menu_button_pressed), menu);
 	g_signal_connect (G_OBJECT (menu->button), "destroy",
 			    G_CALLBACK (destroy_menu), menu);
 	gtk_widget_show(menu->button);

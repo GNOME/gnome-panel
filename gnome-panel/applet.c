@@ -697,32 +697,52 @@ applet_show_menu (AppletInfo     *info,
 }
 
 static gboolean
+applet_do_popup_menu (GtkWidget      *widget,
+		      GdkEventButton *event,
+		      AppletInfo     *info)
+{
+	if (panel_applet_in_drag)
+		return FALSE;
+
+	switch (info->type) {
+	case APPLET_BONOBO:
+			break;
+	case APPLET_SWALLOW: {
+		GtkHandleBox *handle_box;
+
+		handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
+
+		if (handle_box->child_detached)
+			applet_show_menu (info, event);
+		}
+		break;
+	default:
+		applet_show_menu (info, event);
+		break;
+	}
+
+	return TRUE;
+}
+
+static gboolean
+applet_popup_menu (GtkWidget      *widget,
+		   AppletInfo     *info)
+{
+	GdkEventButton event;
+
+	event.button = 3;
+	event.time = GDK_CURRENT_TIME;
+
+	return applet_do_popup_menu (widget, &event, info);
+}
+
+static gboolean
 applet_button_press (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     AppletInfo     *info)
 {
 	if (event->button == 3) {
-		if (panel_applet_in_drag)
-			return FALSE;
-
-		switch (info->type) {
-		case APPLET_BONOBO:
-			break;
-		case APPLET_SWALLOW: {
-			GtkHandleBox *handle_box;
-
-			handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
-
-			if (handle_box->child_detached)
-				applet_show_menu (info, event);
-			}
-			break;
-		default:
-			applet_show_menu (info, event);
-			break;
-		}
-
-		return TRUE;
+		return applet_do_popup_menu (widget, event, info);
 	}
 
 	if (BUTTON_IS_WIDGET (widget))
@@ -1140,11 +1160,16 @@ panel_applet_register (GtkWidget      *applet,
 		panel = PANEL_WIDGET(list->data);
 	}
 
-	if(BUTTON_IS_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet))
+	if(BUTTON_IS_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet)) {
 		g_signal_connect(G_OBJECT(applet),
 				   "button_press_event",
 				   G_CALLBACK(applet_button_press),
 				   info);
+		g_signal_connect(G_OBJECT (applet),
+				   "popup_menu",
+                          	   G_CALLBACK(applet_popup_menu),
+				   info);
+	}
 
 	g_signal_connect (G_OBJECT (applet), "destroy",
 			  G_CALLBACK (applet_destroy),

@@ -1,3 +1,17 @@
+2002-01-23  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* applet.c: Add applet_do_popup_menu() and applet_popup_menu() to
+	support popping up of menu using Shift+F10 for buttons on the panel.
+
+	* basep_widget.c (base_widget_focus_return):
+	Update to forget previously focussed widget so that Ctrl+Tab followed
+	by Tab gives always gives focus to first button 
+
+	* menu.c: Add menu_button_menu_popup() and menu_button_notify() to
+	support menu popup when menu icon receives focus.
+	Define callback for "clicked" to be menu_button_pressed so that
+	pressing Enter or Space on a focussed menu icon activates its menu.
+	
 Tue Jan 22 16:11:47 2002  George Lebl <jirka@5z.com>
 
 	* quick-desktop-reader.c: when testing for tryexec, just do an

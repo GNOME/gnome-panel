@@ -622,6 +622,7 @@ static void
 basep_widget_focus_return (BasePWidget *basep)
 {
 	gtk_window_set_focus (GTK_WINDOW (basep), NULL);
+	gtk_container_set_focus_child (GTK_CONTAINER (basep->panel), NULL);
 }
 
 static void
