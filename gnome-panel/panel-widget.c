@@ -2129,6 +2129,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	gtk_widget_hide(applet);
 
+/*this should have worked I guess*/
+#if 0
 	/*reparent applet*/
 	gtk_widget_reparent(applet,new_panel->fixed);
 
@@ -2139,6 +2141,21 @@ panel_widget_reparent (PanelWidget *old_panel,
 	else
 		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
 			       0,pos*PANEL_CELL_SIZE);
+#else
+	/*remove applet from the old panel applet*/
+	gtk_widget_ref(applet);
+	gtk_container_remove(GTK_CONTAINER(old_panel->fixed),applet);
+
+	/*add it to the new panel*/
+	/*it will get moved to the right position on size_allocate*/
+	if(new_panel->orient == PANEL_HORIZONTAL)
+		gtk_fixed_put(GTK_FIXED(new_panel->fixed),applet,
+			      pos*PANEL_CELL_SIZE,0);
+	else
+		gtk_fixed_put(GTK_FIXED(new_panel->fixed),applet,
+			      0,pos*PANEL_CELL_SIZE);
+	gtk_widget_unref(applet);
+#endif
 
 	gtk_widget_show(applet);
 
