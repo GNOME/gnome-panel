@@ -349,7 +349,6 @@ create_properties_dialog(Launcher *launcher)
 	SETUP_EDITABLE (exec);
 	SETUP_EDITABLE (tryexec);
 	SETUP_EDITABLE (doc);
-	SETUP_EDITABLE (icon);
 
 #undef SETUP_EDITABLE
 	

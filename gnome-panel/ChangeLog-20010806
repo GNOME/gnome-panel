@@ -1,3 +1,11 @@
+Wed Oct 20 22:25:28 1999  George Lebl  <jirka@5z.com>
+
+	* launcher.c: remove the SETUP_EDITTABLE for the icon entry in the
+          setup dialog as it's not an actual GtkEditable
+
+	* panel-widget.[ch]: use the style_set signal for figuring out
+	  when to dump the background
+
 Wed Oct 20 21:40:57 1999  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c,button-widget.[ch]: when we are using opaque

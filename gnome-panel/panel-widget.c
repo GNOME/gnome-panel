@@ -923,11 +923,10 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 	bg_pixmap = widget->style->bg_pixmap[GTK_WIDGET_STATE(widget)];
 
 	if(panel->back_type == PANEL_BACK_NONE) {
-		if(bg_pixmap && bg_pixmap != panel->back_source) {
+		if(bg_pixmap && !panel->backpix) {
 			if(panel->backpix)
 				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
-			panel->back_source = bg_pixmap;
 			kill_cache_on_all_buttons(panel, FALSE);
 		} else if(!bg_pixmap && panel->backpix) {
 			if(panel->backpix)
@@ -983,11 +982,6 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 			ButtonWidget *button = BUTTON_WIDGET(ad->applet);
 			if(!button->cache) {
 				guchar *rgb_buf;
-				
-				{
-					static int drawn = 0;
-					printf("drawn: %d\n",++drawn);
-				}
 
 				button->cache =
 					gdk_pixmap_new(widget->window, size,size,
@@ -1581,6 +1575,17 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 		gtk_timeout_remove(panel->pixmap_resize_timeout_top);
 }
 
+static void
+panel_widget_style_set(PanelWidget *panel)
+{
+	if(panel->back_type == PANEL_BACK_NONE) {
+		if(panel->backpix)
+			gdk_pixbuf_unref(panel->backpix);
+		panel->backpix = NULL;
+		kill_cache_on_all_buttons(panel, TRUE);
+	}
+}
+
 static int panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data);
 
 static int
@@ -1663,6 +1668,10 @@ panel_widget_init (PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_widget_destroy),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "style_set",
+			   GTK_SIGNAL_FUNC(panel_widget_style_set),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "event",
