@@ -9,13 +9,15 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(includedir)                                 \
 	$(GNOME_INCLUDEDIR)				\
 	$(WARN_CFLAGS)					\
-	$(PANEL_CFLAGS)
+	$(WNCKLET_CFLAGS)
 
 
 libgen_util_applet_2_la_SOURCES = \
 	main.c		\
 	clock.c		\
-	clock.h		
+	clock.h		\
+	pager.c		\
+	pager.h
 
 #	mailcheck.c	\
 #	mailcheck.h	\
@@ -28,7 +30,7 @@ libgen_util_applet_2_la_SOURCES = \
 
 libgen_util_applet_2_la_LIBADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
-	$(PANEL_LIBS)
+	$(WNCKLET_LIBS)
 
 appletdir = $(libdir)
 applet_LTLIBRARIES = libgen_util_applet-2.la

@@ -27,6 +27,7 @@
 
 //#include "mailcheck.h"
 #include "clock.h"
+#include "pager.h"
 //#include "printer.h"
 
 
@@ -41,6 +42,9 @@ genutil_factory (BonoboGenericFactory *this,
 	
 	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
 		applet = make_clock_applet();
+	
+	if (!strcmp (iid, "OAFIID:GNOME_PagerApplet"))
+		applet = make_pager_applet();
 
 	return applet;
 }
