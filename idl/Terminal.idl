@@ -1,0 +1,12 @@
+#include <gnome-factory.idl>
+module GNOME {
+	module Terminal {
+		interface Terminal {
+			/* not much yet */
+		};
+
+		interface TerminalFactory : GenericFactory {
+			Terminal create_terminal (in string geometry);
+		};
+	};
+};
