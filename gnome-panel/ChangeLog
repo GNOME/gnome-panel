@@ -1,5 +1,12 @@
 2004-09-14  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for bug #148672 - freakiness with auto-hide and snap-to.
+
+	* panel-toplevel.c: (panel_toplevel_update_auto_hide_position):
+	When auto-hidden, snap to the screen edge too.
+
+2004-09-14  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix for bug #144281 - auto-hide panel sometimes not hiding
 	when a drawer closes. Based on a patch from Arvind.
 

@@ -1741,6 +1741,18 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 		g_assert_not_reached ();
 		break;
 	}
+
+	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
+		if (*x <= SNAP_TOLERANCE)
+			*x = 0;
+		else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE))
+			*x = monitor_width - width;
+	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
+		if (*y <= SNAP_TOLERANCE)
+			*y = 0;
+		else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE))
+			*y = monitor_height - height;
+	}
 }
 
 /* FIXME: this is wrong for Xinerama. In the Xinerama case
