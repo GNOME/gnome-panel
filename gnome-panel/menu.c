@@ -1094,6 +1094,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 					    it's not ours!*/
 		sim->type = 1;
 		sim->applet = applet;
+		sim->menuitem = menuitem;
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
