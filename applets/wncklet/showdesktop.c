@@ -282,8 +282,6 @@ show_desktop_applet_fill (PanelApplet *applet)
         sdd = g_new0 (ShowDesktopData, 1);
 
         sdd->applet = GTK_WIDGET (applet);
-        atk_obj = gtk_widget_get_accessible (sdd->button);
-        atk_object_set_name (atk_obj, _("Show Desktop Button"));
 
         file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
                                           "gnome-show-desktop.png", TRUE, NULL);
@@ -324,6 +322,8 @@ show_desktop_applet_fill (PanelApplet *applet)
         update_icon (sdd);
 
         sdd->button = gtk_toggle_button_new ();
+        atk_obj = gtk_widget_get_accessible (sdd->button);
+        atk_object_set_name (atk_obj, _("Show Desktop Button"));
 
         g_signal_connect (G_OBJECT (sdd->button), "button_press_event",
                           G_CALLBACK (do_not_eat_button_press), NULL);
