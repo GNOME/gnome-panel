@@ -455,10 +455,8 @@ panel_properties_dialog_update_name (PanelPropertiesDialog *dialog,
 	if (value && value->type == GCONF_VALUE_STRING)
 		text = gconf_value_get_string (value);
 
-	if (text) {
+	if (text)
 		gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), text);
-		g_free (text);
-	}
 }
 
 static void
