@@ -62,7 +62,8 @@ struct _AppletUserMenu {
 struct _AppletInfo {
 	AppletType type;
 	int applet_id;
-	GtkWidget *widget;
+	GtkWidget *widget; /*an event box*/
+	GtkWidget *applet_widget; /*the actual applet widget*/
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	GtkWidget *menu; /*the applet menu*/
 	gpointer data;
@@ -100,10 +101,11 @@ void apply_global_config(void);
 
 /*stuff for corba*/
 void reparent_window_id (unsigned long winid, int id);
-int applet_request_id (const char * ior, const char *path, char **cfgpath,
-		       char **globcfgpath);
+int applet_request_id (const char *path, char **cfgpath,
+		       char **globcfgpath, guint32 *winid);
+void applet_register (const char * ior, int id);
 void applet_request_glob_cfg (char **globcfgpath);
-void reserve_applet_spot (const char *id, const char *path, int panel,
+guint32 reserve_applet_spot (const char *id, const char *path, int panel,
 			  int pos, char *cfgpath, AppletType type);
 void applet_abort_id(int id);
 int applet_get_panel(int id);

@@ -33,7 +33,7 @@ static char *myinvoc;
 
 typedef struct {
 	int                applet_id;
-	GtkWidget         *aw;
+	GtkWidget         *plug;
 	GtkWidget         *button;
 	gint               signal_click_tag;
 	GnomeDesktopEntry *dentry;
@@ -146,7 +146,7 @@ create_launcher (GtkWidget *window, char *parameters)
 	launcher->dentry = dentry;
 
 	launcher->applet_id = -1;
-	launcher->aw = NULL;
+	launcher->plug = NULL;
 
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "destroy",
 			   (GtkSignalFunc) free_user_data,
@@ -427,8 +427,8 @@ shutdown_applet(int id)
 
 	/*FIXME: somehow unref or something this, so we don't leak,
 	  unref gives me a bunch of warnings here*/
-	if(launcher->aw)
-		gtk_widget_destroy(launcher->aw);
+	if(launcher->plug)
+		gtk_widget_destroy(launcher->plug);
 
 	launcher_count--;
 	launchers = g_list_remove(launchers,launcher);
@@ -437,7 +437,7 @@ shutdown_applet(int id)
 void
 start_new_launcher(const char *path)
 {
-	GtkWidget         *aw;
+	GtkWidget         *plug;
 	Launcher          *launcher;
 	GnomeDesktopEntry *dentry;
 
@@ -446,16 +446,15 @@ start_new_launcher(const char *path)
 	char              *cfgpath;
 	char              *globcfgpath;
 	int                applet_id = -1;
+	guint32            winid;
 
-	aw = applet_widget_new ();
-
-	result = gnome_panel_applet_request_id(aw, myinvoc, &applet_id,
-					       &cfgpath, &globcfgpath);
-
-	if (result){
+	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
+					       &cfgpath, &globcfgpath,
+					       &winid);
+	if (result)
 		g_error ("Could not talk to the Panel: %s\n", result);
-		/*exit (1);*/
-	}
+
+	plug = gtk_plug_new(winid);;
 
 	launcher = NULL;
 	/*no path given, try getting it from config*/
@@ -464,11 +463,11 @@ start_new_launcher(const char *path)
 		char *query = g_copy_strings(cfgpath,"path=",NULL);
 		params = gnome_config_get_string(query);
 		if(params && params[0]!='\0')
-			launcher = create_launcher (GTK_WIDGET(aw), params);
+			launcher = create_launcher (plug, params);
 		g_free(params);
 		g_free(query);
 	} else {
-		launcher = create_launcher (GTK_WIDGET(aw), (char *)path);
+		launcher = create_launcher (plug, (char *)path);
 	}
 
 	g_free(globcfgpath);
@@ -480,17 +479,14 @@ start_new_launcher(const char *path)
 		return;
 	}
 
-	launcher->aw = aw;
+	launcher->plug = plug;
 	launcher->applet_id = applet_id;
-	applet_widget_add (APPLET_WIDGET (aw), launcher->button);
-	gtk_widget_show (aw);
+	gtk_container_add (GTK_CONTAINER (plug), launcher->button);
+	gtk_widget_show (plug);
 
-	result = gnome_panel_prepare_and_transfer(aw,applet_id);
-	/*printf ("Done\n");*/
-	if (result){
+	result = gnome_panel_applet_register(plug,applet_id);
+	if (result)
 		g_error ("Could not talk to the Panel: %s\n", result);
-		/*exit (1);*/
-	}
 
 	launchers = g_list_append(launchers,launcher);
 	launcher_count++;

@@ -15,19 +15,18 @@
    
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
-	void reparent_window_id (CORBA::ULong wid,
-				 CORBA::Short id) {
-		::reparent_window_id (wid,id);
-	}
-	CORBA::Short applet_request_id (const char *ior,
-					const char *path,
+	CORBA::Short applet_request_id (const char *path,
 					char *&cfgpath,
-					char *&globcfgpath) {
+					char *&globcfgpath,
+					CORBA::ULong &wid) {
 		char *cfg=NULL;
 		char *globcfg=NULL;
 		int id;
+		guint32 winid;
 
-		id = ::applet_request_id (ior,path,&cfg,&globcfg);
+		id = ::applet_request_id (path,&cfg,&globcfg,&winid);
+		wid = winid;
+
 		if(cfg) {
 			cfgpath = CORBA::string_dup(cfg);
 			g_free(cfg);
@@ -39,6 +38,9 @@ public:
 		} else
 			globcfgpath = CORBA::string_dup("");
 		return id;
+	}
+	void applet_register (const char *ior, CORBA::Short id) {
+		::applet_register(ior, id);
 	}
 	void applet_abort_id (CORBA::Short id) {
 		::applet_abort_id (id);

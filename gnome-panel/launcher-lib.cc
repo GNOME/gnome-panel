@@ -6,7 +6,6 @@
 #include "gnome-panel.h"
 #include "applet-lib.h"
 #include "launcher-lib.h"
-#include "applet-widget.h"
 #include "panel-widget.h"
 #include "mico-parse.h"
 

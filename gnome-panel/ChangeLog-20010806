@@ -1,3 +1,16 @@
+Mon Mar 16 23:23:26 1998  George Lebl  <jirka@5z.com>
+
+	* gtkplug.[ch], gtksocket.[ch]: added the plug-socket
+	  colde v0.1 (that's the newest I found:)
+
+	* applet-widget.[ch]: removed in favor of plugsocket code
+
+	* gnome-panel.idl,panel.c,mico-glue.cc,applet-lib.cc:
+	  adapted to plugsocket code, slightly different calls
+	  and the registration of applets acts slightly differently
+
+	* clock.c, logout.c, launcher.c: ported to plugsocket
+
 Mon Mar 16 17:56:08 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c,mico-glue.cc: implemented abort_applet_id

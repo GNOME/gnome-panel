@@ -63,12 +63,12 @@ gtk_panel_widget_marshal_signal_state (GtkObject * object,
 				       gpointer func_data,
 				       GtkArg * args)
 {
-  PanelWidgetStateSignal rfunc;
+	PanelWidgetStateSignal rfunc;
 
-  rfunc = (PanelWidgetStateSignal) func;
+	rfunc = (PanelWidgetStateSignal) func;
 
-  (*rfunc) (object, GTK_VALUE_ENUM (args[0]),
-	    func_data);
+	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+		  func_data);
 }
 
 static void
@@ -77,13 +77,13 @@ gtk_panel_widget_marshal_signal_orient (GtkObject * object,
 					gpointer func_data,
 					GtkArg * args)
 {
-  PanelWidgetOrientSignal rfunc;
+	PanelWidgetOrientSignal rfunc;
 
-  rfunc = (PanelWidgetOrientSignal) func;
+	rfunc = (PanelWidgetOrientSignal) func;
 
-  (*rfunc) (object, GTK_VALUE_ENUM (args[0]),
-	    GTK_VALUE_ENUM (args[1]),
-	    func_data);
+	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
+		  GTK_VALUE_ENUM (args[1]),
+		  func_data);
 }
 
 static void
@@ -92,12 +92,12 @@ gtk_panel_widget_marshal_signal_applet (GtkObject * object,
 					gpointer func_data,
 					GtkArg * args)
 {
-  PanelWidgetAppletSignal rfunc;
+	PanelWidgetAppletSignal rfunc;
 
-  rfunc = (PanelWidgetAppletSignal) func;
+	rfunc = (PanelWidgetAppletSignal) func;
 
-  (*rfunc) (object, GTK_VALUE_POINTER (args[0]),
-	    func_data);
+	(*rfunc) (object, GTK_VALUE_POINTER (args[0]),
+		  func_data);
 }
 
 static void

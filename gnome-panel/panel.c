@@ -15,6 +15,7 @@
 #include "menu.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
+#include "gtksocket.h"
 #include <gdk/gdkx.h>
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
@@ -144,12 +145,13 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		/*FIXME:????????????: next time we do sync it's gonna
 		  ignore whatever was written to our sections by other
 		  programs ... whoops ... needs to be fixed in
-		  gnome-config!*/
+		  gnome-config! it has to do with no locking on 
+		  config files and mtime resolution of 1 second*/
 
 		/*have the applet do it's own session saving*/
 		send_applet_session_save(info->id,(*num)-2,path,
 					 panel_cfg_path);
-		/*FIXME: related to above FIXME*/
+		/*FIXME: related to above FIXME, this makes it slightly work*/
 		sleep(1);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
@@ -702,8 +704,8 @@ applet_add_callback(short id, char *callback_name, char *menuitem_text)
 }
 
 int
-applet_request_id (const char * ior, const char *path, char **cfgpath,
-		   char **globcfgpath)
+applet_request_id (const char *path, char **cfgpath,
+		   char **globcfgpath, guint32 * winid)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
@@ -716,18 +718,18 @@ applet_request_id (const char * ior, const char *path, char **cfgpath,
 		if(info && info->type == APPLET_EXTERN_PENDING &&
 		   strcmp(info->params,path)==0) {
 			/*we started this and already reserved a spot
-			  for it, including the eventbox widget*/
+			  for it, including the socket widget*/
 			*cfgpath = info->cfg;
 			info->cfg = NULL;
 			*globcfgpath = g_strdup(panel_cfg_path);
-			g_free(info->id);
-			info->id = g_strdup(ior);
 			info->type = APPLET_EXTERN_RESERVED;
+			*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
 			return i;
 		}
 	}
 
-	reserve_applet_spot (ior, path, 0, 0, NULL, APPLET_EXTERN_RESERVED);
+	*winid = reserve_applet_spot (EXTERN_ID, path, 0, 0, NULL,
+				      APPLET_EXTERN_RESERVED);
 	*cfgpath = NULL;
 	*globcfgpath = g_strdup(panel_cfg_path);
 	return i;
@@ -740,51 +742,44 @@ applet_request_glob_cfg (char **globcfgpath)
 }
 
 void
-reparent_window_id (unsigned long winid, int id)
+applet_register (const char * ior, int id)
 {
-	GtkWidget *eb;
-	GdkWindow *win;
-	int w,h;
 	AppletInfo *info = get_applet_by_id(id);
 
 	if(!info)
 		return;
 
-	/*printf ("I got this window ID to reparent: %d\n", winid);*/
-
 	/*no longer pending*/
 	info->type = APPLET_EXTERN;
-	eb = info->widget;
-	
-	win = gdk_window_foreign_new(winid);
-	gdk_window_get_size(win,&w,&h);
-	/*printf ("setting window size to: %d %d\n", w, h);*/
-	gtk_widget_set_usize(eb,w,h);
 
-	gdk_window_reparent(win,eb->window,0,0);
-	
-	/*printf ("leaving reparent\n");*/
+	/*set the ior*/
+	g_free(info->id);
+	info->id = g_strdup(ior);
 }
 
-/*note taht type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
+/*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
   only*/
-void
+guint32
 reserve_applet_spot (const char *id, const char *path, int panel, int pos,
 		     char *cfgpath, AppletType type)
 {
-	GtkWidget *eb;
+	GtkWidget *socket;
 	GdkWindow *win;
 	GList *list;
 
 	/*printf ("entering reserve spot\n");*/
 	
-	eb = gtk_event_box_new();
-	gtk_widget_show (eb);
+	socket = gtk_socket_new();
+	gtk_widget_show (socket);
 
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
-	register_toy(eb,NULL,NULL,g_strdup(id),g_strdup(path),
+	register_toy(socket,NULL,NULL,g_strdup(id),g_strdup(path),
 		     pos,panel,cfgpath, type);
+
+	printf("XWIN(%lu)\n",(unsigned long)GDK_WINDOW_XWINDOW(socket->window));
+
+	return GDK_WINDOW_XWINDOW(socket->window);
 
 	/*printf ("leaving reserve spot\n");*/
 }
@@ -903,6 +898,7 @@ register_toy(GtkWidget *applet,
 	info->applet_id = i;
 	info->type = type;
 	info->widget = eventbox;
+	info->applet_widget = applet;
 	info->assoc = assoc;
 	info->menu = NULL;
 	info->data = data;

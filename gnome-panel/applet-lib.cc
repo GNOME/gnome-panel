@@ -5,15 +5,22 @@
 #include "panel.h"
 #include "gnome-panel.h"
 #include "applet-lib.h"
-#include "applet-widget.h"
+#include "gtkplug.h"
 #include "panel-widget.h"
 #include "mico-parse.h"
+
+#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
+			   GDK_BUTTON_RELEASE_MASK |		\
+			   GDK_POINTER_MOTION_MASK |		\
+			   GDK_POINTER_MOTION_HINT_MASK)
 
 GNOME::Panel_var panel_client;
 
 /*this might be done better but I doubt there will be more then one
   drag at a time :) Blah blah */
 static int currently_dragged_id = -1;
+
+static GdkCursor *fleur_cursor=NULL;
 
 typedef struct _CallbackInfo CallbackInfo;
 struct _CallbackInfo {
@@ -105,10 +112,8 @@ gnome_panel_applet_init_corba (void)
 }
 
 /*adds a callback to the callback hash*/
-/*the interfacte to thsi should probably be in appletwidget*/
 void
-gnome_panel_applet_register_callback(AppletWidget *aw,
-				     int id,
+gnome_panel_applet_register_callback(int id,
 				     char *name,
 				     char *menutext,
 				     AppletCallbackFunc func,
@@ -148,14 +153,12 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(bevent->button == 2 && currently_dragged_id==-1) {
 				panel_client->applet_drag_start(ourid);
 				currently_dragged_id = ourid;
-				applet_widget_move_grab_add(
-					APPLET_WIDGET(widget));
+				move_grab_add(widget);
 				return TRUE;
 			} else if(currently_dragged_id > -1) {
 				panel_client->applet_drag_stop(ourid);
 				currently_dragged_id = -1;
-				applet_widget_move_grab_remove(
-					APPLET_WIDGET(widget));
+				move_grab_remove(widget);
 				return TRUE;
 			} else if(bevent->button == 3) {
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
@@ -168,8 +171,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(currently_dragged_id > -1) {
 				panel_client->applet_drag_stop(ourid);
 				currently_dragged_id = -1;
-				applet_widget_move_grab_remove(
-					APPLET_WIDGET(widget));
+				move_grab_remove(widget);
 				return TRUE;
 			}
 			break;
@@ -239,32 +241,22 @@ bind_top_applet_events(GtkWidget *widget, int id)
 /*id will return a unique id for this applet for the applet to identify
   itself as*/
 char *
-gnome_panel_applet_request_id (GtkWidget *widget,
-			       char *path,
+gnome_panel_applet_request_id (char *path,
 			       int *id,
 			       char **cfgpath,
-			       char **globcfgpath)
+			       char **globcfgpath,
+			       guint32 *winid)
 {
 	char *result;
-	char *ior;
 	char *cfg = NULL;
 	char *globcfg = NULL;
-
-	/* Create an applet object, I do pass the widget parameter to the
-	 * constructor object to have a way of sort out to which object
-	 * implementation the panel is talking to us about (ie, if an applet
-	 * can implement various instances of some object, like say a bunch
-	 * of "Swallow" applets 
-	 */
-	GNOME::Applet_ptr applet = new Applet_impl (widget);
-
-	/* Now a way to find out the CORBA impl from the widget */
-	gtk_object_set_data (GTK_OBJECT (widget), "CORBA_object", applet);
-
-	ior = orb_ptr->object_to_string (applet);
+	guint32 wid;
 
 	/*reserve a spot and get an id for this applet*/
-	*id = panel_client->applet_request_id(ior,path,cfg,globcfg);
+	*id = panel_client->applet_request_id(path,cfg,globcfg,wid);
+
+	if(winid)
+		*winid = wid;
 
 	if(cfgpath==NULL) {
 		CORBA::string_free(cfg);
@@ -282,6 +274,34 @@ gnome_panel_applet_request_id (GtkWidget *widget,
 	} else {
 		*globcfgpath = NULL;
 	}
+
+	return 0;
+}
+
+
+/*this function will register the ior with the panel so it can call us*/
+char *
+gnome_panel_applet_register (GtkWidget *widget, int id)
+{
+	char *result;
+	char *ior;
+
+	/* Create an applet object, I do pass the widget parameter to the
+	 * constructor object to have a way of sort out to which object
+	 * implementation the panel is talking to us about (ie, if an applet
+	 * can implement various instances of some object, like say a bunch
+	 * of "Swallow" applets 
+	 */
+	GNOME::Applet_ptr applet = new Applet_impl (widget);
+
+	/* Now a way to find out the CORBA impl from the widget */
+	gtk_object_set_data (GTK_OBJECT (widget), "CORBA_object", applet);
+
+	ior = orb_ptr->object_to_string (applet);
+
+	panel_client->applet_register(ior,id);
+
+	bind_top_applet_events(widget,id);
 
 	return 0;
 }
@@ -316,27 +336,6 @@ gnome_panel_applet_request_glob_cfg (char **globcfgpath)
 }
 
 
-/*id will return a unique id for this applet for the applet to identify
-  itself as*/
-char *
-gnome_panel_prepare_and_transfer (GtkWidget *widget, int id)
-{
-	char *result;
-
-	gtk_widget_realize(widget);
-	gtk_widget_show(widget);
-	
-	/*printf ("Transfiriendo: %d\n", GDK_WINDOW_XWINDOW (widget->window));*/
-
-	/*reparent the window*/
-	panel_client->reparent_window_id (GDK_WINDOW_XWINDOW (widget->window),
-					  id);
-	bind_top_applet_events(widget,id);
-
-	/*printf ("Transferido\n");*/
-	return 0;
-}
-
 char *
 gnome_panel_quit (void)
 {
@@ -347,9 +346,30 @@ gnome_panel_quit (void)
 	return 0;
 }
 
-
 void
 applet_corba_gtk_main (char *str)
 {
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
+}
+
+void
+move_grab_add (GtkWidget *applet)
+{
+	if(!fleur_cursor)
+		fleur_cursor = gdk_cursor_new(GDK_FLEUR);
+
+ 	gtk_grab_add(applet);
+	gdk_pointer_grab(applet->window,
+			 TRUE,
+			 APPLET_EVENT_MASK,
+			 NULL,
+			 fleur_cursor,
+			 GDK_CURRENT_TIME);
+}
+
+void
+move_grab_remove (GtkWidget *applet)
+{
+	gdk_pointer_ungrab(GDK_CURRENT_TIME);
+	gtk_grab_remove(applet);
 }

@@ -3,13 +3,13 @@
 
 #include "gnome.h"
 #include "applet-lib.h"
-#include "applet-widget.h"
+#include "gtkplug.h"
 #include "panel.h"
 #include "mico-parse.h"
 
 #define APPLET_ID "Logout"
 
-GtkWidget *aw;
+GtkWidget *plug;
 int applet_id=-1;
 
 void
@@ -33,7 +33,7 @@ quit_logout(gpointer data)
 void
 shutdown_applet(int id)
 {
-  gtk_widget_destroy(aw);
+  gtk_widget_destroy(plug);
   gtk_idle_add(quit_logout,NULL);
 }
 
@@ -44,7 +44,7 @@ logout(void)
 }
 
 static GtkWidget *
-create_logout_widget (GtkWidget *aw)
+create_logout_widget (GtkWidget *plug)
 {
   GtkWidget *button;
   GtkWidget *pixmap;
@@ -76,6 +76,7 @@ main(int argc, char *argv[])
   char *result;
   char *cfgpath;
   char *globcfgpath;
+  guint32 winid;
 
   panel_corba_register_arguments ();
 
@@ -87,12 +88,6 @@ main(int argc, char *argv[])
       exit(1);
     }
 
-  aw = applet_widget_new();
-
-  logout = create_logout_widget(GTK_WIDGET(aw));
-  gtk_widget_show(logout);
-  applet_widget_add(APPLET_WIDGET(aw), GTK_WIDGET(logout));
-  gtk_widget_show(aw);
 
   {
     char *mypath, *myinvoc;
@@ -106,9 +101,9 @@ main(int argc, char *argv[])
 	free(mypath);
       }
     
-    result = gnome_panel_applet_request_id (GTK_WIDGET(aw),
-					    myinvoc, &applet_id,
-					    &cfgpath,&globcfgpath);
+    result = gnome_panel_applet_request_id (myinvoc, &applet_id,
+					    &cfgpath,&globcfgpath,
+					    &winid);
     if(result)
       g_error("Could not talk to the panel: %s\n", result);
 
@@ -118,7 +113,14 @@ main(int argc, char *argv[])
   g_free(cfgpath); /* We should load up config data first... */
   g_free(globcfgpath);
 
-  result = gnome_panel_prepare_and_transfer(aw, applet_id);
+  plug = gtk_plug_new(winid);
+
+  logout = create_logout_widget(plug);
+  gtk_widget_show(logout);
+  gtk_container_add(GTK_CONTAINER(plug), logout);
+  gtk_widget_show(plug);
+
+  result = gnome_panel_applet_register(plug, applet_id);
   if (result)
     g_error("Could not talk to the Panel: %s\n", result);
   
