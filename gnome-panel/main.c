@@ -111,8 +111,14 @@ main(int argc, char **argv)
 	client = gnome_master_client ();
 
 	if (! duplicate && 
-	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED))
-		duplicate = ! gnome_startup_acquire_token("GNOME_PANEL", gnome_client_get_id(client));
+	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED)) {
+		CORBA_Object exist;
+		exist = goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", GOAD_ACTIVATE_EXISTING_ONLY, NULL);
+		if(!CORBA_Object_is_nil(exist, &ev))
+			duplicate = TRUE;
+		else
+			CORBA_Object_release(duplicate, &ev);
+	}
 
 	gnome_client_set_restart_style (client, duplicate ? GNOME_RESTART_NEVER : GNOME_RESTART_IMMEDIATELY);
 
