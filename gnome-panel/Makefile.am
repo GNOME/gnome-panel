@@ -4,7 +4,7 @@ SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 INCLUDES =	 			\
 	-I$(includedir) $(X_CFLAGS)
 
-bin_PROGRAMS = panel
+bin_PROGRAMS = panel clock_applet
 
 panel_SOURCES = \
 	gdkextra.c	\
@@ -22,6 +22,11 @@ panel_SOURCES = \
 	panel_config.h
 
 panel_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(DL_LIB)
+
+clock_applet_SOURCES = \
+	clock.c
+
+clock_applet_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS)
 
 data_DATA = panelrc
 

@@ -19,6 +19,8 @@
 #include "menu.h"
 #include "panel_config.h"
 
+#include <gdk/gdkx.h>
+
 
 #define APPLET_CMD_FUNC "panel_applet_cmd_func"
 #define APPLET_FLAGS    "panel_applet_flags"
@@ -619,6 +621,29 @@ add_main_menu(GtkWidget *widget, gpointer data)
 	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
+static void
+add_reparent(GtkWidget *widget, gpointer data)
+{
+	int id;
+	GtkWidget *eb;
+	GdkWindow *win;
+	int w,h;
+
+	puts("Enter window ID to reparent:");
+	scanf("%d",&id);
+
+	eb = gtk_event_box_new();
+	gtk_widget_show(eb);
+
+	win = gdk_window_foreign_new(id);
+	gdk_window_get_size(win,&w,&h);
+	gtk_widget_set_usize(eb,w,h);
+
+	panel_widget_add(PANEL_WIDGET(panels->data), eb, 0);
+
+	gdk_window_reparent(win,eb->window,0,0);
+}
+
 GtkWidget *
 create_panel_root_menu(PanelWidget *panel)
 {
@@ -630,6 +655,13 @@ create_panel_root_menu(PanelWidget *panel)
 	menuitem = gtk_menu_item_new_with_label(_("Panel properties..."));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_properties_callback,
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Add reparent"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) add_reparent,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
@@ -755,6 +787,8 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 
 	if(strcmp(id,"Menu")==0)
 		menu_count++;
+
+	printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));
 }
 
 static void
