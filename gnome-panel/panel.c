@@ -2861,7 +2861,7 @@ remove_panel_accept (GtkWidget *w,
 		     int        response,
 		     GtkWidget *panel)
 {
-	PanelWidget *panel_widget;
+	PanelWidget *panel_widget = NULL;
 
 	if (BASEP_IS_WIDGET (panel))
 		panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);

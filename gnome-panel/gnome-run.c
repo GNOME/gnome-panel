@@ -1001,8 +1001,6 @@ create_simple_contents (GdkScreen *screen)
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
-	hbox = gtk_hbox_new (FALSE, 0);
-
         w = gtk_check_button_new_with_mnemonic(_("Run in _terminal"));
 	g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
         gtk_box_pack_start (GTK_BOX (hbox2), w,

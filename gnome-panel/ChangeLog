@@ -1,3 +1,10 @@
+2003-07-02  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* panel-recent.c: (show_uri): Call g_string_new() with
+	NULL instead of "".
+	* panel.c: (remove_panel_accept): Kill a compiler warning.
+	* gnome-run.c: Fix a leak.
+
 2003-06-30  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* menu.c (panel_make_sure_menu_within_screen): Omit call to 

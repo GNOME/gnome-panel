@@ -58,7 +58,7 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 		return FALSE;
 	}
 
-	str = g_string_new ("");
+	str = g_string_new (NULL);
 
 	if (app->requires_terminal) {
 		/* FIXME: we should use their preferred terminal
