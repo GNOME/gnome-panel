@@ -1,5 +1,19 @@
 2003-01-06  Mark McLoughlin  <mark@skynet.ie>
 
+	Makes the password dialog not modal so that we don't
+	have a locked up panel when getting the password.
+	Fixes #102399. Based on patch from Balamurali Viswanathan.
+
+	* mailcheck.c:
+	(check_remote_mailbox): factor this out from
+	check_mail_file_status().
+	(password_response_cb): check the mailbox and
+	destroy the dialog once we get the password.
+	(get_remote_password): don't make the dialog modal.
+	(check_mail_file_status), (fill_mailcheck_applet): upd.
+
+2003-01-06  Mark McLoughlin  <mark@skynet.ie>
+
 	* clock.c: (fill_clock_applet): remove the 4 pixel
 	border around the clock as suggested by Gediminas.
 	Fixes #97409.

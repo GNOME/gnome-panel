@@ -122,6 +122,8 @@ struct _MailCheck {
 	/* the about box */
 	GtkWidget *about;
 
+	GtkWidget *password_dialog;
+
 	gboolean anim_changed;
 
 	char *mailcheck_text_only;
@@ -157,6 +159,8 @@ static void applet_load_prefs(MailCheck *mc);
 static void set_atk_name_description (GtkWidget *widget, const gchar *name,
 					const gchar *description);
 static void set_atk_relation (GtkWidget *label, GtkWidget *entry, AtkRelationType);
+static void got_remote_answer (int mails, gpointer data);
+static void null_remote_handle (gpointer data);
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
@@ -254,17 +258,67 @@ calc_dir_contents (char *dir)
        return size;
 }
 
-static char *
+static void
+check_remote_mailbox (MailCheck *mc)
+{
+	if (!mc->real_password || !mc->remote_username || !mc->remote_server)
+		return;
+
+	if (mc->mailbox_type == MAILBOX_POP3)
+		mc->remote_handle = helper_pop3_check (got_remote_answer,
+						       mc,
+						       null_remote_handle,
+						       mc->pre_remote_command,
+						       mc->remote_server,
+						       mc->remote_username,
+						       mc->real_password);
+	else if (mc->mailbox_type == MAILBOX_IMAP)
+		helper_imap_check (got_remote_answer,
+				   mc,
+				   null_remote_handle,
+				   mc->pre_remote_command,
+				   mc->remote_server,
+				   mc->remote_username,
+				   mc->real_password,
+				   mc->remote_folder);
+}
+
+static void
+password_response_cb (GtkWidget  *dialog,
+		      int         response_id,
+		      MailCheck  *mc)
+{
+
+	switch (response_id) {
+		GtkWidget *entry;
+
+	case GTK_RESPONSE_OK:
+		entry = g_object_get_data (G_OBJECT (dialog), "password_entry");
+		mc->real_password = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+		check_remote_mailbox (mc);
+		break;
+	}
+
+	gtk_widget_destroy (dialog);
+	mc->password_dialog = NULL;
+}
+static void
 get_remote_password (MailCheck *mc)
 {
 	GtkWidget *dialog;
 	GtkWidget *hbox;
 	GtkWidget *label;
 	GtkWidget *entry;
-	int        response;
-	char      *pass = NULL;
 
-	dialog = gtk_dialog_new_with_buttons (
+	if (mc->password_dialog) {
+		gtk_window_set_screen (GTK_WINDOW (mc->password_dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
+		gtk_window_present (GTK_WINDOW (mc->password_dialog));
+		return;
+	}
+
+	mc->password_dialog = dialog =
+		gtk_dialog_new_with_buttons (
 			_("Inbox Monitor"), NULL, 0,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 			GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
@@ -291,18 +345,14 @@ get_remote_password (MailCheck *mc)
 	gtk_widget_show_all (hbox);
 	gtk_widget_grab_focus (GTK_WIDGET (entry));
 
-	gtk_window_set_modal (GTK_WINDOW(dialog), TRUE);
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
 
-	response = gtk_dialog_run (GTK_DIALOG (dialog));
+	g_signal_connect (dialog, "response",
+                          G_CALLBACK (password_response_cb), mc);
 
-	if (response == GTK_RESPONSE_OK)
-		pass = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
-
-	gtk_widget_destroy (dialog);
-
-	return pass;
+	g_object_set_data (G_OBJECT (dialog), "password_entry", entry);
+	gtk_widget_show (GTK_WIDGET (dialog));
 }
 
 static void
@@ -380,40 +430,11 @@ check_mail_file_status (MailCheck *mc)
 		    mc->remote_password[0] != '\0') {
 			g_free (mc->real_password);
 			mc->real_password = g_strdup (mc->remote_password);
-		}
-		else if(mc->real_password == NULL) {
-			if(mc->mail_timeout != 0) {
-				gtk_timeout_remove(mc->mail_timeout);
-				mc->mail_timeout = 0;
-			}
-			mc->real_password = get_remote_password(mc);
-			mc->mail_timeout = gtk_timeout_add(mc->update_freq,
-							   mail_check_timeout,
-							   mc);
-		}
 
-		if (mc->real_password != NULL &&
-		    mc->remote_username != NULL &&
-		    mc->remote_server != NULL) {
-			if (mc->mailbox_type == MAILBOX_POP3)
-				mc->remote_handle =
-					helper_pop3_check (got_remote_answer,
-							   mc,
-							   null_remote_handle,
-							   mc->pre_remote_command,
-							   mc->remote_server,
-							   mc->remote_username,
-							   mc->real_password);
-			else
-					helper_imap_check (got_remote_answer,
-							   mc,
-							   null_remote_handle,
-							   mc->pre_remote_command,
-							   mc->remote_server,
-							   mc->remote_username,
-							   mc->real_password,
-							   mc->remote_folder);
-		}
+		} else if (!mc->real_password)
+			get_remote_password (mc);
+
+		check_remote_mailbox (mc);
 	}
 	else if (mc->mailbox_type == MAILBOX_LOCAL) {
 		status = stat (mc->mail_file, &s);
@@ -1886,6 +1907,7 @@ fill_mailcheck_applet(PanelApplet *applet)
 	mc->anymail = mc->unreadmail = mc->newmail = FALSE;
 	mc->mail_timeout = 0;
 	mc->animation_tag = 0;
+	mc->password_dialog = NULL;
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
