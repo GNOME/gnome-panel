@@ -121,6 +121,9 @@ PKG_CHECK_MODULES(FISH, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
 
+# For the run dialog
+gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE
+
 # For egg-recent-files
 AC_CHECK_FUNCS(lockf)
 
