@@ -1,3 +1,12 @@
+Mon Mar 16 17:26:03 1998  George Lebl  <jirka@5z.com>
+
+	* launcher.c: a few fixes, dumped the params field
+
+	* panel.c: need to pause a second to make mtimes
+	  different for gnome-config to work with two
+	  programs writing to the same section at the same
+	  time .. bad bad bad ... gnome-config is broke
+
 Sun Mar 15 23:53:47 1998  George Lebl  <jirka@5z.com>
 
 	* launcher.c: port to corba, acts like mc should,

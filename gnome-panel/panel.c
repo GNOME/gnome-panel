@@ -139,9 +139,18 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_string(fullpath, info->params);
 		g_free(fullpath);
 
+		/*sync before the applet does it's stuff*/
+		gnome_config_sync();
+		/*FIXME:????????????: next time we do sync it's gonna
+		  ignore whatever was written to our sections by other
+		  programs ... whoops ... needs to be fixed in
+		  gnome-config!*/
+
 		/*have the applet do it's own session saving*/
 		send_applet_session_save(info->id,(*num)-2,path,
 					 panel_cfg_path);
+		/*FIXME: related to above FIXME*/
+		sleep(1);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
 		gnome_config_set_string(fullpath, info->id);

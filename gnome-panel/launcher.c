@@ -37,7 +37,6 @@ typedef struct {
 	GtkWidget         *button;
 	gint               signal_click_tag;
 	GnomeDesktopEntry *dentry;
-	char              *params;
 } Launcher;
 
 typedef struct {
@@ -78,7 +77,6 @@ static void
 free_user_data(GtkWidget *widget, gpointer data)
 {
 	Launcher *launcher = gtk_object_get_user_data(GTK_OBJECT(widget));
-	g_free(launcher->params);
 	gnome_desktop_entry_free(launcher->dentry);
 	g_free(launcher);
 }
@@ -144,9 +142,6 @@ create_launcher (GtkWidget *window, char *parameters)
 							 dentry);
 
 	gtk_object_set_user_data(GTK_OBJECT(launcher->button), launcher);
-
-	/* The .desktop path is stored in the params field */
-	launcher->params = g_strdup(parameters);
 
 	launcher->dentry = dentry;
 
@@ -252,9 +247,6 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 	prop->dentry = dentry;
 
 	/* FIXME: should update the button and pixmap */
-
-	g_free(prop->launcher->params);
-	prop->launcher->params=g_strdup(dentry->location);
 
 	/*FIXME: CORBAize*/
 	/*cmd.cmd = PANEL_CMD_SET_TOOLTIP;
@@ -381,7 +373,7 @@ properties(GtkWidget *widget)
 	Launcher          *launcher;
 
 	launcher = gtk_object_get_user_data(GTK_OBJECT(widget));
-	path = launcher->params;
+	path = launcher->dentry->location;
 
 	dentry = gnome_desktop_entry_load(path);
 	if (!dentry) {
@@ -414,7 +406,8 @@ session_save(int id, const char *cfgpath, const char *globcfgpath)
 
 	query = g_copy_strings(cfgpath,"path",NULL);
 	puts(query);
-	gnome_config_set_string(query,launcher->params);
+	gnome_config_set_string(query,launcher->dentry->location);
+	puts(launcher->dentry->location);
 	g_free(query);
 
 	query = g_copy_strings(globcfgpath,CONFIG_TAG,"/count",NULL);
@@ -503,7 +496,7 @@ start_new_launcher(const char *path)
 	launcher_count++;
 
 	/*FIXME: corbaize*/
-	/*dentry = gnome_desktop_entry_load(launcher->params);
+	/*dentry = gnome_desktop_entry_load(launcher->dentry->location);
 
 	cmd.cmd = PANEL_CMD_SET_TOOLTIP;
 	cmd.params.set_tooltip.applet  = launcher->button;
