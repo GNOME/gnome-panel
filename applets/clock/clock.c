@@ -174,7 +174,9 @@ update_timeformat(ClockData *cd)
 
 /* sets accessible name and description for the widget */
 static void
-set_atk_name_description (GtkWidget *widget, const char *name, const char *desc)
+set_atk_name_description (GtkWidget  *widget,
+			  const char *name,
+			  const char *desc)
 {
 	AtkObject *obj;
 	obj = gtk_widget_get_accessible (widget);
@@ -188,6 +190,41 @@ set_atk_name_description (GtkWidget *widget, const char *name, const char *desc)
 	if (name != NULL)
 		atk_object_set_name (obj, name);
 } 
+
+/* sets up ATK relation between the widgets */
+static void
+add_atk_relation (GtkWidget       *widget,
+		  GSList          *list,
+		  AtkRelationType  type)
+{
+	AtkRelationSet *relation_set;
+	AtkObject      *aobj;
+
+	aobj = gtk_widget_get_accessible (widget);
+	if (!GTK_IS_ACCESSIBLE (aobj))
+		return;
+
+	relation_set = atk_object_ref_relation_set (aobj);
+
+	if (list) {
+		AtkObject  **accessible_array;
+		AtkRelation *relation;
+		GSList      *l;
+		guint        len;
+		int          i = 0;
+
+		len = g_slist_length (list);
+		accessible_array =
+			(AtkObject **)g_malloc (sizeof (AtkObject *) * len);
+
+		for (l = list, i = 0; l; l = l->next, i++)
+			accessible_array [i] = gtk_widget_get_accessible (l->data);
+
+		relation = atk_relation_new (accessible_array, len, type);
+		atk_relation_set_add (relation_set, relation);
+		g_object_unref (relation);
+	}
+}
 
 static void
 update_clock (ClockData * cd, time_t current_time)
@@ -818,7 +855,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget *unixtime;
 	GtkWidget *internettime;
 	GtkWidget *use_gmt_time;
-	gchar *file;
+	GSList    *list;
+	char      *file;
 
 	if (cd->props != NULL) {
 		gtk_window_present (GTK_WINDOW (cd->props));
@@ -974,6 +1012,17 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
 	g_signal_connect (G_OBJECT (cd->props), "response",
 			  G_CALLBACK (properties_response_cb), NULL);
+
+	/* sets up atk relation  */
+	list = g_slist_append (NULL, twelvehour);
+	list = g_slist_append (list, twentyfourhour);
+	add_atk_relation (use_gmt_time, list, ATK_RELATION_CONTROLLED_BY);
+	g_slist_free (list);
+
+	list = g_slist_append (NULL, use_gmt_time);
+	add_atk_relation (twelvehour, list, ATK_RELATION_CONTROLLER_FOR);
+	add_atk_relation (twentyfourhour, list, ATK_RELATION_CONTROLLER_FOR);
+	g_slist_free (list);
 				
 	gtk_widget_show (cd->props);
 }
