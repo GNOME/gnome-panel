@@ -1,5 +1,13 @@
 2004-09-14  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix for https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=131868
+	where trying to drag a locked applet caused autohide to stop working.
+
+	* panel-widget.c: (panel_widget_applet_drag_start): pop the autohide
+	disabler if we fail to start the drag. 
+
+2004-09-14  Mark McLoughlin  <mark@skynet.ie>
+
 	Fix for bug #148672 - freakiness with auto-hide and snap-to.
 
 	* panel-toplevel.c: (panel_toplevel_update_auto_hide_position):

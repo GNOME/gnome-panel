@@ -1822,10 +1822,11 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	g_message("Starting drag [grabbed] on a %s at %p\n",
 		  g_type_name(G_TYPE_FROM_INSTANCE(applet)), applet);
 #endif
-	panel_toplevel_push_autohide_disabler (panel->toplevel);
 
 	if (!panel_widget_applet_drag_start_no_grab (panel, applet, drag_off))
 		return;
+
+	panel_toplevel_push_autohide_disabler (panel->toplevel);
 
 	gtk_grab_add (applet);
 	if (applet->window) {
