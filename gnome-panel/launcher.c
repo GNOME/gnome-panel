@@ -240,6 +240,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 			pixmap = gtk_label_new (_("App"));
 	}
 	gtk_container_add (GTK_CONTAINER(prop->launcher->button), pixmap);
+	gtk_widget_show(pixmap);
 
 	/*FIXME: a bad hack to keep it all 48x48*/
 	gtk_widget_set_usize (prop->launcher->button, 48, 48);
@@ -262,10 +263,11 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 
 #undef free_and_nullify
 
-static void
+static gint
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
 	g_free (data);
+	return FALSE;
 }
 
 static GtkWidget *
@@ -314,7 +316,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX (prop->dialog),
 					table, gtk_label_new ("Item properties"));
 	
-	gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
+	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) properties_close_callback,
 			   prop);
 
@@ -330,9 +332,6 @@ launcher_properties(Launcher *launcher)
 	GnomeDesktopEntry *dentry;
 	char              *path;
 	GtkWidget         *dialog;
-
-	/*FIXME:
-	launcher = find_launcher(applet_id);*/
 
 	path = launcher->dentry->location;
 
