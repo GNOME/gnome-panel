@@ -1,5 +1,11 @@
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-widget.c: (panel_widget_applet_destroy): do not forget to
+	remove the pointer to PANEL_APPLET_DATA. Fix invalid read/write in
+	panel_widget_set_applet_size_hints ().
+
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
 	Fix pixmap background when moving the menu bar.
 
 	* panel-menu-bar.c: (panel_menu_bar_realized): killed

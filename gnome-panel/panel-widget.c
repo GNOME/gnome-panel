@@ -2336,6 +2336,7 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 	g_return_if_fail (GTK_IS_WIDGET (applet));
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
+	g_object_set_data (G_OBJECT (applet), PANEL_APPLET_DATA, NULL);
 
 	/*if it wasn't yet removed*/
 	if(applet->parent) {
