@@ -1,3 +1,16 @@
+Tue Feb 23 01:03:25 1999  George Lebl  <jirka@5z.com>
+
+	* basep-widget.c: remove some dead code
+
+	* panel-widget.c: resize pixmap in two level of timeouts, not
+	  resizing for half a second after change and resizing maximally
+	  once in 2 seconds, this should get rid of slow startups when
+	  the panel width changes a lot. also draw after resizing the
+	  pixmap to update the panel. Also fix moving code for races
+
+	* drawer-widget.c: seems like gtk table allocation got fixed
+	  (if it was broken) so I removed a hack for drawer positioning
+
 Mon Feb 22 21:47:15 1999  George Lebl  <jirka@5z.com>
 
 	* basep-widget.c,panel_config_global.[ch],session.c: add a non

@@ -58,7 +58,6 @@ struct _PanelWidget
 {
 	GtkFixed		fixed;
 	
-	
 	GdkPixmap		*pixmap;
 	int			pixw,pixh;
 
@@ -68,6 +67,8 @@ struct _PanelWidget
 	int			size;
 	PanelOrientation	orient;
 	int			fit_pixmap_bg;
+	int			pixmap_resize_timeout;
+	int			pixmap_resize_pending;
 
 	int			packed;
 

@@ -850,6 +850,37 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	return FALSE;
 }
 
+static int
+fit_pix_timeout(gpointer data)
+{
+	PanelWidget *panel = data;
+	if(panel->pixmap_resize_pending &&
+	   panel->fit_pixmap_bg &&
+	   panel->back_type == PANEL_BACK_PIXMAP) {
+		panel_resize_pixmap(panel);
+		panel->pixmap_resize_pending = FALSE;
+		return TRUE;
+	}
+	panel->pixmap_resize_timeout = 0;
+	panel->pixmap_resize_pending = FALSE;
+	return FALSE;
+}
+
+static int
+fit_pix_timeout_top(gpointer data)
+{
+	PanelWidget *panel = data;
+	if(panel->pixmap_resize_timeout ||
+	   !panel->fit_pixmap_bg ||
+	   panel->back_type != PANEL_BACK_PIXMAP)
+		return FALSE;
+	panel_resize_pixmap(panel);
+	panel->pixmap_resize_pending = FALSE;
+	panel->pixmap_resize_timeout =
+		gtk_timeout_add(2000,fit_pix_timeout,panel);
+	return FALSE;
+}
+
 static void
 panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
@@ -975,8 +1006,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(old_thick != panel->thick &&
 	   panel->fit_pixmap_bg &&
-	   panel->back_type == PANEL_BACK_PIXMAP)
-		panel_resize_pixmap(panel);
+	   panel->back_type == PANEL_BACK_PIXMAP) {
+		if(panel->pixmap_resize_timeout)
+			panel->pixmap_resize_pending = TRUE;
+		else {
+			gtk_timeout_add(500,fit_pix_timeout_top,panel);
+		}
+	}
 
 	
 	for(li=send_move;li!=NULL;li=g_slist_next(li)) {
@@ -1157,6 +1193,8 @@ panel_resize_pixmap(PanelWidget *panel)
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
 	
 	gtk_style_unref(ns);
+
+	panel_widget_draw_all(panel);
 }
 
 static int
@@ -1343,6 +1381,8 @@ panel_widget_init (PanelWidget *panel)
 
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
+	panel->pixmap_resize_timeout = 0;
+	panel->pixmap_resize_pending = FALSE;
 	panel->back_pixmap = NULL;
 	panel->back_color.red = 0;
 	panel->back_color.green = 0;
@@ -1764,11 +1804,16 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 static int
 move_timeout_handler(gpointer data)
 {
+	PanelWidget *panel = data;
 	g_return_val_if_fail(data!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(data),FALSE);
 	
-	if(been_moved)
-		panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
+	if(been_moved &&
+	   panel->currently_dragged_applet) {
+		panel_widget_applet_move_to_cursor(panel);
+		been_moved = FALSE;
+		return TRUE;
+	}
 	been_moved = FALSE;
 	moving_timeout = -1;
 	

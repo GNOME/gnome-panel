@@ -137,8 +137,6 @@ basep_widget_set_ebox_orient(BasePWidget *basep,
 		break;
 	case ORIENT_DOWN:
 	case ORIENT_RIGHT:
-		xattributes.win_gravity = NorthWestGravity;
-		break;
 	default:
 		xattributes.win_gravity = NorthWestGravity;
 		break;
@@ -184,34 +182,6 @@ move_step(int src, int dest, long start_time, long end_time, long cur_time)
 	}
 }
 
-#if 0
-static int
-move_step(int src, int dest, int pos, int step)
-{
-	int range;
-	int diff;
-	int percentage;
-	int ret;
-	
-	if(src == dest)
-		return 0;
-
-	range = abs(src-dest);
-	diff = abs(range-abs(pos-src));
-	percentage = (diff*100)/range;
-
-	if(percentage>50)
-		percentage = 100-percentage;
-	
-	ret = (src>dest?-1:1)*(((step>>1)*log((percentage/10.0)+1))+1);
-	if(src>dest) {
-		if(ret+pos<dest) ret = dest - pos;
-	} else {
-		if(ret+pos>dest) ret = dest - pos;
-	}
-	return ret;
-}
-#endif
 
 void
 basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
@@ -270,7 +240,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	}
 
 	if(!pw_disable_animations && step != 0) {
-		int i;
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
@@ -287,7 +256,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 
 		basep_widget_set_ebox_orient(basep, hide_orient);
 		
-		i = 0;
 		while(x != dx ||
 		      y != dy ||
 		      w != dw ||
@@ -303,13 +271,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(wid->window, x,y,w,h);
 			gdk_flush();
-			/*drawing the entire table flickers, so don't
-			  do it often*/
-			/*if(i++%10)
-				gtk_widget_draw(basep->panel, NULL);
-			else
-				gtk_widget_draw(basep->table, NULL);
-			gdk_flush();*/
 		}
 
 		gdk_window_resize(wid->window,dw,dh);
@@ -527,10 +488,7 @@ basep_widget_init (BasePWidget *basep)
 
 	basep->hidebuttons_enabled = TRUE;
 	basep->hidebutton_pixmaps_enabled = TRUE;
-
 }
-
-
 
 static void
 show_hidebutton_pixmap(GtkWidget *hidebutton, int show)

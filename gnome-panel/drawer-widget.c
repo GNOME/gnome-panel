@@ -191,7 +191,6 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		int px, py, pw, ph;
 		GtkWidget *ppanel; /*parent panel*/
 
-		BasePWidget *basep;
 		
 		/*get the parent of the applet*/
 		ppanel = panel->master_widget->parent;
@@ -205,12 +204,6 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 			bx += ppanel->allocation.x;
 			by += ppanel->allocation.y;
 		}
-		basep = BASEP_WIDGET(ppanel);
-		/*a hack as the above just doesn't work perfectly*/
-		if(GTK_WIDGET_VISIBLE(basep->hidebutton_n))
-			by -= basep->hidebutton_n->allocation.height;
-		if(GTK_WIDGET_VISIBLE(basep->hidebutton_w))
-			bx -= basep->hidebutton_w->allocation.width;
 
 		bw = panel->master_widget->allocation.width;
 		bh = panel->master_widget->allocation.height;
