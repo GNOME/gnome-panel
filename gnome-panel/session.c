@@ -71,6 +71,7 @@ send_tooltips_state(int enabled)
 void
 apply_global_config(void)
 {
+	int i;
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.drawer_step_size,
@@ -86,6 +87,12 @@ apply_global_config(void)
 	set_show_small_icons();
 	send_tooltips_state(global_config.tooltips_enabled);
 	button_widget_tile_enable(global_config.tiles_enabled);
+	for(i=0;i<LAST_TILE;i++) {
+		button_widget_load_tile(i, global_config.tile_up[i],
+					global_config.tile_down[i],
+					global_config.tile_border[i],
+					global_config.tile_depth[i]);
+	}
 }
 
 /*shouldn't this be in gnome-dentry?? :)*/
@@ -304,6 +311,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("pos", snapped->pos);
 		gnome_config_set_int("mode", snapped->mode);
 		gnome_config_set_int("state", snapped->state);
+		gnome_config_set_bool("hidebuttons_enabled",
+				      snapped->hidebuttons_enabled);
 		break;
 		}
 	case CORNER_PANEL:
@@ -430,6 +439,17 @@ do_session_save(GnomeClient *client,
 				     global_config.applet_padding);
 		gnome_config_set_bool("tiles_enabled",
 				      global_config.tiles_enabled);
+		for(i=0;i<LAST_TILE;i++) {
+			char buf[256];
+			g_snprintf(buf,256,"tile_up_%d",i);
+			gnome_config_set_string(buf,global_config.tile_up[i]);
+			g_snprintf(buf,256,"tile_down_%d",i);
+			gnome_config_set_string(buf,global_config.tile_down[i]);
+			g_snprintf(buf,256,"tile_border_%d",i);
+			gnome_config_set_int(buf,global_config.tile_border[i]);
+			g_snprintf(buf,256,"tile_depth_%d",i);
+			gnome_config_set_int(buf,global_config.tile_depth[i]);
+		}
 	}
 
 	gnome_config_pop_prefix ();
@@ -712,6 +732,7 @@ init_user_panels(void)
 		panel = snapped_widget_new(SNAPPED_BOTTOM,
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
+					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
 					   TRUE,
@@ -760,6 +781,7 @@ init_user_panels(void)
 				SnappedPos pos;
 				SnappedMode mode;
 				SnappedState state;
+				int hidebuttons_enabled;
 
 				g_snprintf(buf,256,"pos=%d", SNAPPED_BOTTOM);
 				pos=gnome_config_get_int(buf);
@@ -769,10 +791,14 @@ init_user_panels(void)
 
 				g_snprintf(buf,256,"state=%d", SNAPPED_SHOWN);
 				state=gnome_config_get_int(buf);
-				
+
+				hidebuttons_enabled =
+					gnome_config_get_bool("hidebuttons_enabled=TRUE");
+
 				panel = snapped_widget_new(pos,
 							   mode,
 							   state,
+							   hidebuttons_enabled,
 							   back_type,
 							   back_pixmap,
 							   fit_pixmap_bg,
@@ -841,6 +867,8 @@ void
 load_up_globals(void)
 {
 	char buf[256];
+	char *tile_def[]={"normal","purple","green"};
+	int i;
 
 	/*set up global options*/
 	
@@ -884,6 +912,21 @@ load_up_globals(void)
 
 	global_config.tiles_enabled =
 		gnome_config_get_bool("tiles_enabled=TRUE");
+	
+	for(i=0;i<LAST_TILE;i++) {
+		g_free(global_config.tile_up[i]);
+		g_snprintf(buf,256,"tile_up_%d=tile-%s-up.png",i,tile_def[i]);
+		global_config.tile_up[i] = gnome_config_get_string(buf);
+
+		g_free(global_config.tile_down[i]);
+		g_snprintf(buf,256,"tile_down_%d=tile-%s-down.png",i,tile_def[i]);
+		global_config.tile_down[i] = gnome_config_get_string(buf);
+
+		g_snprintf(buf,256,"tile_border_%d=2",i);
+		global_config.tile_border[i] = gnome_config_get_int(buf);
+		g_snprintf(buf,256,"tile_depth_%d=2",i);
+		global_config.tile_depth[i] = gnome_config_get_int(buf);
+	}
 		
 	gnome_config_pop_prefix();
 

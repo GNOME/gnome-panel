@@ -25,6 +25,7 @@ struct _PerPanelConfig {
 	/*snapped types*/
 	SnappedPos		snapped_pos;
 	SnappedMode		snapped_mode;
+	int			snapped_hidebuttons;
 	
 	/*corner types*/
 	CornerPos		corner_pos;
@@ -180,6 +181,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					     ppc->snapped_pos,
 					     ppc->snapped_mode,
 					     SNAPPED_WIDGET(ppc->panel)->state,
+					     ppc->snapped_hidebuttons,
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
@@ -206,6 +208,48 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	gtk_widget_queue_draw (ppc->panel);
 }
 
+/*thy evil easter egg*/
+static int
+config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
+{
+	GtkWidget *w;
+	char *file;
+	static int clicks=0;
+	static int pages=0;
+	GdkEventButton *bevent;
+	
+	if(event->type != GDK_BUTTON_PRESS)
+		return FALSE;
+	
+	bevent = (GdkEventButton *)event;
+	if(bevent->button != 3)
+		clicks = 0;
+	else
+		clicks++;
+	
+	if(clicks<3)
+		return FALSE;
+	clicks = 0;
+	
+	if(pages==0) {
+		file = gnome_unconditional_pixmap_file("gnome-gegl.png");
+		if (file && g_file_exists (file)) {
+			w = gnome_pixmap_new_from_file (file);
+			gtk_widget_show(w);
+			/*the GEGL shall not be translated*/
+			gtk_notebook_append_page (nbook, w,
+						  gtk_label_new ("GEGL"));
+			gtk_notebook_set_page(nbook,-1);
+			pages = 1;
+		}
+		g_free(file);
+	} else {
+			gtk_notebook_set_page(nbook,-1);
+	}
+	return FALSE;
+}
+
+
 static void
 snapped_set_pos (GtkWidget *widget, gpointer data)
 {
@@ -216,6 +260,17 @@ snapped_set_pos (GtkWidget *widget, gpointer data)
 		return;
 	
 	ppc->snapped_pos = pos;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+snapped_set_hidebuttons (GtkWidget *widget, gpointer data)
+{
+	SnappedPos pos = (SnappedPos) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	ppc->snapped_hidebuttons = !(GTK_TOGGLE_BUTTON(widget)->active);
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
@@ -354,6 +409,16 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_mode), 
 			    (gpointer)SNAPPED_AUTO_HIDE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Auto-hide */
+	button = gtk_check_button_new_with_label (_("Disable hidebuttons"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (!ppc->snapped_hidebuttons)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (snapped_set_hidebuttons), NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
@@ -744,6 +809,7 @@ panel_config(GtkWidget *panel)
 		PanelWidget *pw = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
 		ppc->snapped_pos = snapped->pos;
 		ppc->snapped_mode = snapped->mode;
+		ppc->snapped_hidebuttons = snapped->hidebuttons_enabled;
 		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
 		ppc->back_pixmap = g_strdup(pw->back_pixmap);
 		ppc->back_color = pw->back_color;
@@ -769,6 +835,9 @@ panel_config(GtkWidget *panel)
 	
 	/* main window */
 	ppc->config_window = gnome_property_box_new ();
+	gtk_widget_set_events(ppc->config_window,
+			      gtk_widget_get_events(ppc->config_window) |
+			      GDK_BUTTON_PRESS_MASK);
 	/*gtk_window_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(ppc->config_window), FALSE, FALSE, TRUE);
 
@@ -812,6 +881,9 @@ panel_config(GtkWidget *panel)
 	
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
+			    GTK_SIGNAL_FUNC (config_event),
+			    prop_nbook);
 	
 	ppc->register_changes = TRUE;
 

@@ -638,12 +638,19 @@ snapped_leave_notify(SnappedWidget *snapped,
 static void
 snapped_widget_set_hidebuttons(SnappedWidget *snapped)
 {
-	if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
+	/*hidebuttons are disabled*/
+	if(!snapped->hidebuttons_enabled) {
+		gtk_widget_hide(snapped->hidebutton_n);
+		gtk_widget_hide(snapped->hidebutton_e);
+		gtk_widget_hide(snapped->hidebutton_w);
+		gtk_widget_hide(snapped->hidebutton_s);
+	/* horizontal and enabled */
+	} else if(PANEL_WIDGET(snapped->panel)->orient == PANEL_HORIZONTAL) {
 		gtk_widget_hide(snapped->hidebutton_n);
 		gtk_widget_show(snapped->hidebutton_e);
 		gtk_widget_show(snapped->hidebutton_w);
 		gtk_widget_hide(snapped->hidebutton_s);
-	} else {
+	} else { /*vertical*/
 		gtk_widget_show(snapped->hidebutton_n);
 		gtk_widget_hide(snapped->hidebutton_e);
 		gtk_widget_hide(snapped->hidebutton_w);
@@ -751,6 +758,7 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->pos = SNAPPED_BOTTOM;
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;
 	snapped->state = SNAPPED_SHOWN;
+	snapped->hidebuttons_enabled = TRUE;
 
 	snapped->leave_notify_timer_tag = 0;
 	snapped->autohide_inhibit = FALSE;
@@ -761,6 +769,7 @@ GtkWidget*
 snapped_widget_new (SnappedPos pos,
 		    SnappedMode mode,
 		    SnappedState state,
+		    int hidebuttons_enabled,
 		    PanelBackType back_type,
 		    char *back_pixmap,
 		    int fit_pixmap_bg,
@@ -803,6 +812,7 @@ snapped_widget_new (SnappedPos pos,
 
 	snapped->pos = pos;
 	snapped->mode = mode;
+	snapped->hidebuttons_enabled = hidebuttons_enabled;
 	if(state != SNAPPED_MOVING)
 		snapped->state = state;
 
@@ -827,6 +837,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 			     SnappedPos pos,
 			     SnappedMode mode,
 			     SnappedState state,
+			     int hidebuttons_enabled,
 			     PanelBackType back_type,
 			     char *pixmap_name,
 			     int fit_pixmap_bg,
@@ -845,6 +856,7 @@ snapped_widget_change_params(SnappedWidget *snapped,
 	oldstate = snapped->state;
 	snapped->state = state;
 	snapped->mode = mode;
+	snapped->hidebuttons_enabled = hidebuttons_enabled;
 
 	if(snapped->pos == SNAPPED_TOP ||
 	   snapped->pos == SNAPPED_BOTTOM)
@@ -899,6 +911,7 @@ snapped_widget_change_pos(SnappedWidget *snapped,
 				     pos,
 				     snapped->mode,
 				     snapped->state,
+				     snapped->hidebuttons_enabled,
 				     panel->back_type,
 				     panel->back_pixmap,
 				     panel->fit_pixmap_bg,

@@ -51,6 +51,7 @@ struct _SnappedWidget
 	SnappedPos		pos;
 	SnappedMode		mode;
 	SnappedState		state;
+	int			hidebuttons_enabled;
 
 	int			leave_notify_timer_tag;
 
@@ -75,6 +76,7 @@ guint		snapped_widget_get_type		(void);
 GtkWidget*	snapped_widget_new		(SnappedPos pos,
 						 SnappedMode mode,
 						 SnappedState state,
+						 int hidebuttons_enabled,
 						 PanelBackType back_type,
 						 char *back_pixmap,
 						 int fit_pixmap_bg,
@@ -85,6 +87,7 @@ void		snapped_widget_change_params	(SnappedWidget *snapped,
 						 SnappedPos pos,
 						 SnappedMode mode,
 						 SnappedState state,
+						 int hidebuttons_enabled,
 						 PanelBackType back_type,
 						 char *pixmap_name,
 						 int fit_pixmap_bg,

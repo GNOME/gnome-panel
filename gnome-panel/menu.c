@@ -1116,6 +1116,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 		panel = snapped_widget_new(SNAPPED_BOTTOM,
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
+					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
 					   TRUE,
@@ -1482,8 +1483,9 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	Menu *menu = data;
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
-	int applet_id = gtk_object_get_data(GTK_OBJECT(menu->button),
-					    "applet_id");
+	int applet_id =
+		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(menu->button),
+						    "applet_id"));
 	int main_menu = (strcmp (menu->path, ".") == 0);
 	
 	check_and_reread(menu->menu,menu,main_menu);
@@ -1586,8 +1588,8 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 
 
 	if(!gnome_folder) {
-		gnome_folder = gnome_unconditional_pixmap_file
-			("gnome-folder.png");
+		gnome_folder =
+			gnome_unconditional_pixmap_file("gnome-folder.png");
 		if (!g_file_exists (gnome_folder)) {
 			g_free (gnome_folder);
 			gnome_folder = NULL;
