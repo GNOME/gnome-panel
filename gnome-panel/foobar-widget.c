@@ -1244,7 +1244,7 @@ reparent_button_widgets(GtkWidget *w, gpointer data)
 {
 	GdkWindow *newwin = data;
 	if (BUTTON_IS_WIDGET (w)) {
-		ButtonWidget *button = BUTTON_WIDGET(w);
+		GtkButton *button = GTK_BUTTON (w);
 		/* we can just reparent them all to 0,0 as the next thing
 		 * that will happen is a queue_resize and on size allocate
 		 * they will be put into their proper place */

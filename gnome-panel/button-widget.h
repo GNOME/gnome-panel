@@ -19,7 +19,7 @@ typedef struct _ButtonWidgetClass	ButtonWidgetClass;
 
 struct _ButtonWidget
 {
-	GtkWidget		parent;
+	GtkButton		parent;
 	
 	GdkPixbuf		*pixbuf;
   
@@ -31,18 +31,13 @@ struct _ButtonWidget
 	
 	guint			pobject:2; /* Not quite sure if we need this right now */
 	
-	GdkWindow               *event_window;
-	
 	char			*text;
 	
-	guint			pressed:1; /*true if the button is pressed*/
-	guint			in_button:1;
-
 	guint			ignore_leave:1; /*ignore the leave notify,
 						  if you do this remember to
 						  set the in_button properly
 						  later!*/
-	
+
 	guint			arrow:1; /*0 no arrow, 1 simple arrow, more
 					   to do*/
 	guint			dnd_highlight:1;
@@ -54,11 +49,7 @@ struct _ButtonWidget
 
 struct _ButtonWidgetClass
 {
-	GtkWidgetClass parent_class;
-
-	void (* clicked) (ButtonWidget *button);
-	void (* pressed) (ButtonWidget *button);
-	void (* unpressed) (ButtonWidget *button);
+	GtkButtonClass parent_class;
 };
 
 GType		button_widget_get_type		(void) G_GNUC_CONST;
@@ -84,10 +75,6 @@ void		button_widget_set_params	(ButtonWidget *button,
 
 void		button_widget_set_dnd_highlight	(ButtonWidget *button,
 						 gboolean highlight);
-
-void		button_widget_clicked		(ButtonWidget *button);
-void		button_widget_down		(ButtonWidget *button);
-void		button_widget_up		(ButtonWidget *button);
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

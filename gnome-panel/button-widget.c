@@ -25,25 +25,20 @@ static void     button_widget_size_request   (GtkWidget         *widget,
 static void     button_widget_size_allocate  (GtkWidget         *widget,
 					      GtkAllocation     *allocation);
 static void     button_widget_realize        (GtkWidget         *widget);
-static void     button_widget_unrealize      (GtkWidget         *widget);
-static void     button_widget_map            (GtkWidget         *widget);
-static void     button_widget_unmap          (GtkWidget         *widget);
 static gboolean button_widget_expose         (GtkWidget         *widget,
 					      GdkEventExpose    *event);
 static void     button_widget_destroy        (GtkObject         *obj);
 static gboolean button_widget_button_press   (GtkWidget         *widget,
-					      GdkEventButton    *event);
-static gboolean button_widget_button_release (GtkWidget         *widget,
-					      GdkEventButton    *event);
+					      GdkEventButton	*event);
 static gboolean button_widget_enter_notify   (GtkWidget         *widget,
 					      GdkEventCrossing  *event);
 static gboolean button_widget_leave_notify   (GtkWidget         *widget,
 					      GdkEventCrossing  *event);
-static void     button_widget_pressed        (ButtonWidget      *button);
-static void     button_widget_unpressed      (ButtonWidget      *button);
+static void     button_widget_button_pressed (GtkButton         *button);
+static void     button_widget_button_released (GtkButton         *button);
 
 
-static GtkWidgetClass *button_widget_parent_class;
+static GtkButtonClass *button_widget_parent_class;
 
 GType
 button_widget_get_type (void)
@@ -64,79 +59,32 @@ button_widget_get_type (void)
 
 		};
 
-		object_type = g_type_register_static (GTK_TYPE_WIDGET, "ButtonWidget", &object_info, 0);
-		button_widget_parent_class = g_type_class_ref (GTK_TYPE_WIDGET);
+		object_type = g_type_register_static (GTK_TYPE_BUTTON, "ButtonWidget", &object_info, 0);
+		button_widget_parent_class = g_type_class_ref (GTK_TYPE_BUTTON);
 	}
 
 	return object_type;
 }
 
-enum {
-	CLICKED_SIGNAL,
-	PRESSED_SIGNAL,
-	UNPRESSED_SIGNAL,
-	LAST_SIGNAL
-};
-
-static guint button_widget_signals[LAST_SIGNAL] = {0};
-
 static void
 button_widget_class_init (ButtonWidgetClass *class)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (class);
 	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (class);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
-
-	button_widget_signals[CLICKED_SIGNAL] =
-		g_signal_new ("clicked",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (ButtonWidgetClass, clicked),
-                              NULL,
-                              NULL,
-			      g_cclosure_marshal_VOID__VOID,
-			      G_TYPE_NONE,
-			      0);
-
-	button_widget_signals[PRESSED_SIGNAL] =
-		g_signal_new ("pressed",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (ButtonWidgetClass, pressed),
-                              NULL,
-                              NULL,
-                              g_cclosure_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-
-	button_widget_signals[UNPRESSED_SIGNAL] =
-		g_signal_new ("unpressed",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (ButtonWidgetClass, unpressed),
-                              NULL,
-                              NULL,
-                              g_cclosure_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-	
-	class->clicked = NULL;
-	class->pressed = button_widget_pressed;
-	class->unpressed = button_widget_unpressed;
+	GtkButtonClass *button_class = GTK_BUTTON_CLASS (class);
 
 	gtk_object_class->destroy = button_widget_destroy;
 	  
 	widget_class->realize = button_widget_realize;
-	widget_class->unrealize = button_widget_unrealize;
-	widget_class->map = button_widget_map;
-	widget_class->unmap = button_widget_unmap;
 	widget_class->size_allocate = button_widget_size_allocate;
 	widget_class->size_request = button_widget_size_request;
 	widget_class->button_press_event = button_widget_button_press;
-	widget_class->button_release_event = button_widget_button_release;
 	widget_class->enter_notify_event = button_widget_enter_notify;
 	widget_class->leave_notify_event = button_widget_leave_notify;
 	widget_class->expose_event = button_widget_expose;
+
+	button_class->pressed = button_widget_button_pressed;
+	button_class->released = button_widget_button_released;
 }
  
 static void
@@ -256,7 +204,7 @@ button_widget_realize(GtkWidget *widget)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
-	ButtonWidget *button_widget;
+	GtkButton *button;
 	PanelWidget *panel;
 	GtkWidget *parent;
 	int x,y,w,h;
@@ -269,7 +217,7 @@ button_widget_realize(GtkWidget *widget)
 
 	calculate_overlay_geometry(panel, parent, widget, &x, &y, &w, &h);
 
-	button_widget = BUTTON_WIDGET (widget);
+	button = GTK_BUTTON (widget);
 
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
@@ -291,54 +239,12 @@ button_widget_realize(GtkWidget *widget)
 	widget->window = gtk_widget_get_parent_window(widget);
 	g_object_ref (G_OBJECT (widget->window));
       
-	button_widget->event_window = gdk_window_new (parent->window,
-						      &attributes,
-						      attributes_mask);
-	gdk_window_set_user_data (button_widget->event_window, widget);
+	button->event_window = gdk_window_new (parent->window,
+					       &attributes,
+					       attributes_mask);
+	gdk_window_set_user_data (button->event_window, widget);
 
 	widget->style = gtk_style_attach (widget->style, widget->window);
-}
-
-static void
-button_widget_unrealize (GtkWidget *widget)
-{
-	ButtonWidget *button_widget;
-  
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
-
-	button_widget = BUTTON_WIDGET (widget);
-	
-	gdk_window_set_user_data (button_widget->event_window, NULL);
-	gdk_window_destroy (button_widget->event_window);
-	button_widget->event_window = NULL;
-	
-	if (GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize)
-		(* GTK_WIDGET_CLASS (button_widget_parent_class)->unrealize) (widget);
-}
-
-static void
-button_widget_map (GtkWidget *widget)
-{
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
-
-	if (GTK_WIDGET_REALIZED (widget) && !GTK_WIDGET_MAPPED (widget))
-		gdk_window_show (BUTTON_WIDGET (widget)->event_window);
-
-	GTK_WIDGET_CLASS (button_widget_parent_class)->map (widget);
-}
-
-static void
-button_widget_unmap (GtkWidget *widget)
-{
-	g_return_if_fail (widget != NULL);
-	g_return_if_fail (BUTTON_IS_WIDGET (widget));
-
-	if (GTK_WIDGET_MAPPED (widget))
-		gdk_window_hide (BUTTON_WIDGET (widget)->event_window);
-
-	GTK_WIDGET_CLASS (button_widget_parent_class)->unmap (widget);
 }
 
 static void
@@ -347,7 +253,7 @@ button_widget_destroy (GtkObject *obj)
 	ButtonWidget *button = BUTTON_WIDGET(obj);
 
 	if (button->pressed_timeout != 0)
-		gtk_timeout_remove(button->pressed_timeout);
+		gtk_timeout_remove (button->pressed_timeout);
 	button->pressed_timeout = 0;
 
 	if (button->pixbuf)
@@ -494,7 +400,8 @@ static gboolean
 button_widget_expose (GtkWidget         *widget,
 		      GdkEventExpose    *event)
 {
-	ButtonWidget *button;
+	ButtonWidget *button_widget;
+	GtkButton *button;
 	GdkRectangle area, image_bound;
 	int off, size;
 	int x, y, w, h;
@@ -503,7 +410,8 @@ button_widget_expose (GtkWidget         *widget,
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
-	button = BUTTON_WIDGET (widget);
+	button_widget = BUTTON_WIDGET (widget);
+	button = GTK_BUTTON (widget);
 	
 	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget)) {
 		return FALSE;
@@ -511,13 +419,13 @@ button_widget_expose (GtkWidget         *widget,
 
 	size = widget->allocation.height;
 	/* offset for pressed buttons */
-	off = (button->in_button && button->pressed) ?
+	off = (button->in_button && button->button_down) ?
 		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0;
 	
 	if (!global_config.highlight_when_over || !button->in_button) {
-		pb = button->scaled;
+		pb = button_widget->scaled;
 	} else {
-		pb = button->scaled_hc;
+		pb = button_widget->scaled_hc;
 	}
 	
 	w = gdk_pixbuf_get_width (pb);
@@ -545,10 +453,10 @@ button_widget_expose (GtkWidget         *widget,
 						     0, 0);
 	}
 	
-	if(button->arrow) {
+	if(button_widget->arrow) {
 		int i;
 		GdkPoint points[3];
-		draw_arrow (points, button->orient, widget->allocation.height);
+		draw_arrow (points, button_widget->orient, widget->allocation.height);
 		for (i = 0; i < 3; i++) {
 			points[i].x += off + widget->allocation.x;
 			points[i].y += off + widget->allocation.y;
@@ -557,7 +465,7 @@ button_widget_expose (GtkWidget         *widget,
 		gdk_draw_polygon (widget->window, widget->style->black_gc, FALSE, points, 3);
 	}
 
-	if (button->dnd_highlight) {
+	if (button_widget->dnd_highlight) {
 		gdk_draw_rectangle(widget->window, widget->style->black_gc, FALSE,
 				   widget->allocation.x, widget->allocation.x,
 				   widget->allocation.width - 1,
@@ -598,13 +506,14 @@ static void
 button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	ButtonWidget *button_widget;
+	GtkButton *button;
 	int w, h;
 	double scale, scale_x, scale_y;
 
-	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BUTTON_IS_WIDGET (widget));
 
 	button_widget = BUTTON_WIDGET (widget);
+	button = GTK_BUTTON (widget);
 
 	widget->allocation = *allocation;
 
@@ -640,27 +549,22 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 		calculate_overlay_geometry (panel, panel->panel_parent,
 					    widget, &x, &y, &w, &h);
-		gdk_window_move_resize (button_widget->event_window,
-					x, y, w, h);
+		gdk_window_move_resize (button->event_window, x, y, w, h);
 	}
 }
 
 static void
 button_widget_instance_init (ButtonWidget *button)
 {
-	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
-
 	button->pixbuf = NULL;
 	
 	button->pobject = 0;
 	button->arrow = 0;
 	button->orient = PANEL_ORIENT_UP;
 	
-	button->pressed = FALSE;
-	button->in_button = FALSE;
 	button->ignore_leave = FALSE;
 	button->dnd_highlight = FALSE;
-	
+
 	button->pressed_timeout = 0;
 }
 
@@ -669,22 +573,20 @@ pressed_timeout_func(gpointer data)
 {
 	ButtonWidget *button;
 
-	g_return_val_if_fail (data != NULL, FALSE);
 	g_return_val_if_fail (BUTTON_IS_WIDGET (data), FALSE);
 
 	button = BUTTON_WIDGET (data);
-	
+
 	button->pressed_timeout = 0;
-	
+
 	return FALSE;
 }
 
 static gboolean
 button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 {
-	ButtonWidget *button;
+ 	ButtonWidget *button;
 
-	g_return_val_if_fail (widget != NULL, FALSE);
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
@@ -693,51 +595,17 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 	if (button->pressed_timeout)
 		return TRUE;
 
-	if (event->button == 1) {
-		gtk_grab_add(widget);
-		button_widget_down (button);
-		button->pressed_timeout =
-			gtk_timeout_add(400, pressed_timeout_func, button);
-	}
-	return TRUE;
-}
-
-static gboolean
-button_widget_button_release (GtkWidget *widget, GdkEventButton *event)
-{
-	g_return_val_if_fail (widget != NULL, FALSE);
-	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
-
-	if (event->button == 1) {
-		ButtonWidget *button = BUTTON_WIDGET (widget);
-		gtk_grab_remove (widget);
-		button_widget_up (button);
-	}
-
-	return TRUE;
+	return GTK_WIDGET_CLASS (button_widget_parent_class)->button_press_event (widget, event);
 }
 
 static gboolean
 button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
-	GtkWidget *event_widget;
-
-	g_return_val_if_fail (widget != NULL, FALSE);
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
-	g_return_val_if_fail (event != NULL, FALSE);
 
-	event_widget = gtk_get_event_widget ((GdkEvent*) event);
-
-	if ((event_widget == widget) &&
-	    (event->detail != GDK_NOTIFY_INFERIOR)) {
-		ButtonWidget *button = BUTTON_WIDGET (widget);
-#ifdef BUTTON_WIDGET_DEBUG
-	printf ("We should be getting events here!!\n");
-#endif
-		button->in_button = TRUE;
+	GTK_WIDGET_CLASS (button_widget_parent_class)->enter_notify_event (widget, event);
+	if (GTK_BUTTON (widget)->in_button)
 		gtk_widget_queue_draw (widget);
-	}
 
 	return FALSE;
 }
@@ -746,19 +614,20 @@ static gboolean
 button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 {
 	GtkWidget *event_widget;
-	ButtonWidget *button;
+	ButtonWidget *button_widget;
+	GtkButton *button;
 
-	g_return_val_if_fail (widget != NULL, FALSE);
 	g_return_val_if_fail (BUTTON_IS_WIDGET (widget), FALSE);
 	g_return_val_if_fail (event != NULL, FALSE);
 
 	event_widget = gtk_get_event_widget ((GdkEvent*) event);
 
-	button = BUTTON_WIDGET (widget);
+	button_widget = BUTTON_WIDGET (widget);
+	button = GTK_BUTTON (widget);
 
 	if ((event_widget == widget) &&
 	    (event->detail != GDK_NOTIFY_INFERIOR) &&
-	    (!button->ignore_leave)) {
+	    (!button_widget->ignore_leave)) {
 		button->in_button = FALSE;
 		if (global_config.highlight_when_over) {
 			gtk_widget_queue_draw (widget);
@@ -768,55 +637,30 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	return FALSE;
 }
 
-void
-button_widget_clicked(ButtonWidget *button)
+static void
+button_widget_button_pressed (GtkButton *button)
 {
-	g_signal_emit (G_OBJECT(button),
-		       button_widget_signals[CLICKED_SIGNAL], 0);
+	ButtonWidget *button_widget;
+
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
+
+	button_widget_parent_class->pressed (button);
+
+	button_widget = BUTTON_WIDGET (button);
+	button_widget->pressed_timeout =
+		gtk_timeout_add (400, pressed_timeout_func, button_widget);
+        gtk_widget_queue_draw (GTK_WIDGET (button));
 }
 
 static void
-button_widget_pressed(ButtonWidget *button)
+button_widget_button_released (GtkButton *button)
 {
-	g_return_if_fail(button != NULL);
-	g_return_if_fail(BUTTON_IS_WIDGET(button));
+	ButtonWidget *button_widget;
 
-	button->pressed = TRUE;
-	gtk_widget_queue_draw (GTK_WIDGET (button));
-}
+	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
-static void
-button_widget_unpressed(ButtonWidget *button)
-{
-	g_return_if_fail(button != NULL);
-	g_return_if_fail(BUTTON_IS_WIDGET(button));
-
-	button->pressed = FALSE;
-	gtk_widget_queue_draw (GTK_WIDGET (button));
-	
-	if(button->in_button)
-		button_widget_clicked(button);
-}
-
-void
-button_widget_down(ButtonWidget *button)
-{
-	g_return_if_fail(button != NULL);
-	g_return_if_fail(BUTTON_IS_WIDGET(button));
-
-	if(!button->pressed)
-		g_signal_emit(G_OBJECT(button),
-			      button_widget_signals[PRESSED_SIGNAL], 0);
-}
-void
-button_widget_up(ButtonWidget *button)
-{
-	g_return_if_fail(button != NULL);
-	g_return_if_fail(BUTTON_IS_WIDGET(button));
-
-	if(button->pressed)
-		g_signal_emit(G_OBJECT(button),
-			      button_widget_signals[UNPRESSED_SIGNAL], 0);
+	button_widget_parent_class->released (button);
+        gtk_widget_queue_draw (GTK_WIDGET (button));
 }
 
 GtkWidget*
@@ -850,7 +694,6 @@ button_widget_new(const char *filename,
 gboolean
 button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
 {
-	g_return_val_if_fail(button != NULL, FALSE);
 	g_return_val_if_fail(BUTTON_IS_WIDGET(button), FALSE);
 
 	if (size < 0)
@@ -880,7 +723,6 @@ button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
 void
 button_widget_set_text(ButtonWidget *button, const char *text)
 {
-	g_return_if_fail(button != NULL);
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
 
 	g_free(button->text);
@@ -895,7 +737,6 @@ button_widget_set_params(ButtonWidget *button,
 			 gboolean arrow,
 			 PanelOrient orient)
 {
-	g_return_if_fail(button != NULL);
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
 	g_return_if_fail(pobject >= 0);
 	g_return_if_fail(pobject < LAST_POBJECT);

@@ -2333,9 +2333,9 @@ menu_deactivate (GtkWidget *w, gpointer data)
 	/* allow the panel to hide again */
 	if (BASEP_IS_WIDGET (panel))
 		BASEP_WIDGET (panel)->autohide_inhibit = FALSE;
-	BUTTON_WIDGET (menu->button)->in_button = FALSE;
+	GTK_BUTTON (menu->button)->in_button = FALSE;
 	BUTTON_WIDGET (menu->button)->ignore_leave = FALSE;
-	button_widget_up (BUTTON_WIDGET (menu->button));
+	gtk_button_released (GTK_BUTTON (menu->button));
 	menu->age = 0;
 }
 

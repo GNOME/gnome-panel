@@ -1,3 +1,18 @@
+2002-01-14  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	reviewed by: Mark McLoughlin <mark@skynet.ie>
+
+	* basep_widget.c  foobar-widget.c menu.c 
+	Use GtkButton's in_button field instead of ButtonWidget's
+
+	* button-widget.[ch]:
+	Derive ButtonWidget from GtkButton instead of GtkWidget; use
+	GtkButton's pressed, released and clicked signals instead of signals
+	defined in ButtonWidget; ButtonWidget now can receive focus and react
+	to keystrokes.
+	Remove calls to g_return_if_fail (foo != NULL) if followed by calls
+	to g_return_if_fail (GTK_IS_BAR (foo));
+	
 2002-01-14  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: distcheck fix.
