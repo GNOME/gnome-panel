@@ -1,3 +1,9 @@
+2002-05-14  Anders Carlsson  <andersca@gnu.org>
+
+	* pager.c: (fill_pager_applet):
+	* tasklist.c: (fill_tasklist_applet):
+	Use wnck_screen_get_default () instead of wnck_screen_get (0).
+	
 2002-05-13  Dennis Cranston <dennis_cranston@yahoo.com>
 	* mailcheck.c, clock.c:  "About..." dialog fixes -- change
 	the names to match that in the "Add to panel" menu.  Also,

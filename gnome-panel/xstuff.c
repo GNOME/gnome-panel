@@ -107,7 +107,7 @@ typedef struct {
 void
 xstuff_go_through_client_list (void)
 {
-	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
+	WnckScreen *screen = wnck_screen_get_default ();
 	GList *windows, *li, *our_windows = NULL;
 
 	/* Avoid possible race by copying out information first */

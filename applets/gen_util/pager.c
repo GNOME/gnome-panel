@@ -343,8 +343,7 @@ fill_pager_applet(PanelApplet *applet)
 		break;
 	}
 
-	/* TODO: Needs to get the screen number from DISPLAY or the panel. */
-	pager->screen = wnck_screen_get (0);
+	pager->screen = wnck_screen_get_default ();
 
 	/* because the pager doesn't respond to signals at the moment */
 	wnck_screen_force_update (pager->screen);

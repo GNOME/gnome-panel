@@ -388,7 +388,7 @@ add_window (WnckWindow *window, FoobarWidget *foo)
 	GtkWidget *image = NULL;
 	GdkPixbuf *pb;
 	const char *name;
-	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
+	WnckScreen *screen = wnck_screen_get_default ();
 	WnckWorkspace *wspace = wnck_screen_get_active_workspace (screen);
 
 	g_assert (foo->windows != NULL);
@@ -468,7 +468,7 @@ create_task_menu (GtkWidget *w, gpointer data)
 	FoobarWidget *foo = FOOBAR_WIDGET (data);
 	GList *list;
 	GtkWidget *separator;
-	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
+	WnckScreen *screen = wnck_screen_get_default ();
 	GList *windows = wnck_screen_get_windows (screen);
 
 	/* g_message ("creating..."); */
@@ -648,7 +648,7 @@ setup_task_menu (FoobarWidget *foo)
 
 	set_the_task_submenu (foo, foo->task_item);
 
-	screen = wnck_screen_get (0 /* FIXME screen number */);
+	screen = wnck_screen_get_default ();
 
 	/* setup the pixmap to the focused task */
 	windows = wnck_screen_get_windows (screen);

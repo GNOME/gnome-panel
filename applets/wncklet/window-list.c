@@ -509,8 +509,7 @@ fill_tasklist_applet(PanelApplet *applet)
 		break;
 	}
 
-	/* FIXME: Needs to get the screen number from DISPLAY or the panel. */
-	tasklist->screen = wnck_screen_get (0);
+	tasklist->screen = wnck_screen_get_default ();
 
 	/* because the tasklist doesn't respond to signals at the moment */
 	wnck_screen_force_update (tasklist->screen);
