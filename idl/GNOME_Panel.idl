@@ -1,16 +1,23 @@
 module GNOME {
-	struct Color {
-		unsigned short red, green, blue;
-	};
-
-	typedef short AppletId;
-	typedef short PanelId;
 
 	interface PanelSpot;
 	interface Applet;
 	interface StatusSpot;
 
 	interface Panel {
+		struct Color {
+			unsigned short red, green, blue;
+		};
+
+		typedef	sequence<octet> RgbData;
+
+		struct RgbImage {
+			RgbData data;
+			unsigned short width;
+			unsigned short height;
+			unsigned short rowstride;
+		};
+
 		enum OrientType {
 		        ORIENT_UP,
 	        	ORIENT_DOWN,
@@ -57,8 +64,10 @@ module GNOME {
 					  out string cfgpath,
 					  out string globcfgpath,
 					  out unsigned long winid);
+		/* initiate a logout */
 		oneway void quit ();
 
+		/* is there an applet being dragged at this moment */
 		readonly attribute boolean in_drag;
 		
 		StatusSpot add_status (out unsigned long winid);
@@ -95,7 +104,16 @@ module GNOME {
 		/*true or false, sets if the spot should send the applet
 		  position changes*/
 		attribute boolean send_position;
+		
+		/*true or false, sets if the spot should send the applet
+		  draw requests, usefull if you want to get an rgb of the
+		  background, you will only get a draw request when the
+		  background is changed*/
+		attribute boolean send_draw;
 
+		/* the current background of the applet as an rgb image */
+		readonly attribute Panel::RgbImage rgb_background;
+		
 		/* the applet is all done with building itself
 		   so it just tells us that it's all ready, this
 		   makes the panel start the next applet (otherwise,
@@ -135,6 +153,11 @@ module GNOME {
 					  in string global_cfgpath,
 					  in unsigned long cookie);
 		oneway void back_change (in Panel::BackInfoType backing);
+		/* the draw signal, the applet doesn't get the rgb here
+		   becase it may not want it every time, it has to
+		   request the rgb of the background explicitly with
+		   rgb_background attribute of PanelSpot */
+		oneway void draw ();
 		oneway void set_tooltips_state (in boolean enabled);
 		oneway void change_position (in short x, in short y);
 		readonly attribute string goad_id;
