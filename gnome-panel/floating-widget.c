@@ -154,17 +154,26 @@ floating_pos_get_applet_orient (BasePWidget *basep)
 static PanelOrientType
 floating_pos_get_hide_orient (BasePWidget *basep)
 {
-	/*FloatingPos *pos = FLOATING_POS (basep->pos);*/
+	FloatingPos *pos = FLOATING_POS (basep->pos);
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 
 	switch (basep->state) {
 	case BASEP_HIDDEN_LEFT:
-	case BASEP_AUTO_HIDDEN:
 		return (panel->orient == PANEL_HORIZONTAL)
 			? ORIENT_LEFT : ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
 		return (panel->orient == PANEL_HORIZONTAL)
 			? ORIENT_RIGHT : ORIENT_DOWN;
+	case BASEP_AUTO_HIDDEN:
+		if (panel->orient == PANEL_HORIZONTAL) {
+			return ((pos->x > (gdk_screen_width () - pos->x -
+					   basep->shown_alloc.width))
+				? ORIENT_RIGHT : ORIENT_LEFT);
+		} else {
+			return ((pos->y > (gdk_screen_height () - pos->y -
+					   basep->shown_alloc.height))
+				? ORIENT_DOWN : ORIENT_UP);
+		}
 	default:
 		g_warning ("not hidden");
 		return -1;

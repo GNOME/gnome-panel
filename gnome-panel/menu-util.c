@@ -45,8 +45,12 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 					  x,y,wx,wy,
 					  w->allocation.width,
 					  w->allocation.height);
-	else if (IS_FOOBAR_WIDGET (w))
+	else if (IS_FOOBAR_WIDGET (w)) {
+		GtkRequisition req;
+		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
+		*x = MIN (*x, gdk_screen_width () -  req.width);
 		*y = w->allocation.height;
+	}
 }
 
 void
@@ -78,7 +82,10 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 					  info->widget->allocation.width,
 					  info->widget->allocation.height);
        	} else if (IS_FOOBAR_WIDGET (w)) {
-		gtk_widget_get_pointer (w, x, y);	
+		GtkRequisition req;
+		gtk_widget_get_pointer (w, x, y);
+		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
+		*x = MIN (*x, gdk_screen_width () - req.width);
 		*y = w->allocation.height;
 	}
 }

@@ -17,7 +17,6 @@
 #include "menu.h"
 #include "menu-util.h"
 #include "session.h"
-/*#include "gdk-bufmap.h"*/
 #include "panel-widget.h"
 #include "xstuff.h"
 #include "basep-widget.h"
