@@ -178,7 +178,7 @@ calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
 	/* XXX: These window thingies should really be unmapped in hidden
 	 * case, or something like that, this is ugly, but who gives a fuck,
 	 * this is all going to be rewritten soon (famous last words?) */
-	if(IS_BASEP_WIDGET(parent) &&
+	if(BASEP_IS_WIDGET(parent) &&
 	   BASEP_WIDGET(parent)->state != BASEP_SHOWN &&
 	   BASEP_WIDGET(parent)->state != BASEP_AUTO_HIDDEN) {
 		*x = parent->requisition.width + 1;
@@ -203,7 +203,7 @@ calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
 			*w = panel->size - applet->allocation.x;
 		}
 
-		if ( ! IS_BASEP_WIDGET(parent)) {
+		if ( ! BASEP_IS_WIDGET(parent)) {
 			/*don't do the edge flushing on foobar*/
 			return;
 		}
@@ -233,7 +233,7 @@ calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
 			*h = panel->size - applet->allocation.y;
 		}
 
-		if ( ! IS_BASEP_WIDGET(parent)) {
+		if ( ! BASEP_IS_WIDGET(parent)) {
 			/*don't do the edge flushing on foobar*/
 			return;
 		}

@@ -11,19 +11,19 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_BASEP_WIDGET        (basep_widget_get_type ())
-#define BASEP_WIDGET(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_WIDGET, BasePWidget))
-#define BASEP_WIDGET_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_WIDGET, BasePWidgetClass))
-#define IS_BASEP_WIDGET(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_WIDGET))
-#define IS_BASEP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_WIDGET))
-#define BASEP_WIDGET_GET_CLASS(k)(BASEP_WIDGET_CLASS(G_OBJECT_GET_CLASS(k)))
+#define BASEP_TYPE_WIDGET        	(basep_widget_get_type ())
+#define BASEP_WIDGET(object)          	(G_TYPE_CHECK_INSTANCE_CAST ((object), BASEP_TYPE_WIDGET, BasePWidget))
+#define BASEP_WIDGET_CLASS(klass)    	(G_TYPE_CHECK_CLASS_CAST ((klass), BASEP_TYPE_WIDGET, BasePWidgetClass))
+#define BASEP_IS_WIDGET(object)       	(G_TYPE_CHECK_INSTANCE_TYPE ((object), BASEP_TYPE_WIDGET))
+#define BASEP_IS_WIDGET_CLASS(klass) 	(G_TYPE_CHECK_CLASS_TYPE ((klass), BASEP_TYPE_WIDGET))
+#define BASEP_WIDGET_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS ((obj), BASEP_TYPE_WIDGET, BasePWidgetClass))
 
-#define TYPE_BASEP_POS        (basep_pos_get_type ())
-#define BASEP_POS(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_POS, BasePPos))
-#define BASEP_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_POS, BasePPosClass))
-#define IS_BASEP_POS(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_POS))
-#define IS_BASEP_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_POS))
-#define BASEP_POS_GET_CLASS(k)(BASEP_POS_CLASS(G_OBJECT_GET_CLASS(BASEP_WIDGET(k)->pos)))
+#define BASEP_TYPE_POS		        (basep_pos_get_type ())
+#define BASEP_POS(object)      		(G_TYPE_CHECK_INSTANCE_CAST((object), BASEP_TYPE_POS, BasePPos))
+#define BASEP_POS_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST ((klass), BASEP_TYPE_POS, BasePPosClass))
+#define BASEP_IS_POS(object)            (G_TYPE_CHECK_INSTANCE_TYPE ((object), BASEP_TYPE_POS))
+#define BASEP_IS_POS_CLASS(klass)	(G_TYPE_CHECK_CLASS_TYPE ((klass), BASEP_TYPE_POS))
+#define BASEP_POS_GET_CLASS(k)		(BASEP_POS_CLASS(G_OBJECT_GET_CLASS(BASEP_WIDGET(k)->pos)))
 
 
 typedef struct _BasePWidget		BasePWidget;
@@ -180,6 +180,7 @@ struct _BasePPosClass {
 
 GType           basep_pos_get_type              (void) G_GNUC_CONST;
 GType		basep_widget_get_type		(void) G_GNUC_CONST;
+
 GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,

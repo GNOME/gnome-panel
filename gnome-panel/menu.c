@@ -3341,7 +3341,7 @@ menu_deactivate (GtkWidget *w, gpointer data)
 	GtkWidget *panel = get_panel_parent (menu->button);
 
 	/* allow the panel to hide again */
-	if (IS_BASEP_WIDGET (panel))
+	if (BASEP_IS_WIDGET (panel))
 		BASEP_WIDGET (panel)->autohide_inhibit = FALSE;
 	BUTTON_WIDGET (menu->button)->in_button = FALSE;
 	BUTTON_WIDGET (menu->button)->ignore_leave = FALSE;
@@ -4013,7 +4013,7 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 	menu_panel = get_panel_from_menu_data (w, TRUE);
 
 	menu = create_root_menu (NULL, TRUE, flags, FALSE,
-				 IS_BASEP_WIDGET (menu_panel->panel_parent),
+				 BASEP_IS_WIDGET (menu_panel->panel_parent),
 				 TRUE);
 
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", menu_panel);
@@ -4041,7 +4041,7 @@ create_panel_root_menu(PanelWidget *panel, gboolean tearoff)
 	GtkWidget *menu;
 
 	menu = create_root_menu (NULL, TRUE, global_config.menu_flags, tearoff,
-				 IS_BASEP_WIDGET (panel->panel_parent),
+				 BASEP_IS_WIDGET (panel->panel_parent),
 				 TRUE);
 
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", panel);
@@ -4097,7 +4097,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 
@@ -4240,7 +4240,7 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
@@ -4277,7 +4277,7 @@ change_level (GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
@@ -4314,7 +4314,7 @@ change_avoid_on_maximize (GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
@@ -4371,7 +4371,7 @@ change_orient (GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 	
@@ -4427,7 +4427,7 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 		return;
 
 	g_assert (cur_panel->panel_parent);
-	g_return_if_fail (IS_BASEP_WIDGET (cur_panel->panel_parent));
+	g_return_if_fail (BASEP_IS_WIDGET (cur_panel->panel_parent));
 
 	basep = BASEP_WIDGET(cur_panel->panel_parent);
 
@@ -5252,7 +5252,7 @@ panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	char *wmclass = get_unique_tearoff_wmclass();
 	PanelWidget *menu_panel = get_panel_from_menu_data(w, TRUE);
 	GtkWidget *menu = create_panel_submenu (
-		NULL, TRUE, FALSE, IS_BASEP_WIDGET (menu_panel->panel_parent));
+		NULL, TRUE, FALSE, BASEP_IS_WIDGET (menu_panel->panel_parent));
 		
 	/*set the panel to use as the data*/
 	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
@@ -5702,7 +5702,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 			flags = menu->main_menu_flags;
 		menu->menu = create_root_menu(NULL,
 			fake_subs, flags, TRUE,
-			IS_BASEP_WIDGET (panel->panel_parent), TRUE);
+			BASEP_IS_WIDGET (panel->panel_parent), TRUE);
 
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
 				      _("Main Menu"), NULL);
@@ -5729,7 +5729,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 			g_warning(_("Can't create menu, using main menu!"));
 			menu->menu = create_root_menu(NULL,
 				fake_subs, flags, TRUE,
-				IS_BASEP_WIDGET (panel->panel_parent),
+				BASEP_IS_WIDGET (panel->panel_parent),
 				TRUE);
 			gtk_tooltips_set_tip (panel_tooltips, menu->button,
 					      _("Main Menu"), NULL);
@@ -5783,7 +5783,7 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 
 	/*so that the panel doesn't pop down until we're
 	  done with the menu */
-	if(IS_BASEP_WIDGET(wpanel)) {
+	if(BASEP_IS_WIDGET(wpanel)) {
 		BASEP_WIDGET(wpanel)->autohide_inhibit = TRUE;
 		basep_widget_autohide(BASEP_WIDGET(wpanel));
 	}
@@ -6091,7 +6091,7 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 		if(sscanf(special, "PANEL:%d", &flags) != 1)
 			flags = global_config.menu_flags;
 		menu = create_root_menu (NULL, TRUE, flags, FALSE,
-					 IS_BASEP_WIDGET (menu_panel_widget->panel_parent),
+					 BASEP_IS_WIDGET (menu_panel_widget->panel_parent),
 					 TRUE);
 	} else if(strcmp(special, "DESKTOP")==0) {
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
@@ -6101,7 +6101,7 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 	} else if(strcmp(special, "PANEL_SUBMENU")==0) {
 		menu = create_panel_submenu (
 			NULL, TRUE, FALSE,
-			IS_BASEP_WIDGET (menu_panel_widget->panel_parent));
+			BASEP_IS_WIDGET (menu_panel_widget->panel_parent));
 
 	}
 
@@ -6326,7 +6326,7 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 				   menutop->allocation.height);
 		if (screen < 0)
 			screen = 0;
-	} else if (IS_BASEP_WIDGET (cur_panel->panel_parent)) {
+	} else if (BASEP_IS_WIDGET (cur_panel->panel_parent)) {
 		screen = BASEP_WIDGET (cur_panel->panel_parent)->screen;
 	} else if (IS_FOOBAR_WIDGET (cur_panel->panel_parent)) {
 		screen = FOOBAR_WIDGET (cur_panel->panel_parent)->screen;

@@ -8,8 +8,6 @@
 
 #include "panel-util.h"
 
-#define NUMBER_OF_SIZES 5
-
 /* used to temporarily store config values until the 'Apply'
    button is pressed. */
 typedef struct _PerPanelConfig PerPanelConfig;

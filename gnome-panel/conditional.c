@@ -262,7 +262,7 @@ eval_cond (int connector, gboolean a, gboolean b)
 	}
 }
 
-gboolean
+static gboolean
 conditional_parse (const char *conditional, int len)
 {
 	int llen;

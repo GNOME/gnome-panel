@@ -18,12 +18,12 @@ G_BEGIN_DECLS
 #define IS_BORDER_POS(o)       (GTK_CHECK_TYPE ((o), TYPE_BORDER_POS))
 #define IS_BORDER_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), TYPE_BORDER_POS))
 
-#define TYPE_BORDER_WIDGET        (TYPE_BASEP_WIDGET) 
+#define TYPE_BORDER_WIDGET        (BASEP_TYPE_WIDGET) 
 #define BORDER_WIDGET(o)          (BASEP_WIDGET(o))
 #define BORDER_WIDGET_CLASS(k)    (BASEP_WIDGET_CLASS(o))
-#define IS_BORDER_WIDGET(o)       (IS_BASEP_WIDGET(o) && IS_BORDER_POS( BASEP_WIDGET(o)->pos ))
+#define IS_BORDER_WIDGET(o)       (BASEP_IS_WIDGET(o) && IS_BORDER_POS( BASEP_WIDGET(o)->pos ))
 /* this is not reliable... */
-#define IS_BORDER_WIDGET_CLASS(k) (IS_BASEP_WIDGET_CLASS (k))
+#define IS_BORDER_WIDGET_CLASS(k) (BASEP_IS_WIDGET_CLASS (k))
 
 typedef BasePWidget          BorderWidget;
 typedef BasePWidgetClass     BorderWidgetClass;

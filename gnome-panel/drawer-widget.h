@@ -19,12 +19,12 @@ G_BEGIN_DECLS
 #define IS_DRAWER_POS(o)           (GTK_CHECK_TYPE ((o), TYPE_DRAWER_POS))
 #define IS_DRAWER_POS_CLASS(k)     (GTK_CHECK_CLASS_TYPE ((k), TYPE_DRAWER_POS))
 
-#define TYPE_DRAWER_WIDGET         (TYPE_BASEP_WIDGET)
+#define TYPE_DRAWER_WIDGET         (BASEP_TYPE_WIDGET)
 #define DRAWER_WIDGET(o)           (BASEP_WIDGET(o))
 #define DRAWER_WIDGET_CLASS(k)     (BASEP_WIDGET_CLASS(k))
-#define IS_DRAWER_WIDGET(o)        (IS_BASEP_WIDGET(o) && IS_DRAWER_POS(BASEP_WIDGET(o)->pos))
+#define IS_DRAWER_WIDGET(o)        (BASEP_IS_WIDGET(o) && IS_DRAWER_POS(BASEP_WIDGET(o)->pos))
 /* this is not reliable */
-#define IS_DRAWER_WIDGET_CLASS(k)  (IS_BASEP_WIDGET_CLASS(k))
+#define IS_DRAWER_WIDGET_CLASS(k)  (BASEP_IS_WIDGET_CLASS(k))
 
 typedef BasePWidget            DrawerWidget;
 typedef BasePWidgetClass       DrawerWidgetClass;

@@ -3,8 +3,6 @@
 
 G_BEGIN_DECLS
 
-gboolean	conditional_parse	(const char *conditional, int len);
-
 /* get key, if key doesn't exist append "Conditional" to key and treat
  * value as "{<conditional1>}<value1>{<conditional2>}<value2>...",
  * key should not include "=default", which should be given as argument */

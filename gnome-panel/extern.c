@@ -1673,7 +1673,7 @@ s_panel_main_menu (PortableServer_Servant _servant,
 	panel = panels->data;
 	menu = make_popup_panel_menu (panel);
 	basep = panel->panel_parent;
-	if (IS_BASEP_WIDGET(basep)) {
+	if (BASEP_IS_WIDGET(basep)) {
 		BASEP_WIDGET(basep)->autohide_inhibit = TRUE;
 		basep_widget_autohide (BASEP_WIDGET (basep));
 	}
@@ -2034,9 +2034,9 @@ s_panelspot_show_menu(PortableServer_Servant servant,
 	panel = get_panel_parent (ext->info->widget);
 
 	if (!ext->info->menu)
-		create_applet_menu(ext->info, IS_BASEP_WIDGET (panel));
+		create_applet_menu(ext->info, BASEP_IS_WIDGET (panel));
 
-	if (IS_BASEP_WIDGET (panel)) {
+	if (BASEP_IS_WIDGET (panel)) {
 		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
 		basep_widget_queue_autohide(BASEP_WIDGET(panel));
 	}

@@ -6,7 +6,7 @@
  *
  */
 
-/* since IS_BASEP_WIDGET() is used throughout, it makes life easier if we
+/* since BASEP_IS_WIDGET() is used throughout, it makes life easier if we
  * have a GtkWindow of our own.
  */
 

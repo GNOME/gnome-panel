@@ -73,7 +73,7 @@ floating_pos_get_type (void)
 			NULL
 		};
 
-		floating_pos_type = gtk_type_unique (TYPE_BASEP_POS,
+		floating_pos_type = gtk_type_unique (BASEP_TYPE_POS,
 						     &floating_pos_info);
 	}
 
@@ -92,7 +92,7 @@ floating_pos_class_init (FloatingPosClass *klass)
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(TYPE_BASEP_POS);
+	parent_class = gtk_type_class(BASEP_TYPE_POS);
 
 	floating_pos_signals[COORDS_CHANGE_SIGNAL] =
 		gtk_signal_new ("floating_coords_change",

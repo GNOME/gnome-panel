@@ -101,7 +101,7 @@ panel_menu_position (GtkMenu  *menu,
 	gdk_window_get_origin (w->window, &wx, &wy);
 
 	gtk_widget_get_pointer(w, x, y);
-	if (IS_BASEP_WIDGET (w)) {
+	if (BASEP_IS_WIDGET (w)) {
 		basep_widget_get_menu_pos(BASEP_WIDGET(w), 
 					  GTK_WIDGET(menu),
 					  x,y,wx,wy,
@@ -145,7 +145,7 @@ applet_menu_position (GtkMenu  *menu,
 		wx += info->widget->allocation.x;
 		wy += info->widget->allocation.y;
 	}
-	if (IS_BASEP_WIDGET (w)) {
+	if (BASEP_IS_WIDGET (w)) {
 		*x = *y = 0;
 		basep_widget_get_menu_pos(BASEP_WIDGET(w),
 					  GTK_WIDGET(menu),

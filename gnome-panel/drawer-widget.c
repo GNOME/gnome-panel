@@ -66,7 +66,7 @@ drawer_pos_get_type (void)
 			NULL
 		};
 
-		drawer_pos_type = gtk_type_unique (TYPE_BASEP_POS,
+		drawer_pos_type = gtk_type_unique (BASEP_TYPE_POS,
 						   &drawer_pos_info);
 	}
 
@@ -79,7 +79,7 @@ drawer_pos_class_init (DrawerPosClass *klass)
 	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(TYPE_BASEP_POS);
+	parent_class = gtk_type_class(BASEP_TYPE_POS);
 
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = drawer_pos_set_hidebuttons;
@@ -191,7 +191,7 @@ drawer_pos_get_hide_orient (BasePWidget *basep)
 void
 drawer_widget_open_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
-	if (IS_BASEP_WIDGET (parentp))
+	if (BASEP_IS_WIDGET (parentp))
 		BASEP_WIDGET (parentp)->drawers_open++;
 	basep_widget_explicit_show (BASEP_WIDGET (drawer));
 }
@@ -215,7 +215,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 		break;
 	}
 
-	if (IS_BASEP_WIDGET (parentp))
+	if (BASEP_IS_WIDGET (parentp))
 		BASEP_WIDGET (parentp)->drawers_open--;
 }
 

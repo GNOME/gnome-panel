@@ -12,6 +12,7 @@
 #include <gdk/gdkx.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
+#include <libgnome/gnome-macros.h>
 #include "panel-widget.h"
 #include "basep-widget.h"
 #include "panel-util.h"
@@ -41,11 +42,11 @@ extern GtkTooltips *panel_tooltips;
 
 extern GlobalConfig global_config;
 
-static void basep_widget_class_init	(BasePWidgetClass *klass);
-static void basep_widget_init		(BasePWidget      *basep);
+static void basep_widget_class_init (BasePWidgetClass *klass);
+static void basep_widget_instance_init (BasePWidget *basep);
 
 static void basep_pos_class_init (BasePPosClass *klass);
-static void basep_pos_init (BasePPos *pos);
+static void basep_pos_instance_init (BasePPos *pos);
 static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
 static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
 static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
@@ -59,29 +60,29 @@ static GtkObjectClass *basep_pos_parent_class = NULL;
  widget core
  ************************/
 
-GType
-basep_widget_get_type (void)
+GType									\
+basep_widget_get_type (void)					
 {
-	static GType basep_widget_type = 0;
-
-	if (!basep_widget_type) {
-		GtkTypeInfo basep_widget_info = {
-			"BasePWidget",
-			sizeof (BasePWidget),
-			sizeof (BasePWidgetClass),
-			(GtkClassInitFunc) basep_widget_class_init,
-			(GtkObjectInitFunc) basep_widget_init,
-			NULL,
-			NULL,
-			NULL
+	static GType object_type = 0;
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+		    sizeof (BasePWidgetClass),
+		    (GBaseInitFunc)         NULL,
+		    (GBaseFinalizeFunc)     NULL,
+		    (GClassInitFunc)        basep_widget_class_init,
+		    NULL,                   /* class_finalize */
+		    NULL,                   /* class_data */
+		    sizeof (BasePWidget),
+		    0,                      /* n_preallocs */
+		    (GInstanceInitFunc)     basep_widget_instance_init 
 		};
-
-		basep_widget_type = gtk_type_unique (gtk_window_get_type (),
-						     &basep_widget_info);
+		object_type = g_type_register_static
+		    (GTK_TYPE_WINDOW, "BasePWidget", &object_info, 0);
+		basep_widget_parent_class = g_type_class_ref (GTK_TYPE_WINDOW);
 	}
-
-	return basep_widget_type;
+	return object_type;
 }
+
 
 enum {
 	/*TYPE_CHANGE_SIGNAL,*/
@@ -97,12 +98,12 @@ static BasePPosClass *
 basep_widget_get_pos_class (BasePWidget *basep) {
 	BasePPosClass *klass;
 
-	g_return_val_if_fail (IS_BASEP_WIDGET(basep), NULL);
-	g_return_val_if_fail (IS_BASEP_POS(basep->pos), NULL);
+	g_return_val_if_fail (BASEP_IS_WIDGET(basep), NULL);
+	g_return_val_if_fail (BASEP_IS_POS(basep->pos), NULL);
 
 	klass = BASEP_POS_GET_CLASS(basep);
 
-	g_return_val_if_fail (IS_BASEP_POS_CLASS (klass), NULL);
+	g_return_val_if_fail (BASEP_IS_POS_CLASS (klass), NULL);
 
 	return klass;
 }
@@ -113,7 +114,7 @@ basep_widget_realize (GtkWidget *w)
 	BasePWidget *basep = BASEP_WIDGET (w);
 	BasePPosClass *klass;
 
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_return_if_fail (BASEP_IS_WIDGET (basep));
 
 	gtk_window_set_wmclass (GTK_WINDOW (basep),
 				"panel_window", "Panel");
@@ -142,7 +143,7 @@ basep_widget_map (GtkWidget *w)
 {
         BasePWidget *basep = BASEP_WIDGET (w);
 
-        g_return_if_fail (IS_BASEP_WIDGET (basep));
+        g_return_if_fail (BASEP_IS_WIDGET (basep));
 
         if (GTK_WIDGET_CLASS (basep_widget_parent_class)->map != NULL)
 		GTK_WIDGET_CLASS (basep_widget_parent_class)->map (w);
@@ -394,36 +395,29 @@ basep_widget_class_init (BasePWidgetClass *klass)
 }
 
 /* pos core */
-GType
-basep_pos_get_type (void)
+
+GType									\
+basep_pos_get_type (void)					
 {
-	static GType basep_pos_type = 0;
-	
-	if (!basep_pos_type) {
-		GtkTypeInfo basep_pos_info = {
-			"BasePPos",
-			sizeof (BasePPos),
-			sizeof (BasePPosClass),
-			(GtkClassInitFunc) basep_pos_class_init,
-			(GtkObjectInitFunc) basep_pos_init,
-			NULL,
-			NULL
+	static GType object_type = 0;
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+		    sizeof (BasePPosClass),
+		    (GBaseInitFunc)         NULL,
+		    (GBaseFinalizeFunc)     NULL,
+		    (GClassInitFunc)        basep_pos_class_init,
+		    NULL,                   /* class_finalize */
+		    NULL,                   /* class_data */
+		    sizeof (BasePPos),
+		    0,                      /* n_preallocs */
+		    (GInstanceInitFunc)     basep_pos_instance_init 
 		};
-		
-		basep_pos_type = gtk_type_unique (gtk_object_get_type (),
-						  &basep_pos_info);
+		object_type = g_type_register_static
+		    (GTK_TYPE_OBJECT, "BasePPos", &object_info, 0);
+		basep_pos_parent_class = g_type_class_ref (GTK_TYPE_OBJECT);
 	}
-
-	return basep_pos_type;
+	return object_type;
 }
-
-#if 0
-enum {
-	POS_CHANGE_SIGNAL,
-	POS_LAST_SIGNAL
-}
-static guint basep_pos_signals[POS_LAST_SIGNAL] = { 0 };
-#endif
 
 static void
 basep_pos_get_hide_size (BasePWidget *basep, 
@@ -484,7 +478,7 @@ basep_pos_class_init (BasePPosClass *klass)
 
 /* nothing to see here... */
 static void
-basep_pos_init (BasePPos *pos)
+basep_pos_instance_init (BasePPos *pos)
 {
 	return;
 }
@@ -624,7 +618,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	int diff;
 	
 	g_return_if_fail(basep != NULL);
-	g_return_if_fail(IS_BASEP_WIDGET(basep));
+	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
 #ifdef PANEL_DEBUG
 	g_warning ("do_hiding with step %d", step);
@@ -733,7 +727,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	int diff;
 
 	g_return_if_fail(basep != NULL);
-	g_return_if_fail(IS_BASEP_WIDGET(basep));
+	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
 #ifdef PANEL_DEBUG
 		g_warning ("do_showing with step %d", step);
@@ -1004,7 +998,7 @@ basep_widget_redo_window(BasePWidget *basep)
 
 
 static void
-basep_widget_init (BasePWidget *basep)
+basep_widget_instance_init (BasePWidget *basep)
 {
 	basep->screen = 0;
 
@@ -1216,7 +1210,7 @@ basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
 	PanelWidget *panel;
 
 	g_return_if_fail (widget != NULL);
-	g_return_if_fail (IS_BASEP_WIDGET (widget));
+	g_return_if_fail (BASEP_IS_WIDGET (widget));
 
 	basep = BASEP_WIDGET (widget);
 
@@ -1443,11 +1437,6 @@ basep_widget_change_params (BasePWidget *basep,
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
-#if 0
-	if (type != basep->type)
-		basep_widget_convert_to (basep, type);
-#endif
-
 	if (state == BASEP_AUTO_HIDDEN &&
 	    mode != BASEP_AUTO_HIDE)
 		state = BASEP_SHOWN;
@@ -1507,7 +1496,7 @@ basep_widget_convert_to (BasePWidget *basep,
 	gint16 x=0, y=0;
 	gboolean temp_keep;
 
-	g_return_val_if_fail (IS_BASEP_WIDGET(basep), FALSE);
+	g_return_val_if_fail (BASEP_IS_WIDGET(basep), FALSE);
 
 	g_return_val_if_fail (create_panel_type[type], FALSE);
 
@@ -1677,7 +1666,7 @@ basep_widget_autoshow (gpointer data)
 {
 	BasePWidget *basep = data;
 
-	g_return_val_if_fail (IS_BASEP_WIDGET(basep), FALSE);
+	g_return_val_if_fail (BASEP_IS_WIDGET(basep), FALSE);
 
 	if (basep->state == BASEP_MOVING) {
 #ifdef PANEL_DEBUG
@@ -1771,7 +1760,7 @@ basep_widget_autohide (gpointer data)
 {
 	BasePWidget *basep = data;
 
-	g_return_val_if_fail (IS_BASEP_WIDGET(basep), TRUE);
+	g_return_val_if_fail (BASEP_IS_WIDGET(basep), TRUE);
 
 	if (basep->autohide_inhibit)
 		return TRUE;
@@ -2012,7 +2001,7 @@ void
 basep_widget_init_offsets (BasePWidget *basep)
 {
 	g_return_if_fail (basep != NULL);
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_return_if_fail (BASEP_IS_WIDGET (basep));
 
 	if (GTK_WIDGET (basep)->window != NULL) {
 		int x, y;
@@ -2079,7 +2068,7 @@ void
 basep_widget_screen_change (BasePWidget *basep, int screen)
 {
 	g_return_if_fail (basep != NULL);
-	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	g_return_if_fail (BASEP_IS_WIDGET (basep));
 	g_return_if_fail (screen >= 0);
 
 	if (basep->screen == screen)

@@ -223,7 +223,7 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 	GtkWidget *panel = get_panel_parent(info->widget);
 	info->menu_age = 0;
 	
-	if(IS_BASEP_WIDGET(panel))
+	if(BASEP_IS_WIDGET(panel))
 		BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
@@ -551,10 +551,10 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	panel = get_panel_parent(info->widget);
 
 	if (info->menu == NULL)
-		create_applet_menu (info, IS_BASEP_WIDGET (panel));
+		create_applet_menu (info, BASEP_IS_WIDGET (panel));
 	g_assert (info->menu != NULL);
 
-	if(IS_BASEP_WIDGET(panel)) {
+	if(BASEP_IS_WIDGET(panel)) {
 		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
 		basep_widget_queue_autohide(BASEP_WIDGET(panel));
 	}

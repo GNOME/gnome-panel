@@ -200,7 +200,7 @@ apply_global_config (void)
 			PanelData *pd = li->data;
 			if ( ! GTK_WIDGET_REALIZED (pd->panel))
 				continue;
-			if (IS_BASEP_WIDGET (pd->panel))
+			if (BASEP_IS_WIDGET (pd->panel))
 				basep_widget_update_winhints (BASEP_WIDGET (pd->panel));
 			else if (IS_FOOBAR_WIDGET (pd->panel))
 				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
@@ -212,7 +212,7 @@ apply_global_config (void)
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
-		if (IS_BASEP_WIDGET (pd->panel)) {
+		if (BASEP_IS_WIDGET (pd->panel)) {
 			basep_update_frame (BASEP_WIDGET (pd->panel));
 
 			if ((menu_flags_old != global_config.menu_flags) &&
@@ -544,7 +544,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	BasePWidget   *basep = NULL; 
 	PanelWidget   *panel = NULL;
 
-	if (IS_BASEP_WIDGET (pd->panel)) {
+	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
 		panel = PANEL_WIDGET (basep->panel);
 	} else if (IS_FOOBAR_WIDGET (pd->panel)) {

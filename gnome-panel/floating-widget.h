@@ -17,12 +17,12 @@ G_BEGIN_DECLS
 #define IS_FLOATING_POS(o)           (GTK_CHECK_TYPE ((o), TYPE_FLOATING_POS))
 #define IS_FLOATING_POS_CLASS(k)     (GTK_CHECK_CLASS_TYPE ((k), TYPE_FLOATING_POS))
 
-#define TYPE_FLOATING_WIDGET         (TYPE_BASEP_WIDGET)
+#define TYPE_FLOATING_WIDGET         (BASEP_TYPE_WIDGET)
 #define FLOATING_WIDGET(o)           (BASEP_WIDGET(o))
 #define FLOATING_WIDGET_CLASS(k)     (BASEP_WIDGET_CLASS(k))
-#define IS_FLOATING_WIDGET(o)        (IS_BASEP_WIDGET(o) && IS_FLOATING_POS(BASEP_WIDGET(o)->pos))
+#define IS_FLOATING_WIDGET(o)        (BASEP_IS_WIDGET(o) && IS_FLOATING_POS(BASEP_WIDGET(o)->pos))
 /* this is not reliable */
-#define IS_FLOATING_WIDGET_CLASS(k)  (IS_BASEP_WIDGET_CLASS(k))
+#define IS_FLOATING_WIDGET_CLASS(k)  (BASEP_IS_WIDGET_CLASS(k))
 
 typedef BasePWidget            FloatingWidget;
 typedef BasePWidgetClass       FloatingWidgetClass;

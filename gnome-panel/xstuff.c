@@ -123,7 +123,7 @@ redo_interface (void)
 	GSList *li;
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
-		if (IS_BASEP_WIDGET (pd->panel))
+		if (BASEP_IS_WIDGET (pd->panel))
 			basep_widget_redo_window (BASEP_WIDGET (pd->panel));
 		else if (IS_FOOBAR_WIDGET (pd->panel))
 			foobar_widget_redo_window (FOOBAR_WIDGET (pd->panel));

@@ -256,7 +256,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		panel = panels->data;
 		menu = make_popup_panel_menu (panel);
 		basep = panel->panel_parent;
-		if (IS_BASEP_WIDGET(basep)) {
+		if (BASEP_IS_WIDGET(basep)) {
 			BASEP_WIDGET(basep)->autohide_inhibit = TRUE;
 			basep_widget_autohide (BASEP_WIDGET (basep));
 		}
