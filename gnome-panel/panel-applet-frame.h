@@ -57,7 +57,7 @@ GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
 GtkWidget *panel_applet_frame_new       (const gchar *iid);
 
-void       panel_applet_frame_construct (PanelAppletFrame *frame,
+GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
 					 const gchar      *iid);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,

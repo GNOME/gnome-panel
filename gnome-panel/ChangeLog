@@ -1,3 +1,24 @@
+2001-12-21  Anders Carlsson  <andersca@gnu.org>
+
+	* Makefile.am: Re-add gnome-panel-screenshot
+	
+	* gnome-panel-screenshot.c: (main): Build with gnome2.
+
+	* gnome-panel-screenshot.glade: Switch button order.
+	
+	* panel-applet-frame.c: (panel_applet_frame_load),
+	(panel_applet_frame_construct), (panel_applet_frame_new):
+	* panel-applet-frame.h:
+	Don't segfault when applets can't be loaded.
+	
+	* panel-gconf.c: (panel_notify_object_dead),
+	(panel_gconf_notify_add_while_alive):
+	Use g_object_weak_ref here instead.
+	
+	* panel.c: (drop_background_reset), (drop_bgimage),
+	(get_target_list), (drag_data_recieved_cb):
+	Use x-special/gnome-reset-background to reset backgrounds.
+
 2001-12-21  Glynn Foster  <glynn.foster@sun.com>
 
 	* aligned-widget.c, aligned-widget.h, basep-widget.c, basep-widget.h,

@@ -100,6 +100,21 @@ panel_applet_frame_load (const gchar *iid,
 
 	frame = panel_applet_frame_new (iid);
 
+	if (!frame) {
+		GtkWidget *dialog;
+
+		dialog = gtk_message_dialog_new (NULL,
+						 0,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_OK,
+						 _("There was a problem loading the applet."));
+		
+		gtk_dialog_run (GTK_DIALOG (dialog));
+		gtk_widget_destroy (dialog);
+		
+		return;
+	}
+	
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, 
@@ -320,7 +335,7 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 	return retval;
 }
 
-void
+GtkWidget *
 panel_applet_frame_construct (PanelAppletFrame  *frame,
 			      const gchar       *iid)
 {
@@ -341,7 +356,7 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
 
 	if (!widget) {
 		g_warning (G_STRLOC ": failed to load %s", iid);
-		return;
+		return NULL;
 	}
 
 	frame->priv->iid = g_strdup (iid);
@@ -375,6 +390,8 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
         bonobo_ui_component_add_verb_list_with_data (ui_component, popup_verbs, frame);
 
         gtk_container_add (GTK_CONTAINER (frame), widget);
+
+	return widget;
 }
 
 GtkWidget *
@@ -384,7 +401,10 @@ panel_applet_frame_new (const gchar *iid)
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	panel_applet_frame_construct (frame, iid);
+	if (!panel_applet_frame_construct (frame, iid)) {
+		g_object_unref (frame);
+		return NULL;
+	}
 
 	return GTK_WIDGET (frame);
 }

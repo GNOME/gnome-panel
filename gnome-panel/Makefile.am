@@ -27,7 +27,10 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
-bin_PROGRAMS = gnome-panel-2 gnome-panel-properties
+bin_PROGRAMS = \
+	gnome-panel-2 			\
+	gnome-panel-properties		\
+	gnome-panel-screenshot
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -151,6 +154,16 @@ gnome_panel_properties_LDADD = $(PANELCONFIG_LIBS)
 
 gnome_panel_properties_LDFLAGS = -export-dynamic
 
+
+gnome_panel_screenshot_SOURCES = \
+	gnome-panel-screenshot.c
+
+gnome_panel_screenshot_LDFLAGS = -export-dynamic
+
+gnome_panel_screenshot_LDADD = 	\
+	$(PANELCONFIG_LIBS)	\
+	$(PNG_LIBS)
+
 EXTRA_DIST =					\
 	APPLET_WRITING				\
 	GNOME_Panel.server.in			\
@@ -168,14 +181,25 @@ EXTRA_DIST =					\
 	panel-marshal.list
 
 gladedir = $(datadir)/gnome/panel
-glade_DATA = gnome-panel-properties.glade2
-glade_src = gnome-panel-properties.glade
-glade_msgs = gnome-panel-properties.glade.h
+glade_DATA = \
+	gnome-panel-properties.glade2		\
+	gnome-panel-screenshot.glade2
+
+glade_src = \
+	gnome-panel-properties.glade		\
+	gnome-panel-screenshot.glade
+
+glade_msgs = \
+	gnome-panel-properties.glade.h		\
+	gnome-panel-screenshot.glade.h
 
 gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
 	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-properties.glade > gnome-panel-properties.glade.tmp \
 	&& mv gnome-panel-properties.glade.tmp gnome-panel-properties.glade2
 
+gnome-panel-screenshot.glade2: gnome-panel-screenshot.glade $(LIBGLADE_CONVERT)
+	$(LIBGLADE_CONVERT) $(srcdir)/gnome-panel-screenshot.glade > gnome-panel-screenshot.glade.tmp \
+	&& mv gnome-panel-screenshot.glade.tmp gnome-panel-screenshot.glade2
 
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints

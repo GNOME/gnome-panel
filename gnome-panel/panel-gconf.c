@@ -170,9 +170,8 @@ panel_gconf_notify_add (const gchar *key, GConfClientNotifyFunc notify_func, gpo
 }
 
 static void
-panel_notify_object_dead (gpointer data)
+panel_notify_object_dead (guint notify_id)
 {
-	guint notify_id = GPOINTER_TO_UINT (data);
 	gconf_client_notify_remove (panel_gconf_get_client (),
 				    notify_id);
 }
@@ -188,16 +187,11 @@ panel_gconf_notify_add_while_alive (const gchar *key,
 
 	notify_id = panel_gconf_notify_add (key, notify_func, alive_object);
 	if (notify_id > 0) {
-		static int cookie = 0;
-		char *str;
-		/* eek a hack, we want a unique key each time,
-		 * how else do we hook into the destruction of an object?? */
-		str = g_strdup_printf ("PanelGConfNotify-%d", cookie++);
-		g_object_set_data_full (alive_object,
-					str,
-					GUINT_TO_POINTER (notify_id),
-					panel_notify_object_dead);
-		g_free (str);
+		/* Add a weak reference to the object so that we can
+		 * remove the notification when the object's gone. */
+		g_object_weak_ref (alive_object,
+				   (GWeakNotify)panel_notify_object_dead,
+				   GUINT_TO_POINTER (notify_id));
 	}
 	return notify_id;
 }

@@ -42,10 +42,6 @@
 #include "swallow.h"
 #include "panel-applet-frame.h"
 
-/* nautilus uses this UTTER HACK to reset backgrounds, ugly ugly ugly,
- * broken, ugly ugly, but whatever */
-#define RESET_IMAGE_NAME "/nautilus/backgrounds/reset.png"
-
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -83,7 +79,8 @@ enum {
 	TARGET_APPLET,
 	TARGET_APPLET_INTERNAL,
 	TARGET_ICON_INTERNAL,
-	TARGET_BGIMAGE
+	TARGET_BGIMAGE,
+	TARGET_BACKGROUND_RESET,
 };
 
 static void
@@ -1020,27 +1017,27 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 }
 
 static void
+drop_background_reset (PanelWidget *panel)
+{
+	panel_widget_change_params (panel,
+				    panel->orient,
+				    panel->sz,
+				    PANEL_BACK_NONE,
+				    panel->back_pixmap,
+				    panel->fit_pixmap_bg,
+				    panel->stretch_pixmap_bg,
+				    panel->rotate_pixmap_bg,
+				    &panel->back_color);
+}
+
+static void
 drop_bgimage (PanelWidget *panel, const char *bgimage)
 {
 	char *filename;
 
 	filename = extract_filename (bgimage);
 	if (filename != NULL) {
-		/* an incredible hack, no, worse, INCREDIBLE FUCKING HACK,
-		 * whatever, we need to work with nautilus on this one */
-		if (strstr (filename, RESET_IMAGE_NAME) != NULL) {
-			panel_widget_change_params (panel,
-						    panel->orient,
-						    panel->sz,
-						    PANEL_BACK_NONE,
-						    panel->back_pixmap,
-						    panel->fit_pixmap_bg,
-						    panel->stretch_pixmap_bg,
-						    panel->rotate_pixmap_bg,
-						    &panel->back_color);
-		} else {
-			panel_widget_set_back_pixmap (panel, filename);
-		}
+		panel_widget_set_back_pixmap (panel, filename);
 
 		g_free (filename);
 	}
@@ -1184,7 +1181,8 @@ get_target_list (void)
 		{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
 		{ "application/x-panel-icon-internal",   0, TARGET_ICON_INTERNAL },
 		{ "application/x-color",                 0, TARGET_COLOR },
-		{ "property/bgimage",                    0, TARGET_BGIMAGE }
+		{ "property/bgimage",                    0, TARGET_BGIMAGE },
+		{ "x-special/gnome-reset-background",    0, TARGET_BACKGROUND_RESET },
 	};
 	static GtkTargetList *target_list = NULL;
 
@@ -1410,6 +1408,10 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	case TARGET_BGIMAGE:
 		if ( ! FOOBAR_IS_WIDGET(widget))
 			drop_bgimage (panel, (char *)selection_data->data);
+		break;
+	case TARGET_BACKGROUND_RESET:
+		if ( ! FOOBAR_IS_WIDGET(widget))
+			drop_background_reset (panel);
 		break;
 	case TARGET_DIRECTORY:
 		drop_directory (panel, pos, (char *)selection_data->data);
