@@ -9,6 +9,18 @@ of the applets by providing them with stuff such as sessions saving, and
 taking care of their space on the panel, taking care of restarting them,
 etc ... etc ... etc ...
 
+Changes:
+========
+
+7/3/98) the session_save signal is now being phased out, you need to use
+	save_session signal which has basically the same interface, but
+	uses privcfgpath instead of cfgpath. cfgpath variable is also
+	being phased out and should not be used, you should use privcfgpath
+	instead. The change is basically that for privcfgpath and
+	save_session you add "section/key" to the path instead of just "key".
+	The old stuff is still in for compatibility reasons but will disappear
+	soon.
+
 
 The Hello World of applets:
 ===========================
@@ -187,8 +199,8 @@ saving the info. Loading is pretty simple, after you do
 applet_widget_new, you can get the correct paths to load your properties
 from the widget's structure. For example:
 
-gnome_config_push_prefix(APPLET_WIDGET(applet)->cfgpath);
-hello = gnome_config_get_bool("hello=true");
+gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
+hello = gnome_config_get_bool("section/hello=true");
 gnome_config_pop_prefix();
 
 will do the trick.
@@ -205,13 +217,13 @@ gint hello = TRUE;
 
 /* sesion save signal handler*/
 static gint
-applet_session_save(GtkWidget *w,
-		    const char *cfgpath,
+applet_save_session(GtkWidget *w,
+		    const char *privcfgpath,
 		    const char *globcfgpath)
 {
-	gnome_config_push_prefix(cfgpath);
-	gnome_config_set_string("hello",hello);
-	gnome_config_pop_prefix(cfgpath);
+	gnome_config_push_prefix(privcfgpath);
+	gnome_config_set_string("section/hello",hello);
+	gnome_config_pop_prefix(privcfgpath);
 
 	gnome_config_sync();
 	/* you need to use the drop_all here since we're all writing to
@@ -253,8 +265,8 @@ main(int argc, char **argv)
 
 	/* read the contents of the stored value of hello from the
 	   config file */
-	gnome_config_push_prefix(APPLET_WIDGET(applet)->cfgpath);
-	hello = gnome_config_get_bool("hello=true");
+	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
+	hello = gnome_config_get_bool("section/hello=true");
 	gnome_config_pop_prefix();
 
 	/* create the widget we are going to put on the applet */
@@ -262,8 +274,8 @@ main(int argc, char **argv)
 	gtk_widget_show(label);
 
 	/* bind the session save signal */
-	gtk_signal_connect(GTK_OBJECT(applet),"session_save",
-			   GTK_SIGNAL_FUNC(applet_session_save),
+	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),
 			   NULL);
 
 	/* add the widget to the applet-widget, and thereby actually
@@ -277,26 +289,28 @@ main(int argc, char **argv)
 	return 0;
 }
 
-That's basically it. Make sure you return FALSE from the session_save
+That's basically it. Make sure you return FALSE from the save_session
 handler, else the panel will not remember your applet next time. Also
 note the presence of gnome_config_drop_all, that needs to be done,
 especially for multi applets (discussed below), or your info might get
 lost.
 
 If you need to store information global to all applets you can use the
-globcfgpath counterpart of cfgpath, which gives you path to the actual
-file of the panel configuration. Make sure you only use one level of
-config path below cfgpath and two levels below globcfgpath. Which means
-for cfgpath, you tack on only "key" to the data, to globcfgpath you tack
-on "section/key". Both of them will be the same file, but cfgpath
-already points to an applet specific section. An example of a global
-config would be:
+globcfgpath counterpart of privcfgpath, which gives you a path to a file
+which is the same for all applets.
+
+IMPORTANT!
+Make sure you only use two levels of config path below
+privcfgpath/globcfgpath. Which means you only tack on "section/key".
+Also don't just use "key". You need to tack on both the section and
+the key, no more, no less.
+
 
 gnome_config_push_prefix(APPLET_WIDGET(applet)->globcfgpath);
 hello = gnome_config_get_bool("all_hello_applets/hello=true");
 gnome_config_pop_prefix();
 
-Similiarly for the session_save.
+Similiarly for the save_session.
 
 Panel Orientation:
 ==================
