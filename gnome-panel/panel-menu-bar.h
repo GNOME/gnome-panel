@@ -65,6 +65,9 @@ void       panel_menu_bar_load_from_gconf  (PanelWidget  *panel,
 void       panel_menu_bar_invoke_menu      (PanelMenuBar *menubar,
 					    const char   *callback_name);
 
+void       panel_menu_bar_popup_menu       (PanelMenuBar *menubar,
+					    guint32       activate_time);
+
 G_END_DECLS
 
 #endif /* __PANEL_MENU_BAR_H__ */

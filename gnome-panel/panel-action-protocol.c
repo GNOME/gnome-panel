@@ -33,10 +33,13 @@
 
 #include "egg-screen-exec.h"
 #include "menu.h"
+#include "applet.h"
 #include "panel-globals.h"
 #include "panel-toplevel.h"
 #include "panel-util.h"
 #include "panel-run-dialog.h"
+#include "panel-menu-button.h"
+#include "panel-menu-bar.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
@@ -48,6 +51,21 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 {
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
+	AppletInfo  *info;
+
+	info = panel_applet_get_by_type (PANEL_OBJECT_MENU_BAR);
+	if (info) {
+		panel_menu_bar_popup_menu (PANEL_MENU_BAR (info->widget),
+					   activate_time);
+		return;
+	}
+
+	info = panel_applet_get_by_type (PANEL_OBJECT_MENU);
+	if (info && !panel_menu_button_get_use_menu_path (PANEL_MENU_BUTTON (info->widget))) {
+		panel_menu_button_popup_menu (PANEL_MENU_BUTTON (info->widget),
+					      1, activate_time);
+		return;
+	}
 
 	panel_widget = panels->data;
 	menu = create_panel_root_menu (panel_widget);

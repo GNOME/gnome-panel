@@ -56,8 +56,8 @@ struct _PanelMenuBarPrivate {
 static GObjectClass *parent_class;
 
 static void
-panel_menu_bar_show_applications_menu (GtkWidget    *menu,
-				       PanelMenuBar *menubar)
+panel_menu_bar_show_applications_menu (PanelMenuBar *menubar,
+				       GtkWidget    *menu)
 {
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_widget_get_screen (GTK_WIDGET (menubar)));
@@ -197,9 +197,11 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 				   menubar->priv->applications_menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar), item);
 
-	g_signal_connect (menubar->priv->applications_menu, "show",
-			  G_CALLBACK (panel_menu_bar_show_applications_menu), menubar);
-
+	g_signal_connect_swapped (menubar->priv->applications_menu, "show",
+				  G_CALLBACK (panel_menu_bar_show_applications_menu), menubar);
+	g_signal_connect_swapped (menubar->priv->applications_menu, "hide",
+				  G_CALLBACK (gtk_menu_shell_deselect), menubar);
+	
 	panel_menu_bar_append_actions_menu (menubar);
 }
 
@@ -348,4 +350,18 @@ panel_menu_bar_invoke_menu (PanelMenuBar *menubar,
 	screen = gtk_widget_get_screen (GTK_WIDGET (menubar));
 
 	panel_show_help (screen, "wgospanel.xml", NULL);
+}
+
+void
+panel_menu_bar_popup_menu (PanelMenuBar *menubar,
+			   guint32       activate_time)
+{
+	GtkMenu *menu;
+	
+	g_return_if_fail (PANEL_IS_MENU_BAR (menubar));
+
+	menu = GTK_MENU (menubar->priv->applications_menu);
+
+	gtk_menu_shell_select_item (GTK_MENU_SHELL (menubar),
+				    gtk_menu_get_attach_widget (menu));
 }

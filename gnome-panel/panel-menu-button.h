@@ -65,6 +65,7 @@ void       panel_menu_button_set_custom_icon     (PanelMenuButton  *button,
 						  const char       *custom_icon);
 void       panel_menu_button_set_use_menu_path   (PanelMenuButton  *button,
 						  gboolean          use_menu_path);
+gboolean   panel_menu_button_get_use_menu_path   (PanelMenuButton  *button);
 void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
 						  gboolean          use_custom_icon);
 
@@ -79,6 +80,10 @@ void       panel_menu_button_save_to_gconf       (PanelMenuButton  *button,
 
 void       panel_menu_button_invoke_menu         (PanelMenuButton  *button,
 						  const char       *callback_name);
+
+void       panel_menu_button_popup_menu          (PanelMenuButton  *button,
+						  guint             n_button,
+						  guint32           activate_time);
 
 void       panel_menu_button_change_orientation  (PanelMenuButton  *button,
 						  PanelOrientation  orientation);

@@ -283,12 +283,14 @@ panel_menu_button_menu_detacher	(GtkWidget *widget,
 	button->priv->menu = NULL;
 }
 
-static void
+void
 panel_menu_button_popup_menu (PanelMenuButton *button,
 			      guint            n_button,
 			      guint32          activate_time)
 {
 	GdkScreen *screen;
+
+	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	if (button->priv->menu && menu_need_reread (GTK_WIDGET (button->priv->menu))) {
 		g_object_unref (button->priv->menu);
@@ -679,6 +681,14 @@ panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 	button->priv->menu = NULL;
 
 	panel_menu_button_set_icon (button);
+}
+
+gboolean
+panel_menu_button_get_use_menu_path (PanelMenuButton *button)
+{
+	g_return_val_if_fail (PANEL_IS_MENU_BUTTON (button), FALSE);
+
+	return button->priv->use_menu_path;
 }
 
 void

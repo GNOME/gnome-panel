@@ -955,6 +955,21 @@ panel_applet_list_applets (void)
 }
 
 AppletInfo *
+panel_applet_get_by_type (PanelObjectType object_type)
+{
+	GSList *l;
+
+	for (l = registered_applets; l; l = l->next) {
+		AppletInfo *info = l->data;
+
+		if (info->type == object_type)
+			return info;
+	}
+
+	return NULL;
+}
+
+AppletInfo *
 panel_applet_register (GtkWidget       *applet,
 		       gpointer         data,
 		       GDestroyNotify   data_destroy,

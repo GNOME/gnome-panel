@@ -1,4 +1,22 @@
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+	
+	* panel-action-protocol.c: (panel_action_protocol_main_menu):
+	Try to popup the applications menu or the main menu and only
+	failing that popup a menu at the pointer location. bug #10733.
+	
+	* panel-menu-bar.[ch]:
+	(panel_menu_bar_instance_init): deselect the menu item when
+	the menu is hidden. Dunno why that needed the hack.
+	(panel_menu_bar_popup_menu): impl.
+	
+	* panel-menu-button.[ch]:
+	(panel_menu_button_popup_menu): make public.
+	(panel_menu_button_get_use_menu_path): impl.
+	
+	* applet.[ch]: (panel_applet_get_by_type): impl finding the first
+	applet of a given type.
+
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-properties-dialog.c: (panel_properties_dialog_update_name):
 	don't g_free the return value of gconf_value_get_string.
