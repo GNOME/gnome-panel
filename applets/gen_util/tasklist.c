@@ -49,6 +49,9 @@ typedef struct {
 	GtkWidget *always_group_radio;
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
+
+	/* gconf listeners id */
+	guint listeners [3];
 } TasklistData;
 
 static void display_properties_dialog (BonoboUIComponent *uic,
@@ -145,9 +148,17 @@ applet_change_pixel_size (PanelApplet  *applet,
 }
 
 static void
-destroy_tasklist(GtkWidget * widget, gpointer data)
+destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
-	/* TasklistData *tasklist = data; */
+	GConfClient *client = gconf_client_get_default ();
+
+	gconf_client_notify_remove (client, tasklist->listeners[0]);
+	gconf_client_notify_remove (client, tasklist->listeners[1]);
+	gconf_client_notify_remove (client, tasklist->listeners[2]);
+	
+	tasklist->listeners[0] = 0;
+	tasklist->listeners[1] = 0;
+	tasklist->listeners[2] = 0;
 }
 
 static const BonoboUIVerb tasklist_menu_verbs [] = {
@@ -328,7 +339,7 @@ setup_gconf (TasklistData *tasklist)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
 					       "display_all_workspaces");
-	gconf_client_notify_add(client, key,
+	tasklist->listeners[0] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)display_all_workspaces_changed,
 				tasklist,
 				NULL, NULL);
@@ -336,7 +347,7 @@ setup_gconf (TasklistData *tasklist)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
 					       "group_windows");
-	gconf_client_notify_add(client, key,
+	tasklist->listeners[1] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)group_windows_changed,
 				tasklist,
 				NULL, NULL);
@@ -344,7 +355,7 @@ setup_gconf (TasklistData *tasklist)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
 					       "move_unminimized_windows");
-	gconf_client_notify_add(client, key,
+	tasklist->listeners[2] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)move_unminimized_windows_changed,
 				tasklist,
 				NULL, NULL);

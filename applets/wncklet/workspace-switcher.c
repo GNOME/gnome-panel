@@ -52,7 +52,9 @@ typedef struct {
 	WnckPagerDisplayMode display_mode;
 	gboolean display_all;
 	int size;
-  
+
+	/* gconf listeners id */
+	guint listeners [3];
 } PagerData;
 
 static void display_properties_dialog (BonoboUIComponent *uic,
@@ -131,8 +133,18 @@ applet_change_pixel_size (PanelApplet *applet,
 }
 
 static void
-destroy_pager(GtkWidget * widget, gpointer data)
+destroy_pager(GtkWidget * widget, PagerData *pager)
 {
+	GConfClient *client = gconf_client_get_default ();
+
+	gconf_client_notify_remove (client, pager->listeners[0]);
+	gconf_client_notify_remove (client, pager->listeners[1]);
+	gconf_client_notify_remove (client, pager->listeners[2]);
+
+	pager->listeners[0] = 0;
+	pager->listeners[1] = 0;
+	pager->listeners[2] = 0;
+
 }
 
 static const BonoboUIVerb pager_menu_verbs [] = {
@@ -229,7 +241,7 @@ setup_gconf (PagerData *pager)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
 					       "num_rows");
-	gconf_client_notify_add(client, key,
+	pager->listeners[0] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)num_rows_changed,
 				pager,
 				NULL, NULL);
@@ -239,7 +251,7 @@ setup_gconf (PagerData *pager)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
 					       "display_workspace_names");
-	gconf_client_notify_add(client, key,
+	pager->listeners[1] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)display_workspace_names_changed,
 				pager,
 				NULL, NULL);
@@ -248,7 +260,7 @@ setup_gconf (PagerData *pager)
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (pager->applet),
 					       "display_all_workspaces");
-	gconf_client_notify_add(client, key,
+	pager->listeners[2] = gconf_client_notify_add(client, key,
 				(GConfClientNotifyFunc)all_workspaces_changed,
 				pager,
 				NULL, NULL);
