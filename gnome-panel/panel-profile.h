@@ -29,11 +29,18 @@
 #include <gconf/gconf-client.h>
 
 #include "panel-toplevel.h"
+#include "panel-enums.h"
 
 G_BEGIN_DECLS
 
 void        panel_profile_load     (char *profile_name);
 const char *panel_profile_get_name (void);
+
+
+const char    *panel_profile_get_toplevel_id    (PanelToplevel     *toplevel);
+PanelToplevel *panel_profile_get_toplevel_by_id (const char        *toplevel_id);
+char          *panel_profile_find_new_id        (PanelGConfKeyType  type,
+						 GSList            *existing_ids);
 
 
 gboolean    panel_profile_get_show_program_list   (void);

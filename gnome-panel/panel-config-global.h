@@ -18,7 +18,6 @@ typedef struct {
  *   (+) indicates its in the capplet
  *
  * tooltips_enabled
- * keep_menus_in_memory
  * enable_animations (+)
  *
  * panel_minimized_size
@@ -40,7 +39,6 @@ typedef struct {
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
 	gboolean           tooltips_enabled;
-	gboolean           keep_menus_in_memory;
 	gboolean           enable_animations;
 
 	int                minimized_size;

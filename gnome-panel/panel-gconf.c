@@ -73,8 +73,7 @@ G_CONST_RETURN char *
 panel_gconf_general_key (const char *profile,
 			 const char *key)
 {
-	return panel_gconf_sprintf (
-			"/apps/panel/profiles/%s/general/%s", profile, key);
+	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/general/%s", profile, key);
 }
 
 G_CONST_RETURN char *
@@ -86,8 +85,8 @@ panel_gconf_full_key (PanelGConfKeyType  type,
 	char *subdir = NULL;
 
 	switch (type) {
-	case PANEL_GCONF_PANELS:
-		subdir = "panels";
+	case PANEL_GCONF_TOPLEVELS:
+		subdir = "toplevels";
 		break;
 	case PANEL_GCONF_OBJECTS:
 		subdir = "objects";
@@ -100,9 +99,8 @@ panel_gconf_full_key (PanelGConfKeyType  type,
 		break;
 	}
 
-	return panel_gconf_sprintf (
-			"/apps/panel/profiles/%s/%s/%s/%s",
-			profile, subdir, id, key);
+	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s/%s",
+				    profile, subdir, id, key);
 }
 
 const char *
@@ -413,47 +411,3 @@ panel_gconf_associate_schemas_in_dir (GConfClient  *client,
 
 	g_slist_free (list);
 }
-
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-char *
-panel_gconf_load_default_config_for_screen (PanelGConfKeyType   type,
-					    const char         *profile,
-					    const char         *id,
-					    int                 screen)
-{
-	const char *subdir = NULL;
-	const char *schemas_dir;
-	char       *new_dir;
-	char       *new_id;
-
-	switch (type) {
-	case PANEL_GCONF_PANELS:
-		subdir = "panels";
-		break;
-	case PANEL_GCONF_OBJECTS:
-		subdir = "objects";
-		break;
-	case PANEL_GCONF_APPLETS:
-		subdir = "applets";
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	schemas_dir = panel_gconf_sprintf (
-				"/schemas/apps/panel/default_profiles/medium/%s/%s",
-				subdir, id);
-
-	new_id = g_strdup_printf ("%s_screen%d", id, screen);
-
-	new_dir = g_strdup_printf ("/apps/panel/profiles/%s/%s/%s", profile, subdir, new_id);
-
-	panel_gconf_associate_schemas_in_dir (
-		panel_gconf_get_client (), new_dir, schemas_dir);
-
-	g_free (new_dir);
-
-	return new_id;
-}
-#endif /* FIXME_FOR_NEW_TOPLEVEL */

@@ -156,6 +156,7 @@ void                 panel_toplevel_unset_binding       (PanelToplevel       *to
 							 guint                keyval,
 							 GdkModifierType      modifiers);
 
+gboolean             panel_toplevel_is_last_unattached  (PanelToplevel       *toplevel);
 GSList              *panel_toplevel_list_toplevels      (void);
 
 G_END_DECLS

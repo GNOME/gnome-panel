@@ -42,11 +42,7 @@
 #include "egg-screen-url.h"
 #include "egg-screen-help.h"
 #include "xstuff.h"
-
-extern GlobalConfig global_config;
-
-extern GSList *applets;
-extern GSList *panels;
+#include "panel-globals.h"
 
 GdkScreen *
 panel_screen_from_number (int screen)

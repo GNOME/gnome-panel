@@ -3,14 +3,14 @@
 
 #include <gconf/gconf-client.h>
 
+#include "panel-enums.h"
+
+/* FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ */
+#define PANEL_CONFIG_DIR   "/apps/new_panel/profiles"
+#define PANEL_SCHEMAS_DIR  "/schemas/apps/new_panel"
+#define PANEL_DEFAULTS_DIR "/apps/new_panel/default_setup"
+
 G_BEGIN_DECLS
-
-typedef enum {
-	PANEL_GCONF_PANELS,
-	PANEL_GCONF_OBJECTS,
-	PANEL_GCONF_APPLETS
-} PanelGConfKeyType;
-
 GConfClient         *panel_gconf_get_client  (void);
 
 G_CONST_RETURN char *panel_gconf_sprintf     (const char *format,
@@ -21,7 +21,7 @@ G_CONST_RETURN char *panel_gconf_general_key (const char *profile,
 					      const char *key);
 G_CONST_RETURN char *panel_gconf_full_key    (PanelGConfKeyType  type,
 					      const char        *profile,
-					      const char        *panel_id,
+					      const char        *id,
 					      const char        *key);
 
 

@@ -47,11 +47,9 @@
 #include "menu-ditem.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
-#include "panel-main.h"
 #include "panel.h"
 #include "drawer.h"
 #include "panel-config-global.h"
-#include "session.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
@@ -64,32 +62,12 @@
 #include "panel-multiscreen.h"
 #include "panel-toplevel.h"
 #include "panel-profile.h"
+#include "panel-menu-button.h"
+#include "panel-globals.h"
 
 #undef MENU_DEBUG
 
 static char *gnome_folder = NULL;
-
-extern GSList *applets;
-
-/*list of all toplevel panel widgets (basep) created*/
-extern GSList *panel_list;
-/*list of all PanelWidgets created*/
-extern GSList *panels;
-
-
-extern gboolean commie_mode;
-extern gboolean no_run_box;
-extern GlobalConfig global_config;
-
-extern int panels_to_sync;
-extern int need_complete_save;
-
-extern int base_panels;
-
-extern char *kde_menudir;
-extern char *kde_icondir;
-
-extern GtkTooltips *panel_tooltips;
 
 typedef struct _ShowItemMenu ShowItemMenu;
 struct _ShowItemMenu {
@@ -1237,7 +1215,8 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		subdir_name = name;
 	pixmap_name = item_info != NULL ? item_info->icon : NULL;
 
-	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name, panel, pos, FALSE, NULL);
+	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name,
+				     panel->toplevel, pos, FALSE, NULL);
 	if (!drawer) {
 		g_warning("Can't load a drawer");
 		return;
@@ -1308,36 +1287,26 @@ add_menudrawer_to_panel(GtkWidget *widget, gpointer data)
 }
 
 static void
-add_menu_to_panel (GtkWidget *widget, gpointer data)
+add_menu_to_panel (GtkWidget  *widget,
+		   const char *menu_path)
 {
-	const char *menudir = data;
-	gboolean main_menu;
 	PanelWidget *panel;
-	PanelData *pd;
-	int insertion_pos = -1;
-	int flags = get_default_menu_flags ();
+	PanelData   *pd;
+	int         insertion_pos = -1;
 
 	panel = menu_get_panel (widget);
 
 	pd = g_object_get_data (G_OBJECT (panel->toplevel), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
+	insertion_pos = pd ? pd->insertion_pos : -1;
 
-	if (menudir == NULL) {
-		main_menu = TRUE;
-		menudir = "applications:/";
-	} else {
-		main_menu = FALSE;
-	}
-
-	load_menu_applet (menudir, main_menu, flags,
-			  TRUE /* global_main */,
-			  FALSE /* custom_icon */,
-			  NULL /* custom_icon_file */,
-			  panel /* panel */,
-			  insertion_pos /* pos */,
-			  FALSE /* exactpos */,
-			  NULL);
+	panel_menu_button_load (menu_path,
+				menu_path != NULL,
+				NULL,
+				FALSE,
+				panel,
+				insertion_pos,
+				FALSE,
+				NULL);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -1885,8 +1854,8 @@ add_drawer_to_panel (GtkWidget *widget, gpointer data)
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 	
-	load_drawer_applet (NULL, NULL, NULL,
-			    panel, insertion_pos, FALSE, NULL);
+	load_drawer_applet (NULL, NULL, NULL, panel->toplevel,
+			    insertion_pos, FALSE, NULL);
 }
 
 static void
@@ -1971,33 +1940,6 @@ menu_destroy(GtkWidget *menu, gpointer data)
 		destroy_mf (mf);
 	}
 	g_slist_free (mfl);
-}
-
-/*reread the applet menu, not a submenu*/
-static void
-check_and_reread_applet (Menu *menu)
-{
-	GSList *mfl, *list;
-
-	if (menu_need_reread (menu->menu)) {
-		mfl = g_object_get_data (G_OBJECT (menu->menu), "mf");
-
-		/*that will be destroyed in add_menu_widget*/
-		if (menu->main_menu) {
-			add_menu_widget (menu, NULL, NULL, TRUE);
-		} else {
-			GSList *dirlist = NULL;
-			for(list = mfl; list != NULL;
-			    list = list->next) {
-				MenuFinfo *mf = list->data;
-				dirlist = g_slist_append (dirlist,
-							  g_strdup (mf->menudir));
-			}
-			add_menu_widget (menu, NULL, dirlist, TRUE);
-
-			panel_g_slist_deep_free (dirlist);
-		}
-	}
 }
 
 /* XXX: hmmm the gtk_menu_reposition only calls
@@ -2173,9 +2115,13 @@ create_menuitem (GtkWidget *menu,
 	icon = fr->icon;
 	fallback = NULL;
 
-	if(fr->type == FILE_REC_DIR) {
-
-		if (icon == NULL)
+	if (fr->type == FILE_REC_DIR) {
+		if (!gnome_folder)
+			gnome_folder = gnome_program_locate_file (NULL, 
+								  GNOME_FILE_DOMAIN_PIXMAP, 
+								  "gnome-folder.png", 
+								  TRUE, NULL);
+		if (!icon)
 			icon = gnome_folder;
 		else
 			fallback = gnome_folder;
@@ -2246,7 +2192,7 @@ create_menuitem (GtkWidget *menu,
 	return TRUE;
 }
 
-static GtkWidget *
+GtkWidget *
 create_menu_at (GtkWidget *menu,
 		const char *menudir,
 		gboolean launcher_add,
@@ -2361,54 +2307,6 @@ create_menu_at_fr (GtkWidget *menu,
 	return menu;
 }
 
-static void
-destroy_menu (GtkWidget *widget, gpointer data)
-{
-	Menu *menu = data;
-	GtkWidget *prop_dialog = menu->prop_dialog;
-
-	menu->prop_dialog = NULL;
-
-	if (prop_dialog != NULL)
-		gtk_widget_destroy (prop_dialog);
-
-	menu->button = NULL;
-
-	if (menu->menu != NULL)
-		g_object_unref (G_OBJECT (menu->menu));
-	menu->menu = NULL;
-}
-
-static void
-free_menu (gpointer data)
-{
-	Menu *menu = data;
-
-	g_free (menu->path);
-	menu->path = NULL;
-
-	g_free (menu->custom_icon_file);
-	menu->custom_icon_file = NULL;
-
-	g_free(menu);
-}
-
-static void
-menu_deactivate (GtkWidget *w, gpointer data)
-{
-	PanelWidget *panel_widget;
-	Menu        *menu = data;
-
-	panel_widget = PANEL_WIDGET (menu->button->parent);
-
-	panel_toplevel_unblock_auto_hide (panel_widget->toplevel);
-
-	GTK_BUTTON (menu->button)->in_button = FALSE;
-	BUTTON_WIDGET (menu->button)->ignore_leave = FALSE;
-	gtk_button_released (GTK_BUTTON (menu->button));
-	menu->age = 0;
-}
-
 static const char *
 applet_menu_get_category_icon (const char *untranslated_category)
 {
@@ -2520,7 +2418,7 @@ static gboolean
 recheck_applet_list (ReloadData *reload_data)
 {
 	return TRUE;
-#if FIXME_FOR_NEW_TOPLEVEL
+#ifdef FIXME
 	Bonobo_ServerInfoList *applet_list;
 	CORBA_Environment      env;
 
@@ -2878,10 +2776,6 @@ remove_panel_accept (GtkWidget     *w,
 
 		panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-		/* FIXME_FOR_NEW_TOPLEVEL:
-		 *  this shouldn't be done here. It should be done in a
-		 *  "destroy" signal handler for the toplevel.
-		 */
 		/* Destroy the drawers button before destroying the drawer */
 		if (panel_toplevel_get_is_attached (toplevel) &&
 		    panel_widget && panel_widget->master_widget) {
@@ -2913,18 +2807,13 @@ remove_panel_query (GtkWidget *menuitem,
 	panel_widget = menu_get_panel (menuitem);
 	toplevel     = panel_widget->toplevel;
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	/* Need some way of figuring out if this is the last
-	 * non-drawer panel
-	 */
-	if (!panel_toplevel_get_is_attached (toplevel) && base_panels == 1) {
+	if (panel_toplevel_is_last_unattached (toplevel)) {
 		panel_error_dialog (
 			menuitem_to_screen (menuitem),
 			"cannot_remove_last_panel",
 			_("You cannot remove your last panel."));
 		return;
 	}
-#endif
 
 	if (!global_config.confirm_panel_remove) {
 		gtk_widget_destroy (GTK_WIDGET (toplevel));
@@ -2982,14 +2871,9 @@ setup_remove_this_panel (GtkWidget *menu,
 
 	g_assert (PANEL_IS_TOPLEVEL (panel_widget->toplevel));
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	/* Need some way of figuring out if this is the last
-	 * non-drawer panel
-	 */
-	if (!panel_toplevel_get_is_attached (panel_widget->toplevel) && base_panels == 1)
+	if (panel_toplevel_is_last_unattached (panel_widget->toplevel))
 		gtk_widget_set_sensitive(menuitem, FALSE);
 	else
-#endif
 		gtk_widget_set_sensitive(menuitem, TRUE);
 
 	label = GTK_BIN(menuitem)->child;
@@ -3020,7 +2904,7 @@ setup_remove_this_panel (GtkWidget *menu,
 			GTK_LABEL (label), _("_Delete This Panel"));
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
+#ifdef FIXME_FOR_NEW_CONFIG
 static void
 current_panel_config (GtkWidget *menuitem)
 {
@@ -3032,7 +2916,7 @@ current_panel_config (GtkWidget *menuitem)
 }
 #endif
 
-#ifndef FIXME_FOR_NEW_TOPLEVEL
+#ifndef FIXME_FOR_NEW_CONFIG
 
 static void
 toggle_expand (PanelToplevel *toplevel)
@@ -3166,7 +3050,7 @@ create_toplevel_testing_menu (PanelToplevel *toplevel)
 
 	return retval;
 }
-#endif
+#endif /* FIXME_FOR_NEW_CONFIG */
 
 static void
 make_panel_submenu (PanelWidget *panel_widget,
@@ -3204,6 +3088,7 @@ make_panel_submenu (PanelWidget *panel_widget,
 			    G_CALLBACK(setup_remove_this_panel),
 			    menuitem);
 
+#if FIXME_FOR_NEW_CONFIG
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
@@ -3212,11 +3097,10 @@ make_panel_submenu (PanelWidget *panel_widget,
 			_("_Properties"));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-#if FIXME_FOR_NEW_TOPLEVEL
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (current_panel_config), 
 			  NULL);
-#else
+#else /* FIXME_FOR_NEW_CONFIG */
 	gtk_widget_set_sensitive (menuitem, FALSE);
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3228,7 +3112,7 @@ make_panel_submenu (PanelWidget *panel_widget,
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	g_signal_connect (submenu, "show",
 			  G_CALLBACK (submenu_to_display), NULL);
-#endif
+#endif /* FIXME_FOR_NEW_CONFIG */
 
 	add_menu_separator (menu);
 
@@ -3637,367 +3521,6 @@ create_root_menu (GtkWidget   *root_menu,
 	return root_menu;
 }
 
-static char *
-get_menu_tooltip (GtkWidget *menu)
-{
-	GString *tooltip;
-	GSList *mfl;
-
-	if (menu == NULL)
-		return g_strdup (_("Menu"));
-
-	tooltip = g_string_new (_("Menu:"));
-
-	mfl = g_object_get_data (G_OBJECT (menu), "mf");
-	while (mfl != NULL) {
-		MenuFinfo *mf = mfl->data;
-
-		g_string_append_c (tooltip, ' ');
-		g_string_append (tooltip, mf->dir_name);
-
-		mfl = mfl->next;
-	}
-
-	return g_string_free (tooltip, FALSE);
-}
-	
-void
-add_menu_widget (Menu *menu,
-		 PanelWidget *panel,
-		 GSList *menudirl,
-		 gboolean fake_subs)
-{
-	GSList *li;
-
-	/* one of these has to be there in order to get the panel of the
-	   applet */
-	g_return_if_fail (menu->menu || panel);
-
-	if (menu->menu) {
-		panel = menu_get_panel (menu->menu);
-		g_object_unref (menu->menu);
-		menu->menu = NULL;
-	}
-
-	if(panel == NULL) {
-		g_warning ("Menu is seriously weird");
-		return;
-	}
-
-	if (menu->main_menu) {
-		int flags;
-		if (menu->global_main)
-			flags = get_default_menu_flags ();
-		else
-			flags = menu->main_menu_flags;
-		menu->menu = create_root_menu (
-				NULL, panel, fake_subs, flags, TRUE);
-
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Main Menu"), NULL);
-	} else {
-		char *tooltip;
-
-		menu->menu = NULL;
-		for(li = menudirl; li != NULL; li = li->next)
-			menu->menu = create_menu_at (menu->menu, li->data,
-						     FALSE /* launcher_add */,
-						     NULL,
-						     fake_subs, FALSE);
-
-		tooltip = get_menu_tooltip (menu->menu);
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      tooltip, NULL);
-		g_free (tooltip);
-
-		if(menu->menu == NULL) {
-			int flags;
-			if (menu->global_main)
-				flags = get_default_menu_flags ();
-			else
-				flags = menu->main_menu_flags;
-			g_warning(_("Can't create menu, using main menu!"));
-			menu->menu = create_root_menu (
-					NULL, panel, fake_subs, flags, TRUE);
-			gtk_tooltips_set_tip (panel_tooltips, menu->button,
-					      _("Main Menu"), NULL);
-		}
-
-	}
-
-	/* sink the menu, none of this floating */
-	g_object_ref (G_OBJECT (menu->menu));
-	gtk_object_sink (GTK_OBJECT (menu->menu));
-
-	g_signal_connect (G_OBJECT (menu->menu), "deactivate",
-			    G_CALLBACK (menu_deactivate), menu);
-
-	g_object_set_data (G_OBJECT (menu->menu), "menu_panel", panel);
-}
-
-static void 
-menu_button_menu_popup (Menu    *menu,
-			guint    button,
-			guint32  activate_time)
-{
-	PanelWidget   *panel_widget;
-	PanelToplevel *toplevel;
-	int            flags;
-
-	if (menu->global_main)
-		flags = get_default_menu_flags ();
-	else
-		flags = menu->main_menu_flags;
-
-	if (menu->menu == NULL) {
-		char *this_menu = get_real_menu_path (menu->path, menu->main_menu);
-		GSList *list = g_slist_append (NULL, this_menu);
-	
-		add_menu_widget (menu, PANEL_WIDGET(menu->button->parent),
-				 list, TRUE);
-		
-		g_slist_free (list);
-
-		g_free (this_menu);
-	} else {
-		const DistributionInfo *distribution_info = get_distribution_info ();
-
-		if(flags & MAIN_MENU_DISTRIBUTION &&
-		   ! (flags & MAIN_MENU_DISTRIBUTION_SUB) &&
-		   distribution_info != NULL &&
-		   distribution_info->menu_show_func)
-			distribution_info->menu_show_func(NULL, NULL);
-
-		check_and_reread_applet (menu);
-	}
-
-	panel_widget = PANEL_WIDGET (menu->button->parent);
-	toplevel     = panel_widget->toplevel;
-
-	panel_toplevel_block_auto_hide (toplevel);
-
-	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
-
-	menu->age = 0;
-
-	gtk_menu_set_screen (GTK_MENU (menu->menu),
-			     gtk_window_get_screen (GTK_WINDOW (toplevel)));
-
-	gtk_menu_popup (GTK_MENU (menu->menu),
-			NULL,
-			NULL, 
-			(GtkMenuPositionFunc) panel_position_applet_menu,
-			menu->info->widget,
-			button,
-			activate_time);
-}
-
-static void
-menu_button_pressed (GtkWidget *widget, gpointer data)
-{
-	Menu *menu = data;
-	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
-
-	gtk_grab_remove(menu->button);
-	menu_button_menu_popup (menu, bevent->button, bevent->time);
-	gdk_event_free((GdkEvent *)bevent);
-}
-
-static void  
-drag_data_get_cb (GtkWidget          *widget,
-		  GdkDragContext     *context,
-		  GtkSelectionData   *selection_data,
-		  guint               info,
-		  guint               time,
-		  gpointer            data)
-{
-	char *foo;
-
-	foo = g_strdup_printf ("MENU:%d", panel_find_applet (widget));
-
-	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, (guchar *)foo,
-				strlen (foo));
-
-	g_free (foo);
-}
-
-static void
-menu_applet_reparented (GtkWidget *applet,
-			GtkWidget *previous_panel,
-			Menu      *menu)
-{
-	g_return_if_fail (menu != NULL && GTK_IS_MENU (menu->menu));
-
-	panel_applet_menu_set_recurse (
-		GTK_MENU (menu->menu), "menu_panel", applet->parent);
-}
-
-static Menu *
-create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
-		   PanelOrientation orientation, int main_menu_flags,
-		   gboolean global_main,
-		   gboolean custom_icon, const char *custom_icon_file)
-{
-        static GtkTargetEntry dnd_targets[] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
-	};
-	Menu *menu;
-	
-	char *pixmap_name;
-
-	menu = g_new0 (Menu, 1);
-
-	menu->main_menu = main_menu;
-
-	menu->path = g_strdup (menudir);
-
-	menu->custom_icon = custom_icon;
-	if ( ! string_empty (custom_icon_file))
-		menu->custom_icon_file = g_strdup (custom_icon_file);
-	else
-		menu->custom_icon_file = NULL;
-
-	if (menu->custom_icon &&
-	    menu->custom_icon_file != NULL &&
-	    g_file_test (menu->custom_icon_file, G_FILE_TEST_EXISTS))
-		pixmap_name = g_strdup (menu->custom_icon_file);
-	else
-		pixmap_name = get_pixmap (menudir, main_menu);
-
-	menu->main_menu_flags = main_menu_flags;
-	menu->global_main = global_main;
-
-	/*make the pixmap*/
-	menu->button = button_widget_new (pixmap_name, -1,
-					  TRUE, orientation);
-	g_free (pixmap_name);
-	if (!menu->button) {
-		free_menu (menu);
-		return NULL;
-	}
-
-	/*A hack since this function only pretends to work on window
-	  widgets (which we actually kind of are) this will select
-	  some (already selected) events on the panel instead of
-	  the button window (where they are also selected) but
-	  we don't mind*/
-	GTK_WIDGET_UNSET_FLAGS (menu->button, GTK_NO_WINDOW);
-	gtk_drag_source_set (menu->button,
-			     GDK_BUTTON1_MASK,
-			     dnd_targets, 1,
-			     GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (menu->button, GTK_NO_WINDOW);
-
-	g_signal_connect (G_OBJECT (menu->button), "drag_data_get",
-			    G_CALLBACK (drag_data_get_cb),
-			    NULL);
-
-	g_signal_connect_after (menu->button, "pressed",
-				G_CALLBACK (menu_button_pressed), menu);
-
-	g_signal_connect (menu->button, "clicked",
-			  G_CALLBACK (menu_button_pressed), menu);
-	g_signal_connect (menu->button, "destroy",
-			  G_CALLBACK (destroy_menu), menu);
-	g_signal_connect (menu->button, "parent_set",
-			  G_CALLBACK (menu_applet_reparented), menu);
-
-	gtk_widget_show (menu->button);
-
-	/*if we are allowed to be pigs and load all the menus to increase
-	  speed, load them*/
-	if(global_config.keep_menus_in_memory) {
-		GSList *list = g_slist_append(NULL, (gpointer)menudir);
-		add_menu_widget (menu, panel, list, TRUE);
-		g_slist_free(list);
-	}
-
-	if (main_menu) {
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("Main Menu"), NULL);
-	} else {
-		char *tooltip = get_menu_tooltip (menu->menu);
-		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      tooltip, NULL);
-		g_free (tooltip);
-	}
-
-	return menu;
-}
-
-static Menu *
-create_menu_applet (PanelWidget *panel,
-		    const char *path,
-		    PanelOrientation orientation,
-		    gboolean main_menu,
-		    int main_menu_flags,
-		    gboolean global_main,
-		    gboolean custom_icon, const char *custom_icon_file)
-{
-	Menu *menu;
-
-	char *this_menu = get_real_menu_path (path, main_menu);
-
-	if (this_menu == NULL)
-		return NULL;
-
-	if(gnome_folder == NULL)
-		gnome_folder = gnome_program_locate_file (NULL, 
-							  GNOME_FILE_DOMAIN_PIXMAP, 
-							  "gnome-folder.png", 
-							  TRUE, NULL);
-
-	menu = create_panel_menu (panel, this_menu, main_menu,
-				  orientation, main_menu_flags, global_main,
-				  custom_icon, custom_icon_file);
-
-	g_free (this_menu);
-	return menu;
-}
-
-void
-set_menu_applet_orientation (Menu             *menu,
-			     PanelOrientation  orientation)
-{
-	g_return_if_fail (menu != NULL);
-
-	button_widget_set_params (BUTTON_WIDGET (menu->button),
-				  TRUE, orientation);
-}
-
-void
-load_menu_applet (const char  *params,
-		  gboolean     main_menu,
-		  int          main_menu_flags,
-		  gboolean     global_main,
-		  gboolean     custom_icon,
-		  const char  *custom_icon_file,
-		  PanelWidget *panel,
-		  int          pos,
-		  gboolean     exactpos,
-		  const char  *gconf_key)
-{
-	Menu *menu;
-
-	menu = create_menu_applet (panel, params, PANEL_ORIENTATION_TOP,
-				   main_menu, main_menu_flags, global_main,
-				   custom_icon, custom_icon_file);
-
-	if (menu != NULL) {
-		AppletInfo *info;
-
-		info = panel_applet_register (menu->button, menu, free_menu, panel, 
-					      pos, exactpos, APPLET_MENU, gconf_key);
-		if (!info)
-			return;
-
-		menu->info = info;
-
-		panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("_Help"));
-	}
-}
-
 static GList *
 find_in_load_list (GtkWidget *image)
 {
@@ -4087,107 +3610,6 @@ panel_load_menu_image_deferred (GtkWidget   *image_menu_item,
 
 	image_menu_items = g_slist_prepend (image_menu_items, image);
 }
-
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-void
-menu_save_to_gconf (Menu       *menu,
-		    const char *gconf_key)
-{
-	GConfClient *client;
-	const char  *profile;
-	const char  *temp_key;
-
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "path");
-	gconf_client_set_string (client, temp_key, menu->path, NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "main-menu");
-	gconf_client_set_bool (client, temp_key, menu->main_menu, NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "global-main");
-	gconf_client_set_bool (client, temp_key, menu->global_main, NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "custom-icon");
-	gconf_client_set_bool (client, temp_key, menu->custom_icon, NULL);
-
-	if (menu->custom_icon && menu->custom_icon_file) {
-		temp_key = panel_gconf_full_key (
-				PANEL_GCONF_OBJECTS, profile, gconf_key, "custom-icon-file");
-		gconf_client_set_string (client, temp_key, menu->custom_icon_file, NULL);
-	}
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "main-menu-flags");
-	gconf_client_set_int (client, temp_key, menu->main_menu_flags, NULL);
-}
-
-void
-menu_load_from_gconf (PanelWidget *panel_widget,
-		      gint         position,
-		      const char  *gconf_key)
-{
-	GConfClient *client;
-	const char  *profile;
-	const char  *temp_key;
-	gboolean     main_menu;
-	gboolean     global_main;
-	gboolean     custom_icon;
-	char        *path;
-	char        *custom_icon_file = NULL;
-	int          flags;
-
-	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (gconf_key != NULL);
-
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "path");
-	path = gconf_client_get_string (client, temp_key, NULL);
-	if (!path) {
-		g_printerr (_("No path set at %s for panel menu object\n"), temp_key);
-		return;
-	}
-        
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "main-menu");
-	main_menu = gconf_client_get_bool (client, temp_key, NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "global-main");
-	global_main = gconf_client_get_bool (client, temp_key, NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "custom-icon");
-	custom_icon = gconf_client_get_bool (client, temp_key, NULL);
-
-	if (custom_icon) {
-		temp_key = panel_gconf_full_key (
-				PANEL_GCONF_OBJECTS, profile,
-				gconf_key, "custom-icon-file");
-		custom_icon_file = gconf_client_get_string (
-					client, temp_key, NULL);
-	}
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "main-menu-flags");
-	flags = gconf_client_get_int (client, temp_key, NULL);
-
-	load_menu_applet (path, main_menu, flags, global_main,
-			  custom_icon, custom_icon_file,
-			  panel_widget, position, TRUE, gconf_key);
-
-	g_free (path);
-	g_free (custom_icon_file);
-}
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static gboolean
 panel_menu_key_press_handler (GtkWidget   *widget,

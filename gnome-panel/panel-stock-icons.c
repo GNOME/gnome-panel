@@ -31,7 +31,7 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-desktop-item.h>
 
-#include "panel-main.h"
+#include "panel-globals.h"
 
 static GtkIconSize panel_menu_icon_size = 0;
 static GtkIconSize panel_menu_bar_icon_size = 0;

@@ -35,7 +35,6 @@
 #include "panel-profile.h"
 #include "panel-util.h"
 #include "panel.h"
-#include "session.h"
 #include "applet.h"
 #include "panel-marshal.h"
 #include "panel-background.h"
@@ -73,46 +72,48 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2,
 } PanelAppletFlags;
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
-				  const char       *gconf_key)
+				  const char       *id)
 {
 	GConfClient *client;
 	const char  *profile;
-	const char  *temp_key;
+	const char  *key;
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
-	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	gconf_client_set_string (client, key, frame->priv->iid, NULL);
+
+	g_object_unref (client);
 }
 
 void
 panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
-				    gint         position,
-				    const char  *gconf_key)
+				    int          position,
+				    const char  *id)
 {
 	GConfClient *client;
 	const char  *profile;
-	const char  *temp_key;
+	const char  *key;
 	char        *applet_iid;
 
 	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (gconf_key != NULL);
+	g_return_if_fail (id != NULL);
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
-	applet_iid = gconf_client_get_string (client, temp_key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	applet_iid = gconf_client_get_string (client, key, NULL);
 
-	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, gconf_key);
+	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
 
 	g_free (applet_iid);
+
+	g_object_unref (client);
 }
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 static void
 popup_handle_remove (BonoboUIComponent *uic,
@@ -157,36 +158,33 @@ panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
 			 int          position,
 			 gboolean     exactpos,
-			 const char  *gconf_key)
+			 const char  *id)
 {
 	GtkWidget  *frame = NULL;
 	AppletInfo *info;
-	char       *real_key;
+	char       *real_id;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
 
-	if (gconf_key)
-		real_key = g_strdup (gconf_key);
-	else
-		real_key = gconf_unique_key ();
+	real_id = id ? g_strdup (id) : panel_profile_find_new_id (PANEL_GCONF_APPLETS, NULL);
 
-	frame = panel_applet_frame_new (panel, iid, real_key);
+	frame = panel_applet_frame_new (panel, iid, real_id);
 
 	if (!frame) {
-		g_free (real_key);
+		g_free (real_id);
 		return;
 	}
 	
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, frame, NULL, panel, position,
-				      exactpos, APPLET_BONOBO, real_key);
+				      exactpos, APPLET_BONOBO, real_id);
 
 	if (!info)
 		g_warning (_("Cannot register control widget\n"));
 
-	g_free (real_key);
+	g_free (real_id);
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
 }
@@ -266,25 +264,18 @@ panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 
 	frame->priv->orientation = orientation;
 
-	/* FIXME_FOR_NEW_TOPLEVEL:
-	 *   I think there may be a semanic difference between
-	 *   these orientations i.e. top might mean down, not up
-	 *   Then again I think only horizontal/vertical really
-	 *   matters. Uggh.
-	 */
-
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		orient = GNOME_Vertigo_PANEL_ORIENT_UP;
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
 		orient = GNOME_Vertigo_PANEL_ORIENT_DOWN;
 		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		orient = GNOME_Vertigo_PANEL_ORIENT_UP;
+		break;
 	case PANEL_ORIENTATION_LEFT:
-		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
+		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
+		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
 		break;
 	default:
 		g_assert_not_reached ();
@@ -667,22 +658,22 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 	if (response == GTK_RESPONSE_YES) {
 		PanelWidget *panel;
 		char        *iid;
-		char        *gconf_key = NULL;
+		char        *id = NULL;
 		int          position = -1;
 
 		panel = frame->priv->panel;
 		iid   = g_strdup (frame->priv->iid);
 
 		if (info) {
-			gconf_key = g_strdup (info->gconf_key);
+			id = g_strdup (info->id);
 			position  = panel_applet_get_position (info);
 			panel_applet_clean (info, FALSE);
 		}
 
-		panel_applet_frame_load (iid, panel, position, TRUE, gconf_key);
+		panel_applet_frame_load (iid, panel, position, TRUE, id);
 
 		g_free (iid);
-		g_free (gconf_key);
+		g_free (id);
 
 	} else if (info)
 		panel_applet_clean (info, TRUE);
@@ -799,7 +790,7 @@ static void
 panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				   CORBA_Environment *ev,
 				   const char        *iid,
-				   const char        *gconf_key,
+				   const char        *id,
 				   GtkWindow         *panel)
 {
 	GtkWidget *dialog;
@@ -834,10 +825,8 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	gtk_widget_destroy (dialog);
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 	if (response == GTK_RESPONSE_OK)
-		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
-#endif
+		panel_applet_clean_gconf (APPLET_BONOBO, id, TRUE);
 }
 
 static void
@@ -931,25 +920,18 @@ panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
 
 	orientation = panel_widget_get_applet_orientation (panel);
 
-	/* FIXME_FOR_NEW_TOPLEVEL:
-	 *   I think there may be a semanic difference between
-	 *   these orientations i.e. top might mean down, not up
-	 *   Then again I think only horizontal/vertical really
-	 *   matters. Uggh.
-	 */
-
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		retval = "up";
-		break;
-	case PANEL_ORIENTATION_BOTTOM:
 		retval = "down";
 		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		retval = "up";
+		break;
 	case PANEL_ORIENTATION_LEFT:
-		retval = "left";
+		retval = "right";
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		retval = "right";
+		retval = "left";
 		break;
 	default:
 		g_assert_not_reached ();
@@ -999,7 +981,7 @@ static char *
 panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 				      PanelWidget      *panel,
 				      const char       *iid,
-				      const char       *gconf_key)
+				      const char       *id)
 {
 	char *retval;
 	char *bg_str;
@@ -1011,7 +993,7 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/new_panel/profiles/%s/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s",
-			iid, panel_profile_get_name (), gconf_key, bg_str,
+			iid, panel_profile_get_name (), id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel));
 
@@ -1024,7 +1006,7 @@ GtkWidget *
 panel_applet_frame_construct (PanelAppletFrame *frame,
 			      PanelWidget      *panel,
 			      const char       *iid,
-			      const char       *gconf_key)
+			      const char       *id)
 {
 	BonoboControlFrame    *control_frame;
 	Bonobo_Control         control;
@@ -1035,7 +1017,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	frame->priv->panel = panel;
 
-	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
+	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
 
 	/* FIXME: this should really use bonobo_get_object_async */
 	CORBA_exception_init (&ev);
@@ -1047,7 +1029,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	if (BONOBO_EX (&ev)) {
 		panel_applet_frame_loading_failed (
-			frame, &ev, iid, gconf_key, GTK_WINDOW (panel->toplevel));
+			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
 		CORBA_exception_free (&ev);
 		return NULL;
 	}
@@ -1104,15 +1086,15 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 GtkWidget *
 panel_applet_frame_new (PanelWidget *panel,
 			const char  *iid,
-			const char  *gconf_key)
+			const char  *id)
 {
 	PanelAppletFrame *frame;
 
-	g_return_val_if_fail (iid != NULL && gconf_key != NULL, NULL);
+	g_return_val_if_fail (iid != NULL && id != NULL, NULL);
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	if (!panel_applet_frame_construct (frame, panel, iid, gconf_key)) {
+	if (!panel_applet_frame_construct (frame, panel, iid, id)) {
 		gtk_object_sink (GTK_OBJECT (frame));
 		return NULL;
 	}

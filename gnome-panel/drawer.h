@@ -20,20 +20,20 @@ typedef struct {
 	AppletInfo    *info;
 } Drawer;
 
-Drawer *load_drawer_applet (gchar       *mypanel,
-			    const char  *pixmap,
-			    const char  *tooltip,
-			    PanelWidget *panel,
-			    int          pos,
-			    gboolean     exactpos,
-			    const char  *gconf_key);
+Drawer *load_drawer_applet (char          *toplevel_id,
+			    const char    *pixmap,
+			    const char    *tooltip,
+			    PanelToplevel *parent_toplevel,
+			    int            pos,
+			    gboolean       exactpos,
+			    const char    *id);
 
 void    drawer_save_to_gconf   (Drawer     *drawer,
-				const char *gconf_key);
+				const char *id);
 
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
-				const char  *gconf_key);
+				const char  *id);
 
 void set_drawer_applet_orientation (Drawer           *drawer,
 				    PanelOrientation  orientation);

@@ -24,21 +24,14 @@
 #include "button-widget.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-util.h"
-#include "session.h"
 #include "xstuff.h"
-
-extern GlobalConfig global_config;
-extern gboolean commie_mode;
-
-extern int panels_to_sync;
-
-extern GtkTooltips *panel_tooltips;
-extern GSList *panels;
+#include "panel-globals.h"
 
 #undef DRAWER_DEBUG
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
+#ifdef FIXME_FOR_NEW_CONFIG
 static void
 properties_apply_callback(gpointer data)
 {
@@ -73,7 +66,7 @@ properties_apply_callback(gpointer data)
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
 			      drawer->tooltip, NULL);
 
-	drawer_save_to_gconf (drawer, drawer->info->gconf_key);
+	drawer_save_to_gconf (drawer, drawer->info->id);
 }
 
 static void
@@ -191,7 +184,7 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 
 	drawer->properties = dialog;
 }
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
+#endif /* FIXME_FOR_NEW_CONFIG */
 
 static void
 drawer_click (GtkWidget *w, Drawer *drawer)
@@ -519,8 +512,7 @@ create_drawer_applet (PanelToplevel    *toplevel,
 }
 
 static Drawer *
-create_empty_drawer_applet (PanelWidget      *container,
-			    PanelToplevel    *parent_toplevel,
+create_empty_drawer_applet (PanelToplevel    *parent_toplevel,
 			    const char       *tooltip,
 			    const char       *pixmap,
 			    PanelOrientation  orientation)
@@ -530,8 +522,8 @@ create_empty_drawer_applet (PanelWidget      *container,
 	int            monitor;
 	int            screen_width, screen_height;
 
-	screen  = panel_screen_from_panel_widget (container);
-	monitor = panel_monitor_from_panel_widget (container);
+	screen  = gtk_window_get_screen (GTK_WINDOW (parent_toplevel));
+	monitor = panel_toplevel_get_monitor (parent_toplevel);
 
 	screen_width  = gdk_screen_get_width  (screen);
 	screen_height = gdk_screen_get_height (screen);
@@ -555,9 +547,11 @@ set_drawer_applet_orientation (Drawer           *drawer,
 }
 
 static void
-button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
+drawer_button_size_allocated (GtkWidget     *widget,
+			      GtkAllocation *alloc,
+			      Drawer        *drawer)
 {
-	if(!GTK_WIDGET_REALIZED(widget))
+	if (!GTK_WIDGET_REALIZED (widget))
 		return;
 
 	gtk_widget_queue_resize (GTK_WIDGET (drawer->toplevel));
@@ -566,74 +560,56 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 }
 
 Drawer *
-load_drawer_applet (gchar       *mypanel_id,
-		    const char  *pixmap,
-		    const char  *tooltip,
-		    PanelWidget *panel,
-		    int          pos,
-		    gboolean     exactpos,
-		    const char  *gconf_key)
+load_drawer_applet (char          *toplevel_id,
+		    const char    *pixmap,
+		    const char    *tooltip,
+		    PanelToplevel *parent_toplevel,
+		    int            pos,
+		    gboolean       exactpos,
+		    const char    *id)
 {
+	PanelToplevel    *toplevel = NULL;
 	PanelOrientation  orientation;
 	Drawer           *drawer;
 
-	orientation = panel_widget_get_applet_orientation (panel);
+	orientation = panel_toplevel_get_orientation (parent_toplevel);
 
-	if (!mypanel_id) {
-		drawer = create_empty_drawer_applet (
-				panel, panel->toplevel, tooltip, pixmap, orientation);
-		if (drawer != NULL)
-			panel_setup (drawer->toplevel);
-		panels_to_sync = TRUE;
-	} else {
-		PanelData *dr_pd;
-
-		dr_pd = panel_data_by_id (mypanel_id);
-
-		if (dr_pd == NULL) {
+	if (toplevel_id) {
+		toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
+		if (!toplevel)
 			g_warning ("Can't find the panel for drawer, making a new panel");
-			drawer = create_empty_drawer_applet(
-					panel, panel->toplevel, tooltip, pixmap, orientation);
-			if(drawer) panel_setup(drawer->toplevel);
-			panels_to_sync = TRUE;
-		} else {
-			drawer = create_drawer_applet (
-					PANEL_TOPLEVEL (dr_pd->panel),
-					panel->toplevel,
-					tooltip, pixmap, orientation);
+	}
 
-			panel_toplevel_set_orientation (
-				PANEL_TOPLEVEL (dr_pd->panel), orientation);
-		}
+	if (toplevel)
+		drawer = create_drawer_applet (toplevel, parent_toplevel,
+					       tooltip, pixmap, orientation);
+	else {
+		drawer = create_empty_drawer_applet (parent_toplevel, tooltip, pixmap, orientation);
+		if (drawer)
+			panel_setup (drawer->toplevel);
 	}
 
 	if (!drawer)
 		return NULL;
 
-	{
-		GtkWidget *dw = GTK_WIDGET (drawer->toplevel);
+	toplevel = drawer->toplevel;
 
-		drawer->info = panel_applet_register (
-					drawer->button, drawer,
-					(GDestroyNotify) free_drawer,
-					panel, pos, exactpos,
-					APPLET_DRAWER, gconf_key);
+	drawer->info = panel_applet_register (drawer->button, drawer,
+					      (GDestroyNotify) free_drawer,
+					      panel_toplevel_get_panel_widget (toplevel),
+					      pos, exactpos, APPLET_DRAWER, id);
 
-		if (!drawer->info) {
-			gtk_widget_destroy (dw);
-			return NULL;
-		}
+	if (!drawer->info) {
+		gtk_widget_destroy (GTK_WIDGET (toplevel));
+		return NULL;
 	}
 
-	g_signal_connect_after (G_OBJECT(drawer->button),
-				"size_allocate",
-				G_CALLBACK (button_size_alloc),
-				drawer);
+	g_signal_connect_after (drawer->button, "size_allocate",
+				G_CALLBACK (drawer_button_size_allocated), drawer);
 
 	panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
 
-	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
-			      drawer->tooltip,NULL);
+	gtk_tooltips_set_tip (panel_tooltips, drawer->button, drawer->tooltip, NULL);
 	gtk_window_present (GTK_WINDOW (drawer->toplevel));
 
 	if (!commie_mode)
@@ -648,96 +624,77 @@ load_drawer_applet (gchar       *mypanel_id,
 	return drawer;
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 drawer_save_to_gconf (Drawer     *drawer,
-		      const char *gconf_key)
+		      const char *id)
 {
-	PanelWidget *panel_widget;
 	GConfClient *client;
 	const char  *profile;
-	const char  *temp_key;
+	const char  *key;
 
 	g_return_if_fail (drawer && PANEL_IS_TOPLEVEL (drawer->toplevel));
 
-	panel_widget = panel_toplevel_get_panel_widget (drawer->toplevel);
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	g_return_if_fail (PANEL_IS_WIDGET (panel_widget));
-
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "parameters");
-	gconf_client_set_int (client, temp_key,
-			      g_slist_index (panels, panel_widget),
-			      NULL);
-
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "unique-drawer-panel-id");
-	gconf_client_set_string (client, temp_key,
-				 panel_widget->unique_id,
+	key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, id, "attached_panel_id");
+	gconf_client_set_string (client, key,
+				 panel_profile_get_toplevel_id (drawer->toplevel),
 				 NULL);
 
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "pixmap");
-	gconf_client_set_string (client, temp_key, drawer->pixmap, NULL);
+	/* FIXME_FOR_NEW_TOPLEVEL: set the use_custom_icon key */
+
+	key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
+	gconf_client_set_string (client, key, drawer->pixmap, NULL);
 
 	if (drawer->tooltip) {
-		temp_key = panel_gconf_full_key (
-				PANEL_GCONF_OBJECTS, profile, gconf_key, "tooltip");
-		gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
+		key = panel_gconf_full_key (
+				PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+		gconf_client_set_string (client, key, drawer->tooltip, NULL);
 	}
 
-	panel_save_to_gconf (g_object_get_data (G_OBJECT (drawer->toplevel), "PanelData"));
+	g_object_unref (client);
 }
 
 void
 drawer_load_from_gconf (PanelWidget *panel_widget,
 			gint         position,
-			const char  *gconf_key)
+			const char  *id)
 {
 	GConfClient *client;
 	const char  *profile;
-	const char  *temp_key;
-	int          panel;
-	char        *panel_id;
+	const char  *key;
+	char        *toplevel_id;
 	char        *pixmap;
 	char        *tooltip;
 
 	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (gconf_key != NULL);
+	g_return_if_fail (id != NULL);
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
-					 gconf_key, "parameters");
-	panel = gconf_client_get_int (client, temp_key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_panel_id");
+	toplevel_id = gconf_client_get_string (client, key, NULL);
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
-					 gconf_key, "unique-drawer-panel-id");
-	panel_id = gconf_client_get_string (client, temp_key, NULL);
+	/* FIXME_FOR_NEW_TOLEVEL: get the use_custom_icon setting */
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
+	pixmap = gconf_client_get_string (client, key, NULL);
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
-					 gconf_key, "pixmap");
-	pixmap = gconf_client_get_string (client, temp_key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+	tooltip = gconf_client_get_string (client, key, NULL);
 
-	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
-					 gconf_key, "tooltip");
-	tooltip = gconf_client_get_string (client, temp_key, NULL);
+	load_drawer_applet (toplevel_id,
+			    pixmap,
+			    tooltip,
+			    panel_widget->toplevel,
+			    position,
+			    TRUE,
+			    id);
 
-	if (!panel_id < 0 && panel >= 0) {
-		PanelWidget *pw = g_slist_nth_data (panels, panel);
-
-		if (pw)
-			panel_id = g_strdup (pw->unique_id);
-	}
-
-	load_drawer_applet (panel_id, pixmap, tooltip, panel_widget, position, TRUE, gconf_key);
-
-	g_free (panel_id);
+	g_free (toplevel_id);
 	g_free (pixmap);
 	g_free (tooltip);
 }
-#endif /* FIXME_FOR_NEW_TOPELVEL */

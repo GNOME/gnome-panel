@@ -36,6 +36,7 @@
 #include "applet.h"
 #include "menu.h"
 #include "menu-util.h"
+#include "panel-globals.h"
 
 #define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
 
@@ -52,8 +53,6 @@ struct _PanelMenuBarPrivate {
 };
 
 static GObjectClass *parent_class;
-
-extern GtkTooltips *panel_tooltips;
 
 static void
 panel_menu_bar_show_applications_menu (GtkWidget    *menu,
@@ -286,7 +285,7 @@ GtkWidget *
 panel_menu_bar_load (PanelWidget *panel,
 		     int          position,
 		     gboolean     exactpos,
-		     const char  *gconf_key)
+		     const char  *id)
 {
 	PanelMenuBar *menubar;
 
@@ -296,7 +295,7 @@ panel_menu_bar_load (PanelWidget *panel,
 
 	menubar->priv->info = panel_applet_register (
 					GTK_WIDGET (menubar), NULL, NULL, panel,
-					position, exactpos, APPLET_MENU_BAR, gconf_key);
+					position, exactpos, APPLET_MENU_BAR, id);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
 		return NULL;
@@ -312,15 +311,14 @@ GtkWidget *
 panel_menu_bar_load_from_gconf (PanelWidget *panel,
 				int          position,
 				gboolean     exactpos,
-				const char  *gconf_key)
+				const char  *id)
 {
-	return panel_menu_bar_load (
-			panel, position, exactpos, gconf_key);
+	return panel_menu_bar_load (panel, position, exactpos, id);
 }
 
 void
 panel_menu_bar_save_to_gconf (PanelMenuBar *menubar,
-			      const char   *gconf_key)
+			      const char   *id)
 {
 	/* Nothing */
 }

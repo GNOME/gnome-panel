@@ -36,14 +36,12 @@
 #include "menu.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
 #include "panel-util.h"
-#include "session.h"
-
-extern GtkTooltips  *panel_tooltips;
-extern GlobalConfig  global_config;
-extern gboolean      commie_mode;
+#include "panel-session.h"
+#include "panel-globals.h"
 
 enum {
 	PROP_0,
@@ -125,7 +123,7 @@ panel_action_logout (GtkWidget *widget)
 
 	recursion_guard++;
 
-	panel_quit ();
+	panel_session_request_logout (gnome_master_client ());
 
 	recursion_guard--;
 }
@@ -218,12 +216,17 @@ static void
 panel_action_button_finalize (GObject *object)
 {
 	PanelActionButton *button = PANEL_ACTION_BUTTON (object);
+	GConfClient       *client;
 
 	button->priv->info = NULL;
 	button->priv->type = PANEL_ACTION_NONE;
 
-	gconf_client_notify_remove (panel_gconf_get_client (), button->priv->gconf_notify);
+	client = gconf_client_get_default ();
+
+	gconf_client_notify_remove (client, button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
+
+	g_object_unref (client);
 
 	g_free (button->priv);
 	button->priv = NULL;
@@ -421,15 +424,14 @@ panel_action_button_set_type (PanelActionButton     *button,
 			      _(actions [type].tooltip), NULL);
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 static void
 panel_action_button_type_changed (GConfClient       *client,
 				  guint              cnxn_id,
 				  GConfEntry        *entry,
 				  PanelActionButton *button)
 {
-	PanelActionButtonType  type;
-	const char            *action_type;
+	int         type;
+	const char *action_type;
 
 	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
 
@@ -438,7 +440,7 @@ panel_action_button_type_changed (GConfClient       *client,
 
 	action_type = gconf_value_get_string (entry->value);
 
-	if (!gconf_string_to_enum (panel_action_type_map, action_type, (int *) &type))
+	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type))
 		return;
 
 	panel_action_button_set_type (button, type);
@@ -451,25 +453,26 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 	const char  *key;
 	const char  *profile;
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
 	key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, button->priv->info->gconf_key, "action_type");
+			PANEL_GCONF_OBJECTS, profile, button->priv->info->id, "action_type");
 
 	button->priv->gconf_notify =
 		gconf_client_notify_add (client, key, 
 					 (GConfClientNotifyFunc) panel_action_button_type_changed,
 					 button, NULL, NULL);
+
+	g_object_unref (client);
 }
-#endif
 
 GtkWidget *
 panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
 			  int                    position,
 			  gboolean               exactpos,
-			  const char            *gconf_key,
+			  const char            *id,
 			  gboolean               compatibility)
 {
 	PanelActionButton *button;
@@ -489,7 +492,7 @@ panel_action_button_load (PanelActionButtonType  type,
 
 	button->priv->info = panel_applet_register (
 				GTK_WIDGET (button), NULL, NULL, panel,
-				position, exactpos, applet_type, gconf_key);
+				position, exactpos, applet_type, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return NULL;
@@ -501,50 +504,45 @@ panel_action_button_load (PanelActionButtonType  type,
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 	panel_action_button_connect_to_gconf (button);
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 	return GTK_WIDGET (button);
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 GtkWidget *
 panel_action_button_load_from_gconf (PanelWidget *panel,
 				     int          position,
 				     gboolean     exactpos,
-				     const char  *gconf_key)
+				     const char  *id)
 {
-	PanelActionButtonType  type = PANEL_ACTION_NONE;
-	GConfClient           *client;
-	const char            *key;
-	const char            *profile;
-	char                  *action_type;
+	int          type;
+	GConfClient *client;
+	const char  *key;
+	const char  *profile;
+	char        *action_type;
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "action_type");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
 	action_type = gconf_client_get_string (client, key, NULL);
 
-	if (!gconf_string_to_enum (panel_action_type_map, action_type, (int *) &type)) {
+	g_object_unref (client);
+
+	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type)) {
 		g_warning ("Unkown action type '%s' from %s", action_type, key);
-		type = PANEL_ACTION_NONE;
+		g_free (action_type);
+		return NULL;
 	}
 
 	g_free (action_type);
 
-	if (type == PANEL_ACTION_NONE)
-		return NULL;
-
-	return panel_action_button_load (
-			type, panel, position, exactpos, gconf_key, FALSE);
+	return panel_action_button_load (type, panel, position, exactpos, id, FALSE);
 }
 
 void
 panel_action_button_save_to_gconf (PanelActionButton *button,
-				   const char        *gconf_key)
+				   const char        *id)
 {
 	GConfClient *client;
 	const char  *key;
@@ -553,23 +551,19 @@ panel_action_button_save_to_gconf (PanelActionButton *button,
 
 	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	key = panel_gconf_sprintf (
-			"/apps/panel/profiles/%s/objects/%s", profile, gconf_key);
+	key = panel_gconf_sprintf ("/apps/panel/profiles/%s/objects/%s", profile, id);
 	panel_gconf_add_dir (key);
-
-	key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "action_type");
 
 	action_type = gconf_enum_to_string (panel_action_type_map, button->priv->type);
 
-	g_assert (action_type != NULL);
-
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
 	gconf_client_set_string (client, key, action_type, NULL);
+
+	g_object_unref (client);
 }
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 void
 panel_action_button_invoke_menu (PanelActionButton *button,
@@ -603,7 +597,7 @@ panel_action_button_load_from_drag (const char  *drag_string,
 				    PanelWidget *panel,
 				    int          position,
 				    gboolean     exactpos,
-				    const char  *gconf_key,
+				    const char  *id,
 				    int         *old_applet)
 {
 	PanelActionButtonType   type = PANEL_ACTION_NONE;
@@ -636,8 +630,7 @@ panel_action_button_load_from_drag (const char  *drag_string,
 
 	g_strfreev (elements);
 
-	panel_action_button_load (
-			type, panel, position, exactpos, gconf_key, FALSE);
+	panel_action_button_load (type, panel, position, exactpos, id, FALSE);
 
 	return retval;
 }

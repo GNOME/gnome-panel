@@ -102,7 +102,7 @@ panel_sources =			\
 	panel-widget.c  	\
 	button-widget.c  	\
 	xstuff.c		\
-	session.c		\
+	panel-session.c		\
 	panel-compatibility.c   \
 	disclosure-widget.c	\
 	panel.c			\
@@ -128,6 +128,7 @@ panel_sources =			\
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-menu-bar.c        \
+	panel-menu-button.c     \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
 	panel-toplevel.c	\
@@ -143,10 +144,10 @@ panel_sources =			\
 panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
-	panel-main.h		\
+	panel-globals.h		\
 	button-widget.h		\
 	xstuff.h		\
-	session.h		\
+	panel-session.h		\
 	panel-compatibility.h   \
 	disclosure-widget.h	\
 	panel.h         	\
@@ -172,6 +173,7 @@ panel_headers =			\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-menu-bar.h        \
+	panel-menu-button.h     \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
 	panel-toplevel.h	\

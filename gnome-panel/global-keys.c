@@ -16,9 +16,7 @@
 #include "egg-screen-exec.h"
 #include "eggaccelerators.h"
 #include "xstuff.h"
-
-extern GlobalConfig global_config;
-extern GSList *panels;
+#include "panel-globals.h"
 
 #define N_BITS 32 /*all modifier masks fit into it */
 

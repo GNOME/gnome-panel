@@ -7,7 +7,7 @@
  *          George Lebl
  */
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
+#ifdef FIXME_FOR_NEW_CONFIG
 
 #include <config.h>
 
@@ -1828,4 +1828,4 @@ panel_config (GtkWidget *panel)
 	/* show main window */
 	gtk_widget_show_all (ppc->config_window);
 }
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
+#endif /* FIXME_FOR_NEW_CONFIG */

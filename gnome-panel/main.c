@@ -27,28 +27,21 @@
 #include "panel-config-global.h"
 #include "panel-shell.h"
 #include "panel-multiscreen.h"
-#include "session.h"
+#include "panel-session.h"
 #include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "global-keys.h"
 
 #include "nothing.cP"
 
-extern int config_sync_timeout;
+/* globals */
+GlobalConfig global_config;
 
-extern GSList *panels;
-
-extern GSList *applets;
-
-extern gboolean commie_mode;
-extern GlobalConfig global_config;
-
-/*list of all panel widgets created*/
-extern GSList *panel_list;
+GSList *panels = NULL;
+GSList *applets = NULL;
+GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
-
-GnomeClient *client = NULL;
 
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
@@ -56,49 +49,11 @@ char *kde_mini_icondir = NULL;
 
 GnomeIconTheme *panel_icon_theme = NULL;
 
-static gchar *profile_name;
+/* FIXME: old lockdown globals */
+gboolean commie_mode = FALSE;
+gboolean no_run_box = FALSE;
 
-static gboolean
-menu_age_timeout(gpointer data)
-{
-	GSList *li;
-	for(li=applets;li!=NULL;li=g_slist_next(li)) {
-		AppletInfo *info = li->data;
-		if(info->menu && info->menu_age++>=6 &&
-		   !GTK_WIDGET_VISIBLE(info->menu)) {
-			gtk_widget_unref(info->menu);
-			info->menu = NULL;
-			info->menu_age = 0;
-		}
-		/*if we are allowed to, don't destroy applet menus*/
-		if(!global_config.keep_menus_in_memory &&
-		   info->type == APPLET_MENU) {
-			Menu *menu = info->data;
-			if(menu->menu && menu->age++>=6 &&
-			   !GTK_WIDGET_VISIBLE(menu->menu)) {
-				gtk_widget_unref(menu->menu);
-				menu->menu = NULL;
-				menu->age = 0;
-			}
-		}
-	}
-	
-	/*skip panel menus if we are memory hungry*/
-	if(global_config.keep_menus_in_memory)
-		return TRUE;
-	
-	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
-		PanelData *pd = li->data;
-		if(pd->menu && pd->menu_age++>=6 &&
-		   !GTK_WIDGET_VISIBLE(pd->menu)) {
-			gtk_widget_unref(pd->menu);
-			pd->menu = NULL;
-			pd->menu_age = 0;
-		}
-	}
-
-	return TRUE;
-}
+static char *profile_arg;
 
 /* Note: similar function is in gnome-desktop-item !!! */
 
@@ -149,15 +104,16 @@ find_kde_directory (void)
 }
 
 static const struct poptOption options[] = {
-  {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
+  {"profile", '\0', POPT_ARG_STRING, &profile_arg, 0, N_("Specify a profile name to load"), NULL},
   POPT_AUTOHELP
   {NULL, '\0', 0, NULL, 0}
 };
 
-
 int
 main(int argc, char **argv)
 {
+	GnomeClient *sm_client;
+
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
 	textdomain (GETTEXT_PACKAGE);
@@ -178,14 +134,10 @@ main(int argc, char **argv)
 	
 	find_kde_directory();
 
-	client = gnome_master_client ();
-
-	panel_session_set_restart_command (client, argv [0]);
-
-	g_signal_connect (client, "save_yourself",
-			  G_CALLBACK (panel_session_save), argv[0]);
-	g_signal_connect (client, "die",
-			  G_CALLBACK (panel_session_die), NULL);
+	sm_client = gnome_master_client ();
+	panel_session_set_restart_command (sm_client, argv [0]);
+	g_signal_connect (sm_client, "die",
+			  G_CALLBACK (panel_session_handle_die_request), NULL);
 
 	panel_register_window_icon ();
 
@@ -202,17 +154,12 @@ main(int argc, char **argv)
 	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
 	panel_load_global_config ();
-	panel_profile_load (profile_name);
+	panel_profile_load (profile_arg);
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
 			 NULL);
-
-	panel_session_setup_config_sync ();
-
-	/* add some timeouts */
-	g_timeout_add (10*1000, menu_age_timeout, NULL);
 
 	gtk_main ();
 

@@ -12,7 +12,6 @@ typedef struct _PanelData PanelData;
 struct _PanelData {
 	GtkWidget *panel;
 	GtkWidget *menu;
-	int menu_age;
 	int insertion_pos;
 	guint deactivate_idle;
 };

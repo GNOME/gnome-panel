@@ -1,3 +1,92 @@
+2003-02-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Some fairly extensive, but random, hacking - got the applets
+	gconf code going again, re-implemented the menu applet ...
+
+	* Makefile.am: remove session.[ch] and panel-main.h. Add
+	panel-menu-button.[ch], panel-session.[ch] and panel-globals.h.
+
+	* install-defaults.sh: add the default applets.
+
+	* applet.[ch]: re-enable the old applets loading/saving code
+	with various fixes.
+
+	* panel-menu-button.[ch]: re-implement the menu applet a bit
+	more sanely.
+
+	* panel-session.[ch]: new files - basically session.[ch] minus
+	all the old config syncing crap.
+
+	* panel-globals.h: lets keep track of all the globals in the
+	one place. 'Course, preferably they shouldn't exist.
+
+	* button-widget.c: include panel-globals.h.
+
+	* drawer.[ch]:
+	(create_empty_drawer_applet): take a toplevel for the parent
+	panel rather than a PanelWidget.
+	(load_drawer_applet): re-factor this.
+	(drawer_save_to_gconf),
+	(drawer_load_from_gconf): impl support for the new schemas.
+
+	* global-keys.c: include panel-globals.h.
+
+	* gnome-run.c: ditto.
+
+	* launcher.[ch]: re-enable the gconf code. Fixup a fair bit of stuff.
+
+	* main.c: (main): remove the menu aging crap, define all globals
+	here and don't bother connecting to "save-yourself".
+
+	* menu-fentry.c: include panel-globals.h.
+
+	* menu-util.[ch]: (get_real_menu_path), (get_pixmap): kill.
+
+	* menu.[ch]: (add_drawers_from_dir): upd.
+	remove the menu applet code.
+
+	* panel-action-button.c: re-enable and fixup the gconf code.
+
+	* panel-applet-frame.[ch]: ditto.
+
+	* panel-compatibility.c: include panel-globals.h.
+
+	* panel-config-global.[ch]: (panel_global_config_set_entry): dump
+	the "keep_menus_in_memory" key.
+
+	* panel-global-config.schemas.in, panel-config.c: ditto.
+
+	* panel-enums.h: move the PanelGConfKeyType enum to here.
+
+	* panel-gconf.h: move the various base dir definitions to here.
+
+	* panel-gconf.c: (panel_gconf_general_key), (panel_gconf_full_key):
+	use them here.
+
+	* panel-profile.[ch]:
+	(panel_profile_get_toplevel_by_id): impl locating a toplevel by its id.
+	(panel_profile_find_new_id): impl finding a sane key for new panels/
+	objects instead of using gconf_unique_key().
+	(panel_profile_get_toplevel_key),
+	(panel_profile_load_toplevel), (panel_profile_delete_toplevel_dir),
+	(panel_profile_create_added_toplevels),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel),
+	(panel_configuration_copy_defaults): upd.
+	(panel_profile_load): load applets.
+	(get_program_listing_setting),
+	(panel_profile_set_show_program_list): fix brokeness.
+
+	* panel-stock-icons.c: include panel-globals.h.
+
+	* panel-toplevel.[ch]: (panel_toplevel_is_last_unattached): impl.
+	finding out is a given panel the last non-drawer one - i.e. can
+	whether or not we delete it.
+
+	* panel-util.c, panel-widget.c: include panel-globals.h
+
+	* panel.[ch]: killall the gconf code and update for the varius
+	menu changes.
+
 2003-02-18  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-object.schemas.in: fix some typos. Thanks G.

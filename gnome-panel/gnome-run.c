@@ -40,7 +40,6 @@
 #include "disclosure-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
-#include "panel-main.h"
 #include "panel-util.h"
 #include "panel-profile.h"
 #include "quick-desktop-reader.h"
@@ -50,6 +49,7 @@
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
 #include "panel-a11y.h"
+#include "panel-globals.h"
 
 enum {
 	COLUMN_ICON,
@@ -67,9 +67,6 @@ typedef enum {
 
 #define ENABLE_LIST_DEFAULT TRUE
 #define SHOW_LIST_DEFAULT FALSE
-
-extern GtkTooltips *panel_tooltips;
-extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;
 static GSList *add_icon_paths = NULL;

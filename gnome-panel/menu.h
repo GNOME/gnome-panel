@@ -26,58 +26,20 @@ enum {
 	MAIN_MENU_DESKTOP_SUB = 1<<15
 };
 
-/* this is defined in menu-properties.c */
-typedef struct _MenuDialogInfo MenuDialogInfo;
-
-typedef struct _Menu Menu;
-struct _Menu {
-	GtkWidget		*button;
-	GtkWidget		*menu;
-	gboolean		 custom_icon;
-	char			*custom_icon_file;
-
-	gboolean		 main_menu;
-	/* If this is the main menu then path is irrelevant */
-	char			*path;
-
-	gboolean		 global_main;
-	/* if global_main is on then main_menu_flags are irrelevant */
-	int			 main_menu_flags;
-
-	int			 age;
-	GtkWidget		*prop_dialog;
-	MenuDialogInfo		*dialog_info;
-	AppletInfo		*info;
-};
-
-void		load_menu_applet	(const char  *path,
-					 gboolean     main_menu,
-					 int          main_menu_flags,
-					 gboolean     global_main,
-					 gboolean     custom_icon,
-					 const char  *custom_icon_file,
-					 PanelWidget *panel,
-					 int          pos,
-					 gboolean     exactpos,
-					 const char  *gconf_key);
-
-void		add_menu_widget		(Menu *menu,
-					 PanelWidget *panel,
-					 GSList *menudirl,
-					 gboolean fake_subs);
-
-void		set_menu_applet_orientation (Menu             *menu,
-					     PanelOrientation  orientation);
-
 void		setup_menuitem		(GtkWidget   *menuitem,
 					 GtkIconSize  icon_size,
 					 GtkWidget   *pixmap,
 					 const char  *title);
 
+GtkWidget      *create_menu_at          (GtkWidget     *menu,
+					 const char    *menudir,
+					 gboolean       launcher_add,
+					 const char    *dir_name,
+					 gboolean       fake_submenus,
+					 gboolean       force);
+
 GtkWidget      *create_panel_context_menu (PanelWidget *panel);
 GtkWidget      *create_panel_root_menu    (PanelWidget *panel);
-
-void		menu_properties		(Menu *menu);
 
 void		panel_menuitem_lock_screen (GtkWidget *widget);
 
@@ -96,20 +58,6 @@ GtkWidget *	create_root_menu	(GtkWidget   *root_menu,
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
-
-void            menu_save_to_gconf   (Menu       *menu,
-				      const char *gconf_key);
-
-void            menu_load_from_gconf (PanelWidget *panel_widget,
-				      gint         position,
-				      const char  *gconf_key);
-
-/* perhaps into basep-widget.h? */
-enum {
-	HIDEBUTTONS_PIXMAP,
-	HIDEBUTTONS_PLAIN,
-	HIDEBUTTONS_NONE
-};
 
 GtkWidget *	panel_menu_new		(void);
 void		panel_load_menu_image_deferred (GtkWidget   *image_menu_item,

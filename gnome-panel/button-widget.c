@@ -11,12 +11,12 @@
 
 #include "button-widget.h"
 #include "panel-widget.h"
-#include "panel-main.h"
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
+#include "panel-globals.h"
 
 
 static GdkPixbuf *button_load_pixbuf (const char  *file,
@@ -33,8 +33,6 @@ enum {
 };
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
-
-extern GlobalConfig global_config;
 
 static GObjectClass *parent_class;
 

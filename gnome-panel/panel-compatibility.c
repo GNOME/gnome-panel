@@ -30,8 +30,7 @@
 
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
-
-extern GSList *panels;
+#include "panel-globals.h"
 
 /* Incompatibilities:
  *

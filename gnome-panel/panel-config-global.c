@@ -6,10 +6,9 @@
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
+#include "panel-globals.h"
 
 #undef PANEL_GLOBAL_CONFIG_DEBUG
-
-extern GlobalConfig global_config;
 
 static GConfEnumStringPair panel_speed_map [] = {
         { PANEL_SPEED_SLOW,   "panel-speed-slow" },
@@ -40,10 +39,6 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 	if (strcmp (key, "tooltips_enabled") == 0)
 		global_config.tooltips_enabled =
-				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "keep_menus_in_memory") == 0)
-		global_config.keep_menus_in_memory =
 				gconf_value_get_bool (value);
 
 	else if (strcmp (key, "enable_animations") == 0)
@@ -123,6 +118,8 @@ panel_global_config_set_entry (GConfEntry *entry)
 		global_config.highlight_when_over =
 			gconf_value_get_bool (value);
 
+	else if (strcmp (key, "keep_menus_in_memory") == 0)
+		; /* ignore */
 	else
 		g_warning ("%s not handled", key);
 

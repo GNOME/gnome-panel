@@ -57,12 +57,12 @@ GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
 GtkWidget *panel_applet_frame_new       (PanelWidget *panel,
 					 const char  *iid,
-					 const char  *gconf_key);
+					 const char  *id);
 
 GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
 					 PanelWidget      *panel,
 					 const char       *iid,
-					 const char       *gconf_key);
+					 const char       *id);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
@@ -71,7 +71,7 @@ void       panel_applet_frame_load      (const gchar *iid,
 					 PanelWidget *panel,
 					 int          position,
 					 gboolean     exactpos,
-					 const char  *gconf_key);
+					 const char  *id);
 
 void       panel_applet_frame_load_applets  (void);
 
@@ -85,11 +85,11 @@ void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
 						 PanelBackgroundType  type);
 
 void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
-						 const char       *gconf_key);
+						 const char       *id);
 
 void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 						 int          position,
-						 const char  *gconf_key);
+						 const char  *id);
 
 int        panel_applet_frame_get_size_hints    (PanelAppletFrame  *frame,
 						 int              **size_hints);

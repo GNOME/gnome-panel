@@ -17,17 +17,13 @@
 
 #include "distribution.h"
 #include "panel-config-global.h"
-#include "panel-main.h"
 #include "panel-util.h"
 #include "menu.h"
 #include "panel-stock-icons.h"
 #include "panel-multiscreen.h"
+#include "panel-globals.h"
 
 #undef MENU_UTIL_DEBUG
-
-extern char *kde_menudir;
-
-extern GlobalConfig global_config;
 
 GtkWidget *
 add_menu_separator (GtkWidget *menu)
@@ -242,55 +238,4 @@ stock_menu_item_new (const char *text,
         }
 
         return item;
-}
-
-char *
-get_real_menu_path (const char *arguments, gboolean main_menu)
-{
-        if (main_menu || !arguments)
-                return g_strdup ("applications:");
-
-        if (arguments [0] == '~')
-                /* FIXME: this needs to be a URI */
-                return g_build_filename (g_get_home_dir(),
-                                              &arguments[1], NULL);
-        else
-                return g_strdup (arguments);
-}
-
-char *
-get_pixmap (const char *menudir, gboolean main_menu)
-{
-        char *pixmap_name = NULL;
-
-        if (main_menu) {
-                pixmap_name = panel_pixmap_discovery ("gnome-logo-icon-transparent.png",
-                                                      TRUE /* fallback */);
-        } else {
-                char *dentry_name;
-                QuickDesktopItem *qitem;
-
-                dentry_name = g_build_path ("/",
-                                            menudir,
-                                            ".directory",
-                                            NULL);
-                qitem = quick_desktop_item_load_uri (dentry_name,
-                                                     NULL /* expected_type */,
-                                                     FALSE /* run_tryexec */);
-                g_free (dentry_name);
-
-                if (qitem != NULL)
-			pixmap_name = gnome_desktop_item_find_icon (panel_icon_theme,
-								    qitem->icon,
-                                                                    20 /* desired size */,
-                                                                    0 /* flags */);
-
-                if (pixmap_name == NULL)
-                        pixmap_name = panel_pixmap_discovery ("gnome-folder.png",
-                                                              TRUE /* fallback */);
-
-                if (qitem != NULL)
-                        quick_desktop_item_destroy (qitem);
-        }
-        return pixmap_name;
 }

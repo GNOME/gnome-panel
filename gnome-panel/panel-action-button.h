@@ -69,7 +69,7 @@ GtkWidget *panel_action_button_load             (PanelActionButtonType   type,
 						 PanelWidget            *panel,
 						 int                     position,
 						 gboolean                exactpos,
-						 const char             *gconf_key,
+						 const char             *id,
 						 gboolean                compatibility);
 
 void       panel_action_button_set_type         (PanelActionButton     *button,
@@ -78,9 +78,9 @@ void       panel_action_button_set_type         (PanelActionButton     *button,
 GtkWidget *panel_action_button_load_from_gconf  (PanelWidget            *panel,
 						 int                     position,
 						 gboolean                exactpos,
-						 const char             *gconf_key);
+						 const char             *id);
 void       panel_action_button_save_to_gconf    (PanelActionButton      *button,
-						 const char             *gconf_key);
+						 const char             *id);
 
 
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,
@@ -90,7 +90,7 @@ gboolean   panel_action_button_load_from_drag   (const char             *drag_st
 						 PanelWidget            *panel,
 						 int                     position,
 						 gboolean                exactpos,
-						 const char             *gconf_key,
+						 const char             *id,
 						 int                    *old_applet);
 
 void       panel_action_lock_screen (GtkWidget *widget);

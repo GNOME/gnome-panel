@@ -33,11 +33,11 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
-#include "panel-main.h"
-#include "session.h"
+#include "panel-profile.h"
 #include "xstuff.h"
 #include "panel-toplevel.h"
 #include "panel-a11y.h"
+#include "panel-globals.h"
 
 #include "quick-desktop-reader.h"
 
@@ -50,13 +50,6 @@ static void properties_apply (Launcher *launcher);
 static void launcher_save    (Launcher *launcher);
 
 static GSList *launchers_to_hoard = NULL;
-
-extern GtkTooltips *panel_tooltips;
-
-extern GSList *applets;
-
-extern GlobalConfig global_config;
-extern gboolean commie_mode;
 
 enum {
 	REVERT_BUTTON
@@ -548,9 +541,7 @@ properties_apply (Launcher *launcher)
 	/* Setup the button look */
 	setup_button (launcher);
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
+	launcher_save_to_gconf (launcher, launcher->info->id);
 }
 
 static void
@@ -564,8 +555,6 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	if (launcher->revert_ditem != NULL)
 		gnome_desktop_item_unref (launcher->revert_ditem);
 	launcher->revert_ditem = NULL;
-
-	panel_config_sync_schedule ();
 }
 
 static void
@@ -707,61 +696,61 @@ launcher_properties (Launcher  *launcher,
 	gtk_widget_show_all (launcher->prop_dialog);
 }
 
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 void
 launcher_save_to_gconf (Launcher   *launcher,
-			const char *gconf_key)
+			const char *id)
 {
-	const char *location;
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	const char  *location;
 
 	location = gnome_desktop_item_get_location (launcher->ditem);
-	if (location) {
-		GConfClient *client;
-		const char  *profile;
-		const char  *temp_key;
+	if (!location)
+		return;
 
-		client  = panel_gconf_get_client ();
-		profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-		temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
-						 gconf_key, "launcher_location");
-		gconf_client_set_string (client, temp_key, location, NULL);
-	}
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	gconf_client_set_string (client, key, location, NULL);
+
+	g_object_unref (client);
 }
 
 void
 launcher_load_from_gconf (PanelWidget *panel_widget,
-			  gint         position,
-			  const char  *gconf_key)
+			  int          position,
+			  const char  *id)
 {
 	GConfClient *client;
 	const char  *profile;
-	const char  *temp_key;
+	const char  *key;
 	char        *launcher_location;
 	Launcher    *launcher;
 
 	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (gconf_key != NULL);
+	g_return_if_fail (id != NULL);
 
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
+	client  = gconf_client_get_default ();
+	profile = panel_profile_get_name ();
 
-	temp_key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, gconf_key, "launcher_location");
-	launcher_location = gconf_client_get_string (client, temp_key, NULL);
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	launcher_location = gconf_client_get_string (client, key, NULL);
+
+	g_object_unref (client);
+
 	if (!launcher_location) {
-		g_printerr (_("Key %s is not set, can't load launcher\n"), temp_key);
+		g_printerr (_("Key %s is not set, can't load launcher\n"), key);
 		return;
 	}
         
-	launcher = load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
-	if (launcher != NULL &&
-	    strstr (launcher_location, PANEL_LAUNCHERS_PATH) == NULL)
+	launcher = load_launcher_applet (launcher_location, panel_widget, position, TRUE, id);
+	if (launcher && !strstr (launcher_location, PANEL_LAUNCHERS_PATH))
 		launcher_hoard (launcher);
 
 	g_free (launcher_location);
 }
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
 
 Launcher *
 load_launcher_applet_full (const char       *params,
@@ -769,7 +758,7 @@ load_launcher_applet_full (const char       *params,
 			   PanelWidget      *panel,
 			   int               pos,
 			   gboolean          exactpos,
-			   const char       *gconf_key)
+			   const char       *id)
 {
 	Launcher *launcher;
 
@@ -781,7 +770,7 @@ load_launcher_applet_full (const char       *params,
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher, panel, pos, 
 						exactpos, APPLET_LAUNCHER,
-						gconf_key);
+						id);
 	if (!launcher->info) {
 		/* 
 		 * Don't free launcher here, the button has 
@@ -823,8 +812,6 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		launcher = load_launcher_applet_full (NULL, ditem, panel, pos, exactpos, NULL);
 		if (launcher != NULL)
 			launcher_hoard (launcher);
-
-		panel_config_sync_schedule ();
 	} else if (response == GTK_RESPONSE_HELP) {
 		panel_show_help (
 			gtk_window_get_screen (GTK_WINDOW (dialog)),
@@ -939,8 +926,6 @@ load_launcher_applet_from_info (const char *name, const char *comment,
 	if (launcher != NULL)
 		launcher_save (launcher);
 
-	panel_config_sync_schedule ();
-
 	return launcher;
 }
 
@@ -970,8 +955,6 @@ load_launcher_applet_from_info_url (const char *name, const char *comment,
 	if (launcher != NULL)
 		launcher_save (launcher);
 
-	panel_config_sync_schedule ();
-
 	return launcher;
 }
 
@@ -980,9 +963,9 @@ load_launcher_applet (const char  *params,
 		      PanelWidget *panel,
 		      int          pos,
 		      gboolean     exactpos,
-		      const char  *gconf_key)
+		      const char  *id)
 {
-	return load_launcher_applet_full (params, NULL, panel, pos, exactpos, gconf_key);
+	return load_launcher_applet_full (params, NULL, panel, pos, exactpos, id);
 }
 
 static char *
@@ -1089,9 +1072,7 @@ launcher_idle_hoard (void)
 					launchers_to_hoard, launchers_to_hoard);
 
 	launcher_save (launcher);
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
-#endif /* FIXME_FOR_NEW_TOPLEVEL */
+	launcher_save_to_gconf (launcher, launcher->info->id);
 
 	return launchers_to_hoard ? TRUE : FALSE;
 }

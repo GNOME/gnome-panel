@@ -20,6 +20,7 @@
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
 #include "panel-applet-frame.h"
+#include "panel-globals.h"
 
 #define MOVE_INCREMENT 2
 
@@ -47,18 +48,11 @@ enum {
 
 static guint panel_widget_signals [LAST_SIGNAL] = {0};
 
-GSList *panels = NULL; /*other panels we might want to move the applet to*/
-
 /*define for some debug output*/
 #undef PANEL_WIDGET_DEBUG
 
-/*there  can universally be only one applet being dragged since we assume
-we only have one mouse :) */
-gboolean panel_applet_in_drag = FALSE;
+static gboolean panel_applet_in_drag = FALSE;
 static GtkWidget *saved_focus_widget = NULL;
-
-/* Commie mode! */
-extern gboolean commie_mode;
 
 static void panel_widget_class_init     (PanelWidgetClass *klass);
 static void panel_widget_instance_init  (PanelWidget      *panel_widget);
@@ -2750,4 +2744,10 @@ panel_widget_set_applet_expandable (PanelWidget *panel,
 	ad->expand_minor = minor;
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel));
+}
+
+gboolean
+panel_applet_is_in_drag ()
+{
+	return panel_applet_in_drag;
 }

@@ -160,6 +160,7 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 #define PW_DRAG_OFF_CENTER -2
 
 /*drag*/
+gboolean        panel_applet_is_in_drag         (void);
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int drag_off);
@@ -220,9 +221,6 @@ void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 GtkWidget   *applet,
 						 gboolean     major,
 						 gboolean     minor);
-
-
-extern gboolean panel_applet_in_drag;
 
 G_END_DECLS
 

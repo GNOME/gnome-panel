@@ -31,7 +31,6 @@ typedef struct {
 	GtkWidget      *widget;
 
 	GtkWidget      *menu;
-	int             menu_age;
 	GList          *user_menu;
 
 	gpointer        data;
@@ -39,7 +38,7 @@ typedef struct {
 
 	guint		remove_idle;
 
-	char           *gconf_key;
+	char           *id;
 } AppletInfo;
 
 typedef struct {
@@ -61,13 +60,13 @@ AppletInfo *panel_applet_register    (GtkWidget      *applet,
 				      gint            pos,
 				      gboolean        exactpos,
 				      AppletType      type,
-				      const char     *gconf_key);
+				      const char     *id);
 
 void        panel_applet_clean       (AppletInfo *info,
 				      gboolean    clean_gconf);
 
 void        panel_applet_clean_gconf (AppletType  type,
-				      const char *gconf_key,
+				      const char *id,
 				      gboolean    clean_gconf);
 
 void            panel_applet_add_callback    (AppletInfo  *info,
@@ -85,9 +84,8 @@ AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 
 
 void        panel_applet_load_applets_from_gconf (void);
-void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
 void        panel_applet_save_position           (AppletInfo *applet_info,
-						  const char *gconf_key,
+						  const char *id,
 						  gboolean    immediate);
 
 void panel_applet_load_defaults_for_screen (PanelGConfKeyType  type,

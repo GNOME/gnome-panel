@@ -43,13 +43,13 @@ Launcher *	load_launcher_applet_full	(const char       *params,
 						 PanelWidget      *panel,
 						 int               pos,
 						 gboolean          exactpos,
-						 const char       *gconf_key);
+						 const char       *id);
 
 Launcher *	load_launcher_applet		(const char       *params,
 						 PanelWidget      *panel,
 						 int              pos,
 						 gboolean         exactpos,
-						 const char      *gconf_key);
+						 const char      *id);
 
 Launcher *	load_launcher_applet_from_info	(const char *name,
 						 const char *comment,
@@ -70,11 +70,11 @@ void		launcher_properties		(Launcher  *launcher,
 						 GdkScreen *screen);
 
 void            launcher_save_to_gconf          (Launcher   *launcher,
-						 const char *gconf_key);
+						 const char *id);
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
 						 gint         position,
-						 const char  *gconf_key);
+						 const char  *id);
 
 void		ask_about_launcher		(const char *file,
 						 PanelWidget *panel,
