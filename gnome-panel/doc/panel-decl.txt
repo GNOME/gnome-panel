@@ -66,17 +66,17 @@ typedef GNOME_Panel_BackType PanelBackType;
 <NAME>IS_APPLET_WIDGET</NAME>
 #define IS_APPLET_WIDGET(obj)       GTK_CHECK_TYPE (obj, applet_widget_get_type ())
 </MACRO>
-<USER_FUNCTION>
-<NAME>AppletCallbackFunc</NAME>
-<RETURNS>void </RETURNS>
-AppletWidget *applet, gpointer data
-</USER_FUNCTION>
 <STRUCT>
 <NAME>AppletWidgetPrivate</NAME>
 </STRUCT>
 <STRUCT>
 <NAME>AppletWidget</NAME>
 </STRUCT>
+<USER_FUNCTION>
+<NAME>AppletCallbackFunc</NAME>
+<RETURNS>void </RETURNS>
+AppletWidget *applet, gpointer data
+</USER_FUNCTION>
 <STRUCT>
 <NAME>AppletWidget</NAME>
 struct AppletWidget
