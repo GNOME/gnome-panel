@@ -175,8 +175,7 @@ int pop3_check(char *h, char* n, char* e)
       return -1;
     }
 
-    c = (char*) g_malloc(strlen(n)+1+5);
-    sprintf(c, "USER %s", n);
+    c = g_strdup_printf(c, "USER %s", n);
     if (!write_line(s, c) ||
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
@@ -185,8 +184,7 @@ int pop3_check(char *h, char* n, char* e)
     }
     g_free(c);
 
-    c = (char*) g_malloc(strlen(e)+1+5);
-    sprintf(c, "PASS %s", e);
+    c = g_strdup_printf(c, "PASS %s", e);
     if (!write_line(s, c) ||
         !is_pop3_answer_ok(read_line(s))) {
       close(s);
@@ -267,8 +265,7 @@ int imap_check(char *h, char* n, char* e)
     if (is_imap_answer_untagged(x))  /* The greeting us untagged */
      if (is_imap_answer_ok(x))
       {
-       c = g_malloc(9+strlen(n)+1+strlen(e)+1);
-       sprintf(c, "A1 LOGIN %s %s", n, e);
+       c = g_strdup_printf("A1 LOGIN \"%s\" \"%s\"", n, e);
        if (write_line(s, c))
         {
          g_free(c);
