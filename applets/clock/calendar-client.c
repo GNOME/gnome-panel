@@ -581,6 +581,22 @@ get_ical_completed_time (icalcomponent *ical)
 				 icalproperty_get_completed);
 }
 
+static char *
+get_source_color (ECal *esource)
+{
+  ESource *source;
+  guint32  color;
+
+  g_return_val_if_fail (E_IS_CAL (esource), NULL);
+
+  source = e_cal_get_source (esource);
+  if (e_source_get_color (source, &color)) {
+    return g_strdup_printf ("%06x", color);
+  }
+  
+  return NULL;
+}
+
 static inline int
 null_safe_strcmp (const char *a,
 		  const char *b)
@@ -608,9 +624,10 @@ calendar_appointment_equal (CalendarAppointment *a,
     }
 
   return
-    null_safe_strcmp (a->uid,         b->uid)         == 0 &&
-    null_safe_strcmp (a->summary,     b->summary)     == 0 &&
-    null_safe_strcmp (a->description, b->description) == 0 &&
+    null_safe_strcmp (a->uid,          b->uid)          == 0 &&
+    null_safe_strcmp (a->summary,      b->summary)      == 0 &&
+    null_safe_strcmp (a->description,  b->description)  == 0 &&
+    null_safe_strcmp (a->color_string, b->color_string) == 0 &&
     a->start_time == b->start_time                         &&
     a->end_time   == b->end_time                           &&
     a->is_all_day == b->is_all_day;
@@ -638,12 +655,13 @@ calendar_appointment_copy (CalendarAppointment *appointment,
       l->data = occurrence_copy;
     }
 
-  appointment_copy->uid         = g_strdup (appointment->uid);
-  appointment_copy->summary     = g_strdup (appointment->summary);
-  appointment_copy->description = g_strdup (appointment->description);
-  appointment_copy->start_time  = appointment->start_time;
-  appointment_copy->end_time    = appointment->end_time;
-  appointment_copy->is_all_day  = appointment->is_all_day;
+  appointment_copy->uid          = g_strdup (appointment->uid);
+  appointment_copy->summary      = g_strdup (appointment->summary);
+  appointment_copy->description  = g_strdup (appointment->description);
+  appointment_copy->color_string = g_strdup (appointment->color_string);
+  appointment_copy->start_time   = appointment->start_time;
+  appointment_copy->end_time     = appointment->end_time;
+  appointment_copy->is_all_day   = appointment->is_all_day;
 }
 
 static void
@@ -665,21 +683,26 @@ calendar_appointment_finalize (CalendarAppointment *appointment)
   g_free (appointment->description);
   appointment->description = NULL;
 
+  g_free (appointment->color_string);
+  appointment->color_string = NULL;
+
   appointment->start_time = 0;
   appointment->is_all_day = FALSE;
 }
 
 static void
-calendar_appointment_init (CalendarAppointment *appointment,
-			   icalcomponent       *ical)
+calendar_appointment_init (CalendarAppointment  *appointment,
+			   icalcomponent        *ical,
+                           CalendarClientSource *source)
 {
-  appointment->uid         = get_ical_uid (ical);
-  appointment->summary     = get_ical_summary (ical);
-  appointment->description = get_ical_description (ical);
-  appointment->start_time  = get_ical_start_time (ical);
-  appointment->end_time    = get_ical_end_time (ical);
-  appointment->is_all_day  = get_ical_is_all_day (ical,
-						  appointment->start_time);
+  appointment->uid          = get_ical_uid (ical);
+  appointment->summary      = get_ical_summary (ical);
+  appointment->description  = get_ical_description (ical);
+  appointment->color_string = get_source_color (source->source);
+  appointment->start_time   = get_ical_start_time (ical);
+  appointment->end_time     = get_ical_end_time (ical);
+  appointment->is_all_day   = get_ical_is_all_day (ical,
+                                                   appointment->start_time);
 }
 
 static icaltimezone *
@@ -748,10 +771,11 @@ calendar_task_equal (CalendarTask *a,
 		     CalendarTask *b)
 {
   return
-    null_safe_strcmp (a->uid,         b->uid)         == 0 &&
-    null_safe_strcmp (a->summary,     b->summary)     == 0 &&
-    null_safe_strcmp (a->description, b->description) == 0 &&
-    null_safe_strcmp (a->url,         b->url)         == 0 &&
+    null_safe_strcmp (a->uid,          b->uid)          == 0 &&
+    null_safe_strcmp (a->summary,      b->summary)      == 0 &&
+    null_safe_strcmp (a->description,  b->description)  == 0 &&
+    null_safe_strcmp (a->color_string, b->color_string) == 0 &&
+    null_safe_strcmp (a->url,          b->url)          == 0 &&
     a->start_time       == b->start_time                   &&
     a->due_time         == b->due_time                     &&
     a->percent_complete == b->percent_complete             &&
@@ -768,6 +792,7 @@ calendar_task_copy (CalendarTask *task,
   task_copy->uid              = g_strdup (task->uid);
   task_copy->summary          = g_strdup (task->summary);
   task_copy->description      = g_strdup (task->description);
+  task_copy->color_string     = g_strdup (task->color_string);
   task_copy->url              = g_strdup (task->url);
   task_copy->start_time       = task->start_time;
   task_copy->due_time         = task->due_time;
@@ -787,6 +812,9 @@ calendar_task_finalize (CalendarTask *task)
   g_free (task->description);
   task->description = NULL;
 
+  g_free (task->color_string);
+  task->color_string = NULL;
+
   g_free (task->url);
   task->url = NULL;
 
@@ -794,12 +822,14 @@ calendar_task_finalize (CalendarTask *task)
 }
 
 static void
-calendar_task_init (CalendarTask  *task,
-		    icalcomponent *ical)
+calendar_task_init (CalendarTask         *task,
+		    icalcomponent        *ical,
+                    CalendarClientSource *source)
 {
   task->uid              = get_ical_uid (ical);
   task->summary          = get_ical_summary (ical);
   task->description      = get_ical_description (ical);
+  task->color_string     = get_source_color (source->source);
   task->url              = get_ical_url (ical);
   task->start_time       = get_ical_start_time (ical);
   task->due_time         = get_ical_due_time (ical);
@@ -827,7 +857,8 @@ calendar_event_free (CalendarEvent *event)
 }
 
 static CalendarEvent *
-calendar_event_new (icalcomponent *ical)
+calendar_event_new (icalcomponent        *ical,
+                    CalendarClientSource *source)
 {
   CalendarEvent *event;
 
@@ -837,11 +868,11 @@ calendar_event_new (icalcomponent *ical)
     {
     case ICAL_VEVENT_COMPONENT:
       event->type = CALENDAR_EVENT_APPOINTMENT;
-      calendar_appointment_init (CALENDAR_APPOINTMENT (event), ical);
+      calendar_appointment_init (CALENDAR_APPOINTMENT (event), ical, source);
       break;
     case ICAL_VTODO_COMPONENT:
       event->type = CALENDAR_EVENT_TASK;
-      calendar_task_init (CALENDAR_TASK (event), ical);
+      calendar_task_init (CALENDAR_TASK (event), ical, source);
       break;
     default:
       g_warning ("Unknown calendar component type\n");
@@ -1130,7 +1161,7 @@ calendar_client_handle_query_result (CalendarClientSource *source,
       CalendarEvent *old_event;
       icalcomponent *ical = l->data;
 
-      event = calendar_event_new (ical);
+      event = calendar_event_new (ical, source);
       calendar_event_generate_ocurrences (event,
 					  ical,
 					  source->source,

@@ -75,6 +75,7 @@ typedef struct
   char   *uid;
   char   *summary;
   char   *description;
+  char   *color_string;
   GTime   start_time;
   GTime   end_time;
   guint   is_all_day : 1;
@@ -88,6 +89,7 @@ typedef struct
   char  *uid;
   char  *summary;
   char  *description;
+  char  *color_string;
   char  *url;
   GTime  start_time;
   GTime  due_time;

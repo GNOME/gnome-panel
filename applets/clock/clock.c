@@ -556,6 +556,7 @@ enum {
         APPOINTMENT_COLUMN_START_TEXT,
         APPOINTMENT_COLUMN_END_TIME,
         APPOINTMENT_COLUMN_ALL_DAY,
+        APPOINTMENT_COLUMN_COLOR,
         N_APPOINTMENT_COLUMNS
 };
 
@@ -570,6 +571,7 @@ enum {
         TASK_COLUMN_COMPLETED,
         TASK_COLUMN_COMPLETED_TIME,
         TASK_COLUMN_OVERDUE_ATTR,
+        TASK_COLUMN_COLOR,
         TASK_COLUMN_URL,
         N_TASK_COLUMNS
 };
@@ -649,6 +651,7 @@ handle_tasks_changed (ClockData *cd)
                                     TASK_COLUMN_PERCENT_COMPLETE_TEXT, percent_complete_text,
                                     TASK_COLUMN_COMPLETED,             task->percent_complete == 100,
                                     TASK_COLUMN_COMPLETED_TIME,        task->completed_time,
+                                    TASK_COLUMN_COLOR,                 task->color_string,
                                     TASK_COLUMN_URL,                   task->url,
                                     -1);
 
@@ -842,6 +845,58 @@ task_activated_cb (GtkTreeView       *view,
         return TRUE;
 }
 
+static void
+set_renderer_pixbuf_color_by_column (GtkCellRenderer *renderer,
+                                     GtkTreeModel    *model,
+                                     GtkTreeIter     *iter,
+                                     gint             column_number)
+{
+        char      *color_string;
+        GdkPixbuf *pixbuf = NULL;
+        guint32    color;
+
+        gtk_tree_model_get (model, iter, column_number, &color_string, -1);
+
+        if (color_string) {
+                sscanf (color_string, "%06x", &color);
+                pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 16, 16);
+                gdk_pixbuf_fill (pixbuf, color << 8);
+
+                g_object_set (renderer, "visible", pixbuf != NULL, "pixbuf", pixbuf, NULL);
+
+                if (pixbuf)
+                        g_object_unref (pixbuf);
+
+                g_free (color_string);
+        }
+}
+
+static void
+task_pixbuf_cell_data_func (GtkTreeViewColumn *column,
+                            GtkCellRenderer   *renderer,
+                            GtkTreeModel      *model,
+                            GtkTreeIter       *iter,
+                            gpointer           data)
+{
+        set_renderer_pixbuf_color_by_column (renderer,
+                                             model,
+                                             iter,
+                                             TASK_COLUMN_COLOR);
+}
+
+static void
+appointment_pixbuf_cell_data_func (GtkTreeViewColumn *column,
+                                   GtkCellRenderer   *renderer,
+                                   GtkTreeModel      *model,
+                                   GtkTreeIter       *iter,
+                                   gpointer           data)
+{
+        set_renderer_pixbuf_color_by_column (renderer,
+                                             model,
+                                             iter,
+                                             APPOINTMENT_COLUMN_COLOR);
+}
+
 static GtkWidget *
 create_task_list (ClockData  *cd,
                   GtkWidget **tree_view,
@@ -876,6 +931,7 @@ create_task_list (ClockData  *cd,
                         G_TYPE_BOOLEAN,        /* completed               */
                         G_TYPE_LONG,           /* completed time          */
                         PANGO_TYPE_ATTR_LIST,  /* summary text attributes */
+                        G_TYPE_STRING,         /* color                   */
                         G_TYPE_STRING          /* url                     */
                 };
 
@@ -905,6 +961,15 @@ create_task_list (ClockData  *cd,
 
         g_signal_connect (view, "row-activated",
                           G_CALLBACK (task_activated_cb), cd);
+
+        /* Source color */
+        column = gtk_tree_view_column_new ();
+        cell = gtk_cell_renderer_pixbuf_new ();
+        gtk_tree_view_column_pack_start (column, cell, TRUE);
+        gtk_tree_view_column_set_cell_data_func (column, cell,
+                                                 (GtkTreeCellDataFunc) task_pixbuf_cell_data_func,
+                                                 NULL, NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
         /* Completed toggle */
         column = gtk_tree_view_column_new ();
@@ -1004,6 +1069,7 @@ handle_appointments_changed (ClockData *cd)
                                     APPOINTMENT_COLUMN_START_TEXT,  start_text,
                                     APPOINTMENT_COLUMN_END_TIME,    appointment->end_time,
                                     APPOINTMENT_COLUMN_ALL_DAY,     appointment->is_all_day,
+                                    APPOINTMENT_COLUMN_COLOR  ,     appointment->color_string,
                                     -1);
 
                 g_free (start_text);
@@ -1047,7 +1113,8 @@ create_appointment_list (ClockData  *cd,
                                             G_TYPE_LONG,     /* start time       */
                                             G_TYPE_STRING,   /* start time text  */
                                             G_TYPE_LONG,     /* end time         */
-                                            G_TYPE_BOOLEAN); /* all day          */
+                                            G_TYPE_BOOLEAN,  /* all day          */
+                                            G_TYPE_STRING);  /* color            */
 
                 gtk_tree_sortable_set_sort_column_id (GTK_TREE_SORTABLE (cd->appointments_model),
                                                       APPOINTMENT_COLUMN_START_TIME,
@@ -1057,6 +1124,15 @@ create_appointment_list (ClockData  *cd,
 
         *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->appointments_model));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
+
+        /* Source color */
+        column = gtk_tree_view_column_new ();
+        cell = gtk_cell_renderer_pixbuf_new ();
+        gtk_tree_view_column_pack_start (column, cell, TRUE);
+        gtk_tree_view_column_set_cell_data_func (column, cell,
+                                                 (GtkTreeCellDataFunc) appointment_pixbuf_cell_data_func,
+                                                 NULL, NULL);
+        gtk_tree_view_append_column (GTK_TREE_VIEW (view), column);
 
         /* Start time */
         column = gtk_tree_view_column_new ();

@@ -1,5 +1,23 @@
 2004-07-19  William Jon McCann  <mccann@jhu.edu>
 
+	* clock.c (handle_tasks_changed)
+	(set_renderer_pixbuf_color_by_column)
+	(task_pixbuf_cell_data_func, appointment_pixbuf_cell_data_func)
+	(create_task_list, handle_appointments_changed)
+	(create_appointment_list): Display source color, if available, as
+	a small pixbuf in the first column.  This is consistent with the
+	method finally decided on in Evolution.
+
+	* calendar-client.c (get_source_color)
+	(calendar_appointment_equal, calendar_appointment_copy)
+	(calendar_appointment_finalize, calendar_appointment_init)
+	(calendar_task_equal, calendar_task_copy)
+	(calendar_task_finalize, calendar_task_init, calendar_event_new)
+	(calendar_client_handle_query_result): Add source color string to query
+	results.  To do this we have to pass the source into the init methods.
+
+2004-07-19  William Jon McCann  <mccann@jhu.edu>
+
 	* clock.c (update_popup): Fix #120855 better.  Make present call
 	after window is positioned.
 
