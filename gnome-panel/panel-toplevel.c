@@ -1561,6 +1561,8 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 	GdkRectangle      attach_box;
 	GdkScreen        *screen;
 	int               x_origin = 0, y_origin = 0;
+	int               monitor_x, monitor_y;
+	int               monitor_width, monitor_height;
 
 	if (!GTK_WIDGET_REALIZED (toplevel->priv->attach_toplevel) ||
 	    !GTK_WIDGET_REALIZED (toplevel->priv->attach_widget))
@@ -1626,10 +1628,19 @@ panel_toplevel_update_attached_position (PanelToplevel *toplevel,
 		break;
 	}
 
-	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+	screen = panel_toplevel_get_monitor_geometry (toplevel,
+						      &monitor_x,
+						      &monitor_y,
+						      &monitor_width,
+						      &monitor_height);
+                                                                                
+	*x -= monitor_x;
+	*y -= monitor_y;
 
-	*x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
-	*y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
+	if (toplevel->priv->orientation & PANEL_VERTICAL_MASK)
+		*x = CLAMP (*x, 0, monitor_width  - toplevel->priv->original_width);
+	else
+		*y = CLAMP (*y, 0, monitor_height - toplevel->priv->original_height);
 }
 
 static void

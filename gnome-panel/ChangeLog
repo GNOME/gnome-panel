@@ -1,3 +1,12 @@
+2004-04-21  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on a patch from Shakti Sen <shprasad@novell.com>
+	in bug #139465.
+
+	* panel-toplevel.c (panel_toplevel_update_attached_position):
+	Do not allow the panel to move offscreen - fixes problem where
+	a drawer could be half offscreen.
+
 2004-05-13  Mark McLoughlin  <mark@skynet.ie>
 
 	Based on a patch from Vincent Berger <vincent.berger@ext.bull.net>
