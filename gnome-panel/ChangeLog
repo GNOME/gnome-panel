@@ -1,5 +1,19 @@
 2002-01-07  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (panel_applet_load_from_unique_id),
+	(panel_applet_save_to_gconf): load menus.
+
+	* menu.[ch]: (add_menu_to_panel): upd.
+	(load_menu_applet): add gconf_key arg.
+	(menu_save_to_gconf), (menu_load_from_gconf): impl.
+
+	* panel.c: (drop_menu): update for load_menu_applet change.
+
+	* launcher.c: (launcher_save_to_gconf), (launcher_load_from_gconf):
+	use object's keys, not applet's keys. doh.
+
+2002-01-07  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: (panel_applet_get_full_gconf_key): fix silly.
 	(panel_applet_load_from_unique_id): use
 	panel_applet_frame_load_from_gconf and load launchers.

@@ -882,7 +882,7 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 		flags |= MAIN_MENU_KDE_SUB;
 	/* FIXME: checkout gnome-vfs stuff for drop, this should be
 	 * a uri */
-	load_menu_applet (dir, FALSE /* main_menu */, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
+	load_menu_applet (dir, FALSE /* main_menu */, flags, TRUE, FALSE, NULL, panel, pos, TRUE, NULL);
 }
 
 static gboolean

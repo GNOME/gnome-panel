@@ -47,15 +47,17 @@ struct _Menu {
 	AppletInfo		*info;
 };
 
-void		load_menu_applet	(const char *path,
-					 gboolean main_menu,
-					 int main_menu_flags,
-					 gboolean global_main,
-					 gboolean custom_icon,
-					 const char *custom_icon_file,
+void		load_menu_applet	(const char  *path,
+					 gboolean     main_menu,
+					 int          main_menu_flags,
+					 gboolean     global_main,
+					 gboolean     custom_icon,
+					 const char  *custom_icon_file,
 					 PanelWidget *panel,
-					 int pos,
-					 gboolean exactpos);
+					 int          pos,
+					 gboolean     exactpos,
+					 const char  *gconf_key);
+
 void		add_menu_widget		(Menu *menu,
 					 PanelWidget *panel,
 					 GSList *menudirl,
@@ -113,6 +115,13 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
+
+void            menu_save_to_gconf   (Menu       *launcher,
+				      const char *gconf_key);
+
+void            menu_load_from_gconf (PanelWidget *panel_widget,
+				      gint         position,
+				      const char  *gconf_key);
 
 /* perhaps into basep-widget.h? */
 enum {

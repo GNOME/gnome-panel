@@ -891,6 +891,7 @@ panel_applet_load_from_unique_id (AppletType   type,
 	case APPLET_SWALLOW:
 		break;
 	case APPLET_MENU:
+		menu_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_LAUNCHER:
 		launcher_load_from_gconf (panel_widget, position, unique_id);
@@ -1024,6 +1025,8 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	case APPLET_SWALLOW:
 		break;
 	case APPLET_MENU:
+		menu_save_to_gconf ((Menu *) applet_info->data,
+				    applet_info->gconf_key);
 		break;
 	case APPLET_LAUNCHER:
 		launcher_save_to_gconf ((Launcher *) applet_info->data,

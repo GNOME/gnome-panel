@@ -611,7 +611,7 @@ launcher_save_to_gconf (Launcher  *launcher,
 
 	location = gnome_desktop_item_get_location (launcher->ditem);
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "base-location");
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "base-location");
 	gconf_client_set_string (client, temp_key, location, NULL);
 	g_free (temp_key);
 }
@@ -632,7 +632,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
         client  = panel_gconf_get_client ();
         profile = session_get_current_profile ();
 
-        temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "base-location");
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "base-location");
         base_location = gconf_client_get_string (client, temp_key, NULL);
         g_free (temp_key);
 

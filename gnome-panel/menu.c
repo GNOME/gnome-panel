@@ -1110,7 +1110,8 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 			  NULL /* custom_icon_file */,
 			  panel,
 			  0 /* pos */,
-			  FALSE /* exactpos */);
+			  FALSE /* exactpos */,
+			  NULL);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -4629,15 +4630,16 @@ set_menu_applet_orient(Menu *menu, PanelOrient orient)
 }
 
 void
-load_menu_applet (const char *params,
-		  gboolean main_menu,
-		  int main_menu_flags,
-		  gboolean global_main,
-		  gboolean custom_icon,
-		  const char *custom_icon_file,
+load_menu_applet (const char  *params,
+		  gboolean     main_menu,
+		  int          main_menu_flags,
+		  gboolean     global_main,
+		  gboolean     custom_icon,
+		  const char  *custom_icon_file,
 		  PanelWidget *panel,
-		  int pos,
-		  gboolean exactpos)
+		  int          pos,
+		  gboolean     exactpos,
+		  const char  *gconf_key)
 {
 	Menu *menu;
 
@@ -4649,7 +4651,7 @@ load_menu_applet (const char *params,
 		AppletInfo *info;
 
 		info = panel_applet_register (menu->button, menu, free_menu, panel, 
-					      pos, exactpos, APPLET_MENU, NULL);
+					      pos, exactpos, APPLET_MENU, gconf_key);
 		if (!info)
 			return;
 
@@ -5076,3 +5078,96 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 	}
 }
 #endif
+
+void
+menu_save_to_gconf (Menu       *menu,
+		    const char *gconf_key)
+{
+        GConfClient *client;
+        char        *profile;
+        char        *temp_key;
+
+        client  = panel_gconf_get_client ();
+        profile = session_get_current_profile ();
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "path");
+        gconf_client_set_string (client, temp_key, menu->path, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "main-menu");
+        gconf_client_set_bool (client, temp_key, menu->main_menu, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "global-main");
+        gconf_client_set_bool (client, temp_key, menu->global_main, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "custom-icon");
+        gconf_client_set_bool (client, temp_key, menu->custom_icon, NULL);
+        g_free (temp_key);
+
+	if (menu->custom_icon) {
+		temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "custom-icon-file");
+		gconf_client_set_string (client, temp_key, menu->custom_icon_file, NULL);
+		g_free (temp_key);
+	}
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "main-menu-flags");
+        gconf_client_set_int (client, temp_key, menu->main_menu_flags, NULL);
+        g_free (temp_key);
+}
+
+void
+menu_load_from_gconf (PanelWidget *panel_widget,
+		      gint         position,
+		      const char  *gconf_key)
+{
+        GConfClient *client;
+        char        *profile;
+        char        *temp_key;
+	gboolean     main_menu;
+	gboolean     global_main;
+	gboolean     custom_icon;
+        char        *path;
+        char        *custom_icon_file = NULL;
+	int          flags;
+
+        g_return_if_fail (panel_widget);
+        g_return_if_fail (gconf_key);
+
+        client  = panel_gconf_get_client ();
+        profile = session_get_current_profile ();
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "path");
+        path = gconf_client_get_string (client, temp_key, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "main-menu");
+        main_menu = gconf_client_get_bool (client, temp_key, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "global-main");
+        global_main = gconf_client_get_bool (client, temp_key, NULL);
+        g_free (temp_key);
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "custom-icon");
+        custom_icon = gconf_client_get_bool (client, temp_key, NULL);
+        g_free (temp_key);
+
+	if (custom_icon) {
+        	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "custom-icon-file");
+	        custom_icon_file = gconf_client_get_string (client, temp_key, NULL);
+	        g_free (temp_key);
+	}
+
+        temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "main-menu-flags");
+        flags = gconf_client_get_int (client, temp_key, NULL);
+        g_free (temp_key);
+
+	load_menu_applet (path, main_menu, flags, global_main,
+			  custom_icon, custom_icon_file,
+			  panel_widget, position, TRUE, gconf_key);
+
+        g_free (path);
+        g_free (custom_icon_file);
+}
