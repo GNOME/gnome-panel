@@ -315,8 +315,11 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};
 
-	if (default_app_pixmap == NULL)
-		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
+	if (!default_app_pixmap)
+		default_app_pixmap = gnome_program_locate_file (NULL, 
+								GNOME_FILE_DOMAIN_PIXMAP, 
+								"gnome-unknown.png", TRUE, 
+								NULL);
 
 	if (ditem == NULL) {
 		if (parameters == NULL) {
@@ -335,12 +338,16 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 
 			apps_par = g_strconcat ("gnome/apps/", parameters,
 						extension, NULL);
-			entry = gnome_datadir_file (apps_par);
+
+			entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+							   apps_par, TRUE, NULL);
+
 			g_free (apps_par);
 
 			if (entry == NULL) {
 				/* perhaps just datadir? */
-				entry = gnome_datadir_file (parameters);
+				entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+								   parameters, TRUE, NULL);
 			}
 
 			if (entry == NULL && merge_merge_dir != NULL) {

@@ -72,7 +72,8 @@ create_logout_widget (void)
 	GtkWidget *button;
 	char *pixmap_name;
 
-	pixmap_name = gnome_pixmap_file ("gnome-term-night.png");
+	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						 "gnome-term-night.png", TRUE, NULL);
 
 	button = button_widget_new (pixmap_name, -1,
 				    MISC_TILE,
@@ -132,7 +133,9 @@ create_lock_widget(void)
 	GtkWidget *button;
 	char *pixmap_name;
 
-	pixmap_name = gnome_pixmap_file("gnome-lockscreen.png");
+	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
+						 "gnome-lockscreen.png",
+						 TRUE, NULL);
 
 	button = button_widget_new (pixmap_name, -1,
 				    MISC_TILE,

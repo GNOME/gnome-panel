@@ -359,7 +359,11 @@ conditional_parse (const char *conditional, int len)
 			if (g_file_test (file, G_FILE_TEST_EXISTS)) {
 				cond = TRUE;
 			} else {
-				char *full = gnome_datadir_file (file);
+				char *full = gnome_program_locate_file (NULL, 
+									GNOME_FILE_DOMAIN_DATADIR,
+									file,
+									TRUE,
+									NULL);
 				if (full != NULL)
 					cond = TRUE;
 				g_free (full);

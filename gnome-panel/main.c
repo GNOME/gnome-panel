@@ -234,9 +234,13 @@ check_screen (void)
 
 	name = g_strdup_printf ("%cish/%cishanim.png",
 				'f', 'f');
-	phsh_file = gnome_pixmap_file (name);
+
+	phsh_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
+					       name, TRUE, NULL);
+
 	g_free (name);
-	if (phsh_file == NULL)
+
+	if (!phsh_file)
 		return;
 
 	tmp = gdk_pixbuf_new_from_file (phsh_file, NULL);

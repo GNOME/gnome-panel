@@ -423,11 +423,14 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	GtkWidget *item, *menu;
 	char *real_path;
 
-	real_path = system 
-		? gnome_unconditional_datadir_file (path)
-		: gnome_util_home_file (path);
+	if (system)
+		real_path = gnome_program_locate_file (NULL, 
+						       GNOME_FILE_DOMAIN_DATADIR,
+						       path, FALSE, NULL);
+	else
+		real_path = gnome_util_home_file (path);
 
-	if (real_path == NULL) {
+	if (!real_path) {
 		g_warning (_("can't fine real path"));
 		return NULL;
 	}
@@ -1073,7 +1076,8 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_container_add(GTK_CONTAINER(foo->ebox), foo->hbox);
 
 #if 0	
-	path = gnome_pixmap_file ("panel/corner1.png");
+	path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					  "panel/corner1.png", TRUE, NULL);
 	bufmap = gnome_pixmap_new_from_file (path);
 	g_free (path);
 	align = gtk_alignment_new (0.0, 0.0, 1.0, 0.0);
@@ -1123,7 +1127,8 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_object_set_data (GTK_OBJECT (menu_bar), "menu_panel", foo->panel);
 
 #if 0
-	path = gnome_pixmap_file ("panel/corner2.png");
+	path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					  "panel/corner2.png", TRUE, NULL);
 	bufmap = gnome_pixmap_new_from_file (path);
 	g_free (path);
 	align = gtk_alignment_new (1.0, 0.0, 1.0, 0.0);

@@ -54,14 +54,18 @@ properties_apply_callback(gpointer data)
 	drawer->tooltip = NULL;
 	s = hack_icon_entry_get_icon (GNOME_ICON_ENTRY (pixentry));
 	if (string_empty (s)) {
-		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
+		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+							    "panel-drawer.png", TRUE, NULL);
 		button_widget_set_pixmap (BUTTON_WIDGET(drawer->button),
 					  drawer->pixmap,-1);
 	} else {
 		if(button_widget_set_pixmap(BUTTON_WIDGET(drawer->button), s, -1))
 			drawer->pixmap = g_strdup(s);
 		else {
-			drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
+			drawer->pixmap = gnome_program_locate_file (NULL, 
+								    GNOME_FILE_DOMAIN_PIXMAP, 
+								    "panel-drawer.png",
+								     TRUE, NULL);
 			button_widget_set_pixmap(BUTTON_WIDGET(drawer->button),
 						 drawer->pixmap, -1);
 		}
@@ -312,7 +316,8 @@ create_drawer_applet(GtkWidget * drawer_panel,
 		drawer->tooltip = g_strdup (tooltip);
 
 	if (string_empty (pixmap)) {
-		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
+		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+							    "panel-drawer.png", TRUE, NULL);
 	} else {
 		drawer->pixmap = g_strdup (pixmap);
 	}

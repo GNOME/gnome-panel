@@ -63,15 +63,17 @@ get_real_menu_path(const char *arguments)
 	if (string_empty (arguments))
 		arguments = ".";
 
-	if(strcmp(arguments, ".") == 0)
-		this_menu = gnome_unconditional_datadir_file ("gnome/apps");
+	if(!strcmp (arguments, "."))
+		this_menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
+						       "gnome/apps", FALSE, NULL);
 	else if (*arguments == '/')
 		this_menu = g_strdup (arguments);
 	else if (*arguments == '~')
 		this_menu = g_build_filename (g_get_home_dir(),
 					      &arguments[1], NULL);
 	else
-		this_menu = gnome_unconditional_datadir_file (arguments);
+		this_menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
+						       arguments, FALSE, NULL);
 
 	if ( ! g_file_test (this_menu, G_FILE_TEST_EXISTS)) {
 		g_warning("menu %s does not exist "
@@ -87,8 +89,11 @@ char *
 get_pixmap(const char *menudir, gboolean main_menu)
 {
 	char *pixmap_name = NULL;
+
 	if (main_menu) {
-		pixmap_name = gnome_unconditional_pixmap_file("gnome-logo-icon-transparent.png");
+		pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+							 "gnome-logo-icon-transparent.png",
+							 FALSE, NULL);
 	} else {
 		char *dentry_name;
 		GnomeDesktopItem *item_info;
@@ -104,9 +109,11 @@ get_pixmap(const char *menudir, gboolean main_menu)
 		if (item_info != NULL)
 			pixmap_name = gnome_desktop_item_get_icon (item_info);
 
-		if (pixmap_name == NULL)
-			pixmap_name =
-				gnome_unconditional_pixmap_file ("gnome-folder.png");
+		if (!pixmap_name)
+			pixmap_name = gnome_program_locate_file (NULL, 
+								 GNOME_FILE_DOMAIN_PIXMAP, 
+								 "gnome-folder.png",
+								 FALSE, NULL);
 
 		if (item_info != NULL)
 			gnome_desktop_item_unref (item_info);

@@ -495,7 +495,8 @@ create_applet_menu (AppletInfo *info, gboolean is_basep)
 	make_panel_submenu (panel_menu, TRUE, is_basep);
 	menuitem = gtk_menu_item_new ();
 
-	pixmap = gnome_pixmap_file ("gnome-panel.png");
+	pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					    "gnome-panel.png", TRUE, NULL);
 	if (pixmap == NULL) {
 		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
 		setup_menuitem (menuitem, NULL, _("Panel"));

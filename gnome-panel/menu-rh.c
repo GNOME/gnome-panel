@@ -218,7 +218,9 @@ add_redhat_entry(GSList *list, char *file)
 				if ( ! g_file_test (rh->u.item.icon,
 						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.icon);
-					rh->u.item.icon = gnome_pixmap_file(s);
+					rh->u.item.icon = gnome_program_locate_file (NULL, 
+										     GNOME_FILE_DOMAIN_PIXMAP, 
+										     s, TRUE, NULL);
 				}
 				g_free(s);
 			}
@@ -237,7 +239,9 @@ add_redhat_entry(GSList *list, char *file)
 				if ( ! g_file_test (rh->u.item.mini_icon,
 						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.mini_icon);
-					rh->u.item.mini_icon = gnome_pixmap_file(s);
+					rh->u.item.mini_icon = gnome_program_locate_file (NULL, 
+											  GNOME_FILE_DOMAIN_PIXMAP, 
+											  s, TRUE, NULL);
 				}
 				g_free(s);
 			}

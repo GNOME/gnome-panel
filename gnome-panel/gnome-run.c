@@ -353,7 +353,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         panel_error_dialog(_("Failed to execute command:\n"
                                              "%s\n"
                                              "%s"),
-                                           s, g_unix_error_string(errno));
+                                           s, g_strerror (errno));
                 }
         }
         
@@ -845,10 +845,12 @@ unset_pixmap (GtkWidget *gpixmap)
        
         gchar *file;
 
-        file = gnome_pixmap_file (DEFAULT_ICON);
+        file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					  DEFAULT_ICON, TRUE, NULL);
 
-        if (file == NULL)
-                file = gnome_pixmap_file (FALLBACK_DEFAULT_ICON);
+        if (!file)
+                file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						  FALLBACK_DEFAULT_ICON, TRUE, NULL);
         
         if (file)
                 gnome_pixmap_load_file (GNOME_PIXMAP (gpixmap),
@@ -1262,7 +1264,8 @@ create_run_widget(void)
 	GtkWidget *button;
 	char *pixmap_name;
 
-	pixmap_name = gnome_pixmap_file("gnome-run.png");
+	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						 "gnome-run.png", TRUE, NULL);
 
 	button = button_widget_new(pixmap_name,-1,
 				   MISC_TILE,

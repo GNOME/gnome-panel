@@ -185,12 +185,14 @@ init_menus (void)
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
-	menu = gnome_datadir_file ("gnome/apps");
+	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+					  "gnome/apps", TRUE, NULL);
 	if (menu != NULL)
 		fr_read_dir (NULL, menu, NULL, NULL, 2);
 	g_free (menu);
 
-	menu = gnome_datadir_file ("applets");
+	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+					  "applets", TRUE, NULL);
 	if (menu != NULL)
 		fr_read_dir (NULL, menu, NULL, NULL, 2);
 	g_free (menu);
@@ -959,7 +961,7 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 	if (unlink (sim->item_loc) < 0) {
 		panel_error_dialog("cant_remove_menu_item",
 				   _("Could not remove the menu item %s: %s\n"), 
-				    sim->item_loc, g_strerror(errno));
+				    sim->item_loc, g_strerror (errno));
 		return;
 	}
 
@@ -998,7 +1000,7 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		panel_error_dialog("cannot_open_order_file",
 				   _("Could not open .order file: %s\n%s"),
 				   order_out_name,
-				   g_unix_error_string(errno));
+				   g_strerror (errno));
 
 		g_free (order_in_name);
 		g_free (order_out_name);
@@ -1030,7 +1032,7 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		panel_error_dialog("cannot_rename_tmp_file",
 				   _("Could not rename tmp file: %s to %s\n%s"),
 				   order_out_name, order_in_name,
-				   g_unix_error_string(errno));
+				   g_strerror (errno));
 	}
 
 	g_free (order_out_name);
@@ -3336,7 +3338,10 @@ static GtkWidget *
 create_applets_menu (GtkWidget *menu, gboolean fake_submenus, gboolean title)
 {
 	GtkWidget *applet_menu;
-	char *menudir = gnome_datadir_file ("applets");
+	char      *menudir;
+
+	menudir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
+					     "applets", TRUE, NULL);
 
 	if (menudir == NULL ||
 	    ! g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
@@ -3683,7 +3688,8 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, const char *try_file,
 	}
 
 	if (try_file) {
-		file = gnome_pixmap_file (try_file);
+		file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						  try_file, TRUE, NULL);
 		if (!file)
 			g_warning (_("Cannot find pixmap file %s"), try_file);
 	}
@@ -3708,7 +3714,10 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 		    gboolean launcher_add,
 		    gboolean favourites_add)
 {
-	char *menudir = gnome_datadir_file ("gnome/apps");
+	char *menudir;
+
+	menudir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
+					     "gnome/apps", TRUE, NULL);
 
 	if (menudir &&
 	    g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
@@ -3794,7 +3803,8 @@ create_distribution_menu (GtkWidget *menu,
 		return NULL;
 
 	if (info->menu_icon != NULL)
-		pixmap_file = gnome_pixmap_file (info->menu_icon);
+		pixmap_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+							 info->menu_icon, TRUE, NULL);
 	else
 		pixmap_file = NULL;
 
@@ -5879,7 +5889,10 @@ create_menu_applet(PanelWidget *panel, const char *arguments,
 		return NULL;
 
 	if(gnome_folder == NULL)
-		gnome_folder = gnome_pixmap_file("gnome-folder.png");
+		gnome_folder = gnome_program_locate_file (NULL, 
+							  GNOME_FILE_DOMAIN_PIXMAP, 
+							  "gnome-folder.png", 
+							  TRUE, NULL);
 
 	main_menu = (string_empty (arguments) ||
 		     (strcmp (arguments, ".") == 0));

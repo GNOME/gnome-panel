@@ -353,7 +353,9 @@ get_full_tile(const char *file)
 	else if (g_path_is_absolute(file))
 		return g_strdup(file);
 	else
-		return gnome_unconditional_pixmap_file(file);
+		return gnome_program_locate_file (NULL,
+						  GNOME_FILE_DOMAIN_PIXMAP,
+						  file, FALSE, NULL);
 }
 
 static void

@@ -945,11 +945,13 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 
 	size = panel->sz < 14 ? panel->sz : 14;
 
-	if ( ! tried_loading) {
+	if (!tried_loading) {
 		char *file;
-		file = gnome_pixmap_file ("gnome-unknown.png");
 
-		if (file != NULL) {
+		file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						  "gnome-unknown.png", TRUE, NULL);
+
+		if (file) {
 			pb = gdk_pixbuf_new_from_file (file, NULL);
 
 			g_free (file);

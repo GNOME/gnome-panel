@@ -1,3 +1,15 @@
+2001-10-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c, basep-widget.c, button-widget.c,
+	  conditional.c, drawer.c, extern.c, foobar-widget.c
+	  gnome-panel-properties.c, gnome-panel-screenshot.c
+	  gnome-run.c, launcher.c, logout.c, main.c
+	  menu-properties.c, menu-rh.c, menu.c:
+	ported gnome_.*_file -> gnome_program_locate_file
+	       gnome_unconditional_.*_file -> gnome_program_locate_file
+	       g_file_exists -> g_file_test
+	       g_unix_error_string -> g_strerror
+
 2001-10-18  jacob berkman  <jacob@ximian.com>
 
 	* session.h (PANEL_CONFIG_PATH): set to panel2.d so you don't
