@@ -653,7 +653,6 @@ create_advanced_contents (void)
 			  G_CALLBACK (kill_completion),
 			  NULL);
  
-        gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
 
@@ -679,11 +678,14 @@ create_advanced_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), w,
                             FALSE, FALSE, GNOME_PAD_SMALL);
         
-        g_object_ref (G_OBJECT (vbox));
-        
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"advanced",
-				vbox,
+				g_object_ref (vbox),
+				(GDestroyNotify) g_object_unref);
+
+        g_object_set_data_full (G_OBJECT (run_dialog),
+				"advanced-entry",
+				g_object_ref (entry),
 				(GDestroyNotify) g_object_unref);
         
         g_signal_connect (G_OBJECT (vbox),
@@ -1076,13 +1078,18 @@ update_contents (GtkWidget *dialog)
                 advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
                 
                 if (advanced && advanced->parent == NULL) {
+			GtkWidget *advanced_entry;
+
+			advanced_entry =
+				g_object_get_data (G_OBJECT (dialog), "advanced-entry");
+
                         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                                             advanced,
                                             FALSE, FALSE, 0);
                 
                         gtk_widget_show_all (advanced);
 
-                        gtk_widget_grab_focus (advanced);
+                        gtk_widget_grab_focus (advanced_entry);
                 }
 
                 gtk_label_set_text (GTK_LABEL (advanced_toggle),
