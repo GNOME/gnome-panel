@@ -39,11 +39,6 @@ char *just_exit = NULL;
 /* The security cookie */
 char *cookie = NULL;
 
-static struct poptOption options[] = {
-  {"discard-session", '\0', POPT_ARG_STRING, &just_exit,0, N_("Discard session"),
-   N_("ID")},
-  {NULL, '\0', 0, NULL, 0}
-};
 
 /*I guess this should be called after we load up, but the problem is
   we never know when all the applets are going to finish loading and
@@ -63,6 +58,24 @@ discard_session (char *id)
 
 	return;
 }
+
+static void
+parse_an_arg (poptContext state,
+              enum poptCallbackReason reason,
+              const struct poptOption *opt,
+              const char *arg, void *data)
+{
+  if(opt->val == 0) {
+    *((char **)data) = arg;
+  }
+}
+
+static struct poptOption options[] = {
+  { NULL, '\0', POPT_ARG_CALLBACK, parse_an_arg, 0},
+  {"discard-session", '\0', POPT_ARG_STRING, &just_exit,0, N_("Discard session"),
+   N_("ID")},
+  {NULL, '\0', 0, NULL, 0}
+};
 
 static int
 try_config_sync(gpointer data)
