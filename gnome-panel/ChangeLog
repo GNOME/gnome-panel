@@ -1,3 +1,9 @@
+2002-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c:
+	(menu_button_notify), (create_panel_menu): binary chop
+	the button notify handler temporarily. Fixes #72430.
+
 Tue Feb 26 17:34:45 2002  George Lebl <jirka@5z.com>
 
 	* panel.c: fix #70518 among others, by queing a resize on all button

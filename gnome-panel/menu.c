@@ -4273,6 +4273,7 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gdk_event_free((GdkEvent *)bevent);
 }
 
+#if 0
 static void
 menu_button_notify (GtkWidget *widget, GParamSpec *pspec,gpointer data)
 {
@@ -4281,6 +4282,7 @@ menu_button_notify (GtkWidget *widget, GParamSpec *pspec,gpointer data)
 	if (!strcmp (pspec->name, "has-focus")) 
 		menu_button_menu_popup (menu, 1, GDK_CURRENT_TIME);
 }
+#endif
 
 static void  
 drag_data_get_cb (GtkWidget          *widget,
@@ -4359,8 +4361,10 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	g_signal_connect_after (G_OBJECT (menu->button), "pressed",
 				G_CALLBACK (menu_button_pressed), menu);
+#if 0
 	g_signal_connect (G_OBJECT (menu->button), "notify",
 			    G_CALLBACK (menu_button_notify), menu);
+#endif
 	g_signal_connect (G_OBJECT (menu->button), "clicked",
 			    G_CALLBACK (menu_button_pressed), menu);
 	g_signal_connect (G_OBJECT (menu->button), "destroy",
