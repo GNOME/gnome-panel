@@ -1,3 +1,13 @@
+2003-11-13 Arvind Samptur <arvind.samptur@wipro.com>
+
+	Patch from Archana Shah <archana.shah@wipro.com>
+
+	* window_menu.c: (window_menu_destroy) Destroy the 'About' dialog 
+	if it is still around.
+	(window_menu_about) Get rid of the static member for the dialog 
+	now that we have a member in the WindowMenu struct.
+	Fixes #126263
+
 2003-11-13  Vincent Untz  <vincent@vuntz.net>
 
 	* window-menu.c: (window_menu_help): use the help from the user guide,
