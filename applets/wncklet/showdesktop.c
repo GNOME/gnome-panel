@@ -319,11 +319,13 @@ show_desktop_applet_fill (PanelApplet *applet)
         if (file) {
                 sdd->icon = gdk_pixbuf_new_from_file (file, &error);
                 g_free (file);
+		file = NULL;
         }
 
         if (sdd->icon == NULL) {
                 g_printerr (_("Failed to load %s: %s\n"),
-                            file, error ? error->message : _("File not found"));
+                            file ? file : "gnome-fs-desktop",
+			    error ? error->message : _("File not found"));
                 if (error)
                         g_error_free (error);
         }
