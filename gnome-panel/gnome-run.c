@@ -472,11 +472,42 @@ return_and_close:
 	gtk_widget_destroy (w);
 }
 
+static char *
+quote_string (const char *s)
+{
+	const char *p;
+	for (p = s; *p != '\0'; p++) {
+		if ((*p >= 'a' && *p <= 'z') ||
+		    (*p >= 'A' && *p <= 'Z') ||
+		    (*p >= '0' && *p <= '9') ||
+		    strchr ("-_./=:", *p) != NULL)
+			;
+		else
+			return g_shell_quote (s);
+	}
+	return g_strdup (s);
+}
+
+static void
+append_file (GtkWidget *entry, const char *file)
+{
+	const char *text;
+	char *quoted = quote_string (file);
+	text = gtk_entry_get_text (GTK_ENTRY (entry));
+	if (string_empty (text)) {
+		gtk_entry_set_text (GTK_ENTRY (entry), quoted);
+	} else {
+		char *new = g_strconcat (text, " ", quoted, NULL);
+		gtk_entry_set_text (GTK_ENTRY (entry), new);
+		g_free (new);
+	}
+	g_free (quoted);
+}
+
 static void
 browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 {
 	const char *fname;
-	char *text, *new;
 	GtkWidget *entry;
 
 	g_return_if_fail (GTK_IS_FILE_SELECTION (fsel));
@@ -485,11 +516,7 @@ browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 
 	fname = gtk_file_selection_get_filename (fsel);
 	if (fname != NULL) {
-		text = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
-		new = g_strconcat (text, " ", fname, NULL);
-		gtk_entry_set_text (GTK_ENTRY (entry), new);
-		g_free (text);
-		g_free (new);
+		append_file (entry, fname);
 	}
 	
 	gtk_widget_destroy (GTK_WIDGET (fsel));
@@ -512,7 +539,7 @@ browse (GtkWidget *w, GtkWidget *entry)
 	g_object_set_data (G_OBJECT (fsel), "entry", entry);
 
 	g_signal_connect (G_OBJECT (fsel->ok_button), "clicked",
-			    G_CALLBACK (browse_ok), fsel);
+			  G_CALLBACK (browse_ok), fsel);
 	g_signal_connect_swapped (G_OBJECT (fsel->cancel_button), "clicked",
 		 		  G_CALLBACK (gtk_widget_destroy), 
 		 		  G_OBJECT (fsel));
@@ -685,6 +712,7 @@ toggle_contents (GtkWidget *disclosure,
 
 	panel_gconf_set_bool (key, GTK_TOGGLE_BUTTON (disclosure)->active);
 
+	/* FIXME: we need to listen on this key! */
         update_contents (dialog);
 }
 
@@ -743,6 +771,45 @@ activate_run (GtkWidget *entry, gpointer data)
 				     PANEL_RESPONSE_RUN);
 }
 
+static void
+drag_data_received (GtkWidget        *widget,
+		    GdkDragContext   *context,
+		    gint              x,
+		    gint              y,
+		    GtkSelectionData *selection_data,
+		    guint             info,
+		    guint32           time,
+		    gpointer          data)
+{
+	GtkEntry *entry = data;
+	char **uris;
+	int i;
+
+	uris = g_strsplit (selection_data->data, "\r\n", -1);
+
+	if (uris == NULL) {
+		gtk_drag_finish (context, FALSE, FALSE, time);
+		return;
+	}
+
+	for (i = 0; uris[i] != NULL; i++) {
+		char *file = gnome_vfs_get_local_path_from_uri (uris[i]);
+
+		if (file != NULL) {
+			append_file (entry, file);
+			g_free (file);
+		} else {
+			append_file (entry, uris[i]);
+		}
+	}
+
+	g_strfreev (uris);
+
+	gtk_drag_finish (context, TRUE, FALSE, time);
+}
+
+#define ELEMENTS(x) (sizeof (x) / sizeof (x[0]))
+
 static GtkWidget*
 create_simple_contents (void)
 {
@@ -756,6 +823,7 @@ create_simple_contents (void)
         GtkWidget *w;
 	const char *key;
 	gboolean enable_program_list;
+	static GtkTargetEntry drop_types[] = { { "text/uri-list", 0, 0 } };
         
         vbox = gtk_vbox_new (FALSE, 0);
 
@@ -803,6 +871,15 @@ create_simple_contents (void)
 			  G_CALLBACK (entry_changed),
 			  NULL);
 
+	gtk_drag_dest_unset (entry);
+	gtk_drag_dest_set (gentry,
+			   GTK_DEST_DEFAULT_ALL,
+			   drop_types, ELEMENTS (drop_types), GDK_ACTION_COPY);
+
+	g_signal_connect (gentry, "drag_data_received",
+			  G_CALLBACK (drag_data_received),
+			  entry);
+
 	hbox2 = gtk_hbox_new (FALSE, 0);
 	gtk_box_pack_start (GTK_BOX (vbox2), hbox2,
 			    TRUE, TRUE, GNOME_PAD_SMALL);
@@ -814,7 +891,7 @@ create_simple_contents (void)
         gtk_box_pack_start (GTK_BOX (hbox2), w,
                             TRUE, TRUE, 0);
 
-        w = gtk_button_new_with_mnemonic (_("Append File..."));
+        w = gtk_button_new_with_mnemonic (_("_Append File..."));
         g_signal_connect(G_OBJECT(w), "clicked",
                          G_CALLBACK (browse), entry);
 	gtk_box_pack_start (GTK_BOX (hbox2), w,
@@ -1349,7 +1426,6 @@ static void
 update_contents (GtkWidget *dialog)
 {
         GtkWidget *program_list_box = NULL;
-	GtkWidget *disclosure_button;
         gboolean show_program_list;
 	const char *key;
 
@@ -1357,8 +1433,6 @@ update_contents (GtkWidget *dialog)
 		(panel_gconf_get_profile (), "show_program_list"),
 	show_program_list = panel_gconf_get_bool (key, SHOW_LIST_DEFAULT);
         
-	disclosure_button = g_object_get_data (G_OBJECT (dialog), "disclosure");
-
         if (show_program_list) {
                 program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
 
