@@ -131,7 +131,7 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 	gnome_desktop_item_save (ditem, NULL, TRUE, &error);
 	if (error) {
 		panel_error_dialog (screen,
-				    "cannot_save_launcher",
+				    "cannot_save_launcher", TRUE,
 				    _("Cannot save launcher to disk"),
 				    "%s",
 				    error->message);
@@ -161,7 +161,7 @@ launch_url (Launcher *launcher)
 		GtkWidget *error_dialog;
 
 		error_dialog = panel_error_dialog (screen,
-						   "no_url_dialog",
+						   "no_url_dialog", TRUE,
 						   _("Cannot launch icon"),
 						   _("This launch icon does not specify a url to show."));
 		launcher_register_error_dialog (launcher, error_dialog);
@@ -174,6 +174,7 @@ launch_url (Launcher *launcher)
 	
 		error_dialog = panel_error_dialog (screen,
 						   "cannot_show_url_dialog",
+						   TRUE,
 						   _("Cannot show %s"),
 						   "%s",
 						   url,
@@ -210,6 +211,7 @@ launch_cb (GtkWidget *widget,
 
 			error_dialog = panel_error_dialog (launcher_get_screen (launcher),
 							   "cannot_launch_icon",
+							   TRUE,
 							   _("Cannot launch icon"),
 							   "%s",
 							   error->message);
@@ -254,7 +256,7 @@ drag_data_received_cb (GtkWidget        *widget,
 	if (error) {
 		GtkWidget *error_dialog;
 		error_dialog = panel_error_dialog (launcher_get_screen (launcher),
-						   "cannot_launch_icon",
+						   "cannot_launch_icon", TRUE,
 						   _("Cannot launch icon"),
 						   "%s",
 						   error->message);
@@ -942,6 +944,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
 			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
 						         "cannot_create_launcher",
+							 TRUE,
 						         _("Cannot create launcher"),
 						         _("You have to specify a name."));
 			g_signal_connect_swapped (G_OBJECT (err_dialog),
@@ -959,6 +962,7 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
 			err_dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
 							 "cannot_create_launcher",
+							 TRUE,
 							 _("Cannot create launcher"),
 							 _("You have to specify a valid URL or command."));
 			g_signal_connect_swapped (G_OBJECT (err_dialog),

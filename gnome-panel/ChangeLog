@@ -1,3 +1,23 @@
+2004-11-30  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-util.[ch]: (panel_error_dialog): add an argument to specify
+	if the dialog should be automatically destroyed when closed
+	(panel_dialog): ditto
+	* button-widget.c: (button_widget_load_pixbuf_and_scale): updated
+	panel_error_dialog call
+	* launcher.c: (panel_launcher_save_ditem), (launch_url),
+	(drag_data_received_cb), (really_add_launcher): ditto
+	* menu-ditem.c: (ditem_properties_close), (really_add_new_menu_item),
+	(panel_new_launcher): ditto
+	* menu.c: (about_gnome_cb), (activate_app_def), (remove_panel): ditto
+	* panel-action-button.c: (panel_action_search),
+	(panel_action_screenshot): ditto
+	* panel-recent.c: (recent_documents_activate_cb): ditto
+	* panel-run-dialog.c: (panel_run_dialog_launch_command),
+	(panel_run_dialog_show_url), (panel_run_dialog_execute): ditto
+	* panel-shell.c: (panel_shell_register): ditto and remove an horrible
+	hack :-)
+
 2004-11-29  Vincent Untz  <vincent@vuntz.net>
 
 	Fix gnome-panel part of bug #148171, and rework the code

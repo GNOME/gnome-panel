@@ -289,7 +289,7 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 				      &error);
 			
 	if (!result) {
-		panel_error_dialog (screen, "cannot_spawn_command",
+		panel_error_dialog (screen, "cannot_spawn_command", TRUE,
 				    _("Cannot launch command '%s'"),
 				    "%s",
 				    escaped,
@@ -315,7 +315,7 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 
 	gnome_url_show_on_screen (url, screen, &error);
 	if (error) {
-		panel_error_dialog (screen, "cannot_show_url",
+		panel_error_dialog (screen, "cannot_show_url", TRUE,
 				    _("Cannot display location '%s'"),
 				    "%s",
 				    escaped,
@@ -368,7 +368,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 
 	if (!disk || error) {
 		panel_error_dialog (screen, "cannot_convert_command_from_utf8",
-				    _("Cannot convert '%s' from UTF-8"),
+				    TRUE, _("Cannot convert '%s' from UTF-8"),
 				    "%s",
 				    command,
 				    error->message);

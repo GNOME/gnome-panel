@@ -86,11 +86,8 @@ panel_shell_register (void)
 			GtkWidget *dlg = panel_error_dialog (
 						gdk_screen_get_default (),
 						"panel_shell_register_error",
-						"%s", NULL, message);
+						FALSE, "%s", NULL, message);
 
-			/* FIXME: quick hack */
-			g_signal_handlers_disconnect_by_func
-				(dlg, G_CALLBACK (gtk_widget_destroy), dlg);
 			gtk_dialog_run (GTK_DIALOG (dlg));
 			gtk_widget_destroy (dlg);
 			return FALSE;

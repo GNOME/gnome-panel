@@ -197,7 +197,7 @@ panel_action_search (GtkWidget *widget)
 				  G_SPAWN_SEARCH_PATH,
 				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool",
+				    "cannot_exec_gnome-search-tool", TRUE,
 				    _("Cannot execute '%s'"),
 				    "%s",
 				    "gnome-search-tool",
@@ -221,7 +221,7 @@ panel_action_screenshot (GtkWidget *widget)
 				  G_SPAWN_SEARCH_PATH,
 				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
-				    "cannot_exec_gnome-screenshot",
+				    "cannot_exec_gnome-screenshot", TRUE,
 				    _("Cannot execute '%s'"),
 				    "%s",
 				    "gnome-screenshot",

@@ -202,7 +202,8 @@ static GtkWidget *
 panel_dialog (GdkScreen  *screen,
 	      int         type,
 	      const char *class,
-	      const char *str)
+	      const char *str,
+	      gboolean    auto_destroy)
 {
 	GtkWidget *dialog;
 
@@ -221,11 +222,10 @@ panel_dialog (GdkScreen  *screen,
 
 	gtk_widget_show_all (dialog);
 
-	/* FIXME: this is ugly and makes it bad to run gtk_dialog_run
-	 * after this function */
-	g_signal_connect_swapped (G_OBJECT (dialog), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  G_OBJECT (dialog));
+	if (auto_destroy)
+		g_signal_connect_swapped (G_OBJECT (dialog), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  G_OBJECT (dialog));
 
 	return dialog;
 }
@@ -233,6 +233,7 @@ panel_dialog (GdkScreen  *screen,
 GtkWidget *
 panel_error_dialog (GdkScreen  *screen,
 		    const char *class,
+		    gboolean    auto_destroy,
 		    const char *primary_format,
 		    const char *secondary_format,
 		    ...)
@@ -265,7 +266,7 @@ panel_error_dialog (GdkScreen  *screen,
 			g_free (format);
 	}
 
-	w = panel_dialog (screen, GTK_MESSAGE_ERROR, class, s);
+	w = panel_dialog (screen, GTK_MESSAGE_ERROR, class, s, auto_destroy);
 	g_free (s);
 	return w;
 }

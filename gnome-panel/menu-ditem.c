@@ -122,7 +122,7 @@ ditem_properties_close (GtkWidget *dialog,
 
 	if (saving_error)
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
-				    "cannot_save_entry",
+				    "cannot_save_entry", TRUE,
 				    _("Cannot save changes to launcher"),
 				    "%s",
 				    saving_error);
@@ -458,7 +458,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	/* check for valid name */
 	if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
 		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
-					     "cannot_create_launcher",
+					     "cannot_create_launcher", TRUE,
 					     _("Cannot create launcher"),
 					     _("You have to specify a name."));
 
@@ -475,7 +475,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
 		dialog = panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
-					     "cannot_create_launcher",
+					     "cannot_create_launcher", TRUE,
 					     _("Cannot create launcher"),
 					     _("You have to specify a valid URL or command."));
 		g_signal_connect_swapped (G_OBJECT (dialog),
@@ -506,7 +506,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 &error);
 	if (error) {
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
-				    "cannot_save_menu_item" /* class */,
+				    "cannot_save_menu_item" /* class */, TRUE,
 				    _("Cannot save menu item to disk"),
 				    "%s",
 				    error->message);
@@ -532,7 +532,7 @@ panel_new_launcher (const char *item_loc,
 	if (!is_item_writable (item_loc, NULL)) {
 		dialog = panel_error_dialog (screen,
 					     "cannot_create_launcher",
-					     _("Cannot create launcher"),
+					     _("Cannot create launcher"), TRUE,
 					     _("You can not create a new launcher at this "
 					       "location since the location is not writable."));
 

@@ -208,7 +208,7 @@ about_gnome_cb (GtkWidget *menuitem,
 
 	if (!gdk_spawn_command_line_on_screen (screen, program_path, &error)) {
 		panel_error_dialog (screen,
-				    "cannot_exec_about_gnome",
+				    "cannot_exec_about_gnome", TRUE,
 				    _("Cannot execute '%s'"),
 				    _("%s: %s"),
 				    _("About GNOME"),
@@ -236,7 +236,7 @@ activate_app_def (GtkWidget     *menuitem,
 			item, NULL, 0, menuitem_to_screen (menuitem), &error);
 		if (error) {
 			panel_error_dialog (menuitem_to_screen (menuitem),
-					    "cannot_launch_entry",
+					    "cannot_launch_entry", TRUE,
 					    _("Cannot launch entry"),
 					    "%s",
 					    error->message);
@@ -248,7 +248,7 @@ activate_app_def (GtkWidget     *menuitem,
 		g_assert (error != NULL);
 
 		panel_error_dialog (menuitem_to_screen (menuitem),
-				    "cannot_load_entry",
+				    "cannot_load_entry", TRUE,
 				    _("Cannot load entry"),
 				    "%s",
 				    error->message);
@@ -1498,7 +1498,7 @@ remove_panel (GtkWidget *menuitem,
 
 	if (panel_toplevel_is_last_unattached (toplevel)) {
 		panel_error_dialog (menuitem_to_screen (menuitem),
-				    "cannot_remove_last_panel",
+				    "cannot_remove_last_panel", TRUE,
 				    _("You cannot remove your last panel."),
 				    NULL);
 		return;

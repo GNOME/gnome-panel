@@ -39,6 +39,7 @@ GList *panel_g_list_resort_item   (GList        *list,
 
 GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
+					 gboolean    auto_destroy,
 					 const char *primary_format,
 					 const char *secondary_format,
 					 ...);
