@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-04-05 15:14+0200\n"
-"PO-Revision-Date: 2002-04-05 15:14+0200\n"
+"POT-Creation-Date: 2002-04-08 17:40+0200\n"
+"PO-Revision-Date: 2002-04-08 17:40+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -250,88 +250,77 @@ msgstr "fabrik för skapande av några allmänna panelprogram"
 msgid "Check for mail"
 msgstr "Kolla efter post"
 
-#: applets/gen_util/clock.c:164
-msgid ""
-"%I:%M\n"
-"%p"
-msgstr "%H.%M"
+#: applets/gen_util/clock.c:148 applets/gen_util/clock.c:408
+msgid "%I:%M:%S %p"
+msgstr "%H.%M.%S"
 
-#. This format string is used, to display the actual time in
-#. 12 hour format.
-#: applets/gen_util/clock.c:167 applets/gen_util/clock.c:383
+#: applets/gen_util/clock.c:150 applets/gen_util/clock.c:410
 msgid "%I:%M %p"
 msgstr "%I.%M %p"
 
-#. This format string is used, to display the actual time in
-#. 24 hour format.
-#: applets/gen_util/clock.c:174 applets/gen_util/clock.c:388
+#: applets/gen_util/clock.c:153 applets/gen_util/clock.c:413
+msgid "%H:%M:%S"
+msgstr "%H.%M.%S"
+
+#: applets/gen_util/clock.c:155 applets/gen_util/clock.c:415
 msgid "%H:%M"
 msgstr "%H.%M"
 
-#. This format string is used, to display the actual day,
-#. when showing a vertical panel.  For an explanation of
-#. this format string type 'man strftime'.
-#: applets/gen_util/clock.c:186
-msgid ""
-"%a\n"
-"%b %d"
-msgstr ""
-"%a\n"
-"%d %b"
-
-#. This format string is used, to display the actual day,
-#. when showing a horizontal panel.
-#: applets/gen_util/clock.c:191
+#: applets/gen_util/clock.c:166 applets/gen_util/clock.c:169
 msgid "%a %b %d"
 msgstr "%a %d %b"
 
-#. Set the applet's tooltip
-#: applets/gen_util/clock.c:202
+#. Show date in tooltip
+#: applets/gen_util/clock.c:230
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: applets/gen_util/clock.c:301
+#: applets/gen_util/clock.c:324
 msgid "Computer Clock"
 msgstr "Datorklocka"
 
-#: applets/gen_util/clock.c:413
+#: applets/gen_util/clock.c:448
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: applets/gen_util/clock.c:750
+#: applets/gen_util/clock.c:828
 msgid "Clock Preferences"
 msgstr "Klockinställningar"
 
-#: applets/gen_util/clock.c:774
-msgid "Time Format"
-msgstr "Tidsformat"
+#: applets/gen_util/clock.c:855
+msgid "Clock type"
+msgstr "Typ av klocka"
 
-#: applets/gen_util/clock.c:786
+#: applets/gen_util/clock.c:865
 msgid "_12 hour"
 msgstr "_12 timmar"
 
-#: applets/gen_util/clock.c:794
+#: applets/gen_util/clock.c:871
 msgid "_24 hour"
 msgstr "_24 timmar"
 
-#: applets/gen_util/clock.c:825
-msgid "Show _date"
-msgstr "Visa datum"
-
-#: applets/gen_util/clock.c:836
-msgid "Use _GMT"
-msgstr "Använd _GMT"
-
-#: applets/gen_util/clock.c:847
+#: applets/gen_util/clock.c:876
 msgid "_UNIX time"
 msgstr "_Unixtid"
 
-#: applets/gen_util/clock.c:851
+#: applets/gen_util/clock.c:880
 msgid "_Internet time"
 msgstr "_Internettid"
 
+#: applets/gen_util/clock.c:917
+msgid "Show _seconds"
+msgstr "Visa _sekunder"
+
+#: applets/gen_util/clock.c:927
+msgid "Show _date"
+msgstr "Visa datum"
+
+#: applets/gen_util/clock.c:937
+msgid "Use _GMT"
+msgstr "Använd _GMT"
+
 #. Translator credits
-#: applets/gen_util/clock.c:944 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/clock.c:1016 applets/gen_util/mailcheck.c:1590
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:489
 #: gnome-panel/menu.c:238
 msgid "translator_credits"
@@ -344,15 +333,15 @@ msgstr ""
 "Martin Wahlén\n"
 "Rapportera fel i översättningen till sv@li.org"
 
-#: applets/gen_util/clock.c:962
+#: applets/gen_util/clock.c:1034
 msgid "Clock Applet"
 msgstr "Klockapanelprogram"
 
-#: applets/gen_util/clock.c:963
+#: applets/gen_util/clock.c:1035
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "© 1998-2002 Free Software Foundation"
 
-#: applets/gen_util/clock.c:964
+#: applets/gen_util/clock.c:1036
 msgid "The Clock Applet displays current time and date"
 msgstr "Klockpanelprogrammet visar aktuell tid och aktuellt datum"
 
@@ -859,7 +848,7 @@ msgstr "Inga fönster öppna"
 #: gnome-panel/foobar-widget.c:731 gnome-panel/menu.c:2675
 #: gnome-panel/menu.c:2681 gnome-panel/menu.c:3525
 msgid "Applications"
-msgstr "Applikationer"
+msgstr "Program"
 
 #: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
 msgid "Can't find the screenshot program"
@@ -1129,6 +1118,14 @@ msgstr ""
 #: gnome-panel/gnome-panel-screenshot.c:1081
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan inte ta en skärmdump av det aktuella skrivbordet."
+
+#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
+msgid "Gnome Screenshot"
+msgstr "Gnome-skärmdump"
+
+#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
+msgid "Screen Capture Tool"
+msgstr "Verktyg för tagning av skärmbilder"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "Options"
@@ -2008,6 +2005,21 @@ msgstr "Panelprogrammet innehåller panelens bakgrundsfärg eller bild"
 msgid "The Applet's flags"
 msgstr "Panelprogrammets flaggor"
 
+#~ msgid ""
+#~ "%I:%M\n"
+#~ "%p"
+#~ msgstr "%H.%M"
+
+#~ msgid ""
+#~ "%a\n"
+#~ "%b %d"
+#~ msgstr ""
+#~ "%a\n"
+#~ "%d %b"
+
+#~ msgid "Time Format"
+#~ msgstr "Tidsformat"
+
 #~ msgid "%s the GNOME Fish Says:"
 #~ msgstr "GNOME-fisken %s säger:"
 
@@ -2047,17 +2059,11 @@ msgstr "Panelprogrammets flaggor"
 #~ msgid "View the calendar for this month."
 #~ msgstr "Visa kalendern för denna månad."
 
-#~ msgid "%H:%M:%S"
-#~ msgstr "%H.%M.%S"
-
 #~ msgid "%l:%M %p"
 #~ msgstr "%k.%M"
 
 #~ msgid "%l:%M:%S %p"
 #~ msgstr "%k.%M.%S"
-
-#~ msgid "%I:%M:%S %p"
-#~ msgstr "%H.%M.%S"
 
 #~ msgid ""
 #~ "Could not call time-admin\n"
@@ -3208,7 +3214,7 @@ msgstr "Panelprogrammets flaggor"
 #~ msgstr "Startar GNOME"
 
 #~ msgid "Applications menu"
-#~ msgstr "Applikationsmeny"
+#~ msgstr "Programmeny"
 
 #~ msgid "Programming"
 #~ msgstr "Programutveckling"
