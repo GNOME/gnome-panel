@@ -123,6 +123,9 @@ GList*		panel_widget_get_applets	(PanelWidget *panel);
 void		panel_widget_foreach		(PanelWidget *panel,
 						 GFunc func,
 						 gpointer user_data);
+/*initiate drag*/
+void		panel_widget_applet_drag_start	(PanelWidget *panel,
+						 GtkWidget *applet);
 
 /*changing parameters*/
 void		panel_widget_change_params	(PanelWidget *panel,

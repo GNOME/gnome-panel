@@ -867,18 +867,18 @@ panel_widget_add_with_drawer (PanelWidget *panel, GtkWidget *button, gint pos)
 	return -1;
 }
 
-static void
-panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet, int warp)
+void
+panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 {
 	panel->currently_dragged_applet = applet;
 	panel->currently_dragged_applet_pos =
 		panel_widget_get_pos(panel,applet);
 
-	if (warp)
+	/*if (warp)
 		gdk_pointer_warp(NULL, applet->window,
 				 0, 0, 0, 0,
 				 applet->allocation.width / 2,
-				 applet->allocation.height / 2);
+				 applet->allocation.height / 2);*/
 	
 	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
@@ -915,8 +915,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 			if(bevent->button == 2) {
 				/* Start drag */
-				panel_widget_applet_drag_start(
-					panel, widget, FALSE);
+				panel_widget_applet_drag_start(panel, widget);
 				return TRUE;
 			}
 

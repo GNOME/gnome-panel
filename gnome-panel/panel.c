@@ -389,16 +389,31 @@ create_applet(char *id, char *params, int pos, int panel)
 		g_free(params);
 }
 
-/*FIXME: move can't work from here!*/
+static PanelWidget *
+find_applet_panel(GtkWidget *applet)
+{
+	GList *list;
+
+	for(list=panels;list!=NULL;list=g_list_next(list))
+		if(panel_widget_get_pos(PANEL_WIDGET(list->data),applet)!=-1)
+			break;
+	if(!list)
+		return NULL;
+	return PANEL_WIDGET(list->data);
+}
+
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
-	/*
 	GtkWidget      *applet;
+	PanelWidget    *panel;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
-	applet_drag_start(applet, TRUE);
-	*/
+
+	if(!(panel = find_applet_panel(applet)))
+		return;
+
+	panel_widget_applet_drag_start(panel,applet);
 }
 
 
@@ -409,7 +424,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	AppletCommand  cmd;
 	gchar *id;
 	gint pos;
-	GList *list;
+	PanelWidget *panel;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 
@@ -425,12 +440,10 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	}
 	applets=g_list_remove(applets,applet);
 
-	for(list=panels;list!=NULL;list=g_list_next(list))
-		if(panel_widget_get_pos(PANEL_WIDGET(list->data),applet)!=-1)
-			break;
-	if(!list)
+	if(!(panel = find_applet_panel(applet)))
 		return;
-	panel_widget_remove(PANEL_WIDGET(list->data),applet);
+
+	panel_widget_remove(panel,applet);
 	gtk_widget_destroy(applet);
 }
 
@@ -463,14 +476,14 @@ create_applet_menu(void)
 	gtk_widget_show(menuitem);
 	applet_menu_remove_item = menuitem;
 
-	/*
+	
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
 			   NULL);
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
-	*/
+	
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
