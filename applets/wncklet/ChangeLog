@@ -1,6 +1,30 @@
+1998-05-30  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* Makefile.am (SUBDIRS): Split into ...
+	(always_built_SUBDIRS): ... this, and ...
+	(sometimes_built_SUBDIRS): ... list all `autoconf'ed dirs here.
+	(DIST_SUBDIRS): List all subdirs.
+
+	* batmon/Makefile.am: Cleaned up Automake hack not to generate
+	those pesky `dummy.cc' files.
+	* cdplayer/Makefile.am: Likewise.
+	* cpuload/Makefile.am: Likewise.
+	* cpumemusage/Makefile.am: Likewise.
+	* diskusage/Makefile.am: Likewise.
+	* drivemount/Makefile.am: Likewise.
+	* gen_util/Makefile.am: Likewise.
+	* icewm-pager/Makefile.am: Likewise.
+	* mixer/Makefile.am: Likewise.
+	* modemlights/Makefile.am: Likewise.
+	* netload/Makefile.am: Likewise.
+	* netwatch/Makefile.am: Likewise.
+	* webcontrol/Makefile.am: Likewise.
+	* winlist/Makefile.am: Likewise.
+	
 Fri May 29 19:42:23 PDT 1998  Garrett Smith  <gsmith@serv.net>
 
-	* Imported webcontrol applet, and added it to the Makefile.am
+	Imported webcontrol applet.
+	* Makefile.am (SUBDIRS): Add `webcontrol'.
 
 1998-05-28  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
 
@@ -18,8 +42,8 @@ Fri May 29 19:42:23 PDT 1998  Garrett Smith  <gsmith@serv.net>
 
 1998-05-26  John Ellis  <johne@bellatlantic.net>
 
-	* Makefile.am: changed modemlights to
-	@PROGRAMS_PANEL_MODEMLIGHTS@
+	* Makefile.am (SUBDIRS): changed modemlights to
+	@PROGRAMS_PANEL_MODEMLIGHTS@.
 
 Sun May 24 18:21:41 1998  George Lebl  <jirka@5z.com>
 
