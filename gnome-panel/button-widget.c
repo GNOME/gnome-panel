@@ -673,7 +673,7 @@ button_widget_expose (GtkWidget         *widget,
 		width = widget->allocation.width -  2 * focus_pad;
 		height = widget->allocation.height - 2 * focus_pad;
 		gtk_paint_focus (widget->style, widget->window,
-				 GTK_WIDGET_STATE (widget),
+				 GTK_STATE_NORMAL,
 				 &event->area, widget, "button",
 				 x, y, width, height);
 	}
