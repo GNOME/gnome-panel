@@ -1300,7 +1300,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 
 		if (strut > 0) {
 			strut_start = MAX (x, monitor_x);
-			strut_end = MIN (x + width, monitor_x + monitor_width);
+			strut_end = MIN (x + width, monitor_x + monitor_width) - 1;
 		}
 	} else {
 		if (leftmost && x <= monitor_x) {
@@ -1313,7 +1313,7 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 
 		if (strut > 0) {
 			strut_start = MAX (y, monitor_y);
-			strut_end = MIN (y + height, monitor_y + monitor_height);
+			strut_end = MIN (y + height, monitor_y + monitor_height) - 1;
 
 		}
 	}

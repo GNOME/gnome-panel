@@ -172,7 +172,7 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 		}
 
 		strut->allocated_strut_start = geometry->y;
-		strut->allocated_strut_end   = geometry->y + geometry->height;
+		strut->allocated_strut_end   = geometry->y + geometry->height - 1;
 	}
 
 	return skip;
@@ -404,26 +404,26 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	case PANEL_ORIENTATION_TOP:
 		strut->geometry.x      = strut->strut_start;
 		strut->geometry.y      = monitor_y;
-		strut->geometry.width  = strut->strut_end - strut->strut_start;
+		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
 		strut->geometry.height = strut->strut_size;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		strut->geometry.x      = strut->strut_start;
 		strut->geometry.y      = monitor_y + monitor_height - strut->strut_size;
-		strut->geometry.width  = strut->strut_end - strut->strut_start;
+		strut->geometry.width  = strut->strut_end - strut->strut_start + 1;
 		strut->geometry.height = strut->strut_size;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		strut->geometry.x      = monitor_x;
 		strut->geometry.y      = strut->strut_start;
 		strut->geometry.width  = strut->strut_size;
-		strut->geometry.height = strut->strut_end - strut->strut_start;
+		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
 		strut->geometry.x      = monitor_x + monitor_width - strut->strut_size;
 		strut->geometry.y      = strut->strut_start;
 		strut->geometry.width  = strut->strut_size;
-		strut->geometry.height = strut->strut_end - strut->strut_start;
+		strut->geometry.height = strut->strut_end - strut->strut_start + 1;
 		break;
 	}
 
