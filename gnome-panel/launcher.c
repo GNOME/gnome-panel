@@ -535,7 +535,7 @@ really_add_launcher(GtkWidget *d, int button, gpointer data)
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
 	GnomeDesktopEntry *dentry;
 	
-	if(button == 0) {
+	if(button == 0/*ok*/) {
 		dentry = gnome_dentry_get_dentry(dedit);
 
 		if(!dentry->name || !(*(dentry->name))) {
@@ -544,7 +544,16 @@ really_add_launcher(GtkWidget *d, int button, gpointer data)
 		}
 		load_launcher_applet_full (NULL, dentry, panel, pos, exactpos);
 		panel_config_sync();
+	} else if(button == 2/*help*/) {
+		GnomeHelpMenuEntry help_entry = {
+			"panel",
+			"launchers.html#LAUNCHERS"
+		};
+		gnome_help_display(NULL, &help_entry);
+		/* just return as we don't want to close */
+		return;
 	}
+
 	gtk_widget_destroy(d);
 }
 
@@ -559,6 +568,7 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 	d = gnome_dialog_new(_("Create launcher applet"),
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
+			     GNOME_STOCK_BUTTON_HELP,
 			     NULL);
 	gtk_window_set_wmclass(GTK_WINDOW(d),
 			       "create_launcher","Panel");

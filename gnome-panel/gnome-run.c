@@ -42,8 +42,17 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	char *s;
 	GSList *tofree = NULL;
 
-	if (button_num != 0)
+	if (button_num == 2/*help*/) {
+		GnomeHelpMenuEntry help_entry = {
+			"panel",
+			"mainmenu.html#RUN"
+		};
+		gnome_help_display(NULL, &help_entry);
+		/* just return as we don't want to close */
 		return;
+	} else if (button_num == 1/*cancel*/) {
+		goto return_and_close;
+	}
 
 	entry = GTK_ENTRY (gtk_object_get_data(GTK_OBJECT(w), "entry"));
 	terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data(GTK_OBJECT(w),
@@ -52,14 +61,14 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	s = gtk_entry_get_text(entry);
 
 	if (!s || !*s)
-		return;
+		goto return_and_close;
 
 	/* we use a popt function as it does exactly what we want to do and
 	   gnome already uses popt */
 	if(poptParseArgvString(s, &temp_argc, &temp_argv) != 0) {
 		panel_error_dialog(_("Failed to execute command:\n"
 				     "%s"), s);
-		return;
+		goto return_and_close;
 	}
 
 
@@ -108,7 +117,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	if (gnome_execute_async (NULL, argc, argv) >= 0) {
 		g_slist_foreach(tofree, (GFunc)g_free, NULL);
 		g_slist_free(tofree);
-		return;
+		goto return_and_close;
 	}
 	g_slist_foreach(tofree, (GFunc)g_free, NULL);
 	g_slist_free(tofree);
@@ -117,6 +126,8 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 			     "%s\n"
 			     "%s"),
 			   s, g_unix_error_string(errno));
+return_and_close:
+	gtk_widget_destroy(w);
 }
 
 static void
@@ -194,9 +205,10 @@ show_run_dialog ()
 						GNOME_STOCK_PIXMAP_EXEC);
 	gnome_dialog_append_button (GNOME_DIALOG (dialog),
 				    GNOME_STOCK_BUTTON_CANCEL);
+	gnome_dialog_append_button (GNOME_DIALOG (dialog),
+				    GNOME_STOCK_BUTTON_HELP);
 
 	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
-	gnome_dialog_set_close (GNOME_DIALOG (dialog), TRUE);
 
 	hbox = gtk_hbox_new(0, FALSE);
 	
