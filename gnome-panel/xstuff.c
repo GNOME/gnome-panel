@@ -68,25 +68,23 @@ try_adding_status(guint32 winid)
 }
 
 static void
-try_checking_swallows (guint32 winid)
+try_checking_swallows (GwmhTask *task)
 {
-	char *tit = NULL;
-	if (XFetchName (GDK_DISPLAY (), winid, &tit) &&
-	    tit != NULL) {
-		GList *li;
-		for (li = check_swallows; li;
-		     li = li->next) {
-			Swallow *swallow = li->data;
-			if (strstr (tit, swallow->title) != NULL) {
-				swallow->wid = winid;
-				gtk_socket_steal (GTK_SOCKET (swallow->socket),
-						  swallow->wid);
-				check_swallows = 
-					g_list_remove (check_swallows, swallow);
-				break;
-			}
+	GList *li;
+
+	if (!task->name)
+		return;
+
+	for (li = check_swallows; li; li = li->next) {	     
+		Swallow *swallow = li->data;
+		if (strstr (task->name, swallow->title) != NULL) {
+			swallow->wid = task->xwin;
+			gtk_socket_steal (GTK_SOCKET (swallow->socket),
+					  swallow->wid);
+			check_swallows = 
+				g_list_remove (check_swallows, swallow);
+			break;
 		}
-		XFree (tit);
 	}
 }
 
@@ -100,7 +98,7 @@ xstuff_go_through_client_list (void)
 	for (li = gwmh_task_list_get (); li != NULL; li = li->next) {
 		GwmhTask *task = li->data;
 		if (check_swallows != NULL)
-			try_checking_swallows (task->xwin);
+			try_checking_swallows (task);
 		try_adding_status (task->xwin);
 	}
 	gdk_flush();
@@ -144,7 +142,7 @@ task_notifier (gpointer func_data,
 	case GWMH_NOTIFY_INFO_CHANGED:
 	case GWMH_NOTIFY_NEW:
 		if (check_swallows != NULL)
-			try_checking_swallows (task->xwin);
+			try_checking_swallows (task);
 		try_adding_status (task->xwin);
 		break;
 	default:

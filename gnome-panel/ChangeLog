@@ -1,3 +1,9 @@
+2001-02-25  jacob berkman  <jacob@ximian.com>
+
+	* xstuff.c (try_checking_swallows): pass in a gwmhtask instead of
+	winid.  this prevents some BadWindows i was getting and maybe
+	saves a server round trip.
+
 Sun Feb 25 00:12:08 2001  George Lebl <jirka@5z.com>
 
 	* menu.c: correctly set the custom_icon_file member, to fix #51348
