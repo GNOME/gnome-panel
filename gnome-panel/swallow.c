@@ -21,7 +21,7 @@
 
 
 static gulong
-get_window_id(char *title)
+get_window_id(Window win, char *title)
 {
 	Window root_return;
 	Window parent_return;
@@ -32,7 +32,7 @@ get_window_id(char *title)
 	gulong wid=-1;
 
 	XQueryTree(GDK_DISPLAY(),
-		   GDK_ROOT_WINDOW(),
+		   win,
 		   &root_return,
 		   &parent_return,
 		   &children,
@@ -52,6 +52,8 @@ get_window_id(char *title)
 			XFree(tit);
 		}
 	}
+	for(i=0;wid==-1 && i<nchildren;i++)
+		wid = get_window_id(children[i],title);
 	if(children)
 		XFree(children);
 	return wid;
@@ -119,18 +121,19 @@ create_swallow_applet(char *arguments, SwallowOrient orient)
 	gtk_widget_show(swallow->socket);
 
 	/*FIXME: add the right window or wait for it or something here*/
-	gtk_widget_set_usize(swallow->socket,48,48);
+	//gtk_widget_set_usize(swallow->socket,48,48);
 	{
 		long wid;
 		char buf[256];
 		puts("window name to get:");
 		scanf("%s",buf);
-		wid = get_window_id(buf);
+		wid = get_window_id(GDK_ROOT_WINDOW(),buf);
 		if(wid==-1)
 			puts("DANG!");
 		else
 			gtk_socket_steal(GTK_SOCKET(swallow->socket),wid);
 	}
+
 
 	gtk_object_set_user_data(GTK_OBJECT(swallow->socket),swallow);
 

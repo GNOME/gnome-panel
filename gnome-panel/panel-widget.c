@@ -1185,6 +1185,9 @@ panel_widget_new (gint size,
 		GTK_WINDOW(panel)->type = GTK_WINDOW_DIALOG;
 	else
 		GTK_WINDOW(panel)->type = GTK_WINDOW_POPUP;
+	GTK_WINDOW(panel)->allow_shrink = TRUE;
+	GTK_WINDOW(panel)->allow_grow = TRUE;
+	GTK_WINDOW(panel)->auto_shrink = TRUE;
 
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(panel),
