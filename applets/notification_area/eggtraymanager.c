@@ -1,4 +1,3 @@
-/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /* eggtraymanager.c
  * Copyright (C) 2002 Anders Carlsson <andersca@gnu.org>
  *
@@ -60,7 +59,9 @@ static void egg_tray_manager_init (EggTrayManager *manager);
 static void egg_tray_manager_class_init (EggTrayManagerClass *klass);
 
 static void egg_tray_manager_finalize (GObject *object);
-     
+
+static void egg_tray_manager_unmanage (EggTrayManager *manager);
+
 GType
 egg_tray_manager_get_type (void)
 {
@@ -160,25 +161,10 @@ static void
 egg_tray_manager_finalize (GObject *object)
 {
   EggTrayManager *manager;
-  Display *display;
-  guint32 timestamp;
   
   manager = EGG_TRAY_MANAGER (object);
 
-#if HAVE_GTK_MULTIHEAD
-  display = GDK_WINDOW_XDISPLAY (manager->invisible);
-#else
-  display = GDK_DISPLAY ();
-#endif
-  
-  if (XGetSelectionOwner (display, manager->selection_atom) ==
-      GDK_WINDOW_XWINDOW (manager->invisible->window))
-    {
-      timestamp = gdk_x11_get_server_time (manager->invisible->window);      
-      XSetSelectionOwner (display, manager->selection_atom, None, timestamp);
-    }
-
-  gtk_widget_destroy (manager->invisible);
+  egg_tray_manager_unmanage (manager);
   
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -367,8 +353,8 @@ egg_tray_manager_handle_event (EggTrayManager       *manager,
     case SYSTEM_TRAY_CANCEL_MESSAGE:
       egg_tray_manager_handle_cancel_message (manager, xevent);
       return GDK_FILTER_REMOVE;
-
     default:
+      break;
     }
 
   return GDK_FILTER_CONTINUE;
@@ -395,10 +381,37 @@ egg_tray_manager_window_filter (GdkXEvent *xev, GdkEvent *event, gpointer data)
   else if (xevent->type == SelectionClear)
     {
       g_signal_emit (manager, manager_signals[LOST_SELECTION], 0);
-      g_print ("Lost our selection :(");
+      egg_tray_manager_unmanage (manager);
     }
   
   return GDK_FILTER_CONTINUE;
+}
+
+static void
+egg_tray_manager_unmanage (EggTrayManager *manager)
+{
+  Display *display;
+  guint32 timestamp;
+  GtkWidget *invisible;
+
+  if (manager->invisible == NULL)
+	  return;
+
+  invisible = manager->invisible;
+  
+  display = GDK_WINDOW_XDISPLAY (manager->invisible);
+  
+  if (XGetSelectionOwner (display, manager->selection_atom) ==
+      GDK_WINDOW_XWINDOW (manager->invisible->window))
+    {
+      timestamp = gdk_x11_get_server_time (manager->invisible->window);      
+      XSetSelectionOwner (display, manager->selection_atom, None, timestamp);
+    }
+
+  gdk_window_remove_filter (invisible->window, egg_tray_manager_window_filter, manager);  
+
+  manager->invisible = NULL; /* prior to destroy for reentrancy paranoia */
+  gtk_widget_destroy (invisible);
 }
 
 static gboolean
@@ -407,6 +420,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
   GtkWidget *invisible;
   char *selection_atom_name;
   guint32 timestamp;
+  GdkScreen *screen;
   
   g_return_val_if_fail (EGG_IS_TRAY_MANAGER (manager), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
@@ -418,11 +432,10 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
   if (egg_tray_manager_check_running_xscreen (xscreen))
     return FALSE;
 #endif
-#if HAVE_GTK_MULTIHEAD
+  screen = gdk_display_get_screen (gdk_x11_lookup_xdisplay (DisplayOfScreen (xscreen)),
+				   XScreenNumberOfScreen (xscreen));
+  
   invisible = gtk_invisible_new_for_screen (screen);
-#else
-  invisible = gtk_invisible_new ();
-#endif
   
   gtk_widget_add_events (invisible, GDK_PROPERTY_CHANGE_MASK | GDK_STRUCTURE_MASK);
 
@@ -458,7 +471,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 		  False, StructureNotifyMask, (XEvent *)&xev);
 
       manager->invisible = invisible;
-      
+
       manager->opcode_atom = XInternAtom (DisplayOfScreen (xscreen),
 					  "_NET_SYSTEM_TRAY_OPCODE",
 					  False);
@@ -468,18 +481,17 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
 						False);
 
       /* Add a window filter */
-      gdk_window_add_filter (NULL, egg_tray_manager_window_filter, manager);
+      gdk_window_add_filter (invisible->window, egg_tray_manager_window_filter, manager);
       return TRUE;
     }
   else
     {
       gtk_widget_destroy (invisible);
-
+ 
       return FALSE;
     }
 }
 
-#if HAVE_GTK_MULTIHEAD
 gboolean
 egg_tray_manager_manage_screen (EggTrayManager *manager,
 				GdkScreen      *screen)
@@ -487,9 +499,9 @@ egg_tray_manager_manage_screen (EggTrayManager *manager,
   g_return_val_if_fail (GDK_IS_SCREEN (screen), FALSE);
   g_return_val_if_fail (manager->screen == NULL, FALSE);
 
-  
+  return egg_tray_manager_manage_xscreen (manager, 
+					  GDK_SCREEN_XSCREEN (screen));
 }
-#endif
 
 gboolean
 egg_tray_manager_manage (EggTrayManager *manager)

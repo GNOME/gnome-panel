@@ -54,7 +54,7 @@ EXTRA_DIST =					\
 	update-from-egg.sh			\
 	eggmarshalers.list
 
-EGGDIR=$(srcdir)/../../libegg/libegg/tray
+EGGDIR=$(srcdir)/../../../libegg/libegg/tray
 
 CLEANFILES =                                    \
 	GNOME_NotificationAreaApplet.server.in        \
