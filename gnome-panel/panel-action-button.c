@@ -179,7 +179,7 @@ panel_action_logout (GtkWidget *widget)
 void
 panel_action_run_program (GtkWidget *widget)
 {
-	panel_run_dialog_present (gtk_widget_get_screen (widget));
+	panel_run_dialog_present (gtk_widget_get_screen (widget), gtk_get_current_event_time ());
 }
 
 /* Search For Files

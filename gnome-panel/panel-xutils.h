@@ -54,6 +54,12 @@ void panel_warp_pointer           (GdkWindow             *gdk_window,
 				   int                    x,
 				   int                    y);
 
+/* FIXME: When we switch to gtk+-2.6, use of this function should be
+ * replaced by using the real gdk_x11_window_set_user_time.
+ */
+void panel_gdk_x11_window_set_user_time (GdkWindow *window,
+					 guint32    timestamp);
+
 G_END_DECLS
 
 #endif /* __PANEL_XUTILS_H__ */

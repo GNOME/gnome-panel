@@ -1505,10 +1505,11 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 				  PANEL_STOCK_RUN,
 				  GTK_ICON_SIZE_DIALOG);
 }
-				
+
 static PanelRunDialog *
 panel_run_dialog_new (GdkScreen *screen,
-		      GladeXML  *gui)
+		      GladeXML  *gui,
+		      guint32    activate_time)
 {
 	PanelRunDialog *dialog;
 
@@ -1543,6 +1544,8 @@ panel_run_dialog_new (GdkScreen *screen,
 	set_window_icon_from_stock (GTK_WINDOW (dialog->run_dialog), PANEL_STOCK_RUN);
 
 	gtk_widget_grab_focus (dialog->gtk_entry);
+	gtk_widget_realize (dialog->run_dialog);
+	panel_gdk_x11_window_set_user_time (dialog->run_dialog->window, activate_time);
 	gtk_widget_show (dialog->run_dialog);
 	
 	return dialog;
@@ -1556,7 +1559,8 @@ panel_run_dialog_static_dialog_destroyed (PanelRunDialog *dialog)
 }
 
 void
-panel_run_dialog_present (GdkScreen *screen)
+panel_run_dialog_present (GdkScreen *screen,
+			  guint32    activate_time)
 {
 	GladeXML *gui;
 
@@ -1565,6 +1569,7 @@ panel_run_dialog_present (GdkScreen *screen)
 
 	if (static_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (static_dialog->run_dialog), screen);
+		panel_gdk_x11_window_set_user_time (static_dialog->run_dialog->window, activate_time);
 		gtk_window_present (GTK_WINDOW (static_dialog->run_dialog));
 		gtk_widget_grab_focus (static_dialog->gtk_entry);
 		return;
@@ -1574,7 +1579,7 @@ panel_run_dialog_present (GdkScreen *screen)
 			     "panel_run_dialog",
 			     NULL);
 
-	static_dialog = panel_run_dialog_new (screen, gui);
+	static_dialog = panel_run_dialog_new (screen, gui, activate_time);
 
 	g_signal_connect_swapped (static_dialog->run_dialog, "destroy",
 				  G_CALLBACK (panel_run_dialog_static_dialog_destroyed),
@@ -1585,9 +1590,10 @@ panel_run_dialog_present (GdkScreen *screen)
 
 void
 panel_run_dialog_present_with_text (GdkScreen  *screen,
-				    const char *text)
+				    const char *text,
+				    guint32    activate_time)
 {
-	panel_run_dialog_present (screen);
+	panel_run_dialog_present (screen, activate_time);
 	
 	if (static_dialog)
 		gtk_entry_set_text (GTK_ENTRY (static_dialog->gtk_entry), text);

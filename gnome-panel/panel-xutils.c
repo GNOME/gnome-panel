@@ -170,3 +170,30 @@ panel_warp_pointer (GdkWindow *gdk_window,
 	XWarpPointer (display, None, window, 0, 0, 0, 0, x, y);
 	gdk_error_trap_pop ();
 }
+
+/* FIXME: When we switch to gtk+-2.6, use of this function should be
+ * replaced by using the real gdk_x11_window_set_user_time.  Also,
+ * think of the code style mismatch (e.g. 2 spaces instead of tabs) as
+ * an extra reminder to nuke this function.  :-)
+ */
+void
+panel_gdk_x11_window_set_user_time (GdkWindow *window,
+				    guint32    timestamp)
+{
+  GdkDisplay *display;
+  glong timestamp_long = (glong)timestamp;
+
+  g_return_if_fail (window != NULL);
+  g_return_if_fail (GDK_IS_WINDOW (window));
+
+  if (GDK_WINDOW_DESTROYED (window))
+    return;
+
+  display = gdk_drawable_get_display (window);
+
+  XChangeProperty (GDK_DISPLAY_XDISPLAY (display), GDK_WINDOW_XID (window),
+                   gdk_x11_get_xatom_by_name_for_display (display, "_NET_WM_USER_TIME"),
+                   XA_CARDINAL, 32, PropModeReplace,
+                   (guchar *)&timestamp_long, 1);
+}
+

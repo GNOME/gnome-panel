@@ -77,9 +77,10 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 }
 
 static void
-panel_action_protocol_run_dialog (GdkScreen *screen)
+panel_action_protocol_run_dialog (GdkScreen *screen,
+				  guint32    activate_time)
 {
-	panel_run_dialog_present (screen);
+	panel_run_dialog_present (screen, activate_time);
 }
 
 static GdkFilterReturn
@@ -106,7 +107,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
 		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
-		panel_action_protocol_run_dialog (screen);
+		panel_action_protocol_run_dialog (screen, xevent->xclient.data.l [1]);
 	else
 		return GDK_FILTER_CONTINUE;
 

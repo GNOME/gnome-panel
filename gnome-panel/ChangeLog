@@ -1,3 +1,31 @@
+2004-08-18  Elijah Newren  <newren@math.utah.edu>
+
+	Make sure "Run Application" dialog gets focused when invoked via
+	the window manager keybinding.  Fixes #150271.
+
+	* gnome-panel/panel-action-button.c (panel_action_run_program):
+	pass a timestamp to panel_run_dialog_present
+
+	* gnome-panel/panel-action-protocol.c
+	(panel_action_protocol_run_dialog): make this function take a
+	timestamp and pass it to panel_run_dialog_present,
+	(panel_action_protocol_filter): get the timestamp passed by
+	Metacity and pass it to panel_action_protocol_run_dialog
+
+	* gnome-panel/panel-run-dialog.[ch] (panel_run_dialog_new): make this
+	function take a timestamp, and set the _NET_WM_USER_TIME of the
+	dialog to the value of this timestamp, (panel_run_dialog_present):
+	make this function take a timestamp, and either set the
+	_NET_WM_USER_TIME of the dialog to the value of this timestamp or
+	pass the timestamp to panel_run_dialog_new,
+	(panel_run_dialog_present_with_text): make this function take a
+	timestamp and pass it to panel_run_dialog_present
+
+	# gnome-panel/panel-xutils.[ch]
+	(panel_gdk_x11_window_set_user_time): Add this temporary function
+	which updates the _NET_WM_USER_TIME field, since
+	gdk_x11_window_set_user_time doesn't exist in gtk+-2.4.x.
+
 2004-08-17  Mark McLoughlin  <mark@skynet.ie>
 
 	* egg-recent-item.c, egg-recent-view-gtk.c: Sync to
