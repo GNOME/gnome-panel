@@ -528,12 +528,18 @@ add_to_submenus (AppletInfo *info,
 static GtkWidget *
 panel_applet_create_menu (AppletInfo *info)
 {
-	GtkWidget *retval;
+	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GList     *l;
 
-	retval = g_object_ref (panel_menu_new ());
-	gtk_object_sink (GTK_OBJECT (retval));
+	menu = g_object_ref (panel_menu_new ());
+	gtk_object_sink (GTK_OBJECT (menu));
+
+	/* connect the deactivate signal, so that we can "re-allow" 
+	 * autohide when the menu is deactivated.
+	 */
+	g_signal_connect (menu, "deactivate",
+			  G_CALLBACK (applet_menu_deactivate), info);
 
 	if (!commie_mode) {
 		GtkWidget *image;
@@ -548,46 +554,35 @@ panel_applet_create_menu (AppletInfo *info)
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (applet_remove_callback), info);
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 		menuitem = gtk_image_menu_item_new ();
 
-		/*
-		 * FIXME: should have a "Move" pixmap.
+		/* FIXME: should have a "Move" pixmap.
 		 */
 		setup_menuitem (menuitem, NULL, _("Move"));
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (move_applet_callback), info);
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	}
 
-	if (info->user_menu) {
-		menuitem = gtk_image_menu_item_new ();
+	if (!info->user_menu)
+		return menu;
 
-		gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-
-		gtk_widget_set_sensitive (menuitem, FALSE);
-
-		gtk_widget_show (menuitem);
-	}
+	menuitem = gtk_separator_menu_item_new ();
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_widget_show (menuitem);
 
 	for (l = info->user_menu; l; l = l->next) {
-		AppletUserMenu *menu = (AppletUserMenu *)l->data;
+		AppletUserMenu *user_menu = (AppletUserMenu *)l->data;
 
-		add_to_submenus (info, "", menu->name, menu, 
-				 retval, info->user_menu);
+		add_to_submenus (info, "", user_menu->name, user_menu, 
+				 menu, info->user_menu);
 	}
 
-	/*
-	 * connect the deactivate signal, so that we can "re-allow" 
-	 * autohide when the menu is deactivated.
-	 */
-	g_signal_connect (retval, "deactivate",
-			  G_CALLBACK (applet_menu_deactivate), info);
-
-	return retval;
+	return menu;
 }
 
 static void

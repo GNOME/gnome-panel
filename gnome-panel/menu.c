@@ -141,55 +141,14 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
 				       const char *title);
 
-static gboolean panel_menus_have_icons   = TRUE;
 
-static void
-panel_menu_have_icons_notify (GConfClient *client,
-			      guint        cnxn_id,
-			      GConfEntry  *entry,
-			      gpointer     user_data)
-{
-	GConfValue *value = gconf_entry_get_value (entry);
-	if (value->type == GCONF_VALUE_BOOL)
-		panel_menus_have_icons = gconf_value_get_bool (value);
-	else
-		/* default to true */
-		panel_menus_have_icons = TRUE;
-}
-
-gboolean
+static inline gboolean
 panel_menu_have_icons (void)
 {
-	static guint notify_id = 0;
-
-	if (notify_id == 0) {
-		GConfValue  *value;
-		GConfClient *client = panel_gconf_get_client ();
-		gchar       *key    = PANEL_MENU_HAVE_ICONS_KEY;
-		GError      *error  = NULL;
-
-		notify_id = gconf_client_notify_add (client, key, 
-						     panel_menu_have_icons_notify,
-						     NULL, NULL, &error);
-		if (error) {
-			g_warning (G_STRLOC ": failed to add notification for '%s' : '%s'",
-				   key, error->message);
-			g_error_free (error);
-		}
-
-		value = gconf_client_get (client, key, NULL);
-		if (value != NULL &&
-		    value->type == GCONF_VALUE_BOOL)
-			panel_menus_have_icons = gconf_value_get_bool (value);
-		else
-			/* default to true */
-			panel_menus_have_icons = TRUE;
-
-		if (value != NULL)
-			gconf_value_free (value);
-	}
-
-	return panel_menus_have_icons;
+	return gconf_client_get_bool (
+			panel_gconf_get_client (),
+			"/desktop/gnome/interface/menus_have_icons",
+			NULL);
 }
 
 /*to be called on startup to load in some of the directories,
@@ -424,55 +383,49 @@ setup_menu_panel (GtkWidget *menu)
 }
 
 static void
-pixmaps_changed (GConfClient* client,
-		 guint cnxn_id,
-		 GConfEntry *entry,
-		 gpointer user_data)
+menus_have_icons_changed (GConfClient *client,
+			  guint        cnxn_id,
+			  GConfEntry  *entry,
+			  GtkWidget   *menu)
 {
-	GtkWidget *menu = user_data;
-	GConfValue *value = gconf_entry_get_value (entry);
-	GList *list, *li;
-	gboolean pixmaps;
+	GConfValue *value;
+	GList      *list, *l;
+	gboolean    have_icons = TRUE;
+
+	value = gconf_entry_get_value (entry);
 
 	if (value->type == GCONF_VALUE_BOOL)
-		pixmaps = gconf_value_get_bool (value);
-	else
-		/* default to true */
-		pixmaps = TRUE;
+		have_icons = gconf_value_get_bool (value);
 
 	list = g_list_copy (GTK_MENU_SHELL (menu)->children);
-	for (li = list;
-	     li != NULL;
-	     li = li->next) {
-		GtkWidget *item = li->data;
+	for (l = list; l; l = l->next) {
+		GtkWidget *item = l->data;
 		GtkWidget *cur_image;
 		GtkWidget *image;
 
-		if ( ! GTK_IS_IMAGE_MENU_ITEM (item))
+		if (!GTK_IS_IMAGE_MENU_ITEM (item))
 			continue;
 
 		image = g_object_get_data (G_OBJECT (item), "Panel:Image");
-
-		if (image == NULL)
+		if (!image)
 			continue;
 
 		/* A forced image is always on */
-		if (g_object_get_data (G_OBJECT (item),
-				       "Panel:ForceImage"))
+		if (g_object_get_data (G_OBJECT (item), "Panel:ForceImage"))
 			continue;
 
-		cur_image = gtk_image_menu_item_get_image
-			(GTK_IMAGE_MENU_ITEM (item));
+		cur_image = gtk_image_menu_item_get_image (
+					GTK_IMAGE_MENU_ITEM (item));
 
-		if (pixmaps) {
+		if (have_icons) {
 			if (cur_image != image) {
-				gtk_image_menu_item_set_image
-					(GTK_IMAGE_MENU_ITEM (item), image);
+				gtk_image_menu_item_set_image (
+					GTK_IMAGE_MENU_ITEM (item), image);
 				gtk_widget_show (image);
 			}
 		} else {
-			gtk_image_menu_item_set_image
-				(GTK_IMAGE_MENU_ITEM (item), NULL);
+			gtk_image_menu_item_set_image (
+				GTK_IMAGE_MENU_ITEM (item), NULL);
 		}
 	}
 	g_list_free (list);
@@ -697,12 +650,17 @@ GtkWidget *
 panel_menu_new (void)
 {
 	GtkWidget *menu;
+
 	menu = gtk_menu_new ();
-	panel_gconf_notify_add_while_alive (PANEL_MENU_HAVE_ICONS_KEY,
-					    pixmaps_changed,
+
+	panel_gconf_notify_add_while_alive ("/desktop/gnome/interface/menus_have_icons",
+					    (GConfClientNotifyFunc) menus_have_icons_changed,
 					    G_OBJECT (menu));
-	g_signal_connect_after (G_OBJECT (menu), "show",
-				G_CALLBACK (panel_make_sure_menu_within_screen), NULL);
+
+	g_signal_connect_after (menu, "show",
+				G_CALLBACK (panel_make_sure_menu_within_screen),
+				NULL);
+
 	return menu;
 }
 
@@ -1553,6 +1511,18 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 }
 
 static void
+image_menuitem_size_request (GtkWidget      *menuitem,
+			     GtkRequisition *requisition,
+			     gpointer        dummy)
+{
+	/* If we don't have a pixmap for this menuitem
+	 * at least make sure its the same height as
+	 * the rest.
+	 */
+	requisition->height = MAX (requisition->height, ICON_SIZE);
+}
+
+static void
 setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		     const char *title, const char *item_loc,
 		     gboolean applet, MenuFinfo *mf)
@@ -1570,7 +1540,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
 
-	if (pixmap != NULL) {
+	if (pixmap) {
 		g_object_set_data_full (G_OBJECT (menuitem),
 					"Panel:Image",
 					g_object_ref (G_OBJECT (pixmap)),
@@ -1579,7 +1549,10 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		if (panel_menu_have_icons ())
 			gtk_image_menu_item_set_image
 				(GTK_IMAGE_MENU_ITEM (menuitem), pixmap);
-	}
+	} else
+		g_signal_connect (menuitem, "size_request",
+				  G_CALLBACK (image_menuitem_size_request),
+				  NULL);
 
 	if (item_loc != NULL) {
 		ShowItemMenu *sim = g_new0 (ShowItemMenu, 1);
@@ -3592,7 +3565,7 @@ create_root_menu (GtkWidget *root_menu,
 	if ( ! no_run_box && run_item) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
-					   _("Run..."));
+					   _("Run Program..."));
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK (run_cb), NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);

@@ -121,9 +121,6 @@ enum {
 	HIDEBUTTONS_NONE
 };
 
-#define PANEL_MENU_HAVE_ICONS_KEY "/desktop/gnome/menus/show-icons"
-gboolean panel_menu_have_icons   (void);
-
 GtkWidget *	panel_menu_new		(void);
 void		panel_load_menu_image_deferred (GtkWidget *image_menu_item,
 						const char *image_filename,

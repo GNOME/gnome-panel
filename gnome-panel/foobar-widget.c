@@ -211,7 +211,7 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	menu = panel_menu_new ();
 
-	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png",
+	item = pixmap_menu_item_new (_("Run Program..."), "gnome-run.png",
 				     FALSE /* force_image */);
 	gtk_tooltips_set_tip (panel_tooltips, item,
 			      _("Run applications, if you know the "

@@ -725,62 +725,69 @@ panel_widget_queue_applet_for_resize(AppletData *ad)
 
 
 static void
-panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
+panel_widget_switch_applet_right (PanelWidget *panel,
+				  GList       *list)
 {
 	AppletData *ad;
 	AppletData *nad = NULL;
 
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(list!=NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (list != NULL);
 	
 	ad = list->data;
 
-	if(list->next)
+	if (ad->pos + ad->min_cells >= panel->size)
+		return;
+
+	if (list->next)
 		nad = list->next->data;
-	if(!nad || nad->pos > ad->pos+ad->min_cells) {
-		ad->pos++;
-		panel_widget_queue_applet_for_resize(ad);
+
+	if (!nad || nad->pos > ad->pos + ad->min_cells) {
+		ad->pos += MOVE_INCREMENT;
+		panel_widget_queue_applet_for_resize (ad);
 		return;
 	}
 
 	nad->pos = ad->pos;
-	ad->pos = nad->pos+nad->min_cells;
-	panel->applet_list = panel_g_list_swap_next(panel->applet_list,list);
+	ad->pos = nad->pos + nad->min_cells;
+	panel->applet_list = panel_g_list_swap_next (panel->applet_list,list);
 
-	panel_widget_queue_applet_for_resize(ad);
-	panel_widget_queue_applet_for_resize(nad);
+	panel_widget_queue_applet_for_resize (ad);
+	panel_widget_queue_applet_for_resize (nad);
 }
 
 static void
-panel_widget_switch_applet_left(PanelWidget *panel, GList *list)
+panel_widget_switch_applet_left (PanelWidget *panel,
+				 GList       *list)
 {
 	AppletData *ad;
 	AppletData *pad = NULL;
 
-	g_return_if_fail(PANEL_IS_WIDGET(panel));
-	g_return_if_fail(list!=NULL);
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_return_if_fail (list != NULL);
 	
 	ad = list->data;
 
+	if (ad->pos <= 0)
+		return;
 
-	if(list->prev)
+	if (list->prev)
 		pad = list->prev->data;
 
-
-	if(!pad || pad->pos+pad->min_cells < ad->pos) {
-		ad->pos--;
-		panel_widget_queue_applet_for_resize(ad);
-		if (pad && pad->pos+pad->cells >= ad->pos)
-			panel_widget_queue_applet_for_resize(pad);
+	if (!pad || pad->pos + pad->min_cells < ad->pos) {
+		ad->pos -= MOVE_INCREMENT;
+		panel_widget_queue_applet_for_resize (ad);
+		if (pad && (pad->pos + pad->cells) >= ad->pos)
+			panel_widget_queue_applet_for_resize (pad);
 		return;
 	}
 
 	ad->pos = pad->pos;
-	pad->pos = ad->pos+ad->min_cells;
-	panel->applet_list = panel_g_list_swap_prev(panel->applet_list,list);
+	pad->pos = ad->pos + ad->min_cells;
+	panel->applet_list = panel_g_list_swap_prev (panel->applet_list, list);
 
-	panel_widget_queue_applet_for_resize(ad);
-	panel_widget_queue_applet_for_resize(pad);
+	panel_widget_queue_applet_for_resize (ad);
+	panel_widget_queue_applet_for_resize (pad);
 }
 
 static int
@@ -1952,49 +1959,6 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 	}
 }
 
-#ifdef FIXME /* This isn't used anymore but looks useful */
-
-/*get amount of free space around the applet (including the applet size),
-  or return 0 on error or if the panel is packed*/
-int
-panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
-{
-	int right,left;
-	GList *li;
-	AppletData *ad;
-
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel), 0);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet), 0);
-	
-	/*this function doesn't make sense on packed panels*/
-	if(panel->packed)
-		return 0;
-	
-	right = panel->size;
-	left = 0;
-	
-	for(li = panel->applet_list; li; li = g_list_next(li)) {
-		ad = li->data;
-		if(ad->applet == applet)
-			break;
-	}
-	/*the applet is not on this panel*/
-	if(!li)
-		return 0;
-	
-	if(li->prev) {
-		AppletData *pad = li->prev->data;
-		left = pad->pos+pad->cells;
-	}
-	if(li->next) {
-		AppletData *nad = li->next->data;
-		right = nad->pos;
-	}
-	
-	return right - left;
-}
-#endif
-
 /*calculates the value to move the applet by*/
 static int
 panel_widget_get_moveby (PanelWidget *panel, int pos, int offset)
@@ -2662,46 +2626,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 	return pos;
 }
 
-#ifdef FIXME /* This isn't used anymore but looks useful */
-int
-panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
-{
-	AppletData *ad;
-
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),-1);
-	g_return_val_if_fail(GTK_IS_WIDGET(applet),-1);
-	g_return_val_if_fail(pos>=0,-1);
-
-	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
-	ad->pos = -1;
-	panel->applet_list = g_list_remove (panel->applet_list, ad);
-	
-	if(pos < 0)
-		pos = 0;
-
-	if(get_applet_list_pos(panel,pos)) 
-		/*this is a slight hack so that this applet is
-		  inserted AFTER an applet with this pos number*/
-		pos++;
-	if(pos==-1) return -1;
-
-	ad->pos = pos;
-	/*reset size to 1*/
-	ad->cells = 1;
-	ad->min_cells = 1;
-	panel->applet_list =
-		g_list_insert_sorted(panel->applet_list,ad,
-				     (GCompareFunc)applet_data_compare);
-
-	g_signal_emit (G_OBJECT(panel),
-		       panel_widget_signals[APPLET_MOVE_SIGNAL],
-		       0, ad->applet);
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
-
-	return pos;
-}
-#endif
-
 void
 panel_widget_change_params(PanelWidget *panel,
 			   GtkOrientation orient,
@@ -2797,59 +2721,52 @@ static void
 panel_widget_push_move_applet (PanelWidget     *panel,
                                GtkDirectionType dir)
 {
-	AppletData       *ad;
-	gint increment = MOVE_INCREMENT;
+	AppletData *applet;
+	int         increment = 0;
 
-	ad = panel->currently_dragged_applet;
-
-	g_return_if_fail (ad);
+	applet = panel->currently_dragged_applet;
+	g_return_if_fail (applet);
 
 	switch (dir) {
 	case GTK_DIR_LEFT:
 	case GTK_DIR_UP:
-		increment = -increment;
+		increment = -MOVE_INCREMENT;
 		break;
 	case GTK_DIR_RIGHT:
 	case GTK_DIR_DOWN:
+		increment = MOVE_INCREMENT;
 		break;
 	default:
 		return;
 	}
-	panel_widget_push_move (panel, ad, increment);
+
+	panel_widget_push_move (panel, applet, increment);
 }
 
 static void 
 panel_widget_switch_move_applet (PanelWidget      *panel,
                                  GtkDirectionType  dir)
 {
-	AppletData       *ad;
-	AppletData *nad = NULL;
-	GList *list;
-	gint increment;
+	AppletData *applet;
+	GList      *list;
 
-	ad = panel->currently_dragged_applet;
+	applet = panel->currently_dragged_applet;
+	g_return_if_fail (applet != NULL);
 
-	g_return_if_fail (ad);
+	list = g_list_find (panel->applet_list, applet);
+	g_return_if_fail (list != NULL);
 
-	list = g_list_find (panel->applet_list, ad);
-	g_return_if_fail (list);
 	switch (dir) {
 	case GTK_DIR_LEFT:
 	case GTK_DIR_UP:
-		if (list->prev)
-			nad = list->prev->data;
+		panel_widget_switch_applet_left (panel, list);
 		break;
 	case GTK_DIR_RIGHT:
 	case GTK_DIR_DOWN:
-		if (list->next)
-			nad = list->next->data;
+		panel_widget_switch_applet_right (panel, list);
 		break;
 	default:
 		return;
-	}
-	if (nad) {
-		increment = nad->pos - ad->pos;
-		panel_widget_switch_move (panel, ad, increment);
 	}
 }
 
@@ -2876,6 +2793,7 @@ panel_widget_free_move_applet (PanelWidget      *panel,
 	default:
 		return;
 	}
+
 	pos = panel_widget_get_free_spot (panel, ad, 
                                           increment + ad->pos + ad->drag_off);
 	panel_widget_nice_move (panel, ad, pos);

@@ -1,3 +1,36 @@
+2002-03-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (panel_applet_create_menu): cleanup and use
+	a GtkSeparator menu item as a separator.
+
+	* basep-widget.c: kill uneeded panel_applet_in_drag def.
+
+	* foobar-widget.c: (append_actions_menu): use 'Run Program...' instead
+	of 'Run...' as suggested by calum.
+
+	* main.c: (main): add a notify to /desktop/gnome/interface instead of
+	/desktop/gnome/menus.
+
+	* menu.c:
+	(panel_menu_have_icons): kill old crack and use the correct key.
+	(menus_have_icons_changed), (panel_menu_new): use the correct key
+	for menus_have_icons.
+	(image_menuitem_size_request): impl hack to make sure menu items
+	without images are the same height as ones with images.
+	(setup_full_menuitem): hook up to size_request.
+	(create_root_menu): use 'Run Program...' instead of 'Run..'
+
+	* menu.h: kill panel_menu_have_icons and bogus key definition.
+
+	* panel-widget.[ch]:
+	(panel_widget_get_free_space), (panel_widget_move): kill unused.
+	(panel_widget_switch_applet_right): return is we're at the end of
+	the panel.
+	(panel_widget_switch_applet_left): return is we've hit the start of
+	the panel.
+	(panel_widget_switch_move_applet): only switch applets when we actual
+	hit an applet.
+
 2002-03-22  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.c: (panel_applet_clean): kill the applet

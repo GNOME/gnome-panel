@@ -165,21 +165,11 @@ void		panel_widget_set_new_id		(PanelWidget *panel);
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);
 
-/*move applet to newpos*/
-int		panel_widget_move		(PanelWidget *panel,
-						 GtkWidget *applet,
-						 int pos);
-
 /*move applet to a different panel*/
 int		panel_widget_reparent		(PanelWidget *old_panel,
 						 PanelWidget *new_panel,
 						 GtkWidget *applet,
 						 int pos);
-
-/*get amount of free space around the applet (including the applet size),
-  or return 0 on error or if the panel is packed*/
-int		panel_widget_get_free_space	(PanelWidget *panel,
-						 GtkWidget *applet);
 
 /* use these for drag_off for special cases */
 #define PW_DRAG_OFF_CURSOR -1

@@ -31,7 +31,6 @@
 
 #undef BASEP_WIDGET_DEBUG
 
-extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
 
 extern int panels_to_sync;

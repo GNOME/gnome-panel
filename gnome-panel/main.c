@@ -212,7 +212,7 @@ main(int argc, char **argv)
 	multiscreen_init ();
 
 	panel_gconf_add_dir ("/apps/panel/global");
-	panel_gconf_add_dir ("/desktop/gnome/menus");
+	panel_gconf_add_dir ("/desktop/gnome/interface");
 	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
 
 	status_applet_create_offscreen ();
