@@ -1,3 +1,14 @@
+1999-09-17  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel-widget.h: remove the back type enum
+
+	* panel-types.h: include enum definitions from applet-widget.h
+
+	* Makefile.am (libpanel_appletinclude_HEADERS): remove "panel-types.h"
+	(it is internal to the panel)
+
+	this address gnome bug #2062
+
 Fri Sep 17 18:43:44 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* panel-util.c: 

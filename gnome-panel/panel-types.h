@@ -3,20 +3,26 @@
 #define PANEL_TYPES_H
 
 #include <gtk/gtktypeutils.h>
+#include "gnome-panel.h"
 
-typedef enum {
-	ORIENT_UP=0,
-	ORIENT_DOWN,
-	ORIENT_LEFT,
-	ORIENT_RIGHT
-} PanelOrientType;
+typedef GNOME_Panel_OrientType PanelOrientType;
+#define ORIENT_UP GNOME_Panel_ORIENT_UP
+#define ORIENT_DOWN GNOME_Panel_ORIENT_DOWN
+#define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
+#define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
 
-typedef enum {
-	SIZE_TINY=0,
-	SIZE_STANDARD,
-	SIZE_LARGE,
-	SIZE_HUGE
-} PanelSizeType;
+typedef GNOME_Panel_SizeType PanelSizeType;
+#define SIZE_TINY GNOME_Panel_SIZE_TINY
+#define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
+#define SIZE_LARGE GNOME_Panel_SIZE_LARGE
+#define SIZE_HUGE GNOME_Panel_SIZE_HUGE
+
+typedef GNOME_Panel_BackType PanelBackType;
+#define PANEL_BACK_NONE GNOME_Panel_BACK_NONE
+#define PANEL_BACK_COLOR GNOME_Panel_BACK_COLOR
+#define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
+
+
 
 typedef enum {
 	LAUNCHER_TILE=0,

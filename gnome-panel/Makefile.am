@@ -40,8 +40,7 @@ libpanel_applet_la_SOURCES = \
 
 libpanel_appletinclude_HEADERS = \
 	applet-widget.h		\
-	gnome-panel.h		\
-	panel-types.h
+	gnome-panel.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
