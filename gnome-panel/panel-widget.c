@@ -1134,7 +1134,7 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 		panel->back_color.pixel = 1; /* bogus */
 
 	if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
-		gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
+		gdk_pixmap_unref(ns->bg_pixmap[GTK_STATE_NORMAL]);
 		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
 	}
 
@@ -1192,13 +1192,13 @@ panel_resize_pixmap(PanelWidget *panel)
 		g_assert_not_reached ();
 	}
 
-	p = gdk_imlib_move_image (im);
+	p = gdk_imlib_copy_image (im);
 
 	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
 	gtk_style_ref(ns);
 
 	if(ns->bg_pixmap[GTK_STATE_NORMAL])
-		gdk_imlib_free_pixmap (ns->bg_pixmap[GTK_STATE_NORMAL]);
+		gdk_pixmap_unref (ns->bg_pixmap[GTK_STATE_NORMAL]);
 	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
 
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
@@ -1225,7 +1225,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 
 		p = ns->bg_pixmap[GTK_STATE_NORMAL];
 		if(p)
-			gdk_imlib_free_pixmap (p);
+			gdk_pixmap_unref (p);
 		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
 
 		gtk_widget_set_style(GTK_WIDGET(panel), ns);
@@ -1267,13 +1267,13 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	} else
 		gdk_imlib_render (im, im->rgb_width, im->rgb_height);
 
-	p = gdk_imlib_move_image (im);
+	p = gdk_imlib_copy_image (im);
 
 	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
 	gtk_style_ref(ns);
 
 	if(ns->bg_pixmap[GTK_STATE_NORMAL])
-		gdk_imlib_free_pixmap (ns->bg_pixmap[GTK_STATE_NORMAL]);
+		gdk_pixmap_unref (ns->bg_pixmap[GTK_STATE_NORMAL]);
 	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
 
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
