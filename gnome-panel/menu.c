@@ -71,12 +71,12 @@ about_cb (GtkWidget *widget, gpointer data)
 	  NULL
 	  };
 
-	about = gnome_about_new ( "The GNOME Panel", VERSION,
+	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
 			"(C) 1998 the Free Software Foundation",
 			(const gchar **)authors,
-			"This program is responsible for launching "
+			_("This program is responsible for launching "
 			"other applications, embedding small applets "
-			"within itself, world peace, and random X crashes.",
+			"within itself, world peace, and random X crashes."),
 			"gnome-gegl.png");
 	gtk_widget_show (about);
 
