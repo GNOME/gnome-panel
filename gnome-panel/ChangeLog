@@ -1,3 +1,10 @@
+Thu Feb 21 18:15:42 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: load both the list of apps and then the icons
+	  in idle time, so that we display the dialog immediately and then
+	  load all this crap a bit later.  This makes the whole thing feel
+	  a lot snappier.
+
 Thu Feb 21 17:25:56 2002  George Lebl <jirka@5z.com>
 
 	* menu.c, panel.[ch]: when adding applets or launchers and such

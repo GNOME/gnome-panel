@@ -53,6 +53,7 @@
 
 enum {
 	COLUMN_ICON,
+	COLUMN_ICON_FILE,
 	COLUMN_FULLNAME,
 	COLUMN_COMMENT,
 	COLUMN_NAME,
@@ -69,6 +70,9 @@ extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;
+static GSList *add_icon_iters = NULL;
+static guint add_icon_idle_id = 0;
+static guint add_items_idle_id = 0;
 
 static GList *executables = NULL;
 static GCompletion *exe_completion = NULL;
@@ -720,6 +724,56 @@ add_columns (GtkTreeView *treeview)
 	gtk_tree_view_append_column (treeview, column);
 }
 
+static gboolean
+add_icon_idle (gpointer data)
+{
+	GtkTreeIter *iter;
+	GValue value = {0, };
+	char *file;
+	GdkPixbuf *pixbuf;
+	gboolean long_operation;
+
+add_icon_again:
+
+	if (add_icon_iters == NULL) {
+		add_icon_idle_id = 0;
+		return FALSE;
+	}
+
+	iter = add_icon_iters->data;
+	add_icon_iters = g_slist_remove (add_icon_iters, iter);
+
+	gtk_tree_model_get_value (GTK_TREE_MODEL (data), iter,
+				  COLUMN_ICON_FILE, &value);
+	file = g_strdup (g_value_get_string (&value));
+	g_value_unset (&value);
+
+	pixbuf = panel_make_menu_icon (file,
+				       NULL /* fallback */,
+				       ICON_SIZE,
+				       &long_operation);
+	if (pixbuf != NULL) {
+		gtk_list_store_set (GTK_LIST_STORE (data), iter,
+				    COLUMN_ICON, pixbuf,
+				    -1);
+		g_object_unref (G_OBJECT (pixbuf));
+	}
+
+	g_free (file);
+	g_free (iter);
+
+	/* don't go back into the main loop if this wasn't very hard to do */
+	if ( ! long_operation)
+		goto add_icon_again;
+
+	if (add_icon_iters != NULL) {
+		return TRUE;
+	} else {
+		add_icon_idle_id = 0;
+		return FALSE;
+	}
+}
+
 /* Called when simple contents are switched to or first shown */
 static void
 fill_list (GtkWidget *list)
@@ -734,6 +788,7 @@ fill_list (GtkWidget *list)
 	/* create list store */
 	store = gtk_list_store_new (NUM_COLUMNS,
 				    GDK_TYPE_PIXBUF,
+				    G_TYPE_STRING,
 				    G_TYPE_STRING,
 				    G_TYPE_STRING,
 				    G_TYPE_STRING);
@@ -771,27 +826,23 @@ fill_list (GtkWidget *list)
 
 	tmp = files;
 	while (tmp != NULL) {
-		GtkTreeIter iter;
+		GtkTreeIter *iter;
 		FileRec *fr;
-		GdkPixbuf *pixbuf;
 
 		fr = tmp->data;
 
-		pixbuf = panel_make_menu_icon (fr->icon,
-					       NULL /* fallback */,
-					       ICON_SIZE,
-					       NULL /* long_operation */);
+		iter = g_new0 (GtkTreeIter, 1);
 
-		gtk_list_store_append (store, &iter);
-		gtk_list_store_set (store, &iter,
-				    COLUMN_ICON, pixbuf,
+		gtk_list_store_append (store, iter);
+		gtk_list_store_set (store, iter,
+				    COLUMN_ICON, NULL,
+				    COLUMN_ICON_FILE, fr->icon,
 				    COLUMN_FULLNAME, fr->fullname,
 				    COLUMN_COMMENT, fr->comment,
 				    COLUMN_NAME, fr->name,
 				    -1);
 
-		if (pixbuf != NULL)
-			g_object_unref (G_OBJECT (pixbuf));
+		add_icon_iters = g_slist_prepend (add_icon_iters, iter);
 
 		tmp = tmp->next;
 	}
@@ -802,6 +853,11 @@ fill_list (GtkWidget *list)
 				 GTK_TREE_MODEL (store));
 
 	add_columns (GTK_TREE_VIEW (list));
+
+	add_icon_iters = g_slist_reverse (add_icon_iters);
+
+	if (add_icon_idle_id == 0)
+		add_icon_idle_id = g_idle_add (add_icon_idle, store);
 }
 
 #define DEFAULT_ICON "document-icons/i-executable.png"
@@ -951,6 +1007,15 @@ selection_changed (GtkTreeSelection *selection,
         sync_list_to_entry (dialog);
 }
 
+static gboolean
+add_items_idle (gpointer data)
+{
+	GtkWidget *list = data;
+	add_items_idle_id = 0;
+	fill_list (list);
+	return FALSE;
+}
+
 static GtkWidget*
 create_simple_contents (void)
 {
@@ -1026,7 +1091,10 @@ create_simple_contents (void)
 				vbox,
 				(GtkDestroyNotify) g_object_unref);
 
-	fill_list (list);
+
+
+	if (add_items_idle_id == 0)
+		add_items_idle_id = g_idle_add (add_items_idle, list);
 
         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
                             vbox,
@@ -1122,6 +1190,21 @@ register_run_stock_item (void)
 	}
 }
 
+static void
+run_dialog_destroyed (GtkWidget *widget)
+{
+	run_dialog = NULL;
+	g_slist_foreach (add_icon_iters, (GFunc)g_free, NULL);
+	g_slist_free (add_icon_iters);
+	add_icon_iters = NULL;
+	if (add_icon_idle_id != 0)
+		g_source_remove (add_icon_idle_id);
+	add_icon_idle_id = 0;
+	if (add_items_idle_id != 0)
+		g_source_remove (add_items_idle_id);
+	add_items_idle_id = 0;
+}
+
 void
 show_run_dialog (void)
 {
@@ -1172,9 +1255,9 @@ show_run_dialog (void)
 		g_free (run_icon);
 	}
 
-	g_signal_connect(G_OBJECT(run_dialog), "destroy",
-			   G_CALLBACK(gtk_widget_destroyed),
-			   &run_dialog);
+	g_signal_connect (G_OBJECT (run_dialog), "destroy",
+			  G_CALLBACK (run_dialog_destroyed),
+			  NULL);
 	gtk_window_set_position (GTK_WINDOW (run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
