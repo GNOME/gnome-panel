@@ -1,3 +1,12 @@
+/*
+ * panel-applet-frame.h:
+ *
+ * Authors:
+ *    Mark McLoughlin <mark@skynet.ie>
+ *
+ * Copyright 2001 Sun Microsystems, Inc.
+ */
+
 #ifndef __PANEL_APPLET_CONTROL_H__
 #define __PANEL_APPLET_CONTROL_H__
 

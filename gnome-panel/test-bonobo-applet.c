@@ -1,24 +1,87 @@
-#include <config.h>
+/*
+ * test-bonobo-applet.c:
+ *
+ * Authors:
+ *    Mark McLoughlin <mark@skynet.ie>
+ *
+ * Copyright 2001 Sun Microsystems, Inc.
+ */
+
 #include <string.h>
 
 #include <libbonoboui.h>
 
+#include "panel-applet.h"
+
+static void
+test_applet_on_do1 (BonoboUIComponent *uic,
+		    gpointer           user_data,
+		    const gchar       *verbname)
+{
+        g_message ("do1 called\n");
+}
+
+static void
+test_applet_on_do2 (BonoboUIComponent *uic,
+		    gpointer           user_data,
+		    const gchar       *verbname)
+{
+        g_message ("do2 called\n");
+}
+
+static void
+test_applet_on_do3 (BonoboUIComponent *uic,
+		    gpointer           user_data,
+		    const gchar       *verbname)
+{
+        g_message ("do3 called\n");
+}
+
+static const BonoboUIVerb test_applet_menu_verbs [] = {
+        BONOBO_UI_VERB ("TestAppletDo1", test_applet_on_do1),
+        BONOBO_UI_VERB ("TestAppletDo2", test_applet_on_do2),
+        BONOBO_UI_VERB ("TestAppletDo3", test_applet_on_do3),
+
+        BONOBO_UI_VERB_END
+};
+
+static char test_applet_menu_xml [] =
+	"<popups>\n"
+	"  <popup name=\"button3\">\n"
+	"    <menuitem name=\"Test Item 1\" verb=\"TestAppletDo1\" _label=\"Test This One\"/>\n"
+	"    <menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
+	"    <menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n"
+	"  </popup>\n"
+	"</popups>\n";
+
+static void
+test_applet_setup_popup_menu (PanelApplet *applet)
+{
+	BonoboUIComponent *popup_component;
+
+	popup_component = panel_applet_get_popup_component (applet);
+
+	bonobo_ui_component_set_translate (popup_component, "/", test_applet_menu_xml, NULL);
+
+	bonobo_ui_component_add_verb_list (popup_component, test_applet_menu_verbs);
+}
+
 static BonoboObject *
 test_applet_new (const gchar *iid)
 {
-	BonoboControl *control;
-	GtkWidget     *label;
+	PanelApplet *applet;
+	GtkWidget   *label;
 
 	g_message ("test_applet_new: %s\n", iid);
 
 	label = gtk_label_new ("Hello");
-	gtk_widget_show (label);
 
-	control = bonobo_control_new (label);
+	applet = panel_applet_new (label);
 
-	return BONOBO_OBJECT (control);
+	test_applet_setup_popup_menu (applet);
+
+	return BONOBO_OBJECT (panel_applet_get_control (applet));
 }
-
 
 static BonoboObject *
 test_applet_factory (BonoboGenericFactory *this,

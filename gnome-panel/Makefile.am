@@ -52,6 +52,8 @@ test_applet_LDADD =					\
 
 test_bonobo_applet_SOURCES =	\
 	test-bonobo-applet.c	\
+	panel-applet.c		\
+	panel-applet.h		\
 	$(NULL)
 
 test_bonobo_applet_LDADD =	\
@@ -225,6 +227,7 @@ EXTRA_DIST = \
 	title-item.gob			\
 	gnome-panel-screenshot.glade	\
 	gnome-panel-screenshot.glade.h	\
+	$(schema_DATA)			\
 	libpanelapplet-2.0.pc.in
 
 gladedir = $(datadir)/gnome/panel
