@@ -302,6 +302,15 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	if (panel->back_pixmap)
 		gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
+	else {
+		char buf[32];
+		g_snprintf(buf, sizeof(buf), "#%.2x%.2x%.2x",
+			panel->back_color.red >> 8,
+			panel->back_color.green >> 8,
+			panel->back_color.blue >> 8);
+		gnome_config_set_string("backcolor", buf);
+	}
+
 
 	/*FIXME: this should be allocation.[xy] but those don't work!!!
 	  probably a gtk bug*/

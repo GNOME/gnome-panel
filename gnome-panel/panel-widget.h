@@ -116,6 +116,7 @@ struct _PanelWidget
 
 	char                    *back_pixmap;
 	gint			pixmap_enabled;
+	GdkColor		back_color;
 };
 
 struct _PanelWidgetClass
@@ -144,7 +145,8 @@ GtkWidget*	panel_widget_new		(gint size,
 						 gint pos_y,
 						 DrawerDropZonePos
 						 	drop_zone_pos,
-						 char *back_pixmap);
+						 char *back_pixmap,
+						 GdkColor *back_color);
 
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,

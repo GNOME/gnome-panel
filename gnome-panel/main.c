@@ -773,7 +773,8 @@ init_user_panels(void)
 	GtkWidget *panel;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
-	char *back_pixmap;
+	char *back_pixmap, *tmp;
+	GdkColor back_color;
 
 	g_snprintf(buf,256,"%sConfig/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
@@ -815,7 +816,20 @@ init_user_panels(void)
 
 		back_pixmap = gnome_config_get_string ("backpixmap=");
 		if (back_pixmap && *back_pixmap == 0)
-			back_pixmap = 0;
+			back_pixmap = NULL;
+
+#if 0
+		tmp = gnome_config_get_string("backcolor");
+		if(tmp && *tmp) {
+			g_print("tmp for color = %s\n", tmp);
+			gdk_color_parse(tmp, &back_color);
+			back_color.pixel = 1;
+		} else
+			back_color.pixel = 0;
+		g_free(tmp);
+#else
+		back_color.pixel = 0;
+#endif
 		
 		gnome_config_pop_prefix ();
 		panel = panel_widget_new(size,
@@ -826,8 +840,12 @@ init_user_panels(void)
 					 x,
 					 y,
 					 drop_pos,
-					 back_pixmap
-					 );
+					 back_pixmap,
+#if 0
+					 back_color.pixel?&back_color:NULL);
+#else
+					 NULL);
+#endif
 		panel_widget_disable_buttons(PANEL_WIDGET(panel));
 
 		panel_setup(PANEL_WIDGET(panel));

@@ -30,7 +30,7 @@ static PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
    the panel will do interpanel drags differently
 static char *applet_drop_types[]={"internal/applet-widget-pointer"};
 */
-static char *image_drop_types[] = {"url:ALL"};
+static char *image_drop_types[] = {"url:ALL", "application/x-color"};
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -315,11 +315,7 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->snapped = PANEL_BOTTOM;
 	panel_widget->mode = PANEL_EXPLICIT_HIDE;
 	panel_widget->state = PANEL_SHOWN;
-	panel_widget->size = 0;
-	panel_widget->leave_notify_timer_tag = 0;
-	panel_widget->currently_dragged_applet = NULL;
 	panel_widget->drawer_drop_zone_pos = DROP_ZONE_LEFT;
-	panel_widget->drawers_open = 0;
 }
 
 
@@ -1677,7 +1673,7 @@ panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEvent *event, gpointer data
 }*/
 
 static void
-panel_widget_dnd_droped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
+panel_widget_dnd_dropped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
 {
 	if (panel_try_to_set_pixmap (panel, event->data)){
 		if (panel->back_pixmap)
@@ -1688,11 +1684,48 @@ panel_widget_dnd_droped_filename (GtkWidget *widget, GdkEventDropDataAvailable *
 }
 
 static void
+panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
+{
+  GtkStyle *ns;
+
+  ns = gtk_style_copy(panel->fixed->style);
+  gtk_style_ref(ns);
+
+  ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
+  ns->bg[GTK_STATE_NORMAL].pixel = panel->back_color.pixel = 1; /* bogus */
+
+  gtk_widget_set_style(panel->fixed, ns);
+
+  if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
+	  gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
+	  ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+  }
+  g_free(panel->back_pixmap); panel->back_pixmap = NULL;
+  gtk_style_unref(ns);
+}
+
+static void
+panel_widget_dnd_dropped_color (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
+{
+  gdouble *dropped = (gdouble *)event->data;
+  GdkColor c;
+
+  c.red = (dropped[1]*65535);
+  c.green = (dropped[2]*65535);
+  c.blue = (dropped[3]*65535);
+  c.pixel = 0;
+
+  panel_try_to_set_back_color(panel, &c);
+}
+
+static void
 panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer data)
 {
 	/* Test for the type that was dropped */
 	if (strcmp (event->data_type, "url:ALL") == 0)
-		panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
+		panel_widget_dnd_dropped_filename (widget, event, PANEL_WIDGET (data));
+	else if(!strcmp(event->data_type, "application/x-color"))
+	  panel_widget_dnd_dropped_color(widget, event, PANEL_WIDGET(data));
 	return;
 }
 
@@ -1701,16 +1734,22 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 {
 	GdkImlibImage *im;
 	GdkPixmap *p;
+	GtkStyle *ns;
 
 	if(!pixmap || strcmp(pixmap,"")==0) {
-		/*gdk_gc_set_background (GTK_WIDGET(panel)->gc,
-			    &(GTK_WIDGET(panel)->style->bg[GTK_STATE_NORMAL]));*/
-		gdk_window_set_background (panel->fixed->window, 
-			    &(GTK_WIDGET(panel)->style->bg[GTK_STATE_NORMAL]));
-		//gdk_window_set_back_pixmap (panel->fixed->window, NULL, 0);
+		ns = gtk_style_copy(panel->fixed->style);
+		gtk_style_ref(ns);
+
+		p = ns->bg_pixmap[GTK_STATE_NORMAL];
+		gdk_imlib_free_pixmap (p);
+		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+
+		gtk_widget_set_style(panel->fixed, ns);
+	
+		gtk_style_unref(ns);
 		return 1;
 	}
-	
+
 	if (panel->back_pixmap && pixmap &&
 	    strcmp (panel->back_pixmap, pixmap) == 0)
 		return 1;
@@ -1718,14 +1757,23 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!g_file_exists (pixmap))
 		return 0;
 	
+	panel->back_color.pixel = 0;
+
 	im = gdk_imlib_load_image (pixmap);
 	if (!im)
 		return 0;
 	
 	gdk_imlib_render (im, im->rgb_width, im->rgb_height);
 	p = gdk_imlib_move_image (im);
-	gdk_window_set_back_pixmap (panel->fixed->window, p, 0);
-	gdk_imlib_free_pixmap (p);
+
+	ns = gtk_style_copy(panel->fixed->style);
+	gtk_style_ref(ns);
+
+	ns->bg_pixmap[GTK_STATE_NORMAL] = p;
+
+	gtk_widget_set_style(panel->fixed, ns);
+	
+	gtk_style_unref(ns);
 	gdk_imlib_destroy_image (im);
 	return 1;
 }
@@ -1778,7 +1826,8 @@ panel_widget_new (gint size,
 		  gint pos_x,
 		  gint pos_y,
 		  DrawerDropZonePos drop_zone_pos,
-		  char *back_pixmap)
+		  char *back_pixmap,
+		  GdkColor *back_color)
 {
 	PanelWidget *panel;
 
@@ -1786,6 +1835,7 @@ panel_widget_new (gint size,
 		g_return_val_if_fail(size>=0,NULL);
 
 	panel = gtk_type_new(panel_widget_get_type());
+
 	if(snapped == PANEL_FREE)
 		GTK_WINDOW(panel)->type = GTK_WINDOW_DIALOG;
 	else
@@ -1825,6 +1875,9 @@ panel_widget_new (gint size,
 		back_pixmap = 0;
 
 	panel->back_pixmap = back_pixmap;
+
+	if(back_color && back_color->pixel)
+		panel_try_to_set_back_color(panel, back_color);
 	
 	
 	/*we add all the hide buttons to the table here*/
@@ -1941,7 +1994,9 @@ panel_widget_new (gint size,
 			    panel);
 	
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel->fixed), TRUE,
-				 image_drop_types, 1, FALSE);
+				 image_drop_types,
+				 sizeof(image_drop_types)/sizeof(char *),
+				 FALSE);
 	
 	/*FIXME: ???? will we delete this or make it work*/
 	/*set up drag'n'drop (the drop)*/
@@ -1961,7 +2016,7 @@ panel_widget_new (gint size,
 	*/
 
 
-	return GTK_WIDGET(panel);
+  return GTK_WIDGET(panel);
 }
 
 static void

@@ -199,7 +199,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_LEFT, NULL),
+						DROP_ZONE_LEFT, NULL, NULL),
 					    orient);
 	case DRAWER_DOWN:
 		return create_drawer_applet(panel_widget_new(0,
@@ -208,7 +208,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_RIGHT, NULL),
+						DROP_ZONE_RIGHT, NULL, NULL),
 					    orient);
 	case DRAWER_LEFT:
 		return create_drawer_applet(panel_widget_new(0,
@@ -217,7 +217,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_LEFT, NULL),
+						DROP_ZONE_LEFT, NULL, NULL),
 					    orient);
 	case DRAWER_RIGHT:
 		return create_drawer_applet(panel_widget_new(0,
@@ -226,7 +226,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_RIGHT, NULL),
+						DROP_ZONE_RIGHT, NULL, NULL),
 					    orient);
 	}
 	return NULL;
