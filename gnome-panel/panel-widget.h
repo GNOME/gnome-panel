@@ -41,11 +41,6 @@ typedef enum {
 	PANEL_SWITCH_MOVE,
 	PANEL_FREE_MOVE
 } PanelMovementType;
-typedef enum {
-	PANEL_BACK_NONE,
-	PANEL_BACK_COLOR,
-	PANEL_BACK_PIXMAP
-} PanelBackType;
 
 struct _AppletData
 {

@@ -1,5 +1,12 @@
 1999-09-20  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* panel-types.h: include enum definitions from applet-widget.h
+	
+	* panel-widget.h: remove the back type enum
+	
+	* Makefile.am (base_panel_SOURCES): remove "panel-types.h"
+	(it is internal to the panel)
+
 	* corner-widget.c (corner_widget_size_allocate): fix
 	hiding sizings
 
