@@ -1,3 +1,11 @@
+2002-08-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: link against XSHAPE_LIBS. Fixes #90000.
+
+	* gnome-panel-screenshot.c: (take_window_shot):
+	dont' use the shape extension if the header wasn't
+	found.
+
 2002-08-06  Mark McLoughlin  <mark@skynet.ie>
 
 	Fixes #84744, applets not loading in the correct order,

@@ -85,6 +85,13 @@ AC_CHECK_FUNCS(wnck_pager_set_screen)
 AC_CHECK_FUNCS(wnck_tasklist_set_screen)
 LIBS=$___save_LIBS
 
+dnl shape extenstion for gnome-panel-screenshot
+savecppflags=$CPPFLAGS
+CPPFLAGS="$CPPFLAGS $X_CFLAGS"
+AC_CHECK_HEADERS(X11/extensions/shape.h, XSHAPE_LIBS="-lXext")
+AC_SUBST(XSHAPE_LIBS)
+CPPFLAGS=$savecppflags
+
 dnl X development libraries check
 
 #

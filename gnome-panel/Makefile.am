@@ -199,6 +199,7 @@ gnome_panel_screenshot_SOURCES = \
 gnome_panel_screenshot_LDFLAGS = -export-dynamic
 
 gnome_panel_screenshot_LDADD = 	\
+	$(XSHAPE_LIBS)		\
 	$(X_LIBS)		\
 	$(PANELCONFIG_LIBS)	\
 	$(PNG_LIBS)
