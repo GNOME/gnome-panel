@@ -1468,7 +1468,8 @@ panel_run_dialog_static_dialog_destroyed (PanelRunDialog *dialog)
 void
 panel_run_dialog_present (GdkScreen *screen)
 {
-	GladeXML *gui = NULL;
+	GladeXML *gui;
+	char     *glade_file;
 
 	if (panel_lockdown_get_disable_command_line ())
 		return;
@@ -1480,23 +1481,20 @@ panel_run_dialog_present (GdkScreen *screen)
 		return;
 	}
 
-	/* Load a local .glade file first if available */
 	if (g_file_test ("panel-run-dialog.glade", G_FILE_TEST_EXISTS))
-		gui = glade_xml_new ("panel-run-dialog.glade", "panel_run_dialog", NULL);
+		glade_file = "panel-run-dialog.glade";
+	else
+		glade_file = GLADEDIR "/panel-run-dialog.glade";
 
-	/* Fallback to loading an installed .glade file */
-	if (!gui)
-		gui = glade_xml_new (GLADEDIR "/panel-run-dialog.glade", "panel_run_dialog", NULL);
+	gui = glade_xml_new (glade_file, "panel_run_dialog", NULL);
 
-	if (gui) {
-		static_dialog = panel_run_dialog_new (screen, gui);
+	static_dialog = panel_run_dialog_new (screen, gui);
 
-		g_signal_connect_swapped (static_dialog->run_dialog, "destroy",
-					  G_CALLBACK (panel_run_dialog_static_dialog_destroyed),
-					  static_dialog);
+	g_signal_connect_swapped (static_dialog->run_dialog, "destroy",
+				  G_CALLBACK (panel_run_dialog_static_dialog_destroyed),
+				  static_dialog);
 
-		g_object_unref (gui);
-	}
+	g_object_unref (gui);
 }
 
 void
