@@ -1,3 +1,18 @@
+Mon Aug 10 02:32:19 1998  George Lebl  <jirka@5z.com>
+
+	* launcher.c: removed a leak when launchers were destroyed
+	  and made config dialog disappear when it's launcher is
+	  destroyed
+
+	* menu.c: made config dialog disappear when it's menu is
+	  destroyed
+
+	* drawer.c: made config dialog disappear when it's drawer is
+	  destroyed
+
+	* panel.c,applet.c: put in hacks to deal with tooltips owning
+	  a reference count for applets
+
 Sun Aug 09 19:59:18 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: implemented properties of menu buttons

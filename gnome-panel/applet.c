@@ -29,6 +29,8 @@ extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
+extern GtkTooltips *panel_tooltips;
+
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
@@ -68,6 +70,13 @@ panel_clean_applet(int applet_id)
 
 		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
+
+		/*warning warning ... HACK ahead*/
+		/*this makes the refcount right, why a widget that has
+		  a tooltip shouldn't destroy right is beyond me, but
+		  I guess there is a reason .. it just makes things a
+		  lot harder*/
+		gtk_tooltips_set_tip (panel_tooltips,w,NULL,NULL);
 
 		if(panel)
 			gtk_container_remove(GTK_CONTAINER(panel),w);

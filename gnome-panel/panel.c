@@ -938,6 +938,19 @@ bind_panel_events(GtkWidget *widget, gpointer data)
 }
 
 
+/*warning warning ... HACK ahead*/
+static int
+panel_widget_destroy(GtkWidget *w, gpointer data)
+{
+	GtkFixed *fixed = GTK_FIXED(w);
+	GList *list;
+	for(list = fixed->children; list != NULL; list = g_list_next(list))
+		/*this makes the refcount right, why a widget that has
+		  a tooltip shouldn't destroy right is beyond me, but
+		  I guess there is a reason .. it just makes things a
+		  lot harder*/
+		gtk_tooltips_set_tip (panel_tooltips,list->data,NULL,NULL);
+}
 
 static void
 panel_widget_setup(PanelWidget *panel)
@@ -957,6 +970,10 @@ panel_widget_setup(PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "back_change",
 			   GTK_SIGNAL_FUNC(panel_back_change),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(panel_widget_destroy),
 			   NULL);
 }
 

@@ -388,18 +388,17 @@ panel_widget_cremove(GtkContainer *container, GtkWidget *widget)
 	g_return_if_fail (container != NULL);
 	g_return_if_fail (IS_PANEL_WIDGET (container));
 	g_return_if_fail (widget != NULL);
-
+	
 	panel = PANEL_WIDGET (container);
 	
 	ad = gtk_object_get_data(GTK_OBJECT(widget), PANEL_APPLET_DATA);
-
-	if (GTK_CONTAINER_CLASS (parent_class)->remove)
-		(* GTK_CONTAINER_CLASS (parent_class)->remove) (container,
-								widget);
-
 	p = gtk_object_get_data(GTK_OBJECT(widget),
 				PANEL_APPLET_ASSOC_PANEL_KEY);
 
+	gtk_widget_ref(widget);
+	if (GTK_CONTAINER_CLASS (parent_class)->remove)
+		(* GTK_CONTAINER_CLASS (parent_class)->remove) (container,
+								widget);
 	if(ad) {
 		PanelWidget *panel = PANEL_WIDGET (container);
 
@@ -414,6 +413,7 @@ panel_widget_cremove(GtkContainer *container, GtkWidget *widget)
 	gtk_signal_emit(GTK_OBJECT(container),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL],
 			widget);
+	gtk_widget_unref(widget);
 }
 
 
@@ -1729,7 +1729,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	g_return_val_if_fail(panel!=NULL,-1);
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
-	
+
 	ad = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_DATA);
 
 	if(ad)

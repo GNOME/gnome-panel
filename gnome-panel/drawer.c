@@ -239,6 +239,10 @@ static int
 destroy_drawer(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = data;
+	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(drawer->button),
+						     DRAWER_PROPERTIES);
+	if(prop_dialog)
+		gtk_widget_unref(prop_dialog);
 	g_free(drawer);
 	return FALSE;
 }

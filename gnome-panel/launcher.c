@@ -61,6 +61,20 @@ launch (GtkWidget *widget, GdkEvent *event, void *data)
 	return FALSE;
 }
 
+static int
+destroy_launcher(GtkWidget *widget, gpointer data)
+{
+	Launcher *launcher = data;
+	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(launcher->button),
+						     LAUNCHER_PROPERTIES);
+	if(prop_dialog)
+		gtk_widget_unref(prop_dialog);
+	gnome_desktop_entry_free(launcher->dentry);
+	g_free(launcher);
+	return FALSE;
+}
+
+
 Launcher *
 create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 {
@@ -129,6 +143,10 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 				    "event",
 				    (GtkSignalFunc) launch,
 				    dentry);
+	
+	gtk_signal_connect (GTK_OBJECT(launcher->button), "destroy",
+			    GTK_SIGNAL_FUNC(destroy_launcher),
+			    launcher);
 
 	gtk_object_set_user_data(GTK_OBJECT(launcher->button), launcher);
 
