@@ -1427,7 +1427,7 @@ session_read_global_config (void)
 				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "auto-update-menus"))
-			g_warning ("\nGman: what's this '%s' ?\nmarkmc: something that's probably not needed\nGman: then why is in the schema? :P\n_vicious_: It's needed so that say NFS setups don't recheck menus all the time, cuz it can slow things down quite a bit.", key);
+			g_warning ("\nGman: what's this '%s' ?\nmarkmc: something that's probably not needed\nGman: then why is in the schema? :P\n_vicious_: It's needed so that say NFS setups don't recheck menus all the time, cuz it can slow things down quite a bit.\nandersca: you guys are very lucky to have _v_.", key);
 
 		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
 			global_config.highlight_when_over =
